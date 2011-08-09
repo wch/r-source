@@ -220,8 +220,50 @@ function(x)
     if(inherits(x, "person")) return(x)
 
     x <- as.character(x)
+
+    ## Need to split the strings into individual person components.
+    ## We used to split at ',' and 'and', but of course these could be
+    ## contained in roles or comments as well.
+    ## Hence, try the following.  First, replace all comment, role and
+    ## email substrings by all-z substrings of the same length.  Then,
+    ## tokenize the strings according to the split regexp matches in the
+    ## corresponding z-ified strings.
+    ## Then, extract the persons from the thus obtained tokens.
+
+    zify <- function(pattern, x) {
+        if(!length(x)) return(character())
+        ## Could use gregexpr() to match all in one, but there seems to
+        ## easy way to simultaneously perform all replacements.
+        sapply(x,
+               function(s) {
+                   while((p <- regexpr(pattern, s)) > -1L) {
+                       mlen <- attr(p, "match.length")
+                       substring(s, p, p + mlen - 1L) <-
+                           paste(rep.int("z", mlen), collapse = "")
+                   }
+                   s
+               })
+    }
+    
+    pattern <- "[[:space:]]?(,|,?[[:space:]]and)[[:space:]]+"
+
+    y <- zify("\\([^)]*\\)", x)
+    y <- zify("\\[[^]]*\\]", y)
+    y <- zify("<[^>]*>", y)
+
+    ## The Map() part really is a tokenizer for splitting at the given
+    ## pattern (like strsplit(), but we need to split x according to the
+    ## split matches in y.
     x <- do.call("c",
-                 strsplit(x, "[[:space:]]?(,|[[:space:]]and)[[:space:]]+"))
+                 Map(function(u, v) {
+                     beg <- c(1L, v + attr(v, "match.length"))
+                     end <- c(v - 1L, nchar(u))
+                     ind <- beg <= end
+                     substring(u, beg[ind], end[ind])
+                 },
+                     x,
+                     gregexpr(pattern, y),
+                     USE.NAMES = FALSE))
     x <- x[!sapply(x, .is_not_nonempty_text)]
 
     as_person1 <- function(x) {
@@ -753,6 +795,11 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     }
 
     author <- meta$`Authors@R`
+    ## <FIXME>
+    ## Temporarily support Author@R fields ...
+    if(is.null(author))
+        author <- meta$`Author@R`
+    ## </FIXME>
     if(has_authors_at_R_field <- !is.null(author)) {
         author <- .read_authors_at_R_field(author)
         ## We only want those with author roles.
