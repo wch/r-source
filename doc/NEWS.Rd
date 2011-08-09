@@ -330,6 +330,12 @@
       \item New function \code{psnice()} in the \pkg{tools} package to
       return or change the \sQuote{niceness} of a process.  (Refers to
       the \sQuote{priority class} on Windows.)
+
+      \item \code{list.dirs()} gains a \code{recursive} argument.
+
+      \item A \samp{Authors@R} field in a package \file{DESCRIPTION}
+      file can now be used to generate Author and Maintainer fields if
+      needed, and to auto-generate package citations.
     }
   }
 
