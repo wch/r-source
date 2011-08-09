@@ -563,6 +563,30 @@ function(file1, file2)
     .Internal(codeFiles.append(file1, file2))
 }
 
+### ** .find_calls
+
+.find_calls <-
+function(x, f = NULL, recursive = FALSE)
+{
+    x <- as.list(x)
+    
+    predicate <- if(is.null(f))
+        function(e) is.call(e)
+    else
+        function(e) is.call(e) && f(e)
+
+    if(!recursive) return(Filter(predicate, x))
+
+    calls <- list()
+    gatherer <- function(e) {
+        if(predicate(e)) calls <<- c(calls, list(e))
+        if(is.recursive(e))
+            for(i in seq_along(e)) gatherer(e[[i]])
+    }
+    gatherer(x)
+    calls
+}
+
 ### ** .find_owner_env
 
 .find_owner_env <-
