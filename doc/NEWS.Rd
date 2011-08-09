@@ -13,7 +13,7 @@
       package without a namespace must be re-installed under this
       version of \R (but data-only packages without \R code can still be
       used).
-      
+
       \item The \code{yLineBias} of the \code{X11()} and
       \code{windows()} families of devices has been changed from 0.1 to
       0.2: this changes slightly the vertical positioning of text in the
@@ -30,7 +30,7 @@
       (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"} and \code{"P(>|Chi|)"}
       variants have been eliminated).  Code which extracts the p value
       \emph{via} indexing by name may need adjustment.
-      
+
       \item \code{::} can now be used for datasets made available for
       lazy-loading in packages with namespaces (which makes it consistent
       with its use for data-only packages without namespaces in earlier
@@ -206,7 +206,7 @@
       the POSIX 2008 and FreeBSD/Darwin/NetBSD methods are detected.)
 
       \item New function \code{getCall(m)} as an abstraction for
-      \code{m$call}, enabling \code{update(m)}'s default method to apply % $ 
+      \code{m$call}, enabling \code{update(m)}'s default method to apply % $
       more universally.  (NB: this can be masked by existing functions
       in packages.)
 
@@ -220,28 +220,28 @@
       \item All packages with \R code are lazy-loaded irrespective of
       the \samp{LazyLoad} field in the \file{DESCRIPTION} file.  A
       warning is given if the \samp{LazyLoad} field is overridden.
-      
+
       \item Added new \samp{\figure} tag to Rd markup, so
       that figures can be included in help pages when displayed
       in HTML or LaTeX.  There is an example in the help page for
       \code{points()}.
-      
+
       \item The built-in httpd server now allows access to files
       in the session temporary directory \code{tempdir()},
       addressed as the \samp{/session} directory on the httpd
       server.
-      
+
       \item Development versions of \R are no longer referred to by the
       number under which they might be released, e.g. in the startup
       banner, \command{R --version} and \code{sessionUtils()}.  The
       correct way to refer to a development version of R is
       \sQuote{R-devel}, preferably with the date and SVN version number.\cr
       E.g. \samp{R-devel (2011-07-04 r56266)}
-      
+
       \item There is a new function \code{texi2pdf()} in package
       \pkg{tools}, currently a convenience wrapper for
       \code{texi2dvi(pdf = TRUE)}.
-      
+
       \item There are two new options for typesetting PDF manuals from
       Rd files.  These are \samp{beramono} and \samp{inconsolata}, and
       used the named font for mononspaced output. They are intended to
@@ -256,51 +256,51 @@
       \samp{envRefClass} and may be overriden for user classes (see
       the \code{?ReferenceClasses} example).  S4 \code{show()} methods
       should no longer be needed for reference classes.
-      
+
       \item \code{tools::Rdiff} (by default) and \code{R CMD Rdiff}
       now ignore differences in pointer values when comparing printed
-      environments, compiled byte code, etc.   
+      environments, compiled byte code, etc.
 
       \item The \code{"source"} attribute on functions created with
       \code{keep.source=TRUE} has been replaced with a \code{"srcref"}
       attribute.  The \code{"srcref"} attribute references an in-memory
       copy of the source file using the \code{"srcfilecopy"} or the
       new \code{"srcfilealias"} class.
-      
-      \item New items \href{UserManuals.html}{User Manuals} and 
+
+      \item New items \href{UserManuals.html}{User Manuals} and
       \href{http://developer.r-project.org/TechDocs}{Technical Papers}
       have been added to the HTML help main page.  These link to
       vignettes in the base and recommended packages and to a
       collection of papers about R issues, respectively.
-      
-      \item Documentation and messages have been standardized to 
+
+      \item Documentation and messages have been standardized to
       use \dQuote{namespace} rather than \dQuote{name space}.
-      
+
       \item Sweave now knows about a few more Windows' encodings,
       including \code{cp1250} and \code{cp1257}.  (Belated user request.)
 
       \item \code{setGeneric()} now looks in the default packages for
       a non-generic version of a function if called from a package with a
       namespace.  (It always did for packages without a namespace.)
-      
+
       \item Setting the environment variable
       \env{_R_WARN_ON_LOCKED_BINDINGS_} will give a warning if an
       attempt is made to change a locked binding.
-      
+
       \item \code{\\SweaveInput} is now supported when generating
       concordances in \code{Sweave()}.
-      
+
       \item \code{findLineNum()} and \code{setBreakpoint()} now allow
       the environment to be specified indirectly; the latter gains
       a \code{clear} argument to allow it to call \code{untrace()}.
-      
+
       \item The body of a closure can be one of more types of \R
       objects, including enviroments and external pointers.
-      
+
       \item The \code{Rd2HTML()} function in package \pkg{tools} now has
       a \code{stylesheet} argument, allowing pages to be displayed in
       alternate formats.
-      
+
       \item New function \code{requireNamespace()} analogous to
       \code{require()}, returning a logical value after attempting to
       load a namespace.
@@ -308,14 +308,14 @@
       \item There is a new type of RNG, \code{"L'Ecuyer-CMRG"}
       implementing L'Ecuyer (1999)'s \sQuote{combined multiple-recursive
       generator} \samp{MRG32k3a}.  See the comments on \code{?RNG}.
-      
+
       \item \code{help.search()} and \code{??} will now display
       vignettes and demos as well as help pages.  The new option
       \code{help.search.types} controls the types of documentation
       and the order of the display.
-      
+
       \item \code{socketConnection()} now has a \code{timeout} argument.
-      
+
       \item The initialization of the random-number generator now uses
       the process ID as well as the current time, just in case two \R
       processes are launched very rapidly on a machine with
@@ -425,7 +425,7 @@
 
       \item \command{R CMD Sweave} now has a \option{--pdf} option to
       produce a PDF version of the processed Sweave document.
-      
+
       \item It is no longer allowed to have two vignettes with the
       same vignette name (e.g. vig.Rnw and vig.Snw).  (Previously one
       vignette hid the other from the \code{vignette()} function.)
@@ -465,12 +465,12 @@
       nor \code{.onAttach()} function is found but \code{.First.lib()}
       is, it will be run as the attach hook (unless one of a list of
       known exceptions, when it will be run as the load hook).
-      
+
       \item A warning is given if test-loading a package changes a
       locked binding in a package other than itself.  It is likely that
       this will be disallowed in future releases.  (There are \emph{pro
 	tem} some exceptions to the warning.)
-    
+
       \item A dependency on SVN revision is allowed for \code{R}, e.g.
       \code{R (>= r56550)}.  This should be used in conjunction with a
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
@@ -536,7 +536,7 @@
 
       \item \command{zip.file.extract()} is now defunct: use
       \code{unzip()} or \code{unz()} instead.
-      
+
       \item \command{R CMD Rd2dvi} without the \option{--pdf} option is
       now deprecated: only PDF output will be supported in future
       releases (since this allows the use of fonts only supported for
@@ -545,19 +545,19 @@
       \item A top-level \file{COPYING} file in a package is now
       deprecated (file names \file{LICENSE} or \file{LICENCE} have long
       been preferred), and will not be installed as from \R 2.15.0.
-      
+
       \item Options such as \code{--max-nsize} and the function
       \code{mem.limits()} are now deprecated: these limits are nowadays
       almost never used, and are reported by \code{gc()} when they are
       in use.
-      
+
       \item Forms like \code{binomial(link = "link")} for GLM families
       deprecated since \R 2.4.0 are now defunct.
-      
+
       \item The \code{declarativeOnly} argument to
       \code{loadNamespace()} (not relevant since \R 2.13.0) has been
       removed.
-      
+
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is deprecated.  (It is often called from a
       namespace, and the defaults are only appropriate to a package.)
@@ -568,7 +568,7 @@
     \itemize{
       \item The base and recommended packages are now byte-compiled
       (equivalent to \command{make bytecode} in \R 2.13.x).
-      
+
       \item Configure option \option{--with-system-zlib} now only makes
       use of the basic interface of \code{zlib} and not the
       C function \samp{gzseek} which has shown erroneous behaviour in
@@ -596,7 +596,7 @@
 
       \item The C99 functions \code{acosh}, \code{asinh}, \code{atanh},
       \code{snprintf} and \code{vsnprintf} are now required.
-      
+
       \item There is no longer support for making DVI manuals \emph{via}
       \command{make dvi}, \command{make install-dvi} and similar.  Only
       PDF manuals are supported (to allow the use of fonts which are
@@ -657,24 +657,24 @@
     \itemize{
       \item It is possible to build in \file{src/extra/xdr} on more
       platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
-      
+
       \item \command{configure} will find the Sun TI-RPC implementation
       of xdr (in \file{libtirpc}) provided its header files are in the
       search path: see the \sQuote{R Installation and Administration
 	Manual}.
-    
+
       \item \code{mem.limits()} now reports values larger than the
       maximum integer (previously documented to be reported as
       \code{NA}), and allows larger values to be set, including
       \code{Inf} to remove the limit.
-      
+
       \item The \code{print()} methods for classes \code{"Date"},
       \code{"POSIXct"} and \code{"POSIXlt"} respect the option
       \code{"max.print"} and so are much faster for very long datetime
       vectors.  (Suggestion of Yohan Chalabi.)
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
      \item \code{fisher.test()} had a buglet: If arguments were
@@ -685,25 +685,25 @@
       \item \code{package.skeleton()} will no longer dump S4 objects
       supplied directly rather than in a code file.  These cannot be
       restored correctly from the dumped version.
-      
+
       \item Build-time expressions in help files did not have access
-      to functions in the package being built (with \command{R CMD build}).  
-      
+      to functions in the package being built (with \command{R CMD build}).
+
       \item Because \code{quote()} did not mark its result as being in
       use, modification of the result could in some circumstances
       modify the original call.
-      
+
       \item Plotting \code{pch = '.'} now guarantees at least a one-pixel
       dot if \code{cex > 0}.
-      
+
       \item The very-rarely-used command-line option
       \option{--max-vsize} was incorrectly interpreted as a number of
       Vcells and not in bytes as documented.  (Spotted by Christophe
       Rhodes.)
-      
-      \item The HTML generated by \code{Rd2HTML()} comes closer to 
+
+      \item The HTML generated by \code{Rd2HTML()} comes closer to
       being standards compliant.
-      
+
       \item \code{filter(x, recursive = TRUE)} gave incorrect results on a
       series containing \code{NA}s.  (Spotted by Bill Dunlap.)
 
@@ -712,7 +712,10 @@
 
       \item \code{retracemem()} was still using positional matching.
       (\PR{14650})
-    }  
+
+      The \code{quantile} method for \code{"ecdf"} objects now works and
+      is documented.
+    }
   }
 }
 
@@ -833,11 +836,11 @@
       \code{.saveRDS()} are now deprecated in favour of the public
       functions \code{readRDS()} and \code{saveRDS()} introduced in \R
       2.13.0.
-      
+
       \item Switching off lazy-loading of code \emph{via} the
       \samp{LazyLoad} field of the \file{DESCRIPTION} file is now
       deprecated.  In future all packages will be lazy-loaded.
-      
+
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are deprecated.
     }
@@ -928,13 +931,13 @@
       \item Command completion will no longer be broken if
       \code{tail.default()} is redefined by the user. (Problem reported
       by Henrik Bengtsson.)
-      
+
       \item LaTeX rendering of markup in titles of help pages has been
       improved; in particular, \code{\\eqn{}} may be used there.
 
       \item \code{isClass()} used its own namespace as the default of
       the \code{where} argument inadvertently.
-      
+
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).  (It seems this happened only in 2.13.0 patched.)
