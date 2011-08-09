@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:43+0100\n"
+"POT-Creation-Date: 2011-08-09 22:15+0100\n"
 "PO-Revision-Date: 2011-03-30 01:56+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -192,50 +192,51 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/platform.c:449 src/main/platform.c:451 src/main/platform.c:726
 #: src/main/platform.c:728 src/main/platform.c:1092 src/main/platform.c:1098
 #: src/main/platform.c:1101 src/main/platform.c:1104 src/main/platform.c:1107
-#: src/main/platform.c:1110 src/main/platform.c:1113 src/main/platform.c:1200
-#: src/main/platform.c:1239 src/main/platform.c:1296 src/main/platform.c:1299
-#: src/main/platform.c:1461 src/main/platform.c:1464 src/main/platform.c:1467
-#: src/main/platform.c:1503 src/main/platform.c:1506 src/main/platform.c:1509
-#: src/main/platform.c:1592 src/main/platform.c:1607 src/main/platform.c:1644
-#: src/main/platform.c:1646 src/main/platform.c:1711 src/main/platform.c:1795
-#: src/main/platform.c:2070 src/main/platform.c:2116 src/main/platform.c:2246
-#: src/main/platform.c:2249 src/main/platform.c:2252 src/main/platform.c:2255
-#: src/main/platform.c:2258 src/main/platform.c:2391 src/main/platform.c:2394
-#: src/main/platform.c:2397 src/main/platform.c:2400 src/main/platform.c:2403
-#: src/main/platform.c:2472 src/main/platform.c:2480 src/main/platform.c:2516
-#: src/main/platform.c:2566 src/main/plot.c:3104 src/main/plot.c:4241
-#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2434
-#: src/main/plot3d.c:2438 src/main/plot3d.c:2443 src/main/plot3d.c:2447
-#: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:236
-#: src/main/print.c:242 src/main/print.c:264 src/main/print.c:270
-#: src/main/print.c:276 src/main/random.c:468 src/main/random.c:472
-#: src/main/random.c:476 src/main/saveload.c:1937 src/main/saveload.c:1940
-#: src/main/saveload.c:1943 src/main/saveload.c:2059 src/main/saveload.c:2239
-#: src/main/saveload.c:2244 src/main/saveload.c:2247 src/main/saveload.c:2350
-#: src/main/scan.c:663 src/main/scan.c:830 src/main/scan.c:843
-#: src/main/scan.c:847 src/main/scan.c:849 src/main/scan.c:860
-#: src/main/scan.c:887 src/main/scan.c:890 src/main/scan.c:943
-#: src/main/scan.c:980 src/main/scan.c:984 src/main/scan.c:994
-#: src/main/scan.c:1208 src/main/scan.c:1434 src/main/scan.c:1485
-#: src/main/scan.c:1497 src/main/scan.c:1501 src/main/scan.c:1507
-#: src/main/scan.c:1721 src/main/scan.c:1722 src/main/scan.c:1724
-#: src/main/scan.c:1725 src/main/scan.c:1726 src/main/scan.c:1727
-#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/seq.c:381
-#: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
-#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
-#: src/main/sysutils.c:593 src/main/sysutils.c:597 src/main/sysutils.c:603
-#: src/main/sysutils.c:607 src/main/sysutils.c:1612 src/main/sysutils.c:1616
-#: src/main/unique.c:822 src/main/unique.c:1102 src/main/unique.c:1162
-#: src/main/unique.c:1169 src/main/util.c:574 src/main/util.c:577
-#: src/main/util.c:1757 src/modules/internet/internet.c:283
-#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
-#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
-#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
-#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1077
-#: src/modules/X11/devX11.c:3138 src/modules/X11/devX11.c:3141
-#: src/modules/X11/devX11.c:3144 src/modules/X11/devX11.c:3168
-#: src/unix/sys-std.c:1211 src/unix/sys-std.c:1234
+#: src/main/platform.c:1110 src/main/platform.c:1113 src/main/platform.c:1212
+#: src/main/platform.c:1215 src/main/platform.c:1218 src/main/platform.c:1257
+#: src/main/platform.c:1314 src/main/platform.c:1317 src/main/platform.c:1479
+#: src/main/platform.c:1482 src/main/platform.c:1485 src/main/platform.c:1521
+#: src/main/platform.c:1524 src/main/platform.c:1527 src/main/platform.c:1610
+#: src/main/platform.c:1625 src/main/platform.c:1662 src/main/platform.c:1664
+#: src/main/platform.c:1729 src/main/platform.c:1813 src/main/platform.c:2088
+#: src/main/platform.c:2134 src/main/platform.c:2264 src/main/platform.c:2267
+#: src/main/platform.c:2270 src/main/platform.c:2273 src/main/platform.c:2276
+#: src/main/platform.c:2409 src/main/platform.c:2412 src/main/platform.c:2415
+#: src/main/platform.c:2418 src/main/platform.c:2421 src/main/platform.c:2490
+#: src/main/platform.c:2498 src/main/platform.c:2534 src/main/platform.c:2584
+#: src/main/plot.c:3104 src/main/plot.c:4241 src/main/plot.c:4245
+#: src/main/plot.c:4248 src/main/plot3d.c:2434 src/main/plot3d.c:2438
+#: src/main/plot3d.c:2443 src/main/plot3d.c:2447 src/main/plot3d.c:2451
+#: src/main/plot3d.c:2455 src/main/print.c:236 src/main/print.c:242
+#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
+#: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
+#: src/main/saveload.c:1937 src/main/saveload.c:1940 src/main/saveload.c:1943
+#: src/main/saveload.c:2059 src/main/saveload.c:2239 src/main/saveload.c:2244
+#: src/main/saveload.c:2247 src/main/saveload.c:2350 src/main/scan.c:663
+#: src/main/scan.c:830 src/main/scan.c:843 src/main/scan.c:847
+#: src/main/scan.c:849 src/main/scan.c:860 src/main/scan.c:887
+#: src/main/scan.c:890 src/main/scan.c:943 src/main/scan.c:980
+#: src/main/scan.c:984 src/main/scan.c:994 src/main/scan.c:1208
+#: src/main/scan.c:1434 src/main/scan.c:1485 src/main/scan.c:1497
+#: src/main/scan.c:1501 src/main/scan.c:1507 src/main/scan.c:1721
+#: src/main/scan.c:1722 src/main/scan.c:1724 src/main/scan.c:1725
+#: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
+#: src/main/scan.c:1729 src/main/seq.c:381 src/main/seq.c:388
+#: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
+#: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
+#: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
+#: src/main/sysutils.c:1612 src/main/sysutils.c:1616 src/main/unique.c:822
+#: src/main/unique.c:1102 src/main/unique.c:1162 src/main/unique.c:1169
+#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1757
+#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
+#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
+#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
+#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
+#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
+#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3138
+#: src/modules/X11/devX11.c:3141 src/modules/X11/devX11.c:3144
+#: src/modules/X11/devX11.c:3168 src/unix/sys-std.c:1211
+#: src/unix/sys-std.c:1234
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
@@ -417,7 +418,7 @@ msgstr "Ключ реестра '%ls' не найден"
 msgid "invalid input in Rmbstowcs"
 msgstr "неправильный ввод в Rmbstowcs"
 
-#: src/gnuwin32/extra.c:2165 src/main/platform.c:1271
+#: src/gnuwin32/extra.c:2165 src/main/platform.c:1289
 msgid "file choice cancelled"
 msgstr "выбор файла отменен"
 
@@ -5258,110 +5259,110 @@ msgstr "не могу переименовать '%s' в '%s' по причин�
 msgid "invalid 'pattern' regular expression"
 msgstr "неправильный шаблон регулярного выражения"
 
-#: src/main/platform.c:1221
+#: src/main/platform.c:1239
 msgid "unable to determine R home location"
 msgstr "не могу определить домашнюю папку R"
 
-#: src/main/platform.c:1273
+#: src/main/platform.c:1291
 msgid "file name too long"
 msgstr "имя файла слишком длинное"
 
-#: src/main/platform.c:1474 src/main/platform.c:1521 src/main/sysutils.c:1631
+#: src/main/platform.c:1492 src/main/platform.c:1539 src/main/sysutils.c:1631
 #: src/main/sysutils.c:1645
 msgid "internal out-of-memory condition"
 msgstr "внутренняя нехватка памяти"
 
-#: src/main/platform.c:1517 src/main/sysutils.c:1641
+#: src/main/platform.c:1535 src/main/sysutils.c:1641
 #, c-format
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
 
-#: src/main/platform.c:1678
+#: src/main/platform.c:1696
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "установка 'LC_NUMERIC' может заставить R странно себя вести"
 
-#: src/main/platform.c:1690
+#: src/main/platform.c:1708
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1717
+#: src/main/platform.c:1735
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "ОС сообщает, что запрос установки локали в \"%s\" не может быть выполнен"
 
-#: src/main/platform.c:2019
+#: src/main/platform.c:2037
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:2025
+#: src/main/platform.c:2043
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:2032
+#: src/main/platform.c:2050
 msgid "unknown format returned by gethostbyname"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:2041
+#: src/main/platform.c:2059
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:2098
+#: src/main/platform.c:2116
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"
 
-#: src/main/platform.c:2101
+#: src/main/platform.c:2119
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "не могу создать директорию '%s' по причине '%s'"
 
-#: src/main/platform.c:2147
+#: src/main/platform.c:2165
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' уже существует"
 
-#: src/main/platform.c:2151
+#: src/main/platform.c:2169
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "не могу создать каталог '%ls' по причине '%s'"
 
-#: src/main/platform.c:2181
+#: src/main/platform.c:2199
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "проблема с созданием каталога %ls: %s "
 
-#: src/main/platform.c:2196
+#: src/main/platform.c:2214
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "проблема с чтением каталога %ls: %s"
 
-#: src/main/platform.c:2209
+#: src/main/platform.c:2227
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "проблема с копированием %ls в %ls: %s"
 
-#: src/main/platform.c:2325
+#: src/main/platform.c:2343
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "проблема с созданием каталога %s: %s"
 
-#: src/main/platform.c:2339
+#: src/main/platform.c:2357
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "проблема с чтением каталога %s: %s"
 
-#: src/main/platform.c:2355
+#: src/main/platform.c:2373
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "проблема с копированием %s в %s: %s"
 
-#: src/main/platform.c:2477
+#: src/main/platform.c:2495
 msgid "'mode' must be of length at least one"
 msgstr "длина 'mode' должна быть не меньше единицы"
 
-#: src/main/platform.c:2544
+#: src/main/platform.c:2562
 msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 

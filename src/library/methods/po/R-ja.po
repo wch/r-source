@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
 "PO-Revision-Date: 2011-03-28 14:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -232,11 +232,11 @@ msgid "no existing definition for function \"%s\""
 msgstr " 関数 \"%s\" に対する既存の定義はありません "
 
 #, fuzzy
-msgid "Creating a generic function from function \"%s\" in %s"
+msgid "Creating a generic function from function %s in %s"
 msgstr " 関数 \"%s\" から総称関数を生成します "
 
 #, fuzzy
-msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
+msgid "Creating a generic function for %s from package %s in %s"
 msgstr " 新しい総称関数 \"%s\" を \"%s\" 中に生成します "
 
 msgid ""
@@ -361,7 +361,8 @@ msgstr ""
 " 総称的関数でない \"%s\" が \"%s\" 中にあります； メソッドは取り除かれません"
 "でした "
 
-msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
+#, fuzzy
+msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr ""
 " \"%s\" (ロックされた環境/パッケージ \"%s\" 中の)のメソッドを削除できません "
 
@@ -593,8 +594,8 @@ msgstr " %s を代わりに使ってください． "
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr " 形式的なメソッド定義に対する不正なオブジェクト：タイプ \"%s\" "
 
-msgid ""
-"missing package slot (%s) in object of class \"%s\" (package info added)"
+#, fuzzy
+msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
 " 欠損したパッケージスロット (%s) がクラス \"%s\" のオブジェクト中にあります"
 "(パッケージの情報を付け加えました) "
@@ -689,7 +690,8 @@ msgstr ""
 msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr " \"%s\" として内部名 \"%s\" を持つクラス表現を割り当て中 "
 
-msgid "Class \"%s\" has a locked definition in package \"%s\""
+#, fuzzy
+msgid "Class %s has a locked definition in package %s"
 msgstr " クラス \"%s\" はパッケージ \"%s\" 中にロックされた定義を持ちます "
 
 msgid "'externalptr' objects cannot be initialized from new()"
@@ -805,28 +807,26 @@ msgstr ""
 " validity メソッドは一つの変数を持つ関数でなければなりません、クラス \"%s\" "
 "のオブジェクトを得ました "
 
-msgid "unable to find required package \"%s\""
+#, fuzzy
+msgid "unable to find required package %s"
 msgstr " 必要とされるパッケージ \"%s\" を見付けることが出来ません "
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr " クラス \"%s\" を含む環境を見付けることが出来ません "
 
 msgid ""
-"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
-"one from package \"%s\" and is not turning on duplicate class definitions "
-"for this class"
+"A specification for S3 class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid ""
-"Some super classes of class \"%s\" in package \"%s\" have duplicate "
-"definitions.  This definition is not being treated as equivalent to that "
-"from package \"%s\""
+"Some super classes of class %s in package %s have duplicate definitions.  "
+"This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
 msgid ""
-"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
-"from package \"%s\" and is not turning on duplicate class definitions for "
-"this class"
+"A specification for class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -1079,6 +1079,20 @@ msgstr " 複数の継承された同等物による一致: "
 msgid "single string; got an object of class \"%s\""
 msgstr " 一つのストリング;クラス \"%s\" のオブジェクトを得ました "
 
+msgid ""
+"Multiple definitions exist for class %s, but the supplied package (%s) is "
+"not one of them (%s)"
+msgstr ""
+
+msgid ""
+"Multiple defintions exist for class %s; should specify one of them (%s), e."
+"g. by className()"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for class %s"
+msgstr " クラス %s に対する定義はありません "
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
 
@@ -1183,19 +1197,22 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr " クラス \"%s\" のスロットに対しては不正な名前です: %s "
 
+#, fuzzy
 msgid ""
-"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
-"object was found (not exported?)"
+"Class %s is defined, with package %s, but no corresponding metadata object "
+"was found (not exported?)"
 msgstr ""
 " クラス \"%s\" は、パッケージ \"%s\"の中で定義されていますが、それに関連する"
 "メタデータオブジェクトが見つかりません（エクスポートされていないのでは？）。 "
 
-msgid "no definition of \"%s\" to use for %s"
+#, fuzzy
+msgid "no definition of %s to use for %s"
 msgstr " \"%s\" (%s に対して使用する)の定義がありません "
 
+#, fuzzy
 msgid ""
-"multiple definitions of class \"%s\" visible (%s); using the definition\n"
-"   in package \"%s\" for %s"
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
 msgstr ""
 " クラス \"%s\" の多重定義が見付かりました（%s）；パッケージ\"%s\" 中の定義を "
 "%s に対して使います "
@@ -1330,8 +1347,8 @@ msgstr " 'class1' はクラス名かクラス定義でなければなりませ�
 msgid "'class2' must be the name of a class or a class definition"
 msgstr " 'class2' はクラス名かクラス定義でなければなりません  "
 
-msgid ""
-"class \"%s\" has no visible definition from package or environment \"%s\""
+#, fuzzy
+msgid "class %s has no visible definition from package or environment %s"
 msgstr ""
 " クラス \"%s\" はパッケージもしくは環境 \"%s\" から可視な定義を持ちません "
 
@@ -1518,8 +1535,8 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr " (最大の値を使います) "
 
-msgid ""
-"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+#, fuzzy
+msgid "No methods table for generic %s from package %s in package %s"
 msgstr ""
 " Generic \"%s\" に対するメソッドテーブルを、パッケージ \"%s\" から パッケー"
 "ジ \"%s\" の中に見つけることができません "
@@ -1611,7 +1628,8 @@ msgstr ""
 "S3Classは, \"oldClass\" を拡張したS4オブジェクトにのみ付値され得ます; 真のク"
 "ラス \"%s\" ではありません "
 
-msgid "Created a package name, \"%s\", when none found"
+#, fuzzy
+msgid "Created a package name, %s, when none found"
 msgstr " パッケージ名 %s を作成しましたが、見つかりません "
 
 msgid "no definition of class \"%s\" found"
@@ -1686,8 +1704,8 @@ msgstr " \"%s\" はこのクラス中の欄（field)ではありません "
 
 #, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
-"be redefined"
+"The definition of class %s in package %s is locked, methods may not be "
+"redefined"
 msgstr ""
 " 関数 \"%s\" とシグネチァ(signature) %s に対するメソッドは封印(sealed)されて"
 "おり、再定義出来ません "
@@ -1707,10 +1725,13 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr " 引数はすべて欄の文字列の名前でなければなりません "
 
+#, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
-"be modified"
+"The definition of class %s in package %s is locked, fields may not be "
+"modified"
 msgstr ""
+" 関数 \"%s\" とシグネチァ(signature) %s に対するメソッドは封印(sealed)されて"
+"おり、再定義出来ません "
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1765,9 +1786,10 @@ msgstr ""
 " 　欄 \"%s\" がクラス \"%s\" のオブジェクトとして与えられましたが，クラス名"
 "か binding 関数でなければなりません "
 
+#, fuzzy
 msgid ""
-"Code for methods in class \"%s\" was not checked for suspicious field "
-"assignments (recommended package \"codetools\" not available?)"
+"Code for methods in class %s was not checked for suspicious field "
+"assignments (recommended package %s not available?)"
 msgstr ""
 " クラス \"%s\" 中のメソッドに対するコードは疑問の余地のある欄引数にたいして検"
 "査されていません (推奨パッケージ \"codetools\" が利用不可能？) "
@@ -1907,14 +1929,14 @@ msgid ""
 "cannot use 'at' argument unless the function body has the form '{ ... }'"
 msgstr " 関数本体が '{ ... }' の形でない限り、'at' 引数は使えません "
 
-msgid ""
-"assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+#, fuzzy
+msgid "assigning over the binding of symbol %s in environment/package %s"
 msgstr ""
 " シンボル \"%s\" の拘束を跨いで付値しています(環境/パッケージ \"%s\" 中) "
 
+#, fuzzy
 msgid ""
-"setting a method over the binding of symbol \"%s\" in environment/package "
-"\"%s\""
+"setting a method over the binding of symbol %s in environment/package %s"
 msgstr ""
 " シンボル \"%s\" の binding を跨ぐメソッドを設定しています(環境/パッケージ "
 "\"%s\" 中) "
@@ -1936,7 +1958,8 @@ msgstr ""
 " ソースコード中にオブジェクトが見当たりません：　パッケージをアタッチもしくは"
 "指定する必要があります "
 
-msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+#, fuzzy
+msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr ""
 " 複数のパッケージにオブジェクトが見つかりました。\"%s\"を使い，%sを無視しま"
 "す。 "
@@ -1956,8 +1979,8 @@ msgstr ""
 msgid "Can't find an environment corresponding to package name '%s\""
 msgstr " パッケージ名 \"%s\" に対応する環境を見付けることが出来ません "
 
-msgid ""
-"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+#, fuzzy
+msgid "Supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
 " 与えられたパッケージ \"%s\" はソース \"%s\" から参照されたパッケージと異なり"
 "ます "
@@ -2010,7 +2033,8 @@ msgstr ""
 " シグネチャ(signature) ”%s” に対する \"%s\" に対するメソッドテーブル中にはい"
 "かなるメソッドもありません "
 
-msgid "not a package name: \"%s\""
+#, fuzzy
+msgid "not a package name: %s"
 msgstr " パッケージ名ではありません: ”%s” "
 
 msgid "apparently bad method or class metadata in saved environment;"

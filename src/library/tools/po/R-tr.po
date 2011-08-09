@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:17\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -242,6 +242,21 @@ msgstr ""
 msgid "These fields must have ASCII values."
 msgstr ""
 
+msgid "Malformed Authors@R field:"
+msgstr ""
+
+msgid "Cannot extract Author field from Authors@R field:"
+msgstr ""
+
+msgid "Authors@R field gives no person with author role."
+msgstr ""
+
+msgid "Cannot extract Maintainer field from Authors@R field:"
+msgstr ""
+
+msgid "Authors@R field gives no person with maintainer role and email address."
+msgstr ""
+
 msgid "Required fields missing:"
 msgstr ""
 
@@ -341,6 +356,38 @@ msgstr ""
 msgid "found %s"
 msgstr ""
 
+msgid "File %s:"
+msgstr ""
+
+msgid "%s has wrong argument list %s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "%s calls:"
+msgstr ""
+
+msgid ""
+"Package startup functions should have two arguments with names starting with "
+"%s and %s, respectively."
+msgstr ""
+
+msgid "lib"
+msgstr ""
+
+msgid "pkg"
+msgstr ""
+
+msgid "Package startup functions should not change the search path."
+msgstr ""
+
+msgid "Package startup functions should use %s to generate messages."
+msgstr ""
+
+msgid "packageStartupMessage"
+msgstr ""
+
 msgid "package 'methods' is used but not declared"
 msgstr ""
 
@@ -372,9 +419,6 @@ msgid "Generics g in env ="
 msgstr ""
 
 msgid "where hasMethods(g, env) errors:"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "May need something like"
@@ -476,6 +520,9 @@ msgid ""
 msgstr ""
 
 msgid "running 'make' failed"
+msgstr ""
+
+msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 
 msgid "argument 'vignette' must be of length 1"

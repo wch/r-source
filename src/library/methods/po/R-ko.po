@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -215,11 +215,11 @@ msgid "no existing definition for function \"%s\""
 msgstr "함수'%s'를 위한 기존의 정의가 아닙니다"
 
 #, fuzzy
-msgid "Creating a generic function from function \"%s\" in %s"
+msgid "Creating a generic function from function %s in %s"
 msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 #, fuzzy
-msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
+msgid "Creating a generic function for %s from package %s in %s"
 msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 #, fuzzy
@@ -351,7 +351,7 @@ msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
 msgstr "'%s'는 '%s'의 일반적인 함수가 아닙니다; 제거되지 않는 메소드입니다"
 
 #, fuzzy
-msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
+msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr "락(lock)된 환경/패키지에 '%s'의 전 버전을 회복 할수가 없는 '%s'입니다"
 
 #, fuzzy
@@ -594,8 +594,8 @@ msgstr ""
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr "정식적 메소드 정의의 무효인 오브젝트: 유형 \"%s\""
 
-msgid ""
-"missing package slot (%s) in object of class \"%s\" (package info added)"
+#, fuzzy
+msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
 "클래스\"%s\"(추가해진 패키지)의 오브젝트에서 잘못된 패키지 slot(%s)입니다"
 
@@ -697,7 +697,7 @@ msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr "\"%s\"로서 할당하는것은 내부 이름 \"%s\"를 갖춘 클래스 표시 입니다"
 
 #, fuzzy
-msgid "Class \"%s\" has a locked definition in package \"%s\""
+msgid "Class %s has a locked definition in package %s"
 msgstr ""
 "클래스 \"%s\"는 패키지 또는 환경 '%s'로부터 보이는 정의를 가지지 않습니다"
 
@@ -820,28 +820,25 @@ msgstr ""
 "얻었습니다"
 
 #, fuzzy
-msgid "unable to find required package \"%s\""
+msgid "unable to find required package %s"
 msgstr "필수의 패키지 '%s'를 검색해낼 수가 없습니다"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
 
 msgid ""
-"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
-"one from package \"%s\" and is not turning on duplicate class definitions "
-"for this class"
+"A specification for S3 class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid ""
-"Some super classes of class \"%s\" in package \"%s\" have duplicate "
-"definitions.  This definition is not being treated as equivalent to that "
-"from package \"%s\""
+"Some super classes of class %s in package %s have duplicate definitions.  "
+"This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
 msgid ""
-"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
-"from package \"%s\" and is not turning on duplicate class definitions for "
-"this class"
+"A specification for class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 #, fuzzy
@@ -1103,6 +1100,20 @@ msgstr ""
 msgid "single string; got an object of class \"%s\""
 msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
+msgid ""
+"Multiple definitions exist for class %s, but the supplied package (%s) is "
+"not one of them (%s)"
+msgstr ""
+
+msgid ""
+"Multiple defintions exist for class %s; should specify one of them (%s), e."
+"g. by className()"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for class %s"
+msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"는 밀폐된 클래스 정의를 가져, 다시 정의를 될수가 없습니다"
 
@@ -1219,17 +1230,18 @@ msgid "invalid names for slots of class \"%s\": %s"
 msgstr "클래스 \"%s\"의 slot 무효인 이름: %s 입니다"
 
 msgid ""
-"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
-"object was found (not exported?)"
+"Class %s is defined, with package %s, but no corresponding metadata object "
+"was found (not exported?)"
 msgstr ""
 
-msgid "no definition of \"%s\" to use for %s"
+#, fuzzy
+msgid "no definition of %s to use for %s"
 msgstr "%s를 사용하는 \"%s\"의 정의가 아닙니다"
 
 #, fuzzy
 msgid ""
-"multiple definitions of class \"%s\" visible (%s); using the definition\n"
-"   in package \"%s\" for %s"
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
 msgstr "\"%s\"의 다수의 정의는 검색되었습니다; %s에서 사용합니다"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
@@ -1365,8 +1377,7 @@ msgid "'class2' must be the name of a class or a class definition"
 msgstr "'class2'는 클래스 또는 클래스 정의의 이름이 아니면 되지 않습니다"
 
 #, fuzzy
-msgid ""
-"class \"%s\" has no visible definition from package or environment \"%s\""
+msgid "class %s has no visible definition from package or environment %s"
 msgstr ""
 "클래스 \"%s\"는 패키지 또는 환경 '%s'로부터 보이는 정의를 가지지 않습니다"
 
@@ -1550,9 +1561,9 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr ""
 
-msgid ""
-"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
-msgstr ""
+#, fuzzy
+msgid "No methods table for generic %s from package %s in package %s"
+msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 #, fuzzy
 msgid "Undefined classes ("
@@ -1643,7 +1654,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "Created a package name, \"%s\", when none found"
+msgid "Created a package name, %s, when none found"
 msgstr "패키지명이 아닙니다:'%s'"
 
 msgid "no definition of class \"%s\" found"
@@ -1713,8 +1724,8 @@ msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
 #, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
-"be redefined"
+"The definition of class %s in package %s is locked, methods may not be "
+"redefined"
 msgstr "함수'%s' 또는 기호 %s의 메소드는 밀폐되어 다시 정의할수가 없습니다"
 
 #, fuzzy
@@ -1729,10 +1740,11 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
-"be modified"
-msgstr ""
+"The definition of class %s in package %s is locked, fields may not be "
+"modified"
+msgstr "함수'%s' 또는 기호 %s의 메소드는 밀폐되어 다시 정의할수가 없습니다"
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1785,8 +1797,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Code for methods in class \"%s\" was not checked for suspicious field "
-"assignments (recommended package \"codetools\" not available?)"
+"Code for methods in class %s was not checked for suspicious field "
+"assignments (recommended package %s not available?)"
 msgstr ""
 
 msgid "A list argument for fields must have nonempty names for all the fields"
@@ -1922,14 +1934,13 @@ msgid ""
 msgstr ""
 "함수 전체가 형식 '{ ... }'을 가지지 않으면 'at' 인수를 사용할 수가 없습니다"
 
-msgid ""
-"assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+#, fuzzy
+msgid "assigning over the binding of symbol %s in environment/package %s"
 msgstr "환경/패키지 \"%s\"로 심벌 \"%s\"의 결합에 관해서 할당합니다"
 
 #, fuzzy
 msgid ""
-"setting a method over the binding of symbol \"%s\" in environment/package "
-"\"%s\""
+"setting a method over the binding of symbol %s in environment/package %s"
 msgstr "환경/패키지 '%s'에서 심벌 '%s'의 결합에 관한 메소드를 세트합니다"
 
 msgid "Constructing traceable class \""
@@ -1946,7 +1957,7 @@ msgid ""
 "specify the package"
 msgstr ""
 
-msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr ""
 
 msgid "Package \"%s\" is not attached and no namespace found for it"
@@ -1962,8 +1973,7 @@ msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대
 msgid "Can't find an environment corresponding to package name '%s\""
 msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
 
-msgid ""
-"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgid "Supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
 
 msgid "Can't insert these (not found in source): %s"
@@ -2013,7 +2023,7 @@ msgid "No method in methods table for \"%s\" for signature \"%s\""
 msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
 #, fuzzy
-msgid "not a package name: \"%s\""
+msgid "not a package name: %s"
 msgstr "패키지명이 아닙니다:'%s'"
 
 #, fuzzy

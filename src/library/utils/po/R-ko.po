@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:17\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -217,7 +217,7 @@ msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
 
-msgid "Enhanced author specification provides no authors."
+msgid "Enhanced authors specification provides no authors."
 msgstr ""
 
 msgid "m < 0"
@@ -722,6 +722,10 @@ msgstr ""
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'를 위한 (무효?) 인스톨 된 패키지가 없습니다"
+
+#, fuzzy
+msgid "no new packages are available"
+msgstr "지정된 R 오브젝트는 없거나 이용가능합니다"
 
 #, fuzzy
 msgid "metadata of %s is corrupt"

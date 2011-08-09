@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -202,11 +202,11 @@ msgid "no existing definition for function \"%s\""
 msgstr "函数'%s'没有定义"
 
 #, fuzzy
-msgid "Creating a generic function from function \"%s\" in %s"
+msgid "Creating a generic function from function %s in %s"
 msgstr "用函数\"%s\"来建立新的泛型函数"
 
 #, fuzzy
-msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
+msgid "Creating a generic function for %s from package %s in %s"
 msgstr "为'%1$s'里的'%2$s'建立新的泛型函数"
 
 msgid ""
@@ -313,7 +313,8 @@ msgstr "第一个参数应当为泛型函数的名称(现在却是类别为\"%s\
 msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
 msgstr "'%s'不是在'%s'里的泛型函数；因此方法没有被删除掉"
 
-msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
+#, fuzzy
+msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr "无法将锁住环境/程輯包'%2$s'里的'%1$s'方法删除"
 
 msgid "restoring default function definition of \"%s\""
@@ -515,8 +516,8 @@ msgstr "请用%s。"
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr "正式方法定义的对象不对: \"%s\"种类"
 
-msgid ""
-"missing package slot (%s) in object of class \"%s\" (package info added)"
+#, fuzzy
+msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr "\"%2$s\"类别的对象里缺少程輯包槽(%1$s)( 加入了程輯包信息)"
 
 msgid ""
@@ -599,7 +600,8 @@ msgstr ""
 msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr "无法将内部名字为\"%2$s\"的类别表現指定成\"%1$s\""
 
-msgid "Class \"%s\" has a locked definition in package \"%s\""
+#, fuzzy
+msgid "Class %s has a locked definition in package %s"
 msgstr "类别\"%s\"在程輯包'%s'里的定义被锁住了"
 
 msgid "'externalptr' objects cannot be initialized from new()"
@@ -697,28 +699,26 @@ msgid ""
 "\"%s\""
 msgstr "正确的方法必需的带一个参数的函数，收到的却是类别为\"%s\"的对象"
 
-msgid "unable to find required package \"%s\""
+#, fuzzy
+msgid "unable to find required package %s"
 msgstr "找不到所需要的程輯包'%s'"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "找不到包含类别\"%s\"的环境"
 
 msgid ""
-"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
-"one from package \"%s\" and is not turning on duplicate class definitions "
-"for this class"
+"A specification for S3 class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid ""
-"Some super classes of class \"%s\" in package \"%s\" have duplicate "
-"definitions.  This definition is not being treated as equivalent to that "
-"from package \"%s\""
+"Some super classes of class %s in package %s have duplicate definitions.  "
+"This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
 msgid ""
-"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
-"from package \"%s\" and is not turning on duplicate class definitions for "
-"this class"
+"A specification for class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -940,6 +940,20 @@ msgstr "多个等同继承匹配"
 msgid "single string; got an object of class \"%s\""
 msgstr "单独字符串：不该是类别为\"%s\"的对象"
 
+msgid ""
+"Multiple definitions exist for class %s, but the supplied package (%s) is "
+"not one of them (%s)"
+msgstr ""
+
+msgid ""
+"Multiple defintions exist for class %s; should specify one of them (%s), e."
+"g. by className()"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for class %s"
+msgstr "类别%s的定义不存在"
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
 
@@ -1031,20 +1045,22 @@ msgstr "无法在new()里用类别为\"%s\"的对象；类别\"%s\"并不擴充�
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr "类别\"%s\"的槽的名字不对：%s"
 
+#, fuzzy
 msgid ""
-"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
-"object was found (not exported?)"
+"Class %s is defined, with package %s, but no corresponding metadata object "
+"was found (not exported?)"
 msgstr ""
 "\"%s\"类别已经在\"%s\"程序包里被定义过了，但没有与之相对应的元数据对象(有没有"
 "被出口过？)"
 
-msgid "no definition of \"%s\" to use for %s"
+#, fuzzy
+msgid "no definition of %s to use for %s"
 msgstr "\"%s\"没有定义，不能为%s起作用"
 
 #, fuzzy
 msgid ""
-"multiple definitions of class \"%s\" visible (%s); using the definition\n"
-"   in package \"%s\" for %s"
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
 msgstr "\"%s\"有多个定义；现在用程序包\"%s\"中%s的定义"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
@@ -1156,8 +1172,8 @@ msgstr "'class1'必需是类别名字或类别定义"
 msgid "'class2' must be the name of a class or a class definition"
 msgstr "'class2'必需是类别名字或类别定义"
 
-msgid ""
-"class \"%s\" has no visible definition from package or environment \"%s\""
+#, fuzzy
+msgid "class %s has no visible definition from package or environment %s"
 msgstr "类别\"%s\"在程輯包或环境'%s'里没有看得见的定义"
 
 msgid ""
@@ -1325,8 +1341,8 @@ msgstr "好象有点不对：方法表字符里参数数目有矛盾"
 msgid "(using the largest value)"
 msgstr "(用最大值)"
 
-msgid ""
-"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+#, fuzzy
+msgid "No methods table for generic %s from package %s in package %s"
 msgstr "在\"%3$s\"程序包中，程序包\"%2$s\"里的泛型\"%1$s\"没有方法列表"
 
 msgid "Undefined classes ("
@@ -1401,7 +1417,8 @@ msgid ""
 "true of class \"%s\""
 msgstr "S3Class只能分配给扩充\"oldClass\"类别的S4目标对象；不适用于类别\"%s\""
 
-msgid "Created a package name, \"%s\", when none found"
+#, fuzzy
+msgid "Created a package name, %s, when none found"
 msgstr "建立了程輯包名: '%s'，因为没有找到其它名字"
 
 msgid "no definition of class \"%s\" found"
@@ -1466,8 +1483,8 @@ msgstr "\"%s\"不是在\"%s\"类别里的场"
 
 #, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
-"be redefined"
+"The definition of class %s in package %s is locked, methods may not be "
+"redefined"
 msgstr "函数'%s'的方法和'%s'标记都被封闭了，因此无法将之重新定义"
 
 msgid "Arguments to methods() must be named, or one named list"
@@ -1484,10 +1501,11 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr "'file'必需是字符串或联结"
 
+#, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
-"be modified"
-msgstr ""
+"The definition of class %s in package %s is locked, fields may not be "
+"modified"
+msgstr "函数'%s'的方法和'%s'标记都被封闭了，因此无法将之重新定义"
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1533,8 +1551,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Code for methods in class \"%s\" was not checked for suspicious field "
-"assignments (recommended package \"codetools\" not available?)"
+"Code for methods in class %s was not checked for suspicious field "
+"assignments (recommended package %s not available?)"
 msgstr ""
 
 msgid "A list argument for fields must have nonempty names for all the fields"
@@ -1657,13 +1675,13 @@ msgid ""
 "cannot use 'at' argument unless the function body has the form '{ ... }'"
 msgstr "不能用'at'这个参数，除非函数的主文有'{ ... }'这样的形式"
 
-msgid ""
-"assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+#, fuzzy
+msgid "assigning over the binding of symbol %s in environment/package %s"
 msgstr "在环境/程輯包 \"%2$s\"将符号\"%1$s\"的連結重新设定"
 
+#, fuzzy
 msgid ""
-"setting a method over the binding of symbol \"%s\" in environment/package "
-"\"%s\""
+"setting a method over the binding of symbol %s in environment/package %s"
 msgstr "在环境/程輯包'%2$s'里将符号'%1$s'的连结重新进行了方法设定"
 
 msgid "Constructing traceable class \""
@@ -1680,7 +1698,8 @@ msgid ""
 "specify the package"
 msgstr "在源代码中找不到任何对象：需要附加或指定程序包"
 
-msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+#, fuzzy
+msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr "在多个程序包中找到了对象：用\"%s\"而不用%s"
 
 msgid "Package \"%s\" is not attached and no namespace found for it"
@@ -1694,8 +1713,8 @@ msgstr "源参数：应该是文件名字或连接，现在却是类别为\"%s\"
 msgid "Can't find an environment corresponding to package name '%s\""
 msgstr "找不到于程序包\"%s\"对应的环境"
 
-msgid ""
-"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+#, fuzzy
+msgid "Supplied package, %s, differs from package inferred from source, %s"
 msgstr "提供的程序包，\"%s\"，不同与从来源推断出的程序包，\"%s\""
 
 msgid "Can't insert these (not found in source): %s"
@@ -1739,7 +1758,8 @@ msgstr "在追溯环境里找不到\"%s\"泛型函数的方法表"
 msgid "No method in methods table for \"%s\" for signature \"%s\""
 msgstr "函数\"%s\"标记\"%s\"方法表里没有设定方法"
 
-msgid "not a package name: \"%s\""
+#, fuzzy
+msgid "not a package name: %s"
 msgstr "不程輯包名: '%s'"
 
 msgid "apparently bad method or class metadata in saved environment;"

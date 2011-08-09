@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36+0000\n"
+"POT-Creation-Date: 2011-08-09 22:17+0100\n"
 "PO-Revision-Date: 2010-10-03 18:50-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -26,6 +26,14 @@ msgstr "l'argument 'files' doit être une chaîne de caractères"
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 a échoué sur le fichier '%s'"
+
+#: signals.c:43
+msgid "pskill() is not supported on this platform"
+msgstr ""
+
+#: signals.c:137
+msgid "psnice() is not supported on this platform"
+msgstr ""
 
 #: text.c:65
 msgid "invalid argument type"

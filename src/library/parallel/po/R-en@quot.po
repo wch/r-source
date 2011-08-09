@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 16:02\n"
-"PO-Revision-Date: 2011-08-03 16:02\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
+"PO-Revision-Date: 2011-08-09 22:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -36,15 +36,6 @@ msgstr ""
 
 msgid "invalid value of 'seed'"
 msgstr "invalid value of ‘seed’"
-
-msgid "not a valid cluster"
-msgstr "not a valid cluster"
-
-msgid "one node produced an error:"
-msgstr "one node produced an error:"
-
-msgid "nodes produced errors; first error:"
-msgstr "nodes produced errors; first error:"
 
 msgid "need at least one argument"
 msgstr "need at least one argument"
@@ -57,6 +48,27 @@ msgstr "‘X’ must have named dimnames"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "not all elements of ‘MARGIN’ are names of dimensions"
+
+msgid "not a valid cluster"
+msgstr "not a valid cluster"
+
+msgid "unknown cluster type"
+msgstr "unknown cluster type"
+
+msgid "socket cluster with %d nodes on hosts %s"
+msgstr "socket cluster with %d nodes on hosts %s"
+
+msgid ","
+msgstr ","
+
+msgid "socket cluster with %d nodes on host %s"
+msgstr "socket cluster with %d nodes on host %s"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "node of a socket cluster on host %s with pid %d"
+
+msgid "host"
+msgstr "host"
 
 msgid "invalid 'child' argument"
 msgstr "invalid ‘child’ argument"
@@ -73,11 +85,33 @@ msgstr "‘child’ must be a valid child process"
 msgid "'what' must be a character or raw vector"
 msgstr "‘what’ must be a character or raw vector"
 
+msgid "%d of all function calls resulted in an error"
+msgstr "%d of all function calls resulted in an error"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "all scheduled cores encountered errors in user code"
+
 msgid "invalid 'jobs' argument"
 msgstr "invalid ‘jobs’ argument"
 
-msgid "v must be a vector"
-msgstr "v must be a vector"
+msgid "'v' must be a vector"
+msgstr "‘v’ must be a vector"
 
 msgid "some results may be missing, folded or caused an error"
 msgstr "some results may be missing, folded or caused an error"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "fork clusters are not supported on Windows"
+
+msgid ""
+"scheduled core %d encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+"scheduled core %d encountered error in user code, all values of the job will "
+"be affected"
+msgstr[1] ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"

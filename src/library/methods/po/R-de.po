@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
 "PO-Revision-Date: 2011-03-24 10:38+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -236,11 +236,11 @@ msgid "no existing definition for function \"%s\""
 msgstr "keine exisitierende Definition für Funktion \"%s\""
 
 #, fuzzy
-msgid "Creating a generic function from function \"%s\" in %s"
+msgid "Creating a generic function from function %s in %s"
 msgstr "Erzeuge generische Funktion aus Funktion \"%s\""
 
 #, fuzzy
-msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
+msgid "Creating a generic function for %s from package %s in %s"
 msgstr "Erzeuge neue generische Funktion für \"%s\" in \"%s\""
 
 msgid ""
@@ -366,7 +366,8 @@ msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
 msgstr ""
 "\"%s\" ist keine generische S4 Funktion in \"%s\"; Methoden nicht entfernt"
 
-msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
+#, fuzzy
+msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr ""
 "kann methoden von \"%s\" aus gesicherter/m Umgebung/Paket \"%s\" nicht "
 "entfernen"
@@ -603,8 +604,8 @@ msgstr "Nutze stattdessen %s."
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr "unzulässiges Objekt für die formale Methodendefinition: Typ \"%s\""
 
-msgid ""
-"missing package slot (%s) in object of class \"%s\" (package info added)"
+#, fuzzy
+msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
 "fehender Paketslot (%s) in Objekt der Klasse \"%s\" (Paketinformation "
 "hinzugefügt"
@@ -703,7 +704,8 @@ msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr ""
 "Zuweisen als \"%s\" einer Klassenrepresentation mit internem Namen \"%s\""
 
-msgid "Class \"%s\" has a locked definition in package \"%s\""
+#, fuzzy
+msgid "Class %s has a locked definition in package %s"
 msgstr "Klasse \"%s\" besitzt eine gesicherte Definition in Paket \"%s\""
 
 msgid "'externalptr' objects cannot be initialized from new()"
@@ -825,28 +827,26 @@ msgstr ""
 "eine Validierungsmethode muss eine Funktion mit einem Argument sein, bekam "
 "Objekt der Klasse \"%s\""
 
-msgid "unable to find required package \"%s\""
+#, fuzzy
+msgid "unable to find required package %s"
 msgstr "kann benötigtes Paket \"%s\" nicht finden"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "kann keine Umgebung mit einer Klasse \"%s\" finden"
 
 msgid ""
-"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
-"one from package \"%s\" and is not turning on duplicate class definitions "
-"for this class"
+"A specification for S3 class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid ""
-"Some super classes of class \"%s\" in package \"%s\" have duplicate "
-"definitions.  This definition is not being treated as equivalent to that "
-"from package \"%s\""
+"Some super classes of class %s in package %s have duplicate definitions.  "
+"This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
 msgid ""
-"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
-"from package \"%s\" and is not turning on duplicate class definitions for "
-"this class"
+"A specification for class %s in package %s seems equivalent to one from "
+"package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -1108,6 +1108,20 @@ msgstr "mehrfache äquivalents vererbte Treffer:"
 msgid "single string; got an object of class \"%s\""
 msgstr "einzelne Zeichenkette: bekam Objekt der Klasse %s"
 
+msgid ""
+"Multiple definitions exist for class %s, but the supplied package (%s) is "
+"not one of them (%s)"
+msgstr ""
+
+msgid ""
+"Multiple defintions exist for class %s; should specify one of them (%s), e."
+"g. by className()"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for class %s"
+msgstr "keine Definition der Klasse %s"
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
 "\"%s\" besitzt eine versiegelte Klassendefinition und kann nicht umdefiniert "
@@ -1216,19 +1230,22 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr "unzulässige Namen für Slots der Klasse \"%s\"; %s"
 
+#, fuzzy
 msgid ""
-"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
-"object was found (not exported?)"
+"Class %s is defined, with package %s, but no corresponding metadata object "
+"was found (not exported?)"
 msgstr ""
 "Klasse \"%s\" ist definiert, mit Paket \"%s\", aber kein korrespondierendes "
 "Metadatenobjekt gefunden (nicht exportiert?)"
 
-msgid "no definition of \"%s\" to use for %s"
+#, fuzzy
+msgid "no definition of %s to use for %s"
 msgstr "keine Definition von \"%s\", die für \"%s\" genutzt werden kann"
 
+#, fuzzy
 msgid ""
-"multiple definitions of class \"%s\" visible (%s); using the definition\n"
-"   in package \"%s\" for %s"
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
 msgstr ""
 "mehrfache Definitionen der Klasse \"%s\" sichtbar (%s); benutze die "
 "Definition aus Paket \"%s\" für %s"
@@ -1364,8 +1381,8 @@ msgstr "'class1' muss der Name einer Klasse oder eine Klassendefinition sein"
 msgid "'class2' must be the name of a class or a class definition"
 msgstr "'class2' muss der Name einer Klasse oder eine Klassendefinition sein"
 
-msgid ""
-"class \"%s\" has no visible definition from package or environment \"%s\""
+#, fuzzy
+msgid "class %s has no visible definition from package or environment %s"
 msgstr ""
 "Klasse \"%s\" hat keine sichtbare Definition aus Paket oder Umgebung \"%s\""
 
@@ -1552,8 +1569,8 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr "(nutze größten Wert)"
 
-msgid ""
-"No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+#, fuzzy
+msgid "No methods table for generic %s from package %s in package %s"
 msgstr ""
 "keine Methodentabelle für generische \"%s\" aus  Paket \"%s\" in paket \"%s\""
 
@@ -1644,7 +1661,8 @@ msgstr ""
 "S3Class kann nur S4 Objekten zugewiesen werden, die \"oldClass\" erweitern; "
 "gilt nicht für Klasse \"%s\""
 
-msgid "Created a package name, \"%s\", when none found"
+#, fuzzy
+msgid "Created a package name, %s, when none found"
 msgstr "Erzeuge Paketnamen, \"%s\", da keinen gefunden"
 
 msgid "no definition of class \"%s\" found"
@@ -1724,8 +1742,8 @@ msgstr "\"%s\" ist kein Feld dieser Klasse"
 
 #, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
-"be redefined"
+"The definition of class %s in package %s is locked, methods may not be "
+"redefined"
 msgstr ""
 "die Methode für Funktion \"%s\" und Signatur %s ist versiegelt und kann "
 "nicht re-definiert werden"
@@ -1745,10 +1763,13 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr "Die Argumente müssen alle Zeichenketten für Feldnamen sein"
 
+#, fuzzy
 msgid ""
-"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
-"be modified"
+"The definition of class %s in package %s is locked, fields may not be "
+"modified"
 msgstr ""
+"die Methode für Funktion \"%s\" und Signatur %s ist versiegelt und kann "
+"nicht re-definiert werden"
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1805,9 +1826,10 @@ msgstr ""
 "Feld \"%s\" wurde angegeben als Objekt der Klasse \"%s\"; muss ein\n"
 "Klassenname sein oder eine Bindungsfunktion"
 
+#, fuzzy
 msgid ""
-"Code for methods in class \"%s\" was not checked for suspicious field "
-"assignments (recommended package \"codetools\" not available?)"
+"Code for methods in class %s was not checked for suspicious field "
+"assignments (recommended package %s not available?)"
 msgstr ""
 "Kode für die Methoden in der Klasse \"%s\" wurde nicht auf verdächtige\n"
 "Feldzuweisungen gecheckt (empfohlenes Paket \"codetools\" nicht verfügbar?))"
@@ -1952,15 +1974,15 @@ msgstr ""
 "kann das 'at' Argument nur nutzen, wenn der Funtionskörper die Form "
 "'{ ... }' besitzt"
 
-msgid ""
-"assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+#, fuzzy
+msgid "assigning over the binding of symbol %s in environment/package %s"
 msgstr ""
 "Zuweisung über die Bindung des Symbols \"%s\" in der Umbegung / im Paket \"%s"
 "\""
 
+#, fuzzy
 msgid ""
-"setting a method over the binding of symbol \"%s\" in environment/package "
-"\"%s\""
+"setting a method over the binding of symbol %s in environment/package %s"
 msgstr ""
 "Setzen einer Methode  über die Bindung des Symbols \"%s\" in der Umgebung / "
 "im Paket \"%s\""
@@ -1981,7 +2003,8 @@ msgstr ""
 "Keines der Objekte aus dem Quelltext konnte gefunden werden; entweder muss "
 "das Paket attached werden oder zumindest spezifiziert"
 
-msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+#, fuzzy
+msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr "Objekte in mehreren Paketen gefunden: nutze \"%s\", ignoriere %s"
 
 msgid "Package \"%s\" is not attached and no namespace found for it"
@@ -1999,8 +2022,8 @@ msgid "Can't find an environment corresponding to package name '%s\""
 msgstr ""
 "kann keine Umgebung finden, die mit dem Paketnamen \"%s\" korrespondiert"
 
-msgid ""
-"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+#, fuzzy
+msgid "Supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
 "Das angegebene Paket, \"%s\", unterscheidet sich vom Paket aus den Sourcen, "
 "\"%s\""
@@ -2054,7 +2077,8 @@ msgstr ""
 msgid "No method in methods table for \"%s\" for signature \"%s\""
 msgstr "Keine Methode in der Methodentabelle für  \"%s\" für Signatur \"%s\""
 
-msgid "not a package name: \"%s\""
+#, fuzzy
+msgid "not a package name: %s"
 msgstr "kein Paketname: \"%s\""
 
 msgid "apparently bad method or class metadata in saved environment;"

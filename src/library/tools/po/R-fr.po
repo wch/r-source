@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:17\n"
 "PO-Revision-Date: 2011-03-29 19:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -266,6 +266,22 @@ msgstr "Champs comportant des valeurs non ASCII :"
 msgid "These fields must have ASCII values."
 msgstr "Ces champs doivent avoir des valeurs ASCII."
 
+#, fuzzy
+msgid "Malformed Authors@R field:"
+msgstr "Champ 'maintainer' mal orthographié."
+
+msgid "Cannot extract Author field from Authors@R field:"
+msgstr ""
+
+msgid "Authors@R field gives no person with author role."
+msgstr ""
+
+msgid "Cannot extract Maintainer field from Authors@R field:"
+msgstr ""
+
+msgid "Authors@R field gives no person with maintainer role and email address."
+msgstr ""
+
 msgid "Required fields missing:"
 msgstr "Champs requis mais manquants :"
 
@@ -377,6 +393,39 @@ msgstr ""
 msgid "found %s"
 msgstr "trouvé(s) %s"
 
+#, fuzzy
+msgid "File %s:"
+msgstr "Fichier '%s' :"
+
+msgid "%s has wrong argument list %s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "%s calls:"
+msgstr ""
+
+msgid ""
+"Package startup functions should have two arguments with names starting with "
+"%s and %s, respectively."
+msgstr ""
+
+msgid "lib"
+msgstr ""
+
+msgid "pkg"
+msgstr ""
+
+msgid "Package startup functions should not change the search path."
+msgstr ""
+
+msgid "Package startup functions should use %s to generate messages."
+msgstr ""
+
+msgid "packageStartupMessage"
+msgstr ""
+
 msgid "package 'methods' is used but not declared"
 msgstr "le package 'methods' est utilisé mais pas déclaré"
 
@@ -409,9 +458,6 @@ msgstr "Les génériques g dans env ="
 
 msgid "where hasMethods(g, env) errors:"
 msgstr "où les erreurs hasMethods(g, env) :"
-
-msgid ","
-msgstr ","
 
 msgid "May need something like"
 msgstr "Il faut quelque chose du genre"
@@ -520,6 +566,9 @@ msgstr ""
 
 msgid "running 'make' failed"
 msgstr "l'exécution de 'make' a échoué"
+
+msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
+msgstr ""
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "l'argument 'vignette' doit être de longueur 1"

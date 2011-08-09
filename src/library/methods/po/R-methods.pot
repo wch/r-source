@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,10 +134,10 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr ""
 
-msgid "Creating a generic function from function \"%s\" in %s"
+msgid "Creating a generic function from function %s in %s"
 msgstr ""
 
-msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
+msgid "Creating a generic function for %s from package %s in %s"
 msgstr ""
 
 msgid "apparent internal error: a generic function was found for \"%s\", but no corresponding object was found searching from \"%s\""
@@ -218,7 +218,7 @@ msgstr ""
 msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
 msgstr ""
 
-msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
+msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr ""
 
 msgid "restoring default function definition of \"%s\""
@@ -377,7 +377,7 @@ msgstr ""
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr ""
 
-msgid "missing package slot (%s) in object of class \"%s\" (package info added)"
+msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
 
 msgid "initialize method returned an object of class \"%s\" instead of the required class \"%s\""
@@ -434,7 +434,7 @@ msgstr ""
 msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr ""
 
-msgid "Class \"%s\" has a locked definition in package \"%s\""
+msgid "Class %s has a locked definition in package %s"
 msgstr ""
 
 msgid "'externalptr' objects cannot be initialized from new()"
@@ -503,19 +503,19 @@ msgstr ""
 msgid "a validity method must be a function of one argument, got an object of class \"%s\""
 msgstr ""
 
-msgid "unable to find required package \"%s\""
+msgid "unable to find required package %s"
 msgstr ""
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr ""
 
-msgid "A specification for S3 class \"%s\" in package \"%s\" seems equivalent to one from package \"%s\" and is not turning on duplicate class definitions for this class"
+msgid "A specification for S3 class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
-msgid "Some super classes of class \"%s\" in package \"%s\" have duplicate definitions.  This definition is not being treated as equivalent to that from package \"%s\""
+msgid "Some super classes of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
-msgid "A specification for class \"%s\" in package \"%s\" seems equivalent to one from package \"%s\" and is not turning on duplicate class definitions for this class"
+msgid "A specification for class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -674,6 +674,15 @@ msgstr ""
 msgid "single string; got an object of class \"%s\""
 msgstr ""
 
+msgid "Multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)"
+msgstr ""
+
+msgid "Multiple defintions exist for class %s; should specify one of them (%s), e.g. by className()"
+msgstr ""
+
+msgid "No definition found for class %s"
+msgstr ""
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
 
@@ -743,13 +752,13 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr ""
 
-msgid "Class \"%s\" is defined, with package \"%s\", but no corresponding metadata object was found (not exported?)"
+msgid "Class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)"
 msgstr ""
 
-msgid "no definition of \"%s\" to use for %s"
+msgid "no definition of %s to use for %s"
 msgstr ""
 
-msgid "multiple definitions of class \"%s\" visible (%s); using the definition\n   in package \"%s\" for %s"
+msgid "multiple definitions of class %s visible (%s); using the definition\n   in package %s for %s"
 msgstr ""
 
 msgid "Class definition cannot extend more than one of these data types: %s"
@@ -833,7 +842,7 @@ msgstr ""
 msgid "'class2' must be the name of a class or a class definition"
 msgstr ""
 
-msgid "class \"%s\" has no visible definition from package or environment \"%s\""
+msgid "class %s has no visible definition from package or environment %s"
 msgstr ""
 
 msgid "cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s\") is local and modifiable in this package"
@@ -971,7 +980,7 @@ msgstr ""
 msgid "(using the largest value)"
 msgstr ""
 
-msgid "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
+msgid "No methods table for generic %s from package %s in package %s"
 msgstr ""
 
 msgid "Undefined classes ("
@@ -1022,7 +1031,7 @@ msgstr ""
 msgid "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class \"%s\""
 msgstr ""
 
-msgid "Created a package name, \"%s\", when none found"
+msgid "Created a package name, %s, when none found"
 msgstr ""
 
 msgid "no definition of class \"%s\" found"
@@ -1070,7 +1079,7 @@ msgstr ""
 msgid "\"%s\" is not a field in this class"
 msgstr ""
 
-msgid "The definition of class \"%s\" in package \"%s\" is locked, methods may not be redefined"
+msgid "The definition of class %s in package %s is locked, methods may not be redefined"
 msgstr ""
 
 msgid "Arguments to methods() must be named, or one named list"
@@ -1082,7 +1091,7 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr ""
 
-msgid "The definition of class \"%s\" in package \"%s\" is locked, fields may not be modified"
+msgid "The definition of class %s in package %s is locked, fields may not be modified"
 msgstr ""
 
 msgid "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1115,7 +1124,7 @@ msgstr ""
 msgid "Field \"%s\" was supplied as an object of class \"%s\"; must be a class name or a binding function"
 msgstr ""
 
-msgid "Code for methods in class \"%s\" was not checked for suspicious field assignments (recommended package \"codetools\" not available?)"
+msgid "Code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)"
 msgstr ""
 
 msgid "A list argument for fields must have nonempty names for all the fields"
@@ -1202,10 +1211,10 @@ msgstr ""
 msgid "cannot use 'at' argument unless the function body has the form '{ ... }'"
 msgstr ""
 
-msgid "assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+msgid "assigning over the binding of symbol %s in environment/package %s"
 msgstr ""
 
-msgid "setting a method over the binding of symbol \"%s\" in environment/package \"%s\""
+msgid "setting a method over the binding of symbol %s in environment/package %s"
 msgstr ""
 
 msgid "Constructing traceable class \""
@@ -1220,7 +1229,7 @@ msgstr ""
 msgid "None of the objects in the source code could be found:  need to attach or specify the package"
 msgstr ""
 
-msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr ""
 
 msgid "Package \"%s\" is not attached and no namespace found for it"
@@ -1232,7 +1241,7 @@ msgstr ""
 msgid "Can't find an environment corresponding to package name '%s\""
 msgstr ""
 
-msgid "Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgid "Supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
 
 msgid "Can't insert these (not found in source): %s"
@@ -1271,7 +1280,7 @@ msgstr ""
 msgid "No method in methods table for \"%s\" for signature \"%s\""
 msgstr ""
 
-msgid "not a package name: \"%s\""
+msgid "not a package name: %s"
 msgstr ""
 
 msgid "apparently bad method or class metadata in saved environment;"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
-"PO-Revision-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:17\n"
+"PO-Revision-Date: 2011-08-09 22:17\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -263,6 +263,22 @@ msgstr "Fields with non-ASCII values:"
 msgid "These fields must have ASCII values."
 msgstr "These fields must have ASCII values."
 
+msgid "Malformed Authors@R field:"
+msgstr "Malformed Authors@R field:"
+
+msgid "Cannot extract Author field from Authors@R field:"
+msgstr "Cannot extract Author field from Authors@R field:"
+
+msgid "Authors@R field gives no person with author role."
+msgstr "Authors@R field gives no person with author role."
+
+msgid "Cannot extract Maintainer field from Authors@R field:"
+msgstr "Cannot extract Maintainer field from Authors@R field:"
+
+msgid "Authors@R field gives no person with maintainer role and email address."
+msgstr ""
+"Authors@R field gives no person with maintainer role and email address."
+
 msgid "Required fields missing:"
 msgstr "Required fields missing:"
 
@@ -374,6 +390,40 @@ msgstr ""
 msgid "found %s"
 msgstr "found %s"
 
+msgid "File %s:"
+msgstr "File %s:"
+
+msgid "%s has wrong argument list %s"
+msgstr "%s has wrong argument list %s"
+
+msgid ","
+msgstr ","
+
+msgid "%s calls:"
+msgstr "%s calls:"
+
+msgid ""
+"Package startup functions should have two arguments with names starting with "
+"%s and %s, respectively."
+msgstr ""
+"Package startup functions should have two arguments with names starting with "
+"%s and %s, respectively."
+
+msgid "lib"
+msgstr "lib"
+
+msgid "pkg"
+msgstr "pkg"
+
+msgid "Package startup functions should not change the search path."
+msgstr "Package startup functions should not change the search path."
+
+msgid "Package startup functions should use %s to generate messages."
+msgstr "Package startup functions should use %s to generate messages."
+
+msgid "packageStartupMessage"
+msgstr "packageStartupMessage"
+
 msgid "package 'methods' is used but not declared"
 msgstr "package ‘methods’ is used but not declared"
 
@@ -406,9 +456,6 @@ msgstr "Generics g in env ="
 
 msgid "where hasMethods(g, env) errors:"
 msgstr "where hasMethods(g, env) errors:"
-
-msgid ","
-msgstr ","
 
 msgid "May need something like"
 msgstr "May need something like"
@@ -513,6 +560,9 @@ msgstr ""
 
 msgid "running 'make' failed"
 msgstr "running ‘make’ failed"
+
+msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
+msgstr "In ‘%s’ vignettes ‘%s’ and ‘%s’ have the same vignette name"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "argument ‘vignette’ must be of length 1"

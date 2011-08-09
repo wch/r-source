@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 16:02\n"
+"POT-Creation-Date: 2011-08-09 22:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,9 +12,6 @@ msgstr ""
 
 
 msgid "invalid value of 'seed'"
-msgstr ""
-
-msgid "not a valid cluster"
 msgstr ""
 
 msgid "need at least one argument"
@@ -27,6 +24,27 @@ msgid "'X' must have named dimnames"
 msgstr ""
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
+
+msgid "not a valid cluster"
+msgstr ""
+
+msgid "unknown cluster type"
+msgstr ""
+
+msgid "socket cluster with %d nodes on hosts %s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "socket cluster with %d nodes on host %s"
+msgstr ""
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr ""
+
+msgid "host"
 msgstr ""
 
 msgid "invalid 'child' argument"
@@ -44,6 +62,12 @@ msgstr ""
 msgid "'what' must be a character or raw vector"
 msgstr ""
 
+msgid "%d of all function calls resulted in an error"
+msgstr ""
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr ""
+
 msgid "invalid 'jobs' argument"
 msgstr ""
 
@@ -52,3 +76,11 @@ msgstr ""
 
 msgid "some results may be missing, folded or caused an error"
 msgstr ""
+
+msgid "fork clusters are not supported on Windows"
+msgstr ""
+
+msgid        "scheduled core %d encountered error in user code, all values of the job will be affected"
+msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"
+msgstr[0]    ""
+msgstr[1]    ""

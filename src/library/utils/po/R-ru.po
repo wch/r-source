@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:17\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -224,7 +224,8 @@ msgstr "в файле DESCRIPTION пакета '%s' нет поля date"
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "не могу определить год для '%s' из файла DESCRIPTION пакета"
 
-msgid "Enhanced author specification provides no authors."
+#, fuzzy
+msgid "Enhanced authors specification provides no authors."
 msgstr "Улучшенный перечень авторов не содержит ни одного автора."
 
 msgid "m < 0"
@@ -701,6 +702,10 @@ msgstr "Неверная матрица 'instPkgs'"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "нет установленных пакетов для (неправильного?) 'lib.loc=%s'"
+
+#, fuzzy
+msgid "no new packages are available"
+msgstr "R-объекты не указаны или недоступны"
 
 #, fuzzy
 msgid "metadata of %s is corrupt"

@@ -7,11 +7,4 @@ if (inherits(p, "masterProcess")) {
 }
 cat("I'm the master\n")
 unserialize(readChildren(1.5))
-
-
-
-simplify2array(mclapply(rep(4, 5), rnorm))
-# use the same random numbers for all values
-set.seed(1)
-simplify2array(mclapply(rep(4, 5), rnorm, mc.preschedule = FALSE,
-                mc.set.seed = FALSE))
+## don't do anything here as stdin is eaten.

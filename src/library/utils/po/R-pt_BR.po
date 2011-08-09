@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-09 22:17\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -205,7 +205,7 @@ msgstr ""
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
 
-msgid "Enhanced author specification provides no authors."
+msgid "Enhanced authors specification provides no authors."
 msgstr ""
 
 msgid "m < 0"
@@ -644,6 +644,9 @@ msgid "illformed 'instPkgs' matrix"
 msgstr ""
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr ""
+
+msgid "no new packages are available"
 msgstr ""
 
 msgid "metadata of %s is corrupt"
