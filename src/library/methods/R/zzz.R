@@ -107,13 +107,13 @@
     }
 }
 
-.onLoad <- function(libname, pkgName) {
+.onLoad <- function(libname, pkgname) {
     env <- environment(sys.function())
     doSave <- identical(get(".saveImage", envir = env), FALSE)
-    ..First.lib(libname, pkgName, env)
+    ..First.lib(libname, pkgname, env)
     if(doSave) {
-        dbbase <- file.path(libname, pkgName, "R", pkgName)
-        ns <- asNamespace(pkgName)
+        dbbase <- file.path(libname, pkgname, "R", pkgname)
+        ns <- asNamespace(pkgname)
         tools:::makeLazyLoadDB(ns, dbbase)
     }
     if(Sys.getenv("R_S4_BIND") == "active")
@@ -128,7 +128,7 @@
 }
 
 
-.onAttach <- function(libname, pkgName) {
+.onAttach <- function(libname, pkgname) {
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", env)
