@@ -4097,17 +4097,24 @@ function(dir)
     enc <- if(file.exists(dfile))
         tools:::.read_description(dfile)["Encoding"] else NA
 
+    bad_call_names <-
+        unlist(.bad_call_names_in_startup_functions)
+
     .check_startup_function <- function(fcode, fname) {
         out <- list()
-        if((fname %in% c(".onLoad", ".onAttach")) &&
-           !identical(names(fcode[[2L]]), c("libname", "pkgname")))
-            out$bad_arg_names <- names(fcode[[2L]])
+        nms <- names(fcode[[2L]])
+        ## Check names of formals.
+        ## Allow anything containing ... (for now); otherwise, insist on
+        ## length two with names starting with lib and pkg, respectively.
+        if(is.na(match("...", nms)) &&
+           ((length(nms) != 2L) ||
+            any(substring(nms, 1L, 3L) != c("lib", "pkg"))))
+            out$bad_arg_names <- nms
         ## For now, only look at top level calls.
         calls <- .get_top_level_calls(fcode[[3L]])
         if(!length(calls)) return(out)
         cnames <- .call_names(calls)
-        ind <- (cnames %in%
-                c("library", "require", "cat", "message", "print"))
+        ind <- (cnames %in% bad_call_names)
         if(any(ind))
             out$bad_calls <-
                 list(calls = calls[ind], names = cnames[ind])
@@ -4144,9 +4151,10 @@ function(x, ...)
     calls <-
         unique(unlist(lapply(y,
                              function(e) e[["bad_calls"]][["names"]])))
+    has_bad_calls_for_load <-
+        any(calls %in% .bad_call_names_in_startup_functions$load)
     has_bad_calls_for_output <- 
-        any(calls %in% c("cat", "message", "print"))
-    
+        any(calls %in% .bad_call_names_in_startup_functions$output)
 
     .fmt_entries_for_file <- function(e, f) {
         c(gettextf("File %s:", sQuote(f)),
@@ -4172,8 +4180,11 @@ function(x, ...)
     c(unlist(Map(.fmt_entries_for_file, x, names(x)),
              use.names = FALSE),
       if(has_bad_wrong_args)
-      strwrap(gettextf(".onLoad and .onAttach should have arguments %s and %s.",
-                       sQuote("libname"), sQuote("pkgname")),
+      strwrap(gettextf("Package startup functions should have two arguments with names starting with %s and %s, respectively.",
+                       sQuote("lib"), sQuote("pkg")),
+              exdent = 2L),
+      if(has_bad_calls_for_load)
+      strwrap(gettextf("Package startup functions should not change the search path."),
               exdent = 2L),
       if(has_bad_calls_for_output)
       strwrap(gettextf("Package startup functions should use %s to generate messages.",
@@ -4189,6 +4200,10 @@ function(x, ...)
     writeLines(format(x))
     invisible(x)
 }
+
+.bad_call_names_in_startup_functions <-
+    list(load = c("library", "require"),
+         output = c("cat", "message", "print", "writeLines"))
 
 .get_startup_function_calls <-
 function(dir, all = FALSE)
