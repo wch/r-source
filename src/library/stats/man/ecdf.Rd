@@ -1,7 +1,7 @@
 % File src/library/stats/man/ecdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
-% Copyright 2002-2010 The R Foundation
+% Copyright 1995-2011 R Core Development Team
+% Copyright 2002-2011 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{ecdf}
@@ -36,7 +36,9 @@ ecdf(x)
     \code{\link{print}}.}
 }
 \description{
-  Compute or plot an empirical cumulative distribution function.
+  Compute an empirical cumulative distribution function, with several
+  methods for plotting, printing and computing with a such an
+  \dQuote{ecdf} object.
 }
 \details{
   The e.c.d.f. (empirical cumulative distribution function)
@@ -58,10 +60,14 @@ ecdf(x)
 }
 \value{
   For \code{ecdf}, a function of class \code{"ecdf"}, inheriting from the
-  \code{"\link{stepfun}"} class.
+  \code{"\link{stepfun}"} class, and hence inheriting a
+  \code{\link{knots}()} method.
 
   For the \code{summary} method, a summary of the knots of \code{object}
   with a \code{"header"} attribute.
+
+  The \code{\link{quantile}(obj, ...)} method computes the same quantiles as
+  \code{quantile(x, ...)} would where \code{x} is the original sample.
 }
 \author{
   Martin Maechler, \email{maechler@stat.math.ethz.ch}.\cr
@@ -93,7 +99,7 @@ summary.stepfun(Fn12)
 print(ls.Fn12 <- ls(environment(Fn12)))
 ##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 utils::ls.str(environment(Fn12))
-
+stopifnot(all.equal(quantile(Fn12), quantile(y)))
 
 ###----------------- Plotting --------------------------
 require(graphics)
@@ -126,4 +132,3 @@ par(op)
 }
 \keyword{dplot}
 \keyword{hplot}
-
