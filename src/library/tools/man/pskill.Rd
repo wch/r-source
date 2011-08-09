@@ -37,7 +37,7 @@ SIGUSR1
 SIGUSR2
 }
 \arguments{
-  \item{pid}{integer: one or more process IDs as returned by
+  \item{pid}{positive integers: one or more process IDs as returned by
     \code{\link{Sys.getpid}}.}
   \item{signal}{integer, most often one of the symbolic constants.}
 }
@@ -48,7 +48,7 @@ SIGUSR2
   should define all of those listed here), which also support a
   \code{kill} system call to send a signal to a process, most often to
   terminate it.  Function \code{pskill} provides a wrapper: it silently
-  ignores invalid values of its arguments.
+  ignores invalid values of its arguments, including zero or negative pids.
   
   In normal use on a Unix-alike, \kbd{Ctrl-C} sends \code{SIGINT},
   \kbd{Ctrl-\\} sends \code{SIGQUIT} and \kbd{Ctrl-Z} sends

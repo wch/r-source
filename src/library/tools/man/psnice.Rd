@@ -15,8 +15,8 @@
 psnice(pid = Sys.getpid(), value = NA_integer_)
 }
 \arguments{
-  \item{pid}{The process IDs of one of more processes: defaults to the
-    \R session process.}
+  \item{pid}{positive integers: the process IDs of one of more
+    processes: defaults to the \R session process.}
   \item{value}{The niceness to be set, or \code{NA} for an enquiry.}
 }
 \details{
