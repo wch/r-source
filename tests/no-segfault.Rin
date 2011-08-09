@@ -68,8 +68,7 @@ stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "testInstalledBasic",
                           "testInstalledPackages", # runs whole suite
                           "readNEWS", # slow, pure R code
-                          "findHTMLlinks",
-                          "psnice", "pskill")
+                          "findHTMLlinks)
 stop.list[["ts"]] <- c("arma0f", "KalmanLike")
 stop.list[["grDevices"]] <- dev.int
 stop.list[["utils"]] <- c(inet.list, socket.fun, edit.int, misc.int, misc.2)
