@@ -27,6 +27,7 @@ res <- 0L
 if(.Platform$OS.type == "unix") {
     res <- res + runone("multicore1")
     res <- res + runone("multicore2")
+    res <- res + runone("multicore3")
 }
 res <- res + runone("snow1")
 res <- res + runone("snow2")
