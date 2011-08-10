@@ -19,6 +19,14 @@
       maximum integer (previously documented to be reported as
       \code{NA}), and allows larger values to be set, including
       \code{Inf} to remove the limit.
+
+      \item The \code{print()} methods for classes \code{"Date"},
+      \code{"POSIXct"} and \code{"POSIXlt"} respect the option
+      \code{"max.print"} and so are much faster for very long datetime
+      vectors.  (Suggestion of Yohan Chalabi.)
+
+      \item \code{untar2()} now works around incorrect checksums in tar
+      files that use more than 6 digits for the checksum. (\PR{14654})
     }
   }
 
@@ -62,10 +70,6 @@
 
       \item The \code{quantile} method for \code{"ecdf"} objects now
       works and is documented.
-
-      \item \code{untar2} now handles correctly checksums in tar files
-      that use (superfluously) more than 6 digits for the checksum.
-      (\PR{14654})
     }
   }
 }
