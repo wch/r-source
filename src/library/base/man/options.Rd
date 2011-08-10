@@ -152,11 +152,6 @@ getOption(x, default = NULL)
       \code{FALSE} unless the environment variable
       \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
 
-    \item{\code{max.contour.segments}:}{positive integer, defaulting to
-      \code{250000} and usually not set.  A limit on the number of
-      segments in a single contour line in \code{\link{contour}} or
-      \code{\link{contourLines}}.}
-
     \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
       this option, to limit the amount of information that is printed,
@@ -355,6 +350,13 @@ getOption(x, default = NULL)
   These will be set when package \pkg{grDevices} (or its namespace)
   is loaded if not already set.
   \describe{
+#ifdef unix
+    \item{\code{bitmapType}:}{(Unix-only) character.  The default type for the
+      bitmap devices such as \code{\link{png}}.  Defaults to
+      \code{"cairo"} on systems where that is available, or to
+      \code{"quartz"} on Mac OS X where that is available.}
+#endif
+
     \item{\code{device}:}{a character string giving
       the name of a function, or the function object itself,
       which when called creates a new graphics device of the default
@@ -379,12 +381,6 @@ getOption(x, default = NULL)
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
-#ifdef unix
-    \item{\code{bitmapType}:}{(Unix-only) character.  The default type for the
-      bitmap devices such as \code{\link{png}}.  Defaults to
-      \code{"cairo"} on systems where that is available, or to
-      \code{"quartz"} on Mac OS X where that is available.}
-#endif
 #ifdef windows
     \item{\code{windowsTimeout}:}{(Windows-only) integer vector of length 2
       representing two times in milliseconds.  These control the
@@ -394,6 +390,14 @@ getOption(x, default = NULL)
       continuous plotting (default 500).  The values at the time the
       device is opened are used.}
 #endif
+  }
+}
+\section{Other options used by package graphics}{
+  \describe{
+    \item{\code{max.contour.segments}:}{positive integer, defaulting to
+      \code{25000} if not set.  A limit on the number of
+      segments in a single contour line in \code{\link{contour}} or
+      \code{\link{contourLines}}.}
   }
 }
 \section{Options set in package stats}{
