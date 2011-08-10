@@ -5,8 +5,9 @@
    process and IPC
 
    (C)Copyright 2008-11 Simon Urbanek
+   Copyright 2011 R Core Development Team.
 
-   see package DESCRIPTION for licensing terms (GPL-2) */
+   see package DESCRIPTION for licensing terms */
 
 #include "parallel.h"
 
@@ -94,7 +95,7 @@ static void child_sig_handler(int sig)
 extern void (*ptr_R_ProcessEvents)(void);
 
 static int find_quartz_symbols = 1;
-void (*QuartzCocoa_InhibitEventLoop)(int);
+static void (*QuartzCocoa_InhibitEventLoop)(int);
 typedef void (*QuartzCocoa_InhibitEventLoop_t)(int);
 
 /* unfortunately Rdynload.h forgets to declare it so the API is broken
@@ -611,10 +612,6 @@ SEXP mc_exit(SEXP sRes)
     error(_("mcexit failed"));
     return R_NilValue;
 }
-
-/* this is not really necessary, since from R you can simply use
-   is.loaded("QuartzCocoa_InhibitEventLoop") and it will be TRUE if we
-   got to it. */
 
 SEXP mc_can_disable_quartz() {
     return Rf_ScalarLogical(getQuartzSymbols());
