@@ -165,7 +165,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         size <- getOct(block, 124, 12)
         ts <- getOct(block, 136, 12)
         ft <- as.POSIXct(as.numeric(ts), origin="1970-01-01", tz="UTC")
-        csum <- getOct(block, 148, 6)
+        csum <- getOct(block, 148, 8)
         block[149:156] <- charToRaw(" ")
         xx <- as.integer(block)
         checksum <- sum(xx) %% 2^24 # 6 bytes

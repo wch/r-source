@@ -60,8 +60,12 @@
       \item \code{retracemem()} was still using positional matching.
       (\PR{14650})
 
-      The \code{quantile} method for \code{"ecdf"} objects now works and
-      is documented.
+      \item The \code{quantile} method for \code{"ecdf"} objects now
+      works and is documented.
+
+      \item \code{untar2} now handles correctly checksums in tar files
+      that use (superfluously) more than 6 digits for the checksum.
+      (\PR{14654})
     }
   }
 }
