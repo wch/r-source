@@ -91,12 +91,22 @@ summaryLog <- function(Log)
                          sQuote(Log$filename)))
 }
 
-writeDefaultNamespace <- function(filename)
+writeDefaultNamespace <- function(filename, 
+        desc=file.path(dirname(filename), "DESCRIPTION"))
 {
+    pkgInfo <- .split_description(.read_description(desc))
+    pkgs <- unique(c(names(pkgInfo$Imports), names(pkgInfo$Depends)))
+
     writeLines(c("# Default NAMESPACE created by R",
     		 "",
     		 "# Export all names",
-		 "exportPattern(\".\")"),
+		 "exportPattern(\".\")",
+		 if (length(pkgs))
+		     c("",
+		       "# Import all packages listed as Imports or Depends",
+		       "import(", 
+		       paste(" ", pkgs, collapse=",\n"),
+		       ")")),
     	       filename)
 }
 
