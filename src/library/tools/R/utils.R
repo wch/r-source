@@ -448,15 +448,15 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .vc_dir_names
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
-## (arch), .bzr, .git and .hg (mercurial).
+## (arch), .bzr, .git, .hg (mercurial) and _darcs (Darcs)
 
 .vc_dir_names <-
-    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
+    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs")
 
 ## and RE version (beware of the need for escapes if amending)
 
 .vc_dir_names_re <-
-    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg)(/|$)"
+    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs)(/|$)"
 
 ### * Internal utility functions.
 
