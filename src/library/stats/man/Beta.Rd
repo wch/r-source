@@ -1,6 +1,6 @@
 % File src/library/stats/man/Beta.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Beta}
@@ -36,7 +36,7 @@ rbeta(n, shape1, shape2, ncp = 0)
 \details{
   The Beta distribution with parameters \code{shape1} \eqn{= a} and
   \code{shape2} \eqn{= b} has density
-  \deqn{f(x)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}{x}^{a} {(1-x)}^{b}%
+  \deqn{f(x)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}{x}^{a-1} {(1-x)}^{b-1}%
   }{\Gamma(a+b)/(\Gamma(a)\Gamma(b))x^(a-1)(1-x)^(b-1)}
   for \eqn{a > 0}, \eqn{b > 0} and \eqn{0 \le x \le 1}
   where the boundary values at \eqn{x=0} or \eqn{x=1} are defined as
@@ -85,7 +85,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   Algorithm 708: Significant digit computation of the incomplete beta
   function ratios,
   \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373.
-  (See also\cr 
+  (See also\cr
   Brown, B. and Lawrence Levy, L. (1994)
   Certification of algorithm 708: Significant digit computation of the
   incomplete beta,
@@ -132,7 +132,7 @@ rbeta(n, shape1, shape2, ncp = 0)
 }
 \seealso{
   \link{Distributions} for other standard distributions.
-  
+
   \code{\link{beta}} for the Beta function.
 }
 \examples{
