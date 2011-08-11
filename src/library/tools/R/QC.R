@@ -4040,28 +4040,22 @@ function(dir)
 
     ## Workhorse function.
     filter <- function(file) {
-        matches <- list()
-        walker <- function(e) {
-            if((length(e) > 1L)
-               && is.call(e)
-               && as.character(e[[1L]]) %in% c("library.dynam",
-                                              "library.dynam.unload")
-               && is.character(e[[2L]])
-               && grepl("\\.(so|sl|dll)$", e[[2L]])
-               )
-                matches <<- c(matches, list(e))
-            if(is.recursive(e))
-                for(i in seq_along(e)) Recall(e[[i]])
-        }
-        ## assume that if locale if 'C' we can read encodings unchanged.
         exprs <- if(!is.na(enc) &&
                     !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
 	    con <- file(file, encoding=enc)
             on.exit(close(con))
 	    parse(con)
 	} else parse(file)
-        for(i in seq_along(exprs)) walker(exprs[[i]])
-        matches
+        ## assume that if locale if 'C' we can read encodings unchanged.        
+        .find_calls(exprs,
+                    function(e) {
+                        ((length(e) > 1L)
+                         && (as.character(e[[1L]]) %in%
+                             c("library.dynam", "library.dynam.unload"))
+                         && is.character(e[[2L]])
+                         && grepl("\\.(so|sl|dll)$", e[[2L]]))
+},
+                    recursive = TRUE)
     }
 
     code_files <-
@@ -4116,9 +4110,26 @@ function(dir)
         cnames <- .call_names(calls)
         ## And pick the ones which should not be there ...
         ind <- (cnames %in% bad_call_names)
-        if(any(ind))
-            out$bad_calls <-
-                list(calls = calls[ind], names = cnames[ind])
+        if(any(ind)) {
+            calls <- calls[ind]
+            cnames <- cnames[ind]
+            ## Exclude library(help = ......) calls.
+            pos <- which(cnames == "library")
+            if(length(pos)) {
+                pos <- pos[sapply(calls[pos],
+                                  function(e)
+                                  any(names(e)[-1L] == "help"))]
+                ## Could also match.call(base::library, e) first ...
+                if(length(pos)) {
+                    calls <- calls[-pos]
+                    cnames <- cnames[-pos]
+                }
+            }
+            if(length(calls)) {
+                out$bad_calls <-
+                    list(calls = calls, names = cnames)
+            }
+        }
         out
     }
 
