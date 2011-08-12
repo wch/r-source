@@ -5,16 +5,8 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.1 patched}{
-  \subsection{INSTALLATION}{
+  \subsection{NEW FEATURES}{
     \itemize{
-      \item It is possible to build in \file{src/extra/xdr} on more
-      platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
-
-      \item \command{configure} will find the Sun TI-RPC implementation
-      of xdr (in \file{libtirpc}) provided its header files are in the
-      search path: see the \sQuote{R Installation and Administration
-	Manual}.
-
       \item \code{mem.limits()} now reports values larger than the
       maximum integer (previously documented to be reported as
       \code{NA}), and allows larger values to be set, including
@@ -25,11 +17,33 @@
       \code{"max.print"} and so are much faster for very long datetime
       vectors.  (Suggestion of Yohan Chalabi.)
 
-      \item \code{untar2()} now works around incorrect checksums in tar
+      \item \code{untar2()} now works around checksums in \code{tar}
       files that use more than 6 digits for the checksum. (\PR{14654})
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item It is possible to build in \file{src/extra/xdr} on more
+      platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
+
+      \item \command{configure} will find the Sun TI-RPC implementation
+      of xdr (in \file{libtirpc}) provided its header files are in the
+      search path: see the \sQuote{R Installation and Administration
+	Manual}.
+    }
+  }
+  
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Using a broad \code{exportPattern} directive in a
+      \file{NAMESPACE} file is no longer allowed to export internal
+      objects such as \code{.onLoad} and \code{.__S3MethodsTable__.}.
+
+      These are also excluded from imports, along with \code{.First.lib}.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
      \item \code{fisher.test()} had a buglet: If arguments were

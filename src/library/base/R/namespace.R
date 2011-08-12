@@ -426,6 +426,13 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pattern = p, all.names = TRUE), exports)
+        ## certain things should never be exported.
+        if (length(exports)) {
+            stoplist <- c(".__NAMESPACE__.", ".__S3MethodsTable__.",
+                          ".packageName", ".First.lib", ".onLoad",
+                          ".onAttach", ".conflicts.OK", ".noGenerics")
+            exports <- exports[! exports %in% stoplist]
+        }
         ##
         if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns) &&
            !identical(package, "methods") ) {
@@ -667,7 +674,14 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
         self <- getNamespace(self)
     ns <- asNamespace(ns)
     nsname <- getNamespaceName(ns)
-    impvars <- if (missing(vars)) getNamespaceExports(ns) else vars
+    impvars <- if (missing(vars)) {
+        ## certain things should never be imported
+        stoplist <- c(".__NAMESPACE__.", ".__S3MethodsTable__.",
+                      ".packageName", ".First.lib", ".Last.lib",
+                      ".onLoad", ".onAttach", ".conflicts.OK", ".noGenerics")
+        vars <- getNamespaceExports(ns)
+        vars <- vars[! vars %in% stoplist]
+    } else vars
     impvars <- makeImportExportNames(impvars)
     impnames <- names(impvars)
     if (anyDuplicated(impnames)) {

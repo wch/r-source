@@ -2516,7 +2516,9 @@ exports all variables that do not start with a period.  However, such
 broad patterns are not recommended for production code: it is better to
 list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
 this pattern applies to S4 classes, but did not in earlier versions of
-@R{}.)
+@R{}.)  Beware of patterns which include names starting with a period:
+some of these are internal-only variables and should never be exported,
+e.g.@: @code{.__S3MethodsTable__.}.
 
 A package with a namespace implicitly imports the base namespace.
 Variables exported from other packages with namespaces need to be
