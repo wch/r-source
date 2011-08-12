@@ -1527,15 +1527,6 @@ SEXP makeQuartzDefault() {
     return ScalarLogical(has_wss());
 }
 
-void QuartzCocoa_InhibitEventLoop(int flag);
-
-SEXP inhibitQuartz(SEXP sflag)
-{
-    int action = asLogical(sflag);
-    QuartzCocoa_InhibitEventLoop(action);
-    return R_NilValue;
-}
-
 #else
 /* --- no AQUA support = no Quartz --- */
 
@@ -1561,11 +1552,6 @@ QuartzDesc_t Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int 
 void *getQuartzAPI()
 {
     return NULL;
-}
-
-SEXP inhibitQuartz(SEXP flag)
-{
-    return R_NilValue;
 }
 
 #endif

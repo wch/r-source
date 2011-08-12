@@ -78,7 +78,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_GD_nullDevice", (DL_FUNC) &R_GD_nullDevice, 0},
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),
-    CALLDEF(inhibitQuartz, 1),
     CALLDEF(cairoProps, 1),
 #endif
     {NULL, NULL, 0}
