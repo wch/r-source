@@ -1333,7 +1333,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
             ## Note that "fun" may actually be a method definition, and still will be counted.
             ## This appears to be the correct semantics, in
             ## the sense that, if the call came from a method, it's the method's environment
-            ## where one would expect to start the search (for a class defintion, e.g.)
+            ## where one would expect to start the search (for a class definition, e.g.)
             ev <- environment(fun)
             if(!identical(ev, .methodsNamespace))
                 break
@@ -1723,7 +1723,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
             }
             else {
                 msgs <- c(msgs,
-                          gettextf("Multiple defintions exist for class %s; should specify one of them (%s), e.g. by className()",
+                          gettextf("Multiple definitions exist for class %s; should specify one of them (%s), e.g. by className()",
                                    dQuote(classi),
                                    paste(dQuote(get(classi, envir = .classTable)), collapse = ", ")))
             }

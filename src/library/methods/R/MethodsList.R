@@ -720,7 +720,7 @@ promptMethods <- function(f, filename = NULL, methods)
 
 linearizeMlist <-
     ## Undo the recursive nature of the methods list, making a list of
-    ## function defintions, with the names of the list being the
+    ## function definitions, with the names of the list being the
     ## corresponding signatures (designed for printing; for looping over
     ## the methods, use `listFromMlist' instead).
     ##
