@@ -567,10 +567,10 @@ function(dir, control = list(), program = NULL)
         Sys.glob(file.path(subdir, "*.pot"))
     else character()
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
-    if (is.na(encoding <- meta["Encoding"])) 
+    if(is.na(encoding <- meta["Encoding"])) 
         encoding <- "unknown"
-    aspell(files, filter = po_text_filter, control = control, 
-        encoding = encoding, program = program)
+    aspell(files, filter = "pot", control = control, 
+           encoding = encoding, program = program)
 }    
 
 ## For writing personal dictionaries:
