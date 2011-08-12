@@ -724,11 +724,11 @@ function(file, meta = NULL)
 
     for(expr in exprs) {
         x <- eval(expr, envir = envir)
-        if(class(x) == "bibentry")
+        if(inherits(x, "bibentry"))
             rval <- c(rval, list(x))
-        else if(class(x) == "citationHeader")
+        else if(identical(class(x), "citationHeader"))
             mheader <- c(mheader, x)
-        else if(class(x) == "citationFooter")
+        else if(identical(class(x), "citationFooter"))
             mfooter <- c(mfooter, x)
     }
 
@@ -749,23 +749,31 @@ function(file, meta = NULL)
 citation <-
 function(package = "base", lib.loc = NULL, auto = NULL)
 {
-    dir <- system.file(package = package, lib.loc = lib.loc)
-    if(dir == "")
-        stop(gettextf("package %s not found", sQuote(package)), domain = NA)
-
-    meta <- packageDescription(pkg = package, lib.loc = dirname(dir))
-
-    ## if(is.null(auto)): Use default auto-citation if no CITATION
-    ## available.
-    citfile <- file.path(dir, "CITATION")
-    if(is.null(auto)) auto <- !file_test("-f", citfile)
-
-    ## if CITATION is available
-    if(!auto) {
-        return(readCitationFile(citfile, meta))
-    } else if(package == "base") {
-        ## Avoid infinite recursion for broken installation.
-        stop("broken installation, no CITATION file in the base package.")
+    ## Allow citation(auto = meta) in CITATION files to include
+    ## auto-generated package citation.
+    if(inherits(auto, "packageDescription")) {
+        auto_was_meta <- TRUE
+        meta <- auto
+        package <- meta$Package
+    } else {
+        auto_was_meta <- FALSE        
+        dir <- system.file(package = package, lib.loc = lib.loc)
+        if(dir == "")
+            stop(gettextf("package %s not found", sQuote(package)),
+                 domain = NA)
+        meta <- packageDescription(pkg = package,
+                                   lib.loc = dirname(dir))
+        ## if(is.null(auto)): Use default auto-citation if no CITATION 
+        ## available.
+        citfile <- file.path(dir, "CITATION")
+        if(is.null(auto)) auto <- !file_test("-f", citfile)
+        ## if CITATION is available
+        if(!auto) {
+            return(readCitationFile(citfile, meta))
+        } else if(package == "base") {
+            ## Avoid infinite recursion for broken installation.
+            stop("broken installation, no CITATION file in the base package.")
+        }
     }
 
     ## Auto-generate citation info.
@@ -828,11 +836,20 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             z$note <- paste(z$note, rfr, sep = "/r")
     }
 
-    footer <- if(!("recommended" %in% meta$Priority) && !has_authors_at_R_field)
-            paste("ATTENTION: This citation information has been auto-generated",
-                  "from the package DESCRIPTION file and may need manual editing,",
-                  "see ", sQuote("help(\"citation\")"), ".")
-        else NULL
+    header <- if(!auto_was_meta) {
+        paste("To cite package",
+              sQuote(package),
+              "in publications use:")
+    } else NULL
+    
+
+    footer <- if(!("recommended" %in% meta$Priority) &&
+                 !has_authors_at_R_field &&
+                 !auto_was_meta) {
+        paste("ATTENTION: This citation information has been auto-generated",
+              "from the package DESCRIPTION file and may need manual editing,",
+              "see ", sQuote("help(\"citation\")"), ".")
+    } else NULL
 
     author <- format(z$author, include = c("given", "family"))
     if(length(author) > 1L)
@@ -843,7 +860,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         bibtype = "Manual",
 	textVersion = paste(author, " (", z$year, "). ", z$title, ". ",
 	    z$note, ". ", z$url, sep = ""),
-        header = paste("To cite package", sQuote(package), "in publications use:"),
+        header = header,
 	footer = footer,
 	other = z
     )
