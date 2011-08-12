@@ -192,7 +192,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     importIntoEnv(env, exports, ns, exports)
     ## always exists, might be empty
     dimpenv <- getNamespaceInfo(ns, "lazydata")
-    dnames <- ls(dimpenv, all = TRUE)
+    dnames <- ls(dimpenv, all.names = TRUE)
     .Internal(importIntoEnv(env, dnames, dimpenv, dnames))
     if(length(depends)) assign(".Depends", depends, env)
     Sys.setenv("_R_NS_LOAD_" = nsname)
