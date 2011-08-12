@@ -486,6 +486,10 @@ A package (or @samp{R}) can appear more than once in the @samp{Depends},
 but only the first occurrence will be used in versions of @R{} prior to
 2.7.0: these are now very unlikely to be encountered.
 
+It makes no sense to declare a dependence on @code{R} without a version
+specification, nor on the package @pkg{base}: this is an @R{} package
+and @pkg{base} is always available.
+
 The @samp{Imports} field lists packages whose namespaces are
 imported from (as specified in the @file{NAMESPACE} file) but which do
 not need to be attached.  Namespaces accessed by the @samp{::} and

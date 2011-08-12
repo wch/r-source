@@ -43,6 +43,9 @@ SEXP CIDFontInUse(SEXP, SEXP);
 
 SEXP Quartz(SEXP);
 SEXP makeQuartzDefault();
+#ifndef WIN32
+SEXP inhibitQuartz(SEXP flag);
+#endif
 
 SEXP R_GD_nullDevice();
 

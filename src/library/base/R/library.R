@@ -865,6 +865,8 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
     if (length(pkgs)) {
         pkgname <- pkgInfo$DESCRIPTION["Package"]
         for(pkg in pkgs) {
+            ## several packages 'Depends' on base!
+            if (pkg == "base") next
             ## allow for multiple occurrences
             zs <- pkgInfo$Depends[names(pkgInfo$Depends) == pkg]
             have_vers <- any(vapply(zs, length, 1L) > 1L)
