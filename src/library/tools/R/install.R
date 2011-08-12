@@ -526,7 +526,7 @@
         ## going on in parallel
 
         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
-         pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
+        pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
         if (length(pkgs)) {
             miss <- character()
             for (pkg in pkgs) {
@@ -546,6 +546,13 @@
                  sQuote(pkg_name), " ...")
 
         stars <- "**"
+
+        res <- checkMD5sums(pkg_name, getwd())
+        if(!is.na(res) && res) {
+            starsmsg(stars,
+                     gettextf("package %s successfully unpacked and MD5 sums checked",
+                              sQuote(pkg_name)))
+        }
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             ## Back up a previous version
