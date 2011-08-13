@@ -25,3 +25,8 @@ mget <- function(x, envir, mode = "any",
 				call.=FALSE)),
           inherits = FALSE)
      .Internal(mget(x, envir, mode, ifnotfound, inherits))
+
+## DB's proposed name "getSlotOrComponent" is more precise but harder to type
+getElement <- function(object, name) {
+    if(isS4(object)) slot(object, name) else object[[name, exact=TRUE]]
+}

@@ -336,6 +336,9 @@
       \item A \samp{Authors@R} field in a package \file{DESCRIPTION}
       file can now be used to generate Author and Maintainer fields if
       needed, and to auto-generate package citations.
+
+      \item New utility \code{getElement()} for accessing both list
+      components or slots.
     }
   }
 

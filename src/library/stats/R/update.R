@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 getCall <- function(x, ...) UseMethod("getCall")
-getCall.default <- function(x, ...) x$call
+getCall.default <- function(x, ...) getElement(x, "call")
 ## Using getCall() instead of  x$call  renders update.default() more
 ## generally applicable.
 
