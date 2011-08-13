@@ -37,7 +37,7 @@
 	Manual}.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Using a broad \code{exportPattern} directive in a
@@ -47,7 +47,7 @@
       These are also excluded from imports, along with \code{.First.lib}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
      \item \code{fisher.test()} had a buglet: If arguments were
@@ -88,6 +88,9 @@
 
       \item The \code{quantile} method for \code{"ecdf"} objects now
       works and is documented.
+
+      \item \code{xtabs(~ .., ..., sparse=TRUE)} now also works together
+      with an \code{exclude = ..} specification.
     }
   }
 }
