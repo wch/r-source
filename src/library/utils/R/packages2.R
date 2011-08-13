@@ -383,9 +383,10 @@ install.packages <-
                      domain = NA)
             mfile <- file.path(tmpd, "Makefile")
             conn <- file(mfile, "wt")
-            cat("all: ", paste(paste(update[, 1L], ".ts", sep=""),
-                               collapse=" "),
-                "\n", sep = "", file = conn)
+            deps <- paste(paste(update[, 1L], ".ts", sep=""), collapse=" ")
+            deps <- strwrap(deps, width = 75, exdent = 2)
+            deps <- paste(deps, collapse=" \\\n")
+            cat("all: ", deps, "\n", sep = "", file = conn)
             nms <- rownames(available)
             aDL <- vector("list", length(nms))
             names(aDL) <- nms
@@ -407,6 +408,7 @@ install.packages <-
                     p <- deps
                 }
                 deps <- deps[deps %in% pkgs]
+                ## very unikely to be too long
                 deps <- if(length(deps))
                     paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
                 cat(paste(pkg, ".ts: ", deps, sep=""),
