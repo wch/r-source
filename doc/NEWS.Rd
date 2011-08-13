@@ -334,8 +334,9 @@
       \item \code{list.dirs()} gains a \code{recursive} argument.
 
       \item A \samp{Authors@R} field in a package \file{DESCRIPTION}
-      file can now be used to generate Author and Maintainer fields if
-      needed, and to auto-generate package citations.
+      file can now be used to generate \samp{Author} and
+      \samp{Maintainer} fields if needed, and to auto-generate package
+      citations.
 
       \item New utility \code{getElement()} for accessing both list
       components or slots.
@@ -345,7 +346,7 @@
   \subsection{GRAPHICS DEVICES}{
     \itemize{
       \item The \code{pdf()} device makes use of Flate compression: this
-      controlled by the new logical argument \code{compress}, and is
+      is controlled by the new logical argument \code{compress}, and is
       enabled by default.
 
       \item Devices \code{svg()}, \code{cairo_pdf()} and
@@ -670,6 +671,10 @@
 
       \item \code{untar2()} now works around checksums in \code{tar}
       files that use more than 6 digits for the checksum. (\PR{14654})
+
+      \item \code{install.packages()} with \code{Ncpus > 1} guards
+      against simultaneous installation of indirect dependences as well
+      as direct ones.
     }
   }
 

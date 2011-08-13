@@ -386,6 +386,10 @@ install.packages <-
             cat("all: ", paste(paste(update[, 1L], ".ts", sep=""),
                                collapse=" "),
                 "\n", sep = "", file = conn)
+            nms <- rownames(available)
+            aDL <- vector("list", length(nms))
+            names(aDL) <- nms
+            for (i in seq_along(nms)) aDL[[i]] <- .clean_up_dependencies(available[i, c("Depends", "Imports", "LinkingTo"), drop = FALSE])
             for(i in seq_len(nrow(update))) {
                 pkg <- update[i, 1L]
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
@@ -393,7 +397,15 @@ install.packages <-
                              getConfigureVars(update[i, 3L]),
                              update[i, 3L],
                              ">", paste(pkg, ".out", sep=""), "2>&1")
-                deps <- DL[[pkg]]
+                ## We need recursive dependencies, not just direct ones
+                p <- DL[[pkg]]
+                repeat {
+                    extra <- unlist(aDL[p[p %in% nms]])
+                    extra <- extra[extra != pkg]
+                    deps <- unique(c(p, extra))
+                    if (length(deps) <= length(p)) break
+                    p <- deps
+                }
                 deps <- deps[deps %in% pkgs]
                 deps <- if(length(deps))
                     paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
