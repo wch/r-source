@@ -19,6 +19,10 @@
 
       \item \code{untar2()} now works around checksums in \code{tar}
       files that use more than 6 digits for the checksum. (\PR{14654})
+
+      \item \code{install.packages()} with \code{Ncpus > 1} guards
+      against simultaneous installation of indirect dependences as well
+      as direct ones.
     }
   }
 
