@@ -633,9 +633,9 @@ it treats so-called `hyper-threaded' CPUs such as many Pentium 4s as two
 CPUs even though there is only one physical CPU.
 
 Hyper-threading has been re-introduced for Intel i3/i5/i7 CPUs and some
-Xeons: these will usually be reported as 4 or 8 or 12 CPUs and so R will
-be shown as using 25% or less.  You can see how many `CPU's are assumed
-by looking at the number of graphs of `CPU Usage History' on the
+Xeons: these will usually be reported as 4 or more CPUs and so R will be
+shown as using 25% or less.  You can see how many `CPU's are assumed by
+looking at the number of graphs of `CPU Usage History' on the
 `Performance' tab of the Windows Task manager.
 
 
@@ -1053,6 +1053,8 @@ handles internationalization slightly odd.
 * Help is not shown for some of the packages::  
 * How do I get static HTML pages?::  
 * How can I get a binary version of a package?::  
+* Package xxx is out of date for Windows::  
+* No binary packages appear to be available for my version of R::  
 @end menu
 
 
@@ -1296,7 +1298,7 @@ BUILD_HTML = NO
 and them all packages installed by that build of R will (by default) be
 installed with static HTML pages.
 
-@node How can I get a binary version of a package?,  , How do I get static HTML pages?, Packages
+@node How can I get a binary version of a package?, Package xxx is out of date for Windows, How do I get static HTML pages?, Packages
 @section How can I get a binary version of a package?
 
 Presumably one not available on CRAN, BioC or a similar repository.
@@ -1319,6 +1321,35 @@ In many cases installing packages from the sources is not at all
 difficult (especially if the package contains no compiled code), so
 please attempt that for yourself before requesting help from the busy
 volunteers.
+
+@node Package xxx is out of date for Windows, No binary packages appear to be available for my version of R, How can I get a binary version of a package?, Packages
+@section Package xxx is out of date for Windows
+
+Here are three possible reasons:
+
+You are simply impatient, and need to wait until the binary package has
+been built and propagated to the CRAN mirror you are using.  This
+normally (but not always) happens without 24 hours.
+
+The latest version of the package might not be available for the version
+of R you are using.  You can check on the package's HTML page on CRAN,
+and update your R if needed.
+
+Your R might be too old.  Binary packages for the 2.x series are built
+(if possible) whilst 2.(x+1) is current, e.g.@: once 2.15.0 is released,
+binary packages for 2.13.x will be frozen.  You can always try
+installing from the sources.
+
+@node No binary packages appear to be available for my version of R,  , Package xxx is out of date for Windows, Packages
+@section No binary packages appear to be available for my version of R
+
+How old is it?  The CRAN policy is to archive binary packages two years
+after the 2.x series is closed (so for example those for 2.9.y will be
+archived in October 2011).
+
+If you are using an R version that old we advise you to update your R,
+but you do also have the option of installing packages from their
+source.
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
