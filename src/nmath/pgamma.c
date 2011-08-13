@@ -240,7 +240,7 @@ double logspace_add (double logx, double logy)
  */
 double logspace_sub (double logx, double logy)
 {
-    return logx + log1p (-exp (logy - logx));
+    return logx + R_Log1_Exp(logy - logx);
 }
 
 
