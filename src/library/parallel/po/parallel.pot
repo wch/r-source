@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-09 22:16+0100\n"
+"POT-Creation-Date: 2011-08-13 14:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,61 +17,61 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fork.c:162 fork.c:165
+#: fork.c:163 fork.c:166
 msgid "unable to create a pipe"
 msgstr ""
 
-#: fork.c:174
+#: fork.c:175
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr ""
 
-#: fork.c:210
+#: fork.c:211
 msgid "memory allocation error"
 msgstr ""
 
-#: fork.c:248
+#: fork.c:249
 msgid "only children can send data to the master process"
 msgstr ""
 
-#: fork.c:250
+#: fork.c:251
 msgid "there is no pipe to the master process"
 msgstr ""
 
-#: fork.c:252
+#: fork.c:253
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 
-#: fork.c:261 fork.c:268
+#: fork.c:262 fork.c:269
 msgid "write error, closing pipe to the master"
 msgstr ""
 
-#: fork.c:281
+#: fork.c:282
 msgid "only the master process can send data to a child process"
 msgstr ""
 
-#: fork.c:288
+#: fork.c:289
 #, c-format
 msgid "child %d does not exist"
 msgstr ""
 
-#: fork.c:294
+#: fork.c:295
 msgid "write error"
 msgstr ""
 
-#: fork.c:374 fork.c:496
+#: fork.c:375 fork.c:497
 #, c-format
 msgid "error '%s' in select"
 msgstr ""
 
-#: fork.c:582
+#: fork.c:583
 msgid "mckill failed"
 msgstr ""
 
-#: fork.c:592
+#: fork.c:593
 msgid "mcexit can only be used in a child process"
 msgstr ""
 
-#: fork.c:611
+#: fork.c:612
 msgid "mcexit failed"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-09 22:17\n"
+"POT-Creation-Date: 2011-08-13 14:13\n"
 "PO-Revision-Date: 2011-03-24 11:04+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -789,6 +789,9 @@ msgstr "installiert nach"
 
 msgid "generating debug symbols (dSYM)"
 msgstr "erzeuge Debug-Symbole (dSYM)"
+
+msgid "package %s successfully unpacked and MD5 sums checked"
+msgstr ""
 
 #, fuzzy
 msgid ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-09 22:17\n"
+"POT-Creation-Date: 2011-08-13 14:13\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -744,6 +744,9 @@ msgid "installing to"
 msgstr ""
 
 msgid "generating debug symbols (dSYM)"
+msgstr ""
+
+msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
 msgid ""

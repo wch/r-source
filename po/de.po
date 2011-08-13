@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-09 22:15+0100\n"
+"POT-Creation-Date: 2011-08-13 14:12+0100\n"
 "PO-Revision-Date: 2011-03-23 09:35+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -197,9 +197,9 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/platform.c:2418 src/main/platform.c:2421 src/main/platform.c:2490
 #: src/main/platform.c:2498 src/main/platform.c:2534 src/main/platform.c:2584
 #: src/main/plot.c:3104 src/main/plot.c:4241 src/main/plot.c:4245
-#: src/main/plot.c:4248 src/main/plot3d.c:2434 src/main/plot3d.c:2438
-#: src/main/plot3d.c:2443 src/main/plot3d.c:2447 src/main/plot3d.c:2451
-#: src/main/plot3d.c:2455 src/main/print.c:236 src/main/print.c:242
+#: src/main/plot.c:4248 src/main/plot3d.c:2435 src/main/plot3d.c:2439
+#: src/main/plot3d.c:2444 src/main/plot3d.c:2448 src/main/plot3d.c:2452
+#: src/main/plot3d.c:2456 src/main/print.c:236 src/main/print.c:242
 #: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
 #: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
 #: src/main/saveload.c:1937 src/main/saveload.c:1940 src/main/saveload.c:1943
@@ -290,8 +290,8 @@ msgstr "ungültiger Zeitstempel"
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
-#: src/main/plot3d.c:1381 src/main/plot3d.c:2512 src/main/plot3d.c:2516
-#: src/main/plot3d.c:2518 src/main/seq.c:167 src/main/seq.c:265
+#: src/main/plot3d.c:1382 src/main/plot3d.c:2513 src/main/plot3d.c:2517
+#: src/main/plot3d.c:2519 src/main/seq.c:167 src/main/seq.c:265
 #: src/main/seq.c:268 src/main/sort.c:871 src/main/sort.c:971
 #: src/main/source.c:215 src/main/summary.c:1028 src/main/sysutils.c:248
 #: src/main/util.c:955 src/main/util.c:960 src/main/util.c:967
@@ -1388,7 +1388,7 @@ msgid "cannot write to this connection"
 msgstr "kann auf diese Verbindung nicht schreiben"
 
 #: src/main/builtin.c:513 src/main/builtin.c:543 src/main/platform.c:356
-#: src/main/platform.c:359 src/main/plot3d.c:2526 src/main/plot3d.c:2530
+#: src/main/platform.c:359 src/main/plot3d.c:2527 src/main/plot3d.c:2531
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "ungültige '%s' Spezifikation"
@@ -2561,7 +2561,7 @@ msgstr "R wurde ohne Unterstützung von Memoryprofiling kompiliert"
 #: src/main/plot.c:2238 src/main/plot.c:2519 src/main/plot.c:2697
 #: src/main/plot.c:2916 src/main/plot.c:3460 src/main/plot.c:3588
 #: src/main/plot.c:3667 src/main/plot.c:3836 src/main/plot.c:4113
-#: src/main/plot3d.c:1343 src/main/sprintf.c:211 src/main/sprintf.c:243
+#: src/main/plot3d.c:1344 src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr "zu wenig Argumente"
 
@@ -5701,90 +5701,91 @@ msgid "unable to allocate memory (in do_xspline)"
 msgstr "kann keinen Speicher zuteilen (in do_xspline)"
 
 #: src/main/plot3d.c:713 src/main/plot3d.c:998
-msgid "contour(): circular/long seglist -- bug.report()!"
+#, fuzzy, c-format
+msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour(): zirkuläre/lange Segmentliste -- bug.report()"
 
-#: src/main/plot3d.c:793 src/main/plot3d.c:1443
+#: src/main/plot3d.c:793 src/main/plot3d.c:1444
 msgid "all z values are equal"
 msgstr "alle z Werte sind gleich"
 
-#: src/main/plot3d.c:795 src/main/plot3d.c:1445
+#: src/main/plot3d.c:795 src/main/plot3d.c:1446
 msgid "all z values are NA"
 msgstr "alle z Werte sind NA"
 
-#: src/main/plot3d.c:1407 src/main/plot3d.c:1663
+#: src/main/plot3d.c:1408 src/main/plot3d.c:1664
 msgid "insufficient 'x' or 'y' values"
 msgstr "zu wenig 'x' oder 'y' Werte"
 
-#: src/main/plot3d.c:1410 src/main/plot3d.c:1666
+#: src/main/plot3d.c:1411 src/main/plot3d.c:1667
 msgid "dimension mismatch"
 msgstr "Dimensionen passen nicht"
 
-#: src/main/plot3d.c:1413 src/main/plot3d.c:1669
+#: src/main/plot3d.c:1414 src/main/plot3d.c:1670
 msgid "no contour values"
 msgstr "keine Konturwerte"
 
-#: src/main/plot3d.c:1417
+#: src/main/plot3d.c:1418
 msgid "missing 'x' values"
 msgstr "fehlende 'x' Werte"
 
-#: src/main/plot3d.c:1419
+#: src/main/plot3d.c:1420
 msgid "increasing 'x' values expected"
 msgstr "'x' Werte aufsteigend erwartet"
 
-#: src/main/plot3d.c:1424
+#: src/main/plot3d.c:1425
 msgid "missing 'y' values"
 msgstr "fehlende 'y' Werte"
 
-#: src/main/plot3d.c:1426
+#: src/main/plot3d.c:1427
 msgid "increasing 'y' values expected"
 msgstr "'y' Werte aufsteigend erwartet"
 
-#: src/main/plot3d.c:1431
+#: src/main/plot3d.c:1432
 msgid "invalid NA contour values"
 msgstr "ungültige NA Werte für Kontur"
 
-#: src/main/plot3d.c:1733
+#: src/main/plot3d.c:1734
 msgid "invalid x / y values or limits"
 msgstr "ungültige x / y Werte oder Grenzen"
 
-#: src/main/plot3d.c:1735
+#: src/main/plot3d.c:1736
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "ungültige Konturwerte: müssen streng monoton ansteigen"
 
-#: src/main/plot3d.c:2397 src/main/plot3d.c:2410
+#: src/main/plot3d.c:2398 src/main/plot3d.c:2411
 msgid "Axis orientation not calculated"
 msgstr "Achsenorientierung nicht berechnet"
 
-#: src/main/plot3d.c:2429
+#: src/main/plot3d.c:2430
 msgid "too few parameters"
 msgstr "zu wenig Parameter "
 
-#: src/main/plot3d.c:2461
+#: src/main/plot3d.c:2462
 msgid "invalid 'x' limits"
 msgstr "ungültige Grenzen für 'x'"
 
-#: src/main/plot3d.c:2463
+#: src/main/plot3d.c:2464
 msgid "invalid 'y' limits"
 msgstr "ungültige Grenzen für 'y'"
 
-#: src/main/plot3d.c:2465
+#: src/main/plot3d.c:2466
 msgid "invalid 'z' limits"
 msgstr "ungültige Grenzen für 'z'"
 
-#: src/main/plot3d.c:2486
+#: src/main/plot3d.c:2487
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2488
+#: src/main/plot3d.c:2489
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2491
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2510
+#: src/main/plot3d.c:2511
 msgid "invalid viewing parameters"
 msgstr "ungültige Parameter für Ansicht"
 
