@@ -412,7 +412,7 @@ install.packages <-
                 deps <- if(length(deps))
                     paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
                 cat(paste(pkg, ".ts: ", deps, sep=""),
-                    paste("\t@echo installing package", pkg),
+                    paste("\t@echo begin installing package", sQuote(pkg)),
                     paste("\t@", cmd, " && touch ", pkg, ".ts", sep=""),
                     paste("\t@cat ", pkg, ".out", sep=""),
                     "", sep="\n", file = conn)
@@ -447,7 +447,7 @@ install.packages <-
                                      sQuote(update[i, 1L])), domain = NA)
             }
         }
-        if(!is.null(tmpd) && is.null(destdir))
+        if(nonlocalcran && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                sQuote(normalizePath(tmpd, mustWork = FALSE))),
                 "\n", sep = "")
