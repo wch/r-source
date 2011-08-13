@@ -70,6 +70,8 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
         ## loadNamespace(.) is very quick, once it *is* loaded:
 	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
             stop("xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed")
+        if(length(i.ex <- unique(unlist(lapply(by,function(f) which(is.na(f)))))))
+            by <- lapply(by, `[`, -i.ex)
 	rows <- by[[1L]]
 	cols <- by[[2L]]
 	rl <- levels(rows)

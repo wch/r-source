@@ -102,10 +102,16 @@ cbind(npk, foo)
 ## failed in R < 2.10.0
 
 
-if(require("Matrix")) {
+if(suppressMessages(require("Matrix"))) {
   print(cS. <- contr.SAS(5, sparse = TRUE))
   stopifnot(all(contr.SAS(5) == cS.),
 	    all(contr.helmert(5, sparse = TRUE) == contr.helmert(5)))
+
+  x1 <- x2 <- c('a','b','a','b','c')
+  x3 <- x2; x3[4:5] <- x2[5:4]
+  print(xtabs(~ x1 + x2, sparse= TRUE, exclude = 'c'))
+  print(xtabs(~ x1 + x3, sparse= TRUE, exclude = 'c'))
+  ## failed in R <= 2.13.1
 }
 
 ## regression tests for dimnames (broken on 2009-07-31)
