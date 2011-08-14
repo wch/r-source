@@ -96,7 +96,7 @@ SEXP ps_priority(SEXP spid, SEXP svalue)
     int *pid, *res, val;
     val = asInteger(svalue);
     PROTECT(sspid = coerceVector(spid, INTSXP));
-    unsigned int ns = LENGTH(spid);
+    unsigned int ns = LENGTH(sspid);
     PROTECT(sres = allocVector(INTSXP, ns));
     pid = INTEGER(sspid);
     res = INTEGER(sres);
