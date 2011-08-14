@@ -823,8 +823,10 @@ shortcuts.  If you are using the 64-bit build, replace @samp{i386} by
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
 
-For most users (especially beginners) we would recommend using the
-32-bit build.
+Obviously, only relevant if you are using 64-bit Windows.
+
+For most users we would recommend using the `native' build, that is the
+32-bit version on 32-bit Windows and the 64-bit version of 64-bit Windows.
 
 The advantage of a native 64-bit application is that it gets a 64-bit
 address space and hence can address far more than 4GB (how much depends
@@ -846,12 +848,13 @@ packages needed are available in 64-bit builds (and if CRAN binary
 packages are not that is some indication that installing them from
 sources is problematic).  At the time of writing the most commonly-used
 CRAN packages without 64-bit versions were @code{BRugs} and
-@code{rggobi}. The considerations can be more complex: for example
+@code{rggobi}.  The considerations can be more complex: for example
 32/64-bit @code{RODBC} need 32/64-bit ODBC drivers respectively, and
 where both exist they may not be able to be installed together.  An
 extreme example is the Microsoft Access/Excel ODBC drivers: if you have
 installed 64-bit Microsoft Office you can only install the 64-bit
-drivers and so need to use 64-bit @code{RODBC} and hence R.
+drivers and so need to use 64-bit @code{RODBC} and hence R.  (And
+similarly for 32-bit Microsoft Office.)
 
 @node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
@@ -1326,11 +1329,14 @@ Here are three possible reasons:
 
 You are simply impatient, and need to wait until the binary package has
 been built and propagated to the CRAN mirror you are using.  This
-normally (but not always) happens without 24 hours.
+normally (but not always) happens within 24 hours.  Sometimes mirrors
+do get behind (especially unofficial ones), so you could try another
+mirror.  (Mirror statistics are linked near the top of the CRAN mirror
+page at @uref{http://cran.r-project.org/mirrors.html}.)
 
-The latest version of the package might not be available for the version
-of R you are using.  You can check on the package's HTML page on CRAN,
-and update your R if needed.
+The latest version of the package might require a later version of R
+than the one you are using.  You can check on the package's HTML page on
+CRAN, and update your R if needed.
 
 Your R might be too old.  Binary packages for the 2.x series are built
 (if possible) whilst 2.(x+1) is current, e.g.@: once 2.15.0 is released,
