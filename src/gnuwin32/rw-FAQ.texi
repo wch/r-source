@@ -867,7 +867,7 @@ For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the
 file association for @file{.RData} files, which will use the last
 installation for which this option is selected, and if that was for an
-installation of both, will use 32-bit R.  To change the association the
+installation of both, will use 64-bit R.  To change the association the
 safest way is to edit the Registry entry
 @samp{HKEY_CLASSES_ROOT\RWorkspace\shell\open\command}
 and replace @samp{i386} by @samp{x64} or @emph{vice versa}.

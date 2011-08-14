@@ -67,20 +67,24 @@
 
   \subsection{INSTALLATION}{
     \itemize{
+      \item Compilation of C and Fortran code now uses the optimization
+      flag \option{-mtune=core2}: this will improve performance a few
+      percent on recent CPUs at the expense of those which are several
+      years old.  Its effect is particularly evident on 64-bit builds.
+
+      This can be overridden when building from the sources: see the
+      \samp{EOPTS} macro defined in file \file{MkRules.dist}.
+
+      \item Where both 32- and 64-bit versions of R are installed, the
+      file association for @file{.RData} files defaults to 64-bit R (it
+      defaulted to 32-bit in R 2.12.x and 2.13.x).
+
       \item There is support for \sQuote{multilib} toolchains which use
       options \option{--m32} or \option{--m64} to select the
       architecture; set the appropriate macros in \file{MkRules.local}.
 
       It is the intention to move to such a toolchain when they become
       mature enough.
-
-      \item Compilation of C and Fortran code now uses the optimization
-      flag \option{-mtune=core2}: this will improve performance a few percent
-      on recent CPUs at the expense of those which are several years
-      old.  Its effect is particularly evident on 64-bit builds.
-
-      This can be overridden when building from the sources: see the
-      \samp{EOPTS} macro defined in file \file{MkRules.dist}.
     }
   }
 
