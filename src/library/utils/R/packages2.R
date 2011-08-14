@@ -338,8 +338,8 @@ install.packages <-
     }
 
     tmpd <- destdir
-    nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
-    if(is.null(destdir) && nonlocalcran) {
+    nonlocalrepos <- length(grep("^file:", contriburl)) < length(contriburl)
+    if(is.null(destdir) && nonlocalrepos) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
             stop(gettextf("unable to create temporary directory %s",
@@ -447,7 +447,7 @@ install.packages <-
                                      sQuote(update[i, 1L])), domain = NA)
             }
         }
-        if(nonlocalcran && !is.null(tmpd) && is.null(destdir))
+        if(nonlocalrepos && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                sQuote(normalizePath(tmpd, mustWork = FALSE))),
                 "\n", sep = "")
