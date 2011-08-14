@@ -27,7 +27,9 @@ urlcolor=Blue,%
 pdfstartview={XYZ null null 1},%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
-pdfauthor={Friedrich Leisch and R-core}%
+pdfauthor={Friedrich Leisch and R-core},%
+pdftitle={Sweave User Manual},%
+pdfsubject={R vignette documentation system}%
 }
 
 \sloppy

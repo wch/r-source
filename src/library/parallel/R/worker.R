@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## Extracted from snow 0.3-6.
+## Derived from snow 0.3-6 by Luke Tierney
 
 slaveLoop <- function(master)
 {

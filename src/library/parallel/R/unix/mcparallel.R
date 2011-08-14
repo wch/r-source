@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+### Derived from multicore version 0.1-6 by Simon Urbanek
+
 mcparallel <- function(expr, name, mc.set.seed = FALSE, silent = FALSE)
 {
     f <- mcfork()

@@ -14,7 +14,8 @@ urlcolor=Blue,%
 pdfstartview={XYZ null null 1},% 100%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
-pdfauthor={R Core}%
+pdfauthor={R Core},%
+pdftitle={Package `parallel'}% Could also have pdfusetitle
 }
 
 %\VignetteIndexEntry{Package 'parallel'}
@@ -167,6 +168,11 @@ now rather old Pentium 4's it will simply over-estimate by a factor of
 two.  Note that we said `available': in most cases when virtual
 machines are in use what is reported is the maximum number of virtual
 CPUs which can be used simultaneously by that VM.
+
+On Solaris, we choose (unlike \pkg{multicore}) to give the number of
+physical CPUs.  Modern Sparc CPUS have 8-way `Chip Multi-Threading':
+this enables the CPU to switch rapidly between threads if there are
+cache misses but does not run threads in parallel.
 
 \section{Analogues of apply functions}
 
