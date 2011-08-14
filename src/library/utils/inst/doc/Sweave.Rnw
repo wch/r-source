@@ -14,6 +14,23 @@
 \usepackage{listings}
 
 \lstset{frame=trbl,basicstyle=\small\tt}
+\usepackage{hyperref}
+\usepackage{color}
+\definecolor{Blue}{rgb}{0,0,0.8}
+\hypersetup{%
+colorlinks,%
+plainpages=true,%
+linkcolor=black,%
+citecolor=black,%
+urlcolor=Blue,%
+%pdfstartview=FitH,% or Fit
+pdfstartview={XYZ null null 1},%
+pdfview={XYZ null null null},%
+pdfpagemode=UseNone,% for no outline
+pdfauthor={Friedrich Leisch and R-core},%
+pdftitle={Sweave User Manual},%
+pdfsubject={R vignette documentation system}%
+}
 
 \sloppy
 
@@ -261,7 +278,7 @@ document should arrange to create this before use.
 \subsection{Using multiple input files}
 
 \LaTeX{} files can include others via \verb|\input{}| commands.  These
-can also be used in Sweave files, but the included file will not
+can also be used in Sweave files, but the included files will be
 included by \LaTeX{} and are not processed by Sweave.  The equivalent
 if you want the included files to be processed is the
 \verb|\SweaveInput{}| command.
@@ -611,7 +628,7 @@ argument.  It will be passed additional arguments from a
 options and pass them on the setup function: one such may be the
 encoding used for the text to be processed.
 
-\bibliographystyle{plainnat}
+\bibliographystyle{jss}
 \bibliography{Sweave}
 
 \newpage
