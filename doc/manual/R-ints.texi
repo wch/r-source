@@ -3685,6 +3685,10 @@ Default: false
 @item _R_CHECK_CLEAN_VIGN_TEST_
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
+@item _R_CHECK_REPLACING_IMPORTS_
+Should warnings about replacing imports be reported?  These mainly come
+from auto-generated @file{NAMESPACE} files in other packages.
+Default: false
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

@@ -2220,6 +2220,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                      lines <- grep("Warning: locked binding of .* will not be changed",
                                    lines, invert = TRUE, value = TRUE)
 
+
+                ## Warnings about replacing imports are almost always
+                ## due to auto-generated namespaces
+                check_imports_flag <-
+                    Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "FALSE")
+                if (!config_val_to_logical(check_imports_flag))
+                    lines <- grep("Warning: replacing previous import", lines,
+                                  fixed = TRUE, invert = TRUE, value = TRUE)
+
                 if (length(lines)) {
                     warnLog("Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
