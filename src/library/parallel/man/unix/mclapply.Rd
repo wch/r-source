@@ -82,6 +82,11 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
 \value{
   A list of the same length as \code{X} and named by \code{X}.
 }
+\author{
+  Simon Urbanek and R Core.
+
+  Derived from the \pkg{multicore} package.
+}
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}}
   
@@ -108,5 +113,4 @@ cd4.boot <- do.call(c, res)
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
 }}
-\author{Simon Urbanek}
 \keyword{interface}

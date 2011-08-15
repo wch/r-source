@@ -35,6 +35,9 @@ detectCores(all.tests = FALSE)
   represents the number of CPUs available (or potentially available) to
   that particular VM.
 }
+\author{
+  Simon Urbanek and Brian Ripley
+}
 \examples{
 detectCores()
 }

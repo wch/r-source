@@ -127,6 +127,11 @@ parCapply(cl, x, FUN, ...)
   One exception: \code{parLapply} has argument \code{X}
   not \code{x} for consistency with \code{\link{lapply}}.
 }
+\author{
+  Luke Tierney and R Core.
+
+  Derived from the \pkg{snow} package.
+}
 \examples{\donttest{ ## access to ports might be denied
 cl <- makeCluster(getOption("mc.cores", 2))
 

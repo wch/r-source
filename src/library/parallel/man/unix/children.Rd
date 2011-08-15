@@ -96,6 +96,11 @@ mckill(process, signal = 2L)
   
   \code{mckill} returns \code{TRUE}.
 }
+\author{
+  Simon Urbanek and R Core.
+
+  Derived from the \pkg{multicore} package.
+}
 \section{Warning}{
   This is a very low-level API for expert use only.
 }
@@ -107,5 +112,4 @@ p  <- mcparallel(scan(n = 1, quiet = TRUE))
 sendChildStdin(p, "17.4\n")
 mccollect(p)[[1]]
 }}
-\author{Simon Urbanek}
 \keyword{interface}

@@ -73,6 +73,9 @@ mc.reset.stream()
   An object-oriented random-number package with many long streams
   and substreams.  \emph{Operations Research} \bold{50} 1073--5.
 }
+\author{
+  Brian Ripley
+}
 \seealso{
   \code{\link{RNG}} for \R's built-in random number generators.
 }

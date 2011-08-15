@@ -38,10 +38,13 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         }
     }
     on.exit(cleanup())
+    ## Follow lapply
+    if(!is.vector(X) || is.object(X)) X <- as.list(X)
+
     if (!mc.preschedule) {              # sequential (non-scheduled)
         FUN <- match.fun(FUN)
         if (length(X) <= cores) { # we can use one-shot parallel
-            jobs <- lapply(seq(X),
+            jobs <- lapply(seq_along(X),
                            function(i) mcparallel(FUN(X[[i]], ...),
                                                   name = names(X)[i],
                                                   mc.set.seed = mc.set.seed,
@@ -49,11 +52,8 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             res <- mccollect(jobs)
             if (length(res) == length(X)) names(res) <- names(X)
             has.errors <- sum(sapply(res), inherits, "try-error")
-            if (has.errors)
-                warning(gettextf("%d of all function calls resulted in an error", has.errors), domain = NA)
-            return(res)
         } else { # more complicated, we have to wait for jobs selectively
-            sx <- seq(X)
+            sx <- seq_along(X)
             res <- vector("list", length(sx))
             names(res) <- names(X)
             ent <- rep(FALSE, length(X)) # values entered (scheduled)
@@ -96,11 +96,14 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                         }
                     }
             }
-            if (has.errors)
-                warning(gettextf("%d of all function calls resulted in an error", has.errors), domain = NA)
-            return(res)
         }
+        if (has.errors)
+            warning(gettextf("%d function calls resulted in an error",
+                             has.errors), domain = NA)
+        return(res)
     }
+
+    ## mc.preschedule = TRUE from here on.
     if (length(X) < cores) cores <- length(X)
     if (cores < 2) return(lapply(X = X, FUN = FUN, ...))
     sindex <- lapply(seq_len(cores),

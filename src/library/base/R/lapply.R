@@ -21,6 +21,8 @@ lapply <- function (X, FUN, ...)
     ## However, it would be OK to have attributes which is.vector
     ## disallows.
     if(!is.vector(X) || is.object(X)) X <- as.list(X)
+    ## Note ... is not passed down.  Rather the internal code
+    ## evaluates FUN(X[i], ...) in the frame of this function
     .Internal(lapply(X, FUN))
 }
 

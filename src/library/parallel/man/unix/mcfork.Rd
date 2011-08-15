@@ -71,6 +71,11 @@ mcexit(exit.code = 0L, send = NULL)
 
   \code{mcexit} never returns.
 }
+\author{
+  Simon Urbanek and R Core.
+
+  Derived from the \pkg{multicore} package.
+}
 \section{Warning}{
   This is a very low-level API for expert use only. 
 }
@@ -88,5 +93,4 @@ if (inherits(p, "masterProcess")) {
 cat("I'm the master\n")
 unserialize(readChildren(1.5))
 }}
-\author{Simon Urbanek}
 \keyword{interface}

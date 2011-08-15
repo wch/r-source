@@ -64,7 +64,12 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   data.  Therefore it is the responsibility of the user to check the
   length of the result to make sure it is of the correct
   size.  \code{pvec} raises a warning if that is the case since it does
-  not know whether such outcome is intentional or not.
+  not know whether such an outcome is intentional or not.
+}
+\author{
+  Simon Urbanek and R Core.
+  
+  Derived from the \pkg{multicore} package.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{mclapply}}

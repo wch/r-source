@@ -1,6 +1,6 @@
 % File src/library/parallel/man/makePSOCKcluster.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2011 R Core Development Team
+% Copyright 2003-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{makeCluster}
@@ -99,7 +99,11 @@ stopCluster(cl)
 \value{
   An object of class \code{c("SOCKcluster", "cluster")}.
 }
+\author{
+  Luke Tierney and R Core.
 
+  Derived from the \pkg{snow} package.
+}
 \seealso{
   \code{\link{stopCluster}}.
 }

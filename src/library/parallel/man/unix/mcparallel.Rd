@@ -100,6 +100,11 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   the results of simulations will be reproducible provided the same
   tasks are given to the first, second, \ldots{} forked process.
 }
+\author{
+  Simon Urbanek and R Core.
+  
+  Derived from the \pkg{multicore} package.
+}
 \seealso{
   \code{\link{sendMaster}}, \code{\link{pvec}}, \code{\link{mclapply}}
 }
@@ -118,5 +123,4 @@ mccollect(p, wait=FALSE)     # there is no such job
 jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name = x))
 mccollect(jobs)
 }
-\author{Simon Urbanek}
 \keyword{interface}

@@ -28,6 +28,8 @@
   For a complete list of functions, use \code{library(help="parallel")}.
 }
 \author{
+  Brian Ripley, Luke Tierney and Simon Urbanek
+
   Maintainer: R Core Team \email{R-core@r-project.org}
 }
 \seealso{

@@ -121,8 +121,13 @@ processes.  They can be created in one of three ways:
   using \R{} packages \pkg{rpvm} and \pkg{Rmpi} respectively.
   Communication overheads can dominate computation times in this
   approach, so it is most often used on tightly-coupled clusters of
-  computers with high-speed interconnects.  It will not be considered
-  further in this package.
+  computers with high-speed interconnects.  
+  
+  Other CRAN packages following this approach are \pkg{GridR} (using
+  Condor or Globus) and \pkg{Rsge} (using SGE, currently called
+  `Oracle Grid Engine').
+
+  It will not be considered further in this vignette.
 \end{enumerate}
 
 The landscape of parallel computing has changed with the advent of
@@ -170,7 +175,7 @@ machines are in use what is reported is the maximum number of virtual
 CPUs which can be used simultaneously by that VM.
 
 On Solaris, we choose (unlike \pkg{multicore}) to give the number of
-physical CPUs.  Modern Sparc CPUS have 8-way `Chip Multi-Threading':
+physical CPUs.  Modern Sparc CPUs have 8-way `Chip Multi-Threading':
 this enables the CPU to switch rapidly between threads if there are
 cache misses but does not run threads in parallel.
 
@@ -222,8 +227,8 @@ the environment of the current session).
 
 These functions would normally be called \emph{via} \code{makeCluster}.
 
-Both \file{stdout} and \file{stdout} of the workers are redirected,
-by default being discarded but they can be logged using the
+Both \file{stdout} and \file{stderr} of the workers are redirected, by
+default being discarded but they can be logged using the
 \code{outfile} option.
 
 \section{Forking}
@@ -294,8 +299,8 @@ fixed number of steps.  The generator is the combination of two:
 The `seed' then consists of $(x_n, x_{n-1}, x_{n-2}, y_n, y_{n-1},
 y_{n-2})$, and the recursion for each of $x_n$ and $y_n$ can have
 pre-computed coefficients for $k$ steps ahead.  For $k = 2^{127}$, the
-seed is advanced by $k$ steps by \R{} function
-\code{nextRNGStream(.Random.seed)}.
+seed is advanced by $k$ steps by \R{} call
+\code{.Random.seed <- nextRNGStream(.Random.seed)}.
 
 The \citet{lecuyer.1999} generator is available in \R{} as from
 version 2.14.0 \emph{via} \code{RNGkind("L'Ecuyer-CMRG")}.  Thus using
