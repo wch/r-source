@@ -19,7 +19,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       key.xpd = TRUE,
       xlim = NULL, ylim = NULL, flip.labels = NULL,
       draw.segments = FALSE,
-      col.segments = 1:n.seg, col.stars = NA,
+      col.segments = 1:n.seg, col.stars = NA, col.lines = NA,
       axes = FALSE, frame.plot = axes,
       main = NULL, sub = NULL, xlab = "", ylab = "",
       cex = 0.8, lwd = 0.25, lty = par("lty"), xpd = FALSE,
@@ -72,6 +72,9 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
     (variables).  Ignored if \code{draw.segments = FALSE}.}
   \item{col.stars}{color vector (integer or character, see
     \code{\link{par}}), each specifying a color for one of the stars
+    (cases).  Ignored if \code{draw.segments = TRUE}.}
+  \item{col.lines}{color vector (integer or character, see
+    \code{\link{par}}), each specifying a color for one of the lines
     (cases).  Ignored if \code{draw.segments = TRUE}.}
   \item{axes}{logical flag: if \code{TRUE} axes are added to the plot.}
   \item{frame.plot}{logical flag: if \code{TRUE}, the plot region is framed.}
@@ -162,6 +165,9 @@ stars(USJudge, draw.segments = TRUE, scale = FALSE, key.loc = c(13,1.5))
 ## 'Spider':
 stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
       col.stars=1:10, key.loc = c(0,0), main="US Judges rated")
+## Same as above, but with colored lines instead of filled polygons.
+stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
+      col.lines=1:10, key.loc = c(0,0), main="US Judges rated")
 ## 'Radar-Segments'
 stars(USJudgeRatings[1:10,], locations = 0:1, scale=FALSE,
       draw.segments = TRUE, col.segments=0, col.stars=1:10,key.loc= 0:1,

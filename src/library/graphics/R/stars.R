@@ -25,7 +25,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
          key.loc = NULL, key.labels = dimnames(x)[[2L]], key.xpd = TRUE,
          xlim = NULL, ylim = NULL, flip.labels = NULL,
          draw.segments = FALSE, col.segments = 1L:n.seg,
-         col.stars = NA,
+         col.stars = NA, col.lines = NA,
          axes = FALSE, frame.plot = axes,
          main = NULL, sub = NULL, xlab = "", ylab = "",
          cex = 0.8, lwd = 0.25, lty = par("lty"), xpd = FALSE,
@@ -135,6 +135,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     else { # Draw stars instead
 	for (i in 1L:n.loc) {
 	    polygon(s.x[i,], s.y[i,], lwd=lwd, lty=lty, col = col.stars[i])
+	    polygon(s.x[i, ], s.y[i, ], lwd = lwd, lty = lty,
+			border = col.lines[i], col = col.stars[i])
 	    if (radius)
 		segments(rep.int(xloc[i],n.seg),
 			 rep.int(yloc[i],n.seg),

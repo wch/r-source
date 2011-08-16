@@ -340,6 +340,9 @@
 
       \item New utility \code{getElement()} for accessing both list
       components or slots.
+
+      \item \code{stars()} gains a \code{col.lines} argument, thanks to
+      Dustin Sallings. (Wish of \PR{14657}.)
     }
   }
 
