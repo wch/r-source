@@ -2156,7 +2156,7 @@ Optionally, a modifier, for example to indicate that Austria is to be
 considered pre- or post-Euro.  The modifier is also used to indicate the
 script (@code{@@latin}, @code{@@cyrillic}, @code{@@iqtelif}) or language
 dialect (e.g.@: @code{saaho}, a dialect of Afar, and @code{bokmal} and
-@code{nynorsk}, dialects of Norwegian regarded by some OSes are separate
+@code{nynorsk}, dialects of Norwegian regarded by some OSes as separate
 languages, @code{no} and @code{nn}).
 @end itemize
 
