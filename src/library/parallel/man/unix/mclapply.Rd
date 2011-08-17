@@ -17,7 +17,7 @@
 \usage{
 mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
          mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
-         mc.cleanup = TRUE)
+         mc.cleanup = TRUE, mc.allow.recursive = TRUE)
 }
 \arguments{
   \item{X}{a vector (atomic or list) or an expressions vector.  Other
@@ -48,6 +48,8 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     collected, but not forcefully terminated.  As a special case this
     argument can be set to the number of the signal that should be used
     to kill the children instead of \code{SIGTERM}.}
+  \item{mc.allow.recursive}{Unless true, calling \code{mclapply} in a
+    child process will use the child and not fork again.}
 }
 \details{
   \code{mclapply} is a parallelized version of \code{lapply}.  By

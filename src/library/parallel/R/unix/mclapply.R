@@ -18,10 +18,13 @@
 
 mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                      mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
-                     mc.cleanup = TRUE)
+                     mc.cleanup = TRUE, mc.allow.recursive = TRUE)
 {
     env <- parent.frame()
     cores <- as.integer(mc.cores)
+    if (isChild() && !isTRUE(mc.allow.recursive))
+        return(lapply(X = X, FUN = FUN, ...))
+
     jobs <- list()
     cleanup <- function() {
         ## kill children if cleanup is requested
@@ -105,7 +108,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
 
     ## mc.preschedule = TRUE from here on.
     if (length(X) < cores) cores <- length(X)
-    if (cores < 2) return(lapply(X = X, FUN = FUN, ...))
+    if (cores < 2L) return(lapply(X = X, FUN = FUN, ...))
     sindex <- lapply(seq_len(cores),
                      function(i) seq(i, length(X), by = cores))
     schedule <- lapply(seq_len(cores),
