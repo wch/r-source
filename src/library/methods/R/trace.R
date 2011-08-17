@@ -79,9 +79,10 @@
         if(!is(def, "refMethodDef")) {
             thisName <- substitute(what)
             stop(gettextf(
-             "\"%s\" is not a method for reference class \"%s\"",
-             as.character(if(is.symbol(thisName)) thisName else what),
-             class(where)), domain = NA)
+             "\"%s\" is not a method for reference class %s",
+                          as.character(if(is.symbol(thisName)) thisName else what),
+                          dQuote(class(where))),
+                 domain = NA)
         }
         what <- def@name
         whereF <- .where
@@ -328,7 +329,9 @@
             def <- Recall(def, tracer, exit, at, print, FALSE)
         def2 <- utils::edit(def, editor = editor, file = file)
         if(!is.function(def2))
-            stop(gettextf("the editing in trace() can only change the body of the function; got an object of class \"%s\"", class(def2)), domain = NA)
+            stop(gettextf("the editing in trace() can only change the body of the function; got an object of class %s",
+                          dQuote(class(def2))),
+                 domain = NA)
         if(!identical(args(def), args(def2)))
             stop("the editing in trace() can only change the body of the function, not the arguments or defaults")
         fBody <- body(def2)
@@ -665,7 +668,9 @@ evalSource <- function(source, package = "", lock = TRUE, cache = FALSE) {
     else if(is(source, "connection"))
         sys.source(source, envir = env)
     else if(!is(source, "environment"))
-        stop(gettextf("Invalid source argument: expected file names(s) or connection, got an object of class \"%s\"", class(source)[[1]]), domain = NA)
+        stop(gettextf("Invalid source argument: expected file names(s) or connection, got an object of class %s",
+                      dQuote(class(source)[[1L]])),
+             domain = NA)
     if(lock)
         lockEnvironment(env, bindings = TRUE) # no further changes allowed
     env

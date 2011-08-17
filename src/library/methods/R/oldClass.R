@@ -33,7 +33,9 @@ setOldClass <- function(Classes, prototype = NULL,
                   removeClass(clName, where = where) # so Recall() will work
             }
             else
-              stop(gettextf("argument S4Class must be a class definition:  got an object of class \"%s\"", class(S4Class)))
+              stop(gettextf("argument S4Class must be a class definition:  got an object of class %s",
+                            dQuote(class(S4Class))),
+                   domain = NA)
         }
         if(!is.null(prototype)) {
             S4prototype <- S4Class@prototype
@@ -111,7 +113,8 @@ setOldClass <- function(Classes, prototype = NULL,
 
 .restoreClass <- function(def, where) {
     cl <- def@className
-    message(gettextf("Restoring definition of class \"%s\"", cl),
+    message(gettextf("Restoring definition of class %s",
+                     dQuote(cl)),
             domain = NA)
     if(isClass(cl, where = where))
        removeClass(cl, where = where)
@@ -171,8 +174,10 @@ setOldClass <- function(Classes, prototype = NULL,
         bad <- character()
         for(what in n2[match(n2, n1, 0) > 0])
           if(!extends(elNamed(slots1, what), elNamed(slots2, what))) {
-              message(gettextf("Slot \"%s\": class \"%s\" should extend class \"%s\"",
-                               what, elNamed(slots1, what), elNamed(slots2, what)),
+              message(gettextf("Slot \"%s\": class %s should extend class %s",
+                               what,
+                               dQuote(elNamed(slots1, what)),
+                               dQuote(elNamed(slots2, what))),
                       domain = NA)
               bad <- c(bad, what)
           }
@@ -197,7 +202,9 @@ slotsFromS3 <- function(object) {
     from
 }
 .oldReplaceFun <- function(from, to, value)
-    stop(gettextf("explicit replacement not defined for as(x, \"%s\") <- value for old-style class \"%s\"", to, class(from)[1L]), domain = NA)
+    stop(gettextf("explicit replacement not defined for as(x, \"%s\") <- value for old-style class %s",
+                  to, dQuote(class(from)[1L])),
+         domain = NA)
 
 ## the inheritance of these S3 classes must be decided on a per-instance
 ## basis.  At one time, there were classes in base/stats that had this
@@ -262,8 +269,9 @@ S3Class <- function(object) {
         current <- attr(object, ".S3Class")
         if(is.null(current)) {
             if(is.na(match(value, .BasicClasses)))
-               stop(gettextf("S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class \"%s\"",
-                        class(object)), domain = NA)
+               stop(gettextf("S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class %s",
+                             dQuote(class(object))),
+                    domain = NA)
             mode(object) <- value ## may still fail, a further check would be good
         }
         else

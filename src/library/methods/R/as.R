@@ -209,9 +209,13 @@ setAs <-
         ## allowed by the definition of a union
         toDef <- getClassDef(to, where=where)
         if(is.null(toDef))
-            stop(gettextf("class \"%s\" is not defined in this environment", to), domain = NA)
+            stop(gettextf("class %s is not defined in this environment",
+                          dQuote(to)),
+                 domain = NA)
         if(isClassUnion(toDef))
-            stop(gettextf("class \"%s\" is a class union: 'coerce' relations to a class union are not meaningful", to), domain = NA)
+            stop(gettextf("class %s is a class union: 'coerce' relations to a class union are not meaningful",
+                          dQuote(to)),
+                 domain = NA)
         ## else go ahead (but are there any cases here where extds is TRUE?)
         setIs(from, to, coerce = def, replace = replace, where = where)
     }

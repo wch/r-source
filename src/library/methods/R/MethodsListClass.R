@@ -158,8 +158,10 @@
                         return(value)
                 }
                 else
-                    stop(gettextf("initialize method returned an object of class \"%s\" instead of the required class \"%s\"",
-                                  paste(class(value), collapse=", "), class(.Object)), domain = NA)
+                    stop(gettextf("initialize method returned an object of class \"%s\" instead of the required class %s",
+                                  paste(class(value), collapse=", "),
+                                  dQuote(class(.Object))),
+                         domain = NA)
             }
             value
         }

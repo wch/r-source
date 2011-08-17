@@ -65,7 +65,9 @@
     else if(is(genericFunction, "genericFunction"))
         value <- genericFunction
     else
-        stop(gettextf("the 'genericFunction' argument must be NULL or a generic function object; got an object of class \"%s\"", class(genericFunction)),
+        stop(gettextf("the %s argument must be NULL or a generic function object; got an object of class %s",
+                      sQuote("genericFunction"),
+                      dQuote(class(genericFunction))),
              domain = NA)
     value@.Data <- fdef
     value@generic <- f
@@ -1070,7 +1072,11 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined"))
     if(length(classes)) {
         for(Cl in classes)
             if(is(object, Cl)) return(object)
-        stop(gettextf("invalid value from generic function \"%s\", class \"%s\", expected %s", fname, class(object), paste("\"", classes, "\"", sep = "", collapse = " or ")), domain = NA)
+        stop(gettextf("invalid value from generic function %s, class %s, expected %s",
+                      sQuote(fname),
+                      dQuote(class(object)),
+                      paste(dQuote(classes), collapse = " or ")),
+             domain = NA)
     }
     ## empty test is allowed
     object
@@ -1239,10 +1245,13 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 .ChangeFormals <- function(def, defForArgs, msg = "<unidentified context>")
 {
     if(!is(def, "function"))
-        stop(gettextf("trying to change the formal arguments in %s, in an object of class \"%s\"; expected a function definition", msg, class(def)),
+        stop(gettextf("trying to change the formal arguments in %s, in an object of class %s; expected a function definition",
+                      msg, dQuote(class(def))),
              domain = NA)
     if(!is(defForArgs, "function"))
-        stop(gettextf("trying to change the formal arguments in %s, but getting the new formals from an object of class \"%s\"; expected a function definition", msg, class(def)), domain = NA)
+        stop(gettextf("trying to change the formal arguments in %s, but getting the new formals from an object of class %s; expected a function definition",
+                      msg, dQuote(class(def))),
+             domain = NA)
     old <- formalArgs(def)
     new <- formalArgs(defForArgs)
     if(length(old) < length(new))
@@ -1456,8 +1465,9 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
                 else if(is(x, "genericFunction"))
                     x@generic
                 else
-		    stop(gettextf("invalid element in the groupMembers slot (class \"%s\")",
-				  class(x)), domain = NA)
+		    stop(gettextf("invalid element in the groupMembers slot (class %s)",
+				  dQuote(class(x))),
+                         domain = NA)
             })
         else
             members
@@ -1660,7 +1670,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     else if(is.character(what))
         paste("single string; got a character vector of length", length(what))
     else
-        gettextf("single string; got an object of class \"%s\"", class(what)[[1]])
+        gettextf("single string; got an object of class %s",
+                 dQuote(class(what)[[1L]]))
 }
 
 .dotsClass <- function(...) {

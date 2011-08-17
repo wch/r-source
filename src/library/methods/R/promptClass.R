@@ -79,7 +79,8 @@ function (clName, filename = NULL, type = "class",
     else {
         whereClass <- find(classMetaName(clName))
         if(length(whereClass) == 0L)
-          stop(gettextf("no definition of class \"%s\" found", clName),
+          stop(gettextf("no definition of class %s found",
+                        dQuote(clName)),
                domain = NA)
         else if(length(whereClass) > 1L) {
             if(identical(where, topenv(parent.frame()))) {
@@ -91,8 +92,8 @@ function (clName, filename = NULL, type = "class",
                 if(exists(classMetaName(clName), where, inherits = FALSE))
                   whereClass <- where
                 else
-                  stop(gettextf("no definition of class \"%s\" in the specified position, %s, definition(s) on : %s",
-                                clName, where,
+                  stop(gettextf("no definition of class %s in the specified position, %s, definition(s) on : %s",
+                                dQuote(clName), where,
                                 paste(whereClass, collapse = ", ")),
                        domain = NA)
             }

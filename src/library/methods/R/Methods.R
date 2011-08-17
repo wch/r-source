@@ -572,8 +572,8 @@ setMethod <-
 	   "NULL" = {
 
 	   },
-           stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"",
-			 class(definition)), domain = NA)
+           stop(gettextf("invalid method definition: expected a function, got an object of class %s",
+			 dQuote(class(definition))), domain = NA)
 	   )
     fenv <- environment(fdef)
     ## check length against active sig. length, reset if necessary in .addToMetaTable
@@ -958,8 +958,8 @@ showMethods <-
         if(length(f) > 1L) f <- paste(f, collapse = "; ")
     }
     if(!is(f, "character"))
-        stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\")",
-                      class(f)), domain = NA)
+        stop(gettextf("first argument should be the name(s) of generic functions (got object of class %s)",
+                      dQuote(class(f))), domain = NA)
     if(length(f) ==  0L) { ## usually, the default character()
         f <- if(missing(where)) getGenerics() else getGenerics(where)
     }
@@ -1092,7 +1092,7 @@ resetGeneric <- function(f, fdef = getGeneric(f, where = where),
 			 deflt = finalDefaultMethod(mlist))
 {
     if(!is(fdef, "genericFunction")) {
-            stop(gettextf("error in updating S4 generic function \"%s\"; the function definition is not an S4 generic function (class \"%s\")", f, class(fdef)),
+            stop(gettextf("error in updating S4 generic function %s; the function definition is not an S4 generic function (class %s)", sQuote(f), dQuote(class(fdef))),
                  domain = NA)
         }
     ## reset inherited methods
@@ -1341,8 +1341,8 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
                                      where = topenv(parent.frame()))
 {
     if(!is.environment(what))
-        stop(gettextf("Must provide an environment table; got class \"%s\"",
-                      class(what)), domain = NA)
+        stop(gettextf("Must provide an environment table; got class %s",
+                      dQuote(class(what))), domain = NA)
     objs <- objects(what, all.names = TRUE)
     for(f in objs)
         .cacheImplicitGeneric(f, get(f, envir = what))
@@ -1471,7 +1471,9 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
         }
     }
     else if(!is(f, "function"))
-        stop(gettextf("argument \"f\" must be a generic function or a single character string; got an object of class \"%s\"", class(f)), domain = NA)
+        stop(gettextf("argument %s must be a generic function or a single character string; got an object of class %s",
+                      sQuote("f"), dQuote(class(f))),
+             domain = NA)
     else {
         fdef <- f
         f <- deparse(substitute(f))

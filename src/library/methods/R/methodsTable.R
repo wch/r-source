@@ -84,9 +84,11 @@
            sig <- anySig
     }
     else
-      stop(gettextf(
-                    "Invalid object in meta table of methods for \"%s\", label \"%s\", had class \"%s\"",
-                    generic@generic, what, class(obj)), domain=NA)
+      stop(gettextf("Invalid object in meta table of methods for %s, label \"%s\", had class %s",
+                    sQuote(generic@generic),
+                    what,
+                    dQuote(class(obj))),
+           domain = NA)
     ns <- length(sig)
     if(ns == n) {}
     else {
@@ -332,8 +334,9 @@
                     env <- current
                 else
                     stop(
-                         gettextf("bad method object stored in method table, class \"%s\"",
-                                  class(current)), domain = NA)
+                         gettextf("bad method object stored in method table, class %s",
+                                  dQuote(class(current))),
+                         domain = NA)
             }
             else
                 env <- new.env()
@@ -576,8 +579,9 @@
             if(is.null(condAction))
               condAction <- .ambiguousMethodMessage
             else if(!is(condAction, "function"))
-              stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\"",
-                            class(condAction)), domain = NA)
+              stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class %s",
+                            dQuote(class(condAction))),
+                   domain = NA)
 
             select <- withCallingHandlers(
                                           .disambiguateMethods(classes, select, fdef@generic,

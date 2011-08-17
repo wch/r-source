@@ -270,7 +270,7 @@
                     ## the S3Class stays from the prototype
                     .Object <- .mergeAttrs(obj, .Object)
                 }
-                else stop(gettextf("unnamed argument must extend either the S3 class or the class of the data part; not true of class \"%s\"", Classi), domain = NA)
+                else stop(gettextf("unnamed argument must extend either the S3 class or the class of the data part; not true of class %s", dQuote(Classi)), domain = NA)
 
             }
         }
@@ -322,7 +322,10 @@
     setMethod("coerce", c("ANY", "S3"), function (from, to, strict = TRUE)
               {
                   switch(typeof(from),
-                         S4 = stop(gettextf("Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent",class(from)), domain = NA),
+                         S4 =
+                         stop(gettextf("Class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent",
+                                       dQuote(class(from))),
+                              domain = NA),
                          .notS4(from) )
               },
               where = envir)
@@ -335,14 +338,16 @@
                       cl <- .class1(from)
                       classDef <- getClass(cl)
                       if(identical(classDef@virtual, TRUE))
-                        stop(gettextf("Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this class", cl), domain = NA)
+                        stop(gettextf("Class %s is VIRTUAL; not meaningful to create an S4 object from this class",
+                                      dQuote(cl)),
+                             domain = NA)
                       pr <- classDef@prototype
                       value <- new(cl)
                       slots <- classDef@slots
                       if(match(".Data", names(slots), 0L) > 0L) {
                           data <- unclass(from)
                           if(!is(data, slots[[".Data"]]))
-                            stop(gettextf("Object must be a valid data part for class \"%s\"; not true of type \"%s\"", cl, class(data)),
+                            stop(gettextf("Object must be a valid data part for class %s; not true of type %s", dQuote(cl), dQuote(class(data))),
                                  domain = NA)
                           value@.Data <- unclass(from)
                       }

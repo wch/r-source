@@ -88,8 +88,8 @@ callNextMethod <- function(...) {
         assign(".Generic", f, envir = nextMethodEnv)
     }
     else
-        stop(gettextf("bad object found as method (class \"%s\")",
-                      class(method)), domain = NA)
+        stop(gettextf("bad object found as method (class %s)",
+                      dQuote(class(method))), domain = NA)
     subsetCase <- !is.na(match(f, .BasicSubsetFunctions))
     if(nargs()>0) {
       call <- sys.call()

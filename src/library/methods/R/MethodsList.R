@@ -68,8 +68,9 @@ makeMethodsList <- function(object, level=1)
                 is(eli, "named"))
             el(object, i) <- Recall(eli, NULL, level+1)
         else
-            stop(gettextf("element %d at level %d (class \"%s\") cannot be interpreted as a function or named list",
-                          i, level, class(eli)), domain = NA)
+            stop(gettextf("element %d at level %d (class %s) cannot be interpreted as a function or named list",
+                          i, level, dQuote(class(eli))),
+                 domain = NA)
     }
     slot(value, "methods") <- object
     value
@@ -114,13 +115,15 @@ insertMethod <-
            stop(gettextf("inserting method with invalid signature matching argument '...' to class \"%s\"", signature[[1L]]), domain = NA)
         args <- args[-1L]
         signature <- signature[-1L]
-        if(length(signature) == 0)
+        if(length(signature) == 0L)
             return(mlist)
     }
-    if(length(signature) == 0)
+    if(length(signature) == 0L)
         stop("inserting method corresponding to empty signature")
     if(!is(mlist, "MethodsList"))
-        stop(gettextf("inserting method into non-methods-list object (class \"%s\")", .class1(mlist)), domain = NA)
+        stop(gettextf("inserting method into non-methods-list object (class %s)",
+                      dQuote(.class1(mlist))),
+             domain = NA)
     if(length(args) > 1 && !cacheOnly)
         mlist <- balanceMethodsList(mlist, args)
     Class <- el(signature, 1)
@@ -213,11 +216,15 @@ MethodsListSelect <-
         if(is.null(f)) # recursive recall of MethodsListSelect
             stop("invalid method sublist")
         else if(!is.null(mlist)) # NULL => 1st call to genericFunction
-            stop(gettextf("'%f' is not a valid generic function: methods list was an object of class \"%s\"", f, class(mlist)), domain = NA)
+            stop(gettextf("%f is not a valid generic function: methods list was an object of class %s",
+                          sQuote(f), dQuote(class(mlist))),
+                 domain = NA)
     }
     if(!is.logical(useInherited))
-        stop(gettextf("'useInherited' must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"%s\"",
-                      class(useInherited)), domain = NA)
+        stop(gettextf("%s must be TRUE, FALSE, or a named logical vector of those values; got an object of class %s",
+                      sQuote("useInherited"),
+                      dQuote(class(useInherited))),
+             domain = NA)
     if(identical(mlist, .getMethodsForDispatch(fdef))) {
         resetNeeded <- TRUE
         ## On the initial call:
@@ -446,9 +453,11 @@ matchSignature <-
   function(signature, fun, where = baseenv())
 {
     if(!is(fun, "genericFunction"))
-        stop(gettextf("trying to match a method signature to an object (of class \"%s\") that is not a generic function", class(fun)), domain = NA)
+        stop(gettextf("trying to match a method signature to an object (of class %s) that is not a generic function",
+                      dQuote(class(fun))),
+             domain = NA)
     anames <- fun@signature
-    if(length(signature) == 0)
+    if(length(signature) == 0L)
         return(character())
     if(is(signature,"character")) {
         pkgs <- packageSlot(signature) # includes case of  "ObjectsWithPackage"
@@ -478,7 +487,9 @@ matchSignature <-
         }
     }
     else
-        stop(gettextf("trying to match a method signature of class \"%s\"; expects a list or a character vector", class(signature)), domain = NA)
+        stop(gettextf("trying to match a method signature of class %s; expects a list or a character vector",
+                      dQuote(class(signature))),
+             domain = NA)
     if(!identical(where, baseenv())) {
         ## fill in package information, warn about undefined classes
         unknown <- !nzchar(pkgs)
@@ -757,8 +768,9 @@ linearizeMlist <-
                 arguments <- c(arguments, lapply(mi@arguments, preC, argname))
             }
             else
-                warning(gettextf("skipping methods list element %s of unexpected class \"%s\"\n\n",
-                                paste(cnames[i], collapse = ", "), .class1(mi)),
+                warning(gettextf("skipping methods list element %s of unexpected class %s\n\n",
+                                 paste(cnames[i], collapse = ", "),
+                                 dQuote(.class1(mi))),
                         domain = NA)
         }
         new("LinearMethodsList", methods = value, classes = classes, arguments = arguments)

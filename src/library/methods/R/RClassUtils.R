@@ -142,8 +142,10 @@ makePrototypeFromClassDef <-
             else
                 OK <- FALSE
             if(identical(OK, FALSE))
-                stop(gettextf("in constructing the prototype for class \"%s\": prototype has class \"%s\", but the data part specifies class \"%s\"",
-                              className, .class1(prototype), dataPartClass),
+                stop(gettextf("in constructing the prototype for class %s: prototype has class %s, but the data part specifies class %s",
+                              dQuote(className),
+                              dQuote(.class1(prototype)),
+                              dQuote(dataPartClass)),
                      domain = NA)
         }
         iData <- -match(".Data", snames)
@@ -161,8 +163,10 @@ makePrototypeFromClassDef <-
     }
     extra <- pnames[is.na(match(pnames, snames)) & !is.na(match(pnames, pslots))]
     if(length(extra) && is.na(match("oldClass", supers)))
-        warning(gettextf("in constructing the prototype for class \"%s\", slots in prototype and not in class: %s",
-                         className, paste(extra, collapse=", ")), domain = NA)
+        warning(gettextf("in constructing the prototype for class %s, slots in prototype and not in class: %s",
+                         dQuote(className),
+                         paste(extra, collapse=", ")),
+                domain = NA)
     ## now check the elements of the prototype against the class definition
     slotDefs <- getSlots(ClassDef); slotNames <- names(slotDefs)
     pnames <- names(attributes(prototype))
@@ -183,9 +187,14 @@ makePrototypeFromClassDef <-
         }
     }
     if(any(check))
-        stop(gettextf("in making the prototype for class \"%s\" elements of the prototype failed to match the corresponding slot class: %s",
-                      className,
-                      paste(pnames[check], "(class", .dQ(slotDefs[match(pnames[check], slotNames)]), ")", collapse = ", ")), domain = NA)
+        stop(gettextf("in making the prototype for class %s elements of the prototype failed to match the corresponding slot class: %s",
+                      dQuote(className),
+                      paste(pnames[check],
+                            "(class",
+                            .dQ(slotDefs[match(pnames[check], slotNames)]),
+                            ")",
+                            collapse = ", ")),
+             domain = NA)
     prototype
 }
 
@@ -394,12 +403,17 @@ superClassDepth <-
         exti <- ext[[i]]
         soFar <- c(soFar, what)
         if(!is(exti, "SClassExtension"))
-            stop(gettextf("in definition of class \"%s\", information for superclass \"%s\" is of class \"%s\" (expected \"SClassExtension\")",
-                          ClassDef@className, what, class(exti)), domain = NA)
+            stop(gettextf("in definition of class %s, information for superclass %s is of class %s (expected \"SClassExtension\")",
+                          dQuote(ClassDef@className),
+                          dQuote(what),
+                          dQuote(class(exti))),
+                 domain = NA)
         superClass <-  getClassDef(exti@superClass, package = exti@package)
             if(is.null(superClass)) {
-                warning(gettextf("class \"%s\" extends an undefined class, \"%s\"",
-                                 ClassDef@className, what), domain = NA)
+                warning(gettextf("class %s extends an undefined class, %s",
+                                 dQuote(ClassDef@className),
+                                 dQuote(what)),
+                        domain = NA)
                 next
             }
             more <- Recall(superClass, soFar)
@@ -488,8 +502,10 @@ assignClassDef <-
   ## assign the definition of the class to the specially named object
   function(Class, def, where = .GlobalEnv, force = FALSE) {
       if(!is(def,"classRepresentation"))
-          stop(gettextf("trying to assign an object of class \"%s\" as the definition of class \"%s\": must supply a \"classRepresentation\" object",
-                        class(def), Class), domain = NA)
+          stop(gettextf("trying to assign an object of class %s as the definition of class %s: must supply a \"classRepresentation\" object",
+                        dQuote(class(def)),
+                        dQuote(Class)),
+               domain = NA)
       clName <- def@className; attributes(clName) <- NULL
       if(!.identC(Class, clName))
           stop(gettextf("assigning as \"%s\" a class representation with internal name \"%s\"",
@@ -604,7 +620,9 @@ newBasic <-
                           msg <- paste("Calling new() on an undefined and non-basic class (\"",
                                Class, "\")", sep="")
                       else
-                          msg <- gettextf("initializing objects from class \"%s\" with these arguments is not supported", Class)
+                          msg <-
+                              gettextf("initializing objects from class %s with these arguments is not supported",
+                                       dQuote(Class))
                   }
                   )
   if(is.null(msg))
@@ -648,7 +666,9 @@ reconcilePropertiesAndPrototype <-
       dataPartClass <- elNamed(properties, ".Data")
       dataPartValue <- FALSE
       if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, where)))
-          stop(gettextf("in defining class \"%s\", the supplied data part class, \"%s\" is not valid (must be a basic class or a virtual class combining basic classes)", name, dataPartClass), domain = NA)
+          stop(gettextf("in defining class %s, the supplied data part class, %s is not valid (must be a basic class or a virtual class combining basic classes)",
+                        dQuote(name), dQuote(dataPartClass)),
+               domain = NA)
       prototypeClass <- getClass(class(prototype), where = where)
       if((!is.null(dataPartClass) || length(superClasses))
          && is.na(match("VIRTUAL", superClasses))) {
@@ -657,7 +677,9 @@ reconcilePropertiesAndPrototype <-
           for(cl in superClasses) {
               clDef <- getClassDef(cl, where = where)
               if(is.null(clDef))
-                stop(gettextf("No definition was found for superclass \"%s\" in the specification of class \"%s\" ", cl, name), domain = NA)
+                stop(gettextf("No definition was found for superclass %s in the specification of class %s",
+                              dQuote(cl), dQuote(name)),
+                     domain = NA)
               thisDataPart <-  .validDataPartClass(clDef, where, dataPartClass)
               if(!is.null(thisDataPart)) {
                     dataPartClass <- thisDataPart
@@ -702,13 +724,15 @@ reconcilePropertiesAndPrototype <-
                       }
                       else if(!extends(getClass(class(prototype@object), where = where)
                                        , dataPartClass))
-                          stop(gettextf("a prototype object was supplied with object slot of class \"%s\", but the class definition requires an object that is class \"%s\"",
-                                        class(prototype@object), dataPartClass),
+                          stop(gettextf("a prototype object was supplied with object slot of class %s, but the class definition requires an object that is class %s",
+                                        dQuote(class(prototype@object)),
+                                        dQuote(dataPartClass)),
                                domain = NA)
                   }
                   else if(!extends(prototypeClass, dataPartClass))
-                      stop(gettextf("a prototype was supplied of class \"%s\", but the class definition requires an object that is class \"%s\"",
-                                    class(prototype), dataPartClass),
+                      stop(gettextf("a prototype was supplied of class %s, but the class definition requires an object that is class %s",
+                                    dQuote(class(prototype)),
+                                    dQuote(dataPartClass)),
                            domain = NA)
               }
           }
@@ -728,16 +752,20 @@ reconcilePropertiesAndPrototype <-
               dups <- !is.na(match(theseSlots, allProps))
               for(dup in theseSlots[dups])
                   if(!extends(elNamed(allProps, dup), elNamed(theseProperties, dup)))
-                      stop(gettextf("slot \"%s\" in class \"%s\" currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class \"%s\"",
-                                    dup, name, elNamed(allProps, dup), cl),
+                      stop(gettextf("slot \"%s\" in class %s currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class %s",
+                                    dup,
+                                    dQuote(name),
+                                    elNamed(allProps, dup),
+                                    dQuote(cl)),
                            domain = NA)
               theseSlots <- theseSlots[!dups]
               if(length(theseSlots))
                   allProps[theseSlots] <- theseProperties[theseSlots]
           }
           else
-              stop(gettextf("class \"%s\" extends an undefined class (\"%s\")",
-                            name, cl), domain = NA)
+              stop(gettextf("class %s extends an undefined class (%s)",
+                            dQuote(name), dQuote(cl)),
+                   domain = NA)
       }
       if(is.null(dataPartClass)) {
           if(extends(prototypeClass, "classPrototypeDef"))
@@ -1082,9 +1110,10 @@ completeSubclasses <-
             }
         }
         else
-            stop(gettextf("the \"%s\" list for class \"%s\", includes an undefined class \"%s\"",
+            stop(gettextf("the \"%s\" list for class %s, includes an undefined class %s",
                           if(superClassCase) "superClass" else "subClass",
-                          className,.className(by)),
+                          dQuote(className),
+                          dQuote(.className(by))),
                  domain = NA)
     }
     what <- names(ext)  ## the direct and indirect extensions
@@ -1102,8 +1131,10 @@ completeSubclasses <-
                     whatError <- "have itself as a subclass"
                 }
                 ## this is not translatable
-                stop(sprintf("class \"%s\" may not %s: it contains class \"%s\", with a circular relation back to \"%s\"",
-                              className, whatError, exti@by, className),
+                stop(sprintf("class %s may not %s: it contains class %s, with a circular relation back to %s",
+                             dQuote(className), whatError,
+                             dQuote(exti@by),
+                             dQuote(className)),
                      domain = NA)
             }
         }
@@ -1303,7 +1334,8 @@ getDataPart <- function(object) {
     if(length(temp) == 0L)
         return(object)
     if(is.na(match(".Data", names(temp))))
-       stop(gettextf("no '.Data' slot defined for class \"%s\"", class(object)),
+       stop(gettextf("no '.Data' slot defined for class %s",
+                     dQuote(class(object))),
             domain = NA)
     dataPart <- temp[[".Data"]]
     switch(dataPart,
@@ -1347,8 +1379,9 @@ setDataPart <- function(object, value, check = TRUE) {
         if(length(dataSlot) == 1)
           dataClass <- elNamed(slots, dataSlot)
         else if(check)
-          stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
-                        class(object)), domain = NA)
+          stop(gettextf("class %s does not have a data part (a .Data slot) defined",
+                        dQuote(class(object))),
+               domain = NA)
         else # this case occurs in making the methods package. why?
           return(.mergeAttrs(value, object))
         value <- as(value, dataClass)  # note that this is strict as()
@@ -1677,7 +1710,9 @@ substituteFunctionArgs <-
 .makeValidityMethod <- function(Class, validity) {
     if(!is.null(validity)) {
         if(!is(validity, "function"))
-            stop(gettextf("a validity method must be a function of one argument, got an object of class \"%s\"", class(validity)), domain = NA)
+            stop(gettextf("a validity method must be a function of one argument, got an object of class %s",
+                          dQuote(class(validity))),
+                 domain = NA)
         validity <- substituteFunctionArgs(validity, "object", functionName = sprintf("validity method for class '%s'", Class))
     }
     validity
@@ -1808,8 +1843,9 @@ substituteFunctionArgs <-
 	    }
 	}
 	if(is.null(def) && mustFind)
-	    stop(gettextf("unable to find an environment containing class \"%s\"",
-			  Class), domain = NA)
+	    stop(gettextf("unable to find an environment containing class %s",
+			  dQuote(Class)),
+                 domain = NA)
 	value
     }
     else

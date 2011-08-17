@@ -149,7 +149,9 @@ setIs <-
         stop(gettextf("cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s\") is local and modifiable in this package",
                       class1, class2), domain = NA)
     if(classDef@sealed && !isClassUnion(classDef2))
-        stop(gettextf("class \"%s\" is sealed; new superclasses can not be defined, except by 'setClassUnion'", class1), domain = NA)
+        stop(gettextf("class %s is sealed; new superclasses can not be defined, except by 'setClassUnion'",
+                      dQuote(class1)),
+             domain = NA)
     prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
                          FALSE) # used in checking for previous coerce
     if(is.null(extensionObject))
@@ -195,7 +197,10 @@ setIs <-
 
 
 .validExtends <- function(class1, class2, classDef1,  classDef2, slotTests) {
-    .msg <- function(class1, class2) gettextf("class \"%s\" cannot extend class \"%s\"", class1, class2)
+    .msg <- function(class1, class2)
+        gettextf("class %s cannot extend class %s",
+                 dQuote(class1),
+                 dQuote(class2))
     if((is.null(classDef1) || is.null(classDef2)) &&
        !(isVirtualClass(class1) && isVirtualClass(class2)))
         return(c(.msg(class1, class2), ": ",
@@ -208,8 +213,9 @@ setIs <-
             n1 <- names(slots1)
             if(any(is.na(match(n2, n1))))
                 return(c(.msg(class1, class2), ": ",
-                     gettextf("class \"%s\" is missing slots from class \"%s\" (%s), and no coerce method was supplied",
-                              class1, class2,
+                     gettextf("class %s is missing slots from class %s (%s), and no coerce method was supplied",
+                              dQuote(class1),
+                              dQuote(class2),
                               paste(n2[is.na(match(n2, n1))], collapse = ", "))))
             bad <- character()
             for(what in n2)
@@ -217,8 +223,10 @@ setIs <-
                     bad <- c(bad, what)
             if(length(bad))
                 return(c(.msg(class1, class2), ": ",
-                     gettextf("slots in class \"%s\" must extend corresponding slots in class \"%s\": fails for %s",
-                              class1, class2, paste(bad, collapse = ", "))))
+                     gettextf("slots in class %s must extend corresponding slots in class %s: fails for %s",
+                              dQuote(class1),
+                              dQuote(class2),
+                              paste(bad, collapse = ", "))))
         }
     }
     TRUE
