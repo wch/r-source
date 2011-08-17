@@ -91,6 +91,9 @@
 
       \item \code{xtabs(~ .., ..., sparse=TRUE)} now also works together
       with an \code{exclude = ..} specification.
+  
+      \item \code{decompose()} computed an incorrect seasonal component for
+      time series with odd frequencies.
     }
   }
 }

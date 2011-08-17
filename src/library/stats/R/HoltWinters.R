@@ -348,20 +348,12 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
     else
         x / trend
 
-    ## rearrange seasons at beginning/end
-    season <- na.omit(c(as.numeric(window(season,
-                                          start(x) + c(1, 0),
-                                          end(x))),
-                        as.numeric(window(season,
-                                          start(x),
-                                          start(x) + c(0, f))))
-                      )
-
     ## average seasonal figures
-    periods <- l%/%f
-    index <- c(0, cumsum(rep(f, periods - 2)))
+    periods <- l %/% f
+    index <- seq.int(1L, l, by = f) - 1L
     figure <- numeric(f)
-    for (i in 1L:f) figure[i] <- mean(season[index + i])
+    for (i in 1L:f)
+        figure[i] <- mean(season[index + i], na.rm = TRUE)
 
     ## normalize figure
     figure <- if (type == "additive")
