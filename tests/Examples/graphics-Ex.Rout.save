@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-07-31 r56578)
+R Under development (unstable) (2011-08-16 r56745)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1989,7 +1989,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1f08a00>
+<bytecode: 0x34ef1f8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2567,6 +2567,9 @@ temperature no yes
 > ## 'Spider':
 > stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
 +       col.stars=1:10, key.loc = c(0,0), main="US Judges rated")
+> ## Same as above, but with colored lines instead of filled polygons.
+> stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
++       col.lines=1:10, key.loc = c(0,0), main="US Judges rated")
 > ## 'Radar-Segments'
 > stars(USJudgeRatings[1:10,], locations = 0:1, scale=FALSE,
 +       draw.segments = TRUE, col.segments=0, col.stars=1:10,key.loc= 0:1,
@@ -2893,7 +2896,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x2e92e00>
+<bytecode: 0x42b5020>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2973,7 +2976,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.237 0.094 4.354 0 0 
+Time elapsed:  4.86 0.03 5.062 0 0 
 > grDevices::dev.off()
 null device 
           1 
