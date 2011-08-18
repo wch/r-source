@@ -521,6 +521,11 @@
       \item \command{R CMD build} on a Unix-alike (only) now tries to
       preserve dates on files it copies from its input directory.  (This
       was the undocumented behaviour prior to \R 2.13.0.)
+
+      \item \command{R CMD check} performs additional code analysis of
+      package startup functions, and notifies about incorrect argument
+      lists and (incorrect) calls to functions which modify the search
+      path or inappropriately generate messages.
     }
   }
 
