@@ -35,7 +35,7 @@ x[[i]] <- value
 x$i <- value
 }
 \arguments{
-  \item{x}{
+  \item{x, object}{
     object from which to extract element(s) or in which to replace element(s).
   }
   \item{i, j, \dots}{
