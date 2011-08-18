@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -26,7 +26,10 @@ density(x, \dots)
     (Note this differs from the reference books cited below, and from S-PLUS.)
 
     \code{bw} can also be a character string giving a rule to choose the
-    bandwidth.  See \code{\link{bw.nrd}}.
+    bandwidth.  See \code{\link{bw.nrd}}. \cr
+    The default, \code{"nrd0"}, has remained the default for historical
+    and compatibility reasons, rather than as a general recommendation,
+    where e.g., \code{"SJ"} would rather fit, see also V&R (2002).
 
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.
@@ -120,7 +123,7 @@ density(x, \dots)
   \item{call}{the call which produced the result.}
   \item{data.name}{the deparsed name of the \code{x} argument.}
   \item{has.na}{logical, for compatibility (always \code{FALSE}).}
-  
+
   The \code{print} method reports \code{\link{summary}} values on the
   \code{x} and \code{y} components.
 }
