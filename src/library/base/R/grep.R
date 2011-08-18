@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 strsplit <-
-    function(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
+function(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
     .Internal(strsplit(x, as.character(split), fixed, perl, useBytes))
 
 grep <-
@@ -146,4 +146,43 @@ function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
 
     .Internal(agrep(pattern, x, ignore.case, value, max.distance,
                     max.deletions, max.insertions, max.substitutions, useBytes))
+}
+
+regmatches <-
+function(x, m, invert = FALSE)
+{
+    if(length(x) != length(m))
+        stop(gettextf("%s and %s must have the same length",
+                      sQuote("x"), sQuote("m")),
+             domain = NA)
+
+    if(!(ili <- is.list(m)) && !invert) {
+        so <- m[ind <- (m > -1L)]
+        eo <- so + attr(m, "match.length")[ind] - 1L
+        return(substring(x[ind], so, eo))
+    }
+
+    y <- if(invert) {
+        Map(function(u, so, ml) {
+            beg <- c(1L, so + ml)
+            end <- c(so - 1L, nchar(u))
+            ind <- beg <= end
+            substring(u, beg[ind], end[ind])
+        },
+            x, m,
+            if(ili)
+            lapply(m, attr, "match.length")
+            else
+            attr(m, "match.length"),
+            USE.NAMES = FALSE)
+    } else {
+        Map(function(u, so, ml) {
+            if(so[1L] == -1L) return(character())
+            substring(u, so, so + ml - 1L)
+        },
+            x, m, lapply(m, attr, "match.length"), USE.NAMES = FALSE)
+    }
+
+    names(y) <- names(x)
+    y
 }

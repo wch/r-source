@@ -63,7 +63,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
   \item{invert}{logical.  If \code{TRUE} return indices or values for
-         elements that do \emph{not} match.}
+    elements that do \emph{not} match.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.  Coerced to character if possible.  For \code{fixed =
       FALSE} this can include backreferences \code{"\\1"} to
@@ -210,6 +210,9 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 \seealso{
   \link{regular expression} (aka \code{\link{regexp}}) for the details
   of the pattern specification.
+
+  \code{\link{regmatches}} for extracting matched substrings based on
+  the results of \code{regexpr} and \code{gregexpr}.
 
   \code{\link{glob2rx}} to turn wildcard matches into regular expressions.
 

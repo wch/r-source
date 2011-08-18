@@ -9,7 +9,9 @@
 \alias{require}
 
 \alias{.noGenerics}
+\alias{format.libraryIQR}
 \alias{print.libraryIQR}
+\alias{format.packageInfo}
 \alias{print.packageInfo}
 \description{
   \code{library} and \code{require} load add-on packages.
