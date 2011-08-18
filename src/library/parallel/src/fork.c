@@ -1,14 +1,3 @@
-/* multicore R package
-
-   fork.c
-   interface to system-level tools for sawning copies of the current
-   process and IPC
-
-   (C)Copyright 2008-11 Simon Urbanek
-   Copyright 2011 R Core Development Team.
-   
-   Derived from multicore version 0.1-6 by Simon Urbanek
-
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-11 Simon Urbanek
@@ -27,7 +16,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
- */
+
+   fork.c
+   interface to system-level tools for spawning copies of the current
+   process and IPC
+   
+   Derived from multicore version 0.1-6 by Simon Urbanek
+*/
 
 #include "parallel.h"
 
