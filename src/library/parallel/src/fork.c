@@ -525,8 +525,6 @@ SEXP mc_read_children(SEXP sTimeout)
        but none of the handles is set - let's treat it as a timeout */
     if (!ci) return ScalarLogical(1);
     else return read_child_ci(ci);
-    /* we should never land here */
-    return R_NilValue;
 }
 
 SEXP mc_rm_child(SEXP sPid) 
