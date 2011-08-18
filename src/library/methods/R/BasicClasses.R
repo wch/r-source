@@ -258,7 +258,9 @@
                 Classi <- class(obj)
                 defi <- getClassDef(Classi)
                 if(is.null(defi))
-                  stop(gettextf("unnamed argument to initialize() for S3 class must have a class definition; \"%s\" does not", Classi), domain = NA)
+                  stop(gettextf("unnamed argument to initialize() for S3 class must have a class definition; %s does not",
+                                dQuote(Classi)),
+                       domain = NA)
                 if(is(obj, S3ClassP)) {
                     ## eligible to be the S3 part; merge other slots from prototype;
                     ## obj then becomes the object, with its original class as the S3Class

@@ -279,8 +279,9 @@ isGeneric <-
 	    TRUE
     }
     else {
-        warning(gettextf("function \"%s\" appears to be a generic function, but with generic name \"%s\"",
-                         f, gen), domain = NA)
+        warning(gettextf("function %s appears to be a generic function, but with generic name %s",
+                         sQuote(f), sQuote(gen)),
+                domain = NA)
         FALSE
     }
 }
@@ -312,7 +313,8 @@ removeGeneric <-
     else {
         if(!is.character(f))
             f <- deparse(f)
-        warning(gettextf("generic function \"%s\" not found for removal", f),
+        warning(gettextf("generic function %s not found for removal",
+                         sQuote(f)),
                 domain = NA)
     }
     return(found)
@@ -400,7 +402,9 @@ getMethodsForDispatch <- function(fdef, inherited = FALSE)
     ev <- environment(fdef)
     if(!is(fdef, "genericFunction") ||
        !exists(".Methods", envir = ev, inherits = FALSE))
-        stop(gettextf("internal error: did not get a valid generic function object for function \"%s\"", f), domain = NA)
+        stop(gettextf("internal error: did not get a valid generic function object for function %s",
+                      sQuote(f)),
+             domain = NA)
     assign(".Methods", envir = ev, mlist)
 }
 
@@ -464,8 +468,10 @@ setMethod <-
         fdef <- getGeneric(f, where = if(identical(gwhere, baseenv())) where else gwhere)
     }
     if(.lockedForMethods(fdef, where))
-        stop(gettextf("the environment \"%s\" is locked; cannot assign methods for function \"%s\"",
-                      getPackageName(where), f), domain = NA)
+        stop(gettextf("the environment %s is locked; cannot assign methods for function %s",
+                      sQuote(getPackageName(where)),
+                      sQuote(f)),
+             domain = NA)
     hasMethods <- !is.null(fdef)
     deflt <- getFunction(f, generic = FALSE, mustFind = FALSE, where = where)
     ## where to insert the methods in generic
@@ -490,10 +496,10 @@ setMethod <-
                     stop(gettextf("the 'where' environment (%s) is a locked namespace; cannot assign methods there",
                                   getPackageName(where)), domain = NA)
                 msg <-
-                    gettextf("copying the generic function \"%s\" to environment \"%s\", because the previous version was in a sealed namespace (%s)",
-                             f,
-                             getPackageName(where),
-                             getPackageName(gwhere))
+                    gettextf("copying the generic function %s to environment %s, because the previous version was in a sealed namespace (%s)",
+                             sQuote(f),
+                             sQuote(getPackageName(where)),
+                             sQuote(getPackageName(gwhere)))
                 message(strwrap(msg), domain = NA)
                 assign(f, fdef, where)
                 gwhere <- where
@@ -503,7 +509,8 @@ setMethod <-
     if(!hasMethods)
         fdef <- deflt
     if(is.null(fdef))
-        stop(gettextf("no existing definition for function \"%s\"", f),
+        stop(gettextf("no existing definition for function %s",
+                      sQuote(f)),
              domain = NA)
     if(!hasMethods) {
         ## create using the visible non-generic as a pattern and default method
@@ -529,8 +536,10 @@ setMethod <-
             setGeneric(f) # turn on this generic and cache it.
     }
     if(isSealedMethod(f, signature, fdef, where=where))
-        stop(gettextf("the method for function \"%s\" and signature %s is sealed and cannot be re-defined",
-                      f, .signatureString(fdef, signature)), domain = NA)
+        stop(gettextf("the method for function %s and signature %s is sealed and cannot be re-defined",
+                      sQuote(f),
+                      .signatureString(fdef, signature)),
+             domain = NA)
     signature <- matchSignature(signature, fdef, where)
     createMethod <- FALSE # TRUE for "closure" only
     switch(typeof(definition),
@@ -541,8 +550,12 @@ setMethod <-
 		   ## fix up arg name for single-argument generics
 		   ## useful for e.g. '!'
 		   if(length(fnames) == length(mnames) && length(mnames) == 1L) {
-		       warning(gettextf("For function \"%s\", signature \"%s\": argument in method definition changed from (%s) to (%s)",
-					f, signature, mnames, fnames), domain = NA, call. = FALSE)
+		       warning(gettextf("For function %s, signature \"%s\": argument in method definition changed from (%s) to (%s)",
+					sQuote(f),
+                                        signature,
+                                        mnames,
+                                        fnames),
+                               domain = NA, call. = FALSE)
 		       formals(definition) <- formals(fdef)
 		       ll <- list(as.name(formalArgs(fdef))); names(ll) <- mnames
 		       body(definition) <- substituteDirect(body(definition), ll)
@@ -619,12 +632,14 @@ removeMethod <- function(f, signature = character(), where = topenv(parent.frame
     else
       fdef <- getGeneric(f, where = where)
     if(is.null(fdef)) {
-        warning(gettextf("no generic function \"'%s\" found", f), domain = NA)
+        warning(gettextf("no generic function %s found",
+                         sQuote(f)),
+                domain = NA)
         return(FALSE)
     }
     if(is.null(getMethod(fdef, signature, optional=TRUE))) {
-        warning(gettextf("no method found for function \"%s\" and signature %s",
-                         fdef@generic,
+        warning(gettextf("no method found for function %s and signature %s",
+                         sQuote(fdef@generic),
                          paste(.dQ(signature), collapse =", ")),
                 domain = NA)
         return(FALSE)
@@ -637,7 +652,9 @@ removeMethod <- function(f, signature = character(), where = topenv(parent.frame
 .undefineMethod <- function(f, signature = character(), where = topenv(parent.frame())) {
     fdef <- getGeneric(f, where = where)
     if(is.null(fdef)) {
-        warning(gettextf("no generic function \"%s\" found", f), domain = NA)
+        warning(gettextf("no generic function %s found",
+                         sQuote(f)),
+                domain = NA)
         return(FALSE)
     }
     if(!is.null(getMethod(fdef, signature, optional=TRUE)))
@@ -652,7 +669,9 @@ findMethod <- function(f, signature, where = topenv(parent.frame())) {
     else
       fdef <- getGeneric(f, where = where)
     if(is.null(fdef)) {
-        warning(gettextf("no generic function \"%s\" found", f), domai.n = NA)
+        warning(gettextf("no generic function %s found",
+                         sQuote(f)),
+                domain = NA)
         return(character())
     }
     fM <- .TableMetaName(fdef@generic, fdef@package)
@@ -727,8 +746,11 @@ getMethod <-
     Classes <- signature # a copy just for possible error message
     while(length(signature) && is(mlist, "MethodsList")) {
         if(!identical(argNames[[i]], as.character(mlist@argument)))
-            stop(gettextf("apparent inconsistency in the methods for function \"%s\"; argument \"%s\" in the signature corresponds to \"%s\" in the methods list object",
-                          .genericName(f), argNames[[i]], as.character(mlist@argument)), domain = NA)
+            stop(gettextf("apparent inconsistency in the methods for function %s; argument %s in the signature corresponds to %s in the methods list object",
+                          sQuote(.genericName(f)),
+                          sQuote(argNames[[i]]),
+                          sQuote(as.character(mlist@argument))),
+                 domain = NA)
         Class <- signature[[1L]]
         signature <- signature[-1L]
         methods <- slot(mlist, "methods")
@@ -747,8 +769,10 @@ getMethod <-
     else {
         ## for friendliness, look for (but don't return!) an S3 method
         if(length(Classes) == 1L && exists(paste(.genericName(f), Classes, sep="."), where))
-            stop(gettextf("no S4 method for function \"%s\" and signature %s; consider getS3method() if you wanted the S3 method",
-                          .genericName(f), Classes), domain = NA)
+            stop(gettextf("no S4 method for function %s and signature %s; consider getS3method() if you wanted the S3 method",
+                          sQuote(.genericName(f)),
+                          Classes),
+                 domain = NA)
         if(length(Classes)) {
             length(argNames) <- length(Classes)
             Classes <- paste(argNames," = \"", unlist(Classes),
@@ -756,8 +780,10 @@ getMethod <-
         }
         else
             Classes <- "\"ANY\""
-        stop(gettextf("no method defined in methods list object for function \"%s\" and signature %s",
-                      .genericName(f), Classes), domain = NA)
+        stop(gettextf("no method defined in methods list object for function %s and signature %s",
+                      sQuote(.genericName(f)),
+                      Classes),
+             domain = NA)
     }
 }
 
@@ -832,7 +858,8 @@ selectMethod <-
             method <- .selectDotsMethod(signature, mlist,
                  if(useInherited) getMethodsForDispatch(fdef, inherited = TRUE))
             if(is.null(method) && !optional)
-              stop(gettextf("No method for \"...\" matches class \"%s\"", signature),
+              stop(gettextf("No method for %s matches class %s",
+                            sQuote("..."), dQuote(signature)),
                    domain = NA)
             return(method)
         }
@@ -1113,8 +1140,8 @@ setGroupGeneric <-
         def <- getFunction(name, where = where)
         if(isGroup(name, fdef = def)) {
             if(nargs() == 1) {
-                message(gettextf("function \"%s\" is already a group generic; no change",
-                                 name),
+                message(gettextf("function %s is already a group generic; no change",
+                                 sQuote(name)),
                         domain = NA)
                 return(name)
             }
@@ -1123,7 +1150,9 @@ setGroupGeneric <-
     ## By definition, the body must generate an error.
     body(def, envir = environment(def)) <- substitute(
               stop(MSG, domain = NA),
-              list(MSG = gettextf("function \"%s\" is a group generic; do not call it directly", name)))
+              list(MSG =
+                   gettextf("function %s is a group generic; do not call it directly",
+                            sQuote(name))))
     if(is.character(knownMembers))
         knownMembers <- as.list(knownMembers) # ? or try to find them?
     setGeneric(name, def, group = group, valueClass = valueClass,

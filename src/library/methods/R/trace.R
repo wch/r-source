@@ -134,8 +134,8 @@
         pname <- temp$pname
     }
     if(what %in% .InvalidTracedFunctions)
-        stop(gettextf("Tracing the internal function \"%s\" is not allowed",
-                      what))
+        stop(gettextf("Tracing the internal function %s is not allowed",
+                      sQuote(what)))
     if(.traceTraceState) {
         message(".TraceWithMethods: after computing what, whereF")
         browser()

@@ -200,15 +200,19 @@ makeStandardGeneric <-
         ## methods are prohibited)
         fgen <- genericForPrimitive(f)
         if(identical(fgen, FALSE))
-            stop(gettextf("special function \"%s\" is not permitted to have methods",
-                          f), domain = NA)
+            stop(gettextf("special function %s is not permitted to have methods",
+                          sQuote(f)),
+                 domain = NA)
         if(is.null(fgen)) {
-            warning(gettextf("special function \"%s\" has no known argument list; will assume '(x, ...)'", f), domain = NA)
+            warning(gettextf("special function %s has no known argument list; will assume '(x, ...)'",
+                             sQuote(f)),
+                    domain = NA)
             ## unknown
             fgen <- function(x, ...) {}
         }
         else {
-            message(gettextf("making a generic for special function \"%s\"", f),
+            message(gettextf("making a generic for special function %s",
+                             sQuote(f)),
                     domain = NA)
             setPrimitiveMethods(f, fdef, "reset", fgen, NULL)
         }
@@ -450,8 +454,8 @@ getGeneric <-
         if(is.primitive(baseDef)) {
             value <- genericForPrimitive(f)
             if(!is.function(value) && mustFind)
-                stop(gettextf("methods cannot be defined for the primitive function \"%s\"",
-                              f), domain = NA)
+                stop(gettextf("methods cannot be defined for the primitive function %s",
+                              sQuote(f)), domain = NA)
             if(is(value, "genericFunction"))
                 value <- .cacheGeneric(f, value)
         }
@@ -1217,7 +1221,9 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
         else if(is(mi, "MethodsList"))
             mi <- Recall(mi, f)
         else
-            stop(gettextf("internal error: Bad methods list object in fixing methods for primitive function \"%s\"", f), domain = NA)
+            stop(gettextf("internal error: Bad methods list object in fixing methods for primitive function %s",
+                          sQuote(f)),
+                 domain = NA)
         methods[[i]] <- mi
     }
     mlist@methods <- methods

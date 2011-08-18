@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-08-09 r56687)
+R Under development (unstable) (2011-08-18 r56755)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -540,7 +540,7 @@ $answer.all
 > setMethod("!", "foo", function(e1) e1+NA)
 [1] "!"
 Warning message:
-For function "!", signature "foo": argument in method definition changed from (e1) to (x) 
+For function '!', signature "foo": argument in method definition changed from (e1) to (x) 
 > selectMethod("!", "foo")
 Method Definition:
 

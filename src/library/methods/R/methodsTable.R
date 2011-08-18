@@ -595,8 +595,9 @@
         methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,
                           verbose, returnAll, FALSE)
         if(length(methods) > 0L)
-          message(gettextf("No simply inherited methods found for function \"%s\"; using non-simple method",
-                           fdef@generic), domain = NA)
+          message(gettextf("No simply inherited methods found for function %s; using non-simple method",
+                           sQuote(fdef@generic)),
+                  domain = NA)
     }
     if(doCache && length(methods)) { ## Cache the newly found one
         if(verbose) cat(" .fI> caching newly found methods ..\n")

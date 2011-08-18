@@ -112,7 +112,9 @@ insertMethod <-
     ## See rev. 1.17 for the code before the assertions added.
     if(identical(args[1L], "...") && !identical(names(signature), "...")) {
         if(identical(signature[[1L]], "ANY"))
-           stop(gettextf("inserting method with invalid signature matching argument '...' to class \"%s\"", signature[[1L]]), domain = NA)
+           stop(gettextf("inserting method with invalid signature matching argument '...' to class %s",
+                         dQuote(signature[[1L]])),
+                domain = NA)
         args <- args[-1L]
         signature <- signature[-1L]
         if(length(signature) == 0L)
@@ -510,14 +512,16 @@ matchSignature <-
 		sprintf(ngettext(length(unknown),
 				 "no definition for class %s",
 				 "no definition for classes %s"),
-			paste(.dQ(unknown), collapse = ", ")),
+			paste(dQuote(unknown), collapse = ", ")),
 		domain = NA)
         }
     }
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
-        stop(gettextf("object to use as a method signature for function \"%s\" does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object",
-                      fun@generic, length(sigClasses), length(signature)),
+        stop(gettextf("object to use as a method signature for function %s does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object",
+                      sQuote(fun@generic),
+                      length(sigClasses),
+                      length(signature)),
              domain = NA)
     if(is.null(names(signature))) {
         which <- seq_along(signature)
@@ -548,8 +552,8 @@ matchSignature <-
     ## and carried along the values.  Get the supplied classes in that
     ## order, from the matched args in the call object.
     if(any(is.na(which)))
-        stop(gettextf("in the method signature for function \"%s\" invalid argument names in the signature: %s",
-                      fun@generic,
+        stop(gettextf("in the method signature for function %s invalid argument names in the signature: %s",
+                      sQuote(fun@generic),
                       paste(snames[is.na(which)], collapse = ", ")),
              domain = NA)
     smatch <- smatch[-1]

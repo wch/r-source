@@ -59,8 +59,8 @@ getFunction <- function(name, generic = TRUE, mustFind = TRUE,
     }
     if(!found && mustFind)
 	stop(if(generic)
-	     gettextf("no function \"%s\" found", name) else
-	     gettextf("no non-generic function \"%s\" found", name),
+	     gettextf("no function %s found", sQuote(name)) else
+	     gettextf("no non-generic function %s found", sQuote(name)),
 	     domain = NA)
     f
 }

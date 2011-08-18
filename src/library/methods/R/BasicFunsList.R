@@ -115,13 +115,15 @@ list(
 
 genericForPrimitive <- function(f, where = topenv(parent.frame())) {
 #    if(.matchBasic(f, .ExcludePrimitiveGenerics, FALSE))
-#        stop(gettextf("methods may not be defined for primitive function \"%s\" in this version of R", f), domain = NA)
+#        stop(gettextf("methods may not be defined for primitive function %s in this version of R", sQuote(f)), domain = NA)
     env <- .findBasicFuns(where)
     funs <- get(".BasicFunsList", envir = env)
     ans <- elNamed(funs, f)
     ## this element may not exist (yet, during loading), dom't test null
     if(identical(ans, FALSE))
-        stop(gettextf("methods may not be defined for primitive function \"%s\" in this version of R", f), domain = NA)
+        stop(gettextf("methods may not be defined for primitive function %s in this version of R",
+                      sQuote(f)),
+             domain = NA)
     ans
 }
 
