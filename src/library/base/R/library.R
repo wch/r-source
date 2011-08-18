@@ -14,7 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-testPlatformEquivalence <- function(built, run)
+testPlatformEquivalence <-
+function(built, run)
 {
     ## args are "cpu-vendor-os", but os might be 'linux-gnu'!
     ## remove vendor field
@@ -462,40 +463,36 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     else invisible(.packages())
 }
 
-print.libraryIQR <-
+format.libraryIQR <-
 function(x, ...)
 {
     db <- x$results
+    if(!nrow(db)) return(character())
     ## Split according to LibPath, preserving order of libraries.
     libs <- db[, "LibPath"]
-    libs <- factor(libs, levels=unique(libs))
-    out <- if(nrow(db) == 0L)
-        NULL
-    else lapply(split(1 : nrow(db), libs),
-                function(ind) db[ind, c("Package", "Title"),
-                                 drop = FALSE])
-    outFile <- tempfile("RlibraryIQR")
-    outConn <- file(outFile, open = "w")
-    first <- TRUE
-    for(lib in names(out)) {
-        writeLines(gettextf("%sPackages in library %s:\n",
-                            ifelse(first, "", "\n"),
-                            sQuote(lib)),
-                   outConn)
-        writeLines(formatDL(out[[lib]][, "Package"],
-                            out[[lib]][, "Title"]),
-                   outConn)
-        first <- FALSE
-    }
-    if(first) {
-        close(outConn)
-        unlink(outFile)
+    libs <- factor(libs, levels = unique(libs))
+    out <- lapply(split(1 : nrow(db), libs),
+                  function(ind) db[ind, c("Package", "Title"),
+                                   drop = FALSE])
+    c(unlist(Map(function(lib, sep) {
+        c(gettextf("%sPackages in library %s:\n", sep, sQuote(lib)),
+          formatDL(out[[lib]][, "Package"],
+                   out[[lib]][, "Title"]))
+    },
+                 names(out),
+                 c("", rep.int("\n", length(out) - 1L)))),
+      x$footer)
+}
+
+print.libraryIQR <-
+function(x, ...)
+{
+    s <- format(x)
+    if(!length(s)) {
         message("no packages found")
-    }
-    else {
-        if(!is.null(x$footer))
-            writeLines(c("\n", x$footer), outConn)
-        close(outConn)
+    } else {
+        outFile <- tempfile("RlibraryIQR")
+        writeLines(s, outFile)
         file.show(outFile, delete.file = TRUE,
                   title = gettext("R packages available"))
     }
@@ -653,7 +650,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     invisible(value)
 }
 
-.packages <- function(all.available = FALSE, lib.loc = NULL)
+.packages <-
+function(all.available = FALSE, lib.loc = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -670,7 +668,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     return(invisible(substring(s[substr(s, 1L, 8L) == "package:"], 9)))
 }
 
-path.package <- function(package = NULL, quiet = FALSE)
+path.package <-
+function(package = NULL, quiet = FALSE)
 {
     if(is.null(package)) package <- .packages()
     if(length(package) == 0L) return(character())
@@ -698,8 +697,8 @@ path.package <- function(package = NULL, quiet = FALSE)
 
 ## As from 2.9.0 ignore versioned installs
 find.package <-
-    function(package = NULL, lib.loc = NULL, quiet = FALSE,
-             verbose = getOption("verbose"))
+function(package = NULL, lib.loc = NULL, quiet = FALSE,
+         verbose = getOption("verbose"))
 {
     if(is.null(package) && is.null(lib.loc) && !verbose) {
         ## We only want the paths to the attached packages.
@@ -817,40 +816,43 @@ find.package <-
     out
 }
 
-print.packageInfo <- function(x, ...)
+format.packageInfo <-
+function(x, ...)
 {
     if(!inherits(x, "packageInfo")) stop("wrong class")
-    outFile <- tempfile("RpackageInfo")
-    outConn <- file(outFile, open = "w")
     vignetteMsg <-
         gettextf("Further information is available in the following vignettes in directory %s:",
                  sQuote(file.path(x$path, "doc")))
-    headers <- c(gettext("Description:\n\n"),
-                 gettext("Index:\n\n"),
-                 paste(paste(strwrap(vignetteMsg), collapse = "\n"),
-                       "\n\n", sep = ""))
-    footers <- c("\n", "\n", "")
+    headers <- sprintf("\n%s\n",
+                       c(gettext("Description:"),
+                         gettext("Index:"),
+                         paste(strwrap(vignetteMsg), collapse = "\n")))
     formatDocEntry <- function(entry) {
         if(is.list(entry) || is.matrix(entry))
             formatDL(entry, style = "list")
         else
             entry
     }
-    writeLines(gettextf("\n\t\tInformation on package %s\n", sQuote(x$name)),
-               outConn)
-    for(i in which(!vapply(x$info, is.null, NA))) {
-        writeLines(headers[i], outConn, sep = "")
-        writeLines(formatDocEntry(x$info[[i]]), outConn)
-        writeLines(footers[i], outConn, sep = "")
-    }
-    close(outConn)
+    c(gettextf("\n\t\tInformation on package %s", sQuote(x$name)),
+      unlist(lapply(which(!vapply(x$info, is.null, NA)),
+                    function(i)
+                        c(headers[i], formatDocEntry(x$info[[i]])))))
+                
+}
+
+print.packageInfo <-
+function(x, ...)
+{
+    outFile <- tempfile("RpackageInfo")
+    writeLines(format(x), outFile)
     file.show(outFile, delete.file = TRUE,
-              title = gettextf("Documentation for package %s", sQuote(x$name)))
+              title =
+              gettextf("Documentation for package %s", sQuote(x$name)))
     invisible(x)
 }
 
 .getRequiredPackages <-
-    function(file="DESCRIPTION", lib.loc = NULL, quietly = FALSE, useImports = FALSE)
+function(file="DESCRIPTION", lib.loc = NULL, quietly = FALSE, useImports = FALSE)
 {
     ## OK to call tools as only used during installation.
     pkgInfo <- tools:::.split_description(tools:::.read_description(file))
