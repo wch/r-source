@@ -24,8 +24,9 @@
       against simultaneous installation of indirect dependences as well
       as direct ones.
       
-      \item Sweave now knows about a few more Windows' encodings,
-      including \code{cp1250} and \code{cp1257}.
+      \item Sweave now knows about a few more Windows' encodings
+      (including \code{cp1250} and \code{cp1257}) and some
+      \code{inputenx} encodings such as \code{koi8-r}.
     }
   }
 

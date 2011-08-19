@@ -35,7 +35,8 @@
     the DLL given by this argument (plus the conventional extension,
     \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
-    that no other package can override their external symbols.  Use
+    that no other package can override their external symbols, and also
+    speeds up the search (see \sQuote{Note}).  Use
     \code{PACKAGE="base"} for symbols linked in to \R.}
   \item{ENCODING}{optional name for an encoding to be assumed for
     character vectors.  See \sQuote{Details}.}
@@ -222,6 +223,12 @@
   \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
   as other header files are not installed and are even more
   likely to be changed.
+}
+
+\note{
+  If one of these functions is to be used frequently, do specify
+  \code{PACKAGE} (to confine the search to a single DLL) or pass
+  \code{name} as one of the native symbol objects.
 }
 
 \references{
