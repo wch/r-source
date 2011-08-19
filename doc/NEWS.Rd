@@ -23,6 +23,9 @@
       \item \code{install.packages()} with \code{Ncpus > 1} guards
       against simultaneous installation of indirect dependences as well
       as direct ones.
+      
+      \item Sweave now knows about a few more Windows' encodings,
+      including \code{cp1250} and \code{cp1257}.
     }
   }
 
