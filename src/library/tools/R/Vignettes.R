@@ -300,13 +300,15 @@ getVignetteEncoding <-  function(file, ...)
         ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
         switch(res,
                "utf8" =, "utf8x" = "UTF-8",
-               "latin1" = "latin1",
-               "latin2" = "latin2",
-               "latin9" = "latin-9", # only form known to GNU libiconv
-               "arabic" = "ISO-8859-6",
-               "cyrillic" = "ISO-8859-5",
-               "greek" = "ISO-8859-7",
-               "hebrew" = "ISO-8859-8",
+               "latin1" =, "iso-8859-1" = "latin1",
+               "latin2" =, "iso-8859-2" = "latin2",
+               "latin9" =, "iso-8859-15" = "latin-9", # only form known to GNU libiconv
+               "latin10" =, "iso-8859-16" = "latin10",
+               "cyrillic" =, "iso-8859-5" =  "ISO-8859-5", # inputenx
+               "koi8-r" =  "KOI8-R", # inputenx
+               "arabic" = "ISO-8859-6", # Not clear next 3 are known to latex
+               "greek" =, "iso-8859-7" = "ISO-8859-7",
+               "hebrew" =, "iso-8859-8" = "ISO-8859-8",
                "ansinew" = "CP1252",
                "applemac" = "macroman",
                ## assume these only get used on Windows
@@ -400,7 +402,7 @@ function(vignetteDir)
                       row.names = NULL, # avoid trying to compute row
                                         # names
                       stringsAsFactors = FALSE)
-                      
+
     if (any(dups <- duplicated(names <- file_path_sans_ext(out$File)))) {
     	dup <- out$File[dups][1]
     	dupname <- names[dups][1]
@@ -408,7 +410,7 @@ function(vignetteDir)
     	stop(gettextf("In '%s' vignettes '%s' and '%s' have the same vignette name",
     		      basename(dirname(vignetteDir)), orig, dup),
              domain = NA)
-    }         
+    }
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
     out

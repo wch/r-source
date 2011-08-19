@@ -276,9 +276,6 @@
       \item Documentation and messages have been standardized to
       use \dQuote{namespace} rather than \dQuote{name space}.
 
-      \item Sweave now knows about a few more Windows' encodings,
-      including \code{cp1250} and \code{cp1257}.  (Belated user request.)
-
       \item \code{setGeneric()} now looks in the default packages for
       a non-generic version of a function if called from a package with a
       namespace.  (It always did for packages without a namespace.)
@@ -687,6 +684,10 @@
       \item \code{install.packages()} with \code{Ncpus > 1} guards
       against simultaneous installation of indirect dependences as well
       as direct ones.
+      
+      \item Sweave now knows about a few more Windows' encodings
+      (including \code{cp1250} and \code{cp1257}) and some
+      \code{inputenx} encodings such as \code{koi8-r}.
     }
   }
 
