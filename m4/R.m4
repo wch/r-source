@@ -3799,6 +3799,55 @@ else
 fi
 ])# R_ICU
 
+## R_ABI
+## ------------
+AC_DEFUN([R_ABI],
+[## System type.
+case "${host_os}" in
+  linux*)
+    R_SYSTEM_ABI="linux"
+    ;;
+  *)
+    R_SYSTEM_ABI="?"
+    ;;
+esac
+## Compiler types
+## C: AC_PROG_CC does
+##   If using the GNU C compiler, set shell variable `GCC' to `yes'.
+##   Alternatively, could use ac_cv_c_compiler_gnu (undocumented).
+if test "${GCC}" = yes; then
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
+else
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+fi
+## C++: AC_PROG_CXX does
+##   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
+##   Alternatively, could use ac_cv_cxx_compiler_gnu (undocumented).
+if test "${GXX}" = yes; then
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
+else
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+fi
+## Fortran 77: AC_PROG_F77 does
+##   If using `g77' (the GNU Fortran 77 compiler), then set the shell
+##   variable `G77' to `yes' (and also seems to do so for gfortran, which
+##   is what we really need).
+##   Alternatively, could use ac_cv_f77_compiler_gnu (undocumented).
+if test "${G77}" = yes; then
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
+else
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+fi
+## Fortran 90/95: AC_PROG_FC does not seem to set a shell variable
+##   indicating the GNU Fortran 90/95 compiler.
+##   Hence, need to use ac_cv_fc_compiler_gnu (undocumented).
+if test "${ac_cv_fc_compiler_gnu}" = yes; then
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
+else
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+fi
+AC_SUBST(R_SYSTEM_ABI)
+]) # R_ABI
 
 ### Local variables: ***
 ### mode: outline-minor ***

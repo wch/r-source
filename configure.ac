@@ -1087,6 +1087,8 @@ AC_SUBST(OBJC_LIBS)
 AC_SUBST(OBJCFLAGS)
 AC_SUBST(OBJCXXFLAGS)
 
+R_ABI
+
 ### ** DLL stuff.
 
 ## We need to determine the following:
