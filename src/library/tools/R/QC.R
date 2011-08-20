@@ -4202,7 +4202,8 @@ function(x, ...)
       strwrap(gettextf("Package startup functions should use %s to generate messages.",
                        sQuote("packageStartupMessage")),
               exdent = 2L),
-      gettextf("See section 'Good practice' in ?.onAttach."),
+      gettextf("See section %s in ?.onAttach.",
+               sQuote("Good practice")),
       ""
       )
 }
