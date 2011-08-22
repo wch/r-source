@@ -127,7 +127,7 @@ par(\dots, no.readonly = FALSE)
   \code{"cra"}, \code{"csi"}, \code{"cxy"} and \code{"din"} are always
   read-only.)
 
-  There are several parameters can only be set by a call to \code{par()}:
+  Several parameters can only be set by a call to \code{par()}:
   \itemize{
     \item \code{"ask"},
     \item \code{"fig"}, \code{"fin"},
