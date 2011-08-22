@@ -77,7 +77,8 @@ image(x, \dots)
   only makes sense to specify the midpoints of an equally-spaced
   grid.  If you specify just one row or column and a length-one \code{x}
   or \code{y}, the whole user area in the corresponding direction is
-  filled.
+  filled. For logarithmic \code{x} or \code{y} axes the boundaries between 
+  cells must be specified.
 
   Rectangles corresponding to missing values are not plotted (and so are
   transparent and (unless \code{add=TRUE}) the default background painted
