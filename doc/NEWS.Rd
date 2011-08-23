@@ -36,10 +36,18 @@
       with its use for data-only packages without namespaces in earlier
       versions of \R).
 
-      \item There is a new package \pkg{parallel}.\cr
-      Currently it contains support for multiple RNG streams following
-      L'Ecuyer \emph{et al} (2002).\cr
-      (Anything else there is still incomplete/experimental.)
+      \item There is a new package \pkg{parallel}.
+      
+      It incorporates (slightly revised) copies of packages \pkg{multicore}
+      \pkg{snow} (excluding MPI, PVM and NWS clusters).  Code written to
+      use those packages should work unchanged (apart from changing any
+      references to their namespaces to a reference to \pkg{parallel}).
+      
+      It also contains support for multiple RNG streams following
+      L'Ecuyer \emph{et al} (2002), with support for both
+      \code{mclapply} and \pkg{snow} clusters.
+      
+      (It is still incomplete/experimental.)
     }
   }
 
@@ -341,9 +349,9 @@
       \item \code{stars()} gains a \code{col.lines} argument, thanks to
       Dustin Sallings. (Wish of \PR{14657}.)
 
-      \item New function \code{regmatches} for extracting matched or
-      non-matched substrings from match data obtained by \code{regexpr}
-      and \code{gregexpr}.
+      \item New function \code{regmatches()} for extracting matched or
+      non-matched substrings from match data obtained by \code{regexpr()}
+      and \code{gregexpr()}.
     }
   }
 
@@ -435,8 +443,9 @@
       produce a PDF version of the processed Sweave document.
 
       \item It is no longer allowed to have two vignettes with the
-      same vignette name (e.g. vig.Rnw and vig.Snw).  (Previously one
-      vignette hid the other from the \code{vignette()} function.)
+      same vignette basename (e.g. \file{vig.Rnw} and \file{vig.Snw}).
+      (Previously one vignette hid the other from the \code{vignette()}
+      function.)
     }
   }
 
@@ -479,8 +488,8 @@
       this will be disallowed in future releases.  (There are \emph{pro
 	tem} some exceptions to the warning.)
 
-      \item A dependency on SVN revision is allowed for \code{R}, e.g.
-      \code{R (>= r56550)}.  This should be used in conjunction with a
+      \item A dependency on SVN revision is allowed for \code{R},
+      e.g. \code{R (>= r56550)}.  This should be used in conjunction with a
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
@@ -707,7 +716,7 @@
     \itemize{
       \item Using a broad \code{exportPattern} directive in a
       \file{NAMESPACE} file is no longer allowed to export internal
-      objects such as \code{.onLoad} and \code{.__S3MethodsTable__.}.
+      objects such as \code{.onLoad} and \code{.__S3MethodsTable__.} .
 
       These are also excluded from imports, along with \code{.First.lib}.
     }
