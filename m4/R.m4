@@ -3807,6 +3807,12 @@ case "${host_os}" in
   linux*)
     R_SYSTEM_ABI="linux"
     ;;
+  solaris*)    
+    R_SYSTEM_ABI="solaris"
+    ;;
+  darwin*)
+    R_SYSTEM_ABI="osx"
+    ;;
   *)
     R_SYSTEM_ABI="?"
     ;;
