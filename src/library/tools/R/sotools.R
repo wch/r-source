@@ -1,34 +1,59 @@
-read_symbols_from_object_file <-
-function(f)
-{
-    if(!nzchar(nm <- Sys.which("nm"))) return()
-    f <- file_path_as_absolute(f)
-    s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
-                         intern = TRUE),
-                  " +")
-    ## Cannot simply rbind() this because elements may have 2-4
-    ## entries.
-    n <- length(s)
-    tab <- matrix("", nrow = n, ncol = 4L)
-    colnames(tab) <- c("name", "type", "value", "size")
-    ## Compute desired i and j positions in tab.
-    i <- rep.int(seq_len(n), sapply(s, length))
-    j <- unlist(lapply(s, seq_along))
+if(.Platform$OS.type == "windows") {
+    DLL_nm <- local({
+        etc <- readLines(paste(R.home("etc"), Sys.getenv("R_ARCH"),
+                               "/Makeconf", sep = ""))
+        bp <- grep("^BINPREF", etc, value = TRUE)
+        bp <- sub("^BINPREF = +", "", bp)
+        paste(bp, "objdump.exe", sep = "")
+    })
+    read_symbols_from_dll <- function(f)
+    {
+        if(!nzchar(Sys.which(DLL_nm))) return()
+        f <- file_path_as_absolute(f)
+        s0 <- system2(DLL_nm, c("-x", shQuote(f)), stdout = TRUE, stderr=TRUE)
+        l1 <- grep("^\tDLL Name:", s0)
+        l2 <- grep("^The Export Tables", s0)
+        if (!length(l1) || !length(l2)) return()
+        s1 <- s0[(l1[1L] + 3L):(l2 - 4L)]
+        s2 <- grep("\t[0-9a-f]+\t +[0-9]+", s1, value = TRUE)
+        sub(".* ([_A-Za-z0-9]+)$", "\\1", s2)
+    }
+} else {
+    read_symbols_from_object_file <- function(f)
+    {
+        if(!nzchar(nm <- Sys.which("nm"))) return()
+        f <- file_path_as_absolute(f)
+        s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
+                             intern = TRUE),
+                      " +")
+        ## Cannot simply rbind() this because elements may have 2-4
+        ## entries.
+        n <- length(s)
+        tab <- matrix("", nrow = n, ncol = 4L)
+        colnames(tab) <- c("name", "type", "value", "size")
+        ## Compute desired i and j positions in tab.
+        i <- rep.int(seq_len(n), sapply(s, length))
+        j <- unlist(lapply(s, seq_along))
 
-    tab[n * (j - 1L) + i] <- unlist(s)
+        tab[n * (j - 1L) + i] <- unlist(s)
 
-    tab
+        tab
+    }
 }
 
-get_system_ABI <-
-function()
-{
-    s <- Sys.getenv("R_SYSTEM_ABI")
-    if((s == "") || (substring(s, 1L, 1L) %in% c("@", "?")))
-        return(character())
-    s <- unlist(strsplit(s, ",", fixed = TRUE))
-    names(s) <- c("system", "CC", "CXX", "F77", "FC")
-    s
+get_system_ABI <- if(.Platform$OS.type == "windows") {
+    function() c(system = "windows", CC = "gcc", CXX = "g++",
+                 F77 = "gfortran", FC = "gfortran")
+} else {
+    function()
+    {
+        s <- Sys.getenv("R_SYSTEM_ABI")
+        if((s == "") || (substring(s, 1L, 1L) %in% c("@", "?")))
+            return(character())
+        s <- unlist(strsplit(s, ",", fixed = TRUE))
+        names(s) <- c("system", "CC", "CXX", "F77", "FC")
+        s
+    }
 }
 
 system_ABI <- get_system_ABI()
@@ -86,7 +111,18 @@ so_symbol_names_table <-
       "solaris, Fortran, solf95, write, __f90_slw_ch",
       "solaris, Fortran, solf95, write, __f90_sslw",
       "solaris, Fortran, solf95, stop, _f90_stop_int",
-      "solaris, Fortran, solf95, stop, _f90_stop_char"
+      "solaris, Fortran, solf95, stop, _f90_stop_char",
+
+      ## Windows statically links libstdc++, libgfortran
+      # "windows, C, gcc, abort, abort",  # lots of false positives
+      "windows, C, gcc, assert, _assert",
+      "windows, C, gcc, exit, exit",
+      "windows, C, gcc, printf, printf",
+      "windows, C, gcc, printf, puts",
+      "windows, C, gcc, puts, puts",
+      "windows, C, gcc, putchar, putchar",
+      "windows, C, gcc, vprintf, vprintf",
+      "windows, Fortran, gfortran, stop, exit"
       )
 so_symbol_names_table <-
     do.call(rbind,
@@ -120,20 +156,32 @@ function(x)
     sub("@.*", "", x)
 }
 
-check_so_symbols <-
-function(so)
-{
-    if(!length(system_ABI)) return()
-    tab <- read_symbols_from_object_file(so)
-    nms <- tab[tab[, "type"] == "U", "name"]
-    sys <- system_ABI["system"]
-    if(!is.null(snh <- so_symbol_names_handlers_db[[sys]]))
-        nms <- snh(nms)
-    ind <- so_symbol_names_table[, "osname"] %in% nms
-    tab <- so_symbol_names_table[ind, , drop = FALSE]
-    attr(tab, "file") <- so
-    class(tab) <- "check_so_symbols"
-    tab
+check_so_symbols <- if(.Platform$OS.type == "windows") {
+    function(so)
+    {
+        if(!length(system_ABI)) return()
+        nms <- read_symbols_from_dll(so)
+        ind <- so_symbol_names_table[, "osname"] %in% nms
+        tab <- so_symbol_names_table[ind, , drop = FALSE]
+        attr(tab, "file") <- so
+        class(tab) <- "check_so_symbols"
+        tab
+    }
+} else {
+    function(so)
+    {
+        if(!length(system_ABI)) return()
+        tab <- read_symbols_from_object_file(so)
+        nms <- tab[tab[, "type"] == "U", "name"]
+        sys <- system_ABI["system"]
+        if(!is.null(snh <- so_symbol_names_handlers_db[[sys]]))
+            nms <- snh(nms)
+        ind <- so_symbol_names_table[, "osname"] %in% nms
+        tab <- so_symbol_names_table[ind, , drop = FALSE]
+        attr(tab, "file") <- so
+        class(tab) <- "check_so_symbols"
+        tab
+    }
 }
 
 format.check_so_symbols <-
