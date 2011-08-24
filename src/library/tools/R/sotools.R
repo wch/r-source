@@ -67,7 +67,26 @@ so_symbol_names_table <-
       "osx, Fortran, gfortran, write, __gfortran_st_write",
       "osx, Fortran, gfortran, print, __gfortran_st_write",
       "osx, Fortran, gfortran, stop, __gfortran_stop_numeric",
-      "osx, Fortran, gfortran, stop, __gfortran_stop_string"
+      "osx, Fortran, gfortran, stop, __gfortran_stop_string",
+
+      ## stdout, stderr do not show up on Solaris
+      "solaris, C, suncc, abort, abort",
+      "solaris, C, suncc, assert, __assert_c99",
+      "solaris, C, suncc, exit, exit",
+      "solaris, C, suncc, printf, printf",
+      "solaris, C, suncc, printf, puts",
+      "solaris, C, suncc, puts, puts",
+      "solaris, C, suncc, vprintf, vprintf",
+      "solaris, C++, sunCC, std::cout, __1cDstdEcout_",
+      "solaris, C++, sunCC, std::cerr, __1cDstdEcerr_",
+      "solaris, Fortran, sunf95, print, __f90_eslw",
+      "solaris, Fortran, sunf95, print, __f90_slw_ch",
+      "solaris, Fortran, sunf95, print, __f90_sslw",
+      "solaris, Fortran, sunf95, write, __f90_eslw",
+      "solaris, Fortran, sunf95, write, __f90_slw_ch",
+      "solaris, Fortran, sunf95, write, __f90_sslw",
+      "solaris, Fortran, sunf95, stop, _f90_stop_int",
+      "solaris, Fortran, sunf95, stop, _f90_stop_char"
       )
 so_symbol_names_table <-
     do.call(rbind,
