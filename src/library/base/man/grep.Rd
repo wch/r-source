@@ -151,7 +151,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   integer vector giving the length of the matched text (or \eqn{-1} for
   no match).  The match positions and lengths are in characters unless
   \code{useBytes = TRUE} is used, when they are in bytes.  If named
-  capture is uses there are further attributes \code{"capture.start"}
+  capture is used there are further attributes \code{"capture.start"},
   \code{"capture.length"} and \code{"capture.names"}.
 
   \code{gregexpr} returns a list of the same length as \code{text} each
