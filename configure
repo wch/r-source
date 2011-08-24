@@ -25573,6 +25573,12 @@ case "${host_os}" in
   linux*)
     R_SYSTEM_ABI="linux"
     ;;
+  solaris*)
+    R_SYSTEM_ABI="solaris"
+    ;;
+  darwin*)
+    R_SYSTEM_ABI="osx"
+    ;;
   *)
     R_SYSTEM_ABI="?"
     ;;
@@ -35705,11 +35711,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35708: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35714: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35712: \$? = $ac_status" >&5
+   echo "$as_me:35718: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35804,11 +35810,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35807: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35813: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35811: \$? = $ac_status" >&5
+   echo "$as_me:35817: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35856,11 +35862,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35859: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35865: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35863: \$? = $ac_status" >&5
+   echo "$as_me:35869: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
