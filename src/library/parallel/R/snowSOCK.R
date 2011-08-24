@@ -74,10 +74,8 @@ newPSOCKnode <- function(machine = "localhost", ...,
         else system(cmd, wait = FALSE)
     }
 
-Sys.sleep(1)
     con <- socketConnection("localhost", port = port, server = TRUE,
                             blocking = TRUE, open = "a+b", timeout = timeout)
-	print(con)
     structure(list(con = con, host = machine, rank = rank), class = "SOCKnode")
 }
 
@@ -140,11 +138,8 @@ print.SOCKnode <- function(x, ...)
     {
         port <- as.integer(port)
         ## maybe use `try' and sleep/retry if first time fails?
-	Sys.sleep(1)
         con <- socketConnection(master, port = port, blocking = TRUE,
                                 open = "a+b", timeout = timeout)
-print(con)
-	Sys.sleep(1)
         structure(list(con = con), class = "SOCKnode")
     }
 

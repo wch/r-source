@@ -1,4 +1,4 @@
-library(multicore)
+library(parallel)
 
 library(boot)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)

@@ -1,4 +1,4 @@
-library(multicore)
+library(parallel)
 
 simplify2array(mclapply(rep(4, 5), rnorm))
 # use the same random numbers for all values
