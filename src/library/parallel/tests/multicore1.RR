@@ -1,9 +1,9 @@
-library(parallel)
+library(multicore)
 
-p <- mcfork()
+p <- fork()
 if (inherits(p, "masterProcess")) {
     cat("I'm a child! ", Sys.getpid(), "\n")
-    mcexit(,"I was a child")
+    exit(,"I was a child")
 }
 cat("I'm the master\n")
 unserialize(readChildren(1.5))

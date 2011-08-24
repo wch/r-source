@@ -70,23 +70,23 @@ so_symbol_names_table <-
       "osx, Fortran, gfortran, stop, __gfortran_stop_string",
 
       ## stdout, stderr do not show up on Solaris
-      "solaris, C, suncc, abort, abort",
-      "solaris, C, suncc, assert, __assert_c99",
-      "solaris, C, suncc, exit, exit",
-      "solaris, C, suncc, printf, printf",
-      "solaris, C, suncc, printf, puts",
-      "solaris, C, suncc, puts, puts",
-      "solaris, C, suncc, vprintf, vprintf",
-      "solaris, C++, sunCC, std::cout, __1cDstdEcout_",
-      "solaris, C++, sunCC, std::cerr, __1cDstdEcerr_",
-      "solaris, Fortran, sunf95, print, __f90_eslw",
-      "solaris, Fortran, sunf95, print, __f90_slw_ch",
-      "solaris, Fortran, sunf95, print, __f90_sslw",
-      "solaris, Fortran, sunf95, write, __f90_eslw",
-      "solaris, Fortran, sunf95, write, __f90_slw_ch",
-      "solaris, Fortran, sunf95, write, __f90_sslw",
-      "solaris, Fortran, sunf95, stop, _f90_stop_int",
-      "solaris, Fortran, sunf95, stop, _f90_stop_char"
+      "solaris, C, solcc, abort, abort",
+      "solaris, C, solcc, assert, __assert_c99",
+      "solaris, C, solcc, exit, exit",
+      "solaris, C, solcc, printf, printf",
+      "solaris, C, solcc, printf, puts",
+      "solaris, C, solcc, puts, puts",
+      "solaris, C, solcc, vprintf, vprintf",
+      "solaris, C++, solCC, std::cout, __1cDstdEcout_",
+      "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
+      "solaris, Fortran, solf95, print, __f90_eslw",
+      "solaris, Fortran, solf95, print, __f90_slw_ch",
+      "solaris, Fortran, solf95, print, __f90_sslw",
+      "solaris, Fortran, solf95, write, __f90_eslw",
+      "solaris, Fortran, solf95, write, __f90_slw_ch",
+      "solaris, Fortran, solf95, write, __f90_sslw",
+      "solaris, Fortran, solf95, stop, _f90_stop_int",
+      "solaris, Fortran, solf95, stop, _f90_stop_char"
       )
 so_symbol_names_table <-
     do.call(rbind,
@@ -166,8 +166,7 @@ function(dir)
     ## Check compiled code in the shared objects of an installed
     ## package.
     r_arch <- .Platform$r_arch
-    so_files <- Sys.glob(file.path(dir, "libs",
-                                   if(nzchar(r_arch)) r_arch,
+    so_files <- Sys.glob(file.path(dir, "libs", r_arch,
                                    sprintf("*%s",
                                            .Platform$dynlib.ext)))
     bad <- Filter(length, lapply(so_files, check_so_symbols))
