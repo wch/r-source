@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-13 14:13\n"
-"PO-Revision-Date: 2011-08-13 14:13\n"
+"POT-Creation-Date: 2011-08-24 10:21\n"
+"PO-Revision-Date: 2011-08-24 10:21\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -423,6 +423,12 @@ msgstr "Package startup functions should use %s to generate messages."
 
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
+
+msgid "See section %s in ?.onAttach."
+msgstr "See section %s in ?.onAttach."
+
+msgid "Good practice"
+msgstr "Good practice"
 
 msgid "package 'methods' is used but not declared"
 msgstr "package ‘methods’ is used but not declared"

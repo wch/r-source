@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-24 10:21\n"
 "PO-Revision-Date: 2011-03-28 11:02+0900 \n"
 "Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -769,6 +769,10 @@ msgstr " 未知の一致距離成分は無視されました "
 
 msgid "'max.distance' components must be non-negative"
 msgstr " 'max.distance' 成分は非負でなければなりません "
+
+#, fuzzy
+msgid "%s and %s must have the same length"
+msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr " norm '%S'は現在は常に exact = FALSE を使います "

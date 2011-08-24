@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-24 10:21\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -798,6 +798,10 @@ msgstr "le componenti sconosciute della distanza verranno ignorate"
 
 msgid "'max.distance' components must be non-negative"
 msgstr "le componenti di 'max.distance' devono essere non negative"
+
+#, fuzzy
+msgid "%s and %s must have the same length"
+msgstr "'x' e 'y' devono avere la stessa lunghezza"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""

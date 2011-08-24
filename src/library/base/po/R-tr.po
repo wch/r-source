@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-24 10:21\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -738,6 +738,9 @@ msgid "unknown match distance components ignored"
 msgstr ""
 
 msgid "'max.distance' components must be non-negative"
+msgstr ""
+
+msgid "%s and %s must have the same length"
 msgstr ""
 
 msgid "norm '%s' currently always uses exact = FALSE"

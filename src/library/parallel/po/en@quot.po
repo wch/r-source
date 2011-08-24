@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-13 14:13+0100\n"
-"PO-Revision-Date: 2011-08-13 14:13+0100\n"
+"POT-Creation-Date: 2011-08-24 10:21+0100\n"
+"PO-Revision-Date: 2011-08-24 10:21+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -39,61 +39,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: fork.c:163 fork.c:166
+#: fork.c:178 fork.c:181
 msgid "unable to create a pipe"
 msgstr "unable to create a pipe"
 
-#: fork.c:175
+#: fork.c:190
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "unable to fork, possible reason: %s"
 
-#: fork.c:211
+#: fork.c:226
 msgid "memory allocation error"
 msgstr "memory allocation error"
 
-#: fork.c:249
+#: fork.c:264
 msgid "only children can send data to the master process"
 msgstr "only children can send data to the master process"
 
-#: fork.c:251
+#: fork.c:266
 msgid "there is no pipe to the master process"
 msgstr "there is no pipe to the master process"
 
-#: fork.c:253
+#: fork.c:268
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "content to send must be RAW, use serialize() if needed"
 
-#: fork.c:262 fork.c:269
+#: fork.c:277 fork.c:284
 msgid "write error, closing pipe to the master"
 msgstr "write error, closing pipe to the master"
 
-#: fork.c:282
+#: fork.c:297
 msgid "only the master process can send data to a child process"
 msgstr "only the master process can send data to a child process"
 
-#: fork.c:289
+#: fork.c:304
 #, c-format
 msgid "child %d does not exist"
 msgstr "child %d does not exist"
 
-#: fork.c:295
+#: fork.c:310
 msgid "write error"
 msgstr "write error"
 
-#: fork.c:375 fork.c:497
+#: fork.c:390 fork.c:512
 #, c-format
 msgid "error '%s' in select"
 msgstr "error ‘%s’ in select"
 
-#: fork.c:583
+#: fork.c:596
 msgid "mckill failed"
 msgstr "mckill failed"
 
-#: fork.c:593
+#: fork.c:606
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit can only be used in a child process"
 
-#: fork.c:612
+#: fork.c:626
 msgid "mcexit failed"
 msgstr "mcexit failed"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-24 10:21\n"
 "PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -768,6 +768,10 @@ msgstr "unbekannte Komponenten in der match-distance Matrix ignoriert"
 
 msgid "'max.distance' components must be non-negative"
 msgstr "'max.distance' Komponenten dürfen nicht negativ sein"
+
+#, fuzzy
+msgid "%s and %s must have the same length"
+msgstr "'x' und 'y' müssen die selbe Länge haben"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "Norm '%s' nutzt aktuell immer exact = FALSE"

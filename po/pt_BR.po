@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-13 14:12+0100\n"
+"POT-Creation-Date: 2011-08-24 10:20+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -115,122 +115,122 @@ msgstr "problema ao mostrar '%ls'"
 #: src/gnuwin32/extra.c:772 src/gnuwin32/extra.c:856 src/gnuwin32/extra.c:859
 #: src/gnuwin32/extra.c:864 src/gnuwin32/extra.c:1656
 #: src/gnuwin32/extra.c:1681 src/main/agrep.c:67 src/main/agrep.c:70
-#: src/main/apply.c:278 src/main/apply.c:280 src/main/apply.c:283
-#: src/main/array.c:86 src/main/array.c:1100 src/main/array.c:1232
-#: src/main/array.c:1234 src/main/array.c:1235 src/main/attrib.c:192
-#: src/main/builtin.c:74 src/main/builtin.c:83 src/main/builtin.c:102
-#: src/main/builtin.c:104 src/main/builtin.c:133 src/main/builtin.c:521
-#: src/main/builtin.c:537 src/main/builtin.c:720 src/main/builtin.c:722
-#: src/main/builtin.c:724 src/main/character.c:131 src/main/character.c:134
-#: src/main/character.c:195 src/main/character.c:1022
-#: src/main/character.c:1026 src/main/character.c:1259
-#: src/main/character.c:1263 src/main/character.c:1320
-#: src/main/character.c:1323 src/main/connections.c:961
-#: src/main/connections.c:967 src/main/connections.c:970
-#: src/main/connections.c:974 src/main/connections.c:1113
-#: src/main/connections.c:1129 src/main/connections.c:1134
-#: src/main/connections.c:1736 src/main/connections.c:1742
-#: src/main/connections.c:1746 src/main/connections.c:1750
-#: src/main/connections.c:1755 src/main/connections.c:2405
-#: src/main/connections.c:2410 src/main/connections.c:2413
-#: src/main/connections.c:2416 src/main/connections.c:2782
-#: src/main/connections.c:2787 src/main/connections.c:2793
-#: src/main/connections.c:2796 src/main/connections.c:2800
-#: src/main/connections.c:2815 src/main/connections.c:2866
-#: src/main/connections.c:2871 src/main/connections.c:2875
-#: src/main/connections.c:2879 src/main/connections.c:2883
-#: src/main/connections.c:2889 src/main/connections.c:2937
-#: src/main/connections.c:2943 src/main/connections.c:2947
-#: src/main/connections.c:2998 src/main/connections.c:3001
-#: src/main/connections.c:3267 src/main/connections.c:3270
-#: src/main/connections.c:3273 src/main/connections.c:3371
-#: src/main/connections.c:3377 src/main/connections.c:3380
-#: src/main/connections.c:3530 src/main/connections.c:3533
-#: src/main/connections.c:3537 src/main/connections.c:3540
-#: src/main/connections.c:3647 src/main/connections.c:3750
-#: src/main/connections.c:3753 src/main/connections.c:4089
-#: src/main/connections.c:4114 src/main/connections.c:4147
-#: src/main/connections.c:4161 src/main/connections.c:4169
-#: src/main/connections.c:4195 src/main/connections.c:4336
-#: src/main/connections.c:4340 src/main/connections.c:4466
-#: src/main/connections.c:4468 src/main/connections.c:4470
-#: src/main/connections.c:4498 src/main/connections.c:4628
-#: src/main/connections.c:4654 src/main/connections.c:4658
-#: src/main/connections.c:4662 src/main/connections.c:4666
-#: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:715 src/main/datetime.c:795 src/main/datetime.c:797
-#: src/main/datetime.c:801 src/main/datetime.c:960 src/main/datetime.c:962
-#: src/main/datetime.c:1126 src/main/debug.c:223 src/main/deparse.c:360
-#: src/main/devices.c:583 src/main/dotcode.c:738 src/main/dotcode.c:742
-#: src/main/dotcode.c:747 src/main/dounzip.c:320 src/main/dounzip.c:327
-#: src/main/dounzip.c:337 src/main/dounzip.c:342 src/main/dounzip.c:346
-#: src/main/dounzip.c:350 src/main/envir.c:1543 src/main/envir.c:1546
-#: src/main/envir.c:1663 src/main/envir.c:1668 src/main/envir.c:1734
-#: src/main/envir.c:1750 src/main/envir.c:1756 src/main/envir.c:1856
-#: src/main/envir.c:1864 src/main/envir.c:1871 src/main/envir.c:1885
-#: src/main/envir.c:1891 src/main/envir.c:1895 src/main/envir.c:2112
-#: src/main/envir.c:2233 src/main/envir.c:2492 src/main/envir.c:2699
-#: src/main/envir.c:2713 src/main/envir.c:2720 src/main/envir.c:2736
-#: src/main/envir.c:3299 src/main/errors.c:937 src/main/eval.c:268
-#: src/main/eval.c:2041 src/main/eval.c:2070 src/main/eval.c:2074
-#: src/main/grep.c:758 src/main/grep.c:763 src/main/grep.c:1037
-#: src/main/grep.c:1039 src/main/grep.c:1041 src/main/grep.c:1485
-#: src/main/grep.c:1489 src/main/grep.c:1494 src/main/grep.c:2273
-#: src/main/grep.c:2278 src/main/memory.c:3375 src/main/model.c:1610
-#: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
-#: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
-#: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
-#: src/main/paste.c:400 src/main/paste.c:408 src/main/paste.c:574
-#: src/main/paste.c:579 src/main/platform.c:296 src/main/platform.c:298
-#: src/main/platform.c:300 src/main/platform.c:316 src/main/platform.c:327
-#: src/main/platform.c:449 src/main/platform.c:451 src/main/platform.c:726
-#: src/main/platform.c:728 src/main/platform.c:1092 src/main/platform.c:1098
-#: src/main/platform.c:1101 src/main/platform.c:1104 src/main/platform.c:1107
-#: src/main/platform.c:1110 src/main/platform.c:1113 src/main/platform.c:1212
-#: src/main/platform.c:1215 src/main/platform.c:1218 src/main/platform.c:1257
-#: src/main/platform.c:1314 src/main/platform.c:1317 src/main/platform.c:1479
-#: src/main/platform.c:1482 src/main/platform.c:1485 src/main/platform.c:1521
-#: src/main/platform.c:1524 src/main/platform.c:1527 src/main/platform.c:1610
-#: src/main/platform.c:1625 src/main/platform.c:1662 src/main/platform.c:1664
-#: src/main/platform.c:1729 src/main/platform.c:1813 src/main/platform.c:2088
-#: src/main/platform.c:2134 src/main/platform.c:2264 src/main/platform.c:2267
-#: src/main/platform.c:2270 src/main/platform.c:2273 src/main/platform.c:2276
-#: src/main/platform.c:2409 src/main/platform.c:2412 src/main/platform.c:2415
-#: src/main/platform.c:2418 src/main/platform.c:2421 src/main/platform.c:2490
-#: src/main/platform.c:2498 src/main/platform.c:2534 src/main/platform.c:2584
-#: src/main/plot.c:3104 src/main/plot.c:4241 src/main/plot.c:4245
-#: src/main/plot.c:4248 src/main/plot3d.c:2435 src/main/plot3d.c:2439
-#: src/main/plot3d.c:2444 src/main/plot3d.c:2448 src/main/plot3d.c:2452
-#: src/main/plot3d.c:2456 src/main/print.c:236 src/main/print.c:242
-#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
-#: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
-#: src/main/saveload.c:1937 src/main/saveload.c:1940 src/main/saveload.c:1943
-#: src/main/saveload.c:2059 src/main/saveload.c:2239 src/main/saveload.c:2244
-#: src/main/saveload.c:2247 src/main/saveload.c:2350 src/main/scan.c:663
-#: src/main/scan.c:830 src/main/scan.c:843 src/main/scan.c:847
-#: src/main/scan.c:849 src/main/scan.c:860 src/main/scan.c:887
-#: src/main/scan.c:890 src/main/scan.c:943 src/main/scan.c:980
-#: src/main/scan.c:984 src/main/scan.c:994 src/main/scan.c:1208
-#: src/main/scan.c:1434 src/main/scan.c:1485 src/main/scan.c:1497
-#: src/main/scan.c:1501 src/main/scan.c:1507 src/main/scan.c:1721
-#: src/main/scan.c:1722 src/main/scan.c:1724 src/main/scan.c:1725
-#: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
-#: src/main/scan.c:1729 src/main/seq.c:381 src/main/seq.c:388
-#: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
-#: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
-#: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
-#: src/main/sysutils.c:1612 src/main/sysutils.c:1616 src/main/unique.c:822
-#: src/main/unique.c:1102 src/main/unique.c:1162 src/main/unique.c:1169
-#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1757
-#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
-#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
-#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
-#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
-#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3138
-#: src/modules/X11/devX11.c:3141 src/modules/X11/devX11.c:3144
-#: src/modules/X11/devX11.c:3168 src/unix/sys-std.c:1211
-#: src/unix/sys-std.c:1234
+#: src/main/agrep.c:223 src/main/agrep.c:226 src/main/apply.c:278
+#: src/main/apply.c:280 src/main/apply.c:283 src/main/array.c:86
+#: src/main/array.c:1100 src/main/array.c:1232 src/main/array.c:1234
+#: src/main/array.c:1235 src/main/attrib.c:192 src/main/builtin.c:74
+#: src/main/builtin.c:83 src/main/builtin.c:102 src/main/builtin.c:104
+#: src/main/builtin.c:133 src/main/builtin.c:521 src/main/builtin.c:537
+#: src/main/builtin.c:720 src/main/builtin.c:722 src/main/builtin.c:724
+#: src/main/character.c:131 src/main/character.c:134 src/main/character.c:195
+#: src/main/character.c:1022 src/main/character.c:1026
+#: src/main/character.c:1259 src/main/character.c:1263
+#: src/main/character.c:1320 src/main/character.c:1323
+#: src/main/connections.c:961 src/main/connections.c:967
+#: src/main/connections.c:970 src/main/connections.c:974
+#: src/main/connections.c:1113 src/main/connections.c:1129
+#: src/main/connections.c:1134 src/main/connections.c:1736
+#: src/main/connections.c:1742 src/main/connections.c:1746
+#: src/main/connections.c:1750 src/main/connections.c:1755
+#: src/main/connections.c:2405 src/main/connections.c:2410
+#: src/main/connections.c:2413 src/main/connections.c:2416
+#: src/main/connections.c:2782 src/main/connections.c:2787
+#: src/main/connections.c:2793 src/main/connections.c:2796
+#: src/main/connections.c:2800 src/main/connections.c:2815
+#: src/main/connections.c:2866 src/main/connections.c:2871
+#: src/main/connections.c:2875 src/main/connections.c:2879
+#: src/main/connections.c:2883 src/main/connections.c:2889
+#: src/main/connections.c:2937 src/main/connections.c:2943
+#: src/main/connections.c:2947 src/main/connections.c:2998
+#: src/main/connections.c:3001 src/main/connections.c:3267
+#: src/main/connections.c:3270 src/main/connections.c:3273
+#: src/main/connections.c:3371 src/main/connections.c:3377
+#: src/main/connections.c:3380 src/main/connections.c:3530
+#: src/main/connections.c:3533 src/main/connections.c:3537
+#: src/main/connections.c:3540 src/main/connections.c:3647
+#: src/main/connections.c:3750 src/main/connections.c:3753
+#: src/main/connections.c:4089 src/main/connections.c:4114
+#: src/main/connections.c:4147 src/main/connections.c:4161
+#: src/main/connections.c:4169 src/main/connections.c:4195
+#: src/main/connections.c:4336 src/main/connections.c:4340
+#: src/main/connections.c:4466 src/main/connections.c:4468
+#: src/main/connections.c:4470 src/main/connections.c:4498
+#: src/main/connections.c:4628 src/main/connections.c:4654
+#: src/main/connections.c:4658 src/main/connections.c:4662
+#: src/main/connections.c:4666 src/main/context.c:597 src/main/context.c:606
+#: src/main/context.c:610 src/main/datetime.c:715 src/main/datetime.c:795
+#: src/main/datetime.c:797 src/main/datetime.c:801 src/main/datetime.c:960
+#: src/main/datetime.c:962 src/main/datetime.c:1126 src/main/debug.c:223
+#: src/main/deparse.c:360 src/main/devices.c:583 src/main/dotcode.c:738
+#: src/main/dotcode.c:742 src/main/dotcode.c:747 src/main/dounzip.c:320
+#: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
+#: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1543
+#: src/main/envir.c:1546 src/main/envir.c:1663 src/main/envir.c:1668
+#: src/main/envir.c:1734 src/main/envir.c:1750 src/main/envir.c:1756
+#: src/main/envir.c:1856 src/main/envir.c:1864 src/main/envir.c:1871
+#: src/main/envir.c:1885 src/main/envir.c:1891 src/main/envir.c:1895
+#: src/main/envir.c:2112 src/main/envir.c:2233 src/main/envir.c:2492
+#: src/main/envir.c:2699 src/main/envir.c:2713 src/main/envir.c:2720
+#: src/main/envir.c:2736 src/main/envir.c:3299 src/main/errors.c:937
+#: src/main/eval.c:268 src/main/eval.c:2041 src/main/eval.c:2070
+#: src/main/eval.c:2074 src/main/grep.c:758 src/main/grep.c:763
+#: src/main/grep.c:1037 src/main/grep.c:1039 src/main/grep.c:1041
+#: src/main/grep.c:1485 src/main/grep.c:1489 src/main/grep.c:1494
+#: src/main/grep.c:2273 src/main/grep.c:2278 src/main/memory.c:3375
+#: src/main/model.c:1610 src/main/model.c:1618 src/main/optim.c:225
+#: src/main/paste.c:87 src/main/paste.c:368 src/main/paste.c:375
+#: src/main/paste.c:382 src/main/paste.c:387 src/main/paste.c:392
+#: src/main/paste.c:397 src/main/paste.c:400 src/main/paste.c:408
+#: src/main/paste.c:574 src/main/paste.c:579 src/main/platform.c:296
+#: src/main/platform.c:298 src/main/platform.c:300 src/main/platform.c:316
+#: src/main/platform.c:327 src/main/platform.c:449 src/main/platform.c:451
+#: src/main/platform.c:726 src/main/platform.c:728 src/main/platform.c:1092
+#: src/main/platform.c:1098 src/main/platform.c:1101 src/main/platform.c:1104
+#: src/main/platform.c:1107 src/main/platform.c:1110 src/main/platform.c:1113
+#: src/main/platform.c:1212 src/main/platform.c:1215 src/main/platform.c:1218
+#: src/main/platform.c:1257 src/main/platform.c:1314 src/main/platform.c:1317
+#: src/main/platform.c:1479 src/main/platform.c:1482 src/main/platform.c:1485
+#: src/main/platform.c:1521 src/main/platform.c:1524 src/main/platform.c:1527
+#: src/main/platform.c:1610 src/main/platform.c:1625 src/main/platform.c:1662
+#: src/main/platform.c:1664 src/main/platform.c:1729 src/main/platform.c:1813
+#: src/main/platform.c:2088 src/main/platform.c:2134 src/main/platform.c:2264
+#: src/main/platform.c:2267 src/main/platform.c:2270 src/main/platform.c:2273
+#: src/main/platform.c:2276 src/main/platform.c:2409 src/main/platform.c:2412
+#: src/main/platform.c:2415 src/main/platform.c:2418 src/main/platform.c:2421
+#: src/main/platform.c:2490 src/main/platform.c:2498 src/main/platform.c:2534
+#: src/main/platform.c:2584 src/main/plot.c:3104 src/main/plot.c:4241
+#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2435
+#: src/main/plot3d.c:2439 src/main/plot3d.c:2444 src/main/plot3d.c:2448
+#: src/main/plot3d.c:2452 src/main/plot3d.c:2456 src/main/print.c:236
+#: src/main/print.c:242 src/main/print.c:264 src/main/print.c:270
+#: src/main/print.c:276 src/main/random.c:468 src/main/random.c:472
+#: src/main/random.c:476 src/main/saveload.c:1937 src/main/saveload.c:1940
+#: src/main/saveload.c:1943 src/main/saveload.c:2059 src/main/saveload.c:2239
+#: src/main/saveload.c:2244 src/main/saveload.c:2247 src/main/saveload.c:2350
+#: src/main/scan.c:663 src/main/scan.c:830 src/main/scan.c:843
+#: src/main/scan.c:847 src/main/scan.c:849 src/main/scan.c:860
+#: src/main/scan.c:887 src/main/scan.c:890 src/main/scan.c:943
+#: src/main/scan.c:980 src/main/scan.c:984 src/main/scan.c:994
+#: src/main/scan.c:1208 src/main/scan.c:1434 src/main/scan.c:1485
+#: src/main/scan.c:1497 src/main/scan.c:1501 src/main/scan.c:1507
+#: src/main/scan.c:1721 src/main/scan.c:1722 src/main/scan.c:1724
+#: src/main/scan.c:1725 src/main/scan.c:1726 src/main/scan.c:1727
+#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/seq.c:381
+#: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
+#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
+#: src/main/sysutils.c:593 src/main/sysutils.c:597 src/main/sysutils.c:603
+#: src/main/sysutils.c:607 src/main/sysutils.c:1612 src/main/sysutils.c:1616
+#: src/main/unique.c:822 src/main/unique.c:1102 src/main/unique.c:1162
+#: src/main/unique.c:1169 src/main/util.c:574 src/main/util.c:577
+#: src/main/util.c:1757 src/modules/internet/internet.c:283
+#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
+#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
+#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1077
+#: src/modules/X11/devX11.c:3138 src/modules/X11/devX11.c:3141
+#: src/modules/X11/devX11.c:3144 src/modules/X11/devX11.c:3168
+#: src/unix/sys-std.c:1211 src/unix/sys-std.c:1234
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
@@ -819,7 +819,7 @@ msgstr ""
 msgid "regular expression is invalid in this locale"
 msgstr "expressão regular é inválida nesse locale"
 
-#: src/main/agrep.c:113
+#: src/main/agrep.c:113 src/main/agrep.c:264
 #, c-format
 msgid "regcomp error:  '%s'"
 msgstr "erro regcomp:  '%s'"
@@ -4546,32 +4546,32 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "variáveis de tipo '%s' não são permitidas em matrizes de modelo"
 
-#: src/main/names.c:1045
+#: src/main/names.c:1046
 msgid "string argument required"
 msgstr "argumento string requerido"
 
-#: src/main/names.c:1048
+#: src/main/names.c:1049
 msgid "no such primitive function"
 msgstr "não existe tal função primitiva"
 
-#: src/main/names.c:1184
+#: src/main/names.c:1185
 msgid "attempt to use zero-length variable name"
 msgstr "tentativa de usar um nome de variável com comprimento zero"
 
-#: src/main/names.c:1186
+#: src/main/names.c:1187
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nomes de variáveis são limitados a %d bytes"
 
-#: src/main/names.c:1213
+#: src/main/names.c:1214
 msgid "invalid .Internal() argument"
 msgstr "argumento .Internal() inválido"
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid internal function"
 msgstr "função interna inválida"
 
-#: src/main/names.c:1218
+#: src/main/names.c:1219
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nenhuma função interna \"%s\""
