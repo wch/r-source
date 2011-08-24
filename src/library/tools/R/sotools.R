@@ -16,7 +16,7 @@ function(f)
     j <- unlist(lapply(s, seq_along))
 
     tab[n * (j - 1L) + i] <- unlist(s)
-    
+
     tab
 }
 
@@ -38,7 +38,7 @@ so_symbol_names_table <-
       ## http://refspecs.freestandards.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/baselib---assert-fail-1.html
       "linux, C, gcc, assert, __assert_fail",
       "linux, C, gcc, exit, exit",
-      "linux, C, gcc, printf, printf",      
+      "linux, C, gcc, printf, printf",
       "linux, C, gcc, printf, puts",
       "linux, C, gcc, puts, puts",
       "linux, C, gcc, putchar, putchar",
@@ -50,7 +50,24 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, write, _gfortran_st_write",
       "linux, Fortran, gfortran, print, _gfortran_st_write",
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
-      "linux, Fortran, gfortran, stop, _gfortran_stop_string"
+      "linux, Fortran, gfortran, stop, _gfortran_stop_string",
+
+      "osx, C, gcc, abort, _abort",
+      "osx, C, gcc, assert, ___assert_rtn",
+      "osx, C, gcc, exit, _exit",
+      "osx, C, gcc, printf, _printf",
+      "osx, C, gcc, printf, _puts",
+      "osx, C, gcc, puts, _puts",
+      "osx, C, gcc, putchar, _putchar",
+      "osx, C, gcc, stderr, ___stderrp",
+      "osx, C, gcc, stdout, ___stdoutp",
+      "osx, C, gcc, vprintf, _vprintf",
+      "osx, C++, gxx, std::cout, __ZSt4cout",
+      "osx, C++, gxx, std::cerr, __ZSt4cerr",
+      "osx, Fortran, gfortran, write, __gfortran_st_write",
+      "osx, Fortran, gfortran, print, __gfortran_st_write",
+      "osx, Fortran, gfortran, stop, __gfortran_stop_numeric",
+      "osx, Fortran, gfortran, stop, __gfortran_stop_string"
       )
 so_symbol_names_table <-
     do.call(rbind,
@@ -129,8 +146,10 @@ function(dir)
 {
     ## Check compiled code in the shared objects of an installed
     ## package.
+    r_arch <- .Platform$r_arch
     so_files <- Sys.glob(file.path(dir, "libs",
-                                   sprintf("*%s", 
+                                   if(nzchar(r_arch)) r_arch,
+                                   sprintf("*%s",
                                            .Platform$dynlib.ext)))
     bad <- Filter(length, lapply(so_files, check_so_symbols))
     class(bad) <- "check_compiled_code"
