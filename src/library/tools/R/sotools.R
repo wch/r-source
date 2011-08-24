@@ -166,9 +166,11 @@ function(dir)
     ## Check compiled code in the shared objects of an installed
     ## package.
     r_arch <- .Platform$r_arch
-    so_files <- Sys.glob(file.path(dir, "libs", r_arch,
-                                   sprintf("*%s",
-                                           .Platform$dynlib.ext)))
+    so_files <- if(nzchar(r_arch))
+        Sys.glob(file.path(dir, "libs", r_arch,
+                           sprintf("*%s", .Platform$dynlib.ext)))
+    else
+        Sys.glob(file.path(dir, "libs", sprintf("*%s", .Platform$dynlib.ext)))
     bad <- Filter(length, lapply(so_files, check_so_symbols))
     class(bad) <- "check_compiled_code"
     bad
