@@ -3824,7 +3824,14 @@ esac
 if test "${GCC}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
 else
+case "${host_os}" in
+  solaris*)
+  ## we assume native compilers elsewhere (e.g. for -KPIC), so do so here too.
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},solcc"
+  ;;
+  *)
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+esac
 fi
 ## C++: AC_PROG_CXX does
 ##   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
@@ -3832,7 +3839,13 @@ fi
 if test "${GXX}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
 else
+case "${host_os}" in
+  solaris*)
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},solCC"
+  ;;
+  *)
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+esac
 fi
 ## Fortran 77: AC_PROG_F77 does
 ##   If using `g77' (the GNU Fortran 77 compiler), then set the shell
@@ -3842,7 +3855,13 @@ fi
 if test "${G77}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
 else
+case "${host_os}" in
+  solaris*)
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
+  ;;
+  *)
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+esac
 fi
 ## Fortran 90/95: AC_PROG_FC does not seem to set a shell variable
 ##   indicating the GNU Fortran 90/95 compiler.
@@ -3850,7 +3869,13 @@ fi
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
 else
+case "${host_os}" in
+  solaris*)
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
+  ;;
+  *)
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+esac
 fi
 AC_SUBST(R_SYSTEM_ABI)
 ]) # R_ABI
