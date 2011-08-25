@@ -1950,6 +1950,9 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC)
 	INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
     }
     setAttrib(ans, install("match.length"), matchlen);
+    if(useBytes) {
+	setAttrib(ans, install("useBytes"), ScalarLogical(TRUE));
+    }
     UNPROTECT(4);
     return ans;
 }
@@ -2028,6 +2031,9 @@ gregexpr_fixed(const char *pattern, const char *string,
 	INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
     }
     setAttrib(ans, install("match.length"), matchlen);
+    if(useBytes) {
+	setAttrib(ans, install("useBytes"), ScalarLogical(TRUE));
+    }
     UNPROTECT(4);
     return ans;
 }
@@ -2171,6 +2177,9 @@ gregexpr_perl(const char *pattern, const char *string,
     /* Protect in case install("match.length") allocates */
     PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
     setAttrib(ans, install("match.length"), matchlen);
+    if(useBytes) {
+	setAttrib(ans, install("useBytes"), ScalarLogical(TRUE));
+    }
     UNPROTECT(1);
     if (foundAny) {
 	for (int j = 0; j <= matchIndex; j++) {
@@ -2372,6 +2381,9 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Protect in case install("match.length") allocates */
 	PROTECT(matchlen = allocVector(INTSXP, n));
 	setAttrib(ans, install("match.length"), matchlen);
+	if(useBytes) {
+	    setAttrib(ans, install("useBytes"), ScalarLogical(TRUE));
+	}
 	UNPROTECT(1);
 	if (perl_opt && capture_count) {
 	    SEXP dmn;
