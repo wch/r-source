@@ -36,13 +36,14 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, n, nmatches;
     int igcase_opt, value_opt, max_distance_opt, useBytes;
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
+    int fixed_opt;
     Rboolean useWC = FALSE;
     const void *vmax = NULL;
 
     regex_t reg;
     regaparams_t params;
     regamatch_t match;
-    int rc, cflags = REG_NOSUB | REG_LITERAL;
+    int rc, cflags = REG_NOSUB;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -58,10 +59,15 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     max_substitutions_opt = asInteger(CAR(args));
     args = CDR(args);
     useBytes = asLogical(CAR(args));
+    args = CDR(args);
+    fixed_opt = asLogical(CAR(args));
 
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (value_opt == NA_INTEGER) value_opt = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
+    if (fixed_opt == NA_INTEGER) fixed_opt = 1;
+
+    if(fixed_opt) cflags |= REG_LITERAL;
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");

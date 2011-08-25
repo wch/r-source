@@ -356,6 +356,9 @@
       \item \code{help(package = "pkg_name", help_type = "HTML")} now
       gives HTML help on the package rather than text help.  (This gives
       direct access to the HTML version of the package manual.)
+
+      \item \code{agrep()} gains a \code{fixed} argument to optionally
+      allow approximate regular expression matching.
     }
   }
 

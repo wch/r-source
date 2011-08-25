@@ -14,12 +14,12 @@
 }
 \usage{
 agrep(pattern, x, ignore.case = FALSE, value = FALSE,
-      max.distance = 0.1, useBytes = FALSE)
+      max.distance = 0.1, useBytes = FALSE, fixed = TRUE)
 }
 \arguments{
-  \item{pattern}{a non-empty character string to be matched (\emph{not}
-    a regular expression!).  Coerced by \code{as.character} to a string
-    if possible.}
+  \item{pattern}{a non-empty character string or a character string
+    containing a regular expression (for \code{fixed = FALSE}) to be
+    matched.  Coerced by \code{as.character} to a string if possible.}
   \item{x}{character vector where matches are sought.  Coerced by
     \code{as.character} to a character vector if possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
@@ -43,6 +43,9 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   }
   \item{useBytes}{logical. in a multibyte locale, should the comparison
     be character-by-character (the default) or byte-by-byte.}
+  \item{fixed}{logical.  If \code{TRUE} (default), the pattern is
+    matched literally (as is).  Otherwise, it is matched as a regular
+    expression.}
 }
 \details{
   The Levenshtein edit distance is used as measure of approximateness:
