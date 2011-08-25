@@ -190,15 +190,17 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#define MAT_ANS(I, J)      REAL(ans)[I + J * nx]
-#define ARR_ANS(I, J, K)   REAL(ans)[I + J * nx + K * nxy]
+#define ANS(I, J)          REAL(ans)[I + J * nx]
+#define COUNTS(I, J, K)	   REAL(counts)[I + J * nx + K * nxy]
 
 SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, ans, dim, dimnames, names;
-    int cost_ins_opt, cost_del_opt, cost_sub_opt,
-	partial_opt, all_opt, icase_opt, useBytes;
+    SEXP pattern, x, y, ans, dim, dimnames, counts, names;
+    int opt_cost_ins, opt_cost_del, opt_cost_sub,
+	opt_partial, opt_counts, opt_icase, useBytes;
     int i, j, k, nx, ny, nxy;
+    const char *s, *t;
+    size_t delta;
 
     regex_t reg;
     regaparams_t params;
@@ -206,64 +208,66 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     int rc, cflags = REG_EXTENDED | REG_NOSUB;
     
     checkArity(op, args);
+    pattern = CAR(args); args = CDR(args);
     x = CAR(args); args = CDR(args);
     y = CAR(args); args = CDR(args);
-    cost_ins_opt = asInteger(CAR(args)); args = CDR(args);
-    cost_del_opt = asInteger(CAR(args)); args = CDR(args);
-    cost_sub_opt = asInteger(CAR(args)); args = CDR(args);
-    partial_opt = asInteger(CAR(args)); args = CDR(args);
-    all_opt = asLogical(CAR(args)); args = CDR(args);
-    icase_opt = asLogical(CAR(args)); args = CDR(args);
+    opt_cost_ins = asInteger(CAR(args)); args = CDR(args);
+    opt_cost_del = asInteger(CAR(args)); args = CDR(args);
+    opt_cost_sub = asInteger(CAR(args)); args = CDR(args);
+    opt_counts = asLogical(CAR(args)); args = CDR(args);
+    opt_partial = asInteger(CAR(args)); args = CDR(args);
+    opt_icase = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args));
 
-    if(partial_opt == NA_INTEGER) partial_opt = 0;
-    if(all_opt == NA_INTEGER) all_opt = 0;
-    if(icase_opt == NA_INTEGER) icase_opt = 0;
+    if(opt_counts == NA_INTEGER) opt_counts = 0;
+    if(opt_partial == NA_INTEGER) opt_partial = 0;
+    if(opt_icase == NA_INTEGER) opt_icase = 0;
     if(useBytes == NA_INTEGER) useBytes = 0;
 
-    if(partial_opt) cflags |= REG_LITERAL;
-    if(icase_opt) cflags |= REG_ICASE;
-    
-    nx = length(x);
-    if(!isString(x) || (nx < 1))
+    if(opt_partial) cflags |= REG_LITERAL;
+    if(opt_icase) cflags |= REG_ICASE;
+
+    counts = R_NilValue;	/* -Wall */
+
+    if(!isString(x))
 	error(_("invalid '%s' argument"), "x");
-    ny = length(y);
-    if(!isString(y) || (ny < 1))
+    nx = length(x);
+    if(!isString(y))
 	error(_("invalid '%s' argument"), "y");
+    ny = length(y);
     nxy = nx * ny;
-    
-    if(all_opt) {
+
+    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+    if(opt_counts) {
 	PROTECT(dim = allocVector(INTSXP, 3));
 	INTEGER(dim)[0] = nx;
 	INTEGER(dim)[1] = ny;
-	INTEGER(dim)[2] = 4;
+	INTEGER(dim)[2] = 3;
 	UNPROTECT(1);
-	PROTECT(ans = allocArray(REALSXP, dim));
-    } else {
-	PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+	PROTECT(counts = allocArray(REALSXP, dim));
     }
 
     tre_regaparams_default(&params);
     params.max_cost = INT_MAX;
-    params.cost_ins = cost_ins_opt;
-    params.cost_del = cost_del_opt;
-    params.cost_subst = cost_sub_opt;
+    params.cost_ins = opt_cost_ins;
+    params.cost_del = opt_cost_del;
+    params.cost_subst = opt_cost_sub;
 
     /* Handle encoding stuff etc lateron. */
     for(i = 0; i < nx; i++) {
-	if(STRING_ELT(x, i) == NA_STRING) {
+	if(STRING_ELT(pattern, i) == NA_STRING) {
 	    for(j = 0; j < ny; j++) {
-		if(all_opt) {
-		    for(k = 0; k < 4; k++) {
-			ARR_ANS(i, j, k) = NA_REAL;
+		if(opt_counts) {
+		    for(k = 0; k < 3; k++) {
+			COUNTS(i, j, k) = NA_REAL;
 		    }
 		} else {
-		    MAT_ANS(i, j) = NA_REAL;
+		    ANS(i, j) = NA_REAL;
 		}
 	    }
 	    continue;
 	}
-	rc = tre_regcomp(&reg, CHAR(STRING_ELT(x, i)), cflags);
+	rc = tre_regcomp(&reg, CHAR(STRING_ELT(pattern, i)), cflags);
 	if(rc) {
 	    char errbuf[1001];
 	    tre_regerror(rc, &reg, errbuf, 1001);
@@ -271,27 +275,52 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	for(j = 0; j < ny; j++) {
 	    if(STRING_ELT(y, j) == NA_STRING) {
-		if(all_opt) {
-		    for(k = 0; k < 4; k++) {
-			ARR_ANS(i, j, k) = NA_REAL;
+		if(opt_counts) {
+		    for(k = 0; k < 3; k++) {
+			COUNTS(i, j, k) = NA_REAL;
 		    }
 		} else {
-		    MAT_ANS(i, j) = NA_REAL;
+		    ANS(i, j) = NA_REAL;
 		}   
 		continue;
+	    }
+	    /* Argh. */
+	    /* For full matching (where we use regexps of regexp-quoted
+	     * strings anchored by ^ and $) there is a problem in case
+	     * of substring matches, where TRE finds a substitution
+	     * where there is none.  Cf.
+	     *   $ echo "AB" | tre-agrep -5 -s A
+	     *   0:AB
+	     *   $ echo "AB" | tre-agrep -5 -s -w A
+	     *   2:AB
+	     * So we need to explicitly catch these cases.
+	     */
+	    if(!opt_partial) {
+		s = CHAR(STRING_ELT(x, i));
+		t = CHAR(STRING_ELT(y, j));
+		if(strstr(t, s) != NULL) {
+		    delta = (strlen(t) - strlen(s));
+		    ANS(i, j) = (double) (delta * opt_cost_ins);
+		    if(opt_counts) {
+			COUNTS(i, j, 0) = (double) delta;
+			COUNTS(i, j, 1) = (double) 0.;
+			COUNTS(i, j, 2) = (double) 0.;
+		    }
+		    continue;
+		}
 	    }
 	    /* Perform match. */
 	    /* undocumented, must be zeroed */
 	    memset(&match, 0, sizeof(match));
 	    rc = tre_regaexec(&reg, CHAR(STRING_ELT(y, j)),
 			      &match, params, 0);
-	    if(all_opt) {
-		ARR_ANS(i, j, 0) = (double) match.cost;
-		ARR_ANS(i, j, 1) = (double) match.num_ins;
-		ARR_ANS(i, j, 2) = (double) match.num_del;
-		ARR_ANS(i, j, 3) = (double) match.num_subst;
+	    ANS(i, j) = (double) match.cost;	    
+	    if(opt_counts) {
+		COUNTS(i, j, 0) = (double) match.num_ins;
+		COUNTS(i, j, 1) = (double) match.num_del;
+		COUNTS(i, j, 2) = (double) match.num_subst;
 	    } else {
-		MAT_ANS(i, j) = (double) match.cost;
+
 	    }
 	}
 
@@ -300,26 +329,25 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = getAttrib(x, R_NamesSymbol);
     y = getAttrib(y, R_NamesSymbol);
-    if(all_opt) {
+    if(!isNull(x) || !isNull(y)) {
+	PROTECT(dimnames = allocVector(VECSXP, 2));	    
+	SET_VECTOR_ELT(dimnames, 0, x);
+	SET_VECTOR_ELT(dimnames, 1, y);
+	setAttrib(ans, R_DimNamesSymbol, dimnames);
+	UNPROTECT(1);
+    }
+    if(opt_counts) {
 	PROTECT(dimnames = allocVector(VECSXP, 3));
-	PROTECT(names = allocVector(STRSXP, 4));
-	SET_STRING_ELT(names, 0, mkChar("cost"));
-	SET_STRING_ELT(names, 1, mkChar("ins"));
-	SET_STRING_ELT(names, 2, mkChar("del"));
-	SET_STRING_ELT(names, 3, mkChar("sub"));
+	PROTECT(names = allocVector(STRSXP, 3));
+	SET_STRING_ELT(names, 0, mkChar("ins"));
+	SET_STRING_ELT(names, 1, mkChar("del"));
+	SET_STRING_ELT(names, 2, mkChar("sub"));
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	SET_VECTOR_ELT(dimnames, 2, names);
-	setAttrib(ans, R_DimNamesSymbol, dimnames);
-	UNPROTECT(2);
-    } else {
-	if(!isNull(x) || !isNull(y)) {
-	    PROTECT(dimnames = allocVector(VECSXP, 2));	    
-	    SET_VECTOR_ELT(dimnames, 0, x);
-	    SET_VECTOR_ELT(dimnames, 1, y);
-	    setAttrib(ans, R_DimNamesSymbol, dimnames);
-	    UNPROTECT(1);
-	}
+	setAttrib(counts, R_DimNamesSymbol, dimnames);
+	setAttrib(ans, install("counts"), counts);	
+	UNPROTECT(3);
     }
 
     UNPROTECT(1);

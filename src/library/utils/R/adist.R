@@ -1,12 +1,10 @@
 adist <-
-function(x, y = x, cost = NULL, partial = FALSE,
-         all = FALSE, ignore.case = FALSE, useBytes = FALSE)
+function(x, y = x, cost = NULL, counts = FALSE,
+         partial = FALSE, ignore.case = FALSE, useBytes = FALSE)
 {
-    if(!identical(partial, TRUE)) {
-        nmx <- names(x)
-        x <- sprintf("^%s$", regquote(x))
-        names(x) <- nmx
-    }
+    pattern <- if(!identical(partial, TRUE))
+        sprintf("^%s$", regquote(x))
+    else x
 
     all_costs <-
         list(insertions = 1, deletions = 1, substitutions = 1)
@@ -22,12 +20,14 @@ function(x, y = x, cost = NULL, partial = FALSE,
         ## Could add some sanity checking ...
     }
 
-    .Internal(adist(x, y,
+    .Internal(adist(pattern, x, y,
                     all_costs$insertions,
                     all_costs$deletions,
                     all_costs$substitutions,
-                    partial, all, ignore.case, useBytes))
+                    counts, partial, ignore.case, useBytes))
 }
+
+## Use by adist() for now, but could be more generally useful.
     
 regquote <-
 function(x)
