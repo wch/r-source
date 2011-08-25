@@ -28,9 +28,9 @@ help(topic, package = NULL, lib.loc = NULL,
    See \sQuote{Details} for what happens if this is omitted.
  }
  \item{package}{a name or character vector giving the packages to look
-   into for documentation, or \code{NULL}. By default, all packages in
-   the search path are used. To avoid a name being deparsed use e.g.
-   \code{(pkg_ref)}.}
+   into for documentation, or \code{NULL}.  By default, all packages in
+   the search path are used.  To avoid a name being deparsed use e.g.
+   \code{(pkg_ref)} (see the examples).}
  \item{lib.loc}{a character vector of directory names of \R libraries,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
    libraries currently known.  If the default is used, the loaded
@@ -172,5 +172,9 @@ help(topi)
 try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
 help("bs", try.all.packages=TRUE)       # reports can be found
                                         # in package 'splines'
-}
+
+\donttest{## For programmatic use:
+topic <- "family"; pkg_ref <- "stats"
+help((topic), (pkg_ref))
+}}
 \keyword{documentation}
