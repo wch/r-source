@@ -34,7 +34,8 @@ help(topic, package = NULL, lib.loc = NULL,
  \item{lib.loc}{a character vector of directory names of \R libraries,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
    libraries currently known.  If the default is used, the loaded
-   packages are searched before the libraries.}
+   packages are searched before the libraries.  This is not used for
+   HTML help (see \sQuote{Details}.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{help_type}{character string: the type of help required.
@@ -93,6 +94,10 @@ help(topic, package = NULL, lib.loc = NULL,
   first on the search path is used.  (For HTML help the menu will be an
   HTML page, otherwise a graphical menu if possible if
   \code{\link{getOption}("menu.graphics")} is true, the default.)
+  
+  Note that HTML help does not make use of \code{lib.loc}: it will
+  always look first in the attached packages and then along
+  \code{.libPaths()}.
 }
 
 \section{Offline help}{
