@@ -20,18 +20,37 @@ function(topic, package = NULL, lib.loc = NULL,
          try.all.packages = getOption("help.try.all.packages"),
          help_type = getOption("help_type"))
 {
+    types <- c("text", "html", "postscript", "ps", "pdf")
     if(!missing(package))
         if(is.name(y <- substitute(package)))
             package <- as.character(y)
 
     ## If no topic was given ...
     if(missing(topic)) {
-        if(!missing(package))           # "Help" on package.
-            return(library(help = package, lib.loc = lib.loc,
-                           character.only = TRUE))
-        if(!missing(lib.loc))           # "Help" on library.
+        if(!missing(package)) {         # "Help" on package.
+            help_type <- if(!length(help_type)) "text"
+            else match.arg(tolower(help_type), types)
+            if (help_type == "html") {
+                if (tools:::httpdPort == 0L) tools::startDynamicHelp()
+                if (tools:::httpdPort <= 0L) # fallback to text help
+                    return(library(help = package, lib.loc = lib.loc,
+                                   character.only = TRUE))
+                browser <- if (.Platform$GUI == "AQUA") {
+                    function(x, ...) {
+                        .Internal(aqua.custom.print("help-files", x))
+                        return(invisible(x))
+                    }
+                } else getOption("browser")
+ 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
+                                "/library/", package, "/html/00Index.html",
+                                sep = ""), browser)
+                return(invisible())
+            } else return(library(help = package, lib.loc = lib.loc,
+                                  character.only = TRUE))
+        }
+        if(!missing(lib.loc))           # text "Help" on library.
             return(library(lib.loc = lib.loc))
-        ## ultimate default is to give help on help
+        ## ultimate default is to give help on help()
         topic <- "help"; package <- "utils"; lib.loc <- .Library
     }
 
@@ -51,8 +70,7 @@ function(topic, package = NULL, lib.loc = NULL,
     }
 
     help_type <- if(!length(help_type)) "text"
-    else match.arg(tolower(help_type),
-                   c("text", "html", "postscript", "ps", "pdf"))
+    else match.arg(tolower(help_type), types)
     if (help_type %in% c("postscript", "ps"))
         warning("Postscript offline help is deprecated",
                 call. = FALSE, immediate. = TRUE)
