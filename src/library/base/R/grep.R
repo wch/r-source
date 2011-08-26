@@ -82,6 +82,11 @@ function(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE,
     .Internal(grepRaw(pattern, x, offset, ignore.case, fixed, value, all, invert))
 }
 
+regexec <-
+function(pattern, text, ignore.case = FALSE,
+         fixed = FALSE, useBytes = FALSE)
+    .Internal(regexec(pattern, text, ignore.case, fixed, useBytes))
+
 agrep <-
 function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
          useBytes = FALSE, fixed = TRUE)

@@ -2519,3 +2519,105 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+
+SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP pat, vec, ans, matchpos, matchlen;
+    int opt_icase, opt_fixed, useBytes;
+    
+    regex_t reg;
+    size_t nmatch;
+    regmatch_t *pmatch;
+    int i, j, n, so;
+    int rc, cflags = REG_EXTENDED;
+
+    checkArity(op, args);
+
+    pat = CAR(args); args = CDR(args);
+    vec = CAR(args); args = CDR(args);
+    opt_icase = asLogical(CAR(args)); args = CDR(args);
+    opt_fixed = asLogical(CAR(args)); args = CDR(args);
+    useBytes = asLogical(CAR(args));
+    
+    if(opt_icase == NA_INTEGER) opt_icase = 0;
+    if(opt_fixed == NA_INTEGER) opt_fixed = 0;
+    if(useBytes == NA_INTEGER) useBytes = 0;
+    if(opt_fixed && opt_icase) {
+	warning(_("argument '%s' will be ignored"),
+		"ignore.case = TRUE");
+	opt_icase = 0;
+    }
+    if(opt_fixed) cflags |= REG_LITERAL;
+    if(opt_icase) cflags |= REG_ICASE;
+
+    if(!isString(pat) ||
+       (length(pat) < 1) ||
+       (STRING_ELT(pat, 0) == NA_STRING))
+	error(_("invalid '%s' argument"), "pattern");
+    if(length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
+    
+    if(!isString(vec))
+	error(_("invalid '%s' argument"), "text");
+
+    n = LENGTH(vec);
+
+    rc = tre_regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
+    if(rc) {
+        char errbuf[1001];
+        tre_regerror(rc, &reg, errbuf, 1001);
+        error(_("regcomp error: '%s'"), errbuf);
+    }
+
+    nmatch = reg.re_nsub + 1;
+
+    pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
+
+    PROTECT(ans = allocVector(VECSXP, n));
+
+    for(i = 0; i < n; i++) {
+	if(STRING_ELT(vec, i) == NA_STRING) {
+	    PROTECT(matchpos = ScalarInteger(NA_INTEGER));
+	    setAttrib(matchpos, install("match.length"),
+		      ScalarInteger(NA_INTEGER));
+	    SET_VECTOR_ELT(ans, i, matchpos);
+	    UNPROTECT(1);
+	} else {
+	    rc = tre_regexec(&reg, CHAR(STRING_ELT(vec, i)), nmatch,
+			     pmatch, 0);
+	    if(rc == 0) {
+		PROTECT(matchpos = allocVector(INTSXP, nmatch));
+		PROTECT(matchlen = allocVector(INTSXP, nmatch));
+		for(j = 0; j < nmatch; j++) {
+		    so = pmatch[j].rm_so;
+		    INTEGER(matchpos)[j] = so + 1;
+		    INTEGER(matchlen)[j] = pmatch[j].rm_eo - so;
+		}
+		setAttrib(matchpos, install("match.length"), matchlen);
+		if(useBytes)
+		    setAttrib(matchpos, install("useBytes"),
+			      ScalarLogical(TRUE));
+		SET_VECTOR_ELT(ans, i, matchpos);
+		UNPROTECT(2);
+	    } else {
+		/* No match (or could there be an error?). */
+		/* FIXME:
+		   Should this perhaps return nmatch -1 values?
+		*/
+		PROTECT(matchpos = ScalarInteger(-1));
+		PROTECT(matchlen = ScalarInteger(-1));
+		setAttrib(matchpos, install("match.length"), matchlen);
+		SET_VECTOR_ELT(ans, i, matchpos);
+		UNPROTECT(2);
+	    }
+	}
+    }
+    
+    free(pmatch);
+
+    tre_regfree(&reg);
+
+    UNPROTECT(1);
+
+    return ans;
+}

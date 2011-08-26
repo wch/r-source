@@ -11,6 +11,7 @@
 \alias{gsub}
 \alias{regexpr}
 \alias{gregexpr}
+\alias{regexec}
 \description{
   \code{grep}, \code{grepl}, \code{regexpr} and \code{gregexpr} search
   for matches to argument \code{pattern} within each element of a
