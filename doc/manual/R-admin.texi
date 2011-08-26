@@ -2011,7 +2011,9 @@ simplest way to set up such a file is to use function
 which fields are needed.  Optionally there can also be a
 @file{PACKAGES.gz} file, a @command{gzip}-compressed version of
 @file{PACKAGES}---as this will be downloaded in preference to
-@file{PACKAGES} it should be included for large repositories.
+@file{PACKAGES} it should be included for large repositories.  (If you
+have a mis-configured server that does not report correctly non-existent
+files you will need @file{PACKAGES.gz}.)
 
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
