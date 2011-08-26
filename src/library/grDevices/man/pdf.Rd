@@ -66,8 +66,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     page? -- is only relevant for \code{paper != "special"}.  
     Defaults to \code{TRUE}.}
   \item{colormodel}{a character string describing the color model:
-    currently allowed values are \code{"rgb"}, \code{"gray"} and
-    \code{"cmyk"}.  Defaults to \code{"rgb"}.}
+    currently allowed values are \code{"srgb"}, \code{"gray"} and
+    \code{"cmyk"}.  Defaults to \code{"srgb"}.}
   \item{useDingbats}{logical.  Should small circles be rendered
     \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
     smaller and better output.  Setting this to \code{FALSE} can work
@@ -175,12 +175,17 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{maxRasters}.
 }
 
-\section{Color models}{
-  The default color model is sRGB, and model \code{"gray"} maps sRGB
-  colors to greyscale using perceived luminosity (biased towards green).
-  \code{"cmyk"} outputs in CMYK colorspace.  The simplest
-  possible conversion from sRGB to CMYK is used
+\section{Color models}{  
+  The default color model (\code{"srgb"}) is sRGB and model
+  \code{"gray"} maps sRGB colors to greyscale using perceived luminosity
+  (biased towards green).  \code{"cmyk"} outputs in CMYK colorspace.
+  The simplest possible conversion from sRGB to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
+
+  Also available is model \code{"rgb"} which uses uncalibrated RGB and
+  corresponds to the model used under that name in \R prior to 2.13.0.
+  Some viewers may render some plots in that colorspace much faster than
+  in sRGB, and the plots will be slightly smaller.
 }
 
 \section{Conventions}{
@@ -192,13 +197,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with a minimum
-    of 0.01 enforced.   
+    of 0.01 enforced.
     \item Circles of any radius are allowed.  Unless \code{useDingbats =
-    FALSE}, opaque circles of less than 10 big
-    points radius are rendered using char 108 in the Dingbats font:
-    all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
-    curve for each quadrant.
-    \item Colours are specified as sRGB.
+      FALSE}, opaque circles of less than 10 big points radius are
+    rendered using char 108 in the Dingbats font: all semi-transparent
+    and larger circles using a \enc{Bézier}{Bezier} curve for each
+    quadrant.
+    \item Colours are by default specified as sRGB.
   }
 
   At very small line widths, the line type may be forced to solid.

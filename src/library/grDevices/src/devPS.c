@@ -2559,7 +2559,8 @@ static void PSFileHeader(FILE *fp,
     fprintf(fp, "%% begin .ps.prolog\n");
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
-    if (streql(pd->colormodel, "rgb") || streql(pd->colormodel, "rgb-nogray")) {
+    if (streql(pd->colormodel, "srgb") || 
+	streql(pd->colormodel, "srgb-nogray")) {
 	SEXP graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices")));
 	prolog = findVar(install(".ps.prolog.srgb"), graphicsNS);
 	/* under lazy loading this will be a promise on first use */
@@ -2989,7 +2990,8 @@ static void PS_TextUTF8(double x, double y, const char *str,
 static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 			     const char *mm)
 {
-    if(r == g && g == b && !(streql(mm, "cmyk") || streql(mm, "rgb-nogray"))) { /* grey */
+    if(r == g && g == b && 
+       !(streql(mm, "cmyk") || streql(mm, "srgb-nogray") || streql(mm, "rgb-nogray")) ) { /* grey */
 	if(r == 0) fprintf(fp, "0");
 	else if (r == 1) fprintf(fp, "1");
 	else fprintf(fp, "%.4f", r);
@@ -3027,7 +3029,9 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	    if(b == 0) fprintf(fp, " 0");
 	    else if (b == 1) fprintf(fp, " 1");
 	    else fprintf(fp, " %.4f", b);
-	    fprintf(fp," rgb");
+	    if (streql(mm, "srgb") || streql(mm, "srgb-nogray"))
+		fprintf(fp," srgb");
+	    else fprintf(fp," rgb");
 	}
     }
 }
@@ -4107,6 +4111,8 @@ static void PS_Path(double *x, double *y,
     /* code == 1, outline only */
     /* code == 2, fill only */
     /* code == 3, outline and fill */
+    /* code == 6, eofill only */
+    /* code == 7, outline and eofill */
 
     CheckAlpha(gc->fill, pd);
     CheckAlpha(gc->col, pd);
@@ -6264,7 +6270,8 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	if(streql(pd->colormodel, "gray")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
 		b = R_BLUE(color)/255.0;
-	    /* weights from http://www.faqs.org/faqs/graphics/colorspace-faq/ */
+	    /* weights from C-9 of 
+	       http://www.faqs.org/faqs/graphics/colorspace-faq/ */
 	    fprintf(pd->pdffp, "%.3f G\n", (0.213*r+0.715*g+0.072*b));
 	} else if(streql(pd->colormodel, "cmyk")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
@@ -6275,9 +6282,14 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	    if(k == 1.0) c = m = y = 0.0;
 	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
 	    fprintf(pd->pdffp, "%.3f %.3f %.3f %.3f K\n", c, m, y, k);
+	} else if(streql(pd->colormodel, "rgb")) {
+	    fprintf(pd->pdffp, "%.3f %.3f %.3f RG\n",
+		    R_RED(color)/255.0,
+		    R_GREEN(color)/255.0,
+		    R_BLUE(color)/255.0);
 	} else {
-	    if (!streql(pd->colormodel, "rgb"))
-		warning(_("unknown 'colormodel', using 'rgb'"));
+	    if (!streql(pd->colormodel, "srgb"))
+		warning(_("unknown 'colormodel', using 'srgb'"));
 	    fprintf(pd->pdffp, "/sRGB CS %.3f %.3f %.3f SCN\n",
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
@@ -6313,9 +6325,14 @@ static void PDF_SetFill(int color, pDevDesc dd)
 	    if(k == 1.0) c = m = y = 0.0;
 	    else { c = (c-k)/(1-k); m = (m-k)/(1-k); y = (y-k)/(1-k); }
 	    fprintf(pd->pdffp, "%.3f %.3f %.3f %.3f k\n", c, m, y, k);
+	} else if(streql(pd->colormodel, "rgb")) {
+	    fprintf(pd->pdffp, "%.3f %.3f %.3f rg\n",
+		    R_RED(color)/255.0,
+		    R_GREEN(color)/255.0,
+		    R_BLUE(color)/255.0);
 	} else {
-	    if (!streql(pd->colormodel, "rgb"))
-		warning(_("unknown 'colormodel', using 'rgb'"));
+	    if (!streql(pd->colormodel, "srgb"))
+		warning(_("unknown 'colormodel', using 'srgb'"));
 	    fprintf(pd->pdffp, "/sRGB cs %.3f %.3f %.3f scn\n",
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
@@ -6710,7 +6727,7 @@ static void PDF_endfile(PDFDesc *pd)
     fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\nendobj\n");
     pd->pos[6] = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "6 0 obj\n");
-    if (streql(pd->colormodel, "rgb")) PDFwritesRGBcolorspace(pd);    
+    if (streql(pd->colormodel, "srgb")) PDFwritesRGBcolorspace(pd);    
     fprintf(pd->pdffp, "endobj\n");
     
     /*

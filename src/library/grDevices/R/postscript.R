@@ -396,10 +396,11 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "/cl  { grestore gsave newpath 3 index 3 index moveto 1 index",
 "       4 -1 roll lineto  exch 1 index lineto lineto",
 "       closepath clip newpath } bind def",
+"/rgb { setrgbcolor } bind def",
 "/s   { scalefont setfont } bind def")
 
 .ps.prolog.srgb <- c(## From PLRM 3rd Ed pg 225
-"/srgb { [ /CIEBasedABC",
+"/sRGB { [ /CIEBasedABC",
 "          << /DecodeLMN",
 "               [ { dup 0.03928 le",
 "                        {12.92321 div}",
@@ -413,7 +414,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "             /WhitePoint [0.9505 1.0 1.0890]",
 "           >>",
 "         ] setcolorspace } bind def",
-"/rgb { srgb setcolor } bind def"
+"/srgb { sRGB setcolor } bind def"
 )
 
 ####################
@@ -656,7 +657,7 @@ assign(".PostScript.Options",
          pagecentre = TRUE,
 	 print.it   = FALSE,
 	 command    = "default",
-         colormodel = "rgb",
+         colormodel = "srgb",
          useKerning = TRUE,
          fillOddEven= FALSE), envir = .PSenv)
 assign(".PostScript.Options.default",
@@ -677,7 +678,7 @@ assign(".PDF.Options",
 	 fg	= "black",
 	 pointsize  = 12,
 	 pagecentre = TRUE,
-         colormodel = "rgb",
+         colormodel = "srgb",
          useDingbats = TRUE,
          useKerning = TRUE,
          fillOddEven = FALSE,

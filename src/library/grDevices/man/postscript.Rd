@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -108,8 +108,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 #endif
   }
   \item{colormodel}{a character string describing the color model:
-    currently allowed values as \code{"rgb"}, \code{"rgb-nogray"},
-    \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"rgb"}.}
+    currently allowed values as \code{"srgb"}, \code{"srgb-nogray"},
+    \code{"rgb"}, \code{"rgb-nogray"},
+    \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"srgb"}.}
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
@@ -290,12 +291,17 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \file{CM_symbol_10.afm}.
 }
 \section{Color models}{
-  The default color model is sRGB, with pure gray colors expressed as
-  greyscales.  Color model \code{"rgb-nogray"} uses only sRGB, model
-  \code{"cmyk"} only CMYK, and model \code{"gray"} only greyscales (and
-  selecting any other colour is an error).  The simplest
+  The default color model (\code{"srgb"}) is sRGB, with pure gray colors
+  expressed as greyscales.  Color model \code{"srgb-nogray"} uses only
+  sRGB, model \code{"cmyk"} only CMYK, and model \code{"gray"} only
+  greyscales (and selecting any other colour is an error).  The simplest
   possible conversion from sRGB to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
+
+  Color models \code{"rgb"}) and \code{"rgb-nogray"} use uncalibrated
+  RGB as used in \R prior to 2.13.0.  This may render much faster for
+  some plots in some viewers, but does rely on the viewer being set up
+  for the desired RGB color space.
 }
 
 \section{Printing}{
@@ -333,7 +339,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \item Line widths are as a multiple of 1/96 inch, with a minimum
     of 0.01 enforced.   
     \item Circle of any radius are allowed.
-    \item Colours are specified as sRGB.
+    \item Colours are by default specified as sRGB.
   }
 
   At very small line widths, the line type may be forced to solid.
