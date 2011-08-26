@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 read.dcf <-
-function(file, fields = NULL, all = FALSE)
+function(file, fields = NULL, all = FALSE, keep.white = NULL)
 {
     if(is.character(file)){
         file <- gzfile(file, "r")
@@ -33,7 +33,7 @@ function(file, fields = NULL, all = FALSE)
     ##                  function(s)
     ##                  if(is.atomic(s)) s
     ##                  else mapply("[[", s, sapply(s, length))))
-    if(!all) return(.Internal(readDCF(file, fields)))
+    if(!all) return(.Internal(readDCF(file, fields, keep.white)))
 
     .assemble_things_into_a_data_frame <- function(tags, vals, nums) {
         tf <- factor(tags, levels = unique(tags))

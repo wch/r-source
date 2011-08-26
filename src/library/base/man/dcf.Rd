@@ -12,7 +12,7 @@
   format. 
 }
 \usage{
-read.dcf(file, fields = NULL, all = FALSE)
+read.dcf(file, fields = NULL, all = FALSE, keep.white = NULL)
 
 write.dcf(x, file = "", append = FALSE,
           indent = 0.1 * getOption("width"),
@@ -28,6 +28,15 @@ write.dcf(x, file = "", append = FALSE,
     occurrences of a field in a record, all these should be gathered.
     If \code{all} is false (default), only the last such occurrence is
     used.}
+  \item{keep.white}{a character string with the names of the fields for
+    which white space should be kept as is, or \code{NULL} (default)
+    indicating that there are no such fields.  Coerced to character if
+    possible.  For fields where white space is not to be kept as is,
+    \code{read.dcf} removes leading and trailing white space, and
+    \code{write.dcf} folds using \code{\link{strwrap}}.
+
+    Currently only works when \code{all} is \code{FALSE}.
+   }
   \item{x}{the object to be written, typically a data frame.  If not, it
     is attempted to coerce \code{x} to a data frame.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
@@ -71,12 +80,13 @@ write.dcf(x, file = "", append = FALSE,
 \value{
   The default \code{read.dcf(all = FALSE)} returns a character matrix
   with one row per record and one column per field.  Leading and
-  trailing whitespace of field values is ignored.  If a tag name is
-  specified in the file, but the corresponding value is empty, then an
-  empty string is returned.  If the tag name of a field is specified in
-  \code{fields} but never used in a record, then the corresponding value
-  is \code{NA}.  If fields are repeated within a record, the last one
-  encountered is returned.  Malformed lines lead to an error.
+  trailing whitespace of field values is ignored unless a field is
+  listed in \code{keep.white}.  If a tag name is specified in the file,
+  but the corresponding value is empty, then an empty string is
+  returned.  If the tag name of a field is specified in \code{fields}
+  but never used in a record, then the corresponding value is \code{NA}.
+  If fields are repeated within a record, the last one encountered is
+  returned.  Malformed lines lead to an error.
   
   For \code{read.dcf(all = TRUE)} a data frame is returned, again with
   one row per record and one column per field.  The columns are lists of

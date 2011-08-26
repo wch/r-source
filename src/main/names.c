@@ -987,7 +987,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"memDecompress",do_memDecompress,0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 
 
-{"readDCF",	do_readDCF,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
+{"readDCF",	do_readDCF,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 
 {"getNumRtoCConverters", do_getNumRtoCConverters, 0, 11, 0,{PP_FUNCALL, PREC_FN,0}},
 {"getRtoCConverterDescriptions", do_getRtoCConverterDescriptions, 0, 11, 0,{PP_FUNCALL, PREC_FN, 0}},
