@@ -234,7 +234,7 @@ function(con) {
             if(x %in% pdf_bytes_eols) break
         }
         read_next_non_whitespace_and_seek_back(con)
-        read_pdf_object(con)
+        pdf_read_object(con)
     }
     else {
         ## Could be a number object or an indirect object reference.
