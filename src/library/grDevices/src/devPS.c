@@ -2605,18 +2605,6 @@ static void PostScriptEndPage(FILE *fp)
     fprintf(fp, "ep\n");
 }
 
-static void PostScriptInitColorSpace(FILE *fp)
-{
-    /* From PLRM 3rd Ed pg 225 */
-    fprintf(fp, "[ /CIEBasedABC\n");
-    fprintf(fp, "  << /DecodeLMN\n");
-    fprintf(fp, "       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]\n");
-    fprintf(fp, "     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]\n");
-    fprintf(fp, "     /WhitePoint [0.9505 1.0 1.0890]\n");
-    fprintf(fp, "  >>\n");
-    fprintf(fp, "] setcolorspace\n");
-}
-
 static void PostScriptSetClipRect(FILE *fp, double x0, double x1,
 				  double y0, double y1)
 {
@@ -3048,7 +3036,7 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	    if(b == 0) fprintf(fp, " 0");
 	    else if (b == 1) fprintf(fp, " 1");
 	    else fprintf(fp, " %.4f", b);
-	    fprintf(fp," setrgb");
+	    fprintf(fp," srgb");
 	}
     }
 }
@@ -3695,7 +3683,6 @@ static void PS_NewPage(const pGEcontext gc,
 	pd->pageno = 1;
     } else pd->pageno++;
     PostScriptStartPage(pd->psfp, pd->pageno);
-    PostScriptInitColorSpace(pd->psfp);
     Invalidate(dd);
     CheckAlpha(gc->fill, pd);
     if(R_OPAQUE(gc->fill)) {
