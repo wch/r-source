@@ -39,7 +39,7 @@
       \item There is a new package \pkg{parallel}.
       
       It incorporates (slightly revised) copies of packages \pkg{multicore}
-      \pkg{snow} (excluding MPI, PVM and NWS clusters).  Code written to
+      and \pkg{snow} (excluding MPI, PVM and NWS clusters).  Code written to
       use those packages should work unchanged (apart from changing any
       references to their namespaces to a reference to \pkg{parallel}).
       
@@ -500,6 +500,11 @@
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
+
+      \item The \code{postscript()} and \code{pdf()} devices only
+      include the definition of the sRGB colorspace in the output file
+      for the colormodels which use it (and not for \code{"gray"} nor
+      \code{"cmyk"}).
     }
   }
 

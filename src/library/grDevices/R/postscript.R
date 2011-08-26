@@ -396,6 +396,9 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "/cl  { grestore gsave newpath 3 index 3 index moveto 1 index",
 "       4 -1 roll lineto  exch 1 index lineto lineto",
 "       closepath clip newpath } bind def",
+"/s   { scalefont setfont } bind def")
+
+.ps.prolog.srgb <- c(## From PLRM 3rd Ed pg 225
 "/srgb { [ /CIEBasedABC",
 "          << /DecodeLMN",
 "               [ { dup 0.03928 le",
@@ -410,8 +413,8 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "             /WhitePoint [0.9505 1.0 1.0890]",
 "           >>",
 "         ] setcolorspace } bind def",
-"/setrgb { srgb setcolor } bind def",
-"/s   { scalefont setfont } bind def")
+"/rgb { srgb setcolor } bind def"
+)
 
 ####################
 # PostScript font database
