@@ -85,7 +85,7 @@ help(topic, package = NULL, lib.loc = NULL,
   appear on their own such as unary and binary operators,
   \code{function} and control-flow \link{reserved} words (including
   \code{if}, \code{else} \code{for}, \code{in}, \code{repeat},
-  \code{while}, \code{break} and \code{next}.  The other \code{reserved}
+  \code{while}, \code{break} and \code{next}).  The other \code{reserved}
   words can be used as if they were names, for example \code{TRUE},
   \code{NA} and \code{Inf}.
 
