@@ -74,11 +74,15 @@ help(topic, package = NULL, lib.loc = NULL,
   used do not support these quotes so this can be turned off by setting
   \code{\link{options}(useFancyQuotes = FALSE)}.
 
-  \code{topic} is not optional: if it is omitted \R will give (text or
-  HTML) information on the package (including hints to suitable help
-  topics) if a package is specified, a (text) list of available packages
-  if \code{lib.loc} only is specified, and help on \code{help} itself if
-  none of the first three arguments is specified.
+  \code{topic} is not optional: if it is omitted \R will give
+  \itemize{
+    \item If a package is specified, (text or HTML) information on the
+    package, including hints/links to suitable help topics. 
+    \item If \code{lib.loc} only is specified, a (text) list of available
+    packages.
+    \item Help on \code{help} itself if none of the first three
+  arguments is specified.
+  }
 
   Some topics need to be quoted (by \link{backtick}s) or given as a
   character string.  These include those which cannot syntactically

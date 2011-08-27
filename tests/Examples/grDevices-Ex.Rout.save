@@ -2207,7 +2207,7 @@ List of 19
  $ fg         : chr "black"
  $ pointsize  : num 12
  $ pagecentre : logi TRUE
- $ colormodel : chr "rgb"
+ $ colormodel : chr "srgb"
  $ useDingbats: logi TRUE
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
@@ -2953,7 +2953,7 @@ List of 18
  $ pagecentre : logi TRUE
  $ print.it   : logi FALSE
  $ command    : chr "default"
- $ colormodel : chr "rgb"
+ $ colormodel : chr "srgb"
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
 > 
@@ -2985,7 +2985,7 @@ List of 18
  $ pagecentre : logi TRUE
  $ print.it   : logi FALSE
  $ command    : chr "default"
- $ colormodel : chr "rgb"
+ $ colormodel : chr "srgb"
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
 > ps.options(reset = TRUE) # back to factory-fresh
