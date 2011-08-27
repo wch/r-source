@@ -228,7 +228,9 @@ format.check_compiled_code <-
 function(x, ...)
 {
     if(!length(x)) return(character())
-    paste(sapply(x, format), collapse = "\n")
+    ## sapply does not always simplify as one wants here if there is
+    ## more than one DLL.
+    paste(unlist(lapply(x, format)), collapse = "\n")
 }
 
 print.check_compiled_code <-
