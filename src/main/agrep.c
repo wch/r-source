@@ -243,7 +243,6 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	INTEGER(dim)[0] = nx;
 	INTEGER(dim)[1] = ny;
 	INTEGER(dim)[2] = 3;
-	UNPROTECT(1);
 	PROTECT(counts = allocArray(REALSXP, dim));
     }
 
@@ -347,7 +346,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dimnames, 2, names);
 	setAttrib(counts, R_DimNamesSymbol, dimnames);
 	setAttrib(ans, install("counts"), counts);	
-	UNPROTECT(3);
+	UNPROTECT(4);
     }
 
     UNPROTECT(1);
