@@ -157,6 +157,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir()
 
+        if(do_install &&
+           dir.exists("src") &&
+           length(so_symbol_names_table))
+            check_sos()
+        
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
         if (any(f <- file.exists(miss))) {
             checkingLog(Log, "for left-overs from vignette generation")
@@ -1324,6 +1329,21 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
         if (!any) resultLog(Log, "OK")
+    }
+
+    check_sos <- function() {
+        checkingLog(Log, "compiled code")
+        Rcmd <- paste("options(warn=1)\n",
+                      sprintf("tools:::check_compiled_code(\"%s\")",
+                              file.path(libdir, pkgname)))
+        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        any <- FALSE
+        if(length(out)) {
+            noteLog(Log)
+            any <- TRUE
+            printLog0(Log, paste(c(out, ""), collapse = "\n"))
+        }
+        if(!any) resultLog(Log, "OK")
     }
 
     check_loading <- function(arch = "")
