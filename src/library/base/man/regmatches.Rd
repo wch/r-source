@@ -18,7 +18,7 @@ regmatches(x, m, invert = FALSE)
   If \code{invert} is \code{TRUE} (default), the matched substrings as
   specified by the match data are extracted.  For vector match data,
   empty matches are dropped; for list match data, empty matches give
-  empty components (zero-lenght character vectors).
+  empty components (zero-length character vectors).
   
   If \code{invert} is \code{FALSE}, the non-matched substrings are
   extracted, i.e., the strings are split according to the matches

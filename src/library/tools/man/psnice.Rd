@@ -29,7 +29,7 @@ psnice(pid = Sys.getpid(), value = NA_integer_)
   with normal priority.  On some OSes, processes with niceness
   \code{+19} are only run when the system would otherwise be idle.
 
-  On many OSes utiltiies such as \command{top} report the priority and
+  On many OSes utilities such as \command{top} report the priority and
   not the niceness.  Niceness is used by the utility
   \file{/usr/bin/renice}: \file{/usr/bin/nice} (and
   \command{/usr/bin/renice -n}) specifies an \emph{increment} in niceness.
