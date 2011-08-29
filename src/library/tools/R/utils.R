@@ -1242,7 +1242,8 @@ function(dfile)
     ## </NOTE>
     if(!file_test("-f", dfile))
         stop(gettextf("file '%s' does not exist", dfile), domain = NA)
-    out <- tryCatch(read.dcf(dfile)[1L, ],
+    out <- tryCatch(read.dcf(dfile,
+                             keep.white = c("Description", "Author"))[1L, ],
                     error = function(e)
                     stop(gettextf("file '%s' is not in valid DCF format",
                                   dfile),
@@ -1423,6 +1424,8 @@ function(x)
     x <- sub("[[:space:]]+$", "", x)
     x
 }
+
+### ** .write_description
 
 ### ** .try_quietly
 
