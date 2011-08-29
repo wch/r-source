@@ -296,8 +296,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   advantageous with some printers).
 
   Color model \code{"srgb-nogray"} uses only sRGB, model \code{"cmyk"}
-  only CMYK, and model \code{"gray"} only greyscales (and selecting any
-  other color is an error).  The simplest possible conversion from sRGB
+  only CMYK, and model \code{"gray"} only greyscales (and converts other
+  colours to a luminance).  The simplest possible conversion from sRGB
   to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 

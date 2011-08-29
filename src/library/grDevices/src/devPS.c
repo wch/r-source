@@ -3002,9 +3002,10 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	else fprintf(fp, "%.4f", r);
 	fprintf(fp," setgray");
     } else {
-	if(strcmp(mm, "gray") == 0)
-	    error(_("only gray colors are allowed in this color model"));
-	if(strcmp(mm, "cmyk") == 0) {
+	if(strcmp(mm, "gray") == 0) {
+	    fprintf(fp, "%.4f setgray", 0.213*r + 0.715*g + 0.072*b);
+	    // error(_("only gray colors are allowed in this color model"));
+	} else if(strcmp(mm, "cmyk") == 0) {
 	    double c = 1.0-r, m=1.0-g, y=1.0-b, k=c;
 	    k = fmin2(k, m);
 	    k = fmin2(k, y);
@@ -6331,7 +6332,9 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
 		b = R_BLUE(color)/255.0;
 	    /* weights from C-9 of 
-	       http://www.faqs.org/faqs/graphics/colorspace-faq/ */
+	       http://www.faqs.org/faqs/graphics/colorspace-faq/ 
+	       Those from C-11 might be more appropriate.
+	    */
 	    fprintf(pd->pdffp, "%.3f G\n", (0.213*r+0.715*g+0.072*b));
 	} else if(streql(pd->colormodel, "cmyk")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,

@@ -421,8 +421,8 @@
 
       \code{pdf(colormodel = "rgb")} gives the behaviour prior to \R
       2.13.0 of uncalibrated RGB, which under some circumstances can be
-      rendered much faster by a viewer, and the files will be smaller
-      (by about 9KB if compression is not used).
+      rendered faster by a viewer, and the files will be smaller (by
+      about 9KB if compression is not used).
       
       \item The \code{postscript()} device only includes the definition
       of the sRGB colorspace in the output file for the colormodels
@@ -430,6 +430,13 @@
 
       \item The \code{postscript()} and \code{pdf()} devices now output
       greyscale raster images (and not RGB) when \code{colormodel = "gray"}.
+      
+      \code{postscript(colormodel = "srgb-nogray")} no longer sets the
+      sRGB colorspace for each colour and so some viewers may render it
+      much faster.
+      
+      \code{postscript(colormodel = "gray")} now accepts non-grey
+      colours and uses their luminance (as \code{pdf()} long has).
     }
   }
 
