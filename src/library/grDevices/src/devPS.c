@@ -3909,23 +3909,31 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 typedef rcolor * rcolorPtr;
 
 static void PS_imagedata(rcolorPtr raster,
-			  int w, int h,
-			  PostScriptDesc *pd)
+			 int w, int h,
+			 PostScriptDesc *pd)
 {
     /* Each original byte is translated to two hex digits
-     * (representing a number between 0 and 256)
-     * End-of-data signalled by a '>'
-     */
-    int i;
-    for (i = 0; i < w*h; i++) {
+       (representing a number between 0 and 255) */
+    for (int i = 0; i < w*h; i++) {
 	fprintf(pd->psfp, "%02x", R_RED(raster[i]));
 	fprintf(pd->psfp, "%02x", R_GREEN(raster[i]));
 	fprintf(pd->psfp, "%02x", R_BLUE(raster[i]));
     }
 }
 
-/* FIXME: this should support other values of 'colormodel', at least
-   "gray" */
+static void PS_grayimagedata(rcolorPtr raster,
+			     int w, int h,
+			     PostScriptDesc *pd)
+{
+    /* Weights as in PDF gray conversion */
+    for (int i = 0; i < w*h; i++) {
+	double r = 0.213 * R_RED(raster[i]) + 0.715 * R_GREEN(raster[i])
+	    + 0.072 * R_BLUE(raster[i]);
+	fprintf(pd->psfp, "%02x", (int)(r+0.49));
+    }
+}
+
+/* FIXME: this should support other values of 'colormodel' */
 static void PS_writeRaster(unsigned int *raster, int w, int h,
 			   double x, double y,
 			   double width, double height,
@@ -3941,8 +3949,7 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
      * There is no support for semitransparent images.
      */
     /* Save graphics state */
-    fprintf(pd->psfp,
-	    "gsave\n");
+    fprintf(pd->psfp, "gsave\n");
     /* set the colour space */
     if (streql(pd->colormodel, "srgb") || 
 	streql(pd->colormodel, "srgb-nogray")) fprintf(pd->psfp, "sRGB\n");
@@ -3961,17 +3968,27 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
     fprintf(pd->psfp,
 	    "%d %d 8 [%d 0 0 %d 0 %d]\n",
 	    w, h, w, -h, h);
-    /* Begin image data */
-    fprintf(pd->psfp, "{<\n");
-    /* The image stream */
-    PS_imagedata(raster, w, h, pd);
-    /* End image */
-    fprintf(pd->psfp, "\n>}\n");
-    /* single source, 3 components (interleaved) */
-    fprintf(pd->psfp, "false 3 colorimage\n");
+    if (streql(pd->colormodel, "gray")) {
+	/* Begin image data */
+	fprintf(pd->psfp, "{<\n");
+	/* The image stream */
+	PS_grayimagedata(raster, w, h, pd);
+	/* End image */
+	fprintf(pd->psfp, "\n>}\n");
+	/* single source, 3 components (interleaved) */
+	fprintf(pd->psfp, "image\n");
+    } else {
+	/* Begin image data */
+	fprintf(pd->psfp, "{<\n");
+	/* The image stream */
+	PS_imagedata(raster, w, h, pd);
+	/* End image */
+	fprintf(pd->psfp, "\n>}\n");
+	/* single source, 3 components (interleaved) */
+	fprintf(pd->psfp, "false 3 colorimage\n");
+    }
     /* Restore graphics state */
-    fprintf(pd->psfp,
-	    "grestore\n");
+    fprintf(pd->psfp, "grestore\n");
 }
 
 static void PS_Raster(unsigned int *raster, int w, int h,
@@ -5609,13 +5626,26 @@ static void writeRasterXObject(rasterImage raster, int n,
 			       int mask, int maskObj, PDFDesc *pd)
 {
     Bytef *buf, *buf2, *p;
-    uLong inlen = 3*raster.w*raster.h, outlen = inlen;
-    p = buf = Calloc(inlen, Bytef);
-    for(int i = 0; i < raster.w*raster.h; i++) {
-	*p++ = R_RED(raster.raster[i]);
-	*p++ = R_GREEN(raster.raster[i]);
-	*p++ = R_BLUE(raster.raster[i]);
+    uLong inlen;
+    if (streql(pd->colormodel, "gray")) {
+	inlen = raster.w * raster.h;
+	p = buf = Calloc(inlen, Bytef);
+	for(int i = 0; i < raster.w * raster.h; i++) {
+	    double r =  0.213 * R_RED(raster.raster[i]) 
+		+ 0.715 * R_GREEN(raster.raster[i])
+		+ 0.072 * R_BLUE(raster.raster[i]);
+	    *p++ = (int)(r + 0.49);
+	}
+    } else {
+	inlen = 3 * raster.w * raster.h;
+	p = buf = Calloc(inlen, Bytef);
+	for(int i = 0; i < raster.w * raster.h; i++) {
+	    *p++ = R_RED(raster.raster[i]);
+	    *p++ = R_GREEN(raster.raster[i]);
+	    *p++ = R_BLUE(raster.raster[i]);
+	}
     }
+    uLong outlen = inlen;
     if (pd->useCompression) {
 	outlen = 1.001*inlen + 20;
 	buf2 = Calloc(outlen, Bytef);
@@ -5629,12 +5659,15 @@ static void writeRasterXObject(rasterImage raster, int n,
     fprintf(pd->pdffp, "  /Subtype /Image\n");
     fprintf(pd->pdffp, "  /Width %d\n", raster.w);
     fprintf(pd->pdffp, "  /Height %d\n", raster.h);
-    if (streql(pd->colormodel, "srgb"))
+    if (streql(pd->colormodel, "gray"))
+	fprintf(pd->pdffp, "  /ColorSpace /DeviceGray\n");
+    else if (streql(pd->colormodel, "srgb"))
 	fprintf(pd->pdffp, "  /ColorSpace 5 0 R\n"); /* sRGB */
     else
 	fprintf(pd->pdffp, "  /ColorSpace /DeviceRGB\n");
     fprintf(pd->pdffp, "  /BitsPerComponent 8\n");
-    fprintf(pd->pdffp, "  /Length %u\n", (unsigned) outlen);
+    fprintf(pd->pdffp, "  /Length %u\n", (unsigned) 
+	    (pd->useCompression ? outlen : 2 * outlen + 1));
     if (raster.interpolate)
 	fprintf(pd->pdffp, "  /Interpolate true\n");
     if (pd->useCompression)
@@ -5644,8 +5677,14 @@ static void writeRasterXObject(rasterImage raster, int n,
     if (mask >= 0)
 	fprintf(pd->pdffp, "  /SMask %d 0 R\n", maskObj);
     fprintf(pd->pdffp, "  >>\nstream\n");
-    size_t res = fwrite(buf, 1, outlen, pd->pdffp);
-    if(res != outlen) error(_("write failed"));
+    if (pd->useCompression) {
+	size_t res = fwrite(buf, 1, outlen, pd->pdffp);
+	if(res != outlen) error(_("write failed"));
+    } else {
+	for(int i = 0; i < outlen; i++)
+	    fprintf(pd->pdffp, "%02x", buf[i]);
+	fprintf(pd->pdffp, ">\n");
+    }
     Free(buf);
     fprintf(pd->pdffp, "endstream\nendobj\n");
 }
@@ -5653,9 +5692,9 @@ static void writeRasterXObject(rasterImage raster, int n,
 static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd) 
 {
     Bytef *buf, *buf2, *p;
-    uLong inlen = raster.w*raster.h, outlen = inlen;
+    uLong inlen = raster.w * raster.h, outlen = inlen;
     p = buf = Calloc(outlen, Bytef);
-    for(int i = 0; i < raster.w*raster.h; i++) 
+    for(int i = 0; i < raster.w * raster.h; i++) 
 	*p++ = R_ALPHA(raster.raster[i]);
     if (pd->useCompression) {
 	outlen = 1.001*inlen + 20;
@@ -5672,7 +5711,8 @@ static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd)
     fprintf(pd->pdffp, "  /Height %d\n", raster.h);
     fprintf(pd->pdffp, "  /ColorSpace /DeviceGray\n");
     fprintf(pd->pdffp, "  /BitsPerComponent 8\n");
-    fprintf(pd->pdffp, "  /Length %u\n", (unsigned) outlen);
+    fprintf(pd->pdffp, "  /Length %u\n", (unsigned) 
+	    (pd->useCompression ? outlen : 2 * outlen + 1));
     if (raster.interpolate)
 	fprintf(pd->pdffp, "  /Interpolate true\n");
     if (pd->useCompression)
@@ -5680,8 +5720,14 @@ static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd)
     else
 	fprintf(pd->pdffp, "  /Filter /ASCIIHexDecode\n");
     fprintf(pd->pdffp, "  >>\nstream\n");
-    size_t res = fwrite(buf, 1, outlen, pd->pdffp);
-    if(res != outlen) error(_("write failed"));
+    if (pd->useCompression) {
+	size_t res = fwrite(buf, 1, outlen, pd->pdffp);
+	if(res != outlen) error(_("write failed"));
+    } else {
+	for(int i = 0; i < outlen; i++)
+	    fprintf(pd->pdffp, "%02x", buf[i]);
+	fprintf(pd->pdffp, ">\n");
+    }
     Free(buf);
     fprintf(pd->pdffp, "endstream\nendobj\n");
 }

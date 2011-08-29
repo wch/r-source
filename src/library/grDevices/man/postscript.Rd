@@ -303,8 +303,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   some plots in some viewers, but does rely on the viewer being set up
   for the desired RGB color space.
 
-  Raster images are output in RGB under the \code{"gray"} and
-  \code{"cmyk"} models.  
+  Raster images are output in RGB under the \code{"cmyk"} model.  
 }
 
 \section{Printing}{

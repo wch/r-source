@@ -409,6 +409,27 @@
       Currently implemented for \code{windows(buffered = TRUE)},
       \code{quartz()} and the cairo-based \code{X11()} types with
       buffering (which are the default on-screen devices).
+
+      \item The default \code{colormodel} for \code{postscript()} and
+      \code{pdf()} is now called \code{"srgb"} to more accurately
+      describe it.
+
+      \item \code{postscript()} with values \code{colormodel = "rgb"} and
+      \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
+      2.13.0 of uncalibrated RGB, which under some circumstances can be
+      rendered much faster by a viewer.
+
+      \code{pdf(colormodel = "rgb")} gives the behaviour prior to \R
+      2.13.0 of uncalibrated RGB, which under some circumstances can be
+      rendered much faster by a viewer, and the files will be smaller
+      (by about 9KB if compression is not used).
+      
+      \item The \code{postscript()} device only includes the definition
+      of the sRGB colorspace in the output file for the colormodels
+      which use it.
+
+      \item The \code{postscript()} and \code{pdf()} devices now output
+      greyscale raster images (and not RGB) when \code{colormodel = "gray"}.
     }
   }
 
@@ -504,24 +525,6 @@
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
-
-      \item The default \code{colormodel} for \code{postscript()} and
-      \code{pdf()} is now called \code{"srgb"} to more accurately
-      describe it.
-
-      \item \code{postscript()} with values \code{colormodel = "rgb"} and
-      \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
-      2.13.0 of uncalibrated RGB, which under some circumstances can be
-      rendered much faster by a viewer.
-
-      \code{pdf(colormodel = "rgb")} gives the behaviour prior to \R
-      2.13.0 of uncalibrated RGB, which under some circumstances can be
-      rendered much faster by a viewer, and the files will be smaller
-      (by about 9KB if compression is not used).
-      
-      \item The \code{postscript()} device only includes the definition
-      of the sRGB colorspace in the output file for the colormodels
-      which use it.
     }
   }
 

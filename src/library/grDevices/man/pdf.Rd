@@ -165,10 +165,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   on a landscape A4 page with 0.25 inch margins.
 
   When the background colour is fully transparent (as is the initial
-  default value), the PDF produced does not paint the background.
-  Almost all PDF viewers will use a white canvas so the visual effect is
-  if the background were white.  This will not be the case when printing
-  onto coloured paper, though.
+  default value), the PDF produced does not paint the background.  Most
+  PDF viewers will use a white canvas so the visual effect is if the
+  background were white.  This will not be the case when printing onto
+  coloured paper, though.
 
   If you are planning to use a large number of raster images in your
   output, you may need to specify a larger value for argument
@@ -187,8 +187,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Some viewers may render some plots in that colorspace faster than
   in sRGB, and the plot files will be smaller.
 
-  Raster images are output in RGB under the \code{"gray"} and
-  \code{"cmyk"} models.
+  Raster images are output in RGB under the \code{"cmyk"} model.
 }
 
 \section{Conventions}{
