@@ -66,7 +66,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     page? -- is only relevant for \code{paper != "special"}.  
     Defaults to \code{TRUE}.}
   \item{colormodel}{a character string describing the color model:
-    currently allowed values are \code{"srgb"}, \code{"gray"} and
+    currently allowed values are \code{"srgb"}, \code{"gray"}, \code{"grey"} and
     \code{"cmyk"}.  Defaults to \code{"srgb"}.}
   \item{useDingbats}{logical.  Should small circles be rendered
     \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces

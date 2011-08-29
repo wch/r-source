@@ -109,8 +109,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"srgb"}, \code{"srgb-nogray"},
-    \code{"rgb"}, \code{"rgb-nogray"},
-    \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"srgb"}.}
+    \code{"rgb"}, \code{"rgb-nogray"}, \code{"gray"}, \code{"grey"} and
+    \code{"cmyk"}.  Defaults to \code{"srgb"}.}
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see

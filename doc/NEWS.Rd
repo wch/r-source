@@ -431,12 +431,15 @@
       \item The \code{postscript()} and \code{pdf()} devices now output
       greyscale raster images (and not RGB) when \code{colormodel = "gray"}.
       
-      \code{postscript(colormodel = "srgb-nogray")} no longer sets the
+      \item \code{postscript(colormodel = "srgb-nogray")} no longer sets the
       sRGB colorspace for each colour and so some viewers may render it
       much faster.
       
-      \code{postscript(colormodel = "gray")} now accepts non-grey
+      \item \code{postscript(colormodel = "gray")} now accepts non-grey
       colours and uses their luminance (as \code{pdf()} long has).
+      
+      \item \code{colormodel = "grey"} is allowed for
+      \code{postscript()} and \code{pdf()}.
     }
   }
 

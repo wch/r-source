@@ -3105,7 +3105,8 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
-    strncpy(pd->colormodel, colormodel, 30);
+    if (streql(pd->colormodel, "grey")) strcpy("gray", colormodel);
+    else strncpy(pd->colormodel, colormodel, 30);
     pd->useKern = (useKern != 0);
     pd->fillOddEven = fillOddEven;
 
@@ -5892,7 +5893,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
     memset(pd->fontUsed, 0, 100*sizeof(Rboolean));
-    strncpy(pd->colormodel, colormodel, 30);
+    if (streql(pd->colormodel, "grey")) strcpy("gray", colormodel);
+    else strncpy(pd->colormodel, colormodel, 30);
     pd->dingbats = (dingbats != 0);
     pd->useKern = (useKern != 0);
     pd->fillOddEven = fillOddEven;
