@@ -325,7 +325,7 @@
       the process ID as well as the current time, just in case two \R
       processes are launched very rapidly on a machine with
       low-resolution wall clock (some have a resolution of a second;
-      modern systems have microsecond-level resolutions).
+      modern systems have microsecond-level resolution).
 
       \item New function \code{pskill()} in the \pkg{tools} package to
       send a terminate signal to one or more processes, plus constants
@@ -338,7 +338,7 @@
 
       \item \code{list.dirs()} gains a \code{recursive} argument.
 
-      \item A \samp{Authors@R} field in a package \file{DESCRIPTION}
+      \item An \samp{Authors@R} field in a package \file{DESCRIPTION}
       file can now be used to generate \samp{Author} and
       \samp{Maintainer} fields if needed, and to auto-generate package
       citations.
