@@ -213,20 +213,16 @@ get_exclude_patterns <- function()
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
 
-    add_build_stamp_to_description_file <- function(ldpath)
-    {
-        lines <- readLines(ldpath, warn = FALSE)
-        lines <- lines[nzchar(lines)] # Remove blank lines.
-        ## Do not keep previous build stamps.
-        lines <- lines[!grepl("^Packaged:", lines, useBytes = TRUE)]
+    add_build_stamp_to_description_file <- function(ldpath) {
+        db <- .read_description(ldpath)
         ## this is an optional function, so could fail
         user <- Sys.info()["user"]
-        if (user == "unknown") user <- Sys.getenv("LOGNAME")
-        lines <- c(lines,
-                   paste("Packaged: ",
-                         format(Sys.time(), '', tz='UTC', usetz=TRUE),
-                         ";", " ", user, sep = ""))
-        writeLinesNL(lines, ldpath)
+        if(user == "unknown") user <- Sys.getenv("LOGNAME")
+        db["Packaged"] <- 
+            sprintf("%s; %s",
+                    format(Sys.time(), '', tz = 'UTC', usetz = TRUE),
+                    user)
+        .write_description(db, ldpath)
     }
 
     ## <FIXME>
@@ -236,11 +232,8 @@ get_exclude_patterns <- function()
     add_expanded_R_fields_to_description_file <- function(dfile) {
         db <- .read_description(dfile)
         fields <- .expand_package_description_db_R_fields(db)
-        if(length(fields)) {
-            lines <- c(readLines(dfile, warn = FALSE),
-                       paste(names(fields), fields, sep = ": "))
-            writeLinesNL(lines, dfile)
-        }
+        if(length(fields))
+            .write_description(c(db, fields), ldpath)
     }
     ## </FIXME>
 
@@ -601,8 +594,10 @@ get_exclude_patterns <- function()
             if(dep$op != '>=') next
             if(dep$version >= package_version(ver)) return()
         }
+        
         on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
         Sys.setlocale("LC_CTYPE", "C")
+        
         flatten <- function(x) {
             if(length(x) == 3L)
                 paste(x$name, " (", x$op, " ", x$version, ")", sep = "")
@@ -615,13 +610,9 @@ get_exclude_patterns <- function()
             paste(c(sprintf("R (>= %s)", ver), sapply(deps, flatten)),
                   collapse = ", ")
         } else sprintf("R (>= %s)", ver)
-        ## Avoid calling write.dcf which reformats.
-        ##   write.dcf(t(as.matrix(desc)),
-        ##             file.path(pkgname, "DESCRIPTION"))
-        writeLines(sprintf("%s: %s",
-                           names(desc),
-                           gsub("\n", "\n  ", desc, fixed = TRUE)),
-                   file.path(pkgname, "DESCRIPTION"))
+        
+        .write_description(desc, file.path(pkgname, "DESCRIPTION"))
+        
         printLog(Log,
                  "  NB: this package now depends on R (>= ", ver, ")\n")
     }

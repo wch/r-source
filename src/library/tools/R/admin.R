@@ -83,17 +83,11 @@ function(dir, outDir)
     ## But in any case, it is true for fields obtained from expanding R
     ## fields (Authors@R): these should not be reformatted.
 
-    fields <- c(.expand_package_description_db_R_fields(db),
-                Built = Built)
-
-    ## Avoid declared encodings
-    dbn <- db; Encoding(dbn) <- "unknown"
-    outConn <- file(file.path(outDir, "DESCRIPTION"), open = "w")
-    write.dcf(rbind(dbn), outConn)
-    writeLines(paste(names(fields), fields, sep = ": "), outConn)
-    close(outConn)
-
-    db <- c(db, fields)
+    db <- c(db,     
+            .expand_package_description_db_R_fields(db),
+            Built = Built)
+    
+    .write_description(db, file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))

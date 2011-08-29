@@ -1230,6 +1230,9 @@ function(txt)
 
 ### ** .read_description
 
+.keep_white_description_fields <-
+    c("Description", "Author", "Built", "Packaged")
+
 .read_description <-
 function(dfile)
 {
@@ -1243,7 +1246,8 @@ function(dfile)
     if(!file_test("-f", dfile))
         stop(gettextf("file '%s' does not exist", dfile), domain = NA)
     out <- tryCatch(read.dcf(dfile,
-                             keep.white = c("Description", "Author"))[1L, ],
+                             keep.white =
+                             .keep_white_description_fields)[1L, ],
                     error = function(e)
                     stop(gettextf("file '%s' is not in valid DCF format",
                                   dfile),
@@ -1255,6 +1259,26 @@ function(dfile)
         else out <- iconv(out, encoding, "", sub = "byte")
     }
     out
+}
+
+.write_description <-
+function(x, dfile)
+{
+    ## Invert how .read_description() handles package encodings.
+    if(!is.na(encoding <- x["Encoding"])) {
+        ## For UTF-8 or latin1 encodings, .read_description() would
+        ## simply have marked the encoding.  But we might have added
+        ## fields encoded differently ...
+        ind <- is.na(match(Encoding(x), c(encoding, "unknown")))
+        if(any(ind))
+            x[ind] <- mapply(iconv, x[ind], Encoding(x)[ind], encoding,
+                             sub = "byte")
+    }
+    ## Avoid declared encodings when writing out.
+    Encoding(x) <- "unknown"
+    ## Avoid folding for Description, Author, Built, and Packaged.
+    write.dcf(rbind(x), dfile,
+              keep.white = .keep_white_description_fields)
 }
 
 ### ** .read_repositories
@@ -1424,8 +1448,6 @@ function(x)
     x <- sub("[[:space:]]+$", "", x)
     x
 }
-
-### ** .write_description
 
 ### ** .try_quietly
 
