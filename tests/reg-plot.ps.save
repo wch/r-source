@@ -40,6 +40,7 @@
        closepath clip newpath } bind def
 /rgb { setrgbcolor } bind def
 /s   { scalefont setfont } bind def
+% end   .ps.prolog
 /sRGB { [ /CIEBasedABC
           << /DecodeLMN
                [ { dup 0.03928 le
@@ -55,7 +56,6 @@
            >>
          ] setcolorspace } bind def
 /srgb { sRGB setcolor } bind def
-% end   .ps.prolog
 %%IncludeResource: font Helvetica
 /Helvetica findfont
 dup length dict begin

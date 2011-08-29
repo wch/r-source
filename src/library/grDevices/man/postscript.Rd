@@ -292,18 +292,26 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 }
 \section{Color models}{
   The default color model (\code{"srgb"}) is sRGB, with pure gray colors
-  expressed as greyscales.  Color model \code{"srgb-nogray"} uses only
-  sRGB, model \code{"cmyk"} only CMYK, and model \code{"gray"} only
-  greyscales (and selecting any other colour is an error).  The simplest
-  possible conversion from sRGB to CMYK is used
+  expressed as greyscales (which results in smaller files and can be
+  advantageous with some printers).
+
+  Color model \code{"srgb-nogray"} uses only sRGB, model \code{"cmyk"}
+  only CMYK, and model \code{"gray"} only greyscales (and selecting any
+  other color is an error).  The simplest possible conversion from sRGB
+  to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 
   Color models \code{"rgb"}) and \code{"rgb-nogray"} use uncalibrated
-  RGB as used in \R prior to 2.13.0.  This may render much faster for
-  some plots in some viewers, but does rely on the viewer being set up
-  for the desired RGB color space.
+  RGB, as used in \R prior to 2.13.0.  These result in small files, but
+  do rely on the viewer being properly calibrated.
 
-  Raster images are output in RGB under the \code{"cmyk"} model.  
+  In the default \code{"srgb"} model, the viewer has to switch to and
+  from the sRGB colorspace and this can be slow.  This can be avoided by
+  using either the \code{"srgb-nogray"} or the \code{"rgb"} colorspaces,
+  although each has disadvantages.
+
+  Raster images are output in RGB under the \code{"cmyk"} model, and are
+  converted to greyscale under the \code{"gray"} model.
 }
 
 \section{Printing}{

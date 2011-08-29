@@ -413,8 +413,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "                         0.180437 0.072175 0.950301]",
 "             /WhitePoint [0.9505 1.0 1.0890]",
 "           >>",
-"         ] setcolorspace } bind def",
-"/srgb { sRGB setcolor } bind def"
+"         ] setcolorspace } bind def"
 )
 
 ####################
