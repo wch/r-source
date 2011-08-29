@@ -4116,6 +4116,8 @@ static void PS_Path(double *x, double *y,
     /* code == 1, outline only */
     /* code == 2, fill only */
     /* code == 3, outline and fill */
+    /* code == 6, eofill only */
+    /* code == 7, outline and eofill */
 
     CheckAlpha(gc->fill, pd);
     CheckAlpha(gc->col, pd);
@@ -5432,7 +5434,7 @@ typedef struct {
 
     /*
      * What version of PDF are we trying to work with?
-     * This is used (so far) for implementing transparency
+     * This is used (so far) for implementing transparency and CID fonts
      * Alphas are only used if version is at least 1.4
      */
     int versionMajor;
@@ -6277,7 +6279,8 @@ static void PDF_SetLineColor(int color, pDevDesc dd)
 	if(streql(pd->colormodel, "gray")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
 		b = R_BLUE(color)/255.0;
-	    /* weights from http://www.faqs.org/faqs/graphics/colorspace-faq/ */
+	    /* weights from C-9 of 
+	       http://www.faqs.org/faqs/graphics/colorspace-faq/ */
 	    fprintf(pd->pdffp, "%.3f G\n", (0.213*r+0.715*g+0.072*b));
 	} else if(streql(pd->colormodel, "cmyk")) {
 	    double r = R_RED(color)/255.0, g = R_GREEN(color)/255.0,
@@ -6563,21 +6566,9 @@ static void PDF_startfile(PDFDesc *pd)
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "2 0 obj\n<<\n/Type /Catalog\n/Pages 3 0 R\n>>\nendobj\n");
 
-    /* Object 3 will be at the end */
-
-    ++pd->nobjs;
-
-    /* Object 4 will be at the end */
-
-    ++pd->nobjs;
-
-    /* Object 5 will be at the end */
-
-    ++pd->nobjs;
-
-    /* Object 6 will be at the end */
-
-    ++pd->nobjs;
+    /* Objects at the end */
+    pd->nobjs += 2;
+    if (streql(pd->colormodel, "rgb")) pd->nobjs += 2;
 }
 
 static const char *Base14[] =
@@ -6732,25 +6723,21 @@ static void PDF_endfile(PDFDesc *pd)
     }
     fprintf(pd->pdffp, ">>\n");
 
-    /* The sRGB colorspace */
-    fprintf(pd->pdffp, "/ColorSpace << /sRGB 5 0 R >>\n");
+    if (streql(pd->colormodel, "rgb")) {
+	/* Objects 5 and 6 are the sRGB color space, if required */
+	fprintf(pd->pdffp, "/ColorSpace << /sRGB 5 0 R >>\n");
+	fprintf(pd->pdffp, ">>\nendobj\n");
+	pd->pos[5] = (int) ftell(pd->pdffp);
+	fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\nendobj\n");
+	pd->pos[6] = (int) ftell(pd->pdffp);
+	fprintf(pd->pdffp,
+		"6 0 obj\n<< /N 3 /Alternate /DeviceRGB /Length 9433 /Filter /ASCIIHexDecode >>\nstream\n");
+	PDFwritesRGBcolorspace(pd);    
+	fprintf(pd->pdffp, " >\nendstream\nendobj\n");
+    } else {
+    	fprintf(pd->pdffp, ">>\nendobj\n");
+    }
 
-    fprintf(pd->pdffp, ">>\nendobj\n");
-
-    /* Objects 5 and 6 are the sRGB color space */
-
-    /* sRGB colorspace */
-    pd->pos[5] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\n");
-    fprintf(pd->pdffp,
-            "endobj\n");
-    pd->pos[6] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp,
-            "6 0 obj\n<< /N 3 /Alternate /DeviceRGB /Length 9433 /Filter /ASCIIHexDecode >>\nstream\n");
-    PDFwritesRGBcolorspace(pd);    
-    fprintf(pd->pdffp,
-            " >\nendstream\nendobj\n");
-    
     /*
      * Write out objects representing the encodings
      */

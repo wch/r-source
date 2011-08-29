@@ -46,7 +46,7 @@
     \itemize{
       \item Using a broad \code{exportPattern} directive in a
       \file{NAMESPACE} file is no longer allowed to export internal
-      objects such as \code{.onLoad} and \code{.__S3MethodsTable__.}.
+      objects such as \code{.onLoad} and \code{.__S3MethodsTable__.} .
 
       These are also excluded from imports, along with \code{.First.lib}.
     }
@@ -98,6 +98,10 @@
   
       \item \code{decompose()} computed an incorrect seasonal component for
       time series with odd frequencies.
+      
+      \item The \code{pdf()} device only includes the definition of the
+      sRGB colorspace in the output file for the colormodels which use
+      it (and not for \code{"gray"} nor \code{"cmyk"}).
     }
   }
 }
