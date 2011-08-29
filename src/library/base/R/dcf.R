@@ -18,7 +18,7 @@ read.dcf <-
 function(file, fields = NULL, all = FALSE, keep.white = NULL)
 {
     if(is.character(file)){
-        file <- gzfile(file, "r")
+        file <- gzfile(file)
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
@@ -102,14 +102,16 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
              domain = NA)
     }
 
+    lengths <- rle(cumsum(line_has_tag))$lengths
     ## End positions of field entries.
-    pos <- cumsum(rle(cumsum(line_has_tag))$lengths)
+    pos <- cumsum(lengths)
 
     tags <- sub(":.*", "", lines[line_has_tag])
     lines[line_has_tag] <-
         sub("[^:]*:[[:space:]]*", "", lines[line_has_tag])
-    lines[!line_has_tag] <-
-        sub("^[[:space:]]*", "", lines[!line_has_tag])
+    foldable <- rep.int(is.na(match(tags, keep.white)), lengths)
+    lines[foldable] <- sub("^[[:space:]]*", "", lines[foldable])
+    lines[foldable] <- sub("[[:space:]]*$", "", lines[foldable])
 
     vals <- mapply(function(from, to) paste(lines[from:to],
                                             collapse = "\n"),
@@ -126,7 +128,8 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
 write.dcf <-
 function(x, file = "", append = FALSE,
          indent = 0.1 * getOption("width"),
-         width = 0.9 * getOption("width"))
+         width = 0.9 * getOption("width"),
+         keep.white = NULL)
 {
     if(file == "")
         file <- stdout()
@@ -146,33 +149,44 @@ function(x, file = "", append = FALSE,
 	gsub("\n \\.([^\n])","\n  .\\1",
 	     gsub("\n[[:space:]]*\n", "\n .\n ", s, useBytes=TRUE),
              useBytes=TRUE)
+    fmt <- function(tag, val, fold = TRUE) {
+        s <- if(fold)
+            formatDL(rep.int(tag, length(val)), val, style = "list",
+                     width = width, indent = indent)
+        else {
+            ## Need to ensure a leading whitespace for continuation
+            ## lines.
+            sprintf("%s: %s", tag,
+                    gsub("\n([^[:blank:]])", "\n \\1", val))
+        }
+        escape_paragraphs(s)
+    }
+    
 
     if(!is.data.frame(x))
         x <- as.data.frame(x, stringsAsFactors = FALSE)
     nmx <- names(x)
     out <- matrix("", nrow(x), ncol(x))
+
+    foldable <- is.na(match(nmx, keep.white))
+    
     for(j in seq_along(x)) {
         xj <- x[[j]]
         if(is.atomic(xj)) {
             ## For atomic ("character") columns, things are simple ...
             i <- !is.na(xj)
-            s <- formatDL(rep.int(nmx[j], sum(i)), xj[i],
-                          style = "list", width = width,
-                          indent = indent)
-            out[i, j] <- escape_paragraphs(s)
+            out[i, j] <- fmt(nmx[j], xj[i], foldable[j])
         }
         else {
             ## Should be a list ...
             nmxj <- nmx[j]
+            fold <- foldable[j]
             i <- !vapply(xj, function(s) (length(s) == 1L) && is.na(s), NA)
             out[i, j] <-
 		vapply(xj[i],
                        function(s) {
-                           s <- formatDL(rep.int(nmxj, length(s)), s,
-                                         style = "list", width = width,
-                                         indent = indent)
-                           paste(escape_paragraphs(s), collapse = "\n")
-		       }, "")
+                           paste(fmt(nmxj, s, fold), collapse = "\n")
+                       }, "")
         }
     }
     out <- t(out)

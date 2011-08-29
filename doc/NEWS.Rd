@@ -359,6 +359,10 @@
 
       \item \code{agrep()} gains a \code{fixed} argument to optionally
       allow approximate regular expression matching.
+
+      \item \code{read.dcf()} and \code{write.dcf()} gain a
+      \code{keep.white} argument to indicate fields where whitespace
+      should be kept as is.
     }
   }
 

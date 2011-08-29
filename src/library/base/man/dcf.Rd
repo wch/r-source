@@ -16,7 +16,8 @@ read.dcf(file, fields = NULL, all = FALSE, keep.white = NULL)
 
 write.dcf(x, file = "", append = FALSE,
           indent = 0.1 * getOption("width"),
-          width = 0.9 * getOption("width"))
+          width = 0.9 * getOption("width"),
+          keep.white = NULL)
 }
 \arguments{
   \item{file}{either a character string naming a file or a \link{connection}.
@@ -29,13 +30,11 @@ write.dcf(x, file = "", append = FALSE,
     If \code{all} is false (default), only the last such occurrence is
     used.}
   \item{keep.white}{a character string with the names of the fields for
-    which white space should be kept as is, or \code{NULL} (default)
+    which whitespace should be kept as is, or \code{NULL} (default)
     indicating that there are no such fields.  Coerced to character if
-    possible.  For fields where white space is not to be kept as is,
-    \code{read.dcf} removes leading and trailing white space, and
+    possible.  For fields where whitespace is not to be kept as is,
+    \code{read.dcf} removes leading and trailing whitespace, and
     \code{write.dcf} folds using \code{\link{strwrap}}.
-
-    Currently only works when \code{all} is \code{FALSE}.
    }
   \item{x}{the object to be written, typically a data frame.  If not, it
     is attempted to coerce \code{x} to a data frame.}
@@ -60,14 +59,14 @@ write.dcf(x, file = "", append = FALSE,
     \item Regular lines start with a non-whitespace character.
     \item Regular lines are of form \code{tag:value}, i.e., have a name
     tag and a value for the field, separated by \code{:} (only the first
-    \code{:} counts).  The value can be empty (=whitespace only).
+    \code{:} counts).  The value can be empty (i.e., whitespace only).
     \item Lines starting with whitespace are continuation lines (to the
     preceding field) if at least one character in the line is
     non-whitespace.  Continuation lines where the only non-whitespace
     character is a \samp{.} are taken as blank lines (allowing for
     multi-paragraph field values).
-    \item Records are separated by one or more empty (=whitespace only)
-    lines.
+    \item Records are separated by one or more empty (i.e., whitespace
+    only) lines.
   }
   
   Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.
