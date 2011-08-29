@@ -5623,7 +5623,10 @@ static void writeRasterXObject(rasterImage raster, int n,
     fprintf(pd->pdffp, "  /Subtype /Image\n");
     fprintf(pd->pdffp, "  /Width %d\n", raster.w);
     fprintf(pd->pdffp, "  /Height %d\n", raster.h);
-    fprintf(pd->pdffp, "  /ColorSpace 5 0 R\n"); /* sRGB */
+    if (streql(pd->colormodel, "srgb"))
+	fprintf(pd->pdffp, "  /ColorSpace 5 0 R\n"); /* sRGB */
+    else
+	fprintf(pd->pdffp, "  /ColorSpace /DeviceRGB\n");
     fprintf(pd->pdffp, "  /BitsPerComponent 8\n");
     fprintf(pd->pdffp, "  /Length %u\n", (unsigned) outlen);
     if (raster.interpolate)

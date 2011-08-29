@@ -508,11 +508,6 @@
       \item The default \code{colormodel} for \code{postscript()} and
       \code{pdf()} is now called \code{"srgb"} to more accurately
       describe it.
-      
-      \item The \code{postscript()} and \code{pdf()} devices only
-      include the definition of the sRGB colorspace in the output file
-      for the colormodels which use it (and not for \code{"gray"} nor
-      \code{"cmyk"}).
 
       \item \code{postscript()} with values \code{colormodel = "rgb"} and
       \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
@@ -523,6 +518,10 @@
       2.13.0 of uncalibrated RGB, which under some circumstances can be
       rendered much faster by a viewer, and the files will be smaller
       (by about 9KB if compression is not used).
+      
+      \item The \code{postscript()} device only includes the definition
+      of the sRGB colorspace in the output file for the colormodels
+      which use it.
     }
   }
 
@@ -798,6 +797,10 @@
   
       \item \code{decompose()} computed an incorrect seasonal component for
       time series with odd frequencies.
+      
+      \item The \code{pdf()} device only includes the definition of the
+      sRGB colorspace in the output file for the colormodels which use
+      it (and not for \code{"gray"} nor \code{"cmyk"}).
     }
   }
 }

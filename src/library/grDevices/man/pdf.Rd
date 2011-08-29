@@ -184,8 +184,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 
   Also available is model \code{"rgb"} which uses uncalibrated RGB and
   corresponds to the model used under that name in \R prior to 2.13.0.
-  Some viewers may render some plots in that colorspace much faster than
-  in sRGB, and the plots will be slightly smaller.
+  Some viewers may render some plots in that colorspace faster than
+  in sRGB, and the plot files will be smaller.
+
+  Raster images are output in RGB under the \code{"gray"} and
+  \code{"cmyk"} models.
 }
 
 \section{Conventions}{
