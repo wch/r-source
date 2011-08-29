@@ -186,6 +186,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{"cmyk"} outputs in CMYK colorspace.  The simplest
   possible conversion from sRGB to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
+
+  Raster images are output in RGB under the \code{"gray"} and
+  \code{"cmyk"} models.
 }
 
 \section{Conventions}{
@@ -199,11 +202,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item Line widths are as a multiple of 1/96 inch, with a minimum
     of 0.01 enforced.   
     \item Circles of any radius are allowed.  Unless \code{useDingbats =
-    FALSE}, opaque circles of less than 10 big
-    points radius are rendered using char 108 in the Dingbats font:
-    all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
-    curve for each quadrant.
-    \item Colours are specified as sRGB.
+      FALSE}, opaque circles of less than 10 big points radius are
+    rendered using char 108 in the Dingbats font: all semi-transparent
+    and larger circles using a \enc{Bézier}{Bezier} curve for each
+    quadrant.
+    \item Colours are by default specified as sRGB.
   }
 
   At very small line widths, the line type may be forced to solid.
