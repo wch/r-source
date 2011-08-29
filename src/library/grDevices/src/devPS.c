@@ -6566,8 +6566,9 @@ static void PDF_startfile(PDFDesc *pd)
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "2 0 obj\n<< /Type /Catalog /Pages 3 0 R >>\nendobj\n");
 
-    /* Objects 3-6 will be at the end */
-    pd->nobjs += 4;
+    /* Objects at the end */
+    pd->nobjs += 2;
+    if (streql(pd->colormodel, "srgb")) pd->nobjs += 2;
 }
 
 static const char *Base14[] =
@@ -6719,17 +6720,20 @@ static void PDF_endfile(PDFDesc *pd)
 	fprintf(pd->pdffp, "/GSais %d 0 R ", ++tempnobj);
     fprintf(pd->pdffp, ">>\n");
 
-    /* Objects 5 and 6 are the sRGB color space */
-    /* The sRGB colorspace */
-    fprintf(pd->pdffp, "/ColorSpace << /sRGB 5 0 R >>\n");
-    fprintf(pd->pdffp, ">>\nendobj\n");
-    pd->pos[5] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\nendobj\n");
-    pd->pos[6] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "6 0 obj\n");
-    if (streql(pd->colormodel, "srgb")) PDFwritesRGBcolorspace(pd);    
-    fprintf(pd->pdffp, "endobj\n");
-    
+    if (streql(pd->colormodel, "srgb")) {
+	/* Objects 5 and 6 are the sRGB color space, if required */
+	fprintf(pd->pdffp, "/ColorSpace << /sRGB 5 0 R >>\n");
+	fprintf(pd->pdffp, ">>\nendobj\n");
+	pd->pos[5] = (int) ftell(pd->pdffp);
+	fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\nendobj\n");
+	pd->pos[6] = (int) ftell(pd->pdffp);
+	fprintf(pd->pdffp, "6 0 obj\n");
+	PDFwritesRGBcolorspace(pd);    
+	fprintf(pd->pdffp, "endobj\n");
+    } else {
+    	fprintf(pd->pdffp, ">>\nendobj\n");
+    }
+
     /*
      * Write out objects representing the encodings
      */
