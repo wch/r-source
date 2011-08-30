@@ -291,12 +291,20 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 }
 \section{Color models}{
   The default color model is sRGB, with pure gray colors expressed as
-  greyscales.  Color model \code{"rgb-nogray"} uses only sRGB, model
-  \code{"cmyk"} only CMYK, and model \code{"gray"} only greyscales (and
-  selecting any other colour is an error).  The simplest
-  possible conversion from sRGB to CMYK is used
+  greyscales (which results in smaller files and can be
+  advantageous with some printers).
+  
+  Color model \code{"rgb-nogray"} uses only sRGB, model \code{"cmyk"}
+  only CMYK, and model \code{"gray"} only greyscales (and selecting any
+  other colour is an error).  The simplest possible conversion from sRGB
+  to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
-
+  
+  In the default \code{"rgb"} model the viewing program has to switch to
+  and from the sRGB colorspace and this can be slow.  This can be
+  avoided by using the \code{"rgb-nogray"} colorspace, although some
+  printer drivers may render grey colors using RGB inks in that space.
+  
   Raster images are output in RGB under the \code{"gray"} and
   \code{"cmyk"} models.  
 }

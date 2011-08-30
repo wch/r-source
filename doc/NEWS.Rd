@@ -27,6 +27,10 @@
       \item Sweave now knows about a few more Windows' encodings
       (including \code{cp1250} and \code{cp1257}) and some
       \code{inputenx} encodings such as \code{koi8-r}.
+      
+      \item \code{postscript(colormodel = "rgb-nogray")} no longer sets
+      the sRGB colorspace for each colour and so some viewers may render
+      its files much faster than the default \code{colormodel ="rgb"}.
     }
   }
 

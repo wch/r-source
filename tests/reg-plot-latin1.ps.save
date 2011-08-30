@@ -52,9 +52,9 @@
              /WhitePoint [0.9505 1.0 1.0890]
            >>
          ] setcolorspace } bind def
-/srgb { sRGB setcolor } bind def
 /s   { scalefont setfont } bind def
 % end   .ps.prolog
+/srgb { sRGB setcolor } bind def
 %%IncludeResource: font Helvetica
 /Helvetica findfont
 dup length dict begin
