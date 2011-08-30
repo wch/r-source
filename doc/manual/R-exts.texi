@@ -3135,7 +3135,18 @@ defined in the released package (maybe by adding it to
 @code{PKG_CPPFLAGS}).
 
 This applies not only to your own code but to any external software you
-compile in or link to.
+compile in or link to.  Such code may contain references
+to @code{abort} or @code{exit} that can never be called, but if any are
+found in the package's shared object/DLL, they are reported by
+@command{R CMD check}.
+
+@item
+Compiled code should not write to @file{stdout} or @file{stderr} and C++
+and Fortran I/O should be be used.  Where @command{R CMD check} can
+detect this in the package's shared object/DLL it will report it: as
+with the previous item such calls may come from external software and
+may never be called.  (This seems particularly common on Mac OS X and
+Windows with static libraries.)
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
