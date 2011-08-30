@@ -113,10 +113,10 @@
       \item \code{pbirthday()} and \code{qbirthday()} now use exact
       calculations for \code{coincident = 2}.
 
-      \item \code{unzip()} and \code{unz()} connection have been updated
-      with support for more recent Zip64 features (including large file
-      sizes and \command{bzip2} compression, but not yet UTF-8 file
-      names).
+      \item \code{unzip()} and \code{unz()} connections have been
+      updated with support for more recent Zip64 features (including
+      large file sizes and \command{bzip2} compression, but not UTF-8
+      file names).
 
       \code{unzip()} has a new option to restore file times from those
       recorded (in an unknown timezone) in the zip file.
@@ -199,7 +199,8 @@
 
       \item The \code{length} argument of \code{vector()} and its
       wrappers such as \code{numeric()} is required to be of length 1
-      (instead of a warning as previously).
+      (other values are an error rather than giving a warning as
+      previously).
 
       \item \code{vector(len)} and \code{length(x) <- len} no longer
       acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
@@ -207,14 +208,15 @@
       code).
 
       \item There is a new function \code{Sys.setFileTime()} to set the
-      time of a file (including a directory).
+      time of a file (including a directory).  See its help for exactly
+      which times it sets.
 
       \item The file times reported by \code{file.info()} are reported
       to sub-second resolution on systems which support it.  (Currently
       the POSIX 2008 and FreeBSD/Darwin/NetBSD methods are detected.)
 
       \item New function \code{getCall(m)} as an abstraction for
-      \code{m$call}, enabling \code{update(m)}'s default method to apply % $
+      \code{m$call}, enabling \code{update()}'s default method to apply % $
       more universally.  (NB: this can be masked by existing functions
       in packages.)
 
@@ -222,21 +224,20 @@
       the \sQuote{effective} user on OSes which have that concept.
 
       \item The result returned by \code{try()} now contains the
-      original error condition object at the \code{"condition"}
+      original error condition object as the \code{"condition"}
       attribute.
 
       \item All packages with \R code are lazy-loaded irrespective of
       the \samp{LazyLoad} field in the \file{DESCRIPTION} file.  A
       warning is given if the \samp{LazyLoad} field is overridden.
 
-      \item Added new \samp{\figure} tag to Rd markup, so
-      that figures can be included in help pages when displayed
-      in HTML or LaTeX.  There is an example in the help page for
-      \code{points()}.
+      \item \code{Rd} markup has a new \samp{\figure} tag so that
+      figures can be included in help pages when converted to HTML or
+      LaTeX.  There is an example on the help page for \code{points()}.
 
       \item The built-in httpd server now allows access to files
       in the session temporary directory \code{tempdir()},
-      addressed as the \samp{/session} directory on the httpd
+      addressed as the \file{/session} directory on the httpd
       server.
 
       \item Development versions of \R are no longer referred to by the
@@ -272,8 +273,8 @@
       \item The \code{"source"} attribute on functions created with
       \code{keep.source=TRUE} has been replaced with a \code{"srcref"}
       attribute.  The \code{"srcref"} attribute references an in-memory
-      copy of the source file using the \code{"srcfilecopy"} or the
-      new \code{"srcfilealias"} class.
+      copy of the source file using the \code{"srcfilecopy"} class or
+      the new \code{"srcfilealias"} class.
 
       \item New items \href{UserManuals.html}{User Manuals} and
       \href{http://developer.r-project.org/TechDocs}{Technical Papers}
@@ -299,7 +300,7 @@
       the environment to be specified indirectly; the latter gains
       a \code{clear} argument to allow it to call \code{untrace()}.
 
-      \item The body of a closure can be one of more types of \R
+      \item The body of a closure can be one of further types of \R
       objects, including enviroments and external pointers.
 
       \item The \code{Rd2HTML()} function in package \pkg{tools} now has
@@ -355,7 +356,8 @@
       
       \item \code{help(package = "pkg_name", help_type = "HTML")} now
       gives HTML help on the package rather than text help.  (This gives
-      direct access to the HTML version of the package manual.)
+      direct access to the HTML version of the package manual shown
+      \emph{via} \code{help.start()}'s \sQuote{Packages} menu.)
 
       \item \code{agrep()} gains a \code{fixed} argument to optionally
       allow approximate regular expression matching.
@@ -430,10 +432,6 @@
 
       \item The \code{postscript()} and \code{pdf()} devices now output
       greyscale raster images (and not RGB) when \code{colormodel = "gray"}.
-      
-      \item \code{postscript(colormodel = "srgb-nogray")} no longer sets the
-      sRGB colorspace for each colour and so some viewers may render it
-      much faster.
       
       \item \code{postscript(colormodel = "gray")} now accepts non-grey
       colours and uses their luminance (as \code{pdf()} long has).
@@ -682,15 +680,15 @@
       supported.
 
       \item Reference class utilities will detect an attempt to modify
-      methods or fields in a locked class definition (e.g., in a name
-      space) and generate an error.
+      methods or fields in a locked class definition (e.g., in a
+      namespace) and generate an error.
 
       \item The formula methods for \code{lines()}, \code{points()} and
       \code{text()} now work even if package \pkg{stats} is not on the
       search path.
 
       \item In principle, S4 classes from different packages could
-      have the same name.  This has not previously worked. Changes
+      have the same name.  This has not previously worked.  Changes
       have now been installed that should allow such classes and
       permit methods to use them.  New functions \code{className()}
       and \code{multipleClasses()} are related tools for programming.
@@ -739,6 +737,10 @@
       \item Sweave now knows about a few more Windows' encodings
       (including \code{cp1250} and \code{cp1257}) and some
       \code{inputenx} encodings such as \code{koi8-r}.
+      
+      \item \code{postscript(colormodel = "rgb-nogray")} no longer sets
+      the sRGB colorspace for each colour and so some viewers may render
+      its files much faster than the default \code{colormodel ="rgb"}.
     }
   }
 

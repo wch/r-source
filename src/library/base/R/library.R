@@ -510,7 +510,7 @@ function(chname, package = NULL, lib.loc = NULL,
         return(dll_list)
 
     if(missing(package) || missing(lib.loc))
-        warning("use of library.dynam() without specifying 'package' and 'lib.loc' is deprecated", immediate. = TRUE, domain = NA)
+        warning("use of library.dynam() without specifying both 'package' and 'lib.loc' is deprecated", immediate. = TRUE, domain = NA)
     ## Be defensive about possible system-specific extension for shared
     ## objects, although the docs clearly say they should not be
     ## added.
@@ -837,7 +837,7 @@ function(x, ...)
       unlist(lapply(which(!vapply(x$info, is.null, NA)),
                     function(i)
                         c(headers[i], formatDocEntry(x$info[[i]])))))
-                
+
 }
 
 print.packageInfo <-
