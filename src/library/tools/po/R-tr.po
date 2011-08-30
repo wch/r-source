@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -909,6 +909,72 @@ msgstr ""
 msgid "found encoding"
 msgstr ""
 
+msgid "%s must be a character string or a file connection"
+msgstr ""
+
+msgid "EOF marker not found"
+msgstr ""
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+msgid "cannot read boolean object"
+msgstr ""
+
+msgid "cannot read literal string object"
+msgstr ""
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+msgid "cannot read name object"
+msgstr ""
+
+msgid "cannot read array object"
+msgstr ""
+
+msgid "cannot read dictionary object"
+msgstr ""
+
+msgid "cannot read stream object"
+msgstr ""
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "unsupported filter %s"
+msgstr ""
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+msgid "unsupported PNG filter %d"
+msgstr ""
+
 msgid "argument 'pkg' must be of length 1"
 msgstr ""
 
@@ -931,6 +997,18 @@ msgid "unimplemented encoding"
 msgstr ""
 
 msgid "file"
+msgstr ""
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+msgid "ssname"
+msgstr ""
+
+msgid "language"
 msgstr ""
 
 msgid "cannot be opened"

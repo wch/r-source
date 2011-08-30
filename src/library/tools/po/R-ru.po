@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2011-03-30 02:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -967,6 +967,82 @@ msgstr "уже определен быть"
 msgid "found encoding"
 msgstr "найдена кодировка"
 
+#, fuzzy
+msgid "%s must be a character string or a file connection"
+msgstr "'file' должен быть текстовой строкой или соединением"
+
+#, fuzzy
+msgid "EOF marker not found"
+msgstr "URL %s не найден"
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read boolean object"
+msgstr "нельзя открыть"
+
+#, fuzzy
+msgid "cannot read literal string object"
+msgstr "Не могу создать врЕменную"
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read name object"
+msgstr "не могу выполнить код пакета"
+
+#, fuzzy
+msgid "cannot read array object"
+msgstr "Не могу создать врЕменную"
+
+#, fuzzy
+msgid "cannot read dictionary object"
+msgstr "Не могу создать папку '%s'"
+
+#, fuzzy
+msgid "cannot read stream object"
+msgstr "Не могу создать врЕменную"
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported filter %s"
+msgstr "неподдерживаемые URL %s"
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported PNG filter %d"
+msgstr "неподдерживаемые URL %s"
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "аргумент 'pkg' должен быть единичной длины"
 
@@ -990,6 +1066,19 @@ msgstr "не разработанная кодировка"
 
 msgid "file"
 msgstr "файл"
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+#, fuzzy
+msgid "ssname"
+msgstr "имя"
+
+msgid "language"
+msgstr ""
 
 msgid "cannot be opened"
 msgstr "нельзя открыть"

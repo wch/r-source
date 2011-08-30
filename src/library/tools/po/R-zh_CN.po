@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -940,6 +940,82 @@ msgstr "已经定义为"
 msgid "found encoding"
 msgstr "找到编码"
 
+#, fuzzy
+msgid "%s must be a character string or a file connection"
+msgstr "参数'file'必需是字符串或联结"
+
+#, fuzzy
+msgid "EOF marker not found"
+msgstr "找不到%s这个URL"
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read boolean object"
+msgstr "打不开"
+
+#, fuzzy
+msgid "cannot read literal string object"
+msgstr "无法建立临时性目录"
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read name object"
+msgstr "无法读取程辑包源编码"
+
+#, fuzzy
+msgid "cannot read array object"
+msgstr "无法建立临时性目录"
+
+#, fuzzy
+msgid "cannot read dictionary object"
+msgstr "无法建立目录'%s'"
+
+#, fuzzy
+msgid "cannot read stream object"
+msgstr "无法建立临时性目录"
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported filter %s"
+msgstr "不支持URL %s"
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported PNG filter %d"
+msgstr "不支持URL %s"
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "参数'pkg'的长度必需是一"
 
@@ -963,6 +1039,19 @@ msgstr "还没有实现的编码"
 
 msgid "file"
 msgstr "文件"
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+#, fuzzy
+msgid "ssname"
+msgstr "名字"
+
+msgid "language"
+msgstr ""
 
 msgid "cannot be opened"
 msgstr "打不开"

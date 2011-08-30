@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2011-03-29 19:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -988,6 +988,82 @@ msgstr "déjà définie pour être"
 msgid "found encoding"
 msgstr "encodage trouvé"
 
+#, fuzzy
+msgid "%s must be a character string or a file connection"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
+
+#, fuzzy
+msgid "EOF marker not found"
+msgstr "l'URL %s est introuvable"
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read boolean object"
+msgstr "ne peut être ouvert"
+
+#, fuzzy
+msgid "cannot read literal string object"
+msgstr "impossible de créer un répertoire temporaire"
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read name object"
+msgstr "impossible de sourcer le code du package"
+
+#, fuzzy
+msgid "cannot read array object"
+msgstr "impossible de créer un répertoire temporaire"
+
+#, fuzzy
+msgid "cannot read dictionary object"
+msgstr "impossible de créer le répertoire '%s'"
+
+#, fuzzy
+msgid "cannot read stream object"
+msgstr "impossible de créer un répertoire temporaire"
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported filter %s"
+msgstr "URL %s non supportée"
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported PNG filter %d"
+msgstr "URL %s non supportée"
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "l'argument 'pkg' doit être de longueur 1"
 
@@ -1011,6 +1087,19 @@ msgstr "encodage non implémenté"
 
 msgid "file"
 msgstr "fichier"
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+#, fuzzy
+msgid "ssname"
+msgstr "nom"
+
+msgid "language"
+msgstr ""
 
 msgid "cannot be opened"
 msgstr "ne peut être ouvert"

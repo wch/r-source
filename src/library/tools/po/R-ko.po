@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -954,6 +954,79 @@ msgstr ""
 msgid "found encoding"
 msgstr ""
 
+#, fuzzy
+msgid "%s must be a character string or a file connection"
+msgstr "인수'file'는 문자열 또는 connection이어야만 합니다"
+
+#, fuzzy
+msgid "EOF marker not found"
+msgstr "패키지 '%s'가 검색되지 않습니다"
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+msgid "cannot read boolean object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read literal string object"
+msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read name object"
+msgstr "source은 code로 패키지 할수가 없습니다"
+
+#, fuzzy
+msgid "cannot read array object"
+msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
+
+#, fuzzy
+msgid "cannot read dictionary object"
+msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
+
+#, fuzzy
+msgid "cannot read stream object"
+msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "unsupported filter %s"
+msgstr ""
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+msgid "unsupported PNG filter %d"
+msgstr ""
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "인수 'pkg'가 1 길이어야만 합니다"
 
@@ -978,6 +1051,18 @@ msgid "unimplemented encoding"
 msgstr ""
 
 msgid "file"
+msgstr ""
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+msgid "ssname"
+msgstr ""
+
+msgid "language"
 msgstr ""
 
 msgid "cannot be opened"

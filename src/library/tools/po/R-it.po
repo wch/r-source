@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -953,6 +953,80 @@ msgstr ""
 msgid "found encoding"
 msgstr ""
 
+#, fuzzy
+msgid "%s must be a character string or a file connection"
+msgstr ""
+"argomento 'file' deve essere una stringa di caratteri o una connessione"
+
+#, fuzzy
+msgid "EOF marker not found"
+msgstr "pacchetto '%s' non trovato"
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+msgid "cannot read boolean object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read literal string object"
+msgstr "impossibile creare directory '%s'"
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read name object"
+msgstr "impossibile leggere codice sorgente del pacchetto"
+
+#, fuzzy
+msgid "cannot read array object"
+msgstr "impossibile creare directory '%s'"
+
+#, fuzzy
+msgid "cannot read dictionary object"
+msgstr "impossibile creare directory '%s'"
+
+#, fuzzy
+msgid "cannot read stream object"
+msgstr "impossibile creare directory '%s'"
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "unsupported filter %s"
+msgstr ""
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+msgid "unsupported PNG filter %d"
+msgstr ""
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "l'argomento 'pkg' deve avere lunghezza 1"
 
@@ -978,6 +1052,18 @@ msgid "unimplemented encoding"
 msgstr ""
 
 msgid "file"
+msgstr ""
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+msgid "ssname"
+msgstr ""
+
+msgid "language"
 msgstr ""
 
 msgid "cannot be opened"

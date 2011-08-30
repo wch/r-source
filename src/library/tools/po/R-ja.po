@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -984,6 +984,82 @@ msgstr " は既に以下のように定義されています "
 msgid "found encoding"
 msgstr " 見つけられたエンコーディング "
 
+#, fuzzy
+msgid "%s must be a character string or a file connection"
+msgstr " 'file' は文字列ベクトルかコネクションでなければなりません "
+
+#, fuzzy
+msgid "EOF marker not found"
+msgstr "URL '%s' は見つかりませんでした "
+
+msgid "cannot find startxref"
+msgstr ""
+
+msgid "cannot find xref table"
+msgstr ""
+
+msgid "cannot read xref table"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read boolean object"
+msgstr " オープンできません "
+
+#, fuzzy
+msgid "cannot read literal string object"
+msgstr " 一時ディレクトリを生成することが出来ません "
+
+msgid "invalid escape sequence %s"
+msgstr ""
+
+msgid "cannot read hexadecimal string object"
+msgstr ""
+
+#, fuzzy
+msgid "cannot read name object"
+msgstr " パッケージコードを読み込めません "
+
+#, fuzzy
+msgid "cannot read array object"
+msgstr " 一時ディレクトリを生成することが出来ません "
+
+#, fuzzy
+msgid "cannot read dictionary object"
+msgstr " ディレクトリ '%s' を生成することが出来ません "
+
+#, fuzzy
+msgid "cannot read stream object"
+msgstr " 一時ディレクトリを生成することが出来ません "
+
+msgid "cannot read null object"
+msgstr ""
+
+msgid "cannot read indirect reference object"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "cannot find object header at xrefed positions"
+msgstr ""
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported filter %s"
+msgstr " 未サポートのURL %s "
+
+msgid "unsupported flatedecode predictor %d"
+msgstr ""
+
+#, fuzzy
+msgid "unsupported PNG filter %d"
+msgstr " 未サポートのURL %s "
+
 msgid "argument 'pkg' must be of length 1"
 msgstr " 引数 'pkg' は長さ1でなければなりません "
 
@@ -1007,6 +1083,19 @@ msgstr " 実装されていないエンコード "
 
 msgid "file"
 msgstr " ファイル "
+
+msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "%s (%s)"
+msgstr ""
+
+#, fuzzy
+msgid "ssname"
+msgstr " 名前 "
+
+msgid "language"
+msgstr ""
 
 msgid "cannot be opened"
 msgstr " オープンできません "

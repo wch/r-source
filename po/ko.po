@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:20+0100\n"
+"POT-Creation-Date: 2011-08-30 11:39+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -114,8 +114,8 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:545 src/gnuwin32/extra.c:585
 #: src/gnuwin32/extra.c:772 src/gnuwin32/extra.c:856 src/gnuwin32/extra.c:859
 #: src/gnuwin32/extra.c:864 src/gnuwin32/extra.c:1656
-#: src/gnuwin32/extra.c:1681 src/main/agrep.c:67 src/main/agrep.c:70
-#: src/main/agrep.c:223 src/main/agrep.c:226 src/main/apply.c:278
+#: src/gnuwin32/extra.c:1681 src/main/agrep.c:73 src/main/agrep.c:76
+#: src/main/agrep.c:233 src/main/agrep.c:236 src/main/apply.c:278
 #: src/main/apply.c:280 src/main/apply.c:283 src/main/array.c:86
 #: src/main/array.c:1100 src/main/array.c:1232 src/main/array.c:1234
 #: src/main/array.c:1235 src/main/attrib.c:192 src/main/builtin.c:74
@@ -176,61 +176,62 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/eval.c:2074 src/main/grep.c:758 src/main/grep.c:763
 #: src/main/grep.c:1037 src/main/grep.c:1039 src/main/grep.c:1041
 #: src/main/grep.c:1485 src/main/grep.c:1489 src/main/grep.c:1494
-#: src/main/grep.c:2273 src/main/grep.c:2278 src/main/memory.c:3375
-#: src/main/model.c:1610 src/main/model.c:1618 src/main/optim.c:225
-#: src/main/paste.c:87 src/main/paste.c:368 src/main/paste.c:375
-#: src/main/paste.c:382 src/main/paste.c:387 src/main/paste.c:392
-#: src/main/paste.c:397 src/main/paste.c:400 src/main/paste.c:408
-#: src/main/paste.c:574 src/main/paste.c:579 src/main/platform.c:296
-#: src/main/platform.c:298 src/main/platform.c:300 src/main/platform.c:316
-#: src/main/platform.c:327 src/main/platform.c:449 src/main/platform.c:451
-#: src/main/platform.c:726 src/main/platform.c:728 src/main/platform.c:1092
-#: src/main/platform.c:1098 src/main/platform.c:1101 src/main/platform.c:1104
-#: src/main/platform.c:1107 src/main/platform.c:1110 src/main/platform.c:1113
-#: src/main/platform.c:1212 src/main/platform.c:1215 src/main/platform.c:1218
-#: src/main/platform.c:1257 src/main/platform.c:1314 src/main/platform.c:1317
-#: src/main/platform.c:1479 src/main/platform.c:1482 src/main/platform.c:1485
-#: src/main/platform.c:1521 src/main/platform.c:1524 src/main/platform.c:1527
-#: src/main/platform.c:1610 src/main/platform.c:1625 src/main/platform.c:1662
-#: src/main/platform.c:1664 src/main/platform.c:1729 src/main/platform.c:1813
-#: src/main/platform.c:2088 src/main/platform.c:2134 src/main/platform.c:2264
-#: src/main/platform.c:2267 src/main/platform.c:2270 src/main/platform.c:2273
-#: src/main/platform.c:2276 src/main/platform.c:2409 src/main/platform.c:2412
-#: src/main/platform.c:2415 src/main/platform.c:2418 src/main/platform.c:2421
-#: src/main/platform.c:2490 src/main/platform.c:2498 src/main/platform.c:2534
-#: src/main/platform.c:2584 src/main/plot.c:3104 src/main/plot.c:4241
-#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2435
-#: src/main/plot3d.c:2439 src/main/plot3d.c:2444 src/main/plot3d.c:2448
-#: src/main/plot3d.c:2452 src/main/plot3d.c:2456 src/main/print.c:236
-#: src/main/print.c:242 src/main/print.c:264 src/main/print.c:270
-#: src/main/print.c:276 src/main/random.c:468 src/main/random.c:472
-#: src/main/random.c:476 src/main/saveload.c:1937 src/main/saveload.c:1940
-#: src/main/saveload.c:1943 src/main/saveload.c:2059 src/main/saveload.c:2239
-#: src/main/saveload.c:2244 src/main/saveload.c:2247 src/main/saveload.c:2350
-#: src/main/scan.c:663 src/main/scan.c:830 src/main/scan.c:843
-#: src/main/scan.c:847 src/main/scan.c:849 src/main/scan.c:860
-#: src/main/scan.c:887 src/main/scan.c:890 src/main/scan.c:943
-#: src/main/scan.c:980 src/main/scan.c:984 src/main/scan.c:994
-#: src/main/scan.c:1208 src/main/scan.c:1434 src/main/scan.c:1485
-#: src/main/scan.c:1497 src/main/scan.c:1501 src/main/scan.c:1507
-#: src/main/scan.c:1721 src/main/scan.c:1722 src/main/scan.c:1724
-#: src/main/scan.c:1725 src/main/scan.c:1726 src/main/scan.c:1727
-#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/seq.c:381
-#: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
-#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
-#: src/main/sysutils.c:593 src/main/sysutils.c:597 src/main/sysutils.c:603
-#: src/main/sysutils.c:607 src/main/sysutils.c:1612 src/main/sysutils.c:1616
-#: src/main/unique.c:822 src/main/unique.c:1102 src/main/unique.c:1162
-#: src/main/unique.c:1169 src/main/util.c:574 src/main/util.c:577
-#: src/main/util.c:1757 src/modules/internet/internet.c:283
-#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
-#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
-#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
-#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1077
-#: src/modules/X11/devX11.c:3138 src/modules/X11/devX11.c:3141
-#: src/modules/X11/devX11.c:3144 src/modules/X11/devX11.c:3168
-#: src/unix/sys-std.c:1211 src/unix/sys-std.c:1234
+#: src/main/grep.c:2282 src/main/grep.c:2287 src/main/grep.c:2556
+#: src/main/grep.c:2561 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
+#: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
+#: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
+#: src/main/paste.c:400 src/main/paste.c:408 src/main/paste.c:574
+#: src/main/paste.c:579 src/main/platform.c:296 src/main/platform.c:298
+#: src/main/platform.c:300 src/main/platform.c:316 src/main/platform.c:327
+#: src/main/platform.c:449 src/main/platform.c:451 src/main/platform.c:726
+#: src/main/platform.c:728 src/main/platform.c:1092 src/main/platform.c:1098
+#: src/main/platform.c:1101 src/main/platform.c:1104 src/main/platform.c:1107
+#: src/main/platform.c:1110 src/main/platform.c:1113 src/main/platform.c:1212
+#: src/main/platform.c:1215 src/main/platform.c:1218 src/main/platform.c:1257
+#: src/main/platform.c:1314 src/main/platform.c:1317 src/main/platform.c:1479
+#: src/main/platform.c:1482 src/main/platform.c:1485 src/main/platform.c:1521
+#: src/main/platform.c:1524 src/main/platform.c:1527 src/main/platform.c:1610
+#: src/main/platform.c:1625 src/main/platform.c:1662 src/main/platform.c:1664
+#: src/main/platform.c:1729 src/main/platform.c:1813 src/main/platform.c:2088
+#: src/main/platform.c:2134 src/main/platform.c:2264 src/main/platform.c:2267
+#: src/main/platform.c:2270 src/main/platform.c:2273 src/main/platform.c:2276
+#: src/main/platform.c:2409 src/main/platform.c:2412 src/main/platform.c:2415
+#: src/main/platform.c:2418 src/main/platform.c:2421 src/main/platform.c:2490
+#: src/main/platform.c:2498 src/main/platform.c:2534 src/main/platform.c:2584
+#: src/main/plot.c:3104 src/main/plot.c:4241 src/main/plot.c:4245
+#: src/main/plot.c:4248 src/main/plot3d.c:2435 src/main/plot3d.c:2439
+#: src/main/plot3d.c:2444 src/main/plot3d.c:2448 src/main/plot3d.c:2452
+#: src/main/plot3d.c:2456 src/main/print.c:236 src/main/print.c:242
+#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
+#: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
+#: src/main/saveload.c:1937 src/main/saveload.c:1940 src/main/saveload.c:1943
+#: src/main/saveload.c:2059 src/main/saveload.c:2239 src/main/saveload.c:2244
+#: src/main/saveload.c:2247 src/main/saveload.c:2350 src/main/scan.c:663
+#: src/main/scan.c:830 src/main/scan.c:843 src/main/scan.c:847
+#: src/main/scan.c:849 src/main/scan.c:860 src/main/scan.c:887
+#: src/main/scan.c:890 src/main/scan.c:943 src/main/scan.c:980
+#: src/main/scan.c:984 src/main/scan.c:994 src/main/scan.c:1208
+#: src/main/scan.c:1434 src/main/scan.c:1485 src/main/scan.c:1497
+#: src/main/scan.c:1501 src/main/scan.c:1507 src/main/scan.c:1721
+#: src/main/scan.c:1722 src/main/scan.c:1724 src/main/scan.c:1725
+#: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
+#: src/main/scan.c:1729 src/main/seq.c:381 src/main/seq.c:388
+#: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
+#: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
+#: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
+#: src/main/sysutils.c:1612 src/main/sysutils.c:1616 src/main/unique.c:822
+#: src/main/unique.c:1102 src/main/unique.c:1162 src/main/unique.c:1169
+#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1757
+#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
+#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
+#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
+#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
+#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
+#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3138
+#: src/modules/X11/devX11.c:3141 src/modules/X11/devX11.c:3144
+#: src/modules/X11/devX11.c:3168 src/unix/sys-std.c:1211
+#: src/unix/sys-std.c:1234
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'인수가 부적절합니다"
@@ -810,29 +811,29 @@ msgstr "'destination'가 너무 깁니다"
 msgid "invalid multibyte format string"
 msgstr "multibyte 문자열이 부적절합니다"
 
-#: src/main/agrep.c:69 src/main/character.c:1024 src/main/character.c:1028
+#: src/main/agrep.c:75 src/main/character.c:1024 src/main/character.c:1028
 #: src/main/grep.c:760 src/main/grep.c:1487 src/main/grep.c:1491
-#: src/main/grep.c:2275
+#: src/main/grep.c:2284 src/main/grep.c:2558
 #, fuzzy, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr "조건 길이가 2이상이므로, 최초의 하나만이 사용됩니다"
 
-#: src/main/agrep.c:84 src/main/grep.c:173 src/main/grep.c:800
+#: src/main/agrep.c:90 src/main/grep.c:173 src/main/grep.c:800
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 msgstr ""
 
-#: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2317
+#: src/main/agrep.c:113 src/main/grep.c:827 src/main/grep.c:2326
 msgid "regular expression is invalid in this locale"
 msgstr "이 licale에서는 정규 표현은 무효입니다"
 
-#: src/main/agrep.c:113 src/main/agrep.c:264
+#: src/main/agrep.c:119 src/main/agrep.c:273
 #, fuzzy, c-format
 msgid "regcomp error:  '%s'"
 msgstr "read error입니다"
 
-#: src/main/agrep.c:149 src/main/grep.c:221 src/main/grep.c:308
+#: src/main/agrep.c:155 src/main/grep.c:221 src/main/grep.c:308
 #: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
-#: src/main/grep.c:2408 src/main/grep.c:2476
+#: src/main/grep.c:2420 src/main/grep.c:2488
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
@@ -1989,7 +1990,7 @@ msgstr ""
 #: src/main/connections.c:3283 src/main/connections.c:3388
 #: src/main/connections.c:3548 src/main/connections.c:3771
 #: src/main/connections.c:4098 src/main/connections.c:4211
-#: src/main/connections.c:4420 src/main/connections.c:4764 src/main/dcf.c:57
+#: src/main/connections.c:4420 src/main/connections.c:4764 src/main/dcf.c:64
 #: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2254
 #: src/main/saveload.c:2334 src/main/scan.c:904 src/main/scan.c:1015
 #: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
@@ -2226,7 +2227,7 @@ msgstr "행이 버퍼 사이즈보다 길어지고 있습니다"
 
 #: src/main/connections.c:3290 src/main/connections.c:3292
 #: src/main/connections.c:3556 src/main/connections.c:4082
-#: src/main/connections.c:4106 src/main/dcf.c:64 src/main/scan.c:907
+#: src/main/connections.c:4106 src/main/dcf.c:71 src/main/scan.c:907
 #: src/main/scan.c:911 src/main/scan.c:1018 src/main/scan.c:1022
 #: src/main/serialize.c:1662 src/main/source.c:267
 msgid "cannot read from this connection"
@@ -2561,16 +2562,16 @@ msgstr "editor %s의 실행에 관계되어 문제가 발생하였습니다"
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "비어있지 않는 POSIXlt 구조에는 길이 0의 요소가 있습니다"
 
-#: src/main/dcf.c:71 src/main/dcf.c:129 src/main/dcf.c:182
+#: src/main/dcf.c:83 src/main/dcf.c:147 src/main/dcf.c:223
 msgid "could not allocate memory for 'read.dcf'"
 msgstr "'read.dcf'에 위한 메모리를 할당할수가 없었습니다"
 
-#: src/main/dcf.c:113
+#: src/main/dcf.c:123
 #, c-format
 msgid "Found continuation line starting '%s ...' at begin of record."
 msgstr ""
 
-#: src/main/dcf.c:197
+#: src/main/dcf.c:251
 #, c-format
 msgid "Line starting '%s ...' is malformed!"
 msgstr ""
@@ -4104,13 +4105,14 @@ msgstr "'%s'의 정규 표현이 부적절합니다"
 
 #: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
 #: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
-#: src/main/grep.c:1480 src/main/grep.c:2265 src/main/grep.c:2267
+#: src/main/grep.c:1480 src/main/grep.c:2274 src/main/grep.c:2276
+#: src/main/grep.c:2546
 #, fuzzy, c-format
 msgid "argument '%s' will be ignored"
 msgstr "세번째로부터 인수는 무시됩니다"
 
 #: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
-#: src/main/grep.c:871 src/main/grep.c:2401
+#: src/main/grep.c:871 src/main/grep.c:2413
 #, fuzzy, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
@@ -4126,7 +4128,7 @@ msgid "'split' string %d is invalid in this locale"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
 
 #: src/main/grep.c:388 src/main/grep.c:840 src/main/grep.c:1560
-#: src/main/grep.c:2330
+#: src/main/grep.c:2339
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -4140,19 +4142,19 @@ msgid "invalid split pattern '%s'"
 msgstr "분할 패턴 '%s'가 부적절합니다"
 
 #: src/main/grep.c:394 src/main/grep.c:846 src/main/grep.c:1567
-#: src/main/grep.c:2337
+#: src/main/grep.c:2346
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
 "\t'%s'\n"
 msgstr ""
 
-#: src/main/grep.c:823 src/main/grep.c:2313
+#: src/main/grep.c:823 src/main/grep.c:2322
 #, fuzzy
 msgid "regular expression is invalid UTF-8"
 msgstr "이 licale에서는 정규 표현은 무효입니다"
 
-#: src/main/grep.c:842 src/main/grep.c:1562 src/main/grep.c:2332
+#: src/main/grep.c:842 src/main/grep.c:1562 src/main/grep.c:2341
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s'의 정규 표현이 부적절합니다"
@@ -4189,10 +4191,15 @@ msgstr "zero-length의 패턴"
 msgid "result string is too long"
 msgstr "zip 파일의 패스가 너무 깁니다"
 
-#: src/main/grep.c:2347
+#: src/main/grep.c:2356
 #, c-format
 msgid "pcre_fullinfo returned '%d' "
 msgstr ""
+
+#: src/main/grep.c:2569
+#, fuzzy, c-format
+msgid "regcomp error: '%s'"
+msgstr "read error입니다"
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -4630,32 +4637,32 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/names.c:1046
+#: src/main/names.c:1047
 msgid "string argument required"
 msgstr "문자열 인수가 요구되어져 있습니다"
 
-#: src/main/names.c:1049
+#: src/main/names.c:1050
 msgid "no such primitive function"
 msgstr "그러한 원시적 함수는 없습니다"
 
-#: src/main/names.c:1185
+#: src/main/names.c:1186
 msgid "attempt to use zero-length variable name"
 msgstr "길이 0의 변수명을 사용했습니다"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "변수명은 %d로 제한되어있습니다"
 
-#: src/main/names.c:1214
+#: src/main/names.c:1215
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 인수가 부적절합니다"
 
-#: src/main/names.c:1217
+#: src/main/names.c:1218
 msgid "invalid internal function"
 msgstr "내부 함수가 부적절합니다"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "내부 함수 \"%s \" 가 없습니다"

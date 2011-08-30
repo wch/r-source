@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
-"PO-Revision-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-08-30 11:39\n"
+"PO-Revision-Date: 2011-08-30 11:39\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -966,6 +966,72 @@ msgstr "already defined to be"
 msgid "found encoding"
 msgstr "found encoding"
 
+msgid "%s must be a character string or a file connection"
+msgstr "%s must be a character string or a file connection"
+
+msgid "EOF marker not found"
+msgstr "EOF marker not found"
+
+msgid "cannot find startxref"
+msgstr "cannot find startxref"
+
+msgid "cannot find xref table"
+msgstr "cannot find xref table"
+
+msgid "cannot read xref table"
+msgstr "cannot read xref table"
+
+msgid "cannot read boolean object"
+msgstr "cannot read boolean object"
+
+msgid "cannot read literal string object"
+msgstr "cannot read literal string object"
+
+msgid "invalid escape sequence %s"
+msgstr "invalid escape sequence %s"
+
+msgid "cannot read hexadecimal string object"
+msgstr "cannot read hexadecimal string object"
+
+msgid "cannot read name object"
+msgstr "cannot read name object"
+
+msgid "cannot read array object"
+msgstr "cannot read array object"
+
+msgid "cannot read dictionary object"
+msgstr "cannot read dictionary object"
+
+msgid "cannot read stream object"
+msgstr "cannot read stream object"
+
+msgid "cannot read null object"
+msgstr "cannot read null object"
+
+msgid "cannot read indirect reference object"
+msgstr "cannot read indirect reference object"
+
+msgid "invalid index in object stream lookup"
+msgstr "invalid index in object stream lookup"
+
+msgid "cannot find object header at xrefed positions"
+msgstr "cannot find object header at xrefed positions"
+
+msgid "mismatch in object numbers (given: %d, found: %d)"
+msgstr "mismatch in object numbers (given: %d, found: %d)"
+
+msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr "mismatch in generation numbers (given: %d, found: %d)"
+
+msgid "unsupported filter %s"
+msgstr "unsupported filter %s"
+
+msgid "unsupported flatedecode predictor %d"
+msgstr "unsupported flatedecode predictor %d"
+
+msgid "unsupported PNG filter %d"
+msgstr "unsupported PNG filter %d"
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "argument ‘pkg’ must be of length 1"
 
@@ -989,6 +1055,18 @@ msgstr "unimplemented encoding"
 
 msgid "file"
 msgstr "file"
+
+msgid "Found %s, possibly from %s"
+msgstr "Found %s, possibly from %s"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "ssname"
+msgstr "ssname"
+
+msgid "language"
+msgstr "language"
 
 msgid "cannot be opened"
 msgstr "cannot be opened"
