@@ -625,6 +625,21 @@ static int HashGet(SEXP item, SEXP ht)
 #define EMPTYENV_SXP	  242
 #define BASEENV_SXP	  241
 
+/* The following are needed to preserve attribute information on
+   expressions in the constant pool of byte code objects. This is
+   mainly for preserving source references attributes.  The original
+   implementation of the sharing-preserving writing and reading of yte
+   code objects did not account for the need to preserve attributes,
+   so there is now a work-around using these SXP types to flag when
+   the ATTRIB field has been written out. Object bits and S4 bits are
+   still not preserved.  It the long run in might be better to change
+   to a scheme in which all sharing is preserved and byte code objects
+   don't need to be handled as a special case.  LT */
+#ifdef BYTECODE
+#define ATTRLANGSXP       240
+#define ATTRLISTSXP       239
+#endif
+
 /*
  * Type/Flag Packing and Unpacking
  *
@@ -1057,7 +1072,16 @@ static void WriteBCLang(SEXP s, SEXP ref_table, SEXP reps,
 	    }
 	}
 	if (output) {
+	    SEXP attr = ATTRIB(s);
+	    if (attr != R_NilValue) {
+		switch(type) {
+		case LANGSXP: type = ATTRLANGSXP; break;
+		case LISTSXP: type = ATTRLISTSXP; break;
+		}
+	    }
 	    OutInteger(stream, type);
+	    if (attr != R_NilValue)
+		WriteItem(attr, ref_table, stream);
 	    WriteItem(TAG(s), ref_table, stream);
 	    WriteBCLang(CAR(s), ref_table, reps, stream);
 	    WriteBCLang(CDR(s), ref_table, reps, stream);
@@ -1445,16 +1469,25 @@ static SEXP ReadBCLang(int type, SEXP ref_table, SEXP reps,
     case BCREPDEF:
     case LANGSXP:
     case LISTSXP:
+    case ATTRLANGSXP:
+    case ATTRLISTSXP:
 	{
 	    SEXP ans;
 	    int pos = -1;
+	    int hasattr = FALSE;
 	    if (type == BCREPDEF) {
 		pos = InInteger(stream);
 		type = InInteger(stream);
 	    }
+	    switch (type) {
+	    case ATTRLANGSXP: type = LANGSXP; hasattr = TRUE; break;
+	    case ATTRLISTSXP: type = LISTSXP; hasattr = TRUE; break;
+	    }
 	    PROTECT(ans = allocSExp(type));
 	    if (pos >= 0)
 		SET_VECTOR_ELT(reps, pos, ans);
+	    if (hasattr)
+		SET_ATTRIB(ans, ReadItem(ref_table, stream));
 	    SET_TAG(ans, ReadItem(ref_table, stream));
 	    SETCAR(ans, ReadBCLang(InInteger(stream), ref_table, reps,
 				   stream));
@@ -1484,6 +1517,8 @@ static SEXP ReadBCConsts(SEXP ref_table, SEXP reps, R_inpstream_t stream)
 	case LISTSXP:
 	case BCREPDEF:
 	case BCREPREF:
+	case ATTRLANGSXP:
+	case ATTRLISTSXP:
 	    c = ReadBCLang(type, ref_table, reps, stream);
 	    SET_VECTOR_ELT(ans, i, c);
 	    break;
