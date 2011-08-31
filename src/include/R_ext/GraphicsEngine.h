@@ -38,22 +38,23 @@ extern "C" {
  *
  * Version 1:  Introduction of the version number.
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
- * Version 3:  R_GE_str2col() added to API.
+ * Version 3:  R_GE_str2col() added to API. (r41887)
  * Version 4:  UTF-8 text hooks, useRotatedTextInContour,
  *             add newFrameConfirm() to NewDevDesc.
  *             New API: GEaddDevice[2] GEgetDevice, GEkillDevice,
- *             ndevNumber.
+ *             ndevNumber. (R 2.7.0)
  * Version 5:  Clean up 1.4.0/2.0.0 changes!
  *             Remove newDevStruct from GEDevDesc and NewDevDesc.
  *             Remove asp, dot(), hold(), open() from NewDevDesc.
  *             Move displayList, DLlastElt, savedSnapshot from
  *             NewDevDesc to GEDevDesc.
- *             Add 'ask' to GEDevDesc.
- * Version 6:  Add dev_Raster() and dev_Cap()
+ *             Add 'ask' to GEDevDesc. (R 2.8.0)
+ * Version 6:  Add dev_Raster() and dev_Cap()  (R 2.11.0)
  * Version 7:  Change graphics event handling, adding eventEnv and eventHelper() 
- *	       to DevDesc.
- * Version 8:  Add dev_Path()
- * Version 9:  Add dev_HoldFlush()
+ *	       to DevDesc.  (R 2.12.0)
+ * Version 8:  Add dev_Path() (R 2.12.0)
+ * Version 9:  Add dev_HoldFlush(), haveTrans*, haveRaster, 
+ *             haveCapture, haveLocator.  (R 2.14.0)
  */
 
 #define R_GE_version 9
