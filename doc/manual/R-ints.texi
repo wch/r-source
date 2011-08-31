@@ -572,11 +572,11 @@ the global environment (possibly as part of a recursive search).
 
 @menu
 * Search paths::                
-* Name spaces::                 
+* Namespaces::                  
 * Hash table::                  
 @end menu
 
-@node Search paths, Name spaces, Environments and variable lookup, Environments and variable lookup
+@node Search paths, Namespaces, Environments and variable lookup, Environments and variable lookup
 @subsection Search paths
 
 @cindex search path
@@ -606,13 +606,13 @@ the empty environment, but with an optimization to stop at the base
 environment.)  So the `search path' describes the chain of environments
 which is traversed once the search reaches the global environment.
 
-@node Name spaces, Hash table, Search paths, Environments and variable lookup
-@subsection Name spaces
+@node Namespaces, Hash table, Search paths, Environments and variable lookup
+@subsection Namespaces
 
-@cindex name space
-Name spaces are environments associated with packages (and once again
+@cindex namespace
+Namespaces are environments associated with packages (and once again
 the base package is special and will be considered separately).  A
-package @code{@var{pkg}} with a name space defines two environments
+package @code{@var{pkg}} with a namespace defines two environments
 @code{namespace:@var{pkg}} and @code{package:@var{pkg}}: it is
 @code{package:@var{pkg}} that can be @code{attach}ed and form part of
 the search path.
@@ -622,24 +622,24 @@ bindings in the @code{namespace:@var{pkg}} environment.  The
 @code{package:@var{pkg}} environment is populated by selected symbols
 from the @code{namespace:@var{pkg}} environment (the exports).  The
 enclosure of this environment is an environment populated with the
-explicit imports from other name spaces, and the enclosure of
-@emph{that} environment is the base name space.  (So the illusion of the
-imports being in the name space environment is created via the
-environment tree.)  The enclosure of the base name space is the global
-environment, so the search from a package name space goes via the
+explicit imports from other namespaces, and the enclosure of
+@emph{that} environment is the base namespace.  (So the illusion of the
+imports being in the namespace environment is created via the
+environment tree.)  The enclosure of the base namespace is the global
+environment, so the search from a package namespace goes via the
 (explicit and implicit) imports to the standard `search path'.
 
-@cindex base name space
-@cindex name space, base
+@cindex base namespace
+@cindex namespace, base
 @findex R_BaseNamespace
-The base name space environment @code{R_BaseNamespace} is another
+The base namespace environment @code{R_BaseNamespace} is another
 @code{ENVSXP} that is special-cased.  It is effectively the same thing
 as the base environment @code{R_BaseEnv} @emph{except} that its
 enclosure is the global environment rather than the empty environment:
 the internal code diverts lookups in its frame to the global symbol
 table.
 
-@node Hash table,  , Name spaces, Environments and variable lookup
+@node Hash table,  , Namespaces, Environments and variable lookup
 @subsection Hash table
 
 Environments in @R{} usually have a hash table, although that is not the
@@ -1180,7 +1180,7 @@ environments and so on.  (Environments recognized as package or name
 space environments are saved by name.)  There are `reference objects'
 which are not duplicated on copy and should remain shared on
 unserialization.  These are weak references, external pointers and
-environments other than those associated with packages, name spaces and
+environments other than those associated with packages, namespaces and
 the global environment.  These are handled via a hash table, and
 references after the first are written out as a reference marker indexed
 by the table entry.
@@ -1218,7 +1218,7 @@ code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
 length @code{-1} with no data.
 
 Environments are treated in several ways: as we have seen, some are
-written as specific pseudo-@code{SEXPTYPE}s.  Package and name space
+written as specific pseudo-@code{SEXPTYPE}s.  Package and namespace
 environments are written with pseudo-@code{SEXPTYPE}s followed by the
 name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
@@ -1467,7 +1467,7 @@ The objects are S4 objects of class @code{"classRepresentation"} which
 is defined in the @pkg{methods} package.
 
 Since these are just objects, they are subject to the normal scoping
-rules and can be imported and exported from name spaces like other
+rules and can be imported and exported from namespaces like other
 objects.  The directives @code{importClassesFrom} and
 @code{exportClasses} are merely convenient ways to refer to class
 objects without needing to know their internal `metaname' (although
@@ -1487,7 +1487,7 @@ has names the signatures of the methods defined, and values the
 corresponding method functions.  This is often referred to as a `methods
 table'.
 
-When a package without a name space is attached these objects become
+When a package without a namespace is attached these objects become
 visible on the search path.  @code{library} calls
 @code{methods:::cacheMetaData} to update the internal tables.
 
@@ -1498,10 +1498,10 @@ non-primitive generic containing objects @code{.AllMTable},
 methods tables containing all the methods defined directly and via
 inheritance respectively.  @code{.Methods} is a merged methods list.
 
-Exporting methods from a name space is more complicated than exporting a
+Exporting methods from a namespace is more complicated than exporting a
 class.  Note first that you do not export a method, but rather the
 directive @code{exportMethods} will export all the methods defined in
-the name space for a specified generic: the code also adds to the list
+the namespace for a specified generic: the code also adds to the list
 of generics any that are exported directly.  For generics which are
 listed via @code{exportMethods} or exported themselves, the
 corresponding @code{"MethodsList"} and environment are exported and so
@@ -1519,7 +1519,7 @@ methods defined on generics in other packages.  Since methods for a
 generic could be imported from several different packages, the methods
 tables are merged.
 
-When a package with a name space is attached
+When a package with a namespace is attached
 @code{methods:::cacheMetaData} is called to update the internal tables:
 only the visible methods will be cached.
 
@@ -1537,13 +1537,13 @@ old definition as the default method.  Such S4 generics can also be
 created @emph{via} a call to @code{setGeneric}@footnote{although this is
 not recommended as it is less future-proof.} and are standard closures
 in the @R{} language, with environment the environment within which they
-are created.  With the advent of name spaces this is somewhat
+are created.  With the advent of namespaces this is somewhat
 problematic: if @code{myfn} was previously in a package with a name
 space there will be two functions called @code{myfn} on the search
 paths, and which will be called depends on which search path is in use.
-This is starkest for functions in the base name space, where the
+This is starkest for functions in the base namespace, where the
 original will be found ahead of the newly created function from any
-other package with a name space.
+other package with a namespace.
 
 Primitive functions are treated quite differently, for efficiency
 reasons: this results in different semantics.  @code{setGeneric} is
@@ -1559,7 +1559,7 @@ Actual dispatch of S4 methods for almost all primitives piggy-backs on
 the S3 dispatch mechanism, so S4 methods can only be dispatched for
 primitives which are internally S3 generic.  When a primitive that is
 internally S3 generic is called with a first argument which is an S4
-object and S4 dispatch is on (that is, the @pkg{methods} name space is
+object and S4 dispatch is on (that is, the @pkg{methods} namespace is
 loaded), @code{DispatchOrEval} calls @code{R_possible_dispatch} (defined
 in file @file{src/main/objects.c}).  (Members of the S3 group generics,
 which includes all the generic operators, are treated slightly
@@ -1568,7 +1568,7 @@ differently: the first two arguments are checked and
 checks an internal table to see if any S4 methods are set for that
 generic (and S4 dispatch is currently enabled for that generic), and if
 so proceeds to S4 dispatch using methods stored in another internal
-table.  All primitives are in the base name space, and this mechanism
+table.  All primitives are in the base namespace, and this mechanism
 means that S4 methods can be set for (some) primitives and will always
 be used, in contrast to setting methods on non-primitives.
 
@@ -1944,8 +1944,8 @@ compiling the @R{} sources on Windows.
 
 Lazy loading was introduced in @R{} 2.0.0, for code in packages and for
 datasets in packages (both are optional, but it is the default for
-code).  When a package/name space which uses it is loaded, the
-package/name space environment is populated with promises for all the
+code).  When a package/namespace which uses it is loaded, the
+package/namespace environment is populated with promises for all the
 named objects: when these promises are evaluated they load the actual
 code from a database.
 
@@ -2279,12 +2279,12 @@ for the @code{deparse.level} argument), @code{eapply}, @code{lapply} and
 Prototypes are available for the primitive functions and operators, and
 these are used for printing, @code{args} and package checking (e.g.@: by
 @code{tools::checkS3methods} and by package @pkg{codetools}).  There are
-two environments in the @pkg{base} package (and name space),
+two environments in the @pkg{base} package (and namespace),
 @samp{.GenericArgsEnv} for those primitives which are internal S3
 generics, and @samp{.ArgsEnv} for the rest.  Those environments contain
 closures with the same names as the primitives, formal arguments derived
 (manually) from the help pages, a body which is a suitable call to
-@code{UseMethod} or @code{NULL} and environment the base name space.
+@code{UseMethod} or @code{NULL} and environment the base namespace.
 
 The C code for @code{print.default} and @code{args} uses the closures in
 these environments in preference to the definitions in base (as
@@ -2487,7 +2487,7 @@ often has a directory @file{libs} to contain compiled code.  Other
 directories with known meaning to @R{} are @file{data}, @file{demo},
 @file{doc} and @file{po}.
 
-Function @code{library} looks for a name space and if one is found
+Function @code{library} looks for a namespace and if one is found
 passes control to @code{loadNamespace}.  Then @code{library} or
 @code{loadNamespace} looks for file @file{R/@var{pkgname}}, warns if it
 is not found and otherwise sources the code (using @code{sys.source})
@@ -2498,7 +2498,7 @@ lazy-load databases are provided in @file{share/R/[ns]packloader.R}.
 
 How (and if) compiled code is loaded is down to the package's startup
 code such as @code{.First.lib} or @code{.onLoad}, although a
-@code{useDynlib} directive in a name space provides an alternative.
+@code{useDynlib} directive in a namespace provides an alternative.
 Conventionally compiled code is loaded by a call to @code{library.dynam}
 and this looks in directory @file{libs} (and in an appropriate
 sub-directory if sub-architectures are in use) for a shared object
@@ -2526,7 +2526,7 @@ catalogs.
 Directory @file{Meta} contains several files in @code{.rds} format, that
 is serialized @R{} objects written by @code{saveRDS}.  All packages
 have files @file{Rd.rds}, @file{hsearch.rds}, @file{links.rds} and
-@file{package.rds}.  Packages with name spaces have a file
+@file{package.rds}.  Packages with namespaces have a file
 @file{nsInfo.rds}, and those with data, demos or vignettes have
 @file{data.rds}, @file{demo.rds} or @file{vignette.rds} files.
 
@@ -2619,7 +2619,7 @@ faster access by @R{} >= 2.11.0.
 @node Files, Graphics Devices, Package Structure, Top
 @chapter Files
 
-@R{} provides may functions to work with files and directories: many of
+@R{} provides many functions to work with files and directories: many of
 these have been added relatively recently to facilitate scripting in
 @R{} and in particular the replacement of Perl scripts by @R{} scripts
 in the management of @R{} itself.
@@ -2672,11 +2672,6 @@ relative to that current directory, on a particular drive if one is
 specified.  So @file{D:dir\file} and @file{D:} are valid path
 specifications (the last being the current directory on drive
 @file{D:}).
-
-spaces
-case insensitivity
-
-globbing
 
 @c basename        Wchar   na
 @c dir.create      Wchar   ~
@@ -2733,7 +2728,9 @@ This implements a set of graphics primitives, to `draw'
 @item a line
 @item a set of connected lines
 @item a polygon, optionally filled
+@item a paths, optionally filled using a winding rule
 @item text
+@item a raster image (optional)
 @item and to set a clipping rectangle
 @end itemize
 
@@ -2761,6 +2758,7 @@ the screen when drawing stops).
 @item wait for an event, for example a mouse click or keypress.
 @item an `onexit' action, to clean up if plotting is interrupted (by an
 error or by the user).
+@item capture the current contents of the device as a raster image.
 @item close the device.
 @end itemize
 
@@ -2792,7 +2790,7 @@ Some but not all instances of graphics devices maintain display lists, a
 `list' of operations that have been performed on the device to produce
 the current plot (since the device was opened or the plot was last
 cleared, e.g.@: by @code{plot.new}).  Screen devices generally maintain
-a display list to handle repaint and resize events where as file-based
+a display list to handle repaint and resize events whereas file-based
 formats do not---display lists are also used to implement
 @code{dev.copy()} and friends.  The display list is a pairlist of
 @code{.Internal} (base graphics) or @code{.Call.graphics} (grid
@@ -2959,30 +2957,30 @@ The following `capabilities' can be defined for the device's
 @code{DevDesc} structure.
 
 @itemize
-@item canChangeGamma --
+@item @code{canChangeGamma} --
 @code{Rboolean}: can the display gamma be adjusted?  This is not true
 for any current device, and as from @R{} 2.8.0 there is no user-level
 function to change gamma.  So @samp{FALSE} is the only useful value.
-@item canHadj --
+@item @code{canHadj} --
 @code{integer}: can the device do horizontal adjustment of text
 @emph{via} the @code{text} callback, and if so, how precisely? 0 = no
 adjustment, 1 = @{0, 0.5, 1@} (left, centre, right justification) or 2 =
 continuously variable (in [0,1]) between left and right justification.
-@item canGenMouseDown -- 
+@item @code{canGenMouseDown} -- 
 @code{Rboolean}: can the device handle mouse down events?  This
 flag and the next three are not currently used by R, but are maintained
 for back compatibility.
-@item canGenMouseMove -- 
+@item @code{canGenMouseMove} -- 
 @code{Rboolean}: ditto for mouse move events.
-@item canGenMouseUp -- 
+@item @code{canGenMouseUp} -- 
 @code{Rboolean}: ditto for mouse up events.
-@item canGenKeybd -- 
+@item @code{canGenKeybd} -- 
 @code{Rboolean}: ditto for keyboard events.
-@item hasTextUTF8 --
+@item @code{hasTextUTF8} --
 @code{Rboolean}: should non-symbol text be sent (in UTF-8) to the
 @code{textUTF8} and @code{strWidthUTF8} callbacks, and sent as Unicode
 points (negative values) to the @code{metricInfo} callback?
-@item wantSymbolUTF8 --
+@item @code{wantSymbolUTF8} --
 @code{Rboolean}: should symbol text be handled in UTF-8 in the same way
 as other text?  Requires @code{textUTF8 = TRUE}.
 @end itemize
@@ -3245,13 +3243,13 @@ be more open ended.
 
 Users may use @code{grDevices::setGraphicsEventEnv} to set the
 @code{eventEnv} environment in the device driver to hold event
-handlers. When the user calls @code{grDevices::getGraphicsEvent}, R
-will take three steps.  First, it sets the device driver member
+handlers. When the user calls @code{grDevices::getGraphicsEvent}, R will
+take three steps.  First, it sets the device driver member
 @code{gettingEvent} to @code{true} for each device with a
 non-@code{NULL} @code{eventEnv} entry, and calls @code{initEvent(dd,
-true)} if the callback is defined. It then enters an event loop.  Each
-time through the loop R will process events once, then check whether
-any device has set the @code{result} member of @code{eventEnv} to a
+true)} if the callback is defined.  It then enters an event loop.  Each
+time through the loop R will process events once, then check whether any
+device has set the @code{result} member of @code{eventEnv} to a
 non-@code{NULL} value, and will save the first such value found to be
 returned.  C functions @code{doMouseEvent} and @code{doKeybd} are
 provided to call the R event handlers @code{onMouseDown},
@@ -3427,10 +3425,10 @@ file @file{colors.c}.  Note that semi-transparent colours are not
 What is not clear is how the RGB values are to be mapped to display
 colours in the graphics device.  There is a proposal
 (@uref{http://developer.r-project.org/sRGB-RFC.html}) to regard the
-mapping as the colorspace `sRGB', but this is not currently done.
-The sRGB colorspace is an industry standard: it is used by Web browsers
-and JPEGs from all but high-end digital cameras.  The interpretation is
-a matter for graphics devices and for code that manipulates colours, but
+mapping as the colorspace `sRGB', which was adopted in @R{} 2.13.0.  The
+sRGB colorspace is an industry standard: it is used by Web browsers and
+JPEGs from all but high-end digital cameras.  The interpretation is a
+matter for graphics devices and for code that manipulates colours, but
 not for the graphics engine or subsystems.
 
 @R{} uses a painting model similar to PostScript and PDF.  This means
