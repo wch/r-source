@@ -2902,39 +2902,40 @@ static SEXP GA_Cap(pDevDesc dd)
     /* These in-place conversions are ok */
     TRACEDEVGA("cap");
 
-    /* Only make sense for on-screen device ? */
+    /* Only make sense for on-screen device */
     if(xd->kind == SCREEN) {
         img = bitmaptoimage(xd->gawin);
         if (imagedepth(img) == 8) img = convert8to32(img);
+
+	if (img) {
+	    int width = imagewidth(img), height = imageheight(img),
+		size = width*height;
+	    unsigned int *rint;
+
+	    screenData = getpixels(img);
+
+	    PROTECT(raster = allocVector(INTSXP, size));
+
+	    /* Copy each byte of screen to an R matrix.
+	     * The ARGB32 needs to be converted to R's ABGR32 */
+	    rint = (unsigned int *) INTEGER(raster);
+	    for (int i = 0; i < size; i++)
+		rint[i] = R_RGBA(screenData[i*4 + 2],
+				 screenData[i*4 + 1],
+				 screenData[i*4 + 0],
+				 255);
+	    PROTECT(dim = allocVector(INTSXP, 2));
+	    INTEGER(dim)[0] = height;
+	    INTEGER(dim)[1] = width;
+	    setAttrib(raster, R_DimSymbol, dim);
+
+	    UNPROTECT(2);
+	}
+
+	/* Tidy up */
+	delimage(img);
     }
-
-    if (img) {
-        int width = imagewidth(img), height = imageheight(img),
-	    size = width*height;
-        unsigned int *rint;
-
-        screenData = getpixels(img);
-
-        PROTECT(raster = allocVector(INTSXP, size));
-
-        /* Copy each byte of screen to an R matrix.
-         * The ARGB32 needs to be converted to an R ABGR32 */
-        rint = (unsigned int *) INTEGER(raster);
-        for (int i = 0; i < size; i++)
-            rint[i] = R_RGBA(screenData[i*4 + 2],
-                             screenData[i*4 + 1],
-                             screenData[i*4 + 0],
-                             255);
-        PROTECT(dim = allocVector(INTSXP, 2));
-        INTEGER(dim)[0] = height;
-        INTEGER(dim)[1] = width;
-        setAttrib(raster, R_DimSymbol, dim);
-
-        UNPROTECT(2);
-    }
-
-    /* Tidy up */
-    delimage(img);
+    
 
     return raster;
 }
@@ -3229,9 +3230,9 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     xd->cntxt = NULL;
     dd->holdflush = GA_holdflush;
     xd->holdlevel = 0;
-    dd->haveRaster = 2;
-    dd->haveCapture = 1;
-    dd->haveLocator = 1;
+
+    dd->haveRaster = 2;  /* full support */
+    dd->haveCapture = dd->haveLocator = (xd->kind == SCREEN) ? 2 : 1;
     switch(xd->kind) {
     case SCREEN:
     case PRINTER:
