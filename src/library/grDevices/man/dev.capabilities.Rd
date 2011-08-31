@@ -13,9 +13,9 @@
 dev.capabilities(what = NULL)
 }
 \arguments{
-  \item{what}{a character vector including names of the components
-    listed in section \sQuote{Value}, or \code{NULL} which lists all
-    available capabilities.}
+  \item{what}{a character vector partially matching the names of the
+    components listed in section \sQuote{Value}, or \code{NULL} which
+    lists all available capabilities.}
 }
 \details{
   The capabilities have to be specified by the author of the graphics
@@ -32,8 +32,8 @@ dev.capabilities(what = NULL)
 \value{
   A list with some of all of the following components, any of which may
   be \code{NA}:
-  \item{transparency}{logical:  Does the device support
-    (semi)-transparent colours?}
+  \item{semiTransparency}{logical:  Does the device support
+    semi-transparent colours?}
   \item{transparentBackground}{character:  Does the device support
     (semi)-transparent backgrounds?  Possible values are \code{"no"},
     \code{"fully"} (only full transparency) and \code{"semi"}
