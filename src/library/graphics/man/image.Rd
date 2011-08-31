@@ -105,8 +105,7 @@ image(x, \dots)
   option.
 }
 \note{
-  Based on a function by Thomas Lumley
-  \email{tlumley@u.washington.edu}.
+  Based on a function by Thomas Lumley.
 }
 \seealso{
   \code{\link{filled.contour}} or \code{\link{heatmap}} which can
