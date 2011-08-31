@@ -95,9 +95,13 @@ image(x, \dots)
   i.e. a 90 degree counter-clockwise rotation of the conventional
   printed layout of a matrix.
 
-  Images for large \code{z} on a regular grid are more efficient with
-  \code{useRaster} enabled and can prevent rare anti-aliasing artifacts,
-  but may not be supported by all graphics devices.
+  Images for large \code{z} on a regular grid are rendered more
+  efficiently with \code{useRaster} enabled and can prevent rare
+  anti-aliasing artifacts, but may not be supported by all graphics
+  devices.  Some devices (such as \code{\link{postscript}}) which do not
+  support semi-transparent colours will emit missing values as white
+  rather than transparent.  The graphics files in PDF and
+  PostScript can be much smaller.
 }
 \note{
   Based on a function by Thomas Lumley
