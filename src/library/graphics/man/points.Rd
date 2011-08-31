@@ -63,7 +63,7 @@ points(x, \dots)
   The \link{graphical parameters} \code{pch}, \code{col}, \code{bg},
   \code{cex} and \code{lwd} can be vectors (which will be recycled as
   needed) giving a value for each point plotted.  If lines are to be
-  plotted (e.g. for \code{type = "b"}/ the first element of \code{lwd}
+  plotted (e.g. for \code{type = "b"}) the first element of \code{lwd}
   is used.
 
   Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
