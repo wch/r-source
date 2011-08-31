@@ -2619,7 +2619,7 @@ faster access by @R{} >= 2.11.0.
 @node Files, Graphics Devices, Package Structure, Top
 @chapter Files
 
-@R{} provides may functions to work with files and directories: many of
+@R{} provides many functions to work with files and directories: many of
 these have been added relatively recently to facilitate scripting in
 @R{} and in particular the replacement of Perl scripts by @R{} scripts
 in the management of @R{} itself.
@@ -2672,11 +2672,6 @@ relative to that current directory, on a particular drive if one is
 specified.  So @file{D:dir\file} and @file{D:} are valid path
 specifications (the last being the current directory on drive
 @file{D:}).
-
-spaces
-case insensitivity
-
-globbing
 
 @c basename        Wchar   na
 @c dir.create      Wchar   ~
@@ -2733,7 +2728,9 @@ This implements a set of graphics primitives, to `draw'
 @item a line
 @item a set of connected lines
 @item a polygon, optionally filled
+@item a paths, optionally filled using a winding rule
 @item text
+@item a raster image (optional)
 @item and to set a clipping rectangle
 @end itemize
 
@@ -2761,6 +2758,7 @@ the screen when drawing stops).
 @item wait for an event, for example a mouse click or keypress.
 @item an `onexit' action, to clean up if plotting is interrupted (by an
 error or by the user).
+@item capture the current contents of the device as a raster image.
 @item close the device.
 @end itemize
 
@@ -2792,7 +2790,7 @@ Some but not all instances of graphics devices maintain display lists, a
 `list' of operations that have been performed on the device to produce
 the current plot (since the device was opened or the plot was last
 cleared, e.g.@: by @code{plot.new}).  Screen devices generally maintain
-a display list to handle repaint and resize events where as file-based
+a display list to handle repaint and resize events whereas file-based
 formats do not---display lists are also used to implement
 @code{dev.copy()} and friends.  The display list is a pairlist of
 @code{.Internal} (base graphics) or @code{.Call.graphics} (grid
@@ -2959,33 +2957,51 @@ The following `capabilities' can be defined for the device's
 @code{DevDesc} structure.
 
 @itemize
-@item canChangeGamma --
+@item @code{canChangeGamma} --
 @code{Rboolean}: can the display gamma be adjusted?  This is not true
 for any current device, and as from @R{} 2.8.0 there is no user-level
 function to change gamma.  So @samp{FALSE} is the only useful value.
-@item canHadj --
+@item @code{canHadj} --
 @code{integer}: can the device do horizontal adjustment of text
 @emph{via} the @code{text} callback, and if so, how precisely? 0 = no
 adjustment, 1 = @{0, 0.5, 1@} (left, centre, right justification) or 2 =
 continuously variable (in [0,1]) between left and right justification.
-@item canGenMouseDown -- 
+@item @code{canGenMouseDown} -- 
 @code{Rboolean}: can the device handle mouse down events?  This
 flag and the next three are not currently used by R, but are maintained
 for back compatibility.
-@item canGenMouseMove -- 
+@item @code{canGenMouseMove} -- 
 @code{Rboolean}: ditto for mouse move events.
-@item canGenMouseUp -- 
+@item @code{canGenMouseUp} -- 
 @code{Rboolean}: ditto for mouse up events.
-@item canGenKeybd -- 
+@item @code{canGenKeybd} -- 
 @code{Rboolean}: ditto for keyboard events.
-@item hasTextUTF8 --
+@item @code{hasTextUTF8} --
 @code{Rboolean}: should non-symbol text be sent (in UTF-8) to the
 @code{textUTF8} and @code{strWidthUTF8} callbacks, and sent as Unicode
 points (negative values) to the @code{metricInfo} callback?
-@item wantSymbolUTF8 --
+@item @code{wantSymbolUTF8} --
 @code{Rboolean}: should symbol text be handled in UTF-8 in the same way
 as other text?  Requires @code{textUTF8 = TRUE}.
 @end itemize
+
+Several more were added at @R{} 2.14.0 to support the
+@code{dev.capabilities} function: these are all small integers.
+@itemize
+@item @code{haveTransparency}:
+does the device support semi-transparent colours?
+@item @code{haveTransparentBg}:
+can the background be fully or semi-transparent?
+@item @code{haveRaster}:
+is there support for rendering raster images?
+@item @code{haveCapture}:
+is there support for @code{grid::grid.cap}?
+@item @code{haveLocator}:
+is there an interactive locator?
+@end itemize
+
+The last three can often be deduced to be false from the presence of
+@code{NULL} entries instead of the corresponding functions.
 
 @node Handling text, Conventions, Device capabilities, Graphics devices
 @subsection Handling text
@@ -3237,6 +3253,8 @@ figure will stop and start drawing many times.  The buffering introduced
 in the @code{X11()} makes use of @code{mode = 0} to indicate activity:
 it updates the screen after @emph{ca} 100ms of inactivity.
 
+As from @R{} 2.14.0 this callback need not be supplied if it does nothing.
+
 @node Graphics events, Specific devices, 'Mode', Graphics devices
 @subsection Graphics events
 
@@ -3247,13 +3265,13 @@ be more open ended.
 
 Users may use @code{grDevices::setGraphicsEventEnv} to set the
 @code{eventEnv} environment in the device driver to hold event
-handlers. When the user calls @code{grDevices::getGraphicsEvent}, R
-will take three steps.  First, it sets the device driver member
+handlers. When the user calls @code{grDevices::getGraphicsEvent}, R will
+take three steps.  First, it sets the device driver member
 @code{gettingEvent} to @code{true} for each device with a
 non-@code{NULL} @code{eventEnv} entry, and calls @code{initEvent(dd,
-true)} if the callback is defined. It then enters an event loop.  Each
-time through the loop R will process events once, then check whether
-any device has set the @code{result} member of @code{eventEnv} to a
+true)} if the callback is defined.  It then enters an event loop.  Each
+time through the loop R will process events once, then check whether any
+device has set the @code{result} member of @code{eventEnv} to a
 non-@code{NULL} value, and will save the first such value found to be
 returned.  C functions @code{doMouseEvent} and @code{doKeybd} are
 provided to call the R event handlers @code{onMouseDown},
@@ -3429,10 +3447,10 @@ file @file{colors.c}.  Note that semi-transparent colours are not
 What is not clear is how the RGB values are to be mapped to display
 colours in the graphics device.  There is a proposal
 (@uref{http://developer.r-project.org/sRGB-RFC.html}) to regard the
-mapping as the colorspace `sRGB', but this is not currently done.
-The sRGB colorspace is an industry standard: it is used by Web browsers
-and JPEGs from all but high-end digital cameras.  The interpretation is
-a matter for graphics devices and for code that manipulates colours, but
+mapping as the colorspace `sRGB', which was adopted in @R{} 2.13.0.  The
+sRGB colorspace is an industry standard: it is used by Web browsers and
+JPEGs from all but high-end digital cameras.  The interpretation is a
+matter for graphics devices and for code that manipulates colours, but
 not for the graphics engine or subsystems.
 
 @R{} uses a painting model similar to PostScript and PDF.  This means
