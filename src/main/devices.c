@@ -614,7 +614,7 @@ SEXP attribute_hidden do_devholdflush(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_devcap(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, ansnames;
+    SEXP ans;
     int i = 0;
     pDevDesc dd = GEcurrentDevice()->dev;
 
