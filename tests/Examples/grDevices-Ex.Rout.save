@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-07-05 r56287)
+R Under development (unstable) (2011-08-31 r56867)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1683,6 +1683,38 @@ Copyright M. P. Wand 1997-2009
 > ##D dev.set(dev.prev())
 > ##D dev.off(); dev.off()#- close the two X devices
 > ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dev.capabilities")
+> ### * dev.capabilities
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dev.capabilities
+> ### Title: Query Capabilities of the Current Graphics Device
+> ### Aliases: dev.capabilities
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> dev.capabilities()
+$semiTransparency
+[1] FALSE
+
+$transparentBackground
+[1] "fully"
+
+$rasterImage
+[1] "non-missing"
+
+$capture
+[1] FALSE
+
+$locator
+[1] FALSE
+
 > 
 > 
 > 

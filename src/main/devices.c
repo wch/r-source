@@ -248,7 +248,7 @@ int selectDevice(int devNum)
 
 	if (!NoDevices()) {
 	    pGEDevDesc oldd = GEcurrentDevice();
-	    oldd->dev->deactivate(oldd->dev);
+	    if (oldd->dev->deactivate) oldd->dev->deactivate(oldd->dev);
 	}
 
 	R_CurrentDevice = devNum;
@@ -260,7 +260,7 @@ int selectDevice(int devNum)
 
 	gdd = GEcurrentDevice(); /* will start a device if current is null */
 	if (!NoDevices()) /* which it always will be */
-	    gdd->dev->activate(gdd->dev);
+	    if (gdd->dev->activate) gdd->dev->activate(gdd->dev);
 	return devNum;
     }
     else
@@ -303,7 +303,7 @@ void removeDevice(int devNum, Rboolean findNext)
 		/* activate new current device */
 		if (R_CurrentDevice) {
 		    pGEDevDesc gdd = GEcurrentDevice();
-		    gdd->dev->activate(gdd->dev);
+		    if(gdd->dev->activate) gdd->dev->activate(gdd->dev);
 		}
 	    }
 	}
@@ -449,7 +449,7 @@ void GEaddDevice(pGEDevDesc gdd)
 
     if (!NoDevices())  {
 	oldd = GEcurrentDevice();
-	oldd->dev->deactivate(oldd->dev);
+	if(oldd->dev->deactivate) oldd->dev->deactivate(oldd->dev);
     }
 
     /* find empty slot for new descriptor */
@@ -473,7 +473,7 @@ void GEaddDevice(pGEDevDesc gdd)
     active[i] = TRUE;
 
     GEregisterWithDevice(gdd);
-    gdd->dev->activate(gdd->dev);
+    if(gdd->dev->activate) gdd->dev->activate(gdd->dev);
 
     /* maintain .Devices (.Device has already been set) */
     PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(R_DeviceSymbol), 0)));

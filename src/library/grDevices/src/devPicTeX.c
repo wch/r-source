@@ -159,14 +159,12 @@ static const char * const fontname[] = {
 
 	/* Device driver actions */
 
-static void PicTeX_Activate(pDevDesc dd);
 static void PicTeX_Circle(double x, double y, double r,
 			  const pGEcontext gc,
 			  pDevDesc dd);
 static void PicTeX_Clip(double x0, double x1, double y0, double y1, 
 			pDevDesc dd);
 static void PicTeX_Close(pDevDesc dd);
-static void PicTeX_Deactivate(pDevDesc dd);
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
 			const pGEcontext gc,
 			pDevDesc dd);
@@ -225,14 +223,6 @@ static void SetFont(int face, int size, picTeXDesc *ptd)
 	ptd->fontsize = lsize;
 	ptd->fontface = lface;
     }
-}
-
-static void PicTeX_Activate(pDevDesc dd)
-{
-}
-
-static void PicTeX_Deactivate(pDevDesc dd)
-{
 }
 
 static void PicTeX_MetricInfo(int c, 
@@ -650,8 +640,6 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     dd->startfont = 1;
     dd->startgamma = 1;
 
-    dd->activate = PicTeX_Activate;
-    dd->deactivate = PicTeX_Deactivate;
     dd->close = PicTeX_Close;
     dd->clip = PicTeX_Clip;
     dd->size = PicTeX_Size;

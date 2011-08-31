@@ -184,6 +184,7 @@ struct _DevDesc {
      *
      * static void   X11_Activate(pDevDesc dd);
      *
+     * As from R 2.14.0 this can be omitted or set to NULL.
      */
 #if R_USE_PROTOTYPES
     void (*activate)(const pDevDesc );
@@ -261,6 +262,7 @@ struct _DevDesc {
      *
      * static void X11_Deactivate(pDevDesc dd)
      *
+     * As from R 2.14.0 this can be omitted or set to NULL.
      */
 #if R_USE_PROTOTYPES
     void (*deactivate)(pDevDesc );
