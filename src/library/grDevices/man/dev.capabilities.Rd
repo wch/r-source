@@ -50,7 +50,5 @@ dev.capabilities(what = NULL)
 }
 \examples{
 dev.capabilities()
-
-dev.capabilities("transparency")[[1L]] \%in\% c("fully", "alpha")
 }
 \keyword{ dplot }
