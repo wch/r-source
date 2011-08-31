@@ -229,8 +229,8 @@ get_exclude_patterns <- function()
     ## This should really be combined with
     ## add_build_stamp_to_description_file().
     ## Also, the build code reads DESCRIPTION files too often ...
-    add_expanded_R_fields_to_description_file <- function(dfile) {
-        db <- .read_description(dfile)
+    add_expanded_R_fields_to_description_file <- function(ldpath) {
+        db <- .read_description(ldpath)
         fields <- .expand_package_description_db_R_fields(db)
         if(length(fields))
             .write_description(c(db, fields), ldpath)
