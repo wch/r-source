@@ -1925,7 +1925,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 files <- files[-chunk]
                 lines <- suppressWarnings(system2("file", shQuote(these), TRUE, TRUE))
                 ex <- grepl("executable", lines, useBytes=TRUE)
-                ex2 <- grepl("script text", lines, useBytes=TRUE)
+		ex2 <- grepl("script", lines, useBytes=TRUE) &
+		       grepl("text", lines, useBytes=TRUE)
                 execs <- c(execs, lines[ex & !ex2])
             }
             if(length(execs)) {
