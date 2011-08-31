@@ -12,9 +12,9 @@ pdf_bytes_delimiters <-
 pdf_bytes_digits <-
     charToRaw("0123456789")
 
-## * pdf_file
+## * pdf_doc
 
-pdf_file <-
+pdf_doc <-
 function(file)
 {
     if(is.character(file)) {
@@ -28,8 +28,12 @@ function(file)
         con <- file
     }
 
-    ## Start at the end.
+    ## Read header.
+    header <- rawToChar(read_next_bytes_until_whitespace(con))
+
+    ## Go to the end.
     seek(con, -1L, "end")
+    nbytes <- seek(con) + 1L
     bytes <- raw()
     while(!length(bytes))
         bytes <- read_prev_bytes_after_eols(con)
@@ -68,7 +72,6 @@ function(file)
         else
             stop("cannot find xref table")
     }
-            
 
     ## Load the xref info.
     repeat {
@@ -139,7 +142,7 @@ function(file)
             cnt <- 0L
             xrefs <- list()
             xrefs_obj_streams <- list()
-            stream <- rawConnection(pdf_get_stream_data(obj))
+            stream <- rawConnection(pdf_stream_get_data(obj))
             while(cnt < size) {
                 bytes <- readBin(stream, "raw", field_sizes[1L])
                 d1 <- strtoi(paste(bytes, collapse = ""), 16L)
@@ -183,11 +186,69 @@ function(file)
         colnames(xrefs_obj_streams) <- c("num", "str", "idx")
 
     y <- list(file = summary(con)$description,
+              size = nbytes,
+              header = header,
               xrefs = xrefs,
               xrefs_obj_streams = xrefs_obj_streams,
               trailer = trailer)
-    class(y) <- "pdf_file"
+    class(y) <- "pdf_doc"
     y
+}
+
+## * pdf_catalog
+
+pdf_catalog <-
+function(file)
+{
+    doc <- if(inherits(file, "pdf_doc")) file else pdf_doc(file)
+    pdf_doc_get_object(doc, doc$trailer[["/Root"]])
+}
+
+## * pdf_fonts
+
+pdf_fonts <-
+function(file)
+{
+    doc <- if(inherits(file, "pdf_doc")) file else pdf_doc(file)
+
+    ## Get the page resources.
+    resources <- pdf_doc_get_page_resources(doc)
+    ## Get the font resources (actually, their references).
+    frefs <- list()
+    for(res in resources) {
+        for(ref in res[["/Font"]]) {
+            if(is.na(match(list(ref), frefs))) {
+                frefs <- c(frefs, list(ref))
+            }
+        }
+    }
+    ## Now get the referenced font objects and extract some basic
+    ## information in the style of pdffonts(1).
+    tab <-
+        lapply(frefs,
+               function(ref) {
+                   obj <- pdf_doc_get_object(doc, ref)
+                   base <- obj[["/BaseFont"]]
+                   list(base,
+                        obj[["/Subtype"]],
+                    !is.null(obj[["/FontDescriptor"]]),
+                        grepl("^[[:upper:]]{6}\\+", base),
+                        !is.null(obj[["/ToUnicode"]]),
+                        obj[["/Encoding"]],
+                        ref["num"],
+                        ref["gen"])
+               })
+
+    tab <- as.data.frame(do.call(rbind, tab))
+    names(tab) <-
+        c("name", "type", "emb", "sub", "uni", "enc", "num", "gen")
+    tab$name <- substring(tab$name, 2L)
+    tab$type <- substring(tab$type, 2L)
+    ## <FIXME>
+    ## Do something useful to the encoding information.
+    ## </FIXME>
+    
+    tab
 }
 
 ## * pdf_info
@@ -195,12 +256,82 @@ function(file)
 pdf_info <-
 function(file)
 {
-    doc <- pdf_file(file)
+    doc <- if(inherits(file, "pdf_doc")) file else pdf_doc(file)
+    
     ref <- doc$trailer[["/Info"]]
-    if(is.null(ref)) return(NULL)
-    pdf_file_get_object(doc, ref)
+    if(is.null(ref)) {
+        info <- list()    
+    } else {
+        info <- unclass(pdf_doc_get_object(doc, ref))
+        names(info) <- substring(names(info), 2L)
+        if(!is.null(el <- info[["Trapped"]]))
+            info[["Trapped"]] <- tolower(substring(el, 2L))
+        ## Transform dates to POSIXt if possible.
+        ## The PDF specs say that dates are of the form
+        ##   (D:YYYYMMDDHHmmSSOHH'mm')
+        ## where
+        ## * YYYY MM DD HH mm SS have the usual meanings
+        ## * O is the relationship of local time to Universal Time (UT),
+        ##   denoted by one of the characters +, -, or Z: a plus sign (+) as
+        ##   the value of the O field signifies that local time is later
+        ##   than UT, a minus sign (-) signifies that local time is earlier
+        ##   than UT, and the letter Z signifies that local time is UT.
+        ## * the apostrophe character after HH and mm is part of the syntax
+        ## * all fields after the year are optional
+        ## * the prefix 'D:', although also optional, is strongly recommended
+        ## * the default values for MM and DD are both 01
+        ## * all other numerical fields default to zero values.
+        PDF_Date_to_POSIXt <- function(s) {
+            ## Strip optional 'D:' prefix.
+            s <- sub("^D:", "", s)
+            ## Strip apostrophes in offset spec.
+            s <- gsub("'", "", s)
+            if(nchar(s) <= 12L) {
+                substring(s, nchar(s), 12L) <-
+                    substring("    0101000000", nchar(s), 12L)
+                strptime(s, "%Y%m%d%H%M%S")
+            } else if(substring(s, 13L, 13L) == "Z") {
+                strptime(substring(s, 1L, 12L), "%Y%m%d%H%M%S")
+            } else {
+                strptime(s, "%Y%m%d%H%M%S%z")
+            }
+        }
+        if(!is.null(dt <- info[["CreationDate"]]))
+            info[["CreationDate"]] <- PDF_Date_to_POSIXt(dt)
+        if(!is.null(dt <- info[["ModDate"]]))
+            info[["ModDate"]] <- PDF_Date_to_POSIXt(dt)
+    }
+
+    pages <- pdf_doc_get_page_list(doc)
+    info[["Pages"]] <- length(pages)
+
+    rectangles <- lapply(pages, `[[`, "/MediaBox")
+    urx <- lapply(rectangles, `[[`, 3L)
+    ury <- lapply(rectangles, `[[`, 4L)
+    if((length(uurx <- unique(urx)) == 1L) &&
+       (length(uury <- unique(ury)) == 1L))
+        info["Page size"] <- sprintf("%s x %s pts", uurx, uury)
+    
+    info[["File size"]] <- sprintf("%d bytes", doc$size)
+
+    catalog <- pdf_doc_get_object(doc, doc$trailer[["/Root"]])
+    version <- catalog[["/Version"]]
+    if(is.null(version))
+        version <- substring(doc$header, 6L)
+    info[["PDF version"]] <- version
+    
+    class(info) <- "pdf_info"
+    info
 }
 
+print.pdf_info <-
+function(x, ...)
+{
+    writeLines(formatDL(sprintf("%s:", names(x)),
+                        sapply(x, format),
+                        ...))
+    invisible(x)
+}
 
 ## * Object readers
 
@@ -223,7 +354,7 @@ function(con) {
         bytes <- readBin(con, "raw", 2L)
         seek(con, -2L, "current")
         if(rawToChar(bytes) == "<<")
-            pdf_read_object_dictionary(con)
+            pdf_read_object_dictionary_or_stream(con)
         else
             pdf_read_object_string_hexadecimal(con)
     }
@@ -404,7 +535,9 @@ function(con) {
         }
         x <- c(x, y)
     }
-    rawToChar(x)
+    y <- rawToChar(x)
+    class(y) <- "PDF_Name"
+    y
 }
 
 pdf_read_object_array <-
@@ -420,12 +553,13 @@ function(con) {
             readBin(con, "raw", 1L)
             break
         }
-        y <- c(y, pdf_read_object(con))
+        y <- c(y, list(pdf_read_object(con)))
     }
+    class(y) <- "PDF_Array"
     y
 }
 
-pdf_read_object_dictionary <-
+pdf_read_object_dictionary_or_stream <-
 function(con) {
     bytes <- readBin(con, "raw", 2L)
     if(rawToChar(bytes) != "<<")
@@ -467,14 +601,12 @@ function(con) {
         bytes <- readBin(con, "raw", 9L)
         if(rawToChar(bytes) != "endstream")
             stop("cannot read stream object")
+        class(y) <- "PDF_Stream"
     } else {
         seek(con, pos)
+        class(y) <- "PDF_Dictionary"
     }
     y
-}
-
-pdf_read_object_stream <-
-function(con) {
 }
 
 pdf_read_object_null <-
@@ -495,8 +627,10 @@ function(con) {
     x <- readBin(con, "raw", 1L)
     if(rawToChar(x) != "R")
         stop("cannot read indirect reference object")
-    c(num = as.integer(rawToChar(num)),
-      gen = as.integer(rawToChar(gen)))
+    y <- c(num = as.integer(rawToChar(num)),
+           gen = as.integer(rawToChar(gen)))
+    class(y) <- "PDF_Indirect_Reference"
+    y
 }
 
 pdf_read_object_header <-
@@ -513,8 +647,7 @@ function(con) {
       gen = as.integer(rawToChar(gen)))
 }
     
-
-pdf_file_get_object <-
+pdf_doc_get_object <-
 function(doc, ref, con = NULL)
 {
     ## Experimental---need to read the docs first.
@@ -541,12 +674,12 @@ function(doc, ref, con = NULL)
         ptr <- doc$xrefs_obj_streams[pos, ]
         num <- ptr["str"]
         idx <- ptr["idx"]
-        obj <- pdf_file_get_object(doc, num, con)
+        obj <- pdf_doc_get_object(doc, num, con)
         ## Could check whether
         ##   obj[["/Type"]] == "/ObjStm"
         if(idx >= obj[["/N"]])
             stop("invalid index in object stream lookup")
-        stream <- rawConnection(pdf_get_stream_data(obj))
+        stream <- rawConnection(pdf_stream_get_data(obj))
         on.exit(close(stream), add = TRUE)
         i <- 0L
         while(i <= idx) {
@@ -597,9 +730,141 @@ function(doc, ref, con = NULL)
     pdf_read_object(con)
 }
 
+pdf_doc_get_objects <-
+function(doc)
+{
+    con <- file(doc$file, "rb")
+    on.exit(close(con))
+
+    objects <- list()
+
+    for(i in seq_len(nrow(doc$xrefs))[-1L]) {
+        entry <- doc$xrefs[i, , drop = FALSE]
+        ## <FIXME>
+        ## Merge this with pdf_doc_get_object()
+        seek(con, entry[["pos"]])
+        hdr <- pdf_read_object_header(con)
+        ## Should do something with the header info
+        obj <- pdf_read_object(con)
+        num <- as.character(entry[["num"]])
+        gen <- as.character(entry[["gen"]])
+        objects[[num]][[gen]] <- obj
+    }
+
+    objects
+}
+
+## * pdf_doc_get_page_tree
+
+pdf_doc_get_page_tree <-
+function(doc)
+{
+    catalog <- pdf_doc_get_object(doc, doc$trailer[["/Root"]])
+    ## Pages entry in the catalog dictionary is required and must be an
+    ## indirect reference.
+    pages <- pdf_doc_get_object(doc, catalog[["/Pages"]])
+    recurse <- function(x) {
+        if(!is.null(kids <- x[["/Kids"]])) {
+            x[["/Kids"]] <-
+                lapply(kids,
+                       function(kid)
+                       if(inherits(kid, "PDF_Indirect_Reference")) {
+                           recurse(pdf_doc_get_object(doc, kid))
+                       } else {
+                           kid
+                       })
+            class(x) <- "PDF_Page_Tree"
+        } else {
+            ## No more kids, should be a leaf node.
+            ## Could check on Type being Page.
+            class(x) <- "PDF_Page"
+        }
+        x
+    }
+    recurse(pages)
+}
+
+pdf_doc_get_page_list <-
+function(doc)
+{
+    pages <- list()
+    ## Cannot use rapply() because this only deals with nodes which are
+    ## not lists.
+    recurse <- function(x) {
+        if(!is.null(kids <- x[["/Kids"]])) {
+            for(kid in kids) {
+                if(inherits(kid, "PDF_Page")) {
+                    pages <<- c(pages, list(kid))
+                }
+                recurse(kid)
+            }
+        }
+    }
+    recurse(pdf_doc_get_page_tree(doc))
+    pages
+}
+
+## * pdf_doc_get_content_streams
+
+## pdf_doc_get_page_content_streams <-
+## function(doc)
+## {
+##     streams <- list()
+##     recurse <- function(x) {
+##         if(!is.null(kids <- x[["/Kids"]])) {
+##             for(kid in kids) {
+##                 if(inherits(kid, "PDF_Page")) {
+##                     streams <<-
+##                         c(streams,
+##                           list(pdf_doc_get_object(doc, kid[["/Contents"]])))
+##                 }
+##                 recurse(kid)
+##             }
+##         }
+##     }
+##     recurse(pdf_doc_get_page_tree(doc))
+##     streams
+## }
+
+pdf_doc_get_page_content_streams <-
+function(doc)
+{
+    pages <- pdf_doc_get_page_list(doc)
+    lapply(pages,
+           function(p) pdf_doc_get_object(doc, p[["/Contents"]]))
+}
+
+## pdf_doc_get_page_resources <- 
+## function(doc)
+## {
+##     out <- list()
+##     recurse <- function(x) {
+##         if(!is.null(kids <- x[["/Kids"]])) {
+##             for(kid in kids) {
+##                 if(inherits(kid, "PDF_Page")) {
+##                     out <<-
+##                         c(out,
+##                           list(pdf_doc_get_object(doc, kid[["/Resources"]])))
+##                 }
+##                 recurse(kid)
+##             }
+##         }
+##     }
+##     recurse(pdf_doc_get_page_tree(doc))
+##     out
+## }
+
+pdf_doc_get_page_resources <- 
+function(doc)
+{
+    pages <- pdf_doc_get_page_list(doc)
+    lapply(pages,
+           function(p) pdf_doc_get_object(doc, p[["/Resources"]]))
+}
+
 ## * Streams
 
-pdf_get_stream_data <-
+pdf_stream_get_data <-
 function(obj) {
     bytes <- obj[["__streamdata__"]]
     filters <- as.list(obj[["/Filter"]])
