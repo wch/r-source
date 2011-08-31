@@ -319,10 +319,10 @@ Package: pkgname
 Version: 0.5-1
 Date: 2004-01-01
 Title: My First Collection of Functions
-Author@@R: c(person("Joe", "Developer",
-                    email = "Joe.Developer@@some.domain.net"),
-             person("A.", "User", role = "ctb",
-	            email = "A.User@@whereever.net"))
+Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
+                     email = "Joe.Developer@@some.domain.net"),
+              person("A.", "User", role = "ctb",
+	             email = "A.User@@whereever.net"))
 Author: Joe Developer <Joe.Developer@@some.domain.net>, with
   contributions from A. User <A.User@@whereever.net>.
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
