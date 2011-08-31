@@ -438,6 +438,10 @@
       
       \item \code{colormodel = "grey"} is allowed for
       \code{postscript()} and \code{pdf()}.
+      
+      \item The default \code{postscript(colormodel = "srgb")} now
+      changes colorspace less often, so e.g. coloured \code{image()}
+      plots may render faster.
     }
   }
 

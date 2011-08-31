@@ -2207,6 +2207,7 @@ typedef struct {
 	int fontsize;	         /* font size in points */
 	rcolor col;		 /* color */
 	rcolor fill;	         /* fill color */
+	int srgb;                /* is current colorspace known to be sRGB? */
     } current;
 
     /*
@@ -2993,14 +2994,16 @@ static void PS_TextUTF8(double x, double y, const char *str,
 /* PostScript Support (formerly in PostScript.c) */
 
 static void PostScriptSetCol(FILE *fp, double r, double g, double b,
-			     const char *mm)
+			     PostScriptDesc *pd, Rboolean fg)
 {
+    const char *mm = pd->colormodel;
     if(r == g && g == b && 
        !(streql(mm, "cmyk") || streql(mm, "srgb-nogray") || streql(mm, "rgb-nogray")) ) { /* grey */
 	if(r == 0) fprintf(fp, "0");
 	else if (r == 1) fprintf(fp, "1");
 	else fprintf(fp, "%.4f", r);
 	fprintf(fp," setgray");
+	pd->current.srgb = 0;
     } else {
 	if(strcmp(mm, "gray") == 0) {
 	    fprintf(fp, "%.4f setgray", 0.213*r + 0.715*g + 0.072*b);
@@ -3035,18 +3038,29 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	    if(b == 0) fprintf(fp, " 0");
 	    else if (b == 1) fprintf(fp, " 1");
 	    else fprintf(fp, " %.4f", b);
-	    if (streql(mm, "srgb") || streql(mm, "srgb-nogray"))
-		fprintf(fp," srgb");
+	    if (streql(mm, "srgb")) {
+		if(fg) {
+		    if (pd->current.srgb)  fprintf(fp," setcolor");
+		    else {
+			pd->current.srgb = 1;
+			fprintf(fp," srgb");
+		    }
+		} else fprintf(fp," srgb");
+	    } else if(streql(mm, "srgb-nogray")) fprintf(fp," srgb");
 	    else fprintf(fp," rgb");
 	}
     }
 }
 
 static void PostScriptSetFill(FILE *fp, double r, double g, double b,
-			      const char *m)
+			      PostScriptDesc *pd, int setfg)
 {
+    if (setfg && !pd->current.srgb) {
+	pd->current.srgb = 1;
+	fprintf(fp, "sRGB\n");
+    }
     fprintf(fp,"/bg { ");
-    PostScriptSetCol(fp, r, g, b, m);
+    PostScriptSetCol(fp, r, g, b, pd, setfg);
     fprintf(fp, " } def\n");
 }
 
@@ -3055,7 +3069,7 @@ static void PostScriptSetFill(FILE *fp, double r, double g, double b,
 /* Driver Support Routines */
 
 static void SetColor(int, pDevDesc);
-static void SetFill(int, pDevDesc);
+static void SetFill(int, pDevDesc, int);
 static void SetFont(int, int, pDevDesc);
 static void SetLineStyle(const pGEcontext, pDevDesc dd);
 static void Invalidate(pDevDesc);
@@ -3460,20 +3474,20 @@ static void SetColor(int color, pDevDesc dd)
 	PostScriptSetCol(pd->psfp,
 			 R_RED(color)/255.0,
 			 R_GREEN(color)/255.0,
-			 R_BLUE(color)/255.0, pd->colormodel);
+			 R_BLUE(color)/255.0, pd, TRUE);
 	fprintf(pd->psfp, "\n");
 	pd->current.col = color;
     }
 }
 
-static void SetFill(int color, pDevDesc dd)
+static void SetFill(int color, pDevDesc dd, int colorspace_set)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     if(color != pd->current.fill) {
 	PostScriptSetFill(pd->psfp,
 			  R_RED(color)/255.0,
 			  R_GREEN(color)/255.0,
-			  R_BLUE(color)/255.0, pd->colormodel);
+			  R_BLUE(color)/255.0, pd, colorspace_set);
 	pd->current.fill = color;
     }
 }
@@ -3632,7 +3646,11 @@ static Rboolean PS_Open(pDevDesc dd, PostScriptDesc *pd)
    the state becomes unknown, notably after changing the clipping and
    at the start of a new page, so we have the following routine to
    invalidate the saved values, which in turn causes the parameters to
-   be set before usage. */
+   be set before usage.
+
+   Called at the start of each page and by PS_Clip (since that 
+   does a grestore).
+*/
 
 static void Invalidate(pDevDesc dd)
 {
@@ -3647,6 +3665,7 @@ static void Invalidate(pDevDesc dd)
     pd->current.lmitre = 0;
     pd->current.col = INVALID_COL;
     pd->current.fill = INVALID_COL;
+    pd->current.srgb = 0;
 }
 
 static void PS_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
@@ -3903,7 +3922,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 
     if (code) {
 	if(code & 2)
-	    SetFill(gc->fill, dd);
+	    SetFill(gc->fill, dd, code == 2);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
 	    SetLineStyle(gc, dd);
@@ -4053,7 +4072,7 @@ static void PS_Circle(double x, double y, double r,
 
     if (code) {
 	if(code & 2)
-	    SetFill(gc->fill, dd);
+	    SetFill(gc->fill, dd, code == 2);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
 	    SetLineStyle(gc, dd);
@@ -4096,6 +4115,8 @@ static void PS_Polygon(int n, double *x, double *y,
     /* code == 1, outline only */
     /* code == 2, fill only */
     /* code == 3, outline and fill */
+    /* code == 6, eofill only */
+    /* code == 7, outline and eofill */
 
     CheckAlpha(gc->fill, pd);
     CheckAlpha(gc->col, pd);
@@ -4103,9 +4124,8 @@ static void PS_Polygon(int n, double *x, double *y,
 
     if (code) {
 	if(code & 2) {
-	    SetFill(gc->fill, dd);
-	    if (pd->fillOddEven)
-		code |= 4;
+	    SetFill(gc->fill, dd, code == 2);
+	    if (pd->fillOddEven) code |= 4;
 	}
 	if(code & 1) {
 	    SetColor(gc->col, dd);
@@ -4147,9 +4167,8 @@ static void PS_Path(double *x, double *y,
 
     if (code) {
 	if(code & 2) {
-	    SetFill(gc->fill, dd);
-	    if (!winding)
-		code |= 4;
+	    SetFill(gc->fill, dd, code = 2);
+	    if (!winding) code |= 4;
 	}
 	if(code & 1) {
 	    SetColor(gc->col, dd);
@@ -4157,10 +4176,10 @@ static void PS_Path(double *x, double *y,
 	}
 	fprintf(pd->psfp, "np\n");
         index = 0;
-        for (i=0; i < npoly; i++) {
+        for (i = 0; i < npoly; i++) {
             fprintf(pd->psfp, " %.2f %.2f m\n", x[index], y[index]);
             index++;
-            for(j=1; j < nper[i]; j++) {
+            for(j = 1; j < nper[i]; j++) {
                 if (j % 100 == 0)
                     fprintf(pd->psfp, "%.2f %.2f lineto\n", 
                             x[index], y[index]);

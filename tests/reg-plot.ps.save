@@ -1691,14 +1691,15 @@ o
 -0.360 (x) tb gr
 30.96 304.84 (1:10) .5 90 t
 77.04 91.44 793.65 518.24 cl
-/bg { 1 1 0 srgb } def
+sRGB
+/bg { 1 1 0 setcolor } def
 np
  103.58 107.25 m
 147.45 0 l
 0 87.82 l
 -147.45 0 l
 cp p2
-/bg { 0 0 1 srgb } def
+/bg { 0 0 1 setcolor } def
 472.21 326.79 294.90 175.64 r p2
 ep
 %%Page: 8 8
@@ -1789,7 +1790,8 @@ o
 30.96 284.50 (V) 90 ta
 -0.960 (olume) tb gr
 77.04 91.44 793.65 518.24 cl
-/bg { 0 0 1 srgb } def
+sRGB
+/bg { 0 0 1 setcolor } def
 320.15 140.67 7.97 c p2
 204.95 140.67 8.26 c p2
 158.88 140.18 8.45 c p2
@@ -3754,7 +3756,7 @@ np
 106.82 488.03 m
 21.60 0 l
 o
-0 0.8039 0 srgb
+0 0.8039 0 setcolor
 2.25 setlinewidth
 [] 0 setdash
 np
@@ -3762,11 +3764,11 @@ np
 21.60 0 l
 o
 /bg { 0.5294 0.8078 0.9216 srgb } def
-1 0 0 srgb
+1 0 0 setcolor
 1.50 setlinewidth
 [] 0 setdash
 117.62 488.03 2.70 c p3
-0 0.8039 0 srgb
+0 0.8039 0 setcolor
 2.25 setlinewidth
 [] 0 setdash
 115.23 471.24 4.79 4.79 r p3
