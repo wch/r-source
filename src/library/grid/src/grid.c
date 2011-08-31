@@ -3436,7 +3436,7 @@ SEXP L_locator() {
      * Get a mouse click
      * Fails if user did not click mouse button 1
      */
-    if (dd->dev->locator(&x, &y, dd->dev)) {
+    if(dd->dev->locator && dd->dev->locator(&x, &y, dd->dev)) {
 	REAL(answer)[0] = fromDeviceX(x, GE_INCHES, dd);
 	REAL(answer)[1] = fromDeviceY(y, GE_INCHES, dd);
     } else {

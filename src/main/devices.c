@@ -626,7 +626,7 @@ SEXP attribute_hidden do_devcap(SEXP call, SEXP op, SEXP args, SEXP env)
     /* These will be NULL if the device does not define them */
     INTEGER(ans)[++i] = (dd->raster != NULL) ? dd->haveRaster : 1;
     INTEGER(ans)[++i] = (dd->cap != NULL) ? dd->haveCapture : 1;
-    INTEGER(ans)[++i] = dd->haveLocator;
+    INTEGER(ans)[++i] = (dd->locator != NULL) ? dd->haveLocator : 1;
 
     UNPROTECT(1);
     return ans;

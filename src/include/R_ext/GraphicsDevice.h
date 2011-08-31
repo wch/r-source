@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-10 The R Development Core Team.
+ *  Copyright (C) 2001-11 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -277,6 +277,7 @@ struct _DevDesc {
      *
      * static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
      *
+     * As from R 2.14.0 this can be omitted or set to NULL.
      */
 #if R_USE_PROTOTYPES
     Rboolean (*locator)(double *x, double *y, pDevDesc dd);
@@ -339,6 +340,7 @@ struct _DevDesc {
      *
      * static void X11_Mode(int mode, pDevDesc dd);
      *
+     * As from R 2.14.0 this can be omitted or set to NULL.
      */
 #if R_USE_PROTOTYPES
     void (*mode)(int mode, pDevDesc dd);

@@ -2942,7 +2942,6 @@ static void PS_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void PS_Close(pDevDesc dd);
 static void PS_Deactivate(pDevDesc dd);
-static Rboolean PS_Locator(double *x, double *y, pDevDesc dd);
 static void PS_Line(double x1, double y1, double x2, double y2,
 		    const pGEcontext gc,
 		    pDevDesc dd);
@@ -2950,7 +2949,6 @@ static void PS_MetricInfo(int c,
 			  const pGEcontext gc,
 			  double* ascent, double* descent,
 			  double* width, pDevDesc dd);
-static void PS_Mode(int mode, pDevDesc dd);
 static void PS_NewPage(const pGEcontext gc,
 		       pDevDesc dd);
 static Rboolean PS_Open(pDevDesc, PostScriptDesc*);
@@ -2972,7 +2970,6 @@ static void PS_Raster(unsigned int *raster, int w, int h,
 		       double x, double y, double width, double height,
 		       double rot, Rboolean interpolate,
 		       const pGEcontext gc, pDevDesc dd);
-static SEXP PS_Cap(pDevDesc dd);
 static void PS_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
@@ -3441,13 +3438,12 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->rect	      = PS_Rect;
     dd->path     = PS_Path;
     dd->raster     = PS_Raster;
-    dd->cap        = PS_Cap;
     dd->circle     = PS_Circle;
     dd->line	      = PS_Line;
     dd->polygon    = PS_Polygon;
     dd->polyline   = PS_Polyline;
-    dd->locator    = PS_Locator;
-    dd->mode	      = PS_Mode;
+    /* dd->locator    = PS_Locator;
+       dd->mode	      = PS_Mode; */
     dd->hasTextUTF8   = TRUE;
     dd->textUTF8      = PS_TextUTF8;
     dd->strWidthUTF8  = PS_StrWidthUTF8;
@@ -3455,8 +3451,6 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->haveTransparency = 1;
     dd->haveTransparentBg = 2;
     dd->haveRaster = 3; /* non-missing colours */
-    dd->haveCapture = 1;
-    dd->haveLocator = 1;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -4052,12 +4046,6 @@ static void PS_Raster(unsigned int *raster, int w, int h,
     }
 }
 
-static SEXP PS_Cap(pDevDesc dd)
-{
-    warning(_("%s not available for this device"), "Raster capture");
-    return R_NilValue;
-}
-
 static void PS_Circle(double x, double y, double r,
 		      const pGEcontext gc,
 		      pDevDesc dd)
@@ -4475,16 +4463,6 @@ static void PS_TextUTF8(double x, double y, const char *str,
 }
 
 
-static Rboolean PS_Locator(double *x, double *y, pDevDesc dd)
-{
-    return FALSE;
-}
-
-static void PS_Mode(int mode, pDevDesc dd)
-{
-}
-
-
 
 /***********************************************************************
 
@@ -4653,7 +4631,6 @@ static void XFig_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void XFig_Close(pDevDesc dd);
 static void XFig_Deactivate(pDevDesc dd);
-static Rboolean XFig_Locator(double *x, double *y, pDevDesc dd);
 static void XFig_Line(double x1, double y1, double x2, double y2,
 		      const pGEcontext gc,
 		      pDevDesc dd);
@@ -4661,7 +4638,6 @@ static void XFig_MetricInfo(int c,
 			    const pGEcontext gc,
 			    double* ascent, double* descent,
 			    double* width, pDevDesc dd);
-static void XFig_Mode(int mode, pDevDesc dd);
 static void XFig_NewPage(const pGEcontext gc, pDevDesc dd);
 static void XFig_Polygon(int n, double *x, double *y,
 			 const pGEcontext gc,
@@ -4672,16 +4648,6 @@ static void XFig_Polyline(int n, double *x, double *y,
 static void XFig_Rect(double x0, double y0, double x1, double y1,
 		      const pGEcontext gc,
 		      pDevDesc dd);
-static void XFig_Path(double *x, double *y,
-                      int npoly, int *nper,
-                      Rboolean winding,
-                      const pGEcontext gc,
-                      pDevDesc dd);
-static void XFig_Raster(unsigned int *raster, int w, int h,
-		       double x, double y, double width, double height,
-		       double rot, Rboolean interpolate,
-		       const pGEcontext gc, pDevDesc dd);
-static SEXP XFig_Cap(pDevDesc dd);
 static void XFig_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
@@ -4966,15 +4932,15 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->strWidth   = XFig_StrWidth;
     dd->metricInfo = XFig_MetricInfo;
     dd->rect	   = XFig_Rect;
-    dd->path       = XFig_Path;
-    dd->raster     = XFig_Raster;
-    dd->cap        = XFig_Cap;
+    /* dd->path       = XFig_Path;
+       dd->raster     = XFig_Raster;
+       dd->cap        = XFig_Cap; */
     dd->circle     = XFig_Circle;
     dd->line	   = XFig_Line;
     dd->polygon    = XFig_Polygon;
     dd->polyline   = XFig_Polyline;
-    dd->locator    = XFig_Locator;
-    dd->mode	   = XFig_Mode;
+    /* dd->locator    = XFig_Locator;
+       dd->mode	   = XFig_Mode; */
     dd->hasTextUTF8 = FALSE;
     dd->useRotatedTextInContour = FALSE; /* maybe */
     dd->haveTransparency = 1;
@@ -5168,30 +5134,6 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
     fprintf(fp, "  %d %d\n", ix0, iy0);
 }
 
-static void XFig_Path(double *x, double *y,
-                      int npoly, int *nper,
-                      Rboolean winding,
-		      const pGEcontext gc, pDevDesc dd)
-{
-    warning(_("%s not yet implemented for this device"), "Path rendering");
-}
-
-static void XFig_Raster(unsigned int *raster, int w, int h,
-		      double x, double y,
-		      double width, double height,
-		      double rot,
-		      Rboolean interpolate,
-		      const pGEcontext gc, pDevDesc dd)
-{
-    warning(_("%s not yet implemented for this device"), "Raster rendering");
-}
-
-static SEXP XFig_Cap(pDevDesc dd)
-{
-    warning(_("%s not available for this device"), "Raster capture");
-    return R_NilValue;
-}
-
 static void XFig_Circle(double x, double y, double r,
 			const pGEcontext gc,
 			pDevDesc dd)
@@ -5375,15 +5317,6 @@ static void XFig_Text(double x, double y, const char *str,
     }
 }
 
-static Rboolean XFig_Locator(double *x, double *y, pDevDesc dd)
-{
-    return FALSE;
-}
-
-static void XFig_Mode(int mode, pDevDesc dd)
-{
-}
-
 static double XFig_StrWidth(const char *str,
 			    const pGEcontext gc,
 			    pDevDesc dd)
@@ -5536,7 +5469,6 @@ static void PDF_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void PDF_Close(pDevDesc dd);
 static void PDF_Deactivate(pDevDesc dd);
-static Rboolean PDF_Locator(double *x, double *y, pDevDesc dd);
 static void PDF_Line(double x1, double y1, double x2, double y2,
 		     const pGEcontext gc,
 		     pDevDesc dd);
@@ -5544,7 +5476,6 @@ static void PDF_MetricInfo(int c,
 			   const pGEcontext gc,
 			   double* ascent, double* descent,
 			   double* width, pDevDesc dd);
-static void PDF_Mode(int mode, pDevDesc dd);
 static void PDF_NewPage(const pGEcontext gc, pDevDesc dd);
 static void PDF_Polygon(int n, double *x, double *y,
 			const pGEcontext gc,
@@ -5564,7 +5495,6 @@ static void PDF_Raster(unsigned int *raster, int w, int h,
 		       double x, double y, double width, double height,
 		       double rot, Rboolean interpolate,
 		       const pGEcontext gc, pDevDesc dd);
-static SEXP PDF_Cap(pDevDesc dd);
 static void PDF_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
@@ -6245,13 +6175,12 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->rect	      = PDF_Rect;
     dd->path	      = PDF_Path;
     dd->raster	      = PDF_Raster;
-    dd->cap	      = PDF_Cap;
     dd->circle     = PDF_Circle;
     dd->line	      = PDF_Line;
     dd->polygon    = PDF_Polygon;
     dd->polyline   = PDF_Polyline;
-    dd->locator    = PDF_Locator;
-    dd->mode	      = PDF_Mode;
+    /* dd->locator    = PDF_Locator;
+       dd->mode	      = PDF_Mode; */
     dd->hasTextUTF8   = TRUE;
     dd->textUTF8       = PDF_TextUTF8;
     dd->strWidthUTF8   = PDF_StrWidthUTF8;
@@ -6259,8 +6188,6 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->haveTransparency = 2;
     dd->haveTransparentBg = 3;
     dd->haveRaster = 2;
-    dd->haveCapture = 1;
-    dd->haveLocator = 1;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -7247,7 +7174,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 #ifdef SIMPLE_RASTER
 /* Maybe reincoporate this simpler approach as an alternative
  * (for opaque raster images) because it has the advantage of
- * NOT keepig the raster in memory until the PDF file is complete
+ * NOT keeping the raster in memory until the PDF file is complete
  */
 static void PDF_Raster(unsigned int *raster,
 		       int w, int h,
@@ -7348,12 +7275,6 @@ static void PDF_Raster(unsigned int *raster,
 }
 
 #endif
-
-static SEXP PDF_Cap(pDevDesc dd)
-{
-    warning(_("%s not available for this device"), "Raster capture");
-    return R_NilValue;
-}
 
 /* r is in device coords */
 static void PDF_Circle(double x, double y, double r,
@@ -7898,16 +7819,6 @@ static void PDF_TextUTF8(double x, double y, const char *str,
 			 pDevDesc dd)
 {
     PDF_Text0(x, y, str, CE_UTF8, rot, hadj, gc, dd);
-}
-
-
-static Rboolean PDF_Locator(double *x, double *y, pDevDesc dd)
-{
-    return FALSE;
-}
-
-static void PDF_Mode(int mode, pDevDesc dd)
-{
 }
 
 static FontMetricInfo

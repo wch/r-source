@@ -91,16 +91,6 @@ static void null_Deactivate(pDevDesc dd)
 {
 }
 
-static Rboolean null_Locator(double *x, double *y, pDevDesc dd)
-{
-    return FALSE;
-}
-
-
-static void null_Mode(int mode, pDevDesc dd)
-{
-}
-
 static Rboolean
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
@@ -393,8 +383,8 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
     dd->polygon = Cairo_Polygon;
     dd->path = Cairo_Path;
     dd->raster = Cairo_Raster;
-    dd->locator = null_Locator;
-    dd->mode = null_Mode;
+    /* dd->locator = null_Locator;
+       dd->mode = null_Mode; */
 #ifdef HAVE_PANGOCAIRO
     dd->metricInfo = PangoCairo_MetricInfo;
     dd->strWidth = dd->strWidthUTF8 = PangoCairo_StrWidth;
@@ -414,8 +404,8 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
 
     dd->haveTransparency = 2;
     dd->haveRaster = 2;
-    dd->haveCapture = 1;
-    dd->haveLocator = 1;
+    /* dd->haveCapture = 1;
+       dd->haveLocator = 1; */
     switch(xd->type) {
     case PDF:
     case SVG:

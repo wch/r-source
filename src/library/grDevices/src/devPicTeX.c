@@ -2,7 +2,7 @@
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-10  The R Development Core Team
+ *  Copyright (C) 2001-11  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -167,7 +167,6 @@ static void PicTeX_Clip(double x0, double x1, double y0, double y1,
 			pDevDesc dd);
 static void PicTeX_Close(pDevDesc dd);
 static void PicTeX_Deactivate(pDevDesc dd);
-static Rboolean PicTeX_Locator(double *x, double *y, pDevDesc dd);
 static void PicTeX_Line(double x1, double y1, double x2, double y2,
 			const pGEcontext gc,
 			pDevDesc dd);
@@ -175,24 +174,13 @@ static void PicTeX_MetricInfo(int c,
 			      const pGEcontext gc,
 			      double* ascent, double* descent,
 			      double* width, pDevDesc dd);
-static void PicTeX_Mode(int mode, pDevDesc dd);
 static void PicTeX_NewPage(const pGEcontext gc, pDevDesc dd);
-static void PicTeX_Path(double *x, double *y, 
-                        int npoly, int *nper,
-                        Rboolean winding,
-                        const pGEcontext gc,
-                        pDevDesc dd);
 static void PicTeX_Polygon(int n, double *x, double *y, 
 			   const pGEcontext gc,
 			   pDevDesc dd);
 static void PicTeX_Rect(double x0, double y0, double x1, double y1,
 			const pGEcontext gc,
 			pDevDesc dd);
-static void PicTeX_Raster(unsigned int *raster, int w, int h,
-                       double x, double y, double width, double height,
-                       double rot, Rboolean interpolate,
-                       const pGEcontext gc, pDevDesc dd);
-static SEXP PicTeX_Cap(pDevDesc dd);
 static void PicTeX_Size(double *left, double *right,
 			double *bottom, double *top,
 			pDevDesc dd);
@@ -530,29 +518,6 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
     PicTeX_Polygon(4, x, y, gc, dd);
 }
 
-static void PicTeX_Path(double *x, double *y, 
-                        int npoly, int *nper,
-                        Rboolean winding,
-                        const pGEcontext gc, pDevDesc dd)
-{
-    warning(_("%s not available for this device"), "Path rendering");
-}
-
-static void PicTeX_Raster(unsigned int *raster, int w, int h,
-                      double x, double y, 
-                      double width, double height,
-                      double rot, 
-                      Rboolean interpolate,
-                      const pGEcontext gc, pDevDesc dd)
-{
-    warning(_("%s not available for this device"), "Raster rendering");
-}
-
-static SEXP PicTeX_Cap(pDevDesc dd)
-{
-    warning(_("%s not available for this device"), "Raster capture");
-    return R_NilValue;
-}
 
 static void PicTeX_Circle(double x, double y, double r,
 			  const pGEcontext gc,
@@ -665,17 +630,6 @@ static void PicTeX_Text(double x, double y, const char *str,
     fprintf(ptd->texfp," at %.2f %.2f\n", x, y);
 }
 
-/* Pick */
-static Rboolean PicTeX_Locator(double *x, double *y, pDevDesc dd)
-{
-    return FALSE;
-}
-
-
-static void PicTeX_Mode(int mode, pDevDesc dd)
-{
-}
-
 static
 Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename, 
 			    const char *bg, const char *fg,
@@ -706,14 +660,15 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     dd->text = PicTeX_Text;
     dd->strWidth = PicTeX_StrWidth;
     dd->rect = PicTeX_Rect;
-    dd->raster     = PicTeX_Raster;
-    dd->cap        = PicTeX_Cap;
+    /* Not implemented
+      dd->raster     = PicTeX_Raster;
+      dd->cap        = PicTeX_Cap; */
     dd->circle = PicTeX_Circle;
-    dd->path = PicTeX_Path;
+    /* dd->path = PicTeX_Path; not implemented */
     dd->polygon = PicTeX_Polygon;
     dd->polyline = PicTeX_Polyline;
-    dd->locator = PicTeX_Locator;
-    dd->mode = PicTeX_Mode;
+    /* dd->locator = PicTeX_Locator;
+       dd->mode = PicTeX_Mode; */
     dd->metricInfo = PicTeX_MetricInfo;
     dd->hasTextUTF8 = FALSE;
     dd->useRotatedTextInContour = FALSE;

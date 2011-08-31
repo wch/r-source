@@ -1954,7 +1954,7 @@ void GEMode(int mode, pGEDevDesc dd)
 {
     if (NoDevices())
 	error(_("no graphics device is active"));
-    dd->dev->mode(mode, dd->dev);
+    if(dd->dev->mode) dd->dev->mode(mode, dd->dev);
 }
 
 /****************************************************************
