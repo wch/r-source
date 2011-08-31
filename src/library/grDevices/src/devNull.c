@@ -66,17 +66,6 @@ static void NULL_Path(double *x, double *y,
                       const pGEcontext gc,
                       pDevDesc dev) {
 }
-static void NULL_Raster(unsigned int *raster, int w, int h,
-                        double x, double y,
-                        double width, double height,
-                        double rot,
-                        Rboolean interpolate,
-                        const pGEcontext gc, pDevDesc dd) {
-}
-static SEXP NULL_Cap(pDevDesc dd)
-{
-    return R_NilValue;
-}
 static void NULL_Polyline(int n, double *x, double *y,
                           const pGEcontext gc,
                           pDevDesc dev) {
@@ -98,17 +87,8 @@ static void NULL_Close(pDevDesc dev) {
 static Rboolean NULL_Open(pDevDesc dev) {
     return TRUE;
 }
-static void NULL_Activate(pDevDesc dev) {
-}
 static void NULL_Clip(double x0, double x1, double y0, double y1,
                       pDevDesc dev) {
-}
-static void NULL_Deactivate(pDevDesc dev) {
-}
-static void NULL_Mode(int mode, pDevDesc dev) {
-}
-static Rboolean NULL_Locator(double *x, double *y, pDevDesc dev) {
-    return FALSE;
 }
 static void NULL_MetricInfo(int c, const pGEcontext gc,
                             double* ascent, double* descent,
@@ -148,8 +128,6 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
      * Device functions
      */
     dev->close = NULL_Close;
-    dev->activate = NULL_Activate;
-    dev->deactivate = NULL_Deactivate;
     dev->size = NULL_Size;
     dev->newPage = NULL_NewPage;
     dev->clip = NULL_Clip;
@@ -161,10 +139,6 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
     dev->polyline = NULL_Polyline;
     dev->polygon = NULL_Polygon;
     dev->path = NULL_Path;
-    dev->raster = NULL_Raster;
-    dev->cap = NULL_Cap;
-    dev->locator = NULL_Locator;
-    dev->mode = NULL_Mode;
     dev->metricInfo = NULL_MetricInfo;
     dev->hasTextUTF8 = FALSE;
     dev->useRotatedTextInContour = FALSE;
@@ -204,6 +178,8 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
     dev->canHAdj = 2;
     dev->canChangeGamma = FALSE;
     dev->displayListOn = FALSE;
+    dev->haveTransparency = 1;
+    dev->haveTransparentBg = 1;
 
     return TRUE;
 }

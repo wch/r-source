@@ -248,7 +248,7 @@ int selectDevice(int devNum)
 
 	if (!NoDevices()) {
 	    pGEDevDesc oldd = GEcurrentDevice();
-	    oldd->dev->deactivate(oldd->dev);
+	    if(oldd->dev->deactivate) oldd->dev->deactivate(oldd->dev);
 	}
 
 	R_CurrentDevice = devNum;
@@ -260,7 +260,7 @@ int selectDevice(int devNum)
 
 	gdd = GEcurrentDevice(); /* will start a device if current is null */
 	if (!NoDevices()) /* which it always will be */
-	    gdd->dev->activate(gdd->dev);
+	    if(gdd->dev->activate) gdd->dev->activate(gdd->dev);
 	return devNum;
     }
     else

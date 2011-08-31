@@ -2934,14 +2934,12 @@ PostScriptTextKern(FILE *fp, double x, double y,
 
 /* Device Driver Actions */
 
-static void PS_Activate(pDevDesc dd);
 static void PS_Circle(double x, double y, double r,
 		      const pGEcontext gc,
 		      pDevDesc dd);
 static void PS_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void PS_Close(pDevDesc dd);
-static void PS_Deactivate(pDevDesc dd);
 static void PS_Line(double x1, double y1, double x2, double y2,
 		    const pGEcontext gc,
 		    pDevDesc dd);
@@ -3427,8 +3425,6 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     PS_Open(dd, pd);
 
     dd->close      = PS_Close;
-    dd->activate   = PS_Activate;
-    dd->deactivate = PS_Deactivate;
     dd->size     = PS_Size;
     dd->newPage    = PS_NewPage;
     dd->clip	      = PS_Clip;
@@ -3767,9 +3763,6 @@ static void PS_Close(pDevDesc dd)
     pd->encodings = NULL;
     free(pd);
 }
-
-static void PS_Activate(pDevDesc dd) {}
-static void PS_Deactivate(pDevDesc dd) {}
 
 static FontMetricInfo
 *CIDsymbolmetricInfo(const char *family, PostScriptDesc *pd)
@@ -4623,14 +4616,12 @@ static int XF_SetLty(int lty)
 
 /* Device Driver Actions */
 
-static void XFig_Activate(pDevDesc dd);
 static void XFig_Circle(double x, double y, double r,
 			const pGEcontext gc,
 			pDevDesc dd);
 static void XFig_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void XFig_Close(pDevDesc dd);
-static void XFig_Deactivate(pDevDesc dd);
 static void XFig_Line(double x1, double y1, double x2, double y2,
 		      const pGEcontext gc,
 		      pDevDesc dd);
@@ -4923,8 +4914,6 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     XFig_Open(dd, pd);
 
     dd->close      = XFig_Close;
-    dd->activate   = XFig_Activate;
-    dd->deactivate = XFig_Deactivate;
     dd->size       = XFig_Size;
     dd->newPage    = XFig_NewPage;
     dd->clip	   = XFig_Clip;
@@ -5097,9 +5086,6 @@ static void XFig_Close(pDevDesc dd)
     fclose(pd->psfp);
     free(pd);
 }
-
-static void XFig_Activate(pDevDesc dd) {}
-static void XFig_Deactivate(pDevDesc dd) {}
 
 static void XFig_Rect(double x0, double y0, double x1, double y1,
 		      const pGEcontext gc,
@@ -5461,14 +5447,12 @@ PDFDesc;
 /* Device Driver Actions */
 
 static Rboolean PDF_Open(pDevDesc, PDFDesc*);
-static void PDF_Activate(pDevDesc dd);
 static void PDF_Circle(double x, double y, double r,
 		       const pGEcontext gc,
 		       pDevDesc dd);
 static void PDF_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void PDF_Close(pDevDesc dd);
-static void PDF_Deactivate(pDevDesc dd);
 static void PDF_Line(double x1, double y1, double x2, double y2,
 		     const pGEcontext gc,
 		     pDevDesc dd);
@@ -6164,8 +6148,6 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     PDF_Open(dd, pd); /* errors on failure */
 
     dd->close      = PDF_Close;
-    dd->activate   = PDF_Activate;
-    dd->deactivate = PDF_Deactivate;
     dd->size     = PDF_Size;
     dd->newPage    = PDF_NewPage;
     dd->clip	      = PDF_Clip;
@@ -7142,9 +7124,6 @@ static void PDF_Close(pDevDesc dd)
     killRasterArray(pd->rasters, pd->maxRasters);
     PDFcleanup(6, pd);
 }
-
-static void PDF_Activate(pDevDesc dd) {}
-static void PDF_Deactivate(pDevDesc dd) {}
 
 static void PDF_Rect(double x0, double y0, double x1, double y1,
 		     const pGEcontext gc,
