@@ -57,11 +57,18 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                 on.exit(unlink(tmpf))
                 op <- options("warn")
                 options(warn = -1)
+                
+                ## Two kinds of errors can happen:  PACKAGES.gz may not exist,
+                ## or a junk error page that is not a valid dcf file may be 
+                ## returned.  Handle both...
+                
                 ## This is a binary file
                 z <- tryCatch(download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
                                             destfile = tmpf, method = method,
                                             cacheOK = FALSE, quiet = TRUE, mode = "wb"),
-                         error = identity)
+                              error = identity)
+		if(!inherits(z, "error")) 
+		    z <- res0 <- tryCatch(read.dcf(file = tmpf), error = identity)
                 if(inherits(z, "error")) {
                     ## read.dcf is going to interpret CRLF as LF, so use
                     ## binary mode to avoid CRCRLF.
@@ -70,14 +77,15 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                                                 cacheOK = FALSE, quiet = TRUE,
                                                 mode = "wb"),
                              error = identity)
-                }
-                options(op)
-                if(inherits(z, "error")) {
-                    warning(gettextf("unable to access index for repository %s", repos),
-                            call. = FALSE, immediate. = TRUE, domain = NA)
-                    next
-                }
-                res0 <- read.dcf(file = tmpf)
+		    options(op)
+		    if(inherits(z, "error")) {
+			warning(gettextf("unable to access index for repository %s", repos),
+				call. = FALSE, immediate. = TRUE, domain = NA)
+			next
+		    }
+		    res0 <- read.dcf(file = tmpf)
+		} else 
+		    options(op)
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 saveRDS(res0, dest, compress = TRUE)
                 unlink(tmpf)

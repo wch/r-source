@@ -365,6 +365,10 @@
       \item \code{read.dcf()} and \code{write.dcf()} gain a
       \code{keep.white} argument to indicate fields where whitespace
       should be kept as is.
+      
+      \item \code{available.packages()} now works around servers that
+      fail to return an error when \file{PACKAGES.gz} does not exist.
+      (Patch submitted by Seth Schommer.)
     }
   }
 
