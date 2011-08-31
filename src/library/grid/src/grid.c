@@ -2939,7 +2939,7 @@ SEXP L_cap()
      * to be BY COLUMN (though the dimensions are correct) */
     SEXP image, idim;
     
-    PROTECT(raster = GECap(dd));    
+    PROTECT(raster = GECap(dd));
     /* Non-complying devices will return NULL */
     if (isNull(raster)) {
         image = raster;

@@ -416,7 +416,8 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->canChangeGamma= FALSE;
     dev->displayListOn = (def->flags & QDFLAG_DISPLAY_LIST) ? TRUE : FALSE;
 
-    dev->haveTransparency = 4; /* FIXME: depends on underlying device */
+    dev->haveTransparency = 2;
+    dev->haveTransparentBg = 3; /* FIXME: depends on underlying device */
     dev->haveRaster = 2;
     dev->haveCapture = (def->cap) ? 2 : 1;
     dev->haveLocator = (def->locatePoint) ? 2 : 1;

@@ -3233,17 +3233,17 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 
     dd->haveRaster = 2;  /* full support */
     dd->haveCapture = dd->haveLocator = (xd->kind == SCREEN) ? 2 : 1;
+    dd->haveTransparency = 4;
     switch(xd->kind) {
     case SCREEN:
+	dd->haveTransparentBg = 3;
     case PRINTER:
     case METAFILE:
-	dd->haveTransparency = 4;
-	break;
     case PNG:
-	dd->haveTransparency = 2;
+	dd->haveTransparentBg = 2;
 	break;
     default: /* JPEG, BMP, TIFF */
-	dd->haveTransparency = 1;
+	dd->haveTransparentBg = 1;
 	break;
     }
     /* set graphics parameters that must be set by device driver */

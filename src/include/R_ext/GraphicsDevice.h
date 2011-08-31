@@ -642,7 +642,8 @@ struct _DevDesc {
     /* added in 2.14.0, for dev.capabilities.
        In all cases 0 means NA (unset).
     */
-    int haveTransparency; /* 1 = none, 2 = bg, 3 = fully, 4 = alpha */
+    int haveTransparency; /* 1 = no, 2 = yes */
+    int haveTransparentBg; /* 1 = no, 2 = fully, 3 = semi */
     int haveRaster; /* 1 = no, 2 = yes, 3 = except for missing values */
     int haveCapture, haveLocator;  /* 1 = no, 2 = yes */
 

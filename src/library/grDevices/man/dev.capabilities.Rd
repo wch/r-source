@@ -21,16 +21,23 @@ dev.capabilities(what = NULL)
   The capabilities have to be specified by the author of the graphics
   device, unless they can be deduced from missing hooks.  Thus they will
   often by returned as \code{NA}, and may reflect the maximal
-  capabilities of the device.
+  capabilities of the underlying device where several output formats are
+  supported by one device.
+
+  Most recent devices support semi-transparent colours provided the
+  graphics format does (which PostScript does not).  On the other hand,
+  relatively few graphics formats support (fully or semi-) transparent
+  backgrounds: generally the latter is found only in PDF and PNG plots.
 }
 \value{
   A list with some of all of the following components, any of which may
   be \code{NA}:
-  \item{transparency}{character:  To what extend does the device support
-    (semi)-transparent colours?  Possible values as \code{"none"},
-    \code{"bg"} (fully transparent backgrounds), \code{"fully"} (fully
-    transparent colours) and \code{"alpha"} (full support for
-    semi-transparent colours, including backgrounds).}
+  \item{transparency}{logical:  Does the device support
+    (semi)-transparent colours?}
+  \item{transparentBackground}{character:  Does the device support
+    (semi)-transparent backgrounds?  Possible values are \code{"no"},
+    \code{"fully"} (only full transparency) and \code{"semi"}
+    (semi-transparent background colours are supported).}
   \item{rasterImage}{character: To what extent does the device support
     raster images as used by \code{\link{rasterImage}} and
     \code{\link{grid.raster}}?  Possible values \code{"no"}, \code{"yes"} and
