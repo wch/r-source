@@ -141,7 +141,7 @@ struct _DevDesc {
      * Event handling entries
      ********************************************************/
 
-    /* The next 4 are not currently used, but are kept for back compatibility */
+    /* Used in do_setGraphicsEventEnv */
 
     Rboolean canGenMouseDown; /* can the device generate mousedown events */
     Rboolean canGenMouseMove; /* can the device generate mousemove events */
@@ -438,6 +438,10 @@ struct _DevDesc {
      *
      * 'winding' says whether to fill using the nonzero 
      * winding rule or the even-odd rule
+     *
+     * Added 2010-06-27
+     *
+     * As from R 2.13.2 this can be left unimplemented as NULL.
      */
 #if R_USE_PROTOTYPES
     void (*path)(double *x, double *y, 
@@ -459,6 +463,8 @@ struct _DevDesc {
      *
      * 'rot' is in degrees (as per device_Text), with positive
      * rotation anticlockwise from the positive x-axis.
+     *
+     * As from R 2.13.2 this can be left unimplemented as NULL.
      */
 #if R_USE_PROTOTYPES
     void (*raster)(unsigned int *raster, int w, int h,
@@ -478,6 +484,10 @@ struct _DevDesc {
      *
      * This will only make sense for raster devices and can 
      * probably only be implemented for screen devices.
+     *
+     * added 2010-06-27
+     *
+     * As from R 2.13.2 this can be left unimplemented as NULL.
      */
 #if R_USE_PROTOTYPES
     SEXP (*cap)(pDevDesc dd);
@@ -501,6 +511,8 @@ struct _DevDesc {
      *
      * R_GE_gcontext parameters that should be honoured (if possible):
      *   col, fill, gamma, lty, lwd
+     *
+     * As from R 2.13.2 this can be left unimplemented as NULL.
      */
 #if R_USE_PROTOTYPES
     void (*size)(double *left, double *right, double *bottom, double *top,
@@ -574,6 +586,8 @@ struct _DevDesc {
        FALSE if it wants the engine to do so. 
 
        There is an example in the windows() device.
+
+       Can be left unimplemented as NULL.
     */
 #if R_USE_PROTOTYPES
     Rboolean (*newFrameConfirm)(pDevDesc dd);
@@ -611,7 +625,7 @@ struct _DevDesc {
 
     /* Added in 2.12.0:  Changed graphics event handling. */
     
-    SEXP eventEnv;		/* This is an environment holding  event handlers. */
+    SEXP eventEnv;   /* This is an environment holding event handlers. */
     /*
      * eventHelper(dd, 1) is called by do_getGraphicsEvent before looking for a 
      * graphics event.  It will then call R_ProcessEvents() and eventHelper(dd, 2)
@@ -621,6 +635,8 @@ struct _DevDesc {
      * An example is ...
      *
      * static SEXP GA_eventHelper(pDevDesc dd, int code);
+
+     * Can be left unimplemented as NULL
      */
 #if R_USE_PROTOTYPES
     void (*eventHelper)(pDevDesc dd, int code);
