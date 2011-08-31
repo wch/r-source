@@ -96,16 +96,16 @@ image(x, \dots)
   printed layout of a matrix.
 
   Images for large \code{z} on a regular grid are rendered more
-  efficiently with \code{useRaster} enabled and can prevent rare
+  efficiently with \code{useRaster = TRUE} and can prevent rare
   anti-aliasing artifacts, but may not be supported by all graphics
-  devices.  Some devices (such as \code{\link{postscript}}) which do not
-  support semi-transparent colours will emit missing values as white
-  rather than transparent.  The graphics files in PDF and
-  PostScript can be much smaller.
+  devices.  Some devices (such as \code{\link{postscript}} and
+  \code{\link{X11}(type = "Xlib")}) which do not support semi-transparent
+  colours may emit missing values as white rather than transparent.  The
+  graphics files in PDF and PostScript can be much smaller under this
+  option.
 }
 \note{
-  Based on a function by Thomas Lumley
-  \email{tlumley@u.washington.edu}.
+  Based on a function by Thomas Lumley.
 }
 \seealso{
   \code{\link{filled.contour}} or \code{\link{heatmap}} which can
