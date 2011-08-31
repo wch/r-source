@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.path.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.path}
@@ -46,14 +46,15 @@ grid.path(\dots)
 }
 \details{
   Both functions create a path grob (a graphical object describing a
-  path), but only \code{grid.path}
-  draws the path (and then only if \code{draw} is \code{TRUE}).
+  path), but only \code{grid.path} draws the path (and then only if
+  \code{draw} is \code{TRUE}).
 
-  A path is like a polygon except that the former
-  can contain holes, as interpreted by the fill rule; these fill a region if
-  the path border encircles it an odd or non-zero number of times,
-  respectively.
-
+  A path is like a polygon except that the former can contain holes, as
+  interpreted by the fill rule; these fill a region if the path border
+  encircles it an odd or non-zero number of times, respectively.
+  
+  Not all graphics devices support this function: for example
+  \code{xfig} and \code{pictex} do not.
 }
 \author{Paul Murrell}
 \seealso{

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/path.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{polypath}
@@ -46,12 +46,10 @@ polypath(x, y = NULL,
   the first point.
  
   The coordinates can contain missing values.  The behaviour is similar
-  to that of \code{\link{polygon}}, except
-  that instead of breaking a polygon into several polygons, \code{NA}
-  values break the path into several sub-paths
-  (including closing the last point to the first point in each
-  sub-path).  See
-  the examples below.
+  to that of \code{\link{polygon}}, except that instead of breaking a
+  polygon into several polygons, \code{NA} values break the path into
+  several sub-paths (including closing the last point to the first point
+  in each sub-path).  See the examples below.
 
   The distinction between a path and a polygon is that the former
   can contain holes, as interpreted by the fill rule; these fill a region if
@@ -60,6 +58,9 @@ polypath(x, y = NULL,
   
   Hatched shading (as implemented for \code{polygon()}) is not
   (currently) supported.
+  
+  Not all graphics devices support this function: for example
+  \code{xfig} and \code{pictex} do not.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
