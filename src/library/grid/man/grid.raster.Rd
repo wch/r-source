@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.record.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.raster}
@@ -82,7 +82,9 @@ rasterGrob(image,
   Paul Murrell
 }
 \seealso{
-\code{\link{as.raster}}.
+  \code{\link{as.raster}}.
+
+  \code{\link{dev.capabilities}} to see if it is supported.
 }
 \examples{
 redGradient <- matrix(hcl(0, 80, seq(50, 80, 10)),

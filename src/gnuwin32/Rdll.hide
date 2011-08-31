@@ -652,6 +652,7 @@
  do_deparseRd
  do_deriv
  do_detach
+ do_devcap
  do_devcontrol
  do_devcopy
  do_devcur

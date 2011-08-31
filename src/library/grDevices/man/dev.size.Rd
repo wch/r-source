@@ -1,4 +1,4 @@
-% File src/library/grDevices/man/devSet.Rd
+% File src/library/grDevices/man/dev.size.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2008 R Core Development Team
 % Distributed under GPL 2 or later

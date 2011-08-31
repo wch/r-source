@@ -446,6 +446,11 @@
       \item \code{pdf()} in the default sRGB colorspace outputs many
       fewer changes of colorspace, which may speed up rendering in some
       viewing applications.
+
+      \item There is a new function \code{dev.capabilities()} to query
+      the capabilities of the current device.  The initial set of
+      capabilities are support for (semi-)transparent colours, raster
+      images, image capture and the locator.
     }
   }
 

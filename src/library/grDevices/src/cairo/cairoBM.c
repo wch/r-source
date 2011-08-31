@@ -412,6 +412,24 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
 #endif
     dd->useRotatedTextInContour = FALSE;
 
+    dd->haveRaster = 2;
+    dd->haveCapture = 1;
+    dd->haveLocator = 1;
+    switch(xd->type) {
+    case PDF:
+    case SVG:
+    case PNG:
+    case PNGdirect:
+	dd->haveTransparency = 4;
+	break;
+    case PS:
+	dd->haveTransparency = 2;
+	dd->haveRaster = 3;
+	break;
+    default: /* TIFF, BMP */
+	dd->haveTransparency = 1;
+    }
+
     dd->newPage = BM_NewPage;
     dd->close = BM_Close;
 

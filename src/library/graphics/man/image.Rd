@@ -96,12 +96,12 @@ image(x, \dots)
   printed layout of a matrix.
 
   Images for large \code{z} on a regular grid are rendered more
-  efficiently with \code{useRaster} enabled and can prevent rare
+  efficiently with \code{useRaster = TRUE} and can prevent rare
   anti-aliasing artifacts, but may not be supported by all graphics
   devices.  Some devices (such as \code{\link{postscript}}) which do not
-  support semi-transparent colours will emit missing values as white
-  rather than transparent.  The graphics files in PDF and
-  PostScript can be much smaller.
+  support semi-transparent colours may emit missing values as white
+  rather than transparent.  The graphics files in PDF and PostScript can
+  be much smaller under this option.
 }
 \note{
   Based on a function by Thomas Lumley
@@ -117,6 +117,9 @@ image(x, \dots)
   \code{\link{heat.colors}}, \code{\link{topo.colors}},
   \code{\link{terrain.colors}}, \code{\link{rainbow}},
   \code{\link{hsv}}, \code{\link{par}}.
+  
+  \code{\link{dev.capabilities}} to see if \code{useRaster = TRUE} is
+  supported on the current device.
 }
 \examples{
 require(grDevices) # for colours

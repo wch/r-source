@@ -1,6 +1,6 @@
 % File src/library/graphics/man/identify.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{identify}
@@ -138,6 +138,8 @@ identify(x, \dots)
 }
 \seealso{
   \code{\link{locator}}, \code{\link{text}}.
+
+  \code{\link{dev.capabilities}} to see if it is supported.
 }
 \examples{
 ## A function to use identify to select points, and overplot the

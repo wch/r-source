@@ -588,7 +588,7 @@ SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(oldask);
 }
 
-SEXP do_devsize(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_devsize(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     pDevDesc dd = GEcurrentDevice()->dev;
@@ -601,7 +601,7 @@ SEXP do_devsize(SEXP call, SEXP op, SEXP args, SEXP env)
     return(ans);
 }
 
-SEXP do_devholdflush(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_devholdflush(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     pDevDesc dd = GEcurrentDevice()->dev;
 
@@ -610,4 +610,30 @@ SEXP do_devholdflush(SEXP call, SEXP op, SEXP args, SEXP env)
     if(dd->holdflush && level != NA_INTEGER) level = (dd->holdflush(dd, level));
     else level = 0;
     return ScalarInteger(level);
+}
+
+SEXP attribute_hidden do_devcap(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, ansnames;
+    int i = 0, res;
+    pDevDesc dd = GEcurrentDevice()->dev;
+
+    checkArity(op, args);
+
+    PROTECT(ans = allocVector(INTSXP, 4));
+    PROTECT(ansnames = allocVector(STRSXP, 4));
+    SET_STRING_ELT(ansnames, i,   mkChar("transparency"));
+    INTEGER(ans)[i] = dd->haveTransparency;
+    SET_STRING_ELT(ansnames, ++i, mkChar("rasterImage"));
+    res = (dd->raster != NULL) ? dd->haveRaster : 1;
+    INTEGER(ans)[i] = res;
+    SET_STRING_ELT(ansnames, ++i, mkChar("capture"));
+    res = (dd->cap != NULL) ? dd->haveCapture : 1;
+    INTEGER(ans)[i] = res;
+    SET_STRING_ELT(ansnames, ++i, mkChar("locator"));
+    INTEGER(ans)[i] = dd->haveLocator;
+
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    UNPROTECT(2);
+    return ans;
 }

@@ -757,6 +757,11 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     ptd->pageno = 0;
     ptd->debug = debug;
 
+    dd->haveTransparency = 1;
+    dd->haveRaster = 1;
+    dd->haveCapture = 1;
+    dd->haveLocator = 1;
+
     dd->deviceSpecific = (void *) ptd;
     dd->displayListOn = FALSE;
     return TRUE;

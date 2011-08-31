@@ -1,6 +1,6 @@
 % File src/library/graphics/man/raster.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rasterImage}
@@ -38,6 +38,8 @@ rasterImage(image,
   \code{\link{rect}},
   \code{\link{polygon}}, and \code{\link{segments}} and others
   for flexible ways to draw shapes.
+
+  \code{\link{dev.capabilities}} to see if it is supported.
 }
 \examples{
 require(grDevices)

@@ -345,3 +345,15 @@ dev.size <- function(units = c("in", "cm", "px"))
 
 dev.hold <- function(level = 1L) .Internal(devHoldFlush(max(0L, level)))
 dev.flush <- function(level = 1L) .Internal(devHoldFlush(-max(0L, level)))
+
+dev.capabilities <- function(what = NULL)
+{
+    zz <- .Internal(dev.capabilities())
+    z <- vector("list", 4L)
+    names(z) <-  c("transparency", "rasterImage", "capture", "locator")
+    z[[1L]] <- c(NA, "none", "bg", "fully", "alpha")[zz[1L] + 1L]
+    z[[2L]] <- c(NA, "no", "yes", "non-missing")[zz[2L] + 1L]
+    z[[3L]] <- c(NA, FALSE, TRUE)[zz[3L] + 1L]
+    z[[4L]] <- c(NA, FALSE, TRUE)[zz[4L] + 1L]
+    if (!is.null(what)) z[match(what, names(z), 0L)] else z
+}

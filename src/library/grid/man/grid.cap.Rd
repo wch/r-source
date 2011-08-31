@@ -25,7 +25,9 @@ grid.cap()
   Paul Murrell
 }
 \seealso{
-\code{\link{grid.raster}}
+  \code{\link{grid.raster}}
+
+  \code{\link{dev.capabilities}} to see if it is supported.
 }
 \examples{
 \dontrun{

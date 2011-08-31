@@ -169,6 +169,7 @@ SEXP do_deparse(SEXP, SEXP, SEXP, SEXP);
 SEXP do_deparseRd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_deriv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_detach(SEXP,SEXP,SEXP,SEXP);
+SEXP do_devcap(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devcontrol(SEXP,SEXP,SEXP,SEXP);
 SEXP do_devcopy(SEXP,SEXP,SEXP,SEXP);
 SEXP do_devcur(SEXP, SEXP, SEXP, SEXP);

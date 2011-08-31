@@ -1,6 +1,6 @@
 % File src/library/graphics/man/locator.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{locator}
@@ -70,6 +70,8 @@ locator(n = 512, type = "n", \dots)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{identify}}
+  \code{\link{identify}}.
+
+  \code{\link{dev.capabilities}} to see if it is supported.
 }
 \keyword{iplot}
