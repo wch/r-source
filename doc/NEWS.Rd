@@ -441,7 +441,11 @@
       
       \item The default \code{postscript(colormodel = "srgb")} now
       changes colorspace less often, so e.g. coloured \code{image()}
-      plots may render faster.
+      plots may render much faster.
+
+      \item \code{pdf()} in the default sRGB colorspace outputs many
+      fewer changes of colorspace, which may speed up rendering in some
+      viewing applications.
     }
   }
 
