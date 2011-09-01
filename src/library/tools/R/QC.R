@@ -2903,7 +2903,7 @@ function(x, ...)
     if(length(x[["bad_authors_at_R_field_has_no_maintainer"]]))
         writeLines(c(gettext("Authors@R field gives no person with maintainer role and email address."),
                      ""))
-              
+
     if(length(x$missing_required_fields)) {
         writeLines(gettext("Required fields missing:"))
         .pretty_print(x$missing_required_fields)
@@ -2912,10 +2912,10 @@ function(x, ...)
 
     if(length(x$bad_package))
         writeLines(c(strwrap(x$bad_package), ""))
-    
+
     if(length(x$bad_version))
         writeLines(c(gettext("Malformed package version."), ""))
-    
+
     if(length(x$bad_maintainer))
         writeLines(c(gettext("Malformed maintainer field."), ""))
 
@@ -2943,10 +2943,10 @@ function(x, ...)
         }
         writeLines("")
     }
-    
+
     if(length(x$bad_namespace))
         writeLines(c(gettext("Package name and namespace differ."), ""))
-    
+
     if(length(x$bad_priority))
         writeLines(c(gettext("Invalid Priority field."),
                      strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
@@ -4042,11 +4042,13 @@ function(dir)
     filter <- function(file) {
         exprs <- if(!is.na(enc) &&
                     !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-	    con <- file(file, encoding=enc)
-            on.exit(close(con))
-	    parse(con)
+            ## Previous use of con <- file(file, encoding=enc) was intolerant
+            ## so do what .install_package_code_files does.
+            lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
+                           sub = "byte")
+	    parse(text = lines)
 	} else parse(file)
-        ## assume that if locale if 'C' we can read encodings unchanged.        
+        ## assume that if locale if 'C' we can read encodings unchanged.
         .find_calls(exprs,
                     function(e) {
                         ((length(e) > 1L)
@@ -4165,7 +4167,7 @@ function(x, ...)
                              function(e) e[["bad_calls"]][["names"]])))
     has_bad_calls_for_load <-
         any(calls %in% .bad_call_names_in_startup_functions$load)
-    has_bad_calls_for_output <- 
+    has_bad_calls_for_output <-
         any(calls %in% .bad_call_names_in_startup_functions$output)
 
     .fmt_entries_for_file <- function(e, f) {
@@ -4188,7 +4190,7 @@ function(x, ...)
                       sep = ""))
           })
     }
-          
+
     c(unlist(Map(.fmt_entries_for_file, x, names(x)),
              use.names = FALSE),
       if(has_bad_wrong_args)
