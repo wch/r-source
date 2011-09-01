@@ -81,7 +81,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Defaults to \code{FALSE}.}
   \item{maxRasters}{integer.  The maximum number of raster images that
-    can be stored in this PDF document. }
+    can be stored in this PDF document.  Defaults to \code{1000}.}
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -177,7 +177,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 
   If you are planning to use a large number of raster images in your
   output, you may need to specify a larger value for argument
-  \code{maxRasters}.
+  \code{maxRasters} (this had default \code{64} prior to \R 2.13.2).
 }
 
 \section{Color models}{

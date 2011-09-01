@@ -675,7 +675,7 @@ assign(".PDF.Options",
          useDingbats = TRUE,
          useKerning = TRUE,
          fillOddEven = FALSE,
-         maxRasters = 64), envir = .PSenv)
+         maxRasters = 1000L), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
        envir = .PSenv)
