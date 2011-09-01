@@ -1,5 +1,5 @@
 
-R version 2.13.1 RC (2011-07-05 r56282)
+R version 2.13.1 Patched (2011-09-01 r56878)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2211,7 +2211,7 @@ List of 18
  $ useDingbats: logi TRUE
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
- $ maxRasters : num 64
+ $ maxRasters : int 1000
 > pdf.options(reset = TRUE) # back to factory-fresh
 > 
 > 

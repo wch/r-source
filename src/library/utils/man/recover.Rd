@@ -1,6 +1,6 @@
 % File src/library/utils/man/recover.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{recover}
@@ -20,7 +20,7 @@ recover()
   When called, \code{recover} prints the list of current calls, and
   prompts the user to select one of them.  The standard \R
   \code{\link{browser}} is then invoked from the corresponding
-  environment; the user can type ordinary S language expressions to be
+  environment; the user can type ordinary \R language expressions to be
   evaluated in that environment.
 
   When finished browsing in this call, type \code{c} to return to
