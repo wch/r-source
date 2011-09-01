@@ -1897,6 +1897,7 @@ function(package, dir, file, lib.loc = NULL,
     else {
         if(!is.na(enc) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+            ## FIXME: what if conversion fails on e.g. UTF-8 comments
 	    con <- file(file, encoding=enc)
             on.exit(close(con))
 	} else con <- file
@@ -3913,17 +3914,26 @@ function(dir)
         file <- file.path(dir, f)
         if(!is.na(enc) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-            con <- file(file, encoding = enc)
-            on.exit(close(con))
-        } else con <- file
-        withCallingHandlers(tryCatch(parse(con),
-                                     error = function(e)
-                                     .error <<- conditionMessage(e)),
-                            warning = function(e) {
-                                .warnings <<- c(.warnings,
-                                                conditionMessage(e))
-                                invokeRestart("muffleWarning")
-                            })
+            lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
+                           sub = "byte")
+            withCallingHandlers(tryCatch(parse(text = lines),
+                                         error = function(e)
+                                         .error <<- conditionMessage(e)),
+                                warning = function(e) {
+                                    .warnings <<- c(.warnings,
+                                                    conditionMessage(e))
+                                    invokeRestart("muffleWarning")
+                                })
+        } else {
+            withCallingHandlers(tryCatch(parse(file),
+                                         error = function(e)
+                                         .error <<- conditionMessage(e)),
+                                warning = function(e) {
+                                    .warnings <<- c(.warnings,
+                                                    conditionMessage(e))
+                                    invokeRestart("muffleWarning")
+                                })
+        }
         ## (We show offending file paths starting with the base of the
         ## given directory as this provides "nicer" output ...)
         if(length(.error) || length(.warnings))
@@ -3998,9 +4008,11 @@ function(dir)
         ## assume that if locale if 'C' we can read encodings unchanged.
         exprs <- if(!is.na(enc) &&
                     !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-	    con <- file(file, encoding=enc)
-            on.exit(close(con))
-	    parse(con)
+            ## Previous use of con <- file(file, encoding=enc) was intolerant
+            ## so do what .install_package_code_files does.
+            lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
+                           sub = "byte")
+	    parse(text = lines)
 	} else parse(file)
         for(i in seq_along(exprs)) walker(exprs[[i]])
         matches
@@ -4168,6 +4180,7 @@ function(package, dir, lib.loc = NULL)
         enc <- db["Encoding"]
         if(!is.na(enc) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+            ## FIXME: what if conversion fails on e.g. UTF-8 comments
 	    con <- file(file, encoding=enc)
             on.exit(close(con))
         } else con <- file
@@ -4349,6 +4362,7 @@ function(package, dir, lib.loc = NULL)
     enc <- db["Encoding"]
     if(!is.na(enc) &&
        !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+        ## FIXME: what if conversion fails on e.g. UTF-8 comments
         con <- file(file, encoding=enc)
         on.exit(close(con))
     } else con <- file
