@@ -591,6 +591,10 @@
       package startup functions, and notifies about incorrect argument
       lists and (incorrect) calls to functions which modify the search
       path or inappropriately generate messages.
+
+      \item \command{R CMD check} now also checks compiled code for
+      symbols corresponding to functions which might terminate R or
+      write to stdout/stderr instead of the console.
     }
   }
 
