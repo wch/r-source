@@ -758,6 +758,9 @@
       \item \code{postscript(colormodel = "rgb-nogray")} no longer sets
       the sRGB colorspace for each colour and so some viewers may render
       its files much faster than the default \code{colormodel ="rgb"}.
+      
+      \item The default for \code{pdf(maxRasters=) has been increased
+	from 64 to 1000.
     }
   }
 

@@ -5504,6 +5504,7 @@ static void PDF_TextUTF8(double x, double y, const char *str,
 static rasterImage* initRasterArray(int numRasters) 
 {
     int i;
+    /* why not use calloc? */
     rasterImage* rasters = malloc(numRasters*sizeof(rasterImage));
     if (rasters) {
 	for (i = 0; i < numRasters; i++) {
