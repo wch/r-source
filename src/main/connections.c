@@ -3573,6 +3573,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("size changing is not supported for complex vectors"));
 	PROTECT(ans = allocVector(CPLXSXP, n));
 	p = (void *) COMPLEX(ans);
+	/* FIXME do this in blocks to avoid very large buffers */
 	m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np)
 	    : con->read(p, size, n, con);
 	if(swap)
@@ -3647,6 +3648,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "what");
 
 	if(size == sizedef) {
+	    /* FIXME do this in blocks to avoid very large buffers */
 	    m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np)
 		: con->read(p, size, n, con);
 	    if(swap && size > 1)
@@ -3654,7 +3656,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    char buf[size];
 	    int s;
-	    if(mode == 1) {
+	    if(mode == 1) { /* integer result */
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
 			: con->read(buf, size, 1, con);
@@ -3686,7 +3688,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			error(_("size %d is unknown on this machine"), size);
 		    }
 		}
-	    } else if (mode == 2) {
+	    } else if (mode == 2) { /* double result */
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
 			: con->read(buf, size, 1, con);
@@ -3760,7 +3762,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(isRaw)
 	    error(_("only 2^31-1 bytes can be written to a raw vector"));
 	else
-	    error(_("only 2^31-1 bytes can be written in a single readBin() call"));
+	    error(_("only 2^31-1 bytes can be written in a single writeBin() call"));
     }
 
     if(!wasopen) {
