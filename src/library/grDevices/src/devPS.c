@@ -5510,7 +5510,7 @@ static rasterImage* initRasterArray(int numRasters)
 	for (i = 0; i < numRasters; i++) {
 	    rasters[i].raster = NULL;
 	}
-    }
+    } /* else error thrown in PDFDeviceDriver */
     return rasters;
 }
 
@@ -5523,8 +5523,22 @@ static int addRaster(rcolorPtr raster, int w, int h,
     int i, alpha = 0;
     rcolorPtr newRaster;
 
-    if (pd->numRasters == pd->maxRasters)
-	error(_("Too many raster images"));
+    if (pd->numRasters == pd->maxRasters) {
+	int new = 2*pd->maxRasters;
+	void *tmp;
+	/* Do it this way so previous pointer is retained if it fails */
+	tmp = realloc(pd->masks, new*sizeof(int));
+	if(!tmp) error(_("failed to increase 'maxRaster'"));
+	pd->masks = tmp;
+	tmp = realloc(pd->rasters, new*sizeof(rasterImage));
+	if(!tmp) error(_("failed to increase 'maxRaster'"));
+	pd->rasters = tmp;
+	for (i = pd->maxRasters; i < new; i++) {
+	    pd->rasters[i].raster = NULL;
+	    pd->masks[i] = -1;
+	}
+	pd->maxRasters = new;
+    }
 
     newRaster = malloc(w*h*sizeof(rcolor));
 
@@ -5563,12 +5577,10 @@ static int* initMaskArray(int numRasters) {
     int* masks = malloc(numRasters*sizeof(int));
     if (masks) {
 	for (i = 0; i < numRasters; i++) masks[i] = -1;
-    }
+    } /* else error thrown in PDFDeviceDriver */
     return masks;
 }
 
-/* FIXME: this should support other values of 'colormodel', at least
-   "gray" */
 static void writeRasterXObject(rasterImage raster, int n,
 			       int mask, int maskObj, PDFDesc *pd)
 {
@@ -7123,7 +7135,7 @@ static void PDF_Close(pDevDesc dd)
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
     killRasterArray(pd->rasters, pd->maxRasters);
-    PDFcleanup(6, pd);
+    PDFcleanup(6, pd); /* which frees masks and rasters */
 }
 
 static void PDF_Rect(double x0, double y0, double x1, double y1,

@@ -455,6 +455,8 @@
       the capabilities of the current device.  The initial set of
       capabilities are support for (semi-)transparent colours, raster
       images, image capture and the locator.
+      
+      \item For \code{pdf()}, \code{maxRasters} is increased as needed.
     }
   }
 
