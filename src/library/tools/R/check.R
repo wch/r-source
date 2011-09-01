@@ -1337,13 +1337,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-        any <- FALSE
         if(length(out)) {
             noteLog(Log)
-            any <- TRUE
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-        }
-        if(!any) resultLog(Log, "OK")
+            wrapLog("\nCompiled code should not call functions which",
+                    "might terminate R nor write to stdout/stderr instead of",
+                    "to the console.  The detected symbols are linked into the",
+                    "code but might come from libraries and not actually",
+                    "be called.\n","\n",
+                    "See 'Writing portable packages'",
+                    "in the 'Writing R Extensions' manual.\n")
+        } else resultLog(Log, "OK")
     }
 
     check_loading <- function(arch = "")

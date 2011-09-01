@@ -593,8 +593,8 @@
       path or inappropriately generate messages.
 
       \item \command{R CMD check} now also checks compiled code for
-      symbols corresponding to functions which might terminate R or
-      write to stdout/stderr instead of the console.
+      symbols corresponding to functions which might terminate \R or
+      write to \file{stdout}/\file{stderr} instead of the console.
     }
   }
 
