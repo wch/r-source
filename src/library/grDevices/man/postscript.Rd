@@ -350,6 +350,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   }
 
   At very small line widths, the line type may be forced to solid.
+  
+  Raster images are (currently) limited to 10,000 pixels and opaque colours.
 }
 
 \note{
