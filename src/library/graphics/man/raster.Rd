@@ -13,7 +13,7 @@ rasterImage(image,
 }
 \arguments{
   \item{image}{a \code{raster} object, or an object that can be
-    coerced to one.}
+    coerced to one by \code{\link{as.raster}}.}
   \item{xleft}{a vector (or scalar) of left x positions.}
   \item{ybottom}{a vector (or scalar) of bottom y positions.}
   \item{xright}{a vector (or scalar) of right x positions.}
@@ -33,6 +33,11 @@ rasterImage(image,
   100 to 200 then \code{xleft} should be larger than 100 and \code{xright}
   should be less than 200.  The position vectors will be recycled to the
   length of the longest.
+  
+  Plotting raster images is not supported on all devices and may have
+  limitations where supported, for example in the size of images and
+  (e.g. for \code{postscript} and \code{X11(type = "Xlib")}) to
+  opaque colors only.
 }
 \seealso{
   \code{\link{rect}},
