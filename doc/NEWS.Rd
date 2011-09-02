@@ -471,6 +471,8 @@
       
       \item \code{postscript()} with an sRGB colormodel now uses sRGB
       for raster images (in \R 2.13.x it used uncalibrated RGB).
+
+      There is no longer a 21845-pixel limit on raster images.
     }
   }
 
@@ -911,6 +913,10 @@
       argument of more than one element.  This helps track down user
       errors such as calling \code{double(x)} instead of
       \code{as.double(x)}.
+
+      \item \code{postscript()} now gives an error if asked to output a
+      raster image of more than 21845 pixels (after interpolation),
+      rather than producing a file which cannot be viewed.
     }
   }
 

@@ -35,9 +35,8 @@ rasterImage(image,
   length of the longest.
   
   Plotting raster images is not supported on all devices and may have
-  limitations where supported, for example in the size of images and
-  (e.g. for \code{postscript} and \code{X11(type = "Xlib")}) to
-  opaque colors only.
+  limitations where supported, for example (e.g. for \code{postscript}
+  and \code{X11(type = "Xlib")}) restricted to opaque colors.
 }
 \seealso{
   \code{\link{rect}},
