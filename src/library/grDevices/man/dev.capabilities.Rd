@@ -47,6 +47,13 @@ dev.capabilities(what = NULL)
     support raster capture as used by \code{\link{grid.cap}}?}
   \item{locator}{logical:  Does the current device
     support \code{\link{locator}} and \code{\link{identify}}?}
+  \item{events}{character:  Which events can be generated on this device?
+    Currently this will be a subset of \code{c("MouseDown",
+    "MouseMove", "MouseUp", "Keybd")}, but other events may be
+    supported in the future.  }
+}
+\seealso{
+  See \code{\link{getGraphicsEvent}} for details on interactive events.
 }
 \examples{
 dev.capabilities()

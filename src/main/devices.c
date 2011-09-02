@@ -620,13 +620,19 @@ SEXP attribute_hidden do_devcap(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    PROTECT(ans = allocVector(INTSXP, 5));
+    PROTECT(ans = allocVector(INTSXP, 9));
     INTEGER(ans)[i] = dd->haveTransparency;
     INTEGER(ans)[++i] = dd->haveTransparentBg;
     /* These will be NULL if the device does not define them */
     INTEGER(ans)[++i] = (dd->raster != NULL) ? dd->haveRaster : 1;
     INTEGER(ans)[++i] = (dd->cap != NULL) ? dd->haveCapture : 1;
     INTEGER(ans)[++i] = (dd->locator != NULL) ? dd->haveLocator : 1;
+    INTEGER(ans)[++i] = (int)(dd->canGenMouseDown);
+    INTEGER(ans)[++i] = (int)(dd->canGenMouseMove);
+    INTEGER(ans)[++i] = (int)(dd->canGenMouseUp);
+    INTEGER(ans)[++i] = (int)(dd->canGenKeybd);
+    /* FIXME:  there should be a way for a device to declare its own
+               events, and return information on how to set them */
 
     UNPROTECT(1);
     return ans;
