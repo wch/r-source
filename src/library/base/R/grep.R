@@ -238,3 +238,140 @@ function(x, m, invert = FALSE)
     names(y) <- names(x)
     y
 }
+
+`regmatches<-` <-
+function(x, m, invert = FALSE, value)
+{
+    if(!length(x)) return(x)
+    
+    y <- regmatches(x, m, !invert)
+
+    ili <- is.list(m)
+
+    ## For non-list m and invert = FALSE, we need a character vector of
+    ## replacement values with length the number of matched elements (or
+    ## one; this will be checked later).
+    ## Otherwise, we need a list of character vectors with the same
+    ## length as m.
+    if(!ili && !invert) {
+        if(!is.character(value))
+            stop(gettextf("%s must be a character vector",
+                          sQuote("value")),
+                 domain = NA)
+    } else {
+        if(length(x) != length(value))
+            stop(gettextf("%s and %s must have the same length",
+                          sQuote("x"), sQuote("value")),
+                 domain = NA)
+        if(!is.list(value) || !all(sapply(value, is.character)))
+            stop(gettextf("%s must be a list of character vectors",
+                          sQuote("value")),
+                 domain = NA)
+    }
+
+    if(!invert) {
+        if(!ili) {
+            ## Entries with matches have length 2.
+            pos <- which(sapply(y, length) == 2L)
+            np <- length(pos)
+            nv <- length(value)
+            if(np != nv) {
+                ## <FIXME>
+                ## Should we be nice and always recycle, or only handle
+                ## the cases where value has length ones or the number
+                ## of matches?
+                if(nv == 1L)
+                    value <- rep.int(value, np)
+                else
+                    stop(gettextf("%s must have length one or the number of matches",
+                                  sQuote("value")),
+                         domain = NA)
+                ## </FIXME>
+            }
+            x[pos] <- paste(sapply(y, `[`, 1L),
+                            value,
+                            sapply(y, `[`, 2L),
+                            sep = "")
+            return(x)
+        } else {
+            y <- Map(function(u, v) {
+                nu <- length(u)
+                nv <- length(v)
+                ## Entries with no matches have length 1.
+                ## For these, we cannot have replacements, so the
+                ## corresponding entry in value must be empty.
+                ## <FIXME>
+                ## Note that if not allowing recycling the code gets
+                ## simplified substantially.
+                ## </FIXME>
+                if(nu == 1L) {
+                    if(nv == 0L) return(u)
+                    else
+                        stop("cannot have replacements for non-matches")
+                } else {
+                    if(nv == 0L)
+                        stop("must have replacements for matches")
+                    if(nu != (nv + 1L)) {
+                        if(nv == 1L) {
+                            ## Be nice.
+                            v <- rep.int(v, nu - 1L)
+                        } else {
+                            stop(gettextf("entries of %s must have length one or the number of corresponding matches",
+                                          sQuote("value")))
+                        }
+                    }
+                    ## Now that all the work is done ...
+                    paste(u, c(v, ""), sep = "", collapse = "")
+                }
+            },
+                     y, value, USE.NAMES = FALSE)
+        }
+    } else {
+        if(!ili) {
+            pos <- which(!is.na(m) & (m > -1L))
+            np <- length(pos)
+            nv <- length(value)
+            ## We need value to be a list with length the number of
+            ## matches, with two elements each.
+            if((np != nv) || !all(sapply(value, length) == 2L)) {
+                ## <FIXME>
+                ## If we really want to recycle we should also do so
+                ## here.
+                stop(gettextf("%s must be a list with length the number of matches and two elements each",
+                              sQuote("value")),
+                     domain = NA)
+                ## </FIXME>
+            }
+            x[pos] <- paste(sapply(value, `[`, 1L),
+                            y[pos],
+                            sapply(value, `[`, 2L),
+                            sep = "")
+            return(x)
+        } else {
+            y <- Map(function(u, v) {
+                nu <- length(u)
+                nv <- length(v)
+                if(nv != (nu + 1L)) {
+                    if(nv == 0L) {
+                        stop("must have replacements for non-matches")
+                    } else if(nv == 1L) {
+                        ## Be nice.
+                        v <- rep.int(v, nu + 1L)
+                    } else {
+                        stop(gettextf("entries of %s must have length one or the number of corresponding non-matches",
+                                      sQuote("value")))
+                    }
+                }
+                ## Now that all the work is done ...
+                paste(v, c(u, ""), sep = "", collapse = "")
+            },
+                     y, value, USE.NAMES = FALSE)
+        }
+
+    }
+        
+    y <- unlist(y)
+    names(y) <- names(x)
+
+    y
+}

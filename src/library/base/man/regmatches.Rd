@@ -1,5 +1,6 @@
 \name{regmatches}
 \alias{regmatches}
+\alias{regmatches<-}
 \title{Extract Matched Substrings}
 \description{
   Extract matched substrings from match data obtained by
