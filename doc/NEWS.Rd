@@ -375,7 +375,11 @@
 
       \item New function \code{regexec} for finding the positions of
       matches as well as all substrings corresponding to parenthesized
-      subexpressions of the given regular expression.      
+      subexpressions of the given regular expression.
+
+      \item New function \code{adist} in package \pkg{utils} for
+      computing approximate (generalized Levenshtein) distances between
+      strings.
     }
   }
 

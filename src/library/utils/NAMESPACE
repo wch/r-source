@@ -1,5 +1,5 @@
 export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
-       RSiteSearch, URLdecode, URLencode, View, alarm, apropos,
+       RSiteSearch, URLdecode, URLencode, View, adist, alarm, apropos,
        argsAnywhere, assignInNamespace, as.roman, as.person,
        as.personList, as.relistable, aspell, aspell_package_Rd_files,
        aspell_package_vignettes,
