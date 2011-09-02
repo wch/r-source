@@ -468,6 +468,9 @@
       images, image capture and the locator.
       
       \item For \code{pdf()}, \code{maxRasters} is increased as needed.
+      
+      \item \code{postscript()} with an sRGB colormodel now uses sRGB
+      for raster images (in \R 2.13.x it used uncalibrated RGB).
     }
   }
 

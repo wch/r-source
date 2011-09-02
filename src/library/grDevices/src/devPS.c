@@ -3932,11 +3932,9 @@ static void PS_imagedata(rcolorPtr raster,
 {
     /* Each original byte is translated to two hex digits
        (representing a number between 0 and 255) */
-    for (int i = 0; i < w*h; i++) {
-	fprintf(pd->psfp, "%02x", R_RED(raster[i]));
-	fprintf(pd->psfp, "%02x", R_GREEN(raster[i]));
-	fprintf(pd->psfp, "%02x", R_BLUE(raster[i]));
-    }
+    for (int i = 0; i < w*h; i++)
+	fprintf(pd->psfp, "%02x%02x%02x",
+		R_RED(raster[i]), R_GREEN(raster[i]), R_BLUE(raster[i]));
 }
 
 static void PS_grayimagedata(rcolorPtr raster,
@@ -3956,6 +3954,7 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
 			   double x, double y,
 			   double width, double height,
 			   double rot,
+			   Rboolean interpolate,
 			   pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -3963,50 +3962,64 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
     /* This takes the simple approach of creating an inline
      * image.  This will not work for larger images
      * (more than 10000 pixels, e.g., 100x100)
-     * due to hard limits in the PostScript language.
+     * due to hard limits in the PostScript language.  [Ref?]
      * There is no support for semitransparent images, not even
      * for transparent pixels (missing values in image(useRaster = TRUE) ).
-     * The latter could be added by using the level-3 feature of
-     * the 'image' operator with an image dictionary and ImageType 3:
-     * see PLRM 3rd ed section 4.10.6
+     *
+     * The version in R < 2.14.0 used colorimage, hence the DeviceRGB
+     * colour space.
      */
+
+    /* Now we are using level-2 features, there are other things we could do
+       (a) encode the data more compactly, e.g. using 
+       /DataSource currentfile /ASCII85Decode filter /LZWDecode filter def
+
+       (b) add a mask with ImageType 3: see PLRM 3rd ed section 4.10.6.
+
+       (c) interpolation (done)
+
+       (d) sRGB colorspace (done)
+    */
 
     /* Save graphics state */
     fprintf(pd->psfp, "gsave\n");
-    /* set the colour space */
-    if (streql(pd->colormodel, "srgb")) fprintf(pd->psfp, "sRGB\n");
+    /* set the colour space: this form of the image operator uses the 
+       current colour space. */
+    if (streql(pd->colormodel, "srgb")) 
+	fprintf(pd->psfp, "sRGB\n");
+    else if (streql(pd->colormodel, "srgb-nogray")) ; 
+    else if (streql(pd->colormodel, "gray"))
+	fprintf(pd->psfp, "/DeviceGray setcolorspace\n");
+    else
+	fprintf(pd->psfp, "/DeviceRGB setcolorspace\n");
     /* translate */
     fprintf(pd->psfp, "%.2f %.2f translate\n", x, y);
     /* rotate */
-    if (rot != 0.0)
-	fprintf(pd->psfp, "%.2f rotate\n", rot);
+    if (rot != 0.0) fprintf(pd->psfp, "%.2f rotate\n", rot);
     /* scale */
     fprintf(pd->psfp, "%.2f %.2f scale\n", width, height);
-    /* Begin image */
-    /* Image characteristics */
-    /* width height bitspercomponent matrix */
-    fprintf(pd->psfp,
-	    "%d %d 8 [%d 0 0 %d 0 %d]\n",
-	    w, h, w, -h, h);
-    if (streql(pd->colormodel, "gray")) {
-	/* Begin image data */
-	fprintf(pd->psfp, "{<\n");
-	/* The image stream */
+    /* write dictionary */
+    fprintf(pd->psfp, "8 dict dup begin\n");
+    fprintf(pd->psfp, "  /ImageType 1 def\n");
+    fprintf(pd->psfp, "  /Width %d def\n", w);
+    fprintf(pd->psfp, "  /Height %d def\n", h);
+    fprintf(pd->psfp, "  /BitsPerComponent 8 def\n");
+    if (interpolate)
+	fprintf(pd->psfp, "  /Interpolate true def\n");
+    if (streql(pd->colormodel, "gray"))
+	fprintf(pd->psfp, "  /Decode [0 1] def\n");
+    else
+	fprintf(pd->psfp, "  /Decode [0 1 0 1 0 1] def\n");
+    fprintf(pd->psfp, "  /DataSource currentfile /ASCIIHexDecode filter def\n");
+    fprintf(pd->psfp, "  /ImageMatrix [%d 0 0 %d 0 %d] def\n", w, -h, h);
+    fprintf(pd->psfp, "end\n");
+    fprintf(pd->psfp, "image\n");
+    /* now the data */
+    if (streql(pd->colormodel, "gray"))
 	PS_grayimagedata(raster, w, h, pd);
-	/* End image */
-	fprintf(pd->psfp, "\n>}\n");
-	/* single source, 3 components (interleaved) */
-	fprintf(pd->psfp, "image\n");
-    } else {
-	/* Begin image data */
-	fprintf(pd->psfp, "{<\n");
-	/* The image stream */
+    else
 	PS_imagedata(raster, w, h, pd);
-	/* End image */
-	fprintf(pd->psfp, "\n>}\n");
-	/* single source, 3 components (interleaved) */
-	fprintf(pd->psfp, "false 3 colorimage\n");
-    }
+    fprintf(pd->psfp, ">\n");
     /* Restore graphics state */
     fprintf(pd->psfp, "grestore\n");
 }
@@ -4018,6 +4031,7 @@ static void PS_Raster(unsigned int *raster, int w, int h,
 		      Rboolean interpolate,
 		      const pGEcontext gc, pDevDesc dd)
 {
+#ifdef OLD
     if (interpolate) {
 	/* Generate a new raster
 	 * which is interpolated from the original
@@ -4034,12 +4048,16 @@ static void PS_Raster(unsigned int *raster, int w, int h,
 	R_GE_rasterInterpolate(raster, w, h,
 			       newRaster, newW, newH);
 	PS_writeRaster(newRaster, newW, newH,
-		       x, y, width, height, rot, dd);
+		       x, y, width, height, rot, FALSE, dd);
 	vmaxset(vmax);
     } else {
 	PS_writeRaster(raster, w, h,
-		       x, y, width, height, rot, dd);
+		       x, y, width, height, rot, FALSE, dd);
     }
+#else
+	PS_writeRaster(raster, w, h,
+		       x, y, width, height, rot, interpolate, dd);
+#endif
 }
 
 static void PS_Circle(double x, double y, double r,
