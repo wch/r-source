@@ -372,6 +372,10 @@
       
       \item \code{readBin()} can now read more than
       \eqn{2^{31}-1}{2^31 - 1} bytes in a single call.
+
+      \item New function \code{regexec} for finding the positions of
+      matches as well as all substrings corresponding to parenthesized
+      subexpressions of the given regular expression.      
     }
   }
 
