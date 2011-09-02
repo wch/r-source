@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-10     The R Core Team
+ *  Copyright (C) 2004-11     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -319,7 +319,7 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
 	return NULL;
     p->kind = kind;
     /* PR#14624 claimed this was needed, with no example */
-    p->chbrk = p->modbrk = NULL;
+    p->chbrk = p->modbrk = '\0';
     if (kind == CONSOLE) {
 	p->lbuf = newxbuf(bufbytes, buflines, SLBUF);
 	if (!p->lbuf) {
