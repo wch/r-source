@@ -492,6 +492,7 @@ struct _DevDesc {
      * added 2010-06-27
      *
      * As from R 2.13.2 this can be left unimplemented as NULL.
+     * For earlier versions of R it should return R_NilValue.
      */
 #if R_USE_PROTOTYPES
     SEXP (*cap)(pDevDesc dd);
