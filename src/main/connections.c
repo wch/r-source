@@ -366,6 +366,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 		strcpy(ob, con->init_out);
 		ob += ninit; onb -= ninit; ninit = 0;
 	    }
+	    errno = 0;
 	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
 	    if(ires == (size_t)(-1) && errno == E2BIG) again = TRUE;
 	    if(ires == (size_t)(-1) && errno != E2BIG)
@@ -416,6 +417,7 @@ int dummy_fgetc(Rconnection con)
 	    }
 	    ib = con->iconvbuff; inb = con->inavail;
 	    ob = con->oconvbuff; onb = 50;
+	    errno = 0;
 	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
 	    con->inavail = inb;
 	    if(res == (size_t)-1) { /* an error condition */
@@ -876,6 +878,7 @@ static Rboolean fifo_open(Rconnection con)
     else flags = O_WRONLY;
     if(!con->blocking) flags |= O_NONBLOCK;
     if(con->mode[0] == 'a') flags |= O_APPEND;
+    errno = 0; /* precaution */
     fd = open(name, flags);
     if(fd < 0) {
 	if(errno == ENXIO) warning(_("fifo '%s' is not ready"), name);
@@ -1064,7 +1067,7 @@ static Rboolean pipe_open(Rconnection con)
 	fp = R_popen(con->description, mode);
     if(!fp) {
 	warning(_("cannot open pipe() cmd '%s': %s"), con->description,
-			strerror(errno));
+		strerror(errno));
 	return FALSE;
     }
     ((Rfileconn)(con->private))->fp = fp;
@@ -1211,6 +1214,7 @@ static Rboolean gzfile_open(Rconnection con)
     if(strchr(con->mode, 'w')) sprintf(mode, "wb%1d", gzcon->compress);
     else if (con->mode[0] == 'a') sprintf(mode, "ab%1d", gzcon->compress);
     else strcpy(mode, "rb");
+    errno = 0; /* precaution */
     fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
@@ -1358,6 +1362,7 @@ static Rboolean bzfile_open(Rconnection con)
     /* regardless of the R view of the file, the file must be opened in
        binary mode where it matters */
     mode[0] = con->mode[0];
+    errno = 0; /* precaution */
     fp = R_fopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open bzip2-ed file '%s', probable reason '%s'"),
@@ -1543,6 +1548,7 @@ static Rboolean xzfile_open(Rconnection con)
     /* regardless of the R view of the file, the file must be opened in
        binary mode where it matters */
     mode[0] = con->mode[0];
+    errno = 0; /* precaution */
     xz->fp = R_fopen(R_ExpandFileName(con->description), mode);
     if(!xz->fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
@@ -3584,7 +3590,12 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("size changing is not supported for complex vectors"));
 	PROTECT(ans = allocVector(CPLXSXP, n));
 	p = (void *) COMPLEX(ans);
-	/* FIXME do this in blocks to avoid very large buffers */
+	if((double) n * size > INT_MAX) {
+	    if(isRaw)
+		error(_("only 2^31-1 bytes can be read from a raw vector"));
+	    else
+		error(_("only 2^31-1 bytes can be read in a single readBin() call"));
+	}
 	m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np)
 	    : con->read(p, size, n, con);
 	if(swap)
@@ -3658,8 +3669,15 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else
 	    error(_("invalid '%s' argument"), "what");
 
+	if(!signd && (mode != 1 || size > 2))
+	    warning(_("'signed = FALSE' is only valid for integers of sizes 1 and 2"));
 	if(size == sizedef) {
-	    /* FIXME do this in blocks to avoid very large buffers */
+	    if((double) n * size > INT_MAX) {
+		if(isRaw)
+		    error(_("only 2^31-1 bytes can be read from a raw vector"));
+		else
+		    error(_("only 2^31-1 bytes can be read in a single readBin() call"));
+	    }
 	    m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np)
 		: con->read(p, size, n, con);
 	    if(swap && size > 1)
@@ -5081,12 +5099,12 @@ static int gzcon_fgetc(Rconnection con)
 }
 
 
-/* gzcon(con, level) */
+/* gzcon(con, level, allowNonCompressed) */
 SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, class;
     int icon, level, allow;
-    Rconnection incon=NULL, new=NULL;
+    Rconnection incon = NULL, new = NULL;
     char *m, *mode = NULL /* -Wall */,  description[1000];
 
     checkArity(op, args);
@@ -5148,8 +5166,7 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     ((Rgzconn)(new->private))->nsaved = -1;
     ((Rgzconn)(new->private))->allow = allow;
 
-    /* as there might not be an R-level reference to the wrapped
-       connection */
+    /* as there might not be an R-level reference to the wrapped connection */
     R_PreserveObject(incon->ex_ptr);
 
     Connections[icon] = new;
@@ -5157,7 +5174,6 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     new->ex_ptr = R_MakeExternalPtr((void *)new->id, install("connection"),
 				    R_NilValue);
     if(incon->isopen) new->open(new);
-    /* show we do encoding here */
 
     PROTECT(ans = ScalarInteger(icon));
     PROTECT(class = allocVector(STRSXP, 2));

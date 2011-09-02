@@ -74,8 +74,8 @@ writeBin(object, con, size = NA_integer_,
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
   \code{NaN}) values is discussed in the \emph{R Data Import/Export} manual.
   
-  Only \eqn{2^{31}-1}{2^31 - 1} bytes can be read in a single
-  \code{readBin} call (and this is the maximum capacity of a raw vector).
+  Only \eqn{2^{31}-1}{2^31 - 1} bytes can be read or written in a single
+  call (and that is the maximum capacity of a raw vector).
 }
 
 \note{

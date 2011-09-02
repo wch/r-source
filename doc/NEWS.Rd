@@ -34,6 +34,12 @@
       
       \item The default for \code{pdf(maxRasters=)} has been increased
 	from 64 to 1000.
+
+      \item \code{readBin()} now warns if \code{signed = FALSE} is used
+      inappropriately (rather than being silently ignored).
+
+      It enforces the documented limit of \eqn{2^{31}-1}{2^31-1} bytes
+      in a single call.
     }
   }
 
