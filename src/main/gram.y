@@ -212,6 +212,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
+%token		INCOMPLETE_STRING
 %token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR AND2 OR2
@@ -2081,12 +2082,12 @@ static int StringValue(int c, Rboolean forSymbol)
 	}
 	if (c == '\\') {
 	    c = xxgetc(); CTEXT_PUSH(c);
-	    if ('0' <= c && c <= '8') {
+	    if ('0' <= c && c <= '7') {
 		int octal = c - '0';
-		if ('0' <= (c = xxgetc()) && c <= '8') {
+		if ('0' <= (c = xxgetc()) && c <= '7') {
 		    CTEXT_PUSH(c);
 		    octal = 8 * octal + c - '0';
-		    if ('0' <= (c = xxgetc()) && c <= '8') {
+		    if ('0' <= (c = xxgetc()) && c <= '7') {
 			CTEXT_PUSH(c);
 			octal = 8 * octal + c - '0';
 		    } else {
@@ -2265,6 +2266,11 @@ static int StringValue(int c, Rboolean forSymbol)
     }
     STEXT_PUSH('\0');
     WTEXT_PUSH(0);
+    if (c == R_EOF) {
+        if(stext != st0) free(stext);
+        PROTECT(yylval = R_NilValue);
+    	return INCOMPLETE_STRING;
+    }
     if(forSymbol) {
 	PROTECT(yylval = install(stext));
 	if(stext != st0) free(stext);

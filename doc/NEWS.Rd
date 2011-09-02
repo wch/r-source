@@ -380,6 +380,10 @@
       \item New function \code{adist} in package \pkg{utils} for
       computing approximate (generalized Levenshtein) distances between
       strings.
+      
+      \item The parser no longer accepts the digit \code{8} in an octal
+      character code in a string, nor does it accept unterminated 
+      strings in a file.  (Reported by Bill Dunlap.)
     }
   }
 

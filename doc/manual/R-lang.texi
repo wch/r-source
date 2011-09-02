@@ -4361,7 +4361,7 @@ vertical tab
 backslash itself
 @item \@var{nnn}
 character with given octal code -- sequences of one, two or three digits
-in the range @code{0 ... 8} are accepted.
+in the range @code{0 ... 7} are accepted.
 @item \x@var{nn}
 character with given hex code -- sequences of one or two hex digits
 (with entries @code{0 ... 9 A ... F a ... f}).
