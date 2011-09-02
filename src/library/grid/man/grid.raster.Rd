@@ -84,7 +84,7 @@ rasterGrob(image,
 \seealso{
 \code{\link{as.raster}}.
 }
-\examples{
+\examples{\donttest{## some of these are too big for postscript()
 redGradient <- matrix(hcl(0, 80, seq(50, 80, 10)),
                       nrow=4, ncol=5)
 # interpolated 
@@ -100,5 +100,5 @@ grid.raster(redGradient, interpolate=FALSE, height=unit(1, "npc"))
 # The same raster drawn several times
 grid.newpage()
 grid.raster(0, x=1:3/4, y=1:3/4, w=.1, interp=FALSE)
-}
+}}
 \keyword{ dplot }
