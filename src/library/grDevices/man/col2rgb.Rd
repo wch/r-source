@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/col2rgb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{col2rgb}
@@ -15,15 +15,16 @@ col2rgb(col, alpha = FALSE)
 \arguments{
   \item{col}{vector of any of the three kind of \R colors, i.e., either
     a color name (an element of \code{\link{colors}()}), a hexadecimal
-    string of the form \code{"#rrggbb"}, or an integer \code{i} meaning
-    \code{palette()[i]}.  Non-string values are coerced to integer.}
-  \item{alpha}{logical value indicating whether alpha channel
+    string of the form \code{"#rrggbb"} or \code{"#rrggbbaa"} (see
+    \code{\link{rgb}}), or an integer \code{i} meaning
+      \code{palette()[i]}.  Non-string values are coerced to integer.}
+  \item{alpha}{logical value indicating whether alpha channel (opacity)
     values should be returned.}
 }
 \details{
   For integer colors, \code{0} is shorthand for the current
-  \code{par("bg")} (and hence is only relevant to base graphics), and
-  \code{\link{NA}} means transparent.
+  \code{par("bg")} (and hence is only relevant to base graphics and not
+  grid graphics), and \code{\link{NA}} means transparent.
 
   For character colors, \code{"NA"} is equivalent to \code{NA} above.
 }

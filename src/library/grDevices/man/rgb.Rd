@@ -13,13 +13,13 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   This function creates colors corresponding to the given
   intensities (between 0 and \code{max}) of the red, green and blue
   primaries.  The colour specification refers to the
-  standard sRGB colorspace  (IEC standard 61966).
+  standard sRGB colorspace (IEC standard 61966).
 
-  An alpha transparency value can also be specified
-  (0 means fully transparent and \code{max} means opaque).
-  If \code{alpha} is not specified, an opaque colour is generated.
+  An alpha transparency value can also be specified (as an opacity, so
+  \code{0} means fully transparent and \code{max} means opaque).  If
+  \code{alpha} is not specified, an opaque colour is generated.
 
-  The names argument may be used to provide names for the
+  The \code{names} argument may be used to provide names for the
   colors.
 
   The values returned by these functions can be used with a
@@ -56,7 +56,10 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}
   followed by the red, blue, green and optionally alpha values in
-  hexadecimal (after rescaling to \code{0 ... 255}).
+  hexadecimal (after rescaling to \code{0 ... 255}).  The optional alpha
+  values range from \code{0} (fully transparent) to \code{255} (opaque).
+  
+  \R does \strong{not} use \sQuote{premultiplied alpha}.
 }
 \seealso{
   \code{\link{col2rgb}} for translating \R colors to RGB vectors;
