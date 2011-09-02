@@ -203,8 +203,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     int lpos, rpos;
     const char *s, *t;
 
+    Rboolean haveBytes, useWC = FALSE;
+
     regex_t reg;
-    regaparams_t params_x_y, params_y_x;
+    regaparams_t params, params_x_y, params_y_x;
     regamatch_t match;
     int rc, cflags = REG_EXTENDED | REG_NOSUB | REG_LITERAL;
 
@@ -238,15 +240,47 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(y))
 	error(_("invalid '%s' argument"), "y");
     ny = length(y);
-    nxy = nx * ny;
+    nxy = nx * ny;    
 
-    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
-    if(opt_counts) {
-	PROTECT(dim = allocVector(INTSXP, 3));
-	INTEGER(dim)[0] = nx;
-	INTEGER(dim)[1] = ny;
-	INTEGER(dim)[2] = 3;
-	PROTECT(counts = allocArray(REALSXP, dim));
+    if(!useBytes) {
+	haveBytes = FALSE;
+	for(i = 0; i < nx; i++) {
+	    if(IS_BYTES(STRING_ELT(x, i))) {
+		haveBytes = TRUE;
+		break;
+	    }
+	}
+	if(!haveBytes) {
+	    for(j = 0; j < ny; j++) {
+		if(IS_BYTES(STRING_ELT(y, j))) {
+		    haveBytes = TRUE;
+		    break;
+		}
+	    }
+	}
+	if(haveBytes) {
+	    warning(_("string marked as \"bytes\" found, so using useBytes = TRUE"));
+	    useBytes = TRUE;
+	}
+    }
+
+    if(!useBytes) {
+	for(i = 0; i < nx; i++) {
+	    if(STRING_ELT(x, i) == NA_STRING) continue;
+	    if(!strIsASCII(CHAR(STRING_ELT(x, i)))) {
+		useWC = TRUE;
+		break;
+	    }
+	}
+	if(!useWC) {
+	    for(j = 0; j < ny; j++) {
+		if(STRING_ELT(y, j) == NA_STRING) continue;
+		if(!strIsASCII(CHAR(STRING_ELT(y, j)))) {
+		    useWC = TRUE;
+		    break;
+		}
+	    }
+	}
     }
 
     tre_regaparams_default(&params_x_y);
@@ -261,7 +295,15 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     params_y_x.cost_del = opt_cost_del;
     params_y_x.cost_subst = opt_cost_sub;
 
-    /* Handle encoding stuff etc lateron. */
+    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+    if(opt_counts) {
+	PROTECT(dim = allocVector(INTSXP, 3));
+	INTEGER(dim)[0] = nx;
+	INTEGER(dim)[1] = ny;
+	INTEGER(dim)[2] = 3;
+	PROTECT(counts = allocArray(REALSXP, dim));
+    }
+
     for(k = 0; k < LENGTH(lpositions); k++) {
 	lpos = INTEGER(lpositions)[k];
 
@@ -294,20 +336,39 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	} else {
 	    s = CHAR(elt);
-	    rc = tre_regcomp(&reg, s, cflags);
+	    if(useBytes)
+		rc = tre_regcompb(&reg, CHAR(elt), cflags);
+	    else if (useWC)
+		rc = tre_regwcomp(&reg, wtransChar(elt), cflags);
+	    else {
+		s = translateChar(elt);
+		if(mbcslocale && !mbcsValid(s)) {
+		    if(do_x_y) {
+			error(_("input string x[%d] is invalid in this locale"),
+			      i + 1);
+		    } else {
+			error(_("input string y[%d] is invalid in this locale"),
+			      j + 1);
+		    }
+		}
+		rc = tre_regcomp(&reg, s, cflags);
+	    }
 	    if(rc) {
 		char errbuf[1001];
 		tre_regerror(rc, &reg, errbuf, 1001);
 		error(_("regcomp error:  '%s'"), errbuf);
 	    }
+	    
 	    for(l = 0; l < LENGTH(rpositions_k); l++) {
 		rpos = INTEGER(rpositions_k)[l];
 		if(do_x_y) {
 		    j = rpos - nx;
 		    elt = STRING_ELT(y, j);
+		    params = params_x_y;
 		} else {
 		    i = rpos;
 		    elt = STRING_ELT(x, i);
+		    params = params_y_x;
 		}
 		if(elt == NA_STRING) {
 		    ANS(i, j) = NA_REAL;
@@ -320,22 +381,46 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* Perform match. */
 		    /* undocumented, must be zeroed */
 		    memset(&match, 0, sizeof(match));
-		    t = CHAR(elt);
-		    if(do_x_y) {
-			rc = tre_regaexec(&reg, t, &match, params_x_y, 0);
-		    } else {
-			rc = tre_regaexec(&reg, t, &match, params_y_x, 0);
-		    }
-		    ANS(i, j) = (double) match.cost;	    
-		    if(opt_counts) {
-			if(do_x_y) {
-			    COUNTS(i, j, 0) = (double) match.num_ins;
-			    COUNTS(i, j, 1) = (double) match.num_del;
-			} else {
-			    COUNTS(i, j, 0) = (double) match.num_del;
-			    COUNTS(i, j, 1) = (double) match.num_ins;
+		    if(useBytes)
+			rc = tre_regaexecb(&reg, CHAR(elt),
+					   &match, params, 0);
+		    else if(useWC)
+			rc = tre_regawexec(&reg, wtransChar(elt), 
+					   &match, params, 0);
+		    else {
+			t = translateChar(elt);
+			if(mbcslocale && !mbcsValid(t)) {
+			    if(do_x_y) {
+				error(_("input string y[%d] is invalid in this locale"),
+				      j + 1);
+			    } else {
+				error(_("input string x[%d] is invalid in this locale"),
+				      i + 1);
+			    }
 			}
-			COUNTS(i, j, 2) = (double) match.num_subst;
+			rc = tre_regaexec(&reg, t,
+					  &match, params, 0);
+		    }
+		    if(rc == REG_OK) {
+			ANS(i, j) = (double) match.cost;
+			if(opt_counts) {
+			    if(do_x_y) {
+				COUNTS(i, j, 0) = (double) match.num_ins;
+				COUNTS(i, j, 1) = (double) match.num_del;
+			    } else {
+				COUNTS(i, j, 0) = (double) match.num_del;
+				COUNTS(i, j, 1) = (double) match.num_ins;
+			    }
+			    COUNTS(i, j, 2) = (double) match.num_subst;
+			}
+		    } else {
+			/* Should maybe check for REG_NOMATCH? */
+			ANS(i, j) = R_PosInf;
+			if(opt_counts) {
+			    for(m = 0; m < 3; m++) {
+				COUNTS(i, j, m) = NA_REAL;
+			    }
+			}
 		    }
 		}
 	    }
