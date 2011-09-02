@@ -1273,6 +1273,17 @@ function(x, dfile)
         if(any(ind))
             x[ind] <- mapply(iconv, x[ind], Encoding(x)[ind], encoding,
                              sub = "byte")
+    } else {
+        ## If there is no declared encoding, we cannot have non-ASCII
+        ## content.
+        ## Cf. tools::showNonASCII():
+        asc <- iconv(x, "latin1", "ASCII")
+        ind <- is.na(asc) | (asc != x)
+        if(any(ind)) {
+            warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
+                    domain = NA)
+            x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
+        }
     }
     ## Avoid declared encodings when writing out.
     Encoding(x) <- "unknown"
