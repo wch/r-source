@@ -3972,7 +3972,7 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
 
     /* Now we are using level-2 features, there are other things we could do
        (a) encode the data more compactly, e.g. using 
-       /DataSource currentfile /ASCII85Decode filter /LZWDecode filter def
+       /DataSource currentfile /ASCII85Decode filter /FlateDecode filter def
 
        (b) add a mask with ImageType 3: see PLRM 3rd ed section 4.10.6.
 
