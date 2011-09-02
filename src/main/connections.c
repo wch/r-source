@@ -3495,6 +3495,7 @@ static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
 }
 
 /* readBin(con, what, n, swap) */
+#define BLOCK 8096
 SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, swhat;
@@ -3567,9 +3568,21 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("size changing is not supported for complex vectors"));
 	PROTECT(ans = allocVector(CPLXSXP, n));
 	p = (void *) COMPLEX(ans);
-	/* FIXME do this in blocks to avoid very large buffers */
-	m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np)
-	    : con->read(p, size, n, con);
+	if(isRaw) m = rawRead(p, size, n, bytes, nbytes, &np);
+	else {
+	    /* Do this in blocks to avoid large buffers in the connection */
+	    char *pp = p;
+	    int m0, n0 = n;
+	    m = 0;
+	    while(n0) {
+		int n1 = (n0 < BLOCK) ? n0 : BLOCK;
+		m0 = con->read(pp, size, n1, con);
+		m += m0;
+		if (m0 < n1) break;
+		n0 -= n1;
+		pp += n1 * size;
+	    }
+	}
 	if(swap)
 	    for(i = 0; i < m; i++) {
 		swapb(&(COMPLEX(ans)[i].r), sizeof(double));
@@ -3641,10 +3654,24 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else
 	    error(_("invalid '%s' argument"), "what");
 
+	if(!signd && (mode != 1 || size > 2))
+	    warning(_("'signed = FALSE' is only valid for integers of sizes 1 and 2"));
 	if(size == sizedef) {
-	    /* FIXME do this in blocks to avoid very large buffers */
-	    m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np)
-		: con->read(p, size, n, con);
+	    if(isRaw) m = rawRead(p, size, n, bytes, nbytes, &np);
+	    else {
+		/* Do this in blocks to avoid large buffers in the connection */
+		char *pp = p;
+		int m0, n0 = n;
+		m = 0;
+		while(n0) {
+		    int n1 = (n0 < BLOCK) ? n0 : BLOCK;
+		    m0 = con->read(pp, size, n1, con);
+		    m += m0;
+		    if (m0 < n1) break;
+		    n0 -= n1;
+		    pp += n1 * size;
+		}
+	    }
 	    if(swap && size > 1)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {

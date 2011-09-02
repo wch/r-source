@@ -369,6 +369,9 @@
       \item \code{available.packages()} now works around servers that
       fail to return an error when \file{PACKAGES.gz} does not exist.
       (Patch submitted by Seth Schommer.)
+      
+      \item \code{readBin()} can now read more than
+      \eqn{2^{31}-1}{2^31 - 1} bytes in a single call.
     }
   }
 
@@ -767,6 +770,12 @@
       
       \item The default for \code{pdf(maxRasters=)} has been increased
 	from 64 to 1000.
+
+      \item \code{readBin()} now warns if \code{signed = FALSE} is used
+      inappropriately (rather than being silently ignored).
+
+      It enforces the documented limit of \eqn{2^{31}-1}{2^31-1} bytes
+      in a single call.
     }
   }
 
