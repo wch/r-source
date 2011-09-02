@@ -164,6 +164,10 @@
       argument of more than one element.  This helps track down user
       errors such as calling \code{double(x)} instead of
       \code{as.double(x)}.
+
+      \item \code{postscript()} now gives an error if asked to output a
+      raster image of more than 21845 pixels (after interpolation),
+      rather than producing a file which cannot be viewed.
     }
   }
 

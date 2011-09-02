@@ -3944,10 +3944,16 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
 
     /* This takes the simple approach of creating an inline
      * image.  This will not work for larger images
-     * (more than 10000 pixels, e.g., 100x100)
+     * (much more than 10000 pixels, e.g., 100x100)
      * due to hard limits in the PostScript language.
+     * (The limit is the use of a string, which has maximum length
+     *  65535: and there are 3 bytes per pixel in an RGB colorspace).
      * There is no support for semitransparent images.
      */
+    
+    /* avoid silly inputs which overflow */
+    if ((double)w * h > 65535/3)
+	error(_("a raster image in postscript() can be at most 21845 pixels"));
     /* Save graphics state */
     fprintf(pd->psfp,
 	    "gsave\n");
