@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
 #   2011 Free Software Foundation, Inc.
 
-timestamp='2011-02-02'
+timestamp='2011-09-03'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ timestamp='2011-02-02'
 # exits with 0.  Otherwise, it exits with 1.
 #
 # You can get the latest version of this script from:
-# http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD
+# http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess
 
 me=`echo "$0" | sed -e 's,.*/,,'`
 
@@ -792,13 +792,12 @@ EOF
 	echo ${UNAME_MACHINE}-unknown-bsdi${UNAME_RELEASE}
 	exit ;;
     *:FreeBSD:*:*)
-	case ${UNAME_MACHINE} in
-	    pc98)
-		echo i386-unknown-freebsd`echo ${UNAME_RELEASE}|sed -e 's/[-(].*//'` ;;
+	UNAME_PROCESSOR=`/usr/bin/uname -p`
+	case ${UNAME_PROCESSOR} in
 	    amd64)
 		echo x86_64-unknown-freebsd`echo ${UNAME_RELEASE}|sed -e 's/[-(].*//'` ;;
 	    *)
-		echo ${UNAME_MACHINE}-unknown-freebsd`echo ${UNAME_RELEASE}|sed -e 's/[-(].*//'` ;;
+		echo ${UNAME_PROCESSOR}-unknown-freebsd`echo ${UNAME_RELEASE}|sed -e 's/[-(].*//'` ;;
 	esac
 	exit ;;
     i*:CYGWIN*:*)
@@ -882,7 +881,13 @@ EOF
 	then
 	    echo ${UNAME_MACHINE}-unknown-linux-gnu
 	else
-	    echo ${UNAME_MACHINE}-unknown-linux-gnueabi
+	    if echo __ARM_PCS_VFP | $CC_FOR_BUILD -E - 2>/dev/null \
+		| grep -q __ARM_PCS_VFP
+	    then
+		echo ${UNAME_MACHINE}-unknown-linux-gnueabi
+	    else
+		echo ${UNAME_MACHINE}-unknown-linux-gnueabihf
+	    fi
 	fi
 	exit ;;
     avr32*:Linux:*:*)
@@ -972,7 +977,7 @@ EOF
 	echo ${UNAME_MACHINE}-unknown-linux-gnu
 	exit ;;
     tile*:Linux:*:*)
-	echo ${UNAME_MACHINE}-tilera-linux-gnu
+	echo ${UNAME_MACHINE}-unknown-linux-gnu
 	exit ;;
     vax:Linux:*:*)
 	echo ${UNAME_MACHINE}-dec-linux-gnu
