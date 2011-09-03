@@ -3960,13 +3960,11 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     /* This takes the simple approach of creating an inline
-     * image.  This will not work for larger images
-     * (more than 10000 pixels, e.g., 100x100)
-     * due to hard limits in the PostScript language.  [Ref?]
+     * image.
      * There is no support for semitransparent images, not even
      * for transparent pixels (missing values in image(useRaster = TRUE) ).
      *
-     * The version in R < 2.14.0 used colorimage, hence the DeviceRGB
+     * The version in R < 2.13.2 used colorimage, hence the DeviceRGB
      * colour space.
      */
 
