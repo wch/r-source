@@ -164,10 +164,6 @@
       argument of more than one element.  This helps track down user
       errors such as calling \code{double(x)} instead of
       \code{as.double(x)}.
-
-      \item \code{postscript()} now gives an error if asked to output a
-      raster image of more than 21845 pixels (after interpolation),
-      rather than producing a file which cannot be viewed.
     }
   }
 
@@ -345,6 +341,11 @@
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).  (It seems this happened only in 2.13.0 patched.)
+      
+      \item \code{postscript()} with an sRGB colormodel now uses sRGB
+      for raster images (in \R 2.13.[01] it used uncalibrated RGB).
+
+      There is no longer an undocumented 21845-pixel limit on raster images.
     }
   }
 }

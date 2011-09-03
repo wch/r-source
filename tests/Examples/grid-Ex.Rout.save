@@ -1,8 +1,8 @@
 
-R version 2.13.1 Patched (2011-09-02 r56904)
+R version 2.13.1 RC (2011-07-05 r56282)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1119,6 +1119,23 @@ List of 6
 > 
 > ### ** Examples
 > 
+> redGradient <- matrix(hcl(0, 80, seq(50, 80, 10)),
++                       nrow=4, ncol=5)
+> # interpolated 
+> grid.newpage()
+> grid.raster(redGradient)
+> # blocky
+> grid.newpage()
+> grid.raster(redGradient, interpolate=FALSE)
+> # blocky and stretched
+> grid.newpage()
+> grid.raster(redGradient, interpolate=FALSE, height=unit(1, "npc"))
+> 
+> # The same raster drawn several times
+> grid.newpage()
+> grid.raster(0, x=1:3/4, y=1:3/4, w=.1, interp=FALSE)
+> 
+> 
 > 
 > cleanEx()
 > nameEx("grid.record")
@@ -1733,7 +1750,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.302 0.042 4.36 0 0 
+Time elapsed:  3.36 0.044 3.448 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -3923,15 +3923,11 @@ static void PS_imagedata(rcolorPtr raster,
 			  PostScriptDesc *pd)
 {
     /* Each original byte is translated to two hex digits
-     * (representing a number between 0 and 256)
-     * End-of-data signalled by a '>'
+     * (representing a number between 0 and 255)
      */
-    int i;
-    for (i = 0; i < w*h; i++) {
-	fprintf(pd->psfp, "%02x", R_RED(raster[i]));
-	fprintf(pd->psfp, "%02x", R_GREEN(raster[i]));
-	fprintf(pd->psfp, "%02x", R_BLUE(raster[i]));
-    }
+    for (int i = 0; i < w*h; i++)
+	fprintf(pd->psfp, "%02x%02x%02x",
+		R_RED(raster[i]), R_GREEN(raster[i]), R_BLUE(raster[i]));
 }
 
 static void PS_writeRaster(unsigned int *raster, int w, int h,
@@ -3943,48 +3939,44 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     /* This takes the simple approach of creating an inline
-     * image.  This will not work for larger images
-     * (much more than 10000 pixels, e.g., 100x100)
-     * due to hard limits in the PostScript language.
-     * (The limit is the use of a string, which has maximum length
-     *  65535: and there are 3 bytes per pixel in an RGB colorspace).
-     * There is no support for semitransparent images.
+     * image.
+     * There is no support for semitransparent images, not even
+     * for transparent pixels (missing values in image(useRaster = TRUE) ).
+     *
+     * The version in R < 2.13.2 used colorimage, hence the DeviceRGB
+     * colour space.
      */
-    
-    /* avoid silly inputs which overflow */
-    if ((double)w * h > 65535/3)
-	error(_("a raster image in postscript() can be at most 21845 pixels"));
     /* Save graphics state */
-    fprintf(pd->psfp,
-	    "gsave\n");
-    /* set the colour space */
-    if (streql(pd->colormodel, "rgb")) fprintf(pd->psfp, "sRGB\n");
+    fprintf(pd->psfp, "gsave\n");
+    /* set the colour space: this form of the image operator uses the 
+       current colour space. */
+    if (streql(pd->colormodel, "rgb") || streql(pd->colormodel, "rgb-nogray"))
+	fprintf(pd->psfp, "sRGB\n");
+    else
+	fprintf(pd->psfp, "/DeviceRGB setcolorspace\n");
     /* translate */
     fprintf(pd->psfp, "%.2f %.2f translate\n", x, y);
     /* rotate */
-    if (rot != 0.0)
-	fprintf(pd->psfp, "%.2f rotate\n", rot);
+    if (rot != 0.0) fprintf(pd->psfp, "%.2f rotate\n", rot);
     /* scale */
-    fprintf(pd->psfp,
-	    "%.2f %.2f scale\n",
-	    width, height);
-    /* Begin image */
-    /* Image characteristics */
-    /* width height bitspercomponent matrix */
-    fprintf(pd->psfp,
-	    "%d %d 8 [%d 0 0 %d 0 %d]\n",
-	    w, h, w, -h, h);
-    /* Begin image data */
-    fprintf(pd->psfp, "{<\n");
-    /* The image stream */
+    fprintf(pd->psfp, "%.2f %.2f scale\n", width, height);
+    /* write dictionary */
+    fprintf(pd->psfp, "7 dict dup begin\n");
+    fprintf(pd->psfp, "  /ImageType 1 def\n");
+    fprintf(pd->psfp, "  /Width %d def\n", w);
+    fprintf(pd->psfp, "  /Height %d def\n", h);
+    fprintf(pd->psfp, "  /BitsPerComponent 8 def\n");
+    fprintf(pd->psfp, "  /Decode [0 1 0 1 0 1] def\n");
+    fprintf(pd->psfp, "  /DataSource currentfile /ASCIIHexDecode filter def\n");
+    fprintf(pd->psfp, "  /ImageMatrix [%d 0 0 %d 0 %d] def\n", w, -h, h);
+    fprintf(pd->psfp, "end\n");
+    fprintf(pd->psfp, "image\n");
+    /* now the data */
     PS_imagedata(raster, w, h, pd);
-    /* End image */
-    fprintf(pd->psfp, "\n>}\n");
-    /* single source, 3 components (interleaved) */
-    fprintf(pd->psfp, "false 3 colorimage\n");
+    /* End-of-data signalled by a '>' */
+    fprintf(pd->psfp, ">\n");
     /* Restore graphics state */
-    fprintf(pd->psfp,
-	    "grestore\n");
+    fprintf(pd->psfp, "grestore\n");
 }
 
 static void PS_Raster(unsigned int *raster, int w, int h,

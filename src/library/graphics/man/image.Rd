@@ -101,8 +101,7 @@ image(x, \dots)
   devices.  Some devices (such as \code{postscript} and
   \code{X11(type = "Xlib")}) which do not support semi-transparent
   colours may emit missing values as white rather than transparent, and
-  there may be limitations on the size of a raster image (currently
-  21845 elements in \code{\link{postscript}}, for example).
+  there may be limitations on the size of a raster image.
   
   The graphics files in PDF and PostScript can be much smaller under
   this option.
