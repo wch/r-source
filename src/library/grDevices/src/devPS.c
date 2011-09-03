@@ -2207,7 +2207,6 @@ typedef struct {
 	int fontsize;	         /* font size in points */
 	rcolor col;		 /* color */
 	rcolor fill;	         /* fill color */
-	int srgb;                /* is current colorspace known to be sRGB? */
     } current;
 
     /*
@@ -2988,7 +2987,7 @@ static void PS_TextUTF8(double x, double y, const char *str,
 /* PostScript Support (formerly in PostScript.c) */
 
 static void PostScriptSetCol(FILE *fp, double r, double g, double b,
-			     PostScriptDesc *pd, Rboolean fg)
+			     PostScriptDesc *pd)
 {
     const char *mm = pd->colormodel;
     if(r == g && g == b && 
@@ -2998,7 +2997,6 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	else if (r == 1) fprintf(fp, "1");
 	else fprintf(fp, "%.4f", r);
 	fprintf(fp," setgray");
-	pd->current.srgb = 0;
     } else {
 	if(strcmp(mm, "gray") == 0) {
 	    fprintf(fp, "%.4f setgray", 0.213*r + 0.715*g + 0.072*b);
@@ -3033,29 +3031,18 @@ static void PostScriptSetCol(FILE *fp, double r, double g, double b,
 	    if(b == 0) fprintf(fp, " 0");
 	    else if (b == 1) fprintf(fp, " 1");
 	    else fprintf(fp, " %.4f", b);
-	    if (streql(mm, "srgb+gray")) {
-		if(fg) {
-		    if (pd->current.srgb)  fprintf(fp," setcolor");
-		    else {
-			pd->current.srgb = 1;
-			fprintf(fp," srgb");
-		    }
-		} else fprintf(fp," srgb");
-	    } else if(streql(mm, "srgb")) fprintf(fp," srgb");
+	    if (streql(mm, "srgb+gray") || streql(mm, "srgb")) 
+		fprintf(fp," srgb");
 	    else fprintf(fp," rgb");
 	}
     }
 }
 
 static void PostScriptSetFill(FILE *fp, double r, double g, double b,
-			      PostScriptDesc *pd, int setfg)
+			      PostScriptDesc *pd)
 {
-    if (setfg && !pd->current.srgb) {
-	pd->current.srgb = 1;
-	fprintf(fp, "sRGB\n");
-    }
     fprintf(fp,"/bg { ");
-    PostScriptSetCol(fp, r, g, b, pd, setfg);
+    PostScriptSetCol(fp, r, g, b, pd);
     fprintf(fp, " } def\n");
 }
 
@@ -3064,7 +3051,7 @@ static void PostScriptSetFill(FILE *fp, double r, double g, double b,
 /* Driver Support Routines */
 
 static void SetColor(int, pDevDesc);
-static void SetFill(int, pDevDesc, int);
+static void SetFill(int, pDevDesc);
 static void SetFont(int, int, pDevDesc);
 static void SetLineStyle(const pGEcontext, pDevDesc dd);
 static void Invalidate(pDevDesc);
@@ -3469,20 +3456,20 @@ static void SetColor(int color, pDevDesc dd)
 	PostScriptSetCol(pd->psfp,
 			 R_RED(color)/255.0,
 			 R_GREEN(color)/255.0,
-			 R_BLUE(color)/255.0, pd, TRUE);
+			 R_BLUE(color)/255.0, pd);
 	fprintf(pd->psfp, "\n");
 	pd->current.col = color;
     }
 }
 
-static void SetFill(int color, pDevDesc dd, int colorspace_set)
+static void SetFill(int color, pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     if(color != pd->current.fill) {
 	PostScriptSetFill(pd->psfp,
 			  R_RED(color)/255.0,
 			  R_GREEN(color)/255.0,
-			  R_BLUE(color)/255.0, pd, colorspace_set);
+			  R_BLUE(color)/255.0, pd);
 	pd->current.fill = color;
     }
 }
@@ -3660,7 +3647,6 @@ static void Invalidate(pDevDesc dd)
     pd->current.lmitre = 0;
     pd->current.col = INVALID_COL;
     pd->current.fill = INVALID_COL;
-    pd->current.srgb = 0;
 }
 
 static void PS_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
@@ -3914,7 +3900,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 
     if (code) {
 	if(code & 2)
-	    SetFill(gc->fill, dd, code == 2);
+	    SetFill(gc->fill, dd);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
 	    SetLineStyle(gc, dd);
@@ -4080,7 +4066,7 @@ static void PS_Circle(double x, double y, double r,
 
     if (code) {
 	if(code & 2)
-	    SetFill(gc->fill, dd, code == 2);
+	    SetFill(gc->fill, dd);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
 	    SetLineStyle(gc, dd);
@@ -4132,7 +4118,7 @@ static void PS_Polygon(int n, double *x, double *y,
 
     if (code) {
 	if(code & 2) {
-	    SetFill(gc->fill, dd, code == 2);
+	    SetFill(gc->fill, dd);
 	    if (pd->fillOddEven) code |= 4;
 	}
 	if(code & 1) {
@@ -4175,7 +4161,7 @@ static void PS_Path(double *x, double *y,
 
     if (code) {
 	if(code & 2) {
-	    SetFill(gc->fill, dd, code = 2);
+	    SetFill(gc->fill, dd);
 	    if (!winding) code |= 4;
 	}
 	if(code & 1) {

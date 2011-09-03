@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-08-31 r56867)
+R Under development (unstable) (2011-09-03 r56914)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
@@ -2988,7 +2988,7 @@ List of 18
  $ pagecentre : logi TRUE
  $ print.it   : logi FALSE
  $ command    : chr "default"
- $ colormodel : chr "srgb"
+ $ colormodel : chr "srgb+gray"
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
 > 
@@ -3020,7 +3020,7 @@ List of 18
  $ pagecentre : logi TRUE
  $ print.it   : logi FALSE
  $ command    : chr "default"
- $ colormodel : chr "srgb"
+ $ colormodel : chr "srgb+gray"
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
 > ps.options(reset = TRUE) # back to factory-fresh

@@ -267,6 +267,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   and \sQuote{grave} respectively), as they are in the Adobe
   documentation.
 }
+
 \section{TeX fonts}{
   TeX has traditionally made use of fonts such as Computer Modern which
   are encoded rather differently, in a 7-bit encoding.  This encoding
@@ -291,10 +292,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   special-casing the postscript code generated from the supplied
   \file{CM_symbol_10.afm}.
 }
+
 \section{Color models}{
-  The default color model (\code{"srgb+gray"}) is sRGB, with pure gray colors
-  expressed as greyscales (which results in smaller files and can be
-  advantageous with some printer drivers).
+  The default color model (\code{"srgb+gray"}) is sRGB, with pure gray
+  colors (including black and white) expressed as greyscales (which
+  results in smaller files and can be advantageous with some printer
+  drivers).
 
   Color model \code{"srgb"} uses only sRGB, model \code{"cmyk"} only
   CMYK, and model \code{"gray"} (or \code{"grey"}) only greyscales (and
@@ -309,9 +312,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   In the default \code{"srgb+gray"} model, the viewing program may have
   to switch to and from the sRGB colorspace and this can be slow if done
   many times (e.g. in scatterplots using \code{pch = 21} with a black
-  outline and a coloured fill).  This can be avoided by using either the
-  \code{"srgb"} or the \code{"rgb"} colorspaces, although each has
-  disadvantages.
+  outline and a coloured fill, and in coloured \code{\link{image}}
+  plots).  This can be avoided by using either the \code{"srgb"} or the
+  \code{"rgb"} colorspace, although each has disadvantages.
 
   Raster images are output in RGB under the \code{"cmyk"} model, and are
   converted to greyscale under the \code{"gray"} model.
@@ -377,6 +380,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
+
 \seealso{
   \code{\link{postscriptFonts}},
   \code{\link{Devices}},
@@ -393,10 +397,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   and PDF graphics. \emph{R News}, 6(2):41--47.
   \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
+
 \author{
   Support for Computer Modern fonts is based on a contribution by
   Brian D'Urso \email{durso@hussle.harvard.edu}.
 }
+
 \examples{
 require(graphics)
 \dontrun{

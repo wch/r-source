@@ -437,9 +437,9 @@
       (Instead of \code{"rgb"}.)
 
       The default \code{colormodel} for \code{pdf()} and the sRGB-only
-      \code{colormodel} for \code{postscript()} and \code{pdf()} are now
-      called \code{"srgb"}, instead of \code{"rgb"} and
-      \code{"rgb-nogray"} respectively.
+      \code{colormodel} for \code{postscript()} are now called
+      \code{"srgb"}, instead of \code{"rgb"} and \code{"rgb-nogray"}
+      respectively.
      
       \item \code{postscript()} with values \code{colormodel = "rgb"} and
       \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
@@ -464,10 +464,6 @@
       \item \code{colormodel = "grey"} is allowed for
       \code{postscript()} and \code{pdf()}.
       
-      \item The default \code{postscript(colormodel = "srgb+gray")} now
-      changes colorspace less often, so e.g. coloured \code{image()}
-      plots may render much faster.
-
       \item \code{pdf()} in the default sRGB colorspace outputs many
       fewer changes of colorspace, which may speed up rendering in some
       viewing applications.
