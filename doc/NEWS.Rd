@@ -188,8 +188,8 @@
       \code{"summary.glm"}.
 
       \item The \code{plot()} method for class \code{"profile.nls"}
-      gains \code{ylab} and \code{lty} arguments, and passes \code{...}
-      on to \code{plot.default}.
+      gains \code{ylab} and \code{lty} arguments, and passes
+      \code{\dots} on to \code{plot.default}.
 
       \item Character-string arguments such as the \code{mode} argument
       of \code{vector()}, \code{as.vector()} and \code{is.vector()} and
@@ -311,14 +311,14 @@
       \code{require()}, returning a logical value after attempting to
       load a namespace.
 
-      \item There is a new type of RNG, \code{"L'Ecuyer-CMRG"}
+      \item There is a new type of RNG, \code{"L'Ecuyer-CMRG"},
       implementing L'Ecuyer (1999)'s \sQuote{combined multiple-recursive
       generator} \samp{MRG32k3a}.  See the comments on \code{?RNG}.
 
-      \item \code{help.search()} and \code{??} will now display
+      \item \code{help.search()} and \code{??} can now display
       vignettes and demos as well as help pages.  The new option
-      \code{help.search.types} controls the types of documentation
-      and the order of the display.
+      \code{"help.search.types"} controls the types of documentation
+      and the order of their display.
 
       \item \code{socketConnection()} now has a \code{timeout} argument.
 
@@ -344,8 +344,8 @@
       \samp{Maintainer} fields if needed, and to auto-generate package
       citations.
 
-      \item New utility \code{getElement()} for accessing both list
-      components or slots.
+      \item New utility \code{getElement()} for accessing either a list
+      component or a slot in an S4 object.
 
       \item \code{stars()} gains a \code{col.lines} argument, thanks to
       Dustin Sallings. (Wish of \PR{14657}.)
@@ -371,13 +371,14 @@
       (Patch submitted by Seth Schommer.)
       
       \item \code{readBin()} can now read more than
-      \eqn{2^{31}-1}{2^31 - 1} bytes in a single call.
+      \eqn{2^{31}-1}{2^31 - 1} bytes in a single call (the previously
+      documented limitation).
 
-      \item New function \code{regexec} for finding the positions of
+      \item New function \code{regexec()} for finding the positions of
       matches as well as all substrings corresponding to parenthesized
       subexpressions of the given regular expression.
 
-      \item New function \code{adist} in package \pkg{utils} for
+      \item New function \code{adist()} in package \pkg{utils} for
       computing approximate (generalized Levenshtein) distances between
       strings.
       
@@ -428,8 +429,8 @@
       that the plot is only displayed when the page is complete.
 
       Currently implemented for \code{windows(buffered = TRUE)},
-      \code{quartz()} and the cairo-based \code{X11()} types with
-      buffering (which are the default on-screen devices).
+      \code{quartz()} and the cairographics-based \code{X11()} types
+      with buffering (which are the default on-screen devices).
 
       \item The default \code{colormodel} for \code{postscript()} and
       \code{pdf()} is now called \code{"srgb"} to more accurately
@@ -468,8 +469,8 @@
 
       \item There is a new function \code{dev.capabilities()} to query
       the capabilities of the current device.  The initial set of
-      capabilities are support for (semi-)transparent colours, raster
-      images, image capture, the locator and support for interactive
+      capabilities are support for (semi-)transparent colours, rendering
+      and capturing raster images, the locator and for interactive
       events.
       
       \item For \code{pdf()}, \code{maxRasters} is increased as needed.
@@ -705,12 +706,10 @@
 
       \item The \file{configure} arguments used during configuration of
       \R are included as a comment in \file{Makeconf} for informative
-      purposes on unix in a form suitable for shell execution.  Note that
-      those are merely command-line arguments, they do not include
-      environment variables (one more reason to use configure variables
-      instead) or site configuration settings.
-    }
-  }
+      purposes on Unix-alikes in a form suitable for shell execution.
+      Note that those are merely command-line arguments, they do not
+      include environment variables (one more reason to use configure
+      variables instead) or site configuration settings.  } }
 
   \subsection{BUG FIXES}{
     \itemize{
@@ -766,11 +765,12 @@
       \code{"max.print"} and so are much faster for very long datetime
       vectors.  (Suggestion of Yohan Chalabi.)
 
-      \item \code{untar2()} now works around checksums in \code{tar}
-      files that use more than 6 digits for the checksum. (\PR{14654})
+      \item \code{untar2()} now works around errors generated with
+      \code{tar} files that use more than the standard 6 digits for the
+      checksum. (\PR{14654})
 
       \item \code{install.packages()} with \code{Ncpus > 1} guards
-      against simultaneous installation of indirect dependences as well
+      against simultaneous installation of indirect dependencies as well
       as direct ones.
       
       \item Sweave now knows about a few more Windows' encodings
@@ -863,7 +863,8 @@
       
       \item The \code{pdf()} device only includes the definition of the
       sRGB colorspace in the output file for the colormodels which use
-      it (and not for \code{"gray"} nor \code{"cmyk"}).
+      it (and not for \code{"gray"} nor \code{"cmyk"}): this saves ca
+      9KB in the output file.
     }
   }
 }
