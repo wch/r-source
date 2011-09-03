@@ -8,8 +8,8 @@
   substitutions needed to transform one string into another.
 }
 \usage{
-adist(x, y = x, cost = NULL, counts = FALSE, partial = FALSE, 
-      ignore.case = FALSE, useBytes = FALSE)
+adist(x, y = x, cost = NULL, counts = FALSE, fixed = TRUE,
+      partial = !fixed, ignore.case = FALSE, useBytes = FALSE)
 }
 \arguments{
   \item{x}{a character vector.}
@@ -23,6 +23,11 @@ adist(x, y = x, cost = NULL, counts = FALSE, partial = FALSE,
     transformation counts (numbers of insertions, deletions and
     substitutions) as the \code{"counts"} attribute of the return
     value.}
+  \item{fixed}{a logical.  If \code{TRUE} (default), the \code{x}
+    elements are used as string literals.  Otherwise, they are taken as
+    regular expressions and \code{partial = TRUE} is implied
+    (corresponding to the approximate string distance used by
+    \code{\link{agrep}} with \code{fixed = FALSE}.}
   \item{partial}{a logical indicating whether the transformed \code{x}
     elements must exactly match the complete \code{y} elements, or only
     substrings of these.  The latter corresponds to the approximate

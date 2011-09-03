@@ -198,7 +198,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, y, ans, dim, dimnames, counts, names;
     SEXP lpositions, rpositions, rpositions_k, elt;
     int opt_cost_ins, opt_cost_del, opt_cost_sub,
-	opt_partial, opt_counts, opt_icase, useBytes;
+	opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
     int i = 0, j = 0, k, l, m, nx, ny, nxy;
     int lpos, rpos;
     const char *s, *t;
@@ -208,7 +208,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regaparams_t params, params_x_y, params_y_x;
     regamatch_t match;
-    int rc, cflags = REG_EXTENDED | REG_NOSUB | REG_LITERAL;
+    int rc, cflags = REG_EXTENDED | REG_NOSUB;
 
     Rboolean do_x_y;
     
@@ -221,16 +221,23 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     opt_cost_del = asInteger(CAR(args)); args = CDR(args);
     opt_cost_sub = asInteger(CAR(args)); args = CDR(args);
     opt_counts = asLogical(CAR(args)); args = CDR(args);
+    opt_fixed = asInteger(CAR(args)); args = CDR(args);    
     opt_partial = asInteger(CAR(args)); args = CDR(args);
     opt_icase = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args));
 
     if(opt_counts == NA_INTEGER) opt_counts = 0;
+    if(opt_fixed == NA_INTEGER) opt_fixed = 1;
     if(opt_partial == NA_INTEGER) opt_partial = 0;
     if(opt_icase == NA_INTEGER) opt_icase = 0;
     if(useBytes == NA_INTEGER) useBytes = 0;
 
+    if(opt_fixed) cflags |= REG_LITERAL;
     if(opt_icase) cflags |= REG_ICASE;
+
+    if(!opt_fixed && !opt_partial) {
+	warning(_("argument '%s' will be ignored"), "partial = FALSE");
+    }
 
     counts = R_NilValue;	/* -Wall */
 

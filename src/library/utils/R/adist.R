@@ -1,6 +1,6 @@
 adist <-
-function(x, y = x, cost = NULL, counts = FALSE,
-         partial = FALSE, ignore.case = FALSE, useBytes = FALSE)
+function(x, y = x, cost = NULL, counts = FALSE, fixed = TRUE,
+         partial = !fixed, ignore.case = FALSE, useBytes = FALSE)
 {
     nx <- length(x)
     ny <- length(y)
@@ -11,7 +11,7 @@ function(x, y = x, cost = NULL, counts = FALSE,
     rpositions <-
         as.integer(rep.int(seq(from = nx, length.out = ny),
                            rep.int(nx, ny)))
-    if(!identical(partial, TRUE)) {
+    if(!identical(fixed, FALSE) && !identical(partial, TRUE)) {
         ind <- outer(nchar(x), nchar(y), `<`)
         if(any(ind)) {
             tmp <- lpositions[ind]
@@ -40,7 +40,7 @@ function(x, y = x, cost = NULL, counts = FALSE,
                     all_costs$insertions,
                     all_costs$deletions,
                     all_costs$substitutions,
-                    counts, partial, ignore.case, useBytes))
+                    counts, fixed, partial, ignore.case, useBytes))
 }
 
 ## No longer used by adist(), but could be more generally useful ...
