@@ -33,12 +33,17 @@ function(file)
 
     ## Go to the end.
     seek(con, -1L, "end")
+
+    ## Record file size as number of bytes.
     nbytes <- seek(con) + 1L
+
+    ## Check footer.
     bytes <- raw()
     while(!length(bytes))
         bytes <- read_prev_bytes_after_eols(con)
     if(rawToChar(bytes) != "%%EOF")
         stop("EOF marker not found")
+
     ## Find startxref entry (the location of the xref table).
     bytes <- read_prev_bytes_after_eols(con)
     startxref <- as.integer(rawToChar(bytes))
@@ -46,7 +51,7 @@ function(file)
     if(substring(rawToChar(bytes), 1L, 9L) != "startxref")
         stop("cannot find startxref")
 
-    xrefs <- xrefs_obj_streams <- trailer <- list()
+    xrefs <- xrefs_streams <- trailer <- list()
 
     ## Some PDFs have the offset to the xref table wrong.  As of
     ## 2011-08-24,
@@ -110,7 +115,7 @@ function(file)
             }
             ## Read trailer info.
             read_next_non_whitespace_and_seek_back(con)            
-            new_trailer <- pdf_read_object(con)
+            new_trailer <- pdf_stream_read_object(con)
             ## Merge with current trailer info.
             trailer[names(new_trailer)] <- new_trailer
             ## If the trailer info has a /Prev key, then redo the above
@@ -121,8 +126,8 @@ function(file)
             ## PDF 1.5+ cross-reference stream, hopefully.
             seek(con, -1L, "current")
             pos <- seek(con)
-            hdr <- pdf_read_object_header(con)
-            obj <- pdf_read_object(con)
+            hdr <- pdf_stream_read_object_header(con)
+            obj <- pdf_stream_read_object(con)
             if(!("/Type" %in% names(obj)) ||
                !(obj[["/Type"]] == "/XRef")) {
                 ## Something's wrong.
@@ -131,38 +136,46 @@ function(file)
                 startxref <- find_xref_start(con)
                 next
             }
-            ## return(obj)            
             ## <FIXME>
             ## Add support for /Index lateron, for now only deal with
             ## the default.
             ## </FIXME>
             num <- 0L
             size <- obj[["/Size"]]
+            index <- obj[["/Index"]]
+            index <- if(is.null(index)) {
+                ## Use default [0 Size].
+                cbind(0, size)
+            } else {
+                matrix(index, ncol = 2L, byrow = TRUE)
+            }
             field_sizes <- unlist(obj[["/W"]])
-            cnt <- 0L
             xrefs <- list()
-            xrefs_obj_streams <- list()
+            xrefs_streams <- list()
             stream <- rawConnection(pdf_stream_get_data(obj))
-            while(cnt < size) {
-                bytes <- readBin(stream, "raw", field_sizes[1L])
-                d1 <- strtoi(paste(bytes, collapse = ""), 16L)
-                bytes <- readBin(stream, "raw", field_sizes[2L])
-                d2 <- strtoi(paste(bytes, collapse = ""), 16L)      
-                bytes <- readBin(stream, "raw", field_sizes[3L])
-                d3 <- strtoi(paste(bytes, collapse = ""), 16L)
-                ## Might actually need to overwrite entries.
-                ## Worry about that lateron ...
-                if(d1 == 1) {
-                    xrefs <-
-                        c(xrefs,
-                          list(c(num, d2, d3, "n")))
-                } else if(d1 == 2) {
-                    xrefs_obj_streams <-
-                        c(xrefs_obj_streams,
-                          list(c(num, d2, d3)))
+            for(i in seq_len(nrow(index))) {
+                num <- index[i, 1L]
+                cnt <- 0L
+                while(cnt < index[i, 2L]) {
+                    bytes <- readBin(stream, "raw", field_sizes[1L])
+                    d1 <- strtoi(paste(bytes, collapse = ""), 16L)
+                    bytes <- readBin(stream, "raw", field_sizes[2L])
+                    d2 <- strtoi(paste(bytes, collapse = ""), 16L)      
+                    bytes <- readBin(stream, "raw", field_sizes[3L])
+                    d3 <- strtoi(paste(bytes, collapse = ""), 16L)
+                    ## Might actually need to overwrite entries.
+                    ## Worry about that lateron ...
+                    if(d1 == 1) {
+                        xrefs <-
+                            c(xrefs,
+                              list(c(num, d2, d3, "n")))
+                    } else if(d1 == 2) {
+                        xrefs_streams <-
+                            c(xrefs_streams, list(c(num, d2, d3)))
+                    }
+                    cnt <- cnt + 1L
+                    num <- num + 1L
                 }
-                cnt <- cnt + 1L
-                num <- num + 1L
             }
             close(stream)
             keys <- c("/Root", "/Encrypt", "/Info", "/ID")
@@ -181,15 +194,15 @@ function(file)
     xrefs[-4L] <- lapply(xrefs[-4L], as.integer)
     names(xrefs) <- c("num", "pos", "gen", "use")
 
-    xrefs_obj_streams <- do.call(rbind, xrefs_obj_streams)
-    if(!is.null(xrefs_obj_streams))
-        colnames(xrefs_obj_streams) <- c("num", "str", "idx")
+    xrefs_streams <- do.call(rbind, xrefs_streams)
+    if(!is.null(xrefs_streams))
+        colnames(xrefs_streams) <- c("num", "str", "idx")
 
     y <- list(file = summary(con)$description,
               size = nbytes,
               header = header,
               xrefs = xrefs,
-              xrefs_obj_streams = xrefs_obj_streams,
+              xrefs_streams = xrefs_streams,
               trailer = trailer)
     class(y) <- "pdf_doc"
     y
@@ -286,12 +299,12 @@ function(file)
             s <- sub("^D:", "", s)
             ## Strip apostrophes in offset spec.
             s <- gsub("'", "", s)
-            if(nchar(s) <= 12L) {
-                substring(s, nchar(s), 12L) <-
-                    substring("    0101000000", nchar(s), 12L)
+            if(nchar(s) <= 14L) {
+                substring(s, nchar(s), 14L) <-
+                    substring("    0101000000", nchar(s), 14L)
                 strptime(s, "%Y%m%d%H%M%S")
-            } else if(substring(s, 13L, 13L) == "Z") {
-                strptime(substring(s, 1L, 12L), "%Y%m%d%H%M%S")
+            } else if(substring(s, 15L, 15L) == "Z") {
+                strptime(substring(s, 1L, 14L), "%Y%m%d%H%M%S")
             } else {
                 strptime(s, "%Y%m%d%H%M%S%z")
             }
@@ -335,28 +348,29 @@ function(x, ...)
 
 ## * Object readers
 
-pdf_read_object <-
-function(con) {
+pdf_stream_read_object <-
+function(con)
+{
     x <- rawToChar(readBin(con, "raw", 1L))
     seek(con, -1L, "current")
     if(x %in% c("t", "f"))
-        pdf_read_object_boolean(con)
+        pdf_stream_read_object_boolean(con)
     else if(x == "(")
-        pdf_read_object_string_literal(con)
+        pdf_stream_read_object_string_literal(con)
     else if(x == "/")
-        pdf_read_object_name(con)
+        pdf_stream_read_object_name(con)
     else if(x == "[")
-        pdf_read_object_array(con)
+        pdf_stream_read_object_array(con)
     else if(x == "n")
-        pdf_read_object_null(con)
+        pdf_stream_read_object_null(con)
     else if(x == "<") {
         ## Hexadecimal string or dictionary
         bytes <- readBin(con, "raw", 2L)
         seek(con, -2L, "current")
         if(rawToChar(bytes) == "<<")
-            pdf_read_object_dictionary_or_stream(con)
+            pdf_stream_read_object_dictionary_or_stream(con)
         else
-            pdf_read_object_string_hexadecimal(con)
+            pdf_stream_read_object_string_hexadecimal(con)
     }
     else if(x == "%") {
         ## Read until eol.
@@ -365,12 +379,12 @@ function(con) {
             if(x %in% pdf_bytes_eols) break
         }
         read_next_non_whitespace_and_seek_back(con)
-        pdf_read_object(con)
+        pdf_stream_read_object(con)
     }
     else {
         ## Could be a number object or an indirect object reference.
         if(x %in% charToRaw("+-"))
-            return(pdf_read_object_numeric(con))
+            return(pdf_stream_read_object_numeric(con))
         bytes <- readBin(con, "raw", 20L)
         seek(con, - length(bytes), "current")
         ## Cannot simply call rawToChar(bytes) as we might have read nul
@@ -381,13 +395,13 @@ function(con) {
         if(grepl("^[[:digit:]]+\\s[[:digit:]]+\\sR[^[:alpha:]]",
                  rawToChar(bytes),
                  useBytes = TRUE))
-            pdf_read_object_indirect_reference(con)
+            pdf_stream_read_object_indirect_reference(con)
         else
-            pdf_read_object_numeric(con)
+            pdf_stream_read_object_numeric(con)
     }
 }
 
-pdf_read_object_boolean <-
+pdf_stream_read_object_boolean <-
 function(con)
 {
     x <- rawToChar(readBin(con, "raw", 1L))
@@ -403,8 +417,9 @@ function(con)
     stop("cannot read boolean object")
 }
 
-pdf_read_object_numeric <-
-function(con) {
+pdf_stream_read_object_numeric <-
+function(con)
+{
     bytes <- raw()
     table <- charToRaw("+-.0123456789")
     while((x <- readBin(con, "raw", 1L)) %in% table) {
@@ -418,8 +433,9 @@ function(con) {
         as.integer(s)
 }
 
-pdf_read_object_string_literal <-
-function(con) {
+pdf_stream_read_object_string_literal <-
+function(con)
+{
     x <- readBin(con, "raw", 1L)
     if(rawToChar(x) != "(")
         stop("cannot read literal string object")
@@ -477,10 +493,9 @@ function(con) {
     rawToChar(bytes)
 }
 
-pdf_read_object_string_hexadecimal <-
-function(con) {
-    ## <FIXME>
-    ## Quick shot, may need to improve.
+pdf_stream_read_object_string_hexadecimal <-
+function(con)
+{
     x <- readBin(con, "raw", 1L)
     if(rawToChar(x) != "<")
         stop("cannot read hexadecimal string object")
@@ -521,8 +536,9 @@ function(con) {
     ## </FIXME>
 }
 
-pdf_read_object_name <-
-function(con) {
+pdf_stream_read_object_name <-
+function(con)
+{
     x <- readBin(con, "raw", 1L)
     if(rawToChar(x) != "/")
         stop("cannot read name object")
@@ -540,8 +556,9 @@ function(con) {
     y
 }
 
-pdf_read_object_array <-
-function(con) {
+pdf_stream_read_object_array <-
+function(con)
+{
     x <- readBin(con, "raw", 1L)
     if(rawToChar(x) != "[")
         stop("cannot read array object")
@@ -553,14 +570,15 @@ function(con) {
             readBin(con, "raw", 1L)
             break
         }
-        y <- c(y, list(pdf_read_object(con)))
+        y <- c(y, list(pdf_stream_read_object(con)))
     }
     class(y) <- "PDF_Array"
     y
 }
 
-pdf_read_object_dictionary_or_stream <-
-function(con) {
+pdf_stream_read_object_dictionary_or_stream <-
+function(con)
+{
     bytes <- readBin(con, "raw", 2L)
     if(rawToChar(bytes) != "<<")
         stop("cannot read dictionary object")
@@ -572,9 +590,9 @@ function(con) {
             readBin(con, "raw", 2L)
             break
         }
-        key <- pdf_read_object(con)
+        key <- pdf_stream_read_object(con)
         read_next_non_whitespace_and_seek_back(con)
-        val <- pdf_read_object(con)
+        val <- pdf_stream_read_object(con)
         y[[key]] <- val
     }
     pos <- seek(con)
@@ -609,7 +627,7 @@ function(con) {
     y
 }
 
-pdf_read_object_null <-
+pdf_stream_read_object_null <-
 function(con)
 {
     bytes <- readBin(con, "raw", 4L)
@@ -618,8 +636,9 @@ function(con)
     NULL
 }
 
-pdf_read_object_indirect_reference <-
-function(con) {
+pdf_stream_read_object_indirect_reference <-
+function(con)
+{
     num <- read_next_bytes_until_whitespace(con)
     read_next_non_whitespace_and_seek_back(con)
     gen <- read_next_bytes_until_whitespace(con)
@@ -633,8 +652,9 @@ function(con) {
     y
 }
 
-pdf_read_object_header <-
-function(con) {
+pdf_stream_read_object_header <-
+function(con)
+{
     ## Read num and gen.
     read_next_non_whitespace_and_seek_back(con)    
     num <- read_next_bytes_until_whitespace(con)
@@ -646,13 +666,32 @@ function(con) {
     c(num = as.integer(rawToChar(num)),
       gen = as.integer(rawToChar(gen)))
 }
+
+pdf_stream_read_direct_object_at_pos <-
+function(con, pos, num = NA_integer_, gen = NA_integer_)
+{
+    ## Move to pos.
+    seek(con, pos)
+    ## Read header first.
+    hdr <- pdf_stream_read_object_header(con)
+    ## Be paranoid.
+    if(any(is.na(hdr)))
+        stop("cannot find object header at xrefed positions")
+    if(!is.na(num) && (num != hdr["num"]))
+        stop(gettextf("mismatch in object numbers (given: %d, found: %d)",
+                      num, hdr["num"]),
+             domain = NA)
+    if(!is.na(gen) && (gen != hdr["gen"]))
+        stop(gettextf("mismatch in generation numbers (given: %d, found: %d)",
+                      gen, hdr["gen"]),
+             domain = NA)
+    ## Read object.
+    pdf_stream_read_object(con)
+}
     
 pdf_doc_get_object <-
 function(doc, ref, con = NULL)
 {
-    ## Experimental---need to read the docs first.
-    ## Right now, get an indirect object from its reference.
-
     if(is.null(con)) {
         con <- file(doc$file, "rb")
         on.exit(close(con))
@@ -666,12 +705,12 @@ function(doc, ref, con = NULL)
 
     ## First look in the xrefs for object streams.
     if((is.na(gen) || (gen == 0L)) &&
-       (length(pos <- which(doc$xrefs_obj_streams[, "num"] == num)))) {
+       (length(pos <- which(doc$xrefs_streams[, "num"] == num)))) {
         if(length(pos) > 1L) {
             ## Can this really happen?
             pos <- pos[1L]
         }
-        ptr <- doc$xrefs_obj_streams[pos, ]
+        ptr <- doc$xrefs_streams[pos, ]
         num <- ptr["str"]
         idx <- ptr["idx"]
         obj <- pdf_doc_get_object(doc, num, con)
@@ -683,14 +722,14 @@ function(doc, ref, con = NULL)
         on.exit(close(stream), add = TRUE)
         i <- 0L
         while(i <= idx) {
-            cnum <- pdf_read_object(stream)
+            cnum <- pdf_stream_read_object(stream)
             read_next_non_whitespace_and_seek_back(stream)
-            cpos <- pdf_read_object(stream)
+            cpos <- pdf_stream_read_object(stream)
             read_next_non_whitespace_and_seek_back(stream)
             i <- i + 1L
         }
         seek(stream, obj[["/First"]] + cpos)
-        return(pdf_read_object(stream))
+        return(pdf_stream_read_object(stream))
     }
 
     ## Figure out the position to start from.
@@ -701,33 +740,16 @@ function(doc, ref, con = NULL)
             pos <- pos[1L]
         }
     }
-    else
+    else {
+        ## <FIXME>
+        ## This looks a bit awkward.
+        ## Eliminate subset() and extract directly.
         pos <- subset(doc$xrefs,
                       (num == ref["num"]) & (gen == ref["gen"]))$pos
+        ## </FIXME>
+    }
 
-    ## con <- file(doc$file, "rb")
-    ## on.exit(close(con))
-    
-    seek(con, pos)
-    ## Read header first.
-    hdr <- pdf_read_object_header(con)
-    ## Be paranoid.
-    if(any(is.na(hdr)))
-        stop("cannot find object header at xrefed positions")
-    gnum <- ref["num"]
-    fnum <- hdr["num"]
-    if(gnum != fnum)
-        stop(gettextf("mismatch in object numbers (given: %d, found: %d)",
-                      gnum, fnum),
-             domain = NA)
-    ggen <- ref["gen"]
-    fgen <- hdr["gen"]
-    if(!is.na(ggen) && (ggen != fgen))
-        stop(gettextf("mismatch in generation numbers (given: %d, found: %d)",
-                      gnum, fnum),
-             domain = NA)
-
-    pdf_read_object(con)
+    pdf_stream_read_direct_object_at_pos(con, pos, num, gen)
 }
 
 pdf_doc_get_objects <-
@@ -738,38 +760,69 @@ function(doc)
 
     objects <- list()
 
-    for(i in seq_len(nrow(doc$xrefs))[-1L]) {
+    ## First get the objects from the old-style xref tables.
+    for(i in seq_len(nrow(doc$xrefs))) {
         entry <- doc$xrefs[i, , drop = FALSE]
-        ## <FIXME>
-        ## Merge this with pdf_doc_get_object()
-        seek(con, entry[["pos"]])
-        hdr <- pdf_read_object_header(con)
-        ## Should do something with the header info
-        obj <- pdf_read_object(con)
-        num <- as.character(entry[["num"]])
-        gen <- as.character(entry[["gen"]])
-        objects[[num]][[gen]] <- obj
+        if(entry[["use"]] == "f") next
+        pos <- entry[["pos"]]
+        num <- entry[["num"]]
+        gen <- entry[["gen"]]
+        obj <- pdf_stream_read_direct_object_at_pos(con, pos, num, gen)
+        objects[[as.character(num)]][[as.character(gen)]] <- obj
     }
-
+    ## Now for the new-style xref streams.
+    if(length(doc$xrefs_streams)) {
+        for(str in unique(doc$xrefs_streams[, "str"])) {
+            obj <- objects[[as.character(str)]][["0"]]
+            n <- obj[["/N"]]
+            first <- obj[["/First"]]
+            stream <- rawConnection(pdf_stream_get_data(obj))
+            tab <- matrix(0, n, 2L)
+            ## First read the object numbers and byte offsets.
+            i <- 1L
+            while(i <= n) {
+                tab[i, 1L] <- pdf_stream_read_object(stream)
+                read_next_non_whitespace_and_seek_back(stream)
+                tab[i, 2L] <- pdf_stream_read_object(stream)
+                read_next_non_whitespace_and_seek_back(stream)
+                i <- i + 1L
+            }
+            ## Then read the objects from the stream.
+            i <- 1L
+            while(i <= n) {
+                seek(stream, first + tab[i, 2L])
+                obj <- pdf_stream_read_object(stream)
+                objects[[as.character(tab[i, 1L])]][["0"]] <- obj
+                i <- i + 1L                
+            }
+            close(stream)
+        }
+    }
+                
     objects
 }
 
 ## * pdf_doc_get_page_tree
 
 pdf_doc_get_page_tree <-
-function(doc)
+function(doc, con = NULL)
 {
-    catalog <- pdf_doc_get_object(doc, doc$trailer[["/Root"]])
+    if(is.null(con)) {
+        con <- file(doc$file, "rb")
+        on.exit(close(con))
+    }
+    
+    catalog <- pdf_doc_get_object(doc, doc$trailer[["/Root"]], con)
     ## Pages entry in the catalog dictionary is required and must be an
     ## indirect reference.
-    pages <- pdf_doc_get_object(doc, catalog[["/Pages"]])
+    pages <- pdf_doc_get_object(doc, catalog[["/Pages"]], con)
     recurse <- function(x) {
         if(!is.null(kids <- x[["/Kids"]])) {
             x[["/Kids"]] <-
                 lapply(kids,
                        function(kid)
                        if(inherits(kid, "PDF_Indirect_Reference")) {
-                           recurse(pdf_doc_get_object(doc, kid))
+                           recurse(pdf_doc_get_object(doc, kid, con))
                        } else {
                            kid
                        })
@@ -785,8 +838,13 @@ function(doc)
 }
 
 pdf_doc_get_page_list <-
-function(doc)
+function(doc, con = NULL)
 {
+    if(is.null(con)) {
+        con <- file(doc$file, "rb")
+        on.exit(close(con))
+    }
+    
     pages <- list()
     ## Cannot use rapply() because this only deals with nodes which are
     ## not lists.
@@ -806,60 +864,26 @@ function(doc)
 
 ## * pdf_doc_get_content_streams
 
-## pdf_doc_get_page_content_streams <-
-## function(doc)
-## {
-##     streams <- list()
-##     recurse <- function(x) {
-##         if(!is.null(kids <- x[["/Kids"]])) {
-##             for(kid in kids) {
-##                 if(inherits(kid, "PDF_Page")) {
-##                     streams <<-
-##                         c(streams,
-##                           list(pdf_doc_get_object(doc, kid[["/Contents"]])))
-##                 }
-##                 recurse(kid)
-##             }
-##         }
-##     }
-##     recurse(pdf_doc_get_page_tree(doc))
-##     streams
-## }
-
 pdf_doc_get_page_content_streams <-
 function(doc)
 {
-    pages <- pdf_doc_get_page_list(doc)
-    lapply(pages,
-           function(p) pdf_doc_get_object(doc, p[["/Contents"]]))
-}
+    con <- file(doc$file, "rb")
+    on.exit(close(con))
 
-## pdf_doc_get_page_resources <- 
-## function(doc)
-## {
-##     out <- list()
-##     recurse <- function(x) {
-##         if(!is.null(kids <- x[["/Kids"]])) {
-##             for(kid in kids) {
-##                 if(inherits(kid, "PDF_Page")) {
-##                     out <<-
-##                         c(out,
-##                           list(pdf_doc_get_object(doc, kid[["/Resources"]])))
-##                 }
-##                 recurse(kid)
-##             }
-##         }
-##     }
-##     recurse(pdf_doc_get_page_tree(doc))
-##     out
-## }
+    pages <- pdf_doc_get_page_list(doc, con)
+    lapply(pages,
+           function(p) pdf_doc_get_object(doc, p[["/Contents"]], con))
+}
 
 pdf_doc_get_page_resources <- 
 function(doc)
 {
-    pages <- pdf_doc_get_page_list(doc)
+    con <- file(doc$file, "rb")
+    on.exit(close(con))
+    
+    pages <- pdf_doc_get_page_list(doc, con)
     lapply(pages,
-           function(p) pdf_doc_get_object(doc, p[["/Resources"]]))
+           function(p) pdf_doc_get_object(doc, p[["/Resources"]], con))
 }
 
 ## * Streams
@@ -924,7 +948,8 @@ function(x, params) {
 ## * Utilities
 
 read_next_bytes_until_whitespace <-
-function(con) {
+function(con)
+{
     bytes <- raw()
     repeat {
         x <- readBin(con, "raw", 1L)
@@ -935,7 +960,8 @@ function(con) {
 }
 
 read_next_non_whitespace <-
-function(con) {
+function(con)
+{
     repeat {
         x <- readBin(con, "raw", 1L)
         if(!length(x) || !(x %in% pdf_bytes_whitespaces)) break
@@ -944,14 +970,16 @@ function(con) {
 }
 
 read_next_non_whitespace_and_seek_back <-
-function(con) {
+function(con)
+{
     x <- read_next_non_whitespace(con)
     seek(con, -1L, "current")
     x
 }
 
 read_prev_bytes_after_eols <-
-function(con) {
+function(con)
+{
     ## Read the previous bytes until the first eol byte, and move point
     ## to the first preceding non-eol byte.
     bytes <- raw()

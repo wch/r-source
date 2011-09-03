@@ -72,6 +72,8 @@ S3method("print", "undoc")
 S3method("print", "xgettext")
 S3method("print", "xngettext")
 
+S3method("print", "pdf_info")
+
 S3method("print", "check_Rd_contents")
 S3method("print", "check_Rd_metadata")
 S3method("print", "check_Rd_xrefs")
