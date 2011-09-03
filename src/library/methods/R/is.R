@@ -74,7 +74,7 @@ extends <-
         ext <- classDef1@contains
         if(!identical(maybe, TRUE) && length(ext) > 0)
         {
-            noTest <- sapply(ext, function(obj)identical(obj@test, .simpleExtTest))
+            noTest <- sapply(ext, function(obj)identical(body(obj@test), TRUE))
             ext <- ext[noTest]
         }
         if(fullInfo) {
@@ -106,7 +106,7 @@ extends <-
         value
     else if(is.logical(value))
         value
-    else if(value@simple || identical(value@test, .simpleExtTest))
+    else if(value@simple || identical(body(value@test), TRUE))
         TRUE
     else
         maybe

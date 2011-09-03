@@ -672,7 +672,7 @@
         if(simpleOnly)
             eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple)
         else # eliminate conditional inheritance
-            eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple || identical(x@test, .simpleExtTest))
+            eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple || identical(body(x@test), TRUE))
         what[eligible]
     }
 }
