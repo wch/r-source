@@ -432,10 +432,15 @@
       \code{quartz()} and the cairographics-based \code{X11()} types
       with buffering (which are the default on-screen devices).
 
-      \item The default \code{colormodel} for \code{postscript()} and
-      \code{pdf()} is now called \code{"srgb"} to more accurately
-      describe it.
+      \item The default \code{colormodel} for \code{postscript()} is now
+      called \code{"srgb+gray"} to more accurately describe it.
+      (Instead of \code{"rgb"}.)
 
+      The default \code{colormodel} for \code{pdf()} and the sRGB-only
+      \code{colormodel} for \code{postscript()} and \code{pdf()} are now
+      called \code{"srgb"}, instead of \code{"rgb"} and
+      \code{"rgb-nogray"} respectively.
+     
       \item \code{postscript()} with values \code{colormodel = "rgb"} and
       \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
       2.13.0 of uncalibrated RGB, which under some circumstances can be
@@ -459,7 +464,7 @@
       \item \code{colormodel = "grey"} is allowed for
       \code{postscript()} and \code{pdf()}.
       
-      \item The default \code{postscript(colormodel = "srgb")} now
+      \item The default \code{postscript(colormodel = "srgb+gray")} now
       changes colorspace less often, so e.g. coloured \code{image()}
       plots may render much faster.
 
