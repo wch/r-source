@@ -5,7 +5,7 @@
 /* This is the public header file for the PCRE library, to be #included by
 applications that call the PCRE functions.
 
-           Copyright (c) 1997-2010 University of Cambridge
+           Copyright (c) 1997-2011 University of Cambridge
 
 -----------------------------------------------------------------------------
 Redistribution and use in source and binary forms, with or without
@@ -42,9 +42,9 @@ POSSIBILITY OF SUCH DAMAGE.
 /* The current PCRE version information. */
 
 #define PCRE_MAJOR          8
-#define PCRE_MINOR          12
+#define PCRE_MINOR          13
 #define PCRE_PRERELEASE     
-#define PCRE_DATE           2011-01-15
+#define PCRE_DATE           2011-09-03
 
 /* When an application links to a PCRE DLL in Windows, the symbols that are
 imported have to be identified as such. When building PCRE, the appropriate
@@ -163,6 +163,32 @@ compile-time only bits for runtime options, or vice versa. */
 #define PCRE_ERROR_BADNEWLINE     (-23)
 #define PCRE_ERROR_BADOFFSET      (-24)
 #define PCRE_ERROR_SHORTUTF8      (-25)
+#define PCRE_ERROR_RECURSELOOP    (-26)
+
+/* Specific error codes for UTF-8 validity checks */
+
+#define PCRE_UTF8_ERR0               0
+#define PCRE_UTF8_ERR1               1
+#define PCRE_UTF8_ERR2               2
+#define PCRE_UTF8_ERR3               3
+#define PCRE_UTF8_ERR4               4
+#define PCRE_UTF8_ERR5               5
+#define PCRE_UTF8_ERR6               6
+#define PCRE_UTF8_ERR7               7
+#define PCRE_UTF8_ERR8               8
+#define PCRE_UTF8_ERR9               9
+#define PCRE_UTF8_ERR10             10
+#define PCRE_UTF8_ERR11             11
+#define PCRE_UTF8_ERR12             12
+#define PCRE_UTF8_ERR13             13
+#define PCRE_UTF8_ERR14             14
+#define PCRE_UTF8_ERR15             15
+#define PCRE_UTF8_ERR16             16
+#define PCRE_UTF8_ERR17             17
+#define PCRE_UTF8_ERR18             18
+#define PCRE_UTF8_ERR19             19
+#define PCRE_UTF8_ERR20             20
+#define PCRE_UTF8_ERR21             21
 
 /* Request types for pcre_fullinfo() */
 
@@ -254,6 +280,8 @@ typedef struct pcre_callout_block {
   /* ------------------- Added for Version 1 -------------------------- */
   int          pattern_position;  /* Offset to next item in the pattern */
   int          next_item_length;  /* Length of next item in the pattern */
+  /* ------------------- Added for Version 2 -------------------------- */
+  const unsigned char *mark;      /* Pointer to current mark or NULL    */
   /* ------------------------------------------------------------------ */
 } pcre_callout_block;
 

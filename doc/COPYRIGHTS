@@ -327,7 +327,7 @@ According to http://www.netlib.org/cephes/readme
 src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
 
-   Copyright (c) 1997-2010 University of Cambridge
+   Copyright (c) 1997-2011 University of Cambridge
    All rights reserved.
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires

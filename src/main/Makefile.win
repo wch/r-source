@@ -67,6 +67,7 @@ memory-CPPFLAGS=$(malloc-DEFS)
 printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
+util-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
 
 ifdef USE_ICU
 util-CPPFLAGS=-DUSE_ICU -I"$(ICU_PATH)"/include

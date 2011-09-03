@@ -41,6 +41,9 @@
 
       It enforces the documented limit of \eqn{2^{31}-1}{2^31-1} bytes
       in a single call.
+      
+      \item PCRE has been updated to version 8.13, a bug-fix release
+      with updated Unicode tables (version 6.0.0).
     }
   }
 

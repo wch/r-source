@@ -1255,13 +1255,24 @@ Rboolean mbcsValid(const char *str)
     return  ((int)mbstowcs(NULL, str, 0) >= 0);
 }
 
+#include "pcre.h"
+/* This changed at 8.13: we don't allow < 8.0 */
+#if  PCRE_MAJOR > 8 || PCRE_MINOR >= 13
+extern int _pcre_valid_utf8(const char *string, int length, int *erroroffset);
 
+Rboolean utf8Valid(const char *str)
+{
+    int errp;
+    return  (_pcre_valid_utf8(str, (int) strlen(str), &errp) == 0);
+}
+#else
 extern int _pcre_valid_utf8(const char *string, int length);
 
 Rboolean utf8Valid(const char *str)
 {
     return  (_pcre_valid_utf8(str, strlen(str)) < 0);
 }
+#endif
 
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */
