@@ -17,11 +17,12 @@
       \code{"max.print"} and so are much faster for very long datetime
       vectors.  (Suggestion of Yohan Chalabi.)
 
-      \item \code{untar2()} now works around checksums in \code{tar}
-      files that use more than 6 digits for the checksum. (\PR{14654})
+      \item \code{untar2()} now works around errors generated with
+      \code{tar} files that use more than the standard 6 digits for the
+      checksum. (\PR{14654})
 
       \item \code{install.packages()} with \code{Ncpus > 1} guards
-      against simultaneous installation of indirect dependences as well
+      against simultaneous installation of indirect dependencies as well
       as direct ones.
       
       \item Sweave now knows about a few more Windows' encodings
@@ -114,7 +115,8 @@
       
       \item The \code{pdf()} device only includes the definition of the
       sRGB colorspace in the output file for the colormodels which use
-      it (and not for \code{"gray"} nor \code{"cmyk"}).
+      it (and not for \code{"gray"} nor \code{"cmyk"}): this saves ca
+      9KB in the output file.
     }
   }
 }
