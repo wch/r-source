@@ -147,7 +147,7 @@ function(file)
                 ## Use default [0 Size].
                 cbind(0, size)
             } else {
-                matrix(index, ncol = 2L, byrow = TRUE)
+                matrix(unlist(index), ncol = 2L, byrow = TRUE)
             }
             field_sizes <- unlist(obj[["/W"]])
             xrefs <- list()
@@ -753,10 +753,12 @@ function(doc, ref, con = NULL)
 }
 
 pdf_doc_get_objects <-
-function(doc)
+function(doc, con = NULL)
 {
-    con <- file(doc$file, "rb")
-    on.exit(close(con))
+    if(is.null(con)) {
+        con <- file(doc$file, "rb")
+        on.exit(close(con))
+    }
 
     objects <- list()
 
@@ -892,10 +894,22 @@ pdf_stream_get_data <-
 function(obj) {
     bytes <- obj[["__streamdata__"]]
     filters <- as.list(obj[["/Filter"]])
-    for(filter in filters) {
+    ## Handle DecodeParms.
+    ## The PDF specs say that if there is a single filter, DecodeParms
+    ## can be a dictionary object with the parameters, but need not be
+    ## given if the defaults are to be used.  If there are multiple
+    ## filters and any filter has non-default parameters, DecodeParms
+    ## must be an array with one entry for each filter: either a
+    ## dictionary with the parameters or the null object.
+    parameters <- obj[["/DecodeParms"]]
+    if(is.null(parameters))
+        parameters <- rep.int(list(NULL), length(filters))
+    else if(inherits(parameters, "PDF_Dictionary"))
+        parameters <- list(parameters)
+    for(i in seq_along(filters)) {
+        filter <- filters[[i]]
         if(filter == "/FlateDecode")
-            bytes <- pdf_filter_flate_decode(bytes,
-                                             obj[["/DecodeParms"]])
+            bytes <- pdf_filter_flate_decode(bytes, parameters[[i]])
         else
             stop(gettextf("unsupported filter %s",
                           sQuote(filter)),
