@@ -207,7 +207,6 @@
  R_compress1
  R_compress2
  R_compress3
- R_compute_identical
  R_cpolyroot
  R_current_trace_state
  R_data_class2
