@@ -7035,12 +7035,15 @@ static void PDF_NewPage(const pGEcontext gc,
     char buf[512];
 
     if(pd->pageno >= pd->pagemax || pd->nobjs >= 3*pd->pagemax) {
-	pd->pageobj = (int *)
-	    realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
-	pd->pos = (int *) realloc(pd->pos,
-				  (6*pd->pagemax + 550) * sizeof(int));
-	if(!pd->pos || !pd->pageobj)
+	/* if realloc fails the original block remains allocated */
+	void *tmp = realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
+	if (!tmp)
 	    error(_("unable to increase page limit: please shutdown the pdf device"));
+	pd->pageobj = (int *) tmp;
+	tmp = realloc(pd->pos, (6*pd->pagemax + 550) * sizeof(int));
+	if(!tmp)
+	    error("unable to increase object limit: please shutdown the pdf device");
+	pd->pos = (int *) tmp;
 	pd->pagemax *= 2;
     }
 
