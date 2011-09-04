@@ -224,7 +224,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if(!tmp) {
 				free(buf);
 				error(_("could not allocate memory for 'read.dcf'"));
-			    } else tmp = buf;
+			    } else buf = tmp;
 			    buflen = need;
 			}
 			strncpy(buf, line, Rf_strchr(line, ':') - line);
