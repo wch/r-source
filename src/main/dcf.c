@@ -53,7 +53,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP fold_excludes;
     Rboolean field_fold = TRUE, has_fold_excludes;
     const char *field_name;
-    int offset;
+    int offset = 0; /* -Wall */
 
     checkArity(op, args);
 
@@ -142,9 +142,11 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			need += strlen(line + offset);
 		    }
 		    if(buflen < need) {
-			buf = (char *) realloc(buf, need);
-			if(!buf)
+			char *tmp = (char *) realloc(buf, need);
+			if(!tmp) {
+			    free(buf);
 			    error(_("could not allocate memory for 'read.dcf'"));
+			} else buf = tmp;
 			buflen = need;
 		    }
 		    strcpy(buf,CHAR(STRING_ELT(retval, lastm + nwhat * k)));
@@ -218,9 +220,11 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			*/
 			need = strlen(line+regmatch[0].rm_eo);
 			if(buflen < need){
-			    buf = (char *) realloc(buf, need);
-			    if(!buf)
+			    char *tmp = (char *) realloc(buf, need);
+			    if(!tmp) {
+				free(buf);
 				error(_("could not allocate memory for 'read.dcf'"));
+			    } else tmp = buf;
 			    buflen = need;
 			}
 			strncpy(buf, line, Rf_strchr(line, ':') - line);
