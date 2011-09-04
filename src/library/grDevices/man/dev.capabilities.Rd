@@ -7,7 +7,7 @@
 \alias{dev.capabilities}
 \title{Query Capabilities of the Current Graphics Device}
 \description{
-  Query the capabilibities of the current graphics device.
+  Query the capabilities of the current graphics device.
 }
 \usage{
 dev.capabilities(what = NULL)
