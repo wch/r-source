@@ -3961,7 +3961,7 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
        (b) add a mask with ImageType 3: see PLRM 3rd ed section 4.10.6.
 
        (c) interpolation (done, but at least ghostscript seems to
-       ignore the request (and Mac preview always interpolates.)
+       ignore the request, and Mac preview always interpolates.)
 
        (d) sRGB colorspace (done)
     */
