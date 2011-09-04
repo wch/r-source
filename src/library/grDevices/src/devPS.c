@@ -3960,8 +3960,9 @@ static void PS_writeRaster(unsigned int *raster, int w, int h,
 
        (b) add a mask with ImageType 3: see PLRM 3rd ed section 4.10.6.
 
-       (c) interpolation (done, but at least ghostscript seems to
-       ignore the request, and Mac preview always interpolates.)
+       (c) interpolation (done but disabled, as at least ghostscript
+       seems to ignore the request, and Mac preview always
+       interpolates.)
 
        (d) sRGB colorspace (done)
     */
@@ -5357,6 +5358,8 @@ typedef struct {
     int w;
     int h;
     Rboolean interpolate;
+    int nobj;     /* The object number when written out */
+    int nmaskobj; /* The mask object number */
 } rasterImage;
 
 typedef struct {
@@ -5446,6 +5449,7 @@ typedef struct {
     /* Raster images used on the device */
     rasterImage *rasters;
     int numRasters; /* number in use */
+    int writtenRasters; /* number written out */
     int maxRasters; /* size of array allocated */
     /* Soft masks for raster images */
     int *masks;
@@ -5562,6 +5566,8 @@ static int addRaster(rcolorPtr raster, int w, int h,
     pd->rasters[pd->numRasters].w = w;
     pd->rasters[pd->numRasters].h = h;
     pd->rasters[pd->numRasters].interpolate = interpolate;
+    pd->rasters[pd->numRasters].nobj = -1; /* not yet written out */
+    pd->rasters[pd->numRasters].nmaskobj = -1; /* not yet written out */
 
     /* If any of the pixels are not opaque, we need to add
      * a mask as well */
@@ -5575,9 +5581,8 @@ static int addRaster(rcolorPtr raster, int w, int h,
 
 static void killRasterArray(rasterImage *rasters, int numRasters) {
     int i;
-    for (i = 0; i < numRasters; i++) {
+    for (i = 0; i < numRasters; i++)
 	if (rasters[i].raster != NULL) free(rasters[i].raster);
-    }
 }
 
 /* Detect a mask by masks[] >= 0 */
@@ -5595,6 +5600,7 @@ static void writeRasterXObject(rasterImage raster, int n,
 {
     Bytef *buf, *buf2, *p;
     uLong inlen;
+    
     if (streql(pd->colormodel, "gray")) {
 	inlen = raster.w * raster.h;
 	p = buf = Calloc(inlen, Bytef);
@@ -6019,7 +6025,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
      * END Load fonts
      *****************************/
 
-    pd->numRasters = 0;
+    pd->numRasters = pd->writtenRasters = 0;
     pd->maxRasters = 64; /* dynamic */
     pd->rasters = initRasterArray(pd->maxRasters);
     if (!pd->rasters) {
@@ -6653,13 +6659,23 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* Object 4 is the standard resources dict for each page */
 
-    /* Count how many images */
+    /* Count how many images and masks */
     nraster = pd->numRasters;
-    /* Count how many image masks */
     nmask = pd->numMasks;
+
+    if(pd->nobjs + nraster + nmask + 500 >= pd->max_nobjs) {
+	int new =  pd->nobjs + nraster + nmask + 500;
+	void *tmp = realloc(pd->pos, new * sizeof(int));
+	if(!tmp)
+	    error("unable to increase object limit: please shutdown the pdf device");
+	pd->pos = (int *) tmp;
+	pd->max_nobjs = new;
+    }
 
     pd->pos[4] = (int) ftell(pd->pdffp);
 
+    /* The resource dictionary for each page */
+    /* ProcSet is regarded as obsolete as from PDF 1.4 */
     if (nraster > 0) {
 	if (nmask > 0) {
 	    fprintf(pd->pdffp,
@@ -6675,7 +6691,7 @@ static void PDF_endfile(PDFDesc *pd)
 		"4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font <<");
     }
 
-    /* Count how many encodings will be included
+    /* Count how many encodings will be included:
      * fonts come after encodings */
     nenc = 0;
     if (pd->encodings) {
@@ -6723,25 +6739,17 @@ static void PDF_endfile(PDFDesc *pd)
     if (nraster > 0) {
 	/* image XObjects */
 	fprintf(pd->pdffp, "/XObject <<\n");
-	for (i = 0; i < nraster; i++)
-	    fprintf(pd->pdffp, "  /Im%d %d 0 R\n", i, ++tempnobj);
-
-	if (nmask > 0) {
-	    /* soft mask XObjects */
-	    for (i = 0; i < nraster; i++) {
+	for (i = 0; i < nraster; i++) {
+	    fprintf(pd->pdffp, "  /Im%d %d 0 R\n", i, pd->rasters[i].nobj);
 		if (pd->masks[i] >= 0)
 		    fprintf(pd->pdffp, "  /Mask%d %d 0 R\n",
-			    pd->masks[i], ++tempnobj);
-	    }
+			    pd->masks[i], pd->rasters[i].nmaskobj);
 	}
-
 	fprintf(pd->pdffp, ">>\n");
     }
 
     /* graphics state parameter dictionaries */
     fprintf(pd->pdffp, "/ExtGState << ");
-    /* <FIXME> is this correct now ?
-    tempnobj = pd->nobjs + nenc + nfonts + cidnfonts; */
     for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++)
 	fprintf(pd->pdffp, "/GS%i %d 0 R ", i + 1, ++tempnobj);
     for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
@@ -6768,13 +6776,13 @@ static void PDF_endfile(PDFDesc *pd)
     if(tempnobj >= pd->max_nobjs) {
 	int new = tempnobj + 500;
 	void *tmp = realloc(pd->pos, new * sizeof(int));
-	if(!pd->pos || !pd->pageobj)
+	if(!tmp)
 	    error("unable to increase object limit: please shutdown the pdf device");
 	pd->pos = (int *) tmp;
 	pd->max_nobjs = new;
     }
 
-    /*
+   /*
      * Write out objects representing the encodings
      */
 
@@ -6938,22 +6946,6 @@ static void PDF_endfile(PDFDesc *pd)
 	}
     }
 
-    /* Write out objects representing the raster images */
-    for (i = 0; i < nraster; i++) {
-	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-	writeRasterXObject(pd->rasters[i], pd->nobjs,
-			   pd->masks[i],
-			   pd->nobjs - i + nraster + pd->masks[i], pd);
-    }
-
-    /* Write out objects representing the soft masks */
-    for (i = 0; i < nraster; i++) {
-	if (pd->masks[i] >= 0) {
-	    pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-	    writeMaskXObject(pd->rasters[i], pd->nobjs, pd);
-	}
-    }
-
     /*
      * Write out objects representing the graphics state parameter
      * dictionaries for alpha transparency
@@ -7076,6 +7068,32 @@ static void PDF_endpage(PDFDesc *pd)
 	fprintf(pd->pdffp, "%d 0 obj\n%d\nendobj\n", pd->nobjs,
 		here - pd->startstream);
     }
+
+    if(pd->nobjs + 2*(pd->numRasters-pd->writtenRasters) + 500 
+       >= pd->max_nobjs) {
+	int new =  pd->nobjs + 2*(pd->numRasters-pd->writtenRasters) + 2000;
+	void *tmp = realloc(pd->pos, new * sizeof(int));
+	if(!tmp)
+	    error("unable to increase object limit: please shutdown the pdf device");
+	pd->pos = (int *) tmp;
+	pd->max_nobjs = new;
+    }
+
+    /* Write out any new rasters */
+    for (int i = pd->writtenRasters; i < pd->numRasters; i++) {
+	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+	pd->rasters[i].nobj = pd->nobjs;
+	writeRasterXObject(pd->rasters[i], pd->nobjs,
+			   pd->masks[i], pd->nobjs+1, pd);
+ 	if (pd->masks[i] >= 0) {
+	    pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+	    pd->rasters[i].nmaskobj = pd->nobjs;
+	    writeMaskXObject(pd->rasters[i], pd->nobjs, pd);
+	}
+	free(pd->rasters[i].raster);
+	pd->rasters[i].raster = NULL;
+	pd->writtenRasters = pd->numRasters;
+   }
 }
 
 #define R_VIS(col) (R_ALPHA(col) > 0)
@@ -7088,7 +7106,7 @@ static void PDF_NewPage(const pGEcontext gc,
 
     if(pd->pageno >= pd->pagemax) {
 	void * tmp = realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
-	if(!pd->pageobj)
+	if(!tmp)
 	    error("unable to increase page limit: please shutdown the pdf device");
 	pd->pageobj = (int *) tmp;
 	pd->pagemax *= 2;
@@ -7096,7 +7114,7 @@ static void PDF_NewPage(const pGEcontext gc,
     if(pd->nobjs + 500 >= pd->max_nobjs) {
 	int new = pd->max_nobjs + 2000;
 	void *tmp = realloc(pd->pos, new * sizeof(int));
-	if(!pd->pos || !pd->pageobj)
+	if(!tmp)
 	    error("unable to increase object limit: please shutdown the pdf device");
 	pd->pos = (int *) tmp;
 	pd->max_nobjs = new;
@@ -7161,6 +7179,7 @@ static void PDF_Close(pDevDesc dd)
 
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
+    /* may no longer be needed */
     killRasterArray(pd->rasters, pd->maxRasters);
     PDFcleanup(6, pd); /* which frees masks and rasters */
 }
@@ -7261,16 +7280,14 @@ static void PDF_Raster(unsigned int *raster,
     double angle, cosa, sina;
     int alpha;
 
-    /* Record the raster so can write it out when file is closed */
+    /* Record the raster so can write it out when page is finished */
     alpha = addRaster(raster, w, h, interpolate, pd);
 
     if(pd->inText) textoff(pd);
     /* Save graphics state */
     fprintf(pd->pdffp, "q\n");
     /* Need to set AIS graphics state parameter ? */
-    if (alpha) {
-	fprintf(pd->pdffp, "/GSais gs\n");
-    }
+    if (alpha) fprintf(pd->pdffp, "/GSais gs\n");
     /* translate */
     fprintf(pd->pdffp,
 	    "1 0 0 1 %.2f %.2f cm\n",
@@ -7286,11 +7303,10 @@ static void PDF_Raster(unsigned int *raster,
     fprintf(pd->pdffp,
 	    "%.2f 0 0 %.2f 0 0 cm\n",
 	    width, height);
-    /* Refer to XObject which will be written to file when file is closed */
+    /* Refer to XObject which will be written to file when page is finished */
     fprintf(pd->pdffp, "/Im%d Do\n", pd->numRasters - 1);
     /* Restore graphics state */
     fprintf(pd->pdffp, "Q\n");
-
 }
 
 #endif
