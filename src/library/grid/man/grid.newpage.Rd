@@ -23,8 +23,9 @@ grid.newpage(recording = TRUE)
   \code{windows} and \code{quartz}), the page is first painted with the
   canvas colour and then the background colour.
 
-  There is a hook called \code{"grid.newpage"} (see \code{\link{setHook}})
-  which is used in the testing code to annotate the new page.  The hook
+  There are two hooks called \code{"before.grid.newpage"} and
+  \code{"grid.newpage"} (see \code{\link{setHook}}).  The latter
+  is used in the testing code to annotate the new page.  The hook
   function(s) are called with no argument.  (If the value is a character
   string, \code{get} is called on it from within the \pkg{grid}
   namespace.)

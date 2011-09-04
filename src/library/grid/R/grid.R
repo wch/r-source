@@ -309,21 +309,25 @@ grid.prompt <- function(ask) {
 # so that they can use your function within a parent viewport
 # (rather than the whole device) if they want to.
 grid.newpage <- function(recording=TRUE) {
-  # NOTE that we do NOT do grid.Call here because we have to do
-  # things slightly differently if grid.newpage is the first grid operation
-  # on a new device
-  .Call(L_newpagerecording)
-  .Call(L_newpage)
-  .Call(L_initGPar)
-  .Call(L_initViewportStack)
-  if (recording) {
-    .Call(L_initDisplayList)
-    for (fun in getHook("grid.newpage"))  {
+    for (fun in getHook("before.grid.newpage"))  {
         if(is.character(fun)) fun <- get(fun)
         try(fun())
     }
-  }
-  invisible()
+    # NOTE that we do NOT do grid.Call here because we have to do
+    # things slightly differently if grid.newpage is the first grid operation
+    # on a new device
+    .Call(L_newpagerecording)
+    .Call(L_newpage)
+    .Call(L_initGPar)
+    .Call(L_initViewportStack)
+    if (recording) {
+        .Call(L_initDisplayList)
+        for (fun in getHook("grid.newpage"))  {
+            if(is.character(fun)) fun <- get(fun)
+            try(fun())
+        }
+    }
+    invisible()
 }
 
 ###########
