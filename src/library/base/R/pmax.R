@@ -30,10 +30,16 @@ pmax <- function (..., na.rm = FALSE)
         has.na <- FALSE
         for (each in elts[-1L]) {
             attr(each, "dim") <- NULL
-            if(length(mmm) < (m <- length(each)))
-                mmm <- rep(mmm, length.out=m)
-            else if(length(each) < (m <- length(mmm)))
-                each <- rep(each, length.out=m)
+            l1 <- length(each); l2 <- length(mmm)
+            if(l2 < l1) {
+                if (l2 && l1 %% l2)
+                    warning("an argument will be fractionally recycled")
+                mmm <- rep(mmm, length.out = l1)
+            } else if(l1 && l1 < l2) {
+                if (l2 %% l1)
+                    warning("an argument will be fractionally recycled")
+                each <- rep(each, length.out = l2)
+            }
             nas <- cbind(is.na(mmm), is.na(each))
             if(has.na || (has.na <- any(nas))) {
                 mmm[nas[, 1L]] <- each[nas[, 1L]]
@@ -61,10 +67,16 @@ pmin <- function (..., na.rm = FALSE)
         has.na <- FALSE
         for (each in elts[-1L]) {
             attr(each, "dim") <- NULL
-            if(length(mmm) < (m <- length(each)))
-                mmm <- rep(mmm, length.out=m)
-            else if(length(each) < (m <- length(mmm)))
-                each <- rep(each, length.out=m)
+            l1 <- length(each); l2 <- length(mmm)
+            if(l2 < l1) {
+                if (l2 && l1 %% l2)
+                    warning("an argument will be fractionally recycled")
+                mmm <- rep(mmm, length.out = l1)
+            } else if(l1 && l1 < l2) {
+                if (l2 %% l1)
+                    warning("an argument will be fractionally recycled")
+                each <- rep(each, length.out = l2)
+            }
             nas <- cbind(is.na(mmm), is.na(each))
             if(has.na || (has.na <- any(nas))) {
                 mmm[nas[, 1L]] <- each[nas[, 1L]]

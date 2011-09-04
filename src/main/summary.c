@@ -1013,7 +1013,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue; /* -Wall */
 }
 
-/* op = 0 is pmin.int, op = 1 is pmax.int
+/* op = 0 is pmin, op = 1 is pmax
    It seems that NULL and logicals are supposed to be handled as
    if they have been coerced to integer.
  */
@@ -1066,6 +1066,14 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if(anstype < INTSXP) anstype = INTSXP;
     if(len == 0) return allocVector(anstype, 0);
+    /* Check for fractional recycling (added in 2.14.0) */
+    for(a = args; a != R_NilValue; a = CDR(a)) {
+	n = length(CAR(a));
+	if (len % n) {
+	    warning(_("an argument will be fractionally recycled"));
+	    break;
+	}
+    }
 
     PROTECT(ans = allocVector(anstype, len));
     switch(anstype) {

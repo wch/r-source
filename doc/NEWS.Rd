@@ -388,6 +388,9 @@
 
       \item Class \code{"raster"} gains an \code{is.na} method to avoid
       confusion from the misuse of the matrix method (such as PR#14618).
+      
+      \item \code{pmin} and \code{pmax} now warn if an argument is
+      partially recycled (wish of \PR{14638}).
     }
   }
 
