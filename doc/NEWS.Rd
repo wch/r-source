@@ -385,6 +385,9 @@
       \item The parser no longer accepts the digit \code{8} in an octal
       character code in a string, nor does it accept unterminated 
       strings in a file.  (Reported by Bill Dunlap.)
+
+      \item Class \code{"raster"} gains an \code{is.na} method to avoid
+      confusion from the misuse of the matrix method (such as PR#14618).
     }
   }
 

@@ -89,18 +89,19 @@ as.raster.array <- function(x, max=1, ...) {
 # Conversion to (character) matrix
 as.matrix.raster <- function(x, ...) {
     dim <- dim(x)
-    m <- matrix(x, nrow=dim[1], ncol=dim[2], byrow=TRUE)
+    m <- matrix(x, nrow=dim[1L], ncol=dim[2L], byrow=TRUE)
     m
 }
+
+is.na.raster <- function(x) is.na(as.matrix(x))
 
 # FIXME:
 # It would be useful to have conversion to array (rgb[a])
 # so that people could play with numeric machinations
 # with raster images
 
-print.raster <- function(x, ...) {
-    print(as.matrix(x))
-}
+print.raster <- function(x, ...) print(as.matrix(x))
+
 
 # Subsetting methods
 # Non-standard because raster is ROW-wise

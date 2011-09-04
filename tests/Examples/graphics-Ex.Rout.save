@@ -2218,8 +2218,8 @@ attr(,"class")
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
-> nameEx("raster")
-> ### * raster
+> nameEx("rasterImage")
+> ### * rasterImage
 > 
 > flush(stderr()); flush(stdout())
 > 

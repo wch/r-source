@@ -11,6 +11,7 @@
 \alias{as.raster.character}
 \alias{as.raster.matrix}
 \alias{as.raster.array}
+
 \title{Create a Raster Object}
 \description{
   Functions to create a raster object (representing a bitmap
@@ -53,10 +54,15 @@ as.raster(x, \dots)
 
   There is a method for converting a raster object to a matrix
   (of colour strings).
-
+  
   Raster objects can be compared
   for equality or inequality (with each other or with a
   colour string).
+  
+  As from \R 2.14.0 there is a \code{\link{is.na}} method which returns
+  a logical matrix of the same dimensions as the raster object.  Note
+  that \code{NA} values are interpreted as the fully transparent colour
+  by some (but not all) graphics devices.
 }
 \value{
   For \code{as.raster()}, a raster object.
