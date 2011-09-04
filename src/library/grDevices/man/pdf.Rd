@@ -80,8 +80,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Defaults to \code{FALSE}.}
-  \item{maxRasters}{integer.  The initial number of raster images to
-    be stored in this PDF document.  Defaults to \code{1000}.}
+  \item{maxRasters}{integer.  Unused in \R >= 2.14.0, previously the
+    maximum number of raster images to be stored in this PDF document
+    (default \code{64} in \R < 2.13.2).}
   \item{compress}{logical.  Should PDF streams be generated with Flate
     compression?  Defaults to \code{TRUE}.}
 }
@@ -169,12 +170,6 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   PDF viewers will use a white canvas so the visual effect is if the
   background were white.  This will not be the case when printing onto
   coloured paper, though.
-
-  If you are planning to use a very large number of raster images in
-  your output, you could specify a larger value for argument
-  \code{maxRasters} but as from \R 2.14.0 it is increased as needed.  In
-  earlier versions it was a hard limit, \code{1000L} in \R 2.13.2 and
-  \code{64L} earlier.
 }
 
 \section{Color models}{  

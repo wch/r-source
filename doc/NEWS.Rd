@@ -474,7 +474,8 @@
       and capturing raster images, the locator and for interactive
       events.
       
-      \item For \code{pdf()}, \code{maxRasters} is increased as needed.
+      \item For \code{pdf()}, \code{maxRasters} is increased as needed
+      so the argument is no longer used.
     }
   }
 

@@ -315,7 +315,8 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(useDingbats)) new$useDingbats <- useDingbats
     if(!missing(useKerning)) new$useKerning <- useKerning
     if(!missing(fillOddEven)) new$fillOddEven <- fillOddEven
-    if(!missing(maxRasters)) new$maxRasters <- maxRasters
+    if(!missing(maxRasters))
+        warning("'maxRasters' is no longer needed, and will be ignored")
     if(!missing(compress)) new$compress <- compress
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)
@@ -367,7 +368,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
               old$title, old$fonts, version[1L], version[2L],
               old$colormodel, old$useDingbats, old$useKerning,
-              old$fillOddEven, old$maxRasters, old$compress)
+              old$fillOddEven, old$compress)
     invisible()
 }
 
@@ -681,7 +682,6 @@ assign(".PDF.Options",
          useDingbats = TRUE,
          useKerning = TRUE,
          fillOddEven = FALSE,
-         maxRasters = 1000L,
          compress = TRUE), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
