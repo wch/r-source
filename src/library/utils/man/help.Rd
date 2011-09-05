@@ -76,8 +76,9 @@ help(topic, package = NULL, lib.loc = NULL,
 
   \code{topic} is not optional: if it is omitted \R will give
   \itemize{
-    \item If a package is specified, (text or HTML) information on the
-    package, including hints/links to suitable help topics. 
+    \item If a package is specified, (text or, in interactive use only,
+    HTML) information on the package, including hints/links to suitable
+    help topics.
     \item If \code{lib.loc} only is specified, a (text) list of available
     packages.
     \item Help on \code{help} itself if none of the first three

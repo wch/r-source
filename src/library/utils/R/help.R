@@ -30,7 +30,8 @@ function(topic, package = NULL, lib.loc = NULL,
         if(!missing(package)) {         # "Help" on package.
             help_type <- if(!length(help_type)) "text"
             else match.arg(tolower(help_type), types)
-            if (help_type == "html") {
+            ## Carter Butts and others misuse 'help(package=)' in startup
+            if (interactive() && help_type == "html") {
                 if (tools:::httpdPort == 0L) tools::startDynamicHelp()
                 if (tools:::httpdPort <= 0L) # fallback to text help
                     return(library(help = package, lib.loc = lib.loc,
