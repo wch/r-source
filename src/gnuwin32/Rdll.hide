@@ -175,6 +175,7 @@
  R_ShowErrorMessages
  R_ShowFiles
  R_ShowWarnCalls
+ R_SignalHandlers
  R_SrcfileSymbol
  R_Srcref
  R_SrcrefSymbol
@@ -236,6 +237,8 @@
  R_init_base
  R_init_jit_enabled
  R_initialize_bcode
+ R_inspect
+ R_inspect3
  R_isMissing
  R_is_running
  R_jit_enabled
@@ -243,11 +246,13 @@
  R_lazyLoadDBinsertValue
  R_localtime
  R_max_memory
+ R_max_num_math_threads
  R_mktime
  R_moduleCdynload
  R_newsock
  R_newunz
  R_newurl
+ R_num_math_threads
  R_osDynSymbol
  R_possible_dispatch
  R_print
@@ -315,6 +320,7 @@
  Rf_PrintValueRec
  Rf_PrintVersion
  Rf_PrintVersionString
+ Rf_PrintVersion_part_1
  Rf_ProcessInlinePars
  Rf_RealFromComplex
  Rf_RealFromInteger
@@ -426,6 +432,7 @@
  SET_PRIMOFFSET
  SET_UTF8
  Sys_TempDir
+ TimeToSeed
  UNLOCK_BINDING
  UTF8in
  UTF8out
@@ -567,6 +574,7 @@
  do_addRestart
  do_addTryHandlers
  do_addhistory
+ do_adist
  do_agrep
  do_allnames
  do_aperm
@@ -651,10 +659,12 @@
  do_deparseRd
  do_deriv
  do_detach
+ do_devAskNewPage
  do_devcap
  do_devcontrol
  do_devcopy
  do_devcur
+ do_devholdflush
  do_devnext
  do_devoff
  do_devprev
@@ -686,6 +696,7 @@
  do_edit
  do_emptyenv
  do_enablejit
+ do_enc2
  do_encodeString
  do_encoding
  do_env2list
@@ -930,6 +941,7 @@
  do_rawconvalue
  do_readClipboard
  do_readDCF
+ do_readEnviron
  do_readLines
  do_readRegistry
  do_readbin
@@ -942,6 +954,7 @@
  do_rect
  do_regFinaliz
  do_regNS
+ do_regexec
  do_regexpr
  do_relop
  do_relop_dflt
