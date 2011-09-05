@@ -1603,7 +1603,7 @@ double R_atof(const char *str)
 
 /* enc2native and enc2utf8, but they are the same in a UTF-8 locale */
 /* primitive */
-SEXP do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, el;
     int i;

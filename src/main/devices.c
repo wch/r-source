@@ -570,7 +570,7 @@ void NewFrameConfirm(pDevDesc dd)
 }
 
 /* This needs to manage R_Visible */
-SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int ask;
     pGEDevDesc gdd = GEcurrentDevice();
