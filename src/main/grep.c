@@ -170,7 +170,6 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    break;
 		}
 	if (haveBytes) {
-	    warning(_("string marked as \"bytes\" found, so using useBytes = TRUE"));
 	    useBytes = TRUE;
 	} else {
 	    if (perl_opt && mbcslocale) use_UTF8 = TRUE;
@@ -2574,10 +2573,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
                     break;
                 }
 	    }
-	if (haveBytes) {
-            warning(_("string marked as \"bytes\" found, so using useBytes = TRUE"));
-            useBytes = TRUE;
-	}
+	if (haveBytes) useBytes = TRUE;
     }
 
     if(!useBytes) {
