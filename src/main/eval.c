@@ -5173,7 +5173,7 @@ SEXP attribute_hidden do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
     /* check for a match and return index if one is found */
     for (i = 0; i < constCount; i++) {
 	SEXP y = VECTOR_ELT(constBuf, i);
-	if (x == y || R_compute_identical(x, y, TRUE, TRUE, TRUE))
+	if (x == y || R_compute_identical(x, y, 0))
 	    return ScalarInteger(i);
     }
 

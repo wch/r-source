@@ -12,7 +12,8 @@
   \code{FALSE} in every other case.
 }
 \usage{
-identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
+identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
+                ignore.bytecode = TRUE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -28,8 +29,9 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
     \code{x} and \code{y} should be treated as \emph{unordered} tagged
     pairlists (\dQuote{sets}); this currently also applies to
     \code{\link{slot}}s of S4 objects.  It may well be too strict to set
-    \code{attrib.as.set = FALSE}.
-  }
+    \code{attrib.as.set = FALSE}.}
+  \item{ignore.bytecode}{logical indicating if byte code should be
+    ignored when comparing functions.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in
@@ -70,8 +72,15 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
   If \code{attrib.as.set} is true, as by default, comparison of
   attributes view them as a set (and not a vector, so order is not
   tested).
+  
+  If \code{ignore.bytecode} is true (the default), the compiled
+  bytecode of a function (see \code{\link{cmpfun}}) will be ignored in
+  the comparison. If it is false, functions will compare equal only if
+  they are copies of the same compiled object (or both are
+  uncompiled).  To check whether two different compiles are equal, you
+  should compare the results of \code{\link{dissassemble}()}.
 
-  Note that \code{identical(x,y, FALSE,FALSE,FALSE)} pickily tests for
+  Note that \code{identical(x,y, FALSE,FALSE,FALSE,FALSE)} pickily tests for
   very exact equality.
 }
 \value{
@@ -114,6 +123,13 @@ identical(0., -0., num.eq = FALSE)
 ## similar:
 identical(NaN, -NaN) # TRUE
 identical(NaN, -NaN, single.NA=FALSE) # differ on bit-level
+## for functions:
+f <- function(x) x
+f
+g <- compiler::cmpfun(f)
+g
+identical(f, g)
+identical(f, g, ignore.bytecode=FALSE)
 \dontshow{
 m0 <- m <- structure(cbind(I=1, a=1:3), foo = "bar", class = "matrix")
 attributes(m0) <- rev(attributes(m))

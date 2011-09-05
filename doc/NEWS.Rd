@@ -383,12 +383,12 @@
       computing approximate (generalized Levenshtein) distances between
       strings.
       
-      \item The parser no longer accepts the digit \code{8} in an octal
-      character code in a string, nor does it accept unterminated 
-      strings in a file.  (Reported by Bill Dunlap.)
-
       \item Class \code{"raster"} gains an \code{is.na} method to avoid
       confusion from the misuse of the matrix method (such as PR#14618).
+      
+      \item The \code{identical()} function gains an
+      \code{ignore.bytecode} argument to control comparison of
+      compiled functions.      
       
       \item \code{pmin} and \code{pmax} now warn if an argument is
       partially recycled (wish of \PR{14638}).
@@ -764,6 +764,10 @@
       \code{"coerce<-"} were lacking some essential information in the
       \code{generic}, \code{defined} and \code{target} slots;
       \code{as()} did not handle duplicate class definitions correctly.
+      
+      \item The parser no longer accepts the digit \code{8} in an octal
+      character code in a string, nor does it accept unterminated 
+      strings in a file.  (Reported by Bill Dunlap.)
     }
   }
 }

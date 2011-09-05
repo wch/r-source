@@ -587,8 +587,6 @@ SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
-Rboolean R_compute_identical(SEXP, SEXP, Rboolean num_eq,
-			     Rboolean single_NA, Rboolean attr_asSet);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
 void Rf_copyVector(SEXP, SEXP);
@@ -848,6 +846,16 @@ void R_RunExitFinalizers(void);	/* in memory.c */
 FILE *R_popen(const char *, const char *);
 #endif
 int R_system(const char *);
+
+/* R_compute_identical:  C version of identical() function
+   The third arg to R_compute_identical() consists of bitmapped flags for non-default options:  
+   currently all default to TRUE, so the flag is set for FALSE values:
+   1 = !NUM_EQ
+   2 = !SINGLE_NA
+   4 = !ATTR_AS_SET
+   8 = !IGNORE_BYTECODE
+*/
+Rboolean R_compute_identical(SEXP, SEXP, int);
 
 #ifndef R_NO_REMAP
 #define acopy_string		Rf_acopy_string

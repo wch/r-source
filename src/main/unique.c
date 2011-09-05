@@ -281,8 +281,7 @@ static int vhash(SEXP x, int indx, HashData *d)
 static int vequal(SEXP x, int i, SEXP y, int j)
 {
     if (i < 0 || j < 0) return 0;
-    return R_compute_identical(VECTOR_ELT(x, i), VECTOR_ELT(y, j),
-			       TRUE, TRUE, TRUE);
+    return R_compute_identical(VECTOR_ELT(x, i), VECTOR_ELT(y, j), 0);
 }
 
 /*
