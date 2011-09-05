@@ -233,7 +233,8 @@
 
       \item \code{Rd} markup has a new \samp{\figure} tag so that
       figures can be included in help pages when converted to HTML or
-      LaTeX.  There is an example on the help page for \code{points()}.
+      LaTeX.  There are examples on the help pages for \code{par()} and
+      \code{points()}.
 
       \item The built-in httpd server now allows access to files
       in the session temporary directory \code{tempdir()},
@@ -827,10 +828,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-     \item \code{fisher.test()} had a buglet: If arguments were
-      factors with unused levels, levels were dropped and you'd get an
-      error saying that there should be at least two levels,
-      inconsistently with pre-tabulated data.  (Reported by Michael Fay).
+     \item \code{fisher.test()} had a buglet: If arguments were factors
+      with unused levels, levels were dropped and you would get an error
+      saying that there should be at least two levels, inconsistently
+      with pre-tabulated data.  (Reported by Michael Fay).
 
       \item \code{package.skeleton()} will no longer dump S4 objects
       supplied directly rather than in a code file.  These cannot be
@@ -873,8 +874,8 @@
       time series with odd frequencies.
       
       \item The \code{pdf()} device only includes the definition of the
-      sRGB colorspace in the output file for the colormodels which use
-      it (and not for \code{"gray"} nor \code{"cmyk"}): this saves ca
+      sRGB colorspace in the output file for the \code{"rgb"} colormodel
+      (and not for \code{"gray"} nor \code{"cmyk"}): this saves ca
       9KB in the output file.
     }
   }
