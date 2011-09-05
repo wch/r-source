@@ -83,7 +83,8 @@ clean:
 	done
 	-@rm -f stamp-R Makedeps Rplot* data dumpdata.R \
 	  Rplot* Rprof.out Rprofmem.out \
-	  reg-plot-latin1.ps reg-plot.ps reg-tests-*.ps \
+	  reg-examples-*.pdf testCID.* \
+	  reg-plot-latin1.ps reg-plot.ps reg-tests-*.pdf \
 	  R-exts.* R-intro.R R-intro.Rout
 	-@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R

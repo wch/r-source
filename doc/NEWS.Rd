@@ -621,6 +621,9 @@
       \item \command{R CMD check} now also checks compiled code for
       symbols corresponding to functions which might terminate \R or
       write to \file{stdout}/\file{stderr} instead of the console.
+
+      \item \command{R CMD check} now uses a \code{pdf()} device when
+      checking examples (rather than \code{postscript()}).
     }
   }
 

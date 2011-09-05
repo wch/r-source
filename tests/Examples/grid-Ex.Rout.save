@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-08-11 r56709)
+R Under development (unstable) (2011-09-04 r56935)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1354,29 +1354,13 @@ List of 6
 +                 name="parent")
 >     grid.draw(gt)
 >     showGrob()
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(gPath="child")
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(recurse=FALSE)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(depth=1)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(depth=2)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(depth=1:2)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(gt)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(gt, gPath="child")
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 >     showGrob(just="left", gp=gpar(col="red", cex=.5), rot=45)
 >     showGrob(labelfun=function(grob, ...) {
 +         x <- grobX(grob, "west")
@@ -1390,8 +1374,6 @@ Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(
 +                          x=x + unit(1, "mm"), y=y - unit(1, "mm"),
 +                          just=c("left", "top"))))
 +     })
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 > 
 > ## Not run: 
 > ##D     # Examples from higher-level packages
@@ -1432,15 +1414,11 @@ Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(
 > showViewport(vpStack(viewport(width=.5, height=.5),
 +                      viewport(width=.5, height=.5)),
 +              newpage=TRUE)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 > 
 > showViewport(vpStack(viewport(width=.5, height=.5),
 +                      viewport(width=.5, height=.5)),
 +              fill=rgb(1:0, 0:1, 0, .1),
 +              newpage=TRUE)
-Warning in grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 > 
 > 
 > 
@@ -1750,7 +1728,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.063 0.033 3.233 0 0 
+Time elapsed:  5.428 0.159 5.629 0 0 
 > grDevices::dev.off()
 null device 
           1 

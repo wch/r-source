@@ -71,7 +71,8 @@ test-Standalone:
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 \
 	  Rplot* Rprof.out Rprofmem.out \
-	  reg-plot-latin1.ps reg-plot.ps reg-tests-*.ps \
+	  reg-examples-*.pdf  testCIS.* \
+	  reg-plot-latin1.ps reg-plot.ps reg-tests-*.pdf \
 	  R-exts.* R-intro.R 
 	@rm -f R-exts_res.rc Makedeps
 	@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz

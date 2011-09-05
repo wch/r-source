@@ -1,6 +1,6 @@
 ## From PR#10000 on
 
-postscript("reg-tests-1.ps", encoding = "ISOLatin1.enc")
+pdf("reg-tests-1a.pdf", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
 options(stringsAsFactors=TRUE)

@@ -55,12 +55,12 @@ assign("cleanEx",
        },
        pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")
-## at least one package changes these via ps.options(), so do this
-## before loading the package.
-## Use postscript as incomplete files may be viewable, unlike PDF.
-## Choose a size that is close to on-screen devices, fix paper
-grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
-grDevices::postscript(paste(pkgname, "-Ex.ps", sep=""), encoding = "ISOLatin1")
+## Do this before loading the package,
+## since packages have been known to change settings.
+## Force a size that is close to on-screen devices, fix paper.
+## don't rename par.postscript for back-compatibility of reference output.
+grDevices::pdf.options(width = 7, height = 7, paper = "special", reset = TRUE)
+grDevices::pdf(paste(pkgname, "-Ex.pdf", sep=""), encoding = "ISOLatin1")
 
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))

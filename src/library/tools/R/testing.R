@@ -64,7 +64,7 @@ massageExamples <-
         ## make a syntactic name out of the filename
         nm <- gsub("[^- .a-zA-Z0-9_]", ".", nm, perl = TRUE, useBytes = TRUE)
         if (pkg == "grDevices" && nm == "postscript") next
-        ## we set the encoding in postscript(): this should now work everywhere
+        ## Latin-1 examples are treated separat
         if (pkg == "graphics" && nm == "text") next
         if(!file.exists(file)) stop("file ", file, " cannot be opened")
         lines <- readLines(file)

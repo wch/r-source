@@ -1,4 +1,4 @@
-postscript("reg-tests-1b.ps", encoding = "ISOLatin1.enc")
+pdf("reg-tests-1b.pdf", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
 options(stringsAsFactors = TRUE)
@@ -479,19 +479,21 @@ close(zz)
 
 
 ## pdf() with CIDfonts active -- they need MBCS to be supported
-pdf(family="Japan1") # << for CIDfonts, pd->fonts is NULL
+pdf(file = "testCID.pdf", family="Japan1") # << for CIDfonts, pd->fonts is NULL
 try({
     plot(1,1,pch="", axes=FALSE)
     text(1,1,"F.1", family="Helvetica")
 })
 dev.off()
+unlink("testCID.pdf")
 ## text() seg.faulted up to 2.7.2 (and early 2.8.0-alpha)
 
 
 ## PS mixing CIDfonts and Type1 - reverse case
-postscript(family="Helvetica")
+postscript(file = "testCID.ps", family="Helvetica")
 plot(1,1,pch="", axes=FALSE)
 try(text(1,1,"A",family="Japan1"))
+unlink("testCID.ps")
 ## error instead of seg.fault
 
 
