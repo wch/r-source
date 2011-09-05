@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -774,6 +774,41 @@ msgstr "componentes de 'max.distance' devem ser não negativos"
 msgid "%s and %s must have the same length"
 msgstr "'x' e 'y' devem ter o mesmo comprimento"
 
+msgid "need non-overlapping matches for %s"
+msgstr ""
+
+#, fuzzy
+msgid "%s must be a character vector"
+msgstr "'arg' deve ser NULL ou um vetor caractere"
+
+#, fuzzy
+msgid "%s must be a list of character vectors"
+msgstr "'arg' deve ser NULL ou um vetor caractere"
+
+msgid "%s must have length one or the number of matches"
+msgstr ""
+
+msgid "cannot have replacements for non-matches"
+msgstr ""
+
+msgid "must have replacements for matches"
+msgstr ""
+
+msgid ""
+"entries of %s must have length one or the number of corresponding matches"
+msgstr ""
+
+msgid ""
+"%s must be a list with length the number of matches and two elements each"
+msgstr ""
+
+msgid "must have replacements for non-matches"
+msgstr ""
+
+msgid ""
+"entries of %s must have length one or the number of corresponding non-matches"
+msgstr ""
+
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norma '%s' atualmente sempre usa exact = FALSE"
 
@@ -1284,6 +1319,10 @@ msgstr "'x' não é coercível para hexmode"
 
 msgid "no arguments"
 msgstr "sem argumentos"
+
+#, fuzzy
+msgid "an argument will be fractionally recycled"
+msgstr "argumento 'drop' será ignorado"
 
 msgid "invalid 'n' value"
 msgstr "valor de 'n' inválido"

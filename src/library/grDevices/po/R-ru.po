@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-30 02:00+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -168,6 +168,9 @@ msgstr "неправильный аргумент 'family'"
 
 msgid "invalid 'file'"
 msgstr "неправильный 'file'"
+
+msgid "'maxRasters' is no longer needed, and will be ignored"
+msgstr ""
 
 msgid "invalid PDF version"
 msgstr "неправильная версия PDF"

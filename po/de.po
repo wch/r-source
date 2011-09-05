@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-30 11:39+0100\n"
+"POT-Creation-Date: 2011-09-05 08:23+0100\n"
 "PO-Revision-Date: 2011-03-23 09:35+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -113,7 +113,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/gnuwin32/extra.c:772 src/gnuwin32/extra.c:856 src/gnuwin32/extra.c:859
 #: src/gnuwin32/extra.c:864 src/gnuwin32/extra.c:1656
 #: src/gnuwin32/extra.c:1681 src/main/agrep.c:73 src/main/agrep.c:76
-#: src/main/agrep.c:233 src/main/agrep.c:236 src/main/apply.c:278
+#: src/main/agrep.c:245 src/main/agrep.c:248 src/main/apply.c:278
 #: src/main/apply.c:280 src/main/apply.c:283 src/main/array.c:86
 #: src/main/array.c:1100 src/main/array.c:1232 src/main/array.c:1234
 #: src/main/array.c:1235 src/main/attrib.c:192 src/main/builtin.c:74
@@ -126,36 +126,36 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/character.c:1320 src/main/character.c:1323
 #: src/main/connections.c:961 src/main/connections.c:967
 #: src/main/connections.c:970 src/main/connections.c:974
-#: src/main/connections.c:1113 src/main/connections.c:1129
-#: src/main/connections.c:1134 src/main/connections.c:1736
-#: src/main/connections.c:1742 src/main/connections.c:1746
-#: src/main/connections.c:1750 src/main/connections.c:1755
-#: src/main/connections.c:2405 src/main/connections.c:2410
-#: src/main/connections.c:2413 src/main/connections.c:2416
-#: src/main/connections.c:2782 src/main/connections.c:2787
-#: src/main/connections.c:2793 src/main/connections.c:2796
-#: src/main/connections.c:2800 src/main/connections.c:2815
-#: src/main/connections.c:2866 src/main/connections.c:2871
-#: src/main/connections.c:2875 src/main/connections.c:2879
-#: src/main/connections.c:2883 src/main/connections.c:2889
-#: src/main/connections.c:2937 src/main/connections.c:2943
-#: src/main/connections.c:2947 src/main/connections.c:2998
-#: src/main/connections.c:3001 src/main/connections.c:3267
-#: src/main/connections.c:3270 src/main/connections.c:3273
-#: src/main/connections.c:3371 src/main/connections.c:3377
-#: src/main/connections.c:3380 src/main/connections.c:3530
-#: src/main/connections.c:3533 src/main/connections.c:3537
-#: src/main/connections.c:3540 src/main/connections.c:3647
-#: src/main/connections.c:3750 src/main/connections.c:3753
-#: src/main/connections.c:4089 src/main/connections.c:4114
-#: src/main/connections.c:4147 src/main/connections.c:4161
-#: src/main/connections.c:4169 src/main/connections.c:4195
-#: src/main/connections.c:4336 src/main/connections.c:4340
-#: src/main/connections.c:4466 src/main/connections.c:4468
-#: src/main/connections.c:4470 src/main/connections.c:4498
-#: src/main/connections.c:4628 src/main/connections.c:4654
-#: src/main/connections.c:4658 src/main/connections.c:4662
-#: src/main/connections.c:4666 src/main/context.c:597 src/main/context.c:606
+#: src/main/connections.c:1112 src/main/connections.c:1128
+#: src/main/connections.c:1133 src/main/connections.c:1734
+#: src/main/connections.c:1740 src/main/connections.c:1744
+#: src/main/connections.c:1748 src/main/connections.c:1753
+#: src/main/connections.c:2403 src/main/connections.c:2408
+#: src/main/connections.c:2411 src/main/connections.c:2414
+#: src/main/connections.c:2786 src/main/connections.c:2791
+#: src/main/connections.c:2797 src/main/connections.c:2800
+#: src/main/connections.c:2804 src/main/connections.c:2819
+#: src/main/connections.c:2869 src/main/connections.c:2874
+#: src/main/connections.c:2878 src/main/connections.c:2882
+#: src/main/connections.c:2886 src/main/connections.c:2892
+#: src/main/connections.c:2939 src/main/connections.c:2945
+#: src/main/connections.c:2949 src/main/connections.c:2999
+#: src/main/connections.c:3002 src/main/connections.c:3268
+#: src/main/connections.c:3271 src/main/connections.c:3274
+#: src/main/connections.c:3374 src/main/connections.c:3380
+#: src/main/connections.c:3383 src/main/connections.c:3534
+#: src/main/connections.c:3537 src/main/connections.c:3541
+#: src/main/connections.c:3544 src/main/connections.c:3664
+#: src/main/connections.c:3782 src/main/connections.c:3785
+#: src/main/connections.c:4121 src/main/connections.c:4146
+#: src/main/connections.c:4179 src/main/connections.c:4193
+#: src/main/connections.c:4201 src/main/connections.c:4227
+#: src/main/connections.c:4368 src/main/connections.c:4372
+#: src/main/connections.c:4497 src/main/connections.c:4499
+#: src/main/connections.c:4501 src/main/connections.c:4529
+#: src/main/connections.c:4659 src/main/connections.c:4685
+#: src/main/connections.c:4689 src/main/connections.c:4693
+#: src/main/connections.c:4697 src/main/context.c:597 src/main/context.c:606
 #: src/main/context.c:610 src/main/datetime.c:715 src/main/datetime.c:795
 #: src/main/datetime.c:797 src/main/datetime.c:801 src/main/datetime.c:960
 #: src/main/datetime.c:962 src/main/datetime.c:1126 src/main/debug.c:223
@@ -174,8 +174,8 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/eval.c:2074 src/main/grep.c:758 src/main/grep.c:763
 #: src/main/grep.c:1037 src/main/grep.c:1039 src/main/grep.c:1041
 #: src/main/grep.c:1485 src/main/grep.c:1489 src/main/grep.c:1494
-#: src/main/grep.c:2282 src/main/grep.c:2287 src/main/grep.c:2556
-#: src/main/grep.c:2561 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2282 src/main/grep.c:2287 src/main/grep.c:2559
+#: src/main/grep.c:2564 src/main/memory.c:3375 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -211,24 +211,24 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/scan.c:890 src/main/scan.c:943 src/main/scan.c:980
 #: src/main/scan.c:984 src/main/scan.c:994 src/main/scan.c:1208
 #: src/main/scan.c:1434 src/main/scan.c:1485 src/main/scan.c:1497
-#: src/main/scan.c:1501 src/main/scan.c:1507 src/main/scan.c:1721
-#: src/main/scan.c:1722 src/main/scan.c:1724 src/main/scan.c:1725
-#: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
-#: src/main/scan.c:1729 src/main/seq.c:381 src/main/seq.c:388
+#: src/main/scan.c:1501 src/main/scan.c:1507 src/main/scan.c:1723
+#: src/main/scan.c:1724 src/main/scan.c:1726 src/main/scan.c:1727
+#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
+#: src/main/scan.c:1731 src/main/seq.c:381 src/main/seq.c:388
 #: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
 #: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
 #: src/main/sysutils.c:1612 src/main/sysutils.c:1616 src/main/unique.c:822
 #: src/main/unique.c:1102 src/main/unique.c:1162 src/main/unique.c:1169
-#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1757
+#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1768
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
 #: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3138
-#: src/modules/X11/devX11.c:3141 src/modules/X11/devX11.c:3144
-#: src/modules/X11/devX11.c:3168 src/unix/sys-std.c:1211
+#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3149
+#: src/modules/X11/devX11.c:3152 src/modules/X11/devX11.c:3155
+#: src/modules/X11/devX11.c:3179 src/unix/sys-std.c:1211
 #: src/unix/sys-std.c:1234
 #, c-format
 msgid "invalid '%s' argument"
@@ -282,7 +282,7 @@ msgstr "ungültiger Zeitstempel"
 #: src/gnuwin32/extra.c:689 src/gnuwin32/extra.c:1872
 #: src/gnuwin32/extra.c:2053 src/gnuwin32/extra.c:2056
 #: src/gnuwin32/extra.c:2059 src/main/character.c:581 src/main/colors.c:358
-#: src/main/connections.c:3275 src/main/context.c:643 src/main/context.c:662
+#: src/main/connections.c:3276 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:647 src/main/datetime.c:717 src/main/datetime.c:964
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
@@ -296,11 +296,11 @@ msgstr "ungültiger Zeitstempel"
 #: src/main/seq.c:268 src/main/sort.c:871 src/main/sort.c:971
 #: src/main/source.c:215 src/main/summary.c:1028 src/main/sysutils.c:248
 #: src/main/util.c:955 src/main/util.c:960 src/main/util.c:967
-#: src/main/util.c:970 src/modules/X11/devX11.c:3039
-#: src/modules/X11/devX11.c:3066 src/modules/X11/devX11.c:3071
-#: src/modules/X11/devX11.c:3076 src/modules/X11/devX11.c:3086
-#: src/modules/X11/devX11.c:3091 src/modules/X11/devX11.c:3095
-#: src/modules/X11/devX11.c:3099 src/unix/sys-std.c:1285
+#: src/main/util.c:970 src/modules/X11/devX11.c:3050
+#: src/modules/X11/devX11.c:3077 src/modules/X11/devX11.c:3082
+#: src/modules/X11/devX11.c:3087 src/modules/X11/devX11.c:3097
+#: src/modules/X11/devX11.c:3102 src/modules/X11/devX11.c:3106
+#: src/modules/X11/devX11.c:3110 src/unix/sys-std.c:1285
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
@@ -329,11 +329,11 @@ msgstr "Wähle eine"
 msgid "argument must be a character vector or a raw vector"
 msgstr "Argument muss ein Charakter-Vektor oder ein raw Vektor sein"
 
-#: src/gnuwin32/extra.c:1110 src/main/connections.c:1914
+#: src/gnuwin32/extra.c:1110 src/main/connections.c:1912
 msgid "Unable to open the clipboard"
 msgstr "kann die Zwischenablage nicht öffnen"
 
-#: src/gnuwin32/extra.c:1115 src/main/connections.c:1918
+#: src/gnuwin32/extra.c:1115 src/main/connections.c:1916
 msgid "Unable to write to the clipboard"
 msgstr "kann nicht in die Zwischenablage schreiben"
 
@@ -442,9 +442,9 @@ msgid "truncate not enabled for this connection"
 msgstr "für diesen Verbindungstyp ist truncate nicht möglich"
 
 #: src/gnuwin32/run.c:720 src/gnuwin32/run.c:724 src/gnuwin32/run.c:737
-#: src/gnuwin32/run.c:765 src/main/connections.c:1068
-#: src/main/connections.c:1072 src/main/connections.c:1078
-#: src/main/connections.c:1092
+#: src/gnuwin32/run.c:765 src/main/connections.c:1067
+#: src/main/connections.c:1071 src/main/connections.c:1077
+#: src/main/connections.c:1091
 msgid "allocation of pipe connection failed"
 msgstr "Einrichtung einer pipe Verbindung fehlgeschlagen"
 
@@ -499,8 +499,8 @@ msgstr "<Fehler: Rekodierungsfehler aus Kodierung '%s'>\n"
 #: src/gnuwin32/system.c:546 src/gnuwin32/system.c:1023
 #: src/gnuwin32/system.c:1035 src/main/connections.c:562
 #: src/main/connections.c:567 src/main/dounzip.c:177 src/main/saveload.c:1948
-#: src/main/serialize.c:2202 src/main/serialize.c:2207
-#: src/main/serialize.c:2288 src/main/serialize.c:2333 src/unix/system.c:315
+#: src/main/serialize.c:2239 src/main/serialize.c:2244
+#: src/main/serialize.c:2325 src/main/serialize.c:2370 src/unix/system.c:315
 #: src/unix/system.c:335
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -801,32 +801,52 @@ msgstr "ungültige multi-byte Formattierungs-Zeichenkette"
 
 #: src/main/agrep.c:75 src/main/character.c:1024 src/main/character.c:1028
 #: src/main/grep.c:760 src/main/grep.c:1487 src/main/grep.c:1491
-#: src/main/grep.c:2284 src/main/grep.c:2558
+#: src/main/grep.c:2284 src/main/grep.c:2561
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr ""
 "Argument '%s' hat einen Länge > 1 und nur das erste Element wird benutzt"
 
-#: src/main/agrep.c:90 src/main/grep.c:173 src/main/grep.c:800
+#: src/main/agrep.c:90 src/main/agrep.c:269 src/main/grep.c:173
+#: src/main/grep.c:800 src/main/grep.c:2578
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 msgstr ""
 "Zeichenkette markiert, da \"bytes\" gefunden, also wird useBytes = TRUE "
 "benutzt"
 
 #: src/main/agrep.c:113 src/main/grep.c:827 src/main/grep.c:2326
+#: src/main/grep.c:2603
 msgid "regular expression is invalid in this locale"
 msgstr "regular expression ist in dieser Lokalisierung ungültig"
 
-#: src/main/agrep.c:119 src/main/agrep.c:273
+#: src/main/agrep.c:119 src/main/agrep.c:366
 #, c-format
 msgid "regcomp error:  '%s'"
 msgstr "Fehler bei regcomp: '%s'"
 
 #: src/main/agrep.c:155 src/main/grep.c:221 src/main/grep.c:308
 #: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
-#: src/main/grep.c:2420 src/main/grep.c:2488
+#: src/main/grep.c:2420 src/main/grep.c:2488 src/main/grep.c:2635
 #, c-format
 msgid "input string %d is invalid in this locale"
+msgstr "Eingabezeichenkette %d ungültig in dieser locale"
+
+#: src/main/agrep.c:239 src/main/grep.c:148 src/main/grep.c:751
+#: src/main/grep.c:753 src/main/grep.c:1023 src/main/grep.c:1031
+#: src/main/grep.c:1478 src/main/grep.c:1480 src/main/grep.c:2274
+#: src/main/grep.c:2276 src/main/grep.c:2549
+#, c-format
+msgid "argument '%s' will be ignored"
+msgstr "Argument '%s' wird ignoriert"
+
+#: src/main/agrep.c:354 src/main/agrep.c:404
+#, fuzzy, c-format
+msgid "input string x[%d] is invalid in this locale"
+msgstr "Eingabezeichenkette %d ungültig in dieser locale"
+
+#: src/main/agrep.c:357 src/main/agrep.c:401
+#, fuzzy, c-format
+msgid "input string y[%d] is invalid in this locale"
 msgstr "Eingabezeichenkette %d ungültig in dieser locale"
 
 #: src/main/apply.c:41 src/main/apply.c:103 src/main/complex.c:750
@@ -1343,7 +1363,7 @@ msgstr "angegebene Vektorgröße ist zu groß"
 
 #: src/main/builtin.c:70 src/main/builtin.c:79 src/main/builtin.c:279
 #: src/main/builtin.c:314 src/main/builtin.c:353 src/main/builtin.c:363
-#: src/main/coerce.c:1448 src/main/connections.c:2791 src/main/engine.c:2859
+#: src/main/coerce.c:1448 src/main/connections.c:2795 src/main/engine.c:2875
 #: src/main/envir.c:940 src/main/envir.c:993 src/main/envir.c:1083
 #: src/main/envir.c:1540 src/main/envir.c:1660 src/main/envir.c:1728
 #: src/main/envir.c:1849 src/main/envir.c:2522 src/main/envir.c:2582
@@ -1351,7 +1371,7 @@ msgstr "angegebene Vektorgröße ist zu groß"
 #: src/main/envir.c:2927 src/main/envir.c:2962 src/main/envir.c:2983
 #: src/main/envir.c:3289 src/main/envir.c:3294 src/main/eval.c:4974
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2057
-#: src/main/saveload.c:2348 src/main/serialize.c:2355
+#: src/main/saveload.c:2348 src/main/serialize.c:2392
 msgid "use of NULL environment is defunct"
 msgstr "Verwendung der NULL Umgebung ist nicht mehr möglich"
 
@@ -1379,12 +1399,12 @@ msgstr "kann keinen Parent für die leere Umgebung setzen"
 msgid "'parent' is not an environment"
 msgstr "'parent' ist keine Umgebung"
 
-#: src/main/builtin.c:508 src/main/connections.c:3396
-#: src/main/connections.c:3744 src/main/connections.c:3778
-#: src/main/connections.c:4153 src/main/connections.c:4218
-#: src/main/connections.c:4424 src/main/connections.c:4428
-#: src/main/connections.c:4789 src/main/deparse.c:323 src/main/deparse.c:409
-#: src/main/scan.c:1705 src/main/serialize.c:1670
+#: src/main/builtin.c:508 src/main/connections.c:3399
+#: src/main/connections.c:3776 src/main/connections.c:3810
+#: src/main/connections.c:4185 src/main/connections.c:4250
+#: src/main/connections.c:4455 src/main/connections.c:4459
+#: src/main/connections.c:4822 src/main/deparse.c:323 src/main/deparse.c:409
+#: src/main/scan.c:1707 src/main/serialize.c:1705
 msgid "cannot write to this connection"
 msgstr "kann auf diese Verbindung nicht schreiben"
 
@@ -1782,7 +1802,7 @@ msgstr "unbekannte Palette (brauche >= 2 Farben)"
 msgid "maximum number of colors exceeded"
 msgstr "maximale Anzahl von Farben überschritten"
 
-#: src/main/colors.c:1312 src/main/engine.c:2998
+#: src/main/colors.c:1312 src/main/engine.c:3014
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "ungültige Hex-Ziffer für 'color' oder 'lty'"
 
@@ -1861,7 +1881,7 @@ msgid "%s not enabled for this connection"
 msgstr "%s für diese Verbindung nicht ermöglicht"
 
 #: src/main/connections.c:322 src/main/connections.c:339
-#: src/main/connections.c:2649
+#: src/main/connections.c:2646
 msgid "printing of extremely long output is truncated"
 msgstr "Druck von extrem langer Ausgabe wird abgeschnitten"
 
@@ -1882,7 +1902,7 @@ msgstr "Verbindung nicht zum Lesen geöffnet"
 msgid "connection is not open for writing"
 msgstr "Verbindung nicht zum Schreiben geöffnet"
 
-#: src/main/connections.c:705 src/main/connections.c:1969
+#: src/main/connections.c:705 src/main/connections.c:1967
 msgid "can only truncate connections open for writing"
 msgstr ""
 "nur bei zum Schreiben geöffneten Verbindungen kann abgeschnitten werden"
@@ -1921,11 +1941,11 @@ msgid "cannot open fifo '%s'"
 msgstr "kann fifo '%s' nicht öffnen"
 
 #: src/main/connections.c:898 src/main/connections.c:909
-#: src/main/connections.c:1270 src/main/connections.c:1280
-#: src/main/connections.c:1399 src/main/connections.c:1460
-#: src/main/connections.c:1986 src/main/connections.c:2003
-#: src/main/connections.c:2312 src/main/connections.c:4962
-#: src/main/connections.c:5026
+#: src/main/connections.c:1268 src/main/connections.c:1278
+#: src/main/connections.c:1397 src/main/connections.c:1458
+#: src/main/connections.c:1984 src/main/connections.c:2001
+#: src/main/connections.c:2310 src/main/connections.c:4995
+#: src/main/connections.c:5059
 msgid "too large a block specified"
 msgstr "zu großer Block spezifiziert"
 
@@ -1934,9 +1954,9 @@ msgstr "zu großer Block spezifiziert"
 msgid "allocation of fifo connection failed"
 msgstr "Allokation der fifo Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:963 src/main/connections.c:1115
-#: src/main/connections.c:1738 src/main/connections.c:2939
-#: src/main/connections.c:4630
+#: src/main/connections.c:963 src/main/connections.c:1114
+#: src/main/connections.c:1736 src/main/connections.c:2941
+#: src/main/connections.c:4661
 msgid "only first element of 'description' argument used"
 msgstr "nur das erste Element von 'description' benutzt"
 
@@ -1947,431 +1967,436 @@ msgstr ""
 "fifo(\"\") unterstützt nur open = \"w+\" und open = \"w+b\": Ersteres wird "
 "verwendet"
 
-#: src/main/connections.c:993 src/main/connections.c:1151
-#: src/main/connections.c:1803 src/main/connections.c:2904
-#: src/main/connections.c:2958 src/main/connections.c:3008
-#: src/main/connections.c:3283 src/main/connections.c:3388
-#: src/main/connections.c:3548 src/main/connections.c:3771
-#: src/main/connections.c:4098 src/main/connections.c:4211
-#: src/main/connections.c:4420 src/main/connections.c:4764 src/main/dcf.c:64
+#: src/main/connections.c:994 src/main/connections.c:1151
+#: src/main/connections.c:1802 src/main/connections.c:2908
+#: src/main/connections.c:2961 src/main/connections.c:3009
+#: src/main/connections.c:3284 src/main/connections.c:3391
+#: src/main/connections.c:3552 src/main/connections.c:3803
+#: src/main/connections.c:4130 src/main/connections.c:4243
+#: src/main/connections.c:4451 src/main/connections.c:4799 src/main/dcf.c:64
 #: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2254
 #: src/main/saveload.c:2334 src/main/scan.c:904 src/main/scan.c:1015
-#: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
-#: src/main/serialize.c:1890 src/main/source.c:260
+#: src/main/scan.c:1515 src/main/scan.c:1711 src/main/serialize.c:1874
+#: src/main/serialize.c:1925 src/main/source.c:260
 msgid "cannot open the connection"
 msgstr "kann Verbindung nicht öffnen"
 
-#: src/main/connections.c:1010
+#: src/main/connections.c:1009
 msgid "fifo connections are not available on this system"
 msgstr "fifo Verbindungen sind auf diesem System nicht verfügbar"
 
-#: src/main/connections.c:1042
+#: src/main/connections.c:1041
 #, c-format
 msgid "cannot open pipe() cmd '%s': %s"
 msgstr "kann pipe() cmd '%s': %s nicht öffnen"
 
-#: src/main/connections.c:1210 src/main/connections.c:1531
+#: src/main/connections.c:1208 src/main/connections.c:1529
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
 msgstr "kann komprimierte Datei '%s' nicht öffnen. Grund evtl. '%s'"
 
-#: src/main/connections.c:1250
+#: src/main/connections.c:1248
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence =\"end\" für gzfile Verbindungen nicht implementiert"
 
-#: src/main/connections.c:1255
+#: src/main/connections.c:1253
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "seek in einer gzfile Verbindung gab internen Fehler zurück"
 
-#: src/main/connections.c:1289 src/main/connections.c:1293
-#: src/main/connections.c:1299 src/main/connections.c:1316
+#: src/main/connections.c:1287 src/main/connections.c:1291
+#: src/main/connections.c:1297 src/main/connections.c:1314
 msgid "allocation of gzfile connection failed"
 msgstr "Allokation einer gzfile Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:1345
+#: src/main/connections.c:1343
 #, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
 msgstr "kann bzip2-ed Datei '%s' nicht öffnen. Grund evtl. '%s'"
 
-#: src/main/connections.c:1354
+#: src/main/connections.c:1352
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "Datei '%s' scheint nicht mit bzip2 komprimiert zu sein"
 
-#: src/main/connections.c:1363
+#: src/main/connections.c:1361
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
 msgstr ""
 "Initialisierung der bzip2-Kompression für Datei '%s' ist fehlgeschlagen"
 
-#: src/main/connections.c:1418
+#: src/main/connections.c:1416
 msgid "allocation of overflow buffer for bzfile failed"
 msgstr "Allokation des overflow buffers für bzfile fehlgeschlagen"
 
-#: src/main/connections.c:1425
+#: src/main/connections.c:1423
 #, c-format
 msgid ""
 "file '%s' has trailing content that appears not to be compressed by bzip2"
 msgstr ""
 "Datei '%s' endet mit Inhalt, der nicht mit bzip2 komprimiert zu sein scheint"
 
-#: src/main/connections.c:1471 src/main/connections.c:1475
-#: src/main/connections.c:1481 src/main/connections.c:1498
+#: src/main/connections.c:1469 src/main/connections.c:1473
+#: src/main/connections.c:1479 src/main/connections.c:1496
 msgid "allocation of bzfile connection failed"
 msgstr "Allokation einer bzfile Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:1544 src/main/connections.c:5565
+#: src/main/connections.c:1542 src/main/connections.c:5598
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "kann den lzma Dekodierer nicht initialisieren, Fehler %d"
 
-#: src/main/connections.c:1560
+#: src/main/connections.c:1558
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
 msgstr "kann den lzma Kodierer nicht initialisieren, Fehler %d"
 
-#: src/main/connections.c:1688 src/main/connections.c:1692
-#: src/main/connections.c:1698 src/main/connections.c:1716
+#: src/main/connections.c:1686 src/main/connections.c:1690
+#: src/main/connections.c:1696 src/main/connections.c:1714
 msgid "allocation of xzfile connection failed"
 msgstr "Allokation einer xzfile Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:1775
+#: src/main/connections.c:1773
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 "dies ist eine %s-komprimierte Datei, die in diesem R Binary nicht "
 "unterstützt wird"
 
-#: src/main/connections.c:1870 src/modules/X11/devX11.c:3272
+#: src/main/connections.c:1868 src/modules/X11/devX11.c:3283
 msgid "memory allocation to copy clipboard failed"
 msgstr "Allokation von Speicher für Kopie der Zwischenablage fehlgeschlagen"
 
-#: src/main/connections.c:1875 src/modules/X11/devX11.c:3251
-#: src/modules/X11/devX11.c:3256
+#: src/main/connections.c:1873 src/modules/X11/devX11.c:3262
+#: src/modules/X11/devX11.c:3267
 msgid "clipboard cannot be opened or contains no text"
 msgstr "Zwischenablage kann nicht geöffnet werden oder enthält keinen Text"
 
-#: src/main/connections.c:1886
+#: src/main/connections.c:1884
 msgid "memory allocation to open clipboard failed"
 msgstr "Allokation von Speicher um die Zwischenablage zu öffnen fehlgeschlagen"
 
-#: src/main/connections.c:1958
+#: src/main/connections.c:1956
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "Versuch den Bereich der Zwischenablage zu verlassen"
 
-#: src/main/connections.c:2001
+#: src/main/connections.c:1999
 msgid "clipboard connection is open for reading only"
 msgstr "Verbindung zur Zwischenablage ist nur zum Lesen geöffnet"
 
-#: src/main/connections.c:2021
+#: src/main/connections.c:2019
 msgid "clipboard buffer is full and output lost"
 msgstr "Zwischenablage-buffer ist voll und Teil der Ausgabe verloren"
 
-#: src/main/connections.c:2042
+#: src/main/connections.c:2040
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "'mode' für die Zwischenablage muss entweder 'r' oder 'w' sein"
 
-#: src/main/connections.c:2045
+#: src/main/connections.c:2043
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "'mode' für die Zwischenablage muss unter Unix 'r' sein"
 
-#: src/main/connections.c:2048 src/main/connections.c:2054
-#: src/main/connections.c:2060 src/main/connections.c:2077
+#: src/main/connections.c:2046 src/main/connections.c:2052
+#: src/main/connections.c:2058 src/main/connections.c:2075
 msgid "allocation of clipboard connection failed"
 msgstr "Allokation einer Zwischenablage-Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:2146 src/main/connections.c:2150
-#: src/main/connections.c:2156
+#: src/main/connections.c:2144 src/main/connections.c:2148
+#: src/main/connections.c:2154
 msgid "allocation of terminal connection failed"
 msgstr "Allokation einer Terminal Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:2289
+#: src/main/connections.c:2287
 msgid "attempting to add too many elements to raw vector"
 msgstr "Versuch einem raw Vektor zu viele Elements hinzuzufügen"
 
-#: src/main/connections.c:2341
+#: src/main/connections.c:2339
 msgid "attempt to seek outside the range of the raw connection"
 msgstr "Versuch außerhalb des Bereichs einer raw connection zuzugreifen"
 
-#: src/main/connections.c:2352 src/main/connections.c:2356
-#: src/main/connections.c:2362 src/main/connections.c:2388
+#: src/main/connections.c:2350 src/main/connections.c:2354
+#: src/main/connections.c:2360 src/main/connections.c:2386
 msgid "allocation of raw connection failed"
 msgstr "Allokation einer raw-Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:2442
+#: src/main/connections.c:2439
 msgid "'con' is not a rawConnection"
 msgstr "'con' ist keine raw-Verbindung"
 
-#: src/main/connections.c:2445
+#: src/main/connections.c:2442
 msgid "'con' is not an output rawConnection"
 msgstr "'con' ist keine Ausgabe-Verbindung vom raw Typ"
 
-#: src/main/connections.c:2481
+#: src/main/connections.c:2478
 msgid "cannot allocate memory for text connection"
 msgstr "kann keinen Speicher für Textverbindung zuweisen"
 
-#: src/main/connections.c:2529
+#: src/main/connections.c:2526
 msgid "seek is not relevant for text connection"
 msgstr "seek ist nicht relevant für Textverbindungen"
 
-#: src/main/connections.c:2537 src/main/connections.c:2541
-#: src/main/connections.c:2547 src/main/connections.c:2560
-#: src/main/connections.c:2737 src/main/connections.c:2741
-#: src/main/connections.c:2747 src/main/connections.c:2760
-#: src/main/connections.c:2766
+#: src/main/connections.c:2534 src/main/connections.c:2538
+#: src/main/connections.c:2544 src/main/connections.c:2557
+#: src/main/connections.c:2741 src/main/connections.c:2745
+#: src/main/connections.c:2751 src/main/connections.c:2764
+#: src/main/connections.c:2770
 msgid "allocation of text connection failed"
 msgstr "Allokation einer Textverbindung fehlgeschlagen"
 
-#: src/main/connections.c:2714
+#: src/main/connections.c:2718
 msgid "text connection: appending to a non-existent char vector"
 msgstr "Text Verbindung: Anhängen an nicht existierenden Charakter Vektor"
 
-#: src/main/connections.c:2818
+#: src/main/connections.c:2822
 msgid "unsupported mode"
 msgstr "nicht unterstützter Modus"
 
-#: src/main/connections.c:2841
+#: src/main/connections.c:2844
 msgid "'con' is not a textConnection"
 msgstr "'con' ist keine Text-Verbindung"
 
-#: src/main/connections.c:2844
+#: src/main/connections.c:2847
 msgid "'con' is not an output textConnection"
 msgstr "'con' ist keine Ausgabe-Textverbindung"
 
-#: src/main/connections.c:2919
+#: src/main/connections.c:2921
 msgid "sockets are not available on this system"
 msgstr "Sockets sind auf diesem System nicht verfügbar"
 
-#: src/main/connections.c:2988 src/main/connections.c:3037
-#: src/main/connections.c:3048 src/main/connections.c:3095
-#: src/main/connections.c:3116 src/main/connections.c:3139
-#: src/main/connections.c:3151 src/main/connections.c:3263
-#: src/main/connections.c:3373 src/main/connections.c:5065
+#: src/main/connections.c:2989 src/main/connections.c:3038
+#: src/main/connections.c:3049 src/main/connections.c:3096
+#: src/main/connections.c:3117 src/main/connections.c:3140
+#: src/main/connections.c:3152 src/main/connections.c:3264
+#: src/main/connections.c:3376 src/main/connections.c:5098
 msgid "'con' is not a connection"
 msgstr "'con' ist keine Verbindung"
 
-#: src/main/connections.c:2991
+#: src/main/connections.c:2992
 msgid "cannot open standard connections"
 msgstr "kann die Standardverbindungen nicht öffnen"
 
-#: src/main/connections.c:2993
+#: src/main/connections.c:2994
 msgid "connection is already open"
 msgstr "Verbindung bereits geöffnet"
 
-#: src/main/connections.c:3026
+#: src/main/connections.c:3027
 msgid "unknown 'rw' value"
 msgstr "unbekannter 'rw' Wert"
 
-#: src/main/connections.c:3097
+#: src/main/connections.c:3098
 msgid "cannot close standard connections"
 msgstr "kann Standardverbindungen nicht schließen"
 
-#: src/main/connections.c:3100
+#: src/main/connections.c:3101
 msgid "cannot close output sink connection"
 msgstr "kann die Ausgaben-sink-Verbindung nicht schließen"
 
-#: src/main/connections.c:3102
+#: src/main/connections.c:3103
 msgid "cannot close messages sink connection"
 msgstr "kann die Nachrichten-sink-Verbindung nicht schließen"
 
-#: src/main/connections.c:3118 src/main/connections.c:4788
-#: src/main/serialize.c:1660 src/main/serialize.c:1668
+#: src/main/connections.c:3119 src/main/connections.c:4821
+#: src/main/serialize.c:1695 src/main/serialize.c:1703
 msgid "connection is not open"
 msgstr "Verbindung ist nicht geöffnet"
 
-#: src/main/connections.c:3211 src/main/connections.c:3223
+#: src/main/connections.c:3212 src/main/connections.c:3224
 msgid "Line longer than buffer size"
 msgstr "Zeile länger als Buffergröße"
 
-#: src/main/connections.c:3290 src/main/connections.c:3292
-#: src/main/connections.c:3556 src/main/connections.c:4082
-#: src/main/connections.c:4106 src/main/dcf.c:71 src/main/scan.c:907
+#: src/main/connections.c:3291 src/main/connections.c:3293
+#: src/main/connections.c:3560 src/main/connections.c:4114
+#: src/main/connections.c:4138 src/main/dcf.c:71 src/main/scan.c:907
 #: src/main/scan.c:911 src/main/scan.c:1018 src/main/scan.c:1022
-#: src/main/serialize.c:1662 src/main/source.c:267
+#: src/main/serialize.c:1697 src/main/source.c:267
 msgid "cannot read from this connection"
 msgstr "kann aus dieser Verbindung nicht lesen"
 
-#: src/main/connections.c:3304 src/main/connections.c:3323
+#: src/main/connections.c:3305 src/main/connections.c:3325
 msgid "cannot allocate buffer in readLines"
 msgstr "kann Buffer in readLines nicht allozieren"
 
-#: src/main/connections.c:3345
+#: src/main/connections.c:3348
 #, c-format
 msgid "incomplete final line found on '%s'"
 msgstr "unvollständige letzte Zeile in '%s' gefunden"
 
-#: src/main/connections.c:3351
+#: src/main/connections.c:3354
 msgid "too few lines read in readLines"
 msgstr "zu wenig Zeilen gelesen in readLines"
 
-#: src/main/connections.c:3454
+#: src/main/connections.c:3457
 msgid "incomplete string at end of file has been discarded"
 msgstr "unvollständige Zeichenkette am Ende der Datei wurde verworfen"
 
-#: src/main/connections.c:3460
+#: src/main/connections.c:3463
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr ""
 "Null Terminator nicht gefunden: Zeichenkette bei 10000 Zeichen abgebrochen"
 
-#: src/main/connections.c:3524
+#: src/main/connections.c:3528
 msgid "can only read from a binary connection"
 msgstr "kann nur aus binärer Verbindung lesen"
 
-#: src/main/connections.c:3573 src/main/connections.c:3852
+#: src/main/connections.c:3577 src/main/connections.c:3884
 msgid "size changing is not supported for complex vectors"
 msgstr "Ändern der Größe für komplexe Vektoren nicht unterstützt"
 
-#: src/main/connections.c:3598 src/main/connections.c:3616
-#: src/main/connections.c:3642 src/main/connections.c:3686
-#: src/main/connections.c:3706 src/main/connections.c:3833
-#: src/main/connections.c:3846 src/main/connections.c:3905
-#: src/main/connections.c:3937
+#: src/main/connections.c:3615 src/main/connections.c:3633
+#: src/main/connections.c:3659 src/main/connections.c:3718
+#: src/main/connections.c:3738 src/main/connections.c:3865
+#: src/main/connections.c:3878 src/main/connections.c:3937
+#: src/main/connections.c:3969
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "Größe %d ist auf dieser Maschine unbekannt"
 
-#: src/main/connections.c:3627
+#: src/main/connections.c:3644
 msgid "raw is always of size 1"
 msgstr "raw hat immer Größe 1"
 
-#: src/main/connections.c:3736
+#: src/main/connections.c:3667
+msgid "'signed = FALSE' is only valid for integers of sizes 1 and 2"
+msgstr ""
+
+#: src/main/connections.c:3768
 msgid "'x' is not an atomic vector type"
 msgstr "'x' ist kein atomarer Vektor Typ"
 
-#: src/main/connections.c:3742
+#: src/main/connections.c:3774
 msgid "can only write to a binary connection"
 msgstr "kann nur in binäre Verbindungen schreiben"
 
-#: src/main/connections.c:3761
+#: src/main/connections.c:3793
 msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr "lediglich 2^31-1 Bytes können in einen raw vector geschrieben werden"
 
-#: src/main/connections.c:3763
-msgid "only 2^31-1 bytes can be written in a single readBin() call"
+#: src/main/connections.c:3795
+#, fuzzy
+msgid "only 2^31-1 bytes can be written in a single writeBin() call"
 msgstr ""
 "lediglich 2^31 -1 Bytes können in einem einzelnen aufruf von readBin() "
 "geschrieben werden"
 
-#: src/main/connections.c:3812 src/main/connections.c:3965
-#: src/main/connections.c:4238 src/main/connections.c:4278
+#: src/main/connections.c:3844 src/main/connections.c:3997
+#: src/main/connections.c:4270 src/main/connections.c:4310
 msgid "problem writing to connection"
 msgstr "Problem beim Schreiben in Verbindung"
 
-#: src/main/connections.c:3857
+#: src/main/connections.c:3889
 msgid "size changing is not supported for raw vectors"
 msgstr "Ändern der Größe nicht unterstützt für raw Vektoren"
 
-#: src/main/connections.c:4000 src/main/connections.c:4004
-#: src/main/connections.c:4043
+#: src/main/connections.c:4032 src/main/connections.c:4036
+#: src/main/connections.c:4075
 msgid "invalid UTF-8 input in readChar()"
 msgstr "ungültige UTF-8 Eingabe in readChar()"
 
-#: src/main/connections.c:4109
+#: src/main/connections.c:4141
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
 msgstr "kann Bytes nur in nicht-UTF-8 MBCS Lokalisierungen lesen"
 
-#: src/main/connections.c:4178
+#: src/main/connections.c:4210
 msgid "'object' is too short"
 msgstr "'object' ist zu kurz"
 
-#: src/main/connections.c:4227
+#: src/main/connections.c:4259
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: mehr Zeichen verlangt als in Zeichenkette vorhanden - fülle mit "
 "Nullen auf"
 
-#: src/main/connections.c:4252
+#: src/main/connections.c:4284
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: mehr Zeichen verlangt als in Zeichenkette vorhanden - fülle mit "
 "Nullen auf"
 
-#: src/main/connections.c:4312 src/main/connections.c:4315
-#: src/main/connections.c:4353 src/main/connections.c:4358
+#: src/main/connections.c:4343 src/main/connections.c:4347
+#: src/main/connections.c:4383 src/main/connections.c:4389
 msgid "could not allocate space for pushBack"
 msgstr "konnte keinen Speicher für pushBack zuteilen"
 
-#: src/main/connections.c:4342
+#: src/main/connections.c:4374
 msgid "can only push back on open readable connections"
 msgstr "push back geht nur auf offenen lesbaren Verbindungen"
 
-#: src/main/connections.c:4344
+#: src/main/connections.c:4376
 msgid "can only push back on text-mode connections"
 msgstr "push back geht nur bei Text Verbindungen"
 
-#: src/main/connections.c:4405 src/main/connections.c:4475
+#: src/main/connections.c:4436 src/main/connections.c:4506
 msgid "sink stack is full"
 msgstr "sink stack ist voll"
 
-#: src/main/connections.c:4408
+#: src/main/connections.c:4439
 msgid "cannot switch output to stdin"
 msgstr "kann Ausgabe nicht auf stdin umleiten"
 
-#: src/main/connections.c:4435
+#: src/main/connections.c:4466
 msgid "no sink to remove"
 msgstr "kein sink zu entfernen"
 
-#: src/main/connections.c:4557
+#: src/main/connections.c:4588
 #, c-format
 msgid "there is no connection %d"
 msgstr "Es gibt keine Verbindung %d"
 
-#: src/main/connections.c:4692
+#: src/main/connections.c:4723
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") unterstützt nur open = \"w+\" und open = \"w+b\": Ersteres wird "
 "verwendet"
 
-#: src/main/connections.c:4746 src/modules/internet/internet.c:113
+#: src/main/connections.c:4777 src/modules/internet/internet.c:113
 #: src/modules/internet/internet.c:568
 msgid "unsupported URL scheme"
 msgstr "nicht unterstütztes URL Schema"
 
-#: src/main/connections.c:4830
+#: src/main/connections.c:4863
 msgid "file stream does not have gzip magic number"
 msgstr "Dateistrom hat nicht die magic number von gzip"
 
-#: src/main/connections.c:4841
+#: src/main/connections.c:4874
 msgid "file stream does not have valid gzip header"
 msgstr "Dateistrom hat keinen gültigen gzip header"
 
-#: src/main/connections.c:4906
+#: src/main/connections.c:4939
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "Schreibfehler während flush auf 'gzcon' Verbindung"
 
-#: src/main/connections.c:5008
+#: src/main/connections.c:5041
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "Checksummenfehler %x %x\n"
 
-#: src/main/connections.c:5035
+#: src/main/connections.c:5068
 msgid "write error on 'gzcon' connection"
 msgstr "Schreibfehler auf 'gzcon' Verbindung"
 
-#: src/main/connections.c:5069
+#: src/main/connections.c:5102
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' muss aus 0..9 sein"
 
-#: src/main/connections.c:5072
+#: src/main/connections.c:5105
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' muss entweder TRUE oder FALSE sein"
 
-#: src/main/connections.c:5075
+#: src/main/connections.c:5108
 msgid "this is already a gzcon connection"
 msgstr "dies ist bereits eine gzcon Verbindung"
 
-#: src/main/connections.c:5081
+#: src/main/connections.c:5114
 msgid "can only use read- or write- binary connections"
 msgstr "kann nur entweder read- oder write- binäre Verbindungen benutzen"
 
-#: src/main/connections.c:5084
+#: src/main/connections.c:5117
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "Benutzung einer text-mode 'file' connection arbeitet evtl. nicht korrekt"
 
-#: src/main/connections.c:5087
+#: src/main/connections.c:5120
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2379,24 +2404,24 @@ msgstr ""
 "kann aus einer schreibbaren textConnection keine gzcon erzeugen; evtl. "
 "\"rawconnection\" benutzen"
 
-#: src/main/connections.c:5090 src/main/connections.c:5094
-#: src/main/connections.c:5101 src/main/connections.c:5115
+#: src/main/connections.c:5123 src/main/connections.c:5127
+#: src/main/connections.c:5134 src/main/connections.c:5148
 msgid "allocation of 'gzcon' connection failed"
 msgstr "Allokation einer 'gzcon' Verbindung fehlgeschlagen"
 
-#: src/main/connections.c:5273
+#: src/main/connections.c:5306
 msgid "not a list of sockets"
 msgstr "keine Liste von Sockets"
 
-#: src/main/connections.c:5278
+#: src/main/connections.c:5311
 msgid "bad write indicators"
 msgstr "unbrauchbare Schreibindikatoren"
 
-#: src/main/connections.c:5289
+#: src/main/connections.c:5322
 msgid "not a socket connection"
 msgstr "keine Socket Verbindung"
 
-#: src/main/connections.c:5510
+#: src/main/connections.c:5543
 msgid "unknown compression, assuming none"
 msgstr "unbekannte Kompression, vermute keine"
 
@@ -2512,7 +2537,7 @@ msgstr "Problem beim Zurücksetzen der Zeitzone"
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "Komponente der Länge 0 in nicht-leerer POSIXlt Struktur"
 
-#: src/main/dcf.c:83 src/main/dcf.c:147 src/main/dcf.c:223
+#: src/main/dcf.c:83 src/main/dcf.c:148 src/main/dcf.c:226
 msgid "could not allocate memory for 'read.dcf'"
 msgstr "konnte Speicher für 'read.dcf' nicht zuteilen"
 
@@ -2522,7 +2547,7 @@ msgid "Found continuation line starting '%s ...' at begin of record."
 msgstr ""
 "Fortsetzungszeile beginnend mit '%s ...' am Anfang des Records gefunden."
 
-#: src/main/dcf.c:251
+#: src/main/dcf.c:255
 #, c-format
 msgid "Line starting '%s ...' is malformed!"
 msgstr "Zeile beginnend mit '%s ...' ist fehlformatiert"
@@ -2600,7 +2625,7 @@ msgstr "'opts' sollte eine kleine nicht-negative ganze Zahl sein"
 
 #: src/main/deparse.c:374 src/main/envir.c:1685 src/main/envir.c:1767
 #: src/main/eval.c:410 src/main/eval.c:1048 src/main/eval.c:3348
-#: src/main/saveload.c:1965 src/main/saveload.c:2296 src/main/serialize.c:2373
+#: src/main/saveload.c:1965 src/main/saveload.c:2296 src/main/serialize.c:2410
 #, c-format
 msgid "object '%s' not found"
 msgstr "Objekt '%s' nicht gefunden"
@@ -2949,82 +2974,97 @@ msgstr "ungültige Zusammenfassung von Zeilen"
 msgid "out of memory while clipping polyline"
 msgstr "zu wenig Speicher beim Abschneiden von polyline"
 
-#: src/main/engine.c:1385
+#: src/main/engine.c:1372
+#, fuzzy
+msgid "Path rendering is not implemented for this device"
+msgstr "gc.time() ist auf diesem System nicht implementiert"
+
+#: src/main/engine.c:1390
 msgid "Invalid graphics path"
 msgstr "Ungültiger Grafikpfad"
 
-#: src/main/engine.c:1624
+#: src/main/engine.c:1409
+#, fuzzy
+msgid "Raster rendering is not implemented for this device"
+msgstr "Sys.sleep ist auf diesem System nicht implementiert"
+
+#: src/main/engine.c:1433
+#, fuzzy
+msgid "Raster capture is not available for this device"
+msgstr "'%s' für dieses Device nicht verfügbar"
+
+#: src/main/engine.c:1640
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "Schriftform %d für Schriftfamilie '%s' nicht unterstützt"
 
-#: src/main/engine.c:1940
+#: src/main/engine.c:1956
 msgid "no graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: src/main/engine.c:2018
+#: src/main/engine.c:2034
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "pch Wert '%d' ist ungültig in dieser locale"
 
-#: src/main/engine.c:2275
+#: src/main/engine.c:2291
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "nicht implementierter Wert '%d' für pch"
 
-#: src/main/engine.c:2298
+#: src/main/engine.c:2314
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "ungültige Achsenausdehnungen [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2302
+#: src/main/engine.c:2318
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "unendliche Achsenausdehnung [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2340
+#: src/main/engine.c:2356
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ".. GEPretty(.): new *lo = %g < %g = x1"
 
-#: src/main/engine.c:2342
+#: src/main/engine.c:2358
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up = %g > %g = x2"
 
-#: src/main/engine.c:2671
+#: src/main/engine.c:2687
 msgid "Display list redraw incomplete"
 msgstr "unvollständiges Neuzeichnen der Displayliste"
 
-#: src/main/engine.c:2855
+#: src/main/engine.c:2871
 msgid "'expr' argument must be an expression"
 msgstr "'expr' Argument muss ein Ausdruck sein"
 
-#: src/main/engine.c:2857
+#: src/main/engine.c:2873
 msgid "'list' argument must be a list"
 msgstr "'list' Argument muss eine Liste sein"
 
-#: src/main/engine.c:2863
+#: src/main/engine.c:2879
 msgid "'env' argument must be an environment"
 msgstr "'env' Argument muss eine Umgebung sein"
 
-#: src/main/engine.c:2885 src/main/graphics.c:2395
+#: src/main/engine.c:2901 src/main/graphics.c:2395
 msgid "invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
-#: src/main/engine.c:2943 src/main/engine.c:2951
+#: src/main/engine.c:2959 src/main/engine.c:2967
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "ungültiges multibyte zeichen in pch=\"%c\""
 
-#: src/main/engine.c:3021
+#: src/main/engine.c:3037
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "ungültiger Linientyp: muss Länge 2, 4, 6, oder 8 haben"
 
-#: src/main/engine.c:3025
+#: src/main/engine.c:3041
 msgid "invalid line type: zeroes are not allowed"
 msgstr "ungültiger Linientyp: Nullen sind nicht erlaubt"
 
-#: src/main/engine.c:3034 src/main/engine.c:3042 src/main/engine.c:3049
+#: src/main/engine.c:3050 src/main/engine.c:3058 src/main/engine.c:3065
 msgid "invalid line type"
 msgstr "ungültiger Linientyp"
 
@@ -3696,7 +3736,7 @@ msgid "'file' must be non-empty string"
 msgstr "'file' muss eine nichtleere Zeichenkette sein"
 
 #: src/main/eval.c:5077 src/main/saveload.c:1931 src/main/saveload.c:2231
-#: src/main/serialize.c:1813
+#: src/main/serialize.c:1848
 msgid "'ascii' must be logical"
 msgstr "'ascii' muss ein logischer Wert sein"
 
@@ -3781,145 +3821,145 @@ msgstr "rekursive Nutzung von getGraphicsEvent wird nicht unterstützt"
 msgid "no graphics event handlers set"
 msgstr "keine Verarbeitung für Grafikereignisse gesetzt"
 
-#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2000
-#: src/main/gram.y:2014
+#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2001
+#: src/main/gram.y:2015
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF beim Lesen von MBCS Zeichen in Zeile %d"
 
-#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2004
-#: src/main/gram.y:2011
+#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2005
+#: src/main/gram.y:2012
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "ungültiges multibyte Zeichen im Parser in Zeile %d"
 
-#: src/main/gram.y:946
+#: src/main/gram.y:947
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "ungültiger tag-Typ in Zeile %d"
 
-#: src/main/gram.y:1474
+#: src/main/gram.y:1475
 msgid "contextstack overflow"
 msgstr "Kontextstacküberlauf"
 
-#: src/main/gram.y:1710
+#: src/main/gram.y:1711
 msgid "input"
 msgstr "Eingabe"
 
-#: src/main/gram.y:1711
+#: src/main/gram.y:1712
 msgid "end of input"
 msgstr "Ende der Eingabe"
 
-#: src/main/gram.y:1712
+#: src/main/gram.y:1713
 msgid "string constant"
 msgstr "Zeichenkettenkonstante"
 
-#: src/main/gram.y:1713
+#: src/main/gram.y:1714
 msgid "numeric constant"
 msgstr "numerische Konstante"
 
-#: src/main/gram.y:1714
+#: src/main/gram.y:1715
 msgid "symbol"
 msgstr "Symbol"
 
-#: src/main/gram.y:1715
+#: src/main/gram.y:1716
 msgid "assignment"
 msgstr "Zuweisung"
 
-#: src/main/gram.y:1716
+#: src/main/gram.y:1717
 msgid "end of line"
 msgstr "Zeilenende"
 
-#: src/main/gram.y:1730 src/main/gram.y:1736
+#: src/main/gram.y:1731 src/main/gram.y:1737
 #, c-format
 msgid "unexpected %s"
 msgstr "Unerwartete(s) %s"
 
-#: src/main/gram.y:1746
+#: src/main/gram.y:1747
 #, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "wiederholtes formales Argument '%s' in Zeile %d"
 
-#: src/main/gram.y:1764
+#: src/main/gram.y:1765
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "Überlauf des Eingabebuffers in Zeile %d"
 
-#: src/main/gram.y:1915
+#: src/main/gram.y:1916
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr "ganzzahliges Literal %sL enthält ein Komma; nutze den numerischen Wert"
 
-#: src/main/gram.y:1917
+#: src/main/gram.y:1918
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
 "nicht-ganzzahliger Wert %s mit L qualifiziert; nutze den numerischen Wert"
 
-#: src/main/gram.y:1928
+#: src/main/gram.y:1929
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "ganzzahliges Literal %sL enthält unnötiges Komma"
 
-#: src/main/gram.y:1960
+#: src/main/gram.y:1961
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 "kann nicht genug Speicher für lange Zeichenkette in Zeile %d allozieren"
 
-#: src/main/gram.y:2115
+#: src/main/gram.y:2116
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "\\x' ohne Hex-Ziffern in der Zeichenkette beginnened mit \"%s\" genutzt"
 
-#: src/main/gram.y:2129
+#: src/main/gram.y:2130
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\uxxxx Sequenzen werden nicht zwischen backticks unterstützt (Zeile %d)"
 
-#: src/main/gram.y:2144
+#: src/main/gram.y:2145
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "\\u' ohne Hex-Ziffern in der Zeichekette beginnend mit \"%s\" genutzt"
 
-#: src/main/gram.y:2152
+#: src/main/gram.y:2153
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "ungültige \\u{xxxx} Sequenz (Zeile %d)"
 
-#: src/main/gram.y:2164
+#: src/main/gram.y:2165
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\Uxxxxxxx Sequenzen werden nicht zwischen backticks unterstützt (Zeile %d)"
 
-#: src/main/gram.y:2179
+#: src/main/gram.y:2180
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\U' ohne Hex-Ziffern in der Zeichenkette beginnend mit \"%s\" genutzt"
 
-#: src/main/gram.y:2187
+#: src/main/gram.y:2188
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "ungültige \\U{xxxxxxxx} Sequenz (Zeile %d)"
 
-#: src/main/gram.y:2227
+#: src/main/gram.y:2228
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' ist eine unbekannte Escape-Sequenz in der Zeichenkette beginnend mit "
 "\"%s\""
 
-#: src/main/gram.y:2275
+#: src/main/gram.y:2281
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "Unicode und oktale bzw. hexadezimale Escapecodes in einer Zeichenkette zu "
 "mischen ist nicht zulässig."
 
-#: src/main/gram.y:2279
+#: src/main/gram.y:2285
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3928,8 +3968,8 @@ msgstr ""
 "Zeichenkette in Zeile %d mit Unicodeescapes nicht aus dieser Lokalisierung\n"
 "ist zu lang (max. 1000 Zeichen)"
 
-#: src/main/gram.y:2808 src/main/gram.y:2815 src/main/gram.y:2821
-#: src/main/gram.y:2828
+#: src/main/gram.y:2814 src/main/gram.y:2821 src/main/gram.y:2827
+#: src/main/gram.y:2834
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "Kontextstack-Überlauf in Zeile %d"
@@ -3974,7 +4014,7 @@ msgstr "Achsenstil \"%c\" nicht implementiert"
 msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
 msgstr "relativer Wertebereich =%4.0f * EPS ist klein (Achse %d)"
 
-#: src/main/graphics.c:2198 src/main/graphics.c:2561
+#: src/main/graphics.c:2198 src/main/graphics.c:2557
 msgid "No graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
@@ -3982,28 +4022,24 @@ msgstr "kein aktives Grafikdevice"
 msgid "plot.new has not been called yet"
 msgstr "plot.new wurde noch nicht aufgerufen"
 
-#: src/main/graphics.c:2528
-msgid "no locator capability in device driver"
-msgstr "Treiber dieses Devices hat keine Möglichkeit locator zu nutzen"
-
-#: src/main/graphics.c:2800 src/main/graphics.c:2836
+#: src/main/graphics.c:2796 src/main/graphics.c:2832
 msgid "unable to allocate memory (in GPolygon)"
 msgstr "kann keinen Speicher zuteilen (in GPolygon)"
 
-#: src/main/graphics.c:3018
+#: src/main/graphics.c:3014
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "Pfeil ohne Länge hat keine Richtung und wird ignoriert"
 
-#: src/main/graphics.c:3099
+#: src/main/graphics.c:3095
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ungültiger par(\"bty\") = '%c': keine box() gezeichnet"
 
-#: src/main/graphics.c:3116
+#: src/main/graphics.c:3112
 msgid "invalid argument to GBox"
 msgstr "ungültiges Argument für GBox"
 
-#: src/main/graphics.c:3360
+#: src/main/graphics.c:3356
 msgid "Metric information not available for this device"
 msgstr "Metrische Information für dieses Device nicht möglich"
 
@@ -4016,14 +4052,6 @@ msgstr "ungültiger regulärer Ausdruck '%s', Grund '%s'"
 #, c-format
 msgid "invalid regular expression, reason '%s'"
 msgstr "ungültiger regulärer Ausdruck '%s'"
-
-#: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
-#: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
-#: src/main/grep.c:1480 src/main/grep.c:2274 src/main/grep.c:2276
-#: src/main/grep.c:2546
-#, c-format
-msgid "argument '%s' will be ignored"
-msgstr "Argument '%s' wird ignoriert"
 
 #: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
 #: src/main/grep.c:871 src/main/grep.c:2413
@@ -4113,7 +4141,7 @@ msgstr "Ergebnis-Zeichenkette ist zu lang"
 msgid "pcre_fullinfo returned '%d' "
 msgstr ""
 
-#: src/main/grep.c:2569
+#: src/main/grep.c:2609
 #, fuzzy, c-format
 msgid "regcomp error: '%s'"
 msgstr "Fehler bei regcomp: '%s'"
@@ -4542,32 +4570,32 @@ msgstr "Komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "Variablen des Typs '%s' sind in Modellmatrizen nicht erlaubt"
 
-#: src/main/names.c:1047
+#: src/main/names.c:1048
 msgid "string argument required"
 msgstr "Zeichenkettenargument benötigt"
 
-#: src/main/names.c:1050
+#: src/main/names.c:1051
 msgid "no such primitive function"
 msgstr "keine solche primitive Funktion"
 
-#: src/main/names.c:1186
+#: src/main/names.c:1187
 msgid "attempt to use zero-length variable name"
 msgstr "Versuch einen Variablennamen der Länge 0 zu nutzen"
 
-#: src/main/names.c:1188
+#: src/main/names.c:1189
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "Variablennamen sind auf %d Bytes beschränkt"
 
-#: src/main/names.c:1215
+#: src/main/names.c:1216
 msgid "invalid .Internal() argument"
 msgstr "ungültiges Argument für .Internal()"
 
-#: src/main/names.c:1218
+#: src/main/names.c:1219
 msgid "invalid internal function"
 msgstr "ungültige interne Funktion"
 
-#: src/main/names.c:1220
+#: src/main/names.c:1221
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "keine interne Funktion \"%s\""
@@ -5967,7 +5995,7 @@ msgstr "ungültiger Vergleich mit komplexen Werten"
 #: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1369
 #: src/main/saveload.c:1374 src/main/saveload.c:1418 src/main/saveload.c:1486
 #: src/main/saveload.c:1495 src/main/serialize.c:330 src/main/serialize.c:337
-#: src/main/serialize.c:2043 src/main/serialize.c:2051
+#: src/main/serialize.c:2080 src/main/serialize.c:2088
 msgid "read error"
 msgstr "Lesefehler"
 
@@ -6110,8 +6138,8 @@ msgstr "xdr Schreibfehler bei complex aufgetreten"
 msgid "an xdr complex data read error occurred"
 msgstr "xdr Lesefehler bei complex aufgetreten"
 
-#: src/main/saveload.c:1771 src/main/serialize.c:1622
-#: src/main/serialize.c:2218 src/modules/internet/internet.c:350
+#: src/main/saveload.c:1771 src/main/serialize.c:1657
+#: src/main/serialize.c:2255 src/modules/internet/internet.c:350
 #: src/modules/internet/internet.c:408 src/modules/internet/internet.c:513
 msgid "write failed"
 msgstr "Schreibfehler"
@@ -6168,12 +6196,12 @@ msgstr "XDR Lesefehler"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "kann Daten nicht sichern -- kann '%s': %s nicht öffnen"
 
-#: src/main/saveload.c:2241 src/main/serialize.c:1825
+#: src/main/saveload.c:2241 src/main/serialize.c:1860
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "kann nicht in Verbindungen in Version %d Format sichern"
 
-#: src/main/saveload.c:2264 src/main/serialize.c:1850
+#: src/main/saveload.c:2264 src/main/serialize.c:1885
 msgid "connection not open for writing"
 msgstr "Verbindungen nicht geöffnet zum Schreiben"
 
@@ -6181,13 +6209,13 @@ msgstr "Verbindungen nicht geöffnet zum Schreiben"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "kann XDR Format nicht in eine Verbindung im Textmodus sichern"
 
-#: src/main/saveload.c:2282 src/main/serialize.c:1730
-#: src/main/serialize.c:1744 src/main/serialize.c:1926
-#: src/main/serialize.c:1948
+#: src/main/saveload.c:2282 src/main/serialize.c:1765
+#: src/main/serialize.c:1779 src/main/serialize.c:1961
+#: src/main/serialize.c:1983
 msgid "error writing to connection"
 msgstr "Schreibfehler in Verbindung"
 
-#: src/main/saveload.c:2343 src/main/serialize.c:1898
+#: src/main/saveload.c:2343 src/main/serialize.c:1933
 msgid "connection not open for reading"
 msgstr "Verbindung nicht zum Lesen geöffnet"
 
@@ -6258,33 +6286,33 @@ msgstr "erstes Argument muss Charakter Mode haben"
 msgid "Selection: "
 msgstr "Auswahl: "
 
-#: src/main/scan.c:1524 src/main/scan.c:1536
+#: src/main/scan.c:1524 src/main/scan.c:1537
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "kann keinen Zwischenspeicher in 'readTableHead' zuteilen"
 
-#: src/main/scan.c:1546
+#: src/main/scan.c:1548
 msgid "\\ followed by EOF"
 msgstr "\\ gefolgt von EOF"
 
-#: src/main/scan.c:1591 src/main/scan.c:1594
+#: src/main/scan.c:1593 src/main/scan.c:1596
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "unvollständige letzte Zeile von readTableHeader gefunden in '%s'"
 
-#: src/main/scan.c:1702
+#: src/main/scan.c:1704
 msgid "'file' is not a connection"
 msgstr "'file' ist keine Verbindung"
 
-#: src/main/scan.c:1735
+#: src/main/scan.c:1737
 msgid "'dec' must be a single character"
 msgstr "'dec' muss ein einzelnes Zeichen sein"
 
-#: src/main/scan.c:1762
+#: src/main/scan.c:1764
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "korrupter Data Frame -- Länge der Spalte %d entspricht nicht nrows"
 
-#: src/main/scan.c:1808
+#: src/main/scan.c:1810
 msgid "corrupt matrix -- dims not not match length"
 msgstr "korrupte Matrix -- dims entspricht nicht Länge"
 
@@ -6378,65 +6406,65 @@ msgstr "unbekanntes Eingabeformat"
 msgid "input format does not match specified format"
 msgstr "Eingabeformat passt nicht zum angegebenen Format"
 
-#: src/main/serialize.c:740
+#: src/main/serialize.c:755
 msgid "no restore method available"
 msgstr "keine Restore-Methode vorhanden"
 
-#: src/main/serialize.c:770
+#: src/main/serialize.c:785
 msgid "names in persistent strings are currently ignored"
 msgstr "Namen in persistenten Zeichenketten werden im Moment ignoriert"
 
-#: src/main/serialize.c:835
+#: src/main/serialize.c:850
 #, c-format
 msgid "'%s' may not be available when loading"
 msgstr "'%s' evtl. nicht verfügbar während des Ladens"
 
-#: src/main/serialize.c:842
+#: src/main/serialize.c:857
 msgid "namespaces may not be available when loading"
 msgstr "namespaces evtl. nicht verfügbar während des Ladens"
 
-#: src/main/serialize.c:947
+#: src/main/serialize.c:962
 msgid "this version of R cannot write byte code objects"
 msgstr "diese R Version kann keine Bytecodeobjekte schreiben"
 
-#: src/main/serialize.c:956
+#: src/main/serialize.c:971
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem: unbekannter Typ %i"
 
-#: src/main/serialize.c:1126
+#: src/main/serialize.c:1150
 #, c-format
 msgid "version %d not supported"
 msgstr "Version %d nicht unterstützt"
 
-#: src/main/serialize.c:1154
+#: src/main/serialize.c:1178
 msgid "reference index out of range"
 msgstr "Referenzindex außerhalb des Bereichs"
 
-#: src/main/serialize.c:1184
+#: src/main/serialize.c:1208
 msgid "names in persistent strings are not supported yet"
 msgstr "Namen in persistenten Zeichenketten werden noch nicht unterstützt"
 
-#: src/main/serialize.c:1395
+#: src/main/serialize.c:1419
 msgid "this version of R cannot read byte code objects"
 msgstr "diese R Version kann keine Bytecodeobjekte lesen"
 
-#: src/main/serialize.c:1398
+#: src/main/serialize.c:1422
 msgid "this version of R cannot read class references"
 msgstr "diese R Version kann keine Klassenreferenzen lesen"
 
-#: src/main/serialize.c:1400
+#: src/main/serialize.c:1424
 msgid "this version of R cannot read generic function references"
 msgstr "diese R Version kann keine Referenzen auf generische Funktionen lesen"
 
-#: src/main/serialize.c:1411
+#: src/main/serialize.c:1435
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 "ReadItem: unbekannter Typ %i, evtl. von einer späteren Version von R "
 "geschrieben"
 
-#: src/main/serialize.c:1546
+#: src/main/serialize.c:1581
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d."
@@ -6445,7 +6473,7 @@ msgstr ""
 "kann inoffiziellen Version %d workspace nicht lesen, geschrieben von "
 "experimentellem R %d.%d.%d"
 
-#: src/main/serialize.c:1550
+#: src/main/serialize.c:1585
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6454,83 +6482,83 @@ msgstr ""
 "kann Version %d workspace geschrieben von R %d.%d.%d nicht lesen, brauche "
 "mindestens R %d.%d.%d"
 
-#: src/main/serialize.c:1629
+#: src/main/serialize.c:1664
 msgid "read failed"
 msgstr "Lesen fehlgeschlagen"
 
-#: src/main/serialize.c:1692
+#: src/main/serialize.c:1727
 msgid "error reading from ascii connection"
 msgstr "Lesefehler aus ASCII-Verbindung"
 
-#: src/main/serialize.c:1694
+#: src/main/serialize.c:1729
 msgid "unexpected format in ascii connection"
 msgstr "unerwartetes Format aus ASCII Verbindung"
 
-#: src/main/serialize.c:1699 src/main/serialize.c:1713
+#: src/main/serialize.c:1734 src/main/serialize.c:1748
 msgid "error reading from connection"
 msgstr "Lesefehler aus Verbindung"
 
-#: src/main/serialize.c:1754
+#: src/main/serialize.c:1789
 msgid "only ascii format can be written to text mode connections"
 msgstr "nur ASCII kann in Verbindung im Textmodus geschrieben werden"
 
-#: src/main/serialize.c:1768
+#: src/main/serialize.c:1803
 msgid "only ascii format can be read from text mode connections"
 msgstr "nur ASCII kann in Verbindung im Textmodus gelesen werden"
 
-#: src/main/serialize.c:1823 src/main/serialize.c:1976
-#: src/main/serialize.c:2114
+#: src/main/serialize.c:1858 src/main/serialize.c:2011
+#: src/main/serialize.c:2151
 msgid "bad version value"
 msgstr "unbrauchbarer Wert für Version"
 
-#: src/main/serialize.c:1848
+#: src/main/serialize.c:1883
 msgid "binary-mode connection required for ascii=FALSE"
 msgstr "binäre Verbindung für ascii=FALSE benötigt"
 
-#: src/main/serialize.c:2006 src/main/serialize.c:2033
-#: src/main/serialize.c:2094
+#: src/main/serialize.c:2041 src/main/serialize.c:2070
+#: src/main/serialize.c:2131
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 "Serialisierung ist zu groß, um in einem Raw-Vektor gespeichert zu werden"
 
-#: src/main/serialize.c:2015
+#: src/main/serialize.c:2051
 msgid "cannot allocate buffer"
 msgstr "kann Zwischenspeicher nicht zuteilen"
 
-#: src/main/serialize.c:2196 src/main/serialize.c:2265
+#: src/main/serialize.c:2233 src/main/serialize.c:2302
 msgid "not a proper file name"
 msgstr "kein korrekter Dateiname"
 
-#: src/main/serialize.c:2198
+#: src/main/serialize.c:2235
 msgid "not a proper raw vector"
 msgstr "kein zulässiger raw Vektor"
 
-#: src/main/serialize.c:2219
+#: src/main/serialize.c:2256
 msgid "could not determine file position"
 msgstr "konnte Position in Datei nicht bestimmen"
 
-#: src/main/serialize.c:2267
+#: src/main/serialize.c:2304
 msgid "bad offset/length argument"
 msgstr "unbrauchbares Argument für Offset/Länge"
 
-#: src/main/serialize.c:2291 src/main/serialize.c:2304
-#: src/main/serialize.c:2313 src/main/serialize.c:2323
-#: src/main/serialize.c:2336
+#: src/main/serialize.c:2328 src/main/serialize.c:2341
+#: src/main/serialize.c:2350 src/main/serialize.c:2360
+#: src/main/serialize.c:2373
 #, c-format
 msgid "seek failed on %s"
 msgstr "seek fehlgeschlagen auf %s"
 
-#: src/main/serialize.c:2308 src/main/serialize.c:2317
-#: src/main/serialize.c:2327 src/main/serialize.c:2340
+#: src/main/serialize.c:2345 src/main/serialize.c:2354
+#: src/main/serialize.c:2364 src/main/serialize.c:2377
 #, c-format
 msgid "read failed on %s"
 msgstr "Lesen fehlgeschlagen auf %s"
 
-#: src/main/serialize.c:2359
+#: src/main/serialize.c:2396
 msgid "bad environment"
 msgstr "unbrauchbare Umgebung"
 
-#: src/main/serialize.c:2361
+#: src/main/serialize.c:2398
 msgid "bad variable names"
 msgstr "unbrauchbarer Variablenname"
 
@@ -7004,6 +7032,11 @@ msgstr "ungültiger Eingabetyp"
 msgid "cannot mix 0-length vectors with others"
 msgstr "kann keine Vektoren mit 0-Länge mit anderen mischen"
 
+#: src/main/summary.c:1073
+#, fuzzy
+msgid "an argument will be fractionally recycled"
+msgstr "Argument '%s' wird ignoriert"
+
 #: src/main/sysutils.c:69 src/main/sysutils.c:83
 #, c-format
 msgid "cannot determine file modification time of '%s'"
@@ -7294,15 +7327,15 @@ msgstr "ungültige Eingabe '%s' in 'utf8towcs"
 msgid "invalid multibyte string at '%s'"
 msgstr "ungültige multibyte Zeichenkette bei '%s'"
 
-#: src/main/util.c:1357
+#: src/main/util.c:1368
 msgid "error message truncated to 255 chars"
 msgstr "Fehlermeldung auf 255 Zeichen gekürzt"
 
-#: src/main/util.c:1370
+#: src/main/util.c:1381
 msgid "warning message truncated to 255 chars"
 msgstr "Warnung auf 255 Zeichen gekürzt"
 
-#: src/main/util.c:1823
+#: src/main/util.c:1834
 msgid "ICU is not supported on this build"
 msgstr "ICU wird in diesem Binary nicht unterstützt"
 
@@ -7916,50 +7949,50 @@ msgstr "Kann XImage nicht erzeugen"
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3011
+#: src/modules/X11/devX11.c:3022
 #, c-format
 msgid "unable to start device %s"
 msgstr "kann Device %s nicht starten"
 
-#: src/modules/X11/devX11.c:3035
+#: src/modules/X11/devX11.c:3046
 msgid "invalid 'width' or 'height'"
 msgstr "ungültige 'width' oder 'height'"
 
-#: src/modules/X11/devX11.c:3042
+#: src/modules/X11/devX11.c:3053
 msgid "invalid colortype passed to X11 driver"
 msgstr "ungültiger Farbtyp an X11 Treiber übergeben"
 
-#: src/modules/X11/devX11.c:3056
+#: src/modules/X11/devX11.c:3067
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "unbekanntes X11 Farbmodell -- nutze Monochrom"
 
-#: src/modules/X11/devX11.c:3146
+#: src/modules/X11/devX11.c:3157
 msgid "no plot on device to save"
 msgstr "kein Plot auf dem Device zu sichern"
 
-#: src/modules/X11/devX11.c:3148
+#: src/modules/X11/devX11.c:3159
 msgid "not an open X11cairo device"
 msgstr "kein offenes X11cairo Device"
 
-#: src/modules/X11/devX11.c:3157
+#: src/modules/X11/devX11.c:3168
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "kann Datei '%s' nicht öffnen"
 
-#: src/modules/X11/devX11.c:3174
+#: src/modules/X11/devX11.c:3185
 msgid "savePlot() is not supported on this build"
 msgstr "savePlot() wird auf dieser Plattform nicht unterstützt"
 
-#: src/modules/X11/devX11.c:3214
+#: src/modules/X11/devX11.c:3225
 msgid "unable to contact X11 display"
 msgstr "konnte Verbindung zu X11 Display nicht herstellen"
 
-#: src/modules/X11/devX11.c:3263
+#: src/modules/X11/devX11.c:3274
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
 msgstr "Zwischenablage kann nicht gelesen werden (Fehlerkode %d)"
 
-#: src/modules/X11/devX11.c:3297
+#: src/modules/X11/devX11.c:3308
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "kann Speicher für X11Routines-Struktur nicht zuteilen"
 
@@ -8283,6 +8316,9 @@ msgstr "X11 Modul kann nicht geladen werden"
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
 
+#~ msgid "no locator capability in device driver"
+#~ msgstr "Treiber dieses Devices hat keine Möglichkeit locator zu nutzen"
+
 #~ msgid ""
 #~ "invalid body argument for \"function\"\n"
 #~ "Should NEVER happen; please bug.report() [mkCLOSXP]"
@@ -8311,9 +8347,6 @@ msgstr "X11 nicht verfügbar"
 #~ msgid "not a simple matrix"
 #~ msgstr "keine einfache Matrix"
 
-#~ msgid "gc.time() is not implemented on this system"
-#~ msgstr "gc.time() ist auf diesem System nicht implementiert"
-
 #~ msgid "proc.time() is not implemented on this system"
 #~ msgstr "proc.time() ist auf diesem System nicht implementiert"
 
@@ -8337,6 +8370,3 @@ msgstr "X11 nicht verfügbar"
 
 #~ msgid "cairo-based devices are not supported on this build"
 #~ msgstr "cairo-basierte Devices sind auf dieser Plattform nicht unterstützt"
-
-#~ msgid "Sys.sleep is not implemented on this system"
-#~ msgstr "Sys.sleep ist auf diesem System nicht implementiert"

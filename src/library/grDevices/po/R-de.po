@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-23 15:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -164,6 +164,9 @@ msgstr "ungültiges 'family' Argument"
 
 msgid "invalid 'file'"
 msgstr "ungültiges 'file' Argument"
+
+msgid "'maxRasters' is no longer needed, and will be ignored"
+msgstr ""
 
 msgid "invalid PDF version"
 msgstr "ungültige PDF Version"

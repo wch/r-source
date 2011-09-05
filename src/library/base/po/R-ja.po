@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-28 11:02+0900 \n"
 "Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -774,6 +774,41 @@ msgstr " 'max.distance' 成分は非負でなければなりません "
 msgid "%s and %s must have the same length"
 msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
 
+msgid "need non-overlapping matches for %s"
+msgstr ""
+
+#, fuzzy
+msgid "%s must be a character vector"
+msgstr " 'arg' は、NULL かひとつの文字列ベクトルでなければなりません "
+
+#, fuzzy
+msgid "%s must be a list of character vectors"
+msgstr " 'arg' は、NULL かひとつの文字列ベクトルでなければなりません "
+
+msgid "%s must have length one or the number of matches"
+msgstr ""
+
+msgid "cannot have replacements for non-matches"
+msgstr ""
+
+msgid "must have replacements for matches"
+msgstr ""
+
+msgid ""
+"entries of %s must have length one or the number of corresponding matches"
+msgstr ""
+
+msgid ""
+"%s must be a list with length the number of matches and two elements each"
+msgstr ""
+
+msgid "must have replacements for non-matches"
+msgstr ""
+
+msgid ""
+"entries of %s must have length one or the number of corresponding non-matches"
+msgstr ""
+
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr " norm '%S'は現在は常に exact = FALSE を使います "
 
@@ -1292,6 +1327,10 @@ msgstr " 'x' は hexmode に強制変換できません "
 
 msgid "no arguments"
 msgstr " 引数がありません "
+
+#, fuzzy
+msgid "an argument will be fractionally recycled"
+msgstr " drop 引数は無視されます "
 
 msgid "invalid 'n' value"
 msgstr " 無効な 'n' 値です "

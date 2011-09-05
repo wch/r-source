@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-08-09 22:17+0100\n"
-"PO-Revision-Date: 2011-08-09 22:17+0100\n"
+"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"PO-Revision-Date: 2011-09-05 08:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -60,6 +60,6 @@ msgstr "psnice() is not supported on this platform"
 msgid "invalid argument type"
 msgstr "invalid argument type"
 
-#: text.c:222 text.c:241
+#: text.c:222 text.c:244
 msgid "out of memory"
 msgstr "out of memory"

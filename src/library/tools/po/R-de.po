@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-30 11:39\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-24 11:04+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1024,9 +1024,6 @@ msgstr ""
 msgid "cannot read indirect reference object"
 msgstr ""
 
-msgid "invalid index in object stream lookup"
-msgstr ""
-
 msgid "cannot find object header at xrefed positions"
 msgstr ""
 
@@ -1034,6 +1031,9 @@ msgid "mismatch in object numbers (given: %d, found: %d)"
 msgstr ""
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
 msgstr ""
 
 #, fuzzy
@@ -1225,6 +1225,10 @@ msgstr "ungültige Paketstruktur"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
+
+#, fuzzy
+msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+msgstr "Unbekannte Kodierung mit nicht-ASCII Daten"
 
 msgid "cannot source package code"
 msgstr "kann Paketquelltext nicht einlesen"

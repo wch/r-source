@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-30 11:39\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -993,9 +993,6 @@ msgstr ""
 msgid "cannot read indirect reference object"
 msgstr ""
 
-msgid "invalid index in object stream lookup"
-msgstr ""
-
 msgid "cannot find object header at xrefed positions"
 msgstr ""
 
@@ -1003,6 +1000,9 @@ msgid "mismatch in object numbers (given: %d, found: %d)"
 msgstr ""
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
 msgstr ""
 
 #, fuzzy
@@ -1193,6 +1193,10 @@ msgstr "程辑包布局不对"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
+
+#, fuzzy
+msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+msgstr "没有这样的编码，带非ASCII数据:"
 
 msgid "cannot source package code"
 msgstr "无法读取程辑包源编码"

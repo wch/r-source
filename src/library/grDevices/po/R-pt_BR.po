@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -161,6 +161,9 @@ msgstr "argumento 'family' inválido"
 
 msgid "invalid 'file'"
 msgstr "'file' inválido"
+
+msgid "'maxRasters' is no longer needed, and will be ignored"
+msgstr ""
 
 msgid "invalid PDF version"
 msgstr "versão PDF inválida"

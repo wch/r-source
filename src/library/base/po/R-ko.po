@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -792,6 +792,41 @@ msgstr "'max.distance'요소는 non-negative가 나오지 않으면 되지 않�
 msgid "%s and %s must have the same length"
 msgstr "'x' 그리고 'y'는 동일 길이를 가지지 않으면 안됩니다"
 
+msgid "need non-overlapping matches for %s"
+msgstr ""
+
+#, fuzzy
+msgid "%s must be a character vector"
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
+#, fuzzy
+msgid "%s must be a list of character vectors"
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
+msgid "%s must have length one or the number of matches"
+msgstr ""
+
+msgid "cannot have replacements for non-matches"
+msgstr ""
+
+msgid "must have replacements for matches"
+msgstr ""
+
+msgid ""
+"entries of %s must have length one or the number of corresponding matches"
+msgstr ""
+
+msgid ""
+"%s must be a list with length the number of matches and two elements each"
+msgstr ""
+
+msgid "must have replacements for non-matches"
+msgstr ""
+
+msgid ""
+"entries of %s must have length one or the number of corresponding non-matches"
+msgstr ""
+
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""
 
@@ -1314,6 +1349,10 @@ msgstr "테이블에 강제 변환 할수 없습니다"
 #, fuzzy
 msgid "no arguments"
 msgstr "잘못된 인수입니다"
+
+#, fuzzy
+msgid "an argument will be fractionally recycled"
+msgstr "drop인수는 무시됩니다"
 
 msgid "invalid 'n' value"
 msgstr "무효인 'n'값입니다"

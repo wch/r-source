@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-30 11:39\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1037,9 +1037,6 @@ msgstr ""
 msgid "cannot read indirect reference object"
 msgstr ""
 
-msgid "invalid index in object stream lookup"
-msgstr ""
-
 msgid "cannot find object header at xrefed positions"
 msgstr ""
 
@@ -1047,6 +1044,9 @@ msgid "mismatch in object numbers (given: %d, found: %d)"
 msgstr ""
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
+msgstr ""
+
+msgid "invalid index in object stream lookup"
 msgstr ""
 
 #, fuzzy
@@ -1237,6 +1237,10 @@ msgstr " 不正なパッケージ構成です "
 
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
+
+#, fuzzy
+msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+msgstr " 非ASCIIデータをもつ未知のエンコーディングです "
 
 msgid "cannot source package code"
 msgstr " パッケージコードを読み込めません "

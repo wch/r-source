@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -716,6 +716,36 @@ msgstr ""
 msgid "%s and %s must have the same length"
 msgstr ""
 
+msgid "need non-overlapping matches for %s"
+msgstr ""
+
+msgid "%s must be a character vector"
+msgstr ""
+
+msgid "%s must be a list of character vectors"
+msgstr ""
+
+msgid "%s must have length one or the number of matches"
+msgstr ""
+
+msgid "cannot have replacements for non-matches"
+msgstr ""
+
+msgid "must have replacements for matches"
+msgstr ""
+
+msgid "entries of %s must have length one or the number of corresponding matches"
+msgstr ""
+
+msgid "%s must be a list with length the number of matches and two elements each"
+msgstr ""
+
+msgid "must have replacements for non-matches"
+msgstr ""
+
+msgid "entries of %s must have length one or the number of corresponding non-matches"
+msgstr ""
+
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""
 
@@ -1143,6 +1173,9 @@ msgid "'x' cannot be coerced to hexmode"
 msgstr ""
 
 msgid "no arguments"
+msgstr ""
+
+msgid "an argument will be fractionally recycled"
 msgstr ""
 
 msgid "invalid 'n' value"

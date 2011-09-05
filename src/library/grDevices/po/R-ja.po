@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
 "PO-Revision-Date: 2011-03-25 15:11+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -164,6 +164,9 @@ msgstr " 不正な 'family' 引数です "
 
 msgid "invalid 'file'"
 msgstr " 不正な 'file' です "
+
+msgid "'maxRasters' is no longer needed, and will be ignored"
+msgstr ""
 
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
