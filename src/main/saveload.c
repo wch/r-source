@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1425,7 +1425,7 @@ static char *InStringAscii(FILE *fp, SaveLoadData *unused)
 	/* Protect against broken realloc */
 	if(buf) newbuf = (char *) realloc(buf, nbytes + 1);
 	else newbuf = (char *) malloc(nbytes + 1);
-	if (newbuf == NULL)
+	if (newbuf == NULL) /* buf remains allocated */
 	    error(_("out of memory reading ascii string"));
 	buf = newbuf;
 	buflen = nbytes + 1;

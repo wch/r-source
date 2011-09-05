@@ -2010,9 +2010,11 @@ static void resize_buffer(membuf_t mb, R_size_t needed)
 	needed = (1+1.2*needed/INCR) * INCR;
     else if(needed < INT_MAX - INCR) 
 	needed = (1+needed/INCR) * INCR;
-    mb->buf = realloc(mb->buf, needed);
-    if (mb->buf == NULL)
+    unsigned char *tmp = realloc(mb->buf, needed);
+    if (tmp == NULL) {
+	free(mb->buf); mb->buf = NULL;
 	error(_("cannot allocate buffer"));
+    } else mb->buf = tmp;
     mb->size = needed;
 }
 

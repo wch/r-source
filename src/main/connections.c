@@ -2697,8 +2697,15 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    /* retain the last line */
 	    if(strlen(p) >= this->lastlinelength) {
 		int newlen = strlen(p) + 1;
-		this->lastline = realloc(this->lastline, newlen);
-		this->lastlinelength = newlen;
+		void * tmp = realloc(this->lastline, newlen);
+		if (tmp) {
+		    this->lastline = tmp;
+		    this->lastlinelength = newlen;
+		} else {
+		    warning("allocation problem for last line");
+		    this->lastline = NULL;
+		    this->lastlinelength = 0;
+		}
 	    }
 	    strcpy(this->lastline, p);
 	    con->incomplete = strlen(this->lastline) > 0;
@@ -3335,9 +3342,11 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	while((c = Rconn_fgetc(con)) != R_EOF) {
 	    if(nbuf == buf_size) {
 		buf_size *= 2;
-		buf = (char *) realloc(buf, buf_size);
-		if(!buf)
+		char *tmp = (char *) realloc(buf, buf_size);
+		if(!buf) {
+		    free(buf);
 		    error(_("cannot allocate buffer in readLines"));
+		} else buf = tmp;
 	    }
 	    if(c != '\n') buf[nbuf++] = c; else break;
 	}
@@ -4335,12 +4344,12 @@ void con_pushback(Rconnection con, Rboolean newLine, char *line)
     char **q;
 
     if(nexists > 0) {
-	q = con->PushBack =
-	    (char **) realloc(con->PushBack, (nexists+1)*sizeof(char *));
+	q = (char **) realloc(con->PushBack, (nexists+1)*sizeof(char *));
     } else {
-	q = con->PushBack = (char **) malloc(sizeof(char *));
+	q = (char **) malloc(sizeof(char *));
     }
     if(!q) error(_("could not allocate space for pushBack"));
+    else con->PushBack = q;
     q += nexists;
     *q = (char *) malloc(strlen(line) + 1 + newLine);
     if(!(*q)) error(_("could not allocate space for pushBack"));
@@ -4375,13 +4384,12 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("can only push back on text-mode connections"));
     nexists = con->nPushBack;
     if((n = length(stext)) > 0) {
-	if(nexists > 0) {
-	    q = con->PushBack =
-		(char **) realloc(con->PushBack, (n+nexists)*sizeof(char *));
-	} else {
-	    q = con->PushBack = (char **) malloc(n*sizeof(char *));
-	}
+	if(nexists > 0)
+	    q = (char **) realloc(con->PushBack, (n+nexists)*sizeof(char *));
+	else
+	    q = (char **) malloc(n*sizeof(char *));
 	if(!q) error(_("could not allocate space for pushBack"));
+	con->PushBack = q;
 	q += nexists;
 	for(i = 0; i < n; i++) {
 	    p = translateChar(STRING_ELT(stext, n - i - 1));
