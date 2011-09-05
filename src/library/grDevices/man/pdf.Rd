@@ -66,8 +66,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     page? -- is only relevant for \code{paper != "special"}.  
     Defaults to \code{TRUE}.}
   \item{colormodel}{a character string describing the color model:
-    currently allowed values are \code{"srgb"}, \code{"gray"}, \code{"grey"} and
-    \code{"cmyk"}.  Defaults to \code{"srgb"}.}
+    currently allowed values are \code{"srgb"}, \code{"gray"} (or
+    \code{"grey"}) and \code{"cmyk"}.  Defaults to \code{"srgb"}.  See section
+    \sQuote{Color models}.}
   \item{useDingbats}{logical.  Should small circles be rendered
     \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
     smaller and better output.  Setting this to \code{FALSE} can work
@@ -172,19 +173,19 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   coloured paper, though.
 }
 
-\section{Color models}{  
-  The default color model (\code{"srgb"}) is sRGB and model
-  \code{"gray"} maps sRGB colors to greyscale using perceived luminosity
-  (biased towards green).  \code{"cmyk"} outputs in CMYK colorspace.
-  The simplest possible conversion from sRGB to CMYK is used
-  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
+\section{Color models}{
+  The default color model (\code{"srgb"}) is sRGB.  Model \code{"gray"}
+  (or \code{"grey"}) maps sRGB colors to greyscale using perceived
+  luminosity (biased towards green).  \code{"cmyk"} outputs in CMYK
+  colorspace.  The simplest possible conversion from sRGB to CMYK is
+  used
+  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
+  and raster images are output in RGB.
 
-  Also available is model \code{"rgb"} which uses uncalibrated RGB and
-  corresponds to the model used under that name in \R prior to 2.13.0.
-  Some viewers may render some plots in that colorspace faster than
-  in sRGB, and the plot files will be smaller.
-
-  Raster images are output in RGB under the \code{"cmyk"} model.
+  Also available for backwards compatibility is model \code{"rgb"} which
+  uses uncalibrated RGB and corresponds to the model used with that name
+  in \R prior to 2.13.0.  Some viewers may render some plots in that
+  colorspace faster than in sRGB, and the plot files will be smaller.
 }
 
 \section{Conventions}{

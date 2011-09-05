@@ -12,7 +12,7 @@
 %%BoundingBox: 46 169 550 673
 %%EndComments
 %%BeginProlog
-/bp  { gs 595.00 0 translate 90 rotate gs } def
+/bp  { gs sRGB 595.00 0 translate 90 rotate gs } def
 % begin .ps.prolog
 /gs  { gsave } bind def
 /gr  { grestore } bind def
@@ -55,7 +55,7 @@
              /WhitePoint [0.9505 1.0 1.0890]
            >>
          ] setcolorspace } bind def
-/srgb { sRGB setcolor } bind def
+/srgb { setcolor } bind def
 %%IncludeResource: font Helvetica
 /Helvetica findfont
 dup length dict begin
@@ -99,7 +99,7 @@ dup length dict begin
 %%Page: 1 1
 bp
 168.94 45.64 672.94 549.64 cl
-0 setgray
+0 0 0 srgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -173,7 +173,7 @@ np
 o
 168.94 45.64 672.94 549.64 cl
 /Font1 findfont 12 s
-0 setgray
+0 0 0 srgb
 435.34 64.36 (Re) .5 0 t
 181.90 304.84 (Im) .5 90 t
 227.98 119.08 642.70 490.60 cl
@@ -200,7 +200,7 @@ ep
 bp
 227.98 119.08 642.70 490.60 cl
 227.98 119.08 642.70 490.60 cl
-0 setgray
+0 0 0 srgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -217,7 +217,7 @@ bp
 584.68 438.62 2.70 c p1
 627.34 476.84 2.70 c p1
 168.94 45.64 672.94 549.64 cl
-0 setgray
+0 0 0 srgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -291,7 +291,7 @@ np
 o
 168.94 45.64 672.94 549.64 cl
 /Font2 findfont 14 s
-0 setgray
+0 0 0 srgb
 378.55 523.73 (te) 0 ta
 -0.210 (xt\(...\) e) tb
 -0.210 (xamples) tb gr
@@ -303,7 +303,7 @@ o
 181.90 304.84 (1:10) .5 90 t
 168.94 45.64 672.94 549.64 cl
 /Font1 findfont 12 s
-0 setgray
+0 0 0 srgb
 435.34 493.48 («Latin-1 accented chars»: éè øØ å<Å æ<Æ) .5 0 t
 227.98 119.08 642.70 490.60 cl
 1 0 0 srgb
@@ -329,7 +329,7 @@ np
 0 30.55 l
 o
 /Font1 findfont 10 s
-0 setgray
+0 0 0 srgb
 339.27 168.45 (the te) 0 ta
 -0.300 (xt is CENTERED around \(x,y\) = \(6,2\) b) tb
 -0.200 (y def) tb

@@ -108,9 +108,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 #endif
   }
   \item{colormodel}{a character string describing the color model:
-    currently allowed values as \code{"srgb+gray"}, \code{"srgb"},
-    \code{"rgb"}, \code{"rgb-nogray"}, \code{"gray"}, \code{"grey"} and
-    \code{"cmyk"}.  Defaults to \code{"srgb+gray"}.   See section
+    currently allowed values as \code{"srgb"}, \code{"srgb+gray"},
+    \code{"rgb"}, \code{"rgb-nogray"}, \code{"gray"} (or \code{"grey")} and
+    \code{"cmyk"}.  Defaults to \code{"srgb"}.  See section
     \sQuote{Color models}.}
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
@@ -294,30 +294,27 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 }
 
 \section{Color models}{
-  The default color model (\code{"srgb+gray"}) is sRGB, with pure gray
-  colors (including black and white) expressed as greyscales (which
+  The default color model (\code{"srgb"}) is sRGB.
+
+  The alternative \code{"srgb+gray"} uses sRGB for colors, but with pure
+  gray colors (including black and white) expressed as greyscales (which
   results in smaller files and can be advantageous with some printer
-  drivers).
+  drivers).  Conversely, its files can be rendered much slower on some
+  viewers, and there can be a noticeable discontinuity in color
+  gradients involving gray or white.
+  
+  Other possibilities are \code{"gray"} (or \code{"grey"}) which used
+  only greyscales (and converts other colours to a luminance), and
+  \code{"cmyk"}.  The simplest possible conversion from sRGB to CMYK is
+  used
+  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
+  and raster images are output in RGB.
 
-  Color model \code{"srgb"} uses only sRGB, model \code{"cmyk"} only
-  CMYK, and model \code{"gray"} (or \code{"grey"}) only greyscales (and
-  converts other colours to a luminance).  The simplest possible
-  conversion from sRGB to CMYK is used
-  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
-
-  Color models \code{"rgb"}) (which is RGB+gray) and \code{"rgb-nogray"}
-  use uncalibrated RGB, as used in \R prior to 2.13.0.  These result in
-  small files, but do rely on the viewer being properly calibrated.
-
-  In the default \code{"srgb+gray"} model, the viewing program may have
-  to switch to and from the sRGB colorspace and this can be slow if done
-  many times (e.g. in scatterplots using \code{pch = 21} with a black
-  outline and a coloured fill, and in coloured \code{\link{image}}
-  plots).  This can be avoided by using either the \code{"srgb"} or the
-  \code{"rgb"} colorspace, although each has disadvantages.
-
-  Raster images are output in RGB under the \code{"cmyk"} model, and are
-  converted to greyscale under the \code{"gray"} model.
+  Color models provided for backwards compatibility are \code{"rgb"})
+  (which is RGB+gray) and \code{"rgb-nogray"} which use uncalibrated RGB
+  (as used in \R prior to 2.13.0).  These result in slightly smaller
+  files which may render faster, but do rely on the viewer being
+  properly calibrated.
 }
 
 \section{Printing}{

@@ -439,14 +439,18 @@
       \code{quartz()} and the cairographics-based \code{X11()} types
       with buffering (which are the default on-screen devices).
 
-      \item The default \code{colormodel} for \code{postscript()} is now
-      called \code{"srgb+gray"} to more accurately describe it.
-      (Instead of \code{"rgb"}.)
+      \item The default \code{colormodel} for \code{pdf()} and
+      \code{postscript()} is now called \code{"srgb"} to more accurately
+      describe it.  (Instead of \code{"rgb"}, and in the case of
+      \code{postscript()} it no longer switches to and from the gray
+      colorspace, by default.)
+      
+      The\code{colormodel} for \code{postscript()} which does use both
+      gray and sRGB colorspace is now called \code{"srgb+gray"}.
 
-      The default \code{colormodel} for \code{pdf()} and the sRGB-only
-      \code{colormodel} for \code{postscript()} are now called
-      \code{"srgb"}, instead of \code{"rgb"} and \code{"rgb-nogray"}
-      respectively.
+      Plots which are known to use only black/white/transparent can
+      advantageously use \code{colormodel = "gray"} (just as before, but
+      there is now slightly more advantage in doing so).
      
       \item \code{postscript()} with values \code{colormodel = "rgb"} and
       \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
@@ -468,8 +472,8 @@
       \item \code{postscript(colormodel = "gray")} now accepts non-grey
       colours and uses their luminance (as \code{pdf()} long has).
       
-      \item \code{colormodel = "grey"} is allowed for
-      \code{postscript()} and \code{pdf()}.
+      \item \code{colormodel = "grey"} is allowed as an alternative name
+      for \code{postscript()} and \code{pdf()}.
       
       \item \code{pdf()} in the default sRGB colorspace outputs many
       fewer changes of colorspace, which may speed up rendering in some

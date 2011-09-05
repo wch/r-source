@@ -657,7 +657,7 @@ assign(".PostScript.Options",
          pagecentre = TRUE,
 	 print.it   = FALSE,
 	 command    = "default",
-         colormodel = "srgb+gray",
+         colormodel = "srgb",
          useKerning = TRUE,
          fillOddEven= FALSE), envir = .PSenv)
 assign(".PostScript.Options.default",
