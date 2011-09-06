@@ -95,17 +95,19 @@ FORCE:
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
+## diff -b may be needed on Windows because of CRLF line endings.
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@$(ECHO) "$(ECHO_T) OK"
 	@$(ECHO) $(ECHO_N) \
-	  "  comparing 'reg-plot.pdf' to '$(srcdir)/reg-plot.pdf.save' ...$(ECHO_C)"
-	-@$(RDIFF) reg-plot.pdf $(srcdir)/reg-plot.pdf.save
+	  "  comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
+	-@diff -b reg-plot.ps $(srcdir)/reg-plot.ps.save
 	@$(ECHO) "$(ECHO_T) OK"
 
 ## allow this to fail, as it may if the locale does not support Latin-1 chars
+## we can't use Rdiff as MacOS tr crashes on latin-1 chars in a UTF-8 locale
 reg-plot-latin1.Rout: reg-plot-latin1.R
 	@rm -f $@ $@.fail
 	@$(ECHO) "running tests of plotting Latin-1"
@@ -117,8 +119,8 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	else \
 	  $(ECHO) "$(ECHO_T) OK"; \
 	  $(ECHO) $(ECHO_N) \
-	  "  comparing 'reg-plot-latin1.pdf' to '$(srcdir)/reg-plot-latin1.pdf.save' ...$(ECHO_C)"; \
-	  $(RDIFF) reg-plot-latin1.pdf $(srcdir)/reg-plot-latin1.pdf.save && exitstatus=0; \
+	  "  comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"; \
+	  diff -b reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save && exitstatus=0; \
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
@@ -357,7 +359,7 @@ INSTFILES = README \
 	$(test-src-reg) $(test-src-reg3) \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
-	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
-	  reg-plot-latin1.pdf.save \
+	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
+	  reg-plot-latin1.ps.save \
 	  encodings.R utf8-regex.R \
 	  nanbug.rda WinUnicode.dat

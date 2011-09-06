@@ -1,9 +1,9 @@
 #### Regression tests for GRAPHICS & PLOTS
 
-pdf("reg-plot.pdf", compress = FALSE, encoding ="ISOLatin1.enc")
-
+postscript("reg-plot.ps", paper="a4", horizontal=TRUE,
+           encoding ="ISOLatin1.enc")
 ## since we supply the font metrics, the results depend only on
-## the encoding used which depends on the locale (and OS).
+## the encoding used: Windows is different from Unix by default.
 ## As from 2.1.0 we only test genuine Latin-1 chars: Adobe has dotlessi
 ## and accents at 144:152, 154, 155, 157:159, but Unicode does not.
 
