@@ -24,8 +24,8 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 		   ylim = range(y),
 		   col = heat.colors(12), add = FALSE,
 		   xaxs = "i", yaxs = "i", xlab, ylab,
-                   breaks, oldstyle=FALSE, 
-                   useRaster = FALSE, ...)
+                   breaks, oldstyle = FALSE,
+                   useRaster, ...)
 {
     if (missing(z)) {
 	if (!missing(x)) {
@@ -98,12 +98,28 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
     if (length(y) <= 1) y <- par("usr")[3:4]
     if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
         stop("dimensions of z are not length(x)(-1) times length(y)(-1)")
-    if (useRaster) {
+
+    check_irregular <- function(x, y)
+    {
         # check that the grid is regular
         dx <- diff(x)
         dy <- diff(y)
-        if ((length(dx) && !isTRUE(all.equal(dx, rep(dx[1], length(dx))))) ||
-            (length(dy) && !isTRUE(all.equal(dy, rep(dy[1], length(dy))))))
+        (length(dx) && !isTRUE(all.equal(dx, rep(dx[1], length(dx))))) ||
+        (length(dy) && !isTRUE(all.equal(dy, rep(dy[1], length(dy)))))
+    }
+    if (missing(useRaster)) {
+       useRaster <-  getOption("preferRaster", FALSE)
+       if (useRaster && check_irregular(x, y)) useRaster <- FALSE
+       if (useRaster) {
+           useRaster <- FALSE
+           ras <- dev.capabilities("raster")
+           if(identical(ras, "yes")) useRaster <- TRUE
+           if(identical(ras, "non-missing"))
+               useRaster <- all(!is.na(zi))
+       }
+    }
+    if (useRaster) {
+         if(check_irregular(x,y))
             stop("useRaster=TRUE can only be used with a regular grid")
         # this should be mostly equivalent to RGBpar3 with bg=NA
         if (!is.character(col)) {
