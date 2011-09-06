@@ -99,7 +99,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   ordering index vector.  In the latter case, if \code{method ==
     "quick"} ties may be reversed in the ordering, unlike
   \code{sort.list}, as quicksort is not stable.  NB: the index vector
-  refers to element numbers after \emph{after removal of \code{NA}s}. 
+  refers to element numbers \emph{after removal of \code{NA}s}. 
 
   All attributes are removed from the return value (see Becker \emph{et
     al}, 1988, p.146) except names, which are sorted.  (If
