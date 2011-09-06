@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rdiff.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010-1 R Core Development Team
+% Copyright 2010-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rdiff}
@@ -35,6 +35,9 @@ compared line-by-line.  If there are the same number of lines and
 \code{useDiff} is false, a simple \command{diff}-like display of
 differences is printed, otherwise \command{diff -bw} is called on the
 edited files.
+
+As from \R 2.14.0 this can compare uncompressed PDF files, ignoring
+differences in creation and modification dates.
 }
 \value{
   If \code{Log} is true, a list with components \code{status} (see
