@@ -1750,7 +1750,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
             ## package not yet loaded.  It's an error to specify
             ## a non-loadable package
             if(nzchar(pkgi)) {
-                loadNamespace(pkgi, character.only = TRUE)
+                loadNamespace(pkgi)
                 classDefi <- getClass(classi, where = ns)
             }
             if(is.null(classDefi)) {

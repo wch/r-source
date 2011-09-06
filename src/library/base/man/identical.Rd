@@ -78,9 +78,9 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   the comparison. If it is false, functions will compare equal only if
   they are copies of the same compiled object (or both are
   uncompiled).  To check whether two different compiles are equal, you
-  should compare the results of \code{\link{dissassemble}()}.
+  should compare the results of \code{\link{disassemble}()}.
 
-  Note that \code{identical(x,y, FALSE,FALSE,FALSE,FALSE)} pickily tests for
+  Note that \code{identical(x,y,FALSE,FALSE,FALSE,FALSE)} pickily tests for
   very exact equality.
 }
 \value{

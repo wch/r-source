@@ -203,9 +203,8 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 }
 
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
-  # Start a new null device
-  .Call(R_GD_nullDevice, PACKAGES = "grDevices")
-  # If something goes wrong, want to revert to the current device
+  # Start a new null device for this function
+  .Call("GD_nullDevice", PACKAGES = "grDevices")
   on.exit(dev.off())
   # Run the graphics code in expr
   # Rely on lazy evaluation for correct "timing"
