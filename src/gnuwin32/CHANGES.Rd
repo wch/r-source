@@ -79,9 +79,10 @@
       file association for @file{.RData} files defaults to 64-bit R (it
       defaulted to 32-bit in R 2.12.x and 2.13.x).
 
-      \item There is support for \sQuote{multilib} toolchains which use
-      options \option{--m32} or \option{--m64} to select the
-      architecture; set the appropriate macros in \file{MkRules.local}.
+      \item There is preliminary support for \sQuote{multilib}
+      toolchains which use options \option{--m32} or \option{--m64} to
+      select the architecture; set the appropriate macros in
+      \file{MkRules.local}.
 
       It is the intention to move to such a toolchain when they become
       mature enough.
@@ -95,6 +96,14 @@
       interface from zlib 1.2.5.
     }
   }
+
+  \subsection{DEFUNCT}{
+    \itemize{
+      \item{zip.unpack()} (deprecated in \R 2.13.0) is defunct:
+      use \code{unzip()} instead.
+    }
+  }
+
 }
 
 \section{CHANGES IN R VERSION 2.13.1 patched}{
