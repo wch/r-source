@@ -795,8 +795,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    haveBytes = TRUE;
 		    break;
 		}
-	if (haveBytes) {
-	    warning(_("string marked as \"bytes\" found, so using useBytes = TRUE"));
+	if(haveBytes) {
 	    useBytes = TRUE;
 	}
     }
@@ -2526,6 +2525,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     Rboolean haveBytes, useWC = FALSE;
     const char *s, *t;
+    const void *vmax = NULL;
     
     regex_t reg;
     size_t nmatch;
@@ -2619,12 +2619,15 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_VECTOR_ELT(ans, i, matchpos);
 	    UNPROTECT(1);
 	} else {
+	    vmax = vmaxget();
 	    if(useBytes)
 		rc = tre_regexecb(&reg, CHAR(STRING_ELT(vec, i)),
 				  nmatch, pmatch, 0);
-	    else if(useWC)
+	    else if(useWC) {
 		rc = tre_regwexec(&reg, wtransChar(STRING_ELT(vec, i)),
 				  nmatch, pmatch, 0);
+		vmaxset(vmax);
+	    }
 	    else {
 		t = translateChar(STRING_ELT(vec, i));
 		if (mbcslocale && !mbcsValid(t))
@@ -2632,6 +2635,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 			  i + 1);
 		rc = tre_regexec(&reg, t,
 				 nmatch, pmatch, 0);
+		vmaxset(vmax);		
 	    }
 	    if(rc == REG_OK) {
 		PROTECT(matchpos = allocVector(INTSXP, nmatch));
