@@ -892,7 +892,12 @@ function(x)
 .person_has_author_role <-
 function(x)
 {
-    is.null(r <- x$role) || "aut" %in% r
+    ## <NOTE>
+    ## Earlier versions used
+    ##   is.null(r <- x$role) || "aut" %in% r
+    ## using author roles by default.
+    ## </NOTE>
+    "aut" %in% x$role
 }
 
 print.citation <-

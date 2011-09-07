@@ -44,11 +44,11 @@ readCitationFile(file, meta = NULL)
   is parsed, the resulting citation object may be arbitrarily bad, but
   is quite useful (at least as a starting point) in most cases.
 
-  In \R >= 2.14.0, one can use a \code{Authors@R} field in
+  In \R >= 2.14.0, one can use a \samp{Authors@R} field in
   \file{DESCRIPTION} to provide (\R code giving) a
   \code{\link{person}} object with a refined, machine-readable
   description of the package \dQuote{authors} (in particular specifying
-  their precise roles).  Only those with an actual author role will be
+  their precise roles).  Only those with an author role will be
   included in the auto-generated citation.
 
   If only one reference is given, the print method for the object
