@@ -321,10 +321,10 @@ Date: 2004-01-01
 Title: My First Collection of Functions
 Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
                      email = "Joe.Developer@@some.domain.net"),
+              person("Pat", "Developer", role = "aut"),
               person("A.", "User", role = "ctb",
 	             email = "A.User@@whereever.net"))
-Author: Joe Developer <Joe.Developer@@some.domain.net>, with
-  contributions from A. User <A.User@@whereever.net>.
+Author: Joe Developer and Pat Developer, with contributions from A. User
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
 Depends: R (>= 1.8.0), nlme
 Suggests: MASS
@@ -447,7 +447,7 @@ code (see @code{?person} for more information).  Auto-generated package
 citation information takes advantage of this specification; in @R{}
 2.14.0 or later, the @samp{Author} and @samp{Maintainer} fields are
 auto-generated from it if needed when building or installing.  Note that
-@samp{Authors@@R} assumes @samp{aut} (author) roles by default, and that
+@samp{Authors@@R} does not assume author roles by default, and that
 the maintainer must be identified via the @samp{cre} (creator) role.
 
 The mandatory @samp{Maintainer} field should give a @emph{single} name
@@ -1821,16 +1821,20 @@ then.)
 
 @item
 The @R{} files are checked for correct calls to @code{library.dynam}.
-In addition, it is checked whether methods have all arguments of the
-corresponding generic, and whether the final argument of replacement
-functions is called @samp{value}.  All foreign function calls
-(@code{.C}, @code{.Fortran}, @code{.Call} and @code{.External} calls)
-are tested to see if they have a @code{PACKAGE} argument, and if not,
-whether the appropriate DLL might be deduced from the namespace of the
-package.  Any other calls are reported.  (The check is generous, and
-users may want to supplement this by examining the output of
-@code{tools::checkFF("mypkg", verbose=TRUE)}, especially if the
-intention were to always use a @code{PACKAGE} argument)
+Package startup functions are checked for correct argument lists and
+(incorrect) calls to functions which modify the search path or
+inappropriately generate messages.  The @R{} code is checked for
+possible problems using @pkg{codetools}.  In addition, it is checked
+whether methods have all arguments of the corresponding generic, and
+whether the final argument of replacement functions is called
+@samp{value}.  All foreign function calls (@code{.C}, @code{.Fortran},
+@code{.Call} and @code{.External} calls) are tested to see if they have
+a @code{PACKAGE} argument, and if not, whether the appropriate DLL might
+be deduced from the namespace of the package.  Any other calls are
+reported.  (The check is generous, and users may want to supplement this
+by examining the output of @code{tools::checkFF("mypkg", verbose=TRUE)},
+especially if the intention were to always use a @code{PACKAGE}
+argument)
 
 @item
 The @file{Rd} files are checked for correct syntax and metadata,
@@ -1857,7 +1861,9 @@ C, C++ and FORTRAN source and header files are tested for portable
 (LF-only) line endings.  If there is a @file{Makefile} or
 @file{Makefile.in} or @file{Makevars} or @file{Makevars.in} file in the
 @file{src} directory, it is checked for portable line endings and the
-correct use of @samp{$(BLAS_LIBS)}.
+correct use of @samp{$(BLAS_LIBS)}.  Compiled code is checked for
+symbols corresponding to functions which might terminate @R{} or write
+to @file{stdout}/@file{stderr} instead of the console.
 
 @item
 The examples provided by the package's documentation are run.
