@@ -8,6 +8,9 @@
 \alias{utils-defunct}
 \alias{package.contents}
 \alias{zip.file.extract}
+#ifdef windows
+\alias{zip.unpack}
+#endif
 
 \title{Defunct Functions in Package \pkg{utils}}
 \description{
@@ -19,6 +22,9 @@ package.contents(pkg, lib.loc = NULL)
 
 zip.file.extract(file, zipname = "R.zip",
                  unzip = getOption("unzip"), dir = tempdir())
+#ifdef windows
+zip.unpack(zipname, dest)
+#endif
 }
 \seealso{
   \code{\link{utils-deprecated}},

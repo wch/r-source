@@ -12,10 +12,6 @@
 \usage{
 win.version()
 }
-\arguments{
-  \item{zipname}{character string giving name of zip file.}
-  \item{dest}{character string giving directory within which to unpack.}
-}
 \details{
   \code{win.version} is an auxiliary function for
   \code{\link{bug.report}} which returns a character string describing
