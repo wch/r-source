@@ -1618,4 +1618,6 @@
  xrealloc_impl
  yydebug
  yylloc
+ yyllocL
+ yyllocR
  z_prec_r
