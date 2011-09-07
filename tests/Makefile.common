@@ -121,7 +121,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	  $(ECHO) "$(ECHO_T) OK"; \
 	  $(ECHO) $(ECHO_N) \
 	  "  comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"; \
-	  @$(RDIFF) -b reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save; \
+	  $(RDIFF) reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save; \
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
