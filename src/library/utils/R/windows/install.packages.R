@@ -278,14 +278,6 @@ menuInstallLocal <- function()
                      .libPaths()[1L], repos = NULL)
 }
 
-### Deprecated in 2.13.0
-zip.unpack <- function(zipname, dest)
-{
-    .Deprecated("unzip")
-    if(file.exists(zipname)) {
-        if((unzip <- getOption("unzip")) != "internal") {
-            system(paste(unzip, "-oq", zipname, "-d", dest),
-                   show.output.on.console = FALSE, invisible = TRUE)
-        } else unzip(zipname, exdir = dest)
-    } else stop(gettextf("zipfile %s not found", sQuote(zipname)), domain = NA)
-}
+### Deprecated in 2.13.0, defunct in 2.14.0
+zip.unpack <- function(zipname, dest) .Defunct("unzip")
+
