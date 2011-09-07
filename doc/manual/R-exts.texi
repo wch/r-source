@@ -3146,7 +3146,8 @@ and Fortran I/O should be be used.  Where @command{R CMD check} can
 detect this in the package's shared object/DLL it will report it: as
 with the previous item such calls may come from external software and
 may never be called.  (This seems particularly common on Mac OS X and
-Windows with static libraries.)
+Windows with static libraries: however on Windows the use of Fortran I/O
+usually results in the detection of @code{_assert} and @code{exit}.)
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
