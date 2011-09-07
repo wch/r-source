@@ -735,11 +735,11 @@ R CMD Sweave file.Rnw
 \begin{verbatim}
  <<results=tex,echo=FALSE>>=
  for(i in 1:4){
-    fnfile <- paste("myfile", i, ".pdf", sep = "")
-    pdf(file = fn, width = 6, height = 6)
+    fname <- paste("myfile", i, ".pdf", sep = "")
+    pdf(file = fname, width = 6, height = 6)
     plot(rnorm(100)+i)
     dev.off()
-    cat("\\includegraphics{", fn, "}\n\n", sep = "")
+    cat("\\includegraphics{", fname, "}\n\n", sep = "")
  }
  @
 \end{verbatim}
