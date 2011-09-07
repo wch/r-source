@@ -12,6 +12,9 @@
       \item The fix for \PR{14583} caused inconsistent behaviour in other
       areas, e.g. \PR{14628}, extra lines appearing in image displays,
       and uneven bases on histograms \PR{14632}.
+      
+      \item Opening large numbers of \code{windows()} graphics devices
+      could cause some of them to fail to redraw (\PR{14668}).
     }
   }
 }
