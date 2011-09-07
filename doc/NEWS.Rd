@@ -394,7 +394,7 @@
       partially recycled (wish of \PR{14638}).
 
       \item The default for \code{image(useRaster=)} is now taken from
-      option \code{"preferRastrs"}: for the small print see \code{?image}.
+      option \code{"preferRaster"}: for the small print see \code{?image}.
     }
   }
 
