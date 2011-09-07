@@ -1708,7 +1708,8 @@ directly.
 
 @menu
 * Checking packages::           
-* Building packages::           
+* Building package tarballs::           
+* Building binary packages::           
 @end menu
 
 @quotation Note
@@ -1733,7 +1734,7 @@ system (some network-mounted file systems are not).
 @end quotation
 
 
-@node Checking packages, Building packages, Checking and building packages, Checking and building packages
+@node Checking packages, Building package tarballs, Checking and building packages, Checking and building packages
 @subsection Checking packages
 @cindex Checking packages
 
@@ -1955,14 +1956,22 @@ tests, vignettes} which differ by sub-architecture.
 @end quotation
 
 
-@node Building packages,  , Checking packages, Checking and building packages
-@subsection Building packages
-@cindex Building packages
+@node Building package tarballs,  Building binary packages, Checking packages, Checking and building packages
+@subsection Building package tarballs
+@cindex Building source packages
 
 @findex R CMD build
 @cindex Package builder
+@cindex tarballs
+Packages may be distributed in source form as ``tarballs''
+(@file{.tar.gz} files) or in binary form. The source form can be
+installed on all platforms with suitable tools and is the usual form
+for Unix-like systems; the binary form is platform-specific, and is
+more common distribution form for the Windows and Mac
+platforms.
+
 Using @command{R CMD build}, the @R{} package builder, one can build @R{}
-packages from their sources (for example, for subsequent release).
+package tarballs from their sources (for example, for subsequent release).
 
 Prior to actually building the package in the standard gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
@@ -2047,10 +2056,6 @@ default (it can be selected by environment variable
 It can be useful to run @command{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.
 
-@command{R CMD build} can also build pre-compiled version of packages
-for binary distributions, but it is now deprecated in favour of
-@command{R CMD INSTALL --build}.
-
 Note that prior to @R{} 2.13.0, @command{R CMD build} did some cleaning in
 the supplied source directory, but this was undocumented and is no
 longer done.
@@ -2061,6 +2066,73 @@ when @R{} was configured on a Unix-alike (and the Windows toolset
 contains one), but if there are problems, set the environment variable
 @env{TAR} to the path to a suitable program or to @code{"internal"} if
 none is available.
+
+@node Building binary packages,  , Building package tarballs, Checking and building packages
+@subsection Building binary packages
+@cindex Building binary packages
+
+Binary packages are compressed copies of installed versions of
+packages.  They contain compiled shared libraries rather than C, C++ or
+Fortran source code, and the R functions are included in their installed
+form.  The format and filename are platform-specific; for example, a
+binary package for Windows is usually supplied as a @file{.zip} file,
+and for the Mac platform the default binary package file extension is
+@file{.tgz}.
+
+The present recommended method of building binary packages is to use 
+
+@command{R CMD INSTALL --build pkg}
+
+where @file{pkg} is either the name of a source tarball (in the usual
+@file{.tar.gz} format) or the location of the directory of the package
+source to be built.
+
+@command{R CMD INSTALL --build} operates by first installing the package 
+and then packing the installed binaries into 
+the appropriate binary package file for the particular platform.
+
+By default, @command{R CMD INSTALL --build} will attempt to install the package
+into the default library tree for the local installation of @R{}. This has two 
+implications:
+
+@itemize @bullet
+@item
+If the installation is successful, it will overwrite any existing installation 
+of the same package. 
+
+@item
+The default library tree must have write permission; if not, the package will 
+not install and the binary will not be created.
+
+@end itemize
+
+To prevent changes to the present working installation or to provide an install
+location with write access, create a suitably located directory with write access
+and use the @command{-l} option to build the package in the chosen location. 
+The usage is then
+
+@command{R CMD INSTALL -l location --build pkg}
+
+where @file{location} is the chosen directory with write access. The package
+will be installed as a subdirectory of @file{location}, and the package binary
+will be created in the current directory.
+
+Other options for @command{R CMD INSTALL} can be found using 
+@command{R CMD INSTALL --help}, and platform-specific details for special
+cases (e.g. handling Fortran sources on MacOS) are discussed in the 
+platform-specific FAQs.
+
+
+In earlier versions of @R{}, @command{R CMD build --binary} could build a 
+binary version of a package, but this approach is now deprecated in favour of
+@command{R CMD INSTALL --build}.
+
+
+Finally, at least one web-based service is available for building binary packages 
+from (checked) source code: WinBuilder (see @uref{http://win-builder.r-project.org/}) 
+is able to build Windows binaries. Note that this is intended for developers on 
+other platforms who do not have access to Windows but wish to provide binaries 
+for the Windows platform.  
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
