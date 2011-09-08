@@ -24,15 +24,15 @@
       \item \code{install.packages()} with \code{Ncpus > 1} guards
       against simultaneous installation of indirect dependencies as well
       as direct ones.
-      
+
       \item Sweave now knows about a few more Windows' encodings
       (including \code{cp1250} and \code{cp1257}) and some
       \code{inputenx} encodings such as \code{koi8-r}.
-      
+
       \item \code{postscript(colormodel = "rgb-nogray")} no longer sets
       the sRGB colorspace for each colour and so some viewers may render
       its files much faster than the default \code{colormodel ="rgb"}.
-      
+
       \item The default for \code{pdf(maxRasters=)} has been increased
 	from 64 to 1000.
 
@@ -41,7 +41,7 @@
 
       It enforces the documented limit of \eqn{2^{31}-1}{2^31-1} bytes
       in a single call.
-      
+
       \item PCRE has been updated to version 8.13, a bug-fix release
       with updated Unicode tables (version 6.0.0).
     }
@@ -112,14 +112,16 @@
 
       \item \code{xtabs(~ .., ..., sparse=TRUE)} now also works together
       with an \code{exclude = ..} specification.
-  
+
       \item \code{decompose()} computed an incorrect seasonal component for
       time series with odd frequencies.
-      
+
       \item The \code{pdf()} device only includes the definition of the
       sRGB colorspace in the output file for the \code{"rgb"} colormodel
       (and not for \code{"gray"} nor \code{"cmyk"}): this saves ca
       9KB in the output file.
+
+      \item \code{.hasSlot()} wrongly gave \code{FALSE} in some cases.
     }
   }
 }
@@ -346,7 +348,7 @@
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).  (It seems this happened only in 2.13.0 patched.)
-      
+
       \item \code{postscript()} with an sRGB colormodel now uses sRGB
       for raster images (in \R 2.13.[01] it used uncalibrated RGB).
 

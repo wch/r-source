@@ -34,8 +34,7 @@ SEXP R_set_slot(SEXP obj, SEXP name, SEXP value)
 
 SEXP R_hasSlot(SEXP obj, SEXP name)
 {
-    return ScalarLogical(TYPEOF(obj) == S4SXP ?
-			 R_has_slot(obj, name) : 0);
+    return ScalarLogical(R_has_slot(obj, name));
 }
 
 
