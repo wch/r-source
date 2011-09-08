@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-08-18 r56755)
+R Under development (unstable) (2011-09-08 r56975)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -326,7 +326,8 @@ Slot "name":
 [1,]   NA
 > ## this has no longer (2.7.0) an S4 bit: set it explicitly just for testing:
 > stopifnot(isS4(m. <- asS4(m)),
-+           identical(m, f@.Data))
++           identical(m, f@.Data),
++ 	  .hasSlot(f, "name"))# failed in R <= 2.13.1
 > show(m.)
      [,1]
 [1,]   NA

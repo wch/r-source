@@ -211,7 +211,8 @@ f2 <- new("Foo", .Data = diag(2), name="Diag")# explicit .Data
 (m <- as(f, "matrix"))
 ## this has no longer (2.7.0) an S4 bit: set it explicitly just for testing:
 stopifnot(isS4(m. <- asS4(m)),
-          identical(m, f@.Data))
+          identical(m, f@.Data),
+	  .hasSlot(f, "name"))# failed in R <= 2.13.1
 show(m.)
 print(m.)
 ## fixed in 2.5.0 patched

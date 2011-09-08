@@ -37,16 +37,16 @@
       versions of \R).
 
       \item There is a new package \pkg{parallel}.
-      
+
       It incorporates (slightly revised) copies of packages \pkg{multicore}
       and \pkg{snow} (excluding MPI, PVM and NWS clusters).  Code written to
       use those packages should work unchanged (apart from changing any
       references to their namespaces to a reference to \pkg{parallel}).
-      
+
       It also contains support for multiple RNG streams following
       L'Ecuyer \emph{et al} (2002), with support for both
       \code{mclapply} and \pkg{snow} clusters.
-      
+
       (It is still incomplete/experimental.)
     }
   }
@@ -354,7 +354,7 @@
       \item New function \code{regmatches()} for extracting matched or
       non-matched substrings from match data obtained by \code{regexpr()}
       and \code{gregexpr()}.
-      
+
       \item \code{help(package = "pkg_name", help_type = "HTML")} now
       gives HTML help on the package rather than text help.  (This gives
       direct access to the HTML version of the package manual shown
@@ -366,11 +366,11 @@
       \item \code{read.dcf()} and \code{write.dcf()} gain a
       \code{keep.white} argument to indicate fields where whitespace
       should be kept as is.
-      
+
       \item \code{available.packages()} now works around servers that
       fail to return an error when \file{PACKAGES.gz} does not exist.
       (Patch submitted by Seth Schommer.)
-      
+
       \item \code{readBin()} can now read more than
       \eqn{2^{31}-1}{2^31 - 1} bytes in a single call (the previously
       documented limitation).
@@ -382,14 +382,14 @@
       \item New function \code{adist()} in package \pkg{utils} for
       computing approximate (generalized Levenshtein) distances between
       strings.
-      
+
       \item Class \code{"raster"} gains an \code{is.na} method to avoid
       confusion from the misuse of the matrix method (such as PR#14618).
-      
+
       \item The \code{identical()} function gains an
       \code{ignore.bytecode} argument to control comparison of
-      compiled functions.      
-      
+      compiled functions.
+
       \item \code{pmin} and \code{pmax} now warn if an argument is
       partially recycled (wish of \PR{14638}).
 
@@ -447,14 +447,14 @@
       describe it.  (Instead of \code{"rgb"}, and in the case of
       \code{postscript()} it no longer switches to and from the gray
       colorspace, by default.)
-      
+
       The\code{colormodel} for \code{postscript()} which does use both
       gray and sRGB colorspace is now called \code{"srgb+gray"}.
 
       Plots which are known to use only black/white/transparent can
       advantageously use \code{colormodel = "gray"} (just as before, but
       there is now slightly more advantage in doing so).
-     
+
       \item \code{postscript()} with values \code{colormodel = "rgb"} and
       \code{colormodel = "rgb-nogray"} give the behaviour prior to \R
       2.13.0 of uncalibrated RGB, which under some circumstances can be
@@ -464,20 +464,20 @@
       2.13.0 of uncalibrated RGB, which under some circumstances can be
       rendered faster by a viewer, and the files will be smaller (by
       about 9KB if compression is not used).
-      
+
       \item The \code{postscript()} device only includes the definition
       of the sRGB colorspace in the output file for the colormodels
       which use it.
 
       \item The \code{postscript()} and \code{pdf()} devices now output
       greyscale raster images (and not RGB) when \code{colormodel = "gray"}.
-      
+
       \item \code{postscript(colormodel = "gray")} now accepts non-grey
       colours and uses their luminance (as \code{pdf()} long has).
-      
+
       \item \code{colormodel = "grey"} is allowed as an alternative name
       for \code{postscript()} and \code{pdf()}.
-      
+
       \item \code{pdf()} in the default sRGB colorspace outputs many
       fewer changes of colorspace, which may speed up rendering in some
       viewing applications.
@@ -487,7 +487,7 @@
       capabilities are support for (semi-)transparent colours, rendering
       and capturing raster images, the locator and for interactive
       events.
-      
+
       \item For \code{pdf()}, \code{maxRasters} is increased as needed
       so the argument is no longer used.
     }
@@ -767,9 +767,9 @@
       \code{"coerce<-"} were lacking some essential information in the
       \code{generic}, \code{defined} and \code{target} slots;
       \code{as()} did not handle duplicate class definitions correctly.
-      
+
       \item The parser no longer accepts the digit \code{8} in an octal
-      character code in a string, nor does it accept unterminated 
+      character code in a string, nor does it accept unterminated
       strings in a file.  (Reported by Bill Dunlap.)
     }
   }
@@ -795,15 +795,15 @@
       \item \code{install.packages()} with \code{Ncpus > 1} guards
       against simultaneous installation of indirect dependencies as well
       as direct ones.
-      
+
       \item Sweave now knows about a few more Windows' encodings
       (including \code{cp1250} and \code{cp1257}) and some
       \code{inputenx} encodings such as \code{koi8-r}.
-      
+
       \item \code{postscript(colormodel = "rgb-nogray")} no longer sets
       the sRGB colorspace for each colour and so some viewers may render
       its files much faster than the default \code{colormodel ="rgb"}.
-      
+
       \item The default for \code{pdf(maxRasters=)} has been increased
 	from 64 to 1000.
 
@@ -812,7 +812,7 @@
 
       It enforces the documented limit of \eqn{2^{31}-1}{2^31-1} bytes
       in a single call.
-      
+
       \item PCRE has been updated to version 8.13, a bug-fix release
       with updated Unicode tables (version 6.0.0).
     }
@@ -883,14 +883,16 @@
 
       \item \code{xtabs(~ .., ..., sparse=TRUE)} now also works together
       with an \code{exclude = ..} specification.
-  
+
       \item \code{decompose()} computed an incorrect seasonal component for
       time series with odd frequencies.
-      
+
       \item The \code{pdf()} device only includes the definition of the
       sRGB colorspace in the output file for the \code{"rgb"} colormodel
       (and not for \code{"gray"} nor \code{"cmyk"}): this saves ca
       9KB in the output file.
+
+      \item \code{.hasSlot()} wrongly gave \code{FALSE} in some cases.
     }
   }
 }
@@ -1117,7 +1119,7 @@
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).  (It seems this happened only in 2.13.0 patched.)
-      
+
       \item \code{postscript()} with an sRGB colormodel now uses sRGB
       for raster images (in \R 2.13.[01] it used uncalibrated RGB).
 
