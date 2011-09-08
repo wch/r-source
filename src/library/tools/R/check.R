@@ -2976,6 +2976,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (do_install) check_dependencies()
 
             check_sources()
+            checkingLog(Log, "if there is a namespace")
+            if (file.exists(file.path(pkgdir, "NAMESPACE")))
+                resultLog(Log, "OK")
+            else {
+                resultLog(Log, "NOTE")
+                wrapLog("As from R 2.14.0 all packages need a namespace.\n",
+                        "One will be generated on installation,",
+                        "but it is better to handcraft a NAMESPACE file:",
+                        "R CMD build will produce a suitable starting point.\n")
+            }
 
             ## we need to do this before installation
             if (R_check_executables) check_executables()
