@@ -32,7 +32,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             ## first take care of uncollected children
             mccollect(children(jobs), FALSE)
             mckill(children(jobs),
-                   if (is.integer(mc.cleanup)) mc.cleanup else 15L)
+                   if (is.integer(mc.cleanup)) mc.cleanup else tools::SIGTERM)
             mccollect(children(jobs))
         }
         if (length(jobs)) {
@@ -54,7 +54,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                                                   silent = mc.silent))
             res <- mccollect(jobs)
             if (length(res) == length(X)) names(res) <- names(X)
-            has.errors <- sum(sapply(res), inherits, "try-error")
+            has.errors <- sum(sapply(res, inherits, "try-error"))
         } else { # more complicated, we have to wait for jobs selectively
             sx <- seq_along(X)
             res <- vector("list", length(sx))
