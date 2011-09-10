@@ -1,4 +1,5 @@
 \name{ReferenceClasses}
+\title{Objects With Fields Treated by Reference (OOP-style)}
 \alias{ReferenceClasses}
 \alias{setRefClass}
 \alias{getRefClass}
@@ -16,9 +17,6 @@
 \alias{show,envRefClass-method}
 \alias{show,refMethodDef-method}
 \alias{show,refClassRepresentation-method}
-\title{
-Objects With Fields Treated by Reference (OOP-style)
-}
 \description{
 The software described here supports reference classes whose objects have
 fields
@@ -38,7 +36,6 @@ setRefClass(Class, fields = , contains = , methods =,
      where =, ...)
 
 getRefClass(Class, where =)
-
 }
 \arguments{
   \item{Class}{
@@ -91,11 +88,8 @@ in the section \dQuote{Reference Object Generators}.
 If a \code{finalize} method is defined, a function will be
 \link[=reg.finalizer]{registered} to invoke it before the environment
 in the object is discarded by the garbage collector. See the matrix
-viewer example for both initialize and finalize methods.
+viewer example for both initialize and finalize methods.}
 
-
- }
- 
   \item{where}{
 the environment in which to store the class definition.  Defaults to
 the package namespace or environment for code that is part of an \R{}
@@ -261,7 +255,7 @@ The code in a method can refer to  inherited methods in the same
 way as directly specified methods.
 
 A method may override a method of the same name in a superclass.
-The overriding method can call the superclass method by 
+The overriding method can call the superclass method by
 \code{callSuper(...)} as described below.
 
 All reference classes inherit from the class \code{"envRefClass"},
@@ -356,7 +350,7 @@ from the method, as opposed to the \code{$show()} %$
 method itself, refer to \code{methods::show()} explicitly.
 }
 
-\item{\code{$trace(what, ...)}, \code{$untrace(what)} }{ 
+\item{\code{$trace(what, ...)}, \code{$untrace(what)} }{
 Apply the tracing and debugging facilities of the \code{\link{trace}}
 function to the reference method \code{what}.
 
@@ -560,7 +554,7 @@ environment of the function.
 }
 
 \section{Inter-System Interfaces}{
-A number of 
+A number of
 languages use a similar reference-based programming model with classes
 and class-based methods.
 Aside from differences in choice of terminology and other details,
@@ -638,11 +632,10 @@ reference method interactively.
 
 }
 \author{
-John Chambers
+  John Chambers
 }
 
-
- \examples{
+\examples{
 ## a simple editor for matrix objects.  Method  $edit() changes some
 ## range of values; method $undo() undoes the last edit.
 mEdit <- setRefClass("mEdit",
@@ -681,7 +674,7 @@ mEdit <- setRefClass("mEdit",
        cat("Undo list is of length", length(edits), "\n")
      }
      ))
-    
+
 xMat <- matrix(1:12,4,3)
 xx <- mEdit$new(data = xMat)
 xx$edit(2, 2, 0)
@@ -689,6 +682,8 @@ xx
 xx$undo()
 mEdit$help("undo")
 stopifnot(all.equal(xx$data, xMat))
+
+utils::str(xx) # show fields and names of non-trivial methods
 
 ## add a method to save the object
 mEdit$methods(
@@ -698,7 +693,7 @@ mEdit$methods(
        '
          base::save(.self, file = file)
      }
-)  
+)
 
 tf <- tempfile()
 xx$save(tf)
@@ -710,7 +705,7 @@ stopifnot(identical(xx$data, .self$data))
 
 \dontrun{
 ## Inheriting a reference class:  a matrix viewer
-mv <- setRefClass("matrixViewer", 
+mv <- setRefClass("matrixViewer",
     fields = c("viewerDevice", "viewerFile"),
     contains = "mEdit",
     methods = list( view = function() {
@@ -725,7 +720,7 @@ mv <- setRefClass("matrixViewer",
           }))
 
 ## initialize and finalize methods
-mv$methods( initialize = 
+mv$methods( initialize =
   function(file = "./matrixView.pdf", ...) {
     viewerFile <<- file
     pdf(viewerFile)

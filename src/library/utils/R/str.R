@@ -146,6 +146,22 @@ str.default <-
     pClass <- function(cls)
 	paste("Class", if(length(cls) > 1) "es",
               " '", paste(cls, collapse = "', '"), "' ", sep="")
+    `%w/o%` <- function(x,y) x[is.na(match(x,y))]
+
+    nfS <- names(fStr <- formals())# names of all formal args to str.default()
+    ##' Purpose: using short strSub() calls instead of long str() ones
+    ##' @title Call str() on sub-parts, with mostly the *same* arguments
+    ##' @param obj R object; always a "part" of the main 'object'
+    ##' @param ... further arguments to str(), [often str.default()]
+    strSub <- function(obj, ...) {
+	## 'give.length', ...etc are *not* automatically passed down:
+	nf <- nfS %w/o% c("object", "give.length", "comp.str", "no.list",
+			  ## drop fn.name & "obj" :
+			  names(match.call())[-(1:2)], "...")
+	aList <- as.list(fStr)[nf]
+	aList[] <- lapply(nf, function(n) eval(as.name(n)))
+	do.call(str, c(list(object=obj), aList, list(...)), quote=TRUE)
+    }
 
     ## le.str: not used for arrays:
     le.str <-
@@ -165,15 +181,49 @@ str.default <-
     if (is.null(object))
 	cat(" NULL\n")
     else if(S4) {
-	a <- sapply(methods::.slotNames(object), methods::slot,
-		    object=object, simplify = FALSE)
-	cat("Formal class", " '", paste(cl, collapse = "', '"),
-	    "' [package \"", attr(cl,"package"), "\"] with ",
-	    length(a)," slots\n", sep="")
-	str(a, no.list = TRUE, comp.str = "@ ", # instead of "$ "
-	    max.level = max.level, vec.len = vec.len, digits.d = digits.d,
-	    indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
-	    nchar.max = nchar.max, give.attr = give.attr, width=width)
+	if(isRef <- is(object,"envRefClass")) {
+	    cld <- object$getClass()
+	    nFlds <- names(cld@fieldClasses)
+	    a <- sapply(nFlds, function(ch) object[[ch]],
+			simplify = FALSE)
+	    meths <- ls(cld@refMethods, all.names = TRUE)
+	    dfltMs <- ls(getClassDef("envRefClass")@refMethods, all.names = TRUE)
+	    oMeths <- meths[is.na(match(meths, dfltMs))]
+	    sNms <- names(cld@slots)
+	    if(length(sNms <- sNms[sNms != ".xData"]))
+		sls <- sapply(sNms, methods::slot,
+			      object=object, simplify = FALSE)
+	    cat("Reference class", " '", paste(cl, collapse = "', '"),
+		"' [package \"", attr(cl,"package"), "\"] with ",
+		length(a)," fields\n", sep="")
+	} else {
+	    a <- sapply(methods::.slotNames(object), methods::slot,
+			object=object, simplify = FALSE)
+	    cat("Formal class", " '", paste(cl, collapse = "', '"),
+		"' [package \"", attr(cl,"package"), "\"] with ",
+		length(a)," slots\n", sep="")
+	}
+	if(isRef) {
+	    strSub(a, no.list=TRUE, give.length=give.length,
+		   nest.lev = nest.lev + 1)
+	    cat(indent.str, "and ", length(meths), " methods,", sep="")
+	    if(length(oMeths)) {
+		cat(" of which ", length(oMeths), " possibly relevant:\n")
+		cat(strwrap(paste(oMeths, collapse=", "),
+			    indent = 2, exdent = 2,
+			    prefix = indent.str, width=width),# exdent = nind),
+		    sep="\n")
+	    }
+	    if(length(sNms)) {
+		cat(" and", length(sNms), "slots\n")
+		strSub(sls, comp.str = "@ ", no.list=TRUE, give.length=give.length,
+		       indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
+	    }
+	}
+	else { ## S4
+	    strSub(a, comp.str = "@ ", no.list=TRUE, give.length=give.length,
+		   indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
+	}
 	return(invisible())
     }
     else if(is.function(object)) {
@@ -216,12 +266,9 @@ str.default <-
 			if(typeof(object[[i]]) == "promise") {
 			    structure(object, nam= as.name(nam.ob[i]))
 			} # else NULL
-		    str(object[[i]], nest.lev = nest.lev + 1,
-                        indent.str = paste(indent.str,".."),
-                        nchar.max = nchar.max, max.level = max.level,
-                        vec.len = vec.len, digits.d = digits.d,
-                        give.attr = give.attr, give.head= give.head, give.length = give.length,
-                        width = width, envir = envir, list.len=list.len)
+		    strSub(object[[i]], give.length=give.length,
+                           nest.lev = nest.lev + 1,
+                           indent.str = paste(indent.str,".."))
 		}
 	    }
 	    if(list.len < le)
@@ -356,10 +403,7 @@ str.default <-
 		} else if(!is.object(object)) "not-object")
 		if(!is.null(xtr)) cat("{",xtr,"} ", sep="")
 	    }
-	    str(uo,
-		max.level = max.level, vec.len = vec.len, digits.d = digits.d,
-		indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
-		nchar.max = nchar.max, give.attr = give.attr, width=width)
+	    strSub(uo, indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	    return(invisible())
 	} else if(is.atomic(object)) {
 	    if((1 == length(a <- attributes(object))) && (names(a) == "names"))
@@ -373,10 +417,7 @@ str.default <-
 	    if (!is.null(envir)) {
 		objExp <- eval(bquote(substitute(.(attr(envir, "nam")), envir)))
 		cat("to ")
-		str(objExp,
-		    max.level= max.level, vec.len= vec.len, digits.d= digits.d,
-		    indent.str = indent.str, nest.lev = nest.lev,
-		    nchar.max = nchar.max, give.attr = give.attr, width=width)
+		strSub(objExp)
 	    } else cat(" <...>\n")
 	    return(invisible())
 	} else {
@@ -493,12 +534,9 @@ str.default <-
 	for (i in seq_along(a))
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:
 		cat(indent.str, P0('- attr(*, "',nam[i],'")='),sep="")
-		str(a[[i]],
-		    indent.str= paste(indent.str,".."), nest.lev= nest.lev+1,
-		    max.level = max.level, digits.d = digits.d,
-		    nchar.max = nchar.max,
-		    vec.len = if(nam[i] == "source") 1 else vec.len,
-		    give.attr= give.attr, give.head= give.head, give.length= give.length, width= width)
+		strSub(a[[i]], give.length=give.length,
+                       indent.str= paste(indent.str,".."), nest.lev= nest.lev+1,
+                       vec.len = if(nam[i] == "source") 1 else vec.len)
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects

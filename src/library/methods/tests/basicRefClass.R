@@ -7,6 +7,7 @@ f1$bar <- 1
 stopifnot(identical(f1$bar, 1))
 fg$methods(showAll = function() c(bar, flag))
 stopifnot(all.equal(f1$showAll(), c(1, "testing")))
+str(f1)
 
 fg <- setRefClass("foo", list(bar = "numeric", flag = "character",
                               tag = "ANY"),
@@ -28,6 +29,8 @@ stopifnot(identical(ff$bar, f2$bar), identical(ff$flag, f2$flag))
 
 f2$flag <- "standard flag"
 stopifnot(identical(f2$flag, "standard flag"))
+
+str(f2)
 
 ## fg$lock("flag")
 ## tryCatch(f2$flag <- "other", error = function(e)e)
@@ -81,6 +84,7 @@ f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"),
 ## but not a second one
 stopifnot(is(tryCatch(f2$flag <- "Try again",
          error = function(e)e), "error"))
+str(f2)
 f22 <- foo2$new(bar = f2$bar)
 ## same story if assignment follows the initialization
 f22$flag <- f2$flag
@@ -120,6 +124,7 @@ stopifnot(all.equal(f3$bar, -2), all.equal(f3$b2, 2:4+0),
 ## but the import should have used up the one write for $flag
 stopifnot(is(tryCatch(f3$flag <- "Try again",
          error = function(e)e), "error"))
+str(f3)
 
 ## a class with an initialize method, and an extra slot
 setOldClass(c("simple.list", "list"))

@@ -395,6 +395,9 @@
 
       \item The default for \code{image(useRaster=)} is now taken from
       option \code{"preferRaster"}: for the small print see \code{?image}.
+
+      \item str() now displays reference class objects and their fields,
+      rather than treating them as classical S4 classes.
     }
   }
 
