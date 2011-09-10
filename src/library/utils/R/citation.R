@@ -894,10 +894,10 @@ function(x)
 {
     ## <NOTE>
     ## Earlier versions used
-    ##   is.null(r <- x$role) || "aut" %in% r
+    is.null(r <- x$role) || "aut" %in% r
     ## using author roles by default.
     ## </NOTE>
-    "aut" %in% x$role
+    ##   "aut" %in% x$role
 }
 
 print.citation <-
