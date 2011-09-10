@@ -1514,6 +1514,11 @@ function(package, dir, lib.loc = NULL)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
+        dfile <- file.path(dir, "DESCRIPTION")
+        meta <- if(file_test("-f", dfile))
+            .read_description(dfile)
+        else
+            character()
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
             stop(gettextf("directory '%s' does not contain R code",
@@ -1644,11 +1649,9 @@ function(package, dir, lib.loc = NULL)
     ## package has a namespace and the method is exported (even though
     ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
     ## cases).
-    ## Disable for now (2.14.0) as it gives inconsistent results for
-    ## automatically generated namespaces.
-    ##     if(has_namespace)
-    ##         all_methods_in_package <-
-    ##             all_methods_in_package %w/o% functions_in_code
+    if(has_namespace && !identical(meta["Namespace"], "auto"))
+        all_methods_in_package <-
+    	    all_methods_in_package %w/o% functions_in_code
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -2508,8 +2511,8 @@ function(dir, force_suggests = TRUE)
 			package_name, dir_name))
 	package_name <- dir_name
     }
-    ldepends <- .get_requires_with_version_from_package_db(db, "Depends")
-    limports <- .get_requires_with_version_from_package_db(db, "Imports")
+    ldepends <-  .get_requires_with_version_from_package_db(db, "Depends")
+    limports <-  .get_requires_with_version_from_package_db(db, "Imports")
     lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
     ## NB: no one checks version for 'Enhances'.
     lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
@@ -2855,7 +2858,7 @@ function(dfile)
     }
     if(!is.na(val <- db["Namespace"])
        && !is.na(package_name)
-       && (val != package_name))
+       && is.na(match(val, c(package_name, "auto"))))
         out$bad_namespace <- val
     if(!is.na(val <- db["Priority"])
        && !is.na(package_name)
