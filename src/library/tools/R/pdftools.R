@@ -45,6 +45,26 @@ pdf_bytes_in_numerics <-
 
 ## * pdf_doc
 
+pdf_page_sizes <-
+do.call(rbind,
+        list("A0" =        c(2384L, 3371L),
+             "A1" =        c(1685L, 2384L),
+             "A2" =        c(1190L, 1684L),
+             "A3" =        c( 842L, 1190L),
+             "A4" =        c( 595L,  842L),
+             "A5" =        c( 420L,  595L),
+             "B4" =        c( 729L, 1032L),
+             "B5" =        c( 516L,  729L),
+             "letter" =    c( 612L,  792L),
+             "tabloid" =   c( 792L, 1224L),
+             "ledger"=     c(1224L,  792L),
+             "legal" =     c( 612L, 1008L),
+             "statement" = c( 396L,  612L),
+             "executive" = c( 540L,  720L),
+             "folio" =     c( 612L,  936L),
+             "quarto" =    c( 610L,  780L),
+             "10x14" =     c( 720L, 1008L)))
+
 pdf_doc <-
 function(file)
 {
@@ -67,16 +87,16 @@ function(file)
     }
 
     ## Read header.
-    seek(con, 0L)
+    .con_seek(con, 0L)
     header <- rawToChar(read_next_bytes_until_whitespace(con))
     if(substring(header, 1L, 5L) != "%PDF-")
         stop("PDF header not found")
 
     ## Go to the end.
-    seek(con, -1L, "end")
+    .con_seek(con, -1L, 3L)
 
     ## Record file size as number of bytes.
-    nbytes <- seek(con) + 1L
+    nbytes <- .con_seek(con) + 1L
 
     ## Check footer.
     bytes <- raw()
@@ -107,19 +127,19 @@ function(file)
     find_xref_start <- function(con) {
         ## Skip backwards over whitespace, then read back until the next
         ## whitespace.
-        seek(con, -1L, "current")
+        .con_seek(con, -1L, 2L)
         repeat {
-            x <- readBin(con, "raw", 1L)
+            x <- .con_read_bytes(con, 1L)
             if(!(x %.IN.% pdf_bytes_whitespaces)) break
-            seek(con, -2L, "current")
+            .con_seek(con, -2L, 2L)
         }
         repeat {
-            seek(con, -2L, "current")
-            x <- readBin(con, "raw", 1L)
+            .con_seek(con, -2L, 2L)
+            x <- .con_read_bytes(con, 1L)
             if(x %.IN.% pdf_bytes_whitespaces) break
         }
-        pos <- seek(con)
-        if(rawToChar(readBin(con, "raw", 4L)) == "xref")
+        pos <- .con_seek(con)
+        if(rawToChar(.con_read_bytes(con, 4L)) == "xref")
             pos
         else
             stop("cannot find xref table")
@@ -127,8 +147,8 @@ function(file)
 
     ## Load the xref info.
     repeat {
-        seek(con, startxref)
-        x <- readBin(con, "raw", 1L)
+        .con_seek(con, startxref)
+        x <- .con_read_bytes(con, 1L)
         if(x == charToRaw("x")) {
             ## A standard cross-reference table, hopefully.
             bytes <- read_next_bytes_until_whitespace(con)
@@ -145,7 +165,7 @@ function(file)
                 cnt <- 0
                 entries <- list()
                 while(cnt < size) {
-                    bytes <- readBin(con, "raw", 20L)
+                    bytes <- .con_read_bytes(con, 20L)
                     ## Assume that all lines were correctly at 20 bytes.
                     ## (Could also try to be nice ...)
                     entry <- c(num,
@@ -158,8 +178,8 @@ function(file)
                 }
                 xref_tabs <- rbind(xref_tabs, do.call(rbind, entries))
                 read_next_non_whitespace_and_seek_back(con)
-                if(rawToChar(readBin(con, "raw", 7L)) != "trailer")
-                    seek(con, -7L, "current")
+                if(rawToChar(.con_read_bytes(con, 7L)) != "trailer")
+                    .con_seek(con, -7L, 2L)
                 else break
             }
             ## Read trailer info.
@@ -173,15 +193,15 @@ function(file)
             if(is.null(startxref)) break
         } else if(x %.IN.% pdf_bytes_digits) {
             ## PDF 1.5+ cross-reference stream, hopefully.
-            seek(con, -1L, "current")
-            pos <- seek(con)
+            .con_seek(con, -1L, 2L)
+            pos <- .con_seek(con)
             hdr <- pdf_read_object_header(con)
             obj <- pdf_read_object(con)
             if(!("Type" %in% names(obj)) ||
                !(obj[["Type"]] == "XRef")) {
                 ## Something's wrong.
                 ## Try finding the xref table before pos.
-                seek(con, pos)
+                .con_seek(con, pos)
                 startxref <- find_xref_start(con)
                 next
             }
@@ -199,11 +219,11 @@ function(file)
                 num <- index[i, 1L]
                 cnt <- 0L
                 while(cnt < index[i, 2L]) {
-                    bytes <- readBin(stream, "raw", field_sizes[1L])
+                    bytes <- .con_read_bytes(stream, field_sizes[1L])
                     d1 <- strtoi(paste(bytes, collapse = ""), 16L)
-                    bytes <- readBin(stream, "raw", field_sizes[2L])
+                    bytes <- .con_read_bytes(stream, field_sizes[2L])
                     d2 <- strtoi(paste(bytes, collapse = ""), 16L)      
-                    bytes <- readBin(stream, "raw", field_sizes[3L])
+                    bytes <- .con_read_bytes(stream, field_sizes[3L])
                     d3 <- strtoi(paste(bytes, collapse = ""), 16L)
                     ## Might actually need to overwrite entries.
                     ## Worry about that lateron ...
@@ -225,7 +245,7 @@ function(file)
             startxref <- obj[["Prev"]]
             if(is.null(startxref)) break
         } else {
-            seek(con, -1L, "current")
+            .con_seek(con, -1L, 2L)
             startxref <- find_xref_start(con)
         }
     }
@@ -440,11 +460,23 @@ function(file)
     info[["Pages"]] <- length(pages)
 
     rectangles <- lapply(pages, `[[`, "MediaBox")
-    urx <- lapply(rectangles, `[[`, 3L)
-    ury <- lapply(rectangles, `[[`, 4L)
+    urx <- unlist(lapply(rectangles, `[[`, 3L))
+    ury <- unlist(lapply(rectangles, `[[`, 4L))
     if((length(uurx <- unique(urx)) == 1L) &&
-       (length(uury <- unique(ury)) == 1L))
+       (length(uury <- unique(ury)) == 1L)) {
         info["Page size"] <- sprintf("%s x %s pts", uurx, uury)
+        pos <- which((abs(pdf_page_sizes[, 1L] - urx) < 1) &
+                     (abs(pdf_page_sizes[, 2L] - ury) < 1))
+        if(!length(pos)) {
+            pos <- which((abs(pdf_page_sizes[, 2L] - urx) < 1) &
+                         (abs(pdf_page_sizes[, 1L] - ury) < 1))
+        }
+        if(length(pos))
+            info["Page size"] <-
+                sprintf("%s [%s]",
+                        info["Page size"],
+                        rownames(pdf_page_sizes)[pos])
+    }
     
     info[["File size"]] <- sprintf("%d bytes", doc$size)
 
@@ -484,14 +516,14 @@ pdf_read_object <-
 function(con)
 {
     if(pdftools_debug_level() > 0L) {
-        bytes <- readBin(con, "raw", 10L)
+        bytes <- .con_read_bytes(con, 10L)
         message(sprintf("looking at %s", deparse(intToUtf8(bytes))))
-        seek(con, -length(bytes), "current")
+        .con_seek(con, -length(bytes), 2L)
     }
     
     x <- read_next_non_whitespace(con)
     if(!length(x)) return(NA)
-    seek(con, -1L, "current")
+    .con_seek(con, -1L, 2L)
     if(x == 0x28)                       # charToRaw("(") => 28
         pdf_read_object_string_literal(con)
     else if(x == 0x2f)                  # charToRaw("/") => 2f
@@ -507,8 +539,8 @@ function(con)
     ## </NOTE>
     else if(x == 0x3c) {                # charToRaw("<") => 3c
         ## Hexadecimal string or dictionary
-        bytes <- readBin(con, "raw", 2L)
-        seek(con, -2L, "current")
+        bytes <- .con_read_bytes(con, 2L)
+        .con_seek(con, -2L, 2L)
         if(all(bytes == c(0x3c, 0x3c)))
             pdf_read_object_dictionary_or_stream(con)
         else
@@ -517,7 +549,7 @@ function(con)
     else if(x == 0x25) {                # charToRaw("%") => 25
         ## Read until eol.
         repeat {
-            x <- readBin(con, "raw", 1L)
+            x <- .con_read_bytes(con, 1L)
             if(x %.IN.% pdf_bytes_eols) break
         }
         read_next_non_whitespace_and_seek_back(con)
@@ -527,8 +559,8 @@ function(con)
         pdf_read_object_numeric(con)
     else if(x %.IN.% pdf_bytes_digits) {
         ## Could be a number object or an indirect object reference.
-        bytes <- readBin(con, "raw", 20L)
-        seek(con, - length(bytes), "current")
+        bytes <- .con_read_bytes(con, 20L)
+        .con_seek(con, - length(bytes), 2L)
         ## Cannot simply call rawToChar(bytes) as we might have read nul
         ## bytes.
         if(length(pos <- which(bytes == 0))) {
@@ -553,13 +585,13 @@ function(con)
 ## pdf_read_object_boolean <-
 ## function(con)
 ## {
-##     x <- rawToChar(readBin(con, "raw", 1L))
+##     x <- rawToChar(.con_read_bytes(con, 1L))
 ##     if(x == "t") {
-##         bytes <- readBin(con, "raw", 3L)
+##         bytes <- .con_read_bytes(con, 3L)
 ##         if(rawToChar(bytes) == "rue")
 ##             return(TRUE)
 ##     } else if(x == "f") {
-##         bytes <- readBin(con, "raw", 4L)
+##         bytes <- .con_read_bytes(con, 4L)
 ##         if(rawToChar(bytes) == "alse")
 ##             return(FALSE)
 ##     }
@@ -574,10 +606,10 @@ function(con)
     table <- pdf_bytes_in_numerics
     
     bytes <- raw()
-    while((x <- readBin(con, "raw", 1L)) %.IN.% table) {
+    while((x <- .con_read_bytes(con, 1L)) %.IN.% table) {
         bytes <- c(bytes, x)
     }
-    seek(con, -1L, "current")
+    .con_seek(con, -1L, 2L)
     
     s <- rawToChar(bytes)
     if(grepl(".", s, fixed = TRUE))
@@ -618,7 +650,7 @@ function(con)
 pdf_read_object_string_literal <-
 function(con)
 {
-    x <- readBin(con, "raw", 1L)
+    x <- .con_read_bytes(con, 1L)
     lparen <- charToRaw("(")    
     if(x != lparen)
         stop("cannot read literal string object")
@@ -633,7 +665,7 @@ function(con)
     bytes <- raw()
     parens <- 1L
     repeat {
-        x <- readBin(con, "raw", 1L)
+        x <- .con_read_bytes(con, 1L)
         if(!length(x)) break
         if(x == lparen) {
             parens <- parens + 1L
@@ -641,13 +673,13 @@ function(con)
             parens <- parens - 1L
             if(!parens) break
         } else if(x == escape) {
-            x <- readBin(con, "raw", 1L)
+            x <- .con_read_bytes(con, 1L)
             if(x %.IN.% pdf_bytes_digits) {
                 i <- 0L
                 while(i < 2L) {
-                    y <- readBin(con, "raw", 1L)
+                    y <- .con_read_bytes(con, 1L)
                     if(!(y %.IN.% pdf_bytes_digits)) {
-                        seek(con, -1L, "current")                        
+                        .con_seek(con, -1L, 2L)                        
                         break
                     }
                     x <- c(x, y)
@@ -657,9 +689,9 @@ function(con)
             } else if(x %.IN.% pdf_bytes_escape_tails) {
                 x <- pdf_bytes_escape_bytes[as.character(x)]
             } else if(x %.IN.% pdf_bytes_eols) {
-                x <- readBin(con, "raw", 1L)
+                x <- .con_read_bytes(con, 1L)
                 if(!(x %.IN.% pdf_bytes_eols))
-                    seek(con, -1L, "current")
+                    .con_seek(con, -1L, 2L)
                 x <- raw()
             }
             ## See PDF Reference version 1.7 section 3.2.3.
@@ -676,7 +708,7 @@ function(con)
 pdf_read_object_string_hexadecimal <-
 function(con)
 {
-    x <- readBin(con, "raw", 1L)
+    x <- .con_read_bytes(con, 1L)
     if(x != 0x3c)                       # charToRaw("<") => 3c
         stop("cannot read hexadecimal string object")
     
@@ -684,7 +716,7 @@ function(con)
 
     bytes <- raw()
     repeat {
-        x <- readBin(con, "raw", 1L)
+        x <- .con_read_bytes(con, 1L)
         if(x == end) break
         bytes <- c(bytes, x)
     }
@@ -730,15 +762,15 @@ function(con)
     ##   code 0) may be included in a name by writing its 2-digit
     ##   hexadecimal code, preceded by the number sign character (#).
 
-    x <- readBin(con, "raw", 1L)
+    x <- .con_read_bytes(con, 1L)
     if(x != 0x2f)                       # charToRaw("/") => 2f
         stop("cannot read name object")
 
     bytes <- raw()
     repeat {
-        x <- readBin(con, "raw", 1L)
+        x <- .con_read_bytes(con, 1L)
         if(!length(x) || (x %.IN.% pdf_bytes_non_regulars)) {
-            seek(con, -1L, "current")
+            .con_seek(con, -1L, 2L)
             break
         }
         bytes <- c(bytes, x)
@@ -769,7 +801,7 @@ function(x, ...)
 pdf_read_object_array <-
 function(con)
 {
-    x <- readBin(con, "raw", 1L)
+    x <- .con_read_bytes(con, 1L)
     if(x != 0x5b)                       # charToRaw("[") => 5b
         stop("cannot read array object")
 
@@ -779,7 +811,7 @@ function(con)
     repeat {
         x <- read_next_non_whitespace_and_seek_back(con)
         if(x == end) {
-            readBin(con, "raw", 1L)
+            .con_read_bytes(con, 1L)
             break
         }
         y <- c(y, list(pdf_read_object(con)))
@@ -804,7 +836,7 @@ function(x, ...)
 pdf_read_object_dictionary_or_stream <-
 function(con)
 {
-    bytes <- readBin(con, "raw", 2L)
+    bytes <- .con_read_bytes(con, 2L)
     if(!all(bytes == c(0x3c, 0x3c)))
         stop("cannot read dictionary object")
 
@@ -814,7 +846,7 @@ function(con)
     repeat {
         x <- read_next_non_whitespace_and_seek_back(con)
         if(x == end) {
-            readBin(con, "raw", 2L)
+            .con_read_bytes(con, 2L)
             break
         }
         key <- pdf_read_object(con)
@@ -822,18 +854,18 @@ function(con)
         val <- pdf_read_object(con)
         y[[key]] <- val
     }
-    pos <- seek(con)
+    pos <- .con_seek(con)
     ## Check whether this is in fact a stream object.
     ## Read ahead.
     read_next_non_whitespace_and_seek_back(con)
-    if(rawToChar(readBin(con, "raw", 6L)) == "stream") {
+    if(rawToChar(.con_read_bytes(con, 6L)) == "stream") {
         ## Argh.  Handle the EOL marker assuming compliance: should
         ## check for this.
-        eol <- readBin(con, "raw", 1L)
+        eol <- .con_read_bytes(con, 1L)
         if(!(eol %.IN.% pdf_bytes_eols))
             stop("cannot read stream object")
         if(eol == charToRaw("\r"))
-            readBin(con, "raw", 1L)
+            .con_read_bytes(con, 1L)
         ## Need length information in dictionary.
         len <- y[["Length"]]
         if(is.null(len))
@@ -844,19 +876,19 @@ function(con)
         ## information).  Hence, record the position where the stream
         ## data start, and have PDF_Stream_get_data() resolve lateron.
         if(inherits(len, "PDF_Indirect_Reference")) {
-            y[["__stream_tell__"]] <- seek(con)
+            y[["__stream_tell__"]] <- .con_seek(con)
             y[["__stream_data__"]] <- NULL
         } else {
-            y[["__stream_data__"]] <- readBin(con, "raw", len)
+            y[["__stream_data__"]] <- .con_read_bytes(con, len)
             ## Now check if we really hit the end of the stream.
             read_next_non_whitespace_and_seek_back(con)
-            bytes <- readBin(con, "raw", 9L)
+            bytes <- .con_read_bytes(con, 9L)
             if(rawToChar(bytes) != "endstream")
                 stop("cannot read stream object")
         }
         class(y) <- "PDF_Stream"
     } else {
-        seek(con, pos)
+        .con_seek(con, pos)
         class(y) <- "PDF_Dictionary"
     }
     y
@@ -890,7 +922,7 @@ function(x, ...)
 ## pdf_read_object_null <-
 ## function(con)
 ## {
-##     bytes <- readBin(con, "raw", 4L)
+##     bytes <- .con_read_bytes(con, 4L)
 ##     if(rawToChar(bytes) != "null")
 ##         stop("cannot read null object")
 ##     NULL
@@ -905,7 +937,7 @@ function(con)
     read_next_non_whitespace_and_seek_back(con)
     gen <- read_next_bytes_until_whitespace(con)
     read_next_non_whitespace_and_seek_back(con)
-    x <- readBin(con, "raw", 1L)
+    x <- .con_read_bytes(con, 1L)
     if(x != 0x52)                       # charToRaw("R") => 52
         stop("cannot read indirect reference object")
     y <- c(num = as.integer(rawToChar(num)),
@@ -940,9 +972,9 @@ function(con)
 {
     bytes <- raw()
     repeat {
-        x <- readBin(con, "raw", 1L)
+        x <- .con_read_bytes(con, 1L)
         if(!length(x) || !(x %.IN.% pdf_bytes_in_keywords)) {
-            seek(con, -1L, "current")
+            .con_seek(con, -1L, 2L)
             break
         }
         bytes <- c(bytes, x)
@@ -977,7 +1009,7 @@ function(con)
     read_next_non_whitespace_and_seek_back(con)
     gen <- read_next_bytes_until_whitespace(con)
     ## Now skip the "obj".
-    readBin(con, "raw", 3L)
+    .con_read_bytes(con, 3L)
     read_next_non_whitespace_and_seek_back(con)
     c(num = suppressWarnings(as.integer(rawToChar(num))),
       gen = suppressWarnings(as.integer(rawToChar(gen))))
@@ -987,7 +1019,7 @@ pdf_read_indirect_object_at_pos <-
 function(con, pos, num = NA_integer_, gen = NA_integer_)
 {
     ## Move to pos.
-    seek(con, pos)
+    .con_seek(con, pos)
     ## Read header first.
     hdr <- pdf_read_object_header(con)
     ## Be paranoid.
@@ -1050,7 +1082,7 @@ function(doc, ref, con = NULL)
             read_next_non_whitespace_and_seek_back(stream)
             i <- i + 1L
         }
-        seek(stream, obj[["First"]] + cpos)
+        .con_seek(stream, obj[["First"]] + cpos)
         return(pdf_read_object(stream))
     }
 
@@ -1098,12 +1130,12 @@ function(doc, con = NULL)
         num <- entry["num"]
         gen <- entry["gen"]
         obj <- pdf_read_indirect_object_at_pos(con, pos, num, gen)
-        objects[[.ref_to_name(c(num, gen))]] <- obj
+        objects[[.iref_to_name(c(num, gen))]] <- obj
     }
     ## Now for the new-style xref streams objects.
     if(length(doc$xref_objs)) {
         for(str in unique(doc$xref_objs[, "str"])) {
-            obj <- objects[[.ref_to_name(str)]]
+            obj <- objects[[.iref_to_name(str)]]
             n <- obj[["N"]]
             first <- obj[["First"]]
             stream <- rawConnection(PDF_Stream_get_data(obj))
@@ -1120,9 +1152,9 @@ function(doc, con = NULL)
             ## Then read the objects from the stream.
             i <- 1L
             while(i <= n) {
-                seek(stream, first + tab[i, 2L])
+                .con_seek(stream, first + tab[i, 2L])
                 obj <- pdf_read_object(stream)
-                objects[[.ref_to_name(tab[i, 1L])]] <- obj
+                objects[[.iref_to_name(tab[i, 1L])]] <- obj
                 i <- i + 1L                
             }
             close(stream)
@@ -1288,11 +1320,11 @@ function(obj, doc = NULL)
             len <- pdf_doc_get_object(doc, len, con)
         }
         ## Now that we know the length as well ...
-        seek(con, obj[["__stream_tell__"]])
-        bytes <- readBin(con, "raw", len)
+        .con_seek(con, obj[["__stream_tell__"]])
+        bytes <- .con_read_bytes(con, len)
         ## Now check if we really hit the end of the stream.
         read_next_non_whitespace_and_seek_back(con)
-        if(rawToChar(readBin(con, "raw", 9L)) != "endstream")
+        if(rawToChar(.con_read_bytes(con, 9L)) != "endstream")
             stop("cannot read stream data")
     }
     
@@ -1498,7 +1530,7 @@ function(bytes)
 ## * Utilities
 
 ## Need a better name ...
-.ref_to_name <-
+.iref_to_name <-
 function(x)
 {
     if(length(x) == 1L)
@@ -1512,7 +1544,7 @@ function(con)
 {
     bytes <- raw()
     repeat {
-        x <- readBin(con, "raw", 1L)
+        x <- .con_read_bytes(con, 1L)
         if(!length(x) || (x %.IN.% pdf_bytes_whitespaces)) break
         bytes <- c(bytes, x)
     }
@@ -1523,7 +1555,7 @@ read_next_non_whitespace <-
 function(con)
 {
     repeat {
-        x <- readBin(con, "raw", 1L)
+        x <- .con_read_bytes(con, 1L)
         if(!length(x) || !(x %.IN.% pdf_bytes_whitespaces)) break
     }
     x
@@ -1533,7 +1565,7 @@ read_next_non_whitespace_and_seek_back <-
 function(con)
 {
     x <- read_next_non_whitespace(con)
-    seek(con, -1L, "current")
+    .con_seek(con, -1L, 2L)
     x
 }
 
@@ -1544,14 +1576,14 @@ function(con)
     ## to the first preceding non-eol byte.
     bytes <- raw()
     repeat {
-        x <- readBin(con, "raw", 1L)
-        seek(con, -2L, "current")
+        x <- .con_read_bytes(con, 1L)
+        .con_seek(con, -2L, 2L)
         if(x %.IN.% pdf_bytes_eols) {
             while(x %.IN.% pdf_bytes_eols) {
-                x <- readBin(con, "raw", 1L)
-                seek(con, -2L, "current")
+                x <- .con_read_bytes(con, 1L)
+                .con_seek(con, -2L, 2L)
             }
-            seek(con, 1, "current")
+            .con_seek(con, 1, 2L)
             break
         } else {
             bytes <- c(x, bytes)
@@ -1582,7 +1614,7 @@ function(x, bytes)
 ## Hence, use the following, where values 1L, 2L, 3L for the origin
 ## correspond to "start", "current" and "end".
 
-.stream_seek <-
+.con_seek <-
 function(con, where = NA, origin = 1L)
 {
     .Internal(seek(con, as.double(where), as.integer(origin), 0L))
@@ -1591,7 +1623,7 @@ function(con, where = NA, origin = 1L)
 ## Calling readBin() to read bytes is somewhat inefficient.
 ## Hence, use the following.
 
-.stream_read_bytes <-
+.con_read_bytes <-
 function(con, n = 1L)
 {
     .Internal(readBin(con, "raw", n, NA_integer_, FALSE, FALSE))
