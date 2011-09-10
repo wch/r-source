@@ -244,7 +244,7 @@ function(file)
 print.pdf_doc <-
 function(x, ...)
 {
-    n <- sum(x$xref_tabs[, "use"]) + NROW(x$xref_objs)
+    n <- sum(x$xref_tabs[, "use"]) + nrow(x$xref_objs)
     writeLines(strwrap(sprintf("PDF document (file \"%s\", %d bytes, %d objects)",
                                x$file, x$size, n),
                        exdent = 4L))
@@ -262,6 +262,11 @@ function(file)
 
 ## * pdf_fonts
 
+## <FIXME>
+## Currently only extracts the fonts used in pages (but not, e.g.,
+## forms).
+## </FIXME>
+
 pdf_fonts <-
 function(file)
 {
@@ -275,7 +280,8 @@ function(file)
     ## Get the font resources (actually, their references).
     frefs <- list()
     for(res in resources) {
-        for(ref in res[["Font"]]) {
+        fonts <- pdf_dereference_maybe(res[["Font"]], doc, con)
+        for(ref in fonts) {
             if(is.na(match(list(ref), frefs))) {
                 frefs <- c(frefs, list(ref))
             }
@@ -322,9 +328,15 @@ function(file)
                   function(ref) {
                       obj <- pdf_doc_get_object(doc, ref, con)
                       base <- obj[["BaseFont"]]
+                      ## See PDF Reference version 1.7 section 5.5.4.
+                      ## Type 3 font dictionaries have no BaseFont entry.
+                      ## (Guess they are always embedded?)
+                      if(is.null(base))
+                          base <- "[none]"
                       list(base,
                            obj[["Subtype"]],
-                           !is.null(obj[["FontDescriptor"]]),
+                           ((base == "[none]") ||
+                            !is.null(obj[["FontDescriptor"]])),
                            grepl("^[[:upper:]]{6}\\+", base),
                            !is.null(obj[["ToUnicode"]]),
                            obj[["Encoding"]],
@@ -473,7 +485,7 @@ function(con)
 {
     if(pdftools_debug_level() > 0L) {
         bytes <- readBin(con, "raw", 10L)
-        message(sprintf("Looking at %s", intToUtf8(bytes)))
+        message(sprintf("looking at %s", deparse(intToUtf8(bytes))))
         seek(con, -length(bytes), "current")
     }
     
@@ -613,14 +625,10 @@ function(con)
     
     rparen <- charToRaw(")")
     escape <- charToRaw("\\")
-    escape_tails <- c("n", "r", "t", "b", "f", "(", ")", "\\")
-    pdf_bytes_escape_tails <-
-        charToRaw(paste(escape_tails, collapse = ""))
-    pdf_bytes_escape_bytes <-
-        charToRaw(c("\n\r\t\b\f()\\"))
-    ## names(pdf_bytes_escape_bytes) <- escape_tails
+    pdf_bytes_escape_tails <- charToRaw("nrtbf()\\")
+    pdf_bytes_escape_bytes <- charToRaw("\n\r\t\b\f()\\")
     names(pdf_bytes_escape_bytes) <-
-        as.character(charToRaw("nrtbf()\\"))
+        as.character(pdf_bytes_escape_tails)
 
     bytes <- raw()
     parens <- 1L
@@ -647,20 +655,17 @@ function(con)
                 }
                 x <- as.raw(strtoi(rawToChar(x), 8L))
             } else if(x %.IN.% pdf_bytes_escape_tails) {
-                ## x <- pdf_bytes_escape_bytes[rawToChar(x)]
                 x <- pdf_bytes_escape_bytes[as.character(x)]
             } else if(x %.IN.% pdf_bytes_eols) {
                 x <- readBin(con, "raw", 1L)
                 if(!(x %.IN.% pdf_bytes_eols))
                     seek(con, -1L, "current")
                 x <- raw()
-            } else {
-                stop(gettextf("invalid escape sequence %s",
-                              sQuote(paste("\\",
-                                           rawToChar(x),
-                                           collapse = ""))),
-                     domain = NA)
             }
+            ## See PDF Reference version 1.7 section 3.2.3.
+            ## If the character following the backslash is not not a
+            ## special character for an escape sequence, the backslash
+            ## is ignored.
         }
         bytes <- c(bytes, x)
     }
@@ -922,6 +927,14 @@ function(x, ...)
     invisible(x)
 }
 
+pdf_dereference_maybe <-
+function(obj, doc, con = NULL)
+{
+    if(inherits(obj, "PDF_Indirect_Reference"))
+        obj <- pdf_doc_get_object(doc, obj, con)
+    obj
+}
+
 pdf_read_object_keyword <-
 function(con)
 {
@@ -1079,7 +1092,9 @@ function(doc, con = NULL)
         if(!entry["use"]) next
         pos <- entry["pos"]
         if(pos == 0L) next
-        if(debug) message(sprintf("processing %s", format(entry)))
+        if(debug)
+            message(sprintf("processing %s",
+                            paste(names(entry), entry, collapse = " ")))
         num <- entry["num"]
         gen <- entry["gen"]
         obj <- pdf_read_indirect_object_at_pos(con, pos, num, gen)
@@ -1189,6 +1204,11 @@ function(doc, con = NULL)
 
 ## * pdf_doc_get_content_streams
 
+## <FIXME>
+## Most likely this should only extract the Contents entries and let the
+## "consumers" do the expansions of indirect object references as needed.
+## </FIXME>
+
 pdf_doc_get_page_content_streams <-
 function(doc, con = NULL)
 {
@@ -1200,9 +1220,25 @@ function(doc, con = NULL)
     }
 
     pages <- pdf_doc_get_page_list(doc, con)
+    ## See PDF Reference version 1.7 section 3.6.2.
+    ## A page object may have a Contents entry with value a single
+    ## content stream or an array of such streams.
+    ## A missing Contents entry means that the page is empty.
     lapply(pages,
-           function(p) pdf_doc_get_object(doc, p[["Contents"]], con))
+           function(p) {
+               obj <- p[["Contents"]]
+               if(inherits(obj, "PDF_Array"))
+                   lapply(obj, pdf_dereference_maybe, doc, con)
+               else
+                   pdf_dereference_maybe(obj, doc, con)
+           })
 }
+
+## <FIXME>
+## Most likely this should only extract the Resources entries and let the
+## "consumers" do the expansions of indirect object references as needed
+## (as well as handle inheritance from ancestors).
+## </FIXME>
 
 pdf_doc_get_page_resources <- 
 function(doc, con = NULL)
@@ -1215,8 +1251,17 @@ function(doc, con = NULL)
     }
     
     pages <- pdf_doc_get_page_list(doc, con)
+    
+    ## See PDF Reference version 1.7 section 3.6.2.
+    ## A page object may have a Resources entry giving a dictionary
+    ## (which apparently could be an indirect object reference).
+    ## An empty dictionary means no resources.
+    ## A missing Resources entry means that resources are inherited from
+    ## an ancestor node in the page tree.
     lapply(pages,
-           function(p) pdf_doc_get_object(doc, p[["Resources"]], con))
+           function(p) {
+               pdf_dereference_maybe(p[["Resources"]], doc, con)
+           })
 }
 
 ## * Streams
