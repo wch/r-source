@@ -25,7 +25,9 @@ readCitationFile(file, meta = NULL)
   \item{auto}{a logical indicating whether the default citation
     auto-generated from the package \file{DESCRIPTION} metadata should
     be used or not, or \code{NULL} (default), indicating that a
-    \file{CITATION} file is used if it exists.}
+    \file{CITATION} file is used if it exists, or an object of class
+    \code{"\link{packageDescription}"} with package metadata (see
+    below).}
   \item{file}{a file name.}
   \item{meta}{a list of package metadata as obtained by
     \code{\link{packageDescription}}, or \code{NULL} (the default).}
