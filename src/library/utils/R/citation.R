@@ -808,13 +808,21 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     if(is.null(author))
         author <- meta$`Author@R`
     ## </FIXME>
-    if(has_authors_at_R_field <- !is.null(author)) {
+    ## <FIXME>
+    ## Older versions took persons with no roles as "implied" authors.
+    ## So for now check whether Authors@R gives any authors; if not fall
+    ## back to the plain text Author field.
+    if(length(author)) {
         author <- .read_authors_at_R_field(author)
         ## We only want those with author roles.
         author <- Filter(.person_has_author_role, author)
+    }
+    if(length(author)) {
+        has_authors_at_R_field <- TRUE
     } else {
         author <- as.personList(meta$Author)
     }
+    ## </FIXME>
 
     z <- list(title = paste(package, ": ", meta$Title, sep=""),
               author = author,
@@ -882,9 +890,6 @@ function(x)
     ## Alternatively, we could throw an error.
     if(!inherits(out, "person"))
         out <- do.call("c", lapply(x, as.person))
-    ## Barf if we got no authors at all.
-    if(!any(sapply(out, .person_has_author_role)))
-        stop("Enhanced authors specification provides no authors.")
 
     out
 }
@@ -894,10 +899,10 @@ function(x)
 {
     ## <NOTE>
     ## Earlier versions used
-    is.null(r <- x$role) || "aut" %in% r
+    ##    is.null(r <- x$role) || "aut" %in% r
     ## using author roles by default.
     ## </NOTE>
-    ##   "aut" %in% x$role
+    "aut" %in% x$role
 }
 
 print.citation <-
@@ -928,16 +933,12 @@ function(x)
 function(x) {
     ## Names first.
     out <- format(x, include = c("given", "family"))
-    ## In case there are roles and/or comments:
-    if(!is.null(role <- x$role)) {
-        ## Only show roles recommended for usage with R.
-        role <- role[role %in% MARC_relator_db_codes_used_with_R]
-        ## If this leaves nothing:
-        if(!length(role)) return("")
-        out <- sprintf("%s [%s]", out,
-                       paste(role, collapse = ", "))
-    }
-    ## (Do not indicate implied 'aut' roles.)
+    ## Only show roles recommended for usage with R.
+    role <- x$role
+    if(!length(role)) return("")
+    role <- role[role %in% MARC_relator_db_codes_used_with_R]
+    if(!length(role)) return("")
+    out <- sprintf("%s [%s]", out, paste(role, collapse = ", "))
     if(!is.null(comment <- x$comment))
         out <- sprintf("%s (%s)", out, 
                        paste(comment, collapse = "\n"))
