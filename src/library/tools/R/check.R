@@ -416,6 +416,21 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log, paste(out, collapse="\n"), "\n")
             }
         }
+
+        ## Check Authors@R in case it was not checked as part of
+        ## .check_package_description().
+        db <- .read_description(dfile)
+        if(!is.na(aar <- db["Authors@R"]) &&
+           !is.na(db["Author"]) &&
+           !is.na(db["Maintainer"])) {
+            out <- .check_package_description_authors_at_R_field(aar)
+            if(length(out)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                .show_check_package_description_authors_at_R_field_results(out)
+            }
+        }
+
         if (!any) resultLog(Log, "OK")
     }
 

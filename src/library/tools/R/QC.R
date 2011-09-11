@@ -2745,35 +2745,15 @@ function(dfile)
     ## Check Authors@R and expansion if needed.
     if(!is.na(aar <- db["Authors@R"]) &&
        (is.na(db["Author"]) || is.na(db["Maintainer"]))) {
-        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
-                        error = identity)
-        if(inherits(aar, "error")) {
-            out$bad_authors_at_R_field <- conditionMessage(aar)
-        } else {
-            ## Check whether we can expand to something non-empty.
-            s <- tryCatch(utils:::.format_authors_at_R_field_for_author(aar),
-                          error = identity)
-            if(inherits(s, "error")) {
-                out$bad_authors_at_R_field_for_author <-
-                    conditionMessage(s)
-            } else {
-                if(s == "")
-                    out$bad_authors_at_R_field_has_no_author <- TRUE
-                else if(is.na(db["Author"]))
-                    db["Author"] <- s
-            }
-            s <- tryCatch(utils:::.format_authors_at_R_field_for_maintainer(aar),
-                          error = identity)
-            if(inherits(s, "error")) {
-                out$bad_authors_at_R_field_for_maintainer <-
-                    conditionMessage(s)
-            } else {
-                if(s == "")
-                    out$bad_authors_at_R_field_has_no_maintainer <- TRUE
-                else if(is.na(db["Maintainer"]))
-                    db["Maintainer"] <- s
-            }
-        }
+        res <- .check_package_description_authors_at_R_field(aar)
+        if(is.na(db["Author"]) &&
+           !is.null(s <- attr(res, "Author")))
+            db["Author"] <- s
+        if(is.na(db["Maintainer"]) &&
+           !is.null(s <- attr(res, "Maintainer")))
+            db["Maintainer"] <- s
+        attributes(res) <- NULL
+        out <- c(out, res)
     }
 
     ## Mandatory entries in DESCRIPTION:
@@ -2889,24 +2869,8 @@ function(x, ...)
         writeLines(c(gettext("These fields must have ASCII values."), ""))
     }
 
-    if(length(bad <- x[["bad_authors_at_R_field"]]))
-        writeLines(c(gettext("Malformed Authors@R field:"),
-                     paste(" ", bad),
-                     ""))
-    if(length(bad <- x[["bad_authors_at_R_field_for_author"]]))
-        writeLines(c(gettext("Cannot extract Author field from Authors@R field:"),
-                     paste(" ", bad),
-                     ""))
-    if(length(x[["bad_authors_at_R_field_has_no_author"]]))
-        writeLines(c(gettext("Authors@R field gives no person with author role."),
-                     ""))
-    if(length(bad <- x[["bad_authors_at_R_field_for_maintainer"]]))
-        writeLines(c(gettext("Cannot extract Maintainer field from Authors@R field:"),
-                     paste(" ", bad),
-                     ""))
-    if(length(x[["bad_authors_at_R_field_has_no_maintainer"]]))
-        writeLines(c(gettext("Authors@R field gives no person with maintainer role and email address."),
-                     ""))
+    any <- .show_check_package_description_authors_at_R_field_results(x)
+    if(any) writeLines("")
 
     if(length(x$missing_required_fields)) {
         writeLines(gettext("Required fields missing:"))
@@ -2961,6 +2925,73 @@ function(x, ...)
                      ""))
 
     invisible(x)
+}
+
+.check_package_description_authors_at_R_field <-
+function(aar)
+{
+    out <- list()
+    if(is.na(aar)) return(out)
+    aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
+                    error = identity)
+    if(inherits(aar, "error")) {
+        out$bad_authors_at_R_field <- conditionMessage(aar)
+    } else {
+        ## Check whether we can expand to something non-empty.
+        s <- tryCatch(utils:::.format_authors_at_R_field_for_author(aar),
+                      error = identity)
+        if(inherits(s, "error")) {
+            out$bad_authors_at_R_field_for_author <-
+                conditionMessage(s)
+        } else {
+            if(s == "")
+                out$bad_authors_at_R_field_has_no_author <- TRUE
+            else
+                attr(out, "Author") <- s
+        }
+        s <- tryCatch(utils:::.format_authors_at_R_field_for_maintainer(aar),
+                      error = identity)
+        if(inherits(s, "error")) {
+            out$bad_authors_at_R_field_for_maintainer <-
+                conditionMessage(s)
+        } else {
+            if(s == "")
+                out$bad_authors_at_R_field_has_no_maintainer <- TRUE
+            else
+                attr(out, "Maintainer") <- s
+        }
+    }
+    out
+}
+
+.show_check_package_description_authors_at_R_field_results <-
+function(x)
+{
+    any <- FALSE
+    if(length(bad <- x[["bad_authors_at_R_field"]])) {
+        writeLines(c(gettext("Malformed Authors@R field:"),
+                     paste(" ", bad)))
+        any <- TRUE
+    }
+    if(length(bad <- x[["bad_authors_at_R_field_for_author"]])) {
+        writeLines(c(gettext("Cannot extract Author field from Authors@R field:"),
+                     paste(" ", bad)))
+        any <- TRUE
+    }
+    if(length(x[["bad_authors_at_R_field_has_no_author"]])) {
+        writeLines(gettext("Authors@R field gives no person with author role."))
+        any <- TRUE
+    }
+    if(length(bad <- x[["bad_authors_at_R_field_for_maintainer"]])) {
+        writeLines(c(gettext("Cannot extract Maintainer field from Authors@R field:"),
+                     paste(" ", bad)))
+        any <- TRUE
+    }
+    if(length(x[["bad_authors_at_R_field_has_no_maintainer"]])) {
+        writeLines(gettext("Authors@R field gives no person with maintainer role and email address."))
+        any <- TRUE
+    }
+    any
 }
 
 ### * .check_package_description_encoding
