@@ -43,8 +43,6 @@ pdf_bytes_in_numerics_not_digits <-
 pdf_bytes_in_numerics <-
     c(pdf_bytes_digits, pdf_bytes_in_numerics_not_digits)
 
-## * pdf_doc
-
 pdf_page_sizes <-
 do.call(rbind,
         list("A0" =        c(2384L, 3371L),
@@ -65,10 +63,23 @@ do.call(rbind,
              "quarto" =    c( 610L,  780L),
              "10x14" =     c( 720L, 1008L)))
 
+## * pdf_doc
+
 pdf_doc <-
-function(file)
+function(file, cache = TRUE)
 {
     if(is.character(file)) {
+        ## <FIXME>
+        ## When caching, we could read the whole PDF file into memory
+        ## and use a raw connection to read this byte stream.  But is
+        ## there a way to get the connection closed when the doc object
+        ## gets removed?
+        ##   if(cache) {
+        ##       .bytes <- readBin(file, "raw", file.info(file)$size)
+        ##       con <- rawConnection(.bytes)
+        ##       keep <- TRUE
+        ##   }
+        ## </FIXME>
         con <- file(file, "rb")
         on.exit(close(con))
         keep <- FALSE
@@ -250,13 +261,27 @@ function(file)
         }
     }
 
-    y <- list(file = file,
-              size = nbytes,
-              header = header,
-              xref_tabs = xref_tabs,
-              xref_objs = xref_objs,
-              trailer = trailer,
-              con = if(keep) con else NULL)
+    ## Determine the "active" objects (all objects in cross-reference
+    ## streams and objects in cross-reference tables marked in use and
+    ## with a "real" position).
+    ind <- (xref_tabs[, "pos"] > 0L) & (xref_tabs[, "use"] > 0L)
+    names <-
+        c(.ref_to_name(xref_tabs[ind, c("num", "gen"), drop = FALSE]),
+          if(length(num <- xref_objs[, "num"]))
+          .ref_to_name(cbind(num, 0)))
+    
+    y <- new.env(parent = emptyenv())
+    y$file <- file
+    y$size <- nbytes
+    y$header <- header
+    y$xref_tabs <- xref_tabs
+    y$xref_objs <- xref_objs
+    y$trailer <- trailer
+    y$cache <- cache
+    y$con <- if(keep) con else NULL
+    y$names <- names
+    y$length <- length(names)    
+    y$objects <- list()
     class(y) <- "pdf_doc"
     y
 }
@@ -264,12 +289,19 @@ function(file)
 print.pdf_doc <-
 function(x, ...)
 {
-    n <- sum(x$xref_tabs[, "use"]) + nrow(x$xref_objs)
     writeLines(strwrap(sprintf("PDF document (file \"%s\", %d bytes, %d objects)",
-                               x$file, x$size, n),
+                               x$file, x$size, x$length),
                        exdent = 4L))
     invisible(x)
 }
+
+length.pdf_doc <-
+function(x)
+    x$length
+
+names.pdf_doc <-
+function(x)
+    x$names
 
 ## * pdf_catalog
 
@@ -290,7 +322,10 @@ function(file)
 pdf_fonts <-
 function(file)
 {
-    doc <- if(inherits(file, "pdf_doc")) file else pdf_doc(file)
+    doc <- if(inherits(file, "pdf_doc"))
+        file
+    else
+        pdf_doc(file, cache = FALSE)
 
     con <- file(doc$file, "rb")
     on.exit(close(con))
@@ -408,7 +443,10 @@ function(x, ...)
 pdf_info <-
 function(file)
 {
-    doc <- if(inherits(file, "pdf_doc")) file else pdf_doc(file)
+    doc <- if(inherits(file, "pdf_doc"))
+        file
+    else
+        pdf_doc(file, cache = FALSE)
 
     if(is.null(con <- doc$con)) {
         con <- file(doc$file, "rb")
@@ -465,11 +503,11 @@ function(file)
     if((length(uurx <- unique(urx)) == 1L) &&
        (length(uury <- unique(ury)) == 1L)) {
         info["Page size"] <- sprintf("%s x %s pts", uurx, uury)
-        pos <- which((abs(pdf_page_sizes[, 1L] - urx) < 1) &
-                     (abs(pdf_page_sizes[, 2L] - ury) < 1))
+        pos <- which((abs(pdf_page_sizes[, 1L] - uurx) < 1) &
+                     (abs(pdf_page_sizes[, 2L] - uury) < 1))
         if(!length(pos)) {
-            pos <- which((abs(pdf_page_sizes[, 2L] - urx) < 1) &
-                         (abs(pdf_page_sizes[, 1L] - ury) < 1))
+            pos <- which((abs(pdf_page_sizes[, 2L] - uurx) < 1) &
+                         (abs(pdf_page_sizes[, 1L] - uury) < 1))
         }
         if(length(pos))
             info["Page size"] <-
@@ -1044,11 +1082,6 @@ function(doc, ref, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
     
-    if(is.null(con) && is.null(con <- doc$con)) {
-        con <- file(doc$file, "rb")
-        on.exit(close(con))
-    }
-
     if(length(ref) == 1L) {
         names(ref) <- "num"
     } else if(length(ref) == 2L) {
@@ -1057,7 +1090,18 @@ function(doc, ref, con = NULL)
     num <- ref["num"]
     gen <- ref["gen"]
 
-    ## First look in the xrefs for object streams.
+    ## First look in the object cache.
+    if(doc$cache) {
+        pos <- match(.ref_to_name(ref), names(doc$objects))
+        if(!is.na(pos)) return(doc$objects[[pos]])
+    }
+
+    if(is.null(con) && is.null(con <- doc$con)) {
+        con <- file(doc$file, "rb")
+        on.exit(close(con))
+    }
+
+    ## Next look in the xrefs for object streams.
     if((is.na(gen) || (gen == 0L)) &&
        (length(pos <- which(doc$xref_objs[, "num"] == num)))) {
         if(length(pos) > 1L) {
@@ -1065,35 +1109,49 @@ function(doc, ref, con = NULL)
             pos <- pos[1L]
         }
         ptr <- doc$xref_objs[pos, ]
-        num <- ptr["str"]
         idx <- ptr["idx"]
-        obj <- pdf_doc_get_object(doc, num, con)
+        obj <- pdf_doc_get_object(doc, ptr["str"], con)
         ## Could check whether
         ##   obj[["Type"]] == "ObjStm"
-        if(idx >= obj[["N"]])
+        n <- obj[["N"]]
+        if(idx >= n)
             stop("invalid index in object stream lookup")
+        first <- obj[["First"]]        
         stream <- rawConnection(PDF_Stream_get_data(obj, doc))
         on.exit(close(stream), add = TRUE)
         i <- 0L
-        while(i <= idx) {
-            cnum <- pdf_read_object(stream)
-            read_next_non_whitespace_and_seek_back(stream)
-            cpos <- pdf_read_object(stream)
-            read_next_non_whitespace_and_seek_back(stream)
-            i <- i + 1L
+        if(doc$cache) {
+            while(i < n) {
+                cnum <- pdf_read_object(stream)
+                read_next_non_whitespace_and_seek_back(stream)
+                cpos <- pdf_read_object(stream)
+                read_next_non_whitespace_and_seek_back(stream)
+                tell <- .con_seek(stream, first + cpos)
+                obj <- pdf_read_object(stream)
+                key <- .ref_to_name(cnum)
+                doc$objects[[key]] <- obj
+                .con_seek(stream, tell)
+                i <- i + 1L
+            }
+            return(doc$objects[[.ref_to_name(num)]])
+        } else {
+            while(i <= idx) {
+                cnum <- pdf_read_object(stream)
+                read_next_non_whitespace_and_seek_back(stream)
+                cpos <- pdf_read_object(stream)
+                read_next_non_whitespace_and_seek_back(stream)
+                i <- i + 1L
+            }
+            .con_seek(stream, obj[["First"]] + cpos)
+            return(pdf_read_object(stream))
         }
-        .con_seek(stream, obj[["First"]] + cpos)
-        return(pdf_read_object(stream))
     }
 
     ## Figure out the position to start from.
     if(length(ref) == 1L) {
-        ind <- (doc$xref_tabs[, "num"] == ref)
-        pos <- doc$xref_tabs[ind, "pos"]
-        if(length(pos) > 1L) {
-            ## Can this really happen?
-            pos <- pos[1L]
-        }
+        pos <- which(doc$xref_tabs[, "num"] == ref)[1L]
+        gen <- doc$xref_tabs[pos, "gen"]        
+        pos <- doc$xref_tabs[pos, "pos"]
     }
     else {
         ind <- ((doc$xref_tabs[, "num"] == num) &
@@ -1101,7 +1159,10 @@ function(doc, ref, con = NULL)
         pos <- doc$xref_tabs[ind, "pos"]
     }
 
-    pdf_read_indirect_object_at_pos(con, pos, num, gen)
+    obj <- pdf_read_indirect_object_at_pos(con, pos, num, gen)
+    if(doc$cache)
+        doc$objects[[.ref_to_name(c(num, gen))]] <- obj
+    obj
 }
 
 pdf_doc_get_objects <-
@@ -1109,6 +1170,17 @@ function(doc, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
     
+    ## Start with the object cache.
+    objects <- doc$objects
+
+    ## If this contains as many objects as there are names, all objects
+    ## have already been cached.
+    if(length(objects) == doc$length)
+        return(objects)
+
+    ## Otherwise, we need to get the objects not yet in the cache (which
+    ## could be all objects if caching if off, of course).
+
     if(is.null(con) && is.null(con <- doc$con)) {
         con <- file(doc$file, "rb")
         on.exit(close(con))
@@ -1116,26 +1188,32 @@ function(doc, con = NULL)
 
     debug <- (pdftools_debug_level() > 0L)    
 
-    objects <- list()
-
     ## First get the objects from the old-style xref tables.
-    for(i in seq_len(nrow(doc$xref_tabs))) {
-        entry <- doc$xref_tabs[i, ]
-        if(!entry["use"]) next
-        pos <- entry["pos"]
-        if(pos == 0L) next
+    tab <- doc$xref_tabs
+    ## Only get active objects still needed.
+    ind <- ((tab[, "pos"] > 0L) &
+            (tab[, "use"] > 0L) &
+            is.na(match(.ref_to_name(tab[, c("num", "gen"),
+                                         drop = FALSE]),
+                        names(objects))))
+    for(i in which(ind)) {
+        entry <- tab[i, ]
         if(debug)
             message(sprintf("processing %s",
                             paste(names(entry), entry, collapse = " ")))
+        pos <- entry["pos"]
         num <- entry["num"]
         gen <- entry["gen"]
         obj <- pdf_read_indirect_object_at_pos(con, pos, num, gen)
-        objects[[.iref_to_name(c(num, gen))]] <- obj
+        key <- .ref_to_name(c(num, gen))
+        if(doc$cache)
+            doc$objects[[key]] <- obj
+        objects[[key]] <- obj
     }
     ## Now for the new-style xref streams objects.
     if(length(doc$xref_objs)) {
         for(str in unique(doc$xref_objs[, "str"])) {
-            obj <- objects[[.iref_to_name(str)]]
+            obj <- objects[[.ref_to_name(str)]]
             n <- obj[["N"]]
             first <- obj[["First"]]
             stream <- rawConnection(PDF_Stream_get_data(obj))
@@ -1149,13 +1227,17 @@ function(doc, con = NULL)
                 read_next_non_whitespace_and_seek_back(stream)
                 i <- i + 1L
             }
+            ## Determine the objects still needed.
+            pos <- which(is.na(match(.ref_to_name(tab[, 1L]),
+                                     names(objects))))
             ## Then read the objects from the stream.
-            i <- 1L
-            while(i <= n) {
+            for(i in pos) {
                 .con_seek(stream, first + tab[i, 2L])
                 obj <- pdf_read_object(stream)
-                objects[[.iref_to_name(tab[i, 1L])]] <- obj
-                i <- i + 1L                
+                key <- .ref_to_name(tab[i, 1L])
+                if(doc$cache)
+                    doc$objects[[key]] <- obj
+                objects[[key]] <- obj
             }
             close(stream)
         }
@@ -1530,13 +1612,18 @@ function(bytes)
 ## * Utilities
 
 ## Need a better name ...
-.iref_to_name <-
+.ref_to_name <-
 function(x)
 {
-    if(length(x) == 1L)
-        paste(x, "0", sep = ",")
+    sep <- "."
+    if(!length(x))
+        character()
+    else if(is.matrix(x))
+        paste(x[, 1L], x[, 2L], sep = sep)
+    else if(length(x) > 1L)
+        paste(x[1L], x[2L], sep = sep)
     else
-        paste(x[1L], x[2L], sep = ",")
+        paste(x, "0", sep = sep)
 }
 
 read_next_bytes_until_whitespace <-
