@@ -752,11 +752,17 @@ function(con)
     
     end <- charToRaw(">")
 
+    ## See PDF Reference version 1.7 section 3.2.3:
+    ## Each pair of hexadecimal digits defines one byte of the string.
+    ## White-space characters are ignored.
+    ## If the final digit of a hexadecimal string is missing (i.e., if
+    ## there is an odd number of digits) it is assumed to be 0.
     bytes <- raw()
     repeat {
         x <- .con_read_bytes(con, 1L)
         if(x == end) break
-        bytes <- c(bytes, x)
+        if(!(x %.IN.% pdf_bytes_whitespaces))
+            bytes <- c(bytes, x)
     }
     
     if(length(bytes) %% 2)
@@ -914,7 +920,7 @@ function(con)
         ## information).  Hence, record the position where the stream
         ## data start, and have PDF_Stream_get_data() resolve lateron.
         if(inherits(len, "PDF_Indirect_Reference")) {
-            y[["__stream_tell__"]] <- .con_seek(con)
+            y[["__stream_init__"]] <- .con_seek(con)
             y[["__stream_data__"]] <- NULL
         } else {
             y[["__stream_data__"]] <- .con_read_bytes(con, len)
@@ -1402,7 +1408,7 @@ function(obj, doc = NULL)
             len <- pdf_doc_get_object(doc, len, con)
         }
         ## Now that we know the length as well ...
-        .con_seek(con, obj[["__stream_tell__"]])
+        .con_seek(con, obj[["__stream_init__"]])
         bytes <- .con_read_bytes(con, len)
         ## Now check if we really hit the end of the stream.
         read_next_non_whitespace_and_seek_back(con)
