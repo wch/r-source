@@ -351,9 +351,9 @@
       \item \code{stars()} gains a \code{col.lines} argument, thanks to
       Dustin Sallings. (Wish of \PR{14657}.)
 
-      \item New function \code{regmatches()} for extracting matched or
-      non-matched substrings from match data obtained by \code{regexpr()}
-      and \code{gregexpr()}.
+      \item New function \code{regmatches()} for extracting or replacing
+      matched or non-matched substrings from match data obtained by
+      \code{regexpr()}, \code{gregexpr()} and \code{regexec()}.
 
       \item \code{help(package = "pkg_name", help_type = "HTML")} now
       gives HTML help on the package rather than text help.  (This gives
