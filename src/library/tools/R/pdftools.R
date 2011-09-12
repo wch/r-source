@@ -117,9 +117,21 @@ function(file, cache = TRUE)
         stop("EOF marker not found")
 
     ## Find startxref entry (the location of the xref table).
-    bytes <- read_prev_bytes_after_eols(con)
+    ## See PDF Reference version 1.7 section 3.4.4:
+    ##   The last line of the file contains only the end-of-file marker,
+    ##   %%EOF.
+    ##   The two preceding lines contain the keyword startxref and the
+    ##   byte offset from the beginning of the file to the beginning of
+    ##   the xref keyword in the last cross-reference section.
+    ## But as of 2011-09-12 there is at least one PDF in CRAN's packages
+    ## (limSolve/inst/doc/JSS-373-fig1.pdf) which has keyword and offset
+    ## in the same line.
+    ## Hence, let's be nice, and read back over any white-space and not
+    ## just eols.
+
+    bytes <- read_prev_bytes_after_bytes(con, pdf_bytes_whitespaces)
     startxref <- suppressWarnings(as.integer(rawToChar(bytes)))
-    bytes <- read_prev_bytes_after_eols(con)
+    bytes <- read_prev_bytes_after_bytes(con, pdf_bytes_whitespaces)
     if(substring(rawToChar(bytes), 1L, 9L) != "startxref")
         stop("cannot find startxref")
 
@@ -1662,17 +1674,17 @@ function(con)
     x
 }
 
-read_prev_bytes_after_eols <-
-function(con)
+read_prev_bytes_after_bytes <-
+function(con, set)
 {
-    ## Read the previous bytes until the first eol byte, and move point
-    ## to the first preceding non-eol byte.
+    ## Read the previous bytes from con until the first byte in set, and
+    ## move point to the first preceding byte not in set.
     bytes <- raw()
     repeat {
         x <- .con_read_bytes(con, 1L)
         .con_seek(con, -2L, 2L)
-        if(x %.IN.% pdf_bytes_eols) {
-            while(x %.IN.% pdf_bytes_eols) {
+        if(x %.IN.% set) {
+            while(x %.IN.% set) {
                 x <- .con_read_bytes(con, 1L)
                 .con_seek(con, -2L, 2L)
             }
@@ -1684,6 +1696,10 @@ function(con)
     }
     bytes
 }
+    
+read_prev_bytes_after_eols <-
+function(con)
+    read_prev_bytes_after_bytes(con, pdf_bytes_eols)
 
 raw_connection_to_bytes_in_file <-
 function(file)
