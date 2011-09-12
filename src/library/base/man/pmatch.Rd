@@ -47,10 +47,8 @@ pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
   differentiates between no match and an ambiguous partial match,  it
   does match empty strings, and it does not allow multiple exact matches.
 
-  \code{NA} values are treated as if they were the string constant \code{"NA"}.
-  
-  Character strings with marked encoding \code{"bytes"} cannot be
-  compared, so give an error.
+  \code{NA} values are treated as if they were the string constant
+  \code{"NA"}.
 }
 \value{
   An integer vector (possibly including \code{NA} if \code{nomatch =

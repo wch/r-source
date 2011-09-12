@@ -73,8 +73,9 @@ enc2utf8(x)
   \code{\link{sub}} and \code{gsub} will give a marked UTF-8 result if
   any of the inputs are UTF-8.
 
-  \code{\link{paste}} and \code{\link{sprintf}} return a UTF-8 marked
-  element if any of the inputs to that element is marked as UTF-8.
+  \code{\link{paste}} and \code{\link{sprintf}} return elements marked
+  as bytes if any of the corresponding inputs is marked as bytes, and 
+  otherwise marked as UTF-8 of any of the inputs is marked as UTF-8.
 
   \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},
   \code{\link{duplicated}} and \code{\link{unique}} all match in UTF-8
