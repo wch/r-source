@@ -582,13 +582,25 @@ function(x)
                options =
                c(Rd2txt_NEWS_in_Rd_options,
                  list(itemBullet = "\036  ")))
-        s <- gsub("^    ", "", out)
-        # Number of blanks is system dependent
-        s <- gsub("^ *\036 ", "\036", s)
+        
+        ## Try to find the column offset of the top-level bullets.
+        pat <- "^( *)\036.*"
+        off <- min(nchar(sub(pat, "\\1", out[grepl(pat, out)])))
+        pat <- sprintf("^%s\036 ",
+                       paste(rep.int(" ", off), collapse = ""))
+        s <- sub(pat, "\036", out)
+        ## Try to remove some indent for nested material.
+        pat <- sprintf("^%s",
+                       paste(rep.int(" ", off + 2L), collapse = ""))
+        s <- sub(pat, "", s)
+
         s <- paste(s, collapse = "\n")
         s <- sub("^[[:space:]]*\036", "", s)
         s <- sub("[[:space:]]*$", "", s)
-        unlist(strsplit(s, "\n\036", fixed = TRUE))
+        ## <FIXME>
+        ## Could be more fancy and use \u2022 "if possible".
+        gsub("\036", "*", unlist(strsplit(s, "\n\036", fixed = TRUE)))
+        ## </FIXME>
     }
 
     y <- x[RdTags(x) == "\\section"]
