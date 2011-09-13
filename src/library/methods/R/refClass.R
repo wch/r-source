@@ -506,7 +506,7 @@ prints the definition of the class.
         writeLines(
 c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
   paste('The definition of class', className, 'follows.')))
-        show(def)
+        methods::show(def)
     }
     else {
         if(is.name(substitute(topic)))
@@ -515,12 +515,7 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
             topic <- as.character(topic)
         env <- def@refMethods
         if(exists(topic, envir = env)) {
-            f <- get(topic, envir = env)
-            cat("Call:",.makeCall(topic, f), "\n")
-            bb <- body(f)
-            ## look for self-documentation
-            if(is(bb, "{") && length(bb) > 1 && is(bb[[2]], "character"))
-                writeLines(c(bb[[2]], ""))
+            writeLines(.refMethodDoc(topic, env))
         }
         else {
             cat(gettextf("Topic \"%s\" is not a method name in class %s\nThe class definition follows\n",
@@ -1099,3 +1094,14 @@ all.equal.environment <- function(target, current, ...) {
                 domain = NA)
     !any(localsAreFields) && !any(globalsNotFields)
 }
+
+.refMethodDoc <- function(topic, env) {
+    f <- get(topic, envir = env)
+    msg <- c("Call:",.makeCall(topic, f), "")
+    bb <- body(f)
+    ## look for self-documentation
+    if(is(bb, "{") && length(bb) > 1 && is(bb[[2]], "character"))
+        msg <- c(msg, bb[[2]], "")
+    msg
+}
+
