@@ -88,9 +88,9 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   tests for identity of character representations.  This will
   catch people who unwisely rely on exact equality of floating-point
   numbers!
-  
-  Character strings with marked encoding \code{"bytes"} cannot be
-  compared, so give an error.
+
+  Character strings will be compared as byte sequences if any input is
+  marked as \code{"bytes"}.
 }
 \value{
     \code{duplicated()}:

@@ -65,9 +65,9 @@ x \%in\% table
   
   That \code{\%in\%} never returns \code{NA} makes it particularly
   useful in \code{if} conditions.
-  
-  Character strings with marked encoding \code{"bytes"} cannot be
-  compared, so give an error.
+
+  Character strings will be compared as byte sequences if any input is
+  marked as \code{"bytes"}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
