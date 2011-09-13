@@ -122,6 +122,10 @@
       9KB in the output file.
 
       \item \code{.hasSlot()} wrongly gave \code{FALSE} in some cases.
+      
+      \item \code{Sweave()} with \code{keep.source=TRUE} could generate
+      spurious \code{NA} lines when a chunk reference appeared last in
+      a code chunk.
     }
   }
 }

@@ -222,7 +222,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 dce <- trySrcLines(srcfile, lastshown + 1L, showto, NULL)
                 linedirs <- grepl("^#line ", dce)
 		dce <- dce[!linedirs]
-                putSinput(dce, length(dce)) # These are all trailing comments
+		if (length(dce))
+                    putSinput(dce, length(dce)) # These are all trailing comments
                 lastshown <<- showto
             }
         }
