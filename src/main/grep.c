@@ -160,12 +160,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!useBytes) {
 	for (i = 0; i < tlen; i++)
-	    if (getCharCE(STRING_ELT(tok, i)) == CE_BYTES) {
+	    if (IS_BYTES(STRING_ELT(tok, i))) {
 		haveBytes = TRUE; break;
 	    }
 	if (!haveBytes)
 	    for (i = 0; i < len; i++)
-		if (getCharCE(STRING_ELT(x, i)) == CE_BYTES) {
+		if (IS_BYTES(STRING_ELT(x, i))) {
 		    haveBytes = TRUE;
 		    break;
 		}
@@ -175,12 +175,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (perl_opt && mbcslocale) use_UTF8 = TRUE;
 	    if (!use_UTF8)
 		for (i = 0; i < tlen; i++)
-		    if (getCharCE(STRING_ELT(tok, i)) == CE_UTF8) {
+		    if (IS_UTF8(STRING_ELT(tok, i))) {
 			use_UTF8 = TRUE; break;
 		    }
 	    if (!use_UTF8)
 		for (i = 0; i < len; i++)
-		    if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) {
+		    if (IS_UTF8(STRING_ELT(x, i))) {
 			use_UTF8 = TRUE;
 			break;
 		    }
@@ -802,10 +802,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
 	if (perl_opt && mbcslocale) use_UTF8 = TRUE;
-	else if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	else if (IS_UTF8(STRING_ELT(pat, 0))) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
-		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
+		if (IS_UTF8(STRING_ELT(text, i))) {
 		    use_UTF8 = TRUE;
 		    break;
 		}
@@ -1510,13 +1510,24 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	useBytes = onlyASCII;
     }
-
+    if (!useBytes) {
+	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
+	if (!haveBytes)
+	    for (i = 0; i < n; i++)
+		if (IS_BYTES(STRING_ELT(text, i))) {
+		    haveBytes = TRUE;
+		    break;
+		}
+	if(haveBytes) {
+	    useBytes = TRUE;
+	}
+    }
     if (!useBytes) {
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
-	else if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	else if (IS_UTF8(STRING_ELT(pat, 0))) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
-		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
+		if (IS_UTF8(STRING_ELT(text, i))) {
 		    use_UTF8 = TRUE;
 		    break;
 		}
@@ -2295,16 +2306,26 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	useBytes = onlyASCII;
     }
-
-
+    if (!useBytes) {
+	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
+	if (!haveBytes)
+	    for (i = 0; i < n; i++)
+		if (IS_BYTES(STRING_ELT(text, i))) {
+		    haveBytes = TRUE;
+		    break;
+		}
+	if(haveBytes) {
+	    useBytes = TRUE;
+	}
+    }
     if (!useBytes && !use_UTF8) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales,
 	   and as from 2.11.0 in TRE too. */
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
-	else if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	else if (IS_UTF8(STRING_ELT(pat, 0))) use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
-		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
+		if (IS_UTF8(STRING_ELT(text, i))) {
 		    use_UTF8 = TRUE;
 		    break;
 		}
