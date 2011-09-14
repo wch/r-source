@@ -224,48 +224,44 @@ function(x)
     ## Need to split the strings into individual person components.
     ## We used to split at ',' and 'and', but of course these could be
     ## contained in roles or comments as well.
-    ## Hence, try the following.  First, replace all comment, role and
-    ## email substrings by all-z substrings of the same length.  Then,
-    ## tokenize the strings according to the split regexp matches in the
-    ## corresponding z-ified strings.
-    ## Then, extract the persons from the thus obtained tokens.
+    ## Hence, try the following.
+    ## A. Replace all comment, role and email substrings by all-z
+    ##    substrings of the same length.
+    ## B. Tokenize the strings according to the split regexp matches in
+    ##    the corresponding z-ified strings.
+    ## C. Extract the persons from the thus obtained tokens.
 
+    ## Create strings consisting of a given character c with given
+    ## numbers n of characters.
+    strings <- function(n, c = "z") {
+        vapply(Map(rep.int, rep.int(c, length(n)), n,
+                   USE.NAMES = FALSE),
+               paste, "", collapse = "")
+    }
+
+    ## Replace matches of pattern in x by all-z substrings of the same
+    ## length.
     zify <- function(pattern, x) {
         if(!length(x)) return(character())
-        ## Could use gregexpr() to match all in one, but there seems to
-        ## easy way to simultaneously perform all replacements.
-        sapply(x,
-               function(s) {
-                   while((p <- regexpr(pattern, s)) > -1L) {
-                       mlen <- attr(p, "match.length")
-                       substring(s, p, p + mlen - 1L) <-
-                           paste(rep.int("z", mlen), collapse = "")
-                   }
-                   s
-               })
+        browser()
+        m <- gregexpr(pattern, x)
+        regmatches(x, m) <-
+            Map(strings, lapply(regmatches(x, m), nchar))
+        x
     }
-    
-    pattern <- "[[:space:]]?(,|,?[[:space:]]and)[[:space:]]+"
 
+    ## Step A.
     y <- zify("\\([^)]*\\)", x)
     y <- zify("\\[[^]]*\\]", y)
     y <- zify("<[^>]*>", y)
 
-    ## The Map() part really is a tokenizer for splitting at the given
-    ## pattern (like strsplit(), but we need to split x according to the
-    ## split matches in y.
+    ## Step B.
+    pattern <- "[[:space:]]?(,|,?[[:space:]]and)[[:space:]]+"
     x <- do.call("c",
-                 Map(function(u, v) {
-                     beg <- c(1L, v + attr(v, "match.length"))
-                     end <- c(v - 1L, nchar(u))
-                     ind <- beg <= end
-                     substring(u, beg[ind], end[ind])
-                 },
-                     x,
-                     gregexpr(pattern, y),
-                     USE.NAMES = FALSE))
+                 regmatches(x, gregexpr(pattern, y), invert = TRUE))
     x <- x[!sapply(x, .is_not_nonempty_text)]
 
+    ## Step C.
     as_person1 <- function(x) {
         comment <- if(grepl("\\(.*\\)", x))
             sub(".*\\(([^)]*)\\).*", "\\1", x)
