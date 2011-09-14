@@ -74,9 +74,10 @@ x <- "John (fishing, hunting), Paul (hiking, biking)"
 m <- gregexpr("\\\\([^)]*\\\\)", x)
 ## Write a little utility for creating blank strings with given numbers
 ## of characters.
-blanks <- function(n)
-    sapply(Map(rep.int, " ", n, USE.NAMES = FALSE),
-           paste, collapse = "")
+blanks <- function(n) {
+     vapply(Map(rep.int, rep.int(" ", length(n)), n, USE.NAMES = FALSE),
+           paste, "", collapse = "")
+}
 ## Create a copy of x with the parenthesized parts blanked out.
 s <- x
 regmatches(s, m) <- Map(blanks, lapply(regmatches(s, m), nchar))
