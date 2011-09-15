@@ -74,6 +74,10 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     when the length is specified they are still only defined up to a
     scalar of modulus one (the sign for real matrices).
   }
+
+  If \code{r <- eigen(A)}, and \code{V <- r$vectors; lam <- r$values},
+  then \deqn{A = V \Lambda V^{-1}}{A = V Lmbd V^(-1)} (up to numerical
+  fuzz), where \eqn{\Lambda =}{Lmbd =}\code{diag(lam)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
