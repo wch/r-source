@@ -817,7 +817,9 @@
       in a single call.
 
       \item PCRE has been updated to version 8.13, a bug-fix release
-      with updated Unicode tables (version 6.0.0).
+      with updated Unicode tables (version 6.0.0). An additional patch
+      (r611 from PCRE 8.20-to-be) has been added to fix a collation
+      symbol recognition issue.
     }
   }
 
