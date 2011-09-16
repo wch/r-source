@@ -27,6 +27,9 @@
 #endif
 
 #include <Defn.h>
+
+#include <R_ext/RS.h>		/* for Calloc/Free */
+
 #include <wchar.h>
 #include <tre/tre.h>
 
@@ -188,37 +191,210 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#define ANS(I, J)          REAL(ans)[I + J * nx]
-#define COUNTS(I, J, K)	   REAL(counts)[I + J * nx + K * nxy]
+#define ANS(I, J)		REAL(ans)[I + J * nx]
+#define COUNTS(I, J, K)		REAL(counts)[I + J * nx + K * nxy]
+
+#define MAT(X, I, J)		X[I + (J) * nr]
+
+static SEXP
+adist_full(SEXP x, SEXP y,
+	   double cost_ins, double cost_del, double cost_sub,
+	   Rboolean opt_counts)
+{
+    SEXP ans, counts, trafos, dimnames, names;
+    double *dists, d, d_ins, d_del, d_sub;
+    char *paths = NULL, p, *buf = NULL;
+    int i, j, k, l, m, nx, ny, nxy, *xi, *yj, nxi, nyj, nr, nc;
+    int nins, ndel, nsub, buflen = 100;
+
+    counts = R_NilValue;	/* -Wall */
+
+    nx = LENGTH(x);
+    ny = LENGTH(y);
+    nxy = nx * ny;
+
+    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+    if(opt_counts) {
+	PROTECT(counts = alloc3DArray(REALSXP, nx, ny, 3));
+	PROTECT(trafos = allocMatrix(STRSXP, nx, ny));
+	buf = Calloc(buflen, char);
+    }
+
+    for(i = 0; i < nx; i++) {
+	nxi = LENGTH(VECTOR_ELT(x, i));	
+	xi = INTEGER(VECTOR_ELT(x, i));
+	if(nxi && (xi[0] == NA_INTEGER)) {
+	    for(j = 0; j < ny; j++) {
+		ANS(i, j) = NA_REAL;
+	    }
+	    if(opt_counts) {
+		for(m = 0; m < 3; m++) {
+		    COUNTS(i, j, m) = NA_REAL;
+		}
+	    }
+	} else {
+	    for(j = 0; j < ny; j++) {
+		nyj = LENGTH(VECTOR_ELT(y, j));
+		yj = INTEGER(VECTOR_ELT(y, j));
+		if(nyj && (yj[0] == NA_INTEGER)) {
+		    ANS(i, j) = NA_REAL;
+		    if(opt_counts) {
+			for(m = 0; m < 3; m++) {
+			    COUNTS(i, j, m) = NA_REAL;
+			}
+		    }
+		}
+		else {
+		    /* Determine operation-weighted edit distance via
+		     * straightforward dynamic programming.
+		     */
+		    nr = nxi + 1;
+		    nc = nyj + 1;
+		    dists = Calloc(nr * nc, double);
+		    for(k = 0; k < nr; k++)
+			MAT(dists, k, 0) = k * cost_del;
+		    for(l = 1; l < nc; l++)
+			MAT(dists, 0, l) = l * cost_ins;
+		    if(opt_counts) {
+			paths = Calloc(nr * nc, char);
+			for(k = 1; k < nr; k++)
+			    MAT(paths, k, 0) = 'D';
+			for(l = 1; l < nc; l++)
+			    MAT(dists, 0, l) = 'I';
+		    }
+		    for(k = 1; k < nr; k++) {
+			for(l = 1; l < nc; l++) {
+			    if(xi[k - 1] == yj[l - 1]) {
+				MAT(dists, k, l) =
+				    MAT(dists, k - 1, l - 1);
+				if(opt_counts)
+				    MAT(paths, k, l) = 'M';
+			    } else {
+				d_ins = MAT(dists, k, l - 1) + cost_ins;
+				d_del = MAT(dists, k - 1, l) + cost_del;
+				d_sub = MAT(dists, k - 1, l - 1) + cost_sub;
+				if(opt_counts) {
+				    if(d_ins <= d_del) {
+					d = d_ins;
+					p = 'I';
+				    } else {
+					d = d_del;
+					p = 'D';
+				    }
+				    if(d_sub < d) {
+					d = d_sub;
+					p = 'S';
+				    }
+				    MAT(paths, k, l) = p;
+				} else {
+				    d = fmin(fmin(d_ins, d_del), d_sub);
+				}
+				MAT(dists, k, l) = d;
+			    }
+			}
+		    }
+		    ANS(i, j) = MAT(dists, nxi, nyj);
+		    if(opt_counts) {
+			nins = ndel = nsub = 0;
+			k = nxi; l = nyj;
+			m = nr < nc ? nc : nr;
+			if(buflen < m) {
+			    buf = Realloc(buf, m, char);
+			    buflen = m;
+			}
+			m--;
+			buf[m] = '\0';
+			m--;
+			while(m >= 0) {
+			    p = MAT(paths, k, l);
+			    if(p == 'I') {
+				nins++;
+				l--;
+			    } else if(p == 'D') {
+				ndel++;
+				k--;
+			    } else {
+				if(p == 'S')
+				    nsub++;
+				k--;
+				l--;
+			    }
+			    buf[m] = p;
+			    m--;
+			}
+			COUNTS(i, j, 0) = nins;
+			COUNTS(i, j, 1) = ndel;
+			COUNTS(i, j, 2) = nsub;
+			SET_STRING_ELT(trafos, i + nx * j, mkChar(buf));
+			Free(paths);
+		    }
+		    Free(dists);
+		}
+	    }
+	}
+    }
+
+    x = getAttrib(x, R_NamesSymbol);
+    y = getAttrib(y, R_NamesSymbol);
+    if(!isNull(x) || !isNull(y)) {
+	PROTECT(dimnames = allocVector(VECSXP, 2));	    
+	SET_VECTOR_ELT(dimnames, 0, x);
+	SET_VECTOR_ELT(dimnames, 1, y);
+	setAttrib(ans, R_DimNamesSymbol, dimnames);
+	UNPROTECT(1);
+    }
+
+    if(opt_counts) {
+	Free(buf);
+	PROTECT(dimnames = allocVector(VECSXP, 3));
+	PROTECT(names = allocVector(STRSXP, 3));
+	SET_STRING_ELT(names, 0, mkChar("ins"));
+	SET_STRING_ELT(names, 1, mkChar("del"));
+	SET_STRING_ELT(names, 2, mkChar("sub"));
+	SET_VECTOR_ELT(dimnames, 0, x);
+	SET_VECTOR_ELT(dimnames, 1, y);
+	SET_VECTOR_ELT(dimnames, 2, names);
+	setAttrib(counts, R_DimNamesSymbol, dimnames);
+	setAttrib(ans, install("counts"), counts);
+	UNPROTECT(2);
+	if(!isNull(x) || !isNull(y)) {
+	    PROTECT(dimnames = allocVector(VECSXP, 2));	    
+	    SET_VECTOR_ELT(dimnames, 0, x);
+	    SET_VECTOR_ELT(dimnames, 1, y);
+	    setAttrib(trafos, R_DimNamesSymbol, dimnames);
+	    UNPROTECT(1);
+	}
+	setAttrib(ans, install("trafos"), trafos);
+	UNPROTECT(2);
+    }
+		
+    UNPROTECT(1);
+    return ans;
+}
 
 SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, ans, dim, dimnames, counts, names;
-    SEXP lpositions, rpositions, rpositions_k, elt;
-    int opt_cost_ins, opt_cost_del, opt_cost_sub,
-	opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
-    int i = 0, j = 0, k, l, m, nx, ny, nxy;
-    int lpos, rpos;
+    SEXP x, y, ans, dim, dimnames, counts, names, elt;
+    SEXP opt_cost_ins, opt_cost_del, opt_cost_sub;
+    int opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
+    int cost_ins, cost_del, cost_sub; 
+    int i = 0, j = 0, m, nx, ny, nxy;
     const char *s, *t;
     const void *vmax = NULL;
 
     Rboolean haveBytes, useWC = FALSE;
 
     regex_t reg;
-    regaparams_t params, params_x_y, params_y_x;
+    regaparams_t params;
     regamatch_t match;
     int rc, cflags = REG_EXTENDED | REG_NOSUB;
 
-    Rboolean do_x_y;
-    
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
     y = CAR(args); args = CDR(args);
-    lpositions = CAR(args); args = CDR(args);
-    rpositions = CAR(args); args = CDR(args);
-    opt_cost_ins = asInteger(CAR(args)); args = CDR(args);
-    opt_cost_del = asInteger(CAR(args)); args = CDR(args);
-    opt_cost_sub = asInteger(CAR(args)); args = CDR(args);
+    opt_cost_ins = CAR(args); args = CDR(args);
+    opt_cost_del = CAR(args); args = CDR(args);
+    opt_cost_sub = CAR(args); args = CDR(args);
     opt_counts = asLogical(CAR(args)); args = CDR(args);
     opt_fixed = asInteger(CAR(args)); args = CDR(args);    
     opt_partial = asInteger(CAR(args)); args = CDR(args);
@@ -238,13 +414,20 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "partial = FALSE");
     }
 
+    if(!opt_partial)
+	return(adist_full(x, y,
+			  asReal(opt_cost_ins),
+			  asReal(opt_cost_del),
+			  asReal(opt_cost_sub),
+			  opt_counts));
+
     counts = R_NilValue;	/* -Wall */
 
-    if(!isString(x))
-	error(_("invalid '%s' argument"), "x");
+    cost_ins = asInteger(opt_cost_ins);
+    cost_del = asInteger(opt_cost_del);
+    cost_sub = asInteger(opt_cost_sub);
+
     nx = length(x);
-    if(!isString(y))
-	error(_("invalid '%s' argument"), "y");
     ny = length(y);
     nxy = nx * ny;    
 
@@ -286,17 +469,11 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    tre_regaparams_default(&params_x_y);
-    params_x_y.max_cost = INT_MAX;
-    params_x_y.cost_ins = opt_cost_ins;
-    params_x_y.cost_del = opt_cost_del;
-    params_x_y.cost_subst = opt_cost_sub;
-
-    tre_regaparams_default(&params_y_x);    
-    params_y_x.max_cost = INT_MAX;
-    params_y_x.cost_ins = opt_cost_ins;
-    params_y_x.cost_del = opt_cost_del;
-    params_y_x.cost_subst = opt_cost_sub;
+    tre_regaparams_default(&params);
+    params.max_cost = INT_MAX;
+    params.cost_ins = cost_ins;
+    params.cost_del = cost_del;
+    params.cost_subst = cost_sub;
 
     PROTECT(ans = allocMatrix(REALSXP, nx, ny));
     if(opt_counts) {
@@ -309,29 +486,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* wtransChar and translateChar can R_alloc */
     vmax = vmaxget();
-    for(k = 0; k < LENGTH(lpositions); k++) {
-	lpos = INTEGER(lpositions)[k];
-
-	if(opt_partial || (lpos < nx)) {
-	    do_x_y = TRUE;
-	    i = lpos;
-	    elt = STRING_ELT(x, i);
-	} else {
-	    do_x_y = FALSE;
-	    j = lpos - nx;
-	    elt = STRING_ELT(y, j);
-	}
-
-	rpositions_k = VECTOR_ELT(rpositions, k);
-
+    for(i = 0; i < nx; i++) {
+	elt = STRING_ELT(x, i);
 	if(elt == NA_STRING) {
-	    for(l = 0; l < LENGTH(rpositions_k); l++) {
-		rpos = INTEGER(rpositions_k)[l];
-		if(do_x_y) {
-		    j = rpos - nx;
-		} else {
-		    i = rpos;
-		}
+	    for(j = 0; j < ny; j++) {
 		ANS(i, j) = NA_REAL;
 		if(opt_counts) {
 		    for(m = 0; m < 3; m++) {
@@ -340,22 +498,16 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	} else {
-	    s = CHAR(elt);
 	    if(useBytes)
 		rc = tre_regcompb(&reg, CHAR(elt), cflags);
-	    else if (useWC) {
+	    else if(useWC) {
 		rc = tre_regwcomp(&reg, wtransChar(elt), cflags);
 		vmaxset(vmax);
 	    } else {
 		s = translateChar(elt);
 		if(mbcslocale && !mbcsValid(s)) {
-		    if(do_x_y) {
-			error(_("input string x[%d] is invalid in this locale"),
-			      i + 1);
-		    } else {
-			error(_("input string y[%d] is invalid in this locale"),
-			      j + 1);
-		    }
+		    error(_("input string x[%d] is invalid in this locale"),
+			  i + 1);
 		}
 		rc = tre_regcomp(&reg, s, cflags);
 		vmaxset(vmax);
@@ -365,18 +517,9 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		tre_regerror(rc, &reg, errbuf, 1001);
 		error(_("regcomp error:  '%s'"), errbuf);
 	    }
-	    
-	    for(l = 0; l < LENGTH(rpositions_k); l++) {
-		rpos = INTEGER(rpositions_k)[l];
-		if(do_x_y) {
-		    j = rpos - nx;
-		    elt = STRING_ELT(y, j);
-		    params = params_x_y;
-		} else {
-		    i = rpos;
-		    elt = STRING_ELT(x, i);
-		    params = params_y_x;
-		}
+
+	    for(j = 0; j < ny; j++) {
+		elt = STRING_ELT(y, j);
 		if(elt == NA_STRING) {
 		    ANS(i, j) = NA_REAL;
 		    if(opt_counts) {
@@ -384,7 +527,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 			    COUNTS(i, j, m) = NA_REAL;
 			}
 		    }
-		} else {
+		}
+		else {
 		    /* Perform match. */
 		    /* undocumented, must be zeroed */
 		    memset(&match, 0, sizeof(match));
@@ -398,13 +542,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else {
 			t = translateChar(elt);
 			if(mbcslocale && !mbcsValid(t)) {
-			    if(do_x_y) {
-				error(_("input string y[%d] is invalid in this locale"),
-				      j + 1);
-			    } else {
-				error(_("input string x[%d] is invalid in this locale"),
-				      i + 1);
-			    }
+			    error(_("input string y[%d] is invalid in this locale"),
+				  j + 1);
 			}
 			rc = tre_regaexec(&reg, t,
 					  &match, params, 0);
@@ -413,13 +552,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(rc == REG_OK) {
 			ANS(i, j) = (double) match.cost;
 			if(opt_counts) {
-			    if(do_x_y) {
-				COUNTS(i, j, 0) = (double) match.num_ins;
-				COUNTS(i, j, 1) = (double) match.num_del;
-			    } else {
-				COUNTS(i, j, 0) = (double) match.num_del;
-				COUNTS(i, j, 1) = (double) match.num_ins;
-			    }
+			    COUNTS(i, j, 0) = (double) match.num_ins;
+			    COUNTS(i, j, 1) = (double) match.num_del;
 			    COUNTS(i, j, 2) = (double) match.num_subst;
 			}
 		    } else {
@@ -456,10 +590,11 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dimnames, 1, y);
 	SET_VECTOR_ELT(dimnames, 2, names);
 	setAttrib(counts, R_DimNamesSymbol, dimnames);
-	setAttrib(ans, install("counts"), counts);	
+	setAttrib(ans, install("counts"), counts);
 	UNPROTECT(4);
     }
 
     UNPROTECT(1);
     return ans;
 }
+

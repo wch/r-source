@@ -1,26 +1,55 @@
 adist <-
-function(x, y = x, cost = NULL, counts = FALSE, fixed = TRUE,
+function(x, y = NULL, cost = NULL, counts = FALSE, fixed = TRUE,
          partial = !fixed, ignore.case = FALSE, useBytes = FALSE)
 {
-    nx <- length(x)
-    ny <- length(y)
+    bytesToInt <- function(x) {
+        if(is.na(x)) return(NA_integer_)
+        as.integer(charToRaw(x))
+    }
 
-    lpositions <-
-        as.integer(rep.int(seq(from = 0L, length.out = nx),
-                           ny))
-    rpositions <-
-        as.integer(rep.int(seq(from = nx, length.out = ny),
-                           rep.int(nx, ny)))
+    nmx <- names(x)
+    x <- as.character(x)
+    names(x) <- nmx
+
+    if(!is.null(y)) {
+        nmy <- names(y)
+        y <- as.character(y)
+        names(y) <- nmy
+    }
+
     if(!identical(fixed, FALSE) && !identical(partial, TRUE)) {
-        ind <- outer(nchar(x), nchar(y), `<`)
-        if(any(ind)) {
-            tmp <- lpositions[ind]
-            lpositions[ind] <- rpositions[ind]
-            rpositions[ind] <- tmp
+        ex <- Encoding(x)
+        useBytes <- identical(useBytes, TRUE) || any(ex == "bytes")
+        if(!is.null(y)) {
+            ey <- Encoding(y)
+            useBytes <- useBytes || any(ey == "bytes")
+        }
+        if(useBytes) {
+            x <- lapply(x, bytesToInt)
+            y <- if(is.null(y)) {
+                x
+            } else {
+                lapply(y, bytesToInt)
+            }
+        } else {
+            ignore.case <- identical(ignore.case, TRUE)
+            x <- if(ignore.case) {
+                lapply(tolower(enc2utf8(x)), utf8ToInt)
+            } else {
+                lapply(enc2utf8(x), utf8ToInt)
+            }
+            y <- if(is.null(y)) {
+                x
+            } else if(ignore.case) {
+                lapply(tolower(enc2utf8(y)), utf8ToInt)
+            } else {
+                lapply(enc2utf8(y), utf8ToInt)
+            }
         }
     }
-    rpositions <- split(rpositions, lpositions)
-    lpositions <- as.integer(names(rpositions))
+    else if(is.null(y)) {
+        y <- x
+    }
 
     all_costs <-
         list(insertions = 1, deletions = 1, substitutions = 1)
@@ -36,7 +65,7 @@ function(x, y = x, cost = NULL, counts = FALSE, fixed = TRUE,
         ## Could add some sanity checking ...
     }
 
-    .Internal(adist(x, y, lpositions, rpositions,
+    .Internal(adist(x, y,
                     all_costs$insertions,
                     all_costs$deletions,
                     all_costs$substitutions,
