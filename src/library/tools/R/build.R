@@ -511,7 +511,7 @@ get_exclude_patterns <- function()
 
         dir.create(libdir, mode = "0755", showWarnings = FALSE)
         savelib <- .libPaths()
-        .libPaths(libdir)
+        .libPaths(c(libdir, savelib))
         on.exit(.libPaths(savelib), add = TRUE)
 
         temp_install_pkg(pkgdir, libdir)
