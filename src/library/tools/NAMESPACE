@@ -23,6 +23,9 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
 
 exportPattern("^SIG.+")
 
+S3method("[", "pdf_doc")
+S3method("[[", "pdf_doc")
+
 S3method("as.character", "Rd")
 
 S3method("format", "check_Rd_contents")
@@ -60,6 +63,10 @@ S3method("format", "PDF_Dictionary")
 S3method("format", "PDF_Indirect_Reference")
 S3method("format", "PDF_Stream")
 S3method("format", "PDF_String")
+
+S3method("length", "pdf_doc")
+
+S3method("names", "pdf_doc")
 
 S3method("print", "LaTeX")
 S3method("print", "Rd")
