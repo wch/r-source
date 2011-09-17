@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2011
-@set FAQ_DATE @value{FAQ_YEAR}-07-05
+@set FAQ_DATE @value{FAQ_YEAR}-09-17
 @set REL_YEAR 2011
 @set REL_MAJOR 2
 @set REL_MINOR 13
@@ -2271,6 +2271,7 @@ dir /opt/R/src/unix
 * How do I create a plot with two y-axes?::  
 * How do I access the source code for a function?::  
 * Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::  
+* Why is R apparently not releasing memory?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3316,7 +3317,7 @@ a complete overview on how to access source code, see Uwe Ligges (2006),
 ``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
 43--45 (@url{http://cran.r-project.org/doc/Rnews/Rnews_2006-4.pdf}).
 
-@node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?,  , How do I access the source code for a function?, R Miscellanea
+@node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, Why is R apparently not releasing memory?, How do I access the source code for a function?, R Miscellanea
 @section Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?
 
 As described in @code{?summary.lm}, when the intercept is zero (e.g.,
@@ -3355,6 +3356,61 @@ compare to the fitted line, the model where @math{x} doesn't explain any
 of the variance, is the model where @math{E[Y]=0} everywhere.  (If you
 don't know a priori that @math{E[Y]=0} when @math{x=0}, then you
 probably shouldn't be fitting a line through the origin.)
+
+@node Why is R apparently not releasing memory?,  , Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
+@section Why is R apparently not releasing memory?
+
+This question is often asked in different flavors along the lines of
+``I have removed objects in R and run @code{gc()} and yet
+@code{ps}/@code{top} still shows the R process using a lot of
+memory'', often on Linux machines.
+
+This is an artifact of the way the operating system (OS) allocates
+memory.  In general it is common that the OS is not capable of
+releasing all unused memory.  In extreme cases it is possible that even
+if R frees almost all its memory, the OS can not release any of it due
+to its design and thus tools such as @code{ps} or @code{top} will
+report substantial amount of resident RAM used by the R process even
+though R has released all that memory.  In general such tools do
+@emph{not} report the actual memory usage of the process but rather
+what the OS is reserving for that process.
+
+The short answer is that this is a limitation of the memory allocator
+in the operating system and there is nothing R can do about it. That
+space is simply kept by the OS in the hope that R will ask for it
+later.  The following paragraph gives more in-depth answer with
+technical details on how this happens.
+
+Most systems use two separate ways to allocate memory. For allocation
+of large chunks they will use @code{mmap} to map memory into the
+process address space.  Such chunks can be released immediately when
+they are completely free, because they can reside anywhere in the
+virtual memory.  However, this is a relatively expensive operation and
+many OSes have a limit on the number of such allocated chunks, so this
+is only used for allocating large memory regions.  For smaller
+allocations the system can expand the data segment of the process
+(historically using the @code{brk} system call), but this whole area
+is always contiguous.  The OS can only move the end of this space, it
+cannot create any ``holes''. Since this operation is fairly cheap, it
+is used for allocations of small pieces of memory.  However, the
+side-effect is that even if there is just one byte that is in use
+at the end of the data segment, the OS cannot release any memory
+at all, because it cannot change the address of that byte.  This is
+actually more common than it may seem, because allocating a lot of
+intermediate objects, then allocating a result object and removing all
+intermediate objects is a very common practice.  Since the result is
+allocated at the end it will prevent the OS from releasing any memory
+used by the intermediate objects.  In practice, this is not necessarily
+a problem, because modern operating systems can page out unused
+portions of the virtual memory so it does not necessarily reduce the
+amount of real memory available for other applications.  Typically,
+small objects such as strings or pairlists will be affected by this
+behavior, whereas large objects such as long vectors will be allocated
+using @code{mmap} and thus not affected.  On Linux (and possibly other
+Unix-like systems) it is possible to use the @code{mallinfo} system call
+(also see the @url{http://rforge.net/mallinfo, mallinfo} package) to
+query the allocator about the layout of the allocations, including the
+actually used memory as well as unused memory that cannot be released.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
