@@ -4889,8 +4889,12 @@ and include the printed results verbatim.  (Invisible results will not print.)
 
 @item @code{results=rd}
 The result is assumed to be a character vector containing markup to
-be passed to @code{parse_Rd(fragment=TRUE)}, with the result inserted in place.
-This could be used to insert computed aliases, for instance.
+be passed to @code{parse_Rd()}, with the result inserted in place.
+This could be used to insert computed aliases, for instance.  
+As of @R{} 2.13.1-patched, @code{parse_Rd()} is called first
+with @code{fragment=FALSE} to allow a single Rd section
+macro to be inserted.  If that fails, it is called again with
+@code{fragment=TRUE}, the older behavior.
 
 @item @code{results=hide}
 Insert no output.

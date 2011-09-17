@@ -126,6 +126,10 @@
       \item \code{Sweave()} with \code{keep.source=TRUE} could generate
       spurious \code{NA} lines when a chunk reference appeared last in
       a code chunk.
+
+      \item  \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
+      \code{parse_Rd(fragment=FALSE)} to allow Rd section-level macros
+      to be inserted.
     }
   }
 }
