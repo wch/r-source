@@ -192,7 +192,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #define ANS(I, J)		REAL(ans)[I + J * nx]
-#define COUNTS(I, J, K)		REAL(counts)[I + J * nx + K * nxy]
+#define COUNTS(I, J, K)		INTEGER(counts)[I + J * nx + K * nxy]
 
 #define MAT(X, I, J)		X[I + (J) * nr]
 
@@ -204,8 +204,8 @@ adist_full(SEXP x, SEXP y,
     SEXP ans, counts, trafos, dimnames, names;
     double *dists, d, d_ins, d_del, d_sub;
     char *paths = NULL, p, *buf = NULL;
-    int i, j, k, l, m, nx, ny, nxy, *xi, *yj, nxi, nyj, nr, nc;
-    int nins, ndel, nsub, buflen = 100;
+    int i, j, k, l, m, nx, ny, nxy, *xi, *yj, nxi, nyj, nr, nc, nz;
+    int nins, ndel, nsub, buflen = 100, need;
 
     counts = R_NilValue;	/* -Wall */
 
@@ -215,7 +215,7 @@ adist_full(SEXP x, SEXP y,
 
     PROTECT(ans = allocMatrix(REALSXP, nx, ny));
     if(opt_counts) {
-	PROTECT(counts = alloc3DArray(REALSXP, nx, ny, 3));
+	PROTECT(counts = alloc3DArray(INTSXP, nx, ny, 3));
 	PROTECT(trafos = allocMatrix(STRSXP, nx, ny));
 	buf = Calloc(buflen, char);
     }
@@ -229,7 +229,7 @@ adist_full(SEXP x, SEXP y,
 	    }
 	    if(opt_counts) {
 		for(m = 0; m < 3; m++) {
-		    COUNTS(i, j, m) = NA_REAL;
+		    COUNTS(i, j, m) = NA_INTEGER;
 		}
 	    }
 	} else {
@@ -240,7 +240,7 @@ adist_full(SEXP x, SEXP y,
 		    ANS(i, j) = NA_REAL;
 		    if(opt_counts) {
 			for(m = 0; m < 3; m++) {
-			    COUNTS(i, j, m) = NA_REAL;
+			    COUNTS(i, j, m) = NA_INTEGER;
 			}
 		    }
 		}
@@ -251,7 +251,8 @@ adist_full(SEXP x, SEXP y,
 		    nr = nxi + 1;
 		    nc = nyj + 1;
 		    dists = Calloc(nr * nc, double);
-		    for(k = 0; k < nr; k++)
+		    MAT(dists, 0, 0) = 0;
+		    for(k = 1; k < nr; k++)
 			MAT(dists, k, 0) = k * cost_del;
 		    for(l = 1; l < nc; l++)
 			MAT(dists, 0, l) = l * cost_ins;
@@ -260,7 +261,7 @@ adist_full(SEXP x, SEXP y,
 			for(k = 1; k < nr; k++)
 			    MAT(paths, k, 0) = 'D';
 			for(l = 1; l < nc; l++)
-			    MAT(dists, 0, l) = 'I';
+			    MAT(paths, 0, l) = 'I';
 		    }
 		    for(k = 1; k < nr; k++) {
 			for(l = 1; l < nc; l++) {
@@ -295,37 +296,46 @@ adist_full(SEXP x, SEXP y,
 		    }
 		    ANS(i, j) = MAT(dists, nxi, nyj);
 		    if(opt_counts) {
-			nins = ndel = nsub = 0;
-			k = nxi; l = nyj;
-			m = nr < nc ? nc : nr;
-			if(buflen < m) {
-			    buf = Realloc(buf, m, char);
-			    buflen = m;
-			}
-			m--;
-			buf[m] = '\0';
-			m--;
-			while(m >= 0) {
-			    p = MAT(paths, k, l);
-			    if(p == 'I') {
-				nins++;
-				l--;
-			    } else if(p == 'D') {
-				ndel++;
-				k--;
-			    } else {
-				if(p == 'S')
-				    nsub++;
-				k--;
-				l--;
+			if(!R_finite(ANS(i, j))) {
+			    for(m = 0; m < 3; m++) {
+				COUNTS(i, j, m) = NA_INTEGER;
 			    }
-			    buf[m] = p;
-			    m--;
+			    SET_STRING_ELT(trafos, i + nx * j, NA_STRING);
+			} else {
+			    nins = ndel = nsub = 0;
+			    k = nxi; l = nyj; m = k + l; nz = m;
+			    need = 2 * m + 1;
+			    if(buflen < need) {
+				buf = Realloc(buf, need , char);
+				buflen = need;
+			    }
+			    /* Need to read backwards and fill forwards. */
+			    while((k > 0) || (l > 0)) {
+				p = MAT(paths, k, l);
+				if(p == 'I') {
+				    nins++;
+				    l--;
+				} else if(p == 'D') {
+				    ndel++;
+				    k--;
+				} else {
+				    if(p == 'S')
+					nsub++;
+				    k--;
+				    l--;
+				}
+				buf[m] = p;
+				m++;
+			    }
+			    /* Now reverse the transcript. */
+			    for(k = 0, l = --m; l >= nz; k++, l--)
+				buf[k] = buf[l];
+			    buf[++k] = '\0';
+			    COUNTS(i, j, 0) = nins;
+			    COUNTS(i, j, 1) = ndel;
+			    COUNTS(i, j, 2) = nsub;
+			    SET_STRING_ELT(trafos, i + nx * j, mkChar(buf));
 			}
-			COUNTS(i, j, 0) = nins;
-			COUNTS(i, j, 1) = ndel;
-			COUNTS(i, j, 2) = nsub;
-			SET_STRING_ELT(trafos, i + nx * j, mkChar(buf));
 			Free(paths);
 		    }
 		    Free(dists);
@@ -372,9 +382,12 @@ adist_full(SEXP x, SEXP y,
     return ans;
 }
 
+#define OFFSETS(I, J, K)	INTEGER(offsets)[I + J * nx + K * nxy]
+
 SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, ans, dim, dimnames, counts, names, elt;
+    SEXP x, y;
+    SEXP ans, counts, offsets, dimnames, names, elt;
     SEXP opt_cost_ins, opt_cost_del, opt_cost_sub;
     int opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
     int cost_ins, cost_del, cost_sub; 
@@ -387,7 +400,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regaparams_t params;
     regamatch_t match;
-    int rc, cflags = REG_EXTENDED | REG_NOSUB;
+    size_t nmatch;
+    regmatch_t *pmatch;
+
+    int rc, cflags = REG_EXTENDED;
 
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
@@ -422,10 +438,13 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 			  opt_counts));
 
     counts = R_NilValue;	/* -Wall */
+    offsets = R_NilValue;	/* -Wall */
 
     cost_ins = asInteger(opt_cost_ins);
     cost_del = asInteger(opt_cost_del);
     cost_sub = asInteger(opt_cost_sub);
+
+    if(!opt_counts) cflags |= REG_NOSUB;
 
     nx = length(x);
     ny = length(y);
@@ -477,11 +496,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = allocMatrix(REALSXP, nx, ny));
     if(opt_counts) {
-	PROTECT(dim = allocVector(INTSXP, 3));
-	INTEGER(dim)[0] = nx;
-	INTEGER(dim)[1] = ny;
-	INTEGER(dim)[2] = 3;
-	PROTECT(counts = allocArray(REALSXP, dim));
+	PROTECT(counts = alloc3DArray(INTSXP, nx, ny, 3));
+	PROTECT(offsets = alloc3DArray(INTSXP, nx, ny, 2));
     }
 
     /* wtransChar and translateChar can R_alloc */
@@ -493,8 +509,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		ANS(i, j) = NA_REAL;
 		if(opt_counts) {
 		    for(m = 0; m < 3; m++) {
-			COUNTS(i, j, m) = NA_REAL;
+			COUNTS(i, j, m) = NA_INTEGER;
 		    }
+		    OFFSETS(i, j, 0) = -1;
+		    OFFSETS(i, j, 1) = -1;
 		}
 	    }
 	} else {
@@ -517,6 +535,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		tre_regerror(rc, &reg, errbuf, 1001);
 		error(_("regcomp error:  '%s'"), errbuf);
 	    }
+	    if(opt_counts) {
+		nmatch = reg.re_nsub + 1;
+		pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
+	    }
 
 	    for(j = 0; j < ny; j++) {
 		elt = STRING_ELT(y, j);
@@ -524,14 +546,20 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ANS(i, j) = NA_REAL;
 		    if(opt_counts) {
 			for(m = 0; m < 3; m++) {
-			    COUNTS(i, j, m) = NA_REAL;
+			    COUNTS(i, j, m) = NA_INTEGER;
 			}
+			OFFSETS(i, j, 0) = -1;
+			OFFSETS(i, j, 1) = -1;
 		    }
 		}
 		else {
 		    /* Perform match. */
 		    /* undocumented, must be zeroed */
 		    memset(&match, 0, sizeof(match));
+		    if(opt_counts) {
+			match.nmatch = nmatch;
+			match.pmatch = pmatch;
+		    }
 		    if(useBytes)
 			rc = tre_regaexecb(&reg, CHAR(elt),
 					   &match, params, 0);
@@ -552,21 +580,27 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(rc == REG_OK) {
 			ANS(i, j) = (double) match.cost;
 			if(opt_counts) {
-			    COUNTS(i, j, 0) = (double) match.num_ins;
-			    COUNTS(i, j, 1) = (double) match.num_del;
-			    COUNTS(i, j, 2) = (double) match.num_subst;
+			    COUNTS(i, j, 0) = match.num_ins;
+			    COUNTS(i, j, 1) = match.num_del;
+			    COUNTS(i, j, 2) = match.num_subst;
+			    OFFSETS(i, j, 0) = match.pmatch[0].rm_so + 1;
+			    OFFSETS(i, j, 1) = match.pmatch[0].rm_eo;
 			}
 		    } else {
 			/* Should maybe check for REG_NOMATCH? */
 			ANS(i, j) = R_PosInf;
 			if(opt_counts) {
 			    for(m = 0; m < 3; m++) {
-				COUNTS(i, j, m) = NA_REAL;
+				COUNTS(i, j, m) = NA_INTEGER;
 			    }
+			    OFFSETS(i, j, 0) = -1;
+			    OFFSETS(i, j, 1) = -1;
 			}
 		    }
 		}
 	    }
+	    if(opt_counts)
+		free(pmatch);
 	    tre_regfree(&reg);
 	}
     }
@@ -591,6 +625,16 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dimnames, 2, names);
 	setAttrib(counts, R_DimNamesSymbol, dimnames);
 	setAttrib(ans, install("counts"), counts);
+	UNPROTECT(2);
+	PROTECT(dimnames = allocVector(VECSXP, 3));
+	PROTECT(names = allocVector(STRSXP, 2));
+	SET_STRING_ELT(names, 0, mkChar("first"));
+	SET_STRING_ELT(names, 1, mkChar("last"));
+	SET_VECTOR_ELT(dimnames, 0, x);
+	SET_VECTOR_ELT(dimnames, 1, y);
+	SET_VECTOR_ELT(dimnames, 2, names);
+	setAttrib(offsets, R_DimNamesSymbol, dimnames);
+	setAttrib(ans, install("offsets"), offsets);
 	UNPROTECT(4);
     }
 

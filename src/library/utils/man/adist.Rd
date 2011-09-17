@@ -47,12 +47,15 @@ adist(x, y = NULL, cost = NULL, counts = FALSE, fixed = TRUE,
   returned as the \code{"counts"} attribute of this matrix, as a
   3-dimensional array with dimensions corresponding to the elements of
   \code{x}, the elements of \code{y}, and the type of transformation
-  (insertions, deletions and substitutions), respectively.  If
-  transformations to full matches are computed, the transformation
-  sequences are also returned as the \code{"trafos"} attribute of the
-  return value, as character strings with elements \samp{M}, \samp{I},
-  \samp{D} and \samp{S} indicating a match, insertion, deletion and
-  substitution, respectively.
+  (insertions, deletions and substitutions), respectively.
+  Additionally, if \code{partial = FALSE}, the transformation sequences
+  are returned as the \code{"trafos"} attribute of the return value, as
+  character strings with elements \samp{M}, \samp{I}, \samp{D} and
+  \samp{S} indicating a match, insertion, deletion and substitution,
+  respectively.  If \code{partial = FALSE}, the offsets (positions of
+  the first and last element) of the matched substrings are returned as
+  the \code{"offsets"} attribute of the return value (with both offsets
+  \eqn{-1} in case of no match).
 }
 \details{
   The (generalized) Levenshtein (or edit) distance between two strings
