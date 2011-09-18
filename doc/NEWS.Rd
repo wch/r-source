@@ -384,7 +384,7 @@
       strings.
 
       \item Class \code{"raster"} gains an \code{is.na} method to avoid
-      confusion from the misuse of the matrix method (such as PR#14618).
+      confusion from the misuse of the matrix method (such as \PR{14618}).
 
       \item The \code{identical()} function gains an
       \code{ignore.bytecode} argument to control comparison of
