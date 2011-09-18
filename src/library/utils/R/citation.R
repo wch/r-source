@@ -243,7 +243,6 @@ function(x)
     ## length.
     zify <- function(pattern, x) {
         if(!length(x)) return(character())
-        browser()
         m <- gregexpr(pattern, x)
         regmatches(x, m) <-
             Map(strings, lapply(regmatches(x, m), nchar))
