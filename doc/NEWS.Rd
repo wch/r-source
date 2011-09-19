@@ -4,7 +4,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.13.1 patched}{
+\section{CHANGES IN R VERSION 2.13.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{mem.limits()} now reports values larger than the
