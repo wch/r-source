@@ -200,29 +200,44 @@
                                Sys.glob(file.path(pkgdir, "man", e, "*.Rd")),
                                Sys.glob(file.path(pkgdir, "man", e, "*.rd")))
             }
+            paths <- files
+            ## Use a partial Rd db if there is one.
+            ## In this case, files will become a list of paths or
+            ## preprocessed Rd objects to be passed to Rd2latex(), and
+            ## paths will contain the corresponding paths.
+            built_file <- file.path(pkgdir, "build", "partial.rdb")
+            if(file_test("-f", built_file)) {
+                db <- readRDS(built_file)
+                pos <- match(names(db), basename(paths), nomatch = 0L)
+                files <- as.list(files)
+                files[pos] <- db[pos > 0L]
+            }
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
             if (!silent) message("Converting Rd files to LaTeX ",
                                  appendLF = FALSE, domain = NA)
             cnt <- 0L
-            for(f in files) {
-#                cat("  ", basename(f), "\n", sep="")
+            for(i in seq_along(paths)) {
                 cnt <- cnt + 1L
-                if (!silent && cnt %% 10L == 0L)
-                    message(".", appendLF=FALSE, domain=NA)
-                out <-  sub("\\.[Rr]d$", ".tex", basename(f))
+                if(!silent && cnt %% 10L == 0L)
+                    message(".", appendLF = FALSE, domain = NA)
+                out <-  sub("\\.[Rr]d$", ".tex", basename(paths[i]))
                 outfilename <- file.path(latexdir, out)
-                res <- Rd2latex(f, outfilename,
-                                    stages = c("build", "install", "render"),
-                                    encoding = encoding,
-                                    outputEncoding = outputEncoding)
-                latexEncodings <- c(latexEncodings,
-                      attr(res,"latexEncoding"))
+                res <- Rd2latex(files[[i]], outfilename,
+                                stages = c("build", "install", "render"),
+                                encoding = encoding,
+                                outputEncoding = outputEncoding)
+                latexEncodings <-
+                    c(latexEncodings, attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
-                    graphicspath <- paste("\\graphicspath{{",
-                    		    normalizePath(file.path(dirname(f), "figures"), "/"),
-                    		    "/}}", sep="")
+                    graphicspath <-
+                        paste("\\graphicspath{{",
+                              normalizePath(file.path(dirname(paths[i]),
+                                                      "figures"),
+                                            "/"),
+                              "/}}",
+                              sep = "")
                     writeLines(c(graphicspath, lines), outfilename)
                     hasFigures <- TRUE
                 }
