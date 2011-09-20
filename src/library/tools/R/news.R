@@ -570,11 +570,27 @@ function(x)
         sapply(x, function(e) .Rd_get_text(e[[1L]]))
 
     do_chunk <- function(x) {
-        ## <FIXME>
-        ## This assumes that the chunk in essence is one \itemize list.
-        ## Should be safe to assume this for base R NEWS in Rd: for add
-        ## on packages we need to check ...
-        ## </FIXME>
+        ## Currently, chunks should consist of a single \itemize list
+        ## containing the news items.  Notify if there is more than one
+        ## such list, and stop if there is none.
+
+        pos <- which(RdTags(x) == "\\itemize")
+        if(!length(pos)) {
+            stop(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\itemize.",
+                          substring(sub("^[[:space:]]*", "",
+                                        .Rd_deparse(x)),
+                                    1L, 60L)),
+                 domain = NA)
+        } else if(length(pos) > 1L) {
+            warning(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains more than one \\itemize.\nUsing the first one.",
+                             substring(sub("^[[:space:]]*", "",
+                                           .Rd_deparse(x)),
+                                       1L, 60L)),
+                    domain = NA)
+            pos <- pos[1L]
+        }
+        x <- x[pos]
+        
         out <- NULL
         zz <- textConnection("out", "w", local = TRUE)
         on.exit(close(zz))
@@ -620,11 +636,7 @@ function(x)
                                                   function(e)
                                                   do_chunk(e[[2L]]))))
                            } else {
-                               pos <- which(RdTags(z) == "\\itemize")[1L]
-                               if(is.na(pos))
-                                   stop("Malformed NEWS.Rd file.")
-                               cbind(NA_character_,
-                                     do_chunk(z[pos]))
+                               cbind(NA_character_, do_chunk(z))
                            }
                        })))
 
