@@ -175,7 +175,6 @@
  R_ShowErrorMessages
  R_ShowFiles
  R_ShowWarnCalls
- R_SignalHandlers
  R_SrcfileSymbol
  R_Srcref
  R_SrcrefSymbol
