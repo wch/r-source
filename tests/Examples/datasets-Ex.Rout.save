@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-07-05 r56287)
+R Under development (unstable) (2011-09-22 r57041)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -757,18 +757,18 @@ Cumulative Var   0.147   0.285   0.384   0.471   0.503
 +         main = "InsectSprays data", varwidth = TRUE, col = "lightgray")
 > fm1 <- aov(count ~ spray, data = InsectSprays)
 > summary(fm1)
-            Df Sum Sq Mean Sq F value    Pr(>F)    
-spray        5 2668.8  533.77  34.702 < 2.2e-16 ***
-Residuals   66 1015.2   15.38                      
+            Df Sum Sq Mean Sq F value Pr(>F)    
+spray        5   2669   533.8    34.7 <2e-16 ***
+Residuals   66   1015    15.4                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 > plot(fm1)
 > fm2 <- aov(sqrt(count) ~ spray, data = InsectSprays)
 > summary(fm2)
-            Df Sum Sq Mean Sq F value    Pr(>F)    
-spray        5 88.438 17.6876  44.799 < 2.2e-16 ***
-Residuals   66 26.058  0.3948                      
+            Df Sum Sq Mean Sq F value Pr(>F)    
+spray        5  88.44  17.688    44.8 <2e-16 ***
+Residuals   66  26.06   0.395                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot(fm2)
@@ -1457,14 +1457,14 @@ Private Education   -0.293625 -0.0399168  0.000000  0.017388  0.000000
 > coplot(Drate ~ as.numeric(age) | gender * site, data = d.VAD,
 +        panel = panel.smooth, xlab = "VADeaths data - Given: gender")
 > summary(aov.VAD <- aov(Drate ~ .^2, data = d.VAD))
-            Df Sum Sq Mean Sq  F value    Pr(>F)    
-age          4 6288.5 1572.12 590.8576 8.555e-06 ***
-gender       1  647.5  647.52 243.3607 9.859e-05 ***
-site         1   76.8   76.83  28.8761  0.005793 ** 
-age:gender   4   86.2   21.55   8.0995  0.033577 *  
-age:site     4   42.5   10.63   3.9963  0.104141    
-gender:site  1   73.0   72.96  27.4216  0.006355 ** 
-Residuals    4   10.6    2.66                       
+            Df Sum Sq Mean Sq F value   Pr(>F)    
+age          4   6288  1572.1 590.858 8.55e-06 ***
+gender       1    648   647.5 243.361 9.86e-05 ***
+site         1     77    76.8  28.876  0.00579 ** 
+age:gender   4     86    21.6   8.100  0.03358 *  
+age:site     4     43    10.6   3.996  0.10414    
+gender:site  1     73    73.0  27.422  0.00636 ** 
+Residuals    4     11     2.7                     
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
@@ -2598,10 +2598,10 @@ Expt 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
 +      main = "Speed of Light Data", xlab = "Experiment No.")
 > fm <- aov(Speed ~ Run + Expt, data = morley)
 > summary(fm)
-            Df Sum Sq Mean Sq F value   Pr(>F)   
-Run         19 113344  5965.5  1.1053 0.363209   
-Expt         4  94514 23628.5  4.3781 0.003071 **
-Residuals   76 410166  5396.9                    
+            Df Sum Sq Mean Sq F value  Pr(>F)   
+Run         19 113344    5965   1.105 0.36321   
+Expt         4  94514   23629   4.378 0.00307 **
+Residuals   76 410166    5397                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > fm0 <- update(fm, . ~ . - Run)
@@ -3427,7 +3427,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.462 0.083 5.374 0 0 
+Time elapsed:  9.445 0.567 20.448 0 0 
 > grDevices::dev.off()
 null device 
           1 

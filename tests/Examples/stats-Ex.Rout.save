@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-08-09 r56693)
+R Under development (unstable) (2011-09-22 r57041)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1714,10 +1714,10 @@ Variances:
 > require(graphics)
 > 
 > summary(fm1 <- aov(breaks ~ wool + tension, data = warpbreaks))
-            Df Sum Sq Mean Sq F value   Pr(>F)   
-wool         1  450.7  450.67  3.3393 0.073614 . 
-tension      2 2034.3 1017.13  7.5367 0.001378 **
-Residuals   50 6747.9  134.96                    
+            Df Sum Sq Mean Sq F value  Pr(>F)   
+wool         1    451   450.7   3.339 0.07361 . 
+tension      2   2034  1017.1   7.537 0.00138 **
+Residuals   50   6748   135.0                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > TukeyHSD(fm1, "tension", ordered = TRUE)
@@ -2966,19 +2966,19 @@ Estimated effects are balanced
 > summary(npk.aovE)
 
 Error: block
-          Df  Sum Sq Mean Sq F value Pr(>F)
-N:P:K      1  37.002  37.002  0.4832 0.5252
-Residuals  4 306.293  76.573               
+          Df Sum Sq Mean Sq F value Pr(>F)
+N:P:K      1   37.0   37.00   0.483  0.525
+Residuals  4  306.3   76.57               
 
 Error: Within
-          Df  Sum Sq Mean Sq F value   Pr(>F)   
-N          1 189.282 189.282 12.2587 0.004372 **
-P          1   8.402   8.402  0.5441 0.474904   
-K          1  95.202  95.202  6.1657 0.028795 * 
-N:P        1  21.282  21.282  1.3783 0.263165   
-N:K        1  33.135  33.135  2.1460 0.168648   
-P:K        1   0.482   0.482  0.0312 0.862752   
-Residuals 12 185.287  15.441                    
+          Df Sum Sq Mean Sq F value  Pr(>F)   
+N          1 189.28  189.28  12.259 0.00437 **
+P          1   8.40    8.40   0.544 0.47490   
+K          1  95.20   95.20   6.166 0.02880 * 
+N:P        1  21.28   21.28   1.378 0.26317   
+N:K        1  33.14   33.14   2.146 0.16865   
+P:K        1   0.48    0.48   0.031 0.86275   
+Residuals 12 185.29   15.44                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > options(op)# reset to previous
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x38737f0>
+<environment: 0x103538908>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4762,7 +4762,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x57cdac0>
+<bytecode: 0x105ca2b58>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -6752,8 +6752,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x23af9f8>
-<environment: 0x728f580>
+<bytecode: 0x10352cf50>
+<environment: 0x108171940>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7155,7 +7155,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x899ebc8>
+<environment: 0x109a617f8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11532,26 +11532,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x23b61a0>
-<environment: 0x7cc4268>
+<bytecode: 0x10352f180>
+<environment: 0x105f263b8>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x23b6210>
-<environment: 0x7cc4268>
+<bytecode: 0x10352f1f0>
+<environment: 0x105f263b8>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x23b6280>
-<environment: 0x7cc4268>
+<bytecode: 0x10352f260>
+<environment: 0x105f263b8>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x23b6478>
-<environment: 0x7cc4268>
+<bytecode: 0x10352e478>
+<environment: 0x105f263b8>
 
 $name
 [1] "identity"
@@ -11562,14 +11562,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7cc59e0>
-<environment: 0x7cbc668>
+<bytecode: 0x105f272a0>
+<environment: 0x105f045c0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7cc5af8>
-<environment: 0x7cbc668>
+<bytecode: 0x105f273b8>
+<environment: 0x105f045c0>
 
 > 
 > 
@@ -14379,15 +14379,15 @@ Contrast 1
 Contrast 1 
   -1.26356 
 > summary(fit, split=list(B=1:2), expand.split = TRUE)
-            Df  Sum Sq Mean Sq F value   Pr(>F)   
-A            1  18.778  18.778  2.2208 0.146606   
-B            2  62.000  31.000  3.6662 0.037629 * 
-  B: C1      1   1.500   1.500  0.1774 0.676621   
-  B: C2      1  60.500  60.500  7.1551 0.011986 * 
-A:B          2  81.556  40.778  4.8226 0.015274 * 
-  A:B: C1    1  13.500  13.500  1.5966 0.216119   
-  A:B: C2    1  68.056  68.056  8.0486 0.008085 **
-Residuals   30 253.667   8.456                    
+            Df Sum Sq Mean Sq F value  Pr(>F)   
+A            1  18.78   18.78   2.221 0.14661   
+B            2  62.00   31.00   3.666 0.03763 * 
+  B: C1      1   1.50    1.50   0.177 0.67662   
+  B: C2      1  60.50   60.50   7.155 0.01199 * 
+A:B          2  81.56   40.78   4.823 0.01527 * 
+  A:B: C1    1  13.50   13.50   1.597 0.21612   
+  A:B: C2    1  68.06   68.06   8.049 0.00809 **
+Residuals   30 253.67    8.46                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > ## t.stat^2 is the F value on the A:B: C1 line (with Helmert contrasts)
@@ -15227,8 +15227,8 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<bytecode: 0x26590e0>
-<environment: 0x68f1e50>
+<bytecode: 0x10311e980>
+<environment: 0x109cb7228>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15363,54 +15363,54 @@ f.f1c  1.0 1.00    1 2.00  2.0 2.00    2 4.00  4.0  4.00     4  3.00   3.0
 + )
 > CC.aov <- aov(y ~ N * P, data = CC , weights = rep(12, 9))
 > summary(CC.aov)
-            Df  Sum Sq Mean Sq
-N            2 1016.67  508.33
-P            2  917.39  458.69
-N:P          4  399.28   99.82
+            Df Sum Sq Mean Sq
+N            2 1016.7   508.3
+P            2  917.4   458.7
+N:P          4  399.3    99.8
 > 
 > # Split both main effects into linear and quadratic parts.
 > summary(CC.aov, split = list(N = list(L = 1, Q = 2),
 +                              P = list(L = 1, Q = 2)))
-            Df  Sum Sq Mean Sq
-N            2 1016.67  508.33
-  N: L       1 1012.50 1012.50
-  N: Q       1    4.17    4.17
-P            2  917.39  458.69
-  P: L       1  917.35  917.35
-  P: Q       1    0.04    0.04
-N:P          4  399.28   99.82
-  N:P: L.L   1  184.08  184.08
-  N:P: Q.L   1  152.11  152.11
-  N:P: L.Q   1   49.00   49.00
-  N:P: Q.Q   1   14.08   14.08
+            Df Sum Sq Mean Sq
+N            2 1016.7   508.3
+  N: L       1 1012.5  1012.5
+  N: Q       1    4.2     4.2
+P            2  917.4   458.7
+  P: L       1  917.3   917.3
+  P: Q       1    0.0     0.0
+N:P          4  399.3    99.8
+  N:P: L.L   1  184.1   184.1
+  N:P: Q.L   1  152.1   152.1
+  N:P: L.Q   1   49.0    49.0
+  N:P: Q.Q   1   14.1    14.1
 > 
 > # Split only the interaction
 > summary(CC.aov, split = list("N:P" = list(L.L = 1, Q = 2:4)))
-            Df  Sum Sq Mean Sq
-N            2 1016.67  508.33
-P            2  917.39  458.69
-N:P          4  399.28   99.82
-  N:P: L.L   1  184.08  184.08
-  N:P: Q     3  215.19   71.73
+            Df Sum Sq Mean Sq
+N            2 1016.7   508.3
+P            2  917.4   458.7
+N:P          4  399.3    99.8
+  N:P: L.L   1  184.1   184.1
+  N:P: Q     3  215.2    71.7
 > 
 > # split on just one var
 > summary(CC.aov, split = list(P = list(lin = 1, quad = 2)))
-            Df  Sum Sq Mean Sq
-N            2 1016.67  508.33
-P            2  917.39  458.69
-  P: lin     1  917.35  917.35
-  P: quad    1    0.04    0.04
-N:P          4  399.28   99.82
-  N:P: lin   2  336.19  168.10
-  N:P: quad  2   63.08   31.54
+            Df Sum Sq Mean Sq
+N            2 1016.7   508.3
+P            2  917.4   458.7
+  P: lin     1  917.3   917.3
+  P: quad    1    0.0     0.0
+N:P          4  399.3    99.8
+  N:P: lin   2  336.2   168.1
+  N:P: quad  2   63.1    31.5
 > summary(CC.aov, split = list(P = list(lin = 1, quad = 2)),
 +         expand.split=FALSE)
-            Df  Sum Sq Mean Sq
-N            2 1016.67  508.33
-P            2  917.39  458.69
-  P: lin     1  917.35  917.35
-  P: quad    1    0.04    0.04
-N:P          4  399.28   99.82
+            Df Sum Sq Mean Sq
+N            2 1016.7   508.3
+P            2  917.4   458.7
+  P: lin     1  917.3   917.3
+  P: quad    1    0.0     0.0
+N:P          4  399.3    99.8
 > 
 > 
 > cleanEx()
@@ -17451,7 +17451,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.537 0.446 29.354 0 0 
+Time elapsed:  38.927 2.34 81.39 0 0 
 > grDevices::dev.off()
 null device 
           1 

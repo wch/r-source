@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-09-04 r56935)
+R Under development (unstable) (2011-09-22 r57041)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -1841,10 +1841,10 @@ armed.forces
 > 
 > Form <- breaks ~ wool + tension
 > summary(fm1 <- aov(Form, data = warpbreaks))
-            Df Sum Sq Mean Sq F value   Pr(>F)   
-wool         1  450.7  450.67  3.3393 0.073614 . 
-tension      2 2034.3 1017.13  7.5367 0.001378 **
-Residuals   50 6747.9  134.96                    
+            Df Sum Sq Mean Sq F value  Pr(>F)   
+wool         1    451   450.7   3.339 0.07361 . 
+tension      2   2034  1017.1   7.537 0.00138 **
+Residuals   50   6748   135.0                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot.design(       Form, data = warpbreaks, col = 2)# same as above
@@ -1989,7 +1989,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1031baf78>
+<bytecode: 0x1031bf6a0>
 <environment: namespace:graphics>
 > 
 > 
@@ -2896,7 +2896,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x10377cb90>
+<bytecode: 0x1031f3060>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2976,7 +2976,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.04 0.987 13.322 0 0 
+Time elapsed:  16.771 1.486 28.634 0 0 
 > grDevices::dev.off()
 null device 
           1 

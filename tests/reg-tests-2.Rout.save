@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-08-08 r56659)
+R Under development (unstable) (2011-09-22 r57041)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3735,12 +3735,12 @@ f1:f2  2 100371   50185
 
 Error: subject:f1
       Df Sum Sq Mean Sq
-f1     2 483.96  241.98
-f1:f2  4 869.69  217.42
+f1     2  484.0   242.0
+f1:f2  4  869.7   217.4
 
 Error: Within
           Df Sum Sq Mean Sq F value Pr(>F)
-Residuals 42  29204  695.34               
+Residuals 42  29204   695.3               
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
 Warning message:
 In aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) :
@@ -3790,12 +3790,12 @@ f1:f2  2 100371   50185
 
 Error: subject:f1
       Df Sum Sq Mean Sq
-f1     2 483.96  241.98
-f1:f2  4 869.69  217.42
+f1     2  484.0   242.0
+f1:f2  4  869.7   217.4
 
 Error: Within
           Df Sum Sq Mean Sq F value Pr(>F)
-Residuals 42  29204  695.34               
+Residuals 42  29204   695.3               
 > ## failed in 1.8.1
 > 
 > 
@@ -6369,15 +6369,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x026d3014> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x1037f5120> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x026e31c8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x10393a958> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x026e31c8> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x10393a958> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 

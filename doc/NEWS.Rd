@@ -588,6 +588,10 @@
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
+      
+      \item \code{install.packages()} puts it cache files in
+      subdirectories to avoid vary rare problems with excessively long
+      path names.  (\PR{14699})
     }
   }
 
@@ -774,6 +778,11 @@
       \item The parser no longer accepts the digit \code{8} in an octal
       character code in a string, nor does it accept unterminated
       strings in a file.  (Reported by Bill Dunlap.)
+      
+      \item The \code{print()} method for class \code{"summary.aov"} did
+      not pass on argument \code{digits} when \code{summary()} was
+      called on a single object, and hence used more digits than
+      documented.
     }
   }
 }

@@ -57,17 +57,17 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                 on.exit(unlink(tmpf))
                 op <- options("warn")
                 options(warn = -1)
-                
+
                 ## Two kinds of errors can happen:  PACKAGES.gz may not exist,
-                ## or a junk error page that is not a valid dcf file may be 
+                ## or a junk error page that is not a valid dcf file may be
                 ## returned.  Handle both...
-                
+
                 ## This is a binary file
                 z <- tryCatch(download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
                                             destfile = tmpf, method = method,
                                             cacheOK = FALSE, quiet = TRUE, mode = "wb"),
                               error = identity)
-		if(!inherits(z, "error")) 
+		if(!inherits(z, "error"))
 		    z <- res0 <- tryCatch(read.dcf(file = tmpf), error = identity)
                 if(inherits(z, "error")) {
                     ## read.dcf is going to interpret CRLF as LF, so use
@@ -84,7 +84,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
 			next
 		    }
 		    res0 <- read.dcf(file = tmpf)
-		} else 
+		} else
 		    options(op)
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 saveRDS(res0, dest, compress = TRUE)
@@ -500,10 +500,10 @@ installed.packages <-
     fields <- .instPkgFields(fields)
     retval <- matrix(character(0), 0L, 2L + length(fields))
     for(lib in lib.loc) {
-	dest <- file.path(tempdir(),
-			  paste("libloc_", URLencode(lib, TRUE),
-				paste(fields, collapse=","), ".rds",
-				sep=""))
+        dest.dir <- file.path(tempdir(), "libloc_", lib)
+        dest <- file.path(dest.dir,
+                          paste(paste(fields, collapse=","), ".rds", sep=""))
+        if (!file.exists(dest.dir)) dir.create(dest.dir, recursive=TRUE)
 	if(!noCache && file.exists(dest) &&
 	    file.info(dest)$mtime > file.info(lib)$mtime) {
 	    ## use the cache file
@@ -913,4 +913,3 @@ function(pkgs, available, dependencies = c("Depends", "Imports", "LinkingTo"))
     }
     done
 }
-

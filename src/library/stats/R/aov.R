@@ -381,11 +381,11 @@ summary.aov <- function(object, intercept = FALSE, split,
 
 print.summary.aov <-
     function(x, digits = max(3, getOption("digits") - 3), symbolic.cor = FALSE,
-             signif.stars= getOption("show.signif.stars"),	...)
+             signif.stars = getOption("show.signif.stars"),	...)
 {
-    ## don't pass down digits for back-compatibility
     if (length(x) == 1L)
-        print(x[[1L]], symbolic.cor = symbolic.cor, signif.stars = signif.stars)
+        print(x[[1L]], digits = digits, symbolic.cor = symbolic.cor,
+              signif.stars = signif.stars)
     else NextMethod()
     if(nzchar(mess <- naprint(attr(x, "na.action")))) cat(mess, "\n", sep="")
     invisible(x)
