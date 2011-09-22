@@ -148,6 +148,8 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         ## </FIXME>
     }
 
+    ## fix up possible overshoot (PR#14671)
+    PVAL <- min(1.0, max(0.0, PVAL))
     RVAL <- list(statistic = STATISTIC,
                  p.value = PVAL,
                  alternative = nm_alternative,
