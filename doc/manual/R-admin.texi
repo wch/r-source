@@ -2790,9 +2790,10 @@ specified by @option{--with-system-zlib} (version 1.2.3 or later, but
 beware that bugs have been found with 1.2.4 and 1.2.5, and these should
 not be used on 32-bit Linux systems with LFS),
 @option{--with-system-bzlib} or @option{--with-system-pcre} (version
-8.13 or later): otherwise versions in the @R{} sources will be compiled
-in.  As the latter suffice and are tested with @R{} you should not need
-to change this.
+8.13 or later: earlier versions will give incorrect results since a
+non-API function is used in @R{}): otherwise versions in the @R{}
+sources will be compiled in.  As the latter suffice and are tested with
+@R{} you should not need to change this.
 
 @code{liblzma} from @code{xz-utils} version 4.999 or later (preferably
 5.0.0 or later) will be used if installed: the version in the @R{}
