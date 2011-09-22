@@ -906,6 +906,13 @@
       \item  \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
       \code{parse_Rd(fragment=FALSE)} to allow Rd section-level macros
       to be inserted.
+      
+      \item The \code{print()} method for class \code{"summary.aov"} did
+      not pass on arguments such as \code{signif.stars} when
+      \code{summary()} was called on a single object.  (\PR{14684})
+
+      \item In rare cases \code{ks.test()} could return a p-value
+      very slightly less than 0 by rounding error.  (\PR{14671})
     }
   }
 }
