@@ -61,6 +61,9 @@ names(x) <- value
   For a one-dimensional array the \code{names} attribute really is
   \code{\link{dimnames}[[1]]}.
 }
+\seealso{
+  \code{\link{slotNames}}, \code{\link{dimnames}}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
