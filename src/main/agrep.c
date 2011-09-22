@@ -27,6 +27,8 @@
 #endif
 
 #include <Defn.h>
+/* This is remapped */
+#undef pmatch 
 
 #include <R_ext/RS.h>		/* for Calloc/Free */
 
@@ -201,7 +203,7 @@ adist_full(SEXP x, SEXP y,
 	   double cost_ins, double cost_del, double cost_sub,
 	   Rboolean opt_counts)
 {
-    SEXP ans, counts, trafos, dimnames, names;
+    SEXP ans, counts, trafos = R_NilValue /* -Wall */, dimnames, names;
     double *dists, d, d_ins, d_del, d_sub;
     char *paths = NULL, p, *buf = NULL;
     int i, j, k, l, m, nx, ny, nxy, *xi, *yj, nxi, nyj, nr, nc, nz;
@@ -400,8 +402,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regaparams_t params;
     regamatch_t match;
-    size_t nmatch;
-    regmatch_t *pmatch;
+    size_t nmatch = 0 /* -Wall */;
+    regmatch_t *pmatch = NULL; /* -Wall */
 
     int rc, cflags = REG_EXTENDED;
 
