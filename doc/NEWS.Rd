@@ -589,8 +589,8 @@
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
       
-      \item \code{install.packages()} puts it cache files in
-      subdirectories to avoid vary rare problems with excessively long
+      \item \code{install.packages()} puts its cache files in
+      subdirectories to avoid very rare problems with excessively long
       path names.  (\PR{14699})
     }
   }
