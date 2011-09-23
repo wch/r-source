@@ -500,7 +500,9 @@ installed.packages <-
     fields <- .instPkgFields(fields)
     retval <- matrix(character(0), 0L, 2L + length(fields))
     for(lib in lib.loc) {
-        dest.dir <- file.path(tempdir(), "libloc_", lib)
+        ## Need URLencode for e.g. Windows paths with drives
+        ## Split into two components to workaround very long file names.
+        dest.dir <- file.path(tempdir(), "libloc_",  URLencode(lib, TRUE))
         dest <- file.path(dest.dir,
                           paste(paste(fields, collapse=","), ".rds", sep=""))
         if (!file.exists(dest.dir)) dir.create(dest.dir, recursive=TRUE)
