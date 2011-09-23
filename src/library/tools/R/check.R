@@ -2001,9 +2001,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## this is tailored to the FreeBSD/Linux 'file',
         ## see http://www.darwinsys.com/file/
         ## (Solaris has a different 'file' without --version)
-        ## Most systems are now on 5.03, but Mac OS 10.5 is 4.17
-        ## version 4.21 writes to stdout, 4.23 to stderr
-        ## and sets an error status code
+        ## Most systems are now on 5.03/7, but Mac OS 10.5 is 4.17
+        ## version 4.21 writes to stdout,
+        ## 4.23 to stderr and sets an error status code
         lines <- suppressWarnings(tryCatch(system2("file", "--version", TRUE, TRUE), error = function(e) "error"))
         ## a reasonable check -- it does not identify itself well
         have_free_file <-
@@ -2863,8 +2863,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             next
         }
         pkgoutdir <- file.path(outdir, paste(pkgname0, "Rcheck", sep = "."))
-        if (clean && dir.exists(pkgoutdir))
+        if (clean && dir.exists(pkgoutdir)) {
             unlink(pkgoutdir, recursive = TRUE)
+            if(WINDOWS) Sys.sleep(0.5) # allow for antivirus interference
+        }
         dir.create(pkgoutdir, mode = "0755")
         if (!dir.exists(pkgoutdir)) {
             message(sprintf("ERROR: cannot create check dir %s", sQuote(pkgoutdir)))
