@@ -139,6 +139,10 @@
 
       \item In rare cases \code{ks.test()} could return a p-value
       very slightly less than 0 by rounding error.  (\PR{14671})
+      
+      \item If \code{trunc()} was called on a \code{"POSIXlt"} vector
+      and the result was subsetted, all but the first element was
+      converted to \code{NA}.  (\PR{14679}) 
     }
   }
 }
