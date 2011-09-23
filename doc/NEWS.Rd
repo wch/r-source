@@ -787,7 +787,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.13.1 patched}{
+\section{CHANGES IN R VERSION 2.13.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{mem.limits()} now reports values larger than the
@@ -922,6 +922,10 @@
 
       \item In rare cases \code{ks.test()} could return a p-value
       very slightly less than 0 by rounding error.  (\PR{14671})
+      
+      \item If \code{trunc()} was called on a \code{"POSIXlt"} vector
+      and the result was subsetted, all but the first element was
+      converted to \code{NA}.  (\PR{14679}) 
     }
   }
 }
@@ -969,7 +973,7 @@
       \item \code{vector()} and its wrappers such as \code{integer()}
       and \code{double()} now warn if called with a \code{length}
       argument of more than one element.  This helps track down user
-      errors such as calling \code{double(x)} instead of
+      Prints such as calling \code{double(x)} instead of
       \code{as.double(x)}.
     }
   }
