@@ -973,7 +973,7 @@
       \item \code{vector()} and its wrappers such as \code{integer()}
       and \code{double()} now warn if called with a \code{length}
       argument of more than one element.  This helps track down user
-      Prints such as calling \code{double(x)} instead of
+      errors such as calling \code{double(x)} instead of
       \code{as.double(x)}.
     }
   }
