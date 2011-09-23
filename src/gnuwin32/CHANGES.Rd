@@ -62,6 +62,10 @@
 
       \item \code{R CMD INSTALL} preserves the package-directory
       modification time when it restores an earlier install of the package.
+
+      \item File extensions \code{.xz}, \code{.rda} and \code{.RData}
+      have been added to those which default to binary transfer for
+      \code{download.file()}.
     }
   }
 
