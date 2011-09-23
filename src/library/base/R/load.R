@@ -61,7 +61,7 @@ save <- function(..., list = character(),
 
     names <- as.character( substitute( list(...)))[-1L]
     list<- c(list, names)
-    if (! is.null(version) && version == 1)
+    if (!is.null(version) && version == 1)
         invisible(.Internal(save(list, file, ascii, version, envir,
                                  eval.promises)))
     else {
@@ -80,29 +80,39 @@ save <- function(..., list = character(),
             }
         }
         if (is.character(file)) {
-            if (file == "") stop("'file' must be non-empty string")
-            con <- if (identical(compress, "bzip2")) {
-                if (!missing(compression_level))
-                    bzfile(file, "wb", compression = compression_level)
-                else bzfile(file, "wb")
-            } else if (identical(compress, "xz")) {
-                if (!missing(compression_level))
-                    xzfile(file, "wb", compression = compression_level)
-                else xzfile(file, "wb", compression = 9)
-            } else if (identical(compress, "gzip") || compress) {
-                if (!missing(compression_level))
-                    gzfile(file, "wb", compression = compression_level)
-                else gzfile(file, "wb")
-            } else file(file, "wb")
-            on.exit(close(con))
-        }
-        else if (inherits(file, "connection"))
-            con <- file
-        else stop("bad file argument")
-        if(isOpen(con) && summary(con)$text != "binary")
-            stop("can only save to a binary connection")
-        invisible(.Internal(saveToConn(list, con, ascii, version, envir,
-                                       eval.promises)))
+	    if(!nzchar(file)) stop("'file' must be non-empty string")
+	    if(!is.character(compress)) {
+		if(!is.logical(compress))
+		    stop("'compress' must be logical or character")
+		compress <- if(compress) "gzip" else "no compression"
+	    }
+	    con <- switch(compress,
+			  "bzip2" = {
+			      if (!missing(compression_level))
+				  bzfile(file, "wb", compression = compression_level)
+			      else bzfile(file, "wb")
+			  }, "xz" = {
+			      if (!missing(compression_level))
+				  xzfile(file, "wb", compression = compression_level)
+			      else xzfile(file, "wb", compression = 9)
+			  }, "gzip" = {
+			      if (!missing(compression_level))
+				  gzfile(file, "wb", compression = compression_level)
+			      else gzfile(file, "wb")
+			  },
+			  "no compression" = file(file, "wb"),
+
+			  ## otherwise:
+			  stop(gettextf("'compress = \"%s\"' is invalid", compress)))
+	    on.exit(close(con))
+	}
+	else if (inherits(file, "connection"))
+	    con <- file
+	else stop("bad file argument")
+	if(isOpen(con) && summary(con)$text != "binary")
+	    stop("can only save to a binary connection")
+	invisible(.Internal(saveToConn(list, con, ascii, version, envir,
+				       eval.promises)))
     }
 }
 
