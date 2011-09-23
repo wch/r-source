@@ -208,7 +208,7 @@ str.default <-
 		   nest.lev = nest.lev + 1)
 	    cat(indent.str, "and ", length(meths), " methods,", sep="")
 	    if(length(oMeths)) {
-		cat(" of which ", length(oMeths), " possibly relevant:\n")
+		cat(" of which", length(oMeths), "are possibly relevant:\n")
 		cat(strwrap(paste(oMeths, collapse=", "),
 			    indent = 2, exdent = 2,
 			    prefix = indent.str, width=width),# exdent = nind),
