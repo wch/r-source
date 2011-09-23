@@ -208,11 +208,14 @@ str.default <-
 		   nest.lev = nest.lev + 1)
 	    cat(indent.str, "and ", length(meths), " methods,", sep="")
 	    if(length(oMeths)) {
-		cat(" of which", length(oMeths), "are possibly relevant:\n")
-		cat(strwrap(paste(oMeths, collapse=", "),
-			    indent = 2, exdent = 2,
-			    prefix = indent.str, width=width),# exdent = nind),
-		    sep="\n")
+		cat(" of which ", length(oMeths), " possibly relevant")
+		if (is.na(max.level) || nest.lev < max.level)
+		    cat(":",
+			strwrap(paste(oMeths, collapse=", "),
+				indent = 2, exdent = 2,
+				prefix = indent.str, width=width),# exdent = nind),
+			sep="\n")
+		else cat("\n")
 	    }
 	    if(length(sNms)) {
 		cat(" and", length(sNms), "slots\n")
