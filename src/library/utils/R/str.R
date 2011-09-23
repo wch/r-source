@@ -208,7 +208,7 @@ str.default <-
 		   nest.lev = nest.lev + 1)
 	    cat(indent.str, "and ", length(meths), " methods,", sep="")
 	    if(length(oMeths)) {
-		cat(" of which ", length(oMeths), " possibly relevant")
+		cat(" of which", length(oMeths), "are possibly relevant")
 		if (is.na(max.level) || nest.lev < max.level)
 		    cat(":",
 			strwrap(paste(oMeths, collapse=", "),
