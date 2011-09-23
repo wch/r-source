@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:23+0100\n"
+"POT-Creation-Date: 2011-09-23 12:18+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -114,115 +114,115 @@ msgstr "problema ao mostrar '%ls'"
 #: src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:545 src/gnuwin32/extra.c:585
 #: src/gnuwin32/extra.c:772 src/gnuwin32/extra.c:856 src/gnuwin32/extra.c:859
 #: src/gnuwin32/extra.c:864 src/gnuwin32/extra.c:1656
-#: src/gnuwin32/extra.c:1681 src/main/agrep.c:73 src/main/agrep.c:76
-#: src/main/agrep.c:245 src/main/agrep.c:248 src/main/apply.c:278
-#: src/main/apply.c:280 src/main/apply.c:283 src/main/array.c:86
-#: src/main/array.c:1100 src/main/array.c:1232 src/main/array.c:1234
-#: src/main/array.c:1235 src/main/attrib.c:192 src/main/builtin.c:74
-#: src/main/builtin.c:83 src/main/builtin.c:102 src/main/builtin.c:104
-#: src/main/builtin.c:133 src/main/builtin.c:521 src/main/builtin.c:537
-#: src/main/builtin.c:720 src/main/builtin.c:722 src/main/builtin.c:724
-#: src/main/character.c:131 src/main/character.c:134 src/main/character.c:195
-#: src/main/character.c:1022 src/main/character.c:1026
-#: src/main/character.c:1259 src/main/character.c:1263
-#: src/main/character.c:1320 src/main/character.c:1323
-#: src/main/connections.c:961 src/main/connections.c:967
-#: src/main/connections.c:970 src/main/connections.c:974
-#: src/main/connections.c:1112 src/main/connections.c:1128
-#: src/main/connections.c:1133 src/main/connections.c:1734
-#: src/main/connections.c:1740 src/main/connections.c:1744
-#: src/main/connections.c:1748 src/main/connections.c:1753
-#: src/main/connections.c:2403 src/main/connections.c:2408
-#: src/main/connections.c:2411 src/main/connections.c:2414
-#: src/main/connections.c:2786 src/main/connections.c:2791
-#: src/main/connections.c:2797 src/main/connections.c:2800
-#: src/main/connections.c:2804 src/main/connections.c:2819
-#: src/main/connections.c:2869 src/main/connections.c:2874
-#: src/main/connections.c:2878 src/main/connections.c:2882
-#: src/main/connections.c:2886 src/main/connections.c:2892
-#: src/main/connections.c:2939 src/main/connections.c:2945
-#: src/main/connections.c:2949 src/main/connections.c:2999
-#: src/main/connections.c:3002 src/main/connections.c:3268
-#: src/main/connections.c:3271 src/main/connections.c:3274
-#: src/main/connections.c:3374 src/main/connections.c:3380
-#: src/main/connections.c:3383 src/main/connections.c:3534
-#: src/main/connections.c:3537 src/main/connections.c:3541
-#: src/main/connections.c:3544 src/main/connections.c:3664
-#: src/main/connections.c:3782 src/main/connections.c:3785
-#: src/main/connections.c:4121 src/main/connections.c:4146
-#: src/main/connections.c:4179 src/main/connections.c:4193
-#: src/main/connections.c:4201 src/main/connections.c:4227
-#: src/main/connections.c:4368 src/main/connections.c:4372
-#: src/main/connections.c:4497 src/main/connections.c:4499
-#: src/main/connections.c:4501 src/main/connections.c:4529
-#: src/main/connections.c:4659 src/main/connections.c:4685
-#: src/main/connections.c:4689 src/main/connections.c:4693
-#: src/main/connections.c:4697 src/main/context.c:597 src/main/context.c:606
-#: src/main/context.c:610 src/main/datetime.c:715 src/main/datetime.c:795
-#: src/main/datetime.c:797 src/main/datetime.c:801 src/main/datetime.c:960
-#: src/main/datetime.c:962 src/main/datetime.c:1126 src/main/debug.c:223
-#: src/main/deparse.c:360 src/main/devices.c:583 src/main/dotcode.c:738
-#: src/main/dotcode.c:742 src/main/dotcode.c:747 src/main/dounzip.c:320
-#: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
-#: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1543
-#: src/main/envir.c:1546 src/main/envir.c:1663 src/main/envir.c:1668
-#: src/main/envir.c:1734 src/main/envir.c:1750 src/main/envir.c:1756
-#: src/main/envir.c:1856 src/main/envir.c:1864 src/main/envir.c:1871
-#: src/main/envir.c:1885 src/main/envir.c:1891 src/main/envir.c:1895
-#: src/main/envir.c:2112 src/main/envir.c:2233 src/main/envir.c:2492
-#: src/main/envir.c:2699 src/main/envir.c:2713 src/main/envir.c:2720
-#: src/main/envir.c:2736 src/main/envir.c:3299 src/main/errors.c:937
-#: src/main/eval.c:268 src/main/eval.c:2041 src/main/eval.c:2070
-#: src/main/eval.c:2074 src/main/grep.c:758 src/main/grep.c:763
-#: src/main/grep.c:1037 src/main/grep.c:1039 src/main/grep.c:1041
-#: src/main/grep.c:1485 src/main/grep.c:1489 src/main/grep.c:1494
-#: src/main/grep.c:2282 src/main/grep.c:2287 src/main/grep.c:2559
-#: src/main/grep.c:2564 src/main/memory.c:3375 src/main/model.c:1610
-#: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
-#: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
-#: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
-#: src/main/paste.c:400 src/main/paste.c:408 src/main/paste.c:574
-#: src/main/paste.c:579 src/main/platform.c:296 src/main/platform.c:298
-#: src/main/platform.c:300 src/main/platform.c:316 src/main/platform.c:327
-#: src/main/platform.c:449 src/main/platform.c:451 src/main/platform.c:726
-#: src/main/platform.c:728 src/main/platform.c:1092 src/main/platform.c:1098
-#: src/main/platform.c:1101 src/main/platform.c:1104 src/main/platform.c:1107
-#: src/main/platform.c:1110 src/main/platform.c:1113 src/main/platform.c:1212
-#: src/main/platform.c:1215 src/main/platform.c:1218 src/main/platform.c:1257
-#: src/main/platform.c:1314 src/main/platform.c:1317 src/main/platform.c:1479
-#: src/main/platform.c:1482 src/main/platform.c:1485 src/main/platform.c:1521
-#: src/main/platform.c:1524 src/main/platform.c:1527 src/main/platform.c:1610
-#: src/main/platform.c:1625 src/main/platform.c:1662 src/main/platform.c:1664
-#: src/main/platform.c:1729 src/main/platform.c:1813 src/main/platform.c:2088
-#: src/main/platform.c:2134 src/main/platform.c:2264 src/main/platform.c:2267
-#: src/main/platform.c:2270 src/main/platform.c:2273 src/main/platform.c:2276
-#: src/main/platform.c:2409 src/main/platform.c:2412 src/main/platform.c:2415
-#: src/main/platform.c:2418 src/main/platform.c:2421 src/main/platform.c:2490
-#: src/main/platform.c:2498 src/main/platform.c:2534 src/main/platform.c:2584
-#: src/main/plot.c:3104 src/main/plot.c:4241 src/main/plot.c:4245
-#: src/main/plot.c:4248 src/main/plot3d.c:2435 src/main/plot3d.c:2439
-#: src/main/plot3d.c:2444 src/main/plot3d.c:2448 src/main/plot3d.c:2452
-#: src/main/plot3d.c:2456 src/main/print.c:236 src/main/print.c:242
-#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
-#: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
-#: src/main/saveload.c:1937 src/main/saveload.c:1940 src/main/saveload.c:1943
-#: src/main/saveload.c:2059 src/main/saveload.c:2239 src/main/saveload.c:2244
-#: src/main/saveload.c:2247 src/main/saveload.c:2350 src/main/scan.c:663
-#: src/main/scan.c:830 src/main/scan.c:843 src/main/scan.c:847
-#: src/main/scan.c:849 src/main/scan.c:860 src/main/scan.c:887
-#: src/main/scan.c:890 src/main/scan.c:943 src/main/scan.c:980
-#: src/main/scan.c:984 src/main/scan.c:994 src/main/scan.c:1208
-#: src/main/scan.c:1434 src/main/scan.c:1485 src/main/scan.c:1497
-#: src/main/scan.c:1501 src/main/scan.c:1507 src/main/scan.c:1723
-#: src/main/scan.c:1724 src/main/scan.c:1726 src/main/scan.c:1727
-#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
-#: src/main/scan.c:1731 src/main/seq.c:381 src/main/seq.c:388
-#: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
-#: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
-#: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
-#: src/main/sysutils.c:1612 src/main/sysutils.c:1616 src/main/unique.c:822
-#: src/main/unique.c:1102 src/main/unique.c:1162 src/main/unique.c:1169
-#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1768
+#: src/gnuwin32/extra.c:1681 src/main/agrep.c:78 src/main/agrep.c:81
+#: src/main/apply.c:278 src/main/apply.c:280 src/main/apply.c:283
+#: src/main/array.c:86 src/main/array.c:1100 src/main/array.c:1232
+#: src/main/array.c:1234 src/main/array.c:1235 src/main/attrib.c:192
+#: src/main/builtin.c:74 src/main/builtin.c:83 src/main/builtin.c:102
+#: src/main/builtin.c:104 src/main/builtin.c:133 src/main/builtin.c:521
+#: src/main/builtin.c:537 src/main/builtin.c:720 src/main/builtin.c:722
+#: src/main/builtin.c:724 src/main/character.c:131 src/main/character.c:134
+#: src/main/character.c:195 src/main/character.c:1022
+#: src/main/character.c:1026 src/main/character.c:1259
+#: src/main/character.c:1263 src/main/character.c:1320
+#: src/main/character.c:1323 src/main/connections.c:961
+#: src/main/connections.c:967 src/main/connections.c:970
+#: src/main/connections.c:974 src/main/connections.c:1112
+#: src/main/connections.c:1128 src/main/connections.c:1133
+#: src/main/connections.c:1734 src/main/connections.c:1740
+#: src/main/connections.c:1744 src/main/connections.c:1748
+#: src/main/connections.c:1753 src/main/connections.c:2403
+#: src/main/connections.c:2408 src/main/connections.c:2411
+#: src/main/connections.c:2414 src/main/connections.c:2786
+#: src/main/connections.c:2791 src/main/connections.c:2797
+#: src/main/connections.c:2800 src/main/connections.c:2804
+#: src/main/connections.c:2819 src/main/connections.c:2869
+#: src/main/connections.c:2874 src/main/connections.c:2878
+#: src/main/connections.c:2882 src/main/connections.c:2886
+#: src/main/connections.c:2892 src/main/connections.c:2939
+#: src/main/connections.c:2945 src/main/connections.c:2949
+#: src/main/connections.c:2999 src/main/connections.c:3002
+#: src/main/connections.c:3268 src/main/connections.c:3271
+#: src/main/connections.c:3274 src/main/connections.c:3374
+#: src/main/connections.c:3380 src/main/connections.c:3383
+#: src/main/connections.c:3534 src/main/connections.c:3537
+#: src/main/connections.c:3541 src/main/connections.c:3544
+#: src/main/connections.c:3664 src/main/connections.c:3782
+#: src/main/connections.c:3785 src/main/connections.c:4121
+#: src/main/connections.c:4146 src/main/connections.c:4179
+#: src/main/connections.c:4193 src/main/connections.c:4201
+#: src/main/connections.c:4227 src/main/connections.c:4368
+#: src/main/connections.c:4372 src/main/connections.c:4497
+#: src/main/connections.c:4499 src/main/connections.c:4501
+#: src/main/connections.c:4529 src/main/connections.c:4659
+#: src/main/connections.c:4685 src/main/connections.c:4689
+#: src/main/connections.c:4693 src/main/connections.c:4697
+#: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
+#: src/main/datetime.c:715 src/main/datetime.c:795 src/main/datetime.c:797
+#: src/main/datetime.c:801 src/main/datetime.c:960 src/main/datetime.c:962
+#: src/main/datetime.c:1126 src/main/debug.c:223 src/main/deparse.c:360
+#: src/main/devices.c:583 src/main/dotcode.c:738 src/main/dotcode.c:742
+#: src/main/dotcode.c:747 src/main/dounzip.c:320 src/main/dounzip.c:327
+#: src/main/dounzip.c:337 src/main/dounzip.c:342 src/main/dounzip.c:346
+#: src/main/dounzip.c:350 src/main/envir.c:1543 src/main/envir.c:1546
+#: src/main/envir.c:1663 src/main/envir.c:1668 src/main/envir.c:1734
+#: src/main/envir.c:1750 src/main/envir.c:1756 src/main/envir.c:1856
+#: src/main/envir.c:1864 src/main/envir.c:1871 src/main/envir.c:1885
+#: src/main/envir.c:1891 src/main/envir.c:1895 src/main/envir.c:2112
+#: src/main/envir.c:2233 src/main/envir.c:2492 src/main/envir.c:2699
+#: src/main/envir.c:2713 src/main/envir.c:2720 src/main/envir.c:2736
+#: src/main/envir.c:3299 src/main/errors.c:937 src/main/eval.c:268
+#: src/main/eval.c:2041 src/main/eval.c:2070 src/main/eval.c:2074
+#: src/main/grep.c:757 src/main/grep.c:762 src/main/grep.c:1035
+#: src/main/grep.c:1037 src/main/grep.c:1039 src/main/grep.c:1483
+#: src/main/grep.c:1487 src/main/grep.c:1492 src/main/grep.c:2291
+#: src/main/grep.c:2296 src/main/grep.c:2579 src/main/grep.c:2584
+#: src/main/memory.c:3375 src/main/model.c:1610 src/main/model.c:1618
+#: src/main/optim.c:225 src/main/paste.c:87 src/main/paste.c:368
+#: src/main/paste.c:375 src/main/paste.c:382 src/main/paste.c:387
+#: src/main/paste.c:392 src/main/paste.c:397 src/main/paste.c:400
+#: src/main/paste.c:408 src/main/paste.c:574 src/main/paste.c:579
+#: src/main/platform.c:296 src/main/platform.c:298 src/main/platform.c:300
+#: src/main/platform.c:316 src/main/platform.c:327 src/main/platform.c:449
+#: src/main/platform.c:451 src/main/platform.c:726 src/main/platform.c:728
+#: src/main/platform.c:1092 src/main/platform.c:1098 src/main/platform.c:1101
+#: src/main/platform.c:1104 src/main/platform.c:1107 src/main/platform.c:1110
+#: src/main/platform.c:1113 src/main/platform.c:1212 src/main/platform.c:1215
+#: src/main/platform.c:1218 src/main/platform.c:1257 src/main/platform.c:1314
+#: src/main/platform.c:1317 src/main/platform.c:1479 src/main/platform.c:1482
+#: src/main/platform.c:1485 src/main/platform.c:1521 src/main/platform.c:1524
+#: src/main/platform.c:1527 src/main/platform.c:1610 src/main/platform.c:1625
+#: src/main/platform.c:1662 src/main/platform.c:1664 src/main/platform.c:1729
+#: src/main/platform.c:1813 src/main/platform.c:2088 src/main/platform.c:2134
+#: src/main/platform.c:2264 src/main/platform.c:2267 src/main/platform.c:2270
+#: src/main/platform.c:2273 src/main/platform.c:2276 src/main/platform.c:2409
+#: src/main/platform.c:2412 src/main/platform.c:2415 src/main/platform.c:2418
+#: src/main/platform.c:2421 src/main/platform.c:2490 src/main/platform.c:2498
+#: src/main/platform.c:2534 src/main/platform.c:2584 src/main/plot.c:3104
+#: src/main/plot.c:4241 src/main/plot.c:4245 src/main/plot.c:4248
+#: src/main/plot3d.c:2435 src/main/plot3d.c:2439 src/main/plot3d.c:2444
+#: src/main/plot3d.c:2448 src/main/plot3d.c:2452 src/main/plot3d.c:2456
+#: src/main/print.c:236 src/main/print.c:242 src/main/print.c:264
+#: src/main/print.c:270 src/main/print.c:276 src/main/random.c:468
+#: src/main/random.c:472 src/main/random.c:476 src/main/saveload.c:1937
+#: src/main/saveload.c:1940 src/main/saveload.c:1943 src/main/saveload.c:2059
+#: src/main/saveload.c:2239 src/main/saveload.c:2244 src/main/saveload.c:2247
+#: src/main/saveload.c:2350 src/main/scan.c:663 src/main/scan.c:830
+#: src/main/scan.c:843 src/main/scan.c:847 src/main/scan.c:849
+#: src/main/scan.c:860 src/main/scan.c:887 src/main/scan.c:890
+#: src/main/scan.c:943 src/main/scan.c:980 src/main/scan.c:984
+#: src/main/scan.c:994 src/main/scan.c:1208 src/main/scan.c:1434
+#: src/main/scan.c:1485 src/main/scan.c:1497 src/main/scan.c:1501
+#: src/main/scan.c:1507 src/main/scan.c:1723 src/main/scan.c:1724
+#: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
+#: src/main/scan.c:1729 src/main/scan.c:1730 src/main/scan.c:1731
+#: src/main/seq.c:381 src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412
+#: src/main/seq.c:418 src/main/seq.c:426 src/main/sort.c:161
+#: src/main/sysutils.c:589 src/main/sysutils.c:593 src/main/sysutils.c:597
+#: src/main/sysutils.c:603 src/main/sysutils.c:607 src/main/sysutils.c:1612
+#: src/main/sysutils.c:1616 src/main/unique.c:850 src/main/unique.c:1176
+#: src/main/unique.c:1236 src/main/unique.c:1243 src/main/util.c:574
+#: src/main/util.c:577 src/main/util.c:1768
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
@@ -802,52 +802,45 @@ msgstr "string de formato é muito longa"
 msgid "invalid multibyte format string"
 msgstr "string de formato multibyte inválida"
 
-#: src/main/agrep.c:75 src/main/character.c:1024 src/main/character.c:1028
-#: src/main/grep.c:760 src/main/grep.c:1487 src/main/grep.c:1491
-#: src/main/grep.c:2284 src/main/grep.c:2561
+#: src/main/agrep.c:80 src/main/character.c:1024 src/main/character.c:1028
+#: src/main/grep.c:759 src/main/grep.c:1485 src/main/grep.c:1489
+#: src/main/grep.c:2293 src/main/grep.c:2581
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr ""
 "argumento '%s' tem comprimento > 1 e somente o primeiro elemento será usado"
 
-#: src/main/agrep.c:90 src/main/agrep.c:269 src/main/grep.c:173
-#: src/main/grep.c:800 src/main/grep.c:2578
-msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
-msgstr ""
-"cadeia de caracteres marcada como \"bytes\" encontrada, portanto usando "
-"useBytes = TRUE"
-
-#: src/main/agrep.c:113 src/main/grep.c:827 src/main/grep.c:2326
-#: src/main/grep.c:2603
+#: src/main/agrep.c:118 src/main/grep.c:825 src/main/grep.c:2345
+#: src/main/grep.c:2620
 msgid "regular expression is invalid in this locale"
 msgstr "expressão regular é inválida nesse locale"
 
-#: src/main/agrep.c:119 src/main/agrep.c:366
+#: src/main/agrep.c:124 src/main/agrep.c:538
 #, c-format
 msgid "regcomp error:  '%s'"
 msgstr "erro regcomp:  '%s'"
 
-#: src/main/agrep.c:155 src/main/grep.c:221 src/main/grep.c:308
-#: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
-#: src/main/grep.c:2420 src/main/grep.c:2488 src/main/grep.c:2635
+#: src/main/agrep.c:158 src/main/grep.c:220 src/main/grep.c:307
+#: src/main/grep.c:415 src/main/grep.c:570 src/main/grep.c:875
+#: src/main/grep.c:2439 src/main/grep.c:2507 src/main/grep.c:2655
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "string de entrada %d é inválida nesse locale"
 
-#: src/main/agrep.c:239 src/main/grep.c:148 src/main/grep.c:751
-#: src/main/grep.c:753 src/main/grep.c:1023 src/main/grep.c:1031
-#: src/main/grep.c:1478 src/main/grep.c:1480 src/main/grep.c:2274
-#: src/main/grep.c:2276 src/main/grep.c:2549
+#: src/main/agrep.c:432 src/main/grep.c:148 src/main/grep.c:750
+#: src/main/grep.c:752 src/main/grep.c:1021 src/main/grep.c:1029
+#: src/main/grep.c:1476 src/main/grep.c:1478 src/main/grep.c:2283
+#: src/main/grep.c:2285 src/main/grep.c:2569
 #, c-format
 msgid "argument '%s' will be ignored"
 msgstr "argumento '%s' será ignorado"
 
-#: src/main/agrep.c:354 src/main/agrep.c:404
+#: src/main/agrep.c:529
 #, fuzzy, c-format
 msgid "input string x[%d] is invalid in this locale"
 msgstr "string de entrada %d é inválida nesse locale"
 
-#: src/main/agrep.c:357 src/main/agrep.c:401
+#: src/main/agrep.c:575
 #, fuzzy, c-format
 msgid "input string y[%d] is invalid in this locale"
 msgstr "string de entrada %d é inválida nesse locale"
@@ -4062,24 +4055,24 @@ msgstr "expressão regular inválida '%s', razão '%s'"
 msgid "invalid regular expression, reason '%s'"
 msgstr "expressão regular inválida '%s'"
 
-#: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
-#: src/main/grep.c:871 src/main/grep.c:2413
+#: src/main/grep.c:213 src/main/grep.c:300 src/main/grep.c:408
+#: src/main/grep.c:869 src/main/grep.c:2432
 #, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr "string de entrada %d é inválida em UTF-8"
 
-#: src/main/grep.c:279 src/main/grep.c:376
+#: src/main/grep.c:278 src/main/grep.c:375
 #, c-format
 msgid "'split' string %d is invalid UTF-8"
 msgstr "string 'split' %d é UTF-8 inválido"
 
-#: src/main/grep.c:283 src/main/grep.c:380 src/main/grep.c:553
+#: src/main/grep.c:282 src/main/grep.c:379 src/main/grep.c:552
 #, c-format
 msgid "'split' string %d is invalid in this locale"
 msgstr "string de 'split' %d é inválida nesse locale"
 
-#: src/main/grep.c:388 src/main/grep.c:840 src/main/grep.c:1560
-#: src/main/grep.c:2339
+#: src/main/grep.c:387 src/main/grep.c:838 src/main/grep.c:1569
+#: src/main/grep.c:2358
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -4090,13 +4083,13 @@ msgstr ""
 "\t'%s'\n"
 "\tat '%s'\n"
 
-#: src/main/grep.c:390
+#: src/main/grep.c:389
 #, c-format
 msgid "invalid split pattern '%s'"
 msgstr "padrão split inválido '%s'"
 
-#: src/main/grep.c:394 src/main/grep.c:846 src/main/grep.c:1567
-#: src/main/grep.c:2346
+#: src/main/grep.c:393 src/main/grep.c:844 src/main/grep.c:1576
+#: src/main/grep.c:2365
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
@@ -4105,50 +4098,50 @@ msgstr ""
 "erro no estudo do padrão PCRE\n"
 "\t'%s'\n"
 
-#: src/main/grep.c:823 src/main/grep.c:2322
+#: src/main/grep.c:821 src/main/grep.c:2341
 msgid "regular expression is invalid UTF-8"
 msgstr "expressão regular é inválida em UTF-8"
 
-#: src/main/grep.c:842 src/main/grep.c:1562 src/main/grep.c:2341
+#: src/main/grep.c:840 src/main/grep.c:1571 src/main/grep.c:2360
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "expressão regular inválida '%s'"
 
-#: src/main/grep.c:1240
+#: src/main/grep.c:1238
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
 
-#: src/main/grep.c:1535
+#: src/main/grep.c:1544
 msgid "'pattern' is invalid UTF-8"
 msgstr "'pattern' é inválido em UTF-8"
 
-#: src/main/grep.c:1537
+#: src/main/grep.c:1546
 msgid "'replacement' is invalid UTF-8"
 msgstr "'replacement' é inválido em UTF-8"
 
-#: src/main/grep.c:1541
+#: src/main/grep.c:1550
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' é inválido nesse locale"
 
-#: src/main/grep.c:1544
+#: src/main/grep.c:1553
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' é inválido nesse locale"
 
-#: src/main/grep.c:1549
+#: src/main/grep.c:1558
 msgid "zero-length pattern"
 msgstr "padrão de comprimento 0"
 
-#: src/main/grep.c:1691 src/main/grep.c:1707 src/main/grep.c:1755
-#: src/main/grep.c:1771 src/main/grep.c:1818 src/main/grep.c:1834
+#: src/main/grep.c:1700 src/main/grep.c:1716 src/main/grep.c:1764
+#: src/main/grep.c:1780 src/main/grep.c:1827 src/main/grep.c:1843
 msgid "result string is too long"
 msgstr "string de resultado é muito longa"
 
-#: src/main/grep.c:2356
+#: src/main/grep.c:2375
 #, c-format
 msgid "pcre_fullinfo returned '%d' "
 msgstr ""
 
-#: src/main/grep.c:2609
+#: src/main/grep.c:2626
 #, fuzzy, c-format
 msgid "regcomp error: '%s'"
 msgstr "erro regcomp:  '%s'"
@@ -7184,62 +7177,62 @@ msgstr "comprimento %d é muito grande para uso de hash"
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated' pode ser aplicada somente a vetores"
 
-#: src/main/unique.c:489
+#: src/main/unique.c:496
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr "any_duplicated3(., <0-length incomp>)"
 
-#: src/main/unique.c:538
+#: src/main/unique.c:545
 msgid "'fromLast' must be length 1"
 msgstr "'fromLast' deve ter comprimento 1"
 
-#: src/main/unique.c:541
+#: src/main/unique.c:548
 msgid "'fromLast' must be TRUE or FALSE"
 msgstr "'fromLast' deve ser TRUE ou FALSE"
 
-#: src/main/unique.c:550
+#: src/main/unique.c:557
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s() pode ser aplicada somente a vetores"
 
-#: src/main/unique.c:778
+#: src/main/unique.c:806
 msgid "'match' requires vector arguments"
 msgstr "'match' requer argumentos vetoriais"
 
-#: src/main/unique.c:826 src/main/unique.c:957
+#: src/main/unique.c:854 src/main/unique.c:1012
 msgid "argument is not of mode character"
 msgstr "argumento não é de modo caractere"
 
-#: src/main/unique.c:1064
+#: src/main/unique.c:1138
 msgid "... used in a situation where it doesn't exist"
 msgstr "... usado em uma situação onde ele não existe"
 
-#: src/main/unique.c:1155
+#: src/main/unique.c:1229
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 "não foi possível encontrar o fechamento de onde a chamada 'match.call' foi "
 "iniciada"
 
-#: src/main/unique.c:1313
+#: src/main/unique.c:1387
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "matrix não numérica em rowsum(): isso não pode acontecer"
 
-#: src/main/unique.c:1345
+#: src/main/unique.c:1419
 msgid "non-numeric data frame in rowsum"
 msgstr "data frame não numérico em rowsum"
 
-#: src/main/unique.c:1377
+#: src/main/unique.c:1451
 msgid "this cannot happen"
 msgstr "isso não pode acontecer"
 
-#: src/main/unique.c:1434
+#: src/main/unique.c:1508
 msgid "'names' must be a character vector"
 msgstr "'names' deve ser um vetor de caracteres"
 
-#: src/main/unique.c:1438
+#: src/main/unique.c:1512
 msgid "'sep' must be a character string"
 msgstr "'sep' deve ser uma string de caracteres"
 
-#: src/main/unique.c:1511
+#: src/main/unique.c:1585
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated não chamado dentro de uma STRSXP"
 
@@ -8333,6 +8326,11 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
+
+#~ msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
+#~ msgstr ""
+#~ "cadeia de caracteres marcada como \"bytes\" encontrada, portanto usando "
+#~ "useBytes = TRUE"
 
 #~ msgid "no locator capability in device driver"
 #~ msgstr "driver do dispositivo não possui capacidade de localização"

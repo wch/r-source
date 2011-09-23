@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24\n"
+"POT-Creation-Date: 2011-09-23 12:21\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -242,21 +242,6 @@ msgstr ""
 msgid "These fields must have ASCII values."
 msgstr ""
 
-msgid "Malformed Authors@R field:"
-msgstr ""
-
-msgid "Cannot extract Author field from Authors@R field:"
-msgstr ""
-
-msgid "Authors@R field gives no person with author role."
-msgstr ""
-
-msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr ""
-
-msgid "Authors@R field gives no person with maintainer role and email address."
-msgstr ""
-
 msgid "Required fields missing:"
 msgstr ""
 
@@ -305,6 +290,21 @@ msgstr ""
 msgid ""
 "See the information on DESCRIPTION files in section 'Creating R packages' of "
 "the 'Writing R Extensions' manual."
+msgstr ""
+
+msgid "Malformed Authors@R field:"
+msgstr ""
+
+msgid "Cannot extract Author field from Authors@R field:"
+msgstr ""
+
+msgid "Authors@R field gives no person with author role."
+msgstr ""
+
+msgid "Cannot extract Maintainer field from Authors@R field:"
+msgstr ""
+
+msgid "Authors@R field gives no person with maintainer role and email address."
 msgstr ""
 
 msgid "Encoding '%s' is not portable"
@@ -515,6 +515,9 @@ msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"
+msgstr ""
+
+msgid "Only one Rd section per \\Sexpr is supported."
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -873,7 +876,19 @@ msgstr ""
 msgid "%s"
 msgstr ""
 
-msgid "Malformed NEWS.Rd file."
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains no \\itemize."
+msgstr ""
+
+msgid ""
+"Malformed NEWS.Rd file:\n"
+"Chunk starting\n"
+"  %s\n"
+"contains more than one \\itemize.\n"
+"Using the first one."
 msgstr ""
 
 msgid "Processing packages:"
@@ -909,7 +924,10 @@ msgstr ""
 msgid "found encoding"
 msgstr ""
 
-msgid "%s must be a character string or a file connection"
+msgid "%s must be a character string or a file/raw connection"
+msgstr ""
+
+msgid "PDF header not found"
 msgstr ""
 
 msgid "EOF marker not found"
@@ -924,13 +942,19 @@ msgstr ""
 msgid "cannot read xref table"
 msgstr ""
 
-msgid "cannot read boolean object"
+msgid "wrong class"
+msgstr ""
+
+msgid "attempting to select less than one element"
+msgstr ""
+
+msgid "attempting to select more than one element"
+msgstr ""
+
+msgid "looking at %s"
 msgstr ""
 
 msgid "cannot read literal string object"
-msgstr ""
-
-msgid "invalid escape sequence %s"
 msgstr ""
 
 msgid "cannot read hexadecimal string object"
@@ -948,13 +972,10 @@ msgstr ""
 msgid "cannot read stream object"
 msgstr ""
 
-msgid "cannot read null object"
-msgstr ""
-
 msgid "cannot read indirect reference object"
 msgstr ""
 
-msgid "cannot find object header at xrefed positions"
+msgid "cannot find object header at xrefed position %d"
 msgstr ""
 
 msgid "mismatch in object numbers (given: %d, found: %d)"
@@ -963,7 +984,16 @@ msgstr ""
 msgid "mismatch in generation numbers (given: %d, found: %d)"
 msgstr ""
 
+msgid "cannot read stream data"
+msgstr ""
+
 msgid "invalid index in object stream lookup"
+msgstr ""
+
+msgid "processing %s"
+msgstr ""
+
+msgid "expanding %s"
 msgstr ""
 
 msgid "unsupported filter %s"

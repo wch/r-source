@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24\n"
+"POT-Creation-Date: 2011-09-23 12:19\n"
 "PO-Revision-Date: 2011-03-30 02:18+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -773,35 +773,19 @@ msgid "need non-overlapping matches for %s"
 msgstr ""
 
 #, fuzzy
-msgid "%s must be a character vector"
-msgstr "'arg' должен быть NULL либо текстовой строкой"
+msgid "missing replacement values are not allowed"
+msgstr "пропущенные значения в 'row.names' не разрешены"
 
-#, fuzzy
-msgid "%s must be a list of character vectors"
-msgstr "'arg' должен быть NULL либо текстовой строкой"
-
-msgid "%s must have length one or the number of matches"
+msgid "must have replacement values for matches"
 msgstr ""
 
-msgid "cannot have replacements for non-matches"
-msgstr ""
-
-msgid "must have replacements for matches"
-msgstr ""
-
-msgid ""
-"entries of %s must have length one or the number of corresponding matches"
-msgstr ""
-
-msgid ""
-"%s must be a list with length the number of matches and two elements each"
+msgid "value does not provide any replacement values"
 msgstr ""
 
 msgid "must have replacements for non-matches"
 msgstr ""
 
-msgid ""
-"entries of %s must have length one or the number of corresponding non-matches"
+msgid "must have replacements for matches"
 msgstr ""
 
 msgid "norm '%s' currently always uses exact = FALSE"
@@ -1769,6 +1753,14 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "%s must be a character vector"
+#~ msgstr "'arg' должен быть NULL либо текстовой строкой"
+
+#, fuzzy
+#~ msgid "%s must be a list of character vectors"
+#~ msgstr "'arg' должен быть NULL либо текстовой строкой"
 
 #, fuzzy
 #~ msgid "package %s has no namespace and is not on the search path"

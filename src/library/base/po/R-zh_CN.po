@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24\n"
+"POT-Creation-Date: 2011-09-23 12:19\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -764,35 +764,19 @@ msgid "need non-overlapping matches for %s"
 msgstr ""
 
 #, fuzzy
-msgid "%s must be a character vector"
-msgstr "'arg'要么是NULL，要么是字符矢量。"
+msgid "missing replacement values are not allowed"
+msgstr "'row.names'里不允许有遗漏值"
 
-#, fuzzy
-msgid "%s must be a list of character vectors"
-msgstr "'arg'要么是NULL，要么是字符矢量。"
-
-msgid "%s must have length one or the number of matches"
+msgid "must have replacement values for matches"
 msgstr ""
 
-msgid "cannot have replacements for non-matches"
-msgstr ""
-
-msgid "must have replacements for matches"
-msgstr ""
-
-msgid ""
-"entries of %s must have length one or the number of corresponding matches"
-msgstr ""
-
-msgid ""
-"%s must be a list with length the number of matches and two elements each"
+msgid "value does not provide any replacement values"
 msgstr ""
 
 msgid "must have replacements for non-matches"
 msgstr ""
 
-msgid ""
-"entries of %s must have length one or the number of corresponding non-matches"
+msgid "must have replacements for matches"
 msgstr ""
 
 msgid "norm '%s' currently always uses exact = FALSE"
@@ -1727,6 +1711,14 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "%s must be a character vector"
+#~ msgstr "'arg'要么是NULL，要么是字符矢量。"
+
+#, fuzzy
+#~ msgid "%s must be a list of character vectors"
+#~ msgstr "'arg'要么是NULL，要么是字符矢量。"
 
 #, fuzzy
 #~ msgid "package %s has no namespace and is not on the search path"

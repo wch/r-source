@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-09-23 12:21\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,9 +183,6 @@ msgid "no date field in DESCRIPTION file of package %s"
 msgstr ""
 
 msgid "could not determine year for %s from package DESCRIPTION file"
-msgstr ""
-
-msgid "Enhanced authors specification provides no authors."
 msgstr ""
 
 msgid "m < 0"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-09-23 12:21\n"
 "PO-Revision-Date: 2011-03-24 11:19+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -223,10 +223,6 @@ msgstr "kein Feld date in der Datei DESCRIPTION des Paketes '%s'"
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
 "konnte das Jahr für '%s' aus der DESCRIPTION des Paketes nicht bestimmen"
-
-#, fuzzy
-msgid "Enhanced authors specification provides no authors."
-msgstr "Verbesserte Autorenspezifikation liefert keiner Autoren"
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -1282,6 +1278,10 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#, fuzzy
+#~ msgid "Enhanced authors specification provides no authors."
+#~ msgstr "Verbesserte Autorenspezifikation liefert keiner Autoren"
 
 #~ msgid "'namespace' must be a single logical"
 #~ msgstr "'namespace' muss einzelner logischer Wert sein"
