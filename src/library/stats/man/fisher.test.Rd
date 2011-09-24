@@ -39,10 +39,11 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.  Only used in the
     \eqn{2 \times 2}{2 by 2} case.}
-  \item{conf.int}{logical indicating if a confidence interval should be
+  \item{conf.int}{logical indicating if a confidence interval for the
+    odds ratio in a \eqn{2 \times 2}{2 by 2} table should be
     computed (and returned).}
   \item{conf.level}{confidence level for the returned confidence
-    interval.  Only used in the \eqn{2 \times 2}{2 by 2} case if
+    interval.  Only used in the \eqn{2 \times 2}{2 by 2} case and if
     \code{conf.int = TRUE}.}
   \item{simulate.p.value}{a logical indicating whether to compute
     p-values by Monte Carlo simulation, in larger than \eqn{2 \times
@@ -54,7 +55,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   A list with class \code{"htest"} containing the following components:
   \item{p.value}{the p-value of the test.}
   \item{conf.int}{a confidence interval for the odds ratio.
-    Only present in the \eqn{2 \times 2}{2 by 2} case if argument
+    Only present in the \eqn{2 \times 2}{2 by 2} case and if argument
     \code{conf.int = TRUE}.}
   \item{estimate}{an estimate of the odds ratio.  Note that the
     \emph{conditional} Maximum Likelihood Estimate (MLE) rather than the
