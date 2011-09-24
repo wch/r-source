@@ -933,7 +933,11 @@
       
       \item If \code{trunc()} was called on a \code{"POSIXlt"} vector
       and the result was subsetted, all but the first element was
-      converted to \code{NA}.  (\PR{14679}) 
+      converted to \code{NA}.  (\PR{14679})
+
+      \item \code{cbind()} and \code{rbind()} could cause memory
+      corruption when used on a combination of raw and logical/integer
+      vectors.
     }
   }
 }
