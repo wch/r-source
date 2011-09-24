@@ -595,9 +595,9 @@
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
       
-      \item \code{install.packages()} puts its cache files in
-      subdirectories to avoid very rare problems with excessively long
-      path names.  (\PR{14699})
+      \item \code{installed.packages()} now hashes the names of its
+      cache files to avoid very rare problems with excessively long path
+      names.  (\PR{14699})
     }
   }
 
@@ -741,7 +741,9 @@
       purposes on Unix-alikes in a form suitable for shell execution.
       Note that those are merely command-line arguments, they do not
       include environment variables (one more reason to use configure
-      variables instead) or site configuration settings.  } }
+      variables instead) or site configuration settings.
+    }
+  }
 
   \subsection{BUG FIXES}{
     \itemize{

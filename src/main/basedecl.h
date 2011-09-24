@@ -114,3 +114,4 @@ SEXP bitwiseNot(SEXP);
 SEXP bitwiseAnd(SEXP, SEXP);
 SEXP bitwiseOr(SEXP, SEXP);
 SEXP bitwiseXor(SEXP, SEXP);
+SEXP crc64ToString(SEXP);

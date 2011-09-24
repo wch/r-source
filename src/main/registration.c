@@ -245,6 +245,8 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(bitwiseOr,  2),
     CALLDEF(bitwiseXor, 2),
 
+    CALLDEF(crc64ToString, 1),
+
     {NULL, NULL, 0}
 };
 

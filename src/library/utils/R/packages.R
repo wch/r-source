@@ -506,23 +506,22 @@ installed.packages <-
         } else {
             ## Previously used URLencode for e.g. Windows paths with drives
             ## This version works for very long file names.
-            ## FIXME: use a more elaborate checksum
             base <- paste(c(lib, fields), collapse = ",")
-            enc <- as.integer(charToRaw(base))
-            enc <- sprintf("%x_%x_%x",
-                           length(enc), sum(enc), sum(enc * seq_along(enc)))
+            enc <- sprintf("%x_%s", nchar(base),
+                           .Call("crc64ToString", base, PACKAGE = "base"))
             dest <- file.path(tempdir(),
                               paste("libloc_", enc, ".rds", sep = ""))
             if(file.exists(dest) &&
-               file.info(dest)$mtime > file.info(lib)$mtime) {
+               file.info(dest)$mtime > file.info(lib)$mtime &&
+               (val <- readRDS(dest))$lib == lib)
                 ## use the cache file
-                retval <- rbind(retval, readRDS(dest))
-            } else {
+                retval <- rbind(retval, val$value)
+            else {
                 ret0 <- .readPkgDesc(lib, fields)
                 if(length(ret0)) {
                     retval <- rbind(retval, ret0)
                     ## save the cache file
-                    saveRDS(ret0, dest, compress = TRUE)
+                    saveRDS(list(lib = lib, value = ret0), dest)
                 }
             }
         }

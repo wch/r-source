@@ -1864,3 +1864,18 @@ int Scollate(SEXP a, SEXP b)
 
 # endif
 #endif
+
+#include <lzma.h>
+
+SEXP crc64ToString(SEXP in)
+{
+    uint64_t crc = 0;
+    char ans[17];
+    if (!isString(in)) error("input must be a character string");
+    const char *str = CHAR(STRING_ELT(in, 0));
+
+    /* Seems this is realy 64-bit only on 64-bit platforms */
+    crc = lzma_crc64((uint8_t *)str, strlen(str), crc);
+    snprintf(ans, 17, "%lx", (long unsigned int) crc);
+    return mkString(ans);
+}
