@@ -1296,13 +1296,13 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    }
 	}
     }
-    else {
+    else { /* everything else, currently REALSXP, INTSXP, LGLSXP */
 	for (t = args; t != R_NilValue; t = CDR(t)) {
-	    u = PRVALUE(CAR(t));
+	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		k = LENGTH(u);
 		idx = (!isMatrix(u)) ? rows : k;
-		if (TYPEOF(u) <= INTSXP) {
+		if (TYPEOF(u) <= INTSXP) { /* INT or LGL */
 		    if (mode <= INTSXP) {
 			for (i = 0; i < idx; i++)
 			    INTEGER(result)[n++] = INTEGER(u)[i % k];
@@ -1312,9 +1312,21 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			    REAL(result)[n++] = (INTEGER(u)[i % k]) == NA_INTEGER ? NA_REAL : INTEGER(u)[i % k];
 		    }
 		}
-		else {
+		else if (TYPEOF(u) == REALSXP) {
 		    for (i = 0; i < idx; i++)
 			REAL(result)[n++] = REAL(u)[i % k];
+		} 
+		else { /* RAWSXP */
+		    /* FIXME: I'm not sure what the author intended when the sequence was
+		       defined as raw < logical -- it is possible to represent logical as
+		       raw losslessly but not vice versa. So due to the way this was
+		       defined the raw -> logical conversion is bound to be lossy .. */
+		    if (mode == LGLSXP)
+			for (i = 0; i < idx; i++)
+			    LOGICAL(result)[n++] = RAW(u)[i % k] ? TRUE : FALSE;
+		    else
+			for (i = 0; i < idx; i++)
+			    INTEGER(result)[n++] = (unsigned char) RAW(u)[i % k];
 		}
 	    }
 	}
@@ -1524,9 +1536,9 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    }
 	}
     }
-    else {
+    else { /* everything else, currently REALSXP, INTSXP, LGLSXP */
 	for (t = args; t != R_NilValue; t = CDR(t)) {
-	    u = PRVALUE(CAR(t));
+	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		k = LENGTH(u);
 		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
@@ -1546,12 +1558,25 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			n += idx;
 		    }
 		}
-		else {
+		else if (TYPEOF(u) == REALSXP) {
 		    for (i = 0; i < idx; i++)
 			for (j = 0; j < cols; j++)
 			    REAL(result)[i + n + (j * rows)]
 				= REAL(u)[(i + j * idx) % k];
 		    n += idx;
+		}
+		else { /* RAWSXP */
+		    if (mode == LGLSXP) {
+			for (i = 0; i < idx; i++)
+			    for (j = 0; j < cols; j++)
+				LOGICAL(result)[i + n + (j * rows)]
+				    = RAW(u)[(i + j * idx) % k] ? TRUE : FALSE;
+		    }
+		    else
+			for (i = 0; i < idx; i++)
+			    for (j = 0; j < cols; j++)
+				INTEGER(result)[i + n + (j * rows)]
+				    = (unsigned char) RAW(u)[(i + j * idx) % k];
 		}
 	    }
 	}
