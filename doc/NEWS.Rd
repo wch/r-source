@@ -48,6 +48,12 @@
       \code{mclapply} and \pkg{snow} clusters.
 
       (It is still incomplete/experimental.)
+      
+      \item Building PDF manuals (for \R itself or packages,
+      e.g. \emph{via} \command{R CMD check}) by default requires the
+      LaTeX package \samp{inconsolata}: see the section on
+      \sQuote{Making the manuals} in the \sQuote{R Installation and
+      Administration Manual}.
     }
   }
 

@@ -468,7 +468,9 @@ come out rather wide: this can be overcome by using @emph{in addition}
 either of the options @code{beramono} or @code{inconsolata}, which
 replace the Courier monospaced font by Bera Sans mono or Inconsolata
 respectively.  (You will need the appropriate @LaTeX{} package
-@code{bera} or @code{inconsolata} installed.)
+@pkg{bera} or @pkg{inconsolata} installed.@footnote{Debian/Ubuntu use
+a very old version of TeXLive and so need Debian package
+@samp{texlive-fonts-extra} installed.})
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
@@ -504,8 +506,9 @@ The default can be overridden by setting the environment variable
 and stored in @file{etc/Renviron}, but can still be overridden when the
 manuals are built.)  The default value for @env{R_RD4PDF} is
 @samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
-hyperlinks, e.g.@: for printing.
-
+hyperlinks (e.g.@: for printing the manual) or do not have @LaTeX{}
+package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
+@LaTeX{} package @pkg{inconsolata} installed.
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
@@ -1237,7 +1240,7 @@ make -f Makefile.win info
 in your path).
 
 See the @ref{Making the manuals} section in the Unix-alike section for setting
-options such as the paper size.
+options such as the paper size and the fonts used.
 
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
@@ -2718,7 +2721,9 @@ manuals (including the @R{} reference manual) and vignettes is sensitive
 to the version of the @LaTeX{} package @pkg{hyperref} and we recommend
 that the @TeX{} distribution used is keep up-to-date.  A number of
 @LaTeX{} packages are required (including @pkg{url.sty}, and
-@pkg{listings.sty}) and others such as @pkg{hyperref} are desirable.
+@pkg{listings.sty}) and others such as @pkg{hyperref} and
+@pkg{inconsolata} are desirable (and without them you will need to
+change @R{}'s defaults: @pxref{Making the manuals}).
 
 
 If you want to build from the R Subversion repository you need both

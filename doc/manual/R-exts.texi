@@ -120,7 +120,7 @@ Once a source package is created, it must be installed by
 the command @code{R CMD INSTALL}.
 @ifset UseExternalXrefs
 @xref{Add-on packages, , Add-on-packages,
-R-admin, R Installation and Administration}, for further details.
+R-admin, R Installation and Administration} for further details.
 @end ifset
 
 Other types of extensions are supported (but rare): @xref{Package types}.
@@ -1915,7 +1915,17 @@ set to a false value.)
 
 @item
 The PDF version of the package's manual is created (to check that the
-@file{Rd} files can be converted successfully).
+@file{Rd} files can be converted successfully).  This needs @LaTeX{} and
+suitable fonts and @LaTeX{} packages to be installed.
+@ifset UseExternalXrefs
+@xref{Making the manuals, , Making the manuals,
+R-admin, R Installation and Administration} for further details.
+@end ifset
+@ifclear UseExternalXrefs
+See the section `Making the manuals' in the `R Installation and
+Administration' manual for further details.
+@end ifclear
+
 @end enumerate
 
 All these tests are run with collation set to the @code{C} locale, and
