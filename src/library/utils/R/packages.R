@@ -500,24 +500,32 @@ installed.packages <-
     fields <- .instPkgFields(fields)
     retval <- matrix(character(0), 0L, 2L + length(fields))
     for(lib in lib.loc) {
-        ## Need URLencode for e.g. Windows paths with drives
-        ## Split into two components to workaround very long file names.
-        dest.dir <- file.path(tempdir(), "libloc_",  URLencode(lib, TRUE))
-        dest <- file.path(dest.dir,
-                          paste(paste(fields, collapse=","), ".rds", sep=""))
-        if (!file.exists(dest.dir)) dir.create(dest.dir, recursive=TRUE)
-	if(!noCache && file.exists(dest) &&
-	    file.info(dest)$mtime > file.info(lib)$mtime) {
-	    ## use the cache file
-	    retval <- rbind(retval, readRDS(dest))
-	} else {
-	    ret0 <- .readPkgDesc(lib, fields)
-	    if(length(ret0)) {
-		retval <- rbind(retval, ret0)
-		## save the cache file
-		saveRDS(ret0, dest, compress = TRUE)
-	    }
-	}
+        if(noCache) {
+            ret0 <- .readPkgDesc(lib, fields)
+            if(length(ret0)) retval <- rbind(retval, ret0)
+        } else {
+            ## Previously used URLencode for e.g. Windows paths with drives
+            ## This version works for very long file names.
+            ## FIXME: use a more elaborate checksum
+            base <- paste(c(lib, fields), collapse = ",")
+            enc <- as.integer(charToRaw(base))
+            enc <- sprintf("%x_%x_%x",
+                           length(enc), sum(enc), sum(enc * seq_along(enc)))
+            dest <- file.path(tempdir(),
+                              paste("libloc_", enc, ".rds", sep = ""))
+            if(file.exists(dest) &&
+               file.info(dest)$mtime > file.info(lib)$mtime) {
+                ## use the cache file
+                retval <- rbind(retval, readRDS(dest))
+            } else {
+                ret0 <- .readPkgDesc(lib, fields)
+                if(length(ret0)) {
+                    retval <- rbind(retval, ret0)
+                    ## save the cache file
+                    saveRDS(ret0, dest, compress = TRUE)
+                }
+            }
+        }
     }
 
     .fixupPkgMat(retval, fields, priority, subarch)
