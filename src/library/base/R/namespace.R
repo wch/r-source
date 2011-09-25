@@ -101,7 +101,7 @@ getExportedValue <- function(ns, name) {
 .Firstlib_as_onLoad <-
     c(## automatically detected as calls to library.dynam
       "AnalyzeFMRI", "BAS", "BBMM", "BMA", "BPHO", "BTSPAS",
-      "BiasedUrn", "BioPhysConnectoR", "Bmix", "BradleyTerry",
+      "BioPhysConnectoR", "Bmix", "BradleyTerry",
       "CHsharp", "CPE", "CompQuadForm", "CompRandFld", "CorrBin",
       "Covpath", "DAAGbio", "DAAGxtras", "DCluster", "DDHFm", "DIME",
       "EMD", "ExPD2D", "FAmle", "FactoClass", "FracSim", "GEOmap",
@@ -109,7 +109,7 @@ getExportedValue <- function(ns, name) {
       "IFP", "LogicReg", "LowRankQP", "MAMSE", "MHadaptive", "MISA",
       "NORMT3", "OPE", "ORMDR", "OSACC", "PKfit", "POT", "PSCN", "PSM",
       "Peaks", "QRMlib", "RANN", "RArcInfo", "RFA", "RSEIS",
-      "RSVGTipsDevice", "RSvgDevice", "ReadImages", "RiDMC", "Rmpfr",
+      "RSVGTipsDevice", "RSvgDevice", "ReadImages",
       "Rsundials", "Rwave", "SigWinR", "SpatialEpi", "SpatialExtremes",
       "SpherWave", "TAHMMAnnot", "WINRPACK", "WMTregions", "acepack",
       "adaptivetau", "ade4", "adephylo", "alphahull", "analogue", "aod",
@@ -117,44 +117,44 @@ getExportedValue <- function(ns, name) {
       "biseVec", "bisoreg", "bitops", "boolfun", "bootstrap", "bqtl",
       "brainwaver", "caTools", "cat", "cclust", "changeLOS", "cheb",
       "clusterSim", "codep", "coenoflex", "crosshybDetector", "crrSC",
-      "date", "dblcens", "depth", "devEMF", "diptest", "dixon",
+      "dblcens", "depth", "devEMF", "dixon",
       "dynCorr", "dynamo", "ebdbNet", "ecespa", "energy", "envelope",
       "epinet", "evd", "evdbayes", "exactLoglinTest", "fEcofin",
-      "fImport", "fMultivar", "fdim", "fdrtool", "fields", "forensim",
-      "fork", "fpow", "gRc", "gafit", "gdsfmt", "geepack", "gibbs.met",
+      "fImport", "fMultivar", "fdim", "fdrtool", "forensim",
+      "fpow", "gRc", "gafit", "gdsfmt", "geepack", "gibbs.met",
       "gld", "gllm", "glmmAK", "gss", "haplo.stats", "hapsim", "hbmem",
       "hddplot", "hier.part", "hot", "ifs", "imputeMDR", "infotheo",
-      "intcox", "integrOmics", "interactivity", "ivivc", "kknn",
+      "intcox", "integrOmics", "ivivc", "kknn",
       "knncat", "kohonen", "labeltodendro", "lago", "lasso2", "lazy",
       "ljr", "locpol", "logspline", "lokern", "lpridge", "magnets",
       "maxLinear", "mcga", "mclust", "mhsmm", "mixAK", "mixstock",
       "mlbench", "mlegp", "moc", "mpa", "mra", "mspath", "mvgraph",
-      "mvnmle", "mvpart", "mvtnormpcs", "nbpMatching", "ncdf",
+      "mvnmle", "mvpart", "mvtnormpcs", "nbpMatching",
       "ncomplete", "negenes", "nlstools", "norm", "noverlap", "npde",
       "npst", "nsRFA", "onemap", "opefimor", "pamctdp", "panel",
       "pbivnorm", "permax", "phybase", "pi0", "picante", "plugdensity",
       "poibin", "polspline", "popgen", "ppMeasures", "predbayescor",
-      "predmixcor", "princurve", "proptest", "ptw", "qp", "qtl", "ref",
+      "predmixcor", "proptest", "ptw", "qp", "qtl", "ref",
       "rich", "rimage", "ringscale", "rioja", "rjson", "robust", "rpvm",
       "rqmcmb2", "rsdepth", "rvmbinary", "rworldmap", "sampfling",
       "sampling", "seqCBS", "simba", "spc", "speedRlibTF", "speedRlibs",
-      "spgwr", "splancs", "stab", "stepwise", "surv2sample",
+      "stab", "stepwise", "surv2sample",
       "survPresmooth", "survivalROC", "svmpath", "tdm", "tdthap",
       "tnet", "tweedie", "twopartqtl", "twslm", "ucminf", "uncompress",
-      "vegan", "wavelets", "waveslim", "wccsom", "wombsoft",
+      "wavelets", "waveslim", "wccsom", "wombsoft",
       ## Manually checked
       "CarbonEL", "JavaGD", "LogConcDEAD", "Rmpi", "Rniftilib", "akima",
       "amei", "distory", "dynaTree", "ecodist", "ftnonpar", "glpk",
       "iSubpathwayMiner", "ifultools", "mnormT", "monomvn", "rlecuyer",
-      "rngwell19937", "textir", "trex", "tripack", "udunits2", "wgaim")
+      "rngwell19937", "trex", "tripack", "udunits2", "wgaim")
 
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
     ## only used to run .onAttach
-    runHook <- function(hookname, env, ...) {
+    runHook <- function(hookname, env, libname, pkgname) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
-            res <- tryCatch(fun(...), error=identity)
+            res <- tryCatch(fun(libname, pkgname), error=identity)
             if (inherits(res, "error")) {
                 stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
                               hookname, "attachNamespace", nsname,
@@ -170,7 +170,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
                 message(gettextf("running .First.lib() for package %s as .onLoad/.onAttach were not found", sQuote(nsname)),
                         domain = NA)
             fn <- get(".First.lib", envir = env, inherits = FALSE)
-            fn(...)                 # dirname(nspath), nsname
+            fn(libname, pkgname)
         }
     }
     runUserHook <- function(pkgname, pkgpath) {
