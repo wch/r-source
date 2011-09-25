@@ -507,13 +507,15 @@ installed.packages <-
             ## Previously used URLencode for e.g. Windows paths with drives
             ## This version works for very long file names.
             base <- paste(c(lib, fields), collapse = ",")
-            enc <- sprintf("%x_%s", nchar(base),
+            enc <- sprintf("%d_%s", nchar(base),
+                           ## add 64-bit CRC in hex (in theory, seems
+                           ## it is actually 32-bit on some systems)
                            .Call("crc64ToString", base, PACKAGE = "base"))
             dest <- file.path(tempdir(),
                               paste("libloc_", enc, ".rds", sep = ""))
             if(file.exists(dest) &&
                file.info(dest)$mtime > file.info(lib)$mtime &&
-               (val <- readRDS(dest))$lib == lib)
+               (val <- readRDS(dest))$base == base)
                 ## use the cache file
                 retval <- rbind(retval, val$value)
             else {
@@ -521,7 +523,7 @@ installed.packages <-
                 if(length(ret0)) {
                     retval <- rbind(retval, ret0)
                     ## save the cache file
-                    saveRDS(list(lib = lib, value = ret0), dest)
+                    saveRDS(list(base = base, value = ret0), dest)
                 }
             }
         }
