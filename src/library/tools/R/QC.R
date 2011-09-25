@@ -1542,7 +1542,7 @@ function(package, dir, lib.loc = NULL)
         ## auto-generated.
         if(packageHasNamespace(package, dirname(dir))) {
             has_namespace <- TRUE
-            ns <- readLines(file.path(dir, "NAMESPACE"))
+            ns <- readLines(file.path(dir, "NAMESPACE"), warn = FALSE)
             auto_namespace <- grepl("# Default NAMESPACE created by R", ns[1L])
             ## Determine names of declared S3 methods and associated S3
             ## generics.
