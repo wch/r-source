@@ -38,10 +38,10 @@
 SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
+    SEXP opt_costs, opt_bounds;
     int i, j, n, nmatches;
-    int igcase_opt, value_opt, max_distance_opt, useBytes;
-    int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
-    int fixed_opt;
+    int opt_icase, opt_value, useBytes;
+    int opt_fixed;
     Rboolean useWC = FALSE;
     const void *vmax = NULL;
 
@@ -53,26 +53,20 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     vec = CAR(args); args = CDR(args);
-    igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    value_opt = asLogical(CAR(args)); args = CDR(args);
-    max_distance_opt = asInteger(CAR(args));
-    args = CDR(args);
-    max_deletions_opt = asInteger(CAR(args));
-    args = CDR(args);
-    max_insertions_opt = asInteger(CAR(args));
-    args = CDR(args);
-    max_substitutions_opt = asInteger(CAR(args));
-    args = CDR(args);
+    opt_icase = asLogical(CAR(args)); args = CDR(args);
+    opt_value = asLogical(CAR(args)); args = CDR(args);
+    opt_costs = CAR(args); args = CDR(args);
+    opt_bounds = CAR(args); args = CDR(args);
     useBytes = asLogical(CAR(args));
     args = CDR(args);
-    fixed_opt = asLogical(CAR(args));
+    opt_fixed = asLogical(CAR(args));
 
-    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (value_opt == NA_INTEGER) value_opt = 0;
+    if (opt_icase == NA_INTEGER) opt_icase = 0;
+    if (opt_value == NA_INTEGER) opt_value = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
-    if (fixed_opt == NA_INTEGER) fixed_opt = 1;
+    if (opt_fixed == NA_INTEGER) opt_fixed = 1;
 
-    if(fixed_opt) cflags |= REG_LITERAL;
+    if (opt_fixed) cflags |= REG_LITERAL;
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -80,7 +74,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pat");
     if (!isString(vec)) error(_("invalid '%s' argument"), "x");
 
-    if (igcase_opt) cflags |= REG_ICASE;
+    if (opt_icase) cflags |= REG_ICASE;
 
     n = LENGTH(vec);
     if (!useBytes) {
@@ -125,11 +119,14 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     tre_regaparams_default(&params);
-    params.max_cost = max_distance_opt;
-    params.max_del = max_deletions_opt;
-    params.max_ins = max_insertions_opt;
-    params.max_subst = max_substitutions_opt;
-    params.max_err = max_distance_opt;
+    params.cost_ins = INTEGER(opt_costs)[0];;
+    params.cost_del = INTEGER(opt_costs)[1];
+    params.cost_subst = INTEGER(opt_costs)[2];
+    params.max_cost = INTEGER(opt_bounds)[0];
+    params.max_del = INTEGER(opt_bounds)[1];
+    params.max_ins = INTEGER(opt_bounds)[2];
+    params.max_subst = INTEGER(opt_bounds)[3];
+    params.max_err = INTEGER(opt_bounds)[4];
 
     /* Matching. */
     n = LENGTH(vec);
@@ -166,10 +163,10 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     tre_regfree(&reg);
 
-    PROTECT(ans = value_opt
+    PROTECT(ans = opt_value
 	    ? allocVector(STRSXP, nmatches)
 	    : allocVector(INTSXP, nmatches));
-    if (value_opt) {
+    if (opt_value) {
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
 	for (j = i = 0 ; i < n ; i++) {
 	    if (LOGICAL(ind)[i])
@@ -199,11 +196,10 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 #define MAT(X, I, J)		X[I + (J) * nr]
 
 static SEXP
-adist_full(SEXP x, SEXP y,
-	   double cost_ins, double cost_del, double cost_sub,
-	   Rboolean opt_counts)
+adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 {
     SEXP ans, counts, trafos = R_NilValue /* -Wall */, dimnames, names;
+    double cost_ins, cost_del, cost_sub;
     double *dists, d, d_ins, d_del, d_sub;
     char *paths = NULL, p, *buf = NULL;
     int i, j, k, l, m, nx, ny, nxy, *xi, *yj, nxi, nyj, nr, nc, nz;
@@ -214,6 +210,10 @@ adist_full(SEXP x, SEXP y,
     nx = LENGTH(x);
     ny = LENGTH(y);
     nxy = nx * ny;
+
+    cost_ins = costs[0];
+    cost_del = costs[1];
+    cost_sub = costs[2];
 
     PROTECT(ans = allocMatrix(REALSXP, nx, ny));
     if(opt_counts) {
@@ -390,9 +390,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
     SEXP ans, counts, offsets, dimnames, names, elt;
-    SEXP opt_cost_ins, opt_cost_del, opt_cost_sub;
+    SEXP opt_costs;
     int opt_fixed, opt_partial, opt_counts, opt_icase, useBytes;
-    int cost_ins, cost_del, cost_sub; 
     int i = 0, j = 0, m, nx, ny, nxy;
     const char *s, *t;
     const void *vmax = NULL;
@@ -410,9 +409,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
     y = CAR(args); args = CDR(args);
-    opt_cost_ins = CAR(args); args = CDR(args);
-    opt_cost_del = CAR(args); args = CDR(args);
-    opt_cost_sub = CAR(args); args = CDR(args);
+    opt_costs = CAR(args); args = CDR(args);
     opt_counts = asLogical(CAR(args)); args = CDR(args);
     opt_fixed = asInteger(CAR(args)); args = CDR(args);    
     opt_partial = asInteger(CAR(args)); args = CDR(args);
@@ -433,18 +430,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if(!opt_partial)
-	return(adist_full(x, y,
-			  asReal(opt_cost_ins),
-			  asReal(opt_cost_del),
-			  asReal(opt_cost_sub),
-			  opt_counts));
+	return(adist_full(x, y, REAL(opt_costs), opt_counts));
 
     counts = R_NilValue;	/* -Wall */
     offsets = R_NilValue;	/* -Wall */
-
-    cost_ins = asInteger(opt_cost_ins);
-    cost_del = asInteger(opt_cost_del);
-    cost_sub = asInteger(opt_cost_sub);
 
     if(!opt_counts) cflags |= REG_NOSUB;
 
@@ -492,9 +481,9 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     tre_regaparams_default(&params);
     params.max_cost = INT_MAX;
-    params.cost_ins = cost_ins;
-    params.cost_del = cost_del;
-    params.cost_subst = cost_sub;
+    params.cost_ins = INTEGER(opt_costs)[0];;
+    params.cost_del = INTEGER(opt_costs)[1];
+    params.cost_subst = INTEGER(opt_costs)[2];
 
     PROTECT(ans = allocMatrix(REALSXP, nx, ny));
     if(opt_counts) {

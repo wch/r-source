@@ -8,14 +8,14 @@
   substitutions needed to transform one string into another.
 }
 \usage{
-adist(x, y = NULL, cost = NULL, counts = FALSE, fixed = TRUE,
+adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
       partial = !fixed, ignore.case = FALSE, useBytes = FALSE)
 }
 \arguments{
   \item{x}{a character vector.}
   \item{y}{a character vector, or \code{NULL} (default) indicating
     taking \code{x} as \code{y}.}
-  \item{cost}{a numeric vector or list with names partially matching
+  \item{costs}{a numeric vector or list with names partially matching
     \samp{insertions}, \samp{deletions} and \samp{substitutions} giving
     the respective costs for computing the Levenshtein distance, or
     \code{NULL} (default) indicating using unit cost for all three

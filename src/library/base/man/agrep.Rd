@@ -6,51 +6,70 @@
 \name{agrep}
 \alias{agrep}
 \alias{fuzzy matching}
+\alias{.amatch_bounds}
+\alias{.amatch_costs}
 \title{Approximate String Matching (Fuzzy Matching)}
 \description{
   Searches for approximate matches to \code{pattern} (the first argument)
   within each element of the string \code{x} (the second argument) using
-  the Levenshtein edit distance.
+  the generalized Levenshtein edit distance (the minimal possibly
+  weighted number of insertions, deletions and substitutions needed to
+  transform one string into another).
 }
 \usage{
 agrep(pattern, x, ignore.case = FALSE, value = FALSE,
-      max.distance = 0.1, useBytes = FALSE, fixed = TRUE)
+      max.distance = 0.1, useBytes = FALSE, fixed = TRUE,
+      costs = NULL)
 }
 \arguments{
   \item{pattern}{a non-empty character string or a character string
     containing a regular expression (for \code{fixed = FALSE}) to be
-    matched.  Coerced by \code{as.character} to a string if possible.}
-  \item{x}{character vector where matches are sought.  Coerced by
-    \code{as.character} to a character vector if possible.}
+    matched.
+    Coerced by \code{\link{as.character}} to a string if possible.}
+  \item{x}{character vector where matches are sought.
+    Coerced by \code{\link{as.character}} to a character vector if
+    possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{value}{if \code{FALSE}, a vector containing the (integer)
     indices of the matches determined is returned and if \code{TRUE}, a
     vector containing the matching elements themselves is returned.}
   \item{max.distance}{Maximum distance allowed for a match.  Expressed
-    either as integer, or as a fraction of the \emph{pattern} length (will be
-    replaced by the smallest integer not less than the corresponding
-    fraction of the pattern length), or a list with possible components
+    either as integer, or as a fraction of the \emph{pattern} length
+    times the maximal transformation cost (will be replaced by the
+    smallest integer not less than the corresponding fraction), or a
+    list with possible components
     \describe{
-      \item{\code{all}:}{maximal (overall) distance}
+      \item{\code{cost}:}{maximum number/fraction of match cost
+	(generalized Levenshtein distance)}
+      \item{\code{all}:}{maximal number/fraction of \emph{all}
+	transformations (insertions, deletions and substitutions)}
       \item{\code{insertions}:}{maximum number/fraction of insertions}
       \item{\code{deletions}:}{maximum number/fraction of deletions}
       \item{\code{substitutions}:}{maximum number/fraction of
         substitutions}
     }
-    If \code{all} is missing, it is set to 10\%, the other components
-    default to \code{all}.  The component names can be abbreviated.
+    If \code{cost} is not given, \code{all} defaults to 10\%, and the
+    other transformation number bounds default to \code{all}.
+    The component names can be abbreviated.
   }
   \item{useBytes}{logical. in a multibyte locale, should the comparison
     be character-by-character (the default) or byte-by-byte.}
   \item{fixed}{logical.  If \code{TRUE} (default), the pattern is
     matched literally (as is).  Otherwise, it is matched as a regular
     expression.}
+  \item{costs}{a numeric vector or list with names partially matching
+    \samp{insertions}, \samp{deletions} and \samp{substitutions} giving
+    the respective costs for computing the generalized Levenshtein
+    distance, or \code{NULL} (default) indicating using unit cost for
+    all three possible transformations.
+    Coerced to integer via \code{\link{as.integer}} if possible.}
 }
 \details{
   The Levenshtein edit distance is used as measure of approximateness:
-  it is the total number of insertions, deletions and substitutions
-  required to transform one string into another.
+  it is the (possibly cost-weighted) total number of insertions,
+  deletions and substitutions required to transform one string into
+  another.
 
   As from \R 2.10.0 this uses \code{tre} by Ville Laurikari
   (\url{http://http://laurikari.net/tre/}), which supports MBCS
@@ -62,12 +81,12 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   forced (with a warning) if any input is found which is marked as
   \code{"bytes"}.
 }
-
 \note{
   Since someone who read the description carelessly even filed a bug
   report on it, do note that this matches substrings of each element of
   \code{x} (just as \code{\link{grep}} does) and \bold{not} whole
-  elements.
+  elements.  See \code{\link{adist}} in package \pkg{utils}, which
+  optionally returns the offsets of the matched substrings.
 }
 \value{
   Either a vector giving the indices of the elements that yielded a
@@ -75,7 +94,8 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   coercion, preserving names but no other attributes).
 }
 \author{
-  Original version by David Meyer.  Current version by Brian Ripley.
+  Original version by David Meyer.
+  Current version by Brian Ripley and Kurt Hornik.
 }
 \seealso{
   \code{\link{grep}}

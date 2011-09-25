@@ -1,11 +1,13 @@
 adist <-
-function(x, y = NULL, cost = NULL, counts = FALSE, fixed = TRUE,
+function(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
          partial = !fixed, ignore.case = FALSE, useBytes = FALSE)
 {
     bytesToInt <- function(x) {
         if(is.na(x)) return(NA_integer_)
         as.integer(charToRaw(x))
     }
+
+    costs <- .amatch_costs(costs)
 
     nmx <- names(x)
     x <- as.character(x)
@@ -47,29 +49,16 @@ function(x, y = NULL, cost = NULL, counts = FALSE, fixed = TRUE,
             }
         }
     }
-    else if(is.null(y)) {
-        y <- x
-    }
-
-    all_costs <-
-        list(insertions = 1, deletions = 1, substitutions = 1)
-    if(!is.null(cost)) {
-        ## Compatibility with agrep().
-        cost <- as.list(cost)
-        tab <- names(all_costs)
-        pos <- pmatch(names(cost), tab)
-        if(any(is.na(pos))) {
-            warning("unknown cost components ignored")
+    else {
+        if(is.null(y)) {
+            y <- x
         }
-        all_costs[pos] <- cost[!is.na(pos)]
-        ## Could add some sanity checking ...
+        ## TRE needs integer costs: coerce here for simplicity.
+        costs <- as.integer(costs)
     }
 
-    .Internal(adist(x, y,
-                    all_costs$insertions,
-                    all_costs$deletions,
-                    all_costs$substitutions,
-                    counts, fixed, partial, ignore.case, useBytes))
+    .Internal(adist(x, y, costs, counts, fixed, partial, ignore.case,
+                    useBytes))
 }
 
 ## No longer used by adist(), but could be more generally useful ...

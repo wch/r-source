@@ -89,7 +89,7 @@ function(pattern, text, ignore.case = FALSE,
 
 agrep <-
 function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
-         useBytes = FALSE, fixed = TRUE)
+         useBytes = FALSE, fixed = TRUE, costs = NULL)
 {
     pattern <- as.character(pattern)
     if(!is.character(x)) x <- as.character(x)
@@ -105,53 +105,121 @@ function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
     if(!is.character(pattern) || length(pattern) != 1L || !nzchar(pattern))
         stop("'pattern' must be a non-empty character string")
 
+    ## <FIXME>
+    ## Shouldn't we use bytes when useBytes is given or implied?
     n <- nchar(pattern, "c")
     if(is.na(n)) stop("invalid multibyte string for 'pattern'")
-    if(!is.list(max.distance)) {
-        if(!is.numeric(max.distance) || (max.distance < 0))
-            stop("'max.distance' must be non-negative")
-        if(max.distance < 1)            # transform percentages
-            max.distance <- ceiling(n * max.distance)
-        max.insertions <- max.deletions <- max.substitutions <-
-            max.distance
+    ## </FIXME>
+
+    ## TRE needs integer costs: coerce here for simplicity.
+    costs <- as.integer(.amatch_costs(costs))
+    bounds <- .amatch_bounds(max.distance, n, max(costs))
+
+    .Internal(agrep(pattern, x, ignore.case, value, costs, bounds,
+                    useBytes, fixed))
+}
+
+.amatch_bounds <-
+function(x = 0.1, n, costs)
+{
+    ## Expand max match distance argument for agrep() et al into bounds
+    ## for the TRE regaparams struct.
+
+    ## Note that TRE allows for different (integer) costs for
+    ## insertions, deletions and substitions, and allows for specifying
+    ## separate bounds for these numbers as well as the total number of
+    ## "errors" (transformations) and the total cost.
+    ##
+    ## When using unit costs (and older versions of agrep() did not
+    ## allow otherwise), the total number of errors is the same as the
+    ## total cost, and bounds on the total number of errors imply the
+    ## same bounds for the individual transformation counts.  This no
+    ## longer holds when using possibly different costs.
+    ##
+    ## If the max distance argument is not a list, it should be a
+    ## non-negative number which is taken to bound the *cost* of a
+    ## match.  If less 
+    ## than one, it is taken as a fraction of the pattern length times
+    ## the maximal cost.
+    ##
+    ## If the max distance argument is a list, it can be used to
+    ## indidually provide bounds for the total cost and the individual
+    ## and total numbers of transformations.  Unspecified bounds are
+    ## taken as inactive (i.e., with a value of INT_MAX).
+    ##
+    ## We return a vector of 5 integers giving the bounds for the total
+    ## cost, the numbers of insertions, deletions and substitutions, and
+    ## the total number of transformations (which is the order used in
+    ## TRE's regaparams_t struct).
+
+    INT_MAX <- .Machine$integer.max
+
+    m <- max(costs)
+
+    if(!is.list(x)) {
+        ## Sanity checks.
+        if(!is.numeric(x) || (x < 0))
+            stop("match distance components must be non-negative")
+        ## Transform percentages.
+        if(x < 1) x <- x * n * m
+        bounds <- c(as.integer(ceiling(x)), rep.int(INT_MAX, 4L))
     } else {
-        ## partial matching
-        table <- c("all", "deletions", "insertions", "substitutions")
-        ind <- pmatch(names(max.distance), table)
-        if(any(is.na(ind)))
+        table <-
+            c("cost", "insertions", "deletions", "substitutions", "all")
+        ## Partial matching.
+        pos <- pmatch(names(x), table)
+        if(any(is.na(pos))) {
             warning("unknown match distance components ignored")
-        max.distance <- max.distance[!is.na(ind)]
-        names(max.distance) <- table[ind]
-        ## sanity checks
-        comps <- unlist(max.distance)
-        if(!all(is.numeric(comps)) || any(comps < 0))
-            stop("'max.distance' components must be non-negative")
-        ## extract restrictions
-        if(is.null(max.distance$all))
-            max.distance$all <- 0.1
-        max.insertions <- max.deletions <- max.substitutions <-
-            max.distance$all
-        if(!is.null(max.distance$deletions))
-            max.deletions <- max.distance$deletions
-        if(!is.null(max.distance$insertions))
-            max.insertions <- max.distance$insertions
-        if(!is.null(max.distance$substitutions))
-            max.substitutions <- max.distance$substitutions
-        max.distance <- max.distance$all
-        ## transform percentages
-        if(max.distance < 1)
-            max.distance <- ceiling(n * max.distance)
-        if(max.deletions < 1)
-            max.deletions <- ceiling(n * max.deletions)
-        if(max.insertions < 1)
-            max.insertions <- ceiling(n * max.insertions)
-        if(max.substitutions < 1)
-            max.substitutions <- ceiling(n * max.substitutions)
+            x <- x[!is.na(pos)]
+        }
+        names(x) <- table[pos]
+        ## Sanity checks.
+        x <- unlist(x)
+        if(!all(is.numeric(x)) || any(x < 0))
+            stop("match distance components must be non-negative")
+        ## Defaults.
+        if(!is.na(x["cost"])) {
+            bounds <- rep.int(INT_MAX, 5L)
+        } else {
+            ## If 'cost' is missing: if 'all' is missing it is set to
+            ## 0.1, and the other transformation number bounds default
+            ## to 'all'.
+            if(is.na(x["all"]))
+                x["all"] <- 0.1
+            bounds <- c(INT_MAX, rep.int(x["all"], 4L))
+        }
+        names(bounds) <- table
+        bounds[names(x)] <- x
+        ## Fractions.
+        ind <- (bounds < 1)
+        bounds[ind] <- (bounds * n * c(m, rep.int(1, 4L)))[ind]
+        ## Ensure integers.
+        bounds <- as.integer(ceiling(bounds))
     }
 
-    .Internal(agrep(pattern, x, ignore.case, value, max.distance,
-                    max.deletions, max.insertions, max.substitutions,
-                    useBytes, fixed))
+    bounds
+}
+
+.amatch_costs <-
+function(x = NULL)
+{
+    costs <- c(insertions = 1, deletions = 1, substitutions = 1)
+    if(!is.null(x)) {
+        x <- as.list(x)
+        ## Partial matching.
+        pos <- pmatch(names(x), names(costs))
+        if(any(is.na(pos))) {
+            warning("unknown cost components ignored")
+            x <- x[!is.na(pos)]
+        }
+        ## Sanity checks.
+        x <- unlist(x)
+        if(!all(is.numeric(x)) || any(x < 0))
+            stop("cost components must be non-negative")
+        costs[pos] <- x
+    }
+    
+    costs
 }
 
 regmatches <-

@@ -367,7 +367,9 @@
       \emph{via} \code{help.start()}'s \sQuote{Packages} menu.)
 
       \item \code{agrep()} gains a \code{fixed} argument to optionally
-      allow approximate regular expression matching.
+      allow approximate regular expression matching, and a \code{costs}
+      argument to specify possibly different integer match costs for
+      insertions, deletions and substitutions.
 
       \item \code{read.dcf()} and \code{write.dcf()} gain a
       \code{keep.white} argument to indicate fields where whitespace
