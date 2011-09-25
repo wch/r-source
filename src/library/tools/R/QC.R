@@ -1506,7 +1506,7 @@ function(x, ...)
 checkDocStyle <-
 function(package, dir, lib.loc = NULL)
 {
-    has_namespace <- FALSE
+    has_namespace <- auto_namespace <- FALSE
 
     ## Argument handling.
     if(!missing(package)) {
@@ -1538,8 +1538,12 @@ function(package, dir, lib.loc = NULL)
         objects_in_code <- objects(envir = code_env, all.names = TRUE)
 
         ## Does the package have a namespace?
+        ## These days all packages have namespaces, but some are
+        ## auto-generated.
         if(packageHasNamespace(package, dirname(dir))) {
             has_namespace <- TRUE
+            ns <- readLines(file.path(dir, "NAMESPACE"))
+            auto_namespace <- grepl("# Default NAMESPACE created by R", ns[1L])
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
@@ -1579,9 +1583,7 @@ function(package, dir, lib.loc = NULL)
 
         objects_in_code <- objects(envir = code_env, all.names = TRUE)
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Do the package sources have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
@@ -1649,7 +1651,9 @@ function(package, dir, lib.loc = NULL)
     ## package has a namespace and the method is exported (even though
     ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
     ## cases).
-    if(has_namespace && !identical(meta["Namespace"], "auto"))
+    ## But only allow this if the NAMESPACE was manually generated.
+    if(has_namespace && !auto_namespace &&
+       !identical(meta["Namespace"], "auto"))
         all_methods_in_package <-
     	    all_methods_in_package %w/o% functions_in_code
 
