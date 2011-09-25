@@ -238,10 +238,10 @@ loadNamespace <- function (package, lib.loc = NULL,
         ns
     else {
         ## only used here for .onLoad
-        runHook <- function(hookname, pkgname, env, ...) {
+        runHook <- function(hookname, env, libname, pkgname) {
             if (exists(hookname, envir = env, inherits = FALSE)) {
                 fun <- get(hookname, envir = env, inherits = FALSE)
-                res <- tryCatch(fun(...), error = identity)
+                res <- tryCatch(fun(libname, pkgname), error = identity)
                 if (inherits(res, "error")) {
                     stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
                                   hookname, "loadNamespace", pkgname,
@@ -252,10 +252,12 @@ loadNamespace <- function (package, lib.loc = NULL,
             } else if (pkgname %in% .Firstlib_as_onLoad &&
                        !exists(".onLoad", envir = env, inherits = FALSE) &&
                        exists(".First.lib", envir = env, inherits = FALSE)) {
-                message(gettextf("using .First.lib() as .onLoad() for namespace %s", sQuote(pkgname)),
-                        domain = NA)
-                fn <- get(".First.lib", envir = env, inherits = FALSE)
-                fn(...)
+                ## ignore .First.lib except for auto-generated NAMESPACEs
+                ns <- readLines(file.path(libname, pkgname, "NAMESPACE"))
+                if(grepl("# Default NAMESPACE created by R", ns[1L])) {
+                    fn <- get(".First.lib", envir = env, inherits = FALSE)
+                    fn(libname, pkgname)
+                }
             }
         }
         runUserHook <- function(pkgname, pkgpath) {
@@ -503,7 +505,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         Sys.setenv("_R_NS_LOAD_" = package)
         on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
         ## run the load hook
-        runHook(".onLoad", package, env, package.lib, package)
+        runHook(".onLoad", env, package.lib, package)
 
         ## process exports, seal, and clear on.exit action
         exports <- nsInfo$exports
