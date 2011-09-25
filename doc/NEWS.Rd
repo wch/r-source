@@ -579,10 +579,11 @@
       CMD INSTALL} time, so all packages will be installed with
       namespaces.  A consequence of this is that \code{.First.lib()}
       functions need to be copied to \code{.onLoad()} (usually) or
-      \code{.onAttach()}.  For the time being, if no \code{.onLoad()}
-      nor \code{.onAttach()} function is found but \code{.First.lib()}
-      is, it will be run as the attach hook (unless one of a list of
-      known exceptions, when it will be run as the load hook).
+      \code{.onAttach()}.  For the time being, if there is an
+      auto-generated \file{NAMESPACE} file and no \code{.onLoad()} nor
+      \code{.onAttach()} function is found but \code{.First.lib()} is,
+      it will be run as the attach hook (unless the package one of a
+      list of known exceptions, when it will be run as the load hook).
 
       \item A warning is given if test-loading a package changes a
       locked binding in a package other than itself.  It is likely that
