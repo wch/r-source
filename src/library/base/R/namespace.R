@@ -169,7 +169,8 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
             ## ignore .First.lib except for auto-generated NAMESPACEs
             ns <- readLines(file.path(libname, pkgname, "NAMESPACE"),
                             warn = FALSE)
-            if(grepl("# Default NAMESPACE created by R", ns[1L])) {
+            if(grepl("# Default NAMESPACE created by R", ns[1L],
+                     useBytes = TRUE)) {
                 if (nsname == Sys.getenv("R_INSTALL_PKG"))
                     message(gettextf("running .First.lib() for package %s as .onLoad/.onAttach were not found", sQuote(nsname)),
                             domain = NA)
@@ -260,7 +261,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                 ## ignore .First.lib except for auto-generated NAMESPACEs
                 ns <- readLines(file.path(libname, pkgname, "NAMESPACE"),
                                 warn = FALSE)
-                if(grepl("# Default NAMESPACE created by R", ns[1L])) {
+                if(grepl("# Default NAMESPACE created by R", ns[1L],
+                         useBytes = TRUE)) {
                     fn <- get(".First.lib", envir = env, inherits = FALSE)
                     fn(libname, pkgname)
                 }
