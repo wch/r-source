@@ -24,7 +24,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     used in the network algorithm.  In units of 4 bytes.  Only used for
     non-simulated p-values larger than \eqn{2 \times 2}{2 by 2} tables.}
   \item{hybrid}{a logical. Only used for larger than \eqn{2 \times 2}{2 by 2}
-    tables, in which cases it indicated whether the exact probabilities
+    tables, in which cases it indicates whether the exact probabilities
     (default) or a hybrid approximation thereof should be computed.
     See \sQuote{Details}.}
   \item{control}{a list with named components for low level algorithm
@@ -106,7 +106,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   For larger than  \eqn{2 \times 2}{2 by 2} tables and \code{hybrid =
     TRUE}, asymptotic chi-squared probabilities are only used if the
   \sQuote{Cochran conditions} are satisfied, that is if no cell has
-  count zero, and more than 80\% of the cells have counts at least 5.
+  count zero, and more than 80\% of the cells have counts at least 5:
+  otherwise the exact calculation is used.
 
   Simulation is done conditional on the row and column marginals, and
   works only if the marginals are strictly positive.  (A C translation
