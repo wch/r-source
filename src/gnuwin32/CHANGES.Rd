@@ -11,7 +11,8 @@
       devices has been changed from 0.1 to 0.2: this changes slightly
       the vertical positioning of text (including axis annotations).
       This can be overridden by setting the new \code{"ylbias"} graphical
-      parameter.
+      parameter.  This was done for consistency with other devices
+      such as \code{pdf()}.
 
       \item \command{R CMD build} once again attempts to preserve file
       permissions on Windows.
@@ -23,8 +24,9 @@
       \code{svg()}, \code{cairo_pdf()} and \code{cairo_ps()} are now
       available on Windows.
 
-      These are not compiled in by default: see the instructions in
-      the \sQuote{R Installation and Administration Manual}.
+      These are not compiled in by default when building from source:
+      see the instructions in the \sQuote{R Installation and
+	Administration Manual}.
 
       \item All the Windows-specific graphics devices now have a
       \code{family} argument.  If non-empty this specifies an initial
@@ -66,6 +68,10 @@
       \item File extensions \code{.xz}, \code{.rda} and \code{.RData}
       have been added to those which default to binary transfer for
       \code{download.file()}.
+
+      \item \code{install.packages()} and \command{R CMD check} have a
+      small delay after removing a directory to counteract some
+      interference from anti-virus software.
     }
   }
 
@@ -115,7 +121,7 @@
     \itemize{
       \item The fix for \PR{14583} caused inconsistent behaviour in other
       areas, e.g. \PR{14628}, extra lines appearing in image displays,
-      and uneven bases on histograms \PR{14632}.
+      and uneven bases on histograms.  (\PR{14632}).
       
       \item Opening large numbers of \code{windows()} graphics devices
       could cause some of them to fail to redraw (\PR{14668}).

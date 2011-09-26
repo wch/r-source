@@ -164,9 +164,11 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
         } else {
             ## If the package is already installed, remove it.  If it
             ## isn't there, the unlink call will still return success.
-            ret <- unlink(instPath, recursive=TRUE)
+            ret <- unlink(instPath, recursive=TRUE, force=TRUE)
             if (ret == 0) {
                 ## Move the new package to the install lib
+                ## To avoid anti-virus interference, wait a little
+                Sys.sleep(0.5)
                 ret <- file.rename(file.path(tmpDir, pkgname), instPath)
                 if(!ret) {
                     warning(gettextf("unable to move temporary installation %s to %s",
