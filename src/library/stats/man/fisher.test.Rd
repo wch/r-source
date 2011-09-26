@@ -1,6 +1,6 @@
 % File src/library/stats/man/fisher.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
@@ -154,6 +154,10 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 }
 \seealso{
   \code{\link{chisq.test}}
+
+  \code{fisher.exact} in package \pkg{exact2x2} for alternative
+  interpretations of two-sided tests and confidence intervals for
+  \eqn{2 \times 2}{2 by 2} tables.
 }
 \examples{
 ## Agresti (1990, p. 61f; 2002, p. 91) Fisher's Tea Drinker
