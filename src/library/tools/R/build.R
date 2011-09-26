@@ -99,6 +99,7 @@ writeDefaultNamespace <-
     pkgs <- pkgs[pkgs != "base"]
 
     writeLines(c("# Default NAMESPACE created by R",
+                 "# Remove the previous line if you edit this file",
     		 "",
     		 "# Export all names",
 		 "exportPattern(\".\")",
@@ -218,7 +219,7 @@ get_exclude_patterns <- function()
         ## this is an optional function, so could fail
         user <- Sys.info()["user"]
         if(user == "unknown") user <- Sys.getenv("LOGNAME")
-        db["Packaged"] <- 
+        db["Packaged"] <-
             sprintf("%s; %s",
                     format(Sys.time(), '', tz = 'UTC', usetz = TRUE),
                     user)
@@ -234,12 +235,6 @@ get_exclude_patterns <- function()
         fields <- .expand_package_description_db_R_fields(db)
         if(length(fields))
             .write_description(c(db, fields), ldpath)
-    }
-    
-    add_namespace_is_auto_to_description_file <- function(ldpath) {
-    	db <- .read_description(ldpath)
-    	db["Namespace"] <- "auto"
-    	.write_description(db, ldpath)
     }
     ## </FIXME>
 
@@ -600,10 +595,10 @@ get_exclude_patterns <- function()
             if(dep$op != '>=') next
             if(dep$version >= package_version(ver)) return()
         }
-        
+
         on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
         Sys.setlocale("LC_CTYPE", "C")
-        
+
         flatten <- function(x) {
             if(length(x) == 3L)
                 paste(x$name, " (", x$op, " ", x$version, ")", sep = "")
@@ -616,9 +611,9 @@ get_exclude_patterns <- function()
             paste(c(sprintf("R (>= %s)", ver), sapply(deps, flatten)),
                   collapse = ", ")
         } else sprintf("R (>= %s)", ver)
-        
+
         .write_description(desc, file.path(pkgname, "DESCRIPTION"))
-        
+
         printLog(Log,
                  "  NB: this package now depends on R (>= ", ver, ")\n")
     }
@@ -984,4 +979,10 @@ get_exclude_patterns <- function()
         closeLog(Log)
     }
     do_exit(0L)
+}
+
+add_namespace_is_auto_to_description_file <- function(ldpath) {
+    db <- .read_description(ldpath)
+    db["Namespace"] <- "auto"
+    .write_description(db, ldpath)
 }
