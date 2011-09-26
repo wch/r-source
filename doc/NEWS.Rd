@@ -70,19 +70,19 @@
 	TRUE} allows Python-style named captures.  (Wish and
       contribution of \PR{14518}.)
 
-      \item The placement of plotmath text in the margins of plots done
-      by base graphics now makes the same vertical adjustment as
-      ordinary text, so using ordinary and plotmath on the same margin
-      line will seem better aligned (but not exactly aligned, since
-      ordinary text has descenders below the baseline and plotmath
+      \item The placement of \sQuote{plotmath} text in the margins of
+      plots done by base graphics now makes the same vertical adjustment
+      as ordinary text, so using ordinary and plotmath text on the same
+      margin line will seem better aligned (but not exactly aligned,
+      since ordinary text has descenders below the baseline and plotmath
       places them on the baseline).  (Related to \PR{14537}.)
 
       \item \code{sunflowerplot()} now has a formula interface.
       (Wish of \PR{14541}.)
 
-      \item \code{iconv()} has a new argument \code{toRaw} to handle (as
-      was possible before the \code{CHARSXP} cache was introduced)
-      encodings such as \code{UTF-16} with embedded nuls.
+      \item \code{iconv()} has a new argument \code{toRaw} to handle
+      encodings such as \code{UTF-16} with embedded nuls (as was
+      possible before the \code{CHARSXP} cache was introduced).
 
       It will also accept as input the type of list generated with
       \code{toRaw = TRUE}.
@@ -215,7 +215,7 @@
 
       \item There is a new function \code{Sys.setFileTime()} to set the
       time of a file (including a directory).  See its help for exactly
-      which times it sets.
+      which times it sets on various OSes.
 
       \item The file times reported by \code{file.info()} are reported
       to sub-second resolution on systems which support it.  (Currently
@@ -404,8 +404,8 @@
       \item The default for \code{image(useRaster=)} is now taken from
       option \code{"preferRaster"}: for the small print see \code{?image}.
 
-      \item str() now displays reference class objects and their fields,
-      rather than treating them as classical S4 classes.
+      \item \code{str()} now displays reference class objects and their
+      fields, rather than treating them as classical S4 classes.
     }
   }
 
@@ -423,9 +423,9 @@
       argument to the \code{bmp()}, \code{jpeg()}, \code{png()} and
       \code{tiff()} devices.
 
-      Analogous changes have been made on Windows, so all \R graphics
-      devices now have a \code{family} argument except \code{pictex()}
-      (which has no means to change fonts).
+      Analogous changes have been made on Windows, so all built-in \R
+      graphics devices now have a \code{family} argument except
+      \code{pictex()} (which has no means to change fonts).
 
       \item The \code{bmp()}, \code{jpeg()}, \code{png()} and \code{tiff()}
       devices now make use of the \code{antialias} argument for
@@ -495,7 +495,7 @@
 
       \item There is a new function \code{dev.capabilities()} to query
       the capabilities of the current device.  The initial set of
-      capabilities are support for (semi-)transparent colours, rendering
+      capabilities are support for semi-transparent colours, rendering
       and capturing raster images, the locator and for interactive
       events.
 
@@ -547,7 +547,7 @@
 
       \item It is no longer allowed to have two vignettes with the
       same vignette basename (e.g. \file{vig.Rnw} and \file{vig.Snw}).
-      (Previously one vignette hid the other from the \code{vignette()}
+      (Previously one vignette hid the other in the \code{vignette()}
       function.)
     }
   }
