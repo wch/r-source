@@ -13,7 +13,8 @@
 #ifndef ZUTIL_H
 #define ZUTIL_H
 
-#ifdef WIN32
+/* gcc on Solaris does not support visibility but marks the symbol as local */
+#if defined(WIN32) || defined(__sun)
 # define NO_VIZ
 #endif
 
