@@ -600,7 +600,7 @@
       
       \item \code{installed.packages()} now hashes the names of its
       cache files to avoid very rare problems with excessively long path
-      names.  (\PR{14699})
+      names.  (\PR{14669})
     }
   }
 
