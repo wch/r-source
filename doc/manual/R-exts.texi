@@ -700,8 +700,7 @@ as @code{require} and @code{options}.  If computations are required to
 create objects these can use code `earlier' in the package (see the
 @samp{Collate} field) plus functions in the @samp{Depends} packages
 provided that the objects created do not depend on those packages except
-@emph{via} namespace imports.  (Packages without namespaces will work
-under somewhat less restrictive assumptions.)
+@emph{via} namespace imports.
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects: please use suitable
@@ -759,8 +758,8 @@ for ``internal'' use only, it should provide a file
 clearly states that these are not meant to be called by the user.  See
 e.g.@: the sources for package @pkg{grid} in the @R{} distribution for
 an example.  Note that packages which use internal objects extensively
-should hide those objects in a namespace, when they do not need to be
-documented (@pxref{Package namespaces}).
+should not export those objects from their namespace, when they do not
+need to be documented (@pxref{Package namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
@@ -1822,11 +1821,10 @@ used in the same locale.
 @item
 It is checked that the package can be loaded, first with the usual
 default packages and then only with package @pkg{base} already
-loaded. If the package has a namespace, it is checked if this can be
-loaded in an empty session with only the @pkg{base} namespace loaded.
-(Namespaces and packages can be loaded very early in the session,
-before the default packages are available, so packages should work
-then.)
+loaded. It is checked that the namespace this can be loaded in an empty
+session with only the @pkg{base} namespace loaded.  (Namespaces and
+packages can be loaded very early in the session, before the default
+packages are available, so packages should work then.)
 
 @item
 The @R{} files are checked for correct calls to @code{library.dynam}.
@@ -2592,14 +2590,19 @@ package namespace first, then the imports, then the base namespace and
 then the normal search path.
 
 If a @file{NAMESPACE} file is not present, then one is generated
-automatically when the package is built or installed.  All 
-objects are exported.  All packages listed in the Imports or 
-Depends fields in the @file{DESCRIPTION} file are imported.
+automatically when the package is built or installed, all objects are
+exported, and all packages listed in the Imports or Depends fields in
+the @file{DESCRIPTION} file are imported.  This is only intended as a
+temporary measure whilst packages are converted to have a
+@file{NAMESPACE} file and will be removed in due course.  A hand-crafted
+@file{NAMESPACE} should be added to any existing package which does not
+have one.
 
-Prior to version 2.14.0, namespaces were optional in packages. In
-such packages searches for non-local variables started with the search
-path, so a package's own functions could be masked by those of a
-package appearing earlier.
+Prior to version 2.14.0, namespaces were optional in packages.  In such
+packages searches for non-local variables started with the search path,
+so a package's own functions could be masked by those of a package
+appearing earlier.
+
 
 @menu
 * Specifying imports and exports::  
@@ -3013,13 +3016,17 @@ Identify dependencies and replace any @code{require} calls by
 @code{Depends} and @code{Imports} fields of the @file{DESCRIPTION}
 file).
 @item
-Replace @code{.First.lib} functions with @code{.onLoad} functions or
-@code{useDynLib} directives.
+Replace @code{.First.lib} functions with @code{.onLoad}/@code{.onAttach}
+functions or use a @code{useDynLib} directive in the @file{NAMESPACE}
+file.
 @end itemize
 
 The first two of these are done automatically, but a package author
 can usually improve on @R{}'s guesswork.
 
+@command{R CMD build} will add a basic @file{NAMESPACE} file to a
+package.  If this is edited, do remove the first line (as the comment in
+the file says).
 
 @node Namespaces with S4 classes and methods,  , Summary -- converting an existing package, Package namespaces
 @subsection Namespaces with S4 classes and methods
