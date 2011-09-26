@@ -96,6 +96,7 @@ SEXP do_agrep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_allnames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_anydf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_aperm(SEXP, SEXP, SEXP, SEXP);
+SEXP do_aregexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_args(SEXP, SEXP, SEXP, SEXP);
 SEXP do_arith(SEXP, SEXP, SEXP, SEXP);
 SEXP do_arrows(SEXP, SEXP, SEXP, SEXP);

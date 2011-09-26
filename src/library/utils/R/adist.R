@@ -61,8 +61,28 @@ function(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
                     useBytes))
 }
 
+aregexec <-
+function(pattern, text, max.distance = 0.1, costs = NULL,
+         ignore.case = FALSE, fixed = FALSE, useBytes = FALSE)
+{
+    ## <FIXME>
+    ## Expanding fractions and testing pattern length should really
+    ## happen in the C code.
+    n <- nchar(pattern, "c")
+    if (is.na(n)) 
+        stop("invalid multibyte string for 'pattern'")
+    ## </FIXME>
+
+    costs <- as.integer(.amatch_costs(costs))
+    bounds <- .amatch_bounds(max.distance, n, max(costs))
+    
+    .Internal(aregexec(pattern, text, bounds, costs,
+                       ignore.case, fixed, useBytes))
+}
+
 ## No longer used by adist(), but could be more generally useful ...
     
 regquote <-
 function(x)
     gsub("([*.?+^&\\[])", "\\\\\\1", x)
+

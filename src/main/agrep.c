@@ -633,3 +633,176 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP pat, vec, ans, matchpos, matchlen;
+    SEXP opt_bounds, opt_costs;
+    int opt_icase, opt_fixed, useBytes;
+
+    Rboolean haveBytes, useWC = FALSE;
+    const char *s, *t;
+    const void *vmax = NULL;
+    
+    regex_t reg;
+    size_t nmatch;
+    regmatch_t *pmatch;
+    regaparams_t params;
+    regamatch_t match;
+    int i, j, n, so;
+    int rc, cflags = REG_EXTENDED;
+
+    checkArity(op, args);
+
+    pat = CAR(args); args = CDR(args);
+    vec = CAR(args); args = CDR(args);
+    opt_bounds = CAR(args); args = CDR(args);
+    opt_costs = CAR(args); args = CDR(args);
+    opt_icase = asLogical(CAR(args)); args = CDR(args);
+    opt_fixed = asLogical(CAR(args)); args = CDR(args);
+    useBytes = asLogical(CAR(args));
+    
+    if(opt_icase == NA_INTEGER) opt_icase = 0;
+    if(opt_fixed == NA_INTEGER) opt_fixed = 0;
+    if(useBytes == NA_INTEGER) useBytes = 0;
+    if(opt_fixed && opt_icase) {
+	warning(_("argument '%s' will be ignored"),
+		"ignore.case = TRUE");
+	opt_icase = 0;
+    }
+    if(opt_fixed) cflags |= REG_LITERAL;
+    if(opt_icase) cflags |= REG_ICASE;
+
+    if(!isString(pat) ||
+       (length(pat) < 1) ||
+       (STRING_ELT(pat, 0) == NA_STRING))
+	error(_("invalid '%s' argument"), "pattern");
+    if(length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
+    
+    if(!isString(vec))
+	error(_("invalid '%s' argument"), "text");
+
+    n = LENGTH(vec);
+
+    if(!useBytes) {
+        haveBytes = IS_BYTES(STRING_ELT(pat, 0));
+	if(!haveBytes)
+            for(i = 0; i < n; i++) {
+                if(IS_BYTES(STRING_ELT(vec, i))) {
+                    haveBytes = TRUE;
+                    break;
+                }
+	    }
+	if (haveBytes) useBytes = TRUE;
+    }
+
+    if(!useBytes) {
+        useWC = !strIsASCII(CHAR(STRING_ELT(pat, 0)));
+        if(!useWC) {
+            for(i = 0 ; i < n ; i++) {
+                if(STRING_ELT(vec, i) == NA_STRING) continue;
+                if(!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
+                    useWC = TRUE;
+                    break;
+                }
+            }
+        }
+    }
+    
+    if(useBytes)
+	rc = tre_regcompb(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
+    else if (useWC)
+	rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+    else {
+        s = translateChar(STRING_ELT(pat, 0));
+        if(mbcslocale && !mbcsValid(s))
+            error(_("regular expression is invalid in this locale"));
+        rc = tre_regcomp(&reg, s, cflags);
+    }
+    if(rc) {
+        char errbuf[1001];
+        tre_regerror(rc, &reg, errbuf, 1001);
+        error(_("regcomp error: '%s'"), errbuf);
+    }
+
+    nmatch = reg.re_nsub + 1;
+
+    pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
+
+    tre_regaparams_default(&params);
+    params.cost_ins = INTEGER(opt_costs)[0];;
+    params.cost_del = INTEGER(opt_costs)[1];
+    params.cost_subst = INTEGER(opt_costs)[2];
+    params.max_cost = INTEGER(opt_bounds)[0];
+    params.max_del = INTEGER(opt_bounds)[1];
+    params.max_ins = INTEGER(opt_bounds)[2];
+    params.max_subst = INTEGER(opt_bounds)[3];
+    params.max_err = INTEGER(opt_bounds)[4];
+
+    PROTECT(ans = allocVector(VECSXP, n));
+
+    for(i = 0; i < n; i++) {
+	if(STRING_ELT(vec, i) == NA_STRING) {
+	    PROTECT(matchpos = ScalarInteger(NA_INTEGER));
+	    setAttrib(matchpos, install("match.length"),
+		      ScalarInteger(NA_INTEGER));
+	    SET_VECTOR_ELT(ans, i, matchpos);
+	    UNPROTECT(1);
+	} else {
+	    vmax = vmaxget();
+	    /* Perform match. */
+	    memset(&match, 0, sizeof(match));
+	    match.nmatch = nmatch;
+	    match.pmatch = pmatch;
+	    if(useBytes)
+		rc = tre_regaexecb(&reg, CHAR(STRING_ELT(vec, i)),
+				   &match, params, 0);
+	    else if(useWC) {
+		rc = tre_regawexec(&reg, wtransChar(STRING_ELT(vec, i)),
+				   &match, params, 0);
+		vmaxset(vmax);
+	    }
+	    else {
+		t = translateChar(STRING_ELT(vec, i));
+		if (mbcslocale && !mbcsValid(t))
+		    error(_("input string %d is invalid in this locale"),
+			  i + 1);
+		rc = tre_regaexec(&reg, t,
+				  &match, params, 0);
+		vmaxset(vmax);		
+	    }
+	    if(rc == REG_OK) {
+		PROTECT(matchpos = allocVector(INTSXP, nmatch));
+		PROTECT(matchlen = allocVector(INTSXP, nmatch));
+		for(j = 0; j < match.nmatch; j++) {
+		    so = match.pmatch[j].rm_so;
+		    INTEGER(matchpos)[j] = so + 1;
+		    INTEGER(matchlen)[j] = match.pmatch[j].rm_eo - so;
+		}
+		setAttrib(matchpos, install("match.length"), matchlen);
+		if(useBytes)
+		    setAttrib(matchpos, install("useBytes"),
+			      ScalarLogical(TRUE));
+		SET_VECTOR_ELT(ans, i, matchpos);
+		UNPROTECT(2);
+	    } else {
+		/* No match (or could there be an error?). */
+		/* Alternatively, could return nmatch -1 values.
+		*/
+		PROTECT(matchpos = ScalarInteger(-1));
+		PROTECT(matchlen = ScalarInteger(-1));
+		setAttrib(matchpos, install("match.length"), matchlen);
+		SET_VECTOR_ELT(ans, i, matchpos);
+		UNPROTECT(2);
+	    }
+	}
+    }
+    
+    free(pmatch);
+
+    tre_regfree(&reg);
+
+    UNPROTECT(1);
+
+    return ans;
+}

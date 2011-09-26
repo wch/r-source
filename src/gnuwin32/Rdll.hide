@@ -577,6 +577,7 @@
  do_agrep
  do_allnames
  do_aperm
+ do_aregexec
  do_args
  do_arith
  do_arrangeWindows
