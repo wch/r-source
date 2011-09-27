@@ -92,40 +92,24 @@ function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
          useBytes = FALSE, fixed = TRUE, costs = NULL)
 {
     pattern <- as.character(pattern)
-    if(!is.character(x)) x <- as.character(x)
-    ## behaves like == for NA pattern
-    if (is.na(pattern)){
-        if (value)
-            return(structure(rep.int(NA_character_, length(x)),
-                             names = names(x)))
-        else
-            return(rep.int(NA, length(x)))
-    }
-
-    if(!is.character(pattern) || length(pattern) != 1L || !nzchar(pattern))
-        stop("'pattern' must be a non-empty character string")
-
-    ## <FIXME>
-    ## Shouldn't we use bytes when useBytes is given or implied?
-    n <- nchar(pattern, "c")
-    if(is.na(n)) stop("invalid multibyte string for 'pattern'")
-    ## </FIXME>
+    if(!is.character(x))
+        x <- as.character(x)
 
     ## TRE needs integer costs: coerce here for simplicity.
     costs <- as.integer(.amatch_costs(costs))
-    bounds <- .amatch_bounds(max.distance, n, max(costs))
+    bounds <- .amatch_bounds(max.distance)
 
     .Internal(agrep(pattern, x, ignore.case, value, costs, bounds,
                     useBytes, fixed))
 }
 
 .amatch_bounds <-
-function(x = 0.1, n, costs)
+function(x = 0.1)
 {
     ## Expand max match distance argument for agrep() et al into bounds
     ## for the TRE regaparams struct.
 
-    ## Note that TRE allows for different (integer) costs for
+    ## Note that TRE allows for possibly different (integer) costs for
     ## insertions, deletions and substitions, and allows for specifying
     ## separate bounds for these numbers as well as the total number of
     ## "errors" (transformations) and the total cost.
@@ -136,33 +120,21 @@ function(x = 0.1, n, costs)
     ## same bounds for the individual transformation counts.  This no
     ## longer holds when using possibly different costs.
     ##
-    ## If the max distance argument is not a list, it should be a
-    ## non-negative number which is taken to bound the *cost* of a
-    ## match.  If less 
-    ## than one, it is taken as a fraction of the pattern length times
-    ## the maximal cost.
+    ## See ? agrep for details on handling the match distance argument.
     ##
-    ## If the max distance argument is a list, it can be used to
-    ## indidually provide bounds for the total cost and the individual
-    ## and total numbers of transformations.  Unspecified bounds are
-    ## taken as inactive (i.e., with a value of INT_MAX).
+    ## Older versions of agrep() expanded fractions (of the pattern
+    ## length) in R code: but as the C code determines whether matching
+    ## used bytes or characters, only the C code can determine the
+    ## pattern length and hence expand fractions.
     ##
-    ## We return a vector of 5 integers giving the bounds for the total
-    ## cost, the numbers of insertions, deletions and substitutions, and
-    ## the total number of transformations (which is the order used in
-    ## TRE's regaparams_t struct).
-
-    INT_MAX <- .Machine$integer.max
-
-    m <- max(costs)
-
+    ## Unspecified bounds are taken as NA_real_, and set to INT_MAX by
+    ## the C code.
+    
     if(!is.list(x)) {
         ## Sanity checks.
         if(!is.numeric(x) || (x < 0))
             stop("match distance components must be non-negative")
-        ## Transform percentages.
-        if(x < 1) x <- x * n * m
-        bounds <- c(as.integer(ceiling(x)), rep.int(INT_MAX, 4L))
+        bounds <- c(as.double(x), rep.int(NA_real_, 4L))
     } else {
         table <-
             c("cost", "insertions", "deletions", "substitutions", "all")
@@ -179,22 +151,17 @@ function(x = 0.1, n, costs)
             stop("match distance components must be non-negative")
         ## Defaults.
         if(!is.na(x["cost"])) {
-            bounds <- rep.int(INT_MAX, 5L)
+            bounds <- rep.int(NA_real_, 5L)
         } else {
             ## If 'cost' is missing: if 'all' is missing it is set to
             ## 0.1, and the other transformation number bounds default
             ## to 'all'.
             if(is.na(x["all"]))
                 x["all"] <- 0.1
-            bounds <- c(INT_MAX, rep.int(x["all"], 4L))
+            bounds <- c(NA_real_, rep.int(x["all"], 4L))
         }
         names(bounds) <- table
         bounds[names(x)] <- x
-        ## Fractions.
-        ind <- (bounds < 1)
-        bounds[ind] <- (bounds * n * c(m, rep.int(1, 4L)))[ind]
-        ## Ensure integers.
-        bounds <- as.integer(ceiling(bounds))
     }
 
     bounds

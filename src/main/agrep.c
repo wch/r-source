@@ -35,13 +35,66 @@
 #include <wchar.h>
 #include <tre/tre.h>
 
+static void
+amatch_regaparams(regaparams_t *params, int patlen,
+		  double *bounds, int *costs)
+{
+    int cost, max_cost, warn = 0;
+    double bound;
+
+    cost = params->cost_ins = max_cost = costs[0];
+    cost = params->cost_del = costs[1];
+    if(cost > max_cost) max_cost = cost;
+    cost = params->cost_subst = costs[2];
+    if(cost > max_cost) max_cost = cost;
+    bound = bounds[0];
+    if(ISNA(bound)) {
+	params->max_cost = INT_MAX;
+    } else {
+	if(bound < 1) bound *= (patlen * max_cost);
+	params->max_cost = IntegerFromReal(ceil(bound), &warn);
+	CoercionWarning(warn);
+    }
+    bound = bounds[1];
+    if(ISNA(bound)) {
+	params->max_del = INT_MAX;
+    } else {
+	if(bound < 1) bound *= patlen;
+	params->max_del = IntegerFromReal(ceil(bound), &warn);
+	CoercionWarning(warn);
+    }
+    bound = bounds[2];
+    if(ISNA(bound)) {
+	params->max_ins = INT_MAX;
+    } else {
+	if(bound < 1) bound *= patlen;
+	params->max_ins = IntegerFromReal(ceil(bound), &warn);
+	CoercionWarning(warn);
+    }
+    bound = bounds[3];
+    if(ISNA(bound)) {
+	params->max_subst = INT_MAX;
+    } else {
+	if(bound < 1) bound *= patlen;
+	params->max_subst = IntegerFromReal(ceil(bound), &warn);
+	CoercionWarning(warn);
+    }
+    bound = bounds[4];
+    if(ISNA(bound)) {
+	params->max_err = INT_MAX;
+    } else {
+	if(bound < 1) bound *= patlen;
+	params->max_err = IntegerFromReal(ceil(bound), &warn);
+	CoercionWarning(warn);
+    }
+}
+
 SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     SEXP opt_costs, opt_bounds;
-    int i, j, n, nmatches;
-    int opt_icase, opt_value, useBytes;
-    int opt_fixed;
+    int opt_icase, opt_value, opt_fixed, useBytes;
+    int i, j, n, nmatches, patlen;
     Rboolean useWC = FALSE;
     const void *vmax = NULL;
 
@@ -61,38 +114,39 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     opt_fixed = asLogical(CAR(args));
 
-    if (opt_icase == NA_INTEGER) opt_icase = 0;
-    if (opt_value == NA_INTEGER) opt_value = 0;
-    if (useBytes == NA_INTEGER) useBytes = 0;
-    if (opt_fixed == NA_INTEGER) opt_fixed = 1;
+    if(opt_icase == NA_INTEGER) opt_icase = 0;
+    if(opt_value == NA_INTEGER) opt_value = 0;
+    if(useBytes == NA_INTEGER) useBytes = 0;
+    if(opt_fixed == NA_INTEGER) opt_fixed = 1;
 
-    if (opt_fixed) cflags |= REG_LITERAL;
+    if(opt_fixed) cflags |= REG_LITERAL;
 
-    if (!isString(pat) || length(pat) < 1)
+    if(!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
-    if (length(pat) > 1)
-	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pat");
-    if (!isString(vec)) error(_("invalid '%s' argument"), "x");
+    if(length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
+    
+    if(!isString(vec)) error(_("invalid '%s' argument"), "x");
 
-    if (opt_icase) cflags |= REG_ICASE;
+    if(opt_icase) cflags |= REG_ICASE;
 
     n = LENGTH(vec);
-    if (!useBytes) {
+    if(!useBytes) {
 	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
-	if (!haveBytes)
+	if(!haveBytes)
 	    for (i = 0; i < n; i++)
-		if (IS_BYTES(STRING_ELT(vec, i))) {
+		if(IS_BYTES(STRING_ELT(vec, i))) {
 		    haveBytes = TRUE;
 		    break;
 		}
-	if (haveBytes) useBytes = TRUE;
+	if(haveBytes) useBytes = TRUE;
     }
-    if (!useBytes) {
+    if(!useBytes) {
 	useWC = !strIsASCII(CHAR(STRING_ELT(pat, 0)));
-	if (!useWC) {
+	if(!useWC) {
 	    for (i = 0 ; i < n ; i++) {
-		if (STRING_ELT(vec, i) == NA_STRING) continue;
-		if (!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
+		if(STRING_ELT(vec, i) == NA_STRING) continue;
+		if(!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
 		    useWC = TRUE;
 		    break;
 		}
@@ -100,63 +154,85 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
+    if(STRING_ELT(pat, 0) == NA_STRING) {
+	if(opt_value) {
+	    PROTECT(ans = allocVector(STRSXP, n));
+	    for(i = 0; i < n; i++)
+		SET_STRING_ELT(ans, i, NA_STRING);
+	    SEXP nms = getAttrib(vec, R_NamesSymbol);
+	    if(!isNull(nms))
+		setAttrib(ans, R_NamesSymbol, nms);
+	} else {
+	    PROTECT(ans = allocVector(INTSXP, n));
+	    for(i = 0; i < n; i++)
+		INTEGER(ans)[i] = NA_INTEGER;
+	}
+	UNPROTECT(1);
+	return ans;
+    }
+
+    if(useBytes)
+	PROTECT(call = lang3(install("nchar"), pat,
+			     ScalarString(mkChar("bytes"))));
+    else
+	PROTECT(call = lang3(install("nchar"), pat,
+			     ScalarString(mkChar("chars"))));
+    patlen = asInteger(eval(call, env));
+    UNPROTECT(1);
+    if(!patlen)
+	error(_("'pattern' must be a non-empty character string"));
+
     /* wtransChar and translateChar can R_alloc */
     vmax = vmaxget();
-    if (useBytes)
+    if(useBytes)
 	rc = tre_regcompb(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
-    else if (useWC)
+    else if(useWC)
 	rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
     else {
 	const char *spat = translateChar(STRING_ELT(pat, 0));
-	if (mbcslocale && !mbcsValid(spat))
+	if(mbcslocale && !mbcsValid(spat))
 	    error(_("regular expression is invalid in this locale"));
 	rc = tre_regcomp(&reg, spat, cflags);
     }
-    if (rc) {
+    if(rc) {
 	char errbuf[1001];
 	tre_regerror(rc, &reg, errbuf, 1001);
 	error(_("regcomp error:  '%s'"), errbuf);
     }
 
     tre_regaparams_default(&params);
-    params.cost_ins = INTEGER(opt_costs)[0];;
-    params.cost_del = INTEGER(opt_costs)[1];
-    params.cost_subst = INTEGER(opt_costs)[2];
-    params.max_cost = INTEGER(opt_bounds)[0];
-    params.max_del = INTEGER(opt_bounds)[1];
-    params.max_ins = INTEGER(opt_bounds)[2];
-    params.max_subst = INTEGER(opt_bounds)[3];
-    params.max_err = INTEGER(opt_bounds)[4];
-
+    amatch_regaparams(&params, patlen,
+		      REAL(opt_bounds), INTEGER(opt_costs));
+    
     /* Matching. */
     n = LENGTH(vec);
     PROTECT(ind = allocVector(LGLSXP, n));
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
-	if (STRING_ELT(vec, i) == NA_STRING) {
+	if(STRING_ELT(vec, i) == NA_STRING) {
 	    LOGICAL(ind)[i] = 0;
 	    continue;
 	}
 	/* Perform match. */
 	/* undocumented, must be zeroed */
 	memset(&match, 0, sizeof(match));
-	if (useBytes)
+	if(useBytes)
 	    rc = tre_regaexecb(&reg,
 			       CHAR(STRING_ELT(vec, i)),
 			       &match, params, 0);
-	else if (useWC) {
+	else if(useWC) {
 	    rc = tre_regawexec(&reg,
 			       wtransChar(STRING_ELT(vec, i)), 
 			       &match, params, 0);
 	    vmaxset(vmax);
 	} else {
 	    const char *s = translateChar(STRING_ELT(vec, i));
-	    if (mbcslocale && !mbcsValid(s))
+	    if(mbcslocale && !mbcsValid(s))
 		error(_("input string %d is invalid in this locale"), i+1);
 	    rc = tre_regaexec(&reg, s, &match, params, 0);
 	    vmaxset(vmax);
 	}
-	if (rc == REG_OK) {
+	if(rc == REG_OK) {
 	    LOGICAL(ind)[i] = 1;
 	    nmatches++;
 	} else LOGICAL(ind)[i] = 0;
@@ -166,23 +242,23 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = opt_value
 	    ? allocVector(STRSXP, nmatches)
 	    : allocVector(INTSXP, nmatches));
-    if (opt_value) {
+    if(opt_value) {
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
 	for (j = i = 0 ; i < n ; i++) {
-	    if (LOGICAL(ind)[i])
+	    if(LOGICAL(ind)[i])
 		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
 	}
 	/* copy across names and subset */
-	if (!isNull(nmold)) {
+	if(!isNull(nmold)) {
 	    nm = allocVector(STRSXP, nmatches);
 	    for (i = 0, j = 0; i < n ; i++)
-		if (LOGICAL(ind)[i])
+		if(LOGICAL(ind)[i])
 		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
 	    setAttrib(ans, R_NamesSymbol, nm);
 	}
     } else {
 	for (j = i = 0 ; i < n ; i++)
-	    if (LOGICAL(ind)[i] == 1)
+	    if(LOGICAL(ind)[i] == 1)
 		INTEGER(ans)[j++] = i + 1;
     }
 
@@ -648,7 +724,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     regmatch_t *pmatch;
     regaparams_t params;
     regamatch_t match;
-    int i, j, n, so;
+    int i, j, n, so, patlen;
     int rc, cflags = REG_EXTENDED;
 
     checkArity(op, args);
@@ -693,7 +769,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
                     break;
                 }
 	    }
-	if (haveBytes) useBytes = TRUE;
+	if(haveBytes) useBytes = TRUE;
     }
 
     if(!useBytes) {
@@ -710,8 +786,19 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     
     if(useBytes)
+	PROTECT(call = lang3(install("nchar"), pat,
+			     ScalarString(mkChar("bytes"))));
+    else
+	PROTECT(call = lang3(install("nchar"), pat,
+			     ScalarString(mkChar("chars"))));
+    patlen = asInteger(eval(call, env));
+    UNPROTECT(1);
+    if(!patlen)
+	error(_("'pattern' must be a non-empty character string"));
+
+    if(useBytes)
 	rc = tre_regcompb(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
-    else if (useWC)
+    else if(useWC)
 	rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
     else {
         s = translateChar(STRING_ELT(pat, 0));
@@ -730,14 +817,8 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
 
     tre_regaparams_default(&params);
-    params.cost_ins = INTEGER(opt_costs)[0];;
-    params.cost_del = INTEGER(opt_costs)[1];
-    params.cost_subst = INTEGER(opt_costs)[2];
-    params.max_cost = INTEGER(opt_bounds)[0];
-    params.max_del = INTEGER(opt_bounds)[1];
-    params.max_ins = INTEGER(opt_bounds)[2];
-    params.max_subst = INTEGER(opt_bounds)[3];
-    params.max_err = INTEGER(opt_bounds)[4];
+    amatch_regaparams(&params, patlen,
+		      REAL(opt_bounds), INTEGER(opt_costs));
 
     PROTECT(ans = allocVector(VECSXP, n));
 
@@ -764,7 +845,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    else {
 		t = translateChar(STRING_ELT(vec, i));
-		if (mbcslocale && !mbcsValid(t))
+		if(mbcslocale && !mbcsValid(t))
 		    error(_("input string %d is invalid in this locale"),
 			  i + 1);
 		rc = tre_regaexec(&reg, t,
