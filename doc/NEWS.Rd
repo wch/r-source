@@ -406,6 +406,11 @@
 
       \item \code{str()} now displays reference class objects and their
       fields, rather than treating them as classical S4 classes.
+
+      \item New function \code{aregexec()} in package \pkg{utils} for
+      finding the positions of approximate string matches as well as all
+      substrings corresponding to parenthesized subexpressions of the
+      given regular expression.
     }
   }
 

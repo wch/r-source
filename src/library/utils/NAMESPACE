@@ -1,6 +1,6 @@
 export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        RSiteSearch, URLdecode, URLencode, View, adist, alarm, apropos,
-       argsAnywhere, assignInNamespace, as.roman, as.person,
+       aregexec, argsAnywhere, assignInNamespace, as.roman, as.person,
        as.personList, as.relistable, aspell, aspell_package_Rd_files,
        aspell_package_vignettes,
        aspell_write_personal_dictionary_file, available.packages,
