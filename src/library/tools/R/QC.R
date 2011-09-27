@@ -1662,7 +1662,7 @@ function(package, dir, lib.loc = NULL)
 ##         all_methods_in_package <-
 ##     	    all_methods_in_package %w/o% functions_in_code
     ## Historical exception
-    if(package == "cluster")
+    if(package_name == "cluster")
         all_methods_in_package <-
     	    all_methods_in_package %w/o% functions_in_code
 
