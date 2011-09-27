@@ -73,31 +73,31 @@ isS4 <- function(object)
 asS4 <- function(object, flag = TRUE, complete = TRUE) {
     flag <- methods::as(flag, "logical")
     if(length(flag) != 1L || is.na(flag))
-      stop("Expected a single logical value for the S4 state flag")
+	stop("Expected a single logical value for the S4 state flag")
     .Call("R_setS4Object", object, flag, complete, PACKAGE = "base")
-  }
+}
 
 asS3 <- function(object, flag = TRUE, complete = TRUE) {
     flag <- methods::as(flag, "logical")
     if(length(flag) != 1L || is.na(flag))
-      stop("Expected a single logical value for the S3 state flag")
+	stop("Expected a single logical value for the S3 state flag")
     .Call("R_setS4Object", object, !flag, complete, PACKAGE = "base")
-  }
+}
 
 
 
 .doTrace <- function(expr, msg) {
-    on <- tracingState(FALSE) # turn it off QUICKLY (via a .Call)
+    on <- tracingState(FALSE)	   # turn it off QUICKLY (via a .Call)
     if(on) {
-        on.exit(tracingState(TRUE)) # restore on exit, keep off during trace
-        if(!missing(msg)) {
-            call <- deparse(sys.call(sys.parent(1L)))
-            if(length(call) > 1L)
-              call <- paste(call[[1L]], "....")
-            cat("Tracing", call, msg, "\n")
-        }
-        exprObj <- substitute(expr)
-        eval.parent(exprObj)
+	on.exit(tracingState(TRUE)) # restore on exit, keep off during trace
+	if(!missing(msg)) {
+	    call <- deparse(sys.call(sys.parent(1L)))
+	    if(length(call) > 1L)
+		call <- paste(call[[1L]], "....")
+	    cat("Tracing", call, msg, "\n")
+	}
+	exprObj <- substitute(expr)
+	eval.parent(exprObj)
     }
     NULL
 }

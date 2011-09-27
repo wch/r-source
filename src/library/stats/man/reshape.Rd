@@ -169,4 +169,3 @@ reshape(wide)
 
 }
 \keyword{manip}
-
