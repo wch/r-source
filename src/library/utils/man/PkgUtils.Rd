@@ -47,7 +47,7 @@
   the \env{TAR} environment variable (which is set when \R was
   configured on a Unix-alike).
   
-  \command{R CMD checl} by default unpacks tarballs by the internal
+  \command{R CMD check} by default unpacks tarballs by the internal
   \code{\link{untar}} function: if needed an external \command{tar}
   command can be specified by the environment variable
   \env{R_INSTALL_TAR}: please ensure that it can handle the type of

@@ -2514,7 +2514,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     Usage <- function() {
         cat("Usage: R CMD check [options] pkgs",
             "",
-            " Check R packages from package sources, which can be directories or",
+            "Check R packages from package sources, which can be directories or",
             "package 'tar' archives with extension '.tar.gz', '.tar.bz2' or '.tgz'.",
             "",
             "A variety of diagnostic checks on directory structure, index and",
