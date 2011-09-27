@@ -1649,13 +1649,20 @@ function(package, dir, lib.loc = NULL)
     ## There are situations where S3 methods might be documented as
     ## functions (i.e., with their full name), if they do something
     ## useful also for arguments not inheriting from the class they
-    ## provide a method for.  Let's allow for this in the case the
+    ## provide a method for.
+    ## But they they should be exported under another name, and
+    ## registered as an S3 method.
+    ## Prior to 2.14.0 we used to allow this in the case the
     ## package has a namespace and the method is exported (even though
     ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
     ## cases).
-    ## But only allow this if the NAMESPACE was manually generated.
-    if(has_namespace && !auto_namespace &&
-       !identical(meta["Namespace"], "auto"))
+    ## But this causes discontinuities with adding namespaces.
+##     if(has_namespace && !auto_namespace &&
+##        !identical(meta["Namespace"], "auto"))
+##         all_methods_in_package <-
+##     	    all_methods_in_package %w/o% functions_in_code
+    ## Historical exception
+    if(package == "cluster")
         all_methods_in_package <-
     	    all_methods_in_package %w/o% functions_in_code
 
