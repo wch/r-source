@@ -652,8 +652,17 @@
 
       \item \command{R CMD check} now uses a \code{pdf()} device when
       checking examples (rather than \code{postscript()}).
-    }
-  }
+      
+       \item \command{R CMD check} now gives an NOTE about S3 methods
+       with their full name in the usage even if they are exported from
+       a namespace: in almost all cases they are intended to be used
+       only as methods and should use the \samp{\\method} markup.  In
+       the other rare cases the recommended form is to use a function
+       such as \code{coefHclust} which would not get confused with a
+       method, document that and register it in the \file{NAMESPACE}
+       file by \code{s3method(coef, hclust, coefHclust)}.
+     }
+   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
