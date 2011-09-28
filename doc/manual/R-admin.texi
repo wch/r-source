@@ -1058,9 +1058,9 @@ and a 64-bit version.
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
-@uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  The earliest
-versions that have been tested are @file{libpng-1.4.5.tar.gz},
-@file{jpegsrc.v8b.tar.gz}, @file{tiff-3.9.4.tar.gz} (including betas of
+@uref{http://download.osgeo.org/@/libtiff/}.  The earliest versions
+that have been tested are @file{libpng-1.5.4.tar.gz},
+@file{jpegsrc.v8c.tar.gz}, @file{tiff-3.9.4.tar.gz} (including betas of
 @file{tiff-4.0.0}).  It is also possible to use @samp{libjpeg-turbo}
 from @uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
@@ -1076,12 +1076,12 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.4.5.tar.gz
-> mv libpng-1.4.5 libpng
+> tar -zxf libpng-1.5.4.tar.gz
+> mv libpng-1.5.4 libpng
 > tar -zxf jpegsrc.v8c.tar.gz
-> tar -zxf tiff-3.9.4.tar.gz
-> mv tiff-3.9.4/libtiff .
-> rm -rf tiff-3.9.4
+> tar -zxf tiff-3.9.5.tar.gz
+> mv tiff-3.9.5/libtiff .
+> rm -rf tiff-3.9.5
 @end example
 
 @noindent
@@ -2782,9 +2782,9 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
-@code{zlib} or @code{libtiff} (any recent version of 3.x.y -- 3.8.2 and
-3.9.[124] have been tested) respectively.  They also need support for
-either @code{X11} or @code{cairo} (see above).
+@code{zlib} or @code{libtiff} (any recent version of 3.x.y -- 3.9.[45]
+have been tested) respectively.  They also need support for either
+@code{X11} or @code{cairo} (see above).
 
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
