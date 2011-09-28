@@ -14,7 +14,7 @@
 }
 \usage{
 download.file(url, destfile, method, quiet = FALSE, mode = "w",
-              cacheOK = TRUE)
+              cacheOK = TRUE, extra = getOption("download.file.extra"))
 }
 \arguments{
   \item{url}{A character string naming the URL of a resource to be
@@ -41,7 +41,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   }
 
   \item{cacheOK}{logical.  Is a server-side cached value acceptable?
-    Implemented for the \code{"internal"} and \code{"wget"} methods.}
+    Implemented for the \code{"internal"}, \code{"wget"} and
+    \code{"curl"} methods.}
+
+  \item{extra}{character vector of additional command-line arguments for
+    the \code{"wget"}, \code{"curl"} and \code{"lynx"} methods.}
 }
 \details{
   The function \code{download.file} can be used to download a single

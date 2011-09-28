@@ -412,6 +412,12 @@
       finding the positions of approximate string matches as well as all
       substrings corresponding to parenthesized subexpressions of the
       given regular expression.
+
+      \item \code{download.file()} has an \code{extra} argument to pass
+      additional command-line options to the non-default methods using
+      command-line utilities.
+
+      \code{cacheOK = FALSE} is now supported for \code{method = "curl"}.
     }
   }
 

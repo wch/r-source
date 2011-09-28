@@ -103,6 +103,9 @@ getOption(x, default = NULL)
       print when formatting time values in seconds.  Valid values
       are 0\dots6 with default 0.  See \code{\link{strftime}}.}
 
+    \item{\code{download.file.extra}:}{Extra command-line argument(s) for
+      non-default methods: see \code{\link{download.file}}.}
+    
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
       \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.
