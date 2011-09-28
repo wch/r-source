@@ -88,9 +88,9 @@ rc <- uniroot(function(x) cos(x) - x, lower=-pi, upper=pi, tol = 1e-9)
 rc$root
 
 str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
-            tol = 0.0001), digits.d = 10)
+            tol = 0.0001))
 str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
-            tol = 1e-10 ), digits.d = 10)
+            tol = 1e-10 ))
 
 \donttest{
 ## Find the smallest value x for which exp(x) > 0 (numerically):
