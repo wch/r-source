@@ -103,7 +103,7 @@
       (Wish of \PR{14550}.)
 
       \item \code{smooth.spline()} gains a \code{tol} argument which
-      controls how different \code{x} values need to be to regarded as
+      controls how different \code{x} values need to be to be treated as
       distinct.  The default has been changed to be more reliable for
       inputs whose range is small compared to their maximum absolute
       value.  (Wish of \PR{14452}.)
@@ -200,13 +200,14 @@
       \item Character-string arguments such as the \code{mode} argument
       of \code{vector()}, \code{as.vector()} and \code{is.vector()} and
       the \code{description} argument of \code{file()} are required to
-      be of length one, rather than any further elements being silently
-      discarded.  This helps catch incorrect usage in programming.
+      be of length exactly one, rather than any further elements being
+      silently discarded.  This helps catch incorrect usage in
+      programming.
 
       \item The \code{length} argument of \code{vector()} and its
-      wrappers such as \code{numeric()} is required to be of length 1
-      (other values are an error rather than giving a warning as
-      previously).
+      wrappers such as \code{numeric()} is required to be of length
+      exactly one (other values are now an error rather than giving a
+      warning as previously).
 
       \item \code{vector(len)} and \code{length(x) <- len} no longer
       acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
@@ -376,8 +377,8 @@
       should be kept as is.
 
       \item \code{available.packages()} now works around servers that
-      fail to return an error when \file{PACKAGES.gz} does not exist.
-      (Patch submitted by Seth Schommer.)
+      fail to return an error code when \file{PACKAGES.gz} does not
+      exist.  (Patch submitted by Seth Schommer.)
 
       \item \code{readBin()} can now read more than
       \eqn{2^{31}-1}{2^31 - 1} bytes in a single call (the previously
@@ -388,7 +389,7 @@
       subexpressions of the given regular expression.
 
       \item New function \code{adist()} in package \pkg{utils} for
-      computing approximate (generalized Levenshtein) distances between
+      computing \sQuote{edit} (generalized Levenshtein) distances between
       strings.
 
       \item Class \code{"raster"} gains an \code{is.na} method to avoid
@@ -589,7 +590,7 @@
       \code{.onAttach()}.  For the time being, if there is an
       auto-generated \file{NAMESPACE} file and no \code{.onLoad()} nor
       \code{.onAttach()} function is found but \code{.First.lib()} is,
-      it will be run as the attach hook (unless the package one of a
+      it will be run as the attach hook (unless the package is one of a
       list of known exceptions, when it will be run as the load hook).
 
       \item A warning is given if test-loading a package changes a
@@ -614,32 +615,10 @@
       \item \command{R CMD check} now gives an error if the \R code in a
       vignette fails to run, unless this is caused by a missing package.
 
-      It now unpacks tarballs in the same way as \command{R CMD
-	INSTALL}, including making use of the environment variable
-      \env{R_INSTALL_TAR} to override the default behaviour.
-
-      \item \command{R CMD check} now reports what look like methods
-      documented with their full names even if there is a namespace and
-      they are exported (as this happens a lot with automatically
-      constructed namespaces).
-
-      \item The default for the environment variable
-      \env{_R_CHECK_COMPACT_DATA2_} is now true: thus if using the newer
-      forms of compression introduced in \R 2.10.0 would be beneficial
-      is now checked (by default).
-
-      \item \command{R CMD Rd2dvi} allows the use of LaTeX package
-      \samp{inputenx} rather than \samp{inputenc}: the value of the
-      environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
-      \samp{inputenx} is an optional install which provides greater
-      coverage of the UTF-8 encoding.)
-
-      \item \command{Rscript} on a Unix-alike now accepts file names
-      containing spaces (if these are escaped or quoted in the shell).
-
-      \item \command{R CMD build} on a Unix-alike (only) now tries to
-      preserve dates on files it copies from its input directory.  (This
-      was the undocumented behaviour prior to \R 2.13.0.)
+      \item \command{R CMD check} now unpacks tarballs in the same way
+	as \command{R CMD INSTALL}, including making use of the
+	environment variable \env{R_INSTALL_TAR} to override the default
+	behaviour.
 
       \item \command{R CMD check} performs additional code analysis of
       package startup functions, and notifies about incorrect argument
@@ -653,14 +632,34 @@
       \item \command{R CMD check} now uses a \code{pdf()} device when
       checking examples (rather than \code{postscript()}).
       
-       \item \command{R CMD check} now gives an NOTE about S3 methods
-       with their full name in the usage even if they are exported from
-       a namespace: in almost all cases they are intended to be used
-       only as methods and should use the \samp{\\method} markup.  In
-       the other rare cases the recommended form is to use a function
-       such as \code{coefHclust} which would not get confused with a
-       method, document that and register it in the \file{NAMESPACE}
-       file by \code{s3method(coef, hclust, coefHclust)}.
+      \item \command{R CMD check} now reports as a NOTE what look like
+      methods documented with their full names even if there is a
+      namespace and they are exported.  In almost all cases they are
+      intended to be used only as methods and should use the
+      \samp{\\method} markup.  In the other rare cases the recommended
+      form is to use a function such as \code{coefHclust} which would
+      not get confused with a method, document that and register it in
+      the \file{NAMESPACE} file by \code{s3method(coef, hclust,
+      coefHclust)}.
+
+      \item The default for the environment variable
+      \env{_R_CHECK_COMPACT_DATA2_} is now true: thus if using the newer
+      forms of compression introduced in \R 2.10.0 would be beneficial
+      is now checked (by default).
+
+      \item \command{R CMD Rd2dvi} allows the use of LaTeX package
+      \samp{inputenx} rather than \samp{inputenc}: the value of the
+      environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
+      \samp{inputenx} is an optional install which provides greater
+      coverage of the UTF-8 encoding.)
+
+      \item \command{Rscript} on a Unix-alike now accepts file names
+      containing spaces (provided these are escaped or quoted in the
+      shell).
+
+      \item \command{R CMD build} on a Unix-alike (only) now tries to
+      preserve dates on files it copies from its input directory.  (This
+      was the undocumented behaviour prior to \R 2.13.0.)
      }
    }
 
@@ -851,7 +850,7 @@
       in a single call.
 
       \item PCRE has been updated to version 8.13, a bug-fix release
-      with updated Unicode tables (version 6.0.0). An additional patch
+      with updated Unicode tables (version 6.0.0).  An additional patch
       (r611 from PCRE 8.20-to-be) has been added to fix a collation
       symbol recognition issue.
     }
