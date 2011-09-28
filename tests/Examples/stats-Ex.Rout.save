@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-09-27 r57095)
+R Under development (unstable) (2011-09-28 r57097)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -16562,39 +16562,6 @@ Frequency = 1
 > ### Keywords: optimize
 > 
 > ### ** Examples
-> 
-> require(utils) # for str
-> 
-> ## some platforms hit zero exactly on the first step:
-> ## if so the estimated precision is 2/3.
-> f <- function (x,a) x - a
-> str(xmin <- uniroot(f, c(0, 1), tol = 0.0001, a = 1/3))
-List of 4
- $ root      : num 0.333
- $ f.root    : num -5.55e-17
- $ iter      : int 2
- $ estim.prec: num 5e-05
-> 
-> ## handheld calculator example: fixpoint of cos(.):
-> rc <- uniroot(function(x) cos(x) - x, lower=-pi, upper=pi, tol = 1e-9)
-> rc$root
-[1] 0.7390851
-> 
-> str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
-+             tol = 0.0001))
-List of 4
- $ root      : num -1.19
- $ f.root    : num -2.55e-07
- $ iter      : int 7
- $ estim.prec: num 5e-05
-> str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
-+             tol = 1e-10 ))
-List of 4
- $ root      : num -1.19
- $ f.root    : num 5.67e-11
- $ iter      : int 8
- $ estim.prec: num 5e-11
-> 
 > 
 > 
 > cleanEx()
