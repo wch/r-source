@@ -1018,6 +1018,23 @@ function(x, ...)
     invisible(x)
 }
 
+## Experimental summary methods.
+## Cannot easily make this the print method, because PDF dictionary
+## and stream objects can be recursive ...
+
+summary.PDF_Dictionary <-
+function(object, ...)
+    writeLines(sprintf("%s: %s", names(object), sapply(object, format)))
+
+summary.PDF_Stream <-
+function(object, ...)
+{
+    if(!is.null(bytes <- object[["__stream_bytes__"]]))
+        object[["__stream_bytes__"]] <-
+            sprintf("%d bytes", length(bytes))
+    writeLines(sprintf("%s: %s", names(object), sapply(object, format)))
+}
+
 ## <NOTE>
 ## Handled by pdf_read_object_keyword() now.
 ##
@@ -1129,14 +1146,19 @@ function(con, pos, num = NA_integer_, gen = NA_integer_, doc = NULL)
         stop(gettextf("cannot find object header at xrefed position %d",
                       pos),
              domain = NA)
+    ## Apparently it is feasible to have cross-references to indirect
+    ## objects with actually different object and/or generation numbers:
+    ## as of 2011-09-27, grImport/inst/doc/Rnewspage27.pdf had both
+    ## objects 69 and 70 point to the same offset [providing object 70].
+    ## For now, give a message and proceed.
     if(!is.na(num) && (num != hdr["num"]))
-        stop(gettextf("mismatch in object numbers (given: %d, found: %d)",
-                      num, hdr["num"]),
-             domain = NA)
+        message(gettextf("mismatch in object numbers (given: %d, found: %d)",
+                         num, hdr["num"]),
+                domain = NA)
     if(!is.na(gen) && (gen != hdr["gen"]))
-        stop(gettextf("mismatch in generation numbers (given: %d, found: %d)",
-                      gen, hdr["gen"]),
-             domain = NA)
+        message(gettextf("mismatch in generation numbers (given: %d, found: %d)",
+                         gen, hdr["gen"]),
+                domain = NA)
     ## Read object.
     pdf_read_object(con, doc)
 }

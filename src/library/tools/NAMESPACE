@@ -120,6 +120,9 @@ S3method("print", "check_packages_used")
 S3method("print", "check_so_symbols")
 S3method("print", "check_vignette_index")
 
+S3method("summary", "PDF_Dictionary")
+S3method("summary", "PDF_Stream")
+
 S3method("toHTML", "news_db")
 S3method("toHTML", "packageIQR")
 
