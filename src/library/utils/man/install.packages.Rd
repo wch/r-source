@@ -155,17 +155,17 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
   also available, and the type most commonly used by Windows and users
-  of the Mac OS X GUI \code{R.app}.  \code{install.packages} can install
-  either type, either by downloading a file from a repository or from a
-  local file.  The default type is given by
+  of the Mac OS X GUI \code{R.app}.  This function can install either
+  type where supported, either by downloading a file from a repository
+  or from a local file.  The default type is given by
   \code{\link{getOption}("pkgType")}: this is \code{"source"} apart from
   under Windows or a CRAN binary distribution for Mac OS X.
   
-  \code{install.packages} is used to install packages. It takes
+  This is the main function to install packages. It takes
   a vector of names and a destination library, downloads the packages
   from the repositories and installs them.  (If the library is omitted
   it defaults to the first directory in \code{.libPaths()}, with a
-  warning if there is more than one.)  If \code{lib} is omitted or is of
+  message if there is more than one.)  If \code{lib} is omitted or is of
   length one and is not a (group) writable directory, the code offers
   to create a personal library tree (the first element of
   \code{Sys.getenv("R_LIBS_USER")}) and install there.
@@ -180,16 +180,17 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   library path for installs (set by \env{R_LIBS}).
 #ifdef windows
   
-  Using packages with \code{type = "source"} works on Windows provided
-  the package contains no C/C++/Fortran code that needs compilation,
-  Otherwise you will need to have installed the Rtools collection as
-  described in the \sQuote{R for Windows FAQ} \emph{and} you must have the
-  \env{PATH} set up as required by Rtools.
+  Using packages with \code{type = "source"} always works on Windows
+  provided the package contains no C/C++/Fortran code that needs
+  compilation.  Otherwise you will need to have installed the Rtools
+  collection as described in the \sQuote{R for Windows FAQ} \emph{and}
+  you must have the \env{PATH} environment variable set up as required
+  by Rtools.
   
   When installing a binary package, \code{install.packages} will abort
   the install if it detects that the package is already installed and is
   currently in use.  In some circumstances (e.g. multiple instances of
-  R running at the same time and sharing a library) it will not detect a
+  \R running at the same time and sharing a library) it will not detect a
   problem, but the installation may fail.
 #endif
  
@@ -214,7 +215,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   package to restore on error.  A finer-grained locking is provided by
   the option \option{--pkglock} which creates a separate lock for each
   package: this allows enough freedom for parallel
-  installation. Per-package locking is the default when installing a
+  installation.  Per-package locking is the default when installing a
   single package, and for multiple packages when \code{Ncpus > 1L}
   Finally locking (and restoration on error) can be suppressed by
   \option{--no-lock}.
