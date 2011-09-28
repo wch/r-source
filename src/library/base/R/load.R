@@ -14,8 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-load <-
-    function (file, envir = parent.frame())
+load <- function (file, envir = parent.frame())
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
@@ -25,7 +24,8 @@ load <-
         ## Since the connection is not open this opens it in binary mode
         ## and closes it again.
         magic <- readChar(con, 5L, useBytes = TRUE)
-        if (!grepl("RD[AX]2\n", magic)) {
+	if (!length(magic)) stop("empty (zero-byte) input file")
+	if (!grepl("RD[AX]2\n", magic)) {
             ## a check while we still know the call to load()
             if(grepl("RD[ABX][12]\r", magic))
                 stop("input has been corrupted, with LF replaced by CR")
