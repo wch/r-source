@@ -55,6 +55,7 @@ julian(x, \dots)
 
   \code{julian} returns the number of days (possibly fractional)
   since the origin, with the origin as a \code{"origin"} attribute.
+  All time calculations in \R are done ignoring leap-seconds.
 }
 \note{
   Other components such as the day of the month or the year are
@@ -74,7 +75,10 @@ quarters(.leap.seconds)
 
 ## Julian Day Number (JDN, http://en.wikipedia.org/wiki/Julian_day)
 ## is the number of days since noon UTC on the first day of 4317 BC.
-julian(Sys.Date(), -2440588) # for a day
-floor(as.numeric(julian(Sys.time())) + 2440587.5) # for a date-time
+## in the proleptic Julian calendar.  To more recently, in
+## 'Terrestrial Time' which differs from UTC by a few seconds
+## See http://en.wikipedia.org/wiki/Terrestrial_Time
+julian(Sys.Date(), -2440588) # from a day
+floor(as.numeric(julian(Sys.time())) + 2440587.5) # from a date-time
 }}
 \keyword{chron}
