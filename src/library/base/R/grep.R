@@ -88,8 +88,9 @@ function(pattern, text, ignore.case = FALSE,
     .Internal(regexec(pattern, text, ignore.case, fixed, useBytes))
 
 agrep <-
-function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
-         useBytes = FALSE, fixed = TRUE, costs = NULL)
+function(pattern, x, max.distance = 0.1, costs = NULL,
+         ignore.case = FALSE, value = FALSE, fixed = TRUE,
+         useBytes = FALSE)
 {
     pattern <- as.character(pattern)
     if(!is.character(x))

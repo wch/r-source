@@ -17,9 +17,9 @@
   transform one string into another).
 }
 \usage{
-agrep(pattern, x, ignore.case = FALSE, value = FALSE,
-      max.distance = 0.1, useBytes = FALSE, fixed = TRUE,
-      costs = NULL)
+agrep(pattern, x, max.distance = 0.1, costs = NULL, 
+      ignore.case = FALSE, value = FALSE, fixed = TRUE,
+      useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{a non-empty character string or a character string
@@ -29,11 +29,6 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   \item{x}{character vector where matches are sought.
     Coerced by \code{\link{as.character}} to a character vector if
     possible.}
-  \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
-      sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{value}{if \code{FALSE}, a vector containing the (integer)
-    indices of the matches determined is returned and if \code{TRUE}, a
-    vector containing the matching elements themselves is returned.}
   \item{max.distance}{Maximum distance allowed for a match.  Expressed
     either as integer, or as a fraction of the \emph{pattern} length
     times the maximal transformation cost (will be replaced by the
@@ -53,17 +48,22 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
     other transformation number bounds default to \code{all}.
     The component names can be abbreviated.
   }
-  \item{useBytes}{logical. in a multibyte locale, should the comparison
-    be character-by-character (the default) or byte-by-byte.}
-  \item{fixed}{logical.  If \code{TRUE} (default), the pattern is
-    matched literally (as is).  Otherwise, it is matched as a regular
-    expression.}
   \item{costs}{a numeric vector or list with names partially matching
     \samp{insertions}, \samp{deletions} and \samp{substitutions} giving
     the respective costs for computing the generalized Levenshtein
     distance, or \code{NULL} (default) indicating using unit cost for
     all three possible transformations.
     Coerced to integer via \code{\link{as.integer}} if possible.}
+  \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
+      sensitive} and if \code{TRUE}, case is ignored during matching.}
+  \item{value}{if \code{FALSE}, a vector containing the (integer)
+    indices of the matches determined is returned and if \code{TRUE}, a
+    vector containing the matching elements themselves is returned.}
+  \item{fixed}{logical.  If \code{TRUE} (default), the pattern is
+    matched literally (as is).  Otherwise, it is matched as a regular
+    expression.}
+  \item{useBytes}{logical. in a multibyte locale, should the comparison
+    be character-by-character (the default) or byte-by-byte.}
 }
 \details{
   The Levenshtein edit distance is used as measure of approximateness:
