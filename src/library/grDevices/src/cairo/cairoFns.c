@@ -401,43 +401,44 @@ static SEXP Cairo_Cap(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     cairo_surface_t* screen;
     cairo_format_t format;
-    unsigned char *screenData;
+    unsigned int *screenData;
     SEXP dim, raster = R_NilValue;
     unsigned int *rint;
 
     screen = cairo_surface_reference(cairo_get_target(xd->cc));
     width = cairo_image_surface_get_width(screen);
     height = cairo_image_surface_get_height(screen);
-    screenData = cairo_image_surface_get_data(screen);
+    screenData = (unsigned int*) cairo_image_surface_get_data(screen);
 
     /* The type of image surface will depend on what sort
      * of X11 color model has been used */
     format = cairo_image_surface_get_format(screen);
     /* For now, if format is not RGB24 just bail out */
-    if (format != CAIRO_FORMAT_RGB24) 
+    if (format != CAIRO_FORMAT_RGB24) {
+	cairo_surface_destroy(screen);
         return raster;
+    }
         
     size = width*height;
 
+    /* FIXME: the screen surface reference will leak if allocVector() fails */
     PROTECT(raster = allocVector(INTSXP, size));
 
     /* Copy each byte of screen to an R matrix. 
-     * The Cairo RGB24 needs to be converted to an R ABGR32 */
+     * The Cairo RGB24 needs to be converted to an R ABGR32.
+     * Cairo uses native endiannes (A=msb,R,G,B=lsb) so use int* instead of char* */
     rint = (unsigned int *) INTEGER(raster);
-    for (i=0; i<size; i++) {
-        rint[i] = 255u << 24 | 
-	    ((screenData[i*4])<<16 | 
-	     (screenData[i*4 + 1])<<8 |
-	     (screenData[i*4 + 2]));
-    }
+    for (i = 0; i < size; i++)
+        rint[i] = R_RGB((screenData[i] >> 16) & 255, (screenData[i] >> 8) & 255, screenData[i] & 255);
     
+    /* Release MY reference to the screen surface (do it here in case anything fails below) */
+    cairo_surface_destroy(screen);    
+
     PROTECT(dim = allocVector(INTSXP, 2));
     INTEGER(dim)[0] = height;
     INTEGER(dim)[1] = width;
     setAttrib(raster, R_DimSymbol, dim);
 
-    /* Release MY reference to the screen surface */
-    cairo_surface_destroy(screen);    
     UNPROTECT(2);
     return raster;
 }

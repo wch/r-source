@@ -817,6 +817,9 @@
       not pass on argument \code{digits} when \code{summary()} was
       called on a single object, and hence used more digits than
       documented.
+
+      \item X11 cairo back-end produced incorrect capture snapshot
+      images on big-endian machines.
     }
   }
 }
