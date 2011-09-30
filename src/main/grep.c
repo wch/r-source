@@ -722,7 +722,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ind, ans;
     regex_t reg;
-    int i, j, n, nmatches = 0, ov, rc;
+    int i, j, n, nmatches = 0, ov[3], rc;
     int igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
     const char *spat = NULL;
     pcre *re_pcre = NULL /* -Wall */;
@@ -880,7 +880,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (fixed_opt)
 		LOGICAL(ind)[i] = fgrep_one(spat, s, useBytes, use_UTF8, NULL) >= 0;
 	    else if (perl_opt) {
-		if (pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, &ov, 0) >= 0)
+		if (pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, ov, 0) >= 0)
 		    INTEGER(ind)[i] = 1;
 	    } else {
 		if (!use_WC)
