@@ -39,6 +39,10 @@
         cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
             "}\n", sep = "", file = out)
     for (f in fields) {
+        ## Drop 'Authors@R' for now: this is formatted badly by \AsIs,
+        ## and ideally was used for auto-generating the Author and
+        ## Maintainer fields anyways ...
+        if(f == "Authors@R") next
         text <- desc[f]
         ## munge 'text' appropriately (\\, {, }, "...")
         ## not sure why just these: copied from Rd2dvi, then added to.
@@ -61,8 +65,8 @@
                          text, useBytes = TRUE)
         if(f == "URL")
             text <- gsub("(http://|ftp://)([^[:space:]]+)",
-                         "}\\\\url{\\1\\2}\\\\AsIs{", text,
-                         useBytes = TRUE)
+                         "}\\\\url{\\1\\2}\\\\AsIs{",
+                         text, useBytes = TRUE)
         text <- paste("\\AsIs{", text, "}", sep = "")
         ## Not entirely safe: in theory, tags could contain \ ~ ^.
         cat("\\item[", gsub("([#$%&_{}])", "\\\\\\1", f),
