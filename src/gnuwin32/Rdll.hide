@@ -661,6 +661,7 @@
  do_detach
  do_devAskNewPage
  do_devcap
+ do_devcapture
  do_devcontrol
  do_devcopy
  do_devcur

@@ -465,6 +465,10 @@
       \code{quartz()} and the cairographics-based \code{X11()} types
       with buffering (which are the default on-screen devices).
 
+      \item New function \code{dev.capture()} for capture of bitmap
+      snapshots of image-based devices (a superset of the functionality
+      provided by \code{grid.cap()} in \code{grid}).
+
       \item The default \code{colormodel} for \code{pdf()} and
       \code{postscript()} is now called \code{"srgb"} to more accurately
       describe it.  (Instead of \code{"rgb"}, and in the case of

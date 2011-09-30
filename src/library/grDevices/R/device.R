@@ -346,6 +346,8 @@ dev.size <- function(units = c("in", "cm", "px"))
 dev.hold <- function(level = 1L) .Internal(devHoldFlush(max(0L, level)))
 dev.flush <- function(level = 1L) .Internal(devHoldFlush(-max(0L, level)))
 
+dev.capture <- function(native = FALSE) .Internal(devCapture(native))
+
 dev.capabilities <- function(what = NULL)
 {
     zz <- .Internal(dev.capabilities())

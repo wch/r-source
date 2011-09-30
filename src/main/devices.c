@@ -637,3 +637,50 @@ SEXP attribute_hidden do_devcap(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+
+SEXP attribute_hidden do_devcapture(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int i, col, row, nrow, ncol, size;
+    Rboolean native;
+    pGEDevDesc gdd = GEcurrentDevice();
+    int *rint;
+    SEXP raster, image, idim;
+    
+    checkArity(op, args);
+
+    native = asLogical(CAR(args));
+    if (native != TRUE) native = FALSE;
+
+    raster = GECap(gdd);
+    if (isNull(raster)) /* NULL = unsupported */
+	return raster;
+
+    PROTECT(raster);
+    if (native) {
+	setAttrib(raster, R_ClassSymbol, mkString("nativeRaster"));
+	UNPROTECT(1);
+	return raster;
+    }
+
+    /* non-native, covert to color strings (this is based on grid.cap) */
+    size = LENGTH(raster);
+    nrow = INTEGER(getAttrib(raster, R_DimSymbol))[0];
+    ncol = INTEGER(getAttrib(raster, R_DimSymbol))[1];
+        
+    PROTECT(image = allocVector(STRSXP, size));
+    rint = INTEGER(raster);
+    for (i = 0; i < size; i++) {
+	col = i % ncol + 1;
+	row = i / ncol + 1;
+	SET_STRING_ELT(image, (col - 1) * nrow + row - 1, 
+		       mkChar(col2name(rint[i])));
+    }
+        
+    PROTECT(idim = allocVector(INTSXP, 2));
+    INTEGER(idim)[0] = nrow;
+    INTEGER(idim)[1] = ncol;
+    setAttrib(image, R_DimSymbol, idim);
+    UNPROTECT(3);
+
+    return image;    
+}
