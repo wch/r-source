@@ -11,6 +11,8 @@
 \description{
   Utility functions to access and replace the non-exported functions in
   a namespace, for use in developing packages with namespaces.
+
+  They should not be used in production code.
 }
 \usage{
 getFromNamespace(x, ns, pos = -1, envir = as.environment(pos))
@@ -42,6 +44,11 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \code{fixInNamespace} invokes \code{\link{edit}} on the object named
   \code{x} and assigns the revised object in place of the original
   object.  For compatibility with \code{fix}, \code{x} can be unquoted.
+}
+\section{Warning}{
+  \code{assignInNamespace} should not be used in final code, and will in
+  future throw an error if called from a package.  Already certain uses
+  are disallowed.
 }
 \note{
   \code{assignInNamespace} and \code{fixInNamespace} change the copy in
