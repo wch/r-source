@@ -13,7 +13,7 @@
   \code{\link{axis}(side)} would use.
 }
 \usage{
-axTicks(side, axp = NULL, usr = NULL, log = NULL)
+axTicks(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
 }
 \arguments{
   \item{side}{integer in 1:4, as for \code{\link{axis}}.}
@@ -29,6 +29,11 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
   \item{log}{logical indicating if log coordinates are active; defaults
     to \code{\link{par}("xlog")} or \code{\link{par}("ylog")}
     depending on \code{side}.}
+  \item{nintLog}{(only used when \code{log} is true): approximate (lower
+    bound for the) number of tick intervals; defaults to
+    \code{\link{par}("lab")[j]} where \code{j} is 1 or 2 depending on
+    \code{side}.  Set this to \code{Inf} if you want the same behavior
+    as in earlier \R versions (than 2.14.x).}
 }
 \details{
   The \code{axp}, \code{usr}, and \code{log} arguments must be consistent
@@ -38,21 +43,27 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
   when \code{log} is \code{TRUE}; see the documentation on
   \code{\link{par}(xaxp=.)}.
 
-  \code{axTicks()} can be regarded as an \R implementation  of the
-  C function \code{CreateAtVector()} in \file{..../src/main/plot.c}
+  \code{axTicks()} can be used an \R interface to the C function
+  \code{CreateAtVector()} in \file{..../src/main/plot.c}
   which is called by \code{\link{axis}(side,*)} when no argument
   \code{at} is specified.
+  The delicate case, \code{log = TRUE}, now makes use of
+  \code{\link{axisTicks}} (in package \pkg{grDevices}) unless
+  \code{nintLog = Inf} which existsfor back compatibility.
 }
 \value{
   numeric vector of coordinate values at which axis tickmarks can be
   drawn.  By default, when only the first argument is specified,
   these values should be identical to those that
-  \code{\link{axis}(side)} would use or has used.
+  \code{\link{axis}(side)} would use or has used.  Note that the values
+  are decreasing when \code{usr} is (\dQuote{reverse axis} case).
 }
 \seealso{\code{\link{axis}}, \code{\link{par}}.  \code{\link{pretty}}
   uses the same algorithm (but independently of the graphics
   environment) and has more options.  However it is not available for
   \code{log = TRUE.}
+
+  \code{\link[grDevices]{axisTicks}()} (package \pkg{grDevices}).
 }
 \examples{
  plot(1:7, 10*21:27)
@@ -66,9 +77,14 @@ op <- par(mfrow = c(3,1))
 for(x in 9999*c(1,2,8)) {
     plot(x,9, log = "x")
     cat(formatC(par("xaxp"), width=5),";", T <- axTicks(1),"\n")
-    rug(T, col="red")
+    rug(T, col= adjustcolor("red", 0.5), lwd = 4)
 }
 par(op)
+
+x <- 9.9*10^(-3:10)
+plot(x, 1:14, log = "x")
+axTicks(1) # now length 5, in R <= 2.13.x gave the following
+axTicks(1, nintLog=Inf)# rather too many
 
 ## An example using axTicks() without reference to an existing plot
 ## (copying R's internal procedures for setting axis ranges etc.),

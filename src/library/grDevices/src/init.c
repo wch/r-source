@@ -73,8 +73,11 @@ static R_CMethodDef CEntries [] = {
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef CallEntries[] = {
+    // NB: each *also* needs an entry in useDynLib() in ../NAMESPACE !
     CALLDEF(Type1FontInUse, 2),
     CALLDEF(CIDFontInUse, 2),
+    CALLDEF(R_CreateAtVector, 4),
+    CALLDEF(R_GAxisPars, 3),
     {"R_GD_nullDevice", (DL_FUNC) &R_GD_nullDevice, 0},
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),

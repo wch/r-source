@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2011  The R Development Core Team
- *  Copyright (C) 2002--2005  The R Foundation
+ *  Copyright (C) 2002--2011  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include <Defn.h>
 #include <float.h> /* for DBL_EPSILON etc */
 #include <Graphics.h>
+// --> R_ext/GraphicsEngine.h + Rgraphics.h
 #include <GraphicsBase.h>       /* setBaseDevice */
 #include <Rmath.h>		/* eg. fmax2() */
 
@@ -1851,6 +1852,55 @@ pGEDevDesc GNewPlot(Rboolean recording)
 }
 #undef G_ERR_MSG
 
+// used in GScale(), but also ../library/grDevices/src/axis_scales.c :
+// (usr, log, n_inp) |--> (axp, n_out) :
+void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
+{
+#define EPS_FAC_2 100
+    Rboolean swap = *min > *max;
+    double t_, min_o, max_o;
+
+    if(swap) { /* Feature: in R, something like  xlim = c(100,0)  just works */
+	t_ = *min; *min = *max; *max = t_;
+    }
+    /* save only for the extreme case (EPS_FAC_2): */
+    min_o = *min; max_o = *max;
+
+    if(log) {
+	/* Avoid infinities */
+	if(*max > 308) *max = 308;
+	if(*min < -307) *min = -307;
+	*min = pow(10., *min);
+	*max = pow(10., *max);
+	GLPretty(min, max, n);
+    }
+    else GPretty(min, max, n);
+
+    double tmp2 = EPS_FAC_2 * DBL_EPSILON;/* << prevent overflow in product below */
+    if(fabs(*max - *min) < (t_ = fmax2(fabs(*max), fabs(*min)))* tmp2) {
+	/* Treat this case somewhat similar to the (min ~= max) case above */
+	/* Too much accuracy here just shows machine differences */
+	warning(_("relative range of values =%4.0f * EPS, is small (axis %d)")
+		/*"to compute accurately"*/,
+		fabs(*max - *min) / (t_*DBL_EPSILON), axis);
+
+	/* No pretty()ing anymore */
+	*min = min_o;
+	*max = max_o;
+	double eps = .005 * fabs(*max - *min);/* .005: not to go to DBL_MIN/MAX */
+	*min += eps;
+	*max -= eps;
+	if(log) {
+	    *min = pow(10., *min);
+	    *max = pow(10., *max);
+	}
+	*n = 1;
+    }
+    if(swap) {
+	t_ = *min; *min = *max; *max = t_;
+    }
+}
+
 void GScale(double min, double max, int axis, pGEDevDesc dd)
 {
 /* GScale: used to default axis information
@@ -1858,9 +1908,8 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
  * NB: can have min > max !
  */
 #define EPS_FAC_1  16
-#define EPS_FAC_2 100
 
-    Rboolean swap, is_xaxis = (axis == 1 || axis == 3);
+    Rboolean is_xaxis = (axis == 1 || axis == 3);
     int log, n, style;
     double temp, min_o = 0., max_o = 0., tmp2 = 0.;/*-Wall*/
 
@@ -1947,57 +1996,14 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	}
     }
 
-    /* ------  The following : Only computation of [xy]axp[0:2] ------- */
-
     /* This is not directly needed when [xy]axt = "n",
      * but may later be different in another call to axis(), e.g.:
       > plot(1, xaxt = "n");  axis(1)
-     * In that case, do_axis() should do the following.
-     * MM: May be we should modularize and put the following into another
-     * subroutine which could be called by do_axis {when [xy]axt != 'n'} ..
+     * In that case, do_axis() should do the following:
      */
 
-    swap = min > max;
-    if(swap) { /* Feature: in R, something like  xlim = c(100,0)  just works */
-	temp = min; min = max; max = temp;
-    }
-    /* save only for the extreme case (EPS_FAC_2): */
-    min_o = min; max_o = max;
-
-    if(log) {
-	/* Avoid infinities */
-	if(max > 308) max = 308;
-	if(min < -307) min = -307;
-	min = pow(10., min);
-	max = pow(10., max);
-	GLPretty(&min, &max, &n);
-    }
-    else GPretty(&min, &max, &n);
-
-    tmp2 = EPS_FAC_2 * DBL_EPSILON;/* << prevent overflow in product below */
-    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* tmp2) {
-	/* Treat this case somewhat similar to the (min ~= max) case above */
-	/* Too much accuracy here just shows machine differences */
-	warning(_("relative range of values =%4.0f * EPS, is small (axis %d)")
-		/*"to compute accurately"*/,
-		fabs(max - min) / (temp*DBL_EPSILON), axis);
-
-	/* No pretty()ing anymore */
-	min = min_o;
-	max = max_o;
-	temp = .005 * fabs(max - min);/* .005: not to go to DBL_MIN/MAX */
-	min += temp;
-	max -= temp;
-	if(log) {
-	    min = pow(10., min);
-	    max = pow(10., max);
-	}
-	n = 1;
-    }
-
-    if(swap) {
-	temp = min; min = max; max = temp;
-    }
+    // Computation of [xy]axp[0:2] == (min,max,n) :
+    GAxisPars(&min, &max, &n, log, axis);
 
 #define G_Store_AXP(is_X)			\
     if(is_X) {					\
@@ -2903,7 +2909,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     GERect(x0, y0, x1, y1, &gc, dd);
 }
 
-void GPath(double *x, double *y, 
+void GPath(double *x, double *y,
            int npoly, int *nper,
            Rboolean winding,
            int bg, int fg, pGEDevDesc dd)
@@ -2922,9 +2928,9 @@ void GPath(double *x, double *y,
     GEPath(x, y, npoly, nper, winding, &gc, dd);
 }
 
-void GRaster(unsigned int* image, int w, int h, 
-             double x0, double y0, double x1, double y1, 
-             double angle, Rboolean interpolate, 
+void GRaster(unsigned int* image, int w, int h,
+             double x0, double y0, double x1, double y1,
+             double angle, Rboolean interpolate,
              pGEDevDesc dd)
 {
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -2934,7 +2940,7 @@ void GRaster(unsigned int* image, int w, int h,
      */
     GClip(dd);
 
-    GERaster(image, w, h, x0, y0, x1, y1, angle, interpolate, 
+    GERaster(image, w, h, x0, y0, x1, y1, angle, interpolate,
              &gc, dd);
 }
 

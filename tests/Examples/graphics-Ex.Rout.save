@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-09-22 r57041)
+R Under development (unstable) (2011-10-01 r57121)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -140,12 +140,20 @@ Hair    Brown Blue Hazel Green
 > for(x in 9999*c(1,2,8)) {
 +     plot(x,9, log = "x")
 +     cat(formatC(par("xaxp"), width=5),";", T <- axTicks(1),"\n")
-+     rug(T, col="red")
++     rug(T, col= adjustcolor("red", 0.5), lwd = 4)
 + }
  1000 1e+05     3 ; 200 500 1000 2000 5000 10000 20000 50000 1e+05 2e+05 5e+05 
  1000 1e+06     2 ; 500 1000 5000 10000 50000 1e+05 5e+05 1e+06 
  1000 1e+07     1 ; 1000 10000 1e+05 1e+06 1e+07 
 > par(op)
+> 
+> x <- 9.9*10^(-3:10)
+> plot(x, 1:14, log = "x")
+> axTicks(1) # now length 5, in R <= 2.13.x gave the following
+[1] 1e-02 1e+01 1e+04 1e+07 1e+10
+> axTicks(1, nintLog=Inf)# rather too many
+ [1] 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05 1e+06 1e+07 1e+08 1e+09
+[13] 1e+10 1e+11
 > 
 > ## An example using axTicks() without reference to an existing plot
 > ## (copying R's internal procedures for setting axis ranges etc.),
@@ -156,7 +164,7 @@ Hair    Brown Blue Hazel Green
 > usr.i <- log10(ylims)
 > (aT.i <- axTicks(side=2, usr=usr.i,
 +                  axp=c(get_axp(usr.i), n=3), log=TRUE))
-[1]  0.2  0.5  1.0  2.0  5.0 10.0 20.0 50.0
+[1]  0.5  1.0  2.0  5.0 10.0 20.0 50.0
 > ## mimic (default) par("yaxs")=="r"
 > usr.r <- extendrange(r = log10(ylims), f = 0.04)
 > (aT.r <- axTicks(side=2, usr=usr.r,
@@ -1989,7 +1997,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1031bf6a0>
+<bytecode: 0x25d9710>
 <environment: namespace:graphics>
 > 
 > 
@@ -2896,7 +2904,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x1031f3060>
+<bytecode: 0x1459368>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2976,7 +2984,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  16.771 1.486 28.634 0 0 
+Time elapsed:  4.98 0.14 5.189 0 0 
 > grDevices::dev.off()
 null device 
           1 

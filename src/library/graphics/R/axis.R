@@ -65,10 +65,8 @@ Axis.table <- function(x, at, ..., labels)
 
 
 ## Note that axTicks() can be used without any graphics device
-## when (axp, usr, log) are specified.  However, axTicks() should
-## *really* just call .Internal(createAtVector(axp,usr,nint,log))
-## where nint is par("lab")[1 or 2]  (x or y)
-axTicks <- function(side, axp = NULL, usr = NULL, log = NULL)
+## when (axp, usr, log, nintLog) are specified..
+axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
 {
     ## Compute tickmark "at" values which axis(side) would use by default;
     ## using par("Xaxp") , par("usr") & par("Xlog") where X = x|y
@@ -84,17 +82,25 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL)
     if(log && axp[3L] > 0) { ## special log-scale axp[]
         if(!any((iC <- as.integer(axp[3L])) == 1L:3L))
             stop("invalid positive 'axp[3]'")
-        if(is.null(usr)) usr <- par("usr")[if(is.x) 1L:2L else 3L:4L]
+        if(is.null(usr)) usr <- par("usr")[if(is.x) 1:2 else 3:4]
         else if(!is.numeric(usr) || length(usr) != 2) stop("invalid 'usr'")
-        ## need sorting for the case of reverse axes
-        ii <- round(log10(sort(axp[1L:2L])))
-        usr <- sort(usr)
-        x10 <- 10^((ii[1L] - (iC >= 2L)):ii[2L])
-	r <- switch(iC,				## axp[3L]
-		    x10,			## 1
-		    c(outer(c(1,  5), x10))[-1L],## 2
-                    c(outer(c(1,2,5), x10))[-1L])## 3
-        r[usr[1L] <= log10(r) & log10(r) <= usr[2L]]
+        if(is.null(nintLog)) nintLog <- par("lab")[2L - is.x]
+        if(is.finite(nintLog)) {
+            grDevices::axisTicks(usr, log=log, axp=axp, nint=nintLog)
+        } else { ## nintLog = Inf <--> "cheap" back compatible
+	    if(needSort <- is.unsorted(usr)) { ## need sorting for reverse axes
+		usr <- usr[2:1]; axp <- axp[2:1]
+	    } else axp <- axp[1:2]
+	    ii <- round(log10(axp))
+	    x10 <- 10^((ii[1L] - (iC >= 2L)):ii[2L])
+	    r <- switch(iC, ## axp[3]
+			x10,			     ## 1
+			c(outer(c(1,  5), x10))[-1L],## 2
+			c(outer(c(1,2,5), x10))[-1L])## 3
+	    if(needSort) # revert
+		r <- rev(r)
+            r[usr[1L] <= log10(r) & log10(r) <= usr[2L]]
+        }
     } else { # linear
         seq.int(axp[1L], axp[2L], length.out = 1L + abs(axp[3L]))
     }

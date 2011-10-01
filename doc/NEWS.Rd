@@ -53,7 +53,10 @@
       e.g. \emph{via} \command{R CMD check}) by default requires the
       LaTeX package \samp{inconsolata}: see the section on
       \sQuote{Making the manuals} in the \sQuote{R Installation and
-      Administration Manual}.
+	Administration Manual}.
+
+      \item \code{axTicks(*, log=TRUE)} has changed in some cases to
+      satisfy the documented behavior and be consistent.
     }
   }
 
@@ -421,6 +424,13 @@
 
       \item \code{interaction.plot(*, type = .)} now also allows type
       \code{"o"} or \code{"c"}.
+
+      \item \code{axTicks(*, log=TRUE)} did sometimes give more values
+      than the ticks in the corresponding \code{graphics::axis()}.  By
+      default, it now makes use of the new (\pkg{graphics}-package
+      independent) \code{axisTicks()} which can make use of a new
+      utility \code{.axisPars()}.  Further, it now returns a decreasing
+      sequence (as for \code{log=FALSE}) when \code{usr} is decreasing.
     }
   }
 

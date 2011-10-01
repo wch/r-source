@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-09-04 r56935)
+R Under development (unstable) (2011-10-01 r57121)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -358,6 +358,51 @@ $allowed
 > 
 > 
 > 
+> cleanEx()
+> nameEx("axisTicks")
+> ### * axisTicks
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: axisTicks
+> ### Title: Compute Pretty Axis Tick Scales
+> ### Aliases: axisTicks .axisPars
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> ##--- Demonstrating correspondence between graphics'
+> ##--- axis() and the graphics-engine agnostic  axisTicks() :
+> 
+> require("graphics")
+> plot(10*(0:10)); (pu <- par("usr"))
+[1]   0.6  11.4  -4.0 104.0
+> aX <- function(side, at, ...)
++     axis(side, at=at, labels=FALSE, lwd.ticks=2, col.ticks=2, tck=0.05, ...)
+> aX(1, print(xa <- axisTicks(pu[1:2], log=FALSE)))# x axis
+[1]  2  4  6  8 10
+> aX(2, print(ya <- axisTicks(pu[3:4], log=FALSE)))# y axis
+[1]   0  20  40  60  80 100
+> 
+> axisTicks(pu[3:4], log=FALSE, n = 10)
+ [1]   0  10  20  30  40  50  60  70  80  90 100
+> 
+> plot(10*(0:10), log="y"); (pu <- par("usr"))
+Warning in xy.coords(x, y, xlabel, ylabel, log) :
+  1 y value <= 0 omitted from logarithmic plot
+[1]  0.60 11.40  0.96  2.04
+> aX(2, print(ya <- axisTicks(pu[3:4], log=TRUE)))# y axis
+[1]  10  20  50 100
+> 
+> plot(2^(0:9), log="y"); (pu <- par("usr"))
+[1]  0.6400000 10.3600000 -0.1083708  2.8176408
+> aX(2, print(ya <- axisTicks(pu[3:4], log=TRUE)))# y axis
+[1]   1   2   5  10  20  50 100 200 500
+> 
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("boxplot.stats")
 > ### * boxplot.stats
@@ -3426,7 +3471,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.692 0.21 5.002 0 0 
+Time elapsed:  1.91 0.01 1.985 0 0 
 > grDevices::dev.off()
 null device 
           1 

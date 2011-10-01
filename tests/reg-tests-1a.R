@@ -3570,7 +3570,7 @@ stopifnot(all.equal(Arg(-1), pi))
 
 ## PR#7973: reversed log-scaled axis
 plot(1:100, log="y", ylim=c(100,10))
-stopifnot(axTicks(2) == 10*c(1,2,5,10))
+stopifnot(axTicks(2) == 10*c(10,5,2,1))
 ## empty < 2.2.0
 
 

@@ -33,6 +33,9 @@ void R_chull(int *n, double *x, int *m, int *in,
 	   int *ia, int *ib,
 	   int *ih, int *nh, int *il);
 
+SEXP R_CreateAtVector(SEXP axp, SEXP usr, SEXP nint, SEXP is_log);
+SEXP R_GAxisPars(SEXP usr, SEXP is_log, SEXP nintLog);
+
 SEXP PicTeX(SEXP);
 
 SEXP PostScript(SEXP);
@@ -58,7 +61,7 @@ PSDeviceDriver(pDevDesc, const char*, const char*, const char*,
 Rboolean
 PDFDeviceDriver(pDevDesc, const char *, const char *, const char *,
 		const char **, const char *, const char *, const char *,
-		double, double, double, int, int, const char*, SEXP, 
+		double, double, double, int, int, const char*, SEXP,
 		int, int, const char *, int, int, Rboolean, Rboolean);
 
 #ifdef WIN32

@@ -29,8 +29,8 @@ extern "C" {
 /*
  * The current graphics engine (including graphics device) API version
  * MUST be integer
- * 
- * This number should be bumped whenever there are changes to 
+ *
+ * This number should be bumped whenever there are changes to
  * GraphicsEngine.h or GraphicsDevice.h so that add-on packages
  * that compile against these headers (graphics systems such as
  * graphics and grid;  graphics devices such as gtkDevice, RSvgDevice)
@@ -50,10 +50,10 @@ extern "C" {
  *             NewDevDesc to GEDevDesc.
  *             Add 'ask' to GEDevDesc. (R 2.8.0)
  * Version 6:  Add dev_Raster() and dev_Cap()  (R 2.11.0)
- * Version 7:  Change graphics event handling, adding eventEnv and eventHelper() 
+ * Version 7:  Change graphics event handling, adding eventEnv and eventHelper()
  *	       to DevDesc.  (R 2.12.0)
  * Version 8:  Add dev_Path() (R 2.12.0)
- * Version 9:  Add dev_HoldFlush(), haveTrans*, haveRaster, 
+ * Version 9:  Add dev_HoldFlush(), haveTrans*, haveRaster,
  *             haveCapture, haveLocator.  (R 2.14.0)
  */
 
@@ -63,12 +63,12 @@ int R_GE_getVersion(void);
 
 void R_GE_checkVersionOrDie(int version);
 
-/* The graphics engine will only accept locations and dimensions 
+/* The graphics engine will only accept locations and dimensions
  * in native device coordinates, but it provides the following functions
- * for converting between a couple of simple alternative coordinate 
+ * for converting between a couple of simple alternative coordinate
  * systems and device coordinates:
  *    DEVICE = native units of the device
- *    NDC = Normalised device coordinates 
+ *    NDC = Normalised device coordinates
  *    INCHES = inches (!)
  *    CM = centimetres (!!)
  */
@@ -85,7 +85,7 @@ typedef enum {
 typedef enum {
     /* In response to this event, the registered graphics system
      * should allocate and initialise the systemSpecific structure
-     * 
+     *
      * Should return R_NilValue on failure so that engine
      * can tidy up memory allocation
      */
@@ -119,8 +119,8 @@ typedef enum {
     /* Restore the system state that is saved by GE_SaveSnapshotState
      */
     GE_RestoreSnapshotState = 5,
-    /* When replaying the display list, the graphics engine 
-     * checks, after each replayed action, that the action 
+    /* When replaying the display list, the graphics engine
+     * checks, after each replayed action, that the action
      * produced valid output.  This is the graphics system's
      * chance to say that the output is crap (in which case the
      * graphics engine will abort the display list replay).
@@ -128,7 +128,7 @@ typedef enum {
     GE_CheckPlot = 7,
     /* The device wants to scale the current pointsize
      * (for scaling an image)
-     * This is not a nice general solution, but a quick fix for 
+     * This is not a nice general solution, but a quick fix for
      * the Windows device.
      */
     GE_ScalePS = 8
@@ -149,8 +149,8 @@ typedef enum {
   GE_BEVEL_JOIN = 3
 } R_GE_linejoin;
 
-/* 
- * A structure containing graphical parameters 
+/*
+ * A structure containing graphical parameters
  *
  * This is how graphical parameters are passed from graphics systems
  * to the graphics engine AND from the graphics engine to graphics
@@ -168,7 +168,7 @@ typedef struct {
     int col;             /* pen colour (lines, text, borders, ...) */
     int fill;            /* fill colour (for polygons, circles, rects, ...) */
     double gamma;        /* Gamma correction */
-    /* 
+    /*
      * Line characteristics
      */
     double lwd;          /* Line width (roughly number of pixels) */
@@ -187,7 +187,7 @@ typedef struct {
 } R_GE_gcontext;
 
 typedef R_GE_gcontext* pGEcontext;
-    
+
 
 #include <R_ext/GraphicsDevice.h> /* needed for DevDesc */
 
@@ -195,14 +195,14 @@ typedef struct _GEDevDesc GEDevDesc;
 
 typedef SEXP (* GEcallback)(GEevent, GEDevDesc *, SEXP);
 
-typedef struct { 
+typedef struct {
     /* An array of information about each graphics system that
      * has registered with the graphics engine.
      * This is used to store graphics state for each graphics
      * system on each device.
      */
     void *systemSpecific;
-    /* 
+    /*
      * An array of function pointers, one per graphics system that
      * has registered with the graphics engine.
      *
@@ -219,7 +219,7 @@ typedef struct {
 } GESystemDesc;
 
 struct _GEDevDesc {
-    /* 
+    /*
      * Stuff that the devices can see (and modify).
      * All detailed in GraphicsDevice.h
      */
@@ -240,11 +240,11 @@ struct _GEDevDesc {
     Rboolean recordGraphics; /* Should a graphics call be stored
 			      * on the display list?
 			      * Set to FALSE by do_recordGraphics,
-			      * do_dotcallgr, and do_Externalgr 
+			      * do_dotcallgr, and do_Externalgr
 			      * so that nested calls are not
 			      * recorded on the display list
 			      */
-    /* 
+    /*
      * Stuff about the device that only graphics systems see.
      * The graphics engine has no idea what is in here.
      * Used by graphics systems to store system state per device.
@@ -285,13 +285,13 @@ SEXP GEhandleEvent(GEevent event, pDevDesc dev, SEXP data);
 #define fromDeviceHeight	GEfromDeviceHeight
 #define toDeviceHeight		GEtoDeviceHeight
 
-double fromDeviceX(double value, GEUnit to, pGEDevDesc dd); 
+double fromDeviceX(double value, GEUnit to, pGEDevDesc dd);
 double toDeviceX(double value, GEUnit from, pGEDevDesc dd);
-double fromDeviceY(double value, GEUnit to, pGEDevDesc dd); 
+double fromDeviceY(double value, GEUnit to, pGEDevDesc dd);
 double toDeviceY(double value, GEUnit from, pGEDevDesc dd);
-double fromDeviceWidth(double value, GEUnit to, pGEDevDesc dd); 
+double fromDeviceWidth(double value, GEUnit to, pGEDevDesc dd);
 double toDeviceWidth(double value, GEUnit from, pGEDevDesc dd);
-double fromDeviceHeight(double value, GEUnit to, pGEDevDesc dd); 
+double fromDeviceHeight(double value, GEUnit to, pGEDevDesc dd);
 double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
 
 /*-------------------------------------------------------------------
@@ -373,20 +373,20 @@ SEXP GE_LJOINget(R_GE_linejoin ljoin);
 
 void GESetClip(double x1, double y1, double x2, double y2, pGEDevDesc dd);
 void GENewPage(const pGEcontext gc, pGEDevDesc dd);
-void GELine(double x1, double y1, double x2, double y2, 
+void GELine(double x1, double y1, double x2, double y2,
 	    const pGEcontext gc, pGEDevDesc dd);
-void GEPolyline(int n, double *x, double *y, 
+void GEPolyline(int n, double *x, double *y,
 		const pGEcontext gc, pGEDevDesc dd);
-void GEPolygon(int n, double *x, double *y, 
+void GEPolygon(int n, double *x, double *y,
 	       const pGEcontext gc, pGEDevDesc dd);
-SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open, 
+SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
 	       Rboolean repEnds, Rboolean draw,
 	       const pGEcontext gc, pGEDevDesc dd);
 void GECircle(double x, double y, double radius,
 	      const pGEcontext gc, pGEDevDesc dd);
 void GERect(double x0, double y0, double x1, double y1,
 	    const pGEcontext gc, pGEDevDesc dd);
-void GEPath(double *x, double *y, 
+void GEPath(double *x, double *y,
             int npoly, int *nper,
             Rboolean winding,
             const pGEcontext gc, pGEDevDesc dd);
@@ -402,10 +402,10 @@ void GEMode(int mode, pGEDevDesc dd);
 void GESymbol(double x, double y, int pch, double size,
 	      const pGEcontext gc, pGEDevDesc dd);
 void GEPretty(double *lo, double *up, int *ndiv);
-void GEMetricInfo(int c, const pGEcontext gc, 
+void GEMetricInfo(int c, const pGEcontext gc,
 		  double *ascent, double *descent, double *width,
 		  pGEDevDesc dd);
-double GEStrWidth(const char *str, cetype_t enc, 
+double GEStrWidth(const char *str, cetype_t enc,
 		  const pGEcontext gc, pGEDevDesc dd);
 double GEStrHeight(const char *str, cetype_t enc,
 		  const pGEcontext gc, pGEDevDesc dd);
@@ -430,8 +430,8 @@ void R_GE_rasterRotatedSize(int w, int h, double angle,
                             int *wnew, int *hnew);
 void R_GE_rasterRotatedOffset(int w, int h, double angle, int botleft,
                               double *xoff, double *yoff);
-void R_GE_rasterResizeForRotation(unsigned int *sraster, 
-                                  int w, int h, 
+void R_GE_rasterResizeForRotation(unsigned int *sraster,
+                                  int w, int h,
                                   unsigned int *newRaster,
                                   int wnew, int hnew,
                                   const pGEcontext gc);
@@ -440,39 +440,39 @@ void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
                        Rboolean perPixelAlpha);
 
 
-/* 
- * From plotmath.c 
+/*
+ * From plotmath.c
  */
-double GEExpressionWidth(SEXP expr, 
+double GEExpressionWidth(SEXP expr,
 			 const pGEcontext gc, pGEDevDesc dd);
-double GEExpressionHeight(SEXP expr, 
+double GEExpressionHeight(SEXP expr,
 			  const pGEcontext gc, pGEDevDesc dd);
 void GEMathText(double x, double y, SEXP expr,
-		double xc, double yc, double rot, 
+		double xc, double yc, double rot,
 		const pGEcontext gc, pGEDevDesc dd);
-/* 
+/*
  * (End from plotmath.c)
  */
 
-/* 
+/*
  * From plot3d.c : used in package clines
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 		    double *z, double *levels, int nl);
-/* 
+/*
  * (End from plot3d.c)
  */
 
-/* 
+/*
  * From vfonts.c
  */
 double R_GE_VStrWidth(const char *s, cetype_t enc, const pGEcontext gc, pGEDevDesc dd);
 
 double R_GE_VStrHeight(const char *s, cetype_t enc, const pGEcontext gc, pGEDevDesc dd);
-void R_GE_VText(double x, double y, const char * const s, cetype_t enc, 
+void R_GE_VText(double x, double y, const char * const s, cetype_t enc,
 		double x_justify, double y_justify, double rotation,
 		const pGEcontext gc, pGEDevDesc dd);
-/* 
+/*
  * (End from vfonts.c)
  */
 
@@ -494,9 +494,12 @@ void GEonExit(void);
 void GEnullDevice(void);
 
 
-/* From plot.c, used by grid/src/grid.c */
+// From ../../main/plot.c, used by ../../library/grid/src/grid.c :
 #define CreateAtVector		Rf_CreateAtVector
 SEXP CreateAtVector(double*, double*, int, Rboolean);
+// From ../../main/graphics.c, used by ../../library/grDevices/src/axis_scales.c :
+#define GAxisPars 		Rf_GAxisPars
+void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
 
 #ifdef __cplusplus
 }

@@ -3,17 +3,17 @@
 ## conflict with functions on Windows, i.e. savePlot.
 
 if(tools:::.OStype() == "windows") {
-    useDynLib(grDevices, R_chull,
+    useDynLib(grDevices, R_chull, R_CreateAtVector, R_GAxisPars,
               PicTeX, PostScript, XFig, PDF,
               Cdevga=devga, CsavePlot=savePlot, devCairo,
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 } else {
-    useDynLib(grDevices, R_chull,
+    useDynLib(grDevices, R_chull, R_CreateAtVector, R_GAxisPars,
               PicTeX, PostScript, XFig, PDF, CQuartz = Quartz, devCairo,
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 }
 
-export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, blues9,
+export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks, blues9,
        boxplot.stats, check.options, chull, CIDFont, col2rgb, colors,
        colours, cm, colorRamp, colorRampPalette, contourLines,
        convertColor, colorConverter, colorspaces, cm.colors, densCols,
@@ -29,8 +29,8 @@ export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, blues9,
        postscriptFonts, ps.options, rainbow, recordGraphics,
        recordPlot, replayPlot, rgb, rgb2hsv, savePlot, setEPS,
        setGraphicsEventEnv, setGraphicsEventHandlers, setPS,
-       terrain.colors, topo.colors, trans3d, Type1Font, xfig, xyTable,
-       xy.coords, xyz.coords)
+       terrain.colors, topo.colors, trans3d, Type1Font, .axisPars,
+       xfig, xyTable, xy.coords, xyz.coords)
 
 ## devices common to all platforms
 export(X11, x11, bitmap, bmp, jpeg, png, tiff)
