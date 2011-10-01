@@ -16,7 +16,7 @@
 
 interaction.plot <-
     function(x.factor, trace.factor, response, fun=mean,
-             type = c("l", "p", "b"), legend = TRUE,
+	     type = c("l", "p", "b", "o", "c"), legend = TRUE,
              trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
              xlab = deparse(substitute(x.factor)), ylab = ylabel,
              ylim = range(cells, na.rm=TRUE),

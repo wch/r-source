@@ -48,7 +48,7 @@
       \code{mclapply} and \pkg{snow} clusters.
 
       (It is still incomplete/experimental.)
-      
+
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
       LaTeX package \samp{inconsolata}: see the section on
@@ -418,6 +418,9 @@
       command-line utilities.
 
       \code{cacheOK = FALSE} is now supported for \code{method = "curl"}.
+
+      \item \code{interaction.plot(*, type = .)} now also allows type
+      \code{"o"} or \code{"c"}.
     }
   }
 
@@ -613,7 +616,7 @@
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
       distinguish beteen R-patched and R-devel versions with the same
       SVN revision.
-      
+
       \item \code{installed.packages()} now hashes the names of its
       cache files to avoid very rare problems with excessively long path
       names.  (\PR{14669})
@@ -641,7 +644,7 @@
 
       \item \command{R CMD check} now uses a \code{pdf()} device when
       checking examples (rather than \code{postscript()}).
-      
+
       \item \command{R CMD check} now reports as a NOTE what look like
       methods documented with their full names even if there is a
       namespace and they are exported.  In almost all cases they are
@@ -812,7 +815,7 @@
       \item The parser no longer accepts the digit \code{8} in an octal
       character code in a string, nor does it accept unterminated
       strings in a file.  (Reported by Bill Dunlap.)
-      
+
       \item The \code{print()} method for class \code{"summary.aov"} did
       not pass on argument \code{digits} when \code{summary()} was
       called on a single object, and hence used more digits than
@@ -944,7 +947,7 @@
       9KB in the output file.
 
       \item \code{.hasSlot()} wrongly gave \code{FALSE} in some cases.
-      
+
       \item \code{Sweave()} with \code{keep.source=TRUE} could generate
       spurious \code{NA} lines when a chunk reference appeared last in
       a code chunk.
@@ -952,14 +955,14 @@
       \item  \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
       \code{parse_Rd(fragment=FALSE)} to allow Rd section-level macros
       to be inserted.
-      
+
       \item The \code{print()} method for class \code{"summary.aov"} did
       not pass on arguments such as \code{signif.stars} when
       \code{summary()} was called on a single object.  (\PR{14684})
 
       \item In rare cases \code{ks.test()} could return a p-value
       very slightly less than 0 by rounding error.  (\PR{14671})
-      
+
       \item If \code{trunc()} was called on a \code{"POSIXlt"} vector
       and the result was subsetted, all but the first element was
       converted to \code{NA}.  (\PR{14679})

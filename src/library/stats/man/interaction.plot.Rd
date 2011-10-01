@@ -12,7 +12,7 @@
 }
 \usage{
 interaction.plot(x.factor, trace.factor, response, fun = mean,
-                 type = c("l", "p", "b"), legend = TRUE,
+                 type = c("l", "p", "b", "o", "c"), legend = TRUE,
                  trace.label = deparse(substitute(trace.factor)),
                  fixed = FALSE,
                  xlab = deparse(substitute(x.factor)),
@@ -29,7 +29,8 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
   \item{response}{a numeric variable giving the response}
   \item{fun}{the function to compute the summary. Should return a single
     real value.}
-  \item{type}{the type of plot: lines or points.}
+  \item{type}{the type of plot (see \code{\link{plot.default}}): lines
+    or points or both.}
   \item{legend}{logical. Should a legend be included?}
   \item{trace.label}{overall label for the legend.}
   \item{fixed}{logical.  Should the legend be in the order of the levels
