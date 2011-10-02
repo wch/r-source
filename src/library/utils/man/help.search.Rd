@@ -103,10 +103,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \R 2.10.0 approximate searches should be fast enough (around a second
   with 2000 packages installed).
 
-  If possible, the help database is saved in memory or (if memory
-  limits have been set: see \code{\link{mem.limits}}) to a file in the
-  session temporary directory for use by subsequent calls in the
-  session.
+  If possible, the help database is saved in memory for use by
+  subsequent calls in the session.
   
   Note that currently the aliases in the matching help files are not
   displayed.
