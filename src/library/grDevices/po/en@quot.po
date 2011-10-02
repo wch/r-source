@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
-"PO-Revision-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"PO-Revision-Date: 2011-10-02 08:41+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -38,6 +38,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
+#, c-format
+msgid "'%s' must be numeric of length %d"
+msgstr "‘%s’ must be numeric of length %d"
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"

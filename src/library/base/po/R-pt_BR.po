@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -755,19 +755,19 @@ msgstr "' não encontrado"
 msgid "all arguments must be named"
 msgstr "todos os argumentos devem ser nomeados"
 
-msgid "'pattern' must be a non-empty character string"
-msgstr "'pattern' deve ser uma string de caracteres não vazia"
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr "string multibyte inválida para 'pattern'"
-
-msgid "'max.distance' must be non-negative"
-msgstr "'max.distance' deve ser não negativo"
+#, fuzzy
+msgid "match distance components must be non-negative"
+msgstr "componentes de 'max.distance' devem ser não negativos"
 
 msgid "unknown match distance components ignored"
 msgstr "componentes de pareamento de distância desconhecidos ignorados"
 
-msgid "'max.distance' components must be non-negative"
+#, fuzzy
+msgid "unknown cost components ignored"
+msgstr "componentes de pareamento de distância desconhecidos ignorados"
+
+#, fuzzy
+msgid "cost components must be non-negative"
 msgstr "componentes de 'max.distance' devem ser não negativos"
 
 #, fuzzy
@@ -998,6 +998,9 @@ msgstr "pacote '%s' não pôde ser carregado"
 msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "pacote '%s' %s está carregado, mas %s %s é exigido por '%s'"
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "entrada foi corrompida, com LF substituido por CR"
 
@@ -1020,6 +1023,13 @@ msgstr "Uso de versões salvas antes da versão 2 é obsoleto"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' deve ser uma string não vazia"
+
+#, fuzzy
+msgid "'compress' must be logical or character"
+msgstr "'from' deve ser de tipo raw ou caractere"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "argumento de arquivo inválido"
@@ -1142,9 +1152,6 @@ msgstr "espaço de nomes já está anexo"
 
 msgid "%s not found"
 msgstr "%s não encontrado"
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1754,6 +1761,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "'pattern' must be a non-empty character string"
+#~ msgstr "'pattern' deve ser uma string de caracteres não vazia"
+
+#~ msgid "invalid multibyte string for 'pattern'"
+#~ msgstr "string multibyte inválida para 'pattern'"
+
+#~ msgid "'max.distance' must be non-negative"
+#~ msgstr "'max.distance' deve ser não negativo"
 
 #, fuzzy
 #~ msgid "%s must be a character vector"

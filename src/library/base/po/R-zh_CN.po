@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -741,19 +741,19 @@ msgstr "'不存在"
 msgid "all arguments must be named"
 msgstr "所有参数都必需有名字"
 
-msgid "'pattern' must be a non-empty character string"
-msgstr "'pattern'必需为非空字符串"
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr "'pattern'的多字节字符串出错"
-
-msgid "'max.distance' must be non-negative"
-msgstr "'max.distance'不能有负值"
+#, fuzzy
+msgid "match distance components must be non-negative"
+msgstr "'max.distance'的组成部分不能有负值"
 
 msgid "unknown match distance components ignored"
 msgstr "匹配位距的組成部分不存在，因此忽略不计"
 
-msgid "'max.distance' components must be non-negative"
+#, fuzzy
+msgid "unknown cost components ignored"
+msgstr "匹配位距的組成部分不存在，因此忽略不计"
+
+#, fuzzy
+msgid "cost components must be non-negative"
 msgstr "'max.distance'的组成部分不能有负值"
 
 #, fuzzy
@@ -980,6 +980,9 @@ msgstr "无法载入程辑包'%s'"
 msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "载入了程辑包'%1$s' %2$s，但'%5$s'需要%3$s %4$s "
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "输入有破损，LF被CR取代"
 
@@ -1002,6 +1005,13 @@ msgstr "在R版本2号之前的保存功能不再有用"
 
 msgid "'file' must be non-empty string"
 msgstr "'file'的值必需是长度大于零的字符串"
+
+#, fuzzy
+msgid "'compress' must be logical or character"
+msgstr "'from'要么是生的，要么是字符。"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "文件参数值不对"
@@ -1120,9 +1130,6 @@ msgstr "已经连接上名字空间了"
 
 msgid "%s not found"
 msgstr "%s不存在"
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1711,6 +1718,15 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'pattern' must be a non-empty character string"
+#~ msgstr "'pattern'必需为非空字符串"
+
+#~ msgid "invalid multibyte string for 'pattern'"
+#~ msgstr "'pattern'的多字节字符串出错"
+
+#~ msgid "'max.distance' must be non-negative"
+#~ msgstr "'max.distance'不能有负值"
 
 #, fuzzy
 #~ msgid "%s must be a character vector"

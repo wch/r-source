@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2011-03-29 20:10+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -783,19 +783,19 @@ msgstr "' non trouvée"
 msgid "all arguments must be named"
 msgstr "tous les arguments doivent être nommés"
 
-msgid "'pattern' must be a non-empty character string"
-msgstr "'pattern' doit être une chaîne de caractères non vide"
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr "chaîne de caractères multioctets incorrecte pour 'pattern'"
-
-msgid "'max.distance' must be non-negative"
-msgstr "'max.distance' ne peut être négatif"
+#, fuzzy
+msgid "match distance components must be non-negative"
+msgstr "les composantes 'max.distance' ne peuvent être négatives"
 
 msgid "unknown match distance components ignored"
 msgstr "composantes de distance sans correspondance ignorées"
 
-msgid "'max.distance' components must be non-negative"
+#, fuzzy
+msgid "unknown cost components ignored"
+msgstr "composantes de distance sans correspondance ignorées"
+
+#, fuzzy
+msgid "cost components must be non-negative"
 msgstr "les composantes 'max.distance' ne peuvent être négatives"
 
 #, fuzzy
@@ -1035,6 +1035,9 @@ msgstr "le package '%s' ne peut être chargé"
 msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "le package '%s' %s est chargé, mais %s %s est requis par '%s'"
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "l'entrée est corrompue, avec LF remplacé par CR"
 
@@ -1057,6 +1060,13 @@ msgstr "L'utilisation d'une version antérieure à 2 est obsolète"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' doit être une chaîne de caractères non vide"
+
+#, fuzzy
+msgid "'compress' must be logical or character"
+msgstr "'from' doit être 'raw' ou une chaîne de caractères"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "mauvais argument 'file'"
@@ -1181,9 +1191,6 @@ msgstr "l'espace de noms est déjà attaché"
 
 msgid "%s not found"
 msgstr "%s introuvable"
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1802,6 +1809,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "'pattern' must be a non-empty character string"
+#~ msgstr "'pattern' doit être une chaîne de caractères non vide"
+
+#~ msgid "invalid multibyte string for 'pattern'"
+#~ msgstr "chaîne de caractères multioctets incorrecte pour 'pattern'"
+
+#~ msgid "'max.distance' must be non-negative"
+#~ msgstr "'max.distance' ne peut être négatif"
 
 #, fuzzy
 #~ msgid "%s must be a character vector"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2011-03-28 11:02+0900 \n"
 "Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -755,19 +755,19 @@ msgstr " ' が見つけられません "
 msgid "all arguments must be named"
 msgstr " 全ての引数は名前を持たなければなりません "
 
-msgid "'pattern' must be a non-empty character string"
-msgstr " 'pattern' は空でない文字列でなければなりません "
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr " 'pattern' に対する不適切な多倍長文字列です "
-
-msgid "'max.distance' must be non-negative"
-msgstr " 'max.distance' は非負でなければなりません "
+#, fuzzy
+msgid "match distance components must be non-negative"
+msgstr " 'max.distance' 成分は非負でなければなりません "
 
 msgid "unknown match distance components ignored"
 msgstr " 未知の一致距離成分は無視されました "
 
-msgid "'max.distance' components must be non-negative"
+#, fuzzy
+msgid "unknown cost components ignored"
+msgstr " 未知の一致距離成分は無視されました "
+
+#, fuzzy
+msgid "cost components must be non-negative"
 msgstr " 'max.distance' 成分は非負でなければなりません "
 
 #, fuzzy
@@ -1001,6 +1001,9 @@ msgstr ""
 " パッケージ '%s' %s はロードされましたが、%s %s が '%s' によって要求されてい"
 "ます "
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr " 入力は混乱しています。LF が CR で置き換えられています "
 
@@ -1023,6 +1026,13 @@ msgstr " 二回以前の保存バージョンの使用は廃止予定です "
 
 msgid "'file' must be non-empty string"
 msgstr " 'file' は空でない文字列でなければなりません "
+
+#, fuzzy
+msgid "'compress' must be logical or character"
+msgstr " 'from'はrawまたは文字でなければなりません "
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr ""
 
 msgid "bad file argument"
 msgstr " 誤ったファイル引数です "
@@ -1144,9 +1154,6 @@ msgstr " 名前空間は既に付加されています "
 
 msgid "%s not found"
 msgstr " %s を見付けることができません "
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1757,6 +1764,15 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "'pattern' must be a non-empty character string"
+#~ msgstr " 'pattern' は空でない文字列でなければなりません "
+
+#~ msgid "invalid multibyte string for 'pattern'"
+#~ msgstr " 'pattern' に対する不適切な多倍長文字列です "
+
+#~ msgid "'max.distance' must be non-negative"
+#~ msgstr " 'max.distance' は非負でなければなりません "
 
 #, fuzzy
 #~ msgid "%s must be a character vector"

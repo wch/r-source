@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -772,20 +772,19 @@ msgstr "(을)를 찾아낼수가 없습니다"
 msgid "all arguments must be named"
 msgstr "모든 인수는 동일 길이가 나오지 않으면 되지 않습니다"
 
-msgid "'pattern' must be a non-empty character string"
-msgstr "'pattern'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
-
 #, fuzzy
-msgid "invalid multibyte string for 'pattern'"
-msgstr "'by'에 대한 무효인 문자열입니다"
-
-msgid "'max.distance' must be non-negative"
-msgstr "'max.distance'는 non-negative이 나오지 않으면 되지 않습니다"
+msgid "match distance components must be non-negative"
+msgstr "'max.distance'요소는 non-negative가 나오지 않으면 되지 않습니다"
 
 msgid "unknown match distance components ignored"
 msgstr "알수 없는 일치거리요소는 무시되었습니다"
 
-msgid "'max.distance' components must be non-negative"
+#, fuzzy
+msgid "unknown cost components ignored"
+msgstr "알수 없는 일치거리요소는 무시되었습니다"
+
+#, fuzzy
+msgid "cost components must be non-negative"
 msgstr "'max.distance'요소는 non-negative가 나오지 않으면 되지 않습니다"
 
 #, fuzzy
@@ -1018,6 +1017,9 @@ msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr ""
 "패키지 '%s' %s는 적재 되었습니다만, %s %s 가 '%s'에 의해 요구되어 있습니다"
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "입력 오류가 발생되어지고 있습니다. LF가 CR로 옮겨 놓을 수가 있습니다"
 
@@ -1037,6 +1039,13 @@ msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'compress' must be logical or character"
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "잘못된 파일 인수입니다"
@@ -1163,9 +1172,6 @@ msgstr "name space는 이미 부가되어 있습니다"
 
 msgid "%s not found"
 msgstr "%s를 검색해낼수가 없습니다"
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1808,6 +1814,16 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "'pattern' must be a non-empty character string"
+#~ msgstr "'pattern'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
+
+#, fuzzy
+#~ msgid "invalid multibyte string for 'pattern'"
+#~ msgstr "'by'에 대한 무효인 문자열입니다"
+
+#~ msgid "'max.distance' must be non-negative"
+#~ msgstr "'max.distance'는 non-negative이 나오지 않으면 되지 않습니다"
 
 #, fuzzy
 #~ msgid "%s must be a character vector"

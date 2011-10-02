@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
-"PO-Revision-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
+"PO-Revision-Date: 2011-10-02 08:41\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -753,20 +753,17 @@ msgstr "' not found"
 msgid "all arguments must be named"
 msgstr "all arguments must be named"
 
-msgid "'pattern' must be a non-empty character string"
-msgstr "‘pattern’ must be a non-empty character string"
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr "invalid multibyte string for ‘pattern’"
-
-msgid "'max.distance' must be non-negative"
-msgstr "‘max.distance’ must be non-negative"
+msgid "match distance components must be non-negative"
+msgstr "match distance components must be non-negative"
 
 msgid "unknown match distance components ignored"
 msgstr "unknown match distance components ignored"
 
-msgid "'max.distance' components must be non-negative"
-msgstr "‘max.distance’ components must be non-negative"
+msgid "unknown cost components ignored"
+msgstr "unknown cost components ignored"
+
+msgid "cost components must be non-negative"
+msgstr "cost components must be non-negative"
 
 msgid "%s and %s must have the same length"
 msgstr "%s and %s must have the same length"
@@ -960,6 +957,9 @@ msgstr "package %s could not be loaded"
 msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "package %s %s is loaded, but %s %s is required by %s"
 
+msgid "empty (zero-byte) input file"
+msgstr "empty (zero-byte) input file"
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "input has been corrupted, with LF replaced by CR"
 
@@ -981,6 +981,12 @@ msgstr "Use of save versions prior to 2 is deprecated"
 
 msgid "'file' must be non-empty string"
 msgstr "‘file’ must be non-empty string"
+
+msgid "'compress' must be logical or character"
+msgstr "‘compress’ must be logical or character"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr "‘compress = “%s”’ is invalid"
 
 msgid "bad file argument"
 msgstr "bad file argument"
@@ -1100,9 +1106,6 @@ msgstr "namespace is already attached"
 
 msgid "%s not found"
 msgstr "%s not found"
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr "using .First.lib() as .onLoad() for namespace %s"
 
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr "namespace %s is already sealed in loadNamespace"

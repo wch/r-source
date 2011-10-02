@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2011-03-30 02:18+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -750,19 +750,19 @@ msgstr "' не найдено"
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
 
-msgid "'pattern' must be a non-empty character string"
-msgstr "'pattern' должен быть непустой текстовой строкой"
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr "неправильная многобайтная строка для 'pattern'"
-
-msgid "'max.distance' must be non-negative"
-msgstr "'max.distance' должна быть неотрицательной"
+#, fuzzy
+msgid "match distance components must be non-negative"
+msgstr "компоненты 'max.distance' должны быть неотрицательными"
 
 msgid "unknown match distance components ignored"
 msgstr "компоненты расстояния с неизвестным соответствием пропущены"
 
-msgid "'max.distance' components must be non-negative"
+#, fuzzy
+msgid "unknown cost components ignored"
+msgstr "компоненты расстояния с неизвестным соответствием пропущены"
+
+#, fuzzy
+msgid "cost components must be non-negative"
 msgstr "компоненты 'max.distance' должны быть неотрицательными"
 
 #, fuzzy
@@ -991,6 +991,9 @@ msgstr "пакет '%s' нельзя загрузить"
 msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "пакет '%s' %s загружен, но %s %s требуется для '%s'"
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "ввод поврежден, LF заменен на CR"
 
@@ -1013,6 +1016,13 @@ msgstr "Использование сохраненных версий, более ранних чем 2, не одобряется"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
+
+#, fuzzy
+msgid "'compress' must be logical or character"
+msgstr "'from' должен быть raw либо текстовой строкой"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr ""
 
 msgid "bad file argument"
 msgstr "неправильный файловый аргумент"
@@ -1135,9 +1145,6 @@ msgstr "пространство имен уже присоединено"
 
 msgid "%s not found"
 msgstr "%s не найден"
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
-msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1753,6 +1760,15 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'pattern' must be a non-empty character string"
+#~ msgstr "'pattern' должен быть непустой текстовой строкой"
+
+#~ msgid "invalid multibyte string for 'pattern'"
+#~ msgstr "неправильная многобайтная строка для 'pattern'"
+
+#~ msgid "'max.distance' must be non-negative"
+#~ msgstr "'max.distance' должна быть неотрицательной"
 
 #, fuzzy
 #~ msgid "%s must be a character vector"

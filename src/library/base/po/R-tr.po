@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:19\n"
+"POT-Creation-Date: 2011-10-02 08:41\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -725,19 +725,16 @@ msgstr ""
 msgid "all arguments must be named"
 msgstr ""
 
-msgid "'pattern' must be a non-empty character string"
-msgstr ""
-
-msgid "invalid multibyte string for 'pattern'"
-msgstr ""
-
-msgid "'max.distance' must be non-negative"
+msgid "match distance components must be non-negative"
 msgstr ""
 
 msgid "unknown match distance components ignored"
 msgstr ""
 
-msgid "'max.distance' components must be non-negative"
+msgid "unknown cost components ignored"
+msgstr ""
+
+msgid "cost components must be non-negative"
 msgstr ""
 
 msgid "%s and %s must have the same length"
@@ -931,6 +928,9 @@ msgstr ""
 msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr ""
 
+msgid "empty (zero-byte) input file"
+msgstr ""
+
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr ""
 
@@ -949,6 +949,12 @@ msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
 msgid "'file' must be non-empty string"
+msgstr ""
+
+msgid "'compress' must be logical or character"
+msgstr ""
+
+msgid "'compress = \"%s\"' is invalid"
 msgstr ""
 
 msgid "bad file argument"
@@ -1065,9 +1071,6 @@ msgid "namespace is already attached"
 msgstr ""
 
 msgid "%s not found"
-msgstr ""
-
-msgid "using .First.lib() as .onLoad() for namespace %s"
 msgstr ""
 
 msgid "namespace %s is already sealed in loadNamespace"

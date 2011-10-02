@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:21\n"
+"POT-Creation-Date: 2011-10-02 08:42\n"
 "PO-Revision-Date: 2011-03-29 19:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -97,9 +97,6 @@ msgid "value of 'results' option should be lowercase"
 msgstr ""
 
 msgid "value of 'strip.white' option should be lowercase"
-msgstr ""
-
-msgid "unknown cost components ignored"
 msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
