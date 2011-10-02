@@ -781,6 +781,9 @@
       Note that those are merely command-line arguments, they do not
       include environment variables (one more reason to use configure
       variables instead) or site configuration settings.
+
+      \item Framework installation now supports \code{DESTDIR}
+      (Mac OS X only).
     }
   }
 
