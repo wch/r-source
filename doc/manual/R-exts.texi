@@ -877,16 +877,14 @@ matched@footnote{case-insensitively on Windows.} against the file and
 directory names.
 
 Note that with the exceptions of @file{INDEX},
-@file{LICENSE}/@file{LICENCE}, @file{COPYING}@footnote{see the earlier
-comments about not using such a file: its use is deprecated and it will
-not be installed in future versions of @R{}.} and @file{NEWS}, information
-files at the top level of the package will @emph{not} be installed and
-so not be known to users of Windows and Mac OS X compiled packages (and
-not seen by those who use @command{R CMD INSTALL} or
-@command{install.packages} on the tarball).  So any information files
-you wish an end user to see should be included in @file{inst}.  Note
-that if the named exceptions also occur in @file{inst}, the versions in
-@file{inst} will be that seen in the installed package.
+@file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
+top level of the package will @emph{not} be installed and so not be
+known to users of Windows and Mac OS X compiled packages (and not seen
+by those who use @command{R CMD INSTALL} or @command{install.packages}
+on the tarball).  So any information files you wish an end user to see
+should be included in @file{inst}.  Note that if the named exceptions
+also occur in @file{inst}, the versions in @file{inst} will be that seen
+in the installed package.
 
 @findex CITATION
 @cindex citation
