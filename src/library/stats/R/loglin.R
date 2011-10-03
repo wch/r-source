@@ -139,7 +139,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             dyadic <- cbind(dyadic, terms %% 2)
             terms <- terms %/% 2
         }
-        dyadic <- dyadic[order(rowSums(dyadic)), ]
+        dyadic <- dyadic[order(rowSums(dyadic)), , drop = FALSE]
 
         for (i in 2 : parlen) {
             vars <- which(dyadic[i - 1, ] > 0)
