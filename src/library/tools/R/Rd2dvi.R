@@ -455,7 +455,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## Rd2.tex part 1: header
     if (batch) writeLines("\\nonstopmode{}", out)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
-        "\\usepackage[", Sys.getenv("R_RDPDF", "times,inconsolata,pdf"), "]{Rd}\n",
+        "\\usepackage[", Sys.getenv("R_RD4PDF", "times,inconsolata,hyper"), "]{Rd}\n",
         sep = "", file = out)
     if (index) writeLines("\\usepackage{makeidx}", out)
     inputenc <- Sys.getenv("RD2DVI_INPUTENC", "inputenc")
