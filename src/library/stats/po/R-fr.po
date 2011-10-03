@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-10-03 18:49\n"
 "PO-Revision-Date: 2011-03-29 20:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1451,6 +1451,18 @@ msgstr ""
 
 msgid "specified parametric for all predictors"
 msgstr "tous les prédicteurs spécifiés sont paramétriques"
+
+#, fuzzy
+msgid "invalid argument 'span'"
+msgstr "argument 'n' incorrect"
+
+#, fuzzy
+msgid "invalid argument 'cell'"
+msgstr "argument 'c' incorrect"
+
+#, fuzzy
+msgid "invalid argument 'degree'"
+msgstr "argument 'r' incorrect"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "le premier argument doit être un objet \"loess\""

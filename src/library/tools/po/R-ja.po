@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:21\n"
+"POT-Creation-Date: 2011-10-03 18:49\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -814,14 +814,6 @@ msgstr " デバッグシンボル (dSYM) を生成中 "
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
-#, fuzzy
-msgid ""
-"installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
-"Extensions' manual'"
-msgstr ""
-" マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
-"ファイルにある情報を参照してください． "
-
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
@@ -1317,6 +1309,14 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#, fuzzy
+#~ msgid ""
+#~ "installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
+#~ "Extensions' manual'"
+#~ msgstr ""
+#~ " マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
+#~ "ファイルにある情報を参照してください． "
 
 #~ msgid "Malformed NEWS.Rd file."
 #~ msgstr " 不正な NEWS.Rd ファイルです． "

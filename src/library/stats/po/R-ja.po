@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-10-03 18:49\n"
 "PO-Revision-Date: 2011-03-28 15:10+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1393,6 +1393,18 @@ msgstr " 唯一つの数値予測子を持つ予測子の平方は捨て去る�
 
 msgid "specified parametric for all predictors"
 msgstr " すべての予測子がパラメトリックと指定されました "
+
+#, fuzzy
+msgid "invalid argument 'span'"
+msgstr " 無効な引数 'n' です "
+
+#, fuzzy
+msgid "invalid argument 'cell'"
+msgstr " 無効な引数 'c' です "
+
+#, fuzzy
+msgid "invalid argument 'degree'"
+msgstr " 無効な引数 'r' です "
 
 msgid "first argument must be a \"loess\" object"
 msgstr " 最初の引数は \"loess\" オブジェクトでなければなりません "
