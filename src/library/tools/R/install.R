@@ -602,11 +602,8 @@
 
 
         if (more_than_libs) {
-            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "COPYING", "NEWS"))
+            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS"))
                 if (file.exists(f)) {
-                    if (f == "COPYING")
-                        warning("installing a top-level 'COPYING' file is deprecated -- see the 'Writing R Extensions' manual'",
-                                call. = FALSE)
                     file.copy(f, instdir, TRUE)
                     Sys.chmod(file.path(instdir, f), "644")
                 }
@@ -1001,8 +998,7 @@
                 Sys.setenv(R_ENABLE_JIT = 0L)
                 compiler::compilePKGS(1L)
                 compiler::setCompilerOptions(suppressUndefined = TRUE)
-            }
-            else
+            } else
                 starsmsg(stars, "preparing package for lazy loading")
             keep.source <-
                 parse_description_field(desc, "KeepSource",
