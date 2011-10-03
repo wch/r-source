@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
 "PO-Revision-Date: 2011-03-30 02:50+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1408,6 +1408,18 @@ msgstr ""
 
 msgid "specified parametric for all predictors"
 msgstr "указан параметрический для всех предикторов"
+
+#, fuzzy
+msgid "invalid argument 'span'"
+msgstr "неправильный аргумент 'n'"
+
+#, fuzzy
+msgid "invalid argument 'cell'"
+msgstr "неправильный аргумент 'c'"
+
+#, fuzzy
+msgid "invalid argument 'degree'"
+msgstr "неправильный аргумент 'r'"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "первый аргумент должен быть объектом \"loess\""

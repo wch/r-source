@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -586,39 +586,24 @@ msgstr ""
 msgid "WARNING: no value given for --encoding"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:212
-#, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr ""
-
-#: src/main/CommandLineArgs.c:220
-#, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr ""
-
-#: src/main/CommandLineArgs.c:224
-#, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr ""
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr ""
 

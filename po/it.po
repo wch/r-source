@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -609,43 +609,28 @@ msgstr "nessun convertitore R-to-C associato a questo identificatore"
 msgid "WARNING: no value given for --encoding"
 msgstr "ATTENZIONE: nessun valore specificato per --encoding\n"
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "ATTENZIONE: l'opzione %s non è più supportata\n"
 
-#: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr "ATTENZIONE: nessun valore specificato per %s\n"
-
-#: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr "ATTENZIONE: il valore %s non è valido: verrà ignorato\n"
-
-#: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr "ATTENZIONE: %s=%lu'%c': tropo grande e quindi ingorato\n"
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "ATTENZIONE: nessun valore specificato per --max-ppsize\n"
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "ATTENZIONE: il valore di -max-ppsize è negativo: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr ""
 "ATTENZIONE: il valore di -max-ppsize è troppo piccolo: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr ""
@@ -8482,6 +8467,18 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
+
+#, fuzzy
+#~ msgid "WARNING: no value given for '%s'"
+#~ msgstr "ATTENZIONE: nessun valore specificato per %s\n"
+
+#, fuzzy
+#~ msgid "WARNING: '%s' value is invalid: ignored"
+#~ msgstr "ATTENZIONE: il valore %s non è valido: verrà ignorato\n"
+
+#, fuzzy
+#~ msgid "WARNING: %s: too large and ignored"
+#~ msgstr "ATTENZIONE: %s=%lu'%c': tropo grande e quindi ingorato\n"
 
 #~ msgid "no locator capability in device driver"
 #~ msgstr "il dispositivo non ha la funzionalità 'locator'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2011-03-31 22:26-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -598,42 +598,27 @@ msgstr ""
 msgid "WARNING: no value given for --encoding"
 msgstr "AVIS : aucune valeur donnée pour --encoding\n"
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "AVIS : l'option '%s' n'est plus disponible\n"
 
-#: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr "AVIS : aucune valeur donnée pour '%s'\n"
-
-#: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr "AVIS : valeur '%s' incorrecte : ignorée\n"
-
-#: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr "AVIS : %s : trop grand et ignoré\n"
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "AVIS : aucune valeur donnée pour '--max-ppsize'\n"
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "AVIS : valeur de '--max-ppsize' strictement négative : ignorée\n"
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "AVIS : valeur de '--max-ppsize' trop petite : ignorée\n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "AVIS : valeur de '--max-ppsize' trop grande : ignorée\n"
@@ -8465,6 +8450,18 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 indisponible"
+
+#, fuzzy
+#~ msgid "WARNING: no value given for '%s'"
+#~ msgstr "AVIS : aucune valeur donnée pour '%s'\n"
+
+#, fuzzy
+#~ msgid "WARNING: '%s' value is invalid: ignored"
+#~ msgstr "AVIS : valeur '%s' incorrecte : ignorée\n"
+
+#, fuzzy
+#~ msgid "WARNING: %s: too large and ignored"
+#~ msgstr "AVIS : %s : trop grand et ignoré\n"
 
 #~ msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 #~ msgstr ""

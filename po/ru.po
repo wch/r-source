@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2011-03-30 01:56+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -596,42 +596,27 @@ msgstr "не найдено конвертера R-в-C, соответству�
 msgid "WARNING: no value given for --encoding"
 msgstr "ВНИМАНИЕ: для данной --encoding нет значения\n"
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "ВНИМАНИЕ: параметр '%s' больше не поддерживается\n"
 
-#: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr "ВНИМАНИЕ: не задано значение '%s'\n"
-
-#: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr "ВНИМАНИЕ: '%s' значение неправильное: пропущено\n"
-
-#: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr "ВНИМАНИЕ: %s: слишком велико и пропущено\n"
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "ВНИМАНИЕ: не задано значение '--max-ppsize'\n"
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "ВНИМАНИЕ: значение '--max-ppsize' отрицательное: пропущено\n"
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "ВНИМАНИЕ: значение '--max-ppsize' слишком мало: пропущено\n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "ВНИМАНИЕ: значение '--max-ppsize' слишком велико: пропущено\n"
@@ -8278,6 +8263,18 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#, fuzzy
+#~ msgid "WARNING: no value given for '%s'"
+#~ msgstr "ВНИМАНИЕ: не задано значение '%s'\n"
+
+#, fuzzy
+#~ msgid "WARNING: '%s' value is invalid: ignored"
+#~ msgstr "ВНИМАНИЕ: '%s' значение неправильное: пропущено\n"
+
+#, fuzzy
+#~ msgid "WARNING: %s: too large and ignored"
+#~ msgstr "ВНИМАНИЕ: %s: слишком велико и пропущено\n"
 
 #~ msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 #~ msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2011-03-28 15:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -593,42 +593,27 @@ msgstr " 識別子に対応する R-to-C コンバータがありません "
 msgid "WARNING: no value given for --encoding"
 msgstr " 警告: --encoding の値が与えられていません \n"
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr " 警告: '%s' オプションはもやはサポートされていません \n"
 
-#: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr " 警告: ''%s' の値が与えられていません \n"
-
-#: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr " 警告: '%s' 値が不正なので無視されました \n"
-
-#: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr " 警告: %s: 大きすぎるので無視されました \n"
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr " 警告: '--max-ppsize' の値が与えられていません \n"
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr " 警告: '--max-ppsize' 値が負なので無視されました \n"
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr " 警告: '--max-ppsize' 値が小さすぎるので無視されました \n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr " 警告: '--max-ppsize' 値が大きすぎるので無視されました \n"
@@ -8301,6 +8286,18 @@ msgstr " X11 モジュールをロードできません "
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
+
+#, fuzzy
+#~ msgid "WARNING: no value given for '%s'"
+#~ msgstr " 警告: ''%s' の値が与えられていません \n"
+
+#, fuzzy
+#~ msgid "WARNING: '%s' value is invalid: ignored"
+#~ msgstr " 警告: '%s' 値が不正なので無視されました \n"
+
+#, fuzzy
+#~ msgid "WARNING: %s: too large and ignored"
+#~ msgstr " 警告: %s: 大きすぎるので無視されました \n"
 
 #~ msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 #~ msgstr ""

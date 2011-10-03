@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1359,6 +1359,18 @@ msgstr "只有一个数值従属変数时不能忽略従属変数的二次方"
 
 msgid "specified parametric for all predictors"
 msgstr "所有従属変数都被设定为参数"
+
+#, fuzzy
+msgid "invalid argument 'span'"
+msgstr "参数'n'不对"
+
+#, fuzzy
+msgid "invalid argument 'cell'"
+msgstr "参数'c'不对"
+
+#, fuzzy
+msgid "invalid argument 'degree'"
+msgstr "参数'r'不对"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "第一个参数必需为\"loess\"对象"

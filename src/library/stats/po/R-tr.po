@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1362,6 +1362,18 @@ msgstr ""
 
 msgid "specified parametric for all predictors"
 msgstr ""
+
+#, fuzzy
+msgid "invalid argument 'span'"
+msgstr "geçersiz argüman 'n'"
+
+#, fuzzy
+msgid "invalid argument 'cell'"
+msgstr "geçersiz argüman 'c'"
+
+#, fuzzy
+msgid "invalid argument 'degree'"
+msgstr "geçersiz argüman 'r'"
 
 msgid "first argument must be a \"loess\" object"
 msgstr ""

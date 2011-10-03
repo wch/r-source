@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -593,42 +593,27 @@ msgstr "fann ingen R til C-omformar som svarar til identifikatoren"
 msgid "WARNING: no value given for --encoding"
 msgstr "ÅTVARING: ingen verdi vald for «--encoding»\n"
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "ÅTVARING: valet «%s» er ikkje lenger støtta\n"
 
-#: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr "ÅTVARING: ingen verdi vald for «%s»\n"
-
-#: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr "ÅTVARING: «%s»-verdien er ugyldig, og vert ikkje brukt\n"
-
-#: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr "ÅTVARING: «%s»-verdien er for stor, og vert ikkje brukt\n"
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "ÅTVARING: ingen verdi vald for «--max-ppsize»\n"
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "ÅTVARING: «--max-ppsize»-verdien er negativ, og vert ikkje brukt\n"
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "ÅTVARING: «--max-ppsize»-verdien er for låg, og vert ikkje brukt\n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "ÅTVARING: «--max-ppsize»-verdien er for høg, og vert ikkje brukt\n"
@@ -8280,6 +8265,18 @@ msgstr "X11-modulen kan ikkje lastast"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 er ikkje tilgjengeleg"
+
+#, fuzzy
+#~ msgid "WARNING: no value given for '%s'"
+#~ msgstr "ÅTVARING: ingen verdi vald for «%s»\n"
+
+#, fuzzy
+#~ msgid "WARNING: '%s' value is invalid: ignored"
+#~ msgstr "ÅTVARING: «%s»-verdien er ugyldig, og vert ikkje brukt\n"
+
+#, fuzzy
+#~ msgid "WARNING: %s: too large and ignored"
+#~ msgstr "ÅTVARING: «%s»-verdien er for stor, og vert ikkje brukt\n"
 
 #~ msgid "no locator capability in device driver"
 #~ msgstr "einingsdrivaren støttar ikkje koordinatdetektering"

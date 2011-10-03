@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41\n"
-"PO-Revision-Date: 2011-10-02 08:41\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
+"PO-Revision-Date: 2011-10-03 18:50\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"

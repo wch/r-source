@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-03 18:50+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -590,42 +590,27 @@ msgstr "nenhum conversor R-para-C encontrado correspondendo ao identificador"
 msgid "WARNING: no value given for --encoding"
 msgstr "ATENÇÃO: nenhum valor especificado para --encoding\n"
 
-#: src/main/CommandLineArgs.c:195
+#: src/main/CommandLineArgs.c:199
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "ATENÇÃO: opção '%s' não mais suportada\n"
 
-#: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
-msgid "WARNING: no value given for '%s'"
-msgstr "ATENÇÃO: nenhum valor especificado para '%s'\n"
-
-#: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
-msgid "WARNING: '%s' value is invalid: ignored"
-msgstr "ATENÇÃO: valor '%s' é inválido: ignorado\n"
-
-#: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
-msgid "WARNING: %s: too large and ignored"
-msgstr "ATENÇÃO: %s: muito grande e ignorado\n"
-
-#: src/main/CommandLineArgs.c:240
+#: src/main/CommandLineArgs.c:207
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "ATENÇÃO: nenhum valor especificado para '--max-ppsize'\n"
 
-#: src/main/CommandLineArgs.c:245
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "ATENÇÃO: valor de '--max-ppsize' negativo: ignorado\n"
 
-#: src/main/CommandLineArgs.c:247
+#: src/main/CommandLineArgs.c:214
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "ATENÇÃO: valor de '--max-ppsize' é muito pequeno: ignorado\n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:217
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "ATENÇÃO: valor de '--max-ppsize' é muito grande: ignorado\n"
@@ -8332,6 +8317,18 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
+
+#, fuzzy
+#~ msgid "WARNING: no value given for '%s'"
+#~ msgstr "ATENÇÃO: nenhum valor especificado para '%s'\n"
+
+#, fuzzy
+#~ msgid "WARNING: '%s' value is invalid: ignored"
+#~ msgstr "ATENÇÃO: valor '%s' é inválido: ignorado\n"
+
+#, fuzzy
+#~ msgid "WARNING: %s: too large and ignored"
+#~ msgstr "ATENÇÃO: %s: muito grande e ignorado\n"
 
 #~ msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 #~ msgstr ""

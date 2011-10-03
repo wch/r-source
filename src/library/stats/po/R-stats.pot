@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1314,6 +1314,15 @@ msgid "specified the square of a predictor to be dropped with only one numeric p
 msgstr ""
 
 msgid "specified parametric for all predictors"
+msgstr ""
+
+msgid "invalid argument 'span'"
+msgstr ""
+
+msgid "invalid argument 'cell'"
+msgstr ""
+
+msgid "invalid argument 'degree'"
 msgstr ""
 
 msgid "first argument must be a \"loess\" object"

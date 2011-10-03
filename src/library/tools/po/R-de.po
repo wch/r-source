@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-09-23 12:21\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
 "PO-Revision-Date: 2011-03-24 11:04+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -533,10 +533,8 @@ msgstr "das aktuelle ARbeitsverzeichnis kann nicht bestimmt werden"
 msgid "no inputs"
 msgstr "keine Eingaben"
 
-msgid "DVI output from Rd2dvi is deprecated"
-msgstr ""
-
-msgid "Error in running tools::texi2dvi"
+#, fuzzy
+msgid "Error in running tools::texi2pdf"
 msgstr "Fehler bei der Ausführung von tools::texi2dvi"
 
 msgid "more than one \\examples section, using the first"
@@ -801,14 +799,6 @@ msgstr "erzeuge Debug-Symbole (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
-
-#, fuzzy
-msgid ""
-"installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
-"Extensions' manual'"
-msgstr ""
-"Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
-"packages' im 'Writing R Extension' Handbuch"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -1313,6 +1303,14 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#, fuzzy
+#~ msgid ""
+#~ "installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
+#~ "Extensions' manual'"
+#~ msgstr ""
+#~ "Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
+#~ "packages' im 'Writing R Extension' Handbuch"
 
 #~ msgid "Malformed NEWS.Rd file."
 #~ msgstr "Falsch formatierte NEWS.Rd Datei."
