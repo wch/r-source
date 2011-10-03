@@ -17,14 +17,11 @@
    \itemize{
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
 
-      \item A top-level \file{COPYING} file in a package will no longer
-      be installed (it has been deprecated for several years).
-
       \item Options such as \code{--max-nsize} and the function
       \code{mem.limits()} are now defunct.
 
       \item Use of \code{library.dynam()} without specifying all the
-      first three arguments is defunct.
+      first three arguments is now disallowed.
     }
   }
 }
@@ -654,6 +651,10 @@
       \item \code{installed.packages()} now hashes the names of its
       cache files to avoid very rare problems with excessively long path
       names.  (\PR{14669})
+      
+      \item A top-level \file{COPYING} file in a package is no longer
+      installed (file names \file{LICENSE} or \file{LICENCE} having long
+      been preferred).
     }
   }
 
@@ -738,10 +739,6 @@
       now deprecated: only PDF output will be supported in future
       releases (since this allows the use of fonts only supported for
       PDF).
-
-      \item A top-level \file{COPYING} file in a package is now
-      deprecated (file names \file{LICENSE} or \file{LICENCE} have long
-      been preferred), and will not be installed as from \R 2.15.0.
 
       \item Options such as \code{--max-nsize} and the function
       \code{mem.limits()} are now deprecated: these limits are nowadays

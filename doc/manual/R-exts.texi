@@ -223,10 +223,10 @@ file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
 @file{src}, and @file{tests} (some of which can be missing, but which
 should not be empty).  The package subdirectory may also contain files
 @file{INDEX}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
-@file{LICENSE}, @file{LICENCE} and @file{NEWS}.  Other
-files such as @file{INSTALL} (for non-standard installation
-instructions), @file{README} or @file{ChangeLog} will be ignored by
-@R{}, but may be useful to end users.
+@file{LICENSE}, @file{LICENCE} and @file{NEWS}.  Other files such as
+@file{INSTALL} (for non-standard installation instructions),
+@file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
+useful to end users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 subsections below.  The @file{NAMESPACE} file is described in the
