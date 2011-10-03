@@ -507,6 +507,10 @@ function(chname, package, lib.loc, verbose = getOption("verbose"),
 
     if(missing(chname) || !nzchar(chname)) return(dll_list)
 
+    ## For better error messages, force these to be evaluated.
+    package
+    lib.loc
+
     ## Be defensive about possible system-specific extension for shared
     ## objects, although the docs clearly say they should not be
     ## added.
