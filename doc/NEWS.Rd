@@ -860,6 +860,13 @@
 
       \item X11 cairo back-end produced incorrect capture snapshot
       images on big-endian machines.
+
+      \item \code{loglin()} gave a spurious error when argument
+      \code{margin} consists of a single element of length one.
+      (\PR{14690})
+
+      \item \code{loess()} is better protected against misuse,
+      e.g. zero-length \code{span}.  (\PR{14691})
     }
   }
 }

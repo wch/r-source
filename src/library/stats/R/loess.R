@@ -129,6 +129,9 @@ simpleLoess <-
 	    statistics <- if(trace.hat == "exact") "1.approx"
             else "2.approx" # trace.hat == "approximate"
 	surf.stat <- paste(surface, statistics, sep="/")
+        if (length(span) != 1L) stop("invalid argument 'span'")
+        if (length(cell) != 1L) stop("invalid argument 'cell'")
+        if (length(degree) != 1L) stop("invalid argument 'degree'")
 	z <- .C(C_loess_raw, # ../src/loessc.c
 		as.double(y),
 		as.double(x),
