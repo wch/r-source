@@ -2597,8 +2597,8 @@ cbind(x, "1"=filter(x, 0.5, method="recursive"),
 ## NAs in wrong place in R <= 2.13.1.
 
 
-## PR#14679
+## PR#14679.  Format depends if TZ is set.
 x <- as.POSIXlt(c("2010-02-27 22:30:33", "2009-08-09 06:01:03",
                   "2010-07-23 17:29:59"))
-trunc(x, units = "days")[1:3]
+stopifnot(is.na(trunc(x, units = "days")[1:3]))
 ## gave NAs after the first in R < 2.13.2
