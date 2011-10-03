@@ -57,6 +57,7 @@
 \alias{.Export}
 \alias{.S3method}
 \alias{.First.lib}
+\alias{mem.limits}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -149,6 +150,9 @@ manglePackageName(pkgName, pkgVersion)
 % Removed in 2.14.0
 .First.lib(lib, pkg)
 % </Removed 2.14.0>
+% Removed in 2.15.0
+mem.limits(nsize = NA, vsize = NA)
+% </Removed 2.15.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -248,6 +252,10 @@ manglePackageName(pkgName, pkgVersion)
 
   \code{.First.lib} was the load/attach hook for packages without
   namespaces: use \code{\link{.onLoad}} or \code{\link{.onAttach}} instead.
+  
+  \code{mem.limits} reported on the old-style limits on the number of
+  cons cells and size of the vector heap.  These are no longer limited
+  except by overall memory limits.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
