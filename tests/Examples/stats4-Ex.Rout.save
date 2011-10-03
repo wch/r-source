@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-07-05 r56287)
+R version 2.14.0 alpha (2011-10-03 r57134)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -183,7 +183,7 @@ Coefficients:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.222 0.013 1.322 0 0 
+Time elapsed:  0.763 0.011 0.779 0 0 
 > grDevices::dev.off()
 null device 
           1 
