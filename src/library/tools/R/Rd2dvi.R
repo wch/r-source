@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-#### R based engine for  R CMD Rdconv Rd2dvi
+#### R based engine for  R CMD Rdconv|Rd2pdf
 ####
 
 ##' @param args
@@ -455,7 +455,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## Rd2.tex part 1: header
     if (batch) writeLines("\\nonstopmode{}", out)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
-        "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
+        "\\usepackage[", Sys.getenv("R_RDPDF", "times,inconsolata,pdf"), "]{Rd}\n",
         sep = "", file = out)
     if (index) writeLines("\\usepackage{makeidx}", out)
     inputenc <- Sys.getenv("RD2DVI_INPUTENC", "inputenc")
@@ -601,12 +601,12 @@ function(pkgdir, outfile, title, batch = FALSE,
     1L
 }
 
-### * ..Rd2dvi
+### * ..Rd2pdf
 
-## Driver called from R CMD Rd2dvi
+## Driver called from R CMD Rd2pdf
 ## See the comments in install.R as to how this can be called directly.
 
-..Rd2dvi <- function(args = NULL, quit = TRUE)
+..Rd2pdf <- function(args = NULL, quit = TRUE)
 {
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
@@ -620,9 +620,9 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     Usage <- function() {
-        cat("Usage: R CMD Rd2dvi [options] files",
+        cat("Usage: R CMD Rd2pdf [options] files",
             "",
-            "Generate PDF (or DVI) output from the Rd sources specified by files, by",
+            "Generate PDF output from the Rd sources specified by files, by",
             "either giving the paths to the files, or the path to a directory with",
             "the sources of a package, or an installed package.",
             "",
@@ -643,14 +643,13 @@ function(pkgdir, outfile, title, batch = FALSE,
             "  -v, --version		print version info and exit",
             "      --batch		no interaction",
             "      --no-clean	do not remove created temporary files",
-            "      --no-preview	do not preview generated DVI/PDF file",
+            "      --no-preview	do not preview generated PDF file",
             "      --encoding=enc    use 'enc' as the default input encoding",
             "      --outputEncoding=outenc",
             "                        use 'outenc' as the default output encoding",
             "      --os=NAME		use OS subdir 'NAME' (unix or windows)",
             "      --OS=NAME		the same as '--os'",
             "  -o, --output=FILE	write output to FILE",
-            "      --pdf		generate PDF output",
             "      --force		overwrite output file if it exists",
             "      --title=NAME	use NAME as the title of the document",
             "      --no-index	don't index output",
@@ -659,7 +658,6 @@ function(pkgdir, outfile, title, batch = FALSE,
             "",
             "The output papersize is set by the environment variable R_PAPERSIZE.",
             "The PDF previewer is set by the environment variable R_PDFVIEWER.",
-            "The DVI previewer is set by the environment variable xdvi.",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -676,12 +674,12 @@ function(pkgdir, outfile, title, batch = FALSE,
     startdir <- getwd()
     if (is.null(startdir))
         stop("current working directory cannot be ascertained")
-    build_dir <- paste(".Rd2dvi", Sys.getpid(), sep = "")
+    build_dir <- paste(".Rd2pdf", Sys.getpid(), sep = "")
     title <- ""
     batch <- FALSE
     clean <- TRUE
     only_meta <- FALSE
-    out_ext <- "dvi"
+    out_ext <- "pdf"
     output <- ""
     enc <- "unknown"
     outenc <- "latin1"
@@ -694,13 +692,7 @@ function(pkgdir, outfile, title, batch = FALSE,
 
     WINDOWS <- .Platform$OS.type == "windows"
 
-    if (WINDOWS) {
-        OSdir <- "windows"
-        preview <- Sys.getenv("xdvi", "open")
-    } else {
-        OSdir <- "unix"
-        preview <- Sys.getenv("xdvi", "xdvi")
-    }
+    preview <- Sys.getenv("R_PDFVIEWER", if(WINDOWS) "open" else "false")
 
     while(length(args)) {
         a <- args[1L]
@@ -708,7 +700,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             Usage()
             q("no", runLast = FALSE)
         } else if (a %in% c("-v", "--version")) {
-            cat("Rd2dvi: ",
+            cat("Rd2pdf: ",
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
@@ -724,11 +716,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         } else if (a == "--no-preview") {
             preview <- "false"
         } else if (a == "--pdf") {
-            out_ext <-  "pdf";
-            ## allow for --no-preview --pdf
-            if (preview != "false")
-                preview <- Sys.getenv("R_PDFVIEWER", if(WINDOWS) "open" else "false")
-            Sys.setenv(R_RD4DVI = Sys.getenv("R_RD4PDF", "times,inconsolata,hyper"))
+            # ignore for back-compatibility
         } else if (substr(a, 1, 8) == "--title=") {
             title <- substr(a, 9, 1000)
         } else if (a == "-o") {
@@ -764,9 +752,6 @@ function(pkgdir, outfile, title, batch = FALSE,
         message("no inputs")
         q("no", status = 1L, runLast = FALSE)
     }
-
-    if (out_ext != "pdf")
-        warning("DVI output from Rd2dvi is deprecated", call. = FALSE)
 
     ## Windows does not allow .../man/, say, for a directory
     if(WINDOWS) files[1L] <- sub("[\\/]$", "", files[1L])
@@ -816,10 +801,9 @@ function(pkgdir, outfile, title, batch = FALSE,
     if (!batch)  cat("Creating", out_ext, "output from LaTeX ...\n")
     setwd(build_dir)
 
-    res <- try(texi2dvi('Rd2.tex', pdf = (out_ext == "pdf"),
-                        quiet = FALSE, index = index))
+    res <- try(texi2pdf('Rd2.tex', quiet = FALSE, index = index))
     if (inherits(res, "try-error")) {
-        message("Error in running tools::texi2dvi")
+        message("Error in running tools::texi2pdf")
         do_cleanup()
         q("no", status = 1L, runLast = FALSE)
     }

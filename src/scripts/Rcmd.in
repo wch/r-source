@@ -44,9 +44,10 @@ case "${1}" in
     cmd="${R_HOME}/bin/Rdconv"
     extra="-t txt"
     ;;
-  Rd2pdf)
-    cmd="${R_HOME}/bin/Rd2dvi"
-    extra="--pdf"
+## removed in 2.15.0
+  Rd2dvi)
+    echo "R CMD Rd2dvi is defunct: use Rd2pdf instead"
+    exit 1
     ;;
   *)
     if test -x "${R_HOME}/bin/${1}"; then

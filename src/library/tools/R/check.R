@@ -555,22 +555,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
 
         ## Several packages had leftover Rd2dvi build directories in
-        ## their sources, e.g.
-        ## ./catmap/man/.Rd2dvi
-        ## ./Rdsm/man/.Rd2dvi7366
-        ## ./depmix/man/.Rd2dvi1150
-        ## ./beadarrayMSV/man/.Rd2dvi2933
-        ## ./qgraph/man/.Rd2dvi4352
-        ## ./qgraph/man/.Rd2dvi1532
-        ## ./qgraph/man/.Rd2dvi2032
-        ## ./qgraph/man/.Rd2dvi6032
-        ind <- grepl("^\\.Rd2dvi", basename(all_dirs))
+        ## their sources/
+        ind <- grepl("^\\.Rd2(dvi|pdf)", basename(all_dirs))
         if(any(ind)) {
             if(!any) warnLog()
             any <- TRUE
             printLog(Log,
                      "Found the following directory(s) with ",
-                     "names of Rd2dvi build directories:\n",
+                     "names of Rd2pdf build directories:\n",
                      .format_lines_with_indent(all_dirs[ind]),
                      "\n",
                      "Most likely, these were included erroneously.\n")
@@ -1922,7 +1914,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
                 file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
-            if (res == 11) { ## return code from Rd2dvi
+            if (res == 11) { ## return code from Rd2pdf
                 errorLog(Log, "Rd conversion errors:")
                 lines <- readLines("Rdlatex.log", warn = FALSE)
                 lines <- grep("^(Hmm|Execution)", lines,

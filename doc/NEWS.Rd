@@ -5,6 +5,23 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R-devel}{
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
+
+      \item A top-level \file{COPYING} file in a package will no longer
+      be installed.
+
+      \item Options such as \code{--max-nsize} and the function
+      \code{mem.limits()} are now defunct.
+
+      \item Use of \code{library.dynam()} without specifying all the
+      first three arguments is defunct.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R VERSION 2.14.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{

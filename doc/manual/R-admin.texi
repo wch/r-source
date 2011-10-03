@@ -4748,7 +4748,6 @@ This item is installed by the @file{Rtools*.exe} installer.
 @c INSTALL may use sh make zip (and tar if R_INSTALL_TAR is used)
 @c build uses make tar gzip
 @c Rdiff.sh USED to use diff echo grep sed tr
-@c Rd2dvi USED to use basename echo mkdir rm sed
 
 @c basename is used in src/library/Recommended/Makefile.win
 @c comm, sort, uniq are used in producing .def files

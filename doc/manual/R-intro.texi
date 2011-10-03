@@ -6948,13 +6948,6 @@ for more information.  Command-line editing is enabled by default
 interactive use (see @option{--interactive}).  This option also affects
 tilde-expansion: see the help for @code{path.expand}.
 
-@item --min-vsize=@var{N}
-@itemx --max-vsize=@var{N}
-@itemx --min-nsize=@var{N}
-@itemx --max-nsize=@var{N}
-Deprecated, and almost entirely of historical interest: see
-@code{?Memory} in @R{}.
-
 @item --max-ppsize=@var{N}
 Specify the maximum size of the pointer protection stack as @var{N}
 locations.  This defaults to 10000, but can be increased to allow

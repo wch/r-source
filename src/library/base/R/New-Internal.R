@@ -161,12 +161,6 @@ is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
     .Internal(is.unsorted(x, strictly))
 }
 
-mem.limits <- function(nsize=NA, vsize=NA)
-{
-    .Deprecated("gc")
-    structure(.Internal(mem.limits(nsize, vsize)), names = c("nsize", "vsize"))
-}
-
 nchar <- function(x, type = "chars", allowNA = FALSE)
     .Internal(nchar(x, type, allowNA))
 

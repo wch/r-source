@@ -98,7 +98,6 @@ Commands:
   LINK			Front-end for creating executable programs
   Rprof			Post-process R profiling files
   Rdconv		Convert Rd format to various other formats
-  Rd2dvi		Convert Rd format to DVI
   Rd2pdf		Convert Rd format to PDF
   Rd2txt		Convert Rd format to pretty text
   Stangle		Extract S/R code from Sweave documentation

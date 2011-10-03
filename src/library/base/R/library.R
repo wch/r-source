@@ -500,25 +500,24 @@ function(x, ...)
 }
 
 library.dynam <-
-function(chname, package = NULL, lib.loc = NULL,
-         verbose = getOption("verbose"),
+function(chname, package, lib.loc, verbose = getOption("verbose"),
          file.ext = .Platform$dynlib.ext, ...)
 {
     dll_list <- .dynLibs()
 
-    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0L)
-        return(dll_list)
+    if(missing(chname) || !nzchar(chname)) return(dll_list)
 
-    if(missing(package) || missing(lib.loc))
-        warning("use of library.dynam() without specifying both 'package' and 'lib.loc' is deprecated", immediate. = TRUE, domain = NA)
     ## Be defensive about possible system-specific extension for shared
     ## objects, although the docs clearly say they should not be
     ## added.
+    nc_chname <- nchar(chname, "c")
     nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname) == file.ext)
         chname <- substr(chname, 1L, nc_chname - nc_file_ext)
 
     r_arch <- .Platform$r_arch
+    ## it is not clear we should allow this, rather require a single
+    ## package and library.
     for(pkg in find.package(package, lib.loc, verbose = verbose)) {
         DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs", r_arch)
 	else    file.path(pkg, "libs")

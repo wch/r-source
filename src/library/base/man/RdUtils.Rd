@@ -5,7 +5,6 @@
 
 \name{RdUtils}
 \alias{Rdconv}
-\alias{Rd2dvi}
 \alias{Rd2pdf}
 \title{Utilities for Processing Rd Files}
 \description{
@@ -15,7 +14,6 @@
 }
 \usage{
 \special{R CMD Rdconv [options] file}
-\special{R CMD Rd2dvi [options] files}
 \special{R CMD Rd2pdf [options] files}
 }
 \arguments{
@@ -30,26 +28,21 @@
   \command{R CMD Rdconv} converts Rd format to plain text, HTML or LaTeX
   formats: it can also extract the examples.
 
-  \command{R CMD Rd2dvi} is the user-level program for producing DVI/PDF output
+  \command{R CMD Rd2pdf} is the user-level program for producing PDF output
   from Rd sources.  It will make use of the environment variables
 #ifdef unix
   \env{R_PAPERSIZE} (set by \command{R CMD}, with a default set when \R
   was installed: values for \env{R_PAPERSIZE} are \code{a4},
-  \code{letter}, \code{legal} and \code{executive}), \env{xdvi} (the
-  DVI previewer, default \command{xdvi})
+  \code{letter}, \code{legal} and \code{executive})
 #endif
 #ifdef windows
   \env{R_PAPERSIZE} (default \code{a4}, also \code{legal} and
-  \code{executive}), \env{xdvi} (the DVI previewer, default
-  \command{open} (use file associations))
+  \code{executive})
 #endif
   and \env{R_PDFVIEWER} (the PDF previewer).  Also,
   \env{RD2DVI_INPUTENC} can be set to \code{inputenx} to make use of the
   LaTeX package of that name rather than \code{inputenc}: this might be
   needed for better support of the UTF-8 encoding.
-
-  \command{Rd2pdf} is shorthand for \command{Rd2dvi --pdf}.  Use of
-  \command{Rd2dvi} for DVI output was deprecated in \R 2.14.0.
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on utility
   \code{\var{foo}}.

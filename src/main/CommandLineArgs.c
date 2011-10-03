@@ -188,49 +188,16 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		     !strcmp(*av, "-quiet") ||
 		     !strcmp(*av, "-nsize") ||
 		     !strcmp(*av, "-vsize") ||
+		     !strncmp(*av, "--min-nsize", 11) ||
+		     !strncmp(*av, "--max-nsize", 11) ||
+		     !strncmp(*av, "--min-vsize", 11) ||
+		     !strncmp(*av, "--max-vsize", 11) ||
 		     !strcmp(*av, "-V") ||
 		     !strcmp(*av, "-n") ||
 		     !strcmp(*av, "-v")) {
 		snprintf(msg, 1024,
 			 _("WARNING: option '%s' no longer supported"), *av);
 		R_ShowMessage(msg);
-	    }
-	    /* mop up --max/min/-n/vsize */
-	    else if( !strncmp(*av, "--min-nsize", 11) ||
-		     !strncmp(*av, "--max-nsize", 11) ||
-		     !strncmp(*av, "--min-vsize", 11) ||
-		     !strncmp(*av, "--max-vsize", 11) ) {
-		snprintf(msg, 1024,
-			 "WARNING: option '%s' is deprecated", *av);
-		R_ShowMessage(msg);
-		if(strlen(*av) < 13) {
-		    if(ac > 1) {ac--; av++; p = *av;} else p = NULL;
-		}
-		else p = &(*av)[12];
-		if (p == NULL) {
-		    snprintf(msg, 1024,
-			     _("WARNING: no value given for '%s'"), *av);
-		    R_ShowMessage(msg);
-		    break;
-		}
-		value = R_Decode2Long(p, &ierr);
-		if(ierr) {
-		    if(ierr < 0)
-			snprintf(msg, 1024,
-				 _("WARNING: '%s' value is invalid: ignored"),
-				 *av);
-		    else
-			sprintf(msg,
-				_("WARNING: %s: too large and ignored"),
-				*av);
-		    R_ShowMessage(msg);
-
-		} else {
-		    if(!strncmp(*av, "--min-nsize", 11)) Rp->nsize = value;
-		    if(!strncmp(*av, "--max-nsize", 11)) Rp->max_nsize = value;
-		    if(!strncmp(*av, "--min-vsize", 11)) Rp->vsize = value;
-		    if(!strncmp(*av, "--max-vsize", 11)) Rp->max_vsize = value;
-		}
 	    }
 	    else if(strncmp(*av, "--max-ppsize", 12) == 0) {
 		if(strlen(*av) < 14) {

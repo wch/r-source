@@ -179,3 +179,9 @@ manglePackageName <- function (pkgName, pkgVersion) .Defunct()
 .S3method <- function(generic, class, method)
     .Defunct(msg = "namespaces should be specified via the 'NAMESPACE' file")
 ## </entry>
+
+## <entry>
+## Deprecated in 2.14.0
+## Defunct in 2.15.0
+mem.limits <- function(nsize=NA, vsize=NA) .Defunct("gc")
+## </entry>

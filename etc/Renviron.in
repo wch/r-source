@@ -10,8 +10,7 @@ R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'@R_PAPERSIZE@'}
 ## Default print command
 R_PRINTCMD=${R_PRINTCMD-'@R_PRINTCMD@'}
-# for Rd2dvi, reference manual
-R_RD4DVI=${R_RD4DVI-'@R_RD4DVI@'}
+# for Rd2pdf, reference manual
 R_RD4PDF=${R_RD4PDF-'@R_RD4PDF@'}
 ## used for options("texi2dvi")
 R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'@TEXI2DVICMD@'}}

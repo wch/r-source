@@ -159,8 +159,6 @@ if test -z "${TEXI2DVICMD}"; then
   TEXI2DVICMD=texi2dvi
 fi
 AC_SUBST(TEXI2DVICMD)
-: ${R_RD4DVI="ae"}
-AC_SUBST(R_RD4DVI)
 : ${R_RD4PDF="times,inconsolata,hyper"}
 AC_SUBST(R_RD4PDF)
 ])# R_PROG_TEXMF

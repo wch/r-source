@@ -74,7 +74,6 @@ void rcmdusage (char *RCMD)
 	    "  Rprof    Post process R profiling files\n",
 	    "  Rdconv   Convert Rd format to various other formats\n",
 	    "  Rdiff    difference R output files\n",
-	    "  Rd2dvi   Convert Rd format to DVI\n",
 	    "  Rd2pdf   Convert Rd format to PDF\n",
 	    "  Rd2txt   Convert Rd format to pretty text\n",
 	    "  Stangle  Extract S/R code from Sweave documentation\n",
@@ -446,14 +445,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		 "%s/%s/Rterm.exe -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --slave --args nextArg-tnextArgtxt",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (!strcmp(argv[cmdarg], "Rd2dvi")) {
-	snprintf(cmd, CMD_LEN,
-		 "%s/%s/Rterm.exe -e tools:::..Rd2dvi() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args ",
-		 getRHOME(3), BINDIR);
-	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Rd2pdf")) {
 	snprintf(cmd, CMD_LEN,
-		 "%s/%s/Rterm.exe -e tools:::..Rd2dvi() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args nextArg--pdf",
+		 "%s/%s/Rterm.exe -e tools:::..Rd2pdf() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args nextArg",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Sweave")) {

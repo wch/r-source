@@ -14,8 +14,7 @@ BSTINPUTS=.;${BSTINPUTS};${R_SHARE_DIR}/texmf/bibtex/bst;
 # R_PLATFORM='i386-pc-mingw32'
 R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'a4'}
-# for Rd2dvi, reference manual
-R_RD4DVI=${R_RD4DVI-'ae'}
+# for Rd2dpf, reference manual
 R_RD4PDF=${R_RD4PDF-'times,inconsolata,hyper'}
 ## used for options("texi2dvi")
 # R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'texi2dvi'}}

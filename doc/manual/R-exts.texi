@@ -5245,15 +5245,12 @@ other formats, or extract the executable examples for run-time testing.
 The currently supported conversions are to plain text, @HTML{} and
 @LaTeX{} as well as extraction of the examples.
 
-@findex R CMD Rd2dvi
 @findex R CMD Rd2pdf
-@code{R CMD Rd2dvi} generates DVI (or, if option @option{--pdf} is
-given, or it is invoked as @code{R CMD Rd2pdf}, PDF) output from
-documentation in @file{Rd} files, which can be specified either
-explicitly or by the path to a directory with the sources of a package.
-In the latter case, a reference manual for all documented objects in the
-package is created, including the information in the @file{DESCRIPTION}
-files.  Use for DVI output was deprecated in @R{} 2.14.0.
+@code{R CMD Rd2pdf} generates PDF output from documentation in @file{Rd}
+files, which can be specified either explicitly or by the path to a
+directory with the sources of a package.  In the latter case, a
+reference manual for all documented objects in the package is created,
+including the information in the @file{DESCRIPTION} files.
 
 @findex R CMD Sweave
 @findex R CMD Stangle

@@ -604,9 +604,11 @@
         if (more_than_libs) {
             for (f in c("NAMESPACE", "LICENSE", "LICENCE", "COPYING", "NEWS"))
                 if (file.exists(f)) {
-                    if (f == "COPYING")
-                        warning("installing a top-level 'COPYING' file is deprecated -- see the 'Writing R Extensions' manual'",
+                    if (f == "COPYING") {
+                        warning("installing a top-level 'COPYING' file is defunct\n-- see the 'Writing R Extensions manual' and remove it",
                                 call. = FALSE)
+                        next
+                    }
                     file.copy(f, instdir, TRUE)
                     Sys.chmod(file.path(instdir, f), "644")
                 }
@@ -984,12 +986,10 @@
 
 	## LazyLoading
 	value <- parse_description_field(desc, "LazyLoad", default = TRUE)
-        if(!value) {
-            value <- TRUE
+        if(!value)
             warning("only LazyLoad = TRUE is supported",
                     call. = FALSE, domain = NA)
-        }
-	if (install_R && dir.exists("R") && length(dir("R")) && value) {
+	if (install_R && dir.exists("R") && length(dir("R"))) {
             BC <- parse_description_field(desc, "ByteCompile",
                                           default = byte_compile)
             rcp <- as.numeric(Sys.getenv("R_COMPILE_PKGS"))
@@ -1001,8 +1001,7 @@
                 Sys.setenv(R_ENABLE_JIT = 0L)
                 compiler::compilePKGS(1L)
                 compiler::setCompilerOptions(suppressUndefined = TRUE)
-            }
-            else
+            } else
                 starsmsg(stars, "preparing package for lazy loading")
             keep.source <-
                 parse_description_field(desc, "KeepSource",

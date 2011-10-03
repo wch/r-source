@@ -531,7 +531,7 @@ get_exclude_patterns <- function()
 	    dir.create("build", showWarnings = FALSE)
 	    refman <- file.path(pkgdir, "build",
                                 paste(basename(pkgdir), ".pdf", sep = ""))
-	    ..Rd2dvi(c("--pdf", "--force", "--no-preview",
+	    ..Rd2pdf(c("--force", "--no-preview",
 	               paste("--output=", refman, sep=""),
 	               pkgdir), quit = FALSE)
         }

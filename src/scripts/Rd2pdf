@@ -1,4 +1,4 @@
-## Rd2dvi -*- sh -*-  Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
+## Rd2pdf -*- sh -*-  Convert man pages (*.Rd help files) via LaTeX to PDF.
 
 args=
 while test -n "${1}"; do
@@ -7,6 +7,6 @@ while test -n "${1}"; do
   shift
 done
 
-echo 'tools:::..Rd2dvi()' \
+echo 'tools:::..Rd2pdf()' \
 | R_DEFAULT_PACKAGES= LC_ALL=C "${R_HOME}/bin/R" \
 --vanilla --slave --args ${args}
