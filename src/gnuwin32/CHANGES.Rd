@@ -4,7 +4,7 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
-\section{CHANGES IN R-devel}{
+\section{CHANGES IN R VERSION 2.14.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{yLineBias} of the \code{windows()} family of

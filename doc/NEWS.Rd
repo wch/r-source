@@ -5,7 +5,7 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R VERSION 2.14.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item All packages must have a namespace, and one is created on
