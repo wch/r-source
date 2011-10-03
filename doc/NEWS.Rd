@@ -18,7 +18,7 @@
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
 
       \item A top-level \file{COPYING} file in a package will no longer
-      be installed.
+      be installed (it has been deprecated for several years).
 
       \item Options such as \code{--max-nsize} and the function
       \code{mem.limits()} are now defunct.

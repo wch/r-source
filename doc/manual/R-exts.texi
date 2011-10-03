@@ -223,7 +223,7 @@ file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
 @file{src}, and @file{tests} (some of which can be missing, but which
 should not be empty).  The package subdirectory may also contain files
 @file{INDEX}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
-@file{LICENSE}, @file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other
+@file{LICENSE}, @file{LICENCE} and @file{NEWS}.  Other
 files such as @file{INSTALL} (for non-standard installation
 instructions), @file{README} or @file{ChangeLog} will be ignored by
 @R{}, but may be useful to end users.
@@ -243,16 +243,14 @@ are @file{configure.win} and @file{cleanup.win}
 
 @cindex LICENSE file
 @cindex LICENCE file
-@cindex COPYING file
 
-The optional file @file{LICENSE}/@file{LICENCE} or @file{COPYING} (where
-the former names are preferred, and @file{COPYING} is now deprecated)
-contains a copy of the license to the package.  Whereas you should feel
-free to include a license file in your @emph{source} distribution,
-please do not arrange to @emph{install} yet another copy of the
-@acronym{GNU} @file{COPYING} or @file{COPYING.LIB} files but refer to
-the copies on @uref{http://www.r-project.org/@/Licenses/} and included
-in the @R{} distribution (in directory @file{share/licenses}).
+The optional file @file{LICENSE}/@file{LICENCE} contains a copy of the
+license to the package.  Whereas you should feel free to include a
+license file in your @emph{source} distribution, please do not arrange
+to @emph{install} yet another copy of the @acronym{GNU} @file{COPYING}
+or @file{COPYING.LIB} files but refer to the copies on
+@uref{http://www.r-project.org/@/Licenses/} and included in the @R{}
+distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see

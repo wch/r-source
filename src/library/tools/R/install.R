@@ -602,13 +602,8 @@
 
 
         if (more_than_libs) {
-            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "COPYING", "NEWS"))
+            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS"))
                 if (file.exists(f)) {
-                    if (f == "COPYING") {
-                        warning("installing a top-level 'COPYING' file is defunct\n-- see the 'Writing R Extensions manual' and remove it",
-                                call. = FALSE)
-                        next
-                    }
                     file.copy(f, instdir, TRUE)
                     Sys.chmod(file.path(instdir, f), "644")
                 }
