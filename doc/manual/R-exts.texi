@@ -223,10 +223,10 @@ file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
 @file{src}, and @file{tests} (some of which can be missing, but which
 should not be empty).  The package subdirectory may also contain files
 @file{INDEX}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
-@file{LICENSE}, @file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other
-files such as @file{INSTALL} (for non-standard installation
-instructions), @file{README} or @file{ChangeLog} will be ignored by
-@R{}, but may be useful to end users.
+@file{LICENSE}, @file{LICENCE} and @file{NEWS}.  Other files such as
+@file{INSTALL} (for non-standard installation instructions),
+@file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
+useful to end users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 subsections below.  The @file{NAMESPACE} file is described in the
@@ -243,16 +243,14 @@ are @file{configure.win} and @file{cleanup.win}
 
 @cindex LICENSE file
 @cindex LICENCE file
-@cindex COPYING file
 
-The optional file @file{LICENSE}/@file{LICENCE} or @file{COPYING} (where
-the former names are preferred, and @file{COPYING} is now deprecated)
-contains a copy of the license to the package.  Whereas you should feel
-free to include a license file in your @emph{source} distribution,
-please do not arrange to @emph{install} yet another copy of the
-@acronym{GNU} @file{COPYING} or @file{COPYING.LIB} files but refer to
-the copies on @uref{http://www.r-project.org/@/Licenses/} and included
-in the @R{} distribution (in directory @file{share/licenses}).
+The optional file @file{LICENSE}/@file{LICENCE} contains a copy of the
+license to the package.  Whereas you should feel free to include a
+license file in your @emph{source} distribution, please do not arrange
+to @emph{install} yet another copy of the @acronym{GNU} @file{COPYING}
+or @file{COPYING.LIB} files but refer to the copies on
+@uref{http://www.r-project.org/@/Licenses/} and included in the @R{}
+distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
@@ -879,16 +877,14 @@ matched@footnote{case-insensitively on Windows.} against the file and
 directory names.
 
 Note that with the exceptions of @file{INDEX},
-@file{LICENSE}/@file{LICENCE}, @file{COPYING}@footnote{see the earlier
-comments about not using such a file: its use is deprecated and it will
-not be installed in future versions of @R{}.} and @file{NEWS}, information
-files at the top level of the package will @emph{not} be installed and
-so not be known to users of Windows and Mac OS X compiled packages (and
-not seen by those who use @command{R CMD INSTALL} or
-@command{install.packages} on the tarball).  So any information files
-you wish an end user to see should be included in @file{inst}.  Note
-that if the named exceptions also occur in @file{inst}, the versions in
-@file{inst} will be that seen in the installed package.
+@file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
+top level of the package will @emph{not} be installed and so not be
+known to users of Windows and Mac OS X compiled packages (and not seen
+by those who use @command{R CMD INSTALL} or @command{install.packages}
+on the tarball).  So any information files you wish an end user to see
+should be included in @file{inst}.  Note that if the named exceptions
+also occur in @file{inst}, the versions in @file{inst} will be that seen
+in the installed package.
 
 @findex CITATION
 @cindex citation
