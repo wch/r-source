@@ -458,7 +458,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         "\\usepackage[", Sys.getenv("R_RD4PDF", "times,inconsolata,hyper"), "]{Rd}\n",
         sep = "", file = out)
     if (index) writeLines("\\usepackage{makeidx}", out)
-    inputenc <- Sys.getenv("RD2DVI_INPUTENC", "inputenc")
+    inputenc <- Sys.getenv("RD2PDF_INPUTENC", "inputenc")
     ## this needs to be canonical, e.g. 'utf8'
     ## trailer is for detection if we want to edit it later.
     setEncoding <-

@@ -40,7 +40,7 @@
   \code{executive})
 #endif
   and \env{R_PDFVIEWER} (the PDF previewer).  Also,
-  \env{RD2DVI_INPUTENC} can be set to \code{inputenx} to make use of the
+  \env{RD2PDF_INPUTENC} can be set to \code{inputenx} to make use of the
   LaTeX package of that name rather than \code{inputenc}: this might be
   needed for better support of the UTF-8 encoding.
 

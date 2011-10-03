@@ -6,6 +6,14 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Environment variable \env{RD2DVI_INPUTENC} has been renamed
+      to \env{RD2PDF_INPUTENC}.
+      }
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
