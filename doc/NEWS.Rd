@@ -10,7 +10,6 @@
     \itemize{
       \item Environment variable \env{RD2DVI_INPUTENC} has been renamed
       to \env{RD2PDF_INPUTENC}.
-      }
     }
   }
   
