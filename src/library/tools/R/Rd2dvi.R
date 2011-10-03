@@ -693,6 +693,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     WINDOWS <- .Platform$OS.type == "windows"
 
     preview <- Sys.getenv("R_PDFVIEWER", if(WINDOWS) "open" else "false")
+    OSdir <- if (WINDOWS) "windows" else "unix"
 
     while(length(args)) {
         a <- args[1L]
