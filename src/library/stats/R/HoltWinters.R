@@ -85,9 +85,9 @@ function (x,
         .C(C_HoltWinters,
            as.double(x),
            as.integer(length(x)),
-           as.double(alpha),
-           as.double(beta),
-           as.double(gamma),
+           as.double(max(min(alpha,1),0)),
+           as.double(max(min(beta,1),0)),
+           as.double(max(min(gamma,1),0)),
            as.integer(start.time),
            as.integer(! + (seasonal == "multiplicative")),
            as.integer(f),
@@ -120,6 +120,8 @@ function (x,
                 sol   <- optim(optim.start, error, method = "L-BFGS-B",
                                lower = c(0, 0, 0), upper = c(1, 1, 1),
                                control = optim.control)
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
+                    stop("optimization failure")
                 alpha <- sol$par[1L]
                 beta  <- sol$par[2L]
                 gamma <- sol$par[3L]
@@ -131,6 +133,8 @@ function (x,
                                error, method = "L-BFGS-B",
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
+                    stop("optimization failure")
                 alpha <- sol$par[1L]
                 gamma <- sol$par[2L]
             }
@@ -144,6 +148,8 @@ function (x,
                                error, method = "L-BFGS-B",
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
+                    stop("optimization failure")
                 beta  <- sol$par[1L]
                 gamma <- sol$par[2L]
             } else {
@@ -165,6 +171,8 @@ function (x,
                                error, method = "L-BFGS-B",
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
+                    stop("optimization failure")
                 alpha <- sol$par[1L]
                 beta  <- sol$par[2L]
             } else {

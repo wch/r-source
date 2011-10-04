@@ -849,6 +849,9 @@
 
       \item \code{loess()} is better protected against misuse,
       e.g. zero-length \code{span}.  (\PR{14691})
+
+      \item \code{HoltWinters()} checks that the optimization
+      succeeded. (\PR{14694})
     }
   }
 }
