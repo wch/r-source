@@ -22,6 +22,13 @@
 
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is now disallowed.
+      
+      Use of \code{chname} in \code{library.dynam()} with the extension
+      \file{.so} or \code{.dll} (which was never allowed according
+      to the help page) is defunct.  This also applies to
+      \code{library.dynam.unload()} and to \code{useDynLib} directives
+      in \code{NAMESPACE} files.
+      
     }
   }
 }
@@ -758,7 +765,7 @@
       
       Use of \code{chname} in \code{library.dynam()} with the extension
       \file{.so} or \code{.dll} (which is clearly not allowed according
-      to the help page) is deprecated.  This also applied to
+      to the help page) is deprecated.  This also applies to
       \code{useDynLib} directives in \code{NAMESPACE} files.
     }
   }

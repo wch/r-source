@@ -49,7 +49,7 @@ library.dynam.unload(chname, libpath,
   \code{library.dynam} is designed to be used inside a package rather
   than at the command line, and should really only be used inside
   \code{\link{.onLoad}}.  The system-specific extension for DLLs (e.g.,
-  \file{.so} or \file{.sl} on Unix systems, \file{.so} on Mac OS X,
+  \file{.so} or \file{.sl} on Unix-alike systems,
   \file{.dll} on Windows) should not be added.
 #ifdef windows
 
@@ -61,8 +61,8 @@ library.dynam.unload(chname, libpath,
 #endif
   
   \code{library.dynam.unload} is designed for use in
-  \code{\link{.Last.lib}} or \code{\link{.onUnload}}: it unloads the
-  DLL and updates the value of \code{.dynLibs()}
+  \code{\link{.onUnload}}: it unloads the DLL and updates the value of
+  \code{.dynLibs()}
 
   \code{.dynLibs} is used for getting (with no argument) or setting the
   DLLs which are currently loaded by packages (using \code{library.dynam}).
