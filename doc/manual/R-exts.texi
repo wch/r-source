@@ -2756,11 +2756,13 @@ useDynLib(foo)
 @end example
 
 @noindent
-registers the shared object @code{foo} for loading with
-@code{library.dynam}.  Loading of registered object(s) occurs after the
-package code has been loaded and before running the load hook function.
-Packages that would only need a load hook function to load a shared
-object can use the @code{useDynLib} directive instead.
+registers the shared object @code{foo}@footnote{Note that this is the
+basename of the shared object, and the appropriate extension (@file{.so}
+or @file{.dll}) will be added.} for loading with @code{library.dynam}.
+Loading of registered object(s) occurs after the package code has been
+loaded and before running the load hook function.  Packages that would
+only need a load hook function to load a shared object can use the
+@code{useDynLib} directive instead.
 
 User-level hooks are also available: see the help on function
 @code{setHook}.
