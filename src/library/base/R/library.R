@@ -523,30 +523,32 @@ function(chname, package = NULL, lib.loc = NULL,
                 domain = NA)
 
     r_arch <- .Platform$r_arch
+    chname1 <- paste(chname, file.ext, sep = "")
+    ## it is not clear we should allow this, rather require a single
+    ## package and library.
     for(pkg in find.package(package, lib.loc, verbose = verbose)) {
         DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs", r_arch)
 	else    file.path(pkg, "libs")
-        file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
+        file <- file.path(DLLpath, chname1)
         if(file.exists(file)) break else file <- ""
     }
     if(file == "")
         if(.Platform$OS.type == "windows")
             stop(gettextf("DLL %s not found: maybe not installed for this architecture?", sQuote(chname)), domain = NA)
         else
-            stop(gettextf("shared object %s not found", sQuote(chname)),
+            stop(gettextf("shared object %s not found", sQuote(chname1)),
                  domain = NA)
     ## for consistency with library.dyn.unload:
-    file <- file.path(normalizePath(DLLpath, "/", TRUE),
-                      paste(chname, file.ext, sep = ""))
+    file <- file.path(normalizePath(DLLpath, "/", TRUE), chname1)
     ind <- vapply(dll_list, function(x) x[["path"]] == file, NA)
     if(length(ind) && any(ind)) {
         if(verbose)
             if(.Platform$OS.type == "windows")
-                message(gettextf("DLL %s already loaded", sQuote(chname)),
+                message(gettextf("DLL %s already loaded", sQuote(chname1)),
                         domain = NA)
             else
                 message(gettextf("shared object '%s' already loaded",
-                                 sQuote(chname)), domain = NA)
+                                 sQuote(chname1)), domain = NA)
         return(invisible(dll_list[[ seq_along(dll_list)[ind] ]]))
     }
     if(.Platform$OS.type == "windows") {
@@ -586,32 +588,37 @@ function(chname, libpath, verbose = getOption("verbose"),
     ## Be defensive about possible system-specific extension for shared
     ## objects, although the docs clearly say they should not be
     ## added.
+    chname0 <- chname
     nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname)
        == file.ext)
         chname <- substr(chname, 1L, nc_chname - nc_file_ext)
+    if (chname != chname0)
+        warning("use of 'chname' with an extension is deprecated",
+                domain = NA)
 
-    ## We need an absolute path here, and separators consistent with library.dynam.unload
+    ## We need an absolute path here, and separators consistent with
+    ## library.dynam
     libpath <- normalizePath(libpath, "/", TRUE)
+    chname1 <- paste(chname, file.ext, sep = "")
     file <- if(nzchar(.Platform$r_arch))
-             file.path(libpath, "libs", .Platform$r_arch,
-                       paste(chname, file.ext, sep = ""))
-     else    file.path(libpath, "libs",
-                       paste(chname, file.ext, sep = ""))
+             file.path(libpath, "libs", .Platform$r_arch, chname1)
+     else    file.path(libpath, "libs", chname1)
 
     pos <- which(vapply(dll_list, function(x) x[["path"]] == file, NA))
     if(!length(pos))
         if(.Platform$OS.type == "windows")
-            stop(gettextf("DLL %s was not loaded", sQuote(chname)), domain = NA)
+            stop(gettextf("DLL %s was not loaded", sQuote(chname1)),
+                 domain = NA)
         else
-            stop(gettextf("shared object %s was not loaded", sQuote(chname)),
+            stop(gettextf("shared object %s was not loaded", sQuote(chname1)),
                  domain = NA)
 
     if(!file.exists(file))
         if(.Platform$OS.type == "windows")
-            stop(gettextf("DLL %s not found", sQuote(chname)), domain = NA)
+            stop(gettextf("DLL %s not found", sQuote(chname1)), domain = NA)
         else
-            stop(gettextf("shared object '%s' not found", sQuote(chname)),
+            stop(gettextf("shared object '%s' not found", sQuote(chname1)),
                  domain = NA)
     if(verbose)
         message(gettextf("now dyn.unload(\"%s\") ...", file), domain = NA)
