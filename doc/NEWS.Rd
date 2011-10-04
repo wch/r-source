@@ -766,7 +766,8 @@
       Use of \code{chname} in \code{library.dynam()} with the extension
       \file{.so} or \code{.dll} (which is clearly not allowed according
       to the help page) is deprecated.  This also applies to
-      \code{useDynLib} directives in \code{NAMESPACE} files.
+      \code{library.dynam.unload()} and \code{useDynLib} directives in
+      \code{NAMESPACE} files.
     }
   }
 

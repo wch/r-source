@@ -575,7 +575,7 @@ function(chname, libpath, verbose = getOption("verbose"),
             stop("no shared object was specified")
 
     ## We need an absolute path here, and separators consistent with
-    ## library.dynam.load
+    ## library.dynam
     libpath <- normalizePath(libpath, "/", TRUE)
     chname1 <- paste(chname, file.ext, sep = "")
     file <- if(nzchar(.Platform$r_arch))
