@@ -514,9 +514,13 @@ function(chname, package = NULL, lib.loc = NULL,
     ## Be defensive about possible system-specific extension for shared
     ## objects, although the docs clearly say they should not be
     ## added.
+    chname0 <- chname
     nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname) == file.ext)
         chname <- substr(chname, 1L, nc_chname - nc_file_ext)
+    if (chname != chname0)
+        warning("use of 'chname' with an extension is deprecated",
+                domain = NA)
 
     r_arch <- .Platform$r_arch
     for(pkg in find.package(package, lib.loc, verbose = verbose)) {
