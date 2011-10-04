@@ -717,7 +717,7 @@
       \item \command{R CMD Rd2dvi} without the \option{--pdf} option is
       now deprecated: only PDF output will be supported in future
       releases (since this allows the use of fonts only supported for
-      PDF).
+      PDF), and only \command{R CMD Rd2pdf} will be available.
 
       \item Options such as \code{--max-nsize} and the function
       \code{mem.limits()} are now deprecated: these limits are nowadays
