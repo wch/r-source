@@ -847,9 +847,10 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     } else NULL
     
 
-    footer <- if(!("recommended" %in% meta$Priority) &&
-                 !has_authors_at_R_field &&
-                 !auto_was_meta) {
+    ## No auto-generation message for auto was meta so that maintainers
+    ## can safely use citation(auto = meta) in their CITATION without
+    ## getting notified about possible needs for editing.
+    footer <- if(!has_authors_at_R_field && !auto_was_meta) {
         paste("ATTENTION: This citation information has been auto-generated",
               "from the package DESCRIPTION file and may need manual editing,",
               "see ", sQuote("help(\"citation\")"), ".")
