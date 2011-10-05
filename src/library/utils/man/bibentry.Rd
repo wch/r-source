@@ -57,13 +57,14 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   instead of character strings.
 
   The \code{\link{print}} method for bibentry objects provides a choice
-  between six different styles:
+  between seven different styles:
   plain text (style \code{"text"}),
   BibTeX (\code{"Bibtex"}),
   a mixture of plain text and BibTeX as traditionally used for citations
   (\code{"citation"}),
-  HTML (style \code{"html"}),
-  LaTeX (style \code{"latex"}),
+  HTML (\code{"html"}),
+  LaTeX (\code{"latex"}),
+  R code (\code{"R"}),
   and a simple copy of the \code{textVersion} elements (style
   \code{"textVersion"}).
   The \code{"text"}, \code{"html"} and \code{"latex"} styles make use
@@ -72,6 +73,16 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \code{header}/\code{footer} for each item can be displayed as well as
   a \code{mheader}/\code{mfooter} for the whole vector of references.
 
+  The \code{\link{print}} method is based on a \code{\link{format}}
+  method which provides the same styles, and for formatting as R code
+  a choice between giving a character vector with one \code{bibentry()}
+  call for each bibentry (as commonly used in \file{CITATION} files), or
+  a character string with one collapsed call, obtained by combining the
+  individual calls with \code{c()} if there is more than one bibentry.
+  This can be controlled by setting the option \code{collapse} to
+  \code{FALSE} (default) or \code{TRUE}, respectively.  (Printing in R
+  style always collapses to a single call.)
+  
   There is also a \code{\link{toBibtex}} method for direct conversion to
   BibTeX.
 }
@@ -162,6 +173,7 @@ print(rref, style = "Bibtex")
 print(rref, style = "citation")
 print(rref, style = "html")
 print(rref, style = "latex")
+print(rref, style = "R")
 
 ## References for boot package and associated book
 bref <- c(
@@ -203,6 +215,12 @@ bref[1]$author[2]$email
 
 ## Convert to BibTeX
 toBibtex(bref)
+
+## Format in R style
+## One bibentry() call for each bibentry:
+writeLines(paste(format(bref, "R"), collapse = "\n\n"))
+## One collapsed call:
+writeLines(format(bref, "R", collapse = TRUE))
 }
 \keyword{ utilities }
 \keyword{ documentation }
