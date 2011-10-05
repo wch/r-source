@@ -31,27 +31,38 @@ function(given = NULL, family = NULL, middle = NULL,
     {
         if(!.is_not_nonempty_text(first)) {
             if(!.is_not_nonempty_text(given))
-                stop("Use either 'given' or 'first'/'middle' but not both.")
+                stop(gettextf("Use either %s or %s/%s but not both.",
+                              sQuote("given"),
+                              sQuote("first"), sQuote("middle")),
+                     domain = NA)
             ## <FIXME>
             ## Start warning eventually ... maybe use message() for now?
-            message("It is recommended to use 'given' instead of 'first'.")
+            message(gettextf("It is recommended to use %s instead of %s.",
+                             sQuote("given"), sQuote("first")),
+                    domain = NA)
             ## </FIXME>
             given <- first
         }
         if(!.is_not_nonempty_text(middle)) {
             ## <FIXME>
             ## Start warning eventually ... maybe use message() for now?
-            message("It is recommended to use 'given' instead of 'middle'.")
+            message(gettextf("It is recommended to use %s instead of %s.",
+                             sQuote("given"), sQuote("middle")),
+                    domain = NA)
             ## </FIXME>
             given <- c(given, unlist(strsplit(middle, "[[:space:]]+")))
         }
 
         if(!.is_not_nonempty_text(last)) {
             if(!.is_not_nonempty_text(family))
-                stop("Use either 'family' or 'last' but not both.")
+                stop(gettextf("Use either %s or %s but not both.",
+                              sQuote("family"), sQuote("last")),
+                     domain = NA)
             ## <FIXME>
             ## Start warning eventually ... maybe use message() for now?
-            message("It is recommended to use 'family' instead of 'last'.")
+            message(gettextf("It is recommended to use %s instead of %s.",
+                             sQuote("family"), sQuote("last")),
+                    domain = NA)
             ## </FIXME>
             family <- last
         }
@@ -157,7 +168,10 @@ function(x, name)
     ## Let's be nice and support first/middle/last for now.
     ## </COMMENT>
     if(name %in% c("first", "last", "middle")) {
-        message("It is recommended to use given/family instead of first/middle/last.")
+        message(gettextf("It is recommended to use %s/%s instead of %s/%s/%s.",
+                         sQuote("given"), sQuote("family"),
+                         sQuote("first"), sQuote("middle"), sQuote("last")),
+                domain = NA)
         oname <- name
 	name <- switch(name,
 	    "first" = "given",
@@ -203,7 +217,9 @@ function(..., recursive = FALSE)
 {
     args <- list(...)
     if(!all(sapply(args, inherits, "person")))
-        warning("method is just applicable to 'person' objects")
+        warning(gettextf("method is just applicable to %s objects",
+                         sQuote("person")),
+                domain = NA)
     args <- lapply(args, unclass)
     rval <- do.call("c", args)
     class(rval) <- "person"
@@ -367,11 +383,10 @@ function(object, ...)
     paste(format(object, include = c("given", "family")),
           collapse = " and ")
 
-
 ######################################################################
 
 bibentry <-
-function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
+function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
          ...,
          other = list(), mheader = NULL, mfooter = NULL)
 {
@@ -408,7 +423,11 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
 	bibtype <- as.character(bibtype)
 	stopifnot(length(bibtype) == 1L)
         pos <- match(tolower(bibtype), tolower(BibTeX_names))
-	if(is.na(pos)) stop("'bibtype' has to be one of", paste(BibTeX_names, collapse = ", "))
+	if(is.na(pos))
+            stop(gettextf("%s has to be one of %s",
+                          sQuote("bibtype"),
+                          paste(BibTeX_names, collapse = ", ")),
+                 domain = NA)
 	bibtype <- BibTeX_names[pos]
 
         ## process fields
@@ -422,9 +441,11 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
                             fixed = TRUE)
         if(length(rfields) > 0L) {
             ok <- sapply(rfields, function(f) any(f %in% fields))
-	    if(any(!ok)) stop("A bibentry of bibtype '", bibtype,
-		"' has to correctly specify the field(s): ",
-		paste(rfields[!ok], collapse = ", "), sep = "")
+	    if(any(!ok))
+                stop(gettextf("A bibentry of bibtype %s has to correctly specify the field(s): %s",
+                              sQuote(bibtype),
+                              paste(rfields[!ok], collapse = ", ")),
+                     domain = NA)
         }
         pos <- fields %in% c("author", "editor")
 	if(any(pos)) {
@@ -462,6 +483,9 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
     rval
 }
 
+bibentry_attribute_names <-
+    c("bibtype", "textVersion", "header", "footer", "key")
+
 `[[.bibentry` <-
 `[.bibentry` <-
 function(x, i)
@@ -472,19 +496,26 @@ function(x, i)
 }
 
 bibentry_format_styles <-
-    c("text", "Bibtex", "citation", "html", "latex", "textVersion")
+    c("text", "Bibtex", "citation", "html", "latex", "textVersion", "R")
 
-format.bibentry <-
-function(x, style = "text", .bibstyle = "JSS", ...)
+.match_bibentry_format_style <-
+function(style)
 {
     ind <- pmatch(tolower(style), tolower(bibentry_format_styles),
                   nomatch = 0L)
     if(all(ind == 0L))
-        stop(gettextf("'style' should be one of %s",
+        stop(gettextf("%s should be one of %s",
+                      sQuote("style"),
                       paste(dQuote(bibentry_format_styles),
                             collapse = ", ")),
              domain = NA)
-    style <- bibentry_format_styles[ind]
+    bibentry_format_styles[ind]
+}
+
+format.bibentry <-
+function(x, style = "text", .bibstyle = "JSS", ...)
+{
+    style <- .match_bibentry_format_style(style)
 
     .format_bibentry_via_Rd <- function(f) {
         out <- file()
@@ -538,34 +569,148 @@ function(x, style = "text", .bibstyle = "JSS", ...)
                out[!sapply(out, length)] <- ""
                unlist(out)
            },
-           "citation" = .format_bibentry_as_citation(x)
+           "citation" = .format_bibentry_as_citation(x),
+           "R" = .format_bibentry_as_R_code(x, ...)
            )
 }
 
 print.bibentry <-
 function(x, style = "text", .bibstyle = "JSS", ...)
 {
-    y <- format(x, style)
-    n <- length(y)
+    style <- .match_bibentry_format_style(style)
 
-    if(n > length(x)) {
-        ## Printing in citation style does extra headers/footers (which
-        ## however we may empty), so it is handled differently.
-        if(nzchar(header <- y[1L]))
-            header <- c("", header, "")
-        if(nzchar(footer <- y[n]))
-            footer <- c("", footer, "")
-        writeLines(c(header,
-                     paste(y[-c(1L, n)], collapse = "\n\n"),
-                     footer))
-    } else
-        writeLines(paste(y, collapse = "\n\n"))
-
+    if(style == "R") {
+        writeLines(format(x, "R", collapse = TRUE))
+    } else {
+        y <- format(x, style)
+        if(style == "citation") {
+            ## Printing in citation style does extra headers/footers
+            ## (which however may be empty), so it is handled
+            ## differently.
+            n <- length(y)
+            if(nzchar(header <- y[1L]))
+                header <- c("", header, "")
+            if(nzchar(footer <- y[n]))
+                footer <- c("", footer, "")
+            writeLines(c(header,
+                         paste(y[-c(1L, n)], collapse = "\n\n"),
+                         footer))
+        } else {
+            writeLines(paste(y, collapse = "\n\n"))
+        }
+    }
+    
     invisible(x)
 }
 
-bibentry_attribute_names <-
-    c("bibtype", "textVersion", "header", "footer", "key")
+## Not vectorized for now: see ?regmatches for a vectorized version.
+.blanks <-
+function(n)
+    paste(rep.int(" ", n), collapse = "")
+
+.format_call_RR <-
+function(cname, cargs)
+{
+    ## Format call with ragged right argument list (one arg per line).
+    cargs <- as.list(cargs)
+    n <- length(cargs)
+    lens <- sapply(cargs, length)
+    sums <- cumsum(lens)
+    starters <- c(sprintf("%s(", cname),
+                  rep.int(.blanks(nchar(cname) + 1L), sums[n] - 1L))
+    trailers <- c(rep.int("", sums[n] - 1L), ")")
+    trailers[sums[-n]] <- ","
+    sprintf("%s%s%s", starters, unlist(cargs), trailers)
+}
+
+.format_bibentry_as_R_code <-
+function(x, collapse = FALSE)
+{
+    ## There are two subleties for constructing R calls giving a given
+    ## bibentry object.
+    ## * There can be mheader and mfooter entries.
+    ##   If there are, we put them into the first bibentry.
+    ## * There could be field names which clash with the names of the
+    ##   bibentry() formals: these would need to be put as a list into
+    ##   the 'other' formal.
+    
+    ## The following make it into the attributes of an entry.
+    anames <- bibentry_attribute_names
+    ## The following make it into the attributes of the object.
+    manames <- c("mheader", "mfooter")
+
+    ## Format a single element (person or string, at least for now).
+    f <- function(e) {
+        if(inherits(e, "person"))
+            .format_person_as_R_code(e)
+        else
+            deparse(e)
+    }
+
+    g <- function(u, v) {
+        prefix <- sprintf("%s = ", u)
+        n <- length(v)
+        if(n > 1L)
+            prefix <- c(prefix,
+                        rep.int(.blanks(nchar(prefix)), n - 1L))
+        sprintf("%s%s", prefix, v)
+    }        
+
+    s <- lapply(unclass(x),
+                function(e) {
+                    a <- Filter(length, attributes(e)[anames])
+                    e <- e[!sapply(e, is.null)]
+                    ind <- !is.na(match(names(e),
+                                       c(anames, manames, "other")))
+                    if(any(ind)) {
+                        other <- paste(names(e[ind]),
+                                       sapply(e[ind], f),
+                                       sep = " = ")
+
+                        other <- Map(g,
+                                     names(e[ind]),
+                                     sapply(e[ind], f))
+                        other <- .format_call_RR("list", other)
+                        e <- e[!ind]
+                    } else {
+                        other <- NULL
+                    }
+                    c(Map(g, names(a), sapply(a, deparse)),
+                      Map(g, names(e), sapply(e, f)),
+                      if(length(other)) list(g("other", other)))
+                      
+                })
+
+    if(!is.null(mheader <- attr(x, "mheader")))
+        s[[1L]] <- c(s[[1L]],
+                     paste("mheader = ", deparse(mheader)))
+    if(!is.null(mfooter <- attr(x, "mfooter")))
+        s[[1L]] <- c(s[[1L]],
+                     paste("mfooter = ", deparse(mfooter)))
+
+    s <- Map(.format_call_RR, "bibentry", s)
+    if(collapse && (length(s) > 1L))
+        paste(.format_call_RR("c", s), collapse = "\n")
+    else
+        unlist(lapply(s, paste, collapse = "\n"), use.names = FALSE)
+
+}
+
+.format_person_as_R_code <-
+function(x)
+{
+    s <- lapply(unclass(x),
+                function(e) {
+                    e <- e[!sapply(e, is.null)]
+                    cargs <-
+                        sprintf("%s = %s", names(e), sapply(e, deparse))
+                    .format_call_RR("person", cargs)
+                })
+    if(length(s) > 1L)
+        .format_call_RR("c", s)
+    else
+        unlist(s, use.names = FALSE)
+}
 
 `$.bibentry` <-
 function(x, name)
@@ -600,8 +745,10 @@ function(x, name, value)
       value <- unlist(value)
       pos <- match(tolower(value), tolower(BibTeX_names))
       if(any(is.na(pos)))
-          stop("'bibtype' has to be one of",
-               paste(BibTeX_names, collapse = ", "))
+          stop(gettextf("%s has to be one of %s",
+                        sQuote("bibtype"),
+                        paste(BibTeX_names, collapse = ", ")),
+               domain = NA)
       value <- as.list(BibTeX_names[pos])
     }
 
@@ -627,9 +774,11 @@ function(x, name, value)
                      fixed = TRUE)
         if(length(rfields) > 0L) {
             ok <- sapply(rfields, function(f) any(f %in% fields))
-	    if(any(!ok)) stop("A bibentry of bibtype '", bibtype,
-		"' has to specify the field(s): ",
-		paste(rfields[!ok], collapse = ", "), sep = "")
+	    if(any(!ok))
+                stop(gettextf("A bibentry of bibtype %s has to specify the field(s): %s",
+                              sQuote(bibtype),
+                              paste(rfields[!ok], collapse = ", ")),
+                     domain = NA)
         }
     }
     for(i in seq_along(x)) check_bibentry1(x[[i]])
@@ -643,7 +792,9 @@ function(..., recursive = FALSE)
 {
     args <- list(...)
     if(!all(sapply(args, inherits, "bibentry")))
-        warning("method is just applicable to 'bibentry' objects")
+        warning(gettextf("method is just applicable to %s objects",
+                         sQuote("bibentry")),
+                domain = NA)
     args <- lapply(args, unclass)
     rval <- do.call("c", args)
     class(rval) <- "bibentry"
