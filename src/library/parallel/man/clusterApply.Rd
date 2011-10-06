@@ -133,7 +133,8 @@ parCapply(cl, x, FUN, ...)
   Derived from the \pkg{snow} package.
 }
 \examples{\donttest{ ## access to ports might be denied
-cl <- makeCluster(getOption("mc.cores", 2))
+## Use option cl.core to choose an appropriate cluster size.
+cl <- makeCluster(getOption("cl.cores", 2))
 
 clusterApply(cl, 1:2, get("+"), 3)
 xx <- 1
@@ -146,7 +147,7 @@ parSapply(cl, 1:20, get("+"), 3)
 stopCluster(cl)
 
 ## A bootstrapping example, which can be done in many ways:
-cl <- makeCluster(getOption("mc.cores", 2))
+cl <- makeCluster(getOption("cl.cores", 2))
 clusterEvalQ(cl, {
   ## set up each worker.  Could also use clusterExport()
   library(boot)
@@ -171,7 +172,7 @@ run1 <- function(...) {
    boot(cd4, corr, R = 500, sim = "parametric",
         ran.gen = cd4.rg, mle = cd4.mle)
 }
-cl <- makeCluster(mc <- getOption("mc.cores", 2))
+cl <- makeCluster(mc <- getOption("cl.cores", 2))
 ## make this reproducible
 clusterSetRNGStream(cl, 123)
 cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1))
