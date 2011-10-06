@@ -44,6 +44,11 @@ detectCores(all.tests = FALSE, logical = FALSE)
   the number of cores on AMD/Intel hardware, but the number of available
   hardware threads on Sparc hardware (some versions of which do have
   multiple cores per CPU, and others have multiple threads per core).
+  For example, the UltraSparc T2 CPU used in the CRAN check server is a
+  single physical CPU with 8 cores, and each core supports 8 hardware
+  threads.  So \code{detectCores(logical=FALSE)} returns 1, and
+  \code{detectCores(logical=TRUE)} returns 64, neither of which is very
+  useful!
 
   Where virtual machines are in use, one would hope that the result
   represents the number of CPUs available (or potentially available) to
