@@ -87,23 +87,24 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   workspace), the child will start drawing random numbers at the same
   point as the current session.  If the RNG has not yet been used, the
   child will set a seed based on the time and process ID when it first
-  uses the RNG.
+  uses the RNG: this is pretty much guaranteed to give a different
+  random-number stream from the current session and any other child
+  process.
   
-  The default behaviour is to set the seed in the child process at the
-  time it is first used: this is pretty much guaranteed to give a
-  different random-number stream from the current session and any other
-  child process.  For an absolute guarantee, use
-  \code{\link{RNGkind}("L'Ecuyer-CMRG")}: then each time a child is
-  forked it is given the next stream (see \code{\link{nextRNGStream}}.
-  So if you select that generator and set a seed just before the first
-  use of \code{mcparallel} (including \emph{via} \code{\link{mclapply}})
-  the results of simulations will be reproducible provided the same
-  tasks are given to the first, second, \ldots{} forked process.
+  The behaviour with \code{mc.set.seed = TRUE} is different only if
+  \code{\link{RNGkind}("L'Ecuyer-CMRG")} has been selected.  Then each
+  time a child is forked it is given the next stream (see
+  \code{\link{nextRNGStream}}).  So if you select that generator and set
+  a seed just before the first use of \code{mcparallel} (including
+  \emph{via} \code{\link{mclapply}}) the results of simulations will be
+  reproducible provided the same tasks are given to the first, second,
+  \ldots{} forked process.
 }
 \author{
   Simon Urbanek and R Core.
   
-  Derived from the \pkg{multicore} package.
+  Derived from the \pkg{multicore} package (but with different handling
+  of the RNG stream).
 }
 \seealso{
   \code{\link{sendMaster}}, \code{\link{pvec}}, \code{\link{mclapply}}

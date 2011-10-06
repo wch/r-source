@@ -32,12 +32,9 @@ pdftitle={Package `parallel'}% Could also have pdfusetitle
 
 \section{Introduction}
 
-A package \pkg{parallel} is being developed for release in \R{}
-2.14.0.  It builds on the work done for CRAN packages \pkg{multicore}
-\citep{multicore} and \pkg{snow} \citep{snow}.
-
-Until October 2011 anything in this package is strictly experimental
-and may be changed or removed without notice.
+A package \pkg{parallel} was developed for \R{} 2.14.0.  It builds on
+the work done for CRAN packages \pkg{multicore} \citep{multicore} and
+\pkg{snow} \citep{snow}.
 
 Parallelism can be done in computation at many different levels: this
 package is principally concerned with `coarse-grained
@@ -45,14 +42,15 @@ parallelization'.  At the lowest level, modern CPUs can do several
 basic operations in parallel (e.g.{} integer and floating-point
 arithmetic), and several implementations of external BLAS libraries
 use multiple threads to do parts of basic vector/matrix operations in
-parallel.
+parallel.  Several contributed \R{} packages use multiple threads
+at C level \emph{via} OpenMP or pthreads.
 
-This package is about running much larger chunks of computations in
+This package handles running much larger chunks of computations in
 parallel.  A typical example is to evaluate the same \R{} function on
 many different sets of data: often simulated data as in bootstrap
 computations (or with `data' being the random-number stream).  The
 crucial point is that these chunks of computation are unrelated and do
-not need to communicate in any way.  It is often important that the
+not need to communicate in any way.  It is often the case that the
 chunks take approximately the same length of time.  The basic
 computational model is
 \begin{enumerate}[(a)]
@@ -70,7 +68,7 @@ Amongst the initializations which may be needed are to load packages
 and initialize the random-number stream.
 
 There are implementations of this model in the functions
-\code{parLapply} and \code{mclapply} as near-drop-in replacements for
+\code{mclapply} and \code{parLapply} as near-drop-in replacements for
 \code{lapply}.
 
 A slightly different model is to split the task into $M_1 > M$ chunks,
@@ -134,7 +132,7 @@ The landscape of parallel computing has changed with the advent of
 shared-memory computers with multiple (and often many) CPU cores.
 Until the late 2000's parallel computing was mainly done on clusters
 of large numbers of single- or dual-CPU computers: nowadays even
-laptops have two or four cores, and servers with 8, 12 or more are
+laptops have two or four cores, and servers with 8 or more cores are
 commonplace.  It is such hardware that package \pkg{parallel} is
 designed to exploit.
 
@@ -157,27 +155,30 @@ may be running many \R{} processes simultaneously, and those processes
 may themselves by using multiple threads through multi-threaded BLAS,
 compiled code using OpenMP or other low-level forms of parallelism.
 We have even seen instances of \pkg{multicore}'s \code{mclapply} being
-called recursively, generating $2n + n^2$ processes on a machine
-estimated to have $n = 16$ CPUs.
+called recursively,\footnote{\code{parallel::mclapply} detects this
+  and runs nested calls serially.} generating $2n + n^2$ processes on
+a machine estimated to have $n = 16$ CPUs.
 
-But in so far as it is a helpful guideline, function
-\code{detectCores()} try to determine the number of CPU cores in the
+But in so far as it is a useful guideline, function
+\code{detectCores()} tries to determine the number of CPU cores in the
 machine on which \R{} is running: it has ways to do so on all known
 current \R{} platforms.  What exactly it measures is OS-specific: we
 try where possible to report the number of physical cores available.
-One OS where this is not the case is Windows, where only the number
-of logical CPUs is readily available.  On modern hardware (e.g.{}
-Intel \emph{Core i7}) the latter may not be unreasonable as
-hyper-threading does give a significant extra throughput: on what are
-now rather old Pentium 4's it will simply over-estimate by a factor of
-two.  Note that we said `available': in most cases when virtual
-machines are in use what is reported is the maximum number of virtual
-CPUs which can be used simultaneously by that VM.
+One OS where this is not the case is Windows, where only the number of
+logical CPUs is readily available.  On modern hardware (e.g.{} Intel
+\emph{Core i7}) the latter may not be unreasonable as hyper-threading
+does give a significant extra throughput: on what are now rather old
+Pentium 4's it will simply over-estimate by a factor of two.  Note
+that we said `available': in most cases when virtual machines are in
+use what is reported is the maximum number of virtual CPUs which can
+be used simultaneously by that virtual machine.
 
 On Solaris, we choose (unlike \pkg{multicore}) to give the number of
 physical CPUs.  Modern Sparc CPUs have 8-way `Chip Multi-Threading':
 this enables the CPU to switch rapidly between threads if there are
-cache misses but does not run threads in parallel.
+cache misses but does not run threads in parallel.  On
+Opteron/Xeon-based boxes this does not take multiple cores into
+account.
 
 \section{Analogues of apply functions}
 
@@ -212,9 +213,9 @@ For matrices there are the rarely used \code{parApply} and
 
 \section{SNOW Clusters}
 
-Currently the package contains a copy of much of \pkg{snow}, and the
-functions it contains can also be used with clusters created by
-\pkg{snow}.
+The package contains a slightly revised copy of much of \pkg{snow},
+and the functions it contains can also be used with clusters created
+by \pkg{snow}.
 
 Two functions are provided to create SNOW clusters,
 \code{makePSOCKcluster} (a streamlined version of
@@ -233,25 +234,20 @@ default being discarded but they can be logged using the
 
 \section{Forking}
 
-Except on Windows, the package currently contains a copy of
-\pkg{multicore}: there a few names with the added prefix \code{mc},
-e.g.{} \code{mccollect}, \code{mcexit}, \code{mcfork}, \code{mckill}
-and \code{mcparallel}.  (For back-compatibility, functions
-\code{parallel} and \code{collect} are also exported: these names are
-easily masked.)
+Except on Windows, the package contains a copy of \pkg{multicore}:
+there a few names with the added prefix \code{mc}, e.g.{}
+\code{mccollect}, \code{mcexit}, \code{mcfork}, \code{mckill} and
+\code{mcparallel}.  (For back-compatibility, functions \code{parallel}
+and \code{collect} are also exported: these names are easily masked.)
 
 Most of the functions provided are not intended to be used by end
 users, and they may not in future be exported from the namespace.
 
-There are copies of the higher-level functions \code{mclapply} and
-\code{pvec}: unlike the versions in \pkg{multicore} these default to 2
-cores, but this can be controlled by setting
-\code{options("mc.cores")}, and that takes its default from
-environment variable \code{MC\_CORES} when the package is loaded.
-
-One unexported function which might be useful is
-\code{parallel:::isChild}, which can be used to prevent
-\code{mclapply} being called recursively.
+There are higher-level functions \code{mclapply} and \code{pvec}:
+unlike the versions in \pkg{multicore} these default to 2 cores, but
+this can be controlled by setting \code{options("mc.cores")}, and that
+takes its default from environment variable \code{MC\_CORES} when the
+package is loaded.
 
 \section{Random-number generation}
 
@@ -264,11 +260,10 @@ done in package \pkg{boot} (version 1.3-1 and later).
 
 When an \R{} process is started up it takes the random-number seed
 from the object \code{.Random.seed} in a saved workspace or constructs
-one from the clock time (see the help on \code{RNG}: as from \R{}
-2.14.0 it also uses the process ID).  Thus worker processes might get
-the same seed, either because a workspace was restored or (in \R{} <
-2.14.0) because the workers were started at the same time: otherwise
-these get a non-reproducible seed.
+one from the clock time and process ID (see the help on \code{RNG}).
+Thus worker processes might get the same seed because a workspace
+containing \code{.Random.seed} was restored: otherwise these get a
+non-reproducible seed.
 
 The alternative is to set separate seeds for each worker process in
 some reproducible way from the seed in the master process.  This is
@@ -317,7 +312,8 @@ for (i in 1:M) {
 \end{verbatim}
 and this is is implemented for SNOW clusters in function
 \code{clusterSetRNGStream}, and as part of \code{mcparallel} and
-\code{mclapply}.
+\code{mclapply} if \code{mc.set.seed = TRUE} (the default for
+\code{mclapply}).
 
 Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
 \emph{sub-streams} starting from seeds $2^{76}$ steps apart.
