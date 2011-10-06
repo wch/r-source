@@ -140,8 +140,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
   default), or \code{"user-supplied"}.  (For inversion, see the
   reference in \code{\link{qnorm}}.)  The Kinderman-Ramage generator
-  used in versions prior to 1.7.1 (now called \code{"Buggy"} had several
-  approximation errors and should only be used for reproduction of older
+  used in versions prior to 1.7.1 (now called \code{"Buggy"}) had several
+  approximation errors and should only be used for reproduction of old
   results.  The \code{"Box-Muller"} generator is stateful as pairs of
   normals are generated and returned sequentially.  The state is reset
   whenever it is selected (even if it is the current normal generator)
@@ -151,7 +151,9 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   as are required.  It is intended as a simple way to get quite different
   seeds by specifying small integer arguments, and also as a way to get
   valid seed sets for the more complicated methods (especially
-  \code{"Mersenne-Twister"} and \code{"Knuth-TAOCP"}).
+  \code{"Mersenne-Twister"} and \code{"Knuth-TAOCP"}).  There is no
+  guarantee that different values of \code{seed} will seed the RNG
+  differently, although any exceptions would be extremely rare.
 
   The use of \code{kind=NULL} or \code{normal.kind=NULL} in
   \code{RNGkind} or \code{set.seed} selects the currently-used

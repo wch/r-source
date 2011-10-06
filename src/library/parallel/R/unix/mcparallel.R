@@ -16,7 +16,7 @@
 
 ### Derived from multicore version 0.1-6 by Simon Urbanek
 
-mcparallel <- function(expr, name, mc.set.seed = FALSE, silent = FALSE)
+mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE)
 {
     f <- mcfork()
     env <- parent.frame()

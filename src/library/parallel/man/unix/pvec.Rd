@@ -24,15 +24,17 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \item{FUN}{function to call on each part of the vector}
   \item{\dots}{any further arguments passed to \code{FUN} after the vector}
   \item{mc.set.seed}{See \code{\link{mcparallel}}.}
-  \item{mc.silent}{if set to \code{TRUE} then all output on stdout will
-    be suppressed for all parallel processes forked (stderr is not
+  \item{mc.silent}{if set to \code{TRUE} then all output on \file{stdout} will
+    be suppressed for all parallel processes forked (\file{stderr} is not
     affected).}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
-    child processes will be run simultaneously.   The option is
-    initialized from environment variable \env{MC_CORES} if set.}
-  \item{mc.cleanup}{See the description of this
-    argument in \code{\link{mclapply}}.}
+    child processes will be run simultaneously.  Must be at least one,
+    and at least two for parallel operation.  The option is initialized
+    from environment variable \env{MC_CORES} if set.}
+  \item{mc.cleanup}{See the description of this argument in
+    \code{\link{mclapply}}.}
 }
+
 \details{
   \code{pvec} parallelizes \code{FUN(x, ...)} where \code{FUN} is a
   function that returns a vector of the same length as
@@ -51,12 +53,17 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   calls to \code{FUN} as there are cores, each handling a subset
   vector.  This makes it more efficient than \code{mclapply} but
   requires the above assumption on \code{FUN}.
+  
+  If \code{mc.cores == 1} this evaluates \code{FUN(v, ...)} in the
+  current process. 
 }
+
 \value{
   The result of the computation -- in a successful case it should be of
   the same length as \code{v}.  If an error occurred or the function was
-  not a map the result may be shorter and a warning is given.
+  not a map the result may be shorter or longer, and a warning is given.
 }
+
 \note{
   Due to the nature of the parallelization, error handling does not
   follow the usual rules since errors will be returned as strings and
@@ -65,7 +72,11 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   length of the result to make sure it is of the correct
   size.  \code{pvec} raises a warning if that is the case since it does
   not know whether such an outcome is intentional or not.
+  
+  See \code{\link{mcfork}} for the inadvisability of using this with
+  GUI front-ends.
 }
+
 \author{
   Simon Urbanek and R Core.
   

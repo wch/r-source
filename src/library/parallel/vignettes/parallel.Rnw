@@ -312,8 +312,7 @@ for (i in 1:M) {
 \end{verbatim}
 and this is is implemented for SNOW clusters in function
 \code{clusterSetRNGStream}, and as part of \code{mcparallel} and
-\code{mclapply} if \code{mc.set.seed = TRUE} (the default for
-\code{mclapply}).
+\code{mclapply} (by default).
 
 Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
 \emph{sub-streams} starting from seeds $2^{76}$ steps apart.

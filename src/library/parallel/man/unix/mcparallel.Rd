@@ -18,7 +18,7 @@
   \code{mccollect} collects results from parallel processes.
 }
 \usage{
-mcparallel(expr, name, mc.set.seed = FALSE, silent = FALSE)
+mcparallel(expr, name, mc.set.seed = TRUE, silent = FALSE)
 
 mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }

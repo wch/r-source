@@ -51,9 +51,11 @@ mcexit(exit.code = 0L, send = NULL)
 
   It is \emph{strongly discouraged} to use \code{mcfork} in GUI or
   embedded environments, because it leads to several processes sharing
-  the same GUI which will likely cause chaos (and possibly
-  crashes).  Child processes should never use on-screen graphics
-  devices.
+  the same GUI which will likely cause chaos (and possibly crashes).
+  Child processes should never use on-screen graphics devices.  Some
+  precautions have been taken to make this usable in \command{R.app} on
+  Mac OS X, but users of third-party front-ends should consult their
+  documentation.
 
   \code{mcexit} is to be run in the child process.  It sends \code{send}
   to the master (unless \code{NULL}) and then shuts down the child

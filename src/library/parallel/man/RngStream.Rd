@@ -50,15 +50,15 @@ mc.reset.stream()
   implemented in \R, but it is as easy to work by saving the relevant
   values of \code{.Random.seed}: see the examples.
 
-  \code{clusterSetRNGStream} distributes streams to the members of a
-  \pkg{snow} cluster, optionally setting the seed of the first stream
-  by the value of \code{set.seed(iseed)}.
+  \code{clusterSetRNGStream} selects the \code{"L'Ecuyer-CMRG"} RNG and
+  then distributes streams to the members of a cluster, optionally
+  setting the seed of the streams by \code{set.seed(iseed)}.
 #ifdef unix
   
   Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
   number generator and seed makes runs from \code{\link{mcparallel}},
-  \code{\link{mclapply}(mc.preschedule = TRUE)}
-  and \code{\link{pvec}} reproducible.
+  \code{\link{mclapply}(mc.preschedule = TRUE)} and \code{\link{pvec}}
+  reproducible (with the default \code{mc.set.seed = TRUE}).
 #endif  
 }
 \value{
@@ -80,14 +80,15 @@ mc.reset.stream()
   \code{\link{RNG}} for \R's built-in random number generators.
 }
 \note{
-  An interface to L'Ecuyer's C code is available in CRAN
-  package \pkg{rlecuyer}.
+  Interfaces to L'Ecuyer's C code are available in CRAN
+  packages \pkg{rlecuyer} and \pkg{rstream}.
 }
 
 \examples{
 RNGkind("L'Ecuyer-CMRG")
 set.seed(123)
 (s <- .Random.seed)
+## do some work involving random numbers.
 nextRNGStream(s)
 nextRNGSubStream(s)
 }
