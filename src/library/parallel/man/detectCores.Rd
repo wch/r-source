@@ -10,10 +10,17 @@
   Attempt to detect the number of CPU cores on the current host.
 }
 \usage{
-detectCores(all.tests = FALSE)
+#ifdef windows
+detectCores(all.tests = FALSE, logical = TRUE)
+#endif
+#ifdef unix
+detectCores(all.tests = FALSE, logical = FALSE)
+#endif
 }
 \arguments{
   \item{all.tests}{Logical: if true apply all known tests.}
+  \item{logical}{Logical: if possible, use the number of physical CPUs/cores
+    (if \code{FALSE}) or logical CPUs (if \code{TRUE}.}
 }
 \details{
   This attempts to detect the number of CPU cores in the current
@@ -26,10 +33,17 @@ detectCores(all.tests = FALSE)
 \value{
   An integer, \code{NA} if the answer is unknown.
   
-  Exactly what this represents is OS-dependent: where
-  possible it represents physical cores and not logical
+  Exactly what this represents is OS-dependent: where possible by
+  default it represents physical cores and not logical
   (e.g. hyperthreaded) CPUs.  Unfortunately on Windows only the number
   of logical CPUS seems to be available on desktop versions.
+
+  Currrenly \code{logical} only makes a difference on Solaris: there
+  \code{logical = FALSE} returns the number of physical CPUs (not cores)
+  and \code{logical = TRUE} returns the number of logical CPUs, which is
+  the number of cores on AMD/Intel hardware, but the number of available
+  hardware threads on Sparc hardware (some versions of which do have
+  multiple cores per CPU, and others have multiple threads per core).
 
   Where virtual machines are in use, one would hope that the result
   represents the number of CPUs available (or potentially available) to

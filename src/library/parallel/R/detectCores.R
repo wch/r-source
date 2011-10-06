@@ -18,18 +18,17 @@
 
 detectCores <-
     if(.Platform$OS.type == "windows") {
-        function(all.tests = FALSE)
+        function(all.tests = FALSE, logical = FALSE)
             .Call(C_ncpus, FALSE, PACKAGE = "parallel")
     } else {
-        function(all.tests = FALSE) {
+        function(all.tests = FALSE, logical = FALSE) {
             systems <-
                 list(darwin = "/usr/sbin/sysctl -n hw.ncpu 2>/dev/null",
                      freebsd = "/sbin/sysctl -n hw.ncpu 2>/dev/null",
                      linux = "grep processor /proc/cpuinfo 2>/dev/null | wc -l",
                      irix  = c("hinv | grep Processors | sed 's: .*::'",
                      "hinv | grep '^Processor '| wc -l"),
-                     ## solaris = "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l"
-                     solaris = "/usr/sbin/psrinfo -p")
+                     solaris = if(logical) "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l" else "/usr/sbin/psrinfo -p")
             for (i in seq(systems))
                 if(all.tests ||
                    length(grep(paste("^", names(systems)[i], sep=''),

@@ -140,24 +140,30 @@ designed to exploit.
 %library(parallel)
 %@
 
-\section{Numbers of CPUs}
+\section{Numbers of CPUs/cores}
 
 In setting up parallel computations it can be helpful to have some
-idea of the number of CPUs available, but this is a rather slippery
-concept.
+idea of the number of CPUs or cores available, but this is a rather
+slippery concept.  Nowadays more physical CPUs contain two or more
+cores that run more-or-less independently (they may share parts of the
+cache memory, and they do share access to RAM).  However, on some
+processors these cores may themselves be able to run multiple tasks
+simultaneously, and some OSes (e.g.{} Windows) have the concept of
+\emph{logical} CPUs which may exceed the number of cores.
 
 Note that all a program can possibly determine is the total number of
-CPUs available.  This is not necessarily the same as the number of
-CPUs available \emph{to the current user} which may well be restricted
-by system policies on multi-user systems.  Nor does it give much idea
-of a reasonable number of CPUs to use for the current task: the user
-may be running many \R{} processes simultaneously, and those processes
-may themselves by using multiple threads through multi-threaded BLAS,
-compiled code using OpenMP or other low-level forms of parallelism.
-We have even seen instances of \pkg{multicore}'s \code{mclapply} being
-called recursively,\footnote{\code{parallel::mclapply} detects this
-  and runs nested calls serially.} generating $2n + n^2$ processes on
-a machine estimated to have $n = 16$ CPUs.
+CPUs and/or cores available.  This is not necessarily the same as the
+number of CPUs available \emph{to the current user} which may well be
+restricted by system policies on multi-user systems.  Nor does it give
+much idea of a reasonable number of CPUs to use for the current task:
+the user may be running many \R{} processes simultaneously, and those
+processes may themselves by using multiple threads through
+multi-threaded BLAS, compiled code using OpenMP or other low-level
+forms of parallelism.  We have even seen instances of
+\pkg{multicore}'s \code{mclapply} being called
+recursively,\footnote{\code{parallel::mclapply} detects this and runs
+  nested calls serially.} generating $2n + n^2$ processes on a machine
+estimated to have $n = 16$ CPUs.
 
 But in so far as it is a useful guideline, function
 \code{detectCores()} tries to determine the number of CPU cores in the
@@ -178,14 +184,13 @@ physical CPUs.  Modern Sparc CPUs have 8-way `Chip Multi-Threading':
 this enables the CPU to switch rapidly between threads if there are
 cache misses but does not run threads in parallel.  On
 Opteron/Xeon-based boxes this does not take multiple cores into
-account.
+account (unless called as \code{detectCores(logical = TRUE)}.
 
 \section{Analogues of apply functions}
 
-By far the most common (direct) applications of packages
-\pkg{multicore} and \pkg{snow} have been to provide parallelized
-replacements of \code{lapply}, \code{sapply}, \code{apply} and related
-functions.
+By far the most common direct applications of packages \pkg{multicore}
+and \pkg{snow} have been to provide parallelized replacements of
+\code{lapply}, \code{sapply}, \code{apply} and related functions.
 
 As analogues of \code{lapply} there are
 \begin{verbatim}
@@ -247,7 +252,8 @@ There are higher-level functions \code{mclapply} and \code{pvec}:
 unlike the versions in \pkg{multicore} these default to 2 cores, but
 this can be controlled by setting \code{options("mc.cores")}, and that
 takes its default from environment variable \code{MC\_CORES} when the
-package is loaded.
+package is loaded.  (Setting this to \code{1} inhibits parallel
+operation.)
 
 \section{Random-number generation}
 
