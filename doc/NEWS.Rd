@@ -75,7 +75,8 @@
       L'Ecuyer \emph{et al} (2002), with support for both
       \code{mclapply} and \pkg{snow} clusters.
 
-      (It is still incomplete/experimental.)
+      (It is not yet complete: some enhancements are planned by \R{}
+      2.14.0.)
 
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
