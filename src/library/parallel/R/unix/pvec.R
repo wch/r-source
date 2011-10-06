@@ -23,6 +23,8 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 
     env <- parent.frame()
     cores <- as.integer(mc.cores)
+    if(cores < 1L) stop("'mc.cores' must be >= 1")
+    if(cores == 1L) return(FUN(v, ...))
 
     n <- length(v)
     l <- if (n < cores) as.list(v) else {

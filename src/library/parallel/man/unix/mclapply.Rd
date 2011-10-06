@@ -29,16 +29,18 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     first divided to (at most) as many jobs are there are cores and then
     the jobs are started, each job possibly covering more than one
     value.  If set to \code{FALSE} then one job is forked for each value
-    of \code{X}. The former is better for short computations or large
+    of \code{X}.  The former is better for short computations or large
     number of values in \code{X}, the latter is better for jobs that
     have high variance of completion time and not too many values of
-    \code{X}.}
+    \code{X} compared to \code{mc.cores}.}
   \item{mc.set.seed}{See \code{\link{mcparallel}}.}
-  \item{mc.silent}{if set to \code{TRUE} then all output on stdout will be
-    suppressed for all parallel processes forked (stderr is not affected).}
+  \item{mc.silent}{if set to \code{TRUE} then all output on
+    \file{stdout} will be suppressed for all parallel processes forked
+    (\file{stderr} is not affected).}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
     child processes will be run simultaneously.   The option is
-    initialized from environment variable \env{MC_CORES} if set.}
+    initialized from environment variable \env{MC_CORES} if set.  Must
+    be at least one, and parallelization requires at least two cores.}
   \item{mc.cleanup}{if set to \code{TRUE} then all children that have
     been forked by this function will be killed (by sending
     \code{SIGTERM}) before this function returns.  Under normal
@@ -51,28 +53,28 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
   \item{mc.allow.recursive}{Unless true, calling \code{mclapply} in a
     child process will use the child and not fork again.}
 }
+
 \details{
-  \code{mclapply} is a parallelized version of \code{lapply}.  By
-  default (\code{mc.preschedule = TRUE}) the input \code{X} is split
+  \code{mclapply} is a parallelized version of \code{\link{lapply}},
+  provided \code{mc.cores > 1}: for \code{mc.cores == 1} it simply calls
+  \code{lapply}.
+
+  By default (\code{mc.preschedule = TRUE}) the input \code{X} is split
   into as many parts as there are cores (currently the values are spread
   across the cores sequentially, i.e. first value to core 1, second to
   core 2, ... (core + 1)-th value to core 1 etc.) and then one process
   is forked to each core and the results are collected.
 
-  Without prescheduling, one job is forked for each value of \code{X}.
-  To ensure that no more than \code{mc.cores} jobs are running at once,
-  once that number has been forked the master process waits for a child
-  to complete before the next fork.
+  Without prescheduling, a separate job is forked for each value of
+  \code{X}.  To ensure that no more than \code{mc.cores} jobs are
+  running at once, once that number has been forked the master process
+  waits for a child to complete before the next fork.
 
   Due to the parallel nature of the execution random numbers are not
   sequential (in the random number sequence) as they would be when using
-  \code{\link{lapply}}.  They are sequential for each forked process,
-  but not all jobs as a whole.  See \code{\link{mcparallel}} or the
-  package's vignette for ways to make the results reproducible.
-
-  In addition, each process is running the job inside \code{try(...,
-    silent = TRUE)} so if errors occur they will be stored as class
-  \code{"try-error"} objects in the list.
+  \code{lapply}.  They are sequential for each forked process, but not
+  all jobs as a whole.  See \code{\link{mcparallel}} or the package's
+  vignette for ways to make the results reproducible.
   
   Note: the number of file descriptors (and processes) is usually
   limited by the operating system, so you may have trouble using more
@@ -81,9 +83,27 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
   descriptors (fork will fail with error \code{"unable to create a
   pipe"}).
 }
+
 \value{
   A list of the same length as \code{X} and named by \code{X}.
+
+  Each forked process runs its job inside \code{try(..., silent = TRUE)}
+  so if errors occur they will be stored as class \code{"try-error"}
+  objects in the list and a warning will be given.
 }
+
+\section{Warning}{
+  It is \emph{strongly discouraged} to use \code{mclapply} in GUI or
+  embedded environments, because it leads to several processes sharing
+  the same GUI which will likely cause chaos (and possibly
+  crashes).  Child processes should never use on-screen graphics
+  devices.
+  
+  Some precautions have been taken to make this usable in
+  \command{R.app} on Mac OS X, but users of third-party front-ends
+  should consult their documentation.
+}
+
 \author{
   Simon Urbanek and R Core.
 
