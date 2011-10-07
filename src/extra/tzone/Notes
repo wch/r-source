@@ -23,3 +23,7 @@ Copy the current version of tzdataXXXXx.tar.gz to this directory and run
 make -f Make.zi VERSION=2011j
 
 for the appropriate version.
+
+[Note added 2011-10-07: the website has been taken down: we wait to
+see if alternative sources become available.]
+
