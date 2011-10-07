@@ -881,6 +881,11 @@
 
       \item \code{HoltWinters()} checks that the optimization
       succeeded. (\PR{14694})
+
+      \item The (undocumented) inclusion of superclass objects in
+      default initializing of reference classes overwrote explicit
+      field arguments. The bug is fixed, the feature documented and a
+      test added.
     }
   }
 }

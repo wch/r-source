@@ -102,7 +102,7 @@ f2$addBoth(-1)
 stopifnot(all.equal(f2$bar, -4), all.equal(f2$b2, 1:3+0))
 
 ## test callSuper()
-setRefClass("foo3", fields = list(flag2 = "ratedChar"),
+foo3 <- setRefClass("foo3", fields = list(flag2 = "ratedChar"),
             contains = "foo2",
 	    methods = list(addBoth = function(incr) {
 		callSuper(incr)
@@ -113,7 +113,7 @@ setRefClass("foo3", fields = list(flag2 = "ratedChar"),
             }))
 
 f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"), b2 =  1:3)
-f3 <- new("foo3")
+f3 <- foo3$new()
 f3$import(f2)
 stopifnot(all.equal(f3$b2, f2$b2), all.equal(f3$bar, f2$bar),
           all.equal(f3$flag, f2$flag))
@@ -125,6 +125,16 @@ stopifnot(all.equal(f3$bar, -2), all.equal(f3$b2, 2:4+0),
 stopifnot(is(tryCatch(f3$flag <- "Try again",
          error = function(e)e), "error"))
 str(f3)
+
+## similar to $import() but using superclass object in the $new() call
+## The explicitly supplied flag= should override and be allowed
+## by the default $initialize() 
+f3b <- foo3$new(f2, flag = as("Other", "ratedChar"),
+                flag2 = as("More", "ratedChar"))
+## check that inherited and direct field assignments worked
+stopifnot(identical(f3b$tag, f2$tag),
+          identical(f3b$flag, as("Other", "ratedChar")),
+          identical(f3b$flag2, as("More", "ratedChar")))
 
 ## a class with an initialize method, and an extra slot
 setOldClass(c("simple.list", "list"))

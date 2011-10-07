@@ -409,8 +409,23 @@ both for the previous reason and also because \code{$new()} %$
 is invoked on the generator object and would be a method for that class.
 
 The default method for \code{$initialize()} %$
-is equivalent to invoking the method \code{$initFields(...)} %$
-with named fields as its arguments.  For technical reasons, the
+is equivalent to invoking the method \code{$initFields(...)}. %$
+Named arguments assign initial values to the corresponding fields.
+Unnamed arguments must be objects from this class or a reference
+superclass of this class.
+Fields will be initialized to the contents of the fields in such
+objects, but named arguments override the corresponding inherited
+fields.
+Note that fields are simply assigned.  If the field is itself a
+reference object, that object is not copied.
+The new and previous object will share the reference.
+Also, a field assigned from an unnamed argument counts as an
+assignment for locked fields.
+To override an inherited value for a locked field, the new value must
+be one of the named arguments in the initializing call.
+A later assignment of the field will result in an error.
+
+For technical reasons, the
 default method does not currently appear explicitly, but can be
 invoked by \code{$callSuper(...)} %$
 from a method for \code{$initialize()}. %$

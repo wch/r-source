@@ -191,19 +191,24 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...) {
         snames <- allNames(args)
         which <- nzchar(snames)
         elements <- args[which]
-        elNames <- names(elements)
         supers <- args[!which]
-        whichFields <- match(elNames, fieldNames, 0) > 0
-        for(field in elNames[whichFields])
-            envRefSetField(.Object, field, classDef, selfEnv, elements[[field]])
-        other <- c(supers, elements[!whichFields])
-        if(length(other)) {
-            ## invoke the default method for superclasses & slots
-            .Object <- do.call(methods:::.initialize,
-                             c(list(.Object), other))
-            ## reassign in case some slot changed
-            assign(".self", .Object, envir = selfEnv)
+        elNames <- names(elements)
+        for(super in supers) {
+            if(!is(super, "refClass")) {
+                warning(gettextf("Unnamed arguments to $new() must be objects from a reference class; got an object of class \"%s\"", class(super)))
+                next
+            }
+            fields <- names(super$.refClassDef@fieldClasses)
+            ##<FIXME> need an object$fields for the above </FIXME>
+            ## assign field if it is not already specified
+            fields <- fields[is.na(match(fields, elNames))]
+            for(field in fields)
+                elements[[field]] <- super$field(field)
+            elNames <- names(elements)
         }
+        ## assign the fields
+        for(field in elNames)
+            envRefSetField(.Object, field, classDef, selfEnv, elements[[field]])
     }
     .Object
 }
