@@ -119,8 +119,8 @@ processes.  They can be created in one of three ways:
   using \R{} packages \pkg{rpvm} and \pkg{Rmpi} respectively.
   Communication overheads can dominate computation times in this
   approach, so it is most often used on tightly-coupled clusters of
-  computers with high-speed interconnects.  
-  
+  computers with high-speed interconnects.
+
   Other CRAN packages following this approach are \pkg{GridR} (using
   Condor or Globus) and \pkg{Rsge} (using SGE, currently called
   `Oracle Grid Engine').
@@ -197,7 +197,8 @@ As analogues of \code{lapply} there are
 parLapply(cl, x, FUN, ...)
 mclapply(X, FUN, ..., mc.cores)
 \end{verbatim}
-where \code{mclapply} is not available on Windows and has further
+where \code{mclapply} is not available\footnote{except as a dummy
+  which simply calls \code{lapply}.} on Windows and has further
 arguments discussed on its help page.  They differ slightly in
 philosophy: \code{mclapply} sets up a pool of \code{mc.cores} workers
 just for this computation, whereas \code{parLapply} uses a less
@@ -228,8 +229,8 @@ Two functions are provided to create SNOW clusters,
 \code{makeForkCluster}.  They differ only in the way they spawn worker
 processes: \code{makePSOCKcluster} uses \code{Rscript} to launch
 further copies of \R{} (on the same host or optionally elsewhere)
-whereas \code{makeForkCluster} forks the workers (which thus inherit
-the environment of the current session).
+whereas \code{makeForkCluster} forks the workers on the currnet host
+(which thus inherit the environment of the current session).
 
 These functions would normally be called \emph{via} \code{makeCluster}.
 
@@ -253,7 +254,8 @@ unlike the versions in \pkg{multicore} these default to 2 cores, but
 this can be controlled by setting \code{options("mc.cores")}, and that
 takes its default from environment variable \code{MC\_CORES} when the
 package is loaded.  (Setting this to \code{1} inhibits parallel
-operation.)
+operation: there are stub functions on Windows which force
+\code{mc.cores = 1}.)
 
 \section{Random-number generation}
 
@@ -262,13 +264,14 @@ numbers: the processes/threads which run separate parts of the
 computation need to run independent (and preferably reproducible)
 random-number streams.  One way to avoid any difficulties is (where
 possible) to do all the randomization in the master process: this is
-done in package \pkg{boot} (version 1.3-1 and later).
+done where possible in package \pkg{boot} (version 1.3-1 and later).
 
 When an \R{} process is started up it takes the random-number seed
 from the object \code{.Random.seed} in a saved workspace or constructs
 one from the clock time and process ID (see the help on \code{RNG}).
 Thus worker processes might get the same seed because a workspace
-containing \code{.Random.seed} was restored: otherwise these get a
+containing \code{.Random.seed} was restored or the random number
+generator has been used before forking: otherwise these get a
 non-reproducible seed.
 
 The alternative is to set separate seeds for each worker process in
@@ -283,14 +286,15 @@ used by e.g.{} \pkg{JAGS}) is to use different random-number
 generators for each separate run/process.
 
 Package \pkg{parallel} contains an implementation of the ideas of
-\citet{lecuyer.2002}: this uses a single RNG and takes seeds $2^{127}$
-apart in the random number stream (which has period approximately
-$2^{191}$).  This is based on the generator of \citet{lecuyer.1999};
-the reason for choosing that generator\footnote{apart from the
-  commonality of authors!} is that it has a fairly long period with a
-small seed (6 integers), and unlike \R{}'s default
-\code{"Mersenne-Twister"} RNG, it is simple to advance the seed by a
-fixed number of steps.  The generator is the combination of two:
+\citet{lecuyer.2002}: this uses a single RNG and make \emph{streams}
+with seeds $2^{127}$ steps apart in the random number stream (which
+has period approximately $2^{191}$).  This is based on the generator
+of \citet{lecuyer.1999}; the reason for choosing that
+generator\footnote{apart from the commonality of authors!} is that it
+has a fairly long period with a small seed (6 integers), and unlike
+\R{}'s default \code{"Mersenne-Twister"} RNG, it is simple to advance
+the seed by a fixed number of steps.  The generator is the combination
+of two:
 \begin{eqnarray*}
   x_n &=& 1403580 \times x_{n-1} - 810728 \times x_{n-3} \mod{(2^{32} - 209)}\\
   y_n &=& 527612 \times y_{n-1} - 1370589 \times y_{n-3} \mod{(2^{32} - 22853)}\\
@@ -320,7 +324,7 @@ and this is is implemented for SNOW clusters in function
 \code{clusterSetRNGStream}, and as part of \code{mcparallel} and
 \code{mclapply} (by default).
 
-Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
+Apart from \emph{streams} ($2^{127}$ steps apart), there is the concept of
 \emph{sub-streams} starting from seeds $2^{76}$ steps apart.
 
 A direct \R{} interface to the (clunkier) original C implementation is
@@ -386,7 +390,7 @@ boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
 @
 There are many ways to program things like this: often the neatest is
-to encapsulate the computation on a function, so this is the parallel
+to encapsulate the computation in a function, so this is the parallel
 form of
 <<eval=FALSE>>=
 do.call(c, lapply(seq_len(mc), run1))
@@ -413,7 +417,7 @@ boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
 stopCluster(cl)
 @
 Note that whereas with \code{mclapply} all the packages and objects
-we use are automatically set in the workers, this is not in
+we use are automatically available in the workers, this is not in
 general\footnote{it is with clusters set up with
   \code{makeForkCluster}.} the case with the \code{parLapply}
 approach.  There is often a delicate choice of where to do the
@@ -466,7 +470,7 @@ mc <- 9
 R <- 999; M <- 999; RR <- floor(R/mc)
 run2 <- function(...)
     cd4.nest <- boot(cd4, nested.corr, R=RR, stype="w", t0=corr(cd4), M=M)
-cd4.nest <- do.call(c, mclapply(seq_len(mc), run2, mc.cores = 9) )
+cd4.nest <- do.call(c, mclapply(seq_len(mc), run2, mc.cores = 8) )
 nominal <- (1:R)/(R+1)
 actual <- cd4.nest$t[, 2]
 100*nominal[c(sum(actual <= 0.05), sum(actual < 0.95))]
