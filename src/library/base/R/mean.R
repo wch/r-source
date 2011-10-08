@@ -39,4 +39,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
     .Internal(mean(x))
 }
 
-mean.data.frame <- function(x, ...) sapply(X = x, FUN = mean, ...)
+mean.data.frame <- function(x, ...) {
+    .Deprecated("sapply( <data>, mean)")
+    sapply(X = x, FUN = mean, ...)
+}
