@@ -12,7 +12,7 @@
       to \env{RD2PDF_INPUTENC}.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
@@ -22,13 +22,13 @@
 
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is now disallowed.
-      
+
       Use of \code{chname} in \code{library.dynam()} with the extension
       \file{.so} or \code{.dll} (which was never allowed according
       to the help page) is defunct.  This also applies to
       \code{library.dynam.unload()} and to \code{useDynLib} directives
       in \code{NAMESPACE} files.
-      
+
     }
   }
 }
@@ -659,7 +659,7 @@
       \item \code{installed.packages()} now hashes the names of its
       cache files to avoid very rare problems with excessively long path
       names.  (\PR{14669})
-      
+
       \item A top-level \file{COPYING} file in a package is no longer
       installed (file names \file{LICENSE} or \file{LICENCE} having long
       been preferred).
@@ -763,12 +763,17 @@
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is deprecated.  (It is often called from a
       namespace, and the defaults are only appropriate to a package.)
-      
+
       Use of \code{chname} in \code{library.dynam()} with the extension
       \file{.so} or \code{.dll} (which is clearly not allowed according
       to the help page) is deprecated.  This also applies to
       \code{library.dynam.unload()} and \code{useDynLib} directives in
       \code{NAMESPACE} files.
+
+      It is deprecated now to use \code{mean(x)} and \code{sd(x)}
+      directly on data frames (or also matrices, for \code{sd})
+      \code{x}, instead of simply using \code{sapply}.
+%% should become defunct not earlier than end of summer 2013!
     }
   }
 
