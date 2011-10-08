@@ -1,4 +1,4 @@
-% File src/library/parallel/man/mcparallel.Rd
+% File src/library/parallel/man/unix/mcparallel.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later

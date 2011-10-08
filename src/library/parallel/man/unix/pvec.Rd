@@ -1,4 +1,4 @@
-% File src/library/parallel/man/pvec.Rd
+% File src/library/parallel/man/unix/pvec.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
@@ -13,7 +13,8 @@
   creates a vector output of exactly the same length as the input which
   doesn't depend on the partition of the vector.
 
-  It relies on forking and hence is not available on Windows.
+  It relies on forking and hence is not available on Windows unless
+  \code{mc.cores = 1}.
 }
 \usage{
 pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
@@ -84,6 +85,8 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{mclapply}}
+  
+  \code{\link{parLapply}}.
 }
 \examples{
 x <- pvec(1:1000, sqrt)
