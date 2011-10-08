@@ -773,7 +773,9 @@
       It is deprecated now to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
-%% should become defunct not earlier than end of summer 2013!
+      %% should become defunct not earlier than end of summer 2013!
+      In the same spirit, \code{median(x)} now gives an error for a data
+      frame \code{x}, rather than often non-sense.
     }
   }
 
