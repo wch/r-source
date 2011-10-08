@@ -244,7 +244,7 @@
                   NULL
               })
 
-    setGeneric("cbind2", function(x, y) standardGeneric("cbind2"),
+    setGeneric("cbind2", function(x, y, ...) standardGeneric("cbind2"),
 	       where = envir)
     ## and its default methods:
     setMethod("cbind2", signature(x = "ANY", y = "ANY"),
@@ -252,7 +252,7 @@
     setMethod("cbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(cbind(deparse.level = 0, x)))
 
-    setGeneric("rbind2", function(x, y) standardGeneric("rbind2"),
+    setGeneric("rbind2", function(x, y, ...) standardGeneric("rbind2"),
 	       where = envir)
     ## and its default methods:
     setMethod("rbind2", signature(x = "ANY", y = "ANY"),
