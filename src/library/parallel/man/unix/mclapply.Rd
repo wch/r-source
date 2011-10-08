@@ -12,7 +12,8 @@
   which is the result of applying \code{FUN} to the corresponding
   element of \code{X}.
 
-  It relies on forking and hence is not available on Windows.
+  It relies on forking and hence is not available on Windows unless
+  \code{mc.cores = 1}.
 }
 \usage{
 mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
