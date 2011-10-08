@@ -15,13 +15,13 @@
 #  http://www.r-project.org/Licenses/
 
 mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
-                     mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
+                     mc.silent = FALSE, mc.cores = 1L,
                      mc.cleanup = TRUE, mc.allow.recursive = TRUE)
 {
     cores <- as.integer(mc.cores)
     if(cores < 1L) stop("'mc.cores' must be >= 1")
     if(cores > 1L) stop("'mc.cores' > 1 is not supported on Windows")
-    lapplyCX, FUN, ...)
+    lapply(X, FUN, ...)
 }
 
 pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,

@@ -13,11 +13,11 @@
 }
 \usage{
 mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
-         mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
+         mc.silent = FALSE, mc.cores = 1L,
          mc.cleanup = TRUE, mc.allow.recursive = TRUE)
 
 pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
-     mc.cores = getOption("mc.cores", 2L), mc.cleanup = TRUE)
+     mc.cores = 1L, mc.cleanup = TRUE)
 }
 \arguments{
   \item{X}{a vector (atomic or list) or an expressions vector.  Other
@@ -30,7 +30,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     Ignored on Windows.}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
     child processes will be run simultaneously.   Must be exactly 1 on
-     Windows.}
+    Windows (which uses the master process).}
 }
 
 \details{
