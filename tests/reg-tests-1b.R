@@ -1639,4 +1639,12 @@ fun <- eval(substitute(function() x, list(x = z)))
 body(fun)
 ## not allowed in R < 2.14.0.
 
+
+## Corner cases for signif() and round()
+x <- pi^(-6:6)
+stopifnot(identical(signif(x, -Inf), signif(x, 1L))) # zero in R < 2.14.0
+stopifnot(identical(round(x, -Inf), rep(0, length(x)))) # NAs in R < 2.14.0
+##
+
+
 proc.time()
