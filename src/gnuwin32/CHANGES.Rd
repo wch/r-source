@@ -72,6 +72,8 @@
       \item \code{install.packages()} and \command{R CMD check} have a
       small delay after removing a directory to counteract some
       interference from anti-virus software.
+
+      \item There is a Danish translation of the RGui menus.
     }
   }
 
