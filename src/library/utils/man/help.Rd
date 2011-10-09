@@ -40,9 +40,7 @@ help(topic, package = NULL, lib.loc = NULL,
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{help_type}{character string: the type of help required.
    Possible values are \code{"text"}, \code{"html"} and \code{"pdf"}.
-   Case is ignored, and partial matching is allowed.  Values
-   \code{"postscript"} and \code{"ps"} are deprecated and will be removed
-   in the near future.}
+   Case is ignored, and partial matching is allowed.}
 }
 \details{
   The following types of help are available:
@@ -57,7 +55,7 @@ help(topic, package = NULL, lib.loc = NULL,
     If for some reason HTML help is unavailable (see
     \code{\link{startDynamicHelp}}), plain text help will be used
     instead.
-    \item For \code{help} only, typeset as a PDF or PostScript file --
+    \item For \code{help} only, typeset as a PDF --
     see the section on \sQuote{Offline help}.
   }
 #ifdef unix
@@ -107,10 +105,7 @@ help(topic, package = NULL, lib.loc = NULL,
 
 \section{Offline help}{
   Typeset documentation is produced by running the LaTeX version of the
-  help page through \command{pdflatex} or (deprecated) \command{latex}
-  and \command{dvips}.  This will produce a PDF or PostScript file and
-  possibly (depending on the configuration of \command{dvips}) send a
-  PostScript file to a printer.
+  help page through \command{pdflatex}: this will produce a PDF file.
 
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
@@ -124,13 +119,11 @@ help(topic, package = NULL, lib.loc = NULL,
   further down the search path it is used to do the typesetting,
   otherwise the function of that name in the \code{utils} namespace (to
   which the first paragraph applies).  It should accept at least two
-  arguments, the name of the LaTeX file to be typeset and the type.  As
-  from \R 2.14.0 it should accept a third argument, \code{texinputs},
-  which will give the graphics path when the help document contains
-  figures, and will otherwise not be supplied.
-  
-  PostScript rendering of help pages containing figures will often not
-  include the figures (which is one reason it is deprecated).
+  arguments, the name of the LaTeX file to be typeset and the type
+  (which as from \R 2.15.0 is ignored).  As from \R 2.14.0 it should
+  accept a third argument, \code{texinputs}, which will give the
+  graphics path when the help document contains figures, and will
+  otherwise not be supplied.
 }
 
 \note{

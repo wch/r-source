@@ -20,7 +20,7 @@ function(topic, package = NULL, lib.loc = NULL,
          try.all.packages = getOption("help.try.all.packages"),
          help_type = getOption("help_type"))
 {
-    types <- c("text", "html", "postscript", "ps", "pdf")
+    types <- c("text", "html", "pdf")
     if(!missing(package))
         if(is.name(y <- substitute(package)))
             package <- as.character(y)
@@ -72,9 +72,6 @@ function(topic, package = NULL, lib.loc = NULL,
 
     help_type <- if(!length(help_type)) "text"
     else match.arg(tolower(help_type), types)
-    if (help_type %in% c("postscript", "ps"))
-        warning("Postscript offline help is deprecated",
-                call. = FALSE, immediate. = TRUE)
 
     paths <- index.search(topic,
                           find.package(package, lib.loc, verbose = verbose))
@@ -222,7 +219,7 @@ function(x, ...)
             file.show(temp, title = gettextf("R Help on %s", sQuote(topic)),
                       delete.file = TRUE)
         }
-        else if(type %in% c("ps", "postscript", "pdf")) {
+        else if(type %in% "pdf") {
             path <- dirname(file)
             dirpath <- dirname(path)
             texinputs <- file.path(dirpath, "help", "figures")

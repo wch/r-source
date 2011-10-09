@@ -185,3 +185,10 @@ manglePackageName <- function (pkgName, pkgVersion) .Defunct()
 ## Defunct in 2.15.0
 mem.limits <- function(nsize=NA, vsize=NA) .Defunct("gc")
 ## </entry>
+
+## <entry>
+## Deprecated in 2.13.1
+## Defunct in 2.15.0
+.readRDS <- function(...) .Defunct("readRDS")
+.saveRDS <- function(...) .Defunct("saveRDS")
+## </entry>

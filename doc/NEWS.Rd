@@ -29,6 +29,11 @@
       \code{library.dynam.unload()} and to \code{useDynLib} directives
       in \code{NAMESPACE} files.
 
+      \item The internal functions \code{.readRDS()} and
+      \code{.saveRDS()} are now defunct.
+
+      \item The off-line \code{help()} types \samp{"postscript"} and
+      \samp{"ps"} are defunct.
     }
   }
 }

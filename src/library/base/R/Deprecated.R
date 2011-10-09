@@ -43,18 +43,6 @@ Sys.putenv <- function(...) {
 ## </entry>
 
 
-## <entry>
-## Deprecated in 2.14.0
-.readRDS <- function(...) {
-    .Deprecated("readRDS")
-    readRDS(...)
-}
-.saveRDS <- function(...) {
-    .Deprecated("saveRDS")
-    saveRDS(...)
-}
-## </entry>
-
 ## Allow for future deprecation/defunct
 .find.package <- function(...) find.package(...)
 .path.package <- function(...) path.package(...)
