@@ -73,15 +73,13 @@ double fprec(double x, double digits)
     /* Max.expon. of 10 (=308.2547) */
     const static int max10e = DBL_MAX_EXP * M_LOG10_2;
 
-#ifdef IEEE_754
     if (ISNAN(x) || ISNAN(digits))
 	return x + digits;
     if (!R_FINITE(x)) return x;
     if (!R_FINITE(digits)) {
-	if(digits > 0) return x;
-	else return 0;
+	if(digits > 0.0) return x;
+	else digits = 1.0;
     }
-#endif
     if(x == 0) return x;
     dig = (int)floor(digits+0.5);
     if (dig > MAX_DIGITS) {

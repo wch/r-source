@@ -46,19 +46,18 @@ rnbinom(n, size, prob, mu)
 
   This represents the number of failures which occur in a sequence of
   Bernoulli trials before a target number of successes is reached.
+  The mean is \eqn{n(1-p)/p} and variance \eqn{n(1-p)/p^2}.
 
-  A negative binomial distribution can arise as a mixture of Poisson
-  distributions with mean distributed as a gamma distribution
+  A negative binomial distribution can also arise as a mixture of
+  Poisson distributions with mean distributed as a gamma distribution
   (see\code{\link{pgamma}}) with scale parameter \code{(1 - prob)/prob}
   and shape parameter \code{size}.  (This definition allows non-integer
-  values of \code{size}.)  In this model \code{prob} =
-  \code{1/(1+size)}, and the mean is \code{size * (1 - prob)/prob}.
+  values of \code{size}.)
 
-  The alternative parametrization (often used in ecology) is by the
-  \emph{mean} \code{mu}, and \code{size}, the \emph{dispersion parameter},
-  where \code{prob} = \code{size/(size+mu)}.
-  The variance is \code{mu + mu^2/size} in this parametrization or
-  \eqn{n (1-p)/p^2} in the first one.
+  An alternative parametrization (often used in ecology) is by the
+  \emph{mean} \code{mu}, and \code{size}, the \emph{dispersion
+  parameter}, where \code{prob} = \code{size/(size+mu)}.  The variance
+  is \code{mu + mu^2/size} in this parametrization.
 
   If an element of \code{x} is not integer, the result of \code{dnbinom}
   is zero, with a warning.

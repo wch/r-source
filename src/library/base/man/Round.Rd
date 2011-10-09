@@ -39,9 +39,12 @@ signif(x, digits = 6)
 }
 \arguments{
   \item{x}{a numeric vector.  Or, for \code{round} and \code{signif}, a
-  complex vector.}
+    complex vector.}
+  
   \item{digits}{integer indicating the number of decimal places
-  (\code{round}) or significant digits (\code{signif}) to be used.}
+    (\code{round}) or significant digits (\code{signif}) to be used.
+    Negative values are allowed (see \sQuote{Details}).}
+
   \item{\dots}{arguments to be passed to methods.}
 }
 \details{
@@ -58,11 +61,16 @@ signif(x, digits = 6)
   to the printed number, and so \code{round(0.15, 1)} could be either
   \code{0.1} or \code{0.2}).
 
-  For \code{signif} the recognized values of \code{digits} are
-  \code{1...22}.  Complex numbers are rounded to retain
-  the specified number of digits in the larger of the components.  Each
-  element of the vector is rounded individually, unlike printing.
+  Rounding to a negative number of digits means rounding to a power of
+  ten, so for example \code{round(x, digits = -2)} rounds to the nearest
+  hundred.
 
+  For \code{signif} the recognized values of \code{digits} are
+  \code{1...22}, and non-missing values are rounded to the nearest
+  integer in that range.  Complex numbers are rounded to retain the
+  specified number of digits in the larger of the components.  Each
+  element of the vector is rounded individually, unlike printing.
+  
   These are all primitive functions.
 }
 \section{S4 methods}{

@@ -1407,8 +1407,8 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (PRIMVAL(op)) {
 
     case  0: return Math2(args, atan2);
-    case 10001: return Math2(args, fround);
-    case 10004: return Math2(args, fprec); /* signif() */
+    case 10001: return Math2(args, fround);/* round(), src/nmath/fround.c */
+    case 10004: return Math2(args, fprec); /* signif(), src/nmath/fprec.c */
 
     case  2: return Math2(args, lbeta);
     case  3: return Math2(args, beta);

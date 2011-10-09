@@ -893,6 +893,12 @@
       default initializing of reference classes overwrote explicit
       field arguments. The bug is fixed, the feature documented and a
       test added.
+      
+      \item \code{round(x, -Inf)} now does something sensible (return
+      zero rather than \code{NA}).
+
+      \item \code{signif(x, -Inf)} now behaves as documented
+      (\code{signif(x, 1)}) rather than giving zero.
     }
   }
 }
