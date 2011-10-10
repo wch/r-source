@@ -79,8 +79,8 @@ double fround(double x, double digits) {
 	return x + digits;
     if(!R_FINITE(x)) return x;
 
-    if(digits == R_PosInf) return x;
-    else if(digits == R_NegInf) return 0.0;
+    if(digits == ML_POSINF) return x;
+    else if(digits == ML_NEGINF) return 0.0;
 
     if (digits > MAX_DIGITS) digits = MAX_DIGITS;
     dig = (int)floor(digits + 0.5);

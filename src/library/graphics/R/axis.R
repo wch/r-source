@@ -44,7 +44,7 @@ Axis <- function(x=NULL, at=NULL, ..., side, labels=NULL)
 Axis.default <- function(x=NULL, at=NULL, ..., side, labels=NULL)
     axis(side=side, at=at, labels=labels, ...)
 
-Axis.table <- function(x, at, ..., labels)
+Axis.table <- function(x, at, ..., side = 1, labels)
 {
      if (length(dim(x)) == 1) {
          nx <- dimnames(x)[[1]]
@@ -57,7 +57,7 @@ Axis.table <- function(x, at, ..., labels)
          xaxt <- if (length(as <- list(...))) {
              if (!is.null(as$axes) && !as$axes) "n" else as$xaxt
          }## else NULL
-         axis(1, at = at, labels = labels, xaxt = xaxt)
+         axis(side, at = at, labels = labels, xaxt = xaxt)
      }
      else stop("only for 1-D table")
 }

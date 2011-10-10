@@ -871,6 +871,10 @@
 
       \item \code{signif(x, -Inf)} now behaves as documented
       (\code{signif(x, 1)}) rather than giving zero.
+
+      \item The \code{"table"} method for \code{Axis()} hardcoded
+      \code{side = 1}, hence calls \code{plot(<vector>, <table>)}
+      labelled the wrong axis. (\PR{14699}) 
     }
   }
 }
