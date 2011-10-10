@@ -40,6 +40,8 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
 }
 
 mean.data.frame <- function(x, ...) {
-    .Deprecated("sapply( <data>, mean)")
+    ## cannot use .Deprecated("sapply( <data>, mean)")
+    msg <- "mean(<data.frame>) is deprecated.\n Use colMeans() or sapply(*, mean) instead."
+    warning(paste(msg, collapse = ""), call. = FALSE, domain = NA)
     sapply(X = x, FUN = mean, ...)
 }
