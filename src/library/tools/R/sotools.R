@@ -23,6 +23,7 @@ if(.Platform$OS.type == "windows") {
     {
         if(!nzchar(nm <- Sys.which("nm"))) return()
         f <- file_path_as_absolute(f)
+        if(!(file.info(f)$size)) return()
         s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
                              intern = TRUE),
                       " +")
@@ -218,7 +219,8 @@ function(dir)
         Sys.glob(file.path(dir, "libs", r_arch,
                            sprintf("*%s", .Platform$dynlib.ext)))
     else
-        Sys.glob(file.path(dir, "libs", sprintf("*%s", .Platform$dynlib.ext)))
+        Sys.glob(file.path(dir, "libs",
+                           sprintf("*%s", .Platform$dynlib.ext)))
     bad <- Filter(length, lapply(so_files, check_so_symbols))
     class(bad) <- "check_compiled_code"
     bad
