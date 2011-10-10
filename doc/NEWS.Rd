@@ -10,6 +10,9 @@
     \itemize{
       \item Environment variable \env{RD2DVI_INPUTENC} has been renamed
       to \env{RD2PDF_INPUTENC}.
+
+      \item \code{.Deprecated()} becomes a bit more flexible, getting an
+      \code{old} argument.
     }
   }
 
@@ -898,7 +901,7 @@
       default initializing of reference classes overwrote explicit
       field arguments. The bug is fixed, the feature documented and a
       test added.
-      
+
       \item \code{round(x, -Inf)} now does something sensible (return
       zero rather than \code{NA}).
 
