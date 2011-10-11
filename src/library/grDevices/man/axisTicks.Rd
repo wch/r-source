@@ -3,8 +3,9 @@
 \alias{.axisPars}
 \title{Compute Pretty Axis Tick Scales}
 \description{
-  Compute pretty axis scales and tick mark locations.
-  ........ FIXME
+  Compute pretty axis scales and tick mark locations, the same way as
+  traditional \R graphics do it.  This is interesting particularly for
+  log scale axes.
 }
 \usage{
 axisTicks(usr, log, axp = NULL, nint = 5)
