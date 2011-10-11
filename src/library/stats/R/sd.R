@@ -19,15 +19,15 @@ sd <- function(x, na.rm=FALSE)	sqrt(var(as.double(x), na.rm=na.rm))
 
 sd <- function(x, na.rm=FALSE) {
     if (is.matrix(x)) {
-	msg <- "sd(<matrix>) will be deprecated.  Use apply(*, 2, sd) instead."
-	message(paste(msg, collapse = ""), domain = NA)
+	msg <- "sd(<matrix>) is deprecated.\n Use apply(*, 2, sd) instead."
+	warning(paste(msg, collapse = ""), call. = FALSE, domain = NA)
 	apply(x, 2, sd, na.rm=na.rm)
     }
     else if (is.vector(x))
 	sqrt(var(x, na.rm=na.rm))
     else if (is.data.frame(x)) {
-	msg <- "sd(<data.frame>) will be deprecated.  Use sapply(*, sd) instead."
-	message(paste(msg, collapse = ""), call. = FALSE, domain = NA)
+	msg <- "sd(<data.frame>) is deprecated.\n Use sapply(*, sd) instead."
+	warning(paste(msg, collapse = ""), call. = FALSE, domain = NA)
 	sapply(x, sd, na.rm=na.rm)
     }
     else
