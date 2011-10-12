@@ -65,19 +65,6 @@ readRDS(file, refhook = NULL)
   default).
 }
 
-\note{
-  Prior to \R 2.13.0 these functions were known as \code{.readRDS()} and
-  \code{.saveRDS()} and marked as \sQuote{internal}.  Otherwise their
-  interface has been stable since \R 1.7.0, except that support for
-  support for types of compression was added in \R 2.10.0 (previously
-  only \code{"gzip"} was available), and \code{readRDS} called
-  \code{gzcon} internally prior to \R 2.13.0.
-
-  The internal-only \code{.readRDS} if given an un-opened connection
-  would wrap it in \code{\link{gzcon}} and \code{\link{close}} it after
-  use: this was undocumented.
-}
-
 \value{
   For \code{readRDS}, an \R object.
 
