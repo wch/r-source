@@ -67,7 +67,7 @@ ks.test <-
         if(is.character(y)) # avoid matching anything in this function
             y <- get(y, mode = "function", envir = parent.frame())
         if(!is.function(y))
-            stop("'y' must be numeric or a function of a string naming a valid function")
+            stop("'y' must be numeric or a function or a string naming a valid function")
         METHOD <- "One-sample Kolmogorov-Smirnov test"
         TIES <- FALSE
         if(length(unique(x)) < n) {
