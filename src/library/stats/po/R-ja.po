@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:49\n"
+"POT-Creation-Date: 2011-10-12 18:01\n"
 "PO-Revision-Date: 2011-03-28 15:10+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -38,6 +38,9 @@ msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなけれ
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
+
+msgid "optimization failure"
+msgstr ""
 
 msgid "time series has no or less than 2 periods"
 msgstr " 時系列の期間が無いか、2未満です "
@@ -1250,7 +1253,7 @@ msgid "p-values will be approximate in the presence of ties"
 msgstr ""
 
 #, fuzzy
-msgid "'y' must be numeric or a function of a string naming a valid function"
+msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr " 'y' は数値または有効な関数の名前である文字列でなければなりません "
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
