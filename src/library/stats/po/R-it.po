@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-12 18:02\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -43,6 +43,9 @@ msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "sono necessari almeno 3 periodi per poter calcolare valori stagionali "
 "iniziali"
+
+msgid "optimization failure"
+msgstr ""
 
 #, fuzzy
 msgid "time series has no or less than 2 periods"
@@ -1300,7 +1303,7 @@ msgid "p-values will be approximate in the presence of ties"
 msgstr ""
 
 #, fuzzy
-msgid "'y' must be numeric or a function of a string naming a valid function"
+msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' deve essere numerico o una stringa contente un nome di funzione"
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"

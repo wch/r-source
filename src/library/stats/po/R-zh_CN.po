@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-12 18:02\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -41,6 +41,9 @@ msgstr "乘法Holt-Winters的数据不能是零"
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "计算季節性初始值至少需要两个周期的数据"
+
+msgid "optimization failure"
+msgstr ""
 
 msgid "time series has no or less than 2 periods"
 msgstr "時間序列的周期不能小于二"
@@ -1221,7 +1224,7 @@ msgid "p-values will be approximate in the presence of ties"
 msgstr ""
 
 #, fuzzy
-msgid "'y' must be numeric or a function of a string naming a valid function"
+msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y'必需是数值，否则的话请用字符串指定适当的函数"
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
