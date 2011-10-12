@@ -119,7 +119,7 @@ R-FAQ.html: $(srcdir)/R-FAQ.texi
 	fi
 
 
-version.tex: Makefile $(top_builddir)/SVN-REVISION $(top_builddir)/VERSION
+version.tex: Makefile $(top_builddir)/SVN-REVISION $(top_srcdir)/VERSION
 	@$(ECHO) "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`)"; \
