@@ -47,7 +47,7 @@
       L'Ecuyer \emph{et al} (2002), with support for both
       \code{mclapply} and \pkg{snow} clusters.  This replaces functions
       like \code{clusterSetupRNG()} from \pkg{snow} (which are not in
-      \pkg{paralllel}.
+      \pkg{parallel}).
 
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
