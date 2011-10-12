@@ -81,10 +81,9 @@
 
       It also contains support for multiple RNG streams following
       L'Ecuyer \emph{et al} (2002), with support for both
-      \code{mclapply} and \pkg{snow} clusters.
-
-      (It is not yet complete: some enhancements are planned by \R{}
-      2.14.0.)
+      \code{mclapply} and \pkg{snow} clusters.  This replaces functions
+      like \code{clusterSetupRNG()} from \pkg{snow} (which are not in
+      \pkg{paralllel}.
 
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
@@ -525,7 +524,7 @@
       \code{postscript()} it no longer switches to and from the gray
       colorspace, by default.)
 
-      The\code{colormodel} for \code{postscript()} which does use both
+      The \code{colormodel} for \code{postscript()} which does use both
       gray and sRGB colorspace is now called \code{"srgb+gray"}.
 
       Plots which are known to use only black/white/transparent can
