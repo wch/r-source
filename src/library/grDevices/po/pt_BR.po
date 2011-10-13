@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
+"POT-Creation-Date: 2011-10-13 22:07+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -435,14 +435,14 @@ msgstr ""
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:8146 devPS.c:8305 devPS.c:8308 devWindows.c:3576 devWindows.c:3580
-#: devWindows.c:3588 devWindows.c:3599 devWindows.c:3605 devWindows.c:3612
-#: devWindows.c:3619 devWindows.c:3623
+#: devPS.c:8146 devPS.c:8305 devPS.c:8308 devWindows.c:3577 devWindows.c:3581
+#: devWindows.c:3589 devWindows.c:3600 devWindows.c:3606 devWindows.c:3613
+#: devWindows.c:3620 devWindows.c:3624
 #, c-format
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:8159 devPS.c:8226 devPS.c:8322 devPicTeX.c:741 devWindows.c:3656
+#: devPS.c:8159 devPS.c:8226 devPS.c:8322 devPicTeX.c:741 devWindows.c:3657
 #, c-format
 msgid "unable to start %s() device"
 msgstr "não é possível iniciar dispositivo %s()"
@@ -572,56 +572,56 @@ msgstr ""
 msgid "metafile '%s' could not be created"
 msgstr "arquivo afm '%s' não pode ser aberto"
 
-#: devWindows.c:3042 devWindows.c:3680
+#: devWindows.c:3043 devWindows.c:3681
 msgid "R Graphics"
 msgstr ""
 
-#: devWindows.c:3056
+#: devWindows.c:3057
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: devWindows.c:3320
+#: devWindows.c:3321
 msgid "option 'windowsTimeouts' should be integer"
 msgstr ""
 
-#: devWindows.c:3341
+#: devWindows.c:3342
 msgid "invalid device number in 'savePlot'"
 msgstr ""
 
-#: devWindows.c:3343
+#: devWindows.c:3344
 msgid "invalid device in 'savePlot'"
 msgstr ""
 
-#: devWindows.c:3346
+#: devWindows.c:3347
 msgid "invalid filename argument in savePlot"
 msgstr ""
 
-#: devWindows.c:3351
+#: devWindows.c:3352
 msgid "invalid type argument in 'savePlot'"
 msgstr ""
 
-#: devWindows.c:3378
+#: devWindows.c:3379
 msgid "unknown type in savePlot"
 msgstr ""
 
-#: devWindows.c:3423 devWindows.c:3456 devWindows.c:3485 devWindows.c:3517
-#: devWindows.c:3542
+#: devWindows.c:3424 devWindows.c:3457 devWindows.c:3486 devWindows.c:3518
+#: devWindows.c:3543
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:3502
+#: devWindows.c:3503
 msgid "Impossible to open "
 msgstr ""
 
-#: devWindows.c:3529
+#: devWindows.c:3530
 msgid "Impossible to load Rbitmap.dll"
 msgstr ""
 
-#: devWindows.c:3571
+#: devWindows.c:3572
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: devWindows.c:3774
+#: devWindows.c:3775
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr ""
 

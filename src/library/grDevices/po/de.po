@@ -1,13 +1,13 @@
 # Translation of src/library/grDevices/po/grDevices.pot to German.
 # Copyright (C) 2005-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-1011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.13.0\n"
+"Project-Id-Version: R-2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41+0100\n"
-"PO-Revision-Date: 2011-03-23 15:43+0100\n"
+"POT-Creation-Date: 2011-10-13 22:07+0100\n"
+"PO-Revision-Date: 2011-10-07 15:43+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -19,7 +19,7 @@ msgstr ""
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
 #, c-format
 msgid "'%s' must be numeric of length %d"
-msgstr ""
+msgstr "'%s' muss numerisch sein mit Länge %d"
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"
@@ -339,9 +339,8 @@ msgid "unable to use encoding '%s'"
 msgstr "kann Kodierung '%s' nicht nutzen"
 
 #: devPS.c:5544 devPS.c:5547
-#, fuzzy
 msgid "failed to increase 'maxRaster'"
-msgstr "konnte Raster nicht allozieren"
+msgstr "konnte 'maxRaster' nicht vergrößern"
 
 #: devPS.c:5559
 msgid "Unable to allocate raster image"
@@ -356,9 +355,8 @@ msgid "Failed to record device encoding; font not added"
 msgstr "Konnte Gerätekodierung nicht feststellen; Zeichensatz nicht hizugefügt"
 
 #: devPS.c:5875
-#, fuzzy
 msgid "increasing the PDF version to 1.2"
-msgstr "PDF Version auf 1.4 erhöht"
+msgstr "PDF Version auf 1.2 erhöht"
 
 #: devPS.c:5900
 msgid "failed to load default encoding"
@@ -398,14 +396,12 @@ msgid "increasing the PDF version to 1.4"
 msgstr "PDF Version auf 1.4 erhöht"
 
 #: devPS.c:6321 devPS.c:6368
-#, fuzzy
 msgid "unknown 'colormodel', using 'srgb'"
-msgstr "unbekanntes 'colormodel', nutze 'rgb'"
+msgstr "unbekanntes 'colormodel', nutze 'srgb'"
 
 #: devPS.c:6562
-#, fuzzy
 msgid "Failed to load sRGB colorspace file"
-msgstr "Laden des sRGB Farbraumes fehlgeschlagen"
+msgstr "Laden der sRGB Farbraumdatei fehlgeschlagen"
 
 #: devPS.c:6816
 msgid "Corrupt encodings in PDF device"
@@ -442,14 +438,14 @@ msgstr "ungültiger 'family' Parameter in %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "ungültiger 'fonts' Parameter in %s<"
 
-#: devPS.c:8146 devPS.c:8305 devPS.c:8308 devWindows.c:3576 devWindows.c:3580
-#: devWindows.c:3588 devWindows.c:3599 devWindows.c:3605 devWindows.c:3612
-#: devWindows.c:3619 devWindows.c:3623
+#: devPS.c:8146 devPS.c:8305 devPS.c:8308 devWindows.c:3577 devWindows.c:3581
+#: devWindows.c:3589 devWindows.c:3600 devWindows.c:3606 devWindows.c:3613
+#: devWindows.c:3620 devWindows.c:3624
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "unzulässiger Wert von '%s'"
 
-#: devPS.c:8159 devPS.c:8226 devPS.c:8322 devPicTeX.c:741 devWindows.c:3656
+#: devPS.c:8159 devPS.c:8226 devPS.c:8322 devPicTeX.c:741 devWindows.c:3657
 #, c-format
 msgid "unable to start %s() device"
 msgstr "kann %s()-Gerät nicht starten"
@@ -581,59 +577,58 @@ msgstr "Ein Zwischenablagemetafile kann nur eine Figur speichern."
 msgid "metafile '%s' could not be created"
 msgstr "Das Metafile '%s' kann nicht erzeugt werden"
 
-#: devWindows.c:3042 devWindows.c:3680
+#: devWindows.c:3043 devWindows.c:3681
 msgid "R Graphics"
 msgstr "R Grafiken"
 
-#: devWindows.c:3056
+#: devWindows.c:3057
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr "Versuch den Lokator zu nutzen nach Aufruf von dev.hold()"
 
-#: devWindows.c:3320
+#: devWindows.c:3321
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "Option 'windowsTimeouts' sollte ganzzahlig sein"
 
-#: devWindows.c:3341
+#: devWindows.c:3342
 msgid "invalid device number in 'savePlot'"
 msgstr "unzulässige Gerätenummer in 'savePlot'"
 
-#: devWindows.c:3343
+#: devWindows.c:3344
 msgid "invalid device in 'savePlot'"
 msgstr "unzulässiges Gerät in 'savePlot'"
 
-#: devWindows.c:3346
+#: devWindows.c:3347
 msgid "invalid filename argument in savePlot"
 msgstr "unzulässiges Dateinamenargument in savePlot"
 
-#: devWindows.c:3351
+#: devWindows.c:3352
 msgid "invalid type argument in 'savePlot'"
 msgstr "unzulässiges Typ Argument in 'savePlot'"
 
-#: devWindows.c:3378
+#: devWindows.c:3379
 msgid "unknown type in savePlot"
 msgstr "unbekannter Typ in savePlot"
 
-#: devWindows.c:3423 devWindows.c:3456 devWindows.c:3485 devWindows.c:3517
-#: devWindows.c:3542
+#: devWindows.c:3424 devWindows.c:3457 devWindows.c:3486 devWindows.c:3518
+#: devWindows.c:3543
 msgid "processing of the plot ran out of memory"
 msgstr "Bei Bearbeitung der Grafik ging der Speicher aus"
 
-#: devWindows.c:3502
+#: devWindows.c:3503
 msgid "Impossible to open "
 msgstr "Kann nicht öffnen"
 
-#: devWindows.c:3529
+#: devWindows.c:3530
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Kann Rbitmap.dll nicht laden"
 
-#: devWindows.c:3571
+#: devWindows.c:3572
 msgid "invalid 'width' or 'height'"
 msgstr "unzulässige 'with' oder 'height'"
 
-#: devWindows.c:3774
-#, fuzzy
+#: devWindows.c:3775
 msgid "Unable to load winCairo.dll: was it built?"
-msgstr "Kann Rbitmap.dll nicht laden"
+msgstr "Kann winCairo.dll nicht laden: wurde sie erstellt?"
 
 #: qdBitmap.c:79
 #, c-format

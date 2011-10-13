@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
-"PO-Revision-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-10-13 22:08\n"
+"PO-Revision-Date: 2011-10-13 22:08\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -70,6 +70,9 @@ msgstr "node of a socket cluster on host %s with pid %d"
 msgid "host"
 msgstr "host"
 
+msgid "'nnodes' must be >= 1"
+msgstr "‘nnodes’ must be >= 1"
+
 msgid "invalid 'child' argument"
 msgstr "invalid ‘child’ argument"
 
@@ -84,6 +87,9 @@ msgstr "‘child’ must be a valid child process"
 
 msgid "'what' must be a character or raw vector"
 msgstr "‘what’ must be a character or raw vector"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "‘mc.cores’ must be >= 1"
 
 msgid "%d function calls resulted in an error"
 msgstr "%d function calls resulted in an error"
@@ -102,6 +108,9 @@ msgstr "some results may be missing, folded or caused an error"
 
 msgid "fork clusters are not supported on Windows"
 msgstr "fork clusters are not supported on Windows"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "‘mc.cores’ > 1 is not supported on Windows"
 
 msgid ""
 "scheduled core %d encountered error in user code, all values of the job will "

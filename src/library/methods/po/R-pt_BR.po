@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-10-13 22:07\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1609,6 +1609,14 @@ msgstr "'%s' não é uma das funções básicas"
 #, fuzzy
 msgid "\"%s\" is not a field in class %s"
 msgstr "classe \"%s\" extende uma classe não definida, \"%s\""
+
+#, fuzzy
+msgid ""
+"Unnamed arguments to $new() must be objects from a reference class; got an "
+"object of class \"%s\""
+msgstr ""
+"argumento \"f\" deve ser uma função genérica ou um único caractere, mas foi "
+"obtido um objeto de classe  \"%s\""
 
 #, fuzzy
 msgid "\"%s\" is not a valid field or method name for this class"

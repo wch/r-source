@@ -1,0 +1,76 @@
+# Translation of src/library/parallel/po/parallel.pot to German
+# Copyright (C) 2011 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.14.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-07-29 08:52+0100\n"
+"PO-Revision-Date: 2011-10-12 13:38+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R-core <R-core@r-project.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#: fork.c:178 fork.c:181
+msgid "unable to create a pipe"
+msgstr "kann keine pipe erzeugen"
+
+#: fork.c:190
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "kann nicht forken, möglicher Grund: %s"
+
+#: fork.c:226
+msgid "memory allocation error"
+msgstr "Speicherallozierungsfehler"
+
+#: fork.c:264
+msgid "only children can send data to the master process"
+msgstr "nur Kindprozesse können Daten zum Elternprozess schicken"
+
+#: fork.c:266
+msgid "there is no pipe to the master process"
+msgstr "es gibt keine pipe zum Elternprozess"
+
+#: fork.c:268
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "zu schickender Inhalt muss RAW sein, nutze serialize() wenn nötig"
+
+#: fork.c:277 fork.c:284
+msgid "write error, closing pipe to the master"
+msgstr "Schreibfehler, schließe pipe zum Elternprozess"
+
+#: fork.c:297
+msgid "only the master process can send data to a child process"
+msgstr "nur der Elternprozess kann Daten zum Kindprozess schicken"
+
+#: fork.c:304
+#, c-format
+msgid "child %d does not exist"
+msgstr "Kindprozess %d existiert nicht"
+
+#: fork.c:310
+msgid "write error"
+msgstr "Schreibfehler"
+
+#: fork.c:390 fork.c:512
+#, c-format
+msgid "error '%s' in select"
+msgstr "Fehler '%s' in select"
+
+#: fork.c:596
+msgid "mckill failed"
+msgstr "mckill fehlgeschlagen"
+
+#: fork.c:606
+msgid "mcexit can only be used in a child process"
+msgstr "mcexit kann nur von Kindprozessen genutzt werden"
+
+#: fork.c:626
+msgid "mcexit failed"
+msgstr "mcexit fehlgeschlagen"

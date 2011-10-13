@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:42\n"
+"POT-Creation-Date: 2011-10-13 22:08\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -150,28 +150,27 @@ msgstr "不是所有的参数的长度都一样，下面这些需要被再循环
 msgid ","
 msgstr ","
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr "要么用'given'，要么用'first'/'middle'，但不能两者都用"
-
-msgid "It is recommended to use 'given' instead of 'first'."
-msgstr "我们建议你用'given'而不用'first'。"
-
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr "我们建议你用'given'而不用'middle'。"
-
-msgid "Use either 'family' or 'last' but not both."
+#, fuzzy
+msgid "Use either %s or %s/%s but not both."
 msgstr "要么用'family'，要么用'last'，但不能两者都用"
 
-msgid "It is recommended to use 'family' instead of 'last'."
-msgstr "我们建议你用'family'而不用'last'。"
+#, fuzzy
+msgid "It is recommended to use %s instead of %s."
+msgstr "我们建议你用'given'而不用'first'。"
+
+#, fuzzy
+msgid "Use either %s or %s but not both."
+msgstr "要么用'family'，要么用'last'，但不能两者都用"
 
 msgid "Invalid role specification(s): %s."
 msgstr "角色设定得不对: %s"
 
-msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr "我们建议用名/姓而不是名/中间名/姓"
+#, fuzzy
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "我们建议你用'given'而不用'first'。"
 
-msgid "method is just applicable to 'person' objects"
+#, fuzzy
+msgid "method is just applicable to %s objects"
 msgstr "这个方法不适用于'person'对象"
 
 msgid "all arguments must be of class \"person\""
@@ -183,24 +182,21 @@ msgstr "你至少需要填一项"
 msgid "all fields have to be named"
 msgstr "所有的项都必需有名字"
 
-msgid "'bibtype' has to be one of"
+#, fuzzy
+msgid "%s has to be one of %s"
 msgstr "'bibtype'必需是这些中的一个"
 
-msgid "A bibentry of bibtype '"
-msgstr "参考项参考种类为'"
-
-msgid "' has to correctly specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 msgstr "'必需正确地设定这些项："
 
 #, fuzzy
-msgid "'style' should be one of %s"
+msgid "%s should be one of %s"
 msgstr "'bibtype'必需是这些中的一个"
 
-msgid "' has to specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr "'必需设定这些项："
-
-msgid "method is just applicable to 'bibentry' objects"
-msgstr "这个方法不适用于'bibentry'对象"
 
 #, fuzzy
 msgid "package %s not found"
@@ -1245,6 +1241,24 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "Use either 'given' or 'first'/'middle' but not both."
+#~ msgstr "要么用'given'，要么用'first'/'middle'，但不能两者都用"
+
+#~ msgid "It is recommended to use 'given' instead of 'middle'."
+#~ msgstr "我们建议你用'given'而不用'middle'。"
+
+#~ msgid "It is recommended to use 'family' instead of 'last'."
+#~ msgstr "我们建议你用'family'而不用'last'。"
+
+#~ msgid "It is recommended to use given/family instead of first/middle/last."
+#~ msgstr "我们建议用名/姓而不是名/中间名/姓"
+
+#~ msgid "A bibentry of bibtype '"
+#~ msgstr "参考项参考种类为'"
+
+#~ msgid "method is just applicable to 'bibentry' objects"
+#~ msgstr "这个方法不适用于'bibentry'对象"
 
 #, fuzzy
 #~ msgid "Enhanced authors specification provides no authors."

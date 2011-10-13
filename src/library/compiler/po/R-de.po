@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2011-03-23 15:37+0100\n"
+"PO-Revision-Date: 2011-10-07 15:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsuhh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: \n"
@@ -30,10 +30,10 @@ msgid "bad assignment: %s"
 msgstr "unzulässige Zuweisung: %s"
 
 msgid "cannot constant fold literal promises"
-msgstr ""
+msgstr "kann literale Promises nicht konstant falten"
 
 msgid "cannot constant fold literal bytecode objects"
-msgstr ""
+msgstr "kann literale Bytecodeobjecte nicht konstant falten"
 
 msgid "no offset recorded for label \"%s\""
 msgstr "kein Offset aufgezeichnet für Label \"%s\""
@@ -42,7 +42,7 @@ msgid "cannot compile byte code literals in code"
 msgstr "kann Bytecode Literale im Code nicht kompilieren"
 
 msgid "cannot compile promise literals in code"
-msgstr ""
+msgstr "kann literatle promises nicht in Programm kompilieren"
 
 msgid "possible error in '%s': %s"
 msgstr "möglicher Fehler in '%s': %s"

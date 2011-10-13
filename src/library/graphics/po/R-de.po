@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-07-16 22:46\n"
-"PO-Revision-Date: 2011-03-23 15:41+0100\n"
+"PO-Revision-Date: 2011-10-07 15:38+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -134,19 +134,17 @@ msgstr " Zeilen * Spalten zu klein"
 msgid "Missing rows"
 msgstr "fehlende Zeilen"
 
-#, fuzzy
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
-msgstr ""
-"'expr' muss eine Funktion, ein Call oder ein Ausdruck sein, der 'x' enthält"
+msgstr "'expr' muss eine Funktion, ein Aufruf oder ein Ausdruck sein, der '%s' enthält"
 
 msgid "'add' will be ignored as there is no existing plot"
-msgstr ""
+msgstr "'add' wird ignoriert, da noch keine Grafik exisitiert"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from' und 'to' müssen > 0 sein mit log=\"x\""
 
 msgid "'expr' did not evaluate to an object of length 'n'"
-msgstr ""
+msgstr "'expr' wurde nicht zu einem Objekt der Länge 'n' ausgewertet"
 
 msgid "wrong method"
 msgstr "falsche Methode"
@@ -157,9 +155,8 @@ msgstr "In hist(<POSIXt>) müssen 'breaks' angegeben werden"
 msgid "invalid specification of 'breaks'"
 msgstr "ungültige Spezifikation von 'breaks'"
 
-#, fuzzy
 msgid "Must specify 'breaks' in hist(<Date>)"
-msgstr "In hist(<POSIXt>) müssen 'breaks' angegeben werden"
+msgstr "In hist(<Date>) müssen 'breaks' angegeben werden"
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x' muss ein nummerischer Vektor oder eine Matrix sein"
@@ -318,7 +315,7 @@ msgid "the 'panel' function made a new plot"
 msgstr "die 'panel' Funktion hat neuen Plot erstellt"
 
 msgid "surface extends beyond the box"
-msgstr ""
+msgstr "Oberfläche dehnt sich über den Rand der Box aus"
 
 msgid "'x' values must be positive."
 msgstr "'x' Werte müssen positiv sein."

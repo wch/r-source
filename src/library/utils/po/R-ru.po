@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:42\n"
+"POT-Creation-Date: 2011-10-13 22:08\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -158,28 +158,27 @@ msgstr "Не все аргументы имеют одну длину, следующие надо зациклить: %s"
 msgid ","
 msgstr ","
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr "Используйте либо 'given' или 'first'/'middle', но не оба сразу."
-
-msgid "It is recommended to use 'given' instead of 'first'."
-msgstr "Рекомендуется использовать 'given' вместо 'first'."
-
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr "рекомендуется использовать 'given' вместо 'middle'."
-
-msgid "Use either 'family' or 'last' but not both."
+#, fuzzy
+msgid "Use either %s or %s/%s but not both."
 msgstr "Используйте либо 'family', либо 'last', но не оба сразу."
 
-msgid "It is recommended to use 'family' instead of 'last'."
-msgstr "Рекомендуется использовать 'family' вместо 'last'."
+#, fuzzy
+msgid "It is recommended to use %s instead of %s."
+msgstr "Рекомендуется использовать 'given' вместо 'first'."
+
+#, fuzzy
+msgid "Use either %s or %s but not both."
+msgstr "Используйте либо 'family', либо 'last', но не оба сразу."
 
 msgid "Invalid role specification(s): %s."
 msgstr "Неправильное указание роли: %s"
 
-msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr "Рекомендуется использовать given/family вместо first/middle/last."
+#, fuzzy
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "Рекомендуется использовать 'given' вместо 'first'."
 
-msgid "method is just applicable to 'person' objects"
+#, fuzzy
+msgid "method is just applicable to %s objects"
 msgstr "метод не подходит для объектов 'person'"
 
 msgid "all arguments must be of class \"person\""
@@ -191,23 +190,21 @@ msgstr "по крайней мере одно поле надо определить"
 msgid "all fields have to be named"
 msgstr "все поля надо поименовать"
 
-msgid "'bibtype' has to be one of"
+#, fuzzy
+msgid "%s has to be one of %s"
 msgstr "'bibtype' не имеет ни одного из"
 
-msgid "A bibentry of bibtype '"
-msgstr "Библиографическая запись типа bibtype '"
-
-msgid "' has to correctly specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 msgstr "' должна корректно определять пол(я):"
 
-msgid "'style' should be one of %s"
+#, fuzzy
+msgid "%s should be one of %s"
 msgstr "'style' должен быть одним из %s"
 
-msgid "' has to specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr "' должна определять пол(я):"
-
-msgid "method is just applicable to 'bibentry' objects"
-msgstr "метод подходит только для объектов 'bibentry'"
 
 #, fuzzy
 msgid "package %s not found"
@@ -1289,6 +1286,24 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "Use either 'given' or 'first'/'middle' but not both."
+#~ msgstr "Используйте либо 'given' или 'first'/'middle', но не оба сразу."
+
+#~ msgid "It is recommended to use 'given' instead of 'middle'."
+#~ msgstr "рекомендуется использовать 'given' вместо 'middle'."
+
+#~ msgid "It is recommended to use 'family' instead of 'last'."
+#~ msgstr "Рекомендуется использовать 'family' вместо 'last'."
+
+#~ msgid "It is recommended to use given/family instead of first/middle/last."
+#~ msgstr "Рекомендуется использовать given/family вместо first/middle/last."
+
+#~ msgid "A bibentry of bibtype '"
+#~ msgstr "Библиографическая запись типа bibtype '"
+
+#~ msgid "method is just applicable to 'bibentry' objects"
+#~ msgstr "метод подходит только для объектов 'bibentry'"
 
 #, fuzzy
 #~ msgid "Enhanced authors specification provides no authors."

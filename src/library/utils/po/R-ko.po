@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:42\n"
+"POT-Creation-Date: 2011-10-13 22:08\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -150,29 +150,23 @@ msgstr ""
 msgid ","
 msgstr ""
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
+msgid "Use either %s or %s/%s but not both."
 msgstr ""
 
-msgid "It is recommended to use 'given' instead of 'first'."
+msgid "It is recommended to use %s instead of %s."
 msgstr ""
 
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr ""
-
-msgid "Use either 'family' or 'last' but not both."
-msgstr ""
-
-msgid "It is recommended to use 'family' instead of 'last'."
+msgid "Use either %s or %s but not both."
 msgstr ""
 
 #, fuzzy
 msgid "Invalid role specification(s): %s."
 msgstr "'agrep' 명세는 적적하지 않습니다"
 
-msgid "It is recommended to use given/family instead of first/middle/last."
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr ""
 
-msgid "method is just applicable to 'person' objects"
+msgid "method is just applicable to %s objects"
 msgstr ""
 
 msgid "all arguments must be of class \"person\""
@@ -184,22 +178,16 @@ msgstr ""
 msgid "all fields have to be named"
 msgstr ""
 
-msgid "'bibtype' has to be one of"
+msgid "%s has to be one of %s"
 msgstr ""
 
-msgid "A bibentry of bibtype '"
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 msgstr ""
 
-msgid "' has to correctly specify the field(s):"
+msgid "%s should be one of %s"
 msgstr ""
 
-msgid "'style' should be one of %s"
-msgstr ""
-
-msgid "' has to specify the field(s):"
-msgstr ""
-
-msgid "method is just applicable to 'bibentry' objects"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr ""
 
 #, fuzzy

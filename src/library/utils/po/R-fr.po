@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:42\n"
+"POT-Creation-Date: 2011-10-13 22:08\n"
 "PO-Revision-Date: 2011-03-29 19:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -158,32 +158,27 @@ msgstr ""
 msgid ","
 msgstr ","
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr ""
-"Utilisez soit 'given', soit 'first'/'middle' mais pas les deux en même "
-"temps. "
-
-msgid "It is recommended to use 'given' instead of 'first'."
-msgstr "Il est recommandé d'utiliser 'given' à la place de 'first'."
-
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr "Il est recommandé d'utiliser 'given' à la place de 'middle'."
-
-msgid "Use either 'family' or 'last' but not both."
+#, fuzzy
+msgid "Use either %s or %s/%s but not both."
 msgstr "Utilisez soit 'family', soit 'last', mais pas les deux en même temps."
 
-msgid "It is recommended to use 'family' instead of 'last'."
-msgstr "Il est recommandé d'utiliser 'family' à la place de 'last'."
+#, fuzzy
+msgid "It is recommended to use %s instead of %s."
+msgstr "Il est recommandé d'utiliser 'given' à la place de 'first'."
+
+#, fuzzy
+msgid "Use either %s or %s but not both."
+msgstr "Utilisez soit 'family', soit 'last', mais pas les deux en même temps."
 
 msgid "Invalid role specification(s): %s."
 msgstr "Spécification(s) de rôle incorrecte(s) : %s"
 
-msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr ""
-"Il est recommandé d'utiliser 'given'/'family' à la place de "
-"'first'/'middle'/'last'."
+#, fuzzy
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "Il est recommandé d'utiliser 'given' à la place de 'first'."
 
-msgid "method is just applicable to 'person' objects"
+#, fuzzy
+msgid "method is just applicable to %s objects"
 msgstr "la méthod n'est applicable qu'à des objets 'person'"
 
 msgid "all arguments must be of class \"person\""
@@ -195,23 +190,21 @@ msgstr "il faut spécifier au moins un champ"
 msgid "all fields have to be named"
 msgstr "tous les champs doivent être nommés"
 
-msgid "'bibtype' has to be one of"
+#, fuzzy
+msgid "%s has to be one of %s"
 msgstr "'bibtype' doit être l'un de"
 
-msgid "A bibentry of bibtype '"
-msgstr "An entrée de bibliographie of type (bibtype) '"
-
-msgid "' has to correctly specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 msgstr "' doit spécifier le(s) champ(s) de manière correcte :"
 
-msgid "'style' should be one of %s"
+#, fuzzy
+msgid "%s should be one of %s"
 msgstr "'style' doit être l'un de %s"
 
-msgid "' has to specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr "' doit spécifier le(s) champ(s) :"
-
-msgid "method is just applicable to 'bibentry' objects"
-msgstr "la méthode est seulement applicable à des objets 'bibentry'"
 
 #, fuzzy
 msgid "package %s not found"
@@ -1315,6 +1308,28 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "Use either 'given' or 'first'/'middle' but not both."
+#~ msgstr ""
+#~ "Utilisez soit 'given', soit 'first'/'middle' mais pas les deux en même "
+#~ "temps. "
+
+#~ msgid "It is recommended to use 'given' instead of 'middle'."
+#~ msgstr "Il est recommandé d'utiliser 'given' à la place de 'middle'."
+
+#~ msgid "It is recommended to use 'family' instead of 'last'."
+#~ msgstr "Il est recommandé d'utiliser 'family' à la place de 'last'."
+
+#~ msgid "It is recommended to use given/family instead of first/middle/last."
+#~ msgstr ""
+#~ "Il est recommandé d'utiliser 'given'/'family' à la place de "
+#~ "'first'/'middle'/'last'."
+
+#~ msgid "A bibentry of bibtype '"
+#~ msgstr "An entrée de bibliographie of type (bibtype) '"
+
+#~ msgid "method is just applicable to 'bibentry' objects"
+#~ msgstr "la méthode est seulement applicable à des objets 'bibentry'"
 
 #, fuzzy
 #~ msgid "Enhanced authors specification provides no authors."

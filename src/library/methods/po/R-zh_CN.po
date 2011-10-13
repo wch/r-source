@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-10-13 22:07\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1542,6 +1542,14 @@ msgstr "\"%s\"不是引用类别"
 #, fuzzy
 msgid "\"%s\" is not a field in class %s"
 msgstr "\"%s\"不是在\"%s\"类别里的场"
+
+#, fuzzy
+msgid ""
+"Unnamed arguments to $new() must be objects from a reference class; got an "
+"object of class \"%s\""
+msgstr ""
+"'genericFunction'的参数要么是NULL，要么是泛型函数对象；现在却是类别为\"%s\"的"
+"对象"
 
 #, fuzzy
 msgid "\"%s\" is not a valid field or method name for this class"

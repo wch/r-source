@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-10-13 22:07\n"
 "PO-Revision-Date: 2011-03-28 14:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1759,6 +1759,14 @@ msgstr " \"%s\" は参照クラスではありません "
 #, fuzzy
 msgid "\"%s\" is not a field in class %s"
 msgstr " \"%s\" はクラス \"%s\" 中の欄ではありません "
+
+#, fuzzy
+msgid ""
+"Unnamed arguments to $new() must be objects from a reference class; got an "
+"object of class \"%s\""
+msgstr ""
+" 引数 'genericFunction' は NULL か総称的関数オブジェクトでなければなりませ"
+"ん；クラス\"%s\" のオブジェクトを得ました "
 
 #, fuzzy
 msgid "\"%s\" is not a valid field or method name for this class"
