@@ -55,7 +55,7 @@ R_PKGS_refman = base datasets grDevices graphics grid methods splines stats stat
 refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
-
+SVN_REV = $(top_srcdir)/SVN-REVISION
 
 texiincludes = version.texi $(srcdir)/R-defs.texi
 
@@ -95,10 +95,10 @@ html: $(OBJECTS_HTML)
 $(OBJECTS_HTML): $(texiincludes) Rman.css
 
 info: $(OBJECTS_INFO)
-$(OBJECTS_INFO): $(texiincludes) 
+$(OBJECTS_INFO): $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
-$(OBJECTS_PDF): $(texiincludes) 
+$(OBJECTS_PDF): $(texiincludes)
 
 refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
@@ -115,12 +115,12 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  cat $(srcdir)/refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) refman.tex 
+	  $(BATCHPDFLATEX) refman.tex
 	@$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) refman.tex 
+	  $(BATCHPDFLATEX) refman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) refman.tex 
+	  $(BATCHPDFLATEX) refman.tex
 
 fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
@@ -142,17 +142,17 @@ fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) fullrefman.tex 
+	  $(BATCHPDFLATEX) fullrefman.tex
 	@$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) fullrefman.tex 
+	  $(BATCHPDFLATEX) fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) fullrefman.tex 
+	  $(BATCHPDFLATEX) fullrefman.tex
 
-version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
+version.tex: $(top_srcdir)/VERSION $(SVN_REV)
 	@$(ECHO) "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
-	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
+	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "$${v}") > $@
 
 ## Unlike Unix, we don't check dates
@@ -162,11 +162,11 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	    | LC_ALL=C $(R_EXE) --slave --vanilla
 FORCE:
 
-version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
+version.texi: Makefile.win $(top_srcdir)/VERSION $(SVN_REV)
 	@$(ECHO) "creating $(subdir)/$@"
-	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
+	@(vv=`sed 's/ *(.*//' $(top_srcdir)/VERSION`;v=`echo $${vv}| sed 's/\([^ ]*\).*/\1/'`; \
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
-	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
+	  v="$${vv} (`sed -e 1d -e 's/^Last Changed Date: //' $(SVN_REV)`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
 	  rwv=$(shell ../../bin$(R_ARCH)/Rscript ../../src/gnuwin32/fixed/rwver.R); \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
@@ -180,7 +180,7 @@ clean:
 	@-rm -f *.aux *.toc *refman.i?? *.out *.log
 	@-rm -f *.cp *.cps *.en *.ens *.fn *.fns *.ky *.kys \
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
-	  version.tex version.texi refman.tex fullrefman.tex *-pkg.tex 
+	  version.tex version.texi refman.tex fullrefman.tex *-pkg.tex
 distclean: clean
 	@-rm -f *.pdf *.info* *.html
 maintainer-clean: distclean
