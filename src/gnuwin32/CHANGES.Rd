@@ -116,6 +116,13 @@
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Raster drawing on \code{win.metafile()} (or copying a plot
+      that includes a raster image from another device to a Metafile)
+      now does not crash.  (Reported by Stefan Gelissen.)
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.13.2}{

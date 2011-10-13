@@ -2784,12 +2784,13 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
 	imageData[i*4 + 0] = 0.49 + fac * R_BLUE(raster[i]);
     }
     setpixels(img, imageData);
-    gsetcliprect(xd->bm, xd->clip);
-    if(xd->kind != SCREEN) 
+    if(xd->kind != SCREEN) {
+        gsetcliprect(xd->gawin, xd->clip);
 	gcopyalpha2(xd->gawin, img, dr);
-    else {
+    } else {
+        gsetcliprect(xd->bm, xd->clip);
 	gcopyalpha2(xd->bm, img, dr); 
-	if(!xd->buffered) 
+        if(!xd->buffered) 
 	    gbitblt(xd->gawin, xd->bm, pt(0,0), getrect(xd->bm));
     }
 
@@ -2811,7 +2812,7 @@ static void GA_Raster(unsigned int *raster, int w, int h,
     unsigned int *image = raster;
     int imageWidth = w, imageHeight = h;
     Rboolean adjustXY = FALSE;
-
+ 
     /* The alphablend code cannot handle negative width or height */
     if (height < 0) {
         height = -height;
