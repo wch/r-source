@@ -11,7 +11,6 @@
 \alias{R_BROWSER}
 \alias{R_COMPLETION}
 \alias{R_DOC_DIR}
-\alias{R_DVIPSCMD}
 \alias{R_GSCMD}
 \alias{R_HISTFILE}
 \alias{R_HISTSIZE}
@@ -56,12 +55,6 @@
   some of the more important ones.  Those that set the defaults for
   options are consulted only at startup (as are some of the others).
   \describe{
-#ifdef unix
-    \item{\env{DVIPS}:}{The path to \command{dvips}.  Used at startup to
-      set the default for \code{\link{options}("dvipscmd")} which used
-      by \code{\link{help}(help_type="ps")}.
-    }
-#endif
     \item{\env{HOME}:}{The user's \sQuote{home} directory.}
     \item{\env{LANGUAGE}:}{Optional.  The language(s) to be used for
       message translations.  This is consulted when needed.}
