@@ -909,7 +909,11 @@
 
       \item The \code{"table"} method for \code{Axis()} hardcoded
       \code{side = 1}, hence calls \code{plot(<vector>, <table>)}
-      labelled the wrong axis. (\PR{14699}) 
+      labelled the wrong axis. (\PR{14699})
+
+      \item Raster drawing on Windows Metafile (or copying a scene
+      that includes a raster from another device to a Metafile)
+      now does not crash.  (Reported by Stefan Gelissen.)
     }
   }
 }
