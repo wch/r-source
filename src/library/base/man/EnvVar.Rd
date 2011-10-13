@@ -11,7 +11,7 @@
 \alias{R_BROWSER}
 \alias{R_COMPLETION}
 \alias{R_DOC_DIR}
-\alias{R_DVIPSCMD}
+\alias{DVIPS}
 \alias{R_GSCMD}
 \alias{R_HISTFILE}
 \alias{R_HISTSIZE}
@@ -59,7 +59,7 @@
 #ifdef unix
     \item{\env{DVIPS}:}{The path to \command{dvips}.  Used at startup to
       set the default for \code{\link{options}("dvipscmd")} which used
-      by \code{\link{help}(help_type="ps")}.
+      by the deprecated \code{\link{help}(help_type="ps")}.
     }
 #endif
     \item{\env{HOME}:}{The user's \sQuote{home} directory.}
