@@ -709,7 +709,11 @@
       \env{_R_CHECK_COMPACT_DATA2_} is now true: thus if using the newer
       forms of compression introduced in \R 2.10.0 would be beneficial
       is now checked (by default).
-
+      
+      \item Reference output for a vignette can be supplied when
+      checking a package by \command{R CMD check}: see \sQuote{Writing R
+	Extensions}.
+      
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
       environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package

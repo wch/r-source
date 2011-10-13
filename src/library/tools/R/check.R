@@ -1800,6 +1800,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  jitstr,
                                  stdout = outfile, stderr = outfile)
                 out <- readLines(outfile, warn = FALSE)
+                savefile <- sub("\\.[RrSs](nw|tex)$", ".Rout.save", v)
                 if(length(grep("^  When (tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
@@ -1815,6 +1816,20 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                } else if (file.exists(savefile)) {
+                    cmd <- paste("invisible(tools::Rdiff('",
+                                 outfile, "', '", savefile, "',TRUE,TRUE))",
+                                 sep = "")
+                    out2 <- R_runR(cmd, R_opts2)
+                    if(length(out2)) {
+                        cat(" differences from ", sQuote(basename(savefile)),
+                            "\n", sep = "")
+                        writeLines(c(out2, ""))
+                    } else {
+                        cat(" OK\n")
+                        if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
+                            unlink(outfile)
+                    }
                 } else {
                     cat(" OK\n")
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))

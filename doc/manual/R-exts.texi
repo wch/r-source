@@ -1893,16 +1893,23 @@ possible.
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
 executed, and the vignette PDFs re-made from their sources as a check of
-completeness of the sources (unless there is a @samp{Vignettes} field in
-the package's @file{DESCRIPTION} file with a false value).
+completeness of the sources (unless there is a @samp{BuildVignettes}
+field in the package's @file{DESCRIPTION} file with a false value).  If
+there is a target output file @file{.Rout.save} in the vignette source
+directory, the output from running the code in that vignette is compared
+with the target output file and any differences are reported (but not
+recorded in the log file).  (If the vignette sources are in the
+deprecated location @file{inst/doc}, so mark such target output files to
+not be installed in @file{.Rinstignore}.)
 
 If there is an error@footnote{or if option @option{--use-valgrind} is
 used or environment variable @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_}
-is set to a true value} in executing the @R{} code in vignette
-@file{@var{foo.ext}}, a log file @file{@var{foo.ext}.log} is created in
-the check directory.  The vignette PDFs are re-made in a copy of the
-package sources in the @file{vign_test} subdirectory of the check
-directory, so for further information on errors look in directory
+is set to a true value or if there are differences from a target output
+file} in executing the @R{} code in vignette @file{@var{foo.ext}}, a log
+file @file{@var{foo.ext}.log} is created in the check directory.  The
+vignette PDFs are re-made in a copy of the package sources in the
+@file{vign_test} subdirectory of the check directory, so for further
+information on errors look in directory
 @file{@var{pkgname}/vign_test/inst/doc}.  (It is only retained if there
 are errors or if environment variable @env{_R_CHECK_CLEAN_VIGN_TEST_} is
 set to a false value.)
