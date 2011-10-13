@@ -71,7 +71,10 @@
       If unset to a value determined when \R was built.
       Used by the emulation mode of \code{\link{texi2dvi}} and
       \code{\link{texi2pdf}}.}
-    \item{\env{R_BATCH}:}{Optional -- set in a batch session.}
+    \item{\env{R_BATCH}:}{Optional -- set in a batch session, that is
+      one started by \command{R CMD \link{BATCH}}.  Most often set to
+      \code{""}, so test by something like
+      \code{!is.na(\link{Sys.getenv}("R_BATCH", NA))}.}
     \item{\env{R_BROWSER}:}{The path to the default browser.  Used to
       set the default value of \code{\link{options}("browser")}.}
     \item{\env{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
