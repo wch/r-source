@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:42\n"
+"POT-Creation-Date: 2011-10-13 22:12\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -149,30 +149,27 @@ msgstr ""
 msgid ","
 msgstr " , "
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr ""
-" 'given' か 'first'/'middle' のどちらかを使いますが、両方ではありません． "
-
-msgid "It is recommended to use 'given' instead of 'first'."
-msgstr " 'first' の代わりに 'given' を使うことをおすすめします． "
-
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr " 'middle' の代わりに 'given' を使うことをおすすめします． "
-
-msgid "Use either 'family' or 'last' but not both."
+#, fuzzy
+msgid "Use either %s or %s/%s but not both."
 msgstr " 'family' か 'last' のどちらかを使いますが，両方ではありません． "
 
-msgid "It is recommended to use 'family' instead of 'last'."
-msgstr " 'last' の代わりに 'family' を使うことをおすすめします． "
+#, fuzzy
+msgid "It is recommended to use %s instead of %s."
+msgstr " 'first' の代わりに 'given' を使うことをおすすめします． "
+
+#, fuzzy
+msgid "Use either %s or %s but not both."
+msgstr " 'family' か 'last' のどちらかを使いますが，両方ではありません． "
 
 msgid "Invalid role specification(s): %s."
 msgstr " 不正な role 指定です：%s "
 
-msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr ""
-" first/middle/last の代わりに given/family を使うことをおすすめします． "
+#, fuzzy
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr " 'first' の代わりに 'given' を使うことをおすすめします． "
 
-msgid "method is just applicable to 'person' objects"
+#, fuzzy
+msgid "method is just applicable to %s objects"
 msgstr " メソッドは 'person' オブジェクトだけに適用可能です． "
 
 msgid "all arguments must be of class \"person\""
@@ -184,23 +181,21 @@ msgstr " 少なくとも一つの欄を指定しなければなりません "
 msgid "all fields have to be named"
 msgstr " すべての欄は名前を持つ必要があります "
 
-msgid "'bibtype' has to be one of"
+#, fuzzy
+msgid "%s has to be one of %s"
 msgstr " 'bibtype' は以下のどれかである必要があります "
 
-msgid "A bibentry of bibtype '"
-msgstr " 以下の bibtype の bibentry ' "
-
-msgid "' has to correctly specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 msgstr " ' は欄を正確に指定しなければなりません： "
 
-msgid "'style' should be one of %s"
+#, fuzzy
+msgid "%s should be one of %s"
 msgstr " 'style' は%sのどれかである必要があります "
 
-msgid "' has to specify the field(s):"
+#, fuzzy
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr " ' は欄を指定しなければなりません： "
-
-msgid "method is just applicable to 'bibentry' objects"
-msgstr " メソッドは 'bibentry' オブジェクトだけに適用可能です "
 
 #, fuzzy
 msgid "package %s not found"
@@ -379,10 +374,6 @@ msgstr ""
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr " 'topic'は名前、長さ１の文字列、または予約語でなければなりません "
-
-#, fuzzy
-msgid "Postscript offline help is deprecated"
-msgstr " 引数 'help.db' は廃止されました  "
 
 #, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
@@ -1290,6 +1281,30 @@ msgstr[0] " 'lib' の要素 '%s' は書き込み可能なディレクトリで�
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#, fuzzy
+#~ msgid "Postscript offline help is deprecated"
+#~ msgstr " 引数 'help.db' は廃止されました  "
+
+#~ msgid "Use either 'given' or 'first'/'middle' but not both."
+#~ msgstr ""
+#~ " 'given' か 'first'/'middle' のどちらかを使いますが、両方ではありません． "
+
+#~ msgid "It is recommended to use 'given' instead of 'middle'."
+#~ msgstr " 'middle' の代わりに 'given' を使うことをおすすめします． "
+
+#~ msgid "It is recommended to use 'family' instead of 'last'."
+#~ msgstr " 'last' の代わりに 'family' を使うことをおすすめします． "
+
+#~ msgid "It is recommended to use given/family instead of first/middle/last."
+#~ msgstr ""
+#~ " first/middle/last の代わりに given/family を使うことをおすすめします． "
+
+#~ msgid "A bibentry of bibtype '"
+#~ msgstr " 以下の bibtype の bibentry ' "
+
+#~ msgid "method is just applicable to 'bibentry' objects"
+#~ msgstr " メソッドは 'bibentry' オブジェクトだけに適用可能です "
 
 #, fuzzy
 #~ msgid "Enhanced authors specification provides no authors."

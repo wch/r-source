@@ -1,14 +1,14 @@
 # German translation of src/library/tools/po/tools.pot
-# Copyright (C) 2008-2010 The R Foundation
+# Copyright (C) 2008-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.10.0\n"
+"Project-Id-Version: R-2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-09-05 08:24+0100\n"
-"PO-Revision-Date: 2010-03-24 11:03+0100\n"
+"PO-Revision-Date: 2011-10-12 14:20+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -28,11 +28,11 @@ msgstr "md5 für Datei '%s' fehlgeschlagen"
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
-msgstr ""
+msgstr "pskill() auf dieser Plattform nicht unterstützt"
 
 #: signals.c:137
 msgid "psnice() is not supported on this platform"
-msgstr ""
+msgstr "psnice() auf dieser Plattform nicht unterstützt"
 
 #: text.c:65
 msgid "invalid argument type"

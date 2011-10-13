@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-13 22:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,28 +119,22 @@ msgstr ""
 msgid ","
 msgstr ""
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
+msgid "Use either %s or %s/%s but not both."
 msgstr ""
 
-msgid "It is recommended to use 'given' instead of 'first'."
+msgid "It is recommended to use %s instead of %s."
 msgstr ""
 
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr ""
-
-msgid "Use either 'family' or 'last' but not both."
-msgstr ""
-
-msgid "It is recommended to use 'family' instead of 'last'."
+msgid "Use either %s or %s but not both."
 msgstr ""
 
 msgid "Invalid role specification(s): %s."
 msgstr ""
 
-msgid "It is recommended to use given/family instead of first/middle/last."
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr ""
 
-msgid "method is just applicable to 'person' objects"
+msgid "method is just applicable to %s objects"
 msgstr ""
 
 msgid "all arguments must be of class \"person\""
@@ -152,22 +146,16 @@ msgstr ""
 msgid "all fields have to be named"
 msgstr ""
 
-msgid "'bibtype' has to be one of"
+msgid "%s has to be one of %s"
 msgstr ""
 
-msgid "A bibentry of bibtype '"
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 msgstr ""
 
-msgid "' has to correctly specify the field(s):"
+msgid "%s should be one of %s"
 msgstr ""
 
-msgid "'style' should be one of %s"
-msgstr ""
-
-msgid "' has to specify the field(s):"
-msgstr ""
-
-msgid "method is just applicable to 'bibentry' objects"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr ""
 
 msgid "package %s not found"
@@ -324,9 +312,6 @@ msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr ""
-
-msgid "Postscript offline help is deprecated"
 msgstr ""
 
 msgid "No documentation for %s in specified packages and libraries:"

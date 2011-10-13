@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-07-16 22:46\n"
-"PO-Revision-Date: 2011-03-23 15:47+0100\n"
+"PO-Revision-Date: 2011-10-07 15:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -508,7 +508,6 @@ msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
 
-#, fuzzy
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "schließe alle Geräte, wenn der 'grid' Namensraum entfernt wird "
 

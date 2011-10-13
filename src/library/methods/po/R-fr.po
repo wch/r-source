@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-24 10:21\n"
+"POT-Creation-Date: 2011-10-13 22:07\n"
 "PO-Revision-Date: 2011-03-27 22:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1850,6 +1850,14 @@ msgstr "\"%s\" n'est pas une référence de classe"
 #, fuzzy
 msgid "\"%s\" is not a field in class %s"
 msgstr "\"%s\" n'est pas un champ de la classe \"%s\""
+
+#, fuzzy
+msgid ""
+"Unnamed arguments to $new() must be objects from a reference class; got an "
+"object of class \"%s\""
+msgstr ""
+"l'argument 'genericFunction' doit être soit NULL, soit un objet de type "
+"fonction générique ; Un objet de classe \"%s\" est trouvé"
 
 #, fuzzy
 msgid "\"%s\" is not a valid field or method name for this class"

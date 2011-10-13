@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-10-03 18:50\n"
-"PO-Revision-Date: 2011-03-24 11:04+0100\n"
+"PO-Revision-Date: 2011-10-13 15:53+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -312,21 +312,21 @@ msgstr ""
 "Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
 "packages' im 'Writing R Extension' Handbuch"
 
-#, fuzzy
 msgid "Malformed Authors@R field:"
-msgstr "Falsch formatiertes 'maintainer' Feld"
+msgstr "Falsch formatiertes Authors@R Feld:"
 
 msgid "Cannot extract Author field from Authors@R field:"
-msgstr ""
+msgstr "Kann kein Author Feld aus dem Authors@R Feld extrahieren:"
 
 msgid "Authors@R field gives no person with author role."
-msgstr ""
+msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr ""
+msgstr "Kann kein Maintainer Feld aus dem Authors@R Feld extrahieren:"
 
 msgid "Authors@R field gives no person with maintainer role and email address."
 msgstr ""
+"Das Authors@R Feld enthält keine Person als Maintainer mit email Adresse."
 
 msgid "Encoding '%s' is not portable"
 msgstr "Kodierung '%s' ist nicht portabel"
@@ -381,44 +381,46 @@ msgstr ""
 msgid "found %s"
 msgstr "'%s' gefunden"
 
-#, fuzzy
 msgid "File %s:"
-msgstr "Datei '%s':"
+msgstr "Datei %s:"
 
 msgid "%s has wrong argument list %s"
-msgstr ""
+msgstr "%s hat falsche Argumentliste %s"
 
 msgid ","
 msgstr ","
 
 msgid "%s calls:"
-msgstr ""
+msgstr "%s ruft auf:"
 
 msgid ""
 "Package startup functions should have two arguments with names starting with "
 "%s and %s, respectively."
 msgstr ""
+"Startfunktionen des Pakets sollten zwei Argumente haben, deren Namen\n"
+"mit %s bzw. %s beginnen."
 
 msgid "lib"
-msgstr ""
+msgstr "lib"
 
 msgid "pkg"
-msgstr ""
+msgstr "pkg"
 
 msgid "Package startup functions should not change the search path."
-msgstr ""
+msgstr "Startfunktionen des Pakets sollten den Suchpfad nicht ändern."
 
 msgid "Package startup functions should use %s to generate messages."
 msgstr ""
+"Startfunktionen des Pakets sollten %s nutzen, um Nachrichten zu generieren."
 
 msgid "packageStartupMessage"
-msgstr ""
+msgstr "packageStartupMessage"
 
 msgid "See section %s in ?.onAttach."
-msgstr ""
+msgstr "Siehe Abschnitt %s in ?.onAttach."
 
 msgid "Good practice"
-msgstr ""
+msgstr "Gute Paxis"
 
 msgid "package 'methods' is used but not declared"
 msgstr "Paket 'methods' wird benutzt, wurde aber nicht angemeldet"
@@ -544,7 +546,7 @@ msgid "invalid value for '%s' : %s"
 msgstr "Ungültiger Wert für '%s' : %s"
 
 msgid "Only one Rd section per \\Sexpr is supported."
-msgstr ""
+msgstr "Nur ein Rd Abschnitt pro \\Sepr wird unterstützt"
 
 msgid "unable to create temp directory"
 msgstr "kann kein temp Verzeichnis erzeugen"
@@ -560,7 +562,7 @@ msgid "running 'make' failed"
 msgstr "Ausführen von 'make ' fehlgeschlagen"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr ""
+msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignettennamen"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "Argument 'vignette' muss Länge 1 haben"
@@ -613,9 +615,8 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr "kann  Verzeichnis '%s' nicht erzeugen"
 
-#, fuzzy
 msgid "processing"
-msgstr "Bearbeiten von'"
+msgstr "Bearbeite"
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -664,9 +665,8 @@ msgstr "'--multiarch' angegeben, obwohl es nur eine sub-Architektur gibt"
 msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"
 
-#, fuzzy
 msgid "ERROR: cannot create check dir %s"
-msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+msgstr "Fehler: kann  Verzeichnis %s für Check nicht erzeugen"
 
 msgid "package dir"
 msgstr "Paket Verzeichnis"
@@ -678,19 +678,19 @@ msgid "No files in this directory"
 msgstr "Keine Dateien in diesem Verzeichnis"
 
 msgid "Unrecognized search field:"
-msgstr ""
+msgstr "Nicht erkanntes Suchfeld:"
 
 msgid "No results found"
 msgstr "keine Ergebnisse gefunden"
 
 msgid "Vignettes:"
-msgstr ""
+msgstr "Vignetten:"
 
 msgid "Code demonstrations:"
-msgstr ""
+msgstr "Kode Demos:"
 
 msgid "Help pages:"
-msgstr ""
+msgstr "Hilfeseiten:"
 
 msgid "No help found for topic %s in any package."
 msgstr "Keine Hilfe zum Stichwort %s in irgendeinem Paket gefunden"
@@ -713,11 +713,10 @@ msgstr "Link %s konnte im Paket %s nicht gefunden werden"
 msgid "No docs found for package %s"
 msgstr "Keine Dokumente zu Paket %s gefunden"
 
-#, fuzzy
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
-"Nur Hilfeseiten, %s, %s und Dateien unter %s in einem Paket können "
+"Nur Hilfeseiten, %s, %s und Dateien unter %s und %s in einem Paket können "
 "angeschaut werden"
 
 msgid "NEWS"
@@ -730,7 +729,7 @@ msgid "doc/"
 msgstr "doc/"
 
 msgid "demo/"
-msgstr ""
+msgstr "demo/"
 
 msgid "unsupported URL %s"
 msgstr "nicht unterstützte URL %s"
@@ -780,16 +779,15 @@ msgstr "gepackte Installation von"
 msgid "as"
 msgstr "als"
 
-#, fuzzy
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
 msgstr ""
-"'cleanup'existiert, ist aber nicht ausführbar -- bitte im 'R Installation "
+"'cleanup' existiert, ist aber nicht ausführbar -- bitte im 'R Installation "
 "and Administration Manual' nachlesen"
 
 msgid "installing via 'install.libs.R' to"
-msgstr ""
+msgstr "installiere mittels 'install.libs.R' nach"
 
 msgid "installing to"
 msgstr "installiert nach"
@@ -798,7 +796,7 @@ msgid "generating debug symbols (dSYM)"
 msgstr "erzeuge Debug-Symbole (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr ""
+msgstr "Paket %s erfolgreich entpackt und MD5 Summen überprüft"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -866,12 +864,11 @@ msgstr "suche HTML Links auf 2. Stufe ..."
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket names '%s'"
 
-#, fuzzy
 msgid "namespace must not be already loaded"
-msgstr "Namensraum darf nicht geladen werden"
+msgstr "Namensraum darf nicht bereits geladen sein"
 
 msgid "all packages should have a NAMESPACE"
-msgstr ""
+msgstr "alle Pakete sollten einen NAMESPACE haben"
 
 msgid "package seems to be using lazy loading for data already"
 msgstr "Paket scheint für Daten bereits lazyloading zu nutzen"
@@ -934,6 +931,10 @@ msgid ""
 "  %s\n"
 "contains no \\itemize."
 msgstr ""
+"Schlecht formatierte NEWS.Rd Datei:\n"
+"Abschnitt beginnend\n"
+" %s\n"
+"enthält kein \\itemize."
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -942,6 +943,11 @@ msgid ""
 "contains more than one \\itemize.\n"
 "Using the first one."
 msgstr ""
+"Schlecht formatierte NEWS.Rd Datei:\n"
+"Abschnitt beginnend\n"
+" %s\n"
+"enthält mehr als ein \\itemize.\n"
+"Nutze das erste."
 
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
@@ -976,99 +982,86 @@ msgstr "schon definert als"
 msgid "found encoding"
 msgstr "gefundene Kodierung"
 
-#, fuzzy
 msgid "%s must be a character string or a file/raw connection"
-msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
+msgstr "%s muss eine Zeichenkette oder eine Datei/raw -Verbindung sein"
 
-#, fuzzy
 msgid "PDF header not found"
-msgstr "URL '%s' nicht gefunden"
+msgstr "PDF Header nicht gefunden"
 
-#, fuzzy
 msgid "EOF marker not found"
-msgstr "URL '%s' nicht gefunden"
+msgstr "EOF Markierunge nicht gefunden"
 
 msgid "cannot find startxref"
-msgstr ""
+msgstr "kann startxref nicht finden"
 
 msgid "cannot find xref table"
-msgstr ""
+msgstr "kann xref Tabelle nicht finden"
 
 msgid "cannot read xref table"
-msgstr ""
+msgstr "kann xref Tabelle nicht lesen"
 
 msgid "wrong class"
-msgstr ""
+msgstr "falsche Klasse"
 
 msgid "attempting to select less than one element"
-msgstr ""
+msgstr "Versuch weniger als ein Element auszuwählen"
 
 msgid "attempting to select more than one element"
-msgstr ""
+msgstr "Versuch mehr als ein Element auszuwählen"
 
 msgid "looking at %s"
-msgstr ""
+msgstr "schaue auf %s"
 
-#, fuzzy
 msgid "cannot read literal string object"
-msgstr "kann  temporäres Verzeichnis nicht erzeugen"
+msgstr "kann literales Zeichenkettenobjekt nicht lesen"
 
 msgid "cannot read hexadecimal string object"
-msgstr ""
+msgstr "kann hexasezimales Zeichenkettenobjekt nicht lesen"
 
-#, fuzzy
 msgid "cannot read name object"
-msgstr "kann Paketquelltext nicht einlesen"
+msgstr "kann Namensobjekt nicht lesen"
 
-#, fuzzy
 msgid "cannot read array object"
-msgstr "kann  temporäres Verzeichnis nicht erzeugen"
+msgstr "kann Arrayobjekt nicht lesen"
 
-#, fuzzy
 msgid "cannot read dictionary object"
-msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+msgstr "kann Dictionary-Objekt nicht lesen"
 
-#, fuzzy
 msgid "cannot read stream object"
-msgstr "kann  temporäres Verzeichnis nicht erzeugen"
+msgstr "kann Streamobjekt nicht lesen"
 
 msgid "cannot read indirect reference object"
-msgstr ""
+msgstr "kann indirektes Referenzobjekt nicht lesen"
 
 msgid "cannot find object header at xrefed position %d"
-msgstr ""
+msgstr "kann Objektheader an der xref (-erenzieren) Position %d nicht finden"
 
 msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "verschiedene Objektzahlen (angegeben: %d, gefunden: %d)"
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "verschiedene Erzeugungszahlen (angegeben: %d, gefunden: %d)"
 
-#, fuzzy
 msgid "cannot read stream data"
-msgstr "kann  temporäres Verzeichnis nicht erzeugen"
+msgstr "kann Streamdaten nicht lesen"
 
 msgid "invalid index in object stream lookup"
-msgstr ""
+msgstr "unzulässiger Index beim Lesen eines Objektstroms"
 
-#, fuzzy
 msgid "processing %s"
-msgstr "Bearbeiten von'"
+msgstr "bearbeite %s'"
 
-#, fuzzy
 msgid "expanding %s"
-msgstr "parse '%s'"
+msgstr "erweitere %s"
 
-#, fuzzy
 msgid "unsupported filter %s"
-msgstr "nicht unterstützte URL %s"
+msgstr "nicht unterstützter Filter %s"
 
 msgid "unsupported flatedecode predictor %d"
-msgstr ""
+msgstr "nichtunterstützter flatedecode Prediktor %d"
 
-#, fuzzy
 msgid "unsupported PNG filter %d"
-msgstr "nicht unterstützte URL %s"
+msgstr "nicht unterstützter PNG Filter %d"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "Argument 'pkg' muss Länge 1 haben"
@@ -1077,7 +1070,7 @@ msgid "package '%s' was not found"
 msgstr "Paket '%s' nicht gefunden"
 
 msgid "bad operand"
-msgstr "ungeeigneter Operator"
+msgstr "ungeeigneter Operand"
 
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr "Abhängigkeiten von Paket '%s' auf minimale Menge reduziert."
@@ -1095,17 +1088,16 @@ msgid "file"
 msgstr "Datei"
 
 msgid "Found %s, possibly from %s"
-msgstr ""
+msgstr "%s gefunden, vielleicht aus %s"
 
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
-#, fuzzy
 msgid "ssname"
-msgstr "Name"
+msgstr "ssname"
 
 msgid "language"
-msgstr ""
+msgstr "Sprache"
 
 msgid "cannot be opened"
 msgstr "kann nicht geöffnet werden"
@@ -1131,9 +1123,8 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "Ergebnisse unterscheiden sich von den Referenzergebnissen"
 
-#, fuzzy
 msgid "no examples found for package %s"
-msgstr "Keine Hilfe zum Paket %s gefunden"
+msgstr "Keine Beispiele zum Paket %s gefunden"
 
 msgid "Running specific tests for package"
 msgstr "Ausführen spezifischer Tests für das Paket"
@@ -1249,9 +1240,8 @@ msgstr "ungültige Paketstruktur"
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
 
-#, fuzzy
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Unbekannte Kodierung mit nicht-ASCII Daten"
+msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"
 
 msgid "cannot source package code"
 msgstr "kann Paketquelltext nicht einlesen"
@@ -1303,6 +1293,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "DVI output from Rd2dvi is deprecated"
+#~ msgstr "DVI Ausgabe mit Rd2dvi ist veraltet"
 
 #, fuzzy
 #~ msgid ""

@@ -543,9 +543,8 @@ msgstr "zu wenig Freiheitsgrade, um Kontraste zu definieren"
 msgid "baseline group number out of range"
 msgstr "Basisgruppenanzahl liegt außerhalb des Bereichs"
 
-#, fuzzy
 msgid "invalid 'use' argument"
-msgstr "unzulässiges 'method' Argument"
+msgstr "unzulässiges 'use' Argument"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "'x' und 'y' oder ein matrixähnliches 'x' müssen angegeben werden"
@@ -610,11 +609,8 @@ msgstr "unzulässiger 'tree' (merge component)"
 msgid "either 'k' or 'h' must be specified"
 msgstr "entweder 'k' oder 'h' muss angegeben werden"
 
-#, fuzzy
 msgid "the 'height' component of 'tree' is not sorted (increasingly)"
-msgstr ""
-"die Koponenten 'height' von 'tree' ist nicht (aufsteigend)\\n sortiert; "
-"evtl. zuerst as.hclust() anwenden?"
+msgstr "die Koponente 'height' von 'tree' ist nicht (aufsteigend) sortiert"
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "Elemente von 'k' müssen zwischen 1 und %d sein"
@@ -1250,20 +1246,17 @@ msgstr "zu wenig 'x' Daten"
 msgid "not enough 'y' data"
 msgstr "zu wenig 'y' Daten"
 
-#, fuzzy
 msgid "cannot compute exact p-values with ties"
-msgstr "kann bei Bindungen keinen exakten p-Wert Berechnen"
+msgstr "kann bei Bindungen keinen exakten p-Wert berechnen"
 
 msgid "p-values will be approximate in the presence of ties"
-msgstr ""
+msgstr "Im Falle von Bindungen sind die p-Werte approximativ"
 
-#, fuzzy
 msgid "'y' must be numeric or a function or a string naming a valid function"
-msgstr ""
-"'y' muss entweder numerisch oder der Name einer zulässigen Funktion sein"
+msgstr "'y' muss entweder numerisch oder eine Funktion oder Name einer zulässigen Funktion sein"
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
-msgstr ""
+msgstr "für den Komogorov-Smirnov-Test sollten keine Bindungen vorhanden sein"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1407,17 +1400,14 @@ msgstr ""
 msgid "specified parametric for all predictors"
 msgstr "alle Prediktoren als parametrisch spezifiziert"
 
-#, fuzzy
 msgid "invalid argument 'span'"
-msgstr "unzulässiges Argument 'n'"
+msgstr "unzulässiges Argument 'span'"
 
-#, fuzzy
 msgid "invalid argument 'cell'"
-msgstr "unzulässiges Argument 'c'"
+msgstr "unzulässiges Argument 'cell'"
 
-#, fuzzy
 msgid "invalid argument 'degree'"
-msgstr "unzulässiges Argument 'r'"
+msgstr "unzulässiges Argument 'degree'"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "erstes Argument muss ein \"loess\" Objekt sein"
@@ -1708,7 +1698,6 @@ msgstr "Keine Startwerte angegeben"
 msgid "No starting values specified for some parameters."
 msgstr "Für einige Parameter keine Startwerte angegeben"
 
-#, fuzzy
 msgid "Initializing"
 msgstr "Initialisiere"
 
@@ -1760,9 +1749,8 @@ msgstr "eine zweiseitige Formel ist nötig"
 msgid "not enough groups"
 msgstr "nicht genügend Gruppen"
 
-#, fuzzy
 msgid "bounds can only be used with method L-BFGS-B (or Brent)"
-msgstr "Grenzen können nur mit der Methode L-BFGS-B benutzt werden"
+msgstr "Grenzen können nur mit der Methode L-BFGS-B (oder Brent) benutzt werden"
 
 msgid "unknown names in control:"
 msgstr "unbekannte Namen in control:"
@@ -1779,21 +1767,17 @@ msgstr ""
 "Methode L-BFGS-B benutzt 'factr' (and 'pgtol') anstelle von 'reltol' und "
 "'abstol'"
 
-#, fuzzy
 msgid "one-diml optimization by Nelder-Mead is unreliable:"
-msgstr ""
-"eindimensionale Optimierung mit Nelder-Mead ist unzuverlässig: nutze "
-"'optimize'"
+msgstr "eindimensionale Optimierung mit Nelder-Mead ist unzuverlässig:"
 
 msgid "use \"Brent\" or optimize() directly"
-msgstr ""
+msgstr "nutze \"Brent\" oder optimize() direkt"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
-msgstr ""
+msgstr "method = \"Brent\" ist nur für unidimensionale Optimierung verfügbar"
 
-#, fuzzy
 msgid "'lower' and 'upper' must be finite values"
-msgstr "'k' und 'h' muss ein Skalar sein"
+msgstr "'lower' und 'upper' müssen endliche Werte sein"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "Poolen der SD passt nicht mit paarweisen Tests zusammen"
@@ -2068,9 +2052,8 @@ msgstr "falsche Endregel"
 msgid "invalid 'control.spar'"
 msgstr "unzulässiges 'control.spar'"
 
-#, fuzzy
 msgid "missing or infinite values in inputs are not allowed"
-msgstr "fehlende oder negative Gewichte nicht erlaubt"
+msgstr "fehlende oder unendliche Werte sind als Eingaben nicht zugelassen"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "Längen von 'x' und 'w' müssen übereinstimmen"

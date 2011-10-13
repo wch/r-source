@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-13 22:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1053,6 +1053,9 @@ msgid "\"%s\" is not a reference class"
 msgstr ""
 
 msgid "\"%s\" is not a field in class %s"
+msgstr ""
+
+msgid "Unnamed arguments to $new() must be objects from a reference class; got an object of class \"%s\""
 msgstr ""
 
 msgid "\"%s\" is not a valid field or method name for this class"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
-"PO-Revision-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-13 22:12\n"
+"PO-Revision-Date: 2011-10-13 22:12\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -162,29 +162,23 @@ msgstr ""
 msgid ","
 msgstr ","
 
-msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr "Use either ‘given’ or 'first'/'middle' but not both."
+msgid "Use either %s or %s/%s but not both."
+msgstr "Use either %s or %s/%s but not both."
 
-msgid "It is recommended to use 'given' instead of 'first'."
-msgstr "It is recommended to use ‘given’ instead of 'first'."
+msgid "It is recommended to use %s instead of %s."
+msgstr "It is recommended to use %s instead of %s."
 
-msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr "It is recommended to use ‘given’ instead of 'middle'."
-
-msgid "Use either 'family' or 'last' but not both."
-msgstr "Use either ‘family’ or ‘last’ but not both."
-
-msgid "It is recommended to use 'family' instead of 'last'."
-msgstr "It is recommended to use ‘family’ instead of 'last'."
+msgid "Use either %s or %s but not both."
+msgstr "Use either %s or %s but not both."
 
 msgid "Invalid role specification(s): %s."
 msgstr "Invalid role specification(s): %s."
 
-msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr "It is recommended to use given/family instead of first/middle/last."
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "It is recommended to use %s/%s instead of %s/%s/%s."
 
-msgid "method is just applicable to 'person' objects"
-msgstr "method is just applicable to ‘person’ objects"
+msgid "method is just applicable to %s objects"
+msgstr "method is just applicable to %s objects"
 
 msgid "all arguments must be of class \"person\""
 msgstr "all arguments must be of class “person”"
@@ -195,23 +189,17 @@ msgstr "at least one field has to be specified"
 msgid "all fields have to be named"
 msgstr "all fields have to be named"
 
-msgid "'bibtype' has to be one of"
-msgstr "‘bibtype’ has to be one of"
+msgid "%s has to be one of %s"
+msgstr "%s has to be one of %s"
 
-msgid "A bibentry of bibtype '"
-msgstr "A bibentry of bibtype '"
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+msgstr "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 
-msgid "' has to correctly specify the field(s):"
-msgstr "' has to correctly specify the field(s):"
+msgid "%s should be one of %s"
+msgstr "%s should be one of %s"
 
-msgid "'style' should be one of %s"
-msgstr "‘style’ should be one of %s"
-
-msgid "' has to specify the field(s):"
-msgstr "' has to specify the field(s):"
-
-msgid "method is just applicable to 'bibentry' objects"
-msgstr "method is just applicable to ‘bibentry’ objects"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr "A bibentry of bibtype %s has to specify the field(s): %s"
 
 msgid "package %s not found"
 msgstr "package %s not found"
@@ -373,9 +361,6 @@ msgstr "‘form’ must be a two-sided formula with one term on each side"
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "‘topic’ should be a name, length-one character vector or reserved word"
-
-msgid "Postscript offline help is deprecated"
-msgstr "Postscript offline help is deprecated"
 
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "No documentation for %s in specified packages and libraries:"
