@@ -1218,7 +1218,7 @@ AC_DEFUN([R_PROG_OBJC_FLAG],
 [ac_safe=AS_TR_SH($1)
 
   if test -z "${OBJC}"; then
-    r_cv_prog_objc_flag_${ac_safe}=no
+    eval r_cv_prog_objc_flag_${ac_safe}=no
   else
     AC_MSG_CHECKING([whether ${OBJC} accepts $1])
     AC_CACHE_VAL([r_cv_prog_objc_flag_${ac_safe}],
