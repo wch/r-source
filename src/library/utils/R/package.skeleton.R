@@ -101,6 +101,9 @@ package.skeleton <-
 	file = description, sep = "")
     close(description)
 
+    if(!namespace)
+	warning("From R 2.14.0 on, every package gets a NAMESPACE.",
+		" Argument 'namespace' is deprecated.")
     ## NAMESPACE
     ## <NOTE>
     ## For the time being, we export all non-internal objects using the pattern
