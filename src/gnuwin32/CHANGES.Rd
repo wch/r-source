@@ -88,7 +88,7 @@
       \samp{EOPTS} macro defined in file \file{MkRules.dist}.
 
       \item Where both 32- and 64-bit versions of R are installed, the
-      file association for @file{.RData} files defaults to 64-bit R (it
+      file association for \file{.RData} files defaults to 64-bit R (it
       defaulted to 32-bit in R 2.12.x and 2.13.x).
 
       \item There is preliminary support for \sQuote{multilib}
