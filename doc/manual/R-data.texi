@@ -138,10 +138,11 @@ suited to manipulations of large-scale data.  Some other systems are
 better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
 another system do the work!  (For example Therneau & Grambsch (2000)
-comment that they prefer to do data manipulation in SAS and then use
-@pkg{survival} in @Sl{} for the analysis.)   Database manipulation
-systems are often very suitable for manipulating an extracting data:
-several packages to interact with DBMSs are discussed here.
+commented that they preferred to do data manipulation in SAS and then
+use package @pkg{survival} in @Sl{} for the analysis.)  Database
+manipulation systems are often very suitable for manipulating and
+extracting data: several packages to interact with DBMSs are discussed
+here.
 
 There are packages to allow functionality developed in languages such as
 @code{Java}, @code{perl} and @code{python} to be directly integrated
@@ -237,7 +238,7 @@ distinction is subtle,
 @uref{http://en.wikipedia.org/@/wiki/@/UTF-16/UCS-2}, and the use of
 surrogate pairs is very rare.}).  Otherwise most files will be in a
 8-bit encoding unless from a Chinese/Japanese/Korean locale (which have
-a very wide range of encodings in common use).  It is not possible to
+a wide range of encodings in common use).  It is not possible to
 automatically detect with certainty which 8-bit encoding (although
 guesses may be possible and @command{file} may guess as it did in the
 example above), so you may simply have to ask the originator for some
@@ -344,7 +345,9 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 @cindex Quoting strings
 
 By default strings are quoted (including the row and column names).
-Argument @code{quote} controls quoting of character and factor variables.
+Argument @code{quote} controls if  character and factor variables are
+quoted: some programs, for example @pkg{Mondrian}, do not accept quoted
+strings (which are the default).
 
 Some care is needed if the strings contain embedded quotes.  Three
 useful forms are
@@ -371,9 +374,8 @@ The second is the form of escape commonly used by spreadsheets.
 Text files do not contain metadata on their encodings, so for non-ASCII
 data the file needs to be targetted to the application intended to read
 it.  All of these functions can write to a @emph{connection} which
-allows an encoding to be specified for the file, and as from @R{} 2.13.0
-@code{write.table} has a @code{fileEncoding} argument to make this
-easier.
+allows an encoding to be specified for the file, and @code{write.table}
+has a @code{fileEncoding} argument to make this easier.
 
 The hard part is to know what file encoding to use.  For use on Windows,
 it is best to use what Windows calls `Unicode'@footnote{Even then,
@@ -443,8 +445,9 @@ document: see the package's Web page at
 @uref{http://www.omegahat.org/RSXML} for details and examples.  Package
 @pkg{StatDataML} on @acronym{CRAN} is one example building on @pkg{XML}.
 
-NB: @pkg{XML} is available for Windows, normally from the `CRAN extras'
-repository (which is selected by default on Windows).
+NB: @pkg{XML} is available as a binary package for Windows, normally
+from the `CRAN extras' repository (which is selected by default on
+Windows).
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
 @chapter Spreadsheet-like data
@@ -596,9 +599,10 @@ fast as looking at the first entry rules out most of the possibilities.}
 If all of these fail, the variable is converted to a factor.
 
 Arguments @code{colClasses} and @code{as.is} provide greater control.
-@code{as.is} suppresses conversion of character vectors to factors
-(only).  Using @code{colClasses} allows the desired class to be set for
-each column in the input: it will be faster and use less memory.
+Specifying @code{as.is = TRUE} suppresses conversion of character
+vectors to factors (only).  Using @code{colClasses} allows the desired
+class to be set for each column in the input: it will be faster and use
+less memory.
 
 Note that @code{colClasses} and @code{as.is} are specified @emph{per} 
 column, not @emph{per} variable, and so include the column of row names
@@ -634,8 +638,8 @@ that Unicode escapes such as @code{\u@var{xxxx}} are never interpreted.
 This can be specified by the @code{fileEncoding} argument, for example
 
 @example
-fileEncoding="UCS-2LE"    # Windows 'Unicode' files
-fileEncoding="UTF-8"
+fileEncoding = "UCS-2LE"    # Windows 'Unicode' files
+fileEncoding = "UTF-8"
 @end example
 
 @noindent
@@ -684,7 +688,8 @@ arguments to @code{read.table} appropriate for CSV and tab-delimited
 files exported from spreadsheets in English-speaking locales.  The
 variations @code{read.csv2} and @code{read.delim2} are appropriate for
 use in those locales where the comma is used for the decimal point and
-(for @code{read.csv2}) for spreadsheets use semicolons to separate fields.
+(for @code{read.csv2}) for spreadsheets which use semicolons to separate
+fields.
 
 If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
@@ -750,10 +755,11 @@ format.
 Function @code{read.DIF} provides a simple way to read such files.  It takes 
 arguments similar to @code{read.table} for assigning types to each of the columns.
 
-In Windows, spreadsheets often store spreadsheet data on the clipboard in this
-format; @code{read.DIF("clipboard")} can read it from there directly.
-It is slightly more robust than @code{read.table("clipboard")} in
-handling spreadsheets with empty cells.
+On Windows, spreadsheet programs often store spreadsheet data copied to
+the clipboard in this format; @code{read.DIF("clipboard")} can read it
+from there directly.  It is slightly more robust than
+@code{read.table("clipboard")} in handling spreadsheets with empty
+cells.
 
 @node Using scan directly, Re-shaping data, Data Interchange Format (DIF), Spreadsheet-like data
 @section  Using @code{scan} directly
@@ -1001,8 +1007,10 @@ other system.
 
 The recommended package @pkg{foreign} provides import facilities for
 files produced by these statistical systems, and for export to Stata. In
-some cases these function may require substantially less memory than
-@code{read.table} would. @code{write.foreign} (See @ref{Export to text files}) provides an export mechanism with support currently for @code{SPSS} and @code{Stata}.
+some cases these functions may require substantially less memory than
+@code{read.table} would. @code{write.foreign} (See @ref{Export to text
+files}) provides an export mechanism with support currently for
+@code{SAS}, @code{SPSS} and @code{Stata}.
 
 @cindex EpiInfo
 @cindex EpiData
@@ -1045,9 +1053,9 @@ dumps from S-PLUS 5.x and later written with @code{data.dump(oldStyle=T)}.
 
 If you have access to S-PLUS, it is usually more reliable to @code{dump}
 the object(s) in S-PLUS and @code{source} the dump file in @R{}.  For
-S-PLUS 5.x and 6.x you may need to use @code{dump(..., oldStyle=T)}, and
-to read in very large objects it may be preferable to use the dump file
-as a batch script rather than use the @code{source} function.
+S-PLUS 5.x and later you may need to use @code{dump(..., oldStyle=T)},
+and to read in very large objects it may be preferable to use the dump
+file as a batch script rather than use the @code{source} function.
 
 @cindex SPSS
 @cindex SPSS Data Entry
@@ -1070,9 +1078,11 @@ to handle these.
 @findex read.dta
 @findex write.dta
 Stata @file{.dta} files are a binary file format. Files from versions 5
-up to at least 11 of Stata can be read and written by functions
-@code{read.dta} and @code{write.dta}.  Stata variables with value labels
-are optionally converted to (and from) @R{} factors.
+up to 11 of Stata can be read and written by functions @code{read.dta}
+and @code{write.dta}.  Stata variables with value labels are optionally
+converted to (and from) @R{} factors.  Stata version 12 by default
+writes `format-115 datasets': @code{read.dta} currently may not be able
+to read those.
 
 
 @cindex Systat
@@ -1338,6 +1348,10 @@ The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
+
+Package @pkg{RMongo} provides an @R{} inteface to a Java client for
+`MongoDB'(@uref{http://en.wikipedia.org/wiki/MongoDB}) databases, which
+are queried using JavaScript rather than SQL.
 
 
 @menu
@@ -2150,7 +2164,6 @@ by re-assigning them once read).
 @menu
 * Reading from sockets::        
 * Using download.file::         
-* DCOM interface::              
 * CORBA interface::             
 @end menu
 
@@ -2177,7 +2190,7 @@ The earlier low-level interface is given by functions @code{make.socket},
 @code{read.socket}, @code{write.socket} and @code{close.socket}.
 
 
-@node Using download.file, DCOM interface, Reading from sockets, Network interfaces
+@node Using download.file, CORBA interface, Reading from sockets, Network interfaces
 @section Using @code{download.file}
 
 Function @code{download.file} is provided to read a file from a
@@ -2187,27 +2200,7 @@ directly from a URL, either by explicitly using @code{url} to open a
 connection, or implicitly using it by giving a URL as the @code{file}
 argument.
 
-
-@node DCOM interface, CORBA interface, Using download.file, Network interfaces
-@section @acronym{DCOM} interface
-@cindex DCOM
-
-@acronym{DCOM} is a Windows protocol for communicating between different
-programs, possibly on different machines.  Thomas Baier's
-@code{StatConnector} program available from @acronym{CRAN} under
-Software->Other->Non-standard provides an interface to the proxy DLL in
-package @pkg{rscproxy} and makes an @acronym{DCOM} server.  This can be
-used to pass simple objects (vectors and matrices) to and from @R{} and
-to submit commands to @R{}.  (It is not clear if this is still
-functional: there is another version in the @pkg{RExcelInstaller} package.)
-
-Another (D)COM server is available from @uref{http://www.omegahat.org/},
-which allows R objects to be exported as COM values.  That site also
-has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
-to act as a (D)COM client.
-
-
-@node CORBA interface,  , DCOM interface, Network interfaces
+@node CORBA interface,  , Using download.file, Network interfaces
 @section @acronym{CORBA} interface
 @cindex CORBA
 
