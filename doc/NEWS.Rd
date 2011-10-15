@@ -922,6 +922,9 @@
       \item The \code{"table"} method for \code{Axis()} hardcoded
       \code{side = 1}, hence calls \code{plot(<vector>, <table>)}
       labelled the wrong axis. (\PR{14699})
+
+      \item Creating almost any connection would fail under
+      \code{gctorture()}.
     }
   }
 }
