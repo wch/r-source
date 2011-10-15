@@ -790,6 +790,11 @@
       \code{x}, instead of simply using \code{sapply}.
       In the same spirit, \code{median(x)} now gives an error for a data
       frame \code{x} (it often gave nonsensical results).
+      
+      \item The \code{keep.source} argument to \code{library()} and
+      \code{require()} is deprecated: it was only used for packages
+      installed without lazy-loading, and now all packages are
+      lazy-loaded.
     }
   }
 
