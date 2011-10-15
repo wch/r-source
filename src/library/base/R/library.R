@@ -34,6 +34,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	 quietly = FALSE, keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"))
 {
+    if (!missing(keep.source))
+        warning("'keep.source' is deprecated and will be ignored")
     paste0 <- function(...) paste(..., sep="")
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
@@ -307,8 +309,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 ## takes over.
                 if (packageHasNamespace(package, which.lib.loc)) {
                     tt <- try({
-                        ns <- loadNamespace(package, c(which.lib.loc, lib.loc),
-                                            keep.source = keep.source)
+                        ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
                         dataPath <- file.path(which.lib.loc, package, "data")
                         env <- attachNamespace(ns, pos = pos,
                                                dataPath = dataPath, deps)
@@ -632,6 +633,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
          character.only = FALSE)
 {
+    if (!missing(keep.source))
+        warning("'keep.source' is deprecated and will be ignored")
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
     loaded <- paste("package", package, sep = ":") %in% search()
@@ -644,8 +647,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                   character.only = TRUE,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
-				  quietly = quietly,
-                                  keep.source = keep.source),
+				  quietly = quietly),
                           error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {

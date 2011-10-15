@@ -148,12 +148,11 @@ getOption(x, default = NULL)
  
       The default is \code{\link{interactive}()}, i.e., \code{TRUE} for
       interactive use.}
-
-    \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, when
-      packages are installed, and for packages not using lazy-loading
-      (and necessarily installed prior to \R 2.14.0).  Defaults to
-      \code{FALSE} unless the environment variable
-      \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
+    
+    %% used by tools::makeLazyLoading
+    \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, used only
+    when packages are installed.  Defaults to \code{FALSE} unless the
+    environment variable \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
 
     \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of

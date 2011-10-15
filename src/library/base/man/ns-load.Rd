@@ -33,11 +33,7 @@ unloadNamespace(ns)
     recorded in object \code{.Depends} in the package.}
   \item{package}{string naming the package/namespace to load.}
   \item{lib.loc}{character vector specifying library search path.}
-  \item{keep.source}{
-    logical specifying whether to retain source.
-    This applies only to the specified namespace, and not to other namespaces
-    which might be loaded to satisfy imports.
-
+  \item{keep.source}{Now ignored except during package installation.
     For more details see this argument to \code{\link{library}}.
   }
   \item{partial}{logical; if true, stop just after loading code.}
