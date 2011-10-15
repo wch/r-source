@@ -2639,7 +2639,7 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package required but not available: %s", bad),
+          c(gettextf("Package required but not available: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x$required_but_obsolete) > 1L) {
