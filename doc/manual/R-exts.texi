@@ -114,7 +114,7 @@ before reading on.
 A computing environment including a number of tools is assumed; the
 ``R Installation and Administration'' manual describes what is needed.
 Under a Unix-alike most of the tools are likely to be present by
-default, but Microsoft Windows and Mac OS X will require careful setup.
+default, but Microsoft Windows may require careful setup.
 
 Once a source package is created, it must be installed by
 the command @code{R CMD INSTALL}.
@@ -134,8 +134,8 @@ A @emph{package} is a directory of files which extend @R{}, either a
 containing the files of a source package, or an @emph{installed}
 package, the result of running @command{R CMD INSTALL} on a source
 package.  On some platforms there are also @emph{binary packages}, a zip
-or tarball containing the files of an installed package which can be
-unpacked rather than installing from sources.
+file or tarball containing the files of an installed package which can
+be unpacked rather than installing from sources.
 
 A package is @strong{not}@footnote{although this is common mis-usage.
 It seems to stem from S, whose analogues of @R{}'s packages were
@@ -239,7 +239,7 @@ The optional files @file{configure} and @file{cleanup} are (Bourne
 shell) script files which are, respectively, executed before and
 (provided that option @option{--clean} was given) after installation on
 Unix-alikes, see @ref{Configure and cleanup}.  The analogues on Windows
-are @file{configure.win} and @file{cleanup.win}
+are @file{configure.win} and @file{cleanup.win}.
 
 @cindex LICENSE file
 @cindex LICENCE file
@@ -250,7 +250,9 @@ license file in your @emph{source} distribution, please do not arrange
 to @emph{install} yet another copy of the @acronym{GNU} @file{COPYING}
 or @file{COPYING.LIB} files but refer to the copies on
 @uref{http://www.r-project.org/@/Licenses/} and included in the @R{}
-distribution (in directory @file{share/licenses}).
+distribution (in directory @file{share/licenses}).  Since files named
+@file{LICENSE} or @file{LICENCE} @emph{will} be installed, do not use
+these names for standard licence files.
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
@@ -272,8 +274,8 @@ names.  In addition, files with names @samp{con}, @samp{prn},
 @samp{lpt1} to @samp{lpt9} after conversion to lower case and stripping
 possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are disallowed.
 Also, file names in the same directory must not differ only by case (see
-the previous paragraph).  In addition, the names of @samp{.Rd} files
-will be used in URLs and so must be @acronym{ASCII} and not contain
+the previous paragraph).  In addition, the basenames of @samp{.Rd} files
+may be used in URLs and so must be @acronym{ASCII} and not contain
 @code{%}.  For maximal portability filenames should only contain only
 @acronym{ASCII} characters not excluded already (that is
 @code{A-Za-z0-9._!#$%&+,;=@@^()@{@}'[]} --- we exclude space as many
@@ -863,18 +865,18 @@ The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
-@file{html}, @file{latex}, @file{R-ex} and @file{Meta}).  The copying of
-the @file{inst} happens after @file{src} is built so its @file{Makefile}
-can create files to be installed.  Prior to @R{} 2.12.2, the files were
-installed on POSIX platforms with the permissions in the package
-sources, so care should be taken to ensure these are not too
-restrictive: @command{R CMD build} will make suitable adjustments.  To
-exclude files from being installed, one can specify a list of exclude
-patterns in file @file{.Rinstignore} in the top-level source directory.
-These patterns should be Perl-like regular expressions (see the help for
-@code{regexp} in @R{} for the precise details), one per line, to be
-matched@footnote{case-insensitively on Windows.} against the file and
-directory names.
+@file{html} and @file{Meta}, and earlier versions used @file{latex},
+@file{R-ex}).  The copying of the @file{inst} happens after @file{src}
+is built so its @file{Makefile} can create files to be installed.  Prior
+to @R{} 2.12.2, the files were installed on POSIX platforms with the
+permissions in the package sources, so care should be taken to ensure
+these are not too restrictive: @command{R CMD build} will make suitable
+adjustments.  To exclude files from being installed, one can specify a
+list of exclude patterns in file @file{.Rinstignore} in the top-level
+source directory.  These patterns should be Perl-like regular
+expressions (see the help for @code{regexp} in @R{} for the precise
+details), one per line, to be matched@footnote{case-insensitively on
+Windows.} against the file and directory names.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
@@ -910,9 +912,9 @@ with @code{R_LIBS} set to ensure that the copy of the package installed
 during testing will be found by @code{library(@var{pkg_name})}.  Note
 that the package-specific tests are run in a vanilla @R{} session
 without setting the random-number seed, so tests which use random
-numbers will need to do so to obtain reproducible results (and it can be
-helpful to do so in all cases, to avoid occasional failures when tests
-are run by others).
+numbers will need to set the seed to obtain reproducible results (and it
+can be helpful to do so in all cases, to avoid occasional failures when
+tests are run).
 
 If @file{tests} has a subdirectory @file{Examples} containing a file
 @code{@var{pkg}-Ex.Rout.save}, this is compared to the output file for
@@ -957,12 +959,13 @@ provided by the package, so that the data file can also be used without
 having to load the package.
 
 Images (extensions @file{.RData} or @file{.rda}) can contain references
-to the namespaces of packages that were used to create them.
-Preferably there should be no such references in data files, and in any
-case they should only be to packages listed in the @code{Depends} and
-@code{Imports}, as otherwise it may be impossible to install the
+to the namespaces of packages that were used to create them.  Preferably
+there should be no such references in data files, and in any case they
+should only be to packages listed in the @code{Depends} and
+@code{Imports} fields, as otherwise it may be impossible to install the
 package.  To check for such references, load all the images into a
-vanilla @R{} session, and look at the output of @code{loadedNamespaces()}.
+vanilla @R{} session, and look at the output of
+@code{loadedNamespaces()}.
 
 If your data files are large and you are not using @samp{LazyData} you
 can speed up installation by providing a file @file{datalist} in the
@@ -1899,7 +1902,7 @@ there is a target output file @file{.Rout.save} in the vignette source
 directory, the output from running the code in that vignette is compared
 with the target output file and any differences are reported (but not
 recorded in the log file).  (If the vignette sources are in the
-deprecated location @file{inst/doc}, so mark such target output files to
+deprecated location @file{inst/doc}, do mark such target output files to
 not be installed in @file{.Rinstignore}.)
 
 If there is an error@footnote{or if option @option{--use-valgrind} is
@@ -2029,7 +2032,7 @@ option@footnote{or the package's description contains
 vignettes (@pxref{Writing package vignettes}) in the package.  To do so
 it installs the current package into a temporary library tree, but any
 dependent packages need to be installed in an available library tree
-(see the Note: below).
+(see the Note: at the top of this section).
 
 Similarly, if the @file{.Rd} documentation files contain any
 @code{\Sexpr} macros (@pxref{Dynamic pages}), the package will be
@@ -2098,10 +2101,10 @@ binary package for Windows is usually supplied as a @file{.zip} file,
 and for the Mac platform the default binary package file extension is
 @file{.tgz}.
 
-The present recommended method of building binary packages is to use 
+The recommended method of building binary packages is to use 
 
 @command{R CMD INSTALL --build pkg}
-
+@noindent
 where @file{pkg} is either the name of a source tarball (in the usual
 @file{.tar.gz} format) or the location of the directory of the package
 source to be built.
@@ -2125,33 +2128,36 @@ not install and the binary will not be created.
 
 @end itemize
 
-To prevent changes to the present working installation or to provide an install
-location with write access, create a suitably located directory with write access
-and use the @command{-l} option to build the package in the chosen location. 
-The usage is then
+@noindent
+To prevent changes to the present working installation or to provide an
+install location with write access, create a suitably located directory
+with write access and use the @command{-l} option to build the package
+in the chosen location.  The usage is then
 
 @command{R CMD INSTALL -l location --build pkg}
 
+@noindent
 where @file{location} is the chosen directory with write access. The package
 will be installed as a subdirectory of @file{location}, and the package binary
 will be created in the current directory.
 
 Other options for @command{R CMD INSTALL} can be found using 
 @command{R CMD INSTALL --help}, and platform-specific details for special
-cases (e.g. handling Fortran sources on MacOS) are discussed in the 
+cases (e.g. handling Fortran sources on Mac OS X) are discussed in the 
 platform-specific FAQs.
 
 
-In earlier versions of @R{}, @command{R CMD build --binary} could build a 
-binary version of a package, but this approach is now deprecated in favour of
-@command{R CMD INSTALL --build}.
+In earlier versions of @R{}, @command{R CMD build --binary} could build
+a binary version of a package, but this approach is now deprecated in
+favour of @command{R CMD INSTALL --build}.
 
 
-Finally, at least one web-based service is available for building binary packages 
-from (checked) source code: WinBuilder (see @uref{http://win-builder.r-project.org/}) 
-is able to build Windows binaries. Note that this is intended for developers on 
-other platforms who do not have access to Windows but wish to provide binaries 
-for the Windows platform.  
+Finally, at least one web-based service is available for building binary
+packages from (checked) source code: WinBuilder (see
+@uref{http://win-builder.r-project.org/}) is able to build Windows
+binaries. Note that this is intended for developers on other platforms
+who do not have access to Windows but wish to provide binaries for the
+Windows platform.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
@@ -2189,25 +2195,24 @@ of all these extensions.} @file{.Snw} and @file{.Stex} are also
 recognized as vignettes.  Sweave allows the integration of @LaTeX{}
 documents: see the @code{Sweave} help page in @R{} and the @code{Sweave}
 vignette in package @pkg{utils} for details on the document format.
-Package vignettes found in directory @file{inst/doc} are tested by
-@code{R CMD check} by executing all @R{} code chunks they contain
-(except those with option @code{eval=FALSE}).  The @R{} working
-directory for all vignette tests in @code{R CMD check} is a @emph{copy}
-of the @file{doc} subdirectory.  Make sure all files needed to run the
-vignette (data sets, @dots{}) are accessible by either placing them in
-the @file{inst/doc} hierarchy of the source package or by using calls to
-@code{system.file()}.  All other files needed to re-make the vignette
-PDFs (such as LaTeX style files, BiBTeX input files and files for any
-figures not created by running the code in the vignette) must in the
-sources under @file{vignettes}.
+Package vignettes are tested by @code{R CMD check} by executing all @R{}
+code chunks they contain (except those with option @code{eval=FALSE}).
+The @R{} working directory for all vignette tests in @code{R CMD check}
+is a @emph{copy} of the vignette source directory.  Make sure all files
+needed to run the @R{} code in the vignette (data sets, @dots{}) are
+accessible by either placing them in the @file{inst/doc} hierarchy of
+the source package or by using calls to @code{system.file()}.  All other
+files needed to re-make the vignette PDFs (such as LaTeX style files,
+BiBTeX input files and files for any figures not created by running the
+code in the vignette) must in the vignette source directory.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
 versions of the vignettes in @file{inst/doc} for distribution with the
 package sources.  By including the PDF version in the package sources it
-is not necessary that the vignettes can be run and compiled at install
-time, i.e., the package author can use private @R{} packages, screen
-snapshots and @LaTeX{} extensions which are only available on his
+is not necessary that the vignette PDFs can be re-built at install time,
+i.e., the package author can use private @R{} packages, screen snapshots
+and @LaTeX{} extensions which are only available on his
 machine.@footnote{provided the conditions of the package's licence are
 met: many would see these as incompatible with an Open Source licence.}
 
@@ -2285,18 +2290,18 @@ generates a single file with the vignette extension replaced by
 @file{.R}.
 
 Do watch that PDFs are not too large -- one in a @acronym{CRAN} package
-was 72Mb!  This is usually caused by the inclusion of overly detailed
+was 72MB!  This is usually caused by the inclusion of overly detailed
 figures, which will not render well in PDF viewers.  Sometimes it is
 much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
 @cindex .install_extras file
-When @command{R CMD build} build the vignette PDFs, it copies these and
-the vignette sources from directory @file{vignettes} to
-@file{inst/doc}.  To install any other files from the @file{vignettes}
-directory, include a file @file{vignettes/.install_extras} which
-specifies these as Perl-like regular expressions on one or more lines.
-(See the description of the @file{.Rinstignore} file for full details.)
+When @command{R CMD build} builds the vignette PDFs, it copies these and
+the vignette sources from directory @file{vignettes} to @file{inst/doc}.
+To install any other files from the @file{vignettes} directory, include
+a file @file{vignettes/.install_extras} which specifies these as
+Perl-like regular expressions on one or more lines.  (See the
+description of the @file{.Rinstignore} file for full details.)
 
 
 @node Encodings and vignettes,  , Writing package vignettes, Writing package vignettes
@@ -2304,8 +2309,8 @@ specifies these as Perl-like regular expressions on one or more lines.
 
 Vignette PDFs will in general include descriptive text, @R{} input, @R{}
 output and figures, @LaTeX{} include files and bibliographic references.
-Any of which may contain non-ASCII characters, the handling of encodings
-can become very complicated.
+As any of these may contain non-ASCII characters, the handling of
+encodings can become very complicated.
 
 The vignette source file should be written in ASCII or contain a
 declaration of the encoding (see below).  This applies even to comments
@@ -2397,6 +2402,10 @@ are not supported by other compilers, and this will report @emph{some}
 of them (such as the misuse of variable-length arrays).  If possible,
 check C++ code on a standards-conformant compiler.
 
+Although there is now a 2011 version of the C++ standard, it is not
+widely implemented and portable C++ code needs to follow the 1998
+standard (and not use features from C99).
+
 @item
 Study the output from running your examples, in file
 @file{@var{pkg}.Rcheck/@var{pkg}-Ex.Rout}.  Often warnings there
@@ -2430,8 +2439,8 @@ POSIX-compliant @command{du} program is found on the system: it is
 possible that some other @command{du} programs will incorrectly report
 double the actual size.  This can be disabled by setting
 @env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
-more than 5Mb, detailing directories of more than 1Mb.  It warns about
-inefficient compression of data if environment variable
+more than 5Mb, detailing directories of more than 1Mb.  It warns (by
+default) about inefficient compression of data if environment variable
 @env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}: @command{R CMD
 build --resave-data} will compact data as best it can.  Watch out for
 unnecessary files in @file{inst/doc}: for example @file{Rplots.ps} or
@@ -2484,14 +2493,14 @@ running Ghostscript.
 
 Most of the large PDFs we have encountered have been large because of
 the inclusion of figures, for example complex figures from @R{} (where
-@file{.png} versions may be more appropriate, and compression was not
-used prior to @R{} 2.14.0, so it may help to re-generate them) and
-screendumps.  However, some have been unnecessarily large due to
-@command{pdftex} settings.  The modern default is to use both PDF
-compression and PDF object compression (which needs the PDF 1.5
-specification from 2003): this is the default in most @TeX{}
-distributions but not MiKTeX.  It can be overridden by code in the
-preamble of an Sweave or @LaTeX{} file: see how this is done for the
+@file{.png} versions may be more appropriate, and PDF compression was
+not used by @code{pdf()} prior to @R{} 2.14.0, so it may help to
+re-generate them) and screendumps.  However, some have been
+unnecessarily large due to @command{pdftex} settings.  The modern
+default is to use both PDF compression and PDF object compression (which
+needs the PDF 1.5 specification from 2003): this is the default in most
+@TeX{} distributions but not MiKTeX.  It can be overridden by code in
+the preamble of an Sweave or @LaTeX{} file: see how this is done for the
 @R{} reference manual at
 @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 @end enumerate
@@ -2515,15 +2524,15 @@ message to @email{CRAN@@R-project.org} about it.  The @acronym{CRAN}
 maintainers will run these tests before putting a submission online.
 
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
-@acronym{CRAN} check systems use reasonably recent versions of the
-Debian TexLive distribution
-(@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); for the Windows
-@acronym{CRAN} server, a reasonably recent version of MikTeX (including
-all packages available directly for MikTeX) is employed: the Mac OS X
-builders use a current full version of MacTeX.  Developers wanting to
-have their vignettes use @TeX{} packages or style files not (yet)
-included in these distributions should add the corresponding style files
-to the @file{inst/doc} subdirectory of their package.
+@acronym{CRAN} check systems use the Debian TeXLive@footnote{currently
+the long obsolete TeXLive 2009.} distribution
+(@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); for the
+Windows @acronym{CRAN} server, a reasonably recent version of MikTeX
+(including all packages available directly for MikTeX) is employed: the
+Mac OS X builders use a current full version of MacTeX.  Developers
+wanting to have their vignettes use @TeX{} packages or style files not
+(yet) included in these distributions should add the corresponding style
+files to the @file{inst/doc} subdirectory of their package.
 
 Note that @acronym{CRAN} does not accept submissions of precompiled
 binaries due to security concerns, and does not allow binary executables
@@ -2564,12 +2573,12 @@ allows the package writer to specify which variables in the package
 should be @emph{exported} to make them available to package users, and
 which variables should be @emph{imported} from other packages.
 
-The current mechanism for specifying a namespace for a package is to
-place a @file{NAMESPACE} file in the top level package directory.  This
-file contains @emph{namespace directives} describing the imports and
-exports of the namespace.  Additional directives register any shared
-objects to be loaded and any S3-style methods that are provided.  Note
-that although the file looks like @R{} code (and often has @R{}-style
+The mechanism for specifying a namespace for a package is to place a
+@file{NAMESPACE} file in the top level package directory.  This file
+contains @emph{namespace directives} describing the imports and exports
+of the namespace.  Additional directives register any shared objects to
+be loaded and any S3-style methods that are provided.  Note that
+although the file looks like @R{} code (and often has @R{}-style
 comments) it is not processed as @R{} code.  Only very simple
 conditional processing of @code{if} statements is implemented.
 
@@ -2606,6 +2615,9 @@ packages searches for non-local variables started with the search path,
 so a package's own functions could be masked by those of a package
 appearing earlier.
 
+As from @R{} 2.14.0 all packages have a namespace, and a default
+@file{NAMESPACE} file is generated on installation if there is not one
+in the sources.
 
 @menu
 * Specifying imports and exports::  
@@ -2683,12 +2695,12 @@ imported from other namespaces.
 If a package only needs a few objects from another package it can use a
 fully qualified variable reference in the code instead of a formal
 import.  A fully qualified reference to the function @code{f} in package
-@pkg{foo} is of the form @code{foo::f}.  This is less efficient than a
-formal import and also loses the advantage of recording all dependencies
-in the @file{NAMESPACE} file, so this approach is usually not
-recommended.  Evaluating @code{foo::f} will cause package @pkg{foo} to
-be loaded, but not attached, if it was not loaded already---this can be
-an advantage in delaying the loading of a rarely used package.
+@pkg{foo} is of the form @code{foo::f}.  This is slightly less efficient
+than a formal import and also loses the advantage of recording all
+dependencies in the @file{NAMESPACE} file, so this approach is usually
+not recommended.  Evaluating @code{foo::f} will cause package @pkg{foo}
+to be loaded, but not attached, if it was not loaded already---this can
+be an advantage in delaying the loading of a rarely used package.
 
 Using @code{foo:::f} instead of @code{foo::f} allows access to
 unexported objects.  This is generally not recommended, as the
@@ -3292,10 +3304,6 @@ by @command{R CMD INSTALL}.
 
 @end itemize
 
-Some notes on issues specific to porting to x64 Windows are available at
-@uref{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
-
-
 @node Encoding issues, Binary distribution, Writing portable packages, Writing portable packages
 @subsection Encoding issues
 
@@ -3610,11 +3618,9 @@ intricate: languages can have up to four different forms.  The @R{}
 function @code{ngettext} provides an interface to the C function of the
 same name, and will choose an appropriate singular or plural form for
 the selected language depending on the value of its first argument
-@code{n}.
-
-Packages without namespaces will need to use @code{domain="R-@var{pkg}"}
-explicitly in calls to @code{stop}, @code{warning}, @code{message},
-@code{gettext}/@code{gettextf} and @code{ngettext}.
+@code{n}.  It is safest to use @code{domain="R-@var{pkg}"} explicitly in
+calls to @code{ngettext}, and necessary unless they are calls directly
+from a function in the package.
 
 
 @node Installing translations, Makefile support, R messages, Internationalization
@@ -5476,12 +5482,12 @@ these allow call graphs to be studied.
 @cindex Memory use
 
 Measuring memory use in @R{} code is useful either when the code takes
-more memory than is conveniently available or when memory allocation
-and copying of objects is responsible for slow code. There are three
-ways to profile memory use over time in @R{} code. All three require
-@R{} to have been compiled with @option{--enable-memory-profiling},
-which is not the default. All can be misleading, for different
-reasons.
+more memory than is conveniently available or when memory allocation and
+copying of objects is responsible for slow code. There are three ways to
+profile memory use over time in @R{} code. All three require @R{} to
+have been compiled with @option{--enable-memory-profiling}, which is not
+the default, but is currently used for the Mac OS X and Windows binary
+distributions. All can be misleading, for different reasons.
 
 In understanding the memory profiles it is useful to know a little more
 about @R{}'s memory allocation. Looking at the results of @code{gc()}
@@ -6243,8 +6249,8 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
-@cputype{ppc32} or @cputype{ppc64} platform, or Mac OS 10.5.x
-(`Leopard') on @cputype{i386} you can use @code{valgrind}
+@cputype{ppc32} or @cputype{ppc64} platform, or Mac OS 10.5 or 10.6 on
+@cputype{i386} or @cputype{x86_64} you can use @code{valgrind}
 (@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
@@ -6430,7 +6436,7 @@ Program received signal SIGINT, Interrupt.
 ...
 @end example
 
-Some ``tricks'' are worth knowing.
+Some ``tricks'' worth knowing follow:
 
 @menu
 * Finding entry points::        
