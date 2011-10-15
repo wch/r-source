@@ -13,6 +13,9 @@
 
       \item \code{.Deprecated()} becomes a bit more flexible, getting an
       \code{old} argument.
+
+      \item Even data-only packages without \R code need a namespace and
+      so may need to be installed under \R 2.14.0 or later.
     }
   }
 
