@@ -63,7 +63,7 @@ static int isDir(char *path)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
 	    "  INSTALL  Install add-on packages\n",
 	    "  REMOVE   Remove add-on packages\n",
@@ -447,7 +447,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Rd2pdf")) {
 	snprintf(cmd, CMD_LEN,
-		 "%s/%s/Rterm.exe -e tools:::..Rd2pdf() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args nextArg",
+		 "%s/%s/Rterm.exe -e tools:::..Rd2pdf() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Sweave")) {
