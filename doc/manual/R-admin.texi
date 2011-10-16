@@ -190,9 +190,10 @@ created if necessary).  The alpha, beta and RC versions of an upcoming
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/} in
 the four-week period prior to the release.
 
-Note that @samp{https:} is required, and that the SSL certificate for
-the Subversion server of the R project should be recognized as from a
-trusted source.
+Note that @samp{https:} is required@footnote{for some Subversion clients
+@samp{http:} may appear to work, but requires continual redirection.},
+and that the SSL certificate for the Subversion server of the R project
+should be recognized as from a trusted source.
 
 Note that retrieving the sources by e.g.@: @command{wget -r} or
 @command{svn export} from that URL will not work: the Subversion
@@ -465,12 +466,12 @@ provided four alternatives:
 and Courier.  This works well both for on-screen viewing and for
 printing.  One disadvantage is that the Usage and Examples sections may
 come out rather wide: this can be overcome by using @emph{in addition}
-either of the options @code{beramono} or @code{inconsolata}, which
-replace the Courier monospaced font by Bera Sans mono or Inconsolata
-respectively.  (You will need the appropriate @LaTeX{} package
-@pkg{bera} or @pkg{inconsolata} installed.@footnote{Debian/Ubuntu use
-a very old version of TeXLive and so need Debian package
-@samp{texlive-fonts-extra} installed.})
+either of the options @code{beramono} or @code{inconsolata} (which is
+part of the current default), which replace the Courier monospaced font
+by Bera Sans mono or Inconsolata respectively.  (You will need the
+appropriate @LaTeX{} package @pkg{bera} or @pkg{inconsolata}
+installed.@footnote{Debian/Ubuntu use a rather old version of TeXLive
+and so need Debian package @samp{texlive-fonts-extra} installed.})
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
@@ -634,8 +635,8 @@ will install stripped executables, and on platforms where this is
 supported, stripped libraries in directories @file{lib} and
 @file{modules} and in the standard packages.
 
-Note that installing @R{} into a directory which contains spaces is not
-supported, and at least some aspects (such as installing source
+Note that installing @R{} into a directory whose path contains spaces is
+not supported, and at least some aspects (such as installing source
 packages) will not work.
 @c The main problem is the Makefile include in etc/Makeconf
 
@@ -1076,8 +1077,8 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.5.4.tar.gz
-> mv libpng-1.5.4 libpng
+> tar -zxf libpng-1.5.5.tar.gz
+> mv libpng-1.5.5 libpng
 > tar -zxf jpegsrc.v8c.tar.gz
 > tar -zxf tiff-3.9.5.tar.gz
 > mv tiff-3.9.5/libtiff .
@@ -1174,13 +1175,12 @@ DLL @file{winCairo.dll} which is loaded when one of these devices is
 first used.  It is not built by default, and needs to be built after
 @file{Rbitmap.dll}, by @command{make cairodevices}.
 
-To enable the building of these devices you need to install
-the static cairographics libraries built by Simon Urbanek at
-@uref{http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz}.
-Set the macros @samp{CAIRO_HOME} and @samp{CAIRO_TYPE} in
-@file{MkRules.local}.  (Note that this tarball unpacks with a top-level
-directory @file{src/}: @samp{CAIRO_HOME} needs to include that
-directory in its path.)
+To enable the building of these devices you need to install the static
+cairographics libraries built by Simon Urbanek at
+@uref{http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz}.  Set
+the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
+tarball unpacks with a top-level directory @file{src/}:
+@samp{CAIRO_HOME} needs to include that directory in its path.)
 
 
 @node Checking the build, Building the manuals, Building the cairo devices files, Building from source
@@ -2080,7 +2080,7 @@ shell with different settings for environment variables and the path (to
 find external software, notably for Gtk+).
 
 @command{R CMD INSTALL} can do a @code{i386} install and then add the
-@code{x64} DLL by
+@code{x64} DLL from a single command by
 
 @example
 R CMD INSTALL --merge-multiarch -l @var{libdir} @var{tarball}
@@ -2475,9 +2475,9 @@ make
 
 @noindent
 will make standalone libraries @file{libRmath.a} and @file{libRmath.so}:
-@samp{make static} and @code{make shared} will create just one of them.
+@samp{make static} and @samp{make shared} will create just one of them.
 
-@strong{NB:} certain compilers are unable to do compile-time IEEE-754
+@strong{NB:} certain compilers are unable to do compile-time IEC 60559
 arithmetic and so cannot compile @file{mlutils.c} and several other
 files.  The known example is old versions of Sun's @code{cc} (e.g.@:
 Forte 6 and 7).
@@ -2662,16 +2662,17 @@ replacement: see @uref{http://www.gnu.org/@/software/@/libiconv/}).
 
 An implementation of @acronym{XDR} is required.  This is part of
 @acronym{RPC} and historically has been part of @file{libc} on a
-Unix-alike: however some builds@footnote{when built by default, but not
-for example as built for Fedora 15.} @code{glibc 2.14} hide it.  The
-intention seems to be that the @acronym{TI-RPC} library be used instead,
-in which case @code{libtirpc} (and its development version) needs to be
-installed, and its headers need to be on the C include path (and
-@command{configure} tries @file{/usr/include/tirpc} if the headers are
-not found on the standard include path).  The @R{} sources contain a
-simple implementation of @acronym{XDR} which in recent versions can be
-used on platforms with 32-bit or 64-bit @code{long} (and earlier ones
-will fail to compile unless @code{long} is 32-bit).
+Unix-alike: however some builds@footnote{apparently when built by
+default, but not for example as built for Fedora 15.} of @code{glibc
+2.14} hide it.  The intention seems to be that the @acronym{TI-RPC}
+library be used instead, in which case @code{libtirpc} (and its
+development version) needs to be installed, and its headers need to be
+on the C include path (and @command{configure} tries
+@file{/usr/include/tirpc} if the headers are not found on the standard
+include path).  The @R{} sources contain a simple implementation of
+@acronym{XDR} which in recent versions can be used on platforms with
+32-bit or 64-bit @code{long} (and earlier ones will fail to compile
+unless @code{long} is 32-bit).
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
@@ -2713,7 +2714,7 @@ older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
 @pkg{texinfo} 4.13.
 
 @cindex Vignettes
-The PDF documentation (including @file{doc/NEWS.pdf} and
+The PDF documentation (including @file{doc/NEWS.pdf}) and
 building vignettes needs @command{tex} and @command{latex}, or
 @command{pdftex} and @command{pdflatex}.  We require @LaTeX{} version
 @code{2005/12/01} or later (for UTF-8 support).  Building PDF package
@@ -2766,7 +2767,7 @@ package@footnote{also known as @code{ttf-mscorefonts-installer} in the
 Debian/Ubuntu world: see also
 @uref{http://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.}  provides
 TrueType versions of Monotype fonts such as Arial and Times New Roman.
-Another useful set of fonts is the `liberation' truetype fonts available
+Another useful set of fonts is the `liberation' TrueType fonts available
 at
 @uref{https://www.redhat.com/@/promo/@/fonts/},@footnote{@code{ttf-liberation}
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
@@ -2854,7 +2855,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.9 have been tested (including most versions
+Versions of Tcl/Tk up to 8.5.10 have been tested (including most versions
 of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
@@ -2949,11 +2950,10 @@ is an instruction to link against @samp{-lfoo} to find an external
 @acronym{BLAS} (which needs to be found both at link time and run time).
 
 The configure code checks that the external @acronym{BLAS} is complete
-(it must include all double precision and double complex
-routines@footnote{unless FORTRAN double complex is not supported on the
-platform}, as well as @code{LSAME}), and appears to be usable.  However,
-an external @acronym{BLAS} has to be usable from a shared object (so
-must contain position-independent code), and that is not checked.
+(it must include all double precision and double complex routines, as
+well as @code{LSAME}), and appears to be usable.  However, an external
+@acronym{BLAS} has to be usable from a shared object (so must contain
+position-independent code), and that is not checked.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
@@ -2980,7 +2980,8 @@ such as @pkg{quantreg} will need to be re-installed.
 @acronym{BLAS}.  This can be broken if for example the code assumes that
 terms with a zero factor are always zero and do not need to be
 computed---whereas @code{x*0} can be @code{NaN}.  (The version of the
-reference @acronym{BLAS} used prior to @R{} 2.12.0 did so.)
+reference @acronym{BLAS} used prior to @R{} 2.12.0 did so.)  This is
+checked in the test suite.
 
 
 @menu
@@ -3015,7 +3016,7 @@ if the libraries are in the library path, otherwise by
 @end example
 
 @noindent
-For systems with multiple processors it is possible to use a
+For systems with multiple CPU cores it is possible to use a
 multi-threaded version of ATLAS, by specifying
 
 @example
@@ -3081,7 +3082,6 @@ updated for CPUs released since mid-2010.
 
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
-svn up
 For Intel processors under Linux, there is Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
@@ -3205,7 +3205,6 @@ dynamic @acronym{BLAS} library (such as ACML or Goto's) to
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
 ln -s /opt/acml4.4.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
-
 will change the @acronym{BLAS} in use to multithreaded ACML.  A similar
 link works for recent versions of the Goto @acronym{BLAS} and perhaps
 for MKL (provided the appropriate @file{lib} directory is in the
@@ -3736,10 +3735,8 @@ recent reports.
 
 The @samp{X11()} graphics device is the one started automatically on
 Unix-alikes when plotting.  As its name implies, it displays on a (local
-or remote) X server, and relies on the services and in particular the
-fonts provided by the X server.  So if you sometimes use @R{} at a
-console and sometimes remotely from an X11 session running on a Windows
-machine, you may have to setup the fonts differently for the two usages.
+or remote) X server, and relies on the services provided by the X
+server.
 
 The `modern' version of the @samp{X11()} device is based on @samp{cairo}
 graphics and (in most implementations) uses @samp{fontconfig} to pick and
@@ -4635,11 +4632,11 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.13.x.}  @file{Rtools213.exe}, available from
-@uref{http://www.murdoch-sutherland.com/@/Rtools/}. You should download
-and run it, choosing the default ``Package authoring installation'' to
-build add-on packages, or the ``full installation'' if you intend to
-build @R{}.
+named@footnote{for @R{} 2.13.x and later.}  @file{Rtools214.exe},
+available from @uref{http://www.murdoch-sutherland.com/@/Rtools/}. You
+should download and run it, choosing the default ``Package authoring
+installation'' to build add-on packages, or the ``full installation'' if
+you intend to build @R{}.
 
 You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
@@ -4725,7 +4722,8 @@ It is also possible to use the TeXLive distribution from
 @enindex R_RD4PDF
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
 and set the environment variable @env{R_RD4PDF} suitably; ensure you
-have the required fonts installed.
+have the required fonts installed or that @samp{MiKTeX} is set up to
+install @LaTeX{} on first use.
 
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer
@@ -4823,7 +4821,7 @@ where C++ code is involved.  So we recommend that all packages are built
 with the current toolchain.
 
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain included in @file{Rtools213.exe}, and was
+@code{4.5.0}.  The toolchain included in @file{Rtools214.exe}, and was
 collected from the files at
 @uref{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
@@ -4871,7 +4869,7 @@ unless @option{--no-test-load} is used.}  This is based on files from
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip},
 including a pre-release of @command{gcc 4.5.2}.  However, this has been
 patched to use static Fortran and C++ runtime libraries: a suitable
-toolchain is included in @file{Rtools213.exe}.
+toolchain is included in @file{Rtools214.exe}.
 
 @strong{NB:} 64-bit toolchains after late April 2010 at that site
 generate objects with symbols without a leading underscore. Only such
@@ -4897,7 +4895,8 @@ Developers of packages will find some of the `goodies' at
 @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies} useful.  
 
 There is a version of the @command{file} command that identifies the
-type of files, and is used by @command{Rcmd check} if available.
+type of files, and is used by @command{Rcmd check} if available.  The
+binary distribution is included in @file{Rtools214.exe}.
 
 The file @file{xzutils.zip} contains the program @command{xz} which can
 be used to (de)compress files with that form of compression.
