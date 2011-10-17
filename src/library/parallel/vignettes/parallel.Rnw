@@ -32,18 +32,23 @@ pdftitle={Package `parallel'}% Could also have pdfusetitle
 
 \section{Introduction}
 
-A package \pkg{parallel} was developed for \R{} 2.14.0.  It builds on
-the work done for CRAN packages \pkg{multicore} \citep{multicore} and
-\pkg{snow} \citep{snow}.
+Package \pkg{parallel} was first included in \R{} 2.14.0.  It builds
+on the work done for CRAN packages \pkg{multicore} \citep{multicore}
+and \pkg{snow} \citep{snow} and provides drop-in replacements for most
+of the functionality of those packages, with integrated handling of
+random-number generation.
+
+The first released version is described here: various enhancements are
+planned for upcoming versions of \R{}.
 
 Parallelism can be done in computation at many different levels: this
 package is principally concerned with `coarse-grained
 parallelization'.  At the lowest level, modern CPUs can do several
-basic operations in parallel (e.g.{} integer and floating-point
+basic operations simultaneously (e.g.{} integer and floating-point
 arithmetic), and several implementations of external BLAS libraries
 use multiple threads to do parts of basic vector/matrix operations in
-parallel.  Several contributed \R{} packages use multiple threads
-at C level \emph{via} OpenMP or pthreads.
+parallel.  Several contributed \R{} packages use multiple threads at C
+level \emph{via} OpenMP or pthreads.
 
 This package handles running much larger chunks of computations in
 parallel.  A typical example is to evaluate the same \R{} function on
@@ -76,17 +81,31 @@ send the first $M$ chunks to the workers, then repeatedly wait for any
 worker to complete and send it the next remaining task: this is done
 in \code{mclapply(mc.preschedule = FALSE)} and \code{clusterApplyLB}.
 
-In principle the workers could be implemented by threads or
+In principle the workers could be implemented by threads\footnote{only
+  `in principle` since the \R{} interpreter is not thread-safe.} or
 lightweight processes, but in the current implementation they are full
 processes.  They can be created in one of three ways:
 \begin{enumerate}
+\item \emph{Via} \code{system("Rscript")} or similar to launch a new
+  process on the current machine or a similar machine with an identical
+  \R{} installation.  This then needs a way to communicate between
+  master and worker processes, which is usually done \emph{via}
+  sockets.
+
+  This should be available on all \R{} platforms, although it is
+  conceivable that zealous security measures could block the
+  inter-process communication \emph{via} sockets.  Users of Windows
+  and Mac OS X may expect pop-up dialog boxes from the firewall asking
+  if an \R{} process should accept incoming connections.
+
 \item \emph{Via} forking.  \emph{Fork} is a
   concept\footnote{\url{http://en.wikipedia.org/wiki/Fork_(operating_system)}}
   from POSIX operating systems, and should be available on all \R{}
   platforms except Windows.  This creates a new \R{} process by taking
   a complete copy of the master process, including the workspace and
-  state of the random-number stream.  However, the copy will usually
-  share pages with the master until modified so forking is very fast.
+  state of the random-number stream.  However, the copy will (in any
+  reasonable OS) share memory pages with the master until modified so
+  forking is very fast.
 
   The use of forking was pioneered by package \pkg{multicore}.
 
@@ -102,16 +121,6 @@ processes.  They can be created in one of three ways:
   results.  Both that and communication \emph{via} sockets is
   supported in package \pkg{parallel}.
 
-\item \emph{Via} \code{system("Rscript")} or similar to launch a new
-  process on the current machine or a similar machine with an identical
-  \R{} installation.  This then needs a way to communicate between
-  master and worker processes, which is usually done \emph{via}
-  sockets.
-
-  This should be available on all \R{} platforms, although it is
-  conceivable that zealous security measures could block the
-  inter-process communication \emph{via} sockets.
-
 \item Using OS-level facilities to set up a means to send tasks to
   other members of a group of machines.  There are several ways to do
   that, and for example package \pkg{snow} can make use of PVM
@@ -125,7 +134,10 @@ processes.  They can be created in one of three ways:
   Condor or Globus) and \pkg{Rsge} (using SGE, currently called
   `Oracle Grid Engine').
 
-  It will not be considered further in this vignette.
+  It will not be considered further in this vignette, but those parts
+  of \pkg{parallel} which provide \pkg{snow}-like functions will
+  accept \pkg{snow} clusters including MPI clusters (and although PVM
+  and NWS clusters have not been tested, they should also work).
 \end{enumerate}
 
 The landscape of parallel computing has changed with the advent of
@@ -134,7 +146,9 @@ Until the late 2000's parallel computing was mainly done on clusters
 of large numbers of single- or dual-CPU computers: nowadays even
 laptops have two or four cores, and servers with 8 or more cores are
 commonplace.  It is such hardware that package \pkg{parallel} is
-designed to exploit.
+designed to exploit.  It can also be used with several computers
+running the same version of \R{} connected by (reasonable-speed)
+ethernet: the computers need not be running the same OS.
 
 %<<>>=
 %library(parallel)
@@ -157,7 +171,7 @@ number of CPUs available \emph{to the current user} which may well be
 restricted by system policies on multi-user systems.  Nor does it give
 much idea of a reasonable number of CPUs to use for the current task:
 the user may be running many \R{} processes simultaneously, and those
-processes may themselves by using multiple threads through
+processes may themselves by using multiple threads through a
 multi-threaded BLAS, compiled code using OpenMP or other low-level
 forms of parallelism.  We have even seen instances of
 \pkg{multicore}'s \code{mclapply} being called
@@ -184,7 +198,7 @@ physical CPUs.  Modern Sparc CPUs have 8-way `Chip Multi-Threading':
 this enables the CPU to switch rapidly between threads if there are
 cache misses but does not run threads in parallel.  On
 Opteron/Xeon-based boxes this does not take multiple cores into
-account (unless called as \code{detectCores(logical = TRUE)}.
+account (unless called as \code{detectCores(logical = TRUE)}).
 
 \section{Analogues of apply functions}
 
@@ -229,7 +243,7 @@ Two functions are provided to create SNOW clusters,
 \code{makeForkCluster}.  They differ only in the way they spawn worker
 processes: \code{makePSOCKcluster} uses \code{Rscript} to launch
 further copies of \R{} (on the same host or optionally elsewhere)
-whereas \code{makeForkCluster} forks the workers on the currnet host
+whereas \code{makeForkCluster} forks the workers on the current host
 (which thus inherit the environment of the current session).
 
 These functions would normally be called \emph{via} \code{makeCluster}.
@@ -247,7 +261,7 @@ there a few names with the added prefix \code{mc}, e.g.{}
 and \code{collect} are also exported: these names are easily masked.)
 
 Most of the functions provided are not intended to be used by end
-users, and they may not in future be exported from the namespace.
+users, and they may not in future be exported from the name space.
 
 There are higher-level functions \code{mclapply} and \code{pvec}:
 unlike the versions in \pkg{multicore} these default to 2 cores, but
@@ -268,11 +282,12 @@ done where possible in package \pkg{boot} (version 1.3-1 and later).
 
 When an \R{} process is started up it takes the random-number seed
 from the object \code{.Random.seed} in a saved workspace or constructs
-one from the clock time and process ID (see the help on \code{RNG}).
-Thus worker processes might get the same seed because a workspace
-containing \code{.Random.seed} was restored or the random number
-generator has been used before forking: otherwise these get a
-non-reproducible seed.
+one from the clock time and process ID when random-number generation
+is first used (see the help on \code{RNG}).  Thus worker processes
+might get the same seed because a workspace containing
+\code{.Random.seed} was restored or the random number generator has
+been used before forking: otherwise these get a non-reproducible seed
+(but with very high probability a different seed for each worker).
 
 The alternative is to set separate seeds for each worker process in
 some reproducible way from the seed in the master process.  This is
@@ -281,8 +296,8 @@ random-number streams in the workers might somehow get into step.  One
 approach is to take the seeds a long way apart in the random-number
 stream: note that random numbers taken a long (fixed) distance apart
 in a single stream are not necessarily (and often are not) as
-independent as those a short distance apart.  Yet another idea (as
-used by e.g.{} \pkg{JAGS}) is to use different random-number
+independent as those taken a short distance apart.  Yet another idea
+(as used by e.g.{} \pkg{JAGS}) is to use different random-number
 generators for each separate run/process.
 
 Package \pkg{parallel} contains an implementation of the ideas of
@@ -330,11 +345,9 @@ Apart from \emph{streams} ($2^{127}$ steps apart), there is the concept of
 A direct \R{} interface to the (clunkier) original C implementation is
 available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.  That works
 with named streams, each of which have three 6-elements seeds
-associated with them, the original seed set for the package, the
-initial seed set for the stream and the current seed for the stream.
-This can easily be emulated in \R{} by storing \code{.Random.seed} at
-suitable times.  There is another interface using S4 classes in
-package \pkg{rstream} \citep{rstream}.
+associated with them.  This can easily be emulated in \R{} by storing
+\code{.Random.seed} at suitable times.  There is another interface
+using S4 classes in package \pkg{rstream} \citep{rstream}.
 
 
 \section{Extended examples}
@@ -346,8 +359,8 @@ statistics is to do multiple simulation runs, for example to do large
 numbers of bootstrap replicates or several runs of an MCMC simulation.
 We show an example of each.
 
-Note that some of the examples are not available on Windows and some
-actually are computer-intensive.
+Note that some of the examples will only work serially on Windows and
+some actually are computer-intensive.
 
 \subsection{Bootstrapping}
 
@@ -410,7 +423,7 @@ mc <- 2
 cl <- makeCluster(mc)
 ## make this reproducible
 clusterSetRNGStream(cl, 123)
-library(boot) # needed for c() method on master
+library(boot)
 cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1) )
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
@@ -480,7 +493,7 @@ which ran in 11 secs (elapsed).
 \subsection{MCMC runs}
 
 \citet{Ripley.88} discusses the maximum-likelihood estimation of the
-Straus process, which is done by solving a moment equation
+Strauss process, which is done by solving a moment equation
 \[
 E_c T = t
 \]

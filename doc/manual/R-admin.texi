@@ -4134,12 +4134,14 @@ LIBS=-L/usr/X11/lib
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using the (zero cost) Oracle Solaris Studio 12 compilers:
-there has been some success with
+@cputype{x86}) using the (zero cost) Oracle Solaris Studio
+12@footnote{versions 12u1 and 12.2; a beta of 12.3 in Oct 2011 gave a
+segfault on powers of complex numbers and required @code{HAVE_CPOW}
+undefined.} compilers: there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
 for @R{} are available from @uref{http://www.sunfreeware.com/} for both
 32-bit architectures, but recently have often been several versions
-old.@footnote{For example, 2.11.1 at the time of release of 2.13.0.}
+old.@footnote{For example, 2.11.1 at the time of release of 2.13.2.}
 (Recent Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64})
 rather than @cputype{x86}, but 32-bit @cputype{x86} executables are the
 default.)
@@ -4209,9 +4211,9 @@ FCLIBS="-lfai -lfai2 -lfsu"
 packages currently on CRAN).
 
 Currently @cputype{amd64} and @cputype{sparcv9} builds work
-out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2:
-@file{libRblas.so} and @file{lapack.so} are generated with code that
-causes relocation errors (which is being linked in from the Fortran
+out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
+later: @file{libRblas.so} and @file{lapack.so} are generated with code
+that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
 impossible with Solaris Studio 12.2.  For a standard build the trick
 seems to be manually set @code{FLIBS}.  For example, on @cputype{amd64},

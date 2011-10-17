@@ -5291,13 +5291,15 @@ structure and detect mis-matched braces.
 The system most commonly used for this is some version of
 @command{Emacs} with the @pkg{ESS} package
 (@uref{http://ess.r-project.org/}: it is often is installed with
-@command{Emacs}, but may need to enabled, or even installed separately).
+@command{Emacs} but may need to be loaded, or even installed
+separately).
 
 Another is the Eclipse IDE with the Stat-ET plugin
-(@uref{http://www.walware.de/goto/statet}).
+(@uref{http://www.walware.de/goto/statet}), and (on Windows only)
+Tinn-R (@uref{http://sourceforge.net/projects/tinn-r/}).
 
-People have also suggested using @LaTeX{} mode in a editor, as
-@file{.Rd} files are rather similar to @LaTeX{} files.
+People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
+rather similar to @LaTeX{} files.
 
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
