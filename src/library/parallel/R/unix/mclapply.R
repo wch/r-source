@@ -27,6 +27,8 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     if (isChild() && !isTRUE(mc.allow.recursive))
         return(lapply(X = X, FUN = FUN, ...))
 
+    if(mc.set.seed) mc.reset.stream()
+
     jobs <- list()
     cleanup <- function() {
         ## kill children if cleanup is requested

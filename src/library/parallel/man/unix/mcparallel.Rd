@@ -94,11 +94,11 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   The behaviour with \code{mc.set.seed = TRUE} is different only if
   \code{\link{RNGkind}("L'Ecuyer-CMRG")} has been selected.  Then each
   time a child is forked it is given the next stream (see
-  \code{\link{nextRNGStream}}).  So if you select that generator and set
-  a seed just before the first use of \code{mcparallel} (including
-  \emph{via} \code{\link{mclapply}}) the results of simulations will be
-  reproducible provided the same tasks are given to the first, second,
-  \ldots{} forked process.
+  \code{\link{nextRNGStream}}).  So if you select that generator, set a
+  seed and call \code{\link{mc.reset.stream}} just before the first use
+  of \code{mcparallel} the results of simulations will be reproducible
+  provided the same tasks are given to the first, second, \ldots{}
+  forked process.
 }
 \author{
   Simon Urbanek and R Core.
@@ -118,10 +118,10 @@ res <- mccollect(list(p, q))
 p <- mcparallel(1:10)
 mccollect(p, wait=FALSE, 10) # will retrieve the result (since it's fast)
 mccollect(p, wait=FALSE)     # will signal the job as terminating
-mccollect(p, wait=FALSE)     # there is no such job
+mccollect(p, wait=FALSE)     # there is no longer such a job
 
 \dontshow{set.seed(123, "L'Ecuyer"); mc.reset.stream()}
-# a naive mcparallelized lapply can be created using parallel alone:
+# a naive mcparallelized lapply can be created using mcparallel alone:
 jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name = x))
 mccollect(jobs)
 }

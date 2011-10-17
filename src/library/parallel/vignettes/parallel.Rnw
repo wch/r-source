@@ -61,7 +61,7 @@ computational model is
 \begin{enumerate}[(a)]
 \item Start up $M$ `worker' processes, and do any initialization
   needed on the workers.
-\item Send any data required to the workers.
+\item Send any data required for each task to the workers.
 \item Split the task into $M$ roughly equally-sized chunks, and send
   the chunks (including the \R{} code needed) to the workers.
 \item Wait for all the workers to complete their tasks, and ask them
@@ -162,12 +162,12 @@ ethernet: the computers need not be running the same OS.
 
 In setting up parallel computations it can be helpful to have some
 idea of the number of CPUs or cores available, but this is a rather
-slippery concept.  Nowadays more physical CPUs contain two or more
-cores that run more-or-less independently (they may share parts of the
-cache memory, and they do share access to RAM).  However, on some
-processors these cores may themselves be able to run multiple tasks
-simultaneously, and some OSes (e.g.{} Windows) have the concept of
-\emph{logical} CPUs which may exceed the number of cores.
+slippery concept.  Nowadays almost all physical CPUs contain two or
+more cores that run more-or-less independently (they may share parts
+of the cache memory, and they do share access to RAM).  However, on
+some processors these cores may themselves be able to run multiple
+tasks simultaneously, and some OSes (e.g.{} Windows) have the concept
+of \emph{logical} CPUs which may exceed the number of cores.
 
 Note that all a program can possibly determine is the total number of
 CPUs and/or cores available.  This is not necessarily the same as the
@@ -175,7 +175,7 @@ number of CPUs available \emph{to the current user} which may well be
 restricted by system policies on multi-user systems.  Nor does it give
 much idea of a reasonable number of CPUs to use for the current task:
 the user may be running many \R{} processes simultaneously, and those
-processes may themselves by using multiple threads through a
+processes may themselves be using multiple threads through a
 multi-threaded BLAS, compiled code using OpenMP or other low-level
 forms of parallelism.  We have even seen instances of
 \pkg{multicore}'s \code{mclapply} being called
@@ -260,12 +260,12 @@ default being discarded but they can be logged using the
 
 Except on Windows, the package contains a copy of \pkg{multicore}:
 there a few names with the added prefix \code{mc}, e.g.{}
-\code{mccollect}, \code{mcexit}, \code{mcfork}, \code{mckill} and
-\code{mcparallel}.  (For back-compatibility, functions \code{parallel}
-and \code{collect} are also exported: these names are easily masked.)
+\code{mccollect} and \code{mcparallel}, (For back-compatibility,
+functions \code{parallel} and \code{collect} are also exported: these
+names are easily masked.)
 
-Most of the functions provided are not intended to be used by end
-users, and they may not in future be exported from the name space.
+A number of functions from \pkg{multicore} are provided but not
+exported from the name space.
 
 There are higher-level functions \code{mclapply} and \code{pvec}:
 unlike the versions in \pkg{multicore} these default to 2 cores, but
@@ -351,7 +351,7 @@ Apart from \emph{streams} ($2^{127}$ steps apart), there is the concept of
 
 A direct \R{} interface to the (clunkier) original C implementation is
 available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.  That works
-with named streams, each of which have three 6-elements seeds
+with named streams, each of which have three 6-element seeds
 associated with them.  This can easily be emulated in \R{} by storing
 \code{.Random.seed} at suitable times.  There is another interface
 using S4 classes in package \pkg{rstream} \citep{rstream}.
@@ -373,9 +373,10 @@ Using \code{parLapply} will work everywhere that socket communication
 works, and can be used, for example, to harness all the CPU cores in a
 lab of machines that are not otherwise in use.  But socket
 communication may be blocked even when using a single machine, and we
-have seen environments in which it is unreliable.  There is no
+have seen environments in which it is unreliable.  There is not
 currently any fallback to serial use, nor could there easily be (as
-the workers start with a different \R{} environment).
+the workers start with a different \R{} environment from the one
+current on the master).
 
 An example of providing access to both approaches as well as serial
 code is package \pkg{boot}, version \code{1.3-3} or later.
@@ -427,7 +428,7 @@ run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
                            ran.gen = cd4.rg, mle = cd4.mle)
 library(parallel)
 ## To make this reproducible:
-set.seed(123, "L'Ecuyer"); mc.reset.stream()
+set.seed(123, "L'Ecuyer")
 cd4.boot <- do.call(c, mclapply(seq_len(mc), run1) )
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
@@ -569,6 +570,39 @@ As one might expect, the \code{mclapply} version is slightly simpler:
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
 res <- c(0, unlist(mclapply(c[-1], run3, mc.cores = 10)))
 @
+
+\section{Differences from earlier versions}
+
+The support of parallel RNG differs from \pkg{snow}: \pkg{multicore}
+had no support.
+
+\subsection{Differences from multicore}
+
+\pkg{multicore} had quite elaborate code to inhibit the Aqua event
+loop for \command{R.app} and the event loop for the \code{quartz}
+graphics device.  This has been replaced by recording a flag in the
+\R{} executable for a child process.
+
+The version of \code{detectCores} here is biased towards the number of
+physical CPUs.  This was occasioned by serious problems on Solaris
+where \pkg{multicore} defaulted to a silly number of processes.
+
+Functions \code{fork} and \code{kill} have \code{mc} prefixes and are
+not exported.  This avoids confusion with other packages (such as
+package \pkg{fork}), and note that \code{mckill} is not as general as
+\code{tools::pskill},
+
+\subsection{Differences from snow}
+
+\code{makeCluster} creates PVM, MPI or NWS clusters by calling \pkg{snow}.
+
+\code{makePSOCKcluster} has been streamlined, as package \pkg{parallel} is in
+a known location on all systems, and \command{Rscript} is these days
+always available.  Logging of workers is set up to append to the file,
+so multiple processes can be logged.
+
+\code{parSapply} has been brought into line with \code{sapply}.
+
 
 \bibliographystyle{jss}
 \bibliography{parallel}
