@@ -5304,7 +5304,7 @@ rather similar to @LaTeX{} files.
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
 example RStudio (@url{http://rstudio.org/}).
 
-@Node Tidying and profiling R code, Debugging, Writing R documentation files, Top
+@node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
 
 @menu
