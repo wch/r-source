@@ -536,11 +536,13 @@ static void millisleep(unsigned long tout) {
 
 /* from aqua.c */
 extern void (*ptr_R_ProcessEvents)(void);
+/* from Defn.h */
+extern Rboolean R_isForkedChild;
 
 static void cocoa_process_events() {
     /* this is a precaution if cocoa_process_events is called
        via R_ProcessEvents and the R code calls it too often */
-    if (!el_inhibit && el_serial != el_pe_serial) {
+    if (!R_isForkedChild && !el_inhibit && el_serial != el_pe_serial) {
         NSEvent *event;
         while ((event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                           untilDate:nil

@@ -4216,7 +4216,7 @@ later: @file{libRblas.so} and @file{lapack.so} are generated with code
 that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
 impossible with Solaris Studio 12.2.  For a standard build the trick
-seems to be manually set @code{FLIBS}.  For example, on @cputype{amd64},
+seems to be to manually set @code{FLIBS}.  For example, on @cputype{amd64},
 set in @file{Makeconf}
 
 @example

@@ -676,6 +676,7 @@ extern int Rf_initEmbeddedR(int argc, char **argv);
 /* GUI type */
 
 extern char	*R_GUIType	INI_as("unknown");
+extern Rboolean R_isForkedChild		INI_as(FALSE); /* was this forked? */
 
 extern double cpuLimit			INI_as(-1.0);
 extern double cpuLimit2			INI_as(-1.0);
