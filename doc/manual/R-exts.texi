@@ -204,7 +204,7 @@ faster and use less (virtual) memory.
 * Checking and building packages::  
 * Writing package vignettes::   
 * Submitting a package to CRAN::  
-* Package namespaces::         
+* Package namespaces::          
 * Writing portable packages::   
 * Diagnostic messages::         
 * Internationalization::        
@@ -1714,8 +1714,8 @@ directly.
 
 @menu
 * Checking packages::           
-* Building package tarballs::           
-* Building binary packages::           
+* Building package tarballs::   
+* Building binary packages::    
 @end menu
 
 @quotation Note
@@ -1978,7 +1978,7 @@ tests, vignettes} which differ by sub-architecture.
 @end quotation
 
 
-@node Building package tarballs,  Building binary packages, Checking packages, Checking and building packages
+@node Building package tarballs, Building binary packages, Checking packages, Checking and building packages
 @subsection Building package tarballs
 @cindex Building source packages
 
@@ -3863,8 +3863,8 @@ for exchanging information between developers and/or interested useRs.
 * Marking text::                
 * Lists and tables::            
 * Cross-references::            
-* Mathematics::
-* Figures::
+* Mathematics::                 
+* Figures::                     
 * Insertions::                  
 * Indices::                     
 * Platform-specific sections::  
@@ -3873,6 +3873,7 @@ for exchanging information between developers and/or interested useRs.
 * User-defined macros::         
 * Encoding::                    
 * Processing Rd format::        
+* Editing Rd files::            
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -5243,7 +5244,7 @@ UTF-8 in @LaTeX{} is quite low.
 
 
 
-@node Processing Rd format,  , Encoding, Writing R documentation files
+@node Processing Rd format, Editing Rd files, Encoding, Writing R documentation files
 @section Processing Rd format
 @cindex Processing Rd format
 
@@ -5277,9 +5278,29 @@ these commands can be obtained by running @code{R CMD @var{command}
 --help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help} (or @kbd{Rcmd --help} under Windows).
 
-All of these work under Windows.  You will need to have installed the
+All of these work under Windows.  You may need to have installed the
 the tools to build packages from source as described in the ``R
-Installation and Administration'' manual.
+Installation and Administration'' manual, although typically all that is
+needed is a @LaTeX{} installation.
+
+@node Editing Rd files,  , Processing Rd format, Writing R documentation files
+@section Editing Rd files
+@cindex Editing Rd files
+
+It can be very helpful to prepare @file{.Rd} files using a editor which
+knows about their syntax and will highlight commands, indent to show the
+structure and detect mis-matched braces.
+
+The system most commonly used for this is some version of
+@command{Emacs} with the @pkg{ESS} package
+(@uref{http://ess.r-project.org/}: it is often is installed with
+@command{Emacs}, but may need to enabled, or even installed separately).
+
+Another is the Eclipse IDE with the Stat-ET plugin
+(@uref{http://www.walware.de/goto/statet}).
+
+People have also suggested using @LaTeX{} mode in a editor, as
+@file{.Rd} files are rather similar to @LaTeX{} files.
 
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
