@@ -16,6 +16,10 @@
 
       \item Even data-only packages without \R code need a namespace and
       so may need to be installed under \R 2.14.0 or later.
+
+      \item \code{stack()} now gives are error if no vector column is
+      selected, rather than returning a 1-column data frame contrary to
+      its documentation.
     }
   }
 
@@ -40,6 +44,14 @@
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{stack()} now gives are error if no vector column is
+      selected, rather than returning a 1-column data frame contrary to
+      its documentation.
     }
   }
 }
@@ -920,11 +932,10 @@
       (\code{signif(x, 1)}) rather than giving zero.
 
       \item The \code{"table"} method for \code{Axis()} hardcoded
-      \code{side = 1}, hence calls \code{plot(<vector>, <table>)}
+      \code{side = 1}, hence calls to \code{plot(<vector>, <table>)}
       labelled the wrong axis. (\PR{14699})
 
-      \item Creating almost any connection would fail under
-      \code{gctorture()}.
+      \item Creating a connection might fail under \code{gctorture(TRUE)}.
     }
   }
 }

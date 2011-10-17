@@ -31,7 +31,7 @@ unstack(x, \dots)
     data frame.}
   \item{form}{a two-sided formula whose left side evaluates to the
     vector to be unstacked and whose right side evaluates to the
-    indicator of the groups to create.  Defaults to \code{formula(x)}
+    indicator of the groups to create.  Defaults to \code{\link{formula}(x)}
     in the data frame method for \code{unstack}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -43,9 +43,10 @@ unstack(x, \dots)
 
   Note that \code{stack} applies to \emph{vectors} (as determined by
   \code{\link{is.vector}}): non-vector columns (e.g., factors) will be
-  ignored.  Where vectors of different types are selected they are
-  concatenated by \code{\link{unlist}} whose help page explains how the
-  type of the result is chosen.
+  ignored (with a warning as from \R 2.15.0).  Where vectors of
+  different types are selected they are concatenated by
+  \code{\link{unlist}} whose help page explains how the type of the
+  result is chosen.
 
   These functions are generic: the supplied methods handle data frames
   and objects coercible to lists by \code{\link{as.list}}.
