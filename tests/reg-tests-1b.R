@@ -1647,4 +1647,14 @@ stopifnot(identical(round(x, -Inf), rep(0, length(x)))) # NAs in R < 2.14.0
 ##
 
 
+## (un)stack with character columns
+DF <- data.frame(a = letters[1:3], b = letters[4:6], stringsAsFactors = FALSE)
+DF2 <- stack(DF)
+stopifnot(class(DF2$values) == "character") # was factor
+DF3 <- unstack(DF2) # contained factors
+stopifnot(all(sapply(DF3, class) == "character"))
+DF4 <- stack(DF[1])
+stopifnot(identical(unstack(DF4), DF[1])) # was a list
+## issues in R < 2.14.0
+
 proc.time()

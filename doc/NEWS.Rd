@@ -936,6 +936,11 @@
       labelled the wrong axis. (\PR{14699})
 
       \item Creating a connection might fail under \code{gctorture(TRUE)}.
+      
+      \item \code{stack()} and \code{unstack()} converted character
+      columns to factors.  \code{unstack()} sometimes produced incorrect
+      results (a list or a vector) if the factor on which to un-split
+      had only one level.
     }
   }
 }
