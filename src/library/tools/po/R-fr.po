@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-10-03 18:50\n"
-"PO-Revision-Date: 2011-03-29 19:49+0100\n"
+"PO-Revision-Date: 2011-10-15 17:54+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -324,21 +324,22 @@ msgstr ""
 "Voyez l'information à propos des fichiers DESCRIPTION dans la section "
 "'Creating R packages' du manuel 'Writing R Extensions'."
 
-#, fuzzy
 msgid "Malformed Authors@R field:"
-msgstr "Champ 'maintainer' mal orthographié."
+msgstr "Champ 'Author@R' mal orthographié."
 
 msgid "Cannot extract Author field from Authors@R field:"
-msgstr ""
+msgstr "Impossible d'extraire le champ 'Author' du champ 'Authors@R' :"
 
 msgid "Authors@R field gives no person with author role."
-msgstr ""
+msgstr "Le champ 'Authors@R' ne renvoie aucune personne avec un rôle d'auteur."
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr ""
+msgstr "Impossible d'extraire le champ 'Maintainer' du champ 'Authors@R' :"
 
 msgid "Authors@R field gives no person with maintainer role and email address."
 msgstr ""
+"Le champ 'Authors@R' ne renvoie personne avec un rôle de mainteneur et une "
+"adresse email."
 
 msgid "Encoding '%s' is not portable"
 msgstr "l'encodage '%s' n'est pas portable"
@@ -393,44 +394,49 @@ msgstr ""
 msgid "found %s"
 msgstr "trouvé(s) %s"
 
-#, fuzzy
 msgid "File %s:"
-msgstr "Fichier '%s' :"
+msgstr "Fichier %s :"
 
 msgid "%s has wrong argument list %s"
-msgstr ""
+msgstr "%s a une liste d'arguments erronée %s"
 
 msgid ","
 msgstr ","
 
 msgid "%s calls:"
-msgstr ""
+msgstr "appels %s :"
 
 msgid ""
 "Package startup functions should have two arguments with names starting with "
 "%s and %s, respectively."
 msgstr ""
+"Les fonctions de démarrage de package doivent avoir deux arguments avec des "
+"noms commençant par %s et %s, respectivement."
 
 msgid "lib"
-msgstr ""
+msgstr "lib"
 
 msgid "pkg"
-msgstr ""
+msgstr "pkg"
 
 msgid "Package startup functions should not change the search path."
 msgstr ""
+"Les fonctions de démarrage de package ne devraient pas changer le chemin de "
+"recherche."
 
 msgid "Package startup functions should use %s to generate messages."
 msgstr ""
+"Les fonctions de démarrage de package devraient utiliser %s pour générer des "
+"messages."
 
 msgid "packageStartupMessage"
-msgstr ""
+msgstr "packageStartupMessage"
 
 msgid "See section %s in ?.onAttach."
-msgstr ""
+msgstr "Voir section %s dans ?.onAttach."
 
 msgid "Good practice"
-msgstr ""
+msgstr "Bonne pratique"
 
 msgid "package 'methods' is used but not declared"
 msgstr "le package 'methods' est utilisé mais pas déclaré"
@@ -559,7 +565,7 @@ msgid "invalid value for '%s' : %s"
 msgstr "valeur inexacte pour '%s' : %s"
 
 msgid "Only one Rd section per \\Sexpr is supported."
-msgstr ""
+msgstr "Seulement une section par \\Sexpr est supportée."
 
 msgid "unable to create temp directory"
 msgstr "impossible de créer le répertoire temporaire"
@@ -575,7 +581,7 @@ msgid "running 'make' failed"
 msgstr "l'exécution de 'make' a échoué"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr ""
+msgstr "Dans '%s' les vignettes '%s' et '%s' ont le même nom de vignette"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "l'argument 'vignette' doit être de longueur 1"
@@ -630,9 +636,8 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr "impossible de créer le répertoire '%s'"
 
-#, fuzzy
 msgid "processing"
-msgstr "analyse de '"
+msgstr "analyse de "
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -683,9 +688,8 @@ msgstr ""
 msgid "Error: no packages were specified"
 msgstr "Erreur : aucun package spécifié"
 
-#, fuzzy
 msgid "ERROR: cannot create check dir %s"
-msgstr "impossible de créer le répertoire '%s'"
+msgstr "ERREUR : impossible de créer le répertoire de vérification %s"
 
 msgid "package dir"
 msgstr "le répertoire"
@@ -697,19 +701,19 @@ msgid "No files in this directory"
 msgstr "Pas de fichiers dans ce répertoire"
 
 msgid "Unrecognized search field:"
-msgstr ""
+msgstr "Champ de recherche inconnu :"
 
 msgid "No results found"
 msgstr "aucun résultat trouvé"
 
 msgid "Vignettes:"
-msgstr ""
+msgstr "Vignettes :"
 
 msgid "Code demonstrations:"
-msgstr ""
+msgstr "Démonstration de code :"
 
 msgid "Help pages:"
-msgstr ""
+msgstr "Pages d'aide :"
 
 msgid "No help found for topic %s in any package."
 msgstr "Aucune entrée d'aide pour le mot %s dans aucun package"
@@ -732,12 +736,11 @@ msgstr "Le lien %s dans le package %s ne peut être localisé"
 msgid "No docs found for package %s"
 msgstr "Pas de docs trouvés pour le package %s"
 
-#, fuzzy
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 "Visualisation possible seulement pour les fichiers d'aide, %s, %s et les "
-"fichiers dans %s"
+"fichiers dans %s et %s d'un package"
 
 msgid "NEWS"
 msgstr "NEWS"
@@ -749,7 +752,7 @@ msgid "doc/"
 msgstr "doc/"
 
 msgid "demo/"
-msgstr ""
+msgstr "demo/"
 
 msgid "unsupported URL %s"
 msgstr "URL %s non supportée"
@@ -807,7 +810,7 @@ msgstr ""
 "et d'administration de R"
 
 msgid "installing via 'install.libs.R' to"
-msgstr ""
+msgstr "Installation via 'install.libs.R' vers"
 
 msgid "installing to"
 msgstr "installation dans"
@@ -816,7 +819,7 @@ msgid "generating debug symbols (dSYM)"
 msgstr "génération des symboles de débogage (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr ""
+msgstr "package %s correctement décompressé et sommes MD5 vérifiées"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -883,12 +886,11 @@ msgstr "recherche des liens HTML de niveau 2 ..."
 msgid "there is no package called '%s'"
 msgstr "aucun package nommé '%s' n'existe"
 
-#, fuzzy
 msgid "namespace must not be already loaded"
-msgstr "l'espace de noms ne doit pas être chargé."
+msgstr "l'espace de noms ne doit pas être encore chargé"
 
 msgid "all packages should have a NAMESPACE"
-msgstr ""
+msgstr "tous les packages devraient avoir un NAMESPACE"
 
 msgid "package seems to be using lazy loading for data already"
 msgstr "le package semble déjà utiliser le chargement partiel pour les données"
@@ -951,6 +953,10 @@ msgid ""
 "  %s\n"
 "contains no \\itemize."
 msgstr ""
+"Fichier NEWS.Rd erroné :\n"
+"Le fragment démarrant\n"
+"  %s\n"
+"contiennent no \\itemsize."
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -959,6 +965,11 @@ msgid ""
 "contains more than one \\itemize.\n"
 "Using the first one."
 msgstr ""
+"Fichier NEWS.Rd erroné :\n"
+"Le fragment démarrant\n"
+"  %s\n"
+"contiennent plus d'un \\itemsize.\n"
+"Le premier est utilisé."
 
 msgid "Processing packages:"
 msgstr "Traitement des packages :"
@@ -993,99 +1004,86 @@ msgstr "déjà définie pour être"
 msgid "found encoding"
 msgstr "encodage trouvé"
 
-#, fuzzy
 msgid "%s must be a character string or a file/raw connection"
-msgstr "'file' doit être une chaîne de caractères ou une connexion"
+msgstr "% doit être une chaîne de caractères ou une connexion fichier/raw"
 
-#, fuzzy
 msgid "PDF header not found"
-msgstr "l'URL %s est introuvable"
+msgstr "Entête PDF introuvable"
 
-#, fuzzy
 msgid "EOF marker not found"
-msgstr "l'URL %s est introuvable"
+msgstr "Marqueur EOF introuvable"
 
 msgid "cannot find startxref"
-msgstr ""
+msgstr "impossible de trouver startxref"
 
 msgid "cannot find xref table"
-msgstr ""
+msgstr "impossible de trouver la table xref"
 
 msgid "cannot read xref table"
-msgstr ""
+msgstr "impossible de lire la table xref"
 
 msgid "wrong class"
-msgstr ""
+msgstr "mauvaise classe"
 
 msgid "attempting to select less than one element"
-msgstr ""
+msgstr "tentative de sélection de moins d'un élément"
 
 msgid "attempting to select more than one element"
-msgstr ""
+msgstr "tentative de sélection de plus d'un élément"
 
 msgid "looking at %s"
-msgstr ""
+msgstr "recherche de %s"
 
-#, fuzzy
 msgid "cannot read literal string object"
-msgstr "impossible de créer un répertoire temporaire"
+msgstr "impossible de lire les objets de chaine littérales"
 
 msgid "cannot read hexadecimal string object"
-msgstr ""
+msgstr "impossible de lire un objet chaine de caractères hexadécimaux"
 
-#, fuzzy
 msgid "cannot read name object"
-msgstr "impossible de sourcer le code du package"
+msgstr "impossible de lire un objet de nom"
 
-#, fuzzy
 msgid "cannot read array object"
-msgstr "impossible de créer un répertoire temporaire"
+msgstr "impossible de lire un objet 'array'"
 
-#, fuzzy
 msgid "cannot read dictionary object"
-msgstr "impossible de créer le répertoire '%s'"
+msgstr "impossible de lire un objet 'dictionary'"
 
-#, fuzzy
 msgid "cannot read stream object"
-msgstr "impossible de créer un répertoire temporaire"
+msgstr "impossible de lire un objet 'stream'"
 
 msgid "cannot read indirect reference object"
-msgstr ""
+msgstr "impossible de lire un objet de référence indirecte"
 
 msgid "cannot find object header at xrefed position %d"
-msgstr ""
+msgstr "impossible de trouver un objet entête à la position %d xrefed"
 
 msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "incohérence dans les nombres d'objets (donné : %d, trouvé : %d)"
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "incohérence dans les générateurs de nombres (donné : %d, trouvé : %d)"
 
-#, fuzzy
 msgid "cannot read stream data"
-msgstr "impossible de créer un répertoire temporaire"
+msgstr "impossible de lire des données 'stream'"
 
 msgid "invalid index in object stream lookup"
-msgstr ""
+msgstr "indice incorrect dans l'objet stream lookup"
 
-#, fuzzy
 msgid "processing %s"
-msgstr "analyse de '"
+msgstr "analyse de %s"
 
-#, fuzzy
 msgid "expanding %s"
-msgstr "analyse de '%s'"
+msgstr "expansion de '%s'"
 
-#, fuzzy
 msgid "unsupported filter %s"
-msgstr "URL %s non supportée"
+msgstr "filtre %s non supporté"
 
 msgid "unsupported flatedecode predictor %d"
-msgstr ""
+msgstr "flatedecode predictor %d non supporté"
 
-#, fuzzy
 msgid "unsupported PNG filter %d"
-msgstr "URL %s non supportée"
+msgstr "filtre PNG %s non supporté"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "l'argument 'pkg' doit être de longueur 1"
@@ -1112,17 +1110,16 @@ msgid "file"
 msgstr "fichier"
 
 msgid "Found %s, possibly from %s"
-msgstr ""
+msgstr "%s est trouvé, sans doute depuis %s"
 
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
-#, fuzzy
 msgid "ssname"
-msgstr "nom"
+msgstr "ssname"
 
 msgid "language"
-msgstr ""
+msgstr "langage"
 
 msgid "cannot be opened"
 msgstr "ne peut être ouvert"
@@ -1148,9 +1145,8 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "les résultats ne sont pas identiques aux résultats de référence"
 
-#, fuzzy
 msgid "no examples found for package %s"
-msgstr "Pas d'aide trouvée pour le package %s"
+msgstr "Pas d'examples trouvés pour le package %s"
 
 msgid "Running specific tests for package"
 msgstr "Exécution des tests spécifiques au package"
@@ -1267,9 +1263,8 @@ msgstr "structure de package incorrecte"
 msgid "file '%s' is not in valid DCF format"
 msgstr "le fichier '%s' n'est pas d'un format DCF valide"
 
-#, fuzzy
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Encodage inconnu avec des données non-ASCII"
+msgstr "Encodage inconnu avec des données non-ASCII : conversion vers ASCII"
 
 msgid "cannot source package code"
 msgstr "impossible de sourcer le code du package"
@@ -1328,6 +1323,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "DVI output from Rd2dvi is deprecated"
+#~ msgstr "La sortie DVI de Rd2dvi est obsolète"
 
 #, fuzzy
 #~ msgid ""

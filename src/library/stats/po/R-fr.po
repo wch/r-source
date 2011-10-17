@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-10-12 18:02\n"
-"PO-Revision-Date: 2011-03-29 20:04+0100\n"
+"PO-Revision-Date: 2011-10-15 15:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -627,11 +627,8 @@ msgstr "'tree' incorrect (composante merge)"
 msgid "either 'k' or 'h' must be specified"
 msgstr "'k' ou 'h' doivent être spécifiés"
 
-#, fuzzy
 msgid "the 'height' component of 'tree' is not sorted (increasingly)"
-msgstr ""
-"la composante 'height' de 'tree' n'est pas triée\n"
-"(par ordre croissant) ; envisagez d'utiliser d'abord as.hclust()"
+msgstr "la composante 'height' de 'tree' n'est pas triée (par ordre croissant)"
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "les éléments de 'k' doivent être compris entre 1 et %d"
@@ -1287,21 +1284,21 @@ msgstr "pas assez de données 'x'"
 msgid "not enough 'y' data"
 msgstr "pas assez de données 'y'"
 
-#, fuzzy
 msgid "cannot compute exact p-values with ties"
-msgstr "impossible de calculer la p-value exacte avec des ex-aequos"
+msgstr "impossible de calculer la valeur p exacte avec des ex-aequos"
 
 msgid "p-values will be approximate in the presence of ties"
-msgstr ""
+msgstr "les valeurs p seront approximées en présence d'ex-aequos"
 
 #, fuzzy
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr ""
-"'y' doit être numérique ou bien une chaîne de caractères donnant le nom de "
-"la fonction adéquate"
+"'y' doit être numérique ou une fonction ou bien une chaîne de caractères "
+"donnant le nom de la fonction adéquate"
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
 msgstr ""
+"aucun ex-aequo ne devrait être présent pour le test de Kolmogorov-Smirnov"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1455,17 +1452,14 @@ msgstr ""
 msgid "specified parametric for all predictors"
 msgstr "tous les prédicteurs spécifiés sont paramétriques"
 
-#, fuzzy
 msgid "invalid argument 'span'"
-msgstr "argument 'n' incorrect"
+msgstr "argument 'span' incorrect"
 
-#, fuzzy
 msgid "invalid argument 'cell'"
-msgstr "argument 'c' incorrect"
+msgstr "argument 'cell' incorrect"
 
-#, fuzzy
 msgid "invalid argument 'degree'"
-msgstr "argument 'r' incorrect"
+msgstr "argument 'degree' incorrect"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "le premier argument doit être un objet \"loess\""
@@ -1766,7 +1760,6 @@ msgstr "Pas de valeurs initiales fournies"
 msgid "No starting values specified for some parameters."
 msgstr "Pas de valeurs initiales fournies pour certains paramètres."
 
-#, fuzzy
 msgid "Initializing"
 msgstr "Initialisation"
 
@@ -1820,9 +1813,9 @@ msgstr "Une formule à deux membres est requise"
 msgid "not enough groups"
 msgstr "pas assez de groupes"
 
-#, fuzzy
 msgid "bounds can only be used with method L-BFGS-B (or Brent)"
-msgstr "des bornes ne peuvent être fixées que pour la méthode L-BFGS-B"
+msgstr ""
+"des bornes ne peuvent être fixées que pour la méthode L-BFGS-B (ou Brent)"
 
 msgid "unknown names in control:"
 msgstr "noms inconnus dans le contrôle :"
@@ -1839,21 +1832,19 @@ msgstr ""
 "la méthode L-BFGS-B utilise 'factr' (et 'pgtol') au lieu de 'reltol' et "
 "'abstol'"
 
-#, fuzzy
 msgid "one-diml optimization by Nelder-Mead is unreliable:"
-msgstr ""
-"l'optimisation de Nelder-Mead unidimensionnelle est instable : utilisez "
-"optimize"
+msgstr "l'optimisation de Nelder-Mead unidimensionnelle est instable :"
 
 msgid "use \"Brent\" or optimize() directly"
-msgstr ""
+msgstr "utilisation de \"Brent\" ou optimize() directement"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr ""
+"method = \"Brent\" n'est disponible que pour une optimisation "
+"unidimensionnelle"
 
-#, fuzzy
 msgid "'lower' and 'upper' must be finite values"
-msgstr "'k' et 'h' doivent être des scalaires"
+msgstr "'lower' et 'upper' doivent être des valeurs finies"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "Le regroupement des SD est incompatible avec les tests appariés"
@@ -2138,9 +2129,9 @@ msgstr "règle de fin incorrecte"
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' incorrect"
 
-#, fuzzy
 msgid "missing or infinite values in inputs are not allowed"
-msgstr "les poids manquants ou négatifs ne sont pas autorisés"
+msgstr ""
+"les valeurs manquantes ou infinies ne sont pas autorisées dans les entrées"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "les longueurs de 'x' et de 'w' doivent correspondre"

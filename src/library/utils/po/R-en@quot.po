@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:12\n"
-"PO-Revision-Date: 2011-10-13 22:12\n"
+"POT-Creation-Date: 2011-10-17 10:16\n"
+"PO-Revision-Date: 2011-10-17 10:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -353,6 +353,18 @@ msgstr "too many list items (at most up to number 26)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "too many list items (at most up to number 3899)"
 
+msgid "no vector columns were selected"
+msgstr "no vector columns were selected"
+
+msgid "non-vector columns will be ignored"
+msgstr "non-vector columns will be ignored"
+
+msgid "at least one vector element is required"
+msgstr "at least one vector element is required"
+
+msgid "non-vector elements will be ignored"
+msgstr "non-vector elements will be ignored"
+
 msgid "'form' must be a two-sided formula"
 msgstr "‘form’ must be a two-sided formula"
 
@@ -606,6 +618,12 @@ msgstr "directory ‘%s’ already exists"
 
 msgid "Creating DESCRIPTION ..."
 msgstr "Creating DESCRIPTION ..."
+
+msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+msgstr "From R 2.14.0 on, every package gets a NAMESPACE."
+
+msgid "Argument 'namespace' is deprecated."
+msgstr "Argument ‘namespace’ is deprecated."
 
 msgid "Creating NAMESPACE ..."
 msgstr "Creating NAMESPACE ..."

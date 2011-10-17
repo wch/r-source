@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:12\n"
+"POT-Creation-Date: 2011-10-17 10:16\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -365,6 +365,20 @@ msgstr " リストの項目が多すぎます（最大でも26です） "
 msgid "too many list items (at most up to number 3899)"
 msgstr " リストの項目が多すぎます（最大でも3899です） "
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr " 如何なるイベントも記録されませんでした "
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr " 少なくとも一つの欄を指定しなければなりません "
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr " \"form\" は両辺に項を持つ公式でなければなりません "
 
@@ -638,6 +652,13 @@ msgstr " ディレクトリ '%s' は既に存在します "
 
 msgid "Creating DESCRIPTION ..."
 msgstr " DESCRIPTION を作成中 ... "
+
+msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+msgstr ""
+
+#, fuzzy
+msgid "Argument 'namespace' is deprecated."
+msgstr " 引数 'help.db' は廃止されました  "
 
 msgid "Creating NAMESPACE ..."
 msgstr " NAMESPACE を作成中 ... "
