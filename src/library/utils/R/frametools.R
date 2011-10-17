@@ -25,8 +25,10 @@ stack.data.frame <- function(x, select, ...)
         x <- x[, vars, drop=FALSE]
     }
     x <- x[, unlist(lapply(x, is.vector)), drop = FALSE]
+    ## need to avoid promotion to factors
     data.frame(values = unlist(unname(x)),
-               ind = factor(rep.int(names(x), lapply(x, length))))
+               ind = factor(rep.int(names(x), lapply(x, length))),
+               stringsAsFactors = FALSE)
 }
 
 stack.default <- function(x, ...)
@@ -34,7 +36,8 @@ stack.default <- function(x, ...)
     x <- as.list(x)
     x <- x[unlist(lapply(x, is.vector))]
     data.frame(values = unlist(unname(x)),
-               ind = factor(rep.int(names(x), lapply(x, length))))
+               ind = factor(rep.int(names(x), lapply(x, length))),
+               stringsAsFactors = FALSE)
 }
 
 unstack <- function(x, ...) UseMethod("unstack")
@@ -45,9 +48,9 @@ unstack.data.frame <- function(x, form, ...)
     if (length(form) < 3)
         stop("'form' must be a two-sided formula")
     res <- c(tapply(eval(form[[2L]], x), eval(form[[3L]], x), as.vector))
-    if (length(res) < 2L || any(diff(unlist(lapply(res, length))) != 0L))
+    if (length(res) >= 2L && any(diff(unlist(lapply(res, length))) != 0L))
         return(res)
-    data.frame(res)
+    data.frame(res, stringsAsFactors = FALSE)
 }
 
 unstack.default <- function(x, form, ...)
@@ -57,7 +60,7 @@ unstack.default <- function(x, form, ...)
     if ((length(form) < 3) || (length(all.vars(form))>2))
         stop("'form' must be a two-sided formula with one term on each side")
     res <- c(tapply(eval(form[[2L]], x), eval(form[[3L]], x), as.vector))
-    if (length(res) < 2L || any(diff(unlist(lapply(res, length))) != 0L))
+    if (length(res) >= 2L && any(diff(unlist(lapply(res, length))) != 0L))
         return(res)
-    data.frame(res)
+    data.frame(res, stringsAsFactors = FALSE)
 }

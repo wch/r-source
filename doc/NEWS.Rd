@@ -881,11 +881,15 @@
       (\code{signif(x, 1)}) rather than giving zero.
 
       \item The \code{"table"} method for \code{Axis()} hardcoded
-      \code{side = 1}, hence calls \code{plot(<vector>, <table>)}
-      labelled the wrong axis. (\PR{14699}) 
+      \code{side = 1}, hence calls to \code{plot(<vector>, <table>)}
+      labelled the wrong axis. (\PR{14699})
 
-      \item Creating almost any connection would fail under
-      \code{gctorture()}.
+      \item Creating a connection might fail under \code{gctorture(TRUE)}.
+      
+      \item \code{stack()} and \code{unstack()} converted character
+      columns to factors.  \code{unstack()} sometimes produced incorrect
+      results (a list or a vector) if the factor on which to un-split
+      had only one level.
     }
   }
 }
