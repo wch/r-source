@@ -120,6 +120,7 @@ mccollect(p, wait=FALSE, 10) # will retrieve the result (since it's fast)
 mccollect(p, wait=FALSE)     # will signal the job as terminating
 mccollect(p, wait=FALSE)     # there is no such job
 
+\dontshow{set.seed(123, "L'Ecuyer"); mc.reset.stream()}
 # a naive mcparallelized lapply can be created using parallel alone:
 jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name = x))
 mccollect(jobs)
