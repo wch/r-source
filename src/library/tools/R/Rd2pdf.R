@@ -1,4 +1,4 @@
-#  File src/library/tools/R/Rd2dvi.R
+#  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,7 @@
         if(f == "Authors@R") next
         text <- desc[f]
         ## munge 'text' appropriately (\\, {, }, "...")
-        ## not sure why just these: copied from Rd2dvi, then added to.
+        ## not sure why just these: copied from Perl Rd2dvi, then added to.
         ## KH: the LaTeX special characters are
         ##   # $ % & _ ^ ~ { } \
         ## \Rd@AsIs@dospecials in Rd.sty handles the first seven, so
@@ -75,7 +75,7 @@
     cat("\\end{description}\n", file = out)
 }
 
-## workhorse of .Rd2dvi
+## workhorse of .Rd2pdf
 .Rdfiles2tex <-
     function(files, outfile, encoding = "unknown", outputEncoding = "UTF-8",
              append = FALSE, extraDirs = NULL, internals = FALSE,
@@ -426,9 +426,9 @@
     invisible()
 }
 
-### * .Rd2dvi
+### * .Rd2pdf
 
-.Rd2dvi <-
+.Rd2pdf <-
 function(pkgdir, outfile, title, batch = FALSE,
          description = TRUE, only_meta = FALSE,
          enc = "unknown", outputEncoding = "UTF-8", files_or_dir, OSdir,
@@ -793,7 +793,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     res <-
-        try(.Rd2dvi(files[1L], file.path(build_dir, "Rd2.tex"),
+        try(.Rd2pdf(files[1L], file.path(build_dir, "Rd2.tex"),
                     title, batch, description, only_meta,
                     enc, outenc, dir, OSdir, internals, index))
     if (inherits(res, "try-error"))
