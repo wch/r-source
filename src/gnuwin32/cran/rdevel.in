@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
-<title>Download the R-@FULLVERSION@ build for Windows.  The R-project for statistical computing.</title>
+<title>Download the R-Devel build for Windows.  The R-project for statistical computing.</title>
 <style>
 .download {
   border: 1px solid #ccc;
@@ -33,10 +33,10 @@
 
 <body>
 
-<h1>R-@FULLVERSION@ build for Windows (32/64 bit)</h1>
+<h1>R-devel build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(39 megabytes, 32/64 bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(39 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li>New features in this version: <a href="CHANGES.@RWVER@.html">Windows specific</a>, <a href="NEWS.@RWVER@.html">all platforms</a>.</li>
