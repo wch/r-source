@@ -18,11 +18,14 @@
 
 ### --- multicore --- low-level functions ---
 
-## childrenDescriptors, closeAll, closeFS, closeStderr, closeStdout,
-## isChild, masterDescriptor, processID, rmChild are not exported.
+## all not exported in parallel.
+
+mc_pids <- new.env()
+assign("pids", integer(), envir = mc_pids)
 
 mcfork <- function() {
     r <- .Call(C_mc_fork, PACKAGE = "parallel")
+#    assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
     structure(list(pid = r[1L], fd = r[2:3]),
               class = c(if(r[1L]) "childProcess"
                         else "masterProcess", "process"))

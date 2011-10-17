@@ -75,7 +75,8 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
   sequential (in the random number sequence) as they would be when using
   \code{lapply}.  They are sequential for each forked process, but not
   all jobs as a whole.  See \code{\link{mcparallel}} or the package's
-  vignette for ways to make the results reproducible.
+  vignette for ways to make the results reproducible with
+  \code{mc.preschedule = TRUE}.
   
   Note: the number of file descriptors (and processes) is usually
   limited by the operating system, so you may have trouble using more
@@ -130,7 +131,7 @@ mc <- getOption("mc.cores", 2)
 run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
                            ran.gen = cd4.rg, mle = cd4.mle)
 ## To make this reproducible:
-set.seed(123, "L'Ecuyer"); mc.reset.stream()
+set.seed(123, "L'Ecuyer")
 res <- mclapply(seq_len(mc), run1)
 cd4.boot <- do.call(c, res)
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),

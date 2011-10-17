@@ -8,7 +8,8 @@
 \alias{mcexit}
 \title{Fork a Copy of the Current R Process}
 \description{
-  These are low-level functions, not available on Windows.
+  These are low-level functions, not available on Windows, and not
+  exported from the name space.
   
   \code{mcfork} creates a new child process as a copy of the current \R process.
  

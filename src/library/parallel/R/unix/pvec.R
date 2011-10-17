@@ -26,6 +26,8 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     if(cores < 1L) stop("'mc.cores' must be >= 1")
     if(cores == 1L) return(FUN(v, ...))
 
+    if(mc.set.seed) mc.reset.stream()
+
     n <- length(v)
     l <- if (n < cores) as.list(v) else {
         ## compute the scheduling, making it as fair as possible

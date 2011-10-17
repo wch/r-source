@@ -9,8 +9,8 @@ export(mccollect, mcparallel, mc.reset.stream)
 export(parallel, collect)
 
 ## unclear if we should export these.
-export(children, mcexit, mcfork, mckill, readChild, readChildren,
-       selectChildren, sendChildStdin, sendMaster)
+## export(children, mcexit, mcfork, mckill, readChild, readChildren,
+##        selectChildren, sendChildStdin, sendMaster)
 }
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,

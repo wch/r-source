@@ -56,9 +56,9 @@ mc.reset.stream()
 #ifdef unix
   
   Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
-  number generator and seed makes runs from \code{\link{mcparallel}},
-  \code{\link{mclapply}(mc.preschedule = TRUE)} and \code{\link{pvec}}
-  reproducible (with the default \code{mc.set.seed = TRUE}).
+  number generator and seed makes runs from
+  \code{\link{mcparallel}(mc.set.seed = TRUE)}) reproducible.  This is
+  done internally in \code{\link{mclapply}} and \code{\link{pvec}}. 
 #endif  
 }
 \value{
