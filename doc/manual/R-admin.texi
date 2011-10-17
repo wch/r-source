@@ -2693,11 +2693,11 @@ automagically detect compressed archives is preferred for use with
 @enindex TAR
 @command{tar}: use environment variable @env{TAR} to override this.
 
-There need to be suitable versions of the tools @command{grep},
-@command{sed} and @command{tr}: the problems are usually with old AT&T
-and BSD variants.  @command{configure} will try to find suitable
-versions (including looking in @file{/usr/xpg4/bin} which is used on
-some commercial Unixes).
+There need to be suitable versions of the tools @command{grep} and
+@command{sed}: the problems are usually with old AT&T and BSD variants.
+@command{configure} will try to find suitable versions (including
+looking in @file{/usr/xpg4/bin} which is used on some commercial
+Unixes).
 
 You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
@@ -4153,8 +4153,7 @@ The Solaris versions of several of the tools needed to build @R{}
 path.  A version of the preferred @acronym{GNU} @command{tar} is (if
 installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.  It may be necessary to avoid the tools in
-@file{/usr/ucb}: in particular @file{/usr/ucb/tr} has caused problems in
-the past.  POSIX-compliant versions of some tools can be found in
+@file{/usr/ucb}: POSIX-compliant versions of some tools can be found in
 @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from
@@ -4744,8 +4743,8 @@ location where Inno Setup was installed.
 This item is installed by the @file{Rtools*.exe} installer.
 
 @c INSTALL may use sh make zip (and tar if R_INSTALL_TAR is used)
-@c build uses make tar gzip
-@c Rdiff.sh USED to use diff echo grep sed tr
+@c build may use make and sh.
+@c Rdiff.sh USED to use diff echo grep sed tr: grep and tr are no longer used.
 
 @c basename is used in src/library/Recommended/Makefile.win
 @c comm, sort, uniq are used in producing .def files
@@ -4779,7 +4778,7 @@ also need @code{zip} and @code{unzip} from the Info-ZIP project
 @file{Rtools*.exe}.
 
 @c So needed for end users:
-@c basename comm cp diff echo gzip make mkdir rm sh sort tar uniq zip
+@c comm cp diff echo gzip make mkdir rm sh sort tar uniq zip
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that called `MinGW make' at the MinGW SourceForge site).
