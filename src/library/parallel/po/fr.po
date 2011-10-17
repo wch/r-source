@@ -1,0 +1,82 @@
+# Translation of parallel.pot to French
+# Copyright (C) 2011 The R Foundation
+# This file is distributed under the same license as the parallel R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.14.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-08-24 10:21+0100\n"
+"PO-Revision-Date: 2011-10-15 18:02+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=n(n > 1);\n"
+"X-Poedit-Language: French\n"
+
+#: fork.c:178
+#: fork.c:181
+msgid "unable to create a pipe"
+msgstr "impossible de créer un canal (pipe)"
+
+#: fork.c:190
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "impossible de créer une nouvelle branche, raison possible : %s"
+
+#: fork.c:226
+msgid "memory allocation error"
+msgstr "erreur d'allocation mémoire"
+
+#: fork.c:264
+msgid "only children can send data to the master process"
+msgstr "seuls des processus enfants peuvent envoyer des données à un processus maître"
+
+#: fork.c:266
+msgid "there is no pipe to the master process"
+msgstr "aucun canal vers le processus maître"
+
+#: fork.c:268
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "le contenu à envoyer doit être RAW, utilisez serialize() si nécessaire"
+
+#: fork.c:277
+#: fork.c:284
+msgid "write error, closing pipe to the master"
+msgstr "erreur d'écriture, fermeture du canal vers le processus maître"
+
+#: fork.c:297
+msgid "only the master process can send data to a child process"
+msgstr "seul le processus maître peut envoyer des données vers un processus fils"
+
+#: fork.c:304
+#, c-format
+msgid "child %d does not exist"
+msgstr "le processus fils %d n'existe pas"
+
+#: fork.c:310
+msgid "write error"
+msgstr "erreur d'écriture"
+
+#: fork.c:390
+#: fork.c:512
+#, c-format
+msgid "error '%s' in select"
+msgstr "erreur '%s' lors de la sélection"
+
+#: fork.c:596
+msgid "mckill failed"
+msgstr "mckill a échoué"
+
+#: fork.c:606
+msgid "mcexit can only be used in a child process"
+msgstr "mcexit peut seulement être utilisé avec un processus fils"
+
+#: fork.c:626
+msgid "mcexit failed"
+msgstr "mcexit a échoué"
+

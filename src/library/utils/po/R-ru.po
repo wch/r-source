@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:08\n"
+"POT-Creation-Date: 2011-10-17 10:14\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -643,6 +643,13 @@ msgstr "папка '%s' уже есть"
 
 msgid "Creating DESCRIPTION ..."
 msgstr "Создаю DESCRIPTION..."
+
+msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+msgstr ""
+
+#, fuzzy
+msgid "Argument 'namespace' is deprecated."
+msgstr "аргумент 'help.db' устарел"
 
 msgid "Creating NAMESPACE ..."
 msgstr "Создаю NAMESPACE..."

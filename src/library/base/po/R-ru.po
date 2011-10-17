@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41\n"
+"POT-Creation-Date: 2011-10-17 10:14\n"
 "PO-Revision-Date: 2011-03-30 02:18+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -796,6 +796,9 @@ msgstr "треугольная матрица должна быть квадратной"
 
 msgid "'object' must be a list"
 msgstr "'object' должен быть списком"
+
+msgid "'keep.source' is deprecated and will be ignored"
+msgstr ""
 
 #, fuzzy
 msgid "package %s has not been installed properly"

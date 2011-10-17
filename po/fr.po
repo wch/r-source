@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-10-02 08:41+0100\n"
-"PO-Revision-Date: 2011-03-31 22:26-0400\n"
-"Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
+"PO-Revision-Date: 2011-10-15 14:49+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -594,49 +594,44 @@ msgstr ""
 "aucun convertisseur R-vers-C disponible correspondant à cet identifiant"
 
 #: src/main/CommandLineArgs.c:172
-#, fuzzy
 msgid "WARNING: no value given for --encoding"
-msgstr "AVIS : aucune valeur donnée pour --encoding\n"
+msgstr "AVIS : aucune valeur donnée pour --encoding"
 
 #: src/main/CommandLineArgs.c:195
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: option '%s' no longer supported"
-msgstr "AVIS : l'option '%s' n'est plus disponible\n"
+msgstr "AVIS : l'option '%s' n'est plus disponible"
 
 #: src/main/CommandLineArgs.c:212
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: no value given for '%s'"
-msgstr "AVIS : aucune valeur donnée pour '%s'\n"
+msgstr "AVIS : aucune valeur donnée pour '%s'"
 
 #: src/main/CommandLineArgs.c:220
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: '%s' value is invalid: ignored"
-msgstr "AVIS : valeur '%s' incorrecte : ignorée\n"
+msgstr "AVIS : valeur '%s' incorrecte : ignorée"
 
 #: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: %s: too large and ignored"
-msgstr "AVIS : %s : trop grand et ignoré\n"
+msgstr "AVIS : %s : trop grand et ignoré"
 
 #: src/main/CommandLineArgs.c:240
-#, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
-msgstr "AVIS : aucune valeur donnée pour '--max-ppsize'\n"
+msgstr "AVIS : aucune valeur donnée pour '--max-ppsize'"
 
 #: src/main/CommandLineArgs.c:245
-#, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
-msgstr "AVIS : valeur de '--max-ppsize' strictement négative : ignorée\n"
+msgstr "AVIS : valeur de '--max-ppsize' strictement négative : ignorée"
 
 #: src/main/CommandLineArgs.c:247
-#, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
-msgstr "AVIS : valeur de '--max-ppsize' trop petite : ignorée\n"
+msgstr "AVIS : valeur de '--max-ppsize' trop petite : ignorée"
 
 #: src/main/CommandLineArgs.c:250
-#, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
-msgstr "AVIS : valeur de '--max-ppsize' trop grande : ignorée\n"
+msgstr "AVIS : valeur de '--max-ppsize' trop grande : ignorée"
 
 #: src/main/RNG.c:174
 #, c-format
@@ -831,9 +826,8 @@ msgstr ""
 "l'argument %s a une longueur > 1 et seul le premier élément est utilisé"
 
 #: src/main/agrep.c:183 src/main/agrep.c:797
-#, fuzzy
 msgid "'pattern' must be a non-empty character string"
-msgstr "'title' doit être une chaîne de caractères"
+msgstr "'pattern' doit être une chaîne de caractères non vide"
 
 #: src/main/agrep.c:194 src/main/agrep.c:806 src/main/grep.c:825
 #: src/main/grep.c:2345 src/main/grep.c:2620
@@ -864,23 +858,23 @@ msgid "argument '%s' will be ignored"
 msgstr "l'argument '%s' sera ignoré"
 
 #: src/main/agrep.c:594
-#, fuzzy, c-format
+#, c-format
 msgid "input string x[%d] is invalid in this locale"
 msgstr ""
-"la chaîne de caractères entrée %d est incorrecte dans cet environnement "
+"la chaîne de caractères entrée x[%d] est incorrecte dans cet environnement "
 "linguistique"
 
 #: src/main/agrep.c:640
-#, fuzzy, c-format
+#, c-format
 msgid "input string y[%d] is invalid in this locale"
 msgstr ""
-"la chaîne de caractères entrée %d est incorrecte dans cet environnement "
+"la chaîne de caractères entrée y[%d] est incorrecte dans cet environnement "
 "linguistique"
 
 #: src/main/agrep.c:812 src/main/grep.c:2626
-#, fuzzy, c-format
+#, c-format
 msgid "regcomp error: '%s'"
-msgstr "erreur rgcomp : '%s'"
+msgstr "erreur regcomp : '%s'"
 
 #: src/main/apply.c:41 src/main/apply.c:103 src/main/complex.c:750
 msgid "invalid length"
@@ -1180,7 +1174,7 @@ msgstr "tentative de changer l'attribut 'class' à une valeur incorrecte"
 #: src/main/attrib.c:766
 #, c-format
 msgid "Class '%s' has no 'names' slot"
-msgstr ""
+msgstr "La classe '%s' n'a pas de slot 'names'"
 
 #: src/main/attrib.c:768
 #, c-format
@@ -1188,12 +1182,16 @@ msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
 msgstr ""
+"La classe '%s' n'a pas de slot 'names'; l'affectation d'un attribut 'names' "
+"créera un object incorrect"
 
 #: src/main/attrib.c:771
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
 msgstr ""
+"L'utilisation de names()<- pour changer le slot 'names' dans une classe non "
+"vectorielle ('%s') est interdite"
 
 #: src/main/attrib.c:800
 msgid "incompatible 'names' argument"
@@ -1342,6 +1340,8 @@ msgstr "L'événement GE_ScalePS exige une valeur numérique unique"
 #, c-format
 msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr ""
+"le vecteur résultant à une taille supérieure à la valeur maximale permise "
+"dans '%s'"
 
 #: src/main/bind.c:282 src/main/bind.c:322 src/main/bind.c:375
 #: src/main/bind.c:453 src/main/bind.c:483
@@ -1697,9 +1697,9 @@ msgstr ""
 "%s() appliqué à un objet de type '%s' qui n'est ni une liste, ni un vecteur"
 
 #: src/main/coerce.c:2044 src/main/coerce.c:2107 src/main/coerce.c:2175
-#, fuzzy, c-format
+#, c-format
 msgid "default method not implemented for type '%s'"
-msgstr "type '%s' indisponible dans '%s'\n"
+msgstr "méthode par défaut indisponible pour le type '%s'"
 
 #: src/main/coerce.c:2193 src/main/dotcode.c:772 src/main/dotcode.c:815
 #: src/main/dotcode.c:1638
@@ -2314,7 +2314,7 @@ msgstr "raw est toujours de taille 1"
 
 #: src/main/connections.c:3667
 msgid "'signed = FALSE' is only valid for integers of sizes 1 and 2"
-msgstr ""
+msgstr "'signed = FALSE' n'est autorisé que pour des entiers de taille 1 ou 2"
 
 #: src/main/connections.c:3768
 msgid "'x' is not an atomic vector type"
@@ -2329,10 +2329,9 @@ msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr "seuls 2^31-1 octets peuvent être écrits dans un vecteur 'raw'"
 
 #: src/main/connections.c:3795
-#, fuzzy
 msgid "only 2^31-1 bytes can be written in a single writeBin() call"
 msgstr ""
-"seuls 2^31-1 octets peuvent être écrits lors d'un appel unique readBin()"
+"seuls 2^31-1 octets peuvent être écrits lors d'un appel unique writeBin()"
 
 #: src/main/connections.c:3844 src/main/connections.c:3997
 #: src/main/connections.c:4270 src/main/connections.c:4310
@@ -2495,9 +2494,9 @@ msgstr ""
 "veuillez signaler l'anomalie à l'aide de bug.report() [R_run_onexits]"
 
 #: src/main/context.c:283
-#, fuzzy
 msgid "no loop for break/next, jumping to top level"
-msgstr "aucune boucle d'où sortir ; saut vers le niveau le plus haut"
+msgstr ""
+"aucune boucle d'où sortir (break/next) ; saut vers le niveau le plus haut"
 
 #: src/main/context.c:291
 msgid "no function to return from, jumping to top level"
@@ -3010,14 +3009,12 @@ msgid "allocation of unz connection failed"
 msgstr "l'allocation d'une connexion unz a échoué"
 
 #: src/main/dstruct.c:89
-#, fuzzy
 msgid "invalid formal arguments for 'function'"
-msgstr "argument formel invalide pour \"function\""
+msgstr "argument formel invalide pour 'function'"
 
 #: src/main/dstruct.c:99
-#, fuzzy
 msgid "invalid body argument for 'function'"
-msgstr "argument formel invalide pour \"function\""
+msgstr "argument formel invalide pour 'function'"
 
 #: src/main/engine.c:39
 msgid "Graphics API version mismatch"
@@ -3050,23 +3047,20 @@ msgid "out of memory while clipping polyline"
 msgstr "manque de mémoire lors de la coupure d'une ligne brisée"
 
 #: src/main/engine.c:1372
-#, fuzzy
 msgid "Path rendering is not implemented for this device"
-msgstr "gc.time() non implémenté sur ce système"
+msgstr "Résolution de chemin d'accès non implémenté pour ce périphérique"
 
 #: src/main/engine.c:1390
 msgid "Invalid graphics path"
 msgstr "Chemin graphique incorrect"
 
 #: src/main/engine.c:1409
-#, fuzzy
 msgid "Raster rendering is not implemented for this device"
-msgstr "Sys.sleep n'est pas implémenté sur ce système"
+msgstr "Rendu en mode pixel (raster) non implémenté pour ce périphérique"
 
 #: src/main/engine.c:1433
-#, fuzzy
 msgid "Raster capture is not available for this device"
-msgstr "%s non disponible pour ce périphérique"
+msgstr "Capture en mode point (raster) non disponible pour ce périphérique"
 
 #: src/main/engine.c:1640
 #, c-format
@@ -3350,17 +3344,14 @@ msgid "cannot unbind an active binding"
 msgstr "impossible d'éliminer un lien actif"
 
 #: src/main/envir.c:3221
-#, fuzzy
 msgid "bad namespace name"
-msgstr "nom erroné dans l'espace de nom"
+msgstr "espace de nom erroné"
 
 #: src/main/envir.c:3233
-#, fuzzy
 msgid "namespace already registered"
 msgstr "espace de noms déjà enregistré"
 
 #: src/main/envir.c:3245
-#, fuzzy
 msgid "namespace not registered"
 msgstr "espace de noms non enregistré"
 
@@ -3798,9 +3789,8 @@ msgid "cannot find index for threaded code address"
 msgstr "impossible de trouver l'indice pour l'adresse de code traitée"
 
 #: src/main/eval.c:4971
-#, fuzzy
 msgid "invalid body"
-msgstr "symbole non valide"
+msgstr "corps (body) non valide"
 
 #: src/main/eval.c:4991
 msgid "invalid symbol"
@@ -4238,7 +4228,7 @@ msgstr "chaîne de caractères résultat trop longue"
 #: src/main/grep.c:2375
 #, c-format
 msgid "pcre_fullinfo returned '%d' "
-msgstr ""
+msgstr "pcre_fullinfo a renvoyé '%d'"
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -4342,9 +4332,9 @@ msgid "unable to open the base package\n"
 msgstr "impossible d'ouvrir le package 'base'\n"
 
 #: src/main/main.c:909
-#, fuzzy, c-format
+#, c-format
 msgid "unable to restore saved data in %s\n"
-msgstr "impossible de récupérer les données sauvées dans .RData\n"
+msgstr "impossible de récupérer les données sauvées dans %s\n"
 
 #: src/main/main.c:956
 msgid "During startup - "
@@ -5042,9 +5032,8 @@ msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' n'est pas plus petit que 'xmax'"
 
 #: src/main/optimize.c:145
-#, fuzzy
 msgid "-Inf replaced by maximally negative value"
-msgstr "NA / Inf remplacé par la valeur maximale positive"
+msgstr "-Inf remplacé par la valeur négative la plus large possible"
 
 #: src/main/optimize.c:158
 msgid "invalid function value in 'zeroin'"
@@ -5451,7 +5440,7 @@ msgstr "changer 'LC_NUMERIC' peut résulter en un fonctionnement étrange de R"
 
 #: src/main/platform.c:1708
 msgid "LC_MESSAGES exists on Windows but is not operational"
-msgstr ""
+msgstr "LC_MESSAGES existe sous Windows mais n'y est pas opérationel"
 
 #: src/main/platform.c:1735
 #, c-format
@@ -5846,9 +5835,9 @@ msgid "unable to allocate memory (in do_xspline)"
 msgstr "impossible d'allouer de la mémoire (dans do_xspline)"
 
 #: src/main/plot3d.c:713 src/main/plot3d.c:998
-#, fuzzy, c-format
+#, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
-msgstr "contour() : seglist longue / circulaire -- bug.report()!"
+msgstr "contour() : seglist longue / circulaire -- est-ce que %s > %d ?"
 
 #: src/main/plot3d.c:793 src/main/plot3d.c:1444
 msgid "all z values are equal"
@@ -7170,9 +7159,8 @@ msgid "cannot mix 0-length vectors with others"
 msgstr "impossible de mélanger des vecteurs de longueur nulle avec des autres"
 
 #: src/main/summary.c:1073
-#, fuzzy
 msgid "an argument will be fractionally recycled"
-msgstr "l'argument '%s' sera ignoré"
+msgstr "un argument sera recyclé partiellement"
 
 #: src/main/sysutils.c:69 src/main/sysutils.c:83
 #, c-format
@@ -7250,9 +7238,8 @@ msgid "'x' must be a character vector"
 msgstr "'x' doit être un vecteur de caractères"
 
 #: src/main/sysutils.c:650
-#, fuzzy
 msgid "'x' must be a list of NULL or raw vectors"
-msgstr "'x' doit être un vecteur de caractères"
+msgstr "'x' doit être une list de vecteurs NULL ou \"raw\""
 
 #: src/main/sysutils.c:726 src/main/sysutils.c:789 src/main/sysutils.c:888
 #: src/main/sysutils.c:902 src/main/sysutils.c:977
@@ -8049,6 +8036,7 @@ msgstr ""
 #: src/modules/X11/devX11.c:1433
 msgid "cairo-based types may only work correctly on TrueColor visuals"
 msgstr ""
+"les types basés sur cairo ne fonctionnent correctement qu'en mode TrueColor"
 
 #: src/modules/X11/devX11.c:1443
 msgid "jpeg() does not support transparency: using white bg"
@@ -8097,7 +8085,7 @@ msgstr "impossible de créer un 'XImage'"
 
 #: src/modules/X11/devX11.c:2446
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr "tentative d'utilisation du localisateur (locator) après dev.hold()"
 
 #: src/modules/X11/devX11.c:3022
 #, c-format

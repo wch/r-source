@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-10-13 22:07+0100\n"
-"PO-Revision-Date: 2011-03-27 22:21+0100\n"
+"PO-Revision-Date: 2011-10-15 15:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
 #, c-format
 msgid "'%s' must be numeric of length %d"
-msgstr ""
+msgstr "'%s' doit être numérique et de longueur %d"
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"
@@ -341,9 +341,8 @@ msgid "unable to use encoding '%s'"
 msgstr "Impossible d'utiliser l'encodage '%s'"
 
 #: devPS.c:5544 devPS.c:5547
-#, fuzzy
 msgid "failed to increase 'maxRaster'"
-msgstr "Echec d'allocation d'images en mode pixel"
+msgstr "Echec d'augmentation de 'maxRaster'"
 
 #: devPS.c:5559
 msgid "Unable to allocate raster image"
@@ -359,9 +358,8 @@ msgstr ""
 "Echec d'enregistrement de l'encodage du périphérique ; police non ajoutée"
 
 #: devPS.c:5875
-#, fuzzy
 msgid "increasing the PDF version to 1.2"
-msgstr "la version du PDF est augmentée à 1.4"
+msgstr "la version du PDF est augmentée à 1.2"
 
 #: devPS.c:5900
 msgid "failed to load default encoding"
@@ -401,12 +399,10 @@ msgid "increasing the PDF version to 1.4"
 msgstr "la version du PDF est augmentée à 1.4"
 
 #: devPS.c:6321 devPS.c:6368
-#, fuzzy
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "'colormodel' inconnu, utilisation de 'rgb'"
 
 #: devPS.c:6562
-#, fuzzy
 msgid "Failed to load sRGB colorspace file"
 msgstr "Echec de chargement de l'espace de couleur sRGB"
 
@@ -594,7 +590,7 @@ msgstr "R Graphes"
 
 #: devWindows.c:3057
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr "tentative d'utilisation du localisateur (locator) après dev.hold()"
 
 #: devWindows.c:3321
 msgid "option 'windowsTimeouts' should be integer"
@@ -638,9 +634,8 @@ msgid "invalid 'width' or 'height'"
 msgstr "'width' ou 'height' incorrecte"
 
 #: devWindows.c:3775
-#, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
-msgstr "Impossible de charger Rbitmap.dll"
+msgstr "Impossible de charger winCairo.dll : a-t-il été compilé ?"
 
 #: qdBitmap.c:79
 #, c-format

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-02 08:41\n"
+"POT-Creation-Date: 2011-10-17 10:14\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -820,6 +820,9 @@ msgstr "정방 행렬이어야 합니다"
 #, fuzzy
 msgid "'object' must be a list"
 msgstr "'subset'는 논리값이 아니면 되지 않습니다"
+
+msgid "'keep.source' is deprecated and will be ignored"
+msgstr ""
 
 #, fuzzy
 msgid "package %s has not been installed properly"

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-09-05 08:24+0100\n"
-"PO-Revision-Date: 2010-10-03 18:50-0400\n"
-"Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
+"PO-Revision-Date: 2011-10-15 17:16+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -29,16 +29,18 @@ msgstr "md5 a échoué sur le fichier '%s'"
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
-msgstr ""
+msgstr "pskill() n'est pas supporté sur cette plateforme"
 
 #: signals.c:137
 msgid "psnice() is not supported on this platform"
-msgstr ""
+msgstr "psnice() n'est pas supporté sur cette plateforme"
 
 #: text.c:65
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
 
-#: text.c:222 text.c:244
+#: text.c:222
+#: text.c:244
 msgid "out of memory"
 msgstr "plus de mémoire disponible"
+

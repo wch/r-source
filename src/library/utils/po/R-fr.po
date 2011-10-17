@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:08\n"
-"PO-Revision-Date: 2011-03-29 19:56+0100\n"
+"POT-Creation-Date: 2011-10-17 10:14\n"
+"PO-Revision-Date: 2011-10-15 15:37+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -26,9 +26,8 @@ msgstr ""
 "spécifiant\n"
 "  un fichier de documentation"
 
-#, fuzzy
 msgid "no documentation for %s found in package %s"
-msgstr "pas de documentation pour '%s' dans le package '%s'"
+msgstr "pas de documentation pour %s dans le package %s"
 
 msgid "document not found"
 msgstr "document introuvable"
@@ -39,29 +38,24 @@ msgstr "Une requête de recherche a été soumise à"
 msgid "The results page should open in your browser shortly"
 msgstr "La page de résultats devrait s'ouvrir dans votre navigateur"
 
-#, fuzzy
 msgid "reference to unknown chunk %s"
-msgstr "référence à un tronçon inconnu '%s'"
+msgstr "référence à un tronçon inconnu %s"
 
-#, fuzzy
 msgid "no Sweave file with name %s found"
-msgstr "un fichier Sweave de nom '%s' est introuvable"
+msgstr "un fichier Sweave de nom %s est introuvable"
 
-#, fuzzy
 msgid "%d Sweave files for basename %s found:"
-msgstr "%d fichiers Sweave trouvés pour le nom de base '%s' :"
+msgstr "%d fichiers Sweave trouvés pour le nom de base %s :"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr ""
 "plusieurs spécifications de syntaxe possibles ; la première est utilisée"
 
-#, fuzzy
 msgid "object %s does not have class \"SweaveSyntax\""
-msgstr "l'objet '%s' n'est pas de la classe \"SweaveSyntax\""
+msgstr "l'objet %s n'est pas de la classe \"SweaveSyntax\""
 
-#, fuzzy
 msgid "recursive Sweave input %s in stack"
-msgstr "entrée Sweave récursive '%s' dans la pile"
+msgstr "entrée Sweave récursive %s dans la pile"
 
 msgid "target syntax not of class \"SweaveSyntax\""
 msgstr "la syntaxe de la cible n'est pas de la classe \"SweaveSyntax\""
@@ -77,27 +71,25 @@ msgstr ""
 "%s"
 
 msgid "Warning: unknown option"
-msgstr ""
+msgstr "Avis : option inconnue"
 
 msgid "Created PDF document"
-msgstr ""
+msgstr "Document PDF créé"
 
-#, fuzzy
 msgid "path to %s contains spaces,"
-msgstr "le chemin vers '%s' contient des espaces"
+msgstr "le chemin vers %s contient des espaces,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
 
-#, fuzzy
 msgid "invalid value for %s : %s"
-msgstr "valeur incorrecte pour '%s' : %s"
+msgstr "valeur incorrecte pour %s : %s"
 
 msgid "value of 'results' option should be lowercase"
-msgstr ""
+msgstr "la valeur de l'option 'results' doit être en minuscules"
 
 msgid "value of 'strip.white' option should be lowercase"
-msgstr ""
+msgstr "la valeur de l'option 'strip.white' doit être en minuscules"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "les éléments suivants de 'what' seront ignorés"
@@ -139,9 +131,8 @@ msgstr "Aucune vignette n'est trouvée par"
 msgid "call"
 msgstr "appel"
 
-#, fuzzy
 msgid "Package %s: DESCRIPTION not found"
-msgstr "' : DESCRIPTION non trouvé."
+msgstr "Package %s : DESCRIPTION non trouvée"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' doit être NULL, une chaîne de caractères ou une connexion"
@@ -206,21 +197,18 @@ msgstr "'style' doit être l'un de %s"
 msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr "' doit spécifier le(s) champ(s) :"
 
-#, fuzzy
 msgid "package %s not found"
-msgstr "package '%s' introuvable"
+msgstr "package %s introuvable"
 
 msgid "broken installation, no CITATION file in the base package."
 msgstr "installation incomplète, pas de fichier CITATION dans le package base"
 
-#, fuzzy
 msgid "no date field in DESCRIPTION file of package %s"
-msgstr "pas de champ date dans le fichier DESCRIPTION du package '%s'"
+msgstr "pas de champ date dans le fichier DESCRIPTION du package %s"
 
-#, fuzzy
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
-"impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
+"impossible de déterminer l'année de %s du fichier DESCRIPTION du package "
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -247,17 +235,14 @@ msgstr ""
 "les jeux de données ont été transférés du package 'stats' au package "
 "'datasets'"
 
-#, fuzzy
 msgid "data index for package %s is invalid and will be ignored"
-msgstr "l'index de données pour le package '%s' est incorrect et sera ignoré"
+msgstr "l'index de données pour le package %s est incorrect et sera ignoré"
 
-#, fuzzy
 msgid "file 'filelist' is missing for directory %s"
-msgstr "fichier 'filelist' introuvable pour le répertoire '%s'"
+msgstr "fichier 'filelist' introuvable pour le répertoire %s"
 
-#, fuzzy
 msgid "data set %s not found"
-msgstr "jeu de données '%s' introuvable"
+msgstr "jeu de données %s introuvable"
 
 msgid "kind '%s' not yet implemented"
 msgstr "le type '%s' n'est pas encore implémenté"
@@ -309,17 +294,15 @@ msgstr ""
 msgid "No suitable frames for recover()"
 msgstr "Aucun frame ne convient pour recover()"
 
-#, fuzzy
 msgid "No demo found for topic %s"
-msgstr "démo sur le thème '%s' introuvable"
+msgstr "démo sur le thème %s introuvable"
 
-#, fuzzy
 msgid ""
 "Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"La démo pour le thème '%s' a été trouvée plusieurs fois,\n"
-"celle trouvée dans '%s' est utilisée"
+"La démo pour le thème %s a été trouvée plusieurs fois,\n"
+"celle trouvée dans %s est utilisée"
 
 msgid "invalid 'data' argument"
 msgstr "argument 'data' incorrect"
@@ -352,13 +335,11 @@ msgstr "la(les) classe(s) de 'name' sera écartées"
 msgid "cannot edit NULL row names"
 msgstr "impossible d'éditer des noms de lignes NULL"
 
-#, fuzzy
 msgid "no help found for %s"
-msgstr "fichier d'aide introuvable pour '%s'"
+msgstr "fichier d'aide introuvable pour %s"
 
-#, fuzzy
 msgid "%s has a help file but no examples"
-msgstr "'%s' a un fichier d'aide associé, mais pas d'exemples"
+msgstr "%s a un fichier d'aide associé, mais pas d'exemples"
 
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
@@ -387,30 +368,26 @@ msgstr ""
 "'topic' doit être un nom, une chaîne de caractères de longueur unitaire, ou "
 "un mot réservé"
 
-#, fuzzy
 msgid "Postscript offline help is deprecated"
-msgstr "l'argument 'help.db' est obsolète"
+msgstr "Les fichiers d'aide postscript hors ligne sont obsolète"
 
-#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr ""
-"Aucune documentation pour '%s' n'a été trouvée dans les packages et les "
+"Aucune documentation pour %s n'a été trouvée dans les packages et les "
 "bibliothèques :"
 
-#, fuzzy
 msgid "you could try %s"
-msgstr "vous pourriez essayer '??%s'"
+msgstr "vous pourriez essayer %s"
 
 msgid "??"
-msgstr ""
+msgstr "??"
 
-#, fuzzy
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
 msgstr ""
-"L'aide sur le thème '%s' n'est dans aucun des packages chargés mais peut "
-"être trouvée dans les packages suivants :"
+"L'aide sur le thème %s n'est dans aucun des packages chargés mais peut être "
+"trouvée dans les packages suivants :"
 
 msgid "Package"
 msgstr "Package"
@@ -418,9 +395,8 @@ msgstr "Package"
 msgid "Library"
 msgstr "Bibliothèque"
 
-#, fuzzy
 msgid "Help on topic %s was found in the following packages:"
-msgstr "L'aide sur le thème '%s' a été trouvée dans les packages suivants :"
+msgstr "L'aide sur le thème %s a été trouvée dans les packages suivants :"
 
 msgid "Choose one"
 msgstr "Choisissez un item"
@@ -431,13 +407,11 @@ msgstr "Utilisation de la première correspondance ..."
 msgid "HTML help is unavailable"
 msgstr "aide HTML non disponible"
 
-#, fuzzy
 msgid "R Help on %s"
-msgstr "R Help sur '%s'"
+msgstr "R Help sur %s"
 
-#, fuzzy
 msgid "invalid %s argument"
-msgstr "argument '%s' incorrect"
+msgstr "argument %s incorrect"
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
@@ -446,24 +420,20 @@ msgstr ""
 "le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc "
 "l'aide n'est pas accessible"
 
-#, fuzzy
 msgid "running %s failed"
-msgstr "l'exécution de '%s' a échoué"
+msgstr "l'exécution de %s a échoué"
 
-#, fuzzy
 msgid "%s produced no output file: sent to printer?"
-msgstr "'%s' n'a produit aucun fichier en sortie : envoyer vers l'imprimante ?"
+msgstr "%s n'a produit aucun fichier en sortie : envoyer vers l'imprimante ?"
 
-#, fuzzy
 msgid "creation of %s failed"
-msgstr "la création de '%s' a échoué"
+msgstr "la création de %s a échoué"
 
 msgid "Saving help page to"
 msgstr "Sauvegarde de la page d'aide dans"
 
-#, fuzzy
 msgid "argument %s must be a single character string"
-msgstr "l'argument '%s' doit être une seule chaîne de caractères"
+msgstr "l'argument %s doit être une seule chaîne de caractères"
 
 msgid "incorrect field specification"
 msgstr "spécification de champ incorrecte"
@@ -471,9 +441,8 @@ msgstr "spécification de champ incorrecte"
 msgid "do not know what to search"
 msgstr "je ne sais pas quoi rechercher"
 
-#, fuzzy
 msgid "incorrect type specification"
-msgstr "spécification de champ incorrecte"
+msgstr "spécification de type incorrecte"
 
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
@@ -490,13 +459,11 @@ msgstr "Packages {readRDS() séquentiellement} :"
 msgid "."
 msgstr "."
 
-#, fuzzy
 msgid "could not find package %s"
-msgstr "impossible de trouver le packages '%s'"
+msgstr "impossible de trouver le packages %s"
 
-#, fuzzy
 msgid "package %s has empty hsearch data - strangely"
-msgstr "le package '%s' a des données hsearch vides - étrangement"
+msgstr "le package %s a des données hsearch vides - étrangement"
 
 msgid "no hsearch.rds meta data for package"
 msgstr "pas de métadonnées hsearch.rds pour le package"
@@ -518,10 +485,9 @@ msgstr "Sauvegarde de la base de données ..."
 msgid "... database rebuilt"
 msgstr "... reconstruction de la base de donnée"
 
-#, fuzzy
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
-"pas d'information dans la base de données pour le package '%s' : faut-il "
+"pas d'information dans la base de données pour le package %s : faut-il "
 "'rebuild = TRUE' ?"
 
 msgid "incorrect 'agrep' specification"
@@ -623,10 +589,10 @@ msgid "environment specified is not a package"
 msgstr "l'environnement spécifié n'est pas un package"
 
 msgid "changing locked binding for %s in %s whilst loading %s"
-msgstr ""
+msgstr "changement du lien verrouillé pour %s dans %s lors du chargement de %s"
 
 msgid "changing locked binding for %s in %s"
-msgstr ""
+msgstr "changement du lien verrouillé pour %s dans %s"
 
 msgid "'fixInNamespace' requires a name"
 msgstr "'fixInNamespace' nécessite un nom"
@@ -660,6 +626,13 @@ msgstr "le répertoire '%s' existe déjà"
 msgid "Creating DESCRIPTION ..."
 msgstr "Création de DESCRIPTION..."
 
+msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+msgstr ""
+
+#, fuzzy
+msgid "Argument 'namespace' is deprecated."
+msgstr "l'argument 'help.db' est obsolète"
+
 msgid "Creating NAMESPACE ..."
 msgstr "Création de NAMESPACE..."
 
@@ -673,6 +646,8 @@ msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the code_files= argument"
 msgstr ""
+"Les fonctions génériques et autres objets S4 (e.g., '%s') ne peuvent être "
+"retranscrits à l'aide de dump ; utilisez l'argument code_files="
 
 msgid "Copying code files ..."
 msgstr "Recopiage des fichiers de code..."
@@ -701,10 +676,11 @@ msgstr "impossible d'accéder à l'index de l'entrepôt %s"
 msgid "Invalid 'filters' argument."
 msgstr "argument 'filters' incorrect"
 
-#, fuzzy
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
-msgstr "'oldPkgs' incorrect ; il faut des données renvoyées par old.packages()"
+msgstr ""
+"'oldPkgs' incorrect ; il faut des chaines de caractères ou des données "
+"renvoyées par old.packages()"
 
 msgid "illformed 'instPkgs' matrix"
 msgstr "matrice 'instPkgs' incorrecte"
@@ -712,13 +688,11 @@ msgstr "matrice 'instPkgs' incorrecte"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "aucun package installé pour 'lib.loc=%s' (incorrect ?)"
 
-#, fuzzy
 msgid "no new packages are available"
-msgstr "aucun objet R spécifié ou disponible"
+msgstr "aucuns nouveaux packages ne sont disponibles"
 
-#, fuzzy
 msgid "metadata of %s is corrupt"
-msgstr "les métadonnées de '%s' sont incorrectes"
+msgstr "les métadonnées de %s sont incorrectes"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority' doit être de type caractère ou NULL"
@@ -736,17 +710,14 @@ msgstr ""
 msgid "'destdir' is not a directory"
 msgstr "'destdir' n'est pas un répertoire"
 
-#, fuzzy
 msgid "no package %s at the repositories"
-msgstr "pas de package '%s' dans les entrepôts"
+msgstr "pas de package %s dans les entrepôts"
 
-#, fuzzy
 msgid "package %s does not exist on the local repository"
-msgstr "pas de package '%s' dans l'entrepôt local"
+msgstr "pas de package %s dans l'entrepôt local"
 
-#, fuzzy
 msgid "download of package %s failed"
-msgstr "le téléchargement du package '%s' a échoué"
+msgstr "le téléchargement du package %s a échoué"
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
 msgstr "--- SVP sélectionner un miroir CRAN pour cette session ---"
@@ -766,9 +737,8 @@ msgstr "impossible de fixer les entrepôts en mode non interactif"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
 
-#, fuzzy
 msgid "%s must be supplied"
-msgstr "'%s' doit être fourni"
+msgstr "%s doit être fourni"
 
 msgid "every package depends on at least one other"
 msgstr "tout package dépend au moins d'un autre"
@@ -796,14 +766,13 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\"' ne peut être ouvert en écriture"
 
-#, fuzzy
 msgid ""
 "Would you like to create a personal library\n"
 "%s\n"
 "to install packages into?"
 msgstr ""
 "Voulez-vous créer une bibliothèque personnelle\n"
-"'%s'\n"
+"%s\n"
 "pour y installer les packages ?"
 
 msgid "unable to install packages"
@@ -818,15 +787,13 @@ msgstr "supposition de 'repos = NULL' à partir du nom de fichier"
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
-#, fuzzy
 msgid "cannot install MacOS X binary packages on this platform"
 msgstr ""
-"impossible d'installer les packages MacOS X binaire sur cette architecture"
+"impossible d'installer les packages MacOS X binaires sur cette plateforme"
 
-#, fuzzy
 msgid "cannot install Windows binary packages on this platform"
 msgstr ""
-"impossible d'installer les packages Windows binaire sur cette architecture"
+"impossible d'installer les packages Windows binaires sur cette plateforme"
 
 msgid ""
 "This version of R is not set up to install source packages\n"
@@ -835,13 +802,11 @@ msgstr ""
 "Cette version de R n'est pas configurée pour installer les packages source\n"
 "Si elle vient d'un RPM, vous avez peut-être besoin du RPM R-devel"
 
-#, fuzzy
 msgid "installation of package %s had non-zero exit status"
-msgstr "l'installation du package '%s' a eu un statut de sortie non nul"
+msgstr "l'installation du package %s a eu un statut de sortie non nul"
 
-#, fuzzy
 msgid "unable to create temporary directory %s"
-msgstr "impossible de créer le répertoire temporaire '%s'"
+msgstr "impossible de créer le répertoire temporaire %s"
 
 msgid ""
 "installation of one of more packages failed,\n"
@@ -860,9 +825,8 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "aucun objet de nom '%s' à afficher"
 
-#, fuzzy
 msgid "'file' must be \"\" or an open connection object"
-msgstr "'file' doit être une chaîne de caractères ou une connexion"
+msgstr "'file' doit être \"\" ou un objet connexion"
 
 msgid "must have max > min"
 msgstr "doit avoir max > min"
@@ -873,46 +837,38 @@ msgstr "'pb' n'est pas un objet de classe \"txtProgressBar\""
 msgid "cannot determine a usable name"
 msgstr "impossible de trouver un nom utilisable"
 
-#, fuzzy
 msgid "Created file named %s."
-msgstr "Création du fichier '%s'"
+msgstr "Création du fichier %s."
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Editez le fichier et déplacez-le dans le répertoire approprié"
 
-#, fuzzy
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
-"pas de documentation de type '%s' et de thème '%s' (ou erreur de traitement "
-"de l'aide)"
+"pas de documentation de type %s et de thème %s (ou erreur de traitement de "
+"l'aide)"
 
-#, fuzzy
 msgid ""
 "the object of class \"%s\" in the function call %s could not be used as a "
 "documentation topic"
 msgstr ""
-"l'objet de la classe \"%s\" dans l'appel de fonction '%s' n'a pas pu être "
+"l'objet de la classe \"%s\" dans l'appel de fonction %s n'a pas pu être "
 "utilisé comme thème de documentation"
 
-#, fuzzy
 msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
-"aucune méthode pour '%s' et aucune documentation à son sujet en tant que "
+"aucune méthode pour %s et aucune documentation à son sujet en tant que "
 "fonction"
 
-#, fuzzy
 msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr ""
-"erreur lors de la tentative d'évaluation d'expression pour l'argument "
-"'%s' (%s)"
+"erreur lors de la tentative d'évaluation d'expression pour l'argument %s (%s)"
 
-#, fuzzy
 msgid "no method defined for function %s and signature %s"
-msgstr "aucune méthode définie pour la fonction '%s' et pour la signature '%s'"
+msgstr "aucune méthode définie pour la fonction %s et pour la signature %s"
 
-#, fuzzy
 msgid "no documentation for function %s and signature %s"
-msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
+msgstr "pas de documentation pour la fonction %s et pour la signature %s"
 
 msgid "No DIF data on clipboard"
 msgstr "Pas de données DIF dans le presse-papier"
@@ -1110,21 +1066,18 @@ msgstr "le chemin d'accès au fichier est trop long"
 msgid "linked path is too long"
 msgstr "le chemin de lien est trop long"
 
-#, fuzzy
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"la vignette '%s' a été trouvée plusieurs fois,\n"
-"utilisation de celle trouvée dans '%s'"
+"la vignette %s a été trouvée plusieurs fois,\n"
+"utilisation de celle trouvée dans %s"
 
-#, fuzzy
 msgid "vignette %s not found"
-msgstr "vignette '%s' introuvable"
+msgstr "vignette %s introuvable"
 
-#, fuzzy
 msgid "vignette %s has no PDF"
-msgstr "la vignette '%s' n'a pas de PDF"
+msgstr "la vignette %s n'a pas de PDF"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() ne peut pas être utilisé en mode non-interactif"
@@ -1197,10 +1150,9 @@ msgstr "le téléchargement a a eu un statut de sortie non nul"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' a renvoyé un code de sortie non nul %d"
 
-#, fuzzy
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
-"le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
+"le package %s a été décompressé et les sommes MD5 ont été vérifiées avec "
 "succés"
 
 msgid "ERROR: failed to lock directory"
@@ -1216,13 +1168,11 @@ msgstr ""
 msgid "ERROR: failed to create lock directory"
 msgstr "ERREUR : impossible de créer le répertoire verrouillé"
 
-#, fuzzy
 msgid "restored %s"
-msgstr "'%s' restauré"
+msgstr "%s restauré"
 
-#, fuzzy
 msgid "unable to move temporary installation %s to %s"
-msgstr "impossible de déplacer l'installation temporaire '%s' vers '%s'"
+msgstr "impossible de déplacer l'installation temporaire %s vers %s"
 
 msgid "cannot remove prior installation of package"
 msgstr "impossible de supprimer l'installation précédente du package"
@@ -1236,29 +1186,24 @@ msgstr "'memory.limit()' est spécifique à Windows"
 msgid "method 'mailx' is Unix-only"
 msgstr "la méthode 'mailx' n'est valable que sous Unix"
 
-#, fuzzy
 msgid ""
 "If nothing happens, you should open\n"
 "%s yourself"
 msgstr ""
 "Si rien ne se passe, vous devrez ouvrir\n"
-"'%s' vous-même"
+"%s vous-même"
 
-#, fuzzy
 msgid "zipfile %s not found"
-msgstr "fichier zip '%s' introuvable"
+msgstr "fichier zip %s introuvable"
 
-#, fuzzy
 msgid "failed to create %s"
-msgstr "la création de '%s' a échoué"
+msgstr "la création de %s a échoué"
 
-#, fuzzy
 msgid "there is no 'libs' directory in package %s"
-msgstr "aucun répertoire 'libs' n'est trouvé dans le package '%s'"
+msgstr "aucun répertoire 'libs' n'est trouvé dans le package %s"
 
-#, fuzzy
 msgid "cannot remove prior installation of package %s"
-msgstr "impossible de supprimer l'installation précédente du package '%s'"
+msgstr "impossible de supprimer l'installation précédente du package %s"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() ne peut être utilisé en mode non interactif"
@@ -1294,20 +1239,17 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "installation de la dépendance %s"
 msgstr[1] "installation des dépendances %s"
 
-#, fuzzy
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
-msgstr[0] ""
-"l'élément '%s' de 'lib' n'est pas un répertoire ouvrable en écriture"
+msgstr[0] "l'élément %s de 'lib' n'est pas un répertoire ouvrable en écriture"
 msgstr[1] ""
-"les éléments '%s' de 'lib' ne sont pas des répertoires ouvrables en écriture"
+"les éléments %s de 'lib' ne sont pas des répertoires ouvrables en écriture"
 
-#, fuzzy
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
+msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
-"les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+"les packages %s sont en cours d'utilisation et ne seront pas installés"
 
 #~ msgid "Use either 'given' or 'first'/'middle' but not both."
 #~ msgstr ""

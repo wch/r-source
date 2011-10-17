@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:08\n"
-"PO-Revision-Date: 2011-10-13 22:08\n"
+"POT-Creation-Date: 2011-10-17 10:14\n"
+"PO-Revision-Date: 2011-10-17 10:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -609,6 +609,12 @@ msgstr "directory ‘%s’ already exists"
 
 msgid "Creating DESCRIPTION ..."
 msgstr "Creating DESCRIPTION ..."
+
+msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+msgstr "From R 2.14.0 on, every package gets a NAMESPACE."
+
+msgid "Argument 'namespace' is deprecated."
+msgstr "Argument ‘namespace’ is deprecated."
 
 msgid "Creating NAMESPACE ..."
 msgstr "Creating NAMESPACE ..."
