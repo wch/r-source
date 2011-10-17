@@ -394,7 +394,14 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 DL_FUNC ptr_R_ProcessEvents;
 void R_ProcessEvents(void)
 {
+#if HAVE_AQUA
+    /* disable ProcessEvents in child,
+       since we can't call CoreFoundation there. */
+    if (ptr_R_ProcessEvents && !R_isForkedChild) ptr_R_ProcessEvents();
+#else
+    /* We might in due course want to always inhibit in a child */
     if (ptr_R_ProcessEvents) ptr_R_ProcessEvents();
+#endif
     R_PolledEvents();
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
 	double cpu, data[5];

@@ -5286,11 +5286,11 @@ needed is a @LaTeX{} installation.
 
 It can be very helpful to prepare @file{.Rd} files using a editor which
 knows about their syntax and will highlight commands, indent to show the
-structure and detect mis-matched braces.
+structure and detect mis-matched braces, and so on.
 
 The system most commonly used for this is some version of
-@command{Emacs} with the @pkg{ESS} package
-(@uref{http://ess.r-project.org/}: it is often is installed with
+@command{Emacs} (including @command{XEmacs}) with the @acronym{ESS}
+package (@uref{http://ess.r-project.org/}: it is often is installed with
 @command{Emacs} but may need to be loaded, or even installed
 separately).
 
@@ -5301,8 +5301,10 @@ Tinn-R (@uref{http://sourceforge.net/projects/tinn-r/}).
 People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
+Some @R{} front-ends provide editing support for  @file{.Rd} files, for
+example RStudio (@url{http://rstudio.org/}).
 
-@node Tidying and profiling R code, Debugging, Writing R documentation files, Top
+@Node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
 
 @menu
@@ -5372,14 +5374,14 @@ and run @R{} with this as the source file, for example by @kbd{R
 @file{new.myfuns.R} will contain the functions in alphabetical order in
 the standard layout.  Warning:  comments in your functions will be lost.
 
-The standard format provides a good starting point for further
-tidying. Although the deparsing cannot do so, we recommend the
-consistent use of the preferred assignment operator @samp{<-} (rather
-than @samp{=}) for assignment. Many package authors use a version of
-Emacs (on a Unix-alike or Windows) to edit @R{} code, using the ESS[S]
-mode of the @acronym{ESS} Emacs package.  See @ref{R coding standards,
-, R coding standards, R-ints, R Internals} for style options within
-the ESS[S] mode recommended for the source code of @R{} itself.
+The standard format provides a good starting point for further tidying.
+Although the deparsing cannot do so, we recommend the consistent use of
+the preferred assignment operator @samp{<-} (rather than @samp{=}) for
+assignment.  Many package authors use a version of Emacs (on a
+Unix-alike or Windows) to edit @R{} code, using the ESS[S] mode of the
+@acronym{ESS} Emacs package.  See @ref{R coding standards, , R coding
+standards, R-ints, R Internals} for style options within the ESS[S] mode
+recommended for the source code of @R{} itself.
 
 
 

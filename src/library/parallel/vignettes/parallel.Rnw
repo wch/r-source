@@ -111,7 +111,11 @@ processes.  They can be created in one of three ways:
 
   Note that as it does share the complete process, it also shares any
   GUI elements, for example an \R{} console and on-screen devices.
-  This can cause havoc.
+  This can cause havoc.\footnote{Some precautions are taken on Mac OS
+    X: for example the event loops for \command{R.app} and the
+    \code{quartz} device are inhibited.  This information is available
+    at C level in the \code{Rboolean} variable
+    \code{R\_isForkedChild}.}
 
   There needs to be a way to communicate between master and worker.
   Once again there are several possibilities since master and workers
@@ -268,8 +272,11 @@ unlike the versions in \pkg{multicore} these default to 2 cores, but
 this can be controlled by setting \code{options("mc.cores")}, and that
 takes its default from environment variable \code{MC\_CORES} when the
 package is loaded.  (Setting this to \code{1} inhibits parallel
-operation: there are stub functions on Windows which force
-\code{mc.cores = 1}.)
+operation: there are stub versions of these functions on Windows which
+force \code{mc.cores = 1}.)
+
+Note the earlier comments about using these functions in a GUI
+environment.
 
 \section{Random-number generation}
 
