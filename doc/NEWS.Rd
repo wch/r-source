@@ -46,12 +46,16 @@
       \samp{"ps"} are defunct.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives are error if no vector column is
       selected, rather than returning a 1-column data frame contrary to
       its documentation.
+
+      \item \code{str(x, width)} now \dQuote{obeys} its \code{width}
+      argument also for function headers
+      and other objects \code{x}, where \code{deparse()} is applied.
     }
   }
 }
@@ -724,11 +728,11 @@
       \env{_R_CHECK_COMPACT_DATA2_} is now true: thus if using the newer
       forms of compression introduced in \R 2.10.0 would be beneficial
       is now checked (by default).
-      
+
       \item Reference output for a vignette can be supplied when
       checking a package by \command{R CMD check}: see \sQuote{Writing R
 	Extensions}.
-      
+
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
       environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
@@ -802,7 +806,7 @@
       \code{x}, instead of simply using \code{sapply}.
       In the same spirit, \code{median(x)} now gives an error for a data
       frame \code{x} (it often gave nonsensical results).
-      
+
       \item The \code{keep.source} argument to \code{library()} and
       \code{require()} is deprecated: it was only used for packages
       installed without lazy-loading, and now all packages are
@@ -936,7 +940,7 @@
       labelled the wrong axis. (\PR{14699})
 
       \item Creating a connection might fail under \code{gctorture(TRUE)}.
-      
+
       \item \code{stack()} and \code{unstack()} converted character
       columns to factors.  \code{unstack()} sometimes produced incorrect
       results (a list or a vector) if the factor on which to un-split

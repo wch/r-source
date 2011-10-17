@@ -177,6 +177,7 @@ str.default <-
     has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
+    deParse <- function(.) deparse(., width.cutoff = max(20, width - 10))
 
     if (is.null(object))
 	cat(" NULL\n")
@@ -230,8 +231,8 @@ str.default <-
 	return(invisible())
     }
     else if(is.function(object)) {
-	cat(if(is.null(ao <- args(object))) deparse(object)
-	else { dp <- deparse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
+	cat(if(is.null(ao <- args(object))) deParse(object)
+	else { dp <- deParse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
     } else if(is.list(object)) {
 	i.pl <- is.pairlist(object)
 	is.d.f <- is.data.frame(object)
@@ -320,9 +321,9 @@ str.default <-
 			       call = " call",
 			       language = " language",
 			       symbol = " symbol",
-			       expression = " ",# "expression(..)" by deparse(.)
+			       expression = " ",# "expression(..)" by deParse(.)
 			       name = " name",
-			       ##not in R:argument = "",# .Argument(.) by deparse(.)
+			       ##not in R:argument = "",# .Argument(.) by deParse(.)
 			       ## in R (once):	comment.expression
 
 			       ## default :
@@ -440,7 +441,7 @@ str.default <-
 		##give.mode <- !is.vector(object)# then it has not yet been done
 		if(mod == "(") give.mode <- TRUE
 		typ <- typeof(object)
-		object <- deparse(object)
+		object <- deParse(object)
 
 		le <- length(object) # is > 1 e.g. for {A;B} language
 		format.fun <- function(x)x
@@ -456,12 +457,12 @@ str.default <-
 		    }
 		}
 	    } else if (mod == "expression") {
-		format.fun <- function(x) deparse(as.expression(x))
+		format.fun <- function(x) deParse(as.expression(x))
 		v.len <- round(.75 * v.len)
 	    } else if (mod == "name"){
 		object <- paste(object)#-- show `as' char
 	    } else if (mod == "argument"){
-		format.fun <- deparse
+		format.fun <- deParse
 	    } else {
 		give.mode <- TRUE
 	    }
