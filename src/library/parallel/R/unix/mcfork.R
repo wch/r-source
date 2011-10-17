@@ -22,10 +22,17 @@
 
 mc_pids <- new.env()
 assign("pids", integer(), envir = mc_pids)
+clean_pids <- function(e) {
+    pids <- get("pids", envir = e)
+    if(length(pids)) {
+        library.dynam("tools", "tools", .Library)
+        .Call("ps_kill", pids, 9L, PACKAGE = "tools")
+    }
+}
 
 mcfork <- function() {
     r <- .Call(C_mc_fork, PACKAGE = "parallel")
-#    assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
+    assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
     structure(list(pid = r[1L], fd = r[2:3]),
               class = c(if(r[1L]) "childProcess"
                         else "masterProcess", "process"))
