@@ -38,7 +38,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
   (e.g. hyperthreaded) CPUs.  Unfortunately on Windows only the number
   of logical CPUS seems to be available on desktop versions.
 
-  Currrenly \code{logical} only makes a difference on Solaris: there
+  Currrently \code{logical} only makes a difference on Solaris: there
   \code{logical = FALSE} returns the number of physical CPUs (not cores)
   and \code{logical = TRUE} returns the number of logical CPUs, which is
   the number of cores on AMD/Intel hardware, but the number of available

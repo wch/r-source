@@ -22,6 +22,7 @@
     cores <- getOption("mc.cores", NULL)
     if(is.null(cores) && !is.na(nc <- as.integer(Sys.getenv("MC_CORES"))))
         options("mc.cores" = nc)
+    if(.Platform$OS.type == "unix") reg.finalizer(mc_pids, clean_pids, TRUE)
 }
 
 .onUnload <-
