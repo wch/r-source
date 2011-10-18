@@ -93,9 +93,10 @@
 
       \item There is a new package \pkg{parallel}.
 
-      It incorporates (slightly revised) copies of packages \pkg{multicore}
-      and \pkg{snow} (excluding MPI, PVM and NWS clusters).  Code written to
-      use those packages should work unchanged (apart from changing any
+      It incorporates (slightly revised) copies of packages
+      \pkg{multicore} and \pkg{snow} (excluding MPI, PVM and NWS
+      clusters).  Code written to use the higher-level API functions in
+      those packages should work unchanged (apart from changing any
       references to their namespaces to a reference to \pkg{parallel}).
 
       It also contains support for multiple RNG streams following
