@@ -3357,10 +3357,9 @@ From @R{} 2.10.0 there is a fairly portable way to have arbitrary text
 in character strings (only) in your @R{} code, which is to supply them
 in Unicode as @code{\uxxxx} escapes.  If there are any characters not in
 the current encoding the parser will encode the character string as
-UTF-8 and mark it as such.  A variation of this approach that has worked
-for Latin-1 text since @R{} 2.5.0 is to enter the text with @code{\x}
-escapes and using @code{Encoding(x) <- "latin1"} to declare its
-encoding, but that may not work in future versions of @R{}.
+UTF-8 and mark it as such.  @R{} sessions running in non-UTF-8 locales
+will if possible re-encode such strings for display (although they may
+contain characters not covered by the fonts in use).
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets the encoding you may need to specify a suitable locale

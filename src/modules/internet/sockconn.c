@@ -109,6 +109,7 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
     int res;
     int nread = 0, n;
 
+    con->incomplete = FALSE;
     do {
 	/* read data into the buffer if it's empty and size > 0 */
 	if (size > 0 && this->pstart == this->pend) {
@@ -121,7 +122,7 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 		con->incomplete = TRUE;
 		return nread;
 	    }
-	    else if (con->blocking && res == 0) /* should mean EOF */
+	    else if (res == 0) /* should mean EOF */
 		return nread;
 	    else if (res < 0) return res;
 	    else this->pend = this->inbuf + res;
@@ -139,7 +140,6 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 	nread += n;
     } while (size > 0);
 
-    con->incomplete = FALSE;
     return nread;
 }
 

@@ -894,6 +894,10 @@
   
       \item On some systems \code{help(".C", help_type = "pdf")} and
       similar generated file names that TeX was unable to handle.
+      
+      \item Non-blocking listening socket connections continued to
+      report \code{isIncomplete} as true even when the peer had closed
+      down.
     }
   }
 }

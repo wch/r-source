@@ -221,10 +221,9 @@ these are sometimes lumped into a pseudo-type @code{FUNSXP} with code
 have formals, body and environment.
 
 @cindex S4 type
-The @code{SEXPTYPE} @code{S4SXP} was introduced in @R{} 2.4.0 for S4
-classes which were previously represented as empty lists, that is
-objects which do not consist solely of a simple type such as an atomic
-vector or function.
+The @code{SEXPTYPE} @code{S4SXP} is for S4 objects which do not consist
+solely of a simple type such as an atomic vector or function.  Prior to
+@R{} 2.4.0 these were represented as empty lists.
 
 
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
@@ -359,19 +358,18 @@ finalize', 'finalize on exit').
 Bit 0 is used by the condition handling system (on a @code{VECSXP}) to
 indicate a calling handler.
 
-As of version 2.4.0 of @R{}, bit 4 is turned on to mark S4 objects.
+Bit 4 is turned on to mark S4 objects.
 
-As from @R{} 2.5.0, bits 2 and 3 for a @code{CHARSXP} are used to note
-that it is known to be in Latin-1 and UTF-8 respectively.  (These are
-not usually set if it is also known to be in ASCII, since code does not
-need to know the charset to handle ASCII strings.  From @R{} 2.8.0 it is
-guaranteed that they will not be set for @code{CHARSXP}s created by @R{}
-itself.)  As from @R{} 2.8.0 bit 5 is used to indicate that a
-@code{CHARSXP} is hashed by its address, that is @code{NA_STRING} or in
-the @code{CHARSXP} cache: this is not serialized.  As from @R{} 2.13.0,
-bit 1 is used to indicate if the @code{CHARSXP} should be treated as a
-set of bytes, not necessarily representing a character in any known
-encoding.
+Bits 1, 2, 3 and 5 are used for a @code{CHARSXP} to denote its encoding.
+Bit 1 indicates the @code{CHARSXP} should be treated as a set of bytes,
+not necessarily representing a character in any known encoding.  Bits 2
+and 3 are used to indicate that it is known to be in Latin-1 and UTF-8
+respectively.
+
+Bit 5 for a @code{CHARSXP} indicates that it is hashed by its address,
+that is @code{NA_STRING} or in the @code{CHARSXP} cache (this is not
+serialized).  Only exceptionally is a @code{CHARSXP} not hashed, and
+this should never happen in end-user code.
 
 @node The 'data', Allocation classes, Rest of header, SEXPs
 @subsection The `data'
@@ -598,8 +596,7 @@ However, the notion of variable lookup is more general in @R{}, hence
 the plural in the title of this subsection.  Since environments have
 enclosures, from any environment there is a search path found by looking
 in the frame, then the frame of its enclosure and so on.  Since loops
-are not allowed, this process will eventually terminate: until @R{}
-2.2.0 it always terminated at the base environment, but nowadays it can
+are not allowed, this process will eventually terminate: it can
 terminate at either the base environment or the empty environment.  (It
 can be conceptually simpler to think of the search always terminating at
 the empty environment, but with an optimization to stop at the base
@@ -1068,12 +1065,10 @@ a function, with comments in the code about @code{warning},
 (Since the C-level function @code{eval} sets @code{R_Visible}, this
 could apply to any function calling it.  Since it is called when
 evaluating promises, even object lookup can change @code{R_Visible}.)
-From @R{} 2.1.0 internal functions that were marked to set
-@code{R_Visible = FALSE} enforced this when the function returned.  As
-from @R{} 2.5.0 both internal and primitive functions force the
-documented setting of @code{R_Visible} on return, unless the C code is
-allowed to change it (the exceptions above are indicated by
-@code{PRIMPRINT} having value 2).
+As from @R{} 2.5.0 internal and primitive functions force the documented
+setting of @code{R_Visible} on return, unless the C code is allowed to
+change it (the exceptions above are indicated by @code{PRIMPRINT} having
+value 2).
 
 The actual autoprinting is done by @code{PrintValueEnv} in file
 @file{print.c}.  If the object to be printed has the S4 bit set and S4
@@ -1276,9 +1271,9 @@ the @R{} command line.  (Other ways are recorded on the help page for
 @code{Encoding}.)
 
 It is not necessary to declare the encoding of ASCII strings as they
-will work in any locale.  As from @R{} 2.8.0, ASCII strings should never
-have a marked encoding, as any encoding will be ignored when entering
-such strings into the @code{CHARSXP} cache.
+will work in any locale.  ASCII strings should never have a marked
+encoding, as any encoding will be ignored when entering such strings
+into the @code{CHARSXP} cache.
 
 The rationale behind considering only UTF-8 and Latin-1 is that most
 systems are capable of producing UTF-8 strings and this is the nearest
@@ -1302,29 +1297,26 @@ encodings: there are some notes as to which at the top of file
 
 Graphics devices are offered the possibility of handing UTF-8-encoded
 strings without re-encoding to the native character set, by setting
-@code{hasTextUTF8} to be @samp{TRUE}@footnote{To maximize
-back-compatibility with devices installed prior to @R{} 2.7.0 it has to
-be exactly that value: all others are equivalent to @samp{FALSE}.} and
-supplying functions @code{textUTF8} and @code{strWidthUTF8} that expect
-UTF-8-encoded inputs.  Normally the symbol font is encoded in Adobe
-Symbol encoding, but that can be re-encoded to UTF-8 by setting
-@code{wantSymbolUTF8} to @samp{TRUE}.  The Windows' port of
-cairographics has a rather peculiar assumption: it wants the symbol font
-to be encoded in UTF-8 as if it were encoded in Latin-1 rather than
-Adobe Symbol: this is selected by @code{wantSymbolUTF8 = NA_LOGICAL} (as
-from @R{} 2.13.1).
+@code{hasTextUTF8} to be @samp{TRUE} and supplying functions
+@code{textUTF8} and @code{strWidthUTF8} that expect UTF-8-encoded
+inputs.  Normally the symbol font is encoded in Adobe Symbol encoding,
+but that can be re-encoded to UTF-8 by setting @code{wantSymbolUTF8} to
+@samp{TRUE}.  The Windows' port of cairographics has a rather peculiar
+assumption: it wants the symbol font to be encoded in UTF-8 as if it
+were encoded in Latin-1 rather than Adobe Symbol: this is selected by
+@code{wantSymbolUTF8 = NA_LOGICAL} (as from @R{} 2.13.1).
 
 Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it is not normally so at least for Western versions of Windows,
 despite some claims to the contrary on the Microsoft website.} strings.
 @R{} (being written in standard C) would not work internally with UCS-2
-without extensive changes.  As from @R{} 2.7.0 the @file{Rgui}
-console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
-but communicates with the @R{} engine in the native encoding.  To allow
-UTF-8 strings to be printed in UTF-8 in @file{Rgui.exe}, an escape
-convention is used (see header file @file{rgui_UTF8.h}) which is used by
-@code{cat}, @code{print} and autoprinting.
+without extensive changes.  The @file{Rgui} console@footnote{but not the
+GraphApp toolkit.} uses UCS-2 internally, but communicates with the @R{}
+engine in the native encoding.  To allow UTF-8 strings to be printed in
+UTF-8 in @file{Rgui.exe}, an escape convention is used (see header file
+@file{rgui_UTF8.h}) which is used by @code{cat}, @code{print} and
+autoprinting.
 
 `Unicode' (UCS-2LE) files are common in the Windows world, and
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
@@ -1339,29 +1331,15 @@ A global cache for @code{CHARSXP}s created by @code{mkChar} was
 introduced in @R{} 2.6.0 -- the cache ensures that most @code{CHARSXP}s
 with the same contents share storage (`contents' including any declared
 encoding).  Not all @code{CHARSXP}s are part of the cache -- notably
-@samp{NA_STRING} is not.
-
-In @R{} 2.6.x and 2.7.x character strings created by @code{mkCharLen}
-were not part of the cache: these were intended to be those containing
-embedded nuls.  As from @R{} 2.8.0 the cache can handle any content,
-although embedded nuls are now disallowed.
-
-There are a few other ways in which @code{CHARSXP}s could or can escape
-the cache.  @code{CHARSXP}s reloaded from the @code{save} formats of
-@R{} prior to 0.99.0 are not cached (since the code used is frozen and
-few examples still exist).  Prior to @R{} 2.8.0, @code{CHARSXP}s were
-used to hold the finalizer function of a C finalizer (uncached) -- now
-@code{RAWSXP}s are used.  Finally, user code could create uncached
-@code{CHARSXP}s via @code{allocString} (removed in @R{} 2.8.0) and
-@code{allocVector(CHARSXP ...)} (deprecated in @R{} 2.8.0, removed in @R{}
-2.9.0).
+@samp{NA_STRING} is not. @code{CHARSXP}s reloaded from the @code{save}
+formats of @R{} prior to 0.99.0 are not cached (since the code used is
+frozen and few examples still exist).
 
 @findex mkCharLenCE
 The cache records the encoding of the string as well as the bytes: all
 requests to create a @code{CHARSXP} should be @emph{via} a call to
-@code{mkCharLenCE}.  As from @R{} 2.8.0 any encoding given in
-@code{mkCharLenCE} call will be ignored if the string's bytes are all
-ASCII characters.
+@code{mkCharLenCE}.  Any encoding given in @code{mkCharLenCE} call will
+be ignored if the string's bytes are all ASCII characters.
 
 
 @node Warnings and errors, S4 objects, The CHARSXP cache, R Internal Structures
@@ -1431,12 +1409,6 @@ has not been set.]
 
 @node Representation of S4 objects, S4 classes, S4 objects, S4 objects
 @subsection Representation of S4 objects
-
-[The internal representation of objects from S4 classes changed in @R{}
-2.4.0.  It is possible that objects from earlier representations still
-exist, but there is no guarantee that they will be handled correctly.
-An attempt is made to detect old-style S4 objects and warn when binary
-objects are @code{load}ed or a workspace is restored.]
 
 S4 objects can be of any @code{SEXPTYPE}.  They are either an object of
 a simple type (such as an atomic vector or function) with S4 class
@@ -1577,10 +1549,9 @@ its C code contains a direct call to @code{R_possible_dispatch}.
 
 The primitive @code{as.double} is special, as @code{as.numeric} and
 @code{as.real} are copies of it.  The @pkg{methods} package code partly
-refers to generics by name and partly by function, and was modified in
-@R{} 2.6.0 to map @code{as.double} and @code{as.real} to
-@code{as.numeric} (since that is the name used by packages exporting
-methods for it).
+refers to generics by name and partly by function, and maps
+@code{as.double} and @code{as.real} to @code{as.numeric} (since that is
+the name used by packages exporting methods for it).
 
 Some elements of the language are implemented as primitives, for example
 @code{@}}.  This includes the subset and subassignment `functions' and
@@ -1605,12 +1576,11 @@ Specifically, there are entry points @code{Rm_malloc}, @code{Rm_free},
 @file{src/gnuwin32/malloc.c}.  This was done for two reasons.  The
 primary motivation was performance: the allocator provided by MSVCRT
 @emph{via} MinGW was far too slow at handling the many small allocations
-that the current (since @R{} 1.2.0) allocation system for
-@code{SEXPREC}s uses.  As a side benefit, we can set a limit on the
-amount of allocated memory: this is useful as whereas Windows does
-provide virtual memory it is relatively far slower than many other @R{}
-platforms and so limiting @R{}'s use of swapping is highly advantageous.
-The high-performance allocator is only called from
+that the allocation system for @code{SEXPREC}s uses.  As a side benefit,
+we can set a limit on the amount of allocated memory: this is useful as
+whereas Windows does provide virtual memory it is relatively far slower
+than many other @R{} platforms and so limiting @R{}'s use of swapping is
+highly advantageous.  The high-performance allocator is only called from
 @file{src/main/memory.c}, @file{src/main/regex.c}, @file{src/extra/pcre}
 and @file{src/extra/xdr}: note that this means that it is not used in
 packages.
@@ -1724,10 +1694,7 @@ The memory used by @code{R_alloc} is allocated as @R{} vectors, of type
 @code{RAWSXP} for `small' allocations (less than 2^31 - 1 bytes) and of
 type @code{REALSXP} for allocations up to 2^34 - 1 bytes on 64-bit
 machines.  Thus the allocation is in units of 8 bytes, and is rounded
-up.  (Prior to @R{} 2.6.0 @code{CHARSXP}s were used, and so one byte was
-added prior to rounding up.  This had the effect of over-allocating
-areas for @code{double}s by one and thereby masked several subtle
-programming errors in package code.)
+up.
 
 The vectors allocated are protected via the setting of @code{R_VStack},
 as the garbage collector marks everything that can be reached from that
@@ -1832,20 +1799,6 @@ The Hershey font databases and the code to draw with them.
 the @code{X11}, @code{pango}, @code{cairo}, @code{jpeg}, @code{libpng}
 and @code{libtiff} libraries.
 
-@item @file{Rbitmap.dll}
-(Windows only.)  The code for the BMP, JPEG, PNG and TIFF devices and
-for saving on-screen graphs to those formats. This is technically
-optional, and needs source code not in the tarball.
-
-@c @item @file{Rchtml.dll}
-@c (Windows only, up to @R{} 2.9.x.)  A link to an ActiveX control that
-@c displays Compiled @HTML{} help.  This is optional, and only compiled if
-@c CHTML is specified.
-
-@c @item @file{iconv.dll}
-@c (Windows only.)  A DLL compiled via Visual C++ which contains the
-@c routines to convert between character sets.
-
 @item @file{internet2.dll}
 (Windows only.)  An alternative version of the internet access routines,
 compiled against Internet Explorer internals (and so loads
@@ -1943,11 +1896,11 @@ compiling the @R{} sources on Windows.
 @section Lazy loading
 
 Lazy loading was introduced in @R{} 2.0.0, for code in packages and for
-datasets in packages (both are optional, but it is the default for
-code).  When a package/namespace which uses it is loaded, the
-package/namespace environment is populated with promises for all the
-named objects: when these promises are evaluated they load the actual
-code from a database.
+datasets in packages (the latter is still optional, but code is always
+lazy-loaded as from @R{} 2.14.0).  When a package/namespace which uses it
+is loaded, the package/namespace environment is populated with promises
+for all the named objects: when these promises are evaluated they load
+the actual code from a database.
 
 There are separate databases for code and data, stored in the @file{R}
 and @file{data} subdirectories.  The database consists of two files,
@@ -1969,7 +1922,7 @@ file.  Element @code{variables} has an entry for each named object:
 @code{references} serializes a temporary environment used when named
 environments are added to the database.  @code{compressed} is a logical
 indicating if the serialized objects were compressed: compression is
-always used nowadays. @R{} 2.10.0 adds the values @code{compressed = 2}
+always used nowadays. @R{} 2.10.0 added the values @code{compressed = 2}
 and @code{3} for @command{bzip2} and @command{xz} compression (with the
 possibility of future expansion to other methods): these formats add a
 fifth byte to the header for the type of compression, and stores
@@ -1990,9 +1943,9 @@ Lazy-load databases of less than 10MB are cached in memory at first use:
 this was found necessary when using file systems with high latency
 (removable devices and network-mounted file systems on Windows).
 
-The same database mechanism is used to store parsed @file{Rd} files as
-from @R{} 2.10.0.  One or all of the parsed objects is fetched by a call
-to @code{tools:::fetchRdDB}.
+The same database mechanism is used to store parsed @file{Rd} files.
+One or all of the parsed objects is fetched by a call to
+@code{tools:::fetchRdDB}.
 
 @node .Internal vs .Primitive, Internationalization in the R sources, R Internal Structures, Top
 @chapter @code{.Internal} vs @code{.Primitive}
@@ -2104,8 +2057,8 @@ Im  Re  Arg  Conj  Mod
 @end group
 @end example
 
-@code{log} is a function of one or two arguments, but was made
-primitive in @R{} 2.6.0 with named argument matching.
+@code{log} is a primitive function of one or two arguments with named
+argument matching.
 
 @code{trunc} is a difficult case: it is a primitive that can have one
 or more arguments: the default method handled in the primitive has
@@ -2472,9 +2425,6 @@ The structure of a @emph{source} packages is described in @ref{Creating
 R packages, , Creating R packages, R-exts, Writing R Extensions}: this
 chapter is concerned with the structure of @emph{installed} packages.
 
-The description here is for @R{} 2.10.0 and later: the way help was
-installed differed in earlier versions.
-
 An installed package has a top-level file @file{DESCRIPTION}, a copy of
 the file of that name in the package sources with a @samp{Built} field
 appended, and file @file{INDEX}, usually describing the objects on which
@@ -2536,9 +2486,9 @@ sources: there should be no reference to these files in non-base
 packages.
 
 File @file{package.rds} is a dump of information extracted from the
-@file{DESCRIPTION} file.  It is a list of several components.  The first,
-@samp{DESCRIPTION}, is a character vector, the @file{DESCRIPTION} file
-as read by @code{read.dcf}.  Further elements @samp{Depends},
+@file{DESCRIPTION} file.  It is a list of several components.  The
+first, @samp{DESCRIPTION}, is a character vector, the @file{DESCRIPTION}
+file as read by @code{read.dcf}.  Further elements @samp{Depends},
 @samp{Suggests}, @samp{Imports}, @samp{Rdepends} and @samp{Rdepends2}
 record the @samp{Depends}, @samp{Suggests} and @samp{Imports} fields.
 These are all lists, and can be empty.  The first three have an entry
@@ -2549,8 +2499,8 @@ element @samp{name} (the package name) and optional elements @samp{op}
 first version dependency on @R{}, and @samp{Rdepends2} is a list of zero
 or more @R{} version dependencies---each is a three-element list of the
 form described for packages.  Element @samp{Rdepends} is no longer used,
-but it is still needed so @R{} < 2.7.0 can detect that the package was not
-installed for it.
+but it is still potentially needed so @R{} < 2.7.0 can detect that the
+package was not installed for it.
 
 File @file{nsInfo.rds} records a list, a parsed version of the
 @file{NAMESPACE} file.
@@ -2614,7 +2564,7 @@ search for files matching a topic (alias), and read by @code{scan} in
 
 File @file{aliases.rds} is the same information as @file{AnIndex} as a
 named character vector (names the topics, values the file basename), for
-faster access by @R{} >= 2.11.0.
+faster access.
 
 @node Files, Graphics Devices, Package Structure, Top
 @chapter Files
@@ -2853,8 +2803,7 @@ of a would-be writer of a graphics device.
 There are two types used internally which are pointers to structures
 related to graphics devices.
 
-The @code{DevDesc} type@footnote{@code{NewDevDesc} from @R{} 1.4.0,
-renamed in @R{} 2.8.0.} is a structure defined in the header file
+The @code{DevDesc} type is a structure defined in the header file
 @file{R_ext/GraphicsDevice.h} (which is included by
 @file{R_ext/GraphicsEngine.h}).  This describes the physical
 characteristics of a device, the capabilities of the device driver and
@@ -2967,9 +2916,8 @@ The following `capabilities' can be defined for the device's
 
 @itemize
 @item @code{canChangeGamma} --
-@code{Rboolean}: can the display gamma be adjusted?  This is not true
-for any current device, and as from @R{} 2.8.0 there is no user-level
-function to change gamma.  So @samp{FALSE} is the only useful value.
+@code{Rboolean}: can the display gamma be adjusted?  This is now
+ignored, as gamma support has been removed.
 @item @code{canHadj} --
 @code{integer}: can the device do horizontal adjustment of text
 @emph{via} the @code{text} callback, and if so, how precisely? 0 = no
@@ -3063,16 +3011,14 @@ text (it needs to be for e.g. @code{hat(beta)} to work correctly).
 However, the @code{width} is used in plotmath to advance to the next
 character, and so needs to include left and right bearings.
  
-The @emph{interpretation} of @samp{c} depends on the locale.  Using
-@code{c = 0} used to give an indication of the size of the font: it
-often returned the measurements for character @code{"M"}---however it is
-no longer used as from @R{} 2.7.0.  In a single-byte locale values
-@code{32...255} indicate the corresponding character in the locale (if
-present).  For the symbol font (as used by @samp{graphics::par(font=5)},
-@samp{grid::gpar(fontface=5}) and by `plotmath'), values @code{32...126,
-161...239, 241...254} indicate glyphs in the Adobe Symbol encoding.  In
-a multibyte locale, @code{c} represents a Unicode point (except in the
-symbol font).  So the function needs to include code like
+The @emph{interpretation} of @samp{c} depends on the locale.  In a
+single-byte locale values @code{32...255} indicate the corresponding
+character in the locale (if present).  For the symbol font (as used by
+@samp{graphics::par(font=5)}, @samp{grid::gpar(fontface=5}) and by
+`plotmath'), values @code{32...126, 161...239, 241...254} indicate
+glyphs in the Adobe Symbol encoding.  In a multibyte locale, @code{c}
+represents a Unicode point (except in the symbol font).  So the function
+needs to include code like
 
 @example
     Rboolean Unicode = mbcslocale && (gc->fontface != 5);
@@ -3100,7 +3046,7 @@ one, argument @samp{hadj} to @code{text} will be called as @code{0 ,0.5,
 position.  If it is two, continuous values in the range @code{[0, 1]}
 are assumed to be supported.
 
-A new capability in @R{} 2.7.0 (graphics API version 4) is
+A new capability in @R{} 2.7.0 (graphics API version 4) was
 @code{hasTextUTF8}.  If this is true, it has two consequences.  First,
 there are callbacks @code{textUTF8} and @code{strWidthUTF8} that should
 behave identically to @code{text} and @code{strWidth} except that
@@ -3179,9 +3125,8 @@ for multi-line strings.
 @subsection Conventions
 
 The aim is to make the (default) output from graphics devices as similar
-as possible, and further steps were taken in that direction in @R{}
-2.7.0.  Generally people follow the model of the @code{postscript} and
-@code{pdf} devices (which share most of their internal code).
+as possible.  Generally people follow the model of the @code{postscript}
+and @code{pdf} devices (which share most of their internal code).
 
 The following conventions have become established:
 
@@ -3259,8 +3204,8 @@ ensure that drawing is flushed to the screen when called with @code{mode
 = 0}.  It is tempting to use it for some sort of buffering, but note
 that `drawing' is interpreted at quite a low level and a typical single
 figure will stop and start drawing many times.  The buffering introduced
-in the @code{X11()} makes use of @code{mode = 0} to indicate activity:
-it updates the screen after @emph{ca} 100ms of inactivity.
+in the @code{X11()} device makes use of @code{mode = 0} to indicate
+activity: it updates the screen after @emph{ca} 100ms of inactivity.
 
 As from @R{} 2.14.0 this callback need not be supplied if it does nothing.
 
@@ -3338,7 +3283,7 @@ low coverage apart from a few monospaced fonts in a few sizes (which are
 not suitable for graph annotation), and where glyphs are missing what is
 plotted is often quite unsatisfactory.
 
-The approach being taken for @R{} 2.7.0 is to make use of more modern
+The approach being taken as from @R{} 2.7.0 is to make use of more modern
 toolkits, namely @code{cairo} for rendering and @code{Pango} for font
 management---because these are associated with @code{Gtk+2} they are
 widely available.  Cairo supports translucent colours and alpha-blending
@@ -3611,8 +3556,6 @@ errors in running vignettes.
 Default: 10.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
-This was off by default in R versions prior to 2.10.0 as it gave false
-positives.
 Default: true.
 @item _R_CHECK_DOT_INTERNAL_
 Control whether the package code is scanned for @code{.Internal} calls.
@@ -3641,14 +3584,12 @@ Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
 @samp{T}/@samp{F} uses in examples.
 Off by default because this can result in false positives.
 @item _R_CHECK_RD_CHECKRD_MINLEVEL_
-New in @R{} 2.10.0.  Controls the minimum level for reporting warnings
-from @code{checkRd}.
+Controls the minimum level for reporting warnings from @code{checkRd}.
 Default: -1.
 @item _R_CHECK_XREFS_REPOSITORIES_
-New in @R{} 2.10.0.  If set to a non-empty value, a space-separated list
-of repositories to use to determine known packages.
-Default: empty, when the CRAN, Omegahat and Bioconductor repositories
-known to @R{} is used.
+If set to a non-empty value, a space-separated list of repositories to
+use to determine known packages.  Default: empty, when the CRAN,
+Omegahat and Bioconductor repositories known to @R{} is used.
 @item _R_CHECK_SRC_MINUS_W_IMPLICIT_
 Control whether installation output is checked for compilation warnings
 about implicit function declarations (as spotted by GCC with command
@@ -3794,20 +3735,15 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is needed for a few uncommon tools.
+Perl version 5 is needed for a few uncommonly-used tools: @command{make
+install-info} needs Perl installed if there is no command
+@command{install-info} on the system, and for the maintainer-only script
+@file{tools/help2man.pl}.
 @findex Perl
-
-The @R{} Core Team decided that Perl (version 5) can safely be assumed
-for building @R{} from source, building and checking add-on packages,
-and for installing add-on packages from source.  On the other hand, Perl
-cannot be assumed at all for installing @emph{binary} (pre-built)
-versions of add-on packages, or at run time.  (As from @R{} 2.12.0 Perl
-is not normally needed for any of these purposes.)
 
 @item
 Makeinfo version 4.7 or later is needed to build the Info files for the
-@R{} manuals written in the @acronym{GNU} Texinfo system.  (Future
-distributions of @R{} may contain the Info files.)
+@R{} manuals written in the @acronym{GNU} Texinfo system.
 @findex makeinfo
 @end itemize
 
