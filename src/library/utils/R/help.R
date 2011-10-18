@@ -281,8 +281,11 @@ function(x, ...)
 offline_help_helper <- function(texfile, type = "postscript", texinputs = NULL)
 {
     PDF <- type == "pdf"
-    tools::texi2dvi(texfile, pdf = PDF, clean = TRUE, texinputs = texinputs)
-    ofile <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
+    ## Some systems have problems with texfile names like ".C.tex"
+    tf <- tempfile("tex", tmpdir = ".", fileext = ".tex"); on.exit(unlink(tf))
+    file.copy(texfile, tf)
+    tools::texi2dvi(tf, pdf = PDF, clean = TRUE, texinputs = texinputs)
+    ofile <- sub("tex$", if(PDF) "pdf" else "ps", tf)
     if(!PDF) {
         dfile <- sub("tex$", "dvi", texfile)
         on.exit(unlink(dfile))
@@ -297,8 +300,13 @@ offline_help_helper <- function(texfile, type = "postscript", texinputs = NULL)
         }
     } else if(!file.exists(ofile))
         stop(gettextf("creation of %s failed", sQuote(ofile)), domain = NA)
-    if(ofile != basename(ofile)) file.copy(ofile, basename(ofile))
-    message("Saving help page to ", sQuote(basename(ofile)))
+    ofile2 <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
+    if(file.copy(ofile, ofile2)) {
+        unlink(ofile)
+        message("Saving help page to ", sQuote(basename(ofile2)))
+    } else {
+        message("Saving help page to ", sQuote(ofile))
+    }
     invisible()
 }
 

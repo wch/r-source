@@ -946,6 +946,9 @@
       columns to factors.  \code{unstack()} sometimes produced incorrect
       results (a list or a vector) if the factor on which to un-split
       had only one level.
+  
+      \item On some systems \code{help(".C", help_type = "pdf")} and
+      similar generated file names that TeX was unable to handle.
     }
   }
 }
