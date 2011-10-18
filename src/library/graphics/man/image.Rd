@@ -103,6 +103,10 @@ image(x, \dots)
   \code{X11(type = "Xlib")}) which do not support semi-transparent
   colours may emit missing values as white rather than transparent, and
   there may be limitations on the size of a raster image.
+#ifdef windows
+  Problems with the rendering of raster images have been reported using
+  \code{windows()} devices under Remote Desktop.
+#endif
   
   The graphics files in PDF and PostScript can be much smaller under
   this option.
