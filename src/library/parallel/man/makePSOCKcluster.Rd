@@ -27,7 +27,7 @@ stopCluster(cl)
 \arguments{
   \item{spec}{A specification appropriate to the type of cluster.}
   \item{names}{Either a character vector of host names on which to run
-    the worker copies on \R, or a non-negative integer (in which case
+    the worker copies of \R, or a positive integer (in which case
     that number of copies is run on \samp{localhost}).}
 #ifdef unix
   \item{nnodes}{The number of nodes.}
@@ -74,7 +74,7 @@ stopCluster(cl)
       Defaults to the full path on the master.}
     \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
       worker processes, e.g.{} \code{15} for a low priority.
-      OS-dependent.}
+      OS-dependent: see \code{\link{psnice}} for details.}
     \item{\code{rshcmd}}{The command to be run on the master to launch a
       process on another host.  Defaults to \command{ssh}.}
     \item{\code{user}}{The user name to be used when communicating with
