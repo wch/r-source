@@ -410,7 +410,7 @@ a \emph{parametric bootstrap}.  The non-parallel form is
 <<>>=
 library(boot)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-cd4.mle <- list(m = mean(cd4), v = var(cd4))
+cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
 cd4.boot <- boot(cd4, corr, R = 999, sim = "parametric",
                  ran.gen = cd4.rg, mle = cd4.mle)
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
@@ -422,7 +422,7 @@ runs, and we will illustrate two runs of 500 simulations each:
 <<>>=
 library(boot)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-cd4.mle <- list(m = mean(cd4), v = var(cd4))
+cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
 mc <- 2
 run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
                            ran.gen = cd4.rg, mle = cd4.mle)
@@ -445,7 +445,7 @@ To run this with \code{parLapply} we could take a similar approach by
 run1 <- function(...) {
    library(boot)
    cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-   cd4.mle <- list(m = mean(cd4), v = var(cd4))
+   cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
    boot(cd4, corr, R = 500, sim = "parametric",
         ran.gen = cd4.rg, mle = cd4.mle)
 }
@@ -473,7 +473,7 @@ library(parallel)
 mc <- 2
 cl <- makeCluster(mc)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-cd4.mle <- list(m = mean(cd4), v = var(cd4))
+cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
 clusterExport(cl, c("cd4.rg", "cd4.mle"))
 junk <- clusterEvalQ(cl, library(boot)) # discard result
 clusterSetRNGStream(cl, 123)
