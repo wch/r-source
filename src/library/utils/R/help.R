@@ -294,7 +294,7 @@ offline_help_helper <- function(texfile, type = "postscript", texinputs = NULL)
     tools::texi2dvi(tf, pdf = PDF, clean = TRUE, texinputs = texinputs)
     ofile <- sub("tex$", if(PDF) "pdf" else "ps", tf)
     if(!PDF) {
-        dfile <- sub("tex$", "dvi", texfile)
+        dfile <- sub("tex$", "dvi", tf)
         on.exit(unlink(dfile))
         dvips <- getOption("dvipscmd", default = "dvips")
         res <- system2(dvips, dfile, stdout = FALSE, stderr = FALSE)
@@ -308,7 +308,7 @@ offline_help_helper <- function(texfile, type = "postscript", texinputs = NULL)
     } else if(!file.exists(ofile))
         stop(gettextf("creation of %s failed", sQuote(ofile)), domain = NA)
     ofile2 <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
-    if(file.copy(ofile, ofile2)) {
+    if(file.copy(ofile, ofile2, overwrite = TRUE)) {
         unlink(ofile)
         message("Saving help page to ", sQuote(basename(ofile2)))
     } else {
@@ -316,4 +316,3 @@ offline_help_helper <- function(texfile, type = "postscript", texinputs = NULL)
     }
     invisible()
 }
-
