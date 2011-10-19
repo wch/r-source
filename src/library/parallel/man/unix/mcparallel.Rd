@@ -81,8 +81,8 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }
 \note{
   Package \pkg{multicore} also exported functions \code{collect} and
-  \code{paralllel}.  These names are easily masked: for example package
-  \pkg{lattice} also has a function \code{parallel}, and they are no
+  \code{parallel}.  These names are easily masked: for example package
+  \pkg{lattice} also has a function \code{parallel}, and they are not
   supplied in this package.
 }
 \section{Random numbers}{
@@ -126,7 +126,7 @@ mccollect(p, wait=FALSE)     # will signal the job as terminating
 mccollect(p, wait=FALSE)     # there is no longer such a job
 
 \dontshow{set.seed(123, "L'Ecuyer"); mc.reset.stream()}
-# a naive mcparallelized lapply can be created using mcparallel alone:
+# a naive parallel lapply can be created using mcparallel alone:
 jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name = x))
 mccollect(jobs)
 }

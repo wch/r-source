@@ -82,7 +82,7 @@ stopCluster(cl)
     \item{\code{manual}}{Logical.  If true the workers will need to be
       run manually.}
     \item{\code{methods}}{Logical.  If true (default) the workers will
-      load the \pkg{methods} package: not loading it save ca 50\% of the
+      load the \pkg{methods} package: not loading it saves ca 50\% of the
       startup time of the cluster.}
   }
 

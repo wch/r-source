@@ -12,7 +12,7 @@
 \title{Implementation of Pierre L'Ecuyer's RngStreams}
 \description{
   This is an \R re-implementation of Pierre L'Ecuyer's \sQuote{RngStreams}
-  multiple streams of (pseudo-)random numbers.
+  multiple streams of pseudo-random numbers.
 }
 \usage{
 nextRNGStream(seed)

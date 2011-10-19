@@ -68,16 +68,17 @@ parCapply(cl, x, FUN, ...)
   arguments \code{seq[[1]]} and \code{...}, on the second node with
   \code{seq[[2]]} and \code{...}, and so on, recycling nodes as needed.
 
-  \code{clusterApplyLB} is a load balancing version of \code{clusterApply}.
-  if the length \code{p} of \code{seq} is greater than the number of
-  cluster nodes \code{n}, then the first \code{n} jobs are placed in
-  order on the \code{n} nodes.  When the first job completes, the next
-  job is placed on the available node; this continues until all jobs
-  are complete.  Using \code{clusterApplyLB} can result in better
-  cluster utilization than using \code{clusterApply}.  However,
-  increased communication can reduce performance.  Furthermore, the
-  node that executes a particular job is nondeterministic, which can
-  complicate ensuring reproducibility in simulations.
+  \code{clusterApplyLB} is a load balancing version of
+  \code{clusterApply}.  if the length \code{p} of \code{seq} is greater
+  than the number of cluster nodes \code{n}, then the first \code{n}
+  jobs are placed in order on the \code{n} nodes.  When the first job
+  completes, the next job is placed on the available node; this
+  continues until all jobs are complete.  Using \code{clusterApplyLB}
+  can result in better cluster utilization than using
+  \code{clusterApply}, but increased communication can reduce
+  performance.  Furthermore, the node that executes a particular job is
+  non-deterministic, which can complicate ensuring reproducibility in
+  simulations.
 
   \code{clusterMap} is a multi-argument version of \code{clusterApply},
   analogous to \code{mapply}.  If \code{RECYCLE} is true shorter
@@ -92,7 +93,7 @@ parCapply(cl, x, FUN, ...)
   \code{clusterSplit} splits \code{seq} into one consecutive piece for
   each cluster and returns the result as a list with length equal to the
   number of nodes.  Currently the pieces are chosen to be close
-  to equal in length.
+  to equal in length: the computation is done on the master.
   
   \code{parLapply}, \code{parSapply}, and \code{parApply} are parallel
   versions of \code{lapply}, \code{sapply}, and \code{apply}.
@@ -100,12 +101,9 @@ parCapply(cl, x, FUN, ...)
   \code{parRapply} and \code{parCapply} are parallel row and column
   \code{apply} functions for a matrix \code{x}; they may be slightly
   more efficient than \code{parApply}.
-  
-  An error is signalled on the master if any of the workers produces an
-  error.
 }
 \value{
-  For \code{clusterCall}, code{clusterEvalQ} and \code{clusterSplit}, a
+  For \code{clusterCall}, \code{clusterEvalQ} and \code{clusterSplit}, a
   list with one element per node.
 
   For \code{clusterApply} and \code{clusterApplyLB}, a list the same
@@ -119,20 +117,24 @@ parCapply(cl, x, FUN, ...)
 
   \code{parSapply} and \code{parApply} follow \code{\link{sapply}} and
   \code{\link{apply}} respectively.
+  
+  An error is signalled on the master if any of the workers produces an
+  error.
 }
 \note{
   These functions are almost identical to those in package \pkg{snow}:
   they are copied here to avoid namespace scoping issues.
 
-  One exception: \code{parLapply} has argument \code{X}
-  not \code{x} for consistency with \code{\link{lapply}}.
+  Two exceptions: \code{parLapply} has argument \code{X}
+  not \code{x} for consistency with \code{\link{lapply}}, and
+  \code{parSapply} was updated to match \code{\link{sapply}}.
 }
 \author{
   Luke Tierney and R Core.
 
   Derived from the \pkg{snow} package.
 }
-\examples{\donttest{ ## access to ports might be denied
+\examples{\donttest{## access to ports might be denied
 ## Use option cl.core to choose an appropriate cluster size.
 cl <- makeCluster(getOption("cl.cores", 2))
 
@@ -152,7 +154,7 @@ clusterEvalQ(cl, {
   ## set up each worker.  Could also use clusterExport()
   library(boot)
   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-  cd4.mle <- list(m = mean(cd4), v = var(cd4))
+  cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
   NULL
 })
 res <- clusterEvalQ(cl, boot(cd4, corr, R = 100,
