@@ -2878,8 +2878,8 @@ static void GA_Raster(unsigned int *raster, int w, int h,
         /*
          * Adjust (x, y) for resized and rotated image
          */
-        x -= (newW - imageWidth)/2 - xoff;
-        y -= (newH - imageHeight)/2 + yoff;
+        x -= (newW - imageWidth)/2 + xoff;
+        y -= (newH - imageHeight)/2 - yoff;
 
         image = rotatedRaster;
         imageWidth = newW;
