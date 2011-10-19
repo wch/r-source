@@ -4,21 +4,13 @@ useDynLib("parallel", .registration = TRUE, .fixes = "C_")
 export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
 
 if(tools:::.OStype() == "unix") {
-export(mccollect, mcparallel, mc.reset.stream)
-## multicore interface, used in Modalclust, cMonkey, ddepn, multiPIM
-export(parallel, collect)
-
-## unclear if we should export these.
-## export(children, mcexit, mcfork, mckill, readChild, readChildren,
-##        selectChildren, sendChildStdin, sendMaster)
+    export(mccollect, mcparallel, mc.reset.stream)
 }
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, makeCluster,
-       makePSOCKcluster, mclapply, parApply, parCapply, parLapply,
-       parRapply, parSapply, pvec, stopCluster)
-       export(makeForkCluster)
-
+       makeForkCluster, makePSOCKcluster, mclapply, parApply,
+       parCapply, parLapply, parRapply, parSapply, pvec, stopCluster)
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)

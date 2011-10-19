@@ -74,7 +74,3 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
         res
     }
 }
-
-## for back-compatibility with multicore
-parallel <- mcparallel
-collect <- mccollect

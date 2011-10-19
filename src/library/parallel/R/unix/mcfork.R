@@ -89,7 +89,7 @@ sendMaster <- function(what)
 processID <- function(process) {
     if (inherits(process, "process")) process$pid
     else if (is.list(process)) unlist(lapply(process, processID))
-    else stop("'process' must be of the class \"`process\"")
+    else stop("'process' must be of the class \"process\"")
 }
 
 # unused

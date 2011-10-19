@@ -52,7 +52,9 @@ mc.reset.stream()
 
   \code{clusterSetRNGStream} selects the \code{"L'Ecuyer-CMRG"} RNG and
   then distributes streams to the members of a cluster, optionally
-  setting the seed of the streams by \code{set.seed(iseed)}.
+  setting the seed of the streams by \code{set.seed(iseed)} (otherwise
+  they are set from the current seed of the master process: after
+  selecting the L'Ecuyer generator).
 #ifdef unix
   
   Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
@@ -77,7 +79,10 @@ mc.reset.stream()
   Brian Ripley
 }
 \seealso{
-  \code{\link{RNG}} for \R's built-in random number generators.
+  \code{\link{RNG}} for fuller details of \R's built-in random number
+  generators.
+
+  The vignette for package \pkg{parallel}.
 }
 \note{
   Interfaces to L'Ecuyer's C code are available in CRAN
