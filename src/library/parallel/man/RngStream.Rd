@@ -25,7 +25,7 @@ mc.reset.stream()
   \item{seed}{An integer vector of length 7 as given by
     \code{.Random.seed} when the \samp{"L'Ecuyer-CMRG"} RNG is in use.
     See \code{\link{RNG}} for the valid values.}
-  \item{cl}{A cluster from package \pkg{snow}.}
+  \item{cl}{A cluster from this package or package \pkg{snow}.}
   \item{iseed}{An integer to be supplied to \code{\link{set.seed}}, or
     \code{NULL} not to set reproducible seeds.}
 }
