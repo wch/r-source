@@ -56,7 +56,7 @@ msgstr ""
 msgid "'children' must be a list of processes or a single process"
 msgstr ""
 
-msgid "'process' must be of the class \"`process\""
+msgid "'process' must be of the class \"process\""
 msgstr ""
 
 msgid "'child' must be a valid child process"

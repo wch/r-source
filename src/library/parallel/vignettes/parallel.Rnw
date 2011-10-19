@@ -260,17 +260,17 @@ default being discarded but they can be logged using the
 
 Except on Windows, the package contains a copy of \pkg{multicore}:
 there a few names with the added prefix \code{mc}, e.g.{}
-\code{mccollect} and \code{mcparallel}, (For back-compatibility,
-functions \code{parallel} and \code{collect} are also exported: these
-names are easily masked.)
+\code{mccollect} and \code{mcparallel}.  (\pkg{multicore} used these
+names, but also the versions without the prefix which are too easily
+masked: e.g.{} package \pkg{lattice} has a function \code{parallel}.)
 
-A number of low-level functions from \pkg{multicore} are provided but
-not exported from the name space.
+The low-level functions from \pkg{multicore} are provided but not
+exported from the name space.
 
-There are higher-level functions \code{mclapply} and \code{pvec}:
-unlike the versions in \pkg{multicore} these default to 2 cores, but
-this can be controlled by setting \code{options("mc.cores")}, and that
-takes its default from environment variable \code{MC\_CORES} when the
+There are high-level functions \code{mclapply} and \code{pvec}: unlike
+the versions in \pkg{multicore} these default to 2 cores, but this can
+be controlled by setting \code{options("mc.cores")}, and that takes
+its default from environment variable \code{MC\_CORES} when the
 package is loaded.  (Setting this to \code{1} inhibits parallel
 operation: there are stub versions of these functions on Windows which
 force \code{mc.cores = 1}.)
@@ -346,7 +346,8 @@ and this is is implemented for SNOW clusters in function
 \code{mclapply} (by default).
 
 Apart from \emph{streams} ($2^{127}$ steps apart), there is the concept of
-\emph{sub-streams} starting from seeds $2^{76}$ steps apart.
+\emph{sub-streams} starting from seeds $2^{76}$ steps apart.  Function
+\code{nextRNGSubStream} advances to the next substream.
 
 A direct \R{} interface to the (clunkier) original C implementation is
 available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.  That works
@@ -603,6 +604,7 @@ so multiple processes can be logged.
 
 \code{parSapply} has been brought into line with \code{sapply}.
 
+The timimng interface has not been copied.
 
 \bibliographystyle{jss}
 \bibliography{parallel}

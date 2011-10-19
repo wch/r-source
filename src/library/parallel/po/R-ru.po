@@ -63,8 +63,8 @@ msgstr "неправильный аргумент 'child'"
 msgid "'children' must be a list of processes or a single process"
 msgstr "'children' должен быть списком процессов или одним процессом"
 
-msgid "'process' must be of the class \"`process\""
-msgstr "'process' должен быть класса \"`process\""
+msgid "'process' must be of the class \"process\""
+msgstr "'process' должен быть класса \"process\""
 
 msgid "'child' must be a valid child process"
 msgstr "'child' должен быть правильным дочерним процессом"

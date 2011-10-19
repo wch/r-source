@@ -6,7 +6,6 @@
 \name{mcparallel}
 \alias{mccollect}
 \alias{mcparallel}
-\alias{collect}
 
 \title{Evaluate an \R Expression Asynchronously in a Separate Process}
 \description{
@@ -79,6 +78,12 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   multiple jobs and a job has a name it will be used to name the
   result, otherwise its process ID will be used.  If none of the
   specified children are still running, it returns \code{NULL}.
+}
+\note{
+  Package \pkg{multicore} also exported functions \code{collect} and
+  \code{paralllel}.  These names are easily masked: for example package
+  \pkg{lattice} also has a function \code{parallel}, and they are no
+  supplied in this package.
 }
 \section{Random numbers}{
   If \code{mc.set.seed} is false, the child process has the same random
