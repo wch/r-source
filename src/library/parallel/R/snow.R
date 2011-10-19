@@ -123,7 +123,11 @@ makeCluster <-
 }
 
 
-stopCluster <- function(cl) UseMethod("stopCluster")
+stopCluster <- function(cl)
+{
+    checkCluster(cl)
+    UseMethod("stopCluster")
+}
 
 stopCluster.default <- function(cl) for (n in cl) stopNode(n)
 
