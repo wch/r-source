@@ -115,8 +115,10 @@ splitIndices <- function(nx, ncl)
     else structure(split(i, cut(i, ncl)), names = NULL)
 }
 
-clusterSplit <- function(cl, seq)
+clusterSplit <- function(cl = NULL, seq) {
+    cl <- defaultCluster(cl)
     lapply(splitIndices(length(seq), length(cl)), function(i) seq[i])
+}
 
 #internal
 splitList <- function(x, ncl)

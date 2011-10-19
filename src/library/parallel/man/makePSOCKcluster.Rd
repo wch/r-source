@@ -8,6 +8,7 @@
 \alias{makePSOCKcluster}
 \alias{makeForkCluster}
 \alias{stopCluster}
+\alias{setDefaultCluster}
 \title{
   Create a Parallel Socket Cluster
 }
@@ -24,7 +25,7 @@ makeForkCluster(nnodes = getOption("mc.cores", 2L), ...)
 
 stopCluster(cl = NULL)
 
-registerCluster(cl = NULL)
+setDefaultCluster(cl = NULL)
 }
 \arguments{
   \item{spec}{A specification appropriate to the type of cluster.}
@@ -98,8 +99,8 @@ registerCluster(cl = NULL)
   becomes unavailable, which it should if the master \R session is
   completed (or its process dies).
   
-  Function \code{registerCluster} registers a cluster as the default one
-  for the current session.  Using \code{registerCluster(NULL)} removes
+  Function \code{setDefaultCluster} registers a cluster as the default one
+  for the current session.  Using \code{setDefaultCluster(NULL)} removes
   the registered cluster, as does stopping that cluster.
 }
 \value{

@@ -256,6 +256,13 @@ Both \file{stdout} and \file{stderr} of the workers are redirected, by
 default being discarded but they can be logged using the
 \code{outfile} option.
 
+A default cluster can be registered by a call to
+\code{setDefaultCluster()}: this is then used whenever one of the
+higher-level functions such as \code{parApply} is called without an
+explicit cluster.  A little care is needed when repeatedly re-using a
+pool of workers, as their workspaces will accumulate objects from past
+usage, and packages may get added to the search path.
+
 \section{Forking}
 
 Except on Windows, the package contains a copy of \pkg{multicore}:

@@ -22,7 +22,7 @@
       its documentation.
     
       \item Package \pkg{parallel} now allows a default cluster to be
-      registered by \code{registerCluster()}: this will be used by
+      registered by \code{setDefaultCluster()}: this will be used by
       default in functions such as \code{parLapply()}.
     }
   }

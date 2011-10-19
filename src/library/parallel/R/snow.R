@@ -26,7 +26,7 @@ defaultCluster <- function(cl = NULL)
     cl
 }
 
-registerCluster <- function(cl = NULL)
+setDefaultCluster <- function(cl = NULL)
 {
     if(!is.null(cl)) checkCluster(cl)
     assign("default", cl, envir = .reg)
@@ -138,7 +138,7 @@ makeCluster <-
 }
 
 
-stopCluster <- function(cl)
+stopCluster <- function(cl = NULL)
 {
     cl <- defaultCluster(cl)
     if(identical(cl, get("default", envir = .reg)))
