@@ -97,7 +97,9 @@
       \pkg{multicore} and \pkg{snow} (excluding MPI, PVM and NWS
       clusters).  Code written to use the higher-level API functions in
       those packages should work unchanged (apart from changing any
-      references to their namespaces to a reference to \pkg{parallel}).
+      references to their namespaces to a reference to \pkg{parallel},
+      and links explicitly to \pkg{multicore} or \pkg{snow} on help
+      pages).
 
       It also contains support for multiple RNG streams following
       L'Ecuyer \emph{et al} (2002), with support for both

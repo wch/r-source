@@ -111,15 +111,7 @@ clusterMap <- function (cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
 ## internal
 splitIndices <- function(nx, ncl)
 {
-    batchsize <- if (nx %% ncl == 0L) nx %/% ncl else 1L + nx %/% ncl
-    batches <- (nx + batchsize - 1L) %/% batchsize
-    split(1:nx, rep(1:batches, each = batchsize)[1L:nx])
-}
-
-## internal
-splitIndices <- function(nx, ncl)
-{
-    i <- 1:nx
+    i <- seq_len(nx)
     if (ncl == 1L) i
     else structure(split(i, cut(i, ncl)), names = NULL)
 }

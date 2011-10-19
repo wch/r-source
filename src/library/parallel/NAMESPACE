@@ -10,7 +10,9 @@ if(tools:::.OStype() == "unix") {
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, makeCluster,
        makeForkCluster, makePSOCKcluster, mclapply, parApply,
-       parCapply, parLapply, parRapply, parSapply, pvec, stopCluster)
+       parCapply, parLapply, parRapply, parSapply, pvec,
+       splitIndices, # used by e.g. spdep
+       stopCluster)
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)
