@@ -22,7 +22,9 @@ makePSOCKcluster(names, ...)
 makeForkCluster(nnodes = getOption("mc.cores", 2L), ...)
 #endif
 
-stopCluster(cl)
+stopCluster(cl = NULL)
+
+registerCluster(cl = NULL)
 }
 \arguments{
   \item{spec}{A specification appropriate to the type of cluster.}
@@ -82,7 +84,7 @@ stopCluster(cl)
     \item{\code{manual}}{Logical.  If true the workers will need to be
       run manually.}
     \item{\code{methods}}{Logical.  If true (default) the workers will
-      load the \pkg{methods} package: not loading it save ca 50\% of the
+      load the \pkg{methods} package: not loading it saves ca 50\% of the
       startup time of the cluster.}
   }
 
@@ -95,6 +97,10 @@ stopCluster(cl)
   themselves once the socket on which they are listening for commands
   becomes unavailable, which it should if the master \R session is
   completed (or its process dies).
+  
+  Function \code{registerCluster} registers a cluster as the default one
+  for the current session.  Using \code{registerCluster(NULL)} removes
+  the registered cluster, as does stopping that cluster.
 }
 \value{
   An object of class \code{c("SOCKcluster", "cluster")}.

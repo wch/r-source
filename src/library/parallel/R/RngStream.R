@@ -28,9 +28,10 @@ nextRNGSubStream <- function(seed)
     .Call(C_nextSubStream, seed, PACKAGE = "parallel")
 }
 
-## Different from snow's
-clusterSetRNGStream <- function(cl, iseed = NULL)
+## Different from snow's RNG code
+clusterSetRNGStream <- function(cl = NULL, iseed = NULL)
 {
+    cl <- defaultCluster(cl)
     oldseed <-
         if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
             get(".Random.seed", envir = .GlobalEnv, inherits = FALSE)

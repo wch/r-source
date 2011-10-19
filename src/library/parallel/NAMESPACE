@@ -11,6 +11,7 @@ export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, makeCluster,
        makeForkCluster, makePSOCKcluster, mclapply, parApply,
        parCapply, parLapply, parRapply, parSapply, pvec,
+       registerCluster,
        splitIndices, # used by e.g. spdep
        stopCluster)
 

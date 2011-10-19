@@ -20,6 +20,10 @@
       \item \code{stack()} now gives are error if no vector column is
       selected, rather than returning a 1-column data frame contrary to
       its documentation.
+    
+      \item Package \pkg{parallel} now allows a default cluster to be
+      registered by \code{registerCluster()}: this will be used by
+      default in functions such as \code{parLapply()}.
     }
   }
 
