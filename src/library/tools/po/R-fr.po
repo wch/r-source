@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: 2011-10-15 17:54+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -527,6 +527,9 @@ msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
 msgid "No help on %s found in RdDB %s"
 msgstr "Pas d'aide pour %s trouvée dans RdDB %s"
 
+msgid "more than one \\examples section, using the first"
+msgstr "plus d'une section \\example, utilisation de la première"
+
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Conversion des fichiers Rd en LaTeX ..."
 
@@ -557,9 +560,6 @@ msgstr "pas d'entrées"
 #, fuzzy
 msgid "Error in running tools::texi2pdf"
 msgstr "Erreur lors de l'exécution de tools:texi2dvi"
-
-msgid "more than one \\examples section, using the first"
-msgstr "plus d'une section \\example, utilisation de la première"
 
 msgid "invalid value for '%s' : %s"
 msgstr "valeur inexacte pour '%s' : %s"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
-"PO-Revision-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
+"PO-Revision-Date: 2011-10-19 07:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -515,6 +515,9 @@ msgstr "missing/empty \\name field in Rd file(s)"
 msgid "No help on %s found in RdDB %s"
 msgstr "No help on %s found in RdDB %s"
 
+msgid "more than one \\examples section, using the first"
+msgstr "more than one \\examples section, using the first"
+
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Converting Rd files to LaTeX ..."
 
@@ -544,9 +547,6 @@ msgstr "no inputs"
 
 msgid "Error in running tools::texi2pdf"
 msgstr "Error in running tools::texi2pdf"
-
-msgid "more than one \\examples section, using the first"
-msgstr "more than one \\examples section, using the first"
 
 msgid "invalid value for '%s' : %s"
 msgstr "invalid value for ‘%s’ : %s"

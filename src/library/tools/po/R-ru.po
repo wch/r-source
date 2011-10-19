@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
-"PO-Revision-Date: 2011-03-30 02:30+0300\n"
-"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
+"PO-Revision-Date: 2011-10-18 22:43-0600\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -313,21 +313,21 @@ msgstr ""
 "См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
 "руководства 'Writing R Extensions'."
 
-#, fuzzy
 msgid "Malformed Authors@R field:"
-msgstr "Плохо сформированное поле разработчика."
+msgstr "Плохо сформированное поле Authors@R:"
 
 msgid "Cannot extract Author field from Authors@R field:"
-msgstr ""
+msgstr "Не могу вынуть поле Author из поля Authors@R:"
 
 msgid "Authors@R field gives no person with author role."
-msgstr ""
+msgstr "В поле Authors@R нет никого в роли автора."
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr ""
+msgstr "Не могу вынуть поле Maintainer из поля Authors@R:"
 
 msgid "Authors@R field gives no person with maintainer role and email address."
 msgstr ""
+"В поле Authors@R нет никого в роли разработчика с адресом электронной почты."
 
 msgid "Encoding '%s' is not portable"
 msgstr "Кодировка '%s' не переносима"
@@ -382,44 +382,46 @@ msgstr ""
 msgid "found %s"
 msgstr "найден %s"
 
-#, fuzzy
 msgid "File %s:"
-msgstr "Файл '%s':"
+msgstr "Файл %s:"
 
 msgid "%s has wrong argument list %s"
-msgstr ""
+msgstr "у %s неправильный список аргументов %s"
 
 msgid ","
 msgstr ","
 
 msgid "%s calls:"
-msgstr ""
+msgstr "%s вызывает:"
 
 msgid ""
 "Package startup functions should have two arguments with names starting with "
 "%s and %s, respectively."
 msgstr ""
+"Стартовые функции пакета должны иметь два аргумента с именами, начинающимися "
+"с %s и %s, соответственно."
 
 msgid "lib"
-msgstr ""
+msgstr "lib"
 
 msgid "pkg"
-msgstr ""
+msgstr "pkg"
 
 msgid "Package startup functions should not change the search path."
-msgstr ""
+msgstr "Стартовые функции пакета не должны менять путь поиска."
 
 msgid "Package startup functions should use %s to generate messages."
 msgstr ""
+"Стартовые функции пакета должны использовать %s для создания сообщений."
 
 msgid "packageStartupMessage"
-msgstr ""
+msgstr "packageStartupMessage"
 
 msgid "See section %s in ?.onAttach."
-msgstr ""
+msgstr "См. раздел %s в ?.onAttach."
 
 msgid "Good practice"
-msgstr ""
+msgstr "Хорошо сделано"
 
 msgid "package 'methods' is used but not declared"
 msgstr "пакет 'methods' используется, но не объявлен"
@@ -508,6 +510,9 @@ msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 msgid "No help on %s found in RdDB %s"
 msgstr "Не найдено помощи %s в RdDB %s"
 
+msgid "more than one \\examples section, using the first"
+msgstr "более чем одна \\секция примеров, использую первую"
+
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Конвертирую  Rd файлы в LaTeX ..."
 
@@ -539,14 +544,11 @@ msgstr "нет вводов"
 msgid "Error in running tools::texi2pdf"
 msgstr "Ошибка запуска tools::texi2dvi"
 
-msgid "more than one \\examples section, using the first"
-msgstr "более чем одна \\секция примеров, использую первую"
-
 msgid "invalid value for '%s' : %s"
 msgstr "неправильное значение '%s' : %s"
 
 msgid "Only one Rd section per \\Sexpr is supported."
-msgstr ""
+msgstr "Поддерживается только один раздел Rd на \\Sexpr."
 
 msgid "unable to create temp directory"
 msgstr "не могу создать временную папку"
@@ -562,7 +564,7 @@ msgid "running 'make' failed"
 msgstr "не удался запуск 'make'"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr ""
+msgstr "Среди миниатюр '%s' '%s' и '%s' имеют одинаковые имена"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "аргумент 'vignette' должен быть единичной длины"
@@ -616,9 +618,8 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr "Не могу создать папку '%s'"
 
-#, fuzzy
 msgid "processing"
-msgstr "обрабытываю '"
+msgstr "обрабытываю"
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -666,9 +667,8 @@ msgstr "'--multiarch' определен только для одной используемой субархитектуры"
 msgid "Error: no packages were specified"
 msgstr "Ошибка: пакеты не определены"
 
-#, fuzzy
 msgid "ERROR: cannot create check dir %s"
-msgstr "Не могу создать папку '%s'"
+msgstr "ОШИБКА: не могу создать проверочную директорию %s"
 
 msgid "package dir"
 msgstr "директория пакетов"
@@ -680,19 +680,19 @@ msgid "No files in this directory"
 msgstr "В этой папке нет файлов"
 
 msgid "Unrecognized search field:"
-msgstr ""
+msgstr "Неизвестное поле поиска:"
 
 msgid "No results found"
 msgstr "Не найдено результатов"
 
 msgid "Vignettes:"
-msgstr ""
+msgstr "Миниатюры:"
 
 msgid "Code demonstrations:"
-msgstr ""
+msgstr "Примеры работы кода:"
 
 msgid "Help pages:"
-msgstr ""
+msgstr "Страницы помощи:"
 
 msgid "No help found for topic %s in any package."
 msgstr "Не найдено помощи по теме %s ни в одном из пакетов."
@@ -715,11 +715,10 @@ msgstr "Ссылка %s в пакете %s не найдена"
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
 
-#, fuzzy
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
-"Только файлы помощи, %s, %s и файлы внутри %s могут быть просмотрены в пакете"
+"Только файлы помощи, %s, %s и файлы внутри %s в пакете могут быть просмотрены"
 
 msgid "NEWS"
 msgstr "НОВОСТИ"
@@ -731,7 +730,7 @@ msgid "doc/"
 msgstr "doc/"
 
 msgid "demo/"
-msgstr ""
+msgstr "demo/"
 
 msgid "unsupported URL %s"
 msgstr "неподдерживаемые URL %s"
@@ -789,7 +788,7 @@ msgstr ""
 "Adminstration Manual'"
 
 msgid "installing via 'install.libs.R' to"
-msgstr ""
+msgstr "инсталлирую четез 'install.libs.R' в"
 
 msgid "installing to"
 msgstr "устанавливаю в"
@@ -798,7 +797,7 @@ msgid "generating debug symbols (dSYM)"
 msgstr "создаю символы отладки (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr ""
+msgstr "пакет %s удачно распакован, MD5 sums проверены"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -865,12 +864,11 @@ msgstr "нахожу ссылки HTML второго уровня..."
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
 
-#, fuzzy
 msgid "namespace must not be already loaded"
-msgstr "должно быть загружено пространство имен."
+msgstr "должно быть уже загружено пространство имен"
 
 msgid "all packages should have a NAMESPACE"
-msgstr ""
+msgstr "все пакеты должны иметь NAMESPACE"
 
 msgid "package seems to be using lazy loading for data already"
 msgstr "кажется, пакет уже использует ленивую загрузку данных"
@@ -930,6 +928,10 @@ msgid ""
 "  %s\n"
 "contains no \\itemize."
 msgstr ""
+"Неправильный файл NEWS.Rd:\n"
+"Кусок, начинающий\n"
+"  %s\n"
+"не содержит \\itemize."
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -938,6 +940,11 @@ msgid ""
 "contains more than one \\itemize.\n"
 "Using the first one."
 msgstr ""
+"Неправильный файл NEWS.Rd:\n"
+"Кусок, начинающий\n"
+"  %s\n"
+"содержит много \\itemize.\n"
+"Использую первый."
 
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
@@ -972,99 +979,86 @@ msgstr "уже определен быть"
 msgid "found encoding"
 msgstr "найдена кодировка"
 
-#, fuzzy
 msgid "%s must be a character string or a file/raw connection"
-msgstr "'file' должен быть текстовой строкой или соединением"
+msgstr "%s должен быть текстовой строкой или файлом/простым соединением"
 
-#, fuzzy
 msgid "PDF header not found"
-msgstr "URL %s не найден"
+msgstr "Заголовок PDF не найден"
 
-#, fuzzy
 msgid "EOF marker not found"
-msgstr "URL %s не найден"
+msgstr "Маркер EOF не найден"
 
 msgid "cannot find startxref"
-msgstr ""
+msgstr "не могу найти startxref"
 
 msgid "cannot find xref table"
-msgstr ""
+msgstr "не могу найти таблицу xref"
 
 msgid "cannot read xref table"
-msgstr ""
+msgstr "не могу прочитать таблицу xref"
 
 msgid "wrong class"
-msgstr ""
+msgstr "неправильный класс"
 
 msgid "attempting to select less than one element"
-msgstr ""
+msgstr "попытка выбрать менее одного элемента"
 
 msgid "attempting to select more than one element"
-msgstr ""
+msgstr "попытка выбрать более одного элемента"
 
 msgid "looking at %s"
-msgstr ""
+msgstr "смотрю на %s"
 
-#, fuzzy
 msgid "cannot read literal string object"
-msgstr "Не могу создать врЕменную"
+msgstr "не могу прочитать буквенный строковый объект"
 
 msgid "cannot read hexadecimal string object"
-msgstr ""
+msgstr "не могу прочитать шестнадцатиричный строковый объект"
 
-#, fuzzy
 msgid "cannot read name object"
-msgstr "не могу выполнить код пакета"
+msgstr "не могу прочитать именной объект"
 
-#, fuzzy
 msgid "cannot read array object"
-msgstr "Не могу создать врЕменную"
+msgstr "не могу прочитать многомерный матричный объект"
 
-#, fuzzy
 msgid "cannot read dictionary object"
-msgstr "Не могу создать папку '%s'"
+msgstr "не могу прочитать словарный объект"
 
-#, fuzzy
 msgid "cannot read stream object"
-msgstr "Не могу создать врЕменную"
+msgstr "не могу прочитать потоковый объект"
 
 msgid "cannot read indirect reference object"
-msgstr ""
+msgstr "не могу прочитать непрямой ссылочный объект"
 
 msgid "cannot find object header at xrefed position %d"
-msgstr ""
+msgstr "не могу найти заголовок объекта в xref позиции %d"
 
 msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "несоответствие в номерах объектов (дано: %d, найдено: %d)"
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "несоответствие в номерах генерации (дано: %d, найдено: %d)"
 
-#, fuzzy
 msgid "cannot read stream data"
-msgstr "Не могу создать врЕменную"
+msgstr "не могу прочитать потоковые данные"
 
 msgid "invalid index in object stream lookup"
-msgstr ""
+msgstr "неправильный индекс в просмотре потока"
 
-#, fuzzy
 msgid "processing %s"
-msgstr "обрабытываю '"
+msgstr "обрабатываю %s"
 
-#, fuzzy
 msgid "expanding %s"
-msgstr "разбор '%s'"
+msgstr "раскрываю %s"
 
-#, fuzzy
 msgid "unsupported filter %s"
-msgstr "неподдерживаемые URL %s"
+msgstr "неподдерживаемый фильтр %s"
 
 msgid "unsupported flatedecode predictor %d"
-msgstr ""
+msgstr "неподдерживаемый flatedecode predictor %d"
 
-#, fuzzy
 msgid "unsupported PNG filter %d"
-msgstr "неподдерживаемые URL %s"
+msgstr "неподдерживаемый фильтр PNG %s"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "аргумент 'pkg' должен быть единичной длины"
@@ -1091,17 +1085,16 @@ msgid "file"
 msgstr "файл"
 
 msgid "Found %s, possibly from %s"
-msgstr ""
+msgstr "Нашел %s, возможно, из %s"
 
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
-#, fuzzy
 msgid "ssname"
-msgstr "имя"
+msgstr "ssname"
 
 msgid "language"
-msgstr ""
+msgstr "язык"
 
 msgid "cannot be opened"
 msgstr "нельзя открыть"
@@ -1127,9 +1120,8 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "результаты отличаются от эталонных"
 
-#, fuzzy
 msgid "no examples found for package %s"
-msgstr "Не найдено помощи для пакета %s"
+msgstr "не найдено примеров для пакета %s"
 
 msgid "Running specific tests for package"
 msgstr "Запускаю специфические тесты для пакета"
@@ -1242,9 +1234,8 @@ msgstr "неправильная структура пакета"
 msgid "file '%s' is not in valid DCF format"
 msgstr "файл '%s' не является правильным форматом DCF"
 
-#, fuzzy
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Неизвестная кодировка с не-ASCII данными"
+msgstr "Неизвестная кодировка с не-ASCII данными: конвертирую в ASCII"
 
 msgid "cannot source package code"
 msgstr "не могу выполнить код пакета"
@@ -1305,6 +1296,9 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "DVI output from Rd2dvi is deprecated"
+#~ msgstr "Вывод DVI из Rd2dvi не рекомендуется"
 
 #, fuzzy
 #~ msgid ""

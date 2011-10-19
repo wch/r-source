@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:16\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -22,9 +22,8 @@ msgid ""
 "   a documentation file"
 msgstr "RShowDoc()应该和指定说明书文件的字符串一起使用"
 
-#, fuzzy
 msgid "no documentation for %s found in package %s"
-msgstr "程序包'%2$s'里没有'%1$s'这样一本说明书"
+msgstr "程序包%2$s里没有%1$s这样一本说明书"
 
 msgid "document not found"
 msgstr "找不到这个说明书"
@@ -35,28 +34,23 @@ msgstr "檢索查詢疑問%s已被提出于"
 msgid "The results page should open in your browser shortly"
 msgstr "计算结果应很快就在瀏覽器里打开"
 
-#, fuzzy
 msgid "reference to unknown chunk %s"
-msgstr "没有这样一个'%s'的對照參块"
+msgstr "没有这样一个可對照的%s块"
 
-#, fuzzy
 msgid "no Sweave file with name %s found"
 msgstr "没有名字为'%s'的Sweave文件"
 
-#, fuzzy
 msgid "%d Sweave files for basename %s found:"
-msgstr "找到了%d个不含路径文件字符串为'%s'的Sweave文件:"
+msgstr "找到了%d个不含路径文件字符串为%s的Sweave文件:"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "在多套語法規則里选用第一个套"
 
-#, fuzzy
 msgid "object %s does not have class \"SweaveSyntax\""
-msgstr "对象'%s'不是\"Sweave語法\"这一类别"
+msgstr "对象%s不属于\"SweavSyntax\"这一类别"
 
-#, fuzzy
 msgid "recursive Sweave input %s in stack"
-msgstr "堆疊里不能有回歸Sweave输入'%s'"
+msgstr "堆疊里不能有回歸Sweave输入%s"
 
 msgid "target syntax not of class \"SweaveSyntax\""
 msgstr "目标語法不是\"SweaveSyntax\"这一类别"
@@ -72,27 +66,25 @@ msgstr ""
 "%s里有空白的选项"
 
 msgid "Warning: unknown option"
-msgstr ""
+msgstr "警告：没有这样的选项"
 
 msgid "Created PDF document"
-msgstr ""
+msgstr "建立了PDF文件"
 
-#, fuzzy
 msgid "path to %s contains spaces,"
-msgstr "指向'%s'的路径里不能有空格,"
+msgstr "指向%s的路径里不能有空格,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "这可能会对运行LaTeX里产生问题"
 
-#, fuzzy
 msgid "invalid value for %s : %s"
-msgstr "'%s'的值不对: %s"
+msgstr "%s的值不对: %s"
 
 msgid "value of 'results' option should be lowercase"
-msgstr ""
+msgstr "'results'这个选项的值必需小写"
 
 msgid "value of 'strip.white' option should be lowercase"
-msgstr ""
+msgstr "'strip.white'这个选项的值必需小写"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "只用'what'值里的第一个元素"
@@ -132,9 +124,8 @@ msgstr "没有找到小文品"
 msgid "call"
 msgstr "调用"
 
-#, fuzzy
 msgid "Package %s: DESCRIPTION not found"
-msgstr "'的DESCRIPTION文件不存在"
+msgstr "'程序包%s: 找不到DESCRIPTION这个文件"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file'的值必需是NULL，字符串或联结"
@@ -150,28 +141,23 @@ msgstr "不是所有的参数的长度都一样，下面这些需要被再循环
 msgid ","
 msgstr ","
 
-#, fuzzy
 msgid "Use either %s or %s/%s but not both."
-msgstr "要么用'family'，要么用'last'，但不能两者都用"
+msgstr "要么用%s或%s/%s，但不能两者都用"
 
-#, fuzzy
 msgid "It is recommended to use %s instead of %s."
-msgstr "我们建议你用'given'而不用'first'。"
+msgstr "建议你用%s而不用%s。"
 
-#, fuzzy
 msgid "Use either %s or %s but not both."
-msgstr "要么用'family'，要么用'last'，但不能两者都用"
+msgstr "要么用%s,要么用%s，但不能两者都用"
 
 msgid "Invalid role specification(s): %s."
 msgstr "角色设定得不对: %s"
 
-#, fuzzy
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
-msgstr "我们建议你用'given'而不用'first'。"
+msgstr "建议你用%s/%s而不用%s/%s/%s。"
 
-#, fuzzy
 msgid "method is just applicable to %s objects"
-msgstr "这个方法不适用于'person'对象"
+msgstr "这个方法只适用于%s目标对象"
 
 msgid "all arguments must be of class \"person\""
 msgstr "所有的参数都必需是\"person\"类别"
@@ -182,36 +168,29 @@ msgstr "你至少需要填一项"
 msgid "all fields have to be named"
 msgstr "所有的项都必需有名字"
 
-#, fuzzy
 msgid "%s has to be one of %s"
-msgstr "'bibtype'必需是这些中的一个"
+msgstr "%s必需是%s这些中的一个"
 
-#, fuzzy
 msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr "'必需正确地设定这些项："
+msgstr "bibtype %s的条目必需正确地设定这些项：%s"
 
-#, fuzzy
 msgid "%s should be one of %s"
-msgstr "'bibtype'必需是这些中的一个"
+msgstr "%s必需是%s这些中的一个"
 
-#, fuzzy
 msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "'必需设定这些项："
+msgstr "bibtype %s的条目必需设定这些项：%s"
 
-#, fuzzy
 msgid "package %s not found"
-msgstr "没有'%s'这一个程序包"
+msgstr "没有%s这一个程序包"
 
 msgid "broken installation, no CITATION file in the base package."
 msgstr "安装出错，基本程序包里没有CITATION这一文件。"
 
-#, fuzzy
 msgid "no date field in DESCRIPTION file of package %s"
-msgstr "程序包'%s'里的DESCRIPTION文件中没有日期这一域"
+msgstr "程序包's里的DESCRIPTION文件中没有日期这一域"
 
-#, fuzzy
 msgid "could not determine year for %s from package DESCRIPTION file"
-msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
+msgstr "无法从程序包的DESCRIPTION文件中为%s确定年份"
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -234,17 +213,14 @@ msgstr "數據機从程序包'base'移到了程序包'datasets'"
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr "數據機从程序包'stats'移到了程序包'datasets'"
 
-#, fuzzy
 msgid "data index for package %s is invalid and will be ignored"
-msgstr "程序包'%s'的数据索引不对，略过不用"
+msgstr "程序包%s的数据索引不对，略过不用"
 
-#, fuzzy
 msgid "file 'filelist' is missing for directory %s"
-msgstr "目录'%s'里没有'filelist'这一文件"
+msgstr "目录%s里没有'filelist'这一文件"
 
-#, fuzzy
 msgid "data set %s not found"
-msgstr "没有'%s'这个数据机"
+msgstr "没有%s这个数据集"
 
 msgid "kind '%s' not yet implemented"
 msgstr "'%s'这一类还没有被实现"
@@ -294,17 +270,15 @@ msgstr "非交互式地調用了recover; 傾印出了所有的框，可以用deb
 msgid "No suitable frames for recover()"
 msgstr "找不到可用于recover()的框"
 
-#, fuzzy
 msgid "No demo found for topic %s"
-msgstr "没有与題目'%s'有关的演示"
+msgstr "没有与題目%s有关的演示"
 
-#, fuzzy
 msgid ""
 "Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"有多个与題目'%s'有关的演示，\n"
-"现在用在'%s'找到的那一个"
+"有多个与題目%s有关的演示，\n"
+"用在%s找到的那一个"
 
 msgid "invalid 'data' argument"
 msgstr "'data'参数不对"
@@ -336,13 +310,11 @@ msgstr "'name'的类别将被略过不用"
 msgid "cannot edit NULL row names"
 msgstr "无法修改NULL行名"
 
-#, fuzzy
 msgid "no help found for %s"
-msgstr "找不到与'%s'有关的帮助文件"
+msgstr "找不到与%s有关的帮助文件"
 
-#, fuzzy
 msgid "%s has a help file but no examples"
-msgstr "'%s'含帮助文件但没有示范文件"
+msgstr "%s含帮助文件但没有示范文件"
 
 msgid "test '%s' is not available"
 msgstr "没有'%s'这种测试"
@@ -382,23 +354,19 @@ msgstr "'form'必需是双边公式，每一边至少带一项"
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
 
-#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
-msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
+msgstr "在指定的程序包和图书馆里没有与%s有关的说明书:"
 
-#, fuzzy
 msgid "you could try %s"
-msgstr "你可以用用'??%s'"
+msgstr "你可以用用%s"
 
 msgid "??"
-msgstr ""
+msgstr "??"
 
-#, fuzzy
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
-msgstr ""
-"在载入的程序包里没有与'%s'题目有关的帮助文件，但在以下的程序包里找得到:"
+msgstr "在载入的程序包里没有与%s题目有关的帮助文件，但在以下的程序包里找得到:"
 
 msgid "Package"
 msgstr "程序包"
@@ -406,9 +374,8 @@ msgstr "程序包"
 msgid "Library"
 msgstr "图书馆"
 
-#, fuzzy
 msgid "Help on topic %s was found in the following packages:"
-msgstr "在以下的程序包里找到了与'%s'题目有关的帮助文件:"
+msgstr "在以下的程序包里找到了与%s题目有关的帮助文件:"
 
 msgid "Choose one"
 msgstr "选一个"
@@ -419,37 +386,25 @@ msgstr "用第一个相配…"
 msgid "HTML help is unavailable"
 msgstr "没有HTML帮助"
 
-#, fuzzy
 msgid "R Help on %s"
-msgstr "与'%s'有关的R Help"
+msgstr "与%s有关的R Help"
 
-#, fuzzy
 msgid "invalid %s argument"
-msgstr "'%s'参数不对"
+msgstr "%s参数不对"
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
 msgstr "有%s这样一个程序包但没有在R >= 2.10.0下安装，因此不能用它的帮助文件"
 
-#, fuzzy
-msgid "running %s failed"
-msgstr "执行'%s'失败"
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr "'%s'没有产生文件：是不是还要送到打印机？"
-
-#, fuzzy
 msgid "creation of %s failed"
-msgstr "制造'%s'时出了问题"
+msgstr "制造%s时出了问题"
 
 msgid "Saving help page to"
 msgstr "保存帮助页到"
 
-#, fuzzy
 msgid "argument %s must be a single character string"
-msgstr "参数'%s'必需是单字符串"
+msgstr "参数%s必需是单字符串"
 
 msgid "incorrect field specification"
 msgstr "域设定得不对"
@@ -457,7 +412,6 @@ msgstr "域设定得不对"
 msgid "do not know what to search"
 msgstr "不知道要搜查什么"
 
-#, fuzzy
 msgid "incorrect type specification"
 msgstr "域设定得不对"
 
@@ -476,13 +430,11 @@ msgstr "程序包{顺序readRDS()}:"
 msgid "."
 msgstr "."
 
-#, fuzzy
 msgid "could not find package %s"
-msgstr "找不到程序包'%s'"
+msgstr "找不到程序包%s"
 
-#, fuzzy
 msgid "package %s has empty hsearch data - strangely"
-msgstr "程序包'%s'的hsearch数据是空的-很奇怪"
+msgstr "程序包%s的hsearch数据是空的-很奇怪"
 
 msgid "no hsearch.rds meta data for package"
 msgstr "程序包里没有hsearch.rds样的隐喻数据"
@@ -502,9 +454,8 @@ msgstr "保存到数据库…"
 msgid "... database rebuilt"
 msgstr "…重新建立数据库"
 
-#, fuzzy
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr "数据库里没有关于程序包'%s'的信息：是不是需要设定'rebuild = TRUE'？"
+msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'rebuild = TRUE'？"
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
@@ -563,9 +514,8 @@ msgstr "找不到"
 msgid "cannot update HTML package index"
 msgstr "无法更新HTML程序包索引"
 
-#, fuzzy
 msgid "Making packages.html  ..."
-msgstr "制造packages.html"
+msgstr "制造packages.html …"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()不能在非互交形式下使用"
@@ -601,10 +551,10 @@ msgid "environment specified is not a package"
 msgstr "指定的环境不是程序包"
 
 msgid "changing locked binding for %s in %s whilst loading %s"
-msgstr ""
+msgstr "载入%3$s时为%2$s里的%1$s改变锁定约束"
 
 msgid "changing locked binding for %s in %s"
-msgstr ""
+msgstr "为%2$s里的%1$s改变锁定约束"
 
 msgid "'fixInNamespace' requires a name"
 msgstr "'fixInNamespace'需要名字值"
@@ -637,11 +587,10 @@ msgid "Creating DESCRIPTION ..."
 msgstr "建立DESCRIPTION…"
 
 msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr ""
+msgstr "R 1.14.0以后所有的版本都要求每个程序包包含NAMESPACE这个文件"
 
-#, fuzzy
 msgid "Argument 'namespace' is deprecated."
-msgstr "参数'help.db'已经不再用了"
+msgstr "参数'namespace'已经不再用了"
 
 msgid "Creating NAMESPACE ..."
 msgstr "建立NAMESPACE…"
@@ -655,7 +604,7 @@ msgstr "保存函数和数据…"
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the code_files= argument"
-msgstr ""
+msgstr "泛型函数和其他S4对象（例如'%s'）不能被转储出来；用code_files=参数"
 
 msgid "Copying code files ..."
 msgstr "拷贝程序文件…"
@@ -684,10 +633,9 @@ msgstr "无法在貯藏處%s中读写索引"
 msgid "Invalid 'filters' argument."
 msgstr "'filters'参数不对"
 
-#, fuzzy
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
-msgstr "'oldPkgs'的值不对；必需是从old.packages()得到的结果"
+msgstr "'oldPkgs'的值不对；必需字符矢量或从old.packages()得到的结果"
 
 msgid "illformed 'instPkgs' matrix"
 msgstr "'instPkgs'矩阵有错"
@@ -695,13 +643,11 @@ msgstr "'instPkgs'矩阵有错"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
 
-#, fuzzy
 msgid "no new packages are available"
-msgstr "没有指点定的R对象"
+msgstr "没有新的程序包"
 
-#, fuzzy
 msgid "metadata of %s is corrupt"
-msgstr "程序包'%s'里元数据出了错"
+msgstr "%s元数据出了错"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
@@ -719,17 +665,14 @@ msgstr ""
 msgid "'destdir' is not a directory"
 msgstr "'destdir'不是目录"
 
-#, fuzzy
 msgid "no package %s at the repositories"
-msgstr "貯藏處里没有'%s'这样的程序包"
+msgstr "貯藏處里没有%s这样的程序包"
 
-#, fuzzy
 msgid "package %s does not exist on the local repository"
-msgstr "地方貯藏處里没有'%s'这样的程序包"
+msgstr "地方貯藏處里没有%s这样的程序包"
 
-#, fuzzy
 msgid "download of package %s failed"
-msgstr "下载程序包'%s'时出了问题"
+msgstr "下载程序包%s时出了问题"
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
 msgstr "--- 在此連線階段时请选用CRAN的鏡子 ---"
@@ -749,9 +692,8 @@ msgstr "无法在非互交情况下设定貯藏處"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 请选用一个貯藏處 ---"
 
-#, fuzzy
 msgid "%s must be supplied"
-msgstr "必需提供'%s'"
+msgstr "必需提供%s"
 
 msgid "every package depends on at least one other"
 msgstr "每个程序包至少依赖其他另外一个程序字"
@@ -779,14 +721,13 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib=\"%s\"'不可写"
 
-#, fuzzy
 msgid ""
 "Would you like to create a personal library\n"
 "%s\n"
 "to install packages into?"
 msgstr ""
 "你是不是想建立一个用户定义库\n"
-"'%s'\n"
+"%s\n"
 "用来安装程序包?"
 
 msgid "unable to install packages"
@@ -801,11 +742,9 @@ msgstr "从文件名字推断'repos = NULL'"
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
 
-#, fuzzy
 msgid "cannot install MacOS X binary packages on this platform"
 msgstr "无法在此平台下安装MacOS X二元程序包"
 
-#, fuzzy
 msgid "cannot install Windows binary packages on this platform"
 msgstr "无法在此平台下安装Windows二元程序包"
 
@@ -816,13 +755,11 @@ msgstr ""
 "本版本的R不能安装程序包的原始程序\n"
 "如果它是从RPM上安装来的话你可能需要R-devel的RPM文件"
 
-#, fuzzy
 msgid "installation of package %s had non-zero exit status"
-msgstr "安装程序包'%s'时退出狀態的值不为0"
+msgstr "安装程序包%s时退出狀態的值不是0"
 
-#, fuzzy
 msgid "unable to create temporary directory %s"
-msgstr "无法建立临时目录'%s'"
+msgstr "无法建立临时目录%s"
 
 msgid ""
 "installation of one of more packages failed,\n"
@@ -841,9 +778,8 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "找不到名字为'%s'的对象"
 
-#, fuzzy
 msgid "'file' must be \"\" or an open connection object"
-msgstr "'file'的值必需是字符串或联结"
+msgstr "'file'必需是\"\"或打开的联结"
 
 msgid "must have max > min"
 msgstr "一定得满足max > min这个条件"
@@ -854,38 +790,31 @@ msgstr "'pb'不属于\"txtProgressBar\"这一类别"
 msgid "cannot determine a usable name"
 msgstr "无法指定一个可以用的名字"
 
-#, fuzzy
 msgid "Created file named %s."
-msgstr "建立一名字叫'%s'的文件。"
+msgstr "建立一名字叫%s的文件。"
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "修改文件再把它放到合适的目录中去。"
 
-#, fuzzy
 msgid "no documentation of type %s and topic %s (or error in processing help)"
-msgstr "没有种类为'%s'和題目为'%s'的文件(或是在处理帮助文件时发生了错误)"
+msgstr "没有种类为%s和題目为%s的文件(或是在处理帮助文件时发生了错误)"
 
-#, fuzzy
 msgid ""
 "the object of class \"%s\" in the function call %s could not be used as a "
 "documentation topic"
-msgstr "函数調用'%2$s'里类别为\"%1$s\"的对象不能用作帮助文件題目"
+msgstr "函数調用%2$s里类别为\"%1$s\"的对象不能用作帮助文件題目"
 
-#, fuzzy
 msgid "no methods for %s and no documentation for it as a function"
-msgstr "'%s'没有方法，也没有将之用作函数的帮助文件"
+msgstr "%s没有方法，也没有将之用作函数的帮助文件"
 
-#, fuzzy
 msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "为参数'%s'評估表示式时发生了错误(%s)"
+msgstr "为参数%s評估表示式时发生了错误(%s)"
 
-#, fuzzy
 msgid "no method defined for function %s and signature %s"
-msgstr "函数'%s'和簽署'%s'没有设定方法"
+msgstr "函数%s和标签%s没有设定方法"
 
-#, fuzzy
 msgid "no documentation for function %s and signature %s"
-msgstr "函数'%s'和簽署'%s'没有帮助文件"
+msgstr "函数%s和标签%s没有帮助文件"
 
 msgid "No DIF data on clipboard"
 msgstr "剪贴板里没有DIF数据"
@@ -1046,9 +975,8 @@ msgstr "没有记录下任何事件"
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'必需是字符向量"
 
-#, fuzzy
 msgid "failed to create directory %s"
-msgstr "无法建立临时目录'%s'"
+msgstr "无法建立目录%s"
 
 msgid "invalid octal digit"
 msgstr "八进制数字格式不对"
@@ -1062,9 +990,8 @@ msgstr "不完全文件锁"
 msgid "checksum error for entry '%s'"
 msgstr "项目'%s'检查和错误"
 
-#, fuzzy
 msgid "failed to copy %s to %s"
-msgstr "无法建立'%s'"
+msgstr "无法把%s拷贝到%s"
 
 msgid "unsupported entry type"
 msgstr "不支持这一项目种类"
@@ -1078,21 +1005,18 @@ msgstr "文件通路太长"
 msgid "linked path is too long"
 msgstr "链结的通路太长"
 
-#, fuzzy
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"有多个'%d'小文品，\n"
-"使用'%s'里的那一个"
+"有多个%d小文品，\n"
+"用's里的那一个"
 
-#, fuzzy
 msgid "vignette %s not found"
-msgstr "没有找到小文品'%s'"
+msgstr "没有找到小文品%s"
 
-#, fuzzy
 msgid "vignette %s has no PDF"
-msgstr "小文品'%s'没有PDF文件"
+msgstr "小文品%s没有PDF文件"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list()不能在非互交形式下使用"
@@ -1131,27 +1055,24 @@ msgstr "不能修改'%s'"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'必需是单字符串"
 
-#, fuzzy
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr "'list'必需是为R对象取名的字符向量"
+msgstr "'files'必须指定一个或多个文件路径的字符向量"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
-msgstr ""
+msgstr "没有可以打开'mailto:'URIs的程序: 回复到'method=\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "用浏览器打开mailto: URI"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "必需设定'address'"
 
-#, fuzzy
 msgid "'subject' is missing"
 msgstr "缺少'subject'值"
 
-#, fuzzy
 msgid "'ccaddress' must be of length 1"
-msgstr "'port'必需是长度为一的整数"
+msgstr "'ccaddress'的长度必需为一"
 
 msgid "no download method found"
 msgstr "没有下载方法"
@@ -1162,28 +1083,27 @@ msgstr "下载退出状态不是零"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'退出码为%d"
 
-#, fuzzy
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "程序包'%s'打开成功，MD5和检查也通过"
+msgstr "程序包%s打开成功，MD5和检查也通过"
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "错误：不能打开锁定目录"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+"修改\n"
+"试试删除"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr "无法建立临时目录'%s'"
+msgstr "错误：无法建立锁定目录'"
 
 msgid "restored %s"
-msgstr ""
+msgstr "回复了%s"
 
-#, fuzzy
 msgid "unable to move temporary installation %s to %s"
-msgstr "无法将临时安装'%s'搬到'%s'"
+msgstr "无法将临时安装%s搬到%s"
 
 msgid "cannot remove prior installation of package"
 msgstr "无法拆除原来安装的程序包"
@@ -1195,29 +1115,24 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()'只在Windows上有用"
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr "'mailx'只在Unix上有用"
 
-#, fuzzy
 msgid ""
 "If nothing happens, you should open\n"
 "%s yourself"
-msgstr "如果什么都不发生的话，你应该自己打开'%s'"
+msgstr "如果什么都不发生的话，你应该自己打开%s"
 
-#, fuzzy
 msgid "zipfile %s not found"
-msgstr "找不到'%s'这一zip文件"
+msgstr "找不到%s这一zip文件"
 
-#, fuzzy
 msgid "failed to create %s"
-msgstr "无法建立'%s'"
+msgstr "无法建立%s"
 
-#, fuzzy
 msgid "there is no 'libs' directory in package %s"
-msgstr "在程序字'%s'里找不到'libs'这个目录"
+msgstr "在程序包%s里找不到'libs'这个目录"
 
-#, fuzzy
 msgid "cannot remove prior installation of package %s"
-msgstr "无法将拆除原来安装的程序包 '%s'"
+msgstr "无法将拆除原来安装的程序包%s"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"
@@ -1236,10 +1151,9 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "找不到'%s'这个对象"
 
-#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
-msgstr[0] "没有'%s'这个程序包"
+msgstr[0] "没有%s这个程序包(给%s用)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1249,19 +1163,22 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "还安装相依关系%s"
 
-#, fuzzy
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
-msgstr[0] "'lib'元素'%s'不是可写的目录"
+msgstr[0] "'lib'元素%s不是可写目录"
 
-#, fuzzy
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
-#, fuzzy
 #~ msgid "Postscript offline help is deprecated"
-#~ msgstr "参数'help.db'已经不再用了"
+#~ msgstr "Postscript offline 脱机帮助已经不再用了"
+
+#~ msgid "running %s failed"
+#~ msgstr "执行%s失败"
+
+#~ msgid "%s produced no output file: sent to printer?"
+#~ msgstr "%s没有产生文件：是不是还要送到打印机？"
 
 #~ msgid "Use either 'given' or 'first'/'middle' but not both."
 #~ msgstr "要么用'given'，要么用'first'/'middle'，但不能两者都用"

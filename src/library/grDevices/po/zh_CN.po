@@ -20,7 +20,7 @@ msgstr ""
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
 #, c-format
 msgid "'%s' must be numeric of length %d"
-msgstr ""
+msgstr "'%s'必需是长度为%d的数值"
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"
@@ -331,9 +331,8 @@ msgid "unable to use encoding '%s'"
 msgstr "无法用编码'%s'"
 
 #: devPS.c:5544 devPS.c:5547
-#, fuzzy
 msgid "failed to increase 'maxRaster'"
-msgstr "无法分配栅格"
+msgstr "无法增加’maxRaster’"
 
 #: devPS.c:5559
 msgid "Unable to allocate raster image"
@@ -348,9 +347,8 @@ msgid "Failed to record device encoding; font not added"
 msgstr "无法记录装置编码; 字体没有加入"
 
 #: devPS.c:5875
-#, fuzzy
 msgid "increasing the PDF version to 1.2"
-msgstr "增加PDF版本到1.4"
+msgstr "增加PDF版本到1.2"
 
 #: devPS.c:5900
 msgid "failed to load default encoding"
@@ -390,14 +388,12 @@ msgid "increasing the PDF version to 1.4"
 msgstr "增加PDF版本到1.4"
 
 #: devPS.c:6321 devPS.c:6368
-#, fuzzy
 msgid "unknown 'colormodel', using 'srgb'"
-msgstr "没有这种'colormodel'，用'rgb'"
+msgstr "没有这种'colormodel'，用'srgb'"
 
 #: devPS.c:6562
-#, fuzzy
 msgid "Failed to load sRGB colorspace file"
-msgstr "无法载入编码"
+msgstr "无法载入sRGB色彩文件"
 
 #: devPS.c:6816
 msgid "Corrupt encodings in PDF device"
@@ -577,7 +573,7 @@ msgstr "R Graphics"
 
 #: devWindows.c:3057
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr "调用dev.hold()后不能再用定位器"
 
 #: devWindows.c:3321
 msgid "option 'windowsTimeouts' should be integer"
@@ -621,9 +617,8 @@ msgid "invalid 'width' or 'height'"
 msgstr "'width'或'height'的值不对"
 
 #: devWindows.c:3775
-#, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
-msgstr "无法载入Rbitmap.dll"
+msgstr "无法载入winCairo.dll: 构建了这个动态链接库没有？"
 
 #: qdBitmap.c:79
 #, c-format

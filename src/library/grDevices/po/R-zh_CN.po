@@ -152,9 +152,8 @@ msgstr "'%s'里的选择项出错"
 msgid "NOT changing"
 msgstr "不更换"
 
-#, fuzzy
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr "'append'不后向相容，因此略过不用"
+msgstr "'append'参数不后向相容，因此略过不用"
 
 msgid "unknown family '%s'"
 msgstr "没有'%s'这样的系列"
@@ -166,7 +165,7 @@ msgid "invalid 'file'"
 msgstr "'file'不对"
 
 msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr ""
+msgstr "不再需要'maxRasters'，将之忽略"
 
 msgid "invalid PDF version"
 msgstr "PDF版本不对"
@@ -235,15 +234,13 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "栅格阵列必需有三个或四个平面"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'[.raster'里的'drop'含蓄值总是FALSE"
 
-#, fuzzy
 msgid "invalid raster subsetting"
-msgstr "第一个参数不对"
+msgstr "栅格子集不对"
 
-#, fuzzy
 msgid "invalid raster subassignment"
-msgstr "第一个参数不对"
+msgstr "光栅子分配无效"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "这种操作对光栅对象没有意义"
@@ -324,10 +321,10 @@ msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "石英字体里的参数不对(需要带名参数)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
+msgstr "这个构建不支持基于cairo的类型-用\"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr ""
+msgstr "X11(type = \"XLib\")的系列不对"
 
 msgid "invalid X11 font specification:"
 msgstr "X11字体设置出了错:"
@@ -390,3 +387,4 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
+

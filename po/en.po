@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50+0100\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -174,7 +174,7 @@ msgstr ""
 #: src/main/grep.c:1035 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1483 src/main/grep.c:1487 src/main/grep.c:1492
 #: src/main/grep.c:2291 src/main/grep.c:2296 src/main/grep.c:2579
-#: src/main/grep.c:2584 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2584 src/main/memory.c:3377 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -464,19 +464,19 @@ msgstr ""
 msgid "running command '%s' had status %d"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:414
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:416
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:422
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:424
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -580,28 +580,28 @@ msgstr ""
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:172
+#: src/main/CommandLineArgs.c:170
 msgid "WARNING: no value given for --encoding"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:197
 #, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:205
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:210
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:214
+#: src/main/CommandLineArgs.c:212
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:217
+#: src/main/CommandLineArgs.c:215
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr ""
 
@@ -4035,9 +4035,9 @@ msgstr ""
 msgid "internet routines cannot be loaded"
 msgstr ""
 
-#: src/main/internet.c:117 src/main/memory.c:3104 src/main/memory.c:3113
-#: src/main/memory.c:3124 src/main/memory.c:3137 src/main/memory.c:3153
-#: src/main/memory.c:3170
+#: src/main/internet.c:117 src/main/memory.c:3106 src/main/memory.c:3115
+#: src/main/memory.c:3126 src/main/memory.c:3139 src/main/memory.c:3155
+#: src/main/memory.c:3172
 msgid "bad value"
 msgstr ""
 
@@ -4246,68 +4246,68 @@ msgstr ""
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr ""
 
-#: src/main/memory.c:2255
+#: src/main/memory.c:2256
 msgid "negative length vectors are not allowed"
 msgstr ""
 
-#: src/main/memory.c:2281 src/main/memory.c:2294 src/main/memory.c:2307
-#: src/main/memory.c:2322
+#: src/main/memory.c:2282 src/main/memory.c:2295 src/main/memory.c:2308
+#: src/main/memory.c:2323
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr ""
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2338
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr ""
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2407
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr ""
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2411
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr ""
 
-#: src/main/memory.c:2414
+#: src/main/memory.c:2415
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr ""
 
-#: src/main/memory.c:2742
+#: src/main/memory.c:2744
 msgid "protect(): protection stack overflow"
 msgstr ""
 
-#: src/main/memory.c:2758
+#: src/main/memory.c:2760
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr ""
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2774
 msgid "unprotect_ptr: pointer not found"
 msgstr ""
 
-#: src/main/memory.c:2828
+#: src/main/memory.c:2830
 #, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr ""
 
-#: src/main/memory.c:2839
+#: src/main/memory.c:2841
 #, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr ""
 
-#: src/main/memory.c:3058
+#: src/main/memory.c:3060
 msgid "not safe to return vector pointer"
 msgstr ""
 
-#: src/main/memory.c:3296
+#: src/main/memory.c:3298
 msgid "memory profiling is not available on this system"
 msgstr ""
 
-#: src/main/memory.c:3361
+#: src/main/memory.c:3363
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr ""

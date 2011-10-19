@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50+0100\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -179,7 +179,7 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/grep.c:1035 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1483 src/main/grep.c:1487 src/main/grep.c:1492
 #: src/main/grep.c:2291 src/main/grep.c:2296 src/main/grep.c:2579
-#: src/main/grep.c:2584 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2584 src/main/memory.c:3377 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -469,19 +469,19 @@ msgstr "karakter dizesi üçüncü argüman olarak beklendi"
 msgid "running command '%s' had status %d"
 msgstr "'%s' komutunu çalıştırırken %d durumu oluştu"
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:414
 msgid "reached session elapsed time limit"
 msgstr "kalan oturum zaman limitine erişildi"
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:416
 msgid "reached elapsed time limit"
 msgstr "kalan zaman limitine erişildi"
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:422
 msgid "reached session CPU time limit"
 msgstr "oturum işlemci zaman limitine erişildi"
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:424
 msgid "reached CPU time limit"
 msgstr "işlemci zaman limitine erişildi"
 
@@ -589,32 +589,32 @@ msgstr "'%s' tipi nesne alt küme yapılamaz"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "tanımlayıcıya ilişkin R-den-C'ye çeviricisi bulunamadı"
 
-#: src/main/CommandLineArgs.c:172
+#: src/main/CommandLineArgs.c:170
 #, fuzzy
 msgid "WARNING: no value given for --encoding"
 msgstr "UYARI: verilen --encoding için değer verilmedi\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:197
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "UYARI: '%s' seçeğeni artık desteklenmiyor\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:205
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "UYARI: '--max-ppsize' için değer verilmedi\n"
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:210
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "UYARI: '--max-ppsize' değeri negatif: görmezden gelindi\n"
 
-#: src/main/CommandLineArgs.c:214
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "UYARI: '--max-ppsize' değeri çok küçük: görmezden gelindi\n"
 
-#: src/main/CommandLineArgs.c:217
+#: src/main/CommandLineArgs.c:215
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "UYARI: '--max-ppsize' değeri çok büyük: görmezden gelindi\n"
@@ -4126,9 +4126,9 @@ msgstr "internet rutinlerine bu modülden erişilemez"
 msgid "internet routines cannot be loaded"
 msgstr "internet rutinleri yüklenemez"
 
-#: src/main/internet.c:117 src/main/memory.c:3104 src/main/memory.c:3113
-#: src/main/memory.c:3124 src/main/memory.c:3137 src/main/memory.c:3153
-#: src/main/memory.c:3170
+#: src/main/internet.c:117 src/main/memory.c:3106 src/main/memory.c:3115
+#: src/main/memory.c:3126 src/main/memory.c:3139 src/main/memory.c:3155
+#: src/main/memory.c:3172
 msgid "bad value"
 msgstr "hatalı değer"
 
@@ -4341,68 +4341,68 @@ msgstr "bellek tükendi (limite erişildi?)"
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "%0.1f Gb boyutunda bellek bölgesi oluşturulamadı"
 
-#: src/main/memory.c:2255
+#: src/main/memory.c:2256
 msgid "negative length vectors are not allowed"
 msgstr "negatif uzunlukta vektörlere izin verilmiyor"
 
-#: src/main/memory.c:2281 src/main/memory.c:2294 src/main/memory.c:2307
-#: src/main/memory.c:2322
+#: src/main/memory.c:2282 src/main/memory.c:2295 src/main/memory.c:2308
+#: src/main/memory.c:2323
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "%d uzunluğunda vektör oluşturulamadı"
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2338
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "vektör ayırmasında geçersiz tip/uzunluk (%s/%d)"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2407
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "%0.1f Gb boyutunda vektör ayrılamıyor"
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2411
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "%0.1f Mb boyutunda vektör ayrılamıyor"
 
-#: src/main/memory.c:2414
+#: src/main/memory.c:2415
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "%0.f Kb boyutunda vektör ayrılamıyor"
 
-#: src/main/memory.c:2742
+#: src/main/memory.c:2744
 msgid "protect(): protection stack overflow"
 msgstr "protect(): yığın taşması koruması"
 
-#: src/main/memory.c:2758
+#: src/main/memory.c:2760
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): sadece %d korunmuş öğe var"
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2774
 msgid "unprotect_ptr: pointer not found"
 msgstr "uprotect_prt: işaretçi bulunamadı"
 
-#: src/main/memory.c:2828
+#: src/main/memory.c:2830
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc bellekte (%d / %d)  yer ayıramıyor"
 
-#: src/main/memory.c:2839
+#: src/main/memory.c:2841
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc bellekte (%d boyutunda) yeniden yer ayırm yapamadı"
 
-#: src/main/memory.c:3058
+#: src/main/memory.c:3060
 msgid "not safe to return vector pointer"
 msgstr "vektör işaretçisine geri döndürme güvenli değil"
 
-#: src/main/memory.c:3296
+#: src/main/memory.c:3298
 msgid "memory profiling is not available on this system"
 msgstr "bellek profilleme bu sistemde mevcut değil"
 
-#: src/main/memory.c:3361
+#: src/main/memory.c:3363
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: çıktı dosyası '%s' açılamadı"

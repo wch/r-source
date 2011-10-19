@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50+0100\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
 "PO-Revision-Date: 2011-03-30 16:08+0100\n"
 "Last-Translator: Dr. Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf."
 "de>\n"
@@ -179,7 +179,7 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/grep.c:1035 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1483 src/main/grep.c:1487 src/main/grep.c:1492
 #: src/main/grep.c:2291 src/main/grep.c:2296 src/main/grep.c:2579
-#: src/main/grep.c:2584 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2584 src/main/memory.c:3377 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -471,19 +471,19 @@ msgstr "string de caracteres esperado como tercer argumento"
 msgid "running command '%s' had status %d"
 msgstr "comando ejecutado '%s' tiene estatus %d"
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:414
 msgid "reached session elapsed time limit"
 msgstr "período de sesiones llegó a límite de tiempo transcurrido"
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:416
 msgid "reached elapsed time limit"
 msgstr "llegado el tiempo límite"
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:422
 msgid "reached session CPU time limit"
 msgstr "período de sesiones llegó a límite de tiempo de CPU"
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:424
 msgid "reached CPU time limit"
 msgstr "llegó a tiempo de CPU límite"
 
@@ -593,32 +593,32 @@ msgstr ""
 "no se ha encontrado ningún conversor de R a C correspondiente al "
 "identificador"
 
-#: src/main/CommandLineArgs.c:172
+#: src/main/CommandLineArgs.c:170
 #, fuzzy
 msgid "WARNING: no value given for --encoding"
 msgstr "ATENCIÓN: ningún valor especificado para --encoding\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:197
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "ATENCIÓN: ya no se provee soporte de la opción '%s'\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:205
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "ATENCIÓN: ningún valor especificado para '--max-ppsize'\n"
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:210
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "ATENCIÓN: el valor de '-max-ppsize'es negativo: ignorado\n"
 
-#: src/main/CommandLineArgs.c:214
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "ATENCIÓN: el valor de '-max-ppsize' es demasiado pequeño: ignorado\n"
 
-#: src/main/CommandLineArgs.c:217
+#: src/main/CommandLineArgs.c:215
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "ATENCIÓN: el valor de '-max-ppsize' es demasiado grande: ignorado\n"
@@ -4178,9 +4178,9 @@ msgstr "rutinas de internet no pueden ser abiertas en el módulo"
 msgid "internet routines cannot be loaded"
 msgstr "rutinas de internet no pueden ser cargadas"
 
-#: src/main/internet.c:117 src/main/memory.c:3104 src/main/memory.c:3113
-#: src/main/memory.c:3124 src/main/memory.c:3137 src/main/memory.c:3153
-#: src/main/memory.c:3170
+#: src/main/internet.c:117 src/main/memory.c:3106 src/main/memory.c:3115
+#: src/main/memory.c:3126 src/main/memory.c:3139 src/main/memory.c:3155
+#: src/main/memory.c:3172
 msgid "bad value"
 msgstr "valor incorrecto"
 
@@ -4400,69 +4400,69 @@ msgstr "la memoria está agotada (se alcanzó el límite?)"
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "no se puede asignar un bloque de memoria de tamaño %0.1f Gb"
 
-#: src/main/memory.c:2255
+#: src/main/memory.c:2256
 msgid "negative length vectors are not allowed"
 msgstr "no se permiten vectores de longitud negativa"
 
-#: src/main/memory.c:2281 src/main/memory.c:2294 src/main/memory.c:2307
-#: src/main/memory.c:2322
+#: src/main/memory.c:2282 src/main/memory.c:2295 src/main/memory.c:2308
+#: src/main/memory.c:2323
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "no se puede asignar un vector de longitud %d"
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2338
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "tipo/longitud no válido (%s/%d) en la asignación del vector"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2407
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "no se puede ubicar un vector de tamaño  %0.1f Gb"
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2411
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "no se puede ubicar un vector de tamaño  %0.1f Mb"
 
-#: src/main/memory.c:2414
+#: src/main/memory.c:2415
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "no se puede ubicar un vector de tamaño  %0.1f Kb"
 
-#: src/main/memory.c:2742
+#: src/main/memory.c:2744
 msgid "protect(): protection stack overflow"
 msgstr "protect(): protección del desborde de la pila"
 
-#: src/main/memory.c:2758
+#: src/main/memory.c:2760
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): solo %d proteje items"
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2774
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: no se encontró el puntero"
 
-#: src/main/memory.c:2828
+#: src/main/memory.c:2830
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc no puede asignar memoria (%d de %d)"
 
-#: src/main/memory.c:2839
+#: src/main/memory.c:2841
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc no puede re-asignar memoria (tamaño %d)"
 
-#: src/main/memory.c:3058
+#: src/main/memory.c:3060
 msgid "not safe to return vector pointer"
 msgstr "no es seguro devolver un puntero de vector"
 
-#: src/main/memory.c:3296
+#: src/main/memory.c:3298
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "'R profiling' no disponible en este sistema"
 
-#: src/main/memory.c:3361
+#: src/main/memory.c:3363
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: no puede abrir el archivo de perfil '%s'"

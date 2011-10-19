@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:16\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,12 +363,6 @@ msgid "invalid %s argument"
 msgstr ""
 
 msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
-msgstr ""
-
-msgid "running %s failed"
-msgstr ""
-
-msgid "%s produced no output file: sent to printer?"
 msgstr ""
 
 msgid "creation of %s failed"

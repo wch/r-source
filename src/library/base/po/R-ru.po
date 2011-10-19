@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-10-17 10:16\n"
-"PO-Revision-Date: 2011-03-30 02:18+0300\n"
-"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
+"PO-Revision-Date: 2011-10-18 19:27-0600\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -138,9 +138,8 @@ msgstr ""
 "  вызов: %s\n"
 "  ошибка: %s"
 
-#, fuzzy
 msgid "namespace cannot be unloaded:"
-msgstr "пространство имен  нельзя выгрузить:"
+msgstr "пространство имен нельзя выгрузить:"
 
 msgid "converted to character string"
 msgstr "конвертирован в текстовую строку"
@@ -692,13 +691,11 @@ msgstr "'пакет' должен быть длиной 1"
 msgid "no file found"
 msgstr "файл не найден"
 
-#, fuzzy
 msgid "invalid 'path' argument"
-msgstr "неправильный аргумент 'name'"
+msgstr "неправильный аргумент 'path'"
 
-#, fuzzy
 msgid "invalid 'time' argument"
-msgstr "неправильный аргумент 'name'"
+msgstr "неправильный аргумент 'time'"
 
 msgid "'vec' contains NAs"
 msgstr "'vec' содержит NA"
@@ -750,43 +747,38 @@ msgstr "' не найдено"
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
 
-#, fuzzy
 msgid "match distance components must be non-negative"
-msgstr "компоненты 'max.distance' должны быть неотрицательными"
+msgstr "компоненты соответствий расстояний должны быть неотрицательными"
 
 msgid "unknown match distance components ignored"
 msgstr "компоненты расстояния с неизвестным соответствием пропущены"
 
-#, fuzzy
 msgid "unknown cost components ignored"
-msgstr "компоненты расстояния с неизвестным соответствием пропущены"
+msgstr "неизвестные компоненты платы пропущены"
 
-#, fuzzy
 msgid "cost components must be non-negative"
-msgstr "компоненты 'max.distance' должны быть неотрицательными"
+msgstr "компоненты платы должны быть неотрицательными"
 
-#, fuzzy
 msgid "%s and %s must have the same length"
-msgstr "'x' и 'y' должны иметь одинаковую длину"
+msgstr "%s и %s должны иметь одинаковую длину"
 
 msgid "need non-overlapping matches for %s"
-msgstr ""
+msgstr "для %s нужны неперекрывающиеся соответствия"
 
-#, fuzzy
 msgid "missing replacement values are not allowed"
-msgstr "пропущенные значения в 'row.names' не разрешены"
+msgstr "пропущенные значения для замены не разрешены"
 
 msgid "must have replacement values for matches"
-msgstr ""
+msgstr "для соответствий нужны значения на замену"
 
 msgid "value does not provide any replacement values"
-msgstr ""
+msgstr "значение не дает никаких замен"
 
 msgid "must have replacements for non-matches"
-msgstr ""
+msgstr "нужны замены для несоответствующих значений"
 
 msgid "must have replacements for matches"
-msgstr ""
+msgstr "нужны замены для соответствий"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' сейчас всегда использует exact = FALSE"
@@ -800,59 +792,47 @@ msgstr "'object' должен быть списком"
 msgid "'keep.source' is deprecated and will be ignored"
 msgstr ""
 
-#, fuzzy
 msgid "package %s has not been installed properly"
-msgstr "пакет '%s' как следует не установлен"
+msgstr "пакет %s как следует не установлен"
 
-#, fuzzy
 msgid "package %s was built before R 2.10.0: please re-install it"
-msgstr ""
-"пакет '%s' был собран до R 2.10.0: пожалуйста, инсталлируйте его заново"
+msgstr "пакет %s был собран до R 2.10.0: пожалуйста, инсталлируйте его заново"
 
-#, fuzzy
 msgid "This is R %s, package %s needs %s %s"
-msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
+msgstr "Это -- R версии %s, а пакету %s нужен %s %s"
 
-#, fuzzy
 msgid "package %s was built under R version %s"
-msgstr "пакет '%s' был собран под R версии %s"
+msgstr "пакет %s был собран под R версии %s"
 
-#, fuzzy
 msgid "package %s was built for %s"
-msgstr "пакет '%s' был собран для %s"
+msgstr "пакет %s был собран для %s"
 
-#, fuzzy
 msgid "package %s is not installed for 'arch=%s'"
-msgstr "пакет '%s' не установлен для 'arch=%s'"
+msgstr "пакет %s не установлен для 'arch=%s'"
 
-#, fuzzy
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
 msgstr ""
-"у пакета '%s' есть лицензия, которую Вам нужно принять в инерактивной сессии"
+"у пакета %s есть лицензия, которую Вам нужно принять в инерактивной сессии"
 
-#, fuzzy
 msgid "Package %s has a license that you need to accept after viewing"
-msgstr "Пакет '%s' имеет лицензию, которую Вам нужно принять после просмотра"
+msgstr "Пакет %s имеет лицензию, которую Вам нужно принять после просмотра"
 
-#, fuzzy
 msgid ""
 "Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
-"Пакет '%s' имеет лицензию, которую надо принять::\n"
+"Пакет %s имеет лицензию, которую надо принять::\n"
 "в соответствии с файлом DESCRIPTION это"
 
 msgid "License"
 msgstr "Лицензия"
 
-#, fuzzy
 msgid "License for package %s not accepted"
-msgstr "Лицензия для пакета '%s' не принята"
+msgstr "Лицензия для пакета %s не принята"
 
-#, fuzzy
 msgid "Attaching package: %s"
-msgstr "Присоединяю пакет: '%s'"
+msgstr "Присоединяю пакет: %s"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
 msgstr "'verbose' и 'quietly' -- оба true; значит, будем verbose..."
@@ -860,39 +840,33 @@ msgstr "'verbose' и 'quietly' -- оба true; значит, будем verbose..."
 msgid "invalid package name"
 msgstr "неправильное имя пакета"
 
-#, fuzzy
 msgid "there is no package called %s"
-msgstr "нет пакета под названием '%s'"
+msgstr "нет пакета под названием %s"
 
 msgid "no library trees found in 'lib.loc'"
 msgstr "деревья библиотеки не найдены в 'lib.loc'"
 
-#, fuzzy
 msgid "%s is not a valid installed package"
-msgstr "'%s' не является правильным установленным пакетом"
+msgstr "%s не является правильным установленным пакетом"
 
-#, fuzzy
 msgid "%s not found on search path, using pos = 2"
-msgstr "'%s' не найден в пути поиска, использую pos = 2"
+msgstr "%s не найден в пути поиска, использую pos = 2"
 
-#, fuzzy
 msgid "package/namespace load failed for %s"
-msgstr "не удалась загрузка пакета/пространства имен для '%s'"
+msgstr "не удалась загрузка пакета/пространства имен для %s"
 
-#, fuzzy
 msgid "package %s does not have a NAMESPACE and should be re-installed"
-msgstr "пакет '%s' не имеет пространства имен"
+msgstr ""
+"пакет '%s' не имеет пространства имен и должен быть инсталлирован заново"
 
-#, fuzzy
 msgid "package %s already present in search()"
-msgstr "пакет '%s' уже есть в search()"
+msgstr "пакет %s уже есть в search()"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
 msgstr "У 'DESCRIPTION' есть поле 'Encoding', перекодировка невозможна"
 
-#, fuzzy
 msgid "%sPackages in library %s:"
-msgstr "%sПакеты в библиотеке '%s':"
+msgstr "%sПакеты в библиотеке %s:"
 
 msgid "no packages found"
 msgstr "пакеты не найдены"
@@ -900,17 +874,14 @@ msgstr "пакеты не найдены"
 msgid "R packages available"
 msgstr "доступные R-пакеты"
 
-#, fuzzy
 msgid "DLL %s not found: maybe not installed for this architecture?"
-msgstr "DLL '%s' не найден: может, не установлен в этой архитектуре?"
+msgstr "DLL %s не найден: может быть, не установлен в этой архитектуре?"
 
-#, fuzzy
 msgid "shared object %s not found"
-msgstr "разделяемый объект '%s' не найден"
+msgstr "разделяемый объект %s не найден"
 
-#, fuzzy
 msgid "DLL %s already loaded"
-msgstr "DLL '%s' уже загружена"
+msgstr "DLL %s уже загружена"
 
 msgid "shared object '%s' already loaded"
 msgstr "разделяемый объект '%s' уже загружен"
@@ -924,17 +895,14 @@ msgstr "не определена DLL"
 msgid "no shared object was specified"
 msgstr "разделяемый объект не указан"
 
-#, fuzzy
 msgid "DLL %s was not loaded"
-msgstr "DLL '%s' не загружен"
+msgstr "DLL %s не загружен"
 
-#, fuzzy
 msgid "shared object %s was not loaded"
-msgstr "разделяемый объект '%s' не загружен"
+msgstr "разделяемый объект %s не загружен"
 
-#, fuzzy
 msgid "DLL %s not found"
-msgstr "DLL '%s' не найден"
+msgstr "DLL %s не найден"
 
 msgid "shared object '%s' not found"
 msgstr "разделяемый объект '%s' не найден"
@@ -948,18 +916,16 @@ msgstr "Загрузка требуемого пакета: %s"
 msgid "none of the packages are loaded"
 msgstr "ни один из пакетов не загружен"
 
-#, fuzzy
 msgid ""
 "package %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"пакет '%s' найден более чем однажды,\n"
-"использую тот, который найден в '%s'"
+"пакет %s найден больше одного раза,\n"
+"использую тот, который найден в %s"
 
-#, fuzzy
 msgid ""
 "Further information is available in the following vignettes in directory %s:"
-msgstr "Дальнейшая информация доступна в следующих миниатюрах из папки '%s':"
+msgstr "Дальнейшая информация доступна в следующих миниатюрах из папки %s:"
 
 msgid "doc"
 msgstr "документ"
@@ -970,42 +936,35 @@ msgstr "Определение:"
 msgid "Index:"
 msgstr "Индекс:"
 
-#, fuzzy
 msgid "Information on package %s"
-msgstr "Информация по пакету '%s'"
+msgstr "Информация по пакету %s"
 
-#, fuzzy
 msgid "Documentation for package %s"
-msgstr "Документация для пакета '%s'"
+msgstr "Документация для пакета %s"
 
-#, fuzzy
 msgid "package %s required by %s could not be found"
-msgstr "пакет '%s', требуемый для '%s', не найден"
+msgstr "пакет %s, требуемый для %s, не найден"
 
-#, fuzzy
 msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "пакет '%s' %s найден, но %s %s требуется для '%s'"
+msgstr "пакет %s %s найден, но %s %s требуется для %s"
 
-#, fuzzy
 msgid "package %s could not be loaded"
-msgstr "пакет '%s' нельзя загрузить"
+msgstr "пакет %s нельзя загрузить"
 
-#, fuzzy
 msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "пакет '%s' %s загружен, но %s %s требуется для '%s'"
+msgstr "пакет %s %s загружен, но %s %s требуется для %s"
 
 msgid "empty (zero-byte) input file"
-msgstr ""
+msgstr "пустой (ноль бит) входной файл"
 
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "ввод поврежден, LF заменен на CR"
 
-#, fuzzy
 msgid ""
 "file %s has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
-"файл '%s' имеет магическое число '%s'\n"
+"файл %s имеет магическое число '%s'\n"
 "   Использование сохраненных версий, более ранних чем 2, не одобряется"
 
 msgid "bad 'file' argument"
@@ -1020,12 +979,11 @@ msgstr "Использование сохраненных версий, более ранних чем 2, не одобряется"
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
-#, fuzzy
 msgid "'compress' must be logical or character"
-msgstr "'from' должен быть raw либо текстовой строкой"
+msgstr "'compress' должен быть логическим либо текстовой строкой"
 
 msgid "'compress = \"%s\"' is invalid"
-msgstr ""
+msgstr "'compress = \"%s\"' неправилен"
 
 msgid "bad file argument"
 msgstr "неправильный файловый аргумент"
@@ -1039,9 +997,8 @@ msgstr "изображение нельзя переименовать; оставлено в"
 msgid "[Previously saved workspace restored]"
 msgstr "[Загружено ранее сохраненное рабочее пространство]"
 
-#, fuzzy
 msgid "Attempting to load the environment %s"
-msgstr "Пытаюсь загрузить окружение '%s'"
+msgstr "Пытаюсь загрузить окружение %s"
 
 msgid "not found: using .GlobalEnv instead"
 msgstr "не найдено: использую .GlobalEnv"
@@ -1140,18 +1097,16 @@ msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
-msgstr ""
+msgstr "запущенная .First.lib() для пакета %s в .onLoad/.onAttach не найдена"
 
-#, fuzzy
 msgid "namespace is already attached"
 msgstr "пространство имен уже присоединено"
 
 msgid "%s not found"
 msgstr "%s не найден"
 
-#, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
-msgstr "пространство имен '%s' уже включено в loadNamespace"
+msgstr "пространство имен %s уже запечатано в loadNamespace"
 
 msgid "failed to assign RegisteredNativeSymbol for"
 msgstr "не удалось присвоить RegisteredNativeSymbol для"
@@ -1171,13 +1126,11 @@ msgstr "пространство имен"
 msgid "failed to assign NativeSymbolInfo for"
 msgstr "не удалось присвоить NativeSymbolInfo для"
 
-#, fuzzy
 msgid "package %s does not have a namespace"
-msgstr "пакет '%s' не имеет пространства имен"
+msgstr "пакет %s не имеет пространства имен"
 
-#, fuzzy
 msgid "unable to load R code in package %s"
-msgstr "не могу загрузить код R пакета '%s'"
+msgstr "не могу загрузить код R пакета %s"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1189,9 +1142,8 @@ msgstr ""
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "в пакете '%s' классы %s указаны для экспорта, но не определены"
 
-#, fuzzy
 msgid "in %s methods for export not found: %s"
-msgstr "в '%s' методы для экспорта не найдены: %s"
+msgstr "в %s не найдены методы для экспорта: %s"
 
 msgid "multiple methods tables found for %s"
 msgstr "множественные таблицы методов найдены для %s"
@@ -1202,27 +1154,21 @@ msgstr "не удалось найти объект метаданных для %s"
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "в пакете '%s' указаны методы %s для экспорта, но не определены"
 
-#, fuzzy
 msgid "Loading required namespace: %s"
 msgstr "Загрузка требуемого пакета: %s"
 
 msgid "not found"
 msgstr "не найден"
 
-#, fuzzy
 msgid "not loading a namespace"
 msgstr "не загружаю пространство имен"
 
-#, fuzzy
 msgid "namespace %s is imported by %s so cannot be unloaded"
-msgstr ""
-"пространство имен %s импортировано из %s и поэтому его нельзя выгрузить"
+msgstr "пространство имен %s импортировано из %s и потому его нельзя выгрузить"
 
-#, fuzzy
 msgid "not a namespace"
-msgstr "не пространство имен"
+msgstr "это не пространство имен"
 
-#, fuzzy
 msgid "operation not allowed on base namespace"
 msgstr "в базовом пространстве имен эта операция не разрешена"
 
@@ -1232,9 +1178,8 @@ msgstr "одинаковые импортированные имена"
 msgid "replacing local value with import %s when loading %s"
 msgstr "заменяю локальное значение на импортированное %s во время загрузки %s"
 
-#, fuzzy
 msgid "cannot import into a sealed namespace"
-msgstr "не могу импортировать во включенное пространство имен"
+msgstr "не могу импортировать в запечатанное пространство имен"
 
 msgid "replacing previous import %s when loading %s"
 msgstr "заменяю предыдущий импорт %s во время загрузки %s"
@@ -1248,16 +1193,14 @@ msgstr "найдены методы импорта для функции %s но они сами не общие"
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "запрошенные методы не найдены в окружении/пакете %s: %s"
 
-#, fuzzy
 msgid "cannot add to exports of a sealed namespace"
-msgstr "не могу добавить к экспорту из включенного пространства имен"
+msgstr "не могу добавить к экспорту из запечатанного пространства имен"
 
 msgid "undefined exports:"
 msgstr "неопределенные экспорты:"
 
-#, fuzzy
 msgid "package %s has no NAMESPACE file"
-msgstr "у пакета '%s' нет файла NAMESPACE"
+msgstr "у пакета %s нет файла NAMESPACE"
 
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "пустое имя в директиве '%s' из файла NAMESPACE"
@@ -1301,9 +1244,8 @@ msgstr "'x' нельзя преобразовать в 'hexmode'"
 msgid "no arguments"
 msgstr "нет аргументов"
 
-#, fuzzy
 msgid "an argument will be fractionally recycled"
-msgstr "аргумент 'drop' не будет учтен"
+msgstr "аргумент будет частично зациклен"
 
 msgid "invalid 'n' value"
 msgstr "неправильное значение 'n'"
@@ -1467,9 +1409,8 @@ msgstr "method=\"quick\" -- только для числовых 'x'"
 msgid "method=\"radix\" is only for integer 'x'"
 msgstr "method=\"radix\" -- только для целых 'x'"
 
-#, fuzzy
 msgid "'local' must be TRUE, FALSE or an environment"
-msgstr "'wait' должен быть TRUE или FALSE"
+msgstr "'local' должен быть TRUE, FALSE, или environment"
 
 msgid "'echo' must be logical"
 msgstr "'echo' должно быть логическим"
@@ -1657,7 +1598,7 @@ msgid "'stderr' must be of length 1"
 msgstr "'stderr' должен быть длиной 1"
 
 msgid "'which' was not found on this platform"
-msgstr ""
+msgstr "'which' для этой платформы не найдена"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' должен быть TRUE или FALSE"

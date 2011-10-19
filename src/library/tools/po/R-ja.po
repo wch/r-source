@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -518,6 +518,9 @@ msgstr ""
 msgid "No help on %s found in RdDB %s"
 msgstr " %s に関するいかなるヘルプも RdDB %s 中にはありません "
 
+msgid "more than one \\examples section, using the first"
+msgstr " 2つ以上の\\examples節があります、1番目を用います "
+
 msgid "Converting Rd files to LaTeX ..."
 msgstr "RdファイルをLaTeXに変換しています "
 
@@ -549,9 +552,6 @@ msgstr " 入力がありません "
 #, fuzzy
 msgid "Error in running tools::texi2pdf"
 msgstr " tools::texi2dvi を実行中にエラーがありました "
-
-msgid "more than one \\examples section, using the first"
-msgstr " 2つ以上の\\examples節があります、1番目を用います "
 
 msgid "invalid value for '%s' : %s"
 msgstr " '%s' に対する不正な値 : %s "

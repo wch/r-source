@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50+0100\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -178,7 +178,7 @@ msgstr ""
 #: src/main/grep.c:1035 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1483 src/main/grep.c:1487 src/main/grep.c:1492
 #: src/main/grep.c:2291 src/main/grep.c:2296 src/main/grep.c:2579
-#: src/main/grep.c:2584 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2584 src/main/memory.c:3377 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -473,19 +473,19 @@ msgstr "第三個引數應當是字串"
 msgid "running command '%s' had status %d"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:414
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:416
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:422
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:424
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -590,32 +590,32 @@ msgstr "目的物件不是次集合表格"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "找不到與識別碼相應的 R-to-C 轉換器"
 
-#: src/main/CommandLineArgs.c:172
+#: src/main/CommandLineArgs.c:170
 #, fuzzy
 msgid "WARNING: no value given for --encoding"
 msgstr "警告: 沒有設定 --enconding 的值\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:197
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "警告: 本版本不再支援 '%s' 選項\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:205
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "警告: 沒有設定 '--max-ppsize' 的值\n"
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:210
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "警告: '-max-ppsize' 的值是負數: 忽略不用\n"
 
-#: src/main/CommandLineArgs.c:214
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "警告: '-max-ppsize' 的值太小: 忽略不用\n"
 
-#: src/main/CommandLineArgs.c:217
+#: src/main/CommandLineArgs.c:215
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "警告: '-max-ppsize' 的值太大: 忽略不用\n"
@@ -4171,9 +4171,9 @@ msgstr "無法讀寫模組中的網際網路例行程式"
 msgid "internet routines cannot be loaded"
 msgstr "無法載入網際網路例行程式"
 
-#: src/main/internet.c:117 src/main/memory.c:3104 src/main/memory.c:3113
-#: src/main/memory.c:3124 src/main/memory.c:3137 src/main/memory.c:3153
-#: src/main/memory.c:3170
+#: src/main/internet.c:117 src/main/memory.c:3106 src/main/memory.c:3115
+#: src/main/memory.c:3126 src/main/memory.c:3139 src/main/memory.c:3155
+#: src/main/memory.c:3172
 msgid "bad value"
 msgstr "不當的值"
 
@@ -4386,69 +4386,69 @@ msgstr "cons 記憶體已用完 (達到了極值?)"
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "無法分派大小為 %.0f 的記憶體區塊"
 
-#: src/main/memory.c:2255
+#: src/main/memory.c:2256
 msgid "negative length vectors are not allowed"
 msgstr "不允許負長度的向量"
 
-#: src/main/memory.c:2281 src/main/memory.c:2294 src/main/memory.c:2307
-#: src/main/memory.c:2322
+#: src/main/memory.c:2282 src/main/memory.c:2295 src/main/memory.c:2308
+#: src/main/memory.c:2323
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "無法分派長度為 %d 的向量"
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2338
 #, fuzzy, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "向量指派的類型/長度 (%d/%d) 不正確"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2407
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "無法指派大小為 %lu Kb 的向量"
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2411
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "無法指派大小為 %lu Kb 的向量"
 
-#: src/main/memory.c:2414
+#: src/main/memory.c:2415
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "無法指派大小為 %lu Kb 的向量"
 
-#: src/main/memory.c:2742
+#: src/main/memory.c:2744
 msgid "protect(): protection stack overflow"
 msgstr "protect()：防護堆疊向上溢位"
 
-#: src/main/memory.c:2758
+#: src/main/memory.c:2760
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr ""
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2774
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到這個指標"
 
-#: src/main/memory.c:2828
+#: src/main/memory.c:2830
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc 無法分派 (%d / %d) 記憶體"
 
-#: src/main/memory.c:2839
+#: src/main/memory.c:2841
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc 無法重新分派 (大小為 %d) 的記憶體"
 
-#: src/main/memory.c:3058
+#: src/main/memory.c:3060
 msgid "not safe to return vector pointer"
 msgstr "回傳向量指標不是安全的做法"
 
-#: src/main/memory.c:3296
+#: src/main/memory.c:3298
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "本系統沒有 R 程式概要分析這個功能"
 
-#: src/main/memory.c:3361
+#: src/main/memory.c:3363
 #, fuzzy, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprof: 打不開程式概要分析檔案 '%s'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -496,6 +496,9 @@ msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습�
 msgid "No help on %s found in RdDB %s"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
+msgid "more than one \\examples section, using the first"
+msgstr ""
+
 msgid "Converting Rd files to LaTeX ..."
 msgstr ""
 
@@ -524,9 +527,6 @@ msgid "no inputs"
 msgstr ""
 
 msgid "Error in running tools::texi2pdf"
-msgstr ""
-
-msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: 2011-10-13 15:53+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -508,6 +508,9 @@ msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
 msgid "No help on %s found in RdDB %s"
 msgstr "Keine Hilfe zu %s in RdDB %s gefunden"
 
+msgid "more than one \\examples section, using the first"
+msgstr "mehr als eine \\examples section, benutze die erste"
+
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konvertiere RD Dateien nach LaTeX"
 
@@ -538,9 +541,6 @@ msgstr "keine Eingaben"
 #, fuzzy
 msgid "Error in running tools::texi2pdf"
 msgstr "Fehler bei der Ausführung von tools::texi2dvi"
-
-msgid "more than one \\examples section, using the first"
-msgstr "mehr als eine \\examples section, benutze die erste"
 
 msgid "invalid value for '%s' : %s"
 msgstr "Ungültiger Wert für '%s' : %s"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50+0100\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
 "PO-Revision-Date: 2011-03-28 15:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -179,7 +179,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/grep.c:1035 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1483 src/main/grep.c:1487 src/main/grep.c:1492
 #: src/main/grep.c:2291 src/main/grep.c:2296 src/main/grep.c:2579
-#: src/main/grep.c:2584 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2584 src/main/memory.c:3377 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -469,19 +469,19 @@ msgstr " 三番目の引数には文字列が期待されています "
 msgid "running command '%s' had status %d"
 msgstr " 命令 '%s' の実行は状態 %d を持ちました "
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:414
 msgid "reached session elapsed time limit"
 msgstr " セッション時間が経過して上限に達しました "
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:416
 msgid "reached elapsed time limit"
 msgstr " 時間が経過して上限に達しました "
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:422
 msgid "reached session CPU time limit"
 msgstr "  セッションCPU時間が経過して上限に達しました "
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:424
 msgid "reached CPU time limit"
 msgstr " CPU時間が経過して上限に達しました "
 
@@ -588,32 +588,32 @@ msgstr " '%s' 型のオブジェクトは部分代入可能ではありません
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr " 識別子に対応する R-to-C コンバータがありません "
 
-#: src/main/CommandLineArgs.c:172
+#: src/main/CommandLineArgs.c:170
 #, fuzzy
 msgid "WARNING: no value given for --encoding"
 msgstr " 警告: --encoding の値が与えられていません \n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:197
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr " 警告: '%s' オプションはもやはサポートされていません \n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:205
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr " 警告: '--max-ppsize' の値が与えられていません \n"
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:210
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr " 警告: '--max-ppsize' 値が負なので無視されました \n"
 
-#: src/main/CommandLineArgs.c:214
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr " 警告: '--max-ppsize' 値が小さすぎるので無視されました \n"
 
-#: src/main/CommandLineArgs.c:217
+#: src/main/CommandLineArgs.c:215
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr " 警告: '--max-ppsize' 値が大きすぎるので無視されました \n"
@@ -4140,9 +4140,9 @@ msgstr " モジュール中でインターネットルーチンがアクセス�
 msgid "internet routines cannot be loaded"
 msgstr " インターネットルーチンがロードできません "
 
-#: src/main/internet.c:117 src/main/memory.c:3104 src/main/memory.c:3113
-#: src/main/memory.c:3124 src/main/memory.c:3137 src/main/memory.c:3153
-#: src/main/memory.c:3170
+#: src/main/internet.c:117 src/main/memory.c:3106 src/main/memory.c:3115
+#: src/main/memory.c:3126 src/main/memory.c:3139 src/main/memory.c:3155
+#: src/main/memory.c:3172
 msgid "bad value"
 msgstr " 不適切な値です "
 
@@ -4353,68 +4353,68 @@ msgstr " メモリが尽きました（限界に達したかも？） "
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のメモリブロックを割り当てることができません "
 
-#: src/main/memory.c:2255
+#: src/main/memory.c:2256
 msgid "negative length vectors are not allowed"
 msgstr " 負の長さのベクトルは許されません "
 
-#: src/main/memory.c:2281 src/main/memory.c:2294 src/main/memory.c:2307
-#: src/main/memory.c:2322
+#: src/main/memory.c:2282 src/main/memory.c:2295 src/main/memory.c:2308
+#: src/main/memory.c:2323
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr " 長さ %d のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2338
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr " ベクトル割り当てにおいて，型か長さ (%s か %d) が不正です "
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2407
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2411
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr " サイズ %0.1f Mb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2414
+#: src/main/memory.c:2415
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr " サイズ %0.f Kb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2742
+#: src/main/memory.c:2744
 msgid "protect(): protection stack overflow"
 msgstr " protect()：プロテクションスタックが溢れました "
 
-#: src/main/memory.c:2758
+#: src/main/memory.c:2760
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr " unprotect(): %d 個の保護された項目  "
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2774
 msgid "unprotect_ptr: pointer not found"
 msgstr " unprotect_ptr：ポインターがありません "
 
-#: src/main/memory.c:2828
+#: src/main/memory.c:2830
 #, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr " Calloc がメモリー (%2$u バイトの %1$.0f) を割りあてられませんでした "
 
-#: src/main/memory.c:2839
+#: src/main/memory.c:2841
 #, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr " Realloc がメモリーを再確保できません (%.0f バイト)  "
 
-#: src/main/memory.c:3058
+#: src/main/memory.c:3060
 msgid "not safe to return vector pointer"
 msgstr " ベクトルのポインタを返すのは安全ではありません "
 
-#: src/main/memory.c:3296
+#: src/main/memory.c:3298
 msgid "memory profiling is not available on this system"
 msgstr " メモリプロファリングはこのシステムでは使えません "
 
-#: src/main/memory.c:3361
+#: src/main/memory.c:3363
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr " Rprofmem: ファイル '%s' を開くことができません "

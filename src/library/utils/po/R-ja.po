@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:16\n"
+"POT-Creation-Date: 2011-10-19 07:24\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -443,14 +443,6 @@ msgid ""
 msgstr ""
 " パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないためヘルプ"
 "ファイルにアクセスできません "
-
-#, fuzzy
-msgid "running %s failed"
-msgstr " '%s'の実行に失敗しました "
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr " '%s'は出力ファイルを生成しません: プリンタに送りますか? "
 
 #, fuzzy
 msgid "creation of %s failed"
@@ -1302,6 +1294,14 @@ msgstr[0] " 'lib' の要素 '%s' は書き込み可能なディレクトリで�
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#, fuzzy
+#~ msgid "running %s failed"
+#~ msgstr " '%s'の実行に失敗しました "
+
+#, fuzzy
+#~ msgid "%s produced no output file: sent to printer?"
+#~ msgstr " '%s'は出力ファイルを生成しません: プリンタに送りますか? "
 
 #, fuzzy
 #~ msgid "Postscript offline help is deprecated"

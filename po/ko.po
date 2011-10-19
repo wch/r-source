@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50+0100\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -177,7 +177,7 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/grep.c:1035 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1483 src/main/grep.c:1487 src/main/grep.c:1492
 #: src/main/grep.c:2291 src/main/grep.c:2296 src/main/grep.c:2579
-#: src/main/grep.c:2584 src/main/memory.c:3375 src/main/model.c:1610
+#: src/main/grep.c:2584 src/main/memory.c:3377 src/main/model.c:1610
 #: src/main/model.c:1618 src/main/optim.c:225 src/main/paste.c:87
 #: src/main/paste.c:368 src/main/paste.c:375 src/main/paste.c:382
 #: src/main/paste.c:387 src/main/paste.c:392 src/main/paste.c:397
@@ -474,19 +474,19 @@ msgstr "세번째 인수에는 문자열으로 예측되어 있습니다"
 msgid "running command '%s' had status %d"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:414
 msgid "reached session elapsed time limit"
 msgstr "경과된 시간이 초과되었습니다"
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:416
 msgid "reached elapsed time limit"
 msgstr "시간제한에 도달했습니다"
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:422
 msgid "reached session CPU time limit"
 msgstr "session CPU 시간제한에 도달했습니다"
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:424
 msgid "reached CPU time limit"
 msgstr "CPU 시간제한에 도달했습니다"
 
@@ -593,32 +593,32 @@ msgstr "오브젝트는 부분대입이 가능하지 않습니다"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "식별자에 대응하는 R-to-C변환기가 없습니다"
 
-#: src/main/CommandLineArgs.c:172
+#: src/main/CommandLineArgs.c:170
 #, fuzzy
 msgid "WARNING: no value given for --encoding"
 msgstr "경고: --인코딩의 값이 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:197
 #, fuzzy, c-format
 msgid "WARNING: option '%s' no longer supported"
 msgstr "경고: '%s'옵션이 현재에는 더 이상 제공하지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:205
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "경고: '--max-ppsize'값이 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:210
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "경고: '-max-ppsize'값이 negative입니다: 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:214
+#: src/main/CommandLineArgs.c:212
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "경고: '-max-ppsize'값이 너무 작습니다: 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:217
+#: src/main/CommandLineArgs.c:215
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "경고: '--vsize'값이 너무 큽니다: 무시되었습니다\n"
@@ -4226,9 +4226,9 @@ msgstr "모듈에서 internet routinef를 액세스할수가 없습니다"
 msgid "internet routines cannot be loaded"
 msgstr "인터넷 루틴을 로드할수가 없습니다"
 
-#: src/main/internet.c:117 src/main/memory.c:3104 src/main/memory.c:3113
-#: src/main/memory.c:3124 src/main/memory.c:3137 src/main/memory.c:3153
-#: src/main/memory.c:3170
+#: src/main/internet.c:117 src/main/memory.c:3106 src/main/memory.c:3115
+#: src/main/memory.c:3126 src/main/memory.c:3139 src/main/memory.c:3155
+#: src/main/memory.c:3172
 msgid "bad value"
 msgstr "부적절한 값입니다"
 
@@ -4450,69 +4450,69 @@ msgstr "cons 메모리가 전부 소모했습니다(한계가 이르렀을지도
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "size %.0f의 메모리 블록을 할당할수가 없습니다"
 
-#: src/main/memory.c:2255
+#: src/main/memory.c:2256
 msgid "negative length vectors are not allowed"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/memory.c:2281 src/main/memory.c:2294 src/main/memory.c:2307
-#: src/main/memory.c:2322
+#: src/main/memory.c:2282 src/main/memory.c:2295 src/main/memory.c:2308
+#: src/main/memory.c:2323
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "길이 %d의 벡터를 할당한 수가 없습니다"
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2338
 #, fuzzy, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "벡터 할당에 두고, 유형 또는 길이(%d/%d)가 부적절합니다"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2407
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2411
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2414
+#: src/main/memory.c:2415
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2742
+#: src/main/memory.c:2744
 msgid "protect(): protection stack overflow"
 msgstr "protect():  protection 스택이 오버플로우입니다"
 
-#: src/main/memory.c:2758
+#: src/main/memory.c:2760
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr ""
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2774
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: pointer가 없습니다"
 
-#: src/main/memory.c:2828
+#: src/main/memory.c:2830
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc가 메모리(%d of %d)를 할당할수가 없었습니다"
 
-#: src/main/memory.c:2839
+#: src/main/memory.c:2841
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc가 메모리를 재확보할수 없습니다 (size는 %d)"
 
-#: src/main/memory.c:3058
+#: src/main/memory.c:3060
 msgid "not safe to return vector pointer"
 msgstr "벡터 pointer를 돌려주는 것은 안전하지는 않습니다"
 
-#: src/main/memory.c:3296
+#: src/main/memory.c:3298
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "R profiling는 이 시스템에서 사용할 수가 없습니다"
 
-#: src/main/memory.c:3361
+#: src/main/memory.c:3363
 #, fuzzy, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprof: profile 파일,파일 '%s'를 열수가 없습니다"

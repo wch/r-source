@@ -131,36 +131,35 @@ msgstr "行 * 列的结果太小"
 msgid "Missing rows"
 msgstr "缺少行"
 
-#, fuzzy
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
-msgstr "'expr'要么是函数，要么调用，要么是包含'x'的表达式"
+msgstr "'expr'要么是函数，要么调用，要么是包含'%s'的表达式"
 
 msgid "'add' will be ignored as there is no existing plot"
-msgstr ""
+msgstr "'add'将被忽略，因为没有任何现有的图形"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "log=\"x\"意味着'from'和'to'的值必需大于零"
 
 msgid "'expr' did not evaluate to an object of length 'n'"
-msgstr ""
+msgstr "'expr'没有评估为长度是'n'的对象"
 
 msgid "wrong method"
 msgstr "方法不对"
 
 msgid "Must specify 'breaks' in hist(<POSIXt>)"
-msgstr ""
+msgstr "hist(<POSIXt>)必需设定'breaks'"
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks'定义不对"
 
 msgid "Must specify 'breaks' in hist(<Date>)"
-msgstr ""
+msgstr " hist(<Date>)必需设定'breaks'"
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x'要么是数值向量，要么是矩阵"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
-msgstr ""
+msgstr "既不是一个向量也不是矩阵：使用as.numeric(x)"
 
 msgid "'x' must be an array"
 msgstr "'x'必需为排列"
@@ -238,7 +237,7 @@ msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "z的大小应该等于length(x)(-1)乘length(y)(-1)"
 
 msgid "useRaster=TRUE can only be used with a regular grid"
-msgstr ""
+msgstr "useRaster=TRUE只适用于普通网格"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "'respect'要么是逻辑值，要么是同'mat'大小一样的矩阵"
@@ -306,7 +305,7 @@ msgid "the 'panel' function made a new plot"
 msgstr "'panel'函数画了一个新的图"
 
 msgid "surface extends beyond the box"
-msgstr ""
+msgstr "面超出框"
 
 msgid "'x' values must be positive."
 msgstr "'x'必需是正数."
@@ -438,3 +437,4 @@ msgstr[0] "没有用%s这个参数"
 
 #~ msgid "regression coefficients"
 #~ msgstr "回归系数"
+
