@@ -168,12 +168,43 @@ if test ${r_cv_java_works} = yes; then
         JAVA_LD_LIBRARY_PATH=
         ;;
       *)
-        R_RUN_JAVA(JAVA_LIBS, [-classpath ${getsp_cp} getsp -libs])
-        JAVA_LIBS="${JAVA_LIBS} -ljvm"
         R_RUN_JAVA(JAVA_LD_LIBRARY_PATH, [-classpath ${getsp_cp} getsp java.library.path])
+	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | ${SED-sed} -e 's/^://' -e 's/:$//'`
 
-	JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
-	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+	# unfortunately recent Oracle Java distributions ship with broken
+	# java.library.path so we try to see if that is the case
+	has_libjvm=no
+	save_IFS=$IFS; IFS=:
+	for dir in ${JAVA_LD_LIBRARY_PATH}; do
+	    if test -f "$dir/libjvm.so"; then
+	        has_libjvm=yes
+	       	break
+	    fi
+        done
+	# for broken java.library.path try some heuristic using sun.boot.library.path
+	if test ${has_libjvm} = no; then
+	     R_RUN_JAVA(boot_path, [-classpath ${getsp_cp} getsp sun.boot.library.path])
+	     if test -n "${boot_path}"; then
+	          for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
+	       	      if test -f "$dir/libjvm.so"; then
+		          has_libjvm=yes
+			  # NOTE: we decided to ignore java.library.path altogether since it was bogus
+			  #       we could just append the newly found paths, though
+			  if test "${dir}" = "${boot_path}"; then
+			      JAVA_LD_LIBRARY_PATH="${dir}"
+			  else
+			      JAVA_LD_LIBRARY_PATH="${boot_path}:${dir}"
+			  fi
+			  break
+		       fi
+		  done
+	    fi
+	fi
+	IFS=${save_IFS}
+
+	JAVA_LIBS=`echo ":${JAVA_LD_LIBRARY_PATH} -ljvm" | ${SED-sed} -e 's/:/ -L/g'`
+	JAVA_LIBS0=`echo ${JAVA_LIBS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
+	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
 
 	## includes consist of two parts - jni.h and machine-dependent jni_md.h
 	jinc=''
@@ -209,7 +240,7 @@ if test ${r_cv_java_works} = yes; then
 	     fi
 	   fi
 	fi
-	JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+	JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
         ;;
     esac
 
@@ -217,12 +248,12 @@ if test ${r_cv_java_works} = yes; then
     acx_java_uses_custom_flags=no
     if test "${custom_JAVA_LIBS}" != '~autodetect~'; then
       JAVA_LIBS="${custom_JAVA_LIBS}"
-      JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+      JAVA_LIBS0=`echo ${JAVA_LIBS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
       acx_java_uses_custom_flags=yes
     fi
     if test "${custom_JAVA_CPPFLAGS}" != '~autodetect~'; then
       JAVA_CPPFLAGS="${custom_JAVA_CPPFLAGS}"
-      JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+      JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
       acx_java_uses_custom_flags=yes
     fi
     if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then

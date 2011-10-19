@@ -809,6 +809,9 @@
 
       \item Framework installation now supports \code{DESTDIR}
       (Mac OS X only).
+
+      \item Java detection (\code{R CMD javareconf}) works around bogus
+      \code{java.library.path} property in recent Oracle Java binaries.
     }
   }
 
