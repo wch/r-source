@@ -1,76 +1,79 @@
-# Translation of src/library/parallel/po/parallel.pot to German
+# Russian translations for R
+# Русский перевод для R
+#
 # Copyright (C) 2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-10-19 07:22+0100\n"
-"PO-Revision-Date: 2011-10-12 13:38+0200\n"
-"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
-"Language-Team: R-core <R-core@r-project.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2011-10-18 22:15-0600\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: fork.c:135 fork.c:138
 msgid "unable to create a pipe"
-msgstr "kann keine pipe erzeugen"
+msgstr "не могу создать трубу"
 
 #: fork.c:149
 #, c-format
 msgid "unable to fork, possible reason: %s"
-msgstr "kann nicht forken, mц╤glicher Grund: %s"
+msgstr "не могу разветвить, возможная причина: %s"
 
 #: fork.c:178
 msgid "memory allocation error"
-msgstr "Speicherallozierungsfehler"
+msgstr "ошибка распределения памяти"
 
 #: fork.c:216
 msgid "only children can send data to the master process"
-msgstr "nur Kindprozesse kц╤nnen Daten zum Elternprozess schicken"
+msgstr "только дочерние процессы могут посылать данные мастер-процессу"
 
 #: fork.c:218
 msgid "there is no pipe to the master process"
-msgstr "es gibt keine pipe zum Elternprozess"
+msgstr "нет трубы к мастер-процессу"
 
 #: fork.c:220
 msgid "content to send must be RAW, use serialize() if needed"
-msgstr "zu schickender Inhalt muss RAW sein, nutze serialize() wenn nц╤tig"
+msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
 #: fork.c:229 fork.c:236
 msgid "write error, closing pipe to the master"
-msgstr "Schreibfehler, schlieц÷e pipe zum Elternprozess"
+msgstr "ошибка записи, закрываю трубу к мастеру"
 
 #: fork.c:249
 msgid "only the master process can send data to a child process"
-msgstr "nur der Elternprozess kann Daten zum Kindprozess schicken"
+msgstr "только мастер-процесс может посылать данные дочернему процессу"
 
 #: fork.c:256
 #, c-format
 msgid "child %d does not exist"
-msgstr "Kindprozess %d existiert nicht"
+msgstr "дочерний процесс %d не существует"
 
 #: fork.c:262
 msgid "write error"
-msgstr "Schreibfehler"
+msgstr "ошибка записи"
 
 #: fork.c:342 fork.c:464
 #, c-format
 msgid "error '%s' in select"
-msgstr "Fehler '%s' in select"
+msgstr "ошибка '%s' в выборе"
 
 #: fork.c:548
 msgid "mckill failed"
-msgstr "mckill fehlgeschlagen"
+msgstr "mckill не удался"
 
 #: fork.c:558
 msgid "mcexit can only be used in a child process"
-msgstr "mcexit kann nur von Kindprozessen genutzt werden"
+msgstr "mcexit может быть использован только в дочернем процессе"
 
 #: fork.c:578
 msgid "mcexit failed"
-msgstr "mcexit fehlgeschlagen"
+msgstr "mcexit не удался"

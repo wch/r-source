@@ -91,13 +91,11 @@ msgstr ""
 "只能设定'side=[\"top\", \"bottom\"]', 'row', 'row.before'或'row.after'中的一"
 "个"
 
-#, fuzzy
 msgid "Invalid 'n'"
-msgstr "'origin'的值不对"
+msgstr "'n'的值不对"
 
-#, fuzzy
 msgid "Invalid 'f'"
-msgstr "'frame'的值不对"
+msgstr "'f'的值不对"
 
 msgid "gpar element '%s' must not be length 0"
 msgstr "gpar成分'%s'的长度不能为零"
@@ -497,7 +495,6 @@ msgstr "至少要设定'x'或'xscale'两个中的一个"
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "至少要设定'y'或'yscale'两个中的一个"
 
-#, fuzzy
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "卸载'grid'名字空间时关闭所有的设备"
 
@@ -521,3 +518,4 @@ msgstr "卸载'grid'名字空间时关闭所有的设备"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

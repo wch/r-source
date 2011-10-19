@@ -1,0 +1,94 @@
+# Translation of R-parallel.pot to French
+# Copyright (C) 2011 The R Foundation
+# This file is distributed under the same license as the parallel R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.14.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2011-08-24 10:21\n"
+"PO-Revision-Date: 2011-10-15 18:14+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=(n > 1);\n"
+"X-Poedit-Language: French\n"
+
+msgid "invalid value of 'seed'"
+msgstr "valeur incorrecte pour 'seed'"
+
+msgid "need at least one argument"
+msgstr "au moins un argument est requis"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) doit avoir une longueur positive"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' doit avoir des dimnames nommés"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "les éléments de 'MARGIN' ne sont pas tous des noms de dimensions"
+
+msgid "not a valid cluster"
+msgstr "groupe de processus invalide"
+
+msgid "unknown cluster type"
+msgstr "groupe de processus de type inconnu"
+
+msgid "socket cluster with %d nodes on hosts %s"
+msgstr "groupe de processus socket avec %d noeuds sur les hôtes %s"
+
+msgid ","
+msgstr ","
+
+msgid "socket cluster with %d nodes on host %s"
+msgstr "groupe de processus socket avec %d noeuds sur l'hôte %s"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "noeud d'un groupe de processus socket sur l'hôte %s avec le pid %d"
+
+msgid "host"
+msgstr "hôte"
+
+msgid "invalid 'child' argument"
+msgstr "argument 'child' incorrect"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "'children' doit être une liste de processus ou un seul processus"
+
+msgid "'process' must be of the class \"`process\""
+msgstr "'process' doit être de classe \"`process\""
+
+msgid "'child' must be a valid child process"
+msgstr "'child' doit être un processus fils valide"
+
+msgid "'what' must be a character or raw vector"
+msgstr "'what' doit être une chaine de caractères ou un vecteur 'raw'"
+
+msgid "%d function calls resulted in an error"
+msgstr "les appels de fonction %d ont produit une erreur"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "tous les coeurs qui ont été programmés ont trouvé des erreurs dans le code utilisateur"
+
+msgid "invalid 'jobs' argument"
+msgstr "argument 'jobs' incorrect"
+
+msgid "'v' must be a vector"
+msgstr "'v' doit être un vecteur"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr "quelques résultats peuvent être manquants, repliés ou ont produit une error"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "la création de nouvelles branches de groupes de processus n'est pas supporté sous Windows"
+
+msgid "scheduled core %d encountered error in user code, all values of the job will be affected"
+msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"
+msgstr[0] "le coeur programmé %d a rencontré une erreur dans le code utilisateur, toutes les valeurs pour cette tâche seront affectées"
+msgstr[1] "les coeurs programmés %d ont rencontré des erreurs dans le code utilisateur, toutes les valeurs pour ces tâches seront affectées"
+

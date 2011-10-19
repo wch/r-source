@@ -120,9 +120,8 @@ msgstr "使用手冊对象'%s'里入档的文件参数没有在\\usage里提到:
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "使用手冊对象'%s'里的\\usage对象没有\\alias这条目:"
 
-#, fuzzy
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr "使用手冊对象'%s'里入档的文件参数没有在\\usage里提到:"
+msgstr "使用手冊对象'%s'里\\usage分配:"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "使用手冊对象'%s'有些\\usage不对:"
@@ -299,21 +298,20 @@ msgid ""
 msgstr ""
 "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
-#, fuzzy
 msgid "Malformed Authors@R field:"
-msgstr "畸形维修人员域."
+msgstr "畸形Authors@R域."
 
 msgid "Cannot extract Author field from Authors@R field:"
-msgstr ""
+msgstr "无法从Authors@R 域中抽取作者域"
 
 msgid "Authors@R field gives no person with author role."
-msgstr ""
+msgstr "Authors@R域没有提供有作者作用的人"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr ""
+msgstr "无法从Authors@R 抽取维修人域"
 
 msgid "Authors@R field gives no person with maintainer role and email address."
-msgstr ""
+msgstr "Authors@R域没有提供有维修作用的人和他的email"
 
 msgid "Encoding '%s' is not portable"
 msgstr "编码'%s'不可便携"
@@ -364,44 +362,43 @@ msgstr "请参考'如何写R附加软件'说明书中'交叉引用'这一段。"
 msgid "found %s"
 msgstr "找到了%s"
 
-#, fuzzy
 msgid "File %s:"
-msgstr "文件'%s':"
+msgstr "文件%s:"
 
 msgid "%s has wrong argument list %s"
-msgstr ""
+msgstr "%s的参数串列%s不对"
 
 msgid ","
 msgstr ","
 
 msgid "%s calls:"
-msgstr ""
+msgstr "%s调用："
 
 msgid ""
 "Package startup functions should have two arguments with names starting with "
 "%s and %s, respectively."
-msgstr ""
+msgstr "程序包启动函数需要有两个名字分别为%s和%s的参数"
 
 msgid "lib"
-msgstr ""
+msgstr "lib"
 
 msgid "pkg"
-msgstr ""
+msgstr "pkg"
 
 msgid "Package startup functions should not change the search path."
-msgstr ""
+msgstr "程序包启动函数不应该改变搜索路径"
 
 msgid "Package startup functions should use %s to generate messages."
-msgstr ""
+msgstr "程序包启动函数应该用%s来生成消息"
 
 msgid "packageStartupMessage"
-msgstr ""
+msgstr "packageStartupMessage"
 
 msgid "See section %s in ?.onAttach."
-msgstr ""
+msgstr "参见?.onAttach 里的%s章节"
 
 msgid "Good practice"
-msgstr ""
+msgstr "良好实践"
 
 msgid "package 'methods' is used but not declared"
 msgstr "用了'methods'这个程辑包却没有被声明"
@@ -509,13 +506,13 @@ msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "'type'值必需在'txt', 'html', 'latex'或'example'取一个"
 
 msgid "current working directory cannot be ascertained"
-msgstr ""
+msgstr "不能确定的当前工作目录"
 
 msgid "no inputs"
 msgstr "没有输入"
 
 msgid "DVI output from Rd2dvi is deprecated"
-msgstr ""
+msgstr "DVI从Rd2dvi输出不再有用"
 
 msgid "Error in running tools::texi2dvi"
 msgstr "调用tools::texi2dvi时出了错"
@@ -527,7 +524,7 @@ msgid "invalid value for '%s' : %s"
 msgstr "'%s'值无效：%s"
 
 msgid "Only one Rd section per \\Sexpr is supported."
-msgstr ""
+msgstr "每\\Sexpr只支持一个Rd章节"
 
 msgid "unable to create temp directory"
 msgstr "无法建立temp目录"
@@ -543,7 +540,7 @@ msgid "running 'make' failed"
 msgstr "调用'make'失败"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr ""
+msgstr "'%s'插图里'%s'和'%s'的名字是一样的"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "参数'vignette'的长度必需为一"
@@ -595,9 +592,8 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
-#, fuzzy
 msgid "processing"
-msgstr "处理 '"
+msgstr "处理"
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -621,9 +617,8 @@ msgstr "错误：R的版本是%s，程序包'%s'要求版本为%s %s的R"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
-#, fuzzy
 msgid "loading failed"
-msgstr "试用'%s'失败了"
+msgstr "载入失败"
 
 msgid "Changes require specified 'style'"
 msgstr "改动需要特别'style'"
@@ -646,9 +641,8 @@ msgstr "'--multiarch'只设定了一个可以用的子体系结构"
 msgid "Error: no packages were specified"
 msgstr "错误：没有设定程序包"
 
-#, fuzzy
 msgid "ERROR: cannot create check dir %s"
-msgstr "无法建立目录'%s'"
+msgstr "错误：无法建立检查目录%s"
 
 msgid "package dir"
 msgstr "程序包目录"
@@ -660,19 +654,19 @@ msgid "No files in this directory"
 msgstr "目录里没有任何文件"
 
 msgid "Unrecognized search field:"
-msgstr ""
+msgstr "无法识别这个搜索字段："
 
 msgid "No results found"
 msgstr "找不到任何结果"
 
 msgid "Vignettes:"
-msgstr ""
+msgstr "插图："
 
 msgid "Code demonstrations:"
-msgstr ""
+msgstr "代码演示"
 
 msgid "Help pages:"
-msgstr ""
+msgstr "说明页面："
 
 msgid "No help found for topic %s in any package."
 msgstr "没有在任何程序包里找到关于%s的主题"
@@ -695,10 +689,9 @@ msgstr "程序包%s里的链结%s不存在"
 msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
 
-#, fuzzy
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
-msgstr "能够查看的文件限制于帮助文件，%s, %s 和程序包里%s下面的文件"
+msgstr "能够查看的文件限制于帮助文件，%s, %s 和%s下的文件和程序包%s里的文件"
 
 msgid "NEWS"
 msgstr "NEWS"
@@ -710,7 +703,7 @@ msgid "doc/"
 msgstr "doc/"
 
 msgid "demo/"
-msgstr ""
+msgstr "demo/"
 
 msgid "unsupported URL %s"
 msgstr "不支持URL %s"
@@ -745,16 +738,14 @@ msgstr "无法从文件'%s'中读取索引信息"
 msgid "ERROR:"
 msgstr "错误："
 
-#, fuzzy
 msgid "error reading file '%s'"
-msgstr "文件'%s'里句法分析有错:"
+msgstr "读取文件'%s'时出了错"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "这看起来好象是捆绑软件--已经不存在了"
 
-#, fuzzy
 msgid "running 'zip' failed"
-msgstr "调用'make'失败"
+msgstr "调用'zip'失败"
 
 msgid "packaged installation of"
 msgstr "程辑包安装"
@@ -762,14 +753,13 @@ msgstr "程辑包安装"
 msgid "as"
 msgstr "如"
 
-#, fuzzy
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
 
 msgid "installing via 'install.libs.R' to"
-msgstr ""
+msgstr "用'install.libs.R'安装到"
 
 msgid "installing to"
 msgstr "安装至"
@@ -778,7 +768,7 @@ msgid "generating debug symbols (dSYM)"
 msgstr "产生调试符号(dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr ""
+msgstr "成功将%s程序包解包并MD5和检查"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -843,12 +833,11 @@ msgstr "搜寻二级HTML链结…"
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
 
-#, fuzzy
 msgid "namespace must not be already loaded"
-msgstr "绝不能载入名字空间."
+msgstr "还没有载入名字空间"
 
 msgid "all packages should have a NAMESPACE"
-msgstr ""
+msgstr "所有的程序包都必需有NAMESPACE这个文件"
 
 msgid "package seems to be using lazy loading for data already"
 msgstr "程辑包好象已经用数据延迟加载了"
@@ -860,7 +849,7 @@ msgid "source must be an environment or a list"
 msgstr "源码要么是环境要么是列"
 
 msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr ""
+msgstr "'compress'的值不对：只能是FALSE, TRUE, 2或3其中的一个"
 
 msgid "this cannot be used for package 'base'"
 msgstr "这个程序无法用在程辑包'base'上"
@@ -906,6 +895,10 @@ msgid ""
 "  %s\n"
 "contains no \\itemize."
 msgstr ""
+"NEWS.Rd文件格式不对:\n"
+"开始块\n"
+"  %s\n"
+"没有\\itemize."
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -914,6 +907,11 @@ msgid ""
 "contains more than one \\itemize.\n"
 "Using the first one."
 msgstr ""
+"NEWS.Rd文件格式不对:\n"
+"开始块\n"
+"  %s\n"
+"包含多个\\itemize."
+"因此用第一个。"
 
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
@@ -948,99 +946,86 @@ msgstr "已经定义为"
 msgid "found encoding"
 msgstr "找到编码"
 
-#, fuzzy
 msgid "%s must be a character string or a file/raw connection"
-msgstr "参数'file'必需是字符串或联结"
+msgstr "%s必需是字符串或原联结"
 
-#, fuzzy
 msgid "PDF header not found"
-msgstr "找不到%s这个URL"
+msgstr "找不到PDF字头"
 
-#, fuzzy
 msgid "EOF marker not found"
-msgstr "找不到%s这个URL"
+msgstr "找不到EOF标记"
 
 msgid "cannot find startxref"
-msgstr ""
+msgstr "找不到startxref"
 
 msgid "cannot find xref table"
-msgstr ""
+msgstr "找不到xref表"
 
 msgid "cannot read xref table"
-msgstr ""
+msgstr "读不到xref表"
 
 msgid "wrong class"
-msgstr ""
+msgstr "类别错了"
 
 msgid "attempting to select less than one element"
-msgstr ""
+msgstr "至少得选择一个元素"
 
 msgid "attempting to select more than one element"
-msgstr ""
+msgstr "最多只能选一个元素"
 
 msgid "looking at %s"
-msgstr ""
+msgstr "看%s"
 
-#, fuzzy
 msgid "cannot read literal string object"
-msgstr "无法建立临时性目录"
+msgstr "无法读取常值字串对象"
 
 msgid "cannot read hexadecimal string object"
-msgstr ""
+msgstr "无法读取十六进制字符串对象"
 
-#, fuzzy
 msgid "cannot read name object"
-msgstr "无法读取程辑包源编码"
+msgstr "无法读取名字对象"
 
-#, fuzzy
 msgid "cannot read array object"
-msgstr "无法建立临时性目录"
+msgstr "无法读取数组对象"
 
-#, fuzzy
 msgid "cannot read dictionary object"
-msgstr "无法建立目录'%s'"
+msgstr "无法读取字典对象"
 
-#, fuzzy
 msgid "cannot read stream object"
-msgstr "无法建立临时性目录"
+msgstr "无法读取流对象"
 
 msgid "cannot read indirect reference object"
-msgstr ""
+msgstr "无法读取间接引用的对象"
 
 msgid "cannot find object header at xrefed position %d"
-msgstr ""
+msgstr "找不到xrefed位置%d的对象标头"
 
 msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "对象数字不匹配(给的是%d，找到的是%d)"
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr ""
+msgstr "生成数字不匹配(给的是%d，找到的是%d)"
 
-#, fuzzy
 msgid "cannot read stream data"
-msgstr "无法建立临时性目录"
+msgstr "无法读取流数据"
 
 msgid "invalid index in object stream lookup"
-msgstr ""
+msgstr "对象流查找索引无效"
 
-#, fuzzy
 msgid "processing %s"
-msgstr "处理 '"
+msgstr "处理%s "
 
-#, fuzzy
 msgid "expanding %s"
-msgstr "文名分析'%s'"
+msgstr "展开%s"
 
-#, fuzzy
 msgid "unsupported filter %s"
-msgstr "不支持URL %s"
+msgstr "不支持%s过滤器"
 
 msgid "unsupported flatedecode predictor %d"
-msgstr ""
+msgstr "不支持flatedecode预测器%d "
 
-#, fuzzy
 msgid "unsupported PNG filter %d"
-msgstr "不支持URL %s"
+msgstr "不支持PNG过滤器%d"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "参数'pkg'的长度必需是一"
@@ -1067,17 +1052,16 @@ msgid "file"
 msgstr "文件"
 
 msgid "Found %s, possibly from %s"
-msgstr ""
+msgstr "找到了%s,可能是从%s来的"
 
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
-#, fuzzy
 msgid "ssname"
-msgstr "名字"
+msgstr "ssname"
 
 msgid "language"
-msgstr ""
+msgstr "语言"
 
 msgid "cannot be opened"
 msgstr "打不开"
@@ -1085,9 +1069,8 @@ msgstr "打不开"
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
 
-#, fuzzy
 msgid "Testing examples for package"
-msgstr "收集范例程序包"
+msgstr "试验程序包范例"
 
 msgid "comparing"
 msgstr "比较"
@@ -1102,11 +1085,10 @@ msgid "OK"
 msgstr "好"
 
 msgid "results differ from reference results"
-msgstr ""
+msgstr "结果与参考结果不一样"
 
-#, fuzzy
 msgid "no examples found for package %s"
-msgstr "%s的程序包没有帮助文件"
+msgstr "程序包%s没有示例"
 
 msgid "Running specific tests for package"
 msgstr "执行特定的检验程序"
@@ -1174,9 +1156,8 @@ msgstr "执行正规表现回归检验"
 msgid "running tests to possibly trigger segfaults"
 msgstr "执行触发程序段故障检验"
 
-#, fuzzy
 msgid "'x' must be a single character string"
-msgstr "参数'txt'必需为字符串"
+msgstr "'x'必需是单字符串"
 
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
@@ -1220,9 +1201,8 @@ msgstr "程辑包布局不对"
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
 
-#, fuzzy
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "没有这样的编码，带非ASCII数据:"
+msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
 
 msgid "cannot source package code"
 msgstr "无法读取程辑包源编码"
@@ -1235,15 +1215,15 @@ msgstr "文名分析'%s'"
 
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
-msgstr[0] ""
+msgstr[0] "注意：发现%d个标志着Latin – 1的字符串"
 
 msgid "Note: found %d marked UTF-8 string"
 msgid_plural "Note: found %d marked UTF-8 strings"
-msgstr[0] ""
+msgstr[0] "注意：发现%d个标志着UTF-8的字符串"
 
 msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
-msgstr[0] ""
+msgstr[0] "注意：发现%d个标志为\"bytes\"的字符串"
 
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
@@ -1464,3 +1444,4 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "no or more than one match"
 #~ msgstr "没有成对的，或多于一双"
+

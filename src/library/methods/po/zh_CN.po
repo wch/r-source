@@ -128,11 +128,11 @@ msgstr ""
 
 #: methods_list_dispatch.c:602 methods_list_dispatch.c:614
 #: methods_list_dispatch.c:995
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
-msgstr "在为'%2$s'函数选择方法时评估'%1$s'参数出了错"
+msgstr "在为'%2$s'函数选择方法时评估'%1$s'参数出了错: %3$s "
 
 #: methods_list_dispatch.c:622
 #, c-format
@@ -159,9 +159,9 @@ msgstr ""
 "在处理'callNextMethod'时，吻合的调用里有'...'，但与之相应的'...'参数却不存在"
 
 #: methods_list_dispatch.c:705
-#, fuzzy, c-format
+#, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "評估'primitive'其次方法时出了错"
+msgstr "評估'primitive'其次方法时出了错: %s "
 
 #: methods_list_dispatch.c:797
 #, c-format
