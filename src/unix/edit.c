@@ -72,9 +72,9 @@ static int  EdFileUsed = 0;
 void attribute_hidden InitEd()
 {
 #ifdef Win32
-    DefaultFileName = R_tmpnam("Redit", R_TempDir);
+    DefaultFileName = R_tmpnam2("Redit", R_TempDir, ".R");
 #else
-    DefaultFileName = R_tmpnam(NULL, R_TempDir);
+    DefaultFileName = R_tmpnam2(NULL, R_TempDir, ".R");
 #endif
 }
 

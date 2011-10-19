@@ -434,6 +434,11 @@
       independent) \code{axisTicks()} which can make use of a new
       utility \code{.axisPars()}.  Further, it now returns a decreasing
       sequence (as for \code{log=FALSE}) when \code{usr} is decreasing.
+      
+      \item Using \code{fix()} or \code{edit()} on a \R{} object (except
+      perhaps a matrix or data frame) writes its temporary file with
+      extension \file{.R} so editors which select their mode based on
+      the extension will select a suitable mode.
     }
   }
 
