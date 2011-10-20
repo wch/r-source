@@ -15,7 +15,7 @@
 \description{
   These are low-level support functions for the forking approach.
 
-  They are not available on Windows, and not exported from the name space.
+  They are not available on Windows, and not exported from the namespace.
 }
 \usage{
 children(select)
