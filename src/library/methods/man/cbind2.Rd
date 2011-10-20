@@ -1,6 +1,7 @@
 % File src/library/methods/man/cbind2.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
+% Copyright 2001-2011 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{cbind2}
@@ -56,7 +57,9 @@ rbind2(x, y)
   A matrix (or matrix like object) combining the columns (or rows) of
   \code{x} and \code{y}.
 }
-\seealso{\code{\link{cbind}}, \code{\link{rbind}}.
+\seealso{\code{\link{cbind}}, \code{\link{rbind}};
+  further, \code{\link[Matrix]{cBind}}, \code{\link[Matrix]{rBind}} in
+  the \pkg{Matrix} package.
 }
 \examples{
 cbind2(1:3, 4)
@@ -79,9 +82,7 @@ cbind(1,a=1:3, m) # ok with a warning
 cbind(A=1, B=3, m, C=4)
 }
 
-## The following fails currently,
-## since cbind() works recursively from the tail:
-try( cbind(m, a=1, b=3) )
+cbind(m, a=1, b=3)
 
 ## turn off the `special cbind()' :
 methods:::bind_activation(FALSE)

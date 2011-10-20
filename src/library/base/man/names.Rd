@@ -19,7 +19,7 @@ names(x) <- value
 \arguments{
   \item{x}{an \R object.}
   \item{value}{a character vector of up to the same length as \code{x}, or
-    \code{NULL}.} 
+    \code{NULL}.}
 }
 \value{
   For \code{names}, \code{NULL} or a character vector of the same length
@@ -38,7 +38,7 @@ names(x) <- value
 
   If \code{value} is shorter than \code{x}, it is extended by character
   \code{NA}s to the length of \code{x}.
-  
+
   It is possible to update just part of the names attribute via the
   general rules: see the examples.  This works because the expression
   there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
@@ -50,7 +50,7 @@ names(x) <- value
 
   A name can be character \code{NA}, but such a name will never be
   matched and is likely to lead to confusion.
-  
+
   Both are \link{primitive} functions.
 }
 \note{
@@ -60,6 +60,9 @@ names(x) <- value
 
   For a one-dimensional array the \code{names} attribute really is
   \code{\link{dimnames}[[1]]}.
+
+  Formally classed aka \dQuote{S4} objects typically have
+  \code{\link{slotNames}()} (and no \code{names()}).
 }
 \seealso{
   \code{\link{slotNames}}, \code{\link{dimnames}}.
