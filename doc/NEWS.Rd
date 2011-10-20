@@ -402,6 +402,9 @@
       \code{"help.search.types"} controls the types of documentation
       and the order of their display.
 
+      This also applies to HTML searches, which now give results in all
+      of help pages, vignettes and demos.
+
       \item \code{socketConnection()} now has a \code{timeout} argument.
 
       \item The initialization of the random-number generator now uses
@@ -976,6 +979,10 @@
       \item Non-blocking listening socket connections continued to
       report \code{isIncomplete} as true even when the peer had closed
       down.
+      
+      \item The revised HTML search system now generates better
+      hyperlinks to help topics found: previously it gave problems with
+      help pages with names containing e.g. spaces and slashes.
     }
   }
 }
