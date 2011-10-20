@@ -61,7 +61,7 @@ getOption(x, default = NULL)
       \code{TRUE}.  Could also be set to an integer for specifying how
       many (simulated) smooths should be added.  This is currently only
       used by \code{\link{plot.lm}}.}
-    
+
     \item{\code{browserNLdisabled}:}{logical: whether newline is
       disabled as a synonym for \code{"n"} is the browser.}
 
@@ -105,7 +105,7 @@ getOption(x, default = NULL)
 
     \item{\code{download.file.extra}:}{Extra command-line argument(s) for
       non-default methods: see \code{\link{download.file}}.}
-    
+
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
       \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.
@@ -145,10 +145,10 @@ getOption(x, default = NULL)
       allowing comments to be kept in the right places.  Retrieve the
       source by printing or using \code{deparse(fn, control =
       "useSource")}.
- 
+
       The default is \code{\link{interactive}()}, i.e., \code{TRUE} for
       interactive use.}
-    
+
     %% used by tools::makeLazyLoading
     \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, used only
     when packages are installed.  Defaults to \code{FALSE} unless the
@@ -178,7 +178,8 @@ getOption(x, default = NULL)
       console itself.
 #endif
       Can be a character string or an \R function, in which case it
-      needs to accept the same first four arguments as
+      needs to accept the arguments \code{(files, header,
+	title, delete.file)} corresponding to the first four arguments of
       \code{\link{file.show}}.}
 
     \item{\code{papersize}:}{the default paper format used by
@@ -453,7 +454,7 @@ getOption(x, default = NULL)
     \item{\code{ccaddress}:}{default Cc: address used by
       \code{\link{create.post}} (and hence\code{\link{bug.report}} and
       \code{\link{help.request}}).  Can be \code{FALSE} or \code{""}.}
-    
+
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
       If this is unset (the default), 0, negative or \code{NA}, variable
@@ -473,7 +474,7 @@ getOption(x, default = NULL)
 
     \item{\code{help.ports}:}{optional integer vector for setting ports
       of the internal HTTP server, see \code{\link{startDynamicHelp}}.}
-      
+
     \item{\code{help.search.types}:}{default types of documentation
       to be searched by \code{\link{help.search}} and \code{\link{??}}.}
 
@@ -498,11 +499,11 @@ getOption(x, default = NULL)
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
-    
+
     \item{\code{mailer}:}{default emailing method used by
       \code{\link{create.post}} and hence \code{\link{bug.report}} and
       \code{\link{help.request}}.}
-    
+
     \item{\code{menu.graphics}:}{Logical: should graphical menus be used
       if available?.  Defaults to \code{TRUE}.  Currently applies to
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
