@@ -26,6 +26,15 @@
       default in functions such as \code{parLapply()}.
     }
   }
+  
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Code in packages is now compiled with \code{-NDEBUG} to
+      mitigate against \code{assert} being called in production use.
+      Developers can turn this off during package development with
+      \code{PKG_CPPFLAGS = -UNDEBUG}.
+    }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
