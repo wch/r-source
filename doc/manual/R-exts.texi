@@ -3249,10 +3249,13 @@ in C on all @R{} platforms.
 Under no circumstances should your compiled code ever call @code{abort}
 or @code{exit}: these terminate the user's @R{} process, quite possibly
 including all his unsaved work.  One usage that could call @code{abort}
-is the @code{assert} macro in C or C++ functions: if you use
-@code{assert} during development, make doubly sure that @code{NDEBUG} is
-defined in the released package (maybe by adding it to
-@code{PKG_CPPFLAGS}).
+is the @code{assert} macro in C or C++ functions, which should never be
+active in production code.  The normal way to ensure that is to define
+the macro @code{NDEBUG}, and as from @R{} 2.15.0 @command{R CMD INSTALL}
+does so as part of the compilation flags.  If you wish to use
+@code{assert} during development. you can include @code{-UNDEBUG} in
+@code{PKG_CPPFLAGS}.  Note that your own @file{src/Makefile} or
+makefiles in sub-directories may also need to define @code{NDEBUG}.
 
 This applies not only to your own code but to any external software you
 compile in or link to.  Such code may contain references
