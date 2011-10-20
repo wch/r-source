@@ -454,7 +454,10 @@ RweaveLatexWritedoc <- function(object, chunk)
             val <- as.character(eval(parse(text = cmd), envir = .GlobalEnv))
             ## protect against character(), because sub() will fail
             if (length(val) == 0L) val <- ""
-        } else val <- paste("\\\\verb{<<", cmd, ">>{", sep = "")
+        }
+        else val <- paste("\\\\verb#<<", cmd, ">>#", sep = "")
+        ## it's always debatable what \verb delim-character to use;
+        ## originally had '{' but that really can mess up LaTeX
 
         chunk[pos[1L]] <- sub(object$syntax$docexpr, val, chunk[pos[1L]])
     }

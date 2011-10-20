@@ -75,5 +75,10 @@ stopifnot(length(comml) == 2,
 ## custom graphics devices
 Sweave("customgraphics.Rnw")
 
+### ------------------------------------ 4 ----------------------------------
+## SweaveOpts + \Sexpr --> \verb... output
+Sweave(f <- "Sexpr-verb-ex.Rnw")
+tools::texi2pdf(sub("Rnw$","tex", f))# used to fail
+
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
