@@ -265,7 +265,7 @@ names, but also the versions without the prefix which are too easily
 masked: e.g.{} package \pkg{lattice} has a function \code{parallel}.)
 
 The low-level functions from \pkg{multicore} are provided but not
-exported from the name space.
+exported from the namespace.
 
 There are high-level functions \code{mclapply} and \code{pvec}: unlike
 the versions in \pkg{multicore} these default to 2 cores, but this can
