@@ -1,5 +1,5 @@
 
-R version 2.14.0 alpha (2011-10-03 r57134)
+R version 2.14.0 beta (2011-10-21 r57363)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x30bddc0>
+<environment: 0x3121fc0>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x30bddc0>
+<environment: 0x3121fc0>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x30bddc0>
+<environment: 0x3121fc0>
 
 $showURLs
 [1] FALSE
@@ -232,7 +232,7 @@ $underline_titles
 +     pages = "211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +        .init = TRUE)
-<environment: 0x2784318>
+<environment: 0x27e7fb0>
 > print(refs, .bibstyle = "unsorted")    
 R Development Core Team (2010). _R: A Language and Environment for
 Statistical Computing_. R Foundation for Statistical Computing, Vienna,
@@ -821,7 +821,7 @@ $NotFound
 character(0)
 
 $R
-[1] "R (>= 2.11.0)"
+[1] "R (>= 2.14.0)"
 
 attr(,"class")
 [1] "DependsList" "list"       
@@ -869,7 +869,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.381 0.017 0.401 0 0 
+Time elapsed:  0.379 0.016 0.397 0 0 
 > grDevices::dev.off()
 null device 
           1 
