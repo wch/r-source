@@ -702,6 +702,9 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 			"usr[0] = %g > %g = usr[1] !", umin, umax);
 	    }
 	}
+	/* allow a fuzz since we will do things like 0.2*dn >= umin */
+	umin *= 1 - 1e-12;
+	umax *= 1 + 1e-12;
 
 	dn = axp[0];
 	if (dn < DBL_MIN) {/* was 1e-300; now seems too cautious */

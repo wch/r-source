@@ -86,7 +86,7 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
         else if(!is.numeric(usr) || length(usr) != 2) stop("invalid 'usr'")
         if(is.null(nintLog)) nintLog <- par("lab")[2L - is.x]
         if(is.finite(nintLog)) {
-            grDevices::axisTicks(usr, log=log, axp=axp, nint=nintLog)
+            axisTicks(usr, log=log, axp=axp, nint=nintLog)
         } else { ## nintLog = Inf <--> "cheap" back compatible
 	    if(needSort <- is.unsorted(usr)) { ## need sorting for reverse axes
 		usr <- usr[2:1]; axp <- axp[2:1]

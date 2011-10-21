@@ -985,6 +985,12 @@
       \item The revised HTML search system now generates better
       hyperlinks to help topics found: previously it gave problems with
       help pages with names containing e.g. spaces and slashes.
+      
+      \item The creation of ticks on log axes (including
+      \code{axTicks()} sometimes incorrectly omitted a tick at one end
+      of the range by rounding error in a platform-dependent way.  This
+      could be seen in the examples for \code{axTicks()} with range
+      \code{c(0.2, 88)} where the tick for \code{0.2} was sometimes omitted.
     }
   }
 }
