@@ -95,7 +95,8 @@ isIncomplete(con)
     applied when writing, from none to maximal available.  For
     \code{xzfile} can also be negative: see the \sQuote{Compression}
     section.}
-  \item{timeout}{numeric: the timeout to be used for this connection.} 
+  \item{timeout}{numeric: the timeout (in seconds) to be used for this
+    connection.  Beware that some OSes may treat very large values as zero.}
   \item{filename}{a filename within a zip file.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}

@@ -338,6 +338,8 @@
       of help pages, vignettes and demos.
 
       \item \code{socketConnection()} now has a \code{timeout} argument.
+      It is now documented that large values (package \pkg{snow} uses a
+      year) do not work on some OSes.
 
       \item The initialization of the random-number generator now uses
       the process ID as well as the current time, just in case two \R
