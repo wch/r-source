@@ -164,7 +164,7 @@ Hair    Brown Blue Hazel Green
 > usr.i <- log10(ylims)
 > (aT.i <- axTicks(side=2, usr=usr.i,
 +                  axp=c(get_axp(usr.i), n=3), log=TRUE, nintLog=5))
-[1]  0.5  1.0  2.0  5.0 10.0 20.0 50.0
+[1]  0.2  0.5  1.0  2.0  5.0 10.0 20.0 50.0
 > ## mimic (default) par("yaxs")=="r"
 > usr.r <- extendrange(r = log10(ylims), f = 0.04)
 > (aT.r <- axTicks(side=2, usr=usr.r,
