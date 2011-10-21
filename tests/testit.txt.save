@@ -11,13 +11,13 @@ _D_e_t_a_i_l_s:
      Escaped backslash '\x'.
 
      '%{}'
-  
+
      a link and one to a known destination: weighted.mean
-  
+
      var in text.
-  
+
      'foo(x, y)'.
-  
+
      
      
        Escaped backslash \x.
@@ -28,8 +28,12 @@ _D_e_t_a_i_l_s:
        
        foo(\var{x}, \var{y}).
        
-       From gap: pedtodot.Rd -- n=split(m,par,"\034")
+       From gap: pedtodot.Rd -- n=split(m,par,"\034") 
        
+
+     Yihui Xie's example:
+
+     def ghi
 
 _E_x_a_m_p_l_e_s:
 

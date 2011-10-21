@@ -224,20 +224,20 @@ test-Segfault:
 test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver20.Rd
 	@$(ECHO) "testing Rd conversion"
 	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
-	@diff -bw testit.txt $(srcdir)/testit.txt.save
 	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html 2> /dev/null
-	@diff -bw testit.html $(srcdir)/testit.html.save
 	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
-	@diff -bw testit.tex $(srcdir)/testit.tex.save
 	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
+	@diff -bw testit.txt $(srcdir)/testit.txt.save
+	@diff -bw testit.html $(srcdir)/testit.html.save
+	@diff -bw testit.tex $(srcdir)/testit.tex.save
 	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
 	@$(RDCONV) -t txt $(srcdir)/ver20.Rd > ver20.txt
-	@diff -bw ver20.txt $(srcdir)/ver20.txt.save
 	@$(RDCONV) -t html $(srcdir)/ver20.Rd > ver20.html
-	@diff -bw ver20.html $(srcdir)/ver20.html.save
 	@$(RDCONV) -t latex $(srcdir)/ver20.Rd > ver20.tex
-	@diff -bw ver20.tex $(srcdir)/ver20.tex.save
 	@$(RDCONV) -t example $(srcdir)/ver20.Rd > ver20-Ex.R
+	@diff -bw ver20.txt $(srcdir)/ver20.txt.save
+	@diff -bw ver20.html $(srcdir)/ver20.html.save
+	@diff -bw ver20.tex $(srcdir)/ver20.tex.save
 	@diff -bw ver20-Ex.R $(srcdir)/ver20-Ex.R.save
 
 test-DocFiles:
