@@ -27,8 +27,10 @@ foo(\var{x}, \var{y})
   
   foo(\var{x}, \var{y}).
   
-  From gap: pedtodot.Rd -- n=split(m,par,"\034")
+  From gap: pedtodot.Rd -- n=split(m,par,"\034") 
   }
+  Yihui Xie's example:
+  \Sexpr[results=rd,stage=render]{"\\\\describe{\\\\item{def}{ghi}}"}
 }
 \examples{
 \\x

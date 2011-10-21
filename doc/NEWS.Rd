@@ -982,6 +982,12 @@
       hyperlinks to help topics found: previously it gave problems with
       help pages with names containing e.g. spaces and slashes.
       
+      \item A late change in \R 2.13.2 broke \samp{\Sexpr} expressions
+      in Rd files.
+      
+      \item The creation of ticks on log axes (including
+      \code{axTicks()} sometimes incorrectly omitted a tick at one end
+
       \item The creation of ticks on log axes (including by
       \code{axTicks()}) sometimes incorrectly omitted a tick at one end
       of the range by rounding error in a platform-dependent way.  This

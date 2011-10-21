@@ -4,10 +4,9 @@
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
-<table width="100%" summary="page for testit {}"><tr><td>testit {}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for testit"><tr><td>testit</td><td align="right">R Documentation</td></tr></table>
 
 <h2>An Rd Regression Test</h2>
-
 
 <h3>Usage</h3>
 
@@ -20,22 +19,19 @@ foo(<VAR>x</VAR>, <VAR>y</VAR>)
 
 <h3>Details</h3>
 
-<p>
-Escaped backslash <code>\x</code>.
+
+<p>Escaped backslash <code>\x</code>.
 </p>
-<p>
-<code>%{}</code>
+<p><code>%{}</code>
 </p>
-<p>
-a link and one to a known destination:
+<p>a link and one to a known destination:
 weighted.mean
 </p>
-<p>
-var in <VAR>text</VAR>.
+<p>var in <VAR>text</VAR>.
 </p>
-<p>
-<code>foo(<VAR>x</VAR>, <VAR>y</VAR>)</code>.
-<pre>
+<p><code>foo(<VAR>x</VAR>, <VAR>y</VAR>)</code>.
+</p>
+<PRE>
   Escaped backslash \x.
 
   %{}
@@ -44,9 +40,13 @@ var in <VAR>text</VAR>.
   
   foo(\var{x}, \var{y}).
   
-  From gap: pedtodot.Rd -- n=split(m,par,"\034")
-  </pre>
-</p>
+  From gap: pedtodot.Rd -- n=split(m,par,"\034") 
+  </PRE>
+Yihui Xie's example:
+<dl>
+<dt>def</dt><dd><p>ghi</p>
+</dd></dl>
+
 
 
 <h3>Examples</h3>
@@ -57,5 +57,5 @@ var in <VAR>text</VAR>.
 foo(<VAR>x</VAR>, <VAR>y</VAR>)
 </pre>
 
-<hr><div align="center">[]</div>
+
 </body></html>

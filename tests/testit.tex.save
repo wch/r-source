@@ -1,6 +1,6 @@
-\inputencoding{latin1}
+\inputencoding{utf8}
 \HeaderA{testit}{An Rd Regression Test}{testit}
-\aliasA{\{}{testit}{.Rlbrace.}
+\aliasB{\{}{testit}{.Rlbrace.}
 %
 \begin{Usage}
 \begin{verbatim}
@@ -30,8 +30,13 @@ var in \var{text}.
   
   foo(\bsl{}var\{x\}, \bsl{}var\{y\}).
   
-  From gap: pedtodot.Rd -- n=split(m,par,"\bsl{}034")
+  From gap: pedtodot.Rd -- n=split(m,par,"\bsl{}034") 
   \end{alltt}
+
+Yihui Xie's example:
+\begin{description}
+\item[def] ghi
+\end{description}
 
 \end{Details}
 %
