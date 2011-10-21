@@ -609,7 +609,7 @@ If you want the @R{} home to be something other than
 @file{@var{libdir}/R}, use @option{rhome}: for example
 
 @example
-make install rhome=/usr/local/lib64/R-2.13.0
+make install rhome=/usr/local/lib64/R-2.14.0
 @end example
 
 @noindent
@@ -1761,7 +1761,7 @@ binary containing either or both architectures.
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.13/@/@@ReadMe}.
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.14/@/@@ReadMe}.
 For 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
 @pkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution from
@@ -2401,7 +2401,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"2.11.0"}.
+string containing the current @R{} version, for example @code{"2.14.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -2979,8 +2979,7 @@ such as @pkg{quantreg} will need to be re-installed.
 @R{} relies on @acronym{IEC}@tie{}60559 compliance of an external
 @acronym{BLAS}.  This can be broken if for example the code assumes that
 terms with a zero factor are always zero and do not need to be
-computed---whereas @code{x*0} can be @code{NaN}.  (The version of the
-reference @acronym{BLAS} used prior to @R{} 2.12.0 did so.)  This is
+computed---whereas @code{x*0} can be @code{NaN}. This is
 checked in the test suite.
 
 
@@ -4300,7 +4299,7 @@ be selected as LAPACK @emph{via} (for Solaris Studio 12.2)
 
 @noindent
 This has often given test failures in the past, in several different
-places.  For @R{} 2.13.0 it fails in @file{tests/reg-BLAS.R}, and on
+places.  At the time of writing it fails in @file{tests/reg-BLAS.R}, and on
 some builds, including for @cputype{amd64}, it fails in
 @code{example(eigen)}.
 
@@ -4510,7 +4509,7 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added.  @R{} 2.13.0 requires C99 complex type support, which
+workarounds added.  @R{} requires C99 complex type support, which
 is available as from Cygwin 1.7.8 (March 2011).  However, the (new)
 implementation of @code{cacos} gives incorrect results, so
 @code{HAVE_CACOS} is undefined in @file{src/main/complex.c}.
@@ -4816,11 +4815,6 @@ install 32/64-bit packages.
 @node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
 @subsection 32-bit toolchain
 
-Note that the recommended toolchain for @R{} >= 2.12.0 differs from that
-for earlier versions, and there are binary incompatibilities, especially
-where C++ code is involved.  So we recommend that all packages are built
-with the current toolchain.
-
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
 @code{4.5.0}.  The toolchain included in @file{Rtools214.exe}, and was
 collected from the files at
@@ -4874,8 +4868,7 @@ toolchain is included in @file{Rtools214.exe}.
 
 @strong{NB:} 64-bit toolchains after late April 2010 at that site
 generate objects with symbols without a leading underscore. Only such
-toolchains are supported (and not that used to build @R{} 2.11.1 on
-64-bit Windows).
+toolchains are supported.
 
 Other toolchains are available: for example under
 @uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
