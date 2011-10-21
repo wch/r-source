@@ -568,7 +568,7 @@
       colorspace, by default.)
 
       The \code{colormodel} for \code{postscript()} which does use both
-      gray and sRGB colorspace is now called \code{"srgb+gray"}.
+      gray and sRGB colorspaces is now called \code{"srgb+gray"}.
 
       Plots which are known to use only black/white/transparent can
       advantageously use \code{colormodel = "gray"} (just as before, but
@@ -825,9 +825,10 @@
       \code{NAMESPACE} files.
 
       %% should become defunct not earlier than end of summer 2013!
-      \item It is deprecated now to use \code{mean(x)} and \code{sd(x)}
+      \item It is eprecated to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
+      
       In the same spirit, \code{median(x)} now gives an error for a data
       frame \code{x} (it often gave nonsensical results).
 
@@ -938,11 +939,11 @@
       called on a single object, and hence used more digits than
       documented.
 
-      \item X11 cairo back-end produced incorrect capture snapshot
-      images on big-endian machines.
+      \item The \code{X11()} device's cairo back-end produced incorrect
+      capture snapshot images on big-endian machines.
 
       \item \code{loglin()} gave a spurious error when argument
-      \code{margin} consists of a single element of length one.
+      \code{margin} consisted of a single element of length one.
       (\PR{14690})
 
       \item \code{loess()} is better protected against misuse,
@@ -969,16 +970,17 @@
       \item Creating a connection might fail under \code{gctorture(TRUE)}.
 
       \item \code{stack()} and \code{unstack()} converted character
-      columns to factors.  \code{unstack()} sometimes produced incorrect
-      results (a list or a vector) if the factor on which to un-split
-      had only one level.
+      columns to factors.
+
+      \code{unstack()} sometimes produced incorrect results (a list or a
+      vector) if the factor on which to un-split had only one level.
   
       \item On some systems \code{help(".C", help_type = "pdf")} and
       similar generated file names that TeX was unable to handle.
       
       \item Non-blocking listening socket connections continued to
       report \code{isIncomplete} as true even when the peer had closed
-      down.
+      down and all available input had been read.
       
       \item The revised HTML search system now generates better
       hyperlinks to help topics found: previously it gave problems with
