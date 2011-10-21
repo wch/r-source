@@ -20,6 +20,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#define DEBUG
 /* <UTF8> chars are handled as a whole */
 
 #ifdef HAVE_CONFIG_H

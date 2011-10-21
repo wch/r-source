@@ -82,7 +82,7 @@ initDefaultClusterOptions <- function(libname)
     port <- as.integer(Sys.getenv("R_PARALLEL_PORT"))
     if (is.na(port)) port <- 10187
     options <- list(port = port,
-                    timeout = 60 * 60 * 24 * 365, # one year
+                    timeout = 60 * 60 * 24 * 30, # 30 days
                     master =  Sys.info()["nodename"],
                     homogeneous = TRUE,
                     type = "PSOCK",
