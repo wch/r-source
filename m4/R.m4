@@ -132,15 +132,6 @@ AC_DEFUN([R_PROG_TEXMF],
 ## TEX PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
 ## TEXI2DVICMD sets default for R_TEXI2DVICMD, used for options('texi2dvi')
 AC_PATH_PROGS(TEX, [${TEX} tex], )
-if test -z "${ac_cv_path_TEX}" ; then
-  warn_dvi1="you cannot build DVI versions of the R manuals"
-  AC_MSG_WARN([${warn_dvi1}])
-fi
-AC_PATH_PROGS(LATEX, [${LATEX} latex], )
-if test -z "${ac_cv_path_LATEX}"; then
-  warn_dvi2="you cannot build DVI versions of all the help pages"
-  AC_MSG_WARN([${warn_dvi2}])
-fi
 AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], )
 if test -z "${ac_cv_path_PDFTEX}" ; then
   warn_pdf1="you cannot build PDF versions of the R manuals"
