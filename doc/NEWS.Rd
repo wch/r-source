@@ -11,8 +11,8 @@
       \item All packages must have a namespace, and one is created on
       installation if not supplied in the sources.  This means that any
       package without a namespace must be re-installed under this
-      version of \R (but data-only packages without \R code can still be
-      used).
+      version of \R (but previously-installed data-only packages without
+      \R code can still be used).
 
       \item The \code{yLineBias} of the \code{X11()} and
       \code{windows()} families of devices has been changed from 0.1 to
@@ -911,18 +911,19 @@
       similar generated file names that TeX was unable to handle.
       
       \item Non-blocking listening socket connections continued to
-      report \code{isIncomplete} as true even when the peer had closed
+      report \code{isIncomplete()} as true even when the peer had closed
       down and all available input had been read.
       
       \item The revised HTML search system now generates better
       hyperlinks to help topics found: previously it gave problems with
       help pages with names containing e.g. spaces and slashes.
       
-      \item The creation of ticks on log axes (including
-      \code{axTicks()} sometimes incorrectly omitted a tick at one end
+      \item The creation of ticks on log axes (including by
+      \code{axTicks()}) sometimes incorrectly omitted a tick at one end
       of the range by rounding error in a platform-dependent way.  This
-      could be seen in the examples for \code{axTicks()} with range
-      \code{c(0.2, 88)} where the tick for \code{0.2} was sometimes omitted.
+      could be seen in the examples for \code{axTicks()}, where with
+      axis limits \code{c(0.2, 88)} the tick for \code{0.2} was
+      sometimes omitted.
     }
   }
 }
