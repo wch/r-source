@@ -1,5 +1,4 @@
-
-R version 2.14.0 alpha (2011-10-03 r57134)
+R version 2.14.0 beta (2011-10-20 r57355)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -151,24 +150,25 @@ Hair    Brown Blue Hazel Green
 > plot(x, 1:14, log = "x")
 > axTicks(1) # now length 5, in R <= 2.13.x gave the following
 [1] 1e-02 1e+01 1e+04 1e+07 1e+10
-> axTicks(1, nintLog=Inf)# rather too many
+> axTicks(1, nintLog=Inf) # rather too many
  [1] 1e-02 1e-01 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05 1e+06 1e+07 1e+08 1e+09
 [13] 1e+10 1e+11
 > 
 > ## An example using axTicks() without reference to an existing plot
 > ## (copying R's internal procedures for setting axis ranges etc.),
+> ## You do need to supply _all_ of axp, usr, log, nintLog
 > ## standard logarithmic y axis labels
 > ylims <- c(0.2, 88)
 > get_axp <- function(x) 10^c(ceiling(x[1]), floor(x[2]))
 > ## mimic par("yaxs")=="i"
 > usr.i <- log10(ylims)
 > (aT.i <- axTicks(side=2, usr=usr.i,
-+                  axp=c(get_axp(usr.i), n=3), log=TRUE))
++                  axp=c(get_axp(usr.i), n=3), log=TRUE, nintLog=5))
 [1]  0.5  1.0  2.0  5.0 10.0 20.0 50.0
 > ## mimic (default) par("yaxs")=="r"
 > usr.r <- extendrange(r = log10(ylims), f = 0.04)
 > (aT.r <- axTicks(side=2, usr=usr.r,
-+                  axp=c(get_axp(usr.r),3), log=TRUE))
++                  axp=c(get_axp(usr.r),3), log=TRUE, nintLog=5))
 [1]   0.2   0.5   1.0   2.0   5.0  10.0  20.0  50.0 100.0
 > 
 > ## Prove that we got it right :
