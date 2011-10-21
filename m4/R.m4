@@ -129,8 +129,10 @@ fi
 ## ------------
 AC_DEFUN([R_PROG_TEXMF],
 [
-## TEX PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
+## PDFTEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
+## PDFLATEX and MAKEINDEX in the emulation mode of tools::texi2dvi
 ## TEXI2DVICMD sets default for R_TEXI2DVICMD, used for options('texi2dvi')
+## TEX AND LATEX are no longer used
 AC_PATH_PROGS(TEX, [${TEX} tex], )
 AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], )
 if test -z "${ac_cv_path_PDFTEX}" ; then
@@ -139,7 +141,7 @@ if test -z "${ac_cv_path_PDFTEX}" ; then
 fi
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], )
 if test -z "${ac_cv_path_PDFLATEX}" ; then
-  warn_pdf2="you cannot build PDF versions of all the help pages"
+  warn_pdf2="you cannot build PDF versions of vignettes and help pages"
   AC_MSG_WARN([${warn_pdf2}])
 fi
 AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
