@@ -14,7 +14,7 @@
   Support for parallel computation, including random-number generation.
 }
 \details{
-  This package is under construction: a first version was released with
+  This package is under development: a first version was released with
   \R 2.14.0.
 
   There is support for multiple RNG streams with the
@@ -27,7 +27,7 @@
   are also supported).
   
   For a complete list of exported functions, use
-  \code{library(help="parallel")}.
+  \code{library(help = "parallel")}.
 }
 \author{
   Brian Ripley, Luke Tierney and Simon Urbanek
@@ -37,6 +37,6 @@
 \seealso{
   Parallel computation involves launching worker processes: functions
   \code{\link{psnice}} and \code{\link{pskill}} in package \pkg{tools}
-  provide means to manage child processes.
+  provide means to manage such processes.
 }
 \keyword{ package }

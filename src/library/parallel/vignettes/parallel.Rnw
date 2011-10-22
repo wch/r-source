@@ -197,13 +197,6 @@ that we said `available': in most cases when virtual machines are in
 use what is reported is the maximum number of virtual CPUs which can
 be used simultaneously by that virtual machine.
 
-On Solaris, we choose (unlike \pkg{multicore}) to give the number of
-physical CPUs.  Modern Sparc CPUs have 8-way `Chip Multi-Threading':
-this enables the CPU to switch rapidly between threads if there are
-cache misses but does not run threads in parallel.  On
-Opteron/Xeon-based boxes this does not take multiple cores into
-account (unless called as \code{detectCores(logical = TRUE)}).
-
 \section{Analogues of apply functions}
 
 By far the most common direct applications of packages \pkg{multicore}
@@ -215,7 +208,7 @@ As analogues of \code{lapply} there are
 parLapply(cl, x, FUN, ...)
 mclapply(X, FUN, ..., mc.cores)
 \end{verbatim}
-where \code{mclapply} is not available\footnote{except as a dummy
+where \code{mclapply} is not available\footnote{except as a stub
   which simply calls \code{lapply}.} on Windows and has further
 arguments discussed on its help page.  They differ slightly in
 philosophy: \code{mclapply} sets up a pool of \code{mc.cores} workers

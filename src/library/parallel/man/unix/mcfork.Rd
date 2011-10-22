@@ -23,21 +23,21 @@ mcexit(exit.code = 0L, send = NULL)
 }
 \arguments{
   \item{exit.code}{process exit code.  By convention \code{0L} signifies
-    clean exit, \code{1L} an error.}
+    a clean exit, \code{1L} an error.}
   \item{send}{if not \code{NULL} send this data before exiting
-    (equivalent to using \code{\link{sendMaster}})}
+    (equivalent to using \code{\link{sendMaster}}).}
 }
 \details{
   The \code{mcfork} function provides an interface to the \code{fork}
   system call.  In addition it sets up a pipe between the master and
   child process that can be used to send data from the child process
-  to the master (see \code{\link{sendMaster}}) and child's stdin is
+  to the master (see \code{\link{sendMaster}}) and child's \file{stdin} is
   re-mapped to another pipe held by the master process (see
   \code{\link{sendChildStdin}}).
 
-  If you are not familiar with the \code{fork} system call, do not
-  use this function since it leads to very complex inter-process
-  interactions amongst the R processes involved.
+  If you are not familiar with the \code{fork} system call, do not use
+  this function directly as it leads to very complex inter-process
+  interactions amongst the \R processes involved.
 
   In a nutshell \code{fork} spawns a copy (child) of the current
   process, that can work in parallel to the master (parent)
@@ -50,20 +50,13 @@ mcexit(exit.code = 0L, send = NULL)
   need to setup the parallel working environment, data and code is
   shared automatically from the start.
 
-  It is \emph{strongly discouraged} to use \code{mcfork} in GUI or
-  embedded environments, because it leads to several processes sharing
-  the same GUI which will likely cause chaos (and possibly crashes).
-  Child processes should never use on-screen graphics devices.  Some
-  precautions have been taken to make this usable in \command{R.app} on
-  Mac OS X, but users of third-party front-ends should consult their
-  documentation.
-
   \code{mcexit} is to be run in the child process.  It sends \code{send}
   to the master (unless \code{NULL}) and then shuts down the child
   process.  The child can also be shut down by sending it the signal
   \code{SIGUSR1}, as is done by the unexported function
-  \code{parallle:::rmChild}.
+  \code{parallel:::rmChild}.
 }
+
 \value{
   \code{mcfork} returns an object of the class \code{"childProcess"} to
   the master and of class \code{"masterProcess"} to the child: both the
@@ -74,6 +67,18 @@ mcexit(exit.code = 0L, send = NULL)
 
   \code{mcexit} never returns.
 }
+
+\section{GUI/embedded environments}{
+  It is \emph{strongly discouraged} to use \code{mcfork} and the
+  higher-level functions which rely on it (e.g., \code{mcparallel},
+  \code{mclapply} and \code{pvec}) in GUI or embedded environments,
+  because it leads to several processes sharing the same GUI which will
+  likely cause chaos (and possibly crashes).  Child processes should
+  never use on-screen graphics devices.  Some precautions have been
+  taken to make this usable in \command{R.app} on Mac OS X, but users of
+  third-party front-ends should consult their documentation.
+}
+
 \author{
   Simon Urbanek and R Core.
 
