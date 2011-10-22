@@ -47,6 +47,7 @@ slaveLoop <- function(master)
         }, interrupt = function(e) NULL)
 }
 
+## NB: this only sinks the connections, not C-level stdout/err.
 sinkWorkerOutput <- function(outfile)
 {
     if (nzchar(outfile)) {

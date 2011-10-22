@@ -45,6 +45,10 @@ newPSOCKnode <- function(machine = "localhost", ...,
         shQuote(getClusterOption("rscript", options))
     } else "Rscript"
     cmd <- paste(rscript, "-e", shQuote(arg), env)
+
+    ## We do redirection of connections at R level once the process is
+    ## running.  We could instead do it at C level here, at least on
+    ## a Unix-alike.
     renice <- getClusterOption("renice", options)
     if(!is.na(renice) && renice) ## ignore 0
         cmd <- sprintf("nice +%d %s", as.integer(renice), cmd)
@@ -62,13 +66,15 @@ newPSOCKnode <- function(machine = "localhost", ...,
         }
 
         if (.Platform$OS.type == "windows") {
-            ## On windows using input = something seems needed to
+            ## On Windows using input = something seems needed to
             ## disconnect standard input of an ssh process when run
             ## from Rterm (at least using putty's plink).  In
             ## principle this could also be used for supplying a
             ## password, but that is probably a bad idea. So, for now
-            ## at least, on windows password-less authentication is
+            ## at least, on Windows password-less authentication is
             ## necessary.
+            ##
+            ## (Not clear if that is the current behaviour.)
             system(cmd, wait = FALSE, input = "")
         }
         else system(cmd, wait = FALSE)
