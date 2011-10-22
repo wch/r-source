@@ -497,10 +497,13 @@ RweaveLatexWritedoc <- function(object, chunk)
 RweaveLatexFinish <- function(object, error = FALSE)
 {
     outputname <- summary(object$output)$description
-    if (!object$quiet && !error)
-        cat("\n",
-            sprintf("You can now run (pdf)latex on %s", sQuote(outputname)),
-            "\n", sep = "")
+    if (!object$quiet && !error) {
+	if(!file.exists(outputname))
+	    stop(gettextf("the output file '%s' has disappeared", outputname))
+	cat("\n",
+	    sprintf("You can now run (pdf)latex on %s", sQuote(outputname)),
+	    "\n", sep = "")
+    }
     close(object$output)
     if (length(object$chunkout))
         for (con in object$chunkout) close(con)
@@ -509,7 +512,7 @@ RweaveLatexFinish <- function(object, error = FALSE)
     	## three or four parts, separated by colons:
     	## 1.  The output .tex filename
     	## 2.  The input .Rnw filename
-    	## 3.  Optionally, the starting line number of the output coded as "ofs nn", 
+    	## 3.  Optionally, the starting line number of the output coded as "ofs nn",
     	##     where nn is the offset to the first output line.  This is omitted if nn is 0.
     	## 4.  The input line numbers corresponding to each output line.
     	##     This are compressed using the following simple scheme:
@@ -527,9 +530,9 @@ RweaveLatexFinish <- function(object, error = FALSE)
             vals <- c(linesout[offset + 1L], as.numeric(rbind(vals$lengths, vals$values)))
     	    concordance <- paste(strwrap(paste(vals, collapse = " ")), collapse = " %\n")
     	    special <- paste("\\Sconcordance{concordance:", outputname, ":",
-                         inputname, ":", 
+                         inputname, ":",
                          if (offset) paste("ofs ", offset, ":", sep="") else "",
-                         "%\n", 
+                         "%\n",
                          concordance,"}\n", sep = "")
     	    cat(special, file = object$concordfile, append=offset > 0L)
     	    offset <- offset + len

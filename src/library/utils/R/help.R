@@ -224,7 +224,7 @@ function(x, ...)
             dirpath <- dirname(path)
             texinputs <- file.path(dirpath, "help", "figures")
             tf2 <- tempfile("Rlatex")
-            tools::Rd2latex(.getHelpFile(file), tf2)
+            tools::Rd2latex(.getHelpFile(file), out = tf2)
             .show_help_on_topic_offline(tf2, topic, type, texinputs)
             unlink(tf2)
         }
