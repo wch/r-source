@@ -18,9 +18,7 @@
 \usage{
 makeCluster(spec, type, ...)
 makePSOCKcluster(names, ...)
-#ifdef unix
 makeForkCluster(nnodes = getOption("mc.cores", 2L), ...)
-#endif
 
 stopCluster(cl)
 }
@@ -29,9 +27,7 @@ stopCluster(cl)
   \item{names}{Either a character vector of host names on which to run
     the worker copies of \R, or a positive integer (in which case
     that number of copies is run on \samp{localhost}).}
-#ifdef unix
   \item{nnodes}{The number of nodes.}
-#endif
   \item{type}{One of the supported types: see \sQuote{Details}.}
   \item{\dots}{Options to be passed to the function spawning the workers.
     See \sQuote{details}.}
@@ -40,8 +36,8 @@ stopCluster(cl)
 \details{
   \code{makeCluster} creates a cluster of one of the supported types.
   The default type, \code{"PSOCK"}, calls \code{makePSOCKcluster}.  Type
-  \code{"FORK"} (not available on Windows) calls
-  \code{makeForkCluster}.  Other types are passed to package \pkg{snow}.
+  \code{"FORK"}calls \code{makeForkCluster}.  Other types are passed to
+  package \pkg{snow}.
   
   \code{makePSOCKcluster} is very similar to \code{makeSOCKcluster} in
   package \pkg{snow}.  It runs \command{Rscript} on the specified
@@ -49,10 +45,13 @@ stopCluster(cl)
   expressions to evaluate, and returns the results (as serialized
   objects).
 
+  \code{makeForkCluster} is merely a stub on Windows.  On Unix-alike
+  platforms it creates the worker process by forking.
+  
   The workers are most often running on the same host as the master,
   when no options need be set.
 
-  Several options are supported:
+  Several options are supported (mainly for \code{makePSOCKcluster}):
   \describe{
     \item{\code{master}}{The host name of the master.}
     \item{\code{port}}{The port number for the socket connection,
@@ -83,7 +82,7 @@ stopCluster(cl)
     \item{\code{manual}}{Logical.  If true the workers will need to be
       run manually.}
     \item{\code{methods}}{Logical.  If true (default) the workers will
-      load the \pkg{methods} package: not loading it saves ca 50\% of the
+      load the \pkg{methods} package: not loading it saves ca 30\% of the
       startup time of the cluster.}
   }
 
@@ -91,7 +90,7 @@ stopCluster(cl)
   (and hence is not available on Windows).  It supports options
   \code{port}, \code{timeout} and \code{outfile}.
   
-  It is good practice to shutdown the workers by calling
+  It is good practice to shut down the workers by calling
   \code{\link{stopCluster}}: however the workers will terminate
   themselves once the socket on which they are listening for commands
   becomes unavailable, which it should if the master \R session is
