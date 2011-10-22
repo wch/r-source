@@ -98,6 +98,10 @@ processes.  They can be created in one of three ways:
   and Mac OS X may expect pop-up dialog boxes from the firewall asking
   if an \R{} process should accept incoming connections.
 
+  Following \pkg{snow}, a pool of worker processes listening
+  \emph{via} sockets for commands from the master is called a
+  `cluster' of nodes.
+
 \item \emph{Via} forking.  \emph{Fork} is a
   concept\footnote{\url{http://en.wikipedia.org/wiki/Fork_(operating_system)}}
   from POSIX operating systems, and should be available on all \R{}
@@ -122,8 +126,8 @@ processes.  They can be created in one of three ways:
   share memory. In \pkg{multicore} the initial fork sends an \R{}
   expression to be evaluated to the worker, and the master process
   opens a pipe for reading that is used by the worker to return the
-  results.  Both that and communication \emph{via} sockets is
-  supported in package \pkg{parallel}.
+  results.  Both that and creating a cluster of nodes communicating
+  \emph{via} sockets are supported in package \pkg{parallel}.
 
 \item Using OS-level facilities to set up a means to send tasks to
   other members of a group of machines.  There are several ways to do
@@ -134,7 +138,7 @@ processes.  They can be created in one of three ways:
   approach, so it is most often used on tightly-coupled networks of
   computers with high-speed interconnects.
 
-  Other CRAN packages following this approach are \pkg{GridR} (using
+  CRAN packages following this approach include \pkg{GridR} (using
   Condor or Globus) and \pkg{Rsge} (using SGE, currently called
   `Oracle Grid Engine').
 
@@ -245,9 +249,12 @@ whereas \code{makeForkCluster} forks the workers on the current host
 
 These functions would normally be called \emph{via} \code{makeCluster}.
 
-Both \file{stdout} and \file{stderr} of the workers are redirected, by
-default being discarded but they can be logged using the
-\code{outfile} option.
+Both \code{stdout()} and \code{stderr()} of the workers are
+redirected, by default being discarded but they can be logged using
+the \code{outfile} option.  Note that the previous sentence refers to
+the \emph{connections} of those names, not the C-level file handles.
+Thus properly written \R{} packages using \code{Rprintf} for will have
+their output redirected, but not direct C-level output.
 
 A default cluster can be registered by a call to
 \code{setDefaultCluster()}: this is then used whenever one of the
@@ -260,9 +267,10 @@ usage, and packages may get added to the search path.
 
 Except on Windows, the package contains a copy of \pkg{multicore}:
 there a few names with the added prefix \code{mc}, e.g.{}
-\code{mccollect} and \code{mcparallel}.  (\pkg{multicore} used these
-names, but also the versions without the prefix which are too easily
-masked: e.g.{} package \pkg{lattice} has a function \code{parallel}.)
+\code{mccollect} and \code{mcparallel}.  (Package \pkg{multicore} used
+these names, but also the versions without the prefix which are too
+easily masked: e.g.{} package \pkg{lattice} has a function
+\code{parallel}.)
 
 The low-level functions from \pkg{multicore} are provided but not
 exported from the namespace.
@@ -276,6 +284,12 @@ operation: there are stub versions of these functions on Windows which
 force \code{mc.cores = 1}.)
 
 Note the earlier comments about using forking in a GUI environment.
+
+The forked workers share file handles with the master: this means that
+any output from the worker should go to the same place as
+\file{stdout} and \file{stderr} of the master process.  (This does not
+work reliably on all OSes: problems have also been noted when forking
+a session that is processing batch input from \file{stdin}.)
 
 \section{Random-number generation}
 
@@ -365,15 +379,15 @@ platforms.
 Using \code{mclapply} is usually the simplest approach, but will run
 serial versions of the code on Windows.  This may suffice where
 parallel computation is only required for use on a single multi-core
-server---for \code{mclapply} can only run on a single shared-memory
-system.  There is fallback to serial use when needed, by setting
-\code{mc.cores = 1}.
+Unix-alike server---for \code{mclapply} can only run on a single
+shared-memory system.  There is fallback to serial use when needed, by
+setting \code{mc.cores = 1}.
 
 Using \code{parLapply} will work everywhere that socket communication
 works, and can be used, for example, to harness all the CPU cores in a
 lab of machines that are not otherwise in use.  But socket
-communication may be blocked even when using a single machine, and we
-have seen environments in which it is unreliable.  There is not
+communication may be blocked even when using a single machine and is
+quite likely to be blocked between machines in a lab.  There is not
 currently any fallback to serial use, nor could there easily be (as
 the workers start with a different \R{} environment from the one
 current on the master).
@@ -423,7 +437,6 @@ runs, and we will illustrate two runs of 500 simulations each:
 library(boot)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
 cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
-mc <- 2
 run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
                            ran.gen = cd4.rg, mle = cd4.mle)
 library(parallel)
@@ -450,7 +463,7 @@ run1 <- function(...) {
         ran.gen = cd4.rg, mle = cd4.mle)
 }
 library(parallel)
-mc <- 2
+mc <- 2 # set as appropriate for your hardware
 cl <- makeCluster(mc)
 ## make this reproducible
 clusterSetRNGStream(cl, 123)
@@ -470,7 +483,6 @@ master and send the value to the workers, or (as here) compute it on
 the workers. We illustrate that by the following code
 <<>>=
 library(parallel)
-mc <- 2
 cl <- makeCluster(mc)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
 cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
@@ -520,7 +532,7 @@ nominal <- (1:R)/(R+1)
 actual <- cd4.nest$t[, 2]
 100*nominal[c(sum(actual <= 0.05), sum(actual < 0.95))]
 @
-which ran in 11 secs (elapsed).
+which ran in 11 secs (elapsed) using all of that server.
 
 \subsection{MCMC runs}
 
@@ -545,7 +557,7 @@ res <- c(0, sapply(c[-1], function(c)
 plot(c, res, type="l", ylab="E t")
 abline(h=t0, col="grey")
 @
-which takes about 20 seconds today, but several hours when first done
+which takes about 20 seconds today, but many hours when first done
 in 1985.  A parallel version might be
 <<>>=
 run3 <- function(c) {
@@ -561,7 +573,7 @@ stopCluster(cl)
 which took about 4.5 secs, plus 2 secs to set up the cluster.  Using a
 fork cluster (not on Windows) makes the startup much faster and setup easier:
 <<>>=
-cl <- makeForkCluster(10)  # after the variables have been setup
+cl <- makeForkCluster(10)  # fork after the variables have been set up
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
 res <- c(0, parSapply(cl, c[-1], run3))
 stopCluster(cl)
