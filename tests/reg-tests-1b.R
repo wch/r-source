@@ -1657,4 +1657,9 @@ DF4 <- stack(DF[1])
 stopifnot(identical(unstack(DF4), DF[1])) # was a list
 ## issues in R < 2.14.0
 
+
+## PR#14710 (an instance of PR#8528)
+stopifnot(!is.na(qchisq(p=0.025, df=0.00991)))
+## NaN in 2.13.2
+
 proc.time()

@@ -59,7 +59,8 @@ stopCluster(cl)
       default taken from the environment variable \env{R_PARALLEL_PORT},
       then \code{10187}.}
     \item{\code{timeout}}{The timeout in seconds for that port.  Default
-      30 days (and some OSes have problems with values as large as a year).}
+      30 days (and the POSIX standard only requires values up to 31 days
+      to be supported).}
     \item{\code{outfile}}{Where to send the stdout and stderr from the
       workers. \code{""} indicates no redirection (which may only be
       useful for local workers).

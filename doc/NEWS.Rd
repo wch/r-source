@@ -338,7 +338,7 @@
       of help pages, vignettes and demos.
 
       \item \code{socketConnection()} now has a \code{timeout} argument.
-      It is now documented that large values (package \pkg{snow} uses a
+      It is now documented that large values (package \pkg{snow} used a
       year) do not work on some OSes.
 
       \item The initialization of the random-number generator now uses
@@ -932,6 +932,10 @@
       could be seen in the examples for \code{axTicks()}, where with
       axis limits \code{c(0.2, 88)} the tick for \code{0.2} was
       sometimes omitted.
+      
+      \item \code{qgamma()} for small \code{shape} underflows to
+      \code{0} rather than sometimes giving \code{NaN}.
+      (\PR{8528}, \PR{14710})
     }
   }
 }

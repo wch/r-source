@@ -263,6 +263,7 @@ END:
 	}
 	else
 	    p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+	if(p_ == ML_NEGINF) return 0; /* PR#14710 */
 	for(i = 1; i <= max_it_Newton; i++) {
 	    p1 = p_ - p;
 #ifdef DEBUG_qgamma
