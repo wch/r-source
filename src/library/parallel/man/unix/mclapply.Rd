@@ -126,7 +126,7 @@ simplify2array(mclapply(rep(4, 5), rnorm, mc.preschedule = FALSE,
 ## Contrast this with the examples for clusterCall
 library(boot)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-cd4.mle <- list(m = mean(cd4), v = var(cd4))
+cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
 mc <- getOption("mc.cores", 2)
 run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
                            ran.gen = cd4.rg, mle = cd4.mle)

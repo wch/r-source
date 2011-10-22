@@ -20,6 +20,7 @@
 pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
      mc.cores = getOption("mc.cores", 2L), mc.cleanup = TRUE)
 }
+
 \arguments{
   \item{v}{vector to operate on}
   \item{FUN}{function to call on each part of the vector}
@@ -42,18 +43,18 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \code{x}. \code{FUN} must also be pure (i.e., without side-effects)
   since side-effects are not collected from the parallel processes. The
   vector is split into nearly identically sized subvectors on which
-  \code{FUN} is run. Although it is in principle possible to use
+  \code{FUN} is run.  Although it is in principle possible to use
   functions that are not necessarily maps, the interpretation would be
-  case-specific as the splitting is in theory arbitrary and a warning is
-  given in such cases.
+  case-specific as the splitting is in theory arbitrary (a warning is
+  given in such cases).
 
   The major difference between \code{pvec} and \code{\link{mclapply}} is
   that \code{mclapply} will run \code{FUN} on each element separately
   whereas \code{pvec} assumes that \code{c(FUN(x[1]), FUN(x[2]))} is
   equivalent to \code{FUN(x[1:2])} and thus will split into as many
-  calls to \code{FUN} as there are cores, each handling a subset
-  vector.  This makes it more efficient than \code{mclapply} but
-  requires the above assumption on \code{FUN}.
+  calls to \code{FUN} as there are cores (or elements, if fewer), each
+  handling a subset vector.  This makes it more efficient than
+  \code{mclapply} but requires the above assumption on \code{FUN}.
   
   If \code{mc.cores == 1} this evaluates \code{FUN(v, ...)} in the
   current process. 
@@ -68,11 +69,11 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 \note{
   Due to the nature of the parallelization, error handling does not
   follow the usual rules since errors will be returned as strings and
-  killed child processes will show up simply as non-existent
-  data.  Therefore it is the responsibility of the user to check the
-  length of the result to make sure it is of the correct
-  size.  \code{pvec} raises a warning if that is the case since it does
-  not know whether such an outcome is intentional or not.
+  results from killed child processes will show up simply as
+  non-existent data.  Therefore it is the responsibility of the user to
+  check the length of the result to make sure it is of the correct size.
+  \code{pvec} raises a warning if that is the case since it does not
+  know whether such an outcome is intentional or not.
   
   See \code{\link{mcfork}} for the inadvisability of using this with
   GUI front-ends.
@@ -84,9 +85,8 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   Derived from the \pkg{multicore} package.
 }
 \seealso{
-  \code{\link{mcparallel}}, \code{\link{mclapply}}
-  
-  \code{\link{parLapply}}.
+  \code{\link{mcparallel}}, \code{\link{mclapply}},
+  \code{\link{parLapply}}, \code{\link{clusterMap}}.
 }
 \examples{
 x <- pvec(1:1000, sqrt)

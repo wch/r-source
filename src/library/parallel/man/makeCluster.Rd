@@ -27,10 +27,10 @@ stopCluster(cl)
   \item{names}{Either a character vector of host names on which to run
     the worker copies of \R, or a positive integer (in which case
     that number of copies is run on \samp{localhost}).}
-  \item{nnodes}{The number of nodes.}
+  \item{nnodes}{The number of nodes to be forked.}
   \item{type}{One of the supported types: see \sQuote{Details}.}
   \item{\dots}{Options to be passed to the function spawning the workers.
-    See \sQuote{details}.}
+    See \sQuote{Details}.}
   \item{cl}{an object of class \code{"cluster"}.}
 }
 \details{
@@ -60,11 +60,13 @@ stopCluster(cl)
     \item{\code{timeout}}{The timeout in seconds for that port.  Default
       30 days (and the POSIX standard only requires values up to 31 days
       to be supported).}
-    \item{\code{outfile}}{Where to send the stdout and stderr from the
-      workers. \code{""} indicates no redirection (which may only be
-      useful for local workers).
-      Defaults to \file{/dev/null} (\file{nul:} on Windows).
-      Other files will be opened in append mode, as all workers log to the
+    \item{\code{outfile}}{Where to direct the \code{\link{stdout}} and
+      \code{\link{stderr}} connection output from the workers.
+      \code{""} indicates no redirection (which may only be useful for
+      workers on the local machines). 
+      Defaults to \file{/dev/null} (\file{nul:} on Windows).  The other
+      possibility is a file path on the worker's host.
+      Files will be opened in append mode, as all workers log to the
       same file.} 
     \item{\code{homogeneous}}{Logical.  Are all the hosts running
       identical setups, so \command{Rscript} can be launched using its
@@ -96,14 +98,13 @@ stopCluster(cl)
   becomes unavailable, which it should if the master \R session is
   completed (or its process dies).
 }
+
 \value{
   An object of class \code{c("SOCKcluster", "cluster")}.
 }
+
 \author{
   Luke Tierney and R Core.
 
   Derived from the \pkg{snow} package.
-}
-\seealso{
-  \code{\link{stopCluster}}.
 }

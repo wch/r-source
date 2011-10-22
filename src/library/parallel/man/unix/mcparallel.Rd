@@ -14,7 +14,7 @@
   \code{mcparallel} starts a parallel \R process which evaluates the
   given expression.
 
-  \code{mccollect} collects results from parallel processes.
+  \code{mccollect} collects results from one or more parallel processes.
 }
 \usage{
 mcparallel(expr, name, mc.set.seed = TRUE, silent = FALSE)
@@ -79,16 +79,10 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   result, otherwise its process ID will be used.  If none of the
   specified children are still running, it returns \code{NULL}.
 }
-\note{
-  Package \pkg{multicore} also exported functions \code{collect} and
-  \code{parallel}.  These names are easily masked: for example package
-  \pkg{lattice} also has a function \code{parallel}, and they are not
-  supplied in this package.
-}
 \section{Random numbers}{
-  If \code{mc.set.seed} is false, the child process has the same random
-  number generator (RNG) state as the current \R session.  If the RNG
-  has been used (or \code{.Random.seed} was restored from a saved
+  If \code{mc.set.seed = FALSE}, the child process has the same initial
+  random number generator (RNG) state as the current \R session.  If the
+  RNG has been used (or \code{.Random.seed} was restored from a saved
   workspace), the child will start drawing random numbers at the same
   point as the current session.  If the RNG has not yet been used, the
   child will set a seed based on the time and process ID when it first
@@ -105,6 +99,15 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   provided the same tasks are given to the first, second, \ldots{}
   forked process.
 }
+
+\note{
+  Package \pkg{multicore} also exported functions \code{collect} and
+  \code{parallel}.  These names are easily masked (for example package
+  \pkg{lattice} also has a function \code{parallel}) and they are not
+  supplied in this package.
+}
+
+
 \author{
   Simon Urbanek and R Core.
   
@@ -112,7 +115,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   of the RNG stream).
 }
 \seealso{
-  \code{\link{sendMaster}}, \code{\link{pvec}}, \code{\link{mclapply}}
+  \code{\link{pvec}}, \code{\link{mclapply}}
 }
 \examples{
 p <- mcparallel(1:10)

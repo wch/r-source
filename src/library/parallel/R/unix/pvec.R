@@ -29,7 +29,7 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     if(mc.set.seed) mc.reset.stream()
 
     n <- length(v)
-    l <- if (n < cores) as.list(v) else {
+    l <- if (n <= cores) as.list(v) else {
         ## compute the scheduling, making it as fair as possible
         il <- as.integer(n / cores)
         xc <- n - il * cores
@@ -56,7 +56,8 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     }
     on.exit(cleanup())
     FUN <- match.fun(FUN)
-    jobs <- lapply(seq_len(cores),
+    ## may have more cores than tasks ....
+    jobs <- lapply(seq_len(min(n, cores)),
                    function(i) mcparallel(FUN(l[[i]], ...), name = i,
                                           mc.set.seed = mc.set.seed,
                                           silent = mc.silent))

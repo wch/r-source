@@ -25,13 +25,13 @@
   a cluster.
 }
 \usage{
-clusterSplit(cl, seq)
 clusterCall(cl, fun, ...)
 clusterApply(cl, x, fun, ...)
 clusterApplyLB(cl, x, fun, ...)
 clusterEvalQ(cl, expr)
 clusterExport(cl, varlist)
 clusterMap(cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
+clusterSplit(cl, seq)
 
 parLapply(cl, X, fun, ...)
 parSapply(cl, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) 
@@ -58,45 +58,44 @@ parCapply(cl, x, FUN, ...)
 }
 \details{
   \code{clusterCall} calls a function \code{fun} with identical
-  arguments \code{...} on each cluster node.
+  arguments \code{...} on each node.
 
   \code{clusterEvalQ} evaluates a literal expression on each cluster
   node.  It a parallel version of \code{\link{evalq}}, and is a convenience
-  function defined in terms of \code{clusterCall}.
+  function invoking \code{clusterCall}.
 
-  \code{clusterApply} calls \code{fun} on the first cluster node with
+  \code{clusterApply} calls \code{fun} on the first node with
   arguments \code{seq[[1]]} and \code{...}, on the second node with
   \code{seq[[2]]} and \code{...}, and so on, recycling nodes as needed.
 
   \code{clusterApplyLB} is a load balancing version of
-  \code{clusterApply}.  if the length \code{p} of \code{seq} is greater
-  than the number of cluster nodes \code{n}, then the first \code{n}
-  jobs are placed in order on the \code{n} nodes.  When the first job
-  completes, the next job is placed on the available node; this
-  continues until all jobs are complete.  Using \code{clusterApplyLB}
-  can result in better cluster utilization than using
-  \code{clusterApply}, but increased communication can reduce
-  performance.  Furthermore, the node that executes a particular job is
-  non-deterministic, which can complicate ensuring reproducibility in
-  simulations.
+  \code{clusterApply}.  If the length \code{p} of \code{seq} is not
+  greater than the number of nodes \code{n}, then a job is sent to
+  \code{p} nodes.  Otherwise the first \code{n} jobs are placed in order
+  on the \code{n} nodes.  When the first job completes, the next job is
+  placed on the node that has become free; this continues until all jobs
+  are complete.  Using \code{clusterApplyLB} can result in better
+  cluster utilization than using \code{clusterApply}, but increased
+  communication can reduce performance.  Furthermore, the node that
+  executes a particular job is non-deterministic.
 
   \code{clusterMap} is a multi-argument version of \code{clusterApply},
   analogous to \code{mapply}.  If \code{RECYCLE} is true shorter
   arguments are recycled; otherwise, the result length is the length of
-  the shortest argument.  Cluster nodes are recycled if the length of
-  the result is greater than the number of nodes.
+  the shortest argument.  Nodes are recycled if the length of the result
+  is greater than the number of nodes.
   
-  \code{clusterExport} assigns the global values on the master of the
-  variables named in \code{list} to variables of the same names in the
-  global environments of each node.
+  \code{clusterExport} assigns the global values on the master \R
+  process of the variables named in \code{list} to variables of the same
+  names in the global environment (aka \sQuote{workspace}) of each node.
 
-  \code{clusterSplit} splits \code{seq} into one consecutive piece for
+  \code{clusterSplit} splits \code{seq} into a consecutive piece for
   each cluster and returns the result as a list with length equal to the
   number of nodes.  Currently the pieces are chosen to be close
   to equal in length: the computation is done on the master.
   
   \code{parLapply}, \code{parSapply}, and \code{parApply} are parallel
-  versions of \code{lapply}, \code{sapply}, and \code{apply}.
+  versions of \code{lapply}, \code{sapply} and \code{apply}.
 
   \code{parRapply} and \code{parCapply} are parallel row and column
   \code{apply} functions for a matrix \code{x}; they may be slightly
@@ -122,19 +121,19 @@ parCapply(cl, x, FUN, ...)
   error.
 }
 \note{
-  These functions are almost identical to those in package \pkg{snow}:
-  they are copied here to avoid namespace scoping issues.
+  These functions are almost identical to those in package \pkg{snow}.
 
   Two exceptions: \code{parLapply} has argument \code{X}
   not \code{x} for consistency with \code{\link{lapply}}, and
-  \code{parSapply} was updated to match \code{\link{sapply}}.
+  \code{parSapply} has been updated to match \code{\link{sapply}}.
 }
 \author{
   Luke Tierney and R Core.
 
   Derived from the \pkg{snow} package.
 }
-\examples{\donttest{## access to ports might be denied
+% donttest, as access to ports might be denied.  Tested in the 'tests' directory
+\examples{\donttest{
 ## Use option cl.core to choose an appropriate cluster size.
 cl <- makeCluster(getOption("cl.cores", 2))
 
@@ -170,12 +169,12 @@ library(boot)
 run1 <- function(...) {
    library(boot)
    cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-   cd4.mle <- list(m = mean(cd4), v = var(cd4))
+   cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
    boot(cd4, corr, R = 500, sim = "parametric",
         ran.gen = cd4.rg, mle = cd4.mle)
 }
 cl <- makeCluster(mc <- getOption("cl.cores", 2))
-## make this reproducible
+## to make this reproducible
 clusterSetRNGStream(cl, 123)
 cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1))
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),

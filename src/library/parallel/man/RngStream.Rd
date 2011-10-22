@@ -59,12 +59,13 @@ mc.reset.stream()
   
   Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
   number generator and seed makes runs from
-  \code{\link{mcparallel}(mc.set.seed = TRUE)}) reproducible.  This is
+  \code{\link{mcparallel}(mc.set.seed = TRUE)} reproducible.  This is
   done internally in \code{\link{mclapply}} and \code{\link{pvec}}. 
 #endif  
 }
 \value{
-  A value which can be assigned to \code{.Random.seed}.
+  For \code{nextRNGStream} and \code{nextRNGSubStream},
+  a value which can be assigned to \code{.Random.seed}.
 }
 \references{
   L'Ecuyer, P. (1999) Good parameters and implementations for combined
