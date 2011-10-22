@@ -434,12 +434,11 @@ boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
 To do this with \code{mclapply} we need to break this into separate
 runs, and we will illustrate two runs of 500 simulations each:
 <<>>=
-library(boot)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
 cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
 run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
                            ran.gen = cd4.rg, mle = cd4.mle)
-library(parallel)
+mc <- 2 # set as appropriate for your hardware
 ## To make this reproducible:
 set.seed(123, "L'Ecuyer")
 cd4.boot <- do.call(c, mclapply(seq_len(mc), run1) )
@@ -462,12 +461,10 @@ run1 <- function(...) {
    boot(cd4, corr, R = 500, sim = "parametric",
         ran.gen = cd4.rg, mle = cd4.mle)
 }
-library(parallel)
-mc <- 2 # set as appropriate for your hardware
 cl <- makeCluster(mc)
 ## make this reproducible
 clusterSetRNGStream(cl, 123)
-library(boot)
+library(boot) # needed for c() method on master
 cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1) )
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
@@ -482,7 +479,6 @@ computations: for example we could compute \code{cd4.mle} on the
 master and send the value to the workers, or (as here) compute it on
 the workers. We illustrate that by the following code
 <<>>=
-library(parallel)
 cl <- makeCluster(mc)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
 cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
@@ -501,7 +497,6 @@ stopCluster(cl)
 Running the double bootstrap on the same problem is far more
 computer-intensive.  The standard version is
 <<<fig=TRUE>>=
-library(boot)
 R <- 999; M <- 999 ## we would like at least 999 each
 cd4.nest <- boot(cd4, nested.corr, R=R, stype="w", t0=corr(cd4), M=M)
 ## nested.corr is a function in package boot
@@ -521,13 +516,11 @@ which took about 55 secs on one core of an 8-core Linux server.
 
 Using \code{mclapply} we could use
 <<<>>=
-library(parallel)
-library(boot)
 mc <- 9
 R <- 999; M <- 999; RR <- floor(R/mc)
 run2 <- function(...)
     cd4.nest <- boot(cd4, nested.corr, R=RR, stype="w", t0=corr(cd4), M=M)
-cd4.nest <- do.call(c, mclapply(seq_len(mc), run2, mc.cores = 8) )
+cd4.nest <- do.call(c, mclapply(seq_len(mc), run2, mc.cores = mc) )
 nominal <- (1:R)/(R+1)
 actual <- cd4.nest$t[, 2]
 100*nominal[c(sum(actual <= 0.05), sum(actual < 0.95))]
@@ -575,7 +568,7 @@ fork cluster (not on Windows) makes the startup much faster and setup easier:
 <<>>=
 cl <- makeForkCluster(10)  # fork after the variables have been set up
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
-res <- c(0, parSapply(cl, c[-1], run3))
+res <- c(0, parSapply(cl, c[-1], run4))
 stopCluster(cl)
 @
 As one might expect, the \code{mclapply} version is slightly simpler:
