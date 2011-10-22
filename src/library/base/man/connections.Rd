@@ -96,7 +96,9 @@ isIncomplete(con)
     \code{xzfile} can also be negative: see the \sQuote{Compression}
     section.}
   \item{timeout}{numeric: the timeout (in seconds) to be used for this
-    connection.  Beware that some OSes may treat very large values as zero.}
+    connection.  Beware that some OSes may treat very large values as
+    zero: however the POSIX standard requires values up to 31 days to be
+    supported.}
   \item{filename}{a filename within a zip file.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}
@@ -596,7 +598,7 @@ close(con)
 #endif
 
 \dontrun{
-## two R processes communicating via non-blocking sockets
+## Two R processes communicating via non-blocking sockets
 # R process 1
 con1 <- socketConnection(port = 6011, server=TRUE)
 writeLines(LETTERS, con1)
