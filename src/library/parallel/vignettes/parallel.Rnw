@@ -78,8 +78,8 @@ There are implementations of this model in the functions
 
 A slightly different model is to split the task into $M_1 > M$ chunks,
 send the first $M$ chunks to the workers, then repeatedly wait for any
-worker to complete and send it the next remaining task: this is done
-in \code{mclapply(mc.preschedule = FALSE)} and \code{clusterApplyLB}.
+worker to complete and send it the next remaining task: see the
+section on `load balancing'.
 
 In principle the workers could be implemented by threads\footnote{only
   `in principle' since the \R{} interpreter is not thread-safe.} or
@@ -369,6 +369,29 @@ with named streams, each of which have three 6-element seeds
 associated with them.  This can easily be emulated in \R{} by storing
 \code{.Random.seed} at suitable times.  There is another interface
 using S4 classes in package \pkg{rstream} \citep{rstream}.
+
+\section{Load balancing}
+
+The introducion mentioned a different strategy which dynamically
+allocates tasks to workers: this is sometimes known as `load
+balancing' and is implemented in \code{mclapply(mc.preschedule =
+  FALSE)}, \code{clusterApplyLB} and wrappers such as
+\code{parLapplyLB} and \code{clusterMap(.scheduling = "dynamic")}.
+
+Load balancing is potentially advantageous when the tasks take quite
+dissimilar amounts of computation time, or where the nodes are of
+disparate capabilities.  But some \emph{caveats} are in order
+\begin{enumerate}[(a)]
+\item Random number streams are allocated to nodes, so if the tasks
+  involve random numbers they are likely to be non-repeatable (as the
+  allocation of tasks to nodes depends on the workloads of the nodes).
+\item More care is needed is allocating the tasks.  If 1000 tasks need
+  to be allocated to 10 nodes, the standard approach send chunks of
+  100 tasks to each of the nodes.  The load-balancing approach sends
+  tasks one at a time to a node, and the communication overhead may be
+  high.  So it makes sense to have substantially more tasks than
+  nodes, but not by a factor of 100 (and maybe not by 10).
+\end{enumerate}
 
 \section{Portability considerations}
 

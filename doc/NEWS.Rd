@@ -126,6 +126,10 @@
       like \code{clusterSetupRNG()} from \pkg{snow} (which are not in
       \pkg{parallel}).
 
+      The version released for \R 2.14.0 contains base functionality:
+      higher-level convenience functions are planned (and some are
+      already available in the \sQuote{R-devel} version of \R).
+      
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
       LaTeX package \samp{inconsolata}: see the section on

@@ -9887,9 +9887,10 @@ which can used to set or test for missingness.
 The most useful function for printing from a C routine compiled into
 @R{} is @code{Rprintf}.  This is used in exactly the same way as
 @code{printf}, but is guaranteed to write to @R{}'s output (which might
-be a @acronym{GUI} console rather than a file).  It is wise to write
-complete lines (including the @code{"\n"}) before returning to @R{}.
-It is defined in @file{R_ext/Print.h}.
+be a @acronym{GUI} console rather than a file, and can be re-directed by
+@code{sink}).  It is wise to write complete lines (including the
+@code{"\n"}) before returning to @R{}.  It is defined in
+@file{R_ext/Print.h}.
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
@@ -9899,6 +9900,10 @@ analogues using the @code{vprintf} interface.
 Because @code{Rvprintf} and @code{REvprintf} use a C99 interface, they
 are only defined by @file{R_ext/Print.h} in C++ code if the macro
 @code{R_USE_C99_IN_CXX} is defined when it is included.
+
+Another circumstance when it may be important to use these functions is
+when using parallel computation on a cluster of computational nodes, as
+their output will be re-directed/logged appropriately.
 
 @menu
 * Printing from FORTRAN::       
