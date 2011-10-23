@@ -17,7 +17,8 @@
 \alias{parLapply}
 \alias{parRapply}
 \alias{parSapply}
-\alias{parlapply}
+\alias{parLapplyLB}
+\alias{parSapplyLB}
 
 \title{Apply Operations using Clusters}
 \description{
@@ -40,6 +41,9 @@ parSapply(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 parApply(cl = NULL, X, MARGIN, FUN, ...)
 parRapply(cl = NULL, x, FUN, ...)
 parCapply(cl = NULL, x, FUN, ...)
+
+parLapplyLB(cl = NULL, X, fun, ...)
+parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) 
 }
 \arguments{
   \item{cl}{a cluster object, created by this package or by package
@@ -104,6 +108,10 @@ parCapply(cl = NULL, x, FUN, ...)
   
   \code{parLapply}, \code{parSapply}, and \code{parApply} are parallel
   versions of \code{lapply}, \code{sapply} and \code{apply}.
+  \code{parLapplyLB}, \code{parSapplyLB} are load-balancing versions,
+  intended for use when applying \code{FUN} to different elements of
+  \code{X} takes quite variable amounts of time, and either the function
+  is deterministic or reproducible results are not required.
 
   \code{parRapply} and \code{parCapply} are parallel row and column
   \code{apply} functions for a matrix \code{x}; they may be slightly

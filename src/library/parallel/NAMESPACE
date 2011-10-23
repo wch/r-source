@@ -9,9 +9,10 @@ if(tools:::.OStype() == "unix") {
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, detectCores,
-       makeCluster, makeForkCluster, makePSOCKcluster, mclapply, mcmapply,
-       parApply, parCapply, parLapply, parRapply, parSapply, pvec,
-       setDefaultCluster, splitIndices, stopCluster)
+       makeCluster, makeForkCluster, makePSOCKcluster, mclapply,
+       mcmapply, parApply, parCapply, parLapply, parLapplyLB,
+       parRapply, parSapply, parSapplyLB, pvec, setDefaultCluster,
+       splitIndices, stopCluster)
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)

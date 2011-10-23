@@ -154,6 +154,12 @@ parLapply <- function(cl = NULL, X, fun, ...)
                          fun = lapply, fun, ...),
             quote = TRUE)
 
+parLapplyLB <- function(cl = NULL, X, fun, ...)
+    do.call(c,
+            clusterApplyLB(cl, x = splitList(X, length(cl)),
+                           fun = lapply, fun, ...),
+            quote = TRUE)
+
 parRapply <- function(cl = NULL, x, FUN, ...)
     do.call(c,
             clusterApply(cl = cl, x = splitRows(x, length(cl)),
@@ -167,7 +173,8 @@ parCapply <- function(cl = NULL, x, FUN, ...)
             quote = TRUE)
 
 
-parSapply <- function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+parSapply <-
+    function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 {
     FUN <- match.fun(FUN) # should this be done on worker?
     answer <- parLapply(cl, X = as.list(X), fun = FUN, ...)
@@ -177,6 +184,19 @@ parSapply <- function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE
 	simplify2array(answer, higher = (simplify == "array"))
     else answer
 }
+
+parSapplyLB <-
+    function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+{
+    FUN <- match.fun(FUN) # should this be done on worker?
+    answer <- parLapplyLB(cl, X = as.list(X), fun = FUN, ...)
+    if(USE.NAMES && is.character(X) && is.null(names(answer)))
+	names(answer) <- X
+    if(!identical(simplify, FALSE) && length(answer))
+	simplify2array(answer, higher = (simplify == "array"))
+    else answer
+}
+
 
 parApply <- function(cl = NULL, X, MARGIN, FUN, ...)
 {

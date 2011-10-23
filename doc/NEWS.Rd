@@ -27,6 +27,9 @@
 
       \code{clusterMap()} has a new argument \code{.scheduling} to allow
       the use of load-balancing.
+
+      There are new load-balancing versions \code{parLapplyLB} and
+      \code{parSapplyLB}.
     }
   }
   

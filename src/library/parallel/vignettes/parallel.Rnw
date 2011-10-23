@@ -582,8 +582,9 @@ res <- c(0, unlist(mclapply(c[-1], run4, mc.cores = 10)))
 If you do not have around 10 cores, you might want to consider
 load-balancing in a task like this as the time taken per simulation
 does vary with \code{c}.  This can be done using
-\code{mclapply(mc.preschedule = FALSE)} or the lower-level function
-\code{clusterApplyLB}.
+\code{mclapply(mc.preschedule = FALSE)} or \code{parSapplyLB}.  The
+disadvantage is that the results would not be reproducible (which does
+not matter here).
 
 \section{Differences from earlier versions}
 
