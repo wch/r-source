@@ -22,7 +22,8 @@
       default in functions such as \code{parLapply()}.
       
       It has a new function \code{mcmapply()}, a parallel version of
-      \code{mapply()}.
+      \code{mapply()}, and a wrapper \code{mcMap()}, a parallel version
+      of \code{Map()}.
     }
   }
   

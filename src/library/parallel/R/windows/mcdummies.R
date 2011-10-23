@@ -45,3 +45,5 @@ mcmapply <-
     mapply(FUN = FUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
            USE.NAMES = USE.NAMES)
 }
+
+mcMap <- function (f, ...) Map(f, ...)
