@@ -30,7 +30,8 @@ clusterApply(cl, x, fun, ...)
 clusterApplyLB(cl, x, fun, ...)
 clusterEvalQ(cl, expr)
 clusterExport(cl, varlist)
-clusterMap(cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
+clusterMap(cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
+           SIMPLIFY = FALSE, USE.NAMES = TRUE)
 clusterSplit(cl, seq)
 
 parLapply(cl, X, fun, ...)
@@ -53,8 +54,8 @@ parCapply(cl, x, FUN, ...)
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
   \item{X}{A vector (atomic or list), an array for \code{parApply}.}
   \item{MARGIN}{vector specifying the dimensions to use.}
-  \item{simplify}{logical; see \code{\link{sapply}}.}
-  \item{USE.NAMES}{logical; see \code{\link{sapply}}.}
+  \item{simplify, USE.NAMES}{logical; see \code{\link{sapply}}.}
+  \item{SIMPLIFY}{logical; see \code{\link{mapply}}.}
 }
 \details{
   \code{clusterCall} calls a function \code{fun} with identical
@@ -85,8 +86,8 @@ parCapply(cl, x, FUN, ...)
   or all must be of length zero); otherwise, the result length is the
   length of the shortest argument.  Nodes are recycled if the length of
   the result is greater than the number of nodes.  (\code{mapply} always
-  uses \code{RECYCLE = TRUE}, and has arguments \code{SIMPLIFY} and
-  \code{USE.NAMES}.  \code{Map} always uses \code{RECYCLE = TRUE}.)
+  uses \code{RECYCLE = TRUE}, and has argument \code{SIMPLIFY = TRUE}.
+  \code{Map} always uses \code{RECYCLE = TRUE}.)
   
   \code{clusterExport} assigns the global values on the master \R
   process of the variables named in \code{list} to variables of the same
@@ -145,10 +146,9 @@ xx <- 1
 clusterExport(cl, "xx")
 clusterCall(cl, function(y) xx + y, 2)
 
-## Use clusterMap like an mapply example:
-## unlike mapply the result has no names
+## Use clusterMap like an mapply example
 clusterMap(cl, function(x,y) seq_len(x) + y,
-          c(a =  1, b = 2, c = 3) c(A = 10, B = 0, C = -10))
+          c(a =  1, b = 2, c = 3), c(A = 10, B = 0, C = -10))
 
 
 parSapply(cl, 1:20, get("+"), 3)

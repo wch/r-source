@@ -89,7 +89,8 @@ clusterApplyLB <- function(cl, x, fun, ...)
 }
 
 ## **** should this allow load balancing?
-clusterMap <- function (cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
+clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
+                        SIMPLIFY = FALSE, USE.NAMES = TRUE)
 {
     checkCluster(cl)
     args <- list(...)
@@ -106,7 +107,17 @@ clusterMap <- function (cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
     else vlen <- min(n)
     ## **** this closure is sending all of ... to all nodes
     argfun <- function(i) c(lapply(args, function(x) x[[i]]), MoreArgs)
-    staticClusterApply(cl, fun, vlen, argfun)
+    answer <- staticClusterApply(cl, fun, vlen, argfun)
+    ## rest matches mapply(): with a different default for SIMPLIFY
+    if (USE.NAMES && length(args)) {
+        if (is.null(names1 <- names(args[[1L]])) && is.character(args[[1L]]))
+            names(answer) <- args[[1L]]
+        else if (!is.null(names1))
+            names(answer) <- names1
+    }
+    if (!identical(SIMPLIFY, FALSE) && length(answer))
+        simplify2array(answer, higher = (SIMPLIFY == "array"))
+    else answer
 }
 
 ## internal
