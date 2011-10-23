@@ -89,7 +89,6 @@ clusterApplyLB <- function(cl, x, fun, ...)
 }
 
 ## **** should this allow load balancing?
-## **** disallow recycling if one arg is length zero?
 clusterMap <- function (cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
 {
     checkCluster(cl)
@@ -98,9 +97,11 @@ clusterMap <- function (cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
     n <- sapply(args, length)
     if (RECYCLE) {
         vlen <- max(n)
+        if(vlen && min(n) == 0L)
+            stop("Zero-length inputs cannot be mixed with those of non-zero length")
         if (!all(n == vlen))
             for (i in seq_along(args))
-                args[[i]] <- rep(args[[i]], length.out = max(n))
+                args[[i]] <- rep(args[[i]], length.out = vlen)
     }
     else vlen <- min(n)
     ## **** this closure is sending all of ... to all nodes
