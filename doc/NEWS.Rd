@@ -53,9 +53,6 @@
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
-      
-      \item Using a false value for the \file{DESCRIPTION} field
-      \samp{LazyLoad} is deprecated and will shortly become an error.
     }
   }
 
@@ -837,6 +834,9 @@
       \code{require()} is deprecated: it was only used for packages
       installed without lazy-loading, and now all packages are
       lazy-loaded.
+      
+      \item Using a false value for the \file{DESCRIPTION} field
+      \samp{LazyLoad} is deprecated.
     }
   }
 
