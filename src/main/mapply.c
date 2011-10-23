@@ -42,7 +42,7 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 	if (lengths[i] > longest) longest = lengths[i];
     }
     if (zero && longest)
-	error(_("Zero-length inputs cannot be mixed with those on non-zero length"));
+	error(_("Zero-length inputs cannot be mixed with those of non-zero length"));
 
     counters = (int *) R_alloc(m, sizeof(int));
     for(i = 0; i < m; counters[i++] = 0);
