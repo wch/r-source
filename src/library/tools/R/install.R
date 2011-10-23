@@ -982,7 +982,7 @@
 	## LazyLoading
 	value <- parse_description_field(desc, "LazyLoad", default = TRUE)
         if(!value)
-            warning("only LazyLoad = TRUE is supported",
+            warning("LazyLoad != TRUE is deprecated and ignored",
                     call. = FALSE, domain = NA)
 	if (install_R && dir.exists("R") && length(dir("R"))) {
             BC <- parse_description_field(desc, "ByteCompile",

@@ -53,12 +53,15 @@
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
+      
+      \item Using a false value for the \file{DESCRIPTION} field
+      \samp{LazyLoad} is deprecated and will shortly become an error.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{stack()} now gives are error if no vector column is
+      \item \code{stack()} now gives an error if no vector column is
       selected, rather than returning a 1-column data frame contrary to
       its documentation.
 
