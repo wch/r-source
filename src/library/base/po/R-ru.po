@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2011-10-23 14:54\n"
 "PO-Revision-Date: 2011-10-18 19:27-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1642,7 +1642,8 @@ msgstr "элементы"
 msgid "have been removed from the search path"
 msgstr "удален из пути поиска"
 
-msgid "cannot find name space environment"
+#, fuzzy
+msgid "cannot find namespace environment"
 msgstr "не могу найти окружение пространства имен"
 
 msgid "deparse option %s is not recognized"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2011-10-23 14:54\n"
 "PO-Revision-Date: 2011-03-28 11:02+0900 \n"
 "Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1723,7 +1723,8 @@ msgstr " 項目 "
 msgid "have been removed from the search path"
 msgstr " 検索パスから抹消されています "
 
-msgid "cannot find name space environment"
+#, fuzzy
+msgid "cannot find namespace environment"
 msgstr " 名前空間環境を見つけられません "
 
 msgid "deparse option %s is not recognized"
