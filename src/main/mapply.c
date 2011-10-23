@@ -28,7 +28,7 @@ SEXP attribute_hidden
 do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 {
 
-    int i, j, m, *lengths, *counters, named, longest = 0;
+    int i, j, m, *lengths, *counters, named, longest = 0, zero = 0;
     SEXP vnames, fcall = R_NilValue,  mindex, nindex, tmp1, tmp2, ans;
 
     m = length(varyingArgs);
@@ -38,8 +38,11 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
     lengths = (int *)  R_alloc(m, sizeof(int));
     for(i = 0; i < m; i++){
 	lengths[i] = length(VECTOR_ELT(varyingArgs, i));
+	if(lengths[i] == 0) zero++;
 	if (lengths[i] > longest) longest = lengths[i];
     }
+    if (zero && longest)
+	error(_("Zero-length inputs cannot be mixed with those on non-zero length"));
 
     counters = (int *) R_alloc(m, sizeof(int));
     for(i = 0; i < m; counters[i++] = 0);

@@ -26,7 +26,8 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{\dots}{arguments to vectorize over (vectors or lists).}
+  \item{\dots}{arguments to vectorize over (vectors or lists of strictly
+    positive length, or all of zero length).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{SIMPLIFY}{logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
@@ -39,9 +40,9 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
 }
 \details{
   \code{mapply} calls \code{FUN} for the values of \code{\dots}
-  (re-cycled to the length of the longest), followed by the arguments
-  given in \code{MoreArgs}.  The arguments in the call will be named if
-  \code{\dots} or \code{MoreArgs} are named.
+  (re-cycled to the length of the longest, unless any have length zero),
+  followed by the arguments given in \code{MoreArgs}.  The arguments in
+  the call will be named if \code{\dots} or \code{MoreArgs} are named.
   
   The arguments named in the \code{vectorize.args} argument to
   \code{Vectorize} correspond to the arguments passed in the \code{...}

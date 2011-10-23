@@ -1003,6 +1003,9 @@
       \item \code{qgamma()} for small \code{shape} underflows to
       \code{0} rather than sometimes giving \code{NaN}.
       (\PR{8528}, \PR{14710})
+      
+      \item \code{mapply()} now gives an explicit error message (rather
+      than an obscure one) is inputs of zero and positive length are mixed.
     }
   }
 }
