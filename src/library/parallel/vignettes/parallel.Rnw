@@ -253,7 +253,7 @@ Both \code{stdout()} and \code{stderr()} of the workers are
 redirected, by default being discarded but they can be logged using
 the \code{outfile} option.  Note that the previous sentence refers to
 the \emph{connections} of those names, not the C-level file handles.
-Thus properly written \R{} packages using \code{Rprintf} for will have
+Thus properly written \R{} packages using \code{Rprintf} will have
 their output redirected, but not direct C-level output.
 
 A default cluster can be registered by a call to
@@ -372,7 +372,7 @@ using S4 classes in package \pkg{rstream} \citep{rstream}.
 
 \section{Load balancing}
 
-The introducion mentioned a different strategy which dynamically
+The introduction mentioned a different strategy which dynamically
 allocates tasks to workers: this is sometimes known as `load
 balancing' and is implemented in \code{mclapply(mc.preschedule =
   FALSE)}, \code{clusterApplyLB} and wrappers such as
@@ -380,7 +380,7 @@ balancing' and is implemented in \code{mclapply(mc.preschedule =
 
 Load balancing is potentially advantageous when the tasks take quite
 dissimilar amounts of computation time, or where the nodes are of
-disparate capabilities.  But some \emph{caveats} are in order
+disparate capabilities.  But some \emph{caveats} are in order:
 \begin{enumerate}[(a)]
 \item Random number streams are allocated to nodes, so if the tasks
   involve random numbers they are likely to be non-repeatable (as the
@@ -396,8 +396,8 @@ disparate capabilities.  But some \emph{caveats} are in order
 \section{Portability considerations}
 
 People wanting to provide parallel facilities in their code need to
-decide how hard they want to try: no approach works optimally on all
-platforms.
+decide how hard they want to try to be portable and efficient: no
+approach works optimally on all platforms.
 
 Using \code{mclapply} is usually the simplest approach, but will run
 serial versions of the code on Windows.  This may suffice where
@@ -602,7 +602,7 @@ As one might expect, the \code{mclapply} version is slightly simpler:
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
 res <- c(0, unlist(mclapply(c[-1], run4, mc.cores = 10)))
 @
-If you do not have around 10 cores, you might want to consider
+If you do not have as many as 10 cores, you might want to consider
 load-balancing in a task like this as the time taken per simulation
 does vary with \code{c}.  This can be done using
 \code{mclapply(mc.preschedule = FALSE)} or \code{parSapplyLB}.  The
