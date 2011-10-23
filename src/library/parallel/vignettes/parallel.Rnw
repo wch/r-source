@@ -574,7 +574,7 @@ stopCluster(cl)
 As one might expect, the \code{mclapply} version is slightly simpler:
 <<>>=
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
-res <- c(0, unlist(mclapply(c[-1], run3, mc.cores = 10)))
+res <- c(0, unlist(mclapply(c[-1], run4, mc.cores = 10)))
 @
 
 \section{Differences from earlier versions}
