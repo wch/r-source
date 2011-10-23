@@ -6,23 +6,16 @@
 
 \name{mapply}
 \alias{mapply}
-\alias{Vectorize}
 \title{Apply a Function to Multiple List or Vector Arguments}
 \description{
   \code{mapply} is a multivariate version of \code{\link{sapply}}.
   \code{mapply} applies \code{FUN} to the first elements of each \dots
   argument, the second elements, the third elements, and so on.
   Arguments are recycled if necessary.
-
-  \code{Vectorize} returns a new function that acts as if \code{mapply}
-  was called.
 }
 \usage{
 mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
        USE.NAMES = TRUE)
-
-Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
-          USE.NAMES = TRUE)
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
@@ -35,50 +28,28 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
   \item{USE.NAMES}{logical; use names if the first \dots argument has
     names, or if it is a character vector, use that character vector as
     the names.}
-  \item{vectorize.args}{a character vector of arguments which should be
-    vectorized.  Defaults to all arguments to \code{FUN}.}
 }
 \details{
   \code{mapply} calls \code{FUN} for the values of \code{\dots}
   (re-cycled to the length of the longest, unless any have length zero),
   followed by the arguments given in \code{MoreArgs}.  The arguments in
   the call will be named if \code{\dots} or \code{MoreArgs} are named.
-  
-  The arguments named in the \code{vectorize.args} argument to
-  \code{Vectorize} correspond to the arguments passed in the \code{...}
-  list to \code{mapply}.  However, only those that are actually passed
-  will be vectorized; default values will not.  See the example below.
-
-  \code{Vectorize} cannot be used with primitive functions as they do
-  not have a value for \code{\link{formals}}.
 }
 \value{
-  \code{mapply} returns a list, or for \code{SIMPLIFY = TRUE}, a vector,
-  array or list.
-
-  \code{Vectorize} returns a function with the same arguments as \code{FUN},
-  but wrapping a call to \code{mapply}.
+  A list, or for \code{SIMPLIFY = TRUE}, a vector, array or list.
 }
 \seealso{
-  \code{\link{sapply}}, after which \code{mapply()} is built, notably on
-  simplification; \code{\link{outer}}
+  \code{\link{sapply}}, after which \code{mapply()} is modelled.
+
+  \code{\link{outer}}, which applies a vectorized function to all
+  combinations of two arguments.
 }
 \examples{
-require(graphics)
-
 mapply(rep, 1:4, 4:1)
 
 mapply(rep, times = 1:4, x = 4:1)
 
 mapply(rep, times = 1:4, MoreArgs = list(x = 42))
-
-# Repeat the same using Vectorize: use rep.int as rep is primitive
-vrep <- Vectorize(rep.int)
-vrep(1:4, 4:1)
-vrep(times = 1:4, x = 4:1)
-
-vrep <- Vectorize(rep.int, "times")
-vrep(times = 1:4, x = 42)
 
 mapply(function(x,y) seq_len(x) + y,
        c(a =  1, b = 2, c = 3),  # names from first
@@ -86,26 +57,6 @@ mapply(function(x,y) seq_len(x) + y,
 
 word <- function(C,k) paste(rep.int(C,k), collapse = '')
 utils::str(mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
-
-f <- function(x = 1:3, y) c(x,y)
-vf <- Vectorize(f, SIMPLIFY = FALSE)
-f(1:3, 1:3)
-vf(1:3, 1:3)
-vf(y = 1:3) # Only vectorizes y, not x
-
-# Nonlinear regression contour plot, based on nls() example
-
-SS <- function(Vm, K, resp, conc) {
-    pred <- (Vm * conc)/(K + conc)
-    sum((resp - pred)^2 / pred)
-}
-vSS <- Vectorize(SS, c("Vm", "K"))
-Treated <- subset(Puromycin, state == "treated")
-
-Vm <- seq(140, 310, length.out = 50)
-K <- seq(0, 0.15, length.out = 40)
-SSvals <- outer(Vm, K, vSS, Treated$rate, Treated$conc)
-contour(Vm, K, SSvals, levels = (1:10)^2, xlab = "Vm", ylab = "K")
 }
 \keyword{manip}
 \keyword{utilities}
