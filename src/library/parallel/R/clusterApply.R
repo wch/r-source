@@ -89,8 +89,8 @@ clusterApplyLB <- function(cl = NULL, x, fun, ...)
 }
 
 ## **** should this allow load balancing?
-## **** disallow recycling if one arg is length zero?
-clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
+clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
+                        SIMPLIFY = FALSE, USE.NAMES = TRUE)
 {
     cl <- defaultCluster(cl)
     args <- list(...)
@@ -98,14 +98,26 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
     n <- sapply(args, length)
     if (RECYCLE) {
         vlen <- max(n)
+        if(vlen && min(n) == 0L)
+            stop("Zero-length inputs cannot be mixed with those of non-zero length")
         if (!all(n == vlen))
             for (i in seq_along(args))
-                args[[i]] <- rep(args[[i]], length.out = max(n))
+                args[[i]] <- rep(args[[i]], length.out = vlen)
     }
     else vlen <- min(n)
     ## **** this closure is sending all of ... to all nodes
     argfun <- function(i) c(lapply(args, function(x) x[[i]]), MoreArgs)
-    staticClusterApply(cl, fun, vlen, argfun)
+    answer <- staticClusterApply(cl, fun, vlen, argfun)
+    ## rest matches mapply(): with a different default for SIMPLIFY
+    if (USE.NAMES && length(args)) {
+        if (is.null(names1 <- names(args[[1L]])) && is.character(args[[1L]]))
+            names(answer) <- args[[1L]]
+        else if (!is.null(names1))
+            names(answer) <- names1
+    }
+    if (!identical(SIMPLIFY, FALSE) && length(answer))
+        simplify2array(answer, higher = (SIMPLIFY == "array"))
+    else answer
 }
 
 splitIndices <- function(nx, ncl)

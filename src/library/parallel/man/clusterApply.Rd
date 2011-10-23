@@ -30,7 +30,8 @@ clusterApply(cl = NULL, x, fun, ...)
 clusterApplyLB(cl = NULL, x, fun, ...)
 clusterEvalQ(cl = NULL, expr)
 clusterExport(cl = NULL, varlist)
-clusterMap(cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
+clusterMap(cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
+           SIMPLIFY = FALSE, USE.NAMES = TRUE)
 clusterSplit(cl = NULL, seq)
 
 parLapply(cl = NULL, X, fun, ...)
@@ -54,8 +55,8 @@ parCapply(cl = NULL, x, FUN, ...)
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
   \item{X}{A vector (atomic or list), an array for \code{parApply}.}
   \item{MARGIN}{vector specifying the dimensions to use.}
-  \item{simplify}{logical; see \code{\link{sapply}}.}
-  \item{USE.NAMES}{logical; see \code{\link{sapply}}.}
+  \item{simplify, USE.NAMES}{logical; see \code{\link{sapply}}.}
+  \item{SIMPLIFY}{logical; see \code{\link{mapply}}.}
 }
 \details{
   \code{clusterCall} calls a function \code{fun} with identical
@@ -81,10 +82,13 @@ parCapply(cl = NULL, x, FUN, ...)
   executes a particular job is non-deterministic.
 
   \code{clusterMap} is a multi-argument version of \code{clusterApply},
-  analogous to \code{mapply}.  If \code{RECYCLE} is true shorter
-  arguments are recycled; otherwise, the result length is the length of
-  the shortest argument.  Nodes are recycled if the length of the result
-  is greater than the number of nodes.
+  analogous to \code{\link{mapply}} and \code{\link{Map}}.  If
+  \code{RECYCLE} is true shorter arguments are recycled (and either none
+  or all must be of length zero); otherwise, the result length is the
+  length of the shortest argument.  Nodes are recycled if the length of
+  the result is greater than the number of nodes.  (\code{mapply} always
+  uses \code{RECYCLE = TRUE}, and has argument \code{SIMPLIFY = TRUE}.
+  \code{Map} always uses \code{RECYCLE = TRUE}.)
   
   \code{clusterExport} assigns the global values on the master \R
   process of the variables named in \code{list} to variables of the same
@@ -143,7 +147,10 @@ xx <- 1
 clusterExport(cl, "xx")
 clusterCall(cl, function(y) xx + y, 2)
 
-##FIXME: need example for clusterMap
+## Use clusterMap like an mapply example
+clusterMap(cl, function(x,y) seq_len(x) + y,
+          c(a =  1, b = 2, c = 3), c(A = 10, B = 0, C = -10))
+
 
 parSapply(cl, 1:20, get("+"), 3)
 stopCluster(cl)

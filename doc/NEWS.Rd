@@ -20,6 +20,9 @@
       \item Package \pkg{parallel} now allows a default cluster to be
       registered by \code{setDefaultCluster()}: this will be used by
       default in functions such as \code{parLapply()}.
+      
+      It has a new function \code{mcmapply()}, a parallel version of
+      \code{mapply()}.
     }
   }
   

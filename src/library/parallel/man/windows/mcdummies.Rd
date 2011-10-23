@@ -6,7 +6,9 @@
 \name{mclapply}
 \alias{mclapply}
 \alias{pvec}
-\title{Serial versions of \code{mclapply} and \code{pvec}}
+\alias{mcmapply}
+
+\title{Serial versions of \code{mclapply}, \code{mcmapply} and \code{pvec}}
 \description{
   These are simple serial versions of \code{mclapply} and \code{pvec}
   for Windows where forking is not available.
@@ -15,6 +17,10 @@
 mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
          mc.silent = FALSE, mc.cores = 1L,
          mc.cleanup = TRUE, mc.allow.recursive = TRUE)
+
+mcmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,
+        mc.preschedule = TRUE, mc.set.seed = TRUE,
+        mc.silent = FALSE, mc.cores = 1L, mc.cleanup = TRUE)
 
 pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
      mc.cores = 1L, mc.cleanup = TRUE)
@@ -25,6 +31,10 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     \code{\link{as.list}}.}
   \item{v}{vector to operate on}
   \item{FUN}{the function to be applied to each element of \code{X} or \code{v}}
+  \item{...}{For \code{mclapply} and \code{pvec},
+    optional arguments to \code{FUN}.
+    For \code{mcmapply}, vector or list inputs: see \code{\link{mapply}}.}
+  \item{MoreArgs, SIMPLIFY, USE.NAMES}{see \code{\link{mapply}}.}
   \item{...}{optional arguments to \code{FUN}}
   \item{mc.preschedule, mc.set.seed, mc.cleanup, mc.allow.recursive}{
     Ignored on Windows.}
@@ -42,6 +52,8 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 \value{
   For \code{mclapply}, a list of the same length as \code{X} and named
   by \code{X}.
+
+  For \code{mcmapply}, a list, vector or array: see \code{\link{mapply}}.
 
   For \code{pvec}, a vector of the same length as \code{v}.
 }

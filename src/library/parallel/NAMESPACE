@@ -9,7 +9,7 @@ if(tools:::.OStype() == "unix") {
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, detectCores,
-       makeCluster, makeForkCluster, makePSOCKcluster, mclapply,
+       makeCluster, makeForkCluster, makePSOCKcluster, mclapply, mcmapply,
        parApply, parCapply, parLapply, parRapply, parSapply, pvec,
        setDefaultCluster, splitIndices, stopCluster)
 

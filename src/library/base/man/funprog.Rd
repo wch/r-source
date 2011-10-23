@@ -95,6 +95,12 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
   (predicate) function \code{f}, it creates a function which returns the
   logical negation of what \code{f} returns.
 }
+
+\seealso{
+  Function \code{\link{clusterMap}} and \code{\link({mcmapply}} (not
+  Windows) in package \pkg{parallel} provides parallel versions of \code{Map}.
+}
+
 \examples{
 ## A general-purpose adder:
 add <- function(x) Reduce("+", x)

@@ -33,3 +33,15 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     if(cores > 1L) stop("'mc.cores' > 1 is not supported on Windows")
     FUN(v, ...)
 }
+
+mcmapply <-
+    function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,
+             mc.preschedule = TRUE, mc.set.seed = TRUE,
+             mc.silent = FALSE, mc.cores  = 1L, mc.cleanup = TRUE)
+{
+    cores <- as.integer(mc.cores)
+    if(cores < 1L) stop("'mc.cores' must be >= 1")
+    if(cores > 1L) stop("'mc.cores' > 1 is not supported on Windows")
+    mapply(FUN = FUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
+           USE.NAMES = USE.NAMES)
+}

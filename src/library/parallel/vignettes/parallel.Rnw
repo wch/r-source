@@ -609,6 +609,9 @@ so multiple processes can be logged.
 
 \code{parSapply} has been brought into line with \code{sapply}.
 
+\code{clusterMap()} gains \code{SIMPLIFY} and \code{USE.NAMES}
+arguments to make it a parallel version of \code{mapply} and \code{Map}.
+
 The timimng interface has not been copied.
 
 \bibliographystyle{jss}
