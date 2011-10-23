@@ -31,7 +31,8 @@ clusterApplyLB(cl = NULL, x, fun, ...)
 clusterEvalQ(cl = NULL, expr)
 clusterExport(cl = NULL, varlist)
 clusterMap(cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
-           SIMPLIFY = FALSE, USE.NAMES = TRUE)
+           SIMPLIFY = FALSE, USE.NAMES = TRUE,
+           .scheduling = c("static", "dynamic"))
 clusterSplit(cl = NULL, seq)
 
 parLapply(cl = NULL, X, fun, ...)
@@ -57,6 +58,8 @@ parCapply(cl = NULL, x, FUN, ...)
   \item{MARGIN}{vector specifying the dimensions to use.}
   \item{simplify, USE.NAMES}{logical; see \code{\link{sapply}}.}
   \item{SIMPLIFY}{logical; see \code{\link{mapply}}.}
+  \item{.scheduling}{should tasks be statically allocated to nodes or
+    dynamic load-balancing used?}
 }
 \details{
   \code{clusterCall} calls a function \code{fun} with identical
@@ -153,10 +156,8 @@ clusterMap(cl, function(x,y) seq_len(x) + y,
 
 
 parSapply(cl, 1:20, get("+"), 3)
-stopCluster(cl)
 
 ## A bootstrapping example, which can be done in many ways:
-cl <- makeCluster(getOption("cl.cores", 2))
 clusterEvalQ(cl, {
   ## set up each worker.  Could also use clusterExport()
   library(boot)

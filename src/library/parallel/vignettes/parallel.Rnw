@@ -398,6 +398,9 @@ code is package \pkg{boot}, version \code{1.3-3} or later.
 \section{Extended examples}
 
 \SweaveOpts{eval=FALSE}
+<<hide=TRUE>>=
+library(parallel)
+@
 
 Probably the most common use of coarse-grained paralllelization in
 statistics is to do multiple simulation runs, for example to do large
@@ -496,7 +499,7 @@ stopCluster(cl)
 
 Running the double bootstrap on the same problem is far more
 computer-intensive.  The standard version is
-<<<fig=TRUE>>=
+<<fig=TRUE>>=
 R <- 999; M <- 999 ## we would like at least 999 each
 cd4.nest <- boot(cd4, nested.corr, R=R, stype="w", t0=corr(cd4), M=M)
 ## nested.corr is a function in package boot
@@ -515,7 +518,7 @@ actual <- cd4.nest$t[, 2]
 which took about 55 secs on one core of an 8-core Linux server.
 
 Using \code{mclapply} we could use
-<<<>>=
+<<eval=FALSE>>=
 mc <- 9
 R <- 999; M <- 999; RR <- floor(R/mc)
 run2 <- function(...)
@@ -560,22 +563,27 @@ run3 <- function(c) {
 }
 cl <- makeCluster(10, methods = FALSE)
 clusterExport(cl, c("R", "towns", "tget"))
-res <- c(0, parSapply(cl, c[-1], run3))
+res <- c(0, parSapply(cl, c[-1], run3)) # 10 tasks
 stopCluster(cl)
 @
 which took about 4.5 secs, plus 2 secs to set up the cluster.  Using a
 fork cluster (not on Windows) makes the startup much faster and setup easier:
-<<>>=
+<<eval=FALSE>>=
 cl <- makeForkCluster(10)  # fork after the variables have been set up
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
 res <- c(0, parSapply(cl, c[-1], run4))
 stopCluster(cl)
 @
 As one might expect, the \code{mclapply} version is slightly simpler:
-<<>>=
+<<eval=FALSE>>=
 run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
 res <- c(0, unlist(mclapply(c[-1], run4, mc.cores = 10)))
 @
+If you do not have around 10 cores, you might want to consider
+load-balancing in a task like this as the time taken per simulation
+does vary with \code{c}.  This can be done using
+\code{mclapply(mc.preschedule = FALSE)} or the lower-level function
+\code{clusterApplyLB}.
 
 \section{Differences from earlier versions}
 

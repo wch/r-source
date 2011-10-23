@@ -77,6 +77,7 @@ clusterExport <- local({
 
 clusterApply <- function(cl = NULL, x, fun, ...)
 {
+    ## **** this closure is sending all of x to all nodes
     argfun <- function(i) c(list(x[[i]]), list(...))
     staticClusterApply(cl, fun, length(x), argfun)
 }
@@ -88,26 +89,29 @@ clusterApplyLB <- function(cl = NULL, x, fun, ...)
     dynamicClusterApply(cl, fun, length(x), argfun)
 }
 
-## **** should this allow load balancing?
 clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
-                        SIMPLIFY = FALSE, USE.NAMES = TRUE)
+                        SIMPLIFY = FALSE, USE.NAMES = TRUE,
+                        .scheduling = c("static", "dynamic"))
 {
     cl <- defaultCluster(cl)
     args <- list(...)
     if (length(args) == 0) stop("need at least one argument")
+    .scheduling <- match.arg(.scheduling)
     n <- sapply(args, length)
     if (RECYCLE) {
         vlen <- max(n)
         if(vlen && min(n) == 0L)
             stop("Zero-length inputs cannot be mixed with those of non-zero length")
         if (!all(n == vlen))
-            for (i in seq_along(args))
+            for (i in seq_along(args)) # why not lapply?
                 args[[i]] <- rep(args[[i]], length.out = vlen)
     }
     else vlen <- min(n)
     ## **** this closure is sending all of ... to all nodes
     argfun <- function(i) c(lapply(args, function(x) x[[i]]), MoreArgs)
-    answer <- staticClusterApply(cl, fun, vlen, argfun)
+    answer <-
+        if(.scheduling == "dynamic") dynamicClusterApply(cl, fun, vlen, argfun)
+    else staticClusterApply(cl, fun, vlen, argfun)
     ## rest matches mapply(): with a different default for SIMPLIFY
     if (USE.NAMES && length(args)) {
         if (is.null(names1 <- names(args[[1L]])) && is.character(args[[1L]]))

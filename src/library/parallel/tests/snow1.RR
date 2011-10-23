@@ -3,20 +3,26 @@
 library(parallel)
 
 
-cl <- makeCluster(getOption("mc.cores", 2))
+cl <- makeCluster(getOption("cl.cores", 2))
 
 clusterApply(cl, 1:2, get("+"), 3)
 xx <- 1
 clusterExport(cl, "xx")
 clusterCall(cl, function(y) xx + y, 2)
 
+## Use clusterMap like an mapply example
+clusterMap(cl, function(x,y) seq_len(x) + y,
+          c(a =  1, b = 2, c = 3), c(A = 10, B = 0, C = -10))
+
+
 parSapply(cl, 1:20, get("+"), 3)
 
+## A bootstrapping example, which can be done in many ways:
 clusterEvalQ(cl, {
   ## set up each worker.  Could also use clusterExport()
   library(boot)
   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-  cd4.mle <- list(m = mean(cd4), v = var(cd4))
+  cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
   NULL
 })
 res <- clusterEvalQ(cl, boot(cd4, corr, R = 100,
