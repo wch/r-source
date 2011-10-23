@@ -686,11 +686,11 @@
       \env{_R_CHECK_COMPACT_DATA2_} is now true: thus if using the newer
       forms of compression introduced in \R 2.10.0 would be beneficial
       is now checked (by default).
-      
+
       \item Reference output for a vignette can be supplied when
       checking a package by \command{R CMD check}: see \sQuote{Writing R
 	Extensions}.
-      
+
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
       environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
@@ -765,11 +765,14 @@
       
       In the same spirit, \code{median(x)} now gives an error for a data
       frame \code{x} (it often gave nonsensical results).
-      
+
       \item The \code{keep.source} argument to \code{library()} and
       \code{require()} is deprecated: it was only used for packages
       installed without lazy-loading, and now all packages are
       lazy-loaded.
+      
+      \item Using a false value for the \file{DESCRIPTION} field
+      \samp{LazyLoad} is deprecated.
     }
   }
 
@@ -902,7 +905,7 @@
       labelled the wrong axis. (\PR{14699})
 
       \item Creating a connection might fail under \code{gctorture(TRUE)}.
-      
+
       \item \code{stack()} and \code{unstack()} converted character
       columns to factors.
 
