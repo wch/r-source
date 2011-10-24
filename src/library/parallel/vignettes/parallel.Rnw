@@ -38,9 +38,6 @@ and \pkg{snow} \citep{snow} and provides drop-in replacements for most
 of the functionality of those packages, with integrated handling of
 random-number generation.
 
-The first released version is described here: various enhancements are
-planned for upcoming versions of \R{}.
-
 Parallelism can be done in computation at many different levels: this
 package is principally concerned with `coarse-grained
 parallelization'.  At the lowest level, modern CPUs can do several
@@ -226,7 +223,6 @@ cl <- makeCluster(<size of pool>)
 stopCluster(cl)
 \end{verbatim}
 % we could arrange to stop a cluster when cl is gc-ed
-% we could arrange to create a default cluster if cl = NULL
 
 For matrices there are the rarely used \code{parApply} and
 \code{parCapply} functions, and the more commonly used
