@@ -51,9 +51,6 @@ DT_ARCH =
 # 32- or 64-bit Windows?
 WIN = 32
 
-# define to -DW64 if using 32-bit MinGW-w64 (no longer needed)
-DEFS_W64 =
-
 # pattern for symbols on 64-bit builds only
 # for older toolchains which use a leading underscore
 # SYMPAT64 = 's/^.* [BCDRT] _/ /p'
@@ -86,6 +83,9 @@ MIKTEX = TRUE
 
 # additional optimization flags
 EOPTS=-mtune=core2
+
+# define to -fopenmp if the toolchain has OpenMP support
+OPENMP =
 
 ## ====== configuration macros for building installer ===========
 

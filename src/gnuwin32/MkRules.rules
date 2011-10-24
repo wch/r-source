@@ -4,7 +4,6 @@ ifeq "$(WIN)" "64"
 BINPREF = $(BINPREF64)
 SYMPAT = $(SYMPAT64)
 R_ARCH = /x64
-DEFS_W64 = -DW64
 arch_DEFS = -DR_ARCH='"x64"'
 else
 R_ARCH = /i386
@@ -17,7 +16,6 @@ C99FLAG=-std=gnu99
 
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
 GCC4_SUFF=
-
 
 BINDIR=bin$(R_ARCH)
 
@@ -34,7 +32,7 @@ CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
-DLL=$(CC)
+DLL=$(CC) $(OPENMP)
 DLLTOOL=$(BINPREF)dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
@@ -62,10 +60,10 @@ SORT=sort
 	@$(CC) -MM $(CPPFLAGS) $($*-CPPFLAGS) $(DEFINES) $< -o $@
 
 .c.o:
-	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
+	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(OPENMP) $(DEFINES) -c $< -o $@
 
 .f.o:
-	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+	$(F77) $(FFLAGS) $($*-FFLAGS) $(OPENMP) -c $< -o $@
 
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
