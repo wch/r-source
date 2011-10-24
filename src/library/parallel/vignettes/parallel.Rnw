@@ -283,13 +283,18 @@ package is loaded.  (Setting this to \code{1} inhibits parallel
 operation: there are stub versions of these functions on Windows which
 force \code{mc.cores = 1}.)
 
+As from \R{} 2.15.0, \code{mcmapply} and \code{mcMap} provide
+analogues of \code{mapply} and \code{Map}.
+
 Note the earlier comments about using forking in a GUI environment.
 
 The forked workers share file handles with the master: this means that
 any output from the worker should go to the same place as
 \file{stdout} and \file{stderr} of the master process.  (This does not
 work reliably on all OSes: problems have also been noted when forking
-a session that is processing batch input from \file{stdin}.)
+a session that is processing batch input from \file{stdin}.)  Setting
+argument \code{mc.silent = TRUE} silences \file{stdout} for the child:
+\file{stderr} is not affected.
 
 \section{Random-number generation}
 
@@ -496,14 +501,14 @@ boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
 stopCluster(cl)
 @
-Note that whereas with \code{mclapply} all the packages and objects
-we use are automatically available in the workers, this is not in
+Note that whereas with \code{mclapply} all the packages and objects we
+use are automatically available on the workers, this is not in
 general\footnote{it is with clusters set up with
   \code{makeForkCluster}.} the case with the \code{parLapply}
 approach.  There is often a delicate choice of where to do the
-computations: for example we could compute \code{cd4.mle} on the
-master and send the value to the workers, or (as here) compute it on
-the workers. We illustrate that by the following code
+computations: for example we could compute \code{cd4.mle} on the works
+(as about) or on the master and send the value to the workers. We
+illustrate the latter by the following code
 <<>>=
 cl <- makeCluster(mc)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
@@ -622,13 +627,15 @@ graphics device.  This has been replaced by recording a flag in the
 \R{} executable for a child process.
 
 The version of \code{detectCores} here is biased towards the number of
-physical CPUs.  This was occasioned by serious problems on Solaris
+physical CPUs.  This was occasioned by serious problems on Sparc Solaris
 where \pkg{multicore} defaulted to a silly number of processes.
 
 Functions \code{fork} and \code{kill} have \code{mc} prefixes and are
 not exported.  This avoids confusion with other packages (such as
 package \pkg{fork}), and note that \code{mckill} is not as general as
-\code{tools::pskill},
+\code{tools::pskill}.
+
+Aliased functions \code{collect} and \code{parallel} are no longer provided.
 
 \subsection{Differences from snow}
 

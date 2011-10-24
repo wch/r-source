@@ -58,7 +58,8 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
     beware of partial matching to earlier arguments.}
   \item{MoreArgs}{additional arguments for \code{fun}.}
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
-  \item{X}{A vector (atomic or list), an array for \code{parApply}.}
+  \item{X}{A vector (atomic or list) for \code{parLapply} and
+    \code{parSapply}, an array for \code{parApply}.}
   \item{MARGIN}{vector specifying the dimensions to use.}
   \item{simplify, USE.NAMES}{logical; see \code{\link{sapply}}.}
   \item{SIMPLIFY}{logical; see \code{\link{mapply}}.}
