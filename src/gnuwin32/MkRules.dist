@@ -51,7 +51,7 @@ DT_ARCH =
 # 32- or 64-bit Windows?
 WIN = 32
 
-# define to -DW64 if using 32-bit MinGW-w64
+# define to -DW64 if using 32-bit MinGW-w64 (no longer needed)
 DEFS_W64 =
 
 # pattern for symbols on 64-bit builds only
