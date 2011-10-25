@@ -945,7 +945,11 @@
       (\PR{8528}, \PR{14710})
       
       \item \code{mapply()} now gives an explicit error message (rather
-      than an obscure one) if inputs of zero and positive length are mixed.
+      than an obscure one) is inputs of zero and positive length are
+      mixed.
+
+      \item Setting a Hershey font family followed by string height
+      query would crash R.
     }
   }
 }
