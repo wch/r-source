@@ -1085,7 +1085,7 @@ Example:
 @end example
 
 @noindent
-(and see the comment about about @option{--no-same-owner}.
+(and see the comment about about @option{--no-same-owner}).
 
 @end itemize
 
