@@ -935,8 +935,7 @@ Installation is @emph{via} the installer
 @file{@value{RWVERSION}-win.exe}.  Just double-click on the icon and
 follow the instructions.  When installing on a 64-bit version of Windows
 the options will include 32- or 64-bit versions of R (and the default is
-to install both).  You can uninstall @R{} from the Control Panel or from
-the (optional) @R{} program group on the Start Menu.
+to install both).  You can uninstall @R{} from the Control Panel.
 
 Note that you will be asked to choose a language for installation, and
 that choice applies to both installation and un-installation but not to
@@ -995,6 +994,10 @@ will call this directory @file{@var{R_HOME}} below.
 For a 64-bit build you will need a 64-bit toolchain and the appropriate
 64-bit version of Tcl/Tk: both of these are contained in
 @file{Rtools213.exe}.
+
+It is intended that the toolchain used for @R{} 2.15.x will be changed
+from that used for @R{} 2.12.0 to @R{} 2.14.x, so the information here
+is provisional.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1086,7 +1089,7 @@ Example:
 @end example
 
 @noindent
-(and see the comment about about @option{--no-same-owner}.
+(and see the comment about about @option{--no-same-owner}).
 
 @end itemize
 
@@ -1313,8 +1316,8 @@ installer please do check that license requirements are met -- note that
 the installer will state that the contents are distributed under GPL-2
 and this has a requirement for @emph{you} to supply the complete sources
 (including the R sources even if you started with a binary distribution
-of R, and also the sources of packages (including their external
-software) which are included).
+of R, and also the sources of any extra packages (including their
+external software) which are included).
 
 
 The defaults for the startup parameters may also be customized.  For example
@@ -4638,6 +4641,10 @@ should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
 
+It is intended that the toolchain used for @R{} 2.15.x will be changed
+from that used for @R{} 2.12.0 to @R{} 2.14.x, so the information here
+is provisional.
+
 You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
 @itemize
@@ -4809,6 +4816,7 @@ install 32/64-bit packages.
 @menu
 * 32-bit toolchain::            
 * 64-bit toolchain::            
+* Upcoming toolchains::         
 @end menu
 
 @node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
@@ -4843,7 +4851,7 @@ It is also possible to use the 32-bit toolchain from the
 @code{mingw-w64} project and options to use that are documented in file
 @file{MkRules.dist}.
 
-@node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
+@node 64-bit toolchain, Upcoming toolchains, 32-bit toolchain, The MinGW toolchain
 @subsection 64-bit toolchain
 
 Several versions of the MinGW-w64 toolchain are available: use one of
@@ -4873,6 +4881,29 @@ Other toolchains are available: for example under
 @uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
 contains a native x64 Windows toolchain by `sezero' that may be useful
 when building external software.
+
+@node Upcoming toolchains,  , 64-bit toolchain, The MinGW toolchain
+@subsection Upcoming toolchains
+
+The intention is that the released version of @R{} 2.15.0 will be built
+with an updated toolchain which has support for OpenMP.
+
+Currently experiments are using the (modified) toolchains from the
+Mingw-w64 project for both 32- and 64-bit builds, using release 2.0 of
+the Mingw-w64 headers and a beta version of @command{gcc 4.6.2}.
+
+This has native 32-bit and 64-bit compilers, and hence the C compiler is
+called @command{gcc} for both builds.  This potentially causes problems
+when installing packages for both architectures, and the solution is to
+set the make variable @env{BINPREF} appropriately in the file
+@file{MkRules.local} to be the path to the toolchain, e.g.@:
+@example
+BINPREF64 = c:/R/W64/gcc-4.6.2/bin/
+@end example
+
+It is very likely that external software libraries will need to be
+re-compiled under the new toolchain: especially those providing a C++
+interface.
 
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset

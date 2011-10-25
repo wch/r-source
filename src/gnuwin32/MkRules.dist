@@ -34,6 +34,8 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # USE_IMPLIBS = YES
 
 # Some of the toolchains are in fact cross-compilers and have prefixes
+# This will also be used to give the full path to the compiler where
+# 32- and 64-bit compilers have the same prefix (e.g. none).
 # prefix for 32-bit, i686-w64-mingw32- for MinGW-w64's
 BINPREF =
 # prefix for 64-bit: usually this, but not for native x64 builds.

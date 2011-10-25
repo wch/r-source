@@ -1519,15 +1519,14 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-are available for use in @file{Makevars}.@footnote{They could also be
-used with @file{Makevars.win}, but at present the compilers used for
-@R{} on Windows do not support pthreads nor OpenMP.}  Include the
-appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so on,
-and also in @code{PKG_LIBS}.  C/C++ code that needs to be conditioned on
-the use of OpenMP can be used inside @code{#ifdef SUPPORT_OPENMP}, a
-macro defined in the header @file{Rconfig.h} (@pxref{Platform and
-version information}): however the use of OpenMP is most often indicated
-by @samp{#pragma} statements.
+are available for use in @file{Makevars}, and so from @R{} 2.15.0 with
+@file{Makevars.win}.  Include the appropriate macro in
+@code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so on, and also in
+@code{PKG_LIBS}.  C/C++ code that needs to be conditioned on the use of
+OpenMP can be used inside @code{#ifdef SUPPORT_OPENMP}, a macro defined
+in the header @file{Rconfig.h} (@pxref{Platform and version
+information}): however the use of OpenMP is most often indicated by
+@samp{#pragma} statements.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -1538,9 +1537,10 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 There is nothing to say what version of OpenMP is supported: version 3.0
-is supported by recent versions of the main platforms (except Windows,
-where there is currently no support), but portable packages cannot
-assume that end users have recent versions.
+(May 2008) is supported by recent versions of the main platforms (but
+note that Mac OS X binaries are built for 10.5), but portable packages
+cannot assume that end users have recent versions, and it may be safest
+to assume version 2.5.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
