@@ -32,7 +32,7 @@ CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
-DLL=$(CC) $(OPENMP)
+DLL=$(CC)
 DLLTOOL=$(BINPREF)dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
@@ -60,10 +60,10 @@ SORT=sort
 	@$(CC) -MM $(CPPFLAGS) $($*-CPPFLAGS) $(DEFINES) $< -o $@
 
 .c.o:
-	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(OPENMP) $(DEFINES) -c $< -o $@
+	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
 
 .f.o:
-	$(F77) $(FFLAGS) $($*-FFLAGS) $(OPENMP) -c $< -o $@
+	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)

@@ -70,7 +70,7 @@ ifdef USE_ICU
 LIBEXTRAS+= -licuin38 -licuuc38
 endif
 
-R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
+R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 CSOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
