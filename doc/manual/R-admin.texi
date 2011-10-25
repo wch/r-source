@@ -935,8 +935,7 @@ Installation is @emph{via} the installer
 @file{@value{RWVERSION}-win.exe}.  Just double-click on the icon and
 follow the instructions.  When installing on a 64-bit version of Windows
 the options will include 32- or 64-bit versions of R (and the default is
-to install both).  You can uninstall @R{} from the Control Panel or from
-the (optional) @R{} program group on the Start Menu.
+to install both).  You can uninstall @R{} from the Control Panel.
 
 Note that you will be asked to choose a language for installation, and
 that choice applies to both installation and un-installation but not to
