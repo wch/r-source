@@ -950,6 +950,11 @@
 
       \item Setting a Hershey font family followed by string height
       query would crash R.
+
+      \item \code{R CMD javareconf -e} would fail for some shells due to
+      a shift error. Also the resulting paths will no longer contain
+      \code{$(JAVA_HOME)} as that would result in the wrong substitution
+      based on \file{Makeconf} instead of the shell setting.
     }
   }
 }
