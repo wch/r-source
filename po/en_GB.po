@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24+0100\n"
+"POT-Creation-Date: 2011-10-25 07:54+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -198,8 +198,8 @@ msgstr ""
 #: src/main/platform.c:2409 src/main/platform.c:2412 src/main/platform.c:2415
 #: src/main/platform.c:2418 src/main/platform.c:2421 src/main/platform.c:2490
 #: src/main/platform.c:2498 src/main/platform.c:2534 src/main/platform.c:2584
-#: src/main/plot.c:3104 src/main/plot.c:4241 src/main/plot.c:4245
-#: src/main/plot.c:4248 src/main/plot3d.c:2435 src/main/plot3d.c:2439
+#: src/main/plot.c:3107 src/main/plot.c:4244 src/main/plot.c:4248
+#: src/main/plot.c:4251 src/main/plot3d.c:2435 src/main/plot3d.c:2439
 #: src/main/plot3d.c:2444 src/main/plot3d.c:2448 src/main/plot3d.c:2452
 #: src/main/plot3d.c:2456 src/main/print.c:236 src/main/print.c:242
 #: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
@@ -290,8 +290,8 @@ msgstr ""
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:184 src/main/optimize.c:190 src/main/optimize.c:199
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
-#: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
-#: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
+#: src/main/plot.c:2281 src/main/plot.c:2288 src/main/plot.c:3320
+#: src/main/plot.c:3322 src/main/plot.c:3324 src/main/plot.c:3482
 #: src/main/plot3d.c:1382 src/main/plot3d.c:2513 src/main/plot3d.c:2517
 #: src/main/plot3d.c:2519 src/main/seq.c:167 src/main/seq.c:265
 #: src/main/seq.c:268 src/main/sort.c:871 src/main/sort.c:971
@@ -1160,11 +1160,11 @@ msgstr ""
 #: src/main/attrib.c:1035 src/main/builtin.c:61 src/main/builtin.c:98
 #: src/main/envir.c:1531 src/main/envir.c:1655 src/main/envir.c:1717
 #: src/main/envir.c:1840 src/main/paste.c:68 src/main/paste.c:277
-#: src/main/plot.c:1726 src/main/random.c:474
+#: src/main/plot.c:1729 src/main/random.c:474
 msgid "invalid first argument"
 msgstr ""
 
-#: src/main/attrib.c:1038 src/main/plot.c:1733
+#: src/main/attrib.c:1038 src/main/plot.c:1736
 msgid "invalid second argument"
 msgstr ""
 
@@ -2505,12 +2505,12 @@ msgstr ""
 msgid "R was not compiled with support for memory profiling"
 msgstr ""
 
-#: src/main/deparse.c:150 src/main/plot.c:912 src/main/plot.c:1448
-#: src/main/plot.c:1771 src/main/plot.c:1839 src/main/plot.c:1917
-#: src/main/plot.c:1986 src/main/plot.c:2062 src/main/plot.c:2160
-#: src/main/plot.c:2238 src/main/plot.c:2519 src/main/plot.c:2697
-#: src/main/plot.c:2916 src/main/plot.c:3460 src/main/plot.c:3588
-#: src/main/plot.c:3667 src/main/plot.c:3836 src/main/plot.c:4113
+#: src/main/deparse.c:150 src/main/plot.c:915 src/main/plot.c:1451
+#: src/main/plot.c:1774 src/main/plot.c:1842 src/main/plot.c:1920
+#: src/main/plot.c:1989 src/main/plot.c:2065 src/main/plot.c:2163
+#: src/main/plot.c:2241 src/main/plot.c:2522 src/main/plot.c:2700
+#: src/main/plot.c:2919 src/main/plot.c:3463 src/main/plot.c:3591
+#: src/main/plot.c:3670 src/main/plot.c:3839 src/main/plot.c:4116
 #: src/main/plot3d.c:1344 src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr ""
@@ -4175,11 +4175,15 @@ msgstr ""
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
-#: src/main/mapply.c:61
+#: src/main/mapply.c:45
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+
+#: src/main/mapply.c:62
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr ""
 
-#: src/main/mapply.c:98
+#: src/main/mapply.c:94
 msgid "longer argument not a multiple of length of shorter"
 msgstr ""
 
@@ -5328,250 +5332,250 @@ msgstr ""
 msgid "invalid type for axis labels"
 msgstr ""
 
-#: src/main/plot.c:923
+#: src/main/plot.c:926
 #, c-format
 msgid "invalid axis number %d"
 msgstr ""
 
-#: src/main/plot.c:1013
+#: src/main/plot.c:1016
 msgid "'hadj' must be of length one"
 msgstr ""
 
-#: src/main/plot.c:1020 src/main/plot.c:2572
+#: src/main/plot.c:1023 src/main/plot.c:2575
 msgid "zero length 'padj' specified"
 msgstr ""
 
-#: src/main/plot.c:1089
+#: src/main/plot.c:1092
 msgid "'labels' is supplied and not 'at'"
 msgstr ""
 
-#: src/main/plot.c:1093
+#: src/main/plot.c:1096
 #, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
 msgstr ""
 
-#: src/main/plot.c:1110
+#: src/main/plot.c:1113
 msgid "no locations are finite"
 msgstr ""
 
-#: src/main/plot.c:1464
+#: src/main/plot.c:1467
 msgid "invalid plotting structure"
 msgstr ""
 
-#: src/main/plot.c:1466
+#: src/main/plot.c:1469
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr ""
 
-#: src/main/plot.c:1477
+#: src/main/plot.c:1480
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr ""
 
-#: src/main/plot.c:1481 src/main/plot.c:3182
+#: src/main/plot.c:1484 src/main/plot.c:3185
 msgid "invalid plot type"
 msgstr ""
 
-#: src/main/plot.c:1681
+#: src/main/plot.c:1684
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr ""
 
-#: src/main/plot.c:1741
+#: src/main/plot.c:1744
 msgid "invalid third argument"
 msgstr ""
 
-#: src/main/plot.c:1749
+#: src/main/plot.c:1752
 msgid "invalid fourth argument"
 msgstr ""
 
-#: src/main/plot.c:1757
+#: src/main/plot.c:1760
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr ""
 
-#: src/main/plot.c:1946
+#: src/main/plot.c:1949
 msgid "unable to allocate memory (in GPath)"
 msgstr ""
 
-#: src/main/plot.c:1952
+#: src/main/plot.c:1955
 msgid "invalid x or y (in GPath)"
 msgstr ""
 
-#: src/main/plot.c:2075
+#: src/main/plot.c:2078
 msgid "invalid arrow head length"
 msgstr ""
 
-#: src/main/plot.c:2080
+#: src/main/plot.c:2083
 msgid "invalid arrow head angle"
 msgstr ""
 
-#: src/main/plot.c:2085
+#: src/main/plot.c:2088
 msgid "invalid arrow head specification"
 msgstr ""
 
-#: src/main/plot.c:2250 src/main/plot.c:3324
+#: src/main/plot.c:2253 src/main/plot.c:3327
 msgid "zero length 'labels'"
 msgstr ""
 
-#: src/main/plot.c:2324
+#: src/main/plot.c:2327
 msgid "no coordinates were supplied"
 msgstr ""
 
-#: src/main/plot.c:2530
+#: src/main/plot.c:2533
 msgid "zero length 'text' specified"
 msgstr ""
 
-#: src/main/plot.c:2536
+#: src/main/plot.c:2539
 msgid "zero length 'side' specified"
 msgstr ""
 
-#: src/main/plot.c:2543
+#: src/main/plot.c:2546
 msgid "zero length 'line' specified"
 msgstr ""
 
-#: src/main/plot.c:2551
+#: src/main/plot.c:2554
 msgid "zero length 'outer' specified"
 msgstr ""
 
-#: src/main/plot.c:2558
+#: src/main/plot.c:2561
 msgid "zero length 'at' specified"
 msgstr ""
 
-#: src/main/plot.c:2565
+#: src/main/plot.c:2568
 msgid "zero length 'adj' specified"
 msgstr ""
 
-#: src/main/plot.c:2579
+#: src/main/plot.c:2582
 msgid "zero length 'cex' specified"
 msgstr ""
 
-#: src/main/plot.c:2587
+#: src/main/plot.c:2590
 msgid "zero length 'col' specified"
 msgstr ""
 
-#: src/main/plot.c:2594
+#: src/main/plot.c:2597
 msgid "zero length 'font' specified"
 msgstr ""
 
-#: src/main/plot.c:2957
+#: src/main/plot.c:2960
 msgid "invalid a=, b= specification"
 msgstr ""
 
-#: src/main/plot.c:2966
+#: src/main/plot.c:2969
 msgid "'a' and 'b' must be finite"
 msgstr ""
 
-#: src/main/plot.c:3177
+#: src/main/plot.c:3180
 msgid "invalid number of points in locator()"
 msgstr ""
 
-#: src/main/plot.c:3313
+#: src/main/plot.c:3316
 msgid "invalid number of points in identify()"
 msgstr ""
 
-#: src/main/plot.c:3315
+#: src/main/plot.c:3318
 msgid "incorrect argument type"
 msgstr ""
 
-#: src/main/plot.c:3327
+#: src/main/plot.c:3330
 msgid "different argument lengths"
 msgstr ""
 
-#: src/main/plot.c:3329
+#: src/main/plot.c:3332
 msgid "more 'labels' than points"
 msgstr ""
 
-#: src/main/plot.c:3382
+#: src/main/plot.c:3385
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr ""
 
-#: src/main/plot.c:3388
+#: src/main/plot.c:3391
 msgid "warning: nearest point already identified\n"
 msgstr ""
 
-#: src/main/plot.c:3472
+#: src/main/plot.c:3475
 msgid "invalid units"
 msgstr ""
 
-#: src/main/plot.c:3651 src/main/plot.c:3761
+#: src/main/plot.c:3654 src/main/plot.c:3764
 msgid "invalid dendrogram input"
 msgstr ""
 
-#: src/main/plot.c:3818
+#: src/main/plot.c:3821
 msgid "invalid symbol parameter vector"
 msgstr ""
 
-#: src/main/plot.c:3841
+#: src/main/plot.c:3844
 msgid "invalid symbol coordinates"
 msgstr ""
 
-#: src/main/plot.c:3849
+#: src/main/plot.c:3852
 msgid "x/y/parameter length mismatch"
 msgstr ""
 
-#: src/main/plot.c:3868
+#: src/main/plot.c:3871
 msgid "invalid circles data"
 msgstr ""
 
-#: src/main/plot.c:3870 src/main/plot.c:3889 src/main/plot.c:3913
-#: src/main/plot.c:3942
+#: src/main/plot.c:3873 src/main/plot.c:3892 src/main/plot.c:3916
+#: src/main/plot.c:3945
 msgid "invalid symbol parameter"
 msgstr ""
 
-#: src/main/plot.c:3887
+#: src/main/plot.c:3890
 msgid "invalid squares data"
 msgstr ""
 
-#: src/main/plot.c:3911
+#: src/main/plot.c:3914
 msgid "invalid rectangles data (need 2 columns)"
 msgstr ""
 
-#: src/main/plot.c:3940
+#: src/main/plot.c:3943
 msgid "invalid stars data"
 msgstr ""
 
-#: src/main/plot.c:3981
-msgid "invalid thermometers data (need 3 or 4 columns)"
-msgstr ""
-
 #: src/main/plot.c:3984
-#, c-format
-msgid "invalid thermometers[,%s]"
+msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr ""
 
 #: src/main/plot.c:3987
 #, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+msgid "invalid thermometers[,%s]"
 msgstr ""
 
 #: src/main/plot.c:3990
+#, c-format
+msgid "thermometers[,%s] not in [0,1] -- may look funny"
+msgstr ""
+
+#: src/main/plot.c:3993
 msgid "invalid thermometers[,1:2]"
 msgstr ""
 
-#: src/main/plot.c:4029
+#: src/main/plot.c:4032
 msgid "invalid boxplots data (need 5 columns)"
 msgstr ""
 
-#: src/main/plot.c:4038
+#: src/main/plot.c:4041
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr ""
 
-#: src/main/plot.c:4040
+#: src/main/plot.c:4043
 msgid "invalid boxplots[, 1:4]"
 msgstr ""
 
-#: src/main/plot.c:4086
+#: src/main/plot.c:4089
 msgid "invalid symbol type"
 msgstr ""
 
-#: src/main/plot.c:4126 src/main/plot.c:4128 src/main/plot.c:4133
-#: src/main/plot.c:4135
+#: src/main/plot.c:4129 src/main/plot.c:4131 src/main/plot.c:4136
+#: src/main/plot.c:4138
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr ""
 
-#: src/main/plot.c:4152
+#: src/main/plot.c:4155
 msgid "unable to allocate memory (in do_xspline)"
 msgstr ""
 

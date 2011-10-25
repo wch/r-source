@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-10-13 22:07+0100\n"
-"PO-Revision-Date: 2011-03-25 13:10+0900 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"PO-Revision-Date: 2011-10-22 19:08+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: \n"
 "MIME-Version: 1.0 \n"
@@ -22,7 +22,7 @@ msgstr ""
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
 #, c-format
 msgid "'%s' must be numeric of length %d"
-msgstr ""
+msgstr " '%s'は長さ%dの数値でなければなりません "
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"
@@ -343,9 +343,8 @@ msgid "unable to use encoding '%s'"
 msgstr " エンコーディング '%s' を使うことができません "
 
 #: devPS.c:5544 devPS.c:5547
-#, fuzzy
 msgid "failed to increase 'maxRaster'"
-msgstr " ラスターを割り当てることができませんでした "
+msgstr " 'maxRaster'を増やすことはできませんでした "
 
 #: devPS.c:5559
 msgid "Unable to allocate raster image"
@@ -362,9 +361,8 @@ msgstr ""
 " デバイスエンコーディングの記録に失敗しました；　フォントは追加されません "
 
 #: devPS.c:5875
-#, fuzzy
 msgid "increasing the PDF version to 1.2"
-msgstr " PDF のバージョンを 1.4 に更新 "
+msgstr " PDF のバージョンを 1.2 に更新しています "
 
 #: devPS.c:5900
 msgid "failed to load default encoding"
@@ -404,14 +402,12 @@ msgid "increasing the PDF version to 1.4"
 msgstr " PDF のバージョンを 1.4 に更新 "
 
 #: devPS.c:6321 devPS.c:6368
-#, fuzzy
 msgid "unknown 'colormodel', using 'srgb'"
-msgstr " 未知の 'colormodel', 'rggb' を使います "
+msgstr " 未知の 'colormodel'です。'srgb' を使います "
 
 #: devPS.c:6562
-#, fuzzy
 msgid "Failed to load sRGB colorspace file"
-msgstr " sRGB 色空間のロードに失敗しました "
+msgstr " sRGB 色空間ファイルのロードに失敗しました "
 
 #: devPS.c:6816
 msgid "Corrupt encodings in PDF device"
@@ -591,7 +587,7 @@ msgstr " R グラフィックス "
 
 #: devWindows.c:3057
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr " dev.hold()のあとにロケーターを使おうとしています "
 
 #: devWindows.c:3321
 msgid "option 'windowsTimeouts' should be integer"
@@ -635,9 +631,8 @@ msgid "invalid 'width' or 'height'"
 msgstr " 不正な幅か高さ "
 
 #: devWindows.c:3775
-#, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
-msgstr " Rbitmap.dll　をロードできませんでした "
+msgstr " winCairo.dllをロードできませんでした。ビルドされていますか? "
 
 #: qdBitmap.c:79
 #, c-format

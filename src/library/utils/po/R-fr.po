@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-10-25 07:57\n"
 "PO-Revision-Date: 2011-10-15 15:37+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -81,6 +81,9 @@ msgstr "le chemin vers %s contient des espaces,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
+
+msgid "the output file '%s' has disappeared"
+msgstr ""
 
 msgid "invalid value for %s : %s"
 msgstr "valeur incorrecte pour %s : %s"

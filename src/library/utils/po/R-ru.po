@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-10-25 07:57\n"
 "PO-Revision-Date: 2011-10-18 23:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -84,6 +84,9 @@ msgstr "путь у %s содержит пробелы,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
+
+msgid "the output file '%s' has disappeared"
+msgstr ""
 
 msgid "invalid value for %s : %s"
 msgstr "неправильное значение %s: %s"

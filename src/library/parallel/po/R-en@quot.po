@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:12\n"
-"PO-Revision-Date: 2011-10-13 22:12\n"
+"POT-Creation-Date: 2011-10-25 07:56\n"
+"PO-Revision-Date: 2011-10-25 07:56\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -40,6 +40,9 @@ msgstr "invalid value of ‘seed’"
 msgid "need at least one argument"
 msgstr "need at least one argument"
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "Zero-length inputs cannot be mixed with those of non-zero length"
+
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) must have a positive length"
 
@@ -48,6 +51,9 @@ msgstr "‘X’ must have named dimnames"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "not all elements of ‘MARGIN’ are names of dimensions"
+
+msgid "no cluster supplied and none is registered"
+msgstr "no cluster supplied and none is registered"
 
 msgid "not a valid cluster"
 msgstr "not a valid cluster"

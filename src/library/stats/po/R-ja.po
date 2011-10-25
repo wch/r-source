@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-10-12 18:02\n"
-"PO-Revision-Date: 2011-03-28 15:10+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2011-10-22 19:04+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: \n"
 "MIME-Version: 1.0 \n"
@@ -40,7 +40,7 @@ msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
 
 msgid "optimization failure"
-msgstr ""
+msgstr " 最適化の失敗 "
 
 msgid "time series has no or less than 2 periods"
 msgstr " 時系列の期間が無いか、2未満です "
@@ -538,9 +538,8 @@ msgstr " 対比を定義するために十分な自由度ではありません "
 msgid "baseline group number out of range"
 msgstr " ベースラインのグループ数が範囲を越えています "
 
-#, fuzzy
 msgid "invalid 'use' argument"
-msgstr " 無効な 'method' 引数です "
+msgstr " 無効な 'use' 引数です "
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr " 'x' to 'y' の両方を与えるか、行列形の 'x' を与えてください "
@@ -605,11 +604,8 @@ msgstr " 無効な'tree'(merge 成分)です "
 msgid "either 'k' or 'h' must be specified"
 msgstr " 'k' か 'h' が指定されなければなりません "
 
-#, fuzzy
 msgid "the 'height' component of 'tree' is not sorted (increasingly)"
-msgstr ""
-" 'tree' の 'height' 成分は昇順にソートされていません。 \n"
-" 最初に as.hclust() を適用することを考慮してください "
+msgstr " 'tree' の 'height' 成分は昇順にソートされていません。 "
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr " 'k' の要素は 1 と %d の間になければなりません "
@@ -1245,19 +1241,17 @@ msgstr " 'x' データの数が十分ではありません "
 msgid "not enough 'y' data"
 msgstr " 'y' データの数が十分ではありません "
 
-#, fuzzy
 msgid "cannot compute exact p-values with ties"
 msgstr " タイがあるため、正確な p 値を計算することができません "
 
 msgid "p-values will be approximate in the presence of ties"
-msgstr ""
+msgstr " タイがあるため、p値は近似値になります "
 
-#, fuzzy
 msgid "'y' must be numeric or a function or a string naming a valid function"
-msgstr " 'y' は数値または有効な関数の名前である文字列でなければなりません "
+msgstr " 'y' は数値、関数、または有効な関数名の文字列でなければなりません "
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
-msgstr ""
+msgstr " コルモゴロフ・スミノフ検定において、タイは現れるべきではありません "
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1397,17 +1391,14 @@ msgstr " 唯一つの数値予測子を持つ予測子の平方は捨て去る�
 msgid "specified parametric for all predictors"
 msgstr " すべての予測子がパラメトリックと指定されました "
 
-#, fuzzy
 msgid "invalid argument 'span'"
-msgstr " 無効な引数 'n' です "
+msgstr " 無効な引数 'span' です "
 
-#, fuzzy
 msgid "invalid argument 'cell'"
-msgstr " 無効な引数 'c' です "
+msgstr " 無効な引数 'cell' です "
 
-#, fuzzy
 msgid "invalid argument 'degree'"
-msgstr " 無効な引数 'r' です "
+msgstr " 無効な引数 'degree' です "
 
 msgid "first argument must be a \"loess\" object"
 msgstr " 最初の引数は \"loess\" オブジェクトでなければなりません "
@@ -1696,7 +1687,6 @@ msgstr " 初期値が与えられていません "
 msgid "No starting values specified for some parameters."
 msgstr " いくつかのパラメータに対する初期値が与えられていません "
 
-#, fuzzy
 msgid "Initializing"
 msgstr " 初期化中 "
 
@@ -1748,9 +1738,8 @@ msgstr " 両側モデル式が必要です "
 msgid "not enough groups"
 msgstr " 十分なグループがありません "
 
-#, fuzzy
 msgid "bounds can only be used with method L-BFGS-B (or Brent)"
-msgstr " bounds は L-BFGS-B 法でしか使用することができません "
+msgstr " bounds は L-BFGS-B 法（またはBrent法）でしか使用することができません "
 
 msgid "unknown names in control:"
 msgstr " controlの中に未知の名前 "
@@ -1767,21 +1756,17 @@ msgstr ""
 " L-BFGS-B 法は、'reltol' そして 'abstol' の代わりに 'factr'(と 'pgtol')を使用"
 "します "
 
-#, fuzzy
 msgid "one-diml optimization by Nelder-Mead is unreliable:"
-msgstr ""
-" Nelder-Mead 法による一次元最適化は信頼できません: optimize を使用してくださ"
-"い "
+msgstr " Nelder-Mead 法による一次元最適化は信頼できません: "
 
 msgid "use \"Brent\" or optimize() directly"
-msgstr ""
+msgstr "Brent法を用いるか、optimize()を直接使ってください。 "
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
-msgstr ""
+msgstr " method = \"Brent\"は一次元最適化でのみ使えます。 "
 
-#, fuzzy
 msgid "'lower' and 'upper' must be finite values"
-msgstr " 'k' と 'h' はスカラーでなければなりません "
+msgstr " 'lower'と'upper'は有限の値でなければなりません "
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "SDのプールは対応ありの検定では使えません "
@@ -2055,9 +2040,8 @@ msgstr "  誤った端点規則です "
 msgid "invalid 'control.spar'"
 msgstr " 無効な 'control.spar' です "
 
-#, fuzzy
 msgid "missing or infinite values in inputs are not allowed"
-msgstr " 欠損もしくは負の重みは許されません "
+msgstr " 入力中に欠損値、無限の値は許されません "
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr " 'x' と 'w' の長さは一致しなければなりません "

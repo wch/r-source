@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-10-25 07:57\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -74,6 +74,9 @@ msgid "path to %s contains spaces,"
 msgstr ""
 
 msgid "this may cause problems when running LaTeX"
+msgstr ""
+
+msgid "the output file '%s' has disappeared"
 msgstr ""
 
 msgid "invalid value for %s : %s"

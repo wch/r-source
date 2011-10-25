@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:12\n"
+"POT-Creation-Date: 2011-10-25 07:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,9 @@ msgstr ""
 msgid "need at least one argument"
 msgstr ""
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+
 msgid "dim(X) must have a positive length"
 msgstr ""
 
@@ -24,6 +27,9 @@ msgid "'X' must have named dimnames"
 msgstr ""
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
+
+msgid "no cluster supplied and none is registered"
 msgstr ""
 
 msgid "not a valid cluster"
