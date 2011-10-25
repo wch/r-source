@@ -763,7 +763,7 @@
       \code{NAMESPACE} files.
 
       %% should become defunct not earlier than end of summer 2013!
-      \item It is eprecated to use \code{mean(x)} and \code{sd(x)}
+      \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
       
@@ -945,7 +945,7 @@
       (\PR{8528}, \PR{14710})
       
       \item \code{mapply()} now gives an explicit error message (rather
-      than an obscure one) is inputs of zero and positive length are mixed.
+      than an obscure one) if inputs of zero and positive length are mixed.
     }
   }
 }
