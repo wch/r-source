@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-09-05 08:24\n"
-"PO-Revision-Date: 2011-03-25 15:11+0900 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"PO-Revision-Date: 2011-10-22 19:11+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: \n"
 "MIME-Version: 1.0 \n"
@@ -152,9 +152,8 @@ msgstr " '%s' 中に不正なオプションがあります  "
 msgid "NOT changing"
 msgstr " 変更しません "
 
-#, fuzzy
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr " 上位互換のための引数 'append' は無視されます "
+msgstr " 引数 'append' は下位互換のためのもので、今後は無視されます "
 
 msgid "unknown family '%s'"
 msgstr " フォントファミリー'%s'は未知です "
@@ -166,7 +165,7 @@ msgid "invalid 'file'"
 msgstr " 不正な 'file' です "
 
 msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr ""
+msgstr " 'maxRasters'はもう不要です。今後は無視されます。 "
 
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
@@ -323,9 +322,11 @@ msgstr " quartzFonts 中の不正な引数です（名前がついた引数が�
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr ""
+" このビルドではcarioベースのデバイスはサポートされていません。Xlibを使いま"
+"す。 "
 
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr ""
+msgstr "X11(type = \"XLib\")に対して、未知のファミリーです "
 
 msgid "invalid X11 font specification:"
 msgstr " 不正な X11 フォントの指定方法です "

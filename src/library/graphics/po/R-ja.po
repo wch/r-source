@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-07-16 22:46\n"
-"PO-Revision-Date: 2011-03-25 11:51+0900 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"PO-Revision-Date: 2011-10-22 08:06+0900 \n"
+"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: \n"
 "MIME-Version: 1.0 \n"
@@ -132,18 +132,17 @@ msgstr " 行数 * 列数が小さすぎます "
 msgid "Missing rows"
 msgstr " 行が欠けています "
 
-#, fuzzy
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
-msgstr " 'expr' は 'x' を含む関数、呼び出しまたは表現式でなければなりません "
+msgstr " 'expr' は '%s' を含む関数、呼び出しまたは表現式でなければなりません "
 
 msgid "'add' will be ignored as there is no existing plot"
-msgstr ""
+msgstr " 既存のプロットがないので、'add' は無視されます "
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr " log=\"x\" ならば 'from' と 'to' は正値でなければなりません "
 
 msgid "'expr' did not evaluate to an object of length 'n'"
-msgstr ""
+msgstr " 'expr' は長さ'n'のオブジェクトを評価しませんでした "
 
 msgid "wrong method"
 msgstr " 間違ったメソッドです "
@@ -154,9 +153,8 @@ msgstr " hist.POSIXt メソッドでは 'breaks' を指定しなければなり�
 msgid "invalid specification of 'breaks'"
 msgstr " 'breaks' の指定が無効です "
 
-#, fuzzy
 msgid "Must specify 'breaks' in hist(<Date>)"
-msgstr " hist.POSIXt メソッドでは 'breaks' を指定しなければなりません "
+msgstr " hist(<Date>) メソッドでは 'breaks' を指定しなければなりません "
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr " 'x' は数値ベクトル又は行列でなければなりません "
@@ -314,7 +312,7 @@ msgid "the 'panel' function made a new plot"
 msgstr " 'panel' 関数は新規のプロットを行いました "
 
 msgid "surface extends beyond the box"
-msgstr ""
+msgstr " サーフェイスがボックスを越えて拡大しています "
 
 msgid "'x' values must be positive."
 msgstr " 'x' の値は正でなければなりません "
