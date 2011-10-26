@@ -100,6 +100,13 @@ QPDF=
 # home of 32-bit files for combined installer on 64-bit build
 HOME32=
 
+# Full paths of extra DLLs that need to be shipped
+# e.g
+# DLLs32 = c:/R/W32/gcc-4.6.2/bin/libwinpthread-1.dll
+# DLLs64 = c:/R/W64/gcc-4.6.2/bin/libwinpthread-1.dll
+DLLs32 =
+DLLs64 =
+
 ## ====== configuration macros for building MSI installer ===========
 
 # location where WiX 3.x executables were installed. Spaces allowed.

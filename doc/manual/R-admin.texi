@@ -4886,7 +4886,9 @@ when building external software.
 @subsection Upcoming toolchains
 
 The intention is that the released version of @R{} 2.15.0 will be built
-with an updated toolchain which has support for OpenMP.
+with an updated toolchain which has support for OpenMP.  A candidate
+version can be downloaded from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}
 
 Currently experiments are using the (modified) toolchains from the
 Mingw-w64 project for both 32- and 64-bit builds, using release 2.0 of
@@ -4901,9 +4903,12 @@ set the make variable @env{BINPREF} appropriately in the file
 BINPREF64 = c:/R/W64/gcc-4.6.2/bin/
 @end example
 
-It is very likely that external software libraries will need to be
+It is likely that external software libraries will need to be
 re-compiled under the new toolchain: especially those providing a C++
 interface.
+
+The DLL supporting OpenMP needs to be shipped in the installer: see the
+macros @samp{DLLs32} and @samp{DLLs64} in file @file{MkRules.dist}.
 
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset
