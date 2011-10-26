@@ -75,6 +75,10 @@
       \item \code{str(x, width)} now \dQuote{obeys} its \code{width}
       argument also for function headers
       and other objects \code{x} where \code{deparse()} is applied.
+      
+      \item \code{summary.mlm()} did not handle objects where the
+      formula had been specified by an expression.  (Reported by
+      Helios de Rosario Martinez).
     }
   }
 }
