@@ -451,6 +451,7 @@
         run_shlib <- function(pkg_name, srcs, instdir, arch)
         {
             args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
+            if (WINDOWS && debug) args <- c(args, "--debug")
             if (debug) message("about to run ",
                                "R CMD SHLIB ", paste(args, collapse= " "),
                                domain = NA)
