@@ -99,7 +99,7 @@ csphd(c("blue", "green", "yellow", "orange"))
 csphd(hcl(h = c(30, 120, 210, 300)))
 
 # Same, but lighter and less colorful
-# Turn of automatic correction to make sure
+# Turn off automatic correction to make sure
 # that we have defined real colors.
 csphd(hcl(h = c(30, 120, 210, 300),
           c = 20, l = 90, fixup = FALSE))
