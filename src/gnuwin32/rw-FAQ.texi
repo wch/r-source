@@ -1678,20 +1678,10 @@ make DEBUG=T
 @end example
 
 @noindent
-and make a debug version of your package by either
+and make a debug version of your package by
 
 @example
-make pkgclean-mypkg
-make DEBUG=T pkg-mypkg
-@end example
-
-@noindent
-or
-
-@example
-Rcmd install -c mypkg
-set DEBUG=T
-Rcmd install mypkg
+Rcmd INSTALL --debug mypkg
 @end example
 
 @noindent
