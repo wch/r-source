@@ -39,6 +39,9 @@
       mitigate against \code{assert} being called in production use.
       Developers can turn this off during package development with
       \code{PKG_CPPFLAGS = -UNDEBUG}.
+      
+      \item Package start-up code attempting to change locked bindings
+      in standard packages is now a error, not a warning.
     }
   }
 
