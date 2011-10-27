@@ -1198,8 +1198,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             out <- grep("Warning: changing locked binding", out,
                         invert = TRUE, value = TRUE, fixed = TRUE)
             if (length(out)) {
-                bad <- grep("^Warning:", out)
-                if (length(bad)) warnLog() else noteLog(Log)
+                warnLog()
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }

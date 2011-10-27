@@ -42,6 +42,15 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+       \item \command{R CMD check} now gives a warning rather than a note
+       if it finds inefficiently compressed datasets.   With bzip2 and
+       xz compression having been available since 2.10.0, there is no
+       excuse for not using them.
+     }
+   }
+
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
