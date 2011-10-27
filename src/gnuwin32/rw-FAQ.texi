@@ -118,6 +118,7 @@ The information here applies only to recent versions of R for Windows,
 * Can I use R on 64-bit Windows?::  
 * Should I run 32-bit or 64-bit R?::  
 * Can both 32- and 64-bit R be installed on the same machine?::  
+* Rcmd is not found in my PATH!::  
 @end menu
 
 
@@ -316,18 +317,20 @@ running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
-@option{--max-mem-size} (@pxref{How do I install R for Windows?}) and R
-defaults to the smaller of the amount of physical RAM in the machine and
-0.5GB less than the limit on user virtual memory for a process (most
-often 2GB on a 32-bit build).
+@option{--max-mem-size} (@pxref{How do I install R for Windows?}). For a
+64-bit build of R it defaults to the amount of RAM.
+
+For a 32-bit build of R it defaults to the smaller of the amount of
+physical RAM in the machine and 0.5GB less than the limit on user
+virtual memory for a process (most often 2GB when using a 32-bit edition
+of Windows).
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised (if possible) by calling
 @code{memory.limit} within a running R session.
 
-The 32-bit executables @file{Rgui.exe} and @file{Rterm.exe} support up
-to 3GB of user address space per process under suitably enabled versions
-of 32-bit Windows (see
+The 32-bit executables support up to 3GB of user address space per
+process under suitably enabled versions of 32-bit Windows (see
 @uref{http://www.microsoft.com/@/whdc/@/system/@/platform/@/server/@/PAE/@/PAEmem.mspx},
 @uref{http://msdn.microsoft.com/@/en-us/@/library/@/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
@@ -336,7 +339,6 @@ all but the earliest 64-bit versions of Windows the user address space
 for a 32-bit process is 4GB, and there the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
 
-For a 64-bit build, the default is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
@@ -462,11 +464,11 @@ See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
-is system specific: under Windows 2000/XP/Server 2003 you can use
-`System' in the control panel or the properties of `My Computer' (under
-the `Advanced' tab).  Under Vista/7, go to `User Accounts' in the
-Control Panel, and select your account and then `Change my environment
-variables'.
+is system specific: under Windows XP/Server 2003 you can use `System' in
+the control panel or the properties of `My Computer' (under the
+`Advanced' tab).  Under Vista/7/Server 2008, go to `User Accounts' in
+the Control Panel, and select your account and then `Change my
+environment variables'.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
@@ -632,10 +634,10 @@ percentage of the apparent total number of CPUs.  We say `apparent' as
 it treats so-called `hyper-threaded' CPUs such as many Pentium 4s as two
 CPUs even though there is only one physical CPU.
 
-Hyper-threading has been re-introduced for Intel i3/i5/i7 CPUs and some
-Xeons: these will usually be reported as 4 or more CPUs and so R will be
-shown as using 25% or less.  You can see how many `CPU's are assumed by
-looking at the number of graphs of `CPU Usage History' on the
+Hyper-threading has been re-introduced for some Intel i3/i5/i7, Atom and
+Xeon CPUs: these will usually be reported as 4 or more CPUs and so R
+will be shown as using 25% or less.  You can see how many `CPU's are
+assumed by looking at the number of graphs of `CPU Usage History' on the
 `Performance' tab of the Windows Task manager.
 
 
@@ -856,7 +858,7 @@ installed 64-bit Microsoft Office you can only install the 64-bit
 drivers and so need to use 64-bit @code{RODBC} and hence R.  (And
 similarly for 32-bit Microsoft Office.)
 
-@node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
+@node Can both 32- and 64-bit R be installed on the same machine?, Rcmd is not found in my PATH!, Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
 
 Obviously, only relevant if the machine is running a 64-bit version of
@@ -871,6 +873,57 @@ installation of both, will use 64-bit R.  To change the association the
 safest way is to edit the Registry entry
 @samp{HKEY_CLASSES_ROOT\RWorkspace\shell\open\command}
 and replace @samp{i386} by @samp{x64} or @emph{vice versa}.
+
+
+@node Rcmd is not found in my PATH!,  , Can both 32- and 64-bit R be installed on the same machine?, Installation and Usage
+@section Rcmd is not found in my PATH!
+
+This has often been reported after an upgrade.
+
+The R installer does not put @command{Rcmd.exe} (nor any other R
+executable) on your @env{PATH}.  What seems to have happened is that
+people did this for themselves in the past, upgraded R (which by default
+will install to a different location) and un-installed the old version
+of R.  If you do that (or install R for the first time), you need to
+edit the @env{PATH}.
+
+In recent versions of R (it was different before 2.12.0) the element you
+want to add to the path is something like
+
+@example
+c:\Program Files\R\R-2.14.0\bin\i386
+@end example
+
+@noindent
+for 32-bit @command{Rcmd.exe}, replacing @code{i386} by @code{x64} for
+64-bit.
+
+How you set the path depends on your OS version.  On Windows XP/Server
+2003 you can use `System' in the control panel or the properties of `My
+Computer' (under the `Advanced' tab).  Under Vista/7/Server 2008, go to
+`User Accounts' in the Control Panel, and select your account and then
+`Change my environment variables'.  (System policies can prevent end
+users making changes.)
+
+An alternative is to set the @env{PATH} in the shell you are running
+(@command{Rcmd.exe} is  a command-line program).  For those using the
+standard Windows `Command Prompt' Duncan Murdoch suggested:
+@c https://stat.ethz.ch/pipermail/r-help/2011-October/293413.html
+
+The simple way to do it just for the command prompt is to write a little 
+batch file @command{setpath.bat} containing
+
+@example
+set PATH=newstuff;%PATH%
+@end example
+
+@noindent
+and then run @command{cmd} with
+
+@example
+CMD /K setpath.bat
+@end example
+
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
