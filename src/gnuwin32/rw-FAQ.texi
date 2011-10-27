@@ -1121,30 +1121,30 @@ handles internationalization slightly odd.
 
 Yes, but you will need a lot of tools to do so, unless the author or the
 maintainers of the @file{bin/windows/contrib} section on CRAN have been
-kind enough to provide a pre-compiled version for Windows as a
+kind enough to provide a binary version for Windows as a
 @code{.zip} file, or the package is a simple one involving no compiled
-code (and pre-compiled versions are usually available for simple
+code (and binary versions are usually available for simple
 packages).
 
-You can install pre-compiled packages either from a repository such as
+You can install binary packages either from a repository such as
 CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (2.x) version will be stored in a separate area,
 so for R 2.13.? the files are in @file{bin/windows/contrib/2.13}.
 
-Note that the pre-compiled versions on CRAN are unsupported: see
+Note that the binary versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.13/@/ReadMe},
-which also gives the locations of a few other pre-compiled packages.
+which also gives the locations of a few other binary packages.
 
-If there is not a pre-compiled version or that is not up-to-date or you
-prefer compiling from source, read the `R Installation and
-Administration' manual section on `Add-on Packages'.  Source packages
-which contain no C/C++/Fortran code which needs compilation can simply
-be installed by @code{install.packages(type = "source")} or @command{R
-CMD INSTALL pkgname} at a Windows command prompt.  For packages with
-code that needs compilation you will need to collect and install several
-tools: you can download them via the portal at
+If there is no binary package or that is not up-to-date or you prefer
+compiling from source, read the `R Installation and Administration'
+manual section on `Add-on Packages'.  Source packages which contain no
+C/C++/Fortran code which needs compilation can simply be installed by
+@code{install.packages(type = "source")} or @command{R CMD INSTALL
+pkgname} at a Windows command prompt.  For packages with code that needs
+compilation you will need to collect and install several tools: you can
+download them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
 so, just run @command{R CMD INSTALL pkgname} at a Windows command
 prompt.  To check the package (including running all the examples on its
