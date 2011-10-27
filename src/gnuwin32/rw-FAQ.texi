@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.14.0} or later).
+(@samp{2.14.0} or later).  It is biased towards users of 64-bit Windows.
 
 
 @newchap{}
@@ -153,9 +153,10 @@ mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A typical 32- or
-64-bit installation takes 55Mb of disk space, of both about 70Mb, a
-full installation about 90Mb and a minimal 32-bit one about 33Mb.
+except perhaps for some network-mounted systems).  A typical
+installation for one architecture takes 55Mb of disk space, for both
+about 70Mb, a full installation about 90Mb and a minimal 32-bit one
+about 33Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -317,18 +318,20 @@ running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
-@option{--max-mem-size} (@pxref{How do I install R for Windows?}) and R
-defaults to the smaller of the amount of physical RAM in the machine and
-0.5GB less than the limit on user virtual memory for a process (most
-often 2GB on a 32-bit build).
+@option{--max-mem-size} (@pxref{How do I install R for Windows?}). For a
+64-bit build of R it defaults to the amount of RAM.
+
+For a 32-bit build of R it defaults to the smaller of the amount of
+physical RAM in the machine and 0.5GB less than the limit on user
+virtual memory for a process (most often 2GB when using a 32-bit edition
+of Windows).
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised (if possible) by calling
 @code{memory.limit} within a running R session.
 
-The 32-bit executables @file{Rgui.exe} and @file{Rterm.exe} support up
-to 3GB of user address space per process under suitably enabled versions
-of 32-bit Windows (see
+The 32-bit executables support up to 3GB of user address space per
+process under suitably enabled versions of 32-bit Windows (see
 @uref{http://www.microsoft.com/@/whdc/@/system/@/platform/@/server/@/PAE/@/PAEmem.mspx},
 @uref{http://msdn.microsoft.com/@/en-us/@/library/@/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
@@ -337,7 +340,6 @@ all but the earliest 64-bit versions of Windows the user address space
 for a 32-bit process is 4GB, and there the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
 
-For a 64-bit build, the default is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
@@ -389,7 +391,7 @@ You can also set up a batch file using @command{Rterm.exe}.  A sample
 batch file might contain (as one line)
 
 @example
-path_to_R\bin\i386\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
+path_to_R\bin\x64\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
 
 @noindent
@@ -442,7 +444,7 @@ On the command line as name=value pairs.  For example in the shortcut to
 @command{Rgui} you could have
 
 @example
-"path_to_R\bin\i386\Rgui.exe" HOME=p:/ R_LIBS=p:/myRlib
+"path_to_R\bin\x64\Rgui.exe" HOME=p:/ R_LIBS=p:/myRlib
 @end example
 
 @item
@@ -564,9 +566,9 @@ versions of an example (a real one, but from a machine that is only
 available locally) of a command-line in a short cut:
 
 @example
-"path_to_R\bin\i386\Rgui.exe" http_proxy=http://user:pass@@gannet:80/
+"path_to_R\bin\x64\Rgui.exe" http_proxy=http://user:pass@@gannet:80/
 
-"path_to_R\bin\i386\Rgui.exe" http_proxy=http://gannet/ http_proxy_user=ask
+"path_to_R\bin\x64\Rgui.exe" http_proxy=http://gannet/ http_proxy_user=ask
 @end example
 
 @noindent
@@ -818,8 +820,8 @@ process is 4GB (rather than 2GB or perhaps 3GB).
 When R is installed on 64-bit Windows there is the option of installing
 32- and/or 64-bit builds: the default is to install both.  The 64-bit
 build has 'x64' suffixed to its name on the Start menu and desktop
-shortcuts.  If you are using the 64-bit build, replace @samp{i386} by
-@samp{x64} in the examples in this FAQ.
+shortcuts.  If you are using the 32-bit build, replace @samp{x64} by
+@samp{i386} in the examples in this FAQ.
 
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
@@ -871,7 +873,7 @@ installation for which this option is selected, and if that was for an
 installation of both, will use 64-bit R.  To change the association the
 safest way is to edit the Registry entry
 @samp{HKEY_CLASSES_ROOT\RWorkspace\shell\open\command}
-and replace @samp{i386} by @samp{x64} or @emph{vice versa}.
+and replace @samp{x64} by @samp{i386} or @emph{vice versa}.
 
 
 @node Rcmd is not found in my PATH!,  , Can both 32- and 64-bit R be installed on the same machine?, Installation and Usage
@@ -890,12 +892,12 @@ In recent versions of R (it was different before 2.12.0) the element you
 want to add to the path is something like
 
 @example
-c:\Program Files\R\R-2.14.0\bin\i386
+c:\Program Files\R\R-2.14.0\bin\x64
 @end example
 
 @noindent
-for 32-bit @command{Rcmd.exe}, replacing @code{i386} by @code{x64} for
-64-bit.
+for 64-bit @command{Rcmd.exe}, replacing @code{x64} by @code{i386} for
+32-bit.
 
 How you set the path depends on your OS version.  On Windows XP/Server
 2003 you can use `System' in the control panel or the properties of `My
@@ -1670,7 +1672,7 @@ often an important part of R computations, and more typical calculations
 on small matrices may run slower.
 
 BLAS support is supplied by the single DLL
-@file{R_HOME\bin\i386\Rblas.dll}, and you can add a fast BLAS just by
+@file{R_HOME\bin\x64\Rblas.dll}, and you can add a fast BLAS just by
 replacing that.  Replacements for 32-bit R and some of the older common
 chips are available on CRAN in directory
 @file{bin/windows/contrib/ATLAS}.  See the R Installation and
@@ -1700,12 +1702,12 @@ see the @emph{`Writing R Extensions'} manual.  In any event you should
 get and install the tools and toolchain mentioned in the `R Installation
 and Administration' manual.  Then you can use
 @example
-...\bin\i386\R CMD SHLIB foo.c bar.f
+...\bin\x64\R CMD SHLIB foo.c bar.f
 @end example
 @noindent
-to make @file{foo.dll}.  Use @command{...\bin\i386\R CMD SHLIB --help} for
-further options, or see @code{?SHLIB}.  (Replace @code{i386} by
-@code{x64} for 64-bit R.)
+to make @file{foo.dll}.  Use @command{...\bin\x64\R CMD SHLIB --help} for
+further options, or see @code{?SHLIB}.  (Replace @code{x64} by
+@code{i386} for 64-bit R.)
 
 If you want to use Visual C++, Borland C++ or other compilers, see the
 appropriate section in @file{README.packages}.
@@ -1741,11 +1743,11 @@ You will need a suitable version of @command{gdb} which matches your
 compiler.  Then you can debug by
 
 @example
-gdb /path/to/@RWVER@/bin/i386/Rgui.exe
+gdb /path/to/@RWVER@/bin/x64/Rgui.exe
 @end example
 
 @noindent
-However, note
+(or use @command{Rterm.exe}.)  However, note
 
 @itemize @bullet
 @item
@@ -1780,9 +1782,9 @@ package @code{stats} might be
 @end example
 
 @noindent
-Alternatively, in Rgui you can use the `Misc|Break to debugger' menu item
-after your DLL is loaded.  The C function call @code{breaktodebugger()}
-will do the same thing.
+Alternatively, in @command{Rgui} you can use the `Misc|Break to
+debugger' menu item after your DLL is loaded.  The C function call
+@code{breaktodebugger()} will do the same thing.
 
 @item
 Fortran symbols need an underline appended.
@@ -1821,7 +1823,7 @@ as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 (@command{gcc})
 
 @example
-...\bin\i386\R CMD SHLIB X.cc X_main.cc
+...\bin\x64\R CMD SHLIB X.cc X_main.cc
 @end example
 
 @noindent
