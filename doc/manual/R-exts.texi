@@ -2443,7 +2443,7 @@ POSIX-compliant @command{du} program is found on the system: it is
 possible that some other @command{du} programs will incorrectly report
 double the actual size.  This can be disabled by setting
 @env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
-more than 5Mb, detailing directories of more than 1Mb.  It note
+more than 5Mb, detailing directories of more than 1Mb.  It notes
 inefficient compression of data: @command{R CMD build --resave-data}
 will compact data as best it can.  Watch out for unnecessary files in
 @file{inst/doc}.  As a general rule, @file{doc} directories should not
