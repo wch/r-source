@@ -31,8 +31,9 @@
       There are new load-balancing versions \code{parLapplyLB} and
       \code{parSapplyLB}.
       
-      \item Locked bindings in standard packages now have anti-pick
-      protection, and attempts to change them give an error.
+      \item \code{assignInNamepspace()} has further restrictions on use
+      apart from at top-level, as its help page has warned.
+      Expect it to be disabled from programmatic use in the future.
     }
   }
   
@@ -84,12 +85,12 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
-      selected, rather than returning a 1-column data frame contrary to
-      its documentation.
+      selected, rather than returning a 1-column data frame (contrary to
+      its documentation).
 
       \item \code{str(x, width)} now \dQuote{obeys} its \code{width}
-      argument also for function headers
-      and other objects \code{x} where \code{deparse()} is applied.
+      argument also for function headers and other objects \code{x}
+      where \code{deparse()} is applied.
       
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by

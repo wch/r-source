@@ -246,6 +246,7 @@ getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
 assignInNamespace <-
     function(x, value, ns, pos = -1, envir = as.environment(pos))
 {
+    nf <- sys.nframe()
     if(missing(ns)) {
         nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1L, 8L) != "package:")
@@ -253,11 +254,10 @@ assignInNamespace <-
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
     allowed <- c("%x%", "cbind", "rbind", "..Old.._x_", ".M.classEnv")
-    if (! x %in% allowed &&
-        getNamespaceName(ns) %in% tools:::.get_standard_package_names()$base) {
-        stop("locked binding of ", sQuote(x), " cannot be changed",
-             domain = NA)
-        return(invisible(NULL))
+    if (! x %in% allowed && nf > 1L) {
+        if(getNamespaceName(ns) %in% tools:::.get_standard_package_names()$base)
+            stop("locked binding of ", sQuote(x), " cannot be changed",
+                 domain = NA)
     }
     if(bindingIsLocked(x, ns)) {
         in_load <- Sys.getenv("_R_NS_LOAD_")
