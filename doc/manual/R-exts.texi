@@ -2396,6 +2396,10 @@ this @emph{via} personal @file{Makevars} files.
  R-admin,  R Installation and Administration},
 @end ifset
 
+@code{R CMD check} checks for LF line endings on makefiles and sources
+in directory @file{src}, but not in any subdirectories, so please check
+the latter yourself.
+
 Note that it is particularly important to use @option{-Wall -pedantic}
 with C++ code: the @acronym{GNU} C++ compiler has many extensions which
 are not supported by other compilers, and this will report @emph{some}
@@ -2439,17 +2443,14 @@ POSIX-compliant @command{du} program is found on the system: it is
 possible that some other @command{du} programs will incorrectly report
 double the actual size.  This can be disabled by setting
 @env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
-more than 5Mb, detailing directories of more than 1Mb.  It warns (by
-default) about inefficient compression of data if environment variable
-@env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}: @command{R CMD
-build --resave-data} will compact data as best it can.  Watch out for
-unnecessary files in @file{inst/doc}: for example @file{Rplots.ps} or
-@file{Rplots.pdf} left over from @code{Sweave} runs.  As a general rule,
-@file{doc} directories should not exceed 5Mb, and where @file{data}
-directories need to be 10Mb or more, consideration should be given to a
-separate package containing just the data.  (Similarly for external data
-directories, large @file{jar} files and other libraries that need to be
-installed.)
+more than 5Mb, detailing directories of more than 1Mb.  It note
+inefficient compression of data: @command{R CMD build --resave-data}
+will compact data as best it can.  Watch out for unnecessary files in
+@file{inst/doc}.  As a general rule, @file{doc} directories should not
+exceed 5Mb, and where @file{data} directories need to be 10Mb or more,
+consideration should be given to a separate package containing just the
+data.  (Similarly for external data directories, large @file{jar} files
+and other libraries that need to be installed.)
 
 There are a several tools available to reduce the size of PDF files,
 including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
