@@ -1284,7 +1284,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(bad_files)) {
             warnLog("Found the following Makefiles with CR or CRLF line endings:")
             printLog(Log, .format_lines_with_indent(bad_files), "\n")
-            printLog(Log, "Some Unix compilers require LF line endings.\n")
+            printLog(Log, "Some Unix 'make' programs require LF line endings.\n")
         } else resultLog(Log, "OK")
 
         ## Check src/Makevars[.in] for portable compilation flags.
