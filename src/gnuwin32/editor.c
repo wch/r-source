@@ -184,6 +184,9 @@ static void editorsaveas(editor c)
 	char name[4*MAX_PATH+1];
 	const char *tname;
 	wcstoutf8(name, wname, MAX_PATH);
+	/* now check if it has an extension */
+	char *q = strchr(name, '.');
+	if(!q) strncat(name, ".R", 4*MAX_PATH);
 	tname = reEnc(name, CE_UTF8, CE_NATIVE, 3);
 	editor_save_file(c, name, CE_UTF8);
 	p->file = 1;

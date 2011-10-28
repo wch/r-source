@@ -4,6 +4,15 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
+\section{CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The \code{Save as} menu item on the script
+      editor appends \file{.R} to a file name without an extension.
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.14.0}{
   \subsection{NEW FEATURES}{
     \itemize{
