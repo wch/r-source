@@ -51,6 +51,9 @@
        if it finds inefficiently compressed datasets.   With bzip2 and
        xz compression having been available since 2.10.0, there is no
        excuse for not using them.
+
+       It now checks line-endings of makefiles and C/C++/Fortran sources
+       in subdirectories of \file{src} as well as in \file{src} itself.
      }
    }
 

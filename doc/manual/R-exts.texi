@@ -1865,9 +1865,9 @@ sections of @file{Rd} files are documented in the corresponding
 @item
 C, C++ and FORTRAN source and header files are tested for portable
 (LF-only) line endings.  If there is a @file{Makefile} or
-@file{Makefile.in} or @file{Makevars} or @file{Makevars.in} file in the
-@file{src} directory, it is checked for portable line endings and the
-correct use of @samp{$(BLAS_LIBS)}.  Compiled code is checked for
+@file{Makefile.in} or @file{Makevars} or @file{Makevars.in} file under
+the @file{src} directory, it is checked for portable line endings and
+the correct use of @samp{$(BLAS_LIBS)}.  Compiled code is checked for
 symbols corresponding to functions which might terminate @R{} or write
 to @file{stdout}/@file{stderr} instead of the console.
 
@@ -2395,10 +2395,6 @@ this @emph{via} personal @file{Makevars} files.
 @xref{Customizing package compilation, , Customizing package compilation,
  R-admin,  R Installation and Administration},
 @end ifset
-
-@code{R CMD check} checks for LF line endings on makefiles and sources
-in directory @file{src}, but not in any subdirectories, so please check
-the latter yourself.
 
 Note that it is particularly important to use @option{-Wall -pedantic}
 with C++ code: the @acronym{GNU} C++ compiler has many extensions which

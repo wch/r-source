@@ -1254,7 +1254,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "line endings in C/C++/Fortran sources/headers")
         ## pattern is "([cfh]|cc|cpp)"
         files <- dir("src", pattern = "\\.([cfh]|cc|cpp)$",
-                     full.names = TRUE)
+                     full.names = TRUE, recursive = TRUE)
         bad_files <- character()
         for(f in files) {
             contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
@@ -1271,8 +1271,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "line endings in Makefiles")
         bad_files <- character()
         ## .win files are not checked, as CR/CRLF work there
-        for(f in c("src/Makevars", "src/Makevars.in",
-                   "src/Makefile", "src/Makefile.in")) {
+        all_files <-
+            dir("src",
+                pattern = "^(Makevars|Makevars.in|Makefile|Makefile.in)$",
+                full.names = TRUE, recursive = TRUE)
+        for(f in all_files) {
             if (!file.exists(f)) next
             contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
