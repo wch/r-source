@@ -20,6 +20,8 @@ time_t is signed, which it is on all sensible platforms.)
 To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
 Copy the current version of tzdataXXXXx.tar.gz to this directory and run
 
-make -f Make.zi VERSION=2011j
+make -f Make.zi VERSION=2011m
 
 for the appropriate version.
+
+[The database is now available from http://www.iana.org/time-zones .]
