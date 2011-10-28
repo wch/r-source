@@ -30,6 +30,9 @@
 
       There are new load-balancing versions \code{parLapplyLB} and
       \code{parSapplyLB}.
+      
+      \item Locked bindings in standard packages now have anti-pick
+      protection, and attempts to change them give an error.
     }
   }
   
@@ -39,9 +42,6 @@
       mitigate against \code{assert} being called in production use.
       Developers can turn this off during package development with
       \code{PKG_CPPFLAGS = -UNDEBUG}.
-      
-      \item Package start-up code attempting to change locked bindings
-      in standard packages is now a error, not a warning.
     }
   }
 

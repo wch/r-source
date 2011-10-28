@@ -252,23 +252,22 @@ assignInNamespace <-
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
-    protected <- c("as.Date.numeric", "sample")
-    if (x %in% protected && getNamespaceName(ns) == "base") {
-        warning("locked binding of ", sQuote(x), " will not be changed",
-                call. = FALSE, domain = NA, immediate. = TRUE)
+    allowed <- c("%x%", "cbind", "rbind", "..Old.._x_", ".M.classEnv")
+    if (! x %in% allowed &&
+        getNamespaceName(ns) %in% tools:::.get_standard_package_names()$base) {
+        stop("locked binding of ", sQuote(x), " cannot be changed",
+             domain = NA)
         return(invisible(NULL))
     }
     if(bindingIsLocked(x, ns)) {
         in_load <- Sys.getenv("_R_NS_LOAD_")
         if (nzchar(in_load)) {
             ns_name <- getNamespaceName(ns)
-            if(!in_load %in% c("Matrix", "SparseM") && in_load != ns_name) {
+            if(in_load != ns_name) {
                 msg <-
                     gettextf("changing locked binding for %s in %s whilst loading %s",
                              sQuote(x), sQuote(ns_name), sQuote(in_load))
-                if(ns_name %in% tools:::.get_standard_package_names()$base)
-                    stop(msg, domain = NA)
-                else
+                if (! in_load %in% c("Matrix", "SparseM"))
                     warning(msg, call. = FALSE, domain = NA, immediate. = TRUE)
             }
         } else if (nzchar(Sys.getenv("_R_WARN_ON_LOCKED_BINDINGS_"))) {
