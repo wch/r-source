@@ -698,15 +698,12 @@
                             ## avoid read-only files/dir such as nested .svn
                             .Internal(dirchmod(ss))
                             setwd(ss)
+
                             ra <- paste0("/", arch)
                             Sys.setenv(R_ARCH = ra, R_ARCH_BIN = ra)
-                            has_error0 <- run_shlib(pkg_name, srcs, instdir, ra)
+                            has_error <- run_shlib(pkg_name, srcs, instdir, ra)
                             setwd(owd)
-                            ## allow archs other than the current one to fail.
-                            if (has_error0 && ra == rarch) {
-                                has_error <- TRUE
-                                break
-                            }
+                            if (has_error) break
                         }
                     }
                 }
@@ -1077,6 +1074,7 @@
             cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
                          sep = "")
             ## R_LIBS was set already.  R_runR is in check.R
+            ## We can use arch = arch
             res <- R_runR(cmd, "--no-save --slave", stdout = "", stderr = "")
             if (res) errmsg("loading failed")
         }
