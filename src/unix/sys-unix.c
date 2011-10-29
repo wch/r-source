@@ -301,6 +301,11 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(rval, j, CAR(tlist));
 	    tlist = CDR(tlist);
 	}
+	if(res) {
+	    setAttrib(rval, install("status"), ScalarInteger(res));
+	    if(errno)
+		setAttrib(rval, install("errmsg"), mkString(strerror(errno)));
+	}
 	UNPROTECT(1);
 	return rval;
     }

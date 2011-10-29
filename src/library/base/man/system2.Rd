@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{system2}
@@ -71,7 +71,9 @@ system2(command, args = character(),
   giving the output of the command, one line per character string.
   (Output lines of more than 8095 bytes will be split.)  If the command
   could not be run an \R error is generated.  If \code{command} runs but
-  gives a non-zero exit status this will be reported with a warning.
+  gives a non-zero exit status this will be reported with a warning and
+  in the attribute \code{"status"} of the result: an attribute
+  \code{"errmsg"} may also be available
 
   In other cases, the return value is an error code (\code{0}
   for success), given the invisible attribute (so needs to be printed

@@ -31,9 +31,12 @@
       There are new load-balancing versions \code{parLapplyLB} and
       \code{parSapplyLB}.
       
-      \item \code{assignInNamepspace()} has further restrictions on use
+      \item \code{assignInNamespace()} has further restrictions on use
       apart from at top-level, as its help page has warned.
       Expect it to be disabled from programmatic use in the future.
+      
+      \item \code{system()} and \code{system2()} when capturing output
+      report a non-zero status in the new \code{"status"} attribute.
     }
   }
   
