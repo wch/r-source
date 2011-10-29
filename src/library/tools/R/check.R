@@ -40,9 +40,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## In principle this should escape \
             Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
-        system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
-                else file.path(R.home("bin"), "Rterm.exe"),
-                c(Ropts, paste("-f", Rin)), stdout, stderr, env = env)
+        suppressWarnings(system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+                                 else file.path(R.home("bin"), "Rterm.exe"),
+                                 c(Ropts, paste("-f", Rin)), stdout, stderr, env = env))
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -1365,6 +1365,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         env <- "R_DEFAULT_PACKAGES=NULL"
         env1 <- if(nzchar(arch)) env0 else character()
         out <- R_runR(Rcmd, opts, env1, arch = arch)
+        if(length(st <- attr(out, "status"))) {
+            errorLog(Log)
+            wrapLog("Loading this package had a fatal error",
+                    "status code ", st,  "\n")
+            if(length(out))
+                printLog(Log, paste(c("Loading log:", out, ""),
+                                    collapse = "\n"))
+            do_exit()
+        }
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1376,7 +1385,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
         out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
-        if (any(grepl("^Error", out))) {
+        if(length(st <- attr(out, "status"))) {
+            stop("error status ", st)
+        }
+        if (any(grepl("^Error", out)) || length(attr(out, "status"))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("\nIt looks like this package",
@@ -1390,7 +1402,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
         out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
-        if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
+        if (any(grepl("^(Error|\\.Last\\.lib failed)", out)) ||
+            length(attr(out, "status"))) {
             warnLog()
             ll <- grep("---- unloading", out)
             if(length(ll)) {
@@ -1406,7 +1419,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             checkingLog(Log, "whether the namespace can be loaded with stated dependencies")
             Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
             out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
-            if (any(grepl("^Error", out))) {
+            if (any(grepl("^Error", out)) || length(attr(out, "status"))) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("\nA namespace must be able to be loaded",
@@ -1425,7 +1438,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             out <- if (is_base_pkg && pkgname != "stats4")
                 R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
             else R_runR(Rcmd, opts, env1)
-            if (any(grepl("^(Error|\\.onUnload failed)", out))) {
+            if (any(grepl("^(Error|\\.onUnload failed)", out)) ||
+                length(attr(out, "status"))) {
                 warnLog()
                 ll <- grep("---- unloading", out)
                 if(length(ll)) {
