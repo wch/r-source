@@ -1073,13 +1073,13 @@
             cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
                          sep = "")
             ## R_LIBS was set already.  R_runR is in check.R
-            if(length(test_archs) > 1L) {
-                for(arch in test_archs) {
+            if (length(test_archs) > 1L) {
+                msgs <- character()
+                for (arch in test_archs) {
                     starsmsg("***", "arch - ", arch)
-                    msgs <- character()
                     res <- R_runR(cmd, "--no-save --slave",
                                   stdout = "", stderr = "", arch = arch)
-                    if(res) msgs <- c(msgs, arch)
+                    if (res) msgs <- c(msgs, arch)
                 }
                 if (length(msgs)) {
                     msg <- paste("loading failed for",
