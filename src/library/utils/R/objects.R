@@ -253,7 +253,7 @@ assignInNamespace <-
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
-    allowed <- c("%x%", "cbind", "rbind", "..Old.._x_", ".M.classEnv")
+    allowed <- c("%x%", "..Old.._x_", ".M.classEnv")
     if (! x %in% allowed && nf > 1L) {
         if(getNamespaceName(ns) %in% tools:::.get_standard_package_names()$base)
             stop("locked binding of ", sQuote(x), " cannot be changed",
