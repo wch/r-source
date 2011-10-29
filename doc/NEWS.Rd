@@ -42,6 +42,10 @@
   
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item \code{R CMD INSTALL} will now do a test load for all
+      sub-architectures for which code was compiled (rather than just
+      the primary sub-architecture).
+      
       \item Code in packages is now compiled with \code{-NDEBUG} to
       mitigate against \code{assert} being called in production use.
       Developers can turn this off during package development with
@@ -51,13 +55,10 @@
 
   \subsection{UTILITIES}{
     \itemize{
-       \item \command{R CMD check} now gives a warning rather than a note
-       if it finds inefficiently compressed datasets.   With bzip2 and
-       xz compression having been available since 2.10.0, there is no
-       excuse for not using them.
-
-       It now checks line-endings of makefiles and C/C++/Fortran sources
-       in subdirectories of \file{src} as well as in \file{src} itself.
+       \item \command{R CMD check} now gives a warning rather than a
+       note if it finds inefficiently compressed datasets.  With
+       \command{bzip2} and \command{xz} compression having been
+       available since \R 2.10.0, there is no excuse for not using them.
      }
    }
 
@@ -94,7 +95,13 @@
       \item \code{str(x, width)} now \dQuote{obeys} its \code{width}
       argument also for function headers and other objects \code{x}
       where \code{deparse()} is applied.
-      
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by
       Helios de Rosario Martinez).
@@ -773,6 +780,10 @@
       \item \command{R CMD check} now uses a \code{pdf()} device when
       checking examples (rather than \code{postscript()}).
 
+      \item \command{R CMD check} now checks line-endings of makefiles
+      and C/C++/Fortran sources in subdirectories of \file{src} as well
+      as in \file{src} itself.
+       
       \item \command{R CMD check} now reports as a NOTE what look like
       methods documented with their full names even if there is a
       namespace and they are exported.  In almost all cases they are
@@ -860,7 +871,7 @@
       \code{NAMESPACE} files.
 
       %% should become defunct not earlier than end of summer 2013!
-      \item It is eprecated to use \code{mean(x)} and \code{sd(x)}
+      \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
       
