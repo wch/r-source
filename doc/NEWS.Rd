@@ -271,7 +271,7 @@
 
       \item There are two new options for typesetting PDF manuals from
       Rd files.  These are \samp{beramono} and \samp{inconsolata}, and
-      used the named font for mononspaced output. They are intended to
+      used the named font for monospaced output. They are intended to
       be used in combination with \samp{times}, and
       \samp{times,inconsolata,hyper} is now the default for the
       reference manual and package manuals.  If you do not have that
