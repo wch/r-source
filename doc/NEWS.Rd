@@ -91,6 +91,19 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item On 64-bit Linux systems, \command{configure} now only sets
+      \samp{LIBnn} to \code{lib64} if \file{/usr/lib64} exists.  This
+      may obviate setting \samp{LIBnn} explicitly on Debian-derived
+      systems.
+
+      It is still necessary to set \samp{LIBnn = lib} for 32-bit builds
+      of \R on 64-bit OS on those Linux distributions capable for
+      supporting that concept.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
