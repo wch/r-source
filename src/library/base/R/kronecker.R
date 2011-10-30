@@ -16,6 +16,17 @@
 
 kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 {
+    ## This is principally to allow Matrix/SparseM to set S4 methods
+    ## on %x%, which calls base::kronecker.
+    if (.isMethodsDispatchOn() && (isS4(X) || isS4(Y))) {
+        return(methods::kronecker2(X, Y, FUN = FUN,
+                                   make.dimnames = make.dimnames, ...))
+    }
+    .kronecker(X, Y, FUN = FUN, make.dimnames = make.dimnames, ...)
+}
+
+.kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
+{
     X <- as.array(X)
     Y <- as.array(Y)
     if (make.dimnames) {

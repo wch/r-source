@@ -43,7 +43,7 @@
         .noMlistsFlag <<- (is.character(mopt) && all(mopt != "YES"))
         if(!.noMlistsFlag)
             cat("Initializing with support for old-style methods list objects\n")
-        cat("initializing class and method definitions ...")
+        cat("initializing class and method definitions ...\n")
         on.exit(assign(".saveImage", NA, envir = where))
         ## set up default prototype (uses .Call so has be at load time)
         assign(".defaultPrototype",

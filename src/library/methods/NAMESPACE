@@ -219,6 +219,7 @@ export(.EmptyPrimitiveSkeletons)
 ## to allow "S4-cbind/rbind (./R/cbind-rbind.R)
 export(cbind2)
 export(rbind2)
+export(kronecker)
 
 ## implicit generic functionality
 

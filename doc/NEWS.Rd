@@ -37,6 +37,11 @@
       
       \item \code{system()} and \code{system2()} when capturing output
       report a non-zero status in the new \code{"status"} attribute.
+      
+      \item \code{kronecker()} now has an S4 generic in package
+      \pkg{methods} on which packages can set methods.  It will be
+      invoked by \code{X \%x\% Y} if either \code{X} or \code{Y} is an S4
+      object.
     }
   }
   
