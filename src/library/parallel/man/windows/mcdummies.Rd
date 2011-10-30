@@ -26,7 +26,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \item{v}{vector to operate on}
   \item{FUN}{the function to be applied to each element of \code{X} or \code{v}}
   \item{...}{optional arguments to \code{FUN}}
-  \item{mc.preschedule, mc.set.seed, mc.cleanup, mc.allow.recursive}{
+  \item{mc.preschedule, mc.set.seed, mc.silent, mc.cleanup, mc.allow.recursive}{
     Ignored on Windows.}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
     child processes will be run simultaneously.   Must be exactly 1 on
