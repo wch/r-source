@@ -1,13 +1,11 @@
 #### Regression tests for GRAPHICS & PLOTS
 
-postscript("reg-plot.ps", paper="a4", horizontal=TRUE,
-           encoding ="ISOLatin1.enc")
+pdf("reg-plot.pdf", paper="a4r", encoding ="ISOLatin1.enc", compress = FALSE)
+
 ## since we supply the font metrics, the results depend only on
 ## the encoding used: Windows is different from Unix by default.
-## As from 2.1.0 we only test genuine Latin-1 chars: Adobe has dotlessi
-## and accents at 144:152, 154, 155, 157:159, but Unicode does not.
 
-options(warn = 1)# print them as they occur
+options(warn = 1) # print as they occur
 
 plot(0) # this should remain constant
 str(par(c("usr","xaxp","yaxp")))
