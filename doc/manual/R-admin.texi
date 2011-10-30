@@ -294,7 +294,15 @@ make
 @end example
 
 @noindent
-(See @ref{Using make} if your make is not called @samp{make}.)
+(See @ref{Using make} if your make is not called @samp{make}.)  Users of
+Debian-based 64-bit systems@footnote{which use @file{lib} rather than
+@file{lib64} for their primary 64-bit library directories.} may need
+
+@example
+./configure LIBnn=lib
+make
+@end example
+
 
 Then check the built system works correctly by
 
@@ -3879,6 +3887,12 @@ OBJC=$@{CC@}
 LDFLAGS="-L/usr/local/lib"
 LIBnn=lib
 @end example
+
+@noindent
+Note the use of @samp{LIBnn}: @cputype{x86_64} Fedora installs its
+64-bit software in @file{/usr/lib64} and 32-bit software in
+@file{/usr/lib}.  Linking will skip over inappropriate binaries, but for
+example the 32-bit Tcl/Tk configure scripts are in @file{/usr/lib}.
 
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
