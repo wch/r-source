@@ -36,12 +36,10 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \item{FUN}{the function to be applied to each element of \code{X} or
      \code{v}, or in parallel to \code{...} .}
   \item{f}{the function to be applied in parallel to \code{\dots}.}
-  \item{...}{For \code{mclapply} and \code{pvec},
-    optional arguments to \code{FUN}.
-    For \code{mcmapply} and \code{mcMap}, vector or list inputs: see
-    \code{\link{mapply}}.}
+  \item{...}{For \code{mclapply} and \code{pvec}, optional arguments to
+     \code{FUN}.  For \code{mcmapply} and \code{mcMap}, vector or list
+     inputs: see \code{\link{mapply}}.}
   \item{MoreArgs, SIMPLIFY, USE.NAMES}{see \code{\link{mapply}}.}
-  \item{...}{optional arguments to \code{FUN}}
   \item{mc.preschedule, mc.set.seed, mc.silent, mc.cleanup, mc.allow.recursive}{
     Ignored on Windows.}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
