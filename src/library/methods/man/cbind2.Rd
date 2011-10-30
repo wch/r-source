@@ -36,13 +36,14 @@
   \code{cbind2}, see the examples.
 }
 \usage{
-cbind2(x, y)
-rbind2(x, y)
+cbind2(x, y, ...)
+rbind2(x, y, ...)
 }
 \arguments{
   \item{x}{any \R object, typically matrix-like.}
   \item{y}{any \R object, typically similar to \code{x}, or missing
     completely.}
+  \item{\dots}{optional arguments for methods.}
 }
 \section{Methods}{
   \describe{
