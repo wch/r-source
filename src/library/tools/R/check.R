@@ -40,9 +40,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## In principle this should escape \
             Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
-        suppressWarnings(system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
-                                 else file.path(R.home("bin"), "Rterm.exe"),
-                                 c(Ropts, paste("-f", Rin)), stdout, stderr, env = env))
+        system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+                else file.path(R.home("bin"), "Rterm.exe"),
+                c(Ropts, paste("-f", Rin)), stdout, stderr, env = env)
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),

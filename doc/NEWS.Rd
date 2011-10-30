@@ -5,16 +5,6 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
-  \subsection{BUG FIXES}{
-    \itemize{
-      \item \code{summary.mlm()} did not handle objects where the
-      formula had been specified by an expression.  (Reported by
-      Helios de Rosario Martinez).
-    }
-  }
-}
-
 \section{\Rlogo CHANGES IN R VERSION 2.14.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -686,11 +676,11 @@
       \item \command{R CMD check} now uses a \code{pdf()} device when
       checking examples (rather than \code{postscript()}).
 
-      \item \command{R CMD check} now checks line-endings of makefiles
-      and C/C++/Fortran sources in subdirectories of \file{src} as well
-      as in \file{src} itself.
+       \item \command{R CMD check} now checks line-endings of makefiles
+       and C/C++/Fortran sources in subdirectories of \file{src} as well
+       as in \file{src} itself.
        
-      \item \command{R CMD check} now reports as a NOTE what look like
+       \item \command{R CMD check} now reports as a NOTE what look like
       methods documented with their full names even if there is a
       namespace and they are exported.  In almost all cases they are
       intended to be used only as methods and should use the
