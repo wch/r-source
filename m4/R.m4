@@ -2050,6 +2050,7 @@ AC_EGREP_CPP([yes],
 ## otherwise.
 ## /opt/csw/lib and /usr/sfw/lib are for Solaris (blastwave and sunfreeware
 ## respectively).
+## /opt/freeware/lib is for 'IBM AIX Toolbox for Linux Applications'
 ## We want to look in LIBnn only here.
 AC_DEFUN([_R_PATH_TCL_CONFIG],
 [AC_MSG_CHECKING([for tclConfig.sh in library (sub)directories])
