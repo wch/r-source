@@ -1,6 +1,9 @@
 #ifndef R_CONFIG_H
 #define R_CONFIG_H
 
+/* on Mingw-w64 defines the MING64_ version */
+#include <_mingw.h>
+
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
    */
@@ -458,9 +461,9 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mempcpy' function. */
-/* NB: the 'trunk' MinGW-w64 does have this, and it needs to be defined
-   to use that toolchain */
-/* #undef HAVE_MEMPCPY */
+#if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
+# define HAVE_MEMPCPY 1
+#endif
 
 /* Define to 1 if you have the `mkdtemp' function. */
 /* #undef HAVE_MKDTEMP */

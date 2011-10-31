@@ -120,7 +120,19 @@ cbind <- function(..., deparse.level = 1)
 
 ## To be active, the above cbind() must "replace" cbind() in "base".
 ## This may be called on loading methods, see ./zzz.R
-bind_activation <- function(on = TRUE) {
+bind_activation <- function(on = TRUE)
+{
+    inBase <- function(x, value, ns)
+    {
+        unlockBinding(x, ns)
+        assign(x, value, envir = ns, inherits = FALSE)
+        w <- options("warn")
+        on.exit(options(w))
+        options(warn = -1)
+        lockBinding(x, ns)
+        invisible(NULL)
+    }
+
     ## 'bind' : cbind && rbind
     ## as from 2.4.0 this saving is done in base, so could simplify code
     base.ns <- getNamespace("base")
@@ -128,18 +140,16 @@ bind_activation <- function(on = TRUE) {
     if(was.on <- saved)
         was.on <- !identical(base::cbind, base::.__H__.cbind)
     if(on) {
-        Sys.unsetenv("_R_NS_LOAD_")
         if(!saved) {
-            utils::assignInNamespace(".__H__.cbind", base::cbind, ns = base.ns)
-            utils::assignInNamespace(".__H__.rbind", base::rbind, ns = base.ns)
+            inBase(".__H__.cbind", base::cbind, base.ns)
+            inBase(".__H__.rbind", base::rbind, base.ns)
         }
-	utils::assignInNamespace("cbind", cbind, ns = base.ns)
-	utils::assignInNamespace("rbind", rbind, ns = base.ns)
+	inBase("cbind", cbind, base.ns)
+	inBase("rbind", rbind, base.ns)
     }
     else if(!on && was.on) { ## turn it off
-        Sys.unsetenv("_R_NS_LOAD_")
-        utils::assignInNamespace("cbind", base::.__H__.cbind, ns = base.ns)
-        utils::assignInNamespace("rbind", base::.__H__.rbind, ns = base.ns)
+        inBase("cbind", base::.__H__.cbind, ns = base.ns)
+        inBase("rbind", base::.__H__.rbind, ns = base.ns)
     }
     was.on
 }

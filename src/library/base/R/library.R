@@ -378,7 +378,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if(!inherits(tmp, "try-error"))
                         txt <- tmp
                     else
-                        warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                        warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", call.=FALSE)
                 }
                 nm <- paste0(names(txt), ":")
                 formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3)
@@ -433,7 +433,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         if(!inherits(tmp, "try-error"))
                             txt <- tmp
                         else
-                            warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                            warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", call.=FALSE)
                     }
                     txt["Title"]
                 } else NA

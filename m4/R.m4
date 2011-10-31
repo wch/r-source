@@ -139,7 +139,7 @@ if test -z "${ac_cv_path_PDFTEX}" ; then
 fi
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], )
 if test -z "${ac_cv_path_PDFLATEX}" ; then
-  warn_pdf2="you cannot build PDF versions of all the help pages"
+  warn_pdf2="you cannot build PDF versions of vignettes and help pages"
   AC_MSG_WARN([${warn_pdf2}])
 fi
 AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
@@ -2050,6 +2050,7 @@ AC_EGREP_CPP([yes],
 ## otherwise.
 ## /opt/csw/lib and /usr/sfw/lib are for Solaris (blastwave and sunfreeware
 ## respectively).
+## /opt/freeware/lib is for 'IBM AIX Toolbox for Linux Applications'
 ## We want to look in LIBnn only here.
 AC_DEFUN([_R_PATH_TCL_CONFIG],
 [AC_MSG_CHECKING([for tclConfig.sh in library (sub)directories])

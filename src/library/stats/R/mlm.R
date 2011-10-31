@@ -37,6 +37,8 @@ summary.mlm <- function(object, ...)
     names(value) <- paste("Response", ynames)
     cl <- oldClass(object)
     class(object) <- cl[match("mlm", cl):length(cl)][-1L]
+    # Need to put the evaluated formula in place
+    object$call$formula <- formula(object)
     for(i in seq(ny)) {
 	object$coefficients <- coef[, i]
         ## if there is one coef, above drops names

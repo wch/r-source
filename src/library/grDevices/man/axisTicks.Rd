@@ -18,7 +18,7 @@ axisTicks(usr, log, axp = NULL, nint = 5)
     use.}
   \item{axp}{numeric vector of length 3, \code{c(mi, ma, n.)}, with
     identical meaning to \code{\link{par}("?axp")} (where \code{?} is
-    \code{x} or \code{y}), namely \dQuote{pretty} axisss extents, and an
+    \code{x} or \code{y}), namely \dQuote{pretty} axis extents, and an
     integer \emph{code} \code{n.}.
     %% FIXME: Explain meaning -- different for log and "not-log"
   }

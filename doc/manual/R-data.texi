@@ -1350,7 +1350,7 @@ The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 PostgreSQL.
 
 Package @pkg{RMongo} provides an @R{} inteface to a Java client for
-`MongoDB'(@uref{http://en.wikipedia.org/wiki/MongoDB}) databases, which
+`MongoDB' (@uref{http://en.wikipedia.org/wiki/MongoDB}) databases, which
 are queried using JavaScript rather than SQL.
 
 

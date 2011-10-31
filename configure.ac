@@ -145,7 +145,9 @@ case "${host_os}" in
     ## Not all distros use this: some choose to march out of step  
     case "${host_cpu}" in
       x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
-        libnn=lib64
+        if test -d /usr/lib64; then
+          libnn=lib64
+	fi
       ;;
     esac
     ;;

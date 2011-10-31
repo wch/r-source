@@ -18,7 +18,7 @@
 sd(x, na.rm = FALSE)
 }
 \arguments{
-  \item{x}{a numeric vector or an \R object which is coercable to one
+  \item{x}{a numeric vector or an \R object which is coercible to one
     by \code{as.vector}.  Earlier versions of \R allowed matrices or
     data frames for \code{x}, see below.}
   \item{na.rm}{logical.  Should missing values be removed?}

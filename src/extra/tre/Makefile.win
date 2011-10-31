@@ -4,7 +4,6 @@ include ../../gnuwin32/MkRules
 DEFS=-DHAVE_CONFIG_H
 
 CPPFLAGS=-I../../include -I. $(DEFS)
-tre-parse-CPPFLAGS=$(DEFS_W64)
 
 ## done this way for parallel make
 all:

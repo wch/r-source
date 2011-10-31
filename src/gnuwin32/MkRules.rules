@@ -4,7 +4,6 @@ ifeq "$(WIN)" "64"
 BINPREF = $(BINPREF64)
 SYMPAT = $(SYMPAT64)
 R_ARCH = /x64
-DEFS_W64 = -DW64
 arch_DEFS = -DR_ARCH='"x64"'
 else
 R_ARCH = /i386

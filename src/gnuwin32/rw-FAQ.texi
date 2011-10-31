@@ -1747,7 +1747,7 @@ gdb /path/to/@RWVER@/bin/i386/Rgui.exe
 @end example
 
 @noindent
-However, note
+(or use @command{Rterm.exe}.)  However, note
 
 @itemize @bullet
 @item
@@ -1782,9 +1782,9 @@ package @code{stats} might be
 @end example
 
 @noindent
-Alternatively, in Rgui you can use the `Misc|Break to debugger' menu item
-after your DLL is loaded.  The C function call @code{breaktodebugger()}
-will do the same thing.
+Alternatively, in @command{Rgui} you can use the `Misc|Break to
+debugger' menu item after your DLL is loaded.  The C function call
+@code{breaktodebugger()} will do the same thing.
 
 @item
 Fortran symbols need an underline appended.
