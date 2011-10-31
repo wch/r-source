@@ -19,9 +19,9 @@
 detectCores <-
     if(.Platform$OS.type == "windows") {
         function(all.tests = FALSE, logical = TRUE) {
-            ## result is # packages, cores, logical processors.
+            ## result is # cores, logical processors.
             res <- .Call(C_ncpus, FALSE, PACKAGE = "parallel")
-            ifelse(logical, res[3L], res[2L]);
+            ifelse(logical, res[2L], res[1L]);
         }
     } else {
         function(all.tests = FALSE, logical = FALSE) {

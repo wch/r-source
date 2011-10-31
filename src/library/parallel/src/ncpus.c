@@ -46,15 +46,14 @@ static DWORD CountSetBits(ULONG_PTR bitMask)
     return bitSetCount;
 }
 
-
 SEXP ncpus(SEXP virtual)
 {
     // int virt = asLogical(virtual);
 
-    SEXP ans = allocVector(INTSXP, 3);
+    SEXP ans = allocVector(INTSXP, 2);
     PROTECT(ans);
     int *ians = INTEGER(ans);
-    for(int i = 1; i < 3; i++) ians[i] = NA_INTEGER;
+    for(int i = 1; i < 2; i++) ians[i] = NA_INTEGER;
 
     LPFN_GLPI glpi;
     BOOL done = FALSE;
@@ -64,7 +63,6 @@ SEXP ncpus(SEXP virtual)
     DWORD logicalProcessorCount = 0;
     DWORD numaNodeCount = 0;
     DWORD processorCoreCount = 0;
-    DWORD processorPackageCount = 0;
     DWORD byteOffset = 0;
     glpi = (LPFN_GLPI) 
 	GetProcAddress(GetModuleHandle(TEXT("kernel32")),
@@ -105,11 +103,6 @@ SEXP ncpus(SEXP virtual)
             // Cache data is in ptr->Cache, one CACHE_DESCRIPTOR structure for each cache. 
             break;
 
-        case RelationProcessorPackage:
-            // Logical processors share a physical package.
-            processorPackageCount++;
-            break;
-
         default:
             break;
         }
@@ -118,9 +111,8 @@ SEXP ncpus(SEXP virtual)
         ptr++;
     }
 
-    ians[0] = processorPackageCount;
-    ians[1] = processorCoreCount;
-    ians[2] = logicalProcessorCount;
+    ians[0] = processorCoreCount;
+    ians[1] = logicalProcessorCount;
     free(buffer);
     UNPROTECT(1);
     
