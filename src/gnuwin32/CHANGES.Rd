@@ -19,6 +19,10 @@
     \itemize{
       \item The \code{Save as} menu item on the script
       editor appends \file{.R} to a file name without an extension.
+
+      \item In package \pkg{parallel}, \code{detectCores(logical =
+	FALSE)} makes an OS-dependent attempt to find the number of
+      physical cores.
     }
   }
 }

@@ -23,8 +23,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <tchar.h>
+
+/* Based on example at
+   http://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
+*/
 
 typedef BOOL 
 (WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
