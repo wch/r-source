@@ -55,7 +55,7 @@ help(topic, package = NULL, lib.loc = NULL,
     If for some reason HTML help is unavailable (see
     \code{\link{startDynamicHelp}}), plain text help will be used
     instead.
-    \item For \code{help} only, typeset as a PDF --
+    \item For \code{help} only, typeset as PDF --
     see the section on \sQuote{Offline help}.
   }
 #ifdef unix
