@@ -28,6 +28,10 @@
    http://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
 */
 
+#ifndef _W64
+# include "glpi.h"
+#endif
+
 typedef BOOL 
 (WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
 
