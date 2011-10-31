@@ -29,10 +29,6 @@ Sys.unsetenv(x)
   includes attempting to remove a non-existent variable.)
 }
 \details{
-  The names \code{setenv} and \code{putenv} come from different Unix
-  traditions: \R also has \code{Sys.putenv}, but this is now deprecated.
-  The internal code uses \code{setenv} if available, otherwise \code{putenv}.
-  
   Non-standard \R names must be quoted in \code{Sys.setenv}: see the
   examples.  Most platforms (and POSIX) do not allow names containing
   \code{"="}.  Windows does, but the facilities provided by \R may not
@@ -51,11 +47,6 @@ Sys.unsetenv(x)
 % http://support.microsoft.com/kb/830473
 
 \note{
-  Not all systems need support \code{Sys.setenv} (although all known
-  current platforms do) nor \code{Sys.unsetenv}.
-#ifdef windows
-  Both are provided on Windows.
-#endif
 #ifdef unix
   If \code{Sys.unsetenv} is not supported, it will at least try to
   set the value of the environment variable to \code{""}, with a 
