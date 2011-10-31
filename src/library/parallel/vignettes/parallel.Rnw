@@ -190,7 +190,7 @@ machine on which \R{} is running: it has ways to do so on all known
 current \R{} platforms.  What exactly it measures is OS-specific: we
 try where possible to report the number of physical cores available.
 
-On Windows the defaut is to report the number of logical CPUs.  On
+On Windows the default is to report the number of logical CPUs.  On
 modern hardware (e.g.{} Intel \emph{Core i7}) the latter may not be
 unreasonable as hyper-threading does give a significant extra
 throughput.  What \code{detectCores(logical = FALSE)} reports is

@@ -31,7 +31,7 @@ detectCores <-
                      linux = "grep processor /proc/cpuinfo 2>/dev/null | wc -l",
                      irix  = c("hinv | grep Processors | sed 's: .*::'",
                      "hinv | grep '^Processor '| wc -l"),
-                     solaris = if(logical) "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l" else "/usr/sbin/psrinfo -p")
+                     solaris = if(logical) "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l" else "/bin/kstat -p -m cpu_info | grep :core_id | cut -f2 | uniq | wc -l")
             for (i in seq(systems))
                 if(all.tests ||
                    length(grep(paste("^", names(systems)[i], sep=''),
