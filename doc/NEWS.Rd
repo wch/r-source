@@ -10,6 +10,10 @@
     \itemize{
       \item \code{parallel::detectCores()} is now able to find the
       number of physical cores (rather than CPUs) on Sparc Solaris.
+
+      It can also do so on recent versions of Windows (but not Windows
+      XP); however the default remains \code{detectCores(logical =
+	TRUE)} on that platform.
     }
   }
 
