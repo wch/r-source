@@ -90,7 +90,21 @@
       \samp{"ps"} are defunct.
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{stack()} now gives an error if no vector column is
+      selected, rather than returning a 1-column data frame (contrary to
+      its documentation).
 
+      \item \code{str(x, width)} now obeys its \code{width}
+      argument also for function headers and other objects \code{x}
+      where \code{deparse()} is applied.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
   \subsection{INSTALLATION}{
     \itemize{
       \item On 64-bit Linux systems, \command{configure} now only sets
@@ -104,20 +118,6 @@
     }
   }
   
-  \subsection{BUG FIXES}{
-    \itemize{
-      \item \code{stack()} now gives an error if no vector column is
-      selected, rather than returning a 1-column data frame (contrary to
-      its documentation).
-
-      \item \code{str(x, width)} now \dQuote{obeys} its \code{width}
-      argument also for function headers and other objects \code{x}
-      where \code{deparse()} is applied.
-    }
-  }
-}
-
-\section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{summary.mlm()} did not handle objects where the
@@ -393,7 +393,7 @@
 
       \item There are two new options for typesetting PDF manuals from
       Rd files.  These are \samp{beramono} and \samp{inconsolata}, and
-      used the named font for mononspaced output. They are intended to
+      used the named font for monospaced output. They are intended to
       be used in combination with \samp{times}, and
       \samp{times,inconsolata,hyper} is now the default for the
       reference manual and package manuals.  If you do not have that
