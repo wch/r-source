@@ -203,6 +203,7 @@ void R_getProcTime(double *data)
     double et = currentTime() - StartTime;
     data[2] = 1e-3 * rint(1000*et);
 #ifdef HAVE_GETRUSAGE
+    /* all known current OSes */
     struct rusage self, children;
     getrusage(RUSAGE_SELF, &self);
     getrusage(RUSAGE_CHILDREN, &children);
@@ -215,6 +216,7 @@ void R_getProcTime(double *data)
     data[4] = (double) children.ru_stime.tv_sec +
 	1e-3 * (children.ru_stime.tv_usec/1000);
 #else
+    /* Not known to be currently used */
     struct tms timeinfo;
     times(&timeinfo);
     data[0] = fround(timeinfo.tms_utime / clk_tck, 3);
@@ -225,6 +227,7 @@ void R_getProcTime(double *data)
 }
 
 /* used in memory.c */
+/* FIXME: maybe should try to find the increment for getrusage */
 attribute_hidden
 double R_getClockIncrement(void)
 {

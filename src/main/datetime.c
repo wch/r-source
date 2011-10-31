@@ -25,18 +25,19 @@
     and where they are they may be partially or incorrectly
     implemented.  A number of lightweight alternatives are supplied,
     but generally timezone support is only available if the OS
-    supplies it.  However, as these are now also mandated by C99, they
-    are almost universally available, albeit with more room for
-    implementation variations.
+    supplies it (or as on Windows, we replace it).  However, as these
+    are now also mandated by C99, they are almost universally
+    available, albeit with more room for implementation variations.
 
     A particular problem is the setting of the timezone TZ on
     Unix/Linux.  POSIX appears to require it, yet older Linux systems
     do not set it and do not give the correct results/crash strftime
     if it is not set (or even if it is: see the workaround below).  We
-    use unsetenv() to work around this: that is a BSD construct but
-    seems to be available on the affected platforms.
+    use unsetenv() to work around this: that is a BSD (and POSIX 2001)
+    construct but seems to be available on the affected platforms.
 
     Notes on various time functions:
+    ===============================
 
     The current (2008) POSIX recommendation to find the calendar time
     is to call clock_gettime(), defined in <time.h>.  This may also be
@@ -69,6 +70,18 @@
     POSIX function getrusage() defined in <sys/resource.h>.  This
     returns the same time structure as gettimeofday() and on some
     systems offers millisecond resolution.
+    It is available on Cygwin, FreeBSD, Mac OS X, Linux and Solaris.
+
+    currentTime() (in this file) uses
+    clock_gettime(): AIX, FreeBSD, Linux, Solaris
+    gettimeofday():  Mac OS X, Windows, (Cygwin)
+    time() (as ultimate fallback, AFAIK unused).
+
+    proc.time() uses currentTime() for elapsed time,
+    and getrusage, then times for CPU times on a Unix-alike,
+    GetProcessTimes on Windows.
+
+    devPS.c uses time() and localtime() for timestamps.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -485,6 +498,7 @@ double currentTime(void)
 	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
 
 #elif defined(HAVE_GETTIMEOFDAY)
+    /* Mac OS X, mingw.org */
     struct timeval tv;
     int res = gettimeofday(&tv, NULL);
     if(res == 0)
