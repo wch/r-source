@@ -14,13 +14,17 @@
       systems.
 
       It is still necessary to set \samp{LIBnn = lib} for 32-bit builds
-      of \R on 64-bit OS on those Linux distributions capable for
+      of \R on a 64-bit OS on those Linux distributions capable for
       supporting that concept.
     }
   }
   
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{stack()} now gives an error if no vector column is
+      selected, rather than returning a 1-column data frame (contrary to
+      its documentation).
+
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by
       Helios de Rosario Martinez).
