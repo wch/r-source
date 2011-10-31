@@ -92,6 +92,8 @@
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
+      
+      \item \code{Sys.putenv()}, deprecated in \R 2.5.0, is finally defunct.
     }
   }
   

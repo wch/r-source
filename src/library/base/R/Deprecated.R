@@ -37,10 +37,10 @@
 
 ## <entry>
 ## Deprecated in 2.5.0
-Sys.putenv <- function(...) {
-    .Deprecated("Sys.setenv")
-    Sys.setenv(...)
-}
+## Sys.putenv <- function(...) {
+##     .Deprecated("Sys.setenv")
+##     Sys.setenv(...)
+## }
 ## </entry>
 
 

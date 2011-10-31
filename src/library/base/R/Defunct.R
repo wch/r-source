@@ -154,7 +154,6 @@ symbol.For <- function(name)
 unix <- function(call, intern = FALSE) .Defunct("system")
 ## </entry>
 
-
 ## <entry>
 ## Deprecated in 2.7.0
 ## Defunct in 2.8.0
@@ -191,4 +190,10 @@ mem.limits <- function(nsize=NA, vsize=NA) .Defunct("gc")
 ## Defunct in 2.15.0
 .readRDS <- function(...) .Defunct("readRDS")
 .saveRDS <- function(...) .Defunct("saveRDS")
+## </entry>
+
+## <entry>
+## Deprecated in 2.5.0
+## Defunct in 2.15.0
+Sys.putenv <- function(...) .Defunct("Sys.setenv")
 ## </entry>

@@ -60,6 +60,7 @@
 \alias{mem.limits}
 \alias{.readRDS}
 \alias{.saveRDS}
+\alias{Sys.putenv}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -156,6 +157,7 @@ manglePackageName(pkgName, pkgVersion)
 mem.limits(nsize = NA, vsize = NA)
 .saveRDS(\dots)
 .readRDS(\dots)
+Sys.putenv(\dots)
 % </Removed 2.15.0>
 }
 \details{
@@ -264,6 +266,9 @@ mem.limits(nsize = NA, vsize = NA)
   \code{.readRDS} and \code{.saveRDS}, were internal-only versions (and
   the only versions available prior to \R 2.13.0) of
   \code{\link{.readRDS}} and \code{\link{.saveRDS}}.
+
+  \code{Sys.putenv} was a synonym for \code{\link{Sys.setenv}},
+  deprecated since \R 2.5.0.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
