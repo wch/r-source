@@ -40,18 +40,17 @@ detectCores(all.tests = FALSE, logical = FALSE)
   On Windows the default is the number of logical CPUs: with
   \code{logical = FALSE} it will report the number of cores on Vista or
   later, but the number of physical CPU packages on XP or Server 2003.
-
-  Currently \code{logical} only makes a difference on Solaris: there
-  \code{logical = FALSE} returns the number of physical CPUs (not cores)
+  
+  Currently \code{logical} makes a difference on Solaris: there
+  \code{logical = FALSE} returns the number of physical cores
   and \code{logical = TRUE} returns the number of logical CPUs, which is
   the number of cores on AMD/Intel hardware, but the number of available
   hardware threads on Sparc hardware (some versions of which do have
   multiple cores per CPU, and others have multiple threads per core).
   For example, the UltraSparc T2 CPU in the CRAN check server is a
   single physical CPU with 8 cores, and each core supports 8 hardware
-  threads.  So \code{detectCores(logical=FALSE)} returns 1, and
-  \code{detectCores(logical=TRUE)} returns 64, neither of which is very
-  useful!
+  threads.  So \code{detectCores(logical = FALSE)} returns 8, and
+  \code{detectCores(logical = TRUE)} returns 64.
 
   Where virtual machines are in use, one would hope that the result
   represents the number of CPUs available (or potentially available) to

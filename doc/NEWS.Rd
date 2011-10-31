@@ -6,6 +6,13 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{parallel::detectCores()} is now able to find the
+      number of physical cores (rather than CPUs) on Sparc Solaris.
+    }
+  }
+
   \subsection{INSTALLATION}{
     \itemize{
       \item On 64-bit Linux systems, \command{configure} now only sets
