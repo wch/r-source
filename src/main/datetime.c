@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2010  The R Development Core Team.
+ *  Copyright (C) 2000-2011  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,6 +82,8 @@
     GetProcessTimes on Windows.
 
     devPS.c uses time() and localtime() for timestamps.
+
+    do_date (platform.c) uses ctime.
  */
 
 #ifdef HAVE_CONFIG_H

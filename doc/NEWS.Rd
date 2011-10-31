@@ -17,20 +17,6 @@
       \item Even data-only packages without \R code need a namespace and
       so may need to be installed under \R 2.14.0 or later.
     
-      \item Package \pkg{parallel} now allows a default cluster to be
-      registered by \code{setDefaultCluster()}: this will be used by
-      default in functions such as \code{parLapply()}.
-      
-      It has a new function \code{mcmapply()}, a parallel version of
-      \code{mapply()}, and a wrapper \code{mcMap()}, a parallel version
-      of \code{Map()}.
-
-      \code{clusterMap()} has a new argument \code{.scheduling} to allow
-      the use of load-balancing.
-
-      There are new load-balancing versions \code{parLapplyLB} and
-      \code{parSapplyLB}.
-      
       \item \code{assignInNamespace()} has further restrictions on use
       apart from at top-level, as its help page has warned.
       Expect it to be disabled from programmatic use in the future.
@@ -45,6 +31,24 @@
     }
   }
   
+  \subsection{PACKAGE parallel}{
+    \itemize{
+      \item There is a new function \code{mcmapply()}, a parallel version
+      of \code{mapply()}, and a wrapper \code{mcMap()}, a parallel
+      version of \code{Map()}.
+
+      \item A default cluster can be registered by the new function
+      \code{setDefaultCluster()}: this will be used by default in
+      functions such as \code{parLapply()}.
+      
+      \item \code{clusterMap()} has a new argument \code{.scheduling} to
+      allow the use of load-balancing.
+
+      \item There are new load-balancing function \code{parLapplyLB()}
+      and \code{parSapplyLB()}.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \code{R CMD INSTALL} will now do a test load for all
@@ -93,10 +97,6 @@
   
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{stack()} now gives an error if no vector column is
-      selected, rather than returning a 1-column data frame (contrary to
-      its documentation).
-
       \item \code{str(x, width)} now obeys its \code{width}
       argument also for function headers and other objects \code{x}
       where \code{deparse()} is applied.
@@ -113,13 +113,17 @@
       systems.
 
       It is still necessary to set \samp{LIBnn = lib} for 32-bit builds
-      of \R on 64-bit OS on those Linux distributions capable for
+      of \R on a 64-bit OS on those Linux distributions capable for
       supporting that concept.
     }
   }
   
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{stack()} now gives an error if no vector column is
+      selected, rather than returning a 1-column data frame (contrary to
+      its documentation).
+
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by
       Helios de Rosario Martinez).
