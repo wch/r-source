@@ -35,9 +35,11 @@ detectCores(all.tests = FALSE, logical = FALSE)
   
   Exactly what this represents is OS-dependent: where possible by
   default it represents physical cores and not logical
-  (e.g. hyperthreaded) CPUs.  Unfortunately on Windows only the number
-  of logical CPUs seems to be available on non-server versions of the
-  OS.
+  (e.g. hyperthreaded) CPUs.
+
+  On Windows the default is the number of logical CPUs: with
+  \code{logical = FALSE} it will report the number of cores on Vista or
+  later, but the number of physical CPU packages on XP or Server 2003.
 
   Currently \code{logical} only makes a difference on Solaris: there
   \code{logical = FALSE} returns the number of physical CPUs (not cores)

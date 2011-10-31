@@ -192,14 +192,14 @@ But in so far as it is a useful guideline, function
 machine on which \R{} is running: it has ways to do so on all known
 current \R{} platforms.  What exactly it measures is OS-specific: we
 try where possible to report the number of physical cores available.
-One OS where this is not the case is Windows, where only the number of
-logical CPUs is readily available.  On modern hardware (e.g.{} Intel
-\emph{Core i7}) the latter may not be unreasonable as hyper-threading
-does give a significant extra throughput: on what are now rather old
-Pentium 4's it will simply over-estimate by a factor of two.  Note
-that we said `available': in most cases when virtual machines are in
-use what is reported is the maximum number of virtual CPUs which can
-be used simultaneously by that virtual machine.
+
+On Windows the defaut is to report the number of logical CPUs.  On
+modern hardware (e.g.{} Intel \emph{Core i7}) the latter may not be
+unreasonable as hyper-threading does give a significant extra
+throughput.  What \code{detectCores(logical = FALSE)} reports is
+OS-version-dependent: on recent versions of Windows it reports the
+number of physical cores but on older versions the number of physical
+CPU packages.
 
 \section{Analogues of apply functions}
 

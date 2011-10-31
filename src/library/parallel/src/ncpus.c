@@ -22,13 +22,107 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <stdlib.h>
+
+/* Based on example at
+   http://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
+*/
+
+typedef BOOL 
+(WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
+
+// Helper function to count set bits in the processor mask.
+static DWORD CountSetBits(ULONG_PTR bitMask)
+{
+    DWORD LSHIFT = sizeof(ULONG_PTR)*8 - 1;
+    DWORD bitSetCount = 0;
+    ULONG_PTR bitTest = (ULONG_PTR)1 << LSHIFT;    
+    DWORD i;
+    
+    for (i = 0; i <= LSHIFT; ++i) {
+        bitSetCount += ((bitMask & bitTest)?1:0);
+        bitTest/=2;
+    }
+    return bitSetCount;
+}
 
 
 SEXP ncpus(SEXP virtual)
 {
     // int virt = asLogical(virtual);
-    SYSTEM_INFO info;
-    GetSystemInfo(&info);
-    int nc = info.dwNumberOfProcessors;
-    return ScalarInteger(nc);
+
+    SEXP ans = allocVector(INTSXP, 3);
+    PROTECT(ans);
+    int *ians = INTEGER(ans);
+    for(int i = 1; i < 3; i++) ians[i] = NA_INTEGER;
+
+    LPFN_GLPI glpi;
+    BOOL done = FALSE;
+    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = NULL;
+    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = NULL;
+    DWORD returnLength = 0;
+    DWORD logicalProcessorCount = 0;
+    DWORD numaNodeCount = 0;
+    DWORD processorCoreCount = 0;
+    DWORD processorPackageCount = 0;
+    DWORD byteOffset = 0;
+    glpi = (LPFN_GLPI) 
+	GetProcAddress(GetModuleHandle(TEXT("kernel32")),
+		       "GetLogicalProcessorInformation");
+    if (NULL == glpi) {
+	warning("GetLogicalProcessorInformation is not supported on this OS.");
+        return ans;
+    }
+
+    while (!done) {
+        DWORD rc = glpi(buffer, &returnLength);
+        if (rc == FALSE) {
+            if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+                if (buffer) free(buffer);
+                buffer = (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION) malloc(returnLength);
+                if (!buffer) error("allocation failure");
+            } else error("in reading processor information, probable cause: %d", GetLastError());
+        } else done = TRUE;
+    }
+
+    ptr = buffer;
+
+    while (byteOffset + sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION) <= 
+	   returnLength) {
+        switch (ptr->Relationship) {
+        case RelationNumaNode:
+            // Non-NUMA systems report a single record of this type.
+            numaNodeCount++;
+            break;
+
+        case RelationProcessorCore:
+            processorCoreCount++;
+            // A hyperthreaded core supplies more than one logical processor.
+            logicalProcessorCount += CountSetBits(ptr->ProcessorMask);
+            break;
+
+        case RelationCache:
+            // Cache data is in ptr->Cache, one CACHE_DESCRIPTOR structure for each cache. 
+            break;
+
+        case RelationProcessorPackage:
+            // Logical processors share a physical package.
+            processorPackageCount++;
+            break;
+
+        default:
+            break;
+        }
+
+        byteOffset += sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION);
+        ptr++;
+    }
+
+    ians[0] = processorPackageCount;
+    ians[1] = processorCoreCount;
+    ians[2] = logicalProcessorCount;
+    free(buffer);
+    UNPROTECT(1);
+    
+    return ans;
 }
