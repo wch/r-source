@@ -47,13 +47,12 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   information on the latest versions of packages with duplicates
   removed.
 
-  As from \R 2.10.0 argument \code{filters} used to select which of the
-  packages on the repositories are reported.  It is called with its
-  default value (\code{NULL}) by functions such as
-  \code{install.packages}: this value corresponds to
-  \code{\link{getOption}("available_packages_filters")} and to
-  \code{c("R_version", "OS_type", "subarch", "duplicates")} if that is
-  unset or set to \code{NULL}.
+  Argument \code{filters} can be used to select which of the packages on the
+  repositories are reported.  It is called with its default value
+  (\code{NULL}) by functions such as \code{install.packages}: this value
+  corresponds to \code{\link{getOption}("available_packages_filters")}
+  and to \code{c("R_version", "OS_type", "subarch", "duplicates")} if
+  that is unset or set to \code{NULL}.
 
   The built-in filters are
   \describe{

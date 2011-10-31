@@ -32,8 +32,6 @@ rug(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
   that fall within the plot region are included.  There will be a
   warning if any finite values are omitted, but non-finite values are
   omitted silently.
-  
-  Prior to \R 2.8.0 \code{rug} re-drew the axis like: it no longer does so.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

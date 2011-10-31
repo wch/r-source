@@ -31,8 +31,7 @@
 
   Backslash is used to start an escape sequence inside character
   constants.  Escaping a character not in the following table is an
-  error (since \R 2.11.0; earlier versions accepted such escapes with a
-  warning).
+  error.
   
   Single quotes need to be escaped by backslash in single-quoted
   strings, and double quotes in double-quoted strings.

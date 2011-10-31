@@ -1,6 +1,6 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
@@ -62,8 +62,8 @@ write_PACKAGES(dir = ".", fields = NULL,
   Including non-latest versions of packages is only useful if they have
   less constraining version requirements, so for example
   \code{latestOnly = FALSE} could be used for a source repository when
-  \samp{foo_1.0} depends on \samp{R >= 2.10.0} but \samp{foo_0.9} is
-  available which depends on \samp{R >= 2.7.0}.
+  \samp{foo_1.0} depends on \samp{R >= 2.15.0} but \samp{foo_0.9} is
+  available which depends on \samp{R >= 2.11.0}.
 
   Support for repositories with subdirectories and hence for
   \code{subdirs != FALSE} was added in \R 2.7.0: this depends on

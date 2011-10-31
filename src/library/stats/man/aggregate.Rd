@@ -109,11 +109,6 @@ aggregate(x, \dots)
   non-empty times are used to label the columns in the results, with
   unnamed grouping variables being named \code{Group.\var{i}} for
   \code{by[[\var{i}]]}.
-
-  \strong{Note:} prior to \R 2.6.0
-  the grouping variables were reported as factors with levels in
-  alphabetical order in the current locale.  Now the variable in the
-  result is found by subsetting the original variable.
 }
 \author{
   Kurt Hornik, with contributions by Arni Magnusson.
