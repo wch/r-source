@@ -11,7 +11,7 @@ subdir = src/library/parallel
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
+DISTFILES = AUTHORS DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = parallel
 
