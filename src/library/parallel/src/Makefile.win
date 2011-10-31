@@ -18,6 +18,8 @@ OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 SHLIB = $(pkg).dll
 RESFLAGS = -I $(R_HOME)/include
 
+npus-CPPFLAGS = -I.
+
 all: makeMakedeps shlib
 
 shlib: $(SHLIB)
