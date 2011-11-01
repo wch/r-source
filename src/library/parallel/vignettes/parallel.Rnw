@@ -198,8 +198,8 @@ modern hardware (e.g.{} Intel \emph{Core i7}) the latter may not be
 unreasonable as hyper-threading does give a significant extra
 throughput.  What \code{detectCores(logical = FALSE)} reports is
 OS-version-dependent: on recent versions of Windows it reports the
-number of physical cores but on older versions the number of physical
-CPU packages.
+number of physical cores but on older versions it might report the
+number of physical CPU packages.
 
 \section{Analogues of apply functions}
 

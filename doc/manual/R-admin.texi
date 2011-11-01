@@ -4522,27 +4522,31 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added.  @R{} requires C99 complex type support, which
-is available as from Cygwin 1.7.8 (March 2011).  However, the (new)
-implementation of @code{cacos} gives incorrect results, so
-@code{HAVE_CACOS} is undefined in @file{src/main/complex.c}.
+workarounds added.  @R{} requires C99 complex type support, which is
+available as from Cygwin 1.7.8 (March 2011).  However, the (new)
+implementation of @code{cacos} gives incorrect results, so we undefine
+@code{HAVE_CACOS} in @file{src/main/complex.c} on that platform.
 
-Currently Cygwin 1.7.9-1 is unable to build @R{}: the support for
-dynamic loading of DLLs is broken.
+Many versions of Cygwin during 2011 were unable to build @R{}: 1.7.9-1
+with @acronym{GCC} 4.5.3-3 in November 2011 was able to do so.
 
 Only building as a shared library can possibly work,@footnote{Windows
 DLLs need to have all links resolved at build time and so cannot resolve
 against @file{R.bin}.} so use e.g@:
 
 @example
-./configure --disable-nls --enable-R-shlib
+./configure --disable-nls --enable-R-shlib FLIBS=-lgfortran
 make
 @end example
 
 @noindent
-NLS does work if required, although adding
+Enabling NLS does work if required, although adding
 @option{--with-included-gettext} is preferable.  You will see many
-warnings about the use of auto-import.
+warnings about the use of auto-import.  Setting @samp{FLIBS} explicitly
+seems needed currently as the auto-detection gives an incorrect values.
+
+You will need the @pkg{tetex-extra} Cygwin package to build
+@file{NEWS.pdf} and the vignettes.
 
 Note that this gives you a command-line application using @code{readline}
 for command editing.  The @samp{X11} graphics device will work if a
@@ -4558,9 +4562,9 @@ TK_LIB_SPEC='-ltk84'
 The overhead of using shell scripts makes this noticeably slower than a
 native build of @R{} on Windows.
 
-Even with Cygwin 1.7.8, not all the tests passed: there were incorrect
-results from wide-character regular expressions code and from sourcing
-CR-delimited files.
+Even when @R{} can be built, ot all the tests passed: there were
+incorrect results from wide-character regular expressions code and from
+sourcing CR-delimited files.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
