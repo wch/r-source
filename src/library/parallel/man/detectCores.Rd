@@ -37,12 +37,15 @@ detectCores(all.tests = FALSE, logical = FALSE)
   default it represents physical cores and not logical
   (e.g. hyperthreaded) CPUs.
 
-  On Windows the default is the number of logical CPUs: with
-  \code{logical = FALSE} it will report the number of cores on Vista or
-  later, but the number of physical CPU packages on XP or Server 2003.
+  On Windows the default is the number of logical CPUs.
 #ifdef windows
-  Only versions of Windows since XP SP3 are supported.
+  Only versions of Windows since XP SP3 are supported.  Microsoft
+  documents that \code{logical = FALSE} it will report the number of
+  cores on Vista or later, but the number of physical CPU packages on XP
+  or Server 2003: however it reported correctly on the XP systems we
+  tested.
 #endif
+% http://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
   
   Currently \code{logical} makes a difference on Sparc Solaris: there
   \code{logical = FALSE} returns the number of physical cores and
