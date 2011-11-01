@@ -29,6 +29,8 @@ setwd(dir)
 
 \seealso{
   \code{\link{list.files}} for the \emph{contents} of a directory.
+  
+  \code{\link{normalizePath}} for a \sQuote{canonical} path name.
 }
 
 \value{
