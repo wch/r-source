@@ -173,7 +173,7 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 > ##P (1 - Im(cos(acos(Ii))))/Meps
 > abs(Im(asin(sin(1i))) -	 1) < 2*Meps
 [1] TRUE
-> cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
+> all.equal(cos(1i), cos(-1i)) # i.e. Im(acos(*)) gives + or - 1i:
 [1] TRUE
 > abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
 [1] TRUE
