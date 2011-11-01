@@ -24,6 +24,7 @@
 # include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include "Defn.h"
 #include <R_ext/Riconv.h>
 #include "Fileio.h"
