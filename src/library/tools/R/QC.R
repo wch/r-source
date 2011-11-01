@@ -2526,6 +2526,7 @@ function(dir, force_suggests = TRUE)
     }
     ldepends <-  .get_requires_with_version_from_package_db(db, "Depends")
     limports <-  .get_requires_with_version_from_package_db(db, "Imports")
+    llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
     lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
     ## NB: no one checks version for 'Enhances'.
     lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
@@ -2538,9 +2539,8 @@ function(dir, force_suggests = TRUE)
 
     bad_depends <- list()
 
-    ## Are all packages listed in Depends/Suggests/Imports installed?
-    lreqs <- c(ldepends,
-               limports,
+    ## Are all packages listed in Depends/Suggests/Imports/LinkingTo installed?
+    lreqs <- c(ldepends, limports, llinks,
                if(force_suggests) lsuggests)
     lreqs2 <- c(if(!force_suggests) lsuggests, lenhances)
     if(length(c(lreqs, lreqs2))) {
@@ -2557,8 +2557,15 @@ function(dir, force_suggests = TRUE)
             reqs <- unique(sapply(lreqs, `[[`, 1L))
             reqs <- reqs %w/o% installed
             m <- reqs %in% standard_package_names$stubs
-            if(length(reqs[!m]))
-                bad_depends$required_but_not_installed <- reqs[!m]
+            if(length(reqs[!m])) {
+                bad <- reqs[!m]
+                bad1 <-  bad[! bad %in% suggests]
+                if(length(bad1))
+                    bad_depends$required_but_not_installed <- bad1
+                bad2 <-  bad[bad %in% suggests]
+                if(length(bad2))
+                    bad_depends$suggested_but_not_installed <- bad2
+            }
             if(length(reqs[m]))
                 bad_depends$required_but_stub <- reqs[m]
             ## now check versions
@@ -2635,63 +2642,60 @@ function(x, ...)
 {
     c(character(),
       if(length(bad <- x$required_but_not_installed) > 1L) {
-          c(gettext("Packages required but not available:"),
-            .pretty_format(bad),
-            "")
+          c("Packages required but not available:", .pretty_format(bad), "")
       } else if(length(bad)) {
-          c(gettextf("Package required but not available: %s", sQuote(bad)),
-            "")
+          c(sprintf("Package required but not available: %s", sQuote(bad)), "")
+      },
+      if(length(bad <- x$suggested_but_not_installed) > 1L) {
+          c("Packages suggested but not available:", .pretty_format(bad), "")
+      } else if(length(bad)) {
+          c(sprintf("Package suggested but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$required_but_obsolete) > 1L) {
-          c(gettext("Packages required and available but unsuitable versions:"),
+          c("Packages required and available but unsuitable versions:",
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package required and available but unsuitable version: %s", sQuote(bad)),
+          c(sprintf("Package required and available but unsuitable version: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x$required_but_stub) > 1L) {
-          c(gettext("Former standard packages required but now defunct:"),
+          c("Former standard packages required but now defunct:",
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package required but not available: %s", sQuote(bad)),
-            "")
+          c(sprintf("Former standard package required but now defunct: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$suggests_but_not_installed) > 1L) {
-          c(gettext("Packages suggested but not available for checking:"),
+          c("Packages suggested but not available for checking:",
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package suggested but not available for checking: %s",
+          c(sprintf("Package suggested but not available for checking: %s",
                      sQuote(bad)),
             "")
       },
       if(length(bad <- x$enhances_but_not_installed) > 1L) {
-          c(gettext("Packages which this enhances but not available for checking:"),
+          c("Packages which this enhances but not available for checking:",
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package which this enhances but not available for checking: %s", sQuote(bad)),
+          c(sprintf("Package which this enhances but not available for checking: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
-                c(gettext("Vignette dependencies not required:"),
-                  .pretty_format(bad))
+                c("Vignette dependencies not required:", .pretty_format(bad))
             } else {
-                gettextf("Vignette dependencies not required: %s", sQuote(bad))
+                sprintf("Vignette dependencies not required: %s", sQuote(bad))
             },
             strwrap(gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")),
             "")
       },
       if(length(bad <- x$missing_namespace_depends) > 1L) {
-          c(gettext("Namespace dependencies not required:"),
-            .pretty_format(bad),
-            "")
+          c("Namespace dependencies not required:", .pretty_format(bad), "")
       } else if(length(bad)) {
-          c(gettextf("Namespace dependency not required: %s", sQuote(bad)),
-            "")
+          c(sprintf("Namespace dependency not required: %s", sQuote(bad)), "")
       }
       )
 }
