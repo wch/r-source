@@ -31,8 +31,8 @@
     stop(paste(msg, collapse=""), call. = FALSE, domain = NA)
 }
 
-Version <- function() .Defunct("R.Version")
-provide <- function(package) .Defunct()
+## Version <- function() .Defunct("R.Version")
+## provide <- function(package) .Defunct()
 
 ## <entry>
 ## Deprecated in 1.2.0

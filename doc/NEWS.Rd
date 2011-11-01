@@ -93,11 +93,19 @@
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
       
-      \item \code{Sys.putenv()}, deprecated in \R 2.5.0, is finally
-      removed.
+      \item \code{Sys.putenv()}, replaced and deprecated in \R 2.5.0, is
+      finally removed.
 
-      \item Some functions which have been defunct for 5 or more years
-      have been removed completely.
+      \item Some functions which have been defunct for five or more years
+      have been removed completely.  These include \code{.Alias()},
+      \code{La.chol()}, \code{La.chol2inv()}, \code{La.eigen()},
+      \code{Machine()}, \code{Platform()}, \code{Version},
+      \code{codes()}, \code{delay()}, \code{format.char()},
+      \code{getenv()}, \code{httpclient()}, \code{loadURL()},
+      \code{machine()}, \code{parse.dcf()}, \code{printNoClass()},
+      \code{provide()}, \code{read.table.url()}, \code{restart()},
+      \code{scan.url()}, \code{symbol.C()}, \code{symbol.For()}and
+      \code{unix()}.
     }
   }
   
