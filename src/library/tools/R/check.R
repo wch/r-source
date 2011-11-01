@@ -2461,6 +2461,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                       "enhances_but_not_installed"))) {
                 errorLog(Log)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
+                if(length(res$suggested_but_not_installed))
+                   wrapLog("The suggested packages are required for",
+                           "a complete check.\n",
+                           "Checking can be attempted without them",
+                           "by setting the environment variable",
+                           "_R_CHECK_FORCE_SUGGESTS_",
+                           "to a false value.\n\n")
                 wrapLog(msg_DESCRIPTION)
                 do_exit(1L)
             } else {
