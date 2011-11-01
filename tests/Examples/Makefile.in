@@ -38,7 +38,7 @@ test-Examples-Base: Makefile
 ## addition to 'make check'.
 ## nlme suggests 'Hmisc'
 test-Examples-Recommended: test-Examples-Base
-	@$(ECHO) "tools::testInstalledPackages(scope='recommended', types='examples')" | _R_CHECK_FORCE_SUGGESTS_=FALSE (R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='recommended', types='examples')" | _R_CHECK_FORCE_SUGGESTS_=FALSE $(R_EXE)
 ## </NOTE>
 
 mostlyclean: clean

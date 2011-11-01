@@ -337,7 +337,7 @@ test-undoc:
 	  fi; \
 	done
 
-## There is a potential name clash here on case-insensitive OS
+## There is a potential name clash here on a case-insensitive FS
 test-Packages-Recommended:
 	-@rm -rf PACKAGES
 	@test -d Packages || mkdir Packages
@@ -345,7 +345,7 @@ test-Packages-Recommended:
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
-	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" $(R3) --install=skip \
+	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
 	done
 
