@@ -203,14 +203,15 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 }
 
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
-  # Start a new null device for this function
-  .Call("GD_nullDevice", PACKAGES = "grDevices")
-  on.exit(dev.off())
-  # Run the graphics code in expr
-  # Rely on lazy evaluation for correct "timing"
-  eval(expr)
-  # Grab the DL on the new device
-  grabDL(warn, wrap, ...)
+  # Start an "offline" PDF device for this function
+    # .Call("R_GD_nullDevice", PACKAGE = "grDevices")
+    pdf(offline = TRUE)
+    on.exit(dev.off())
+    # Run the graphics code in expr
+    # Rely on lazy evaluation for correct "timing"
+    eval(expr)
+    # Grab the DL on the new device
+    grabDL(warn, wrap, ...)
 }
 
 #########################

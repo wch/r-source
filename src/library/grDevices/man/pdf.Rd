@@ -18,7 +18,8 @@
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-    useDingbats, useKerning, fillOddEven, maxRasters, compress)
+    useDingbats, useKerning, fillOddEven, maxRasters, compress,
+    offline)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -86,6 +87,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     (default \code{64} in \R < 2.13.2).}
   \item{compress}{logical.  Should PDF streams be generated with Flate
     compression?  Defaults to \code{TRUE}.}
+  \item{offline}{logical.  Should an external file be created?
+    Defaults to \code{FALSE}.}
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -171,6 +174,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   PDF viewers will use a white canvas so the visual effect is if the
   background were white.  This will not be the case when printing onto
   coloured paper, though.
+
+  If \code{offline} is \code{TRUE} then no external file is created
+  (effectively, no drawing occurs),
+  but the device may still be queried (e.g., for size of text).
 }
 
 \section{Color models}{

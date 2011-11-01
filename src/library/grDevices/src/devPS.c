@@ -5454,8 +5454,15 @@ typedef struct {
     /* Soft masks for raster images */
     int *masks;
     int numMasks;
+
+    /* Is the device "offline" (does not write out to a file) */
+    Rboolean offline;
 }
 PDFDesc;
+
+/* Macro for driver actions to check for "offline" device and bail out */
+
+#define PDF_checkOffline() if (pd->offline) return
 
 /* Device Driver Actions */
 
@@ -5469,10 +5476,10 @@ static void PDF_Close(pDevDesc dd);
 static void PDF_Line(double x1, double y1, double x2, double y2,
 		     const pGEcontext gc,
 		     pDevDesc dd);
-static void PDF_MetricInfo(int c,
-			   const pGEcontext gc,
-			   double* ascent, double* descent,
-			   double* width, pDevDesc dd);
+void PDF_MetricInfo(int c,
+                    const pGEcontext gc,
+                    double* ascent, double* descent,
+                    double* width, pDevDesc dd);
 static void PDF_NewPage(const pGEcontext gc, pDevDesc dd);
 static void PDF_Polygon(int n, double *x, double *y,
 			const pGEcontext gc,
@@ -5495,9 +5502,9 @@ static void PDF_Raster(unsigned int *raster, int w, int h,
 static void PDF_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     pDevDesc dd);
-static double PDF_StrWidth(const char *str,
-			   const pGEcontext gc,
-			   pDevDesc dd);
+double PDF_StrWidth(const char *str,
+                    const pGEcontext gc,
+                    pDevDesc dd);
 static void PDF_Text(double x, double y, const char *str,
 		     double rot, double hadj,
 		     const pGEcontext gc,
@@ -5804,7 +5811,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		const char *title, SEXP fonts,
 		int versionMajor, int versionMinor,
 		const char *colormodel, int dingbats, int useKern,
-		Rboolean fillOddEven, Rboolean useCompression)
+		Rboolean fillOddEven, Rboolean useCompression,
+                Rboolean offline)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5877,6 +5885,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     pd->width = width;
     pd->height = height;
+   
+    pd->offline = offline;
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	PDFcleanup(3, pd);
@@ -6997,6 +7007,9 @@ static Rboolean PDF_Open(pDevDesc dd, PDFDesc *pd)
     /* NB: this must be binary to get tell positions and line endings right,
        as well as allowing binary streams */
 
+    if (pd->offline) 
+        return TRUE;
+
     snprintf(buf, 512, pd->filename, pd->fileno + 1); /* file 1 to start */
     pd->mainfp = R_fopen(R_ExpandFileName(buf), "wb");
     if (!pd->mainfp) {
@@ -7021,6 +7034,8 @@ static void pdfClip(double x0, double x1, double y0, double y1, PDFDesc *pd)
 static void PDF_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    PDF_checkOffline();
 
     if(pd->inText) textoff(pd);
     pdfClip(x0, x1, y0, y1, pd);
@@ -7104,6 +7119,8 @@ static void PDF_NewPage(const pGEcontext gc,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     char buf[512];
 
+    PDF_checkOffline();
+
     if(pd->pageno >= pd->pagemax) {
 	void * tmp = realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
 	if(!tmp)
@@ -7177,10 +7194,12 @@ static void PDF_Close(pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    if(pd->pageno > 0) PDF_endpage(pd);
-    PDF_endfile(pd);
-    /* may no longer be needed */
-    killRasterArray(pd->rasters, pd->maxRasters);
+    if (!pd->offline) {
+        if(pd->pageno > 0) PDF_endpage(pd);
+        PDF_endfile(pd);
+        /* may no longer be needed */
+        killRasterArray(pd->rasters, pd->maxRasters);
+    }
     PDFcleanup(6, pd); /* which frees masks and rasters */
 }
 
@@ -7190,6 +7209,8 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code;
+
+    PDF_checkOffline();
 
     code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
     if (code) {
@@ -7223,6 +7244,8 @@ static void PDF_Raster(unsigned int *raster,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double angle, cosa, sina;
+
+    PDF_checkOffline();
 
     /* This takes the simple approach of creating an inline
      * image.  This is not recommended for larger images
@@ -7280,6 +7303,8 @@ static void PDF_Raster(unsigned int *raster,
     double angle, cosa, sina;
     int alpha;
 
+    PDF_checkOffline();
+
     /* Record the raster so can write it out when page is finished */
     alpha = addRaster(raster, w, h, interpolate, pd);
 
@@ -7319,6 +7344,8 @@ static void PDF_Circle(double x, double y, double r,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code, tr;
     double xx, yy, a;
+
+    PDF_checkOffline();
 
     code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
     if (code) {
@@ -7384,6 +7411,8 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
+    PDF_checkOffline();
+
     if(!R_VIS(gc->col)) return;
 
     PDF_SetLineColor(gc->col, dd);
@@ -7399,6 +7428,8 @@ static void PDF_Polygon(int n, double *x, double *y,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double xx, yy;
     int i, code;
+
+    PDF_checkOffline();
 
     code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
     if (code) {
@@ -7442,6 +7473,8 @@ static void PDF_Path(double *x, double *y,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double xx, yy;
     int i, j, index, code;
+
+    PDF_checkOffline();
 
     code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
     if (code) {
@@ -7490,6 +7523,8 @@ static void PDF_Polyline(int n, double *x, double *y,
     PDFDesc *pd = (PDFDesc*) dd->deviceSpecific;
     double xx, yy;
     int i;
+
+    PDF_checkOffline();
 
     if(pd->inText) textoff(pd);
     if(R_VIS(gc->col)) {
@@ -7704,6 +7739,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
     double a, b, rot1;
     char *buff;
     const char *str1;
+
+    PDF_checkOffline();
 
     if(!R_VIS(gc->col)) return;
 
@@ -7981,9 +8018,9 @@ static char
     return result;
 }
 
-static double PDF_StrWidth(const char *str,
-			   const pGEcontext gc,
-			   pDevDesc dd)
+double PDF_StrWidth(const char *str,
+                    const pGEcontext gc,
+                    pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
@@ -8040,10 +8077,10 @@ static double PDF_StrWidthUTF8(const char *str,
     }
 }
 
-static void PDF_MetricInfo(int c,
-			   const pGEcontext gc,
-			   double* ascent, double* descent,
-			   double* width, pDevDesc dd)
+void PDF_MetricInfo(int c,
+                    const pGEcontext gc,
+                    double* ascent, double* descent,
+                    double* width, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int face = gc->fontface;
@@ -8266,7 +8303,7 @@ SEXP PDF(SEXP args)
     double height, width, ps;
     int i, onefile, pagecentre, major, minor, dingbats, useKern, useCompression;
     SEXP fam, fonts;
-    Rboolean fillOddEven;
+    Rboolean fillOddEven, offline;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
@@ -8306,6 +8343,9 @@ SEXP PDF(SEXP args)
     useCompression = asLogical(CAR(args)); args = CDR(args);
     if (useCompression == NA_LOGICAL)
 	error(_("invalid value of '%s'"), "useCompression");
+    offline = asLogical(CAR(args)); args = CDR(args);
+    if (offline == NA_LOGICAL)
+	error(_("invalid value of '%s'"), "offline");
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -8317,7 +8357,7 @@ SEXP PDF(SEXP args)
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
 			    dingbats, useKern, fillOddEven,
-			    useCompression)) {
+			    useCompression, offline)) {
 	    /* we no longer get here: error is thrown in PDFDeviceDriver */
 	    error(_("unable to start %s() device"), "pdf");
 	}
