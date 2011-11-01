@@ -23,6 +23,7 @@
 #endif
 
 #include <stdlib.h> /* for putenv */
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <R_ext/Riconv.h>
 #include <Rinterface.h>

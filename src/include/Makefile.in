@@ -19,7 +19,7 @@ OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 ## Non-API internal ones:
 INT_HEADERS = Colors.h Defn.h Errormsg.h Fileio.h Graphics.h GraphicsBase.h \
    IOStuff.h Internal.h Parse.h Print.h Rconnections.h Rdevices.h \
-   Rdynpriv.h Rgraphics.h Rinlinedfuns.h Startup.h
+   Rdynpriv.h Rgraphics.h Rinlinedfuns.h Rsignals.h Startup.h
 
 DISTFILES = Makefile.in Makefile.win README $(INT_HEADERS) $(SRC_HEADERS) \
   config.h.in stamp-h.in Rmath.h0.in memcheck.h valgrind.h

@@ -75,6 +75,7 @@
 #define VALGRIND_LEVEL 0
 #endif
 
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEgetDevice */
 #include <R_ext/Rdynload.h>

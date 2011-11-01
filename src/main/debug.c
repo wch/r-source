@@ -22,7 +22,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#define R_USE_SIGNALS 1
+#include <Defn.h>
 
 SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

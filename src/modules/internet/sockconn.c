@@ -28,6 +28,7 @@
 
 /* ------------------- socket connections  --------------------- */
 
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>

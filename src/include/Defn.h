@@ -154,11 +154,13 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP y);
 
 extern void R_ProcessEvents(void);
 
+#ifdef R_USE_SIGNALS
 #ifdef Win32
 # include <psignal.h>
 #else
 # include <signal.h>
 # include <setjmp.h>
+#endif
 #endif
 
 #ifdef Unix
@@ -267,6 +269,7 @@ extern int putenv(char *string);
 # endif
 #endif
 
+#ifdef R_USE_SIGNALS
 #ifdef HAVE_POSIX_SETJMP
 # define SIGJMP_BUF sigjmp_buf
 # define SIGSETJMP(x,s) sigsetjmp(x,s)
@@ -281,6 +284,7 @@ extern int putenv(char *string);
 # define JMP_BUF jmp_buf
 # define SETJMP(x) setjmp(x)
 # define LONGJMP(x,i) longjmp(x,i)
+#endif
 #endif
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
@@ -443,6 +447,7 @@ typedef union { void *p; int i; } IStackval;
 # endif
 #endif
 
+#ifdef R_USE_SIGNALS
 /* Stack entry for pending promises */
 typedef struct RPRSTACK {
     SEXP promise;
@@ -519,6 +524,7 @@ BUI   0 0 0 0 0 0 0 1 = 64
 #define IS_RESTART_BIT_SET(flags) ((flags) & CTXT_RESTART)
 #define SET_RESTART_BIT_ON(flags) (flags |= CTXT_RESTART)
 #define SET_RESTART_BIT_OFF(flags) (flags &= ~CTXT_RESTART)
+#endif
 
 /* Miscellaneous Definitions */
 #define streql(s, t)	(!strcmp((s), (t)))
@@ -592,9 +598,11 @@ extern0 SEXP*	R_PPStack;	    /* The pointer protection stack */
 LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern0 SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern0 SEXP*	R_SymbolTable;	    /* The symbol table */
+#ifdef R_USE_SIGNALS
 LibExtern RCNTXT R_Toplevel;	    /* Storage for the toplevel environment */
 LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel environment */
 LibExtern RCNTXT* R_GlobalContext;    /* The global environment */
+#endif
 extern0 Rboolean R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern0 int	R_BrowseLines	INI_as(0);	/* lines/per call in browser */
@@ -607,7 +615,9 @@ extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
 extern uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
 extern0 int	R_CStackDir	INI_as(1);	/* C stack direction */
 
+#ifdef R_USE_SIGNALS
 extern0 struct RPRSTACK *R_PendingPromises INI_as(NULL); /* Pending promise stack */
+#endif
 
 /* File Input/Output */
 LibExtern Rboolean R_Interactive INI_as(TRUE);	/* TRUE during interactive use*/
@@ -943,7 +953,6 @@ SEXP Rf_EnsureString(SEXP);
 
 SEXP Rf_allocCharsxp(R_len_t);
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
-void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 void check1arg(SEXP, SEXP, const char *);
 void Rf_checkArityCall(SEXP, SEXP, SEXP);
 void CheckFormals(SEXP);
@@ -965,8 +974,6 @@ SEXP duplicated(SEXP, Rboolean);
 SEXP duplicated3(SEXP, SEXP, Rboolean);
 int any_duplicated(SEXP, Rboolean);
 int any_duplicated3(SEXP, SEXP, Rboolean);
-SEXP dynamicfindVar(SEXP, RCNTXT*);
-void endcontext(RCNTXT*);
 int envlength(SEXP);
 SEXP evalList(SEXP, SEXP, SEXP, int);
 SEXP evalListKeepMissing(SEXP, SEXP);
@@ -974,7 +981,6 @@ int factorsConform(SEXP, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);
-int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
 int get1index(SEXP, SEXP, int, int, int, SEXP);
 SEXP getVar(SEXP, SEXP);
@@ -998,11 +1004,9 @@ void InitStringHash(void);
 void Init_R_Variables(SEXP);
 void InitTempDir(void);
 void initStack(void);
-void R_InsertRestartHandlers(RCNTXT *, Rboolean);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);
-void R_JumpToContext(RCNTXT *, int, SEXP);
 void jump_to_toplevel(void);
 void KillAllDevices(void);
 SEXP levelsgets(SEXP, SEXP);
@@ -1067,10 +1071,6 @@ void ssort(SEXP*,int);
 int StrToInternal(const char *);
 SEXP strmat2intmat(SEXP, SEXP, SEXP);
 SEXP substituteList(SEXP, SEXP);
-SEXP R_syscall(int,RCNTXT*);
-int R_sysparent(int,RCNTXT*);
-SEXP R_sysframe(int,RCNTXT*);
-SEXP R_sysfunction(int,RCNTXT*);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2symbol(SEXPTYPE);
@@ -1083,6 +1083,22 @@ int usemethod(const char *, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
 SEXP vectorIndex(SEXP, SEXP, int, int, int, SEXP);
 SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
                         SEXP (*)(SEXP, int), SEXP, SEXP);
+
+#ifdef R_USE_SIGNALS
+void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP dynamicfindVar(SEXP, RCNTXT*);
+void endcontext(RCNTXT*);
+int framedepth(RCNTXT*);
+void R_InsertRestartHandlers(RCNTXT *, Rboolean);
+void R_JumpToContext(RCNTXT *, int, SEXP);
+SEXP R_syscall(int,RCNTXT*);
+int R_sysparent(int,RCNTXT*);
+SEXP R_sysframe(int,RCNTXT*);
+SEXP R_sysfunction(int,RCNTXT*);
+
+void R_run_onexits(RCNTXT *);
+void R_restore_globals(RCNTXT *);
+#endif
 
 /* ../main/bind.c */
 SEXP ItemName(SEXP, int);
@@ -1098,9 +1114,6 @@ R_size_t R_GetMaxNSize(void);
 void R_SetMaxNSize(R_size_t);
 R_size_t R_Decode2Long(char *p, int *ierr);
 void R_SetPPSize(R_size_t);
-
-void R_run_onexits(RCNTXT *);
-void R_restore_globals(RCNTXT *);
 
 /* ../main/devices.c, used in memory.c, gnuwin32/extra.c */
 #define R_MaxDevices 64

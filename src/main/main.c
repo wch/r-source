@@ -30,6 +30,7 @@
 #include <string.h>
 
 #define __MAIN__
+#define R_USE_SIGNALS 1
 #include "Defn.h"
 #include "Rinterface.h"
 #include "IOStuff.h"
