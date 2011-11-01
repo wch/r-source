@@ -58,7 +58,7 @@ abs(Im(sin(asin(1i))) -	 1) < 2*Meps
 ##P (1 - Im(sin(asin(Ii))))/Meps
 ##P (1 - Im(cos(acos(Ii))))/Meps
 abs(Im(asin(sin(1i))) -	 1) < 2*Meps
-cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
+all.equal(cos(1i), cos(-1i)) # i.e. Im(acos(*)) gives + or - 1i:
 abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
 
 
