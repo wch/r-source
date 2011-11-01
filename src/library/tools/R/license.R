@@ -74,6 +74,7 @@ function()
                          c(license_db[has_abbrev & has_version,
                                       c("Abbrev", "Version")],
                            list(sep = "-")))))
+    ## codetools squawks here about 'Version'
     license_names_or_abbrevs_without_version <-
         Filter(nzchar,
                unlist(subset(license_db, Version == "",
