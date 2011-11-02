@@ -34,7 +34,7 @@
       (but it can still be queried, e.g., for font metric info).
       
       \item \code{pdf()} accepts forms like \code{file = "|lpr"} in the
-      same way as \code{postscript()}, on Unix-alikes.
+      same way as \code{postscript()}.
     }
   }
   

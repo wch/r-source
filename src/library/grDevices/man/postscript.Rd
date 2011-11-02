@@ -25,10 +25,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{file}{a character string giving the name of the file.  If it is
     \code{""}, the output is piped to the command given by the argument
     \code{command}.
-#ifdef unix
     If it is of the form \code{"|cmd"}, the output is piped to the
     command given by \command{cmd}.
-#endif
 
     For use with \code{onefile = FALSE} give a \code{printf} format such
     as \code{"Rplot\%03d.ps"} (the default in that case).  The string
@@ -331,13 +329,13 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     device by \code{dev.off} immediately.
   }
 #ifdef windows
-  Only the first of these will work on Windows, and the default
+  On Windows the default
   \code{"printcmd"} is empty and will give an error if
   \code{print.it=TRUE} is used.  Suitable commands to spool a PostScript
   file to a printer can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
   run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
-  which may be more convenient (it requires Ghostscript version 6.0
+  which may be more convenient (it requires Ghostscript version 6.50
   or later).
 #endif
 }

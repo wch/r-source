@@ -10,6 +10,8 @@
       \item \command{R CMD INSTALL} for a package with compiled code
       will fail if compilation fails for any of the installed
       sub-architectures: use \option{--no-multiarch} to override this.
+
+      \item \code{postscript(file = "|cmd")} now works on Windows.
     }
   }
 }

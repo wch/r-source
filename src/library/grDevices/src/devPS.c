@@ -3524,11 +3524,6 @@ static void SetFont(int font, int size, pDevDesc dd)
     }
 }
 
-#ifdef Win32
-/* exists, but does not work on GUI processes */
-# undef HAVE_POPEN
-#endif
-
 static void PS_cleanup(int stage, pDevDesc dd, PostScriptDesc *pd)
 {
     switch (stage) {
@@ -3549,11 +3544,6 @@ static Rboolean PS_Open(pDevDesc dd, PostScriptDesc *pd)
     char buf[512];
 
     if (strlen(pd->filename) == 0) {
-#ifdef Win32
-	PS_cleanup(4, dd, pd);
-	error(_("printing via file = \"\" is not implemented in this version"));
-	return FALSE;
-#else
 	if(strlen(pd->command) == 0) return FALSE;
 	errno = 0;
 	pd->psfp = R_popen(pd->command, "w");
@@ -3563,13 +3553,7 @@ static Rboolean PS_Open(pDevDesc dd, PostScriptDesc *pd)
 	    error(_("cannot open 'postscript' pipe to '%s'"), pd->command);
 	    return FALSE;
 	}
-#endif
     } else if (pd->filename[0] == '|') {
-#ifdef Win32
-	PS_cleanup(4, dd, pd);
-	error(_("file = \"|cmd\" is not implemented in this version"));
-	return FALSE;
-#else
 	errno = 0;
 	pd->psfp = R_popen(pd->filename + 1, "w");
 	pd->open_type = 1;
@@ -3579,7 +3563,6 @@ static Rboolean PS_Open(pDevDesc dd, PostScriptDesc *pd)
 		    pd->filename + 1);
 	    return FALSE;
 	}
-#endif
     } else {
 	snprintf(buf, 512, pd->filename, pd->fileno + 1); /* file 1 to start */
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
@@ -5384,9 +5367,7 @@ typedef struct {
 
     FILE *pdffp;        /* output file */
     FILE *mainfp;
-#ifndef Win32
     FILE *pipefp;
-#endif
 
     /* This group of variables track the current device status.
      * They should only be set by routines that emit PDF. */
@@ -7012,7 +6993,6 @@ static void PDF_endfile(PDFDesc *pd)
     rewind(pd->pdffp);
     fprintf(pd->pdffp, "%%PDF-%i.%i\n", pd->versionMajor, pd->versionMinor);
     fclose(pd->pdffp);
-#ifndef Win32
     if (pd->open_type == 1) {
 	char buf[APPENDBUFSIZE];
 	int nc;
@@ -7025,7 +7005,6 @@ static void PDF_endfile(PDFDesc *pd)
 	pclose(pd->pipefp);
 	unlink(pd->filename);
     }
-#endif
 }
 
 
@@ -7037,11 +7016,6 @@ static Rboolean PDF_Open(pDevDesc dd, PDFDesc *pd)
         return TRUE;
     
     if (pd->filename[0] == '|') {
-#ifdef Win32
-	PDFcleanup(6, pd);
-	error(_("file = \"|cmd\" is not implemented in this version"));
-	return FALSE;
-#else
 	strncpy(pd->cmd, pd->filename + 1, PATH_MAX);
 	char *tmp = R_tmpnam("Rpdf", R_TempDir);
 	strncpy(pd->filename, tmp, PATH_MAX);
@@ -7058,7 +7032,6 @@ static Rboolean PDF_Open(pDevDesc dd, PDFDesc *pd)
 	    pd->onefile = TRUE;
 	    warning(_("file = \"|cmd\" implies 'onefile = TRUE'"));
 	}
-#endif
     } else pd->open_type = 0;
     snprintf(buf, 512, pd->filename, pd->fileno + 1); /* file 1 to start */
     /* NB: this must be binary to get tell positions and line endings right,
