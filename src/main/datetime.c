@@ -73,8 +73,8 @@
     It is available on Cygwin, FreeBSD, Mac OS X, Linux and Solaris.
 
     currentTime() (in this file) uses
-    clock_gettime(): AIX, FreeBSD, Linux, Solaris
-    gettimeofday():  Mac OS X, Windows, (Cygwin)
+    clock_gettime(): AIX, FreeBSD, Linux, Solaris, Windows (recent)
+    gettimeofday():  Mac OS X, Windows (older), Cygwin
     time() (as ultimate fallback, AFAIK unused).
 
     proc.time() uses currentTime() for elapsed time,

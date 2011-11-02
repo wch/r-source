@@ -32,7 +32,6 @@
 
 #include <stdio.h>
 #include <time.h>
-#define R_USE_SIGNALS 1
 #include "Defn.h"
 #include "Fileio.h"
 #include <direct.h>
