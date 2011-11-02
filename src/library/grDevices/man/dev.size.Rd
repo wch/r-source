@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev.size}
@@ -24,7 +24,9 @@ dev.size(units = c("in", "cm", "px"))
 \seealso{
   The size information in inches can be obtained by
   \code{\link{par}("din")}, but this provides a way to access it
-  independent of the graphics sub-system in use.
+  independent of the graphics sub-system in use.  Note that
+  \code{par("din")} is only updated when a new plot is started, whereas
+  \code{dev.size} tracks the size as an on-screen device is resized. 
 }
 \examples{
 dev.size("cm")
