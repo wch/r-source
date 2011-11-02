@@ -67,7 +67,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             for(e in enc) {
                 if(is.na(e)) next
                 zz <- file(file, encoding = e)
-                res <- tryCatch(readLines(zz), error = identity)
+                res <- tryCatch(readLines(zz, warn = FALSE), error = identity)
                 close(zz)
                 if(!inherits(res, "error")) { encoding <- e; break }
             }
@@ -83,13 +83,13 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    file <- file(filename, "r", encoding = encoding)
 	    on.exit(close(file))
             if (isTRUE(keep.source)) {
-	    	lines <- readLines(file)
+	    	lines <- readLines(file, warn = FALSE)
 	    	on.exit()
 	    	close(file)
             	srcfile <- srcfilecopy(filename, lines)
 	    } else
             	from_file <- TRUE
-            
+
             ## We translated the file (possibly via a guess),
             ## so don't want to mark the strings.as from that encoding
             ## but we might know what we have encoded to, so
@@ -102,7 +102,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             else "unknown"
 	}
     } else {
-    	lines <- readLines(file)
+    	lines <- readLines(file, warn = FALSE)
     	if (isTRUE(keep.source))
     	    srcfile <- srcfilecopy(deparse(substitute(file)), lines)
     }
@@ -112,7 +112,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         op <- options(keep.source = FALSE)
         on.exit(options(op), add = TRUE)
     } else op <- NULL
-    if (!from_file) 
+    if (!from_file)
         exprs <- .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
     else
     	exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
@@ -259,9 +259,9 @@ function(file, envir = baseenv(), chdir = FALSE,
 		   topLevelEnvironment = as.environment(envir))
     on.exit(options(oop))
     if (keep.source) {
-    	lines <- readLines(file)
+    	lines <- readLines(file, warn = FALSE)
     	srcfile <- srcfilecopy(file, lines)
-    	exprs <- parse(text=lines, srcfile=srcfile)
+    	exprs <- parse(text = lines, srcfile = srcfile)
     } else
     	exprs <- parse(n = -1, file = file)
     if (length(exprs) == 0L)
