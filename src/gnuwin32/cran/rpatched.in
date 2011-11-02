@@ -36,7 +36,7 @@
 <h1>R-@FULLVERSION@ build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(45 megabytes, 32/64 bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(46 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li>New features in this version: <a href="CHANGES.@RWVER@.html">Windows specific</a>, <a href="NEWS.@RWVER@.html">all platforms</a>.</li>
@@ -52,7 +52,8 @@ in this version against the official release before reporting them. </p>
 <h2>Frequently asked questions</h2>
 
 <ul>
-  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How
+  do I install R when using Windows 7 or Vista?</a></li>
   <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
   <li><a href="../../windows/base/rw-FAQ.html#Should-I-run-32_002dbit-or-64_002dbit-R_003f">Should I run 32-bit or 64-bit R?</a></li>
 </ul>
