@@ -23,6 +23,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
+#ifdef unix
+    If it is of the form \code{"|cmd"}, the output is piped to the
+    command given by \command{cmd}.
+#endif
+    
     For use with \code{onefile = FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
     (See \code{\link{postscript}} for further details.)
@@ -31,7 +36,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     inches.  The default values are \code{7}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file with name containing the page
-    number for each page.  Defaults to \code{TRUE}.}
+    number for each page.  Defaults to \code{TRUE}, and forced to true
+    if \code{file} is a pipe.}
   \item{family}{the font family to be used, see
     \code{\link{postscript}}.  Defaults to \code{"Helvetica"}.}
   \item{title}{title string to embed as the \samp{/Title} field in the
@@ -214,6 +220,15 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   }
 
   At very small line widths, the line type may be forced to solid.
+}
+
+\section{Printing}{
+  Except on Windows it is possible to print directly from \code{pdf} by
+  something like (this is appropriate for a CUPS printing system):
+\preformatted{
+    pdf("|lp -o landscape", paper = "a4r")
+}
+  This forces \code{onefile = TRUE}.
 }
 
 \note{

@@ -27,7 +27,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \code{command}.
 #ifdef unix
     If it is of the form \code{"|cmd"}, the output is piped to the
-    command given by \file{cmd}.
+    command given by \command{cmd}.
 #endif
 
     For use with \code{onefile = FALSE} give a \code{printf} format such
