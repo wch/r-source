@@ -5797,8 +5797,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		const char *title, SEXP fonts,
 		int versionMajor, int versionMinor,
 		const char *colormodel, int dingbats, int useKern,
-		Rboolean fillOddEven, Rboolean useCompression,
-                Rboolean offline)
+		Rboolean fillOddEven, Rboolean useCompression)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5815,7 +5814,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     /* Check and extract the device parameters */
 
-    if(strlen(file) > PATH_MAX - 1) {
+    /* 'file' could be NULL */
+    if(file && strlen(file) > PATH_MAX - 1) {
 	/* not yet created PDFcleanup(0, pd); */
 	free(dd);
 	error(_("filename too long in %s()"), "pdf");
@@ -5854,7 +5854,11 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
 
     /* initialize PDF device description */
-    strcpy(pd->filename, file);
+    /* 'file' could be NULL */
+    if (file) 
+        strcpy(pd->filename, file);
+    else 
+        strcpy(pd->filename, "nullPDF");
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
     memset(pd->fontUsed, 0, 100*sizeof(Rboolean));
@@ -5871,8 +5875,11 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     pd->width = width;
     pd->height = height;
-   
-    pd->offline = offline;
+
+    if (file)
+        pd->offline = FALSE;
+    else 
+        pd->offline = TRUE;
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	PDFcleanup(3, pd);
@@ -8328,11 +8335,14 @@ SEXP PDF(SEXP args)
     double height, width, ps;
     int i, onefile, pagecentre, major, minor, dingbats, useKern, useCompression;
     SEXP fam, fonts;
-    Rboolean fillOddEven, offline;
+    Rboolean fillOddEven;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = translateChar(asChar(CAR(args)));  args = CDR(args);
+    if (isNull(CAR(args)))
+        file = NULL;
+    else 
+        file = translateChar(asChar(CAR(args)));  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);
     fam = CAR(args); args = CDR(args);
     if(length(fam) == 1)
@@ -8368,9 +8378,6 @@ SEXP PDF(SEXP args)
     useCompression = asLogical(CAR(args)); args = CDR(args);
     if (useCompression == NA_LOGICAL)
 	error(_("invalid value of '%s'"), "useCompression");
-    offline = asLogical(CAR(args)); args = CDR(args);
-    if (offline == NA_LOGICAL)
-	error(_("invalid value of '%s'"), "offline");
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -8382,7 +8389,7 @@ SEXP PDF(SEXP args)
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
 			    dingbats, useKern, fillOddEven,
-			    useCompression, offline)) {
+			    useCompression)) {
 	    /* we no longer get here: error is thrown in PDFDeviceDriver */
 	    error(_("unable to start %s() device"), "pdf");
 	}

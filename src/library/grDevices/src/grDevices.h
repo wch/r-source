@@ -62,8 +62,7 @@ Rboolean
 PDFDeviceDriver(pDevDesc, const char *, const char *, const char *,
 		const char **, const char *, const char *, const char *,
 		double, double, double, int, int, const char*, SEXP,
-		int, int, const char *, int, int, Rboolean, Rboolean,
-                Rboolean);
+		int, int, const char *, int, int, Rboolean, Rboolean);
 
 #ifdef WIN32
 SEXP devga(SEXP);

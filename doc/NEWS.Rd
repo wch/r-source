@@ -29,13 +29,14 @@
       invoked by \code{X \%x\% Y} if either \code{X} or \code{Y} is an S4
       object.
 
-      \item \code{pdf()} now has an \code{offline} argument.  If that is
-      set to \code{TRUE} then the device does NOT create a PDF file
-      (but it can still be queried, e.g., for font metric info).
-      
       \item \code{pdf()} accepts forms like \code{file = "|lpr"} in the
       same way as \code{postscript()}.
-    }
+
+      \item \code{pdf()} accepts \code{file = NULL}.
+      This means that the device does NOT create a PDF file
+      (but it can still be queried, e.g., for font metric info).
+      
+}
   }
   
   \subsection{PACKAGE parallel}{

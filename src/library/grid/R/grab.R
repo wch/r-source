@@ -205,7 +205,7 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
   # Start an "offline" PDF device for this function
     # .Call("R_GD_nullDevice", PACKAGE = "grDevices")
-    pdf(offline = TRUE)
+    pdf(file=NULL)
     on.exit(dev.off())
     # Run the graphics code in expr
     # Rely on lazy evaluation for correct "timing"
