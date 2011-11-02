@@ -261,9 +261,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{\link{embedFonts}},
   \code{\link{Devices}},
   \code{\link{postscript}}.
-#ifdef unix
-  
+
+#ifdef unix  
   \code{\link{cairo_pdf}} and (on Mac OS X only) \code{\link{quartz}}
+  for other devices that can produce PDF.
+#endif
+#ifdef windows  
+  \code{\link{cairo_pdf}} and (on Mac OS X only) \code{quartz}
   for other devices that can produce PDF.
 #endif
 

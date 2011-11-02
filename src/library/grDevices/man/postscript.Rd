@@ -27,7 +27,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \code{command}.
 #ifdef unix
     If it is of the form \code{"|cmd"}, the output is piped to the
-    command given by \file{cmd}.
+    command given by \command{cmd}.
 #endif
 
     For use with \code{onefile = FALSE} give a \code{printf} format such
@@ -337,7 +337,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   file to a printer can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
   run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
-  which may be more convenient (it requires Ghostscript version 6.0
+  which may be more convenient (it requires Ghostscript version 6.50
   or later).
 #endif
 }
@@ -383,9 +383,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{\link{Devices}},
   and \code{\link{check.options}} which is called from both
   \code{\link{ps.options}} and \code{postscript}.
-#ifdef unix
+
   \code{\link{cairo_ps}} for another device that can produce PostScript.
-#endif
 
   More details of font families and encodings and especially handling
   text in a non-Latin-1 encoding and embedding fonts can be found in
