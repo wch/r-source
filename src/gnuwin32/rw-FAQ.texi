@@ -143,7 +143,8 @@ release.
 
 Current binary versions of R run on Windows XP or later, including on
 64-bit versions: @xref{Can I use R on 64-bit Windows?}. The last version
-known to run on Windows 2000 was 2.12.2.
+known to run on Windows 2000 was 2.12.2 and the last version supporting
+95/98/ME/NT4 was 2.6.1.
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 goes end of life 2014-04-08

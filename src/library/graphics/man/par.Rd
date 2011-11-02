@@ -279,7 +279,9 @@ par(\dots, no.readonly = FALSE)
       Note that \code{c(\link{strwidth}(ch), \link{strheight}(ch))} for
       a given string \code{ch} is usually much more precise.}
     \item{\code{din}}{\emph{\bold{R.O.}}; the device dimensions,
-      \code{(width,height)}, in inches.}
+      \code{(width,height)}, in inches.  See also
+      \code{\link{dev.size}}, which is updated immediately when an
+      on-screen device windows is re-sized.}
     \item{\code{err}}{(\emph{Unimplemented}; \R is silent when points
       outside the plot region are \emph{not} plotted.)
       The degree of error reporting desired.}
