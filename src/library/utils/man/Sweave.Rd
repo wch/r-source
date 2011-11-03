@@ -64,11 +64,12 @@ Stangle(file, driver = Rtangle(),
   of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
   statement in a document.
   
-  Non-ASCII source files should contain a line of the form
+  Non-ASCII source files must contain a line of the form
 \preformatted{\usepackage[foo]{inputenc}}
-  but if none is supplied the value of the \code{encoding} argument is
-  used (and if that is empty, Latin-1).  Re-encoding can be turned off
-  completely with \code{encoding = "bytes"}.
+  (where \samp{foo} is typically \samp{latin1}, \samp{latin2}, \samp{utf8} or
+  \samp{cp1252} or \samp{cp1250}) or they will give an error.
+  Re-encoding can be turned off completely with argument \code{encoding
+    = "bytes"}.
 }
 
 \section{Syntax Definition}{

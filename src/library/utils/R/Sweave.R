@@ -90,7 +90,7 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     namedchunks <- list()
     prevfilenum <- 0L
-    prevlinediff <- 0L    
+    prevlinediff <- 0L
     for (linenum in seq_along(text)) {
     	line <- text[linenum]
     	filenum <- srcFilenum[linenum]
@@ -145,13 +145,13 @@ Sweave <- function(file, driver = RweaveLatex(),
                                     basename(file), '"', sep=""))
                 }
             }
-            if (mode == "code" && 
+            if (mode == "code" &&
                 (prevfilenum != filenum ||
                  prevlinediff != linediff)) {
                 file <- srcFilenames[filenum]
                 line <- c(paste("#line ", linenum+linediff, ' "', basename(file), '"', sep=""),
                           line)
-            }             
+            }
             srclines <- c(attr(chunk, "srclines"), rep(linenum+linediff, length(line)))
             srcfilenum <- c(attr(chunk, "srcFilenum"), rep(filenum, length(line)))
 	    chunk <- c(chunk, line)
@@ -207,10 +207,9 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             enc <- if (nzchar(encoding)) {
                 encoding
             } else {
-                warning(sQuote(basename(file)),
-                        " has unknown encoding: assuming Latin-1",
+                stop(sQuote(basename(file)),
+                        " is not ASCII and does not declare an encoding",
                         domain = NA, call. = FALSE)
-                "latin1"
             }
         } else if (enc == "unknown") {
             stop(sQuote(basename(file)),
@@ -232,7 +231,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             stop(gettextf("object %s does not have class \"SweaveSyntax\"",
                           sQuote(sname)), domain = NA)
         text <- text[-pos]
-        srcLinenum <- srcLinenum[-pos]       
+        srcLinenum <- srcLinenum[-pos]
     }
     srcFilenum <- rep(1, length(srcLinenum))
 
@@ -252,7 +251,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 	    pre <- seq_len(pos-1L)
 	    post <- seq_len(length(text) - pos) + pos
 	    text <- c(text[pre], itext, text[post])
-	    
+
 	    srcLinenum <- c(srcLinenum[pre], attr(itext, "srcLinenum"),
 	    		    srcLinenum[post])
 	    srcFilenum <- c(srcFilenum[pre], attr(itext, "srcFilenum")+length(f),
@@ -265,7 +264,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     attr(text, "files") <- f
     attr(text, "encoding") <- enc
     attr(text, "srcLinenum") <- srcLinenum
-    attr(text, "srcFilenum") <- srcFilenum    
+    attr(text, "srcFilenum") <- srcFilenum
     text
 }
 
