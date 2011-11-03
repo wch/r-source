@@ -366,8 +366,8 @@ characters.  The canonical form is as shown in the example, and a
 version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
 were @samp{0.1-0}.
 
-The mandatory @samp{License} field should specify the license of the package in
-the following standardized form.  Alternatives are indicated @emph{via}
+The mandatory @samp{License} field should specify the license of the
+package in a standardized form.  Alternatives are indicated @emph{via}
 vertical bars.  Individual specifications must be one of
 @itemize @bullet
 @item
@@ -465,6 +465,10 @@ this specification; in @R{} 2.14.0 or later, the @samp{Author} and
 @samp{Maintainer} fields are auto-generated from it if needed when
 building or installing.
 
+Several optional fields take @emph{logical values}: these can be
+specified as @samp{yes}, @samp{true}, @samp{no} or @samp{false}:
+capitalized values are also accepted.
+
 The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
@@ -472,25 +476,24 @@ format conforming to the ISO 8601 standard.
 The @samp{Depends} field gives a comma-separated list of package names
 which this package depends on.  The package name may be optionally
 followed by a comment in parentheses.  The comment should contain a
-comparison operator@footnote{only @samp{>=} is supported for package
-versions by @code{install.packages}.}, whitespace and a valid version
-number.  You can also use the special package name @samp{R} if your
-package depends on a certain version of @R{} --- e.g., if the package
-works only with @R{} version 2.11.0 or later, include @samp{R (>=
-2.11.0)} in the @samp{Depends} field.  You can also require a certain
-SVN revision for R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>=
-r56550)} requires a version later than R-devel of late July 2011.  Both
-@code{library} and the @R{} package checking facilities use this field:
-hence it is an error to use improper syntax or misuse the @samp{Depends}
-field for comments on other software that might be needed.  Other
-dependencies (external to the @R{} system) should be listed in the
-@samp{SystemRequirements} field, possibly amplified in a separate
-@file{README} file.  The @R{} @command{INSTALL} facilities check if the
-version of @R{} used is recent enough for the package being installed,
-and the list of packages which is specified will be attached (after
-checking version requirements) before the current package, both when
-@code{library} is called and when preparing for lazy-loading during
-installation.
+comparison operator, whitespace and a valid version number.  You can
+also use the special package name @samp{R} if your package depends on a
+certain version of @R{} --- e.g., if the package works only with @R{}
+version 2.11.0 or later, include @samp{R (>= 2.11.0)} in the
+@samp{Depends} field.  You can also require a certain SVN revision for
+R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)}
+requires a version later than R-devel of late July 2011 (including
+released versions of 2.14.0).  Both @code{library} and the @R{} package
+checking facilities use this field: hence it is an error to use improper
+syntax or misuse the @samp{Depends} field for comments on other software
+that might be needed.  Other dependencies (external to the @R{} system)
+should be listed in the @samp{SystemRequirements} field, possibly
+amplified in a separate @file{README} file.  The @R{} @command{INSTALL}
+facilities check if the version of @R{} used is recent enough for the
+package being installed, and the list of packages which is specified
+will be attached (after checking version requirements) before the
+current package, both when @code{library} is called and when preparing
+for lazy-loading during installation.
 
 A package (or @samp{R}) can appear more than once in the @samp{Depends},
 but only the first occurrence will be used in versions of @R{} prior to
@@ -588,32 +591,30 @@ Paths containing white space or quotes need to be quoted.  An
 OS-specific collation field (@samp{Collate.unix} or
 @samp{Collate.windows}) will be used instead of @samp{Collate}.
 
-The @samp{LazyData} field controls whether the @R{} datasets use
-lazy-loading: set the field's value to @samp{yes} or @samp{true} for
-lazy-loading and @samp{no} or @samp{false} for no lazy-loading.
-(Capitalized values are also accepted.)  The @samp{LazyLoad} field was
-used in versions prior to 2.14.0, but now is ignored (with a warning if
-a false value is supplied).
+The @samp{LazyData} logical field controls whether the @R{} datasets use
+lazy-loading.  The @samp{LazyLoad} field was used in versions prior to
+2.14.0, but now is ignored (with a warning if a false value is
+supplied).
 
-The @samp{KeepSource} field controls if the package code is sourced
+The @samp{KeepSource} logical field controls if the package code is sourced
 using @code{keep.source = TRUE} or @code{FALSE}: it might be needed
 exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
-The @samp{ByteCompile} field controls if the package code is
+The @samp{ByteCompile} logical field controls if the package code is
 byte-compiled on installation: the default is currently not to, so this
 may be useful for a package known to benefit particularly from
 byte-compilation (which can take quite a long time and increases the
 installed size of the package).
 
-The @samp{ZipData} field controls whether the automatic Windows build
-will zip up the data directory or not: set this to @samp{no} if your
-package will not work with a zipped data directory.  (Setting to any
-other value is deprecated, and it is unused as from @R{} 2.13.0: but it
+The @samp{ZipData} logical field controls whether the automatic Windows
+build will zip up the data directory or not: set this to @samp{no} if
+your package will not work with a zipped data directory.  (Setting to
+any other value is deprecated, and it is unused from @R{} 2.13.0: but it
 might still be needed if the package can be installed under earlier
 versions of @R{}.)
 
-The @samp{BuildVignettes} field can be set to a false value to stop
+The @samp{BuildVignettes} logical field can be set to a false value to stop
 @command{R CMD build} from attempting to rebuild the vignettes, as well
 as preventing @command{R CMD check} from testing this.  This should only
 be used exceptionally, for example if the PDFs need large figures which
