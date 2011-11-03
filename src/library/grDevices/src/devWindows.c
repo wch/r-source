@@ -487,7 +487,7 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, 0, "R Graphics Output", R_NilValue, 1, 4,
-			"rgb", TRUE, TRUE, xd->fillOddEven, useCompression, FALSE))
+			"rgb", TRUE, TRUE, xd->fillOddEven, useCompression))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
