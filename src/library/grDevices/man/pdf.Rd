@@ -79,7 +79,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{useDingbats}{logical.  Should small circles be rendered
     \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
     smaller and better output.  Setting this to \code{FALSE} can work
-    around font display problems in broken PDF viewers.
+    around font display problems in broken PDF viewers: although this
+    font is one of the 14 guaranteed to be available in all PDF viewers,
+    that guarantee is not always honoured.
 #ifdef unix
     See the \sQuote{Note} for a possible fix for such viewers.
 #endif
@@ -269,6 +271,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Some further workarounds for problems with symbol fonts on
   viewers using \sQuote{fontconfig} are given in the \sQuote{Cairo Fonts}
   section of the help for \code{\link{X11}}.
+#endif
+#ifdef windows
+  The TeXworks PDF viewer is one of those which has been seen to fail to
+  display Dingbats correctly.  Whereas on other platforms the problems
+  seen are incorrect output, on Windows points are silently omitted.  One
+  workaround is to use the argument \code{useDingbats = FALSE}: another
+  it to use a better PDF viewer.
 #endif
 }
 
