@@ -158,6 +158,12 @@ designed to exploit.  It can also be used with several computers
 running the same version of \R{} connected by (reasonable-speed)
 ethernet: the computers need not be running the same OS.
 
+Note that all these methods of communication use
+\code{serialize}/\code{unserialize} to send \R{} objects between
+processes.  This has limits (typically hundreds of millions of
+elements) which a well-designed parallelized algorithm should not
+approach.
+
 %<<>>=
 %library(parallel)
 %@
@@ -337,8 +343,9 @@ pre-computed coefficients for $k$ steps ahead.  For $k = 2^{127}$, the
 seed is advanced by $k$ steps by \R{} call
 \code{.Random.seed <- nextRNGStream(.Random.seed)}.
 
+% use \verb to get consistent quote mapping.
 The \citet{lecuyer.1999} generator is available in \R{} as from
-version 2.14.0 \emph{via} \code{RNGkind("L'Ecuyer-CMRG")}.  Thus using
+version 2.14.0 \emph{via} \verb|RNGkind("L'Ecuyer-CMRG")|.  Thus using
 the ideas of \citet{lecuyer.2002} is as simple as
 \begin{verbatim}
 RNGkind("L'Ecuyer-CMRG")
@@ -627,6 +634,10 @@ package \pkg{fork}), and note that \code{mckill} is not as general as
 Aliased functions \code{collect} and \code{parallel} are no longer provided.
 
 \subsection{Differences from snow}
+
+\pkg{snow} set a timeout that exceeded the maximum value required by
+POSIX, and did not provide a means to set the timeout on the workers.
+This resulted in process interlocks on Solaris.
 
 \code{makeCluster} creates PVM, MPI or NWS clusters by calling \pkg{snow}.
 
