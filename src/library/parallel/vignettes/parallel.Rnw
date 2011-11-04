@@ -433,7 +433,7 @@ code is package \pkg{boot}, version \code{1.3-3} or later.
 library(parallel)
 @
 
-Probably the most common use of coarse-grained paralllelization in
+Probably the most common use of coarse-grained parallelization in
 statistics is to do multiple simulation runs, for example to do large
 numbers of bootstrap replicates or several runs of an MCMC simulation.
 We show an example of each.
@@ -658,7 +658,7 @@ so multiple processes can be logged.
 \code{clusterMap()} gains \code{SIMPLIFY} and \code{USE.NAMES}
 arguments to make it a parallel version of \code{mapply} and \code{Map}.
 
-The timimng interface has not been copied.
+The timing interface has not been copied.
 
 \bibliographystyle{jss}
 \bibliography{parallel}
