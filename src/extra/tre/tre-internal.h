@@ -114,8 +114,8 @@ typedef short tre_cint_t;
 #ifdef TRE_USE_SYSTEM_WCTYPE
 /* Use system provided iswctype() and wctype(). */
 typedef wctype_t tre_ctype_t;
-#define tre_isctype iswctype
-#define tre_ctype   wctype
+#define tre_isctype(c, type) iswctype(c, type)
+#define tre_ctype(s)   wctype(s)
 #else /* !TRE_USE_SYSTEM_WCTYPE */
 /* Define our own versions of iswctype() and wctype(). */
 typedef int (*tre_ctype_t)(tre_cint_t);
@@ -151,8 +151,13 @@ typedef struct tnfa_transition tre_tnfa_transition_t;
 
 struct tnfa_transition {
   /* Range of accepted characters. */
+#if 0 /* [i_a] must be able to carry the full span of all [Unicode] character codes *PLUS* these 'specials': TAG, PARAMETER, BACKREF, ASSERTION and EMPTY */
   tre_cint_t code_min;
   tre_cint_t code_max;
+#else
+  int code_min;
+  int code_max;
+#endif
   /* Pointer to the destination state. */
   tre_tnfa_transition_t *state;
   /* ID number of the destination state. */
@@ -166,7 +171,7 @@ struct tnfa_transition {
   /* Assertion parameters. */
   union {
     /* Character class assertion. */
-    tre_ctype_t class;
+    tre_ctype_t classt;
     /* Back reference assertion. */
     int backref;
   } u;

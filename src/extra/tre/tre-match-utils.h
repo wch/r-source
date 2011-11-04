@@ -64,7 +64,7 @@
 		  }							      \
 		else							      \
 		  {							      \
-		    pos_add_next = w;					      \
+		    pos_add_next = (unsigned int)w;					      \
 		    str_byte += w;					      \
 		  }							      \
 	      }								      \
@@ -161,11 +161,11 @@
 #define CHECK_CHAR_CLASSES(trans_i, tnfa, eflags)                             \
   (((trans_i->assertions & ASSERT_CHAR_CLASS)                                 \
        && !(tnfa->cflags & REG_ICASE)                                         \
-       && !tre_isctype((tre_cint_t)prev_c, trans_i->u.class))                 \
+       && !tre_isctype((tre_cint_t)prev_c, trans_i->u.classt))                \
     || ((trans_i->assertions & ASSERT_CHAR_CLASS)                             \
         && (tnfa->cflags & REG_ICASE)                                         \
-        && !tre_isctype(tre_tolower((tre_cint_t)prev_c),trans_i->u.class)     \
-	&& !tre_isctype(tre_toupper((tre_cint_t)prev_c),trans_i->u.class))    \
+        && !tre_isctype(tre_tolower((tre_cint_t)prev_c),trans_i->u.classt)    \
+	&& !tre_isctype(tre_toupper((tre_cint_t)prev_c),trans_i->u.classt))       \
     || ((trans_i->assertions & ASSERT_CHAR_CLASS_NEG)                         \
         && tre_neg_char_classes_match(trans_i->neg_classes,(tre_cint_t)prev_c,\
                                       tnfa->cflags & REG_ICASE)))

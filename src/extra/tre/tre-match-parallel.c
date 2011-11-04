@@ -221,7 +221,7 @@ tre_tnfa_run_parallel(const tre_tnfa_t *tnfa, const void *string, int len,
       if (str_byte >= orig_str + 1)
 	prev_c = (unsigned char)*(str_byte - 1);
       next_c = (unsigned char)*str_byte;
-      pos = str_byte - orig_str;
+      pos = (int)(str_byte - orig_str);
       if (len < 0 || pos < len)
 	str_byte++;
     }

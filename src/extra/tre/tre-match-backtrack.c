@@ -186,7 +186,7 @@ typedef struct tre_backtrack_struct {
       str_byte = stack->item.str_byte;					      \
       BT_STACK_WIDE_OUT;						      \
       state = stack->item.state;					      \
-      next_c = stack->item.next_c;					      \
+      next_c = (tre_char_t)stack->item.next_c;					      \
       for (i = 0; i < tnfa->num_tags; i++)				      \
 	tags[i] = stack->item.tags[i];					      \
       BT_STACK_MBSTATE_OUT;						      \
@@ -632,7 +632,7 @@ tre_tnfa_run_backtrack(const tre_tnfa_t *tnfa, const void *string,
 		    }
 		}
 	      DPRINT(("restarting from next start position\n"));
-	      next_c = next_c_start;
+	      next_c = (tre_char_t)next_c_start;
 #ifdef TRE_MBSTATE
 	      mbstate = mbstate_start;
 #endif /* TRE_MBSTATE */

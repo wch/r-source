@@ -123,22 +123,23 @@ tre_new_item(tre_mem_t mem, int min, int max, int *i, int *max_i,
 
 /* Expands a character class to character ranges. */
 static reg_errcode_t
-tre_expand_ctype(tre_mem_t mem, tre_ctype_t class, tre_ast_node_t ***items,
+tre_expand_ctype(tre_mem_t mem, tre_ctype_t classt, tre_ast_node_t ***items,
 		 int *i, int *max_i, int cflags)
 {
   reg_errcode_t status = REG_OK;
   tre_cint_t c;
-  int j, min = -1, max = 0;
+  tre_cint_t j;
+  int min = EMPTY, max = 0;
   assert(TRE_MB_CUR_MAX == 1);
 
   DPRINT(("  expanding class to character ranges\n"));
   for (j = 0; (j < 256) && (status == REG_OK); j++)
     {
       c = j;
-      if (tre_isctype(c, class)
+      if (tre_isctype(c, classt)
 	  || ((cflags & REG_ICASE)
-	      && (tre_isctype(tre_tolower(c), class)
-		  || tre_isctype(tre_toupper(c), class))))
+	      && (tre_isctype(tre_tolower(c), classt)
+		  || tre_isctype(tre_toupper(c), classt))))
 {
 	  if (min < 0)
 	    min = c;
@@ -148,7 +149,7 @@ tre_expand_ctype(tre_mem_t mem, tre_ctype_t class, tre_ast_node_t ***items,
 	{
 	  DPRINT(("  range %c (%d) to %c (%d)\n", min, min, max, max));
 	  status = tre_new_item(mem, min, max, i, max_i, items);
-	  min = -1;
+	  min = EMPTY;
 	}
     }
   if (min >= 0 && status == REG_OK)
@@ -184,7 +185,6 @@ int tre_isascii_func(tre_cint_t c) { return tre_isascii(c); }
 #else /* !tre_isascii */
 int tre_isascii_func(tre_cint_t c) { return !(c >> 7); }
 #endif /* !tre_isascii */
-
 
 #ifdef tre_isblank
 int tre_isblank_func(tre_cint_t c) { return tre_isblank(c); }
@@ -255,7 +255,7 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 {
   const tre_char_t *re = ctx->re;
   reg_errcode_t status = REG_OK;
-  tre_ctype_t class = (tre_ctype_t)0;
+  tre_ctype_t classt = (tre_ctype_t)0;
   int i = *num_items;
   int max_i = *items_size;
   int skip;
@@ -278,7 +278,7 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 	{
 	  tre_cint_t min = 0, max = 0;
 
-	  class = (tre_ctype_t)0;
+	  classt = (tre_ctype_t)0;
 	  if (re + 2 < ctx->re_end
 	      && *(re + 1) == CHAR_MINUS && *(re + 2) != CHAR_RBRACKET)
 	    {
@@ -302,7 +302,7 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 	    {
 	      char tmp_str[64];
 	      const tre_char_t *endptr = re + 2;
-	      int len;
+	      size_t len;
 	      DPRINT(("tre_parse_bracket:  class: '%.*" STRF "'\n", REST(re)));
 	      while (endptr < ctx->re_end && *endptr != CHAR_COLON)
 		endptr++;
@@ -312,7 +312,7 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 #ifdef TRE_WCHAR
 		  {
 		    tre_char_t tmp_wcs[64];
-		    wcsncpy(tmp_wcs, re + 2, (size_t)len);
+		    wcsncpy(tmp_wcs, re + 2, len);
 		    tmp_wcs[len] = L'\0';
 #if defined HAVE_WCSRTOMBS
 		    {
@@ -330,15 +330,15 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 #endif /* !TRE_WCHAR */
 		  tmp_str[len] = '\0';
 		  DPRINT(("  class name: %s\n", tmp_str));
-		  class = tre_ctype(tmp_str);
-		  if (!class)
+		  classt = tre_ctype(tmp_str);
+		  if (!classt)
 		    status = REG_ECTYPE;
 		  /* Optimize character classes for 8 bit character sets. */
 		  if (status == REG_OK && TRE_MB_CUR_MAX == 1)
 		    {
-		      status = tre_expand_ctype(ctx->mem, class, items,
+		      status = tre_expand_ctype(ctx->mem, classt, items,
 						&i, &max_i, ctx->cflags);
-		      class = (tre_ctype_t)0;
+		      classt = (tre_ctype_t)0;
 		      skip = 1;
 		    }
 		  re = endptr + 2;
@@ -361,22 +361,22 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 	  if (status != REG_OK)
 	    break;
 
-	  if (class && negate)
+	  if (classt && negate)
 	    if (*num_neg_classes >= MAX_NEG_CLASSES)
 	      status = REG_ESPACE;
 	    else
-	      neg_classes[(*num_neg_classes)++] = class;
+	      neg_classes[(*num_neg_classes)++] = classt;
 	  else if (!skip)
 	    {
 	      status = tre_new_item(ctx->mem, min, max, &i, &max_i, items);
 	      if (status != REG_OK)
 		break;
-	      ((tre_literal_t*)((*items)[i-1])->obj)->u.class = class;
+	      ((tre_literal_t*)((*items)[i-1])->obj)->u.classt = classt;
 	    }
 
 	  /* Add opposite-case counterpoints if REG_ICASE is present.
 	     This is broken if there are more than two "same" characters. */
-	  if (ctx->cflags & REG_ICASE && !class && status == REG_OK && !skip)
+	  if (ctx->cflags & REG_ICASE && !classt && status == REG_OK && !skip)
 	    {
 	      tre_cint_t cmin, ccurr;
 
@@ -458,8 +458,8 @@ tre_parse_bracket(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
       min = l->code_min;
       max = l->code_max;
 
-      DPRINT(("item: %d - %d, class %ld, curr_max = %d\n",
-	      (int)l->code_min, (int)l->code_max, (long)l->u.class, curr_max));
+      DPRINT(("item: %d - %d, class %p, curr_max = %d\n",
+	      (int)l->code_min, (int)l->code_max, (void *)l->u.classt, curr_max));
 
       if (negate)
 	{
@@ -831,7 +831,7 @@ tre_parse_bound(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
   /* Create the AST node(s). */
   if (min == 0 && max == 0)
     {
-      *result = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+      *result = tre_ast_new_literal(ctx->mem, EMPTY, EMPTY, -1);
       if (*result == NULL)
 	return REG_ESPACE;
     }
@@ -1352,7 +1352,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 		     subexpression was closed.	POSIX leaves the meaning of
 		     this to be implementation-defined.	 We interpret this as
 		     an empty expression (which matches an empty string).  */
-		  result = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+		  result = tre_ast_new_literal(ctx->mem, EMPTY, EMPTY, -1);
 		  if (result == NULL)
 		    return REG_ESPACE;
 		  if (!(ctx->cflags & REG_EXTENDED))
@@ -1645,7 +1645,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 		{
 		  DPRINT(("tre_parse:	    empty: '%.*" STRF "'\n",
 			  REST(ctx->re)));
-		  result = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+		  result = tre_ast_new_literal(ctx->mem, EMPTY, EMPTY, -1);
 		  if (!result)
 		    return REG_ESPACE;
 		  break;
@@ -1715,7 +1715,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 	    if (result->submatch_id >= 0)
 	      {
 		tre_ast_node_t *n, *tmp_node;
-		n = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+		n = tre_ast_new_literal(ctx->mem, EMPTY, EMPTY, -1);
 		if (n == NULL)
 		  return REG_ESPACE;
 		tmp_node = tre_ast_new_catenation(ctx->mem, n, result);

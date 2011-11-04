@@ -23,7 +23,7 @@ typedef struct {
   const tre_char_t *re_start;
   /* The first character after the end of the regexp. */
   const tre_char_t *re_end;
-  int len;
+  size_t len;
   /* Current submatch ID. */
   int submatch_id;
   /* Current position (number of literal). */
