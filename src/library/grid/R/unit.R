@@ -113,6 +113,15 @@ convertNative <- function(unit, dimension="x", type="location") {
               valueOnly=TRUE)
 }
 
+# This is like the "convert" functions:  it evaluates units (immediately)
+# in the current context
+calcStringMetric <- function(text) {
+    # .Call rather than .Call.graphics because it is a one-off calculation
+    metric <- grid.Call("L_stringMetric", text)
+    names(metric) <- c("ascent", "descent", "width")
+    metric
+}
+
 # NOTE: the order of the strings in these conversion functions must
 # match the order of the enums in ../src/grid.h
 # AND in ../src/unit.c (see UnitTable)
@@ -122,17 +131,19 @@ convertNative <- function(unit, dimension="x", type="location") {
                      "points", "picas", "bigpts",
                      "dida", "cicero", "scaledpts",
                      "strwidth", "strheight",
+                     "strascent", "strdescent",
                      "vplayoutwidth", "vplayoutheight", "char",
                      "grobx", "groby", "grobwidth", "grobheight",
+                     "grobascent", "grobdescent",
                      "mylines", "mychar", "mystrwidth", "mystrheight")
 
 stringUnit <- function(unit) {
-    unit == "strwidth" | unit == "strheight"
+    unit %in% c("strwidth", "strheight", "strascent", "strdescent")
 }
 
 grobUnit <- function(unit) {
-    unit == "grobwidth" | unit == "grobheight" |
-    unit == "grobx" | unit == "groby"
+    unit %in% c("grobx", "groby", "grobwidth", "grobheight",
+                "grobascent", "grobdescent")
 }
 
 dataUnit <- function(unit) {
@@ -591,6 +602,30 @@ stringHeight <- function(string) {
     unit(rep(1, n), "strheight", data=data)
 }
 
+stringAscent <- function(string) {
+    n <- length(string)
+    if (is.language(string)) {
+        data <- vector("list", n)
+        for (i in 1L:n)
+            data[[i]] <- string[i]
+    } else {
+        data <- as.list(as.character(string))
+    }
+    unit(rep(1, n), "strascent", data=data)
+}
+
+stringDescent <- function(string) {
+    n <- length(string)
+    if (is.language(string)) {
+        data <- vector("list", n)
+        for (i in 1L:n)
+            data[[i]] <- string[i]
+    } else {
+        data <- as.list(as.character(string))
+    }
+    unit(rep(1, n), "strdescent", data=data)
+}
+
 convertTheta <- function(theta) {
     if (is.character(theta))
         # Allow some aliases for common angles
@@ -689,6 +724,48 @@ grobHeight.default <- function(x) {
   unit(1, "grobheight", data=gPathDirect(as.character(x)))
 }
 
+# grobAscent
+grobAscent <- function(x) {
+  UseMethod("grobAscent")
+}
+
+grobAscent.grob <- function(x) {
+  unit(1, "grobascent", data=x)
+}
+
+grobAscent.gList <- function(x) {
+  unit(rep(1, length(gList)), "grobascent", data=x)
+}
+
+grobAscent.gPath <- function(x) {
+  unit(1, "grobascent", data=x)
+}
+
+grobAscent.default <- function(x) {
+  unit(1, "grobascent", data=gPathDirect(as.character(x)))
+}
+
+# grobDescent
+grobDescent <- function(x) {
+  UseMethod("grobDescent")
+}
+
+grobDescent.grob <- function(x) {
+  unit(1, "grobdescent", data=x)
+}
+
+grobDescent.gList <- function(x) {
+  unit(rep(1, length(gList)), "grobdescent", data=x)
+}
+
+grobDescent.gPath <- function(x) {
+  unit(1, "grobdescent", data=x)
+}
+
+grobDescent.default <- function(x) {
+  unit(1, "grobdescent", data=gPathDirect(as.character(x)))
+}
+
 #########################
 # Function to decide which values in a unit are "absolute" (do not depend
 # on parent's drawing context or size)
@@ -700,7 +777,7 @@ absolute <- function(unit) {
                c("cm", "inches", "lines", "null",
                  "mm", "points", "picas", "bigpts",
                  "dida", "cicero", "scaledpts",
-                 "strwidth", "strheight", "char",
+                 "strwidth", "strheight", "strascent", "strdescent", "char",
                  "mylines", "mychar", "mystrwidth", "mystrheight")))
 }
 

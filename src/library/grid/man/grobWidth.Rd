@@ -6,6 +6,8 @@
 \name{grobWidth}
 \alias{grobWidth}
 \alias{grobHeight}
+\alias{grobAscent}
+\alias{grobDescent}
 \title{Create a Unit Describing the Width of a Grob}
 \description{
   These functions create a unit object describing the width or height of
@@ -14,6 +16,8 @@
 \usage{
 grobWidth(x)
 grobHeight(x)
+grobAscent(x)
+grobDescent(x)
 }
 \arguments{
   \item{x}{A grob object.}

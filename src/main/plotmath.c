@@ -3134,6 +3134,47 @@ double GEExpressionHeight(SEXP expr,
     return fabs(toDeviceHeight(height, GE_INCHES, dd));
 }
 
+void GEExpressionMetric(SEXP expr,
+                        const pGEcontext gc,
+                        double *ascent, double *descent, double *width,
+                        pGEDevDesc dd)
+{
+    BBOX bbox;
+    double height;
+
+    /*
+     * Build a "drawing context" for the current expression
+     */
+    mathContext mc;
+    mc.BaseCex = gc->cex;
+    mc.BoxColor = name2col("pink");
+    mc.CurrentStyle = STYLE_D;
+    /*
+     * Some "empty" values.  Will be filled in after BBox is calc'ed
+     */
+    mc.ReferenceX = 0;
+    mc.ReferenceY = 0;
+    mc.CurrentX = 0;
+    mc.CurrentY = 0;
+    mc.CurrentAngle = 0;
+    mc.CosAngle = 0;
+    mc.SinAngle = 0;
+
+    SetFont(PlainFont, gc);
+    bbox = RenderElement(expr, 0, &mc, gc, dd);
+    height = bboxHeight(bbox) + bboxDepth(bbox);
+    /* NOTE that we do fabs() here in case the device
+     * draws top-to-bottom (like an X11 window).
+     * This is so that these calculations match those
+     * for string widths and heights, where the width
+     * and height of text is positive no matter how
+     * the device drawing is oriented.
+     */
+    *width = fabs(toDeviceWidth(bboxWidth(bbox), GE_INCHES, dd));
+    *ascent = fabs(toDeviceHeight(bboxHeight(bbox), GE_INCHES, dd));
+    *descent = fabs(toDeviceHeight(bboxDepth(bbox), GE_INCHES, dd));
+}
+
 void GEMathText(double x, double y, SEXP expr,
 		double xc, double yc, double rot,
 		pGEcontext gc,

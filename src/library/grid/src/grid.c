@@ -3542,3 +3542,79 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
     return result;
 }
 
+/*
+ * ****************************************
+ * Calculating text metrics
+ *
+ * ****************************************
+ */
+SEXP L_stringMetric(SEXP label)
+{
+    int i, n;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
+    LViewportContext vpc;
+    R_GE_gcontext gc;
+    LTransform transform;
+    SEXP currentvp, currentgp;
+    SEXP txt;
+    SEXP result = R_NilValue;
+    SEXP ascent = R_NilValue;
+    SEXP descent = R_NilValue;
+    SEXP width = R_NilValue;
+    const void *vmax;
+    double asc, dsc, wid;
+    /* Get the current device 
+     */
+    pGEDevDesc dd = getDevice();
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    getViewportContext(currentvp, &vpc);
+    /* The label can be a string or an expression
+     */
+    PROTECT(txt = label);
+    if (isSymbol(txt) || isLanguage(txt))
+	txt = coerceVector(txt, EXPRSXP);
+    else if (!isExpression(txt))
+	txt = coerceVector(txt, STRSXP);
+    n = LENGTH(txt);
+    vmax = vmaxget();
+    PROTECT(ascent = allocVector(REALSXP, n));
+    PROTECT(descent = allocVector(REALSXP, n));
+    PROTECT(width = allocVector(REALSXP, n));
+    if (n > 0) {
+	for (i=0; i<n; i++) {
+	    gcontextFromgpar(currentgp, i, &gc, dd);
+            if (isExpression(txt))
+                GEExpressionMetric(VECTOR_ELT(txt, i % LENGTH(txt)), &gc, 
+                                   &asc, &dsc, &wid,
+                                   dd);
+            else 
+                GEStrMetric(CHAR(STRING_ELT(txt, i)), 
+                            getCharCE(STRING_ELT(txt, i)), &gc,
+                            &asc, &dsc, &wid,
+                            dd);
+            /*
+             * Reverse the scale adjustment (zoom factor)
+             * when calculating physical value to return to user-level
+             */
+            REAL(ascent)[i] = fromDeviceHeight(asc, GE_INCHES, dd) / 
+                REAL(gridStateElement(dd, GSS_SCALE))[0];
+            REAL(descent)[i] = fromDeviceHeight(dsc, GE_INCHES, dd) /
+                REAL(gridStateElement(dd, GSS_SCALE))[0];
+            REAL(width)[i] = fromDeviceWidth(wid, GE_INCHES, dd) /
+                REAL(gridStateElement(dd, GSS_SCALE))[0];
+	}
+    }
+    PROTECT(result = allocVector(VECSXP, 3));
+    SET_VECTOR_ELT(result, 0, ascent);
+    SET_VECTOR_ELT(result, 1, descent);
+    SET_VECTOR_ELT(result, 2, width);    
+    vmaxset(vmax);
+    UNPROTECT(5);
+    return result;
+}
+

@@ -175,6 +175,8 @@ typedef enum {
      */
     L_STRINGWIDTH = 14,
     L_STRINGHEIGHT = 15,
+    L_STRINGASCENT = 16,
+    L_STRINGDESCENT = 17,
     /* L_LINES now means multiples of the line height.
      * This is multiples of the font size.
      */
@@ -183,13 +185,15 @@ typedef enum {
     L_GROBY = 20,
     L_GROBWIDTH = 21,
     L_GROBHEIGHT = 22,
+    L_GROBASCENT = 23,
+    L_GROBDESCENT = 24,
     /*
      * No longer used
      */
-    L_MYLINES = 23,
-    L_MYCHAR = 24,
-    L_MYSTRINGWIDTH = 25,
-    L_MYSTRINGHEIGHT = 26
+    L_MYLINES = 103,
+    L_MYCHAR = 104,
+    L_MYSTRINGWIDTH = 105,
+    L_MYSTRINGHEIGHT = 106
 } LUnit;
 
 typedef enum {
@@ -301,6 +305,8 @@ SEXP L_locator();
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);
 SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol);
+
+SEXP L_stringMetric(SEXP label);
 
 /* From matrix.c */
 double locationX(LLocation l);

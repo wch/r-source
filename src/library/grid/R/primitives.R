@@ -1300,6 +1300,24 @@ heightDetails.text <- function(x) {
     unit(bounds[4L], "inches")
 }
 
+ascentDetails.text <- function(x) {
+    if (length(x$label) == 1) {
+        metrics <- grid.Call(L_stringMetric, as.graphicsAnnot(x$label))
+        unit(metrics[[1]], "inches")
+    } else {
+        heightDetails(x)
+    }
+}
+
+descentDetails.text <- function(x) {
+    if (length(x$label) == 1) {
+        metrics <- grid.Call(L_stringMetric, as.graphicsAnnot(x$label))
+        unit(metrics[[2]], "inches")
+    } else {
+        unit(0, "inches")
+    }
+}
+
 textGrob <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                      just="centre", hjust=NULL, vjust=NULL,
                      rot=0, check.overlap=FALSE,

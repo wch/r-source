@@ -2534,6 +2534,73 @@ double GEStrHeight(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDes
 }
 
 /****************************************************************
+ * GEStrMetric
+ ****************************************************************
+
+ * This does not (currently) depend on the encoding.  It depends on
+ * the string only through the number of lines of text (via embedded
+ * \n) and we assume they are never part of an mbc.
+ */
+void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc, 
+                 double *ascent, double *descent, double *width,
+                 pGEDevDesc dd)
+{
+    /*
+     * If the fontfamily is a Hershey font family, call R_GE_VStrHeight
+     */
+    int vfontcode = VFontFamilyCode(gc->fontfamily);
+    *ascent = 0.0;
+    *descent = 0.0;
+    *width = 0.0;
+    if (vfontcode >= 0) {
+	/*
+	 * It should be straightforward to figure this out, but
+	 * just haven't got around to it yet
+	 */
+    } else {
+	double h;
+	const char *s;
+	double asc, dsc, wid;
+	/* cra is based on the font pointsize at the
+	 * time the device was created.
+	 * Adjust for potentially different current pointsize
+	 * This is a crude calculation that might be better
+	 * performed using a device call that responds with
+	 * the current font pointsize in device coordinates.
+	 */
+        double lineheight = gc->lineheight * gc->cex * dd->dev->cra[1] *
+                            gc->ps/dd->dev->startps;
+	int n;
+	/* Count the lines of text minus one */
+	n = 0;
+	for(s = str; *s ; s++)
+	    if (*s == '\n')
+		n++;
+        /* Where is the start of the last line? */
+        if (n > 0) {
+            while (*s != '\n') 
+                s--;
+            s++;
+        } else {
+            s = str;
+        }
+	h = n * lineheight;
+        /* Find the largest ascent and descent for the last line of text
+         */
+        while (*s) {
+            GEMetricInfo(*s, gc, &asc, &dsc, &wid, dd);
+            if (asc > *ascent)
+                *ascent = asc;
+            if (dsc > *descent)
+                *descent = dsc;
+            s++;
+        }
+        *ascent = *ascent + h;
+        *width = GEStrWidth(str, enc, gc ,dd);
+    }
+}
+
+/****************************************************************
  * GENewPage
  ****************************************************************
  */

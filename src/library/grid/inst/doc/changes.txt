@@ -1,3 +1,23 @@
+Changes from grid_2.14.0 to grid_2.15.0:
+--------------------------------------
+
+1.  Added calcStringMetric() function.
+
+2.  Added "strascent" and "strdescent" units, plus 
+    stringAscent() and stringDescent() convenience functions.
+
+3.  Added "grobascent" and "grobdescent" units, plus 
+    grobAscent() and grobDescent() convenience functions.
+
+    The "ascent" of a grob is equivalent to its height by default,
+    but ascentDetails() methods can be written 
+    (e.g., text grobs are different).
+
+    The "descent" of a grob is zero by default,
+    but descentDetails() methods can be written 
+    (e.g., text grobs are different).
+
+
 Changes from grid_2.12.0 to grid_2.13.0:
 --------------------------------------
 

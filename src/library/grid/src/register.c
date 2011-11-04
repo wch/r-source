@@ -81,6 +81,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_textBounds", (DL_FUNC) &L_textBounds, 7},
     {"L_xsplineBounds", (DL_FUNC) &L_xsplineBounds, 8},
     {"L_xsplinePoints", (DL_FUNC) &L_xsplinePoints, 8},
+    {"L_stringMetric", (DL_FUNC) &L_stringMetric, 1},
     { NULL, NULL, 0 }
 };
 

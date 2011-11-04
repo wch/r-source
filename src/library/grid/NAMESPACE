@@ -7,6 +7,7 @@ export(
        # Conversion of units
        "convertUnit", "convertX", "convertY",
        "convertWidth", "convertHeight",
+       "calcStringMetric",
        # Deprecated conversion functions
        "convertNative",
        "grid.convertWidth", "grid.convertX", "grid.convertY",
@@ -31,8 +32,9 @@ export(
        "unit",
        "is.unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
-       "stringWidth", "stringHeight",
+       "stringWidth", "stringHeight", "stringAscent", "stringDescent",
        "grobX", "grobY", "grobWidth", "grobHeight",
+       "grobAscent", "grobDescent",
        "absolute.size",
 
        "valid.just",
@@ -49,6 +51,7 @@ export(
        "validDetails",
        "heightDetails", "widthDetails",
        "xDetails", "yDetails",
+       "ascentDetails", "descentDetails",
 
 #       "height", "heightDetails",
 #       "width", "widthDetails",
@@ -210,6 +213,15 @@ S3method("grobY", "gList")
 S3method("grobY", "gPath")
 S3method("grobY", "default")
 
+S3method("grobAscent", "grob")
+S3method("grobAscent", "gList")
+S3method("grobAscent", "gPath")
+S3method("grobAscent", "default")
+S3method("grobDescent", "grob")
+S3method("grobDescent", "gList")
+S3method("grobDescent", "gPath")
+S3method("grobDescent", "default")
+
 S3method("heightDetails", "arrows")
 S3method("heightDetails", "circle")
 S3method("heightDetails", "curve")
@@ -301,6 +313,13 @@ S3method("yDetails", "roundrect")
 S3method("yDetails", "segments")
 S3method("yDetails", "text")
 S3method("yDetails", "xspline")
+
+S3method("ascentDetails", "default")
+S3method("ascentDetails", "grob")
+S3method("ascentDetails", "text")
+
+S3method("descentDetails", "default")
+S3method("descentDetails", "text")
 
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")

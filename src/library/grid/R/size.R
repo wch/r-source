@@ -86,6 +86,24 @@ heightDetails.default <- function(x) {
   unit(1, "null")
 }
 
+ascentDetails <- function(x) {
+    UseMethod("ascentDetails", x)
+}
+
+ascentDetails.default <- heightDetails.default
+
+ascentDetails.grob <- function(x) {
+    heightDetails(x)
+}
+
+descentDetails <- function(x) {
+    UseMethod("descentDetails", x)
+}
+
+descentDetails.default <- function(x) {
+    unit(0, "inches")
+}
+
 #########
 # Some functions that might be useful for determining the sizes
 # of your grobs
