@@ -488,10 +488,9 @@ aspell_control_R_vignettes <-
 aspell_R_vignettes <-
 function(program = NULL)
 {
-    ## Currently, all vignettes are in grid.
     files <- Sys.glob(file.path(tools:::.R_top_srcdir_from_Rd(),
-                                "src", "library", "grid", "inst", "doc",
-                                "*.Snw"))
+                                "src", "library", "*", "vignettes",
+                                "*.Rnw"))
 
     program <- aspell_find_program(program)
 
