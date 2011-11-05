@@ -811,8 +811,11 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
     }
 
-    if (!fixed_opt && !perl_opt) { use_WC = use_UTF8; use_UTF8 = FALSE; }
-
+    if (!fixed_opt && !perl_opt) {
+	/* if we have non-ASCII text in a DBCS locale, we need to use wchar */
+	if (!useBytes && mbcslocale && !utf8locale) use_UTF8 =TRUE;
+	use_WC = use_UTF8; use_UTF8 = FALSE; 
+    }
     if (useBytes)
 	spat = CHAR(STRING_ELT(pat, 0));
     else if (use_WC) ;
@@ -1533,7 +1536,11 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
     }
 
-    if (!fixed_opt && !perl_opt) { use_WC = use_UTF8; use_UTF8 = FALSE; }
+    if (!fixed_opt && !perl_opt) {
+	/* if we have non-ASCII text in a DBCS locale, we need to use wchar */
+	if (!useBytes && mbcslocale && !utf8locale) use_UTF8 =TRUE;
+	use_WC = use_UTF8; use_UTF8 = FALSE; 
+    }
 
     if (useBytes) {
 	spat = CHAR(STRING_ELT(pat, 0));
@@ -2331,7 +2338,11 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
     }
 
-    if (!fixed_opt && !perl_opt) { use_WC = use_UTF8; use_UTF8 = FALSE; }
+    if (!fixed_opt && !perl_opt) {
+	/* if we have non-ASCII text in a DBCS locale, we need to use wchar */
+	if (!useBytes && mbcslocale && !utf8locale) use_UTF8 =TRUE;
+	use_WC = use_UTF8; use_UTF8 = FALSE; 
+    }
 
     if (useBytes)
 	spat = CHAR(STRING_ELT(pat, 0));
