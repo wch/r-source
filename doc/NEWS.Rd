@@ -163,6 +163,9 @@
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by
       Helios de Rosario Martinez).
+      
+      \item \code{tools::deparseLatex(dropBraces=TRUE)} could drop
+      text as well as braces.      
     }
   }
 }
