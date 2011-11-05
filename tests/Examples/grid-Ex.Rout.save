@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-09-04 r56935)
+R Under development (unstable) (2011-11-05 r57577)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -82,6 +82,84 @@ attr(,"class")
 > 
 > 
 > cleanEx()
+> nameEx("calcStringMetric")
+> ### * calcStringMetric
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: calcStringMetric
+> ### Title: Calculate Metric Information for Text
+> ### Aliases: calcStringMetric
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> grid.newpage()
+> grid.segments(.01, .5, .99, .5, gp=gpar(col="grey"))
+> metrics <- calcStringMetric(letters)
+> grid.rect(x=1:26/27,
++           width=unit(metrics$width, "inches"),
++           height=unit(metrics$ascent, "inches"),
++           just="bottom",
++           gp=gpar(col="red"))
+> grid.rect(x=1:26/27,
++           width=unit(metrics$width, "inches"),
++           height=unit(metrics$descent, "inches"),
++           just="top",
++           gp=gpar(col="red"))
+> grid.text(letters, x=1:26/27, just="bottom")
+> 
+> test <- function(x) {
++     grid.text(x, just="bottom")
++     metric <- calcStringMetric(x)
++     if (is.character(x)) {
++         grid.rect(width=unit(metric$width, "inches"),
++                   height=unit(metric$ascent, "inches"),
++                   just="bottom",
++                   gp=gpar(col=rgb(1,0,0,.5)))
++         grid.rect(width=unit(metric$width, "inches"),
++                   height=unit(metric$descent, "inches"),
++                   just="top",
++                   gp=gpar(col=rgb(1,0,0,.5)))
++     } else {
++         grid.rect(width=unit(metric$width, "inches"),
++                   y=unit(.5, "npc") + unit(metric[2], "inches"),
++                   height=unit(metric$ascent, "inches"),
++                   just="bottom",
++                   gp=gpar(col=rgb(1,0,0,.5)))
++         grid.rect(width=unit(metric$width, "inches"),
++                   height=unit(metric$descent, "inches"),
++                   just="bottom",
++                   gp=gpar(col=rgb(1,0,0,.5)))        
++     }
++ }
+> 
+> tests <- list("t",
++               "test",
++               "testy",
++               "test\ntwo",
++               expression(x),
++               expression(y),
++               expression(x + y),
++               expression(a + b),
++               expression(atop(x + y, 2)))
+> 
+> grid.newpage()
+> nrowcol <- n2mfrow(length(tests))
+> pushViewport(viewport(layout=grid.layout(nrowcol[1], nrowcol[2]),
++                       gp=gpar(cex=5, lwd=.5)))
+> for (i in 1:length(tests)) {
++     col <- (i - 1) %% nrowcol[2] + 1
++     row <- (i - 1) %/% nrowcol[2] + 1
++     pushViewport(viewport(layout.pos.row=row, layout.pos.col=col))
++     test(tests[[i]])
++     popViewport()
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("convertNative")
 > ### * convertNative
 > 
@@ -151,12 +229,12 @@ See help("Deprecated")
 +   just="left", name="C"))
 > pushViewport(viewport(width=0.8, height=0.8, name="D"))
 > current.vpPath()
-GRID.VP.55::A::C::D 
+GRID.VP.67::A::C::D 
 > upViewport(1)
 > current.vpPath()
-GRID.VP.55::A::C 
+GRID.VP.67::A::C 
 > current.vpTree()
-viewport[ROOT]->(viewport[GRID.VP.55]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
+viewport[ROOT]->(viewport[GRID.VP.67]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
 > current.viewport()
 viewport[C] 
 > current.vpTree(all=FALSE)
@@ -217,8 +295,8 @@ g1::g2
 > 
 > grid.grill()
 > getNames()
-[1] "GRID.text.135"     "GRID.rect.136"     "GRID.rect.137"    
-[4] "GRID.segments.138" "GRID.segments.139"
+[1] "GRID.text.168"     "GRID.rect.169"     "GRID.rect.170"    
+[4] "GRID.segments.171" "GRID.segments.172"
 > 
 > 
 > 
@@ -1728,7 +1806,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.428 0.159 5.629 0 0 
+Time elapsed:  1.998 0.029 2.042 0 0 
 > grDevices::dev.off()
 null device 
           1 

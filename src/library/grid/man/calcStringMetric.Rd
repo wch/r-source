@@ -85,8 +85,8 @@ nrowcol <- n2mfrow(length(tests))
 pushViewport(viewport(layout=grid.layout(nrowcol[1], nrowcol[2]),
                       gp=gpar(cex=5, lwd=.5)))
 for (i in 1:length(tests)) {
-    col <- (i - 1) %% nrowcol[2] + 1
-    row <- (i - 1) %/% nrowcol[2] + 1
+    col <- (i - 1) \%\% nrowcol[2] + 1
+    row <- (i - 1) \%/\% nrowcol[2] + 1
     pushViewport(viewport(layout.pos.row=row, layout.pos.col=col))
     test(tests[[i]])
     popViewport()
