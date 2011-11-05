@@ -17,8 +17,8 @@ LINKFLAGS+= -static-libgcc
 ## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
 WIN = 32
 BINPREF =
-# SYMPAT = 's/^.* [BCDRT] _/ /p' or 32-bit and older 64-bit toolchains
-# SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit >= May 2010
+# SYMPAT = 's/^.* [BCDRT] _/ /p' for 32-bit
+# SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit
 SYMPAT = @SYMPAT@
 IMPDIR = bin
 # flags for multilib builds, for compilers, dlltool and windres

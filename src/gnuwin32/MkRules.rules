@@ -1,10 +1,10 @@
 #-*- Makefile -*-
 
 ifeq "$(WIN)" "64"
-BINPREF = $(BINPREF64)
-SYMPAT = $(SYMPAT64)
 R_ARCH = /x64
 arch_DEFS = -DR_ARCH='"x64"'
+BINPREF = $(BINPREF64)
+SYMPAT = 's/^.* [BCDRT] / /p'
 else
 R_ARCH = /i386
 arch_DEFS = -DR_ARCH='"i386"'
