@@ -119,10 +119,9 @@
 #define HAVE_CHMOD 1
 
 /* Define to 1 if you have the `clock_gettime' function. */
+/* *Some* mingw-w64 versions have this (if winpthreads are included),
+   but it is just a wrapper for what we use directly */
 /* #undef HAVE_CLOCK_GETTIME */
-#if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
-# define HAVE_CLOCK_GETTIME 1
-#endif
 
 /* Define to 1 if you have the `clog' function. */
 #define HAVE_CLOG 1
