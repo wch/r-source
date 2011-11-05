@@ -17,77 +17,74 @@
 `?` <- function(e1, e2)
 {
     if (missing(e2)) {
-        type <- NULL
-    	topicExpr <- substitute(e1)
+	type <- NULL
+	topicExpr <- substitute(e1)
     } else {
-     	type <- substitute(e1)
-     	topicExpr <- substitute(e2)
+	type <- substitute(e1)
+	topicExpr <- substitute(e2)
     }
-    if (is.call(topicExpr) && topicExpr[[1L]] == "?") {
-            # ??foo is parsed as `?`(`?`(foo))
-            	search <- TRUE
-            	topicExpr <- topicExpr[[2L]]
-            	if (is.call(topicExpr) && topicExpr[[1L]] == "?"
-            	    && is.call(topicExpr[[2L]]) && topicExpr[[2L]][[1L]] == "?") {
-            	     cat("Contacting Delphi...")
-            	     flush.console()
-            	     Sys.sleep(2+rpois(1,2))
-            	     cat("the oracle is unavailable.\nWe apologize for any inconvenience.\n")
-            	     return(invisible())
-            	 }
-            } else
-            	search <- FALSE
+    search <- (is.call(topicExpr) && topicExpr[[1L]] == "?")
+    if(search) { # ??foo is parsed as `?`(`?`(foo))
+	topicExpr <- topicExpr[[2L]]
+	if (is.call(te <- topicExpr	 ) && te[[1L]] == "?" &&
+	    is.call(te <- topicExpr[[2L]]) && te[[1L]] == "?") {
+	    cat("Contacting Delphi...")
+	    flush.console()
+	    Sys.sleep(2+rpois(1,2))
+	    cat("the oracle is unavailable.\nWe apologize for any inconvenience.\n")
+	    return(invisible())
+	}
+    }
 
-    if (is.call(topicExpr) && (topicExpr[[1L]] == "::" || topicExpr[[1L]] == ":::")) {
-		package <- as.character(topicExpr[[2L]])
-		topicExpr <- topicExpr[[3L]]
-	    } else
-		package <- NULL
+    if (is.call(topicExpr) && (topicExpr[[1L]] == "::" ||
+			       topicExpr[[1L]] == ":::")) {
+	package <- as.character(topicExpr[[2L]])
+	topicExpr <- topicExpr[[3L]]
+    }
+    else
+	package <- NULL
 
     if (search) {
-	if (is.null(type))
+	if(is.null(type))
 	    return(eval(substitute(help.search(TOPIC, package = PACKAGE),
-							list(TOPIC = as.character(topicExpr),
-							      PACKAGE = package))))
+				   list(TOPIC = as.character(topicExpr),
+					PACKAGE = package))))
 	else
-	    return(eval(substitute(help.search(TOPIC, fields = FIELD, package = PACKAGE),
-	    						list(TOPIC = as.character(topicExpr),
-	    						      FIELD = as.character(type),
-	    						      PACKAGE = package))))
+	    return(eval(substitute(help.search(TOPIC, fields = FIELD,
+					       package = PACKAGE),
+				   list(TOPIC = as.character(topicExpr),
+					FIELD = as.character(type),
+					PACKAGE = package))))
     } else {
-        if (is.null(type)) {
+	if (is.null(type)) {
 	    if (is.call(topicExpr))
 		return(.helpForCall(topicExpr, parent.frame()))
-	    if (is.name(topicExpr))
-	    	topic <- as.character(topicExpr)
-	    else
-	    	topic <- e1
+	    topic <-
+		if(is.name(topicExpr)) as.character(topicExpr) else e1
 	    return(eval(substitute(help(TOPIC, package = PACKAGE),
-							list(TOPIC = topic,
-							      PACKAGE = package))))
+				   list(TOPIC = topic,
+					PACKAGE = package))))
 	} else {
 	    ## interpret e1 as a type, but to allow customization, do NOT
-            ## force arbitrary expressions to be single character strings
-            ## (so that methods can be defined for topicName).
-            if (is.name(type))
-		type <- as.character(type)
-	    else
-		type <- e1
-	    if (is.name(topicExpr))
-		topic <- as.character(topicExpr)
-            else {
-            	if (is.call(topicExpr) && identical(type, "method"))
-            	    return(.helpForCall(topicExpr, parent.frame(), FALSE))
-            	topic <- e2
-	    }
+	    ## force arbitrary expressions to be single character strings
+	    ## (so that methods can be defined for topicName).
+	    type <-
+		if(is.name(type)) as.character(type) else e1
+	    topic <-
+		if(is.name(topicExpr)) as.character(topicExpr)
+		else {
+		    if (is.call(topicExpr) && identical(type, "method"))
+			return(.helpForCall(topicExpr, parent.frame(), FALSE))
+		    e2
+		}
 	    doHelp <- .tryHelp(topicName(type, topic), package = package)
 	    if(inherits(doHelp, "try-error")) {
-                if(is.language(topicExpr))
-                  topicExpr <- deparse(topicExpr)
+		if(is.language(topicExpr))
+		    topicExpr <- deparse(topicExpr)
 		stop(gettextf("no documentation of type %s and topic %s (or error in processing help)",
-                              sQuote(type), sQuote(topicExpr)), domain = NA)
-            }
-        }
+			      sQuote(type), sQuote(topicExpr)), domain = NA)
+	    }
+	}
     }
 }
 
