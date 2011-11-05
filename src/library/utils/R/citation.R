@@ -519,7 +519,8 @@ function(x, style = "text", .bibstyle = "JSS", ...)
 
     .format_bibentry_via_Rd <- function(f) {
         out <- file()
-        on.exit(close(out))
+        saveopt <- tools::Rd2txt_options(width = getOption("width"))
+        on.exit({tools::Rd2txt_options(saveopt); close(out)})
         sapply(x,
                function(y) {
                    rd <- tools::toRd(y, style = .bibstyle)

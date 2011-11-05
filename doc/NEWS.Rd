@@ -36,6 +36,9 @@
       This means that the device does NOT create a PDF file
       (but it can still be queried, e.g., for font metric info).
       
+      \item \code{format()} (and hence \code{print()}) on
+      \code{"bibentry"} objects now uses \code{options("width")} to
+      set the output width.      
     }
   }
   
