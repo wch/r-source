@@ -1591,7 +1591,8 @@ static SEXP getFont(const char *family, const char *fontdbname) {
 	}
     }
     if (!found)
-	warning(_("font family not found in PostScript font database"));
+	warning(_("font family '%s' not found in PostScript font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
@@ -1625,7 +1626,8 @@ fontMetricsFileName(const char *family, int faceIndex,
 	}
     }
     if (!found)
-	warning(_("font family not found in PostScript font database"));
+	warning(_("font family '%s' not found in PostScript font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
@@ -1696,7 +1698,8 @@ static const char *getFontEncoding(const char *family, const char *fontdbname)
 	}
     }
     if (!found)
-	warning(_("font encoding not found in font database"));
+	warning(_("font encoding for family '%s' not found in font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
@@ -1722,7 +1725,8 @@ static const char *getFontName(const char *family, const char *fontdbname)
 	}
     }
     if (!found)
-	warning(_("font CMap not found in font database"));
+	warning(_("font CMap for family '%s' not found in font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
@@ -1748,7 +1752,8 @@ static const char *getFontCMap(const char *family, const char *fontdbname)
 	}
     }
     if (!found)
-	warning(_("font CMap not found in font database"));
+	warning(_("font CMap for family '%s' not found in font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
@@ -1775,7 +1780,8 @@ getCIDFontEncoding(const char *family, const char *fontdbname)
 	}
     }
     if (!found)
-	warning(_("font encoding not found in font database"));
+	warning(_("font encoding for family '%s' not found in font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
@@ -1801,7 +1807,8 @@ static const char *getCIDFontPDFResource(const char *family)
 	}
     }
     if (!found)
-	warning(_("font encoding not found in font database"));
+	warning(_("font encoding for family '%s' not found in font database"),
+		family);
     UNPROTECT(1);
     return result;
 }
