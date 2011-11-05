@@ -12,7 +12,18 @@
 
       \item In package \pkg{parallel}, \code{detectCores(logical =
 	FALSE)} makes an OS-dependent attempt to find the number of
-      physical cores.
+      physical cores. It usually succeeds, even on XP.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The fix for \PR{14543} caused stack problems with outputing
+      large \R objects (e.g. data frames of 25,000 items).  (\PR{14698})
+
+      In a double-byte locale (Chinese, Japanese, Korean), \code{grep()}
+      and friends might have used byte-wise matching of strings in the
+      native encoding.  (\PR{14622})
     }
   }
 }
