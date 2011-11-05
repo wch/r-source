@@ -39,7 +39,7 @@ deparseLatex <- function(x, dropBraces=FALSE) {
         TEXT = ,
         MACRO = ,
         COMMENT = result <- c(result, a),
-        BLOCK = result <- if (dropBraces && lastTag == "TEXT") deparseLatex(a) else c(result, "{", deparseLatex(a), "}"),
+        BLOCK = result <- c(result, if (dropBraces && lastTag == "TEXT") deparseLatex(a) else c("{", deparseLatex(a), "}")),
         ENVIRONMENT = result <- c(result, 
         	"\\begin{", a[[1L]], "}",
         	deparseLatex(a[[2L]]),
