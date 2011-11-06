@@ -14,6 +14,10 @@
       It can also do so on recent versions of Windows; however the
       default remains \code{detectCores(logical = TRUE)} on that
       platform.
+
+      \item Reference classes now keep a record of which fields are
+      locked.  \code{\$lock()} with no arguments returns the names
+      of the locked fields.
     }
   }
 
