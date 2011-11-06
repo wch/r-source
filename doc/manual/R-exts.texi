@@ -440,10 +440,13 @@ package. Some package listings may truncate the title to 65 characters.
 It should be capitalized, not use any markup, not have any continuation
 lines, and not end in a period.
 
-The mandatory @samp{Author} field describes who wrote the package.  It
-is a plain text field intended for human readers, but not for automatic
-processing (such as extracting the email addresses of all listed
-contributors).
+The mandatory @samp{Author} field describes who wrote @emph{the
+package}.  It is a plain text field intended for human readers, but not
+for automatic processing (such as extracting the email addresses of all
+listed contributors: for that use @samp{Authors@@R}).  Note that all
+significant contributors must be included: if you wrote an @R{} wrapper
+for the work of others included in the @file{src} directory, you are not
+the sole (and maybe not even the main) author.
 
 The mandatory @samp{Maintainer} field should give a @emph{single} name
 with a @emph{valid} (RFC 2822) email address in angle brackets (for
