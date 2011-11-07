@@ -1656,11 +1656,7 @@ function(package, dir, lib.loc = NULL)
     ## package has a namespace and the method is exported (even though
     ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
     ## cases).
-    ## But this causes discontinuities with adding namespaces.
-##     if(has_namespace && !auto_namespace &&
-##        !identical(meta["Namespace"], "auto"))
-##         all_methods_in_package <-
-##     	    all_methods_in_package %w/o% functions_in_code
+    ## But this caused discontinuities with adding namespaces.
     ## Historical exception
     if(package_name == "cluster")
         all_methods_in_package <-
@@ -2849,10 +2845,6 @@ function(dfile)
                      bad_dep_op = bad_dep_op,
                      bad_dep_version = bad_dep_version)
     }
-    if(!is.na(val <- db["Namespace"])
-       && !is.na(package_name)
-       && is.na(match(val, c(package_name, "auto"))))
-        out$bad_namespace <- val
     if(!is.na(val <- db["Priority"])
        && !is.na(package_name)
        && (tolower(val) %in% c("base", "recommended", "defunct-base"))
@@ -2924,9 +2916,6 @@ function(x, ...)
         }
         writeLines("")
     }
-
-    if(length(x$bad_namespace))
-        writeLines(c(gettext("Package name and namespace differ."), ""))
 
     if(length(x$bad_priority))
         writeLines(c(gettext("Invalid Priority field."),

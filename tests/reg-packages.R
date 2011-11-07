@@ -70,7 +70,7 @@ if(file_test("-d", pkgSrcPath)) {
     ## pkgB tests an empty R directory
     dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
                showWarnings = FALSE)
-    p.lis <- c("pkgA", "pkgB", "exS4noNS", "exNSS4")
+    p.lis <- c("pkgA", "pkgB", "exNSS4")
     for(p. in p.lis) {
         cat("building package", p., "...\n")
         r <- build.pkg(file.path(pkgPath, p.))
@@ -81,7 +81,8 @@ if(file_test("-d", pkgSrcPath)) {
         detach(pos = match(p., sub("^package:","", search())))
     }
     ## TODO: not just print, but check the "list":
-    print(installed.packages(lib.loc = "myLib", priority = "NA"))
+    res <- installed.packages(lib.loc = "myLib", priority = "NA")
+    print(res)
 #    options(op)
     unlink("myLib", recursive = TRUE)
     unlink(file.path(pkgPath), recursive = TRUE)

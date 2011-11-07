@@ -950,7 +950,6 @@ get_exclude_patterns <- function()
 	if(!file.exists(namespace <- file.path(pkgname, "NAMESPACE")) ) {
 	    messageLog(Log, "creating default NAMESPACE file")
 	    writeDefaultNamespace(namespace)
-	    add_namespace_is_auto_to_description_file(file.path(pkgname, "DESCRIPTION"))
 	}
 
         ## Finalize
@@ -979,10 +978,4 @@ get_exclude_patterns <- function()
         closeLog(Log)
     }
     do_exit(0L)
-}
-
-add_namespace_is_auto_to_description_file <- function(ldpath) {
-    db <- .read_description(ldpath)
-    db["Namespace"] <- "auto"
-    .write_description(db, ldpath)
 }
