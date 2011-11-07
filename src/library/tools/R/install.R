@@ -608,23 +608,18 @@
                     file.copy(f, instdir, TRUE)
                     Sys.chmod(file.path(instdir, f), "644")
                 }
-            descdir <- "."
-            if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
-                starsmsg(stars, "Creating default NAMESPACE file")
-#                descdir <- tempdir()
-#                file.copy("DESCRIPTION", descdir)
-#                add_namespace_is_auto_to_description_file(file.path(descdir, "DESCRIPTION"))
-#                file.copy(file.path(descdir, "DESCRIPTION"), instdir)
-                writeDefaultNamespace(namespace) # from build.R
-            }
 
             ## This cannot be done in a MBCS: write.dcf fails
             ctype <- Sys.getlocale("LC_CTYPE")
             Sys.setlocale("LC_CTYPE", "C")
-            res <- try(.install_package_description(descdir, instdir))
+            res <- try(.install_package_description('.', instdir))
             Sys.setlocale("LC_CTYPE", ctype)
             if (inherits(res, "try-error"))
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
+            if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
+                starsmsg(stars, "Creating default NAMESPACE file")
+                writeDefaultNamespace(namespace) # from build.R
+            }
         }
 
         if (install_libs && dir.exists("src") &&
