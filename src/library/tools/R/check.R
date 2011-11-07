@@ -888,6 +888,18 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
         }
 
+        if (!is_base_pkg && R_check_unsafe_calls) {
+            Rcmd <- "options(warn=1);tools:::.check_package_code_tampers(\"R\")"
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+            if(!any) warnLog()
+            any <- TRUE
+            printLog0(Log, paste(c("Found the following unsafe calls:", out, ""),
+                                 collapse = "\n"))
+            }
+        }
+
+
         if (R_check_use_codetools && do_install) {
             Rcmd <-
                 paste("options(warn=1)\n",
@@ -2812,6 +2824,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_EXAMPLES_ARCH_"), ",")[[1]])
     R_check_skip_arch <-
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
+    R_check_unsafe_calls <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -2821,7 +2835,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 R_check_executables <- R_check_permissions <-
                     R_check_dot_internal <- R_check_ascii_code <-
                     	R_check_ascii_data <- R_check_compact_data <-
-                            R_check_pkg_sizes <- R_check_doc_sizes <- FALSE
+                            R_check_pkg_sizes <- R_check_doc_sizes <-
+                                R_check_unsafe_calls <- FALSE
 
     startdir <- getwd()
     if (is.null(startdir))

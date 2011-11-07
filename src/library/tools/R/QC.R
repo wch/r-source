@@ -4340,6 +4340,60 @@ function(e)
 function(x)
     as.character(sapply(x, function(e) deparse(e[[1L]])))
 
+### * .check_package_code_tampers
+
+.check_package_code_tampers <-
+function(dir)
+{
+    dfile <- file.path(dir, "..", "DESCRIPTION")
+    enc <- if(file.exists(dfile))
+        .read_description(dfile)["Encoding"] else NA
+
+    ## Workhorse function.
+    filter <- function(file) {
+        exprs <- if(!is.na(enc) &&
+                    !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+            lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
+                           sub = "byte")
+	    parse(text = lines)
+	} else parse(file)
+        ## assume that if locale if 'C' we can read encodings unchanged.
+        .find_calls(exprs,
+                    function(e) {
+                        ((length(e) > 1L) &&
+                         (as.character(e[[1L]]) %in%
+                          c("unlockBinding", "assignInNamespace") ||
+                          ((as.character(e[[1L]]) %in% ".Internal") &&
+                           (as.character(e[[2L]][[1L]]) == "unlockBinding")))
+                         )
+                     },
+                    recursive = TRUE)
+    }
+
+    code_files <-
+        list_files_with_type(dir, "code",
+                             OS_subdirs = c("unix", "windows"))
+    x <- lapply(code_files, filter)
+    names(x) <- code_files
+    x <- x[sapply(x, length) > 0L]
+
+    ## Because we really only need this for calling from R CMD check, we
+    ## produce output here in case we found something.
+    for(fname in names(x)) {
+        writeLines(gettextf("File '%s':", fname))
+        xfname <- x[[fname]]
+        for(i in seq_along(xfname)) {
+            writeLines(strwrap(gettextf("found %s",
+                                        paste(deparse(xfname[[i]]),
+                                              collapse = "")),
+                               indent = 2L, exdent = 4L))
+        }
+    }
+
+    invisible(x)
+}
+
+
 ### * .check_packages_used
 
 .check_packages_used <-
