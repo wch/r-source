@@ -892,7 +892,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             Rcmd <- "options(warn=1);tools:::.check_package_code_tampers(\"R\")"
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-            if(!any) warnLog()
+            if(!any) noteLog(Log)
             any <- TRUE
             printLog0(Log, paste(c("Found the following possibly unsafe calls:", out, ""),
                                  collapse = "\n"))
