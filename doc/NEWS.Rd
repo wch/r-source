@@ -145,6 +145,10 @@
       \item Reference classes now keep a record of which fields are
       locked.  \code{\$lock()} with no arguments returns the names
       of the locked fields.
+      
+      \item \code{HoltWinters()} reports a warning rather than an error
+      for some optimization failures (where the answer might be a
+      reasonable one).
     }
   }
 
