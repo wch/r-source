@@ -4348,6 +4348,7 @@ function(dir)
     dfile <- file.path(dir, "..", "DESCRIPTION")
     enc <- if(file.exists(dfile))
         .read_description(dfile)["Encoding"] else NA
+    pkgname <- if(file.exists(dfile)) .read_description(dfile)["Package"] else ""
 
     ## Workhorse function.
     filter <- function(file) {
@@ -4357,17 +4358,24 @@ function(dir)
                            sub = "byte")
 	    parse(text = lines)
 	} else parse(file)
-        ## assume that if locale if 'C' we can read encodings unchanged.
-        .find_calls(exprs,
-                    function(e) {
-                        ((length(e) > 1L) &&
-                         (as.character(e[[1L]]) %in%
-                          c("unlockBinding", "assignInNamespace") ||
-                          ((as.character(e[[1L]]) %in% ".Internal") &&
-                           (as.character(e[[2L]][[1L]]) == "unlockBinding")))
-                         )
-                     },
-                    recursive = TRUE)
+        check_fun <- function(e)
+        {
+            if(length(e) <= 1L) return(FALSE)
+            if(as.character(e[[1L]])[1L] %in% "unlockBinding") {
+                e3 <- as.character(e[[3L]])
+                if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[3L]][[2L]])
+                return(e3 != pkgname)
+            }
+            if((as.character(e[[1L]])[1L] %in% ".Internal") &&
+               as.character(e[[2L]][[1L]]) == "unlockBinding") return(TRUE)
+            if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
+                e3 <- as.character(e[[4L]])
+                if (e3 == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
+                return(e3 != pkgname)
+            }
+            FALSE
+        }
+        .find_calls(exprs, check_fun, recursive = TRUE)
     }
 
     code_files <-

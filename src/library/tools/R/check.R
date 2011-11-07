@@ -894,7 +894,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (length(out)) {
             if(!any) warnLog()
             any <- TRUE
-            printLog0(Log, paste(c("Found the following unsafe calls:", out, ""),
+            printLog0(Log, paste(c("Found the following possibly unsafe calls:", out, ""),
                                  collapse = "\n"))
             }
         }
