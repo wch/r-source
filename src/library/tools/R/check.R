@@ -165,7 +165,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
         if (any(f <- file.exists(miss))) {
             checkingLog(Log, "for left-overs from vignette generation")
-            noteLog(Log)
+            warnLog()
             printLog(Log,
                      paste("  file", paste(sQuote(miss[f]), collapse = ", "),
                            "will not be installed: please remove it\n"))
