@@ -610,10 +610,10 @@
             descdir <- "."
             if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
                 starsmsg(stars, "Creating default NAMESPACE file")
-                descdir <- tempdir()
-                file.copy("DESCRIPTION", descdir)
-                add_namespace_is_auto_to_description_file(file.path(descdir, "DESCRIPTION"))
-                file.copy(file.path(descdir, "DESCRIPTION"), instdir)
+#                descdir <- tempdir()
+#                file.copy("DESCRIPTION", descdir)
+#                add_namespace_is_auto_to_description_file(file.path(descdir, "DESCRIPTION"))
+#                file.copy(file.path(descdir, "DESCRIPTION"), instdir)
                 writeDefaultNamespace(namespace) # from build.R
             }
 
