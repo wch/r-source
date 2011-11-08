@@ -120,8 +120,12 @@ function (x,
                 sol   <- optim(optim.start, error, method = "L-BFGS-B",
                                lower = c(0, 0, 0), upper = c(1, 1, 1),
                                control = optim.control)
-                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
-                    stop("optimization failure")
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
+                    if (soll$convergence > 50) {
+                        warning(gettextf("optimization difficulties: %s",
+                                         sol$message), domain = NA)
+                    } else stop("optimization failure")
+                }
                 alpha <- sol$par[1L]
                 beta  <- sol$par[2L]
                 gamma <- sol$par[3L]
@@ -133,8 +137,12 @@ function (x,
                                error, method = "L-BFGS-B",
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
-                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
-                    stop("optimization failure")
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
+                    if (soll$convergence > 50) {
+                        warning(gettextf("optimization difficulties: %s",
+                                         sol$message), domain = NA)
+                    } else stop("optimization failure")
+                }
                 alpha <- sol$par[1L]
                 gamma <- sol$par[2L]
             }
@@ -148,8 +156,12 @@ function (x,
                                error, method = "L-BFGS-B",
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
-                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
-                    stop("optimization failure")
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
+                    if (soll$convergence > 50) {
+                        warning(gettextf("optimization difficulties: %s",
+                                         sol$message), domain = NA)
+                    } else stop("optimization failure")
+                }
                 beta  <- sol$par[1L]
                 gamma <- sol$par[2L]
             } else {
@@ -171,8 +183,12 @@ function (x,
                                error, method = "L-BFGS-B",
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
-                if(sol$convergence || any(sol$par < 0 | sol$par > 1))
-                    stop("optimization failure")
+                if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
+                    if (soll$convergence > 50) {
+                        warning(gettextf("optimization difficulties: %s",
+                                         sol$message), domain = NA)
+                    } else stop("optimization failure")
+                }
                 alpha <- sol$par[1L]
                 beta  <- sol$par[2L]
             } else {
