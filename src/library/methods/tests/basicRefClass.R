@@ -71,7 +71,7 @@ stopifnot(is(tryCatch(setRefClass("foo2", list(b2 = "numeric",
                 setB2(getB2() + incr)
                 })),
           error = function(e)e), "error"))
-## but with flag as a subclass of "character", should work
+## but with flag as a subclass of "characters", should work
 ## Also subclasses "tag" which had class "ANY before
 setClass("ratedChar", contains = "character",
          representation(score = "numeric"))
@@ -130,6 +130,15 @@ stopifnot(all.equal(f3$bar, -2), all.equal(f3$b2, 2:4+0),
 stopifnot(is(tryCatch(f3$flag <- "Try again",
          error = function(e)e), "error"))
 str(f3)
+
+## importing the same class (not very useful but documented to work)
+f3 <- foo3$new()
+f4 <- foo3$new(bar = -3, flag = as("More", "ratedChar"), b2 =  1:3, flag2 = f2$flag)
+f3$import(f4)
+stopifnot(identical(f3$bar, f4$bar),
+          identical(f3$flag, f4$flag),
+          identical(f3$b2, f4$b2),
+          identical(f3$flag2, f4$flag2))
 
 ## similar to $import() but using superclass object in the $new() call
 ## The explicitly supplied flag= should override and be allowed

@@ -289,7 +289,8 @@ that class itself, but then you could just overrwite the object).
                  value <- value$export(Class)
              classDef <- getClass(Class)
              if(is(classDef, "refClassRepresentation") &&
-                !is.na(match(Class, .refClassDef@refSuperClasses))) {
+                (!is.na(match(Class, .refClassDef@refSuperClasses))
+                || identical(classDef@className, .refClassDef@className))) {
                  env <- as.environment(value)
                  selfEnv <- as.environment(.self)
                  fieldClasses <- .refClassDef@fieldClasses
