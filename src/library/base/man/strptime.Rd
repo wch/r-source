@@ -199,7 +199,9 @@ strptime(x, format, tz = "")
   \code{isdst} component and to set the \code{"tzone"} attribute if
   \code{tz != ""}.  If the specified time is invalid (for example
   \samp{"2010-02-30 08:00"}) all the components of the result are
-  \code{NA}.
+  \code{NA}.  (NB: this does means exactly what it says -- if it is an
+  invalid time, not just a time that does not exist in some timezone.)
+  %% One of Master B Diggs moments of infamy
 }
 \note{
   The default formats follow the rules of the ISO 8601 international
