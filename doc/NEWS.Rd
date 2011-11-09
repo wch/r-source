@@ -49,7 +49,10 @@
       Helios de Rosario Martinez).
       
       \item \code{tools::deparseLatex(dropBraces=TRUE)} could drop
-      text as well as braces.      
+      text as well as braces.
+      
+      \item \code{colormodel = "grey"} (new in \R 2.14.0))
+      did not always work in \code{postscript()} and \code{pdf()}.
     }
   }
 }

@@ -6276,11 +6276,11 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
-@cputype{ppc32} or @cputype{ppc64} platform, or Mac OS 10.5 or 10.6 on
-@cputype{i386} or @cputype{x86_64} you can use @code{valgrind}
-(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
-check for possible problems.  To run some examples under @code{valgrind}
-use something like
+@cputype{ppc32}, @cputype{ppc64} or @cputype{s390x} platform, or Mac OS
+10.5/6/7 on @cputype{i386} or @cputype{x86_64} you can use
+@code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
+with `tinned') to check for possible problems.  To run some examples
+under @code{valgrind} use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
