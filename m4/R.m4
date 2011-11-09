@@ -152,7 +152,18 @@ if test -z "${TEXI2DVICMD}"; then
   TEXI2DVICMD=texi2dvi
 fi
 AC_SUBST(TEXI2DVICMD)
-: ${R_RD4PDF="times,inconsolata,hyper"}
+AC_PATH_PROGS(KPSEWHICH, [${KPSEWHICH} kpsewhich], "")
+r_rd4pdf="times,inconsolata,hyper"
+if test -n "${KPSEWHICH}"; then
+  if test -z `${KPSEWHICH} inconsolata.sty`; then
+     r_rd4pdf="times,hyper"
+     if test -z "${R_RD4PDF}" ;  then
+       warn_pdf3="PDF vignettes and package manuals will not be rendered optimally"
+       AC_MSG_WARN([${warn_pdf3}])
+     fi
+  fi
+fi
+: ${R_RD4PDF=${r_rd4pdf}}
 AC_SUBST(R_RD4PDF)
 ])# R_PROG_TEXMF
 

@@ -2765,6 +2765,9 @@ fi
 if test -n "${warn_pdf2}"; then
   AC_MSG_WARN([${warn_pdf2}])
 fi
+if test -n "${warn_pdf3}"; then
+  AC_MSG_WARN([${warn_pdf3}])
+fi
 if test -n "${warn_pager}"; then
   AC_MSG_WARN([${warn_pager}])
 fi
