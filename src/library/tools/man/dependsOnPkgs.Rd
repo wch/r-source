@@ -1,6 +1,6 @@
 % File src/library/tools/man/getDepList.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-9 R Core Development Team
+% Copyright 2008-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dependsOnPkgs}
@@ -20,7 +20,8 @@ dependsOnPkgs(pkgs,
   \item{pkgs}{a character vector of package names.}
   \item{dependencies}{a character vector listing the types of
     dependencies, a subset of \code{c("Depends", "Imports", "LinkingTo",
-      "Suggests", "Enhances")}.}
+      "Suggests", "Enhances")}.  Character string \code{"all"} is
+    shorthand for that vector.}
   \item{recursive}{logical: should reverse dependencies of reverse
     dependencies (and so on) be included?}
   \item{lib.loc}{a character vector of \R library trees, or \code{NULL}

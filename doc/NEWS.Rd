@@ -38,7 +38,10 @@
       
       \item \code{format()} (and hence \code{print()}) on
       \code{"bibentry"} objects now uses \code{options("width")} to
-      set the output width.      
+      set the output width.
+
+      \code{tools::dependsOnPkg()} now accepts the shorthand
+      \code{dependencies = "all"}.
     }
   }
   

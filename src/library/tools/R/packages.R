@@ -187,6 +187,8 @@ function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
          recursive = TRUE, lib.loc = NULL,
          installed = installed.packages(lib.loc, fields = "Enhances"))
 {
+    if(identical(dependencies, "all"))
+        dependencies <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
     av <- installed[, dependencies, drop = FALSE]
     need <- apply(av, 1L, function(x)
                   any(pkgs %in% utils:::.clean_up_dependencies(x)) )
