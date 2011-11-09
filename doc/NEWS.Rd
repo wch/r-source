@@ -32,9 +32,13 @@
       may obviate setting \samp{LIBnn} explicitly on Debian-derived
       systems.
 
-      It is still necessary to set \samp{LIBnn = lib} for 32-bit builds
-      of \R on a 64-bit OS on those Linux distributions capable for
-      supporting that concept.
+      It is still necessary to set \samp{LIBnn = lib} (or
+      \samp{lib32})for 32-bit builds of \R on a 64-bit OS on those Linux
+      distributions capable for supporting that concept.
+      
+      \item \command{configure} looks for \file{inconsolata.sty}, and if
+      not found adjusts the default \env{R_RD4PDF} to not use it (with a
+      warning, since it is needed for high-quality manuals).
     }
   }
   

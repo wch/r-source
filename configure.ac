@@ -2720,9 +2720,6 @@ R is now configured for ${host}
 if test -n "${warn_f77_cc_double_complex}"; then
   AC_MSG_WARN([${warn_f77_cc_double_complex}])
 fi
-if test -n "${warn_xcompile_sizeof_int}"; then
-  AC_MSG_WARN([${warn_xcompile_sizeof_int}])
-fi
 if test -n "${warn_xcompile_sizeof_long}"; then
   AC_MSG_WARN([${warn_xcompile_sizeof_long}])
 fi
@@ -2741,14 +2738,8 @@ fi
 if test -n "${warn_fcpicflags}"; then
   AC_MSG_WARN([${warn_fcpicflags}])
 fi
-if test -n "${warn_libglade_version}"; then
-  AC_MSG_WARN([${warn_libglade_version}])
-fi
 if test -n "${warn_tcltk_version}"; then
   AC_MSG_WARN([${warn_tcltk_version}])
-fi
-if test -n "${warn_perl5}"; then
-  AC_MSG_WARN([${warn_perl5}])
 fi
 if test -n "${warn_dvi1}"; then
   AC_MSG_WARN([${warn_dvi1}])
@@ -2764,6 +2755,9 @@ if test -n "${warn_pdf1}"; then
 fi
 if test -n "${warn_pdf2}"; then
   AC_MSG_WARN([${warn_pdf2}])
+fi
+if test -n "${warn_pdf3}"; then
+  AC_MSG_WARN([${warn_pdf3}])
 fi
 if test -n "${warn_pager}"; then
   AC_MSG_WARN([${warn_pager}])
