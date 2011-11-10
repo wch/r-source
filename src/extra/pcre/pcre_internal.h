@@ -97,7 +97,7 @@ be absolutely sure we get our version. */
 #define POSIX_MALLOC_THRESHOLD 10
 #define SUPPORT_UTF8
 #define SUPPORT_UCP
-#define SUPPORT_JIT
+//#define SUPPORT_JIT
 #endif
 
 /* Standard C headers plus the external interface definition. The only time
