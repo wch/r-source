@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -13,7 +13,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
        pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
-       adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
+       adj = c(0, 0.5), text.width = NULL, text.col = par("col"), text.font = NULL,
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
        inset = 0, xpd, title.col = text.col, title.adj = 0.5,
@@ -73,6 +73,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     coordinates.  (Should be positive even for a reversed x axis.)
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
   \item{text.col}{the color used for the legend text.}
+  \item{text.font}{the font used for the legend text, see \code{\link{text}}.}
   \item{merge}{logical; if \code{TRUE}, merge points and lines but
     not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
   \item{trace}{logical; if \code{TRUE}, shows how \code{legend} does all
@@ -273,5 +274,15 @@ legend("topright", "(x,y)", pch=1, title="topright, inset = .02",
        inset = .02)
 legend("right", "(x,y)", pch=1, title="right")
 legend("center", "(x,y)", pch=1, title="center")
+
+# using text.font (and text.col):
+op <- par(mfrow = c(2, 2), mar=rep(2.1,4))
+c6 <- terrain.colors(10)[1:6]
+for(i in 1:4) {
+   plot(1, type = "n", axes=FALSE, ann=FALSE); title(paste("text.font =",i))
+   legend("top", legend = LETTERS[1:6], col = c6,
+          ncol =2, cex = 2, lwd = 3, text.font = i, text.col = c6)
+}
+par(op)
 }
 \keyword{aplot}

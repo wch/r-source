@@ -20,7 +20,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
          box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
 	 pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
-	 text.width = NULL, text.col = par("col"),
+	 text.width = NULL, text.col = par("col"), text.font = NULL,
 	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
 	 inset = 0, xpd, title.col = text.col, title.adj = 0.5,
@@ -91,7 +91,8 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 
     ## at this point we want positive width even for reversed x axis.
     if(is.null(text.width))
-	text.width <- max(abs(strwidth(legend, units="user", cex=cex)))
+	text.width <- max(abs(strwidth(legend, units="user",
+				       cex=cex, font = text.font)))
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("'text.width' must be numeric, >= 0")
 
@@ -263,7 +264,8 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
             text2(left + w*title.adj, top - ymax, labels = title,
                   adj = c(title.adj, 0), cex = cex, col = title.col)
 
-	text2(xt, yt, labels = legend, adj = adj, cex = cex, col = text.col)
+	text2(xt, yt, labels = legend, adj = adj, cex = cex,
+	      col = text.col, font = text.font)
     }
     invisible(list(rect = list(w = w, h = h, left = left, top = top),
 		   text = list(x = xt, y = yt)))

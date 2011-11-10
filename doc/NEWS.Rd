@@ -16,14 +16,14 @@
 
       \item Even data-only packages without \R code need a namespace and
       so may need to be installed under \R 2.14.0 or later.
-    
+
       \item \code{assignInNamespace()} has further restrictions on use
       apart from at top-level, as its help page has warned.
       Expect it to be disabled from programmatic use in the future.
-      
+
       \item \code{system()} and \code{system2()} when capturing output
       report a non-zero status in the new \code{"status"} attribute.
-      
+
       \item \code{kronecker()} now has an S4 generic in package
       \pkg{methods} on which packages can set methods.  It will be
       invoked by \code{X \%x\% Y} if either \code{X} or \code{Y} is an S4
@@ -35,21 +35,24 @@
       \item \code{pdf()} accepts \code{file = NULL}.
       This means that the device does NOT create a PDF file
       (but it can still be queried, e.g., for font metric info).
-      
+
       \item \code{format()} (and hence \code{print()}) on
       \code{"bibentry"} objects now uses \code{options("width")} to
       set the output width.
 
       \item \code{tools::dependsOnPkg()} now accepts the shorthand
       \code{dependencies = "all"}.
-      
+
       \item PCRE has been upgraded to version 8.20: as well as bug fixes
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
       \sQuote{large performance benefits can be had in many situations}.
+
+      \item \code{legend()} gains a \code{text.font} argument, suggested
+      by Tim Paine, \PR{14719}.
     }
   }
-  
+
   \subsection{PACKAGE parallel}{
     \itemize{
       \item There is a new function \code{mcmapply()}, a parallel version
@@ -59,7 +62,7 @@
       \item A default cluster can be registered by the new function
       \code{setDefaultCluster()}: this will be used by default in
       functions such as \code{parLapply()}.
-      
+
       \item \code{clusterMap()} has a new argument \code{.scheduling} to
       allow the use of load-balancing.
 
@@ -72,11 +75,11 @@
     \itemize{
       \item Non-ASCII vignettes without a declared encoding are no
       longer accepted.
-      
+
       \item \code{R CMD INSTALL} will now do a test load for all
       sub-architectures for which code was compiled (rather than just
       the primary sub-architecture).
-      
+
       \item Code in packages is now compiled with \code{-NDEBUG} to
       mitigate against \code{assert} being called in production use.
       Developers can turn this off during package development with
@@ -114,7 +117,7 @@
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
-      
+
       \item \code{Sys.putenv()}, replaced and deprecated in \R 2.5.0, is
       finally removed.
 
@@ -130,7 +133,7 @@
       \code{unix()}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{str(x, width)} now obeys its \code{width}
@@ -153,7 +156,7 @@
       \item Reference classes now keep a record of which fields are
       locked.  \code{\$lock()} with no arguments returns the names
       of the locked fields.
-      
+
       \item \code{HoltWinters()} reports a warning rather than an error
       for some optimization failures (where the answer might be a
       reasonable one).
@@ -170,13 +173,13 @@
       It is still necessary to set \samp{LIBnn = lib} (or
       \samp{lib32})for 32-bit builds of \R on a 64-bit OS on those Linux
       distributions capable for supporting that concept.
-      
+
       \item \command{configure} looks for \file{inconsolata.sty}, and if
       not found adjusts the default \env{R_RD4PDF} to not use it (with a
       warning, since it is needed for high-quality manuals).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
@@ -186,10 +189,10 @@
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by
       Helios de Rosario Martinez).
-      
+
       \item \code{tools::deparseLatex(dropBraces=TRUE)} could drop
       text as well as braces.
-      
+
       \item \code{colormodel = "grey"} (new in \R 2.14.0))
       did not always work in \code{postscript()} and \code{pdf()}.
     }
@@ -246,7 +249,7 @@
       The version released for \R 2.14.0 contains base functionality:
       higher-level convenience functions are planned (and some are
       already available in the \sQuote{R-devel} version of \R).
-      
+
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
       LaTeX package \samp{inconsolata}: see the section on
@@ -634,7 +637,7 @@
       independent) \code{axisTicks()} which can make use of a new
       utility \code{.axisPars()}.  Further, it now returns a decreasing
       sequence (as for \code{log=FALSE}) when \code{usr} is decreasing.
-      
+
       \item Using \code{fix()} or \code{edit()} on a \R{} object (except
       perhaps a matrix or data frame) writes its temporary file with
       extension \file{.R} so editors which select their mode based on
@@ -870,7 +873,7 @@
       \item \command{R CMD check} now checks line-endings of makefiles
       and C/C++/Fortran sources in subdirectories of \file{src} as well
       as in \file{src} itself.
-       
+
       \item \command{R CMD check} now reports as a NOTE what look like
       methods documented with their full names even if there is a
       namespace and they are exported.  In almost all cases they are
@@ -961,7 +964,7 @@
       \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
-      
+
       In the same spirit, \code{median(x)} now gives an error for a data
       frame \code{x} (it often gave nonsensical results).
 
@@ -969,7 +972,7 @@
       \code{require()} is deprecated: it was only used for packages
       installed without lazy-loading, and now all packages are
       lazy-loaded.
-      
+
       \item Using a false value for the \file{DESCRIPTION} field
       \samp{LazyLoad} is deprecated.
     }
@@ -1110,23 +1113,20 @@
 
       \code{unstack()} sometimes produced incorrect results (a list or a
       vector) if the factor on which to un-split had only one level.
-  
+
       \item On some systems \code{help(".C", help_type = "pdf")} and
       similar generated file names that TeX was unable to handle.
-      
+
       \item Non-blocking listening socket connections continued to
       report \code{isIncomplete()} as true even when the peer had closed
       down and all available input had been read.
-      
+
       \item The revised HTML search system now generates better
       hyperlinks to help topics found: previously it gave problems with
       help pages with names containing e.g. spaces and slashes.
-      
+
       \item A late change in \R 2.13.2 broke \samp{\Sexpr} expressions
       in Rd files.
-      
-      \item The creation of ticks on log axes (including
-      \code{axTicks()} sometimes incorrectly omitted a tick at one end
 
       \item The creation of ticks on log axes (including by
       \code{axTicks()}) sometimes incorrectly omitted a tick at one end
@@ -1134,11 +1134,11 @@
       could be seen in the examples for \code{axTicks()}, where with
       axis limits \code{c(0.2, 88)} the tick for \code{0.2} was
       sometimes omitted.
-      
+
       \item \code{qgamma()} for small \code{shape} underflows to
       \code{0} rather than sometimes giving \code{NaN}.
       (\PR{8528}, \PR{14710})
-      
+
       \item \code{mapply()} now gives an explicit error message (rather
       than an obscure one) is inputs of zero and positive length are
       mixed.
