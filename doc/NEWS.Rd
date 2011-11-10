@@ -40,7 +40,7 @@
       \code{"bibentry"} objects now uses \code{options("width")} to
       set the output width.
 
-      \code{tools::dependsOnPkg()} now accepts the shorthand
+      \item \code{tools::dependsOnPkg()} now accepts the shorthand
       \code{dependencies = "all"}.
       
       \item PCRE has been upgraded to version 8.20: as well as bug fixes
