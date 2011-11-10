@@ -47,6 +47,7 @@
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
       \sQuote{large performance benefits can be had in many situations}.
+      (It is supported on most but not all CPUs that run R.)
 
       \item \code{legend()} gains a \code{text.font} argument, suggested
       by Tim Paine, \PR{14719}.
