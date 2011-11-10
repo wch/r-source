@@ -42,6 +42,11 @@
 
       \code{tools::dependsOnPkg()} now accepts the shorthand
       \code{dependencies = "all"}.
+      
+      \item PCRE has been upgraded to version 8.20: as well as bug fixes
+      and greater Perl compatibility, this adds a JIT pattern compiler,
+      about which PCRE's news says
+      \sQuote{large performance benefits can be had in many situations}.
     }
   }
   

@@ -1,7 +1,3 @@
-NOTE: the current sources are up-to-date with PCRE 8.13 plus r661
-      from PCRE SVN which fixes collation symbol recognition issue.
-      This will be in PCRE 8.20 eventually and then this note can go away.
-
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
