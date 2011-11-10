@@ -98,8 +98,10 @@ be absolutely sure we get our version. */
 #define SUPPORT_UTF8
 #define SUPPORT_UCP
 
+#ifndef __SUNPRO_C
 #if defined(WIN32) || defined(__i386__) || defined(__i386) || defined(__x86_64__) || defined(__ppc64__) || defined(__powerpc64__) || defined(__ppc__) || defined(__powerpc__)
 # define SUPPORT_JIT
+#endif
 #endif
 
 #endif
