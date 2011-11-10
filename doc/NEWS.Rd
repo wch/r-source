@@ -49,8 +49,11 @@
       \sQuote{large performance benefits can be had in many situations}.
       (It is supported on most but not all CPUs that run R.)
 
-      \item \code{legend()} gains a \code{text.font} argument, suggested
-      by Tim Paine, \PR{14719}.
+      \item \code{legend()} gains a \code{text.font} argument. (Suggested
+      by Tim Paine, \PR{14719}.)
+
+      \item \code{nchar()} and \code{nzchar()} no longer accept factors
+      (as integer vectors).  (Wish of \PR{6899}.)
     }
   }
 

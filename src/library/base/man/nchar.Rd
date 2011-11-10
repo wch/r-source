@@ -22,7 +22,7 @@ nzchar(x)
 }
 \arguments{
   \item{x}{character vector, or a vector to be coerced to a character
-    vector.}
+    vector.  Giving a factor is an error.}
   \item{type}{character string: partial matching to one of
     \code{c("bytes", "chars", "width")}.  See \sQuote{Details}.}
   \item{allowNA}{logical: should \code{NA} be returned for invalid

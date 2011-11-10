@@ -98,6 +98,8 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    if (isFactor(CAR(args)))
+	error(_("'%s' requires a character vector"), "nzchar()");
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
 	error(_("'%s' requires a character vector"), "nzchar()");
@@ -122,6 +124,8 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     const void *vmax;
 
     checkArity(op, args);
+    if (isFactor(CAR(args)))
+	error(_("'%s' requires a character vector"), "nchar()");
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
 	error(_("'%s' requires a character vector"), "nchar()");
