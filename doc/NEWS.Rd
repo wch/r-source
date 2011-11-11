@@ -80,7 +80,7 @@
       \item Non-ASCII vignettes without a declared encoding are no
       longer accepted.
 
-      \item \code{R CMD INSTALL} will now do a test load for all
+      \item \command{R CMD INSTALL} will now do a test load for all
       sub-architectures for which code was compiled (rather than just
       the primary sub-architecture).
 
@@ -88,6 +88,14 @@
       mitigate against \code{assert} being called in production use.
       Developers can turn this off during package development with
       \code{PKG_CPPFLAGS = -UNDEBUG}.
+      
+      \item \command{R CMD INSTALL} has a new option \option{--dsym}
+      which on Mac OS X (Darwin) dumps the symbols alongside the
+      \file{.so} file: this is helpful when debugging with
+      \command{valgrind} (and especially when installing packages into
+      \file{R.framework}).  [This can also be enabled by setting the
+      undocumented environment variable \env{PKG_NAKE_DSYM}, since \R
+      2.12.0.]
     }
   }
 

@@ -121,6 +121,7 @@
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
+            "      --dsym               (Mac OS X only) generate dSYM directory",
             "\nand on Windows only",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
@@ -432,13 +433,15 @@
                 file.copy(files, dest, overwrite = TRUE)
                 ## not clear if this is still necessary, but sh version did so
                 if (!WINDOWS) Sys.chmod(file.path(dest, files), "755")
-		## OS X does not keep debugging symbols in binaries anymore so
-		## optionally we can create dSYMs. This is important since we
-		## will blow away .o files so there is no way to create it later.
-		if (nzchar(Sys.getenv("PKG_MAKE_DSYM")) && length(grep("^darwin", R.version$os))) {
+		## OS X does not keep debugging symbols in binaries
+		## anymore so optionally we can create dSYMs. This is
+		## important since we will blow away .o files so there
+		## is no way to create it later.
+
+		if (dsym && length(grep("^darwin", R.version$os)) ) {
 		    message('generating debug symbols (dSYM)')
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
-		    if (length(dylib)) for (file in dylib) system(paste0("dsymutil ", file))
+                    for (file in dylib) system(paste0("dsymutil ", file))
 		}
             }
         }
@@ -1129,6 +1132,7 @@
     test_load <- TRUE
     clean_on_error <- TRUE
     merge <- FALSE
+    dsym <- nzchar(Sys.getenv("PKG_MAKE_DSYM"))
 
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
@@ -1257,6 +1261,8 @@
             keep.source <- FALSE
         } else if (a == "--byte-compile") {
             byte_compile <- TRUE
+        } else if (a == "--dsym") {
+            dsym <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
