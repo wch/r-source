@@ -6366,6 +6366,16 @@ It is possible to run all the examples, tests and vignettes covered by
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
+On Mac OS X you may need to ensure that debugging symbols are made
+available (so @command{valgrind} reports line numbers in files).  This
+can usually be done with the @command{valgrind} option
+@option{--dysmutil=yes} to ask for the symbols to be dumped when the
+@file{.so} file is loaded.  This will not work where packages are
+installed into a system area (such as the @file{R.framework}) and can be
+slow.  Installing packages with environment variable @env{PKG_MAKE_DSYM}
+set to a non-empty value installs the dumped sybols.
+
+
 @node Debugging compiled code,  , Using gctorture and valgrind, Debugging
 @section Debugging compiled code
 @cindex Debugging
