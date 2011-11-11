@@ -111,7 +111,7 @@ reg-plot.Rout: reg-plot.R
 ## allow this to fail, as it may if the locale does not support Latin-1 chars
 reg-plot-latin1.Rout: reg-plot-latin1.R
 	@rm -f $@ $@.fail
-	@$(ECHO) "running tests of plotting Latin-1"
+	@$(ECHO) "running tests of plotting Latin-2"
 	@$(ECHO) "  expect failure or some differences if not in a Latin-1 or UTF-8 locale"
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R2) < $< > $@ 2>&1 || mv $@ $@.fail
