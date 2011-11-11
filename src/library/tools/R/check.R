@@ -72,11 +72,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     }
 
     R_runR2 <-
-        if(WINDOWS)
+        if(WINDOWS) {
             function(cmd,
                      env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats")
-                R_runR(cmd, R_opts2, env)
-        else
+                {
+                    out <- R_runR(cmd, R_opts2, env)
+                    ## pesky gdata ....
+                    grep("^(ftype: not found|File type)", out,
+                         invert = TRUE, value = TRUE)
+                }
+        } else
             function(cmd,
                      env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
             {
