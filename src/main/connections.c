@@ -5167,7 +5167,8 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
-    R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
+    /* Disable, as e.g. load() leaves no reference to the new connection */
+    //R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
 
     return ans;
