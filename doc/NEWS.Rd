@@ -153,6 +153,7 @@
     complex and raw vectors as well as the other atomic vector types.
     }
   }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{str(x, width)} now obeys its \code{width}
@@ -195,7 +196,7 @@
 
       \item \command{configure} looks for \file{inconsolata.sty}, and if
       not found adjusts the default \env{R_RD4PDF} to not use it (with a
-      warning, since it is needed for high-quality manuals).
+      warning, since it is needed for high-quality rendering of manuals).
     }
   }
 
@@ -214,6 +215,9 @@
 
       \item \code{colormodel = "grey"} (new in \R 2.14.0))
       did not always work in \code{postscript()} and \code{pdf()}.
+
+      \item \code{file.append()} could return \code{TRUE} for failures.
+      (\PR{14727})
     }
   }
 }
