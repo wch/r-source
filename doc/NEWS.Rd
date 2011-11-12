@@ -191,7 +191,7 @@
       systems.
 
       It is still necessary to set \samp{LIBnn = lib} (or
-      \samp{lib32})for 32-bit builds of \R on a 64-bit OS on those Linux
+      \samp{lib32}) for 32-bit builds of \R on a 64-bit OS on those Linux
       distributions capable for supporting that concept.
 
       \item \command{configure} looks for \file{inconsolata.sty}, and if
