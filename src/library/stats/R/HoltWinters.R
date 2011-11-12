@@ -121,7 +121,7 @@ function (x,
                                lower = c(0, 0, 0), upper = c(1, 1, 1),
                                control = optim.control)
                 if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-                    if (soll$convergence > 50) {
+                    if (sol$convergence > 50) {
                         warning(gettextf("optimization difficulties: %s",
                                          sol$message), domain = NA)
                     } else stop("optimization failure")
@@ -138,7 +138,7 @@ function (x,
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
                 if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-                    if (soll$convergence > 50) {
+                    if (sol$convergence > 50) {
                         warning(gettextf("optimization difficulties: %s",
                                          sol$message), domain = NA)
                     } else stop("optimization failure")
@@ -157,7 +157,7 @@ function (x,
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
                 if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-                    if (soll$convergence > 50) {
+                    if (sol$convergence > 50) {
                         warning(gettextf("optimization difficulties: %s",
                                          sol$message), domain = NA)
                     } else stop("optimization failure")
@@ -184,7 +184,7 @@ function (x,
                                lower = c(0, 0), upper = c(1, 1),
                                control = optim.control)
                 if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-                    if (soll$convergence > 50) {
+                    if (sol$convergence > 50) {
                         warning(gettextf("optimization difficulties: %s",
                                          sol$message), domain = NA)
                     } else stop("optimization failure")
