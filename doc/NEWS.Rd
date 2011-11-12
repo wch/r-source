@@ -18,7 +18,7 @@
       \item Reference classes now keep a record of which fields are
       locked.  \code{\$lock()} with no arguments returns the names
       of the locked fields.
-      
+
       \item \code{HoltWinters()} reports a warning rather than an error
       for some optimization failures (where the answer might be a
       reasonable one).
@@ -33,15 +33,15 @@
       systems.
 
       It is still necessary to set \samp{LIBnn = lib} (or
-      \samp{lib32})for 32-bit builds of \R on a 64-bit OS on those Linux
+      \samp{lib32}) for 32-bit builds of \R on a 64-bit OS on those Linux
       distributions capable for supporting that concept.
-      
+
       \item \command{configure} looks for \file{inconsolata.sty}, and if
       not found adjusts the default \env{R_RD4PDF} to not use it (with a
-      warning, since it is needed for high-quality manuals).
+      warning, since it is needed for high-quality rendering of manuals).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
@@ -51,12 +51,15 @@
       \item \code{summary.mlm()} did not handle objects where the
       formula had been specified by an expression.  (Reported by
       Helios de Rosario Martinez).
-      
+
       \item \code{tools::deparseLatex(dropBraces=TRUE)} could drop
       text as well as braces.
-      
+
       \item \code{colormodel = "grey"} (new in \R 2.14.0))
       did not always work in \code{postscript()} and \code{pdf()}.
+
+      \item \code{file.append()} could return \code{TRUE} for failures.
+      (\PR{14727})
     }
   }
 }
