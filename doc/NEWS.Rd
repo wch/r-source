@@ -146,6 +146,13 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Building wih a positive value of
+    \option{--with-valgrind-instrumentation} now instruments logical,
+    complex and raw vectors as well as the other atomic vector types.
+    }
+  }
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{str(x, width)} now obeys its \code{width}

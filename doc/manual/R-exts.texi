@@ -6291,10 +6291,11 @@ R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < mypkg-Ex.R
 where @file{mypkg-Ex.R} is a set of examples, e.g.@: the file created in
 @file{mypkg.Rcheck} by @code{R CMD check}.  Occasionally this reports
 memory reads of `uninitialised values' that are the result of compiler
-optimization, so can be worth checking under an unoptimized compile.  We
-know there will be some small memory leaks from @code{readline} and @R{}
-itself --- these are memory areas that are in use right up to the end of
-the @R{} session.  Expect this to run around 20x slower than without
+optimization, so can be worth checking under an unoptimized compile: for
+maximal information use a build with debugging symbols.  We know there
+will be some small memory leaks from @code{readline} and @R{} itself ---
+these are memory areas that are in use right up to the end of the @R{}
+session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases even slower than that.  Earlier
 versions (at least) of @code{valgrind} are not happy with many optimized
 BLASes that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2,
@@ -6374,7 +6375,7 @@ can usually be done with the @command{valgrind} option
 installed into a system area (such as the @file{R.framework}) and can be
 slow.  Installing packages with @command{R CMD INSTALL --dsym} installs
 the dumped sybols.  (This can also be done by setting environment
-variable @env{PKG_MAKE_DSYM} to a non-empty value).
+variable @env{PKG_MAKE_DSYM} to a non-empty value.)
 
 
 @node Debugging compiled code,  , Using gctorture and valgrind, Debugging
