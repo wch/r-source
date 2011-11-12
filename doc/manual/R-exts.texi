@@ -8234,16 +8234,6 @@ it will create a new one and add it to the cache before returning it to
 you.   The variant @code{mkCharLen} can be used to create a
 @code{CHARSXP} from part of a buffer and will ensure null-termination.
 
-Currently, it is still possible to create @code{CHARSXP}s using
-@code{allocVector}; @code{CHARSXP}s created in this way will not be
-captured by the global @code{CHARSXP} cache and this should be avoided.
-In the future, all @code{CHARSXP}s will be captured by the cache and
-this will allow further optimizations, for example, replacing calls to
-@code{strcmp} with pointer comparisons.  A helper macro,
-@code{CallocCharBuf}, can be used to obtain a temporary character buffer
-for in-place string manipulation: this memory must be released using
-@code{Free}.
-
 @node Finding and setting variables, Some convenience functions, Handling character data, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
