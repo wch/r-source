@@ -218,6 +218,10 @@
 
       \item \code{file.append()} could return \code{TRUE} for failures.
       (\PR{14727})
+      
+      \item \code{gzcon()} connections are no longer subject to garbage
+      collection: it was possible for this to happen when unintended
+      (e.g. when calling \code{load()}).
     }
   }
 }

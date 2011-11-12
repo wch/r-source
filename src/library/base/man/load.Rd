@@ -28,7 +28,8 @@ load(file, envir = parent.frame())
   after use.  Any connection other than a \code{\link{gzfile}} or
   \code{\link{gzcon}} connection will be wrapped in \code{\link{gzcon}}
   to allow compressed saves to be handled: note that this leaves the
-  connection in an altered state (in particular, binary-only).
+  connection in an altered state (in particular, binary-only), and that
+  it needs to be closed explicitly (it will not be garbage-collected).
   
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a

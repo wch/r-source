@@ -36,7 +36,8 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
   compress data into a variable.
 
   The original connection becomes unusable: any object pointing to it will
-  now refer to the modified connection.
+  now refer to the modified connection.  For this reason, the new
+  connection needs to be closed explicitly.
 }
 \value{
   An object inheriting from class \code{"connection"}.  This is the same
