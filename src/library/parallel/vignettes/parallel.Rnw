@@ -265,6 +265,29 @@ explicit cluster.  A little care is needed when repeatedly re-using a
 pool of workers, as their workspaces will accumulate objects from past
 usage, and packages may get added to the search path.
 
+If clusters are to be created on a host other than the current machine
+(\samp{localhost}), \code{makeCluster} may need to be be given more
+information in the shape of extra arguments.
+\begin{itemize}
+  \item If the worker machines are not set up in exactly the same way
+    as the master (for example if they are of a different
+    architecture), use \code{homogeneous = FALSE} and perhaps set
+    \code{rscript} to the full path to \command{Rscript} on the workers.
+  \item The worker machines need to know how to communicate with the
+    master: normally this can be done using the hostname found by
+    \code{Sys.info()}, but on private networks this need not be the
+    case and \code{master} may need to be supplied as a name or IP
+    address, e.g. \code{master = "192.168.1.111"}.
+  \item By default \command{ssh} is used to launch R on the workers.
+    If it is known by some other name, use e.g.{} \code{rshcmd =
+      "plink.exe"} for a Windows box using PUTTY.  SSH should be set
+    up to use silent authentication: setups which require a password
+    to be supplied may or may not work.
+  \item Socket communication is done over port 10187: site policies
+    might require some other port to be used, in which case set
+    argument \code{port} or environment variable \env{R\_PARALLEL\_PORT}.
+\end{itemize}
+
 \section{Forking}
 
 Except on Windows, the package contains a copy of \pkg{multicore}:
@@ -338,7 +361,7 @@ has a fairly long period with a small seed (6 integers), and unlike
 the seed by a fixed number of steps.  The generator is the combination
 of two:
 \begin{eqnarray*}
-  x_n &=& 1403580 \times x_{n-1} - 810728 \times x_{n-3} \mod{(2^{32} - 209)}\\
+  x_n &=& 1403580 \times x_{n-2} - 810728 \times x_{n-3} \mod{(2^{32} - 209)}\\
   y_n &=& 527612 \times y_{n-1} - 1370589 \times y_{n-3} \mod{(2^{32} - 22853)}\\
   z_n &=& (x_n - y_n) \mod{4294967087}\\
   u_n &=& z_n/4294967088\ \mbox{unless $z_n = 0$}
@@ -448,7 +471,7 @@ by \citet{Davison.Hinkley.97}.  Bootstrapping is often used as an
 example of easy parallelization, and some methods of producing
 confidence intervals require many thousands of bootstrap samples.
 As from version \code{1.3-1} the package itself has parallel support
-within its main functions, but we illustrate how use the original
+within its main functions, but we illustrate how to use the original
 (serial) functions in parallel computations.
 
 We consider two examples using the \code{cd4} dataset from package

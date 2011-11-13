@@ -78,7 +78,7 @@ newPSOCKnode <- function(machine = "localhost", ...,
             ## at least, on Windows password-less authentication is
             ## necessary.
             ##
-            ## (Not clear if that is the current behaviour.)
+            ## (Not clear if that is the current behaviour: works for me)
             system(cmd, wait = FALSE, input = "")
         }
         else system(cmd, wait = FALSE)
