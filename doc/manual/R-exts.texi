@@ -6374,7 +6374,7 @@ can usually be done with the @command{valgrind} option
 @file{.so} file is loaded.  This will not work where packages are
 installed into a system area (such as the @file{R.framework}) and can be
 slow.  Installing packages with @command{R CMD INSTALL --dsym} installs
-the dumped sybols.  (This can also be done by setting environment
+the dumped symbols.  (This can also be done by setting environment
 variable @env{PKG_MAKE_DSYM} to a non-empty value.)
 
 
