@@ -963,7 +963,7 @@ $B$subset
  Mean   :14.742   Mean   :6.0841   Mean   : 56.928   Mean   : 45.603  
  3rd Qu.:20.000   3rd Qu.:6.6000   3rd Qu.: 86.750   3rd Qu.: 47.550  
  Max.   :23.000   Max.   :7.7000   Max.   :117.000   Max.   :370.000  
-                                   NA's   : 16.000                    
+                                   NA's   :16                         
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  

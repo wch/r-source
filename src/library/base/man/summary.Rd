@@ -1,6 +1,6 @@
 % File src/library/base/man/summary.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{summary}
@@ -9,6 +9,7 @@
 \alias{summary.data.frame}
 \alias{summary.factor}
 \alias{summary.matrix}
+\alias{format.summaryDefault}
 \alias{print.summaryDefault}
 \title{Object Summaries}
 \description{

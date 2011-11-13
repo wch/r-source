@@ -60,9 +60,32 @@ summary.default <-
     value
 }
 
-print.summaryDefault <- function(x, ...)
+format.summaryDefault <- function(x, ...)
 {
     xx <- if(is.numeric(x) || is.complex(x)) zapsmall(x) else x
+    class(xx) <- class(x)[-1]
+    m <- match("NA's", names(x), 0)
+    if(inherits(x, "Date") || inherits(x, "POSIXct")) {
+        if(length(a <- attr(x, "NAs")))
+            c(format(xx, ...), "NA's" = as.character(a))
+        else format(xx)
+    } else if(m && !is.character(x))
+        xx <- c(format(xx[-m], ...), "NA's" = as.character(xx[m]))
+    else format(xx, ...)
+}
+
+print.summaryDefault <- function(x, ...)
+{
+     xx <- if(is.numeric(x) || is.complex(x)) zapsmall(x) else x
+    m <- match("NA's", names(xx), 0)
+    if(inherits(x, "Date") || inherits(x, "POSIXct")) {
+        xx <- if(length(a <- attr(x, "NAs")))
+            c(format(xx), "NA's" = as.character(a))
+        else format(xx)
+        print(xx, ...)
+        return(invisible(x))
+    } else if(m && !is.character(x))
+        xx <- c(format(xx[-m]), "NA's" = as.character(xx[m]))
     print.table(xx, ...)
     invisible(x)
 }
@@ -128,9 +151,9 @@ summary.data.frame <-
             nm[i] <- paste(cn, collapse="  ")
             z[[i]] <- sms
         } else {
+            sms <- format(sms, digits = digits) # may add NAs row
             lbs <- format(names(sms))
-            sms <- paste(lbs, ":", format(sms, digits = digits), "  ",
-                         sep = "")
+            sms <- paste(lbs, ":", sms, "  ", sep = "")
             lw[i] <- ncw(lbs[1L])
             length(sms) <- nr
             z[[i]] <- sms

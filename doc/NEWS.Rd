@@ -54,6 +54,12 @@
 
       \item \code{nchar()} and \code{nzchar()} no longer accept factors
       (as integer vectors).  (Wish of \PR{6899}.)
+
+      \item \code{summary()} behaves slightly differently (or more
+      precisely its \code{print()} method does).  For numeric inputs, the
+      number of NAs is printed as an integer and not a real.  For dates
+      and datetimes, the number of NAs is included in the printed output
+      (the latter being the wish of \PR{14720}).
     }
   }
 

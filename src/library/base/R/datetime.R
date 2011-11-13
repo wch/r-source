@@ -234,8 +234,13 @@ print.POSIXlt <- function(x, ...)
 
 summary.POSIXct <- function(object, digits = 15, ...)
 {
-    x <- summary.default(unclass(object), digits=digits, ...)[1L:6L]# no NA's
-    class(x) <- oldClass(object)
+    x <- summary.default(unclass(object), digits = digits, ...)
+    if(m <- match("NA's", names(x), 0)) {
+        NAs <- as.integer(x[m])
+        x <- x[-m]
+        attr(x, "NAs") <- NAs
+    }
+    class(x) <- c("summaryDefault", "table", oldClass(object))
     attr(x, "tzone") <- attr(object, "tzone")
     x
 }
