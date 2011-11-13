@@ -76,7 +76,8 @@ format.summaryDefault <- function(x, ...)
 
 print.summaryDefault <- function(x, ...)
 {
-     xx <- if(is.numeric(x) || is.complex(x)) zapsmall(x) else x
+    xx <- if(is.numeric(x) || is.complex(x)) zapsmall(x) else x
+    class(xx) <- class(x)[-1] # for format
     m <- match("NA's", names(xx), 0)
     if(inherits(x, "Date") || inherits(x, "POSIXct")) {
         xx <- if(length(a <- attr(x, "NAs")))

@@ -60,6 +60,10 @@
       number of NAs is printed as an integer and not a real.  For dates
       and datetimes, the number of NAs is included in the printed output
       (the latter being the wish of \PR{14720}).
+
+      The \code{"data.frame"} method is more consistent with the default
+      method: in particular it now applies \code{zapsmall()} to
+      numeric/complex summaries.
     }
   }
 
