@@ -11,12 +11,11 @@
       \item \code{parallel::detectCores()} is now able to find the
       number of physical cores (rather than CPUs) on Sparc Solaris.
 
-      It can also do so on recent versions of Windows; however the
-      default remains \code{detectCores(logical = TRUE)} on that
-      platform.
+      It can also do so on most versions of Windows; however the default
+      remains \code{detectCores(logical = TRUE)} on that platform.
 
       \item Reference classes now keep a record of which fields are
-      locked.  \code{\$lock()} with no arguments returns the names
+      locked.  \code{$lock()} with no arguments returns the names
       of the locked fields.
 
       \item \code{HoltWinters()} reports a warning rather than an error
@@ -118,7 +117,7 @@
       The version released for \R 2.14.0 contains base functionality:
       higher-level convenience functions are planned (and some are
       already available in the \sQuote{R-devel} version of \R).
-      
+
       \item Building PDF manuals (for \R itself or packages,
       e.g. \emph{via} \command{R CMD check}) by default requires the
       LaTeX package \samp{inconsolata}: see the section on
@@ -506,7 +505,7 @@
       independent) \code{axisTicks()} which can make use of a new
       utility \code{.axisPars()}.  Further, it now returns a decreasing
       sequence (as for \code{log=FALSE}) when \code{usr} is decreasing.
-      
+
       \item Using \code{fix()} or \code{edit()} on a \R{} object (except
       perhaps a matrix or data frame) writes its temporary file with
       extension \file{.R} so editors which select their mode based on
@@ -742,7 +741,7 @@
       \item \command{R CMD check} now checks line-endings of makefiles
       and C/C++/Fortran sources in subdirectories of \file{src} as well
       as in \file{src} itself.
-       
+
       \item \command{R CMD check} now reports as a NOTE what look like
       methods documented with their full names even if there is a
       namespace and they are exported.  In almost all cases they are
@@ -833,7 +832,7 @@
       \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
-      
+
       In the same spirit, \code{median(x)} now gives an error for a data
       frame \code{x} (it often gave nonsensical results).
 
@@ -841,7 +840,7 @@
       \code{require()} is deprecated: it was only used for packages
       installed without lazy-loading, and now all packages are
       lazy-loaded.
-      
+
       \item Using a false value for the \file{DESCRIPTION} field
       \samp{LazyLoad} is deprecated.
     }
@@ -982,23 +981,20 @@
 
       \code{unstack()} sometimes produced incorrect results (a list or a
       vector) if the factor on which to un-split had only one level.
-  
+
       \item On some systems \code{help(".C", help_type = "pdf")} and
       similar generated file names that TeX was unable to handle.
-      
+
       \item Non-blocking listening socket connections continued to
       report \code{isIncomplete()} as true even when the peer had closed
       down and all available input had been read.
-      
+
       \item The revised HTML search system now generates better
       hyperlinks to help topics found: previously it gave problems with
       help pages with names containing e.g. spaces and slashes.
-      
+
       \item A late change in \R 2.13.2 broke \samp{\Sexpr} expressions
       in Rd files.
-      
-      \item The creation of ticks on log axes (including
-      \code{axTicks()} sometimes incorrectly omitted a tick at one end
 
       \item The creation of ticks on log axes (including by
       \code{axTicks()}) sometimes incorrectly omitted a tick at one end
@@ -1006,13 +1002,13 @@
       could be seen in the examples for \code{axTicks()}, where with
       axis limits \code{c(0.2, 88)} the tick for \code{0.2} was
       sometimes omitted.
-      
+
       \item \code{qgamma()} for small \code{shape} underflows to
       \code{0} rather than sometimes giving \code{NaN}.
       (\PR{8528}, \PR{14710})
-      
+
       \item \code{mapply()} now gives an explicit error message (rather
-      than an obscure one) is inputs of zero and positive length are
+      than an obscure one) if inputs of zero and positive length are
       mixed.
 
       \item Setting a Hershey font family followed by string height
