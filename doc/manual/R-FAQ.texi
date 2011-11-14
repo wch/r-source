@@ -1720,8 +1720,22 @@ user interfaces in packages.  The approach is similar to the use of the
 @cpkg{brew} package with @url{http://rapache.net/, Rapache} with the
 advantage of cross-platform support and easy installation.
 
-Finally, the @cpkg{Rook} package by Jeffrey Horner provides a web server
-server interface borrowing heavily from Ruby's Rack project.
+The @cpkg{Rook} package by Jeffrey Horner provides a web server
+interface borrowing heavily from Ruby's Rack project.
+
+Finally, @uref{http://code.google.com/p/concerto-platform/, Concerto} is
+a user friendly open-source Web Interface to R developed at the
+Psychometrics Centre of Cambridge University.  It was designed as an
+online platform to design and run Computerized Adaptive Tests, but can
+be also used as a general-purpose R Web Interface.  It allows R users
+with no programming or web designing background to quickly develop
+flexible and powerful online applications, websites, and psychometrics
+tests.  To maximize its reliability, security, and performance, Concerto
+relies on the popular and reliable open-source elements such as MySQL
+server (exchange and storage of the data), @uref{http://rstudio.org/,
+Rstudio} (R code designing and testing, file management), CKEditor
+(@HTML{} Layer design), and PHP.
+
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
