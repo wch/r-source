@@ -12,7 +12,8 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win .cvsignore
-R = R_LIBS= $(top_builddir)/bin/R
+# avoid user's startup files
+R = R_LIBS= $(top_builddir)/bin/R --vanilla
 
 ## foo.ts is the timestamp for package foo;
 ## foo.tgz is a symlink to foo_x.y-z.tar.gz in the source dir.

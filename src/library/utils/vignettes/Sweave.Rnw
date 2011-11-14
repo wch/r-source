@@ -110,11 +110,11 @@ not described here.
 Sweave source files are \texttt{noweb} files with some additional
 syntax that allows some additional control over the final
 output. Traditional \texttt{noweb} files have the extension
-\texttt{.nw}, which is also fine for Sweave files (and fully supported
+\file{.nw}, which is also fine for Sweave files (and fully supported
 by the software). Additionally, Sweave currently recognizes files with
-extensions \texttt{.rnw}, \texttt{.Rnw}, \texttt{.snw} and
-\texttt{.Snw} to directly indicate a \texttt{noweb} file with Sweave
-extensions. We will use \texttt{.Rnw} throughout this document.
+extensions \file{.rnw}, \file{.Rnw}, \file{.snw} and
+\file{.Snw} to directly indicate a \texttt{noweb} file with Sweave
+extensions. We will use \file{.Rnw} throughout this document.
 
 A minimal Sweave file is shown in Figure~\ref{fig:ex1.Rnw}, which
 contains two code chunks embedded in a simple \LaTeX{}
@@ -130,20 +130,20 @@ be created directly from within \R{} using
 tools::texi2pdf("example-1.tex")
 @
 
-The first difference between \texttt{example-1.Rnw} and
-\texttt{example-1.tex} is that the \LaTeX{} style file
-\texttt{Sweave.sty} is automatically loaded, which provides
+The first difference between \file{example-1.Rnw} and
+\file{example-1.tex} is that the \LaTeX{} style file
+\file{Sweave.sty} is automatically loaded, which provides
 environments for typesetting \R{} input and output (the \LaTeX{}
 environments \texttt{Sinput} and \texttt{Soutput}). Otherwise, the
 documentation chunks are copied without any modification from
-\texttt{example-1.Rnw} to \texttt{example-1.tex}.
+\file{example-1.Rnw} to \file{example-1.tex}.
 
 \begin{figure}[htbp]
   \centering
   \begin{minipage}{0.9\textwidth}
     \lstinputlisting{\Sexpr{rnwfile}}
   \end{minipage}
-  \caption{A minimal Sweave file: \texttt{example-1.Rnw}.}
+  \caption{A minimal Sweave file: \file{example-1.Rnw}.}
   \label{fig:ex1.Rnw}
 \end{figure}
 
@@ -173,7 +173,7 @@ Sweave which control the final output.
     \lstinputlisting{example-1.tex}
   \end{minipage}
   \caption{Running \texttt{Sweave("example-1.Rnw")} produces the file
-    \texttt{example-1.tex}.}
+    \file{example-1.tex}.}
   \label{fig:ex1.tex}
 \end{figure}
 
@@ -183,7 +183,7 @@ Sweave which control the final output.
     \includegraphics[width=\textwidth]{example-1}
   \end{minipage}}
   \caption{The final document is created by running \texttt{pdflatex} on
-  \texttt{example-1.tex}.}
+    \file{example-1.tex}.}
   \label{fig:ex1.pdf}
 \end{figure}
 
@@ -191,7 +191,7 @@ Sweave which control the final output.
 \subsection{Sweave options}
 
 Options control how code chunks and their output (text, figures) are
-transferred from the \texttt{.Rnw} file to the \texttt{.tex} file. All
+transferred from the \file{.Rnw} file to the \file{.tex} file. All
 options have the form \texttt{key=value}, where \texttt{value} can be
 a number, string or logical value.  Several options can be specified at
 once (separated by commas), all options must take a value (which must
@@ -199,7 +199,7 @@ not contain a comma or equal sign). Logical options can take the
 values \texttt{TRUE}, \texttt{FALSE}, \texttt{T}, \texttt{F} as well
 as lower-case and capitalized versions of the first two.
 
-In the \texttt{.Rnw} file options can be specified either
+In the \file{.Rnw} file options can be specified either
 \begin{enumerate}
  \item inside the angle brackets at the beginning of a code chunk,
   modifying the behaviour \emph{only for this chunk}, or
@@ -268,8 +268,8 @@ label of the code chunk if it has one, otherwise the number of the
 code chunk in the range \texttt{001} to \texttt{999}.  \texttt{ext} is
 the appropriate extension for the type of graphics, e.g.{}
 \texttt{pdf}, \texttt{eps}, \ldots{}.  So for the
-\texttt{example-1.Rnw} file, the PDF version of the boxplot is
-\texttt{example-1-002.pdf}, since it is the second code chunk in the
+\file{example-1.Rnw} file, the PDF version of the boxplot is
+\file{example-1-002.pdf}, since it is the second code chunk in the
 document.  Note that if \texttt{prefix.string} is used it can specify
 a directory as part of the prefix, so that for example if
 \verb|\SweaveOpts{prefix.string=figures/fig}|, the auto-generated
@@ -355,7 +355,7 @@ text or reuse code chunks.
   \begin{minipage}{0.9\textwidth}
     \lstinputlisting{example-1.Stex}
   \end{minipage}
-  \caption{An Sweave file using \LaTeX{} syntax: \texttt{example-1.Stex}.}
+  \caption{An Sweave file using \LaTeX{} syntax: \file{example-1.Stex}.}
   \label{fig:ex1.Stex}
 \end{figure}
 
@@ -374,7 +374,7 @@ the noweb-style syntax.
 Which syntax is used for a document is determined by the extension of
 the input file, files with extension\footnote{or the lowercase
   versions, for convenience on case-insensitive file systems.}
-\texttt{.Rtex} or \texttt{.Stex} are assumed to follow the
+\file{.Rtex} or \file{.Stex} are assumed to follow the
 \LaTeX-style syntax. Alternatively the syntax can be changed at any
 point within the document using the commands
 \begin{quote}
@@ -454,8 +454,8 @@ well before \R{} 2.13.0.
 
 The user front-ends of the Sweave system are the two \R{} functions
 \texttt{Stangle()} and \texttt{Sweave()}, both are contained in
-package \texttt{utils}.  \texttt{Stangle} can be used to extract only
-the code chunks from an \texttt{.Rnw} file and write to one or several
+package~\pkg{utils}.  \texttt{Stangle} can be used to extract only
+the code chunks from an \file{.Rnw} file and write to one or several
 files.  \texttt{Sweave()} runs the code chunks through \R{} and replaces
 them with the respective input and/or output.  \texttt{Stangle} is
 actually just a wrapper function for \texttt{Sweave}, which uses a
@@ -467,7 +467,7 @@ for more details and arguments of the functions.
 
 \subsection{The \texttt{RweaveLatex} driver}
 
-This driver transforms \texttt{.Rnw} files with \LaTeX{} documentation
+This driver transforms \file{.Rnw} files with \LaTeX{} documentation
 chunks and \R{} code chunks to proper \LaTeX{} files (for typesetting both
 with standard \texttt{latex} or \texttt{pdflatex}), see
 <<eval=FALSE>>=
@@ -480,7 +480,7 @@ for details, including the supported options.
 If \texttt{split} is set to \texttt{TRUE}, then all text corresponding
 to code chunks (the \texttt{Sinput} and \texttt{Soutput} environments)
 is written to separate files. The file names are of form
-\texttt{prefix.string-label.tex}, if several code chunks have the same
+\file{prefix.string-label.tex}, if several code chunks have the same
 label, their outputs are concatenated. If a code chunk has no label,
 then the number of the chunk is used instead. The same naming scheme
 applies to figures.  You do need to ensure that the file names
@@ -507,7 +507,7 @@ insertion of the line.
 
 \subsubsection{Figure sizes}
 
-\verb|Sweave.sty| sets the default \emph{\LaTeX{}} figure width (which
+\file{Sweave.sty} sets the default \emph{\LaTeX{}} figure width (which
 is independent of the size of the generated EPS or PDF files).  The
 current default is
 \begin{verbatim}
@@ -575,11 +575,11 @@ supplied\footnote{from \R{} 2.13.1} \emph{via} a companion function
 \verb|my.Swd.off|, which is called with no arguments.
 
 For a complete example see the file
-\texttt{src/library/utils/tests/customgraphics.Rnw} in the \R{} sources.
+\file{src/library/utils/tests/customgraphics.Rnw} in the \R{} sources.
 
 \subsection{The \texttt{Rtangle} driver}
 
-This driver can be used to extract \R{} code chunks from a \texttt{.Rnw}
+This driver can be used to extract \R{} code chunks from a \file{.Rnw}
 file. Code chunks can either be written to one large file or separate
 files (one for each code chunk). The options \texttt{split},
 \texttt{prefix}, and \texttt{prefix.string} have the same defaults and
@@ -647,7 +647,7 @@ encoding used for the text to be processed.
 
   Recent versions of ESS (Emacs speaks statistics,
   \url{http://ess.R-project.org}) automatically recognize files with
-  extension \texttt{.Rnw} as Sweave files and turn on the correct
+  extension \file{.Rnw} as Sweave files and turn on the correct
   modes. Please follow the instructions on the ESS homepage on how to
   install ESS on your computer.
 
@@ -683,8 +683,8 @@ R CMD Sweave file.Rnw
 
   \subsection{Why do R lattice graphics not work?}
 
-   The commands in package \texttt{lattice} have different behavior
-   than the standard plot commands in the \texttt{base} package:
+   The commands in package~\pkg{lattice} have different behavior
+   than the standard plot commands in the \pkg{base} package:
    lattice commands return an object of class \texttt{"trellis"}, the
    actual plotting is performed by the \texttt{print} method for the
    class. Encapsulating calls to lattice functions in \texttt{print()}
@@ -783,23 +783,23 @@ R CMD Sweave file.Rnw
 
   \subsection{Can I use Sweave for Word files?}
 
-  Not directly, but package \texttt{SWord} provides similar
+  Not directly, but package~\pkg{SWord} provides similar
   functionality for Microsoft Word on Windows platforms.
 
   \subsection{Can I use Sweave for OpenOffice files?}
 
-   Yes, package \texttt{odfWeave} provides functions for using Sweave in
+   Yes, package \pkg{odfWeave} provides functions for using Sweave in
    combination with OpenOffice Writer rather than \LaTeX.
 
    \subsection{Can I use Sweave for HTML files?}
 
-   Yes, package \texttt{R2HTML} provides a driver for using Sweave in
+   Yes, package \pkg{R2HTML} provides a driver for using Sweave in
    combination with HTML rather than \LaTeX.
 
-   \subsection{After loading package \texttt{R2HTML} Sweave doesn't
+   \subsection{After loading package \pkg{R2HTML} Sweave doesn't
      work properly!}
 
-   Package \texttt{R2HTML} registers an Sweave driver for HTML files
+   Package \pkg{R2HTML} registers an Sweave driver for HTML files
    using the same file extensions as the default \texttt{noweb}
    syntax, and after that its syntax is on the search list before the
    default syntax.  Using
@@ -810,7 +810,7 @@ or calling Sweave like
 \begin{verbatim}
   Sweave(..., syntax = "SweaveSyntaxNoweb")
 \end{verbatim}
-ensures the default syntax even after loading package \texttt{R2HTML}.
+ensures the default syntax even after loading package \pkg{R2HTML}.
 
 
 
