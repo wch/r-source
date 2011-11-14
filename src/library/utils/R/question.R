@@ -14,7 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-`?` <- function(e1, e2)
+`?` <-
+function(e1, e2)
 {
     if (missing(e2)) {
 	type <- NULL
@@ -77,18 +78,21 @@
 			return(.helpForCall(topicExpr, parent.frame(), FALSE))
 		    e2
 		}
-	    doHelp <- .tryHelp(topicName(type, topic), package = package)
-	    if(inherits(doHelp, "try-error")) {
+            h <- .tryHelp(topicName(type, topic), package = package)
+            if(is.null(h)) {
 		if(is.language(topicExpr))
 		    topicExpr <- deparse(topicExpr)
 		stop(gettextf("no documentation of type %s and topic %s (or error in processing help)",
-			      sQuote(type), sQuote(topicExpr)), domain = NA)
+			      sQuote(type), sQuote(topicExpr)),
+                     domain = NA)
 	    }
+            h
 	}
     }
 }
 
-topicName <- function(type, topic)
+topicName <-
+function(type, topic)
 {
     if((length(type) == 0L) || (length(topic) == 0L))
         character(0L)
@@ -96,10 +100,14 @@ topicName <- function(type, topic)
         paste(paste(topic, collapse = ","), type, sep = "-")
 }
 
-.helpForCall <- function(expr, envir, doEval = TRUE)
+.helpForCall <-
+function(expr, envir, doEval = TRUE)
 {
-    ## want ASCII quotes, not fancy nor translated ones
-    dQ <- function (x) paste('"', x, '"', sep = '')
+    ## There should really be a common way of formatting signatures.
+    sigFormat <- function(sigNames, sigClasses) {
+        paste(sprintf("%s = \"%s\"", sigNames, sigClasses),
+              collapse = ", ")
+    }
 
     f <- expr[[1L]]                     # the function specifier
     where <- topenv(envir)              # typically .GlobalEnv
@@ -107,11 +115,14 @@ topicName <- function(type, topic)
         f <- as.character(f)
     if(!.isMethodsDispatchOn() || !methods::isGeneric(f, where = where)) {
         if(!is.character(f) || length(f) != 1L)
-            stop(gettextf("the object of class \"%s\" in the function call %s could not be used as a documentation topic",
-                          class(f), sQuote(deparse(expr))), domain = NA)
+            stop(gettextf("the object of class %s in the function call %s could not be used as a documentation topic",
+                          dQuote(class(f)), sQuote(deparse(expr))),
+                 domain = NA)
         h <- .tryHelp(f)
-        if(inherits(h, "try-error"))
-            stop(gettextf("no methods for %s and no documentation for it as a function", sQuote(f)), domain = NA)
+        if(is.null(h)) 
+            stop(gettextf("no methods for %s and no documentation for it as a function",
+                          sQuote(f)),
+                 domain = NA)
     }
     else {
         ## allow generic function objects or names
@@ -155,35 +166,38 @@ topicName <- function(type, topic)
         if(methods::is(method, "MethodDefinition")) {
             sigClasses <- method@defined
             if(length(sigClasses) < length(sigNames))
-                sigClasses<- c(sigClasses, rep("ANY", length(sigNames)-length(sigClasses)))
+                sigClasses<-
+                    c(sigClasses,
+                      rep.int("ANY", length(sigNames) - length(sigClasses)))
         }
         else
             warning(gettextf("no method defined for function %s and signature %s",
                              sQuote(f),
-                             sQuote(paste(sigNames, " = ", dQ(sigClasses),
-                                          sep = "", collapse = ", "))),
+                             sQuote(sigFormat(sigNames, sigClasses))),
                     domain = NA)
-        topic <- topicName("method", c(f,sigClasses))
+        topic <- topicName("method", c(f, sigClasses))
         h <- .tryHelp(topic)
-        if(methods::is(h, "try-error"))
+        if(is.null(h))
             stop(gettextf("no documentation for function %s and signature %s",
                           sQuote(f),
-                          sQuote(paste(sigNames, " = ", dQ(sigClasses),
-                                       sep = "", collapse = ", "))),
+                          sQuote(sigFormat(sigNames, sigClasses))),
                  domain = NA)
     }
+
+    h
 }
 
-.tryHelp <- function(topic, package = NULL) {
-    opts <- options(error = function() TRUE,
-                    show.error.messages = FALSE)
-    on.exit(options(opts))
-    x <- try(do.call("help", list(topic, package = package)))
-    ## If something was found, actually show it via print().
-    ## Otherwise, give an error.
-    if(!inherits(x, "try-error") && length(x))
-        print(x)
-    else
-        try(stop())
-    ## Argh ...
+.tryHelp <-
+function(topic, package = NULL)
+{
+    ## Try finding help.
+    ## Return NULL (nothing) in case we found no help pages, or an
+    ## error.
+    ## (Earlier versions showed what they found via print(), or gave
+    ## an error.)
+    h <- tryCatch(do.call("help", list(topic, package = package)),
+                  error = identity)
+    if(inherits(h, "error") || !length(h))
+        h <- NULL
+    h
 }
