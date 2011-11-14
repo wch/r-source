@@ -3750,7 +3750,7 @@ function(x, ...)
        && s[2L]/s[1L] < 0.9) { # and at least 10%
         writeLines(c("",
                      "Note: significantly better compression could be obtained",
-                     "      by using tools::resaveRdaFiles() or R CMD build --resave-data"))
+                     "      by using R CMD build --resave-data"))
         if(nrow(x$improve)) {
             improve <- x$improve
             improve$old_size <- reformat(improve$old_size)
