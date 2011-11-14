@@ -44,10 +44,10 @@
       \code{dependencies = "all"}.
 
       \item PCRE has been upgraded to version 8.20: as well as bug fixes
-      and greater Perl compatibility, this adds a JIT pattern compiler,
+      and greater Perl compatibility.  This adds a JIT pattern compiler,
       about which PCRE's news says
       \sQuote{large performance benefits can be had in many situations}.
-      (It is supported on most but not all CPUs that run R.)
+      (It is supported on most but not all platforms that run R.)
 
       \item \code{legend()} gains a \code{text.font} argument. (Suggested
       by Tim Paine, \PR{14719}.)
@@ -80,7 +80,7 @@
       \item \code{clusterMap()} has a new argument \code{.scheduling} to
       allow the use of load-balancing.
 
-      \item There are new load-balancing function \code{parLapplyLB()}
+      \item There are new load-balancing functions \code{parLapplyLB()}
       and \code{parSapplyLB()}.
     }
   }
@@ -94,10 +94,10 @@
       sub-architectures for which code was compiled (rather than just
       the primary sub-architecture).
 
-      \item Code in packages is now compiled with \code{-NDEBUG} to
-      mitigate against \code{assert} being called in production use.
-      Developers can turn this off during package development with
-      \code{PKG_CPPFLAGS = -UNDEBUG}.
+      \item C/C++ code in packages is now compiled with \code{-NDEBUG}
+      to mitigate against the C/C++ function \code{assert} being called
+      in production use.  Developers can turn this off during package
+      development with \code{PKG_CPPFLAGS = -UNDEBUG}.
       
       \item \command{R CMD INSTALL} has a new option \option{--dsym}
       which on Mac OS X (Darwin) dumps the symbols alongside the
@@ -143,24 +143,24 @@
       \item \code{Sys.putenv()}, replaced and deprecated in \R 2.5.0, is
       finally removed.
 
-      \item Some functions which have been defunct for five or more years
-      have been removed completely.  These include \code{.Alias()},
-      \code{La.chol()}, \code{La.chol2inv()}, \code{La.eigen()},
-      \code{Machine()}, \code{Platform()}, \code{Version},
-      \code{codes()}, \code{delay()}, \code{format.char()},
-      \code{getenv()}, \code{httpclient()}, \code{loadURL()},
-      \code{machine()}, \code{parse.dcf()}, \code{printNoClass()},
-      \code{provide()}, \code{read.table.url()}, \code{restart()},
-      \code{scan.url()}, \code{symbol.C()}, \code{symbol.For()}and
-      \code{unix()}.
+      \item Some functions/objects which have been defunct for five or
+      more years have been removed completely.  These include
+      \code{.Alias()}, \code{La.chol()}, \code{La.chol2inv()},
+      \code{La.eigen()}, \code{Machine()}, \code{Platform()},
+      \code{Version}, \code{codes()}, \code{delay()},
+      \code{format.char()}, \code{getenv()}, \code{httpclient()},
+      \code{loadURL()}, \code{machine()}, \code{parse.dcf()},
+      \code{printNoClass()}, \code{provide()}, \code{read.table.url()},
+      \code{restart()}, \code{scan.url()}, \code{symbol.C()},
+      \code{symbol.For()} and \code{unix()}.
     }
   }
 
   \subsection{INSTALLATION}{
     \itemize{
       \item Building wih a positive value of
-    \option{--with-valgrind-instrumentation} now instruments logical,
-    complex and raw vectors as well as the other atomic vector types.
+      \option{--with-valgrind-instrumentation} now  also instruments logical,
+      complex and raw vectors.
     }
   }
   
@@ -179,12 +179,11 @@
       \item \code{parallel::detectCores()} is now able to find the
       number of physical cores (rather than CPUs) on Sparc Solaris.
 
-      It can also do so on recent versions of Windows; however the
-      default remains \code{detectCores(logical = TRUE)} on that
-      platform.
+      It can also do so on most versions of Windows; however the default
+      remains \code{detectCores(logical = TRUE)} on that platform.
 
       \item Reference classes now keep a record of which fields are
-      locked.  \code{\$lock()} with no arguments returns the names
+      locked.  \code{$lock()} with no arguments returns the names
       of the locked fields.
 
       \item \code{HoltWinters()} reports a warning rather than an error
@@ -1177,7 +1176,7 @@
       (\PR{8528}, \PR{14710})
 
       \item \code{mapply()} now gives an explicit error message (rather
-      than an obscure one) is inputs of zero and positive length are
+      than an obscure one) if inputs of zero and positive length are
       mixed.
 
       \item Setting a Hershey font family followed by string height
