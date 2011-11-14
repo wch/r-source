@@ -34,7 +34,8 @@ blues9
 
 \details{
   \code{densCols} computes and returns the set of colors that will be
-  used in plotting.
+  used in plotting, calling \code{\link[KernSmooth]{bkde2D}(*,
+  bandwidth, gridsize=nbin, ..)} from package \pkg{KernSmooth}.
 
   \code{blues9} is a set of 9 color shades of blue used as the default in
   plotting.
@@ -45,9 +46,10 @@ blues9
   contains colors to be used in a subsequent scatterplot.  Each color
   represents the local density around the corresponding point.
 }
-\seealso{\code{\link[KernSmooth]{bkde2D}} from package \pkg{KernSmooth},
-  and \code{\link{smoothScatter}()} which builds on the same
-  computations as \code{densCols}.
+\seealso{
+  \code{\link[KernSmooth]{bkde2D}} from package \pkg{KernSmooth};
+  further, \code{\link{smoothScatter}()} (package \pkg{graphics}) which
+  builds on the same computations as \code{densCols}.
 }
 \author{Florian Hahne at FHCRC, originally}
 \examples{
