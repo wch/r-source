@@ -1662,4 +1662,13 @@ stopifnot(identical(unstack(DF4), DF[1])) # was a list
 stopifnot(!is.na(qchisq(p=0.025, df=0.00991)))
 ## NaN in 2.13.2
 
+
+## nobs() for zero-weight glm fits:
+DF <- data.frame(x1=log(1:10), x2=c(1/(1:9), NA), y=1:10,
+                 wt=c(0,2,0,4,0,6,7,8,9,10))
+stopifnot(nobs(lm(y ~ x1 + x2, weights = wt, data=DF)) ==
+          nobs(glm(y ~ x1 + x2, weights = wt, data = DF)))
+## was 6 and 9 in R < 2.14.1.
+
+
 proc.time()
