@@ -4834,7 +4834,7 @@ install 32/64-bit packages.
 @menu
 * 32-bit toolchain::            
 * 64-bit toolchain::            
-* Upcoming toolchains::         
+* Upcoming toolchain::          
 @end menu
 
 @node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
@@ -4869,7 +4869,7 @@ It is also possible to use the 32-bit toolchain from the
 @code{mingw-w64} project and options to use that are documented in file
 @file{MkRules.dist}.
 
-@node 64-bit toolchain, Upcoming toolchains, 32-bit toolchain, The MinGW toolchain
+@node 64-bit toolchain, Upcoming toolchain, 32-bit toolchain, The MinGW toolchain
 @subsection 64-bit toolchain
 
 Several versions of the MinGW-w64 toolchain are available: use one of
@@ -4900,8 +4900,8 @@ Other toolchains are available: for example under
 contains a native x64 Windows toolchain by `sezero' that may be useful
 when building external software.
 
-@node Upcoming toolchains,  , 64-bit toolchain, The MinGW toolchain
-@subsection Upcoming toolchains
+@node Upcoming toolchain,  , 64-bit toolchain, The MinGW toolchain
+@subsection Upcoming toolchain
 
 The intention is that the released version of @R{} 2.15.0 will be built
 with an updated toolchain which has support for OpenMP.  A candidate
@@ -4909,21 +4909,25 @@ version can be downloaded from
 @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}
 
 Currently experiments are using the (modified) toolchains from the
-Mingw-w64 project for both 32- and 64-bit builds, using release 2.0 of
-the Mingw-w64 headers and a beta version of @command{gcc 4.6.2}.
+Mingw-w64 project for both 32- and 64-bit builds, using a beta version
+of @command{gcc 4.5.4}.
 
 This has native 32-bit and 64-bit compilers, and hence the C compiler is
 called @command{gcc} for both builds.  This potentially causes problems
 when installing packages for both architectures, and the solution is to
-set the make variable @env{BINPREF} appropriately in the file
+set the make variables @env{BINPREF} appropriately in the file
 @file{MkRules.local} to be the path to the toolchain, e.g.@:
 @example
-BINPREF64 = c:/R/W64/gcc-4.6.2/bin/
+BINPREF = c:/R/new2/bin/
+BINPREF64 = c:/R/new2/bin64/
 @end example
+If you use a binary install you will need to edit @code{BINPREF} in
+@file{etc/i386/Makeconf} and @file{etc/x64/Makeconf} to reflect your
+local path to the toolchain.
 
-It is likely that external software libraries will need to be
-re-compiled under the new toolchain: especially those providing a C++
-interface.
+Some external software libraries will need to be re-compiled under the
+new toolchain: especially those providing a C++ interface. Some are
+available from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/}
 
 The DLL supporting OpenMP needs to be shipped in the installer: see the
 macros @samp{DLLs32} and @samp{DLLs64} in file @file{MkRules.dist}.
