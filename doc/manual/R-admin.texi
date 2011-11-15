@@ -4334,8 +4334,8 @@ version of Solaris in use.  (This can be ascertained from @command{gcc
 several reports of problems were due to using @command{gcc} compiled on
 one version of Solaris on a later version.
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 (the
-most recent version on OpenCSW) needed
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.6.2
+needed
 
 @example
 CPPFLAGS=-I/opt/csw/include
@@ -4359,14 +4359,13 @@ be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
-Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.3.3
-and @command{gcc}@tie{}3.4.6 from OpenCSW.} for @cputype{x86} and
-@cputype{amd64} have been less successful.
+Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.6.2,
+and earlier @command{gcc}@tie{}4.3.3 and @command{gcc}@tie{}3.4.6 from
+OpenCSW.} for @cputype{x86} and @cputype{amd64} have been less
+successful.
 
-@cputype{x86} builds have built successfully but failed or gave
-incorrect results on various tests unless built without any optimization
-in @code{CFLAGS}: the issue seems to be that @command{gcc} and the
-system libraries differ over the use of SSE registers.
+@cputype{x86} builds have built successfully, and under
+@command{gcc}@tie{}4.6.2 (but not earlier) checked successfully.
 
 For @cputype{amd64} the builds have failed to complete in
 several different ways, most recently with relocation errors for
