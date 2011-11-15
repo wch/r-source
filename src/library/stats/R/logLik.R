@@ -99,7 +99,8 @@ nobs <- function(object, ...) UseMethod("nobs")
 nobs.lm <- function(object, ...)
     if(!is.null(w <- object$weights)) sum(w != 0) else NROW(object$residuals)
 
-nobs.glm <- function(object, ...) sum(!is.na(object$residuals))
+nobs.glm <- function(object, ...)
+    if(!is.null(w <- object$prior.weights)) sum(w != 0) else length(object$residuals)
 
 nobs.logLik <- function(object, ...) {
     res <- attr(object, "nobs")

@@ -63,6 +63,11 @@
       \item \code{gzcon()} connections are no longer subject to garbage
       collection: it was possible for this to happen when unintended
       (e.g. when calling \code{load()}).
+      
+      \item \code{nobs()} does not count zero-weight observations for
+      \code{glm()} fits, for consistency with \code{lm()}.  This affects
+      the \code{BIC()} values reported for such \code{glm()} fits.
+      (Spotted by Bill Dunlap.)
     }
   }
 }
