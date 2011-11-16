@@ -330,23 +330,22 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     }
     else if(w == 0) {	/* collect them */
 	char *tr; int nc;
-	if(!R_CollectWarnings)
-	    setupwarnings();
-	if( R_CollectWarnings > 49 )
-	    return;
-	SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
-	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
-	    strcat(buf, " [... truncated]");
-	if(R_ShowWarnCalls && call != R_NilValue) {
-	    tr =  R_ConciseTraceback(call, 0); nc = strlen(tr);
-	    if (nc && nc + strlen(buf) + 8 < BUFSIZE) {
-		strcat(buf, "\nCalls: ");
-		strcat(buf, tr);
+	if(!R_CollectWarnings) setupwarnings();
+	if(R_CollectWarnings < 50) {
+	    SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
+	    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
+	    if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
+		strcat(buf, " [... truncated]");
+	    if(R_ShowWarnCalls && call != R_NilValue) {
+		tr =  R_ConciseTraceback(call, 0); nc = strlen(tr);
+		if (nc && nc + strlen(buf) + 8 < BUFSIZE) {
+		    strcat(buf, "\nCalls: ");
+		    strcat(buf, tr);
+		}
 	    }
+	    names = CAR(ATTRIB(R_Warnings));
+	    SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
 	}
-	names = CAR(ATTRIB(R_Warnings));
-	SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
     }
     /* else:  w <= -1 */
     endcontext(&cntxt);
