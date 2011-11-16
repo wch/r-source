@@ -236,6 +236,9 @@
       \code{glm()} fits, for consistency with \code{lm()}.  This affects
       the \code{BIC()} values reported for such \code{glm()} fits.
       (Spotted by Bill Dunlap.)
+      
+      \item \code{options(warn = 0)} failed to end a (C-level) contest
+      with more than 50 accumulated warnings.  (Spotted by Jeffery Horner.)
     }
   }
 }
