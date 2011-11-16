@@ -29,7 +29,7 @@
             lib64 <- gsub("\\", "/", file.path(R.home(), "Tcl", "lib64"),
                           fixed=TRUE)
             Sys.setenv(TCLLIBPATH = lib64)
-        }
+        } else Sys.unsetenv("TCLLIBPATH") # it case called from a 64-bit process
     }
     library.dynam("tcltk", pkgname, libname, DLLpath = tclbin)
     .C("tcltk_start", PACKAGE = "tcltk")
