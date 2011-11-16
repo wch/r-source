@@ -16,7 +16,7 @@ fixhtml:  html/rwin.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html
 	@$(ECHO) done > fixhtml
 
-fixetc: $(wildcard ./etc/*)
+fixetc: $(wildcard ./etc/*) ../MkRules Makefile
 	$(CP) -p $^ $(R_HOME)/etc
 	$(RM) $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
@@ -39,6 +39,7 @@ else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF = $(BINPREF)|" \
+	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  -e "s|DT_ARCH =|DT_ARCH = $(DT_ARCH)|" \

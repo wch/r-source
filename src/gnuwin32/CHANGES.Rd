@@ -14,17 +14,25 @@
       \item \code{postscript(file = "|cmd")} now works on Windows.
     }
   }
+  
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The directory pointed to by \env{USER_LOCAL} can now have
+      architecture-specific sub-directories \file{lib/i386} and
+      \file{lib/x64}.
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.14.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{Save as} menu item on the script
-      editor appends \file{.R} to a file name without an extension.
+      editor adds extension \file{.R} to a file name without an extension.
 
       \item In package \pkg{parallel}, \code{detectCores(logical =
 	FALSE)} makes an OS-dependent attempt to find the number of
-      physical cores. It usually succeeds, even on XP.
+      physical cores.  It usually succeeds, even on XP.
     }
   }
   
@@ -33,9 +41,9 @@
       \item The fix for \PR{14543} caused stack problems with outputing
       large \R objects (e.g. data frames of 25,000 items).  (\PR{14698})
 
-      In a double-byte locale (Chinese, Japanese, Korean), \code{grep()}
-      and friends might have used byte-wise matching of strings in the
-      native encoding.  (\PR{14622})
+      \item In a double-byte locale (Chinese, Japanese, Korean),
+      \code{grep()} and friends might have used byte-wise matching of
+      strings in the native encoding.  (\PR{14622})
     }
   }
 }

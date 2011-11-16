@@ -31,7 +31,7 @@ LOCAL_SOFT =
 
 ifneq ($(strip $(LOCAL_SOFT)),)
 LOCAL_CPPFLAGS = -I"$(LOCAL_SOFT)/include"
-LOCAL_LIBS = -L"$(LOCAL_SOFT)/lib"
+LOCAL_LIBS = -L"$(LOCAL_SOFT)/lib$(R_ARCH)" -L"$(LOCAL_SOFT)/lib"
 endif
 
 DLLTOOL = $(BINPREF)dlltool

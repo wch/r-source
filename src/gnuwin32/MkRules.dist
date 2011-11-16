@@ -1,13 +1,11 @@
 #-*- Makefile -*-
 
 ## This is only used when building R itself but it does customize
-## etc/*/Makeconf using LOCAL_SOFT, BINPREF[64], SYMPAT64, IMPLIB and R_ARCH
+## etc/*/Makeconf using LOCAL_SOFT, BINPREF[64], IMPLIB and R_ARCH
 
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
-# on CRAN can be found at
-# http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win32/local.zip
-# http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win64/local64.zip
+# on CRAN can be found under http://www.stats.ox.ac.uk/pub/Rtools/goodies
 LOCAL_SOFT =
 
 ## ============== configuration macros for building R ===================
