@@ -245,7 +245,12 @@
       (Spotted by Bill Dunlap.)
       
       \item \code{options(warn = 0)} failed to end a (C-level) contest
-      with more than 50 accumulated warnings.  (Spotted by Jeffery Horner.)
+      with more than 50 accumulated warnings.  (Spotted by Jeffery
+      Horner.)
+
+      \item The internal \code{plot.default()} code did not do sanity
+      checks on \code{cex}, so invalid input could cause problems.
+      (Reported by Ben Bolker.)      
     }
   }
 }
