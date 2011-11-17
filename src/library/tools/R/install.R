@@ -791,7 +791,18 @@
                              )
                 writeLines(newdesc, descfile, useBytes = TRUE)
             }
-        }                               # end of src dir
+        } else if (multiarch) {   # end of src dir
+            if (WINDOWS) {
+                wd2 <- setwd(file.path(R.home(), "bin", "exec"))
+                archs <- Sys.glob("*")
+                setwd(wd2)
+                tests_archs <- archs[archs %in% c("i386", "x64")]
+            } else {
+                wd2 <- setwd(file.path(R.home("bin"), "exec"))
+                test_archs <- Sys.glob("*")
+                setwd(wd2)
+             }
+       }
 
         ## R files must start with a letter
 	if (install_R && dir.exists("R") && length(dir("R"))) {

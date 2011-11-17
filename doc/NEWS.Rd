@@ -105,6 +105,12 @@
       \file{R.framework}).  [This can also be enabled by setting the
       undocumented environment variable \env{PKG_NAKE_DSYM}, since \R
       2.12.0.]
+      
+      \item \command{R CMD INSTALL} will test loading under all installed
+      sub-architectures even for packages without compiled code, unless
+      the flag \option{--no-multiarch} is used.  (Pure \R packages can
+      do things which are architecture-dependent: in the case which
+      prompted this, looking for an icon in a Windows \R executable.)
     }
   }
 
