@@ -41,6 +41,14 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \command{R CMD INSTALL} will now do a test load for all
+      sub-architectures for which code was compiled (rather than just
+      the primary sub-architecture).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
