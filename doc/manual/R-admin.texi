@@ -4912,16 +4912,32 @@ of @command{gcc 4.5.4} and version 2.0 of the Mingw-w64 project's runtime.
 
 This has native 32-bit and 64-bit compilers, and hence the C compiler is
 called @command{gcc} for both builds.  This potentially causes problems
-when installing packages for both architectures, and the solution is to
-set the make variables @env{BINPREF} appropriately in the file
+when installing packages for both architectures; there are two
+solutions.
+@enumerate
+@item 
+Set the make variables @env{BINPREF} appropriately in the file
 @file{MkRules.local} to be the path to the toolchain, e.g.@:
 @example
 BINPREF = c:/R/new2/bin/
 BINPREF64 = c:/R/new2/bin64/
 @end example
-If you use a binary install you will need to edit @code{BINPREF} in
-@file{etc/i386/Makeconf} and @file{etc/x64/Makeconf} to reflect your
-local path to the toolchain.
+(use forward slashes and include the trailing one, as here).  In this
+option you do not need the toolchain in your path.
+
+@item
+Set the make variables @env{BINPREF} to use the prefixed versions,
+e.g.@:
+@example
+BINPREF = i686-w64-mingw32-
+BINPREF64 = x86_64-w64-mingw32-
+@end example
+and have both @file{bin} and @file{bin64} directories of the toolchain
+in your path.
+@end enumerate
+If you use a binary install you may need to edit @code{BINPREF} in
+@file{etc/i386/Makeconf} and @file{etc/x64/Makeconf} to change these
+settings.
 
 Some external software libraries will need to be re-compiled under the
 new toolchain: especially those providing a C++ interface. Some are
