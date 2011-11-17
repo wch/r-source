@@ -793,7 +793,7 @@
             }
         } else if (multiarch) {   # end of src dir
             if (WINDOWS) {
-                wd2 <- setwd(file.path(R.home(), "bin", "exec"))
+                wd2 <- setwd(file.path(R.home(), "bin")) # not R.home("bin")
                 archs <- Sys.glob("*")
                 setwd(wd2)
                 tests_archs <- archs[archs %in% c("i386", "x64")]
