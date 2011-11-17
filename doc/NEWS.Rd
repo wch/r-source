@@ -85,6 +85,9 @@
 
       \item There are new load-balancing functions \code{parLapplyLB()}
       and \code{parSapplyLB()}.
+
+      \item The \code{clusterExport} function now allows specification
+      of an environment from which to export.
     }
   }
 
