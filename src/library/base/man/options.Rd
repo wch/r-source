@@ -281,7 +281,7 @@ getOption(x, default = NULL)
       \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
       function returns.  If fewer than 10 warnings were signalled they
-      will be printed otherwise a message saying how many (max 50) were
+      will be printed otherwise a message saying how many were
       signalled.  An object called \code{last.warning} is
       created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
@@ -307,6 +307,10 @@ getOption(x, default = NULL)
       and warning messages.  A non-negative integer, with allowed values
       100\dots8170, default 1000.}
 
+    \item{\code{nwarnings}:}{the limit for the number of warnings kept
+      when \code{warm = 0}, default 50.  This will discard messages if
+      called whilst they are being collected.}
+    
     \item{\code{width}:}{controls the maximum number of columns on a
       line used in printing vectors, matrices and arrays, and when
       filling by \code{\link{cat}}.

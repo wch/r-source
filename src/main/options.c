@@ -69,6 +69,7 @@
  *	"warn"
  *	"warning.length"
  *	"warning.expression"
+ *	"nwarnings"
 
  *
  * S additionally/instead has (and one might think about some)
@@ -224,9 +225,9 @@ void attribute_hidden InitOptions(void)
     char *p;
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(14));
+    PROTECT(v = val = allocList(15));
 #else
-    PROTECT(v = val = allocList(13));
+    PROTECT(v = val = allocList(14));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -274,6 +275,10 @@ void attribute_hidden InitOptions(void)
 
     SET_TAG(v, install("warning.length"));
     SETCAR(v, ScalarInteger(1000));
+    v = CDR(v);
+
+    SET_TAG(v, install("nwarnings"));
+    SETCAR(v, ScalarInteger(50));
     v = CDR(v);
 
     SET_TAG(v, install("OutDec"));
@@ -465,6 +470,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if ( streql(CHAR(namei), "warning.expression") )  {
 		if( !isLanguage(argi) &&  ! isExpression(argi) )
 		    error(_("invalid value for '%s'"), CHAR(namei));
+		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+	    }
+	    else if (streql(CHAR(namei), "nwarnings")) {
+		k = asInteger(argi);
+		if (k < 1) error(_("invalid value for '%s'"), CHAR(namei));
+		R_nwarnings = k;
+		R_CollectWarnings = 0; /* force a reset */
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if ( streql(CHAR(namei), "error") ) {

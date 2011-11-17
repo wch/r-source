@@ -64,6 +64,9 @@
       The \code{"data.frame"} method is more consistent with the default
       method: in particular it now applies \code{zapsmall()} to
       numeric/complex summaries.
+      
+      \item The number of items retained with \code{options(warn = 0)}
+      can be set by \code[options(nwarnings=)}.
     }
   }
 
@@ -89,10 +92,6 @@
     \itemize{
       \item Non-ASCII vignettes without a declared encoding are no
       longer accepted.
-
-      \item \command{R CMD INSTALL} will now do a test load for all
-      sub-architectures for which code was compiled (rather than just
-      the primary sub-architecture).
 
       \item C/C++ code in packages is now compiled with \code{-NDEBUG}
       to mitigate against the C/C++ function \code{assert} being called
@@ -209,6 +208,14 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \command{R CMD INSTALL} will now do a test load for all
+      sub-architectures for which code was compiled (rather than just
+      the primary sub-architecture).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
