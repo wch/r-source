@@ -64,7 +64,7 @@
       The \code{"data.frame"} method is more consistent with the default
       method: in particular it now applies \code{zapsmall()} to
       numeric/complex summaries.
-      
+
       \item The number of items retained with \code{options(warn = 0)}
       can be set by \code{options(nwarnings=)}.
     }
@@ -97,7 +97,7 @@
       to mitigate against the C/C++ function \code{assert} being called
       in production use.  Developers can turn this off during package
       development with \code{PKG_CPPFLAGS = -UNDEBUG}.
-      
+
       \item \command{R CMD INSTALL} has a new option \option{--dsym}
       which on Mac OS X (Darwin) dumps the symbols alongside the
       \file{.so} file: this is helpful when debugging with
@@ -105,7 +105,7 @@
       \file{R.framework}).  [This can also be enabled by setting the
       undocumented environment variable \env{PKG_NAKE_DSYM}, since \R
       2.12.0.]
-      
+
       \item \command{R CMD INSTALL} will test loading under all installed
       sub-architectures even for packages without compiled code, unless
       the flag \option{--no-multiarch} is used.  (Pure \R packages can
@@ -168,7 +168,7 @@
       complex and raw vectors.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{str(x, width)} now obeys its \code{width}
@@ -221,7 +221,7 @@
       the primary sub-architecture).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
@@ -240,23 +240,26 @@
 
       \item \code{file.append()} could return \code{TRUE} for failures.
       (\PR{14727})
-      
+
       \item \code{gzcon()} connections are no longer subject to garbage
       collection: it was possible for this to happen when unintended
       (e.g. when calling \code{load()}).
-      
+
       \item \code{nobs()} does not count zero-weight observations for
       \code{glm()} fits, for consistency with \code{lm()}.  This affects
       the \code{BIC()} values reported for such \code{glm()} fits.
       (Spotted by Bill Dunlap.)
-      
+
       \item \code{options(warn = 0)} failed to end a (C-level) context
       with more than 50 accumulated warnings.  (Spotted by Jeffery
       Horner.)
 
       \item The internal \code{plot.default()} code did not do sanity
       checks on \code{cex}, so invalid input could cause problems.
-      (Reported by Ben Bolker.)      
+      (Reported by Ben Bolker.)
+
+      \item \code{anyDuplicated(<array>, MARGIN=0)} no longer fails.
+      (Reported by Hervé Pagès.)
     }
   }
 }

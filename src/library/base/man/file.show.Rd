@@ -48,7 +48,7 @@ file.show(\dots, header = rep("", nfiles),
   let the user leave it up while \R continues running.  The selection of
   such pagers could either be done using special pager names being
   intercepted by lower-level code (such as \code{"internal"} and
-  \code{"console"} on Windows), or by letting \code{pager} be an R
+  \code{"console"} on Windows), or by letting \code{pager} be an \R
   function which will be called with arguments \code{(files, header,
     title, delete.file)} corresponding to the first four arguments of
   \code{file.show} and take care of interfacing to the GUI.

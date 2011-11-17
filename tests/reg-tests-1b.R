@@ -1670,5 +1670,16 @@ stopifnot(nobs(lm(y ~ x1 + x2, weights = wt, data=DF)) ==
           nobs(glm(y ~ x1 + x2, weights = wt, data = DF)))
 ## was 6 and 9 in R < 2.14.1.
 
+## anyDuplicated(*, MARGIN=0)
+m. <- m <- cbind(M = c(3,2,7,2),
+                 F = c(6,2,7,2))
+rownames(m.) <- LETTERS[1:4]; m.
+stopifnot(identical(attributes(dm <- duplicated(m., MARGIN=0)),
+		    attributes(m.)),
+	  (dvm <- duplicated(as.vector(m.))) == dm, # all TRUE
+	  identical(anyDuplicated(	    m.,	 MARGIN=0),
+		    anyDuplicated(as.vector(m.), MARGIN=0)))
+## gave error in R < 2.14.1
+
 
 proc.time()
