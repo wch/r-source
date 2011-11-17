@@ -48,7 +48,7 @@
       the primary sub-architecture).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
@@ -67,23 +67,26 @@
 
       \item \code{file.append()} could return \code{TRUE} for failures.
       (\PR{14727})
-      
+
       \item \code{gzcon()} connections are no longer subject to garbage
       collection: it was possible for this to happen when unintended
       (e.g. when calling \code{load()}).
-      
+
       \item \code{nobs()} does not count zero-weight observations for
       \code{glm()} fits, for consistency with \code{lm()}.  This affects
       the \code{BIC()} values reported for such \code{glm()} fits.
       (Spotted by Bill Dunlap.)
-      
+
       \item \code{options(warn = 0)} failed to end a (C-level) context
       with more than 50 accumulated warnings.  (Spotted by Jeffery
       Horner.)
 
       \item The internal \code{plot.default()} code did not do sanity
       checks on \code{cex}, so invalid input could cause problems.
-      (Reported by Ben Bolker.)      
+      (Reported by Ben Bolker.)
+
+      \item \code{anyDuplicated(<array>, MARGIN=0)} no longer fails.
+      (Reported by Hervé Pagès.)
     }
   }
 }

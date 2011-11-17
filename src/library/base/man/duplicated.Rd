@@ -16,9 +16,12 @@
 \alias{anyDuplicated.matrix}
 \alias{anyDuplicated.data.frame}
 \description{
-  Determines which elements of a vector or data frame are duplicates
+  \code{duplicated()} determines which elements of a vector or data frame are duplicates
   of elements with smaller subscripts, and returns a logical vector
   indicating which elements (rows) are duplicates.
+
+  \code{anyDuplicated(.)} is a \dQuote{generalized} more efficient
+  shortcut for \code{any(duplicated(.))}.
 }
 \usage{
 duplicated(x, incomparables = FALSE, \dots)
@@ -47,7 +50,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
     elements would correspond to \code{duplicated=FALSE}.}
   \item{\dots}{arguments for particular methods.}
   \item{MARGIN}{the array margin to be held fixed: see
-    \code{\link{apply}}.}
+    \code{\link{apply}}, and note that \code{MARGIN = 0} maybe useful.}
 }
 \details{
   These are generic functions with methods for vectors (including
@@ -75,6 +78,8 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   to those for an earlier (or later, when \code{fromLast=TRUE}) element
   (in row-major order).  This would most commonly be used to find
   duplicated rows (the default) or columns (with \code{MARGIN = 2}).
+  Note that \code{MARGIN = 0} returns an array of the same
+  dimensionality attributes as \code{x}.
 
   Missing values are regarded as equal, but \code{NaN} is not equal to
   \code{NA_real_}.
@@ -82,7 +87,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   Values in \code{incomparables} will never be marked as duplicated.
   This is intended to be used for a fairly small set of values and will
   not be efficient for a very large set.
-  
+
   When used on a data frame with more than one column, or an array or
   matrix when comparing dimensions of length greater than one, this
   tests for identity of character representations.  This will
@@ -96,8 +101,8 @@ anyDuplicated(x, incomparables = FALSE, \dots)
     \code{duplicated()}:
     For a vector input, a logical vector of the same length as
     \code{x}.  For a data frame, a logical vector with one element for
-    each row.  For a matrix or array, a logical array with the same
-    dimensions and dimnames.
+    each row.  For a matrix or array, and when \code{MARGIN = 0}, a
+    logical array with the same dimensions and dimnames.
 
     \code{anyDuplicated()}: a non-negative integer (of length one).
 }
@@ -116,7 +121,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
 x <- c(9:20, 1:5, 3:7, 0:8)
 ## extract unique elements
 (xu <- x[!duplicated(x)])
-## similar, but not the same:
+## similar, same elements but different order:
 (xu2 <- x[!duplicated(x, fromLast = TRUE)])
 
 ## xu == unique(x) but unique(x) is more efficient
