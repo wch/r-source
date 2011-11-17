@@ -66,7 +66,7 @@
       numeric/complex summaries.
       
       \item The number of items retained with \code{options(warn = 0)}
-      can be set by \code[options(nwarnings=)}.
+      can be set by \code{options(nwarnings=)}.
     }
   }
 
