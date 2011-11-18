@@ -1503,7 +1503,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                            printLog(Log, "The error occurred in:\n\n")
                                            printLog0(Log, txt, "\n")
                                        }
-                do_exit(1L)
+                return(FALSE)
             }
 
             ## Look at the output from running the examples.  For
@@ -1540,6 +1540,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     printLog0(Log, paste(c("", out, ""), collapse = "\n"))
                 resultLog(Log, "OK")
             }
+            TRUE
         }
 
         checkingLog(Log, "examples")
@@ -1570,10 +1571,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 } else ""
                 if (!this_multiarch) {
                     exout <- paste(pkgname, "-Ex.Rout", sep = "")
-                    run_one_arch(exfile, exout)
+                    if(!run_one_arch(exfile, exout)) do.exit(1L)
                 } else {
                     printLog(Log, "\n")
                     Log$stars <<-  "**"
+                    res <- TRUE
                     for (arch in inst_archs) {
                         printLog(Log, "** running examples for arch ",
                                  sQuote(arch), " ...")
@@ -1589,13 +1591,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                             }
                             od <- setwd(tdir)
                             exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
-                            run_one_arch(file.path("..", exfile),
-                                         file.path("..", exout),
-                                         arch)
+                            res <- res & run_one_arch(file.path("..", exfile),
+                                                      file.path("..", exout),
+                                                      arch)
                             setwd(od)
                         }
                     }
                     Log$stars <<-  "*"
+                    if (!res) do.exit(1L)
                 }
             } else resultLog(Log, "NONE")
         }

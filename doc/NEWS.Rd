@@ -89,8 +89,8 @@
       \item There are new load-balancing functions \code{parLapplyLB()}
       and \code{parSapplyLB()}.
 
-      \item The \code{clusterExport()} function now allows specification
-      of an environment from which to export.
+      \item The \code{clusterExport()} function now allows the
+      specification of an environment from which to export.
     }
   }
 
@@ -232,7 +232,7 @@
     \itemize{
       \item When checking examples under more than one sub-architecture,
       \command{R CMD check} now uses a separate directory
-      \file{examples-arch} for each sub-architecture, and leaves the
+      \file{examples_arch} for each sub-architecture, and leaves the
       output in file \file{pkgname-Ex_arch.Rout}.  Some packages
       expect their examples to be run in a clean directory \dots{}.
      }
