@@ -17,6 +17,15 @@ Changes from grid_2.14.0 to grid_2.15.0:
     but descentDetails() methods can be written 
     (e.g., text grobs are different).
 
+4.  Fix for xsplinePoints() so that it copes with xspline grob
+    with non-NULL 'id' AND so that it takes the 'vp' and 'gp'
+    settings into account.
+
+5.  Added grid.bezier() function to draw Bezier curve
+    (using an X-spline approximation).
+
+    Also added bezierPoints() function.
+
 
 Changes from grid_2.12.0 to grid_2.13.0:
 --------------------------------------

@@ -83,14 +83,14 @@ export(
        "grid.line.to", "grid.lines", "grid.move.to", "grid.null", 
        "grid.points", "grid.path", "grid.polygon", "grid.polyline", 
        "grid.raster", "grid.rect", "grid.roundrect",
-       "grid.segments", "grid.text", "grid.xspline",
+       "grid.segments", "grid.text", "grid.xspline", "grid.bezier",
        "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
        "functionGrob",
        "linesGrob", "lineToGrob", "moveToGrob", "nullGrob",
        "pointsGrob", "pathGrob", "polygonGrob", "polylineGrob",
        "rasterGrob", "rectGrob", "roundrectGrob",
-       "segmentsGrob", "textGrob", "xsplineGrob",
-       "xsplinePoints",
+       "segmentsGrob", "textGrob", "xsplineGrob", "bezierGrob",
+       "xsplinePoints", "bezierPoints",
        
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob", 
@@ -162,6 +162,7 @@ S3method("drawDetails", "pathgrob")
 S3method("drawDetails", "polygon")
 S3method("drawDetails", "polyline")
 S3method("drawDetails", "xspline")
+S3method("drawDetails", "beziergrob")
 S3method("drawDetails", "rect")
 S3method("drawDetails", "roundrect")
 S3method("drawDetails", "segments")
@@ -237,6 +238,7 @@ S3method("heightDetails", "roundrect")
 S3method("heightDetails", "segments")
 S3method("heightDetails", "text")
 S3method("heightDetails", "xspline")
+S3method("heightDetails", "beziergrob")
 #S3method("height.details", "viewport")
 
 S3method("postDraw", "grob")
@@ -286,6 +288,7 @@ S3method("widthDetails", "roundrect")
 S3method("widthDetails", "segments")
 S3method("widthDetails", "text")
 S3method("widthDetails", "xspline")
+S3method("widthDetails", "beziergrob")
 #S3method("width.details", "viewport")
 
 S3method("xDetails", "circle")
@@ -300,6 +303,7 @@ S3method("xDetails", "roundrect")
 S3method("xDetails", "segments")
 S3method("xDetails", "text")
 S3method("xDetails", "xspline")
+S3method("xDetails", "beziergrob")
 
 S3method("yDetails", "circle")
 S3method("yDetails", "curve")
@@ -313,6 +317,7 @@ S3method("yDetails", "roundrect")
 S3method("yDetails", "segments")
 S3method("yDetails", "text")
 S3method("yDetails", "xspline")
+S3method("yDetails", "beziergrob")
 
 S3method("ascentDetails", "default")
 S3method("ascentDetails", "grob")

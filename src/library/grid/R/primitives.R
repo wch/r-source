@@ -859,10 +859,17 @@ grid.xspline <- function(...) {
 }
 
 xsplinePoints <- function(x) {
+    # Mimic drawGrob() to ensure x$vp and x$gp enforced
+    dlon <- grid.Call(L_setDLon, FALSE)
+    on.exit(grid.Call(L_setDLon, dlon))
+    tempgpar <- grid.Call(L_getGPar)
+    on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
+    preDraw(x)
     # Raw pts in dev coords
     devPoints <- grid.Call(L_xsplinePoints,
                            x$x, x$y, x$shape, x$open, x$arrow,
-                           x$repEnds, list(as.integer(seq_along(x$x))), 0)
+                           x$repEnds, xsplineIndex(x), 0)
+    postDraw(x)
     # Convert to units in inches
     unitPoints <- lapply(devPoints,
                          function(x) {
@@ -876,6 +883,130 @@ xsplinePoints <- function(x) {
     unitPoints
 }
 
+######################################
+# BEZIER primitive
+######################################
+
+# A bezier grob that works of a (not-100% accurate) approximation
+# using X-splines
+
+# X-Spline approx to Bezier
+Ms <- 1/6*rbind(c(1, 4, 1, 0),
+                c(-3, 0, 3, 0),
+                c(3, -6, 3, 0),
+                c(-1, 3, -3, 1))
+Msinv <- solve(Ms)
+# Bezier control matrix
+Mb <- rbind(c(1, 0, 0, 0),
+            c(-3, 3, 0, 0),
+            c(3, -6, 3, 0),
+            c(-1, 3, -3, 1))
+
+splinePoints <- function(xb, yb, idIndex) {
+    xs <- unlist(lapply(idIndex,
+                        function(i) {
+                            Msinv %*% Mb %*% xb[i]
+                        }))
+    ys <- unlist(lapply(idIndex,
+                        function(i) {
+                            Msinv %*% Mb %*% yb[i]
+                        }))
+    list(x=xs, y=ys)
+}
+
+splinegrob <- function(x) {
+    xx <- convertX(x$x, "inches", valueOnly=TRUE)
+    yy <- convertY(x$y, "inches", valueOnly=TRUE)
+    sp <- splinePoints(xx, yy, xsplineIndex(x))
+    # NOTE: do NOT set vp=x$vp because this function is always
+    # called AFTER x$vp has been enforced
+    xsplineGrob(sp$x, sp$y, default.units="inches",
+                id=x$id, id.lengths=x$id.lengths,
+                shape=1, repEnds=FALSE,
+                arrow=x$arrow, name=x$name, gp=x$gp)
+}
+  
+validDetails.beziergrob <- function(x) {
+    if (!is.unit(x$x) ||
+        !is.unit(x$y))
+        stop("x and y must be units")
+    if (!is.null(x$id) && !is.null(x$id.lengths))
+        stop("It is invalid to specify both 'id' and 'id.lengths'")
+    nx <- length(x$x)
+    ny <- length(x$y)
+    if (nx != ny)
+        stop("'x' and 'y' must be same length")
+    if (!is.null(x$id) && (length(x$id) != nx))
+        stop("'x' and 'y' and 'id' must all be same length")
+    if (!is.null(x$id))
+        x$id <- as.integer(x$id)
+    if (!is.null(x$id.lengths) && (sum(x$id.lengths) != nx))
+        stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+    if (!is.null(x$id.lengths))
+        x$id.lengths <- as.integer(x$id.lengths)
+    if (is.null(x$id) && is.null(x$id.lengths)) {
+        if (length(x$x) != 4)
+            stop("Must have exactly 4 control points")            
+    } else {
+        if (is.null(x$id)) {
+            id <- rep(1L:n, x$id.lengths)
+        } else {
+            id <- x$id
+        }
+        xper <- split(x$x, id)
+        if (any(sapply(xper, length) != 4))
+            stop("Must have exactly 4 control points per Bezier curve")
+    }
+    if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
+        stop("invalid 'arrow' argument")
+    x
+}
+    
+drawDetails.beziergrob <- function(x, recording=TRUE) {
+    drawDetails(splinegrob(x))
+}
+
+xDetails.beziergrob <- function(x, theta) {
+    xDetails(splinegrob(x), theta)
+}
+
+yDetails.beziergrob <- function(x, theta) {
+    yDetails(splinegrob(x), theta)
+}
+
+widthDetails.beziergrob <- function(x) {
+    widthDetails(splinegrob(x))
+}
+
+heightDetails.beziergrob <- function(x) {
+    heightDetails(splinegrob(x))
+}
+
+bezierGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
+                       id=NULL, id.lengths=NULL,
+                       default.units="npc", arrow=NULL, 
+                       name=NULL, gp=gpar(), vp=NULL) {
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    grob(x=x, y=y, 
+         id=id, id.lengths=id.lengths, arrow=arrow, 
+         name=name, gp=gp, vp=vp, cl="beziergrob")
+}
+
+grid.bezier <- function(...) {
+    grid.draw(bezierGrob(...))
+}
+
+bezierPoints <- function(x) {
+    sg <- splinegrob(x)
+    # splinegrob() does not make use of x$vp
+    sg$vp <- x$vp
+    xsplinePoints(sg)
+}
+
+  
 ######################################
 # CIRCLE primitive
 ######################################

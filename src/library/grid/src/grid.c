@@ -1967,7 +1967,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 		np--;
 	    }
             if (trace) {
-                int i;
+                int k;
                 int count = end - start + 1;
                 double *keepXptr, *keepYptr;
                 SEXP keepPoints, keepX, keepY;
@@ -1976,13 +1976,13 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
                 PROTECT(keepY = allocVector(REALSXP, count));
                 keepXptr = REAL(keepX);
                 keepYptr = REAL(keepY);
-                for (i=start; i<(end + 1); i++) {
-                    keepXptr[i - start] = fromDeviceX(px[i], GE_INCHES, dd);
-                    keepYptr[i - start] = fromDeviceY(py[i], GE_INCHES, dd);
+                for (k=start; k<(end + 1); k++) {
+                    keepXptr[k - start] = fromDeviceX(px[k], GE_INCHES, dd);
+                    keepYptr[k - start] = fromDeviceY(py[k], GE_INCHES, dd);
                 }
                 SET_VECTOR_ELT(keepPoints, 0, keepX);
                 SET_VECTOR_ELT(keepPoints, 1, keepY);
-                SET_VECTOR_ELT(tracePts, 0, keepPoints);
+                SET_VECTOR_ELT(tracePts, i, keepPoints);
                 UNPROTECT(3); /* keepPoints & keepX & keepY */
             }
             if (draw && !isNull(a) && !isNull(points)) {
