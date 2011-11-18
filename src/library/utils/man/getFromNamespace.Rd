@@ -1,10 +1,11 @@
 % File src/library/utils/man/getFromNamespace.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getFromNamespace}
 \alias{assignInNamespace}
+\alias{assignInMyNamespace}
 \alias{getFromNamespace}
 \alias{fixInNamespace}
 \title{Utility functions for Developing Namespaces}
@@ -20,6 +21,8 @@ getFromNamespace(x, ns, pos = -1, envir = as.environment(pos))
 assignInNamespace(x, value, ns, pos = -1,
                   envir = as.environment(pos))
 
+assignInMyNamespace(x, value)
+
 fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 }
 \arguments{
@@ -31,6 +34,10 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \item{\dots}{arguments to pass to the editor: see \code{\link{edit}}.}
 }
 \details{
+  \code{assignInMyNamespace} is intended to be called from functions
+  within a package, and chooses the namespace as the environment of the
+  function calling it.
+  
   The namespace can be specified in several ways.  Using, for example,
   \code{ns = "stats"} is the most direct, but a loaded package with a
   namespace can be specified via any of the methods used for
@@ -65,8 +72,9 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 \value{
   \code{getFromNamespace} returns the object found (or gives an error).
 
-  \code{assignInNamespace} and \code{fixInNamespace} are invoked for
-  their side effect of changing the object in the namespace.
+  \code{assignInNamespace}, \code{assignInMyNamespace} and
+  \code{fixInNamespace} are invoked for their side effect of changing
+  the object in the namespace.
 }
 
 \seealso{

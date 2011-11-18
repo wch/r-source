@@ -243,12 +243,43 @@ getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
     get(x, envir = ns, inherits = FALSE)
 }
 
+assignInMyNamespace <- function(x, value)
+{
+    ns <- environment(sys.function(-1))
+    if(bindingIsLocked(x, ns)) {
+        unlockBinding(x, ns)
+        assign(x, value, envir = ns, inherits = FALSE)
+        w <- options("warn")
+        on.exit(options(w))
+        options(warn = -1)
+        lockBinding(x, ns)
+    } else assign(x, value, envir = ns, inherits = FALSE)
+    if(!isBaseNamespace(ns)) {
+        ## now look for possible copy as a registered S3 method
+        S3 <- getNamespaceInfo(ns, "S3methods")
+        if(!length(S3)) return(invisible(NULL))
+        S3names <- S3[, 3L]
+        if(x %in% S3names) {
+            i <- match(x, S3names)
+            genfun <- get(S3[i, 1L], mode = "function", envir = parent.frame())
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+                genfun <- methods::slot(genfun, "default")@methods$ANY
+            defenv <- if (typeof(genfun) == "closure") environment(genfun)
+            else .BaseNamespaceEnv
+            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            remappedName <- paste(S3[i, 1L], S3[i, 2L], sep = ".")
+            if(exists(remappedName, envir = S3Table, inherits = FALSE))
+                assign(remappedName, value, S3Table)
+        }
+    }
+    invisible(NULL)
+}
+
 assignInNamespace <-
     function(x, value, ns, pos = -1, envir = as.environment(pos))
 {
     nf <- sys.nframe()
     if(missing(ns)) {
-        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1L, 8L) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))

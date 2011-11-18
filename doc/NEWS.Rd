@@ -67,6 +67,9 @@
 
       \item The number of items retained with \code{options(warn = 0)}
       can be set by \code{options(nwarnings=)}.
+      
+      \item There is a new function \code{assignInMyNamespace()} which
+      uses the namespace of the function it is called from.
     }
   }
 
@@ -86,7 +89,7 @@
       \item There are new load-balancing functions \code{parLapplyLB()}
       and \code{parSapplyLB()}.
 
-      \item The \code{clusterExport} function now allows specification
+      \item The \code{clusterExport()} function now allows specification
       of an environment from which to export.
     }
   }
