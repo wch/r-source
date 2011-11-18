@@ -23,7 +23,7 @@ axisTicks(usr, log, axp = NULL, nint = 5)
     %% FIXME: Explain meaning -- different for log and "not-log"
   }
   \item{nint, nintLog}{positive integer value indicating
-    (\emph{approximately}) how many tick values are desired.
+    (\emph{approximately}) the desired number of intervals.
     \code{nintLog} is used \bold{only} for the case \code{log = TRUE}.}
 }
 \details{
@@ -33,7 +33,7 @@ axisTicks(usr, log, axp = NULL, nint = 5)
 }
 \value{
   \code{axisTicks()} returns a numeric vector of potential axis tick
-  locations, of length approximately \code{nintLog}.
+  locations, of length approximately \code{nint+1}.
 
   \code{.axisPars()} returns a \code{\link{list}} with components
   \item{axp}{numeric vector of length 2, \code{c(min., max.)}, of pretty
