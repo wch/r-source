@@ -406,6 +406,36 @@ grid.refresh <- function() {
   draw.all()
 }
 
+# Call a function on each element of the grid display list
+# AND replace the element with the result
+# This is blood-curdlingly dangerous for the state of the
+# display list
+# Two token efforts at safety are made:
+#   - generate all of the new elements first THEN assign them all
+#     (so if there is an error in generating any one element
+#      you don't end up with a trashed display list)
+#   - check that the new element is either NULL or the same
+#     class as the element it is replacing
+grid.DLapply <- function(FUN, ...) {
+    FUN <- match.fun(FUN)
+    # Traverse DL and do something to each entry
+    gridDL <- grid.Call("L_getDisplayList")
+    gridDLindex <- grid.Call("L_getDLindex")
+    newDL <- vector("list", gridDLindex)
+    for (i in 1:(gridDLindex - 1)) {
+        elt <- grid.Call("L_getDLelt", i)
+        newElt <- FUN(elt, ...)
+        if (!(is.null(newElt) || inherits(newElt, class(elt))))
+            stop("Invalid modification of the display list")
+        newDL[[i]] <- newElt
+    }
+    for (i in 1:(gridDLindex - 1)) {
+        grid.Call("L_setDLindex", i)
+        grid.Call("L_setDLelt", newDL[[i]])
+    }
+    grid.Call("L_setDLindex", gridDLindex)
+}
+
 # Wrapper for .Call and .Call.graphics
 # Used to make sure that grid-specific initialisation occurs just before
 # the first grid graphics output OR the first querying of grid state

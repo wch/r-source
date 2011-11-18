@@ -26,6 +26,8 @@ Changes from grid_2.14.0 to grid_2.15.0:
 
     Also added bezierPoints() function.
 
+6.  Added grid.DLapply() function.
+
 
 Changes from grid_2.12.0 to grid_2.13.0:
 --------------------------------------
