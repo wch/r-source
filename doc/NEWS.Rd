@@ -52,7 +52,17 @@
     }
   }
 
-  \subsection{BUG FIXES}{
+  \subsection{UTILITIES}{
+    \itemize{
+      \item When checking examples under more than one sub-architecture,
+      \command{R CMD check} now uses a separate directory
+      \file{examples-arch} for each sub-architecture, and leaves the
+      output in file \file{pkgname-Ex_arch.Rout}.  Some packages
+      expect their examples to be run in a clean directory \dots{}.
+     }
+   }
+   
+   \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
       selected, rather than returning a 1-column data frame (contrary to

@@ -1565,8 +1565,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         if (arch %in% R_check_skip_examples_arch) {
                             resultLog(Log, "SKIPPED")
                         } else {
+                            tdir <- paste("examples-", arch, sep = "")
+                            dir.create(tdir)
+                            if (!dir.exists(tdir)) {
+                                errorLog(Log,
+                                         "unable to create examples directory")
+                                do_exit(1L)
+                            }
+                            od <- setwd(tdir)
                             exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
-                            run_one_arch(exfile, exout, arch)
+                            run_one_arch(file.path("..", exfile),
+                                         file.path("..", exout),
+                                         arch)
+                            setwd(od)
                         }
                     }
                     Log$stars <<-  "*"
