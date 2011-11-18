@@ -21,6 +21,9 @@
       \item \code{HoltWinters()} reports a warning rather than an error
       for some optimization failures (where the answer might be a
       reasonable one).
+
+      \item \code{parallel::clusterExport} now allows specification of
+      an environment from which to export.
     }
   }
 

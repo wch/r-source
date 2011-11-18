@@ -29,7 +29,7 @@ clusterCall(cl, fun, ...)
 clusterApply(cl, x, fun, ...)
 clusterApplyLB(cl, x, fun, ...)
 clusterEvalQ(cl, expr)
-clusterExport(cl, varlist)
+clusterExport(cl, varlist, envir = .GlobalEnv)
 clusterMap(cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
            SIMPLIFY = FALSE, USE.NAMES = TRUE)
 clusterSplit(cl, seq)
@@ -46,6 +46,7 @@ parCapply(cl, x, FUN, ...)
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
   \item{varlist}{character vector of names of objects to export.}
+  \item{envir}{environment from which t export variables}
   \item{x}{a vector for \code{clusterApply} and \code{clusterApplyLB}, a
     matrix for \code{parRapply} and \code{parCapply}.}
   \item{...}{additional arguments to pass to \code{fun} or \code{FUN}:
@@ -90,9 +91,11 @@ parCapply(cl, x, FUN, ...)
   uses \code{RECYCLE = TRUE}, and has argument \code{SIMPLIFY = TRUE}.
   \code{Map} always uses \code{RECYCLE = TRUE}.)
   
-  \code{clusterExport} assigns the global values on the master \R
-  process of the variables named in \code{list} to variables of the same
-  names in the global environment (aka \sQuote{workspace}) of each node.
+  \code{clusterExport} assigns the values on the master \R process of
+  the variables named in \code{varlist} to variables of the same names
+  in the global environment (aka \sQuote{workspace}) of each node.  The
+  environment on the master from which variables are exported defaults
+  to the global environment.
 
   \code{clusterSplit} splits \code{seq} into a consecutive piece for
   each cluster and returns the result as a list with length equal to the

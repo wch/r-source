@@ -67,10 +67,10 @@ clusterEvalQ <- function(cl, expr)
 
 clusterExport <- local({
     gets <- function(n, v) { assign(n, v, envir = .GlobalEnv); NULL }
-    function(cl, varlist) {
+    function(cl, varlist, envir = .GlobalEnv) {
         ## do this with only one clusterCall--loop on workers?
         for (name in varlist) {
-            clusterCall(cl, gets, name, get(name, envir = .GlobalEnv))
+            clusterCall(cl, gets, name, get(name, envir = envir))
         }
     }
 })
