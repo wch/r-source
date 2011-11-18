@@ -1571,7 +1571,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 } else ""
                 if (!this_multiarch) {
                     exout <- paste(pkgname, "-Ex.Rout", sep = "")
-                    if(!run_one_arch(exfile, exout)) do.exit(1L)
+                    if(!run_one_arch(exfile, exout)) do_exit(1L)
                 } else {
                     printLog(Log, "\n")
                     Log$stars <<-  "**"
@@ -1598,7 +1598,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         }
                     }
                     Log$stars <<-  "*"
-                    if (!res) do.exit(1L)
+                    if (!res) do_exit(1L)
                 }
             } else resultLog(Log, "NONE")
         }
