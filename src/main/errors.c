@@ -474,7 +474,7 @@ void PrintWarnings(void)
 	    REprintf(_("There were %d warnings (use warnings() to see them)\n"),
 		     R_CollectWarnings);
 	else
-	    REprintf(_("There were % or more warnings (use warnings() to see the first %)\n"), R_nwarnings, R_nwarnings);
+	    REprintf(_("There were %d or more warnings (use warnings() to see the first %d)\n"), R_nwarnings, R_nwarnings);
     }
     /* now truncate and install last.warning */
     PROTECT(s = allocVector(VECSXP, R_CollectWarnings));
