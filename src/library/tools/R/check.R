@@ -1580,7 +1580,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         if (arch %in% R_check_skip_examples_arch) {
                             resultLog(Log, "SKIPPED")
                         } else {
-                            tdir <- paste("examples-", arch, sep = "")
+                            tdir <- paste("examples_", arch, sep = "")
                             dir.create(tdir)
                             if (!dir.exists(tdir)) {
                                 errorLog(Log,
