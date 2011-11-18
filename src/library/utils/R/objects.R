@@ -280,6 +280,7 @@ assignInNamespace <-
 {
     nf <- sys.nframe()
     if(missing(ns)) {
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1L, 8L) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
