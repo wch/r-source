@@ -21,10 +21,6 @@
       \R 2.12.0 to 2.14.x: see the\sQuote{R Installation and Administration
 	manual}.  Compiled code (except DLLs) may be incompatible with
       previous toolchains (and compiled C++ code almost certainly will be).
-      
-      \item The directory pointed to by \env{USER_LOCAL} can now have
-      architecture-specific sub-directories \file{lib/i386} and
-      \file{lib/x64}.
     }
   }
 }
@@ -38,6 +34,14 @@
       \item In package \pkg{parallel}, \code{detectCores(logical =
 	FALSE)} makes an OS-dependent attempt to find the number of
       physical cores.  It usually succeeds, even on XP.
+    }
+  }
+  
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The directory pointed to by \env{USER_LOCAL} can now have
+      architecture-specific sub-directories \file{lib/i386} and
+      \file{lib/x64}.
     }
   }
   
