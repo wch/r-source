@@ -1356,6 +1356,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     check_sos <- function() {
         checkingLog(Log, "compiled code")
+        ## from sotools.R
         Rcmd <- paste("options(warn=1)\n",
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
@@ -1466,7 +1467,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             if (status) {
-                errorLog(Log, "Running examples in ", sQuote(exfile),
+                errorLog(Log, "Running examples in ",
+                         sQuote(basename(exfile)),
                          " failed")
                 ## Try to spot the offending example right away.
                 txt <- paste(readLines(exout, warn = FALSE),

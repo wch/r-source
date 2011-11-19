@@ -198,10 +198,18 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       be accessed via an escape sequence of the form \samp{\\\\#H1234}.
       For example, the fleur-de-lys is produced by \samp{\\\\#H0746}.
       The sixth and seventh tables of \code{demo(Hershey)} shows all of
-      the available raw glyphs.  } } } \references{
-      \url{http://www.gnu.org/software/plotutils/plotutils.html} }
-      \seealso{ \code{\link{demo}(Hershey)}, \code{\link{par}},
-      \code{\link{text}}, \code{\link{contour}}.
+      the available raw glyphs.
+    }
+  }
+}
+
+\references{
+  \url{http://www.gnu.org/software/plotutils/plotutils.html}
+}
+
+\seealso{
+  \code{\link{demo}(Hershey)}, \code{\link{par}},
+  \code{\link{text}}, \code{\link{contour}}.
 
   \code{\link{Japanese}} for the Japanese characters in the Hershey fonts.
 }
