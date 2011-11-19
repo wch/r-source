@@ -1357,6 +1357,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     check_sos <- function() {
         checkingLog(Log, "compiled code")
+        ## from sotools.R
         Rcmd <- paste("options(warn=1)\n",
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
@@ -1690,6 +1691,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 res <- run_one_arch()
             } else {
                 printLog(Log, "\n")
+                res <- TRUE
                 for (arch in inst_archs)
                     if (!(arch %in% R_check_skip_tests_arch)) {
                         printLog(Log, "** running tests for arch ", sQuote(arch))
