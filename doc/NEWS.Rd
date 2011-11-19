@@ -22,6 +22,9 @@
       for some optimization failures (where the answer might be a
       reasonable one).
 
+      \item \code{tools::dependsOnPkg()} now accepts the shorthand
+      \code{dependencies = "all"}.
+
       \item \code{parallel::clusterExport()} now allows specification of
       an environment from which to export.
     }
