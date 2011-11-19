@@ -16,6 +16,14 @@
     }
   }
   
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The directory pointed to by \env{USER_LOCAL} can now have
+      architecture-specific sub-directories \file{lib/i386} and
+      \file{lib/x64}.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item The fix for \PR{14543} caused stack problems with outputing
