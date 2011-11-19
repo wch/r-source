@@ -126,6 +126,10 @@
        note if it finds inefficiently compressed datasets.  With
        \command{bzip2} and \command{xz} compression having been
        available since \R 2.10.0, there is no excuse for not using them.
+       
+       \item Where multiple sub-architectures are to be tested,
+       \command{R CMD check} now runs the examples and tests for all the
+       sub-architectures even if the first one fails.
      }
    }
 

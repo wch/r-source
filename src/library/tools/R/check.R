@@ -1481,7 +1481,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             if (status) {
-                errorLog(Log, "Running examples in ", sQuote(exfile),
+                errorLog(Log, "Running examples in ",
+                         sQuote(basename(exfile)),
                          " failed")
                 ## Try to spot the offending example right away.
                 txt <- paste(readLines(exout, warn = FALSE),
@@ -1671,7 +1672,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     printLog(Log, "Last 13 lines of output:\n")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
                 }
-                do_exit(1L)
+                return(FALSE)
             } else {
                 resultLog(Log, "OK")
                 if (Log$con > 0L && file.exists(tf)) {
@@ -1682,18 +1683,20 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 }
             }
             setwd(pkgoutdir)
+            TRUE
         }
         if (do_install && do_tests) {
             if (!this_multiarch) {
-                run_one_arch()
+                res <- run_one_arch()
             } else {
                 printLog(Log, "\n")
                 for (arch in inst_archs)
                     if (!(arch %in% R_check_skip_tests_arch)) {
                         printLog(Log, "** running tests for arch ", sQuote(arch))
-                        run_one_arch(arch)
+                        res <- res & run_one_arch(arch)
                     }
             }
+            if (!res) do_exit(1L)
         } else resultLog(Log, "SKIPPED")
     }
 
