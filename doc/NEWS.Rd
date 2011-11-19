@@ -40,9 +40,6 @@
       \code{"bibentry"} objects now uses \code{options("width")} to
       set the output width.
 
-      \item \code{tools::dependsOnPkg()} now accepts the shorthand
-      \code{dependencies = "all"}.
-
       \item PCRE has been upgraded to version 8.20: as well as bug fixes
       and greater Perl compatibility.  This adds a JIT pattern compiler,
       about which PCRE's news says
@@ -88,9 +85,6 @@
 
       \item There are new load-balancing functions \code{parLapplyLB()}
       and \code{parSapplyLB()}.
-
-      \item The \code{clusterExport()} function now allows the
-      specification of an environment from which to export.
     }
   }
 
@@ -204,6 +198,12 @@
       \item \code{HoltWinters()} reports a warning rather than an error
       for some optimization failures (where the answer might be a
       reasonable one).
+
+      \item \code{tools::dependsOnPkg()} now accepts the shorthand
+      \code{dependencies = "all"}.
+
+      \item \code{parallel::clusterExport()} now allows specification of
+      an environment from which to export.
     }
   }
 
