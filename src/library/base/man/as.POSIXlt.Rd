@@ -92,13 +92,14 @@ as.POSIXlt(x, tz = "", \dots)
   selected timezone.  One issue is what happens at transitions
   to and from DST, for example in the UK
 \preformatted{as.POSIXct(strptime('2011-03-27 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
-  as.POSIXct(strptime('2010-10-31 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
+as.POSIXct(strptime('2010-10-31 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
 }
   are respectively invalid (the clocks went forward at 1:00 GMT to 2:00
   BST) and ambiguous (the clocks went back at 2:00 BST to 1:00 GMT).  What
   happens in such cases is OS-specific: one should expect the first to
   be \code{NA}, but the second could be interpreted as either BST or
-  GMT (and common OSes give both possible values).
+  GMT (and common OSes give both possible values).  Note too (see
+  \code{\link{strftime}}), OS facilities may not format invalid times correctly.
 }
 
 \value{
@@ -112,7 +113,7 @@ as.POSIXlt(x, tz = "", \dots)
   Some of the concepts used have to be extended backwards in time (the
   usage is \emph{proleptic}).  For example, the origin of time for the
   \code{"POSIXct"} class, \sQuote{1970-01-01 00:00.00 UTC}, is before UTC
-  was defined.  For importantly, conversion is done assuming the
+  was defined.  More importantly, conversion is done assuming the
   Gregorian calendar which was introduced in 1582 and not used
   universally until the 20th century.  One of the re-interpretations
   assumed by ISO 8601:2004 is that there was a year zero, even though
@@ -126,7 +127,8 @@ as.POSIXlt(x, tz = "", \dots)
   \code{\link{format.POSIXlt}} or \code{\link{format.POSIXct}}.
 
   If a timezone is needed and that specified is invalid on your system,
-  what happens is system-specific but it will probably be ignored.
+  what happens is system-specific but attempts to set it will probably
+  be ignored.
 }
 \seealso{
   \link{DateTimeClasses} for details of the classes;
