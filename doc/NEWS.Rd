@@ -275,11 +275,16 @@
       Horner.)
 
       \item The internal \code{plot.default()} code did not do sanity
-      checks on \code{cex}, so invalid input could cause problems.
-      (Reported by Ben Bolker.)
+      checks on a \code{cex} argument, so invalid input could cause
+      problems.  (Reported by Ben Bolker.)
 
       \item \code{anyDuplicated(<array>, MARGIN=0)} no longer fails.
       (Reported by Hervé Pagès.)
+
+      \item \code{read.dcf()} removes trailing blanks: unfortunately
+      this included on some platforms \code{\\xa0} (non-breaking space)
+      which is the trailing byte of some UTF-8 characters.  It now only
+      considers ASCII space and tab to be \sQuote{blank}.
     }
   }
 }
