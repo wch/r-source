@@ -1001,7 +1001,7 @@ will call this directory @file{@var{R_HOME}} below.
 
 For a 64-bit build you will need a 64-bit toolchain and the appropriate
 64-bit version of Tcl/Tk: both of these are contained in
-@file{Rtools213.exe}.
+@file{Rtools215.exe}.
 
 It is intended that the toolchain used for @R{} 2.15.x will be changed
 from that used for @R{} 2.12.0 to @R{} 2.14.x, so the information here
@@ -1097,7 +1097,7 @@ Example:
 @end example
 
 @noindent
-(and see the comment about about @option{--no-same-owner}).
+(and see the comment above about @option{--no-same-owner}).
 
 @end itemize
 
@@ -1407,8 +1407,7 @@ Support for cross-building was withdrawn at @R{} 2.9.0.
 @subsection 64-bit Windows builds
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
-discussed here (@pxref{64-bit toolchain}) is based on the work of
-the MinGW-w64 project
+discussed here is based on the work of the MinGW-w64 project
 (@uref{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
 compilers such as those from Intel and PGI could be used (and have been
 by @R{} redistributors).
@@ -4658,17 +4657,13 @@ should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
 
-It is intended that the toolchain used for @R{} 2.15.x will be changed
-from that used for @R{} 2.12.0 to @R{} 2.14.x, so the information here
-is provisional.
-
 You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
 @itemize
 @item
 The command line tools (in @file{Rtools*.exe})
 @item
-The MinGW toolchain to compile C, Fortran and C++.
+The MinGW-w64 toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
 no compiled code, none of these are needed.  Perl is no longer needed to
@@ -4699,7 +4694,7 @@ use filepaths containing spaces: you can always use the short forms
 For example for a 32-bit build, all on one line,
 
 @smallexample
-PATH=c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
+PATH=c:\Rtools\bin;c:\Rtools\MinGW-w64\bin;c:\MiKTeX\miktex\bin;
      c:\R\bin\i386;c:\windows;c:\windows\system32
 @end smallexample
 
@@ -4726,7 +4721,7 @@ path.
 * LaTeX::                       
 * The Inno Setup installer::    
 * The command line tools::      
-* The MinGW toolchain::         
+* The MinGW-w64 toolchain::     
 * Useful additional programs::  
 @end menu
 
@@ -4762,7 +4757,7 @@ Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
 location where Inno Setup was installed.
 
-@node The command line tools, The MinGW toolchain, The Inno Setup installer, The Windows toolset
+@node The command line tools, The MinGW-w64 toolchain, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
 This item is installed by the @file{Rtools*.exe} installer.
@@ -4818,97 +4813,19 @@ You may need to set the environment variable @env{CYGWIN} to a value
 including @samp{nodosfilewarning} to suppress messages about
 Windows-style paths.
 
-@node The MinGW toolchain, Useful additional programs, The command line tools, The Windows toolset
-@section The MinGW toolchain
+@node The MinGW-w64 toolchain, Useful additional programs, The command line tools, The Windows toolset
+@section The MinGW-w64 toolchain
 
-This is the only step which differs between 32- and 64-bit builds.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-In each case you need to put the @file{bin} directory of the toolchain
-early in your @env{PATH}: if you use the recommended toolchains you can
-have both in the path (in either order), and need to if you want to
-install 32/64-bit packages.
-
-@menu
-* 32-bit toolchain::            
-* 64-bit toolchain::            
-* Upcoming toolchain::          
-@end menu
-
-@node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
-@subsection 32-bit toolchain
-
-The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain included in @file{Rtools214.exe}, and was
-collected from the files at
-@uref{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
-
-@example
-binutils-2.20.51-1-mingw32-bin.tar.lzma
-gcc-c++-4.5.0-1-mingw32-bin.tar.lzma
-gcc-core-4.5.0-1-mingw32-bin.tar.lzma
-gcc-fortran-4.5.0-1-mingw32-bin.tar.lzma
-libgcc-4.5.0-1-mingw32-dll-1.tar.lzma
-libgmp-5.0.1-1-mingw32-dll-10.tar.lzma
-libgomp-4.5.0-1-mingw32-dll-1.tar.lzma
-libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
-libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
-libssp-4.5.0-1-mingw32-dll-0.tar.lzma
-mingwrt-3.18-mingw32-dev.tar.gz
-mingwrt-3.18-mingw32-dll.tar.gz
-w32api-3.15-1-mingw32-dev.tar.lzma
-@end example
-
-with the import libraries in @file{lib/gcc/mingw32/4.5.0} moved to a
-subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
-are linked statically.
-
-It is also possible to use the 32-bit toolchain from the
-@code{mingw-w64} project and options to use that are documented in file
-@file{MkRules.dist}.
-
-@node 64-bit toolchain, Upcoming toolchain, 32-bit toolchain, The MinGW toolchain
-@subsection 64-bit toolchain
-
-Several versions of the MinGW-w64 toolchain are available: use one of
-them to replace (or supplement) the 32-bit toolchain's @file{bin}
-directory in your path.  Then copy file @file{src/gnuwin32/MkRules.dist}
-to @file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64}
-and @code{BINPREF64}, @code{M_ARCH}, @code{DT_ARCH}, @code{RC_ARCH} and
-@code{SYMPAT64} appropriate to your toolchain, then make @R{} in the
-usual way.
-
-The toolchain we use is technically a cross-compiler: the tools run
-under 32-bit Windows but produce code to run under 64-bit
-Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
-be done under 64-bit Windows.  So does installation of source packages
-unless @option{--no-test-load} is used.}  This is based on files from
-@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip},
-including a pre-release of @command{gcc 4.5.2}.  However, this has been
-patched to use static Fortran and C++ runtime libraries: a suitable
-toolchain is included in @file{Rtools214.exe}.
-
-@strong{NB:} 64-bit toolchains after late April 2010 at that site
-generate objects with symbols without a leading underscore. Only such
-toolchains are supported.
-
-Other toolchains are available: for example under
-@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
-contains a native x64 Windows toolchain by `sezero' that may be useful
-when building external software.
-
-@node Upcoming toolchain,  , 64-bit toolchain, The MinGW toolchain
-@subsection Upcoming toolchain
-
 The intention is that the released version of @R{} 2.15.0 will be built
-with an updated toolchain.  A candidate version can be downloaded from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}
+with a different toolchain from 2.14.x.  A candidate version can be
+downloaded from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}
 
 Currently experiments are using the (modified) toolchains from the
-Mingw-w64 project for both 32- and 64-bit builds, using a beta version
-of @command{gcc 4.5.4} and version 2.0 of the Mingw-w64 project's runtime.
+MinGW-w64 project for both 32- and 64-bit builds, using a beta version
+of @command{gcc 4.5.4} and version 2.0 of the MinGW-w64 project's runtime.
 
 This has native 32-bit and 64-bit compilers, and hence the C compiler is
 called @command{gcc} for both builds.  This potentially causes problems
@@ -4944,11 +4861,11 @@ new toolchain: especially those providing a C++ interface. Some are
 available from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/}
 
 
-@node Useful additional programs,  , The MinGW toolchain, The Windows toolset
+@node Useful additional programs,  , The MinGW-w64 toolchain, The Windows toolset
 @section Useful additional programs
 
 The process of making the installer will make use of @code{qpdf} to
-compact some of the package vignettes, if it is available.  MinGW
+compact some of the package vignettes, if it is available.  Windows
 binaries of @code{qpdf} are available from
 @uref{http://sourceforge.net/@/projects/@/qpdf/@/files/}.  Set the path
 to the @code{qpdf} installation in file @file{MkRules.local}.
