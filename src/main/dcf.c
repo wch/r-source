@@ -85,8 +85,10 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     /* it is easier if we first have a record per column */
     PROTECT(retval = allocMatrixNA(STRSXP, LENGTH(what), nret));
 
+    /* These used to use [:blank:] but that can match \xa0 as part of
+       a UTF-8 character (and is nbspace on Windows). */ 
     tre_regcomp(&blankline, "^[[:blank:]]*$", REG_NOSUB & REG_EXTENDED);
-    tre_regcomp(&trailblank, "[[:blank:]]+$", REG_EXTENDED);
+    tre_regcomp(&trailblank, "[ \t]+$", REG_EXTENDED);
     tre_regcomp(&contline, "^[[:blank:]]+", REG_EXTENDED);
     tre_regcomp(&regline, "^[^:]+:[[:blank:]]*", REG_EXTENDED);
     tre_regcomp(&eblankline, "^[[:space:]]+\\.[[:space:]]*$", REG_EXTENDED);
