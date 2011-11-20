@@ -40,11 +40,11 @@
       \code{"bibentry"} objects now uses \code{options("width")} to
       set the output width.
 
-      \item PCRE has been upgraded to version 8.20: as well as bug fixes
-      and greater Perl compatibility.  This adds a JIT pattern compiler,
-      about which PCRE's news says
-      \sQuote{large performance benefits can be had in many situations}.
-      (It is supported on most but not all platforms that run R.)
+      \item PCRE has been upgraded to version 8.20 with bug fixes and
+      greater Perl compatibility.  This adds a JIT pattern compiler,
+      about which PCRE's news says \sQuote{large performance benefits
+      can be had in many situations}.  (It is supported on most but not
+      all platforms that run R.)
 
       \item \code{legend()} gains a \code{text.font} argument. (Suggested
       by Tim Paine, \PR{14719}.)
@@ -53,7 +53,7 @@
       (as integer vectors).  (Wish of \PR{6899}.)
 
       \item \code{summary()} behaves slightly differently (or more
-      precisely its \code{print()} method does).  For numeric inputs, the
+      precisely, its \code{print()} method does).  For numeric inputs, the
       number of NAs is printed as an integer and not a real.  For dates
       and datetimes, the number of NAs is included in the printed output
       (the latter being the wish of \PR{14720}).
@@ -123,7 +123,7 @@
        
        \item Where multiple sub-architectures are to be tested,
        \command{R CMD check} now runs the examples and tests for all the
-       sub-architectures even if the first one fails.
+       sub-architectures even if one fails.
      }
    }
 
@@ -137,14 +137,14 @@
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is now disallowed.
 
-      Use of \code{chname} in \code{library.dynam()} with the extension
-      \file{.so} or \code{.dll} (which was never allowed according
-      to the help page) is defunct.  This also applies to
-      \code{library.dynam.unload()} and to \code{useDynLib} directives
-      in \code{NAMESPACE} files.
+      Use of an argument \code{chname} in \code{library.dynam()}
+      including the extension \file{.so} or \code{.dll} (which was never
+      allowed according to the help page) is defunct.  This also applies
+      to \code{library.dynam.unload()} and to \code{useDynLib}
+      directives in \code{NAMESPACE} files.
 
-      \item The internal functions \code{.readRDS()} and
-      \code{.saveRDS()} are now defunct.
+      \item The internal functions (but still used by some packages)
+      \code{.readRDS()} and \code{.saveRDS()} are now defunct.
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
@@ -282,8 +282,8 @@
       (Reported by Hervé Pagès.)
 
       \item \code{read.dcf()} removes trailing blanks: unfortunately
-      this included on some platforms \code{\\xa0} (non-breaking space)
-      which is the trailing byte of some UTF-8 characters.  It now only
+      on some platforms this included \code{\\xa0} (non-breaking space)
+      which is the trailing byte of a UTF-8 character.  It now only
       considers ASCII space and tab to be \sQuote{blank}.
     }
   }

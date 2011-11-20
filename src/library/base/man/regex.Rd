@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -85,8 +85,9 @@
     \item{\samp{[:alpha:]}}{Alphabetic characters: \samp{[:lower:]} and
       \samp{[:upper:]}.}
 
-    \item{\samp{[:blank:]}}{Blank characters: space and tab. (This is an
-      extension to the POSIX standard.)}
+    \item{\samp{[:blank:]}}{Blank characters: space and tab, and
+      possibly other locale-dependent characters such as non-breaking
+      space.}
 
     \item{\samp{[:cntrl:]}}{
       Control characters.  In ASCII, these characters have octal codes
@@ -109,7 +110,8 @@
 
     \item{\samp{[:space:]}}{
       Space characters: tab, newline, vertical tab, form feed, carriage
-      return, and space.}
+      return, and space, and possibly other locale-dependent
+      characters.}
 
     \item{\samp{[:upper:]}}{Upper-case letters in the current locale.}
 
