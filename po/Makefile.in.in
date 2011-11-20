@@ -38,8 +38,8 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
-Rsharedir = $(DESTDIR)${rsharedir}
-Rlocaledir = $(Rsharedir)/locale
+Rsharedir = "$(DESTDIR)${rsharedir}"
+Rlocaledir = "$(Rsharedir)/locale"
 
 mkinstalldirs = $(MKINSTALLDIRS)
 
