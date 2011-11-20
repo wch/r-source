@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-8  The R Foundation
+ *  Copyright (C) 2007-11  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1331,7 +1331,8 @@ SEXP Quartz(SEXP args)
     Rboolean antialias, smooth;
     int      quartzpos, bg, canvas, module = 0;
     double   mydpi[2], *dpi = 0;
-    const char *type, *mtype = 0, *file = 0, *family, *title;
+    const char *type, *mtype = 0, *family, *title;
+    char *file = NULL;
     QuartzDesc_t qd = NULL;
 
     const void *vmax = vmaxget();
@@ -1346,9 +1347,11 @@ SEXP Quartz(SEXP args)
     tmps = CAR(args);    args = CDR(args);
     if (isNull(tmps)) 
 	file = NULL;
-    else if (isString(tmps) && LENGTH(tmps) >= 1)
-        file  = CHAR(STRING_ELT(tmps, 0));
-    else
+    else if (isString(tmps) && LENGTH(tmps) >= 1) {
+        const char *tmp = R_ExpandFileName(CHAR(STRING_ELT(tmps, 0)));
+	file = R_alloc(strlen(tmp) + 1, sizeof(char));
+	strcpy(file, tmp);
+    } else
         error(_("invalid 'file' argument"));
     width     = ARG(asReal,args);
     height    = ARG(asReal,args);

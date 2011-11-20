@@ -27,6 +27,9 @@
 
       \item \code{parallel::clusterExport()} now allows specification of
       an environment from which to export.
+      
+      \item The \code{quartz()} device now does tilde expansion on its
+      \code{file} argument.
     }
   }
 

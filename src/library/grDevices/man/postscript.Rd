@@ -36,6 +36,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     use \code{\%\%} in the string for \code{\%} in the file name.
     A single integer format matching the \link{regular expression}
     \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed.
+    
+    Tilde expansion (see \code{\link{path.expand}}) is done.
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page

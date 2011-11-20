@@ -22,9 +22,15 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
+    If it is of the form \code{"|cmd"}, the output is piped to the
+    command given by \command{cmd}.  If it is \code{NULL},
+    then no external file is created (effectively, no drawing occurs),
+    but the device may still be queried (e.g., for size of text).
     For use with \code{onefile = FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
     (See \code{\link{postscript}} for further details.)
+
+    Tilde expansion (see \code{\link{path.expand}}) is done.
   }
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}

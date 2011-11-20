@@ -110,8 +110,7 @@
 
     \item{\samp{[:space:]}}{
       Space characters: tab, newline, vertical tab, form feed, carriage
-      return, and space, and possibly other locale-dependent
-      characters.}
+      return, space and possibly other locale-dependent characters.}
 
     \item{\samp{[:upper:]}}{Upper-case letters in the current locale.}
 
