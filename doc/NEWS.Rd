@@ -105,8 +105,8 @@
       (Reported by Hervé Pagès.)
 
       \item \code{read.dcf()} removes trailing blanks: unfortunately
-      this included on some platforms \code{\\xa0} (non-breaking space)
-      which is the trailing byte of some UTF-8 characters.  It now only
+      on some platforms this included \code{\\xa0} (non-breaking space)
+      which is the trailing byte of a UTF-8 character.  It now only
       considers ASCII space and tab to be \sQuote{blank}.
     }
   }

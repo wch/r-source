@@ -81,7 +81,7 @@ $(Rlapack_la): $(LIBOBJECTS)
 	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
 
 Rlapack_install: $(Rlapack_la) 
-	@$(MKINSTALLDIRS) $(Rexeclibdir)
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
 	  $(Rexeclibdir)/$(Rlapack_la)
 
