@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/quartz.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-211 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
@@ -79,7 +79,9 @@ quartz.options(\dots, reset = FALSE)
   \code{PATH_MAX} characters long, and may be truncated if not. See
   \code{\link{postscript}} for further details.)  If a \code{file}
   argument is not supplied, the default is \code{Rplots.pdf} or
-  \code{Rplot\%03d.\var{type}}.
+  \code{Rplot\%03d.\var{type}}.  Tilde expansion
+  (see \code{\link{path.expand}}) is done.
+
 
   If a device-independent \R graphics font family is specified
   (e.g., via \code{par(family=)} in the graphics package),

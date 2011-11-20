@@ -27,10 +27,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     then no external file is created (effectively, no drawing occurs),
     but the device may still be queried (e.g., for size of text).
 
-    
     For use with \code{onefile = FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
     (See \code{\link{postscript}} for further details.)
+
+    Tilde expansion (see \code{\link{path.expand}}) is done.
   }
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}
