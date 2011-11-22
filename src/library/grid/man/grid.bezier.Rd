@@ -46,7 +46,7 @@ bezierGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
 }
 \details{
   Both functions create a beziergrob (a graphical object describing a
-  Bezier urve), but only \code{grid.bezier}
+  Bezier curve), but only \code{grid.bezier}
   draws the Bezier curve.
 
   A Bezier curve is a line drawn relative to 4 control points.  
