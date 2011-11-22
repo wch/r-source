@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-11-05 r57577)
+R Under development (unstable) (2011-11-17 r57686)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -376,6 +376,27 @@ $lty
 > 
 > 
 > cleanEx()
+> nameEx("grid.DLapply")
+> ### * grid.DLapply
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.DLapply
+> ### Title: Modify the Grid Display List
+> ### Aliases: grid.DLapply
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> grid.newpage()
+> grid.rect(width=.5, height=.5, gp=gpar(fill="grey"))
+> grid.DLapply(function(x) { if (is.grob(x)) x$gp <- gpar(); x })
+NULL
+> grid.refresh()
+> 
+> 
+> 
+> cleanEx()
 > nameEx("grid.arrows")
 > ### * grid.arrows
 > 
@@ -455,6 +476,34 @@ $lty
 > ##D popViewport(2)
 > ##D grid.edit(gPath("arrowOnLine", "curve"), y=unit((0:80/100)^3, "npc"))
 > ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.bezier")
+> ### * grid.bezier
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.bezier
+> ### Title: Draw a Bezier Curve
+> ### Aliases: grid.bezier bezierGrob
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> x <- c(0.2, 0.2, 0.4, 0.4)
+> y <- c(0.2, 0.4, 0.4, 0.2)
+> 
+> grid.newpage()
+> grid.bezier(x, y)
+> grid.bezier(c(x, x + .4), c(y + .4, y + .4),
++             id=rep(1:2, each=4))
+> grid.segments(.4, .6, .6, .6)
+> grid.bezier(x, y,
++             gp=gpar(lwd=3, fill="black"),
++             arrow=arrow(type="closed"),
++             vp=viewport(x=.9))
 > 
 > 
 > 
@@ -1789,8 +1838,9 @@ vp1::vp2
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: xsplinePoints
-> ### Title: Return the points that would be used to draw an Xspline.
-> ### Aliases: xsplinePoints
+> ### Title: Return the points that would be used to draw an Xspline (or a
+> ###   Bezier curve).
+> ### Aliases: xsplinePoints bezierPoints
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1801,12 +1851,37 @@ vp1::vp2
 > trace <- xsplinePoints(xsg)
 > grid.circle(trace$x, trace$y, default.units="inches", r=unit(.5, "mm"))
 > 
+> grid.newpage()
+> vp <- viewport(width=.5)
+> xg <- xsplineGrob(x=c(0, .2, .4, .2, .5, .7, .9, .7),
++                   y=c(.5, 1, .5, 0, .5, 1, .5, 0),
++                   id=rep(1:2, each=4),
++                   shape=1,
++                   vp=vp)
+> grid.draw(xg)
+> trace <- xsplinePoints(xg)
+> pushViewport(vp)
+> lapply(trace, function(t) grid.lines(t$x, t$y, gp=gpar(col="red")))
+[[1]]
+lines[GRID.lines.969] 
+
+[[2]]
+lines[GRID.lines.970] 
+
+> popViewport()
+> 
+> grid.newpage()
+> bg <- bezierGrob(c(.2, .2, .8, .8), c(.2, .8, .8, .2))
+> grid.draw(bg)
+> trace <- bezierPoints(bg)
+> grid.circle(trace$x, trace$y, default.units="inches", r=unit(.5, "mm"))
+> 
 > 
 > 
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.998 0.029 2.042 0 0 
+Time elapsed:  2.632 0.022 2.682 0 0 
 > grDevices::dev.off()
 null device 
           1 
