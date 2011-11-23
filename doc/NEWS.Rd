@@ -111,6 +111,9 @@
       on some platforms this included \code{\\xa0} (non-breaking space)
       which is the trailing byte of a UTF-8 character.  It now only
       considers ASCII space and tab to be \sQuote{blank}.
+      
+      \item There was sign error in part of the calculations for the
+      variance returned by \code{KalmanSmooth()}.  (\PR{14738})
     }
   }
 }
