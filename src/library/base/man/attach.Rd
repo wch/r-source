@@ -1,6 +1,6 @@
 % File src/library/base/man/attach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{attach}
@@ -63,8 +63,11 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 
   Names starting \code{"package:"} are reserved for
   \code{\link{library}} and should not be used by end users.  The name
-  given for the attached environment will be used by \code{\link{search}}
-  and can be used as the argument to \code{\link{as.environment}}.
+  for an attached file is always of the form \code{file:\var{what}},
+  even if \code{name} is supplied.  Otherwise the \code{name} argument
+  given for the attached environment will be used by
+  \code{\link{search}} and can be used as the argument to
+  \code{\link{as.environment}}.
 
   There are hooks to attach user-defined table objects of class
   \code{"UserDefinedDatabase"}, supported by the Omegahat package
