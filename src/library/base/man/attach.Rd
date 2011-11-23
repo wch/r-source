@@ -62,9 +62,11 @@ attach(what, pos = 2, name = deparse(substitute(what)),
   \code{\link{load}} or \code{\link{sys.source}}.
 
   Names starting \code{"package:"} are reserved for
-  \code{\link{library}} and should not be used by end users.  The name
-  given for the attached environment will be used by \code{\link{search}}
-  and can be used as the argument to \code{\link{as.environment}}.
+  \code{\link{library}} and should not be used by end users. Attached
+  files are by default given the name \code{file:\var{what}}.  The
+  \code{name} argument given for the attached environment will be used
+  by \code{\link{search}} and can be used as the argument to
+  \code{\link{as.environment}}.
 
   There are hooks to attach user-defined table objects of class
   \code{"UserDefinedDatabase"}, supported by the Omegahat package

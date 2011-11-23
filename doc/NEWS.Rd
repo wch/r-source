@@ -67,6 +67,9 @@
       
       \item There is a new function \code{assignInMyNamespace()} which
       uses the namespace of the function it is called from.
+      
+      \item \code{attach()} allows the default name for an attached file
+      to be overridden.
     }
   }
 

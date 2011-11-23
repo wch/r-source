@@ -84,7 +84,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     if (is.character(what) && (length(what) == 1L)){
         if (!file.exists(what))
             stop(gettextf("file '%s' not found", what), domain = NA)
-        name <- paste("file:", what, sep="")
+        if(missing(name)) name <- paste("file:", what, sep="")
         value <- .Internal(attach(NULL, pos, name))
         load(what, envir=as.environment(pos))
     }
