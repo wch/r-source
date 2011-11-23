@@ -31,6 +31,9 @@
   Patterns are described here as they would be printed by \code{cat}:
   (\emph{do remember that backslashes need to be doubled when entering \R
     character strings}, e.g. from the keyboard).
+
+  Do not assume that long regular expressions will be accepted: the
+  POSIX standard only requires up to 256 \emph{bytes}.
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed in the default
