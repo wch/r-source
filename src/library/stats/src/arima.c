@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2006   The R Development Core Team.
+ *  Copyright (C) 2002-2011   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -332,7 +332,7 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		for (j = 0; j < p; j++) {
 		    tmp = Pt[l + n*i + n*p*j];
 		    for (k = 0; k < p; k++)
-			tmp += mm[i + p * k] * Pt[l + n*k + n*p*j];
+			tmp -= mm[i + p * k] * Pt[l + n*k + n*p*j];
 		    Nt[l + n*i + n*p*j] = tmp;
 		}
 	}
