@@ -297,6 +297,9 @@
 /* Define to 1 if you have the `getpagesize' function. */
 #define HAVE_GETPAGESIZE 1
 
+/* Define to 1 if you have the `getpriority' function. */
+/* #undef HAVE_GETPRIORITY */
+
 /* Define to 1 if you have the `getpwuid' function. */
 /* #undef HAVE_GETPWUID */
 
@@ -380,6 +383,9 @@
 
 /* Define if you have KeySym defined in X11. */
 /* #undef HAVE_KEYSYM */
+
+/* Define to 1 if you have the `kill' function. */
+/* #undef HAVE_KILL */
 
 /* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
 /* #undef HAVE_LANGINFO_CODESET */
@@ -597,6 +603,9 @@
 /* Define to 1 if you have the `sigemptyset' function. */
 /* #undef HAVE_SIGEMPTYSET */
 
+/* Define to 1 if you have the `snprintf' function. */
+#define HAVE_SNPRINTF 1
+
 /* Define if you have support for sockets. */
 #define HAVE_SOCKETS 1
 
@@ -645,6 +654,18 @@
 
 /* Define to 1 if you have the `strtoul' function. */
 #define HAVE_STRTOUL 1
+
+/* Define to 1 if `st_atimensec' is a member of `struct stat'. */
+/* #undef HAVE_STRUCT_STAT_ST_ATIMENSEC */
+
+/* Define to 1 if `st_atimespec.tv_nsec' is a member of `struct stat'. */
+/* #undef HAVE_STRUCT_STAT_ST_ATIMESPEC_TV_NSEC */
+
+/* Define to 1 if `st_atim.st__tim.tv_nsec' is a member of `struct stat'. */
+/* #undef HAVE_STRUCT_STAT_ST_ATIM_ST__TIM_TV_NSEC */
+
+/* Define to 1 if `st_atim.tv_nsec' is a member of `struct stat'. */
+/* #undef HAVE_STRUCT_STAT_ST_ATIM_TV_NSEC */
 
 /* Define to 1 if you have the `symlink' function. */
 /* #undef HAVE_SYMLINK */
@@ -704,11 +725,11 @@
 #define HAVE_TIMES 1
 
 /* Define to 1 if you have the `tsearch' function. */
-#ifndef WIN64
+#if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
 #define HAVE_TSEARCH 1
 #endif
 
-/* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>.. (For
+/* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>. (For
    intl) */
 #define HAVE_UINTMAX_T 1
 
@@ -980,6 +1001,10 @@
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */
 
+/* Define to 1 if the type of the st_atim member of a struct stat is struct
+   timespec. */
+/* #undef TYPEOF_STRUCT_STAT_ST_ATIM_IS_STRUCT_TIMESPEC */
+
 /* Define to use ICU for collation. */
 /* #undef USE_ICU */
 
@@ -1048,6 +1073,11 @@
 /* Define to 1 if you need to in order for `stat' and other things to work. */
 /* #undef _POSIX_SOURCE */
 
+/* Define for Solaris 2.5.1 so the uint64_t typedef from <sys/synch.h>,
+   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
+   #define below would cause a syntax error. */
+/* #undef _UINT64_T */
+
 /* Define to 'long' if <sys/types.h> does not define. Apparently necessary to
    fix a GCC bug on AIX? */
 #define blkcnt_t long
@@ -1070,6 +1100,10 @@
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 /* #undef size_t */
+
+/* Define to the type of an unsigned integer type of width exactly 64 bits if
+   such a type exists and the standard includes do not define it. */
+/* #undef uint64_t */
 
 /* Define to unsigned long or unsigned long long if <stdint.h> and
    <inttypes.h> don't define. (For intl) */
