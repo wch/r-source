@@ -545,13 +545,13 @@ unsigned int TimeToSeed(void)
     {
 	struct timespec tp;
 	clock_gettime(CLOCK_REALTIME, &tp);
-	seed = ((uint64_t) tp.tv_nsec << 16) ^ tp.tv_sec;
+	seed = ((uint_least64_t) tp.tv_nsec << 16) ^ tp.tv_sec;
     }
 #elif defined(HAVE_GETTIMEOFDAY)
     {
 	struct timeval tv;
 	gettimeofday (&tv, NULL);
-	seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
+	seed = ((uint_least64_t) tv.tv_usec << 16) ^ tv.tv_sec;
     }
 #else
     /* C89, so must work */

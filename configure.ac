@@ -782,6 +782,8 @@ R_HEADER_GLIBC2
 ### * Checks for types.
 
 AC_TYPE_SIGNAL
+## xz needs uint64_t
+AC_TYPE_UINT64_T
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 R_SIZE_MAX
