@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -180,48 +180,9 @@ msgstr ""
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
-msgid "Packages required but not available:"
-msgstr ""
-
-msgid "Package required but not available: %s"
-msgstr ""
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr ""
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr ""
-
-msgid "Former standard packages required but now defunct:"
-msgstr ""
-
-msgid "Packages suggested but not available for checking:"
-msgstr ""
-
-msgid "Package suggested but not available for checking: %s"
-msgstr ""
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr ""
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr ""
-
-msgid "Vignette dependencies not required:"
-msgstr ""
-
-msgid "Vignette dependencies not required: %s"
-msgstr ""
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
-msgstr ""
-
-msgid "Namespace dependencies not required:"
-msgstr ""
-
-msgid "Namespace dependency not required: %s"
 msgstr ""
 
 msgid "Malformed package name"
@@ -283,9 +244,6 @@ msgstr ""
 msgid ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single '.' or '-'."
-msgstr ""
-
-msgid "Package name and namespace differ."
 msgstr ""
 
 msgid "Invalid Priority field."
@@ -639,6 +597,9 @@ msgstr ""
 #, fuzzy
 msgid "Error: cannot rename directory to"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
+
+msgid "error status"
+msgstr ""
 
 msgid "-l option without value"
 msgstr ""

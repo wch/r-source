@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:57\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -502,7 +502,9 @@ msgstr "程序包'%s'里元数据出了错"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
@@ -802,8 +804,9 @@ msgstr "修改文件再把它放到合适的目录中去。"
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr "没有种类为%s和題目为%s的文件(或是在处理帮助文件时发生了错误)"
 
+#, fuzzy
 msgid ""
-"the object of class \"%s\" in the function call %s could not be used as a "
+"the object of class %s in the function call %s could not be used as a "
 "documentation topic"
 msgstr "函数調用%2$s里类别为\"%1$s\"的对象不能用作帮助文件題目"
 

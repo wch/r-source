@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2011-10-13 15:53+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -175,53 +175,12 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 "Paketname '%s' scheint unzulässig; verwende stattdessen Verzeichnisname '%s'"
 
-msgid "Packages required but not available:"
-msgstr "Benötigte, aber nicht verfügbare Pakete:"
-
-msgid "Package required but not available: %s"
-msgstr "Benötigtes, aber nicht verfügbares Paket: %s"
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr "Benötigte aber nur in falscher Version verfügbare Pakete:"
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr "Benötigtes aber nur in falscher Version verfügbares Paket: %s"
-
-msgid "Former standard packages required but now defunct:"
-msgstr "Ehemalige Standardpakete benötigt, die es nicht mehr gibt:"
-
-msgid "Packages suggested but not available for checking:"
-msgstr "Vorgeschlagene, aber nicht zur Überprüfung verfügbare Pakete:"
-
-msgid "Package suggested but not available for checking: %s"
-msgstr "Vorgeschlagenes, aber nicht zur Überprüfung verfügbares Paket: %s"
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr ""
-"Pakete, welche dieses erweitern, aber nicht für Überprüfung bereit stehen:"
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr ""
-"Paket, welches dieses erweitert, aber nicht für Überprüfung bereit steht: %s"
-
-msgid "Vignette dependencies not required:"
-msgstr "nicht benötigte Vignettenabhängigkeiten "
-
-msgid "Vignette dependencies not required: %s"
-msgstr "nicht benötigte Vignettenabhängigkeiten: %s"
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
 "Abhängigkeiten einer Vignette (\\VignetteDepends[] Einträge) müssen in den "
 "DESCRIPTION-Feldern Depends/Sugggests/Imports enthalten sein"
-
-msgid "Namespace dependencies not required:"
-msgstr "Nicht benötigte Namensraumabhängigkeiten:"
-
-msgid "Namespace dependency not required: %s"
-msgstr "Nicht benötigte Namensraumabhängigkeiten: %s"
 
 msgid "Malformed package name"
 msgstr "ungeeigneter Paketname"
@@ -291,9 +250,6 @@ msgid ""
 msgstr ""
 "Versionsnummern müssen Folgen von mindestens zwei nicht-negativen, ganzen "
 "Zahlen, getrennt durch einen '.' oder einen '-', sein"
-
-msgid "Package name and namespace differ."
-msgstr "Paketname und Namensraum unterscheiden sich"
 
 msgid "Invalid Priority field."
 msgstr "Unzulässiges Feld für 'Priority'"
@@ -652,6 +608,9 @@ msgstr "Der Standard JSS style darf nicht geändert werden"
 
 msgid "Error: cannot rename directory to"
 msgstr "Fehler: kann  Verzeichnis nicht umbennen in"
+
+msgid "error status"
+msgstr ""
 
 msgid "-l option without value"
 msgstr "-l Option ohne Wert"
@@ -1293,6 +1252,51 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "Packages required but not available:"
+#~ msgstr "Benötigte, aber nicht verfügbare Pakete:"
+
+#~ msgid "Package required but not available: %s"
+#~ msgstr "Benötigtes, aber nicht verfügbares Paket: %s"
+
+#~ msgid "Packages required and available but unsuitable versions:"
+#~ msgstr "Benötigte aber nur in falscher Version verfügbare Pakete:"
+
+#~ msgid "Package required and available but unsuitable version: %s"
+#~ msgstr "Benötigtes aber nur in falscher Version verfügbares Paket: %s"
+
+#~ msgid "Former standard packages required but now defunct:"
+#~ msgstr "Ehemalige Standardpakete benötigt, die es nicht mehr gibt:"
+
+#~ msgid "Packages suggested but not available for checking:"
+#~ msgstr "Vorgeschlagene, aber nicht zur Überprüfung verfügbare Pakete:"
+
+#~ msgid "Package suggested but not available for checking: %s"
+#~ msgstr "Vorgeschlagenes, aber nicht zur Überprüfung verfügbares Paket: %s"
+
+#~ msgid "Packages which this enhances but not available for checking:"
+#~ msgstr ""
+#~ "Pakete, welche dieses erweitern, aber nicht für Überprüfung bereit stehen:"
+
+#~ msgid "Package which this enhances but not available for checking: %s"
+#~ msgstr ""
+#~ "Paket, welches dieses erweitert, aber nicht für Überprüfung bereit steht: "
+#~ "%s"
+
+#~ msgid "Vignette dependencies not required:"
+#~ msgstr "nicht benötigte Vignettenabhängigkeiten "
+
+#~ msgid "Vignette dependencies not required: %s"
+#~ msgstr "nicht benötigte Vignettenabhängigkeiten: %s"
+
+#~ msgid "Namespace dependencies not required:"
+#~ msgstr "Nicht benötigte Namensraumabhängigkeiten:"
+
+#~ msgid "Namespace dependency not required: %s"
+#~ msgstr "Nicht benötigte Namensraumabhängigkeiten: %s"
+
+#~ msgid "Package name and namespace differ."
+#~ msgstr "Paketname und Namensraum unterscheiden sich"
 
 #~ msgid "DVI output from Rd2dvi is deprecated"
 #~ msgstr "DVI Ausgabe mit Rd2dvi ist veraltet"

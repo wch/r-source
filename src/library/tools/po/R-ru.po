@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2011-10-18 22:43-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -179,52 +179,12 @@ msgstr ""
 "похоже, что имя пакета '%s' неправильное; вместо него использую имя папки "
 "'%s'"
 
-msgid "Packages required but not available:"
-msgstr "Пакет требуется, но недоступен:"
-
-msgid "Package required but not available: %s"
-msgstr "Пакет требуется, но недоступен: %s"
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr "Пакет требуется и доступен, но неподходящих версий:"
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr "Пакет требуется и доступен, но неподходящей версии:"
-
-msgid "Former standard packages required but now defunct:"
-msgstr ""
-"Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
-
-msgid "Packages suggested but not available for checking:"
-msgstr "Пакет требуется, но недоступен для выдачи:"
-
-msgid "Package suggested but not available for checking: %s"
-msgstr "Пакет требуется, но недоступен  для выдачи:"
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr "Пакет, который это усиливает, недоступен для выдачи:"
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr "Пакет, который это усиливает, недоступен для выдачи: %s"
-
-msgid "Vignette dependencies not required:"
-msgstr "Зависимости очерка не требуются:"
-
-msgid "Vignette dependencies not required: %s"
-msgstr "Зависимости очерка не требуются: %s"
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
 "Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в "
 "пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
-
-msgid "Namespace dependencies not required:"
-msgstr "Определения пространства имен не требуются:"
-
-msgid "Namespace dependency not required: %s"
-msgstr "Определения зависимости имен не требуется: %s"
 
 msgid "Malformed package name"
 msgstr "Плохое имя пакета"
@@ -292,9 +252,6 @@ msgid ""
 msgstr ""
 "Номера версии должны быть последовательностями по крайней мере двух "
 "неотрицательных целых, разделенных одной точкой или дефисом."
-
-msgid "Package name and namespace differ."
-msgstr "Имена пакета и пространства имен различаются."
 
 msgid "Invalid Priority field."
 msgstr "Неправильное поле привилегий."
@@ -654,6 +611,9 @@ msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
 msgid "Error: cannot rename directory to"
 msgstr "Ошибка: не могу переименовать папку в"
+
+msgid "error status"
+msgstr ""
 
 msgid "-l option without value"
 msgstr "-l опция без значения"
@@ -1296,6 +1256,49 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "Packages required but not available:"
+#~ msgstr "Пакет требуется, но недоступен:"
+
+#~ msgid "Package required but not available: %s"
+#~ msgstr "Пакет требуется, но недоступен: %s"
+
+#~ msgid "Packages required and available but unsuitable versions:"
+#~ msgstr "Пакет требуется и доступен, но неподходящих версий:"
+
+#~ msgid "Package required and available but unsuitable version: %s"
+#~ msgstr "Пакет требуется и доступен, но неподходящей версии:"
+
+#~ msgid "Former standard packages required but now defunct:"
+#~ msgstr ""
+#~ "Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
+
+#~ msgid "Packages suggested but not available for checking:"
+#~ msgstr "Пакет требуется, но недоступен для выдачи:"
+
+#~ msgid "Package suggested but not available for checking: %s"
+#~ msgstr "Пакет требуется, но недоступен  для выдачи:"
+
+#~ msgid "Packages which this enhances but not available for checking:"
+#~ msgstr "Пакет, который это усиливает, недоступен для выдачи:"
+
+#~ msgid "Package which this enhances but not available for checking: %s"
+#~ msgstr "Пакет, который это усиливает, недоступен для выдачи: %s"
+
+#~ msgid "Vignette dependencies not required:"
+#~ msgstr "Зависимости очерка не требуются:"
+
+#~ msgid "Vignette dependencies not required: %s"
+#~ msgstr "Зависимости очерка не требуются: %s"
+
+#~ msgid "Namespace dependencies not required:"
+#~ msgstr "Определения пространства имен не требуются:"
+
+#~ msgid "Namespace dependency not required: %s"
+#~ msgstr "Определения зависимости имен не требуется: %s"
+
+#~ msgid "Package name and namespace differ."
+#~ msgstr "Имена пакета и пространства имен различаются."
 
 #~ msgid "DVI output from Rd2dvi is deprecated"
 #~ msgstr "Вывод DVI из Rd2dvi не рекомендуется"

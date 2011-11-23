@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:55\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -28,12 +28,6 @@ msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
 
 msgid "See help(\"Defunct\")"
 msgstr "见help(\"Defunct\"))"
-
-msgid "'symbol.C' is not needed: please remove it"
-msgstr "不需要'symbol.C'：请删除"
-
-msgid "'symbol.For' is not needed: please remove it"
-msgstr "不需要'symbol.For'：请删除"
 
 msgid "'%s' is deprecated."
 msgstr "%s不再有用。"
@@ -846,7 +840,8 @@ msgstr "程辑包%s没有名字空间，应该重新安装"
 msgid "package %s already present in search()"
 msgstr "search()里已经存在程辑包%s"
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'有'Encoding'一域，但重新編碼是不可能的"
 
 msgid "%sPackages in library %s:"
@@ -1658,6 +1653,12 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'symbol.C' is not needed: please remove it"
+#~ msgstr "不需要'symbol.C'：请删除"
+
+#~ msgid "'symbol.For' is not needed: please remove it"
+#~ msgstr "不需要'symbol.For'：请删除"
 
 #~ msgid "'pattern' must be a non-empty character string"
 #~ msgstr "'pattern'必需为非空字符串"

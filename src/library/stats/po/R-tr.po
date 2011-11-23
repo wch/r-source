@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:02\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -41,6 +41,9 @@ msgstr ""
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "mevsimsel başlangıç değerlerini hesaplamak için en az 2 dönem gerekli"
+
+msgid "optimization difficulties: %s"
+msgstr ""
 
 msgid "optimization failure"
 msgstr ""

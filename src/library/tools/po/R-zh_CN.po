@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -172,51 +172,12 @@ msgstr "%s里不能有T/F这样的值"
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 
-msgid "Packages required but not available:"
-msgstr "需要有程辑包但它却不存在:"
-
-msgid "Package required but not available: %s"
-msgstr "需要有程辑包但它却不存在: %s"
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr "虽然有需要的程辑包，但其版本不对:"
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr "虽然有需要的程辑包，但其版本不对: %s"
-
-msgid "Former standard packages required but now defunct:"
-msgstr "原来需要的标准程辑包现在不要了:"
-
-msgid "Packages suggested but not available for checking:"
-msgstr "无法检查建议用的程辑包:"
-
-msgid "Package suggested but not available for checking: %s"
-msgstr "无法检查建议用的程辑包: %s"
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr "无法检查被加强功能的程辑包:"
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr "无法检查被加强功能的程辑包:%s"
-
-msgid "Vignette dependencies not required:"
-msgstr "不需要标头从属:"
-
-msgid "Vignette dependencies not required: %s"
-msgstr "不需要标头从属: %s"
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
 "标头从属(\\VignetteDepends{}条目)必需包含在DESCRIPTION文件里的Depends/"
 "Suggests/Imports条目中."
-
-msgid "Namespace dependencies not required:"
-msgstr "不需要名字空间从属:"
-
-msgid "Namespace dependency not required: %s"
-msgstr "不需要名字空间从属: %s"
 
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
@@ -280,9 +241,6 @@ msgid ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single '.' or '-'."
 msgstr "版本数目至少要由两个非负整数组成，中间用单一的'.'或'-'符号分开."
-
-msgid "Package name and namespace differ."
-msgstr "程辑包的名字和它的名字空间不一样."
 
 msgid "Invalid Priority field."
 msgstr "Priority域不对."
@@ -626,6 +584,9 @@ msgstr "不能对缺省JSS式样进行修改"
 
 msgid "Error: cannot rename directory to"
 msgstr "错误：无法改变目录名字为"
+
+msgid "error status"
+msgstr ""
 
 msgid "-l option without value"
 msgstr "-l选项一定得有值"
@@ -1242,6 +1203,48 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "Packages required but not available:"
+#~ msgstr "需要有程辑包但它却不存在:"
+
+#~ msgid "Package required but not available: %s"
+#~ msgstr "需要有程辑包但它却不存在: %s"
+
+#~ msgid "Packages required and available but unsuitable versions:"
+#~ msgstr "虽然有需要的程辑包，但其版本不对:"
+
+#~ msgid "Package required and available but unsuitable version: %s"
+#~ msgstr "虽然有需要的程辑包，但其版本不对: %s"
+
+#~ msgid "Former standard packages required but now defunct:"
+#~ msgstr "原来需要的标准程辑包现在不要了:"
+
+#~ msgid "Packages suggested but not available for checking:"
+#~ msgstr "无法检查建议用的程辑包:"
+
+#~ msgid "Package suggested but not available for checking: %s"
+#~ msgstr "无法检查建议用的程辑包: %s"
+
+#~ msgid "Packages which this enhances but not available for checking:"
+#~ msgstr "无法检查被加强功能的程辑包:"
+
+#~ msgid "Package which this enhances but not available for checking: %s"
+#~ msgstr "无法检查被加强功能的程辑包:%s"
+
+#~ msgid "Vignette dependencies not required:"
+#~ msgstr "不需要标头从属:"
+
+#~ msgid "Vignette dependencies not required: %s"
+#~ msgstr "不需要标头从属: %s"
+
+#~ msgid "Namespace dependencies not required:"
+#~ msgstr "不需要名字空间从属:"
+
+#~ msgid "Namespace dependency not required: %s"
+#~ msgstr "不需要名字空间从属: %s"
+
+#~ msgid "Package name and namespace differ."
+#~ msgstr "程辑包的名字和它的名字空间不一样."
 
 #~ msgid "DVI output from Rd2dvi is deprecated"
 #~ msgstr "DVI从Rd2dvi输出不再有用"

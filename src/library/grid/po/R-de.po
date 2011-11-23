@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2011-10-07 15:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -155,6 +155,10 @@ msgstr "ungültiger Wert für 'ask'"
 
 msgid "Invalid object inserted on the display list"
 msgstr "unzulässiges Objekt in die Displayliste eingefügt"
+
+#, fuzzy
+msgid "Invalid modification of the display list"
+msgstr "unzulässiges Element in der Display-Liste"
 
 msgid "Invalid 'grob' argument"
 msgstr "unzulässiges 'grob' argument"
@@ -353,6 +357,12 @@ msgstr "x und y müssen Einheiten sein"
 
 msgid "shape must be between -1 and 1"
 msgstr "shape muss zwischen -1 und 1 liegen"
+
+msgid "Must have exactly 4 control points"
+msgstr ""
+
+msgid "Must have exactly 4 control points per Bezier curve"
+msgstr ""
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y' und 'r' müssen Einheiten sein"

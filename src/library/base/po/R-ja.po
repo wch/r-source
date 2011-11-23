@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:55\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2011-10-22 18:27+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -24,12 +24,6 @@ msgstr " help(\"Defunct\") と help(\"%s-defunct\") を見て下さい "
 
 msgid "See help(\"Defunct\")"
 msgstr " help(\"Defunct\") を見て下さい "
-
-msgid "'symbol.C' is not needed: please remove it"
-msgstr " 'symbol.C' は必要ありません: 取り除いてください "
-
-msgid "'symbol.For' is not needed: please remove it"
-msgstr " 'symbol.For' は必要ありません: 取り除いてください "
 
 msgid "'%s' is deprecated."
 msgstr " '%s' は廃止予定です "
@@ -870,7 +864,8 @@ msgstr ""
 msgid "package %s already present in search()"
 msgstr " パッケージ '%s' は既に search() 中に存在します "
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 " 'DESCRIPTION' は 'Encoding' フィールドを持っているので再エンコーディングは出"
 "来ません "
@@ -1718,6 +1713,12 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "'symbol.C' is not needed: please remove it"
+#~ msgstr " 'symbol.C' は必要ありません: 取り除いてください "
+
+#~ msgid "'symbol.For' is not needed: please remove it"
+#~ msgstr " 'symbol.For' は必要ありません: 取り除いてください "
 
 #~ msgid "'pattern' must be a non-empty character string"
 #~ msgstr " 'pattern' は空でない文字列でなければなりません "

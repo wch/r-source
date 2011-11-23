@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:50\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2011-10-22 08:02+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -158,6 +158,10 @@ msgstr " 不正な 'ask' 値です "
 
 msgid "Invalid object inserted on the display list"
 msgstr " ディスプレイリスト上に不正なオブジェクトが挿入されました "
+
+#, fuzzy
+msgid "Invalid modification of the display list"
+msgstr " ディスプレイリストの中に不正な要素があります "
 
 msgid "Invalid 'grob' argument"
 msgstr " 不正な 'grob' 引数です "
@@ -354,6 +358,12 @@ msgstr " x と y は単位(units)でなければなりません "
 
 msgid "shape must be between -1 and 1"
 msgstr " shape は -1 と 1 の間になければなりません  "
+
+msgid "Must have exactly 4 control points"
+msgstr ""
+
+msgid "Must have exactly 4 control points per Bezier curve"
+msgstr ""
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr " 'x', 'y', 'r' は全て単位(units)でなければなりません "

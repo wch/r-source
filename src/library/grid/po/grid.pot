@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2011-11-23 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,23 +77,23 @@ msgstr ""
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 
-#: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 msgid "Unimplemented unit function"
 msgstr ""
 
-#: unit.c:831 unit.c:1577
+#: unit.c:894 unit.c:1640
 msgid "Illegal unit or unit not yet implemented"
 msgstr ""
 
-#: unit.c:1732
+#: unit.c:1799
 msgid "Invalid unit"
 msgstr ""
 
-#: unit.c:1748
+#: unit.c:1815
 msgid "Units must be character"
 msgstr ""
 
-#: unit.c:1751
+#: unit.c:1818
 msgid "Units must be of length > 0"
 msgstr ""
 

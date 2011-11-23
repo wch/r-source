@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -154,6 +154,10 @@ msgstr "'ask'的值不对"
 
 msgid "Invalid object inserted on the display list"
 msgstr "显示列里所插入的对象不对"
+
+#, fuzzy
+msgid "Invalid modification of the display list"
+msgstr "显示单里的成分不对"
 
 msgid "Invalid 'grob' argument"
 msgstr "'grob'参数值不对"
@@ -346,6 +350,12 @@ msgstr "x和y必需为单元值"
 msgid "shape must be between -1 and 1"
 msgstr "形状的值必需在-1和1之间"
 
+msgid "Must have exactly 4 control points"
+msgstr ""
+
+msgid "Must have exactly 4 control points per Bezier curve"
+msgstr ""
+
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y'和'r'必需为单元值"
 
@@ -518,4 +528,3 @@ msgstr "卸载'grid'名字空间时关闭所有的设备"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
-

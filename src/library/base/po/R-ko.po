@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:55\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -23,12 +23,6 @@ msgstr "lp(\"Defunct\")와 help(\"%s-defunct\")를 보아 주십시오"
 
 msgid "See help(\"Defunct\")"
 msgstr "help(\\\"Defunct\\\")를 보아 주십시오"
-
-msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
-
-msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "'%s'는 없어져 버릴 예정입니다"
@@ -907,7 +901,8 @@ msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 msgid "package %s already present in search()"
 msgstr "패키지'%s'는  이미 search()에 존재합니다"
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 "'DESCRIPTION' 는 'Encoding' 필드를 가지고 있습니다. 그리고 re-encoding는 가능"
 "하지는 않습니다"

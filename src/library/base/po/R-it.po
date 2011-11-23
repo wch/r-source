@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:55\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -28,12 +28,6 @@ msgstr "Si veda help(\"Defunct\") e help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
 msgstr "Si veda help(\"Defunct\")"
-
-msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
-
-msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "'%s' è deprecata"
@@ -917,7 +911,7 @@ msgstr "il pacchetto '%s' non ha un namespace"
 msgid "package %s already present in search()"
 msgstr "il pacchetto '%s' è già presente in search()"
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 
 #, fuzzy

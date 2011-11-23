@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -152,6 +152,10 @@ msgstr "Valor 'ask' incorreto"
 
 msgid "Invalid object inserted on the display list"
 msgstr "Objeto inválido inserido na lista de exibição"
+
+#, fuzzy
+msgid "Invalid modification of the display list"
+msgstr "Elemento Inválido na lista de exibição"
 
 msgid "Invalid 'grob' argument"
 msgstr "Argumento 'grob' inválido"
@@ -345,6 +349,12 @@ msgstr "x e y devem ser unidades"
 
 msgid "shape must be between -1 and 1"
 msgstr "shape deve ser entre  -1 e 1"
+
+msgid "Must have exactly 4 control points"
+msgstr ""
+
+msgid "Must have exactly 4 control points per Bezier curve"
+msgstr ""
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', e 'r' devem ser unidades"

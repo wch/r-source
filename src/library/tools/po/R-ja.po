@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2011-10-23 00:23+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -181,52 +181,12 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 " パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
 
-msgid "Packages required but not available:"
-msgstr " パッケージが必要ですが，利用可能ではありません "
-
-msgid "Package required but not available: %s"
-msgstr " パッケージが必要ですが，利用可能ではありません：%s "
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr " パッケージが必要で利用可能ですが，適切なバージョンではありません "
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr ""
-" パッケージが必要で，利用可能ですが，適切なバージョンではありません:%s "
-
-msgid "Former standard packages required but now defunct:"
-msgstr " 以前の標準パッケージが必要ですが，このパッケージは現存しません： "
-
-msgid "Packages suggested but not available for checking:"
-msgstr " パッケージが示唆されていますが，チェック可能ではありません "
-
-msgid "Package suggested but not available for checking: %s"
-msgstr " パッケージが示唆されていますが，チェック可能ではありません：%s "
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr " これが拡張するパッケージがチェック可能ではありません： "
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr " これが拡張するパッケージがチェック可能ではありません：%s "
-
-msgid "Vignette dependencies not required:"
-msgstr " ビニエットの依存性は不要です: "
-
-msgid "Vignette dependencies not required: %s"
-msgstr " ビニエットの依存性は不要です: %s "
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
 " ビニエット依存性(\\VignetteDepends{} 項目)は　DESCRIPTION の Depends/"
 "Suggests/Imports 項目に含まれなければなりません "
-
-msgid "Namespace dependencies not required:"
-msgstr " Namespaceの依存性は必要ありません： "
-
-msgid "Namespace dependency not required: %s"
-msgstr " Namespaceの依存性は必要ありません： %s "
 
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
@@ -294,9 +254,6 @@ msgid ""
 msgstr ""
 " バージョン番号は少なくとも2つの非負の整数列で，'.' または '-' で区切られてい"
 "なければいけません． "
-
-msgid "Package name and namespace differ."
-msgstr " パッケージ名と namespace とが異なっています． "
 
 msgid "Invalid Priority field."
 msgstr " 不正な優先フィールドです． "
@@ -666,6 +623,9 @@ msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
 msgid "Error: cannot rename directory to"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
+
+msgid "error status"
+msgstr ""
 
 msgid "-l option without value"
 msgstr " 値のない -l オプション "
@@ -1301,6 +1261,49 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "Packages required but not available:"
+#~ msgstr " パッケージが必要ですが，利用可能ではありません "
+
+#~ msgid "Package required but not available: %s"
+#~ msgstr " パッケージが必要ですが，利用可能ではありません：%s "
+
+#~ msgid "Packages required and available but unsuitable versions:"
+#~ msgstr " パッケージが必要で利用可能ですが，適切なバージョンではありません "
+
+#~ msgid "Package required and available but unsuitable version: %s"
+#~ msgstr ""
+#~ " パッケージが必要で，利用可能ですが，適切なバージョンではありません:%s "
+
+#~ msgid "Former standard packages required but now defunct:"
+#~ msgstr " 以前の標準パッケージが必要ですが，このパッケージは現存しません： "
+
+#~ msgid "Packages suggested but not available for checking:"
+#~ msgstr " パッケージが示唆されていますが，チェック可能ではありません "
+
+#~ msgid "Package suggested but not available for checking: %s"
+#~ msgstr " パッケージが示唆されていますが，チェック可能ではありません：%s "
+
+#~ msgid "Packages which this enhances but not available for checking:"
+#~ msgstr " これが拡張するパッケージがチェック可能ではありません： "
+
+#~ msgid "Package which this enhances but not available for checking: %s"
+#~ msgstr " これが拡張するパッケージがチェック可能ではありません：%s "
+
+#~ msgid "Vignette dependencies not required:"
+#~ msgstr " ビニエットの依存性は不要です: "
+
+#~ msgid "Vignette dependencies not required: %s"
+#~ msgstr " ビニエットの依存性は不要です: %s "
+
+#~ msgid "Namespace dependencies not required:"
+#~ msgstr " Namespaceの依存性は必要ありません： "
+
+#~ msgid "Namespace dependency not required: %s"
+#~ msgstr " Namespaceの依存性は必要ありません： %s "
+
+#~ msgid "Package name and namespace differ."
+#~ msgstr " パッケージ名と namespace とが異なっています． "
 
 #~ msgid "DVI output from Rd2dvi is deprecated"
 #~ msgstr "Rd2dviからのDVI出力は廃止予定です。 "

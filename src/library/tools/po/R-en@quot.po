@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
-"PO-Revision-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
+"PO-Revision-Date: 2011-11-23 13:46\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -190,51 +190,12 @@ msgstr "found T/F in %s"
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "package name ‘%s’ seems invalid; using directory name ‘%s’ instead"
 
-msgid "Packages required but not available:"
-msgstr "Packages required but not available:"
-
-msgid "Package required but not available: %s"
-msgstr "Package required but not available: %s"
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr "Packages required and available but unsuitable versions:"
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr "Package required and available but unsuitable version: %s"
-
-msgid "Former standard packages required but now defunct:"
-msgstr "Former standard packages required but now defunct:"
-
-msgid "Packages suggested but not available for checking:"
-msgstr "Packages suggested but not available for checking:"
-
-msgid "Package suggested but not available for checking: %s"
-msgstr "Package suggested but not available for checking: %s"
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr "Packages which this enhances but not available for checking:"
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr "Package which this enhances but not available for checking: %s"
-
-msgid "Vignette dependencies not required:"
-msgstr "Vignette dependencies not required:"
-
-msgid "Vignette dependencies not required: %s"
-msgstr "Vignette dependencies not required: %s"
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
-
-msgid "Namespace dependencies not required:"
-msgstr "Namespace dependencies not required:"
-
-msgid "Namespace dependency not required: %s"
-msgstr "Namespace dependency not required: %s"
 
 msgid "Malformed package name"
 msgstr "Malformed package name"
@@ -300,9 +261,6 @@ msgid ""
 msgstr ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single ‘.’ or '-'."
-
-msgid "Package name and namespace differ."
-msgstr "Package name and namespace differ."
 
 msgid "Invalid Priority field."
 msgstr "Invalid Priority field."
@@ -657,6 +615,9 @@ msgstr "The default JSS style may not be modified."
 
 msgid "Error: cannot rename directory to"
 msgstr "Error: cannot rename directory to"
+
+msgid "error status"
+msgstr "error status"
 
 msgid "-l option without value"
 msgstr "-l option without value"

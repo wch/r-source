@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-19 07:24\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -171,48 +171,9 @@ msgstr ""
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
-msgid "Packages required but not available:"
-msgstr ""
-
-msgid "Package required but not available: %s"
-msgstr ""
-
-msgid "Packages required and available but unsuitable versions:"
-msgstr ""
-
-msgid "Package required and available but unsuitable version: %s"
-msgstr ""
-
-msgid "Former standard packages required but now defunct:"
-msgstr ""
-
-msgid "Packages suggested but not available for checking:"
-msgstr ""
-
-msgid "Package suggested but not available for checking: %s"
-msgstr ""
-
-msgid "Packages which this enhances but not available for checking:"
-msgstr ""
-
-msgid "Package which this enhances but not available for checking: %s"
-msgstr ""
-
-msgid "Vignette dependencies not required:"
-msgstr ""
-
-msgid "Vignette dependencies not required: %s"
-msgstr ""
-
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
-msgstr ""
-
-msgid "Namespace dependencies not required:"
-msgstr ""
-
-msgid "Namespace dependency not required: %s"
 msgstr ""
 
 msgid "Malformed package name"
@@ -274,9 +235,6 @@ msgstr ""
 msgid ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single '.' or '-'."
-msgstr ""
-
-msgid "Package name and namespace differ."
 msgstr ""
 
 msgid "Invalid Priority field."
@@ -612,6 +570,9 @@ msgid "The default JSS style may not be modified."
 msgstr ""
 
 msgid "Error: cannot rename directory to"
+msgstr ""
+
+msgid "error status"
 msgstr ""
 
 msgid "-l option without value"

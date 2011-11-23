@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:55\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,12 +21,6 @@ msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
 msgstr ""
 
 msgid "See help(\"Defunct\")"
-msgstr ""
-
-msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
-
-msgid "'symbol.For' is not needed: please remove it"
 msgstr ""
 
 msgid "'%s' is deprecated."
@@ -806,7 +800,7 @@ msgstr ""
 msgid "package %s already present in search()"
 msgstr ""
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 
 msgid "%sPackages in library %s:"

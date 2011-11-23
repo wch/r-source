@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-13 22:12\n"
+"POT-Creation-Date: 2011-11-23 13:46\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1092,6 +1092,9 @@ msgid "Arguments must all be character string names of fields"
 msgstr ""
 
 msgid "The definition of class %s in package %s is locked, fields may not be modified"
+msgstr ""
+
+msgid "Field \"%s\" is already locked"
 msgstr ""
 
 msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"

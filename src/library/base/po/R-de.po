@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-25 07:55\n"
+"POT-Creation-Date: 2011-11-23 13:45\n"
 "PO-Revision-Date: 2011-10-07 15:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -28,12 +28,6 @@ msgstr "Siehe help(\"Defunct\") und help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
 msgstr "Siehe help(\"Defunct\")"
-
-msgid "'symbol.C' is not needed: please remove it"
-msgstr "'symbol.C' ist unnötig: bitte entfernen"
-
-msgid "'symbol.For' is not needed: please remove it"
-msgstr "'symbol.For' ist unnötig: bitte entfernen"
 
 msgid "'%s' is deprecated."
 msgstr "'%s' ist veraltet."
@@ -869,7 +863,8 @@ msgstr "Paket %s hat keinen Namensraum und sollte neu installiert werden"
 msgid "package %s already present in search()"
 msgstr "Paket %s bereits in search()"
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION' hat 'Encoding' Feld und Re-Kodieren ist nicht möglich"
 
 msgid "%sPackages in library %s:"
@@ -1711,6 +1706,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "'symbol.C' is not needed: please remove it"
+#~ msgstr "'symbol.C' ist unnötig: bitte entfernen"
+
+#~ msgid "'symbol.For' is not needed: please remove it"
+#~ msgstr "'symbol.For' ist unnötig: bitte entfernen"
 
 #~ msgid "'pattern' must be a non-empty character string"
 #~ msgstr "'pattern' muss nichtleere Zeichenkette sein"
