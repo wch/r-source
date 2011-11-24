@@ -30,6 +30,30 @@
 
 #include <Defn.h>
 
+/* FIXME: envir.c keeps this private - it should probably go to Defn.h */
+#define FRAME_LOCK_MASK (1<<14)
+#define FRAME_IS_LOCKED(e) (ENVFLAGS(e) & FRAME_LOCK_MASK)
+#define GLOBAL_FRAME_MASK (1<<15)
+#define IS_GLOBAL_FRAME(e) (ENVFLAGS(e) & GLOBAL_FRAME_MASK)
+
+/* from printutils.c */
+static void PrintEnvironment(SEXP x)
+{
+    if (x == R_GlobalEnv)
+	Rprintf("<R_GlobalEnv>");
+    else if (x == R_BaseEnv)
+	Rprintf("<base>");
+    else if (x == R_EmptyEnv)
+	Rprintf("<R_EmptyEnv>");
+    else if (R_IsPackageEnv(x))
+	Rprintf("<%s>",
+		translateChar(STRING_ELT(R_PackageEnvName(x), 0)));
+    else if (R_IsNamespaceEnv(x))
+	Rprintf("<namespace:%s>",
+		translateChar(STRING_ELT(R_NamespaceEnvSpec(x), 0)));
+    else Rprintf("<%p>", (void *)x);
+}
+
 /* print prefix */
 static void pp(int pre) {
     /* this is sort of silly, I know, but it saves at least some output
@@ -89,6 +113,15 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     if (RDEBUG(v)) { if (a) Rprintf(","); Rprintf("DBG"); a = 1; }
     if (RTRACE(v)) { if (a) Rprintf(","); Rprintf("TR"); a = 1; }
     if (RSTEP(v)) { if (a) Rprintf(","); Rprintf("STP"); a = 1; }
+    if (IS_S4_OBJECT(v)) { if (a) Rprintf(","); Rprintf("S4"); a = 1; }
+    if (TYPEOF(v) == SYMSXP || TYPEOF(v) == LISTSXP) {
+	if (IS_ACTIVE_BINDING(v)) { if (a) Rprintf(","); Rprintf("AB"); a = 1; }
+	if (BINDING_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
+    }    
+    if (TYPEOF(v) == ENVSXP) {
+        if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
+	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
+    }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
     Rprintf("] ");
@@ -97,10 +130,19 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     case REALSXP: case CPLXSXP: case EXPRSXP:
 	Rprintf("(len=%d, tl=%d)", LENGTH(v), TRUELENGTH(v));
     }
-    if (TYPEOF(v) == CHARSXP)
+    if (TYPEOF(v) == ENVSXP) /* NOTE: this is not a trivial OP since it involves looking up things
+				in the environment, so for a low-level debugging we may want to
+				avoid it .. */
+        PrintEnvironment(v);
+    if (TYPEOF(v) == CHARSXP) {
+	if (IS_BYTES(v)) Rprintf("[bytes] ");
+	if (IS_LATIN1(v)) Rprintf("[latin1] ");
+	if (IS_UTF8(v)) Rprintf("[UTF8] ");
+	if (IS_CACHED(v)) Rprintf("[cached] ");
 	Rprintf("\"%s\"", CHAR(v));
+    }
     if (TYPEOF(v) == SYMSXP)
-	Rprintf("\"%s\"", CHAR(PRINTNAME(v)));
+	Rprintf("\"%s\"%s", CHAR(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
     switch (TYPEOF(v)) { /* for native vectors print the first elements in-line */
     case LGLSXP:
 	if (LENGTH(v) > 0) {
@@ -180,12 +222,16 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    }
 	    break;
 	case ENVSXP:
-	    pp(pre); Rprintf("FRAME:\n");
-	    inspect_tree(pre+2, FRAME(v), deep - 1, pvec);
+	    if (FRAME(v) != R_NilValue) {
+		pp(pre); Rprintf("FRAME:\n");
+		inspect_tree(pre+2, FRAME(v), deep - 1, pvec);
+	    }
 	    pp(pre); Rprintf("ENCLOS:\n");
 	    inspect_tree(pre+2, ENCLOS(v), 0, pvec);
-	    pp(pre); Rprintf("HASHTAB:\n");
-	    inspect_tree(pre+2, HASHTAB(v), deep - 1, pvec);
+	    if (HASHTAB(v) != R_NilValue) {
+		pp(pre); Rprintf("HASHTAB:\n");
+		inspect_tree(pre+2, HASHTAB(v), deep - 1, pvec);
+	    }
 	    break;
 	    
 	case CLOSXP:
