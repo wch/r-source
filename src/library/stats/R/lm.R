@@ -107,9 +107,13 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     if(method != "qr")
 	warning(gettextf("method = '%s' is not supported. Using 'qr'", method),
                 domain = NA)
-    if(length(list(...)))
-	warning("extra arguments ", paste(names(list(...)), sep=", "),
-                " are just disregarded.")
+    dots <- list(...)
+    if(length(dots) > 1L)
+	warning("extra arguments ", paste(sQuote(names(dots)), sep=", "),
+                " are disregarded.", domain = NA)
+    else if(length(dots) == 1L)
+	warning("extra argument ", sQuote(names(dots)),
+                " is disregarded.", domain = NA)
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
     z <- .Fortran("dqrls",
@@ -167,9 +171,13 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     if(method != "qr")
 	warning(gettextf("method = '%s' is not supported. Using 'qr'", method),
                 domain = NA)
-    if(length(list(...)))
-	warning("extra arguments ", paste(names(list(...)), sep=", "),
-                " are just disregarded.")
+    dots <- list(...)
+    if(length(dots) > 1L)
+	warning("extra arguments ", paste(sQuote(names(dots)), sep=", "),
+                " are disregarded.", domain = NA)
+    else if(length(dots) == 1L)
+	warning("extra argument ", sQuote(names(dots)),
+                " is disregarded.", domain = NA)
     x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
     if (zero.weights) {
