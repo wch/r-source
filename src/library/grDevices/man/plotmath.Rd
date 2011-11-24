@@ -43,10 +43,13 @@
   labels on \code{persp} plots).
 
   In most cases other language objects (names and calls, including
-  formulas) are coerced to expressions and so can also be used.  }
-  \details{ A mathematical expression must obey the normal rules of
-  syntax for any \R expression, but it is interpreted according to very
-  different rules than for normal \R expressions.
+  formulas) are coerced to expressions and so can also be used.
+}
+
+\details{
+  A mathematical expression must obey the normal rules of syntax for any
+  \R expression, but it is interpreted according to very different rules
+  than for normal \R expressions.
 
   It is possible to produce many different mathematical symbols, generate
   sub- or superscripts, produce fractions, etc.
