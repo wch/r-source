@@ -313,6 +313,13 @@ analogues of \code{mapply} and \code{Map}.
 
 Note the earlier comments about using forking in a GUI environment.
 
+The parent and forked \R{} processes share the per-session temporary
+directory \code{tempdir()}, which can be a problem as a lot of code
+has assumed it is private to the \R{} process.  Further, prior to \R{}
+2.14.1 it was possibly for \code{tempfile} in two processes to select
+the same filename in that temporary directory, and do it sufficiently
+simultaneously that neither saw it as being in use.
+
 The forked workers share file handles with the master: this means that
 any output from the worker should go to the same place as
 \file{stdout} and \file{stderr} of the master process.  (This does not
@@ -320,6 +327,11 @@ work reliably on all OSes: problems have also been noted when forking
 a session that is processing batch input from \file{stdin}.)  Setting
 argument \code{mc.silent = TRUE} silences \file{stdout} for the child:
 \file{stderr} is not affected.
+
+Sharing file handles also impacts graphics devices as forked workers
+inherit all open graphics devices of the parent: they should not
+attempt to make use of them.
+
 
 \section{Random-number generation}
 

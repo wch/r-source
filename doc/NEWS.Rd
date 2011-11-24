@@ -210,6 +210,13 @@
       
       \item The \code{quartz()} device now does tilde expansion on its
       \code{file} argument.
+      
+      \item \code{tempfile()} on a Unix-alike now takes the process ID
+      into account.  This is needed with \pkg{multicore} (and as part of
+      \code{parallel} because the parent and all children share a
+      session temporary directory, and they can share the C random
+      number stream used to produce the uniaue part.  Further, two
+      children can call \code{tempfile()} simultaneously.
     }
   }
 
