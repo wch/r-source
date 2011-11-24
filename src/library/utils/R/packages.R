@@ -477,7 +477,15 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                         domain = NA)
                 next
             }
-            if("Built" %in% fields) desc["Built"] <- as.character(md$Built$R)
+            if("Built" %in% fields) {
+                ## This should not be missing.
+                if(is.null(md$Built$R)) {
+                    warning(gettextf("metadata of %s is corrupt",
+                                     sQuote(pkgpath)), domain = NA)
+                    next
+                }
+                desc["Built"] <- as.character(md$Built$R)
+            }
             ret[i, ] <- c(pkgs[i], lib, desc)
         }
     }

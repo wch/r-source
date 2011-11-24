@@ -1452,10 +1452,14 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     return R_tmpnam2(prefix, tempdir, "");
 }
 
-char * R_tmpnam2(const char * prefix, const char * tempdir, const char * fileext)
+/* NB for use with multicore: parent and all children share the same
+   session directory and run in parallel.   
+   So as from 2.14.1, we make sure getpic() is part of the process.
+*/
+char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
 {
     char tm[PATH_MAX], *res;
-    unsigned int n, done = 0;
+    unsigned int n, done = 0, pid = getpid();
 #ifdef Win32
     char filesep[] = "\\";
 #else
@@ -1477,9 +1481,9 @@ char * R_tmpnam2(const char * prefix, const char * tempdir, const char * fileext
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end.  Need at least 6 hex digits */
 #if RAND_MAX > 16777215
-	snprintf(tm, PATH_MAX, "%s%s%s%x%s", tempdir, filesep, prefix, rand(), fileext);
+	snprintf(tm, PATH_MAX, "%s%s%s%x%x%s", tempdir, filesep, prefix, pid, rand(), fileext);
 #else
-	snprintf(tm, PATH_MAX, "%s%s%s%x%x%s", tempdir, filesep, prefix, rand(), rand(), fileext);
+	snprintf(tm, PATH_MAX, "%s%s%s%x%x%x%s", tempdir, filesep, prefix, pid, rand(), rand(), fileext);
 #endif
 	if(!R_FileExists(tm)) {
 	    done = 1;

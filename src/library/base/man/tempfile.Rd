@@ -36,8 +36,9 @@ tempdir()
   arguments; values of shorter arguments are recycled.
 
   The names are very likely to be unique among calls to \code{tempfile}
-  in an \R session and across simultaneous \R sessions.  The filenames are
-  guaranteed not to be currently in use.
+  in an \R session and across simultaneous \R sessions (unless
+  \code{tmpdir} is specified).  The filenames are guaranteed not to be
+  currently in use.
 
   The file name is made by concatenating the path given by \code{tmpdir},
   the \code{pattern} string, a random string in
@@ -58,6 +59,16 @@ tempdir()
   the shortnames version of the path.
 #endif
 }
+\section{Note on parallel}{
+  \R processes produced by function such as \code{\link{mclapply}} in
+  package \pkg{parallel} (or \pkg{multicore}) share a per-session
+  temporary directory.  Further, the \sQuote{guaranteed not to be
+    currently in use} applies only at the time of asking, and two
+  children could ask simultaneously.  As from \R 2.14.1 this is avoided
+  by ensuring that \code{tempfile} calls in different children look for
+  different names.
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
