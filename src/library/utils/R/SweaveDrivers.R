@@ -69,7 +69,7 @@ RweaveLatexSetup <-
                     pdf.encoding = grDevices::pdf.options()$encoding,
                     pdf.compress = grDevices::pdf.options()$compress,
                     expand = TRUE, # unused by us, for 'highlight'
-                    concordance = FALSE, figs.only = TRUE, show = FALSE)
+                    concordance = FALSE, figs.only = TRUE)
     options$.defaults <- options
     options[names(dots)] <- dots
 
@@ -619,15 +619,7 @@ RweaveEvalWithOpt <- function (expr, options)
     if (options$eval) {
         res <- try(withVisible(eval(expr, .GlobalEnv)), silent = TRUE)
         if (inherits(res, "try-error")) return(res)
-
-        if (options$print) print(res$value)
-        else if (.isMethodsDispatchOn() && options$show)
-            methods:::show(res$value)
-        else if (options$term && res$visible) {
-            ## this should ape auto-printing.
-            if (.isMethodsDispatchOn() && isS4(res$value))
-                methods:::show(res$value) else print(res$value)
-        }
+        if (options$print || (options$term && res$visible)) print(res$value)
     }
     res
 }
