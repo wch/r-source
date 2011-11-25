@@ -138,6 +138,11 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       statement before evaluation, such that the values of all
       expressions become visible.}
     
+    \item{show:}{logical (\code{FALSE}).   Ditto, but using
+      \code{\link{show}()}, which may give different results for S4 classes in
+      particular.  Only considered if \code{print} is \code{FALSE} and
+      the \pkg{methods} namespace is loaded.}
+    
     \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
       values emulates an interactive \R session: values of assignments
       are not printed, values of single objects are printed.  If

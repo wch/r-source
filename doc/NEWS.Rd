@@ -299,7 +299,7 @@
       which is the trailing byte of a UTF-8 character.  It now only
       considers ASCII space and tab to be \sQuote{blank}.
       
-      \item There was sign error in part of the calculations for the
+      \item There was a sign error in part of the calculations for the
       variance returned by \code{KalmanSmooth()}.  (\PR{14738})
     }
   }
@@ -593,6 +593,11 @@
       attribute.  The \code{"srcref"} attribute references an in-memory
       copy of the source file using the \code{"srcfilecopy"} class or
       the new \code{"srcfilealias"} class.
+
+      \strong{NB:} This means that functions sourced with
+      \code{keep.source = TRUE} and saved (e.g., by \code{save()} or
+      \code{readRDS()}) in earlier versions of \R will no longer show
+      the original sources (including comments).
 
       \item New items \href{UserManuals.html}{User Manuals} and
       \href{http://developer.r-project.org/TechDocs}{Technical Papers}
