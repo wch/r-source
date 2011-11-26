@@ -121,6 +121,9 @@
       
       \item There was a sign error in part of the calculations for the
       variance returned by \code{KalmanSmooth()}.  (\PR{14738})
+      
+      \item \code{pbinom(10, 1e6, 0.01, log.p = TRUE)} was \code{NaN}
+      thanks to the buggy fix to \PR{14320} in \R 2.11.0.  (\PR{14739})
     }
   }
 }
