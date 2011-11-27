@@ -4690,7 +4690,7 @@ use filepaths containing spaces: you can always use the short forms
 For example for a 32-bit build, all on one line,
 
 @smallexample
-PATH=c:\Rtools\bin;c:\Rtools\MinGW-w64\bin;c:\MiKTeX\miktex\bin;
+PATH=c:\Rtools\bin;c:\Rtools\gcc-4.5.4\bin;c:\MiKTeX\miktex\bin;
      c:\R\bin\i386;c:\windows;c:\windows\system32
 @end smallexample
 
