@@ -28,7 +28,7 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
-# Needed if using other compilers, including some versions of MinGW-w64
+# Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
 
 # Some of the toolchains have prefixes for e.g. ar, gcc.
@@ -94,8 +94,8 @@ HOME32=
 
 # Full paths of extra DLLs that need to be shipped
 # e.g
-# DLLs32 = c:/R/W32/gcc-4.6.2/bin/libwinpthread-1.dll
-# DLLs64 = c:/R/W64/gcc-4.6.2/bin/libwinpthread-1.dll
+# DLLs32 = c:/R/bin/pthreadGC2-w32.dll
+# DLLs64 = c:/R/bin64/pthreadGC2-w64.dll
 DLLs32 =
 DLLs64 =
 
