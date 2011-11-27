@@ -1001,7 +1001,7 @@ will call this directory @file{@var{R_HOME}} below.
 
 For a 64-bit build you will need a 64-bit toolchain and the appropriate
 64-bit version of Tcl/Tk: both of these are contained in
-@file{Rtools213.exe}.
+@file{Rtools214.exe}.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1058,9 +1058,10 @@ build you will also need
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools*.exe}.
-Please make sure you install the right version: there is a 32-bit version
-and a 64-bit version.  
+The Tcl/Tk support files are contained in @file{Rtools*.exe} and
+available from @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make
+sure you install the right version: there is a 32-bit version and a
+64-bit version.
 
 @item
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
@@ -1320,8 +1321,8 @@ installer please do check that license requirements are met -- note that
 the installer will state that the contents are distributed under GPL-2
 and this has a requirement for @emph{you} to supply the complete sources
 (including the R sources even if you started with a binary distribution
-of R, and also the sources of packages (including their external
-software) which are included).
+of R, and also the sources of any extra packages (including their
+external software) which are included).
 
 
 The defaults for the startup parameters may also be customized.  For example
@@ -4660,7 +4661,8 @@ See the subsections below for detailed descriptions.
 @item
 The command line tools (in @file{Rtools*.exe})
 @item
-The MinGW toolchain to compile C, Fortran and C++.
+The (32-bit) MinGW or (64-bit) MinGW-w64 toolchain to compile C, Fortran
+and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
 no compiled code, none of these are needed.  Perl is no longer needed to
@@ -4896,7 +4898,7 @@ when building external software.
 @section Useful additional programs
 
 The process of making the installer will make use of @code{qpdf} to
-compact some of the package vignettes, if it is available.  MinGW
+compact some of the package vignettes, if it is available.  Windows
 binaries of @code{qpdf} are available from
 @uref{http://sourceforge.net/@/projects/@/qpdf/@/files/}.  Set the path
 to the @code{qpdf} installation in file @file{MkRules.local}.

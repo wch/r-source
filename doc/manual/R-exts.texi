@@ -1542,9 +1542,11 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 There is nothing to say what version of OpenMP is supported: version 3.0
-is supported by recent versions of the main platforms (except Windows,
-where there is currently no support), but portable packages cannot
-assume that end users have recent versions.
+(May 2008) is supported by recent versions of the main platforms (but
+note that Mac OS X binaries are built for 10.5 using compilers which
+support version 2.5), but portable packages cannot assume that end users
+have recent versions (there are some years-old versions of Linux in
+use), and it may be safest to assume version 2.5.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
@@ -6291,10 +6293,11 @@ R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < mypkg-Ex.R
 where @file{mypkg-Ex.R} is a set of examples, e.g.@: the file created in
 @file{mypkg.Rcheck} by @code{R CMD check}.  Occasionally this reports
 memory reads of `uninitialised values' that are the result of compiler
-optimization, so can be worth checking under an unoptimized compile.  We
-know there will be some small memory leaks from @code{readline} and @R{}
-itself --- these are memory areas that are in use right up to the end of
-the @R{} session.  Expect this to run around 20x slower than without
+optimization, so can be worth checking under an unoptimized compile: for
+maximal information use a build with debugging symbols.  We know there
+will be some small memory leaks from @code{readline} and @R{} itself ---
+these are memory areas that are in use right up to the end of the @R{}
+session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases even slower than that.  Earlier
 versions (at least) of @code{valgrind} are not happy with many optimized
 BLASes that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2,
