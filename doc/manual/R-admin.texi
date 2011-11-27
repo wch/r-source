@@ -991,21 +991,16 @@ collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
 @uref{http://www.murdoch-sutherland.com/@/Rtools/}) for details.
 
-The @file{Rtools*.exe} executable installer described in @ref{The Windows
-toolset} also includes some source files in addition to the @R{} source
-as noted below. You should run it first, to obtain a working @code{tar}
-and other necessities.  Choose a ``Full installation'', and install the
-extra files into your intended @R{} source directory, e.g.@:
+The @file{Rtools*.exe} executable installer described in @ref{The
+Windows toolset} also includes some source files in addition to the @R{}
+source as noted below.  You should run it first, to obtain a working
+@code{tar} and other necessities.  Choose a ``Full installation'', and
+install the extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @file{@var{R_HOME}} below.
 
-For a 64-bit build you will need a 64-bit toolchain and the appropriate
-64-bit version of Tcl/Tk: both of these are contained in
-@file{Rtools215.exe}.
-
-It is intended that the toolchain used for @R{} 2.15.x will be changed
-from that used for @R{} 2.12.0 to @R{} 2.14.x, so the information here
-is provisional.
+The toolchain used for @R{} 2.15.x differs from from that used for @R{}
+2.12.0 to @R{} 2.14.x.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1062,9 +1057,10 @@ build you will also need
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools*.exe}.
-Please make sure you install the right version: there is a 32-bit version
-and a 64-bit version.  
+The Tcl/Tk support files are contained in @file{Rtools*.exe} and
+available from @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make
+sure you install the right version: there is a 32-bit version and a
+64-bit version.
 
 @item
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
@@ -4820,17 +4816,16 @@ Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
 The intention is that the released version of @R{} 2.15.0 will be built
-with a different toolchain from 2.14.x.  A candidate version can be
-downloaded from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}
-
-Currently experiments are using the (modified) toolchains from the
-MinGW-w64 project for both 32- and 64-bit builds, using a beta version
-of @command{gcc 4.5.4} and version 2.0 of the MinGW-w64 project's runtime.
+with a different toolchain from 2.14.x.  A candidate version (used for
+current snapshots builds) can be downloaded from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}: this uses a beta
+version of @command{gcc 4.5.4} and version 2.0.1 of the MinGW-w64
+project's runtime.
 
 This has native 32-bit and 64-bit compilers, and hence the C compiler is
-called @command{gcc} for both builds.  This potentially causes problems
-when installing packages for both architectures; there are two
-solutions.
+called @command{gcc} for both architectures.  This potentially causes
+problems when installing packages for both architectures; there are two
+solutions:
 @enumerate
 @item 
 Set the make variables @env{BINPREF} appropriately in the file
@@ -4857,9 +4852,15 @@ If you use a binary install you may need to edit @code{BINPREF} in
 settings.
 
 Some external software libraries will need to be re-compiled under the
-new toolchain: especially those providing a C++ interface. Some are
-available from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/}
+new toolchain: especially those providing a C++ interface. Many of those
+used by @acronym{CRAN} packages are available from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/}
 
+There is support for OpenMP in this toolchain, but it is not enabled by
+default.  There is a setting in @file{MkRules.local} to enable it: note
+that if you do so then e.g.@: @file{R.dll} and @file{stats.dll} will
+depend on a @file{pthreads} DLL that you will have to arrange to ship
+(and meet its license conditions: some versions are under GPL).
 
 @node Useful additional programs,  , The MinGW-w64 toolchain, The Windows toolset
 @section Useful additional programs

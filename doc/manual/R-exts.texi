@@ -1523,8 +1523,8 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-are available for use in @file{Makevars}, and from @R{} 2.15.0 with
-@file{Makevars.win}.  Include the appropriate macro in
+are available for use in @file{src/Makevars} and
+@file{src/Makevars.win}.  Include the appropriate macro in
 @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so on, and also in
 @code{PKG_LIBS}.  C/C++ code that needs to be conditioned on the use of
 OpenMP can be used inside @code{#ifdef SUPPORT_OPENMP}, a macro defined
@@ -1542,9 +1542,19 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the main platforms (but
-note that Mac OS X binaries are built for 10.5), but portable packages
-cannot assume that end users have recent versions, and it may be safest
-to assume version 2.5.
+note that Mac OS X binaries are built for 10.5 using compilers which
+support version 2.5), but portable packages cannot assume that end users
+have recent versions (there are some years-old versions of Linux in
+use), and it may be safest to assume version 2.5.
+
+Note that whereas OpenMP support is expected to be available on Windows
+in the toolchain used for @R{} 2.15.0, @R{} is not by default built on
+Windows with OpenMP support and these @command{make} macros will be
+empty unless it is so built.
+
+The performance of OpenMP varies substantially between platforms.  Both
+the Mac OS X and Windows implementations have substantial overheads and
+are only beneficial if quite substantial tasks are run in parallel.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
