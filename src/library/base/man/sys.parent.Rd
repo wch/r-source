@@ -1,6 +1,6 @@
 % File src/library/base/man/sys.parent.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sys.parent}
@@ -58,7 +58,7 @@ parent.frame(n = 1)
   the frame number of the current evaluation, nor is it the environment
   within which the function was defined.  \code{sys.parent} returns the
   number of the parent frame if \code{n} is 1 (the default), the
-  grandparent if \code{n} is 2, and so on.  See also the Note.
+  grandparent if \code{n} is 2, and so on.  See also the \sQuote{Note}.
 
   \code{sys.nframe} returns an integer, the number of the current frame
   as described in the first paragraph.
@@ -89,8 +89,13 @@ parent.frame(n = 1)
   Strictly, \code{sys.parent} and \code{parent.frame} refer to the
   \emph{context} of the parent interpreted function.  So internal
   functions (which may or may not set contexts and so may or may not
-  appear on the call stack) are not counted, and S3 methods can also do
+  appear on the call stack) may not be counted, and S3 methods can also do
   surprising things.
+
+  Beware of the effect of lazy evaluation: these two functions look at
+  the call stack at the time they are evaluated, not at the time they
+  are called.  Passing calls to them as function arguments is unlikely to
+  be a good idea.
 }
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function

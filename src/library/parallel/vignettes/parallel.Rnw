@@ -539,14 +539,14 @@ boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
 stopCluster(cl)
 @
-Note that whereas with \code{mclapply} all the packages and objects we
-use are automatically available on the workers, this is not in
+Note that whereas with \code{mclapply} all the packages and objects
+we use are automatically available on the workers, this is not in
 general\footnote{it is with clusters set up with
   \code{makeForkCluster}.} the case with the \code{parLapply}
 approach.  There is often a delicate choice of where to do the
-computations: for example we could compute \code{cd4.mle} on the works
-(as about) or on the master and send the value to the workers. We
-illustrate the latter by the following code
+computations: for example we could compute \code{cd4.mle} on the
+workers (as above) or on the master and send the value to the
+workers. We illustrate the latter by the following code
 <<>>=
 cl <- makeCluster(mc)
 cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
