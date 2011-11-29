@@ -50,7 +50,7 @@ final document containing
  \item the \R{} code and/or
  \item the output of the code (text, graphs)
 \end{itemize}
-This allows to re-generate a report if the input data change and
+This allows the re-generation of a report if the input data change and
 documents the code to reproduce the analysis in the same file that
 contains the report. The \R{} code of the complete analysis is embedded
 into a \LaTeX{} document\footnote{\url{http://www.ctan.org}} using the
@@ -677,27 +677,16 @@ R CMD Sweave file.Rnw
    \subsection{Empty figure chunks give \LaTeX{} errors.}
 
    When a code chunk with \texttt{fig=TRUE} does not call any plotting
-   functions invalid EPS and PDF files are created. Sweave cannot know
-   if the code in a figure chunk actually plotted something or not, so
-   it will try to include the graphics, which is bound to fail.
+   functions, invalid PDF (or EPS) files may be created. Sweave cannot
+   know if the code in a figure chunk actually plotted something or
+   not, so it will try to include the graphics, which is bound to
+   fail.
 
-  \subsection{Why do R lattice graphics not work?}
-
-   The commands in package~\pkg{lattice} have different behavior
-   than the standard plot commands in the \pkg{base} package:
-   lattice commands return an object of class \texttt{"trellis"}, the
-   actual plotting is performed by the \texttt{print} method for the
-   class. Encapsulating calls to lattice functions in \texttt{print()}
-   statements should do the trick, e.g.:
-\begin{verbatim}
- <<fig=TRUE>>=
- library(lattice)
- print(bwplot(1:10))
- @
-\end{verbatim}
-   should work. Future versions of Sweave may have more automated means
-   to deal with trellis graphics.
-
+   \subsection{Why do R lattice graphics not work?}
+  
+   In recent versions of Sweave they do if they would when run at the
+   command line: some calls (e.g.{} those inside loops) need to be
+   explicitly \code{print()}-ed.
 
    \subsection{How can I get Black \& White lattice graphics?}
 

@@ -133,10 +133,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       is.  If \code{"hide"} then all output is completely suppressed
       (but the code executed during the weave).}
 
-    \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, each
-      expression in the code chunk is wrapped into a \code{print()}
-      statement before evaluation, such that the values of all
-      expressions become visible.}
+    \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, this forces
+      auto-printing of all expressions.}
     
     \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
       values emulates an interactive \R session: values of assignments
