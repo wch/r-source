@@ -21,14 +21,14 @@ slaveLoop <- function(master)
     repeat
         tryCatch({
             msg <- recvData(master)
-            cat(paste("Type:", msg$type, "\n"))
+            # cat(paste("Type:", msg$type, "\n"))
 
             if (msg$type == "DONE") {
                 closeNode(master)
                 break;
             } else if (msg$type == "EXEC") {
                 success <- TRUE
-                ## This uses the message, rather than the exception since
+                ## This uses the message rather than the exception since
                 ## the exception class/methods may not be available on the
                 ## master.
                 handler <- function(e) {
