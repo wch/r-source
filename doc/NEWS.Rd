@@ -217,6 +217,11 @@
       session temporary directory, and they can share the C random
       number stream used to produce the uniaue part.  Further, two
       children can call \code{tempfile()} simultaneously.
+      
+      \item Option \code{print} in Sweave's \code{RweaveLatex()} driver
+      now emulates auto-printing rather than printing (which can differ
+      for an S4 object by calling \code{show()} rather than
+      \code{print()}).
     }
   }
 
@@ -304,6 +309,10 @@
       
       \item \code{pbinom(10, 1e6, 0.01, log.p = TRUE)} was \code{NaN}
       thanks to the buggy fix to \PR{14320} in \R 2.11.0.  (\PR{14739})
+      
+      \item \code{RweaveLatex()} now emulates auto-printing rather than
+      printing, by calling \code{methods::show()} when auto-printing
+      would.
     }
   }
 }
