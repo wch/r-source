@@ -666,7 +666,7 @@ but in a UTF-8 locale on a Unix-alike is likely to need
 @example
 con <- file("intro.dat", "r")
 seek(con, 3)  # step over the 3 initial bytes, the BOM
-foo <- read.table("intro.dat")
+foo <- read.table(con)
 close(con)
 @end example
 
