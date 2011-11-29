@@ -2595,8 +2595,8 @@ cmpframe <- function(inpos, file) {
     outpos <- 2
     on.exit(detach(pos=outpos), add=TRUE)
 
-    for (f in ls(pos=inpos,all=TRUE)) {
-        def <- get(f, pos=inpos)
+    for (f in ls(pos = inpos, all.names = TRUE)) {
+        def <- get(f, pos = inpos)
         if (typeof(def) == "closure") {
                 cat(gettextf("compiling '%s'", f), "\n", sep = "")
                 fc <- cmpfun(def)
@@ -2604,7 +2604,7 @@ cmpframe <- function(inpos, file) {
         }
     }
     cat(gettextf("saving to file \"%s\" ... ", file))
-    save(list=ls(pos=outpos,all=T), file=file)
+    save(list = ls(pos = outpos, all.names = TRUE), file = file)
     cat(gettext("done"), "\n", sep = "")
 }
 
@@ -2615,7 +2615,7 @@ cmplib <- function(package, file) {
     if (missing(file))
         file <- paste(package,".Rc",sep="")
     if (is.na(pos)) {
-        library(package, char=TRUE)
+        library(package, character.only = TRUE)
         pos <- match(pkgname, search());
         on.exit(detach(pos=match(pkgname, search())))
     }
