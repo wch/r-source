@@ -1,6 +1,6 @@
 % File src/library/graphics/man/filled.contour.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{filled.contour}
@@ -21,15 +21,14 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
                axes = TRUE, frame.plot = axes, \dots)
 }
 \arguments{
- \item{x,y}{locations of grid lines at which the values in \code{z} are
+ \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}
     and \code{y}, respectively. If the list has component \code{z} this
     is used for \code{z}.}
- \item{z}{a matrix containing the values to be plotted (\code{NA}s are
-    allowed).  Note that \code{x} can be used instead of \code{z} for
-    convenience.}
+ \item{z}{a matrix containing the values to be plotted..  Note that
+   \code{x} can be used instead of \code{z} for convenience.}
  \item{xlim}{x limits for the plot.}
  \item{ylim}{y limits for the plot.}
  \item{zlim}{z limits for the plot.}
@@ -55,7 +54,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
  \item{yaxs}{the y axis style.  The default is to use internal
     labeling.}
  \item{las}{the style of labeling to be used.  The default is to
-    use horizontal labeling. }
+    use horizontal labeling.}
  \item{axes, frame.plot}{logicals indicating if axes and a box should be
    drawn, as in \code{\link{plot.default}}.}
  \item{\dots}{additional \link{graphical parameters}, currently only passed to
@@ -67,14 +66,23 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   key showing how the colors map to z values is shown to the right of
   the plot.
 }
+\details{
+  The values to be plotted can contain \code{NA}s.  Rectangles with two
+  or more corner values are \code{NA} are omitted entirely: where there
+  is a single \code{NA} value the triangle opposite the \code{NA} is
+  omitted.
+
+  As from \R 2.14.1 values to be plotted can be infinite: the effect is
+  similar to that described for \code{NA} values.
+}
 \references{
   Cleveland, W. S. (1993)
   \emph{Visualizing Data}.
   Summit, New Jersey: Hobart.
 }
-\author{Ross Ihaka.}
+\author{Ross Ihaka and R-core.}
 \note{
-  This function currently uses the \code{layout} function and so is
+  This function uses the \code{\link{layout}} function and so is
   restricted to a full page display.  As an alternative consider the
   \code{\link[lattice]{levelplot}} and
   \code{\link[lattice:levelplot]{contourplot}} functions from the
@@ -83,7 +91,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   The output produced by \code{filled.contour} is actually a combination
   of two plots; one is the filled contour and one is the legend.  Two
   separate coordinate systems are set up for these two plots, but they
-  are only used internally - once the function has returned these
+  are only used internally -- once the function has returned these
   coordinate systems are lost.  If you want to annotate the main contour
   plot, for example to add points, you can specify graphics commands in
   the \code{plot.axes} argument.  An example is given below.
