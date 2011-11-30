@@ -222,6 +222,10 @@
       now emulates auto-printing rather than printing (which can differ
       for an S4 object by calling \code{show()} rather than
       \code{print()}).
+      
+      \item \code{filled.contour()} now accepts infinite values:
+      previously it might have generated invalid graphics files
+      (e.g. containing NaN values).
     }
   }
 

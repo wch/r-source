@@ -1528,41 +1528,49 @@ FindCutPoints(double low, double high,
     double c;
 
     if (z1 > z2 ) {
-	if (z2 > high || z1 < low)
-	    return;
+	if (z2 > high || z1 < low) return;
 	if (z1 < high) {
 	    x[*npt] = x1;
 	    y[*npt] = y1;
 	    z[*npt] = z1;
 	    ++*npt;
-	}
-	else {
+	} else if (z1 == R_PosInf) {
+	    x[*npt] = x2;
+	    y[*npt] = y1;
+	    z[*npt] = z2;
+	    ++*npt;
+	} else { /* z1 >= high, z2 in range */
 	    c = (z1 - high) / (z1 - z2);
 	    x[*npt] = x1 + c * (x2 - x1);
 	    y[*npt] = y1;
 	    z[*npt] = z1 + c * (z2 - z1);
 	    ++*npt;
 	}
-	if (z2 > low) {
-	}
-	else {
+	if (z2 == R_NegInf) {
+	    x[*npt] = x1;
+	    y[*npt] = y1;
+	    z[*npt] = z1;
+	    ++*npt;
+	} else if (z2 <= low) { /* and z1 in range */
 	    c = (z2 -low) / (z2 - z1);
 	    x[*npt] = x2 - c * (x2 - x1);
 	    y[*npt] = y1;
 	    z[*npt] = z2 - c * (z2 - z1);
 	    ++*npt;
 	}
-    }
-    else if (z1 < z2) {
-	if (z2 < low || z1 > high)
-	    return;
+    } else if (z1 < z2) {
+	if (z2 < low || z1 > high) return;
 	if (z1 > low) {
 	    x[*npt] = x1;
 	    y[*npt] = y1;
 	    z[*npt] = z1;
 	    ++*npt;
-	}
-	else {
+	} else if (z1 == R_NegInf) {
+	    x[*npt] = x2;
+	    y[*npt] = y1;
+	    z[*npt] = z2;;
+	    ++*npt;
+	} else { /* and z2 in range */
 	    c = (z1 - low) / (z1 - z2);
 	    x[*npt] = x1 + c * (x2 - x1);
 	    y[*npt] = y1;
@@ -1577,16 +1585,19 @@ FindCutPoints(double low, double high,
 	    z[*npt] = z2;
 	    ++*npt;
 #endif
-	}
-	else {
+	} else if (z2 == R_PosInf) {
+	    x[*npt] = x1;
+	    y[*npt] = y1;
+	    z[*npt] = z1;
+	    ++*npt;
+	} else { /* z2 high, z1 in range */
 	    c = (z2 - high) / (z2 - z1);
 	    x[*npt] = x2 - c * (x2 - x1);
 	    y[*npt] = y1;
 	    z[*npt] = z2 - c * (z2 - z1);
 	    ++*npt;
 	}
-    }
-    else {
+    } else {
 	if(low <= z1 && z1 <= high) {
 	    x[*npt] = x1;
 	    y[*npt] = y1;
@@ -1717,7 +1728,7 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 				    z[i + j * nx],
 				    px, py, pz, &npt);
 		if (npt > 2)
-		    GPolygon(npt, px, py, USER, col[(k-1)%ncol],
+		    GPolygon(npt, px, py, USER, col[(k-1) % ncol],
 			     R_TRANWHITE, dd);
 	    }
 	}
