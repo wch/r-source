@@ -192,7 +192,7 @@
         full
     }
 
-    ## used for LazyData, LazyLoad, KeepSource
+    ## used for LazyData, KeepSource, ByteCompile
     parse_description_field <- function(desc, field, default=TRUE)
     {
         tmp <- desc[field]
@@ -987,11 +987,7 @@
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
 
-	## LazyLoading
-	value <- parse_description_field(desc, "LazyLoad", default = TRUE)
-        if(!value)
-            warning("LazyLoad != TRUE is deprecated and ignored",
-                    call. = FALSE, domain = NA)
+	## LazyLoading/Compiling
 	if (install_R && dir.exists("R") && length(dir("R"))) {
             BC <- parse_description_field(desc, "ByteCompile",
                                           default = byte_compile)
