@@ -396,7 +396,7 @@ install.packages <-
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
-                             update[i, 3L],
+                             shQuote(update[i, 3L]),
                              ">", paste(pkg, ".out", sep=""), "2>&1")
                 ## We need recursive dependencies, not just direct ones
                 p <- DL[[pkg]]
@@ -408,7 +408,7 @@ install.packages <-
                     p <- deps
                 }
                 deps <- deps[deps %in% pkgs]
-                ## very unikely to be too long
+                ## very unlikely to be too long
                 deps <- if(length(deps))
                     paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
                 cat(paste(pkg, ".ts: ", deps, sep=""),
