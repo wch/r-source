@@ -64,12 +64,17 @@
 
       \item The number of items retained with \code{options(warn = 0)}
       can be set by \code{options(nwarnings=)}.
-      
+
       \item There is a new function \code{assignInMyNamespace()} which
       uses the namespace of the function it is called from.
-      
+
       \item \code{attach()} allows the default name for an attached file
       to be overridden.
+
+      \item \code{bxp()}, the work horse of \code{boxplot()}, now uses a
+      more sensible default \code{xlim} in the case where \code{at} is
+      specified differently from \code{1:n}, see the dialogue on R-devel,
+      \url{https://stat.ethz.ch/pipermail/r-devel/2011-November/062586.html}.
     }
   }
 
@@ -123,7 +128,7 @@
        note if it finds inefficiently compressed datasets.  With
        \command{bzip2} and \command{xz} compression having been
        available since \R 2.10.0, there is no excuse for not using them.
-       
+
        \item Where multiple sub-architectures are to be tested,
        \command{R CMD check} now runs the examples and tests for all the
        sub-architectures even if one fails.
@@ -207,22 +212,22 @@
 
       \item \code{parallel::clusterExport()} now allows specification of
       an environment from which to export.
-      
+
       \item The \code{quartz()} device now does tilde expansion on its
       \code{file} argument.
-      
+
       \item \code{tempfile()} on a Unix-alike now takes the process ID
       into account.  This is needed with \pkg{multicore} (and as part of
       \pkg{parallel}) because the parent and all the children share a
       session temporary directory, and they can share the C random
       number stream used to produce the uniaue part.  Further, two
       children can call \code{tempfile()} simultaneously.
-      
+
       \item Option \code{print} in Sweave's \code{RweaveLatex()} driver
       now emulates auto-printing rather than printing (which can differ
       for an S4 object by calling \code{show()} rather than
       \code{print()}).
-      
+
       \item \code{filled.contour()} now accepts infinite values:
       previously it might have generated invalid graphics files
       (e.g. containing NaN values).
@@ -263,7 +268,7 @@
       expect their examples to be run in a clean directory \dots{}.
      }
    }
-   
+
    \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
@@ -307,13 +312,13 @@
       on some platforms this included \code{\\xa0} (non-breaking space)
       which is the trailing byte of a UTF-8 character.  It now only
       considers ASCII space and tab to be \sQuote{blank}.
-      
+
       \item There was a sign error in part of the calculations for the
       variance returned by \code{KalmanSmooth()}.  (\PR{14738})
-      
+
       \item \code{pbinom(10, 1e6, 0.01, log.p = TRUE)} was \code{NaN}
       thanks to the buggy fix to \PR{14320} in \R 2.11.0.  (\PR{14739})
-      
+
       \item \code{RweaveLatex()} now emulates auto-printing rather than
       printing, by calling \code{methods::show()} when auto-printing
       would.

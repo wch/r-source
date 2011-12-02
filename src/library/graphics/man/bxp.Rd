@@ -102,10 +102,10 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
   }%.../pars
 }
 \note{
-  if \code{add = FALSE}, the default is \code{xlim = c(0.5, n +0.5)}.
-  It will usually be a good idea to specify the latter if the "x" axis
-  has a log scale or \code{at} is specified or \code{width} is far from
-  uniform.
+  When \code{add = FALSE}, \code{xlim} now defaults to \code{xlim =
+    range(at, *) + c(-0.5, 0.5)}.  It will usually be a good idea to
+  specify \code{xlim} if the "x" axis has a log scale or \code{width} is
+  far from uniform.
 }
 \value{
   An invisible vector, actually identical to the \code{at} argument,
