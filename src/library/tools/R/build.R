@@ -538,29 +538,29 @@ get_exclude_patterns <- function()
 	return(TRUE)
     }
 
-    ## These also fix up missing final NL
-    fix_nonLF_in_source_files <- function(pkgname, Log)
+    ## also fixes up missing final NL
+    fix_nonLF_in_files <- function(pkgname, dirPattern, Log)
     {
-        if (!dir.exists(file.path(pkgname, "src"))) return()
-        src_files <- dir(file.path(pkgname, "src"),
-                         pattern = "\\.([cfh]|cc|cpp)$",
-                         full.names=TRUE, recursive = TRUE)
-        for (ff in src_files) {
-            lines <- readLines(ff, warn = FALSE)
-            writeLinesNL(lines, ff)
+	if(dir.exists(sDir <- file.path(pkgname, "src"))) {
+            files <- dir(sDir, pattern = dirPattern,
+                         full.names = TRUE, recursive = TRUE)
+            ## FIXME: This "destroys" all timestamps
+            for (ff in files) {
+                lines <- readLines(ff, warn = FALSE)
+                writeLinesNL(lines, ff)
+            }
         }
     }
 
-    fix_nonLF_in_make_files <- function(pkgname, Log)
-    {
-        if (!dir.exists(file.path(pkgname, "src"))) return()
-         for (f in c("Makefile", "Makefile.in", "Makefile.win",
-                     "Makevars", "Makevars.in", "Makevars.win")) {
-             if (!file.exists(ff <- file.path(pkgname, "src", f))) next
-             lines <- readLines(ff, warn = FALSE)
-             writeLinesNL(lines, ff)
-         }
-     }
+    fix_nonLF_in_source_files <- function(pkgname, Log) {
+        fix_nonLF_in_files(pkgname, dirPattern = "\\.([cfh]|cc|cpp)$", Log)
+    }
+    fix_nonLF_in_make_files <- function(pkgname, Log) {
+        fix_nonLF_in_files(pkgname,
+                           paste("^",c("Makefile", "Makefile.in", "Makefile.win",
+                                       "Makevars", "Makevars.in", "Makevars.win"),
+                                 "$", sep=""), Log)
+    }
 
     find_empty_dirs <- function(d)
     {
