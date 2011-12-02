@@ -191,7 +191,7 @@
         full
     }
 
-    ## used for LazyData, LazyLoad, KeepSource
+    ## used for LazyData, LazyLoad, KeepSource, ByteCompile
     parse_description_field <- function(desc, field, default=TRUE)
     {
         tmp <- desc[field]
@@ -973,14 +973,11 @@
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
 
-	## LazyLoading
+	## LazyLoading/Compiling
 	value <- parse_description_field(desc, "LazyLoad", default = TRUE)
-        if(!value) {
-            value <- TRUE
-            warning("LazyLoad != TRUE is deprecated and ignored",
-                    call. = FALSE, domain = NA)
-        }
-	if (install_R && dir.exists("R") && length(dir("R")) && value) {
+        if(!value)
+            message("LazyLoad != TRUE is deprecated and ignored", domain = NA)
+	if (install_R && dir.exists("R") && length(dir("R"))) {
             BC <- parse_description_field(desc, "ByteCompile",
                                           default = byte_compile)
             rcp <- as.numeric(Sys.getenv("R_COMPILE_PKGS"))
