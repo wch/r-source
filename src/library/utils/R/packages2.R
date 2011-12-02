@@ -387,15 +387,16 @@ install.packages <-
             deps <- strwrap(deps, width = 75, exdent = 2)
             deps <- paste(deps, collapse=" \\\n")
             cat("all: ", deps, "\n", sep = "", file = conn)
-            aDL <- .make_dependencies_list(update[, 1L], available, TRUE)
+            aDL <- .make_dependency_list(upkgs, available, recursive = TRUE)
             for(i in seq_len(nrow(update))) {
                 pkg <- update[i, 1L]
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
-                             update[i, 3L],
+                             shQuote(update[i, 3L]),
                              ">", paste(pkg, ".out", sep=""), "2>&1")
                 deps <- aDL[[pkg]]
+                deps <- deps[deps %in% upkgs]
                 ## very unlikely to be too long
                 deps <- if(length(deps))
                     paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
