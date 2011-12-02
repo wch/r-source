@@ -17,7 +17,7 @@
 #### cor() , cov() and var() : Based on the same C code
 
 cor <- function(x, y = NULL, use = "everything",
-         method = c("pearson", "kendall", "spearman"))
+                method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
@@ -47,7 +47,7 @@ cor <- function(x, y = NULL, use = "everything",
     }
     if(method == "pearson")
         .Internal(cor(x, y, na.method, FALSE))
-    else if (na.method %in% c(2L, 5L)) {
+    else if (na.method %in% c(2L, 5L)) { ## "complete.obs" / "na.or.complete"
         if (is.null(y)) {
             .Internal(cor(Rank(na.omit(x)), NULL, na.method,
                           method == "kendall"))
@@ -62,11 +62,12 @@ cor <- function(x, y = NULL, use = "everything",
                           na.method, method == "kendall"))
         }
     } else if (na.method != 3L) {
+        ## i.e., 1 or 4, i.e. "all.obs" or "everything":
 	x <- Rank(x)
 	if(!is.null(y)) y <- Rank(y)
         .Internal(cor(x, y, na.method, method == "kendall"))
     }
-    else { # rank correlations and pairwise complete; the hard case
+    else { # rank correlations and "pairwise.complete.obs"; the hard case
          ## Based on contribution from Shigenobu Aoki.
          ## matrix
          if (is.null(y)) {

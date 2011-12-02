@@ -20,6 +20,7 @@
 ###
 ###            self-starting nonlinear regression models
 ###
+## see  >>> ./zzModels.R <<< for its use in "the standard"  SS*() models
 
 ####* Constructors
 

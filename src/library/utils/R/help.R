@@ -97,8 +97,7 @@ function(topic, package = NULL, lib.loc = NULL,
     paths
 }
 
-print.help_files_with_topic <-
-function(x, ...)
+print.help_files_with_topic <- function(x, ...)
 {
     browser <- getOption("browser")
     topic <- attr(x, "topic")
