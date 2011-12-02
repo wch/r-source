@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-10-01 r57121)
+R Under development (unstable) (2011-12-01 r57776)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,6 +20,8 @@ Type 'q()' to quit R.
 
 > pkgname <- "grDevices"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
+.libPaths() :
+"/sfs/u/staff/maechler/R/D/r-devel/F15-32-inst/library"
 > options(warn = 1)
 > library('grDevices')
 > 
@@ -1568,9 +1570,42 @@ List of 150
 [13] "azure"         "azure1"        "azure2"        "azure3"       
 [17] "azure4"        "beige"         "bisque"        "bisque1"      
 > 
+> ### ----------- Show (almost) all named colors ---------------------
+> 
+> ## 1) with traditional 'graphics' package:
+> showCols1 <- function(bg = "gray", cex = 0.75, srt = 30) {
++     m <- ceiling(sqrt(n <- length(cl <- colors())))
++     length(cl) <- m*m; cm <- matrix(cl, m)
++     ##
++     require("graphics")
++     op <- par(mar=rep(0,4), ann=FALSE, bg = bg); on.exit(par(op))
++     plot(1:m,1:m, type="n", axes=FALSE)
++     text(col(cm), rev(row(cm)), cm,  col = cl, cex=cex, srt=srt)
++ }
+> showCols1()
+> 
+> ## 2) with 'grid' package:
+> showCols2 <- function(bg = "grey", cex = 0.75, rot = 30) {
++     m <- ceiling(sqrt(n <- length(cl <- colors())))
++     length(cl) <- m*m; cm <- matrix(cl, m)
++     ##
++     require("grid")
++     grid.newpage(); vp <- viewport(w = .92, h = .92)
++     grid.rect(gp=gpar(fill=bg))
++     grid.text(cm, x = col(cm)/m, y = rev(row(cm))/m, rot = rot,
++               vp=vp, gp=gpar(cex = cex, col = cm))
++ }
+> showCols2()
+Loading required package: grid
+> showCols2(bg = "gray33")
 > 
 > 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
+
+detaching ‘package:grid’
+
 > nameEx("contourLines")
 > ### * contourLines
 > 
@@ -3471,7 +3506,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.91 0.01 1.985 0 0 
+Time elapsed:  2.475 0.086 2.791 0 0 
 > grDevices::dev.off()
 null device 
           1 
