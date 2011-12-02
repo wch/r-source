@@ -572,8 +572,11 @@ backSpline.npolySpline <- function(object)
 	bcoeff[nkm1, 3L] <- 0
 	bcoeff[nkm1, 2L] <- kdiff[nkm1]/adiff[nkm1]
     }
-    ikn <- if(revKnots) length(bknots):1L else TRUE
-    value <- list(knots = bknots[ikn], coefficients = bcoeff[ikn,])
+    value <- if(!revKnots) list(knots = bknots, coefficients = bcoeff)
+    else {
+	ikn <- length(bknots):1L
+	list(knots = bknots[ikn], coefficients = bcoeff[ikn,])
+    }
     attr(value, "formula") <- do.call("~", as.list(attr(object, "formula"))[3L:2L])
     class(value) <- c("polySpline", "spline")
     value
