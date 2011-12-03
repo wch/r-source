@@ -75,6 +75,10 @@
       more sensible default \code{xlim} in the case where \code{at} is
       specified differently from \code{1:n}, see the dialogue on R-devel,
       \url{https://stat.ethz.ch/pipermail/r-devel/2011-November/062586.html}.
+
+      \item new function \code{paste0()}, an efficient version of
+      \code{paste(*, sep="")}, to be used in many places for more
+      concise (and slightly more efficient) code.
     }
   }
 

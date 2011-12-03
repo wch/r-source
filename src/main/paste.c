@@ -35,8 +35,10 @@
 #include "RBufferUtils.h"
 static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-/*  .Internal(paste(args, sep, collapse))
- *
+/*
+  .Internal(paste (args, sep, collapse))
+  .Internal(paste0(args, collapse))
+
  * do_paste uses two passes to paste the arguments (in CAR(args)) together.
  * The first pass calculates the width of the paste buffer,
  * then it is alloc-ed and the second pass stuffs the information in.
@@ -49,10 +51,11 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x;
     int i, j, k, maxlen, nx, pwidth, sepw, u_sepw, ienc;
-    const char *s, *csep, *cbuf, *u_csep=NULL;
+    const char *s, *cbuf, *csep=NULL, *u_csep=NULL;
     char *buf;
-    Rboolean allKnown, anyKnown, sepASCII, sepKnown, use_UTF8, sepUTF8,
-	use_Bytes, sepBytes;
+    Rboolean allKnown, anyKnown, use_UTF8, use_Bytes,
+	sepASCII=TRUE, sepUTF8=FALSE, sepBytes=FALSE, sepKnown=FALSE,
+	use_sep = (PRIMVAL(op) == 0);
     const void *vmax;
 
     checkArity(op, args);
@@ -68,19 +71,22 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid first argument"));
     nx = length(x);
 
-
-    sep = CADR(args);
-    if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
-	error(_("invalid separator"));
-    sep = STRING_ELT(sep, 0);
-    csep = translateChar(sep);
-    u_sepw = sepw = strlen(csep);
-    sepASCII = strIsASCII(csep);
-    sepKnown = ENC_KNOWN(sep) > 0;
-    sepUTF8 = IS_UTF8(sep);
-    sepBytes = IS_BYTES(sep);
-
-    collapse = CADDR(args);
+    if(use_sep) { /* paste(..., sep, .) */
+	sep = CADR(args);
+	if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
+	    error(_("invalid separator"));
+	sep = STRING_ELT(sep, 0);
+	csep = translateChar(sep);
+	u_sepw = sepw = strlen(csep);
+	sepASCII = strIsASCII(csep);
+	sepKnown = ENC_KNOWN(sep) > 0;
+	sepUTF8 = IS_UTF8(sep);
+	sepBytes = IS_BYTES(sep);
+	collapse = CADDR(args);
+    } else { /* paste0(..., .) */
+	u_sepw = sepw = 0; sep = R_NilValue;/* -Wall */
+	collapse = CADR(args);
+    }
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0 ||
 	   STRING_ELT(collapse, 0) == NA_STRING)
@@ -154,11 +160,13 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		vmaxset(vmax);
 	    }
 	}
-	if (use_UTF8 && !u_csep) {
-	    u_csep = translateCharUTF8(sep);
-	    u_sepw = strlen(u_csep);
+	if(use_sep) {
+	    if (use_UTF8 && !u_csep) {
+		u_csep = translateCharUTF8(sep);
+		u_sepw = strlen(u_csep);
+	    }
+	    pwidth += (nx - 1) * (use_UTF8 ? u_sepw : sepw);
 	}
-	pwidth += (nx - 1) * (use_UTF8 ? u_sepw : sepw);
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	vmax = vmaxget();
 	for (j = 0; j < nx; j++) {
@@ -177,7 +185,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		    anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 		}
 	    }
-	    if (j != nx - 1 && sepw != 0) {
+	    if (sepw != 0 && j != nx - 1) {
 		if (use_UTF8) {
 		    strcpy(buf, u_csep);
 		    buf += u_sepw;
@@ -200,7 +208,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {	
+    if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {
 	sep = STRING_ELT(collapse, 0);
 	use_UTF8 = IS_UTF8(sep);
 	use_Bytes = IS_BYTES(sep);
@@ -460,7 +468,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    /* this has to be different from formatString/EncodeString as
 	       we don't actually want to encode here */
-	    const char *s; 
+	    const char *s;
 	    char *q;
 	    int b, b0, cnt = 0, j;
 	    SEXP s0, xx;
