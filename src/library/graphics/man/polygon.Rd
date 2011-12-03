@@ -1,6 +1,6 @@
 % File src/library/graphics/man/polygon.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{polygon}
@@ -21,7 +21,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{density}{the density of shading lines, in lines per inch.  The
     default value of \code{NULL} means that no shading lines are drawn.
     A zero value of \code{density} means no shading nor filling whereas
-    negative values (and \code{NA}) suppress shading (and so allow
+    negative values and \code{NA} suppress shading (and so allow
     color filling).}
   \item{angle}{the slope of shading lines, given as an angle
      in degrees (counter-clockwise).}
@@ -41,7 +41,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
   \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as arguments.}
-  \item{fillOddEven}{logical controlling the polygon fill mode:  see
+  \item{fillOddEven}{logical controlling the polygon shading mode:  see
       below for details.  Default \code{FALSE}.} 
 }
 \details{
@@ -49,32 +49,31 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   (a list with \code{x} and \code{y} components), a two-column matrix,
   \dots.  See \code{\link{xy.coords}}.
 
-  It is assumed that the polygon is to be closed by joining the last point to
-  the first point.
+  It is assumed that the polygon is to be closed by joining the last
+  point to the first point.
  
   The coordinates can contain missing values.  The behaviour is similar
-  to that of \code{\link{lines}}, except
-  that instead of breaking a line into several lines, \code{NA}
-  values break the polygon into several complete polygons
-  (including closing the last point to the first point).  See
-  the examples below.
+  to that of \code{\link{lines}}, except that instead of breaking a line
+  into several lines, \code{NA} values break the polygon into several
+  complete polygons (including closing the last point to the first
+  point).  See the examples below.
 
-  When multiple polygons are produced,
-  the values of \code{density}, \code{angle}, \code{col}, \code{border},
-  and \code{lty} are recycled in the usual manner.
+  When multiple polygons are produced, the values of \code{density},
+  \code{angle}, \code{col}, \code{border}, and \code{lty} are recycled
+  in the usual manner.
+
+  Shading of polygons is only implemented for linear plots: if either
+  axis is on log scale then shading is omitted, with a warning.
 }
 \section{Bugs}{
   Self-intersecting polygons may be filled using either the
   \dQuote{odd-even} or \dQuote{non-zero} rule.  These fill a region if
   the polygon border encircles it an odd or non-zero number of times,
-  respectively. Shading lines are handled internally by \R{} according
+  respectively.  Shading lines are handled internally by \R{} according
   to the \code{fillOddEven} argument, but device-based solid fills
-  depend on the graphics device.  The
-#ifdef windows
-  \code{\link{windows}},
-#endif
-  \code{\link{pdf}} and \code{\link{postscript}} devices
-  have their own \code{fillOddEven} argument to control this.
+  depend on the graphics device.  The \code{windows}, \code{\link{pdf}}
+  and \code{\link{postscript}} devices have their own \code{fillOddEven}
+  argument to control this.
 }
 \author{
   The code implementing polygon shading was donated by
