@@ -171,7 +171,7 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
     if(!inherits(x, "ftable"))
         stop("'x' must be an \"ftable\" object")
     charQuote <- function(s)
-        if(quote) paste("\"", s, "\"", sep = "") else s
+        if(quote) paste0("\"", s, "\"") else s
     makeLabels <- function(lst) {
         lens <- sapply(lst, length)
         cplensU <- c(1, cumprod(lens))

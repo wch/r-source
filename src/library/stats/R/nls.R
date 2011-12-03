@@ -723,8 +723,8 @@ print.summary.nls <-
             symbolic.cor = x$symbolic.cor,
             signif.stars = getOption("show.signif.stars"), ...)
 {
-    cat("\nFormula: ")
-    cat(paste(deparse(x$formula), sep = "\n", collapse = "\n"), "\n", sep = "")
+    cat("\nFormula: ",
+	paste(deparse(x$formula), sep = "\n", collapse = "\n"), "\n", sep = "")
     df <- x$df
     rdf <- df[2L]
     cat("\nParameters:\n")

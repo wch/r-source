@@ -184,9 +184,9 @@ tk_choose.files <-
         if(!is.character(filters) || length(dim(filters)) != 2 || ncol(filters) != 2)
             stop("'filters' must be a 2-column character matrix")
         f <- filters
-        f[] <- paste("{", filters, "}", sep="")
+        f[] <- paste0("{", filters, "}")
         ff <- apply(f, 1, paste, collapse = " ")
-        fff <- paste("{", ff, "}", sep="")
+        fff <- paste0("{", ff, "}")
         args <- c(args, filetypes = paste(fff, collapse = " "))
     }
     res <- tclvalue(do.call(tcl, args))

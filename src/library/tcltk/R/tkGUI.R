@@ -128,7 +128,7 @@ tkStartGUI <- function() {
           menu=helpPDFMenu)
     pdfBase <- file.path(R.home("doc"), "manual")
     apply(manuals, 1L, function(x) {
-	f <- file.path(pdfBase, paste(x[1L], ".pdf", sep="") )
+	f <- file.path(pdfBase, paste0(x[1L], ".pdf") )
         cmd <- function() system(paste(shQuote(getOption("pdfviewer")),
                                        shQuote(f)),
                                  wait = FALSE)

@@ -67,7 +67,7 @@
             text <- gsub("(http://|ftp://)([^[:space:]]+)",
                          "}\\\\url{\\1\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
-        text <- paste("\\AsIs{", text, "}", sep = "")
+        text <- paste0("\\AsIs{", text, "}")
         ## Not entirely safe: in theory, tags could contain \ ~ ^.
         cat("\\item[", gsub("([#$%&_{}])", "\\\\\\1", f),
             "]", paste(text, collapse = "\n\n"),  "\n", sep = "", file=out)
@@ -139,7 +139,7 @@
 
     options(warn = 1)
     if (missing(outfile))
-        outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
+        outfile <- paste0(basename(pkgdir), "-pkg.tex")
 
     latexEncodings <- character() # Record any encodings used in the output
     hasFigures <- FALSE           # and whether graphics is used
@@ -397,7 +397,7 @@
         ## choose 'out' from filename
         bf <- sub("\\.[Rr]d$", "", file)
         exts <- c(txt=".txt", html=".html", latex=".tex", exmaple=".R")
-        out <- paste(bf,  exts[type], sep = "")
+        out <- paste0(bf,  exts[type])
     } else if (is.null(out)) out <- ""
     if (!nzchar(os)) os <- .Platform$OS.type
     switch(type,
@@ -472,17 +472,17 @@ function(pkgdir, outfile, title, batch = FALSE,
                  "\\begin{document}"), out)
     if (!nzchar(title)) {
         if (is.character(desc))
-            title <- paste("Package `", desc["Package"], "'", sep = "")
+            title <- paste0("Package `", desc["Package"], "'")
         else if (file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
             desc <- read.dcf(f)[1,]
-            title <- paste("Package `", desc["Package"], "'", sep = "")
+            title <- paste0("Package `", desc["Package"], "'")
         } else {
             if (file_test("-d", pkgdir)) {
-                subj <- paste("all in \\file{", pkgdir, "}", sep ="")
+                subj <- paste0("all in \\file{", pkgdir, "}")
             } else {
                 files <- strsplit(files_or_dir, "[[:space:]]+")[[1L]]
                 subj1 <- if (length(files) > 1L) " etc." else ""
-                subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
+                subj <- paste0("\\file{", pkgdir, "}", subj1)
             }
             subj <- gsub("([_$])", "\\\\\\1", subj)
             title <- paste("\\R{} documentation}} \\par\\bigskip{{\\Large of", subj)
@@ -548,7 +548,7 @@ function(pkgdir, outfile, title, batch = FALSE,
 
 	if (!cyrillic) {
 	    lines[lines == setEncoding] <-
-		paste("\\usepackage[", encs, "]{", inputenc, "}", sep = "")
+		paste0("\\usepackage[", encs, "]{", inputenc, "}")
 	} else {
 	    lines[lines == setEncoding] <-
 		paste(
@@ -674,7 +674,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     startdir <- getwd()
     if (is.null(startdir))
         stop("current working directory cannot be ascertained")
-    build_dir <- paste(".Rd2pdf", Sys.getpid(), sep = "")
+    build_dir <- paste0(".Rd2pdf", Sys.getpid())
     title <- ""
     batch <- FALSE
     clean <- TRUE

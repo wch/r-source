@@ -67,7 +67,7 @@ str.Date <- str.POSIXt <- function(object, ...) {
 		    (larg[["width"]]- nchar(larg[["indent.str"]]) -31)%/% 19)
     }
 
-    le.str <- if(give.length) paste("[1:",as.character(n),"]", sep="")
+    le.str <- if(give.length) paste0("[1:",as.character(n),"]")
     cat(" ", cl[1L], le.str,", format: ", sep = "")
     do.call(str, c(list(format(object), give.head = FALSE), larg))
 }
@@ -134,18 +134,17 @@ str.default <-
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
-    P0 <- function(...) paste(..., sep="")
     maybe_truncate <- function(x, e.x = x, Sep = "\"", ch = "| __truncated__")
     {
 	trimmed <- strtrim(e.x, nchar.max)
 	ii <- trimmed != e.x
 	ii[is.na(ii)] <- FALSE
-	if(any(ii)) x[ii] <- P0(trimmed[ii], Sep, ch)
+	if(any(ii)) x[ii] <- paste0(trimmed[ii], Sep, ch)
 	x
     }
     pClass <- function(cls)
-	paste("Class", if(length(cls) > 1) "es",
-              " '", paste(cls, collapse = "', '"), "' ", sep="")
+	paste0("Class", if(length(cls) > 1) "es",
+	       " '", paste(cls, collapse = "', '"), "' ")
     `%w/o%` <- function(x,y) x[is.na(match(x,y))]
 
     nfS <- names(fStr <- formals())# names of all formal args to str.default()
@@ -167,7 +166,7 @@ str.default <-
     le.str <-
 	if(is.na(le)) " __no length(.)__ "
 	else if(give.length) {
-	    if(le > 0) P0("[1:", paste(le), "]") else "(0)"
+	    if(le > 0) paste0("[1:", paste(le), "]") else "(0)"
 	} else ""
     v.len <- vec.len # modify v.len, not vec.len!
     ## NON interesting attributes:
@@ -296,11 +295,11 @@ str.default <-
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
 		    rnk <- length(di. <- dim(object))
-		    di <- P0(ifelse(di. > 1, "1:",""), di.,
-			     ifelse(di. > 0, "" ," "))
+		    di <- paste0(ifelse(di. > 1, "1:",""), di.,
+				 ifelse(di. > 0, "" ," "))
 		    pDi <- function(...) paste(c("[", ..., "]"), collapse = "")
 		    le.str <- (if(rnk == 1) pDi(di[1L], "(1d)") else
-			       pDi(P0(di[-rnk], ", "), di[rnk]))
+			       pDi(paste0(di[-rnk], ", "), di[rnk]))
 		    std.attr <- "dim" #- "names"
 		} else if(!is.null(names(object))) {
 		    mod <- paste("Named", mod)
@@ -308,13 +307,13 @@ str.default <-
 		}
 		if(has.class && length(cl) == 1) {
 		    if(cl != mod && substr(cl, 1,nchar(mod)) != mod)
-			mod <- P0("'",cl,"' ", mod)
+			mod <- paste0("'",cl,"' ", mod)
 		    ## don't show the class *twice*
 		    std.attr <- c(std.attr, "class")
 		}
 		str1 <-
 		    if(le == 1 && !is.array(object)) paste(NULL, mod)
-		    else P0(" ", mod, if(le>0)" ", le.str)
+		    else paste0(" ", mod, if(le>0)" ", le.str)
 	    } else { ##-- not atomic, but vector: #
 		mod <- typeof(object)#-- typeof(.) is more precise than mode!
 		str1 <- switch(mod,
@@ -343,14 +342,14 @@ str.default <-
 #	    if(length(pars)>=4) pars <- pars[-3]
 #	    pars <- paste(abbreviate(names(pars),min=2), pars,
 #			  sep= "=", collapse=", ")
-#	    str1 <- P0(ts.kind, " Time-Series ", le.str, " ", pars, ":")
+#	    str1 <- paste0(ts.kind, " Time-Series ", le.str, " ", pars, ":")
 #	    v.len <- switch(t.cl,rts=.8, cts=.6, its=.9) * v.len
 #	    class(object) <- if(any(!b.ts)) cl[!b.ts]
 #	    std.attr <- c(std.attr, "tspar")
 	} else if(stats::is.ts(object)) {
 	    tsp.a <- stats::tsp(object)
-	    str1 <- P0(" Time-Series ", le.str, " from ", format(tsp.a[1L]),
-		       " to ", format(tsp.a[2L]), ":")
+	    str1 <- paste0(" Time-Series ", le.str, " from ", format(tsp.a[1L]),
+			   " to ", format(tsp.a[2L]), ":")
 	    std.attr <- c("tsp","class") #- "names"
 	} else if (is.factor(object)) {
 	    nl <- length(lev.att <- levels(object))
@@ -368,17 +367,18 @@ str.default <-
 		lev.att <- maybe_truncate(lev.att[seq_len(ml)])
 ##		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
 ##		    lev.att[ml] <-
-##			P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
+##			paste0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
 	    }
 	    else # nl == 0
 		ml <- length(lev.att <- "")
 
 	    lsep <- if(ord) "<" else ","
-	    str1 <- P0(if(ord)" Ord.f" else " F",
+	    str1 <-
+		paste0(if(ord)" Ord.f" else " F",
 		       "actor w/ ", nl, " level", if(nl != 1) "s",
 		       if(nl) " ",
-		       if(nl) P0(lev.att, collapse = lsep),
-		       if(ml < nl) P0(lsep, ".."), ":")
+		       if(nl) paste0(lev.att, collapse = lsep),
+		       if(ml < nl) paste0(lsep, ".."), ":")
 
 	    std.attr <- c("levels", "class")
 	} else if(typeof(object) %in%
@@ -389,7 +389,7 @@ str.default <-
 	    le <- v.len <- 0
 	    str1 <-
 		if(is.environment(object)) format(object)
-		else paste("<", typeof(object), ">", sep="")
+		else paste0("<", typeof(object), ">")
 	    has.class <- TRUE # fake for later
 	    std.attr <- "class"
 	    ## ideally we would figure out if as.character has a
@@ -466,7 +466,7 @@ str.default <-
 	    } else {
 		give.mode <- TRUE
 	    }
-	    if(give.mode) str1 <- P0(str1, ', mode "', mod,'":')
+	    if(give.mode) str1 <- paste0(str1, ', mode "', mod,'":')
 
 	} else if(is.logical(object)) {
 	    v.len <- 1.5 * v.len # was '3' originally (but S prints 'T' 'F' ..)
@@ -527,7 +527,7 @@ str.default <-
 	    formObj <- function(x) paste(format.fun(x), collapse = " ")
 	}
 
-	cat(if(give.head) P0(str1, " "),
+	cat(if(give.head) paste0(str1, " "),
 	    formObj(if(ile >= 1) object[seq_len(ile)] else if(v.len > 0) object),
 	    if(le > v.len) " ...", "\n", sep="")
 
@@ -537,7 +537,7 @@ str.default <-
 	nam <- names(a)
 	for (i in seq_along(a))
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:
-		cat(indent.str, P0('- attr(*, "',nam[i],'")='),sep="")
+		cat(indent.str, paste0('- attr(*, "',nam[i],'")='),sep="")
 		strSub(a[[i]], give.length=give.length,
                        indent.str= paste(indent.str,".."), nest.lev= nest.lev+1,
                        vec.len = if(nam[i] == "source") 1 else vec.len)

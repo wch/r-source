@@ -38,7 +38,7 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
     else {
         nr <- NROW(x)
 	if(do.NULL) NULL
-        else if(nr > 0L) paste(prefix, seq_len(nr), sep="")
+        else if(nr > 0L) paste0(prefix, seq_len(nr))
         else character()
     }
 }
@@ -73,7 +73,7 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
     else {
         nc <- NCOL(x)
 	if(do.NULL) NULL
-        else if(nc > 0L) paste(prefix, seq_len(nc), sep="")
+        else if(nc > 0L) paste0(prefix, seq_len(nc))
         else character()
     }
 }

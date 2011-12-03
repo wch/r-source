@@ -117,7 +117,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                                 domain=NA)
                     thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
-                    thispkg <- paste("package:", thispkg, sep="")
+                    thispkg <- paste0("package:", thispkg)
                     objs <- rds[[name]] # guaranteed an exact match
                     lazyLoad(file.path(p, "Rdata"), envir = envir,
                              filter = function(x) x %in% objs)
@@ -160,7 +160,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                                 appendLF = FALSE, domain = NA)
                     ext <- fileExt(file)
                     ## make sure the match is really for 'name.ext'
-                    if(basename(file) != paste(name, ".", ext, sep = ""))
+                    if(basename(file) != paste0(name, ".", ext))
                         found <- FALSE
                     else {
                         found <- TRUE

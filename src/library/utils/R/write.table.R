@@ -39,7 +39,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         if(is.null(d)) d <- list(NULL, NULL)
         if(is.null(d[[1L]]) && makeRownames) d[[1L]] <- seq_len(nrow(x))
         if(is.null(d[[2L]]) && makeColnames && p > 0L)
-            d[[2L]] <- paste("V", 1L:p, sep="")
+            d[[2L]] <- paste0("V", 1L:p)
         if(qset)
             quote <- if(is.character(x)) seq_len(p) else numeric()
     } else { ## data.frame

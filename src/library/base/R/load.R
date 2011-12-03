@@ -136,11 +136,11 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (safe) {
         ## find a temporary file name in the same directory so we can
         ## rename it to the final output file on success
-        outfile <- paste(file, "Tmp", sep = "")
+        outfile <- paste0(file, "Tmp")
         i <- 0
         while (file.exists(outfile)) {
             i <- i + 1
-            outfile <- paste(file, "Tmp", i, sep = "")
+            outfile <- paste0(file, "Tmp", i)
         }
     }
     else outfile <- file

@@ -214,7 +214,7 @@ valid.units <- function(units) {
 
 as.character.unit <- function(x, ...) {
   class(x) <- NULL
-  paste(x, attr(x, "unit"), sep="")
+  paste0(x, attr(x, "unit"))
 }
 
 #########################
@@ -283,9 +283,9 @@ as.character.unit.arithmetic <- function(x, ...) {
   # this will recurse.
   fname <- x$fname
   if (fname == "+" || fname == "-" || fname == "*")
-    paste(x$arg1, fname, x$arg2, sep="")
+    paste0(x$arg1, fname, x$arg2)
   else
-    paste(fname, "(", paste(x$arg1, collapse=", "), ")", sep="")
+    paste0(fname, "(", paste(x$arg1, collapse=", "), ")")
 }
 
 unit.pmax <- function(...) {

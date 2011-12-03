@@ -78,7 +78,7 @@ abbreviate <-
 	x <- x[match(old,names.arg)]
     if(dot) {			    # add "." where we did abbreviate:
 	chgd <- x != old
-	x[chgd] <- paste(x[chgd],".",sep = "")
+	x[chgd] <- paste0(x[chgd],".")
     }
     names(x) <- old
     x
@@ -142,7 +142,7 @@ sQuote <- function(x) {
         ## R was built under
         Encoding(before) <- Encoding(after) <- "unknown"
     }
-    paste(before, x, after, sep = "")
+    paste0(before, x, after)
 }
 
 dQuote <- function(x) {
@@ -173,7 +173,7 @@ dQuote <- function(x) {
         }
         Encoding(before) <- Encoding(after) <- "unknown"
     }
-    paste(before, x, after, sep = "")
+    paste0(before, x, after)
 }
 
 strtoi <-

@@ -53,7 +53,7 @@ de.setup <- function(ilist, list.names, incols)
 	    for( j in seq_along(telt) ) {
 		ivec[[i]] <- telt[[j]]
 		if( is.null(y) || y[j]=="" )
-		    inames[[i]] <- paste("var", i, sep="")
+		    inames[[i]] <- paste0("var", i)
 		else inames[[i]] <- y[j]
 		i <- i+1L
 	    }
@@ -68,7 +68,7 @@ de.setup <- function(ilist, list.names, incols)
 	    for( j in 1L:ncol(telt) ) {
 		ivec[[i]] <- telt[, j]
 		if( is.null(y) || y[j]=="" )
-		    inames[[i]] <- paste("var", i, sep="")
+		    inames[[i]] <- paste0("var", i)
 		else inames[[i]] <- y[j]
 		i <- i+1L
 	    }

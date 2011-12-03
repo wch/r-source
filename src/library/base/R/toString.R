@@ -24,7 +24,7 @@ toString.default <- function(x, width = NULL, ...)
     if( width < 0 ) stop("'width' must be positive")
     if(nchar(string, type = "w") > width) {
         width <- max(6, width) ## Leave something!
-        string <- paste(strtrim(string, width - 4), "....", sep = "")
+        string <- paste0(strtrim(string, width - 4), "....")
     }
     string
 }

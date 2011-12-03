@@ -67,7 +67,7 @@ acf2AR <- function(acf)
     z <- .Fortran(C_eureka, as.integer(order.max), r, r,
                   coefs = double(order.max^2), vars = double(order.max),
                   double(order.max))
-    nm <- paste("ar(",1L:order.max, ")", sep="")
+    nm <- paste0("ar(",1L:order.max, ")")
     matrix(z$coefs, order.max, order.max, dimnames=list(nm, 1L:order.max))
 }
 

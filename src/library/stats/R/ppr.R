@@ -68,9 +68,9 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     p <- ncol(x)
     q <- ncol(y)
     if(!is.null(dimnames(x))) xnames <- dimnames(x)[[2L]]
-    else xnames <- paste("X", 1L:p, sep="")
+    else xnames <- paste0("X", 1L:p)
     if(!is.null(dimnames(y))) ynames <- dimnames(y)[[2L]]
-    else ynames <- paste("Y", 1L:q, sep="")
+    else ynames <- paste0("Y", 1L:q)
     msmod <- ml*(p+q+2*n)+q+7+ml+1	# for asr
     nsp <- n*(q+15)+q+3*p
     ndp <- p*(p+1)/2+6*p

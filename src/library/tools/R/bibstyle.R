@@ -39,7 +39,7 @@ makeJSS <- function()
 	plainclean <- function(s) plain(cleanup(s))
 
 	emph <- function(s)
-	    if (length(s)) paste("\\emph{", collapse(s), "}", sep="")
+	    if (length(s)) paste0("\\emph{", collapse(s), "}")
 
         emphclean <- function(s) emph(cleanup(s))
 
@@ -48,7 +48,7 @@ makeJSS <- function()
 	label <- function(prefix=NULL, suffix=NULL, style=plain) {
 	    force(prefix); force(suffix); force(style)
 	    function(s)
-		if (length(s)) style(paste(prefix, collapse(s), suffix, sep=""))
+		if (length(s)) style(paste0(prefix, collapse(s), suffix))
 	}
 
 	labelclean <- function(prefix=NULL, suffix=NULL, style=plain) {
@@ -82,28 +82,31 @@ makeJSS <- function()
 
 	fmtYear <- function(year) {
 	    if (!length(year)) year <- "????"
-	    paste("(", collapse(year), ")", sep="")
+	    paste0("(", collapse(year), ")")
 	}
 
 	# Now some more complicated ones that look at multiple fields
 	volNum <- function(paper) {
 	    if (length(paper$volume)) {
-		result <- paste("\\bold{", collapse(paper$volume), "}", sep="")
+		result <- paste0("\\bold{", collapse(paper$volume), "}")
 		if (length(paper$number))
-		    result <- paste(result, "(", collapse(paper$number), ")", sep="")
+		    result <- paste0(result, "(", collapse(paper$number), ")")
 		result
 	    }
 	}
 
-	# Format one person object in short "Murdoch DJ" format
+	## Format one person object in short "Murdoch DJ" format
 	shortName <- function(person) {
 	    if (length(person$family)) {
 		result <- cleanup(person$family)
 		if (length(person$given))
-			 result <- paste(result, paste(substr(sapply(person$given, cleanup), 1,1), collapse=""))
-	    } else
-		     result <- paste(cleanup(person$given), collapse=" ")
-	    result
+		    paste(result,
+			  paste(substr(sapply(person$given, cleanup),
+				       1, 1), collapse=""))
+		else result
+	    }
+	    else
+		paste(cleanup(person$given), collapse=" ")
 	}
 
 	# Format all authors for one paper

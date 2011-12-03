@@ -385,7 +385,7 @@ print.ts <- function(x, calendar, ...)
                     if(fr.x == 12) month.abb
                     else if(fr.x == 4) {
                         c("Qtr1", "Qtr2", "Qtr3", "Qtr4")
-                    } else paste("p", 1L:fr.x, sep = "")
+                    } else paste0("p", 1L:fr.x)
                 if(NROW(x) <= fr.x && start(x)[1L] == end(x)[1L]) {
                     ## not more than one period
                     dn1 <- start(x)[1L]

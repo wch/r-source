@@ -149,7 +149,7 @@ grid.show.layout <- function(l, newpage=TRUE,
       pushViewport(vp.inner)
       grid.rect(gp=gpar(col=cell.border, fill=cell.fill))
       if (cell.label)
-        grid.text(paste("(", i, ", ", j, ")", sep=""), gp=gpar(col=label.col))
+        grid.text(paste0("(", i, ", ", j, ")"), gp=gpar(col=label.col))
       if (j==1)
         # recycle heights if necessary
         grid.text(as.character("["(l$heights, i, top=FALSE)), gp=gp.red,

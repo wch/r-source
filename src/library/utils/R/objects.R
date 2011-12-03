@@ -112,7 +112,7 @@ methods <- function (generic.function, class)
                 generic.function <- truegf
             }
         }
-	name <- paste("^", generic.function, ".", sep = "")
+	name <- paste0("^", generic.function, ".")
         name <- gsub("([.[$+*])", "\\\\\\1",name)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
@@ -149,7 +149,7 @@ methods <- function (generic.function, class)
     else if (!missing(class)) {
 	if (!is.character(class))
 	    class <- paste(deparse(substitute(class)))
-	name <- paste(".", class, "$", sep = "")
+	name <- paste0(".", class, "$")
         name <- gsub("([.[])", "\\\\\\1", name)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
@@ -193,7 +193,7 @@ print.MethodsFunction <- function(x, ...)
 {
     visible <- attr(x, "info")[["visible"]]
     if(length(x)) {
-        print(paste(x, ifelse(visible, "", "*"), sep=""), quote=FALSE, ...)
+	print(paste0(x, ifelse(visible, "", "*")), quote=FALSE, ...)
         if(any(!visible))
             cat("\n", "   ",
                 "Non-visible functions are asterisked", "\n", sep="")
@@ -423,14 +423,14 @@ print.getAnywhere <- function(x, ...)
     } else if (n == 1L) {
         cat("A single object matching", sQuote(x$name), "was found\n")
         cat("It was found in the following places\n")
-        cat(paste("  ", x$where, sep=""), sep="\n")
+	cat(paste0("  ", x$where), sep="\n")
         cat("with value\n\n")
         print(x$objs[[1L]])
     } else {
         cat(n, "differing objects matching", sQuote(x$name),
             "were found\n")
         cat("in the following places\n")
-        cat(paste("  ", x$where, sep=""), sep="\n")
+        cat(paste0("  ", x$where), sep="\n")
         cat("Use [] to view one of them\n")
     }
     invisible(x)

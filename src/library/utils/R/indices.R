@@ -29,7 +29,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
 	if(is.null(lib.loc)) {
 	    if(pkg == "base")
 		file.path(.Library, "base")
-	    else if((envname <- paste("package:", pkg, sep = ""))
+	    else if((envname <- paste0("package:", pkg))
 		    %in% search()) {
 		pp <- attr(as.environment(envname), "path")
 		## could be NULL if a perverse user has been naming

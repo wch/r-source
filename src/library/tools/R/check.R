@@ -45,7 +45,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  c(Ropts, paste("-f", Rin)), stdout, stderr, env = env))
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
-                                 c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
+                                 c(if(nzchar(arch)) paste0("--arch=", arch), Ropts),
                                  stdout, stderr, stdin, input = cmd, env = env))
     }
 }
@@ -248,8 +248,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         full.names = TRUE, recursive = TRUE)
         allfiles <- c(allfiles, unique(dirname(allfiles)))
         allfiles <- sub("^./", "", allfiles)
-        ignore_re <- paste("(", paste(ignore, collapse = "|"), ")",
-                           sep = "")
+        ignore_re <- paste0("(", paste(ignore, collapse = "|"), ")")
         allfiles <- grep(ignore_re, allfiles, invert = TRUE, value = TRUE)
 
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
@@ -1180,7 +1179,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 if (length(odd)) {
                     warnLog()
                     msg <- c("Files not of a type allowed in a 'data' directory:\n",
-                             paste(.pretty_format(odd), "\n", sep = ""),
+                             paste0(.pretty_format(odd), "\n"),
                              "Please use e.g. 'inst/extdata' for non-R data files\n")
                     printLog(Log, msg)
                 } else resultLog(Log, "OK")
@@ -1529,7 +1528,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## Try to compare results from running the examples to
             ## a saved previous version.
             exsave <- file.path(pkgdir, "tests", "Examples",
-                                paste(pkgname, "-Ex.Rout.save", sep=""))
+                                paste0(pkgname, "-Ex.Rout.save"))
             if (file.exists(exsave)) {
                 checkingLog(Log, "differences from ",
                             sQuote(basename(exout)),
@@ -1563,7 +1562,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 do_exit(1L)
             }
             ## It ran, but did it create any examples?
-            exfile <- paste(pkgname, "-Ex.R", sep = "")
+            exfile <- paste0(pkgname, "-Ex.R")
             if (file.exists(exfile)) {
                 enc <- if (!is.na(e <- desc["Encoding"])) {
                     if (is_ascii)
@@ -1572,7 +1571,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     paste("--encoding", e, sep="=")
                 } else ""
                 if (!this_multiarch) {
-                    exout <- paste(pkgname, "-Ex.Rout", sep = "")
+                    exout <- paste0(pkgname, "-Ex.Rout")
                     if(!run_one_arch(exfile, exout)) do_exit(1L)
                 } else {
                     printLog(Log, "\n")
@@ -1584,7 +1583,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         if (arch %in% R_check_skip_examples_arch) {
                             resultLog(Log, "SKIPPED")
                         } else {
-                            tdir <- paste("examples_", arch, sep = "")
+                            tdir <- paste0("examples_", arch)
                             dir.create(tdir)
                             if (!dir.exists(tdir)) {
                                 errorLog(Log,
@@ -1592,7 +1591,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                 do_exit(1L)
                             }
                             od <- setwd(tdir)
-                            exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
+                            exout <- paste0(pkgname, "-Ex_", arch, ".Rout")
                             res <- res & run_one_arch(file.path("..", exfile),
                                                       file.path("..", exout),
                                                       arch)
@@ -1633,14 +1632,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          sprintf("unable to create %s", sQuote(testdir)))
                 do_exit(1L)
             }
-            file.copy(Sys.glob(paste(testsrcdir, "/*", sep = "")),
+            file.copy(Sys.glob(paste0(testsrcdir, "/*")),
                       testdir, recursive = TRUE)
             setwd(testdir)
             extra <- character()
             if (use_gct) extra <- c(extra, "use_gct = TRUE")
             if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
             tf <- gsub("\\", "/", tempfile(), fixed=TRUE)
-            extra <- c(extra, paste('Log="', tf, '"', sep=""))
+            extra <- c(extra, paste0('Log="', tf, '"'))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
             cmd <- paste("tools:::.runPackageTestsR(",
@@ -1842,9 +1841,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
                               basename(v), "', '", vigns$dir, "'",
                               if (nzchar(enc))
-                              paste(", encoding = '", enc, "'", sep = ""),
+                              paste0(", encoding = '", enc, "'"),
                               ")", sep = "")
-                outfile <- paste(basename(v), ".log", sep="")
+                outfile <- paste0(basename(v), ".log")
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                  jitstr,
@@ -1969,16 +1968,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
-            man_file <- paste(pkgname, "-manual.pdf ", sep = "")
+            man_file <- paste0(pkgname, "-manual.pdf ")
             ## precautionary remove in case some other attempt left it behind
             if(file.exists(man_file)) unlink(man_file)
             args <- c( "Rd2pdf ", Rd2pdf_opts,
-                      paste("--build-dir=", shQuote(build_dir), sep = ""),
+                      paste0("--build-dir=", shQuote(build_dir)),
                       "--no-clean", "-o ", man_file , topdir)
             res <- run_Rcmd(args,  "Rdlatex.log")
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
-                file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
+                file.copy(latex_log, paste0(pkgname, "-manual.log"))
             if (res == 11) { ## return code from Rd2pdf
                 errorLog(Log, "Rd conversion errors:")
                 lines <- readLines("Rdlatex.log", warn = FALSE)
@@ -1990,7 +1989,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else if (res > 0) {
                 latex_file <- file.path(build_dir, "Rd2.tex")
                 if (file.exists(latex_file))
-                    file.copy(latex_file, paste(pkgname, "-manual.tex", sep=""))
+                    file.copy(latex_file, paste0(pkgname, "-manual.tex"))
                 warnLog()
                 printLog(Log,
                          paste("LaTeX errors when creating PDF version.\n",
@@ -2009,7 +2008,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## Also turn off hyperrefs.
                 Sys.setenv(R_RD4PDF = "times")
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
-                          paste("--build-dir=", shQuote(build_dir), sep = ""),
+                          paste0("--build-dir=", shQuote(build_dir)),
                           "--no-clean", "--no-index",
                           "-o ", man_file, topdir)
                 if (run_Rcmd(args, "Rdlatex.log")) {
@@ -2017,7 +2016,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     errorLog(Log)
                     latex_log <- file.path(build_dir, "Rd2.log")
                     if (file.exists(latex_log))
-                        file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
+                        file.copy(latex_log, paste0(pkgname, "-manual.log"))
                     else {
                         ## No log file and thus no chance to find out
                         ## what went wrong.  Hence, re-run without
@@ -2030,9 +2029,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         unlink(build_dir, recursive = TRUE)
                         build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
                         args <- c( "Rd2pdf ", Rd2pdf_opts,
-                                  paste("--build-dir=", shQuote(build_dir), sep = ""),
+                                  paste0("--build-dir=", shQuote(build_dir)),
                                   "--no-clean", "--no-index",
-                                  "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
+                                  "-o ", paste0(pkgname, "-manual.pdf "),
                                   topdir)
                         run_Rcmd(args)
                     }
@@ -2642,7 +2641,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     jit <- Sys.getenv("R_ENABLE_JIT")
     jitstr <- if(nzchar(jit)) {
         Sys.setenv(R_ENABLE_JIT = "0")
-        paste("R_ENABLE_JIT=", jit, sep = "")
+        paste0("R_ENABLE_JIT=", jit)
     } else character()
 
     if (is.null(args)) {
@@ -3124,8 +3123,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
 .format_lines_with_indent <-
 function(x)
-    paste("  ", x, sep = "", collapse = "\n")
-
+    paste0("  ", x, collapse = "\n")
     ## Hard-wire indent of 2 for now.
 
 ### Local variables:

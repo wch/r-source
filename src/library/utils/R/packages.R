@@ -520,7 +520,7 @@ installed.packages <-
                            ## it is actually 32-bit on some systems)
                            .Call("crc64ToString", base, PACKAGE = "base"))
             dest <- file.path(tempdir(),
-                              paste("libloc_", enc, ".rds", sep = ""))
+                              paste0("libloc_", enc, ".rds"))
             if(file.exists(dest) &&
                file.info(dest)$mtime > file.info(lib)$mtime &&
                (val <- readRDS(dest))$base == base)
@@ -883,7 +883,7 @@ compareVersion <- function(a, b)
             target <- as.package_version(x[[3L]])
             res <- eval(parse(text = paste("any(current", x$op, "target)")))
             if(res) canget <- c(canget, x[[1L]])
-            else  miss <- c(miss, paste(x[[1L]], " (>= ", x[[3L]], ")", sep=""))
+            else  miss <- c(miss, paste0(x[[1L]], " (>= ", x[[3L]], ")"))
         } else if(x[[1L]] %in% pkgs) canget <- c(canget, x[[1L]])
         else miss <- c(miss, x[[1L]])
     }

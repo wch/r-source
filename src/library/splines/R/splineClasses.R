@@ -495,7 +495,7 @@ print.polySpline <- function(x, ...)
 	dimnames(coeff) <-
 	    list(format(splineKnots(x)),
 		 c("constant", "linear", "quadratic", "cubic",
-		   paste(4:29, "th", sep = ""))[1L:(dim(coeff)[2L])])
+		   paste0(4:29, "th"))[1L:(dim(coeff)[2L])])
     cat("polynomial representation of spline")
     if (!is.null(form <- attr(x, "formula")))
 	cat(" for", deparse(as.vector(form)))

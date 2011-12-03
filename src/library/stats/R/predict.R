@@ -34,7 +34,7 @@ predict.default <- function (object, ...) {
 	stop("wrong number of predictors")
     predictor <- X %*% object$coefficients
     ip <- numeric(n)
-    names(ip) <- paste("P", 1L:n, sep = "")
+    names(ip) <- paste0("P", 1L:n)
     for (i in 1L:n)
 	ip[i] <- sum(X[i, ] * (object$covmat %*% X[i, ]))
     stderr1 <- sqrt(ip)

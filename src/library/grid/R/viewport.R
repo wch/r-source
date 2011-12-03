@@ -19,7 +19,7 @@ initvpAutoName <- function() {
   index <- 0
   function() {
     index <<- index + 1
-    paste("GRID.VP.", index, sep="")
+    paste0("GRID.VP.", index)
   }
 }
 
@@ -129,16 +129,15 @@ vpFromPushedvp <- function(pvp) {
 }
 
 as.character.viewport <- function(x, ...) {
-  paste("viewport[", x$name, "]", sep="")
+  paste0("viewport[", x$name, "]")
 }
 
 as.character.vpList <- function(x, ...) {
-  paste("(", paste(sapply(x, as.character, simplify=TRUE), collapse=", "),
-        ")", sep="")
+  paste0("(", paste(vapply(x, as.character, ""), collapse=", "), ")")
 }
 
 as.character.vpStack <- function(x, ...) {
-  paste(sapply(x, as.character, simplify=TRUE), collapse="->")
+  paste(vapply(x, as.character, ""), collapse="->")
 }
 
 as.character.vpTree <- function(x, ...) {

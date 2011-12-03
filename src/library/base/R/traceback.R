@@ -24,23 +24,23 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
         cat(gettext("No traceback available"), "\n")
     else {
         for(i in 1L:n) {
-            label <- paste(n-i+1L, ": ", sep="")
-            m <- length(x[[i]])            
+            label <- paste0(n-i+1L, ": ")
+            m <- length(x[[i]])
             if (!is.null(srcref <- attr(x[[i]], "srcref"))) {
             	srcfile <- attr(srcref, "srcfile")
-            	x[[i]][m] <- paste(x[[i]][m], " at ", 
-            	            basename(srcfile$filename), "#", srcref[1L], sep="")
+            	x[[i]][m] <- paste0(x[[i]][m], " at ",
+				    basename(srcfile$filename), "#", srcref[1L])
             }
             if(m > 1)
                 label <- c(label, rep(substr("          ", 1L,
                                              nchar(label, type="w")),
                                       m - 1L))
             if(is.numeric(max.lines) && max.lines > 0L && max.lines < m) {
-                cat(paste(label[1L:max.lines], x[[i]][1L:max.lines], sep = ""),
+                cat(paste0(label[1L:max.lines], x[[i]][1L:max.lines]),
                     sep = "\n")
                 cat(label[max.lines+1L], " ...\n")
             } else
-            	cat(paste(label, x[[i]], sep=""), sep="\n")
+            	cat(paste0(label, x[[i]]), sep="\n")
         }
     }
     invisible()

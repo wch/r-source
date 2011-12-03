@@ -293,7 +293,7 @@ completeClassDefinition <-
 #                     }
 #                     stop(paste("Duplicate slot names: slots ",
 #                                paste(dupNames, collapse =", "), "; see classes ",
-#                                paste(c(Class, ext)[dupClasses], collapse = ", "), sep=""))
+#                                paste0(c(Class, ext)[dupClasses], collapse = ", ")))
 #                }
             }
         }
@@ -907,8 +907,8 @@ showExtends <-
         if(is(eli, "SClassExtension")) {
             how[i] <-
                 if(length(eli@by))
-                    paste("by class", paste("\"", eli@by,
-                      "\", distance ",  eli@distance, sep="", collapse = ", "))
+		    paste("by class", paste0("\"", eli@by, "\", distance ",
+					     eli@distance, collapse = ", "))
                 else if(identical(eli@dataPart, TRUE))
                     "from data part"
                 else "directly"
@@ -920,19 +920,20 @@ showExtends <-
                               ", with explicit test", sep="")
                 }
                 else if(is.function(eli@coerce))
-                    how[i] <- paste(how[i], ", with explicit coerce", sep="")
+                    how[i] <- paste0(how[i], ", with explicit coerce")
             }
         }
     }
     if(identical(printTo, FALSE))
         list(what = what, how = how)
     else if(all(!nzchar(how)) ||  all(how == "directly")) {
-        what <- paste('"', what, '"', sep="")
+        what <- paste0('"', what, '"')
         if(length(what) > 1L)
-            what <- c(paste(what[-length(what)], ",", sep=""), what[[length(what)]])
+            what <- c(paste0(what[-length(what)], ","), what[[length(what)]])
         cat(file = printTo, what, fill=TRUE)
     }
-    else cat(file = printTo, "\n", paste("Class \"", what, "\", ", how, "\n", sep=""), sep="")
+    else cat(file = printTo, "\n",
+	     paste0("Class \"", what, "\", ", how, "\n"), sep = "")
 }
 
 
@@ -1240,7 +1241,7 @@ classMetaName <-
 # regexp for matching class metanames; semi-general but assumes the
 # meta pattern starts with "." and has no other special characters
 .ClassMetaPattern <- function()
-    paste("^[.]",substring(methodsPackageMetaName("C",""),2), sep = "")
+    paste0("^[.]",substring(methodsPackageMetaName("C",""),2))
 
 ##FIXME:  C code should take multiple strings in name so paste() calls could  be avoided.
 methodsPackageMetaName <-
@@ -1283,7 +1284,7 @@ requireMethods <-
 ## Construct an error message for an unsatisfied required method.
 .missingMethod <- function(f, message = "", method) {
     if(nzchar(message))
-        message <- paste("(", message, ")", sep="")
+        message <- paste0("(", message, ")")
     message <- paste("for function", f, message)
     if(is(method, "MethodDefinition")) {
         target <-  paste(.dQ(method@target), collapse=", ")
@@ -2357,7 +2358,7 @@ S3forS4Methods <- function(where, checkClasses = character()) {
     allClasses <- allClasses[match(allClasses, checkClasses, 0) > 0]
   if(length(allClasses) == 0)
     return(allClasses)
-  pattern <- paste("([.]",allClasses, "$)", sep = "", collapse="|")
+  pattern <- paste0("([.]",allClasses, "$)", collapse="|")
   allObjects <- objects(where, all.names = TRUE)
   allObjects <- allObjects[-grep("^[.][_][_]", allObjects)] # remove meta data
   allObjects <- grep(pattern, allObjects, value = TRUE)
@@ -2402,7 +2403,7 @@ S3forS4Methods <- function(where, checkClasses = character()) {
 ## .checkS3forClass <- function(className, where, what = className) {
 ##   badMethods <- S3forS4Methods(where, what)
 ##   if(length(badMethods) > 0) {
-##     msg <- paste("The apparent methods are ", paste('"',badMethods, '"', sep = "", collapse = ", "))
+##     msg <- paste0("The apparent methods are ", paste('"',badMethods, '"', collapse = ", "))
 ##     warning("Some of the superclasses in the definition of class \"",
 ##             className, "\" have apparent S3 methods.\n\nThese will be hidden by the S3 class that this class contains. (See ?Methods)\n\n", msg)
 ##   }

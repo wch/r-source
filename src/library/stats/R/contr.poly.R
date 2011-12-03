@@ -29,7 +29,7 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
 	raw <- qr.qy(QR, z)
 	Z <- sweep(raw, 2L, apply(raw, 2L, function(x) sqrt(sum(x^2))), "/",
 		   check.margin=FALSE)
-	colnames(Z) <- paste("^", 1L:n - 1L, sep="")
+	colnames(Z) <- paste0("^", 1L:n - 1L)
 	Z
     }
 

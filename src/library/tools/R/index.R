@@ -48,7 +48,7 @@ function(dataDir, contents)
     ## dataFiles <- list_files_with_type(dataDir, "data")
     dataTopics <- list_data_in_pkg(dataDir=dataDir)
     if(!length(dataTopics)) return(matrix("", 0L, 2L))
-    names(dataTopics) <- paste(names(dataTopics), "/", sep="")
+    names(dataTopics) <- paste0(names(dataTopics), "/")
     datasets <- unlist(dataTopics)
     ## it is possible to have topics that create no object:
     ## BioC's makecdfenv did.
@@ -67,7 +67,7 @@ function(dataDir, contents)
     if(length(datasets))
         dataIndex[, 1L] <-
             as.vector(ifelse(datasets == names(datasets), datasets,
-                             paste(datasets, " (", names(datasets), ")", sep="")))
+                             paste0(datasets, " (", names(datasets), ")")))
     dimnames(dataIndex) <- NULL
     dataIndex
 }

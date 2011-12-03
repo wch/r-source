@@ -112,10 +112,7 @@ pathMatch <- function(path, pathsofar, strict) {
   if (is.null(pathsofar))
     is.null(path)
   else {
-    if (strict)
-      pattern <- paste("^", path, "$", sep="")
-    else
-      pattern <- paste(path, "$", sep="")
+    pattern <- paste0(if(strict) "^", path, "$")
     grepl(pattern, pathsofar)
   }
 }

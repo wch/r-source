@@ -259,7 +259,7 @@ print.acf <- function(x, digits=3, ...)
     } else {
         acfs <- format(x$acf, ...)
         lags <- format(x$lag, digits=3)
-        acfs <- array(paste(acfs, " (", lags, ")", sep=""), dim=dim(x$acf))
+        acfs <- array(paste0(acfs, " (", lags, ")"), dim=dim(x$acf))
         dimnames(acfs)  <- list(rep("", nrow(x$lag)), x$snames, x$snames)
         print(acfs, quote=FALSE, ...)
     }

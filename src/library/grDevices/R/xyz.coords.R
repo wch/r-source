@@ -38,8 +38,8 @@ xy.coords <-
 	else if(is.complex(x)) {
 	    y <- Im(x)
 	    x <- Re(x)
-	    xlab <- paste("Re(", ylab, ")", sep="")
-	    ylab <- paste("Im(", ylab, ")", sep="")
+	    xlab <- paste0("Re(", ylab, ")")
+	    ylab <- paste0("Im(", ylab, ")")
 	}
 	else if(is.matrix(x) || is.data.frame(x)) {
 	    x <- data.matrix(x)
@@ -51,8 +51,8 @@ xy.coords <-
 	    else {
 		colnames <- dimnames(x)[[2L]]
 		if(is.null(colnames)) {
-		    xlab <- paste(ylab, "[,1]", sep="")
-		    ylab <- paste(ylab, "[,2]", sep="")
+		    xlab <- paste0(ylab, "[,1]")
+		    ylab <- paste0(ylab, "[,2]")
 		}
 		else {
 		    xlab <- colnames[1L]
@@ -64,8 +64,8 @@ xy.coords <-
 	}
 	else if(is.list(x)) {
             if (all(c("x", "y") %in% names(x))) {
-                xlab <- paste(ylab, "$x", sep="")
-                ylab <- paste(ylab, "$y", sep="")
+                xlab <- paste0(ylab, "$x")
+                ylab <- paste0(ylab, "$y")
                 y <- x[["y"]]
                 x <- x[["x"]]
             } else
@@ -144,9 +144,9 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	    else { ## >= 3 columns
 		colnames <- dimnames(x)[[2L]]
 		if(is.null(colnames)) {
-		    zlab <- paste(xlab,"[,3]",sep="")
-		    ylab <- paste(xlab,"[,2]",sep="")
-		    xlab <- paste(xlab,"[,1]",sep="")
+		    zlab <- paste0(xlab,"[,3]")
+		    ylab <- paste0(xlab,"[,2]")
+		    xlab <- paste0(xlab,"[,1]")
 		}
 		else {
 		    xlab <- colnames[1L]
@@ -160,9 +160,9 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	}
 	else if(is.list(x)) {
             if (all(c("x", "y", "z") %in% names(x))) {
-                zlab <- paste(xlab,"$z",sep="")
-                ylab <- paste(xlab,"$y",sep="")
-                xlab <- paste(xlab,"$x",sep="")
+                zlab <- paste0(xlab,"$z")
+                ylab <- paste0(xlab,"$y")
+                xlab <- paste0(xlab,"$x")
                 y <- x[["y"]]
                 z <- x[["z"]]
                 x <- x[["x"]]
@@ -178,16 +178,16 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	    y <- Im(x)
 	    x <- Re(x)
 	    zlab <- ylab
-	    ylab <- paste("Im(", xlab, ")", sep="")
-	    xlab <- paste("Re(", xlab, ")", sep="")
+	    ylab <- paste0("Im(", xlab, ")")
+	    xlab <- paste0("Re(", xlab, ")")
 	}
 	else if(is.complex(y)) {
 	    z <- x
 	    x <- Re(y)
 	    y <- Im(y)
 	    zlab <- xlab
-	    xlab <- paste("Re(", ylab, ")", sep="")
-	    ylab <- paste("Im(", ylab, ")", sep="")
+	    xlab <- paste0("Re(", ylab, ")")
+	    ylab <- paste0("Im(", ylab, ")")
 	}
 	else {
 	    if(is.factor(x)) x <- as.numeric(x)

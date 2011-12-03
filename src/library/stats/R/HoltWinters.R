@@ -336,7 +336,7 @@ print.HoltWinters <- function (x, ...)
     cat("Holt-Winters exponential smoothing",
         if (is.logical(x$beta) && !x$beta) "without" else "with", "trend and",
         if (is.logical(x$gamma) && !x$gamma) "without" else
-        paste(if (is.logical(x$beta) && !x$beta) "with ", x$seasonal, sep=""),
+        paste0(if (is.logical(x$beta) && !x$beta) "with ", x$seasonal),
         "seasonal component.\n")
     cat("\nCall:\n", deparse (x$call), "\n\n")
     cat("Smoothing parameters:\n")

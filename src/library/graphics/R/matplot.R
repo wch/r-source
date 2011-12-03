@@ -31,7 +31,7 @@ matplot <- function(x, y, type = "p",
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = getOption("verbose"))
 {
-    paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
+    paste.ch <- function(chv) paste0('"',chv,'"', collapse=" ")
     str2vec <- function(string) {
 	if(nchar(string, type="c")[1L] > 1)
 	    strsplit(string[1L], NULL)[[1L]]

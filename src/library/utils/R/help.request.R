@@ -84,7 +84,7 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
         ## FIXME: inf$otherPkgs is a list of packageDescription()s
 	other <-
 	    readMyLine("You have packages",
-                       paste("(", paste(sQuote(oPkgs), collapse=", "),")", sep=""),
+                       paste0("(", paste(sQuote(oPkgs), collapse=", "),")"),
                        "other than the base packages loaded. ",
 		       "If your query relates to one of these, have you ",
 		       "checked any corresponding books/manuals and",

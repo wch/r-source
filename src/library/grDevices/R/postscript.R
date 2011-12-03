@@ -612,7 +612,7 @@ matchEncoding <- function(font, encoding) UseMethod("matchEncoding")
 
 matchEncoding.Type1Font <- function(font, encoding) {
     ## the trailing .enc is optional
-    font$encoding %in% c("default", encoding, paste(encoding, ".enc", sep=""))
+    font$encoding %in% c("default", encoding, paste0(encoding, ".enc"))
 }
 
 # Users should not be specifying a CID font AND an encoding

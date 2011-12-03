@@ -60,19 +60,16 @@ function(dir, outDir)
         nzchar(Sys.getenv("R_ARCH")))
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
     Built <-
-        paste("R ",
-              paste(R.version[c("major", "minor")],
-                    collapse = "."),
-              "; ",
-              if(file_test("-d", file.path(dir, "src"))) OStype
-              else "",
-              "; ",
-              ## Prefer date in ISO 8601 format, UTC.
-              format(Sys.time(), tz = "UTC", usetz = TRUE),
-              ## Sys.time(),
-              "; ",
-              .OStype(),
-              sep = "")
+	paste0("R ",
+	       paste(R.version[c("major", "minor")], collapse = "."),
+	       "; ",
+	       if(file_test("-d", file.path(dir, "src"))) OStype else "",
+	       "; ",
+	       ## Prefer date in ISO 8601 format, UTC.
+	       format(Sys.time(), tz = "UTC", usetz = TRUE),
+	       ## Sys.time(),
+	       "; ",
+	       .OStype())
 
     ## At some point of time, we had:
     ##   We must not split the Built: field across lines.
@@ -83,10 +80,10 @@ function(dir, outDir)
     ## But in any case, it is true for fields obtained from expanding R
     ## fields (Authors@R): these should not be reformatted.
 
-    db <- c(db,     
+    db <- c(db,
             .expand_package_description_db_R_fields(db),
             Built = Built)
-    
+
     .write_description(db, file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")
@@ -287,7 +284,7 @@ function(dir, outDir)
     outFile <- file.path(outCodeDir, db["Package"])
     if(!file.create(outFile))
         stop(gettextf("unable to create '%s'", outFile), domain = NA)
-    writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
+    writeLines(paste0(".packageName <- \"", db["Package"], "\""),
                outFile)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
@@ -304,7 +301,7 @@ function(dir, outDir)
                tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "",
                             sub = "byte")
             }
-            writeLines(paste("#line 1 \"", f, "\"", sep=""), con)
+            writeLines(paste0("#line 1 \"", f, "\""), con)
             writeLines(tmp, con)
         }
 	close(con); on.exit()
@@ -613,7 +610,7 @@ function(dir, outDir, keep.source = TRUE)
     for(srcfile in vigns$docs[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         message("processing ", sQuote(basename(srcfile)))
-        texfile <- paste(base, ".tex", sep = "")
+        texfile <- paste0(base, ".tex")
         tryCatch(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
                                quiet = TRUE, keep.source = keep.source,
                                stylepath = FALSE),
@@ -629,7 +626,7 @@ function(dir, outDir, keep.source = TRUE)
         texi2pdf(texfile, quiet = TRUE, texinputs = vigns$dir)
         ## </FIXME>
         pdffile <-
-            paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
+	    paste0(basename(file_path_sans_ext(srcfile)), ".pdf")
         if(!file.exists(pdffile))
             stop(gettextf("file '%s' was not created", pdffile),
                  domain = NA)
@@ -698,7 +695,7 @@ function(dir, outDir, encoding = "unknown")
     manOutDir <- file.path(outDir, "help")
     dir.create(manOutDir, FALSE)
     db_file <- file.path(manOutDir,
-                         paste(basename(outDir), ".rdx", sep = ""))
+                         paste0(basename(outDir), ".rdx"))
     built_file <- file.path(dir, "build", "partial.rdb")
     ## Avoid (costly) rebuilding if not needed.
     ## Actually, it seems no more costly than these tests, which it also does
@@ -751,7 +748,7 @@ function(pkgs, lib.loc = NULL, file = NULL)
     pkgs <- strsplit(pkgs[1L], ",[[:blank:]]*")[[1L]]
     paths <- find.package(pkgs, lib.loc, quiet=TRUE)
     if(length(paths))
-        cat(paste(paste('-I"', paths, '/include"', sep=""), collapse=" "))
+	cat(paste(paste0('-I"', paths, '/include"'), collapse=" "))
     return(invisible())
 }
 

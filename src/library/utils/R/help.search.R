@@ -54,7 +54,7 @@ merge.vignette.index <- function(hDB, path, pkg) {
 	    keywords <- matrix("", nrow=nkeywords, ncol=3)
 	    colnames(keywords) <- colnames(hDB[[4]])
 	    keywords[,"Concepts"] <- unlist(vDB$Keywords)
-	    keywords[,"ID"] <- unlist(lapply(1:nrow(vDB), 
+	    keywords[,"ID"] <- unlist(lapply(1:nrow(vDB),
 		   function(i) rep(id[i], length(vDB$Keywords[[i]]))))
 	    keywords[,"Package"] <- pkg
 	    hDB[[4L]] <- rbind(hDB[[4L]], keywords)
@@ -150,7 +150,7 @@ help.search <-
     if (any(is.na(i)))
 	stop("incorrect type specification")
     else
-	types <- TYPES[i]    
+	types <- TYPES[i]
 
     if(is.null(lib.loc))
 	lib.loc <- .libPaths()
@@ -276,7 +276,7 @@ help.search <-
 	    ## the package (as library() will refuse to load it).
 	    ## We always load hsearch.rds to establish the format,
 	    ## sometimes vignettes.rds.
-	    
+
 	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
 		hDB <- readRDS(hs_file)
 		if(!is.null(hDB)) {
@@ -284,9 +284,9 @@ help.search <-
 		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
 			hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
 		    nh <- NROW(hDB[[1L]])
-		    hDB[[1L]] <- cbind(hDB[[1L]], 
+		    hDB[[1L]] <- cbind(hDB[[1L]],
 		                       Type = rep("help", nh))
-		    if (nh) 
+		    if (nh)
 		    	hDB[[1L]][, "LibPath"] <- path
 		    if ("vignette" %in% types)
 		    	hDB <- merge.vignette.index(hDB, path, p)
@@ -438,7 +438,7 @@ help.search <-
 		       x[x[, "Package"] %in% package, , drop = FALSE]
 		   })
     }
-    
+
     ## Subset to the requested help types
     db$Base <- db$Base[db$Base[,"Type"] %in% types,,drop=FALSE]
 
@@ -539,25 +539,23 @@ printhsearchInternal  <- function(x, ...)
 	    url <- paste("http://127.0.0.1:", tools:::httpdPort,
                       "/doc/html/Search?pattern=", tools:::escapeAmpersand(x$pattern),
                       # Only encode non-default values
-                      if (!("title" %in% x$fields)) "&title=0", 
+                      if (!("title" %in% x$fields)) "&title=0",
                       if ("keyword" %in% x$fields) "&keyword=1",
                       if (!("alias" %in% x$fields)) "&alias=0",
                       if (!("concept" %in% x$fields)) "&concept=0",
                       if ("name" %in% x$fields) "&name=1",
-                      if (!is.null(x$agrep)) paste("&agrep=", x$agrep, sep=""),
+                      if (!is.null(x$agrep)) paste0("&agrep=", x$agrep),
                       if (!x$ignore.case) "&ignore.case=0",
                       if (!identical(types, getOption("help.search.types")))
-                      	  paste("&types=", paste(types, collapse=";"), sep=""),
-                      if (!is.null(x$package)) paste("&package=", 
-                                                 paste(x$package, collapse=";"), 
-                                                 sep=""),
-                      if (!identical(x$lib.loc, .libPaths())) 
-                      	paste("&lib.loc=", paste(x$lib.loc, collapse=";")),
-              	      		sep="")
+			 paste0("&types=", paste(types, collapse=";")),
+                      if (!is.null(x$package))
+			 paste0("&package=", paste(x$package, collapse=";")),
+                      if (!identical(x$lib.loc, .libPaths()))
+			 paste0("&lib.loc=", paste(x$lib.loc, collapse=";")))
             browseURL(url, browser)
             return(invisible(x))
-        }  
-    }                      				 
+        }
+    }
     hfields <- paste(x$fields, collapse = " or ")
     vfieldnames <- c(alias = "name", concept="keyword", keyword=NA,
                      name="name", title="title")
@@ -578,7 +576,7 @@ printhsearchInternal  <- function(x, ...)
 				 "using", matchtype, "matching.")))
         return(invisible(x))
     }
-    
+
     outFile <- tempfile()
     outConn <- file(outFile, open = "w")
     typeinstruct <- c(vignette = paste("Type 'vignette(\"FOO\", package=\"PKG\")' to",
@@ -589,7 +587,7 @@ printhsearchInternal  <- function(x, ...)
 				       "'PKG::FOO-TYPE'."),
 		      demo = paste("Type 'demo(PKG::FOO)' to",
 				       "run demonstration 'PKG::FOO'."))
-				
+
     for (type in types) {
 	if(NROW(dbtemp <- db[db[,"Type"] == type,,drop=FALSE]) > 0) {
 	    writeLines(c(strwrap(paste(typenames[type], "with", fields[[type]],
@@ -599,7 +597,7 @@ printhsearchInternal  <- function(x, ...)
 		       outConn)
 	    dbnam <- paste(dbtemp[, "Package"], "::", dbtemp[ , "topic"],
 			   sep = "")
-	    dbtit <- paste(dbtemp[ , "title"], sep = "")
+	    dbtit <- paste0(dbtemp[ , "title"])
 	    writeLines(formatDL(dbnam, dbtit), outConn)
 	    writeLines(c("\n",
 			 strwrap(typeinstruct[type]),
@@ -608,6 +606,6 @@ printhsearchInternal  <- function(x, ...)
 	}
     }
     close(outConn)
-    file.show(outFile, delete.file = TRUE)    
+    file.show(outFile, delete.file = TRUE)
     invisible(x)
 }

@@ -103,7 +103,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     class(xreg) <- NULL
     if(include.mean && (nd == 0)) {
         if(is.matrix(xreg) && is.null(colnames(xreg)))
-            colnames(xreg) <- paste("xreg", 1L:ncxreg, sep = "")
+            colnames(xreg) <- paste0("xreg", 1L:ncxreg)
         xreg <- cbind(intercept = rep(1, n), xreg = xreg)
         ncxreg <- ncxreg + 1
     }
@@ -123,7 +123,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         xreg <- as.matrix(xreg)
         if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("'xreg' is collinear")
         if(is.null(cn <- colnames(xreg)))
-            cn <- paste("xreg", 1L:ncxreg, sep = "")
+            cn <- paste0("xreg", 1L:ncxreg)
     }
     if(any(is.na(x)) || (ncxreg && any(is.na(xreg))))
         ## only exact recursions handle NAs
@@ -207,10 +207,10 @@ arima0 <- function(x, order = c(0, 0, 0),
     class(resid) <- "ts"
     n.used <- sum(!is.na(resid))
     nm <- NULL
-    if(arma[1L] > 0) nm <- c(nm, paste("ar", 1L:arma[1L], sep = ""))
-    if(arma[2L] > 0) nm <- c(nm, paste("ma", 1L:arma[2L], sep = ""))
-    if(arma[3L] > 0) nm <- c(nm, paste("sar", 1L:arma[3L], sep = ""))
-    if(arma[4L] > 0) nm <- c(nm, paste("sma", 1L:arma[4L], sep = ""))
+    if(arma[1L] > 0) nm <- c(nm, paste0("ar", 1L:arma[1L]))
+    if(arma[2L] > 0) nm <- c(nm, paste0("ma", 1L:arma[2L]))
+    if(arma[3L] > 0) nm <- c(nm, paste0("sar", 1L:arma[3L]))
+    if(arma[4L] > 0) nm <- c(nm, paste0("sma", 1L:arma[4L]))
     fixed[mask] <- coef
     if(ncxreg > 0) {
         nm <- c(nm, cn)

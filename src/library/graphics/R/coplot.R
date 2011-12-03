@@ -347,7 +347,7 @@ coplot <-
     }
     if (length(missingrows)) {
 	cat("\n", gettext("Missing rows"), ": ",
-            paste(missingrows, collapse = ", "), "\n", sep ="")
+            paste0(missingrows, collapse = ", "), "\n")
 	invisible(missingrows)
     } else invisible()
 }

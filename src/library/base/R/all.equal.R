@@ -172,7 +172,7 @@ all.equal.language <- function(target, current, ...)
     ttxt <- paste(deparse(target), collapse = "\n")
     ctxt <- paste(deparse(current), collapse = "\n")
     msg <- c(if(mt != mc)
-	     paste("Modes of target, current: ", mt, ", ", mc, sep = ""),
+	     paste0("Modes of target, current: ", mt, ", ", mc),
 	     if(ttxt != ctxt) {
 		 if(pmatch(ttxt, ctxt, 0L))
 		     "target is a subset of current"
@@ -219,7 +219,7 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
     for(i in iseq) {
 	mi <- all.equal(target[[i]], current[[i]], check.attributes = check.attributes, ...)
 	if(is.character(mi))
-	    msg <- c(msg, paste("Component ", i, ": ", mi, sep=""))
+	    msg <- c(msg, paste0("Component ", i, ": ", mi))
     }
     if(is.null(msg)) TRUE else msg
 }
@@ -267,7 +267,7 @@ attr.all.equal <- function(target, current,
     ##---  Auxiliary in all.equal(.) methods --- return NULL or character()
     msg <- NULL
     if(mode(target) != mode(current))
-	msg <- paste("Modes: ", mode(target), ", ", mode(current), sep = "")
+	msg <- paste0("Modes: ", mode(target), ", ", mode(current))
     if(length(target) != length(current))
 	msg <- c(msg, paste("Lengths: ", length(target), ", ",
 			    length(current), sep = ""))

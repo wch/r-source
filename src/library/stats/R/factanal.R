@@ -211,7 +211,7 @@ factanal.fit.mle <-
                  q = factors, S = cmat)
     Lambda <- FAout(res$par, cmat, factors)
     dimnames(Lambda) <- list(dimnames(cmat)[[1L]],
-                             paste("Factor", 1L:factors, sep = ""))
+                             paste0("Factor", 1L:factors))
     p <- ncol(cmat)
     dof <- 0.5 * ((p - factors)^2 - p - factors)
     un <- res$par
@@ -267,7 +267,7 @@ print.factanal <- function(x, digits = 3, ...)
       tmat <- solve(x$rotmat)
       R <- tmat %*% t(tmat)
       factors <- x$factors
-      rownames(R) <- colnames(R) <- paste("Factor", 1:factors, sep="")
+      rownames(R) <- colnames(R) <- paste0("Factor", 1:factors)
 
                                         # the following line changed by Ulrich Keller, 9 Sept 2008
       if (TRUE != all.equal(c(R), c(diag(factors)))){

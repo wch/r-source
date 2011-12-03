@@ -113,7 +113,7 @@ print.help_files_with_topic <- function(x, ...)
         writeLines(c(gettextf("No documentation for %s in specified packages and libraries:",
                               sQuote(topic)),
                      gettextf("you could try %s",
-                              sQuote(paste("??", topic, sep = "")))))
+                              sQuote(paste0("??", topic)))))
         return(invisible(x))
     }
 
@@ -183,7 +183,7 @@ print.help_files_with_topic <- function(x, ...)
                         "unknown title" else
                     tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
                 }
-                txt <- paste(titles, " {", basename(paths), "}", sep="")
+                txt <- paste0(titles, " {", basename(paths), "}")
                 ## the default on menu() is currtently graphics = FALSE
                 res <- menu(txt, title = gettext("Choose one"),
                             graphics = getOption("menu.graphics"))
@@ -241,7 +241,7 @@ print.help_files_with_topic <- function(x, ...)
     if(length(res <- grep(encpatt, lines, perl = TRUE, useBytes = TRUE)))
         encoding <- sub(encpatt, "\\1", lines[res],
                         perl = TRUE, useBytes = TRUE)
-    texfile <- paste(topic, ".tex", sep = "")
+    texfile <- paste0(topic, ".tex")
     on.exit(unlink(texfile)) ## ? leave to helper
     if(nzchar(opt <- Sys.getenv("R_RD4PDF"))) opt else "times,inconsolata"
     has_figure <- any(grepl("\\Figure", lines))

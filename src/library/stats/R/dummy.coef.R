@@ -176,11 +176,11 @@ print.dummy_coef <- function(x, ..., title)
 	    line <- line + 2
 	    ans[line-1, 1L:n1] <- names(this)
 	    ans[line, 1L:n1] <- format(this, ...)
-	    rn[line-1] <- paste(terms[j], ":   ", sep="")
+	    rn[line-1] <- paste0(terms[j], ":   ")
 	} else {
 	    line <- line + 1
 	    ans[line, 1L:n1] <- format(this, ...)
-	    rn[line] <- paste(terms[j], ":   ", sep="")
+	    rn[line] <- paste0(terms[j], ":   ")
 	}
     }
     rownames(ans) <- rn

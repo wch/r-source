@@ -38,14 +38,14 @@ stopRd <- function(block, Rdfile, ...)
     	    Rdfile <- srcfile$filename
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
-    else Rdfile <- paste(Rdfile, ":", sep="")
+    else Rdfile <- paste0(Rdfile, ":")
 
     msg <- if (is.null(srcref))
-        paste(Rdfile, " ", ..., sep = "")
+        paste0(Rdfile, " ", ...)
     else {
-    	loc <- paste(Rdfile, srcref[1L], sep = "")
-    	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
-    	paste(loc, ": ", ..., sep="")
+    	loc <- paste0(Rdfile, srcref[1L])
+    	if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
+    	paste0(loc, ": ", ...)
     }
     stop(msg, call. = FALSE, domain = NA)
 }
@@ -59,14 +59,14 @@ warnRd <- function(block, Rdfile, ...)
     	    Rdfile <- srcfile$filename
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
-    else Rdfile <- paste(Rdfile, ":", sep="")
+    else Rdfile <- paste0(Rdfile, ":")
 
     msg <- if (is.null(srcref))
-        paste(Rdfile, " ", ..., sep = "")
+        paste0(Rdfile, " ", ...)
     else {
-    	loc <- paste(Rdfile, srcref[1L], sep = "")
-    	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
-        paste(loc, ": ", ..., sep = "")
+    	loc <- paste0(Rdfile, srcref[1L])
+    	if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
+        paste0(loc, ": ", ...)
     }
     warning(msg, call. = FALSE, domain = NA, immediate. = TRUE)
 }
@@ -267,7 +267,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    	               seek(tmpcon, 0)
 	    	               parse_Rd(tmpcon, fragment=TRUE)
 	    	            }
-	    res <- tryCatch(parse_Rd(tmpcon, fragment=FALSE), 
+	    res <- tryCatch(parse_Rd(tmpcon, fragment=FALSE),
 	    	            warning = parseFragment, error = parseFragment,
 	    	            finally = close(tmpcon))
 	    # Now remove that extra newline added by the writeLines
@@ -275,10 +275,10 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    if (attr(last, "Rd_tag") == "TEXT" && (len <- length(last)))
 	        res[[length(res)]][len] <- gsub("\\n$", "", last[len])
 	    flag <- getDynamicFlags(res)
-	    # We may have multiple chunks now.  If they are in 
+	    # We may have multiple chunks now.  If they are in
 	    # a section, we can wrap them in LIST, but at top
 	    # level we can't, so we disallow multiple sections.
-	    
+
 	    # First clear out the junk.
 	    tags <- RdTags(res)
 	    keep <- rep(TRUE, length(tags))
@@ -290,16 +290,16 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    tags <- tags[keep]
 	    if (length(res) > 1) {
 	    	is_section <- !is.na(sectionOrder[tags])
-	    	if (!any(is_section)) 
+	    	if (!any(is_section))
 	    	    res <- tagged(res, "LIST")
 	    	else {
-	    	    if (sum(is_section) > 1) 
+	    	    if (sum(is_section) > 1)
 	    		stop("Only one Rd section per \\Sexpr is supported.")
 	    	    res <- res[[which(is_section)]]
 	    	}
 	    } else if (length(res) == 1) res <- res[[1]]
 	    else res <- tagged("", "TEXT")
-	    
+
 	    if (is.list(res)) {
 	    	res <- setDynamicFlags(res, flag)
 	    	res <- prepare_Rd(res, defines = .Platform$OS.type, options=options,
@@ -602,11 +602,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     {
         srcref <- attr(block, "srcref")
         msg <- if (is.null(srcref))
-            paste("file '", Rdfile, "': ", ..., sep = "")
+            paste0("file '", Rdfile, "': ", ...)
         else {
-            loc <- paste(Rdfile, ":", srcref[1L], sep = "")
-            if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
-            paste(loc, ": ", ..., sep = "")
+            loc <- paste0(Rdfile, ":", srcref[1L])
+            if (srcref[1L] != srcref[3L]) loc <- paste0(loc, "-", srcref[3L])
+            paste0(loc, ": ", ...)
         }
         msg <- sprintf("checkRd: (%d) %s", level, msg)
         .messages <<- c(.messages, msg)

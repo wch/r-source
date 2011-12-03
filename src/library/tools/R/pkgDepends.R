@@ -303,7 +303,7 @@ depMtrxToStrings <- function(depMtrx) {
             if (is.na(x[2L]))
                 x[1L]
             else
-                paste(x[1L]," (",x[2L]," ",x[3L],")",sep="")
+                paste0(x[1L]," (",x[2L]," ",x[3L],")")
         })
     }
     else

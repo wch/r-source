@@ -43,8 +43,6 @@
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
-    paste0 <- function(...) paste(..., sep="")
-
     MAKE <- Sys.getenv("MAKE")
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
@@ -1517,14 +1515,13 @@
             "Report bugs to <r-bugs@r-project.org>.",
             sep="\n")
 
-    p0 <- function(...) paste(..., sep="")
     ## FIXME shQuote here?
     p1 <- function(...) paste(..., collapse=" ")
 
     WINDOWS <- .Platform$OS.type == "windows"
     if (!WINDOWS) {
         mconf <- readLines(file.path(R.home(),
-                                     p0("etc", Sys.getenv("R_ARCH")),
+                                     paste0("etc", Sys.getenv("R_ARCH")),
                                      "Makeconf"))
         SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
         SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
@@ -1540,7 +1537,7 @@
         rarch <- Sys.getenv("R_ARCH", NA)
         if(is.na(rarch)) {
             if (nzchar(.Platform$r_arch)) {
-                rarch <- p0("/", .Platform$r_arch)
+                rarch <- paste0("/", .Platform$r_arch)
                 Sys.setenv(R_ARCH = rarch)
             } else rarch <- ""
         }
@@ -1550,9 +1547,9 @@
 
     objs <- character()
     shlib <- ""
-    site <- file.path(p0(R.home("etc"), rarch), "Makevars.site")
+    site <- file.path(paste0(R.home("etc"), rarch), "Makevars.site")
     makefiles <-
-        c(file.path(p0(R.home("etc"), rarch), "Makeconf"),
+        c(file.path(paste0(R.home("etc"), rarch), "Makeconf"),
           if(file.exists(site)) site,
           file.path(R.home("share"), "make",
                     if (WINDOWS) "winshlib.mk" else "shlib.mk"))
@@ -1599,7 +1596,7 @@
         } else {
             ## a source file or something like -Ldir -lfoo
             base <- sub("\\.[[:alnum:]]*$", "", a)
-            ext <- sub(p0(base, "."),  "", a, fixed = TRUE)
+            ext <- sub(paste0(base, "."),  "", a, fixed = TRUE)
             nobj <- ""
             if (nzchar(ext)) {
                 if (ext %in% c("cc", "cpp")) {
@@ -1625,7 +1622,7 @@
                     nobj <- base
                 }
                 if (nzchar(nobj) && !nzchar(shlib))
-                    shlib <- p0(nobj, SHLIB_EXT)
+                    shlib <- paste0(nobj, SHLIB_EXT)
             }
             if (nzchar(nobj)) objs <- c(objs, nobj)
             else pkg_libs <- c(pkg_libs, a)
@@ -1633,7 +1630,7 @@
         args <- args[-1L]
     }
 
-    if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
+    if (length(objs)) objs <- paste0(objs, OBJ_EXT, collapse=" ")
 
     if (WINDOWS) {
         if (rarch == "/x64" &&
@@ -1652,7 +1649,7 @@
             makefiles <- c(makefiles, f)
     }
 
-    makeobjs <- p0("OBJECTS=", shQuote(objs))
+    makeobjs <- paste0("OBJECTS=", shQuote(objs))
     if (WINDOWS && file.exists("Makevars.win")) {
         makefiles <- c("Makevars.win", makefiles)
         lines <- readLines("Makevars.win", warn = FALSE)
@@ -1665,7 +1662,7 @@
             makeobjs <- ""
     }
 
-    makeargs <- p0("SHLIB=", shQuote(shlib))
+    makeargs <- paste0("SHLIB=", shQuote(shlib))
     if (with_f9x) {
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
@@ -1679,10 +1676,10 @@
 
     if (length(pkg_libs))
         makeargs <- c(makeargs,
-                      p0("PKG_LIBS='", p1(pkg_libs), "'"))
+                      paste0("PKG_LIBS='", p1(pkg_libs), "'"))
     if (length(shlib_libadd))
         makeargs <- c(makeargs,
-                      p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
+                      paste0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
     ## TCLBIN is needed for tkrplot and tcltk2
@@ -1861,28 +1858,24 @@
         if (m) nm <- c(" ", nm[-m])
         m <- match("misc", nm, 0L) # force last in all locales.
         if (m) nm <- c(nm[-m], "misc")
-        writeLines("<p align=\"center\">", outcon)
-        writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
-                   outcon)
-        writeLines("</p>\n", outcon)
-
+	writeLines(c("<p align=\"center\">",
+		     paste0("<a href=\"#", nm, "\">", nm, "</a>"),
+		     "</p>\n"), outcon)
         for (f in nm) {
             MM <- M[first == f, ]
             if (f != " ")
                 cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                     sep = "", file = outcon)
-            writeLines('<table width="100%">', outcon)
-            writeLines(paste('<tr><td width="25%"><a href="', MM[, 2L], '.html">',
-                             MM$HTopic, '</a></td>\n<td>', MM[, 3L],'</td></tr>',
-                             sep = ''), outcon)
-            writeLines("</table>", outcon)
+	    writeLines(c('<table width="100%">',
+			 paste0('<tr><td width="25%"><a href="', MM[, 2L], '.html">',
+				MM$HTopic, '</a></td>\n<td>', MM[, 3L],'</td></tr>'),
+			 "</table>"), outcon)
        }
     } else if (nrow(M)) {
-        writeLines('<table width="100%">', outcon)
-        writeLines(paste('<tr><td width="25%"><a href="', M[, 2L], '.html">',
-                         M$HTopic, '</a></td>\n<td>', M[, 3L],'</td></tr>',
-                         sep = ''), outcon)
-        writeLines("</table>", outcon)
+	writeLines(c('<table width="100%">',
+		     paste0('<tr><td width="25%"><a href="', M[, 2L], '.html">',
+			    M$HTopic, '</a></td>\n<td>', M[, 3L],'</td></tr>'),
+		     "</table>"), outcon)
     } else { # no rows
          writeLines("There are no help pages in this package", outcon)
     }
@@ -1975,7 +1968,7 @@
         if ("html" %in% types) {
             type <- "html"
             ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
+                            paste0(bf, ext[type]))
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 ## assume prepare_Rd was run when dumping the .rds
@@ -1988,7 +1981,7 @@
         if ("latex" %in% types) {
             type <- "latex"
             ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
+                            paste0(bf, ext[type]))
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 .convert(Rd2latex(Rd, ff, defines = NULL,
@@ -1998,7 +1991,7 @@
         if ("example" %in% types) {
             type <- "example"
             ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
+                            paste0(bf, ext[type]))
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 .convert(Rd2ex(Rd, ff, defines = NULL))
                 if (file_test("-f", ff)) showtype(type)

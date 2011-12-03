@@ -71,7 +71,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
               # "1256" = return("ISO8859-6"),
                "1257" = return("ISO8859-13")
                )
-        return(paste("CP", x[2L], sep=""))
+        return(paste0("CP", x[2L]))
     } else {
         ## Assume locales are like  en_US[.utf8[@euro]]
         x <- strsplit(locale, ".", fixed=TRUE)[[1L]]

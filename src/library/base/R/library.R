@@ -36,7 +36,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 {
     if (!missing(keep.source))
         warning("'keep.source' is deprecated and will be ignored")
-    paste0 <- function(...) paste(..., sep="")
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
         if(is.null(built <- pkgInfo$Built))
@@ -487,7 +486,7 @@ function(chname, package, lib.loc, verbose = getOption("verbose"),
     lib.loc
 
     r_arch <- .Platform$r_arch
-    chname1 <- paste(chname, file.ext, sep = "")
+    chname1 <- paste0(chname, file.ext)
     ## it is not clear we should allow this, rather require a single
     ## package and library.
     for(pkg in find.package(package, lib.loc, verbose = verbose)) {
@@ -552,7 +551,7 @@ function(chname, libpath, verbose = getOption("verbose"),
     ## We need an absolute path here, and separators consistent with
     ## library.dynam
     libpath <- normalizePath(libpath, "/", TRUE)
-    chname1 <- paste(chname, file.ext, sep = "")
+    chname1 <- paste0(chname, file.ext)
     file <- if(nzchar(.Platform$r_arch))
              file.path(libpath, "libs", .Platform$r_arch, chname1)
      else    file.path(libpath, "libs", chname1)
@@ -694,7 +693,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         paths <- character()
         for(lib in lib.loc) {
             dirs <- list.files(lib,
-                               pattern = paste("^", pkg, "$", sep = ""),
+                               pattern = paste0("^", pkg, "$"),
                                full.names = TRUE)
             ## Note that we cannot use tools::file_test() here, as
             ## cyclic namespace dependencies are not supported.  Argh.
@@ -704,7 +703,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                                                   "DESCRIPTION"))])
         }
         if(use_attached
-           && length(pos <- grep(paste("^package:", pkg, "$", sep = ""),
+           && length(pos <- grep(paste0("^package:", pkg, "$"),
                                  search()))) {
             dirs <- sapply(pos, function(i) {
                 if(identical(env <- as.environment(i), baseenv()))
@@ -894,7 +893,7 @@ function(x)
     v <- paste(R.version[c("major", "minor")], collapse = ".")
 
     expand <- function(x, spec, expansion)
-        gsub(paste("(^|[^%])(%%)*%", spec, sep = ""),
+        gsub(paste0("(^|[^%])(%%)*%", spec),
              sprintf("\\1\\2%s", expansion), x)
 
     ## %V => version x.y.z

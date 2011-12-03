@@ -90,7 +90,7 @@ princomp.default <-
         else
             ev[neg] <- 0
     }
-    cn <- paste("Comp.", 1L:ncol(cv), sep = "")
+    cn <- paste0("Comp.", 1L:ncol(cv))
     names(ev) <- cn
     dimnames(edc$vectors) <- if(missing(x))
         list(dimnames(cv)[[2L]], cn) else list(dimnames(x)[[2L]], cn)

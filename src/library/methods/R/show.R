@@ -49,7 +49,7 @@ showDefault <- function(object, oldMethods = TRUE)
 ##             slots <- slots[! slots %in% names(slotsFromS3(object))]
 ##             if(!identical(cl, S3Class)) {
 ##                 if(length(S3Class) > 1)
-##                   cat("  (S3 class: c(", paste('"', S3Class, '"', sep="", collapse = ", "), "))\n", sep="")
+##                   cat("  (S3 class: c(", paste0('"', S3Class, '"', collapse = ", "), "))\n", sep="")
 ##                 else
 ##                   cat("  (S3 class: \"",S3Class, "\")\n", sep = "")
 ##             }
@@ -99,10 +99,9 @@ show <- function(object)
     setMethod("show", "MethodDefinition",
               function(object) {
                   cl <- class(object)
-                  if(.identC(cl, "MethodDefinition"))
-                      nonStandard <- ""
-                  else
-                      nonStandard <-  paste(" (Class ", classLabel(cl),")", sep="")
+		  nonStandard <-
+		      if(.identC(cl, "MethodDefinition"))
+			  "" else paste0(" (Class ", classLabel(cl),")")
                   cat("Method Definition",nonStandard,":\n\n", sep = "")
                   show(object@.Data)
                   mm <- methodSignatureMatrix(object)
@@ -179,12 +178,13 @@ classLabel <- function(Class) {
         else stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class %s", classLabel(class(Class))), domain = NA)
     }
     if(.showPackage(className)) {
-       if(identical(packageName, ".GlobalEnv"))
-           packageName <- " (from the global environment)"
-        else
-            packageName <- paste(" (from package \"", packageName, "\")", sep="")
-       paste('"', className, '"', packageName, sep = "")
+	packageName <-
+	    if(identical(packageName, ".GlobalEnv"))
+		" (from the global environment)"
+	    else
+		paste0(" (from package \"", packageName, "\")")
+       paste0('"', className, '"', packageName)
    }
    else
-       paste('"', className, '"', sep = "")
+       paste0('"', className, '"')
 }

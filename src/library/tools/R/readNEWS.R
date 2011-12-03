@@ -23,8 +23,6 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     ## ----------------------------------------------------------------------
     ## Author: Martin Maechler, Date: 26 Jun 2006, 15:34
 
-    p0 <- function(...) paste(..., sep="")
-
     rmIniTABs	   <- function(ch) sub("^\t+", "", ch)
     rmTABs	   <- function(ch) gsub("\t+", "", ch)
     collapseWSpace <- function(ch) {
@@ -175,9 +173,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     s.pre <- "^\t*\\*[\t ]+ " ##  REGEXP prefix used to identify series begin
     s.post <- " SERIES NEWS"
 
-    iS <- grep(p0(s.pre, "[1-9]+\\.[0-9]+", s.post), ll)
+    iS <- grep(paste0(s.pre, "[1-9]+\\.[0-9]+", s.post), ll)
     series <- as.list(iS)
-    names(series) <- sub(p0(s.post,"[\t ]*\\*$"), "",
+    names(series) <- sub(paste0(s.post,"[\t ]*\\*$"), "",
 			 sub(s.pre, "", ll[iS]))
     if(trace) {
         cat(s.post, ":\n")

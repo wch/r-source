@@ -165,12 +165,12 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	R     <- vignettes[i, "R"]
 	pkg   <- vignettes[i, "Package"]
         root <- c(rep("../", depth), "library/", pkg, "/doc/")
-	link  <- c('<a href="', root, 
-		  if (nchar(PDF)) PDF else File, '">', 
+	link  <- c('<a href="', root,
+		  if (nchar(PDF)) PDF else File, '">',
 		  pkg, "::", topic, '</a>')
-	line <- c('<tr><td align="right" valign="top">', link, 
-		    '</td>\n<td></td><td valign="top">', Title, 
-		    '</td>\n<td valign="top">', 
+	line <- c('<tr><td align="right" valign="top">', link,
+		    '</td>\n<td></td><td valign="top">', Title,
+		    '</td>\n<td valign="top">',
 		    if (nchar(PDF))
 			c('<a href="', root, PDF,'">PDF</a>'),
 		    '</td>\n<td valign="top">',
@@ -178,7 +178,7 @@ makeVignetteTable <- function(vignettes, depth=2) {
 		    '</td>\n<td valign="top" nowrap>',
 		    if (nchar(R))
 		    	c('<a href="', root, R,'">R code</a>'),
-		    '</td></tr>')      
+		    '</td></tr>')
 	out <- c(out, paste(line, collapse=''))
      }
      c(out, '</table>')
@@ -193,24 +193,24 @@ makeDemoTable <- function(demos, depth=2) {
     for (i in seq_len(nrow(demos))) {
 	topic <- demos[i, "topic"]
 	pkg <- demos[i, "Package"]
-        root <- c(rep("../", depth), "library/", pkg, "/")	      
+        root <- c(rep("../", depth), "library/", pkg, "/")
 	Title <- demos[i, "title"]
 	path <- file.path(demos[i, "LibPath"], "demo")
 	files <- basename(list_files_with_type(path, "demo", full.names=FALSE))
 	file <- files[topic == file_path_sans_ext(files)]
-	if (length(file) == 1) { 
-	    link <- c('<a href="', root, 'demo/', file, '">', 
+	if (length(file) == 1) {
+	    link <- c('<a href="', root, 'demo/', file, '">',
 			  pkg, "::", topic, '</a>')
-	    runlink <- c(' <a href="', root, 'Demo/', topic, 
-	                 '">(Run demo in console)</a>')					  	
+	    runlink <- c(' <a href="', root, 'Demo/', topic,
+	                 '">(Run demo in console)</a>')
 	} else {
 	    link <- c(pkg, "::", topic)
 	    runlink <- ""
 	}
-	line <- c('<tr><td align="right" valign="top">', link, 
-		    '</td>\n<td></td><td valign="top">', Title, 
-		    '</td>\n<td valign="top" nowrap>', runlink, 
-		    '</td></tr>')      
+	line <- c('<tr><td align="right" valign="top">', link,
+		    '</td>\n<td></td><td valign="top">', Title,
+		    '</td>\n<td valign="top" nowrap>', runlink,
+		    '</td></tr>')
 	out <- c(out, paste(line, collapse=''))
      }
      c(out, '</table>')
@@ -223,14 +223,14 @@ makeHelpTable <- function(help, depth=2) {
 	      '<col width="74%">')
     pkg <- help[,"Package"]
     root <- paste(paste(rep("../", depth), collapse=""),
-                  "library/", pkg, "/html/", sep="")	      
+                  "library/", pkg, "/html/", sep="")
     topic <- help[, "topic"]
     Title <- help[, "title"]
     links <- paste('<a href="', root, topic, '.html">',
-		   ifelse(nchar(pkg), paste(pkg, "::", sep=""), ""),
+		   ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		   topic, '</a>', sep = "")
-    lines <- paste('<tr><td align="right" valign="top">', links, 
-		   '</td>\n<td></td><td valign="top">', Title, 
-		   '</td></tr>', sep="")  
+    lines <- paste('<tr><td align="right" valign="top">', links,
+		   '</td>\n<td></td><td valign="top">', Title,
+		   '</td></tr>', sep="")
     c(out, lines, '</table>')
 }

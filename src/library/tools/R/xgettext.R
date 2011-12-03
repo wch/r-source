@@ -142,7 +142,7 @@ function(dir, potFile)
 {
     dir <- file_path_as_absolute(dir)
     if(missing(potFile))
-        potFile <- paste("R-", basename(dir), ".pot", sep="")
+        potFile <- paste0("R-", basename(dir), ".pot")
     tmp <- unique(unlist(xgettext(dir, asCall = FALSE)))
     tmp <- tmp[nzchar(tmp)]
     tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc

@@ -33,7 +33,7 @@
     ## Convert argument tags to option names (i.e. stick "-" in front)
     name2opt <- function(x)
         if ( x != "")
-            paste("-",x,sep="")
+            paste0("-",x)
         else ""
 
     isCallback <- function(x)
@@ -78,7 +78,7 @@
         x <- gsub("\"","\\\\\"", as.character(x))
         x <- gsub("\\[","\\\\[", as.character(x))
         x <- gsub("\\$","\\\\$", as.character(x))
-        paste("\"", x, "\"", sep = "", collapse = " ")
+        paste0("\"", x, "\"", collapse = " ")
     }
 
     val <- list(...)
@@ -199,7 +199,7 @@ is.tkwin <- function(x) inherits(x, "tkwin")
 
 tclVar <- function(init="") {
    n <- evalq(TclVarCount <- TclVarCount + 1, .TkRoot$env)
-   name <- paste("::RTcl", n, sep="")
+   name <- paste0("::RTcl", n)
    l <- list(env=new.env())
    assign(name,NULL,envir=l$env)
    reg.finalizer(l$env,function(env)tcl("unset",ls(env)))

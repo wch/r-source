@@ -41,7 +41,7 @@ history <- function(max.show = 25, reverse = FALSE, pattern, ...)
 timestamp <- function(stamp = date(), prefix = "##------ ",
                       suffix = " ------##", quiet = FALSE)
 {
-    stamp <- paste(prefix, stamp, suffix, sep = "")
+    stamp <- paste0(prefix, stamp, suffix)
     .Internal(addhistory(stamp))
     if (!quiet) cat(stamp, sep = "\n")
     invisible(stamp)

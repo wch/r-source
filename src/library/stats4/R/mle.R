@@ -197,14 +197,14 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     confstr <- NULL
     if (missing(levels)) {
         levels <- sqrt(qchisq(pmax(0, pmin(1, conf)), 1))
-        confstr <- paste(format(100 * conf), "%", sep = "")
+        confstr <- paste0(format(100 * conf), "%")
     }
     if (any(levels <= 0)) {
         levels <- levels[levels > 0]
         warning("levels truncated to positive values only")
     }
     if (is.null(confstr)) {
-        confstr <- paste(format(100 * pchisq(levels^2, 1)), "%", sep = "")
+        confstr <- paste0(format(100 * pchisq(levels^2, 1)), "%")
     }
     mlev <- max(levels) * 1.05
     nm <- names(obj)

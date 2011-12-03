@@ -112,15 +112,13 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             }
 
             nBlocks <- length(upperBlockIndex)
-            s <- paste(c(initial, rep.int(prefix, nBlocks - 1L)),
-                       c(indentString, rep.int(exdentString, nBlocks - 1L)),
-                       sep = "")
+	    s <- paste0(c(initial, rep.int(prefix, nBlocks - 1L)),
+			c(indentString, rep.int(exdentString, nBlocks - 1L)))
             initial <- prefix
             for(k in seq_len(nBlocks))
-                s[k] <- paste(s[k], paste(words[lowerBlockIndex[k] :
-                                                upperBlockIndex[k]],
-                                          collapse = " "),
-                              sep = "")
+		s[k] <- paste0(s[k], paste(words[lowerBlockIndex[k] :
+						 upperBlockIndex[k]],
+					   collapse = " "))
 
             yi <- c(yi, s, prefix)
         }
@@ -174,18 +172,18 @@ function(x, y, style = c("table", "list"),
     if(style == "table") {
         i <- (nchar(x, type="w") > indent - 3L)
         if(any(i))
-            x[i] <- paste(x[i], "\n", indentString, sep = "")
+            x[i] <- paste0(x[i], "\n", indentString)
         i <- !i
         if(any(i))
             x[i] <- formatC(x[i], width = indent, flag = "-")
         y <- lapply(strwrap(y, width = width - indent,
                             simplify = FALSE),
                     paste,
-                    collapse = paste("\n", indentString, sep = ""))
-        r <- paste(x, unlist(y), sep = "")
+                    collapse = paste0("\n", indentString))
+        r <- paste0(x, unlist(y))
     }
     else if(style == "list") {
-        y <- strwrap(paste(x, ": ", y, sep = ""), exdent = indent,
+        y <- strwrap(paste0(x, ": ", y), exdent = indent,
                      width = width, simplify = FALSE)
         r <- unlist(lapply(y, paste, collapse = "\n"))
     }

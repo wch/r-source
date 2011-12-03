@@ -328,7 +328,7 @@ function(x, m, invert = FALSE, value)
                     stop("must have replacements for non-matches")
                 v <- rep(v, length.out = nu + 1L)
             }
-            paste(v, c(u, ""), sep = "", collapse = "")
+            paste0(v, c(u, ""), collapse = "")
         },
             y, value, USE.NAMES = FALSE)
     } else {
@@ -343,7 +343,7 @@ function(x, m, invert = FALSE, value)
                     stop("must have replacements for matches")
                 v <- rep(v, length.out = nu - 1L)
             }
-            paste(u, c(v, ""), sep = "", collapse = "")
+            paste0(u, c(v, ""), collapse = "")
         },
             y, value, USE.NAMES = FALSE)
     }

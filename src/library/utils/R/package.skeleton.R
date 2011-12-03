@@ -115,11 +115,11 @@ package.skeleton <-
     writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
     if(length(methodsList)) {
 	cat("exportMethods(\n    ", file = out)
-	cat(paste('"', methodsList, '"', sep="", collapse = ",\n    "), "\n)\n", file = out)
+	cat(paste0('"', methodsList, '"', collapse = ",\n    "), "\n)\n", file = out)
     }
     if(length(classesList)) {
 	cat("exportClasses(\n    ", file = out)
-	cat(paste('"', classesList, '"', sep="", collapse = ",\n     "), "\n)\n", file = out)
+	cat(paste0('"', classesList, '"', collapse = ",\n     "), "\n)\n", file = out)
     }
     close(out)
 
@@ -180,7 +180,7 @@ package.skeleton <-
 		    "\n are now renamed to 'z<name>.R'")
 	    file.rename(from = file.path(code_dir, wrong),
 			to = file.path(code_dir,
-			paste("z", sub("(\\.[^.]*)?$", ".R", wrong), sep="")))
+			paste0("z", sub("(\\.[^.]*)?$", ".R", wrong))))
         }
     }
 
@@ -255,11 +255,11 @@ package.skeleton <-
         wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",
                       list0)
         if(length(wrong))
-            list0[wrong] <- paste("zz", list0[wrong], sep="")
+            list0[wrong] <- paste0("zz", list0[wrong])
         ## using grep was wrong, as could give -integer(0)
         ok <- grepl("^[[:alnum:]]", list0)
         if(any(!ok))
-            list0[!ok] <- paste("z", list0[!ok], sep="")
+            list0[!ok] <- paste0("z", list0[!ok])
         ## now on Mac/Windows lower/uppercase will collide too
         list1 <- tolower(list0)
         list2 <- make.unique(list1, sep="_")

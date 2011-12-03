@@ -54,7 +54,7 @@ debugger <- function(dump = last.dump)
     calls <- names(dump)
     repeat {
         cat(gettext("Available environments had calls:\n"))
-        cat(paste(1L:n, ": ", calls,  sep=""), sep="\n")
+        cat(paste0(1L:n, ": ", calls), sep="\n")
         cat(gettext("\nEnter an environment number, or 0 to exit  "))
         repeat {
             ind <- .Internal(menu(as.character(calls)))
@@ -71,9 +71,9 @@ limitedLabels <- function(value, maxwidth = getOption("width") - 5L)
     srcrefs <- sapply(value, function(v)
                       if (!is.null(srcref <- attr(v, "srcref"))) {
                           srcfile <- attr(srcref, "srcfile")
-                          paste(basename(srcfile$filename), "#", srcref[1L],": ", sep="")
+                          paste0(basename(srcfile$filename), "#", srcref[1L],": ")
                       } else "")
-    value <- paste(srcrefs, as.character(value), sep="")
+    value <- paste0(srcrefs, as.character(value))
     if(is.null(maxwidth) || maxwidth < 40L) maxwidth <- 40L
     maxwidth <- min(maxwidth, 1000L)
     strtrim(value, maxwidth)

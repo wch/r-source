@@ -75,6 +75,6 @@ function(labels, x, offset = 0, width = 0.9 * getOption("width"),
     nlines <- cumsum(sapply(x, length))
     prefix <- rep.int(.make_empty_string(delta), nlines[len])
     prefix[1L + c(0L, nlines[-len])] <-
-        paste(.make_empty_string(offset), labels, sep = "")
+        paste0(.make_empty_string(offset), labels)
     paste(prefix, unlist(x), sep = sep)
 }

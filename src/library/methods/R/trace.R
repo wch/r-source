@@ -277,14 +277,14 @@
                 ""
             else {
                 if(nameSpaceCase)
-                    paste(" in environment <namespace:",  pname, ">", sep="")
+                    paste0(" in environment <namespace:",  pname, ">")
                 else
-                    paste(" ", tracingWhere, " \"",  pname, "\"", sep="")
+                    paste0(" ", tracingWhere, " \"",  pname, "\"")
             }
         }
-        else paste(" as seen from package \"", fromPackage, "\"", sep="")
+        else paste0(" as seen from package \"", fromPackage, "\"")
         object <- if(refCase) "reference method" else if(is.null(signature)) "function" else "specified method for function"
-        object <- paste(" ", object, " \"", what, "\" ", sep="")
+        object <- paste0(" ", object, " \"", what, "\" ")
         .message(action, object, location)
         if(nameSpaceCase && !untrace && exists(what, envir = .GlobalEnv)) {
             untcall<- paste("untrace(\"", what, "\", where = getNamespace(\"",
@@ -466,7 +466,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
 }
 
 .traceClassName <- function(className) {
-    className[] <- paste(className, "WithTrace", sep="")
+    className[] <- paste0(className, "WithTrace")
     className
 }
 
@@ -711,7 +711,7 @@ insertSource <- function(source, package = "",
         if(identical(package, ".GlobalEnv"))
             envns <- NULL
         else {
-            pname <- paste("package:", package, sep="")
+            pname <- paste0("package:", package)
             envp <- tryCatch(as.environment(pname), error = function(cond)NULL)
             if(is.null(envp)) {
                 envp <- tryCatch(as.environment(pname), error = function(cond)NULL)

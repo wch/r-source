@@ -21,7 +21,7 @@
   function(libname, pkgname, where)
 {
     if(missing(where)) {
-        where <- match(paste("package:", pkgname, sep=""), search())
+        where <- match(paste0("package:", pkgname), search())
         if(is.na(where)) {
             warning(gettextf("not a package name: %s", sQuote(pkgname)),
                     domain = NA)

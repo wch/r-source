@@ -107,7 +107,7 @@ plot.isoreg <-
     if(grid) grid()
     if(both) { ## Cumulative Plot
 	plot (x0, cy, type = "n", xlab = xlab,
-	      ylab = paste("cumsum(", ylab, ")", sep=""), ylim = range(cy, cf),
+	      ylab = paste0("cumsum(", ylab, ")"), ylim = range(cy, cf),
               ...)
         i <- 1L + x$iKnots
         lines(x0, cf, col = par.fit$col, lwd = par.fit$lwd)

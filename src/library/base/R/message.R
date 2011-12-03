@@ -62,7 +62,7 @@ function(..., domain = NULL, appendLF = TRUE)
             args <- .Internal(gettext(domain, unlist(args)))
         paste(args, collapse = "")
     } else ""
-    if(appendLF) paste(msg, "\n", sep = "") else msg
+    if(appendLF) paste0(msg, "\n") else msg
 }
 
 .packageStartupMessage <- function (message, call = NULL)

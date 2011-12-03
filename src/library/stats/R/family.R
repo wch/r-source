@@ -35,7 +35,7 @@ power <- function(lambda = 1)
     mu.eta <- function(eta)
         pmax((1/lambda) * eta^(1/lambda - 1), .Machine$double.eps)
     valideta <- function(eta) all(eta>0)
-    link <- paste("mu^", round(lambda, 3), sep="")
+    link <- paste0("mu^", round(lambda, 3))
     structure(list(linkfun = linkfun, linkinv = linkinv,
                    mu.eta = mu.eta, valideta = valideta, name = link),
               class="link-glm")

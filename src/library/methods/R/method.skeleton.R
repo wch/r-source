@@ -26,7 +26,6 @@ method.skeleton <- function (generic, signature, file, external = FALSE,
     else {
         generic <- fdef@generic
     }
-    paste0 <- function(...) paste(..., sep = "")
     signature <- matchSignature(signature, fdef)
     if (length(signature) == 0)
         signature <- "ANY"

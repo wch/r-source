@@ -23,7 +23,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     xnames <- colnames(x)
     if( is.null(xnames) ) {
 	if(ncol(x)==1) xnames <- "X"
-	else xnames <- paste("X", 1L:ncol(x), sep="")
+	else xnames <- paste0("X", 1L:ncol(x))
     }
     if( intercept ) {
 	x <- cbind(1, x)
@@ -32,7 +32,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 
     ## find names of y variables (responses)
 
-    if(is.null(yname) && ncol(y) > 1) yname <- paste("Y", 1L:ncol(y), sep="")
+    if(is.null(yname) && ncol(y) > 1) yname <- paste0("Y", 1L:ncol(y))
 
     ## remove missing values
 

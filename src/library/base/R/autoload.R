@@ -32,7 +32,7 @@ autoload <- function(name, package, reset=FALSE, ...)
 
 autoloader <- function (name, package, ...)
 {
-    name <- paste(name, "", sep = "")
+    name <- paste0(name, "")
     rm(list = name, envir = .AutoloadEnv, inherits = FALSE)
     m <- match.call()
     m$name <- NULL

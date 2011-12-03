@@ -246,7 +246,7 @@ format.data.frame <- function(x, ..., justify = "none")
     }
     cn <- names(x)
     m <- match(c("row.names", "check.rows", "check.names", ""), cn, 0L)
-    if(any(m)) cn[m] <- paste("..dfd.", cn[m], sep="")
+    if(any(m)) cn[m] <- paste0("..dfd.", cn[m])
     ## This requires valid symbols for the columns, so we need to
     ## truncate any of more than 256 bytes.
     long <- nchar(cn, "bytes") > 256L
@@ -317,7 +317,6 @@ prettyNum <-
 	return(x)
 
     ## else
-    P0 <- function(...) paste(..., sep="")
     if(is.na(is.cmplx)) { ## find if 'x' is format from a *complex*
 	ina <- is.na(x) | x == "NA"
 	is.cmplx <-
@@ -344,8 +343,8 @@ prettyNum <-
 				  decimal.mark=decimal.mark, preserve.width=preserve.width,
 				  zero.print=zero.print, drop0trailing=drop0trailing,
 				  is.cmplx=FALSE, ...))
-	    r[[2]][has.i] <- P0(r[[2]][has.i], "i")
-	    x[i3] <- paste(r[[1]], sapply(z.sp, `[[`, 2L), r[[2]], sep="")
+	    r[[2]][has.i] <- paste0(r[[2]][has.i], "i")
+	    x[i3] <- paste0(r[[1]], sapply(z.sp, `[[`, 2L), r[[2]])
 	}
 	return(x)
     }
@@ -358,17 +357,17 @@ prettyNum <-
     if(any(iN <- is.na(A.))) A.[iN] <- ""
 
     if(nzchar(big.mark) &&
-       length(i.big <- grep(P0("[0-9]{", big.interval + 1L,",}"), B.))
+       length(i.big <- grep(paste0("[0-9]{", big.interval + 1L,",}"), B.))
        ) { ## add 'big.mark' in decimals before "." :
 	B.[i.big] <-
-	    revStr(gsub(P0("([0-9]{",big.interval,"})\\B"),
-			P0("\\1",revStr(big.mark)), revStr(B.[i.big])))
+	    revStr(gsub(paste0("([0-9]{",big.interval,"})\\B"),
+			paste0("\\1",revStr(big.mark)), revStr(B.[i.big])))
     }
     if(nzchar(small.mark) &&
-       length(i.sml <- grep(P0("[0-9]{", small.interval + 1L,",}"), A.))
+       length(i.sml <- grep(paste0("[0-9]{", small.interval + 1L,",}"), A.))
        ) { ## add 'small.mark' in decimals after "."  -- but *not* trailing
-	A.[i.sml] <- gsub(P0("([0-9]{",small.interval,"}\\B)"),
-			  P0("\\1",small.mark), A.[i.sml])
+	A.[i.sml] <- gsub(paste0("([0-9]{",small.interval,"}\\B)"),
+			  paste0("\\1",small.mark), A.[i.sml])
     }
     if(drop0trailing) {
 	a <- A.[!iN]
@@ -381,7 +380,7 @@ prettyNum <-
 	iN <- !nzchar(A.)
     }
     ## extraneous trailing dec.marks: paste(B., A., sep = decimal.mark)
-    A. <- P0(B., c(decimal.mark, "")[iN+ 1L], A.)
+    A. <- paste0(B., c(decimal.mark, "")[iN+ 1L], A.)
     if(preserve.width != "none") {
 	nnc <- nchar(A., "c")
 	d.len <- nnc - nchar(x, "c") # extra space added by 'marks' above

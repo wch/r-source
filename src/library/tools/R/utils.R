@@ -97,7 +97,7 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
     }
     ## does not cope with exts with '.' in.
     ## files <- files[sub(".*\\.", "", files) %in% exts]
-    patt <- paste("\\.(", paste(exts, collapse="|"), ")$", sep = "")
+    patt <- paste0("\\.(", paste(exts, collapse="|"), ")$")
     files <- grep(patt, files, value = TRUE)
     if(full.names)
         files <- if(length(files))
@@ -399,7 +399,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         texfile <- shQuote(file)
         ## 'file' could be a file path
         base <- basename(file_path_sans_ext(file))
-        idxfile <- paste(base, ".idx", sep="")
+        idxfile <- paste0(base, ".idx")
         latex <- if(pdf) Sys.getenv("PDFLATEX", "pdflatex")
         else  Sys.getenv("LATEX", "latex")
         if(!nzchar(Sys.which(latex)))
@@ -411,7 +411,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             stop(gettextf("unable to run '%s' on '%s'", latex, file),
                  domain = NA)
         nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
-                             readLines(paste(base, ".log", sep = ""))))
+                             readLines(paste0(base, ".log"))))
         for(iter in 1L:10L) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
@@ -424,7 +424,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             }
             if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
                 stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
-            Log <- readLines(paste(base, ".log", sep = ""))
+            Log <- readLines(paste0(base, ".log"))
             nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined", Log))
             if(nmiss == nmiss_prev &&
                !length(grep("Rerun to get", Log)) ) break
@@ -569,7 +569,7 @@ function(file1, file2)
 function(x, f = NULL, recursive = FALSE)
 {
     x <- as.list(x)
-    
+
     predicate <- if(is.null(f))
         function(e) is.call(e)
     else

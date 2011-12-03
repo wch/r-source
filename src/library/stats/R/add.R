@@ -703,7 +703,7 @@ step <- function(object, scope, scale = 0,
     cut.string <- function(string)
     {
 	if(length(string) > 1L)
-	    string[-1L] <- paste("\n", string[-1L], sep = "")
+	    string[-1L] <- paste0("\n", string[-1L])
 	string
     }
     re.arrange <- function(keep)

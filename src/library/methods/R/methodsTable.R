@@ -1001,7 +1001,7 @@
     cf <- function(...) cat(file = printTo, sep = "", ...)
     sigString <- function(sig) paste(names(sig), "=\"", as.character(sig), "\"",
 				     sep = "", collapse = ", ")
-    qs <- function(what) paste('"', what, '"', collapse = ", ", sep = "")
+    qs <- function(what) paste0('"', what, '"', collapse = ", ")
     doFun <- function(func, pkg) cf("Function: ", func, " (package ", pkg, ")\n")
     env <- environment(generic)
     signature <- generic@signature
@@ -1234,7 +1234,7 @@ outerLabels <- function(labels, new) {
 # regexp for matching table names; semi-general but assumes the
 # meta pattern starts with "." and has no other special characters
 .TableMetaPattern <- function()
-    paste("^[.]",substring(methodsPackageMetaName("T",""),2), sep = "")
+    paste0("^[.]",substring(methodsPackageMetaName("T",""),2))
 
 .addToMetaTable <- function(fdef, signature, definition, where, nSig) {
   return()
@@ -1534,7 +1534,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       }
 
       if(length(.undefClasses)) {
-        warning("Undefined classes (", paste('"',unique(.undefClasses),'"', sep="", collapse=", "),
+        warning("Undefined classes (", paste0('"',unique(.undefClasses),'"', collapse=", "),
                 ") will be ignored, for argument ", colnames(sigs)[[j]])
         .undefClasses <- character()
       }
@@ -1581,7 +1581,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
     }
     signatures <- lapply(signatures, doSelect)
   }
-  signatures <- sapply(signatures, function(x)paste(x, collapse = "#"))
+  signatures <- sapply(signatures, paste0, collapse = "#")
   names(signatures) <- sigLabels
 
   new("MethodSelectionReport", generic = fname, allSelections = signatures,

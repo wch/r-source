@@ -130,7 +130,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
             warning("header and 'col.names' are of different lengths")
 
     } else if (missing(col.names))
-	col.names <- paste("V", 1L:cols, sep = "")
+	col.names <- paste0("V", 1L:cols)
     if(length(col.names) + rlabp < cols)
         stop("more columns than column names")
     if(cols > 0L && length(col.names) > cols)

@@ -61,7 +61,7 @@ resultLog <- function(Log, text) printLog(Log, " ", text, "\n")
 errorLog <- function(Log, ...)
 {
     resultLog(Log, "ERROR")
-    text <- paste(..., sep="")
+    text <- paste0(...)
     if (length(text) && nzchar(text)) printLog(Log, ..., "\n")
 }
 
@@ -406,7 +406,7 @@ get_exclude_patterns <- function()
                     }
                     ## Also cleanup possible Unix leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
-                             paste(pkgname, c(".a", ".dll", ".def"), sep="")))
+                             paste0(pkgname, c(".a", ".dll", ".def"))))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
@@ -429,7 +429,7 @@ get_exclude_patterns <- function()
                     }
                     ## Also cleanup possible Windows leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
-                             paste(pkgname, c(".a", ".dll", ".def"), sep="")))
+                             paste0(pkgname, c(".a", ".dll", ".def"))))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
@@ -530,9 +530,9 @@ get_exclude_patterns <- function()
 	    messageLog(Log, "building the PDF package manual")
 	    dir.create("build", showWarnings = FALSE)
 	    refman <- file.path(pkgdir, "build",
-                                paste(basename(pkgdir), ".pdf", sep = ""))
+                                paste0(basename(pkgdir), ".pdf"))
 	    ..Rd2pdf(c("--force", "--no-preview",
-	               paste("--output=", refman, sep=""),
+	               paste0("--output=", refman),
 	               pkgdir), quit = FALSE)
         }
 	return(TRUE)
@@ -601,7 +601,7 @@ get_exclude_patterns <- function()
 
         flatten <- function(x) {
             if(length(x) == 3L)
-                paste(x$name, " (", x$op, " ", x$version, ")", sep = "")
+                paste0(x$name, " (", x$op, " ", x$version, ")")
             else x[[1L]]
         }
         deps <- desc["Depends"]
@@ -823,7 +823,7 @@ get_exclude_patterns <- function()
         intname <- desc["Package"]
         ## make a copy, cd to parent of copy
         setwd(dirname(pkgdir))
-        filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
+        filename <- paste0(intname, "_", desc["Version"], ".tar")
         filepath <- file.path(startdir, filename)
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
@@ -888,7 +888,7 @@ get_exclude_patterns <- function()
         ## Mac resource forks
         exclude <- exclude | grepl("^\\._", bases)
 	## Windows DLL resource file
-        exclude <- exclude | (bases == paste("src/", pkgname, "_res.rc", sep=""))
+        exclude <- exclude | (bases == paste0("src/", pkgname, "_res.rc"))
         unlink(allfiles[exclude], recursive = TRUE, force = TRUE)
         setwd(owd)
 
@@ -953,7 +953,7 @@ get_exclude_patterns <- function()
 	}
 
         ## Finalize
-        filename <- paste(pkgname, "_", desc["Version"], ".tar.gz", sep="")
+        filename <- paste0(pkgname, "_", desc["Version"], ".tar.gz")
         filepath <- file.path(startdir, filename)
         ## NB: naughty reg-packages.R relies on this exact format!
         messageLog(Log, "building ", sQuote(filename))

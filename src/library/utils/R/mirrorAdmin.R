@@ -26,7 +26,7 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
     z <- c(z, "<dl>")
     for(country in unique(mirrors$Country)){
         m = mirrors[mirrors$Country==country,]
-        z <- c(z, paste("<dt>", country, "</dt>", sep=""),
+        z <- c(z, paste0("<dt>", country, "</dt>"),
                "<dd>",
                "<table border=0 width=90%>")
         for(k in 1L:nrow(m)){

@@ -34,7 +34,7 @@ plot.function <-
     if (is.null(ylab)) {
         xname <- list(...)[["xname"]]
         if (is.null(xname)) xname <- "x"
-       ylab <- paste(substitute(x), "(", xname, ")", sep = "")
+       ylab <- paste0(substitute(x), "(", xname, ")")
     }
     ## name args to avoid partial matches from ...
     curve(expr = x, from = from, to = to, xlim = xlim, ylab = ylab, ...)
@@ -178,7 +178,7 @@ function(formula, data = parent.frame(), ..., subset,
 	if( is.object(y) ) {
 	    found <- FALSE
 	    for(j in class(y)) {
-		funname <- paste("plot.", j, sep = "")
+		funname <- paste0("plot.", j)
 		if( exists(funname) ) {
 		    found <- TRUE
 		    break

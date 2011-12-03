@@ -87,7 +87,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     }
 
     last_char <- ""
-    of0 <- function(...) of1(paste(..., sep=""))
+    of0 <- function(...) of1(paste0(...))
     of1 <- function(text) {
         nc <- nchar(text)
         last_char <<- substr(text, nc, nc)
@@ -201,7 +201,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     writeWrapped <- function(block, tag) {
     	wrapper <- wrappers[[tag]]
     	if (is.null(wrapper))
-    	    wrapper <- c(paste(tag, "{", sep=""), "}")
+    	    wrapper <- c(paste0(tag, "{"), "}")
     	of1(wrapper[1L])
     	writeContent(block, tag)
     	of1(wrapper[2L])
@@ -359,7 +359,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         ## And texindy used by texi2dvi > 1.135 chokes on {/(
         if(grepl("[|{(]", alias)) aa <- "\\aliasB{"
         if(is.na(currentAlias)) currentAlias <<- name
-        if (pmatch(paste(currentAlias, ".", sep=""), alias, 0L)) {
+        if (pmatch(paste0(currentAlias, "."), alias, 0L)) {
             aa <- "\\methaliasA{"
         } else currentAlias <<- alias
         ## 'name' is linked from the header

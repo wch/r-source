@@ -175,7 +175,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
                 }
         format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
         else if(np == 0L) "%Y-%m-%d %H:%M:%S"
-        else paste("%Y-%m-%d %H:%M:%OS", np, sep="")
+        else paste0("%Y-%m-%d %H:%M:%OS", np)
     }
     ## <FIXME>
     ## Move names handling to C code eventually ...
@@ -864,7 +864,7 @@ quarters <- function(x, abbreviate) UseMethod("quarters")
 quarters.POSIXt <- function(x, ...)
 {
     x <- (as.POSIXlt(x)$mon)%/%3
-    paste("Q", x+1, sep = "")
+    paste0("Q", x+1)
 }
 
 trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"), ...)

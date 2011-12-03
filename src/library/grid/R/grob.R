@@ -126,7 +126,7 @@ is.grob <- function(x) {
 }
 
 as.character.grob <- function(x, ...) {
-  paste(class(x)[1L], "[", x$name, "]", sep="")
+  paste0(class(x)[1L], "[", x$name, "]")
 }
 
 print.grob <- function(x, ...) {
@@ -234,7 +234,7 @@ addToGList.gList <- function(x, gList) {
 }
 
 as.character.gList <- function(x, ...) {
-  paste("(", paste(lapply(x, as.character), collapse=", "), ")", sep="")
+  paste0("(", paste(lapply(x, as.character), collapse=", "), ")")
 }
 
 print.gList <- function(x, ...) {
@@ -672,7 +672,7 @@ namePos <- function(pathName, names, grep) {
 partialPathMatch <- function(pathsofar, path, strict=FALSE, grep) {
   if (strict) {
     if (!any(grep))
-      length(grep(paste("^", pathsofar, sep=""), path)) > 0L
+      length(grep(paste0("^", pathsofar), path)) > 0L
     else {
       pathSoFarElts <- explodePath(pathsofar)
       pathElts <- explodePath(path)
@@ -705,7 +705,7 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
       if (strict)
         match <- match(pathsofar, path, nomatch=0L)
       else
-        match <- (length(grep(paste(path, "$", sep=""), pathsofar)) > 0L)
+        match <- (length(grep(paste0(path, "$"), pathsofar)) > 0L)
     else {
       pathSoFarElts <- explodePath(pathsofar)
       pathElts <- explodePath(path)
@@ -811,7 +811,7 @@ getGTree <- function(gTree, pathsofar, gPath, strict, grep, global) {
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- getGrobFromGPath(child, newpathsofar,
                                                     gPath, strict,
                                                     grep, global))) {
@@ -834,7 +834,7 @@ getGTree <- function(gTree, pathsofar, gPath, strict, grep, global) {
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- getGrobFromGPath(child, newpathsofar,
                                                     gPath, strict,
                                                     grep, global))) {
@@ -949,7 +949,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- setGrobFromGPath(child, newpathsofar,
                                                     gPath, newGrob,
                                                     strict, grep))) {
@@ -976,7 +976,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- setGrobFromGPath(child, newpathsofar,
                                                     gPath, newGrob,
                                                     strict, grep))) {
@@ -1116,7 +1116,7 @@ editGTree <- function(gTree, specs, pathsofar, gPath, strict,
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- editGrobFromGPath(child, specs,
                                                      newpathsofar,
                                                      gPath, strict,
@@ -1140,7 +1140,7 @@ editGTree <- function(gTree, specs, pathsofar, gPath, strict,
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- editGrobFromGPath(child, specs,
                                                      newpathsofar,
                                                      gPath, strict,
@@ -1280,7 +1280,7 @@ addGTree <- function(gTree, grob, pathsofar, gPath, strict,
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- addGrobFromGPath(child, grob,
                                                     newpathsofar,
                                                     gPath, strict,
@@ -1304,7 +1304,7 @@ addGTree <- function(gTree, grob, pathsofar, gPath, strict,
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- addGrobFromGPath(child, grob,
                                                     newpathsofar,
                                                     gPath, strict,
@@ -1448,7 +1448,7 @@ removeGTree <- function(gTree, name, pathsofar, gPath, strict,
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- removeGrobFromGPath(child, name,
                                                        newpathsofar,
                                                        gPath, strict,
@@ -1478,7 +1478,7 @@ removeGTree <- function(gTree, name, pathsofar, gPath, strict,
           if (is.null(pathsofar))
             newpathsofar <- child$name
           else
-            newpathsofar <- paste(pathsofar, .grid.pathSep, childName, sep="")
+            newpathsofar <- paste0(pathsofar, .grid.pathSep, childName)
           if (!is.null(newChild <- removeGrobFromGPath(child, name,
                                                        newpathsofar,
                                                        gPath, strict,

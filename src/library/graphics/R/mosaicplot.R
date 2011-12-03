@@ -347,11 +347,11 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         brks <- round(breaks, 2)
         y.m <- y.b + 1000 * 0.4 * bh
         text(1000 * (1.05 + rtxtWidth), y.m,
-             c(paste("<", brks[2L], sep = ""),
+             c(paste0("<", brks[2L]),
                paste(brks[2 : (2 * len - 1)],
                      brks[3 : (2 * len)],
                      sep = ":"),
-               paste(">", brks[2 * len], sep = "")),
+               paste0(">", brks[2 * len])),
              srt = 90, cex = cex.axis, xpd = NA)
     }
 

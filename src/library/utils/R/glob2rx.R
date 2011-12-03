@@ -21,7 +21,7 @@ glob2rx <- function(pattern, trim.head = FALSE, trim.tail = TRUE)
     ## -------------------------------------------------------------------------
     ## Author: Martin Maechler ETH Zurich, ~ 1991
     ##	       New version using [g]sub() : 2004
-    p <- gsub("\\.","\\\\.", paste("^", pattern, "$", sep=""))
+    p <- gsub("\\.","\\\\.", paste0("^", pattern, "$"))
     p <- gsub("\\?",	 ".",  gsub("\\*",  ".*", p))
     ## 'Escaping hell' : at least for '(', '[' and '{'
     p <- gsub("([^\\])\\(", "\\1\\\\(", p)

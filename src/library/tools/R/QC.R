@@ -220,7 +220,7 @@ function(package, dir, lib.loc = NULL)
             mlist <- .get_S4_methods_list(g, code_env)
             sigs <- .make_siglist(mlist) #  s/#/,/g
             if(length(sigs))
-                paste(g, ",", sigs, sep = "")
+                paste0(g, ",", sigs)
             else
                 character()
         }
@@ -794,7 +794,7 @@ function(x, ...)
         if(!length(s))
             "function()"
         else if(has_only_names)
-            paste("function(", paste(s, collapse = ", "), ")", sep = "")
+	    paste0("function(", paste(s, collapse = ", "), ")")
         else {
             s <- paste(deparse(s), collapse = "")
             s <- gsub(" = ([,\\)])", "\\1", s)
@@ -1384,7 +1384,7 @@ function(package, dir, lib.loc = NULL)
             }
             bad <- sapply(arg_names_in_arg_list_missing_in_usage,
                           function(x)
-                          !grepl(paste("\\b", x, "\\b", sep = ""),
+			  !grepl(paste0("\\b", x, "\\b"),
                                  usage_text))
             arg_names_in_arg_list_missing_in_usage <-
                 c(bad_args,
@@ -1633,7 +1633,7 @@ function(package, dir, lib.loc = NULL)
         ## for internal generics and group generics.)
         ## Matching via grep() is tricky with e.g. a '$' in the name of
         ## the generic function ... hence substr().
-        name <- paste(g, ".", sep = "")
+        name <- paste0(g, ".")
         methods <-
             functions_in_code[substr(functions_in_code, 1L,
                                      nchar(name, type="c")) == name]
@@ -2162,7 +2162,7 @@ function(package, dir, lib.loc = NULL)
         ## needed for internal generics and group generics.)
         ## Matching via grep() is tricky with e.g. a '$' in the name
         ## of the generic function ... hence substr().
-        name <- paste(g, ".", sep = "")
+        name <- paste0(g, ".")
         methods <-
             functions_in_code[substr(functions_in_code, 1L,
                                      nchar(name, type="c")) == name]
@@ -2189,12 +2189,12 @@ format.checkS3methods <-
 function(x, ...)
 {
     format_args <- function(s)
-        paste("function(", paste(s, collapse = ", "), ")", sep = "")
+        paste0("function(", paste(s, collapse = ", "), ")")
 
     .fmt <- function(entry) {
-        c(paste(names(entry)[1L], ":", sep = ""),
+        c(paste0(names(entry)[1L], ":"),
           strwrap(format_args(entry[[1L]]), indent = 2L, exdent = 11L),
-          paste(names(entry)[2L], ":", sep = ""),
+          paste0(names(entry)[2L], ":"),
           strwrap(format_args(entry[[2L]]), indent = 2L, exdent = 11L),
           "")
     }
@@ -2817,7 +2817,7 @@ function(dfile)
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
         dep_regexp <-
             paste("^[[:space:]]*",
-                  paste("(R|", valid_package_name_regexp, ")", sep = ""),
+                  paste0("(R|", valid_package_name_regexp, ")"),
                   "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
                   "[[:space:]]*$",
                   sep = "")
@@ -3493,7 +3493,7 @@ function(package, dir, lib.loc = NULL)
     db <- cbind(db, bad = FALSE, report = db[, 1L])
     have_anchor <- nzchar(anchor <- db[, 2L])
     db[have_anchor, "report"] <-
-        paste("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}", sep = "")
+        paste0("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}")
 
     ## Check the targets from the non-anchored xrefs.
     db[!have_anchor, "bad"] <- !( db[!have_anchor, 1L] %in% unlist(aliases))
@@ -3653,7 +3653,7 @@ format.check_package_datasets <-
 function(x, ...)
 {
     ## not sQuote as we have mucked about with locales.
-    iconv0 <- function(x, ...) paste("'", iconv(x, ...), "'", sep="")
+    iconv0 <- function(x, ...) paste0("'", iconv(x, ...), "'")
 
     c(character(),
       if(n <- x$latin1) {
@@ -3734,7 +3734,7 @@ print.check_package_compact_datasets <-
 function(x, ...)
 {
     reformat <- function(x) {
-        xx <- paste(x, "b", sep = "")
+        xx <- paste0(x, "b")
         ind1 <- (x >= 1024)
         xx[ind1] <- sprintf("%.0fKb", x[ind1]/1024)
         ind2 <- x >= 1024^2
@@ -5552,7 +5552,7 @@ function(txt, re)
                        substring(txt, 1L, ipos - 1L), str)
         txt <- substring(txt, epos + 1L)
     }
-    paste(out, txt, sep = "")
+    paste0(out, txt)
 }
 
 ### ** .functions_to_be_ignored_from_usage
@@ -5615,8 +5615,8 @@ function(env, verbose = getOption("verbose"))
 		    " where hasMethods(g, env) errors: ",
 		    paste(sQuote(rErr), collapse = ", "),
 		    "\nMay need something like\n\n",
-		    paste("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
-                          ")\n", sep=''),
+		    paste0("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
+                          ")\n"),
 		    "\nin NAMESPACE.")
 	    hasM <- hasM[!hasErr]
 	}

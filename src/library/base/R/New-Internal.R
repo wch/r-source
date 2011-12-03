@@ -36,10 +36,10 @@ try <- function(expr, silent = FALSE) {
             if(is.na(w))
                 w <-  14L + nchar(dcall, type="b") + nchar(sm[1L], type="b")
             if (w > LONG)
-                prefix <- paste(prefix, "\n  ", sep = "")
+                prefix <- paste0(prefix, "\n  ")
         }
         else prefix <- "Error : "
-        msg <- paste(prefix, conditionMessage(e), "\n", sep="")
+        msg <- paste0(prefix, conditionMessage(e), "\n")
         ## Store the error message for legacy uses of try() with
         ## geterrmessage().
         .Internal(seterrmessage(msg[1L]))

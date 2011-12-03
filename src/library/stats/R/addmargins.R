@@ -99,7 +99,7 @@ addmargins <-
 		    paste("Margin ", margin[i], ".", fnames[[i]][blank],
 			  sep = "")
 	    } else {
-		fnames[[i]] <- paste(topname, ".", fnames[[i]], sep = "")
+		fnames[[i]] <- paste0(topname, ".", fnames[[i]])
 	    }
 	} else
 	    if (fnames[[i]] == "") fnames[[i]] <- paste("Margin", margin[i])
@@ -178,9 +178,9 @@ addmargins <-
 
     ## Done! Now print it.
     ##
-    if(!quiet && !miss.FUN  && n.sid > 1) {
+    if(!quiet && !miss.FUN && n.sid > 1) {
 	cat("Margins computed over dimensions\nin the following order:\n")
-	for(i in 1L:n.sid)
+	for(i in seq_len(n.sid))
 	    cat(paste(i), ": ", names(dimnames(A))[margin[i]], "\n", sep="")
     }
     new.A

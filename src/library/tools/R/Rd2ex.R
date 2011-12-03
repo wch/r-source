@@ -35,7 +35,7 @@ Rd2ex <-
     dropNewline <- FALSE # drop next char if newline
 
     of0 <- function(...)
-        of1(paste(..., sep=""))
+        of1(paste0(...))
     of1 <- function(text) {
         if (dropNewline && length(text)) {
             text[1L] <- psub("^\n", "", text[1L])
@@ -169,8 +169,8 @@ Rd2ex <-
         if (any(aliasblks)) {
             aliases <- unlist(Rd[aliasblks])
             sp <- grep(" ", aliases, fixed = TRUE)
-            aliases[sp] <- paste("'", aliases[sp], "'", sep = "")
-            of0(wr(paste("Aliases: ", paste(aliases, collapse=" "), sep="")),
+            aliases[sp] <- paste0("'", aliases[sp], "'")
+            of0(wr(paste0("Aliases: ", paste(aliases, collapse=" "))),
                 "\n")
         }
         keyblks <- sections == "\\keyword"
@@ -180,7 +180,7 @@ Rd2ex <-
             if(length(keys)) {
                 keys <- psub("^\\s+", "", keys)
                 of0(wr(paste("Keywords: ",
-                             paste(keys, collapse=" "), sep="")), "\n")
+                             paste0(keys, collapse=" "))), "\n")
             }
         }
         writeLines(c("", "### ** Examples"), con)

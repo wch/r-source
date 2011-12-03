@@ -184,7 +184,7 @@ setOldClass <- function(Classes, prototype = NULL,
         if(length(bad)>0)
           stop(
                gettextf("invalid S4 class corresponding to S3 class: slots in  S4 version must extend corresponding slots in S3 version: fails for %s",
-                        paste('"', bad, '"', sep="",  collapse = ", ")),
+                        paste0('"', bad, '"',  collapse = ", ")),
                domain = NA)
     }
     TRUE

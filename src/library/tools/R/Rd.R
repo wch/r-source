@@ -399,7 +399,7 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
  	built <- readRDS(built_file)
  	names_built <- names(built)
  	if ("install" %in% stages) {
- 	    this_os <- grepl(paste("^", os, "/", sep=""), names_built)
+ 	    this_os <- grepl(paste0("^", os, "/"), names_built)
  	    name_only <- basename(names_built[this_os])
  	    built[name_only] <- built[this_os]
  	    some_os <- grepl("/", names(built))
@@ -503,7 +503,7 @@ function(x, kind)
 function(x, which, predefined = TRUE)
 {
     if(predefined)
-        x <- x[RdTags(x) == paste("\\", which, sep = "")]
+        x <- x[RdTags(x) == paste0("\\", which)]
     else {
         ## User-defined sections are parsed into lists of length 2, with
         ## the elements the title and the body, respectively.
@@ -688,7 +688,7 @@ function(x)
 function(x) {
     # Handle easy cases first
     if (is.character(x)) return(c(x))
-    
+
     # We'd like to use capture.output here, but don't want to depend
     # on utils, so we duplicate some of it
     rval <- NULL
@@ -698,7 +698,7 @@ function(x) {
     Rdsave <- Rd2txt_options(underline_titles = FALSE)
     sink(file)
     tryCatch(Rd2txt(x, fragment=TRUE),
-             finally = {sink() 
+             finally = {sink()
                         options(save)
                         Rd2txt_options(Rdsave)
                         close(file)})

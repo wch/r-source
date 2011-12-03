@@ -411,7 +411,7 @@ months.Date <- function(x, abbreviate = FALSE)
 quarters.Date <- function(x, ...)
 {
     x <- (as.POSIXlt(x)$mon) %/% 3L
-    paste("Q", x+1L, sep = "")
+    paste0("Q", x+1L)
 }
 
 ## These only make sense for negative digits, but still ...

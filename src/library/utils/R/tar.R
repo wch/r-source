@@ -49,7 +49,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!gzOK ) {
         ## version info may be sent to stdout or stderr
         tf <- tempfile()
-        cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
+        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
         system(paste(TAR, "--version >", tf, "2>&1"))
         if (file.exists(tf)) {
             gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
@@ -73,12 +73,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         cflag <- ""
     }
     if (list) {
-        cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
+        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
         system(cmd, intern = TRUE)
     } else {
-        cmd <- paste(TAR, " -", cflag, "xf ", shQuote(tarfile), sep = "")
+        cmd <- paste0(TAR, " -", cflag, "xf ", shQuote(tarfile))
         if (!missing(exdir)) {
             if (!file_test("-d", exdir)) {
                 if(!dir.create(exdir, showWarnings = TRUE, recursive = TRUE))
@@ -313,7 +313,7 @@ tar <- function(tarfile, files = NULL,
         }
         header <- raw(512L)
         ## add trailing / to dirs.
-        if(info$isdir && !grepl("/$", f)) f <- paste(f, "/", sep = "")
+        if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
         name <- charToRaw(f)
         if(length(name) > 100L) {
             if(length(name) > 255L) stop("file path is too long")

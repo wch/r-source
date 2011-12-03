@@ -138,7 +138,7 @@ plot.hclust <-
         box(...)
     if (ann) {
         if(!is.null(cl <- x$call) && is.null(sub))
-            sub <- paste(deparse(cl[[1L]])," (*, \"", x$method,"\")",sep="")
+            sub <- paste0(deparse(cl[[1L]])," (*, \"", x$method,"\")")
         if(is.null(xlab) && !is.null(cl))
             xlab <- deparse(cl[[2L]])
         title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)

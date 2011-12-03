@@ -150,7 +150,7 @@ arima <- function(x, order = c(0, 0, 0),
     class(xreg) <- NULL
     if (ncxreg > 0L && is.null(colnames(xreg)))
         colnames(xreg) <-
-            if(ncxreg == 1L) nmxreg else paste(nmxreg, 1L:ncxreg, sep = "")
+            if(ncxreg == 1L) nmxreg else paste0(nmxreg, 1L:ncxreg)
     if (include.mean && (nd == 0L)) {
         xreg <- cbind(intercept = rep(1, n), xreg = xreg)
         ncxreg <- ncxreg + 1L
@@ -319,10 +319,10 @@ arima <- function(x, order = c(0, 0, 0),
     value <- 2 * n.used * res$value + n.used + n.used * log(2 * pi)
     aic <- if(method != "CSS") value + 2*sum(mask) + 2 else NA
     nm <- NULL
-    if (arma[1L] > 0L) nm <- c(nm, paste("ar", 1L:arma[1L], sep = ""))
-    if (arma[2L] > 0L) nm <- c(nm, paste("ma", 1L:arma[2L], sep = ""))
-    if (arma[3L] > 0L) nm <- c(nm, paste("sar", 1L:arma[3L], sep = ""))
-    if (arma[4L] > 0L) nm <- c(nm, paste("sma", 1L:arma[4L], sep = ""))
+    if (arma[1L] > 0L) nm <- c(nm, paste0("ar", 1L:arma[1L]))
+    if (arma[2L] > 0L) nm <- c(nm, paste0("ma", 1L:arma[2L]))
+    if (arma[3L] > 0L) nm <- c(nm, paste0("sar", 1L:arma[3L]))
+    if (arma[4L] > 0L) nm <- c(nm, paste0("sma", 1L:arma[4L]))
     if (ncxreg > 0L) {
         nm <- c(nm, cn)
         if(!orig.xreg) {

@@ -455,7 +455,7 @@ RweaveLatexWritedoc <- function(object, chunk)
             ## protect against character(), because sub() will fail
             if (length(val) == 0L) val <- ""
         }
-        else val <- paste("\\\\verb#<<", cmd, ">>#", sep = "")
+        else val <- paste0("\\\\verb#<<", cmd, ">>#")
         ## it's always debatable what \verb delim-character to use;
         ## originally had '{' but that really can mess up LaTeX
 
@@ -467,7 +467,7 @@ RweaveLatexWritedoc <- function(object, chunk)
     ## to process all such in a doc chunk at once.
     while(length(pos <- grep(object$syntax$docopt, chunk)))
     {
-        opts <- sub(paste(".*", object$syntax$docopt, ".*", sep = ""),
+        opts <- sub(paste0(".*", object$syntax$docopt, ".*"),
                     "\\1", chunk[pos[1L]])
         object$options <- SweaveParseOptions(opts, object$options,
                                              RweaveLatexOptions)
@@ -480,7 +480,7 @@ RweaveLatexWritedoc <- function(object, chunk)
             object$options$label <- savelabel
             object$concordfile <- paste(prefix, "tex", sep = ".")
             chunk[pos[1L]] <- sub(object$syntax$docopt,
-                                  paste("\\\\input{", prefix, "}", sep = ""),
+                                  paste0("\\\\input{", prefix, "}"),
                                   chunk[pos[1L]])
             object$haveconcordance <- TRUE
         } else
@@ -531,7 +531,7 @@ RweaveLatexFinish <- function(object, error = FALSE)
     	    concordance <- paste(strwrap(paste(vals, collapse = " ")), collapse = " %\n")
     	    special <- paste("\\Sconcordance{concordance:", outputname, ":",
                          inputname, ":",
-                         if (offset) paste("ofs ", offset, ":", sep="") else "",
+                         if (offset) paste0("ofs ", offset, ":") else "",
                          "%\n",
                          concordance,"}\n", sep = "")
     	    cat(special, file = object$concordfile, append=offset > 0L)
@@ -633,7 +633,7 @@ RweaveTryStop <- function(err, options)
         cat("\n")
         msg <- paste(" chunk", options$chunknr)
         if (!is.null(options$label))
-            msg <- paste(msg, " (label = ", options$label, ")", sep = "")
+            msg <- paste0(msg, " (label = ", options$label, ")")
         msg <- paste(msg, "\n")
         stop(msg, err, call. = FALSE)
     }
@@ -757,7 +757,7 @@ RtangleRuncode <-  function(object, chunk, options)
 RtangleWritedoc <- function(object, chunk)
 {
     while(length(pos <- grep(object$syntax$docopt, chunk))) {
-        opts <- sub(paste(".*", object$syntax$docopt, ".*", sep = ""),
+        opts <- sub(paste0(".*", object$syntax$docopt, ".*"),
                     "\\1", chunk[pos[1L]])
         object$options <- SweaveParseOptions(opts, object$options,
                                              RweaveLatexOptions)

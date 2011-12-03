@@ -74,7 +74,7 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
     if(!(side <- as.integer(side)) %in% 1L:4L)
         stop("'side' must be in {1:4}")
     is.x <- side %% 2 == 1
-    XY <- function(ch) paste(if(is.x) "x" else "y", ch, sep="")
+    XY <- function(ch) paste0(if(is.x) "x" else "y", ch)
     if(is.null(axp)) axp <- par(XY("axp"))
     else if(!is.numeric(axp) || length(axp) != 3) stop("invalid 'axp'")
     if(is.null(log)) log <- par(XY("log"))

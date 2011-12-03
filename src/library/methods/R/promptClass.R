@@ -62,13 +62,11 @@ function (clName, filename = NULL, type = "class",
 	    allslots[names(slotsi)] <- paste0("\"", as.character(slotsi),"\"")
 	allslots
     }
-    paste0 <- function(...) paste(..., sep = "")
     pastePar <- function(x) {
         xn <- names(x)
 	x <- as.character(x)
 	xn <- if(length(xn) == length(x)) paste(xn, "= ") else ""
-	paste("(", paste(xn, "\"", x, "\"", sep = "", collapse = ", "),
-	")", sep = "")
+	paste0("(", paste0(xn, "\"", x, "\"", collapse = ", "), ")")
     }
     escape <- function(txt) gsub("%", "\\\\%", txt)
 
@@ -252,7 +250,7 @@ function (clName, filename = NULL, type = "class",
 refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
     ## exclude some sections that are usually irrelevant
     sections <- names(Rdtxt)
-    envRefX <- paste("{",extends("envRefClass"), "}", sep="")
+    envRefX <- paste0("{",extends("envRefClass"), "}")
     exclude <- grep("Objects from the Class", sections)
     if(nmeths < 1)
         exclude <- c(exclude, grep("Methods", sections))
@@ -269,7 +267,6 @@ refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
     extds <- extds[!drop]
     extds <- append(extds, "\nAll reference classes extend and inherit methods from \\code{\"\\linkS4class{envRefClass}\"}.\n", length(extds)-1)
     Rdtxt[[extdsthead]] <- extds
-    paste0 <- function(...) paste(..., sep = "")
     fieldClasses <- refClassFields(clDef)
     nfields <- length(fieldClasses)
     .fields <- if (nfields > 0) {
@@ -299,9 +296,9 @@ refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
 }
 
 .refMethodDescription <- function(methodDefs, fieldnames, otherMethods) {
-    paste0 <- function(...) paste(..., sep = "")
     methodnames <- names(methodDefs)
-    methodargs <- sapply(methodDefs, function(x)paste("(", paste(formalArgs(x), collapse=", "), ")", sep=""))
+    methodargs <- sapply(methodDefs, function(x)
+			 paste0("(", paste(formalArgs(x), collapse=", "), ")"))
     if(length(methodnames) > 0) {
         .methods.head <- "  \\describe{"
         .methods.body <-
@@ -341,6 +338,6 @@ refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
 	def <- getFunction(def)
     }
     if (is(def, "function"))
-	paste(name, "(", paste(args, collapse = ", "), ")", sep = "")
+	paste0(name, "(", paste(args, collapse = ", "), ")")
     else ""
 }

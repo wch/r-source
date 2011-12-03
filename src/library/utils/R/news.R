@@ -88,8 +88,7 @@ function(x, ...)
         ## Add support for DATE.
         ## </FIXME>
         print_items <- function(x)
-            cat(paste("    o   ", gsub("\n", "\n\t", x), sep = ""),
-                sep = "\n\n")
+            cat(paste0("    o   ", gsub("\n", "\n\t", x)), sep = "\n\n")
         vchunks <- split(x, x$Version)
         ## Re-order according to decreasing version.
         ## R NEWS has invalid "versions" such as ""2.4.1 patched" which

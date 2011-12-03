@@ -84,7 +84,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     if (is.character(what) && (length(what) == 1L)){
         if (!file.exists(what))
             stop(gettextf("file '%s' not found", what), domain = NA)
-        if(missing(name)) name <- paste("file:", what, sep="")
+        if(missing(name)) name <- paste0("file:", what)
         value <- .Internal(attach(NULL, pos, name))
         load(what, envir=as.environment(pos))
     }
@@ -169,7 +169,7 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
         if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
             methods:::cacheMetaData(env, FALSE)
         .Call("R_lazyLoadDBflush",
-              paste(libpath, "/R/", pkgname, ".rdb", sep=""),
+              paste0(libpath, "/R/", pkgname, ".rdb"),
               PACKAGE="base")
     }
     invisible()

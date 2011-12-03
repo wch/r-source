@@ -130,7 +130,7 @@ edit.data.frame <-
     if (edit.row.names) {
         out <- out[-1L]
         if((ln <- length(rn)) < maxlength)
-            rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
+            rn <- c(rn, paste0("row", (ln+1):maxlength))
     } else if(length(rn) != maxlength) rn <- seq_len(maxlength)
     for (i in factors) {
         if(factor.mode != mode(out[[i]])) next # user might have switched mode
@@ -192,7 +192,7 @@ edit.matrix <-
     dn <- dimnames(name)
     datalist <- split(name, col(name))
     if(!is.null(dn[[2L]])) names(datalist) <- dn[[2L]]
-    else names(datalist) <- paste("col", 1L:ncol(name), sep = "")
+    else names(datalist) <- paste0("col", 1L:ncol(name))
     modes <- as.list(rep.int(mode(name), ncol(name)))
     ## guard aginst user error (PR#10500)
     if(edit.row.names && is.null(dn[[1L]]))
@@ -212,7 +212,7 @@ edit.matrix <-
     if (edit.row.names) {
         out <- out[-1L]
         if((ln <- length(rn)) < maxlength)
-            rn <- c(rn, paste("row", (ln+1L):maxlength, sep=""))
+            rn <- c(rn, paste0("row", (ln+1L):maxlength))
     }
     out <- do.call("cbind", out)
     if (edit.row.names)

@@ -30,7 +30,7 @@ massageExamples <-
         on.exit(close(out))
     } else out <- outFile
 
-    lines <- c(paste('pkgname <- "', pkg, '"', sep =""),
+    lines <- c(paste0('pkgname <- "', pkg, '"'),
                'source(file.path(R.home("share"), "R", "examples-header.R"))',
                if (use_gct) "gctorture(TRUE)",
                "options(warn = 1)")
@@ -236,7 +236,7 @@ testInstalledPackage <-
         message("Testing examples for package ", sQuote(pkg))
         Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE)
         if (length(Rfile)) {
-            outfile <- paste(pkg, "-Ex.Rout", sep = "")
+            outfile <- paste0(pkg, "-Ex.Rout")
             failfile <- paste(outfile, "fail", sep = "." )
             savefile <- paste(outfile, "prev", sep = "." )
             if (file.exists(outfile)) file.rename(outfile, savefile)
@@ -292,7 +292,7 @@ testInstalledPackage <-
         Rfiles <- dir(".", pattern="\\.R$")
         for(f in Rfiles) {
             message("  Running ", sQuote(f))
-            outfile <- paste(f, "out", sep = "")
+            outfile <- paste0(f, "out")
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "CMD BATCH --vanilla --no-timing", Ropts,
                          shQuote(f), shQuote(outfile))
@@ -341,7 +341,7 @@ testInstalledPackage <-
         message("  Running ", sQuote(f))
         if(!is.null(Log))
             cat("  Running ", sQuote(f), "\n", sep = "", file = Log)
-        outfile <- paste(f, "out", sep = "")
+        outfile <- paste0(f, "out")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla --no-timing",
                      if(use_valgrind) "--debugger=valgrind",
@@ -409,7 +409,7 @@ testInstalledPackage <-
 .createExdotR <-
     function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE)
 {
-    Rfile <- paste(pkg, "-Ex.R", sep = "")
+    Rfile <- paste0(pkg, "-Ex.R")
     ## might be zipped:
     exdir <- file.path(pkgdir, "R-ex")
 
@@ -460,7 +460,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     {
         f <- paste(f, "R", sep = ".")
         if (!file.exists(f)) {
-            if (!file.exists(fin <- paste(f, "in", sep = "")))
+            if (!file.exists(fin <- paste0(f, "in")))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f))
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
@@ -470,7 +470,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
             on.exit(unlink(f))
         }
         message("  running code in ", sQuote(f))
-        outfile <- paste(f, "out", sep = "")
+        outfile <- paste0(f, "out")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla --no-timing",
                      shQuote(f), shQuote(outfile))

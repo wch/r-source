@@ -107,7 +107,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         qty <- as.matrix(qr.qty(qr.e, resp))
         if((nc <- ncol(qty)) > 1) {
             dny <- colnames(resp)
-            if(is.null(dny)) dny <- paste("Y", 1L:nc, sep="")
+            if(is.null(dny)) dny <- paste0("Y", 1L:nc)
             dimnames(qty) <- list(seq(nrow(qty)), dny)
         } else dimnames(qty) <- list(seq(nrow(qty)), NULL)
         qtx <- qr.qty(qr.e, qtx)
@@ -343,11 +343,11 @@ summary.aov <- function(object, intercept = FALSE, split,
                 if(!missing(split) && !is.na(int <- match(nmi, ns))) {
                     df <- c(df, unlist(lapply(split[[int]], length)))
                     if(is.null(nms <- names(split[[int]])))
-                        nms <- paste("C", seq_along(split[[int]]), sep = "")
+                        nms <- paste0("C", seq_along(split[[int]]))
                     ss <- c(ss, unlist(lapply(split[[int]],
                                               function(i, e)
                                               sum(e[i]^2), effects[ai, y])))
-                    nmrows <- c(nmrows, paste("  ", nmi, ": ", nms, sep = ""))
+                    nmrows <- c(nmrows, paste0("  ", nmi, ": ", nms))
                 }
             }
         }
@@ -418,7 +418,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
             xx <- abs(signif(x[z], 2))
             ll <- length(unique(xx))
             if(ll > 10) xx <- cut(xx, 9) else if(ll == 1) x[] <- 1
-            x[z] <- paste(ifelse(x[z] > 0, " ", "-"), xx, sep = "")
+            x[z] <- paste0(ifelse(x[z] > 0, " ", "-"), xx)
         }
         x[!z] <- ""
         collabs <- colnames(x)

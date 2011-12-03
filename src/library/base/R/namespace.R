@@ -333,7 +333,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                       function(type) {
                           lapply(type,
                                  function(sym) {
-                                     varName <- paste(fixes[1L], sym$name, fixes[2L], sep = "")
+                                     varName <- paste0(fixes[1L], sym$name, fixes[2L])
                                      if(exists(varName, envir = env))
                                        warning("failed to assign RegisteredNativeSymbol for ",
                                                sym$name,
@@ -478,11 +478,11 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         ## lazy-load any sysdata
         dbbase <- file.path(pkgpath, "R", "sysdata")
-        if (file.exists(paste(dbbase, ".rdb", sep = ""))) lazyLoad(dbbase, env)
+        if (file.exists(paste0(dbbase, ".rdb"))) lazyLoad(dbbase, env)
 
         ## load any lazydata into a separate environment
         dbbase <- file.path(pkgpath, "data", "Rdata")
-        if(file.exists(paste(dbbase, ".rdb", sep = "")))
+        if(file.exists(paste0(dbbase, ".rdb")))
             lazyLoad(dbbase, getNamespaceInfo(ns, "lazydata"))
 
         ## register any S3 methods
@@ -609,7 +609,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                        exists(mi, envir = ns, mode = "function",
                               inherits = FALSE))
                         exports <- c(exports, mi)
-                    pattern <- paste(tPrefix, mi, ":", sep="")
+                    pattern <- paste0(tPrefix, mi, ":")
                     ii <- grep(pattern, allMethodTables, fixed = TRUE)
                     if(length(ii)) {
 			if(length(ii) > 1L) {
@@ -730,7 +730,7 @@ unloadNamespace <- function(ns)
     if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns))
         methods:::cacheMetaData(ns, FALSE, ns)
     .Call("R_lazyLoadDBflush",
-          paste(nspath, "/R/", nsname, ".rdb", sep=""),
+          paste0(nspath, "/R/", nsname, ".rdb"),
           PACKAGE="base")
     invisible()
 }
@@ -924,8 +924,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
             stop(sprintf(ngettext(length(miss),
                                   "class %s is not exported by 'namespace:%s'",
                                   "classes %s are not exported by 'namespace:%s'"),
-                         paste(paste('"', miss, '"', sep = ""),
-                               collapse = ", "),
+                         paste(paste0('"', miss, '"'), collapse = ", "),
                          getNamespaceName(expenv)),
                  call. = FALSE, domain = NA)
         } else {
@@ -1034,7 +1033,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         function(map, useRegistration, symbolNames, fixes) {
             if(!useRegistration)
                 names(symbolNames) <-
-                    paste(fixes[1L],  names(symbolNames), fixes[2L], sep = "")
+                    paste0(fixes[1L],  names(symbolNames), fixes[2L])
             else
                 map$registrationFixes <- fixes
             map$useRegistration <- map$useRegistration || useRegistration

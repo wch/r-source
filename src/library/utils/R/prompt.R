@@ -22,8 +22,6 @@ prompt.default <-
 function(object, filename = NULL, name = NULL,
          force.function = FALSE, ...)
 {
-    paste0 <- function(...) paste(..., sep = "")
-
     is.missing.arg <- function(arg)
         typeof(arg) == "symbol" && deparse(arg) == ""
 
@@ -173,8 +171,6 @@ function(object, filename = NULL, name = NULL,
 prompt.data.frame <-
 function(object, filename = NULL, name = NULL, ...)
 {
-    paste0 <- function(...) paste(..., sep = "")
-
     if(missing(name))
         name <-
             if(is.character(object))
@@ -205,8 +201,6 @@ function(object, filename = NULL, name = NULL, ...)
 promptData <-
 function(object, filename = NULL, name = NULL)
 {
-    paste0 <- function(...) paste(..., sep = "")
-
     if(missing(name))
         name <-
             if(is.character(object))
@@ -322,7 +316,6 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     ## different conventions
     if (is.null(lib.loc)) lib.loc <- .libPaths()
 
-    paste0 <- function(...) paste(..., sep = "")
     insert1 <- function(field, new) {
     	prev <- Rdtxt[[field]]
     	Rdtxt[[field]] <<- c(prev[-length(prev)], new, prev[length(prev)])

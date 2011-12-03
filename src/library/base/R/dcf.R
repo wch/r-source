@@ -74,7 +74,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     if(length(ind)) {
         lines <- strtrim(lines[ind], 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
-                      paste("  ", lines, sep = "", collapse = "\n")),
+                      paste0("  ", lines, collapse = "\n")),
              domain = NA)
     }
 
@@ -98,7 +98,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     if(length(ind)) {
         lines <- strtrim(lines[ind], 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s",
-                      paste("  ", lines, sep = "", collapse = "\n")),
+                      paste0("  ", lines, collapse = "\n")),
              domain = NA)
     }
 
@@ -197,5 +197,5 @@ function(x, file = "", append = FALSE,
         ## Note that we do not write a trailing blank line.
         eor[ diff(c(col(out))[is_not_empty]) >= 1L ] <- "\n"
     }
-    writeLines(paste(c(out[is_not_empty]), eor, sep = ""), file)
+    writeLines(paste0(c(out[is_not_empty]), eor), file)
 }

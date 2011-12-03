@@ -105,7 +105,7 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(),
     	if (missing(envir)) lastenv <- globalenv()
     	else lastenv <- emptyenv()
     }
-    
+
     if (!is.environment(envir))
     	envir <- environment(envir)
 
@@ -208,7 +208,7 @@ setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), la
     	if (breakpoint) {
     	    filename <- basename(locations[[1]]$filename)
     	    linenum <- locations[[1]]$line
-    	    tracer <- bquote({cat(paste(.(filename), "#", .(linenum), "\n", sep="")) 
+	    tracer <- bquote({cat(paste0(.(filename), "#", .(linenum), "\n"))
     	                      browser(skipCalls=4L)})
     	}
     	locations[[1]] <- NULL
@@ -223,7 +223,7 @@ setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), la
     	    	i <- i+1
     	}
     	if (clear) {
-    	    if (is.null(signature)) 
+    	    if (is.null(signature))
   		untrace(what, where=where)
     	    else
     	    	untrace(what, signature=signature, where=where)

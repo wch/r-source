@@ -154,7 +154,7 @@ summary.data.frame <-
         } else {
             sms <- format(sms, digits = digits) # may add NAs row
             lbs <- format(names(sms))
-            sms <- paste(lbs, ":", sms, "  ", sep = "")
+            sms <- paste0(lbs, ":", sms, "  ")
             lw[i] <- ncw(lbs[1L])
             length(sms) <- nr
             z[[i]] <- sms
@@ -167,7 +167,7 @@ summary.data.frame <-
 		paste(which(is.na(lw)), collapse = ", "))
     blanks <- paste(character(max(lw, na.rm=TRUE) + 2L), collapse = " ")
     pad <- floor(lw - ncw(nm)/2)
-    nm <- paste(substring(blanks, 1, pad), nm, sep = "")
+    nm <- paste0(substring(blanks, 1, pad), nm)
     dimnames(z) <- list(rep.int("", nr), nm)
     attr(z, "class") <- c("table") #, "matrix")
     z

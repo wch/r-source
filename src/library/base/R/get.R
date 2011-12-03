@@ -20,9 +20,9 @@ get <-
     .Internal(get(x, envir, mode, inherits))
 
 mget <- function(x, envir, mode = "any",
-          ifnotfound= list(function(x)
-	                stop(paste("value for '", x, "' not found", sep=""),
-				call.=FALSE)),
+                 ifnotfound= list(function(x)
+				stop(paste0("value for '", x, "' not found"),
+				     call.=FALSE)),
           inherits = FALSE)
      .Internal(mget(x, envir, mode, ifnotfound, inherits))
 

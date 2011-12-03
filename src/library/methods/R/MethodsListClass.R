@@ -227,7 +227,8 @@
     setMethod("show", "MethodSelectionReport", where = envir,
               function(object) {
                   nreport <- length(object@target)
-                  cat(gettextf("Reported %d ambiguous selections out of %d for function %s\n",nreport, length(object@allSelections), object@generic))
+                  cat(gettextf("Reported %d ambiguous selections out of %d for function %s\n",nreport,
+			       length(object@allSelections), object@generic))
                   target <- object@target; selected = object@selected
                   candidates <- object@candidates; note <- object@note
                   for(i in seq_len(nreport)) {
@@ -235,7 +236,7 @@
                       these <- these[is.na(match(these, selected[[i]]))]
                       cat(gettextf(
                                    '%d: target "%s": chose "%s" (others: %s)',
-                                   i,target[[i]], selected[[i]], paste('"', these, '"', sep="", collapse =", ")))
+                                   i,target[[i]], selected[[i]], paste0('"', these, '"', collapse =", ")))
                       if(nzchar(notei))
                           cat(gettextf("\n    Notes: %s.\n", notei))
                       else

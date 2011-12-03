@@ -93,8 +93,8 @@ function(topic, package = NULL, lib.loc = NULL,
         on.exit(options(op), add = TRUE)
     }
     source(tf, local, echo = echo,
-           prompt.echo = paste(prompt.prefix, getOption("prompt"), sep=""),
-           continue.echo = paste(prompt.prefix, getOption("continue"), sep=""),
+           prompt.echo = paste0(prompt.prefix, getOption("prompt")),
+           continue.echo = paste0(prompt.prefix, getOption("continue")),
            verbose = verbose, max.deparse.length = Inf, encoding = "UTF-8",
     	   skip.echo = skips, keep.source=TRUE)
 }

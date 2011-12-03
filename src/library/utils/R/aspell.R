@@ -130,13 +130,13 @@ function(files, filter, control = list(), encoding = "unknown",
         ##   It is recommended that programmatic interfaces prefix every
         ##   data line with an uparrow to protect themselves against
         ##   future changes in Aspell.
-        writeLines(paste("^", lines, sep = ""), tfile)
+        writeLines(paste0("^", lines), tfile)
         ## Note that this re-encodes character strings with marked
         ## encodings to the current encoding (which is definitely fine
         ## if this is UTF-8 and Aspell was compiled with full UTF-8
         ## support).  Alternatively, we could try using something along
         ## the lines of
-        ##   writeLines(paste("^", lines, sep = ""), tfile,
+        ##   writeLines(paste0("^", lines), tfile,
         ##              useBytes = TRUE)
         ## ## Pass encoding info to Aspell in case we know it.
         ## if(!is.null(filter))  {
@@ -270,7 +270,7 @@ aspell_filter_db <- new.env(hash = FALSE) # small
 aspell_filter_db$Rd <- tools::RdTextFilter
 aspell_filter_db$Sweave <- tools::SweaveTeXFilter
 
-aspell_filter_db$pot <- 
+aspell_filter_db$pot <-
 function(ifile, encoding)
 {
     lines <- readLines(ifile, encoding = encoding)
@@ -566,11 +566,11 @@ function(dir, control = list(), program = NULL)
         Sys.glob(file.path(subdir, "*.pot"))
     else character()
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
-    if(is.na(encoding <- meta["Encoding"])) 
+    if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
-    aspell(files, filter = "pot", control = control, 
+    aspell(files, filter = "pot", control = control,
            encoding = encoding, program = program)
-}    
+}
 
 ## For writing personal dictionaries:
 

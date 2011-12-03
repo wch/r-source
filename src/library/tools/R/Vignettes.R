@@ -105,7 +105,7 @@ function(package, dir, lib.loc = NULL,
             for(f in vigns$docs) {
                 bf <- file_path_sans_ext(basename(f))
                 if(bf %in% bad_vignettes) break
-                bft <- paste(bf, ".tex", sep = "")
+                bft <- paste0(bf, ".tex")
                 .eval_with_capture(tryCatch(texi2pdf(file = bft, clean = FALSE,
                                                      quiet = TRUE),
                                             error = function(e)
@@ -216,8 +216,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     for(f in vigns$docs) {
         f <- basename(f)
         bf <- file_path_sans_ext(f)
-        bft <- paste(bf, ".tex", sep = "")
-        pdfs <- c(pdfs, paste(bf, ".pdf", sep = ""))
+        bft <- paste0(bf, ".tex")
+        pdfs <- c(pdfs, paste0(bf, ".pdf"))
 
         tryCatch(utils::Sweave(f, quiet = quiet),
                  error = function(e) {
@@ -451,7 +451,7 @@ function(pkg, con, vignetteIndex = NULL)
 {
     ## FIXME: in principle we could need to set an encoding here
     html <- c(HTMLheader("Vignettes"),
-              paste("<h2>Vignettes from package '", pkg,"'</h2>", sep = ""))
+              paste0("<h2>Vignettes from package '", pkg,"'</h2>"))
 
     if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
         html <-

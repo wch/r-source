@@ -6,7 +6,7 @@ if(.Platform$OS.type == "windows") {
         etc <- readLines(ff)
         bp <- grep("^BINPREF", etc, value = TRUE)
         bp <- sub("^BINPREF = +", "", bp)
-        DLL_nm <- paste(bp, "objdump.exe", sep = "")
+        DLL_nm <- paste0(bp, "objdump.exe")
         if(!nzchar(Sys.which(DLL_nm))) return()
         f <- file_path_as_absolute(f)
         s0 <- system2(DLL_nm, c("-x", shQuote(f)), stdout = TRUE, stderr=TRUE)

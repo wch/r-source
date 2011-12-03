@@ -383,7 +383,7 @@ install.packages <-
                      domain = NA)
             mfile <- file.path(tmpd, "Makefile")
             conn <- file(mfile, "wt")
-            deps <- paste(paste(update[, 1L], ".ts", sep=""), collapse=" ")
+            deps <- paste(paste0(update[, 1L], ".ts"), collapse=" ")
             deps <- strwrap(deps, width = 75, exdent = 2)
             deps <- paste(deps, collapse=" \\\n")
             cat("all: ", deps, "\n", sep = "", file = conn)
@@ -394,16 +394,16 @@ install.packages <-
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
                              shQuote(update[i, 3L]),
-                             ">", paste(pkg, ".out", sep=""), "2>&1")
+                             ">", paste0(pkg, ".out"), "2>&1")
                 deps <- aDL[[pkg]]
                 deps <- deps[deps %in% upkgs]
                 ## very unlikely to be too long
                 deps <- if(length(deps))
-                    paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
-                cat(paste(pkg, ".ts: ", deps, sep=""),
+                    paste(paste0(deps, ".ts"), collapse=" ") else ""
+                cat(paste0(pkg, ".ts: ", deps),
                     paste("\t@echo begin installing package", sQuote(pkg)),
-                    paste("\t@", cmd, " && touch ", pkg, ".ts", sep=""),
-                    paste("\t@cat ", pkg, ".out", sep=""),
+                    paste0("\t@", cmd, " && touch ", pkg, ".ts"),
+                    paste0("\t@cat ", pkg, ".out"),
                     "", sep="\n", file = conn)
             }
             close(conn)
@@ -417,7 +417,7 @@ install.packages <-
                 pkgs <- update[, 1L]
                 tss <- sub("\\.ts$", "", dir(".", pattern = "\\.ts$"))
                 failed <- pkgs[!pkgs %in% tss]
-		for (pkg in failed) system(paste("cat ", pkg, ".out", sep=""))
+		for (pkg in failed) system(paste0("cat ", pkg, ".out"))
                 warning(gettextf("installation of one of more packages failed,\n  probably %s",
                                  paste(sQuote(failed), collapse = ", ")),
                         domain = NA)

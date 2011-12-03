@@ -79,7 +79,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     } else .NotYetImplemented()
     spg.out <- list(freq = freq*xfreq, spec = spec, coh = coh, phase = phase,
                     n.used = nrow(x), series = series,
-                    method = paste("AR (", order, ") spectrum ", sep="")
+                    method = paste0("AR (", order, ") spectrum ")
                     )
     class(spg.out) <- "spec"
     if(plot) {

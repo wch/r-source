@@ -661,7 +661,6 @@ promptMethods <- function(f, filename = NULL, methods)
     ## to.  If it 'FALSE', the methods skeleton is returned, to be
     ## included in other printing (typically, the output from 'prompt').
 
-    paste0 <- function(...) paste(..., sep = "")
     escape <- function(txt) gsub("%", "\\\\%", txt)
     packageString <- ""
 

@@ -28,7 +28,7 @@ httpd <- function(path, query, ...)
     .HTMLdirListing <- function(dir, base, up)
     {
         files <- list.files(dir)    # note, no hidden files are listed
-        out <- HTMLheader(paste("Listing of directory<br>", dir, sep=""),
+        out <- HTMLheader(paste0("Listing of directory<br>", dir),
         		  headerTitle = paste("R:", dir), logo=FALSE,
         		  up = up)
         if(!length(files))
@@ -37,7 +37,7 @@ httpd <- function(path, query, ...)
             urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
                           sep = "")
             out <- c(out, "<dl>",
-                     paste("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>", sep = ""),
+                     paste0("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>"),
                      "</dl>")
         }
         out <- c(out, "<hr>\n</body></html>")
@@ -47,14 +47,14 @@ httpd <- function(path, query, ...)
     .HTMLusermanuals <- function()
     {
         pkgs <- unlist(.get_standard_package_names())
-    
+
         out <- HTMLheader("R User Manuals")
         for (pkg in pkgs) {
             filename <- system.file(file.path("Meta", "vignette.rds"),
             			    package=pkg)
      	    if (file.exists(filename)) {
      	    	vignettes <- readRDS(filename)
-         	out <- c(out, paste('<h2>Manuals in package', sQuote(pkg),'</h2>', sep=""),
+         	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
          		 makeVignetteTable(cbind(Package=pkg, as.matrix(vignettes[,c("File", "Title", "PDF", "R")]))))
             }
      	}
@@ -70,7 +70,7 @@ httpd <- function(path, query, ...)
         else {
             fields = c("alias", "concept", "title")
             args <- list(pattern = ".")
-            for (i in seq_along(query)) 
+            for (i in seq_along(query))
             	switch(names(query)[i],
             		pattern = args$pattern <- query[i],
             		title = if (!bool(query[i])) fields <- setdiff(fields, "title"),
@@ -78,7 +78,7 @@ httpd <- function(path, query, ...)
             		alias = if (!bool(query[i])) fields <- setdiff(fields, "alias"),
             		concept = if (!bool(query[i])) fields <- setdiff(fields, "concept"),
             		name = if (bool(query[i])) fields <- union(fields, "name"),
-            		agrep = { 
+            		agrep = {
             		    args$agrep <- as.logical(query[i])
             		    if (is.na(args$agrep))
             		    	args$agrep <- as.numeric(query[i])
@@ -98,20 +98,20 @@ httpd <- function(path, query, ...)
         res <- res$matches
         title <- "Search Results"
         out <- c(HTMLheader(title),
-                 if ("pattern" %in% names(query)) 
-                     paste('The search string was <b>"', query["pattern"], '"</b>',sep=""),
+                 if ("pattern" %in% names(query))
+                     paste0('The search string was <b>"', query["pattern"], '"</b>'),
                  '<hr>\n')
-                       
-        if(!NROW(res)) 
+
+        if(!NROW(res))
             out <- c(out, gettext("No results found"))
         else {
             vigfile0 <- ""
             vigDB <- NULL
             for (type in types) {
-		if(NROW(temp <- res[res[,"Type"] == type,,drop=FALSE]) > 0) 
+		if(NROW(temp <- res[res[,"Type"] == type,,drop=FALSE]) > 0)
 		    switch(type,
 		    vignette = {
-			out <- c(out, paste("<h3>", gettext("Vignettes:"), "</h3>", sep=""), "<dl>")
+			out <- c(out, paste0("<h3>", gettext("Vignettes:"), "</h3>"), "<dl>")
 			n <- NROW(temp)
 			vignettes <- matrix("", n, 5)
 			colnames(vignettes) <- c("Package", "File",
@@ -125,18 +125,18 @@ httpd <- function(path, query, ...)
 			    	vigfile0 <- vigfile
 			    }
 			    vignette <- vigDB[topic == file_path_sans_ext(vigDB$File),]
-			    # There should be exactly one row in the result, but 
+			    # There should be exactly one row in the result, but
 			    # bad packages might have more, e.g. vig.Snw and vig.Rnw
 			    vignettes[i,] <- c(pkg, unlist(vignette[1,c("File", "Title", "PDF", "R")]))
 			 }
 			 out <- c(out, makeVignetteTable(vignettes))
 		    },
 		    demo = {
-			out <- c(out, paste("<h3>", gettext("Code demonstrations:"), "</h3>", sep=""))
+			out <- c(out, paste0("<h3>", gettext("Code demonstrations:"), "</h3>"))
 			out <- c(out, makeDemoTable(temp))
 		    },
 		    help = {
-			out <- c(out, paste("<h3>", gettext("Help pages:"), "</h3>", sep=""))
+			out <- c(out, paste0("<h3>", gettext("Help pages:"), "</h3>"))
 			out <- c(out, makeHelpTable(temp))
 		    })
 	    }
@@ -182,9 +182,9 @@ httpd <- function(path, query, ...)
     }
 
     sQuote <- function(text)
-        paste("&lsquo;", text, "&rsquo;", sep="")
+        paste0("&lsquo;", text, "&rsquo;")
     mono <- function(text)
-        paste('<span class="samp">', text, "</span>", sep="")
+        paste0('<span class="samp">', text, "</span>")
 
     error_page <- function(msg)
         list(payload =
@@ -352,13 +352,13 @@ httpd <- function(path, query, ...)
     	pkg <- sub(docRegexp, "\\1", path)
     	rest <- sub(docRegexp, "\\2", path)
         docdir <- system.file("doc", package = pkg)
-        up <- paste("/library/", pkg, "/html/00Index.html", sep = "")
+        up <- paste0("/library/", pkg, "/html/00Index.html")
         if(!nzchar(docdir))
             return(error_page(gettextf("No docs found for package %s",
                                        mono(pkg))))
         if(nzchar(rest) && rest != "/") {
             ## FIXME should we check existence here?
-            file <- paste(docdir, rest, sep = "")
+            file <- paste0(docdir, rest)
             if(isTRUE(file.info(file)$isdir))
                 return(.HTMLdirListing(file,
                                        paste("/library/", pkg, "/doc", rest,
@@ -374,11 +374,11 @@ httpd <- function(path, query, ...)
         }
     } else if (grepl(demoRegexp, path)) {
     	pkg <- sub(demoRegexp, "\\1", path)
-    	
+
     	url <- paste("http://127.0.0.1:", httpdPort,
-                      "/doc/html/Search?package=", 
+                      "/doc/html/Search?package=",
                       pkg, "&agrep=FALSE&types=demo", sep="")
-    	return(list(payload = paste('Redirect to <a href="', url, 
+    	return(list(payload = paste('Redirect to <a href="', url,
     				'">help.search()</a>', sep=''),
 		    		"content-type" = 'text/html',
 		    		header = paste('Location: ', url, sep=''),
@@ -386,17 +386,17 @@ httpd <- function(path, query, ...)
     } else if (grepl(demosRegexp, path)) {
 	    pkg <- sub(demosRegexp, "\\1", path)
 	    demo <- sub(demosRegexp, "\\2", path)
-	    file <- system.file(file.path("demo", demo), package=pkg) 
+	    file <- system.file(file.path("demo", demo), package=pkg)
 	    return(list(file = file, "content-type" = mime_type(demo)))
 
     } else if (grepl(DemoRegexp, path)) {
     	pkg <- sub(DemoRegexp, "\\1", path)
     	demo <- sub(DemoRegexp, "\\2", path)
     	demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
-	return( list(payload = paste("Demo '", pkg, "::", demo, 
+	return( list(payload = paste("Demo '", pkg, "::", demo,
 				"' was run in the console.",
 				" To repeat, type 'demo(",
-				pkg, "::", demo, 
+				pkg, "::", demo,
 				")' in the console.", sep="")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)

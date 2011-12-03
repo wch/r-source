@@ -44,7 +44,7 @@ find <- function(what, mode = "any", numeric = FALSE, simple.words=TRUE)
     }
 #   would need to escape at least + * | as well
 #     if(simple.words)
-# 	what <- gsub("([.[])", "\\\\\\1", paste("^",what,"$", sep=""))
+# 	what <- gsub("([.[])", "\\\\\\1", paste0("^",what,"$"))
     len.s <- length(sp <- search())
     ind <- logical(len.s)
     check.mode <- mode != "any"

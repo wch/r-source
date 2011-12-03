@@ -25,7 +25,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
     ## avoid classed args such as data frames: cargs <- args
     cargs <- vector("list", nargs)
     iArgs <- seq_len(nargs)
-    nmc <- paste("Var", iArgs, sep="")
+    nmc <- paste0("Var", iArgs)
     nm <- names(args)
     if(is.null(nm))
 	nm <- nmc

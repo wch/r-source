@@ -22,7 +22,6 @@ RSiteSearch <- function(string,
 			"from", "from:descending", "size", "size:descending"),
 			matchesPerPage = 20)
 {
-    paste0 <- function(...) paste(..., sep = "")
     string <- paste0("http://search.r-project.org/cgi-bin/namazu.cgi?query=",
 		     gsub(" ", "+", string))
     mpp <- paste0("max=", matchesPerPage)

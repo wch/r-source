@@ -129,7 +129,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     pivot <- z$pivot
     ## careful here: the rank might be 0
     r1 <- seq_len(z$rank)
-    dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1L:p, sep="")
+    dn <- colnames(x); if(is.null(dn)) dn <- paste0("x", 1L:p)
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     r2 <- if(z$rank < p) (z$rank+1L):p else integer()
     if (is.matrix(y)) {
@@ -215,7 +215,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- seq_len(z$rank)
-    dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1L:p, sep="")
+    dn <- colnames(x); if(is.null(dn)) dn <- paste0("x", 1L:p)
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     r2 <- if(z$rank < p) (z$rank+1L):p else integer()
     if (is.matrix(y)) {

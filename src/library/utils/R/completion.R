@@ -735,14 +735,14 @@ correctFilenameToken <- function()
     ## part after the last space.  This function tries to recover the
     ## complete initial part.
 
-    ## Find part between last " or ' 
+    ## Find part between last " or '
     linebuffer <- .CompletionEnv[["linebuffer"]]
     lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
     whichDoubleQuote <- lbss == '"'
     whichSingleQuote <- lbss == "'"
     insideDoubleQuote <- (sum(whichDoubleQuote) %% 2 == 1)
     insideSingleQuote <- (sum(whichSingleQuote) %% 2 == 1)
-    loc.start <- 
+    loc.start <-
         if (insideDoubleQuote && insideSingleQuote)
         {
             ## Should not happen, but if it does, should take whichever comes later
@@ -909,7 +909,7 @@ fileCompletions <- function(token)
             }
         if (haveArithOp && length(comps))
         {
-            comps <- paste(prefix, comps, sep = "")
+            comps <- paste0(prefix, comps)
         }
         comps <- c(comps, fargComps)
         .CompletionEnv[["comps"]] <- comps

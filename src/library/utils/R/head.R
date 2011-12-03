@@ -79,7 +79,7 @@ tail.matrix <- function(x, n = 6L, addrownums = TRUE, ...)
     sel <- seq.int(to = nrx, length.out = n)
     ans <- x[sel, , drop = FALSE]
     if (addrownums && is.null(rownames(x)))
-    	rownames(ans) <- paste("[", sel, ",]", sep="")
+    	rownames(ans) <- paste0("[", sel, ",]")
     ans
 }
 tail.table  <- function(x, n = 6L, addrownums = TRUE, ...) {
