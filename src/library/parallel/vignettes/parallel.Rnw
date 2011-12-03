@@ -662,14 +662,16 @@ comprehensive install in parallel. We provide facilities to do so in
 approach may not be suitable.\footnote{A parallel \command{make} might
   not be available, and we have seen a couple of instances of package
   installation not working correctly when run from \command{make}.}
+Some of the tasks take many times longer than others, and we do not
+know in advance which these are.
 
-We illustrate an approach using package \pkg{parallel} which is used on
-part of the CRAN check farm.  Suppose that there is a function
+We illustrate an approach using package \pkg{parallel} which is used
+on part of the CRAN check farm.  Suppose that there is a function
 \code{do\_one(pkg)} which installs a single package and then returns.
 Then the task is to run \code{do\_one} on as many of the \code{M}
 workers as possible whilst ensuring that all of the direct and
 indirect dependencies of \code{pkg} are installed before \code{pkg}
-itself.  As the installation of a single package can block many
+itself.  As the installation of a single package can block several
 others, we do need to allow the number of installs running
 simultaneously to vary: the following code achieves that, but needs to
 use low-level functions to do so.
@@ -693,7 +695,7 @@ submit <- function(node, pkg)
     parallel:::sendCall(cl[[node]], do_one, list(pkg), tag = pkg)
 for (i in 1:min(n, M)) submit(i, ready[i])
 DL <- DL[!names(DL) %in% ready[1:min(n, M)]]
-av <- seq(min(n, M) + 1L, M, 1L) # available workers
+av <- if(n < M) (n+1L):M else integer() # available workers
 while(length(done) < length(pkgs)) {
     d <- parallel:::recvOneResult(cl)
     av <- c(av, d$node)
