@@ -20,8 +20,6 @@ Type 'q()' to quit R.
 
 > pkgname <- "grDevices"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
-.libPaths() :
-"/sfs/u/staff/maechler/R/D/r-devel/F15-32-inst/library"
 > options(warn = 1)
 > library('grDevices')
 > 
