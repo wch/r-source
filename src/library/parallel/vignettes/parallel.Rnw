@@ -654,6 +654,60 @@ does vary with \code{c}.  This can be done using
 disadvantage is that the results would not be reproducible (which does
 not matter here).
 
+\subsection{Package installation}
+
+With over 4000 \R{} packages available, it is often helpful to do a
+comprehensive install in parallel. We provide facilities to do so in
+\code{install.packages} \emph{via} a parallel \command{make}, but that
+approach may not be suitable.\footnote{A parallel \command{make} might
+  not be available, and we have seen a couple of instances of package
+  installation not working correctly when run from \command{make}.}
+
+We illustrate an approach using package \pkg{parallel} which is used on
+part of the CRAN check farm.  Suppose that there is a function
+\code{do\_one(pkg)} which installs a single package and then returns.
+Then the task is to run \code{do\_one} on as many of the \code{M}
+workers as possible whilst ensuring that all of the direct and
+indirect dependencies of \code{pkg} are installed before \code{pkg}
+itself.  As the installation of a single package can block many
+others, we do need to allow the number of installs running
+simultaneously to vary: the following code achieves that, but needs to
+use low-level functions to do so.
+
+<<eval=FALSE>>=
+pkgs <- "<names of packages to be installed>"
+M <- 20 # number of parallel installs
+M <- min(M, length(pkgs))
+library(parallel)
+unlink("install_log")
+cl <- makeCluster(M, outfile = "install_log")
+clusterExport(cl, c("tars", "fakes", "gcc")) # variables needed by do_one
+
+DL <- utils:::.make_dependency_list(pkgs, available, recursive = TRUE)
+DL <- lapply(DL, function(x) x[x %in% pkgs])
+lens <- sapply(DL, length)
+ready <- names(DL[lens == 0L])
+done <- character() # packages already installed
+n <- length(ready)
+submit <- function(node, pkg)
+    parallel:::sendCall(cl[[node]], do_one, list(pkg), tag = pkg)
+for (i in 1:min(n, M)) submit(i, ready[i])
+DL <- DL[!names(DL) %in% ready[1:min(n, M)]]
+av <- seq(min(n, M) + 1L, M, 1L) # available workers
+while(length(done) < length(pkgs)) {
+    d <- parallel:::recvOneResult(cl)
+    av <- c(av, d$node)
+    done <- c(done, d$tag)
+    OK <- unlist(lapply(DL, function(x) all(x %in% done) ))
+    if (!any(OK)) next
+    p <- names(DL)[OK]
+    m <- min(length(p), length(av)) # >= 1
+    for (i in 1:m) submit(av[i], p[i])
+    av <- av[-(1:m)]
+    DL <- DL[!names(DL) %in% p[1:m]]
+}
+@
+
 \section{Differences from earlier versions}
 
 The support of parallel RNG differs from \pkg{snow}: \pkg{multicore}
