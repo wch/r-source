@@ -4159,8 +4159,9 @@ old.@footnote{For example, 2.11.1 at the time of release of 2.13.2.}
 rather than @cputype{x86}, but 32-bit @cputype{x86} executables are the
 default.)
 
-There were also reports of success on OpenSolaris (also known as Solaris
-Express Community Edition, and dropped in August 2010) on @cputype{x86}.
+There have been no reports on Solaris 11.  Solaris 9 and earlier are now
+so old that it is unlikely that @R{} is still used with them, and they
+will not be considered here.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
