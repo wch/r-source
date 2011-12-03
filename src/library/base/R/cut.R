@@ -38,9 +38,9 @@ cut.default <-
 	    if(ok <- all(ch.br[-1L] != ch.br[-nb])) break
 	}
 	labels <-
-	    if(ok) paste(if(right)"(" else "[",
-			 ch.br[-nb], ",", ch.br[-1L],
-			 if(right)"]" else ")", sep='')
+	    if(ok) paste0(if(right)"(" else "[",
+                          ch.br[-nb], ",", ch.br[-1L],
+                          if(right)"]" else ")")
 	    else paste("Range", seq_len(nb - 1L), sep="_")
         if (ok && include.lowest) {
             if (right)

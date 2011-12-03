@@ -44,8 +44,7 @@ Rd2ex <-
         WriteLines(text, con, outputEncoding, sep = "")
     }
     wr <- function(x)
-        paste("###", strwrap(remap(x), 73L, indent=1L, exdent=3L),
-              sep="", collapse="\n")
+	paste0("###", strwrap(remap(x), 73L, indent=1L, exdent=3L), collapse="\n")
 
     remap <- function(x) {
         if(!length(x)) return(x)
@@ -164,7 +163,7 @@ Rd2ex <-
         title <- .Rd_format_title(.Rd_get_title(Rd))
         if (!length(title))
             title <- "No title found"
-        of0(wr(paste("Title: ", title, sep='')), "\n")
+        of0(wr(paste0("Title: ", title)), "\n")
         aliasblks <- sections == "\\alias"
         if (any(aliasblks)) {
             aliases <- unlist(Rd[aliasblks])

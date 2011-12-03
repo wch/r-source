@@ -154,4 +154,4 @@
 ## cat("Saving namespace image ...\n")
 
 ## want ASCII quotes, not fancy nor translated ones
-.dQ <- function (x) paste('"', x, '"', sep = '')
+.dQ <- function (x) paste0('"', x, '"')

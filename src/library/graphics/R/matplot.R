@@ -69,9 +69,9 @@ matplot <- function(x, y, type = "p",
     ## else pch is numeric supposedly
     if(verbose)
 	message("matplot: doing ", k, " plots with ",
-	    paste(" col= (", paste.ch(col), ")", sep=''),
-	    paste(" pch= (", paste.ch(pch), ")", sep=''),
-	    " ...\n", domain=NA)
+		paste0(" col= (", paste.ch(col), ")"),
+		paste0(" pch= (", paste.ch(pch), ")"),
+		" ...\n", domain=NA)
     ii <- match("log", names(xargs <- list(...)), nomatch = 0L)
     log <- if (ii != 0) xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)

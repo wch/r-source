@@ -4232,12 +4232,10 @@ function(x, ...)
                        f, sQuote(paste(bad, collapse = ", ")))
           },
           if(length(bad <- e[["bad_calls"]])) {
-              c(gettextf("  %s calls:", f),
-                paste("    ",
-                      unlist(lapply(bad[["calls"]],
-                                    function(e) paste(deparse(e),
-                                                      collapse = ""))),
-                      sep = ""))
+	      c(gettextf("  %s calls:", f),
+		paste0("    ",
+		       unlist(lapply(bad[["calls"]], function(e)
+				     paste(deparse(e), collapse = "")))))
           })
     }
 

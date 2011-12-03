@@ -654,8 +654,8 @@
     possible <- attr(cond, "candidates")
     message(gettextf('Note: Method with signature "%s" chosen for function "%s",\n target signature "%s".\n %s would also be valid',
                      selected, attr(cond, "generic"), attr(cond, "target"),
-                     paste('"', possible[is.na(match(possible, selected))], '"',
-                           sep="", collapse=", ")),
+		     paste0('"', possible[is.na(match(possible, selected))], '"',
+			    collapse=", ")),
             domain = NA)
   }
 }
@@ -725,8 +725,8 @@
   if(length(methods) == 1L)
     return(methods[[1L]]) # the method
   else if(length(methods) == 0L) {
-    cnames <- paste("\"", sapply(classes, as.character), "\"",
-                    sep = "", collapse = ", ")
+    cnames <- paste0("\"", sapply(classes, as.character), "\"",
+		     collapse = ", ")
     stop("unable to find an inherited method for function \"", fdef@generic,
          "\", for signature ", cnames)
   }
@@ -999,8 +999,8 @@
                               classes = NULL, showEmpty = TRUE, printTo = stdout())
 {
     cf <- function(...) cat(file = printTo, sep = "", ...)
-    sigString <- function(sig) paste(names(sig), "=\"", as.character(sig), "\"",
-				     sep = "", collapse = ", ")
+    sigString <- function(sig)
+	paste0(names(sig), "=\"", as.character(sig), "\"", collapse = ", ")
     qs <- function(what) paste0('"', what, '"', collapse = ", ")
     doFun <- function(func, pkg) cf("Function: ", func, " (package ", pkg, ")\n")
     env <- environment(generic)

@@ -369,8 +369,7 @@ Rd2HTML <-
                 writeHref()
             } else {
                 ## href = "../../pkg/html/file.html"
-                htmlfile <- paste("../../", urlify(parts$pkg), "/html/", htmlfile,
-                                  sep="")
+                htmlfile <- paste0("../../", urlify(parts$pkg), "/html/", htmlfile)
                 writeHref()
             }
         }
@@ -605,8 +604,8 @@ Rd2HTML <-
             	if (tag == "RCODE" && grepl("^\\(", block)) {
             	    block <- sub("^\\(", "", block)
             	    arg1 <- sub("[,)[:space:]].*", "", block)
-            	    block <- sub(paste(arg1, "[[:space:]]*,[[:space:]]*",
-                                       sep = ""), "", block)
+		    block <- sub(paste0(arg1, "[[:space:]]*,[[:space:]]*"),
+				 "", block)
             	    of0(arg1, pendingOpen)
             	    if (pendingOpen == "$")
             	    	pendingClose <<- ""
@@ -801,9 +800,7 @@ Rd2HTML <-
 	    writeSection(Rd[[i]], sections[i])
 
 	if(version != "")
-	    version <- paste('Package <em>', package,
-			     '</em> version ', version,
-			     ' ', sep='')
+	    version <- paste0('Package <em>',package,'</em> version ',version,' ')
 	of0('\n')
 	if (version != "")
 	    of0('<hr><div align="center">[', version,

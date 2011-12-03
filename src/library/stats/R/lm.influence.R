@@ -306,7 +306,7 @@ summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
 	dimnames(imat)[[1L]] <- rownam[is.star]
 	chmat <- format(round(imat, digits = digits))
 	cat("\n")
-	print(array(paste(chmat,c("","_*")[1+is.inf], sep=''),
+	print(array(paste0(chmat, c("","_*")[1+is.inf]),
 		    dimnames = dimnames(imat), dim=dim(imat)),
 	      quote = FALSE)
 	invisible(imat)

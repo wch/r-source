@@ -99,7 +99,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
 	    else lower <- lower / 1.2
 	    if(getOption("verbose"))
 		message(gettextf("increasing bw.SJ() search interval (%d) to [%.4g,%.4g]",
-                        itry, lower, upper), sep='', domain = NA)
+			itry, lower, upper), domain = NA)
 	    itry <- itry + 1
 	}
         res <- uniroot(fSD, c(lower, upper), tol=tol,
