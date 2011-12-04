@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-09-22 r57041)
+R Under development (unstable) (2011-12-04 r57800)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -3229,10 +3229,10 @@ F-statistic: 613.2 on 2 and 28 DF,  p-value: < 2.2e-16
 Start:  AIC=-152.69
 log(Volume) ~ log(Girth) + log(Height)
 
-              Df Sum of Sq    RSS      AIC
-<none>                     0.1855 -152.685
-- log(Height)  1    0.1978 0.3832 -132.185
-- log(Girth)   1    4.6275 4.8130  -53.743
+             Df Sum of Sq    RSS      AIC
+<none>                    0.1855 -152.685
+-log(Height)  1    0.1978 0.3832 -132.185
+-log(Girth)   1    4.6275 4.8130  -53.743
 
 Call:
 lm(formula = log(Volume) ~ log(Girth) + log(Height), data = trees)
