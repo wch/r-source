@@ -336,7 +336,7 @@ if test "x${want_lto}" == xyes; then
 fi
 AC_SUBST(LTO)
 AC_SUBST(LTOALL)
-AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" = xyes])
+AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 
 
 ### ** Optional packages.

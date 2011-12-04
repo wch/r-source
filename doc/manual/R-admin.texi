@@ -4648,7 +4648,8 @@ may need to be compiled without optimization.  Set the configure
 variable @env{SAFE_FFLAGS} to the flags to be used for this file.  If
 configure detects @acronym{GNU} FORTRAN it adds flag
 @option{-ffloat-store} to @env{FFLAGS}.  (Other settings are needed when
-using @command{icc} on @cputype{ix86} Linux, for example.)
+using @command{icc} on @cputype{ix86} Linux, for example.  Using
+@option{-mpc64} is preferable on more recent GCC compilers.)
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include

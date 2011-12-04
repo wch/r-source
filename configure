@@ -3998,7 +3998,7 @@ if test "x${want_lto}" == xyes; then
 fi
 
 
- if test "x${want_lto}" = xyes; then
+ if test "x${want_lto}" != xno; then
   BUILD_LTO_TRUE=
   BUILD_LTO_FALSE='#'
 else
