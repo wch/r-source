@@ -328,10 +328,14 @@ AC_ARG_ENABLE([lto],
 [AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
 [want_lto="${enableval}"], [want_lto=no])
 ## FIXME: add a test for gcc >= 4.5.0
-if test "x${want_lto}" = xyes; then
+if test "x${want_lto}" != xno; then
   LTO=-flto
 fi
+if test "x${want_lto}" == xyes; then
+  LTOALL=-flto
+fi
 AC_SUBST(LTO)
+AC_SUBST(LTOALL)
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" = xyes])
 
 

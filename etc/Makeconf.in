@@ -61,7 +61,7 @@ LIBS = @LIBS@
 LIBnn = @LIBnn@
 LIBTOOL = $(SHELL) "$(R_HOME)/bin/libtool"
 LDFLAGS = @LDFLAGS@
-LTO = @LTO@
+LTO = @LTOALL@
 ## needed to build applications linking to static libR
 MAIN_LD = @MAIN_LD@
 MAIN_LDFLAGS = @MAIN_LDFLAGS@

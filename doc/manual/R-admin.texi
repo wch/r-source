@@ -875,13 +875,17 @@ PE_COFF (Windows): only on some platforms can objects in static
 libraries be included in the link-time optimization.
 
 Link-time optimization roughly doubles the compilation time and
-increases the size of the @file{.o} files.
+increases the size of the @file{.o} files (but not the installed
+@file{.so} and executable files).
 
-Link-time optimization can be enabled by the @command{configure} option 
+Link-time optimization can be enabled by the @command{configure} option
 @option{--enable-lto}: no check it made that the compiler/linker support
 it.  In experiments with @command{gcc} 4.5.x on Linux the performance
-gain was negligible, but this may not be so with later compilers or
-other platforms.
+gain was small (mainly seen with @option{--enable-R-shlib}, but this may
+not be so with later compilers or other platforms.
+
+Setting @option{--enable-lto=R} enables LTO for building @R{} itself but
+not for extension packages (including the recommended packages).
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
