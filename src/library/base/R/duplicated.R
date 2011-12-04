@@ -25,7 +25,7 @@ duplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ..
 	.NotYetUsed("incomparables != FALSE")
     if(length(x) != 1L)
         duplicated(do.call("paste", c(x, sep="\r")), fromLast = fromLast)
-    else duplicated(x[[1L]])
+    else duplicated(x[[1L]], fromLast = fromLast)
 }
 
 duplicated.matrix <- duplicated.array <-

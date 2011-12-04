@@ -137,6 +137,9 @@
       \item \code{RweaveLatex()} now emulates auto-printing rather than
       printing, by calling \code{methods::show()} when auto-printing
       would.
+      
+      \item \code{duplicated()} ignored \code{fromLast} for a
+      one-column data frame.  (\PR{14742})
     }
   }
 }

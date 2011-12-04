@@ -1688,4 +1688,10 @@ stopifnot(is.infinite(pbinom(10, 1e6, 0.01, log.p=TRUE)))
 ## was NaN thanks to Maechler's misuse of toms708 in 2.11.0.
 
 
+## PR14742
+stopifnot(identical(duplicated(data.frame(c(1, 1)), fromLast = TRUE),
+                    duplicated(c(1, 1), fromLast = TRUE)))
+## first ignored fromLast in 2.14.0.
+
+
 proc.time()
