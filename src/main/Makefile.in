@@ -92,6 +92,7 @@ R_XZ = @BUILD_XZ_TRUE@  ../extra/xz/liblzma.a
 R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
 
 MAIN_LIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
+MAIN_OBJS = `ls ../unix/*.o ../appl/*.o ../nmath/*.o`
 EXTRA_STATIC_LIBS = \
   $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
@@ -100,7 +101,7 @@ EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(L
 
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o @BUILD_LTO_TRUE@@WANT_R_SHLIB_FALSE@$(OBJECTS)
-@BUILD_LTO_TRUE@@WANT_R_SHLIB_FALSE@R_bin_LDADD = $(STATIC_LIBS) $(EXTRA_LIBS)
+@BUILD_LTO_TRUE@@WANT_R_SHLIB_FALSE@R_bin_LDADD = $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS)
 @BUILD_LTO_FALSE@@WANT_R_SHLIB_FALSE@R_bin_LDADD = libR.a $(EXTRA_LIBS)
 ## Linked against -lRblas becasue -lR is and otherwise ld complains.
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib@R_ARCH@ -lR @BLAS_SHLIB_TRUE@-lRblas
@@ -108,8 +109,9 @@ R_bin_OBJECTS = Rmain.o @BUILD_LTO_TRUE@@WANT_R_SHLIB_FALSE@$(OBJECTS)
 
 libR_la = libR$(DYLIB_EXT)
 ## have to force in Rembedded.o
-libR_la_OBJECTS = $(OBJECTS) ../unix/Rembedded.o
-libR_la_LIBADD = $(STATIC_LIBS) $(EXTRA_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
+libR_la_OBJECTS = $(OBJECTS) @BUILD_LTO_FALSE@../unix/Rembedded.o
+@BUILD_LTO_FALSE@libR_la_LIBADD = $(STATIC_LIBS) $(EXTRA_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
+@BUILD_LTO_TRUE@libR_la_LIBADD = $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS)
 libR_la_DEPENDENCIES = $(STATIC_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 ## The next is needed on darwin only at present
