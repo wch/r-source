@@ -723,7 +723,7 @@ adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
 @var{name} can be anything non-empty, and is used to name subdirectories
 of @file{lib}, @file{etc}, @file{include} and the package @file{libs}
 subdirectories.  Example names from other systems are the use of
-@file{sparcv9} on Sparc Solaris and @file{32} by @code{gcc} on
+@file{sparcv9} on Sparc Solaris and @file{32} by @command{gcc} on
 @cputype{x86_64} Linux.
 
 If you have two or more such builds you can install them over each other
@@ -852,6 +852,36 @@ recommended packages are lazyloaded but not byte-compiled.
 (Alternatively the (make or environment) variable
 @env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
 of the build.)
+
+@menu
+* Inter-Procedure Optimization::  
+@end menu
+
+@node Inter-Procedure Optimization,  , Other Options, Other Options
+@subsection Inter-Procedure Optimization
+
+In a conventional build system each C/Fortran source file is compiled
+and optimized separately.  A trend in modern compilers is to carry
+optimization across source files: this has been done in commercial
+compilers for some time.
+
+GCC introduced a version of inter-procedure optimization in version
+4.5.0, which is calls @emph{link-time optimization}.  This writes an
+intermediate representation in the @file{.o} file, and then the linker
+combines those intermediate representations and re-compiles with
+optimization the combined representation.  Support for lto is still
+evolving: it is available for ELF-based systems and more recently for
+PE_COFF (Windows): only on some platforms can objects in static
+libraries be included in the link-time optimization.
+
+Link-time optimization roughly doubles the compilation time and
+increases the size of the @file{.o} files.
+
+Link-time optimization can be enabled by the @command{configure} option 
+@option{--enable-lto}: no check it made that the compiler/linker support
+it.  In experiments with @command{gcc} 4.5.x on Linux the performance
+gain was negligible, but this may not be so with later compilers or
+other platforms.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -3861,10 +3891,12 @@ significant performance improvements on recent CPUs (especially for
 @cputype{ix86}): one possibility is to add @option{-mtune=native} for
 the best possible performance on the machine on which @R{} is being
 installed: if the compilation is for a site-wide installation, it may
-still be desirable to use something like @option{-mtume=core2}.  It is
-also possible to increase the optimization levels to @option{-O3}:
-however for many versions of the compilers this has caused problems in
-at least one @acronym{CRAN} package.
+still be desirable to use something like
+@option{-mtume=core2}.@footnote{or @code{-mtune=corei7} for Intel Core
+i3/15/17 with @command{gcc >= 4.6.0}.} It is also possible to increase the
+optimization levels to @option{-O3}: however for many versions of the
+compilers this has caused problems in at least one @acronym{CRAN}
+package.
 
 For platforms with both 64- and 32-bit support, it is likely that
 

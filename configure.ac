@@ -324,6 +324,17 @@ AC_ARG_ENABLE([prebuilt-html],
 AM_CONDITIONAL(BUILD_HTML, [test "x${want_prebuilt_html}" = xyes])
 
 
+AC_ARG_ENABLE([lto],
+[AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
+[want_lto="${enableval}"], [want_lto=no])
+## FIXME: add a test for gcc >= 4.5.0
+if test "x${want_lto}" = xyes; then
+  LTO=-flto
+fi
+AC_SUBST(LTO)
+AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" = xyes])
+
+
 ### ** Optional packages.
 
 ## BLAS.
