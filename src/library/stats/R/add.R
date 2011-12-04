@@ -799,7 +799,7 @@ step <- function(object, scope, scale = 0,
 	    aod <- drop1(fit, scope$drop, scale = scale,
                          trace = trace, k = k, ...)
 	    rn <- row.names(aod)
-	    row.names(aod) <- c(rn[1L], paste0("-", rn[-1L]))
+	    row.names(aod) <- c(rn[1L], paste("-", rn[-1L], sep=" "))
             ## drop zero df terms first: one at time since they
             ## may mask each other
 	    if(any(aod$Df == 0, na.rm=TRUE)) {
@@ -812,7 +812,7 @@ step <- function(object, scope, scale = 0,
 		aodf <- add1(fit, scope$add, scale = scale,
                              trace = trace, k = k, ...)
 		rn <- row.names(aodf)
-		row.names(aodf) <- c(rn[1L], paste0("+", rn[-1L]))
+		row.names(aodf) <- c(rn[1L], paste("+", rn[-1L], sep=" "))
 		aod <-
                     if(is.null(aod)) aodf
                     else rbind(aod, aodf[-1, , drop = FALSE])
