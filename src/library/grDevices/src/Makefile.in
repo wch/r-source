@@ -52,6 +52,7 @@ cairodevice:
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
+LTO = @LTO@
 
 mostlyclean: clean
 clean:

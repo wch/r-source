@@ -65,6 +65,7 @@ shlib: $(SHLIB)
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
+LTO = @LTO@
 
 ## Meeded with i386 gcc 4.5.0 -- PR#14427
 portsrc_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
