@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-09-22 r57041)
+R Under development (unstable) (2011-12-05 r57819)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1608,11 +1608,12 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ##-- now some "magic" to do the 4 regressions in a loop:
 > ff <- y ~ x
+> mods <- setNames(as.list(1:4), paste0("lm", 1:4))
 > for(i in 1:4) {
-+   ff[2:3] <- lapply(paste(c("y","x"), i, sep=""), as.name)
-+   ## or   ff[[2]] <- as.name(paste("y", i, sep=""))
-+   ##      ff[[3]] <- as.name(paste("x", i, sep=""))
-+   assign(paste("lm.",i,sep=""), lmi <- lm(ff, data= anscombe))
++   ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
++   ## or   ff[[2]] <- as.name(paste0("y", i))
++   ##      ff[[3]] <- as.name(paste0("x", i))
++   mods[[i]] <- lmi <- lm(ff, data= anscombe)
 +   print(anova(lmi))
 + }
 Analysis of Variance Table
@@ -1649,28 +1650,27 @@ Residuals  9 13.742  1.5269
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > 
 > ## See how close they are (numerically!)
-> sapply(objects(pattern="lm\\.[1-4]$"), function(n) coef(get(n)))
-                 lm.1     lm.2      lm.3      lm.4
+> sapply(mods, coef)
+                  lm1      lm2       lm3       lm4
 (Intercept) 3.0000909 3.000909 3.0024545 3.0017273
 x1          0.5000909 0.500000 0.4997273 0.4999091
-> lapply(objects(pattern="lm\\.[1-4]$"),
-+        function(n) coef(summary(get(n))))
-[[1]]
+> lapply(mods, function(fm) coef(summary(fm)))
+$lm1
              Estimate Std. Error  t value    Pr(>|t|)
 (Intercept) 3.0000909  1.1247468 2.667348 0.025734051
 x1          0.5000909  0.1179055 4.241455 0.002169629
 
-[[2]]
+$lm2
             Estimate Std. Error  t value    Pr(>|t|)
 (Intercept) 3.000909  1.1253024 2.666758 0.025758941
 x2          0.500000  0.1179637 4.238590 0.002178816
 
-[[3]]
+$lm3
              Estimate Std. Error  t value    Pr(>|t|)
 (Intercept) 3.0024545  1.1244812 2.670080 0.025619109
 x3          0.4997273  0.1178777 4.239372 0.002176305
 
-[[4]]
+$lm4
              Estimate Std. Error  t value    Pr(>|t|)
 (Intercept) 3.0017273  1.1239211 2.670763 0.025590425
 x4          0.4999091  0.1178189 4.243028 0.002164602
@@ -1679,10 +1679,10 @@ x4          0.4999091  0.1178189 4.243028 0.002164602
 > ## Now, do what you should have done in the first place: PLOTS
 > op <- par(mfrow=c(2,2), mar=.1+c(4,4,1,1), oma= c(0,0,2,0))
 > for(i in 1:4) {
-+   ff[2:3] <- lapply(paste(c("y","x"), i, sep=""), as.name)
-+   plot(ff, data =anscombe, col="red", pch=21, bg = "orange", cex = 1.2,
++   ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
++   plot(ff, data=anscombe, col="red", pch=21, bg = "orange", cex = 1.2,
 +        xlim=c(3,19), ylim=c(3,13))
-+   abline(get(paste("lm.",i,sep="")), col="blue")
++   abline(mods[[i]], col="blue")
 + }
 > mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex=1.5)
 > par(op)
@@ -3427,7 +3427,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  9.445 0.567 20.448 0 0 
+Time elapsed:  2.72 0.078 2.968 0 0 
 > grDevices::dev.off()
 null device 
           1 
