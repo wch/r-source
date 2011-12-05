@@ -4092,8 +4092,11 @@ to 10.5 (Leopard).  You will also need @command{gfortran} and
 @code{libreadline} (or configure with @option{--without-readline}).
 
 For more information on how to find these tools please read the
-@uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for Mac
-OS X @acronym{FAQ}}.
+@uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for
+Mac OS X @acronym{FAQ}} or look at
+@url{http://r.research.att.com/@/tools/}.  You will typically need to
+install Xcode and a matching version of @command{gfortran} from the
+tools page.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4119,6 +4122,7 @@ distribution).
 @menu
 * 64-bit builds::               
 * Snow Leopard::                
+* Lion::                        
 @end menu
 
 @node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
@@ -4141,7 +4145,7 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit builds, Mac OS X
+@node Snow Leopard, Lion, 64-bit builds, Mac OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
@@ -4178,6 +4182,32 @@ OBJC='gcc -arch i386'
 LIBS=-L/usr/X11/lib
 @end example
 
+@node Lion,  , Snow Leopard, Mac OS X
+@subsection Lion
+
+With Xcode 4.2 you need to install a package named like
+@url{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
+provide compilers named @command{gcc-4.2}, @command{g++-4.2} and
+@command{gfortran-4.2}.  These default to 64-bit, so for a 64-bit build
+@file{config.site} in the top-level build directory should contain
+
+@example
+CC=gcc-4.2
+CXX=g++-4.2
+F77=gfortran-4.2
+FC=gfortran-4.2
+OBJC=gcc-4.2
+@end example
+
+and for a 32-bit build add @option{-arch i386} as displayed under Snow
+Leopard.
+
+It is also possible to build @R{} using Apple's C/C++ compilers supplied
+with Xcode, but these do need to be supplemented by a Fortran compiler
+(such as @code{gfortran-4.2}).  @command{/usr/bin/gcc} is a link to
+@command{llvm-gcc}, an LLVM-based compiler with a @command{gcc 4.2.1}
+front end, and @command{clang} can also be used (and @command{clang++}
+for C++).
 
 @node Solaris, AIX, Mac OS X, Platform notes
 @section Solaris
