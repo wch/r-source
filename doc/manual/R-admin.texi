@@ -4064,7 +4064,7 @@ pkg_add -r R
 
 @noindent
 (on the system this was tested on, this installed Tcl, Tk, blas, lapack
-and @code{gcc-4.5.3} which includes @command{gfortran45}).  A listing of
+and @code{gcc-4.6.2} which includes @command{gfortran46}).  A listing of
 dependencies (not necessarily for current @R{}) can be found at
 @uref{http://www.freebsd.org/@/ports/@/lang.html}: you will however also
 need a @TeX{} system@footnote{TeXLive is recommended.} to build the
@@ -4073,7 +4073,7 @@ manuals.
 Then @R{} itself can be built by something like
 
 @example
-./configure CC=gcc45 F77=gfortran45 CXX=g++45 FC=gfortran45
+./configure CC=gcc46 F77=gfortran46 CXX=g++46 FC=gfortran46
 @end example
 
 There are also FreeBSD packages for a small eclectic collection of
