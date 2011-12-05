@@ -5225,7 +5225,7 @@ function(dir)
     ## Watch out for maintainer changes.
     ## Note that we cannot get the maintainer info from the PACKAGES
     ## files.
-    con <- url(sprintf("%s/web/packages/packages.rds", urls[1L]), "rb")
+    con <- gzcon(url(sprintf("%s/web/packages/packages.rds", CRAN), "rb"))
     db <- tryCatch(readRDS(con), error = identity)
     close(con)
     if(inherits(db, "error")) return(out)
