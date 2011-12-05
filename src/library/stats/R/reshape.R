@@ -20,8 +20,8 @@ reshape <-
              drop = NULL, direction, new.row.names = NULL,
              sep = ".",
              split = if (sep == "") {
-                 list(regexp="[A-Za-z][0-9]",include=TRUE)
-             } else {list(regexp=sep, include= FALSE, fixed=TRUE)})
+                 list(regexp = "[A-Za-z][0-9]", include = TRUE)
+             } else {list(regexp = sep, include = FALSE, fixed = TRUE)})
 {
 
     if (!is.character(sep) || length(sep) != 1L)
@@ -162,28 +162,29 @@ reshape <-
 
         undoInfo$varying <- varying
 
-        CHECK <- TRUE
-        if (CHECK) {
-            keep <- !(names(data) %in% c(timevar,v.names,idvar,orig.idvar))
-            if(any(keep)) {
-                rval <- data[keep]
-                tmp <- data[,idvar]
-                really.constant <-
-                    unlist(lapply(rval,
-                                  function(a) all(tapply(a, as.vector(tmp),
-                                                         function(b) length(unique(b)) == 1L))))
-                if (!all(really.constant))
-                    warning(gettextf("some constant variables (%s) are really varying",
-                                     paste(names(rval)[!really.constant],collapse = ",")), domain = NA)
-            }
+        keep <- !(names(data) %in% c(timevar, v.names, idvar, orig.idvar))
+        if(any(keep)) {
+            rval <- data[keep]
+            tmp <- data[, idvar]
+            really.constant <-
+                unlist(lapply(rval,
+                              function(a) all(tapply(a, as.vector(tmp),
+                                                     function(b) length(unique(b)) == 1L))))
+            if (!all(really.constant))
+                warning(gettextf("some constant variables (%s) are really varying",
+                                 paste(names(rval)[!really.constant],collapse = ",")), domain = NA)
         }
 
         rval <- data[!duplicated(data[, idvar]),
                      !(names(data) %in% c(timevar, v.names)), drop = FALSE]
 
         for(i in seq_along(times)) {
-            thistime <- data[data[, timevar] %in% times[i],]
-            rval[,varying[, i]] <-
+            thistime <- data[data[, timevar] %in% times[i], ]
+            tab <- table(thistime[, idvar])
+            if (any(tab > 1L))
+                warning(sprintf("multiple rows match for %s=%s: first taken",
+                                timevar, times[i]), domain = NA)
+            rval[, varying[, i]] <-
                 thistime[match(rval[, idvar], thistime[, idvar]), v.names]
         }
 
