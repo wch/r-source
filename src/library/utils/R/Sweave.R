@@ -95,6 +95,12 @@ Sweave <- function(file, driver = RweaveLatex(),
     	line <- text[linenum]
     	filenum <- srcFilenum[linenum]
     	linediff <- srcLinenum[linenum] - linenum
+	if(nzchar(Sys.getenv("R_DEBUG_Sweave"))) {
+	    ## Extensive logging for debugging, needs 'ls' (unix-like or Rtools):
+	    cat(sprintf("l.%3d: %30s -'%4s'- ", linenum, substr(line,1,30), mode))
+	    cat(sprintf("%16s\n", system(paste("ls -s",
+				   summary(drobj$output)$description), intern=TRUE)))
+	}
         if (length(grep(syntax$doc, line))) { # start new documentation chunk
             if (mode == "doc") {
                 if (!is.null(chunk)) drobj <- driver$writedoc(drobj, chunk)
@@ -122,7 +128,7 @@ Sweave <- function(file, driver = RweaveLatex(),
                                             driver$checkopts)
             ## these #line directives are used for error messages when parsing
             file <- srcFilenames[filenum]
-            chunk <- paste("#line ", linenum+linediff+1L, ' "', basename(file), '"', sep="")
+            chunk <- paste0("#line ", linenum+linediff+1L, ' "', basename(file), '"')
             attr(chunk, "srclines") <- linenum + linediff
             attr(chunk, "srcFilenum") <- filenum
             chunknr <- chunknr + 1L  # this is really 'code chunk number'
@@ -141,15 +147,15 @@ Sweave <- function(file, driver = RweaveLatex(),
                     ## when parsing
                     file <- srcFilenames[filenum]
                     line <- c(namedchunks[[chunkref]],
-                              paste("#line ", linenum+linediff+1L, ' "',
-                                    basename(file), '"', sep=""))
+			      paste0("#line ", linenum+linediff+1L,
+				     ' "', basename(file), '"'))
                 }
             }
             if (mode == "code" &&
                 (prevfilenum != filenum ||
                  prevlinediff != linediff)) {
                 file <- srcFilenames[filenum]
-                line <- c(paste("#line ", linenum+linediff, ' "', basename(file), '"', sep=""),
+                line <- c(paste0("#line ", linenum+linediff, ' "', basename(file), '"'),
                           line)
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum+linediff, length(line)))
@@ -184,7 +190,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     df <- dirname(f)
     if (!file.exists(f)) {
         f <- list.files(df, full.names = TRUE,
-                        pattern = paste(bf, syntax$extension, sep = ""))
+                        pattern = paste0(bf, syntax$extension))
 
         if (length(f) == 0L)
             stop(gettextf("no Sweave file with name %s found",
@@ -227,7 +233,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     if (length(pos) > 0L) {
         sname <- sub(syntax$syntaxname, "\\1", text[pos[1L]])
         syntax <- get(sname, mode = "list")
-        if (class(syntax) != "SweaveSyntax")
+        if (!identical(class(syntax), "SweaveSyntax"))
             stop(gettextf("object %s does not have class \"SweaveSyntax\"",
                           sQuote(sname)), domain = NA)
         text <- text[-pos]
@@ -311,7 +317,7 @@ SweaveGetSyntax <- function(file)
     synt <- apropos("SweaveSyntax", mode = "list")
     for (sname in synt) {
         s <- get(sname, mode = "list")
-        if (class(s) != "SweaveSyntax") next
+        if (!identical(class(s), "SweaveSyntax")) next
         if (length(grep(s$extension, file))) return(s)
     }
     SweaveSyntaxNoweb
@@ -322,9 +328,8 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
 {
     if (is.character(syntax)) syntax <- get(syntax)
 
-    if (class(syntax) != "SweaveSyntax")
+    if (!identical(class(syntax), "SweaveSyntax"))
         stop("target syntax not of class \"SweaveSyntax\"")
-
     if (is.null(syntax$trans))
         stop("target syntax contains no translation table")
 
@@ -373,7 +378,7 @@ SweaveParseOptions <- function(text, defaults = list(), check = NULL)
     ## This is undocumented
     if (!is.null(options[["label"]]) && !is.null(options[["engine"]]))
         options[["label"]] <-
-            sub(paste("\\.", options[["engine"]], "$", sep=""),
+            sub(paste0("\\.", options[["engine"]], "$"),
                 "", options[["label"]])
 
     if (!is.null(check)) check(options) else options
