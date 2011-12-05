@@ -1,8 +1,8 @@
 
-R version 2.14.0 beta (2011-10-21 r57363)
+R version 2.14.0 Patched (2011-12-05 r57815)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13727,8 +13727,8 @@ block     N     P     K
  5:11    Mean   :2.886   Mean   :0.5918  
  6:11    3rd Qu.:5.000   3rd Qu.:0.8325  
  3:11    Max.   :8.000   Max.   :2.7200  
-> wide <- reshape(Indometh, v.names="conc", idvar="Subject",
-+                 timevar="time", direction="wide")
+> wide <- reshape(Indometh, v.names = "conc", idvar = "Subject",
++                 timevar = "time", direction = "wide")
 > wide
    Subject conc.0.25 conc.0.5 conc.0.75 conc.1 conc.1.25 conc.2 conc.3 conc.4
 1        1      1.50     0.94      0.78   0.48      0.37   0.19   0.12   0.11
@@ -13745,7 +13745,7 @@ block     N     P     K
 45   0.08   0.10   0.06
 56   0.13   0.10   0.09
 > 
-> reshape(wide, direction="long")
+> reshape(wide, direction = "long")
        Subject time conc
 1.0.25       1 0.25 1.50
 2.0.25       2 0.25 2.03
@@ -13813,8 +13813,8 @@ block     N     P     K
 4.8          4 8.00 0.07
 5.8          5 8.00 0.06
 6.8          6 8.00 0.09
-> reshape(wide, idvar="Subject", varying=list(2:12),
-+         v.names="conc", direction="long")
+> reshape(wide, idvar = "Subject", varying = list(2:12),
++         v.names = "conc", direction = "long")
      Subject time conc
 1.1        1    1 1.50
 2.1        2    1 2.03
@@ -13884,9 +13884,9 @@ block     N     P     K
 6.11       6   11 0.09
 > 
 > ## times need not be numeric
-> df <- data.frame(id=rep(1:4,rep(2,4)),
-+                  visit=I(rep(c("Before","After"),4)),
-+                  x=rnorm(4), y=runif(4))
+> df <- data.frame(id = rep(1:4, rep(2,4)),
++                  visit = I(rep(c("Before","After"), 4)),
++                  x = rnorm(4), y = runif(4))
 > df
   id  visit          x          y
 1  1 Before -0.6264538 0.62911404
@@ -13897,14 +13897,14 @@ block     N     P     K
 6  3  After  0.1836433 0.06178627
 7  4 Before -0.8356286 0.20597457
 8  4  After  1.5952808 0.17655675
-> reshape(df, timevar="visit", idvar="id", direction="wide")
+> reshape(df, timevar = "visit", idvar = "id", direction = "wide")
   id   x.Before  y.Before   x.After    y.After
 1  1 -0.6264538 0.6291140 0.1836433 0.06178627
 3  2 -0.8356286 0.2059746 1.5952808 0.17655675
 5  3 -0.6264538 0.6291140 0.1836433 0.06178627
 7  4 -0.8356286 0.2059746 1.5952808 0.17655675
 > ## warns that y is really varying
-> reshape(df, timevar="visit", idvar="id", direction="wide", v.names="x")
+> reshape(df, timevar = "visit", idvar = "id", direction = "wide", v.names = "x")
 Warning in reshapeWide(data, idvar = idvar, timevar = timevar, varying = varying,  :
   some constant variables (y) are really varying
   id         y   x.Before   x.After
@@ -13915,7 +13915,7 @@ Warning in reshapeWide(data, idvar = idvar, timevar = timevar, varying = varying
 > 
 > 
 > ##  unbalanced 'long' data leads to NA fill in 'wide' form
-> df2 <- df[1:7,]
+> df2 <- df[1:7, ]
 > df2
   id  visit          x          y
 1  1 Before -0.6264538 0.62911404
@@ -13925,7 +13925,7 @@ Warning in reshapeWide(data, idvar = idvar, timevar = timevar, varying = varying
 5  3 Before -0.6264538 0.62911404
 6  3  After  0.1836433 0.06178627
 7  4 Before -0.8356286 0.20597457
-> reshape(df2, timevar="visit", idvar="id", direction="wide")
+> reshape(df2, timevar = "visit", idvar = "id", direction = "wide")
   id   x.Before  y.Before   x.After    y.After
 1  1 -0.6264538 0.6291140 0.1836433 0.06178627
 3  2 -0.8356286 0.2059746 1.5952808 0.17655675
@@ -13933,9 +13933,9 @@ Warning in reshapeWide(data, idvar = idvar, timevar = timevar, varying = varying
 7  4 -0.8356286 0.2059746        NA         NA
 > 
 > ## Alternative regular expressions for guessing names
-> df3 <- data.frame(id=1:4, age=c(40,50,60,50), dose1=c(1,2,1,2),
-+                   dose2=c(2,1,2,1), dose4=c(3,3,3,3))
-> reshape(df3, direction="long", varying=3:5, sep="")
+> df3 <- data.frame(id = 1:4, age = c(40,50,60,50), dose1 = c(1,2,1,2),
++                   dose2 = c(2,1,2,1), dose4 = c(3,3,3,3))
+> reshape(df3, direction = "long", varying = 3:5, sep = "")
     id age time dose
 1.1  1  40    1    1
 2.1  2  50    1    2
@@ -13953,11 +13953,11 @@ Warning in reshapeWide(data, idvar = idvar, timevar = timevar, varying = varying
 > 
 > ## an example that isn't longitudinal data
 > state.x77 <- as.data.frame(state.x77)
-> long <- reshape(state.x77, idvar="state", ids=row.names(state.x77),
-+                 times=names(state.x77), timevar="Characteristic",
-+                 varying=list(names(state.x77)), direction="long")
+> long <- reshape(state.x77, idvar = "state", ids = row.names(state.x77),
++                 times = names(state.x77), timevar = "Characteristic",
++                 varying = list(names(state.x77)), direction = "long")
 > 
-> reshape(long, direction="wide")
+> reshape(long, direction = "wide")
                                    state Population Income Illiteracy Life Exp
 Alabama.Population               Alabama       3615   3624        2.1    69.05
 Alaska.Population                 Alaska        365   6315        1.5    69.31
@@ -14061,7 +14061,7 @@ West Virginia.Population     6.7    41.6   100  24070
 Wisconsin.Population         3.0    54.5   149  54464
 Wyoming.Population           6.9    62.9   173  97203
 > 
-> reshape(long, direction="wide", new.row.names=unique(long$state))
+> reshape(long, direction = "wide", new.row.names = unique(long$state))
                         state Population Income Illiteracy Life Exp Murder
 Alabama               Alabama       3615   3624        2.1    69.05   15.1
 Alaska                 Alaska        365   6315        1.5    69.31   11.3
@@ -14166,10 +14166,9 @@ Wisconsin         54.5   149  54464
 Wyoming           62.9   173  97203
 > 
 > ## multiple id variables
-> df3 <- data.frame(school=rep(1:3,each=4), class=rep(9:10,6),
-+                   time=rep(c(1,1,2,2),3),
-+ score=rnorm(12))
-> wide <- reshape(df3, idvar=c("school","class"), direction="wide")
+> df3 <- data.frame(school = rep(1:3, each = 4), class = rep(9:10, 6),
++                   time = rep(c(1,1,2,2), 3), score = rnorm(12))
+> wide <- reshape(df3, idvar = c("school","class"), direction = "wide")
 > wide
    school class     score.1     score.2
 1       1     9  0.48742905  0.57578135

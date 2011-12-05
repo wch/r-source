@@ -1,6 +1,6 @@
 % File src/library/stats/man/reshape.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{reshape}
@@ -18,10 +18,10 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
         times = seq_along(varying[[1]]),
         drop = NULL, direction, new.row.names = NULL,
         sep = ".",
-        split = if (sep==""){
-            list(regexp="[A-Za-z][0-9]",include=TRUE)
+        split = if (sep == "") {
+            list(regexp = "[A-Za-z][0-9]", include = TRUE)
         } else {
-            list(regexp=sep, include= FALSE, fixed=TRUE)}
+            list(regexp = sep, include = FALSE, fixed = TRUE)}
         )
 
 }
@@ -33,60 +33,59 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     variable names, but it can optionally be a matrix of names, or a
     single vector of names.  In each case, the names can be replaced by
     indices which are interpreted as referring to \code{names(data)}. 
-    See below for more details and
-    options.}
+    See \sQuote{Details} for more details and options.}
   \item{v.names}{names of variables in the long format that correspond
-    to multiple variables in the wide format.  See below for details.}
+    to multiple variables in the wide format.  See \sQuote{Details}.}
   \item{timevar}{the variable in long format that differentiates multiple
     records from the same group or individual.  If more than one record
-    matches, the first will be taken. }
+    matches, the first will be taken.}
   \item{idvar}{Names of one or more variables in long format that
     identify multiple records from the same group/individual.  These
     variables may also be present in wide format.}
   \item{ids}{the values to use for a newly created \code{idvar}
     variable in long format.}
   \item{times}{the values to use for a newly created \code{timevar}
-    variable in long format.  See below for details.}
-  \item{drop}{a vector of names of variables to drop before reshaping}
+    variable in long format.  See \sQuote{Details}.}
+  \item{drop}{a vector of names of variables to drop before reshaping.}
   \item{direction}{character string, either \code{"wide"} to reshape to
     wide format, or \code{"long"} to reshape to long format.}
-  \item{new.row.names}{logical; if \code{TRUE} and \code{direction="wide"},
-    create new row names in long format from the values of the id and
-    time variables.}
+  \item{new.row.names}{logical; if \code{TRUE} and \code{direction = "wide"},
+    create new row names in long format from the values of the \code{id} and
+    \code{time} variables.}
   \item{sep}{A character vector of length 1, indicating a separating
     character in the variable names in the wide format.  This is used for
     guessing \code{v.names} and \code{times} arguments based on the
-    names in \code{varying}.  If \code{sep==""}, the split is just before
-    the first numeral that follows an alphabetic character.  As from \R
-    2.12.1 it is also used to create variable names when reshaping to
-    wide format.}
+    names in \code{varying}.  If \code{sep == ""}, the split is just before
+    the first numeral that follows an alphabetic character.  This is
+    also used to create variable names when reshaping to wide format.}
   \item{split}{A list with three components, \code{regexp},
     \code{include}, and (optionally) \code{fixed}.  This allows an
-    extended interface to variable name splitting.  See below for details.}
+    extended interface to variable name splitting.  See \sQuote{Details}.}
 }
 \details{
   The arguments to this function are described in terms of longitudinal
-  data, as that is the application motivating the functions.  A \sQuote{wide}
-  longitudinal dataset will have one record for each individual with
-  some time-constant variables that occupy single columns and some
-  time-varying variables that occupy a column for each time point.  In
-  \sQuote{long} format there will be multiple records for each individual, with
-  some variables being constant across these records and others varying
-  across the records.  A \sQuote{long} format dataset also needs a \sQuote{time}
-  variable identifying which time point each record comes from and an
-  \sQuote{id} variable showing which records refer to the same person.
+  data, as that is the application motivating the functions.  A
+  \sQuote{wide} longitudinal dataset will have one record for each
+  individual with some time-constant variables that occupy single
+  columns and some time-varying variables that occupy a column for each
+  time point.  In \sQuote{long} format there will be multiple records
+  for each individual, with some variables being constant across these
+  records and others varying across the records.  A \sQuote{long} format
+  dataset also needs a \sQuote{time} variable identifying which time
+  point each record comes from and an \sQuote{id} variable showing which
+  records refer to the same person.
 
   If the data frame resulted from a previous \code{reshape} then the
   operation can be reversed simply by \code{reshape(a)}.  The
   \code{direction} argument is optional and the other arguments are
   stored as attributes on the data frame.
 
-  If \code{direction="wide"} and no \code{varying} or \code{v.names}
+  If \code{direction = "wide"} and no \code{varying} or \code{v.names}
   arguments are supplied it is assumed that all variables except
   \code{idvar} and \code{timevar} are time-varying.  They are all
   expanded into multiple variables in wide format.
 
-  If \code{direction="long"} the \code{varying} argument can be a vector
+  If \code{direction = "long"} the \code{varying} argument can be a vector
   of column names (or a corresponding index).  The function will attempt
   to guess the \code{v.names} and \code{times} from these names.  The
   default is variable names like \code{x.1}, \code{x.2}, where
@@ -120,50 +119,49 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 }
 \examples{
 summary(Indometh)
-wide <- reshape(Indometh, v.names="conc", idvar="Subject",
-                timevar="time", direction="wide")
+wide <- reshape(Indometh, v.names = "conc", idvar = "Subject",
+                timevar = "time", direction = "wide")
 wide
 
-reshape(wide, direction="long")
-reshape(wide, idvar="Subject", varying=list(2:12),
-        v.names="conc", direction="long")
+reshape(wide, direction = "long")
+reshape(wide, idvar = "Subject", varying = list(2:12),
+        v.names = "conc", direction = "long")
 
 ## times need not be numeric
-df <- data.frame(id=rep(1:4,rep(2,4)),
-                 visit=I(rep(c("Before","After"),4)),
-                 x=rnorm(4), y=runif(4))
+df <- data.frame(id = rep(1:4, rep(2,4)),
+                 visit = I(rep(c("Before","After"), 4)),
+                 x = rnorm(4), y = runif(4))
 df
-reshape(df, timevar="visit", idvar="id", direction="wide")
+reshape(df, timevar = "visit", idvar = "id", direction = "wide")
 ## warns that y is really varying
-reshape(df, timevar="visit", idvar="id", direction="wide", v.names="x")
+reshape(df, timevar = "visit", idvar = "id", direction = "wide", v.names = "x")
 
 
 ##  unbalanced 'long' data leads to NA fill in 'wide' form
-df2 <- df[1:7,]
+df2 <- df[1:7, ]
 df2
-reshape(df2, timevar="visit", idvar="id", direction="wide")
+reshape(df2, timevar = "visit", idvar = "id", direction = "wide")
 
 ## Alternative regular expressions for guessing names
-df3 <- data.frame(id=1:4, age=c(40,50,60,50), dose1=c(1,2,1,2),
-                  dose2=c(2,1,2,1), dose4=c(3,3,3,3))
-reshape(df3, direction="long", varying=3:5, sep="")
+df3 <- data.frame(id = 1:4, age = c(40,50,60,50), dose1 = c(1,2,1,2),
+                  dose2 = c(2,1,2,1), dose4 = c(3,3,3,3))
+reshape(df3, direction = "long", varying = 3:5, sep = "")
 
 
 ## an example that isn't longitudinal data
 state.x77 <- as.data.frame(state.x77)
-long <- reshape(state.x77, idvar="state", ids=row.names(state.x77),
-                times=names(state.x77), timevar="Characteristic",
-                varying=list(names(state.x77)), direction="long")
+long <- reshape(state.x77, idvar = "state", ids = row.names(state.x77),
+                times = names(state.x77), timevar = "Characteristic",
+                varying = list(names(state.x77)), direction = "long")
 
-reshape(long, direction="wide")
+reshape(long, direction = "wide")
 
-reshape(long, direction="wide", new.row.names=unique(long$state))
+reshape(long, direction = "wide", new.row.names = unique(long$state))
 
 ## multiple id variables
-df3 <- data.frame(school=rep(1:3,each=4), class=rep(9:10,6),
-                  time=rep(c(1,1,2,2),3),
-score=rnorm(12))
-wide <- reshape(df3, idvar=c("school","class"), direction="wide")
+df3 <- data.frame(school = rep(1:3, each = 4), class = rep(9:10, 6),
+                  time = rep(c(1,1,2,2), 3), score = rnorm(12))
+wide <- reshape(df3, idvar = c("school","class"), direction = "wide")
 wide
 ## transform back
 reshape(wide)
