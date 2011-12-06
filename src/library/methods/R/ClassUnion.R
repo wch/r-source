@@ -58,7 +58,7 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
         stop(gettextf("unable to create union class:  could not set members %s",
                       paste(.dQ(failed), collapse=", ")), domain = NA)
     }
-    value
+    invisible(value)
 }
 
 isClassUnion <- function(Class) {

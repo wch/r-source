@@ -226,10 +226,10 @@ This should be a rare occurrence.
  if(isClass("track"))           removeClass("track")
 }
 ## A simple class with two slots
-setClass("track",
+track <- setClass("track",
          representation(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
-setClass("trackCurve",
+trackCurve <- setClass("trackCurve",
     representation(smooth = "numeric"),
     contains = "track")
 ## A class similar to "trackCurve", but with different structure
@@ -252,7 +252,7 @@ try(setIs("trackMultiCurve", "trackCurve",
 setIs("trackMultiCurve", "trackCurve",
   test = function(obj) {ncol(slot(obj, "y")) == 1},
   coerce = function(obj) {
-     new("trackCurve",
+     trackCurve(
          x = slot(obj, "x"),
          y = as.numeric(slot(obj,"y")),
          smooth = as.numeric(slot(obj, "smooth")))
@@ -260,23 +260,23 @@ setIs("trackMultiCurve", "trackCurve",
 
 ## A class that extends the built-in data type "numeric"
 
-setClass("numWithId", representation(id = "character"),
+numWithId <- setClass("numWithId", representation(id = "character"),
          contains = "numeric")
 
-new("numWithId", 1:3, id = "An Example")
+numWithId(1:3, id = "An Example")
 
 ## inherit from reference object of type "environment"
-setClass("stampedEnv", contains = "environment",
+stampedEnv <-setClass("stampedEnv", contains = "environment",
       representation(update = "POSIXct"))
-
-e1 <- new("stampedEnv",  update = Sys.time())
-
 setMethod("[[<-", c("stampedEnv", "character", "missing"),
    function(x, i, j, ..., value) {
        ev <- as(x, "environment")
        ev[[i]] <- value  #update the object in the environment
        x@update <- Sys.time() # and the update time
        x})
+
+
+e1 <- stampedEnv(update = Sys.time())
 
 e1[["noise"]] <- rnorm(10)
 
@@ -291,26 +291,15 @@ nrow(new("matrix")) # 1
 xxx <- stats::rnorm(3)
 setClass("xNum", representation(x = "numeric"), prototype = list(x = xxx))
 stopifnot(identical(new("xNum")@x, xxx))
-### tests of the C macros MAKE_CLASS and NEW
-### FIXME:  there should be a separate man page for the C-level macros
-### and the tests below should be there.
-stopifnot(identical(.Call("R_methods_test_MAKE_CLASS", "trackCurve",
-                          PACKAGE = "methods"),
-                    getClass("trackCurve")))
 
-stopifnot(identical(.Call("R_methods_test_NEW", "track", PACKAGE = "methods"),
-                    new("track")))
-
+removeClass("xNum")
+removeClass("myMatrix")
 
 ## The following should not be needed.  But make check removes all files
 ## between example files, in a crude way that does not cause the class
 ## information to be reset.  There seems no way to detect this, so we
 ## have to remove classes ourselves
 
-removeClass("withId")
-removeClass("maybeNumber")
-removeClass("xNum")
-removeClass("myMatrix")
 resetClass("integer")
 resetClass("numeric")
 resetClass("logical")

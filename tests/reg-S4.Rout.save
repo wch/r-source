@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-09-08 r56975)
+R Under development (unstable) (2011-12-06 r57837)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin10.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,7 +23,6 @@ Type 'q()' to quit R.
 > 
 > ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
 > setClass("test1", representation(date="POSIXct"))
-[1] "test1"
 > x <- new("test1", date=as.POSIXct("2003-10-09"))
 > stopifnot(format(x @ date) == "2003-10-09")
 > ## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
@@ -87,7 +86,6 @@ Type 'q()' to quit R.
 > ## (But most of this example is irrelevant if one avoids S3 methods for
 > ## S4 classes, as one should.)
 > setClass("bar", representation(a="numeric"))
-[1] "bar"
 > foo <- new("bar", a=pi)
 > foo
 An object of class "bar"
@@ -139,9 +137,7 @@ show method
 S4 print method
 > 
 > setClassUnion("integer or NULL", members = c("integer","NULL"))
-[1] "integer or NULL"
 > setClass("c1", representation(x = "integer", code = "integer or NULL"))
-[1] "c1"
 > nc <- new("c1", x = 1:2)
 > str(nc)# gave ^ANULL^A in 2.0.0
 Formal class 'c1' [package ".GlobalEnv"] with 2 slots
@@ -181,7 +177,6 @@ from="ANY", to="numeric"
 > stopifnot(identical(d2[-1,], d2[2:3,]))
 > ## Now make "[" into S4 generic by defining a trivial method
 > setClass("Mat", representation(Dim = "integer", "VIRTUAL"))
-[1] "Mat"
 > setMethod("[", signature(x = "Mat",
 + 			 i = "missing", j = "missing", drop = "ANY"),
 + 	  function (x, i, j, drop) x)
@@ -200,9 +195,7 @@ from="ANY", to="numeric"
 > 
 > ## Fritz' S4 "odditiy"
 > setClass("X", representation(bar="numeric"))
-[1] "X"
 > setClass("Y", contains="X")
-[1] "Y"
 > ## Now we define a generic foo() and two different methods for "X" and
 > ## "Y" objects for arg missing:
 > setGeneric("foo", function(object, arg) standardGeneric("foo"))
@@ -234,11 +227,8 @@ a Y object with bar = 2
 > 
 > ## Multiple inheritance
 > setClass("A", representation(x = "numeric"))
-[1] "A"
 > setClass("B", representation(y = "character"))
-[1] "B"
 > setClass("C", contains = c("A", "B"), representation(z = "logical"))
-[1] "C"
 > new("C")
 An object of class "C"
 Slot "z":
@@ -252,7 +242,6 @@ character(0)
 
 > setClass("C", contains = c("A", "B"), representation(z = "logical"),
 +          prototype = prototype(x = 1.5, y = "test", z = TRUE))
-[1] "C"
 > (cc <- new("C"))
 An object of class "C"
 Slot "z":
@@ -272,7 +261,6 @@ Slot "y":
 > stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 + 	  any(getGroupMembers("Ops") == "Logic"))
 > setClass("brob", contains="numeric")
-[1] "brob"
 > b <- new("brob", 3.14)
 > logic.brob.error <- function(nm)
 +     stop("logic operator '", nm, "' not applicable to brobs")
@@ -302,7 +290,6 @@ Note: Method with signature "brob#ANY" chosen for function "&",
 > ## methods' hidden cbind() / rbind:
 > cBind <- methods:::cbind
 > setClass("myMat", representation(x = "numeric"))
-[1] "myMat"
 > setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
 [1] "cbind2"
 > m <- new("myMat", x = c(1, pi))
@@ -312,7 +299,6 @@ Note: Method with signature "brob#ANY" chosen for function "&",
 > ## explicit print or show on a basic class with an S4 bit
 > ## caused infinite recursion
 > setClass("Foo", representation(name="character"), contains="matrix")
-[1] "Foo"
 > (f <- new("Foo", name="Sam", matrix()))
 An object of class "Foo"
      [,1]
@@ -341,11 +327,8 @@ Slot "name":
 + 	   useAsDefault = function(x, ...) sum(x, ...))
 [1] "Gfun"
 > setClass("myMat", contains="matrix")
-[1] "myMat"
 > setClass("mmat2", contains="matrix")
-[1] "mmat2"
 > setClass("mmat3", contains="mmat2")
-[1] "mmat3"
 > setMethod(Gfun, signature(x = "myMat"),
 + 	  function(x, extrarg = TRUE) {
 + 	      cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
@@ -488,9 +471,7 @@ $answer.all
 > 
 > ## regression tests of dispatch: most of these became primitive in 2.6.0
 > setClass("c1", "numeric")
-[1] "c1"
 > setClass("c2", "numeric")
-[1] "c2"
 > x_c1 <- new("c1")
 > # the next failed < 2.5.0 as the signature in .BasicFunsList was wrong
 > setMethod("as.character", "c1", function(x, ...) "fn test")
@@ -537,7 +518,6 @@ $answer.all
 > 
 > ## '!' changed signature from 'e1' to 'x' in 2.6.0
 > setClass("foo", "logical")
-[1] "foo"
 > setMethod("!", "foo", function(e1) e1+NA)
 [1] "!"
 Warning message:
@@ -584,24 +564,17 @@ Creating a generic function for 'as.vector' from package 'base' in the global en
 > 
 > ## For a few days (~ 2008-01-30), this failed to work without any notice:
 > setClass("Mat",  representation(Dim = "integer","VIRTUAL"))
-[1] "Mat"
 > setClass("dMat", representation(x = "numeric",  "VIRTUAL"), contains = "Mat")
-[1] "dMat"
 > setClass("CMat", representation(dnames = "list","VIRTUAL"), contains = "Mat")
-[1] "CMat"
 > setClass("dCMat", contains = c("dMat", "CMat"))
-[1] "dCMat"
 > stopifnot(!isVirtualClass("dCMat"),
 + 	  length(slotNames(new("dCMat"))) == 3)
 > 
 > 
 > ## Passing "..." arguments in nested callGeneric()s
 > setClass("m1", contains="matrix")
-[1] "m1"
 > setClass("m2", contains="m1")
-[1] "m2"
 > setClass("m3", contains="m2")
-[1] "m3"
 > ##
 > setGeneric("foo", function(x, ...) standardGeneric("foo"))
 [1] "foo"
@@ -633,7 +606,6 @@ Creating a generic function for 'as.vector' from package 'base' in the global en
 > 
 > ## is() for S3 objects with multiple class strings
 > setClassUnion("OptionalPOSIXct",   c("POSIXct",   "NULL"))
-[1] "OptionalPOSIXct"
 > stopifnot(is(Sys.time(), "OptionalPOSIXct"))
 > ## failed in R 2.7.0
 > 
@@ -665,11 +637,8 @@ Creating a generic function for 'as.vector' from package 'base' in the global en
 > ## containing "array" ("matrix", "ts", ..)
 > t. <- ts(1:10, frequency = 4, start = c(1959, 2))
 > setClass("Arr", contains= "array"); x <- new("Arr", cbind(17))
-[1] "Arr"
 > setClass("Ts",  contains= "ts");   tt <- new("Ts", t.); t2 <- as(t., "Ts")
-[1] "Ts"
 > setClass("ts2", representation(x = "Ts", y = "ts"))
-[1] "ts2"
 > tt2 <- new("ts2", x=t2, y=t.)
 > stopifnot(dim(x) == c(1,1), is(tt, "ts"), is(t2, "ts"),
 +           ## FIXME:  identical(tt, t2)
@@ -697,7 +666,6 @@ Creating a generic function for 'as.vector' from package 'base' in the global en
 > 
 > ## Extending "matrix", the .Data slot etc:
 > setClass("moo", representation("matrix"))
-[1] "moo"
 > m <- matrix(1:4, 2, dimnames= list(NULL, c("A","B")))
 > nf <- new("moo", .Data = m)
 > n2 <- new("moo", 3:1, 3,2)
@@ -726,7 +694,6 @@ Creating a new generic function for 'rbind' in the global environment
 > ## median( <simple S4> )
 > ## FIXME: if we use "C" instead of "L", this fails because of caching
 > setClass("L", contains = "list")
-[1] "L"
 > ## {simplistic, just for the sake of testing here} :
 > setMethod("Compare", signature(e1="L", e2="ANY"),
 +           function(e1,e2) sapply(e1, .Generic, e2=e2))
@@ -756,7 +723,6 @@ Creating a new generic function for 'rbind' in the global environment
 > 
 > ## Buglet in as() generation for class without own slots
 > setClass("SIG", contains="signature")
-[1] "SIG"
 > stopifnot(packageSlot(class(S <- new("SIG"))) == ".GlobalEnv",
 + 	  packageSlot(class(ss <- new("signature"))) == "methods",
 + 	  packageSlot(class(as(S, "signature"))) == "methods")
@@ -768,7 +734,6 @@ Creating a new generic function for 'rbind' in the global environment
 > validObject(ok.f) ; assertError(validObject(bad.f))
 [1] TRUE
 > setClass("myF", contains = "factor")
-[1] "myF"
 > validObject(new("myF", ok.f))
 [1] TRUE
 > assertError(validObject(new("myF", bad.f)))
@@ -783,7 +748,6 @@ Creating a new generic function for 'rbind' in the global environment
 > 
 > ## S4 dispatch in the internal generic xtfrm (added in 2.11.0)
 > setClass("numWithId", representation(id = "character"), contains = "numeric")
-[1] "numWithId"
 > x <- new("numWithId", 1:3, id = "An Example")
 > xtfrm(x) # works as the base representation is numeric
 [1] 1 2 3
@@ -798,9 +762,7 @@ attr(,"id")
 > 
 > ## [-dispatch using callNextMethod()
 > setClass("C1", representation(a = "numeric"))
-[1] "C1"
 > setClass("C2", contains = "C1")
-[1] "C2"
 > setMethod("[", "C1", function(x,i,j,...,drop=TRUE)
 + 	  cat("drop in C1-[ :", drop, "\n"))
 [1] "["
@@ -881,7 +843,6 @@ Creating a new generic function for 'qqplot' in the global environment
 > 
 > ##  'L$A@x <- ..'
 > setClass("foo", representation(x = "numeric"))
-[1] "foo"
 > f <- new("foo", x = pi*1:2)
 > L <- list()
 > L$A <- f

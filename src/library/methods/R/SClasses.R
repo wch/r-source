@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 setClass <-
-    ## Define Class to be an S-style class.
+    ## Define Class to be an S4 class.
     function(Class, representation = list(), prototype = NULL,
              contains = character(), validity = NULL, access = list(),
              where = topenv(parent.frame()), version = .newExternalptr(),
@@ -98,7 +98,7 @@ setClass <-
     if(S3methods)
       classDef <- .setS3MethodsOn(classDef)
     assignClassDef(Class, classDef, where)
-     Class
+    invisible(classGeneratorFunction(classDef, where))
 }
 
 representation <-
@@ -894,4 +894,35 @@ className <- function(class, package) {
             package <- class@package
     }
     new("className", .Data = className, package = package)
+}
+
+## bootstrap version before the class is defined
+classGeneratorFunction <- function(classDef, env = topenv(parent.frame())) {
+    fun <- function(...)NULL
+    ## put the class name with package attribute into new()
+    body(fun) <- substitute(new(CLASS, ...),
+                            list(CLASS = classDef@className))
+    environment(fun) <- env
+    fun
+}
+
+.classGeneratorFunction <- function(classDef, env = topenv(parent.frame())) {
+    if(is(classDef, "classRepresentation")) {}
+    else if(is(classDef, "character")) {
+        if(is.null(packageSlot(classDef)))
+            classDef <- getClass(classDef, where = env)
+        else
+            classDef <- getClass(classDef)
+    }
+    else
+        stop("argument classDef must be a class definition or the name of a class")
+    fun <- function(...)NULL
+    ## put the class name with package attribute into new()
+    body(fun) <- substitute(new(CLASS, ...),
+                            list(CLASS = classDef@className))
+    environment(fun) <- env
+    fun <- as(fun, "classGeneratorFunction")
+    fun@className <- classDef@className
+    fun@package <- classDef@package
+    fun
 }

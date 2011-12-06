@@ -96,6 +96,8 @@ is(quote(sqrt(1:10)), "maybeCode")  ## TRUE
 ## strict coerce to "numeric" on the way to satisfying
 ## is(ttt, "maybeNumber").
 stopifnot(identical(w1@.Data, 1:10))
+removeClass("withId")
+removeClass("maybeNumber")
 }
 
 }

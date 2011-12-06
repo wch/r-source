@@ -576,8 +576,9 @@ assignClassDef <-
     setClass("MethodSelectionReport",
          representation(generic = "character", allSelections = "character", target = "character", selected = "character", candidates = "list", note = "character"),
              sealed = TRUE, where = where)
-
-
+    setClass("classGeneratorFunction",
+             representation(className = "character", package = "character"),
+             contains = "function")
 }
 
 

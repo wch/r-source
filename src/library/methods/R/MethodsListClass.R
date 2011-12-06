@@ -244,6 +244,12 @@
                   }
                   NULL
               })
+    setMethod("show", "classGeneratorFunction", where = envir,
+              function(object) {
+                  cat(gettextf("Class generator function for class \"%s\" from package \"%s\"\n",
+                         object@className, object@package))
+                  show(as(object, "function"))
+              })
 
     setGeneric("cbind2", function(x, y, ...) standardGeneric("cbind2"),
 	       where = envir)
