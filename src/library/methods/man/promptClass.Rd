@@ -30,7 +30,7 @@ promptClass(clName, filename = NULL, type = "class",
     methods that use it.
     %%FIXME: By default, anywhere in the current search list.
   }
-  \item {generatorName}{ the name for a generator function for this
+  \item{generatorName}{the name for a generator function for this
     class; only required if a generator function was created
     \emph{and} saved under a name different from the class name.
   }
