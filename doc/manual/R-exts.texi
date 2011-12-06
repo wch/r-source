@@ -1262,6 +1262,7 @@ pkg-config --list-all | sort
 
 @menu
 * OpenMP support::              
+* Using pthreads::              
 @end menu
 
 Sometimes writing your own @file{configure} script can be avoided by
@@ -1504,7 +1505,7 @@ using DLLs is unavoidable we normally arrange (@emph{via}
 @file{configure.win}) to ship them in the same directory as the package
 DLL.
 
-@node OpenMP support,  , Using Makevars, Using Makevars
+@node OpenMP support, Using pthreads, Using Makevars, Using Makevars
 @subsubsection OpenMP support
 
 @cindex OpenMP
@@ -1547,6 +1548,58 @@ note that Mac OS X binaries are built for 10.5 using compilers which
 support version 2.5), but portable packages cannot assume that end users
 have recent versions (there are some years-old versions of Linux in
 use), and it may be safest to assume version 2.5.
+
+@node Using pthreads,  , OpenMP support, Using Makevars
+@subsubsection Using pthreads
+
+There is no direct support for the POSIX threads (more commonly known as
+@code{pthreads}): by the time we considered adding it several packages
+were using it unconditionally so it seems that nowadays it is
+universally available (except on Windows).
+
+For reasonably recent versions of @command{gcc} the correct
+specification is
+
+@example
+PKG_CPPFLAGS = -pthreads
+PKG_LIBS = -pthreads
+@end example
+
+@noindent
+(and the singular version is also accepted).  For other platforms the
+specification is
+
+@example
+PKG_CPPFLAGS = -D_REENTRANT
+PKG_LIBS = -lpthread
+@end example
+@noindent
+(and note that the library name is singular).  This is what
+@option{-pthreads} does on all known current platforms (although earlier
+version of OpenBSD used a different library name).
+
+For a tutorial see
+@uref{https://computing.llnl.gov/@/tutorials/@/pthreads/}.
+
+POSIX threads are not normally used on Windows, which has its own native
+concepts of threads.  However, there are two projects implementing
+@code{pthreads} on top of Windows, @code{pthreads-w32} and
+@code{winpthreads} (a recent part of the MinGW-w64 project).  Both
+implement @code{libptheads} as an import library for a DLL.
+
+Whether Windows toolchains implement @code{pthreads} is up to the
+toolchain provider.  One issue has been licenses: @code{pthreads-w32} is
+licensed under LGPL which requires source code to be made available.
+The toolchains used to compile @R{} prior to version 2.15.0 do not
+contain @code{pthreads}, although in some cases @code{pthreads-w32}
+could be retro-fitted.  It is expected that the toolchain used for @R{}
+2.15.0 will support @code{pthreads}: however as it is not used by @R{}
+itself, the DLLs are not distributed with @R{}, and a package using
+@code{pthreads} would need to arrange to ship the relevant DLLs (and
+meet the license conditions).
+
+See also the comments on performance under OpenMP: on all known @R{}
+platforms OpenMP is implemented @emph{via} @code{pthreads}.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
