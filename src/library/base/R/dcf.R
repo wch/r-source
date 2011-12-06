@@ -147,8 +147,8 @@ function(x, file = "", append = FALSE,
     ## do not assume that the input is valid in this locale
     escape_paragraphs <- function(s)
 	gsub("\n \\.([^\n])","\n  .\\1",
-	     gsub("\n[[:space:]]*\n", "\n .\n ", s, useBytes=TRUE),
-             useBytes=TRUE)
+	     gsub("\n[ \t]*\n", "\n .\n ", s, perl = TRUE, useBytes = TRUE),
+             perl = TRUE, useBytes = TRUE)
     fmt <- function(tag, val, fold = TRUE) {
         s <- if(fold)
             formatDL(rep.int(tag, length(val)), val, style = "list",
@@ -161,7 +161,7 @@ function(x, file = "", append = FALSE,
         }
         escape_paragraphs(s)
     }
-    
+
 
     if(!is.data.frame(x))
         x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -169,7 +169,7 @@ function(x, file = "", append = FALSE,
     out <- matrix("", nrow(x), ncol(x))
 
     foldable <- is.na(match(nmx, keep.white))
-    
+
     for(j in seq_along(x)) {
         xj <- x[[j]]
         if(is.atomic(xj)) {
