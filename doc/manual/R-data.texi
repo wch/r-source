@@ -1349,7 +1349,7 @@ The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
-Package @pkg{RMongo} provides an @R{} inteface to a Java client for
+Package @pkg{RMongo} provides an @R{} interface to a Java client for
 `MongoDB' (@uref{http://en.wikipedia.org/wiki/MongoDB}) databases, which
 are queried using JavaScript rather than SQL.  Package @pkg{rmongodb} is
 another client using @pkg{mongodb}'s C driver.

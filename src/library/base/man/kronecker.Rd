@@ -1,6 +1,6 @@
 % File src/library/base/man/kronecker.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{kronecker}
@@ -44,10 +44,12 @@ taking \code{X} one term at a time and expanding that term as
   \emph{Matrix Algebra Useful for Statistics.} John Wiley and Sons.
 }
 
-\author{Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}}
+\author{Jonathan Rougier}
 
-\seealso{\code{\link{outer}}, on which \code{kronecker} is built
-and \code{\link{\%*\%}} for usual matrix multiplication.}
+\seealso{
+  \code{\link{outer}}, on which \code{kronecker} is built
+  and \code{\link{\%*\%}} for usual matrix multiplication.
+}
 
 \examples{
 # simple scalar multiplication

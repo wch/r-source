@@ -32,8 +32,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
 %% currently, from "base R", only predict.loess() makes use of it.
 \note{
-  Character vectors have always been converted to factors: this became
-  optional in \R 2.9.1.  Conversion is done with levels in the order
+  Conversion to a factor is done with levels in the order
   they occur in the character vectors (and not alphabetically, as is
   most common when converting to factors).
 }

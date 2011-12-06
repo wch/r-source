@@ -46,7 +46,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   }
 }
 \details{
-  Any names of \code{start} are (as from \R 2.8.1) passed
+  Any names of \code{start} are passed
   on to \code{objective} and where applicable, \code{gradient} and
   \code{hessian}.  The parameter vector will be coerced to double.
 

@@ -176,7 +176,7 @@ addNA(x, ifany=FALSE)
 \note{
   In earlier versions of \R, storing character data as a factor was more
   space efficient if there is even a small proportion of
-  repeats.  Since \R 2.6.0 identical character strings share storage, so
+  repeats.  However, identical character strings share storage, so
   the difference is now small in most cases.  (Integer values are stored
   in 4 bytes whereas each reference to a character string needs a
   pointer of 4 or 8 bytes.)

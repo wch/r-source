@@ -45,8 +45,7 @@ traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
 }
 \section{Warning}{
   It is undocumented where \code{.Traceback} is stored nor that it is
-  visible, and this is subject to change.  Prior to \R 2.4.0 it was
-  stored in the workspace, but no longer.
+  visible, and this is subject to change.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
