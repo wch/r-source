@@ -734,7 +734,6 @@ double transform(double value, int unit, SEXP data,
 	result = result/2.54;
 	break;
     case L_INCHES: 
-	result = result;
 	break;
     /* FIXME:  The following two assume that the pointsize specified
      * by the user is actually the pointsize provided by the
