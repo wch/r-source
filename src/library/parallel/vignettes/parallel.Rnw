@@ -421,7 +421,7 @@ disparate capabilities.  But some \emph{caveats} are in order:
 \item Random number streams are allocated to nodes, so if the tasks
   involve random numbers they are likely to be non-repeatable (as the
   allocation of tasks to nodes depends on the workloads of the nodes).
-  It would however take only slighly more work to allocate a stream to
+  It would however take only slightly more work to allocate a stream to
   each task.
 \item More care is needed is allocating the tasks.  If 1000 tasks need
   to be allocated to 10 nodes, the standard approach send chunks of
