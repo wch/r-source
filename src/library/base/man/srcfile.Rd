@@ -31,7 +31,7 @@ These functions are for working with source files.
 }
 \usage{
 srcfile(filename, encoding = getOption("encoding"), Enc = "unknown")
-srcfilecopy(filename, lines)
+srcfilecopy(filename, lines, timestamp = Sys.time())
 srcfilealias(filename, srcfile)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
@@ -45,12 +45,13 @@ srcref(srcfile, lloc)
 .isOpen(srcfile)
 }
 \arguments{
-  \item{filename}{ The name of a file }
-  \item{encoding}{ The character encoding to assume for the file }
+  \item{filename}{ The name of a file. }
+  \item{encoding}{ The character encoding to assume for the file. }
   \item{Enc}{ The encoding with which to make strings: see the
     \code{encoding} argument of \code{\link{parse}}.}
   \item{lines}{ A character vector of source lines.  Other \R objects
     will be coerced to character. }
+  \item{timestamp}{ The timestamp to use on a copy of a file. }
   \item{srcfile}{ A \code{srcfile} object. }
   \item{first, last, line}{ Line numbers. }
   \item{lloc}{ A vector of four, six or eight values giving a source location; see

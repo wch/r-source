@@ -208,7 +208,7 @@
       remains \code{detectCores(logical = TRUE)} on that platform.
 
       \item Reference classes now keep a record of which fields are
-      locked.  \code{$lock()} with no arguments returns the names
+      locked.  \code{$lock()} with no arguments returns the names % $ 
       of the locked fields.
 
       \item \code{HoltWinters()} reports a warning rather than an error
@@ -333,6 +333,10 @@
       
       \item \code{duplicated()} ignored \code{fromLast} for a
       one-column data frame.  (\PR{14742})
+      
+      \item \code{source()} and related functions did not put the correct
+      timestamp on the source references; \code{srcfilecopy()} has gained
+      a new argument \code{timestamp} to support this fix. (\PR{14750})
     }
   }
 }

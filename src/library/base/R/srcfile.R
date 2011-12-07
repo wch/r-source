@@ -104,7 +104,7 @@ close.srcfile <- function(con, ...) {
 
 # srcfilecopy saves a copy of lines from a file
 
-srcfilecopy <- function(filename, lines) {
+srcfilecopy <- function(filename, lines, timestamp = Sys.time()) {
     stopifnot(is.character(filename), length(filename) == 1L)
 
     e <- new.env(parent=emptyenv())
@@ -116,7 +116,7 @@ srcfilecopy <- function(filename, lines) {
     e$filename <- filename
     e$lines <- as.character(lines)
     e$fixedNewlines <- TRUE  	# we have removed the newlines already
-    e$timestamp <- Sys.time()
+    e$timestamp <- timestamp
     e$Enc <- "unknown"
 
     class(e) <- c("srcfilecopy", "srcfile")
