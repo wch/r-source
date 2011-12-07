@@ -4,6 +4,7 @@
 \alias{setRefClass}
 \alias{getRefClass}
 \alias{initFieldArgs}
+\alias{initRefFields}
 \alias{activeBindingFunction-class}
 \alias{defaultBindingFunction-class}
 \alias{uninitializedField-class}

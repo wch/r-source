@@ -173,7 +173,7 @@ envRefSetField <- function(object, field,
     else {
         if(nargs() > 1) {
             .Object <-
-                methods::initFieldArgs(.Object, classDef, selfEnv, ...)
+                methods::initRefFields(.Object, classDef, selfEnv, list(...))
         }
     }
     if(is.function(classDef@refMethods$finalize))
@@ -183,8 +183,11 @@ envRefSetField <- function(object, field,
     .Object
 }
 
-initFieldArgs <- function(.Object, classDef, selfEnv, ...) {
-    args <- list(...)
+## old version, for back compatibility.  Could be deleted after 2.15.0
+initFieldArgs <- function(.Object, classDef, selfEnv, ...)
+    initRefFields(.Object, classDef, selfEnv, list(...))
+
+initRefFields <- function(.Object, classDef, selfEnv, args) {
     if(length(args)) {
         fieldDefs <- classDef@fieldClasses
         fieldNames <- names(fieldDefs)
@@ -312,7 +315,7 @@ that class itself, but then you could just overrwite the object).
          callSuper = function(...) stop("direct calls to callSuper() are invalid:  should only be called from another method"),
          initFields = function(...) {
              if(length(list(...))>0)
-                 initFieldArgs(.self, .refClassDef, as.environment(.self), ...)
+                 initRefFields(.self, .refClassDef, as.environment(.self),list(...))
              else
                  .self
          },
