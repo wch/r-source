@@ -475,3 +475,11 @@ stopifnot(identical(tgg$def, tggg$def),
 ## a package attribute, which would allow:
 ##          identical(tg$className, tgg$className))
 
+## this used to fail in initFieldArgs() from partial matching "self"
+selfClass <- setRefClass("selfClass",
+        fields=list(
+            self="character", super="character", sub="character"
+        )
+    )
+
+stopifnot(identical(selfClass$new(self="B", super="A", sub="C")$self, "B"))
