@@ -5,9 +5,17 @@
 
 \name{setClass}
 \alias{setClass}
+\alias{classGeneratorFunction-class}
 \title{Create a Class Definition}
 \description{
-  Create  a class definition, specifying the representation (the slots) and/or the classes contained in this one (the superclasses), plus other optional details.
+  Create  a class definition, specifying the representation (the
+  slots) and/or the classes contained in this one (the superclasses),
+  plus other optional details.  As a side effect, the class definition
+  is stored in the specified environment.  A generator function
+  is returned as the value of \code{setClass()}, suitable for creating
+  objects from the class if the class is not virtual.  Of the many
+  arguments to the function only \code{Class},
+  \code{representation} and \code{contains} are usually needed.
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
@@ -24,17 +32,17 @@ Backward compatibility and compatibility with S-Plus allows unnamed
 elements for superclasses, but the recommended style is to use the
 \code{contains=} argument instead.}
   \item{prototype}{ an object providing the default
-    data for the slots in this class.  Usually and preferably the
-    result of a call to \code{\link{prototype}}. }
-  \item{contains}{ what classes does this class extend?  (These are
-    called \emph{superclasses} in some languages.)  When these classes
-    have slots, all their slots will be contained in the new class as
-    well. }
+    data for the slots in this class.  By default, each will be the
+    prototype object for the superclass.  If provided, using a call to
+    \code{\link{prototype}} will carry out some checks. }
+  \item{contains}{ the names (and optionally package slots) for the \emph{superclasses} of this class.
+      }
   \item{where}{ the
-    environment in which to store or remove the
-    definition.  Defaults to the top-level environment of the calling function
-    (the global environment for ordinary computations, and the
-    environment or namespace of a package in the source code for that package).
+    environment in which to store the
+    definition.  Should not be supplied in standard use.  For calls to \code{setClass()} appearing in the
+    source code for a package, will default to the namespace of
+    the package.  For calls typed or sourced at the top level in a
+    session, will default to the global environment.
   }
   \item{validity}{ if supplied, should be a validity-checking method
     for objects from this class (a function that returns \code{TRUE} if
@@ -42,30 +50,50 @@ elements for superclasses, but the recommended style is to use the
     describing the failures otherwise).  See \code{\link{validObject}}
     for details.}
   \item{access, version}{access and version, included for
-      compatibility with S-Plus, but currently ignored.}
+      historical compatibility with S-Plus, but ignored.}
   \item{sealed}{ if \code{TRUE}, the class definition will be sealed,
     so that another call to \code{setClass} will fail on this class name.
   }
-  \item{package}{ an optional package name for the class.  By default
-    (and usually) the name of the package in which the class definition is assigned.
+  \item{package}{ an optional package name for the class.  Should very
+      rarely be used. By default
+    the name of the package in which the class definition is assigned.
   }
   \item{S3methods}{if \code{TRUE}, S3 methods may be written for this
       class.  S3 generic functions and primitives will
       dispatch an S3 method defined for this class, given an S4 object
       from the class or from a subclass of it, provided no S4
       method and no more
-      direct S3 method is found.  Writing S3 methods for S4 classes is
-      somewhat deprecated (see \link{Methods}), but if you do write
-      them, the class should be created with this argument
-      \code{TRUE}, so inheritance will work.  By default, the current
-      implementation takes no special action, so that methods will be
-      dispatched for this class but \emph{not} for subclasses.  Note
-      that future versions may revoke this and dispatch no S3 methods
-      other than the default unless \code{S3methods} is \code{TRUE}.
+      direct S3 method is found.  This argument should rarely be used:
+      It is not needed for
+      classes that are defined via \code{\link{setOldClass}} or for
+      classes that extend such classes, which will nearly always be
+      the case when S3 methods are relevant.
     }
 }
+
+\value{
+  A generator function suitable for creating objects from the class is
+  returned, invisibly.  A call to this function generates a call to
+  \code{\link{new}} for the class.  The call takes any number of arguments,
+  which will be passed on to the initialize method.  If no
+  \code{initialize} method is defined for the class or one of its
+  superclasses, the default method expects named arguments with the
+  name of one of the slots.
+
+  Typically the generator function is assigned the name of the class,
+  for programming clarity.  This is not a requirement and objects
+  from the class can also be generated directly from
+  \code{\link{new}}.  The advantages of the generator function are a
+  slightly simpler and clearer call, and that the call will contain
+  the package name of the class (eliminating any ambiguity if two
+  classes from different packages have the same name).
+
+  If the class is virtual, an attempt to generate an object  from
+  either the generator or \code{new()}
+  will result in an error.
+}
 \section{Basic Use: Slots and Inheritance}{
-The two essential arguments, other than the class name are
+The two essential arguments other than the class name are
 \code{representation} and \code{contains}, defining the explicit slots
 and the inheritance (superclasses). Together, these arguments define
 all the information in an object from this class; that is, the names
@@ -99,6 +127,8 @@ See the section on inheriting from object types, below.
   your own slots with names starting with an alphabetic character.
 }
 
+
+
 \section{Inheriting from Object Types}{
 In addition to containing other S4 classes, a class definition can
 contain either an S3 class (see the next section) or a built-in R pseudo-class---one
@@ -118,7 +148,12 @@ For any object \code{x} from the class,
 pseudo-slot, \code{.Data}, will be shown with the corresponding class.
 See the \code{"numWithId"} example below.
 
-For an object from any class that does \emph{not} contain such a type,
+Classes may also inherit from \code{"vector"}, \code{"matrix"} or
+\code{"array"}.
+The data part of these objects can be any vector data type.
+
+For an object from any class that does \emph{not} contain one of these
+types or classes,
 \code{typeof(x)} will be \code{"S4"}.
 
 Some \R data types do not behave normally, in the sense that they are
@@ -130,32 +165,17 @@ object in all contexts.
 It is possible to define a class that inherits from such types,
 through an indirect mechanism that stores the inherited object in a
 reserved slot.
-The implementation tries to make such classes behave as if the object
-had a data part of the corresponding object type.
-Methods defined with the object type in the signature should work as
-should core code that coerces an object to the type in an internal or
-primitive calculation.
-There is no guarantee, however, because C-level code may switch
-directly on the object type, which in this case will be \code{"S4"}.
-The cautious mechanism is to use \code{as(x, "environment")} or
-something similar before doing the low-level computation.  See the
+See the
 example for class \code{"stampedEnv"} below.
+S3 method dispatch and the relevant \code{as.}\emph{type}\code{()}
+functions should behave correctly, but code that uses the type of the
+object directly will not.
 
-Also, keep in mind that the object passed to the low-level computation
+Also, keep in mind that the object passed to low-level computations
 will be the underlying object type, \emph{without} any of the slots
 defined in the class.
 To return the full information, you will usually have to define a
 method that sets the data part.
-
-Note that, in the current implementation, the interpretation of the
-\code{".Data"} pseudo-slot includes all of the object types above, as
-well as the special pseudo-classes \code{"matrix"} and
-\code{"array"}, which \R treats internally as if they were object types
-(they have no explicit class and \code{\link{is.object}} returns
-\code{FALSE} for such objects).
-Some of this implementation is still experimental, so a wise policy is
-to use standard tools, such as \code{as(object, type)}, to convert to
-the underlying data type, rather than the pseudo-slot, when possible.
 
 }
 
@@ -170,13 +190,15 @@ objects or about consistency of inherited methods.
 Given that, it is still possible to define a class that inherits from
 an S3 class, providing that class has been registered as an old class
 (see \code{\link{setOldClass}}).
-The essential result is that S3 method dispatch will use the S3 class
-as registered when dispatching.
 
-Some additional options are planned, to control whether the object is
-converted to an S3 class before dispatch.  In the present
-implementation, it is not, which causes some S3 computations to
-misbehave, since they are not seeing the S3 class explicitly.
+Broadly speaking, both S3 and S4 method dispatch try to behave
+sensibly with respect to inheritance in either system.
+Given an S4 object, S3 method dispatch and the \code{\link{inherits}}
+function should use the S4 inheritance information.
+Given an S3 object, an S4 generic function will dispatch S4 methods
+using the S3 inheritance, provided that inheritance has been declared via
+\code{\link{setOldClass}}.
+
 }
 
 \section{Classes and Packages}{
@@ -189,15 +211,17 @@ is, part of the \code{classRepresentation} object holding that
 definition.  Thus, two classes with the same name can exist in
 different packages, for most purposes.
 
-When a class name is supplied for a slot or a superclass, a
+When a class name is supplied for a slot or a superclass in a call to
+\code{setClass}, a
 corresponding class definition will be found, looking from the
-namespace or environment of the current package, assuming the call to
-\code{setClass} in question appears directly in the source for the
-package.  That's where it should appear, to avoid ambiguity.
-
-In particular, if the current package has a namespace then the  class
-must be found in the current package itself, in the imports defined by that
-namespace, or in the base package.
+namespace of the current package, assuming the call in question appears directly in the source for the
+package, as it should to avoid ambiguity.
+The  class definition
+must be found in the namespace of the current package, in the imports for that
+namespace or in the basic classes defined by the methods package.
+(The methods package must be included in the \code{Depends} directive
+of the package's \code{"DESCRIPTION"} file in order for the
+\code{"CMD check"} utility to find these classes.)
 
 When this rule does not identify a class uniquely (because it appears
 in more than one imported package) then the \code{\link{packageSlot}}
@@ -228,35 +252,24 @@ This should be a rare occurrence.
 ## A simple class with two slots
 track <- setClass("track",
          representation(x="numeric", y="numeric"))
+## an object from the class
+t1 <- track(x = 1:10, y = 1:10 + rnorm(10))
+
 ## A class extending the previous, adding one more slot
 trackCurve <- setClass("trackCurve",
     representation(smooth = "numeric"),
     contains = "track")
+
+## an object containing a superclass object
+t1s <- trackCurve(t1, smooth = 1:10)
+
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
 setClass("trackMultiCurve",
          representation(x="numeric", y="matrix", smooth="matrix"),
          prototype = list(x=numeric(), y=matrix(0,0,0),
                           smooth= matrix(0,0,0)))
-##
-## Suppose we want trackMultiCurve to be like trackCurve when there's
-## only one column.
-## First, the wrong way.
-try(setIs("trackMultiCurve", "trackCurve",
-    test = function(obj) {ncol(slot(obj, "y")) == 1}))
-
-## Why didn't that work?  You can only override the slots "x", "y",
-## and "smooth" if you provide an explicit coerce function to correct
-## any inconsistencies:
-
-setIs("trackMultiCurve", "trackCurve",
-  test = function(obj) {ncol(slot(obj, "y")) == 1},
-  coerce = function(obj) {
-     trackCurve(
-         x = slot(obj, "x"),
-         y = as.numeric(slot(obj,"y")),
-         smooth = as.numeric(slot(obj, "smooth")))
-  })
+## See ?setIs for further examples using these classes
 
 ## A class that extends the built-in data type "numeric"
 
@@ -300,9 +313,6 @@ removeClass("myMatrix")
 ## information to be reset.  There seems no way to detect this, so we
 ## have to remove classes ourselves
 
-resetClass("integer")
-resetClass("numeric")
-resetClass("logical")
 removeClass("trackMultiCurve")
 removeClass("trackCurve")
 removeClass("track")
