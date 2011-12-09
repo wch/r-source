@@ -140,6 +140,9 @@
       
       \item \code{duplicated()} ignored \code{fromLast} for a
       one-column data frame.  (\PR{14742})
+      
+      \item LaTeX conversion of Rd files did not correctly handle
+      preformatted backslashes.  (\PR{14751})
     }
   }
 }

@@ -161,15 +161,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 		x <- fsub1('"\\{"', '"{"', x)
 	    } else if (inPre) {
 		BSL = '@BSL@';
-		BSL2 = '@BSLBSL@';
-		#x <- fsub("\\dots", "...", x)
-		## escape any odd \, e.g. \n
-		x <- fsub("\\\\", BSL, x) # change even ones
-		x <- fsub("\\", BSL2, x)  # odd ones
-		x <- fsub(BSL, "\\\\", x) # change back
+		x <- fsub("\\", BSL, x)
 		x <- psub("(?<!\\\\)\\{", "\\\\{", x)
 		x <- psub("(?<!\\\\)}", "\\\\}", x)
-		x <- fsub(BSL2, "\\bsl{}", x)
+		x <- fsub(BSL, "\\bsl{}", x)
 		x <- psub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}", "\\\\var{\\1}", x)
 	    } else {
 		## cat(sprintf("\ntexify in: '%s'\n", x))
