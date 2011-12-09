@@ -1,6 +1,6 @@
 % File src/library/utils/man/available.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{available.packages}
@@ -42,10 +42,9 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   }
 }
 \details{
-  By default, this includes only packages whose version and OS type
-  requirements are met by the running version of \R, and only
-  information on the latest versions of packages with duplicates
-  removed.
+  By default, this includes only packages whose version and OS
+  requirements are met by the running version of \R, and only gives
+  information on the latest versions of packages.
 
   Argument \code{filters} can be used to select which of the packages on the
   repositories are reported.  It is called with its default value
@@ -75,19 +74,23 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
       verified as Free or Open Source Software (FOSS, e.g.,
       \url{http://en.wikipedia.org/wiki/FOSS}) employing the available
       license specifications.  Thus both the package and any packages
-      that it depends on to load need to be \emph{known to be} FOSS.}
+      that it depends on to load need to be \emph{known to be} FOSS.
+  
+      Note that this does depend on the repository supplying license
+      information.
+    }
   }
   If all the filters are from this set they can be specified as a
   character vector; otherwise \code{filters} should be a list with
-  elements which are character strings, user-defined function or
-  \code{add = TRUE}. 
+  elements which are character strings, user-defined functions or
+  \code{add = TRUE} (see below).
 
   User-defined filters are functions which take a single argument, a
   matrix of the form returned by by \code{available.packages}, and
-  return a matrix with a subset of the rows of the argument.
+  return a matrix consisting of a subset of the rows of the argument.
 
-  The special \sQuote{filter} \code{add=TRUE} appends the other elements
-  of the filter list to the default filters.
+  The special \sQuote{filter} \code{add = TRUE} appends the other
+  elements of the filter list to the default filters.
 }
 \value{
   A matrix with one row per package, row names the package names and
@@ -104,4 +107,10 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   The \sQuote{R Installation and Administration} manual for how to 
   set up a repository.
 }
+\examples{\dontrun{
+## restrict install.packages() (etc) to known-to-be-FOSS packages
+options(available_packages_filters =
+  c("R_version", "OS_type", "subarch", "duplicates", "license/FOSS"))
+
+}}
 \keyword{utilities}

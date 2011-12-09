@@ -190,16 +190,17 @@ function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
     if(identical(dependencies, "all"))
         dependencies <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
     av <- installed[, dependencies, drop = FALSE]
+    rn <- row.names(installed)
     need <- apply(av, 1L, function(x)
                   any(pkgs %in% utils:::.clean_up_dependencies(x)) )
-    uses <- rownames(installed)[need]
+    uses <- rn[need]
     if(recursive) {
         p <- pkgs
         repeat {
             p <- unique(c(p, uses))
             need <- apply(av, 1L, function(x)
                           any(p %in% utils:::.clean_up_dependencies(x)) )
-            uses <- unique(c(p, rownames(installed)[need]))
+            uses <- unique(c(p, rn[need]))
             if(length(uses) <= length(p)) break
         }
     }
