@@ -1,7 +1,7 @@
 % File src/library/methods/man/RClassUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
-% Copyright 2008-2009 The R Foundation
+% Copyright 1995-2011 R Core Development Team
+% Copyright 2008-2011 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{RClassUtils}
@@ -17,6 +17,7 @@
 \alias{extendsMetaName}
 \alias{classPrototypeDef-class}
 %%
+\alias{.classEnv}
 \alias{classLabel}
 \alias{testVirtual}
 \alias{makePrototypeFromClassDef}
@@ -65,6 +66,7 @@
 
 \usage{
 classLabel(Class)
+.classEnv(Class, default = .requirePackage("methods"), mustFind = TRUE)
 
 testVirtual(properties, extends, prototype, where)
 
@@ -288,9 +290,15 @@ setDataPart(object, value, check = TRUE)
       functions to test and/or coerce the relationship.
     }
 
-{\code{classLabel}: }{
+    \item{\code{classLabel}: }{
         Returns an informative character string identifying the class
         and, if appropriate, the package from which the class came.
+    }
+
+    \item{\code{.classEnv}: }{
+        Returns the environment, typically a namespace, in which the
+        \code{Class} has been defined.
+	%% is called from C level  R_check_class_etc()
     }
 
     \item{\code{completeExtends}:}{
@@ -375,9 +383,21 @@ setDataPart(object, value, check = TRUE)
       to merge the data part of a superclass prototype.
     }
 
-  }
+  }%end{ describe }
 }
 \examples{
 typeof(defaultPrototype()) #-> "S4"
+
+## .classEnv()
+meth.ns <- asNamespace("methods")
+if(get4 <- !any("package:stats4" == search()))
+   require("stats4")
+stopifnot(TRUE
+ , identical(.classEnv("data.frame"), meth.ns)
+ , identical(.classEnv(class(new("data.frame"))), meth.ns)
+ , identical(.classEnv(class(new("mle"))), asNamespace("stats4"))
+ )
+if(get4) detach("package:stats4")
+
 }
 \keyword{internal}

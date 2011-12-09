@@ -833,7 +833,9 @@ int R_has_slot(SEXP obj, SEXP name);
 SEXP R_do_MAKE_CLASS(const char *what);
 SEXP R_getClassDef  (const char *what);
 SEXP R_do_new_object(SEXP class_def);
+// supporting  a C-level version of  is(., .) :
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
+int R_check_class_etc      (SEXP x, const char **valid);
 
 /* preserve objects across GCs */
 void R_PreserveObject(SEXP);
@@ -850,7 +852,7 @@ FILE *R_popen(const char *, const char *);
 int R_system(const char *);
 
 /* R_compute_identical:  C version of identical() function
-   The third arg to R_compute_identical() consists of bitmapped flags for non-default options:  
+   The third arg to R_compute_identical() consists of bitmapped flags for non-default options:
    currently all default to TRUE, so the flag is set for FALSE values:
    1 = !NUM_EQ
    2 = !SINGLE_NA
