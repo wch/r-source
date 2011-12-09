@@ -147,6 +147,9 @@
       
       \item LaTeX conversion of Rd files did not correctly handle
       preformatted backslashes.  (\PR{14751})
+      
+      \item HTML conversion of Rd files did not handle markup within
+      tabular cells properly.  (\PR{14708})
     }
   }
 }
