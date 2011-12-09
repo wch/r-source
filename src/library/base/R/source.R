@@ -86,7 +86,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	lines <- readLines(file, warn = FALSE)
 	    	on.exit()
 	    	close(file)
-            	srcfile <- srcfilecopy(filename, lines)
+            	srcfile <- srcfilecopy(filename, lines, file.info(filename)[1,"mtime"])
 	    } else
             	from_file <- TRUE
 
@@ -260,7 +260,7 @@ function(file, envir = baseenv(), chdir = FALSE,
     on.exit(options(oop))
     if (keep.source) {
     	lines <- readLines(file, warn = FALSE)
-    	srcfile <- srcfilecopy(file, lines)
+    	srcfile <- srcfilecopy(file, lines, file.info(file)[1,"mtime"])
     	exprs <- parse(text = lines, srcfile = srcfile)
     } else
     	exprs <- parse(n = -1, file = file)

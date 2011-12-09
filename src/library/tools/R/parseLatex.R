@@ -19,7 +19,7 @@ parseLatex <- function(text, filename = deparse(substitute(text)),
                      "Sinput", "Soutput") )
 {
     ## the internal function must get some sort of srcfile
-    srcfile <- srcfilecopy(filename, text)
+    srcfile <- srcfilecopy(filename, text, file.info(filename)[1,"mtime"])
     text <- paste(text, collapse="\n")
 
     .Internal(parseLatex(text, srcfile, verbose, as.character(verbatim)))
