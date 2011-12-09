@@ -257,8 +257,8 @@ Rd2HTML <-
         x
     }
 
-    enterPara <- function() {
-	if (isTRUE(!inPara)) {
+    enterPara <- function(enter = TRUE) {
+	if (enter && isTRUE(!inPara)) {
             of0("<p>")
             inPara <<- TRUE
         }
@@ -269,8 +269,8 @@ Rd2HTML <-
     	inPara <<- newval
     }
 
-    writeWrapped <- function(tag, block) {
-    	if (HTMLTags[tag] == "PRE")
+    writeWrapped <- function(tag, block, doParas) {
+    	if (!doParas || HTMLTags[tag] == "PRE")
             leavePara(NA)
         else
             enterPara()
@@ -289,11 +289,11 @@ Rd2HTML <-
     	    TRUE
     	} else FALSE
 
-    writeLink <- function(tag, block) {
+    writeLink <- function(tag, block, doParas) {
 	parts <- get_link(block, tag, Rdfile)
 
         writeHref <- function() {
-            enterPara()
+            enterPara(doParas)
             savePara <- inPara
             inPara <<- NA
             if (!no_links) of0('<a href="', htmlfile, '">')
@@ -383,8 +383,8 @@ Rd2HTML <-
 	of("<!-- ", txt, " -->\n")
     }
 
-    writeLR <- function(block, tag) {
-    	enterPara()
+    writeLR <- function(block, tag, doParas) {
+    	enterPara(doParas)
         of1(HTMLLeft[tag])
         writeContent(block, tag)
         of1(HTMLRight[tag])
@@ -402,11 +402,12 @@ Rd2HTML <-
     }
 
     writeBlock <- function(block, tag, blocktag) {
+        doParas <- !(blocktag %in% c("\\command", "\\tabular"))
 	switch(tag,
                UNKNOWN =,
                VERB = of1(vhtmlify(block, inEqn)),
                RCODE = of1(vhtmlify(block)),
-               TEXT = of1(if(blocktag == "\\command") vhtmlify(block) else addParaBreaks(htmlify(block))),
+               TEXT = of1(if(doParas) addParaBreaks(htmlify(block))else vhtmlify(block)),
                USERMACRO =,
                "\\newcommand" =,
                "\\renewcommand" =,
@@ -428,29 +429,29 @@ Rd2HTML <-
                "\\preformatted" =,
                "\\strong" =,
                "\\var" =,
-               "\\verb" = writeWrapped(tag, block),
+               "\\verb" = writeWrapped(tag, block, doParas),
                "\\special" = writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
-               "\\link" = writeLink(tag, block),
+               "\\link" = writeLink(tag, block, doParas),
                ## cwhmisc has an empty \\email
                "\\email" = if (length(block)) {
                    url <- paste(as.character(block), collapse="")
                    url <- gsub("\n", "", url)
-                   enterPara()
+                   enterPara(doParas)
                    of0('<a href="mailto:', url, '">', htmlify(url), '</a>')},
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
                "\\url" = if(length(block)) {
                    url <- paste(as.character(block), collapse="")
                    url <- gsub("\n", "", url)
-                   enterPara()
+                   enterPara(doParas)
                    of0('<a href="', escapeAmpersand(url), '">', htmlify(url), '</a>')
                },
                "\\href" = {
                	   if(length(block[[1L]])) {
                	   	url <- paste(as.character(block[[1L]]), collapse="")
                	   	url <- gsub("\n", "", url)
-               	   	enterPara()
+		        enterPara(doParas)
                	   	of0('<a href="', escapeAmpersand(url), '">')
                	   	closing <- "</a>"
                	   } else closing <- ""
@@ -465,7 +466,7 @@ Rd2HTML <-
                "\\dots" =,
                "\\ldots" =,
                "\\R" = {
-               	   enterPara()
+                   enterPara(doParas)
                	   of1(HTMLEscapes[tag])
                },
                "\\acronym" =,
@@ -476,7 +477,7 @@ Rd2HTML <-
                "\\pkg" =,
                "\\samp" =,
                "\\sQuote" =,
-               "\\dQuote" =  writeLR(block, tag),
+               "\\dQuote" =  writeLR(block, tag, doParas),
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
@@ -512,7 +513,7 @@ Rd2HTML <-
                        of1(sub("^options: ", "", imgoptions))
 	           } else {
 		       of1('alt="')
-		       writeContent(block[[length(block)]])
+		       writeContent(block[[length(block)]], tag)
 		       of1('"')
 		   }
                    of1(' />')
@@ -524,7 +525,7 @@ Rd2HTML <-
                "\\S4method" = {
                    # Should not get here
                },
-               "\\tabular" = writeTabular(block),
+               "\\tabular" = writeTabular(block), 
                "\\subsection" = writeSection(block, tag),
                "\\if" =,
                "\\ifelse" =
