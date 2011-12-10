@@ -1684,7 +1684,7 @@ stopifnot(identical(attributes(dm <- duplicated(m., MARGIN=0)),
 
 
 ## PR#14739
-stopifnot(is.infinite(pbinom(10, 1e6, 0.01, log.p=TRUE)))
+stopifnot(!is.nan(pbinom(10, 1e6, 0.01, log.p=TRUE)))
 ## was NaN thanks to Maechler's misuse of toms708 in 2.11.0.
 
 

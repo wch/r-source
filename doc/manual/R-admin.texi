@@ -4389,17 +4389,25 @@ be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
-Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.6.2,
-and earlier @command{gcc}@tie{}4.3.3 and @command{gcc}@tie{}3.4.6 from
-OpenCSW.} for @cputype{x86} and @cputype{amd64} have been less
-successful.
 
-@cputype{x86} builds have built successfully, and under
-@command{gcc}@tie{}4.6.2 (but not earlier) checked successfully.
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.6.2
+needed
 
-For @cputype{amd64} the builds have failed to complete in
-several different ways, most recently with relocation errors for
-@file{libRblas.so}.
+@example
+CC="/opt/csw/gcc4/bin/gcc -m32"
+CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
+F77="/opt/csw/gcc4/bin/gfortran -m32"
+CXX="/opt/csw/gcc4/bin/g++ -m32"
+FC="/opt/csw/gcc4/bin/gfortran -m32"
+LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
+@end example
+
+(@code{-L/opt/csw/lib} is needed since TexLive 2011 was built using
+32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
+@code{R_LD_LIBRARY_PATH}.)
+
+For @cputype{amd64} the builds have failed to complete in several
+different ways, currently with relocation errors for @file{libRblas.so}.
 
 
 
