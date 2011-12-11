@@ -150,6 +150,10 @@
       
       \item HTML conversion of Rd files did not handle markup within
       tabular cells properly.  (\PR{14708})
+      
+      \item \code{source()} on an empty file with \code{keep.source =
+	TRUE} tried to read from \code{stdin()}, in \R 2.14.0 only.
+      (\PR{14753})
     }
   }
 }
