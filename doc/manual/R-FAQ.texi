@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2011
-@set FAQ_DATE @value{FAQ_YEAR}-10-24
+@set FAQ_DATE @value{FAQ_YEAR}-12-11
 @set REL_YEAR 2011
 @set REL_MAJOR 2
 @set REL_MINOR 14
@@ -58,7 +58,7 @@ FORTRAN
 @strong{\p\}
 @end macro
 
-@macro cpkg {p}
+@macro CRANpkg {p}
 @url{http://CRAN.R-project.org/package=\p\, @strong{\p\}}
 @end macro
 
@@ -1657,7 +1657,7 @@ to a remote server, see for example the collection of links available from
 @url{http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/StatCompCourse}.
 
 @url{http://www.warwick.ac.uk/go/dfirth, David Firth} has written
-@cpkg{CGIwithR}, an R add-on package available from @CRAN{}.  It
+@CRANpkg{CGIwithR}, an R add-on package available from @CRAN{}.  It
 provides some simple extensions to R to facilitate running R scripts
 through the CGI interface to a web server, and allows submission of data
 using both GET and POST methods.  It is easily installed using Apache
@@ -1711,16 +1711,16 @@ interface is created automatically.  There is no need for the user to do
 any extra scripting or learn any new scripting techniques.  Rwui can
 also be found at @uref{http://rwui.cryst.bbk.ac.uk}.
 
-The @cpkg{R.rsp} package by Henrik Bengtsson introduces ``R Server
+The @CRANpkg{R.rsp} package by Henrik Bengtsson introduces ``R Server
 Pages''.  Analogous to Java Server Pages, an R server page is typically
 @HTML{} with embedded R code that gets evaluated when the page is
 requested.  The package includes an internal cross-platform HTTP server
 implemented in Tcl, so provides a good framework for including web-based
 user interfaces in packages.  The approach is similar to the use of the
-@cpkg{brew} package with @url{http://rapache.net/, Rapache} with the
+@CRANpkg{brew} package with @url{http://rapache.net/, Rapache} with the
 advantage of cross-platform support and easy installation.
 
-The @cpkg{Rook} package by Jeffrey Horner provides a web server
+The @CRANpkg{Rook} package by Jeffrey Horner provides a web server
 interface borrowing heavily from Ruby's Rack project.
 
 Finally, @uref{http://code.google.com/p/concerto-platform/, Concerto} is
@@ -1806,7 +1806,7 @@ former @pkg{base} was split into the four packages @pkg{base},
 @pkg{graphics}, @pkg{stats}, and @pkg{utils}.  Packages @pkg{ctest},
 @pkg{eda}, @pkg{modreg}, @pkg{mva}, @pkg{nls}, @pkg{stepfun} and
 @pkg{ts} were merged into @pkg{stats}, package @pkg{lqs} returned to the
-recommended package @pkg{MASS}, and package @pkg{mle} moved to
+recommended package @CRANpkg{MASS}, and package @pkg{mle} moved to
 @pkg{stats4}.
 
 @node Add-on packages from CRAN, Add-on packages from Omegahat, Add-on packages in R, Which add-on packages exist for R?
@@ -2559,9 +2559,9 @@ internal codes).
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
-The recommended package @pkg{lattice} (which is based on another
-recommended package, @pkg{grid}) provides graphical functionality
-that is compatible with most Trellis commands.
+The recommended package @CRANpkg{lattice} (which is based on base
+package @pkg{grid}) provides graphical functionality that is compatible
+with most Trellis commands.
 
 You could also look at @code{coplot()} and @code{dotchart()} which might
 do at least some of what you want.  Note also that the R version of
@@ -2704,15 +2704,15 @@ strings file ``names''.
 @node Are GAMs implemented in R?, Why is the output not printed when I source() a file?, What are valid names?, R Miscellanea
 @section Are GAMs implemented in R?
 
-Package @cpkg{gam} from @CRAN{} implements all the Generalized Additive
-Models (GAM) functionality as described in the GAM chapter of the White
-Book.  In particular, it implements backfitting with both local
-regression and smoothing splines, and is extendable.  There is a
-@code{gam()} function for GAMs in package @pkg{mgcv}, but it is not an
-exact clone of what is described in the White Book (no @code{lo()} for
-example).  Package @cpkg{gss} can fit spline-based GAMs too.  And if you
-can accept regression splines you can use @code{glm()}.  For Gaussian
-GAMs you can use @code{bruto()} from package @cpkg{mda}.
+Package @CRANpkg{gam} from @CRAN{} implements all the Generalized
+Additive Models (GAM) functionality as described in the GAM chapter of
+the White Book.  In particular, it implements backfitting with both
+local regression and smoothing splines, and is extendable.  There is a
+@code{gam()} function for GAMs in package @CRANpkg{mgcv}, but it is not
+an exact clone of what is described in the White Book (no @code{lo()}
+for example).  Package @CRANpkg{gss} can fit spline-based GAMs too.  And
+if you can accept regression splines you can use @code{glm()}.  For
+Gaussian GAMs you can use @code{bruto()} from package @CRANpkg{mda}.
 
 @node Why is the output not printed when I source() a file?, Why does outer() behave strangely with my function?, Are GAMs implemented in R?, R Miscellanea
 @section Why is the output not printed when I source() a file?
@@ -2832,16 +2832,16 @@ available for versions of R prior to 2.7.0, or without support for
 cairo.  From R 2.7.0 @code{png()} by default uses the Quartz device
 on Mac OS X, and that too works in batch mode.
 
-Earlier versions of the @code{png()} device uses the X11 driver, which is 
-a problem in batch mode or for remote operation.  If you have Ghostscript 
-you can use @code{bitmap()}, which produces a PostScript or PDF file then 
-converts it to any bitmap format supported by Ghostscript.  On some 
-installations this produces ugly output, on others it is perfectly 
-satisfactory.  Many systems now come with Xvfb from 
-@url{http://www.x.org/Downloads.html, X.Org} (possibly as an optional 
-install), which is an X11 server that does not require a screen; and there 
-is the @cpkg{GDD} package from @CRAN{}, which produces PNG, JPEG and GIF 
-bitmaps without X11.
+Earlier versions of the @code{png()} device uses the X11 driver, which
+is a problem in batch mode or for remote operation.  If you have
+Ghostscript you can use @code{bitmap()}, which produces a PostScript or
+PDF file then converts it to any bitmap format supported by Ghostscript.
+On some installations this produces ugly output, on others it is
+perfectly satisfactory.  Many systems now come with Xvfb from
+@url{http://www.x.org/Downloads.html, X.Org} (possibly as an optional
+install), which is an X11 server that does not require a screen; and
+there is the @CRANpkg{GDD} package from @CRAN{}, which produces PNG,
+JPEG and GIF bitmaps without X11.
 
 @node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
 @section How can I get command line editing to work?
@@ -2923,7 +2923,7 @@ without any of this messing about.
 
 The most likely reason is that you forgot to tell R to display the
 graph.  Lattice functions such as @code{xyplot()} create a graph object,
-but do not display it (the same is true of @cpkg{ggplot2} graphics,
+but do not display it (the same is true of @CRANpkg{ggplot2} graphics,
 and Trellis graphics in @SPLUS{}).  The @code{print()} method for the
 graph object produces the actual display.  When you use these functions
 interactively at the command line, the result is automatically printed,
@@ -3289,18 +3289,19 @@ warning.
 @section How can I put error bars or confidence bands on my plot?
 
 Some functions will display a particular kind of plot with error bars,
-such as the @code{bar.err()} function in the @cpkg{agricolae} package,
-the @code{plotCI()} function in the @cpkg{gplots} package, the
-@code{plotCI()} and @code{brkdn.plot()} functions in the @cpkg{plotrix}
-package and the @code{error.bars()}, @code{error.crosses()} and
-@code{error.bars.by()} functions in the @cpkg{psych} package.  Within
-these types of functions, some will accept the measures of dispersion
-(e.g., @code{plotCI}), some will calculate the dispersion measures from
-the raw values (@code{bar.err}, @code{brkdn.plot}), and some will do
-both (@code{error.bars}).  Still other functions will just display error
-bars, like the dispersion function in the @cpkg{plotrix} package.  Most
-of the above functions use the @code{arrows()} function in the base
-@pkg{graphics} package to draw the error bars.
+such as the @code{bar.err()} function in the @CRANpkg{agricolae}
+package, the @code{plotCI()} function in the @CRANpkg{gplots} package,
+the @code{plotCI()} and @code{brkdn.plot()} functions in the
+@CRANpkg{plotrix} package and the @code{error.bars()},
+@code{error.crosses()} and @code{error.bars.by()} functions in the
+@CRANpkg{psych} package.  Within these types of functions, some will
+accept the measures of dispersion (e.g., @code{plotCI}), some will
+calculate the dispersion measures from the raw values (@code{bar.err},
+@code{brkdn.plot}), and some will do both (@code{error.bars}).  Still
+other functions will just display error bars, like the dispersion
+function in the @CRANpkg{plotrix} package.  Most of the above functions
+use the @code{arrows()} function in the base @pkg{graphics} package to
+draw the error bars.
 
 The above functions all use the base graphics system.  The grid and
 lattice graphics systems also have specific functions for displaying
@@ -3308,9 +3309,10 @@ error bars, e.g., the @code{grid.arrow()} function in the @pkg{grid}
 package, and the @code{geom_errorbar()}, @code{geom_errorbarh()},
 @code{geom_pointrange()}, @code{geom_linerange()},
 @code{geom_crossbar()} and @code{geom_ribbon()} functions in the
-@cpkg{ggplot2} package.  In the lattice system, error bars can be
-displayed with @code{Dotplot()} or @code{xYplot()} in the @cpkg{Hmisc}
-package and @code{segplot()} in the @cpkg{latticeExtra} package.
+@CRANpkg{ggplot2} package.  In the lattice system, error bars can be
+displayed with @code{Dotplot()} or @code{xYplot()} in the
+@CRANpkg{Hmisc} package and @code{segplot()} in the
+@CRANpkg{latticeExtra} package.
 
 @node How do I create a plot with two y-axes?, How do I access the source code for a function?, How can I put error bars or confidence bands on my plot?, R Miscellanea
 @section How do I create a plot with two y-axes?
@@ -3320,9 +3322,9 @@ scaled to the same vertical size and showing separate vertical axes on
 the left and right sides of the plot that reflect the original scales of
 the data, is possible in R but is not recommended.  The basic approach
 for constructing such graphs is to use @code{par(new=TRUE)} (see
-@code{?par}); functions @code{twoord.plot()} (in the @cpkg{plotrix}
-package) and @code{doubleYScale()} (in the @cpkg{latticeExtra} package)
-automate the process somewhat.  See
+@code{?par}); functions @code{twoord.plot()} (in the @CRANpkg{plotrix}
+package) and @code{doubleYScale()} (in the @CRANpkg{latticeExtra}
+package) automate the process somewhat.  See
 @url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
 for more information, including strong arguments against this sort of
 graph.
