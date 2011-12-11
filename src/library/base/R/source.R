@@ -112,10 +112,12 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         op <- options(keep.source = FALSE)
         on.exit(options(op), add = TRUE)
     } else op <- NULL
-    if (!from_file)
-        exprs <- .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
-    else
-    	exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
+    exprs <- if (!from_file) {
+        if (length(lines))  # there is a C-level test for this
+            .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
+        else expression()
+    } else
+    	.Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
     on.exit()
     if (from_file) close(file)
     if (!is.null(op)) options(op)
