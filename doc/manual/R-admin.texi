@@ -4183,9 +4183,9 @@ for C++).
 12@footnote{versions 12u1 and 12.2; a beta of 12.3 in Oct 2011 gave a
 segfault on powers of complex numbers and required @code{HAVE_CPOW}
 undefined.} compilers: there has been some success with
-@command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
-for @R{} are available from @uref{http://www.sunfreeware.com/} for both
-32-bit architectures, but recently have often been several versions
+@command{gcc}@tie{}4/@command{gfortran}.  Sun packages for @R{} are
+available from @uref{http://www.sunfreeware.com/} for both 32-bit
+architectures, but recently have often been several versions
 old.@footnote{For example, 2.11.1 at the time of release of 2.13.2.}
 (Recent Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64})
 rather than @cputype{x86}, but 32-bit @cputype{x86} executables are the
@@ -4245,6 +4245,13 @@ R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/gcc4/lib:/opt/csw/lib"
 For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/usr/local/lib/sparcv9} or
 @code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.
+It will also be necessary to point @command{pkg-config} at the 64-bit
+directories, e.g.@: one of
+
+@example
+PKG_CONFIG_PATH=/opt/csw/lib/amd64/pkgconfig:/usr/lib/amd64/pkgconfig
+PKG_CONFIG_PATH=/opt/csw/lib/sparcv9/pkgconfig:/usr/lib/sparcv9/pkgconfig
+@end example
 
 With Solaris Studio 12.2 on Sparc, @code{FCLIBS} needs to be
 
@@ -4262,8 +4269,8 @@ later: @file{libRblas.so} and @file{lapack.so} are generated with code
 that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
 impossible with Solaris Studio 12.2.  For a standard build the trick
-seems to be to manually set @code{FLIBS}.  For example, on @cputype{amd64},
-set in @file{Makeconf}
+seems to be to manually set @code{FLIBS} to avoid the troublesome
+libraries.  For example, on @cputype{amd64}, set in @file{Makeconf}
 
 @example
 FLIBS_IN_SO = -R/opt/solstudio12.2/lib/amd64 \
@@ -4281,7 +4288,9 @@ FLIBS = -R/opt/solstudio12.2/prod/lib/sparc/64 -lifai -lsunimath -lfai -lfai2 \
 @end example
 
 @noindent
-in @file{Makeconf} and @file{etc/Makefconf}.
+in @file{config.site}, or manually in both in @file{Makeconf} and
+@file{etc/Makeconf}.
+
 
 By default the Solaris Studio compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
@@ -4296,7 +4305,7 @@ performance: Oracle recommend
 @end example
 
 @noindent
-(in @code{CFLAGS} etc.) as a good compromise for recent Sparc chipsets.
+(in @code{CFLAGS} etc) as a good compromise for recent Sparc chipsets.
 Using @code{-libmil} in @code{CFLAGS} allows more system mathematical
 functions to be inlined.
 
