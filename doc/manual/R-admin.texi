@@ -4253,6 +4253,15 @@ PKG_CONFIG_PATH=/opt/csw/lib/amd64/pkgconfig:/usr/lib/amd64/pkgconfig
 PKG_CONFIG_PATH=/opt/csw/lib/sparcv9/pkgconfig:/usr/lib/sparcv9/pkgconfig
 @end example
 
+@noindent
+and to specify a 64-bit Java VM by e.g.@:
+
+@example
+JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server
+JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server \
+  -R$(JAVA_HOME)/lib/amd64/server -ljvm
+@end example
+
 With Solaris Studio 12.2 on Sparc, @code{FCLIBS} needs to be
 
 @example
@@ -4274,6 +4283,7 @@ libraries.  For example, on @cputype{amd64}, set in @file{Makeconf}
 
 @example
 FLIBS_IN_SO = -R/opt/solstudio12.2/lib/amd64 \
+  /opt/solstudio12.2/lib/amd64/libfui.so \
   /opt/solstudio12.2/lib/amd64/libfsu.so
 @end example
 
