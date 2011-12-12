@@ -3662,8 +3662,9 @@ from auto-generated @file{NAMESPACE} files in other packages.
 Default: false
 @item _R_CHECK_TIMINGS_
 Report timings for examples, tests and running/re-building vignettes as
-part of the check log.  The format is @samp{[a/b]} for the total CPU
-time () @samp{a} and elapsed time @samp{b}.
+part of the check log.  The format is @samp{[as/bs]} for the total CPU
+time () @samp{a} and elapsed time @samp{b}, except on Windows, when it
+is @samp{[bs]}.
 Default: false
 @end vtable
 

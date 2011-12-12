@@ -98,8 +98,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) return()
         td <- t2 - t1
-        td2 <- c(sum(td[-3], td[3]))
-        td2 <- sprintf(" [%d/%d]", round(sum(td[-3])), round(td[3]))
+        td2 <- if(WINDOWS) sprintf(" [%ds]", round(td[3]))
+        else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
         cat(td2)
         if (Log$con > 0L) cat(td2, file = Log$con)
 }
@@ -2210,7 +2210,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
                     ## Normal use of R CMD INSTALL
+                    t1 <- proc.time()
                     install_error <- run_Rcmd(args, outfile)
+                    t2 <- proc.time()
+                    print_time(t1, t2, Log)
                     lines <- readLines(outfile, warn = FALSE)
                 }
                 if (install_error) {
