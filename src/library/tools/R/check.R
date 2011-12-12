@@ -101,8 +101,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         td2 <- if(WINDOWS) sprintf(" [%ds]", round(td[3]))
         else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
         cat(td2)
-        if (Log$con > 0L) cat(td2, file = Log$con)
-}
+        if (!is.null(Log) && Log$con > 0L) cat(td2, file = Log$con)
+    }
 
     parse_description_field <- function(desc, field, default=TRUE)
     {
@@ -1692,7 +1692,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 resultLog(Log, "OK")
                 if (Log$con > 0L && file.exists(tf)) {
                     ## write results only to 00check.log
-                    lines <- readLines(tf)
+                    lines <- readLines(tf, warn = FALSE)
                     cat(lines, sep="\n", file = Log$con)
                     unlink(tf)
                 }
@@ -1860,11 +1860,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               paste0(", encoding = '", enc, "'"),
                               ")", sep = "")
                 outfile <- paste0(basename(v), ".log")
+                t1 <- proc.time()
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                  env = c(jitstr,
                                  if(nzchar(Sys.getenv("_R_CHECK_VIGNETTE_TIMING_"))) "R_BATCH=1234"),
                                  stdout = outfile, stderr = outfile)
+                t2 <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
                 savefile <- sub("\\.[RrSs](nw|tex)$", ".Rout.save", v)
                 if(length(grep("^  When (tangling|sourcing)", out,
@@ -1888,15 +1890,18 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  sep = "")
                     out2 <- R_runR(cmd, R_opts2)
                     if(length(out2)) {
+                        print_time(t1, t2, NULL)
                         cat(" differences from ", sQuote(basename(savefile)),
                             "\n", sep = "")
                         writeLines(c(out2, ""))
                     } else {
+                        print_time(t1, t2, NULL)
                         cat(" OK\n")
                         if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                             unlink(outfile)
                     }
                 } else {
+                    print_time(t1, t2, NULL)
                     cat(" OK\n")
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                         unlink(outfile)

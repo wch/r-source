@@ -337,23 +337,38 @@ testInstalledPackage <-
 {
     show_timing <- nzchar(Sys.getenv("_R_CHECK_TEST_TIMING_"))
     if (!is.null(Log)) Log <- file(Log, "wt")
+    WINDOWS <- .Platform$OS.type == "windows"
+    print_time <- function(t1, t2, Log)
+    {
+        if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) td <- ""
+        else {
+            td <- t2 - t1
+            td2 <- if(WINDOWS) sprintf(" [%ds]", round(td[3]))
+            else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
+        }
+        message(td2)
+        if (!is.null(Log)) cat(td2, "\n", sep = "",  file = Log)
+    }
     runone <- function(f)
     {
-        message("  Running ", sQuote(f))
+        message("  Running ", sQuote(f),  appendLF = FALSE)
         if(!is.null(Log))
-            cat("  Running ", sQuote(f), "\n", sep = "", file = Log)
+            cat("  Running ", sQuote(f), sep = "", file = Log)
         outfile <- paste0(f, "out")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla",
                      if(!show_timing) "--no-timing",
                      if(use_valgrind) "--debugger=valgrind",
                      shQuote(f), shQuote(outfile))
-        if (.Platform$OS.type == "windows") {
+        if (WINDOWS) {
             Sys.setenv(LANGUAGE="C")
             Sys.setenv(R_TESTS="startup.Rs")
         } else
             cmd <- paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
+        t1 <- proc.time()
         res <- system(cmd)
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
         if (res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
             return(1L)
