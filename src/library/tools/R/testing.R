@@ -340,7 +340,7 @@ testInstalledPackage <-
     WINDOWS <- .Platform$OS.type == "windows"
     print_time <- function(t1, t2, Log)
     {
-        if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) td <- ""
+        if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) td2 <- ""
         else {
             td <- t2 - t1
             td2 <- if(WINDOWS) sprintf(" [%ds]", round(td[3]))
