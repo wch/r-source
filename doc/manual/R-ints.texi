@@ -3643,6 +3643,9 @@ Default: true if @command{du} is found.
 @item _R_CHECK_DOC_SIZES_
 Should @command{qpdf} be used to find the installed sizes of PDFs?
 Default: true if @command{qpdf} is found.
+@item _R_CHECK_TEST_TIMING_
+Append timings to each test @file{.Rout} file.
+Default: false
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
 kept only if there is an error.
@@ -3650,9 +3653,17 @@ Default: false
 @item _R_CHECK_CLEAN_VIGN_TEST_
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
+@item _R_CHECK_VIGNETTE_TIMING_
+Append timings to each vignette log file.
+Default: false
 @item _R_CHECK_REPLACING_IMPORTS_
 Should warnings about replacing imports be reported?  These mainly come
 from auto-generated @file{NAMESPACE} files in other packages.
+Default: false
+@item _R_CHECK_TIMINGS_
+Report timings for examples, tests and running/re-building vignettes as
+part of the check log.  The format is @samp{[a/b]} for the total CPU
+time () @samp{a} and elapsed time @samp{b}.
 Default: false
 @end vtable
 

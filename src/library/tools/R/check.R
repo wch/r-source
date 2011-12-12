@@ -94,6 +94,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
+    print_time <- function(t1, t2, Log)
+    {
+        if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) return()
+        td <- t2 - t1
+        td2 <- c(sum(td[-3], td[3]))
+        td2 <- sprintf(" [%d/%d]", round(sum(td[-3])), round(td[3]))
+        cat(td2)
+        if (Log$con > 0L) cat(td2, file = Log$con)
+}
 
     parse_description_field <- function(desc, field, default=TRUE)
     {
@@ -1474,12 +1483,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         {
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
+            t1 <- proc.time()
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- R_runR(NULL, c(Ropts, enc),
                              c("LANGUAGE=en", if(nzchar(arch)) env0, jitstr),
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
+            t2 <- proc.time()
             if (status) {
                 errorLog(Log, "Running examples in ",
                          sQuote(basename(exfile)),
@@ -1507,6 +1518,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 return(FALSE)
             }
 
+            print_time(t1, t2, Log)
             ## Look at the output from running the examples.  For
             ## the time being, report warnings about use of
             ## deprecated functions, as the next release will make
@@ -1645,11 +1657,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             cmd <- paste("tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
                          ")", sep = "")
+            t1 <- proc.time()
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
                              env = c("LANGUAGE=en", if(nzchar(arch)) env0,
                                      jitstr),
                              stdout = "", stderr = "", arch = arch)
+            t2 <- proc.time()
             if (status) {
                 errorLog(Log)
                 ## Don't just fail: try to log where the problem occurred.
@@ -1674,6 +1688,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 }
                 return(FALSE)
             } else {
+                print_time(t1, t2, Log)
                 resultLog(Log, "OK")
                 if (Log$con > 0L && file.exists(tf)) {
                     ## write results only to 00check.log
@@ -1832,6 +1847,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             cat("\n")
             def_enc <- desc["Encoding"]
             if( (is.na(def_enc))) def_enc <- ""
+            t1 <- proc.time()
             for(v in vigns$docs) {
                 enc <- getVignetteEncoding(v, TRUE)
                 if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
@@ -1846,7 +1862,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 outfile <- paste0(basename(v), ".log")
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
-                                 jitstr,
+                                 env = c(jitstr,
+                                 if(nzchar(Sys.getenv("_R_CHECK_VIGNETTE_TIMING_"))) "R_BATCH=1234"),
                                  stdout = outfile, stderr = outfile)
                 out <- readLines(outfile, warn = FALSE)
                 savefile <- sub("\\.[RrSs](nw|tex)$", ".Rout.save", v)
@@ -1885,6 +1902,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         unlink(outfile)
                 }
             }
+            t2 <- proc.time()
+            print_time(t1, t2, Log)
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
                             invert = TRUE, value = TRUE, useBytes = TRUE)
@@ -1926,9 +1945,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 Rcmd <- paste(Rcmd, "buildVignettes(dir = '",
                               file.path(pkgoutdir, "vign_test", pkgname0),
                               "')", sep = "")
+                t1 <- proc.time()
                 outfile <- tempfile()
                 status <- R_runR(Rcmd, R_opts2, jitstr,
                                  stdout = outfile, stderr = outfile)
+                t2 <- proc.time()
                 if (status) {
                     noteLog(Log)
                     out <- readLines(outfile, warn = FALSE)
@@ -1943,6 +1964,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     ## clean up
                     if (config_val_to_logical(Sys.getenv("_R_CHECK_CLEAN_VIGN_TEST_", "true")))
                         unlink(vd2, recursive = TRUE)
+                    print_time(t1, t2, Log)
                     resultLog(Log, "OK")
                 }
             } else {
@@ -2117,14 +2139,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         ## Option '--no-install' turns off installation and the tests
         ## which require the package to be installed.  When testing
-        ## recommended packages bundled with R we can skip installation,
-        ## and do so if '--install=skip' was given.  If command line
-        ## option '--install' is of the form 'check:FILE', it is assumed
-        ## that installation was already performed with stdout/stderr to
-        ## FILE, the contents of which need to be checked (without
-        ## repeating the installation).
-        ## In this case, one also needs to specify *where* the package
-        ## was installed to using command line option '--library'.
+        ## recommended packages bundled with R we can skip
+        ## installation, and do so if '--install=skip' was given.  If
+        ## command line option '--install' is of the form
+        ## 'check:FILE', it is assumed that installation was already
+        ## performed with stdout/stderr redirected to FILE, the
+        ## contents of which need to be checked (without repeating the
+        ## installation).  In this case, one also needs to specify
+        ## *where* the package was installed to using command line
+        ## option '--library'.
 
         if (install == "skip")
             messageLog(Log, "skipping installation test")
@@ -2147,6 +2170,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## This is very rare: needs _R_CHECK_USE_INSTALL_LOG_ set
                 ## to false.
                 message("")
+                ## Rare use of R CMD INSTALL
                 if (run_Rcmd(args)) {
                     errorLog(Log, "Installation failed.")
                     do_exit(1L)
@@ -2185,6 +2209,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
+                    ## Normal use of R CMD INSTALL
                     install_error <- run_Rcmd(args, outfile)
                     lines <- readLines(outfile, warn = FALSE)
                 }
