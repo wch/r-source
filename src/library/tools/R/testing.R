@@ -338,13 +338,21 @@ testInstalledPackage <-
     show_timing <- nzchar(Sys.getenv("_R_CHECK_TEST_TIMING_"))
     if (!is.null(Log)) Log <- file(Log, "wt")
     WINDOWS <- .Platform$OS.type == "windows"
+    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
+    if (is.na(td0)) td0 <- Inf
     print_time <- function(t1, t2, Log)
     {
-        if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) td2 <- ""
+        td <- t2 - t1
+        if(td[3L] < td0) td2 <- ""
         else {
-            td <- t2 - t1
-            td2 <- if(WINDOWS) sprintf(" [%ds]", round(td[3]))
-            else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
+            td2 <- if (td[3L] > 600) {
+                td <- td/60
+                if(WINDOWS) sprintf(" [%dm]", round(td[3L]))
+                else sprintf(" [%dm/%dm]", round(sum(td[-3L])), round(td[3L]))
+            } else {
+                if(WINDOWS) sprintf(" [%ds]", round(td[3L]))
+                else sprintf(" [%ds/%ds]", round(sum(td[-3L])), round(td[3L]))
+            }
         }
         message(td2)
         if (!is.null(Log)) cat(td2, "\n", sep = "",  file = Log)

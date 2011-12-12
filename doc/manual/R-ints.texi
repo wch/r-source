@@ -3661,13 +3661,16 @@ Should warnings about replacing imports be reported?  These mainly come
 from auto-generated @file{NAMESPACE} files in other packages.
 Default: false
 @item _R_CHECK_TIMINGS_
-Report timings for installation, examples, tests and running/re-building
-vignettes as part of the check log.  The format is @samp{[as/bs]} for
-the total CPU time (including child processes) @samp{a} and elapsed time
-@samp{b}, except on Windows, when it is @samp{[bs]}.  In most cases
-timings are only given for @samp{OK} checks.  Times with an elapsed
-component over 10 mins are reported in minutes (with abbreviation
-@samp{m}).  Default: false
+Optionally report timings for installation, examples, tests and
+running/re-building vignettes as part of the check log.  The format is
+@samp{[as/bs]} for the total CPU time (including child processes)
+@samp{a} and elapsed time @samp{b}, except on Windows, when it is
+@samp{[bs]}.  In most cases timings are only given for @samp{OK} checks.
+Times with an elapsed component over 10 mins are reported in minutes
+(with abbreviation @samp{m}).  The value is the smallest numerical value
+in elapsed seconds that should be reported: non-numerical values
+indicate that no report is required.
+Default: @code{""}
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

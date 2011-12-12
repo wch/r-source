@@ -94,17 +94,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
+    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
+    if (is.na(td0)) td0 <- Inf
     print_time <- function(t1, t2, Log)
     {
-        if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) return()
         td <- t2 - t1
-        td2 <- if (td[3] > 600) {
+        if(td[3L] < td0) return()
+        td2 <- if (td[3L] > 600) {
             td <- td/60
-            if(WINDOWS) sprintf(" [%dm]", round(td[3]))
-            else sprintf(" [%dm/%dm]", round(sum(td[-3])), round(td[3]))
+            if(WINDOWS) sprintf(" [%dm]", round(td[3L]))
+            else sprintf(" [%dm/%dm]", round(sum(td[-3L])), round(td[3L]))
         } else {
-            if(WINDOWS) sprintf(" [%ds]", round(td[3]))
-            else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
+            if(WINDOWS) sprintf(" [%ds]", round(td[3L]))
+            else sprintf(" [%ds/%ds]", round(sum(td[-3L])), round(td[3L]))
         }
         cat(td2)
         if (!is.null(Log) && Log$con > 0L) cat(td2, file = Log$con)
