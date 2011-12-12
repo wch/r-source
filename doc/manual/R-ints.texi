@@ -3665,8 +3665,9 @@ Report timings for installation, examples, tests and running/re-building
 vignettes as part of the check log.  The format is @samp{[as/bs]} for
 the total CPU time (including child processes) @samp{a} and elapsed time
 @samp{b}, except on Windows, when it is @samp{[bs]}.  In most cases
-timings are only given for @samp{OK} checks.
-Default: false
+timings are only given for @samp{OK} checks.  Times with an elapsed
+component over 10 mins are reported in minutes (with abbreviation
+@samp{m}).  Default: false
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

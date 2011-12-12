@@ -98,8 +98,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         if(!nzchar(Sys.getenv("_R_CHECK_TIMINGS_"))) return()
         td <- t2 - t1
-        td2 <- if(WINDOWS) sprintf(" [%ds]", round(td[3]))
-        else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
+        td2 <- if (td[3] > 600) {
+            td <- td/60
+            if(WINDOWS) sprintf(" [%dm]", round(td[3]))
+            else sprintf(" [%dm/%dm]", round(sum(td[-3])), round(td[3]))
+        } else {
+            if(WINDOWS) sprintf(" [%ds]", round(td[3]))
+            else sprintf(" [%ds/%ds]", round(sum(td[-3])), round(td[3]))
+        }
         cat(td2)
         if (!is.null(Log) && Log$con > 0L) cat(td2, file = Log$con)
     }
