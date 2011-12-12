@@ -140,6 +140,10 @@
        \item Where multiple sub-architectures are to be tested,
        \command{R CMD check} now runs the examples and tests for all the
        sub-architectures even if one fails.
+
+       \item \command{R CMD check} can optionally report timings on
+       various parts of the check: this is controlled by environment
+       variables documented in \sQuote{Writing R Extensions}.
      }
    }
 
