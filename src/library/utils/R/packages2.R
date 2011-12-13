@@ -36,7 +36,7 @@ getDependencies <-
 				 "packages %s are not available (for %s)"),
 			paste(sQuote(p0[miss]), collapse=", "),
 			sub(" *\\(.*","", R.version.string)),
-                domain = NA)
+                domain = NA, call. = FALSE)
         if (sum(miss) == 1L &&
             !is.na(w <- match(tolower(p0[miss]),
                               tolower(row.names(available))))) {

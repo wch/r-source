@@ -26,18 +26,22 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
-    \file{.zip} files containing binary builds of packages.  With
-    suitable tools installed (see the \sQuote{Details} below) source
-    directories or \file{.tar.gz} archives may also be installed.
+    \file{.zip} files containing binary builds of packages. Source
+    directories or \file{.tar.gz} archives may also be installed, but
+    some packages need suitable tools installed (see the
+    \sQuote{Details} section).
 #endif
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
     package archive files (as created by \command{R CMD build --binary}).
+    On a CRAN build of \R for Mac OS X these can be \file{.tgz} files
+    containing binary package archives.
     Tilde-expansion will be done on the file paths.
 #endif
     
     If this is missing or a zero-length character vector, a listbox of
-    available packages is presented where possible.
+    available packages is presented where possible in an interactive \R
+    session.
   }
   \item{lib}{
     character vector giving the library directories where to
@@ -45,10 +49,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     the first element of \code{\link{.libPaths}()}.
   }
   \item{repos}{
-    character vector, the base URL(s) of the repositories
-    to use, i.e., the URL of the CRAN master such as
-    \code{"http://cran.r-project.org"} or its Statlib mirror,
-    \code{"http://lib.stat.cmu.edu/R/CRAN"}.
+    character vector, the base URLs of the repositories
+    to use, e.g., the URL of a CRAN mirror such as
+    \code{"http://cran.us.r-project.org"}.
     
     Can be \code{NULL} to install from local files
     (with extension \file{.tar.gz} for source packages).
@@ -65,18 +68,18 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{available}{
     an object as returned by \code{\link{available.packages}}
-    listing packages available at the repositories, or \code{NULL} which
-    makes an internal call to \code{available.packages}.
+    listing packages available at the repositories, or \code{NULL} when
+    the function makes an internal call to \code{available.packages}.
   }
   \item{destdir}{
     directory where downloaded packages are stored.  If it is
-    \code{NULL} (the default) a directory
+    \code{NULL} (the default) a subdirectory
     \code{downloaded_packages} of the session temporary
     directory will be used (and the files will be deleted
     at the end of the session). 
   }
   \item{dependencies}{logical indicating to also install uninstalled
-    packages on which these packages depend/suggest/import
+    packages which these packages depend on/link to/import/suggest
     (and so on recursively).  Not used if \code{repos = NULL}.
     Can also be a character vector, a subset of
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
@@ -91,10 +94,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{type}{character, indicating the type of package to download and
     install.
 
-    Possible values are \code{"source"}, \code{"mac.binary"} (obsolete),
-    \code{"mac.binary.leopard"} and \code{"win.binary"}: the binary
-    types can be listed and downloaded but not installed on other
-    platforms.
+    Possible values are \code{"source"}, \code{"mac.binary.leopard"} and
+    \code{"win.binary"}: the binary types can be listed and downloaded
+    but not installed on other platforms.
 
     The default is the appropriate binary type on Windows and on
     the CRAN binary Mac OS X distribution, otherwise \code{"source"}.
@@ -117,9 +119,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     value for \option{--configure-args}.
   }
   \item{configure.vars}{
-    (not used on Windows) analogous, for \option{--configure-vars} which
-    is used to set environment variables for the \command{configure}
-    run.
+    (not used on Windows) analogous to \code{configure.args} for flag
+    \option{--configure-vars}, which is used to set environment variables
+    for the \command{configure} run. 
   }
   \item{clean}{a logical value indicating whether to specify
     to add the \option{--clean} flag to the call to
@@ -154,10 +156,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 \details{
   \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
-  also available, and the type most commonly used by Windows and users
-  of the Mac OS X GUI \code{R.app}.  This function can install either
-  type where supported, either by downloading a file from a repository
-  or from a local file.  The default type is given by
+  also available, and the type most commonly used on Windows and from
+  the CRAN distribution for Mac OS X.  This function can install
+  either type where supported, either by downloading a file from a
+  repository or from a local file.  The default type is given by
   \code{\link{getOption}("pkgType")}: this is \code{"source"} apart from
   under Windows or a CRAN binary distribution for Mac OS X.
   
@@ -198,7 +200,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \code{install.packages} to ensure that any already installed
   dependencies have their latest versions.
   
-  \code{libs_only = TRUE} is supported for source installs and for
+  Argument \code{libs_only = TRUE} is supported for source installs and for
   Windows binary installs.
 }
 \value{
@@ -216,7 +218,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   the option \option{--pkglock} which creates a separate lock for each
   package: this allows enough freedom for parallel
   installation.  Per-package locking is the default when installing a
-  single package, and for multiple packages when \code{Ncpus > 1L}
+  single package, and for multiple packages when \code{Ncpus > 1L}.
   Finally locking (and restoration on error) can be suppressed by
   \option{--no-lock}.
   % and also options(install.lock=FALSE) in an \R startup file.
@@ -227,7 +229,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   per-directory locking as described for source installs: if the value
   is \code{"pkglock"} per-package locking will be used.
   
-  If package locking is used on Windows with \code{libs_only=TRUE} and
+  If package locking is used on Windows with \code{libs_only = TRUE} and
   the installation fails, the package will be restored to its previous
   state.
   
@@ -243,7 +245,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
   give an error if called with \code{type = "source"} on such a system.
   
-  Some binary distributions can be installed on a machine without the
+  Some binary distributions of \R can be installed on a machine without the
   tools needed to install packages: the remedy is to do a complete
   install of \R which should bring in all those tools as dependencies.
 }
