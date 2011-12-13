@@ -2564,7 +2564,8 @@ Windows @acronym{CRAN} server, a reasonably recent version of MikTeX
 Mac OS X builders use a current full version of MacTeX.  Developers
 wanting to have their vignettes use @TeX{} packages or style files not
 (yet) included in these distributions should add the corresponding style
-files to the @file{inst/doc} subdirectory of their package.
+files to the @file{vignettes} (or for the legacy layout,
+@file{inst/doc}) subdirectory of their package.
 
 @menu
 * PDF size::                    
