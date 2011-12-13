@@ -50,8 +50,8 @@
   \item{pkgType}{
     character string, the preferred setting for
     \code{\link{options}("pkgType")}.  Values \code{"source"},
-    \code{"mac.binary"}, \code{"mac.binary.leopard"} and
-    \code{"win.binary"} are currently in use.
+    \code{"mac.binary.leopard"} and \code{"win.binary"} are currently in
+    use.
   }
   \item{path.sep}{
     character string, giving the \bold{path} \bold{sep}arator,
@@ -94,7 +94,7 @@
 if(.Platform$OS.type == "unix") {
    system.test <- function(...) { system(paste("test", ...)) == 0 }
    dir.exists <- function(dir)
-       sapply(dir, function(d)system.test("-d", d))
+       sapply(dir, function(d) system.test("-d", d))
    dir.exists(c(R.home(), "/tmp", "~", "/NO"))# > T T T F
 }
 }
