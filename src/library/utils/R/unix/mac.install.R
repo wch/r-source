@@ -164,7 +164,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
             }
         }
         if(!is.null(tmpd) && is.null(destdir))
-            cat("\n", gettextf("The downloaded packages are in\n\t%s", tmpd),
+            cat("\n", gettextf("The downloaded binary packages are in\n\t%s", tmpd),
                 "\n", sep = "")
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, recursive = TRUE)
 

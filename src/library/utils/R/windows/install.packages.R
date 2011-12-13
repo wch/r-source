@@ -261,7 +261,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
         }
         if(!is.null(tmpd) && is.null(destdir))
             ## tends to be a long path on Windows
-            cat("\n", gettextf("The downloaded packages are in\n\t%s",
+            cat("\n", gettextf("The downloaded binary packages are in\n\t%s",
                                normalizePath(tmpd, mustWork = FALSE)),
                 "\n", sep = "")
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, recursive = TRUE)
