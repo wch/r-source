@@ -3669,7 +3669,8 @@ running/re-building vignettes as part of the check log.  The format is
 Times with an elapsed component over 10 mins are reported in minutes
 (with abbreviation @samp{m}).  The value is the smallest numerical value
 in elapsed seconds that should be reported: non-numerical values
-indicate that no report is required.
+indicate that no report is required, a value of @samp{0} that a report
+is always required.
 Default: @code{""}
 @end vtable
 

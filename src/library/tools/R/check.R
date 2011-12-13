@@ -94,8 +94,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
-    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
-    if (is.na(td0)) td0 <- Inf
+    td0 <- Inf # updated below
     print_time <- function(t1, t2, Log)
     {
         td <- t2 - t1
@@ -2676,6 +2675,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
         readRenviron(Renv)
     else if (file.exists(Renv <- "~/.R/check.Renviron")) readRenviron(Renv)
+    td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
+    if (is.na(td0)) td0 <- Inf
 
     ## A user might have turned on JIT compilation.  That does not
     ## work well, so mostly disable it

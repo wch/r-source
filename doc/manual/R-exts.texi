@@ -527,7 +527,11 @@ suppose an example from package @pkg{foo} uses a dataset from package
 @pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
 unless one wants to execute all the examples/tests/vignettes: it is
 useful to have @pkg{bar}, but not necessary.  Version requirements can
-be specified, and will be used by @command{R CMD check}.
+be specified, and will be used by @command{R CMD check}.  Note that
+someone wanting to run the examples/tests/vignettes may not have a
+suggested package available (and it may not even be possible to install
+it for that platform), so it is helpful if the use of suggested packages
+is made conditional @emph{via} @code{if(require(@var{pkgname}))}).
 
 Finally, the @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
@@ -1148,6 +1152,22 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 in order to use the correct version of @R{} when running the script as
 part of @code{R CMD INSTALL}, and the quotes since @samp{$@{R_HOME@}}
 might contain spaces.)
+
+If your code does load checks then you may also need
+@example
+LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
+@end example
+
+@noindent
+and packages written with C++ need to pick up the details for the C++
+compiler and switch the current language to C++ by
+@example
+AC_LANG(C++)
+@end example
+
+@noindent
+The latter is important, as for example C headers may not be available
+to C++ programs or may not be written to avoid C++ name-mangling.
 
 @findex R CMD config
 You can use @code{R CMD config} for getting the value of the basic
