@@ -1149,6 +1149,22 @@ in order to use the correct version of @R{} when running the script as
 part of @code{R CMD INSTALL}, and the quotes since @samp{$@{R_HOME@}}
 might contain spaces.)
 
+If your code does load checks then you may also need
+@example
+LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
+@end example
+
+@noindent
+and packages written with C++ need to pick up the details for the C++
+compiler and switch the current language to C++ by
+@example
+AC_LANG(C++)
+@end example
+
+@noindent
+The latter is important, as for example C headers may not be available
+to C++ programs or may not be written to avoid C++ name-mangling.
+
 @findex R CMD config
 You can use @code{R CMD config} for getting the value of the basic
 configuration variables, or the header and library flags necessary for
@@ -2461,13 +2477,14 @@ are not supported by other compilers, and this will report @emph{some}
 of them (such as the misuse of variable-length arrays).  If possible,
 check C++ code on a standards-conformant compiler.
 
-Although there is now a 2011 version of the C++ standard, it is not
-widely implemented and portable C++ code needs to follow the 1998
-standard (and not use features from C99).
+Although there is now a 2011 version of the C++ standard, it is not yet
+implemented (nor is it likely to be widely available for many years) and
+portable C++ code needs to follow the 1998 standard (and not use
+features from C99).
 
 @item
 Study the output from running your examples, in file
-@file{@var{pkg}.Rcheck/@var{pkg}-Ex.Rout}.  Often warnings there
+@file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.Rout}.  Often warnings there
 indicate actual errors, and warnings about your mistakes (which the @R{}
 developers are warning you that they are working around for you) will
 just annoy or confuse your users.
@@ -2502,63 +2519,22 @@ more than 5Mb, detailing directories of more than 1Mb.  It notes
 inefficient compression of data: @command{R CMD build --resave-data}
 will compact data as best it can.  Watch out for unnecessary files in
 @file{inst/doc}.  As a general rule, @file{doc} directories should not
-exceed 5Mb, and where @file{data} directories need to be 10Mb or more,
-consideration should be given to a separate package containing just the
-data.  (Similarly for external data directories, large @file{jar} files
-and other libraries that need to be installed.)
+exceed 5Mb, and where @file{data} directories need to be more than
+5--10Mb, consideration should be given to a separate package containing
+just the data.  (Similarly for external data directories, large
+@file{jar} files and other libraries that need to be installed.)
 
-There are a several tools available to reduce the size of PDF files,
-including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
-`Save as', and select `Reduce file size' from the `Quartz filter' menu':
-this can be accessed in other ways, for example by Automator.}, some
-versions of Multivalent, Pdftk
-(@uref{http://www.pdflabs.com/@/tools/@/pdftk-the-pdf-toolkit/}),
-@command{qpdf} (@uref{http://qpdf.sourceforge.net/}), and Ghostscript
-(which converts PDF to PDF by
+See below for ways to reduce the size of PDF files such as vignettes.
 
-@example
-ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
-@end example
+@item
+Ensure that checking the package takes no more time than is needed (the
+CRAN check farm is a resource shared between several thousand packages).
 
-@noindent
-and suitable options might be
-
-@example
--dPDFSETTINGS=/ebook
--dPDFSETTINGS=/printer
-@end example
-
-@noindent
-; see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
-for more such and consider all the options for image downsampling) as
-well as numerous commercial and shareware Windows programs.  Note that
-these do not all try the same size-reduction strategies, and Acrobat and
-@command{ps2pdf} can be much better at reducing the size of embedded
-images than some of the others.
-
-Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
-for Windows and packages in Debian/Ubuntu, and is installed as part of
-the @acronym{CRAN} Mac OS X distribution of @R{}), there is an option
-@option{--compact-vignettes} to @command{R CMD build} to run
-@command{qpdf} over PDF files under @file{inst/doc} and replace them if
-at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
-command can be supplied as environment variable @env{R_QPDF} (and is on
-the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
-function @code{tools::compactPDF} which has other options including
-running Ghostscript.
-
-Most of the large PDFs we have encountered have been large because of
-the inclusion of figures, for example complex figures from @R{} (where
-@file{.png} versions may be more appropriate, and PDF compression was
-not used by @code{pdf()} prior to @R{} 2.14.0, so it may help to
-re-generate them) and screendumps.  However, some have been
-unnecessarily large due to @command{pdftex} settings.  The modern
-default is to use both PDF compression and PDF object compression (which
-needs the PDF 1.5 specification from 2003): this is the default in most
-@TeX{} distributions but not MiKTeX.  It can be overridden by code in
-the preamble of an Sweave or @LaTeX{} file: see how this is done for the
-@R{} reference manual at
-@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
+If you want to look at the timings for examples, use option
+@option{--timings} to @command{R CMD check}.  This generates a file
+called @file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.timings} containing
+timings for each help files (as given by @code{system.time()}).  It is a
+tab-delimited file which can be read into @R{} for further analysis.
 @end enumerate
 
 @noindent
@@ -2589,6 +2565,68 @@ Mac OS X builders use a current full version of MacTeX.  Developers
 wanting to have their vignettes use @TeX{} packages or style files not
 (yet) included in these distributions should add the corresponding style
 files to the @file{inst/doc} subdirectory of their package.
+
+@menu
+* PDF size::                    
+* Windows external software::   
+@end menu
+
+@node PDF size, Windows external software, Submitting a package to CRAN, Submitting a package to CRAN
+@subsection PDF size
+
+There are a several tools available to reduce the size of PDF files,
+including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
+`Save as', and select `Reduce file size' from the `Quartz filter' menu':
+this can be accessed in other ways, for example by Automator.},
+@command{qpdf} (@uref{http://qpdf.sourceforge.net/}), and Ghostscript
+(which converts PDF to PDF by
+
+@example
+ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
+@end example
+
+@noindent
+and suitable options might be
+
+@example
+-dPDFSETTINGS=/ebook
+-dPDFSETTINGS=/printer
+@end example
+
+@noindent
+; see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
+for more such and consider all the options for image downsampling) as
+well as numerous commercial and shareware Windows programs.  Note that
+these do not all try the same size-reduction strategies, and Acrobat and
+@command{ps2pdf} can be much better at reducing the size of embedded
+bitmap images than some of the others.
+
+Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
+for Windows and packages in Debian/Ubuntu, and is installed as part of
+the @acronym{CRAN} Mac OS X distribution of @R{}), there is an option
+@option{--compact-vignettes} to @command{R CMD build} to run
+@command{qpdf} over PDF files under @file{inst/doc} and replace them if
+at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
+command can be supplied as environment variable @env{R_QPDF} (and is on
+the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
+function @code{tools::compactPDF} which has other options including
+running Ghostscript.
+
+Most of the large PDFs we have encountered have been large because of
+the inclusion of figures, for example complex figures from @R{} (where
+@file{.png} versions may be more appropriate, and PDF compression was
+not used by @code{pdf()} prior to @R{} 2.14.0, so it may help to
+re-generate them) and screendumps.  However, some have been
+unnecessarily large due to @command{pdftex} settings.  The modern
+default is to use both PDF compression and PDF object compression (which
+needs PDF version 1.5 from 2003): this is the default in most @TeX{}
+distributions but not MiKTeX.  It can be overridden by code in the
+preamble of an Sweave or @LaTeX{} file: see how this is done for the
+@R{} reference manual at
+@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
+
+@node Windows external software,  , PDF size, Submitting a package to CRAN
+@subsection Windows external software
 
 Note that @acronym{CRAN} does not accept submissions of precompiled
 binaries due to security concerns, and does not allow binary executables
