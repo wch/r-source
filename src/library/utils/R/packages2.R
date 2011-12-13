@@ -169,14 +169,16 @@ install.packages <-
     }
 
     if(missing(pkgs) || !length(pkgs)) {
+        if(!interactive()) stop("no packages were specified")
         ## if no packages were specified, use a menu
 	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
            || (capabilities("tcltk")
-               && capabilities("X11")&& suppressWarnings(tcltk:::.TkUp)) ) {
+               && capabilities("X11") && suppressWarnings(tcltk:::.TkUp)) ) {
             ## this is the condition for a graphical select.list()
 	} else
 	    stop("no packages were specified")
 
+        ## This will only offer the specified type.
 	if(is.null(available))
 	    available <- available.packages(contriburl = contriburl,
 					    method = method)
@@ -247,7 +249,6 @@ install.packages <-
             && length(grep("\\.tgz$", pkgs)))) {
             repos <- NULL
             message("inferring 'repos = NULL' from the file name")
-
         }
     }
 
