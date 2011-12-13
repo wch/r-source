@@ -514,14 +514,13 @@ getOption(x, default = NULL)
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
       Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.
+      \code{"source"}.  Some Mac OS X builds use \code{"mac.binary.leopard"}.
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
-      CRAN Mac OS X build) and \code{"mac.binary"}. The latter can
-      have a suffix if supported by a special build, such as
-      \code{"mac.binary.leopard"} to access the \code{"leopard"} tree
-      of repositories instead of the default \code{"universal"}.
+      CRAN Mac OS X build) and \code{"mac.binary.leopard"}.  Windows
+      uses  \code{"win.binary"}.  (\code{"mac.binary"} and
+      \code{"mac.binary.universal"} are no longer in use.)
 #endif
     }
 
