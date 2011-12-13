@@ -32,7 +32,6 @@ Then check the built system worked correctly, by
 
 and make the manuals by (as many options as preferred from)
 
-	make dvi	to create DVI versions
 	make pdf	to create PDF versions
 	make info	to create info files
 
@@ -48,7 +47,6 @@ You do not need to install R to run it: you can run R by the script
 For a site-wide installation, use
 
 	make install
-	make install-dvi
 	make install-info
 	make install-pdf
 
