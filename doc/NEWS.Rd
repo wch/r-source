@@ -215,6 +215,10 @@
       \item \code{str(x, width)} now obeys its \code{width}
       argument also for function headers and other objects \code{x}
       where \code{deparse()} is applied.
+      
+      \item The convention for \code{x \%/\% 0L} for integer-mode \code{x}
+      has been changed from \code{0L} to \code{NA_integer_}.
+      (\PR{14754})
     }
   }
 }

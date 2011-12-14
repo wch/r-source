@@ -759,10 +759,10 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
+	    /* This had x %/% 0 == 0 prior to 2.14.1, but
+	       it seems conventionally to be undefined */
+	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 		INTEGER(ans)[i] = NA_INTEGER;
-	    else if (x2 == 0)
-		INTEGER(ans)[i] = 0;
 	    else
 		INTEGER(ans)[i] = floor((double)x1 / (double)x2);
 	}
