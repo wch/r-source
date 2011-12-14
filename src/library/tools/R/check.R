@@ -1870,8 +1870,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 t1 <- proc.time()
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
-                                 env = c(jitstr,
-                                 if(nzchar(Sys.getenv("_R_CHECK_VIGNETTE_TIMING_"))) "R_BATCH=1234"),
+                                 ## add timing as footer, as BATCH does
+                                 env = c(jitstr, "R_BATCH=1234"),
                                  stdout = outfile, stderr = outfile)
                 t2 <- proc.time()
                 out <- readLines(outfile, warn = FALSE)

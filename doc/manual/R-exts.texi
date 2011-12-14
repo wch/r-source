@@ -2657,6 +2657,11 @@ containing timings for each help files (as given by
 @code{system.time()}).  It is a tab-delimited file which can be read
 into @R{} for further analysis.
 
+Timings for the tests and vignette runs are given at the bottom of the
+corresponding log file: note that log files for successful vignette runs
+are only retained if @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is set
+to a true value.
+
 
 @node Windows external software,  , Package timing, Submitting a package to CRAN
 @subsection Windows external software

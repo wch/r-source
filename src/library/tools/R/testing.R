@@ -335,7 +335,6 @@ testInstalledPackage <-
 
 .runPackageTests <- function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL)
 {
-    show_timing <- nzchar(Sys.getenv("_R_CHECK_TEST_TIMING_"))
     if (!is.null(Log)) Log <- file(Log, "wt")
     WINDOWS <- .Platform$OS.type == "windows"
     td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
@@ -365,7 +364,6 @@ testInstalledPackage <-
         outfile <- paste0(f, "out")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla",
-                     if(!show_timing) "--no-timing",
                      if(use_valgrind) "--debugger=valgrind",
                      shQuote(f), shQuote(outfile))
         if (WINDOWS) {

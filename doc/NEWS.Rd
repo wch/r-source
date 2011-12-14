@@ -153,7 +153,10 @@
 
        \item \command{R CMD check} can optionally report timings on
        various parts of the check: this is controlled by environment
-       variables documented in \sQuote{Writing R Extensions}.
+       variable \env{_R_CHECK_TIMINGS_} documented in \sQuote{Writing R
+	 Extensions}.  Timings (in the style of \command{R CMD BATCH} are
+       given at the foot of the output file from running each test and
+       the \R code in each vignette.
      }
    }
 
