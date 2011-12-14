@@ -103,7 +103,8 @@ X11.options(\dots, reset = FALSE)
 
   Option \code{type} selects between two separate devices: \R can be
   built with support for neither, \code{type = "Xlib"} or both.  Where
-  both are available, types \code{"cairo"} and \code{"nbcairo"} offer
+  both are available, types \code{"cairo"}, \code{"nbcairo"} and
+  \code{"dbcairo"} offer
   \itemize{
     \item
     antialiasing of text and lines.
@@ -304,7 +305,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 
 \section{Anti-aliasing}{
   Anti-aliasing is only supported for cairographics-based devices, and
-  applies to graphics and to fonts.  It is generally preferable for
+  applies to both graphics and fonts.  It is generally preferable for
   lines and text, but can lead to undesirable effects for fills,
   e.g. for \code{\link{image}} plots, and so is never used for fills.
 
