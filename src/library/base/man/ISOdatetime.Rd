@@ -1,6 +1,6 @@
 % File src/library/base/man/ISOdatetime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ISOdatetime}
@@ -8,7 +8,7 @@
 \alias{ISOdate}
 \title{Date-time Conversion Functions from Numeric Representations}
 \description{
-  Convenience wrappers to cread Date-times from numeric representations.
+  Convenience wrappers to create date-times from numeric representations.
 }
 \usage{
 ISOdatetime(year, month, day, hour, min, sec, tz = "")
@@ -26,6 +26,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \code{strptime} that differ only in their defaults and that
   \code{ISOdate} sets UTC as the timezone.  For dates without times it
   would normally be better to use the \code{"\link{Date}"} class.
+  
+  The main arguments will be recycled using the usual recycling rules.
 }
 \value{
   An object of class \code{"\link{POSIXct}"}.
