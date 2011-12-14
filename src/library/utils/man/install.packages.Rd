@@ -110,7 +110,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     the CRAN binary Mac OS X distribution, otherwise \code{"source"}.
     For the platforms where binary packages are the default, an
     alternative is \code{"both"} which means \sQuote{try binary if
-      available, otherwise try source}.
+      available, otherwise try source}.  (This will only choose the
+    binary package if its version number is no older than the source
+    version.)
   }
   \item{configure.args}{
     (not used on Windows) a character vector or a named list.  If a

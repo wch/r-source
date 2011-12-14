@@ -674,6 +674,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
 
 contrib.url <- function(repos, type = getOption("pkgType"))
 {
+    ## Not entirely clear this is optimal
+    if(type == "both") type <- "source"
     if(is.null(repos)) return(NULL)
     if("@CRAN@" %in% repos && interactive()) {
         cat(gettext("--- Please select a CRAN mirror for use in this session ---"),

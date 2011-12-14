@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{contrib.url}
@@ -17,7 +17,7 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{repos}{character vector, the base URL(s) of the repositories
     to use.
   }
-  \item{type}{character string, indicate which type of packages: see
+  \item{type}{character string, indicating which type of packages: see
     \code{\link{install.packages}}.
   }
 }

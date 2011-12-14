@@ -253,7 +253,7 @@ install.packages <-
         ## paths in DSOs are hard-coded.
         type2 <- .Platform$pkgType
         if (type2 == "source")
-            stop("type == \"both\" can only be used on Windows or Mac OS X")
+            stop("type == \"both\" can only be used on Windows or a CRAN build for Mac OS X")
         if(!missing(contriburl) || !is.null(available))
             stop("type == \"both\" cannot be used if 'available' or 'contriburl' is specified")
         if(is.null(repos))
@@ -266,9 +266,12 @@ install.packages <-
         ## Now see what we can get as binary packages.
         av2 <- available.packages(contriburl = contrib.url(repos, type2),
                                   method = method)
-        ## FIXME: we should check the versions of the binary ones
         bins <- row.names(av2)
         bins <- pkgs[pkgs %in% bins]
+        ## It seems safest to use binaries only if they are as recent as sources.
+        binvers <- av2[bins, "Version"]
+        srcvers <- available[bins, "Version"]
+        bins <- bins[binvers >= srcvers] # allow for CRAN extras updates
         if(length(bins)) {
             if(type2 == "win.binary")
                 .install.winbinary(pkgs = bins, lib = lib,
