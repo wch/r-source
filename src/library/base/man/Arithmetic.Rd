@@ -45,12 +45,11 @@ x \%/\% y
   division and \code{^} for exponentiation.
 
   \code{\%\%} indicates \code{x mod y} and \code{\%/\%} indicates
-  integer division.  It is guaranteed that \code{x == (x \%\% y) + y * ( x
-    \%/\% y )} (up to rounding error) unless \code{y == 0} where the
-  result is \code{\link{NA_integer_}} or \code{\link{NaN}} (depending on
-  the \code{\link{typeof}} of the arguments).  See
-  \url{http://en.wikipedia.org/wiki/Modulo_operation} for the
-  rationale.
+  integer division.  It is guaranteed that \code{x == (x \%\% y) + y * (
+  x \%/\% y )} (up to rounding error) unless \code{y == 0} where the
+  result for \code{\%\%} is \code{\link{NA_integer_}} or
+  \code{\link{NaN}} (depending on the \code{\link{typeof}} of the
+  arguments).
 
   If either argument is complex the result will be complex, otherwise if
   one or both arguments are numeric, the result will be numeric.  If
