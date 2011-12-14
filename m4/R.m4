@@ -158,7 +158,7 @@ if test -n "${KPSEWHICH}"; then
   if test -z `${KPSEWHICH} inconsolata.sty`; then
      r_rd4pdf="times,hyper"
      if test -z "${R_RD4PDF}" ;  then
-       warn_pdf3="PDF vignettes and package manuals will not be rendered optimally"
+       warn_pdf3="inconsolata.sty not found: PDF vignettes and package manuals will not be rendered optimally"
        AC_MSG_WARN([${warn_pdf3}])
      fi
   fi
