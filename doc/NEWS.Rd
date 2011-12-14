@@ -127,6 +127,16 @@
       the flag \option{--no-multiarch} is used.  (Pure \R packages can
       do things which are architecture-dependent: in the case which
       prompted this, looking for an icon in a Windows \R executable.)
+      
+      \item There is a new option \code{install.packages(type = "both")}
+      which tries source packages if binary packages are not available,
+      on those platforms where the latter is the default.
+
+      \item The meaning of \code{install.packages(dependencies = TRUE)}
+      has changed: it now means to install the essential dependencies of
+      the named packages plus the \samp{Suggests}, but only the
+      essential dependencies of dependencies.  To get the previous
+      behaviour, specify \code{dependencies} as a character vector.
     }
   }
 

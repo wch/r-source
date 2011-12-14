@@ -17,13 +17,17 @@
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L])
 {
+    if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
+    dep2 <- NULL
     if(is.logical(dependencies) && is.na(dependencies))
         dependencies <- c("Depends", "Imports", "LinkingTo")
     depends <-
         is.character(dependencies) || (is.logical(dependencies) && dependencies)
-    if(depends && is.logical(dependencies))
+    if(depends && is.logical(dependencies)) {
         dependencies <-  c("Depends", "Imports", "LinkingTo", "Suggests")
+        dep2 <- c("Depends", "Imports", "LinkingTo")
+    }
     if(depends && !oneLib) {
         warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
         depends <- FALSE
@@ -68,6 +72,7 @@ getDependencies <-
 	    if(!length(deps)) break
 	    pkgs <- c(deps, pkgs)
 	    p1 <- deps
+            if(!is.null(dep2)) { dependencies <- dep2; dep2 <- NULL }
 	}
         if(length(not_avail)) {
             not_avail <- unique(not_avail)
@@ -241,6 +246,55 @@ install.packages <-
         } else stop("unable to install packages")
     }
 
+    ## Look at type == "both"
+    if (type == "both") {
+        ## NB it is only safe to use binary packages with a Mac OS X
+        ## build that uses the same R foundation layout as CRAN since
+        ## paths in DSOs are hard-coded.
+        type2 <- .Platform$pkgType
+        if (type2 == "source")
+            stop("type == \"both\" can only be used on Windows or Mac OS X")
+        if(!missing(contriburl) || !is.null(available))
+            stop("type == \"both\" cannot be used if 'available' or 'contriburl' is specified")
+        if(is.null(repos))
+            stop("type == \"both\" cannot be used with 'repos = NULL'")
+        type <- "source"
+        contriburl <- contrib.url(repos, "source")
+        available <-
+            available.packages(contriburl = contriburl, method = method)
+        pkgs <- getDependencies(pkgs, dependencies, available, lib)
+        ## Now see what we can get as binary packages.
+        av2 <- available.packages(contriburl = contrib.url(repos, type2),
+                                  method = method)
+        ## FIXME: we should check the versions of the binary ones
+        bins <- row.names(av2)
+        bins <- pkgs[pkgs %in% bins]
+        if(length(bins)) {
+            if(type2 == "win.binary")
+                .install.winbinary(pkgs = bins, lib = lib,
+                                   contriburl = contrib.url(repos, type2),
+                                   method = method, available = av2,
+                                   destdir = destdir,
+                                   dependencies = NULL,
+                                   libs_only = libs_only, ...)
+            else
+                .install.macbinary(pkgs = bins, lib = lib,
+                                   contriburl = contrib.url(repos, type2),
+                                   method = method, available = av2,
+                                   destdir = destdir,
+                                   dependencies = NULL, ...)
+        }
+        pkgs <- setdiff(pkgs, bins)
+        if(!length(pkgs)) return(invisible())
+        message(sprintf(ngettext(length(pkgs),
+                                     "installing the source package %s",
+                                     "installing the source packages %s"),
+                        paste(sQuote(pkgs), collapse=", ")),
+                "\n", domain = NA)
+            flush.console()
+
+    }
+
     ## check if we should infer repos=NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
@@ -253,7 +307,7 @@ install.packages <-
     }
 
     if(.Platform$OS.type == "windows") {
-        if(type == "mac.binary")
+        if(substr(type, 1L, 10L) == "mac.binary")
             stop("cannot install MacOS X binary packages on Windows")
 
         if(type %in% "win.binary") {
@@ -438,7 +492,7 @@ install.packages <-
             }
         }
         if(nonlocalrepos && !is.null(tmpd) && is.null(destdir))
-            cat("\n", gettextf("The downloaded packages are in\n\t%s",
+            cat("\n", gettextf("The downloaded source packages are in\n\t%s",
                                sQuote(normalizePath(tmpd, mustWork = FALSE))),
                 "\n", sep = "")
         ## update packages.html on Unix only if .Library was installed into

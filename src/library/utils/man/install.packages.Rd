@@ -85,11 +85,19 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
 
     Only supported if \code{lib} is of length one (or missing),
-    so it is unambiguous where to install the dependent packages.
+    so it is unambiguous where to install the dependent packages.  If
+    this is not the case it is ignored, with a warning.
 
     The default, \code{NA}, means
-    \code{c("Depends", "Imports", "LinkingTo")}
-    if \code{lib} is unambiguous, and \code{FALSE} otherwise.
+    \code{c("Depends", "Imports", "LinkingTo")}.
+
+    \code{TRUE} means (as from \R 2.15.0) to use
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests")} for
+    \code{pkgs} and
+    \code{c("Depends", "Imports", "LinkingTo")} for added dependencies:
+    this installs all the packages needed to run \code{pkgs}, their
+    examples, tests and vignettes (if the package author specified them
+    correctly).
   }
   \item{type}{character, indicating the type of package to download and
     install.
@@ -100,6 +108,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
     The default is the appropriate binary type on Windows and on
     the CRAN binary Mac OS X distribution, otherwise \code{"source"}.
+    For the platforms where binary packages are the default, an
+    alternative is \code{"both"} which means \sQuote{try binary if
+      available, otherwise try source}.
   }
   \item{configure.args}{
     (not used on Windows) a character vector or a named list.  If a
@@ -154,14 +165,14 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
 }
 \details{
-  \R packages are primarily distributed as \emph{source} packages, but
+    \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
-  also available, and the type most commonly used on Windows and from
-  the CRAN distribution for Mac OS X.  This function can install
-  either type where supported, either by downloading a file from a
-  repository or from a local file.  The default type is given by
-  \code{\link{getOption}("pkgType")}: this is \code{"source"} apart from
-  under Windows or a CRAN binary distribution for Mac OS X.
+  also supported, and the type most commonly used on Windows and from
+  the CRAN distribution for Mac OS X.  This function can install either
+  type where supported, either by downloading a file from a repository
+  or from a local file.  The default type is given by
+  \code{\link{getOption}("pkgType")}: this defaults to \code{"source"}
+  apart from under Windows or a CRAN binary distribution for Mac OS X.
   
   This is the main function to install packages. It takes
   a vector of names and a destination library, downloads the packages
