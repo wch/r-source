@@ -4622,9 +4622,11 @@ TK_LIB_SPEC='-ltk84'
 The overhead of using shell scripts makes this noticeably slower than a
 native build of @R{} on Windows.
 
-Even when @R{} can be built, ot all the tests passed: there were
+Even when @R{} can be built, not all the tests passed: there were
 incorrect results from wide-character regular expressions code and from
 sourcing CR-delimited files.
+
+Do not use Cygwin's BLAS library: it is known to give incorrect results.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
