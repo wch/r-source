@@ -41,7 +41,10 @@ clusterSetRNGStream <- function(cl, iseed = NULL)
     seeds <- vector("list", nc)
     seeds[[1L]] <- .Random.seed
     for(i in seq_len(nc-1L)) seeds[[i+1L]] <- nextRNGStream(seeds[[i]])
-    if(!is.null(oldseed)) .Random.seed <- oldseed else rm(.Random.seed, envir = .GlobalEnv)
+    ## Reset the random seed in the master.
+    if(!is.null(oldseed))
+        assign(".Random.seed", oldseed, envir = .GlobalEnv)
+    else rm(.Random.seed, envir = .GlobalEnv)
     for (i in seq_along(cl)) {
         expr <- substitute(assign(".Random.seed", seed, envir = .GlobalEnv),
                            list(seed = seeds[[i]]))
