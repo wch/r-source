@@ -3551,7 +3551,7 @@ check to a log file (@file{00install.out} by default), even when running
 interactively.
 Default: true.
 @item _R_CHECK_VIGNETTES_NLINES_
-Maximum umber of lines to show of the bottom of the output when reporting
+Maximum number of lines to show of the bottom of the output when reporting
 errors in running vignettes.
 Default: 10.
 @item _R_CHECK_CODOC_S4_METHODS_
@@ -3664,7 +3664,7 @@ Default: false
 
 @cindex coding standards
 @R{} is meant to run on a wide variety of platforms, including Linux and
-most variants of Unix as well as 32-bit Windows versions and on Mac OS X.
+most variants of Unix as well as Windows and Mac OS X.
 Therefore, when extending @R{} by either adding to the @R{} base
 distribution or by providing an add-on package, one should not rely on
 features specific to only a few supported platforms, if this can be
@@ -3711,14 +3711,14 @@ A Bourne shell and the ``traditional'' Unix programming tools, including
 @command{grep}, @command{sed}, and @command{awk}.
 
 There are @acronym{POSIX} standards for these tools, but these may not
-fully be supported.  Baseline features could be determined from a book
+be fully supported.  Baseline features could be determined from a book
 such as @cite{The UNIX Programming Environment} by Brian W. Kernighan &
 Rob Pike.  Note in particular that @samp{|} in a regexp is an extended
 regexp, and is not supported by all versions of @command{grep} or
-@command{sed}.  The Open Group Base Specifications, Issue 6, which is
-technically identical to ISO/IEC 9945 and IEEE Std 1003.1 (POSIX), 2004,
+@command{sed}.  The Open Group Base Specifications, Issue 7, which are
+technically identical to  IEEE Std 1003.1 (POSIX), 2008,
 are available at
-@uref{http://www.opengroup.org/onlinepubs/009695399/mindex.html}.
+@uref{http://pubs.opengroup.org/onlinepubs/9699919799/mindex.html}.
 @end itemize
 
 Under Windows, most users will not have these tools installed, and you
@@ -3735,7 +3735,7 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is needed for a few uncommonly-used tools: @command{make
+Perl version 5 is only needed for a few uncommonly-used tools: @command{make
 install-info} needs Perl installed if there is no command
 @command{install-info} on the system, and for the maintainer-only script
 @file{tools/help2man.pl}.
@@ -3903,11 +3903,13 @@ not currently implemented in the code in @file{src/extra/xdr}.)
 Another immediate consequence is that there would need to be a C type to
 hold vector lengths and element numbers, say @code{Rlongint}.  It would
 be cleanest if this were a type defined by @R{}, and it may need to be.
-C99 guarantees @emph{via} @file{stdint.h} a number of types which are
-64-bit or at least 64-bit and which would be suitable, but regrettably
-people try to use @R{} internals in C++, whereas C99 is not a subset
-of C++ and C++ compilers are not required to support these types.  It
-would need to be tested if @file{stdint.h} was widely enough usable.
+C99 guarantees @emph{via} @file{stdint.h} a number of types which are at
+least 64-bit (the types of exactly 64 bits are not required to be
+implemented) and which would be suitable, but regrettably people try to
+use @R{} internals in C++, whereas C99 is not a subset of C++98 and
+C++98 compilers are not required to support these types (and there are
+currently no C++11 compilers).  It would need to be tested if
+@file{stdint.h} was widely enough usable.
 
 @item
 There would need to be a way to refer to the length of longer vectors
@@ -3952,10 +3954,11 @@ integer size to be 64-bit (it is not clear if this can be done
 portably), and some external software (e.g.@: AMD's ACML) is available
 in versions compiled with 64-bit integers.
 
-Some FORTRAN compilers (e.g.@: @command{gfortran}) have flags to compile
-code with @code{INTEGER} as 64-bit (but not all), and even amongst those
-which do care is needed that any external functions which are called
-have versions for 64-bit integers and the correct versions are called.
+Some (but not all) FORTRAN compilers (e.g.@: @command{gfortran}) have
+flags to compile code with @code{INTEGER} as 64-bit, and even amongst
+those which do, care is needed that any external functions which are
+called have versions for 64-bit integers and the correct versions are
+called.
 
 However, it does seem that for the foreseeable future anything but the
 most trivial matrix algebra on gigabyte matrices will be too slow to be
