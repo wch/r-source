@@ -2567,14 +2567,15 @@ maintainers will run these tests before putting a submission online.
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use the Debian TeXLive@footnote{currently
 the long obsolete TeXLive 2009.} distribution
-(@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); for the
-Windows @acronym{CRAN} server, a reasonably recent version of MikTeX
-(including all packages available directly for MikTeX) is employed: the
-Mac OS X builders use a current full version of MacTeX.  Developers
-wanting to have their vignettes use @TeX{} packages or style files not
-(yet) included in these distributions should add the corresponding style
-files to the @file{vignettes} (or for the legacy layout,
-@file{inst/doc}) subdirectory of their package.
+(@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); the Fedora and
+Solaris check systems use current TexLive; the Windows @acronym{CRAN}
+server uses a reasonably recent version of MikTeX (including all
+packages available directly for MikTeX) is employed: the Mac OS X
+builders use a current full version of MacTeX.  Developers wanting to
+have their vignettes use @TeX{} packages or style files not (yet)
+included in these distributions should add the corresponding style files
+to the @file{vignettes} (or for the legacy layout, @file{inst/doc})
+subdirectory of their package.
 
 @menu
 * PDF size::                    
