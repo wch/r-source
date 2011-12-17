@@ -527,7 +527,11 @@ suppose an example from package @pkg{foo} uses a dataset from package
 @pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
 unless one wants to execute all the examples/tests/vignettes: it is
 useful to have @pkg{bar}, but not necessary.  Version requirements can
-be specified, and will be used by @command{R CMD check}.
+be specified, and will be used by @command{R CMD check}.  Note that
+someone wanting to run the examples/tests/vignettes may not have a
+suggested package available (and it may not even be possible to install
+it for that platform), so it is helpful if the use of suggested packages
+is made conditional @emph{via} @code{if(require(@var{pkgname}))}).
 
 Finally, the @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
@@ -1540,15 +1544,15 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-are available for use in @file{Makevars}.@footnote{They could also be
-used with @file{Makevars.win}, but at present the compilers used for
-@R{} on Windows do not support pthreads nor OpenMP.}  Include the
-appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so on,
-and also in @code{PKG_LIBS}.  C/C++ code that needs to be conditioned on
-the use of OpenMP can be used inside @code{#ifdef SUPPORT_OPENMP}, a
-macro defined in the header @file{Rconfig.h} (@pxref{Platform and
-version information}): however the use of OpenMP is most often indicated
-by @samp{#pragma} statements.
+are available for use in @file{src/Makevars}.@footnote{They could also
+be used with @file{src/Makevars.win}, but until @R{} 2.15.x the
+compilers used for @R{} on Windows do not support pthreads nor OpenMP.}
+Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
+and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
+conditioned on the use of OpenMP can be used inside @code{#ifdef
+SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
+(@pxref{Platform and version information}): however the use of OpenMP is
+most often indicated by @samp{#pragma} statements.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -1564,6 +1568,10 @@ note that Mac OS X binaries are built for 10.5 using compilers which
 support version 2.5), but portable packages cannot assume that end users
 have recent versions (there are some years-old versions of Linux in
 use), and it may be safest to assume version 2.5.
+
+The performance of OpenMP varies substantially between platforms.  Both
+the Mac OS X and Windows implementations have substantial overheads and
+are only beneficial if quite substantial tasks are run in parallel.
 
 @node Using pthreads,  , OpenMP support, Using Makevars
 @subsubsection Using pthreads
@@ -2560,12 +2568,12 @@ Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 the long obsolete TeXLive 2009.} distribution
 (@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); the Fedora and
 Solaris check systems use current TexLive; the Windows @acronym{CRAN}
-server uses a reasonably recent version of MikTeX (including all
-packages available directly for MikTeX) is employed: the Mac OS X
-builders use a current full version of MacTeX.  Developers wanting to
-have their vignettes use @TeX{} packages or style files not (yet)
-included in these distributions should add the corresponding style files
-to the @file{vignettes} (or for the legacy layout, @file{inst/doc})
+builder uses a reasonably recent version of MikTeX (including all
+packages available directly for MikTeX); the Mac OS X builders use a
+current full version of MacTeX.  Developers wanting to have their
+vignettes use @TeX{} packages or style files not (yet) included in these
+distributions should add the corresponding style files to the
+@file{vignettes} (or for the legacy layout, @file{inst/doc})
 subdirectory of their package.
 
 @menu
@@ -2632,8 +2640,8 @@ preamble of an Sweave or @LaTeX{} file: see how this is done for the
 
 Note that @acronym{CRAN} does not accept submissions of precompiled
 binaries due to security concerns, and does not allow binary executables
-in packages.  Maintainers who need additional software for the Windows
-binaries of their packages on @acronym{CRAN} have three options
+in source packages.  Maintainers who need additional software for the
+Windows binaries of their packages on @acronym{CRAN} have three options
 @enumerate
 @item
 To arrange for installation of the package to download the
@@ -2642,7 +2650,9 @@ additional software from a URL, as e.g.@: package @pkg{Cairo} does.
 @item
 To negotiate with Uwe Ligges to host the additional components on
 WinBuilder, and write a @file{configure.win} file to install them.
-There are many examples, e.g.@: package @pkg{rgdal}.
+There are used to be many examples, e.g.@: package @pkg{rgdal} (however
+nowadays CRAN prefers to use a uniform cross-compilation approach for
+software such as GDAL).
 
 @item
 To negotiate with Brian Ripley to host the package on @acronym{CRAN}
@@ -3286,7 +3296,7 @@ platforms but do not have the intended results.
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
 @example
-PKG_CFLAGS = `gsl-config --cflags`
+PKG_CPPFLAGS = `gsl-config --cflags`
 @end example
 
 @noindent
@@ -3336,7 +3346,8 @@ checking will reject it.}) and typedef your own type to be @code{long} or
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
 pointers to and from integers use the C99 integer types @code{intptr_t}
-and @code{uintptr_t}.
+and @code{uintptr_t} (which are defined in the header @code{<stdint.h>}
+and are not required to be implemented by the C99 standard).
 
 Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
 in C on all @R{} platforms.
@@ -3397,6 +3408,11 @@ Do not use (hard or symbolic) file links in your package sources.
 not usually a problem, but versions 1.24 and later of GNU @command{tar}
 dereference some links to hard links which may not be handled correctly
 by @command{R CMD INSTALL}.
+
+@item
+If you do not yourself have a Windows system, submit your source package
+to WinBuilder (@uref{http://win-builder.r-project.org/}) before
+distribution (including submission to @acronym{CRAN}).
 
 @end itemize
 
@@ -3940,7 +3956,7 @@ R-Forge (@uref{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
 RForge (@uref{http://www.rforge.net, www.rforge.net}) are similar
 services with similar names.  Both provide source-code management
 through SVN, daily building and checking, mailing lists and a repository
-that can be accessed @emph{via} @code{install.packages} (R-Forge can be
+that can be accessed @emph{via} @code{install.packages} (they can be
 selected by @code{setRepositories} and the GUI menus that use it).
 Package developers have the opportunity to present their work on the
 basis of project websites or news announcements.  Mailing lists, forums
