@@ -146,7 +146,7 @@ Rd2ex <-
         ## Do we need to output an encoding?
         if(length(exl) && any(Encoding(exl) != "unknown")) {
             if(any(f <- sections == "\\encoding")) {
-                encoding <- unlist(Rd[[which(f)]])[1L]
+                encoding <- unlist(Rd[which(f)])[1L]
                 ## FIXME: which should win here?
                 if(nzchar(outputEncoding))
                     encoding <- outputEncoding
