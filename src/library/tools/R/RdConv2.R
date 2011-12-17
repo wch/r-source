@@ -901,17 +901,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	    warnRd(Rd, Rdfile, level = 5, "Must have a ", tag)
     	else {
             if (length(which) > 1L)
-    	    warnRd(Rd[[which[2L]]], Rdfile, level = 5,
+    	    	warnRd(Rd[[which[2L]]], Rdfile, level = 5,
                    "Only one ", tag, " is allowed")
             empty <- TRUE
-            for(block in Rd[[which]]) {
+            for(block in Rd[which]) {
                 switch(attr(block, "Rd_tag"),
                        TEXT = if(!grepl("^[[:space:]]*$", block))
                        empty <- FALSE,
                        empty <- FALSE)
             }
             if(empty)
-                warnRd(Rd[[which]], Rdfile, level = 5,
+                warnRd(Rd[[which[1L]]], Rdfile, level = 5,
                        "Tag ", tag, " must not be empty")
         }
     }
@@ -955,7 +955,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     ## Normally prepare_Rd will have dropped duplicates already
     unique_tags <-
         paste("\\",
-              c("name", "title", "description", # must exist and be unique
+              c("name", "title", # "description" checked above
                 "usage", "arguments",  "synopsis",
                 "format", "details", "value", "references", "source",
                 "seealso", "examples", "author", "encoding"),

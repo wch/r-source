@@ -372,6 +372,9 @@
       \item \code{source()} on an empty file with \code{keep.source =
 	TRUE} tried to read from \code{stdin()}, in \R 2.14.0 only.
       (\PR{14753})
+      
+      \item The code to check Rd files in packages would abort if
+      duplicate description sections were present.      
     }
   }
 }
