@@ -1747,10 +1747,11 @@ handle binary files.
 @findex netCDF
 @cindex network Common Data Form
 
-Packages @pkg{hdf5}, @pkg{RNetCDF}, @pkg{ncdf} and @pkg{ncdf4} on
-@acronym{CRAN} provide interfaces to @acronym{NASA}'s HDF5 (Hierarchical
-Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
-netCDF data files (network Common Data Form, see
+Packages @pkg{hdf5}, @pkg{h5r}, Bioconductor's @pkg{rhdf5},
+@pkg{RNetCDF}, @pkg{ncdf} and @pkg{ncdf4} on @acronym{CRAN} provide
+interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format, see
+@uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data files
+(network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented

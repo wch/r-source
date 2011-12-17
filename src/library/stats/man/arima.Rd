@@ -189,8 +189,8 @@ arima(x, order = c(0, 0, 0),
   series with missing observations. \emph{Technometrics} \bold{20} 389--395.
 
   Ripley, B. D. (2002) Time series in \R 1.5.0.
-  \emph{R News}, \bold{2/1}, 2--7.
-  \url{http://www.r-project.org/doc/Rnews/Rnews_2002-1.pdf}
+  \emph{R News}, \bold{2/2}, 2--7.
+  \url{http://www.r-project.org/doc/Rnews/Rnews_2002-2.pdf}
 }
 
 \note{
