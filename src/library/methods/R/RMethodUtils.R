@@ -1203,7 +1203,9 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
         FALSE
     else {
         if(!.recursiveCallTest(body, fname))
-            warning("the supplied generic function definition for ", fname, " does not seem to call 'standardGeneric'; no methods will be dispatched!")
+            warning("the supplied generic function definition for ",
+                    sQuote(fname),
+                    " does not seem to call 'standardGeneric'; no methods will be dispatched!")
         TRUE
     }
 }
