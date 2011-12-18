@@ -510,13 +510,8 @@ function(dir, outDir, encoding = "")
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
             cat("  ", sQuote(basename(srcfile)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
-            ## could simplify
-            tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = enc),
-                     error = function(e)
-                     stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
-                                   srcfile, conditionMessage(e)),
-                          domain = NA, call. = FALSE))
-        }
+            utils::Stangle(srcfile, quiet = TRUE, encoding = enc)
+       }
         Rfiles <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vignetteIndex$File))
         ## remove any files with no R code (they will have header comments).
         ## if not correctly declared they might not be in the current encoding
