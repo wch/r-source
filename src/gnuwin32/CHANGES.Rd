@@ -21,10 +21,13 @@
   
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item The preferred toolchain has changed since the one used for
+      \item The supported toolchain has changed since the one used for
       \R 2.12.0 to 2.14.x: see the\sQuote{R Installation and Administration
 	manual}.  Compiled code (except DLLs) may be incompatible with
       previous toolchains (and compiled C++ code almost certainly will be).
+
+      \item Optimization level \option{-O3} is now used by default on
+      64-bit builds as well as 32-bit ones.
     }
   }
 }
