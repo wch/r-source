@@ -329,7 +329,7 @@ function(dir, outDir)
 ## called from R CMD INSTALL
 
 .install_package_indices <-
-function(dir, outDir, encoding = "")
+function(dir, outDir)
 {
     options(warn = 1)                   # to ensure warnings get seen
     if(!file_test("-d", dir))
@@ -354,7 +354,6 @@ function(dir, outDir, encoding = "")
          stop(gettextf("cannot open directory '%s'", outMetaDir),
               domain = NA)
     .install_package_Rd_indices(dir, outDir)
-    .install_package_vignette_index(dir, outDir, encoding)
     .install_package_demo_index(dir, outDir)
     invisible()
 }
@@ -453,10 +452,10 @@ function(dir, outDir)
     invisible()
 }
 
-### * .install_package_vignette_index
-## only called from .install_package_indices
+### * .install_package_vignettes2
+## called from R CMD INSTALL
 
-.install_package_vignette_index <-
+.install_package_vignettes2 <-
 function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
@@ -506,13 +505,13 @@ function(dir, outDir, encoding = "")
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
 
         ## install tangled versions of all vignettes
-        cat("*** tangling vignette sources ...\n")
         for(srcfile in vignetteIndex$File) {
             enc <- getVignetteEncoding(srcfile, TRUE)
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
             cat("  ", sQuote(basename(srcfile)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
-           tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = enc),
+            ## could simplify
+            tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = enc),
                      error = function(e)
                      stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
                                    srcfile, conditionMessage(e)),

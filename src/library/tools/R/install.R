@@ -1050,12 +1050,18 @@
 
 	## pkg indices: this also tangles the vignettes (if installed)
 	if (install_inst || install_demo || install_help) {
-	    starsmsg(stars, "building package indices ...")
-            enc <- desc["Encoding"]
-            if (is.na(enc)) enc <- ""
-	    res <- try(.install_package_indices(".", instdir, enc))
+	    starsmsg(stars, "building package indices")
+	    res <- try(.install_package_indices(".", instdir))
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
+            if(file_test("-d", "vignettes") || file_test("-d", "inst/doc")) {
+                starsmsg(stars, "installing vignettes")
+                enc <- desc["Encoding"]
+                if (is.na(enc)) enc <- ""
+                res <- try(.install_package_vignettes2(".", instdir, enc))
+	    if (inherits(res, "try-error"))
+		errmsg("installing vignettes failed")
+            }
 	}
 
 	## Install a dump of the parsed NAMESPACE file
