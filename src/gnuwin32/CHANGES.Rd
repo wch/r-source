@@ -12,6 +12,10 @@
       sub-architectures: use \option{--no-multiarch} to override this.
 
       \item \code{postscript(file = "|cmd")} now works on Windows.
+      
+      \item \code{bitmap()} and \code{dev2bitmap()} look for
+      \command{gswin64c.exe} (as used by 64-bit GhostScript), in
+      preference to \command{gswin32c.exe}.
     }
   }
   
