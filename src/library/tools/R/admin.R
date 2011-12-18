@@ -636,7 +636,7 @@ function(dir, outDir, keep.source = TRUE)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!
     ## This also creates the .R files
-    .install_package_vignette_index(dir, outDir)
+    .install_package_vignettes2(dir, outDir)
     invisible()
 }
 
