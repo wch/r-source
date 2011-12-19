@@ -1513,10 +1513,10 @@ Visual C++), but might be import libraries.  See for example
 @uref{http://sourceware.org/@/binutils/@/docs-2.20/@/ld/@/WIN32.html#WIN32}.
 
 The fly in the ointment is that the DLL might not be named
-@file{libxxx.dll}, and in fact on 32-bit Windows there is
-@file{libxml2.dll} whereas on 64-bit Windows the DLL is called
-@file{libxml2-2.dll}.  Using import libraries can cover over these
-differences but can cause equal difficulties.
+@file{libxxx.dll}, and in fact on 32-bit Windows there is a
+@file{libxml2.dll} whereas on one build for 64-bit Windows the DLL is
+called @file{libxml2-2.dll}.  Using import libraries can cover over
+these differences but can cause equal difficulties.
 
 If static libraries are available they can save a lot of problems with
 run-time finding of DLLs, especially when binary packages are to be
@@ -2047,8 +2047,7 @@ compiled code, which are otherwise only checked under the main
 sub-architecture.)  This will run the loading tests, examples and
 @file{tests} directory under each installed sub-architecture in turn,
 and give an error if any fail.  Where environment variables (including
-@env{PATH}@footnote{this is needed on Windows to select the appropriate
-GTK+ and @samp{graphviz} DLLs.}) need to be set differently for each
+perhaps @env{PATH}) need to be set differently for each
 sub-architecture, these can be set in architecture-specific files such
 as @file{@var{R_HOME}/etc/i386/Renviron.site}.
 
