@@ -73,16 +73,24 @@
 
       \item \code{bxp()}, the work horse of \code{boxplot()}, now uses a
       more sensible default \code{xlim} in the case where \code{at} is
-      specified differently from \code{1:n}, see the dialogue on R-devel,
+      specified differently from \code{1:n}, see the discussion on R-devel,
       \url{https://stat.ethz.ch/pipermail/r-devel/2011-November/062586.html}.
 
       \item new function \code{paste0()}, an efficient version of
       \code{paste(*, sep="")}, to be used in many places for more
       concise (and slightly more efficient) code.
 
-      \item Function \code{setClass()} now returns, invisibly, a
-      generator function for the new class, slightly preferred to
-      calling \code{new()}, as explained in the \code{?setClass} documentation.
+      \item Function \code{setClass()} in package \pkg{methods} now
+      returns, invisibly, a generator function for the new class,
+      slightly preferred to calling \code{new()}, as explained on the
+      \code{setClass} help page.
+
+      \item Function \code{compactPDF()} in package \pkg{tools} now
+      takes the default for argument \code{gs_quality} from enironment
+      variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
+      ultimate default, which prevents GhostScript being used in
+      preference to \command{qpdf} even if environment variable
+      \env{R_GSCMD} is set.
     }
   }
 

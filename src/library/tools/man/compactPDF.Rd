@@ -15,7 +15,7 @@
 \usage{
 compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
            gs_cmd = Sys.getenv("R_GSCMD", ""),
-           gs_quality = c("printer", "ebook", "screen"),
+           gs_quality = Sys.getenv("GS_QUALITY", "none"),
            gs_extras = character())
 }
 \arguments{
@@ -28,7 +28,9 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
     executable, if that is to be used.  On Windows this is the path to
     \file{gswin32c.exe} or \file{gswin64c.exe}.}
   \item{gs_quality}{A character string indicating the quality required:
-    the options are respectively 300, 150 and 72dpi.}
+    the options are \code{"none"} (so GhostScript is not used),
+    \code{"printer"} (300dpi), \code{"ebook"} (150dpi) and
+    \code{"screen"} (72dpi).}
   \item{gs_extras}{An optional character vector of further options to be
     passed to GhostScript.}
 }
@@ -36,7 +38,8 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
   This by default makes use of \command{qpdf}, available from
   \url{http://qpdf.sourceforge.net/} (including as a Windows binary) and
   included with the CRAN Mac OS X distribution of \R.  If \code{gs_cmd}
-  is non-empty, GhostScript will used instead.
+  is non-empty and \code{gs_quality != "none"}, GhostScript will used
+  instead.
 
   \command{qpdf} or \command{gs_cmd} is run on all PDF files found, and
   those which are reduced in size by at least 10\% and 10Kb are

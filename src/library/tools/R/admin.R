@@ -888,19 +888,19 @@ resaveRdaFiles <- function(paths,
 compactPDF <-
     function(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
              gs_cmd = Sys.getenv("R_GSCMD", ""),
-             gs_quality = c("printer", "ebook", "screen"),
+             gs_quality = Sys.getenv("GS_QUALITY", "none"),
              gs_extras = character())
 {
     if(!nzchar(Sys.which(qpdf)) && !nzchar(Sys.which(gs_cmd)))
     	return()
     if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
         paths <- Sys.glob(file.path(paths, "*.pdf"))
-    gs_quality <- match.arg(gs_quality)
+    gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
     tf <- tempfile("pdf")
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
     for (p in paths) {
-        res <- if (nzchar(gs_cmd))
+        res <- if (nzchar(gs_cmd) && gs_quality != "none")
             system2(gs_cmd,
                     c("-q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite",
                       sprintf("-dPDFSETTINGS=/%s", gs_quality),
