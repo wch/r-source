@@ -26,14 +26,18 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# We normally link directly against DLLs, 
-# but this macro forces the use of import libs
-# Has been needed for some versions of MinGW-w64
-# USE_IMPLIBS = YES
+# With the recommended toolchain, set this to 32 or 64
+MULTI =
+# If the toolchain's bin directory is not in your path, set this to the path
+# (including the trailing /, and use / not \).
+TOOL_PATH =
+# for other toolchains leave these empty and set the more detailed options below
 
+
+### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
-# This will also be used to give the full path to the compiler, 
-# including a trailing /,
+# This can also be used to give the full path to the compiler, 
+# including a trailing / .
 # prefix for 32-bit: path or i686-w64-mingw32-
 BINPREF =
 # prefix for 64-bit: path or x86_64-w64-mingw32-
@@ -50,6 +54,14 @@ DT_ARCH =
 
 # 32- or 64-bit Windows?
 WIN = 32
+
+# We normally link directly against DLLs, 
+# but this macro forces the use of import libs
+# Has been needed for some versions of MinGW-w64
+# USE_IMPLIBS = YES
+
+### END more detailed options
+
 
 # set to use ICU (experimental)
 # USE_ICU=YES

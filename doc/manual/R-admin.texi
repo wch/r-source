@@ -4899,12 +4899,13 @@ also need @code{zip} and @code{unzip} from the Info-ZIP project
 @c comm cp diff echo gzip make mkdir rm sh sort tar uniq zip
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
-(including that called `MinGW make' at the MinGW SourceForge site).
-There were also problems with other versions of the Cygwin tools and
-DLLs.  To avoid frustration, please use our tool set, and make sure it
-is at the front of your path (including before the Windows system
-directories).  If you are using a Windows shell, type @code{PATH} at the
-prompt to find out.
+(including those called `MinGW make' at the MinGW SourceForge site and
+@command{mingw32-make} in some MinGW-w64 distributions).  There were
+also problems with other versions of the Cygwin tools and DLLs.  To
+avoid frustration, please use our tool set, and make sure it is at the
+front of your path (including before the Windows system directories).
+If you are using a Windows shell, type @code{PATH} at the prompt to find
+out.
 
 @enindex CYGWIN
 You may need to set the environment variable @env{CYGWIN} to a value
@@ -4918,19 +4919,18 @@ Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
 The intention is that the released version of @R{} 2.15.0 will be built
-with a different toolchain from 2.14.x.  A candidate version (used for
-current snapshots builds) can be downloaded from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}: this uses a beta
-version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
-project's runtime.
+with a different toolchain from 2.14.x.  A candidate version can be
+downloaded from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}: this
+uses a beta version of @command{gcc 4.6.3} and version 2.0.1 of the
+MinGW-w64 project's runtime.
 
 The candidate toolchain uses `multilib': that is there is a single
-front-end such as @command{gcc.exe} for each of the compilers, and
-32-bit (the default) and 64-bit compilation are selected by the
+front-end such as @command{gcc.exe} for each of the compilers and 32-bit
+(the default) and 64-bit compilation are selected by the
 flags@footnote{these flags apply to the compilers: some of the tools use
-different flags.}  @option{-m32} and @option{-m64} respectively.
-The tools are all 32-bit Windows executables and should be able to run
-on any version of Windows---however you do need a 64-bit version to
+different flags.}  @option{-m32} and @option{-m64} respectively.  The
+tools are all 32-bit Windows executables and should be able to run on
+any current version of Windows---however you do need a 64-bit version to
 build 64-bit @R{} as the build process runs @R{}.
 
 To select a 32-bit or 64-bit build of @R{}, set the options in

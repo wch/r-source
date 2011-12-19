@@ -1,5 +1,24 @@
 #-*- Makefile -*-
 
+ifeq "$(MULTI)" "64"
+WIN = 64
+M_ARCH = -m64
+AS_ARCH = --64
+RC_ARCH = -F pe-x86-64
+DT_ARCH = -m i386:x86-64 --as-flags --64
+BINPREF64 = $(TOOL_PATH)
+endif
+ifeq "$(MULTI)" "32"
+WIN = 32
+# these are normally the defaults
+M_ARCH = -m32
+AS_ARCH = --32
+RC_ARCH = -F pe-i386
+DT_ARCH = -m i386 --as-flags --32
+BINPREF = $(TOOL_PATH)
+endif
+
+
 ifeq "$(WIN)" "64"
 R_ARCH = /x64
 arch_DEFS = -DR_ARCH='"x64"'
