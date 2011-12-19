@@ -24,7 +24,13 @@
       \item The supported toolchain has changed since the one used for
       \R 2.12.0 to 2.14.x: see the\sQuote{R Installation and Administration
 	manual}.  Compiled code (except DLLs) may be incompatible with
-      previous toolchains (and compiled C++ code almost certainly will be).
+      previous toolchains (and compiled C++ code almost certainly will
+      be).
+
+      This is a \sQuote{multilib} toolchain: there is a single set of
+      tools in the \file{bin} directory and which sub-architecture is
+      selected by a flag: in most cases \option{-m32} \emph{vs}
+      \option{-m64}.
 
       \item Optimization level \option{-O3} is now used by default on
       64-bit builds as well as 32-bit ones.
