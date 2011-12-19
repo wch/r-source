@@ -16,8 +16,9 @@ fixhtml:  html/rwin.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html
 	@$(ECHO) done > fixhtml
 
-fixetc: $(wildcard ./etc/*)
-	$(CP) -p $^ $(R_HOME)/etc
+ETC = $(wildcard ./etc/*)
+fixetc: $(ETC) ../MkRules Makefile
+	$(CP) -p $(ETC) $(R_HOME)/etc
 	$(RM) $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
 ifeq "$(WIN)" "64"
