@@ -3034,7 +3034,7 @@ In addition there are functions @code{ptukey} and @code{qtukey} for the
 distribution of the studentized range of samples from a normal
 distribution, and @code{dmultinom} and @code{rmultinom} for the
 multinomial distribution. Further distributions are available in
-contributed packages, notably @pkg{SuppDists}.
+contributed packages, notably @CRANpkg{SuppDists}.
 
 Here are some examples
 
@@ -3452,7 +3452,7 @@ of @var{expr_1}.
 As an example, suppose @code{ind} is a vector of class indicators and we
 wish to produce separate plots of @code{y} versus @code{x} within
 classes.  One possibility here is to use @code{coplot()},@footnote{to be
-discussed later, or use @code{xyplot} from package @pkg{lattice}.}
+discussed later, or use @code{xyplot} from package @CRANpkg{lattice}.}
 which will produce an array of plots corresponding to each level of the
 factor.  Another way to do this, now putting all plots on the one
 display, is as follows:
@@ -5257,7 +5257,7 @@ problems.
 @itemize @bullet
 @item
 @cindex Mixed models
-@strong{Mixed models.}  The recommended @pkg{nlme} package provides
+@strong{Mixed models.}  The recommended @CRANpkg{nlme} package provides
 functions @code{lme()} and @code{nlme()}
 @findex lme
 @findex nlme
@@ -5285,12 +5285,12 @@ with code for projection pursuit regression.
 fitting regression models in a way resistant to the influence of extreme
 outliers in the data.  Function @code{lqs}
 @findex lqs
-in the recommended package @pkg{MASS} provides state-of-art algorithms
+in the recommended package @CRANpkg{MASS} provides state-of-art algorithms
 for highly-resistant fits.  Less resistant but statistically more
 efficient methods are available in packages, for example function
 @code{rlm}
 @findex rlm
-in package @pkg{MASS}.
+in package @CRANpkg{MASS}.
 
 @item
 @cindex Additive models
@@ -5300,13 +5300,13 @@ usually one for each determining variable.  Functions @code{avas} and
 @code{ace}
 @findex avas
 @findex ace
-in package @pkg{acepack} and functions @code{bruto} and @code{mars}
+in package @CRANpkg{acepack} and functions @code{bruto} and @code{mars}
 @findex bruto
 @findex mars
-in package @pkg{mda} provide some examples of these techniques in
+in package @CRANpkg{mda} provide some examples of these techniques in
 user-contributed packages to @R{}.  An extension is @strong{Generalized
-Additive Models}, implemented in user-contributed packages @pkg{gam} and
-@pkg{mgcv}.
+Additive Models}, implemented in user-contributed packages @CRANpkg{gam} and
+@CRANpkg{mgcv}.
 
 @item
 @cindex Tree-based models
@@ -5326,7 +5326,7 @@ are well adapted to displaying the results of a tree-based model fit in
 a graphical way.
 
 Tree models are available in @R{} @emph{via} the user-contributed
-packages @pkg{rpart} and @pkg{tree}.
+packages @CRANpkg{rpart} and @CRANpkg{tree}.
 
 @end itemize
 
@@ -5371,7 +5371,7 @@ can be manipulated to customize your plots.
 This manual only describes what are known as `base' graphics.  A
 separate graphics sub-system in package @pkg{grid} coexists with base --
 it is more powerful but harder to use.  There is a recommended package
-@pkg{lattice} which builds on @pkg{grid} and provides ways to produce
+@CRANpkg{lattice} which builds on @pkg{grid} and provides ways to produce
 multi-panel plots akin to those in the @emph{Trellis} system in @Sl{}.
 
 @menu
@@ -6217,7 +6217,7 @@ however, so you must create them explicitly using @code{oma} or
 
 More complicated arrangements of multiple figures can be produced by the
 @code{split.screen()} and @code{layout()} functions, as well as by the
-@pkg{grid} and @pkg{lattice} packages.
+@pkg{grid} and @CRANpkg{lattice} packages.
 
 @node Device drivers, Dynamic graphics, Graphics parameters, Graphics
 @section Device drivers
@@ -6405,10 +6405,10 @@ available from
 @end quotation
 
 @noindent
-and these can be accessed from @R{} via the package @pkg{rggobi}, described at
+and these can be accessed from @R{} via the package @CRANpkg{rggobi}, described at
 @uref{http://www.ggobi.org/rggobi}.
 
-Also, package @pkg{rgl} provides ways to interact with 3D plots, for example
+Also, package @CRANpkg{rgl} provides ways to interact with 3D plots, for example
 of surfaces.
 
 @node Packages, A sample session, Graphics, Top
@@ -6431,7 +6431,7 @@ To see which packages are installed at your site, issue the command
 @end example
 
 @noindent
-with no arguments.  To load a particular package (e.g., the @pkg{boot}
+with no arguments.  To load a particular package (e.g., the @CRANpkg{boot}
 package containing functions from Davison & Hinkley (1997)), use a
 command like
 

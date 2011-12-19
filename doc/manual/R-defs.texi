@@ -32,6 +32,10 @@ $\t\$%
 @strong{\p\}
 @end macro
 
+@macro CRANpkg {p}
+@url{http://CRAN.R-project.org/package=\p\, @strong{\p\}}
+@end macro
+
 @macro cputype {c}
 @samp{\c\}
 @end macro

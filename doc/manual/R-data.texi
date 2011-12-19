@@ -90,28 +90,27 @@ principal authors of the packages mentioned are
 @quotation
 @multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
-@item @pkg{DBI} @tab David A. James
-@item @pkg{dataframes2xls} @tab Guido van Steen
-@item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
-@item @pkg{gdata} @tab Gregory R. Warnes
-@item @pkg{hdf5} @tab Marcus Daniels
-@item @pkg{ncdf}, @pkg{ncdf4} @tab David Pierce
-@item @pkg{rJava} @tab Simon Urbanek
-@item @pkg{RJDBC} @tab Simon Urbanek
-@item @pkg{RMySQL} @tab David James and Saikat DebRoy
-@item @pkg{RNetCDF} @tab Pavel Michna
-@item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
-@item @pkg{RMySQL} @tab David A, James and Saikat DebRoy
-@item @pkg{ROracle} @tab David A, James
-@item @pkg{RPostgreSQL} @tab Sameer Kumar Prayaga
+@item @CRANpkg{DBI} @tab David A. James
+@item @CRANpkg{dataframes2xls} @tab Guido van Steen
+@item @CRANpkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
+@item @CRANpkg{gdata} @tab Gregory R. Warnes
+@item @CRANpkg{hdf5} @tab Marcus Daniels
+@item @CRANpkg{ncdf}, @CRANpkg{ncdf4} @tab David Pierce
+@item @CRANpkg{rJava} @tab Simon Urbanek
+@item @CRANpkg{RJDBC} @tab Simon Urbanek
+@item @CRANpkg{RMySQL} @tab David James and Saikat DebRoy
+@item @CRANpkg{RNetCDF} @tab Pavel Michna
+@item @CRANpkg{RODBC} @tab Michael Lapsley and Brian Ripley
+@item @CRANpkg{ROracle} @tab David A, James
+@item @CRANpkg{RPostgreSQL} @tab Sameer Kumar Prayaga
 @item @pkg{RSPerl} @tab Duncan Temple Lang
 @item @pkg{RSPython} @tab Duncan Temple Lang
-@item @pkg{RSQLite} @tab David A, James
+@item @CRANpkg{RSQLite} @tab David A, James
 @item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
-@item @pkg{WriteXLS} @tab Marc Schwartz
-@item @pkg{XLConnect} @tab Mirai Solutions GmbH
-@item @pkg{xlsReadWrite} @tab Hans-Peter Suter
-@item @pkg{XML} @tab Duncan Temple Lang
+@item @CRANpkg{WriteXLS} @tab Marc Schwartz
+@item @CRANpkg{XLConnect} @tab Mirai Solutions GmbH
+@item @CRANpkg{xlsReadWrite} @tab Hans-Peter Suter
+@item @CRANpkg{XML} @tab Duncan Temple Lang
 @end multitable
 @end quotation
 
@@ -139,7 +138,7 @@ better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
 another system do the work!  (For example Therneau & Grambsch (2000)
 commented that they preferred to do data manipulation in SAS and then
-use package @pkg{survival} in @Sl{} for the analysis.)  Database
+use package @CRANpkg{survival} in @Sl{} for the analysis.)  Database
 manipulation systems are often very suitable for manipulating and
 extracting data: several packages to interact with DBMSs are discussed
 here.
@@ -147,7 +146,7 @@ here.
 There are packages to allow functionality developed in languages such as
 @code{Java}, @code{perl} and @code{python} to be directly integrated
 with @R{} code, making the use of facilities in these languages even
-more appropriate.  (See the @pkg{rJava} package from @acronym{CRAN} and
+more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN} and
 the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the
 Omegahat project, @uref{http://www.omegahat.org}.)
 
@@ -392,7 +391,7 @@ of Mac OS).
 @end enumerate
 
 @findex write.matrix
-Function @code{write.matrix} in package @pkg{MASS} provides a
+Function @code{write.matrix} in package @CRANpkg{MASS} provides a
 specialized interface for writing matrices, with the option of writing
 them in blocks and thereby reducing memory usage.
 
@@ -403,7 +402,7 @@ a file, and thereby capture the output of (possibly implicit)
 and the @code{options(width)} setting may need to be increased.
 
 @findex write.foreign
-Function @code{write.foreign} in package @pkg{foreign} uses
+Function @code{write.foreign} in package @CRANpkg{foreign} uses
 @code{write.table} to produce a text file and also writes a code file
 that will read this text file into another statistical package. There is
 currently support for export to @code{SAS}, @code{SPSS} and @code{Stata}.
@@ -438,14 +437,15 @@ XML provides a way to specify the file's encoding, e.g.@:
 @noindent
 although it does not require it.
 
-The @pkg{XML} package provides general facilities for reading and
+The @CRANpkg{XML} package provides general facilities for reading and
 writing @acronym{XML} documents within @R{}.  A description of the
-facilities of the @pkg{XML} package is outside the scope of this
+facilities of the @CRANpkg{XML} package is outside the scope of this
 document: see the package's Web page at
 @uref{http://www.omegahat.org/RSXML} for details and examples.  Package
-@pkg{StatDataML} on @acronym{CRAN} is one example building on @pkg{XML}.
+@CRANpkg{StatDataML} on @acronym{CRAN} is one example building on
+@CRANpkg{XML}.
 
-NB: @pkg{XML} is available as a binary package for Windows, normally
+NB: @CRANpkg{XML} is available as a binary package for Windows, normally
 from the `CRAN extras' repository (which is selected by default on
 Windows).
 
@@ -928,8 +928,8 @@ The @code{reshape} function has a more complicated syntax than
 than the one column in this example. With @code{direction="wide"},
 @code{reshape} can also perform the opposite transformation.
 
-Some people prefer the tools in packages @pkg{reshape}, @pkg{reshape2}
-and @pkg{plyr}.
+Some people prefer the tools in packages @CRANpkg{reshape},
+@CRANpkg{reshape2} and @CRANpkg{plyr}.
 
 @node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
 @section Flat contingency tables
@@ -1005,7 +1005,7 @@ other system.
 @node EpiInfo Minitab SAS S-PLUS SPSS Stata Systat, Octave, Importing from other statistical systems, Importing from other statistical systems
 @section EpiInfo, Minitab, S-PLUS, SAS, SPSS, Stata, Systat
 
-The recommended package @pkg{foreign} provides import facilities for
+The recommended package @CRANpkg{foreign} provides import facilities for
 files produced by these statistical systems, and for export to Stata. In
 some cases these functions may require substantially less memory than
 @code{read.table} would. @code{write.foreign} (See @ref{Export to text
@@ -1031,7 +1031,7 @@ and return a list of data frames.  If SAS is available on your system,
 function @code{read.ssd} can be used to create and run a SAS script that
 saves a SAS permanent dataset (@file{.ssd} or @file{.sas7bdat}) in
 Transport format.  It then calls @code{read.xport} to read the resulting
-file.  (Package @pkg{Hmisc} has a similar function @code{sas.get}, also
+file.  (Package @CRANpkg{Hmisc} has a similar function @code{sas.get}, also
 running SAS.)  For those without access to SAS but running on Windows,
 the SAS System Viewer (a zero-cost download) can be used to open SAS
 datasets and export them to e.g.@: @file{.csv} format.
@@ -1100,7 +1100,7 @@ or (more recently) @file{.syd}.
 
 Octave is a numerical linear algebra system
 (@uref{http://www.octave.org}), and function @code{read.octave} in
-package @pkg{foreign} can read in files in Octave text data format
+package @CRANpkg{foreign} can read in files in Octave text data format
 created using the Octave command @command{save -ascii}, with support for
 most of the common types of variables, including the standard atomic
 (real and complex scalars, matrices, and @math{N}-d arrays, strings,
@@ -1332,15 +1332,15 @@ have functions to select data within the database via @acronym{SQL}
 queries, and to retrieve the result as a whole as a
 data frame or in pieces (usually as groups of rows).  
 
-All except @pkg{RODBC} are tied to one DBMS, but there has been a
-proposal for a unified `front-end' package @pkg{DBI}
+All except @CRANpkg{RODBC} are tied to one DBMS, but there has been a
+proposal for a unified `front-end' package @CRANpkg{DBI}
 (@uref{http://developer.r-project.org/db}) in conjunction with a
-`back-end', the most developed of which is @pkg{RMySQL}.  Also on
-@acronym{CRAN} are the back-ends @pkg{ROracle}, @pkg{RPostgreSQL} and
-@pkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
-@uref{http://www.sqlite.org}),  @pkg{RJDBC} (which uses Java and can
-connect to any DBMS that has a JDBC driver) and @pkg{RpgSQL} (a
-specialist interface to PostgreSQL built on top of @code{RJBDC}).
+`back-end', the most developed of which is @CRANpkg{RMySQL}.  Also on
+@acronym{CRAN} are the back-ends @CRANpkg{ROracle}, @CRANpkg{RPostgreSQL} and
+@CRANpkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
+@uref{http://www.sqlite.org}),  @CRANpkg{RJDBC} (which uses Java and can
+connect to any DBMS that has a JDBC driver) and @CRANpkg{RpgSQL} (a
+specialist interface to PostgreSQL built on top of @CRANpkg{RJBDC}).
 
 The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
@@ -1349,9 +1349,9 @@ The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
-Package @pkg{RMongo} provides an @R{} interface to a Java client for
+Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for
 `MongoDB' (@uref{http://en.wikipedia.org/wiki/MongoDB}) databases, which
-are queried using JavaScript rather than SQL.  Package @pkg{rmongodb} is
+are queried using JavaScript rather than SQL.  Package @CRANpkg{rmongodb} is
 another client using @pkg{mongodb}'s C driver.
 
 
@@ -1365,12 +1365,12 @@ another client using @pkg{mongodb}'s C driver.
 @subsection Packages using DBI
 @cindex MySQL database system
 
-Package @pkg{RMySQL} on @acronym{CRAN} provides an interface to the
+Package @CRANpkg{RMySQL} on @acronym{CRAN} provides an interface to the
 MySQL database system (see @uref{http://www.mysql.com} and Dubois,
 2000.).  The description here applies to version @code{0.5-0}: earlier
 versions had a substantially different interface.  The current version
-requires the @pkg{DBI} package, and this description will apply with
-minor changes to all the other back-ends to @pkg{DBI}.
+requires the @CRANpkg{DBI} package, and this description will apply with
+minor changes to all the other back-ends to @CRANpkg{DBI}.
 
 MySQL exists on Unix/Linux/Mac OS X and Windows: there is a `Community
 Edition' released under GPL but commercial licenses are also available.
@@ -1387,7 +1387,7 @@ object, and then a call to @code{dbConnect} opens a database connection
 which can subsequently be closed by a call to the generic function
 @code{dbDisconnect}.  Use @code{dbDriver("Oracle")},
 @code{dbDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
-DBMSs and packages @pkg{ROracle}, @pkg{RPostgreSQL} or @pkg{RSQLite}
+DBMSs and packages @CRANpkg{ROracle}, @CRANpkg{RPostgreSQL} or @CRANpkg{RSQLite}
 respectively.
 
 @findex dbSendQuery
@@ -1456,10 +1456,10 @@ Arkansas          8.8     190       50 19.5
 @cindex ODBC
 @cindex Open Database Connectivity
 
-Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
+Package @CRANpkg{RODBC} on @acronym{CRAN} provides an interface to database
 sources supporting an @acronym{ODBC} interface.  This is very widely
 available, and allows the same @R{} code to access different database
-systems.  @pkg{RODBC} runs on Unix/Linux, Windows and Mac OS X, and
+systems.  @CRANpkg{RODBC} runs on Unix/Linux, Windows and Mac OS X, and
 almost all database systems provide support for @acronym{ODBC}.  We have
 tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and IBM
 DB2 on Windows and MySQL, Oracle, PostgreSQL and SQLite on Linux.
@@ -1747,8 +1747,8 @@ handle binary files.
 @findex netCDF
 @cindex network Common Data Form
 
-Packages @pkg{hdf5}, @pkg{h5r}, Bioconductor's @pkg{rhdf5},
-@pkg{RNetCDF}, @pkg{ncdf} and @pkg{ncdf4} on @acronym{CRAN} provide
+Packages @CRANpkg{hdf5}, @CRANpkg{h5r}, Bioconductor's @pkg{rhdf5},
+@CRANpkg{RNetCDF}, @CRANpkg{ncdf} and @CRANpkg{ncdf4} on @acronym{CRAN} provide
 interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format, see
 @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data files
 (network Common Data Form, see
@@ -1762,8 +1762,8 @@ matrices.
 
 NetCDF's version 4 format (confusingly, implemented in netCDF 4.1.1 and
 later, but not in 4.0.1) includes the use of various HDF5 formats.  This
-is handled by package @pkg{ncdf4} whereas @pkg{RNetCDF} and @pkg{ncdf}
-handle version 3 files.
+is handled by package @CRANpkg{ncdf4} whereas @CRANpkg{RNetCDF} and
+@CRANpkg{ncdf} handle version 3 files.
 
 The availability of software to support these formats is somewhat
 limited by platform, especially on Windows.
@@ -1788,7 +1788,7 @@ character, logical and numeric fields, and other types in later versions
 @findex write.dbf
 Functions @code{read.dbf} and @code{write.dbf} provide ways to read and
 write basic DBF files on all @R{} platforms.  For Windows users
-@code{odbcConnectDbase} in package @pkg{RODBC} provides more
+@code{odbcConnectDbase} in package @CRANpkg{RODBC} provides more
 comprehensive facilities to read DBF files @emph{via} Microsoft's dBase
 ODBC driver (and the Visual FoxPro driver can also be used via
 @code{odbcDriverConnect}).
@@ -2279,44 +2279,44 @@ and may be confused by other contents of the file.
 @findex odbcConnectExcel
 @findex odbcConnectExcel2007
 Windows users (of 32-bit @R{}) can use @code{odbcConnectExcel} in
-package @pkg{RODBC}.  This can select rows and columns from any of the
+package @CRANpkg{RODBC}.  This can select rows and columns from any of the
 sheets in an Excel spreadsheet file (at least from Excel 97--2003,
 depending on your ODBC drivers: by calling @code{odbcConnect} directly
 versions back to Excel 3.0 can be read).  The version
 @code{odbcConnectExcel2007} will read the Excel 2007 formats as well as
 earlier ones (provided the drivers are installed, including with 64-bit
-Windows @R{}: @pxref{RODBC}).  Mac users can also use @pkg{RODBC} if
+Windows @R{}: @pxref{RODBC}).  Mac users can also use @CRANpkg{RODBC} if
 they have a suitable driver (e.g.@: that from Actual Technologies).
 
 @findex read.xls
 @code{Perl} users have contributed a module
 @code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
-convert Excel 95--2003 spreadsheets to CSV files.  Package @pkg{gdata}
+convert Excel 95--2003 spreadsheets to CSV files.  Package @CRANpkg{gdata}
 provides a basic wrapper in its @code{read.xls} function.  With suitable
 @code{Perl} modules installed this function can also read Excel 2007
 spreadsheets.
 
 @findex xlsReadWrite
-32-bit Windows package @pkg{xlsReadWrite} from
+32-bit Windows package @CRANpkg{xlsReadWrite} from
 @uref{http://www.swissr.org/} and CRAN has a function @code{read.xls} to
 read @file{.xls} files (based on a third-party non-Open-Source Delphi
 component).
 
 @findex dataframes2xls
 @findex WriteXLS
-Packages @pkg{dataframes2xls} and @pkg{WriteXLS} each contain a function
+Packages @CRANpkg{dataframes2xls} and @CRANpkg{WriteXLS} each contain a function
 to @emph{write} one or more data frames to an @file{.xls} file, using
 Python and Perl respectively.  Another version of @code{write.xls} in
-available in package @pkg{xlsReadWrite}.
+available in package @CRANpkg{xlsReadWrite}.
 
 @findex xlsx
 @findex RExcelXML
 Two packages which can read and and manipulate Excel 2007/10
-spreadsheets but not earlier formats are @pkg{xlsx} (which requires
+spreadsheets but not earlier formats are @CRANpkg{xlsx} (which requires
 Java) and the Omegahat package @pkg{RExcelXML}.
 
 @findex XLConnect
-Package @pkg{XLConnect} can read, write and manipulate both Excel
+Package @CRANpkg{XLConnect} can read, write and manipulate both Excel
 97--2003 and Excel 2007/10 spreadsheets, requiring Java.
 
 
