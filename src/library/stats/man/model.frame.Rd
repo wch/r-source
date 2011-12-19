@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{model.frame}
 \alias{model.frame}
 \alias{model.frame.default}
@@ -71,7 +73,7 @@ get_all_vars(formula, data, \dots)
   \code{model = TRUE}) or pass the call used when fitting on to the
   default method.  The default method itself can cope with rather
   standard model objects such as those of class
-  \code{"\link[MASS]{lqs}"} from package \pkg{MASS} if no other
+  \code{"\link[MASS]{lqs}"} from package \CRANpkg{MASS} if no other
   arguments are supplied.
 
   The rest of this section applies only to the default method.

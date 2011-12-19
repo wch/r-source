@@ -3,6 +3,8 @@
 % Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{mclapply}
 \alias{mclapply}
 \alias{mcmapply}
@@ -133,7 +135,7 @@ mcMap(f, ...)
 \author{
   Simon Urbanek and R Core.
 
-  Derived from the \pkg{multicore} package.
+  Derived from the \CRANpkg{multicore} package.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}},

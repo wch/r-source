@@ -3,6 +3,8 @@
 % Copyright 2003-11 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{clusterApply}
 
 \alias{clusterApply}
@@ -47,7 +49,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 }
 \arguments{
   \item{cl}{a cluster object, created by this package or by package
-    \pkg{snow}.  If \code{NULL}, use the registered default cluster.}
+    \CRANpkg{snow}.  If \code{NULL}, use the registered default cluster.}
   \item{fun, FUN}{function or character string naming a function.}
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
@@ -141,7 +143,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
   error.
 }
 \note{
-  These functions are almost identical to those in package \pkg{snow}.
+  These functions are almost identical to those in package \CRANpkg{snow}.
 
   Two exceptions: \code{parLapply} has argument \code{X}
   not \code{x} for consistency with \code{\link{lapply}}, and
@@ -150,7 +152,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 \author{
   Luke Tierney and R Core.
 
-  Derived from the \pkg{snow} package.
+  Derived from the \CRANpkg{snow} package.
 }
 % donttest, as access to ports might be denied.  Tested in the 'tests' directory
 \examples{\donttest{

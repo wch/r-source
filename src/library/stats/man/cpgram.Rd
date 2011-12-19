@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 % file cpgram.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
@@ -33,7 +35,7 @@ cpgram(ts, taper = 0.1,
 }
 \author{B.D. Ripley}
 \note{
-  From package \pkg{MASS}.
+  From package \CRANpkg{MASS}.
 }
 \examples{
 require(graphics)

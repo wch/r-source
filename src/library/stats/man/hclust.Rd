@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{hclust}
 \title{Hierarchical Clustering}
 \alias{hclust}
@@ -201,7 +203,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \code{\link{cutree}}, \code{\link{dendrogram}}, \code{\link{kmeans}}.
 
   For the Lance--Williams formula and methods that apply it generally,
-  see \code{\link[cluster]{agnes}} from package \pkg{cluster}.
+  see \code{\link[cluster]{agnes}} from package \CRANpkg{cluster}.
 }
 \examples{
 require(graphics)

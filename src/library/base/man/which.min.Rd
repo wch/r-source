@@ -3,6 +3,8 @@
 % Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{which.min}
 \alias{which.min}
 \alias{which.max}
@@ -41,7 +43,7 @@ which.max(x)
   Use \code{\link{arrayInd}()}, if you need array/matrix indices instead
   of 1D vector ones.
 
-  \code{\link[nnet]{which.is.max}} in package \pkg{nnet} differs in
+  \code{\link[nnet]{which.is.max}} in package \CRANpkg{nnet} differs in
   breaking ties at random (and having a \sQuote{fuzz} in the definition
   of ties).
 }

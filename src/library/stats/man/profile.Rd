@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{profile}
 \alias{profile}
 \title{Generic Function for Profiling Models}
@@ -26,7 +28,7 @@ profile(fitted, \dots)
 }
 \seealso{
   \code{\link{profile.nls}},
-  \code{\link[MASS:confint]{profile.glm}} in package \pkg{MASS},
+  \code{\link[MASS:confint]{profile.glm}} in package \CRANpkg{MASS},
   \ldots
 
   For profiling R code, see \code{\link{Rprof}}.

@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{rgb}
 \title{RGB Color Specification}
 \usage{
@@ -46,8 +48,8 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   \code{windows}, \code{quartz} and \code{X11(type="cairo")} devices and
   associated bitmap devices (\code{jpeg}, \code{png}, \code{bmp},
   \code{tiff} and \code{bitmap}). They are supported by several
-  third-party devices such as those in packages \pkg{Cairo},
-  \pkg{cairoDevice} and \pkg{JavaGD}.  Only some of these
+  third-party devices such as those in packages \CRANpkg{Cairo},
+  \CRANpkg{cairoDevice} and \CRANpkg{JavaGD}.  Only some of these
   devices support semi-transparent backgrounds.
 
   Most other graphics devices plot semi-transparent colors as fully

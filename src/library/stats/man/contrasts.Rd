@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{contrasts}
 \alias{contrasts}
 \alias{contrasts<-}
@@ -19,13 +21,13 @@ contrasts(x, how.many) <- value
   \item{contrasts}{logical.  See \sQuote{Details}.}
   \item{sparse}{logical indicating if the result should be sparse
     (of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}), using
-    package \pkg{Matrix}.}
+    package \CRANpkg{Matrix}.}
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
     same as the number of columns of \code{value}.}
   \item{value}{either a numeric matrix (or a sparse or dense matrix of a
     class extending \code{\link[Matrix:dMatrix-class]{dMatrix}} from
-    package \pkg{Matrix})  whose columns give coefficients for
+    package \CRANpkg{Matrix})  whose columns give coefficients for
     contrasts in the levels of \code{x}, or the (quoted) name of a
     function which computes such matrices.}
 }

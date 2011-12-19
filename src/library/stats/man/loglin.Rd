@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{loglin}
 \alias{loglin}
 \title{Fitting Log-Linear Models}
@@ -80,10 +82,10 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   given in \code{margin} is a running intersection property ordering
   then IPF will converge in one iteration.
     
-  Package \pkg{MASS} contains \code{loglm}, a front-end to \code{loglin}
-  which allows the log-linear model to be specified and fitted in a
-  formula-based manner similar to that of other fitting functions such
-  as \code{lm} or \code{glm}.
+  Package \CRANpkg{MASS} contains \code{loglm}, a front-end to
+  \code{loglin} which allows the log-linear model to be specified and
+  fitted in a formula-based manner similar to that of other fitting
+  functions such as \code{lm} or \code{glm}.
 }
 
 \references{
@@ -103,7 +105,8 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 \seealso{
   \code{\link{table}}.
 
-  \code{\link[MASS]{loglm}} in package \pkg{MASS} for a user-friendly wrapper.
+  \code{\link[MASS]{loglm}} in package \CRANpkg{MASS} for a
+  user-friendly wrapper.
 
   \code{\link{glm}} for another way to fit log-linear models.
 }

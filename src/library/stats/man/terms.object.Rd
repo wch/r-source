@@ -3,6 +3,8 @@
 % Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{terms.object}
 \title{Description of Terms Objects}
 \alias{terms.object}
@@ -55,7 +57,7 @@
 
   Examples of the \code{specials} argument can be seen in the
   \code{\link{aov}} and \code{\link[survival]{coxph}} functions, the
-  latter from package \pkg{survival}.
+  latter from package \CRANpkg{survival}.
 }
 \seealso{
   \code{\link{terms}}, \code{\link{formula}}.

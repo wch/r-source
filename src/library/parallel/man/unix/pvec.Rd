@@ -3,6 +3,8 @@
 % Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{pvec}
 \alias{pvec}
 \title{Parallelize a Vector Map Function using Forking}
@@ -82,7 +84,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 \author{
   Simon Urbanek and R Core.
   
-  Derived from the \pkg{multicore} package.
+  Derived from the \CRANpkg{multicore} package.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{mclapply}},

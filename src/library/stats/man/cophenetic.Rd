@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{cophenetic}
 \alias{cophenetic}
 \alias{cophenetic.default}
@@ -20,7 +22,7 @@ cophenetic(x)
   \item{x}{an R object representing a hierarchical clustering.
     For the default method, an object of class \code{"\link{hclust}"} or
     with a method for \code{\link{as.hclust}()} such as
-    \code{"\link[cluster]{agnes}"} in package \pkg{cluster}.}
+    \code{"\link[cluster]{agnes}"} in package \CRANpkg{cluster}.}
 }
 \details{
   The cophenetic distance between two observations that have been

@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{filled.contour}
 \alias{filled.contour}
 \title{Level (Contour) Plots}
@@ -86,7 +88,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   restricted to a full page display.  As an alternative consider the
   \code{\link[lattice]{levelplot}} and
   \code{\link[lattice:levelplot]{contourplot}} functions from the
-  \pkg{lattice} package which work in multipanel displays.
+  \CRANpkg{lattice} package which work in multipanel displays.
 
   The output produced by \code{filled.contour} is actually a combination
   of two plots; one is the filled contour and one is the legend.  Two
@@ -98,7 +100,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
 }
 \seealso{\code{\link{contour}}, \code{\link{image}},
   \code{\link{palette}}; \code{\link[lattice:levelplot]{contourplot}}
-  from package \pkg{lattice}.}
+  from package \CRANpkg{lattice}.}
 \examples{
 require(grDevices) # for colours
 filled.contour(volcano, color = terrain.colors, asp = 1)# simple

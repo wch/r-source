@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{source}
 \title{Read R Code from a File or a Connection}
 \description{
@@ -61,7 +63,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   from entering it at the \R command line.  Since expressions are not
   executed at the top level, auto-printing is not done.  So you will
   need to include explicit \code{print} calls for things you want to be
-  printed (and remember that this includes plotting by \pkg{lattice},
+  printed (and remember that this includes plotting by \CRANpkg{lattice},
   FAQ Q7.22).  Since the complete file is parsed before any of it is
   run, syntax errors result in none of the code being run.  If an error
   occurs in running a syntactically correct script, anything assigned

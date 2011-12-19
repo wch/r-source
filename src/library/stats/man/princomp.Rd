@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{princomp}
 \alias{princomp}
 \alias{princomp.formula}
@@ -45,7 +47,7 @@ princomp(x, \dots)
     principal component should be calculated.}
   \item{covmat}{a covariance matrix, or a covariance list as returned by
     \code{\link{cov.wt}} (and \code{\link[MASS:cov.rob]{cov.mve}} or
-    \code{\link[MASS:cov.rob]{cov.mcd}} from package \pkg{MASS}).
+    \code{\link[MASS:cov.rob]{cov.mcd}} from package \CRANpkg{MASS}).
     If supplied, this is used rather than the covariance matrix of
     \code{x}.}
   \item{\dots}{arguments passed to or from other methods. If \code{x} is

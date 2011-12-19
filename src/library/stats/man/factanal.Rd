@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{factanal}
 \alias{factanal}
 \encoding{UTF-8}
@@ -180,7 +182,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \code{\link{Harman74.cor}}.
   
   Other rotation methods are available in various contributed packages,
-  including \pkg{GPArotation} and \pkg{psych}.
+  including \CRANpkg{GPArotation} and \CRANpkg{psych}.
 }
 
 \examples{

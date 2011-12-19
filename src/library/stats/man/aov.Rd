@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{aov}
 \alias{aov}
 \alias{print.aov}
@@ -55,7 +57,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   response(s) will likely lose the balance.  If there are two or more
   error strata, the methods used are statistically inefficient without
   balance, and it may be better to use \code{\link[nlme]{lme}} in
-  package \pkg{nlme}.
+  package \CRANpkg{nlme}.
 
   Balance can be checked with the \code{\link{replications}} function.
 

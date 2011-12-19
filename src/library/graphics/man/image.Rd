@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{image}
 \alias{image}
 \alias{image.default}
@@ -123,7 +125,7 @@ image(x, \dots)
   \code{\link{filled.contour}} or \code{\link{heatmap}} which can
   look nicer (but are less modular),
   \code{\link{contour}};
-  The \pkg{lattice} equivalent of \code{image} is
+  The \CRANpkg{lattice} equivalent of \code{image} is
   \code{\link[lattice]{levelplot}}.
 
   \code{\link{heat.colors}}, \code{\link{topo.colors}},

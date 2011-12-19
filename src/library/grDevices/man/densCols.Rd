@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{densCols}
 \alias{densCols}
 \alias{blues9}
@@ -35,7 +37,7 @@ blues9
 \details{
   \code{densCols} computes and returns the set of colors that will be
   used in plotting, calling \code{\link[KernSmooth]{bkde2D}(*,
-  bandwidth, gridsize=nbin, ..)} from package \pkg{KernSmooth}.
+  bandwidth, gridsize=nbin, ..)} from package \CRANpkg{KernSmooth}.
 
   \code{blues9} is a set of 9 color shades of blue used as the default in
   plotting.
@@ -47,7 +49,7 @@ blues9
   represents the local density around the corresponding point.
 }
 \seealso{
-  \code{\link[KernSmooth]{bkde2D}} from package \pkg{KernSmooth};
+  \code{\link[KernSmooth]{bkde2D}} from package \CRANpkg{KernSmooth};
   further, \code{\link{smoothScatter}()} (package \pkg{graphics}) which
   builds on the same computations as \code{densCols}.
 }
