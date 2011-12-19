@@ -1,5 +1,6 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
 \title{ R News}
@@ -258,7 +259,7 @@
       \code{file} argument.
 
       \item \code{tempfile()} on a Unix-alike now takes the process ID
-      into account.  This is needed with \pkg{multicore} (and as part of
+      into account.  This is needed with \CRANpkg{multicore} (and as part of
       \pkg{parallel}) because the parent and all the children share a
       session temporary directory, and they can share the C random
       number stream used to produce the uniaue part.  Further, two
@@ -421,17 +422,17 @@
       \item There is a new package \pkg{parallel}.
 
       It incorporates (slightly revised) copies of packages
-      \pkg{multicore} and \pkg{snow} (excluding MPI, PVM and NWS
+      \CRANpkg{multicore} and \CRANpkg{snow} (excluding MPI, PVM and NWS
       clusters).  Code written to use the higher-level API functions in
       those packages should work unchanged (apart from changing any
       references to their namespaces to a reference to \pkg{parallel},
-      and links explicitly to \pkg{multicore} or \pkg{snow} on help
+      and links explicitly to \CRANpkg{multicore} or \CRANpkg{snow} on help
       pages).
 
       It also contains support for multiple RNG streams following
       L'Ecuyer \emph{et al} (2002), with support for both
-      \code{mclapply} and \pkg{snow} clusters.  This replaces functions
-      like \code{clusterSetupRNG()} from \pkg{snow} (which are not in
+      \code{mclapply} and \CRANpkg{snow} clusters.  This replaces functions
+      like \code{clusterSetupRNG()} from \CRANpkg{snow} (which are not in
       \pkg{parallel}).
 
       The version released for \R 2.14.0 contains base functionality:
@@ -729,7 +730,7 @@
       of help pages, vignettes and demos.
 
       \item \code{socketConnection()} now has a \code{timeout} argument.
-      It is now documented that large values (package \pkg{snow} used a
+      It is now documented that large values (package \CRANpkg{snow} used a
       year) do not work on some OSes.
 
       \item The initialization of the random-number generator now uses
@@ -1600,7 +1601,7 @@
   \subsection{LICENCE}{
     \itemize{
       \item No parts of \R are now licensed solely under GPL-2.  The
-      licences for packages \pkg{rpart} and \pkg{survival} have been
+      licences for packages \CRANpkg{rpart} and \CRANpkg{survival} have been
       changed, which means that the licence terms for \R as distributed
       are GPL-2 | GPL-3.
     }
@@ -2637,7 +2638,7 @@
     \itemize{
       \item The \samp{zlib} sources in the distribution are now built
       with all symbols remapped: this is intended to avoid problems seen
-      with packages such as \pkg{XML} and \pkg{rggobi} which link to
+      with packages such as \CRANpkg{XML} and \CRANpkg{rggobi} which link to
       \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
 
       \item The default for \env{FFLAGS} and \env{FCFLAGS} with
@@ -2655,7 +2656,7 @@
 
       \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
       in the lazyload database using \command{xz} compression: this for
-      example halves the installed size of package \pkg{Imap}.
+      example halves the installed size of package \CRANpkg{Imap}.
 
       \item \command{R CMD INSTALL} now ensures that directories
       installed from \file{inst} have search permission for everyone.
@@ -2781,7 +2782,7 @@
       resetting the methods tables for the members of the group (patch
       contributed by Martin Morgan).
 
-      \item In some circumstances (including for package \pkg{XML}),
+      \item In some circumstances (including for package \CRANpkg{XML}),
       \command{R CMD INSTALL} installed version-control directories from
       source packages.
 
@@ -3022,7 +3023,7 @@
        objects now insert linebreaks in long calls in the same way that
        the \code{print()} methods for \code{"summary.[g]lm"} objects
        have long done.  This does change the layout of the examples for
-       a number of packages, e.g. \pkg{MASS}.  (\PR{14250})
+       a number of packages, e.g. \CRANpkg{MASS}.  (\PR{14250})
 
       \item \code{constrOptim()} can now be used with method
       \code{"SANN"}.  (\PR{14245})
@@ -5083,7 +5084,7 @@
        \code{aspell()} or other spell checkers.
 
       \item \code{xtabs()} with the new argument \code{sparse = TRUE}
-       now returns a sparse Matrix, using package \pkg{Matrix}.
+       now returns a sparse Matrix, using package \CRANpkg{Matrix}.
 
       \item \code{contr.sum()} etc gain an argument \code{sparse}
        which allows sparse matrices to be returned.
@@ -5455,7 +5456,7 @@
        \option{--data-compress=xz}, often giving even better compression
        on large datasets at the expense of much longer installation
        times.  (The latter is used for the recommended packages: it is
-       particularly effective for \pkg{survival}.)
+       particularly effective for \CRANpkg{survival}.)
 
       \item \code{file()} for open = \code{""}, \code{"r"} or
        \code{"rt"} will automagically detect compressed files (from
