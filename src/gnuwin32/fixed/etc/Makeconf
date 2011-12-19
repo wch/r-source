@@ -121,7 +121,7 @@ OBJCFLAGS = -O2
 OBJC_LIBS = -lobjc
 OBJCXX =
 R_ARCH =
-RANLIB = $(BINPREF)ranlib $(M_ARCH)
+RANLIB = $(BINPREF)ranlib
 SAFE_FFLAGS = -O3 -ffloat-store
 SED = sed
 ## it seems some makes (but not ours) get upset if SHELL is set.
@@ -144,8 +144,8 @@ SHLIB_OPENMP_CFLAGS = @OPENMP@
 SHLIB_OPENMP_CXXFLAGS = @OPENMP@
 SHLIB_OPENMP_FCFLAGS = @OPENMP@
 SHLIB_OPENMP_FFLAGS = @OPENMP@
-STRIP_LIBS = $(BINPREF)strip $(M_ARCH) --strip-unneeded
-STRIP_STATIC_LIBS = $(BINPREF)strip $(M_ARCH) --strip-debug
+STRIP_LIBS = $(BINPREF)strip --strip-unneeded
+STRIP_STATIC_LIBS = $(BINPREF)strip --strip-debug
 TCLTK_CPPFLAGS = -I "$(TCL_HOME)/include" -DWin32
 TCLTK_LIBS = -L"$(TCL_HOME)/bin" -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 
