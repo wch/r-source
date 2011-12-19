@@ -961,6 +961,7 @@
                 pdfs <- dir(file.path(instdir, "doc"), pattern="\\.pdf",
                             recursive = TRUE, full.names = TRUE,
                             all.files = TRUE)
+                res <- compactPDF(pdfs, gs_cmd = "")
                 ## print selectively
                 res <- compactPDF(pdfs)
                 print(res[res$old > 1e5, ])
@@ -1059,9 +1060,7 @@
         if (clean) run_clean()
 
         if (test_load) {
-            ## As from R 2.13.0 do this in a separate R process, in case
-            ## it brings down the R process running .install.packages()
-            ## and so do_exit_on_error() is not called.
+            ## Do this in a separate R process, in case it crashes R.
 	    starsmsg(stars, "testing if installed package can be loaded")
             ## FIXME: maybe the quoting as 'lib' is not quite good enough
             ## On a Unix-alike this calls system(input=)
