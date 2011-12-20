@@ -675,7 +675,7 @@
                                             "igraph", "jpeg", "png", "proj4",
                                             "randtoolbox", "rgdal", "rngWELL",
                                             "rphast", "rtfbs", "tcltk2"))
-                            one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
+                            one_only <- sum(nchar(readLines("../configure.win", warn = FALSE), "bytes")) > 0
                         if(one_only && !force_biarch)
                             warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain=NA)
                     }
@@ -781,7 +781,7 @@
             if(WINDOWS) dirs <- dirs[dirs %in% c("i386", "x64")]
             if (length(dirs)) {
                 descfile <- file.path(instdir, "DESCRIPTION")
-                olddesc <- readLines(descfile)
+                olddesc <- readLines(descfile, warn = FALSE)
                 olddesc <- grep("^Archs:", olddesc,
                                 invert = TRUE, value = TRUE, useBytes = TRUE)
                 newdesc <- c(olddesc,
@@ -944,7 +944,7 @@
             ## handle .Rinstignore:
             ignore_file <- ".Rinstignore"
             ignore <- if (file.exists(ignore_file)) {
-                ignore <- readLines(ignore_file)
+                ignore <- readLines(ignore_file, warn = FALSE)
                 ignore[nzchar(ignore)]
             } else character()
             for(e in ignore)
