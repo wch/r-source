@@ -2603,12 +2603,13 @@ and suitable options might be
 @end example
 
 @noindent
-; see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
-for more such and consider all the options for image downsampling) as
-well as numerous commercial and shareware Windows programs.  Note that
-these do not all try the same size-reduction strategies, and Acrobat and
-@command{ps2pdf} can be much better at reducing the size of embedded
-bitmap images than some of the others.
+; see @uref{http://www.ghostscript.com/@/doc/@/9.04/@/Ps2pdf.htm} for
+more such and consider all the options for image downsampling) as well
+as numerous commercial and shareware Windows programs.  Note that these
+do not all try the same size-reduction strategies, and Acrobat and
+@command{ps2pdf} can sometimes do much better at reducing the size of
+embedded bitmap images, and @command{ps2pdf} does not use PDF object
+compression (see below).
 
 Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
 for Windows and packages in Debian/Ubuntu, and is installed as part of
