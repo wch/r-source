@@ -92,6 +92,11 @@
       ultimate default, which prevents GhostScript being used in
       preference to \command{qpdf} even if environment variable
       \env{R_GSCMD} is set.
+      
+      \item The internal \code{untar()} (as used by default by
+      \command{R CMD INSTALL}) now knows about some \command{pax}
+      headers which \command{bsdtar} incorrectly includes in
+      \command{tar} files, and will skip them with a warning. 
     }
   }
 

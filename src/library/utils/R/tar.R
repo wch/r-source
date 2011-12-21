@@ -257,6 +257,10 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 lname <- rawToChar(block[seq_len(ns)])
             else
                 llink <- rawToChar(block[seq_len(ns)])
+        } else if(ctype %in% c("x", "g") && grepl("^PaxHeader", name)) {
+            ## pax headers misused by bsdtar.
+            warn1 <- c(warn1, "skipping mis-used pax headers")
+            readBin(con, "raw", n = 512L*ceiling(size/512L))
         } else stop("unsupported entry type ", sQuote(ctype))
     }
     if(length(warn1)) {
