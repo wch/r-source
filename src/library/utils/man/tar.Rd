@@ -102,7 +102,7 @@ tar(tarfile, files = NULL,
 \note{
   Error reports from \code{untar} of the form
 \preformatted{
-    Error: unsupported entry type ‘x’
+    Error: unsupported entry type 'x'
 }
   indicate the use of a \command{tar} extension: and lower-case entry
   types are not allowed in the \command{tar} format even as extensions.
