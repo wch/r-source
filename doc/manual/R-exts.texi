@@ -1569,9 +1569,9 @@ have recent versions (there are some years-old versions of Linux in
 use), and it may be safest to assume version 2.5.
 
 Note that whereas OpenMP support is expected to be available on Windows
-in the toolchain used for @R{} 2.15.0, @R{} is not by default built on
-Windows with OpenMP support and these @command{make} macros will be
-empty unless it is so built.
+in the toolchain used for @R{} 2.15.0, @R{} may not be built on Windows
+with OpenMP support and these @command{make} macros will be empty unless
+it is so built.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
@@ -1621,10 +1621,15 @@ licensed under LGPL which requires source code to be made available.
 The toolchains used to compile @R{} prior to version 2.15.0 do not
 contain @code{pthreads}, although in some cases @code{pthreads-w32}
 could be retro-fitted.  It is expected that the toolchain used for @R{}
-2.15.0 will support @code{pthreads}: however as it is not used by @R{}
-itself, the DLLs are not distributed with @R{}, and a package using
-@code{pthreads} would need to arrange to ship the relevant DLLs (and
-meet the license conditions).
+2.15.0 will support @code{pthreads}. As from @R{} 2.15.0 there is
+@command{make} variable @code{SHLIB_PTHREAD_FLAGS} available: this
+should be included in both @code{PKG_CPPFLAGS} (or the Fortran or F9x
+equivalents) and @code{PKG_LIBS}.
+
+The presence of a working @code{pthreads} implementation cannot be
+unambiguously determined without testing for yourself: however, that
+@samp{_REENTRANT} is defined@footnote{some Windows toolchains have the
+typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
 See also the comments on performance under OpenMP: on all known @R{}
 platforms OpenMP is implemented @emph{via} @code{pthreads}.

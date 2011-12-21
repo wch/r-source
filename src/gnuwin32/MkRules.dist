@@ -93,6 +93,9 @@ EOPTS=-mtune=core2
 # define to -fopenmp if the toolchain has OpenMP support
 OPENMP =
 
+# define to -pthreads if the toolchain has pthreads support
+PTHREAD =
+
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.[34].x was installed. Spaces allowed.

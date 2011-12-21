@@ -34,6 +34,7 @@ ifeq "$(WIN)" "64"
 	  -e "s|@SYMPAT@|$(SYMPAT)|" \
 	  -e "s|(TCL_HOME)/bin|(TCL_HOME)/bin64|" \
 	  -e "s|@OPENMP@|$(OPENMP)|" \
+	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
@@ -46,6 +47,7 @@ else
 	  -e "s|M_ARCH =|M_ARCH = $(M_ARCH)|" \
 	  -e "s|@SYMPAT@|$(SYMPAT)|" \
 	  -e "s|@OPENMP@|$(OPENMP)|" \
+	  -e "s|@PTHREAD@|$(PTHREAD)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 endif
 	$(SED) -e "s+@BINDIR@+$(BINDIR)+" Makeconf > $(R_HOME)/Makeconf

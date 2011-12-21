@@ -34,6 +34,12 @@
 
       \item Optimization level \option{-O3} is now used by default on
       64-bit builds as well as 32-bit ones.
+
+      \item There is a new macro (aka make variable)
+      \samp{SHLIB_PTHREAD_FLAGS}.  This is set to
+      \option{-pthread} on builds which support it, and should be
+      included in both \samp{PKG_CPPFLAGS} (or the Fortran or F9x
+      equivalents) and \samp{PKG_LIBS}.
     }
   }
 }
