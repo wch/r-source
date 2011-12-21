@@ -1,14 +1,16 @@
 \documentclass[a4paper]{article}
-%\VignetteIndexEntry{Working with grid grobs}
-%\VignettePackage{grid}
-\newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+
+\usepackage{Rd}
+
+% \VignetteIndexEntry{Working with grid grobs}
+% \VignettePackage{grid}
+
 \newcommand{\grid}{\pkg{grid}}
 \newcommand{\grob}{\code{grob}}
 \newcommand{\gTree}{\code{gTree}}
 \newcommand{\gPath}{\code{gPath}}
-\newcommand{\lattice}{\pkg{lattice}}
-\newcommand{\R}{{\sffamily R}}
+\newcommand{\lattice}{\CRANpkg{lattice}}
+
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}

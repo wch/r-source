@@ -1,14 +1,16 @@
 \documentclass[a4paper]{article}
-%\VignetteIndexEntry{Display Lists in grid}
-%\VignettePackage{grid}
-%\VignetteDepends{graphics}
-%\VignetteDepends{gridBase}
-\newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+
+\usepackage{Rd}
+
+% \VignetteIndexEntry{Display Lists in grid}
+% \VignettePackage{grid}
+% \VignetteDepends{graphics}
+% \VignetteDepends{gridBase}
+
 \newcommand{\grid}{\pkg{grid}}
-\newcommand{\gridBase}{\pkg{gridBase}}
-\newcommand{\lattice}{\pkg{lattice}}
-\newcommand{\R}{{\sffamily R}}
+\newcommand{\gridBase}{\CRANpkg{gridBase}}
+\newcommand{\lattice}{\CRANpkg{lattice}}
+
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -152,8 +154,8 @@ set of base pie charts within \grid{} viewports within a base plot.
 In this case, I can produce all of the grobs required in the normal
 manner -- their locations and sizes are not based on special
 calculations\footnote{The example is wrapped inside a check for
-  whether the \pkg{gridBase} package is installed so that the code
-  will still ``run'' on systems without \pkg{gridBase}.}.
+  whether the \CRANpkg{gridBase} package is installed so that the code
+  will still ``run'' on systems without \CRANpkg{gridBase}.}.
 
 <<results=hide>>=
 x <- c(0.88, 1.00, 0.67, 0.34)

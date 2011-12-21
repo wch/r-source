@@ -357,6 +357,11 @@
 \ifthenelse{\boolean{Rd@use@hyper}}
 {\newcommand{\methaliasA}[3]{\hypertarget{Rfn.#3}{\relax}}}
 {\newcommand{\methaliasA}[3]{}}
+
+\ifthenelse{\boolean{Rd@use@hyper}}
+{\newcommand{\CRANpkg}[1]{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}}
+{\newcommand{\CRANpkg}[1]{\pkg{#1}}}
+
 \newcommand{\HeaderA}[3]{%
   \vneed{1ex}
   \markboth{#1}{#1}
