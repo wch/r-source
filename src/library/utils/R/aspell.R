@@ -367,7 +367,8 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=printindex",
            "--add-texinfo-ignore=set",
            "--add-texinfo-ignore=vindex",
-           "--add-texinfo-ignore-env=menu"
+           "--add-texinfo-ignore-env=menu",
+           "--add-texinfo-ignore=CRANpkg"
            ),
          hunspell =
          c("-d en_US,en_GB"))
@@ -481,7 +482,9 @@ aspell_control_R_vignettes <-
            "--master=en_US",
            "--add-extra-dicts=en_GB",
            "--add-tex-command='code p'",
-           "--add-tex-command='pkg p'"),
+           "--add-tex-command='pkg p'",
+           "--add-tex-command='CRANpkg p'"
+           ),
          hunspell =
          c("-t", "-d en_US,en_GB"))
 
