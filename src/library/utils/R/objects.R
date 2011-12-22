@@ -221,7 +221,8 @@ getS3method <-  function(f, class, optional = FALSE)
     else {
         genfun <- get(f, mode="function", envir = parent.frame())
         if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-            genfun <- methods::slot(genfun, "default")@methods$ANY
+            ## assumes the default method is the S3 generic function
+            genfun <- methods::selectMethod(genfun, "ANY")
         if (typeof(genfun) == "closure") environment(genfun)
         else .BaseNamespaceEnv
     }

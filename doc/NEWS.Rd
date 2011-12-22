@@ -246,6 +246,9 @@
        \item R configured with \code{--disable-openmp} would mistakenly
        set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
        \file{Rconfig.h}) even though no OpenMP flags were populated.
+
+       \item  The \code{getS3method()} implementation had a very old
+       and incorrect computation to find an S4 default method.
      }
    }
 }
