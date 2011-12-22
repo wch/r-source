@@ -26420,7 +26420,8 @@ fi
 
 if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "${CC}" -a \
         "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "${CC}" -a \
-        "x${ac_cv_prog_c_openmp}" != "xunsupported"; then
+        "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${ac_cv_prog_c_openmp}" != "x"; then
   R_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
   R_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
   separator=""
@@ -35935,11 +35936,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35938: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35939: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35942: \$? = $ac_status" >&5
+   echo "$as_me:35943: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36034,11 +36035,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36037: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36038: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36041: \$? = $ac_status" >&5
+   echo "$as_me:36042: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36086,11 +36087,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36089: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36090: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36093: \$? = $ac_status" >&5
+   echo "$as_me:36094: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -38135,6 +38136,7 @@ FCLIBS=${FCLIBS}
 if test "x${shlib_ld_was_given}" = xno -a \
         "${SHLIB_LD}" = "${CC}" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${ac_cv_prog_c_openmp}" != "x" -a \
         "x${shlib_cxxld_was_given}" = xno -a \
         "${SHLIB_CXXLD}" = "${CXX}" -a \
         "x${ac_cv_prog_cxx_openmp}" != "xunsupported" -a \
