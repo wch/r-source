@@ -118,6 +118,23 @@ x \%/\% y
   group generic (or the \code{Ops} group generic), with arguments
   \code{c(e1, e2)}.
 }
+\section{Implementation limits}{
+  \R is dependent on OS services (and they on FPUs) for floating-point
+  arithmetic.  On all current \R platforms IEC 60559 (also known as IEEE
+  754) arithmetic is used, but some things in those standards are
+  optional.  In particular, the support for \emph{denormal numbers}
+  (those outside the range given by \code{\link{.Machine}}) may differ
+  between platforms and even between calculations on a single platform.
+
+  Another potential issue is signed zeroes: on IEC 60659 platforms there
+  are two zeroes with internal representations differing by sign.  Where
+  possible \R treats them as the same, but for example direct output
+  from C code often does not do so and may output \samp{-0.0} (and on
+  Windows whether it does so or not depends on the version of Windows).
+  One place in \R where the difference might be seen is in division by
+  zero: \code{1/x} is \code{Inf} or \code{-Inf} depending on the sign of
+  zero \code{x}.
+}
 \note{
   \code{**} is translated in the parser to \code{^}, but this was
   undocumented for many years.  It appears as an index entry in Becker
