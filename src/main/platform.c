@@ -566,6 +566,31 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <unistd.h> /* for symlink, getpid */
 #endif
 
+#ifdef Win32
+#ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x0500 /* for CreateHardLink */
+#endif
+#include <windows.h>
+typedef BOOLEAN (WINAPI *PCSL)(LPWSTR, LPWSTR, DWORD);
+static PCSL pCSL = NULL;
+const char *formatError(DWORD res);  /* extra.c */
+/* Windows does not have link(), but it does have CreateHardLink() on NTFS */
+#undef HAVE_LINK
+#define HAVE_LINK 1
+#undef HAVE_SYMLINK
+// #define HAVE_SYMLINK 1
+#endif
+
+/* the Win32 stuff here is not ready for release:
+
+   (i) It needs Windows >= XP
+   (ii) unlink() would need to be taught about symlinks, especially for dirs.
+   (iii) It matters where 'from' is a file or a dir, and we could only 
+   know if it exists already.
+   (iv) This needs specific privileges which in general only Adminstrators 
+   have, and which many people report granting in the Policy Editor 
+   fails to work.
+*/
 SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2;
@@ -573,8 +598,6 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_SYMLINK
     SEXP ans;
     int i;
-    char from[PATH_MAX], to[PATH_MAX];
-    const char *p;
 #endif
     checkArity(op, args);
     f1 = CAR(args); n1 = length(f1);
@@ -588,13 +611,32 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
-#ifdef HAVE_SYMLINK  /* Not (yet) Windows */
+
+#ifdef Win32
+    pCSL = (PCSL) GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
+				 "CreateSymbolicLinkW");
+    if(!pCSL) 
+	error(_("symbolic links are not supported on this version of Windows"));
+#endif
+
+#ifdef HAVE_SYMLINK
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	if (STRING_ELT(f1, i%n1) == NA_STRING ||
 	    STRING_ELT(f2, i%n2) == NA_STRING)
 	    LOGICAL(ans)[i] = 0;
 	else {
+#ifdef Win32
+	    wchar_t *from, *to;	    
+	    from = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
+	    LOGICAL(ans)[i] = pCSL(to, from, 0x0) != 0;
+	    if(!LOGICAL(ans)[i])
+		warning(_("cannot symlink '%ls' to '%ls', reason '%s'"),
+			from, to, formatError(GetLastError()));
+#else
+	    char from[PATH_MAX], to[PATH_MAX];
+	    const char *p;
 	    p = R_ExpandFileName(translateChar(STRING_ELT(f1, i%n1)));
 	    if (strlen(p) >= PATH_MAX - 1) {
 		LOGICAL(ans)[i] = 0;
@@ -609,10 +651,10 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    strcpy(to, p);
 	    /* Rprintf("linking %s to %s\n", from, to); */
 	    LOGICAL(ans)[i] = symlink(from, to) == 0;
-	    if(!LOGICAL(ans)[i]) {
+	    if(!LOGICAL(ans)[i])
 		warning(_("cannot symlink '%s' to '%s', reason '%s'"),
 			from, to, strerror(errno));
-	    }
+#endif
 	}
     }
     UNPROTECT(1);
@@ -623,16 +665,6 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
-#ifdef Win32
-# ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x500 /* for CreateHardLink */
-# endif
-#include <windows.h>
-const char *formatError(DWORD res);  /* extra.c */
-/* Windows does not have link(), but it does have CreateHardLink() on NTFS */
-#undef HAVE_LINK
-#define HAVE_LINK 1
-#endif
 
 SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
