@@ -4,7 +4,17 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.14.0 patched}{
+\section{CHANGES IN R VERSION 2.14.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{bitmap()} and \code{dev2bitmap()} look for
+      \command{gswin64c.exe} (as used by 64-bit GhostScript), in
+      preference to \command{gswin32c.exe}.
+    }
+  }
+}
+
+\section{CHANGES IN R VERSION 2.14.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{Save as} menu item on the script

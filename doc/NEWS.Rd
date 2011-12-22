@@ -5,7 +5,17 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
+  \subsection{BUG FIXES}{
+     \itemize{
+       \item R configured with \code{--disable-openmp} would mistakenly
+       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
+       \file{Rconfig.h}) even though no OpenMP flags were populated.
+     }
+   }
+}
+
+\section{\Rlogo CHANGES IN R VERSION 2.14.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{parallel::detectCores()} is now able to find the
@@ -15,7 +25,7 @@
       remains \code{detectCores(logical = TRUE)} on that platform.
 
       \item Reference classes now keep a record of which fields are
-      locked.  \code{$lock()} with no arguments returns the names
+      locked.  \code{$lock()} with no arguments returns the names % $ 
       of the locked fields.
 
       \item \code{HoltWinters()} reports a warning rather than an error

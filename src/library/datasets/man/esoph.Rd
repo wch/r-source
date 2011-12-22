@@ -9,7 +9,7 @@
 \title{Smoking, Alcohol and (O)esophageal Cancer}
 \description{
   Data from a case-control study of (o)esophageal cancer in
-  Ile-et-Vilaine, France.
+  Ille-et-Vilaine, France.
 }
 \usage{esoph}
 \format{

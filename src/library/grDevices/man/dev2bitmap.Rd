@@ -52,8 +52,8 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   it is in your path.)
 #endif  
 #ifdef windows
-  (If this is unset the setting of \env{GSC} is used, otherwise command
-  \code{"gswin32c.exe"}, which will work if it is in your \env{PATH}.)
+  (If this is unset the setting of \env{GSC} is used, otherwise commands
+  \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.)
 #endif
 
   The types available will depend on the version of \code{ghostscript},
