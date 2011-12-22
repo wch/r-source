@@ -233,6 +233,10 @@
       \item The convention for \code{x \%/\% 0L} for integer-mode \code{x}
       has been changed from \code{0L} to \code{NA_integer_}.
       (\PR{14754})
+
+      \item R configured with \code{--disable-openmp} would mistakenly
+      set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
+      \file{Rconfig.h}) even though no OpenMP flags were populated.
     }
   }
 }

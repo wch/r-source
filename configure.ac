@@ -1685,7 +1685,8 @@ AC_SUBST(FW_VERSION)
 
 if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "${CC}" -a \
         "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "${CC}" -a \
-        "x${ac_cv_prog_c_openmp}" != "xunsupported"; then
+        "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${ac_cv_prog_c_openmp}" != "x"; then
   R_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
   R_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
   R_SH_VAR_ADD(MAIN_LDFLAGS, [${OPENMP_CFLAGS}])
@@ -2252,6 +2253,7 @@ AC_SUBST(FCLIBS)
 if test "x${shlib_ld_was_given}" = xno -a \
         "${SHLIB_LD}" = "${CC}" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${ac_cv_prog_c_openmp}" != "x" -a \
         "x${shlib_cxxld_was_given}" = xno -a \
         "${SHLIB_CXXLD}" = "${CXX}" -a \
         "x${ac_cv_prog_cxx_openmp}" != "xunsupported" -a \
