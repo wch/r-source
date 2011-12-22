@@ -233,15 +233,21 @@
       \item The convention for \code{x \%/\% 0L} for integer-mode \code{x}
       has been changed from \code{0L} to \code{NA_integer_}.
       (\PR{14754})
-
-      \item R configured with \code{--disable-openmp} would mistakenly
-      set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
-      \file{Rconfig.h}) even though no OpenMP flags were populated.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R VERSION 2.14.0 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
+  \subsection{BUG FIXES}{
+     \itemize{
+       \item R configured with \code{--disable-openmp} would mistakenly
+       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
+       \file{Rconfig.h}) even though no OpenMP flags were populated.
+     }
+   }
+}
+
+\section{\Rlogo CHANGES IN R VERSION 2.14.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{parallel::detectCores()} is now able to find the
