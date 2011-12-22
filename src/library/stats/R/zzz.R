@@ -25,6 +25,7 @@
              na.action = "na.omit",
              show.coef.Pvalues = TRUE,
              show.signif.stars = TRUE,
+	     str.dendrogram.last = "`",
              ts.eps = 1e-5,
              ts.S.compat = FALSE)
     toset <- !(names(op.stats) %in% names(op))

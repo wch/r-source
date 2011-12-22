@@ -214,7 +214,7 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 str.dendrogram <-
 function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
           wid = getOption("width"), nest.lev = 0, indent.str = "",
-          last.str = "`", stem = "--", ...)
+          last.str = getOption("str.dendrogram.last"), stem = "--", ...)
 {
 ## TO DO: when object is part of a larger structure which is str()ed
 ##    with default max.level= NA, it should not be str()ed to all levels,

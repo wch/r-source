@@ -92,11 +92,14 @@
       ultimate default, which prevents GhostScript being used in
       preference to \command{qpdf} even if environment variable
       \env{R_GSCMD} is set.
-      
+
       \item The internal \code{untar()} (as used by default by
       \command{R CMD INSTALL}) now knows about some \command{pax}
       headers which \command{bsdtar} incorrectly includes in
-      \command{tar} files, and will skip them with a warning. 
+      \command{tar} files, and will skip them with a warning.
+
+      \item The \code{"dendrogram"} method of \code{str()} now takes
+      its default for \code{last.str} from option \code{str.dendrogram.last}.
     }
   }
 
@@ -141,7 +144,7 @@
       the flag \option{--no-multiarch} is used.  (Pure \R packages can
       do things which are architecture-dependent: in the case which
       prompted this, looking for an icon in a Windows \R executable.)
-      
+
       \item There is a new option \code{install.packages(type = "both")}
       which tries source packages if binary packages are not available,
       on those platforms where the latter is the default.
@@ -217,7 +220,7 @@
       \item Building wih a positive value of
       \option{--with-valgrind-instrumentation} now  also instruments logical,
       complex and raw vectors.
-      
+
       \item There is experimental support for \emph{link-time
 	optimization} with \command{gcc} 4.5.0 or later on platforms
 	which support it.
@@ -229,7 +232,7 @@
       \item \code{str(x, width)} now obeys its \code{width}
       argument also for function headers and other objects \code{x}
       where \code{deparse()} is applied.
-      
+
       \item The convention for \code{x \%/\% 0L} for integer-mode \code{x}
       has been changed from \code{0L} to \code{NA_integer_}.
       (\PR{14754})
@@ -257,7 +260,7 @@
       remains \code{detectCores(logical = TRUE)} on that platform.
 
       \item Reference classes now keep a record of which fields are
-      locked.  \code{$lock()} with no arguments returns the names % $ 
+      locked.  \code{$lock()} with no arguments returns the names % $
       of the locked fields.
 
       \item \code{HoltWinters()} reports a warning rather than an error
@@ -379,26 +382,26 @@
       \item \code{RweaveLatex()} now emulates auto-printing rather than
       printing, by calling \code{methods::show()} when auto-printing
       would.
-      
+
       \item \code{duplicated()} ignored \code{fromLast} for a
       one-column data frame.  (\PR{14742})
-      
+
       \item \code{source()} and related functions did not put the correct
       timestamp on the source references; \code{srcfilecopy()} has gained
       a new argument \code{timestamp} to support this fix. (\PR{14750})
-      
+
       \item LaTeX conversion of Rd files did not correctly handle
       preformatted backslashes.  (\PR{14751})
-      
+
       \item HTML conversion of Rd files did not handle markup within
       tabular cells properly.  (\PR{14708})
-      
+
       \item \code{source()} on an empty file with \code{keep.source =
 	TRUE} tried to read from \code{stdin()}, in \R 2.14.0 only.
       (\PR{14753})
-      
+
       \item The code to check Rd files in packages would abort if
-      duplicate description sections were present.      
+      duplicate description sections were present.
     }
   }
 }
