@@ -22,12 +22,13 @@
 ## of (space-delimited) terms that would be passed to R CMD checks.
 
 ## Used for INSTALL and Rd2pdf
-run_Rcmd <- function(args, out = "")
+run_Rcmd <- function(args, out = "", env = "")
 {
     if(.Platform$OS.type == "windows")
         system2(file.path(R.home("bin"), "Rcmd.exe"), args, out, out)
     else
-        system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out)
+        system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out,
+                env = env)
 }
 
 R_runR <- function(cmd = NULL, Ropts = "", env = "",
@@ -2221,9 +2222,38 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
+                    env <- ""
+                    if(!WINDOWS &&
+                       config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))) {
+                        ## We want to test this with only the dependencies
+                        ## available: we use symlinks, hence not Windows.
+                        tmplib <- tempfile("RLIBS")
+                        dir.create(tmplib)
+                        inst <- installed.packages()[, 1:2]
+                        db <- .read_description(file.path(pkgdir, "DESCRIPTION"))
+                        deps <-  c(.get_requires_with_version_from_package_db(db, "Depends"),
+                                   .get_requires_with_version_from_package_db(db, "Imports"),
+                                   .get_requires_with_version_from_package_db(db, "LinkingTo"))
+                        deps <- as.vector(unlist(lapply(deps, `[[`, 1L)))
+                        if(length(deps)) {
+                            deps <- unique(deps)
+                            need <- inst[deps, , drop = FALSE]
+                            ## can't use .Library, as path name is not
+                            ## canonical.
+                            lp <- .libPaths()
+                            need2 <- need[need[, 2L] != lp[length(lp)],,
+                                          drop = FALSE]
+                            if(nrow(need2)) {
+                                from <- file.path(need2[, 2L], need2[, 1L])
+                                file.symlink(from, tmplib)
+                            }
+                        }
+                        env <-  c(paste("R_LIBS", tmplib, sep = "="),
+                                  "R_ENVIRON_USER=foobar")
+                    }
                     ## Normal use of R CMD INSTALL
                     t1 <- proc.time()
-                    install_error <- run_Rcmd(args, outfile)
+                    install_error <- run_Rcmd(args, outfile, env = env)
                     t2 <- proc.time()
                     print_time(t1, t2, Log)
                     lines <- readLines(outfile, warn = FALSE)
