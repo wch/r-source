@@ -59,8 +59,11 @@ checkMD5sums <- function(package, dir)
     diff <- xx[nmxx] != x[nmxx]
     if(any(diff)) {
         res <- FALSE
-        cat("files", paste(nmxx[diff], collapse=", "),
-            "have the wrong MD5 checksums\n", sep=" ")
+        files <- nmxx[diff]
+        if(length(files) > 1L)
+            cat("files", paste(sQuote(files), collapse=", "),
+                "have the wrong MD5 checksums\n", sep=" ")
+        else cat("file", sQuote(files), "has the wrong MD5 checksum\n")
     }
     return(res)
 }
