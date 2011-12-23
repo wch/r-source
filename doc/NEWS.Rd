@@ -87,7 +87,7 @@
       \code{setClass} help page.
 
       \item Function \code{compactPDF()} in package \pkg{tools} now
-      takes the default for argument \code{gs_quality} from enironment
+      takes the default for argument \code{gs_quality} from environment
       variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
       ultimate default, which prevents GhostScript being used in
       preference to \command{qpdf} even if environment variable
@@ -217,7 +217,7 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item Building wih a positive value of
+      \item Building with a positive value of
       \option{--with-valgrind-instrumentation} now  also instruments logical,
       complex and raw vectors.
 
@@ -283,7 +283,7 @@
       into account.  This is needed with \CRANpkg{multicore} (and as part of
       \pkg{parallel}) because the parent and all the children share a
       session temporary directory, and they can share the C random
-      number stream used to produce the uniaue part.  Further, two
+      number stream used to produce the unique part.  Further, two
       children can call \code{tempfile()} simultaneously.
 
       \item Option \code{print} in Sweave's \code{RweaveLatex()} driver
@@ -361,7 +361,7 @@
       (Spotted by Bill Dunlap.)
 
       \item \code{options(warn = 0)} failed to end a (C-level) context
-      with more than 50 accumulated warnings.  (Spotted by Jeffery
+      with more than 50 accumulated warnings.  (Spotted by Jeffrey
       Horner.)
 
       \item The internal \code{plot.default()} code did not do sanity
@@ -684,7 +684,7 @@
 
       \item Automatic printing for reference classes is now done by
       the \code{$show()} method.  A method is defined for class % $
-      \samp{envRefClass} and may be overriden for user classes (see
+      \samp{envRefClass} and may be overridden for user classes (see
       the \code{?ReferenceClasses} example).  S4 \code{show()} methods
       should no longer be needed for reference classes.
 
@@ -728,7 +728,7 @@
       a \code{clear} argument to allow it to call \code{untrace()}.
 
       \item The body of a closure can be one of further types of \R
-      objects, including enviroments and external pointers.
+      objects, including environments and external pointers.
 
       \item The \code{Rd2HTML()} function in package \pkg{tools} now has
       a \code{stylesheet} argument, allowing pages to be displayed in
@@ -1050,7 +1050,7 @@
       \item A dependency on SVN revision is allowed for \code{R},
       e.g. \code{R (>= r56550)}.  This should be used in conjunction with a
       version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
-      distinguish beteen R-patched and R-devel versions with the same
+      distinguish between R-patched and R-devel versions with the same
       SVN revision.
 
       \item \code{installed.packages()} now hashes the names of its
@@ -1684,7 +1684,7 @@
       rather than using \code{uniroot()} on a discontinuous function.
 
       The description of the problem was inaccurate: the probability is
-      a tail probablity (\sQuote{2 \emph{or more} people share a birthday})
+      a tail probability (\sQuote{2 \emph{or more} people share a birthday})
 
       \item Complex arithmetic sometimes warned incorrectly about
       producing NAs when there were NaNs in the input.
@@ -1736,7 +1736,7 @@
       \item \code{isClass()} used its own namespace as the default of
       the \code{where} argument inadvertently.
 
-      \item Rd conversion to latex mis-handled multi-line titles
+      \item Rd conversion to latex mishandled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).  (It seems this happened only in 2.13.0 patched.)
 
