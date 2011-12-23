@@ -128,7 +128,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 45Mb.  This contains all the
+installer @samp{@RWVER@-win.exe} of about 47Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
@@ -310,8 +310,8 @@ versions around if you wish.
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your home directory, @file{R\win64-library\@var{x.y}} on 64-bit
 builds), you will need to update that too when the minor version of R
-changes (e.g.@: from 2.12.2 to 2.13.0).  A simple way to do so is to
-copy (say) @file{R\win-library\2.12} to @file{R\win-library\2.13} before
+changes (e.g.@: from 2.14.2 to 2.15.0).  A simple way to do so is to
+copy (say) @file{R\win-library\2.14} to @file{R\win-library\2.15} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
@@ -799,9 +799,10 @@ This is @code{]} in Canadian (multilingual), German and Scandinavian
 layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
 @code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  For
 some keyboards the uses of AltGr are at
-@url{http://office.microsoft.com/@/en-us/@/word/@/HP052590631033.aspx}: you
-can explore those for your keyboard via the `On-Screen Keyboard' (under
-Accessories, Accessibility on XP).
+@url{http://office.microsoft.com/@/en-us/@/word/@/HP052590631033.aspx}:
+you can explore those for your keyboard via the `On-Screen Keyboard'
+(under Accessories, Accessibility on XP, Accessories, Ease of access on
+Windows 7).
 
 On all Windows versions you should be able to get tilde by holding the
 down the left Alt key and typing 0126 on the numeric keypad (if you have
@@ -843,9 +844,9 @@ to be moved around, and that less external software is available for
 64-bit versions of the OS. The 64-bit compilers are able to take
 advantage of extra features of all x86-64 chips (more registers, SSE2/3
 instructions, @dots{}) and so the code may run faster despite using
-larger pointers.  Changes in the compilation options in R 2.14.0 mean
-that the 64-bit build is now usually slightly faster than the 32-bit
-build on a recent CPU (Core 2 Duo or later).
+larger pointers.  The 64-bit build is nowadays usually slightly faster
+than the 32-bit build on a recent CPU (Intel Core 2 or later or AMD
+equivalent).
 
 For advanced users the choice may be dictated by whether the contributed
 packages needed are available in 64-bit builds (and if CRAN binary
@@ -889,8 +890,7 @@ will install to a different location) and un-installed the old version
 of R.  If you do that (or install R for the first time), you need to
 edit the @env{PATH}.
 
-In recent versions of R (it was different before 2.12.0) the element you
-want to add to the path is something like
+The element you want to add to the path is something like
 
 @example
 c:\Program Files\R\R-2.14.0\bin\x64
@@ -1133,10 +1133,10 @@ CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (2.x) version will be stored in a separate area,
-so for R 2.13.? the files are in @file{bin/windows/contrib/2.13}.
+so for R 2.15.? the files are in @file{bin/windows/contrib/2.15}.
 
 Note that the binary versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.13/@/ReadMe},
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.15/@/ReadMe},
 which also gives the locations of a few other binary packages.
 
 If there is no binary package or that is not up-to-date or you prefer
@@ -1234,7 +1234,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.13/@/ReadMe} for a
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.15/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1891,7 +1891,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2011-07-08
+@set LASTEDIT 2011-12-23
 @ifhtml
 @html
 <hr WIDTH="100%">
