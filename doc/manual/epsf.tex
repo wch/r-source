@@ -2,22 +2,23 @@
 %%% ====================================================================
 %%%  @TeX-file{
 %%%     author          = "Tom Rokicki",
-%%%     version         = "2.7.3",
-%%%     date            = "23 July 2005",
-%%%     time            = "14:32:01 MDT",
+%%%     version         = "2.7.4",
+%%%     date            = "14 February 2011",
+%%%     time            = "15:44:06 MST",
 %%%     filename        = "epsf.tex",
 %%%     address         = "Tom Rokicki
 %%%                        Box 2081
 %%%                        Stanford, CA 94309
 %%%                        USA",
 %%%     telephone       = "+1 415 855 9989",
-%%%     checksum        = "20914 644 3054 26594",
+%%%     checksum        = "29223 653 3100 27123",
 %%%     email           = "rokicki@cs.stanford.edu (Internet)",
 %%%     codetable       = "ISO/ASCII",
 %%%     copyright       = "This file is freely redistributable and
 %%%                        placed into the public domain by Tomas
 %%%                        Rokicki.",
 %%%     keywords        = "PostScript, TeX",
+%%%     license         = "public domain",
 %%%     supported       = "yes",
 %%%     abstract        = "This file contains macros to support the
 %%%                        inclusion of Encapsulated PostScript files
@@ -222,6 +223,13 @@
 %%%
 %%%                        ---------------------------------------------
 %%%                        Revised by Nelson H. F. Beebe
+%%%                        <beebe@math.utah.edu>, 14 Feb 2011 [2.7.3]
+%%%                        Add previously-missing \space in rwi
+%%%                        assignments (bug reported 14-Feb-2011 by
+%%%                        Stefan Rueger <s.rueger@open.ac.uk>).
+%%%
+%%%                        ---------------------------------------------
+%%%                        Revised by Nelson H. F. Beebe
 %%%                        <beebe@math.utah.edu>, Karl Berry
 %%%                        <karl@freefriends.org>, and Robin Fairbairns
 %%%                        <Robin.Fairbairns@cl.cam.ac.uk>,
@@ -255,7 +263,8 @@
 %\immediate \write16 {This is `epsf.tex' v2.7 <25 October 1996>}%
 %\immediate \write16 {This is `epsf.tex' v2.7.1 <18 May 2002>}%
 %\immediate \write16 {This is `epsf.tex' v2.7.2 <16 May 2003>}%
-\immediate \write16 {This is `epsf.tex' v2.7.3 <23 July 2005>}%
+%\immediate \write16 {This is `epsf.tex' v2.7.3 <23 July 2005>}%
+\immediate \write16 {This is `epsf.tex' v2.7.4 <14 February 2011>}%
 %
 \newread \epsffilein    % file to \read
 \newif \ifepsfatend     % need to scan to LAST %%BoundingBox comment?
@@ -384,7 +393,7 @@
 		lly=\epsflly\space
 		urx=\epsfurx\space
 		ury=\epsfury\space
-		rwi=\number\epsftmp
+		rwi=\number\epsftmp\space
 		\epsfclipstring
                }%
      \else
@@ -395,7 +404,7 @@
 		lly=\epsflly\space
 		urx=\epsfurx\space
 		ury=\epsfury\space
-		rwi=\number\epsftmp
+		rwi=\number\epsftmp\space
 		rhi=\number\epsfrsize
 		\epsfclipstring
                }%
