@@ -23,6 +23,7 @@ fixetc: $(ETC) ../MkRules Makefile
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
 ifeq "$(WIN)" "64"
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
+	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF = $(BINPREF)|" \
 	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \

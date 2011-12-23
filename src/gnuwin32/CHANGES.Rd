@@ -37,9 +37,6 @@
       selected by a flag: in most cases \option{-m32} \emph{vs}
       \option{-m64}.
 
-      \item Optimization level \option{-O3} is now used by default on
-      64-bit builds as well as 32-bit ones.
-
       \item There is a new macro (aka make variable)
       \samp{SHLIB_PTHREAD_FLAGS}.  This is set to
       \option{-pthread} on builds which support it, and should be
