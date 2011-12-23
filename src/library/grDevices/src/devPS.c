@@ -7688,7 +7688,7 @@ static void PDFSimpleText(double x, double y, const char *str,
     PDF_SetFill(gc->col, dd);
     fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 	    font,
-	    a, b, -bm, a, x, y);
+	    a, b, bm, a, x, y);
     if (pd->useKern &&
 	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
 	PDFWriteT1KerningString(pd->pdffp, str,
