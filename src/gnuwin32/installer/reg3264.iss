@@ -1,11 +1,11 @@
 [Icons]
-Name: "{group}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
+Name: "{group}\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
 Name: "{group}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('x64')
 
-Name: "{commondesktop}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
+Name: "{commondesktop}\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
 Name: "{commondesktop}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('x64')
 
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('x64')
 
 Name: "{group}\R @RVER@ Help"; Filename: "{app}\doc\html\index.html"; Components: html

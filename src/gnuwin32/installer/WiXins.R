@@ -211,7 +211,7 @@
         cat(file = con, sep="\n",
 sprintf('             <Component Id="shortcut0" Guid="%s">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
-sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
+sprintf('               Name="R i386 %s" Target="[!%s]" ', Rver, rgui),
 '               WorkingDirectory="STARTDIR" />',
             ## stop validation errors
 '            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
@@ -242,7 +242,7 @@ sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
     if (have32bit)
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
-sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R %s"', Rver),
+sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R i386 %s"', Rver),
 sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
 '            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '        </Component>')

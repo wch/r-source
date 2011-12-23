@@ -78,7 +78,7 @@ int AppMain(int argc, char **argv)
 #ifdef WIN64
 	SetConsoleTitle("Rterm (64-bit)");
 #else
-	SetConsoleTitle("Rterm");
+	SetConsoleTitle("Rterm (32-bit)");
 #endif
     }
     Rf_mainloop();

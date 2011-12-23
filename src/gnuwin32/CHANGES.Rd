@@ -7,9 +7,18 @@
 \section{CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \command{R CMD INSTALL} for a package with compiled code
-      will fail if compilation fails for any of the installed
-      sub-architectures: use \option{--no-multiarch} to override this.
+      \item The 32-bit and 64-bit builds are now treated equally, as it
+      is anticipated that 64-bit R will soon be (if not already) the
+      more comonly used.  This entails:
+      
+      The \command{Rterm} or \command{Rgui} title mentions 32-bit as
+      well as 64-bit.
+      
+      The desktop icons are labelled \code{R i386} and \code{R x64}.
+
+      \command{R CMD INSTALL} for a package with compiled code will fail
+      if compilation fails for any of the installed sub-architectures:
+      use \option{--no-multiarch} to override this.
 
       \item \code{postscript(file = "|cmd")} now works on Windows.
     }
