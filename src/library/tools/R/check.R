@@ -51,6 +51,46 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     }
 }
 
+setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
+{
+    ## We want to test this with only the dependencies
+    ## available: we use symlinks, hence not Windows.
+    #
+    ## We need to make some assumptions about layout: this version
+    ## asssumes .Library contains standard and recommended packages
+    ## and nothing else.
+    tmplib <- tempfile("RLIBS_")
+    dir.create(tmplib)
+    pi <- .split_description(.read_description(file.path(pkgdir, "DESCRIPTION")))
+    thispkg <- unname(pi$DESCRIPTION["Package"])
+    deps <- unique(c(names(pi$Depends), names(pi$Imports), names(pi$LinkingTo),
+                     if(suggests) names(pi$Suggests)))
+    ## .Library is not necessarily canonical, but this version is.
+    ## This is not used on Windows, so no need to worry about \
+    lp <- .libPaths()
+    pat <- paste("^", lp[length(lp)], sep = "")
+    already <- thispkg
+    more <- unique(deps[!deps %in% already]) # should not depend on itself ...
+    while(length(more)) {
+        m0 <- more; more <- character()
+        for (pkg in m0) {
+            where <- find.package(pkg, quiet = TRUE)
+            ## here we assume that dependencies in .Library are also in .Library
+            if(nzchar(where) && !grepl(pat, where)) {
+                file.symlink(where, tmplib)
+                pi <- readRDS(file.path(where, "Meta", "package.rds"))
+                more <- c(more, names(pi$Depends), names(pi$Imports), names(pi$LinkingTo))
+            }
+        }
+        already <- c(already, m0)
+        more <- unique(more[!more %in% already])
+    }
+    rlibs <- tmplib
+    if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
+    rlibs <- paste(rlibs, collapse = .Platform$path.sep)
+    c(paste("R_LIBS", rlibs, sep = "="), "R_ENVIRON_USER=foobar")
+}
+
 ###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
 .check_packages <- function(args = NULL)
 {
@@ -2904,6 +2944,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     	R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_unsafe_calls <- FALSE
+
+    R_check_depends_only <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
+    R_check_suggests_only <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE")) &&
+        !R_check_depends_only
 
     startdir <- getwd()
     if (is.null(startdir))

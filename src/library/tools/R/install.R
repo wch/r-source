@@ -1082,30 +1082,9 @@
             cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
                          sep = "")
             ## R_LIBS was set already.  R_runR is in check.R
-            env <- ""
-            if(!WINDOWS &&
-               config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))) {
-                ## We want to test this with only the dependencies
-                ## available: we use symlinks, hence not Windows.
-                tmplib <- tempfile("RLIBS_")
-                dir.create(tmplib)
-                pkgInfo <- .split_description(.read_description("DESCRIPTION"))
-                deps <- unique(c(names(pkgInfo$Depends),
-                                 names(pkgInfo$Imports),
-                                 names(pkgInfo$LinkingTo)))
-                lp <- .libPaths()
-                pat <- paste("^", lp[length(lp)], sep = "")
-                for (pkg in deps) {
-                    where <- find.package(pkg, quiet = TRUE)
-                    if(nzchar(where) && !grepl(pat, where))
-                        file.symlink(where, tmplib)
-                }
-                rlibs <- tmplib
-                if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
-                rlibs <- paste(rlibs, collapse = .Platform$path.sep)
-                env <-  c(paste("R_LIBS", rlibs, sep = "="),
-                          "R_ENVIRON_USER=foobar")
-            }
+            env <- if(!WINDOWS &&
+               config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE")))
+                setRlibs(lib0) else ""
             if (length(test_archs) > 1L) {
                 msgs <- character()
                 for (arch in test_archs) {
