@@ -51,9 +51,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     }
 }
 
-setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
+setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
+                     libdir = NULL)
 {
-    ## We want to test this with only the dependencies
+    ## We may want to test with only the dependencies
     ## available: we use symlinks, hence not Windows.
     #
     ## We need to make some assumptions about layout: this version
@@ -61,22 +62,25 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
     ## and nothing else.
     tmplib <- tempfile("RLIBS_")
     dir.create(tmplib)
+    ## Since this is under the session directory and only contains
+    ## symlinks (hence will be small) we never clean it up.
     pi <- .split_description(.read_description(file.path(pkgdir, "DESCRIPTION")))
     thispkg <- unname(pi$DESCRIPTION["Package"])
     deps <- unique(c(names(pi$Depends), names(pi$Imports), names(pi$LinkingTo),
                      if(suggests) names(pi$Suggests)))
-    ## .Library is not necessarily canonical, but this version is.
-    ## This is not used on Windows, so no need to worry about \
+    if(length(libdir))
+        file.symlink(file.path(libdir, thispkg), tmplib)
+    ## .Library is not necessarily canonical, but the .libPaths version is.
     lp <- .libPaths()
-    pat <- paste("^", lp[length(lp)], sep = "")
+    poss <- c(lp[length(lp)], .Library)
     already <- thispkg
     more <- unique(deps[!deps %in% already]) # should not depend on itself ...
     while(length(more)) {
         m0 <- more; more <- character()
         for (pkg in m0) {
             where <- find.package(pkg, quiet = TRUE)
-            ## here we assume that dependencies in .Library are also in .Library
-            if(nzchar(where) && !grepl(pat, where)) {
+            ## here we assume that dependencies from .Library are also in .Library
+            if(length(where) && !(dirname(where) %in% poss)) {
                 file.symlink(where, tmplib)
                 pi <- readRDS(file.path(where, "Meta", "package.rds"))
                 more <- c(more, names(pi$Depends), names(pi$Imports), names(pi$LinkingTo))
@@ -88,7 +92,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
     rlibs <- tmplib
     if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
-    c(paste("R_LIBS", rlibs, sep = "="), "R_ENVIRON_USER=foobar")
+    c(paste("R_LIBS", rlibs, sep = "="),
+      if(.Platform$OS.type == "windows") " R_ENVIRON_USER='no_such_file'"
+      else "R_ENVIRON_USER=''")
 }
 
 ###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
@@ -1535,7 +1541,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- R_runR(NULL, c(Ropts, enc),
-                             c("LANGUAGE=en", if(nzchar(arch)) env0, jitstr),
+                             c("LANGUAGE=en",
+                               if(nzchar(arch)) env0,
+                               jitstr, elibs),
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             t2 <- proc.time()
@@ -1709,7 +1717,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
                              env = c("LANGUAGE=en", if(nzchar(arch)) env0,
-                                     jitstr),
+                                     jitstr, elibs),
                              stdout = "", stderr = "", arch = arch)
             t2 <- proc.time()
             if (status) {
@@ -1912,7 +1920,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                  ## add timing as footer, as BATCH does
-                                 env = c(jitstr, "R_BATCH=1234"),
+                                 env = c(jitstr, "R_BATCH=1234", elibs),
                                  stdout = outfile, stderr = outfile)
                 t2 <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
@@ -2933,6 +2941,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
     R_check_unsafe_calls <-
         config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "FALSE"))
+    R_check_depends_only <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
+    R_check_suggests_only <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -2944,12 +2956,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
                     	R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_unsafe_calls <- FALSE
-
-    R_check_depends_only <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
-    R_check_suggests_only <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE")) &&
-        !R_check_depends_only
 
     startdir <- getwd()
     if (is.null(startdir))
@@ -3190,6 +3196,12 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE)
                     inst_archs <- inst_archs[!(inst_archs %in% R_check_skip_arch)]
             }
         }   ## end of if (!is_base_pkg)
+
+        elibs <- if(R_check_depends_only)
+            setRlibs(pkgdir = pkgdir, libdir = libdir)
+        else if(R_check_suggests_only)
+            setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
+        else character()
 
         setwd(startdir)
         check_pkg(pkgdir, pkgname, pkgoutdir, startdir, libdir, desc,

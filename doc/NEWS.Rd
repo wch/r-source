@@ -162,7 +162,8 @@
        \item \command{R CMD check} now gives a warning rather than a
        note if it finds inefficiently compressed datasets.  With
        \command{bzip2} and \command{xz} compression having been
-       available since \R 2.10.0, there is no excuse for not using them.
+       available since \R 2.10.0, it only expectionally makes sense to
+       not use them.
 
        \item Where multiple sub-architectures are to be tested,
        \command{R CMD check} now runs the examples and tests for all the
@@ -174,6 +175,10 @@
 	 Extensions}.  Timings (in the style of \command{R CMD BATCH} are
        given at the foot of the output file from running each test and
        the \R code in each vignette.
+       
+       \item There are new options for more rigorous testing by
+       \command{R CMD check} selected by environment variables -- see
+       the \sQuote{Writing R Extensions} manual.
      }
    }
 
