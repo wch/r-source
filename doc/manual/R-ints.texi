@@ -3680,8 +3680,13 @@ is available to those who first install recording to a log, then call
 If set to a true value, running examples, tests and vignettes is done
 with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
-links to the installed copies of all the Depends/Imports/LinkingTo and
-(for the second only) Suggests packages which are not in @code{.Library}.  
+links@footnote{Under Windows, junctions will be used if
+@file{junction.exe} from
+@uref{http://download.sysinternals.com/Files/Junction.zip} (see
+@uref{http://technet.microsoft.com/en-us/sysinternals/bb896768}) is in
+the path, otherwise file copies are used.}  to the installed copies of all
+the Depends/Imports/LinkingTo and (for the second only) Suggests
+packages which are not in @code{.Library}.
 Default: false
 @end vtable
 

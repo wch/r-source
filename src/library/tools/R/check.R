@@ -55,8 +55,18 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      libdir = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
-    flink <- function(from, to)
-        if(WINDOWS) file.copy(from, to, recursive = TRUE) else file.symlink(fron, to)
+    flink <- if(WINDOWS) {
+        if(nzchar(Sys.which("junction.exe"))) {
+            function(from, to) {
+                to2 <- normalizePath(file.path(to, basename(from)))
+                dir.create(to2)
+                system2("junction.exe", c(to2, normalizePath(from)), NULL)
+            }
+        } else {
+            function(from, to) file.copy(from, to, recursive = TRUE)
+        }
+    } else file.symlink
+
     ## We may want to test with only the dependencies available.
     #
     ## We need to make some assumptions about layout: this version
