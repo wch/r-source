@@ -54,8 +54,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      libdir = NULL)
 {
-    ## We may want to test with only the dependencies
-    ## available: we use symlinks, hence not Windows.
+    WINDOWS <- .Platform$OS.type == "windows"
+    flink <- function(from, to)
+        if(WINDOWS) file.copy(from, to, recursive = TRUE) else file.symlink(fron, to)
+    ## We may want to test with only the dependencies available.
     #
     ## We need to make some assumptions about layout: this version
     ## asssumes .Library contains standard and recommended packages
@@ -68,8 +70,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     thispkg <- unname(pi$DESCRIPTION["Package"])
     deps <- unique(c(names(pi$Depends), names(pi$Imports), names(pi$LinkingTo),
                      if(suggests) names(pi$Suggests)))
-    if(length(libdir))
-        file.symlink(file.path(libdir, thispkg), tmplib)
+    if(length(libdir)) flink(file.path(libdir, thispkg), tmplib)
     ## .Library is not necessarily canonical, but the .libPaths version is.
     lp <- .libPaths()
     poss <- c(lp[length(lp)], .Library)
@@ -81,9 +82,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             where <- find.package(pkg, quiet = TRUE)
             ## here we assume that dependencies from .Library are also in .Library
             if(length(where) && !(dirname(where) %in% poss)) {
-                file.symlink(where, tmplib)
+                flink(where, tmplib)
                 pi <- readRDS(file.path(where, "Meta", "package.rds"))
-                more <- c(more, names(pi$Depends), names(pi$Imports), names(pi$LinkingTo))
+                more <- c(more, names(pi$Depends), names(pi$Imports),
+                          names(pi$LinkingTo))
             }
         }
         already <- c(already, m0)
@@ -93,8 +95,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
     c(paste("R_LIBS", rlibs, sep = "="),
-      if(.Platform$OS.type == "windows") " R_ENVIRON_USER='no_such_file'"
-      else "R_ENVIRON_USER=''")
+      if(WINDOWS) " R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''")
 }
 
 ###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
