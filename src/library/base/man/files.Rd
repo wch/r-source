@@ -117,13 +117,19 @@ file.link(from, to)
   instead.  In particular, \file{d:} is not recognized as a directory.
   Nor are \samp{\\\\?\\} prefixes (and similar) supported.
   
-  Recent versions of Windows have a limited version of symbolic links on
-  NTFS filesystems, but this has not been implemented in
-  \code{file.symlink}, not least because \R is still widely used on
-  Windows XP.  However, linking to \emph{directories} has been
-  implemented since Windows 2000 using \sQuote{junctions}, unfortunately
-  without a public API.  The examples show one way to use this
-  \emph{via} \file{junction.exe} from
+  Most of these functions accept UTF-8 filepaths not valid in the
+  current locale.
+
+  User error in supplying invalid file names (and note that \file{foo/}
+  \emph{is} invalid on Windows) has undefined consequences.
+}
+\section{Symbolic links on Windows}{
+  Symbolic links in the sense of POSIX file systems do not exist on
+  Windows.  However, NTFS has two similar concepts.
+
+  Linking to \emph{directories} has been implemented since Windows 2000
+  using \sQuote{junctions}, unfortunately without a public API.  The
+  examples show one way to use this \emph{via} \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
   \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).
 % see also http://www.codeproject.com/KB/winsdk/junctionpoints.aspx
@@ -132,12 +138,19 @@ file.link(from, to)
   points than symbolic links, and have to be linked to/mounted on an
   existing empty directory.  However, they can be removed as if they are
   files (by \code{\link{unlink}}).
-
-  Most of these functions accept UTF-8 filepaths not valid in the
-  current locale.
-
-  User error in supplying invalid file names (and note that \file{foo/}
-  \emph{is} invalid on Windows) has undefined consequences.
+  
+  Linking to files was implemented from Vista, and \code{file.symlink}
+  makes use of that interface since \R 2.15.0.  However, it has
+  restrictions (apart from the OS restriction) that are crippling.
+  First, the users needs permission to make symbolic links, and that
+  permission is not normally granted apart from to Administrator users
+  (note: not users with Administrator rights): further many users report
+  that whereas the Policy Editor appears to be able to grant such
+  rights, the API still reports insufficient permissions.  Second, the
+  interface needs to kwow if \code{from} is a file or directory (and it
+  need not yet exist), so we have only currently implemented this for
+  files.  Finally, file symlinks are basically shortcuts, and not all
+  software will follow them. 
 }
 #endif
 

@@ -21,6 +21,10 @@
       use \option{--no-multiarch} to override this.
 
       \item \code{postscript(file = "|cmd")} now works on Windows.
+      
+      \item \code{file.symlink()} is now implemented on NTFS file
+      systems on Vista or later, for accounts which have suitable
+      permissions (and most will not).
     }
   }
   
