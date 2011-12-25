@@ -120,7 +120,12 @@ file.link(from, to)
   Recent versions of Windows have a limited version of symbolic links on
   NTFS filesystems, but this has not be implemented in
   \code{file.symlink}, not least because \R is still widely used on
-  Windows XP.
+  Windows XP.  However, linking to \emph{directories} has been
+  implemented since Windows 2000 using \sQuote{junctions}, unfortunately
+  without a public API.  The examples show one way to use this
+  \emph{via} \file{junction.exe} from
+  \url{http://download.sysinternals.com/Files/Junction.zip} (see
+  \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).
 
   Most of these functions accept UTF-8 filepaths not valid in the
   current locale.
@@ -169,5 +174,15 @@ setwd("..")
 #endif
 unlink("tmp", recursive=TRUE)
 file.remove("A", "B", "C")
+#ifdef windows
+## Windows can link to directories via junctions.
+## See the text for the system requirements here.
+\dontrun{
+dir.symlink <- function(from, to) {
+    to2 <- normalizePath(file.path(to, basename(from)))
+    dir.create(to2)
+    system2("junction.exe", c(to2, normalizePath(from)), NULL)
+}}
+#endif
 }
 \keyword{file}
