@@ -4576,9 +4576,18 @@ function(x, ...)
       if(length(xx <- x$others)) {
           if(length(xx) > 1L) {
               c(gettext("'library' or 'require' calls not declared from:"),
-                .pretty_format(sort(x$others)))
+                .pretty_format(sort(xx)))
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$data)) {
+          if(length(xx) > 1L) {
+              c(gettext("'data(package=)' calls not declared from:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("'data(package=)' call not declared from: %s",
                        sQuote(xx))
           }
       },
@@ -4615,6 +4624,7 @@ function(db, files)
 
     bad_exprs <- character()
     bad_imports <- character()
+    bad_data <- character()
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
@@ -4649,9 +4659,12 @@ function(db, files)
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in%  ":::") {
-                ## <FIXME> fathom out if this package has a namespace
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
+            } else if(Call %in%  "data" && length(e) >= 3L) {
+                mc <- match.call(utils::data, e)
+                if(!is.null(pkg <- mc$package) && !pkg %in% depends_suggests)
+                    bad_data <<- c(bad_data, pkg)
             }
             for(i in seq_along(e)) Recall(e[[i]])
         }
@@ -4683,6 +4696,7 @@ function(db, files)
 
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
+                data = unique(bad_data),
                 methods_message = "")
     class(res) <- "check_packages_used"
     res
