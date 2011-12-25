@@ -118,7 +118,7 @@ file.link(from, to)
   Nor are \samp{\\\\?\\} prefixes (and similar) supported.
   
   Recent versions of Windows have a limited version of symbolic links on
-  NTFS filesystems, but this has not be implemented in
+  NTFS filesystems, but this has not been implemented in
   \code{file.symlink}, not least because \R is still widely used on
   Windows XP.  However, linking to \emph{directories} has been
   implemented since Windows 2000 using \sQuote{junctions}, unfortunately
@@ -126,6 +126,12 @@ file.link(from, to)
   \emph{via} \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
   \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).
+% see also http://www.codeproject.com/KB/winsdk/junctionpoints.aspx
+
+  Note that from a Unix point of view junctions are much closer to mount
+  points than symbolic links, and have to be linked to/mounted on an
+  existing empty directory.  However, they can be removed as if they are
+  files (by \code{\link{unlink}}).
 
   Most of these functions accept UTF-8 filepaths not valid in the
   current locale.
