@@ -3677,7 +3677,7 @@ is available to those who first install recording to a log, then call
 
 @item _R_CHECK_DEPENDS_ONLY_
 @itemx _R_CHECK_SUGGESTS_ONLY_
-If set to a true vale, running examples, tests and vignettes is done
+If set to a true value, running examples, tests and vignettes is done
 with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
 links to the installed copies of all the Depends/Imports/LinkingTo and
