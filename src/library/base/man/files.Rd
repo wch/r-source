@@ -125,7 +125,7 @@ file.link(from, to)
 }
 \section{Symbolic links on Windows}{
   Symbolic links in the sense of POSIX file systems do not exist on
-  Windows.  However, NTFS has two similar concepts.
+  Windows: however, NTFS file systems support two similar concepts.
 
   Linking to \emph{directories} has been implemented since Windows 2000
   using \sQuote{junctions}, unfortunately without a public API.  The
@@ -142,12 +142,12 @@ file.link(from, to)
   Linking to files was implemented from Vista, and \code{file.symlink}
   makes use of that interface since \R 2.15.0.  However, it has
   restrictions (apart from the OS restriction) that are crippling.
-  First, the users needs permission to make symbolic links, and that
-  permission is not normally granted apart from to Administrator users
+  First, the user needs permission to make symbolic links, and that
+  permission is not normally granted apart from to Administrator accounts
   (note: not users with Administrator rights): further many users report
   that whereas the Policy Editor appears to be able to grant such
   rights, the API still reports insufficient permissions.  Second, the
-  interface needs to kwow if \code{from} is a file or directory (and it
+  interface needs to know if \code{from} is a file or directory (and it
   need not yet exist), so we have only currently implemented this for
   files.  Finally, file symlinks are basically shortcuts, and not all
   software will follow them. 
