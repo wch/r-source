@@ -132,12 +132,9 @@ file.link(from, to)
   examples show one way to use this \emph{via} \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
   \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).
+  See \url{http://en.wikipedia.org/wiki/NTFS_junction_point}.  On recent
+  enough versions of Windows \command{mklink /J} can also be used.
 % see also http://www.codeproject.com/KB/winsdk/junctionpoints.aspx
-
-  Note that from a Unix point of view junctions are much closer to mount
-  points than symbolic links, and have to be linked to/mounted on an
-  existing empty directory.  However, they can be removed as if they are
-  files (by \code{\link{unlink}}).
   
   Linking to files was implemented from Vista, and \code{file.symlink}
   makes use of that interface since \R 2.15.0.  However, it has
@@ -147,10 +144,13 @@ file.link(from, to)
   (note: not users with Administrator rights): further many users report
   that whereas the Policy Editor appears to be able to grant such
   rights, the API still reports insufficient permissions.  Second, the
-  interface needs to know if \code{from} is a file or directory (and it
+  interface needs to know if \code{from} is a file or a directory (and it
   need not yet exist), so we have only currently implemented this for
-  files.  Finally, file symlinks are basically shortcuts, and not all
-  software will follow them. 
+  files.
+
+  Care is needed with removing junctions: many tools will remove their
+  target and its contents (including Windows Explorer in XP):
+  \command{junction -d \var{path}} can be used.
 }
 #endif
 
@@ -198,8 +198,7 @@ file.remove("A", "B", "C")
 ## See the text for the system requirements here.
 \dontrun{
 dir.symlink <- function(from, to) {
-    to2 <- normalizePath(file.path(to, basename(from)))
-    dir.create(to2)
+    to2 <- file.path(to, basename(from))
     system2("junction.exe", c(to2, normalizePath(from)), NULL)
 }}
 #endif

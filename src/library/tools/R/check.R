@@ -56,12 +56,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 {
     WINDOWS <- .Platform$OS.type == "windows"
     flink <- if(WINDOWS) {
-        if(nzchar(Sys.which("junction.exe"))) {
+        if(FALSE && nzchar(Sys.which("junction.exe"))) {
             function(from, to) {
                 to2 <- file.path(to, basename(from))
-                dir.create(to2)
                 system2("junction.exe",
-                        c(normalizePath(to2), normalizePath(from)), NULL)
+                        c(to2, normalizePath(from)), NULL)
             }
         } else {
             function(from, to) file.copy(from, to, recursive = TRUE)
