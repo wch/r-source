@@ -126,12 +126,9 @@ file.link(from, to)
   \emph{via} \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
   \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).
-% see also http://www.codeproject.com/KB/winsdk/junctionpoints.aspx
-
-  Note that from a Unix point of view junctions are much closer to mount
-  points than symbolic links, and have to be linked to/mounted on an
-  existing empty directory.  However, they can be removed as if they are
-  files (by \code{\link{unlink}}).
+  Care is needed with removing junctions: many tools will remove their
+  target and its contents (including Windows Explorer in XP):
+  \command{junction -d \var{path}} can be used.
 
   Most of these functions accept UTF-8 filepaths not valid in the
   current locale.
@@ -185,8 +182,7 @@ file.remove("A", "B", "C")
 ## See the text for the system requirements here.
 \dontrun{
 dir.symlink <- function(from, to) {
-    to2 <- normalizePath(file.path(to, basename(from)))
-    dir.create(to2)
+    to2 <- file.path(to, basename(from))
     system2("junction.exe", c(to2, normalizePath(from)), NULL)
 }}
 #endif
