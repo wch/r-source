@@ -100,6 +100,8 @@
 
       \item The \code{"dendrogram"} method of \code{str()} now takes
       its default for \code{last.str} from option \code{str.dendrogram.last}.
+
+      \item new simple \code{fitted()} method for \code{"kmeans"} objects.
     }
   }
 
@@ -175,7 +177,7 @@
 	 Extensions}.  Timings (in the style of \command{R CMD BATCH} are
        given at the foot of the output file from running each test and
        the \R code in each vignette.
-       
+
        \item There are new options for more rigorous testing by
        \command{R CMD check} selected by environment variables -- see
        the \sQuote{Writing R Extensions} manual.

@@ -1,11 +1,12 @@
 % File src/library/stats/man/kmeans.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{kmeans}
 \alias{kmeans}
 \alias{print.kmeans}
+\alias{fitted.kmeans}
 \title{
 K-Means Clustering
 }
@@ -16,6 +17,7 @@ K-Means Clustering
 kmeans(x, centers, iter.max = 10, nstart = 1,
        algorithm = c("Hartigan-Wong", "Lloyd", "Forgy",
                      "MacQueen"))
+\method{fitted}{kmeans}(object, method = c("centers", "classes"), ...)
 }
 \arguments{
   \item{x}{numeric matrix of data, or an object that can be coerced to
@@ -28,6 +30,11 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{nstart}{if \code{centers} is a number, how many random sets
     should be chosen?}
   \item{algorithm}{character: may be abbreviated.}
+  \item{method}{character: may be abbreviated. \code{"centers"} causes
+    \code{fitted} to return cluster centers (one for each input point) and
+    \code{"classes"} causes \code{fitted} to return a vector of class
+    assignments.}
+  \item{\dots}{not used.}
 }
 \details{
   The data given by \code{x} is clustered by the \eqn{k}-means method,
@@ -53,17 +60,17 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   an error for the Hartigan--Wong method.
 }
 \value{
-  An object of class \code{"kmeans"} which has a \code{print} method and
-  is a list with components:
+  \code{kmeans} returns an object of class \code{"kmeans"} which has a
+  \code{print} and a \code{fitted} method.  It is a list with components:
   \item{cluster}{
     A vector of integers (from \code{1:k}) indicating the cluster to
     which each point is allocated.
   }
   \item{centers}{A matrix of cluster centres.}
-  \item{withinss}{The within-cluster sum of squares for each cluster.}
-  \item{totss}{The total within-cluster sum of squares.}
+  \item{totss}{The total sum of squares.}
+  \item{withinss}{Vector of within-cluster sum of squares, one component per cluster.}
   \item{tot.withinss}{Total within-cluster sum of squares, i.e., \code{sum(withinss)}.}
-  \item{betweenss}{The between-cluster sum of squares.}
+  \item{betweenss}{The between-cluster sum of squares, i.e. \code{totss-tot.withinss}.}
   \item{size}{The number of points in each cluster.}
 }
 \references{
@@ -96,9 +103,29 @@ colnames(x) <- c("x", "y")
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:2, pch = 8, cex=2)
 
-kmeans(x,1)$withinss # if you are interested in that
+# sum of squares
+ss <- function(x) sum(scale(x, scale = FALSE)^2)
+
+## cluster centers "fitted" to each obs.:
+fitted.x <- fitted(cl);  head(fitted.x)
+resid.x <- x - fitted(cl)
+
+## Equalities : ----------------------------------
+cbind(cl[c("betweenss", "tot.withinss", "totss")], # the same two columns
+         c(ss(fitted.x), ss(resid.x),    ss(x)))
+stopifnot(all.equal(cl$ totss,        ss(x)),
+	  all.equal(cl$ tot.withinss, ss(resid.x)),
+	  ## these three are the same:
+	  all.equal(cl$ betweenss,    ss(fitted.x)),
+	  all.equal(cl$ betweenss, cl$totss - cl$tot.withinss),
+	  ## and hence also
+	  all.equal(ss(x), ss(fitted.x) + ss(resid.x))
+	  )
+
+kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 
 ## random starts do help here with too many clusters
+## (and are often recommended anyway!):
 (cl <- kmeans(x, 5, nstart = 25))
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:5, pch = 8)
