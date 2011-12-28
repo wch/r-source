@@ -35,7 +35,8 @@
 #include "getline/getline.h"
 #include "getline/wc_history.h"
 #define WIN32_LEAN_AND_MEAN 1
-#ifndef _WIN32_WINNT /* currently MinGW does not define, MinGW-w64 does */
+/* Mingw-w64 defines this to be 0x0502 */
+#ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0500     /* for MEMORYSTATUSEX */
 #endif
 #include <windows.h>		/* for CreateEvent,.. */

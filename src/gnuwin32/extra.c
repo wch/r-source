@@ -36,6 +36,7 @@
 #include "Fileio.h"
 #include <direct.h>
 #include "graphapp/ga.h"
+/* Mingw-w64 defines this to be 0x0502 */
 #ifndef _WIN32_WINNT
 # define _WIN32_WINNT 0x0502 /* for GetLongPathName, KEY_WOW64_64KEY */
 #endif

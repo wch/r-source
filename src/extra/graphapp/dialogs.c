@@ -28,7 +28,11 @@
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
 
-#define _WIN32_WINNT 0x0500
+/* Mingw-w64 defines this to be 0x0502 */
+#ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x0500
+#endif
+
 #include "win-nls.h"
 #include "internal.h"
 #include "ga.h"

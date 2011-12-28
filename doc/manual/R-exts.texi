@@ -2565,7 +2565,7 @@ warnings that you understand and have reasons not to eliminate.  In
 principle, packages must pass @code{R CMD check} without warnings to be
 admitted to the main @acronym{CRAN} package area.  If there are warnings
 you cannot eliminate (for example because you believe them to be
-spurious) send an explanatory note with your submission.
+spurious) send an explanatory note as part of your covering email.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
@@ -2663,7 +2663,7 @@ appropriate.  For tests and vignettes, it reports the time for each as
 well as the total.
 
 Setting @env{_R_CHECK_TIMINGS_} to a non-zero value sets a threshold (in
-seconds) for reporting timings.
+seconds elapsed time) for reporting timings.
 
 If you need to look in more detail at the timings for examples, use
 option @option{--timings} to @command{R CMD check}.  This generates a

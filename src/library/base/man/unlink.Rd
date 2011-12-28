@@ -25,7 +25,11 @@
   not even empty ones.
 
 #ifdef unix
-  On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
+  On most platforms \sQuote{file} includes symbolic links, fifos and
+  sockets.  Prior to \R 2.15.0 \code{unlink(x, recursive = TRUE)} would
+  delete the contents of a directory target of a symbolic link: it now
+  only deletes the symbolic link (as \code{unlink(x, recursive = FALSE)}
+  always has).
   
 #endif  
   Wildcard expansion is done by the internal code of
@@ -56,6 +60,9 @@
 
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
+
+  It is unsafe to apply \code{unlink} to a junction or symbolic link: it
+  is liable to delete more than was intended.
   
   UTF-8-encoded paths not valid in the current locale can be used.
 #endif

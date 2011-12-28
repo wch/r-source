@@ -92,7 +92,8 @@ file.link(from, to)
   \code{copy.mode = TRUE} (added in \R 2.13.0) file read/write/execute
   permissions are copied where possible, restricted by
   \sQuote{\link{umask}}.  Other security attributes such as ACLs are not
-  copied.
+  copied.  On a POSIX filesystem the targets of symbolic links will be
+  copied rather than the links themselves.
   
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the

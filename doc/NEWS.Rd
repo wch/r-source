@@ -100,8 +100,12 @@
 
       \item The \code{"dendrogram"} method of \code{str()} now takes
       its default for \code{last.str} from option \code{str.dendrogram.last}.
-
-      \item new simple \code{fitted()} method for \code{"kmeans"} objects.
+      
+      \item New simple \code{fitted()} method for \code{"kmeans"} objects.
+      
+      \item The behaviour of \code{unlink(recursive = TRUE)} for a
+      symbolic link to a directory has changed: it now removes the link
+      rather than the directory contents (as \command{rm -r} does).
     }
   }
 
