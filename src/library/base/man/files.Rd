@@ -78,7 +78,7 @@ file.link(from, to)
   something like \command{man 2 rename} on a Unix-alike): in particular
   in the interpretation of \sQuote{file}: most platforms will not rename
   files across file systems.  (On Windows, \code{file.rename} nowadays
-  works for files (but not directories) across volumes.)
+  works across volumes for files but not directories.)
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
@@ -98,9 +98,10 @@ file.link(from, to)
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the
   \code{to} argument can specify a single existing directory.  (Unix and
-  Mac OS X native filesystems support both.  Windows has hard links on
-  NTFS file systems.  What happens on a FAT or SMB-mounted file system is
-  OS-specific.)
+  Mac OS X native filesystems support both.  Windows has hard links to
+  files on NTFS file systems and concepts related to symbolic links on
+  recent versions: see the section below on the Windows version of this
+  help page.  What happens on a FAT or SMB-mounted file system is OS-specific.)
 }
 
 \value{
@@ -111,6 +112,7 @@ file.link(from, to)
   If \code{showWarnings = TRUE}, \code{file.create} will give a warning
   for an unexpected failure.
 }
+
 #ifdef windows
 \note{
   There is no guarantee that these functions will handle Windows
@@ -124,34 +126,36 @@ file.link(from, to)
   User error in supplying invalid file names (and note that \file{foo/}
   \emph{is} invalid on Windows) has undefined consequences.
 }
+
 \section{Symbolic links on Windows}{
   Symbolic links in the sense of POSIX file systems do not exist on
   Windows: however, NTFS file systems support two similar concepts.
 
   Linking to \emph{directories} has been implemented since Windows 2000
-  using \sQuote{junctions}, unfortunately without a public API.  The
-  examples show one way to use this \emph{via} \file{junction.exe} from
+  using \sQuote{junctions} (or \sQuote{junction points}), unfortunately
+  without a public API.  The examples show one way to use this
+  \emph{via} \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
-  \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).
-  See \url{http://en.wikipedia.org/wiki/NTFS_junction_point}.  On recent
+  \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).  See
+  \url{http://en.wikipedia.org/wiki/NTFS_junction_point}.  On recent
   enough versions of Windows \command{mklink /J} can also be used.
-% see also http://www.codeproject.com/KB/winsdk/junctionpoints.aspx
+  (Junctions are in reality a Windows version of the Unix concept of
+  mounting on directory on another.)
   
   Linking to files was implemented from Vista, and \code{file.symlink}
   makes use of that interface since \R 2.15.0.  However, it has
   restrictions (apart from the OS restriction) that are crippling.
   First, the user needs permission to make symbolic links, and that
-  permission is not normally granted apart from to Administrator accounts
+  permission is not normally granted except to Administrator accounts
   (note: not users with Administrator rights): further many users report
   that whereas the Policy Editor appears to be able to grant such
   rights, the API still reports insufficient permissions.  Second, the
   interface needs to know if \code{from} is a file or a directory (and it
-  need not yet exist), so we have only currently implemented this for
-  files.
+  need not yet exist): we have implemented this to allow linking of a
+  directory only if it currently exists.
 
-  Care is needed with removing junctions: many tools will remove their
-  target and its contents (including Windows Explorer in XP):
-  \command{junction -d \var{path}} can be used.
+  Care is needed with removing a junction: many tools will remove the
+  target and its contents (including Windows Explorer in XP).
 }
 #endif
 

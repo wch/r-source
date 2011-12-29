@@ -578,17 +578,18 @@ const char *formatError(DWORD res);  /* extra.c */
 /* Windows does not have link(), but it does have CreateHardLink() on NTFS */
 #undef HAVE_LINK
 #define HAVE_LINK 1
+/* Windows does not have symlink(), but >= Vista does have 
+   CreateSymbolicLink() on NTFS */
 #undef HAVE_SYMLINK
-// #define HAVE_SYMLINK 1
+#define HAVE_SYMLINK 1
 #endif
 
 /* the Win32 stuff here is not ready for release:
 
    (i) It needs Windows >= Vista
-   (ii) unlink() would need to be taught about symlinks, especially for dirs.
-   (iii) It matters where 'from' is a file or a dir, and we could only 
+   (ii) It matters whether 'from' is a file or a dir, and we could only 
    know if it exists already.
-   (iv) This needs specific privileges which in general only Adminstrators 
+   (iii) This needs specific privileges which in general only Adminstrators 
    have, and which many people report granting in the Policy Editor 
    fails to work.
 */
@@ -628,10 +629,13 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t *from, *to;	    
+	    wchar_t *from, *to;
+	    struct _stati64 sb;
 	    from = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
-	    LOGICAL(ans)[i] = pCSL(to, from, 0x0) != 0; // 0x0 = file
+	    _wstati64(from, &sb);
+	    int isDir = (sb.st_mode & S_IFDIR) > 0;
+	    LOGICAL(ans)[i] = pCSL(to, from, isDir) != 0;
 	    if(!LOGICAL(ans)[i])
 		warning(_("cannot symlink '%ls' to '%ls', reason '%s'"),
 			from, to, formatError(GetLastError()));
@@ -1380,6 +1384,46 @@ static int R_rmdir(const wchar_t *dir)
     return _wrmdir(tmp);
 }
 
+/* Junctions and symbolic links are fundamentally reparse points, so
+   apparently this is the way to detect them. */
+static int isReparsePoint(const wchar_t *name)
+{
+    DWORD res = GetFileAttributesW(name);
+    if(res == INVALID_FILE_ATTRIBUTES) {
+	warning("cannot get info on '%ls', reason '%s'",
+		name, formatError(GetLastError()));
+	return 0;
+    }
+    // printf("%ls: %x\n", name, res);
+    return res & FILE_ATTRIBUTE_REPARSE_POINT;
+}
+
+static int delReparsePoint(const wchar_t *name)
+{
+    HANDLE hd = 
+	CreateFileW(name, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING,
+		    FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
+		    0);
+    if(hd == INVALID_HANDLE_VALUE) {
+	warning("cannot open reparse point '%ls', reason '%s'",
+		name, formatError(GetLastError()));
+	return 1;
+    }    
+    REPARSE_GUID_DATA_BUFFER rgdb = {0};
+    rgdb.ReparseTag = IO_REPARSE_TAG_MOUNT_POINT;
+    DWORD dwBytes;
+    BOOL res = DeviceIoControl(hd, FSCTL_DELETE_REPARSE_POINT, &rgdb,
+			       REPARSE_GUID_DATA_BUFFER_HEADER_SIZE,
+			       NULL, 0, &dwBytes, 0);
+    CloseHandle(hd);
+    if(res == 0)
+	warning("cannot delete reparse point '%ls', reason '%s'",
+		name, formatError(GetLastError()));
+    else /* This may leave an empty dir behind */
+	R_rmdir(name);
+    return res == 0;
+}
+
 static int R_unlink(wchar_t *name, int recursive, int force)
 {
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
@@ -1394,18 +1438,11 @@ static int R_unlink(wchar_t *name, int recursive, int force)
 	struct _stati64 sb;
 	int n, ans = 0;
 
-	/* Need to use GetFileInformationByHandle to see if this is a
-	   junction or symlink.  Something like
-	   BY_HANDLE_FILE_INFORMATION info;
-	   // or FILE_FLAG_OPEN_REPARSE_POINT 
-	   handle = CreateFileW(name, 0, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	   // check result
-	   GetFileInformationByHandle(handle, &info);
-	   CloseHandle(handle);
-	   info.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT;
-	*/
-	_wstati64(name, &sb); if ((sb.st_mode &
-	S_IFDIR) > 0) { /* a directory */
+	_wstati64(name, &sb);
+	/* We need to test for a junction first, as junctions
+	   are detected as directories. */
+	if (isReparsePoint(name)) ans += delReparsePoint(name);
+	else if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = _wopendir(name)) != NULL) {
 		while ((de = _wreaddir(dir))) {
 		    if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
@@ -1419,7 +1456,8 @@ static int R_unlink(wchar_t *name, int recursive, int force)
 		    }
 		    /* printf("stat-ing %ls\n", p); */
 		    _wstati64(p, &sb);
-		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+		    if (isReparsePoint(name)) ans += delReparsePoint(name);
+		    else if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 			/* printf("is a directory\n"); */
 			if (force) _wchmod(p, _S_IWRITE);
 			ans += R_unlink(p, recursive, force);
@@ -1436,7 +1474,8 @@ static int R_unlink(wchar_t *name, int recursive, int force)
 	    return ans;
 	}
 	/* drop through */
-    }
+    } else if (isReparsePoint(name)) return delReparsePoint(name);
+    
     return _wunlink(name) == 0 ? 0 : 1;
 }
 

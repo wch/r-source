@@ -1482,9 +1482,6 @@ SEXP do_setStatusBar(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-/* Note that a HANDLE is a pointer and hence will not necesarily fit into
-   an int, so this is fundamentally broken */
-
 static void * getConsoleHandle(const char *which)
 {
     if (CharacterMode != RGui) return(NULL);

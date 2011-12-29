@@ -60,9 +60,6 @@
 
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
-
-  It is unsafe to apply \code{unlink} to a junction or symbolic link: it
-  is liable to delete more than was intended.
   
   UTF-8-encoded paths not valid in the current locale can be used.
 #endif

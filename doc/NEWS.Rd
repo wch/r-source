@@ -90,13 +90,14 @@
       takes the default for argument \code{gs_quality} from environment
       variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
       ultimate default, which prevents GhostScript being used in
-      preference to \command{qpdf} even if environment variable
+      preference to \command{qpdf} just because environment variable
       \env{R_GSCMD} is set.
 
       \item The internal \code{untar()} (as used by default by
       \command{R CMD INSTALL}) now knows about some \command{pax}
-      headers which \command{bsdtar} incorrectly includes in
-      \command{tar} files, and will skip them with a warning.
+      headers which \command{bsdtar} (e.g. the default \command{tar} for
+      Mac OS >= 10.6) can incorrectly include in \command{tar} files,
+      and will skip them with a warning.
 
       \item The \code{"dendrogram"} method of \code{str()} now takes
       its default for \code{last.str} from option \code{str.dendrogram.last}.
@@ -106,6 +107,9 @@
       \item The behaviour of \code{unlink(recursive = TRUE)} for a
       symbolic link to a directory has changed: it now removes the link
       rather than the directory contents (as \command{rm -r} does).
+
+      On Windows it no longer follows reparse points (includiing
+      junctions and symbolic links).
     }
   }
 

@@ -9,7 +9,7 @@
     \itemize{
       \item The 32-bit and 64-bit builds are now treated equally, as it
       is anticipated that 64-bit R will soon be (if not already) the
-      more comonly used.  This entails:
+      more commonly used.  This entails:
       
       The \command{Rterm} or \command{Rgui} title mentions 32-bit as
       well as 64-bit.
@@ -24,7 +24,14 @@
       
       \item \code{file.symlink()} is now implemented on NTFS file
       systems on Vista or later, for accounts which have suitable
-      permissions (and most will not).
+      permissions (and most will not).  It can link existing
+      directories, and existing-or-not files.
+
+      \item The behaviour of \code{unlink()} for reparse points
+      (including junctions and symbolic links) has changed.  It no
+      longer follow links (deleting the contents of the link target
+      rather than the link), and it is able to delete the link itself
+      (given sufficient permissions).
     }
   }
   

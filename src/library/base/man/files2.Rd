@@ -67,7 +67,8 @@ Sys.umask(mode = NA)
   Changing mode on a symbolic link is unlikely to work (nor be
   necessary).  For more details see your OS's documentation on the
   system call \code{chmod}, e.g. \command{man 2 chmod} (and not that on
-  the command-line utility of that name).
+  the command-line utility of that name).  Whether this changes the
+  permission of a symbolic link or its target is OS-dependent.
 #endif
 #ifdef windows
   The interpretation of \code{mode} in the Windows system functions is
@@ -134,8 +135,7 @@ Sys.umask(mode = NA)
 \examples{\dontrun{
 ## Fix up maximal allowed permissions in a file tree
 Sys.chmod(list.dirs("."), "777")
-f <- list.files(".", all.files = TRUE, full.names = TRUE,
-                recursive =TRUE)
+f <- list.files(".", all.files = TRUE, full.names = TRUE, recursive = TRUE)
 Sys.chmod(f, (file.info(f)$mode | "664"))
 }}
 \keyword{file}
