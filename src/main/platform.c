@@ -566,6 +566,13 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <unistd.h> /* for symlink, getpid */
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
+
 #ifdef Win32
 /* Mingw-w64 defines this to be 0x0502 */
 #ifndef _WIN32_WINNT
@@ -804,13 +811,6 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
-
 # if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
 #  include <pwd.h>
@@ -819,8 +819,6 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 # endif
 
 #ifdef Win32
-# define WIN32_LEAN_AND_MEAN 1
-# include <windows.h>
 # ifndef SCS_64BIT_BINARY
 #  define SCS_64BIT_BINARY 6
 # endif
@@ -1374,7 +1372,6 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32
-#include <windows.h>
 
 static int R_rmdir(const wchar_t *dir)
 {
