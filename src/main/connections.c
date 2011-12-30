@@ -3317,7 +3317,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	nbuf = 0;
 	while((c = Rconn_fgetc(con)) != R_EOF) {
-	    if(nbuf == buf_size) {
+	    if(nbuf == buf_size-1) {  /* need space for the null */
 		buf_size *= 2;
 		char *tmp = (char *) realloc(buf, buf_size);
 		if(!buf) {
