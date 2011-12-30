@@ -264,15 +264,18 @@
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
   \subsection{BUG FIXES}{
-     \itemize{
-       \item R configured with \code{--disable-openmp} would mistakenly
-       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
-       \file{Rconfig.h}) even though no OpenMP flags were populated.
+    \itemize{
+      \item R configured with \code{--disable-openmp} would mistakenly
+      set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
+      \file{Rconfig.h}) even though no OpenMP flags were populated.
 
-       \item  The \code{getS3method()} implementation had a very old
-       and incorrect computation to find an S4 default method.
-     }
-   }
+      \item  The \code{getS3method()} implementation had a very old
+      and incorrect computation to find an S4 default method.
+       
+      \item \code{readLines()} could overflow a buffer if the last line
+      was not terminated.  (\PR{14766})
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.1}{
@@ -1294,7 +1297,7 @@
 
       \item Several stack trampling and overflow issues have been fixed
       in TRE, triggered by \code{agrep} and friends with long patterns.
-      (\PR{14627}.)
+      (\PR{14627})
 
       \item (\dQuote{design infelicity}) Field assignments in reference
       classes are now consistent with slots in S4 classes:  the
@@ -1547,7 +1550,7 @@
 
       \item \code{persp(box = TRUE)} now warns if the surface extends
       outside the box (since occlusion for the box and axes is computed
-      assuming the box is a bounding box). (\PR{202}.)
+      assuming the box is a bounding box). (\PR{202})
 
       \item \code{RShowDoc()} can now display the licences shipped with
       \R, e.g. \code{RShowDoc("GPL-3")}.
