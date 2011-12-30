@@ -68,7 +68,9 @@ Sys.umask(mode = NA)
   necessary).  For more details see your OS's documentation on the
   system call \code{chmod}, e.g. \command{man 2 chmod} (and not that on
   the command-line utility of that name).  Whether this changes the
-  permission of a symbolic link or its target is OS-dependent.
+  permission of a symbolic link or its target is OS-dependent (although
+  to change the target is more common, and POSIX does not support modes
+  for symbolic links: BSD-based Unixes do, though).
 #endif
 #ifdef windows
   The interpretation of \code{mode} in the Windows system functions is
