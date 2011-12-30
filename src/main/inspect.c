@@ -36,7 +36,7 @@
 #define GLOBAL_FRAME_MASK (1<<15)
 #define IS_GLOBAL_FRAME(e) (ENVFLAGS(e) & GLOBAL_FRAME_MASK)
 
-/* from printutils.c */
+/* based on EncodeEnvironment in  printutils.c */
 static void PrintEnvironment(SEXP x)
 {
     if (x == R_GlobalEnv)
@@ -101,11 +101,17 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     int a = 0;
     pp(pre);
     /* the use of %lx is deliberate because I hate the output of %p,
-       but if this causes portability issues, it could be changed. */
-#ifdef _W64
-    Rprintf("@%p %02d %s g%dc%d [", v, TYPEOF(v), typename(v), v->sxpinfo.gcgen, v->sxpinfo.gccls);
+       but if this causes portability issues, it could be changed.
+       SU
+
+       It is invalid on 64-bit Windows.
+    */
+#ifdef _WIN64
+    Rprintf("@%p %02d %s g%dc%d [", v, TYPEOF(v), typename(v), 
+	    v->sxpinfo.gcgen, v->sxpinfo.gccls);
 #else
-    Rprintf("@%lx %02d %s g%dc%d [", (long) v, TYPEOF(v), typename(v), v->sxpinfo.gcgen, v->sxpinfo.gccls);
+    Rprintf("@%lx %02d %s g%dc%d [", (long) v, TYPEOF(v), typename(v), 
+	    v->sxpinfo.gcgen, v->sxpinfo.gccls);
 #endif
     if (OBJECT(v)) { a = 1; Rprintf("OBJ"); }
     if (MARK(v)) { if (a) Rprintf(","); Rprintf("MARK"); a = 1; }
