@@ -199,6 +199,13 @@ function that is called from the reference method.
 Specifically, methods can not use special features of the
 enclosing environment mechanism, since the method's environment is
 used to access fields and other methods.
+In particular, methods should not use non-exported entries in the
+package's namespace, because the methods may be inherited by a
+reference class in another package.
+(This is one context in which use of the \code{"..."} operator to
+refer explicitly to such entries may be reasonable.  The reference
+method definition is in the same package source as these entries.)
+
 Reference methods can not themselves be generic functions; if you want
 additional function-based method dispatch, write a separate generic
 function and call that from the method.
