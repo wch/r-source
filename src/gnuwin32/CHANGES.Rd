@@ -65,6 +65,14 @@
       preference to \command{gswin32c.exe}.
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Using a prompt of more than 80 characters in
+      \code{readline()} could cause a buffer overflow in Rterm.
+      (Reported by Henrik Bengtsson.)
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.14.1}{

@@ -28,6 +28,9 @@ int 		(*gl_tab_hook)() = gl_tab;
 extern Rboolean mbcslocale;
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 
+/* NB:  this define must match the one in src/main/scan.c */
+#define CONSOLE_PROMPT_SIZE	256
+
 #include <string.h>
 #include <ctype.h>
 #include <setjmp.h>
@@ -782,7 +785,7 @@ gl_fixup(const char *prompt, int change, int cursor)
     static int   gl_shift;	/* index of first on screen character */
     static int   off_right;	/* true if more text right of screen */
     static int   off_left;	/* true if more text left of screen */
-    static char  last_prompt[80] = "";
+    static char  last_prompt[CONSOLE_PROMPT_SIZE] = "";
     int          left = 0, right = -1;		/* bounds for redraw */
     int          pad;		/* how much to erase at end of line */
     int          backup;        /* how far to backup before fixing */
@@ -796,7 +799,7 @@ gl_fixup(const char *prompt, int change, int cursor)
 	while (gl_pos--) gl_putc('\b');
         gl_pos = gl_cnt = gl_shift = off_right = off_left = 0;
 	gl_puts(prompt);
-	strcpy(last_prompt, prompt);
+	strncpy(last_prompt, prompt, CONSOLE_PROMPT_SIZE-1);
 	change = 0;
         gl_width = gl_termw - gl_strlen(prompt);
     } else if (strcmp(prompt, last_prompt) != 0) {
@@ -804,7 +807,7 @@ gl_fixup(const char *prompt, int change, int cursor)
 	l2 = gl_strlen(prompt);
         ll = gl_pos + l1;
 	gl_cnt = gl_cnt + l1 - l2;
-	strcpy(last_prompt, prompt);
+	strncpy(last_prompt, prompt, CONSOLE_PROMPT_SIZE-1);
 	while (ll--) gl_putc('\b');	
 	gl_puts(prompt);
 	gl_pos = gl_shift;
