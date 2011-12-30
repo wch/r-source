@@ -1476,9 +1476,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
         out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
-        if(length(st <- attr(out, "status"))) {
-            stop("error status ", st)
-        }
         if (any(grepl("^Error", out)) || length(attr(out, "status"))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
