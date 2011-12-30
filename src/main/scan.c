@@ -48,6 +48,7 @@ static R_INLINE int imin2(int x, int y)
 /* The size of vector initially allocated by scan */
 #define SCAN_BLOCKSIZE		1000
 /* The size of the console buffer */
+/* NB:  in Windows this also needs to be set in gnuwin32/getline/getline.c */
 #define CONSOLE_PROMPT_SIZE	256
 
 #define NO_COMCHAR 100000 /* won't occur even in Unicode */
