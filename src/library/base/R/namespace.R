@@ -586,7 +586,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                 ## the rest must be generic functions, implicit or local
                 ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
                 if(!all(ok)) {# unclear how this could happen, but ...
-                    miss <- sort(unique(addGenerics[!OK]))
+                    miss <- sort(unique(addGenerics[!ok]))
                     stop(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true for %s",
                                   paste(sQuote(miss), collapse = ", ")),
                          domain = NA)
