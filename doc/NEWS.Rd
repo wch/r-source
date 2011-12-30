@@ -251,6 +251,13 @@
       \item The convention for \code{x \%/\% 0L} for integer-mode \code{x}
       has been changed from \code{0L} to \code{NA_integer_}.
       (\PR{14754})
+
+      \item The \code{exportMethods} directive now exports generics as
+      necessary, as the extensions manual said it does.  The manual
+      has also been updated to be a little more informative on this point.
+
+      \item Reference methods can not safely use non-exported entries
+      in the namespace.  We now do not do so, and warn in the documentation.
     }
   }
 }

@@ -158,12 +158,10 @@ function(package, dir, lib.loc = NULL)
         ## (with names starting with '.__C__' or '.__M__'; well, as long
         ## as there are none in base).
 
-        ## Need to do something about S4 generic functions 'created' by
-        ## setGeneric() or setMethod() on 'ordinary' functions.
-        ## The test below exempts objects that are generic functions
-        ## which are 'derived', either by importing from another
-        ## package or from a default method.
-        ## In the long run we need dynamic documentation.
+        ## Implicit generic functions exist to turn method dispatch on
+        ## in this package, but their definition and documentation belongs
+        ## to the package in their package slot, so eliminate any
+        ## foreign generic functions from code_objs
         if(.isMethodsDispatchOn()) {
             code_objs <-
                 Filter(function(f) {
