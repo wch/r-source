@@ -1,5 +1,6 @@
 export(mle) # exporting methods implicitly exports the generics
 importFrom("graphics", plot)
+importFrom("methods", show)
 importFrom("stats", optim, qchisq)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
 importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile, update, vcov)
