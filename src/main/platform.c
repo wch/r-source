@@ -2762,30 +2762,25 @@ SEXP attribute_hidden R_setFileTime(SEXP name, SEXP time)
 }
 
 #ifdef Win32
-struct TMN_REPARSE_DATA_BUFFER
+typedef struct TMN_REPARSE_DATA_BUFFER
 {
     DWORD  ReparseTag;
     WORD   ReparseDataLength;
     WORD   Reserved;
-
-    // IO_REPARSE_TAG_MOUNT_POINT specifics follow
     WORD   SubstituteNameOffset;
     WORD   SubstituteNameLength;
     WORD   PrintNameOffset;
     WORD   PrintNameLength;
     WCHAR  PathBuffer[1];
-};
+} TMN_REPARSE_DATA_BUFFER;
 
 #define TMN_REPARSE_DATA_BUFFER_HEADER_SIZE \
-                        FIELD_OFFSET(TMN_REPARSE_DATA_BUFFER, SubstituteNameOffs
-et)
+  FIELD_OFFSET(TMN_REPARSE_DATA_BUFFER, SubstituteNameOffset)
 
 
 SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP sfrom, sto;
-    const wchar_t *from, to;
-    Rboolean res = FALSE;
+    const wchar_t *from, *to;
     checkArity(op, args);
     /* from and to are both directories: and to exists */
     from = filenameToWchar(STRING_ELT(CAR(args), 0), TRUE);
@@ -2797,14 +2792,13 @@ SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    0);
     if(hd == INVALID_HANDLE_VALUE) {
 	warning("cannot open reparse point '%ls', reason '%s'",
-		name, formatError(GetLastError()));
-	return 1;
-    }    
-    char szBuff[MAXIMUM_REPARSE_DATA_BUFFER_SIZE] = { 0 };
-    TMN_REPARSE_DATA_BUFFER &rdb = *(TMN_REPARSE_DATA_BUFFER *) from;
+		to, formatError(GetLastError()));
+	return ScalarLogical(1);
+    }
+    TMN_REPARSE_DATA_BUFFER rdb = *(TMN_REPARSE_DATA_BUFFER *) from;
     const size_t nDestMountPointBytes = wcslen(from) * 2;
     rdb.ReparseTag           = IO_REPARSE_TAG_MOUNT_POINT;
-    rbd,ReparseDataLength    = nDestMountPointBytes + 12;
+    rdb.ReparseDataLength    = nDestMountPointBytes + 12;
     rdb.Reserved             = 0;
     rdb.SubstituteNameOffset = 0;
     rdb.SubstituteNameLength = nDestMountPointBytes;
