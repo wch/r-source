@@ -132,7 +132,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     R_runR2 <-
         if(WINDOWS) {
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats")
+                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats,methods")
                 {
                     out <- R_runR(cmd, R_opts2, env)
                     ## pesky gdata ....
@@ -141,7 +141,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 }
         } else
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats,methods'")
             {
                 out <- R_runR(cmd, R_opts2, env)
                 if (R_check_suppress_RandR_message)
@@ -856,7 +856,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
-                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+		# should be NULL: temporary fix
+                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=methods")
                 if (length(out)) {
                     warnLog()
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
