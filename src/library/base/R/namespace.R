@@ -578,7 +578,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                     warning(gettextf("No function found corresponding to methods exports from %s for: %s",
                                      sQuote(package),
                                      paste(sQuote(sort(unique(addGenerics[nowhere]))), collapse = ", ")),
-                         domain = NA)
+                         domain = NA, call. = FALSE)
                     addGenerics <- addGenerics[!nowhere]
                 }
                 ## skip primitives
@@ -590,7 +590,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                     warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
                                      sQuote(package),
                                      paste(sQuote(sort(unique(addGenerics[!ok]))), collapse = ", ")),
-                         domain = NA)
+                         domain = NA, call. = FALSE)
                     addGenerics <- addGenerics[ok]
                 }
 ### <note> Uncomment following to report any local generic functions
