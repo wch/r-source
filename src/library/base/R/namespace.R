@@ -575,8 +575,9 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(length(addGenerics)) {
                 nowhere <- sapply(addGenerics, function(what) !exists(what, envir = ns))
                 if(any(nowhere)) {
-                    warning(gettextf("No function found corresponding to methods exports for: %s",
-                                  paste(sort(unique(addGenerics[nowhere])), collapse = ", ")),
+                    warning(gettextf("No function found corresponding to methods exports from %s for: %s",
+                                     sQuote(package),
+                                     paste(sQuote(sort(unique(addGenerics[nowhere]))), collapse = ", ")),
                          domain = NA)
                     addGenerics <- addGenerics[!nowhere]
                 }
@@ -586,8 +587,9 @@ loadNamespace <- function (package, lib.loc = NULL,
                 ## the rest must be generic functions, implicit or local
                 ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
                 if(!all(ok)) { # unclear how this could happen, but ...
-                    warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true for %s",
-                                  paste(sort(unique(addGenerics[!ok])), collapse = ", ")),
+                    warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
+                                     sQuote(package),
+                                     paste(sQuote(sort(unique(addGenerics[!ok]))), collapse = ", ")),
                          domain = NA)
                     addGenerics <- addGenerics[ok]
                 }
