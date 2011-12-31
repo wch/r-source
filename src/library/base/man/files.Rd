@@ -141,34 +141,36 @@ Sys.junction(from, to)
   Symbolic links in the sense of POSIX file systems do not exist on
   Windows: however, NTFS file systems support two similar concepts.
 
-  Linking to \emph{directories} has been implemented since Windows 2000
-  using \sQuote{junctions} (or \sQuote{junction points}), unfortunately
-  without a public API.  The examples show one way to use this
-  \emph{via} \file{junction.exe} from
+  Windows 2000 and later have using \sQuote{junctions} (or
+  \sQuote{junction points}), unfortunately without a public API.  They
+  are a Windows version of the Unix concept of mounting on directory on
+  another.  One way to create, list and delete junctions is \emph{via}
+  \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
-  \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).  See
-  \url{http://en.wikipedia.org/wiki/NTFS_junction_point}.  On recent
-  enough versions of Windows \command{mklink /J} can also be used.
-  Function \code{Sys.junction} creates one or more junctions: \code{to}
-  should either specify a single existing directory or a set of
-  non-existent file paths of the same length as \code{from}.
-  (Junctions are in reality a Windows version of the Unix concept of
-  mounting on directory on another.)
+  \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).  On
+  recent enough versions of Windows \command{mklink /J} can also be
+  used.  Function \code{Sys.junction} (added in \R 2.15.0) creates one
+  or more junctions: \code{to} should either specify a single existing
+  directory or a set of non-existent file paths of the same length as
+  \code{from}.
   
-  Linking to files was implemented from Vista, and \code{file.symlink}
-  makes use of that interface since \R 2.15.0.  However, it has
-  restrictions (apart from the OS restriction) that are crippling.
-  First, the user needs permission to make symbolic links, and that
-  permission is not normally granted except to Administrator accounts
-  (note: not users with Administrator rights): further many users report
-  that whereas the Policy Editor appears to be able to grant such
-  rights, the API still reports insufficient permissions.  Second, the
-  interface needs to know if \code{from} is a file or a directory (and it
-  need not yet exist): we have implemented this to allow linking of a
-  directory only if it currently exists.
+  A version of symbolic linking to files/directories was implemented
+  from Vista, and \code{file.symlink} makes use of that interface since
+  \R 2.15.0.  However, it has restrictions (apart from the OS
+  restriction) that are crippling.  First, the user needs permission to
+  make symbolic links, and that permission is not normally granted
+  except to Administrator accounts (note: not users with Administrator
+  rights): further many users report that whereas the Policy Editor
+  appears to be able to grant such rights, the API still reports
+  insufficient permissions.  Second, the interface needs to know if
+  \code{from} is a file or a directory (and it need not yet exist): we
+  have implemented this to allow linking from a directory only if it
+  currently exists.
 
-  Care is needed with removing a junction: many tools will remove the
-  target and its contents (including Windows Explorer in XP).
+  Care is needed with removing a junction (and most likely also a
+  symbolic link): many tools will remove the target and its contents
+  (including Windows Explorer in XP, and \code{unlink} in \R prior to
+  2.15.0).
 }
 #endif
 
