@@ -256,13 +256,17 @@ double R_pow_di(double x, int n)
 
     if (ISNAN(x)) return x;
     if (n == NA_INTEGER) return NA_REAL;
+
     if (n != 0) {
 	if (!R_FINITE(x)) return R_POW(x, (double)n);
-	if (n < 0) { n = -n; x = 1/x; }
+
+	Rboolean is_neg = (n < 0);
+	if(is_neg) n = -n;
 	for(;;) {
 	    if(n & 01) xn *= x;
 	    if(n >>= 1) x *= x; else break;
 	}
+        if(is_neg) xn = 1. / xn;
     }
     return xn;
 }
@@ -838,7 +842,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = tmp + REAL(s2)[i];
             }
-            else if (n1 == n2)            
+            else if (n1 == n2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = REAL(s1)[i] + REAL(s2)[i];
             else
@@ -866,7 +870,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = tmp - REAL(s2)[i];
             }
-            else if (n1 == n2)            
+            else if (n1 == n2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = REAL(s1)[i] - REAL(s2)[i];
             else
@@ -894,7 +898,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = tmp * REAL(s2)[i];
             }
-            else if (n1 == n2)            
+            else if (n1 == n2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = REAL(s1)[i] * REAL(s2)[i];
             else
@@ -915,14 +919,14 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
             if (n2 == 1) {
                 double tmp = REAL(s2)[0];
                 for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] / tmp; 
+		    REAL(ans)[i] = REAL(s1)[i] / tmp;
             }
             else if (n1 == 1) {
                 double tmp = REAL(s1)[0];
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = tmp / REAL(s2)[i];
             }
-            else if (n1 == n2)            
+            else if (n1 == n2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = REAL(s1)[i] / REAL(s2)[i];
             else
@@ -943,14 +947,14 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
             if (n2 == 1) {
                 double tmp = REAL(s2)[0];
                 for (i = 0; i < n; i++)
-		    REAL(ans)[i] = R_POW(REAL(s1)[i], tmp); 
+		    REAL(ans)[i] = R_POW(REAL(s1)[i], tmp);
             }
             else if (n1 == 1) {
                 double tmp = REAL(s1)[0];
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = R_POW(tmp, REAL(s2)[i]);
             }
-            else if (n1 == n2)            
+            else if (n1 == n2)
                 for (i = 0; i < n; i++)
 		    REAL(ans)[i] = R_POW(REAL(s1)[i], REAL(s2)[i]);
             else
@@ -1133,7 +1137,7 @@ SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /*
-   Note that this is slightly different from the do_math1 set, 
+   Note that this is slightly different from the do_math1 set,
    both for integer/logical inputs and what it dispatches to for complex ones.
 */
 
