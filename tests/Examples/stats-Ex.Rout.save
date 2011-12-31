@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-12-23 r57978)
+R Under development (unstable) (2011-12-31 r58017)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3beef28>
+<environment: 0x320d7a8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4762,7 +4762,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5bc0f18>
+<bytecode: 0x6334758>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -6762,8 +6762,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x35be9e0>
-<environment: 0x7df0fd8>
+<bytecode: 0x2de1118>
+<environment: 0x96522f0>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7165,7 +7165,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x9a17278>
+<environment: 0x74d7f18>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8141,7 +8141,7 @@ coef[ 6] = 0.02041
 > 
 > ### Name: kmeans
 > ### Title: K-Means Clustering
-> ### Aliases: kmeans print.kmeans
+> ### Aliases: kmeans print.kmeans fitted.kmeans
 > ### Keywords: multivariate cluster
 > 
 > ### ** Examples
@@ -8176,10 +8176,41 @@ Available components:
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:2, pch = 8, cex=2)
 > 
-> kmeans(x,1)$withinss # if you are interested in that
+> # sum of squares
+> ss <- function(x) sum(scale(x, scale = FALSE)^2)
+> 
+> ## cluster centers "fitted" to each obs.:
+> fitted.x <- fitted(cl);  head(fitted.x)
+           x          y
+2 0.02149367 0.02121248
+2 0.02149367 0.02121248
+2 0.02149367 0.02121248
+2 0.02149367 0.02121248
+2 0.02149367 0.02121248
+2 0.02149367 0.02121248
+> resid.x <- x - fitted(cl)
+> 
+> ## Equalities : ----------------------------------
+> cbind(cl[c("betweenss", "tot.withinss", "totss")], # the same two columns
++          c(ss(fitted.x), ss(resid.x),    ss(x)))
+             [,1]     [,2]    
+betweenss    46.07333 46.07333
+tot.withinss 14.9179  14.9179 
+totss        60.99123 60.99123
+> stopifnot(all.equal(cl$ totss,        ss(x)),
++ 	  all.equal(cl$ tot.withinss, ss(resid.x)),
++ 	  ## these three are the same:
++ 	  all.equal(cl$ betweenss,    ss(fitted.x)),
++ 	  all.equal(cl$ betweenss, cl$totss - cl$tot.withinss),
++ 	  ## and hence also
++ 	  all.equal(ss(x), ss(fitted.x) + ss(resid.x))
++ 	  )
+> 
+> kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 [1] 60.99123
 > 
 > ## random starts do help here with too many clusters
+> ## (and are often recommended anyway!):
 > (cl <- kmeans(x, 5, nstart = 25))
 K-means clustering with 5 clusters of sizes 24, 15, 24, 25, 12
 
@@ -11542,26 +11573,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x35bc390>
-<environment: 0x7800608>
+<bytecode: 0x2de3688>
+<environment: 0x811eeb0>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x35bc320>
-<environment: 0x7800608>
+<bytecode: 0x2de36f8>
+<environment: 0x811eeb0>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x35bc2b0>
-<environment: 0x7800608>
+<bytecode: 0x2de3768>
+<environment: 0x811eeb0>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x35bc0f0>
-<environment: 0x7800608>
+<bytecode: 0x2de3a40>
+<environment: 0x811eeb0>
 
 $name
 [1] "identity"
@@ -11572,14 +11603,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7801d80>
-<environment: 0x77f3c78>
+<bytecode: 0x8120628>
+<environment: 0x8116af0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7801e98>
-<environment: 0x77f3c78>
+<bytecode: 0x8120740>
+<environment: 0x8116af0>
 
 > 
 > 
@@ -15236,8 +15267,8 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<bytecode: 0x1f7ee28>
-<environment: 0x813c4a0>
+<bytecode: 0x3826de8>
+<environment: 0x81dbe28>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17460,7 +17491,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.298 0.352 12.716 0 0 
+Time elapsed:  13.648 0.328 14.069 0 0 
 > grDevices::dev.off()
 null device 
           1 
