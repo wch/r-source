@@ -2762,6 +2762,9 @@ SEXP attribute_hidden R_setFileTime(SEXP name, SEXP time)
 }
 
 #ifdef Win32
+/* based on ideas in
+   http://www.codeproject.com/KB/winsdk/junctionpoints.aspx
+*/
 typedef struct TMN_REPARSE_DATA_BUFFER
 {
     DWORD  ReparseTag;
@@ -2771,21 +2774,20 @@ typedef struct TMN_REPARSE_DATA_BUFFER
     WORD   SubstituteNameLength;
     WORD   PrintNameOffset;
     WORD   PrintNameLength;
-    WCHAR  PathBuffer[1];
+    WCHAR  PathBuffer[1024];
 } TMN_REPARSE_DATA_BUFFER;
-
-#define TMN_REPARSE_DATA_BUFFER_HEADER_SIZE \
-  FIELD_OFFSET(TMN_REPARSE_DATA_BUFFER, SubstituteNameOffset)
-
 
 SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    const wchar_t *from, *to;
+    wchar_t from[10000];
+    const wchar_t *to;
+
     checkArity(op, args);
     /* from and to are both directories: and to exists */
-    from = filenameToWchar(STRING_ELT(CAR(args), 0), TRUE);
+    wcscpy(from, filenameToWchar(STRING_ELT(CAR(args), 0), FALSE));
     to = filenameToWchar(STRING_ELT(CADR(args), 0), TRUE);
-
+    // printf("ln %ls %ls\n", from, to);
+    
     HANDLE hd = 
 	CreateFileW(to, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING,
 		    FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
@@ -2795,20 +2797,24 @@ SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 		to, formatError(GetLastError()));
 	return ScalarLogical(1);
     }
-    TMN_REPARSE_DATA_BUFFER rdb = *(TMN_REPARSE_DATA_BUFFER *) from;
-    const size_t nDestMountPointBytes = wcslen(from) * 2;
-    rdb.ReparseTag           = IO_REPARSE_TAG_MOUNT_POINT;
-    rdb.ReparseDataLength    = nDestMountPointBytes + 12;
-    rdb.Reserved             = 0;
+    TMN_REPARSE_DATA_BUFFER rdb;
+    const size_t nbytes = wcslen(from) * 2;
+    rdb.ReparseTag = IO_REPARSE_TAG_MOUNT_POINT;
+    rdb.ReparseDataLength = nbytes + 12;
+    wcscpy(rdb.PathBuffer, from);
+    rdb.Reserved = 0;
     rdb.SubstituteNameOffset = 0;
-    rdb.SubstituteNameLength = nDestMountPointBytes;
-    rdb.PrintNameOffset      = nDestMountPointBytes + 2;
-    rdb.PrintNameLength      = 0;
+    rdb.SubstituteNameLength = nbytes;
+    rdb.PrintNameOffset = nbytes + 2;
+    rdb.PrintNameLength = 0;
     DWORD dwBytes;
     const BOOL bOK =
 	DeviceIoControl(hd, FSCTL_SET_REPARSE_POINT, &rdb, 
-			rdb.ReparseDataLength + TMN_REPARSE_DATA_BUFFER_HEADER_SIZE,
+			8 /* header */ + rdb.ReparseDataLength,
 			NULL, 0, &dwBytes, 0);
+    if(!bOK)
+	warning("cannot set reparse point '%ls', reason '%s'",
+		to, formatError(GetLastError()));
     return ScalarLogical(bOK != 0);
 }
 #endif

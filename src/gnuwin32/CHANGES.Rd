@@ -32,6 +32,9 @@
       longer follow links (deleting the contents of the link target
       rather than the link), and it is able to delete the link itself
       (given sufficient permissions).
+
+      \item There is a new function \code{Sys.junction()} to create
+      junction points on NTFS file systems.
     }
   }
   

@@ -13,6 +13,10 @@
 \alias{file.rename}
 \alias{file.symlink}
 \alias{file.link}
+#ifdef windows
+\alias{Sys.junction}
+#endif
+
 \title{File Manipulation}
 \usage{
 file.create(\dots, showWarnings = TRUE)
@@ -24,12 +28,18 @@ file.copy(from, to, overwrite = recursive, recursive = FALSE,
           copy.mode = TRUE)
 file.symlink(from, to)
 file.link(from, to)
+#ifdef windows
+Sys.junction(from, to)
+#endif
 }
 \arguments{
   \item{\dots, file1, file2}{character vectors, containing file names or paths.}
   \item{from, to}{character vectors, containing file names or paths.
-    For \code{file.copy} and \code{file.symlink} \code{to} can
-    alternatively be the path to a single existing directory.}
+    For \code{file.copy} and \code{file.symlink}
+#ifdef windows
+    and \code{Sys.junction}
+#endif
+    \code{to} can alternatively be the path to a single existing directory.}
   \item{overwrite}{logical; should existing destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical.  If \code{to} is a directory, should
@@ -124,7 +134,7 @@ file.link(from, to)
   current locale.
 
   User error in supplying invalid file names (and note that \file{foo/}
-  \emph{is} invalid on Windows) has undefined consequences.
+  and \file{foo\\} \emph{are} invalid on Windows) has undefined consequences.
 }
 
 \section{Symbolic links on Windows}{
@@ -139,6 +149,9 @@ file.link(from, to)
   \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).  See
   \url{http://en.wikipedia.org/wiki/NTFS_junction_point}.  On recent
   enough versions of Windows \command{mklink /J} can also be used.
+  Function \code{Sys.junction} creates one or more junctions: \code{to}
+  should either specify a single existing directory or a set of
+  non-existent file paths of the same length as \code{from}.
   (Junctions are in reality a Windows version of the Unix concept of
   mounting on directory on another.)
   
@@ -198,14 +211,5 @@ setwd("..")
 #endif
 unlink("tmp", recursive=TRUE)
 file.remove("A", "B", "C")
-#ifdef windows
-## Windows can link to directories via junctions.
-## See the text for the system requirements here.
-\dontrun{
-dir.symlink <- function(from, to) {
-    to2 <- file.path(to, basename(from))
-    system2("junction.exe", c(to2, normalizePath(from)), NULL)
-}}
-#endif
 }
 \keyword{file}

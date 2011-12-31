@@ -28,11 +28,11 @@ Sys.junction <- function(from, to)
         fr <- paste("\\??\\", normalizePath(from[i]), sep = "")
         link <- to[i]
         if(file.exists(link)) {
-            warning(gettexf("link '%s' already exists", link), domain = NA)
+            warning(gettextf("link '%s' already exists", link), domain = NA)
             next
         }
-        if(!dir.create(link, show.warnings = FALSE)) {
-            warning(gettext("failed to create directory for link '%s", link),
+        if(!dir.create(link, showWarnings = FALSE)) {
+            warning(gettextf("failed to create directory for link '%s", link),
                     domain = NA)
             next
         }
