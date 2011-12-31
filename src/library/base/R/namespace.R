@@ -576,9 +576,10 @@ loadNamespace <- function (package, lib.loc = NULL,
                 nowhere <- sapply(addGenerics, function(what) !exists(what, envir = ns))
                 if(any(nowhere)) {
                     miss <- sort(unique(addGenerics[nowhere]))
-                    stop(gettextf("No function found corresponding to methods exports for: %s",
+                    stop(gettextf("No function found corresponding to methods exports from %s for: %s",
+                                  sQuote(package),
                                   paste(sQuote(miss), collapse = ", ")),
-                         domain = NA)
+                         domain = NA, call. = FALSE)
                 }
                 ## skip primitives
                 addGenerics <- addGenerics[
@@ -587,9 +588,10 @@ loadNamespace <- function (package, lib.loc = NULL,
                 ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
                 if(!all(ok)) {# unclear how this could happen, but ...
                     miss <- sort(unique(addGenerics[!ok]))
-                    stop(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true for %s",
+                    stop(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
+                                  sQuote(package),
                                   paste(sQuote(miss), collapse = ", ")),
-                         domain = NA)
+                         domain = NA, call. = FALSE)
                 }
 ### <note> Uncomment following to report any local generic functions
 ### that should have been exported explicitly.  But would be reported
