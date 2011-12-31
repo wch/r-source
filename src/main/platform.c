@@ -2760,3 +2760,61 @@ SEXP attribute_hidden R_setFileTime(SEXP name, SEXP time)
 #endif
     return ScalarLogical(res);
 }
+
+#ifdef Win32
+struct TMN_REPARSE_DATA_BUFFER
+{
+    DWORD  ReparseTag;
+    WORD   ReparseDataLength;
+    WORD   Reserved;
+
+    // IO_REPARSE_TAG_MOUNT_POINT specifics follow
+    WORD   SubstituteNameOffset;
+    WORD   SubstituteNameLength;
+    WORD   PrintNameOffset;
+    WORD   PrintNameLength;
+    WCHAR  PathBuffer[1];
+};
+
+#define TMN_REPARSE_DATA_BUFFER_HEADER_SIZE \
+                        FIELD_OFFSET(TMN_REPARSE_DATA_BUFFER, SubstituteNameOffs
+et)
+
+
+SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sfrom, sto;
+    const wchar_t *from, to;
+    Rboolean res = FALSE;
+    checkArity(op, args);
+    /* from and to are both directories: and to exists */
+    from = filenameToWchar(STRING_ELT(CAR(args), 0), TRUE);
+    to = filenameToWchar(STRING_ELT(CADR(args), 0), TRUE);
+
+    HANDLE hd = 
+	CreateFileW(to, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING,
+		    FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
+		    0);
+    if(hd == INVALID_HANDLE_VALUE) {
+	warning("cannot open reparse point '%ls', reason '%s'",
+		name, formatError(GetLastError()));
+	return 1;
+    }    
+    char szBuff[MAXIMUM_REPARSE_DATA_BUFFER_SIZE] = { 0 };
+    TMN_REPARSE_DATA_BUFFER &rdb = *(TMN_REPARSE_DATA_BUFFER *) from;
+    const size_t nDestMountPointBytes = wcslen(from) * 2;
+    rdb.ReparseTag           = IO_REPARSE_TAG_MOUNT_POINT;
+    rbd,ReparseDataLength    = nDestMountPointBytes + 12;
+    rdb.Reserved             = 0;
+    rdb.SubstituteNameOffset = 0;
+    rdb.SubstituteNameLength = nDestMountPointBytes;
+    rdb.PrintNameOffset      = nDestMountPointBytes + 2;
+    rdb.PrintNameLength      = 0;
+    DWORD dwBytes;
+    const BOOL bOK =
+	DeviceIoControl(hd, FSCTL_SET_REPARSE_POINT, &rdb, 
+			rdb.ReparseDataLength + TMN_REPARSE_DATA_BUFFER_HEADER_SIZE,
+			NULL, 0, &dwBytes, 0);
+    return ScalarLogical(bOK != 0);
+}
+#endif
