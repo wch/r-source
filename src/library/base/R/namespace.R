@@ -575,23 +575,21 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(length(addGenerics)) {
                 nowhere <- sapply(addGenerics, function(what) !exists(what, envir = ns))
                 if(any(nowhere)) {
-                    miss <- sort(unique(addGenerics[nowhere]))
-                    stop(gettextf("No function found corresponding to methods exports from %s for: %s",
-                                  sQuote(package),
-                                  paste(sQuote(miss), collapse = ", ")),
-                         domain = NA, call. = FALSE)
+                    warning(gettextf("No function found corresponding to methods exports for: %s",
+                                  paste(sort(unique(addGenerics[nowhere])), collapse = ", ")),
+                         domain = NA)
+                    addGenerics <- addGenerics[!nowhere]
                 }
                 ## skip primitives
                 addGenerics <- addGenerics[
                        sapply(addGenerics, function(what) ! is.primitive(get(what, envir = ns)))]
                 ## the rest must be generic functions, implicit or local
                 ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
-                if(!all(ok)) {# unclear how this could happen, but ...
-                    miss <- sort(unique(addGenerics[!ok]))
-                    stop(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
-                                  sQuote(package),
-                                  paste(sQuote(miss), collapse = ", ")),
-                         domain = NA, call. = FALSE)
+                if(!all(ok)) { # unclear how this could happen, but ...
+                    warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true for %s",
+                                  paste(sort(unique(addGenerics[!ok])), collapse = ", ")),
+                         domain = NA)
+                    addGenerics <- addGenerics[ok]
                 }
 ### <note> Uncomment following to report any local generic functions
 ### that should have been exported explicitly.  But would be reported
