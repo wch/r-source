@@ -2316,6 +2316,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
+                             "Functions for exporting methods",
                              "missing link\\(s\\):")
                 ## Warnings spotted by gcc with
                 ## '-Wimplicit-function-declaration', which is
@@ -2335,6 +2336,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                  ")", sep = "")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
+                ## remove some duplicates
+                lines <- grep("Warning: Functions for exporting methods",
+                              lines, invert = TRUE, value = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
