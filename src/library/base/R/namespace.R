@@ -581,17 +581,18 @@ loadNamespace <- function (package, lib.loc = NULL,
                          domain = NA, call. = FALSE)
                     addGenerics <- addGenerics[!nowhere]
                 }
-                ## skip primitives
-                addGenerics <- addGenerics[
-                       sapply(addGenerics, function(what) ! is.primitive(get(what, envir = ns)))]
-                ## the rest must be generic functions, implicit or local
-                ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
-                if(!all(ok)) { # unclear how this could happen, but ...
-                    warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
-                                     sQuote(package),
-                                     paste(sQuote(sort(unique(addGenerics[!ok]))), collapse = ", ")),
-                         domain = NA, call. = FALSE)
-                    addGenerics <- addGenerics[ok]
+                if(length(addGenerics)) {
+                    ## skip primitives
+                    addGenerics <- addGenerics[sapply(addGenerics, function(what) ! is.primitive(get(what, envir = ns)))]
+                    ## the rest must be generic functions, implicit or local
+                    ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
+                    if(!all(ok)) {
+                        warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
+                                         sQuote(package),
+                                         paste(sQuote(sort(unique(addGenerics[!ok]))), collapse = ", ")),
+                                domain = NA, call. = FALSE)
+                        addGenerics <- addGenerics[ok]
+                    }
                 }
 ### <note> Uncomment following to report any local generic functions
 ### that should have been exported explicitly.  But would be reported
