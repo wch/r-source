@@ -141,9 +141,9 @@ Sys.junction(from, to)
   Symbolic links in the sense of POSIX file systems do not exist on
   Windows: however, NTFS file systems support two similar concepts.
 
-  Windows 2000 and later have using \sQuote{junctions} (or
+  Windows 2000 and later have \sQuote{junctions} (or
   \sQuote{junction points}), unfortunately without a public API.  They
-  are a Windows version of the Unix concept of mounting on directory on
+  are a Windows version of the Unix concept of mounting one directory on
   another.  One way to create, list and delete junctions is \emph{via}
   \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
@@ -155,7 +155,7 @@ Sys.junction(from, to)
   \code{from}.
   
   A version of symbolic linking to files/directories was implemented
-  from Vista, and \code{file.symlink} makes use of that interface since
+  starting with Vista, and \code{file.symlink} makes use of that interface since
   \R 2.15.0.  However, it has restrictions (apart from the OS
   restriction) that are crippling.  First, the user needs permission to
   make symbolic links, and that permission is not normally granted
