@@ -2336,9 +2336,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                  ")", sep = "")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
-                ## remove some duplicates
-                lines <- grep("Warning: Functions for exporting methods",
-                              lines, invert = TRUE, value = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
@@ -2429,6 +2426,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
                 if (length(lines)) {
+		    lines <- unique(lines)
                     warnLog("Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
