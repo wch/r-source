@@ -573,7 +573,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## check for generic functions corresponding to exported methods
             addGenerics <- expMethods[is.na(match(expMethods, exports))]
             if(length(addGenerics)) {
-                nowhere <- sapply(addGenerics, function(what) !exists(what, envir = ns))
+                nowhere <- sapply(addGenerics, function(what) !exists(what, mode = "function", envir = ns))
                 if(any(nowhere)) {
                     warning(gettextf("No function found corresponding to methods exports from %s for: %s",
                                      sQuote(package),
@@ -583,9 +583,9 @@ loadNamespace <- function (package, lib.loc = NULL,
                 }
                 if(length(addGenerics)) {
                     ## skip primitives
-                    addGenerics <- addGenerics[sapply(addGenerics, function(what) ! is.primitive(get(what, envir = ns)))]
+                    addGenerics <- addGenerics[sapply(addGenerics, function(what) ! is.primitive(get(what, mode = "function", envir = ns)))]
                     ## the rest must be generic functions, implicit or local
-                    ok <- sapply(addGenerics, function(what) methods::is(get(what, envir = ns), "genericFunction"))
+                    ok <- sapply(addGenerics, function(what) methods::is(get(what, mode = "function", envir = ns), "genericFunction"))
                     if(!all(ok)) {
                         warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
                                          sQuote(package),
