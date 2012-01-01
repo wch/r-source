@@ -56,15 +56,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 {
     WINDOWS <- .Platform$OS.type == "windows"
     flink <- if(WINDOWS) {
-        if(FALSE && nzchar(Sys.which("junction.exe"))) {
-            function(from, to) {
-                to2 <- file.path(to, basename(from))
-                system2("junction.exe",
-                        c(to2, normalizePath(from)), NULL)
-            }
-        } else {
-            function(from, to) file.copy(from, to, recursive = TRUE)
-        }
+        if(TRUE) Sys.junction
+        else function(from, to) file.copy(from, to, recursive = TRUE)
     } else file.symlink
 
     ## We may want to test with only the dependencies available.
@@ -101,6 +94,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         already <- c(already, m0)
         more <- unique(more[!more %in% already])
     }
+    # print(dir(tmplib))
     rlibs <- tmplib
     if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
