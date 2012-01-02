@@ -74,7 +74,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     R_runR2 <-
         if(WINDOWS) {
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats")
+                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats,methods")
                 {
                     out <- R_runR(cmd, R_opts2, env)
                     ## pesky gdata ....
@@ -83,7 +83,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 }
         } else
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats,methods'")
             {
                 out <- R_runR(cmd, R_opts2, env)
                 if (R_check_suppress_RandR_message)
@@ -1018,6 +1018,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                           else
                           sprintf("tools::undoc(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd)
+            ## Grr, get() in undoc can change the search path
+            ## Current example is TeachingDemos
+            out <- grep("^Loading required package:", out,
+                        invert = TRUE, value = TRUE)
             err <- grep("^Error", out)
             if (length(err)) {
                 errorLog(Log)
