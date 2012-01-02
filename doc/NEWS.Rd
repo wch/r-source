@@ -20,6 +20,9 @@
 
       \item \command{R CMD check} could miss undocumented S4 objects in
       packages which used S4 classes but did not \samp{Depends: methods}.
+      
+      \item The HTML Help Search page had malformed links.
+      (\PR{14769})      
     }
   }
 }
