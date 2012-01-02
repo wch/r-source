@@ -224,7 +224,8 @@ makeHelpTable <- function(help, depth=2) {
                    "library/", pkg, "/html/")
     topic <- help[, "topic"]
     Title <- help[, "title"]
-    links <- paste0('<a href="', root, topic, '.html">',
+    name <- help[, "name"]
+    links <- paste0('<a href="', root, name, '.html">',
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')
     lines <- paste0('<tr><td align="right" valign="top">', links,
