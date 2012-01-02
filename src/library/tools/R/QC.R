@@ -165,12 +165,13 @@ function(package, dir, lib.loc = NULL)
         if(.isMethodsDispatchOn()) {
             code_objs <-
                 Filter(function(f) {
-                           fdef <- get(f, envir = code_env)
-                           if(methods::is(fdef, "genericFunction"))
-                               fdef@package == pkgname
-                           else
-                               TRUE
-                       },
+                    ## NB: this get() is expensive as it loads every object
+                    fdef <- get(f, envir = code_env)
+                    if(methods::is(fdef, "genericFunction"))
+                        fdef@package == pkgname
+                    else
+                        TRUE
+                },
                        code_objs)
         }
 
@@ -411,6 +412,7 @@ function(package, dir, lib.loc = NULL,
     ## Find the function objects to work on.
     functions_in_code <-
         Filter(function(f) {
+                   ## This is expensive
                    f <- get(f, envir = code_env)
                    typeof(f) == "closure"
                },
@@ -444,12 +446,12 @@ function(package, dir, lib.loc = NULL,
     ## indexed by the names of the functions.
     function_args_in_code <-
         lapply(functions_in_code,
-               function(f) formals(get(f, envir = code_env)))
+               function(f) formals(get(f, envir = code_env))) # get is expensive
     names(function_args_in_code) <- functions_in_code
     if(has_namespace) {
         functions_in_ns <-
             Filter(function(f) {
-                       f <- get(f, envir = ns_env)
+                       f <- get(f, envir = ns_env) # get is expensive
                        is.function(f) && (length(formals(f)) > 0L)
                    },
                    objects_in_ns)
@@ -705,7 +707,7 @@ function(package, dir, lib.loc = NULL,
             }
             ## Drop the defunct functions.
             is_defunct <- function(f) {
-                f <- get(f, envir = code_env)
+                f <- get(f, envir = code_env) # get is expensive
                 if(!is.function(f)) return(FALSE)
                 (is.call(b <- body(f))
                  && identical(as.character(b[[1L]]), ".Defunct"))
@@ -1603,7 +1605,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the function objects in the given package.
     functions_in_code <-
-        Filter(function(f) is.function(get(f, envir = code_env)),
+        Filter(function(f) is.function(get(f, envir = code_env)),  # get is expensive
                objects_in_code)
 
     ## Find all S3 generics "as seen from the package".
@@ -1891,7 +1893,7 @@ function(package, dir, file, lib.loc = NULL,
     if(!missing(package)) {
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
-                            f <- get(f, envir = code_env)
+                            f <- get(f, envir = code_env)  # get is expensive
                             if(typeof(f) == "closure")
                                 body(f)
                             else
@@ -2052,7 +2054,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the function objects in the given package.
     functions_in_code <-
-        Filter(function(f) is.function(get(f, envir = code_env)),
+        Filter(function(f) is.function(get(f, envir = code_env)), # get is expensive
                objects_in_code)
 
     ## This is the virtual groyp generics, not the members
@@ -2310,7 +2312,7 @@ function(package, dir, lib.loc = NULL)
         Filter(function(f) {
                    ## Always get the functions from code_env ...
                    ## Should maybe get S3 methods from the registry ...
-                   f <- get(f, envir = code_env)
+                   f <- get(f, envir = code_env)  # get is expensive
                    if(!is.function(f)) return(FALSE)
                    ! .check_last_formal_arg(f)
                },
@@ -4517,7 +4519,7 @@ function(package, dir, lib.loc = NULL)
         ## </FIXME>
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
-                            f <- get(f, envir = code_env)
+                            f <- get(f, envir = code_env) # get is expensive
 			    if(typeof(f) == "closure") body(f) # else NULL
                         })
         if(.isMethodsDispatchOn()) {
@@ -5683,8 +5685,7 @@ function(f, env)
     ## Use methods::findMethods() once this gets a package argument.
     ## This will return a listOfMethods object: turn this into a simple
     ## list of methods named by hash-collapsed signatures.
-    tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
-               envir = env)
+    tab <- get(methods:::.TableMetaName(f, attr(f, "package")), envir = env)
     nms <- objects(tab, all.names = TRUE)
     mlist <- lapply(nms, get, envir = tab)
     names(mlist) <- nms

@@ -274,6 +274,9 @@
        
       \item \code{readLines()} could overflow a buffer if the last line
       was not terminated.  (\PR{14766})
+
+      \item \command{R CMD check} could miss undocumented S4 objects in
+      packages which used S4 classes but did not \samp{Depends: methods}.
     }
   }
 }

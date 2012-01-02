@@ -123,6 +123,26 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         Log$warnings <<- Log$warnings+1L
     }
 
+    ## Used for
+    ## .check_packages_used (pro tem with just methods)
+    ## .check_packages_used_in_examples
+    ## .check_packages_used_in_tests
+    ## .check_packages_used_in_vignettes
+    ## checkS3methods
+    ## checkReplaceFuns
+    ## checkFF
+    ## .check_code_usage_in_package (with full set)
+    ## .check_T_and_F (with full set)
+    ## .check_dot_internal (with full set)
+    ## undoc, codoc, codocData, codocClasses
+    ## checkDocFiles, checkDocStyle
+    ## The default set of packages here are as they are because
+    ## (i) .get_S3_generics_as_seen_from_package needs utils,graphics,stats
+    ##      Used by checkDocStyle, checkS3methods.
+    ## (ii) calls to undoc need methods to pick up undocumented S4 classes.
+    ##      even for packages which only import methods.
+    ## (iii) to cope with some of the fallout of c58005, although that
+    ##      may have been circumventing bugs in JMC's code.
     R_runR2 <-
         if(WINDOWS) {
             function(cmd,
@@ -1090,7 +1110,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           else
                           sprintf("tools::undoc(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd)
-            ## Grr, methods:is can change the search path
+            ## Grr, get() in undoc can change the search path
             ## Current example is TeachingDemos
             out <- grep("^Loading required package:", out,
                         invert = TRUE, value = TRUE)
