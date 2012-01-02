@@ -1090,6 +1090,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           else
                           sprintf("tools::undoc(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd)
+            ## Grr, methods:is can change the search path
+            ## Current example is TeachingDemos
+            out <- grep("^Loading required package:", out,
+                        invert = TRUE, value = TRUE)
             err <- grep("^Error", out)
             if (length(err)) {
                 errorLog(Log)
