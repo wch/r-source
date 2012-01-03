@@ -1831,7 +1831,7 @@ environment variables when using these utilities.
 @end quotation
 
 @quotation Note to Windows users
-@code{R CMD build} requires you to have installed the Windows toolset
+@code{R CMD build} may require you to have installed the Windows toolset
 (see the ``R Installation and Administration'' manual) and have it in
 your path, and @code{R CMD check} will make use of it if present.  You
 may need to set @env{TMPDIR} to point to a suitable writable directory
