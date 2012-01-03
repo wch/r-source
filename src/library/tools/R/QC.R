@@ -1626,6 +1626,7 @@ function(package, dir, lib.loc = NULL)
     ## generic functions.
     methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
     methods_in_package <- sapply(all_S3_generics, function(g) {
+        ## This isn't really right: it assumes the generics are visible.
         if(!exists(g, envir = code_env)) return(character())
         ## <FIXME>
         ## We should really determine the name g dispatches for, see
@@ -2032,9 +2033,7 @@ function(package, dir, lib.loc = NULL)
 
         objects_in_code <- objects(envir = code_env, all.names = TRUE)
 
-        ## Does the package have a NAMESPACE file?  Note that when
-        ## working on the sources we (currently?) cannot deal with the
-        ## (experimental) alternative way of specifying the namespace.
+        ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))

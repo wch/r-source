@@ -138,7 +138,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## checkDocFiles, checkDocStyle
     ## The default set of packages here are as they are because
     ## (i) .get_S3_generics_as_seen_from_package needs utils,graphics,stats
-    ##      Used by checkDocStyle, checkS3methods.
+    ##      Used by checkDocStyle (which needs the generic visible) and
+    ##      checkS3methods.
     ## (ii) calls to undoc need methods to pick up undocumented S4 classes.
     ##      even for packages which only import methods.
     ## (iii) to cope with some of the fallout of c58005, although that
