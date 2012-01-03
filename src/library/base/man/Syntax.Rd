@@ -19,7 +19,7 @@
     \code{^}\tab exponentiation (right to left)\cr
     \code{- +}\tab unary minus and plus\cr
     \code{:}\tab sequence operator\cr
-    \code{\%any\%}\tab special operators\cr
+    \code{\%any\%}\tab special operators (including \code{\%\%} and \code{\%/\%})\cr
     \code{* /}\tab multiply, divide\cr
     \code{+ -}\tab (binary) add, subtract\cr
     \code{< > <= >= == !=}\tab ordering and comparison\cr
