@@ -508,6 +508,7 @@ SEXP do_tilde(SEXP, SEXP, SEXP, SEXP);
 SEXP do_title(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tolower(SEXP, SEXP, SEXP, SEXP);
 SEXP do_trace(SEXP, SEXP, SEXP, SEXP);
+SEXP do_traceback(SEXP, SEXP, SEXP, SEXP);
 SEXP do_transpose(SEXP, SEXP, SEXP, SEXP);
 SEXP do_trunc(SEXP, SEXP, SEXP, SEXP);
 SEXP do_typecvt(SEXP, SEXP, SEXP, SEXP);

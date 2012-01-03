@@ -110,6 +110,10 @@
 
       On Windows it no longer follows reparse points (includiing
       junctions and symbolic links).
+      
+      \item The \code{traceback()} function can now be called with
+      an integer argument, to display a current stack trace. (Wish of 
+      \PR{14770}.)
     }
   }
 

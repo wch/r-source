@@ -19,6 +19,8 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
 {
     if(is.null(x) && (exists(".Traceback", envir = baseenv())))
 	x <- get(".Traceback", envir = baseenv())
+    else if (is.numeric(x))
+    	x <- .Internal(traceback(x))
     n <- length(x)
     if(n == 0L)
         cat(gettext("No traceback available"), "\n")
@@ -43,5 +45,5 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
             	cat(paste0(label, x[[i]]), sep="\n")
         }
     }
-    invisible()
+    invisible(x)
 }

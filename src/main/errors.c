@@ -1261,6 +1261,19 @@ SEXP R_GetTraceback(int skip)
     return s;
 }
 
+SEXP attribute_hidden do_traceback(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int skip;
+    
+    checkArity(op, args);
+    skip = asInteger(CAR(args));
+    
+    if (skip == NA_INTEGER || skip < 0 )
+    	error(_("invalid '%s' value"), "skip");
+    	
+    return R_GetTraceback(skip);
+}
+
 static char * R_ConciseTraceback(SEXP call, int skip)
 {
     static char buf[560];
