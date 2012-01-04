@@ -11527,7 +11527,7 @@ a state terminates (@code{@var{which}=0}).
 These functions interact with a console.
 
 @code{R_ReadConsole} prints the given prompt at the console and then
-does a @code{gets(3)}--like operation, transferring up to @var{buflen}
+does a @code{fgets(3)}--like operation, transferring up to @var{buflen}
 characters into the buffer @var{buf}. The last two bytes should be
 set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
 then the line should be added to any command history which is being

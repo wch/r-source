@@ -72,7 +72,7 @@
 
 
 /* 
-   Note: this could use the proposed C1x CMPLX() macro.
+   Note: this could use the C11 CMPLX() macro.
    As could mycpow, z_tan and some of the substitutes.
  */
 static R_INLINE double complex toC99(Rcomplex *x)

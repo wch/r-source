@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2011  The R Development Core Team.
+ *  Copyright (C) 2000-2012  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,6 +45,9 @@
     (e.g. machine reboot), but is not currently so used in R.  It
     returns in second and nanoseconds, although not necessarily to
     more than clock-tick accuracy.
+
+    C11 adds 'struct timespec' to <time.h>.  And timespec_get() can get
+    the current time or interval after a base time.
 
     The previous POSIX recommendation was gettimeofday(), defined in
     <sys/time.h>.  This returns in seconds and microseconds (with

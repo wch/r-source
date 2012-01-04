@@ -1944,13 +1944,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                               paste0(", encoding = '", enc, "'"),
                               ")", sep = "")
                 outfile <- paste0(basename(v), ".log")
-                t1 <- proc.time()
+                t1b <- proc.time()
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                  ## add timing as footer, as BATCH does
                                  env = c(jitstr, "R_BATCH=1234", elibs),
                                  stdout = outfile, stderr = outfile)
-                t2 <- proc.time()
+                t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
                 savefile <- sub("\\.[RrSs](nw|tex)$", ".Rout.save", v)
                 if(length(grep("^  When (tangling|sourcing)", out,
@@ -1974,18 +1974,18 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                  sep = "")
                     out2 <- R_runR(cmd, R_opts2)
                     if(length(out2)) {
-                        print_time(t1, t2, NULL)
+                        print_time(t1b, t2b, NULL)
                         cat(" differences from ", sQuote(basename(savefile)),
                             "\n", sep = "")
                         writeLines(c(out2, ""))
                     } else {
-                        print_time(t1, t2, NULL)
+                        print_time(t1b, t2b, NULL)
                         cat(" OK\n")
                         if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                             unlink(outfile)
                     }
                 } else {
-                    print_time(t1, t2, NULL)
+                    print_time(t1b, t2b, NULL)
                     cat(" OK\n")
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                         unlink(outfile)
