@@ -1789,12 +1789,13 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink 
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])
-## This was declared obsolescent in POSIX 2008 (use utimes instead)
+## utime was declared obsolescent in POSIX 2008 (use utimes instead)
 R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## clock_gettime is POSIX 1993, but not on MacOS X
 ## Some OSes need -lrt: Linux, Solaris, not FreeBSD.
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
-R_CHECK_FUNCS([clock_gettime], [#include <time.h>])
+## timespec_get is C11.
+R_CHECK_FUNCS([clock_gettime timespec_get], [#include <time.h>])
 if test "${ac_cv_have_decl_clock_gettime}" = "yes"; then
 AC_CHECK_LIB(rt, clock_gettime)
 fi

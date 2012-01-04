@@ -486,7 +486,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 }
 
 
-/* clock_gettime, time are in <time.h>, already included */
+/* clock_gettime, timespec_get time are in <time.h>, already included */
 #ifdef HAVE_SYS_TIME_H
 /* gettimeoday, including on Windows */
 # include <sys/time.h>
@@ -496,7 +496,12 @@ double currentTime(void)
 {
     double ans = NA_REAL;
 
-#if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
+#ifdef HAVE_TIMESPEC_GET
+    struct timespec tp;
+    int res = timespec_get(&tp, TIME_UTC);
+    if(res != 0)
+	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
+#elif defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
     struct timespec tp;
     int res = clock_gettime(CLOCK_REALTIME, &tp);
     if(res == 0)

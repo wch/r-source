@@ -720,6 +720,9 @@
 /* Define to 1 if you have the `times' function. */
 #undef HAVE_TIMES
 
+/* Define to 1 if you have the `timespec_get' function. */
+#undef HAVE_TIMESPEC_GET
+
 /* Define to 1 if you have the `tsearch' function. */
 #undef HAVE_TSEARCH
 

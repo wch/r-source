@@ -724,6 +724,9 @@
 /* Define to 1 if you have the `times' function. */
 #define HAVE_TIMES 1
 
+/* Define to 1 if you have the `timespec_get' function. */
+/* #undef HAVE_TIMESPEC_GET */
+
 /* Define to 1 if you have the `tsearch' function. */
 #if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
 #define HAVE_TSEARCH 1
