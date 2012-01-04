@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plotdefault.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.default}
@@ -24,8 +24,9 @@
   \item{type}{1-character string giving the type of plot desired.  The
     following values are possible, for details, see \code{\link{plot}}:
     \code{"p"} for points, \code{"l"} for lines,
+    \code{"b"} for both points and lines,
+    \code{"c"} for empty points joined by lines,    
     \code{"o"} for overplotted points and lines,
-    \code{"b"}, \code{"c"}) for (empty if \code{"c"}) points joined by lines,
     \code{"s"} and \code{"S"} for stair steps and
     \code{"h"} for histogram-like vertical lines.  Finally,
     \code{"n"} does not produce any points or lines.}
