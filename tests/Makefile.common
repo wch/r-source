@@ -21,7 +21,8 @@ test-src-sloppy-1 = \
 	complex.R \
 	print-tests.R \
 	lapack.R \
-	datasets.R
+	datasets.R \
+	iec60559.R
 test-src-sloppy-auto =
 
 test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
