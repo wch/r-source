@@ -23,6 +23,9 @@
       
       \item The HTML Help Search page had malformed links.
       (\PR{14769})      
+      
+      \item A couple of instances of lack of protection of \code{SEXP}s
+      have been squashed. (\PR{14772}, \PR{14773})
     }
   }
 }
