@@ -56,7 +56,7 @@ isatty(con)
   for that connection, which can be used to close the connection,
   for example.  However, if there is no \R level object referring to the
   connection it will be closed automatically at the next garbage
-  collection.
+  collection (except for \code{\link{gzcon}} connections).
 
   \code{closeAllConnections} closes (and destroys) all user
   connections, restoring all \code{\link{sink}} diversions as it does
