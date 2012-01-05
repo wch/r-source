@@ -107,11 +107,11 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
-on systems that have a suitable@footnote{e.g.@: @acronym{GNU} @command{tar}
-version 1.15 or later, or that from the @samp{libarchive} (as used on
-OS 10.6) or `Heirloom Toolchest' distributions.} @command{tar}
-installed.  On other systems you need to have the @command{gzip} program
-installed, when you can use
+on systems that have a suitable@footnote{e.g.@: @acronym{GNU}
+@command{tar} version 1.15 or later, or that from the @samp{libarchive}
+(as used on OS 10.[67]) or `Heirloom Toolchest' distributions.}
+@command{tar} installed.  On other systems you need to have the
+@command{gzip} program installed, when you can use
 
 @example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar -xf -
@@ -1490,7 +1490,7 @@ given by @code{R.home()}).
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for OS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on OS X 10.5/6/7.
+add-on packages from @acronym{CRAN} to run on OS X 10.[567].
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
@@ -2667,10 +2667,13 @@ installed.
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
-@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.  @R{} tries to
-choose suitable flags for the C compilers it knows about, but you may
-have to set @code{CC} or @code{CFLAGS} suitably.  For recent versions of
-@command{gcc} with @code{glibc} this means including
+@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
+that C11 compilers (when they appear) need not be C99-compliant: @R{}
+requires support for @code{double complex} which is optional in C11 but
+is mandatory in C99.}  @R{} tries to choose suitable flags for the C
+compilers it knows about, but you may have to set @code{CC} or
+@code{CFLAGS} suitably.  For recent versions of @command{gcc} with
+@code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.}.  If the compiler is
@@ -2678,11 +2681,11 @@ detected as @command{gcc}, @option{-std=gnu99} will be appended to
 @code{CC} unless it conflicts with a setting of @code{CFLAGS}.  (Note
 that options essential to run the compiler even for linking, such as
 those to set the architecture, should be specified as part of @code{CC}
-rather than of @code{CFLAGS}.)
+rather than in @code{CFLAGS}.)
 
-Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries. For recent Fedora
-distributions it means (at least) RPMs @samp{libX11},
+Unless you do not want to view graphs on-screen (or use a Mac) you need
+@samp{X11} installed, including its headers and client libraries. For
+recent Fedora distributions it means (at least) RPMs @samp{libX11},
 @samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.  On Debian we
 recommend the meta-package @samp{xorg-dev}.  If you really do not want
 these you will need to explicitly configure @R{} without X11, using
@@ -2727,7 +2730,7 @@ A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
 @uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and OS
-10.6) or @command{tar} from the Heirloom Toolchest
+10.[67]) or @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
