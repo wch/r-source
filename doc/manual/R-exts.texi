@@ -2568,8 +2568,10 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 that URL in Internet Explorer and (depending on the version) follow the
 instructions to view it as a folder, then copy the submission to the
 folder.} and not @samp{sftp} to connect to this server) and send a
-message to @email{CRAN@@R-project.org} about it.  The @acronym{CRAN}
-maintainers will run these tests before putting a submission online.
+message to @email{CRAN@@R-project.org} about it (with your package name
+in the subject line, and please do not submit a package by email).  The
+@acronym{CRAN} maintainers will run these tests before putting a
+submission online.
 
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use the Debian TeXLive@footnote{currently
