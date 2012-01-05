@@ -856,17 +856,17 @@ static SEXP HessAssign1(SEXP name, SEXP expr)
 
 static SEXP HessAssign2(SEXP name1, SEXP name2, SEXP expr)
 {
-    SEXP ans, newname1, newname2;
+    SEXP ans, newname1, newname2, tmp1, tmp2, tmp3;
     PROTECT(newname1 = ScalarString(name1));
     PROTECT(newname2 = ScalarString(name2));
-    ans = lang3(install("<-"),
-		lang5(install("["), install(".hessian"), R_MissingArg,
-		      newname1, newname2),
-		lang3(install("<-"),
-		      lang5(install("["), install(".hessian"), R_MissingArg,
-			    newname2, newname1),
-		      expr));
-    UNPROTECT(2);
+    /* this is overkill, but PR#14772 found an issue */
+    PROTECT(tmp1 = lang5(install("["), install(".hessian"), R_MissingArg,
+			 newname1, newname2));
+    PROTECT(tmp2 = lang5(install("["), install(".hessian"), R_MissingArg,
+			 newname2, newname1));
+    PROTECT(tmp3 = lang3(install("<-"), tmp2, expr));
+    ans = lang3(install("<-"), tmp1, tmp3);
+    UNPROTECT(5);
     return ans;
 }
 
