@@ -124,6 +124,7 @@
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
             "      --merge-multiarch	bi-arch by merging from a tarball",
+            "      --compile-both	compile both architectures on 32-bit Windows",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste0("for this one it is ",
@@ -658,9 +659,14 @@
                 } else { ## no src/Makefile.win
                     srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
                                 all.files = TRUE)
-                    ## NB, not R.home("bin")
-                    f  <- dir(file.path(R.home(), "bin"))
-                    archs <- f[f %in% c("i386", "x64")]
+                    archs <- if (!force_both && !grepl(" x64 ", win.version()))
+                        "i386"
+                    else {
+                        ## see what is installed
+                        ## NB, not R.home("bin")
+                        f  <- dir(file.path(R.home(), "bin"))
+                        f[f %in% c("i386", "x64")]
+                    }
                     one_only <- !multiarch
                     if(!one_only && file.exists("../configure.win")) {
                         ## for now, hardcode some exceptions
@@ -799,8 +805,14 @@
                 wd2 <- setwd(file.path(R.home("bin"), "exec"))
                 test_archs <- Sys.glob("*")
                 setwd(wd2)
-             }
-       }
+            }
+        }
+        if (WINDOWS && "x64" %in% tests_archs) {
+            ## we cannot actually test x64 unless this is 64-bit
+            ## Windows, even if it is installed.
+            if (!grepl(" x64 ", win.version())) test_archs <- "i386"
+        }
+
 
         ## R files must start with a letter
 	if (install_R && dir.exists("R") && length(dir("R"))) {
@@ -1143,6 +1155,7 @@
     shargs <- character()
     multiarch <- TRUE
     force_biarch <- FALSE
+    force_both <- FALSE
     test_load <- TRUE
     clean_on_error <- TRUE
     merge <- FALSE
@@ -1230,6 +1243,8 @@
             multiarch <- FALSE
         } else if (a == "--force-biarch") {
             force_biarch <- TRUE
+        } else if (a == "--compile-both") {
+            force_both <- TRUE
         } else if (a == "--maybe-get-user-libPaths") {
             get_user_libPaths <- TRUE
         } else if (a == "--build") {

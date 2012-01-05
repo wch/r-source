@@ -51,6 +51,11 @@
       selected by a flag: in most cases \option{-m32} \emph{vs}
       \option{-m64}.
 
+      \item Since the toolchain uses only 32-bit executables, it is
+      possible to compile a package for both architectures on 32-bit
+      Windows provide both architectures of \R have been installed: use
+      \command{R CMD INSTALL --compile-both}.
+      
       \item There is a new macro (aka make variable)
       \samp{SHLIB_PTHREAD_FLAGS}.  This is set to
       \option{-pthread} on builds which support it, and should be
