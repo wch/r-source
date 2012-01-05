@@ -796,8 +796,9 @@ installation).
 @node Multilib,  , Sub-architectures, Sub-architectures
 @subsection Multilib
 
-On Linux, there is an alternative mechanism for mixing 32-bit and
-64-bit libraries known as @emph{multilib}. If a Linux distribution supports
+On Linux@footnote{mainly on RedHat and Fedora, whose layout is described
+here.}, there is an alternative mechanism for mixing 32-bit and 64-bit
+libraries known as @emph{multilib}. If a Linux distribution supports
 multilib, then parallel builds of @R{} may be installed in the
 sub-directories @file{lib} (32-bit) and @file{lib64} (64-bit).  The
 build to be run may then be chosen using the @command{setarch}
@@ -869,7 +870,7 @@ GCC introduced a version of inter-procedure optimization in version
 4.5.0, which it calls @emph{link-time optimization}.  This writes an
 intermediate representation in the @file{.o} file, and then the linker
 combines those intermediate representations and re-compiles with
-optimization the combined representation.  Support for lto is still
+optimization the combined representation.  Support for LTO is still
 evolving: it is available for ELF-based systems and more recently for
 PE_COFF (Windows): only on some platforms@footnote{For those using GNU
 @code{binutils}, where @command{gold} is used as the linker: this might
@@ -4920,18 +4921,20 @@ referred to as a `toolchain'.
 
 The intention is that the released version of @R{} 2.15.0 will be built
 with a different toolchain from 2.14.x.  A candidate version can be
-downloaded from @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/}: this
-uses a beta version of @command{gcc 4.6.3} and version 2.0.1 of the
-MinGW-w64 project's runtime.
+downloaded from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/R215x.html}: this uses
+a beta version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
+project's runtime.
 
-The candidate toolchain uses `multilib': that is there is a single
+The candidate toolchain uses @emph{multilib}: that is there is a single
 front-end such as @command{gcc.exe} for each of the compilers and 32-bit
 (the default) and 64-bit compilation are selected by the
 flags@footnote{these flags apply to the compilers: some of the tools use
-different flags.}  @option{-m32} and @option{-m64} respectively.  The
-tools are all 32-bit Windows executables and should be able to run on
-any current version of Windows---however you do need a 64-bit version to
-build 64-bit @R{} as the build process runs @R{}.
+different flags.  32-bit builds are the default.}  @option{-m32} and
+@option{-m64} respectively.  The tools are all 32-bit Windows
+executables and should be able to run on any current version of
+Windows---however you do need a 64-bit version of Windows to build
+64-bit @R{} as the build process runs @R{}.
 
 To select a 32-bit or 64-bit build of @R{}, set the options in
 @file{MkRules.local} appropriately (following the comments in the file).
@@ -4939,13 +4942,14 @@ To select a 32-bit or 64-bit build of @R{}, set the options in
 Some external software libraries will need to be re-compiled under the
 new toolchain: especially those providing a C++ interface. Many of those
 used by @acronym{CRAN} packages are available from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/}
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}
 
 There is support for OpenMP in this toolchain, but it is not enabled by
-default.  There is a setting in @file{MkRules.local} to enable it: note
-that if you do so then e.g.@: @file{R.dll} and @file{stats.dll} will
-depend on a @file{pthreads} DLL that you will have to arrange to ship
-(and meet its license conditions: some versions are under GPL).
+default in the @R{} build.  There is a setting in @file{MkRules.local}
+to enable it: note that if you do so then e.g.@: @file{R.dll} and
+@file{stats.dll} may depend on a @file{pthreads} DLL that you will have
+to arrange to ship (and meet its license conditions: some versions are
+under GPL).
 
 @node Useful additional programs,  , The MinGW-w64 toolchain, The Windows toolset
 @section Useful additional programs
