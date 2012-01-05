@@ -26,6 +26,9 @@
       
       \item A couple of instances of lack of protection of \code{SEXP}s
       have been squashed. (\PR{14772}, \PR{14773})
+
+      \item \code{image(x, useRaster=TRUE)} misbehaved on single-column 
+      \code{x}. (\PR{14774})
     }
   }
 }

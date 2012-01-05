@@ -131,7 +131,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         }
         zc <- col[zi + 1L]
         dim(zc) <- dim(z)
-        zc <- t(zc)[ncol(zc):1L,]
+        zc <- t(zc)[ncol(zc):1L,, drop=FALSE]
         rasterImage(as.raster(zc),
                     min(x), min(y), max(x), max(y),
                     interpolate=FALSE)
