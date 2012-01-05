@@ -800,14 +800,14 @@
                 wd2 <- setwd(file.path(R.home(), "bin")) # not R.home("bin")
                 archs <- Sys.glob("*")
                 setwd(wd2)
-                tests_archs <- archs[archs %in% c("i386", "x64")]
+                test_archs <- archs[archs %in% c("i386", "x64")]
             } else {
                 wd2 <- setwd(file.path(R.home("bin"), "exec"))
                 test_archs <- Sys.glob("*")
                 setwd(wd2)
             }
         }
-        if (WINDOWS && "x64" %in% tests_archs) {
+        if (WINDOWS && "x64" %in% test_archs) {
             ## we cannot actually test x64 unless this is 64-bit
             ## Windows, even if it is installed.
             if (!grepl(" x64 ", win.version())) test_archs <- "i386"

@@ -9,7 +9,10 @@ if(.Platform$OS.type == "windows") {
         DLL_nm <- paste0(bp, "objdump.exe")
         if(!nzchar(Sys.which(DLL_nm))) return()
         f <- file_path_as_absolute(f)
-        s0 <- system2(DLL_nm, c("-x", shQuote(f)), stdout = TRUE, stderr=TRUE)
+        s0 <- suppressWarnings(system2(DLL_nm, c("-x", shQuote(f)),
+                                       stdout = TRUE, stderr = TRUE))
+        status <- attr(s0, "status")
+        if (length(status) && status != 0) return()
         l1 <- grep("^\tDLL Name:", s0)
         l2 <- grep("^The Export Tables", s0)
         if (!length(l1) || !length(l2)) return()
