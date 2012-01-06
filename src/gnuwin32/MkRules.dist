@@ -91,10 +91,10 @@ MIKTEX = TRUE
 EOPTS=-mtune=core2
 
 # define to -fopenmp if the toolchain has OpenMP support
-OPENMP =
+OPENMP = -fopenmp
 
 # define to -pthreads if the toolchain has pthreads support
-PTHREAD =
+PTHREAD = -pthreads
 
 ## ====== configuration macros for building installer ===========
 

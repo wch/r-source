@@ -513,7 +513,8 @@
 
 /* Define if you have C OpenMP support. */
 #if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
-#define HAVE_OPENMP 1
+// has it, but it is too slow to be usable
+// #define HAVE_OPENMP 1
 #endif
 
 /* Define to 1 if you have pangocairo. */
