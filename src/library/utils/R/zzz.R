@@ -21,7 +21,7 @@
     ## Set default options() related to functionality in 'utils' pkg
     op <- options()
     op.utils <-
-	list(help.try.all.packages = FALSE, 
+	list(help.try.all.packages = FALSE,
 	     help.search.types = c("vignette", "demo", "help"),
 	     internet.info = 2,
 	     pkgType = .Platform$pkgType,
