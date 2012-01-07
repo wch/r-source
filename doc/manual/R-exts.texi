@@ -1572,15 +1572,14 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the main platforms (but
-note that Mac OS X binaries are built for 10.5 using compilers which
-support version 2.5), but portable packages cannot assume that end users
-have recent versions (there are some years-old versions of Linux in
-use), and it may be safest to assume version 2.5.
+note that Mac OS X binaries are currently built for 10.5 using compilers
+which support version 2.5), but portable packages cannot assume that end
+users have recent versions (there are some years-old versions of Linux
+in use), and it may be safest to assume version 2.5.
 
-Note that whereas OpenMP support is expected to be available on Windows
-in the toolchain used for @R{} 2.15.0, @R{} may not be built on Windows
-with OpenMP support and these @command{make} macros will be empty unless
-it is so built.
+OpenMP support is expected to be available on Windows in the toolchain
+used for @R{} 2.15.0 and these macros will be set appropriately.  It is
+@emph{not} available in earlier version of @R{}.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
@@ -1592,7 +1591,7 @@ are only beneficial if quite substantial tasks are run in parallel.
 There is no direct support for the POSIX threads (more commonly known as
 @code{pthreads}): by the time we considered adding it several packages
 were using it unconditionally so it seems that nowadays it is
-universally available (except on Windows).
+universally available on POSIX operating systems (hence not Windows).
 
 For reasonably recent versions of @command{gcc} the correct
 specification is
@@ -1629,7 +1628,7 @@ toolchain provider.  One issue has been licenses: @code{pthreads-w32} is
 licensed under LGPL which requires source code to be made available.
 The toolchains used to compile @R{} prior to version 2.15.0 do not
 contain @code{pthreads}, although in some cases @code{pthreads-w32}
-could be retro-fitted.  It is expected that the toolchain used for @R{}
+could be retro-fitted.  It is expected that the toolchain used from @R{}
 2.15.0 will support @code{pthreads}. As from @R{} 2.15.0 there is
 @command{make} variable @code{SHLIB_PTHREAD_FLAGS} available: this
 should be included in both @code{PKG_CPPFLAGS} (or the Fortran or F9x
@@ -1641,7 +1640,8 @@ unambiguously determined without testing for yourself: however, that
 typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
 See also the comments on performance under OpenMP: on all known @R{}
-platforms OpenMP is implemented @emph{via} @code{pthreads}.
+platforms OpenMP is implemented @emph{via} @code{pthreads} and the known
+performance issues are in the latter.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
