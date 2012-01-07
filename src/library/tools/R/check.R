@@ -606,19 +606,20 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             ## name of a standard directory, while differing in name.
             ## </FIXME>
 
-            if (dir.exists("r")) {
+            ## Watch out for case-insensitive file systems
+            if ("./r" %in% list.dirs(recursive = FALSE)) {
                 if (!any) warnLog()
                 any <- TRUE
                 printLog(Log, "Found subdirectory 'r'.\n",
                          "Most likely, this should be 'R'.\n")
             }
-            if (dir.exists("MAN")) {
+            if ("./MAN" %in% list.dirs(recursive = FALSE)) {
                 if (!any) warnLog()
                 any <- TRUE
                 printLog(Log, "Found subdirectory 'MAN'.\n",
                          "Most likely, this should be 'man'.\n")
             }
-            if (dir.exists("DATA")) {
+            if ("./DATA" %in% list.dirs(recursive = FALSE)) {
                 if (!any) warnLog()
                 any <- TRUE
                 printLog(Log, "Found subdirectory 'DATA'.\n",
