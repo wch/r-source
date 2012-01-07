@@ -111,9 +111,9 @@ Sys.umask(mode = NA)
   as a length-one object of class \code{"\link{octmode}"}: the
   visibility flag is off unless \code{mode} is \code{NA}.
   
-  See also the section in the help for \code{\;link{file.exists}} on
+  See also the section in the help for \code{\link{file.exists}} on
   case-insensitive file systems for the interpretation of \code{path}
-  and \code}paths}.
+  and \code{paths}.
 }
 #ifdef windows
 \note{
