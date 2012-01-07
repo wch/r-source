@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -121,6 +121,16 @@ Sys.junction(from, to)
 
   If \code{showWarnings = TRUE}, \code{file.create} will give a warning
   for an unexpected failure.
+}
+
+\section{Case-insensitive file systems}{
+  Case-insensitive file systems are the norm on Windows and Mac OS X,
+  but can be found on all OSes (for example a FAT-formatted USB drive is
+  probably case-insensitive).
+
+  These functions will most likely match existing files regardless of case
+  on such file systems: howevever this is an OS function and it is
+  possible that file names might be mapped to upper or lower case.
 }
 
 #ifdef windows
