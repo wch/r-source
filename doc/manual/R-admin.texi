@@ -4180,9 +4180,10 @@ for C++).
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using the (zero cost) Oracle Solaris Studio
-12@footnote{versions 12u1 and 12.2; a beta of 12.3 in Oct 2011 gave a
-segfault on powers of complex numbers and required @code{HAVE_CPOW}
-undefined.} compilers: there has been some success with
+12@footnote{at least on versions 12u1 and 12.2; 12.3 on @cputype{x86} in
+Jan 2012 gave failed to compile @pkg{mgcv} without reducing the
+optimization, and gave segfaults at lower optimizations.} compilers:
+there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}.  Sun packages for @R{} are
 available from @uref{http://www.sunfreeware.com/} for both 32-bit
 architectures, but recently have often been several versions
@@ -4262,7 +4263,7 @@ JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server \
   -R$(JAVA_HOME)/lib/amd64/server -ljvm
 @end example
 
-With Solaris Studio 12.2 on Sparc, @code{FCLIBS} needs to be
+With Solaris Studio 12.[23] on Sparc, @code{FCLIBS} needs to be
 
 @example
 FCLIBS="-lfai -lfai2 -lfsu"
@@ -4277,7 +4278,7 @@ out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
 later: @file{libRblas.so} and @file{lapack.so} are generated with code
 that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
-impossible with Solaris Studio 12.2.  For a standard build the trick
+impossible with Solaris Studio >= 12.2.  For a standard build the trick
 seems to be to manually set @code{FLIBS} to avoid the troublesome
 libraries.  For example, on @cputype{amd64}, set in @file{Makeconf}
 
@@ -4292,14 +4293,14 @@ and set @code{FLIBS} in @file{etc/Makeconf} to the same value.
 
 For 64-bit Sparc, use something like
 @example
-FLIBS = -R/opt/solstudio12.2/prod/lib/sparc/64 -lifai -lsunimath -lfai -lfai2 \
- -lfsumai -lfprodai -lfminlai -lfmaxlai -lfminvai -lfmaxvai -lfui \
- -lsunmath -lmtsk /opt/solstudio12.2/prod/lib/sparc/64/libfsu.so.1
+FLIBS = -R/opt/solarisstudio12.3/prod/lib/sparc/64 \
+ -lifai -lsunimath -lfai -lfai2 -lfsumai -lfprodai -lfminlai -lfmaxlai \
+ -lfminvai -lfmaxvai -lfui -lsunmath -lmtsk \
+ /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1
 @end example
 
 @noindent
-in @file{config.site}, or manually in both in @file{Makeconf} and
-@file{etc/Makeconf}.
+in @file{config.site}.
 
 
 By default the Solaris Studio compilers do not by default conform to the C99

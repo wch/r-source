@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -20,7 +20,8 @@ file.info(\dots)
 \details{
   What constitutes a \sQuote{file} is OS-dependent but includes
   directories.  (However, directory names must not include a trailing
-  backslash or slash on Windows.)
+  backslash or slash on Windows.)  See also the section in the help for
+  \code{\;link{file.exists}} on case-insensitive file systems.
 
   The file \sQuote{mode} follows POSIX conventions, giving three octal
   digits summarizing the permissions for the file owner, the owner's
@@ -40,6 +41,10 @@ file.info(\dots)
   reliable view of read/write access availability to the \R process.
   
   UTF-8-encoded file names not valid in the current locale can be used.
+  
+  Junction points and symbolic links are followed, so information is
+  given about the file/directory to which the link points rather than
+  about the link.
 #endif
 }
 \value{
