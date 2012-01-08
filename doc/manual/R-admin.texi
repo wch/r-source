@@ -796,8 +796,9 @@ installation).
 @node Multilib,  , Sub-architectures, Sub-architectures
 @subsection Multilib
 
-On Linux, there is an alternative mechanism for mixing 32-bit and
-64-bit libraries known as @emph{multilib}. If a Linux distribution supports
+On Linux@footnote{mainly on RedHat and Fedora, whose layout is described
+here.}, there is an alternative mechanism for mixing 32-bit and 64-bit
+libraries known as @emph{multilib}. If a Linux distribution supports
 multilib, then parallel builds of @R{} may be installed in the
 sub-directories @file{lib} (32-bit) and @file{lib64} (64-bit).  The
 build to be run may then be chosen using the @command{setarch}
@@ -4181,15 +4182,14 @@ for C++).
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using the (zero cost) Oracle Solaris Studio
 12@footnote{at least on versions 12u1 and 12.2; 12.3 on @cputype{x86} in
-Jan 2012 gave failed to compile @pkg{mgcv} without reducing the
-optimization, and gave segfaults at lower optimizations.} compilers:
-there has been some success with
-@command{gcc}@tie{}4/@command{gfortran}.  Sun packages for @R{} are
-available from @uref{http://www.sunfreeware.com/} for both 32-bit
-architectures, but recently have often been several versions
-old.@footnote{For example, 2.11.1 at the time of release of 2.13.2.}
-(Recent Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64})
-rather than @cputype{x86}, but 32-bit @cputype{x86} executables are the
+Jan 2012 gave gave segfaults unless the use of @code{cpow} was disabled
+by commenting out @code{HAVE_CPOW} in @file{src/include/config.h}.}
+compilers: there has been some success with
+@command{gcc}@tie{}4/@command{gfortran}.  Sun packages for @R{} used to
+be available from @uref{http://www.sunfreeware.com/} for both 32-bit
+architectures, but recently have often been many versions old.  (Recent
+Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64}) rather
+than @cputype{x86}, but 32-bit @cputype{x86} executables are the
 default.)
 
 There have been no reports on Solaris 11.  Solaris 9 and earlier are now
@@ -4213,7 +4213,7 @@ You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
 
 The native @command{make} suffices to build @R{} but a small number of
-packages require @acronym{GNU} @command{make} (most without good reason
+packages require @acronym{GNU} @command{make} (some without good reason
 and without declaring it as @samp{SystemRequirements} in the
 @file{DESCRIPTION} file).
 
@@ -4233,7 +4233,7 @@ rather than the Solaris @code{iconv}:
 CC="cc -xc99"
 CFLAGS="-O -xlibmieee"
 F77=f95
-FFLAGS=-O4
+FFLAGS=-O
 CXX="CC -library=stlport4"
 CXXFLAGS=-O
 FC=f95
@@ -4283,9 +4283,9 @@ seems to be to manually set @code{FLIBS} to avoid the troublesome
 libraries.  For example, on @cputype{amd64}, set in @file{Makeconf}
 
 @example
-FLIBS_IN_SO = -R/opt/solstudio12.2/lib/amd64 \
-  /opt/solstudio12.2/lib/amd64/libfui.so \
-  /opt/solstudio12.2/lib/amd64/libfsu.so
+FLIBS_IN_SO = -R/opt/solarisstudio12.3/lib/amd64 \
+  /opt/solarisstudio12.3/lib/amd64/libfui.so \
+  /opt/solarisstudio12.3/lib/amd64/libfsu.so
 @end example
 
 @noindent
@@ -4323,14 +4323,16 @@ functions to be inlined.
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
-CFLAGS="-O5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
+CFLAGS="-xO5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
 FFLAGS="-O5 -libmil -nofstore -xtarget=native"
-CXXFLAGS="-O5 -xlibmil -nofstore -xtarget=native"
+CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
 SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
 @noindent
-but the use of @code{-nofstore} can be less numerically stable.
+but the use of @code{-nofstore} can be less numerically stable, and some
+packages (notably @pkg{mgcv} on @cputype{x86}) failed to compile at
+higher optimization levels wth version 12.3.
 
 The Solaris Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
@@ -4342,8 +4344,8 @@ it is needed for linking) is @samp{Cstd}: see
 @uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
-needs to be.  Occasionally the flag @option{-library=stlport4,Crun} is
-needed.
+needs to be.  Occasionally the flag @option{-library=stlport4,Crun} has
+been needed.
 
 Several CRAN packages using C++ need the more liberal interpretation
 given by adding
