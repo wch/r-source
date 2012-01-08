@@ -895,10 +895,15 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
 		## warn only if generic overwrites a function which
 		## it was not derived from
 		genNs <- get(n, envir = ns)@package
-		genImpenv <- environmentName(environment(get(n, envir = impenv)))
+                genImp <- get(n, envir = impenv)
+                if(methods::is(genImp, "genericFunction") &&
+                   identical(genNs, genImp@package)) next # same generic
+		genImpenv <- environmentName(environment(genImp))
+                ## May call environment() on a non-function--an undocumented
+                ## "feature" of environment() is that it returns a special
+                ## attribute for non-functions, usually NULL
 		if (!identical(genNs, genImpenv) ||
-		    ## warning if generic overwrites another generic
-		    methods:::isGeneric(n, impenv)) {}
+                    methods:::isGeneric(n, impenv)) {}
                 else next
 	    }
             ## this is always called from another function, so reporting call

@@ -262,6 +262,10 @@
 
       \item Reference methods can not safely use non-exported entries
       in the namespace.  We now do not do so, and warn in the documentation.
+
+      \item The namespace import code was warning when identical
+      generic functions were imported more than once, but should
+      not (reported by Martin Morgan).
     }
   }
 }
