@@ -69,7 +69,10 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	for(i = 0; i < n; i++) {
 	    INTEGER(ind)[0] = i + 1;
-	    SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
+	    tmp = eval(R_fcall, rho);
+	    if (NAMED(tmp))
+		tmp = duplicate(tmp);
+	    SET_VECTOR_ELT(ans, i, tmp);
 	}
 	UNPROTECT(3);
     }
