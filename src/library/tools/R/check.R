@@ -140,14 +140,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## (i) .get_S3_generics_as_seen_from_package needs utils,graphics,stats
     ##      Used by checkDocStyle (which needs the generic visible) and
     ##      checkS3methods.
-    ## (ii) calls to undoc need methods to pick up undocumented S4 classes.
-    ##      even for packages which only import methods.
-    ## (iii) to cope with some of the fallout of c58005, although that
-    ##      may have been circumventing bugs in JMC's code.
     R_runR2 <-
         if(WINDOWS) {
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats,methods")
+                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats")
                 {
                     out <- R_runR(cmd, R_opts2, env)
                     ## pesky gdata ....
@@ -156,7 +152,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 }
         } else
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats,methods'")
+                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
             {
                 out <- R_runR(cmd, R_opts2, env)
                 if (R_check_suppress_RandR_message)
@@ -872,8 +868,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
-		# should be NULL: temporary fix
-                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=methods")
+                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     warnLog()
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1111,7 +1106,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           sprintf("tools::undoc(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools::undoc(dir = \"%s\")\n", pkgdir))
-            out <- R_runR2(Rcmd)
+            ## This is needed to pick up undocumented S4 classes.
+            ## even for packages which only import methods.
+            ## FIXME: use only when needed.
+            env <- if(WINDOWS) "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats,methods" else "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats,methods'"
+            out <- R_runR2(Rcmd, env = env)
             ## Grr, get() in undoc can change the search path
             ## Current example is TeachingDemos
             out <- grep("^Loading required package:", out,
