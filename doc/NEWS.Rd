@@ -33,6 +33,10 @@
       \item Negative values for \code{options("max.print")} or the \code{max}
       argument to \code{print.default()} caused crashes.  Now the former
       are ignored and the latter trigger an error.  (\PR{14779})
+      
+      \item The text of function bodies containing more than 4096
+      characters were not properly saved by the parser when entered
+      at the console.      
     }
   }
 }

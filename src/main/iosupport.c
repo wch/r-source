@@ -162,7 +162,20 @@ int attribute_hidden R_IoBufferGetc(IoBuffer *iob)
     return *(iob->read_ptr)++;
 }
 
-	/* Initialization code for text buffers */
+/* What is our current offset, taking all blocks into account? */
+
+int attribute_hidden R_IoBufferReadOffset(IoBuffer *iob)
+{
+    int result = iob->read_offset;
+    BufferListItem* buf = iob->start_buf;
+    while(buf && buf != iob->read_buf) {
+    	result += IOBSIZE;
+    	buf = buf->next;
+    }
+    return result;
+}
+    
+/* Initialization code for text buffers */
 
 static void transferChars(unsigned char *p, const char *q)
 {
