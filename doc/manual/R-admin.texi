@@ -990,7 +990,7 @@ configuration files in the @file{etc} directory.
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
-@uref{http://www.murdoch-sutherland.com/@/Rtools/}) for details.
+@uref{http://cran.r-project.org/bin/@/windows/@/Rtools/}) for details.
 
 The @file{Rtools*.exe} executable installer described in @ref{The Windows
 toolset} also includes some source files in addition to the @R{} source
@@ -1060,9 +1060,10 @@ build you will also need
 
 @item
 The Tcl/Tk support files are contained in @file{Rtools*.exe} and
-available from @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make
-sure you install the right version: there is a 32-bit version and a
-64-bit version.
+available as @file{.zip}s from
+@uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
+install the right version: there is a 32-bit version and a 64-bit
+version.
 
 @item
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
@@ -4696,7 +4697,7 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
-@uref{http://www.murdoch-sutherland.com/@/Rtools/} for the current
+@uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/} for the current
 locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
@@ -4715,8 +4716,8 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.13.x and later.}  @file{Rtools214.exe},
-available from @uref{http://www.murdoch-sutherland.com/@/Rtools/}. You
+named@footnote{for @R{} 2.15.x and later.}  @file{Rtools214.exe},
+available from @uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
