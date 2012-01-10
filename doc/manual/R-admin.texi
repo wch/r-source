@@ -1027,7 +1027,7 @@ configuration files in the @file{etc} directory.
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
-@uref{http://www.murdoch-sutherland.com/@/Rtools/}) for details.
+@uref{http://cran.r-project.org/bin/@/windows/@/Rtools/}) for details.
 
 The @file{Rtools*.exe} executable installer described in @ref{The
 Windows toolset} also includes some source files in addition to the @R{}
@@ -1096,9 +1096,10 @@ build you will also need
 
 @item
 The Tcl/Tk support files are contained in @file{Rtools*.exe} and
-available from @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make
-sure you install the right version: there is a 32-bit version and a
-64-bit version.
+available as @file{.zip}s from
+@uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
+install the right version: there is a 32-bit version and a 64-bit
+version.
 
 @item
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
@@ -4733,7 +4734,7 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
-@uref{http://www.murdoch-sutherland.com/@/Rtools/} for the current
+@uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/} for the current
 locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
@@ -4752,8 +4753,8 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.13.x and later.}  @file{Rtools214.exe},
-available from @uref{http://www.murdoch-sutherland.com/@/Rtools/}. You
+named@footnote{for @R{} 2.15.x and later.}  @file{Rtools215.exe},
+available from @uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
@@ -4926,7 +4927,7 @@ with a different toolchain from 2.14.x.  A candidate version can be
 downloaded from
 @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/R215x.html}: this uses
 a beta version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
-project's runtime.
+project's runtime.  It is also part of @code{Rtools215.exe}.
 
 The candidate toolchain uses @emph{multilib}: that is there is a single
 front-end such as @command{gcc.exe} for each of the compilers and 32-bit
@@ -4964,7 +4965,7 @@ Developers of packages will find some of the `goodies' at
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.  The
-binary distribution is included in @file{Rtools214.exe}.
+binary distribution is included in @file{Rtools215.exe}.
 
 The file @file{xzutils.zip} contains the program @command{xz} which can
 be used to (de)compress files with that form of compression.
