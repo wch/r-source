@@ -94,7 +94,7 @@ void PrintDefaults(void)
     R_print.scipen = asInteger(GetOption1(install("scipen")));
     if (R_print.scipen == NA_INTEGER) R_print.scipen = 0;
     R_print.max = asInteger(GetOption1(install("max.print")));
-    if (R_print.max == NA_INTEGER) R_print.max = 99999;
+    if (R_print.max == NA_INTEGER || R_print.max < 0) R_print.max = 99999;
     R_print.gap = 1;
     R_print.width = GetOptionWidth();
     R_print.useSource = USESOURCE;
@@ -266,7 +266,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(!isNull(CAR(args))) {
 	R_print.max = asInteger(CAR(args));
-	if(R_print.max == NA_INTEGER)
+	if(R_print.max == NA_INTEGER || R_print.max < 0)
 	    error(_("invalid '%s' argument"), "max");
     }
     args = CDR(args);
