@@ -75,6 +75,7 @@ int R_IoBufferWriteReset(IoBuffer*);
 int R_IoBufferGetc(IoBuffer*);
 int R_IoBufferPutc(int, IoBuffer*);
 int R_IoBufferPuts(char*, IoBuffer*);
+int R_IoBufferReadOffset(IoBuffer*);
 
 int R_TextBufferInit(TextBuffer*, SEXP);
 int R_TextBufferFree(TextBuffer*);
