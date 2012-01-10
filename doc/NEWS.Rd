@@ -29,6 +29,10 @@
 
       \item \code{image(x, useRaster=TRUE)} misbehaved on single-column 
       \code{x}. (\PR{14774})
+      
+      \item Negative values for \code{options("max.print")} or the \code{max}
+      argument to \code{print.default()} caused crashes.  Now the former
+      are ignored and the latter trigger an error.  (\PR{14779})
     }
   }
 }
