@@ -3234,7 +3234,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             }
         }   ## end of if (!is_base_pkg)
 
-        elibs <- if(R_check_depends_only)
+        elibs <- if(is_base_pkg) character()
+        else if(R_check_depends_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir)
         else if(R_check_suggests_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
