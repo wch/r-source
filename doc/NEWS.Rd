@@ -34,8 +34,8 @@
       argument to \code{print.default()} caused crashes.  Now the former
       are ignored and the latter trigger an error.  (\PR{14779})
       
-      \item The text of function bodies containing more than 4096
-      characters were not properly saved by the parser when entered
+      \item The text of a function body containing more than 4096
+      characters was not properly saved by the parser when entered
       at the console.      
     }
   }
