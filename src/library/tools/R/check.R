@@ -124,7 +124,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     }
 
     ## Used for
-    ## .check_packages_used (pro tem with just methods)
+    ## .check_packages_used
     ## .check_packages_used_in_examples
     ## .check_packages_used_in_tests
     ## .check_packages_used_in_vignettes
@@ -137,9 +137,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## undoc, codoc, codocData, codocClasses
     ## checkDocFiles, checkDocStyle
     ## The default set of packages here are as they are because
-    ## (i) .get_S3_generics_as_seen_from_package needs utils,graphics,stats
-    ##      Used by checkDocStyle (which needs the generic visible) and
-    ##      checkS3methods.
+    ## .get_S3_generics_as_seen_from_package needs utils,graphics,stats
+    ##  Used by checkDocStyle (which needs the generic visible) and checkS3methods.
     R_runR2 <-
         if(WINDOWS) {
             function(cmd,
@@ -1108,9 +1107,17 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           sprintf("tools::undoc(dir = \"%s\")\n", pkgdir))
             ## This is needed to pick up undocumented S4 classes.
             ## even for packages which only import methods.
-            ## FIXME: use only when needed.
-            env <- if(WINDOWS) "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats,methods" else "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats,methods'"
-            out <- R_runR2(Rcmd, env = env)
+            ## But as that check needs to run get() on all the lazy-loaded
+            ## promises, avoid if possible.
+            ## desc exists in the body of this function.
+            use_methods <- if(pkgname == "methods") TRUE else {
+                pi <- .split_description(desc)
+                "methods" %in% c(names(pi$Depends), names(pi$Imports))
+            }
+            out <- if (use_methods) {
+                env <- if(WINDOWS) "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats,methods" else "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats,methods'"
+                R_runR2(Rcmd, env = env)
+            } else R_runR2(Rcmd)
             ## Grr, get() in undoc can change the search path
             ## Current example is TeachingDemos
             out <- grep("^Loading required package:", out,
