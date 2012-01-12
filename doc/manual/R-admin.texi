@@ -3881,7 +3881,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 14 we used
+on @cputype{x86_64} with Fedora 16 we used
 
 @example
 CC="gcc -m32"
@@ -3897,7 +3897,12 @@ LIBnn=lib
 Note the use of @samp{LIBnn}: @cputype{x86_64} Fedora installs its
 64-bit software in @file{/usr/lib64} and 32-bit software in
 @file{/usr/lib}.  Linking will skip over inappropriate binaries, but for
-example the 32-bit Tcl/Tk configure scripts are in @file{/usr/lib}.
+example the 32-bit Tcl/Tk configure scripts are in @file{/usr/lib}.  It
+may also be necessary to set the @command{pkg-config} path, e.g.@: by
+
+@example
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
 
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
