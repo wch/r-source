@@ -30,6 +30,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{nstart}{if \code{centers} is a number, how many random sets
     should be chosen?}
   \item{algorithm}{character: may be abbreviated.}
+  \item{object}{an \R object of class \code{"kmeans"}, typically the
+    result \code{ob} of \code{ob <- kmeans(..)}.}
   \item{method}{character: may be abbreviated. \code{"centers"} causes
     \code{fitted} to return cluster centers (one for each input point) and
     \code{"classes"} causes \code{fitted} to return a vector of class
