@@ -95,7 +95,7 @@
 
       \item The internal \code{untar()} (as used by default by
       \command{R CMD INSTALL}) now knows about some \command{pax}
-      headers which \command{bsdtar} (e.g. the default \command{tar} for
+      headers which \command{bsdtar} (e.g., the default \command{tar} for
       Mac OS >= 10.6) can incorrectly include in \command{tar} files,
       and will skip them with a warning.
 
@@ -108,7 +108,7 @@
       symbolic link to a directory has changed: it now removes the link
       rather than the directory contents (as \command{rm -r} does).
 
-      On Windows it no longer follows reparse points (includiing
+      On Windows it no longer follows reparse points (including
       junctions and symbolic links).
       
       \item The \code{traceback()} function can now be called with
@@ -176,7 +176,7 @@
        \item \command{R CMD check} now gives a warning rather than a
        note if it finds inefficiently compressed datasets.  With
        \command{bzip2} and \command{xz} compression having been
-       available since \R 2.10.0, it only expectionally makes sense to
+       available since \R 2.10.0, it only exceptionally makes sense to
        not use them.
 
        \item Where multiple sub-architectures are to be tested,
@@ -200,17 +200,17 @@
    \itemize{
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
 
-      \item Options such as \code{--max-nsize} and the function
+      \item Options such as \option{--max-nsize} and the function
       \code{mem.limits()} are now defunct.
 
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is now disallowed.
 
       Use of an argument \code{chname} in \code{library.dynam()}
-      including the extension \file{.so} or \code{.dll} (which was never
+      including the extension \file{.so} or \file{.dll} (which was never
       allowed according to the help page) is defunct.  This also applies
       to \code{library.dynam.unload()} and to \code{useDynLib}
-      directives in \code{NAMESPACE} files.
+      directives in \file{NAMESPACE} files.
 
       \item The internal functions (but still used by some packages)
       \code{.readRDS()} and \code{.saveRDS()} are now defunct.
@@ -273,7 +273,7 @@
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item R configured with \code{--disable-openmp} would mistakenly
+      \item R configured with \option{--disable-openmp} would mistakenly
       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
       \file{Rconfig.h}) even though no OpenMP flags were populated.
 
@@ -677,7 +677,7 @@
       warning as previously).
 
       \item \code{vector(len)} and \code{length(x) <- len} no longer
-      acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
+      accept \code{TRUE}/\code{FALSE} for \code{len} (not that they
       were ever documented to, but there was special-casing in the C
       code).
 
@@ -939,7 +939,7 @@
       \code{X11(type = "Xlib")}: see the help on \code{X11Fonts()}.
 
       \item There is a new type \code{X11(type = "dbcairo")} which
-      updates the screeen less frequently: see its help page.
+      updates the screen less frequently: see its help page.
 
       \item The \code{X11()} device now makes use of cursors to
       distinguish its states.  The normal cursor is an arrow (rather
@@ -1206,7 +1206,7 @@
       releases (since this allows the use of fonts only supported for
       PDF), and only \command{R CMD Rd2pdf} will be available.
 
-      \item Options such as \code{--max-nsize} and the function
+      \item Options such as \option{--max-nsize} and the function
       \code{mem.limits()} are now deprecated: these limits are nowadays
       almost never used, and are reported by \code{gc()} when they are
       in use.
@@ -1226,7 +1226,7 @@
       \file{.so} or \code{.dll} (which is clearly not allowed according
       to the help page) is deprecated.  This also applies to
       \code{library.dynam.unload()} and \code{useDynLib} directives in
-      \code{NAMESPACE} files.
+      \file{NAMESPACE} files.
 
       %% should become defunct not earlier than end of summer 2013!
       \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
@@ -1269,7 +1269,7 @@
       Unix-alike system with cairographics installed but not X11, but a
       user might select \option{--without-x}.)
 
-      \item Configure will try to use \code{-fobjc-exceptions} for the
+      \item Configure will try to use \option{-fobjc-exceptions} for the
       Objective-C compiler (if present) to ensure that even compilers
       that do not enable exceptions by default (such as vanilla gcc) can
       be used.  (Objective-C is currently only used on Mac OS X.)
@@ -2146,7 +2146,7 @@
       slightly more correct results, fixing \PR{14491}, notably in
       border cases including when \code{digits >= 16}, thanks to
       substantial contributions (code and experiments) from Petr
-      Savicky.  This affects a noticable amount of numeric output from
+      Savicky.  This affects a noticeable amount of numeric output from
       \R.
 
       \item A new function \code{grepRaw()} has been introduced for
@@ -2169,8 +2169,8 @@
       \item There is an additional marked encoding \code{"bytes"} for
       character strings.  This is intended to be used for non-ASCII
       strings which should be treated as a set of bytes, and never
-      re-encoded as if they were in the encoding of the currrent locale:
-      \code{useBytes = TRUE} is autmatically selected in functions such
+      re-encoded as if they were in the encoding of the current locale:
+      \code{useBytes = TRUE} is automatically selected in functions such
       as \code{writeBin()}, \code{writeLines()}, \code{grep()} and
       \code{strsplit()}.
 
@@ -2669,7 +2669,7 @@
       \item Complex arithmetic (notably \code{z^n} for complex \code{z}
       and integer \code{n}) gave incorrect results since \R 2.10.0 on
       platforms without C99 complex support.  This and some
-      lesser issues in trignometric functions have been corrected.
+      lesser issues in trigonometric functions have been corrected.
 
       Such platforms were rare (we know of Cygwin and FreeBSD).
       However, because of new compiler optimizations in the way complex
@@ -3518,7 +3518,7 @@
        (Suggestion of Vince Carey.)
 
       \item \command{R CMD build} no longer creates an \file{INDEX} file
-       (\command{R CMD INSTALL} does so), and \code{--force} removes
+       (\command{R CMD INSTALL} does so), and \option{--force} removes
        (rather than overwrites) an existing \file{INDEX} file.
 
        It supports a file \file{~/.R/build.Renviron} analogously to
@@ -3534,7 +3534,7 @@
        rather than Perl.  It has new arguments to select one of the
        tables and to limit the number of entries printed.
 
-      \item \command{R CMD Sweave} now runs \R with \code{--vanilla} so
+      \item \command{R CMD Sweave} now runs \R with \option{--vanilla} so
        the environment setting of \env{R_LIBS} will always be used.
     }
   }
@@ -4015,7 +4015,7 @@
       \item \code{na.action()} did not extract the \code{na.action}
       component as documented.
 
-      \item \code{do.call()}ing \code{NextMethod} in erronous ways no
+      \item \code{do.call()}ing \code{NextMethod} in erroneous ways no
       longer segfaults. (\PR{13487})
     }
   }
@@ -4029,7 +4029,7 @@
        current help system is the only one now supported.
 
       \item A port to 64-bit Windows is now available as well as binary
-       package repositiories: see the \sQuote{R Administration and
+       package repositories: see the \sQuote{R Administration and
        Installation Manual}.
 
       \item Argument matching for primitive functions is now done in the
@@ -4550,7 +4550,7 @@
        general purpose bits of the \code{SEXP}s that make up the formals
        list of \R functions.  This fixes an invalid error message that
        would occur when a garbage collection triggered a second call to
-       matchArgs for the same function \emph{via} a finalizer.
+       \code{matchArgs} for the same function \emph{via} a finalizer.
 
       \item \code{gsub()} in 2.10.x could fail from stack overflow for
        extremely long strings due to temporary data being allocated on
@@ -4912,7 +4912,7 @@
       \PR{13999}.)
 
       For \code{ncp} less than but close to 80, \code{pchisq()} and
-      \code{qchisq()} are more accurate for probablilities very close
+      \code{qchisq()} are more accurate for probabilities very close
       to 1 (a series expansion was truncated slightly too early).
 
       \code{pchisq(x, df, ncp)} can no longer return values just larger

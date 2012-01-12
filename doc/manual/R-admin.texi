@@ -4370,7 +4370,7 @@ SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @noindent
 but the use of @code{-nofstore} can be less numerically stable, and some
 packages (notably @pkg{mgcv} on @cputype{x86}) failed to compile at
-higher optimization levels wth version 12.3.
+higher optimization levels with version 12.3.
 
 The Solaris Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.

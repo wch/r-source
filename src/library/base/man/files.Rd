@@ -129,7 +129,7 @@ Sys.junction(from, to)
   probably case-insensitive).
 
   These functions will most likely match existing files regardless of case
-  on such file systems: howevever this is an OS function and it is
+  on such file systems: however this is an OS function and it is
   possible that file names might be mapped to upper or lower case.
 }
 
