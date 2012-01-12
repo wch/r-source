@@ -87,7 +87,7 @@ grid.show.viewport(viewport(x = 0.5, y = 0.5, width = 0.5, height = 0.25,
 \caption{
   \label{figure:viewport}
   A diagram of a simple \grid{} viewport (produced using the
-  \protect\code{grid.show.viewport()} function.}
+  \code{grid.show.viewport()} function.}
 \end{figure}
 
 The object returned by the \code{viewport()} function is only a
@@ -524,7 +524,7 @@ popViewport(2)
 }
 \end{center}
 \caption{\label{figure:simpleplot}
-        The grid equivalent of \protect\code{plot(1:10)}.}
+        The grid equivalent of \code{plot(1:10)}.}
 \end{figure}
 
 Now consider a more complex example, where we create a barplot

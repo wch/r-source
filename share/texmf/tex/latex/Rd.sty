@@ -206,22 +206,36 @@
 \newcommand{\email}[1]{\normalfont\texttt{\textless#1\textgreater}}
 
 %% \code without `-' ligatures
-{\catcode`\-=\active%
-  \global\def\code{\bgroup%
-    \catcode`\-=\active \let-\codedash%
-    \Rd@code}}
-\def\codedash{-\discretionary{}{}{}}
+
+%{\catcode`\-=\active%
+%   \global\def\code{\bgroup%
+%     \catcode`\-=\active \let-\codedash%
+%     \Rd@code}}
+%     \def\codedash{-\discretionary{}{}{}}
+
+%% If we simply do
+%%   \DeclareRobustCommand\code{\bgroup\@noligs\@vobeyspaces\Rd@code}
+%% then e.g.
+%%   \code{\LinkA{attr<-}{attr<.Rdash.}} 
+%% will give an undefined control sequence `\< error when hyperref is
+%% used (so that \LinkA uses \hyperlink).
+%% Hence, use a noligs list without < and > for now, and use the same
+%% list for \code and \samp and their variants.
+\def\Rd@nolig@list{\do\`\do\,\do\'\do\-}
+\def\Rd@noligs{\let\do\do@noligs \Rd@nolig@list}
+
+\DeclareRobustCommand\code{\bgroup\Rd@noligs\@vobeyspaces\Rd@code}
 \def\Rd@code#1{\normalfont\texttt{#1}\egroup}
+\let\command=\code
+\let\env=\code
+
+\DeclareRobustCommand\samp{`\bgroup\Rd@noligs\@vobeyspaces\@sampx}
+\def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
+\let\option=\samp
 
 \def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\@noligs\@vobeyspaces\Rd@AsIsX}
 \def\Rd@AsIs@dospecials{\do\$\do\&\do\#\do\^\do\_\do\%\do\~}
 \def\Rd@AsIsX#1{\normalfont #1\egroup}
-\let\command=\code
-\let\env=\code
-
-\newcommand\samp{`\bgroup\@noligs\@vobeyspaces\@sampx}
-\def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
-\let\option=\samp
 
 % This is a workaround for the old Rdconv to handle \Sexpr by echoing it
 % Rd2latex() should never let \Sexpr through to here.
