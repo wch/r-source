@@ -409,15 +409,23 @@ aspell_R_Rd_files <-
 function(which = NULL, dir = NULL, drop = "\\references",
          program = NULL)
 {
+    files <- character()
+    
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
-    if(is.null(which))
+    
+    if(is.null(which)) {
         which <- tools:::.get_standard_package_names()$base
+        files <- c(file.path(dir, "doc", "NEWS.Rd"),
+                   file.path(dir, "src", "gnuwin32", "CHANGES.Rd"))
+        files <- files[file_test("-f", files)]
+    }
 
     files <-
-        unlist(lapply(file.path(dir, "src", "library", which, "man"),
-                      tools::list_files_with_type,
-                      "docs", OS_subdirs = c("unix", "windows")),
-               use.names = FALSE)
+        c(files,
+          unlist(lapply(file.path(dir, "src", "library", which, "man"),
+                        tools::list_files_with_type,
+                        "docs", OS_subdirs = c("unix", "windows")),
+                 use.names = FALSE))
 
     program <- aspell_find_program(program)
 
