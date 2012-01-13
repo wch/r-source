@@ -1366,7 +1366,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      "Consider the use of a .Rinstignore file: see ",
                      sQuote("Writing R Extensions"),
                      ".\n")
-        } else resultLog(Log, "OK")
+        }
+        if (!any) resultLog(Log, "OK")
     }
 
     check_doc_size <- function()
@@ -1400,7 +1401,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 }
                 if (nzchar(gs_cmd)) {
                     res <- compactPDF(td, gs_cmd = gs_cmd, gs_quality = "ebook")
-                    res <- format(res, diff = 1e5)
+                    res <- format(res, diff = 2.5e5) # 250 KB for now
                     if(length(res)) {
                         if (!any) resultLog(Log, "NOTE")
                         any <- TRUE
@@ -3054,7 +3055,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     R_check_dot_internal <- R_check_ascii_code <-
                     	R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
-                                R_check_unsafe_calls <- FALSE
+                                R_check_doc_sizes2 <-
+                                    R_check_unsafe_calls <- FALSE
 
     startdir <- getwd()
     if (is.null(startdir))
