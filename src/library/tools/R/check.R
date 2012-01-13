@@ -1358,6 +1358,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         bad <- bad | grepl("(Makefile|~$)", files)
         if (any(bad)) {
             if(!any) noteLog(Log)
+            any <- TRUE
             printLog(Log,
                      "The following files should probably not be installed:\n",
                      paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
