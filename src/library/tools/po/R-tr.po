@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -367,6 +367,12 @@ msgstr ""
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+
+msgid "'data(package=)' call not declared from: %s"
+msgstr ""
+
 msgid "Rd files with duplicated name '%s':"
 msgstr ""
 
@@ -529,11 +535,6 @@ msgstr ""
 msgid "unable to copy INDEX to '%s'"
 msgstr ""
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-
 msgid "cannot create directory '%s'"
 msgstr ""
 
@@ -570,9 +571,6 @@ msgid "The default JSS style may not be modified."
 msgstr ""
 
 msgid "Error: cannot rename directory to"
-msgstr ""
-
-msgid "error status"
 msgstr ""
 
 msgid "-l option without value"

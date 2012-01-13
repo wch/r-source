@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -379,6 +379,12 @@ msgstr ""
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+
+msgid "'data(package=)' call not declared from: %s"
+msgstr ""
+
 #, fuzzy
 msgid "Rd files with duplicated name '%s':"
 msgstr "I file Rd devono avere \\title non vuoto."
@@ -552,11 +558,6 @@ msgstr "impossibile creare '%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "impossibile copiare INDEX su"
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-
 msgid "cannot create directory '%s'"
 msgstr "impossibile creare directory '%s'"
 
@@ -597,9 +598,6 @@ msgstr ""
 #, fuzzy
 msgid "Error: cannot rename directory to"
 msgstr "impossibile creare directory '%s'"
-
-msgid "error status"
-msgstr ""
 
 msgid "-l option without value"
 msgstr ""

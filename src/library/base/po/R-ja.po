@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
 "PO-Revision-Date: 2011-10-22 18:27+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -987,6 +987,9 @@ msgstr " 'file' が指定されなければなりません "
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr " 二回以前の保存バージョンの使用は廃止予定です "
 
+msgid "nothing specified to be save()d"
+msgstr ""
+
 msgid "'file' must be non-empty string"
 msgstr " 'file' は空でない文字列でなければなりません "
 
@@ -1156,6 +1159,14 @@ msgstr ""
 " パッケージ '%s' 中のクラス %s をエクスポートするように指定されていますが定義"
 "されていません "
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr ""
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+
 msgid "in %s methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートされるメソッドがありません： %s "
 
@@ -1209,10 +1220,18 @@ msgstr ""
 " 関数 \"%s\" に対するインポートメソッドをみつけましたが、総称的ではありませ"
 "ん "
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr ""
+
 msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 " 要求された 'methods' オブジェクトは環境もしくはパッケージ '%s'中に見付かりま"
 "せん： %s "
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr " 封印された名前空間のエクスポートへ加えることができません "
@@ -1346,6 +1365,10 @@ msgstr " 引数 'length.out' は長さ 1 でなければなりません "
 
 msgid "first element used of 'length.out' argument"
 msgstr " 最初の要素は 引数 'length.out' として使われます "
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr " drop 引数は無視されます "
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "
@@ -1625,6 +1648,17 @@ msgstr " 'stderr' は長さ 1 でなければなりません "
 
 msgid "'which' was not found on this platform"
 msgstr " このプラットホームでは'which'が見つかりません "
+
+#, fuzzy
+msgid "fewer 'from' files than 'to' files"
+msgstr " コピー先ファイルよりも多くのコピー元ファイルがあります "
+
+msgid "link '%s' already exists"
+msgstr ""
+
+#, fuzzy
+msgid "failed to create directory for link '%s"
+msgstr " \"%s\" に対する metadata オブジェクトを見付けることができません "
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr " 'show.output.on.console' は 'TRUE' か 'FALSE' でなければなりません "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -823,6 +823,17 @@ msgstr "패키지 '%s'를 검색할수 가 없었습니다"
 msgid "unable to create"
 msgstr "'%s'를 작성하는데 실패 되었습니다"
 
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr ""
+
 msgid "inferring 'repos = NULL' from the file name"
 msgstr ""
 
@@ -858,8 +869,9 @@ msgid ""
 "  probably %s"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"The downloaded packages are in\n"
+"The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
 "다운로드된 패키지는 %s에\n"
@@ -1240,6 +1252,14 @@ msgstr "'%s'에 임시 설치 '%d'를 이동시킬 수 없습니다"
 msgid "cannot remove prior installation of package"
 msgstr "패키지의 전의 설치를 삭제할 수 없습니다"
 
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"다운로드된 패키지는 %s에\n"
+"있습니다"
+
 msgid "'memory.size()' is Windows-specific"
 msgstr ""
 
@@ -1316,6 +1336,13 @@ msgstr[0] ""
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] "'destdir'는 디렉토리가 아닙니다"
+
+#, fuzzy
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] ""
+"한층 더 dependency를 인스톨 합니다\n"
+"한층 더 depengencies를 인스톨 합니다"
 
 #, fuzzy
 msgid "package %s is in use and will not be installed"

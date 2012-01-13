@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-15 17:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -615,6 +615,11 @@ msgstr "%d : cible \"%s\" : choix \"%s\" (autres : %s)"
 
 msgid "Notes: %s."
 msgstr "Notes : %s."
+
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr ""
+"Une nouvelle fonction générique est créée pour %s du package %s dans %s"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -1282,6 +1287,12 @@ msgid "No package name supplied and no class definition found for %s"
 msgstr ""
 "Aucun nom de package fourni et pas de définition de classe trouvée pour %s"
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr ""
+"l'argument S4Class doit être une définition de classe : un objet de classe "
+"%s est obtenu à la place"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1784,25 +1795,12 @@ msgstr ""
 "L'item \"%s\" n'est pas un nom de méthode dans la classe %s\n"
 "La définition de classe est la suivante"
 
-msgid "Arguments must all be character string names of fields"
-msgstr ""
-"Les arguments doivent tous être des noms sous forme de chaînes de caractères "
-"des champs"
-
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr ""
 "La définition de classe %s dans le package %s est verrouillée, les champs ne "
 "peuvent être redéfinis"
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr ""
-"Le champ \"%s\" de la classe %s a un lien non standard et ne peut être "
-"verrouillé"
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1915,6 +1913,19 @@ msgstr ""
 "L'affectation non-locale à des noms de méthodes n'est pas autorisée\n"
 "    %s\n"
 "(dans la méthode %s de la classe %s)"
+
+msgid "Arguments must all be character string names of fields"
+msgstr ""
+"Les arguments doivent tous être des noms sous forme de chaînes de caractères "
+"des champs"
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+msgstr ""
+"Le champ \"%s\" de la classe %s a un lien non standard et ne peut être "
+"verrouillé"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

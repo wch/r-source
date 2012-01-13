@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-13 15:53+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -393,6 +393,14 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
 
+#, fuzzy
+msgid "'data(package=)' calls not declared from:"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+
+#, fuzzy
+msgid "'data(package=)' call not declared from: %s"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd-Dateien mit doppeltem Namen '%s':"
 
@@ -560,14 +568,6 @@ msgstr "kann '%s' Zeile(n) %s nicht rekodieren"
 msgid "unable to copy INDEX to '%s'"
 msgstr "kann INDEX nicht nach '%s' kopieren"
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-"Stangle auf der Vignette '%s' auszuführen mit folgender Diagnose "
-"fehlgeschlagen:\n"
-"%s"
-
 msgid "cannot create directory '%s'"
 msgstr "kann  Verzeichnis '%s' nicht erzeugen"
 
@@ -608,9 +608,6 @@ msgstr "Der Standard JSS style darf nicht geändert werden"
 
 msgid "Error: cannot rename directory to"
 msgstr "Fehler: kann  Verzeichnis nicht umbennen in"
-
-msgid "error status"
-msgstr ""
 
 msgid "-l option without value"
 msgstr "-l Option ohne Wert"
@@ -1252,6 +1249,14 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid ""
+#~ "running Stangle on vignette '%s' failed with message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Stangle auf der Vignette '%s' auszuführen mit folgender Diagnose "
+#~ "fehlgeschlagen:\n"
+#~ "%s"
 
 #~ msgid "Packages required but not available:"
 #~ msgstr "Benötigte, aber nicht verfügbare Pakete:"

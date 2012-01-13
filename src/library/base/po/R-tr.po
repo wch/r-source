@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -945,6 +945,9 @@ msgstr ""
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
+msgid "nothing specified to be save()d"
+msgstr ""
+
 msgid "'file' must be non-empty string"
 msgstr ""
 
@@ -1105,6 +1108,14 @@ msgstr ""
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr ""
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+
 msgid "in %s methods for export not found: %s"
 msgstr ""
 
@@ -1155,7 +1166,15 @@ msgstr ""
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr ""
+
 msgid "requested methods not found in environment/package %s: %s"
+msgstr ""
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
@@ -1285,6 +1304,9 @@ msgid "argument 'length.out' must be of length 1"
 msgstr ""
 
 msgid "first element used of 'length.out' argument"
+msgstr ""
+
+msgid "extra argument(s) %s will be disregarded"
 msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
@@ -1555,6 +1577,15 @@ msgid "'stderr' must be of length 1"
 msgstr ""
 
 msgid "'which' was not found on this platform"
+msgstr ""
+
+msgid "fewer 'from' files than 'to' files"
+msgstr ""
+
+msgid "link '%s' already exists"
+msgstr ""
+
+msgid "failed to create directory for link '%s"
 msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"

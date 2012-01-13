@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -379,6 +379,12 @@ msgstr ""
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+
+msgid "'data(package=)' call not declared from: %s"
+msgstr ""
+
 #, fuzzy
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd 파일은 비어 있는 \\\\title를 가지고 있어야만 합니다"
@@ -552,11 +558,6 @@ msgstr "'%s'를 작성할수가 없습니다"
 msgid "unable to copy INDEX to '%s'"
 msgstr "INDEX를 복사할수가 없습니다"
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-
 msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
 
@@ -597,9 +598,6 @@ msgstr ""
 #, fuzzy
 msgid "Error: cannot rename directory to"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
-
-msgid "error status"
-msgstr ""
 
 msgid "-l option without value"
 msgstr ""

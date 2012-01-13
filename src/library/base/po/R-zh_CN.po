@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -955,6 +955,9 @@ msgstr "必需设定'file'的值"
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr "在R版本2号之前的保存功能不再有用"
 
+msgid "nothing specified to be save()d"
+msgstr ""
+
 msgid "'file' must be non-empty string"
 msgstr "'file'的值必需是长度大于零的字符串"
 
@@ -1115,6 +1118,14 @@ msgstr "虽然exportClassPattern在NAMESPACE有设定但它在%s程辑包中没�
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "在%s程辑包中%s类别指定被用于出口，但它的定义并不存在"
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr ""
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+
 msgid "in %s methods for export not found: %s"
 msgstr "用于出口的%s方法不存在：%s "
 
@@ -1163,8 +1174,16 @@ msgstr "进口目标有错"
 msgid "found methods to import for function %s but not the generic itself"
 msgstr "%s函数有可进口的方法，但找不到它的同属方法"
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr ""
+
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "环境/程辑包%s里找不到所要求的方法：%s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封闭名字空间里进行出口加入"
@@ -1294,6 +1313,10 @@ msgstr "'length.out'参数的长度必需为一"
 
 msgid "first element used of 'length.out' argument"
 msgstr "用了'length.out'参数里的第一个元素"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "忽略drop参数"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)里的(to - from)/by 有错"
@@ -1567,6 +1590,17 @@ msgstr "'stderr'的长度必需为一"
 
 msgid "'which' was not found on this platform"
 msgstr "这个平台上找不到'which'"
+
+#, fuzzy
+msgid "fewer 'from' files than 'to' files"
+msgstr "'from'的文件比'to'的文件要多"
+
+msgid "link '%s' already exists"
+msgstr ""
+
+#, fuzzy
+msgid "failed to create directory for link '%s"
+msgstr "找不到关于%s的隐喻数据对象"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console'的值必需是'TRUE'或'FALSE'值"

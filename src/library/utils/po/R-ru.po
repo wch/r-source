@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-18 23:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -768,6 +768,17 @@ msgstr "не могу установить пакеты"
 msgid "unable to create"
 msgstr "не удалось создать"
 
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr ""
+
 msgid "inferring 'repos = NULL' from the file name"
 msgstr "выставляю 'repos = NULL' на основе имени файла"
 
@@ -800,8 +811,9 @@ msgstr ""
 "установка одного (или более) пакетов завершилась с ошибкой,\n"
 "  возможно %s"
 
+#, fuzzy
 msgid ""
-"The downloaded packages are in\n"
+"The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
 "Скачанные пакеты находятся в\n"
@@ -1154,6 +1166,14 @@ msgstr "не могу перенести временную установку из %s в %s"
 msgid "cannot remove prior installation of package"
 msgstr "не могу удалить прежнюю установку пакета"
 
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Скачанные пакеты находятся в\n"
+"\t%s"
+
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' -- Windows-специфичный"
 
@@ -1226,6 +1246,13 @@ msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] "'lib' элемент '%s' -- папка не для записи"
 msgstr[1] "'lib' элементы '%s' -- папки не для записи"
 msgstr[2] "'lib' элементы '%s' -- папки не для записи"
+
+#, fuzzy
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] "устанавливаю также зависимость"
+msgstr[1] "устанавливаю также зависимости"
+msgstr[2] "устанавливаю также зависимости"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"

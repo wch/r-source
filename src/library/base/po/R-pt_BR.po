@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1019,6 +1019,9 @@ msgstr "'file' deve ser especificado"
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr "Uso de versões salvas antes da versão 2 é obsoleto"
 
+msgid "nothing specified to be save()d"
+msgstr ""
+
 msgid "'file' must be non-empty string"
 msgstr "'file' deve ser uma string não vazia"
 
@@ -1193,6 +1196,14 @@ msgstr ""
 "no pacote %s classes %s foram especificadas para exportação mas não foram "
 "definidas"
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr ""
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+
 #, fuzzy
 msgid "in %s methods for export not found: %s"
 msgstr "em '%s' métodos para exportação não encontrados: %s"
@@ -1251,8 +1262,16 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 "métodos encontrados para importar para função %s mas não o genérico em si"
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr ""
+
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "métodos requeridos não encontrados no ambiente/pacote %s: %s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
 
 #, fuzzy
 msgid "cannot add to exports of a sealed namespace"
@@ -1387,6 +1406,10 @@ msgstr "argumento 'length.out' deve ter comprimento 1"
 
 msgid "first element used of 'length.out' argument"
 msgstr ""
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "argumento 'drop' será ignorado"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "(to-from)/by inválido em seq(.)"
@@ -1664,6 +1687,17 @@ msgstr "'stderr' deve ter comprimento 1"
 
 msgid "'which' was not found on this platform"
 msgstr ""
+
+#, fuzzy
+msgid "fewer 'from' files than 'to' files"
+msgstr "mais arquivos 'from' do que 'to'"
+
+msgid "link '%s' already exists"
+msgstr ""
+
+#, fuzzy
+msgid "failed to create directory for link '%s"
+msgstr "falha ao encontrar objeto de metadados para %s"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' deve ser TRUE ou FALSE"

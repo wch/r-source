@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-15 15:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1329,12 +1329,6 @@ msgstr "aucun cas ne contient autre chose que des valeurs manquantes (NA)"
 msgid "incompatible dimensions"
 msgstr "dimensions incompatibles"
 
-msgid "extra arguments"
-msgstr "les arguments surnuméraires"
-
-msgid "are just disregarded."
-msgstr "sont ignorés."
-
 msgid "singular fit encountered"
 msgstr "ajustement singulier rencontré"
 
@@ -2554,6 +2548,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#~ msgid "extra arguments"
+#~ msgstr "les arguments surnuméraires"
+
+#~ msgid "are just disregarded."
+#~ msgstr "sont ignorés."
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "impossible de calculer les p-values correctes avec des ex-aequos"

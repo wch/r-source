@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
 "PO-Revision-Date: 2011-10-15 15:05+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1015,6 +1015,9 @@ msgstr "'file' doit être spécifié"
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr "L'utilisation d'une version antérieure à 2 est obsolète"
 
+msgid "nothing specified to be save()d"
+msgstr ""
+
 msgid "'file' must be non-empty string"
 msgstr "'file' doit être une chaîne de caractères non vide"
 
@@ -1187,6 +1190,14 @@ msgstr ""
 "dans le package %s, les classes %s sont spécifiées pour l'exportation, mais "
 "ne sont pas définies"
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr ""
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+
 msgid "in %s methods for export not found: %s"
 msgstr "méthodes à exporter non trouvées dans %s : %s"
 
@@ -1241,10 +1252,18 @@ msgstr ""
 "des méthodes sont disponibles à l'importation pour la fonction %s mais pas "
 "pour la fonction générique elle-même"
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr ""
+
 msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 "des méthodes demandées sont introuvables dans l'environnement / le package "
 "%s : %s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "impossible d'ajouter aux exportations d'un espace de noms verrouillé"
@@ -1377,6 +1396,10 @@ msgstr "l'argument 'length.out' doit être de longueur 1"
 
 msgid "first element used of 'length.out' argument"
 msgstr "seul le premier élément de 'length.out' est utilisé"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "l'argument 'drop' sera ignoré"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "(to - from) / by incorrect dans seq(.)"
@@ -1654,6 +1677,17 @@ msgstr "'stderr' doit être de longeur 1"
 
 msgid "'which' was not found on this platform"
 msgstr "'which' est introuvable sur cette plateforme"
+
+#, fuzzy
+msgid "fewer 'from' files than 'to' files"
+msgstr "plus de fichiers 'from' que de fichiers 'to'"
+
+msgid "link '%s' already exists"
+msgstr ""
+
+#, fuzzy
+msgid "failed to create directory for link '%s"
+msgstr "Objet métadonnées introuvable pour %s"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' doit être TRUE ou FALSE"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-13 16:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -773,6 +773,17 @@ msgstr "kann keinee Pakete installieren"
 msgid "unable to create"
 msgstr "kann nicht erzeugen"
 
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr ""
+
 msgid "inferring 'repos = NULL' from the file name"
 msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
 
@@ -805,8 +816,9 @@ msgstr ""
 "Installation eines oder mehrer Pakete schlug fehl,\n"
 " vermutlich %s"
 
+#, fuzzy
 msgid ""
-"The downloaded packages are in\n"
+"The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
 "Die heruntergeladenen Pakete sind in \n"
@@ -1157,6 +1169,14 @@ msgstr "kann temporäre Installation %s nicht nach %s verschieben"
 msgid "cannot remove prior installation of package"
 msgstr "kann alte Installation des Pakets nicht entfernen"
 
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Die heruntergeladenen Pakete sind in \n"
+"\t%s"
+
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' ist spezifisch für Windows"
 
@@ -1221,6 +1241,12 @@ msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] "'lib' Element %s ist keine schreibbares Verzeichnis"
 msgstr[1] "'lib' Elemente %s sind keine schreibbaren Verzeichnisse"
+
+#, fuzzy
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] "installiere auch Abhängigkeit %s"
+msgstr[1] "installiere auch Abhängigkeiten %s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"

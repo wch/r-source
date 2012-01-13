@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -368,6 +368,12 @@ msgstr ""
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+
+msgid "'data(package=)' call not declared from: %s"
+msgstr ""
+
 msgid "Rd files with duplicated name '%s':"
 msgstr ""
 
@@ -531,11 +537,6 @@ msgstr ""
 msgid "unable to copy INDEX to '%s'"
 msgstr ""
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-
 msgid "cannot create directory '%s'"
 msgstr ""
 
@@ -572,9 +573,6 @@ msgid "The default JSS style may not be modified."
 msgstr ""
 
 msgid "Error: cannot rename directory to"
-msgstr ""
-
-msgid "error status"
 msgstr ""
 
 msgid "-l option without value"

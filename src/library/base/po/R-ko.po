@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1035,6 +1035,9 @@ msgstr "'file'가 지정되지 않으면 안됩니다"
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
+msgid "nothing specified to be save()d"
+msgstr ""
+
 msgid "'file' must be non-empty string"
 msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
 
@@ -1211,6 +1214,14 @@ msgstr ""
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr ""
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+
 #, fuzzy
 msgid "in %s methods for export not found: %s"
 msgstr "'%s'에는 export를 위한 메소드는 검색되지 않습니다"
@@ -1269,9 +1280,17 @@ msgstr "무효인 import target입니다"
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr ""
+
 #, fuzzy
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "요구된 'methods' 오브젝트는 환경/패키지 '%s'에 검색되지 않습니다 :%s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
 
 #, fuzzy
 msgid "cannot add to exports of a sealed namespace"
@@ -1419,6 +1438,10 @@ msgstr "'length.out'는 길이 1이 나오지 않으면 되지 않습니다"
 
 msgid "first element used of 'length.out' argument"
 msgstr ""
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "drop인수는 무시됩니다"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)안의 (to - from)/by가 부적절합니다"
@@ -1701,6 +1724,17 @@ msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
 
 msgid "'which' was not found on this platform"
 msgstr ""
+
+#, fuzzy
+msgid "fewer 'from' files than 'to' files"
+msgstr "복사하는 파일보다 많은 복사 전 파일이 있습니다"
+
+msgid "link '%s' already exists"
+msgstr ""
+
+#, fuzzy
+msgid "failed to create directory for link '%s"
+msgstr "link 해야할 파일 또는 디렉토리가 없습니다"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr ""

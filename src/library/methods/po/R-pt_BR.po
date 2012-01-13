@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -650,6 +650,10 @@ msgstr ""
 msgid "Notes: %s."
 msgstr ""
 
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr "Criando uma nova função genérica para \"%s\" em \"%s\""
+
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "os nomes na assinatura do método (%s) não correspondem aos argumentos da "
@@ -1233,6 +1237,12 @@ msgstr "Criando uma nova função genérica para \"%s\" em \"%s\""
 msgid "No package name supplied and no class definition found for %s"
 msgstr "nenhuma função genérica '%s' encontrada"
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr ""
+"argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
+"objeto de classe  \"%s\""
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1662,22 +1672,12 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "Arguments must all be character string names of fields"
-msgstr "'file' deve ser uma cadeia de caracteres ou uma conexão"
-
-#, fuzzy
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr ""
 "o método para a função \"%s\" e assinatura %s está selado e não pode ser "
 "redefinido"
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr ""
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1777,6 +1777,16 @@ msgid ""
 "Non-local assignment to method names is not allowed\n"
 "    %s\n"
 "( in method %s for class %s)"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments must all be character string names of fields"
+msgstr "'file' deve ser uma cadeia de caracteres ou uma conexão"
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy

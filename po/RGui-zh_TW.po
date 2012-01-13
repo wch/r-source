@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:44+0000\n"
+"POT-Creation-Date: 2012-01-13 11:24+0000\n"
 "PO-Revision-Date: 2011-10-13 17:33+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -321,7 +321,7 @@ msgid "Autosize column"
 msgstr "自動調節欄的大小"
 
 #: dataentry.c:1703 pager.c:310 rui.c:867
-#: ../library/grDevices/src/devWindows.c:1677
+#: ../library/grDevices/src/devWindows.c:1678
 msgid "Stay on top"
 msgstr "視窗保持在最上層"
 
@@ -330,7 +330,7 @@ msgid "Close"
 msgstr "關閉"
 
 #: dataentry.c:1790 editor.c:727 pager.c:467 rui.c:1120
-#: ../library/grDevices/src/devWindows.c:1617
+#: ../library/grDevices/src/devWindows.c:1618
 msgid "File"
 msgstr "檔案"
 
@@ -464,7 +464,7 @@ msgstr "全部選取"
 msgid "Save script"
 msgstr "儲存命令稿"
 
-#: editor.c:704 pager.c:451 ../library/grDevices/src/devWindows.c:1585
+#: editor.c:704 pager.c:451 ../library/grDevices/src/devWindows.c:1586
 msgid "Return focus to Console"
 msgstr "回復焦點到主控臺"
 
@@ -473,7 +473,7 @@ msgid "Print script"
 msgstr "列印命令稿"
 
 #: editor.c:709 pager.c:446 rui.c:1102
-#: ../library/grDevices/src/devWindows.c:1579
+#: ../library/grDevices/src/devWindows.c:1580
 msgid "Print"
 msgstr "列印"
 
@@ -494,7 +494,7 @@ msgid "Save as..."
 msgstr "另存為…"
 
 #: editor.c:737 pager.c:470 rui.c:1136
-#: ../library/grDevices/src/devWindows.c:1680
+#: ../library/grDevices/src/devWindows.c:1681
 msgid "Print..."
 msgstr "列印…"
 
@@ -538,17 +538,17 @@ msgstr "無法建立編輯器視窗"
 msgid "Untitled"
 msgstr "未命名"
 
-#: extra.c:902 ../extra/graphapp/dialogs.c:618 ../extra/graphapp/dialogs.c:737
+#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "確定"
 
-#: extra.c:903 ../extra/graphapp/dialogs.c:598 ../extra/graphapp/dialogs.c:616
-#: ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:721
-#: ../extra/graphapp/dialogs.c:735 ../extra/graphapp/dialogs.c:741
+#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
+#: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "取消"
 
-#: extra.c:2163 rui.c:1222
+#: extra.c:2161 rui.c:1222
 msgid "Select file"
 msgstr "選擇檔案"
 
@@ -947,7 +947,7 @@ msgstr "找不到選單"
 msgid "menu or item does not exist"
 msgstr "選單或是項目不存在"
 
-#: system.c:441
+#: system.c:442
 msgid "Save workspace image?"
 msgstr "儲存工作空間圖案?"
 
@@ -955,29 +955,29 @@ msgstr "儲存工作空間圖案?"
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "記憶體不足: 單元格沒有複製到剪貼簿"
 
-#: ../extra/graphapp/dialogs.c:143 ../extra/graphapp/dialogs.c:160
-#: ../extra/graphapp/dialogs.c:177
+#: ../extra/graphapp/dialogs.c:147 ../extra/graphapp/dialogs.c:164
+#: ../extra/graphapp/dialogs.c:181
 msgid "Question"
 msgstr "問題"
 
-#: ../extra/graphapp/dialogs.c:198
+#: ../extra/graphapp/dialogs.c:202
 msgid " Change working directory to:"
 msgstr " 現行目錄改成："
 
-#: ../extra/graphapp/dialogs.c:201
+#: ../extra/graphapp/dialogs.c:205
 #, c-format
 msgid "Unable to set '%s' as working directory"
 msgstr "無法將 '%s' 設成現行目錄"
 
-#: ../extra/graphapp/dialogs.c:729
+#: ../extra/graphapp/dialogs.c:733
 msgid "User"
 msgstr "使用者"
 
-#: ../extra/graphapp/dialogs.c:730
+#: ../extra/graphapp/dialogs.c:734
 msgid "Password"
 msgstr "密碼"
 
-#: ../extra/graphapp/dialogs.c:896 ../extra/graphapp/dialogs.c:902
+#: ../extra/graphapp/dialogs.c:900 ../extra/graphapp/dialogs.c:906
 #, c-format
 msgid "\"%s\" not found"
 msgstr "找不到 \"%s\""
@@ -986,188 +986,188 @@ msgstr "找不到 \"%s\""
 msgid "Arrange Icons"
 msgstr "排列圖示"
 
-#: ../library/grDevices/src/devWindows.c:924
+#: ../library/grDevices/src/devWindows.c:925
 msgid "Portable network graphics file"
 msgstr "Portable network graphics 檔案"
 
-#: ../library/grDevices/src/devWindows.c:927
+#: ../library/grDevices/src/devWindows.c:928
 msgid "Windows bitmap file"
 msgstr "Windows bitmap 檔案"
 
-#: ../library/grDevices/src/devWindows.c:930
+#: ../library/grDevices/src/devWindows.c:931
 msgid "TIFF file"
 msgstr "TIFF 檔案"
 
-#: ../library/grDevices/src/devWindows.c:933
+#: ../library/grDevices/src/devWindows.c:934
 msgid "Jpeg file"
 msgstr "Jpeg 檔案"
 
-#: ../library/grDevices/src/devWindows.c:955
+#: ../library/grDevices/src/devWindows.c:956
 msgid "Postscript file"
 msgstr "Postscript 檔案"
 
-#: ../library/grDevices/src/devWindows.c:967
+#: ../library/grDevices/src/devWindows.c:968
 msgid "PDF file"
 msgstr "PDF 檔案"
 
-#: ../library/grDevices/src/devWindows.c:979
+#: ../library/grDevices/src/devWindows.c:980
 msgid "Enhanced metafiles"
 msgstr "進階 metafiles"
 
-#: ../library/grDevices/src/devWindows.c:982
-#: ../library/grDevices/src/devWindows.c:3370
+#: ../library/grDevices/src/devWindows.c:983
+#: ../library/grDevices/src/devWindows.c:3371
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "選擇的檔案路徑太長：最多只能有 512 位元組"
 
-#: ../library/grDevices/src/devWindows.c:1193
+#: ../library/grDevices/src/devWindows.c:1194
 msgid "No plot to replace!"
 msgstr "沒有可替換的圖表!"
 
-#: ../library/grDevices/src/devWindows.c:1241
+#: ../library/grDevices/src/devWindows.c:1242
 msgid "Variable name"
 msgstr "變數名"
 
-#: ../library/grDevices/src/devWindows.c:1248
+#: ../library/grDevices/src/devWindows.c:1249
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "變數不存在或不包含任何圖表!"
 
-#: ../library/grDevices/src/devWindows.c:1264
+#: ../library/grDevices/src/devWindows.c:1265
 msgid "Name of variable to save to"
 msgstr "要儲存進去的變數名"
 
-#: ../library/grDevices/src/devWindows.c:1573
+#: ../library/grDevices/src/devWindows.c:1574
 msgid "Copy to the clipboard as a metafile"
 msgstr "做為 metafile 複製到剪貼簿"
 
-#: ../library/grDevices/src/devWindows.c:1591
-#: ../library/grDevices/src/devWindows.c:1602
+#: ../library/grDevices/src/devWindows.c:1592
+#: ../library/grDevices/src/devWindows.c:1603
 msgid "Stop locator"
 msgstr "停止定位器"
 
-#: ../library/grDevices/src/devWindows.c:1601
-#: ../library/grDevices/src/devWindows.c:1605
+#: ../library/grDevices/src/devWindows.c:1602
+#: ../library/grDevices/src/devWindows.c:1606
 msgid "Stop"
 msgstr "停止"
 
-#: ../library/grDevices/src/devWindows.c:1607
+#: ../library/grDevices/src/devWindows.c:1608
 msgid "Continue"
 msgstr "繼續"
 
-#: ../library/grDevices/src/devWindows.c:1611
+#: ../library/grDevices/src/devWindows.c:1612
 msgid "Next"
 msgstr "下一個"
 
-#: ../library/grDevices/src/devWindows.c:1612
+#: ../library/grDevices/src/devWindows.c:1613
 msgid "Next plot"
 msgstr "下一個圖表"
 
-#: ../library/grDevices/src/devWindows.c:1618
+#: ../library/grDevices/src/devWindows.c:1619
 msgid "Save as"
 msgstr "另存為"
 
-#: ../library/grDevices/src/devWindows.c:1627
-#: ../library/grDevices/src/devWindows.c:1629
-#: ../library/grDevices/src/devWindows.c:1631
+#: ../library/grDevices/src/devWindows.c:1628
+#: ../library/grDevices/src/devWindows.c:1630
+#: ../library/grDevices/src/devWindows.c:1632
 #, c-format
 msgid "%s quality..."
 msgstr "%s 品質…"
 
-#: ../library/grDevices/src/devWindows.c:1633
+#: ../library/grDevices/src/devWindows.c:1634
 msgid "Copy to the clipboard"
 msgstr "複製到剪貼簿"
 
-#: ../library/grDevices/src/devWindows.c:1634
+#: ../library/grDevices/src/devWindows.c:1635
 msgid "as a Bitmap\tCTRL+C"
 msgstr "做為 Bitmap\tCTRL+C"
 
-#: ../library/grDevices/src/devWindows.c:1635
+#: ../library/grDevices/src/devWindows.c:1636
 msgid "as a Metafile\tCTRL+W"
 msgstr "做為 Metafile\tCTRL+W"
 
-#: ../library/grDevices/src/devWindows.c:1638
+#: ../library/grDevices/src/devWindows.c:1639
 msgid "Print...\tCTRL+P"
 msgstr "列印…\tCTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1640
+#: ../library/grDevices/src/devWindows.c:1641
 msgid "close Device"
 msgstr "關閉裝置"
 
-#: ../library/grDevices/src/devWindows.c:1641
+#: ../library/grDevices/src/devWindows.c:1642
 msgid "History"
 msgstr "命令歷程"
 
-#: ../library/grDevices/src/devWindows.c:1642
+#: ../library/grDevices/src/devWindows.c:1643
 msgid "Recording"
 msgstr "記錄"
 
-#: ../library/grDevices/src/devWindows.c:1645
+#: ../library/grDevices/src/devWindows.c:1646
 msgid "Add\tINS"
 msgstr "加入\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1646
+#: ../library/grDevices/src/devWindows.c:1647
 msgid "Replace"
 msgstr "替換"
 
-#: ../library/grDevices/src/devWindows.c:1648
+#: ../library/grDevices/src/devWindows.c:1649
 msgid "Previous\tPgUp"
 msgstr "上一個\tPgUp"
 
-#: ../library/grDevices/src/devWindows.c:1649
+#: ../library/grDevices/src/devWindows.c:1650
 msgid "Next\tPgDown"
 msgstr "下一個\tPgDown"
 
-#: ../library/grDevices/src/devWindows.c:1651
+#: ../library/grDevices/src/devWindows.c:1652
 msgid "Save to variable..."
 msgstr "儲存到變數…"
 
-#: ../library/grDevices/src/devWindows.c:1652
+#: ../library/grDevices/src/devWindows.c:1653
 msgid "Get from variable..."
 msgstr "擷取自變數…"
 
-#: ../library/grDevices/src/devWindows.c:1654
+#: ../library/grDevices/src/devWindows.c:1655
 msgid "Clear history"
 msgstr "清除命令歷程"
 
-#: ../library/grDevices/src/devWindows.c:1655
+#: ../library/grDevices/src/devWindows.c:1656
 msgid "Resize"
 msgstr "重設大小"
 
-#: ../library/grDevices/src/devWindows.c:1656
+#: ../library/grDevices/src/devWindows.c:1657
 msgid "R mode"
 msgstr "R 模式"
 
-#: ../library/grDevices/src/devWindows.c:1658
+#: ../library/grDevices/src/devWindows.c:1659
 msgid "Fit to window"
 msgstr "適合視窗大小"
 
-#: ../library/grDevices/src/devWindows.c:1660
+#: ../library/grDevices/src/devWindows.c:1661
 msgid "Fixed size"
 msgstr "固定的大小"
 
-#: ../library/grDevices/src/devWindows.c:1667
+#: ../library/grDevices/src/devWindows.c:1668
 msgid "Copy as metafile"
 msgstr "複製成 metafile"
 
-#: ../library/grDevices/src/devWindows.c:1669
+#: ../library/grDevices/src/devWindows.c:1670
 msgid "Copy as bitmap"
 msgstr "複製成 bitmap"
 
-#: ../library/grDevices/src/devWindows.c:1672
+#: ../library/grDevices/src/devWindows.c:1673
 msgid "Save as metafile..."
 msgstr "儲存成 metafile…"
 
-#: ../library/grDevices/src/devWindows.c:1674
+#: ../library/grDevices/src/devWindows.c:1675
 msgid "Save as postscript..."
 msgstr "儲存成 postscript…"
 
-#: ../library/grDevices/src/devWindows.c:3070
+#: ../library/grDevices/src/devWindows.c:3071
 msgid "Locator is active"
 msgstr "定位器在啟用狀態"
 
-#: ../library/grDevices/src/devWindows.c:3693
+#: ../library/grDevices/src/devWindows.c:3694
 msgid "Waiting to confirm page change..."
 msgstr "等待頁面變更的確認…"
 
-#: ../library/grDevices/src/devWindows.c:3705
+#: ../library/grDevices/src/devWindows.c:3706
 msgid "Click or hit ENTER for next page"
 msgstr "按 ENTER 來看下一頁"

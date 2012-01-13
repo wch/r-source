@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-18 21:48-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -580,6 +580,10 @@ msgstr "%d: цель \"%s\": выбрано \"%s\" (другие: %s)"
 
 msgid "Notes: %s."
 msgstr "Замечания: %s."
+
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr "Создание новой общей функции для %s из пакета %s в %s"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -1202,6 +1206,11 @@ msgstr "Много определений класса для %s из пакетов: %s; беру первое"
 msgid "No package name supplied and no class definition found for %s"
 msgstr "Не дали имя пакета и определение класса для %s"
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr ""
+"аргумент S4Class должен быть определением класса; получен объект класса %s"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1667,21 +1676,10 @@ msgstr ""
 "Топик \"%s\" не является именем метода в классе %s\n"
 "Определение класса ниже"
 
-msgid "Arguments must all be character string names of fields"
-msgstr "Аргументы должны быть текстовыми именами полей"
-
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr "Определение класса %s в пакете %s заблокировано, поля изменить нельзя"
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr ""
-"Поле \"%s\"  класса %s имеет присоединение не по умолчанию и не может быть "
-"заблокировано"
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1790,6 +1788,17 @@ msgstr ""
 "Нелокальное назначение имен методов не разрешено\n"
 "    %s\n"
 "( в методе %s класса %s)"
+
+msgid "Arguments must all be character string names of fields"
+msgstr "Аргументы должны быть текстовыми именами полей"
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+msgstr ""
+"Поле \"%s\"  класса %s имеет присоединение не по умолчанию и не может быть "
+"заблокировано"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

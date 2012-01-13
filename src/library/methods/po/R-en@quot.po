@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
-"PO-Revision-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
+"PO-Revision-Date: 2012-01-13 11:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -590,6 +590,9 @@ msgstr "%d: target “%s”: chose “%s” (others: %s)"
 
 msgid "Notes: %s."
 msgstr "Notes: %s."
+
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr "Class generator function for class “%s” from package “%s”"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -1196,6 +1199,9 @@ msgstr "Multiple class definitions for %s from packages: %s; picking the first"
 msgid "No package name supplied and no class definition found for %s"
 msgstr "No package name supplied and no class definition found for %s"
 
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr "argument classDef must be a class definition or the name of a class"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1659,21 +1665,12 @@ msgstr ""
 "Topic “%s” is not a method name in class %s\n"
 "The class definition follows"
 
-msgid "Arguments must all be character string names of fields"
-msgstr "Arguments must all be character string names of fields"
-
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
-
-msgid "Field \"%s\" is already locked"
-msgstr "Field “%s” is already locked"
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr "Field “%s” of class %s has a non-default binding and cannot be locked"
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1783,6 +1780,15 @@ msgstr ""
 "Non-local assignment to method names is not allowed\n"
 "    %s\n"
 "( in method %s for class %s)"
+
+msgid "Arguments must all be character string names of fields"
+msgstr "Arguments must all be character string names of fields"
+
+msgid "Field \"%s\" is already locked"
+msgstr "Field “%s” is already locked"
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+msgstr "Field “%s” of class %s has a non-default binding and cannot be locked"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

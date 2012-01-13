@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45\n"
-"PO-Revision-Date: 2011-11-23 13:45\n"
+"POT-Creation-Date: 2012-01-13 11:23\n"
+"PO-Revision-Date: 2012-01-13 11:23\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -976,6 +976,9 @@ msgstr "‘file’ must be specified"
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr "Use of save versions prior to 2 is deprecated"
 
+msgid "nothing specified to be save()d"
+msgstr "nothing specified to be save()d"
+
 msgid "'file' must be non-empty string"
 msgstr "‘file’ must be non-empty string"
 
@@ -1141,6 +1144,16 @@ msgstr ""
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "in package %s classes %s were specified for export but not defined"
 
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr "No function found corresponding to methods exports from %s for: %s"
+
+msgid ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+msgstr ""
+"Functions for exporting methods must have been made generic, explicitly or "
+"implicitly; not true when loading %s for %s"
+
 msgid "in %s methods for export not found: %s"
 msgstr "in %s methods for export not found: %s"
 
@@ -1189,8 +1202,18 @@ msgstr "invalid import target"
 msgid "found methods to import for function %s but not the generic itself"
 msgstr "found methods to import for function %s but not the generic itself"
 
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr "No methods found in “%s” for requests: %s"
+
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "requested methods not found in environment/package %s: %s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
+"No generic function found corresponding to requested imported methods for "
+"“%s” from package “%s” (malformed exports?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "cannot add to exports of a sealed namespace"
@@ -1320,6 +1343,9 @@ msgstr "argument ‘length.out’ must be of length 1"
 
 msgid "first element used of 'length.out' argument"
 msgstr "first element used of ‘length.out’ argument"
+
+msgid "extra argument(s) %s will be disregarded"
+msgstr "extra argument(s) %s will be disregarded"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "invalid (to - from)/by in seq(.)"
@@ -1596,6 +1622,15 @@ msgstr "‘stderr’ must be of length 1"
 
 msgid "'which' was not found on this platform"
 msgstr "‘which’ was not found on this platform"
+
+msgid "fewer 'from' files than 'to' files"
+msgstr "fewer ‘from’ files than ‘to’ files"
+
+msgid "link '%s' already exists"
+msgstr "link ‘%s’ already exists"
+
+msgid "failed to create directory for link '%s"
+msgstr "failed to create directory for link '%s"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "‘show.output.on.console’ must be TRUE or FALSE"

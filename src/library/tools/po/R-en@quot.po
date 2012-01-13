@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
-"PO-Revision-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
+"PO-Revision-Date: 2012-01-13 11:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -403,6 +403,12 @@ msgstr "‘library’ or ‘require’ calls not declared from:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "‘library’ or ‘require’ call not declared from: %s"
 
+msgid "'data(package=)' calls not declared from:"
+msgstr "‘data(package=)’ calls not declared from:"
+
+msgid "'data(package=)' call not declared from: %s"
+msgstr "‘data(package=)’ call not declared from: %s"
+
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd files with duplicated name '%s':"
 
@@ -569,13 +575,6 @@ msgstr "unable to re-encode ‘%s’ line(s) %s"
 msgid "unable to copy INDEX to '%s'"
 msgstr "unable to copy INDEX to ‘%s’"
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-"running Stangle on vignette ‘%s’ failed with message:\n"
-"%s"
-
 msgid "cannot create directory '%s'"
 msgstr "cannot create directory ‘%s’"
 
@@ -615,9 +614,6 @@ msgstr "The default JSS style may not be modified."
 
 msgid "Error: cannot rename directory to"
 msgstr "Error: cannot rename directory to"
-
-msgid "error status"
-msgstr "error status"
 
 msgid "-l option without value"
 msgstr "-l option without value"

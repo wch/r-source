@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1250,12 +1250,6 @@ msgstr "没有(非NA)案例可用"
 msgid "incompatible dimensions"
 msgstr "维度不相配"
 
-msgid "extra arguments"
-msgstr "额外参数"
-
-msgid "are just disregarded."
-msgstr "略过不用。"
-
 msgid "singular fit encountered"
 msgstr "遇到了奇异拟合"
 
@@ -2373,6 +2367,12 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "extra arguments"
+#~ msgstr "额外参数"
+
+#~ msgid "are just disregarded."
+#~ msgstr "略过不用。"
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "在有连结的情况下无法正确計算p值"

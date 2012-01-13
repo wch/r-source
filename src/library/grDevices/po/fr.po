@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:45+0000\n"
+"POT-Creation-Date: 2012-01-13 11:23+0000\n"
 "PO-Revision-Date: 2011-10-15 15:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -44,7 +44,7 @@ msgstr "CharInfo ne peut être analysé"
 msgid "unknown AFM entity encountered"
 msgstr "entité AFM inconnue rencontrée"
 
-#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7891 devPicTeX.c:486
+#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7894 devPicTeX.c:486
 #: devPicTeX.c:488
 #, c-format
 msgid "invalid string in '%s'"
@@ -160,11 +160,11 @@ msgstr "Echec d'enregistrement de l'encodage du périphérique"
 msgid "Object .ps.prolog is not a character vector"
 msgstr "L'objet .ps.prolog n'est pas un vecteur de mode caractère"
 
-#: devPS.c:2639 devPS.c:6407 devWindows.c:776
+#: devPS.c:2639 devPS.c:6407 devWindows.c:777
 msgid "Invalid line end"
 msgstr "Fin de ligne incorrecte"
 
-#: devPS.c:2658 devPS.c:6426 devWindows.c:789
+#: devPS.c:2658 devPS.c:6426 devWindows.c:790
 msgid "Invalid line join"
 msgstr "Jointure de ligne incorrecte"
 
@@ -173,7 +173,7 @@ msgid "Invalid line mitre"
 msgstr "Mitre (jointure pointue) de ligne incorrecte"
 
 #: devPS.c:2874 devPS.c:3767 devPS.c:4215 devPS.c:4242 devPS.c:5250
-#: devPS.c:7743 devPS.c:7787
+#: devPS.c:7744 devPS.c:7789
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "tentative d'utiliser la police incorrecte %d remplacée par police 1"
@@ -198,7 +198,7 @@ msgstr "chemin d'accès à l'encodage trop long dans %s()"
 msgid "failed to load encoding file in %s()"
 msgstr "Echec de chargement du fichier d'encodage dans %s"
 
-#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7624
+#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7625
 msgid "Invalid font type"
 msgstr "Spécification de police incorrecte"
 
@@ -227,7 +227,7 @@ msgstr "postscript(print.it=TRUE) utilisé avec une commande d'impression vide"
 msgid "invalid page type '%s' (postscript)"
 msgstr "type de page incorrect '%s' (postscript)"
 
-#: devPS.c:3454 devPS.c:4567 devWindows.c:2325
+#: devPS.c:3454 devPS.c:4567 devWindows.c:2326
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -281,7 +281,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr "erreur d'ouverture du convertisseur vers l'encodage '%s'"
 
-#: devPS.c:4403 devPS.c:5295 devPS.c:7876
+#: devPS.c:4403 devPS.c:5295 devPS.c:7879
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "erreur dans la conversion du texte vers l'encodage '%s'"
@@ -326,7 +326,7 @@ msgstr "xfig(%s, onefile=FALSE) ne retournera que le dernier graphe"
 msgid "empty file name"
 msgstr "nom de fichier vide"
 
-#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7115
+#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7116
 msgid "write failed"
 msgstr "écriture non exécutée"
 
@@ -418,7 +418,7 @@ msgstr "impossible d'ouvrir une conduite 'postscript' vers '%s'"
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr ""
 
-#: devPS.c:7188
+#: devPS.c:7189
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -427,32 +427,32 @@ msgstr ""
 "impossible d'ouvrir le fichier en argument de 'pdf' '%s'\n"
 "  fermez le périphérique PDF"
 
-#: devPS.c:7649 devPS.c:8008 devPS.c:8055
+#: devPS.c:7650 devPS.c:8011 devPS.c:8058
 msgid "Failed to find or load PDF font"
 msgstr "Impossible de trouver ou de charger la police PDF"
 
-#: devPS.c:7830 devPS.c:7963
+#: devPS.c:7833 devPS.c:7966
 msgid "Failed to find or load PDF CID font"
 msgstr "Impossible de trouver ou de charger la police PDF CID"
 
-#: devPS.c:8194 devPS.c:8198 devPS.c:8358 devPS.c:8362
+#: devPS.c:8197 devPS.c:8201 devPS.c:8361 devPS.c:8365
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "paramètre 'family' incorrect dans %s"
 
-#: devPS.c:8216 devPS.c:8374
+#: devPS.c:8219 devPS.c:8377
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "paramètre 'fonts' incorrect dans %s"
 
-#: devPS.c:8222 devPS.c:8384 devPS.c:8387 devWindows.c:3578 devWindows.c:3582
-#: devWindows.c:3590 devWindows.c:3601 devWindows.c:3607 devWindows.c:3614
-#: devWindows.c:3621 devWindows.c:3625
+#: devPS.c:8225 devPS.c:8387 devPS.c:8390 devWindows.c:3579 devWindows.c:3583
+#: devWindows.c:3591 devWindows.c:3602 devWindows.c:3608 devWindows.c:3615
+#: devWindows.c:3622 devWindows.c:3626
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "valeur incorrecte de '%s'"
 
-#: devPS.c:8235 devPS.c:8302 devPS.c:8401 devPicTeX.c:741 devWindows.c:3658
+#: devPS.c:8238 devPS.c:8305 devPS.c:8404 devPicTeX.c:741 devWindows.c:3659
 #, c-format
 msgid "unable to start %s() device"
 msgstr "impossible de démarrer le périphérique %s()"
@@ -493,151 +493,151 @@ msgstr ""
 msgid "Quartz device is not available on this platform"
 msgstr "Périphérique Quartz non disponible sur cette architecture"
 
-#: devWindows.c:333 devWindows.c:379 devWindows.c:450
+#: devWindows.c:334 devWindows.c:380 devWindows.c:451
 msgid "Not enough memory to copy graphics window"
 msgstr "Mémoire insuffisante pour copier la fenêtre graphique"
 
-#: devWindows.c:338 devWindows.c:384 devWindows.c:455
+#: devWindows.c:339 devWindows.c:385 devWindows.c:456
 msgid "No device available to copy graphics window"
 msgstr "Aucun périphérique disponible pour copier la fenêtre graphique"
 
-#: devWindows.c:388 devWindows.c:459
+#: devWindows.c:389 devWindows.c:460
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "'%%' n'est pas autorisé dans le nom du fichier"
 
-#: devWindows.c:596
+#: devWindows.c:597
 msgid "Invalid font specification"
 msgstr "Spécification de police incorrecte"
 
-#: devWindows.c:635
+#: devWindows.c:636
 msgid "Font family not found in Windows font database"
 msgstr ""
 "Famille de police introuvable dans la base de données des polices Windows"
 
-#: devWindows.c:1066
+#: devWindows.c:1067
 msgid "plot history seems corrupted"
 msgstr "l'historique des graphes semble corrompu"
 
-#: devWindows.c:1073
+#: devWindows.c:1074
 msgid "no plot history!"
 msgstr "pas d'historique des graphes !"
 
-#: devWindows.c:1787
+#: devWindows.c:1788
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "nom de fichier trop long dans l'appel %s()"
 
-#: devWindows.c:1791 devWindows.c:1826 devWindows.c:1860
+#: devWindows.c:1792 devWindows.c:1827 devWindows.c:1861
 msgid "Unable to load Rbitmap.dll"
 msgstr "Impossible de charger Rbitmap.dll"
 
-#: devWindows.c:1796 devWindows.c:1835 devWindows.c:1869
+#: devWindows.c:1797 devWindows.c:1836 devWindows.c:1870
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' ne sont probablement pas des valeurs en pixels"
 
-#: devWindows.c:1804 devWindows.c:1809 devWindows.c:1838 devWindows.c:1843
-#: devWindows.c:1872 devWindows.c:1877
+#: devWindows.c:1805 devWindows.c:1810 devWindows.c:1839 devWindows.c:1844
+#: devWindows.c:1873 devWindows.c:1878
 msgid "Unable to allocate bitmap"
 msgstr "Impossible d'allouer un bitmap"
 
-#: devWindows.c:1815 devWindows.c:1849 devWindows.c:2172
+#: devWindows.c:1816 devWindows.c:1850 devWindows.c:2173
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Impossible d'ouvrir le fichier '%s' pour écriture"
 
-#: devWindows.c:1832
+#: devWindows.c:1833
 msgid "filename too long in jpeg() call"
 msgstr "nom de fichier trop long dans l'appel à jpeg()"
 
-#: devWindows.c:1866
+#: devWindows.c:1867
 msgid "filename too long in tiff() call"
 msgstr "nom de fichier trop long dans l'appel tiff()"
 
-#: devWindows.c:1898
+#: devWindows.c:1899
 msgid "filename too long in win.metafile() call"
 msgstr "nom de fichier trop long dans l'appel à win.metafile()"
 
-#: devWindows.c:1908
+#: devWindows.c:1909
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr "Impossible d'ouvrir le fichier metafile '%s' pour écriture"
 
-#: devWindows.c:1910
+#: devWindows.c:1911
 msgid "Unable to open clipboard to write metafile"
 msgstr "Impossible d'ouvrir le presse-papier pour écrire les données metafile"
 
-#: devWindows.c:2121
+#: devWindows.c:2122
 msgid "Insufficient memory for resize. Killing device"
 msgstr ""
 "Mémoire insuffisante pour modifier la taille. Le périphérique va être fermé"
 
-#: devWindows.c:2128
+#: devWindows.c:2129
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr ""
 "Mémoire insuffisante pour modifier la taille. L'\"alpha blending\" est "
 "désactivé"
 
-#: devWindows.c:2157
+#: devWindows.c:2158
 msgid "A clipboard metafile can store only one figure."
 msgstr "Un presse-papier metafile ne peut stocker qu'une seule figure"
 
-#: devWindows.c:2163
+#: devWindows.c:2164
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "le fichier metafile '%s' ne peut être créé"
 
-#: devWindows.c:3044 devWindows.c:3682
+#: devWindows.c:3045 devWindows.c:3683
 msgid "R Graphics"
 msgstr "R Graphes"
 
-#: devWindows.c:3058
+#: devWindows.c:3059
 msgid "attempt to use the locator after dev.hold()"
 msgstr "tentative d'utilisation du localisateur (locator) après dev.hold()"
 
-#: devWindows.c:3322
+#: devWindows.c:3323
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'option 'windowsTimeouts' doit être un entier"
 
-#: devWindows.c:3343
+#: devWindows.c:3344
 msgid "invalid device number in 'savePlot'"
 msgstr "numéro de périphérique incorrect dans 'savePlot'"
 
-#: devWindows.c:3345
+#: devWindows.c:3346
 msgid "invalid device in 'savePlot'"
 msgstr "périphérique incorrect dans 'savePlot'"
 
-#: devWindows.c:3348
+#: devWindows.c:3349
 msgid "invalid filename argument in savePlot"
 msgstr "argument nom de fichier incorrect dans savePlot"
 
-#: devWindows.c:3353
+#: devWindows.c:3354
 msgid "invalid type argument in 'savePlot'"
 msgstr "type d'argument incorrect dans 'savePlot'"
 
-#: devWindows.c:3380
+#: devWindows.c:3381
 msgid "unknown type in savePlot"
 msgstr "type inconnu dans savePlot"
 
-#: devWindows.c:3425 devWindows.c:3458 devWindows.c:3487 devWindows.c:3519
-#: devWindows.c:3544
+#: devWindows.c:3426 devWindows.c:3459 devWindows.c:3488 devWindows.c:3520
+#: devWindows.c:3545
 msgid "processing of the plot ran out of memory"
 msgstr "la réalisation du graphe manque de mémoire"
 
-#: devWindows.c:3504
+#: devWindows.c:3505
 msgid "Impossible to open "
 msgstr "Impossible d'ouvrir "
 
-#: devWindows.c:3531
+#: devWindows.c:3532
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossible to charger Rbitmap.dll"
 
-#: devWindows.c:3573
+#: devWindows.c:3574
 msgid "invalid 'width' or 'height'"
 msgstr "'width' ou 'height' incorrecte"
 
-#: devWindows.c:3776
+#: devWindows.c:3777
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Impossible de charger winCairo.dll : a-t-il été compilé ?"
 

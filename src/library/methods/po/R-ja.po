@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-23 22:33+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -592,6 +592,10 @@ msgstr " %d: ターゲット \"%s\": 選択 \"%s\" (その他: %s) "
 
 msgid "Notes: %s."
 msgstr " 注意：%s "
+
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr " %s に対する総称関数をパッケージ %s (%s 中にある)から作成します "
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -1211,6 +1215,12 @@ msgstr " 新しい総称関数 %s を %s 中に生成します "
 msgid "No package name supplied and no class definition found for %s"
 msgstr " %s に対する関数定義はありません "
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr ""
+" 引数 S4Class はクラス定義でなければなりません: クラス %s のオブジェクトが与"
+"えられました "
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1690,23 +1700,12 @@ msgstr ""
 " トピック \"%s\" はクラス \"%s\" 中のメソッド名ではありません \n"
 " クラス定義が続きます "
 
-msgid "Arguments must all be character string names of fields"
-msgstr " 引数はすべてフィールド名の文字列でなければなりません "
-
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr ""
 " クラス%s（パッケージ%s）の定義はロックされていて、フィールドは再定義できませ"
 "ん。 "
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr ""
-" フィールド \"%s\" （クラス \"%s\"）は既定の結合を持たないためロックできませ"
-"ん "
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1817,6 +1816,17 @@ msgstr ""
 " メソッド名への非局所的な付値は許されません \n"
 "    %s \n"
 " (メソッド %s 中のクラス %s にたいするもの) "
+
+msgid "Arguments must all be character string names of fields"
+msgstr " 引数はすべてフィールド名の文字列でなければなりません "
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+msgstr ""
+" フィールド \"%s\" （クラス \"%s\"）は既定の結合を持たないためロックできませ"
+"ん "
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

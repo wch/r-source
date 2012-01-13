@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-22 21:51+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -764,6 +764,17 @@ msgstr " パッケージをインストール出来ませんでした "
 msgid "unable to create"
 msgstr " 生成できませんでした "
 
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr ""
+
 msgid "inferring 'repos = NULL' from the file name"
 msgstr " ファイル名から 'repos = NULL' を推測 "
 
@@ -802,8 +813,9 @@ msgstr ""
 " 一つもしくは複数のパッケージのインストールが失敗しました \n"
 " 恐らく %s "
 
+#, fuzzy
 msgid ""
-"The downloaded packages are in\n"
+"The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
 " ダウンロードされたパッケージは、以下にあります \n"
@@ -1167,6 +1179,14 @@ msgstr " 一時的なインストール '%s' を '%s' へ移動できません�
 msgid "cannot remove prior installation of package"
 msgstr " パッケージの以前のインストールを取り除けません "
 
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+" ダウンロードされたパッケージは、以下にあります \n"
+" \t%s "
+
 msgid "'memory.size()' is Windows-specific"
 msgstr " 'memory.size()' は Windows 固有の関数です "
 
@@ -1225,6 +1245,11 @@ msgstr[0] " 依存対象(dependency)　%s もインストールします "
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] " 'lib' の要素 '%s' は書き込み可能なディレクトリではありません "
+
+#, fuzzy
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] " 依存対象(dependency)　%s もインストールします "
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"

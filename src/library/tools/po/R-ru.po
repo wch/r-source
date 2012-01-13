@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-18 22:43-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -395,6 +395,14 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "не объявлен вызов 'library' или 'require' из: %ы"
 
+#, fuzzy
+msgid "'data(package=)' calls not declared from:"
+msgstr "не объявлены вызовы 'library' или 'require' из:"
+
+#, fuzzy
+msgid "'data(package=)' call not declared from: %s"
+msgstr "не объявлен вызов 'library' или 'require' из: %ы"
+
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd-файлы с повторяющимся именем '%s':"
 
@@ -565,13 +573,6 @@ msgstr "не могу перекодировать '%s' строк(и) %s"
 msgid "unable to copy INDEX to '%s'"
 msgstr "не могу скопировать 'INDEX' в '%s'"
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-"выполнение Stangle в очерке '%s' не удалось с диагностикой:\n"
-"%s"
-
 msgid "cannot create directory '%s'"
 msgstr "Не могу создать папку '%s'"
 
@@ -611,9 +612,6 @@ msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
 msgid "Error: cannot rename directory to"
 msgstr "Ошибка: не могу переименовать папку в"
-
-msgid "error status"
-msgstr ""
 
 msgid "-l option without value"
 msgstr "-l опция без значения"
@@ -1256,6 +1254,13 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid ""
+#~ "running Stangle on vignette '%s' failed with message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "выполнение Stangle в очерке '%s' не удалось с диагностикой:\n"
+#~ "%s"
 
 #~ msgid "Packages required but not available:"
 #~ msgstr "Пакет требуется, но недоступен:"

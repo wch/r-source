@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-12 13:29+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -599,6 +599,10 @@ msgstr "%d: Ziel \"%s\": gewählt \"%s\" (andere: %s)"
 
 msgid "Notes: %s."
 msgstr "Bemerkung: %s."
+
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr "Erzeuge generische Funktion für %s aus Paket %s in %s"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -1242,6 +1246,12 @@ msgstr ""
 msgid "No package name supplied and no class definition found for %s"
 msgstr "Kein Name angegeben und keine Klassendefinition für %s gefunden"
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr ""
+"Argument S4Class muss eine Klassendefinition sein; bekam ein Objekt aus "
+"Klasse %s"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1723,23 +1733,12 @@ msgstr ""
 "Punkt \"%s\" ist kein Methodenname in der Klasse %s.\n"
 "Die Klassendefinition folgt."
 
-msgid "Arguments must all be character string names of fields"
-msgstr "Die Argumente müssen alle Feldnamen als Zeichenketten sein"
-
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr ""
 "Die Definition von Klasse %s in Paket %s ist abgeschlossen, Felder dürfen "
 "nicht modifiziert werden"
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr ""
-"Feld \"%s\" der Klasse %s hat eine nicht-standard Bindung und kann\n"
-"nicht abgeschlossen werden."
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1855,6 +1854,17 @@ msgstr ""
 "Nicht-lokale Zuweisung an Methodennamen nicht zulässig\n"
 "    %s\n"
 "(in Methode %s für Klasse %s)"
+
+msgid "Arguments must all be character string names of fields"
+msgstr "Die Argumente müssen alle Feldnamen als Zeichenketten sein"
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+msgstr ""
+"Feld \"%s\" der Klasse %s hat eine nicht-standard Bindung und kann\n"
+"nicht abgeschlossen werden."
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

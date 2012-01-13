@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -621,6 +621,10 @@ msgstr ""
 
 msgid "Notes: %s."
 msgstr ""
+
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 #, fuzzy
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
@@ -1293,6 +1297,13 @@ msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다
 msgid "No package name supplied and no class definition found for %s"
 msgstr "검색되는 '%s' 때문에 함수 정의가 아닙니다"
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1784,20 +1795,11 @@ msgid ""
 "The class definition follows"
 msgstr "'class1'는 클래스 또는 클래스 정의의 이름이 아니면 되지 않습니다"
 
-msgid "Arguments must all be character string names of fields"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr "함수'%s' 또는 기호 %s의 메소드는 밀폐되어 다시 정의할수가 없습니다"
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr ""
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1902,6 +1904,15 @@ msgid ""
 "Non-local assignment to method names is not allowed\n"
 "    %s\n"
 "( in method %s for class %s)"
+msgstr ""
+
+msgid "Arguments must all be character string names of fields"
+msgstr ""
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy

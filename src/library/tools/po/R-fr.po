@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-10-15 17:54+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -407,6 +407,14 @@ msgstr "appels 'library' ou 'require' non déclarés depuis :"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "appels 'library' ou 'require' non déclarés depuis : %s"
 
+#, fuzzy
+msgid "'data(package=)' calls not declared from:"
+msgstr "appels 'library' ou 'require' non déclarés depuis :"
+
+#, fuzzy
+msgid "'data(package=)' call not declared from: %s"
+msgstr "appels 'library' ou 'require' non déclarés depuis : %s"
+
 msgid "Rd files with duplicated name '%s':"
 msgstr "Fichiers Rd avec nom dupliqué '%s' :"
 
@@ -579,14 +587,6 @@ msgstr "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "impossible de copier INDEX vers '%s'"
 
-msgid ""
-"running Stangle on vignette '%s' failed with message:\n"
-"%s"
-msgstr ""
-"le traitement de la vignette '%s' à l'aide de 'Stangle' a échoué avec le "
-"diagnostic :\n"
-"%s"
-
 msgid "cannot create directory '%s'"
 msgstr "impossible de créer le répertoire '%s'"
 
@@ -627,9 +627,6 @@ msgstr "Le style par défaut JSS ne peut être modifié."
 
 msgid "Error: cannot rename directory to"
 msgstr "Erreur: impossible de renommer le répertoire"
-
-msgid "error status"
-msgstr ""
 
 msgid "-l option without value"
 msgstr "option -l sans valeur"
@@ -1280,6 +1277,14 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid ""
+#~ "running Stangle on vignette '%s' failed with message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "le traitement de la vignette '%s' à l'aide de 'Stangle' a échoué avec le "
+#~ "diagnostic :\n"
+#~ "%s"
 
 #~ msgid "Packages required but not available:"
 #~ msgstr "Packages requis mais non disponibles :"

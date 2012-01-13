@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -504,6 +504,10 @@ msgstr "%d: 目标\"%s\": 选择\"%s\" (其它：%s)"
 
 msgid "Notes: %s."
 msgstr "记录：%s。"
+
+#, fuzzy
+msgid "Class generator function for class \"%s\" from package \"%s\""
+msgstr "从%3$s里的程辑包%2$s为%1$s建立新的泛型函数"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "方法(%s)标记里的名字同函数%s参数(%s)不相对应"
@@ -1037,6 +1041,10 @@ msgstr "程序包%2$s里有多个类别%1$s的定义；现在用第一个"
 msgid "No package name supplied and no class definition found for %s"
 msgstr "%s没有程辑包出没有类别定义"
 
+#, fuzzy
+msgid "argument classDef must be a class definition or the name of a class"
+msgstr "参数S4Class必需是类别定义：现在得到的却是类别为%s的目标对象"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1449,19 +1457,10 @@ msgstr ""
 "\"%s\"主题在%s类别里不是方法名字\n"
 "类别定义在下面"
 
-msgid "Arguments must all be character string names of fields"
-msgstr "参数必需是场名字的字符串"
-
 msgid ""
 "The definition of class %s in package %s is locked, fields may not be "
 "modified"
 msgstr "程辑包%2$s中%1$s类别的定义封闭了，因此无法个性场的定义"
-
-msgid "Field \"%s\" is already locked"
-msgstr ""
-
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
-msgstr "%1$s类别的\"%2$s\"场有非默认的约束力，因此不能被锁定"
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1556,6 +1555,15 @@ msgstr ""
 "不行允许非本地分配方法名字\n"
 "    %1$s\n"
 "( 在类别%3$s的%2$s方法里)"
+
+msgid "Arguments must all be character string names of fields"
+msgstr "参数必需是场名字的字符串"
+
+msgid "Field \"%s\" is already locked"
+msgstr ""
+
+msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+msgstr "%1$s类别的\"%2$s\"场有非默认的约束力，因此不能被锁定"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

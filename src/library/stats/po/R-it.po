@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1339,12 +1339,6 @@ msgstr "0 casi (non-NA)"
 msgid "incompatible dimensions"
 msgstr "dimensioni incompatibili"
 
-msgid "extra arguments"
-msgstr "argomenti extra"
-
-msgid "are just disregarded."
-msgstr "semplicemente ignorati."
-
 msgid "singular fit encountered"
 msgstr "stima singolare"
 
@@ -2568,6 +2562,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "extra arguments"
+#~ msgstr "argomenti extra"
+
+#~ msgid "are just disregarded."
+#~ msgstr "semplicemente ignorati."
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "impossibile calcolae p-value corretti in presenza di ties"

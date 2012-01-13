@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -741,6 +741,17 @@ msgstr "无法安装程序包"
 msgid "unable to create"
 msgstr "无法建立"
 
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr ""
+
 msgid "inferring 'repos = NULL' from the file name"
 msgstr "从文件名字推断'repos = NULL'"
 
@@ -773,8 +784,9 @@ msgstr ""
 "安装程序包时出了错，\n"
 "  可能原因%s"
 
+#, fuzzy
 msgid ""
-"The downloaded packages are in\n"
+"The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
 "下载的程序包在\n"
@@ -1114,6 +1126,14 @@ msgstr "无法将临时安装%s搬到%s"
 msgid "cannot remove prior installation of package"
 msgstr "无法拆除原来安装的程序包"
 
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"下载的程序包在\n"
+"\t%s里"
+
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()'只在Windows上有用"
 
@@ -1172,6 +1192,11 @@ msgstr[0] "还安装相依关系%s"
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] "'lib'元素%s不是可写目录"
+
+#, fuzzy
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] "还安装相依关系%s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"

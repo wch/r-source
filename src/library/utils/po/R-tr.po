@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-11-23 13:46\n"
+"POT-Creation-Date: 2012-01-13 11:24\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -721,6 +721,17 @@ msgstr "paketler yüklenemedi"
 msgid "unable to create"
 msgstr "oluşturulamadı"
 
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr ""
+
 msgid "inferring 'repos = NULL' from the file name"
 msgstr ""
 
@@ -750,7 +761,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The downloaded packages are in\n"
+"The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
 
@@ -1082,6 +1093,11 @@ msgstr ""
 msgid "cannot remove prior installation of package"
 msgstr ""
 
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+
 msgid "'memory.size()' is Windows-specific"
 msgstr ""
 
@@ -1145,6 +1161,11 @@ msgstr[1] ""
 
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
 msgstr[0] ""
 msgstr[1] ""
 
