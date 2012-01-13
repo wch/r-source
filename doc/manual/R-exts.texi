@@ -893,7 +893,9 @@ list of exclude patterns in file @file{.Rinstignore} in the top-level
 source directory.  These patterns should be Perl-like regular
 expressions (see the help for @code{regexp} in @R{} for the precise
 details), one per line, to be matched@footnote{case-insensitively on
-Windows.} against the file and directory names.
+Windows.} against the file and directory paths, e.g.@:
+@file{doc/.*[.]png$} will exclude all PNG files in @file{inst/doc} based on
+the (lower-case) extension.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
