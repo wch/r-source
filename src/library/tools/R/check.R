@@ -2438,11 +2438,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                   lines, invert = TRUE, value = TRUE)
                 }
 
-                 if (!pkgname %in% c("memisc"))
-                     lines <- grep("Warning: locked binding of .* will not be changed",
-                                   lines, invert = TRUE, value = TRUE)
-
-
                 ## Warnings about replacing imports are almost always
                 ## due to auto-generated namespaces
                 check_imports_flag <-
@@ -2450,6 +2445,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if (!config_val_to_logical(check_imports_flag))
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
+
+                ## Pro tem skip warnings from c58008 fallout unless
+                ## they apply to this package.
+                spurious <- grepl("Warning: Functions for exporting methods must have been made generic", lines) & !grepl(pkgname, lines)
+                lines <- lines[!spurious]
 
                 if (length(lines)) {
 		    lines <- unique(lines)
