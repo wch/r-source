@@ -230,6 +230,9 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 				   (STRING_ELT), x));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
+    /* Check this does not overflow */
+    if ((double)nrs * (double)ncs > INT_MAX)
+	error(_("dimensions would exceed maximum size of array"));
     PROTECT(sr);
     PROTECT(sc);
     result = allocVector(TYPEOF(x), nrs*ncs);
