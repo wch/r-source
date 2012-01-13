@@ -1394,7 +1394,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                          "  consider running tools::compactPDF() on these files\n")
             }
             if (R_check_doc_sizes2) {
-                gs_cmd <- Sys.getenv("R_GSCMD", "gs")
+                gs_cmd <- Sys.which(Sys.getenv("R_GSCMD", "gs"))
                 if (WINDOWS && !nzchar(gs_cmd)) {
                     gs_cmd <- Sys.which("gswin64c")
                     if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
