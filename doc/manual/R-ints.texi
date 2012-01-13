@@ -3637,8 +3637,15 @@ flag to report in units of 1Kb, or reports in a different format -- the
 GNU, Mac OS X and Solaris @command{du} commands have been tested).
 Default: true if @command{du} is found.
 @item _R_CHECK_DOC_SIZES_
-Should @command{qpdf} be used to find the installed sizes of PDFs?
+Should @command{qpdf} be used to check the installed sizes of PDFs?
 Default: true if @command{qpdf} is found.
+@item _R_CHECK_DOC_SIZES2_
+Should @command{gs} be used to check the installed sizes of PDFs?  This
+is slower than (and in addition to) the previous check, but does detect
+figures with excessive detail (often hidden by over-plotting).  Requires
+that @env{R_GSCMD} is set to a valid program, or @command{gs} (or on Windows,
+@command{gswin32.exe} or @command{gswin64c.exe}) is on the path.
+Default: false
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
 kept only if there is an error.
@@ -3649,6 +3656,10 @@ Default: true.
 @item _R_CHECK_REPLACING_IMPORTS_
 Should warnings about replacing imports be reported?  These mainly come
 from auto-generated @file{NAMESPACE} files in other packages.
+Default: false
+@item _R_CHECK_UNSAFE_CALLS_
+Check for calls that appear to tamper with already loaded code not from
+the current package: such calls may well contravene CRAN policies.
 Default: false
 @item _R_CHECK_TIMINGS_
 Optionally report timings for installation, examples, tests and

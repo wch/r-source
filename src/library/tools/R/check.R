@@ -260,6 +260,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                            "will not be installed: please remove it\n"))
         }
         if (R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
+        if (dir.exists("inst/doc") && do_install) check_doc_contents()
 
         setwd(pkgoutdir)
 
@@ -1333,6 +1334,41 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
    }
 
+    check_doc_contents <- function()
+    {
+        ## Have already checked that inst/doc exists
+        doc_dir <- file.path(libdir, pkgname, "doc")
+        if (!dir.exists(doc_dir)) return()
+        checkingLog(Log, "installed files from 'inst/doc'")
+        ## special case common problems.
+        any <- FALSE
+        files <- dir(file.path(pkgdir, "inst", "doc"))
+        bad <- files[files %in% c("jss.cls", "jss.bst", "Sweave.sty")]
+        if (length(bad)) {
+            noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files are already in R: ",
+                     paste(sQuote(bad), collapse = ", "), "\n",
+                     "Please remove them from your package.\n")
+        }
+        files <- dir(doc_dir)
+        files <- files[! files %in% c("jss.cls", "jss.bst", "Sweave.sty")]
+        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out)$", files)
+        bad <- bad | grepl("(Makefile|~$)", files)
+        if (any(bad)) {
+            if(!any) noteLog(Log)
+            printLog(Log,
+                     "The following files should probably not be installed:\n",
+                     paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
+                                   indent = 2, exdent = 2), collapse = "\n"),
+                     "\n\n",
+                     "Consider the use of a .Rinstignore file: see ",
+                     sQuote("Writing R Extensions"),
+                     ".\n")
+        } else resultLog(Log, "OK")
+    }
+
     check_doc_size <- function()
     {
         ## Have already checked that inst/doc exists and qpdf can be found
@@ -1341,6 +1377,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         pdfs <- pdfs %w/o% "inst/doc/Rplots.pdf"
         if (length(pdfs)) {
             checkingLog(Log, "sizes of PDF files under 'inst/doc'")
+            any <- FALSE
             td <- tempfile('pdf')
             dir.create(td)
             file.copy(pdfs, td)
@@ -1348,12 +1385,34 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 resultLog(Log, "NOTE")
+                any <- TRUE
                 printLog(Log,
                          "  'qpdf' made some significant size reductions:\n",
                          paste("  ", res, collapse = "\n"),
                          "\n",
                          "  consider running tools::compactPDF() on these files\n")
-            } else resultLog(Log, "OK")
+            }
+            if (R_check_doc_sizes2) {
+                gs_cmd <- Sys.getenv("R_GSCMD", "gs")
+                if (WINDOWS && !nzchar(gs_cmd)) {
+                    gs_cmd <- Sys.which("gswin64c")
+                    if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
+                }
+                if (nzchar(gs_cmd)) {
+                    res <- compactPDF(td, gs_cmd = gs_cmd, gs_quality = "ebook")
+                    res <- format(res, diff = 1e5)
+                    if(length(res)) {
+                        if (!any) resultLog(Log, "NOTE")
+                        any <- TRUE
+                        printLog(Log,
+                                 "  'gs' made some significant size reductions:\n",
+                                 paste("  ", res, collapse = "\n"),
+                                 "\n",
+                                 '  consider running tools::compactPDF(gs_quality = "ebook") on these files\n')
+                    }
+                }
+            }
+            if (!any) resultLog(Log, "OK")
         }
     }
 
@@ -2487,12 +2546,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
             if(nrow(rest)) {
+                o <- sort.list(rest[, 2L])
                 printLog(Log, "  sub-directories of 1Mb or more:\n")
                 size <- sprintf('%4.1fMb', rest[, 1L]/1024)
                 printLog(Log, paste("    ",
-                                    format(rest[, 2L], justify = "left"),
+                                    format(rest[o, 2L], justify = "left"),
                                     "  ",
-                                    format(size, justify = "right"),
+                                    format(size[o], justify = "right"),
                                     "\n", sep=""))
             }
         } else resultLog(Log, "OK")
@@ -2964,6 +3024,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     R_check_doc_sizes <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES_", "TRUE")) &&
         nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))
+    R_check_doc_sizes2 <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES2_", "FALSE"))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
