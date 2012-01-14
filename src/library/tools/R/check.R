@@ -1383,7 +1383,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             td <- tempfile('pdf')
             dir.create(td)
             file.copy(pdfs, td)
-            res <- compactPDF(td, gs_quality = "") # we say we use qpdf
+            res <- compactPDF(td, gs_quality = "none") # we say we use qpdf
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 resultLog(Log, "NOTE")
