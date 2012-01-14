@@ -302,6 +302,9 @@
       \item The text of a function body containing more than 4096
       characters was not properly saved by the parser when entered
       at the console.      
+      
+      \item Forgetting the \code{#endif} tag in an Rd file could cause 
+      the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
     }
   }
 }
