@@ -1354,7 +1354,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
         files <- dir(doc_dir)
         files <- files[! files %in% c("jss.cls", "jss.bst", "Sweave.sty")]
-        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out)$", files)
+        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out)$", files, ignore.case = TRUE) # There are .JPG files
         bad <- bad | grepl("(Makefile|~$)", files)
         if (any(bad)) {
             if(!any) noteLog(Log)
@@ -1383,7 +1383,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             td <- tempfile('pdf')
             dir.create(td)
             file.copy(pdfs, td)
-            res <- compactPDF(td, gs_cmd = "") # we say we use qpdf
+            res <- compactPDF(td, gs_quality = "") # we say we use qpdf
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 resultLog(Log, "NOTE")

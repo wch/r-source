@@ -900,6 +900,12 @@ compactPDF <-
     tf <- tempfile("pdf")
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
+    if(!nzchar(gs_cmd) && gs_quality != "none") {
+        if(.Platform$OS.type == "windows") {
+            gs_cmd <- Sys.which("gswin64c")
+            if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
+        } else Sys.which("gs")
+    }
     for (p in paths) {
         res <- if (nzchar(gs_cmd) && gs_quality != "none")
             system2(gs_cmd,

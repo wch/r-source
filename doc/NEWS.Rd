@@ -242,7 +242,7 @@
 
       \item There is experimental support for \emph{link-time
 	optimization} with \command{gcc} 4.5.0 or later on platforms
-	which support it.
+      which support it.
     }
   }
 
@@ -256,7 +256,7 @@
       has been changed from \code{0L} to \code{NA_integer_}.
       (\PR{14754})
 
-      \item The \code{exportMethods} directive now exports generics as
+      \item The \code{exportMethods} directive now exports S4 generics as
       necessary, as the extensions manual said it does.  The manual
       has also been updated to be a little more informative on this point.
 

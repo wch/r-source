@@ -2505,9 +2505,12 @@ of them (such as the misuse of variable-length arrays).  If possible,
 check C++ code on a standards-conformant compiler.
 
 Although there is now a 2011 version of the C++ standard, it is not yet
-implemented (nor is it likely to be widely available for many years) and
+implemented (nor is it likely to be widely available for some years) and
 portable C++ code needs to follow the 1998 standard (and not use
 features from C99).
+
+Similarly, the 2011 C standard is unlikely to be widely implemented for
+several years.
 
 @item
 Study the output from running your examples, in file
@@ -2516,7 +2519,7 @@ indicate actual errors, and warnings about your mistakes (which the @R{}
 developers are warning you that they are working around for you) will
 just annoy or confuse your users.
 
-If your package has tests, study their output too.
+If your package has tests or vignettes, study their output too.
 
 @item
 Look for any problems with help file conversions.  For example, you
@@ -2544,12 +2547,18 @@ double the actual size.  This can be disabled by setting
 @env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
 more than 5Mb, detailing directories of more than 1Mb.  It warns about
 inefficient compression of data: @command{R CMD build --resave-data}
-will compact data as best it can.  Watch out for unnecessary files in
-@file{inst/doc}.  As a general rule, @file{doc} directories should not
-exceed 5Mb, and where @file{data} directories need to be more than
-5--10Mb, consideration should be given to a separate package containing
-just the data.  (Similarly for external data directories, large
-@file{jar} files and other libraries that need to be installed.)
+will compact data as best it can.  
+
+Watch out for unnecessary files in @file{inst/doc}: @command{R CMD
+check} will note files of types that probably should be installed, but
+it cannot distinguish PDF figures from PDF documents.  If files need to
+be in @file{inst/doc} but not installed, use a @file{.Rinstignore} file.
+
+The CRAN policy is that @file{doc} directories should not exceed 5Mb,
+and where @file{data} directories need to be more than 5--10Mb,
+consideration should be given to a separate package containing just the
+data.  (Similarly for external data directories, large @file{jar} files
+and other libraries that need to be installed.)
 
 See below for ways to reduce the size of PDF files such as vignettes.
 
@@ -2568,6 +2577,11 @@ principle, packages must pass @code{R CMD check} without warnings to be
 admitted to the main @acronym{CRAN} package area.  If there are warnings
 you cannot eliminate (for example because you believe them to be
 spurious) send an explanatory note as part of your covering email.
+
+Also read the CRAN policies linked from
+@uref{http://cran.r-project.org/web/packages/index.html} and note that
+by submitting a package you are confirming that your package complies
+with them
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
@@ -2619,7 +2633,7 @@ and suitable options might be
 
 @example
 -dPDFSETTINGS=/ebook
--dPDFSETTINGS=/printer
+-dPDFSETTINGS=/screen
 @end example
 
 @noindent
