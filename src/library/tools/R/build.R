@@ -209,8 +209,10 @@ get_exclude_patterns <- function()
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
-            "  --compact-vignettes   try to compact PDF files under inst/doc (using qpdf)",
-            "",
+            "  --compact-vignettes=  try to compact PDF files under inst/doc:",
+            '                        "no" (default), "qpdf", "gs", "both"',
+            "  --compact-vignettes   same as --compact-vignettes=qpdf",
+           "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
 
@@ -370,12 +372,16 @@ get_exclude_patterns <- function()
                 }
             }
         }
-        if (compact_vignettes &&
+        if (compact_vignettes != "no" &&
             length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE,
-                               full.names = TRUE))
-            && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
+                               full.names = TRUE))) {
             messageLog(Log, "compacting vignettes and other PDF files")
-            compactPDF(pdfs, qpdf, gs_cmd = "") # so this always uses qpdf
+            if(compact_vignettes %in% c("qpdf", "both") &&
+               nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf"))))
+                compactPDF(pdfs, qpdf, gs_quality = "none")
+            if(compact_vignettes %in% c("gs", "both") &&
+               nzchar(gs_cmd <- find_gs_cmd("")))
+                compactPDF(pdfs, gs_cmd = gs_cmd, gs_quality = "ebook")
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
@@ -722,11 +728,8 @@ get_exclude_patterns <- function()
     else if (file.exists(Renv <- "~/.R/build.Renviron")) readRenviron(Renv)
 
     ## Configurable variables.
-    compact_vignettes <-
-        config_val_to_logical(Sys.getenv("_R_BUILD_COMPACT_VIGNETTES_",
-                                         "FALSE"))
-    resave_data <-
-        Sys.getenv("_R_BUILD_RESAVE_DATA_", "gzip")
+    compact_vignettes <- Sys.getenv("_R_BUILD_COMPACT_VIGNETTES_", "no")
+    resave_data <- Sys.getenv("_R_BUILD_RESAVE_DATA_", "gzip")
 
     keep_empty <-
         config_val_to_logical(Sys.getenv("_R_BUILD_KEEP_EMPTY_DIRS_", "FALSE"))
@@ -768,12 +771,19 @@ get_exclude_patterns <- function()
             resave_data <- substr(a, 15, 1000)
         } else if (a == "--no-manual") {
             manual <- FALSE
-        } else if (a == "--compact-vignettes") {
-            compact_vignettes <- TRUE
+        } else if (substr(a, 1, 20) == "--compact-vignettes=") {
+            compact_vignettes <- substr(a, 21, 1000)
+       } else if (a == "--compact-vignettes") {
+            compact_vignettes <- "qpdf"
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
         args <- args[-1L]
+    }
+
+    if(!compact_vignettes %in% c("no", "qpdf", "gs", "both")) {
+        warning('invalid value for --compact-vignettes, assuming "qpdf"')
+        compact_vignettes <-"qpdf"
     }
 
     Sys.unsetenv("R_DEFAULT_PACKAGES")

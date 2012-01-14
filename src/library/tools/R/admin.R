@@ -900,12 +900,7 @@ compactPDF <-
     tf <- tempfile("pdf")
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
-    if(!nzchar(gs_cmd) && gs_quality != "none") {
-        if(.Platform$OS.type == "windows") {
-            gs_cmd <- Sys.which("gswin64c")
-            if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
-        } else Sys.which("gs")
-    }
+    if(gs_quality != "none") gs_cmd <- find_gs_cmd(gs_cmd)
     for (p in paths) {
         res <- if (nzchar(gs_cmd) && gs_quality != "none")
             system2(gs_cmd,
@@ -929,6 +924,16 @@ compactPDF <-
         unlink(tf)
     }
     structure(na.omit(ans), class = c("compactPDF", "data.frame"))
+}
+
+find_gs_cmd <- function(gs_cmd)
+{
+    if(!nzchar(gs_cmd)) {
+        if(.Platform$OS.type == "windows") {
+            gs_cmd <- Sys.which("gswin64c")
+            if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
+        } else Sys.which("gs")
+    } else Sys.which(gs_cmd)
 }
 
 format.compactPDF <- function(x, ratio = 0.9, diff = 1e4, ...)

@@ -193,6 +193,9 @@
        \item There are new options for more rigorous testing by
        \command{R CMD check} selected by environment variables -- see
        the \sQuote{Writing R Extensions} manual.
+       
+       \item \command{R CMD build} has more options for
+       \option{--compact-vignettes}: see \command{R CMD build --help}.
      }
    }
 

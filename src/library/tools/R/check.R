@@ -1395,11 +1395,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                          "  consider running tools::compactPDF() on these files\n")
             }
             if (R_check_doc_sizes2) {
-                gs_cmd <- Sys.which(Sys.getenv("R_GSCMD", "gs"))
-                if (WINDOWS && !nzchar(gs_cmd)) {
-                    gs_cmd <- Sys.which("gswin64c")
-                    if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
-                }
+                gs_cmd <- find_gs_cmd(Sys.getenv("R_GSCMD", "gs"))
                 if (nzchar(gs_cmd)) {
                     res <- compactPDF(td, gs_cmd = gs_cmd, gs_quality = "ebook")
                     res <- format(res, diff = 2.5e5) # 250 KB for now
