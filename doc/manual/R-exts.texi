@@ -1652,7 +1652,7 @@ external software to which this is an @R{} interface.
 
 One simple way is simply to set @code{OBJECTS} to be all the objects
 that need to be compiled, including in sub-directories.  For example,
-CRAN package @CRANpkg{RSiena} has
+CRAN package @pkg{RSiena} has
 
 @example
 SOURCES = $(wildcard data/*.cpp network/*.cpp utils/*.cpp model/*.cpp model/*/*.cpp model/*/*/*.cpp)
@@ -1663,7 +1663,7 @@ OBJECTS = siena07utilities.o siena07internals.o siena07setup.o siena07models.o $
 @noindent
 One problem with that approach is that unless GNU make extensions are
 used, the source files need to be listed and kept up-to-date.  As in the
-following from CRAN package @CRANpkg{lossDev}:
+following from CRAN package @pkg{lossDev}:
 
 @example
 OBJECTS.samplers = samplers/ExpandableArray.o samplers/Knots.o \
