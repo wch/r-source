@@ -31,7 +31,8 @@
 \details{
   \code{.Defunct} is called from defunct functions.  Functions should be
   listed in \code{help("pkg-defunct")} for an appropriate \code{pkg},
-  including \code{base}.
+  including \code{base} (with the alias added to the respective Rd
+  file).
 }
 \seealso{
   \code{\link{Deprecated}}.
