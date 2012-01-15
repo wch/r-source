@@ -188,7 +188,12 @@ function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
          installed = installed.packages(lib.loc, fields = "Enhances"))
 {
     if(identical(dependencies, "all"))
-        dependencies <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+        dependencies <-
+            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    else if(identical(dependencies, "most"))
+        dependencies <-
+            c("Depends", "Imports", "LinkingTo", "Suggests")
+    
     av <- installed[, dependencies, drop = FALSE]
     rn <- row.names(installed)
     need <- apply(av, 1L, function(x)
@@ -256,6 +261,13 @@ function(packages = NULL, db,
             out_of_db_packages <- packages[ind == 0L]
         }
     }
+
+    if(identical(which, "all"))
+        which <-
+            c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    else if(identical(which, "most"))
+        which <-
+            c("Depends", "Imports", "LinkingTo", "Suggests")
 
     depends <-
         do.call(Map,
