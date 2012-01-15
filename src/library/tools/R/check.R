@@ -1343,7 +1343,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## special case common problems.
         any <- FALSE
         files <- dir(file.path(pkgdir, "inst", "doc"))
-        bad <- files[files %in% c("jss.cls", "jss.bst", "Sweave.sty")]
+        already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
+        bad <- files[files %in% already]
         if (length(bad)) {
             noteLog(Log)
             any <- TRUE
@@ -1353,7 +1354,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      "Please remove them from your package.\n")
         }
         files <- dir(doc_dir)
-        files <- files[! files %in% c("jss.cls", "jss.bst", "Sweave.sty")]
+        files <- files[! files %in% already]
         bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out)$", files, ignore.case = TRUE) # There are .JPG files
         bad <- bad | grepl("(Makefile|~$)", files)
         if (any(bad)) {
