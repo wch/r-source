@@ -1786,8 +1786,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @R{} assumes that source files with extension @file{.f} are FORTRAN 77,
 and passes them to the compiler specified by @samp{F77}.  On most but
 not all platforms that compiler will accept Fortran 90/95 code: some
-platforms have a separate Fortran 90/95 compiler and a few (typically
-older) platforms have no Fortran 90/95 support.
+platforms have a separate Fortran 90/95 compiler and a few (by now quite
+rare@footnote{Cygwin used @command{g77} up to 2011, and some pre-built
+versions of @R{} for Unix OSes still do.}) platforms have no Fortran
+90/95 support.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
@@ -1806,6 +1808,14 @@ the source files: the variable @code{PKG_FCFLAGS} specifies any special
 flags to be used.  There is no guarantee that compiled Fortran 90/95
 code can be mixed with any other type of compiled code, nor that a build
 of @R{} will have support for such packages.
+
+Some (but not) all compilers specified by the @samp{FC} macro will
+accept Fortan 2003 or 2008 code.  For platform using @command{gfortran},
+you may need to include @option{-std=f2003} or @option{-std=f2008} in
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
+non-standard extensions.  The Solaris @command{f95} compiler `accepts
+some Fortran 2003 features'.  Such code should still use file extension
+@file{.f90} or @file{.f95}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -1934,7 +1944,7 @@ Package startup functions are checked for correct argument lists and
 (incorrect) calls to functions which modify the search path or
 inappropriately generate messages.  The @R{} code is checked for
 possible problems using @CRANpkg{codetools}.  In addition, it is checked
-whether methods have all arguments of the corresponding generic, and
+whether S3 methods have all arguments of the corresponding generic, and
 whether the final argument of replacement functions is called
 @samp{value}.  All foreign function calls (@code{.C}, @code{.Fortran},
 @code{.Call} and @code{.External} calls) are tested to see if they have
@@ -1947,8 +1957,8 @@ argument)
 
 @item
 The @file{Rd} files are checked for correct syntax and metadata,
-including the presence of the mandatory (@code{\name}, @code{\alias},
-@code{\title} and @code{\description}) fields.  The @file{Rd} name and
+including the presence of the mandatory fields (@code{\name}, @code{\alias},
+@code{\title} and @code{\description}).  The @file{Rd} name and
 title are checked for being non-empty, and there is a check for missing
 cross-references (links).
 
@@ -1966,13 +1976,31 @@ sections of @file{Rd} files are documented in the corresponding
 @code{\arguments} section.
 
 @item
+The @file{data} directory is checked for non-ASCII characters and for
+the use of reasonable levels of compression.
+
+@item
 C, C++ and FORTRAN source and header files are tested for portable
 (LF-only) line endings.  If there is a @file{Makefile} or
 @file{Makefile.in} or @file{Makevars} or @file{Makevars.in} file under
 the @file{src} directory, it is checked for portable line endings and
-the correct use of @samp{$(BLAS_LIBS)}.  Compiled code is checked for
-symbols corresponding to functions which might terminate @R{} or write
-to @file{stdout}/@file{stderr} instead of the console.
+the correct use of @samp{$(BLAS_LIBS)} and @samp{$(LAPACK_LIBS)}
+
+Compiled code is checked for symbols corresponding to functions which
+might terminate @R{} or write to @file{stdout}/@file{stderr} instead of
+the console.  Note that the latter might give false positives in that
+the symbols might be pulled in with external libraries and could never
+be called.  Windows@footnote{on most other platforms such runtime
+libraries are dynamic, but static libraries are currently used on
+Windows because the toolchain is not a standard part of the OS.} users
+should note that the Fortran and C++ runtime libraries are examples of
+such external libraries.
+
+@item
+Some checks are made of the contents of the @file{inst/doc} directory.
+These always include checking for files that look like leftovers, and if
+suitable tools (such as @command{qpdf}) are available, checking that the
+PDF documentation is of minimal size.
 
 @item
 The examples provided by the package's documentation are run.
@@ -2579,9 +2607,9 @@ you cannot eliminate (for example because you believe them to be
 spurious) send an explanatory note as part of your covering email.
 
 Also read the CRAN policies linked from
-@uref{http://cran.r-project.org/web/packages/index.html} and note that
-by submitting a package you are confirming that your package complies
-with them
+@uref{http://cran.r-project.org/web/packages/} and note that by
+submitting a package you are confirming that your package complies with
+them
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
@@ -2602,11 +2630,11 @@ the long obsolete TeXLive 2009.} distribution
 Solaris check systems use current TexLive; the Windows @acronym{CRAN}
 builder uses a reasonably recent version of MikTeX (including all
 packages available directly for MikTeX); the Mac OS X builders use a
-current full version of MacTeX.  Developers wanting to have their
-vignettes use @TeX{} packages or style files not (yet) included in these
-distributions should add the corresponding style files to the
-@file{vignettes} (or for the legacy layout, @file{inst/doc})
-subdirectory of their package.
+current full version of MacTeX, which includes all of the current
+TeXLive.  Developers wanting to have their vignettes use @TeX{} packages
+or style files not (yet) included in these distributions should add the
+corresponding style files to the @file{vignettes} (or for the legacy
+layout, @file{inst/doc}) subdirectory of their package.
 
 @menu
 * PDF size::                    
@@ -2652,9 +2680,13 @@ the @acronym{CRAN} Mac OS X distribution of @R{}), there is an option
 @command{qpdf} over PDF files under @file{inst/doc} and replace them if
 at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
 command can be supplied as environment variable @env{R_QPDF} (and is on
-the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
-function @code{tools::compactPDF} which has other options including
-running Ghostscript.
+the CRAN binary of @R{} for Mac OS X).  This option can take values
+@samp{qpdf} (the default) as well as @samp{gs} or @samp{both} to try
+harder to reduce the size.  These should definitely be tried before
+submission to CRAN for packages with more than 500Kb of PDF files: as
+@samp{gs} may make lossy changes such as downsampling bitmap images, do
+examine the results and if necessary use @command{ps2pdf} or
+@code{tools::compactPDF} directly.
 
 Most of the large PDFs we have encountered have been large because of
 the inclusion of figures, for example complex figures from @R{} (where
@@ -2828,7 +2860,9 @@ list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
 this pattern applies to S4 classes, but did not in earlier versions of
 @R{}.)  Beware of patterns which include names starting with a period:
 some of these are internal-only variables and should never be exported,
-e.g.@: @code{.__S3MethodsTable__.}.
+e.g.@: @samp{.__S3MethodsTable__.} .  (Such objects are excluded from
+pattern matches in recent versions of @R{}, so such patterns are safer
+for packages only to be used with @R{} 2.14.0 or later.)
 
 Packages implicitly import the base namespace.
 Variables exported from other packages with namespaces need to be
