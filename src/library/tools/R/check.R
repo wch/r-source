@@ -1357,6 +1357,15 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         files <- files[! files %in% already]
         bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out)$", files, ignore.case = TRUE) # There are .JPG files
         bad <- bad | grepl("(Makefile|~$)", files)
+        ## How about any pdf files which look like figures files from vignettes?
+        vigns <- pkgVignettes(dir = pkgdir)
+        if (!is.null(vigns) && length(vigns$docs)) {
+            vf <- sub("[.][RSrs](nw|tex)", "",  basename(vigns$docs))
+            pat <- paste(vf, collapse="|")
+            pat <- paste0("^(", pat, ")-[0-9]+[.]pdf")
+            bad <- bad | grepl(pat, files)
+        }
+        bad <- bad | grepl("^fig.*[.]pdf$", files)
         if (any(bad)) {
             if(!any) noteLog(Log)
             any <- TRUE
