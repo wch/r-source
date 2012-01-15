@@ -179,6 +179,10 @@
        available since \R 2.10.0, it only exceptionally makes sense to
        not use them.
 
+       The environment variable \env{_R_CHECK_COMPACT_DATA2_} is
+       no longer consulted: the check is always done if
+       \env{_R_CHECK_COMPACT_DATA_} has a true value (its default).
+
        \item Where multiple sub-architectures are to be tested,
        \command{R CMD check} now runs the examples and tests for all the
        sub-architectures even if one fails.

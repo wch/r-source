@@ -3675,7 +3675,7 @@ is always required.
 Default: @code{""}.
 
 @item _R_CHECK_INSTALL_DEPENDS_
-If set to a true value and not on Windows and a test installation is to
+If set to a true value and a test installation is to
 be done, this is done with @code{.libPaths()} containing just a
 temporary library directory and @code{.Library}.  The temporary library
 is populated by symbolic links@footnote{under Windows, junction points.}

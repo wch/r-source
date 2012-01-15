@@ -347,8 +347,8 @@ tab.  The @samp{Package}, @samp{Version}, @samp{License},
 @samp{Description}, @samp{Title}, @samp{Author}, and @samp{Maintainer}
 fields are mandatory, all other fields are optional.  For @R{} 2.14.0 or
 later, @samp{Author} and @samp{Maintainer} can be auto-generated from
-@samp{Authors@@R}, and should be omitted if the latter is provided (see
-below for details).
+@samp{Authors@@R}, and should be omitted if the latter is provided (and
+the packages depends on @code{R (>= 2.14)}: see below for details).
 
 For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
@@ -455,18 +455,18 @@ a public package it should be a @emph{person}, not a mailing list and
 not a corporate entity: do ensure that it is valid and will remain valid
 for the lifetime of the package.
 
-Both @samp{Author} and @samp{Maintainer} can be omitted (as from @R{}
-2.14.0) if a suitable @samp{Authors@@R} is given.  This field can be
-used to provide a refined, machine-readable description of the package
-``authors'' (in particular specifying their precise @emph{roles}), via
-suitable @R{} code.  The roles can include @samp{"aut"} (author) for
-full authors, @samp{"cre"} (creator) for the package maintainer, and
-@samp{"ctb"} (contributor) for other contributors, among others.  See
-@code{?person} for more information.  Note that no role is assumed by
-default.  Auto-generated package citation information takes advantage of
-this specification; in @R{} 2.14.0 or later, the @samp{Author} and
-@samp{Maintainer} fields are auto-generated from it if needed when
-building or installing.
+Both @samp{Author} and @samp{Maintainer} fields can be omitted (as from
+@R{} 2.14.0) if a suitable @samp{Authors@@R} field is given.  This field
+can be used to provide a refined, machine-readable description of the
+package ``authors'' (in particular specifying their precise
+@emph{roles}), via suitable @R{} code.  The roles can include
+@samp{"aut"} (author) for full authors, @samp{"cre"} (creator) for the
+package maintainer, and @samp{"ctb"} (contributor) for other
+contributors, among others.  See @code{?person} for more information.
+Note that no role is assumed by default.  Auto-generated package
+citation information takes advantage of this specification; in @R{}
+2.14.0 or later, the @samp{Author} and @samp{Maintainer} fields are
+auto-generated from it if needed when building or installing.
 
 Several optional fields take @emph{logical values}: these can be
 specified as @samp{yes}, @samp{true}, @samp{no} or @samp{false}:
@@ -499,7 +499,7 @@ current package, both when @code{library} is called and when preparing
 for lazy-loading during installation.
 
 A package (or @samp{R}) can appear more than once in the @samp{Depends},
-but only the first occurrence will be used in versions of @R{} prior to
+but only the first occurrence was used in versions of @R{} prior to
 2.7.0: these are now very unlikely to be encountered.
 
 It makes no sense to declare a dependence on @code{R} without a version
@@ -536,7 +536,9 @@ is made conditional @emph{via} @code{if(require(@var{pkgname}))}).
 Finally, the @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
 these packages.  Version requirements can be specified, but are
-currently not used.
+currently not used.  Such packages cannot be required to check the
+package: any tests which uses the must be conditional on the presence of
+the package.
 
 The general rules are
 
@@ -623,12 +625,12 @@ may be useful for a package known to benefit particularly from
 byte-compilation (which can take quite a long time and increases the
 installed size of the package).
 
-The @samp{ZipData} logical field controls whether the automatic Windows
-build will zip up the data directory or not: set this to @samp{no} if
-your package will not work with a zipped data directory.  (Setting to
-any other value is deprecated, and it is unused from @R{} 2.13.0: but it
-might still be needed if the package can be installed under earlier
-versions of @R{}.)
+The @samp{ZipData} logical field used to control whether the automatic
+Windows build would zip up the data directory or not: set this to
+@samp{no} if your package will not work with a zipped data directory.
+(Setting to any other value is deprecated, and it is unused from @R{}
+2.13.0: but it might still be needed if the package can be installed
+under earlier versions of @R{}.)
 
 The @samp{BuildVignettes} logical field can be set to a false value to stop
 @command{R CMD build} from attempting to rebuild the vignettes, as well
@@ -705,7 +707,10 @@ vignettes}).
 
 The @file{R} subdirectory contains @R{} code files, only.  The code
 files to be installed must start with an @acronym{ASCII} (lower or upper
-case) letter or digit and have one of the extensions @file{.R},
+case) letter or digit and have one of the extensions@footnote{Extensions
+@file{.S} and @file{.s} arise from code originally written for S(-PLUS),
+but are commonly used for assembler code.  Extension @file{.q} was used
+for S, which at one time was tentatively called QPE.} @file{.R},
 @file{.S}, @file{.q}, @file{.r}, or @file{.s}.  We recommend using
 @file{.R}, as this extension seems to be not used by any other software.
 It should be possible to read in the files using @code{source()}, so
@@ -1232,7 +1237,7 @@ variable, but that the secondary object is automatically resolved.
 Another example is when a package installs support files that are
 required at run time, and their location is substituted into an @R{}
 data structure at installation time. (This happens with the Java Archive
-files in the @pkg{SJava} package.)
+files in the Omegahat @pkg{SJava} package.)
 @vindex R_LIBRARY_DIR
 @vindex R_PACKAGE_DIR
 @vindex R_PACKAGE_NAME
@@ -1294,6 +1299,7 @@ pkg-config --list-all | sort
 @menu
 * OpenMP support::              
 * Using pthreads::              
+* Comppiling in sub-directories::  
 @end menu
 
 Sometimes writing your own @file{configure} script can be avoided by
@@ -1587,7 +1593,7 @@ The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
 are only beneficial if quite substantial tasks are run in parallel.
 
-@node Using pthreads,  , OpenMP support, Using Makevars
+@node Using pthreads, Comppiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
 
 There is no direct support for the POSIX threads (more commonly known as
@@ -1644,6 +1650,63 @@ typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 See also the comments on performance under OpenMP: on all known @R{}
 platforms OpenMP is implemented @emph{via} @code{pthreads} and the known
 performance issues are in the latter.
+
+@node Comppiling in sub-directories,  , Using pthreads, Using Makevars
+@subsubsection Comppiling in sub-directories
+
+Package authors fairly often want to organize code in sub-directories of
+@file{src}, for example if they are including a separate piece of
+external software to which this is an @R{} interface.
+
+One simple way is simply to set @code{OBJECTS} to be all the objects
+that need to be compiled, including in sub-directories.  For example,
+CRAN package @CRANpkg{RSiena} has
+
+@example
+SOURCES = $(wildcard data/*.cpp network/*.cpp utils/*.cpp model/*.cpp model/*/*.cpp model/*/*/*.cpp)
+
+OBJECTS = siena07utilities.o siena07internals.o siena07setup.o siena07models.o $(SOURCES:.cpp=.o)
+@end example
+
+@noindent
+One problem with that approach is that unless GNU make extensions are
+used, the source files need to be listed and kept up-to-date.  As in the
+following from CRAN package @CRANpkg{lossDev}:
+
+@example
+OBJECTS.samplers = samplers/ExpandableArray.o samplers/Knots.o \
+  samplers/RJumpSpline.o samplers/RJumpSplineFactory.o \
+  samplers/RealSlicerOV.o samplers/SliceFactoryOV.o samplers/MNorm.o
+OBJECTS.distributions = distributions/DSpline.o \
+  distributions/DChisqrOV.o distributions/DTOV.o \
+  distributions/DNormOV.o distributions/DUnifOV.o distributions/RScalarDist.o
+OBJECTS.root = RJump.o
+
+OBJECTS = $(OBJECTS.samplers) $(OBJECTS.distributions) $(OBJECTS.root)
+@end example
+
+Where the subdirectory is self-contained code with a suitable makefile,
+the best approach is something like
+
+@example
+PKG_LIBS = -LCsdp/lib -lsdp $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+
+$(SHLIB): Csdp/lib/libsdp.a
+
+Csdp/lib/libsdp.a
+        @@(cd Csdp/lib && $(MAKE) libsdp.a \
+          CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
+@end example
+
+@noindent
+Note the quotes: the macros can contain spaces, e.g.@: @code{gcc -m64
+-std=gnu99}.  Several authors have forgotten about parallel makes: the
+static library in the subdirectory must be made before the shared
+library and so must depend on the latter.  Others forget the need for
+position-independent code.
+
+We really do not recommend using a @file{src/Makefile} instead on
+@file{src/Makevars}, and as the example above shows, it is not necessary.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
