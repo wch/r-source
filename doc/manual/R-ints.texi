@@ -3645,22 +3645,22 @@ is slower than (and in addition to) the previous check, but does detect
 figures with excessive detail (often hidden by over-plotting).  Requires
 that @env{R_GSCMD} is set to a valid program, or @command{gs} (or on Windows,
 @command{gswin32.exe} or @command{gswin64c.exe}) is on the path.
-Default: false
+Default: false.
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
 kept only if there is an error.
-Default: false
+Default: false.
 @item _R_CHECK_CLEAN_VIGN_TEST_
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
 @item _R_CHECK_REPLACING_IMPORTS_
 Should warnings about replacing imports be reported?  These mainly come
 from auto-generated @file{NAMESPACE} files in other packages.
-Default: false
+Default: false.
 @item _R_CHECK_UNSAFE_CALLS_
 Check for calls that appear to tamper with already loaded code not from
 the current package: such calls may well contravene CRAN policies.
-Default: false
+Default: false.
 @item _R_CHECK_TIMINGS_
 Optionally report timings for installation, examples, tests and
 running/re-building vignettes as part of the check log.  The format is
@@ -3672,7 +3672,7 @@ Times with an elapsed component over 10 mins are reported in minutes
 in elapsed seconds that should be reported: non-numerical values
 indicate that no report is required, a value of @samp{0} that a report
 is always required.
-Default: @code{""}
+Default: @code{""}.
 
 @item _R_CHECK_INSTALL_DEPENDS_
 If set to a true value and not on Windows and a test installation is to
@@ -3693,7 +3693,22 @@ with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
 links@footnote{under Windows, junction points.} to the installed copies
 of all the Depends/Imports/LinkingTo and (for the second only) Suggests
-packages which are not in @code{.Library}.  Default: false
+packages which are not in @code{.Library}.
+Default: false.
+
+@item _R_CHECK_CODETOOLS_PROFILE_
+A string with comma-separated @code{@var{name}=@var{value}} pairs (with
+@var{value} a logical constant) giving additional arguments for the
+@CRANpkg{codetools} functions used for analyzing package code.  E.g.,
+use @code{_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"} to
+additionally suppress warnings about unused local variables. 
+Default: no additional arguments, corresponding to using @code{skipWith =
+TRUE} and @code{suppressLocalUnused = TRUE}.
+
+@item _R_CHECK_CRAN_INCOMING_
+Check whether package is suitable for publication on CRAN.
+Default: false.
+
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top
