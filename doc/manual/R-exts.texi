@@ -1590,7 +1590,7 @@ are only beneficial if quite substantial tasks are run in parallel.
 There is no direct support for the POSIX threads (more commonly known as
 @code{pthreads}): by the time we considered adding it several packages
 were using it unconditionally so it seems that nowadays it is
-universally available (except on Windows).
+universally available on POSIX operating systems (hence not Windows).
 
 For reasonably recent versions of @command{gcc} the correct
 specification is
@@ -1634,7 +1634,8 @@ itself, the DLLs are not distributed with @R{}, and a package using
 meet the license conditions).
 
 See also the comments on performance under OpenMP: on all known @R{}
-platforms OpenMP is implemented @emph{via} @code{pthreads}.
+platforms OpenMP is implemented @emph{via} @code{pthreads} and the known
+performance issues are in the latter.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
@@ -1777,8 +1778,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @R{} assumes that source files with extension @file{.f} are FORTRAN 77,
 and passes them to the compiler specified by @samp{F77}.  On most but
 not all platforms that compiler will accept Fortran 90/95 code: some
-platforms have a separate Fortran 90/95 compiler and a few (typically
-older) platforms have no Fortran 90/95 support.
+platforms have a separate Fortran 90/95 compiler and a few (by now quite
+rare@footnote{Cygwin used @command{g77} up to 2011, and some pre-built
+versions of @R{} for Unix OSes still do.}) platforms have no Fortran
+90/95 support.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
@@ -1797,6 +1800,14 @@ the source files: the variable @code{PKG_FCFLAGS} specifies any special
 flags to be used.  There is no guarantee that compiled Fortran 90/95
 code can be mixed with any other type of compiled code, nor that a build
 of @R{} will have support for such packages.
+
+Some (but not) all compilers specified by the @samp{FC} macro will
+accept Fortan 2003 or 2008 code.  For platform using @command{gfortran},
+you may need to include @option{-std=f2003} or @option{-std=f2008} in
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
+non-standard extensions.  The Solaris @command{f95} compiler `accepts
+some Fortran 2003 features'.  Such code should still use file extension
+@file{.f90} or @file{.f95}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -1925,7 +1936,7 @@ Package startup functions are checked for correct argument lists and
 (incorrect) calls to functions which modify the search path or
 inappropriately generate messages.  The @R{} code is checked for
 possible problems using @pkg{codetools}.  In addition, it is checked
-whether methods have all arguments of the corresponding generic, and
+whether S3 methods have all arguments of the corresponding generic, and
 whether the final argument of replacement functions is called
 @samp{value}.  All foreign function calls (@code{.C}, @code{.Fortran},
 @code{.Call} and @code{.External} calls) are tested to see if they have
@@ -1938,8 +1949,8 @@ argument)
 
 @item
 The @file{Rd} files are checked for correct syntax and metadata,
-including the presence of the mandatory (@code{\name}, @code{\alias},
-@code{\title} and @code{\description}) fields.  The @file{Rd} name and
+including the presence of the mandatory fields (@code{\name}, @code{\alias},
+@code{\title} and @code{\description}).  The @file{Rd} name and
 title are checked for being non-empty, and there is a check for missing
 cross-references (links).
 
@@ -1957,13 +1968,31 @@ sections of @file{Rd} files are documented in the corresponding
 @code{\arguments} section.
 
 @item
+The @file{data} directory is checked for non-ASCII characters and for
+the use of reasonable levels of compression.
+
+@item
 C, C++ and FORTRAN source and header files are tested for portable
 (LF-only) line endings.  If there is a @file{Makefile} or
 @file{Makefile.in} or @file{Makevars} or @file{Makevars.in} file under
 the @file{src} directory, it is checked for portable line endings and
-the correct use of @samp{$(BLAS_LIBS)}.  Compiled code is checked for
-symbols corresponding to functions which might terminate @R{} or write
-to @file{stdout}/@file{stderr} instead of the console.
+the correct use of @samp{$(BLAS_LIBS)} and @samp{$(LAPACK_LIBS)}
+
+Compiled code is checked for symbols corresponding to functions which
+might terminate @R{} or write to @file{stdout}/@file{stderr} instead of
+the console.  Note that the latter might give false positives in that
+the symbols might be pulled in with external libraries and could never
+be called.  Windows@footnote{on most other platforms such runtime
+libraries are dynamic, but static libraries are currently used on
+Windows because the toolchain is not a standard part of the OS.} users
+should note that the Fortran and C++ runtime libraries are examples of
+such external libraries.
+
+@item
+Some checks are made of the contents of the @file{inst/doc} directory.
+These always include checking for files that look like leftovers, and if
+suitable tools (such as @command{qpdf}) are available, checking that the
+PDF documentation is of minimal size.
 
 @item
 The examples provided by the package's documentation are run.
@@ -2496,9 +2525,12 @@ of them (such as the misuse of variable-length arrays).  If possible,
 check C++ code on a standards-conformant compiler.
 
 Although there is now a 2011 version of the C++ standard, it is not yet
-implemented (nor is it likely to be widely available for many years) and
+implemented (nor is it likely to be widely available for some years) and
 portable C++ code needs to follow the 1998 standard (and not use
 features from C99).
+
+Similarly, the 2011 C standard is unlikely to be widely implemented for
+several years.
 
 @item
 Study the output from running your examples, in file
@@ -2507,7 +2539,7 @@ indicate actual errors, and warnings about your mistakes (which the @R{}
 developers are warning you that they are working around for you) will
 just annoy or confuse your users.
 
-If your package has tests, study their output too.
+If your package has tests or vignettes, study their output too.
 
 @item
 Look for any problems with help file conversions.  For example, you
@@ -2536,11 +2568,13 @@ double the actual size.  This can be disabled by setting
 more than 5Mb, detailing directories of more than 1Mb.  It notes
 inefficient compression of data: @command{R CMD build --resave-data}
 will compact data as best it can.  Watch out for unnecessary files in
-@file{inst/doc}.  As a general rule, @file{doc} directories should not
-exceed 5Mb, and where @file{data} directories need to be more than
-5--10Mb, consideration should be given to a separate package containing
-just the data.  (Similarly for external data directories, large
-@file{jar} files and other libraries that need to be installed.)
+@file{inst/doc}.  
+
+The CRAN policy is that @file{doc} directories should not exceed 5Mb,
+and where @file{data} directories need to be more than 5--10Mb,
+consideration should be given to a separate package containing just the
+data.  (Similarly for external data directories, large @file{jar} files
+and other libraries that need to be installed.)
 
 See below for ways to reduce the size of PDF files such as vignettes.
 
@@ -2561,7 +2595,12 @@ warnings that you understand and have reasons not to eliminate.  In
 principle, packages must pass @code{R CMD check} without warnings to be
 admitted to the main @acronym{CRAN} package area.  If there are warnings
 you cannot eliminate (for example because you believe them to be
-spurious) send an explanatory note with your submission.
+spurious) send an explanatory note as part of your covering email.
+
+Also read the CRAN policies linked from
+@uref{http://cran.r-project.org/web/packages/} and note that by
+submitting a package you are confirming that your package complies with
+them
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
@@ -2582,11 +2621,11 @@ the long obsolete TeXLive 2009.} distribution
 Solaris check systems use current TexLive; the Windows @acronym{CRAN}
 builder uses a reasonably recent version of MikTeX (including all
 packages available directly for MikTeX); the Mac OS X builders use a
-current full version of MacTeX.  Developers wanting to have their
-vignettes use @TeX{} packages or style files not (yet) included in these
-distributions should add the corresponding style files to the
-@file{vignettes} (or for the legacy layout, @file{inst/doc})
-subdirectory of their package.
+current full version of MacTeX, which includes all of the current
+TeXLive.  Developers wanting to have their vignettes use @TeX{} packages
+or style files not (yet) included in these distributions should add the
+corresponding style files to the @file{vignettes} (or for the legacy
+layout, @file{inst/doc}) subdirectory of their package.
 
 @menu
 * PDF size::                    
@@ -2612,7 +2651,7 @@ and suitable options might be
 
 @example
 -dPDFSETTINGS=/ebook
--dPDFSETTINGS=/printer
+-dPDFSETTINGS=/screen
 @end example
 
 @noindent
@@ -2780,7 +2819,9 @@ list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
 this pattern applies to S4 classes, but did not in earlier versions of
 @R{}.)  Beware of patterns which include names starting with a period:
 some of these are internal-only variables and should never be exported,
-e.g.@: @code{.__S3MethodsTable__.}.
+e.g.@: @samp{.__S3MethodsTable__.} .  (Such objects are excluded from
+pattern matches in recent versions of @R{}, so such patterns are safer
+for packages only to be used with @R{} 2.14.0 or later.)
 
 Packages implicitly import the base namespace.
 Variables exported from other packages with namespaces need to be
