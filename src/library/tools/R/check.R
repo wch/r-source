@@ -518,19 +518,20 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## name of a standard directory, while differing in name.
             ## </FIXME>
 
-            if (dir.exists("r")) {
+            ## Watch out for case-insensitive file systems
+            if ("./r" %in% list.dirs(recursive = FALSE)) {
                 if (!any) warnLog()
                 any <- TRUE
                 printLog(Log, "Found subdirectory 'r'.\n",
                          "Most likely, this should be 'R'.\n")
             }
-            if (dir.exists("MAN")) {
+            if ("./MAN" %in% list.dirs(recursive = FALSE)) {
                 if (!any) warnLog()
                 any <- TRUE
                 printLog(Log, "Found subdirectory 'MAN'.\n",
                          "Most likely, this should be 'man'.\n")
             }
-            if (dir.exists("DATA")) {
+            if ("./DATA" %in% list.dirs(recursive = FALSE)) {
                 if (!any) warnLog()
                 any <- TRUE
                 printLog(Log, "Found subdirectory 'DATA'.\n",
@@ -2101,14 +2102,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         ## Option '--no-install' turns off installation and the tests
         ## which require the package to be installed.  When testing
-        ## recommended packages bundled with R we can skip installation,
-        ## and do so if '--install=skip' was given.  If command line
-        ## option '--install' is of the form 'check:FILE', it is assumed
-        ## that installation was already performed with stdout/stderr to
-        ## FILE, the contents of which need to be checked (without
-        ## repeating the installation).
-        ## In this case, one also needs to specify *where* the package
-        ## was installed to using command line option '--library'.
+        ## recommended packages bundled with R we can skip
+        ## installation, and do so if '--install=skip' was given.  If
+        ## command line option '--install' is of the form
+        ## 'check:FILE', it is assumed that installation was already
+        ## performed with stdout/stderr redirected to FILE, the
+        ## contents of which need to be checked (without repeating the
+        ## installation).  In this case, one also needs to specify
+        ## *where* the package was installed to using command line
+        ## option '--library'.
 
         if (install == "skip")
             messageLog(Log, "skipping installation test")
@@ -2344,12 +2346,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
             if(nrow(rest)) {
+                o <- sort.list(rest[, 2L])
                 printLog(Log, "  sub-directories of 1Mb or more:\n")
                 size <- sprintf('%4.1fMb', rest[, 1L]/1024)
                 printLog(Log, paste("    ",
-                                    format(rest[, 2L], justify = "left"),
+                                    format(rest[o, 2L], justify = "left"),
                                     "  ",
-                                    format(size, justify = "right"),
+                                    format(size[o], justify = "right"),
                                     "\n", sep=""))
             }
         } else resultLog(Log, "OK")
@@ -2480,6 +2483,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                       "enhances_but_not_installed"))) {
                 errorLog(Log)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
+                if(length(res$suggested_but_not_installed))
+                   wrapLog("The suggested packages are required for",
+                           "a complete check.\n",
+                           "Checking can be attempted without them",
+                           "by setting the environment variable",
+                           "_R_CHECK_FORCE_SUGGESTS_",
+                           "to a false value.\n\n")
                 wrapLog(msg_DESCRIPTION)
                 do_exit(1L)
             } else {
