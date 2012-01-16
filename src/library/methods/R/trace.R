@@ -685,7 +685,7 @@ insertSource <- function(source, package = "",
     MPattern <- .TableMetaPattern()
     CPattern <- .ClassMetaPattern()
     allPlainObjects <- function()
-        allObjects[!(grepl(MPattern, allObjects) | grepl(CPattern, allObjects))]
+        allObjects[!(grepl(MPattern, allObjects) | grepl(CPattern, allObjects) | ".cacheOnAssign" == allObjects)]
     allMethodTables <- function()
         allObjects[grepl(MPattern, allObjects)]
     allClassDefs <- function()
