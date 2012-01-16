@@ -39,7 +39,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## workaround Windows problem with input = cmd
         if (!is.null(cmd)) {
             ## In principle this should escape \
-            Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
+           Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
         suppressWarnings(system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
                                  else file.path(R.home("bin"), "Rterm.exe"),
@@ -1355,7 +1355,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
         files <- dir(doc_dir)
         files <- files[! files %in% already]
-        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out)$", files, ignore.case = TRUE) # There are .JPG files
+        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out|Rd|Rout|dbj|img)$", files, ignore.case = TRUE)
+        ## There are .JPG files, soiltexture has a .Rd file.
         bad <- bad | grepl("(Makefile|~$)", files)
         ## How about any pdf files which look like figures files from vignettes?
         vigns <- pkgVignettes(dir = pkgdir)
@@ -1366,15 +1367,28 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             bad <- bad | grepl(pat, files)
         }
         bad <- bad | grepl("^fig.*[.]pdf$", files)
-        if (any(bad)) {
+        badf <- files[bad]
+        dirs <- basename(list.dirs(file.path(pkgdir, "inst", "doc"),
+                                   recursive = FALSE))
+        badd <- dirs[dirs %in% c("auto", "Bilder", "fig", "figs", "figures",
+                                 "Figures", "img", "images", "JSSstyle",
+                                 "jssStyle", "screenshots2", "src", "tex", "tmp")]
+        if (length(c(badf, badd))) {
             if(!any) noteLog(Log)
             any <- TRUE
-            printLog(Log,
-                     "The following files should probably not be installed:\n",
-                     paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
-                                   indent = 2, exdent = 2), collapse = "\n"),
-                     "\n\n",
-                     "Consider the use of a .Rinstignore file: see ",
+            if(length(badf))
+                printLog(Log,
+                         "The following files should probably not be installed:\n",
+                         paste(strwrap(paste(sQuote(badf), collapse = ", "),
+                                       indent = 2, exdent = 2), collapse = "\n"),
+                         "\n")
+            if(length(badd))
+                printLog(Log,
+                         "The following directories should probably not be installed:\n",
+                         paste(strwrap(paste(sQuote(badd), collapse = ", "),
+                                       indent = 2, exdent = 2), collapse = "\n"),
+                         "\n")
+            printLog(Log, "\nConsider the use of a .Rinstignore file: see ",
                      sQuote("Writing R Extensions"),
                      ".\n")
         }
