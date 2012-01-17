@@ -293,54 +293,40 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
             dir.exists <- function(x)
                 !is.na(isdir <- file.info(x)$isdir) & isdir
-            if (package != "datasets" &&
-                dir.exists(file.path(pkgpath, "R"))) {
-                ## Check is package specified keep.source: only
-                ## relevant if not lazy-loaded (and hence installed < R 2.14.0)
-                if (!is.na(value <- pkgInfo$DESCRIPTION["KeepSource"]))
-                    keep.source <-
-                        switch(value,
-                               "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                               "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                               keep.source)
 
-                ## If the namespace mechanism is available and the package
-                ## has a namespace, then the namespace loading mechanism
-                ## takes over.
-                if (packageHasNamespace(package, which.lib.loc)) {
-                    tt <- try({
-                        ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-                        dataPath <- file.path(which.lib.loc, package, "data")
-                        env <- attachNamespace(ns, pos = pos,
-                                               dataPath = dataPath, deps)
-                    })
-                    if (inherits(tt, "try-error"))
-                        if (logical.return)
-                            return(FALSE)
-                        else stop(gettextf("package/namespace load failed for %s",
-                                           sQuote(package)),
-                                  call. = FALSE, domain = NA)
-                    else {
-                        on.exit(detach(pos = pos))
-                        ## If there are S4 generics then the package should
-                        ## depend on methods
-                        nogenerics <-
-                            !.isMethodsDispatchOn() || checkNoGenerics(env, package)
-                        if(warn.conflicts &&
-                           !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                            checkConflicts(package, pkgname, pkgpath,
-                                           nogenerics, ns)
-                        on.exit()
-                        if (logical.return)
-                            return(TRUE)
-                        else
-                            return(invisible(.packages()))
-                    }
-                } else
-                    stop(gettextf("package %s does not have a NAMESPACE and should be re-installed",
-                                  sQuote(package)), domain = NA)
-
-            }  else { # no R code
+            ## If the namespace mechanism is available and the package
+            ## has a namespace, then the namespace loading mechanism
+            ## takes over.
+            if (packageHasNamespace(package, which.lib.loc)) {
+                tt <- try({
+                    ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
+                    dataPath <- file.path(which.lib.loc, package, "data")
+                    env <- attachNamespace(ns, pos = pos,
+                                           dataPath = dataPath, deps)
+                })
+                if (inherits(tt, "try-error"))
+                    if (logical.return)
+                        return(FALSE)
+                    else stop(gettextf("package/namespace load failed for %s",
+                                       sQuote(package)),
+                              call. = FALSE, domain = NA)
+                else {
+                    on.exit(detach(pos = pos))
+                    ## If there are S4 generics then the package should
+                    ## depend on methods
+                    nogenerics <-
+                        !.isMethodsDispatchOn() || checkNoGenerics(env, package)
+                    if(warn.conflicts &&
+                       !exists(".conflicts.OK", envir = env, inherits = FALSE))
+                        checkConflicts(package, pkgname, pkgpath,
+                                       nogenerics, ns)
+                    on.exit()
+                    if (logical.return)
+                        return(TRUE)
+                    else
+                        return(invisible(.packages()))
+                }
+            } else if(! dir.exists(file.path(pkgpath, "R"))) {
                 env <- attach(NULL, pos = pos, name = pkgname)
                 attr(env, "path") <- file.path(which.lib.loc, package)
                 assign(".packageName", package, envir = env)
@@ -351,7 +337,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 ## lazy-load a sysdata database if present
                 dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
                 if(file.exists(paste0(dbbase, ".rdb"))) lazyLoad(dbbase, env)
-            }
+            } else
+                stop(gettextf("package %s does not have a NAMESPACE and should be re-installed",
+                              sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",
