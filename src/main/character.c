@@ -1299,9 +1299,12 @@ static int strtoi(SEXP s, int base)
     long res;
     char *endp;
 
+    /* strtol might return extreme values on error */
+    errno = 0;
+
     if(s == NA_STRING) return(NA_INTEGER);
     res = strtol(CHAR(s), &endp, base); /* ASCII */
-    if(*endp != '\0') res = NA_INTEGER;
+    if(errno || *endp != '\0') res = NA_INTEGER;
     if(res > INT_MAX || res < INT_MIN) res = NA_INTEGER;
     return(res);
 }
