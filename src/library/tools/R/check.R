@@ -1389,8 +1389,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                        indent = 2, exdent = 2), collapse = "\n"),
                          "\n")
             printLog(Log, "\nConsider the use of a .Rinstignore file: see ",
-                     sQuote("Writing R Extensions"),
-                     ".\n")
+                     sQuote("Writing R Extensions"), ",\n",
+                     "or move the vignette sources from ",
+                     sQuote("inst/doc"), " to ", sQuote("vignettes"), ".\n")
         }
         if (!any) resultLog(Log, "OK")
     }
