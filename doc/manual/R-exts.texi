@@ -944,13 +944,16 @@ If @file{tests} has a subdirectory @file{Examples} containing a file
 @code{@var{pkg}-Ex.Rout.save}, this is compared to the output file for
 running the examples when the latter are checked.
 
-Subdirectory @file{exec} could contain additional executables the
+Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
 Perl, or Tcl.  This mechanism is currently used only by a very few
 packages, and still experimental.  NB: only files (and not directories)
-under @file{exec} are installed (and those starting with a dot are
-ignored), and they are all marked as executable (mode @code{755},
-moderated by @samp{umask}) on POSIX platforms.
+under @file{exec} are installed (and those with names starting with a
+dot are ignored), and they are all marked as executable (mode
+@code{755}, moderated by @samp{umask}) on POSIX platforms.  Note too
+that this may not be suitable for executable @emph{programs} since some
+platforms (including Mac OS X and Windows) support multiple
+architectures using the same installed package directory.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -2830,10 +2833,11 @@ under just one of the architectures.
 @section Package namespaces
 @cindex namespaces
 
-@R{} has a namespace management system for packages.  This system
-allows the package writer to specify which variables in the package
-should be @emph{exported} to make them available to package users, and
-which variables should be @emph{imported} from other packages.
+@R{} has a namespace management system for code in packages.  This
+system allows the package writer to specify which variables in the
+package should be @emph{exported} to make them available to package
+users, and which variables should be @emph{imported} from other
+packages.
 
 The mechanism for specifying a namespace for a package is to place a
 @file{NAMESPACE} file in the top level package directory.  This file
@@ -2879,7 +2883,8 @@ appearing earlier.
 
 As from @R{} 2.14.0 all packages have a namespace, and a default
 @file{NAMESPACE} file is generated on installation if there is not one
-in the sources.
+in the sources.  However, not all versions of @R{} will read the
+@file{NAMESPACE} file if the package contains not @R{} code.
 
 @menu
 * Specifying imports and exports::  
@@ -3031,7 +3036,8 @@ directive described next.
 
 There can be one or more @code{useDynLib} directives which allows shared
 objects that need to be loaded to be specified in the @file{NAMESPACE}
-file.  The directive
+file.@footnote{NB: this will only be read in all versions of @R{} if the
+package contains @R{} code in a @file{R} directory.}  The directive
 
 @findex useDynLib
 @example
