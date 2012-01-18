@@ -30,8 +30,8 @@ setMethod("ff", "A",
 	      else
 		  callNextMethod()
 	  })
-## stopifnot(identical(ff(aa), "ff maybe method"),
-##           identical(ff(aa2), "default ff"))
+stopifnot(identical(ff(aa), "ff maybe method"),
+          identical(ff(aa2), "default ff"))
 
 removeClass("A")
 removeClass("maybe")

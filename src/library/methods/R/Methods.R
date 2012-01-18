@@ -109,8 +109,10 @@ setGeneric <-
                           name), domain = NA)
         nonstandardCase <- .NonstandardGenericTest(body(def), name, stdGenericBody)
         if(is.na(nonstandardCase)) {
-            if(is.null(useAsDefault)) # take this as the default
+            if(is.null(useAsDefault)) {# take this as the default
                 useAsDefault <- def
+            }
+            body(def, envir = as.environment(where)) <- stdGenericBody
             nonstandardCase <- FALSE
         }
         fdef <- def
