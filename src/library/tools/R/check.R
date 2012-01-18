@@ -1353,10 +1353,23 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      paste(sQuote(bad), collapse = ", "), "\n",
                      "Please remove them from your package.\n")
         }
+
+        ## Now look for TeX leftovers (and soiltexture, Amelia ...).
+        bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj)$",
+                     files, ignore.case = TRUE)
+        if (any(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files look like leftovers/mistakes:\n",
+                     paste(sQuote(files[bad]), collapse = ", "), "\n",
+                     "Please remove them from your package.\n")
+        }
+
         files <- dir(doc_dir)
         files <- files[! files %in% already]
-        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|log|aux|bbl|blg|ps|eps|dvi|toc|out|Rd|Rout|dbj|img)$", files, ignore.case = TRUE)
-        ## There are .JPG files, soiltexture has a .Rd file.
+        bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|ps|eps|img)$",
+                     files, ignore.case = TRUE)
         bad <- bad | grepl("(Makefile|~$)", files)
         ## How about any pdf files which look like figures files from vignettes?
         vigns <- pkgVignettes(dir = pkgdir)
