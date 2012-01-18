@@ -29,7 +29,6 @@ if(isGeneric("colSums")) {
 
 assertError(setGeneric("pubGenf"))# error: no skeleton
 
-assertWarning(setGeneric("pubGenf", function(x,y){}))
 setGeneric("pubGenf", function(x,y) standardGeneric("pubGenf"))
 
 ## a private generic {not often making sense}:

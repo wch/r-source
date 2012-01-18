@@ -105,11 +105,16 @@ setGeneric <-
         body(fdef, envir = as.environment(where)) <- stdGenericBody
     if(!is.null(def)) {
         if(is.primitive(def) || !is.function(def))
-            stop(gettextf("if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") to dispatch methods",
+            stop(gettextf("if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default",
                           name), domain = NA)
+        nonstandardCase <- .NonstandardGenericTest(body(def), name, stdGenericBody)
+        if(is.na(nonstandardCase)) {
+            if(is.null(useAsDefault)) # take this as the default
+                useAsDefault <- def
+            nonstandardCase <- FALSE
+        }
         fdef <- def
-        if(is.null(genericFunction) &&
-           .NonstandardGenericTest(body(fdef), name, stdGenericBody))
+        if(is.null(genericFunction) && nonstandardCase)
             genericFunction <- new("nonstandardGenericFunction") # force this class for fdef
     }
     thisPackage <- getPackageName(where)

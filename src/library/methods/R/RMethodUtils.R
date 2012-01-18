@@ -1201,13 +1201,10 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 {
     if(identical(body, stdBody))
         FALSE
-    else {
-        if(!.recursiveCallTest(body, fname))
-            warning("the supplied generic function definition for ",
-                    sQuote(fname),
-                    " does not seem to call 'standardGeneric'; no methods will be dispatched!")
+    else if(.recursiveCallTest(body, fname))
         TRUE
-    }
+    else
+        NA
 }
 
 .GenericInPrimitiveMethods <- function(mlist, f)

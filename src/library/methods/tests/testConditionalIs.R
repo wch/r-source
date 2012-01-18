@@ -10,8 +10,10 @@ setIs("A", "maybe",
 
 aa <- new("A", x=1)
 
-ff <- function(x)"default ff"
-setGeneric("ff")
+setGeneric("ff", function(x)"default ff")
+## test that the setGeneric() call created the generic & default
+stopifnot(is(ff, "standardGeneric"),
+          identical(body(getMethod("ff","ANY")), "default ff"))
 
 ffMaybe <- function(x) "ff maybe method"
 setMethod("ff", "maybe", ffMaybe)

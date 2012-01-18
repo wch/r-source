@@ -19,6 +19,9 @@ as(xyc, "complex") <- cc * 1i
 stopifnot(identical(xyc, new("xy", x = -y1, y = x1)))
 
 setGeneric("size", function(x)standardGeneric("size"))
+## check that generic for size() was created w/o a default method
+stopifnot(is(size, "standardGeneric"),
+          is.null(selectMethod("size", "ANY",optional=TRUE)))
 
 setMethod("size", "vector", function(x)length(x))
 

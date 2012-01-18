@@ -114,6 +114,10 @@
       \item The \code{traceback()} function can now be called with
       an integer argument, to display a current stack trace. (Wish of 
       \PR{14770}.)
+
+      \item \code{setGeneric()} calls can be simplified when creating
+      a new generic function by supplying the default method as the
+      \code{def} argument.  See \code{?setGeneric}.
     }
   }
 

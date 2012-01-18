@@ -24,19 +24,28 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   \item{name}{ The character string name of the generic function.
     The simplest (and recommended) call, \code{setGeneric(name)},
     looks for a function with this name and creates a corresponding
-    generic function,  if the function found was not generic.
+    generic function,  if the function found was not generic.  In the
+    latter case, the existing function becomes the default method.
   }
   \item{def}{An optional function object, defining the generic.
-    Don't supply this argument if you want an existing non-generic
-    function to supply the arguments. Do supply it if there is no
-    current function of this name, or if you want the generic function
-    to have different arguments. In that case, the formal arguments and
-    default values for the generic are taken from \code{def}.  You can
-    also supply this argument if you want the generic function to do
-    something other than just dispatch methods.
+    Don't supply this argument if you want to turn an existing non-generic
+    function into a generic. In this case, you usually want to use the
+    simple call with one argument.
 
-    Note that \code{def} is \emph{not} the default method; use argument
-    \code{useAsDefault} if you want to specify the default separately.
+    Do supply \code{def} if there is no
+    current function of this name or for some reason you do not want
+    to use that function to define the generic. In that case, the
+    formal arguments and 
+    default values for the generic are taken from \code{def}.  In most
+    cases, the body of \code{def} will then define the default method,
+    as the existing function did in the one-argument call.
+
+    If you want to create a new generic function with \emph{no}
+    default method, then \code{def} should be only a call to
+    \code{\link{standardGeneric}} with the same character string as
+    \code{name}.
+
+    
   }
   \item{group}{ Optionally, a character string giving the name of the group
     generic function to which this function belongs.    See
@@ -79,15 +88,11 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     below for more details.
   }
   \item{useAsDefault}{
-    Override the usual choice of default argument (an existing
-    non-generic function or no default if there is no such function).
+    Override the usual choice of default argument.
     Argument \code{useAsDefault} can be supplied, either as a function
     to use for the default, or as a logical value.
-    \code{FALSE} says not to have a default method at all, so that an
-    error occurs if there is not an explicit or inherited method for a
-    call.
-    \code{TRUE} says to use the existing function as default,
-    unconditionally (hardly ever needed as an explicit argument).  See
+    This argument is now rarely needed.
+    See
     the section on details.
   }
   \item{simpleInheritanceOnly}{
@@ -185,6 +190,12 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   method selected for a call to the function).
 }
 \section{Details}{
+  The great majority of calls to \code{setGeneric()} should either
+  have one argument to ensure that an existing function can have
+  methods, or arguments \code{name} and \code{def} to create a new
+  generic function and optionally a default method.  If that's not
+  what you plan to do, read on.
+
   If you want to change the behavior of an existing function (typically,
   one in another package) when you create a generic version, you must
   supply arguments to \code{setGeneric} correspondingly.  Whatever
@@ -194,7 +205,9 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   required because the version you are creating is no longer the same as
   that implied by the function in the other package.  A message will be
   printed to indicate that this has taken place and noting one of the
-  differences between the two functions.
+  differences between the two functions.  It tends to be a bad idea,
+  because the two versions are now competing for methods, with many
+  chances for mistakes in programming.
 
   The body of a generic function usually does nothing except for
   dispatching methods by a call to \code{standardGeneric}.  Under some
@@ -307,8 +320,7 @@ setClass("track", representation(x="numeric", y="numeric"))
 }
 
 ## create a new generic function, with a default method
-props <- function(object) attributes(object)
-setGeneric("props")
+setGeneric("props", function(object) attributes(object))
 
 ## A new generic function with no default method
 setGeneric("increment",
