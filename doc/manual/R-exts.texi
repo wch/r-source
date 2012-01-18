@@ -7593,13 +7593,13 @@ use by package writers and are subject to change without notice.
 @cindex C++ code, interfacing
 
 Suppose we have the following hypothetical C++ library, consisting of
-the two files @file{X.hh} and @file{X.cc}, and implementing the two
+the two files @file{X.h} and @file{X.cpp}, and implementing the two
 classes @code{X} and @code{Y} which we want to use in @R{}.
 
 @quotation
 @cartouche
 @example
-// X.hh
+// X.h
 
 class X @{
 public: X (); ~X ();
@@ -7615,17 +7615,17 @@ public: Y (); ~Y ();
 @quotation
 @cartouche
 @example
-// X.cc
+// X.cpp
 
-#include <iostream>
-#include "X.hh"
+#include <R.h>
+#include "X.h"
 
 static Y y;
 
-X::X()  @{ std::cout << "constructor X" << std::endl; @}
-X::~X() @{ std::cout << "destructor X"  << std::endl; @}
-Y::Y()  @{ std::cout << "constructor Y" << std::endl; @}
-Y::~Y() @{ std::cout << "destructor Y"  << std::endl; @}
+X::X()  @{ REprintf("constructor X\n"); @}
+X::~X() @{ REprintf("destructor X\n");  @}
+Y::Y()  @{ REprintf("constructor Y\n"); @}
+Y::~Y() @{ REprintf("destructor Y\n");  @}
 @end example
 @end cartouche
 @end quotation
@@ -7646,9 +7646,9 @@ For example,
 @quotation
 @cartouche
 @example
-// X_main.cc:
+// X_main.cpp:
 
-#include "X.hh"
+#include "X.h"
 
 extern "C" @{
 
@@ -7668,7 +7668,7 @@ variable @code{Y}) are not called.  On a properly configured system, one
 can simply use
 
 @example
-R CMD SHLIB X.cc X_main.cc
+R CMD SHLIB X.cpp X_main.cpp
 @end example
 
 @noindent
@@ -7677,8 +7677,8 @@ extension may be different on your platform).  Now starting @R{} yields
 
 @example
 @group
-R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (April 14, 2000)
+R version 2.14.1 Patched (2012-01-16 r58124)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ...
 Type    "q()" to quit R.
 @end group
@@ -7699,10 +7699,11 @@ destructor Y
 The @R{} for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
 to compile this example under various Windows compilers.
 
-Using C++ iostreams, as in this example, is best avoided.  There is no
-guarantee that the output will appear in the @R{} console, and indeed it
-will not on the @R{} for Windows console.  Use @R{} code or the C entry points
-(@pxref{Printing}) for all I/O if at all possible.
+Earlier version of this example used C++ iostreams: this is best
+avoided.  There is no guarantee that the output will appear in the @R{}
+console, and indeed it will not on the @R{} for Windows console.  Use
+@R{} code or the C entry points (@pxref{Printing}) for all I/O if at all
+possible.
 
 Most @R{} header files can be included within C++ programs, and they
 should @strong{not} be included within an @code{extern "C"} block (as
