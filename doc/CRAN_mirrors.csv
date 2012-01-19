@@ -28,7 +28,6 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"dotsrc.org, Aalborg","m
 "France (Lyon 2)",France,Lyon,http://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
-"Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info # rakanu.com>",1,de
 "Germany (Wiesbaden)",Germany,Wiesbaden,http://ftp.yalwa.org/cran/,"Yalwa GmbH, Wiesbaden","webmaster # yalwa.com",1,de
 Greece,Greece,Crete,http://cran.cc.uoc.gr/,"University of Crete","mirrors # Cc.uoc.gr",1,gr
 India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
@@ -42,7 +41,6 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp
-Korea,Korea,Seoul,http://statlab.korea.ac.kr/R/,"Korea University","hanansh # Korea.ac.kr",0,kr
 Korea,Korea,Seoul,http://cran.nexr.com/,"NexR Cortporation, Seoul","mining # nexr.com",1,kr
 "Mexico (Mexico City)",Mexico,"Mexico City",http://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx
 "Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # colpos.mx",1,mx
@@ -62,8 +60,7 @@ Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University 
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb # stat.umu.se>",1,se
 Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.Maechler # R-project.org",1,ch
 "Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung","hcchang # cs.pu.edu.tw",1,tw
-"Taiwan (Taipei 1)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw
-"Taiwan (Taipei 2)",Taiwan,Taipei,http://cran.stat.tku.edu.tw/,"Tamkang University, Taipei","steve # stat.tku.edu.tw",0,tw
+"Taiwan (Taipei)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 "UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>",1,uk
 "UK (London)",UK,London,http://cran.ma.imperial.ac.uk/,"Imperial College London","s.rochford # imperial.ac.uk",1,uk
@@ -76,7 +73,6 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (MD)",USA,Bethesda,http://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",1,us
 "USA (MI)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","admartin # wustl.edu",1,us
-"USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy # metalab.unc.edu>",0,us
 "USA (OH)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us
 "USA (OR)",USA,Corvallis,http://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us
 "USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
