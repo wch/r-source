@@ -99,7 +99,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
     c(paste("R_LIBS", rlibs, sep = "="),
-      if(WINDOWS) " R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''")
+      if(WINDOWS) " R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''",
+      if(WINDOWS) " R_LIBRARY_USER='no_such_dir'" else "R_LIBRARY_USER=''",
+      if(WINDOWS) " R_LIBRARY_SITE='no_such_dir'" else "R_LIBRARY_SITE=''")
 }
 
 ###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
