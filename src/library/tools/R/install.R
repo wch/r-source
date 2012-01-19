@@ -949,6 +949,15 @@
                                 value = TRUE, ignore.case = WINDOWS)
             i_files <- i_files[!i_files %in%
                                c("inst/doc/Rplots.pdf", "inst/doc/Rplots.ps")]
+            i_files <- grep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",
+                            i_files, perl = TRUE, invert = TRUE,
+                            value = TRUE, ignore.case = TRUE)
+            ## Temporary kludge
+            if (!dir.exists("vignettes") && ! pkgname %in% c("RCurl"))
+                i_files <- grep("inst/doc/.*[.](png|jpg|jpeg|gif|ps|eps)$",
+                                i_files, perl = TRUE, invert = TRUE,
+                                value = TRUE, ignore.case = TRUE)
+            i_files <- i_files[! i_files %in% "Makefile"]
             i2_files <- gsub("^inst", instdir, i_files)
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
