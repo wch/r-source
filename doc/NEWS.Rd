@@ -52,6 +52,10 @@
       \item The text of a function body containing more than 4096
       characters was not properly saved by the parser when entered
       at the console.      
+      
+      \item For consistency with the \code{logLik()} method,
+      \code{nobs()} for \code{"nls"} files now excludes observations
+      with zero weight.  (Reported by Berwin Turlach.)
     }
   }
 }

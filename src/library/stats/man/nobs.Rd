@@ -1,6 +1,6 @@
 % File src/library/stats/man/nobs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{nobs}
@@ -33,14 +33,14 @@ nobs(object, ...)
   \code{weights} and \code{residuals} components -- use with care!).
 
   The main usage is in determining the appropriate penalty for BIC, but
-  \code{nobs} is also use by the stepwise fitting methods
+  \code{nobs} is also used by the stepwise fitting methods
   \code{\link{step}}, \code{\link{add1}} and \code{\link{drop1}} as a
   quick check that different fits have been fitted to the same set of
   data (and not, say, that further rows have been dropped because of NAs
   in the new predictors).
   
-  For \code{lm} and \code{glm} fits, observatiosn with zero weight are
-  not included.
+  For \code{lm}, \code{glm} and \code{nls} fits, observations with zero
+  weight are not included.
 }
 \value{
   A single number, normally an integer.  Could be \code{NA}.
