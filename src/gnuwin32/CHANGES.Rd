@@ -13,6 +13,14 @@
     }
   }
   
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item The sources (and packages) can now be compiled using the
+      multilib toolchain recommended for \R 2.15.x: see the
+      \samp{MULTI} macro in \file{MkRules.dist}.
+    }
+  }
+      
   \subsection{BUG FIXES}{
     \itemize{
       \item Using a prompt of more than 80 characters in
