@@ -108,7 +108,8 @@ nobs.logLik <- function(object, ...) {
     res
 }
 
-nobs.nls <- function(object, ...) length(object$m$resid())
+nobs.nls <- function(object, ...)
+    if (is.null(w <- object$weights)) length(object$m$resid()) else sum(w != 0)
 
 ## it is probably too unsafe to use residuals generally, not least
 ## because of e.g. weighted fits.

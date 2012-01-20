@@ -331,6 +331,10 @@
       
       \item Forgetting the \code{#endif} tag in an Rd file could cause 
       the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
+      
+      \item For consistency with the \code{logLik()} method,
+      \code{nobs()} for \code{"nls"} files now excludes observations
+      with zero weight.  (Reported by Berwin Turlach.)
     }
   }
 }
