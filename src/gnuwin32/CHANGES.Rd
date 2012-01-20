@@ -44,7 +44,7 @@
   
   \subsection{BUG FIXES}{
     \itemize{
-      \item The fix for \PR{14543} caused stack problems with outputing
+      \item The fix for \PR{14543} caused stack problems with outputting
       large \R objects (e.g. data frames of 25,000 items).  (\PR{14698})
 
       \item In a double-byte locale (Chinese, Japanese, Korean),

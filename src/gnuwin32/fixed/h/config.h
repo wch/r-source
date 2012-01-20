@@ -119,6 +119,8 @@
 #define HAVE_CHMOD 1
 
 /* Define to 1 if you have the `clock_gettime' function. */
+/* *Some* mingw-w64 versions have this (if winpthreads are included),
+   but it is just a wrapper for what we use directly */
 /* #undef HAVE_CLOCK_GETTIME */
 
 /* Define to 1 if you have the `clog' function. */
@@ -700,11 +702,11 @@
 #define HAVE_TIMES 1
 
 /* Define to 1 if you have the `tsearch' function. */
-#ifndef WIN64
+#if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
 #define HAVE_TSEARCH 1
 #endif
 
-/* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>.. (For
+/* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>. (For
    intl) */
 #define HAVE_UINTMAX_T 1
 
