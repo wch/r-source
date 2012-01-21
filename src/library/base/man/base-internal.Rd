@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -33,11 +33,11 @@
 \alias{.readRDS}
 \alias{.saveRDS}
 \alias{.Firstlib_as_onLoad}
+\alias{.methodsNamespace} % created by the methods package ....
 
-
-\title{Internal Functions in Package \pkg{base}}
+\title{Internal Objects in Package \pkg{base}}
 \description{
-  Internal functions in the base package, which are only user-visible
+  Internal objects in the base package, which are only user-visible
   because of the special nature of the base namespace.
 }
 \usage{
