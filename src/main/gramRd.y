@@ -1,4 +1,3 @@
-
 %{
 /*
  *  R : A Computer Langage for Statistical Data Analysis
@@ -219,6 +218,7 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); } 
+	|	IFDEF IfDefTarget SectionList error { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); }
 	|	SEXPR       goOption RLikeArg2   { $$ = xxmarkup($1, $3, HAS_SEXPR, &@$); xxpopMode($2); }
 	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, HAS_SEXPR, &@$); xxpopMode($2); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
@@ -254,6 +254,7 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|       VERBMACRO2  VerbatimArg1 VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, STATIC, &@$); }
 	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); }
+	|	IFDEF IfDefTarget ArgItems error { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); }
 	|	VERBLATEX   VerbatimArg1 LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	
 UserMacro:	NEWCOMMAND  VerbatimArg1 VerbatimArg { $$ = xxnewcommand($1, $2, $3, &@$); }
