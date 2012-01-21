@@ -4898,6 +4898,10 @@ early in your @env{PATH}: if you use the recommended toolchains you can
 have both in the path (in either order), and need to if you want to
 install 32/64-bit packages.
 
+It is also possible to use the combined 32/64-bit toolchain produced for
+@R{} 2.15.x and contained in @file{Rtools215.exe}: set the macro
+@samp{MULTI} in file @file{MkRules.local} to do so.
+
 @menu
 * 32-bit toolchain::            
 * 64-bit toolchain::            
@@ -4942,30 +4946,20 @@ Several versions of the MinGW-w64 toolchain are available: use one of
 them to replace (or supplement) the 32-bit toolchain's @file{bin}
 directory in your path.  Then copy file @file{src/gnuwin32/MkRules.dist}
 to @file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64}
-and @code{BINPREF64}, @code{M_ARCH}, @code{DT_ARCH}, @code{RC_ARCH} and
-@code{SYMPAT64} appropriate to your toolchain, then make @R{} in the
-usual way.
+(and if needed @code{BINPREF64} and other macros appropriate to your
+toolchain) then make @R{} in the usual way.
 
 The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
 Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages
-unless @option{--no-test-load} is used.}  This is based on files from
-@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip},
-including a pre-release of @command{gcc 4.5.2}.  However, this has been
+unless @option{--no-test-load} is used.}  This was compiled from a
+distribution from
+@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/},
+specifically @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip}: it
+includes a pre-release of @command{gcc 4.5.2}.  However, this has been
 patched to use static Fortran and C++ runtime libraries: a suitable
 toolchain is included in @file{Rtools214.exe}.
-
-@strong{NB:} 64-bit toolchains after late April 2010 at that site
-generate objects with symbols without a leading underscore. Only such
-toolchains are supported.
-
-Other toolchains are available: for example under
-@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
-contains a native x64 Windows toolchain by `sezero' that may be useful
-when building external software.
-
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset
 @section Useful additional programs
