@@ -38,6 +38,14 @@
     }
   }
   
+  \subsection{INSTALLER}{
+    \itemize{
+      \item It is now possible to select \sQuote{Add 64-bit components}
+      from the standard installer (and to select the 64-bit components
+      for a custom install) even on a 32-bit version of Windows.
+    }
+  }
+  
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item The supported toolchain has changed since the one used for
