@@ -347,8 +347,8 @@ tab.  The @samp{Package}, @samp{Version}, @samp{License},
 @samp{Description}, @samp{Title}, @samp{Author}, and @samp{Maintainer}
 fields are mandatory, all other fields are optional.  For @R{} 2.14.0 or
 later, @samp{Author} and @samp{Maintainer} can be auto-generated from
-@samp{Authors@@R}, and should be omitted if the latter is provided (see
-below for details).
+@samp{Authors@@R}, and should be omitted if the latter is provided (and
+the package depends on @code{R (>= 2.14)}: see below for details).
 
 For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
@@ -1564,11 +1564,11 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-are available for use in @file{src/Makevars}.@footnote{They could also
-be used with @file{src/Makevars.win}, but until @R{} 2.15.x the
-compilers used for @R{} on Windows do not support pthreads nor OpenMP.}
-Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
-and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
+are available for use in @file{src/Makevars} or
+@file{src/Makevars.win}.@footnote{But OpenMP support is not available
+with the default toolchain used for @R{} 2.14.x on Windows.}  Include
+the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so
+on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
 SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
 (@pxref{Platform and version information}): however the use of OpenMP is
@@ -1584,10 +1584,15 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the main platforms (but
-note that Mac OS X binaries are built for 10.5 using compilers which
-support version 2.5), but portable packages cannot assume that end users
-have recent versions (there are some years-old versions of Linux in
-use), and it may be safest to assume version 2.5.
+note that Mac OS X binaries are currently built for 10.5 using compilers
+which support version 2.5), but portable packages cannot assume that end
+users have recent versions (there are some years-old versions of Linux
+in use), and it may be safest to assume version 2.5.
+
+OpenMP support is expected to be available on Windows in the toolchain
+used for @R{} 2.15.0 and these macros will be set appropriately.  It is
+not available prior to @R{} 2.14.2, and only then is the toolchain
+designed for @R{} 2.15.0 is used.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
@@ -1637,10 +1642,16 @@ licensed under LGPL which requires source code to be made available.
 The toolchains used to compile @R{} prior to version 2.15.0 do not
 contain @code{pthreads}, although in some cases @code{pthreads-w32}
 could be retro-fitted.  It is expected that the toolchain used for @R{}
-2.15.0 will support @code{pthreads}: however as it is not used by @R{}
-itself, the DLLs are not distributed with @R{}, and a package using
-@code{pthreads} would need to arrange to ship the relevant DLLs (and
-meet the license conditions).
+2.15.0 will support @code{pthreads}, and that toolchain could be used to
+build @R{} 2.14.2 when a @command{make} variable
+@code{SHLIB_PTHREAD_FLAGS} available: this should be included in both
+@code{PKG_CPPFLAGS} (or the Fortran or F9x equivalents) and
+@code{PKG_LIBS}.
+
+The presence of a working @code{pthreads} implementation cannot be
+unambiguously determined without testing for yourself: however, that
+@samp{_REENTRANT} is defined@footnote{some Windows toolchains have the
+typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
 See also the comments on performance under OpenMP: on all known @R{}
 platforms OpenMP is implemented @emph{via} @code{pthreads} and the known
@@ -7544,13 +7555,13 @@ use by package writers and are subject to change without notice.
 @cindex C++ code, interfacing
 
 Suppose we have the following hypothetical C++ library, consisting of
-the two files @file{X.hh} and @file{X.cc}, and implementing the two
+the two files @file{X.h} and @file{X.cpp}, and implementing the two
 classes @code{X} and @code{Y} which we want to use in @R{}.
 
 @quotation
 @cartouche
 @example
-// X.hh
+// X.h
 
 class X @{
 public: X (); ~X ();
@@ -7566,17 +7577,17 @@ public: Y (); ~Y ();
 @quotation
 @cartouche
 @example
-// X.cc
+// X.cpp
 
-#include <iostream>
-#include "X.hh"
+#include <R.h>
+#include "X.h"
 
 static Y y;
 
-X::X()  @{ std::cout << "constructor X" << std::endl; @}
-X::~X() @{ std::cout << "destructor X"  << std::endl; @}
-Y::Y()  @{ std::cout << "constructor Y" << std::endl; @}
-Y::~Y() @{ std::cout << "destructor Y"  << std::endl; @}
+X::X()  @{ REprintf("constructor X\n"); @}
+X::~X() @{ REprintf("destructor X\n");  @}
+Y::Y()  @{ REprintf("constructor Y\n"); @}
+Y::~Y() @{ REprintf("destructor Y\n");  @}
 @end example
 @end cartouche
 @end quotation
@@ -7597,9 +7608,9 @@ For example,
 @quotation
 @cartouche
 @example
-// X_main.cc:
+// X_main.cpp:
 
-#include "X.hh"
+#include "X.h"
 
 extern "C" @{
 
@@ -7619,7 +7630,7 @@ variable @code{Y}) are not called.  On a properly configured system, one
 can simply use
 
 @example
-R CMD SHLIB X.cc X_main.cc
+R CMD SHLIB X.cpp X_main.cpp
 @end example
 
 @noindent
@@ -7628,8 +7639,8 @@ extension may be different on your platform).  Now starting @R{} yields
 
 @example
 @group
-R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (April 14, 2000)
+R version 2.14.1 Patched (2012-01-16 r58124)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ...
 Type    "q()" to quit R.
 @end group
@@ -7650,10 +7661,11 @@ destructor Y
 The @R{} for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
 to compile this example under various Windows compilers.
 
-Using C++ iostreams, as in this example, is best avoided.  There is no
-guarantee that the output will appear in the @R{} console, and indeed it
-will not on the @R{} for Windows console.  Use @R{} code or the C entry points
-(@pxref{Printing}) for all I/O if at all possible.
+Earlier version of this example used C++ iostreams: this is best
+avoided.  There is no guarantee that the output will appear in the @R{}
+console, and indeed it will not on the @R{} for Windows console.  Use
+@R{} code or the C entry points (@pxref{Printing}) for all I/O if at all
+possible.
 
 Most @R{} header files can be included within C++ programs, and they
 should @strong{not} be included within an @code{extern "C"} block (as
