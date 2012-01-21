@@ -348,7 +348,7 @@ tab.  The @samp{Package}, @samp{Version}, @samp{License},
 fields are mandatory, all other fields are optional.  For @R{} 2.14.0 or
 later, @samp{Author} and @samp{Maintainer} can be auto-generated from
 @samp{Authors@@R}, and should be omitted if the latter is provided (and
-the packages depends on @code{R (>= 2.14)}: see below for details).
+the package depends on @code{R (>= 2.14)}: see below for details).
 
 For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
