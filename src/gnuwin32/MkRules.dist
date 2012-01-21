@@ -32,13 +32,12 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 MULTI =
 TOOL_PATH =
 
-### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
-# including a trailing / .
-# prefix for 32-bit: path or i686-w64-mingw32-
+# including a trailing / (and use / not \).
+# prefix for 32-bit: path or i686-w64-mingw32- or none.
 BINPREF =
-# prefix for 64-bit: path or x86_64-w64-mingw32-
+# prefix for 64-bit: path or x86_64-w64-mingw32- or none.
 BINPREF64 = x86_64-w64-mingw32-
 
 # Others use a -m64 or -m32 option to select architectures
@@ -57,8 +56,6 @@ WIN = 32
 # but this macro forces the use of import libs
 # Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
-
-### END more detailed options
 
 
 # set to use ICU (experimental)
@@ -87,6 +84,12 @@ MIKTEX = TRUE
 
 # additional optimization flags
 EOPTS=-mtune=core2
+
+# define to -fopenmp if the toolchain has OpenMP support
+OPENMP =
+
+# define to -pthreads if the toolchain has pthreads support
+PTHREAD =
 
 ## ====== configuration macros for building installer ===========
 
