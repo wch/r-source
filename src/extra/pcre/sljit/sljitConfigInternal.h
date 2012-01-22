@@ -119,20 +119,33 @@
 
 #if !(defined SLJIT_STD_MACROS_DEFINED && SLJIT_STD_MACROS_DEFINED)
 
+/* These libraries are needed for the macros below. */
 #include <stdlib.h>
 #include <string.h>
 
-/* General libraries:
+#endif /* STD_MACROS_DEFINED */
+
+/* General macros:
    Note: SLJIT is designed to be independent from them as possible.
 
-   In release mode (SLJIT_DEBUG is not defined) only the following macros are needed: */
+   In release mode (SLJIT_DEBUG is not defined) only the following macros are needed:
+*/
 
-/* General allocation. */
+#ifndef SLJIT_MALLOC
 #define SLJIT_MALLOC(size) malloc(size)
-#define SLJIT_FREE(ptr) free(ptr)
-#define SLJIT_MEMMOVE(dest, src, len) memmove(dest, src, len)
+#endif
 
-#endif /* STD_MACROS_DEFINED */
+#ifndef SLJIT_FREE
+#define SLJIT_FREE(ptr) free(ptr)
+#endif
+
+#ifndef SLJIT_MEMMOVE
+#define SLJIT_MEMMOVE(dest, src, len) memmove(dest, src, len)
+#endif
+
+#ifndef SLJIT_ZEROMEM
+#define SLJIT_ZEROMEM(dest, len) memset(dest, 0, len)
+#endif
 
 #if !defined(SLJIT_LIKELY) && !defined(SLJIT_UNLIKELY)
 
@@ -161,15 +174,39 @@
 #define SLJIT_UNUSED_ARG(arg) (void)arg
 #endif
 
+#if (defined SLJIT_CONFIG_STATIC && SLJIT_CONFIG_STATIC)
+/* Static ABI functions. For all-in-one programs. */
+
+#if defined(__GNUC__)
+/* Disable unused warnings in gcc. */
+#define SLJIT_API_FUNC_ATTRIBUTE static __attribute__((unused))
+#else
+#define SLJIT_API_FUNC_ATTRIBUTE static
+#endif
+
+#else
+#define SLJIT_API_FUNC_ATTRIBUTE
+#endif /* (defined SLJIT_CONFIG_STATIC && SLJIT_CONFIG_STATIC) */
+
 #ifndef SLJIT_CACHE_FLUSH
 
-#if !(defined SLJIT_CONFIG_X86_32 && SLJIT_CONFIG_X86_32) && !(defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64)
-	/* Just call __ARM_NR_cacheflush on Linux. */
+#if (defined SLJIT_CONFIG_PPC_32 && SLJIT_CONFIG_PPC_32) || (defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64)
+
+/* The __clear_cache() implementation of GCC is a dummy function on PowerPC. */
+#define SLJIT_CACHE_FLUSH(from, to) \
+	ppc_cache_flush((from), (to))
+
+#elif (defined SLJIT_CONFIG_X86_32 && SLJIT_CONFIG_X86_32) || (defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64)
+
+/* Not required to implement on archs with unified caches. */
+#define SLJIT_CACHE_FLUSH(from, to)
+
+#else
+
+/* Calls __ARM_NR_cacheflush on ARM-Linux. */
 #define SLJIT_CACHE_FLUSH(from, to) \
 	__clear_cache((char*)(from), (char*)(to))
-#else
-	/* Not required to implement on archs with unified caches. */
-#define SLJIT_CACHE_FLUSH(from, to)
+
 #endif
 
 #endif /* !SLJIT_CACHE_FLUSH */
@@ -317,8 +354,8 @@ typedef long int sljit_w;
 #endif /* !SLJIT_UNALIGNED */
 
 #if (defined SLJIT_EXECUTABLE_ALLOCATOR && SLJIT_EXECUTABLE_ALLOCATOR)
-void* sljit_malloc_exec(sljit_uw size);
-void sljit_free_exec(void* ptr);
+SLJIT_API_FUNC_ATTRIBUTE void* sljit_malloc_exec(sljit_uw size);
+SLJIT_API_FUNC_ATTRIBUTE void sljit_free_exec(void* ptr);
 #define SLJIT_MALLOC_EXEC(size) sljit_malloc_exec(size)
 #define SLJIT_FREE_EXEC(ptr) sljit_free_exec(ptr)
 #endif
@@ -332,11 +369,14 @@ void sljit_free_exec(void* ptr);
 /* Feel free to redefine these two macros. */
 #ifndef SLJIT_ASSERT
 
+#define SLJIT_HALT_PROCESS() \
+	*((int*)0) = 0
+
 #define SLJIT_ASSERT(x) \
 	do { \
 		if (SLJIT_UNLIKELY(!(x))) { \
 			printf("Assertion failed at " __FILE__ ":%d\n", __LINE__); \
-			*((int*)0) = 0; \
+			SLJIT_HALT_PROCESS(); \
 		} \
 	} while (0)
 
@@ -347,7 +387,7 @@ void sljit_free_exec(void* ptr);
 #define SLJIT_ASSERT_STOP() \
 	do { \
 		printf("Should never been reached " __FILE__ ":%d\n", __LINE__); \
-		*((int*)0) = 0; \
+		SLJIT_HALT_PROCESS(); \
 	} while (0)
 
 #endif /* !SLJIT_ASSERT_STOP */
@@ -363,5 +403,13 @@ void sljit_free_exec(void* ptr);
 	do { } while (0)
 
 #endif /* (defined SLJIT_DEBUG && SLJIT_DEBUG) */
+
+#ifndef SLJIT_COMPILE_ASSERT
+
+/* Should be improved eventually. */
+#define SLJIT_COMPILE_ASSERT(x, description) \
+	SLJIT_ASSERT(x)
+
+#endif /* !SLJIT_COMPILE_ASSERT */
 
 #endif

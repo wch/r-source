@@ -63,7 +63,7 @@ static sljit_ub* generate_far_jump_code(struct sljit_jump *jump, sljit_ub *code_
 	return code_ptr;
 }
 
-int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
 {
 	int size;
 	sljit_ub *buf;
@@ -156,7 +156,7 @@ int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries,
 	return SLJIT_SUCCESS;
 }
 
-void sljit_fake_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE void sljit_fake_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
 {
 	CHECK_ERROR_VOID();
 	check_sljit_fake_enter(compiler, args, temporaries, generals, local_size);
@@ -173,7 +173,7 @@ void sljit_fake_enter(struct sljit_compiler *compiler, int args, int temporaries
 		compiler->local_size += (generals - 3) * sizeof(sljit_uw);
 }
 
-int sljit_emit_return(struct sljit_compiler *compiler, int src, sljit_w srcw)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int src, sljit_w srcw)
 {
 	int size;
 	sljit_ub *buf;
@@ -435,7 +435,7 @@ static SLJIT_INLINE int call_with_args(struct sljit_compiler *compiler, int type
 	return SLJIT_SUCCESS;
 }
 
-int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int generals, int local_size)
 {
 	sljit_ub *buf;
 
@@ -479,7 +479,7 @@ int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw
 	return SLJIT_SUCCESS;
 }
 
-int sljit_emit_fast_return(struct sljit_compiler *compiler, int src, sljit_w srcw)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_return(struct sljit_compiler *compiler, int src, sljit_w srcw)
 {
 	sljit_ub *buf;
 

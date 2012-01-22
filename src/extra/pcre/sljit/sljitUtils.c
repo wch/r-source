@@ -58,7 +58,7 @@ static SLJIT_INLINE void allocator_release_lock(void)
 
 static HANDLE global_mutex = 0;
 
-void SLJIT_CALL sljit_grab_lock(void)
+SLJIT_API_FUNC_ATTRIBUTE void SLJIT_CALL sljit_grab_lock(void)
 {
 	/* No idea what to do if an error occures. Static mutexes should never fail... */
 	if (!global_mutex)
@@ -67,7 +67,7 @@ void SLJIT_CALL sljit_grab_lock(void)
 		WaitForSingleObject(global_mutex, INFINITE);
 }
 
-void SLJIT_CALL sljit_release_lock(void)
+SLJIT_API_FUNC_ATTRIBUTE void SLJIT_CALL sljit_release_lock(void)
 {
 	ReleaseMutex(global_mutex);
 }
@@ -98,12 +98,12 @@ static SLJIT_INLINE void allocator_release_lock(void)
 
 static pthread_mutex_t global_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void SLJIT_CALL sljit_grab_lock(void)
+SLJIT_API_FUNC_ATTRIBUTE void SLJIT_CALL sljit_grab_lock(void)
 {
 	pthread_mutex_lock(&global_mutex);
 }
 
-void SLJIT_CALL sljit_release_lock(void)
+SLJIT_API_FUNC_ATTRIBUTE void SLJIT_CALL sljit_release_lock(void)
 {
 	pthread_mutex_unlock(&global_mutex);
 }
@@ -128,7 +128,7 @@ void SLJIT_CALL sljit_release_lock(void)
 /* Planning to make it even more clever in the future. */
 static sljit_w sljit_page_align = 0;
 
-struct sljit_stack* SLJIT_CALL sljit_allocate_stack(sljit_w limit, sljit_w max_limit)
+SLJIT_API_FUNC_ATTRIBUTE struct sljit_stack* SLJIT_CALL sljit_allocate_stack(sljit_uw limit, sljit_uw max_limit)
 {
 	struct sljit_stack *stack;
 	union {
@@ -139,7 +139,7 @@ struct sljit_stack* SLJIT_CALL sljit_allocate_stack(sljit_w limit, sljit_w max_l
 	SYSTEM_INFO si;
 #endif
 
-	if (limit > max_limit)
+	if (limit > max_limit || limit < 1)
 		return NULL;
 
 #ifdef _WIN32
@@ -193,7 +193,7 @@ struct sljit_stack* SLJIT_CALL sljit_allocate_stack(sljit_w limit, sljit_w max_l
 
 #undef PAGE_ALIGN
 
-void SLJIT_CALL sljit_free_stack(struct sljit_stack* stack)
+SLJIT_API_FUNC_ATTRIBUTE void SLJIT_CALL sljit_free_stack(struct sljit_stack* stack)
 {
 #ifdef _WIN32
 	VirtualFree((void*)stack->base, 0, MEM_RELEASE);
@@ -203,7 +203,7 @@ void SLJIT_CALL sljit_free_stack(struct sljit_stack* stack)
 	SLJIT_FREE(stack);
 }
 
-sljit_w SLJIT_CALL sljit_stack_resize(struct sljit_stack* stack, sljit_uw new_limit)
+SLJIT_API_FUNC_ATTRIBUTE sljit_w SLJIT_CALL sljit_stack_resize(struct sljit_stack* stack, sljit_uw new_limit)
 {
 	sljit_uw aligned_old_limit;
 	sljit_uw aligned_new_limit;

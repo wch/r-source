@@ -286,7 +286,9 @@ for (;;)
     cc++;
     break;
 
-    /* The single-byte matcher means we can't proceed in UTF-8 mode */
+    /* The single-byte matcher means we can't proceed in UTF-8 mode. (In
+    non-UTF-8 mode \C will actually be turned into OP_ALLANY, so won't ever
+    appear, but leave the code, just in case.) */
 
     case OP_ANYBYTE:
 #ifdef SUPPORT_UTF8
@@ -1320,11 +1322,16 @@ if (bits_set || min > 0
   study->size = sizeof(pcre_study_data);
   study->flags = 0;
 
+  /* Set the start bits always, to avoid unset memory errors if the
+  study data is written to a file, but set the flag only if any of the bits
+  are set, to save time looking when none are. */
+
   if (bits_set)
     {
     study->flags |= PCRE_STUDY_MAPPED;
     memcpy(study->start_bits, start_bits, sizeof(start_bits));
     }
+  else memset(study->start_bits, 0, 32 * sizeof(uschar));
 
   /* Always set the minlength value in the block, because the JIT compiler
   makes use of it. However, don't set the bit unless the length is greater than

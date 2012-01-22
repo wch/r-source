@@ -335,6 +335,8 @@
       \item For consistency with the \code{logLik()} method,
       \code{nobs()} for \code{"nls"} files now excludes observations
       with zero weight.  (Reported by Berwin Turlach.)
+      
+      \item PCRE has been updated to version 8.21, a bug-fix release.
     }
   }
 }
