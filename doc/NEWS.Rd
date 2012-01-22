@@ -41,12 +41,6 @@
       \code{"bibentry"} objects now uses \code{options("width")} to
       set the output width.
 
-      \item PCRE has been upgraded to version 8.21 with bug fixes and
-      greater Perl compatibility.  This adds a JIT pattern compiler,
-      about which PCRE's news says \sQuote{large performance benefits
-      can be had in many situations}.  (It is supported on most but not
-      all platforms that run R.)
-
       \item \code{legend()} gains a \code{text.font} argument. (Suggested
       by Tim Paine, \PR{14719}.)
 
@@ -282,6 +276,15 @@
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
+  \subsection{NEW FAEATURES}{
+    \itemize{
+      \item PCRE has been upgraded to version 8.21: as well as bug fixes
+      and greater Perl compatibility, this adds a JIT pattern compiler,
+      about which PCRE's news says
+      \sQuote{large performance benefits can be had in many situations}.
+    }
+  }
+  
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \command{R CMD INSTALL} will now no longer install certain
