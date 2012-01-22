@@ -87,12 +87,6 @@
       preference to \command{qpdf} just because environment variable
       \env{R_GSCMD} is set.
 
-      \item The internal \code{untar()} (as used by default by
-      \command{R CMD INSTALL}) now knows about some \command{pax}
-      headers which \command{bsdtar} (e.g., the default \command{tar} for
-      Mac OS >= 10.6) can incorrectly include in \command{tar} files,
-      and will skip them with a warning.
-
       \item The \code{"dendrogram"} method of \code{str()} now takes
       its default for \code{last.str} from option \code{str.dendrogram.last}.
       
@@ -269,8 +263,8 @@
       in the namespace.  We now do not do so, and warn in the documentation.
 
       \item The namespace import code was warning when identical
-      generic functions were imported more than once, but should
-      not (reported by Martin Morgan).
+      S4 generic functions were imported more than once, but should
+      not (reported by Brian Ripley, then Martin Morgan).
     }
   }
 }
@@ -278,6 +272,12 @@
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
   \subsection{NEW FAEATURES}{
     \itemize{
+      \item The internal \code{untar()} (as used by default by
+      \command{R CMD INSTALL}) now knows about some \command{pax}
+      headers which \command{bsdtar} (e.g., the default \command{tar} for
+      Mac OS >= 10.6) can incorrectly include in \command{tar} files,
+      and will skip them with a warning.
+      
       \item PCRE has been upgraded to version 8.21: as well as bug fixes
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
