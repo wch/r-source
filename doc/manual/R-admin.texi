@@ -2801,7 +2801,7 @@ If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
 PCRE will be used if specified by @option{--with-system-zlib} (version
 1.2.3 or later), @option{--with-system-bzlib} or
-@option{--with-system-pcre} (version 8.10 or later, preferably 8.13
+@option{--with-system-pcre} (version 8.10 or later, preferably 8.21
 which is what is supplied with @R{}): otherwise versions in the @R{}
 sources will be compiled in.  As the latter suffice and are tested with
 @R{} you should not need to change this.

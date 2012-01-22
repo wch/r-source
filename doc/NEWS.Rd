@@ -1,11 +1,21 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
 \title{ R News}
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
+  \subsection{NEW FAEATURES}{
+    \itemize{
+      \item PCRE has been upgraded to version 8.21: as well as bug fixes
+      and greater Perl compatibility, this adds a JIT pattern compiler,
+      about which PCRE's news says
+      \sQuote{large performance benefits can be had in many situations}.
+    }
+  }
+  
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \command{R CMD INSTALL} will now no longer install certain
@@ -23,7 +33,7 @@
   
   \subsection{BUG FIXES}{
     \itemize{
-      \item R configured with \code{--disable-openmp} would mistakenly
+      \item R configured with \option{--disable-openmp} would mistakenly
       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
       \file{Rconfig.h}) even though no OpenMP flags were populated.
 
@@ -73,7 +83,7 @@
       remains \code{detectCores(logical = TRUE)} on that platform.
 
       \item Reference classes now keep a record of which fields are
-      locked.  \code{$lock()} with no arguments returns the names % $ 
+      locked.  \code{$lock()} with no arguments returns the names % $
       of the locked fields.
 
       \item \code{HoltWinters()} reports a warning rather than an error
@@ -85,22 +95,22 @@
 
       \item \code{parallel::clusterExport()} now allows specification of
       an environment from which to export.
-      
+
       \item The \code{quartz()} device now does tilde expansion on its
       \code{file} argument.
-      
+
       \item \code{tempfile()} on a Unix-alike now takes the process ID
-      into account.  This is needed with \pkg{multicore} (and as part of
+      into account.  This is needed with \CRANpkg{multicore} (and as part of
       \pkg{parallel}) because the parent and all the children share a
       session temporary directory, and they can share the C random
       number stream used to produce the unique part.  Further, two
       children can call \code{tempfile()} simultaneously.
-      
+
       \item Option \code{print} in Sweave's \code{RweaveLatex()} driver
       now emulates auto-printing rather than printing (which can differ
       for an S4 object by calling \code{show()} rather than
       \code{print()}).
-      
+
       \item \code{filled.contour()} now accepts infinite values:
       previously it might have generated invalid graphics files
       (e.g. containing NaN values).
@@ -141,7 +151,7 @@
       expect their examples to be run in a clean directory \dots{}.
      }
    }
-   
+
    \subsection{BUG FIXES}{
     \itemize{
       \item \code{stack()} now gives an error if no vector column is
@@ -185,36 +195,36 @@
       on some platforms this included \code{\\xa0} (non-breaking space)
       which is the trailing byte of a UTF-8 character.  It now only
       considers ASCII space and tab to be \sQuote{blank}.
-      
+
       \item There was a sign error in part of the calculations for the
       variance returned by \code{KalmanSmooth()}.  (\PR{14738})
-      
+
       \item \code{pbinom(10, 1e6, 0.01, log.p = TRUE)} was \code{NaN}
       thanks to the buggy fix to \PR{14320} in \R 2.11.0.  (\PR{14739})
-      
+
       \item \code{RweaveLatex()} now emulates auto-printing rather than
       printing, by calling \code{methods::show()} when auto-printing
       would.
-      
+
       \item \code{duplicated()} ignored \code{fromLast} for a
       one-column data frame.  (\PR{14742})
-      
+
       \item \code{source()} and related functions did not put the correct
       timestamp on the source references; \code{srcfilecopy()} has gained
       a new argument \code{timestamp} to support this fix. (\PR{14750})
-      
+
       \item LaTeX conversion of Rd files did not correctly handle
       preformatted backslashes.  (\PR{14751})
-      
+
       \item HTML conversion of Rd files did not handle markup within
       tabular cells properly.  (\PR{14708})
-      
+
       \item \code{source()} on an empty file with \code{keep.source =
 	TRUE} tried to read from \code{stdin()}, in \R 2.14.0 only.
       (\PR{14753})
-      
+
       \item The code to check Rd files in packages would abort if
-      duplicate description sections were present.      
+      duplicate description sections were present.
     }
   }
 }
@@ -253,17 +263,17 @@
       \item There is a new package \pkg{parallel}.
 
       It incorporates (slightly revised) copies of packages
-      \pkg{multicore} and \pkg{snow} (excluding MPI, PVM and NWS
+      \CRANpkg{multicore} and \CRANpkg{snow} (excluding MPI, PVM and NWS
       clusters).  Code written to use the higher-level API functions in
       those packages should work unchanged (apart from changing any
       references to their namespaces to a reference to \pkg{parallel},
-      and links explicitly to \pkg{multicore} or \pkg{snow} on help
+      and links explicitly to \CRANpkg{multicore} or \CRANpkg{snow} on help
       pages).
 
       It also contains support for multiple RNG streams following
       L'Ecuyer \emph{et al} (2002), with support for both
-      \code{mclapply} and \pkg{snow} clusters.  This replaces functions
-      like \code{clusterSetupRNG()} from \pkg{snow} (which are not in
+      \code{mclapply} and \CRANpkg{snow} clusters.  This replaces functions
+      like \code{clusterSetupRNG()} from \CRANpkg{snow} (which are not in
       \pkg{parallel}).
 
       The version released for \R 2.14.0 contains base functionality:
@@ -434,7 +444,7 @@
       warning as previously).
 
       \item \code{vector(len)} and \code{length(x) <- len} no longer
-      acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
+      accept \code{TRUE}/\code{FALSE} for \code{len} (not that they
       were ever documented to, but there was special-casing in the C
       code).
 
@@ -561,7 +571,7 @@
       of help pages, vignettes and demos.
 
       \item \code{socketConnection()} now has a \code{timeout} argument.
-      It is now documented that large values (package \pkg{snow} used a
+      It is now documented that large values (package \CRANpkg{snow} used a
       year) do not work on some OSes.
 
       \item The initialization of the random-number generator now uses
@@ -696,7 +706,7 @@
       \code{X11(type = "Xlib")}: see the help on \code{X11Fonts()}.
 
       \item There is a new type \code{X11(type = "dbcairo")} which
-      updates the screeen less frequently: see its help page.
+      updates the screen less frequently: see its help page.
 
       \item The \code{X11()} device now makes use of cursors to
       distinguish its states.  The normal cursor is an arrow (rather
@@ -963,7 +973,7 @@
       releases (since this allows the use of fonts only supported for
       PDF), and only \command{R CMD Rd2pdf} will be available.
 
-      \item Options such as \code{--max-nsize} and the function
+      \item Options such as \option{--max-nsize} and the function
       \code{mem.limits()} are now deprecated: these limits are nowadays
       almost never used, and are reported by \code{gc()} when they are
       in use.
@@ -983,7 +993,7 @@
       \file{.so} or \code{.dll} (which is clearly not allowed according
       to the help page) is deprecated.  This also applies to
       \code{library.dynam.unload()} and \code{useDynLib} directives in
-      \code{NAMESPACE} files.
+      \file{NAMESPACE} files.
 
       %% should become defunct not earlier than end of summer 2013!
       \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
@@ -1026,7 +1036,7 @@
       Unix-alike system with cairographics installed but not X11, but a
       user might select \option{--without-x}.)
 
-      \item Configure will try to use \code{-fobjc-exceptions} for the
+      \item Configure will try to use \option{-fobjc-exceptions} for the
       Objective-C compiler (if present) to ensure that even compilers
       that do not enable exceptions by default (such as vanilla gcc) can
       be used.  (Objective-C is currently only used on Mac OS X.)
@@ -1432,7 +1442,7 @@
   \subsection{LICENCE}{
     \itemize{
       \item No parts of \R are now licensed solely under GPL-2.  The
-      licences for packages \pkg{rpart} and \pkg{survival} have been
+      licences for packages \CRANpkg{rpart} and \CRANpkg{survival} have been
       changed, which means that the licence terms for \R as distributed
       are GPL-2 | GPL-3.
     }
@@ -1903,7 +1913,7 @@
       slightly more correct results, fixing \PR{14491}, notably in
       border cases including when \code{digits >= 16}, thanks to
       substantial contributions (code and experiments) from Petr
-      Savicky.  This affects a noticable amount of numeric output from
+      Savicky.  This affects a noticeable amount of numeric output from
       \R.
 
       \item A new function \code{grepRaw()} has been introduced for
@@ -1926,8 +1936,8 @@
       \item There is an additional marked encoding \code{"bytes"} for
       character strings.  This is intended to be used for non-ASCII
       strings which should be treated as a set of bytes, and never
-      re-encoded as if they were in the encoding of the currrent locale:
-      \code{useBytes = TRUE} is autmatically selected in functions such
+      re-encoded as if they were in the encoding of the current locale:
+      \code{useBytes = TRUE} is automatically selected in functions such
       as \code{writeBin()}, \code{writeLines()}, \code{grep()} and
       \code{strsplit()}.
 
@@ -2426,7 +2436,7 @@
       \item Complex arithmetic (notably \code{z^n} for complex \code{z}
       and integer \code{n}) gave incorrect results since \R 2.10.0 on
       platforms without C99 complex support.  This and some
-      lesser issues in trignometric functions have been corrected.
+      lesser issues in trigonometric functions have been corrected.
 
       Such platforms were rare (we know of Cygwin and FreeBSD).
       However, because of new compiler optimizations in the way complex
@@ -2469,7 +2479,7 @@
     \itemize{
       \item The \samp{zlib} sources in the distribution are now built
       with all symbols remapped: this is intended to avoid problems seen
-      with packages such as \pkg{XML} and \pkg{rggobi} which link to
+      with packages such as \CRANpkg{XML} and \CRANpkg{rggobi} which link to
       \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
 
       \item The default for \env{FFLAGS} and \env{FCFLAGS} with
@@ -2487,7 +2497,7 @@
 
       \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
       in the lazyload database using \command{xz} compression: this for
-      example halves the installed size of package \pkg{Imap}.
+      example halves the installed size of package \CRANpkg{Imap}.
 
       \item \command{R CMD INSTALL} now ensures that directories
       installed from \file{inst} have search permission for everyone.
@@ -2613,7 +2623,7 @@
       resetting the methods tables for the members of the group (patch
       contributed by Martin Morgan).
 
-      \item In some circumstances (including for package \pkg{XML}),
+      \item In some circumstances (including for package \CRANpkg{XML}),
       \command{R CMD INSTALL} installed version-control directories from
       source packages.
 
@@ -2854,7 +2864,7 @@
        objects now insert linebreaks in long calls in the same way that
        the \code{print()} methods for \code{"summary.[g]lm"} objects
        have long done.  This does change the layout of the examples for
-       a number of packages, e.g. \pkg{MASS}.  (\PR{14250})
+       a number of packages, e.g. \CRANpkg{MASS}.  (\PR{14250})
 
       \item \code{constrOptim()} can now be used with method
       \code{"SANN"}.  (\PR{14245})
@@ -3275,7 +3285,7 @@
        (Suggestion of Vince Carey.)
 
       \item \command{R CMD build} no longer creates an \file{INDEX} file
-       (\command{R CMD INSTALL} does so), and \code{--force} removes
+       (\command{R CMD INSTALL} does so), and \option{--force} removes
        (rather than overwrites) an existing \file{INDEX} file.
 
        It supports a file \file{~/.R/build.Renviron} analogously to
@@ -3291,7 +3301,7 @@
        rather than Perl.  It has new arguments to select one of the
        tables and to limit the number of entries printed.
 
-      \item \command{R CMD Sweave} now runs \R with \code{--vanilla} so
+      \item \command{R CMD Sweave} now runs \R with \option{--vanilla} so
        the environment setting of \env{R_LIBS} will always be used.
     }
   }
@@ -3772,7 +3782,7 @@
       \item \code{na.action()} did not extract the \code{na.action}
       component as documented.
 
-      \item \code{do.call()}ing \code{NextMethod} in erronous ways no
+      \item \code{do.call()}ing \code{NextMethod} in erroneous ways no
       longer segfaults. (\PR{13487})
     }
   }
@@ -3786,7 +3796,7 @@
        current help system is the only one now supported.
 
       \item A port to 64-bit Windows is now available as well as binary
-       package repositiories: see the \sQuote{R Administration and
+       package repositories: see the \sQuote{R Administration and
        Installation Manual}.
 
       \item Argument matching for primitive functions is now done in the
@@ -4307,7 +4317,7 @@
        general purpose bits of the \code{SEXP}s that make up the formals
        list of \R functions.  This fixes an invalid error message that
        would occur when a garbage collection triggered a second call to
-       matchArgs for the same function \emph{via} a finalizer.
+       \code{matchArgs} for the same function \emph{via} a finalizer.
 
       \item \code{gsub()} in 2.10.x could fail from stack overflow for
        extremely long strings due to temporary data being allocated on
@@ -4669,7 +4679,7 @@
       \PR{13999}.)
 
       For \code{ncp} less than but close to 80, \code{pchisq()} and
-      \code{qchisq()} are more accurate for probablilities very close
+      \code{qchisq()} are more accurate for probabilities very close
       to 1 (a series expansion was truncated slightly too early).
 
       \code{pchisq(x, df, ncp)} can no longer return values just larger
@@ -4915,7 +4925,7 @@
        \code{aspell()} or other spell checkers.
 
       \item \code{xtabs()} with the new argument \code{sparse = TRUE}
-       now returns a sparse Matrix, using package \pkg{Matrix}.
+       now returns a sparse Matrix, using package \CRANpkg{Matrix}.
 
       \item \code{contr.sum()} etc gain an argument \code{sparse}
        which allows sparse matrices to be returned.
@@ -5287,7 +5297,7 @@
        \option{--data-compress=xz}, often giving even better compression
        on large datasets at the expense of much longer installation
        times.  (The latter is used for the recommended packages: it is
-       particularly effective for \pkg{survival}.)
+       particularly effective for \CRANpkg{survival}.)
 
       \item \code{file()} for open = \code{""}, \code{"r"} or
        \code{"rt"} will automagically detect compressed files (from
