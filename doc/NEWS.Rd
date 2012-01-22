@@ -41,7 +41,7 @@
       \code{"bibentry"} objects now uses \code{options("width")} to
       set the output width.
 
-      \item PCRE has been upgraded to version 8.20 with bug fixes and
+      \item PCRE has been upgraded to version 8.21 with bug fixes and
       greater Perl compatibility.  This adds a JIT pattern compiler,
       about which PCRE's news says \sQuote{large performance benefits
       can be had in many situations}.  (It is supported on most but not
@@ -335,8 +335,6 @@
       \item For consistency with the \code{logLik()} method,
       \code{nobs()} for \code{"nls"} files now excludes observations
       with zero weight.  (Reported by Berwin Turlach.)
-      
-      \item PCRE has been updated to version 8.21, a bug-fix release.
     }
   }
 }
