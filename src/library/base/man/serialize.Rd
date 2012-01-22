@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{serialize}
@@ -11,7 +11,8 @@
   A simple low-level interface for serializing to connections.
 }
 \usage{
-serialize(object, connection, ascii, version = NULL, refhook = NULL)
+serialize(object, connection, ascii, xdr = TRUE,
+          version = NULL, refhook = NULL)
 
 unserialize(connection, refhook = NULL)
 }
@@ -24,6 +25,8 @@ unserialize(connection, refhook = NULL)
     written; otherwise binary one.  The default is \code{TRUE} for a
     text-mode connection and \code{FALSE} otherwise.
     See also the comments in the help for \code{\link{save}}.}
+  \item{xdr}{a logical: if a binary representation is used, should a
+    big-endian one (XDR) be used?}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
@@ -59,6 +62,12 @@ unserialize(connection, refhook = NULL)
   line contains a single character: \code{X} for binary serialization
   and \code{A} for ASCII serialization, followed by a new line.  (The
   format used is identical to that used by \code{\link{readRDS}}.)
+
+  The option of \code{xdr = FALSE} was introduced in \R 2.15.0.  As
+  almost all systems in current use are little-endian, this can be used
+  to avoid byte-shuffling at both ends when transferrring data from one
+  little-endian machine to another.  Depending on the system, this can
+  speed up serialization and unserialization by a factor of up to 3x.
 }
 \section{Warning}{
   These functions have provided a stable interface since \R 2.4.0 (when

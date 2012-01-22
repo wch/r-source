@@ -106,6 +106,13 @@
       \item \code{setGeneric()} calls can be simplified when creating
       a new generic function by supplying the default method as the
       \code{def} argument.  See \code{?setGeneric}.
+
+      \item \code{serialize()} has a new option \code{xdr = FALSE} which
+      will use the native byte-order for binary serializations.  In
+      scenarios where only little-endian machines are involved (these
+      days, close to universal) and (un)serialization takes an
+      appreciable amount of time this may speed up noticeably
+      transferring data between systems.
     }
   }
 

@@ -23,6 +23,9 @@
    - set errno on error
    - XP-compatibility for WC_NO_BEST_FIT_CHARS -- use only for ASCII
 
+A reasonably complete list is at
+http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.aspx
+
  */
 
 /* for WC_NO_BEST_FIT_CHARS */

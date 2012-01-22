@@ -48,7 +48,8 @@ readRDS <- function(file, refhook = NULL)
 }
 
 serialize <-
-    function(object, connection, ascii = FALSE, version = NULL, refhook = NULL)
+    function(object, connection, ascii = FALSE, xdr = TRUE,
+             version = NULL, refhook = NULL)
 {
     if (!is.null(connection)) {
         if (!inherits(connection, "connection"))
@@ -56,11 +57,13 @@ serialize <-
         if (missing(ascii)) ascii <- summary(connection)$text == "text"
     }
     if (!ascii && inherits(connection, "sockconn"))
-        .Call("R_serializeb", object, connection, version, refhook,
+        .Call("R_serializeb", object, connection, xdr, version, refhook,
               PACKAGE="base")
-    else
+    else {
+        if (!isTRUE(ascii) && !xdr) ascii <- NA
         .Call("R_serialize", object, connection, ascii, version, refhook,
               PACKAGE="base")
+    }
 }
 
 unserialize <- function(connection, refhook = NULL)

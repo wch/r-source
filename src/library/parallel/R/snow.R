@@ -99,7 +99,7 @@ initDefaultClusterOptions <- function(libname)
                     scriptdir = file.path(libname, "parallel"),
                     rprog = file.path(R.home("bin"), "R"),
                     snowlib = .libPaths()[1],
-                    useRscript = TRUE)
+                    useRscript = TRUE, useXDR = TRUE)
     defaultClusterOptions <<- addClusterOptions(emptyenv(), options)
 }
 
