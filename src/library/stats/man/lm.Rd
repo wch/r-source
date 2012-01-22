@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{lm}
 \alias{lm}
 \alias{print.lm}
@@ -195,7 +197,7 @@ lm(formula, data, subset, weights, na.action,
   \code{\link{LifeCycleSavings}}, \code{\link{longley}},
   \code{\link{stackloss}}, \code{\link{swiss}}.
 
-  \code{biglm} in package \pkg{biglm} for an alternative
+  \code{biglm} in package \CRANpkg{biglm} for an alternative
   way to fit linear models to large datasets (especially those with many
   cases).
 }

@@ -1485,6 +1485,40 @@
  sigrelse
  sigsetmask
  sigsuspend
+ sljit_alloc_memory
+ sljit_allocate_stack
+ sljit_create_compiler
+ sljit_emit_cmp
+ sljit_emit_cond_value
+ sljit_emit_const
+ sljit_emit_enter
+ sljit_emit_fast_enter
+ sljit_emit_fast_return
+ sljit_emit_fop1
+ sljit_emit_fop2
+ sljit_emit_ijump
+ sljit_emit_jump
+ sljit_emit_label
+ sljit_emit_op0
+ sljit_emit_op1
+ sljit_emit_op2
+ sljit_emit_return
+ sljit_fake_enter
+ sljit_free_code
+ sljit_free_compiler
+ sljit_free_exec
+ sljit_free_stack
+ sljit_generate_code
+ sljit_get_platform_name
+ sljit_grab_lock
+ sljit_is_fpu_available
+ sljit_malloc_exec
+ sljit_release_lock
+ sljit_set_const
+ sljit_set_jump_addr
+ sljit_set_label
+ sljit_set_target
+ sljit_stack_resize
  stemleaf
  str_signif
  switch_stdout

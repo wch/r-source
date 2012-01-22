@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{simulate}
 \title{Simulate Responses}
 \description{
@@ -46,8 +48,8 @@ simulate(object, nsim = 1, seed = NULL, \dots)
 
   Package \pkg{stats} has a method for \code{"lm"} objects which is used
   for \code{\link{lm}} and \code{\link{glm}} fits.  There is a method
-  for fits from \code{glm.nb} in package \pkg{MASS}, and hence the case
-  of negative binomial families is not covered by the \code{"lm"}
+  for fits from \code{glm.nb} in package \CRANpkg{MASS}, and hence the
+  case of negative binomial families is not covered by the \code{"lm"}
   method.
 
   The methods for linear models fitted by \code{lm} or \code{glm(family
@@ -65,7 +67,7 @@ simulate(object, nsim = 1, seed = NULL, \dots)
 
   For a gamma GLM the shape parameter is estimated by maximum likelihood
   (using function \code{\link[MASS:gamma.shape.glm]{gamma.shape}} in package
-  \pkg{MASS}).  The interpretation of weights is as multipliers to a
+  \CRANpkg{MASS}).  The interpretation of weights is as multipliers to a
   basic shape parameter, since dispersion is inversely proportional to
   shape.
 
@@ -77,7 +79,7 @@ simulate(object, nsim = 1, seed = NULL, \dots)
   \eqn{\mu_i^3/(\lambda w_i)} and
   hence inversely proportional to the prior weights.  The simulation is
   done by function \code{\link[SuppDists:invGauss]{rinvGauss}} from the
-  \pkg{SuppDists} package, which must be installed.
+  \CRANpkg{SuppDists} package, which must be installed.
 }
 \seealso{
   \code{\link{RNG}} about random number generation in \R,

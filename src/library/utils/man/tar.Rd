@@ -97,23 +97,7 @@ tar(tarfile, files = NULL,
   required, unlike GNU \command{tar} which by default pads with
   \samp{nul} to a multiple of 20 blocks (10KB).  Implementations differ
   on whether the block padding should occur before or after compression
-  (or both).}
-
-\note{
-  Error reports from \code{untar} of the form
-\preformatted{
-    Error: unsupported entry type 'x'
-}
-  indicate the use of a \command{tar} extension: and lower-case entry
-  types are not allowed in the \command{tar} format even as extensions.
-
-  It seems that entry types \samp{x} and \samp{g} most commonly occur
-  for a \command{pax} format archive.  Now \command{pax} is not
-  \command{tar} but the POSIX replacement for it, but unfortunately the
-  libarchive project confuse the two and their \command{bsdtar}
-  (the default \command{tar} on Mac OS >= 10.6, although
-  \command{gnutar} is also available there) can write files with
-  \command{tar} headers but \command{pax} content.
+  (or both).
 }
 
 \value{

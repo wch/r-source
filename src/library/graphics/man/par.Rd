@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{par}
 \alias{par}
 \alias{.Pars}
@@ -202,7 +204,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ask}}{logical.  If \code{TRUE} (and the \R session is
       interactive) the user is asked for input, before a new figure is
       drawn.  As this applies to the device, it also affects output by
-      packages \pkg{grid} and \pkg{lattice}.  It can be set even on
+      packages \pkg{grid} and \CRANpkg{lattice}.  It can be set even on
       non-screen devices but may have no effect there.
 
       This not really a graphics parameter, and its use is deprecated in

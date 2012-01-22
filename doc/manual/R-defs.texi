@@ -32,13 +32,17 @@ $\t\$%
 @strong{\p\}
 @end macro
 
+@macro CRANpkg {p}
+@url{http://CRAN.R-project.org/package=\p\, @strong{\p\}}
+@end macro
+
 @macro cputype {c}
 @samp{\c\}
 @end macro
 
 @c -- edit these here alone -- in order keep consistency
 @macro Rcopyright{year}
-Copyright @copyright{} \year\--2011 R Development Core Team
+Copyright @copyright{} \year\--2012 R Development Core Team
 @end macro
 
 @macro permission{}

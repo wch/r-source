@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{connections}
 \alias{connections}
 \alias{connection}
@@ -235,7 +237,7 @@ isIncomplete(con)
   notation for sites requiring authentication is also accepted.
 #endif
 
-  Contributed package \pkg{RCurl} provides more comprehensive facilities
+  Contributed package \CRANpkg{RCurl} provides more comprehensive facilities
   to download from URLs.
 }
 

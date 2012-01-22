@@ -3,6 +3,8 @@
 % Copyright 2008 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{boxplot.matrix}
 \alias{boxplot.matrix}
 \title{Draw a Boxplot for each Column (Row) of a Matrix}
@@ -22,7 +24,7 @@
 \value{
   A list as for \code{\link{boxplot}}.
 }
-\author{Martin Maechler, 1995, for S+, then \R package \pkg{sfsmisc}.}
+\author{Martin Maechler, 1995, for S+, then \R package \CRANpkg{sfsmisc}.}
 \seealso{\code{\link{boxplot.default}} which already works nowadays with
   data.frames; \code{\link{boxplot.formula}}, \code{\link{plot.factor}} which
   work with (the more general concept) of a grouping factor.

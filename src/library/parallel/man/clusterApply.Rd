@@ -3,6 +3,8 @@
 % Copyright 2003-11 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{clusterApply}
 
 \alias{clusterApply}
@@ -41,7 +43,8 @@ parRapply(cl, x, FUN, ...)
 parCapply(cl, x, FUN, ...)
 }
 \arguments{
-  \item{cl}{a cluster object, created by this package or by package \pkg{snow}.}
+  \item{cl}{a cluster object, created by this package or by package
+    \CRANpkg{snow}.}
   \item{fun, FUN}{function or character string naming a function.}
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
@@ -129,7 +132,7 @@ parCapply(cl, x, FUN, ...)
   error.
 }
 \note{
-  These functions are almost identical to those in package \pkg{snow}.
+  These functions are almost identical to those in package \CRANpkg{snow}.
 
   Two exceptions: \code{parLapply} has argument \code{X}
   not \code{x} for consistency with \code{\link{lapply}}, and
@@ -138,7 +141,7 @@ parCapply(cl, x, FUN, ...)
 \author{
   Luke Tierney and R Core.
 
-  Derived from the \pkg{snow} package.
+  Derived from the \CRANpkg{snow} package.
 }
 % donttest, as access to ports might be denied.  Tested in the 'tests' directory
 \examples{\donttest{

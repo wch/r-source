@@ -4,6 +4,8 @@
 % Copyright 2001-2011 The R Foundation
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{cbind2}
 \alias{cbind2}
 \alias{rbind2}
@@ -59,7 +61,7 @@ rbind2(x, y)
 }
 \seealso{\code{\link{cbind}}, \code{\link{rbind}};
   further, \code{\link[Matrix]{cBind}}, \code{\link[Matrix]{rBind}} in
-  the \pkg{Matrix} package.
+  the \CRANpkg{Matrix} package.
 }
 \examples{
 cbind2(1:3, 4)

@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{as.hclust}
 \alias{as.hclust}
 \alias{as.hclust.default}
@@ -22,14 +24,14 @@ as.hclust(x, \dots)
 \details{
   Currently there is only support for converting objects of
   class \code{"twins"} as produced by the functions \code{diana} and
-  \code{agnes} from the package \pkg{cluster}.  The default method
+  \code{agnes} from the package \CRANpkg{cluster}.  The default method
   throws an error unless passed an \code{"hclust"} object.
 }
 \value{
   An object of class \code{"hclust"}.
 }
 \seealso{
-  \code{\link{hclust}}, and from package \pkg{cluster},
+  \code{\link{hclust}}, and from package \CRANpkg{cluster},
   \code{\link[cluster]{diana}} and \code{\link[cluster]{agnes}}
 }
 \examples{

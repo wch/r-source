@@ -33,8 +33,8 @@ pdftitle={Package `parallel'}% Could also have pdfusetitle
 \section{Introduction}
 
 Package \pkg{parallel} was first included in \R{} 2.14.0.  It builds
-on the work done for CRAN packages \pkg{multicore} \citep{multicore}
-and \pkg{snow} \citep{snow} and provides drop-in replacements for most
+on the work done for CRAN packages \CRANpkg{multicore} \citep{multicore}
+and \CRANpkg{snow} \citep{snow} and provides drop-in replacements for most
 of the functionality of those packages, with integrated handling of
 random-number generation.
 
@@ -98,7 +98,7 @@ processes.  They can be created in one of three ways:
   and Mac OS X may expect pop-up dialog boxes from the firewall asking
   if an \R{} process should accept incoming connections.
 
-  Following \pkg{snow}, a pool of worker processes listening
+  Following \CRANpkg{snow}, a pool of worker processes listening
   \emph{via} sockets for commands from the master is called a
   `cluster' of nodes.
 
@@ -111,7 +111,7 @@ processes.  They can be created in one of three ways:
   reasonable OS) share memory pages with the master until modified so
   forking is very fast.
 
-  The use of forking was pioneered by package \pkg{multicore}.
+  The use of forking was pioneered by package \CRANpkg{multicore}.
 
   Note that as it does share the complete process, it also shares any
   GUI elements, for example an \R{} console and on-screen devices.
@@ -123,7 +123,7 @@ processes.  They can be created in one of three ways:
 
   There needs to be a way to communicate between master and worker.
   Once again there are several possibilities since master and workers
-  share memory. In \pkg{multicore} the initial fork sends an \R{}
+  share memory. In \CRANpkg{multicore} the initial fork sends an \R{}
   expression to be evaluated to the worker, and the master process
   opens a pipe for reading that is used by the worker to return the
   results.  Both that and creating a cluster of nodes communicating
@@ -131,20 +131,20 @@ processes.  They can be created in one of three ways:
 
 \item Using OS-level facilities to set up a means to send tasks to
   other members of a group of machines.  There are several ways to do
-  that, and for example package \pkg{snow} can make use of PVM
+  that, and for example package \CRANpkg{snow} can make use of PVM
   (`parallel virtual machine') and MPI (`message passing interface')
-  using \R{} packages \pkg{rpvm} and \pkg{Rmpi} respectively.
+  using \R{} packages \CRANpkg{rpvm} and \CRANpkg{Rmpi} respectively.
   Communication overheads can dominate computation times in this
   approach, so it is most often used on tightly-coupled networks of
   computers with high-speed interconnects.
 
-  CRAN packages following this approach include \pkg{GridR} (using
-  Condor or Globus) and \pkg{Rsge} (using SGE, currently called
+  CRAN packages following this approach include \CRANpkg{GridR} (using
+  Condor or Globus) and \CRANpkg{Rsge} (using SGE, currently called
   `Oracle Grid Engine').
 
   It will not be considered further in this vignette, but those parts
-  of \pkg{parallel} which provide \pkg{snow}-like functions will
-  accept \pkg{snow} clusters including MPI clusters (and although PVM
+  of \pkg{parallel} which provide \CRANpkg{snow}-like functions will
+  accept \CRANpkg{snow} clusters including MPI clusters (and although PVM
   and NWS clusters have not been tested, they should also work).
 \end{enumerate}
 
@@ -188,7 +188,7 @@ the user may be running many \R{} processes simultaneously, and those
 processes may themselves be using multiple threads through a
 multi-threaded BLAS, compiled code using OpenMP or other low-level
 forms of parallelism.  We have even seen instances of
-\pkg{multicore}'s \code{mclapply} being called
+\CRANpkg{multicore}'s \code{mclapply} being called
 recursively,\footnote{\code{parallel::mclapply} detects this and runs
   nested calls serially.} generating $2n + n^2$ processes on a machine
 estimated to have $n = 16$ cores.
@@ -209,8 +209,8 @@ number of physical CPU packages.
 
 \section{Analogues of apply functions}
 
-By far the most common direct applications of packages \pkg{multicore}
-and \pkg{snow} have been to provide parallelized replacements of
+By far the most common direct applications of packages \CRANpkg{multicore}
+and \CRANpkg{snow} have been to provide parallelized replacements of
 \code{lapply}, \code{sapply}, \code{apply} and related functions.
 
 As analogues of \code{lapply} there are
@@ -240,9 +240,9 @@ For matrices there are the rarely used \code{parApply} and
 
 \section{SNOW Clusters}
 
-The package contains a slightly revised copy of much of \pkg{snow},
+The package contains a slightly revised copy of much of \CRANpkg{snow},
 and the functions it contains can also be used with clusters created
-by \pkg{snow}.
+by \CRANpkg{snow}.
 
 Two functions are provided to create SNOW clusters,
 \code{makePSOCKcluster} (a streamlined version of
@@ -287,18 +287,18 @@ information in the shape of extra arguments.
 
 \section{Forking}
 
-Except on Windows, the package contains a copy of \pkg{multicore}:
+Except on Windows, the package contains a copy of \CRANpkg{multicore}:
 there a few names with the added prefix \code{mc}, e.g.{}
-\code{mccollect} and \code{mcparallel}.  (Package \pkg{multicore} used
+\code{mccollect} and \code{mcparallel}.  (Package \CRANpkg{multicore} used
 these names, but also the versions without the prefix which are too
-easily masked: e.g.{} package \pkg{lattice} has a function
+easily masked: e.g.{} package \CRANpkg{lattice} has a function
 \code{parallel}.)
 
-The low-level functions from \pkg{multicore} are provided but not
+The low-level functions from \CRANpkg{multicore} are provided but not
 exported from the namespace.
 
 There are high-level functions \code{mclapply} and \code{pvec}: unlike
-the versions in \pkg{multicore} these default to 2 cores, but this can
+the versions in \CRANpkg{multicore} these default to 2 cores, but this can
 be controlled by setting \code{options("mc.cores")}, and that takes
 its default from environment variable \code{MC\_CORES} when the
 package is loaded.  (Setting this to \code{1} inhibits parallel
@@ -334,7 +334,7 @@ numbers: the processes/threads which run separate parts of the
 computation need to run independent (and preferably reproducible)
 random-number streams.  One way to avoid any difficulties is (where
 possible) to do all the randomization in the master process: this is
-done where possible in package \pkg{boot} (version 1.3-1 and later).
+done where possible in package \CRANpkg{boot} (version 1.3-1 and later).
 
 When an \R{} process is started up it takes the random-number seed
 from the object \code{.Random.seed} in a saved workspace or constructs
@@ -401,11 +401,11 @@ Apart from \emph{streams} ($2^{127}$ steps apart), there is the concept of
 \code{nextRNGSubStream} advances to the next substream.
 
 A direct \R{} interface to the (clunkier) original C implementation is
-available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.  That works
+available in CRAN package \CRANpkg{rlecuyer} \citep{rlecuyer}.  That works
 with named streams, each of which have three 6-element seeds
 associated with them.  This can easily be emulated in \R{} by storing
 \code{.Random.seed} at suitable times.  There is another interface
-using S4 classes in package \pkg{rstream} \citep{rstream}.
+using S4 classes in package \CRANpkg{rstream} \citep{rstream}.
 
 \section{Load balancing}
 
@@ -454,7 +454,7 @@ the workers start with a different \R{} environment from the one
 current on the master).
 
 An example of providing access to both approaches as well as serial
-code is package \pkg{boot}, version \code{1.3-3} or later.
+code is package \CRANpkg{boot}, version \code{1.3-3} or later.
 
 \section{Extended examples}
 
@@ -473,7 +473,7 @@ some actually are computer-intensive.
 
 \subsection{Bootstrapping}
 
-Package \pkg{boot} \citep{boot} is support software for the monograph
+Package \CRANpkg{boot} \citep{boot} is support software for the monograph
 by \citet{Davison.Hinkley.97}.  Bootstrapping is often used as an
 example of easy parallelization, and some methods of producing
 confidence intervals require many thousands of bootstrap samples.
@@ -482,7 +482,7 @@ within its main functions, but we illustrate how to use the original
 (serial) functions in parallel computations.
 
 We consider two examples using the \code{cd4} dataset from package
-\pkg{boot} where the interest is in the correlation between before and
+\CRANpkg{boot} where the interest is in the correlation between before and
 after measurements.  The first is a straight simulation, often called
 a \emph{parametric bootstrap}.  The non-parallel form is
 <<>>=
@@ -649,34 +649,34 @@ be reproducible (which does not matter here).
 
 \section{Differences from earlier versions}
 
-The support of parallel RNG differs from \pkg{snow}: \pkg{multicore}
+The support of parallel RNG differs from \CRANpkg{snow}: \CRANpkg{multicore}
 had no support.
 
 \subsection{Differences from multicore}
 
-\pkg{multicore} had quite elaborate code to inhibit the Aqua event
+\CRANpkg{multicore} had quite elaborate code to inhibit the Aqua event
 loop for \command{R.app} and the event loop for the \code{quartz}
 graphics device.  This has been replaced by recording a flag in the
 \R{} executable for a child process.
 
 The version of \code{detectCores} here is biased towards the number of
 physical CPUs.  This was occasioned by serious problems on Sparc Solaris
-where \pkg{multicore} defaulted to a silly number of processes.
+where \CRANpkg{multicore} defaulted to a silly number of processes.
 
 Functions \code{fork} and \code{kill} have \code{mc} prefixes and are
 not exported.  This avoids confusion with other packages (such as
-package \pkg{fork}), and note that \code{mckill} is not as general as
+package \CRANpkg{fork}), and note that \code{mckill} is not as general as
 \code{tools::pskill}.
 
 Aliased functions \code{collect} and \code{parallel} are no longer provided.
 
 \subsection{Differences from snow}
 
-\pkg{snow} set a timeout that exceeded the maximum value required by
+\CRANpkg{snow} set a timeout that exceeded the maximum value required by
 POSIX, and did not provide a means to set the timeout on the workers.
 This resulted in process interlocks on Solaris.
 
-\code{makeCluster} creates PVM, MPI or NWS clusters by calling \pkg{snow}.
+\code{makeCluster} creates PVM, MPI or NWS clusters by calling \CRANpkg{snow}.
 
 \code{makePSOCKcluster} has been streamlined, as package \pkg{parallel} is in
 a known location on all systems, and \command{Rscript} is these days

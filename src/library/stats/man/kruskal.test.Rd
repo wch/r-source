@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{kruskal.test}
 \alias{kruskal.test}
 \alias{kruskal.test.default}
@@ -75,9 +77,9 @@ kruskal.test(x, \dots)
   one-way location analysis under normality assumptions; with Student's
   t test (\code{\link{t.test}}) as the special case for two samples.
   
-  \code{\link[coin:LocationTests]{wilcox_test}} in package \pkg{coin}
-  for exact, asymptotic and Monte Carlo \emph{conditional} p-values,
-  including in the presence of ties.
+  \code{\link[coin:LocationTests]{wilcox_test}} in package
+  \CRANpkg{coin} for exact, asymptotic and Monte Carlo
+  \emph{conditional} p-values, including in the presence of ties.
 }
 \examples{
 ## Hollander & Wolfe (1973), 116.

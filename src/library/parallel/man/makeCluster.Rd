@@ -3,6 +3,8 @@
 % Copyright 2003-11 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{makeCluster}
 \alias{makeCluster}
 \alias{makePSOCKcluster}
@@ -37,10 +39,10 @@ stopCluster(cl)
   \code{makeCluster} creates a cluster of one of the supported types.
   The default type, \code{"PSOCK"}, calls \code{makePSOCKcluster}.  Type
   \code{"FORK"}calls \code{makeForkCluster}.  Other types are passed to
-  package \pkg{snow}.
+  package \CRANpkg{snow}.
   
   \code{makePSOCKcluster} is very similar to \code{makeSOCKcluster} in
-  package \pkg{snow}.  It runs \command{Rscript} on the specified
+  package \CRANpkg{snow}.  It runs \command{Rscript} on the specified
   host(s) to set up a worker process which listens on a socket for
   expressions to evaluate, and returns the results (as serialized
   objects).
@@ -110,5 +112,5 @@ stopCluster(cl)
 \author{
   Luke Tierney and R Core.
 
-  Derived from the \pkg{snow} package.
+  Derived from the \CRANpkg{snow} package.
 }

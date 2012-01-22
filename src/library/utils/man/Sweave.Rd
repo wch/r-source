@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{Sweave}
 \alias{Sweave}
 \alias{Stangle}
@@ -54,7 +56,7 @@ Stangle(file, driver = Rtangle(),
 
   \code{Stangle} is just a wrapper to \code{Sweave} specifying a
   different default driver.  Alternative drivers can be used: the CRAN
-  package \pkg{cacheSweave} and the Bioconductor package \pkg{weaver}
+  package \CRANpkg{cacheSweave} and the Bioconductor package \pkg{weaver}
   both provide drivers based on the default driver
   \code{\link{RweaveLatex}} which incorporate ideas of \emph{caching}
   the results of computations on code chunks.
@@ -105,11 +107,11 @@ Stangle(file, driver = Rtangle(),
   
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}.
   
-  Packages \pkg{cacheSweave}, \pkg{weaver} (Bioconductor) and
-  \pkg{SweaveListingUtils}.
+  Packages \CRANpkg{cacheSweave}, \pkg{weaver} (Bioconductor) and
+  \CRANpkg{SweaveListingUtils}.
 
-  Further Sweave drivers are in, for example, packages \pkg{R2HTML},
-  \pkg{ascii}, \pkg{odfWeave} and \pkg{pgfSweave}.
+  Further Sweave drivers are in, for example, packages \CRANpkg{R2HTML},
+  \CRANpkg{ascii}, \CRANpkg{odfWeave} and \CRANpkg{pgfSweave}.
 }
 
 \examples{

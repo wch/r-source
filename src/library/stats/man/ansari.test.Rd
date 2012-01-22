@@ -3,6 +3,8 @@
 % Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{ansari.test}
 \alias{ansari.test}
 \alias{ansari.test.default}
@@ -119,9 +121,9 @@ ansari.test(x, \dots)
   \code{\link{var.test}} and \code{\link{bartlett.test}} for parametric
   tests for the homogeneity in variance.
 
-  \code{\link[coin:ScaleTests]{ansari_test}} in package \pkg{coin} for exact and
-  approximate \emph{conditional} p-values for the Ansari-Bradley
-  test, as well as different methods for handling ties.
+  \code{\link[coin:ScaleTests]{ansari_test}} in package \CRANpkg{coin}
+  for exact and approximate \emph{conditional} p-values for the
+  Ansari-Bradley test, as well as different methods for handling ties.
 }
 \examples{
 ## Hollander & Wolfe (1973, p. 86f):

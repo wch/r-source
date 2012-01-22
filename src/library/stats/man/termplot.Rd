@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{termplot}
 \alias{termplot}
 \title{Plot Regression Terms}
@@ -61,7 +63,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   The model object must have a \code{predict} method that accepts
   \code{type=terms}, eg \code{\link{glm}} in the \pkg{base} package,
   \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in
-  the \pkg{survival} package.
+  the \CRANpkg{survival} package.
 
   For the \code{partial.resid=TRUE} option it must have a
   \code{\link{residuals}} method that accepts \code{type="partial"},

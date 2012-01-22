@@ -1,6 +1,6 @@
 % File src/library/graphics/man/abline.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{abline}
@@ -22,9 +22,9 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
   \item{coef}{a vector of length two giving the intercept and slope.}
   \item{reg}{an object with a \code{\link{coef}} method.  See \sQuote{Details}.}
   \item{\dots}{\link{graphical parameters} such as
-    \code{col}, \code{lty} and \code{lwd} (possibly as vectors: see
-    \sQuote{Details}) and the line characteristics \code{lend}, \code{ljoin} and
-    \code{lmitre}.}
+    \code{col}, \code{lty} and  \code{lwd} (possibly as vectors: see
+    \sQuote{Details}) and \code{xpd} and the line characteristics
+    \code{lend}, \code{ljoin} and \code{lmitre}.}
 }
 \details{
   Typical usages are
@@ -58,6 +58,9 @@ abline(reg=, untf = FALSE, \dots)
   can be specified; see \code{\link{par}} for details.  For the
   \code{h=} and \code{v=} usages they can be vectors of length greater
   than one, recycled as necessary.
+
+  Specifying an \code{xpd} argument for clipping overrides
+  the global \code{\link{par}("xpd")} setting used otherwise.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -1047,8 +1047,8 @@ is included in the @file{src} subdirectory and discussed elsewhere in
 this document.
 
 Subdirectory @file{exec} could be used for scripts for interpreters such
-as the shell (e.g.@: @pkg{arulesSequences}), BUGS, Java, JavaScript,
-Matlab, Perl (@pkg{FEST}), php (@pkg{amap}), Python or Tcl, or even
+as the shell (e.g.@: @CRANpkg{arulesSequences}), BUGS, Java, JavaScript,
+Matlab, Perl (@CRANpkg{FEST}), php (@CRANpkg{amap}), Python or Tcl, or even
 @R{}.  However, it seems more common to use the @file{inst} directory,
 for example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
 @file{Amelia/inst/tklibs}, @file{CGIwithR/inst/cgi-bin},
@@ -1262,7 +1262,7 @@ One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
 Unix-alikes (but not Mac OS X) to do this is @command{pkg-config}.  The
 @file{configure} script will need to test for the presence of the
-command itself (see for example package @pkg{Cairo}), and if present it
+command itself (see for example package @CRANpkg{Cairo}), and if present it
 can be asked if the software is installed, of a suitable version and for
 compilation/linking flags by e.g.@:
 
@@ -1407,7 +1407,7 @@ included before the default makefile and @command{make} will call the
 first target, intended to be @code{all} in the default makefile.  If you
 really need to circumvent that, use a suitable (phony) target @code{all}
 before any actual targets in @file{Makevars.[win]}: for example package
-@pkg{fastICA} has
+@CRANpkg{fastICA} has
 
 @smallexample
 PKG_LIBS = @@BLAS_LIBS@@
@@ -1719,7 +1719,7 @@ We really do not recommend using a @file{src/Makefile} instead on
 
 It may be helpful to give an extended example of using a
 @file{configure} script to create a @file{src/Makevars} file: this is
-based on that in the @pkg{RODBC} package.
+based on that in the @CRANpkg{RODBC} package.
 
 The @file{configure.ac} file follows: @file{configure} is created from
 this by running @command{autoconf} in the top-level package directory
@@ -2012,7 +2012,7 @@ The @R{} files are checked for correct calls to @code{library.dynam}.
 Package startup functions are checked for correct argument lists and
 (incorrect) calls to functions which modify the search path or
 inappropriately generate messages.  The @R{} code is checked for
-possible problems using @pkg{codetools}.  In addition, it is checked
+possible problems using @CRANpkg{codetools}.  In addition, it is checked
 whether S3 methods have all arguments of the corresponding generic, and
 whether the final argument of replacement functions is called
 @samp{value}.  All foreign function calls (@code{.C}, @code{.Fortran},
@@ -2554,7 +2554,7 @@ figures and not PNG etc.  The PDF figures will contain declarations for
 their encoding, but the Sweave option @code{pdf.encoding} may need to be
 set appropriately: see the help for the @code{pdf()} graphics device.
 
-As a real example of the complexities, consider the @pkg{fortunes}
+As a real example of the complexities, consider the @CRANpkg{fortunes}
 package version @samp{1.4-0}.  That package did not have a declared
 encoding, and its vignette was in ASCII.  However, the data it displays
 are read from a UTF-8 CSV file and will be assumed to be in the current
@@ -2774,12 +2774,12 @@ Windows binaries of their packages on @acronym{CRAN} have three options
 @enumerate
 @item
 To arrange for installation of the package to download the
-additional software from a URL, as e.g.@: package @pkg{Cairo} does.
+additional software from a URL, as e.g.@: package @CRANpkg{Cairo} does.
 
 @item
 To negotiate with Uwe Ligges to host the additional components on
 WinBuilder, and write a @file{configure.win} file to install them.
-There are used to be many examples, e.g.@: package @pkg{rgdal} (however
+There are used to be many examples, e.g.@: package @CRANpkg{rgdal} (however
 nowadays CRAN prefers to use a uniform cross-compilation approach for
 software such as GDAL).
 
@@ -3167,7 +3167,7 @@ R_version <- function()
 
 Using argument @code{.fixes} allows an automatic prefix to be added to
 the registered symbols, which can be useful when working with an
-existing package.  For example, package @pkg{KernSmooth} has
+existing package.  For example, package @CRANpkg{KernSmooth} has
 
 @example
 useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
@@ -3964,15 +3964,15 @@ declared encoding, or in ASCII if none is declared).  If no such file is
 present, @code{citation} auto-generates citation information from the
 package @file{DESCRIPTION} metadata, and an example of what that would
 look like as a @file{CITATION} file can be seen in recommended package
-@pkg{nlme} (see below): recommended packages @pkg{boot}, @pkg{cluster}
-and @pkg{mgcv} have further examples.
+@CRANpkg{nlme} (see below): recommended packages @CRANpkg{boot},
+@CRANpkg{cluster} and @CRANpkg{mgcv} have further examples.
 
 A @file{CITATION} file will contain calls to function @code{bibentry}
 (new style, only works with @R{} 2.12.0 or later), or to the functions
 @code{citHeader}, @code{citEntry} and (optionally) @code{citFooter} (old
 style).
 
-Here is that for @pkg{nlme}, re-formatted:
+Here is that for @CRANpkg{nlme}, re-formatted:
 
 @example
 citHeader("To cite package 'nlme' in publications use:")
@@ -5745,8 +5745,8 @@ useful to compare profiling code immediately after a call to @code{gc()}
 with a profiling run without a preceding call to @code{gc}.
 
 More detailed analysis of the output can be achieved by the tools in the
-@acronym{CRAN} packages @pkg{proftools} and @pkg{profr}: in particular
-these allow call graphs to be studied.
+@acronym{CRAN} packages @CRANpkg{proftools} and @CRANpkg{profr}: in
+particular these allow call graphs to be studied.
 
 @node Profiling R code for memory use, Profiling compiled code, Profiling R code for speed, Tidying and profiling R code
 @section Profiling R code for memory use
@@ -6028,8 +6028,8 @@ which is a GUI version) and @command{Shark} (see
 This chapter covers the debugging of @R{} extensions, starting with the
 ways to get useful error information and moving on to how to deal with
 errors that crash @R{}.  For those who prefer other styles there are
-contributed packages such as @pkg{debug} on @acronym{CRAN} (described in
-an article in
+contributed packages such as @CRANpkg{debug} on @acronym{CRAN}
+(described in an article in
 @uref{http://cran.r-project.org/@/doc/@/Rnews/@/Rnews_2003-3.pdf, R-News
 3/3}).  (There are notes from 2002 provided by Roger Peng at
 @uref{http://www.biostat.jhsph.edu/@/~rpeng/@/docs/@/R-debug-tools.pdf}
@@ -6581,7 +6581,7 @@ An example of @code{valgrind} output is
 @end smallexample
 @noindent
 This example is from an instrumented version of @R{}, while tracking
-down a bug in the @pkg{Matrix} package in January, 2006.  The first line
+down a bug in the @CRANpkg{Matrix} package in January, 2006.  The first line
 indicates that @R{} has tried to read 4 bytes from a memory address that
 it does not have access to. This is followed by a C stack trace showing
 where the error occurred. Next is a description of the memory that was
@@ -7433,7 +7433,7 @@ This then arranges that the @file{include} directories in the installed
 linked-to packages are added to the include paths for C and C++ code.
 
 A @acronym{CRAN} example of the use of this mechanism is package
-@pkg{lme4}, which links to @pkg{Matrix}.
+@CRANpkg{lme4}, which links to @CRANpkg{Matrix}.
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
@@ -7538,7 +7538,7 @@ file @samp{README.packages} and
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
 DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a
-@acronym{CRAN} example in package @pkg{fastICA}.
+@acronym{CRAN} example in package @CRANpkg{fastICA}.
 
 If you feel tempted to read the source code and subvert these
 mechanisms, please resist.  Far too much developer time has been wasted
@@ -9490,7 +9490,7 @@ encountered at @R{} level, but are created in C code.
 @cindex external pointer
 External pointer @code{SEXP}s are intended to handle references to C
 structures such as `handles', and are used for this purpose in package
-@pkg{RODBC} for example.  They are unusual in their copying semantics in
+@CRANpkg{RODBC} for example.  They are unusual in their copying semantics in
 that when an @R{} object is copied, the external pointer object is not
 duplicated.  (For this reason external pointers should only be used as
 part of an object with normal semantics, for example an attribute or an
@@ -9603,7 +9603,7 @@ Bioconductor package uses weak references.
 @node An external pointer example,  , External pointers and weak references, External pointers and weak references
 @subsection An example
 
-Package @pkg{RODBC} uses external pointers to maintain its
+Package @CRANpkg{RODBC} uses external pointers to maintain its
 @emph{channels}, connections to databases.  There can be several
 connections open at once, and the status information for each is stored
 in a C structure (pointed to by @code{this_handle}) in the code extract
@@ -10994,7 +10994,7 @@ The C99 keyword @code{inline} should be recognized by all compilers now
 used to build @R{}.  Portable code which might be used with earlier
 versions of @R{} can be written using the macro @code{R_INLINE} (defined
 in file @file{Rconfig.h} included by @file{R.h}), as for example from
-package @pkg{cluster}
+package @CRANpkg{cluster}
 
 @example
 #include <R.h>
@@ -11373,10 +11373,10 @@ There are a number of ways to build front-ends to @R{}: we take this to
 mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
-example the package @pkg{Rserve} (from @acronym{CRAN}, see also
+example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
 @uref{http://www.rforge.net/@/Rserve/}) and connections to Java in
 @samp{SJava} (see @uref{http://www.omegahat.org/@/RSJava/} and @samp{JRI},
-part of the @pkg{rJava} package on @acronym{CRAN}).
+part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
 @menu
 * Embedding R under Unix-alikes::  
@@ -11922,9 +11922,9 @@ There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available via
 @uref{http://cran.r-project.org/@/other-software.html} or
 @uref{http://sunsite.univie.ac.at/rcom/}, which works with package
-@pkg{rscproxy} to support transfer of data to and from @R{} and remote
+@CRANpkg{rscproxy} to support transfer of data to and from @R{} and remote
 execution of R commands, as well as embedding of an @R{} graphics
-window.  The @pkg{rcom} package on @acronym{CRAN} provides a (D)COM
+window.  The @CRANpkg{rcom} package on @acronym{CRAN} provides a (D)COM
 server in a running @R{} session.
 
 @item

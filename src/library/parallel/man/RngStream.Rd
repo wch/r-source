@@ -3,6 +3,8 @@
 % Copyright 2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{RNGstreams}
 \alias{nextRNGStream}
 \alias{nextRNGSubStream}
@@ -25,7 +27,7 @@ mc.reset.stream()
   \item{seed}{An integer vector of length 7 as given by
     \code{.Random.seed} when the \samp{"L'Ecuyer-CMRG"} RNG is in use.
     See \code{\link{RNG}} for the valid values.}
-  \item{cl}{A cluster from this package or package \pkg{snow}.}
+  \item{cl}{A cluster from this package or package \CRANpkg{snow}.}
   \item{iseed}{An integer to be supplied to \code{\link{set.seed}}, or
     \code{NULL} not to set reproducible seeds.}
 }
@@ -89,7 +91,7 @@ mc.reset.stream()
 }
 \note{
   Interfaces to L'Ecuyer's C code are available in CRAN
-  packages \pkg{rlecuyer} and \pkg{rstream}.
+  packages \CRANpkg{rlecuyer} and \CRANpkg{rstream}.
 }
 
 \examples{

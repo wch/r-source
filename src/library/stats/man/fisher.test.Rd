@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{fisher.test}
 \alias{fisher.test}
 \title{Fisher's Exact Test for Count Data}
@@ -156,7 +158,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 \seealso{
   \code{\link{chisq.test}}
 
-  \code{fisher.exact} in package \pkg{exact2x2} for alternative
+  \code{fisher.exact} in package \CRANpkg{exact2x2} for alternative
   interpretations of two-sided tests and confidence intervals for
   \eqn{2 \times 2}{2 by 2} tables.
 }

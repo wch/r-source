@@ -3,6 +3,8 @@
 % Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{nclass}
 \alias{nclass.Sturges}
 \alias{nclass.scott}
@@ -60,8 +62,8 @@ nclass.FD(x)
 }
 \seealso{
   \code{\link{hist}} and \code{\link[MASS]{truehist}} (package
-  \pkg{MASS});  \code{\link[KernSmooth]{dpih}} (package
-  \pkg{KernSmooth}) for a plugin bandwidth proposed by Wand(1995).
+  \CRANpkg{MASS});  \code{\link[KernSmooth]{dpih}} (package
+  \CRANpkg{KernSmooth}) for a plugin bandwidth proposed by Wand(1995).
 }
 \examples{
 set.seed(1)

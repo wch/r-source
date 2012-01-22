@@ -9,6 +9,12 @@
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
   \subsection{NEW FAEATURES}{
     \itemize{
+      \item The internal \code{untar()} (as used by default by
+      \command{R CMD INSTALL}) now knows about some \command{pax}
+      headers which \command{bsdtar} (e.g., the default \command{tar} for
+      Mac OS >= 10.6) can incorrectly include in \command{tar} files,
+      and will skip them with a warning.
+      
       \item PCRE has been upgraded to version 8.21: as well as bug fixes
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says

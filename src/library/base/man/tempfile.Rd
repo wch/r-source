@@ -3,6 +3,8 @@
 % Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{tempfile}
 \alias{tempfile}
 \alias{tempdir}
@@ -61,7 +63,7 @@ tempdir()
 }
 \section{Note on parallel}{
   \R processes produced by function such as \code{\link{mclapply}} in
-  package \pkg{parallel} (or \pkg{multicore}) share a per-session
+  package \pkg{parallel} (or \CRANpkg{multicore}) share a per-session
   temporary directory.  Further, the \sQuote{guaranteed not to be
     currently in use} applies only at the time of asking, and two
   children could ask simultaneously.  As from \R 2.14.1 this is avoided

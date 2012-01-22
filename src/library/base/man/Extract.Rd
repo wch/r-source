@@ -97,8 +97,7 @@ x$i <- value
   matrices/arrays and for recursive (list-like, see
   \code{\link{is.recursive}}) objects.  \code{$} is only valid for
   recursive objects, and is only discussed in the section below on
-  recursive objects.  Its use on non-recursive objects was deprecated in
-  \R 2.5.0 and removed in \R 2.7.0.
+  recursive objects.
 
   Subsetting (except by an empty index) will drop all attributes except
   \code{names}, \code{dim} and \code{dimnames}.

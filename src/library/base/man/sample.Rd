@@ -3,6 +3,8 @@
 % Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{sample}
 \alias{sample}
 \alias{sample.int}
@@ -84,7 +86,7 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
 \seealso{
   \code{\link{RNG}} about random number generation.
 
-  CRAN package \pkg{sampling} for other methods of weighted sampling
+  CRAN package \CRANpkg{sampling} for other methods of weighted sampling
   without replacement.
 }
 \examples{

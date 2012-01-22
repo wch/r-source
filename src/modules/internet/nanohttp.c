@@ -60,9 +60,15 @@ extern void R_ProcessEvents(void);
 #ifdef Win32
 #include <io.h>
 #include <winsock2.h>
-#define EWOULDBLOCK             WSAEWOULDBLOCK
-#define EINPROGRESS             WSAEINPROGRESS
-#define EALREADY                WSAEALREADY
+#ifndef EWOULDBLOCK
+# define EWOULDBLOCK             WSAEWOULDBLOCK
+#endif
+#ifndef EINPROGRESS
+# define EINPROGRESS             WSAEINPROGRESS
+#endif
+#ifndef EALREADY
+# define EALREADY                WSAEALREADY
+#endif
 #define _WINSOCKAPI_
 extern void R_FlushConsole(void);
 #define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)

@@ -109,12 +109,11 @@ require(package, lib.loc = NULL, quietly = FALSE,
   class \code{"packageInfo"}.
 
   \code{require} returns (invisibly) a logical indicating whether the required
-  package is available.  (Before \R 2.12.0 it could also fail with an
-  error.)
+  package is available.
 }
 \section{Licenses}{
-  Some packages have restrictive licenses, and as from \R 2.11.0 there
-  is a mechanism to ensure that users are aware of such licenses.  If
+  Some packages have restrictive licenses, and there is a mechanism to
+  allow users to be aware of such licenses.  If
   \code{\link{getOption}("checkPackageLicense") == TRUE}, then at first
   use of a package with a not-known-to-be-FOSS (see below) license the
   user is asked to view and accept the license: a list of accepted

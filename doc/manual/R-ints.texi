@@ -2227,7 +2227,7 @@ for the @code{deparse.level} argument), @code{eapply}, @code{lapply} and
 
 Prototypes are available for the primitive functions and operators, and
 these are used for printing, @code{args} and package checking (e.g.@: by
-@code{tools::checkS3methods} and by package @pkg{codetools}).  There are
+@code{tools::checkS3methods} and by package @CRANpkg{codetools}).  There are
 two environments in the @pkg{base} package (and namespace),
 @samp{.GenericArgsEnv} for those primitives which are internal S3
 generics, and @samp{.ArgsEnv} for the rest.  Those environments contain
@@ -3537,7 +3537,7 @@ Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the
 @file{src} only if there is no @file{configure} file).
 @item _R_CHECK_USE_CODETOOLS_
-If true, make use of the @pkg{codetools} package, which provides a
+If true, make use of the @CRANpkg{codetools} package, which provides a
 detailed analysis of visibility of objects (but may give false
 positives).
 Default: true.

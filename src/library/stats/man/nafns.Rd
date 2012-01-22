@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{naresid}
 \alias{naresid}
 \alias{naresid.default}
@@ -36,8 +38,8 @@ napredict(omit, x, \dots)
   \code{\link{fitted}} and \code{\link{residuals}} methods for modelling
   functions to compensate for the removal of \code{NA}s in the fitting
   process.  They are used by the default, \code{"lm"}, \code{"glm"} and
-  \code{"nls"} methods, and by further methods in packages \pkg{MASS},
-  \pkg{rpart} and \pkg{survival}.  Also used for the scores returned by
+  \code{"nls"} methods, and by further methods in packages \CRANpkg{MASS},
+  \CRANpkg{rpart} and \CRANpkg{survival}.  Also used for the scores returned by
   \code{\link{factanal}}, \code{\link{prcomp}} and \code{\link{princomp}}.
 
   The default methods do nothing.  The default method for the \code{na.exclude}
@@ -49,7 +51,7 @@ napredict(omit, x, \dots)
   \code{napredict} for fitted values, predictions and \code{\link{weights}}.
 }
 \note{
-  In the early 2000s, packages \pkg{rpart} and \pkg{survival5} contained
+  In the early 2000s, packages \CRANpkg{rpart} and \pkg{survival5} contained
   versions of these functions that had an \code{na.omit} action
   equivalent to that now used for \code{na.exclude}.
 }

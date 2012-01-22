@@ -3,6 +3,8 @@
 % Copyright 2008 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{occupationalStatus}
 \alias{occupationalStatus}
 \docType{data}
@@ -23,7 +25,7 @@
   having Ordered Categories.
   \emph{J. Am. Stat. Assoc.}, \bold{74} (367), 537--552.
 
-  The data set has been in package \pkg{gnm} and been provided by the
+  The data set has been in package \CRANpkg{gnm} and been provided by the
   package authors.
 }
 \examples{

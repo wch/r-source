@@ -782,6 +782,8 @@ R_HEADER_GLIBC2
 ### * Checks for types.
 
 AC_TYPE_SIGNAL
+## xz needs uint64_t
+AC_TYPE_UINT64_T
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 R_SIZE_MAX
@@ -1772,7 +1774,7 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink 
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])
-## This was declared obsolescent in POSIX 2008 (use utimes instead)
+## utime was declared obsolescent in POSIX 2008 (use utimes instead)
 R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## clock_gettime is POSIX 1993, but not on MacOS X
 ## Some OSes need -lrt: Linux, Solaris, not FreeBSD.

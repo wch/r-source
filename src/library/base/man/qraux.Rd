@@ -1,6 +1,6 @@
 % File src/library/base/man/qraux.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{QR.Auxiliaries}
@@ -53,9 +53,10 @@ qr.R(qr, complete = FALSE)
   columns.  When \code{Dvec} is specified, each column of \bold{Q} is
   multiplied by the corresponding value in \code{Dvec}.
 
-  \code{qr.R} returns \bold{R}.  The number of rows of \bold{R} is
-  either \code{nrow(X)} or \code{ncol(X)} (and may depend on whether
-  \code{complete} is \code{TRUE} or \code{FALSE}.
+ \code{qr.R} returns \bold{R}.  This may be pivoted, e.g., if
+ \code{a <- qr(x)} then \code{x[, a$pivot]} = \bold{QR}.  The number of
+ rows of \bold{R} is either \code{nrow(X)} or \code{ncol(X)} (and may
+ depend on whether \code{complete} is \code{TRUE} or \code{FALSE}).
 }
 \seealso{
   \code{\link{qr}},
@@ -71,6 +72,20 @@ X <- qr.X(qrstr) # X == x
 range(X - as.matrix(x))# ~ < 6e-12
 ## X == Q \%*\% R if there has been no pivoting, as here.
 Q \%*\% R
+
+# example of pivoting
+x <- cbind(int = 1,
+           b1=rep(1:0, each=3), b2=rep(0:1, each=3),
+           c1=rep(c(1,0,0), 2), c2=rep(c(0,1,0), 2), c3=rep(c(0,0,1),2))
+x # is singular, columns "b2" and "c3" are "extra"
+a <- qr(x)
+zapsmall(qr.R(a)) # columns are int b1 c1 c2 b2 c3
+a$pivot
+pivI <- sort.list(a$pivot) # the inverse permutation
+all.equal (x,            qr.Q(a) \%*\% qr.R(a)) # no, no
+stopifnot(
+ all.equal(x[, a$pivot], qr.Q(a) \%*\% qr.R(a)),        # TRUE
+ all.equal(x           , qr.Q(a) \%*\% qr.R(a)[, pivI]))# TRUE, too!
 }
 \keyword{algebra}
 \keyword{array}

@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{download.file}
 \alias{download.file}
 \concept{proxy}
@@ -189,7 +191,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{url.show}}, \code{\link{available.packages}},
   \code{\link{download.packages}} for applications.
 
-  Contributed package \pkg{RCurl} provides more comprehensive facilities
-  to download from URLs.
+  Contributed package \CRANpkg{RCurl} provides more comprehensive
+  facilities to download from URLs.
 }
 \keyword{utilities}

@@ -777,18 +777,18 @@ R CMD Sweave file.Rnw
 
   \subsection{Can I use Sweave for OpenOffice files?}
 
-   Yes, package \pkg{odfWeave} provides functions for using Sweave in
+   Yes, package \CRANpkg{odfWeave} provides functions for using Sweave in
    combination with OpenOffice Writer rather than \LaTeX.
 
    \subsection{Can I use Sweave for HTML files?}
 
-   Yes, package \pkg{R2HTML} provides a driver for using Sweave in
+   Yes, package \CRANpkg{R2HTML} provides a driver for using Sweave in
    combination with HTML rather than \LaTeX.
 
    \subsection{After loading package \pkg{R2HTML} Sweave doesn't
      work properly!}
 
-   Package \pkg{R2HTML} registers an Sweave driver for HTML files
+   Package \CRANpkg{R2HTML} registers an Sweave driver for HTML files
    using the same file extensions as the default \texttt{noweb}
    syntax, and after that its syntax is on the search list before the
    default syntax.  Using
@@ -799,9 +799,7 @@ or calling Sweave like
 \begin{verbatim}
   Sweave(..., syntax = "SweaveSyntaxNoweb")
 \end{verbatim}
-ensures the default syntax even after loading package \pkg{R2HTML}.
-
-
+ensures the default syntax even after loading package \CRANpkg{R2HTML}.
 
 \end{document}
 

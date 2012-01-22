@@ -3,7 +3,9 @@
 % Copyright 2010 R Core Development Team
 % Copyright 2010 The R Foundation
 % Distributed under GPL 2 or later
-%
+
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{norm}
 \alias{norm}
 \title{Compute the Norm of a Matrix}
@@ -17,7 +19,7 @@
 norm(x, type = c("O", "I", "F", "M"))
 }
 \arguments{
-  \item{x}{numeric matrix; note that packages such as \pkg{Matrix}
+  \item{x}{numeric matrix; note that packages such as \CRANpkg{Matrix}
     define more \code{norm()} methods.}
   \item{type}{character string, specifying the \emph{type} of matrix
     norm to be computed.
