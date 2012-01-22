@@ -1115,7 +1115,7 @@ handles internationalization slightly odd.
 * How can I get a binary version of a package?::  
 * Package xxx is out of date for Windows::  
 * No binary packages appear to be available for my version of R::  
-* How do I build my package for both 32- and 64-bit R::  
+* How do I build my package for both 32- and 64-bit R?::  
 @end menu
 
 
@@ -1399,7 +1399,7 @@ Your R might be too old.  Binary packages for the 2.x series are built
 binary packages for 2.13.x will be frozen.  You can always try
 installing from the sources.
 
-@node No binary packages appear to be available for my version of R, How do I build my package for both 32- and 64-bit R, Package xxx is out of date for Windows, Packages
+@node No binary packages appear to be available for my version of R, How do I build my package for both 32- and 64-bit R?, Package xxx is out of date for Windows, Packages
 @section No binary packages appear to be available for my version of R
 
 How old is it?  The CRAN policy is to archive binary packages two years
@@ -1411,8 +1411,8 @@ but you do also have the option of installing packages from their
 source.
 
 
-@node How do I build my package for both 32- and 64-bit R,  , No binary packages appear to be available for my version of R, Packages
-@section How do I build my package for both 32- and 64-bit R
+@node How do I build my package for both 32- and 64-bit R?,  , No binary packages appear to be available for my version of R, Packages
+@section How do I build my package for both 32- and 64-bit R?
 
 Packages without compiled code nor a @file{configure.win} script will
 run on both 32- and 64-bit R.
@@ -1432,7 +1432,7 @@ under the above conditions.  Other packages can be installed with
 Any package can be installed for first one architecture and then the
 other with option @option{--merge-multiarch}, but the package source
 must be a tarball (and as before, running on a 64-bit version of Windows
-with both versions of R are installed).
+with both versions of R installed).
 
 Finally, as from R 2.15.0, a package without a @code{src/Makefile.win}
 file and no or empty or architecture-independent @code{configure.win}
@@ -1923,7 +1923,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2011-12-23
+@set LASTEDIT 2012-01-21
 @ifhtml
 @html
 <hr WIDTH="100%">
