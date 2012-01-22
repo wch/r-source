@@ -147,21 +147,27 @@ static struct {
     {1200, "CP1200"},
     {1200, "UTF16LE"},
     {1200, "UTF-16LE"},
+    {1200, "UCS2LE"},
     {1200, "UCS-2LE"},
 
     {1201, "CP1201"},
     {1201, "UTF16BE"},
     {1201, "UTF-16BE"},
+    {1201, "UCS2BE"},
     {1201, "UCS-2BE"},
     {1201, "unicodeFFFE"},
 
     {12000, "CP12000"},
     {12000, "UTF32LE"},
     {12000, "UTF-32LE"},
+    {12000, "UCS4LE"},
+    {12000, "UCS-4LE"},
 
     {12001, "CP12001"},
     {12001, "UTF32BE"},
     {12001, "UTF-32BE"},
+    {12001, "UCS4BE"},
+    {12001, "UCS-4BE"},
 
 #ifndef GLIB_COMPILATION
     /*
@@ -170,15 +176,22 @@ static struct {
      */
     {1201, "UTF16"},
     {1201, "UTF-16"},
+    {1201, "UCS2"},
+    {1201, "UCS-2"},
     {12001, "UTF32"},
     {12001, "UTF-32"},
+    {12001, "UCS-4"},
+    {12001, "UCS4"},
 #else
     /* Default is little endian, because the platform is */
     {1200, "UTF16"},
     {1200, "UTF-16"},
+    {1200, "UCS2"},
     {1200, "UCS-2"},
     {12000, "UTF32"},
     {12000, "UTF-32"},
+    {12000, "UCS4"},
+    {12000, "UCS-4"},
 #endif
     /* R additions */
     {12000, "UCS-4LE"},
@@ -308,6 +321,8 @@ static struct {
 
     {950, "CP950"},
     {950, "BIG5"},
+    {950, "BIG5HKSCS"},
+    {950, "BIG5-HKSCS"},
     /* R additions */
     {950, "BIG-5"},
     {950, "BIG-FIVE"},
@@ -419,6 +434,8 @@ static struct {
     {936, "gb2312"}, /* ANSI/OEM Simplified Chinese (PRC, Singapore); Chinese Simplified (GB2312) */
     {949, "ks_c_5601-1987"}, /* ANSI/OEM Korean (Unified Hangul Code) */
     {950, "big5"}, /* ANSI/OEM Traditional Chinese (Taiwan; Hong Kong SAR, PRC); Chinese Traditional (Big5) */
+    {950, "big5hkscs"}, /* ANSI/OEM Traditional Chinese (Hong Kong SAR); Chinese Traditional (Big5-HKSCS) */
+    {950, "big5-hkscs"}, /* alternative name for it */
     {1026, "IBM1026"}, /* IBM EBCDIC Turkish (Latin 5) */
     {1047, "IBM01047"}, /* IBM EBCDIC Latin 1/Open System */
     {1140, "IBM01140"}, /* IBM EBCDIC US-Canada (037 + Euro symbol); IBM EBCDIC (US-Canada-Euro) */
@@ -442,21 +459,39 @@ static struct {
     {1258, "windows-1258"}, /* ANSI/OEM Vietnamese; Vietnamese (Windows) */
     {1361, "Johab"}, /* Korean (Johab) */
     {10000, "macintosh"}, /* MAC Roman; Western European (Mac) */
+    /* R additions to match GNU libiconv and glibc */
+    {10000, "mac"},
+    {10000, "macroman"},
     {10001, "x-mac-japanese"}, /* Japanese (Mac) */
     {10002, "x-mac-chinesetrad"}, /* MAC Traditional Chinese (Big5); Chinese Traditional (Mac) */
     {10003, "x-mac-korean"}, /* Korean (Mac) */
     {10004, "x-mac-arabic"}, /* Arabic (Mac) */
+    {10004, "macarabic"}, /* Arabic (Mac) */
     {10005, "x-mac-hebrew"}, /* Hebrew (Mac) */
+    {10005, "machebrew"},
     {10006, "x-mac-greek"}, /* Greek (Mac) */
+    {10006, "macgreek"},
     {10007, "x-mac-cyrillic"}, /* Cyrillic (Mac) */
+    {10007, "maccyrillic"},
     {10008, "x-mac-chinesesimp"}, /* MAC Simplified Chinese (GB 2312); Chinese Simplified (Mac) */
     {10010, "x-mac-romanian"}, /* Romanian (Mac) */
+    {10010, "mac-romania"},
     {10017, "x-mac-ukrainian"}, /* Ukrainian (Mac) */
+    {10017, "macukraine"},
+    {10017, "macukrainian"},
     {10021, "x-mac-thai"}, /* Thai (Mac) */
+    {10021, "macthai"},
     {10029, "x-mac-ce"}, /* MAC Latin 2; Central European (Mac) */
+    {10029, "maccentraleurope"},
+    {10029, "mac-centraleurope"},
     {10079, "x-mac-icelandic"}, /* Icelandic (Mac) */
+    {10079, "maciceland"},
+    {10079, "mac-is"},
+    {10079, "macis"},
     {10081, "x-mac-turkish"}, /* Turkish (Mac) */
+    {10081, "macturkish"}
     {10082, "x-mac-croatian"}, /* Croatian (Mac) */
+    {10082, "maccroatian"},
     {20000, "x-Chinese_CNS"}, /* CNS Taiwan; Chinese Traditional (CNS) */
     {20001, "x-cp20001"}, /* TCA Taiwan */
     {20002, "x_Chinese-Eten"}, /* Eten Taiwan; Chinese Traditional (Eten) */
@@ -878,17 +913,19 @@ make_csconv(const char *_name, csconv_t *cv)
     cv->codepage = name_to_codepage(name);
     if (cv->codepage == 1200 || cv->codepage == 1201)
     {
-	cv->mbtowc = utf16_mbtowc;
-	cv->wctomb = utf16_wctomb;
-	if (_stricmp(name, "UTF-16") == 0 || _stricmp(name, "UTF16") == 0)
-	    cv->flags |= FLAG_USE_BOM;
+        cv->mbtowc = utf16_mbtowc;
+        cv->wctomb = utf16_wctomb;
+        if (_stricmp(name, "UTF-16") == 0 || _stricmp(name, "UTF16") == 0 ||
+          _stricmp(name, "UCS-2") == 0 || _stricmp(name, "UCS2") == 0)
+            cv->flags |= FLAG_USE_BOM;
     }
     else if (cv->codepage == 12000 || cv->codepage == 12001)
     {
-	cv->mbtowc = utf32_mbtowc;
-	cv->wctomb = utf32_wctomb;
-	if (_stricmp(name, "UTF-32") == 0 || _stricmp(name, "UTF32") == 0)
-	    cv->flags |= FLAG_USE_BOM;
+        cv->mbtowc = utf32_mbtowc;
+        cv->wctomb = utf32_wctomb;
+        if (_stricmp(name, "UTF-32") == 0 || _stricmp(name, "UTF32") == 0 ||
+          _stricmp(name, "UCS-4") == 0 || _stricmp(name, "UCS4") == 0)
+            cv->flags |= FLAG_USE_BOM;
     }
     else if (cv->codepage == 65001)
     {
@@ -1193,8 +1230,8 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 	    return seterror(E2BIG);
 	return seterror(EILSEQ);
     }
-    else if (usedDefaultChar)
-	return seterror(EILSEQ);
+    else if (usedDefaultChar && !(cv->flags & FLAG_TRANSLIT))
+        return seterror(EILSEQ);
     else if (cv->mblen(cv, buf, len) != len) /* validate result */
 	return seterror(EILSEQ);
     return len;
