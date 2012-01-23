@@ -5,7 +5,7 @@
 
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
-# on CRAN can be found under http://www.stats.ox.ac.uk/pub/Rtools/goodies
+# on CRAN can be found under http://www.stats.ox.ac.uk/pub/Rtools/multilib
 LOCAL_SOFT =
 
 ## ============== configuration macros for building R ===================
