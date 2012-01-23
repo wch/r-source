@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-01-23 08:16\n"
 "PO-Revision-Date: 2011-10-18 22:43-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -609,6 +609,9 @@ msgstr "Изменения требуют определенного 'style'"
 
 msgid "The default JSS style may not be modified."
 msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
+
+msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+msgstr ""
 
 msgid "Error: cannot rename directory to"
 msgstr "Ошибка: не могу переименовать папку в"

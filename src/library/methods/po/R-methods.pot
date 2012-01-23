@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-01-23 08:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,7 @@ msgstr ""
 msgid "%s is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed."
 msgstr ""
 
-msgid "if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") to dispatch methods"
+msgid "if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default"
 msgstr ""
 
 msgid "must supply a function skeleton for %s, explicitly or via an existing function"
@@ -618,12 +618,6 @@ msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr ""
 
 msgid "the body of the generic function for \"%s\" calls 'standardGeneric' to dispatch on a different name (\"%s\")!"
-msgstr ""
-
-msgid "the supplied generic function definition for"
-msgstr ""
-
-msgid "does not seem to call 'standardGeneric'; no methods will be dispatched!"
 msgstr ""
 
 msgid "internal error: Bad methods list object in fixing methods for primitive function %s"

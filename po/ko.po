@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:23+0000\n"
+"POT-Creation-Date: 2012-01-23 08:15+0000\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -122,10 +122,10 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:522 src/main/builtin.c:538
 #: src/main/builtin.c:721 src/main/builtin.c:723 src/main/builtin.c:725
-#: src/main/character.c:135 src/main/character.c:138 src/main/character.c:199
-#: src/main/character.c:1026 src/main/character.c:1030
-#: src/main/character.c:1263 src/main/character.c:1267
-#: src/main/character.c:1324 src/main/character.c:1327
+#: src/main/character.c:136 src/main/character.c:139 src/main/character.c:200
+#: src/main/character.c:1027 src/main/character.c:1031
+#: src/main/character.c:1264 src/main/character.c:1268
+#: src/main/character.c:1328 src/main/character.c:1331
 #: src/main/connections.c:962 src/main/connections.c:968
 #: src/main/connections.c:971 src/main/connections.c:975
 #: src/main/connections.c:1113 src/main/connections.c:1129
@@ -284,7 +284,7 @@ msgstr "태그가 부적절합니다"
 
 #: src/gnuwin32/extra.c:690 src/gnuwin32/extra.c:1870
 #: src/gnuwin32/extra.c:2051 src/gnuwin32/extra.c:2054
-#: src/gnuwin32/extra.c:2057 src/main/character.c:585 src/main/colors.c:358
+#: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3277 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:988
 #: src/main/dotcode.c:198 src/main/errors.c:838 src/main/errors.c:869
@@ -509,8 +509,8 @@ msgstr "<에러: 인코딩에서 부적절한 입력>"
 #: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
 #: src/gnuwin32/system.c:1037 src/main/connections.c:563
 #: src/main/connections.c:568 src/main/dounzip.c:177 src/main/saveload.c:1949
-#: src/main/serialize.c:2240 src/main/serialize.c:2245
-#: src/main/serialize.c:2326 src/main/serialize.c:2371 src/unix/system.c:316
+#: src/main/serialize.c:2243 src/main/serialize.c:2248
+#: src/main/serialize.c:2329 src/main/serialize.c:2374 src/unix/system.c:316
 #: src/unix/system.c:336
 #, fuzzy, c-format
 msgid "cannot open file '%s': %s"
@@ -797,8 +797,8 @@ msgstr "'destination'가 너무 깁니다"
 msgid "invalid multibyte format string"
 msgstr "multibyte 문자열이 부적절합니다"
 
-#: src/main/agrep.c:127 src/main/agrep.c:756 src/main/character.c:1028
-#: src/main/character.c:1032 src/main/grep.c:759 src/main/grep.c:1488
+#: src/main/agrep.c:127 src/main/agrep.c:756 src/main/character.c:1029
+#: src/main/character.c:1033 src/main/grep.c:759 src/main/grep.c:1488
 #: src/main/grep.c:1492 src/main/grep.c:2300 src/main/grep.c:2592
 #, fuzzy, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
@@ -1391,7 +1391,7 @@ msgstr "지정된 벡터의 사이즈가 너무 깁니다"
 #: src/main/envir.c:2928 src/main/envir.c:2963 src/main/envir.c:2984
 #: src/main/envir.c:3290 src/main/envir.c:3295 src/main/eval.c:4976
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
-#: src/main/saveload.c:2349 src/main/serialize.c:2393
+#: src/main/saveload.c:2349 src/main/serialize.c:2396
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -1458,7 +1458,7 @@ msgstr "벡터가 non-Vector이지만 길이는 설정할수 없습니다"
 msgid "invalid argument"
 msgstr "부적절한 인수입니다"
 
-#: src/main/builtin.c:872 src/main/builtin.c:876 src/main/character.c:360
+#: src/main/builtin.c:872 src/main/builtin.c:876 src/main/character.c:361
 #: src/main/coerce.c:2576
 #, fuzzy
 msgid "invalid value"
@@ -1490,98 +1490,98 @@ msgstr ""
 msgid "EXPR must be a length 1 vector"
 msgstr "switch:  EXPR는 길이1의 벡터를 돌려주어야만 합니다"
 
-#: src/main/character.c:102 src/main/character.c:105 src/main/character.c:128
-#: src/main/character.c:131
+#: src/main/character.c:103 src/main/character.c:106 src/main/character.c:129
+#: src/main/character.c:132
 #, fuzzy, c-format
 msgid "'%s' requires a character vector"
 msgstr "strtrim 함수는 문자 벡터를 요구합니다"
 
-#: src/main/character.c:160
+#: src/main/character.c:161
 #, c-format
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
 msgstr ""
 
-#: src/main/character.c:165 src/main/character.c:193 src/main/character.c:643
-#: src/main/character.c:739
+#: src/main/character.c:166 src/main/character.c:194 src/main/character.c:644
+#: src/main/character.c:740
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "%d는 부적절한 복수 바이트 문자입니다"
 
-#: src/main/character.c:181
+#: src/main/character.c:182
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
 msgstr ""
 
-#: src/main/character.c:258
+#: src/main/character.c:259
 msgid "extracting substrings from a non-character object"
 msgstr "문자열이 아닌 오브젝트로부터 부분 문자열을 추출하려고 했습니다"
 
-#: src/main/character.c:263 src/main/character.c:357
+#: src/main/character.c:264 src/main/character.c:358
 #, fuzzy
 msgid "invalid substring argument(s)"
 msgstr "문자열수가 부적절합니다"
 
-#: src/main/character.c:352
+#: src/main/character.c:353
 msgid "replacing substrings in a non-character object"
 msgstr "문자열이 아닌 오브젝트의 부분 문자열으로 치환합니다"
 
-#: src/main/character.c:544
+#: src/main/character.c:545
 #, fuzzy
 msgid "the first argument must be a character vector"
 msgstr "최초의 인수는 문자열 벡터가 아니면 안됩니다"
 
-#: src/main/character.c:561
+#: src/main/character.c:562
 msgid "abbreviate used with non-ASCII chars"
 msgstr "ASCII문자가 아닌것에 대해서 생략이름이 사용되었습니다"
 
-#: src/main/character.c:581
+#: src/main/character.c:582
 msgid "non-character names"
 msgstr "이름은 문자열이 아닙니다"
 
-#: src/main/character.c:685 src/main/grep.c:152
+#: src/main/character.c:686 src/main/grep.c:152
 #, fuzzy
 msgid "non-character argument"
 msgstr "이름은 문자열이 아닙니다"
 
-#: src/main/character.c:794
+#: src/main/character.c:795
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "범위 지정을 축소합니다('%lc-%lc')"
 
-#: src/main/character.c:880
+#: src/main/character.c:881
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "범위 지정을 축소합니다('%c-%c')"
 
-#: src/main/character.c:1068
+#: src/main/character.c:1069
 #, fuzzy
 msgid "invalid UTF-8 string 'old'"
 msgstr "'old'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:1074
+#: src/main/character.c:1075
 msgid "invalid multibyte string 'old'"
 msgstr "'old'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:1087
+#: src/main/character.c:1088
 #, fuzzy
 msgid "invalid UTF-8 string 'new'"
 msgstr "'new'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:1093
+#: src/main/character.c:1094
 msgid "invalid multibyte string 'new'"
 msgstr "'new'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:1121 src/main/character.c:1209
+#: src/main/character.c:1122 src/main/character.c:1210
 msgid "'old' is longer than 'new'"
 msgstr "'old'가 'new'보다 깁니다"
 
-#: src/main/character.c:1153
+#: src/main/character.c:1154
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "부적절한 복수바이트 문자열 입력%d입니다"
 
-#: src/main/character.c:1258
+#: src/main/character.c:1259
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 함수는 문자 벡터를 요구합니다"
 
@@ -2670,7 +2670,7 @@ msgstr "'gap'는  non-negative 정수가 아니면 안됩니다"
 
 #: src/main/deparse.c:375 src/main/envir.c:1686 src/main/envir.c:1768
 #: src/main/eval.c:412 src/main/eval.c:1050 src/main/eval.c:3350
-#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2411
+#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2414
 #, c-format
 msgid "object '%s' not found"
 msgstr "오브젝트 '%s'가 없습니다"
@@ -6109,7 +6109,7 @@ msgstr "부적절한 복소치와의 비교입니다"
 #: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1370
 #: src/main/saveload.c:1375 src/main/saveload.c:1419 src/main/saveload.c:1487
 #: src/main/saveload.c:1496 src/main/serialize.c:331 src/main/serialize.c:338
-#: src/main/serialize.c:2081 src/main/serialize.c:2089
+#: src/main/serialize.c:2082 src/main/serialize.c:2090
 msgid "read error"
 msgstr "read error입니다"
 
@@ -6250,7 +6250,7 @@ msgid "an xdr complex data read error occurred"
 msgstr "xdr 복소수 데이터의 입력 에러가 발생했습니다"
 
 #: src/main/saveload.c:1772 src/main/serialize.c:1658
-#: src/main/serialize.c:2256 src/modules/internet/internet.c:351
+#: src/main/serialize.c:2259 src/modules/internet/internet.c:351
 #: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
 msgid "write failed"
 msgstr "기입에 실패했습니다"
@@ -6513,10 +6513,6 @@ msgstr "인수는 환경이어야만 합니다"
 msgid "unknown or inappropriate output format"
 msgstr "알수 없거나 부적절한 출력 서식입니다"
 
-#: src/main/serialize.c:496
-msgid "binary format is deprecated; using xdr instead"
-msgstr "바이너리 서식은 중단 예정입니다.대신 xdr를 사용해 주십시오"
-
 #: src/main/serialize.c:504
 msgid "must specify ascii, binary, or xdr format"
 msgstr "ascii, binary, 또는 xdr서식을 지정 해주십시오"
@@ -6635,7 +6631,7 @@ msgid "only ascii format can be read from text mode connections"
 msgstr "텍스트 모드에는 connection에는 ascii형식만을 기입할수가 없습니다"
 
 #: src/main/serialize.c:1859 src/main/serialize.c:2012
-#: src/main/serialize.c:2152
+#: src/main/serialize.c:2153
 msgid "bad version value"
 msgstr "부적절한 버전값입니다"
 
@@ -6644,50 +6640,50 @@ msgstr "부적절한 버전값입니다"
 msgid "binary-mode connection required for ascii=FALSE"
 msgstr "2항연산에는 두개 인수가 필요합니다"
 
-#: src/main/serialize.c:2042 src/main/serialize.c:2071
-#: src/main/serialize.c:2132
+#: src/main/serialize.c:2043 src/main/serialize.c:2072
+#: src/main/serialize.c:2133
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:2052
+#: src/main/serialize.c:2053
 msgid "cannot allocate buffer"
 msgstr "버퍼를 할당할수가 없습니다"
 
-#: src/main/serialize.c:2234 src/main/serialize.c:2303
+#: src/main/serialize.c:2237 src/main/serialize.c:2306
 msgid "not a proper file name"
 msgstr "파일명은 부적절합니다"
 
-#: src/main/serialize.c:2236
+#: src/main/serialize.c:2239
 #, fuzzy
 msgid "not a proper raw vector"
 msgstr "단일의 벡터가 아닙니다"
 
-#: src/main/serialize.c:2257
+#: src/main/serialize.c:2260
 msgid "could not determine file position"
 msgstr "파일 위치를 결정할수가 없었습니다"
 
-#: src/main/serialize.c:2305
+#: src/main/serialize.c:2308
 msgid "bad offset/length argument"
 msgstr "offset/length 인수가 부적절합니다"
 
-#: src/main/serialize.c:2329 src/main/serialize.c:2342
-#: src/main/serialize.c:2351 src/main/serialize.c:2361
-#: src/main/serialize.c:2374
+#: src/main/serialize.c:2332 src/main/serialize.c:2345
+#: src/main/serialize.c:2354 src/main/serialize.c:2364
+#: src/main/serialize.c:2377
 #, c-format
 msgid "seek failed on %s"
 msgstr "%s로 검색에 실패했습니다"
 
-#: src/main/serialize.c:2346 src/main/serialize.c:2355
-#: src/main/serialize.c:2365 src/main/serialize.c:2378
+#: src/main/serialize.c:2349 src/main/serialize.c:2358
+#: src/main/serialize.c:2368 src/main/serialize.c:2381
 #, c-format
 msgid "read failed on %s"
 msgstr "%s로 read에 실패했습니다"
 
-#: src/main/serialize.c:2397
+#: src/main/serialize.c:2400
 msgid "bad environment"
 msgstr "부적절한 환경입니다"
 
-#: src/main/serialize.c:2399
+#: src/main/serialize.c:2402
 msgid "bad variable names"
 msgstr "부적절한 변수명입니다"
 
@@ -8485,6 +8481,9 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#~ msgid "binary format is deprecated; using xdr instead"
+#~ msgstr "바이너리 서식은 중단 예정입니다.대신 xdr를 사용해 주십시오"
 
 #, fuzzy
 #~ msgid "WARNING: no value given for '%s'"

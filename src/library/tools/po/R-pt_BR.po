@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-01-23 08:16\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -570,6 +570,9 @@ msgid "Changes require specified 'style'"
 msgstr ""
 
 msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
 msgstr ""
 
 msgid "Error: cannot rename directory to"

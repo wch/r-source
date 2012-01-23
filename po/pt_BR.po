@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:23+0000\n"
+"POT-Creation-Date: 2012-01-23 08:15+0000\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -122,10 +122,10 @@ msgstr "problema ao mostrar '%ls'"
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:522 src/main/builtin.c:538
 #: src/main/builtin.c:721 src/main/builtin.c:723 src/main/builtin.c:725
-#: src/main/character.c:135 src/main/character.c:138 src/main/character.c:199
-#: src/main/character.c:1026 src/main/character.c:1030
-#: src/main/character.c:1263 src/main/character.c:1267
-#: src/main/character.c:1324 src/main/character.c:1327
+#: src/main/character.c:136 src/main/character.c:139 src/main/character.c:200
+#: src/main/character.c:1027 src/main/character.c:1031
+#: src/main/character.c:1264 src/main/character.c:1268
+#: src/main/character.c:1328 src/main/character.c:1331
 #: src/main/connections.c:962 src/main/connections.c:968
 #: src/main/connections.c:971 src/main/connections.c:975
 #: src/main/connections.c:1113 src/main/connections.c:1129
@@ -283,7 +283,7 @@ msgstr "etiqueta de tempo inválida"
 
 #: src/gnuwin32/extra.c:690 src/gnuwin32/extra.c:1870
 #: src/gnuwin32/extra.c:2051 src/gnuwin32/extra.c:2054
-#: src/gnuwin32/extra.c:2057 src/main/character.c:585 src/main/colors.c:358
+#: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3277 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:988
 #: src/main/dotcode.c:198 src/main/errors.c:838 src/main/errors.c:869
@@ -503,8 +503,8 @@ msgstr "<ERRO: re-codificação falhou a partir da codificação '%s'> \n"
 #: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
 #: src/gnuwin32/system.c:1037 src/main/connections.c:563
 #: src/main/connections.c:568 src/main/dounzip.c:177 src/main/saveload.c:1949
-#: src/main/serialize.c:2240 src/main/serialize.c:2245
-#: src/main/serialize.c:2326 src/main/serialize.c:2371 src/unix/system.c:316
+#: src/main/serialize.c:2243 src/main/serialize.c:2248
+#: src/main/serialize.c:2329 src/main/serialize.c:2374 src/unix/system.c:316
 #: src/unix/system.c:336
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -788,8 +788,8 @@ msgstr "string de formato é muito longa"
 msgid "invalid multibyte format string"
 msgstr "string de formato multibyte inválida"
 
-#: src/main/agrep.c:127 src/main/agrep.c:756 src/main/character.c:1028
-#: src/main/character.c:1032 src/main/grep.c:759 src/main/grep.c:1488
+#: src/main/agrep.c:127 src/main/agrep.c:756 src/main/character.c:1029
+#: src/main/character.c:1033 src/main/grep.c:759 src/main/grep.c:1488
 #: src/main/grep.c:1492 src/main/grep.c:2300 src/main/grep.c:2592
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
@@ -1364,7 +1364,7 @@ msgstr "tamanho de vetor especificado é muito grande"
 #: src/main/envir.c:2928 src/main/envir.c:2963 src/main/envir.c:2984
 #: src/main/envir.c:3290 src/main/envir.c:3295 src/main/eval.c:4976
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
-#: src/main/saveload.c:2349 src/main/serialize.c:2393
+#: src/main/saveload.c:2349 src/main/serialize.c:2396
 msgid "use of NULL environment is defunct"
 msgstr "uso do ambiente NULL não é mais permitido"
 
@@ -1430,7 +1430,7 @@ msgstr ""
 msgid "invalid argument"
 msgstr "argumento inválido"
 
-#: src/main/builtin.c:872 src/main/builtin.c:876 src/main/character.c:360
+#: src/main/builtin.c:872 src/main/builtin.c:876 src/main/character.c:361
 #: src/main/coerce.c:2576
 msgid "invalid value"
 msgstr "valor inválido"
@@ -1458,13 +1458,13 @@ msgstr "'EXPR' faltante"
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR deve ser um vetor de comprimento 1"
 
-#: src/main/character.c:102 src/main/character.c:105 src/main/character.c:128
-#: src/main/character.c:131
+#: src/main/character.c:103 src/main/character.c:106 src/main/character.c:129
+#: src/main/character.c:132
 #, c-format
 msgid "'%s' requires a character vector"
 msgstr "'%s' requer um vetor de caracteres"
 
-#: src/main/character.c:160
+#: src/main/character.c:161
 #, c-format
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
@@ -1472,82 +1472,82 @@ msgstr ""
 "número de caracteres não é computável para elemento %d em codificação \"bytes"
 "\""
 
-#: src/main/character.c:165 src/main/character.c:193 src/main/character.c:643
-#: src/main/character.c:739
+#: src/main/character.c:166 src/main/character.c:194 src/main/character.c:644
+#: src/main/character.c:740
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "string multibyte inválida %d"
 
-#: src/main/character.c:181
+#: src/main/character.c:182
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
 msgstr "width não é computável para elemento %d em codificação \"bytes\""
 
-#: src/main/character.c:258
+#: src/main/character.c:259
 msgid "extracting substrings from a non-character object"
 msgstr ""
 "tentativa de extrair substrings de um objeto de modo diferente de caractere"
 
-#: src/main/character.c:263 src/main/character.c:357
+#: src/main/character.c:264 src/main/character.c:358
 msgid "invalid substring argument(s)"
 msgstr "argumento de substring inválido"
 
-#: src/main/character.c:352
+#: src/main/character.c:353
 msgid "replacing substrings in a non-character object"
 msgstr "substituição de substrings em um objeto de modo diferente de caractere"
 
-#: src/main/character.c:544
+#: src/main/character.c:545
 msgid "the first argument must be a character vector"
 msgstr "primeiro argumento deve ser um vetor de caracteres"
 
-#: src/main/character.c:561
+#: src/main/character.c:562
 msgid "abbreviate used with non-ASCII chars"
 msgstr "abbreaviate usado com caracteres não-ASCII"
 
-#: src/main/character.c:581
+#: src/main/character.c:582
 msgid "non-character names"
 msgstr "nomes de modo não caractere"
 
-#: src/main/character.c:685 src/main/grep.c:152
+#: src/main/character.c:686 src/main/grep.c:152
 msgid "non-character argument"
 msgstr "argumento modo não caractere"
 
-#: src/main/character.c:794
+#: src/main/character.c:795
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "especificação de intervalo decrescente ('%lc-%lc')"
 
-#: src/main/character.c:880
+#: src/main/character.c:881
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "especificação de intervalo decrescente ('%c-%c')"
 
-#: src/main/character.c:1068
+#: src/main/character.c:1069
 msgid "invalid UTF-8 string 'old'"
 msgstr "string UTF-8 'old' inválida "
 
-#: src/main/character.c:1074
+#: src/main/character.c:1075
 msgid "invalid multibyte string 'old'"
 msgstr "string multibyte inválida 'old'"
 
-#: src/main/character.c:1087
+#: src/main/character.c:1088
 msgid "invalid UTF-8 string 'new'"
 msgstr "string UTF-8 'new' inválida"
 
-#: src/main/character.c:1093
+#: src/main/character.c:1094
 msgid "invalid multibyte string 'new'"
 msgstr "string multibyte inválida 'new'"
 
-#: src/main/character.c:1121 src/main/character.c:1209
+#: src/main/character.c:1122 src/main/character.c:1210
 msgid "'old' is longer than 'new'"
 msgstr "'old' é maior que 'new'"
 
-#: src/main/character.c:1153
+#: src/main/character.c:1154
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "string de entrada multibyte %d inválida"
 
-#: src/main/character.c:1258
+#: src/main/character.c:1259
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requer um vetor de caracteres"
 
@@ -2616,7 +2616,7 @@ msgstr "'opts' deve ser um inteiro pequeno não negativo"
 
 #: src/main/deparse.c:375 src/main/envir.c:1686 src/main/envir.c:1768
 #: src/main/eval.c:412 src/main/eval.c:1050 src/main/eval.c:3350
-#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2411
+#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2414
 #, c-format
 msgid "object '%s' not found"
 msgstr "objeto '%s' não encontrado"
@@ -6005,7 +6005,7 @@ msgstr "comparação inválida com valores complexos"
 #: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1370
 #: src/main/saveload.c:1375 src/main/saveload.c:1419 src/main/saveload.c:1487
 #: src/main/saveload.c:1496 src/main/serialize.c:331 src/main/serialize.c:338
-#: src/main/serialize.c:2081 src/main/serialize.c:2089
+#: src/main/serialize.c:2082 src/main/serialize.c:2090
 msgid "read error"
 msgstr "erro de leitura"
 
@@ -6152,7 +6152,7 @@ msgid "an xdr complex data read error occurred"
 msgstr "um erro de leitura de complexos xdr ocorreu"
 
 #: src/main/saveload.c:1772 src/main/serialize.c:1658
-#: src/main/serialize.c:2256 src/modules/internet/internet.c:351
+#: src/main/serialize.c:2259 src/modules/internet/internet.c:351
 #: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
 msgid "write failed"
 msgstr "falha de escrita"
@@ -6403,10 +6403,6 @@ msgstr "argumento deve ser coercível para um inteiro não-negativo"
 msgid "unknown or inappropriate output format"
 msgstr "formato de saída inapropriado ou desconhecido"
 
-#: src/main/serialize.c:496
-msgid "binary format is deprecated; using xdr instead"
-msgstr "formato binário está obsoleto; usando xdr em seu lugar"
-
 #: src/main/serialize.c:504
 msgid "must specify ascii, binary, or xdr format"
 msgstr "formato deve ser do tipo ascii, binário ou xdr"
@@ -6524,7 +6520,7 @@ msgid "only ascii format can be read from text mode connections"
 msgstr "somente formato ascii pode ser lido a partir de conexões de modo texto"
 
 #: src/main/serialize.c:1859 src/main/serialize.c:2012
-#: src/main/serialize.c:2152
+#: src/main/serialize.c:2153
 msgid "bad version value"
 msgstr "valor de versão inválido"
 
@@ -6532,49 +6528,49 @@ msgstr "valor de versão inválido"
 msgid "binary-mode connection required for ascii=FALSE"
 msgstr ""
 
-#: src/main/serialize.c:2042 src/main/serialize.c:2071
-#: src/main/serialize.c:2132
+#: src/main/serialize.c:2043 src/main/serialize.c:2072
+#: src/main/serialize.c:2133
 msgid "serialization is too large to store in a raw vector"
 msgstr "serialização é muito grande para armazenar em vetor do tipo raw"
 
-#: src/main/serialize.c:2052
+#: src/main/serialize.c:2053
 msgid "cannot allocate buffer"
 msgstr "não é possível alocar buffer"
 
-#: src/main/serialize.c:2234 src/main/serialize.c:2303
+#: src/main/serialize.c:2237 src/main/serialize.c:2306
 msgid "not a proper file name"
 msgstr "não é um nome de arquivo válido"
 
-#: src/main/serialize.c:2236
+#: src/main/serialize.c:2239
 msgid "not a proper raw vector"
 msgstr "não é um vetor simples apropriado"
 
-#: src/main/serialize.c:2257
+#: src/main/serialize.c:2260
 msgid "could not determine file position"
 msgstr "não foi possível determinar a posição do arquivo"
 
-#: src/main/serialize.c:2305
+#: src/main/serialize.c:2308
 msgid "bad offset/length argument"
 msgstr "comprimento/deslocamento do argumento inválido"
 
-#: src/main/serialize.c:2329 src/main/serialize.c:2342
-#: src/main/serialize.c:2351 src/main/serialize.c:2361
-#: src/main/serialize.c:2374
+#: src/main/serialize.c:2332 src/main/serialize.c:2345
+#: src/main/serialize.c:2354 src/main/serialize.c:2364
+#: src/main/serialize.c:2377
 #, c-format
 msgid "seek failed on %s"
 msgstr "falha na procura em %s"
 
-#: src/main/serialize.c:2346 src/main/serialize.c:2355
-#: src/main/serialize.c:2365 src/main/serialize.c:2378
+#: src/main/serialize.c:2349 src/main/serialize.c:2358
+#: src/main/serialize.c:2368 src/main/serialize.c:2381
 #, c-format
 msgid "read failed on %s"
 msgstr "falha na leitura em %s"
 
-#: src/main/serialize.c:2397
+#: src/main/serialize.c:2400
 msgid "bad environment"
 msgstr "ambiente inválido"
 
-#: src/main/serialize.c:2399
+#: src/main/serialize.c:2402
 msgid "bad variable names"
 msgstr "nomes de variáveis inválidos"
 
@@ -8342,6 +8338,9 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
+
+#~ msgid "binary format is deprecated; using xdr instead"
+#~ msgstr "formato binário está obsoleto; usando xdr em seu lugar"
 
 #, fuzzy
 #~ msgid "WARNING: no value given for '%s'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-01-23 08:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -582,6 +582,9 @@ msgstr "改动需要特别'style'"
 
 msgid "The default JSS style may not be modified."
 msgstr "不能对缺省JSS式样进行修改"
+
+msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+msgstr ""
 
 msgid "Error: cannot rename directory to"
 msgstr "错误：无法改变目录名字为"
