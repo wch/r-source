@@ -109,24 +109,14 @@ merge.data.frame <-
         lxy <- length(m$xi)             # == length(m$yi)
         ## x = [ by | x ] :
         has.common.nms <- any(cnm <- nm.x %in% nm.y)
-        if(has.common.nms) {
-            new <- paste(nm.x[cnm], suffixes[1L], sep = "")
-            prob <- new %in% nm.x
-            if(sum(prob) > 1L)
-                stop("there are already columns named ",
-                     paste(sQuote(new[new %in% nm.x]), collapse = ", "),
-                     domain = NA)
-            else if(sum(prob) == 1L)
-                stop("there is already a column named ",
-                     sQuote(new[new %in% nm.x]), domain = NA)
-            nm.x[cnm] <- new
-        }
+        if(has.common.nms)
+            nm.x[cnm] <- paste(nm.x[cnm], suffixes[1L], sep="")
         x <- x[c(m$xi, if(all.x) m$x.alone),
                c(by.x, seq_len(ncx)[-by.x]), drop=FALSE]
         names(x) <- c(nm.by, nm.x)
         if(all.y) { ## add the 'y.alone' rows to x[]
             ## need to have factor levels extended as well -> using [cr]bind
-            ya <- y[m$y.alone, by.y, drop = FALSE]
+            ya <- y[m$y.alone, by.y, drop=FALSE]
             names(ya) <- nm.by
             ## this used to use a logical matrix, but that is not good
             ## enough as x could be zero-row.
@@ -138,16 +128,7 @@ merge.data.frame <-
         ## y (w/o 'by'):
         if(has.common.nms) {
             cnm <- nm.y %in% nm
-            new <- paste(nm.y[cnm], suffixes[2L], sep = "")
-            prob <- new %in% nm.y
-            if(sum(prob) > 1L)
-                stop("there are already columns named ",
-                     paste(sQuote(new[new %in% nm.y]), collapse = ", "),
-                     domain = NA)
-            else if(sum(prob) == 1L)
-                stop("there is already a column named ",
-                     sQuote(new[new %in% nm.y]), domain = NA)
-            nm.y[cnm] <- new
+            nm.y[cnm] <- paste(nm.y[cnm], suffixes[2L], sep="")
         }
         y <- y[c(m$yi, if(all.x) rep.int(1L, nxx), if(all.y) m$y.alone),
                -by.y, drop = FALSE]

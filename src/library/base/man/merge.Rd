@@ -67,8 +67,7 @@ merge(x, y, \dots)
 
   If the remaining columns in the data frames have any common names,
   these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
-  appended to make the names of the result unique.  If columns with such
-  names already exist, an error is thrown.
+  appended to make the names of the result unique.
 
   The complexity of the algorithm used is proportional to the length of
   the answer.
