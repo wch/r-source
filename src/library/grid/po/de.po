@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2012-01-23 08:18+0000\n"
 "PO-Revision-Date: 2010-09-21 14:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -81,23 +81,23 @@ msgstr "singuläre Transformationsmatrix"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Kann den Gridstatus nicht speichern. Zu viele geöffnete Geräte"
 
-#: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
+#: unit.c:260 unit.c:410 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr "Nicht implementierte Einheitenfunktion"
 
-#: unit.c:831 unit.c:1577
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Unzulässige Einheit oder Einheit nicht implementiert"
 
-#: unit.c:1732
+#: unit.c:1731
 msgid "Invalid unit"
 msgstr "Ungültige Einheit"
 
-#: unit.c:1748
+#: unit.c:1747
 msgid "Units must be character"
 msgstr "Einheiten müssen Zeichenketten sein"
 
-#: unit.c:1751
+#: unit.c:1750
 msgid "Units must be of length > 0"
 msgstr "Einheiten müssen positive Länge haben"
 

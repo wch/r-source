@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2012-01-23 08:18+0000\n"
 "PO-Revision-Date: 2011-10-18 19:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,18 +18,17 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: grid.c:214
 msgid "Cannot clip to rotated viewport"
 msgstr "Не могу обрезать для повернутой оконницы"
 
-#: grid.c:673
-#: grid.c:678
-#: grid.c:767
-#: grid.c:772
+#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
-msgstr "Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
+msgstr ""
+"Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
 
 #: grid.c:952
 msgid "attempt to plot on null device"
@@ -83,29 +82,23 @@ msgstr "сингулярная трансформационная матрица"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Не могу сохранить состояние grid. Открыто слишком много устройств?"
 
-#: unit.c:260
-#: unit.c:410
-#: unit.c:1142
-#: unit.c:1222
-#: unit.c:1302
-#: unit.c:1382
+#: unit.c:260 unit.c:410 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr "Не разработанная единичная функция"
 
-#: unit.c:831
-#: unit.c:1577
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Неправильная или не разработанная единица"
 
-#: unit.c:1732
+#: unit.c:1731
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
-#: unit.c:1748
+#: unit.c:1747
 msgid "Units must be character"
 msgstr "Единицы должен быть буквами"
 
-#: unit.c:1751
+#: unit.c:1750
 msgid "Units must be of length > 0"
 msgstr "Единицы должны быть длиной > 0"
 
@@ -115,4 +108,3 @@ msgstr "Не-конечное положение и/или размер оконницы"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr "Неправильный радиус круга (должен быть неотрицательным)"
-

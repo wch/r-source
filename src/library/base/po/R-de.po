@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-23 14:54\n"
+"POT-Creation-Date: 2012-01-23 08:18\n"
 "PO-Revision-Date: 2011-10-07 15:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -869,7 +869,8 @@ msgstr "Paket %s hat keinen Namensraum und sollte neu installiert werden"
 msgid "package %s already present in search()"
 msgstr "Paket %s bereits in search()"
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION' hat 'Encoding' Feld und Re-Kodieren ist nicht möglich"
 
 msgid "%sPackages in library %s:"

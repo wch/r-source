@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-13 16:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -346,6 +346,20 @@ msgstr "zu viele Listenpunke (höchstens 26!)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "zu viele Listenelemente (höchstens 3899!)"
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr "keine Ereignisse aufgezeichnet"
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr "mindestens ein feld muss angegeben werden"
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr "'form' muss eine zweiseitige Formel sein"
 
@@ -517,7 +531,9 @@ msgstr "Metadaten für Paket '%s' sind korrumpiert"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "DESCRIPTION von Paket '%s' ist korrumpiert"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION' hat Feld 'Encoding' und rekodieren ist nicht möglich"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"

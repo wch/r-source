@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -43,6 +43,9 @@ msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "sono necessari almeno 3 periodi per poter calcolare valori stagionali "
 "iniziali"
+
+msgid "optimization difficulties: %s"
+msgstr ""
 
 msgid "optimization failure"
 msgstr ""
@@ -1336,12 +1339,6 @@ msgstr "0 casi (non-NA)"
 msgid "incompatible dimensions"
 msgstr "dimensioni incompatibili"
 
-msgid "extra arguments"
-msgstr "argomenti extra"
-
-msgid "are just disregarded."
-msgstr "semplicemente ignorati."
-
 msgid "singular fit encountered"
 msgstr "stima singolare"
 
@@ -2565,6 +2562,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "extra arguments"
+#~ msgstr "argomenti extra"
+
+#~ msgid "are just disregarded."
+#~ msgstr "semplicemente ignorati."
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "impossibile calcolae p-value corretti in presenza di ties"

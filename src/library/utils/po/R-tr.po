@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -324,6 +324,18 @@ msgstr ""
 msgid "too many list items (at most up to number 3899)"
 msgstr ""
 
+msgid "no vector columns were selected"
+msgstr ""
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+msgid "at least one vector element is required"
+msgstr ""
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr ""
 
@@ -486,7 +498,8 @@ msgstr ""
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr ""
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"

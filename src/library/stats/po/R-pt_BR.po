@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -40,6 +40,9 @@ msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "pelo menos 2 períodos são necessários para calcular valores de início "
 "sazonais"
+
+msgid "optimization difficulties: %s"
+msgstr ""
 
 msgid "optimization failure"
 msgstr ""
@@ -1297,12 +1300,6 @@ msgstr "0 (não-NA) casos"
 msgid "incompatible dimensions"
 msgstr "dimensões incompatíveis"
 
-msgid "extra arguments"
-msgstr "argumentos adicionais"
-
-msgid "are just disregarded."
-msgstr "são apenas ignorados"
-
 msgid "singular fit encountered"
 msgstr "ajuste singular encontrado"
 
@@ -2472,6 +2469,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "extra arguments"
+#~ msgstr "argumentos adicionais"
+
+#~ msgid "are just disregarded."
+#~ msgstr "são apenas ignorados"
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "com emparelhamento, não é possível computar valores-p corretos"

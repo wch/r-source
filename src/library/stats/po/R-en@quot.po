@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.14.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
-"PO-Revision-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
+"PO-Revision-Date: 2012-01-23 08:19\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -57,6 +57,9 @@ msgstr "data must be non-zero for multiplicative Holt-Winters."
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "need at least 2 periods to compute seasonal start values."
+
+msgid "optimization difficulties: %s"
+msgstr "optimization difficulties: %s"
 
 msgid "optimization failure"
 msgstr "optimization failure"
@@ -1271,12 +1274,6 @@ msgstr "0 (non-NA) cases"
 
 msgid "incompatible dimensions"
 msgstr "incompatible dimensions"
-
-msgid "extra arguments"
-msgstr "extra arguments"
-
-msgid "are just disregarded."
-msgstr "are just disregarded."
 
 msgid "singular fit encountered"
 msgstr "singular fit encountered"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:49\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-23 00:23+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -295,9 +295,6 @@ msgstr ""
 " バージョン番号は少なくとも2つの非負の整数列で，'.' または '-' で区切られてい"
 "なければいけません． "
 
-msgid "Package name and namespace differ."
-msgstr " パッケージ名と namespace とが異なっています． "
-
 msgid "Invalid Priority field."
 msgstr " 不正な優先フィールドです． "
 
@@ -440,6 +437,16 @@ msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+" 'library' もしくは 'requires' 呼出しが以下から宣言されていません： ％ｓ "
+
+#, fuzzy
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+" 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
+
+#, fuzzy
+msgid "'data(package=)' call not declared from: %s"
 msgstr ""
 " 'library' もしくは 'requires' 呼出しが以下から宣言されていません： ％ｓ "
 
@@ -1303,6 +1310,9 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "Package name and namespace differ."
+#~ msgstr " パッケージ名と namespace とが異なっています． "
 
 #, fuzzy
 #~ msgid ""

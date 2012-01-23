@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.14.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
-"PO-Revision-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
+"PO-Revision-Date: 2012-01-23 08:19\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -353,6 +353,18 @@ msgstr "too many list items (at most up to number 26)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "too many list items (at most up to number 3899)"
 
+msgid "no vector columns were selected"
+msgstr "no vector columns were selected"
+
+msgid "non-vector columns will be ignored"
+msgstr "non-vector columns will be ignored"
+
+msgid "at least one vector element is required"
+msgstr "at least one vector element is required"
+
+msgid "non-vector elements will be ignored"
+msgstr "non-vector elements will be ignored"
+
 msgid "'form' must be a two-sided formula"
 msgstr "‘form’ must be a two-sided formula"
 
@@ -522,9 +534,10 @@ msgstr "metadata of package ‘%s’ is corrupt"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "DESCRIPTION file of package ‘%s’ is corrupt"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
-"‘DESCRIPTION’ file has ‘Encoding’ field and re-encoding is not possible"
+"‘DESCRIPTION’ file has an ‘Encoding’ field and re-encoding is not possible"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTION file of package ‘%s’ is missing or broken"

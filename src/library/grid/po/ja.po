@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2012-01-23 08:18+0000\n"
 "PO-Revision-Date: 2010-09-29 20:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -81,23 +81,23 @@ msgstr ""
 " 現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"
 "か？ "
 
-#: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
+#: unit.c:260 unit.c:410 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr " 単位(unit)関数は推奨されていません "
 
-#: unit.c:831 unit.c:1577
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr " 不正な単位(unit)か，まだ推奨されていない単位(unit)です "
 
-#: unit.c:1732
+#: unit.c:1731
 msgid "Invalid unit"
 msgstr " 不正な単位(unit) です "
 
-#: unit.c:1748
+#: unit.c:1747
 msgid "Units must be character"
 msgstr " 単位(Units)は文字型である必要があります "
 
-#: unit.c:1751
+#: unit.c:1750
 msgid "Units must be of length > 0"
 msgstr " 単位(Units)の長さは 0 より大きい必要があります "
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-03-24 10:51+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -42,6 +42,9 @@ msgstr "Daten müssen für den multiplikativen Holt-Winters ungleich 0  sein"
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "benötige zumindest 2 Perioden, um saisonale Startwerte zu berechnen"
+
+msgid "optimization difficulties: %s"
+msgstr ""
 
 msgid "optimization failure"
 msgstr ""
@@ -1253,7 +1256,9 @@ msgid "p-values will be approximate in the presence of ties"
 msgstr "Im Falle von Bindungen sind die p-Werte approximativ"
 
 msgid "'y' must be numeric or a function or a string naming a valid function"
-msgstr "'y' muss entweder numerisch oder eine Funktion oder Name einer zulässigen Funktion sein"
+msgstr ""
+"'y' muss entweder numerisch oder eine Funktion oder Name einer zulässigen "
+"Funktion sein"
 
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
 msgstr "für den Komogorov-Smirnov-Test sollten keine Bindungen vorhanden sein"
@@ -1282,12 +1287,6 @@ msgstr "alle Fälle NA"
 
 msgid "incompatible dimensions"
 msgstr "inkompatible Dimensionen"
-
-msgid "extra arguments"
-msgstr "zusätzliche Argumente"
-
-msgid "are just disregarded."
-msgstr "werden einfach ignoriert"
 
 msgid "singular fit encountered"
 msgstr "singlärer Fit aufgetreten"
@@ -1750,7 +1749,8 @@ msgid "not enough groups"
 msgstr "nicht genügend Gruppen"
 
 msgid "bounds can only be used with method L-BFGS-B (or Brent)"
-msgstr "Grenzen können nur mit der Methode L-BFGS-B (oder Brent) benutzt werden"
+msgstr ""
+"Grenzen können nur mit der Methode L-BFGS-B (oder Brent) benutzt werden"
 
 msgid "unknown names in control:"
 msgstr "unbekannte Namen in control:"
@@ -2455,6 +2455,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "Parameter %s kommt in der Modellgleichung nicht vor"
 msgstr[1] "Parameter %s kommen in der Modellgleichung nicht vor"
+
+#~ msgid "extra arguments"
+#~ msgstr "zusätzliche Argumente"
+
+#~ msgid "are just disregarded."
+#~ msgstr "werden einfach ignoriert"
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "kann bei Bindungen nicht die korrekten p-Werte berechnen"

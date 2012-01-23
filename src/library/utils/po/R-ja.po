@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-22 21:51+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -336,6 +336,20 @@ msgstr " リストの項目が多すぎます（最大でも26です） "
 msgid "too many list items (at most up to number 3899)"
 msgstr " リストの項目が多すぎます（最大でも3899です） "
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr " 如何なるイベントも記録されませんでした "
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr " 少なくとも一つの欄を指定しなければなりません "
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr " \"form\" は両辺に項を持つ公式でなければなりません "
 
@@ -507,7 +521,9 @@ msgstr " パッケージ '%s' のメタデータは壊れています "
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr " パッケージ '%s' に対する DESCRIPTION ファイルは壊れています "
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 " 'DESCRIPTION' ファイルは 'Encoding' 欄を持ち、再エンコーディングは不可能で"
 "す "

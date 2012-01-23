@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-22 19:04+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -38,6 +38,10 @@ msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなけれ
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
+
+#, fuzzy
+msgid "optimization difficulties: %s"
+msgstr " 最適化の失敗 "
 
 msgid "optimization failure"
 msgstr " 最適化の失敗 "
@@ -1279,12 +1283,6 @@ msgstr " (非 NA 値の)ケースがゼロです "
 msgid "incompatible dimensions"
 msgstr " 矛盾した次元です "
 
-msgid "extra arguments"
-msgstr " 余分な引数 "
-
-msgid "are just disregarded."
-msgstr " 単に無視されます "
-
 msgid "singular fit encountered"
 msgstr " 特異な当てはめに遭遇しました "
 
@@ -2428,6 +2426,12 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#~ msgid "extra arguments"
+#~ msgstr " 余分な引数 "
+
+#~ msgid "are just disregarded."
+#~ msgstr " 単に無視されます "
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr " タイがあるため、正しい p 値を計算することができません "

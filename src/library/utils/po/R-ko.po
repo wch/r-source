@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -365,6 +365,19 @@ msgstr ""
 msgid "too many list items (at most up to number 3899)"
 msgstr ""
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr "events는 기록되지 않았습니다"
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+msgid "at least one vector element is required"
+msgstr ""
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr ""
 
@@ -554,7 +567,9 @@ msgstr "패키지 '%s'의 DESCRIPTION 파일은 잘못되어지거나 파손되�
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "패키지 '%s'의 DESCRIPTION 파일은 잘못되어지거나 파손되었습니다"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 "'DESCRPTION' 파일은 'Encoding' 필드를 가지고 있습니다. 그리고 re-coding는 가"
 "능하지 않습니다"

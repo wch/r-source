@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-18 23:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -342,6 +342,20 @@ msgstr "слишком много элементов в списке (самое большее 26)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "слишком много элементов в списке (самое большее 3899)"
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr "события не записаны"
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr "по крайней мере одно поле надо определить"
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr "'form' должен быть двусторонней формулой"
 
@@ -514,7 +528,9 @@ msgstr "метаданные пакета '%s' повреждены"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "файл DESCRIPTION пакета '%s' поврежден"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr "у файла 'DESCRIPTION' есть поле 'Encoding', а перекодировка невозможна"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"

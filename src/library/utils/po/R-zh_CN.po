@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -331,6 +331,20 @@ msgstr "串列项太多(最多只能有26项)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "串列项太多(最多只能有3899项("
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr "没有记录下任何事件"
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr "你至少需要填一项"
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr "'form'必需是双边公式"
 
@@ -355,8 +369,7 @@ msgstr "??"
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
-msgstr ""
-"在载入的程序包里没有与%s题目有关的帮助文件，但在以下的程序包里找得到:"
+msgstr "在载入的程序包里没有与%s题目有关的帮助文件，但在以下的程序包里找得到:"
 
 msgid "Package"
 msgstr "程序包"
@@ -495,7 +508,9 @@ msgstr "程序包'%s'里元数据出了错"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
@@ -600,8 +615,7 @@ msgstr "保存函数和数据…"
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the code_files= argument"
-msgstr ""
-"泛型函数和其他S4对象（例如'%s'）不能被转储出来；用code_files=参数"
+msgstr "泛型函数和其他S4对象（例如'%s'）不能被转储出来；用code_files=参数"
 
 msgid "Copying code files ..."
 msgstr "拷贝程序文件…"
@@ -1114,7 +1128,6 @@ msgstr "'memory.limit()'只在Windows上有用"
 msgid "method 'mailx' is Unix-only"
 msgstr "'mailx'只在Unix上有用"
 
-
 msgid ""
 "If nothing happens, you should open\n"
 "%s yourself"
@@ -1391,4 +1404,3 @@ msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
-

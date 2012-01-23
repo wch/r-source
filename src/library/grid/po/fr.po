@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2012-01-23 08:18+0000\n"
 "PO-Revision-Date: 2010-10-01 20:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -81,23 +81,23 @@ msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 "Impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
 
-#: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
+#: unit.c:260 unit.c:410 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr "Fonction d'unité non implémentée"
 
-#: unit.c:831 unit.c:1577
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Unité non autorisée ou pas encore implémentée"
 
-#: unit.c:1732
+#: unit.c:1731
 msgid "Invalid unit"
 msgstr "Unité incorrecte"
 
-#: unit.c:1748
+#: unit.c:1747
 msgid "Units must be character"
 msgstr "Les unités doivent être une chaîne de caractères"
 
-#: unit.c:1751
+#: unit.c:1750
 msgid "Units must be of length > 0"
 msgstr "Les unités doivent être de longueur > 0"
 

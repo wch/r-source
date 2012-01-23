@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2011 The R Foundation
+# Copyright (C) 2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2011.
+# Automatically generated, 2012.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.14.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
-"PO-Revision-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2012-01-23 08:18+0000\n"
+"PO-Revision-Date: 2012-01-23 08:18+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -99,23 +99,23 @@ msgstr "singular transformation matrix"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Unable to store grid state.  Too many devices open?"
 
-#: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
+#: unit.c:260 unit.c:410 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr "Unimplemented unit function"
 
-#: unit.c:831 unit.c:1577
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Illegal unit or unit not yet implemented"
 
-#: unit.c:1732
+#: unit.c:1731
 msgid "Invalid unit"
 msgstr "Invalid unit"
 
-#: unit.c:1748
+#: unit.c:1747
 msgid "Units must be character"
 msgstr "Units must be character"
 
-#: unit.c:1751
+#: unit.c:1750
 msgid "Units must be of length > 0"
 msgstr "Units must be of length > 0"
 

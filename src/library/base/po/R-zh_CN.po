@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-23 14:54\n"
+"POT-Creation-Date: 2012-01-23 08:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -846,7 +846,8 @@ msgstr "程辑包%s没有名字空间，应该重新安装"
 msgid "package %s already present in search()"
 msgstr "search()里已经存在程辑包%s"
 
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'有'Encoding'一域，但重新編碼是不可能的"
 
 msgid "%sPackages in library %s:"

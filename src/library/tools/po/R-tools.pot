@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.14.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:49\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,9 +260,6 @@ msgstr ""
 msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
 msgstr ""
 
-msgid "Package name and namespace differ."
-msgstr ""
-
 msgid "Invalid Priority field."
 msgstr ""
 
@@ -381,6 +378,12 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+
+msgid "'data(package=)' call not declared from: %s"
 msgstr ""
 
 msgid "Rd files with duplicated name '%s':"

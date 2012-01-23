@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -41,6 +41,10 @@ msgstr "乘法Holt-Winters的数据不能是零"
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "计算季節性初始值至少需要两个周期的数据"
 
+#, fuzzy
+msgid "optimization difficulties: %s"
+msgstr "优化失败"
+
 msgid "optimization failure"
 msgstr "优化失败"
 
@@ -49,7 +53,6 @@ msgstr "時間序列的周期不能小于二"
 
 msgid "the series is entirely NA"
 msgstr "时间序列里所有的值都是NA"
-
 
 msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr "用BSM时頻率必需是大于等于二的正整数"
@@ -598,8 +601,7 @@ msgid "either 'k' or 'h' must be specified"
 msgstr "'k'和'h'中必需设定一个"
 
 msgid "the 'height' component of 'tree' is not sorted (increasingly)"
-msgstr ""
-"'tree'里的'height'组件没有排序(由小到大)"
+msgstr "'tree'里的'height'组件没有排序(由小到大)"
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k'的单元必需在一和%d之间"
@@ -1247,12 +1249,6 @@ msgstr "没有(非NA)案例可用"
 
 msgid "incompatible dimensions"
 msgstr "维度不相配"
-
-msgid "extra arguments"
-msgstr "额外参数"
-
-msgid "are just disregarded."
-msgstr "略过不用。"
 
 msgid "singular fit encountered"
 msgstr "遇到了奇异拟合"
@@ -2372,6 +2368,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 
+#~ msgid "extra arguments"
+#~ msgstr "额外参数"
+
+#~ msgid "are just disregarded."
+#~ msgstr "略过不用。"
+
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "在有连结的情况下无法正确計算p值"
 
@@ -2462,4 +2464,3 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
-

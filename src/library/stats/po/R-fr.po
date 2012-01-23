@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-12 18:01\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-15 15:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -47,6 +47,9 @@ msgstr ""
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "il faut au moins 2 périodes pour calculer les valeurs de départ saisonnières."
+
+msgid "optimization difficulties: %s"
+msgstr ""
 
 msgid "optimization failure"
 msgstr ""
@@ -1326,12 +1329,6 @@ msgstr "aucun cas ne contient autre chose que des valeurs manquantes (NA)"
 msgid "incompatible dimensions"
 msgstr "dimensions incompatibles"
 
-msgid "extra arguments"
-msgstr "les arguments surnuméraires"
-
-msgid "are just disregarded."
-msgstr "sont ignorés."
-
 msgid "singular fit encountered"
 msgstr "ajustement singulier rencontré"
 
@@ -2551,6 +2548,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#~ msgid "extra arguments"
+#~ msgstr "les arguments surnuméraires"
+
+#~ msgid "are just disregarded."
+#~ msgstr "sont ignorés."
 
 #~ msgid "cannot compute correct p-values with ties"
 #~ msgstr "impossible de calculer les p-values correctes avec des ex-aequos"

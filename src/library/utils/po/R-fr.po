@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-17 10:14\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2011-10-15 15:37+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -356,6 +356,20 @@ msgstr "trop d'entrées de lists (26 maximum)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "trop d'entrées de liste (3899 maximum)"
 
+#, fuzzy
+msgid "no vector columns were selected"
+msgstr "aucun événement à enregistrer"
+
+msgid "non-vector columns will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "at least one vector element is required"
+msgstr "il faut spécifier au moins un champ"
+
+msgid "non-vector elements will be ignored"
+msgstr ""
+
 msgid "'form' must be a two-sided formula"
 msgstr "'form' doit être une formule à deux membres"
 
@@ -534,7 +548,9 @@ msgstr "les métadonnées du package '%s' sont incorrectes"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "le fichier DESCRIPTION du package '%s' est incorrect"
 
-msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+#, fuzzy
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 "le fichier 'DESCRIPTION' a un champ 'Encoding' et le réencodage est "
 "impossible"

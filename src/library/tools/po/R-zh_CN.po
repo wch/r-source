@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:49\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -281,9 +281,6 @@ msgid ""
 "separated by single '.' or '-'."
 msgstr "版本数目至少要由两个非负整数组成，中间用单一的'.'或'-'符号分开."
 
-msgid "Package name and namespace differ."
-msgstr "程辑包的名字和它的名字空间不一样."
-
 msgid "Invalid Priority field."
 msgstr "Priority域不对."
 
@@ -413,6 +410,14 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr "'library'或'require'调用没有被声明: %s"
+
+#, fuzzy
+msgid "'data(package=)' calls not declared from:"
+msgstr "'library'或'require'调用没有被声明:"
+
+#, fuzzy
+msgid "'data(package=)' call not declared from: %s"
 msgstr "'library'或'require'调用没有被声明: %s"
 
 msgid "Rd files with duplicated name '%s':"
@@ -910,8 +915,7 @@ msgstr ""
 "NEWS.Rd文件格式不对:\n"
 "开始块\n"
 "  %s\n"
-"包含多个\\itemize."
-"因此用第一个。"
+"包含多个\\itemize.因此用第一个。"
 
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
@@ -1246,6 +1250,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
 
+#~ msgid "Package name and namespace differ."
+#~ msgstr "程辑包的名字和它的名字空间不一样."
+
 #, fuzzy
 #~ msgid ""
 #~ "installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
@@ -1444,4 +1451,3 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "no or more than one match"
 #~ msgstr "没有成对的，或多于一双"
-

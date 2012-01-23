@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-10-03 18:49\n"
+"POT-Creation-Date: 2012-01-23 08:19\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -285,9 +285,6 @@ msgid ""
 "separated by single '.' or '-'."
 msgstr ""
 
-msgid "Package name and namespace differ."
-msgstr ""
-
 msgid "Invalid Priority field."
 msgstr ""
 
@@ -419,6 +416,12 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+
+msgid "'data(package=)' calls not declared from:"
+msgstr ""
+
+msgid "'data(package=)' call not declared from: %s"
 msgstr ""
 
 #, fuzzy
