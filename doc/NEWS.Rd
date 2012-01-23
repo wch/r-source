@@ -280,7 +280,7 @@
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
-  \subsection{NEW FAEATURES}{
+  \subsection{NEW FEATURES}{
     \itemize{
       \item The internal \code{untar()} (as used by default by
       \command{R CMD INSTALL}) now knows about some \command{pax}
