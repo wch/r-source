@@ -228,38 +228,38 @@ static struct {
 
     {1250, "CP1250"},
     {1250, "MS-EE"},
-    {1250, "WINDOWS-1250"},
+//    {1250, "WINDOWS-1250"},
 
     {1251, "CP1251"},
     {1251, "MS-CYRL"},
-    {1251, "WINDOWS-1251"},
+//    {1251, "WINDOWS-1251"},
 
     {1252, "CP1252"},
     {1252, "MS-ANSI"},
-    {1252, "WINDOWS-1252"},
+//    {1252, "WINDOWS-1252"},
 
     {1253, "CP1253"},
     {1253, "MS-GREEK"},
-    {1253, "WINDOWS-1253"},
+//    {1253, "WINDOWS-1253"},
 
     {1254, "CP1254"},
     {1254, "MS-TURK"},
-    {1254, "WINDOWS-1254"},
+//    {1254, "WINDOWS-1254"},
 
     {1255, "CP1255"},
     {1255, "MS-HEBR"},
-    {1255, "WINDOWS-1255"},
+//    {1255, "WINDOWS-1255"},
 
     {1256, "CP1256"},
     {1256, "MS-ARAB"},
-    {1256, "WINDOWS-1256"},
+//    {1256, "WINDOWS-1256"},
 
     {1257, "CP1257"},
     {1257, "WINBALTRIM"},
-    {1257, "WINDOWS-1257"},
+//    {1257, "WINDOWS-1257"},
 
     {1258, "CP1258"},
-    {1258, "WINDOWS-1258"},
+//    {1258, "WINDOWS-1258"},
 
     {850, "850"},
     {850, "CP850"},
@@ -289,7 +289,7 @@ static struct {
     {1133, "IBM-CP1133"},
 
     {874, "CP874"},
-    {874, "WINDOWS-874"},
+//    {874, "WINDOWS-874"},
 
     /* !IsValidCodePage(51932) */
     {51932, "CP51932"},
@@ -478,7 +478,7 @@ static struct {
     {10007, "maccyrillic"},
     {10008, "x-mac-chinesesimp"}, /* MAC Simplified Chinese (GB 2312); Chinese Simplified (Mac) */
     {10010, "x-mac-romanian"}, /* Romanian (Mac) */
-    {10010, "mac-romania"},
+    {10010, "macromania"},
     {10017, "x-mac-ukrainian"}, /* Ukrainian (Mac) */
     {10017, "macukraine"},
     {10017, "macukrainian"},
@@ -582,6 +582,9 @@ static struct {
     {51932, "euc-jp"}, /* EUC Japanese */
     {51936, "EUC-CN"}, /* EUC Simplified Chinese; Chinese Simplified (EUC) */
     {51949, "euc-kr"}, /* EUC Korean */
+    {51932, "eucjp"},
+    {51936, "EUCCN"},
+    {51949, "euckr"},
     /* 51950		EUC Traditional Chinese */
     {52936, "hz-gb-2312"}, /* HZ-GB2312 Simplified Chinese; Chinese Simplified (HZ) */
     {54936, "GB18030"}, /* Windows XP and later: GB18030 Simplified Chinese (4 byte); Chinese Simplified (GB18030) */
