@@ -26,12 +26,13 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# If using a multilib toolchain, set MULTI to 32 or 64,
+# If using the preferred multilib toolchain, set MULTI to 32 or 64,
 # and if the toolchain's bin directory is not in your path, 
 # set TOOL_PATH to the path (including the trailing /, and use / not \).
 MULTI =
 TOOL_PATH =
 
+## SETTINGS FOR OLDER TOOLCHAINS
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
 # including a trailing / (and use / not \).
@@ -56,6 +57,7 @@ WIN = 32
 # but this macro forces the use of import libs
 # Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
+## END OF SETTINGS FOR OLDER TOOLCHAINS
 
 
 # set to use ICU (experimental)

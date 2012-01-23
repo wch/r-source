@@ -16,11 +16,32 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The sources (and packages) can now be compiled using the
-      multilib toolchain recommended for \R 2.15.x: see the
-      \samp{MULTI} macro in \file{MkRules.dist}.
+      multilib toolchain developed for \R 2.15.x: see the
+      \samp{MULTI} macro in \file{MkRules.dist}.  This toolchain is used
+      for the CRAN binary distribution.
     }
   }
       
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The preferred toolchain has changed since the one used for
+      \R 2.12.0 to 2.14.1: see the\sQuote{R Installation and
+      Administration manual}.  Compiled code (except DLLs) may be
+      incompatible with previous toolchains (and compiled C++ code
+      almost certainly will be: users of \pkg{Rcpp} take care).
+
+      Ensure that the settings in \file{MkRules.local} are appropriate
+      to the toolchain you use.
+
+      \item There is a new macro (aka make variable)
+      \samp{SHLIB_PTHREAD_FLAGS}.  This is set to \option{-pthread} on
+      builds using toolchains which support it, and should be included
+      in both \samp{PKG_CPPFLAGS} (or the Fortran or F9x equivalents)
+      and \samp{PKG_LIBS}.
+    }
+  }
+}
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Using a prompt of more than 80 characters in

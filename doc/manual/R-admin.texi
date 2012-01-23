@@ -992,17 +992,18 @@ collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
 @uref{http://cran.r-project.org/bin/@/windows/@/Rtools/}) for details.
 
-The @file{Rtools*.exe} executable installer described in @ref{The Windows
-toolset} also includes some source files in addition to the @R{} source
-as noted below. You should run it first, to obtain a working @code{tar}
-and other necessities.  Choose a ``Full installation'', and install the
-extra files into your intended @R{} source directory, e.g.@:
+The @file{Rtools*.exe} executable installer described in @ref{The
+Windows toolset} also includes some source files in addition to the @R{}
+source as noted below.  You should run it first, to obtain a working
+@code{tar} and other necessities.  Choose a ``Full installation'', and
+install the extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @file{@var{R_HOME}} below.
 
-For a 64-bit build you will need a 64-bit toolchain and the appropriate
-64-bit version of Tcl/Tk: both of these are contained in
-@file{Rtools214.exe}.
+The preferred set of tools for @R{} 2.14.2 is contained in
+@file{Rtools215.exe} which uses a single 32/64-bit toolchain: the
+separate 32- and 64-bit toolchains contained in @file{Rtools214.exe} can
+still be used.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1053,13 +1054,13 @@ make rsync-recommended
 @end itemize
 
 The following additional items are normally installed by
-@file{Rtools*.exe}.  If instead you choose to do a completely manual
+@file{Rtools215.exe}.  If instead you choose to do a completely manual
 build you will also need
 
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools*.exe} and
+The Tcl/Tk support files are contained in @file{Rtools215.exe} and
 available as @file{.zip}s from
 @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
@@ -1406,8 +1407,7 @@ Support for cross-building was withdrawn at @R{} 2.9.0.
 @subsection 64-bit Windows builds
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
-discussed here (@pxref{64-bit toolchain}) is based on the work of
-the MinGW-w64 project
+discussed here is based on the work of the MinGW-w64 project
 (@uref{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
 compilers such as those from Intel and PGI could be used (and have been
 by @R{} redistributors).
@@ -1418,6 +1418,8 @@ of Yu Gong at a crucial step in porting R to MinGW-w64 is gratefully
 acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
 
+Windows 64-bit is now completely integrated into the @R{} and package
+build systems.
 
 @node Testing a Windows Installation,  , Building from source, Installing R under Windows
 @section Testing an Installation
@@ -4338,7 +4340,7 @@ SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @noindent
 but the use of @code{-nofstore} can be less numerically stable, and some
 packages (notably @pkg{mgcv} on @cputype{x86}) failed to compile at
-higher optimization levels wth version 12.3.
+higher optimization levels with version 12.3.
 
 The Solaris Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
@@ -4721,7 +4723,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.15.x and later.}  @file{Rtools214.exe},
+named@footnote{for @R{} 2.14.2 and later.}  @file{Rtools215.exe},
 available from @uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
@@ -4733,8 +4735,7 @@ See the subsections below for detailed descriptions.
 @item
 The command line tools (in @file{Rtools*.exe})
 @item
-The (32-bit) MinGW or (64-bit) MinGW-w64 toolchain to compile C, Fortran
-and C++.
+The MinGW-w64 32/64-bit toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
 no compiled code, none of these are needed.  Perl is no longer needed to
@@ -4765,21 +4766,16 @@ use filepaths containing spaces: you can always use the short forms
 For example for a 32-bit build, all on one line,
 
 @smallexample
-PATH=c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
-     c:\R\bin\i386;c:\windows;c:\windows\system32
+PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;c:\MiKTeX\miktex\bin;
+     c:\R\R-2.14.2\bin\i386;c:\windows;c:\windows\system32
 @end smallexample
 
 It is essential that the directory containing the command line tools
 comes first or second in the path: there are typically like-named
-tools@footnote{such as @command{sort}, @command{find} and
+tools@footnote{such as @command{sort}, @command{find} and perhaps
 @command{make}.} in other directories, and they will @strong{not}
-work. The ordering of the other directories is less important, but if
-in doubt, use the order above.  If you install both the 32 bit and 64
-bit toolchains from @file{Rtools*.exe}, it should work to list both in
-the path (as the automatic installer does), and this is needed if you
-want to install or build binary packages containing both architectures
-using the @command{--merge-multiarch} option as described in
-@ref{Windows packages}.  Other toolchains are more likely to conflict.
+work. The ordering of the other directories is less important, but if in
+doubt, use the order above.
 
 Our toolset contains copies of Cygwin DLLs that may conflict with other
 ones on your system if both are in the path at once.  The normal
@@ -4792,7 +4788,7 @@ path.
 * LaTeX::                       
 * The Inno Setup installer::    
 * The command line tools::      
-* The MinGW toolchain::         
+* The MinGW-w64 toolchain::     
 * Useful additional programs::  
 @end menu
 
@@ -4828,7 +4824,7 @@ Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
 location where Inno Setup was installed.
 
-@node The command line tools, The MinGW toolchain, The Inno Setup installer, The Windows toolset
+@node The command line tools, The MinGW-w64 toolchain, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
 This item is installed by the @file{Rtools*.exe} installer.
@@ -4886,82 +4882,45 @@ You may need to set the environment variable @env{CYGWIN} to a value
 including @samp{nodosfilewarning} to suppress messages about
 Windows-style paths.
 
-@node The MinGW toolchain, Useful additional programs, The command line tools, The Windows toolset
-@section The MinGW toolchain
+@node The MinGW-w64 toolchain, Useful additional programs, The command line tools, The Windows toolset
+@section The MinGW-w64 toolchain
 
-This is the only step which differs between 32- and 64-bit builds.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-In each case you need to put the @file{bin} directory of the toolchain
-early in your @env{PATH}: if you use the recommended toolchains you can
-have both in the path (in either order), and need to if you want to
-install 32/64-bit packages.
+The released version of @R{} 2.14.2 will be built with a different
+toolchain from @R{} 2.14.1.  The preferred toolchain is part of
+@code{Rtools215.exe}: this uses a beta version of @command{gcc 4.6.3}
+and version 2.0.1 of the MinGW-w64 project's runtime.
 
-It is also possible to use the combined 32/64-bit toolchain produced for
-@R{} 2.15.x and contained in @file{Rtools215.exe}: set the macro
-@samp{MULTI} in file @file{MkRules.local} to do so.
+This toolchain uses @emph{multilib}: that is there is a single front-end
+such as @command{gcc.exe} for each of the compilers and 32-bit (the
+default) and 64-bit compilation are selected by the flags@footnote{these
+flags apply to the compilers: some of the tools use different flags.
+32-bit builds are the default.}  @option{-m32} and @option{-m64}
+respectively.  The tools are all 32-bit Windows executables and should
+be able to run on any current version of Windows---however you do need a
+64-bit version of Windows to build 64-bit @R{} as the build process runs
+@R{}.
 
-@menu
-* 32-bit toolchain::            
-* 64-bit toolchain::            
-@end menu
+To select a 32-bit or 64-bit build of @R{}, set the options in
+@file{MkRules.local} appropriately (following the comments in the file).
+Older toolchains such as those used for @R{} 2.14.1 can still be used by
+following the comments in that file.
 
-@node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
-@subsection 32-bit toolchain
+Some external software libraries will need to be re-compiled under the
+new toolchain: especially those providing a C++ interface.  Many of
+those used by @acronym{CRAN} packages are available from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
+developing packages with @pkg{Rcpp} need to ensure that they use a
+version built with exactly the same toolchain as their package: the
+recommendation is to build @pkg{Rcpp} from its sources yourself.
 
-The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain included in @file{Rtools214.exe}, and was
-collected from the files at
-@uref{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
+There is support for OpenMP and pthreads in this toolchain.  As the
+performance of OpenMP on Windows is poor for small tasks, it is not used
+for @R{} itself.
 
-@example
-binutils-2.20.51-1-mingw32-bin.tar.lzma
-gcc-c++-4.5.0-1-mingw32-bin.tar.lzma
-gcc-core-4.5.0-1-mingw32-bin.tar.lzma
-gcc-fortran-4.5.0-1-mingw32-bin.tar.lzma
-libgcc-4.5.0-1-mingw32-dll-1.tar.lzma
-libgmp-5.0.1-1-mingw32-dll-10.tar.lzma
-libgomp-4.5.0-1-mingw32-dll-1.tar.lzma
-libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
-libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
-libssp-4.5.0-1-mingw32-dll-0.tar.lzma
-mingwrt-3.18-mingw32-dev.tar.gz
-mingwrt-3.18-mingw32-dll.tar.gz
-w32api-3.15-1-mingw32-dev.tar.lzma
-@end example
-
-with the import libraries in @file{lib/gcc/mingw32/4.5.0} moved to a
-subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
-are linked statically.
-
-It is also possible to use the 32-bit toolchain from the
-@code{mingw-w64} project and options to use that are documented in file
-@file{MkRules.dist}.
-
-@node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
-@subsection 64-bit toolchain
-
-Several versions of the MinGW-w64 toolchain are available: use one of
-them to replace (or supplement) the 32-bit toolchain's @file{bin}
-directory in your path.  Then copy file @file{src/gnuwin32/MkRules.dist}
-to @file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64}
-(and if needed @code{BINPREF64} and other macros appropriate to your
-toolchain) then make @R{} in the usual way.
-
-The toolchain we use is technically a cross-compiler: the tools run
-under 32-bit Windows but produce code to run under 64-bit
-Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
-be done under 64-bit Windows.  So does installation of source packages
-unless @option{--no-test-load} is used.}  This was compiled from a
-distribution from
-@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/},
-specifically @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip}: it
-includes a pre-release of @command{gcc 4.5.2}.  However, this has been
-patched to use static Fortran and C++ runtime libraries: a suitable
-toolchain is included in @file{Rtools214.exe}.
-
-@node Useful additional programs,  , The MinGW toolchain, The Windows toolset
+@node Useful additional programs,  , The MinGW-w64 toolchain, The Windows toolset
 @section Useful additional programs
 
 The process of making the installer will make use of @code{qpdf} to
@@ -4975,7 +4934,7 @@ Developers of packages will find some of the `goodies' at
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.  The
-binary distribution is included in @file{Rtools214.exe}.
+binary distribution is included in @file{Rtools215.exe}.
 
 The file @file{xzutils.zip} contains the program @command{xz} which can
 be used to (de)compress files with that form of compression.
