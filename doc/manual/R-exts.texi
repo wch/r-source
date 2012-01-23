@@ -1565,13 +1565,14 @@ SHLIB_OPENMP_FFLAGS
 
 @noindent
 are available for use in @file{src/Makevars} or
-@file{src/Makevars.win}.  Include the appropriate macro in
-@code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so on, and also in
-@code{PKG_LIBS}.  C/C++ code that needs to be conditioned on the use of
-OpenMP can be used inside @code{#ifdef SUPPORT_OPENMP}, a macro defined
-in the header @file{Rconfig.h} (@pxref{Platform and version
-information}): however the use of OpenMP is most often indicated by
-@samp{#pragma} statements.
+@file{src/Makevars.win}.@footnote{But OpenMP support is not available
+with the default toolchain used prior to @R{} 2.14.2 on Windows.}
+Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
+and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
+conditioned on the use of OpenMP can be used inside @code{#ifdef
+SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
+(@pxref{Platform and version information}): however the use of OpenMP is
+most often indicated by @samp{#pragma} statements.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -1590,7 +1591,7 @@ in use), and it may be safest to assume version 2.5.
 
 OpenMP support is expected to be available on Windows in the toolchain
 used for @R{} 2.15.0 and these macros will be set appropriately.  It is
-@emph{not} available in earlier version of @R{}.
+not available prior to @R{} 2.14.2.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
@@ -1637,13 +1638,12 @@ implement @code{libptheads} as an import library for a DLL.
 Whether Windows toolchains implement @code{pthreads} is up to the
 toolchain provider.  One issue has been licenses: @code{pthreads-w32} is
 licensed under LGPL which requires source code to be made available.
-The toolchains used to compile @R{} prior to version 2.15.0 do not
+The toolchains used to compile @R{} prior to version 2.14.2 do not
 contain @code{pthreads}, although in some cases @code{pthreads-w32}
-could be retro-fitted.  It is expected that the toolchain used from @R{}
-2.15.0 will support @code{pthreads}. As from @R{} 2.15.0 there is
-@command{make} variable @code{SHLIB_PTHREAD_FLAGS} available: this
-should be included in both @code{PKG_CPPFLAGS} (or the Fortran or F9x
-equivalents) and @code{PKG_LIBS}.
+could be retro-fitted.  As from @R{} 2.14.2 a @command{make} variable
+@code{SHLIB_PTHREAD_FLAGS} is available: this should be included in both
+@code{PKG_CPPFLAGS} (or the Fortran or F9x equivalents) and
+@code{PKG_LIBS}.
 
 The presence of a working @code{pthreads} implementation cannot be
 unambiguously determined without testing for yourself: however, that

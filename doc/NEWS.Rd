@@ -272,6 +272,9 @@
       \item The namespace import code was warning when identical
       S4 generic functions were imported more than once, but should
       not (reported by Brian Ripley, then Martin Morgan).
+      
+      \item \code{merge()} is no longer allowed to create a data frame
+      with duplicate column names (which confused \PR{14786}).
     }
   }
 }

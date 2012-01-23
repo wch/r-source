@@ -48,27 +48,10 @@
   
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item The supported toolchain has changed since the one used for
-      \R 2.12.0 to 2.14.x: see the\sQuote{R Installation and Administration
-	manual}.  Compiled code (except DLLs) may be incompatible with
-      previous toolchains (and compiled C++ code almost certainly will
-      be).
-
-      This is a \sQuote{multilib} toolchain: there is a single set of
-      tools in the \file{bin} directory and which sub-architecture is
-      selected by a flag: in most cases \option{-m32} \emph{vs}
-      \option{-m64}.
-
-      \item Since the toolchain uses only 32-bit executables, it is
+      \item As the current toolchain uses only 32-bit executables, it is
       possible to compile a package for both architectures on 32-bit
       Windows provided both architectures of \R have been installed: use
       \command{R CMD INSTALL --compile-both}.
-      
-      \item There is a new macro (aka make variable)
-      \samp{SHLIB_PTHREAD_FLAGS}.  This is set to
-      \option{-pthread} on builds which support it, and should be
-      included in both \samp{PKG_CPPFLAGS} (or the Fortran or F9x
-      equivalents) and \samp{PKG_LIBS}.
     }
   }
 }
@@ -85,11 +68,32 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The sources (and packages) can now be compiled using the
-      multilib toolchain recommended for \R 2.15.x: see the
-      \samp{MULTI} macro in \file{MkRules.dist}.
+      multilib toolchain developed for \R 2.15.x: see the
+      \samp{MULTI} macro in \file{MkRules.dist}.  This toolchain is used
+      for the CRAN binary distribution.
     }
   }
       
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The preferred toolchain has changed since the one used for
+      \R 2.12.0 to 2.14.1: see the\sQuote{R Installation and
+      Administration manual}.  Compiled code (except DLLs) may be
+      incompatible with previous toolchains (and compiled C++ code
+      almost certainly will be: users of \pkg{Rcpp} take care).
+
+      Ensure that the settings in \file{MkRules.local} are appropriate
+      to the toolchain you use.
+
+      \item There is a new macro (aka make variable)
+      \samp{SHLIB_PTHREAD_FLAGS}.  This is set to \option{-pthread} on
+      builds using toolchains which support it, and should be included
+      in both \samp{PKG_CPPFLAGS} (or the Fortran or F9x equivalents)
+      and \samp{PKG_LIBS}.
+    }
+  }
+}
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Using a prompt of more than 80 characters in

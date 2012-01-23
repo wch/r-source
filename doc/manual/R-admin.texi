@@ -1037,8 +1037,8 @@ install the extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @file{@var{R_HOME}} below.
 
-The toolchain used for @R{} 2.15.x differs from from that used for @R{}
-2.12.0 to @R{} 2.14.x.
+The toolchain used from @R{} 2.14.2 differs from from that used for @R{}
+2.12.0 to @R{} 2.14.1.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1089,13 +1089,13 @@ make rsync-recommended
 @end itemize
 
 The following additional items are normally installed by
-@file{Rtools*.exe}.  If instead you choose to do a completely manual
+@file{Rtools215.exe}.  If instead you choose to do a completely manual
 build you will also need
 
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools*.exe} and
+The Tcl/Tk support files are contained in @file{Rtools215.exe} and
 available as @file{.zip}s from
 @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
@@ -1453,7 +1453,7 @@ of Yu Gong at a crucial step in porting R to MinGW-w64 is gratefully
 acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
 
-Window 64-bit is now completely integrated into the @R{} and package
+Windows 64-bit is now completely integrated into the @R{} and package
 build systems.
 
 @node Testing a Windows Installation,  , Building from source, Installing R under Windows
@@ -4758,7 +4758,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.15.x and later.}  @file{Rtools215.exe},
+named@footnote{for @R{} 2.14.2 and later.}  @file{Rtools215.exe},
 available from @uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
@@ -4770,7 +4770,7 @@ See the subsections below for detailed descriptions.
 @item
 The command line tools (in @file{Rtools*.exe})
 @item
-The MinGW-w64 toolchain to compile C, Fortran and C++.
+The MinGW-w64 32/64-bit toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
 no compiled code, none of these are needed.  Perl is no longer needed to
@@ -4802,20 +4802,15 @@ For example for a 32-bit build, all on one line,
 
 @smallexample
 PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;c:\MiKTeX\miktex\bin;
-     c:\R\bin\i386;c:\windows;c:\windows\system32
+     c:\R\R-2.15\bin\i386;c:\windows;c:\windows\system32
 @end smallexample
 
 It is essential that the directory containing the command line tools
 comes first or second in the path: there are typically like-named
-tools@footnote{such as @command{sort}, @command{find} and
+tools@footnote{such as @command{sort}, @command{find} and perhaps
 @command{make}.} in other directories, and they will @strong{not}
-work. The ordering of the other directories is less important, but if
-in doubt, use the order above.  If you install both the 32 bit and 64
-bit toolchains from @file{Rtools*.exe}, it should work to list both in
-the path (as the automatic installer does), and this is needed if you
-want to install or build binary packages containing both architectures
-using the @command{--merge-multiarch} option as described in
-@ref{Windows packages}.  Other toolchains are more likely to conflict.
+work. The ordering of the other directories is less important, but if in
+doubt, use the order above.
 
 Our toolset contains copies of Cygwin DLLs that may conflict with other
 ones on your system if both are in the path at once.  The normal
@@ -4927,30 +4922,31 @@ Windows-style paths.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-The intention is that the released version of @R{} 2.15.0 will be built
-with a different toolchain from 2.14.x.  A candidate version can be
-downloaded from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/R215x.html}: this uses
-a beta version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
-project's runtime.  It is also part of @code{Rtools215.exe}.
+The released version of @R{} 2.15.0 will be built with a different
+toolchain from @R{} 2.14.1.  The preferred toolchain is part of
+@code{Rtools215.exe}: this uses a beta version of @command{gcc 4.6.3}
+and version 2.0.1 of the MinGW-w64 project's runtime.
 
-The candidate toolchain uses @emph{multilib}: that is there is a single
-front-end such as @command{gcc.exe} for each of the compilers and 32-bit
-(the default) and 64-bit compilation are selected by the
-flags@footnote{these flags apply to the compilers: some of the tools use
-different flags.  32-bit builds are the default.}  @option{-m32} and
-@option{-m64} respectively.  The tools are all 32-bit Windows
-executables and should be able to run on any current version of
-Windows---however you do need a 64-bit version of Windows to build
-64-bit @R{} as the build process runs @R{}.
+This toolchain uses @emph{multilib}: that is there is a single front-end
+such as @command{gcc.exe} for each of the compilers and 32-bit (the
+default) and 64-bit compilation are selected by the flags@footnote{these
+flags apply to the compilers: some of the tools use different flags.
+32-bit builds are the default.}  @option{-m32} and @option{-m64}
+respectively.  The tools are all 32-bit Windows executables and should
+be able to run on any current version of Windows---however you do need a
+64-bit version of Windows to build 64-bit @R{} as the build process runs
+@R{}.
 
 To select a 32-bit or 64-bit build of @R{}, set the options in
 @file{MkRules.local} appropriately (following the comments in the file).
 
 Some external software libraries will need to be re-compiled under the
-new toolchain: especially those providing a C++ interface. Many of those
-used by @acronym{CRAN} packages are available from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}
+new toolchain: especially those providing a C++ interface.  Many of
+those used by @acronym{CRAN} packages are available from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
+developing packages with @pkg{Rcpp} need to ensure that they use a
+version built with exactly the same toolchain as their package: the
+recommendation is to build @pkg{Rcpp} from its sources yourself.
 
 There is support for OpenMP and pthreads in this toolchain.  As the
 performance of OpenMP on Windows is poor for small tasks, it is not used
