@@ -955,7 +955,8 @@ get_exclude_patterns <- function()
                recursive = TRUE)
 
         ## work on 'data' directory if present
-        if(file_test("-d", file.path(pkgname, "data"))) {
+        if(file_test("-d", file.path(pkgname, "data")) ||
+           file_test("-f", file.path(pkgname, "R", "sysdata.rda"))) {
             messageLog(Log, "looking to see if a 'data/datalist' file should be added")
             ## in some cases data() needs the package installed as
             ## there are links to the package's namespace
