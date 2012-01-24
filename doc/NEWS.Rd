@@ -7,7 +7,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
-  \subsection{NEW FAEATURES}{
+  \subsection{NEW FEATURES}{
     \itemize{
       \item The internal \code{untar()} (as used by default by
       \command{R CMD INSTALL}) now knows about some \command{pax}
@@ -19,6 +19,13 @@
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
       \sQuote{large performance benefits can be had in many situations}.
+
+      \item Function \code{compactPDF()} in package \pkg{tools} now
+      takes the default for argument \code{gs_quality} from environment
+      variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
+      ultimate default, which prevents GhostScript being used in
+      preference to \command{qpdf} just because environment variable
+      \env{R_GSCMD} is set.
     }
   }
   

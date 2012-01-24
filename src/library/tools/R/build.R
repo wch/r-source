@@ -375,7 +375,7 @@ get_exclude_patterns <- function()
                                full.names = TRUE))
             && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
             messageLog(Log, "compacting vignettes and other PDF files")
-            compactPDF(pdfs, qpdf, gs_cmd = "") # so this always uses qpdf
+            compactPDF(pdfs, qpdf, gs_quality = "none") # so this always uses qpdf
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)

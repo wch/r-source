@@ -1248,7 +1248,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             td <- tempfile('pdf')
             dir.create(td)
             file.copy(pdfs, td)
-            res <- compactPDF(td, gs_cmd = "") # we say we use qpdf
+            res <- compactPDF(td, gs_quality = "none") # we say we use qpdf
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 resultLog(Log, "NOTE")

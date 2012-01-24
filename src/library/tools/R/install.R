@@ -970,9 +970,8 @@
                 pdfs <- dir(file.path(instdir, "doc"), pattern="\\.pdf",
                             recursive = TRUE, full.names = TRUE,
                             all.files = TRUE)
-                res <- compactPDF(pdfs, gs_cmd = "")
+                res <- compactPDF(pdfs, gs_quality = "none")
                 ## print selectively
-                res <- compactPDF(pdfs)
                 print(res[res$old > 1e5, ])
             }
 	}
