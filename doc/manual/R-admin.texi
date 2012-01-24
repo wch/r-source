@@ -4923,8 +4923,8 @@ Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
 The released version of @R{} 2.15.0 will be built with a different
-toolchain from @R{} 2.14.1.  The preferred toolchain is part of
-@code{Rtools215.exe}: this uses a beta version of @command{gcc 4.6.3}
+toolchain from @R{} 2.12.0 to 2.14.1.  The preferred toolchain is part
+of @code{Rtools215.exe}: this uses a beta version of @command{gcc 4.6.3}
 and version 2.0.1 of the MinGW-w64 project's runtime.
 
 This toolchain uses @emph{multilib}: that is there is a single front-end
