@@ -92,7 +92,6 @@
       and \samp{PKG_LIBS}.
     }
   }
-}
 
   \subsection{BUG FIXES}{
     \itemize{
