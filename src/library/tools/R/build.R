@@ -27,7 +27,8 @@
 newLog <- function(filename = "")
 {
     con <- if (nzchar(filename)) file(filename, "wt") else 0L
-    list(filename = filename, con = con, stars = "*", warnings = 0L)
+    list(filename = filename, con = con, stars = "*",
+         warnings = 0L, notes = 0L)
 }
 
 closeLog <- function(Log) if (Log$con > 2) close(Log$con)
@@ -69,7 +70,7 @@ warningLog <- function(Log, text="")
 {
     resultLog(Log, "WARNING")
     if (nzchar(text)) messageLog(Log, text)
-    Log$warnings <- Log$warnings+1L
+    Log$warnings <- Log$warnings + 1L
     invisible(Log)
 }
 
@@ -77,18 +78,30 @@ noteLog <- function(Log, text="")
 {
     resultLog(Log, "NOTE")
     if (nzchar(text)) messageLog(Log, text)
+    Log$notes <- Log$notes + 1L
+    invisible(Log)
 }
 
 summaryLog <- function(Log)
 {
-    if (Log$warnings > 1)
+    if((Log$warnings > 0L) || (Log$notes > 0L)) {
+        if(Log$warnings > 1L)
+            printLog(Log,
+                     sprintf("WARNING: There were %d warnings.\n",
+                             Log$warnings))
+        else if(Log$warnings == 1L)
+            printLog(Log,
+                     sprintf("WARNING: There was 1 warning.\n"))
+        if(Log$notes > 1L)
+            printLog(Log,
+                     sprintf("NOTE: There were %d notes.\n",
+                             Log$notes))
+        else if(Log$notes == 1L)
+            printLog(Log,
+                     sprintf("NOTE: There was 1 note.\n"))
         printLog(Log,
-                 sprintf("WARNING: There were %d warnings, see\n  %s\nfor details\n",
-                         Log$warnings, sQuote(Log$filename)))
-    else if (Log$warnings == 1)
-        printLog(Log,
-                 sprintf("WARNING: There was 1 warning, see\n  %s\nfor details\n",
-                         sQuote(Log$filename)))
+                 sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
+    }
 }
 
 writeDefaultNamespace <-
