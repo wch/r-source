@@ -80,13 +80,6 @@
       slightly preferred to calling \code{new()}, as explained on the
       \code{setClass} help page.
 
-      \item Function \code{compactPDF()} in package \pkg{tools} now
-      takes the default for argument \code{gs_quality} from environment
-      variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
-      ultimate default, which prevents GhostScript being used in
-      preference to \command{qpdf} just because environment variable
-      \env{R_GSCMD} is set.
-
       \item The \code{"dendrogram"} method of \code{str()} now takes
       its default for \code{last.str} from option \code{str.dendrogram.last}.
       
@@ -292,6 +285,13 @@
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
       \sQuote{large performance benefits can be had in many situations}.
+
+      \item Function \code{compactPDF()} in package \pkg{tools} now
+      takes the default for argument \code{gs_quality} from environment
+      variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
+      ultimate default, which prevents GhostScript being used in
+      preference to \command{qpdf} just because environment variable
+      \env{R_GSCMD} is set.
     }
   }
   
