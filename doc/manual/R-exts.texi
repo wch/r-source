@@ -1302,7 +1302,7 @@ pkg-config --list-all | sort
 @menu
 * OpenMP support::              
 * Using pthreads::              
-* Comppiling in sub-directories::  
+* Compiling in sub-directories::  
 @end menu
 
 Sometimes writing your own @file{configure} script can be avoided by
@@ -1597,7 +1597,7 @@ The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
 are only beneficial if quite substantial tasks are run in parallel.
 
-@node Using pthreads, Comppiling in sub-directories, OpenMP support, Using Makevars
+@node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
 
 There is no direct support for the POSIX threads (more commonly known as
@@ -1654,8 +1654,8 @@ See also the comments on performance under OpenMP: on all known @R{}
 platforms OpenMP is implemented @emph{via} @code{pthreads} and the known
 performance issues are in the latter.
 
-@node Comppiling in sub-directories,  , Using pthreads, Using Makevars
-@subsubsection Comppiling in sub-directories
+@node Compiling in sub-directories,  , Using pthreads, Using Makevars
+@subsubsection Compiling in sub-directories
 
 Package authors fairly often want to organize code in sub-directories of
 @file{src}, for example if they are including a separate piece of
@@ -1876,12 +1876,12 @@ code can be mixed with any other type of compiled code, nor that a build
 of @R{} will have support for such packages.
 
 Some (but not) all compilers specified by the @samp{FC} macro will
-accept Fortan 2003 or 2008 code.  For platform using @command{gfortran},
-you may need to include @option{-std=f2003} or @option{-std=f2008} in
-@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
-non-standard extensions.  The Solaris @command{f95} compiler `accepts
-some Fortran 2003 features'.  Such code should still use file extension
-@file{.f90} or @file{.f95}.
+accept Fortran 2003 or 2008 code.  For platforms using
+@command{gfortran}, you may need to include @option{-std=f2003} or
+@option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
+Fortran 95 with non-standard extensions.  The Solaris @command{f95}
+compiler `accepts some Fortran 2003 features'.  Such code should still
+use file extension @file{.f90} or @file{.f95}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages

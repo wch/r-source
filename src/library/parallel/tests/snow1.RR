@@ -16,7 +16,7 @@ clusterEvalQ(cl, {
   ## set up each worker.  Could also use clusterExport()
   library(boot)
   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-  cd4.mle <- list(m = mean(cd4), v = var(cd4))
+  cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
   NULL
 })
 res <- clusterEvalQ(cl, boot(cd4, corr, R = 100,

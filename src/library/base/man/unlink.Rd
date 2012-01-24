@@ -27,6 +27,8 @@
 
 #ifdef unix
   On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
+  Beware that \code{unlink(x, recursive = TRUE)} will on most platforms
+  delete the contents of a directory target of a symbolic link.
   
 #endif  
   Wildcard expansion is done by the internal code of
