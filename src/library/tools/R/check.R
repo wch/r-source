@@ -1362,7 +1362,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
 
         ## Now look for TeX leftovers (and soiltexture, Amelia ...).
-        bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj)$",
+        bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj|drv|ins)$",
                      files, ignore.case = TRUE)
         if (any(bad)) {
             if(!any) noteLog()
@@ -3362,7 +3362,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if ((Log$warnings > 0L) || (Log$notes > 0L)) {
             message(""); summaryLog(Log)
         }
-        
+
         closeLog(Log)
         message("")
 
