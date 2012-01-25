@@ -29,19 +29,17 @@ dev.flush(level = 1L)
   clears all pending holds the screen display is refreshed and normal
   operation is resumed.
 
-#ifdef unix
   This is implemented for the cairo-based \code{X11} types
   with buffering.  When the hold level is positive the \sQuote{watch}
   cursor is set on the device's window.
 
-  It is also available on the \code{quartz} device on Mac OS X.
-#endif
-#ifdef windows
+  It is available on the \code{quartz} device on Mac OS X.
+
   This is implemented for the \code{windows} device with
   buffering selected (the default).  When the hold level is positive the
   \sQuote{busy} cursor is set on the device's window.
-#endif
 }
+
 \value{
   The current level after the change, invisibly.  This is \code{0} on
   devices where hold levels are not supported.

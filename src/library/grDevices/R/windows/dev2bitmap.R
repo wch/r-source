@@ -93,7 +93,7 @@ bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
         poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
         poss <- poss[nzchar(poss)]
         gsexe <- if(length(poss)) poss else "gswin32c.exe"
-    } else if(length(grep(" ", gsexe, fixed=TRUE))> 0)
+    } else if(length(grep(" ", gsexe, fixed=TRUE)))
         gsexe <- shortPathName(gsexe)
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE, invisible=TRUE)
     st <- grep("^Available", gshelp)

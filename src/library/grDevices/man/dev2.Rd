@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev2}
@@ -26,15 +26,9 @@ dev.control(displaylist = c("inhibit", "enable"))
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}
   \item{which}{A device number specifying the device to copy to.}
-#ifdef unix
   \item{out.type}{The name of the output device: can be \code{"pdf"}, or
-    \code{"quartz"} (some Mac OS X builds) or \code{"cairo"} (some
-    Unix-alikes, see \code{\link{cairo_pdf}}).}
-#endif
-#ifdef windows
-  \item{out.type}{The name of the output device: only \code{"pdf"} is
-    allowed on Windows.}
-#endif
+    \code{"quartz"} (some Mac OS X builds) or \code{"cairo"} (Windows
+    and some Unix-alikes, see \code{\link{cairo_pdf}}).}
   \item{displaylist}{A character string: the only valid values are
     \code{"inhibit"} and \code{"enable"}.}
 }
@@ -92,18 +86,11 @@ dev.control(displaylist = c("inhibit", "enable"))
   from was opened with a \code{family} argument, a suitable
   \code{family} argument will need to be included in \code{\dots}.
 
-#ifdef unix
   The default for \code{dev.print} is to produce and print a postscript
-  copy, if \code{\link{options}("printcmd")} is set suitably.
-#endif
-#ifdef windows
-  The default for \code{dev.print} is to produce and print a postscript
-  copy.  This will not work unless
-  \code{\link{options}("printcmd")} is set suitably and you have a
-  PostScript printer: see \code{\link{postscript}} for how to set this
-  up.  Windows users may prefer to use \code{dev.print(win.print)}.
-#endif
-
+  copy.  This will not work unless \code{\link{options}("printcmd")} is
+  set suitably and you have a PostScript printing system: see
+  \code{\link{postscript}} for how to set this up.  Windows users may
+  prefer to use \code{dev.print(win.print)}.
 
   \code{dev.print} is most useful for producing a postscript print
   (its default) when the following applies.  Unless
@@ -144,7 +131,7 @@ dev.control(displaylist = c("inhibit", "enable"))
 }
 \examples{
 \dontrun{
-x11()
+x11() # on a Unix-alike
 plot(rnorm(10), main="Plot 1")
 dev.copy(device=x11)
 mtext("Copy 1", 3)

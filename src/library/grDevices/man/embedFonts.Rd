@@ -38,18 +38,12 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   you will need to tell Ghostscript where the font is, using
   something like \code{options="-sFONTPATH=path/to/font"}.
 
-  This function relies on a suitable Ghostscript executable being in
-  your path, or the environment variable \env{R_GSCMD} (the same as
-  \code{\link{bitmap}}) being set as the full path to the Ghostscript
-  executable.
-#ifdef unix
-  This defaults to \code{"gs"}.
-#endif
-#ifdef windows
-  For Windows users, this should be the path to \code{gswin32c.exe} or
-  \code{gswin64c.exe}.  If unset, environment variable \env{GSC} is
-  tried and then \code{"gswin32c.exe"}.
-#endif
+  You will need \code{ghostscript}: the full path to the executable can
+  be set by the environment variable \env{R_GSCMD}. It this is unset, a
+  GhostScript executable will be looked for by name on your path: on a
+  Unix alike \code{"gs"} is used, and on Windows the setting of the
+  environment variable \env{GSC} is used, otherwise commands
+  \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
 
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.

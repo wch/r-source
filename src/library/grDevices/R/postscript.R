@@ -973,7 +973,11 @@ embedFonts <- function(file, # The ps or pdf file to convert
     if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- switch(.Platform$OS.type,
                         unix = "gs",
-                        windows = "gswin32c.exe")
+                        windows = {
+                            poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
+                            poss <- poss[nzchar(poss)]
+                            if(length(poss)) poss else "gswin32c.exe"
+                        })
     } else if(.Platform$OS.type == "windows" &&
               length(grep(" ", gsexe, fixed=TRUE)))
         gsexe <- shortPathName(gsexe)

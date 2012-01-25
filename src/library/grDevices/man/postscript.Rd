@@ -412,7 +412,7 @@ postscript("|lp -dlw")
 dev.off()              # plot will appear on printer
 #endif
 #ifdef windows
-options(printcmd='redpr -P"\\\\markov\\lw"')
+options(printcmd='redpr -P"\\\\printhost\\lw"')
 postscript(file=tempfile("Rps."), print.it=TRUE)
 # produce the desired graph(s)
 dev.off()              # send plot file to the printer
