@@ -19,13 +19,16 @@
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
       \sQuote{large performance benefits can be had in many situations}.
+      This is supported on most but not all \R platforms.
 
       \item Function \code{compactPDF()} in package \pkg{tools} now
       takes the default for argument \code{gs_quality} from environment
       variable \env{GS_QUALITY}: there is a new value \code{"none"}, the
       ultimate default, which prevents GhostScript being used in
       preference to \command{qpdf} just because environment variable
-      \env{R_GSCMD} is set.
+      \env{R_GSCMD} is set.  If \env{R_GSCMD} is unset or set to
+      \code{""}, the function will try to find a suitable GhostScript
+      executable.
     }
   }
   
