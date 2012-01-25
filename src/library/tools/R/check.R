@@ -1360,13 +1360,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      paste(sQuote(bad), collapse = ", "), "\n",
                      "Please remove them from your package.\n")
         }
-        files <- dir(file.path(pkgdir, "inst", "doc"), recursive = TRUE,
+        files2 <- dir(file.path(pkgdir, "inst", "doc"), recursive = TRUE,
                      pattern = "[.](cls|sty|drv)$", full.names = TRUE)
         ## Skip Rnews.sty and RJournal.sty for now
-        files <- files[! basename(files) %in%
+        files2 <- files2[! basename(files2) %in%
                        c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
         bad <- character()
-        for(f in files) {
+        for(f in files2) {
             pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
             if(length(grep(pat, readLines(f, warn = FALSE))) == 3L)
                bad <- c(bad, basename(f))
