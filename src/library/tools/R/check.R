@@ -1360,6 +1360,26 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      paste(sQuote(bad), collapse = ", "), "\n",
                      "Please remove them from your package.\n")
         }
+        files <- dir(file.path(pkgdir, "inst", "doc"), recursive = TRUE,
+                     pattern = "[.](cls|sty|drv)$", full.names = TRUE)
+        ## Skip Rnews.sty and RJournal.sty for now
+        files <- files[! basename(files) %in%
+                       c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
+        bad <- character()
+        for(f in files) {
+            pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
+            if(length(grep(pat, readLines(f, warn = FALSE))) == 3L)
+               bad <- c(bad, basename(f))
+        }
+        if (length(bad)) {
+            if(!any) noteLog()
+            any <- TRUE
+            printLog(Log,
+                     "The following files contain a license that requires\n",
+                     "distribution of original sources:\n",
+                     "  ", paste(sQuote(bad), collapse = ", "), "\n",
+                     "Please ensure that you have complied with it.\n")
+        }
 
         ## Now look for TeX leftovers (and soiltexture, Amelia ...).
         bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj|drv|ins)$",
@@ -1369,7 +1389,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             any <- TRUE
             printLog(Log,
                      "The following files look like leftovers/mistakes:\n",
-                     paste(sQuote(files[bad]), collapse = ", "), "\n",
+                     paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
+                                   indent = 2, exdent = 2), collapse = "\n"),
                      "Please remove them from your package.\n")
         }
 
