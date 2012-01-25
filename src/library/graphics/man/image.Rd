@@ -101,14 +101,13 @@ image(x, \dots)
   Images for large \code{z} on a regular grid are rendered more
   efficiently with \code{useRaster = TRUE} and can prevent rare
   anti-aliasing artifacts, but may not be supported by all graphics
-  devices.  Some devices (such as \code{postscript} and
-  \code{X11(type = "Xlib")}) which do not support semi-transparent
-  colours may emit missing values as white rather than transparent, and
-  there may be limitations on the size of a raster image.
-#ifdef windows
-  Problems with the rendering of raster images have been reported using
-  \code{windows()} devices under Remote Desktop.
-#endif
+  devices.  Some devices (such as \code{postscript} and \code{X11(type =
+  "Xlib")}) which do not support semi-transparent colours may emit
+  missing values as white rather than transparent, and there may be
+  limitations on the size of a raster image.  (Problems with the
+  rendering of raster images have been reported by users of
+  \code{windows()} devices under Remote Desktop, at least under its
+  default settings.)
   
   The graphics files in PDF and PostScript can be much smaller under
   this option.
