@@ -36,11 +36,10 @@ rasterImage(image,
   
   Plotting raster images is not supported on all devices and may have
   limitations where supported, for example (e.g. for \code{postscript}
-  and \code{X11(type = "Xlib")}) restricted to opaque colors.
-#ifdef windows
-  Problems with rendering of raster images have been reported using
-  \code{windows()} devices under Remote Desktop.
-#endif
+  and \code{X11(type = "Xlib")}) are restricted to opaque colors).
+  Problems with the rendering of raster images have been reported by
+  users of \code{windows()} devices under Remote Desktop, at least under
+  its default settings.
 }
 \seealso{
   \code{\link{rect}},
