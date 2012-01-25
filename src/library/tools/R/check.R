@@ -1368,8 +1368,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         bad <- character()
         for(f in files2) {
             pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
-            if(length(grep(pat, readLines(f, warn = FALSE))) == 3L)
-               bad <- c(bad, basename(f))
+            if(length(grep(pat, readLines(f, warn = FALSE), useBytes = TRUE))
+               == 3L) bad <- c(bad, basename(f))
         }
         if (length(bad)) {
             if(!any) noteLog()
