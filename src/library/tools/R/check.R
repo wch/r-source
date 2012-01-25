@@ -1391,7 +1391,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      "The following files look like leftovers/mistakes:\n",
                      paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
                                    indent = 2, exdent = 2), collapse = "\n"),
-                     "Please remove them from your package.\n")
+                     "\nPlease remove them from your package.\n")
         }
 
         files <- dir(doc_dir)
