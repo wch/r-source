@@ -1328,19 +1328,22 @@ examples below are equivalent.
 The @code{else} clause is optional.  The statement @code{if(any(x <= 0))
 x <- x[x <= 0]} is valid.  When the @code{if} statement is not in a
 block the @code{else}, if present, must appear on the same line as
-@var{statement1}.  Otherwise the new line at the end of @var{statement1}
-yields a syntactically complete statement that is evaluated.
+the end of @var{statement2}.  Otherwise the new line at the end of
+@var{statement2} completes the @code{if} and yields a syntactically
+complete statement that is evaluated.  A simple solution is to use a
+compound statement wrapped in braces, putting the @code{else} on the
+same line as the closing brace that marks the end of the statement.
 
 If/else statements can be nested.
 
 @example
-if ( @var{statement1} )
+if ( @var{statement1} ) @{
     @var{statement2}
-else if ( @var{statement3} )
+@} else if ( @var{statement3} ) @{
     @var{statement4}
-else if ( @var{statement5} )
+@} else if ( @var{statement5} ) @{
     @var{statement6}
-else
+@} else
     @var{statement8}
 @end example
 
