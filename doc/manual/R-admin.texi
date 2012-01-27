@@ -2572,10 +2572,12 @@ library.
 @node Windows standalone,  , Unix-alike standalone, The standalone Rmath library
 @section Windows
 
-You need to set up almost all the tools to make @R{} and then run (in a
-Unix-like shell)
+You need to set up@footnote{including copying @file{MkRules.dist} to
+@file{MkRule.local} and selecting the architecture.} almost all the
+tools to make @R{} and then run (in a Unix-like shell)
 
 @example
+(cd ../../gnuwin32; make MkRules)
 (cd ../../include; make -f Makefile.win config.h Rconfig.h Rmath.h)
 make -f Makefile.win
 @end example
