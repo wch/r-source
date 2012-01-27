@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-12-01 r57776)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2012-01-27 r58210)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1847,7 +1847,7 @@ character(0)
 > ### ** Examples
 > 
 > ## Not run: 
-> ##D x11()
+> ##D x11() # on a Unix-alike
 > ##D plot(rnorm(10), main="Plot 1")
 > ##D dev.copy(device=x11)
 > ##D mtext("Copy 1", 3)
@@ -3504,7 +3504,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.475 0.086 2.791 0 0 
+Time elapsed:  2.174 0.051 2.324 0 0 
 > grDevices::dev.off()
 null device 
           1 
