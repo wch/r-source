@@ -106,6 +106,11 @@
       days, close to universal) and (un)serialization takes an
       appreciable amount of time this may speed up noticeably
       transferring data between systems.
+
+      \item The internal (un)serialization code is faster for long
+      vectors, particularly with XDR on some platforms.  (Based on a
+      suggested patch by Michael Spiegel.)
+      % https://stat.ethz.ch/pipermail/r-devel/2011-September/062113.html
     }
   }
 

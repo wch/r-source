@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Development Core Team
+ *  Copyright (C) 1997--2012  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -162,6 +162,14 @@ static SEXP ReadItem(SEXP ref_table, R_inpstream_t stream);
 static void WriteBC(SEXP s, SEXP ref_table, R_outpstream_t stream);
 static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
 #endif
+
+#define R_XDR_COMPLEX_SIZE 16
+static void R_XDREncodeDoubleVector(double *d, void *buf, int len);
+static void R_XDRDecodeDoubleVector(void *input, double *output, int len);
+static void R_XDREncodeComplexVector(Rcomplex *c, void *buf, int len);
+static void R_XDRDecodeComplexVector(void *input, Rcomplex *output, int len);
+static void R_XDREncodeIntegerVector(int *i, void *buf, int len);
+static void R_XDRDecodeIntegerVector(void *input, int *output, int len);
 
 /*
  * Constants
@@ -793,19 +801,55 @@ static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table)
 	WriteItem(STRING_ELT(s, i), ref_table, stream);
 }
 
-/* e.g., OutVec(fp, obj, INTEGER, OutInteger) */
-#define OutVec(fp, obj, accessor, outfunc)				\
-	do {								\
-		int cnt;						\
-		for (cnt = 0; cnt < LENGTH(obj); ++cnt)		\
-			outfunc(fp, accessor(obj, cnt));		\
-	} while (0)
-
-#define LOGICAL_ELT(x,__i__)	LOGICAL(x)[__i__]
 #define INTEGER_ELT(x,__i__)	INTEGER(x)[__i__]
 #define REAL_ELT(x,__i__)	REAL(x)[__i__]
 #define COMPLEX_ELT(x,__i__)	COMPLEX(x)[__i__]
 #define RAW_ELT(x,__i__)	RAW(x)[__i__]
+
+/* There is a potential problem here: the R_XDR* function can
+   call error, in which case the memory would not be freed */
+#define OutVec(NAME, CAPNAME, XDR, CAPXDR, TYPE) \
+static R_INLINE void Out ## NAME ## Vec(R_outpstream_t stream, SEXP s, int length) { \
+    OutInteger(stream, length); \
+    switch (stream->type) { \
+    case R_pstream_xdr_format: \
+	if (length > (8096 / R_XDR_## CAPXDR ##_SIZE)) { \
+	    char *buf = Calloc( R_XDR_ ## CAPXDR ## _SIZE * length, char); \
+	    R_XDREncode ## XDR ## Vector(CAPNAME(s), buf, length); \
+	    stream->OutBytes(stream, buf, R_XDR_ ## CAPXDR ## _SIZE * length); \
+	    Free(buf); \
+	} else { \
+	    char buf[8096]; \
+	    R_XDREncode ## XDR ## Vector(CAPNAME(s), buf, length); \
+	    stream->OutBytes(stream, buf, R_XDR_ ## CAPXDR ## _SIZE * length); \
+	} \
+	break; \
+    case R_pstream_binary_format: \
+	stream->OutBytes(stream, CAPNAME(s), sizeof(TYPE) * length); \
+	break; \
+    default: \
+	for (int cnt = 0; cnt < length; ++cnt) \
+	    Out ## NAME(stream, CAPNAME ## _ELT(s, cnt)); \
+    } \
+}
+
+OutVec(Integer, INTEGER, Integer, INTEGER, int)
+OutVec(Real, REAL, Double, DOUBLE, double)
+OutVec(Complex, COMPLEX, Complex, COMPLEX, Rcomplex)
+
+static R_INLINE void OutByteVec(R_outpstream_t stream, SEXP s, int length)
+{
+    OutInteger(stream, length);
+    switch (stream->type) {
+    case R_pstream_xdr_format:
+    case R_pstream_binary_format:
+	stream->OutBytes(stream, RAW(s), length);
+	break;
+    default:
+	for (int cnt = 0; cnt < length; ++cnt)
+	    OutByte(stream, RAW_ELT(s, cnt));
+    }
+}
 
 static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 {
@@ -933,16 +977,13 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    break;
 	case LGLSXP:
 	case INTSXP:
-	    OutInteger(stream, LENGTH(s));
-	    OutVec(stream, s, INTEGER_ELT, OutInteger);
+	    OutIntegerVec(stream, s, LENGTH(s));
 	    break;
 	case REALSXP:
-	    OutInteger(stream, LENGTH(s));
-	    OutVec(stream, s, REAL_ELT, OutReal);
+	    OutRealVec(stream, s, LENGTH(s));
 	    break;
 	case CPLXSXP:
-	    OutInteger(stream, LENGTH(s));
-	    OutVec(stream, s, COMPLEX_ELT, OutComplex);
+	    OutComplexVec(stream, s, LENGTH(s));
 	    break;
 	case STRSXP:
 	    OutInteger(stream, LENGTH(s));
@@ -963,8 +1004,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    error(_("this version of R cannot write byte code objects"));
 #endif
 	case RAWSXP:
-	    OutInteger(stream, LENGTH(s));
-	    OutVec(stream, s, RAW_ELT, OutByte);
+	    OutByteVec(stream, s, LENGTH(s));
 	    break;
 	case S4SXP:
 	  break; /* only attributes (i.e., slots) count */
@@ -1215,20 +1255,40 @@ static SEXP InStringVec(R_inpstream_t stream, SEXP ref_table)
     return s;
 }
 
-#define InVec(fp, obj, accessor, infunc, length)			\
-	do {								\
-		int cnt;						\
-		for (cnt = 0; cnt < length; ++cnt)		\
-			accessor(obj, cnt, infunc(fp));		\
-	} while (0)
+/* There is a potential problem here: the R_XDR* function can
+   call error, in which case the memory would not be freed */
+#define InVec(NAME, CAPNAME, XDR, CAPXDR, TYPE) \
+static R_INLINE void In ## NAME ## Vec(R_inpstream_t stream, SEXP obj, int length) { \
+    switch (stream->type) { \
+    case R_pstream_xdr_format: \
+	if (length > (8096 / R_XDR_## CAPXDR ##_SIZE)) { \
+	    char *buf = Calloc( R_XDR_ ## CAPXDR ## _SIZE * length, char); \
+	    stream->InBytes(stream, buf, R_XDR_ ## CAPXDR ## _SIZE * length); \
+	    R_XDRDecode ## XDR ## Vector(buf, CAPNAME(obj), length); \
+	    Free(buf); \
+	} else { \
+	    char buf[8096]; \
+	    stream->InBytes(stream, buf, R_XDR_ ## CAPXDR ## _SIZE * length); \
+	    R_XDRDecode ## XDR ## Vector(buf, CAPNAME(obj), length); \
+	} \
+	break; \
+    case R_pstream_binary_format: \
+	stream->InBytes(stream, CAPNAME(obj), sizeof(TYPE) * length); \
+	break; \
+	default: \
+	    for (int cnt = 0; cnt < length; ++cnt) \
+		SET_ ## CAPNAME ## _ELT(obj, cnt, In ## NAME(stream)); \
+    } \
+}
 
-
-
-#define SET_LOGICAL_ELT(x,__i__,v)	(LOGICAL_ELT(x,__i__)=(v))
 #define SET_INTEGER_ELT(x,__i__,v)	(INTEGER_ELT(x,__i__)=(v))
 #define SET_REAL_ELT(x,__i__,v)		(REAL_ELT(x,__i__)=(v))
 #define SET_COMPLEX_ELT(x,__i__,v)	(COMPLEX_ELT(x,__i__)=(v))
 #define SET_RAW_ELT(x,__i__,v)		(RAW_ELT(x,__i__)=(v))
+
+InVec(Integer, INTEGER, Integer, INTEGER, int)
+InVec(Real, REAL, Double, DOUBLE, double)
+InVec(Complex, COMPLEX, Complex, COMPLEX, Rcomplex)
 
 static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 {
@@ -1380,24 +1440,20 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    }
 	    break;
 	case LGLSXP:
-	    length = InInteger(stream);
-	    PROTECT(s = allocVector(type, length));
-	    InVec(stream, s, SET_LOGICAL_ELT, InInteger, length);
-	    break;
 	case INTSXP:
 	    length = InInteger(stream);
 	    PROTECT(s = allocVector(type, length));
-	    InVec(stream, s, SET_INTEGER_ELT, InInteger, length);
+		InIntegerVec(stream, s, length);
 	    break;
 	case REALSXP:
 	    length = InInteger(stream);
 	    PROTECT(s = allocVector(type, length));
-	    InVec(stream, s, SET_REAL_ELT, InReal, length);
+	    InRealVec(stream, s, length);
 	    break;
 	case CPLXSXP:
 	    length = InInteger(stream);
 	    PROTECT(s = allocVector(type, length));
-	    InVec(stream, s, SET_COMPLEX_ELT, InComplex, length);
+	    InComplexVec(stream, s, length);
 	    break;
 	case STRSXP:
 	    length = InInteger(stream);
@@ -2495,4 +2551,83 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     UNPROTECT(1);
     return val;
+}
+
+#include <rpc/types.h>
+#include <rpc/xdr.h>
+
+static void R_XDREncodeDoubleVector(double *d, void *buf, int len)
+{
+    XDR xdrs;
+    Rboolean success = TRUE;
+
+    xdrmem_create(&xdrs, (char *) buf, len * R_XDR_DOUBLE_SIZE, XDR_ENCODE);
+    for(int cnt = 0; cnt < len && success; cnt++)
+	success = xdr_double(&xdrs, d + cnt);
+    xdr_destroy(&xdrs);
+    if (!success) error(_("XDR write failed"));
+}
+
+static void R_XDRDecodeDoubleVector(void *input, double *output, int len)
+{
+    XDR xdrs;
+    Rboolean success = TRUE;
+
+    xdrmem_create(&xdrs, (char*) input, len * R_XDR_DOUBLE_SIZE, XDR_DECODE);
+    for(int cnt = 0; cnt < len && success; cnt++)
+	success = xdr_double(&xdrs, output + cnt);
+    xdr_destroy(&xdrs);
+    if (!success) error(_("XDR read failed"));
+}
+
+static void R_XDREncodeComplexVector(Rcomplex *c, void *buf, int len)
+{
+    XDR xdrs;
+    Rboolean success = TRUE;
+
+    xdrmem_create(&xdrs, (char *) buf, len * R_XDR_COMPLEX_SIZE, XDR_ENCODE);
+    for(int cnt = 0; cnt < len && success; cnt++) {
+       success = xdr_double(&xdrs, &(c[cnt].r));
+       if (success) success =  xdr_double(&xdrs, &(c[cnt].i));
+    }
+    xdr_destroy(&xdrs);
+    if (!success) error(_("XDR write failed"));
+}
+
+static void R_XDRDecodeComplexVector(void *input, Rcomplex *output, int len)
+{
+    XDR xdrs;
+    Rboolean success = TRUE;
+
+    xdrmem_create(&xdrs, (char*) input, len * R_XDR_COMPLEX_SIZE, XDR_DECODE);
+    for(int cnt = 0; cnt < len && success; cnt++) {
+	success = xdr_double(&xdrs, &(output[cnt].r));
+	if (success) success =  xdr_double(&xdrs, &(output[cnt].i));
+    }
+    xdr_destroy(&xdrs);
+    if (!success) error(_("XDR read failed"));
+}
+
+static void R_XDREncodeIntegerVector(int *i, void *buf, int len)
+{
+    XDR xdrs;
+    Rboolean success = TRUE;
+
+    xdrmem_create(&xdrs, (char *) buf, len * R_XDR_INTEGER_SIZE, XDR_ENCODE);
+    for(int cnt = 0; cnt < len && success; cnt++) 
+	success = xdr_int(&xdrs, i + cnt);
+    xdr_destroy(&xdrs);
+    if (!success) error(_("XDR write failed"));
+}
+
+static void R_XDRDecodeIntegerVector(void *input, int *output, int len)
+{
+    XDR xdrs;
+    Rboolean success = TRUE;
+
+    xdrmem_create(&xdrs, (char*) input, len * R_XDR_INTEGER_SIZE, XDR_DECODE);
+    for(int cnt = 0; cnt < len && success; cnt++)
+	success = xdr_int(&xdrs, output + cnt);
+    xdr_destroy(&xdrs);
+    if (!success) error(_("XDR read failed"));
 }
