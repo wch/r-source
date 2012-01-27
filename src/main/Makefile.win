@@ -66,6 +66,7 @@ grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
 memory-CPPFLAGS=$(malloc-DEFS)
 printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
+serialize-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
 util-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
 util-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
