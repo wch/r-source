@@ -129,6 +129,14 @@
 
       \item There are new load-balancing functions \code{parLapplyLB()}
       and \code{parSapplyLB()}.
+
+      \item \code{makePSOCKCluster()} has a new option \code{useXDR =
+	FALSE} which can be used to avoid byte-shuffling for
+      serialization when all the nodes are known to little-endian (or
+      all big-endian).
+
+      \item \code{makeForkCluster()} and the multicore-based functions
+      all use native byte order for serialization.
     }
   }
 

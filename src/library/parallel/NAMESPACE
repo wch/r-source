@@ -16,12 +16,16 @@ export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)
+S3method(print, SOCK0node)
 S3method("[", cluster)
 S3method(closeNode, SOCKnode)
+S3method(closeNode, SOCK0node)
 S3method(closeNode, default)
 S3method(recvData, SOCKnode)
+S3method(recvData, SOCK0node)
 S3method(recvOneData, SOCKcluster)
 S3method(sendData, SOCKnode)
+S3method(sendData, SOCK0node)
 S3method(stopCluster, default)
 
 ## To support snow clusters

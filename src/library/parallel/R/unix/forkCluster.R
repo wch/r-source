@@ -44,7 +44,7 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
             ## maybe use `try' and sleep/retry if first time fails?
             con <- socketConnection(master, port = port, blocking = TRUE,
                                     open = "a+b", timeout = timeout)
-            structure(list(con = con), class = "SOCKnode")
+            structure(list(con = con), class = "SOCK0node")
         }
         sinkWorkerOutput(outfile)
         msg <- sprintf("starting worker pid=%d on %s at %s\n",
@@ -62,5 +62,5 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
     con <- socketConnection("localhost", port = port, server = TRUE,
                             blocking = TRUE, open = "a+b", timeout = timeout)
     structure(list(con = con, host = "localhost", rank = rank),
-              class = c("forknode", "SOCKnode"))
+              class = c("forknode", "SOCK0node"))
 }
