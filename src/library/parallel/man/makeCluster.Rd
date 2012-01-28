@@ -96,7 +96,7 @@ setDefaultCluster(cl = NULL)
       load the \pkg{methods} package: not loading it saves ca 30\% of the
       startup time of the cluster.}
     \item{\code{useXDR}}{Logical. If true (default) serialization will
-      use XDR: where large amounts of data are to been transferred and
+      use XDR: where large amounts of data are to be transferred and
       all the nodes are little-endian, communication may be
       substantially fast if this is set to false.}
   }
