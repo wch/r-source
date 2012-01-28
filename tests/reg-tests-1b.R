@@ -1693,5 +1693,18 @@ stopifnot(identical(duplicated(data.frame(c(1, 1)), fromLast = TRUE),
                     duplicated(c(1, 1), fromLast = TRUE)))
 ## first ignored fromLast in 2.14.0.
 
+## Tests of serialization (new internal code in 2.15.0)
+input <- pi^(1:10)
+stopifnot(identical(input, unserialize(serialize(input, NULL))))
+stopifnot(identical(input, unserialize(serialize(input, NULL, xdr = FALSE))))
+z <- pi+ 3*1i
+input <- z^(1:10)
+stopifnot(identical(input, unserialize(serialize(input, NULL))))
+stopifnot(identical(input, unserialize(serialize(input, NULL, xdr = FALSE))))
+input <- matrix(1:1000000, 1000, 1000)
+stopifnot(identical(input, unserialize(serialize(input, NULL))))
+stopifnot(identical(input, unserialize(serialize(input, NULL, xdr = FALSE))))
+## Just a test for possible regressions.
+
 
 proc.time()
