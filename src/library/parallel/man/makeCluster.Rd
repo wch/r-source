@@ -38,7 +38,7 @@ stopCluster(cl)
 \details{
   \code{makeCluster} creates a cluster of one of the supported types.
   The default type, \code{"PSOCK"}, calls \code{makePSOCKcluster}.  Type
-  \code{"FORK"}calls \code{makeForkCluster}.  Other types are passed to
+  \code{"FORK"} calls \code{makeForkCluster}.  Other types are passed to
   package \CRANpkg{snow}.
   
   \code{makePSOCKcluster} is very similar to \code{makeSOCKcluster} in

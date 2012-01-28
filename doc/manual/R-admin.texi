@@ -2483,8 +2483,9 @@ make
 @end example
 
 @noindent
-will make standalone libraries @file{libRmath.a} and @file{libRmath.so}:
-@samp{make static} and @samp{make shared} will create just one of them.
+will make standalone libraries @file{libRmath.a} and @file{libRmath.so}
+(@file{libRmath.dylib} on Mac OS X): @samp{make static} and @samp{make
+shared} will create just one of them.
 
 @strong{NB:} certain compilers are unable to do compile-time IEC 60559
 arithmetic and so cannot compile @file{mlutils.c} and several other
