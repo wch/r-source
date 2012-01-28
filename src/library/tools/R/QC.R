@@ -3254,18 +3254,12 @@ function(package, lib.loc = NULL)
             assign("nsl", function(hostname) {}, envir = compat)
             assign("X11Font", function(font) {}, envir = compat)
             assign("X11Fonts", function(...) {}, envir = compat)
-            assign("cairo_pdf",
-                   function(filename =
-                            if (onefile) "Rplots.pdf" else "Rplot%03d.pdf",
-                            width = 7, height = 7, pointsize = 12,
-                            onefile = FALSE, bg = "white", antialias) {},
-                   envir = compat)
             assign("quartz",
-                   function(display = "", width = 5, height = 5,
-                            pointsize = 12, family = "Helvetica",
-                            antialias = TRUE, autorefresh = TRUE) {},
+                   function(title, width, height, pointsize, family,
+                            fontsmooth, antialias, type, file = NULL,
+                            bg, canvas, dpi) {},
                    envir = compat)
-            assign("quartzFont", function(font) {}, envir = compat)
+            assign("quartzFont", function(family) {}, envir = compat)
             assign("quartzFonts", function(...) {}, envir = compat)
         }
         if(.Platform$OS.type != "windows") {
@@ -3299,12 +3293,6 @@ function(package, lib.loc = NULL)
             assign("shortPathName", function(path) {}, envir = compat)
             assign("win.version", function() {}, envir = compat)
             assign("zip.unpack", function(zipname, dest) {}, envir = compat)
-
-            assign("bmp",
-                   function (filename = "Rplot%03d.bmp", width = 480,
-                             height = 480, units = "px", pointsize = 12,
-                             bg = "white", res = NA, restoreConsole = TRUE) {},
-                   envir = compat)
             assign("savePlot",
                    function (filename = "Rplot",
                              type = c("wmf", "emf", "png", "jpeg", "jpg",
