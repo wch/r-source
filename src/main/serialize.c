@@ -802,7 +802,6 @@ static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table)
 /* length will need to be another type to allow longer vectors */
 static R_INLINE void OutIntegerVec(R_outpstream_t stream, SEXP s, int length) 
 {
-    OutInteger(stream, length);
     switch (stream->type) {
     case R_pstream_xdr_format:
     {
@@ -810,7 +809,7 @@ static R_INLINE void OutIntegerVec(R_outpstream_t stream, SEXP s, int length)
 	int done, this; /* and done */
 	XDR xdrs;
 	for (done = 0; done < length; done += this) {
-	    this = min2(CHUNK_SIZE, length - done); /* use a macro */
+	    this = min2(CHUNK_SIZE, length - done);
 	    xdrmem_create(&xdrs, buf, this * sizeof(int), XDR_ENCODE);
 	    for(int cnt = 0; cnt < this; cnt++)
 		if(!xdr_int(&xdrs, INTEGER(s) + done + cnt))
@@ -825,7 +824,7 @@ static R_INLINE void OutIntegerVec(R_outpstream_t stream, SEXP s, int length)
 	/* write in chunks to avoid overflowing ints */
 	int done, this;
 	for (done = 0; done < length; done += this) {
-	    this = min2(CHUNK_SIZE, length - done); /* use a macro */
+	    this = min2(CHUNK_SIZE, length - done);
 	    stream->OutBytes(stream, INTEGER(s) + done, sizeof(int) * this);
 	}
 	break;
@@ -838,7 +837,6 @@ static R_INLINE void OutIntegerVec(R_outpstream_t stream, SEXP s, int length)
 
 static R_INLINE void OutRealVec(R_outpstream_t stream, SEXP s, int length) 
 {
-    OutInteger(stream, length);
     switch (stream->type) {
     case R_pstream_xdr_format:
     {
@@ -873,7 +871,6 @@ static R_INLINE void OutRealVec(R_outpstream_t stream, SEXP s, int length)
 
 static R_INLINE void OutComplexVec(R_outpstream_t stream, SEXP s, int length) 
 {
-    OutInteger(stream, length);
     switch (stream->type) {
     case R_pstream_xdr_format:
     {
@@ -1037,12 +1034,15 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    break;
 	case LGLSXP:
 	case INTSXP:
+	    OutInteger(stream, LENGTH(s));
 	    OutIntegerVec(stream, s, LENGTH(s));
 	    break;
 	case REALSXP:
+	    OutInteger(stream, LENGTH(s));
 	    OutRealVec(stream, s, LENGTH(s));
 	    break;
 	case CPLXSXP:
+	    OutInteger(stream, LENGTH(s));
 	    OutComplexVec(stream, s, LENGTH(s));
 	    break;
 	case STRSXP:
@@ -1061,7 +1061,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    WriteBC(s, ref_table, stream);
 	    break;
 #else
-	    error(_("this version of R cannot write byte code objects"));
+	    error("this version of R cannot write byte code objects");
 #endif
 	case RAWSXP:
 	    OutInteger(stream, LENGTH(s));
@@ -1620,7 +1620,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    PROTECT(s = ReadBC(ref_table, stream));
 	    break;
 #else
-	    error(_("this version of R cannot read byte code objects"));
+	    error("this version of R cannot read byte code objects");
 #endif
 	case CLASSREFSXP:
 	    error(_("this version of R cannot read class references"));
@@ -1629,6 +1629,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case RAWSXP:
 	    len = InInteger(stream);
 	    PROTECT(s = allocVector(type, len));
+	    /* FIXME This limits the length: read longer vectors in chunks */
 	    stream->InBytes(stream, RAW(s), len);
 	    break;
 	case S4SXP:
