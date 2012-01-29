@@ -7328,6 +7328,8 @@ static void PDF_Circle(double x, double y, double r,
     int code, tr;
     double xx, yy, a;
 
+    if (r <= 0.0) return;  /* since PR#14797 use 0-sized pch=0 */
+
     code = 2 * (R_VIS(gc->fill)) + (R_VIS(gc->col));
     if (code) {
 	if(code & 2)
