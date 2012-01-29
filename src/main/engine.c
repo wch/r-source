@@ -1191,6 +1191,11 @@ void GECircle(double x, double y, double radius, const pGEcontext gc, pGEDevDesc
     double *xc, *yc;
     int result;
 
+    /* There is no point in trying to plot a circle of zero radius
+       unless the line width is additional to the radius: check!
+    if (radius <= 0.0) return;
+    */
+
     if (gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;

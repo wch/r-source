@@ -1695,6 +1695,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
 		if (R_FINITE( (thiscex = REAL(cex)[i % ncex]) ) &&
 		    (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER) {
+		    /* FIXME: should this skip 0-sized symbols? */
 		    thiscol = INTEGER(col)[i % ncol];
 		    thisbg = INTEGER(bg)[i % nbg];
 		    if (!(R_TRANSPARENT(thiscol) &&
@@ -3876,6 +3877,7 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i]) &&
 		R_FINITE(REAL(p)[i])) {
 		rx = REAL(p)[i];
+		/* FIXME: should this skip 0-sized symbols? */
 		/* For GCircle the radius is always in INCHES */
 		if (inches > 0)
 		    rx *= inches / pmax;
@@ -3905,6 +3907,7 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		else {
 		    rx = GConvertXUnits(0.5 * p0, USER, DEVICE, dd);
 		}
+		/* FIXME: should this skip 0-sized symbols? */
 		GRect(xx - rx, yy - rx, xx + rx, yy + rx, DEVICE,
 		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
 	    }
@@ -3933,6 +3936,7 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		    rx = GConvertXUnits(0.5 * p0, USER, DEVICE, dd);
 		    ry = GConvertYUnits(0.5 * p1, USER, DEVICE, dd);
 		}
+		/* FIXME: should this skip 0-sized symbols? */
 		GRect(xx - rx, yy - ry, xx + rx, yy + ry, DEVICE,
 		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
 
@@ -3968,6 +3972,7 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 			pp[j] =	 GConvertXUnits(p0, USER, INCHES, dd);
 		    }
 		}
+		/* FIXME: should this skip 0-sized symbols? */
 		for(j = 0; j < nc; j++) {
 		    xp[j] = GConvertXUnits(pp[j] * cos(j * p1),
 					   INCHES, NDC, dd) + xx;
