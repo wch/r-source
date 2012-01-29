@@ -1409,8 +1409,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
         bad <- bad | grepl("^fig.*[.]pdf$", files)
         badf <- files[bad]
-        dirs <- basename(list.dirs(file.path(pkgdir, "inst", "doc"),
-                                   recursive = FALSE))
+        dirs <- basename(list.dirs(doc_dir, recursive = FALSE))
         badd <- dirs[dirs %in% c("auto", "Bilder", "fig", "figs", "figures",
                                  "Figures", "img", "images", "JSSstyle",
                                  "jssStyle", "screenshots2", "src", "tex", "tmp")]
