@@ -111,6 +111,10 @@
       vectors, particularly with XDR on some platforms.  (Based on a
       suggested patch by Michael Spiegel.)
       % https://stat.ethz.ch/pipermail/r-devel/2011-September/062113.html
+      
+      \item For consistency, circles with zero radius are omitted by
+      \code{points} and \code{grid.circle()}.  Previously this was
+      device-dependent, but they were usually invisible.
     }
   }
 
