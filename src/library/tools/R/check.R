@@ -582,6 +582,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                      "Most likely, these were included erroneously.\n")
         }
 
+        ## A submission had src-i386 etc from multi-arch builds
+        ind <- grepl("^[.]/src-", all_dirs)
+        if(any(ind)) {
+            if(!any) warnLog()
+            any <- TRUE
+            printLog(Log,
+                     "Found the following directory(s) with ",
+                     "names of multi-arch build directories:\n",
+                     .format_lines_with_indent(basename(all_dirs[ind])),
+                     "\n",
+                     "Most likely, these were included erroneously.\n")
+        }
+
         if(!is_base_pkg && (istar || R_check_vc_dirs)) {
             ## Packages also should not contain version control subdirs
             ## provided that we check a .tar.gz or know we unpacked one.
