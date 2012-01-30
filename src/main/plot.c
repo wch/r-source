@@ -3877,12 +3877,13 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i]) &&
 		R_FINITE(REAL(p)[i])) {
 		rx = REAL(p)[i];
-		/* FIXME: should this skip 0-sized symbols? */
 		/* For GCircle the radius is always in INCHES */
 		if (inches > 0)
 		    rx *= inches / pmax;
 		else
 		    rx = GConvertXUnits(rx, USER, INCHES, dd);
+		/* GCircle sets radius zero to one pixel, but does
+		   not change very small non-zero radii */
 		GCircle(REAL(x)[i], REAL(y)[i],	USER, rx,
 			INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg],	dd);
 	    }

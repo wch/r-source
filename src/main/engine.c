@@ -2050,7 +2050,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    break;
 
 	case 1: /* S octahedron ( circle) */
-	    xc = RADIUS * size;
+	    xc = RADIUS * size; /* NB: could be zero */
 	    gc->fill = R_TRANWHITE;
 	    GECircle(x, y, xc, gc, dd);
 	    break;

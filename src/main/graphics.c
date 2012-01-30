@@ -2855,7 +2855,9 @@ void GPolyline(int n, double *x, double *y, int coords, pGEDevDesc dd)
  * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
  * to be developed alongside.
  * Could be removed if Rgraphics.h ever gets REPLACED by new API
- * NOTE that base graphics code (in plot.c) still calls this.
+ * NOTE that base graphics code (do_symbol in plot.c) still calls this.
+ *
+ * NB: this fiddles with radius = 0.
  */
 void GCircle(double x, double y, int coords,
 	     double radius, int bg, int fg, pGEDevDesc dd)
