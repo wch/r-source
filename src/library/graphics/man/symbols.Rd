@@ -1,6 +1,6 @@
 % File src/library/graphics/man/symbols.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{symbols}
@@ -87,14 +87,13 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   used.  For boxplots, the lengths of the whiskers are regarded as
   dimensions alongside width and height when scaling by \code{inches},
   and are otherwise interpreted in the units of the y axis.)
-
+  
+  % The next is enforced in GCircle.
   Circles of radius zero are plotted at radius one pixel (which is
-  device-dependent).
-#ifdef windows
-  On \code{\link{windows}} devices circles are plotted
-  at radius at least one pixel as some Windows versions omit smaller
-  circles.
-#endif
+  device-dependent).  Circles of a very small non-zero radius may or may
+  not be visible, and may be smaller than circles of radius zero.  On
+  \code{windows} devices circles are plotted at radius at least one
+  pixel as some Windows versions omit smaller circles.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
