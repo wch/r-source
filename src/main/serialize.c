@@ -477,7 +477,7 @@ static void InString(R_inpstream_t stream, char *buf, int length)
 	    }
 	}
     }
-    else  /* FIXME: this limits the string length */
+    else  /* this limits the string length: used for CHARSXPs */
 	stream->InBytes(stream, buf, length);
 }
 
@@ -1068,9 +1068,15 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    switch (stream->type) {
 	    case R_pstream_xdr_format:
 	    case R_pstream_binary_format:
-		/* FIXME: need to write longer vectors in chunks */
-		stream->OutBytes(stream, RAW(s), LENGTH(s));
+	    {
+		/* need to writelonger vectors in chunks in future */
+		int done, this, len = LENGTH(s);
+		for (done = 0; done < len; done += this) {
+		    this = min2(CHUNK_SIZE, len - done);
+		    stream->OutBytes(stream, RAW(s) + done, this);
+		}
 		break;
+	    }
 	    default:
 		for (ix = 0; ix < LENGTH(s); ix++) 
 		    OutByte(stream, RAW(s)[ix]);
@@ -1629,8 +1635,14 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case RAWSXP:
 	    len = InInteger(stream);
 	    PROTECT(s = allocVector(type, len));
-	    /* FIXME This limits the length: read longer vectors in chunks */
-	    stream->InBytes(stream, RAW(s), len);
+	    {
+		/* need to read longer vectors in chunks in future */
+		int done, this;
+		for (done = 0; done < len; done += this) {
+		    this = min2(CHUNK_SIZE, len - done);
+		    stream->InBytes(stream, RAW(s) + done, this);
+		}
+	    }
 	    break;
 	case S4SXP:
 	    PROTECT(s = allocS4Object());
