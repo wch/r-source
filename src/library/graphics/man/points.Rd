@@ -1,6 +1,6 @@
 % File src/library/graphics/man/points.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{points}
@@ -150,6 +150,10 @@ points(x, \dots)
   Not all negative numbers are valid as Unicode points, and no check is
   done.  A display device is likely to use a rectangle for (or omit)
   Unicode points that do not exist or which it does not have a glyph.
+  
+  What happens for very small or zero values of \code{cex} is
+  device-dependendent: symbols or characters may become invisible or
+  they may be plotted at a fixed minimum size.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
