@@ -7703,7 +7703,9 @@ Earlier version of this example used C++ iostreams: this is best
 avoided.  There is no guarantee that the output will appear in the @R{}
 console, and indeed it will not on the @R{} for Windows console.  Use
 @R{} code or the C entry points (@pxref{Printing}) for all I/O if at all
-possible.
+possible.  Examples have been seen where merely loading a DLL that
+contained calls to C++ I/O upset @R{}'s own C I/O (for example by
+resetting buffers on open files).
 
 Most @R{} header files can be included within C++ programs, and they
 should @strong{not} be included within an @code{extern "C"} block (as
