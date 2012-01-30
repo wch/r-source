@@ -652,7 +652,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
 
         ## Several packages had leftover Rd2dvi build directories in
-        ## their sources/
+        ## their sources
         ind <- grepl("^\\.Rd2(dvi|pdf)", basename(all_dirs))
         if(any(ind)) {
             if(!any) warnLog()
@@ -661,6 +661,19 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      "Found the following directory(s) with ",
                      "names of Rd2pdf build directories:\n",
                      .format_lines_with_indent(all_dirs[ind]),
+                     "\n",
+                     "Most likely, these were included erroneously.\n")
+        }
+
+        ## A submission had src-i386 etc from multi-arch builds
+        ind <- grepl("^[.]/src-", all_dirs)
+        if(any(ind)) {
+            if(!any) warnLog()
+            any <- TRUE
+            printLog(Log,
+                     "Found the following directory(s) with ",
+                     "names of multi-arch build directories:\n",
+                     .format_lines_with_indent(basename(all_dirs[ind])),
                      "\n",
                      "Most likely, these were included erroneously.\n")
         }
