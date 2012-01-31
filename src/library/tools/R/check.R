@@ -666,8 +666,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
 
         ## A submission had src-i386 etc from multi-arch builds
-        ind <- grepl("^[.]/src-", all_dirs)
-        if(any(ind)) {
+        if(subdirs != "no" &&
+           any(ind<- grepl("^[.]/src-(i386|x64|x86_64|ppc)", all_dirs))) {
             if(!any) warnLog()
             any <- TRUE
             printLog(Log,
