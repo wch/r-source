@@ -1,6 +1,6 @@
 % File src/library/base/man/tracemem.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tracemem}
@@ -57,6 +57,9 @@ retracemem(x, previous = NULL)
 }
 
 \seealso{
+  \code{\link{capabilities}("profmem")} to see if this was enabled for
+  this build of \R.
+  
   \code{\link{trace}}, \code{\link{Rprofmem}}
 
   \url{http://developer.r-project.org/memory-profiling.html}
