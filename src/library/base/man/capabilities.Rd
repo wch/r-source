@@ -72,7 +72,8 @@ capabilities(what = NULL)
     \item{iconv}{is internationalization conversion via
       \code{\link{iconv}} supported?  Always true as from \R 2.10.0.}
     \item{NLS}{is there Natural Language Support (for message translations)?}
-    \item{profmem}{is there support for memory profiling?}
+    \item{profmem}{is there support for memory profiling?  See
+      \code{\link{tracemem}}.}
     \item{cairo}{is there support the \code{\link{svg}},
       \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
       for \code{type = "cairo"} in the
