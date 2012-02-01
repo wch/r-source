@@ -665,18 +665,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      "Most likely, these were included erroneously.\n")
         }
 
-        ## A submission had src-i386 etc from multi-arch builds
-        if(subdirs != "no" &&
-           any(ind<- grepl("^[.]/src-(i386|x64|x86_64|ppc)", all_dirs))) {
-            if(!any) warnLog()
-            any <- TRUE
-            printLog(Log,
-                     "Found the following directory(s) with ",
-                     "names of multi-arch build directories:\n",
-                     .format_lines_with_indent(basename(all_dirs[ind])),
-                     "\n",
-                     "Most likely, these were included erroneously.\n")
-        }
 
         if(!is_base_pkg && (istar || R_check_vc_dirs)) {
             ## Packages also should not contain version control subdirs
@@ -2793,12 +2781,29 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             any <- FALSE
             srcd <- file.path(pkgdir, "src")
             if (dir.exists(srcd) &&
-                length(list_files_with_exts(srcd, pat))) {
+                length(of <- list_files_with_exts(srcd, pat))) {
                 if (!any) warnLog()
                 any <- TRUE
+                of <- sub(paste0(".*/",file.path(pkgname, "src") , "/"), "", of)
                 printLog(Log, "Subdirectory ",
                          sQuote(file.path(pkgname, "src")),
-                         " contains object files.\n")
+                         " contains object files\n",
+                         paste(strwrap(paste(of, collapse = " "),
+                                       indent = 2, exdent = 2),
+                               collapse = "\n"), "\n")
+            }
+            ## A submission had src-i386 etc from multi-arch builds
+            ad <- list.dirs(pkgdir, recursive = FALSE)
+            if(thispkg_src_subdirs != "no" &&
+               any(ind <- grepl("/src-(i386|x64|x86_64|ppc)$", ad))) {
+                if(!any) warnLog()
+                any <- TRUE
+                printLog(Log,
+                         "Found the following directory(s) with ",
+                         "name(s) of multi-arch build directories:\n",
+                         .format_lines_with_indent(basename(ad[ind])),
+                     "\n",
+                         "Most likely, these were included erroneously.\n")
             }
             if (thispkg_src_subdirs != "no" && dir.exists(srcd)) {
                 setwd(srcd)
@@ -2809,7 +2814,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     srcfiles <- dir(".", all.files = TRUE)
                     fi <- file.info(srcfiles)
                     srcfiles <- srcfiles[!fi$isdir]
-                    srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h)$|^Makevars|-win\\.def$)",
+                    srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def$)",
                                      srcfiles,
                                      invert = TRUE, value = TRUE)
                     if (length(srcfiles)) {
