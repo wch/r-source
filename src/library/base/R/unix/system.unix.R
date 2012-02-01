@@ -22,7 +22,7 @@ system <- function(command, intern = FALSE,
 {
     if(!missing(show.output.on.console) || !missing(minimized)
        || !missing(invisible))
-        warning("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
+        message("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
 
     if(!is.logical(intern) || is.na(intern))
         stop("'intern' must be TRUE or FALSE")
@@ -54,7 +54,7 @@ system2 <- function(command, args = character(),
                     wait = TRUE, minimized = FALSE, invisible = TRUE)
 {
     if(!missing(minimized) || !missing(invisible))
-        warning("arguments 'minimized' and 'invisible' are for Windows only")
+        message("arguments 'minimized' and 'invisible' are for Windows only")
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
 
