@@ -432,7 +432,8 @@ If that fails, if both environment variables @env{HOMEDRIVE} and
 @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the current
 working directory is used.
 
-You can find this from R code by @code{Sys.getenv("R_USER")}.
+You can find this from R code by @code{Sys.getenv("R_USER")} or
+@code{normalizePath("~")}, @samp{~} being Unix notation for the home directory.
 
 @node How do I set environment variables?, R can't find my file, What are HOME and working directories?, Installation and Usage
 @section How do I set environment variables?
@@ -1923,7 +1924,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2012-01-21
+@set LASTEDIT 2012-02-01
 @ifhtml
 @html
 <hr WIDTH="100%">
