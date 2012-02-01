@@ -579,6 +579,11 @@ Version dependencies in the @samp{Depends} field are used by
 checks versions for the @samp{Imports} and (for @code{dependencies =
 TRUE}) @samp{Suggests} fields.
 
+It is increasingly important that the information in these fields is
+complete and accurate: it is for example used to compute which packages
+depend on an updated package and which packages can safely be installed
+in parallel.
+
 The @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
 author or a page where additional material describing the software can

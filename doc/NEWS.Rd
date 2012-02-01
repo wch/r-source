@@ -209,6 +209,11 @@
        
        \item \command{R CMD build} has more options for
        \option{--compact-vignettes}: see \command{R CMD build --help}.
+       
+       \item \command{R CMD check} now warns (rather than notes) on
+       undeclared use of other packages: increasingly people are using
+       the metadata in the \file{DESCRIPTION} file to compute
+       information about packages, for example reverse dependencies.
      }
    }
 
