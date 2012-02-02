@@ -155,9 +155,8 @@ mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical
-installation for one architecture takes 55Mb of disk space, for both
-about 70Mb, a full installation about 90Mb and a minimal 32-bit one
-about 40Mb.
+installation for one architecture takes 75Mb of disk space, for both
+about 90Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path

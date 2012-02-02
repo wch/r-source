@@ -43,6 +43,11 @@
       \item It is now possible to select \sQuote{Add 64-bit components}
       from the standard installer (and to select the 64-bit components
       for a custom install) even on a 32-bit version of Windows.
+
+      \item The installer by default now installs all the smaller
+      components, as file space is nowadays no longer an issue.
+
+      The set of components will be simplified in due course.
     }
   }
   
