@@ -3251,6 +3251,8 @@ function(package, lib.loc = NULL)
             assign("nsl", function(hostname) {}, envir = compat)
             assign("X11Font", function(font) {}, envir = compat)
             assign("X11Fonts", function(...) {}, envir = compat)
+            assign("X11.options", function(..., reset = TRUE) {},
+                   envir = compat)
             assign("quartz",
                    function(title, width, height, pointsize, family,
                             fontsmooth, antialias, type, file = NULL,
@@ -3258,6 +3260,8 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign("quartzFont", function(family) {}, envir = compat)
             assign("quartzFonts", function(...) {}, envir = compat)
+            assign("quartz.options", function(..., reset = TRUE) {},
+                   envir = compat)
         }
         if(.Platform$OS.type != "windows") {
             assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
@@ -3318,6 +3322,8 @@ function(package, lib.loc = NULL)
                             restoreConsole = FALSE) {}, envir = compat)
             assign("windowsFont", function(font) {}, envir = compat)
             assign("windowsFonts", function(...) {}, envir = compat)
+            assign("windows.options", function(..., reset = TRUE) {},
+                   envir = compat)
 
             assign("winDialog", function(type = "ok", message) {},
                    envir = compat)
