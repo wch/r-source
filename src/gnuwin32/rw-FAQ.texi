@@ -154,9 +154,8 @@ mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A typical
-installation for one architecture takes 75Mb of disk space, for both
-about 90Mb.
+except perhaps for some network-mounted systems).  A installation for
+one architecture takes about 75Mb of disk space, for both about 90Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -223,10 +222,7 @@ set the default installation directory
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
-@samp{i386} or @samp{x64}, @samp{html}, @samp{manuals},
-@samp{manuals/basic}, @samp{manuals/technical}, @samp{manuals/refman},
-@samp{manuals/libdocs}, @samp{tcl/noarch}, @samp{tcl/32}, @samp{tcl/64},
-@samp{tcl/tzdata}, @samp{tcl/chm}, @samp{trans} and @code{tests}.
+@samp{i386} and @samp{x64} (there were many more before R 2.15.0).
 @end table
 
 @noindent
@@ -235,7 +231,7 @@ reload those settings using
 
 @table @samp
 @item /SAVEINF="filename"
-save the settings to the specified file.  Don't forget to use quotes if
+save the settings to the specified file.  Don't forget to use the quotes if
 the filename contains spaces.
 @item /LOADINF="filename"
 instructs the installer to load the settings from the specified file

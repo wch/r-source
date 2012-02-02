@@ -65,7 +65,7 @@
 
     lines <- readLines(types)
     if(have64bit && !have32bit) {
-        lines <- lines[-c(3,4,6,13,23)]
+        lines <- lines[-c(3,4,10)]
         lines <- gsub("user(32)* ", "", lines)
         lines <- gsub("compact ", "", lines)
     }
@@ -87,55 +87,13 @@
 	dir <- paste("\\", gsub("/", "\\", dir, fixed = TRUE), sep = "")
 	dir <- sub("\\\\$", "", dir)
 
-	## These manuals are on the Rgui menu, so should always be installed
-        if (f %in%  c("doc/manual/R-FAQ.html",
-                      "doc/html/rw-FAQ.html",
-                      "share/texmf/Sweave.sty"))
-            component <- "main"
-	else if (grepl("^doc/html", f) || grepl("^library/[^/]*/html", f))
-	    component <- "main"
-	else if (grepl("^doc/manual/[^/]*\\.html", f))
-	    component <- "html"
-	else if (f %in% c("doc/manual/R-data.pdf", "doc/manual/R-intro.pdf"))
-	    component <- "manuals/basic"
-	else if (f %in% c("doc/manual/R-admin.pdf",
-                          "doc/manual/R-exts.pdf",
-                          "doc/manual/R-ints.pdf",
-                          "doc/manual/R-lang.pdf"))
-	    component <- "manuals/technical"
-	else if (f == "doc/manual/refman.pdf")
-	    component <- "manuals/refman"
-	else if (grepl("^doc/manual", f) && f != "doc/manual/R-FAQ.pdf")
-	    component <- "manuals"
-	else if (grepl("^library/[^/]*/tests", f) || grepl("^tests", f))
-	    	component <- "tests"
-	else if (grepl("^Tcl/(bin|lib)64", f))
-	    component <- "tcl/64"
+	component <- if (grepl("^Tcl/(bin|lib)64", f)) "x64"
 	else if (have64bit &&
                  (grepl("^Tcl/bin", f) ||
-                  grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f)))
-	    component <- "tcl/32"
-	else if (grepl("^Tcl/doc/.*chm$", f))
-	    component <- "tcl/chm"
-	else if (grepl("^Tcl/lib/tcl8.5/tzdata", f))
-	    component <- "tcl/tzdata"
-	else if (grepl("^Tcl/.*\\.msg$", f))
-	    component <- "tcl/msg"
-	else if (grepl("^Tcl", f))
-	    component <- "tcl/noarch"
-	else if (grepl("^library/grid/doc", f) ||
-                 grepl("^library/survival/doc", f) ||
-                 grepl("^library/Matrix/doc", f))
-	    component <- "manuals/libdocs"
-	else if (grepl("^share/locale", f) ||
-                 grepl("^library/[^/]*/po", f))
-	    component <- "trans"
-	else if (grepl("/i386/", f))
-            component <- "i386"
-	else if (grepl("/x64/", f))
-            component <- "x64"
-	else
-            component <- "main"
+                  grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f))) "i386"
+	else if (grepl("/i386/", f)) "i386"
+	else if (grepl("/x64/", f)) "x64"
+	else "main"
 
         if (component == "x64" && !have64bit) next
 
