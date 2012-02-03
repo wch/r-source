@@ -1693,6 +1693,15 @@ stopifnot(identical(duplicated(data.frame(c(1, 1)), fromLast = TRUE),
                     duplicated(c(1, 1), fromLast = TRUE)))
 ## first ignored fromLast in 2.14.0.
 
+## str(*, list.len, strict.width=.):
+dm <- as.data.frame(matrix( rnorm(10000), nrow=50, ncol=200))
+calls <- list(quote( str(dm, list.len= 7)),
+	      quote( str(dm, list.len= 7, digits=10, width=88, strict.width='no')),
+	      quote( str(dm, list.len= 7, digits=10, width=88, strict.width='cut')))
+ee <- lapply(calls, function(cl) capture.output(eval(cl)))
+stopifnot(sapply(ee, length) == 1 + 7 + 1)
+## with 'list.len' was not used with 'strict.width="cut"' in  R <= 2.14.1
+
 ## Tests of serialization (new internal code in 2.15.0)
 input <- pi^(1:10)
 stopifnot(identical(input, unserialize(serialize(input, NULL))))

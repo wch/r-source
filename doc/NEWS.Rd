@@ -82,18 +82,18 @@
 
       \item The \code{"dendrogram"} method of \code{str()} now takes
       its default for \code{last.str} from option \code{str.dendrogram.last}.
-      
+
       \item New simple \code{fitted()} method for \code{"kmeans"} objects.
-      
+
       \item The behaviour of \code{unlink(recursive = TRUE)} for a
       symbolic link to a directory has changed: it now removes the link
       rather than the directory contents (as \command{rm -r} does).
 
       On Windows it no longer follows reparse points (including
       junctions and symbolic links).
-      
+
       \item The \code{traceback()} function can now be called with
-      an integer argument, to display a current stack trace. (Wish of 
+      an integer argument, to display a current stack trace. (Wish of
       \PR{14770}.)
 
       \item \code{setGeneric()} calls can be simplified when creating
@@ -111,7 +111,7 @@
       vectors, particularly with XDR on some platforms.  (Based on a
       suggested patch by Michael Spiegel.)
       % https://stat.ethz.ch/pipermail/r-devel/2011-September/062113.html
-      
+
       \item For consistency, circles with zero radius are omitted by
       \code{points} and \code{grid.circle()}.  Previously this was
       device-dependent, but they were usually invisible.
@@ -206,10 +206,10 @@
        \item There are new options for more rigorous testing by
        \command{R CMD check} selected by environment variables -- see
        the \sQuote{Writing R Extensions} manual.
-       
+
        \item \command{R CMD build} has more options for
        \option{--compact-vignettes}: see \command{R CMD build --help}.
-       
+
        \item \command{R CMD check} now warns (rather than notes) on
        undeclared use of other packages in examples and tests:
        increasingly people are using the metadata in the
@@ -259,7 +259,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item Building with a positive value of
-      \option{--with-valgrind-instrumentation} now  also instruments logical,
+      \option{--with-valgrind-instrumentation} now also instruments logical,
       complex and raw vectors.
 
       \item There is experimental support for \emph{link-time
@@ -288,7 +288,7 @@
       \item The namespace import code was warning when identical
       S4 generic functions were imported more than once, but should
       not (reported by Brian Ripley, then Martin Morgan).
-      
+
       \item \code{merge()} is no longer allowed to create a data frame
       with duplicate column names (which confused \PR{14786}).
     }
@@ -303,7 +303,7 @@
       headers which \command{bsdtar} (e.g., the default \command{tar} for
       Mac OS >= 10.6) can incorrectly include in \command{tar} files,
       and will skip them with a warning.
-      
+
       \item PCRE has been upgraded to version 8.21: as well as bug fixes
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
@@ -320,7 +320,7 @@
       executable.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \command{R CMD INSTALL} will now no longer install certain
@@ -335,45 +335,48 @@
       to \R 2.13.0.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item R configured with \option{--disable-openmp} would mistakenly
       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
       \file{Rconfig.h}) even though no OpenMP flags were populated.
 
-      \item  The \code{getS3method()} implementation had a very old
+      \item The \code{getS3method()} implementation had a very old
       and incorrect computation to find an S4 default method.
-       
+
       \item \code{readLines()} could overflow a buffer if the last line
       was not terminated.  (\PR{14766})
 
       \item \command{R CMD check} could miss undocumented S4 objects in
       packages which used S4 classes but did not \samp{Depends: methods}.
-      
+
       \item The HTML Help Search page had malformed links.
-      (\PR{14769})      
-      
+      (\PR{14769})
+
       \item A couple of instances of lack of protection of \code{SEXP}s
       have been squashed. (\PR{14772}, \PR{14773})
 
-      \item \code{image(x, useRaster=TRUE)} misbehaved on single-column 
+      \item \code{image(x, useRaster=TRUE)} misbehaved on single-column
       \code{x}. (\PR{14774})
-      
+
       \item Negative values for \code{options("max.print")} or the \code{max}
       argument to \code{print.default()} caused crashes.  Now the former
       are ignored and the latter trigger an error.  (\PR{14779})
-      
+
       \item The text of a function body containing more than 4096
       characters was not properly saved by the parser when entered
-      at the console.      
-      
-      \item Forgetting the \code{#endif} tag in an Rd file could cause 
+ at the console.
+
+      \item Forgetting the \code{#endif} tag in an Rd file could cause
       the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
-      
+
       \item For consistency with the \code{logLik()} method,
       \code{nobs()} for \code{"nls"} files now excludes observations
       with zero weight.  (Reported by Berwin Turlach.)
+
+      \item str(*, ....., strict.width="cut") now also obeys
+      'list.len = n'  (Reported by Sören Vogel.)
     }
   }
 }
@@ -1620,7 +1623,7 @@
       spurious \code{NA} lines when a chunk reference appeared last in
       a code chunk.
 
-      \item  \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
+      \item \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
       \code{parse_Rd(fragment=FALSE)} to allow Rd section-level macros
       to be inserted.
 
