@@ -1942,7 +1942,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           sprintf("tools:::.check_packages_used_in_vignettes(package = \"%s\")\n", pkgname))
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                warnLog()
+                noteLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
