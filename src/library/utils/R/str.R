@@ -115,11 +115,14 @@ str.default <-
 	ss <- capture.output(str.default(object, max.level = max.level,
 				 vec.len = vec.len, digits.d = digits.d,
 				 nchar.max = nchar.max,
-				 give.attr= give.attr, give.head= give.head, give.length= give.length,
+				 give.attr= give.attr, give.head= give.head,
+				 give.length= give.length,
 				 width = width, nest.lev = nest.lev,
 				 indent.str = indent.str, comp.str= comp.str,
 				 no.list= no.list || is.data.frame(object),
-				 envir = envir, strict.width = "no", ...) )
+				 envir = envir, strict.width = "no",
+				 formatNum = formatNum, list.len = list.len,
+					 ...) )
 	if(strict.width == "wrap") {
 	    nind <- nchar(indent.str) + 2
 	    ss <- strwrap(ss, width = width, exdent = nind)

@@ -14,7 +14,7 @@
       headers which \command{bsdtar} (e.g., the default \command{tar} for
       Mac OS >= 10.6) can incorrectly include in \command{tar} files,
       and will skip them with a warning.
-      
+
       \item PCRE has been upgraded to version 8.21: as well as bug fixes
       and greater Perl compatibility, this adds a JIT pattern compiler,
       about which PCRE's news says
@@ -31,7 +31,7 @@
       executable.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \command{R CMD INSTALL} will now no longer install certain
@@ -46,45 +46,48 @@
       to \R 2.13.0.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item R configured with \option{--disable-openmp} would mistakenly
       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
       \file{Rconfig.h}) even though no OpenMP flags were populated.
 
-      \item  The \code{getS3method()} implementation had a very old
+      \item The \code{getS3method()} implementation had a very old
       and incorrect computation to find an S4 default method.
-       
+
       \item \code{readLines()} could overflow a buffer if the last line
       was not terminated.  (\PR{14766})
 
       \item \command{R CMD check} could miss undocumented S4 objects in
       packages which used S4 classes but did not \samp{Depends: methods}.
-      
+
       \item The HTML Help Search page had malformed links.
-      (\PR{14769})      
-      
+      (\PR{14769})
+
       \item A couple of instances of lack of protection of \code{SEXP}s
       have been squashed. (\PR{14772}, \PR{14773})
 
-      \item \code{image(x, useRaster=TRUE)} misbehaved on single-column 
+      \item \code{image(x, useRaster=TRUE)} misbehaved on single-column
       \code{x}. (\PR{14774})
-      
+
       \item Negative values for \code{options("max.print")} or the \code{max}
       argument to \code{print.default()} caused crashes.  Now the former
       are ignored and the latter trigger an error.  (\PR{14779})
-      
+
       \item The text of a function body containing more than 4096
       characters was not properly saved by the parser when entered
-      at the console.      
-      
-      \item Forgetting the \code{#endif} tag in an Rd file could cause 
+      at the console.
+
+      \item Forgetting the \code{#endif} tag in an Rd file could cause
       the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
-      
+
       \item For consistency with the \code{logLik()} method,
       \code{nobs()} for \code{"nls"} files now excludes observations
       with zero weight.  (Reported by Berwin Turlach.)
+
+      \item str(*, ....., strict.width="cut") now also obeys
+      \code{list.len = n}  (Reported by Sören Vogel.)
     }
   }
 }
@@ -1331,7 +1334,7 @@
       spurious \code{NA} lines when a chunk reference appeared last in
       a code chunk.
 
-      \item  \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
+      \item \samp{\Sexpr[results=rd]} in an \file{.Rd} file now first tries
       \code{parse_Rd(fragment=FALSE)} to allow Rd section-level macros
       to be inserted.
 
