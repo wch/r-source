@@ -72,7 +72,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## symlinks and dummies (hence will be small) we never clean it up.
 
     test_recommended <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_NO_RECOMMENDED_"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_NO_RECOMMENDED_", "FALSE"))
 
     if(test_recommended) {
         ## Now add dummies for recommended packages (removed later if declared)
