@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:23+0000\n"
+"POT-Creation-Date: 2012-02-04 10:00+0000\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -43,7 +43,7 @@ msgstr "CharInfo não pode ser analisado"
 msgid "unknown AFM entity encountered"
 msgstr "entidade AFM desconhecida encontrada"
 
-#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7894 devPicTeX.c:486
+#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7897 devPicTeX.c:486
 #: devPicTeX.c:488
 #, c-format
 msgid "invalid string in '%s'"
@@ -172,7 +172,7 @@ msgid "Invalid line mitre"
 msgstr ""
 
 #: devPS.c:2874 devPS.c:3767 devPS.c:4215 devPS.c:4242 devPS.c:5250
-#: devPS.c:7744 devPS.c:7789
+#: devPS.c:7747 devPS.c:7792
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr ""
@@ -197,7 +197,7 @@ msgstr ""
 msgid "failed to load encoding file in %s()"
 msgstr "falha ao carregar arquivo de codificação '%s'"
 
-#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7625
+#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7628
 msgid "Invalid font type"
 msgstr ""
 
@@ -274,7 +274,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr ""
 
-#: devPS.c:4403 devPS.c:5295 devPS.c:7879
+#: devPS.c:4403 devPS.c:5295 devPS.c:7882
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -421,32 +421,32 @@ msgid ""
 "  please shut down the PDF device"
 msgstr ""
 
-#: devPS.c:7650 devPS.c:8011 devPS.c:8058
+#: devPS.c:7653 devPS.c:8014 devPS.c:8061
 msgid "Failed to find or load PDF font"
 msgstr ""
 
-#: devPS.c:7833 devPS.c:7966
+#: devPS.c:7836 devPS.c:7969
 msgid "Failed to find or load PDF CID font"
 msgstr ""
 
-#: devPS.c:8197 devPS.c:8201 devPS.c:8361 devPS.c:8365
+#: devPS.c:8200 devPS.c:8204 devPS.c:8364 devPS.c:8368
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr ""
 
-#: devPS.c:8219 devPS.c:8377
+#: devPS.c:8222 devPS.c:8380
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:8225 devPS.c:8387 devPS.c:8390 devWindows.c:3579 devWindows.c:3583
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3579 devWindows.c:3583
 #: devWindows.c:3591 devWindows.c:3602 devWindows.c:3608 devWindows.c:3615
 #: devWindows.c:3622 devWindows.c:3626
 #, c-format
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:8238 devPS.c:8305 devPS.c:8404 devPicTeX.c:741 devWindows.c:3659
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3659
 #, c-format
 msgid "unable to start %s() device"
 msgstr "não é possível iniciar dispositivo %s()"

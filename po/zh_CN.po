@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:15+0000\n"
+"POT-Creation-Date: 2012-02-04 10:00+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -198,8 +198,8 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
 #: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2572
 #: src/main/platform.c:2580 src/main/platform.c:2616 src/main/platform.c:2666
-#: src/main/plot.c:3108 src/main/plot.c:4245 src/main/plot.c:4249
-#: src/main/plot.c:4252 src/main/plot3d.c:2446 src/main/plot3d.c:2450
+#: src/main/plot.c:3109 src/main/plot.c:4251 src/main/plot.c:4255
+#: src/main/plot.c:4258 src/main/plot3d.c:2446 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2455 src/main/plot3d.c:2459 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/print.c:236 src/main/print.c:242
 #: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
@@ -290,9 +290,9 @@ msgstr "时间标签不对"
 #: src/main/errors.c:1272 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
 #: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
-#: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2282
-#: src/main/plot.c:2289 src/main/plot.c:3321 src/main/plot.c:3323
-#: src/main/plot.c:3325 src/main/plot.c:3483 src/main/plot3d.c:1382
+#: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2283
+#: src/main/plot.c:2290 src/main/plot.c:3322 src/main/plot.c:3324
+#: src/main/plot.c:3326 src/main/plot.c:3484 src/main/plot3d.c:1382
 #: src/main/plot3d.c:2524 src/main/plot3d.c:2528 src/main/plot3d.c:2530
 #: src/main/seq.c:167 src/main/seq.c:265 src/main/seq.c:268
 #: src/main/sort.c:871 src/main/sort.c:971 src/main/source.c:216
@@ -501,8 +501,8 @@ msgstr "<错误: 无法将编码'%s'重新进行编码>\n"
 #: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
 #: src/gnuwin32/system.c:1037 src/main/connections.c:563
 #: src/main/connections.c:568 src/main/dounzip.c:177 src/main/saveload.c:1949
-#: src/main/serialize.c:2243 src/main/serialize.c:2248
-#: src/main/serialize.c:2329 src/main/serialize.c:2374 src/unix/system.c:316
+#: src/main/serialize.c:2459 src/main/serialize.c:2464
+#: src/main/serialize.c:2545 src/main/serialize.c:2590 src/unix/system.c:316
 #: src/unix/system.c:336
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -1167,11 +1167,11 @@ msgstr "'dimnames'的长度[%d]必需与陈列范围相等"
 #: src/main/attrib.c:1035 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1656 src/main/envir.c:1718
 #: src/main/envir.c:1841 src/main/paste.c:71 src/main/paste.c:285
-#: src/main/plot.c:1730 src/main/random.c:474
+#: src/main/plot.c:1731 src/main/random.c:474
 msgid "invalid first argument"
 msgstr "第一个参数不对"
 
-#: src/main/attrib.c:1038 src/main/plot.c:1737
+#: src/main/attrib.c:1038 src/main/plot.c:1738
 msgid "invalid second argument"
 msgstr "第二个参数不对"
 
@@ -1333,7 +1333,7 @@ msgstr "矢量size设得太大了"
 
 #: src/main/builtin.c:71 src/main/builtin.c:80 src/main/builtin.c:280
 #: src/main/builtin.c:315 src/main/builtin.c:354 src/main/builtin.c:364
-#: src/main/coerce.c:1448 src/main/connections.c:2796 src/main/engine.c:2942
+#: src/main/coerce.c:1448 src/main/connections.c:2796 src/main/engine.c:2945
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
 #: src/main/envir.c:1541 src/main/envir.c:1661 src/main/envir.c:1729
 #: src/main/envir.c:1850 src/main/envir.c:2523 src/main/envir.c:2583
@@ -1341,7 +1341,7 @@ msgstr "矢量size设得太大了"
 #: src/main/envir.c:2928 src/main/envir.c:2963 src/main/envir.c:2984
 #: src/main/envir.c:3290 src/main/envir.c:3295 src/main/eval.c:4976
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
-#: src/main/saveload.c:2349 src/main/serialize.c:2396
+#: src/main/saveload.c:2349 src/main/serialize.c:2612
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用"
 
@@ -1374,7 +1374,7 @@ msgstr "'parent'不是环境"
 #: src/main/connections.c:4186 src/main/connections.c:4251
 #: src/main/connections.c:4456 src/main/connections.c:4460
 #: src/main/connections.c:4823 src/main/deparse.c:324 src/main/deparse.c:410
-#: src/main/scan.c:1709 src/main/serialize.c:1706
+#: src/main/scan.c:1709 src/main/serialize.c:1922
 msgid "cannot write to this connection"
 msgstr "无法写入此链结"
 
@@ -1759,7 +1759,7 @@ msgstr "没有这种调色(至少需要两种颜色)"
 msgid "maximum number of colors exceeded"
 msgstr "颜色的数目已超过最大值"
 
-#: src/main/colors.c:1312 src/main/engine.c:3081
+#: src/main/colors.c:1312 src/main/engine.c:3084
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "十六进制'color'设定或lty设定不对"
 
@@ -1930,8 +1930,8 @@ msgstr "fifo(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现�
 #: src/main/connections.c:4452 src/main/connections.c:4800 src/main/dcf.c:65
 #: src/main/deparse.c:316 src/main/deparse.c:402 src/main/saveload.c:2255
 #: src/main/saveload.c:2335 src/main/scan.c:906 src/main/scan.c:1017
-#: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:1875
-#: src/main/serialize.c:1926 src/main/source.c:261
+#: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:2091
+#: src/main/serialize.c:2142 src/main/source.c:261
 msgid "cannot open the connection"
 msgstr "无法打开链结"
 
@@ -2145,7 +2145,7 @@ msgid "cannot close messages sink connection"
 msgstr "无法关闭信息汇集链结"
 
 #: src/main/connections.c:3120 src/main/connections.c:4822
-#: src/main/serialize.c:1696 src/main/serialize.c:1704
+#: src/main/serialize.c:1912 src/main/serialize.c:1920
 msgid "connection is not open"
 msgstr "链结没有打开"
 
@@ -2157,7 +2157,7 @@ msgstr "行要比缓冲区大"
 #: src/main/connections.c:3561 src/main/connections.c:4115
 #: src/main/connections.c:4139 src/main/dcf.c:72 src/main/scan.c:909
 #: src/main/scan.c:913 src/main/scan.c:1020 src/main/scan.c:1024
-#: src/main/serialize.c:1698 src/main/source.c:268
+#: src/main/serialize.c:1914 src/main/source.c:268
 msgid "cannot read from this connection"
 msgstr "无法从此链结读取"
 
@@ -2516,11 +2516,11 @@ msgid "R was not compiled with support for memory profiling"
 msgstr "在编译R程序时没有建立存储轮廓这一功能"
 
 #: src/main/deparse.c:151 src/main/plot.c:916 src/main/plot.c:1452
-#: src/main/plot.c:1775 src/main/plot.c:1843 src/main/plot.c:1921
-#: src/main/plot.c:1990 src/main/plot.c:2066 src/main/plot.c:2164
-#: src/main/plot.c:2242 src/main/plot.c:2523 src/main/plot.c:2701
-#: src/main/plot.c:2920 src/main/plot.c:3464 src/main/plot.c:3592
-#: src/main/plot.c:3671 src/main/plot.c:3840 src/main/plot.c:4117
+#: src/main/plot.c:1776 src/main/plot.c:1844 src/main/plot.c:1922
+#: src/main/plot.c:1991 src/main/plot.c:2067 src/main/plot.c:2165
+#: src/main/plot.c:2243 src/main/plot.c:2524 src/main/plot.c:2702
+#: src/main/plot.c:2921 src/main/plot.c:3465 src/main/plot.c:3593
+#: src/main/plot.c:3672 src/main/plot.c:3841 src/main/plot.c:4123
 #: src/main/plot3d.c:1344 src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr "参数数目太少"
@@ -2559,7 +2559,7 @@ msgstr "'opts'必需是小的非负整数"
 
 #: src/main/deparse.c:375 src/main/envir.c:1686 src/main/envir.c:1768
 #: src/main/eval.c:412 src/main/eval.c:1050 src/main/eval.c:3350
-#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2414
+#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2630
 #, c-format
 msgid "object '%s' not found"
 msgstr "找不到对象'%s'"
@@ -2903,94 +2903,94 @@ msgstr "行接合出错"
 msgid "out of memory while clipping polyline"
 msgstr "剪裁多重线的时候内存不够"
 
-#: src/main/engine.c:1372
+#: src/main/engine.c:1375
 msgid "Path rendering is not implemented for this device"
 msgstr "本系统没有为这个设备实现路径呈现这个功能"
 
-#: src/main/engine.c:1390
+#: src/main/engine.c:1393
 msgid "Invalid graphics path"
 msgstr "图形路径出错"
 
-#: src/main/engine.c:1409
+#: src/main/engine.c:1412
 msgid "Raster rendering is not implemented for this device"
 msgstr "本系统没有为这个设备实现光栅渲染这一功能"
 
-#: src/main/engine.c:1433
+#: src/main/engine.c:1436
 msgid "Raster capture is not available for this device"
 msgstr "栅格捕捉不适用于这个设备"
 
-#: src/main/engine.c:1640
+#: src/main/engine.c:1643
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "模面%1$d不支持字模家族'%2$s'"
 
-#: src/main/engine.c:1956
+#: src/main/engine.c:1959
 msgid "no graphics device is active"
 msgstr "没有活动图形设备"
 
-#: src/main/engine.c:2034
+#: src/main/engine.c:2037
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "'%d'这个pch值在本语言环境下不适用"
 
-#: src/main/engine.c:2291
+#: src/main/engine.c:2294
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "目前没有实现pch '%d'这样一个值"
 
-#: src/main/engine.c:2314
+#: src/main/engine.c:2317
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "座标范围不对[GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2318
+#: src/main/engine.c:2321
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "座标范围不能是无限值[GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2356
+#: src/main/engine.c:2359
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
 
-#: src/main/engine.c:2358
+#: src/main/engine.c:2361
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
-#: src/main/engine.c:2754
+#: src/main/engine.c:2757
 msgid "Display list redraw incomplete"
 msgstr "显示串列没有完全被刷新"
 
-#: src/main/engine.c:2938
+#: src/main/engine.c:2941
 msgid "'expr' argument must be an expression"
 msgstr "'expr'参数必需是表达式"
 
-#: src/main/engine.c:2940
+#: src/main/engine.c:2943
 msgid "'list' argument must be a list"
 msgstr "'list'参数必需是串列"
 
-#: src/main/engine.c:2946
+#: src/main/engine.c:2949
 msgid "'env' argument must be an environment"
 msgstr "'env'参数必需是环境"
 
-#: src/main/engine.c:2968 src/main/graphics.c:2401
+#: src/main/engine.c:2971 src/main/graphics.c:2401
 msgid "invalid graphics state"
 msgstr "图形狀態不对"
 
-#: src/main/engine.c:3026 src/main/engine.c:3034
+#: src/main/engine.c:3029 src/main/engine.c:3037
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\"里的多字节字元不对"
 
-#: src/main/engine.c:3104
+#: src/main/engine.c:3107
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "行类不对: 长度必需是2, 4, 6或8"
 
-#: src/main/engine.c:3108
+#: src/main/engine.c:3111
 msgid "invalid line type: zeroes are not allowed"
 msgstr "排类别不对：不能有零值"
 
-#: src/main/engine.c:3117 src/main/engine.c:3125 src/main/engine.c:3132
+#: src/main/engine.c:3120 src/main/engine.c:3128 src/main/engine.c:3135
 msgid "invalid line type"
 msgstr "行类不对"
 
@@ -3652,7 +3652,7 @@ msgid "'file' must be non-empty string"
 msgstr "'file'必需是非空字符串"
 
 #: src/main/eval.c:5079 src/main/saveload.c:1932 src/main/saveload.c:2232
-#: src/main/serialize.c:1849
+#: src/main/serialize.c:2065
 msgid "'ascii' must be logical"
 msgstr "'ascii’必需是逻辑值"
 
@@ -3932,20 +3932,20 @@ msgstr "还没有调用plot.new "
 msgid "unable to allocate memory (in GPolygon)"
 msgstr "无法分配内存(GPolygon)"
 
-#: src/main/graphics.c:3020
+#: src/main/graphics.c:3022
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "零长度箭头的角度不定，因此略过不用"
 
-#: src/main/graphics.c:3101
+#: src/main/graphics.c:3103
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\")=‘%c'不对; 因此没有画box()"
 
-#: src/main/graphics.c:3118
+#: src/main/graphics.c:3120
 msgid "invalid argument to GBox"
 msgstr "GBox参数不对"
 
-#: src/main/graphics.c:3362
+#: src/main/graphics.c:3364
 msgid "Metric information not available for this device"
 msgstr "公制信息不适用于这个设备"
 
@@ -5379,7 +5379,7 @@ msgstr "座标数目%d不对"
 msgid "'hadj' must be of length one"
 msgstr "'hadj'的长度必需为一"
 
-#: src/main/plot.c:1024 src/main/plot.c:2576
+#: src/main/plot.c:1024 src/main/plot.c:2577
 msgid "zero length 'padj' specified"
 msgstr "'padj'长度不能为零"
 
@@ -5410,7 +5410,7 @@ msgstr "%s()里的'x'和'y'的长度不一样"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "绘图种类'%s'被缩短成第一个字符"
 
-#: src/main/plot.c:1485 src/main/plot.c:3186
+#: src/main/plot.c:1485 src/main/plot.c:3187
 msgid "invalid plot type"
 msgstr "绘图种类不对"
 
@@ -5419,201 +5419,201 @@ msgstr "绘图种类不对"
 msgid "invalid plot type '%c'"
 msgstr "绘图种类'%c'不对"
 
-#: src/main/plot.c:1745
+#: src/main/plot.c:1746
 msgid "invalid third argument"
 msgstr "第三个参数不对"
 
-#: src/main/plot.c:1753
+#: src/main/plot.c:1754
 msgid "invalid fourth argument"
 msgstr "第四个参数不对"
 
-#: src/main/plot.c:1761
+#: src/main/plot.c:1762
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "不能将零长度的座标同其它长度的座标混合在一起"
 
-#: src/main/plot.c:1950
+#: src/main/plot.c:1951
 msgid "unable to allocate memory (in GPath)"
 msgstr "无法分配内存(GPath)"
 
-#: src/main/plot.c:1956
+#: src/main/plot.c:1957
 msgid "invalid x or y (in GPath)"
 msgstr "x或y的值不对(在GPath里)"
 
-#: src/main/plot.c:2079
+#: src/main/plot.c:2080
 msgid "invalid arrow head length"
 msgstr "箭头长度不对"
 
-#: src/main/plot.c:2084
+#: src/main/plot.c:2085
 msgid "invalid arrow head angle"
 msgstr "箭头角度不对"
 
-#: src/main/plot.c:2089
+#: src/main/plot.c:2090
 msgid "invalid arrow head specification"
 msgstr "箭头设定不对"
 
-#: src/main/plot.c:2254 src/main/plot.c:3328
+#: src/main/plot.c:2255 src/main/plot.c:3329
 msgid "zero length 'labels'"
 msgstr "'labels'的长度不能为零"
 
-#: src/main/plot.c:2328
+#: src/main/plot.c:2329
 msgid "no coordinates were supplied"
 msgstr "没有座标"
 
-#: src/main/plot.c:2534
+#: src/main/plot.c:2535
 msgid "zero length 'text' specified"
 msgstr "'text'长度不能设成零"
 
-#: src/main/plot.c:2540
+#: src/main/plot.c:2541
 msgid "zero length 'side' specified"
 msgstr "'side'长度不能设成零"
 
-#: src/main/plot.c:2547
+#: src/main/plot.c:2548
 msgid "zero length 'line' specified"
 msgstr "'line'长度不能设成零"
 
-#: src/main/plot.c:2555
+#: src/main/plot.c:2556
 msgid "zero length 'outer' specified"
 msgstr "'outer'长度不能设成零"
 
-#: src/main/plot.c:2562
+#: src/main/plot.c:2563
 msgid "zero length 'at' specified"
 msgstr "'at'长度不能设成零"
 
-#: src/main/plot.c:2569
+#: src/main/plot.c:2570
 msgid "zero length 'adj' specified"
 msgstr "'adj'长度不能设成零"
 
-#: src/main/plot.c:2583
+#: src/main/plot.c:2584
 msgid "zero length 'cex' specified"
 msgstr "'cex'长度不能设成零"
 
-#: src/main/plot.c:2591
+#: src/main/plot.c:2592
 msgid "zero length 'col' specified"
 msgstr "'col'长度不能设成零"
 
-#: src/main/plot.c:2598
+#: src/main/plot.c:2599
 msgid "zero length 'font' specified"
 msgstr "'font'长度不能设成零"
 
-#: src/main/plot.c:2961
+#: src/main/plot.c:2962
 msgid "invalid a=, b= specification"
 msgstr "a=, b= 设定不对"
 
-#: src/main/plot.c:2970
+#: src/main/plot.c:2971
 msgid "'a' and 'b' must be finite"
 msgstr "'a'和'b'的值必需是有限的"
 
-#: src/main/plot.c:3181
+#: src/main/plot.c:3182
 msgid "invalid number of points in locator()"
 msgstr "locator()里点的数目不对"
 
-#: src/main/plot.c:3317
+#: src/main/plot.c:3318
 msgid "invalid number of points in identify()"
 msgstr "identify()里点的数目不对"
 
-#: src/main/plot.c:3319
+#: src/main/plot.c:3320
 msgid "incorrect argument type"
 msgstr "参数种类不对"
 
-#: src/main/plot.c:3331
+#: src/main/plot.c:3332
 msgid "different argument lengths"
 msgstr "参数长度不一样"
 
-#: src/main/plot.c:3333
+#: src/main/plot.c:3334
 msgid "more 'labels' than points"
 msgstr "'labels'比点还要多"
 
-#: src/main/plot.c:3386
+#: src/main/plot.c:3387
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "警告: 没有点在%.2f英尺内\n"
 
-#: src/main/plot.c:3392
+#: src/main/plot.c:3393
 msgid "warning: nearest point already identified\n"
 msgstr "警告: 已经找到了最近的点\n"
 
-#: src/main/plot.c:3476
+#: src/main/plot.c:3477
 msgid "invalid units"
 msgstr "单位不对"
 
-#: src/main/plot.c:3655 src/main/plot.c:3765
+#: src/main/plot.c:3656 src/main/plot.c:3766
 msgid "invalid dendrogram input"
 msgstr "谱系图输入不对"
 
-#: src/main/plot.c:3822
+#: src/main/plot.c:3823
 msgid "invalid symbol parameter vector"
 msgstr "符号参数矢量不对"
 
-#: src/main/plot.c:3845
+#: src/main/plot.c:3846
 msgid "invalid symbol coordinates"
 msgstr "符号座标不对"
 
-#: src/main/plot.c:3853
+#: src/main/plot.c:3854
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/参数长度不一样"
 
-#: src/main/plot.c:3872
+#: src/main/plot.c:3873
 msgid "invalid circles data"
 msgstr "圆圈数据不对"
 
-#: src/main/plot.c:3874 src/main/plot.c:3893 src/main/plot.c:3917
-#: src/main/plot.c:3946
+#: src/main/plot.c:3875 src/main/plot.c:3896 src/main/plot.c:3921
+#: src/main/plot.c:3951
 msgid "invalid symbol parameter"
 msgstr "符号参数不对"
 
-#: src/main/plot.c:3891
+#: src/main/plot.c:3894
 msgid "invalid squares data"
 msgstr "正方形数据不对"
 
-#: src/main/plot.c:3915
+#: src/main/plot.c:3919
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "长方形数据不对(需要两个列)"
 
-#: src/main/plot.c:3944
+#: src/main/plot.c:3949
 msgid "invalid stars data"
 msgstr "星形数据不对"
 
-#: src/main/plot.c:3985
+#: src/main/plot.c:3991
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
-#: src/main/plot.c:3988
+#: src/main/plot.c:3994
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "温度计[,%s]不对"
 
-#: src/main/plot.c:3991
+#: src/main/plot.c:3997
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "温度计[,%s]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:3994
+#: src/main/plot.c:4000
 msgid "invalid thermometers[,1:2]"
 msgstr "温度计[,1:2]"
 
-#: src/main/plot.c:4033
+#: src/main/plot.c:4039
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "盒形图数据不对(需要五个列)"
 
-#: src/main/plot.c:4042
+#: src/main/plot.c:4048
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "盒形图[,5]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:4044
+#: src/main/plot.c:4050
 msgid "invalid boxplots[, 1:4]"
 msgstr "盒形图[, 1:4]不对"
 
-#: src/main/plot.c:4090
+#: src/main/plot.c:4096
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
-#: src/main/plot.c:4130 src/main/plot.c:4132 src/main/plot.c:4137
-#: src/main/plot.c:4139
+#: src/main/plot.c:4136 src/main/plot.c:4138 src/main/plot.c:4143
+#: src/main/plot.c:4145
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s'参数的长度不对"
 
-#: src/main/plot.c:4156
+#: src/main/plot.c:4162
 msgid "unable to allocate memory (in do_xspline)"
 msgstr "无法分配内存(do_xspline)"
 
@@ -5873,8 +5873,8 @@ msgstr "不能比较复数值"
 #: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
 #: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1370
 #: src/main/saveload.c:1375 src/main/saveload.c:1419 src/main/saveload.c:1487
-#: src/main/saveload.c:1496 src/main/serialize.c:331 src/main/serialize.c:338
-#: src/main/serialize.c:2082 src/main/serialize.c:2090
+#: src/main/saveload.c:1496 src/main/serialize.c:330 src/main/serialize.c:337
+#: src/main/serialize.c:2298 src/main/serialize.c:2306
 msgid "read error"
 msgstr "读取错误"
 
@@ -6011,8 +6011,8 @@ msgstr "xdr复数数据书写错误"
 msgid "an xdr complex data read error occurred"
 msgstr "xdr复数数据读取错误"
 
-#: src/main/saveload.c:1772 src/main/serialize.c:1658
-#: src/main/serialize.c:2259 src/modules/internet/internet.c:351
+#: src/main/saveload.c:1772 src/main/serialize.c:1874
+#: src/main/serialize.c:2475 src/modules/internet/internet.c:351
 #: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
 msgid "write failed"
 msgstr "书写失败"
@@ -6054,11 +6054,13 @@ msgstr "第一参数必需是文件名字"
 msgid "unable to open file"
 msgstr "无法打开文件"
 
-#: src/main/saveload.c:2096 src/main/saveload.c:2122
+#: src/main/saveload.c:2096 src/main/saveload.c:2122 src/main/serialize.c:816
+#: src/main/serialize.c:851 src/main/serialize.c:887
 msgid "XDR write failed"
 msgstr "XDR书写失败"
 
-#: src/main/saveload.c:2109 src/main/saveload.c:2134
+#: src/main/saveload.c:2109 src/main/saveload.c:2134 src/main/serialize.c:1350
+#: src/main/serialize.c:1384 src/main/serialize.c:1420
 msgid "XDR read failed"
 msgstr "XDR读取失败"
 
@@ -6067,12 +6069,12 @@ msgstr "XDR读取失败"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "无法保存数据 -- 无法打开%s: %s"
 
-#: src/main/saveload.c:2242 src/main/serialize.c:1861
+#: src/main/saveload.c:2242 src/main/serialize.c:2077
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "无法用%d版本的格式来保存链结"
 
-#: src/main/saveload.c:2265 src/main/serialize.c:1886
+#: src/main/saveload.c:2265 src/main/serialize.c:2102
 msgid "connection not open for writing"
 msgstr "无法打开链结进行书写"
 
@@ -6080,13 +6082,13 @@ msgstr "无法打开链结进行书写"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "不能将XDR格式保存到文字状态链结"
 
-#: src/main/saveload.c:2283 src/main/serialize.c:1766
-#: src/main/serialize.c:1780 src/main/serialize.c:1962
-#: src/main/serialize.c:1984
+#: src/main/saveload.c:2283 src/main/serialize.c:1982
+#: src/main/serialize.c:1996 src/main/serialize.c:2178
+#: src/main/serialize.c:2200
 msgid "error writing to connection"
 msgstr "链结书写发生了错误"
 
-#: src/main/saveload.c:2344 src/main/serialize.c:1934
+#: src/main/saveload.c:2344 src/main/serialize.c:2150
 msgid "connection not open for reading"
 msgstr "链结没有打开，不能读"
 
@@ -6251,83 +6253,75 @@ msgstr "'by'的值必需是有限的"
 msgid "argument must be coercible to non-negative integer"
 msgstr "参数必需能被强制改变成非负整数"
 
-#: src/main/serialize.c:225 src/main/serialize.c:255 src/main/serialize.c:278
+#: src/main/serialize.c:224 src/main/serialize.c:254 src/main/serialize.c:277
 msgid "unknown or inappropriate output format"
 msgstr "输出格式不对"
 
-#: src/main/serialize.c:504
+#: src/main/serialize.c:503
 msgid "must specify ascii, binary, or xdr format"
 msgstr "必需设定ascii， binary， 或xdr格式中的一个"
 
-#: src/main/serialize.c:505
+#: src/main/serialize.c:504
 msgid "unknown output format"
 msgstr "没有这种输出格式"
 
-#: src/main/serialize.c:536
+#: src/main/serialize.c:535
 msgid "unknown input format"
 msgstr "没有这种输入格式"
 
-#: src/main/serialize.c:541
+#: src/main/serialize.c:540
 msgid "input format does not match specified format"
 msgstr "输入格式同设定的格式不相配"
 
-#: src/main/serialize.c:756
+#: src/main/serialize.c:755
 msgid "no restore method available"
 msgstr "没有復原的方法"
 
-#: src/main/serialize.c:786
+#: src/main/serialize.c:785
 msgid "names in persistent strings are currently ignored"
 msgstr "持续字符串里的名字现在不用"
 
-#: src/main/serialize.c:851
+#: src/main/serialize.c:952
 #, c-format
 msgid "'%s' may not be available when loading"
 msgstr "载入时'%s'可能无用"
 
-#: src/main/serialize.c:858
+#: src/main/serialize.c:959
 msgid "namespaces may not be available when loading"
 msgstr "载入时名字空间可能无用"
 
-#: src/main/serialize.c:963
-msgid "this version of R cannot write byte code objects"
-msgstr "本R版本无法书写位元组码对象"
-
-#: src/main/serialize.c:972
+#: src/main/serialize.c:1088
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem不对: 没有这一种类%i"
 
-#: src/main/serialize.c:1151
+#: src/main/serialize.c:1267
 #, c-format
 msgid "version %d not supported"
 msgstr "不支持版本%d"
 
-#: src/main/serialize.c:1179
+#: src/main/serialize.c:1295
 msgid "reference index out of range"
 msgstr "引用索引在范围外"
 
-#: src/main/serialize.c:1209
+#: src/main/serialize.c:1325
 msgid "names in persistent strings are not supported yet"
 msgstr "目前不支持持续字符串里的名字"
 
-#: src/main/serialize.c:1420
-msgid "this version of R cannot read byte code objects"
-msgstr "本R版本无法读取位元组码对象"
-
-#: src/main/serialize.c:1423
+#: src/main/serialize.c:1632
 msgid "this version of R cannot read class references"
 msgstr "本R版本无法读取类别引用"
 
-#: src/main/serialize.c:1425
+#: src/main/serialize.c:1634
 msgid "this version of R cannot read generic function references"
 msgstr "本R版本无法读取类属功能引用"
 
-#: src/main/serialize.c:1436
+#: src/main/serialize.c:1652
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr "ReadItem: 不存在%i 这一种类，可能是因为由新的R版本所写的"
 
-#: src/main/serialize.c:1582
+#: src/main/serialize.c:1798
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d."
@@ -6335,7 +6329,7 @@ msgid ""
 msgstr ""
 "无法从由R实验版本%2$d.%3$d.%4$d写的还未被释放的工作空间版本%1$d中读取数据"
 
-#: src/main/serialize.c:1586
+#: src/main/serialize.c:1802
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6344,82 +6338,82 @@ msgstr ""
 "无法从由R版本%2$d.%3$d.%4$d写的工作空间版本%1$d中读取数据；需要R版本%5$d."
 "%6$d.%7$d以后的版本"
 
-#: src/main/serialize.c:1665
+#: src/main/serialize.c:1881
 msgid "read failed"
 msgstr "读取失败"
 
-#: src/main/serialize.c:1728
+#: src/main/serialize.c:1944
 msgid "error reading from ascii connection"
 msgstr "读取ascii链结时发生了错误"
 
-#: src/main/serialize.c:1730
+#: src/main/serialize.c:1946
 msgid "unexpected format in ascii connection"
 msgstr "ascii链结里出现了意外格式"
 
-#: src/main/serialize.c:1735 src/main/serialize.c:1749
+#: src/main/serialize.c:1951 src/main/serialize.c:1965
 msgid "error reading from connection"
 msgstr "读取链结时发生了错误"
 
-#: src/main/serialize.c:1790
+#: src/main/serialize.c:2006
 msgid "only ascii format can be written to text mode connections"
 msgstr "只能用ascii格式书写文字状态的链结"
 
-#: src/main/serialize.c:1804
+#: src/main/serialize.c:2020
 msgid "only ascii format can be read from text mode connections"
 msgstr "只能用ascii格式读取文字状态的链结"
 
-#: src/main/serialize.c:1859 src/main/serialize.c:2012
-#: src/main/serialize.c:2153
+#: src/main/serialize.c:2075 src/main/serialize.c:2228
+#: src/main/serialize.c:2369
 msgid "bad version value"
 msgstr "版本值不对"
 
-#: src/main/serialize.c:1884
+#: src/main/serialize.c:2100
 msgid "binary-mode connection required for ascii=FALSE"
 msgstr "二进列链结需要设定ascii=FALSE"
 
-#: src/main/serialize.c:2043 src/main/serialize.c:2072
-#: src/main/serialize.c:2133
+#: src/main/serialize.c:2259 src/main/serialize.c:2288
+#: src/main/serialize.c:2349
 msgid "serialization is too large to store in a raw vector"
 msgstr "串行太大，无法存储于原始矢量中"
 
-#: src/main/serialize.c:2053
+#: src/main/serialize.c:2269
 msgid "cannot allocate buffer"
 msgstr "无法分配缓冲区"
 
-#: src/main/serialize.c:2237 src/main/serialize.c:2306
+#: src/main/serialize.c:2453 src/main/serialize.c:2522
 msgid "not a proper file name"
 msgstr "文件名字有错"
 
-#: src/main/serialize.c:2239
+#: src/main/serialize.c:2455
 msgid "not a proper raw vector"
 msgstr "不是原始矢量"
 
-#: src/main/serialize.c:2260
+#: src/main/serialize.c:2476
 msgid "could not determine file position"
 msgstr "无法确定文件位置"
 
-#: src/main/serialize.c:2308
+#: src/main/serialize.c:2524
 msgid "bad offset/length argument"
 msgstr "位移/长度参数不对"
 
-#: src/main/serialize.c:2332 src/main/serialize.c:2345
-#: src/main/serialize.c:2354 src/main/serialize.c:2364
-#: src/main/serialize.c:2377
+#: src/main/serialize.c:2548 src/main/serialize.c:2561
+#: src/main/serialize.c:2570 src/main/serialize.c:2580
+#: src/main/serialize.c:2593
 #, c-format
 msgid "seek failed on %s"
 msgstr "读取%s失败"
 
-#: src/main/serialize.c:2349 src/main/serialize.c:2358
-#: src/main/serialize.c:2368 src/main/serialize.c:2381
+#: src/main/serialize.c:2565 src/main/serialize.c:2574
+#: src/main/serialize.c:2584 src/main/serialize.c:2597
 #, c-format
 msgid "read failed on %s"
 msgstr "读取%s失败"
 
-#: src/main/serialize.c:2400
+#: src/main/serialize.c:2616
 msgid "bad environment"
 msgstr "环境有错"
 
-#: src/main/serialize.c:2402
+#: src/main/serialize.c:2618
 msgid "bad variable names"
 msgstr "变数名字不对"
 
@@ -8132,6 +8126,12 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "this version of R cannot write byte code objects"
+#~ msgstr "本R版本无法书写位元组码对象"
+
+#~ msgid "this version of R cannot read byte code objects"
+#~ msgstr "本R版本无法读取位元组码对象"
 
 #~ msgid "binary format is deprecated; using xdr instead"
 #~ msgstr "二进列格式不再使用，替之用xdr格式"
