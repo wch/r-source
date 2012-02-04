@@ -5189,6 +5189,7 @@ function(dir)
     if(length(pos))
         clashes <-
             sprintf("%s [%s]", packages[pos], db[pos, "Repository"])
+    else out$new_submission <- TRUE
     ## If possible, also catch clashes with archived CRAN packages
     ## (which might get un-archived eventually).
     if(length(packages_in_CRAN_archive)) {
@@ -5243,9 +5244,12 @@ function(dir)
     close(con)
     if(inherits(db, "error")) return(out)
 
-    m_m <- meta["Maintainer"]
+    m_m <- as.vector(meta["Maintainer"]) # drop name
     m_d <- db[db[, "Package"] == package, "Maintainer"]
-    if(!all(m_m == m_d))
+    # There may be white space differences here
+    m_m_1 <- gsub("[[:space:]]+", " ", m_m)
+    m_d_1 <- gsub("[[:space:]]+", " ", m_d)
+    if(!all(m_m_1== m_d_1))
         out$new_maintainer <- list(m_m, m_d)
 
     l_d <- db[db[, "Package"] == package, "License"]
@@ -5260,13 +5264,15 @@ format.check_package_CRAN_incoming <-
 function(x, ...)
 {
     c(character(),
+      if(length(x$new_submission))
+          "New submission",
       if(length(y <- x$bad_package))
           sprintf("Conflicting package names (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
       if(length(y <- x$repositories))
           sprintf("Package duplicated from %s", y),
       if(length(y <- x$CRAN_archive))
-          sprintf("Package was archived on CRAN"),
+          "Package was archived on CRAN",
       if(length(y <- x$bad_version))
           sprintf("Insufficient package version (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
