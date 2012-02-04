@@ -71,7 +71,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## Since this is under the session directory and only contains
     ## symlinks and dummies (hence will be small) we never clean it up.
 
-    test_recomended <-
+    test_recommended <-
         config_val_to_logical(Sys.getenv("_R_CHECK_NO_RECOMMENDED_"))
 
     if(test_recommended) {
