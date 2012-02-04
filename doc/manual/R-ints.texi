@@ -3645,7 +3645,7 @@ Default: true if @command{qpdf} is found.
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
 kept only if there is an error.
-Default: false
+Default: false.
 @item _R_CHECK_CLEAN_VIGN_TEST_
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
@@ -3653,6 +3653,16 @@ Default: true.
 Should warnings about replacing imports be reported?  These mainly come
 from auto-generated @file{NAMESPACE} files in other packages.
 Default: false
+@item _R_CHECK_CODETOOLS_PROFILE_
+A string with comma-separated @code{@var{name}=@var{value}} pairs (with
+@var{value} a logical constant) giving additional arguments for the
+@CRANpkg{codetools} functions used for analyzing package code.  E.g.,
+use @code{_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"} to
+additionally suppress warnings about unused local variables. 
+Default: no additional arguments, corresponding to using @code{skipWith =
+TRUE} and @code{suppressLocalUnused = TRUE}.
+
+CRAN's submission checks use @code{suppressPartialMatchArgs=FALSE}.
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top
