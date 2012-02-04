@@ -3699,6 +3699,11 @@ Default: false.
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
 packages unavailable unless declared.
+Default: false.
+
+This may give false positives on code which uses
+@code{grDevices::densCols} and @code{stats:::asSparse} as these invoke
+@pkg{KernSmooth} and @pkg{Matrix} respectively.
 
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with

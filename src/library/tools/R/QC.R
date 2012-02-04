@@ -3353,6 +3353,7 @@ function(package, lib.loc = NULL)
                             method, available = NULL, destdir = NULL,
                             dependencies = FALSE, libs_only = FALSE,
                             ...) {}, envir = compat)
+            assign("Sys.junction", function(from, to) {}, envir = compat)
         }
         attach(compat, name="compat", pos = length(search()),
                warn.conflicts = FALSE)

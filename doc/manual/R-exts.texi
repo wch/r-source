@@ -2688,9 +2688,10 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{ftp}@footnote{for Windows users the simplest way may be to open
 that URL in Internet Explorer and (depending on the version) follow the
 instructions to view it as a folder, then copy the submission to the
-folder.} and not @samp{sftp} to connect to this server) and send a
-message to @email{CRAN@@R-project.org} about it (with your package name
-in the subject line, and please do not submit a package by email).  The
+folder.} and not @samp{sftp} to connect to this server, and passive
+@samp{ftp} is more often successful) and send a message to
+@email{CRAN@@R-project.org} about it (with your package name in the
+subject line, and please do not submit a package by email).  The
 @acronym{CRAN} maintainers will run these tests before putting a
 submission online.
 

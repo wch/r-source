@@ -79,8 +79,14 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         recommended <-  tools:::.get_standard_package_names()$recommended
         ## grDevices has :: to KernSmooth
         ## stats has ::: to Matrix, Matrix depends on lattice
+        ## These give false positives in aroma.core, MASS and Rcpp
         ## codetools is really part of tools
-        recommended <- recommended[!recommended %in% c("KernSmooth", "codetools")]
+        exceptions <- "codetools"
+        if (thispkg %in% c("MASS", "Rcpp"))
+            exceptions <- c(exceptions, "Matrix", "lattice")
+        if (thispkg %in% c("aroma.core"))
+            exceptions <- c(exceptions, "KernSmooth")
+        recommended <- recommended[!recommended %in% exceptions]
         for(pkg in recommended) {
             if(pkg == thispkg) next
             dir.create(pd <- file.path(tmplib, pkg))
