@@ -60,17 +60,36 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         else function(from, to) file.copy(from, to, recursive = TRUE)
     } else file.symlink
 
-    ## We may want to test with only the dependencies available.
-    #
+    pi <- .split_description(.read_description(file.path(pkgdir, "DESCRIPTION")))
+    thispkg <- unname(pi$DESCRIPTION["Package"])
+
     ## We need to make some assumptions about layout: this version
     ## asssumes .Library contains standard and recommended packages
     ## and nothing else.
     tmplib <- tempfile("RLIBS_")
     dir.create(tmplib)
     ## Since this is under the session directory and only contains
-    ## symlinks (hence will be small) we never clean it up.
-    pi <- .split_description(.read_description(file.path(pkgdir, "DESCRIPTION")))
-    thispkg <- unname(pi$DESCRIPTION["Package"])
+    ## symlinks and dummies (hence will be small) we never clean it up.
+
+    test_recomended <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_NO_RECOMMENDED_"))
+
+    if(test_recommended) {
+        ## Now add dummies for recommended packages (removed later if declared)
+        recommended <-  tools:::.get_standard_package_names()$recommended
+        ## grDevices has :: to KernSmooth
+        ## stats has ::: to Matrix, Matrix depends on lattice
+        ## codetools is really part of tools
+        recommended <- recommended[!recommended %in% c("KernSmooth", "codetools")]
+        for(pkg in recommended) {
+            if(pkg == thispkg) next
+            dir.create(pd <- file.path(tmplib, pkg))
+            file.copy(file.path(.Library, pkg, "DESCRIPTION"), pd)
+            ## to make sure find.package throws an error:
+            close(file(file.path(pd, "dummy_for_check"), "w"))
+        }
+    }
+
     deps <- unique(c(names(pi$Depends), names(pi$Imports), names(pi$LinkingTo),
                      if(suggests) names(pi$Suggests)))
     if(length(libdir)) flink(file.path(libdir, thispkg), tmplib)
@@ -82,6 +101,15 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     while(length(more)) {
         m0 <- more; more <- character()
         for (pkg in m0) {
+            if (test_recommended) {
+                if (pkg %in% recommended) unlink(file.path(tmplib, pkg), TRUE)
+                ## hard-code dependencies for now.
+                if (pkg == "mgcv")
+                    unlink(file.path(tmplib, c("Matrix", "lattice", "nlme")), TRUE)
+                if (pkg == "Matrix") unlink(file.path(tmplib, "lattice"), TRUE)
+                if (pkg == "class") unlink(file.path(tmplib, "MASS"), TRUE)
+                if (pkg == "nlme") unlink(file.path(tmplib, "lattice"), TRUE)
+            }
             where <- find.package(pkg, quiet = TRUE)
             ## here we assume that dependencies from .Library are also in .Library
             if(length(where) && !(dirname(where) %in% poss)) {

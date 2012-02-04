@@ -3696,6 +3696,10 @@ of all the Depends/Imports/LinkingTo and (for the second only) Suggests
 packages which are not in @code{.Library}.
 Default: false.
 
+@item _R_CHECK_NO_RECOMMENDED_
+If set to a true value, augment the previous checks to make recommended
+packages unavailable unless declared.
+
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with
 @var{value} a logical constant) giving additional arguments for the
@@ -3704,6 +3708,8 @@ use @code{_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"} to
 additionally suppress warnings about unused local variables. 
 Default: no additional arguments, corresponding to using @code{skipWith =
 TRUE} and @code{suppressLocalUnused = TRUE}.
+
+CRAN's submission checks use @code{suppressPartialMatchArgs=FALSE}.
 
 @item _R_CHECK_CRAN_INCOMING_
 Check whether package is suitable for publication on CRAN.

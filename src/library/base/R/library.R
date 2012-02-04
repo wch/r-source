@@ -715,6 +715,12 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             dirs <- dirs[!vapply(dirs, is.null, NA)]
             paths <- c(as.character(dirs), paths)
         }
+        ## trapdoor for tools:::setRlibs
+        if(length(paths) &&
+           file.exists(file.path(paths[1], "dummy_for_check"))) {
+            bad <- c(bad, pkg)
+            next
+        }
         if(length(paths)) {
             paths <- unique(paths)
             valid_package_version_regexp <-
@@ -744,6 +750,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                    & (grepl(valid_package_version_regexp, db[, "Version"])))
             paths <- paths[ok]
         }
+
         if(length(paths) == 0L) {
             bad <- c(bad, pkg)
             next
