@@ -4778,6 +4778,7 @@ function(package, dir, lib.loc = NULL)
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
+        ## not currently used
         if(!file_test("-d", dir))
             stop(gettextf("directory '%s' does not exist", dir), domain = NA)
         else
@@ -4785,12 +4786,20 @@ function(package, dir, lib.loc = NULL)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
         testsrcdir <- file.path(dir, "inst", "doc")
+        ## FIXME: this isn't right, as we've not tangled in this dir
     }
-    if (file_test("-d", testsrcdir)) {
+    Rfiles <- if (file_test("-d", testsrcdir)) {
         od <- setwd(testsrcdir)
         on.exit(setwd(od))
-        Rfiles <- dir(".", pattern="\\.R$")
-    } else Rfiles <- character()
+        vign_exts <- .make_file_exts( "vignette")
+        Rfiles <- dir(".", pattern="[.]R$")
+        if (length(Rfiles))
+        ## check they have a matching vignette
+        Rfiles[sapply(Rfiles,
+                      function(x) any(file.exists(paste(sub("[.]R$", "", x),
+                                                        vign_exts, sep="."))))]
+        else Rfiles
+    } else character()
     .check_packages_used_helper(db, Rfiles)
 }
 
