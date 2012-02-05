@@ -115,8 +115,6 @@
       \item For consistency, circles with zero radius are omitted by
       \code{points} and \code{grid.circle()}.  Previously this was
       device-dependent, but they were usually invisible.
-      
-      \item The included version of zlib has been updated to 1.2.6.
     }
   }
 
@@ -320,6 +318,8 @@
       \env{R_GSCMD} is set.  If \env{R_GSCMD} is unset or set to
       \code{""}, the function will try to find a suitable GhostScript
       executable.
+      
+      \item The included version of zlib has been updated to 1.2.6.
     }
   }
 
@@ -368,7 +368,7 @@
 
       \item The text of a function body containing more than 4096
       characters was not properly saved by the parser when entered
- at the console.
+      at the console.
 
       \item Forgetting the \code{#endif} tag in an Rd file could cause
       the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
@@ -378,7 +378,7 @@
       with zero weight.  (Reported by Berwin Turlach.)
 
       \item str(*, ....., strict.width="cut") now also obeys
-      'list.len = n'  (Reported by Sören Vogel.)
+      \code{list.len = n}  (Reported by Sören Vogel.)
     }
   }
 }
