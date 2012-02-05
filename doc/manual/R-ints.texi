@@ -3711,7 +3711,7 @@ A string with comma-separated @code{@var{name}=@var{value}} pairs (with
 @var{value} a logical constant) giving additional arguments for the
 @CRANpkg{codetools} functions used for analyzing package code.  E.g.,
 use @code{_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"} to
-additionally suppress warnings about unused local variables. 
+turn off suppressing warnings about unused local variables. 
 Default: no additional arguments, corresponding to using @code{skipWith =
 TRUE} and @code{suppressLocalUnused = TRUE}.
 
