@@ -1,5 +1,5 @@
 /* zconf.h -- configuration of the zlib compression library
- * Copyright (C) 1995-2010 Jean-loup Gailly.
+ * Copyright (C) 1995-2011 Jean-loup Gailly.
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
@@ -154,6 +154,12 @@
 #  endif
 #endif
 
+#if defined(ZLIB_CONST) && !defined(z_const)
+#  define z_const const
+#else
+#  define z_const
+#endif
+
 /* Some Mac compilers merge all .h files incorrectly: */
 #if defined(__MWERKS__)||defined(applec)||defined(THINK_C)||defined(__SC__)
 #  define NO_DUMMY_DECL
@@ -197,6 +203,14 @@
 #    define OF(args)  args
 #  else
 #    define OF(args)  ()
+#  endif
+#endif
+
+#ifndef Z_ARG /* function prototypes for stdarg */
+#  if defined(STDC) || defined(Z_HAVE_STDARG_H)
+#    define Z_ARG(args)  args
+#  else
+#    define Z_ARG(args)  ()
 #  endif
 #endif
 
@@ -317,8 +331,14 @@ typedef uLong FAR uLongf;
 #  define Z_HAVE_UNISTD_H
 #endif
 
+#ifdef HAVE_STDARG_H    /* may be set to #if 1 by ./configure */
+#  define Z_HAVE_STDARG_H
+#endif
+
 #ifdef STDC
-#  include <sys/types.h>    /* for off_t */
+#  ifndef Z_SOLO
+#    include <sys/types.h>      /* for off_t */
+#  endif
 #endif
 
 /* a little trick to accommodate both "#define _LARGEFILE64_SOURCE" and
@@ -331,7 +351,11 @@ typedef uLong FAR uLongf;
 #  undef _LARGEFILE64_SOURCE
 #endif
 
-#if defined(Z_HAVE_UNISTD_H) || defined(_LARGEFILE64_SOURCE)
+#if defined(_LARGEFILE64_SOURCE) && _LFS64_LARGEFILE-0
+#  define Z_LARGE
+#endif
+
+#if (defined(Z_HAVE_UNISTD_H) || defined(Z_LARGE)) && !defined(Z_SOLO)
 #  include <unistd.h>       /* for SEEK_* and off_t */
 #  ifdef VMS
 #    include <unixio.h>     /* for off_t */
@@ -341,7 +365,7 @@ typedef uLong FAR uLongf;
 #  endif
 #endif
 
-#ifndef SEEK_SET
+#if !defined(SEEK_SET) && !defined(Z_SOLO)
 #  define SEEK_SET        0       /* Seek from beginning of file.  */
 #  define SEEK_CUR        1       /* Seek from current position.  */
 #  define SEEK_END        2       /* Set file pointer to EOF plus "offset" */
@@ -351,18 +375,14 @@ typedef uLong FAR uLongf;
 #  define z_off_t long
 #endif
 
-#if defined(_LARGEFILE64_SOURCE) && _LFS64_LARGEFILE-0
+#if !defined(_WIN32) && (defined(_LARGEFILE64_SOURCE) && _LFS64_LARGEFILE-0)
 #  define z_off64_t off64_t
 #else
+#  if defined(_WIN32)
+#    define z_off64_t __int64
+#  else
 #  define z_off64_t z_off_t
 #endif
-
-#if defined(__OS400__)
-#  define NO_vsnprintf
-#endif
-
-#if defined(__MVS__)
-#  define NO_vsnprintf
 #endif
 
 /* MVS linker does not support external names larger than 8 bytes */
