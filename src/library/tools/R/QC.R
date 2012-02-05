@@ -4595,7 +4595,7 @@ function(db, files)
                 mc <- match.call(utils::data, e)
                 if(!is.null(pkg <- mc$package) && !pkg %in% depends_suggests)
                     bad_data <<- c(bad_data, pkg)
-            } else if(deparse(e[[1L]]) %in% c("utils::data", "utils:::data")) {
+            } else if(deparse(e[[1L]])[1L] %in% c("utils::data", "utils:::data")) {
                 mc <- match.call(utils::data, e)
                 if(!is.null(pkg <- mc$package) && !pkg %in% depends_suggests)
                     bad_data <<- c(bad_data, pkg)
