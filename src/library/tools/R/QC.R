@@ -5183,13 +5183,13 @@ function(dir)
     ## ignoring case.
     package <- meta["Package"]
     packages <- db[, "Package"]
+    if(! package %in% packages) out$new_submission <- TRUE
     clashes <- character()
     pos <- which((tolower(packages) == tolower(package)) &
                  (packages != package))
     if(length(pos))
         clashes <-
             sprintf("%s [%s]", packages[pos], db[pos, "Repository"])
-    else out$new_submission <- TRUE
     ## If possible, also catch clashes with archived CRAN packages
     ## (which might get un-archived eventually).
     if(length(packages_in_CRAN_archive)) {
