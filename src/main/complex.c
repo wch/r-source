@@ -52,6 +52,11 @@
 #undef HAVE_CACOS
 #endif
 
+#ifdef __SUNPRO_CC
+/* segfaults in Solaris Studio 12.3 */
+#undef HAVE_CPOW
+#endif
+
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
