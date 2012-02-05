@@ -116,6 +116,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
 {
     clean <- function(txt)
     {
+        if(!length(txt)) return(txt)
         ## remove R header
         if(length(top <- grep("^(R version|R : Copyright|R Under development)",
                               txt, perl = TRUE, useBytes = TRUE)) &&
@@ -123,7 +124,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
             txt <- txt[-(top[1L]:bot[1L])]
         ## remove BATCH footer
         nl <- length(txt)
-        if(grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
+        if(nl > 3L && grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
         if (nullPointers)
         ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
