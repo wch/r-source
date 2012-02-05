@@ -52,7 +52,7 @@
 #undef HAVE_CACOS
 #endif
 
-#ifdef __SUNPRO_CC
+#ifdef __SUNPRO_C
 /* segfaults in Solaris Studio 12.3 */
 #undef HAVE_CPOW
 #endif

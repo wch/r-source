@@ -4226,11 +4226,8 @@ for C++).
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using the (zero cost) Oracle Solaris Studio
-12@footnote{at least on versions 12u1 and 12.2; 12.3 on @cputype{x86} in
-Jan 2012 gave gave segfaults unless the use of @code{cpow} was disabled
-by commenting out @code{HAVE_CPOW} in @file{src/include/config.h}.}
-compilers: there has been some success with
+@cputype{x86}) using the (zero cost) Oracle Solaris Studio compilers:
+there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}.  Sun packages for @R{} used to
 be available from @uref{http://www.sunfreeware.com/} for both 32-bit
 architectures, but recently have often been many versions old.  (Recent
