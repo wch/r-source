@@ -3517,7 +3517,7 @@ ISO C++ warnings.
 Default: false.
 @item _R_CHECK_FORCE_SUGGESTS_
 If true, give an error if suggested packages are not available.
-Default: true.
+Default: true (but false for CRAN submission checks).
 @item _R_CHECK_RD_CONTENTS_
 If true, check @file{Rd} files for auto-generated content which needs editing,
 and missing argument documentation.
@@ -3531,7 +3531,7 @@ If true, check the cross-references in @file{.Rd} files.
 Default: true.
 @item _R_CHECK_SUBDIRS_NOCASE_
 If true, check the case of directories such as @file{R} and @file{man}.
-Default: false.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_SUBDIRS_STRICT_
 Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the
@@ -3562,7 +3562,7 @@ Default: true.
 @item _R_CHECK_EXECUTABLES_EXCLUSIONS_
 Control whether checking for executable (binary) files ignores files
 listed in the package's @file{BinaryFiles} file.
-Default: true.
+Default: true (but false for CRAN submission checks)
 However, most likely this package-level override mechanism will be
 removed eventually.
 @item _R_CHECK_PERMISSIONS_
@@ -3645,7 +3645,7 @@ is slower than (and in addition to) the previous check, but does detect
 figures with excessive detail (often hidden by over-plotting).  Requires
 that @env{R_GSCMD} is set to a valid program, or @command{gs} (or on Windows,
 @command{gswin32.exe} or @command{gswin64c.exe}) is on the path.
-Default: false.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
 kept only if there is an error.
@@ -3660,7 +3660,7 @@ Default: false.
 @item _R_CHECK_UNSAFE_CALLS_
 Check for calls that appear to tamper with already loaded code not from
 the current package: such calls may well contravene CRAN policies.
-Default: false.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_TIMINGS_
 Optionally report timings for installation, examples, tests and
 running/re-building vignettes as part of the check log.  The format is
@@ -3672,7 +3672,7 @@ Times with an elapsed component over 10 mins are reported in minutes
 in elapsed seconds that should be reported: non-numerical values
 indicate that no report is required, a value of @samp{0} that a report
 is always required.
-Default: @code{""}.
+Default: @code{""}. (@code{10} for CRAN checks.)
 
 @item _R_CHECK_INSTALL_DEPENDS_
 If set to a true value and a test installation is to
@@ -3680,7 +3680,8 @@ be done, this is done with @code{.libPaths()} containing just a
 temporary library directory and @code{.Library}.  The temporary library
 is populated by symbolic links@footnote{under Windows, junction points.}
 to the installed copies of all the Depends/Imports/LinkingTo packages
-which are not in @code{.Library}.  Default: false
+which are not in @code{.Library}.  
+Default: false (but true for CRAN submission checks).
 
 Note that this is actually implemented in @command{R CMD INSTALL}, so it
 is available to those who first install recording to a log, then call
@@ -3694,12 +3695,12 @@ and @code{.Library}.  The temporary library is populated by symbolic
 links@footnote{under Windows, junction points.} to the installed copies
 of all the Depends/Imports/LinkingTo and (for the second only) Suggests
 packages which are not in @code{.Library}.
-Default: false.
+Default: false (but true for CRAN checks).
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
 packages unavailable unless declared.
-Default: false.
+Default: false (but true for CRAN submission checks).
 
 This may give false positives on code which uses
 @code{grDevices::densCols} and @code{stats:::asSparse} as these invoke
@@ -3721,6 +3722,25 @@ Check whether package is suitable for publication on CRAN.
 Default: false.
 
 @end vtable
+
+CRAN's submission checks use something like
+
+@example
+_R_CHECK_CRAN_INCOMING_=TRUE
+_R_CHECK_FORCE_SUGGESTS_=FALSE
+_R_CHECK_VC_DIRS_=TRUE
+_R_CHECK_UNSAFE_CALLS_=TRUE
+_R_CHECK_TIMINGS_=10
+_R_CHECK_INSTALL_DEPENDS_=TRUE
+_R_CHECK_SUGGESTS_ONLY_=TRUE
+_R_CHECK_NO_RECOMMENDED_=TRUE
+_R_CHECK_SUBDIRS_NOCASE_=TRUE
+_R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
+_R_CHECK_LICENSE_=TRUE
+_R_CHECK_DOC_SIZES2_=TRUE
+_R_CHECK_CODETOOLS_PROFILE_='suppressPartialMatchArgs=false'
+@end example
+
 
 @node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards
