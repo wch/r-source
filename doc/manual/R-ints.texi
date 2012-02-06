@@ -3555,14 +3555,14 @@ Control whether @code{codoc()} testing is also performed on S4 methods.
 Default: true.
 @item _R_CHECK_DOT_INTERNAL_
 Control whether the package code is scanned for @code{.Internal} calls.
-Default: false.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_EXECUTABLES_
 Control checking for executable (binary) files.
 Default: true.
 @item _R_CHECK_EXECUTABLES_EXCLUSIONS_
 Control whether checking for executable (binary) files ignores files
 listed in the package's @file{BinaryFiles} file.
-Default: true (but false for CRAN submission checks)
+Default: true (but false for CRAN submission checks).
 However, most likely this package-level override mechanism will be
 removed eventually.
 @item _R_CHECK_PERMISSIONS_
@@ -3739,6 +3739,7 @@ _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
 _R_CHECK_LICENSE_=TRUE
 _R_CHECK_DOC_SIZES2_=TRUE
 _R_CHECK_CODETOOLS_PROFILE_='suppressPartialMatchArgs=false'
+_R_CHECK_DOT_INTERNAL_=TRUE
 @end example
 
 
