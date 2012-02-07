@@ -115,6 +115,9 @@
       \item For consistency, circles with zero radius are omitted by
       \code{points} and \code{grid.circle()}.  Previously this was
       device-dependent, but they were usually invisible.
+
+      \item \code{NROW(x)} and \code{NCOL(x)} now work whenever
+      \code{dim(x)} looks appropriate, e.g., also for moregeneralized matrices.
     }
   }
 
@@ -318,7 +321,7 @@
       \env{R_GSCMD} is set.  If \env{R_GSCMD} is unset or set to
       \code{""}, the function will try to find a suitable GhostScript
       executable.
-      
+
       \item The included version of zlib has been updated to 1.2.6.
     }
   }
