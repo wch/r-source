@@ -533,12 +533,16 @@ suggested package available (and it may not even be possible to install
 it for that platform), so it is helpful if the use of suggested packages
 is made conditional @emph{via} @code{if(require(@var{pkgname}))}).
 
-Finally, the @samp{Enhances} field lists packages ``enhanced''
-by the package at hand, e.g., by providing methods for classes from
-these packages.  Version requirements can be specified, but are
+Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
+package at hand, e.g., by providing methods for classes from these
+packages, or ways to handle objects from these packages (so several
+packages have @samp{Enhances: chron} because they can handle datetime
+objects from @CRANpkg{chron} even though they prefer @R{}'s native
+datetime functions).  Version requirements can be specified, but are
 currently not used.  Such packages cannot be required to check the
-package: any tests which uses the must be conditional on the presence of
-the package.
+package: any tests which use them must be conditional on the presence
+of the package.  (If your tests use e.g.@: a dataset from another
+package it should be in @samp{Suggests} and not @samp{Enhances}.)
 
 The general rules are
 
