@@ -1722,5 +1722,10 @@ stopifnot(identical(input, res))
 unlink("serial")
 ## Just a test for possible regressions.
 
+## mis-PROTECT()ion in printarray C code:
+df <- data.frame(a=1:2080, b=1001:2040, c=letters, d=LETTERS, e=1:1040)
+stopifnot(length(df.ch <- capture.output(df)) == 1+nrow(df))
+## "cannot allocate memory block of size 17179869183.6 Gb" in R <= 2.14.1
+
 
 proc.time()
