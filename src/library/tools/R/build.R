@@ -26,12 +26,19 @@
 
 newLog <- function(filename = "")
 {
-    con <- if (nzchar(filename)) file(filename, "wt") else 0L
-    list(filename = filename, con = con, stars = "*",
-         warnings = 0L, notes = 0L)
+    con <- if(nzchar(filename)) file(filename, "wt") else 0L
+
+    Log <- new.env(parent = emptyenv())
+    Log$con <- con
+    Log$filename <- filename
+    Log$stars <- "*"
+    Log$warnings <- 0L
+    Log$notes <- 0L
+
+    Log
 }
 
-closeLog <- function(Log) if (Log$con > 2) close(Log$con)
+closeLog <- function(Log) if (Log$con > 2L) close(Log$con)
 
 printLog <- function(Log, ...) {
     quotes <- function(x) gsub("'([^']*)'", sQuote("\\1"), x)
@@ -57,7 +64,8 @@ creatingLog <- function(Log, text)
 messageLog <- function(Log, ...)
     printLog(Log, Log$stars, " ", ..., "\n")
 
-resultLog <- function(Log, text) printLog(Log, " ", text, "\n")
+resultLog <- function(Log, text)
+    printLog(Log, " ", text, "\n")
 
 errorLog <- function(Log, ...)
 {

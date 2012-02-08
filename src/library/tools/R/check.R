@@ -145,23 +145,23 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## this requires on Windows: file.exe (optional)
 
     wrapLog <- function(...) {
-        text <- paste(..., collapse=" ")
+        text <- paste(..., collapse = " ")
         ## strwrap expects paras separated by blank lines.
         ## Perl's wrap split on \n
         text <- strsplit(text, "\n", useBytes = TRUE)[[1L]]
-        printLog(Log, paste(strwrap(text), collapse="\n"), "\n")
+        printLog(Log, paste(strwrap(text), collapse = "\n"), "\n")
     }
 
     warnLog <- function(text = "") {
         resultLog(Log, "WARNING")
-        if (nzchar(text)) printLog(Log, text, "\n")
-        Log$warnings <<- Log$warnings + 1L
+        if(nzchar(text)) printLog(Log, text, "\n")
+        Log$warnings <- Log$warnings + 1L
     }
 
     noteLog <- function(text = "") {
         resultLog(Log, "NOTE")
-        if (nzchar(text)) printLog(Log, text, "\n")
-        Log$notes <<- Log$notes + 1L
+        if(nzchar(text)) printLog(Log, text, "\n")
+        Log$notes <- Log$notes + 1L
     }
 
     ## Used for
