@@ -99,7 +99,7 @@
             sigPackage <- c(sigPackage, rep("", ns - length(sigPackage)))
         sig <-  .simpleSignature(c(sig, rep("ANY", nadd)),
                     names = generic@signature[1:n],
-                    package = c(sigPackage, rep("methods", nadd)))
+                    packages = c(sigPackage, rep("methods", nadd)))
         obj <- .xpdSignature(obj, sig, n-ns)
         what <- .sigLabel(sig)
         ns <- n
@@ -149,7 +149,7 @@
                     pkgw <- c(pkgw, rep("", length(sigw) - length(pkgw)))
                 sigw <- .simpleSignature( c(sigw, rep("ANY", nadd)),
                         names = names(sig),
-                        package = c(pkgw, rep("methods", nadd)))
+                        packages = c(pkgw, rep("methods", nadd)))
                 objw@defined <- objw@target <- sigw
                 remove(list = what, envir = obj)
                 var <- .pkgMethodLabel(objw)
