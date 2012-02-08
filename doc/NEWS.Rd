@@ -89,7 +89,11 @@
       with zero weight.  (Reported by Berwin Turlach.)
 
       \item str(*, ....., strict.width="cut") now also obeys
-      \code{list.len = n}  (Reported by Sören Vogel.)
+      \code{list.len = n}.  (Reported by Sören Vogel.)
+
+      \item Printing of arrays did not have enough protection (C level),
+      e.g., in the context of \code{capture.output()}.  (Reported by
+      Hervé Pagès and Martin Morgan.)
     }
   }
 }
