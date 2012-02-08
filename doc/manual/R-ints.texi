@@ -3572,9 +3572,10 @@ Default: true iff @code{.Platform$OS.type == "unix"}.
 Allows turning off @code{checkFF()} testing.  Legacy mostly.
 Default: true.
 @item _R_CHECK_LICENSE_
-Control whether/how license checks are performed.
-Default: maybe (warn in case of problems, but not about standardizable
+Control whether/how license checks are performed. A possible value is
+@samp{maybe} (warn in case of problems, but not about standardizable
 non-standard license specs).
+Default: true.
 @item _R_CHECK_RD_EXAMPLES_T_AND_F_
 Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
 @samp{T}/@samp{F} uses in examples.
@@ -3736,7 +3737,6 @@ _R_CHECK_SUGGESTS_ONLY_=TRUE
 _R_CHECK_NO_RECOMMENDED_=TRUE
 _R_CHECK_SUBDIRS_NOCASE_=TRUE
 _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
-_R_CHECK_LICENSE_=TRUE
 _R_CHECK_DOC_SIZES2_=TRUE
 _R_CHECK_CODETOOLS_PROFILE_='suppressPartialMatchArgs=false'
 _R_CHECK_DOT_INTERNAL_=TRUE

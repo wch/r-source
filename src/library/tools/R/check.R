@@ -522,7 +522,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## entries because these really are a part of R: hence, skip the
         ## check.
         if (!is_base_pkg) {
-            check_license <- Sys.getenv("_R_CHECK_LICENSE_", "maybe")
+            check_license <- Sys.getenv("_R_CHECK_LICENSE_", "TRUE")
             if (check_license == "maybe")
                 Sys.setenv('_R_CHECK_LICENSE_' = "maybe")
             else check_license <- config_val_to_logical(check_license)
