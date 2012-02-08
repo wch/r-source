@@ -1044,21 +1044,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             }
         }
 
-        ## This check is no use now all packages have a namespace.
-        if (FALSE && R_check_use_codetools) {
-            Rcmd <- paste("options(warn=1)\n",
-                          if (do_install)
-                          sprintf("tools:::.check_T_and_F(package = \"%s\")\n", pkgname)
-                          else
-                          sprintf("tools:::.check_T_and_F(dir = \"%s\")\n", pkgdir))
-            out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
-            if (length(out)) {
-                if (!any) noteLog()
-                any <- TRUE
-                printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            }
-        }
-
         if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
@@ -1069,7 +1054,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (length(out)) {
                 if (!any) noteLog()
                 any <- TRUE
-                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                printLog0(Log, paste(c(out, "", ""), collapse = "\n"))
+                wrapLog(c("Packages should not call .Internal():",
+                          "it is not part of the API, for use only by R itself",
+                          "and subject to change without notice"))
             }
         }
 
