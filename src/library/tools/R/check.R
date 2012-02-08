@@ -3332,7 +3332,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if (!is_base_pkg) {
             desc <- check_description()
             pkgname <- desc["Package"]
-            is_rec_pkg <- desc["Priority"] == "reommended"
+            is_rec_pkg <- desc["Priority"] %in% "recommended"
 
             ## Check if we have any hope of installing
             OS_type <- desc["OS_type"]
