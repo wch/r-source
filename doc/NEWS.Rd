@@ -29,8 +29,11 @@
       \env{R_GSCMD} is set.  If \env{R_GSCMD} is unset or set to
       \code{""}, the function will try to find a suitable GhostScript
       executable.
-      
+
       \item The included version of zlib has been updated to 1.2.6.
+      
+      \item \command{R CMD check} now reports by default on licenses not
+      according to the description in \sQuote{Writing R Extensions}. 
     }
   }
 
