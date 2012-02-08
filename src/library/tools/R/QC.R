@@ -3393,6 +3393,7 @@ function(package, lib.loc = NULL)
     ##   _R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
     ## (where the values get converted to logicals "the usual way").
     args <- list(skipWith = TRUE,
+                 suppressPartialMatchArgs = FALSE,
                  suppressLocalUnused = TRUE)
     opts <- unlist(strsplit(Sys.getenv("_R_CHECK_CODETOOLS_PROFILE_"),
                             "[[:space:]]*,[[:space:]]*"))

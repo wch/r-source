@@ -3554,8 +3554,10 @@ Default: 10.
 Control whether @code{codoc()} testing is also performed on S4 methods.
 Default: true.
 @item _R_CHECK_DOT_INTERNAL_
-Control whether the package code is scanned for @code{.Internal} calls.
-Default: false (but true for CRAN submission checks).
+Control whether the package code is scanned for @code{.Internal} calls,
+which should only be used by base (and occasionally by recommended) packages.
+Default: false (but true for CRAN submission checks except for
+recommended packages).
 @item _R_CHECK_EXECUTABLES_
 Control checking for executable (binary) files.
 Default: true.
@@ -3659,9 +3661,10 @@ Should warnings about replacing imports be reported?  These mainly come
 from auto-generated @file{NAMESPACE} files in other packages.
 Default: false.
 @item _R_CHECK_UNSAFE_CALLS_
-Check for calls that appear to tamper with already loaded code not from
-the current package: such calls may well contravene CRAN policies.
-Default: false (but true for CRAN submission checks).
+Check for calls that appear to tamper with (or allow tampering with)
+already loaded code not from the current package: such calls may well
+contravene CRAN policies.
+Default: true.
 @item _R_CHECK_TIMINGS_
 Optionally report timings for installation, examples, tests and
 running/re-building vignettes as part of the check log.  The format is
@@ -3712,11 +3715,10 @@ A string with comma-separated @code{@var{name}=@var{value}} pairs (with
 @var{value} a logical constant) giving additional arguments for the
 @CRANpkg{codetools} functions used for analyzing package code.  E.g.,
 use @code{_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"} to
-turn off suppressing warnings about unused local variables. 
-Default: no additional arguments, corresponding to using @code{skipWith =
-TRUE} and @code{suppressLocalUnused = TRUE}.
-
-CRAN's submission checks use @code{suppressPartialMatchArgs=FALSE}.
+turn off suppressing warnings about unused local variables.  Default: no
+additional arguments, corresponding to using @code{skipWith = TRUE},
+@code{suppressPartialMatchArgs = FALSE} and @code{suppressLocalUnused =
+TRUE}.
 
 @item _R_CHECK_CRAN_INCOMING_
 Check whether package is suitable for publication on CRAN.
@@ -3730,7 +3732,6 @@ CRAN's submission checks use something like
 _R_CHECK_CRAN_INCOMING_=TRUE
 _R_CHECK_FORCE_SUGGESTS_=FALSE
 _R_CHECK_VC_DIRS_=TRUE
-_R_CHECK_UNSAFE_CALLS_=TRUE
 _R_CHECK_TIMINGS_=10
 _R_CHECK_INSTALL_DEPENDS_=TRUE
 _R_CHECK_SUGGESTS_ONLY_=TRUE
@@ -3738,7 +3739,6 @@ _R_CHECK_NO_RECOMMENDED_=TRUE
 _R_CHECK_SUBDIRS_NOCASE_=TRUE
 _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
 _R_CHECK_DOC_SIZES2_=TRUE
-_R_CHECK_CODETOOLS_PROFILE_='suppressPartialMatchArgs=false'
 _R_CHECK_DOT_INTERNAL_=TRUE
 @end example
 

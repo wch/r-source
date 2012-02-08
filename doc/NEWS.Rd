@@ -218,6 +218,12 @@
        increasingly people are using the metadata in the
        \file{DESCRIPTION} file to compute information about packages,
        for example reverse dependencies.
+
+       \item The defaults for some of the options in \command{R CMD
+	 check} (described in the \sQuote{R Internals} manual) have
+       changed: the checks for unsafe and \code{.Internal()} calls and
+       for partial matching of arguments in \R function calls are now
+       done by default.
      }
    }
 
@@ -323,6 +329,9 @@
       executable.
 
       \item The included version of zlib has been updated to 1.2.6.
+      
+      \item \command{R CMD check} now reports by default on licenses not
+      according to the description in \sQuote{Writing R Extensions}. 
     }
   }
 

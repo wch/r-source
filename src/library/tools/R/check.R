@@ -231,7 +231,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     }
 
     check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,
-                          is_base_pkg, subdirs, extra_arch)
+                          is_base_pkg, is_rec_pkg, subdirs, extra_arch)
     {
         ## pkg is the argument we received from the main loop.
         ## pkgdir is the corresponding absolute path,
@@ -278,7 +278,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
         if (haveR) {
             check_R_code() # unstated dependencies, S3 methods, replacement, foreign
-            check_R_files() # codetools etc
+            check_R_files(is_rec_pkg) # codetools etc
         }
 
         check_Rd_files(haveR)
@@ -521,13 +521,14 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ##   License: Part of R @VERSION@
         ## entries because these really are a part of R: hence, skip the
         ## check.
-        if (!is_base_pkg) {
-            check_license <- Sys.getenv("_R_CHECK_LICENSE_", "TRUE")
-            if (check_license == "maybe")
-                Sys.setenv('_R_CHECK_LICENSE_' = "maybe")
-            else check_license <- config_val_to_logical(check_license)
-        } else check_license <- FALSE
-        ## The check code conditionalizes *output* on _R_CHECK_LICENSE_.
+        check_license <- if (!is_base_pkg) {
+            Check_license <- Sys.getenv("_R_CHECK_LICENSE_", NA)
+            if(is.na(Check_license)) {
+                ## The check code conditionalizes *output* on _R_CHECK_LICENSE_.
+                Sys.setenv('_R_CHECK_LICENSE_' = "TRUE")
+                TRUE
+            } else config_val_to_logical(Check_license)
+        } else FALSE
         if (!identical(check_license, FALSE)) {
             Rcmd <- sprintf("tools:::.check_package_license(\"%s\", \"%s\")",
                             dfile, pkgdir)
@@ -991,7 +992,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
     }
 
-    check_R_files <- function()
+    check_R_files <- function(is_rec_pkg)
     {
         checkingLog(Log, "R code for possible problems")
         any <- FALSE
@@ -1044,7 +1045,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             }
         }
 
-        if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
+        if(!(is_base_pkg || is_rec_pkg) &&
+           R_check_use_codetools && R_check_dot_internal) {
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
                           sprintf("tools:::.check_dotInternal(package = \"%s\")\n", pkgname)
@@ -3142,7 +3144,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     R_check_skip_arch <-
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
     R_check_unsafe_calls <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_UNSAFE_CALLS_", "TRUE"))
     R_check_depends_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
@@ -3308,7 +3310,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## containing DESCRIPTIION.in, hence the extra check for
         ## Makefile.in.
 
-        is_base_pkg <- FALSE
+        is_base_pkg <- is_rec_pkg <- FALSE
         if (file.exists(f <- file.path(pkgdir, "DESCRIPTION.in")) &&
             file.exists(file.path(pkgdir, "Makefile.in"))) {
             desc <- try(read.dcf(f))
@@ -3330,6 +3332,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if (!is_base_pkg) {
             desc <- check_description()
             pkgname <- desc["Package"]
+            is_rec_pkg <- desc["Priority"] == "reommended"
 
             ## Check if we have any hope of installing
             OS_type <- desc["OS_type"]
@@ -3409,7 +3412,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
         setwd(startdir)
         check_pkg(pkgdir, pkgname, pkgoutdir, startdir, libdir, desc,
-                  is_base_pkg, thispkg_subdirs, extra_arch)
+                  is_base_pkg, is_rec_pkg, thispkg_subdirs, extra_arch)
         if (!extra_arch && do_manual) {
             setwd(pkgoutdir)
             instdir <- file.path(libdir, pkgname)
