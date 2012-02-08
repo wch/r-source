@@ -398,8 +398,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## check.
         if (!is_base_pkg) {
             check_license <- Sys.getenv("_R_CHECK_LICENSE_", "TRUE")
-            if (check_license == "maybe")
-                Sys.setenv('_R_CHECK_LICENSE_' = "maybe")
+            if (check_license == "TRUE")
+                Sys.setenv('_R_CHECK_LICENSE_' = "TRUE")
             else check_license <- config_val_to_logical(check_license)
         } else check_license <- FALSE
         ## The check code conditionalizes *output* on _R_CHECK_LICENSE_.
