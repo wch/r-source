@@ -21,6 +21,9 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (inherits(tarfile, "connection") || identical(tar, "internal"))
         return(untar2(tarfile, files, list, exdir))
 
+    if (!(is.character(tarfile) && length(tarfile) == 1L))
+        stop("invalid 'tarfile' argument")
+
     TAR <- tar
     if (!nzchar(TAR) && .Platform$OS.type == "windows") {
         res <- tryCatch(system("tar.exe --version", intern = TRUE),
@@ -134,7 +137,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
     ## A tar file is a set of 512 byte records,
     ## a header record followed by file contents (zero-padded).
     ## See http://en.wikipedia.org/wiki/Tar_%28file_format%29
-    if(is.character(tarfile)) {
+    if(is.character(tarfile) && length(tarfile) == 1L) {
         con <- gzfile(path.expand(tarfile), "rb") # reads compressed formats
         on.exit(close(con))
     } else if(inherits(tarfile, "connection")) con <- tarfile
