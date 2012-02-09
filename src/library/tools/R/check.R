@@ -174,7 +174,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     ## checkFF
     ## .check_code_usage_in_package (with full set)
     ## .check_T_and_F (with full set)
-    ## .check_dot_internal (with full set)
+    ## .check_dotInternal (with full set)
     ## undoc, codoc, codocData, codocClasses
     ## checkDocFiles, checkDocStyle
     ## The default set of packages here are as they are because
@@ -1053,13 +1053,16 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           else
                           sprintf("tools:::.check_dotInternal(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
-            if (length(out)) {
+            ## Hmisc, gooJSON, quantmod give spurious output
+            if (length(out) && any(grepl("^Found .Internal call", out))) {
+                first <- grep("^Found .Internal call", out)[1L]
+                if(first > 1L) out <- out[-seq_len(first-1)]
                 if (!any) noteLog()
                 any <- TRUE
                 printLog0(Log, paste(c(out, "", ""), collapse = "\n"))
                 wrapLog(c("Packages should not call .Internal():",
                           "it is not part of the API, for use only by R itself",
-                          "and subject to change without notice"))
+                          "and subject to change without notice."))
             }
         }
 
