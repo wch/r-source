@@ -3556,8 +3556,7 @@ Default: true.
 @item _R_CHECK_DOT_INTERNAL_
 Control whether the package code is scanned for @code{.Internal} calls,
 which should only be used by base (and occasionally by recommended) packages.
-Default: false (but true for CRAN submission checks except for
-recommended packages).
+Default: true.
 @item _R_CHECK_EXECUTABLES_
 Control checking for executable (binary) files.
 Default: true.
@@ -3722,7 +3721,7 @@ TRUE}.
 
 @item _R_CHECK_CRAN_INCOMING_
 Check whether package is suitable for publication on CRAN.
-Default: false.
+Default: false, except for CRAN submission checks.
 
 @end vtable
 
@@ -3739,7 +3738,6 @@ _R_CHECK_NO_RECOMMENDED_=TRUE
 _R_CHECK_SUBDIRS_NOCASE_=TRUE
 _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
 _R_CHECK_DOC_SIZES2_=TRUE
-_R_CHECK_DOT_INTERNAL_=TRUE
 @end example
 
 

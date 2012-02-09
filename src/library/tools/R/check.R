@@ -3115,7 +3115,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         config_val_to_logical(Sys.getenv("_R_CHECK_PERMISSIONS_",
                                          as.character(.Platform$OS.type == "unix")))
     R_check_dot_internal <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "TRUE"))
     R_check_Rd_contents <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
     R_check_ascii_code <-
