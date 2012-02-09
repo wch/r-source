@@ -914,7 +914,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
 
-        ## This check is no use now all packages have a namespace.
+        ## This check is not used now all packages have a namespace.
         if (FALSE && R_check_use_codetools) {
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
@@ -936,10 +936,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                           else
                           sprintf("tools:::.check_dotInternal(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
-            if (length(out)) {
+            ## Hmisc, gooJSON, quantmod give spurious output
+            if (length(out) && any(grepl("^Found .Internal call", out))) {
+                first <- grep("^Found .Internal call", out)[1L]
+                if(first > 1L) out <- out[-seq_len(first-1)]
                 if (!any) noteLog(Log)
                 any <- TRUE
-                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                printLog0(Log, paste(c(out, "", ""), collapse = "\n"))
+                wrapLog(c("Packages should not call .Internal():",
+                          "it is not part of the API, for use only by R itself",
+                          "and subject to change without notice."))
             }
         }
 
