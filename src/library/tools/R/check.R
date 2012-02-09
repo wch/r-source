@@ -84,7 +84,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         exceptions <- "codetools"
         if (thispkg %in% c("MASS", "Rcpp"))
             exceptions <- c(exceptions, "Matrix", "lattice")
-        if (thispkg %in% c("aroma.core"))
+        if (thispkg %in% c("aroma.core", "openair"))
             exceptions <- c(exceptions, "KernSmooth")
         recommended <- recommended[!recommended %in% exceptions]
         for(pkg in recommended) {
