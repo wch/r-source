@@ -97,6 +97,9 @@
       \item Printing of arrays did not have enough protection (C level),
       e.g., in the context of \code{capture.output()}.  (Reported by
       Hervé Pagès and Martin Morgan.)
+      
+      \item \code{pdf(file = NULL)} would produce a spurious file named
+      \file{NA}.  (\PR{14808})
     }
   }
 }
