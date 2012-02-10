@@ -86,7 +86,10 @@ $(top_builddir)/libtool:
 install: installdirs install-cmds
 	@rm -f $(DESTDIR)$(bindir)/R
 	@(d=`$(ECHO) '$(rhome)' | sed 's,/,\\\/,g';`; \
-	  sed -e "1,/R_HOME_DIR=/s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharedir)+;" -e  "s+\\(R_INCLUDE_DIR=\\).*+\\1$(rincludedir)+;" -e "s+\\(R_DOC_DIR=\\).*+\\1$(rdocdir)+;"\
+	  d2=`$(ECHO) '$(rsharedir)' | sed 's,/,\\\/,g';`; \
+	  d3=`$(ECHO) '$(rincludedir)' | sed 's,/,\\\/,g';`; \
+	  d4=`$(ECHO) '$(rdocdir)' | sed 's,/,\\\/,g';`; \
+	  sed -e "1,/R_HOME_DIR=/s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s/\\(R_SHARE_DIR=\\).*/\\1$${d2}/;" -e  "s/\\(R_INCLUDE_DIR=\\).*/\\1$${d3}/;" -e "s/\\(R_DOC_DIR=\\).*/\\1$${d4}/;"\
 	  < R.fe > "$(DESTDIR)$(Rexecbindir)/R")
 	@$(INSTALL_SCRIPT)  "$(DESTDIR)$(Rexecbindir)/R" "$(DESTDIR)$(bindir)/R"
 	@chmod 755 "$(DESTDIR)$(bindir)/R" "$(DESTDIR)$(Rexecbindir)/R"
