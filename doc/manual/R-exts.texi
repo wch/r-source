@@ -11354,18 +11354,20 @@ package, and request a change in @R{}.  This may be justifiable, but
 making a function generic with the old definition as the default method
 does have a small performance cost.  It is never necessary, as a package
 can take over a function in the base package and make it generic by
+something like
 
 @example
 @group
 foo <- function(object, ...) UseMethod("foo")
-foo.default <- base::foo
+foo.default <- function(object, ...) base::foo(object)
 @end group
 @end example
 
 @noindent
-(If the thus defined default method needs a @samp{...} added to its
-argument list, one can e.g.@: use @code{formals(foo.default) <-
-c(formals(foo.default), alist(... = ))}.)
+Earlier versions of this manual suggested assigning @code{foo.default <-
+base::foo}.  This is @strong{not} a good idea, as it captures the base
+function at the time of installation and it might be changed as @R{} is
+patched or updated.
 
 The same idea can be applied for functions in other packages with namespaces.
 
@@ -11378,8 +11380,8 @@ to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
 @uref{http://www.rforge.net/@/Rserve/}) and connections to Java in
-@samp{SJava} (see @uref{http://www.omegahat.org/@/RSJava/} and @samp{JRI},
-part of the @CRANpkg{rJava} package on @acronym{CRAN}).
+@samp{SJava} (see @uref{http://www.omegahat.org/@/RSJava/}) and @samp{JRI}
+(part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
 @menu
 * Embedding R under Unix-alikes::  
