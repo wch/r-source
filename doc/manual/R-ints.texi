@@ -3517,7 +3517,7 @@ ISO C++ warnings.
 Default: false.
 @item _R_CHECK_FORCE_SUGGESTS_
 If true, give an error if suggested packages are not available.
-Default: true.
+Default: true (but false for CRAN submission checks).
 @item _R_CHECK_RD_CONTENTS_
 If true, check @file{Rd} files for auto-generated content which needs editing,
 and missing argument documentation.
@@ -3531,7 +3531,7 @@ If true, check the cross-references in @file{.Rd} files.
 Default: true.
 @item _R_CHECK_SUBDIRS_NOCASE_
 If true, check the case of directories such as @file{R} and @file{man}.
-Default: false.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_SUBDIRS_STRICT_
 Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the
@@ -3554,7 +3554,8 @@ Default: 10.
 Control whether @code{codoc()} testing is also performed on S4 methods.
 Default: true.
 @item _R_CHECK_DOT_INTERNAL_
-Control whether the package code is scanned for @code{.Internal} calls.
+Control whether the package code is scanned for @code{.Internal} calls,
+which should only be used by base (and occasionally by recommended) packages.
 Default: false.
 @item _R_CHECK_EXECUTABLES_
 Control checking for executable (binary) files.
@@ -3562,7 +3563,7 @@ Default: true.
 @item _R_CHECK_EXECUTABLES_EXCLUSIONS_
 Control whether checking for executable (binary) files ignores files
 listed in the package's @file{BinaryFiles} file.
-Default: true.
+Default: true (but false for CRAN submission checks).
 However, most likely this package-level override mechanism will be
 removed eventually.
 @item _R_CHECK_PERMISSIONS_
@@ -3664,7 +3665,27 @@ Default: no additional arguments, corresponding to using @code{skipWith =
 TRUE} and @code{suppressLocalUnused = TRUE}.
 
 CRAN's submission checks use @code{suppressPartialMatchArgs=FALSE}.
+
+@item _R_CHECK_CRAN_INCOMING_
+Check whether package is suitable for publication on CRAN.
+Default: false, except for CRAN submission checks.
+
 @end vtable
+
+CRAN's submission checks use something like
+
+@example
+_R_CHECK_CRAN_INCOMING_=TRUE
+_R_CHECK_FORCE_SUGGESTS_=FALSE
+_R_CHECK_VC_DIRS_=TRUE
+_R_CHECK_SUBDIRS_NOCASE_=TRUE
+_R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
+_R_CHECK_CODETOOLS_PROFILE_="suppressPartialMatchArgs=FALSE"
+_R_CHECK_DOT_INTERNAL_=TRUE
+@end example
+
+@noindent
+plus other options only available in the latest versions of @R{}.
 
 @node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards

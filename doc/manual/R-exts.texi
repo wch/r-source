@@ -583,6 +583,11 @@ Version dependencies in the @samp{Depends} field are used by
 checks versions for the @samp{Imports} and (for @code{dependencies =
 TRUE}) @samp{Suggests} fields.
 
+It is increasingly important that the information in these fields is
+complete and accurate: it is for example used to compute which packages
+depend on an updated package and which packages can safely be installed
+in parallel.
+
 The @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
 author or a page where additional material describing the software can
@@ -2686,9 +2691,10 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{ftp}@footnote{for Windows users the simplest way may be to open
 that URL in Internet Explorer and (depending on the version) follow the
 instructions to view it as a folder, then copy the submission to the
-folder.} and not @samp{sftp} to connect to this server) and send a
-message to @email{CRAN@@R-project.org} about it (with your package name
-in the subject line, and please do not submit a package by email).  The
+folder.} and not @samp{sftp} to connect to this server, and passive
+@samp{ftp} is more often successful) and send a message to
+@email{CRAN@@R-project.org} about it (with your package name in the
+subject line, and please do not submit a package by email).  The
 @acronym{CRAN} maintainers will run these tests before putting a
 submission online.
 
@@ -2750,7 +2756,10 @@ at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
 command can be supplied as environment variable @env{R_QPDF} (and is on
 the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
 function @code{tools::compactPDF} which has other options including
-running Ghostscript.
+running Ghostscript.  These should definitely be tried before
+submission to CRAN for packages with more than 250Kb of PDF files: as
+@samp{gs} may make lossy changes such as downsampling bitmap images, do
+examine the results and if necessary use @command{ps2pdf} directly.
 
 Most of the large PDFs we have encountered have been large because of
 the inclusion of figures, for example complex figures from @R{} (where
@@ -2796,7 +2805,7 @@ will if your package has a GPL-like license).
 
 Also be aware that there are both 32- and 64-bit builds of @R{} for
 Windows with a combined distribution of binary packages, so the
-@acronym{CRAN} team will be reluctant to support a package that works
+@acronym{CRAN} team will be unwilling to support a package that works
 under just one of the architectures.
 
 
@@ -11616,7 +11625,7 @@ a state terminates (@code{@var{which}=0}).
 These functions interact with a console.
 
 @code{R_ReadConsole} prints the given prompt at the console and then
-does a @code{gets(3)}--like operation, transferring up to @var{buflen}
+does a @code{fgets(3)}--like operation, transferring up to @var{buflen}
 characters into the buffer @var{buf}. The last two bytes should be
 set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
 then the line should be added to any command history which is being
