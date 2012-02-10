@@ -62,7 +62,7 @@
       and incorrect computation to find an S4 default method.
 
       \item \code{readLines()} could overflow a buffer if the last line
-      was not terminated.  (\PR{14766})
+      of the file was not terminated.  (\PR{14766})
 
       \item \command{R CMD check} could miss undocumented S4 objects in
       packages which used S4 classes but did not \samp{Depends: methods}.
@@ -81,7 +81,7 @@
       are ignored and the latter trigger an error.  (\PR{14779})
 
       \item The text of a function body containing more than 4096
-      characters was not properly saved by the parser when entered
+      bytes was not properly saved by the parser when entered
       at the console.
 
       \item Forgetting the \code{#endif} tag in an Rd file could cause
@@ -100,6 +100,12 @@
       
       \item \code{pdf(file = NULL)} would produce a spurious file named
       \file{NA}.  (\PR{14808})
+
+      \item \code{list2env()} did not check the type of its \code{envir}
+      argument. (\PR{14807})
+
+      \item \code{svg()} could segfault if called with a non-existent
+      filename.  (\PR{14790})
     }
   }
 }
