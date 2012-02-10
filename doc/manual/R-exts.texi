@@ -1885,12 +1885,12 @@ code can be mixed with any other type of compiled code, nor that a build
 of @R{} will have support for such packages.
 
 Some (but not) all compilers specified by the @samp{FC} macro will
-accept Fortran 2003 or 2008 code.  For platform using @command{gfortran},
-you may need to include @option{-std=f2003} or @option{-std=f2008} in
-@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
-non-standard extensions.  The Solaris @command{f95} compiler `accepts
-some Fortran 2003 features'.  Such code should still use file extension
-@file{.f90} or @file{.f95}.
+accept Fortran 2003 or 2008 code.  For platforms using
+@command{gfortran}, you may need to include @option{-std=f2003} or
+@option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
+Fortran 95 with non-standard extensions.  The Solaris @command{f95}
+compiler `accepts some Fortran 2003 features'.  Such code should still
+use file extension @file{.f90} or @file{.f95}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -2759,7 +2759,7 @@ command can be supplied as environment variable @env{R_QPDF} (and is on
 the CRAN binary of @R{} for Mac OS X).  This option can take values
 @samp{qpdf} (the default) as well as @samp{gs} or @samp{both} to try
 harder to reduce the size.  These should definitely be tried before
-submission to CRAN for packages with more than 500Kb of PDF files: as
+submission to CRAN for packages with more than 250Kb of PDF files: as
 @samp{gs} may make lossy changes such as downsampling bitmap images, do
 examine the results and if necessary use @command{ps2pdf} or
 @code{tools::compactPDF} directly.
