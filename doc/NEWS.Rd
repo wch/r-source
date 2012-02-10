@@ -106,6 +106,9 @@
 
       \item \code{svg()} could segfault if called with a non-existent
       filename.  (\PR{14790})
+      
+      \item \command{make install} can install to a path containing
+      \samp{+} characters. (\PR{14798})
     }
   }
 }
