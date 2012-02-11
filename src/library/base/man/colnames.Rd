@@ -22,8 +22,7 @@ colnames(x) <- value
 \arguments{
   \item{x}{a matrix-like \R object, with at least two dimensions for
     \code{colnames}.}
-  \item{do.NULL}{logical.  Should this create names if they are
-    \code{NULL}?}
+  \item{do.NULL}{logical. If \code{FALSE} and names are \code{NULL}, names are created.}
   \item{prefix}{for created names.}
   \item{value}{a valid value for that component of
     \code{\link{dimnames}(x)}.  For a matrix or array this is either
