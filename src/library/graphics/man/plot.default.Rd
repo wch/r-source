@@ -92,6 +92,18 @@
     \item{\code{lwd}}{the line width, see \code{\link{par}}.}
   }
 }
+\note{
+  The presence of \code{panel.first} and \code{panel.last} is a
+  historical anomaly: default plots do not have \sQuote{panels}, unlike
+  e.g. \code{\link{pairs}} plots.  For more control, use lower-level
+  plotting functions: \code{plot.default} calls in turn some of
+  \code{\link{plot.new}}, \code{\link{plot.window}},
+  \code{\link{plot.xy}}, \code{\link{axis}}, \code{\link{box}} and
+  \code{\link{title}}, and plots can be built up by calling these
+  individually, or by calling \code{plot(type = "n")} and adding further
+  elements.
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
