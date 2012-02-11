@@ -120,53 +120,13 @@
             ids <- c(ids, id)
             nm <- c(nm, src)
             g <- sub(rx3, "", src)
-            ## These manuals are on the Rgui menu, so should always be installed
-            if (g %in%  c("doc/manual/R-FAQ.html",
-                          "doc/html/rw-FAQ.html",
-                          "share/texmf/Sweave.sty"))
-                component <- "main"
-            else if (grepl("^doc/html", g) || grepl("^library/[^/]*/html", g))
-                component <- "main"
-            else if (grepl("^doc/manual/[^/]*\\.html", g))
-                component <- "html"
-            else if (g %in% c("doc/manual/R-data.pdf", "doc/manual/R-intro.pdf"))
-                component <- "manuals/basic"
-            else if (g %in% c("doc/manual/R-admin.pdf",
-                              "doc/manual/R-exts.pdf",
-                              "doc/manual/R-ints.pdf",
-                              "doc/manual/R-lang.pdf"))
-                component <- "manuals/technical"
-            else if (g == "doc/manual/refman.pdf")
-                component <- "manuals/refman"
-            else if (grepl("^doc/manual", g) && g != "doc/manual/R-FAQ.pdf")
-                component <- "manuals"
-            else if (grepl("^library/[^/]*/tests", g) || grepl("^tests", g))
-	    	component <- "tests"
-            else if (have64bit && grepl("^Tcl/(bin|lib)64", g))
-                component <- "tcl/64"
+            component <- if (have64bit && grepl("^Tcl/(bin|lib)64", g)) "x64"
             else if (have64bit &&
                      (grepl("^Tcl/bin", g) ||
-                      grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", g)))
-                component <- "tcl/32"
-            else if (grepl("^Tcl/doc/.*chm$", g))
-                component <- "tcl/chm"
-            else if (grepl("^Tcl/lib/tcl8.5/tzdata", g))
-                component <- "tcl/tzdata"
-            else if (grepl("^Tcl/.*\\.msg$", f))
-                component <- "tcl/msg"
-            else if (grepl("^Tcl", g))
-                component <- "tcl/noarch"
-            else if (grepl("^library/grid/doc", g) ||
-                     grepl("^library/survival/doc", g) ||
-                     grepl("^library/Matrix/doc", g))
-                component <- "manuals/libdocs"
-            else if (grepl("^share/locale", g) ||
-                     grepl("^library/[^/]*/po", g))
-                component <- "trans"
-            else if (have64bit && grepl("/i386/", g)) component <- "i386"
-            else if (have64bit && grepl("/x64/", g)) component <- "x64"
-            else
-                component <- "main"
+                      grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", g))) "i386"
+            else if (have64bit && grepl("/i386/", g)) "i386"
+            else if (have64bit && grepl("/x64/", g)) "x64"
+            else "main"
             comps <- c(comps, component)
         }
         if(grepl("PUT-GUID-HERE", f))
@@ -352,7 +312,7 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
     if (have64bit && have32bit) {
     cat(file = con, sep="\n",
         '',
-        '    <Feature Id="i386" Title="i386 Files" Description="32-bit binary files" Level="1"',
+        '    <Feature Id="i386" Title="32-bit Files" Description="32-bit binary files" Level="1"',
         '     InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'i386'])
         cat(file = con,
@@ -363,7 +323,7 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
     if (have64bit) {
     cat(file = con, sep="\n",
         '',
-        '    <Feature Id="x64" Title="x64 Files" Description="64-bit binary files" Level="1"',
+        '    <Feature Id="x64" Title="64-bit Files" Description="64-bit binary files" Level="1"',
         if (!have32bit) '     Absent="disallow"',
         '     InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'x64'])
@@ -371,145 +331,6 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
     }
-
-    cat(file = con, sep="\n",
-        '',
-        '    <Feature Id="html" Title="HTML Manuals" Description="HTML versions of the manuals" Level="1"',
-        '     InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'html'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '    </Feature>\n')
-
-
-    cat(file = con, sep="\n",
-        '',
-        '    <Feature Id="manuals" Title="On-line PDF Manuals" Description="On-line PDF Manuals" Level="1"',
-        '     InstallDefault="local" AllowAdvertise="no" Display="expand">',
-        '     <ComponentRef Id="dummyman" />')
-
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="manualsb" Title="Basic manuals" Description="Basic Manuals in PDF" Level="1"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'manuals/basic'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="manualst" Title="Technical Manuals" Description="Technical Manuals in PDF" Level="1000"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'manuals/technical'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="refman" Title="Reference Manual" Description="Reference Manual (help pages in PDF)" Level="1000"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'manuals/refman'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="libdocs" Title="Docs for Packages grid, Matrix and survival" Description="Docs for packages grid, Matrix and survival: mainly PDF vignettes and their sources and code" Level="1000"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'manuals/libdocs'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, '    </Feature>\n')
-
-    cat(file = con, sep="\n",
-        '',
-        '    <Feature Id="tcl" Title="Support Files for Package tcltk" Description="A binary distribution of Tcl/Tk for use by R package tcltk" Level="1"',
-        '     InstallDefault="local" AllowAdvertise="no" Display="expand">',
-        '     <ComponentRef Id="dummytcl" />')
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="tcl0" Title="Main files" Description="Main files" Level="1"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/noarch'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    if (have64bit && have32bit) {
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="tcl32" Title="i386 Files" Description="32-bit files for package tcltk" Level="1"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/32'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-    }
-    if (have64bit) {
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="tcl64" Title="x64 Files" Description="64-bit files for package tcltk" Level="1"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/64'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-    }
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="tcl1" Title="Help" Description="Tcl/Tk Help (Compiled HTML)" Level="1000"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/chm'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="tcl2" Title="Timezone Files" Description="Timezone files for Tcl" Level="1000"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/tzdata'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, sep="\n",
-        '',
-        '      <Feature Id="tcl3" Title="Message Translations for Tcl/Tk" Description="Timezone files for Tcl" Level="1000"',
-        '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/msg'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '      </Feature>\n')
-
-    cat(file = con, '    </Feature>\n')
-
-
-    cat(file = con, sep="\n",
-        '',
-        '    <Feature Id="trans" Title="Message Translations" Description="Messages translated to other languages" Level="1"',
-        '     InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'trans'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '    </Feature>\n')
-
-     cat(file = con, sep="\n",
-        '',
-        '    <Feature Id="tests" Title="Test Files" Description="Test files" Level="1000"',
-        '     InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tests'])
-        cat(file = con,
-            "      <ComponentRef Id='", id, "' />\n", sep="")
-    cat(file = con, '    </Feature>\n')
 
     cat(file = con, sep="\n",
         '',
