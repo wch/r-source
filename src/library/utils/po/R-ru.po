@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-12 08:59\n"
 "PO-Revision-Date: 2011-10-18 23:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1023,6 +1023,10 @@ msgstr "профиль не содержит информации о памяти"
 
 msgid "no events were recorded"
 msgstr "события не записаны"
+
+#, fuzzy
+msgid "invalid 'tarfile' argument"
+msgstr "неправильный аргумент 'data'"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed' должен быть логическим или текстовым вектором"

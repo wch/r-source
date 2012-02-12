@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-04 10:00+0000\n"
+"POT-Creation-Date: 2012-02-12 08:59+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -172,13 +172,13 @@ msgstr ""
 #: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
-#: src/main/envir.c:1547 src/main/envir.c:1664 src/main/envir.c:1669
-#: src/main/envir.c:1735 src/main/envir.c:1751 src/main/envir.c:1757
-#: src/main/envir.c:1857 src/main/envir.c:1865 src/main/envir.c:1872
-#: src/main/envir.c:1886 src/main/envir.c:1892 src/main/envir.c:1896
-#: src/main/envir.c:2113 src/main/envir.c:2234 src/main/envir.c:2493
-#: src/main/envir.c:2700 src/main/envir.c:2714 src/main/envir.c:2721
-#: src/main/envir.c:2737 src/main/envir.c:3300 src/main/errors.c:937
+#: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
+#: src/main/envir.c:1737 src/main/envir.c:1753 src/main/envir.c:1759
+#: src/main/envir.c:1859 src/main/envir.c:1867 src/main/envir.c:1874
+#: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
+#: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
+#: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:937
 #: src/main/eval.c:270 src/main/eval.c:2043 src/main/eval.c:2072
 #: src/main/eval.c:2076 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
@@ -865,7 +865,7 @@ msgstr "stringa di input %d non valida in questo locale"
 msgid "regcomp error: '%s'"
 msgstr "errore di lettura"
 
-#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:755
+#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:760
 msgid "invalid length"
 msgstr "lunghezza non valida"
 
@@ -955,7 +955,7 @@ msgstr "si è prodotto un NA per overflow di interi"
 msgid "unimplemented real function of 1 argument"
 msgstr "funzione reale (di un argomento) non implementata"
 
-#: src/main/arithmetic.c:1135 src/main/complex.c:645 src/main/complex.c:715
+#: src/main/arithmetic.c:1135 src/main/complex.c:650 src/main/complex.c:720
 msgid "unimplemented complex function"
 msgstr "funzione complessa non implementata"
 
@@ -1221,8 +1221,8 @@ msgstr ""
 "la lunghezza di 'dimnames' [%d] non coincide con l'estensione dell'array"
 
 #: src/main/attrib.c:1035 src/main/builtin.c:62 src/main/builtin.c:99
-#: src/main/envir.c:1532 src/main/envir.c:1656 src/main/envir.c:1718
-#: src/main/envir.c:1841 src/main/paste.c:71 src/main/paste.c:285
+#: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
+#: src/main/envir.c:1843 src/main/paste.c:71 src/main/paste.c:285
 #: src/main/plot.c:1731 src/main/random.c:474
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
@@ -1406,11 +1406,11 @@ msgstr "dimensione troppo grande per il vettore indicato"
 #: src/main/builtin.c:315 src/main/builtin.c:354 src/main/builtin.c:364
 #: src/main/coerce.c:1448 src/main/connections.c:2796 src/main/engine.c:2945
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
-#: src/main/envir.c:1541 src/main/envir.c:1661 src/main/envir.c:1729
-#: src/main/envir.c:1850 src/main/envir.c:2523 src/main/envir.c:2583
-#: src/main/envir.c:2855 src/main/envir.c:2884 src/main/envir.c:2905
-#: src/main/envir.c:2928 src/main/envir.c:2963 src/main/envir.c:2984
-#: src/main/envir.c:3290 src/main/envir.c:3295 src/main/eval.c:4976
+#: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
+#: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
+#: src/main/envir.c:2857 src/main/envir.c:2886 src/main/envir.c:2907
+#: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
+#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4976
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2612
 msgid "use of NULL environment is defunct"
@@ -1881,23 +1881,23 @@ msgstr ""
 msgid "Invalid color specification"
 msgstr "specificazione colore non valida"
 
-#: src/main/complex.c:117
+#: src/main/complex.c:122
 msgid "invalid complex unary operator"
 msgstr "operatore complesso non valido"
 
-#: src/main/complex.c:260
+#: src/main/complex.c:265
 msgid "unimplemented complex operation"
 msgstr "operazione tra numeri complessi non implementata"
 
-#: src/main/complex.c:363
+#: src/main/complex.c:368
 msgid "non-numeric argument to function"
 msgstr "argomento non numerico alla funzione"
 
-#: src/main/complex.c:816
+#: src/main/complex.c:821
 msgid "invalid polynomial coefficient"
 msgstr "coefficiente polinomiale non valido"
 
-#: src/main/complex.c:821
+#: src/main/complex.c:826
 msgid "root finding code failed"
 msgstr "codice di ricerca della radice fallito"
 
@@ -2685,7 +2685,7 @@ msgstr "argomento di lunghezza zero"
 msgid "'opts' should be small non-negative integer"
 msgstr "'gap' deve essere un intero non negativo"
 
-#: src/main/deparse.c:375 src/main/envir.c:1686 src/main/envir.c:1768
+#: src/main/deparse.c:375 src/main/envir.c:1688 src/main/envir.c:1770
 #: src/main/eval.c:412 src/main/eval.c:1050 src/main/eval.c:3350
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2630
 #, c-format
@@ -3159,7 +3159,7 @@ msgstr "non posso rompere i legami nel namespace base"
 msgid "unbind in the base environment is unimplemented"
 msgstr "non posso rompere i legami nell'environment base"
 
-#: src/main/envir.c:786 src/main/envir.c:1608
+#: src/main/envir.c:786 src/main/envir.c:1610
 msgid "cannot remove bindings from a locked environment"
 msgstr "non posso rimuovere i legami da un environment bloccato"
 
@@ -3178,7 +3178,7 @@ msgstr "La lista ... non contiene %d elementi"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d usato in un contesto sbagliato, nessun ... in cui cercare"
 
-#: src/main/envir.c:1320 src/main/envir.c:1764 src/main/eval.c:416
+#: src/main/envir.c:1320 src/main/envir.c:1766 src/main/eval.c:416
 #: src/main/eval.c:3341
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
@@ -3213,183 +3213,188 @@ msgstr "il primo parametro deve essere di tipo list"
 msgid "names(x) must be a character vector of the same length as x"
 msgstr "'hostname' deve essere una stringa di tipo character"
 
-#: src/main/envir.c:1602
+#: src/main/envir.c:1575
+#, fuzzy
+msgid "'envir' argument must be an environment"
+msgstr "l'argomento 'env' deve essere un environment"
+
+#: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
 msgstr "impossibile rimuovere variabili dal namespace base"
 
-#: src/main/envir.c:1604
+#: src/main/envir.c:1606
 #, fuzzy
 msgid "cannot remove variables from the base environment"
 msgstr "impossibile rimuovere variabili da questo database"
 
-#: src/main/envir.c:1606
+#: src/main/envir.c:1608
 #, fuzzy
 msgid "cannot remove variables from the empty environment"
 msgstr "impossibile rimuovere variabili da questo database"
 
-#: src/main/envir.c:1614
+#: src/main/envir.c:1616
 msgid "cannot remove variables from this database"
 msgstr "impossibile rimuovere variabili da questo database"
 
-#: src/main/envir.c:1771
+#: src/main/envir.c:1773
 #, fuzzy, c-format
 msgid "object '%s' of mode '%s' was not found"
 msgstr "variabile \"%s\" in modalità \"%s\" non trovata"
 
-#: src/main/envir.c:1844
+#: src/main/envir.c:1846
 #, c-format
 msgid "invalid name in position %d"
 msgstr "nome non valido in posizione %d"
 
-#: src/main/envir.c:1852
+#: src/main/envir.c:1854
 msgid "second argument must be an environment"
 msgstr "il secondo argomento deve essere un environment"
 
-#: src/main/envir.c:1860 src/main/envir.c:1868
+#: src/main/envir.c:1862 src/main/envir.c:1870
 #, fuzzy, c-format
 msgid "wrong length for '%s' argument"
 msgstr "lunghezza sbagliata dell'argomento 'mode'"
 
-#: src/main/envir.c:2003
+#: src/main/envir.c:2005
 #, fuzzy
 msgid "invalid use of 'missing'"
 msgstr "uso di 'missing' non valido"
 
-#: src/main/envir.c:2028
+#: src/main/envir.c:2030
 #, fuzzy
 msgid "'missing' can only be used for arguments"
 msgstr "missing si può usare solo per gli argomenti"
 
-#: src/main/envir.c:2109
+#: src/main/envir.c:2111
 #, fuzzy
 msgid "'pos' must be an integer"
 msgstr "'a' e 'b' devono essere finiti"
 
-#: src/main/envir.c:2123
+#: src/main/envir.c:2125
 #, fuzzy
 msgid "all elements of a list must be named"
 msgstr "attach: tutti gli elementi devono avere un nome"
 
-#: src/main/envir.c:2146
+#: src/main/envir.c:2148
 #, fuzzy
 msgid "'attach' only works for lists, data frames and environments"
 msgstr "attach funziona solo per liste e data frames"
 
-#: src/main/envir.c:2229
+#: src/main/envir.c:2231
 msgid "detaching \"package:base\" is not allowed"
 msgstr "il detach di \"package:base\" non è permesso"
 
-#: src/main/envir.c:2530 src/main/envir.c:2585
+#: src/main/envir.c:2532 src/main/envir.c:2587
 msgid "argument must be an environment"
 msgstr "l'argomento deve essere di tipo environment"
 
-#: src/main/envir.c:2589
+#: src/main/envir.c:2591
 msgid "arguments must be symbolic"
 msgstr "l'argomento deve essere simbolico"
 
-#: src/main/envir.c:2710
+#: src/main/envir.c:2712
 msgid "no enclosing environment"
 msgstr "nessun environment di inclusione"
 
-#: src/main/envir.c:2760
+#: src/main/envir.c:2762
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "nessun termine chiamato \"%s\" nella lista di ricerca"
 
-#: src/main/envir.c:2783
+#: src/main/envir.c:2785
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr ""
 
-#: src/main/envir.c:2789
+#: src/main/envir.c:2791
 #, fuzzy
 msgid "S4 object does not extend class \"environment\""
 msgstr "l'oggetto sostitutivo non è un environment"
 
-#: src/main/envir.c:2804
+#: src/main/envir.c:2806
 #, fuzzy
 msgid "invalid object for 'as.environment'"
 msgstr "oggetto non valido per 'as.environment'"
 
-#: src/main/envir.c:2830 src/main/envir.c:2858 src/main/envir.c:2887
-#: src/main/envir.c:2908 src/main/envir.c:2931 src/main/envir.c:2966
-#: src/main/envir.c:2987
+#: src/main/envir.c:2832 src/main/envir.c:2860 src/main/envir.c:2889
+#: src/main/envir.c:2910 src/main/envir.c:2933 src/main/envir.c:2968
+#: src/main/envir.c:2989
 msgid "not an environment"
 msgstr "non è un environment"
 
-#: src/main/envir.c:2882 src/main/envir.c:2903 src/main/envir.c:2924
-#: src/main/envir.c:2961 src/main/envir.c:2982 src/main/envir.c:3081
+#: src/main/envir.c:2884 src/main/envir.c:2905 src/main/envir.c:2926
+#: src/main/envir.c:2963 src/main/envir.c:2984 src/main/envir.c:3083
 msgid "not a symbol"
 msgstr "non è un simbolo"
 
-#: src/main/envir.c:2895 src/main/envir.c:2916 src/main/envir.c:2974
-#: src/main/envir.c:2995
+#: src/main/envir.c:2897 src/main/envir.c:2918 src/main/envir.c:2976
+#: src/main/envir.c:2997
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "nessun collegamento per \"%s\""
 
-#: src/main/envir.c:2926
+#: src/main/envir.c:2928
 msgid "not a function"
 msgstr "non è una funzione"
 
-#: src/main/envir.c:2934 src/main/envir.c:2950
+#: src/main/envir.c:2936 src/main/envir.c:2952
 msgid "symbol already has a regular binding"
 msgstr "il simbolo ha già un collegamento regolare"
 
-#: src/main/envir.c:2936 src/main/envir.c:2952
+#: src/main/envir.c:2938 src/main/envir.c:2954
 #, fuzzy
 msgid "cannot change active binding if binding is locked"
 msgstr "non posso cambiare un valore con un legame bloccato"
 
-#: src/main/envir.c:3040
+#: src/main/envir.c:3042
 msgid "unknown op"
 msgstr "op sconosciuto"
 
-#: src/main/envir.c:3085
+#: src/main/envir.c:3087
 msgid "cannot unbind a locked binding"
 msgstr "non posso sbloccare un collegamento bloccato"
 
-#: src/main/envir.c:3087
+#: src/main/envir.c:3089
 msgid "cannot unbind an active binding"
 msgstr "non posso scollegare un collegamento attivo"
 
-#: src/main/envir.c:3222
+#: src/main/envir.c:3224
 #, fuzzy
 msgid "bad namespace name"
 msgstr "nome namespace non valido"
 
-#: src/main/envir.c:3234
+#: src/main/envir.c:3236
 #, fuzzy
 msgid "namespace already registered"
 msgstr "namespace già registrato"
 
-#: src/main/envir.c:3246
+#: src/main/envir.c:3248
 #, fuzzy
 msgid "namespace not registered"
 msgstr "namespace non registrato"
 
-#: src/main/envir.c:3293
+#: src/main/envir.c:3295
 msgid "bad import environment argument"
 msgstr "argoment importazione environment sbagliato"
 
-#: src/main/envir.c:3298
+#: src/main/envir.c:3300
 msgid "bad export environment argument"
 msgstr "argomento esportazione environment sbagliato"
 
-#: src/main/envir.c:3302
+#: src/main/envir.c:3304
 msgid "length of import and export names must match"
 msgstr "le lunghezze dei nomi di import e export devono conincidere"
 
-#: src/main/envir.c:3325
+#: src/main/envir.c:3327
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "il simbolo esportato '%s' non ha un valore"
 
-#: src/main/envir.c:3508
+#: src/main/envir.c:3510
 #, fuzzy, c-format
 msgid "unknown encoding: %d"
 msgstr "codifica '%s' non supportata"
 
-#: src/main/envir.c:3525
+#: src/main/envir.c:3527
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr ""
@@ -6021,15 +6026,15 @@ msgstr "errore di allocazione della memoria in realpr"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "la routine BLAS/LAPACK '%6s' ha restituito un codice errore %d"
 
-#: src/main/printarray.c:483
+#: src/main/printarray.c:449
 msgid "too few row labels"
 msgstr "etichette di riga insufficienti"
 
-#: src/main/printarray.c:485
+#: src/main/printarray.c:451
 msgid "too few column labels"
 msgstr "etichette di colonna insufficienti"
 
-#: src/main/printarray.c:519
+#: src/main/printarray.c:485
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"

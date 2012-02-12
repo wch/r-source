@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-12 08:59\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -959,6 +959,9 @@ msgid "profile does not contain memory information"
 msgstr ""
 
 msgid "no events were recorded"
+msgstr ""
+
+msgid "invalid 'tarfile' argument"
 msgstr ""
 
 msgid "'compressed' must be logical or character"

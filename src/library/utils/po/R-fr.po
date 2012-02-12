@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-12 08:59\n"
 "PO-Revision-Date: 2011-10-15 15:37+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1054,6 +1054,10 @@ msgstr "'profile' ne contient pas d'information sur la mémoire"
 
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
+
+#, fuzzy
+msgid "invalid 'tarfile' argument"
+msgstr "argument 'data' incorrect"
 
 msgid "'compressed' must be logical or character"
 msgstr ""

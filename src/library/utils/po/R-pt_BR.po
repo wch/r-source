@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-12 08:59\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -967,6 +967,9 @@ msgid "profile does not contain memory information"
 msgstr ""
 
 msgid "no events were recorded"
+msgstr ""
+
+msgid "invalid 'tarfile' argument"
 msgstr ""
 
 msgid "'compressed' must be logical or character"

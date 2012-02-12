@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-04 10:00+0000\n"
+"POT-Creation-Date: 2012-02-12 08:59+0000\n"
 "PO-Revision-Date: 2011-10-18 19:12-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -171,13 +171,13 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
-#: src/main/envir.c:1547 src/main/envir.c:1664 src/main/envir.c:1669
-#: src/main/envir.c:1735 src/main/envir.c:1751 src/main/envir.c:1757
-#: src/main/envir.c:1857 src/main/envir.c:1865 src/main/envir.c:1872
-#: src/main/envir.c:1886 src/main/envir.c:1892 src/main/envir.c:1896
-#: src/main/envir.c:2113 src/main/envir.c:2234 src/main/envir.c:2493
-#: src/main/envir.c:2700 src/main/envir.c:2714 src/main/envir.c:2721
-#: src/main/envir.c:2737 src/main/envir.c:3300 src/main/errors.c:937
+#: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
+#: src/main/envir.c:1737 src/main/envir.c:1753 src/main/envir.c:1759
+#: src/main/envir.c:1859 src/main/envir.c:1867 src/main/envir.c:1874
+#: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
+#: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
+#: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:937
 #: src/main/eval.c:270 src/main/eval.c:2043 src/main/eval.c:2072
 #: src/main/eval.c:2076 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
@@ -839,7 +839,7 @@ msgstr "неправильная входная строка y[%d] для это
 msgid "regcomp error: '%s'"
 msgstr "ошибка regcomp: '%s'"
 
-#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:755
+#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:760
 msgid "invalid length"
 msgstr "неправильная длина"
 
@@ -929,7 +929,7 @@ msgstr "целочисленное переполнение привело к с
 msgid "unimplemented real function of 1 argument"
 msgstr "нереализованная действительная функция 1 аргумента"
 
-#: src/main/arithmetic.c:1135 src/main/complex.c:645 src/main/complex.c:715
+#: src/main/arithmetic.c:1135 src/main/complex.c:650 src/main/complex.c:720
 msgid "unimplemented complex function"
 msgstr "нереализованная комплексная функция"
 
@@ -1180,8 +1180,8 @@ msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimnames' [%d] не равна протяженности многомерной матрицы"
 
 #: src/main/attrib.c:1035 src/main/builtin.c:62 src/main/builtin.c:99
-#: src/main/envir.c:1532 src/main/envir.c:1656 src/main/envir.c:1718
-#: src/main/envir.c:1841 src/main/paste.c:71 src/main/paste.c:285
+#: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
+#: src/main/envir.c:1843 src/main/paste.c:71 src/main/paste.c:285
 #: src/main/plot.c:1731 src/main/random.c:474
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
@@ -1353,11 +1353,11 @@ msgstr "указанный размер вектора слишком велик
 #: src/main/builtin.c:315 src/main/builtin.c:354 src/main/builtin.c:364
 #: src/main/coerce.c:1448 src/main/connections.c:2796 src/main/engine.c:2945
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
-#: src/main/envir.c:1541 src/main/envir.c:1661 src/main/envir.c:1729
-#: src/main/envir.c:1850 src/main/envir.c:2523 src/main/envir.c:2583
-#: src/main/envir.c:2855 src/main/envir.c:2884 src/main/envir.c:2905
-#: src/main/envir.c:2928 src/main/envir.c:2963 src/main/envir.c:2984
-#: src/main/envir.c:3290 src/main/envir.c:3295 src/main/eval.c:4976
+#: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
+#: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
+#: src/main/envir.c:2857 src/main/envir.c:2886 src/main/envir.c:2907
+#: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
+#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4976
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2612
 msgid "use of NULL environment is defunct"
@@ -1814,23 +1814,23 @@ msgstr "предложенный цвет -- не цифра и не симво�
 msgid "Invalid color specification"
 msgstr "Неправильное определение цвета"
 
-#: src/main/complex.c:117
+#: src/main/complex.c:122
 msgid "invalid complex unary operator"
 msgstr "неправильный комплексный унарный оператор"
 
-#: src/main/complex.c:260
+#: src/main/complex.c:265
 msgid "unimplemented complex operation"
 msgstr "не реализованная комплексная операция"
 
-#: src/main/complex.c:363
+#: src/main/complex.c:368
 msgid "non-numeric argument to function"
 msgstr "нечисловой аргумент аргумент для функции"
 
-#: src/main/complex.c:816
+#: src/main/complex.c:821
 msgid "invalid polynomial coefficient"
 msgstr "неправильный коэффициент многочлена"
 
-#: src/main/complex.c:821
+#: src/main/complex.c:826
 msgid "root finding code failed"
 msgstr "ошибка кода нахождения корня"
 
@@ -2597,7 +2597,7 @@ msgstr "нулевой аргумент"
 msgid "'opts' should be small non-negative integer"
 msgstr "'opts' должен быть малым положительным целым числом"
 
-#: src/main/deparse.c:375 src/main/envir.c:1686 src/main/envir.c:1768
+#: src/main/deparse.c:375 src/main/envir.c:1688 src/main/envir.c:1770
 #: src/main/eval.c:412 src/main/eval.c:1050 src/main/eval.c:3350
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2630
 #, c-format
@@ -3059,7 +3059,7 @@ msgstr "не могу освободить в базовом окружении"
 msgid "unbind in the base environment is unimplemented"
 msgstr "освобождение в базовом окружении не реализовано"
 
-#: src/main/envir.c:786 src/main/envir.c:1608
+#: src/main/envir.c:786 src/main/envir.c:1610
 msgid "cannot remove bindings from a locked environment"
 msgstr "не могу убрать связи в блокированном окружении"
 
@@ -3078,7 +3078,7 @@ msgstr "Список  ... не содержит %d элементов"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d использовано в неправильном контексте, нет ... чтобы найти"
 
-#: src/main/envir.c:1320 src/main/envir.c:1764 src/main/eval.c:416
+#: src/main/envir.c:1320 src/main/envir.c:1766 src/main/eval.c:416
 #: src/main/eval.c:3341
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
@@ -3110,171 +3110,176 @@ msgstr "первый аргумент должен быть именованны
 msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x) должен быть строковым вектором длиной, совпадающей с длиной x"
 
-#: src/main/envir.c:1602
+#: src/main/envir.c:1575
+#, fuzzy
+msgid "'envir' argument must be an environment"
+msgstr "аргумент 'env' должен быть окружением"
+
+#: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
 msgstr "не могу убрать переменные из базового пространства имен"
 
-#: src/main/envir.c:1604
+#: src/main/envir.c:1606
 msgid "cannot remove variables from the base environment"
 msgstr "не могу удалить переменные из базового окружения"
 
-#: src/main/envir.c:1606
+#: src/main/envir.c:1608
 msgid "cannot remove variables from the empty environment"
 msgstr "не могу удалить переменные из пустого окружения"
 
-#: src/main/envir.c:1614
+#: src/main/envir.c:1616
 msgid "cannot remove variables from this database"
 msgstr "не могу удалить переменные из этой базы данных"
 
-#: src/main/envir.c:1771
+#: src/main/envir.c:1773
 #, c-format
 msgid "object '%s' of mode '%s' was not found"
 msgstr "переменная '%s' типа '%s' не найдена"
 
-#: src/main/envir.c:1844
+#: src/main/envir.c:1846
 #, c-format
 msgid "invalid name in position %d"
 msgstr "неправильное имя в позиции %d"
 
-#: src/main/envir.c:1852
+#: src/main/envir.c:1854
 msgid "second argument must be an environment"
 msgstr "второй аргумент должен быть окружением"
 
-#: src/main/envir.c:1860 src/main/envir.c:1868
+#: src/main/envir.c:1862 src/main/envir.c:1870
 #, c-format
 msgid "wrong length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"
 
-#: src/main/envir.c:2003
+#: src/main/envir.c:2005
 msgid "invalid use of 'missing'"
 msgstr "неправильное использование 'missing'"
 
-#: src/main/envir.c:2028
+#: src/main/envir.c:2030
 msgid "'missing' can only be used for arguments"
 msgstr "'missing' может использоваться только для аргументов"
 
-#: src/main/envir.c:2109
+#: src/main/envir.c:2111
 msgid "'pos' must be an integer"
 msgstr "'pos' должен быть целым"
 
-#: src/main/envir.c:2123
+#: src/main/envir.c:2125
 msgid "all elements of a list must be named"
 msgstr "все элементы должны быть именованы"
 
-#: src/main/envir.c:2146
+#: src/main/envir.c:2148
 msgid "'attach' only works for lists, data frames and environments"
 msgstr "'attach' работает только со списками, таблицами данных и окружениями"
 
-#: src/main/envir.c:2229
+#: src/main/envir.c:2231
 msgid "detaching \"package:base\" is not allowed"
 msgstr "отделение \"package:base\" не разрешено"
 
-#: src/main/envir.c:2530 src/main/envir.c:2585
+#: src/main/envir.c:2532 src/main/envir.c:2587
 msgid "argument must be an environment"
 msgstr "аргумент должен быть окружением"
 
-#: src/main/envir.c:2589
+#: src/main/envir.c:2591
 msgid "arguments must be symbolic"
 msgstr "аргументы должны быть символическими"
 
-#: src/main/envir.c:2710
+#: src/main/envir.c:2712
 msgid "no enclosing environment"
 msgstr "нет вложенного окружения"
 
-#: src/main/envir.c:2760
+#: src/main/envir.c:2762
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "в списке поиска нет пункта по имени \"%s\""
 
-#: src/main/envir.c:2783
+#: src/main/envir.c:2785
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr "использование 'as.environment(NULL)' не одобряется"
 
-#: src/main/envir.c:2789
+#: src/main/envir.c:2791
 msgid "S4 object does not extend class \"environment\""
 msgstr "объект S4 не расширяет класс \"environment\""
 
-#: src/main/envir.c:2804
+#: src/main/envir.c:2806
 msgid "invalid object for 'as.environment'"
 msgstr "неправильный объект для 'as.environment'"
 
-#: src/main/envir.c:2830 src/main/envir.c:2858 src/main/envir.c:2887
-#: src/main/envir.c:2908 src/main/envir.c:2931 src/main/envir.c:2966
-#: src/main/envir.c:2987
+#: src/main/envir.c:2832 src/main/envir.c:2860 src/main/envir.c:2889
+#: src/main/envir.c:2910 src/main/envir.c:2933 src/main/envir.c:2968
+#: src/main/envir.c:2989
 msgid "not an environment"
 msgstr "не окружение"
 
-#: src/main/envir.c:2882 src/main/envir.c:2903 src/main/envir.c:2924
-#: src/main/envir.c:2961 src/main/envir.c:2982 src/main/envir.c:3081
+#: src/main/envir.c:2884 src/main/envir.c:2905 src/main/envir.c:2926
+#: src/main/envir.c:2963 src/main/envir.c:2984 src/main/envir.c:3083
 msgid "not a symbol"
 msgstr "не символ"
 
-#: src/main/envir.c:2895 src/main/envir.c:2916 src/main/envir.c:2974
-#: src/main/envir.c:2995
+#: src/main/envir.c:2897 src/main/envir.c:2918 src/main/envir.c:2976
+#: src/main/envir.c:2997
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "нет связи для \"%s\""
 
-#: src/main/envir.c:2926
+#: src/main/envir.c:2928
 msgid "not a function"
 msgstr "не функция"
 
-#: src/main/envir.c:2934 src/main/envir.c:2950
+#: src/main/envir.c:2936 src/main/envir.c:2952
 msgid "symbol already has a regular binding"
 msgstr "символ уже имеет правильную связь"
 
-#: src/main/envir.c:2936 src/main/envir.c:2952
+#: src/main/envir.c:2938 src/main/envir.c:2954
 msgid "cannot change active binding if binding is locked"
 msgstr "не могу изменить активную связь когда связь блокирована"
 
-#: src/main/envir.c:3040
+#: src/main/envir.c:3042
 msgid "unknown op"
 msgstr "неизвестный op"
 
-#: src/main/envir.c:3085
+#: src/main/envir.c:3087
 msgid "cannot unbind a locked binding"
 msgstr "не могу освободить блокированную связь"
 
-#: src/main/envir.c:3087
+#: src/main/envir.c:3089
 msgid "cannot unbind an active binding"
 msgstr "не могу освободить активную связь"
 
-#: src/main/envir.c:3222
+#: src/main/envir.c:3224
 msgid "bad namespace name"
 msgstr "неправильное имя пространства имен"
 
-#: src/main/envir.c:3234
+#: src/main/envir.c:3236
 msgid "namespace already registered"
 msgstr "пространство имен уже зарегистрировано"
 
-#: src/main/envir.c:3246
+#: src/main/envir.c:3248
 msgid "namespace not registered"
 msgstr "пространство имен не регистрировано"
 
-#: src/main/envir.c:3293
+#: src/main/envir.c:3295
 msgid "bad import environment argument"
 msgstr "неправильный аргумент импорта окружения"
 
-#: src/main/envir.c:3298
+#: src/main/envir.c:3300
 msgid "bad export environment argument"
 msgstr "неправильный аргумент экспорта окружения"
 
-#: src/main/envir.c:3302
+#: src/main/envir.c:3304
 msgid "length of import and export names must match"
 msgstr "длины экспортируемых и импортируемых имен должны совпадать"
 
-#: src/main/envir.c:3325
+#: src/main/envir.c:3327
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "экспортируемый символ '%s' не имеет значения"
 
 # fuzzy, c-format
-#: src/main/envir.c:3508
+#: src/main/envir.c:3510
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "неизвестная кодировка: %d"
 
-#: src/main/envir.c:3525
+#: src/main/envir.c:3527
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "внутреннее nul в строке: '%s'"
@@ -5869,15 +5874,15 @@ msgstr "ошибка размещения памяти в 'realpr'"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "процедура BLAS/LAPACK '%6s' вернуло ошибку с кодом %d"
 
-#: src/main/printarray.c:483
+#: src/main/printarray.c:449
 msgid "too few row labels"
 msgstr "слишком мало меток строк"
 
-#: src/main/printarray.c:485
+#: src/main/printarray.c:451
 msgid "too few column labels"
 msgstr "слишком мало меток колонок"
 
-#: src/main/printarray.c:519
+#: src/main/printarray.c:485
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-04 10:00+0000\n"
+"POT-Creation-Date: 2012-02-12 08:59+0000\n"
 "PO-Revision-Date: 2011-10-22 08:01+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -167,13 +167,13 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
-#: src/main/envir.c:1547 src/main/envir.c:1664 src/main/envir.c:1669
-#: src/main/envir.c:1735 src/main/envir.c:1751 src/main/envir.c:1757
-#: src/main/envir.c:1857 src/main/envir.c:1865 src/main/envir.c:1872
-#: src/main/envir.c:1886 src/main/envir.c:1892 src/main/envir.c:1896
-#: src/main/envir.c:2113 src/main/envir.c:2234 src/main/envir.c:2493
-#: src/main/envir.c:2700 src/main/envir.c:2714 src/main/envir.c:2721
-#: src/main/envir.c:2737 src/main/envir.c:3300 src/main/errors.c:937
+#: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
+#: src/main/envir.c:1737 src/main/envir.c:1753 src/main/envir.c:1759
+#: src/main/envir.c:1859 src/main/envir.c:1867 src/main/envir.c:1874
+#: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
+#: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
+#: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:937
 #: src/main/eval.c:270 src/main/eval.c:2043 src/main/eval.c:2072
 #: src/main/eval.c:2076 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
@@ -840,7 +840,7 @@ msgstr " 入力文字列 y[%d] はこのロケールでは不適切です "
 msgid "regcomp error: '%s'"
 msgstr " regcompのエラー: '%s' "
 
-#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:755
+#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:760
 msgid "invalid length"
 msgstr " 長さが不正です "
 
@@ -929,7 +929,7 @@ msgstr " 整数の桁あふれにより NA が生成されました "
 msgid "unimplemented real function of 1 argument"
 msgstr " 1個の引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1135 src/main/complex.c:645 src/main/complex.c:715
+#: src/main/arithmetic.c:1135 src/main/complex.c:650 src/main/complex.c:720
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
@@ -1185,8 +1185,8 @@ msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr " 'dimnames' の長さ [%d] が配列の大きさと違っています "
 
 #: src/main/attrib.c:1035 src/main/builtin.c:62 src/main/builtin.c:99
-#: src/main/envir.c:1532 src/main/envir.c:1656 src/main/envir.c:1718
-#: src/main/envir.c:1841 src/main/paste.c:71 src/main/paste.c:285
+#: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
+#: src/main/envir.c:1843 src/main/paste.c:71 src/main/paste.c:285
 #: src/main/plot.c:1731 src/main/random.c:474
 msgid "invalid first argument"
 msgstr " 一番目の引数が不正です "
@@ -1362,11 +1362,11 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 #: src/main/builtin.c:315 src/main/builtin.c:354 src/main/builtin.c:364
 #: src/main/coerce.c:1448 src/main/connections.c:2796 src/main/engine.c:2945
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
-#: src/main/envir.c:1541 src/main/envir.c:1661 src/main/envir.c:1729
-#: src/main/envir.c:1850 src/main/envir.c:2523 src/main/envir.c:2583
-#: src/main/envir.c:2855 src/main/envir.c:2884 src/main/envir.c:2905
-#: src/main/envir.c:2928 src/main/envir.c:2963 src/main/envir.c:2984
-#: src/main/envir.c:3290 src/main/envir.c:3295 src/main/eval.c:4976
+#: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
+#: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
+#: src/main/envir.c:2857 src/main/envir.c:2886 src/main/envir.c:2907
+#: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
+#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4976
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2612
 msgid "use of NULL environment is defunct"
@@ -1822,23 +1822,23 @@ msgstr " 与えられた色は数字も文字でもありません "
 msgid "Invalid color specification"
 msgstr " 色の指定が不正です "
 
-#: src/main/complex.c:117
+#: src/main/complex.c:122
 msgid "invalid complex unary operator"
 msgstr " 不正な複素単項演算子です "
 
-#: src/main/complex.c:260
+#: src/main/complex.c:265
 msgid "unimplemented complex operation"
 msgstr " 未実装の複素演算です "
 
-#: src/main/complex.c:363
+#: src/main/complex.c:368
 msgid "non-numeric argument to function"
 msgstr " 関数の引数が数値ではありません "
 
-#: src/main/complex.c:816
+#: src/main/complex.c:821
 msgid "invalid polynomial coefficient"
 msgstr " 多項式の係数が不正です "
 
-#: src/main/complex.c:821
+#: src/main/complex.c:826
 msgid "root finding code failed"
 msgstr " 根を見つけるコードが失敗しました "
 
@@ -2611,7 +2611,7 @@ msgstr " 長さゼロの引数です "
 msgid "'opts' should be small non-negative integer"
 msgstr " 'opts' は，小さな非負の整数でなくてはなりません "
 
-#: src/main/deparse.c:375 src/main/envir.c:1686 src/main/envir.c:1768
+#: src/main/deparse.c:375 src/main/envir.c:1688 src/main/envir.c:1770
 #: src/main/eval.c:412 src/main/eval.c:1050 src/main/eval.c:3350
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2630
 #, c-format
@@ -3075,7 +3075,7 @@ msgstr " 基本名前空間の中では切り離しはできません "
 msgid "unbind in the base environment is unimplemented"
 msgstr " 基本環境中の unbind は未実装です "
 
-#: src/main/envir.c:786 src/main/envir.c:1608
+#: src/main/envir.c:786 src/main/envir.c:1610
 msgid "cannot remove bindings from a locked environment"
 msgstr " ロックされた環境からはバインディングを取り除くことはできません "
 
@@ -3094,7 +3094,7 @@ msgstr " ... リストは %d 個の要素を含んでいません "
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr " ..%d は正しくない文脈で使われています，参照すべき ... がありません "
 
-#: src/main/envir.c:1320 src/main/envir.c:1764 src/main/eval.c:416
+#: src/main/envir.c:1320 src/main/envir.c:1766 src/main/eval.c:416
 #: src/main/eval.c:3341
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
@@ -3126,172 +3126,177 @@ msgstr " 最初の引数は名前付きリストでなくてはなりません "
 msgid "names(x) must be a character vector of the same length as x"
 msgstr " names(x) はxと同じ長さの文字列ベクトルでなくてはなりません "
 
-#: src/main/envir.c:1602
+#: src/main/envir.c:1575
+#, fuzzy
+msgid "'envir' argument must be an environment"
+msgstr " 'env' 引数は環境でなくてはなりません "
+
+#: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
 msgstr " base 名前空間からは変数を取り除くことはできません "
 
-#: src/main/envir.c:1604
+#: src/main/envir.c:1606
 msgid "cannot remove variables from the base environment"
 msgstr " 空の環境中から変数を除去することができません "
 
-#: src/main/envir.c:1606
+#: src/main/envir.c:1608
 msgid "cannot remove variables from the empty environment"
 msgstr " 空の環境中から変数を除去することができません "
 
-#: src/main/envir.c:1614
+#: src/main/envir.c:1616
 msgid "cannot remove variables from this database"
 msgstr " このデータベースから変数を除去することができません "
 
-#: src/main/envir.c:1771
+#: src/main/envir.c:1773
 #, c-format
 msgid "object '%s' of mode '%s' was not found"
 msgstr " 変数 ’%s'（モード '%s'）は見つかりません "
 
-#: src/main/envir.c:1844
+#: src/main/envir.c:1846
 #, c-format
 msgid "invalid name in position %d"
 msgstr " 位置 %d に不正な名前があります "
 
-#: src/main/envir.c:1852
+#: src/main/envir.c:1854
 msgid "second argument must be an environment"
 msgstr " 二番目の引数は環境でなければなりません "
 
-#: src/main/envir.c:1860 src/main/envir.c:1868
+#: src/main/envir.c:1862 src/main/envir.c:1870
 #, c-format
 msgid "wrong length for '%s' argument"
 msgstr " '%s' 引数の長さが不正です "
 
-#: src/main/envir.c:2003
+#: src/main/envir.c:2005
 msgid "invalid use of 'missing'"
 msgstr " 'missing' の不正な使用です "
 
-#: src/main/envir.c:2028
+#: src/main/envir.c:2030
 msgid "'missing' can only be used for arguments"
 msgstr " 'missing' は引数に対してだけ使えます "
 
-#: src/main/envir.c:2109
+#: src/main/envir.c:2111
 msgid "'pos' must be an integer"
 msgstr " 'pos' は整数でなければなりません "
 
-#: src/main/envir.c:2123
+#: src/main/envir.c:2125
 msgid "all elements of a list must be named"
 msgstr " リスト中の全ての要素には名前が必要です "
 
-#: src/main/envir.c:2146
+#: src/main/envir.c:2148
 msgid "'attach' only works for lists, data frames and environments"
 msgstr " 'attach' はリスト、データフレーム、もしくは環境にのみ有効です "
 
-#: src/main/envir.c:2229
+#: src/main/envir.c:2231
 msgid "detaching \"package:base\" is not allowed"
 msgstr " \"package:base\" は切り離すことができません "
 
-#: src/main/envir.c:2530 src/main/envir.c:2585
+#: src/main/envir.c:2532 src/main/envir.c:2587
 msgid "argument must be an environment"
 msgstr " 引数は環境でなければなりません "
 
-#: src/main/envir.c:2589
+#: src/main/envir.c:2591
 msgid "arguments must be symbolic"
 msgstr " 引数はシンボルでなくてはいけません "
 
-#: src/main/envir.c:2710
+#: src/main/envir.c:2712
 msgid "no enclosing environment"
 msgstr " 上位 (enclosing) 環境がありません "
 
-#: src/main/envir.c:2760
+#: src/main/envir.c:2762
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr " 検索リストに \"%s\" という項目はありません "
 
-#: src/main/envir.c:2783
+#: src/main/envir.c:2785
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr " 'as.environment(NULL)'の利用は廃止されました "
 
-#: src/main/envir.c:2789
+#: src/main/envir.c:2791
 msgid "S4 object does not extend class \"environment\""
 msgstr " S4 オブジェクトはクラス \"environment\" に拡張されません "
 
-#: src/main/envir.c:2804
+#: src/main/envir.c:2806
 msgid "invalid object for 'as.environment'"
 msgstr " 'as.environment' に対する不正なオブジェクトです "
 
-#: src/main/envir.c:2830 src/main/envir.c:2858 src/main/envir.c:2887
-#: src/main/envir.c:2908 src/main/envir.c:2931 src/main/envir.c:2966
-#: src/main/envir.c:2987
+#: src/main/envir.c:2832 src/main/envir.c:2860 src/main/envir.c:2889
+#: src/main/envir.c:2910 src/main/envir.c:2933 src/main/envir.c:2968
+#: src/main/envir.c:2989
 msgid "not an environment"
 msgstr " 環境ではありません "
 
-#: src/main/envir.c:2882 src/main/envir.c:2903 src/main/envir.c:2924
-#: src/main/envir.c:2961 src/main/envir.c:2982 src/main/envir.c:3081
+#: src/main/envir.c:2884 src/main/envir.c:2905 src/main/envir.c:2926
+#: src/main/envir.c:2963 src/main/envir.c:2984 src/main/envir.c:3083
 msgid "not a symbol"
 msgstr " シンボルではありません "
 
-#: src/main/envir.c:2895 src/main/envir.c:2916 src/main/envir.c:2974
-#: src/main/envir.c:2995
+#: src/main/envir.c:2897 src/main/envir.c:2918 src/main/envir.c:2976
+#: src/main/envir.c:2997
 #, c-format
 msgid "no binding for \"%s\""
 msgstr " \"%s\" にバインドされているものがありません。 "
 
-#: src/main/envir.c:2926
+#: src/main/envir.c:2928
 msgid "not a function"
 msgstr " 関数でありません "
 
-#: src/main/envir.c:2934 src/main/envir.c:2950
+#: src/main/envir.c:2936 src/main/envir.c:2952
 msgid "symbol already has a regular binding"
 msgstr " シンボルは既に regular binding を持っています "
 
-#: src/main/envir.c:2936 src/main/envir.c:2952
+#: src/main/envir.c:2938 src/main/envir.c:2954
 msgid "cannot change active binding if binding is locked"
 msgstr ""
 " バインディングがロックされているならば、アクティブなバインディングを変更する"
 "ことはできません "
 
-#: src/main/envir.c:3040
+#: src/main/envir.c:3042
 msgid "unknown op"
 msgstr " 未知の演算子です "
 
-#: src/main/envir.c:3085
+#: src/main/envir.c:3087
 msgid "cannot unbind a locked binding"
 msgstr " ロックされたバインディングを切り離せません "
 
-#: src/main/envir.c:3087
+#: src/main/envir.c:3089
 msgid "cannot unbind an active binding"
 msgstr " 現在使用中のバインディングを切り離すことはできません "
 
-#: src/main/envir.c:3222
+#: src/main/envir.c:3224
 msgid "bad namespace name"
 msgstr " 不正な名前空間名です "
 
-#: src/main/envir.c:3234
+#: src/main/envir.c:3236
 msgid "namespace already registered"
 msgstr " ネームスペースはすでに登録されています "
 
-#: src/main/envir.c:3246
+#: src/main/envir.c:3248
 msgid "namespace not registered"
 msgstr " ネームスペースは登録されていません "
 
-#: src/main/envir.c:3293
+#: src/main/envir.c:3295
 msgid "bad import environment argument"
 msgstr " インポートしようとしている環境引数が不正です "
 
-#: src/main/envir.c:3298
+#: src/main/envir.c:3300
 msgid "bad export environment argument"
 msgstr " エクスポートしようとしている環境引数が不正です "
 
-#: src/main/envir.c:3302
+#: src/main/envir.c:3304
 msgid "length of import and export names must match"
 msgstr " インポートとエクスポート名の長さは一致しなければなりません "
 
-#: src/main/envir.c:3325
+#: src/main/envir.c:3327
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr " エクスポートされたシンボル \"%s\" が値を持っていません "
 
-#: src/main/envir.c:3508
+#: src/main/envir.c:3510
 #, c-format
 msgid "unknown encoding: %d"
 msgstr " 未知のエンコーディングです: '%d' "
 
-#: src/main/envir.c:3525
+#: src/main/envir.c:3527
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr " 文字列の中にnulが埋め込まれています: '%s' "
@@ -5881,15 +5886,15 @@ msgstr " realpr でメモリ確保に失敗しました "
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr " BLAS/LAPACK 関数 '%6s' はエラーコード %d を返しました  "
 
-#: src/main/printarray.c:483
+#: src/main/printarray.c:449
 msgid "too few row labels"
 msgstr " 行ラベルの数が少なすぎます "
 
-#: src/main/printarray.c:485
+#: src/main/printarray.c:451
 msgid "too few column labels"
 msgstr " 列ラベルの数が少なすぎます "
 
-#: src/main/printarray.c:519
+#: src/main/printarray.c:485
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"

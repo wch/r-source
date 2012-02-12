@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-12 08:59\n"
 "PO-Revision-Date: 2011-10-22 21:51+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1037,6 +1037,10 @@ msgstr " プロファイルはメモリ情報を含んでいません "
 
 msgid "no events were recorded"
 msgstr " 如何なるイベントも記録されませんでした "
+
+#, fuzzy
+msgid "invalid 'tarfile' argument"
+msgstr " 不正な 'data' 引数 "
 
 msgid "'compressed' must be logical or character"
 msgstr " 'compress'は論理値か文字でなければなりません "

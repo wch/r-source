@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-12 08:59\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -989,6 +989,10 @@ msgstr "程序资料不包含内存信息"
 
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
+
+#, fuzzy
+msgid "invalid 'tarfile' argument"
+msgstr "'data'参数不对"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'必需是字符向量"
