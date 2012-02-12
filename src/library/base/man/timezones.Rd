@@ -95,7 +95,9 @@ Sys.timezone()
   optional colon prepended to the path to a file giving complied zone
   information (and the examples above are all files in a system-specific
   location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.
+  details and references.  By convention, regions with a unique timezone
+  history since 1970 have specific names, but those with different
+  earlier histories may not.
 #ifdef unix
   
   For most Unix-alikes use the Olson database.  The system-specific
@@ -115,7 +117,9 @@ Sys.timezone()
   Environment variable \env{TZDIR} can be used to point to a later
   \file{zoneinfo} directory.  A file listing most known time zones can be
   found at \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
-  \sQuote{Examples}).
+  \sQuote{Examples}).   By convention, regions with a unique timezone
+  history since 1970 have specific names, but those with different
+  earlier histories may not.
 
   An attempt is made (once only per session) to map Windows' idea of
   the current time zone to a location, following an earlier version of
@@ -130,6 +134,12 @@ Sys.timezone()
   it is still accepted for backwards compatibility but was (and remains)
   unreliable and gives a warning.
 #endif
+  
+  Many systems support timezones of the form \samp{GMT+n} and
+  \samp{GMT-n}, which are at a fixed offset from UTC (hence no DST).
+  Contrary to some usage (but consistent with names such as
+  \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
+  positive offsets are times behind (west of) UTC.
 }
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.

@@ -1332,6 +1332,11 @@ preprocessor options (for example include paths) for C/C++ files
 @code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran 9x respectively
 (@pxref{Creating shared objects}).
 
+@strong{NB:} Include paths are preprocessor options, not compiler
+options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
+platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
+precedence.
+
 @file{Makevars} can also be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
 
