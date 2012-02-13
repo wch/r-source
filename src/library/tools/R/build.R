@@ -40,14 +40,16 @@ newLog <- function(filename = "")
 
 closeLog <- function(Log) if (Log$con > 2L) close(Log$con)
 
-printLog <- function(Log, ...) {
+printLog <- function(Log, ...)
+{
     quotes <- function(x) gsub("'([^']*)'", sQuote("\\1"), x)
     args <- lapply(list(...), quotes)
     do.call(cat, c(args, sep = ""))
     if (Log$con > 0L) do.call(cat, c(args, sep = "", file=Log$con))
 }
 
-printLog0 <- function(Log, ...) {
+printLog0 <- function(Log, ...)
+{
     cat(..., sep = "")
     if (Log$con > 0L) cat(..., file = Log$con, sep = "")
 }
@@ -59,7 +61,7 @@ checkingLog <- function(Log, ...)
     printLog(Log, Log$stars, " checking ", ..., " ...")
 
 creatingLog <- function(Log, text)
-    printLog(Log, Log$stars," creating ", text, " ...")
+    printLog(Log, Log$stars, " creating ", text, " ...")
 
 messageLog <- function(Log, ...)
     printLog(Log, Log$stars, " ", ..., "\n")
@@ -74,20 +76,23 @@ errorLog <- function(Log, ...)
     if (length(text) && nzchar(text)) printLog(Log, ..., "\n")
 }
 
-warningLog <- function(Log, text="")
+## <NOTE>
+## Perhaps the arguments to errorLog(), warningLog() and noteLog()
+## should be synchronized?
+## </NOTE>
+
+warningLog <- function(Log, text = "")
 {
     resultLog(Log, "WARNING")
-    if (nzchar(text)) messageLog(Log, text)
+    if(nzchar(text)) printLog(Log, text, "\n")
     Log$warnings <- Log$warnings + 1L
-    invisible(Log)
 }
 
-noteLog <- function(Log, text="")
+noteLog <- function(Log, text = "")
 {
     resultLog(Log, "NOTE")
-    if (nzchar(text)) messageLog(Log, text)
+    if(nzchar(text)) printLog(Log, text, "\n")
     Log$notes <- Log$notes + 1L
-    invisible(Log)
 }
 
 summaryLog <- function(Log)
