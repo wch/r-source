@@ -3723,6 +3723,11 @@ TRUE}.
 Check whether package is suitable for publication on CRAN.
 Default: false, except for CRAN submission checks.
 
+@item _R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_
+When checking anchored Rd xrefs, use Rd aliases from the CRAN package
+web areas (in case the CRAN repository has a @samp{file://} URL) in
+addition to those in the installed packages.  Default: false.
+
 @end vtable
 
 CRAN's submission checks use something like
