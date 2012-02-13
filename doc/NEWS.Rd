@@ -117,7 +117,8 @@
       device-dependent, but they were usually invisible.
 
       \item \code{NROW(x)} and \code{NCOL(x)} now work whenever
-      \code{dim(x)} looks appropriate, e.g., also for moregeneralized matrices.
+      \code{dim(x)} looks appropriate, e.g., also for more generalized
+      matrices.
     }
   }
 
@@ -389,7 +390,7 @@
       \code{nobs()} for \code{"nls"} files now excludes observations
       with zero weight.  (Reported by Berwin Turlach.)
 
-      \item str(*, ....., strict.width="cut") now also obeys
+      \item \code{str(*, ....., strict.width="cut")} now also obeys
       \code{list.len = n}.  (Reported by Sören Vogel.)
 
       \item Printing of arrays did not have enough protection (C level),
