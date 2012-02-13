@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -237,6 +237,24 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   that the lock directory is not removed: this inhibits any further
   installs to the library directory (or for \code{--pkglock}, of the
   package) until the lock directory is removed manually.
+}
+
+\section{Parallel installs}{
+  Parallel installs are attempted if \code{pkgs} has length greater than
+  one and \code{Ncpus > 1}.  It makes use of a parallel \command{make},
+  so the \code{make} specified (default \command{make}) when \R was
+  built must be capable of supporting \code{make -j \var{n}}: GNU make
+  and \command{dmake} do, but FreeBSD and Solaris \command{make} do not:
+  if necessary environment variable \env{MAKE} can be set for the
+  current session to select a suitable \command{make}.
+
+  \code{install.packages} needs to be able to compute all the
+  dependencies of \code{pkgs} from \code{available}, including if one
+  element of \code{pkgs} depends indirectly on another.  This means that
+  if for example you are installing \acronym{CRAN} packages which depend
+  on Bioconductor packages which in turn depend on \acronym{CRAN}
+  packages, \code{available} needs to cover both \acronym{CRAN} and
+  Bioconductor packages.
 }
 
 #ifdef unix
