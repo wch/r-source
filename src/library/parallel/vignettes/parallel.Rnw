@@ -273,8 +273,9 @@ information in the shape of extra arguments.
     case and \code{master} may need to be supplied as a name or IP
     address, e.g. \code{master = "192.168.1.111"}.
   \item By default \command{ssh} is used to launch R on the workers.
-    If it is known by some other name, use e.g.{} \code{rshcmd =
-      "plink.exe"} for a Windows box using PUTTY.  SSH should be set
+    If it is known by some other name, use e.g.{}
+    \code{rshcmd = "plink.exe"} for a Windows box using PUTTY.
+    SSH should be set
     up to use silent authentication: setups which require a password
     to be supplied may or may not work.
   \item Socket communication is done over port 10187: site policies
@@ -702,6 +703,43 @@ while(length(done) < length(pkgs)) {
     DL <- DL[!names(DL) %in% p[1:m]]
 }
 @
+
+\subsection{Passing \code{...}}
+
+The semantics of \code{...} do not fit well with parallel operation,
+since lazy evaluation may be delayed until the tasks have been sent to
+the workers.  This is no problem in the forking approach, as the
+information needed for lazy evaluation will be present in the forked workers.
+
+For \pkg{snow}-like clusters the trick is to ensure that \code{...}
+has any promises forced whilst the information is still available.
+This is how \CRANpkg{boot} does it:
+<<eval=FALSE>>=
+    fn <- function(r) statistic(data, i[r, ], ...)
+    RR <- sum(R)
+    res <- if (ncpus > 1L && (have_mc || have_snow)) {
+        if (have_mc) {
+            parallel::mclapply(seq_len(RR), fn, mc.cores = ncpus)
+        } else if (have_snow) {
+            list(...) # evaluate any promises
+            if (is.null(cl)) {
+                cl <- parallel::makePSOCKcluster(rep("localhost", ncpus))
+                if(RNGkind()[1L] == "L'Ecuyer-CMRG")
+                    parallel::clusterSetRNGStream(cl)
+                res <- parallel::parLapply(cl, seq_len(RR), fn)
+                parallel::stopCluster(cl)
+                res
+            } else parallel::parLapply(cl, seq_len(RR), fn)
+        }
+    } else lapply(seq_len(RR), fn)
+@
+Note that \code{...} is an argument to \code{boot}, and so after
+<<eval=FALSE>>=
+            list(...) # evaluate any promises
+@
+it refers to objects within the evaluation frame of \code{boot} and
+hence the environment of \code{fn} which will therefore be sent to the
+workers along with \code{fn}.
 
 \section{Differences from earlier versions}
 
