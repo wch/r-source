@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -121,15 +121,9 @@ isIncomplete(con)
   \code{""} (the default) or \code{"clipboard"} (see the
   \sQuote{Clipboard} section).  Use \code{"stdin"} to refer to the
   C-level \sQuote{standard input} of the process (which need not be
-  connected to anything
-#ifdef unix
-  in a console or embedded version of \R).
-#endif
-#ifdef windows
-  in a console or embedded version of \R, and is not in \code{RGui}).
-#endif
-  See also \code{\link{stdin}()} for the subtly different R-level concept
-  of \code{stdin}.
+  connected to anything in a console or embedded version of \R, and is
+  not in \code{RGui} on Windows).  See also \code{\link{stdin}()} for
+  the subtly different R-level concept of \code{stdin}.
 
   For \code{url} the description is a complete URL, including scheme
   (such as \samp{http://}, \samp{ftp://} or \samp{file://}).  Proxies
@@ -206,36 +200,35 @@ isIncomplete(con)
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
-#ifdef unix
-  This is then \samp{file:///path/to/file}, where \samp{path/to/file} is
-  relative to \file{/}.  So although the third slash is strictly part of
-  the specification not part of the path, this can be regarded as a way
-  to specify the file \file{/path/to/file}.  It is not possible to
-  specify a relative path using a file URL.
-#endif
-#ifdef windows
+
+  On a Unix-alike, this is then \samp{file:///path/to/file}, where
+  \samp{path/to/file} is relative to \file{/}.  So although the third
+  slash is strictly part of the specification not part of the path, this
+  can be regarded as a way to specify the file \file{/path/to/file}.  It
+  is not possible to specify a relative path using a file URL.
+  
   In this form the path is relative to the root of the filesystem, not a
-  Windows concept.  The standard form is \samp{file:///d:/R/repos}: for
-  compatibility with earlier versions of \R and Unix versions,
-  any other form is parsed as \R as \samp{file://} plus \code{path_to_file}.
-  Also, backslashes are accepted within the path even though
-  RFC1738 does not allow them.
-#endif
+  Windows concept.  The standard form on Windows is
+  \samp{file:///d:/R/repos}: for compatibility with earlier versions of
+  \R and Unix versions, any other form is parsed as \R as \samp{file://}
+  plus \code{path_to_file}.  Also, backslashes are accepted within the
+  path even though RFC1738 does not allow them.
   
   No attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
 
-  Note that \samp{https://} connections are
+  Note that \samp{https://} connections are not supported except on
+  Windows.  There they are only supported if \option{--internet2} or
 #ifdef unix
-  not supported (with some exceptions on Windows).
+  \code{setInternet2(TRUE)}
 #endif
 #ifdef windows
-  only supported if \option{--internet2} or
-  \code{\link{setInternet2}(TRUE)} was used (to make use of Internet
-  Explorer internals), and then only if the certificate is considered to
-  be valid.  With that option only, the \samp{http://user:pass@site}
-  notation for sites requiring authentication is also accepted.
+  \code{\link{setInternet2}(TRUE)}
 #endif
+  was used (to make use of Internet Explorer internals), and then only
+  if the certificate is considered to be valid.  With that option only,
+  the \samp{http://user:pass@site} notation for sites requiring
+  authentication is also accepted.
 
   Contributed package \CRANpkg{RCurl} provides more comprehensive facilities
   to download from URLs.
@@ -274,11 +267,9 @@ isIncomplete(con)
   opened for both reading and writing.  An unsupported mode is usually
   silently substituted.
   
-#ifdef unix
   If a file or fifo is created on a Unix-alike, its permissions will be
   the maximal allowed by the current setting of \code{umask} (see
   \code{\link{Sys.umask}}).
-#endif
 
   For many connections there is little or no difference between text and
   binary modes.  For file-like connections on Windows, translation of
