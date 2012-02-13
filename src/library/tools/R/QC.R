@@ -3500,6 +3500,20 @@ function(package, dir, lib.loc = NULL)
     thisfile <- db[, 1L]
     thispkg[have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
     thisfile[have_colon] <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
+
+    use_aliases_from_CRAN <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_",
+                                         FALSE))
+    if(use_aliases_from_CRAN) {
+        ## But only do so when using a local (file) CRAN mirror.
+        CRAN <- .get_standard_repository_URLs()[1L]
+        if(substring(CRAN, 1L, 7L) != "file://")
+            use_aliases_from_CRAN <- FALSE
+        else
+            CRAN_web_packages_dir <-
+                sprintf(sprintf("%s/web/packages", substring(CRAN, 8L)))
+    }
+        
     for (pkg in unique(thispkg[have_anchor])) {
         ## we can't do this on the current uninstalled package!
         if (missing(package) && pkg == basename(dir)) next
@@ -3520,7 +3534,21 @@ function(package, dir, lib.loc = NULL)
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
             db[this, "bad"] <- !good & !suspect
-        } else
+        } else if(use_aliases_from_CRAN &&
+                  file_test("-f",
+                            afile <- file.path(CRAN_web_packages_dir,
+                                               pkg, "aliases.rds"))) {
+            aliases <- readRDS(afile)
+            nm <- sub("\\.[Rr]d", "", basename(names(aliases)))
+            good <- thisfile[this] %in% nm
+            suspect <- if(any(!good)) {
+                aliases1 <- unique(as.character(unlist(aliases,
+                                                       use.names =
+                                                       FALSE)))
+                !good & (thisfile[this] %in% aliases1)
+            } else FALSE
+        }
+        else
             unknown <- c(unknown, pkg)
     }
 
