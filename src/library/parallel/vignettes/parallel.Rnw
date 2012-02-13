@@ -238,7 +238,7 @@ For matrices there are the rarely used \code{parApply} and
 
 The package contains a slightly revised copy of much of \CRANpkg{snow},
 and the functions it contains can also be used with clusters created
-by \CRANpkg{snow}.
+by \CRANpkg{snow} (provided the package is on the search path).
 
 Two functions are provided to create SNOW clusters,
 \code{makePSOCKcluster} (a streamlined version of
@@ -685,6 +685,9 @@ unlink("install_log")
 cl <- makeCluster(M, outfile = "install_log")
 clusterExport(cl, c("tars", "fakes", "gcc")) # variables needed by do_one
 
+## set up available via a call to available.packages() for
+## repositories containing all the packages involved and all their
+## dependencies.
 DL <- utils:::.make_dependency_list(pkgs, available, recursive = TRUE)
 DL <- lapply(DL, function(x) x[x %in% pkgs])
 lens <- sapply(DL, length)
