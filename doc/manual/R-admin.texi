@@ -3111,7 +3111,7 @@ way to use ACML.
 @node Goto BLAS, MKL, ACML, BLAS
 @subsubsection Goto BLAS
 
-Dr Kazushige Goto has written another tuned @acronym{BLAS} which is
+Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is
 available for several processors and OSes.  The current version is known
 as GotoBLAS2, and has (in November 2010) been re-released under a much
 less restrictive licence.  Source code can be obtained from
@@ -3127,7 +3127,8 @@ See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
 Our understanding is that this project is now frozen and so will not be
-updated for CPUs released since mid-2010.
+updated for CPUs released since mid-2010.  However, OpenBLAS
+(@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project.
 
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
