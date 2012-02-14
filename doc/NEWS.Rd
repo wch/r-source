@@ -109,6 +109,10 @@
       
       \item \command{make install} can install to a path containing
       \samp{+} characters. (\PR{14798})
+      
+      \item The \code{edit()} function did not respect the
+      \code{options("keep.source")} setting. (Reported by Cleridy
+      Lennert.)      
     }
   }
 }
