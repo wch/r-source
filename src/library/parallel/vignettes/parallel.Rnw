@@ -704,7 +704,7 @@ while(length(done) < length(pkgs)) {
 }
 @
 
-\subsection{Passing \code{...}}
+\subsection{Passing \ldots}
 
 The semantics of \code{...} do not fit well with parallel operation,
 since lazy evaluation may be delayed until the tasks have been sent to
