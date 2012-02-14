@@ -1,7 +1,7 @@
 /*
  *    Stack-less Just-In-Time compiler
  *
- *    Copyright 2009-2010 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
+ *    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -44,10 +44,10 @@
       - The compiler is thread-safe
     Disadvantages:
       - Limited number of registers (only 6+4 integer registers, max 3+2
-        temporary and max 3+2 general, and 4 floating point registers)
+        temporary, max 3+2 saved and 4 floating point registers)
     In practice:
       - This approach is very effective for interpreters
-        - One of the general registers typically points to a stack interface
+        - One of the saved registers typically points to a stack interface
         - It can jump to any exception handler anytime (even for another
           function. It is safe for SLJIT.)
         - Fast paths can be modified during runtime reflecting the changes
@@ -64,6 +64,11 @@
 #if !(defined SLJIT_NO_DEFAULT_CONFIG && SLJIT_NO_DEFAULT_CONFIG)
 #include "sljitConfig.h"
 #endif
+
+/* The following header file defines useful macros for fine tuning
+sljit based code generators. They are listed in the begining
+of sljitConfigInternal.h */
+
 #include "sljitConfigInternal.h"
 
 /* --------------------------------------------------------------------- */
@@ -99,14 +104,14 @@
 #define SLJIT_TEMPORARY_EREG1	4
 #define SLJIT_TEMPORARY_EREG2	5
 
-/* General (saved) registers preserve their values across function calls. */
-#define SLJIT_GENERAL_REG1	6
-#define SLJIT_GENERAL_REG2	7
-#define SLJIT_GENERAL_REG3	8
+/* Saved registers whose preserve their values across function calls. */
+#define SLJIT_SAVED_REG1	6
+#define SLJIT_SAVED_REG2	7
+#define SLJIT_SAVED_REG3	8
 /* Note: Extra Registers cannot be used for memory addressing. */
 /* Note: on x86-32, these registers are emulated (using stack loads & stores). */
-#define SLJIT_GENERAL_EREG1	9
-#define SLJIT_GENERAL_EREG2	10
+#define SLJIT_SAVED_EREG1	9
+#define SLJIT_SAVED_EREG2	10
 
 /* Read-only register (cannot be the destination of an operation). */
 /* Note: SLJIT_MEM2( ... , SLJIT_LOCALS_REG) is not supported (x86 limitation). */
@@ -122,9 +127,11 @@
 
 #define SLJIT_RETURN_REG	SLJIT_TEMPORARY_REG1
 
-/* x86 prefers temporary registers for special purposes. If other
-   registers are used such purpose, it costs a little performance
-   drawback. It doesn't matter for other archs. */
+/* x86 prefers specific registers for special purposes. In case of shift
+   by register it supports only SLJIT_TEMPORARY_REG3 for shift argument
+   (which is the src2 argument of sljit_emit_op2). If another register is
+   used, sljit must exchange data between registers which cause a minor
+   slowdown. Other architectures has no such limitation. */
 
 #define SLJIT_PREF_SHIFT_REG	SLJIT_TEMPORARY_REG3
 
@@ -189,8 +196,8 @@ struct sljit_compiler {
 
 	/* Used local registers. */
 	int temporaries;
-	/* Used general registers. */
-	int generals;
+	/* Used saved registers. */
+	int saveds;
 	/* Local stack size. */
 	int local_size;
 	/* Code size. */
@@ -201,7 +208,7 @@ struct sljit_compiler {
 #if (defined SLJIT_CONFIG_X86_32 && SLJIT_CONFIG_X86_32)
 	int args;
 	int temporaries_start;
-	int generals_start;
+	int saveds_start;
 #endif
 
 #if (defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64)
@@ -221,7 +228,7 @@ struct sljit_compiler {
 	sljit_ub *cpool_unique;
 	sljit_uw cpool_diff;
 	sljit_uw cpool_fill;
-	/* General fields. */
+	/* Other members. */
 	/* Contains pointer, "ldr pc, [...]" pairs. */
 	sljit_uw patches;
 #endif
@@ -305,35 +312,56 @@ static SLJIT_INLINE sljit_uw sljit_get_generated_code_size(struct sljit_compiler
 /* Instruction generation. Returns with error code. */
 
 /*
-   Entry instruction. The instruction has "args" number of arguments
-   and will use the first "general" number of general registers.
-   The arguments are passed into the general registers (arg1 to general_reg1, and so on).
-   Thus, "args" must be less or equal than "general". A local_size extra
-   stack space is allocated for the jit code (must be less or equal than
-   SLJIT_MAX_LOCAL_SIZE), which can accessed through SLJIT_LOCALS_REG (see
-   the notes there). SLJIT_LOCALS_REG is not necessary the real stack pointer!
-   It just points somewhere in the stack if local_size > 0 (!). Thus, the only
-   thing which is known that the memory area between SLJIT_LOCALS_REG and
-   SLJIT_LOCALS_REG + local_size is a valid stack area if local_size > 0
-*/
+   The executable code is basically a function call from the viewpoint of
+   the C language. The function calls must obey to the ABI (Application
+   Binary Interface) of the platform, which specify the purpose of machine
+   registers and stack handling among other things. The sljit_emit_enter
+   function emits the necessary instructions for setting up a new context
+   for the executable code and moves function arguments to the saved
+   registers. The number of arguments are specified in the "args"
+   parameter and the first argument goes to SLJIT_SAVED_REG1, the second
+   goes to SLJIT_SAVED_REG2 and so on. The number of temporary and
+   saved registers are passed in "temporaries" and "saveds" arguments
+   respectively. Since the saved registers contains the arguments,
+   "args" must be less or equal than "saveds". The sljit_emit_enter
+   is also capable of allocating a stack space for local variables. The
+   "local_size" argument contains the size in bytes of this local area
+   and its staring address is stored in SLJIT_LOCALS_REG. However
+   the SLJIT_LOCALS_REG is not necessary the machine stack pointer.
+   The memory bytes between SLJIT_LOCALS_REG (inclusive) and
+   SLJIT_LOCALS_REG + local_size (exclusive) can be modified freely
+   until the function returns. The stack space is uninitialized.
 
-/* Note: multiple calls of this function overwrites the previous call. */
+   Note: every call of sljit_emit_enter and sljit_set_context overwrites
+         the previous context. */
 
 #define SLJIT_MAX_LOCAL_SIZE	65536
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size);
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler,
+	int args, int temporaries, int saveds, int local_size);
 
-/* Since sljit_emit_return (and many asserts) uses variables which are initialized
-   by sljit_emit_enter, a simple return is not possible if these variables are not
-   initialized. sljit_fake_enter does not emit any instruction, just initialize
-   those variables. */
+/* The machine code has a context (which contains the local stack space size,
+   number of used registers, etc.) which initialized by sljit_emit_enter. Several
+   functions (like sljit_emit_return) requres this context to be able to generate
+   the appropriate code. However, some code fragments (like inline cache) may have
+   no normal entry point so their context is unknown for the compiler. Using the
+   function below we can specify thir context.
+
+   Note: every call of sljit_emit_enter and sljit_set_context overwrites
+         the previous context. */
 
 /* Note: multiple calls of this function overwrites the previous call. */
 
-SLJIT_API_FUNC_ATTRIBUTE void sljit_fake_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size);
+SLJIT_API_FUNC_ATTRIBUTE void sljit_set_context(struct sljit_compiler *compiler,
+	int args, int temporaries, int saveds, int local_size);
 
-/* Return from jit. See below the possible values for src and srcw. */
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int src, sljit_w srcw);
+/* Return from machine code.  The op argument can be SLJIT_UNUSED which means the
+   function does not return with anything or any opcode between SLJIT_MOV and
+   SLJIT_MOV_SI (see sljit_emit_op1). As for src and srcw they must be 0 if op
+   is SLJIT_UNUSED, otherwise see below the description about source and
+   destination arguments. */
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int op,
+	int src, sljit_w srcw);
 
 /* Really fast calling method for utility functions inside sljit (see SLJIT_FAST_CALL).
    All registers and even the stack frame is passed to the callee. The return address is
@@ -341,7 +369,7 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, 
    use this as a return value later. */
 
 /* Note: only for sljit specific, non ABI compilant calls. Fast, since only a few machine instructions
-   are needed. Excellent for small uility functions, where saving general registers and setting up
+   are needed. Excellent for small uility functions, where saving registers and setting up
    a new stack frame would cost too much performance. However, it is still possible to return
    to the address of the caller (or anywhere else). */
 
@@ -350,7 +378,7 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, 
 /* Note: although sljit_emit_fast_return could be replaced by an ijump, it is not suggested,
    since many architectures do clever branch prediction on call / return instruction pairs. */
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int generals, int local_size);
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int saveds, int local_size);
 SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_return(struct sljit_compiler *compiler, int src, sljit_w srcw);
 
 /*
@@ -365,15 +393,16 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_return(struct sljit_compiler *compi
 */
 
 /*
-   IMPORATNT NOTE: memory access MUST be naturally aligned.
+   IMPORATNT NOTE: memory access MUST be naturally aligned except
+                   SLJIT_UNALIGNED macro is defined and its value is 1.
+
      length | alignment
    ---------+-----------
      byte   | 1 byte (not aligned)
      half   | 2 byte (real_address & 0x1 == 0)
      int    | 4 byte (real_address & 0x3 == 0)
-    sljit_w | 4 byte if SLJIT_32BIT_ARCHITECTURE defined
-            | 8 byte if SLJIT_64BIT_ARCHITECTURE defined
-   (This is a strict requirement for embedded systems.)
+    sljit_w | 4 byte if SLJIT_32BIT_ARCHITECTURE is defined and its value is 1
+            | 8 byte if SLJIT_64BIT_ARCHITECTURE is defined and its value is 1
 
    Note: different architectures have different addressing limitations
          Thus sljit may generate several instructions for other addressing modes
@@ -445,6 +474,24 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_return(struct sljit_compiler *compi
    Note: may or may not cause an extra cycle wait
          it can even decrease the runtime in a few cases. */
 #define SLJIT_NOP			1
+/* Flags: may destroy flags
+   Unsigned multiplication of SLJIT_TEMPORARY_REG1 and SLJIT_TEMPORARY_REG2.
+   Result goes to SLJIT_TEMPORARY_REG2:SLJIT_TEMPORARY_REG1 (high:low) word */
+#define SLJIT_UMUL			2
+/* Flags: may destroy flags
+   Signed multiplication of SLJIT_TEMPORARY_REG1 and SLJIT_TEMPORARY_REG2.
+   Result goes to SLJIT_TEMPORARY_REG2:SLJIT_TEMPORARY_REG1 (high:low) word */
+#define SLJIT_SMUL			3
+/* Flags: I | may destroy flags
+   Unsigned divide of the value in SLJIT_TEMPORARY_REG1 by the value in SLJIT_TEMPORARY_REG2.
+   The result is placed in SLJIT_TEMPORARY_REG1 and the remainder goes to SLJIT_TEMPORARY_REG2.
+   Note: if SLJIT_TEMPORARY_REG2 contains 0, the behaviour is undefined. */
+#define SLJIT_UDIV			4
+/* Flags: I | may destroy flags
+   Signed divide of the value in SLJIT_TEMPORARY_REG1 by the value in SLJIT_TEMPORARY_REG2.
+   The result is placed in SLJIT_TEMPORARY_REG1 and the remainder goes to SLJIT_TEMPORARY_REG2.
+   Note: if SLJIT_TEMPORARY_REG2 contains 0, the behaviour is undefined. */
+#define SLJIT_SDIV			5
 
 SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_op0(struct sljit_compiler *compiler, int op);
 
@@ -457,73 +504,109 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_op0(struct sljit_compiler *compiler, int
    SH = unsgined half (16 bit) */
 
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV			2
+#define SLJIT_MOV			6
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV_UB			3
+#define SLJIT_MOV_UB			7
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV_SB			4
+#define SLJIT_MOV_SB			8
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV_UH			5
+#define SLJIT_MOV_UH			9
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV_SH			6
+#define SLJIT_MOV_SH			10
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV_UI			7
+#define SLJIT_MOV_UI			11
 /* Flags: - (never set any flags) */
-#define SLJIT_MOV_SI			8
+#define SLJIT_MOV_SI			12
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU			9
+#define SLJIT_MOVU			13
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU_UB			10
+#define SLJIT_MOVU_UB			14
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU_SB			11
+#define SLJIT_MOVU_SB			15
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU_UH			12
+#define SLJIT_MOVU_UH			16
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU_SH			13
+#define SLJIT_MOVU_SH			17
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU_UI			14
+#define SLJIT_MOVU_UI			18
 /* Flags: - (never set any flags) */
-#define SLJIT_MOVU_SI			15
+#define SLJIT_MOVU_SI			19
 /* Flags: I | E | K */
-#define SLJIT_NOT			16
+#define SLJIT_NOT			20
 /* Flags: I | E | O | K */
-#define SLJIT_NEG			17
+#define SLJIT_NEG			21
 /* Count leading zeroes
    Flags: I | E | K */
-#define SLJIT_CLZ			18
+#define SLJIT_CLZ			22
 
 SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_op1(struct sljit_compiler *compiler, int op,
 	int dst, sljit_w dstw,
 	int src, sljit_w srcw);
 
 /* Flags: I | E | O | C | K */
-#define SLJIT_ADD			19
+#define SLJIT_ADD			23
 /* Flags: I | C | K */
-#define SLJIT_ADDC			20
+#define SLJIT_ADDC			24
 /* Flags: I | E | S | U | O | C | K */
-#define SLJIT_SUB			21
+#define SLJIT_SUB			25
 /* Flags: I | C | K */
-#define SLJIT_SUBC			22
-/* Note: integer mul */
-/* Flags: I | O (see SLJIT_C_MUL_*) | K */
-#define SLJIT_MUL			23
+#define SLJIT_SUBC			26
+/* Note: integer mul
+   Flags: I | O (see SLJIT_C_MUL_*) | K */
+#define SLJIT_MUL			27
 /* Flags: I | E | K */
-#define SLJIT_AND			24
+#define SLJIT_AND			28
 /* Flags: I | E | K */
-#define SLJIT_OR			25
+#define SLJIT_OR			29
 /* Flags: I | E | K */
-#define SLJIT_XOR			26
-/* Flags: I | E | K */
-#define SLJIT_SHL			27
-/* Flags: I | E | K */
-#define SLJIT_LSHR			28
-/* Flags: I | E | K */
-#define SLJIT_ASHR			29
+#define SLJIT_XOR			30
+/* Flags: I | E | K
+   Let bit_length be the length of the shift operation: 32 or 64.
+   If src2 is immediate, src2w is masked by (bit_length - 1).
+   Otherwise, if the content of src2 is outside the range from 0
+   to bit_length - 1, the operation is undefined. */
+#define SLJIT_SHL			31
+/* Flags: I | E | K
+   Let bit_length be the length of the shift operation: 32 or 64.
+   If src2 is immediate, src2w is masked by (bit_length - 1).
+   Otherwise, if the content of src2 is outside the range from 0
+   to bit_length - 1, the operation is undefined. */
+#define SLJIT_LSHR			32
+/* Flags: I | E | K
+   Let bit_length be the length of the shift operation: 32 or 64.
+   If src2 is immediate, src2w is masked by (bit_length - 1).
+   Otherwise, if the content of src2 is outside the range from 0
+   to bit_length - 1, the operation is undefined. */
+#define SLJIT_ASHR			33
 
 SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_op2(struct sljit_compiler *compiler, int op,
 	int dst, sljit_w dstw,
 	int src1, sljit_w src1w,
 	int src2, sljit_w src2w);
+
+/* The following function is a helper function for sljit_emit_op_custom.
+   It returns with the real machine register index of any SLJIT_TEMPORARY
+   SLJIT_SAVED or SLJIT_LOCALS register.
+   Note: it returns with -1 for virtual registers (all EREGs on x86-32).
+   Note: register returned by SLJIT_LOCALS_REG is not necessary the real
+         stack pointer register of the target architecture. */
+
+SLJIT_API_FUNC_ATTRIBUTE int sljit_get_register_index(int reg);
+
+/* Any instruction can be inserted into the instruction stream by
+   sljit_emit_op_custom. It has a similar purpose as inline assembly.
+   The size parameter must match to the instruction size of the target
+   architecture:
+
+         x86: 0 < size <= 15. The instruction argument can be byte aligned.
+      Thumb2: if size == 2, the instruction argument must be 2 byte aligned.
+              if size == 4, the instruction argument must be 4 byte aligned.
+   Otherwise: size must be 4 and instruction argument must be 4 byte aligned. */
+
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_op_custom(struct sljit_compiler *compiler,
+	void *instruction, int size);
+
+/* Returns with non-zero if fpu is available. */
 
 SLJIT_API_FUNC_ATTRIBUTE int sljit_is_fpu_available(void);
 
@@ -531,26 +614,26 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_is_fpu_available(void);
    Note: NaN check is always performed. If SLJIT_C_FLOAT_NAN is set,
          the comparison result is unpredictable.
    Flags: E | S (see SLJIT_C_FLOAT_*) */
-#define SLJIT_FCMP			30
+#define SLJIT_FCMP			34
 /* Flags: - (never set any flags) */
-#define SLJIT_FMOV			31
+#define SLJIT_FMOV			35
 /* Flags: - (never set any flags) */
-#define SLJIT_FNEG			32
+#define SLJIT_FNEG			36
 /* Flags: - (never set any flags) */
-#define SLJIT_FABS			33
+#define SLJIT_FABS			37
 
 SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fop1(struct sljit_compiler *compiler, int op,
 	int dst, sljit_w dstw,
 	int src, sljit_w srcw);
 
 /* Flags: - (never set any flags) */
-#define SLJIT_FADD			34
+#define SLJIT_FADD			38
 /* Flags: - (never set any flags) */
-#define SLJIT_FSUB			35
+#define SLJIT_FSUB			39
 /* Flags: - (never set any flags) */
-#define SLJIT_FMUL			36
+#define SLJIT_FMUL			40
 /* Flags: - (never set any flags) */
-#define SLJIT_FDIV			37
+#define SLJIT_FDIV			41
 
 SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fop2(struct sljit_compiler *compiler, int op,
 	int dst, sljit_w dstw,
@@ -610,15 +693,29 @@ SLJIT_API_FUNC_ATTRIBUTE struct sljit_label* sljit_emit_label(struct sljit_compi
    Flags: destroy all flags for calls. */
 SLJIT_API_FUNC_ATTRIBUTE struct sljit_jump* sljit_emit_jump(struct sljit_compiler *compiler, int type);
 
-/* Basic arithmetic comparison. In most architectures it is equal to
-   an SLJIT_SUB operation (with SLJIT_UNUSED destination) followed by a
-   sljit_emit_jump. However some architectures (i.e: MIPS) may employ
-   special optimizations here. It is suggested to use this comparison
-   form when flags are unimportant.
+/* Basic arithmetic comparison. In most architectures it is implemented as
+   an SLJIT_SUB operation (with SLJIT_UNUSED destination and setting
+   appropriate flags) followed by a sljit_emit_jump. However some
+   architectures (i.e: MIPS) may employ special optimizations here. It is
+   suggested to use this comparison form when appropriate.
     type must be between SLJIT_C_EQUAL and SLJIT_C_SIG_LESS_EQUAL
     type can be combined (or'ed) with SLJIT_REWRITABLE_JUMP or SLJIT_INT_OP
    Flags: destroy flags. */
 SLJIT_API_FUNC_ATTRIBUTE struct sljit_jump* sljit_emit_cmp(struct sljit_compiler *compiler, int type,
+	int src1, sljit_w src1w,
+	int src2, sljit_w src2w);
+
+/* Basic floating point comparison. In most architectures it is implemented as
+   an SLJIT_FCMP operation (setting appropriate flags) followed by a
+   sljit_emit_jump. However some architectures (i.e: MIPS) may employ
+   special optimizations here. It is suggested to use this comparison form
+   when appropriate.
+    type must be between SLJIT_C_FLOAT_EQUAL and SLJIT_C_FLOAT_NOT_NAN
+    type can be combined (or'ed) with SLJIT_REWRITABLE_JUMP
+   Flags: destroy flags.
+   Note: if either operand is NaN, the behaviour is undefined for
+         type <= SLJIT_C_FLOAT_LESS_EQUAL. */
+SLJIT_API_FUNC_ATTRIBUTE struct sljit_jump* sljit_emit_fcmp(struct sljit_compiler *compiler, int type,
 	int src1, sljit_w src1w,
 	int src2, sljit_w src2w);
 
@@ -667,7 +764,7 @@ SLJIT_API_FUNC_ATTRIBUTE void sljit_set_const(sljit_uw addr, sljit_w new_constan
 /* --------------------------------------------------------------------- */
 
 #define SLJIT_MAJOR_VERSION	0
-#define SLJIT_MINOR_VERSION	82
+#define SLJIT_MINOR_VERSION	87
 
 /* Get the human readable name of the platfrom.
    Can be useful for debugging on platforms like ARM, where ARM and
@@ -675,7 +772,7 @@ SLJIT_API_FUNC_ATTRIBUTE void sljit_set_const(sljit_uw addr, sljit_w new_constan
 SLJIT_API_FUNC_ATTRIBUTE SLJIT_CONST char* sljit_get_platform_name(void);
 
 /* Portble helper function to get an offset of a member. */
-#define SLJIT_OFFSETOF(base, member) 	((sljit_w)(&((base*)0x10)->member) - 0x10)
+#define SLJIT_OFFSETOF(base, member) ((sljit_w)(&((base*)0x10)->member) - 0x10)
 
 #if (defined SLJIT_UTIL_GLOBAL_LOCK && SLJIT_UTIL_GLOBAL_LOCK)
 /* This global lock is useful to compile common functions. */

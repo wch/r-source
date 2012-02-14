@@ -1,7 +1,7 @@
 /*
  *    Stack-less Just-In-Time compiler
  *
- *    Copyright 2009-2010 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
+ *    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -63,23 +63,23 @@ static sljit_ub* generate_far_jump_code(struct sljit_jump *jump, sljit_ub *code_
 	return code_ptr;
 }
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int saveds, int local_size)
 {
 	int size;
 	sljit_ub *buf;
 
 	CHECK_ERROR();
-	check_sljit_emit_enter(compiler, args, temporaries, generals, local_size);
+	check_sljit_emit_enter(compiler, args, temporaries, saveds, local_size);
 
 	compiler->temporaries = temporaries;
-	compiler->generals = generals;
+	compiler->saveds = saveds;
 	compiler->args = args;
 	compiler->flags_saved = 0;
 
 #if (defined SLJIT_X86_32_FASTCALL && SLJIT_X86_32_FASTCALL)
-	size = 1 + (generals <= 3 ? generals : 3) + (args > 0 ? (args * 2) : 0) + (args > 2 ? 2 : 0);
+	size = 1 + (saveds <= 3 ? saveds : 3) + (args > 0 ? (args * 2) : 0) + (args > 2 ? 2 : 0);
 #else
-	size = 1 + (generals <= 3 ? generals : 3) + (args > 0 ? (2 + args * 3) : 0);
+	size = 1 + (saveds <= 3 ? saveds : 3) + (args > 0 ? (2 + args * 3) : 0);
 #endif
 	buf = (sljit_ub*)ensure_buf(compiler, 1 + size);
 	FAIL_IF(!buf);
@@ -92,42 +92,42 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 		*buf++ = 0xc4 | (reg_map[TMP_REGISTER] << 3);
 	}
 #endif
-	if (generals > 2)
-		PUSH_REG(reg_map[SLJIT_GENERAL_REG3]);
-	if (generals > 1)
-		PUSH_REG(reg_map[SLJIT_GENERAL_REG2]);
-	if (generals > 0)
-		PUSH_REG(reg_map[SLJIT_GENERAL_REG1]);
+	if (saveds > 2)
+		PUSH_REG(reg_map[SLJIT_SAVED_REG3]);
+	if (saveds > 1)
+		PUSH_REG(reg_map[SLJIT_SAVED_REG2]);
+	if (saveds > 0)
+		PUSH_REG(reg_map[SLJIT_SAVED_REG1]);
 
 #if (defined SLJIT_X86_32_FASTCALL && SLJIT_X86_32_FASTCALL)
 	if (args > 0) {
 		*buf++ = 0x8b;
-		*buf++ = 0xc0 | (reg_map[SLJIT_GENERAL_REG1] << 3) | reg_map[SLJIT_TEMPORARY_REG3];
+		*buf++ = 0xc0 | (reg_map[SLJIT_SAVED_REG1] << 3) | reg_map[SLJIT_TEMPORARY_REG3];
 	}
 	if (args > 1) {
 		*buf++ = 0x8b;
-		*buf++ = 0xc0 | (reg_map[SLJIT_GENERAL_REG2] << 3) | reg_map[SLJIT_TEMPORARY_REG2];
+		*buf++ = 0xc0 | (reg_map[SLJIT_SAVED_REG2] << 3) | reg_map[SLJIT_TEMPORARY_REG2];
 	}
 	if (args > 2) {
 		*buf++ = 0x8b;
-		*buf++ = 0x44 | (reg_map[SLJIT_GENERAL_REG3] << 3);
+		*buf++ = 0x44 | (reg_map[SLJIT_SAVED_REG3] << 3);
 		*buf++ = 0x24;
-		*buf++ = sizeof(sljit_w) * (3 + 2); /* generals >= 3 as well. */
+		*buf++ = sizeof(sljit_w) * (3 + 2); /* saveds >= 3 as well. */
 	}
 #else
 	if (args > 0) {
 		*buf++ = 0x8b;
-		*buf++ = 0x40 | (reg_map[SLJIT_GENERAL_REG1] << 3) | reg_map[TMP_REGISTER];
+		*buf++ = 0x40 | (reg_map[SLJIT_SAVED_REG1] << 3) | reg_map[TMP_REGISTER];
 		*buf++ = sizeof(sljit_w) * 2;
 	}
 	if (args > 1) {
 		*buf++ = 0x8b;
-		*buf++ = 0x40 | (reg_map[SLJIT_GENERAL_REG2] << 3) | reg_map[TMP_REGISTER];
+		*buf++ = 0x40 | (reg_map[SLJIT_SAVED_REG2] << 3) | reg_map[TMP_REGISTER];
 		*buf++ = sizeof(sljit_w) * 3;
 	}
 	if (args > 2) {
 		*buf++ = 0x8b;
-		*buf++ = 0x40 | (reg_map[SLJIT_GENERAL_REG3] << 3) | reg_map[TMP_REGISTER];
+		*buf++ = 0x40 | (reg_map[SLJIT_SAVED_REG3] << 3) | reg_map[TMP_REGISTER];
 		*buf++ = sizeof(sljit_w) * 4;
 	}
 #endif
@@ -136,9 +136,9 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 	compiler->temporaries_start = local_size;
 	if (temporaries > 3)
 		local_size += (temporaries - 3) * sizeof(sljit_uw);
-	compiler->generals_start = local_size;
-	if (generals > 3)
-		local_size += (generals - 3) * sizeof(sljit_uw);
+	compiler->saveds_start = local_size;
+	if (saveds > 3)
+		local_size += (saveds - 3) * sizeof(sljit_uw);
 
 #ifdef _WIN32
 	if (local_size > 1024) {
@@ -152,47 +152,43 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 		return emit_non_cum_binary(compiler, 0x2b, 0x29, 0x5 << 3, 0x2d,
 			SLJIT_LOCALS_REG, 0, SLJIT_LOCALS_REG, 0, SLJIT_IMM, local_size);
 
-	/* Mov arguments to general registers. */
 	return SLJIT_SUCCESS;
 }
 
-SLJIT_API_FUNC_ATTRIBUTE void sljit_fake_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE void sljit_set_context(struct sljit_compiler *compiler, int args, int temporaries, int saveds, int local_size)
 {
 	CHECK_ERROR_VOID();
-	check_sljit_fake_enter(compiler, args, temporaries, generals, local_size);
+	check_sljit_set_context(compiler, args, temporaries, saveds, local_size);
 
 	compiler->temporaries = temporaries;
-	compiler->generals = generals;
+	compiler->saveds = saveds;
 	compiler->args = args;
 	compiler->local_size = (local_size + sizeof(sljit_uw) - 1) & ~(sizeof(sljit_uw) - 1);
 	compiler->temporaries_start = compiler->local_size;
 	if (temporaries > 3)
 		compiler->local_size += (temporaries - 3) * sizeof(sljit_uw);
-	compiler->generals_start = compiler->local_size;
-	if (generals > 3)
-		compiler->local_size += (generals - 3) * sizeof(sljit_uw);
+	compiler->saveds_start = compiler->local_size;
+	if (saveds > 3)
+		compiler->local_size += (saveds - 3) * sizeof(sljit_uw);
 }
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int src, sljit_w srcw)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int op, int src, sljit_w srcw)
 {
 	int size;
 	sljit_ub *buf;
 
 	CHECK_ERROR();
-	check_sljit_emit_return(compiler, src, srcw);
+	check_sljit_emit_return(compiler, op, src, srcw);
 	SLJIT_ASSERT(compiler->args >= 0);
 
 	compiler->flags_saved = 0;
-	CHECK_EXTRA_REGS(src, srcw, (void)0);
-
-	if (src != SLJIT_UNUSED && src != SLJIT_RETURN_REG)
-		FAIL_IF(emit_mov(compiler, SLJIT_RETURN_REG, 0, src, srcw));
+	FAIL_IF(emit_mov_before_return(compiler, op, src, srcw));
 
 	if (compiler->local_size > 0)
 		FAIL_IF(emit_cum_binary(compiler, 0x03, 0x01, 0x0 << 3, 0x05,
 				SLJIT_LOCALS_REG, 0, SLJIT_LOCALS_REG, 0, SLJIT_IMM, compiler->local_size));
 
-	size = 2 + (compiler->generals <= 3 ? compiler->generals : 3);
+	size = 2 + (compiler->saveds <= 3 ? compiler->saveds : 3);
 #if (defined SLJIT_X86_32_FASTCALL && SLJIT_X86_32_FASTCALL)
 	if (compiler->args > 2)
 		size += 2;
@@ -205,12 +201,12 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, 
 
 	INC_SIZE(size);
 
-	if (compiler->generals > 0)
-		POP_REG(reg_map[SLJIT_GENERAL_REG1]);
-	if (compiler->generals > 1)
-		POP_REG(reg_map[SLJIT_GENERAL_REG2]);
-	if (compiler->generals > 2)
-		POP_REG(reg_map[SLJIT_GENERAL_REG3]);
+	if (compiler->saveds > 0)
+		POP_REG(reg_map[SLJIT_SAVED_REG1]);
+	if (compiler->saveds > 1)
+		POP_REG(reg_map[SLJIT_SAVED_REG2]);
+	if (compiler->saveds > 2)
+		POP_REG(reg_map[SLJIT_SAVED_REG3]);
 	POP_REG(reg_map[TMP_REGISTER]);
 #if (defined SLJIT_X86_32_FASTCALL && SLJIT_X86_32_FASTCALL)
 	if (compiler->args > 2)
@@ -435,23 +431,23 @@ static SLJIT_INLINE int call_with_args(struct sljit_compiler *compiler, int type
 	return SLJIT_SUCCESS;
 }
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int saveds, int local_size)
 {
 	sljit_ub *buf;
 
 	CHECK_ERROR();
-	check_sljit_emit_fast_enter(compiler, dst, dstw, args, temporaries, generals, local_size);
+	check_sljit_emit_fast_enter(compiler, dst, dstw, args, temporaries, saveds, local_size);
 
 	compiler->temporaries = temporaries;
-	compiler->generals = generals;
+	compiler->saveds = saveds;
 	compiler->args = args;
 	compiler->local_size = (local_size + sizeof(sljit_uw) - 1) & ~(sizeof(sljit_uw) - 1);
 	compiler->temporaries_start = compiler->local_size;
 	if (temporaries > 3)
 		compiler->local_size += (temporaries - 3) * sizeof(sljit_uw);
-	compiler->generals_start = compiler->local_size;
-	if (generals > 3)
-		compiler->local_size += (generals - 3) * sizeof(sljit_uw);
+	compiler->saveds_start = compiler->local_size;
+	if (saveds > 3)
+		compiler->local_size += (saveds - 3) * sizeof(sljit_uw);
 
 	CHECK_EXTRA_REGS(dst, dstw, (void)0);
 

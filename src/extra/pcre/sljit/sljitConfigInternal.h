@@ -1,7 +1,7 @@
 /*
  *    Stack-less Just-In-Time compiler
  *
- *    Copyright 2009-2010 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
+ *    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -28,21 +28,25 @@
 #define _SLJIT_CONFIG_INTERNAL_H_
 
 /*
-   SLJIT defines the following variables itself depending on the configuration:
-   sljit_b, sljit_ub : signed and unsigned 8 bit byte
-   sljit_h, sljit_uh : signed and unsigned 16 bit half-word (short) type
-   sljit_i, sljit_ui : signed and unsigned 32 bit integer type
-   sljit_w, sljit_uw : signed and unsigned machine word, enough to store a pointer (same as intptr_t)
-   SLJIT_CALL : C calling convention for both calling JIT and C callbacks from JIT
+   SLJIT defines the following macros depending on the target architecture:
+
+   Feature detection (boolean) macros:
    SLJIT_32BIT_ARCHITECTURE : 32 bit architecture
    SLJIT_64BIT_ARCHITECTURE : 64 bit architecture
    SLJIT_WORD_SHIFT : the shift required to apply when accessing a sljit_w/sljit_uw array by index
    SLJIT_FLOAT_SHIFT : the shift required to apply when accessing a double array by index
-   SLJIT_BIG_ENDIAN : big endian architecture
    SLJIT_LITTLE_ENDIAN : little endian architecture
-   SLJIT_INDIRECT_CALL : see SLJIT_FUNC_OFFSET()
-   SLJIT_W : for defining 64 bit constants on 64 bit architectures (compiler workaround)
-   SLJIT_UNALIGNED : allows unaligned memory accesses for integer arithmetic (only!)
+   SLJIT_BIG_ENDIAN : big endian architecture
+   SLJIT_UNALIGNED : allows unaligned memory accesses for non-fpu operations (only!)
+   SLJIT_INDIRECT_CALL : see SLJIT_FUNC_OFFSET() for more information
+
+   Types and useful macros:
+   sljit_b, sljit_ub : signed and unsigned 8 bit byte
+   sljit_h, sljit_uh : signed and unsigned 16 bit half-word (short) type
+   sljit_i, sljit_ui : signed and unsigned 32 bit integer type
+   sljit_w, sljit_uw : signed and unsigned machine word, enough to store a pointer (same as intptr_t)
+   SLJIT_CALL : C calling convention define for both calling JIT form C and C callbacks for JIT
+   SLJIT_W(number) : defining 64 bit constants on 64 bit architectures (compiler independent helper)
 */
 
 #if !((defined SLJIT_CONFIG_X86_32 && SLJIT_CONFIG_X86_32) \
@@ -226,7 +230,12 @@ typedef signed int sljit_i;
 /* Machine word type. Can encapsulate a pointer.
      32 bit for 32 bit machines.
      64 bit for 64 bit machines. */
-#if !(defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64) && !(defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64)
+#if (defined SLJIT_CONFIG_UNSUPPORTED && SLJIT_CONFIG_UNSUPPORTED)
+/* Just to have something. */
+#define SLJIT_WORD_SHIFT 0
+typedef unsigned long int sljit_uw;
+typedef long int sljit_w;
+#elif !(defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64) && !(defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64)
 #define SLJIT_32BIT_ARCHITECTURE 1
 #define SLJIT_WORD_SHIFT 2
 typedef unsigned int sljit_uw;

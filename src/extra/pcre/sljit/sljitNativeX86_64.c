@@ -1,7 +1,7 @@
 /*
  *    Stack-less Just-In-Time compiler
  *
- *    Copyright 2009-2010 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
+ *    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -86,24 +86,24 @@ static sljit_ub* generate_fixed_jump(sljit_ub *code_ptr, sljit_w addr, int type)
 	return code_ptr;
 }
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, int args, int temporaries, int saveds, int local_size)
 {
 	int size, pushed_size;
 	sljit_ub *buf;
 
 	CHECK_ERROR();
-	check_sljit_emit_enter(compiler, args, temporaries, generals, local_size);
+	check_sljit_emit_enter(compiler, args, temporaries, saveds, local_size);
 
 	compiler->temporaries = temporaries;
-	compiler->generals = generals;
+	compiler->saveds = saveds;
 	compiler->flags_saved = 0;
 
-	size = generals;
+	size = saveds;
 	/* Including the return address saved by the call instruction. */
-	pushed_size = (generals + 1) * sizeof(sljit_w);
+	pushed_size = (saveds + 1) * sizeof(sljit_w);
 #ifndef _WIN64
-	if (generals >= 2)
-		size += generals - 1;
+	if (saveds >= 2)
+		size += saveds - 1;
 #else
 	/* Saving the virtual stack pointer. */
 	compiler->has_locals = local_size > 0;
@@ -111,8 +111,8 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 		size += 2;
 		pushed_size += sizeof(sljit_w);
 	}
-	if (generals >= 4)
-		size += generals - 3;
+	if (saveds >= 4)
+		size += saveds - 3;
 	if (temporaries >= 5) {
 		size += (5 - 4) * 2;
 		pushed_size += sizeof(sljit_w);
@@ -124,37 +124,37 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 		FAIL_IF(!buf);
 
 		INC_SIZE(size);
-		if (generals >= 5) {
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_EREG2] >= 8, general_ereg2_is_hireg);
+		if (saveds >= 5) {
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_EREG2] >= 8, saved_ereg2_is_hireg);
 			*buf++ = REX_B;
-			PUSH_REG(reg_lmap[SLJIT_GENERAL_EREG2]);
+			PUSH_REG(reg_lmap[SLJIT_SAVED_EREG2]);
 		}
-		if (generals >= 4) {
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_EREG1] >= 8, general_ereg1_is_hireg);
+		if (saveds >= 4) {
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_EREG1] >= 8, saved_ereg1_is_hireg);
 			*buf++ = REX_B;
-			PUSH_REG(reg_lmap[SLJIT_GENERAL_EREG1]);
+			PUSH_REG(reg_lmap[SLJIT_SAVED_EREG1]);
 		}
-		if (generals >= 3) {
+		if (saveds >= 3) {
 #ifndef _WIN64
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_REG3] >= 8, general_reg3_is_hireg);
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_REG3] >= 8, saved_reg3_is_hireg);
 			*buf++ = REX_B;
 #else
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_REG3] < 8, general_reg3_is_loreg);
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_REG3] < 8, saved_reg3_is_loreg);
 #endif
-			PUSH_REG(reg_lmap[SLJIT_GENERAL_REG3]);
+			PUSH_REG(reg_lmap[SLJIT_SAVED_REG3]);
 		}
-		if (generals >= 2) {
+		if (saveds >= 2) {
 #ifndef _WIN64
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_REG2] >= 8, general_reg2_is_hireg);
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_REG2] >= 8, saved_reg2_is_hireg);
 			*buf++ = REX_B;
 #else
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_REG2] < 8, general_reg2_is_loreg);
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_REG2] < 8, saved_reg2_is_loreg);
 #endif
-			PUSH_REG(reg_lmap[SLJIT_GENERAL_REG2]);
+			PUSH_REG(reg_lmap[SLJIT_SAVED_REG2]);
 		}
-		if (generals >= 1) {
-			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_GENERAL_REG1] < 8, general_reg1_is_loreg);
-			PUSH_REG(reg_lmap[SLJIT_GENERAL_REG1]);
+		if (saveds >= 1) {
+			SLJIT_COMPILE_ASSERT(reg_map[SLJIT_SAVED_REG1] < 8, saved_reg1_is_loreg);
+			PUSH_REG(reg_lmap[SLJIT_SAVED_REG1]);
 		}
 #ifdef _WIN64
 		if (temporaries >= 5) {
@@ -173,33 +173,33 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 		if (args > 0) {
 			*buf++ = REX_W;
 			*buf++ = 0x8b;
-			*buf++ = 0xc0 | (reg_map[SLJIT_GENERAL_REG1] << 3) | 0x7;
+			*buf++ = 0xc0 | (reg_map[SLJIT_SAVED_REG1] << 3) | 0x7;
 		}
 		if (args > 1) {
 			*buf++ = REX_W | REX_R;
 			*buf++ = 0x8b;
-			*buf++ = 0xc0 | (reg_lmap[SLJIT_GENERAL_REG2] << 3) | 0x6;
+			*buf++ = 0xc0 | (reg_lmap[SLJIT_SAVED_REG2] << 3) | 0x6;
 		}
 		if (args > 2) {
 			*buf++ = REX_W | REX_R;
 			*buf++ = 0x8b;
-			*buf++ = 0xc0 | (reg_lmap[SLJIT_GENERAL_REG3] << 3) | 0x2;
+			*buf++ = 0xc0 | (reg_lmap[SLJIT_SAVED_REG3] << 3) | 0x2;
 		}
 #else
 		if (args > 0) {
 			*buf++ = REX_W;
 			*buf++ = 0x8b;
-			*buf++ = 0xc0 | (reg_map[SLJIT_GENERAL_REG1] << 3) | 0x1;
+			*buf++ = 0xc0 | (reg_map[SLJIT_SAVED_REG1] << 3) | 0x1;
 		}
 		if (args > 1) {
 			*buf++ = REX_W;
 			*buf++ = 0x8b;
-			*buf++ = 0xc0 | (reg_map[SLJIT_GENERAL_REG2] << 3) | 0x2;
+			*buf++ = 0xc0 | (reg_map[SLJIT_SAVED_REG2] << 3) | 0x2;
 		}
 		if (args > 2) {
 			*buf++ = REX_W | REX_B;
 			*buf++ = 0x8b;
-			*buf++ = 0xc0 | (reg_map[SLJIT_GENERAL_REG3] << 3) | 0x0;
+			*buf++ = 0xc0 | (reg_map[SLJIT_SAVED_REG3] << 3) | 0x0;
 		}
 #endif
 	}
@@ -269,21 +269,20 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_enter(struct sljit_compiler *compiler, i
 	}
 #endif
 
-	/* Mov arguments to general registers. */
 	return SLJIT_SUCCESS;
 }
 
-SLJIT_API_FUNC_ATTRIBUTE void sljit_fake_enter(struct sljit_compiler *compiler, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE void sljit_set_context(struct sljit_compiler *compiler, int args, int temporaries, int saveds, int local_size)
 {
 	int pushed_size;
 
 	CHECK_ERROR_VOID();
-	check_sljit_fake_enter(compiler, args, temporaries, generals, local_size);
+	check_sljit_set_context(compiler, args, temporaries, saveds, local_size);
 
 	compiler->temporaries = temporaries;
-	compiler->generals = generals;
+	compiler->saveds = saveds;
 	/* Including the return address saved by the call instruction. */
-	pushed_size = (generals + 1) * sizeof(sljit_w);
+	pushed_size = (saveds + 1) * sizeof(sljit_w);
 #ifdef _WIN64
 	compiler->has_locals = local_size > 0;
 	if (local_size > 0)
@@ -297,20 +296,16 @@ SLJIT_API_FUNC_ATTRIBUTE void sljit_fake_enter(struct sljit_compiler *compiler, 
 #endif
 }
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int src, sljit_w srcw)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, int op, int src, sljit_w srcw)
 {
 	int size;
 	sljit_ub *buf;
 
 	CHECK_ERROR();
-	check_sljit_emit_return(compiler, src, srcw);
+	check_sljit_emit_return(compiler, op, src, srcw);
 
 	compiler->flags_saved = 0;
-
-	if (src != SLJIT_UNUSED && src != SLJIT_RETURN_REG) {
-		compiler->mode32 = 0;
-		FAIL_IF(emit_mov(compiler, SLJIT_RETURN_REG, 0, src, srcw));
-	}
+	FAIL_IF(emit_mov_before_return(compiler, op, src, srcw));
 
 	if (compiler->local_size > 0) {
 		if (compiler->local_size <= 127) {
@@ -333,15 +328,15 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, 
 		}
 	}
 
-	size = 1 + compiler->generals;
+	size = 1 + compiler->saveds;
 #ifndef _WIN64
-	if (compiler->generals >= 2)
-		size += compiler->generals - 1;
+	if (compiler->saveds >= 2)
+		size += compiler->saveds - 1;
 #else
 	if (compiler->has_locals)
 		size += 2;
-	if (compiler->generals >= 4)
-		size += compiler->generals - 3;
+	if (compiler->saveds >= 4)
+		size += compiler->saveds - 3;
 	if (compiler->temporaries >= 5)
 		size += (5 - 4) * 2;
 #endif
@@ -360,27 +355,27 @@ SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_return(struct sljit_compiler *compiler, 
 		POP_REG(reg_lmap[SLJIT_TEMPORARY_EREG2]);
 	}
 #endif
-	if (compiler->generals >= 1)
-		POP_REG(reg_map[SLJIT_GENERAL_REG1]);
-	if (compiler->generals >= 2) {
+	if (compiler->saveds >= 1)
+		POP_REG(reg_map[SLJIT_SAVED_REG1]);
+	if (compiler->saveds >= 2) {
 #ifndef _WIN64
 		*buf++ = REX_B;
 #endif
-		POP_REG(reg_lmap[SLJIT_GENERAL_REG2]);
+		POP_REG(reg_lmap[SLJIT_SAVED_REG2]);
 	}
-	if (compiler->generals >= 3) {
+	if (compiler->saveds >= 3) {
 #ifndef _WIN64
 		*buf++ = REX_B;
 #endif
-		POP_REG(reg_lmap[SLJIT_GENERAL_REG3]);
+		POP_REG(reg_lmap[SLJIT_SAVED_REG3]);
 	}
-	if (compiler->generals >= 4) {
+	if (compiler->saveds >= 4) {
 		*buf++ = REX_B;
-		POP_REG(reg_lmap[SLJIT_GENERAL_EREG1]);
+		POP_REG(reg_lmap[SLJIT_SAVED_EREG1]);
 	}
-	if (compiler->generals >= 5) {
+	if (compiler->saveds >= 5) {
 		*buf++ = REX_B;
-		POP_REG(reg_lmap[SLJIT_GENERAL_EREG2]);
+		POP_REG(reg_lmap[SLJIT_SAVED_EREG2]);
 	}
 
 	RET();
@@ -508,7 +503,7 @@ static sljit_ub* emit_x86_instruction(struct sljit_compiler *compiler, int size,
 				inst_size += 4;
 		}
 		else if (flags & EX86_SHIFT_INS) {
-			imma &= 0x3f;
+			imma &= compiler->mode32 ? 0x1f : 0x3f;
 			if (imma != 1) {
 				inst_size ++;
 				flags |= EX86_BYTE_ARG;
@@ -676,15 +671,15 @@ static SLJIT_INLINE int call_with_args(struct sljit_compiler *compiler, int type
 	return SLJIT_SUCCESS;
 }
 
-SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int generals, int local_size)
+SLJIT_API_FUNC_ATTRIBUTE int sljit_emit_fast_enter(struct sljit_compiler *compiler, int dst, sljit_w dstw, int args, int temporaries, int saveds, int local_size)
 {
 	sljit_ub *buf;
 
 	CHECK_ERROR();
-	check_sljit_emit_fast_enter(compiler, dst, dstw, args, temporaries, generals, local_size);
+	check_sljit_emit_fast_enter(compiler, dst, dstw, args, temporaries, saveds, local_size);
 
 	compiler->temporaries = temporaries;
-	compiler->generals = generals;
+	compiler->saveds = saveds;
 	compiler->local_size = (local_size + sizeof(sljit_uw) - 1) & ~(sizeof(sljit_uw) - 1);
 #ifdef _WIN64
 	compiler->local_size += 4 * sizeof(sljit_w);
@@ -802,52 +797,36 @@ static int emit_mov_int(struct sljit_compiler *compiler, int sign,
 		return SLJIT_SUCCESS; /* Empty instruction. */
 
 	if (src & SLJIT_IMM) {
-		if (dst >= SLJIT_TEMPORARY_REG1 && dst <= SLJIT_NO_REGISTERS)
+		if (dst >= SLJIT_TEMPORARY_REG1 && dst <= SLJIT_NO_REGISTERS) {
+			if (sign || ((sljit_uw)srcw <= 0x7fffffff)) {
+				code = emit_x86_instruction(compiler, 1, SLJIT_IMM, (sljit_w)(sljit_i)srcw, dst, dstw);
+				FAIL_IF(!code);
+				*code = 0xc7;
+				return SLJIT_SUCCESS;
+			}
 			return emit_load_imm64(compiler, dst, srcw);
+		}
 		compiler->mode32 = 1;
-		code = emit_x86_instruction(compiler, 1, SLJIT_IMM, (sljit_w)(int)srcw, dst, dstw);
+		code = emit_x86_instruction(compiler, 1, SLJIT_IMM, (sljit_w)(sljit_i)srcw, dst, dstw);
 		FAIL_IF(!code);
 		*code = 0xc7;
 		compiler->mode32 = 0;
 		return SLJIT_SUCCESS;
 	}
 
-	dst_r = (dst >= SLJIT_TEMPORARY_REG1 && dst <= SLJIT_GENERAL_REG3) ? dst : TMP_REGISTER;
+	dst_r = (dst >= SLJIT_TEMPORARY_REG1 && dst <= SLJIT_SAVED_REG3) ? dst : TMP_REGISTER;
 
-	if ((dst & SLJIT_MEM) && (src >= SLJIT_TEMPORARY_REG1 && src <= SLJIT_GENERAL_REG3))
+	if ((dst & SLJIT_MEM) && (src >= SLJIT_TEMPORARY_REG1 && src <= SLJIT_SAVED_REG3))
 		dst_r = src;
 	else {
 		if (sign) {
 			code = emit_x86_instruction(compiler, 1, dst_r, 0, src, srcw);
 			FAIL_IF(!code);
 			*code++ = 0x63;
-		}
-		else {
-			if (dst_r == src) {
-				compiler->mode32 = 1;
-				code = emit_x86_instruction(compiler, 1, TMP_REGISTER, 0, src, 0);
-				FAIL_IF(!code);
-				*code++ = 0x8b;
-				compiler->mode32 = 0;
-			}
-			/* xor reg, reg. */
-			code = emit_x86_instruction(compiler, 1, dst_r, 0, dst_r, 0);
-			FAIL_IF(!code);
-			*code++ = 0x33;
-			if (dst_r != src) {
-				compiler->mode32 = 1;
-				code = emit_x86_instruction(compiler, 1, dst_r, 0, src, srcw);
-				FAIL_IF(!code);
-				*code++ = 0x8b;
-				compiler->mode32 = 0;
-			}
-			else {
-				compiler->mode32 = 1;
-				code = emit_x86_instruction(compiler, 1, src, 0, TMP_REGISTER, 0);
-				FAIL_IF(!code);
-				*code++ = 0x8b;
-				compiler->mode32 = 0;
-			}
+		} else {
+			compiler->mode32 = 1;
+			FAIL_IF(emit_mov(compiler, dst_r, 0, src, srcw));
+			compiler->mode32 = 0;
 		}
 	}
 

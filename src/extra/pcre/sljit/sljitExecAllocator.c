@@ -1,7 +1,7 @@
 /*
  *    Stack-less Just-In-Time compiler
  *
- *    Copyright 2009-2010 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
+ *    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -263,8 +263,11 @@ SLJIT_API_FUNC_ATTRIBUTE void sljit_free_exec(void* ptr)
 		header->prev_size = free_block->size;
 	}
 
+	/* The whole chunk is free. */
 	if (SLJIT_UNLIKELY(!free_block->header.prev_size && header->size == 1)) {
+		/* If this block is freed, we still have (allocated_size / 2) free space. */
 		if (total_size - free_block->size > (allocated_size * 3 / 2)) {
+			total_size -= free_block->size;
 			sljit_remove_free_block(free_block);
 			free_chunk(free_block, free_block->size + sizeof(struct block_header));
 		}
