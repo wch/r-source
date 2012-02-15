@@ -106,6 +106,8 @@ typedef enum {
 #define REG_RIGHT_ASSOC (REG_LITERAL << 1)
 #define REG_UNGREEDY    (REG_RIGHT_ASSOC << 1)
 
+#define REG_USEBYTES    (REG_UNGREEDY << 1)
+
 /* POSIX tre_regexec() flags. */
 #define REG_NOTBOL 1
 #define REG_NOTEOL (REG_NOTBOL << 1)

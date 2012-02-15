@@ -116,10 +116,10 @@ tre_regncompb(regex_t *preg, const char *regex, size_t n, int cflags)
   for (i = 0; i < n; i++)
     wregex[i] = (tre_char_t) ((unsigned char) regex[i]);
 
-  ret = tre_compile(preg, wregex, n, cflags);
+  ret = tre_compile(preg, wregex, n, cflags | REG_USEBYTES);
   xfree(wregex);
 #else /* !TRE_WCHAR */
-  ret = tre_compile(preg, (const tre_char_t *)regex, n, cflags);
+  ret = tre_compile(preg, (const tre_char_t *)regex, n, cflags | REG_USEBYTES);
 #endif /* !TRE_WCHAR */
 
   return ret;
@@ -149,7 +149,7 @@ tre_regcompb(regex_t *preg, const char *regex, int cflags)
   for (i = 0; i < n; i++) *(wstr++) = *(str++);
   wlen = n;
   wregex[wlen] = L'\0';
-  ret = tre_compile(preg, wregex, wlen, cflags);
+  ret = tre_compile(preg, wregex, wlen, cflags | REG_USEBYTES);
   xfree(wregex);
   return ret;
 }
