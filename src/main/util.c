@@ -1258,7 +1258,7 @@ Rboolean mbcsValid(const char *str)
 
 #include "pcre.h"
 /* This changed at 8.13 and again at 8.30: we don't allow < 8.0 */
-#if  PCRE_MAJOR > 8 || PCRE_MINOR >= 30
+#if PCRE_MAJOR > 8 || PCRE_MINOR >= 30
 extern int _pcre_valid_utf(const char *string, int length, int *erroroffset);
 
 Rboolean utf8Valid(const char *str)
@@ -1266,7 +1266,7 @@ Rboolean utf8Valid(const char *str)
     int errp;
     return  (_pcre_valid_utf(str, (int) strlen(str), &errp) == 0);
 }
-#elif  PCRE_MAJOR > 8 || PCRE_MINOR >= 13
+#elif PCRE_MINOR >= 13
 extern int _pcre_valid_utf8(const char *string, int length, int *erroroffset);
 
 Rboolean utf8Valid(const char *str)
