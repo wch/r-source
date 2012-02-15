@@ -3533,7 +3533,7 @@ function(package, dir, lib.loc = NULL)
             try(suppressWarnings(utils::available.packages(utils::contrib.url(repos, "source"),
                filters = c("R_version", "duplicates"))[, "Package"]))
         miss <- if(inherits(known, "try-error")) TRUE
-        else unknown %in% c(known, c("BRugs", "GLMMGibbs", "survnnet", "yags"))
+        else unknown %in% c(known, c("GLMMGibbs", "survnnet", "yags"))
         ## from CRANextras
         if(any(miss))
             message(gettextf("Package(s) unavailable to check Rd xrefs: %s",
