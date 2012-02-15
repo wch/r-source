@@ -119,6 +119,8 @@
       \item \code{NROW(x)} and \code{NCOL(x)} now work whenever
       \code{dim(x)} looks appropriate, e.g., also for more generalized
       matrices.
+      
+      \item PCRE has been updated to version 8.30.
     }
   }
 
