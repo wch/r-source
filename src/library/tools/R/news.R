@@ -186,8 +186,8 @@ function(file)
         else {
             txt <- chunk[1L]
             header <- sub(re_v, "\\6", txt, ignore.case = TRUE)
-            date <- if(grepl(re_d, txt))
-                sub(re_d, "\\1", txt)
+            date <- if(grepl(re_d, txt, perl = TRUE))
+                sub(re_d, "\\1", txt, perl = TRUE)
             else
                 NA_character_
         }
@@ -554,8 +554,8 @@ function(file)
     .make_news_db(cbind(ifelse(ind,
                                sub(re_v, "\\1", nms),
                                NA_character_),
-                        ifelse(grepl(re_d, nms),
-                               sub(re_d, "\\1", nms),
+                        ifelse(grepl(re_d, nms, perl = TRUE),
+                               sub(re_d, "\\1", nms, perl = TRUE),
                                NA_character_),
                         db[, 2L],
                         sub("\n*$", "", db[, 3L])),
@@ -590,7 +590,7 @@ function(x)
             pos <- pos[1L]
         }
         x <- x[pos]
-        
+
         out <- NULL
         zz <- textConnection("out", "w", local = TRUE)
         on.exit(close(zz))
@@ -598,7 +598,7 @@ function(x)
                options =
                c(Rd2txt_NEWS_in_Rd_options,
                  list(itemBullet = "\036  ")))
-        
+
         ## Try to find the column offset of the top-level bullets.
         pat <- "^( *)\036.*"
         off <- min(nchar(sub(pat, "\\1", out[grepl(pat, out)])))

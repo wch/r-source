@@ -184,7 +184,7 @@ function(file, cache = TRUE)
                 read_next_non_whitespace_and_seek_back(con)
                 bytes <- read_next_bytes_until_whitespace(con)
                 size <- suppressWarnings(as.integer(rawToChar(bytes)))
-                read_next_non_whitespace_and_seek_back(con)            
+                read_next_non_whitespace_and_seek_back(con)
                 cnt <- 0
                 entries <- list()
                 while(cnt < size) {
@@ -206,12 +206,12 @@ function(file, cache = TRUE)
                 else break
             }
             ## Read trailer info.
-            read_next_non_whitespace_and_seek_back(con)            
+            read_next_non_whitespace_and_seek_back(con)
             new_trailer <- pdf_read_object(con)
             ## Merge with current trailer info.
             trailer[names(new_trailer)] <- new_trailer
             ## If the trailer info has a /Prev key, then redo the above
-            ## with the corresponding value the new startxref. 
+            ## with the corresponding value the new startxref.
             startxref <- new_trailer[["Prev"]]
             if(is.null(startxref)) break
         } else if(x %.IN.% pdf_bytes_digits) {
@@ -245,7 +245,7 @@ function(file, cache = TRUE)
                     bytes <- .con_read_bytes(stream, field_sizes[1L])
                     d1 <- strtoi(paste(bytes, collapse = ""), 16L)
                     bytes <- .con_read_bytes(stream, field_sizes[2L])
-                    d2 <- strtoi(paste(bytes, collapse = ""), 16L)      
+                    d2 <- strtoi(paste(bytes, collapse = ""), 16L)
                     bytes <- .con_read_bytes(stream, field_sizes[3L])
                     d3 <- strtoi(paste(bytes, collapse = ""), 16L)
                     ## Might actually need to overwrite entries.
@@ -289,7 +289,7 @@ function(file, cache = TRUE)
     gens <- c(gens, xref_tabs[ind, "gen"])
     gens_by_nums <-
         lapply(split(as.integer(gens), nums), sort, decreasing = TRUE)
-    
+
     y <- new.env(parent = emptyenv())
     y$file <- file
     y$size <- nbytes
@@ -405,7 +405,7 @@ function(file)
         tab$enc <- list()
         return(tab)
     }
-                          
+
     ## Now get the referenced font objects and extract some basic
     ## information in the style of pdffonts(1).
     ##   emb   "yes" if the font is embedded in the PDF file
@@ -416,7 +416,7 @@ function(file)
     ## Re subset, see section 5.5.3 "Font Subsets" in the PDF ref:
     ##   For a font subset, the PostScript name of the font--the value
     ##   of the font's BaseFont entry and the font descriptor's FontName
-    ##   entry--begins with a tag followed by a plus sign (+). The tag 
+    ##   entry--begins with a tag followed by a plus sign (+). The tag
     ##   consists of exactly six uppercase letters; the choice of
     ##   letters is arbitrary, but different subsets in the same PDF
     ##   file must have different tags.
@@ -445,7 +445,7 @@ function(file)
                            obj[["Subtype"]],
                            ((base == "[none]") ||
                             !is.null(obj[["FontDescriptor"]])),
-                           grepl("^[[:upper:]]{6}\\+", base),
+                           grepl("^[[:upper:]]{6}\\+", base, perl = TRUE),
                            !is.null(obj[["ToUnicode"]]),
                            obj[["Encoding"]],
                            ref["num"],
@@ -508,7 +508,7 @@ function(file)
 
     ref <- doc$trailer[["Info"]]
     if(is.null(ref)) {
-        info <- list()    
+        info <- list()
     } else {
         info <- unclass(pdf_doc_get_object(doc, ref, con))
         ## Be nice (the PDF Reference does not explicitly say that
@@ -568,7 +568,7 @@ function(file)
                         info["Page size"],
                         rownames(pdf_page_sizes)[pos])
     }
-    
+
     info[["File size"]] <- sprintf("%d bytes", doc$size)
 
     version <- substring(doc$header, 6L)
@@ -581,7 +581,7 @@ function(file)
             version <- version_in_catalog
     }
     info[["PDF version"]] <- version
-    
+
     class(info) <- "pdf_info"
     info
 }
@@ -611,7 +611,7 @@ function(con, doc = NULL)
         message(sprintf("looking at %s", deparse(intToUtf8(bytes))))
         .con_seek(con, -length(bytes), 2L)
     }
-    
+
     x <- read_next_non_whitespace(con)
     if(!length(x)) return(NA)
     .con_seek(con, -1L, 2L)
@@ -695,13 +695,13 @@ pdf_read_object_numeric <-
 function(con)
 {
     table <- pdf_bytes_in_numerics
-    
+
     bytes <- raw()
     while((x <- .con_read_bytes(con, 1L)) %.IN.% table) {
         bytes <- c(bytes, x)
     }
     .con_seek(con, -1L, 2L)
-    
+
     s <- rawToChar(bytes)
     if(grepl(".", s, fixed = TRUE))
         as.numeric(s)
@@ -716,7 +716,7 @@ function(con)
 ## As this may contain nuls, we cannot unconditionally represent these
 ## as R character strings (which must not have embedded nulls, even with
 ## a "bytes" encoding), and conditionalizing the representation seems
-## rather awkward. 
+## rather awkward.
 ## Hence, we represent PDF strings as a byte (raw) vector of class
 ## "PDF_String".
 ## See PDF Reference version 1.7 section 3.8.1:
@@ -742,10 +742,10 @@ pdf_read_object_string_literal <-
 function(con)
 {
     x <- .con_read_bytes(con, 1L)
-    lparen <- charToRaw("(")    
+    lparen <- charToRaw("(")
     if(x != lparen)
         stop("cannot read literal string object")
-    
+
     rparen <- charToRaw(")")
     escape <- charToRaw("\\")
     pdf_bytes_escape_tails <- charToRaw("nrtbf()\\")
@@ -770,7 +770,7 @@ function(con)
                 while(i < 2L) {
                     y <- .con_read_bytes(con, 1L)
                     if(!(y %.IN.% pdf_bytes_digits)) {
-                        .con_seek(con, -1L, 2L)                        
+                        .con_seek(con, -1L, 2L)
                         break
                     }
                     x <- c(x, y)
@@ -802,7 +802,7 @@ function(con)
     x <- .con_read_bytes(con, 1L)
     if(x != 0x3c)                       # charToRaw("<") => 3c
         stop("cannot read hexadecimal string object")
-    
+
     end <- charToRaw(">")
 
     ## See PDF Reference version 1.7 section 3.2.3:
@@ -817,7 +817,7 @@ function(con)
         if(!(x %.IN.% pdf_bytes_whitespaces))
             bytes <- c(bytes, x)
     }
-    
+
     if(length(bytes) %% 2)
         bytes <- c(bytes, charToRaw("0"))
     n <- length(bytes) %/% 2
@@ -903,7 +903,7 @@ function(con)
         stop("cannot read array object")
 
     end <- charToRaw("]")
-    
+
     y <- list()
     repeat {
         x <- read_next_non_whitespace_and_seek_back(con)
@@ -937,8 +937,8 @@ function(con, doc = NULL)
     if(!all(bytes == c(0x3c, 0x3c)))
         stop("cannot read dictionary object")
 
-    end <- charToRaw(">")    
-    
+    end <- charToRaw(">")
+
     y <- list()
     repeat {
         x <- read_next_non_whitespace_and_seek_back(con)
@@ -1011,7 +1011,7 @@ function(x, ...)
 }
 
 print.PDF_Dictionary <-
-print.PDF_Stream <-    
+print.PDF_Stream <-
 function(x, ...)
 {
     writeLines(format(x))
@@ -1098,7 +1098,7 @@ function(con)
         }
         bytes <- c(bytes, x)
     }
-    
+
     s <- rawToChar(bytes)
     if(s == "null")
         NULL
@@ -1123,7 +1123,7 @@ pdf_read_object_header <-
 function(con)
 {
     ## Read num and gen.
-    read_next_non_whitespace_and_seek_back(con)    
+    read_next_non_whitespace_and_seek_back(con)
     num <- read_next_bytes_until_whitespace(con)
     read_next_non_whitespace_and_seek_back(con)
     gen <- read_next_bytes_until_whitespace(con)
@@ -1188,7 +1188,7 @@ function(doc, ref, con = NULL)
     if(is.character(ref)) {
         ref <- as.integer(unlist(strsplit(ref, ".", fixed = TRUE)))
     }
-    
+
     if(length(ref) == 1L) {
         names(ref) <- "num"
     } else if(length(ref) == 2L) {
@@ -1223,7 +1223,7 @@ function(doc, ref, con = NULL)
         n <- obj[["N"]]
         if(idx >= n)
             stop("invalid index in object stream lookup")
-        first <- obj[["First"]]        
+        first <- obj[["First"]]
         stream <- rawConnection(PDF_Stream_get_data(obj, doc))
         on.exit(close(stream), add = TRUE)
         i <- 0L
@@ -1257,7 +1257,7 @@ function(doc, ref, con = NULL)
     ## Figure out the position to start from.
     if(length(ref) == 1L) {
         pos <- which(doc$xref_tabs[, "num"] == ref)[1L]
-        gen <- doc$xref_tabs[pos, "gen"]        
+        gen <- doc$xref_tabs[pos, "gen"]
         pos <- doc$xref_tabs[pos, "pos"]
     }
     else {
@@ -1276,7 +1276,7 @@ pdf_doc_get_objects <-
 function(doc, ids = NULL, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
-    
+
     ## Start with the object cache.
     objects <- doc$objects
 
@@ -1288,7 +1288,7 @@ function(doc, ids = NULL, con = NULL)
         else
             return(objects[ids])
     }
-    
+
     ## Otherwise, we need to get the objects not yet in the cache (which
     ## could be all objects if caching is off, of course).
 
@@ -1297,7 +1297,7 @@ function(doc, ids = NULL, con = NULL)
         on.exit(close(con))
     }
 
-    debug <- (pdftools_debug_level() > 0L)    
+    debug <- (pdftools_debug_level() > 0L)
 
     ## First get the objects from the old-style xref tables.
     tab <- doc$xref_tabs
@@ -1306,7 +1306,7 @@ function(doc, ids = NULL, con = NULL)
     tab <- tab[((tab[, "pos"] > 0L) & (tab[, "use"] > 0L)), ,
                drop = FALSE]
     ## If ids is NULL (so that we are getting all active objects), we
-    ## need those active objects not yet in the cache.    
+    ## need those active objects not yet in the cache.
     ind <- is.na(match(.ref_to_name(tab[, c("num", "gen"),
                                         drop = FALSE]),
                        names(objects)))
@@ -1327,7 +1327,7 @@ function(doc, ids = NULL, con = NULL)
             ind <- ind & (wanted_by_direct_match | wanted_by_stream_match)
         }
     }
-                   
+
     for(i in which(ind)) {
         entry <- tab[i, ]
         if(debug)
@@ -1378,7 +1378,7 @@ function(doc, ids = NULL, con = NULL)
 
     if(length(ids))
         objects <- objects[ids]
-    
+
     objects
 }
 
@@ -1388,14 +1388,14 @@ pdf_doc_get_page_tree <-
 function(doc, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
-    
+
     if(is.null(con) && is.null(con <- doc$con)) {
         con <- file(doc$file, "rb")
         on.exit(close(con))
     }
 
     debug <- (pdftools_debug_level() > 0L)
-    
+
     catalog <- pdf_doc_get_object(doc, doc$trailer[["Root"]], con)
     ## Pages entry in the catalog dictionary is required and must be an
     ## indirect reference.
@@ -1429,7 +1429,7 @@ pdf_doc_get_page_list <-
 function(doc, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
-    
+
     if(is.null(con) && is.null(con <- doc$con)) {
         con <- file(doc$file, "rb")
         on.exit(close(con))
@@ -1443,7 +1443,7 @@ function(doc, con = NULL)
     ## nodes of the page tree), propagate these entries.
     inherited_entry_names <-
         c("Resources", "MediaBox", "CropBox", "Rotate")
-    
+
     pages <- list()
     ## Cannot use rapply() because this only deals with nodes which are
     ## not lists.
@@ -1477,7 +1477,7 @@ pdf_doc_get_page_content_streams <-
 function(doc, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
-    
+
     if(is.null(con) && is.null(con <- doc$con)) {
         con <- file(doc$file, "rb")
         on.exit(close(con))
@@ -1504,18 +1504,18 @@ function(doc, con = NULL)
 ## (as well as handle inheritance from ancestors).
 ## </FIXME>
 
-pdf_doc_get_page_resources <- 
+pdf_doc_get_page_resources <-
 function(doc, con = NULL)
 {
     if(!inherits(doc, "pdf_doc")) stop("wrong class")
-    
+
     if(is.null(con) && is.null(con <- doc$con)) {
         con <- file(doc$file, "rb")
         on.exit(close(con))
     }
-    
+
     pages <- pdf_doc_get_page_list(doc, con)
-    
+
     ## See PDF Reference version 1.7 section 3.6.2.
     ## A page object may have a Resources entry giving a dictionary
     ## (which apparently could be an indirect object reference).
@@ -1545,7 +1545,7 @@ function(obj, doc = NULL)
         }
         bytes <- pdf_read_stream_bytes(con, obj, doc)
     }
-    
+
     filters <- as.list(obj[["Filter"]])
     ## Handle DecodeParms.
     ## The PDF specs say that if there is a single filter, DecodeParms
@@ -1709,7 +1709,7 @@ PDFDocEncoding <-
       0x00f8, 0x00f9, 0x00fa, 0x00fb, 0x00fc, 0x00fd, 0x00fe, 0x00ff)
 names(PDFDocEncoding) <- format.hexmode(0 : 255)
 ## </FIXME>
-      
+
 ## ** PDF dates
 
 ## See PDF Reference version 1.7 section 3.8.3.
@@ -1835,7 +1835,7 @@ function(con, set)
     }
     bytes
 }
-    
+
 read_prev_bytes_after_eols <-
 function(con)
     read_prev_bytes_after_bytes(con, pdf_bytes_eols)

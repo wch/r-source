@@ -111,7 +111,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                 return(sub("cp-([0-9]+)", "CP\\1", enc))
             if(enc == "EUC") {
                 ## let's hope it is a ll_* name.
-                if(length(grep("^[[:alpha:]]{2}_", x[1L]))) {
+                if(length(grep("^[[:alpha:]]{2}_", x[1L], perl = TRUE))) {
                     ll <- substr(x[1L], 1L, 2L)
                     return(switch(ll, "jp"="EUC-JP", "kr"="EUC-KR",
                                   "zh"="GB2312"))
@@ -124,7 +124,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 	## locales (why is this duplicated in R code anyway?)
 	if (length(grep("darwin", R.version$os))) return("UTF-8")
         ## let's hope it is a ll_* name.
-        if(length(grep("^[[:alpha:]]{2}_", x[1L]))) {
+        if(length(grep("^[[:alpha:]]{2}_", x[1L], perl = TRUE))) {
             ll <- substr(x[1L], 1L, 2L)
             if(enc == "utf8") return(c("UTF-8", guess(ll)))
             else return(guess(ll))

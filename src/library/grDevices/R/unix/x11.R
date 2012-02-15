@@ -122,7 +122,7 @@ checkX11Font <- function(font)
     if (length(grep("(-[^-]+){14}", font)) > 0) {
         ## Force the %s and %d substitution formats into the right spots
         font <- sub("((-[^-]+){2})(-[^-]+){2}((-[^-]+){2})(-[^-]+)((-[^-]+){7})",
-                    "\\1-%s-%s\\4-%d\\7", font)
+                    "\\1-%s-%s\\4-%d\\7", font, perl = TRUE)
     } else {
         X11FontError("incorrect format")
     }
