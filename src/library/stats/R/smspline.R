@@ -62,6 +62,8 @@ smooth.spline <-
 	} # now sum(w) == #{obs. with weight > 0} == sum(w > 0)
 
     ## Replace y[], w[] for same x[] (to a precision of 'tol') by their mean :
+    if(!is.finite(tol) || tol <= 0)
+        stop("'tol' must be strictly positive and finite")
     xx <- round((x - mean(x))/tol)  # de-mean to avoid possible overflow
     nd <- !duplicated(xx); ux <- sort(x[nd]); uxx <- sort(xx[nd])
     nx <- length(ux)

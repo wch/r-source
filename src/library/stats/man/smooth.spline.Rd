@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -73,8 +73,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    }
    
    \item{tol}{A tolerance for same-ness of the \code{x} values.  The
-     values are binned into bin of size \code{tol} and values which
-     fall into the same bin are regarded as the same.}
+     values are binned into bins of size \code{tol} and values which
+     fall into the same bin are regarded as the same.
+     Must be strictly positive (and finite).}
 }
 \details{
   Neither \code{x} nor \code{y} are allowed to containing missing or
