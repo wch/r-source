@@ -3992,9 +3992,7 @@ Here is that for @CRANpkg{nlme}, re-formatted:
 @example
 citHeader("To cite package 'nlme' in publications use:")
 
-## R >= 2.8.0 passes package metadata to citation().
-if(!exists("meta") || is.null(meta)) meta <- packageDescription("nlme")
-year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", meta$Date)
+year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste("R package version", meta$Version)
 
 citEntry(entry="Manual",

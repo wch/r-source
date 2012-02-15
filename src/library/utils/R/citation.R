@@ -935,7 +935,8 @@ function(package = "base", lib.loc = NULL, auto = NULL)
 
     year <- sub("-.*", "", meta$`Date/Publication`)
     if(!length(year)) {
-        year <- sub(".*((19|20)[[:digit:]]{2}).*", "\\1", meta$Date)
+        year <- sub(".*((19|20)[[:digit:]]{2}).*", "\\1", meta$Date,
+                    perl = TRUE) # may not be needed, but safer
         if(is.null(meta$Date)){
             warning(gettextf("no date field in DESCRIPTION file of package %s",
                              sQuote(package)),
