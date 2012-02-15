@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -39,6 +39,12 @@ sessionInfo(package = NULL)
   \item{loadedOnly}{(not always present): a named list of the results of
     calling \code{\link{packageDescription}} on packages whose
     namespaces are loaded but are not attached.}
+}
+\note{
+  The information on \sQuote{loaded} packages and namespaces is the
+  \emph{current} version installed at the location the package was
+  loaded from: it can be wrong if another process has been changing
+  packages during the session.
 }
 \seealso{\code{\link{R.version}}
 }
