@@ -113,6 +113,12 @@
       \item The \code{edit()} function did not respect the
       \code{options("keep.source")} setting. (Reported by Cleridy
       Lennert.)      
+      
+      \item There is a partial workaround for errors in the TRE
+      regular-expressions engine with named classes and repeat counts of
+      at least 2 in a MBCS locale (\PR{14408}): these are avoided when
+      TRE is in 8-bit mode (e.g. for \code{useBytes = TRUE} and when all
+      the data are ASCII).
     }
   }
 }
