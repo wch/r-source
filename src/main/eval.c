@@ -673,6 +673,32 @@ SEXP attribute_hidden do_compilepkgs(SEXP call, SEXP op, SEXP args, SEXP rho)
 static SEXP bytecodeExpr(SEXP);
 #endif
 
+/* this function gets the srcref attribute from a statement block, 
+   and confirms it's in the expected format */
+   
+static R_INLINE SEXP getBlockSrcrefs(SEXP call)
+{
+    SEXP srcrefs = getAttrib(call, R_SrcrefSymbol);
+    if (TYPEOF(srcrefs) == VECSXP) return srcrefs;
+    return R_NilValue;
+}
+
+/* this function extracts one srcref, and confirms the format */
+/* It assumes srcrefs has already been validated to be a VECSXP or NULL */
+
+static R_INLINE SEXP getSrcref(SEXP srcrefs, int ind)
+{
+    SEXP result;
+    if (!isNull(srcrefs)
+        && length(srcrefs) > ind
+        && !isNull(result = VECTOR_ELT(srcrefs, ind))
+	&& TYPEOF(result) == INTSXP
+	&& length(result) >= 6)
+	return result;
+    else
+	return R_NilValue;
+}
+
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 {
 #ifdef BYTECODE
@@ -781,6 +807,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     if (RDEBUG(newrho)) {
 	int old_bl = R_BrowseLines,
 	    blines = asInteger(GetOption1(install("deparse.max.lines")));
+	SEXP savesrcref;
 #ifdef BYTECODE
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
@@ -800,9 +827,13 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		else
 			tmp = eval(CAR(body), rho);
 	}
-	SrcrefPrompt("debug", getAttrib(body, R_SrcrefSymbol));
+	savesrcref = R_Srcref;
+	PROTECT(R_Srcref = getSrcref(getBlockSrcrefs(body), 0));
+	SrcrefPrompt("debug", R_Srcref);
 	PrintValue(body);
 	do_browser(call, op, R_NilValue, newrho);
+	R_Srcref = savesrcref;
+	UNPROTECT(1);
     }
 
     /*  It isn't completely clear that this is the right place to do
@@ -890,6 +921,7 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op));
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(op)) {
+        SEXP savesrcref;
 #ifdef BYTECODE
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
@@ -902,9 +934,13 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	    tmp = findFun(CAR(body), rho);
 	else
 	    tmp = eval(CAR(body), rho);
-	SrcrefPrompt("debug", getAttrib(body, R_SrcrefSymbol));
+	savesrcref = R_Srcref;
+	PROTECT(R_Srcref = getSrcref(getBlockSrcrefs(body), 0));
+	SrcrefPrompt("debug", R_Srcref);
 	PrintValue(body);
 	do_browser(call, op, R_NilValue, newrho);
+	R_Srcref = savesrcref;
+	UNPROTECT(1);
     }
 
     /*  It isn't completely clear that this is the right place to do
@@ -1387,40 +1423,21 @@ SEXP attribute_hidden do_paren(SEXP call, SEXP op, SEXP args, SEXP rho)
     return CAR(args);
 }
 
-/* this function gets the srcref attribute from a statement block, 
-   and confirms it's in the expected format */
-   
-static R_INLINE SEXP getSrcrefs(SEXP call, SEXP args)
-{
-    SEXP srcrefs = getAttrib(call, R_SrcrefSymbol);
-    if (   TYPEOF(srcrefs) == VECSXP
-        && length(srcrefs) == length(args)+1 ) return srcrefs;
-    return R_NilValue;
-}
-
 SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s = R_NilValue;
     if (args != R_NilValue) {
-    	SEXP srcrefs = getSrcrefs(call, args);
+    	SEXP srcrefs = getBlockSrcrefs(call);
     	int i = 1;
-    	R_Srcref = R_NilValue;
-	while (args != R_NilValue) {	    
-	    if (srcrefs != R_NilValue) {
-	    	PROTECT(R_Srcref = VECTOR_ELT(srcrefs, i++));
-	    	if (  TYPEOF(R_Srcref) != INTSXP
-	    	    || length(R_Srcref) < 6) {  /* old code will have length 6; new code length 8 */
-	    	    srcrefs = R_Srcref = R_NilValue;
-	    	    UNPROTECT(1);
-	    	}
-	    }
+	while (args != R_NilValue) {
+	    PROTECT(R_Srcref = getSrcref(srcrefs, i++));
 	    if (RDEBUG(rho)) {
 	    	SrcrefPrompt("debug", R_Srcref);
 	        PrintValue(CAR(args));
 		do_browser(call, op, R_NilValue, rho);
 	    }
 	    s = eval(CAR(args), rho);
-	    if (srcrefs != R_NilValue) UNPROTECT(1);
+	    UNPROTECT(1);
 	    args = CDR(args);
 	}
 	R_Srcref = R_NilValue;

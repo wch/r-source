@@ -121,6 +121,10 @@
       matrices.
 
       \item PCRE has been updated to version 8.30.
+      
+      \item The internal \code{R_Srcref} variable is now updated
+      before the browser stops on entering a function.  (Suggestion of
+      \PR{14818}.      
     }
   }
 
