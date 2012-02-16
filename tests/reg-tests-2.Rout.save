@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-02-15 r58350)
+R Under development (unstable) (2012-02-16 r58367)
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6369,15 +6369,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x104a8f3c8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ce90c8> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x104a7fae8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2cf9a40> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x104a7fae8> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2cf9a40> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -6820,13 +6820,7 @@ Frequency = 1
 > try(smooth.spline(aa, seq_along(aa)))
 Error in smooth.spline(aa, seq_along(aa)) : 
   'tol' must be strictly positive and finite
-> smooth.spline(aa, seq_along(aa), tol = 0.1)
-Call:
-smooth.spline(x = aa, y = seq_along(aa), tol = 0.1)
-
-Smoothing Parameter  spar= 1.493732  lambda= 132519.1 (27 iterations) 
-Equivalent Degrees of Freedom (Df): 2 
-Penalized Criterion: 1.09442 
-GCV: 5.422581 
+> fit <- smooth.spline(aa, seq_along(aa), tol = 0.1)
+> # actual output is too unstable to diff.
 > ## Better message from R 2.14.2
 > 

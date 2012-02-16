@@ -2607,5 +2607,6 @@ stopifnot(!is.na(trunc(x, units = "days")[1:3]))
 ## explicit error message for silly input (tol = 0)
 aa <- c(1, 2, 3, 8, 8, 8, 8, 8, 8, 8, 8, 8, 12, 13, 14)
 try(smooth.spline(aa, seq_along(aa)))
-smooth.spline(aa, seq_along(aa), tol = 0.1)
+fit <- smooth.spline(aa, seq_along(aa), tol = 0.1)
+# actual output is too unstable to diff.
 ## Better message from R 2.14.2
