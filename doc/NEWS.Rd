@@ -303,6 +303,12 @@
 
       \item \code{merge()} is no longer allowed to create a data frame
       with duplicate column names (which confused \PR{14786}).
+      
+      \item There is a partial workaround for errors in the TRE
+      regular-expressions engine with named classes and repeat counts of
+      at least 2 in a MBCS locale (\PR{14408}): these are avoided when
+      TRE is in 8-bit mode (e.g. for \code{useBytes = TRUE} and when all
+      the data are ASCII).
     }
   }
 }
