@@ -2,7 +2,7 @@
 #
 #  File src/library/compiler/R/cmp.R
 #  Part of the R package, http://www.R-project.org
-#  Copyright (C) 2001-2011 Luke Tierney
+#  Copyright (C) 2001-2012 Luke Tierney
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
