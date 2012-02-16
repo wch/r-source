@@ -1727,5 +1727,11 @@ df <- data.frame(a=1:2080, b=1001:2040, c=letters, d=LETTERS, e=1:1040)
 stopifnot(length(df.ch <- capture.output(df)) == 1+nrow(df))
 ## "cannot allocate memory block of size 17179869183.6 Gb" in R <= 2.14.1
 
+## logic in one of the many combinations of predict.lm() computations
+fit <- lm(mpg ~ disp+hp, data=mtcars)
+r <- predict(fit, type="terms", terms = 2, se.fit=TRUE)
+stopifnot(dim(r$se.fit) == c(nrow(mtcars), 1))
+## failed in  R <= 2.14.1
+
 
 proc.time()

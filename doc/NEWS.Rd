@@ -119,7 +119,7 @@
       \item \code{NROW(x)} and \code{NCOL(x)} now work whenever
       \code{dim(x)} looks appropriate, e.g., also for more generalized
       matrices.
-      
+
       \item PCRE has been updated to version 8.30.
     }
   }
@@ -332,9 +332,9 @@
       executable.
 
       \item The included version of zlib has been updated to 1.2.6.
-      
+
       \item \command{R CMD check} now reports by default on licenses not
-      according to the description in \sQuote{Writing R Extensions}. 
+      according to the description in \sQuote{Writing R Extensions}.
     }
   }
 
@@ -398,7 +398,7 @@
       \item Printing of arrays did not have enough protection (C level),
       e.g., in the context of \code{capture.output()}.  (Reported by
       Hervé Pagès and Martin Morgan.)
-      
+
       \item \code{pdf(file = NULL)} would produce a spurious file named
       \file{NA}.  (\PR{14808})
 
@@ -407,13 +407,16 @@
 
       \item \code{svg()} could segfault if called with a non-existent
       filename.  (\PR{14790})
-      
+
       \item \command{make install} can install to a path containing
       \samp{+} characters. (\PR{14798})
-      
+
       \item The \code{edit()} function did not respect the
       \code{options("keep.source")} setting. (Reported by Cleridy
-      Lennert.)      
+      Lennert.)
+
+      \item \code{predict.lm(*, type="terms", terms=*, se.fit=TRUE)} did
+      not work.  (\PR{14817})
       
       \item There is a partial workaround for errors in the TRE
       regular-expressions engine with named classes and repeat counts of
