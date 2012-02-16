@@ -91,7 +91,7 @@
       \code{nobs()} for \code{"nls"} files now excludes observations
       with zero weight.  (Reported by Berwin Turlach.)
 
-      \item str(*, ....., strict.width="cut") now also obeys
+      \item \code{str(*, ....., strict.width="cut")} now also obeys
       \code{list.len = n}.  (Reported by Sören Vogel.)
 
       \item Printing of arrays did not have enough protection (C level),
