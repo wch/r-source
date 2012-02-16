@@ -819,7 +819,8 @@ predict.lm <-
     }
     if(se.fit || interval != "none") {
         se <- sqrt(ip)
-        if (type == "terms" && !is.null(terms)) se <- se[, terms, drop = FALSE]
+	if(type == "terms" && !is.null(terms) && !se.fit)
+	    se <- se[, terms, drop = FALSE]
     }
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
 	predictor <- napredict(na.act, predictor)
