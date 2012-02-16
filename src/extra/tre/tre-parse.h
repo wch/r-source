@@ -38,6 +38,8 @@ typedef struct {
   int nofirstsub;
   /* The currently set approximate matching parameters. */
   int params[TRE_PARAM_LAST];
+  /* the CUR_MAX in use */
+  int cur_max;
 } tre_parse_ctx_t;
 
 /* Parses a wide character regexp pattern into a syntax tree.  This parser

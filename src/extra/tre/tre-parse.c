@@ -129,7 +129,7 @@ tre_expand_ctype(tre_mem_t mem, tre_ctype_t class, tre_ast_node_t ***items,
   reg_errcode_t status = REG_OK;
   tre_cint_t c;
   int j, min = -1, max = 0;
-  assert(TRE_MB_CUR_MAX == 1);
+  //assert(TRE_MB_CUR_MAX == 1); It is the ctx->cur_max that matters
 
   DPRINT(("  expanding class to character ranges\n"));
   for (j = 0; (j < 256) && (status == REG_OK); j++)
@@ -334,7 +334,7 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 		  if (!class)
 		    status = REG_ECTYPE;
 		  /* Optimize character classes for 8 bit character sets. */
-		  if (status == REG_OK && TRE_MB_CUR_MAX == 1)
+		  if (status == REG_OK && ctx->cur_max == 1)
 		    {
 		      status = tre_expand_ctype(ctx->mem, class, items,
 						&i, &max_i, ctx->cflags);
