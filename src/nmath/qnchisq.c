@@ -71,8 +71,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
     if(lower_tail) {
 	if(p > 1 - DBL_EPSILON) return ML_POSINF;
 	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
-        for(ux = ux;
-	    ux < DBL_MAX &&
+        for(; ux < DBL_MAX &&
 		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, TRUE) < pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
@@ -84,8 +83,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
     else {
 	if(p > 1 - DBL_EPSILON) return 0.0;
 	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
-        for(ux = ux;
-	    ux < DBL_MAX &&
+        for(; ux < DBL_MAX &&
 		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, FALSE) > pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
