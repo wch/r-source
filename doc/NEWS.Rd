@@ -429,6 +429,13 @@
       the data are ASCII).
 
       \item \code{R_ReplDLLdo1()} did not call top-level handlers.
+
+      \item The Quartz device was unable to detect window sessions on
+      Mac OS X 10.7 (Lion) and higher and thus it was not used as the
+      default device on the console. Since Lion any application can
+      use window sessions, so Quartz will now be the default device
+      if user's window session is active and R is not run via ssh which
+      is at least close to the behavior in prior OS X versions.
     }
   }
 }
