@@ -1472,6 +1472,21 @@ SEXP Quartz(SEXP args)
     return R_NilValue;
 }
 
+#include <sys/sysctl.h>
+
+static double cached_darwin_version = 0.0;
+
+/* Darwin version X.Y maps to OS X version 10.(X - 4).Y */
+static double darwin_version() {
+    char ver[32];
+    size_t len = sizeof(ver) - 1;
+    int mib[2] = { CTL_KERN, KERN_OSRELEASE };
+    if (cached_darwin_version > 0.0)
+	return cached_darwin_version;
+    sysctl(mib, 2, &ver, &len, 0, 0);
+    return (cached_darwin_version = atof(ver));
+}
+
 #include <mach/mach.h>
 #include <servers/bootstrap.h>
 
@@ -1483,7 +1498,9 @@ extern kern_return_t bootstrap_info(mach_port_t , /* bootstrap port */
 
 /* returns 1 if window server session service
  (com.apple.windowserver.session) is present in the boostrap
- namespace. returns 0 if an error occurred or the service is not
+ namespace (pre-Lion) or when a current session is present, active
+ and there is no SSH_CONNECTION (Lion and later).
+ returns 0 if an error occurred or the service is not
  present. For all practical purposes this returns 1 only if run
  interactively via LS. Although ssh to a machine that has a running
  session for the same user will allow a WS connection, this function
@@ -1495,40 +1512,61 @@ extern kern_return_t bootstrap_info(mach_port_t , /* bootstrap port */
  */
 static int has_wss() {
     int res = 0;
-    kern_return_t kr;
-    mach_port_t self = mach_task_self();
-    mach_port_t bport = MACH_PORT_NULL;
-    kr = task_get_bootstrap_port(self, &bport);
-    if (kr == KERN_SUCCESS) {
-	kern_return_t           kr;
-	name_array_t            serviceNames;
-	mach_msg_type_number_t  serviceNameCount;
-	name_array_t            serverNames;
-	mach_msg_type_number_t  serverNameCount;
-	bool_array_t            active;
-	mach_msg_type_number_t  activeCount;
-	
-	serviceNames  = NULL;
-	serverNames   = NULL;
-	active        = NULL;
-	
-	kr = bootstrap_info(bport, 
-			    &serviceNames, &serviceNameCount, 
-			    &serverNames, &serverNameCount, 
-			    &active, &activeCount);
+
+    if (darwin_version() < 11.0) { /* before Lion we get reliable information from the bootstrap info */
+	kern_return_t kr;
+	mach_port_t self = mach_task_self();
+	mach_port_t bport = MACH_PORT_NULL;
+	kr = task_get_bootstrap_port(self, &bport);
 	if (kr == KERN_SUCCESS) {
-	    unsigned int i = 0;
-	    while (i < serviceNameCount) {
-		if (!strcmp(serviceNames[i], "com.apple.windowserver.session")) {
-		    res = 1;
-		    break;
+	    kern_return_t           kr;
+	    name_array_t            serviceNames;
+	    mach_msg_type_number_t  serviceNameCount;
+	    name_array_t            serverNames;
+	    mach_msg_type_number_t  serverNameCount;
+	    bool_array_t            active;
+	    mach_msg_type_number_t  activeCount;
+	    
+	    serviceNames  = NULL;
+	    serverNames   = NULL;
+	    active        = NULL;
+	    
+	    kr = bootstrap_info(bport, 
+				&serviceNames, &serviceNameCount, 
+				&serverNames, &serverNameCount, 
+				&active, &activeCount);
+	    if (kr == KERN_SUCCESS) {
+		unsigned int i = 0;
+		while (i < serviceNameCount) {
+		    if (!strcmp(serviceNames[i], "com.apple.windowserver.session")) {
+			res = 1;
+			break;
+		    }
+		    i++;
 		}
-		i++;
 	    }
 	}
+	if (bport != MACH_PORT_NULL)
+	    mach_port_deallocate(mach_task_self(), bport);
+    } else {
+	/* On Mac OS X 10.7 (Lion) and higher two things changed:
+	   a) there is no com.apple.windowserver.session anymore so the above will fail
+	   b) every process has now the full bootstrap info, so in fact even remote
+	      connections will be able to run on-screen tasks if the user is logged in
+	   So we need to add some heuristics to decide when the user actually wants Quartz ... */   
+	/* check user's session */
+	CFDictionaryRef dict = CGSessionCopyCurrentDictionary();
+	if (dict) { /* allright, let's see if the session is current */
+	    CFTypeRef obj = CFDictionaryGetValue(dict, CFSTR("kCGSSessionOnConsoleKey"));
+	    if (obj && CFGetTypeID(obj) == CFBooleanGetTypeID()) {
+		/* even if this session is active, we don't use Quartz for SSH connections */
+		if (CFBooleanGetValue(obj) && (!getenv("SSH_CONNECTION") || getenv("SSH_CONNECTION")[0] == 0))
+		    res = 1;
+	    }
+	    CFRelease(dict);
+	}
     }
-    if (bport != MACH_PORT_NULL)
-	mach_port_deallocate(mach_task_self(), bport);
+
     return res;
 }
 
