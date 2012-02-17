@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.formula.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{terms.formula}
@@ -19,7 +19,7 @@
 \arguments{
   \item{x}{a formula.}
   \item{specials}{which functions in the formula should be marked as
-    special in the \code{terms} object.}
+    special in the \code{terms} object?  A character vector or \code{NULL}.}
   \item{abb}{Not implemented in \R.}
   \item{data}{a data frame from which the meaning of the special symbol
     \code{.} can be inferred. It is unused if there is no \code{.} in
