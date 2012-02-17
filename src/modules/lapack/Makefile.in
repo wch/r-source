@@ -40,7 +40,11 @@ lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
 lapack_la_LIBADD = $(LIBR) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 Rlapack_la_OBJECTS = $(LIBOBJECTS)
-Rlapack_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(FLIBS) $(LIBR)
+## This used to skip FLIBS, but that relied on all the functions
+## needed being loaded into R.bin/libR.so, and that need not be the
+## case for a static libfortran or if a package is compiled under a
+## different compiler.
+Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
