@@ -321,12 +321,14 @@ void R_ReplDLLinit(void)
     DLLbufp = DLLbuf;
 }
 
-
+/* FIXME: this should be re-written to use Rf_ReplIteration
+   since it gets out of sync with it over time */
 int R_ReplDLLdo1(void)
 {
     int c;
     ParseStatus status;
-    SEXP rho = R_GlobalEnv;
+    SEXP rho = R_GlobalEnv, lastExpr;
+    Rboolean wasDisplayed = FALSE;
 
     if(!*DLLbufp) {
 	R_Busy(0);
@@ -355,13 +357,16 @@ int R_ReplDLLdo1(void)
 	resetTimeLimits();
 	PROTECT(R_CurrentExpr);
 	R_Busy(1);
+	lastExpr = R_CurrentExpr;
 	R_CurrentExpr = eval(R_CurrentExpr, rho);
 	SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
-	UNPROTECT(1);
+	wasDisplayed = R_Visible;
 	if (R_Visible)
 	    PrintValueEnv(R_CurrentExpr, rho);
 	if (R_CollectWarnings)
 	    PrintWarnings();
+	Rf_callToplevelHandlers(lastExpr, R_CurrentExpr, TRUE, wasDisplayed);
+	UNPROTECT(1);
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	R_Busy(0);
 	prompt_type = 1;
