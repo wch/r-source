@@ -4,7 +4,7 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.14.1 patched}{
+\section{CHANGES IN R VERSION 2.14.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{bitmap()} and \code{dev2bitmap()} look for
@@ -46,6 +46,10 @@
       \item Using a prompt of more than 80 characters in
       \code{readline()} could cause a buffer overflow in Rterm.
       (Reported by Henrik Bengtsson.)
+
+      \item Some of the custom messages in the installer were corrupted:
+      add a BOM mark to the file as now required by Unicode Inno Setup.
+      (\PR{14816})
     }
   }
 }
