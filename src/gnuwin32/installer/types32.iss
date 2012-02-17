@@ -1,7 +1,7 @@
 
 [Types]
-Name: "user"; Description: {cm:user}
-Name: "custom"; Description: {cm:custom}; Flags: iscustom
+Name: "user"; Description: "User installation"
+Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user custom
