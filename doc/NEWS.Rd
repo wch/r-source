@@ -427,6 +427,8 @@
       at least 2 in a MBCS locale (\PR{14408}): these are avoided when
       TRE is in 8-bit mode (e.g. for \code{useBytes = TRUE} and when all
       the data are ASCII).
+
+      \item \code{R_ReplDLLdo1()} did not call top-level handlers.
     }
   }
 }
