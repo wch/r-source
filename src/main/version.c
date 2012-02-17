@@ -97,7 +97,7 @@ void attribute_hidden PrintVersion(char *s)
     strcat(s, "\n"
 	   "R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
 	   "You are welcome to redistribute it under the terms of the\n"
-	   "GNU General Public License version 2.\n"
+	   "GNU General Public License versions 2 or 3.\n"
 	   "For more information about these matters see\n"
 	   "http://www.gnu.org/licenses/.\n");
 }
