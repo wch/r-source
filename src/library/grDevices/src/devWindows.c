@@ -2119,6 +2119,7 @@ static void GA_Resize(pDevDesc dd)
 	    if (!xd->bm) {
 		R_ShowMessage(_("Insufficient memory for resize. Killing device"));
 		killDevice(ndevNumber(dd));
+		return; /* since the device is killed */
 	    }
 	    if(xd->have_alpha) {
 		del(xd->bm2);
