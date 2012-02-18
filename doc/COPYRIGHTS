@@ -303,7 +303,7 @@ src/extra/pcre/*.[ch]
 
    Copyright (c) 1997-2012 University of Cambridge
    All rights reserved.
-   Copyright(c) 2009-2011 Zoltan Herczeg
+   Copyright(c) 2009-2012 Zoltan Herczeg
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires
 us to include
