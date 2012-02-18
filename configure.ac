@@ -835,7 +835,7 @@ AC_OPENMP
 ### *** Fortran 77 compiler.
 
 R_PROG_F77_FLIBS
-if test -z "$(FLIBS_IN_SO)"; then
+if test -z "$FLIBS_IN_SO"; then
   FLIBS_IN_SO=${FLIBS}
 fi
 AC_SUBST(FLIBS_IN_SO)

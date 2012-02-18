@@ -23244,7 +23244,7 @@ done
 FLIBS="${flibs}"
 fi
 
-if test -z "$(FLIBS_IN_SO)"; then
+if test -z "$FLIBS_IN_SO"; then
   FLIBS_IN_SO=${FLIBS}
 fi
 
