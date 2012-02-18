@@ -2585,11 +2585,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
-                ## Pro tem skip warnings from c58008 fallout unless
-                ## they apply to this package.
-                spurious <- grepl("Warning: Functions for exporting methods must have been made generic", lines) & !grepl(pkgname, lines)
-                lines <- lines[!spurious]
-
                 if (length(lines)) {
 		    lines <- unique(lines)
                     warningLog(Log, "Found the following significant warnings:")
