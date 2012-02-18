@@ -4339,7 +4339,7 @@ that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
 impossible with Solaris Studio >= 12.2.  For a standard build the trick
 seems to be to manually set @code{FLIBS} to avoid the troublesome
-libraries.  For example, on @cputype{amd64}, set in @file{Makeconf}
+libraries.  For example, on @cputype{amd64} set in @file{config.site}
 
 @example
 FLIBS_IN_SO = -R/opt/solarisstudio12.3/lib/amd64 \
@@ -4347,20 +4347,13 @@ FLIBS_IN_SO = -R/opt/solarisstudio12.3/lib/amd64 \
   /opt/solarisstudio12.3/lib/amd64/libfsu.so
 @end example
 
-@noindent
-and set @code{FLIBS} in @file{etc/Makeconf} to the same value.
-
-For 64-bit Sparc, use something like
+For 64-bit Sparc, set in @file{config.site} something like
 @example
 FLIBS = -R/opt/solarisstudio12.3/prod/lib/sparc/64 \
  -lifai -lsunimath -lfai -lfai2 -lfsumai -lfprodai -lfminlai -lfmaxlai \
  -lfminvai -lfmaxvai -lfui -lsunmath -lmtsk \
  /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1
 @end example
-
-@noindent
-in @file{config.site}.
-
 
 By default the Solaris Studio compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
