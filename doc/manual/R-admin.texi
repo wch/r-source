@@ -3971,11 +3971,21 @@ the additional flags being needed to resolve problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
 
 @menu
+* Clang::                       
 * Intel compilers::             
 * Oracle Solaris Studio compilers::  
 @end menu
 
-@node Intel compilers, Oracle Solaris Studio compilers, Linux, Linux
+@node Clang, Intel compilers, Linux, Linux
+@subsection Clang
+
+@R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
+C++ compilers (@uref{http://clang.llvm.org}, versions 2.9 and 3.0) based
+on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
+together with @command{gfortran}.  These take very similar options to
+the corresponding GCC compilers.
+
+@node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
