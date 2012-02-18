@@ -4322,17 +4322,12 @@ standard (appendix F 8.9) on the return values of functions such as
 @code{log}: use @option{-xlibmieee} to ensure this.
 
 You can target specific Sparc architectures for (slightly) higher
-performance: Oracle recommend
+performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
+compilation to the current machine.
 
-@example
-@r{32-bit:} -xtarget=ultra3 -xarch=v8plusa
-@r{64-bit:} -xtarget=ultra3 -xarch=sparcvis2
-@end example
+Using @code{-xlibmil} in @code{CFLAGS} and @code{-xlibmil} in
+@code{FFLAGS} allows more system mathematical functions to be inlined.
 
-@noindent
-(in @code{CFLAGS} etc) as a good compromise for recent Sparc chipsets.
-Using @code{-libmil} in @code{CFLAGS} allows more system mathematical
-functions to be inlined.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 

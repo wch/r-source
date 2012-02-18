@@ -760,6 +760,8 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* The formula will be returned, modified if haveDot becomes TRUE */
 
     specials = CADR(args);
+    if(length(specials) && !isString(specials))
+	error(_("'specials' must be NULL or a character vector"));
     a = CDDR(args);
 
     /* We use data to get the value to */
