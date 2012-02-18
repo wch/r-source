@@ -1484,7 +1484,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                         if (!any) noteLog(Log)
                         any <- TRUE
                         printLog(Log,
-                                 "  'gs' made some significant size reductions:\n",
+                                 "  'gs+qpdf' made some significant size reductions:\n",
                                  paste("  ", res, collapse = "\n"),
                                  "\n",
                                  '  consider running tools::compactPDF(gs_quality = "ebook") on these files\n')
