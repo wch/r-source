@@ -307,14 +307,11 @@
 
       \item \code{merge()} is no longer allowed to create a data frame
       with duplicate column names (which confused \PR{14786}).
-
-      \item \code{mclapply()} would fail in code assembling the translated
-      error message if some (but not all) cores encountered an error.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R VERSION 2.14.1 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.14.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The internal \code{untar()} (as used by default by
@@ -431,14 +428,19 @@
       TRE is in 8-bit mode (e.g. for \code{useBytes = TRUE} and when all
       the data are ASCII).
 
-      \item \code{R_ReplDLLdo1()} did not call top-level handlers.
+      \item The C function \code{R_ReplDLLdo1()} did not call top-level
+      handlers.
 
       \item The Quartz device was unable to detect window sessions on
       Mac OS X 10.7 (Lion) and higher and thus it was not used as the
-      default device on the console. Since Lion any application can
-      use window sessions, so Quartz will now be the default device
-      if user's window session is active and R is not run via ssh which
-      is at least close to the behavior in prior OS X versions.
+      default device on the console.  Since Lion any application can use
+      window sessions, so Quartz will now be the default device if the
+      user's window session is active and \R is not run via
+      \command{ssh} which is at least close to the behavior in prior OS
+      X versions.
+
+      \item \code{mclapply()} would fail in code assembling the translated
+      error message if some (but not all) cores encountered an error.
     }
   }
 }

@@ -347,7 +347,8 @@ already been seen during the evaluation of the promise (and so to avoid
 recursive loops).
 
 Bit 0 is used for @code{HASHASH}, on the @code{PRINTNAME} of the
-@code{TAG} of the frame of an environment.
+@code{TAG} of the frame of an environment. (This bit is not serialized
+for @code{CHARSXP} objects.)
 
 Bits 0 and 1 are used for weak references (to indicate `ready to
 finalize', `finalize on exit').
@@ -357,14 +358,14 @@ indicate a calling handler.
 
 Bit 4 is turned on to mark S4 objects.
 
-Bits 1, 2, 3 and 5 are used for a @code{CHARSXP} to denote its encoding.
-Bit 1 indicates the @code{CHARSXP} should be treated as a set of bytes,
-not necessarily representing a character in any known encoding.  Bits 2
-and 3 are used to indicate that it is known to be in Latin-1 and UTF-8
-respectively.
+Bits 1, 2, 3, 5 and 6 are used for a @code{CHARSXP} to denote its
+encoding.  Bit 1 indicates that the @code{CHARSXP} should be treated as
+a set of bytes, not necessarily representing a character in any known
+encoding.  Bits 2, 3 and 6 are used to indicate that it is known to be
+in Latin-1, UTF-8 or ASCII respectively.
 
 Bit 5 for a @code{CHARSXP} indicates that it is hashed by its address,
-that is @code{NA_STRING} or in the @code{CHARSXP} cache (this is not
+that is @code{NA_STRING} or is in the @code{CHARSXP} cache (this is not
 serialized).  Only exceptionally is a @code{CHARSXP} not hashed, and
 this should never happen in end-user code.
 
