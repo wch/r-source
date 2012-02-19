@@ -1627,7 +1627,7 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < LENGTH(ans); i++) {
 	el = STRING_ELT(ans, i);
 	if(PRIMVAL(op) && !known_to_be_utf8) { /* enc2utf8 */
-	    if(!IS_UTF8(el) && !strIsASCII(CHAR(el))) {
+	    if(!IS_UTF8(el) && !IS_ASCII(el)) {
 		if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
 		SET_STRING_ELT(ans, i, 
 			       mkCharCE(translateCharUTF8(el), CE_UTF8));

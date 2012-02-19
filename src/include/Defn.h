@@ -110,7 +110,9 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 #define BYTES_MASK (1<<1)
 #define LATIN1_MASK (1<<2)
 #define UTF8_MASK (1<<3)
+/* (1<<4) is taken by S4_OBJECT_MASK */
 #define CACHED_MASK (1<<5)
+#define ASCII_MASK (1<<6)
 #define HASHASH_MASK 1
 /**** HASHASH uses the first bit -- see HASHASH_MASK defined below */
 
@@ -119,6 +121,8 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 # define SET_BYTES(x) (((x)->sxpinfo.gp) |= BYTES_MASK)
 # define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
 # define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
+# define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
+# define SET_ASCII(x) (((x)->sxpinfo.gp) |= ASCII_MASK)
 # define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 # define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
 # define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
@@ -130,6 +134,8 @@ int IS_BYTES(SEXP x);
 void SET_BYTES(SEXP x);
 int IS_LATIN1(SEXP x);
 void SET_LATIN1(SEXP x);
+int IS_ASCII(SEXP x);
+void SET_ASCII(SEXP x);
 int IS_UTF8(SEXP x);
 void SET_UTF8(SEXP x);
 int ENC_KNOWN(SEXP x);

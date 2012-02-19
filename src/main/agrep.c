@@ -142,11 +142,11 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(haveBytes) useBytes = TRUE;
     }
     if(!useBytes) {
-	useWC = !strIsASCII(CHAR(STRING_ELT(pat, 0)));
+	useWC = !IS_ASCII(STRING_ELT(pat, 0));
 	if(!useWC) {
 	    for (i = 0 ; i < n ; i++) {
 		if(STRING_ELT(vec, i) == NA_STRING) continue;
-		if(!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
+		if(!IS_ASCII(STRING_ELT(vec, i))) {
 		    useWC = TRUE;
 		    break;
 		}
@@ -539,7 +539,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!useBytes) {
 	for(i = 0; i < nx; i++) {
 	    if(STRING_ELT(x, i) == NA_STRING) continue;
-	    if(!strIsASCII(CHAR(STRING_ELT(x, i)))) {
+	    if(!IS_ASCII(STRING_ELT(x, i))) {
 		useWC = TRUE;
 		break;
 	    }
@@ -547,7 +547,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!useWC) {
 	    for(j = 0; j < ny; j++) {
 		if(STRING_ELT(y, j) == NA_STRING) continue;
-		if(!strIsASCII(CHAR(STRING_ELT(y, j)))) {
+		if(!IS_ASCII(STRING_ELT(y, j))) {
 		    useWC = TRUE;
 		    break;
 		}
@@ -773,11 +773,11 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if(!useBytes) {
-        useWC = !strIsASCII(CHAR(STRING_ELT(pat, 0)));
+        useWC = !IS_ASCII(STRING_ELT(pat, 0));
         if(!useWC) {
             for(i = 0 ; i < n ; i++) {
                 if(STRING_ELT(vec, i) == NA_STRING) continue;
-                if(!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
+                if(!IS_ASCII(STRING_ELT(vec, i))) {
                     useWC = TRUE;
                     break;
                 }

@@ -144,6 +144,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (IS_BYTES(v)) Rprintf("[bytes] ");
 	if (IS_LATIN1(v)) Rprintf("[latin1] ");
 	if (IS_UTF8(v)) Rprintf("[UTF8] ");
+	if (IS_ASCII(v)) Rprintf("[ASCII] ");
 	if (IS_CACHED(v)) Rprintf("[cached] ");
 	Rprintf("\"%s\"", CHAR(v));
     }
