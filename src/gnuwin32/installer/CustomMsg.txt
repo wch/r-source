@@ -1,9 +1,11 @@
 ﻿; Custom messages for R
-; Coded in UTF-8
+; Coded in UTF-8 *with a byte-order mark*
 
 [CustomMessages]
 en.regentries=Registry entries:
 en.associate=&Associate R with .RData files
+en.user=User installation
+en.custom=Custom installation
 en.adminprivilegesrequired=You should be logged in as an administrator when installing R
 en.adminexplanation=Note:  A full R installation requires administrative privileges, and it appears that those are not available.  If you continue with this installation, you will not be able to associate R with .RData files.  Installation must be made to a directory where you have write permission.
 en.recordversion=Save version number in registry
@@ -30,6 +32,8 @@ en.Internet1=Internet2
 
 br.regentries=Entradas no registro:
 br.associate=&Associar arquivos .RData ao R
+br.user=Instalação modo usuário
+br.custom=Instalação personalizada
 br.adminprivilegesrequired=Você deve efetuar logon como Administrador para instalar o R
 br.adminexplanation=Observação: Uma instalação completa do R requer privilégios de administrador, e aparentemente estes não estão disponíveis. Se você continuar com a instalação, você não vai poder instalar o suporte a DCOM nem associar o R com arquivos do tipo .RData. A instalação deve ser feita em um diretório no qual você tenha direitos de escrita.
 br.recordversion=Salvar número da versão no registro
@@ -56,12 +60,16 @@ br.Internet1=Internet2
 
 dk.regentries=Indgange i registreringsdatabasen:
 dk.associate=&Associere R med .RData filer
+dk.user=Brugerinstallation
+dk.custom=Brugerdefinet installation
 dk.adminprivilegesrequired=Du skal helst være logget ind som administrator for at installere R
 dk.adminexplanation=En fuld R installation kræver administratorrettigheder, og disse ser ikke ud til at være til stede. Hvis du fortsætter installationen, vil du ikke kunne installere DCOM understøttelse eller kunne associere R med .RData filer. Installation skal være til en mappe, hvortil du har skrivetilladelse.
 dk.recordversion=Gem versionsnummer i registreringsdatabasen
 
 es.regentries=Registro de entradas:
 es.associate=&Asociar archivos .RData con R
+es.user=Instalación del usuario
+es.custom=Instalación a medida
 es.adminprivilegesrequired=Debe registrarse como administrador cuando instala R
 es.adminexplanation=Nota: Una instalación completa de R requiere de privilegios de administrador.  Si continua esta instalación, no podrá instalar el soporte DCOM ni asociar archivos .RData con R.  La instalación debe realizase en un directorio donde tiene permiso de escritura.
 es.recordversion=Guarde el número de versión en el registro
@@ -88,6 +96,8 @@ es.Internet1=Internet2
 
 fr.regentries=Entrées dans le registre :
 fr.associate=&Associer R avec les fichiers .RData
+fr.user=Installation utilisateur
+fr.custom=Installation personnalisée
 fr.adminprivilegesrequired=Vous devez être loggé avec des droits d'administrateur pour installer R
 fr.adminexplanation=Note : une installation complète de R nécessite des privilèges d'administrateur, et il semble que ceux-ci ne soient pas disponibles. Si vous continuer l'installation, vous ne pourrez pas installer DCOM, ni associer R avec les fichiers .RData. L'installation doit se faire dans un répertoire où vous avez des droits en écriture.
 fr.recordversion=Enregistrer le numéro de version dans le registre
@@ -114,6 +124,8 @@ fr.Internet1=Internet2
 
 de.regentries=Einträge in der Windows-Registrierung:
 de.associate=&Verknüpfe R mit .RData Dateien
+de.user=Benutzerinstallation
+de.custom=Benutzerdefinierte Installation
 de.adminprivilegesrequired=Sie sollten als Administrator angemeldet sein, um R zu installieren
 de.adminexplanation=Eine vollständige R Installation verlangt Administratorrechte und diese scheinen nicht vorhanden zu sein. Wenn Sie die Installation fortsetzen, können die DCOM Unterstützung und die Verknüpfung von R mit .RData Dateien nicht installiert werden. Die Installation muss in ein Verzeichnis geschehen, für das sie Schreibrechte besitzen.
 de.recordversion=Speichere Versionsnummer in der Registry
@@ -140,7 +152,8 @@ de.Internet1=Internet2
 
 it.regentries=Valori registri:
 it.associate=Associa R ai file .RData
-
+it.user=Installazione utente
+it.custom=Installazione personalizzata
 it.adminprivilegesrequired=Sarebbe meglio installare R entrando come amministratore
 it.adminexplanation=Nota: l'installazione completa richiede i privilegi da amministratore e sembrerebbe che non siano disponibili. Se si procede con l'installazione non sarà possibile installare il supporto per DCOM o associare R ai files .RData.  L'installazione deve essere eseguita in una cartella di cui si possiedono i permessi in scrittura.
 it.recordversion=Memorizza il numero della versione nel registro
@@ -167,6 +180,8 @@ it.Internet1=Internet2
 
 nl.regentries=Register entries:
 nl.associate=&R associëren met .RData bestanden
+nl.user=Gebruikersinstallatie
+nl.custom=Gepersonaliseerde installatie
 nl.adminprivilegesrequired=Om R te installeren moet men ingelogd zijn als administrator
 nl.adminexplanation=Noot:  Voor een volledige R installatie heeft men administratieve rechten nodig, rechten die in dit geval kennelijk niet beschikbaar zijn. Wanneer u de installatie verderzet, zult u geen DCOM ondersteuning kunnen installeren en geen .RData bestanden met R kunnen associëren. Installatie dient te gebeuren naar een map waar u over schrijfrechten beschikt.
 nl.recordversion=Versie-nummer opslaan in het register
@@ -193,6 +208,8 @@ nl.Internet1=Internet2
 
 no.regentries=Registernøkler:
 no.associate=Knytt R til .RData-filer
+no.user=Brukerinstallering
+no.custom=Tilpasset installering
 no.adminprivilegesrequired=Du bør være pålogget med rettighter til administratoren under installering av R
 no.adminexplanation=Merk: Full installering av R krever administratorens rettigheter, og de er ikke tilgjengelige. Dersom du fortsetter med denne installeringen, vil du ikke kunne installere støtte for DCOM, eller knytte R til .RData-filer. Installering er kun mulig til kataloger der du har skriverettigheter.
 no.recordversion=Lagre versjonsnummer i registeret
@@ -220,6 +237,8 @@ no.Internet1=Internet2
 
 sl.regentries=Vnosi v registru:
 sl.associate=Poveži datoteke .RData z R
+sl.user=Uporabniška namestitev
+sl.custom=Prikrojena namestitev
 sl.adminprivilegesrequired=Namestitev programa lahko opravi le administrator
 sl.adminexplanation=Za polno namestitev R potrebujete pravice administratorja, a teh očitno nimate. Če boste z namestitvijo nadaljevali, ne boste mogli namestiti podporo DCOM niti povezati datoteke .RData z R. Namestitev mora biti opravljena v mapo, kjer imate dovoljenje za pisanje.
 sl.recordversion=Shrani številko verzije v register
@@ -227,6 +246,8 @@ sl.recordversion=Shrani številko verzije v register
 
 po.regentries=Wpisy rejestru:
 po.associate=Powiąż R z plikami z rozszerzeniem .RData
+po.user=Instalacja użytkownika
+po.custom=Dopasowana instalacja
 po.adminprivilegesrequired=Dla instalacji R, trzeba posiadać uprawnienia administratora
 po.adminexplanation=Pełna instalacja R wymaga uprawnienia administratora, które nie są dostępne. Jeśli ta instalacja będzie kontinuowana, instalacja wsparcia dla DCOM oraz powiążania pliki .RData z R nie będą możliwe. Instalacja R jest tylko możliwe w katalogu z prawem zapisu dla użytkownika dokonującego instalacji.
 po.recordversion=Złóż numer wersji w rejestrze
@@ -254,17 +275,19 @@ po.Internet1=Internet2
 
 ja.regentries=レジストリ項目:
 ja.associate=R を 拡張子 .RData に関連づける
+ja.user=利用者向けインストール
+ja.custom=カスタムインストール
 ja.adminprivilegesrequired=Rをインストールするためには、管理者権限のあるユーザでログインするべきです
 ja.adminexplanation=注意: Rを完全にインストールするためには管理者権限が必要ですが、現在のユーザでは権限が十分でないようです。このまま続けると、DCOMサポートをインストールできず、またRを拡張子.RDataのファイルに関連付けることもできません。また、書き込み権限のあるディレクトリにしかインストールすることができません。
 ja.recordversion=バージョン番号をレジストリに保存する
 ja.startupt=起動時オプション
-ja.startupq=起動時オプションをカスタ�Â�ズしますか？
-ja.startupi=「はい」または「いいえ」を選�Á�、「次へ」をクリックして下さい
-ja.startup0=はい (カスタ�Â�ズする)
+ja.startupq=起動時オプションをカスタマイズしますか？
+ja.startupi=「はい」または「いいえ」を選択し、「次へ」をクリックして下さい
+ja.startup0=はい (カスタマイズする)
 ja.startup1=いいえ (デフォルトのまま)
 ja.MDIt=表示モード
 ja.MDIq=MDIとSDI, どちらの表示方法にしますか？
-ja.MDIi=「MDI」または「SDI」を選�Á�、「次へ」をクリックして下さい
+ja.MDIi=「MDI」または「SDI」を選択し、「次へ」をクリックして下さい
 ja.MDI0=MDI (Rを１つの大きなウィンドウで表示)
 ja.MDI1=SDI (複数のウィンドウを使用して表示)
 ja.HelpStylet=ヘルプの表示方法
@@ -274,7 +297,7 @@ ja.HelpStyle0=テキスト形式
 ja.HelpStyle1=HTMLヘルプ
 ja.Internett=インターネット接続
 ja.Internetq=internet2.dll を使って、RがInternet Explorer のプロキシ設定を参照するようにしますか？
-ja.Interneti=「標準」か「Internet2」を選�Á�、「次へ」をクリックして下さい
+ja.Interneti=「標準」か「Internet2」を選択し、「次へ」をクリックして下さい
 ja.Internet0=標準
 ja.Internet1=Internet2
 
@@ -282,6 +305,8 @@ ja.Internet1=Internet2
 
 chs.regentries=登記冊记录項:
 chs.associate=&把R程序同.RData文件联合起来
+chs.user=用户安装
+chs.custom=自定義安装
 chs.adminprivilegesrequired=在安装R的时候你必需以管理员身份登錄。
 chs.adminexplanation=请注意：在全部安装R时你必需具有管理员的特权，但目前看起来你好象没有这样的权利。你可以继续安装R，但它会没有DCOM这一功能，也不会自动将.RData文件同R相联接。你只能在有书写许可的文件目录下安装R。
 chs.recordversion=版本信息保存于注册表内。
@@ -290,24 +315,26 @@ chs.recordversion=版本信息保存于注册表内。
 ; Korean is in code page 949, which extends EUC-KR
 
 ko.regentries=레지스트리 항목:
-ko.associate=R를 확��p .RData에 관련 집니다
-ko.user=이용�p를 위한 인스톨
-ko.compact=이용�p를 위한 최소 인스톨
-ko.full=전부 인스톨
+ko.associate=R를 확장자 .RData에 관련 집니다
+ko.user=이용자를 위한 인스톨
 ko.custom=커스텀 인스톨
 
 ; Traditional Chinese is in code page 950 (a variation on Big5)
 
 cht.regentries=登錄表項目:
 cht.associate=將資料檔副檔名 .R 關聯至 R
+cht.user=一般安裝
+cht.custom=自訂安裝
 cht.adminprivilegesrequired=安裝 R 時您必須以管理者身分登入
-cht.adminexplanation=說明: R 的完整安裝需要系統管理權限，但是看起來並無法取得。如�|您繼續進行此程序，您將無法安裝 DCOM 的支援，也無法將資料檔副檔名 .R 關聯至 R。安裝作業必須在您有寫入權限的目錄之中進行。
+cht.adminexplanation=說明: R 的完整安裝需要系統管理權限，但是看起來並無法取得。如果您繼續進行此程序，您將無法安裝 DCOM 的支援，也無法將資料檔副檔名 .R 關聯至 R。安裝作業必須在您有寫入權限的目錄之中進行。
 cht.recordversion=在登錄表中儲存版本號碼
 
 ; Russian is encoded in code page 1251
 
 ru.regentries=Записи в системном регистре:
 ru.associate=Связать R с файлами .RData
+ru.user=Пользовательская установка
+ru.custom=Выборочная установка
 ru.adminprivilegesrequired=Для установки R Вы должны войти в систему как администратор
 ru.adminexplanation=Замечание: Полная установка R требует прав администратора, но похоже, что они недоступны. Если Вы продолжите установку, то не сможете установить ни поддержки DCOM, ни связать R с файлами .RData. Установка должна быть проведена в ту папку, для которой Вы имеете права записи.
 ru.recordversion=Сохранить номер версии в системном регистре
