@@ -307,6 +307,9 @@
 
       \item \code{merge()} is no longer allowed to create a data frame
       with duplicate column names (which confused \PR{14786}).
+
+      \item \code{mclapply()} would fail in code assembling the translated
+      error message if some (but not all) cores encountered an error.
     }
   }
 }

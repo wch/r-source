@@ -165,9 +165,9 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             warning("all scheduled cores encountered errors in user code")
         else
             warning(sprintf(ngettext(has.errors,
-                                     "scheduled core %d encountered error in user code, all values of the job will be affected",
-                                     "scheduled cores %s encountered errors in user code, all values of the jobs will be affected")
-                            ), paste(has.errors, collapse = ", "),
+                                     "scheduled core %s encountered error in user code, all values of the job will be affected",
+                                     "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"),
+                            paste(has.errors, collapse = ", ")),
                     domain = NA)
     }
     res
