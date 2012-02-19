@@ -1733,5 +1733,11 @@ r <- predict(fit, type="terms", terms = 2, se.fit=TRUE)
 stopifnot(dim(r$se.fit) == c(nrow(mtcars), 1))
 ## failed in  R <= 2.14.1
 
+## format.POSIXlt(x) for wrong x
+d0 <- strptime(as.Date(logical(0)), format="%Y-%m-%d", tz = "GMT")
+d0$mday <- 1
+try(format(d0))
+## crashed (Arithmetic exception) for  R <= 2.14.1
+
 
 proc.time()
