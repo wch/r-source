@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-19 08:56\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -2160,6 +2160,10 @@ msgstr "중량감은 모두 non-negative 일 필요가 있습니다"
 
 msgid "some weights should be positive"
 msgstr "어떠한 중량감는 poitive 일 ��요가 있습니다"
+
+#, fuzzy
+msgid "'tol' must be strictly positive and finite"
+msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
 
 msgid "need at least four unique 'x' values"
 msgstr "'x'값에는 적어도 4게의 다른 값이 필요합니다"

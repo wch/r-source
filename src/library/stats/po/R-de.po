@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-19 08:56\n"
 "PO-Revision-Date: 2011-03-24 10:51+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -2063,6 +2063,10 @@ msgstr "alle Gewichte sollten nicht-negativ sein"
 
 msgid "some weights should be positive"
 msgstr "einige Gewichte sollten positiv sein"
+
+#, fuzzy
+msgid "'tol' must be strictly positive and finite"
+msgstr "'ratio' muss eine einzelne positive Zahl sein"
 
 msgid "need at least four unique 'x' values"
 msgstr "benötige zumindest vier verschiedene 'x' Werte"

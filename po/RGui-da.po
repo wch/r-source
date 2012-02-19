@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rgui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24+0000\n"
+"POT-Creation-Date: 2012-02-19 08:56+0000\n"
 "PO-Revision-Date: 2011-10-08 22:24+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1030,7 +1030,7 @@ msgid "Enhanced metafiles"
 msgstr "Forbedrede metafiler"
 
 #: ../library/grDevices/src/devWindows.c:983
-#: ../library/grDevices/src/devWindows.c:3371
+#: ../library/grDevices/src/devWindows.c:3372
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "den valgte filsti er for langt: Kun 512 byte er tilladt"
 
@@ -1175,14 +1175,14 @@ msgstr "Gem som metafil..."
 msgid "Save as postscript..."
 msgstr "Gem som postscript..."
 
-#: ../library/grDevices/src/devWindows.c:3071
+#: ../library/grDevices/src/devWindows.c:3072
 msgid "Locator is active"
 msgstr "Lokalisering er aktiv"
 
-#: ../library/grDevices/src/devWindows.c:3694
+#: ../library/grDevices/src/devWindows.c:3695
 msgid "Waiting to confirm page change..."
 msgstr "Venter på at bekræfte sideændring..."
 
-#: ../library/grDevices/src/devWindows.c:3706
+#: ../library/grDevices/src/devWindows.c:3707
 msgid "Click or hit ENTER for next page"
 msgstr "Klik eller tryk på RETUR for næste side"

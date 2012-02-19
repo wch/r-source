@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-04 10:00+0000\n"
+"POT-Creation-Date: 2012-02-19 08:56+0000\n"
 "PO-Revision-Date: 2011-10-18 19:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -228,7 +228,7 @@ msgstr "postscript(print.it=TRUE) использован с пустой командой печати"
 msgid "invalid page type '%s' (postscript)"
 msgstr "неправильный тип страницы '%s' (postscript)"
 
-#: devPS.c:3454 devPS.c:4567 devWindows.c:2326
+#: devPS.c:3454 devPS.c:4567 devWindows.c:2327
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -443,14 +443,14 @@ msgstr "неправильный параметр 'family' в %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "неправильный параметр 'fonts' в %s"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3579 devWindows.c:3583
-#: devWindows.c:3591 devWindows.c:3602 devWindows.c:3608 devWindows.c:3615
-#: devWindows.c:3622 devWindows.c:3626
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3580 devWindows.c:3584
+#: devWindows.c:3592 devWindows.c:3603 devWindows.c:3609 devWindows.c:3616
+#: devWindows.c:3623 devWindows.c:3627
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "неправильное значение '%s'"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3659
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3660
 #, c-format
 msgid "unable to start %s() device"
 msgstr "не могу запустить устройство %s()"
@@ -487,7 +487,7 @@ msgstr ""
 "Не могу создать целевое устройство Quartz, указанный тип не может быть "
 "поддержан."
 
-#: devQuartz.c:1547
+#: devQuartz.c:1585
 msgid "Quartz device is not available on this platform"
 msgstr "Устройство Quartz на этой платформе недоступно"
 
@@ -539,7 +539,7 @@ msgstr "не похоже, что 'width=%d, height=%d' в пикселях"
 msgid "Unable to allocate bitmap"
 msgstr "Не могу разместить bitmap"
 
-#: devWindows.c:1816 devWindows.c:1850 devWindows.c:2173
+#: devWindows.c:1816 devWindows.c:1850 devWindows.c:2174
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Не могу открыть файл '%s' для записи"
@@ -569,69 +569,69 @@ msgstr "Не могу открыть буфер обмена для записи метафайла"
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
 
-#: devWindows.c:2129
+#: devWindows.c:2130
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
-#: devWindows.c:2158
+#: devWindows.c:2159
 msgid "A clipboard metafile can store only one figure."
 msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 
-#: devWindows.c:2164
+#: devWindows.c:2165
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "метафайл '%s' не получается создать"
 
-#: devWindows.c:3045 devWindows.c:3683
+#: devWindows.c:3046 devWindows.c:3684
 msgid "R Graphics"
 msgstr "R-графика"
 
-#: devWindows.c:3059
+#: devWindows.c:3060
 msgid "attempt to use the locator after dev.hold()"
 msgstr "попытка использовать locator после dev.hold()"
 
-#: devWindows.c:3323
+#: devWindows.c:3324
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
-#: devWindows.c:3344
+#: devWindows.c:3345
 msgid "invalid device number in 'savePlot'"
 msgstr "неправильный номер устройства в 'savePlot'"
 
-#: devWindows.c:3346
+#: devWindows.c:3347
 msgid "invalid device in 'savePlot'"
 msgstr "неправильное устройство в 'savePlot'"
 
-#: devWindows.c:3349
+#: devWindows.c:3350
 msgid "invalid filename argument in savePlot"
 msgstr "неправильный аргумент имени файла в savePlot"
 
-#: devWindows.c:3354
+#: devWindows.c:3355
 msgid "invalid type argument in 'savePlot'"
 msgstr "неправильный тип аргумента в 'savePlot'"
 
-#: devWindows.c:3381
+#: devWindows.c:3382
 msgid "unknown type in savePlot"
 msgstr "неизвестный тип в savePlot"
 
-#: devWindows.c:3426 devWindows.c:3459 devWindows.c:3488 devWindows.c:3520
-#: devWindows.c:3545
+#: devWindows.c:3427 devWindows.c:3460 devWindows.c:3489 devWindows.c:3521
+#: devWindows.c:3546
 msgid "processing of the plot ran out of memory"
 msgstr "обработка графика исчерпала память"
 
-#: devWindows.c:3505
+#: devWindows.c:3506
 msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
-#: devWindows.c:3532
+#: devWindows.c:3533
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Невозможно загрузить Rbitmap.dll"
 
-#: devWindows.c:3574
+#: devWindows.c:3575
 msgid "invalid 'width' or 'height'"
 msgstr "неправильная 'width' или 'height'"
 
-#: devWindows.c:3777
+#: devWindows.c:3778
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Не могу загрузить winCairo.dll: его действительно собрали?"
 

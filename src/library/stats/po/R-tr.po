@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24\n"
+"POT-Creation-Date: 2012-02-19 08:56\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -2020,6 +2020,10 @@ msgstr "bütün sıklıkların negatif olmaması tavsiye edilir"
 
 msgid "some weights should be positive"
 msgstr "bazı sıklıkların pozitif olması tavsiye edilir"
+
+#, fuzzy
+msgid "'tol' must be strictly positive and finite"
+msgstr "'ratio' tek bir pozitif tamsayı olmalı"
 
 msgid "need at least four unique 'x' values"
 msgstr "en az dört eşsiz 'x' değeri gerekli"

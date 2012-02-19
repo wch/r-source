@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-04 10:00+0000\n"
+"POT-Creation-Date: 2012-02-19 08:56+0000\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -221,7 +221,7 @@ msgstr "postscript(print.it=TRUE) usato con un comando print vuoto"
 msgid "invalid page type '%s' (postscript)"
 msgstr "tipo pagina '%s' non valida (postscript)"
 
-#: devPS.c:3454 devPS.c:4567 devWindows.c:2326
+#: devPS.c:3454 devPS.c:4567 devWindows.c:2327
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -442,14 +442,14 @@ msgstr "parametro 'family' non valido in %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "parametro 'fonts' non valido in %s"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3579 devWindows.c:3583
-#: devWindows.c:3591 devWindows.c:3602 devWindows.c:3608 devWindows.c:3615
-#: devWindows.c:3622 devWindows.c:3626
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3580 devWindows.c:3584
+#: devWindows.c:3592 devWindows.c:3603 devWindows.c:3609 devWindows.c:3616
+#: devWindows.c:3623 devWindows.c:3627
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "valore di 'bg' non valido in devWindows"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3659
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3660
 #, fuzzy, c-format
 msgid "unable to start %s() device"
 msgstr "impossibile aprire dispositivo pdf"
@@ -488,7 +488,7 @@ msgstr "impossibile aprire dispositivo PostScript"
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1547
+#: devQuartz.c:1585
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "Il dispositivo Quartz non è disponibile per questa piattaforma"
@@ -541,7 +541,7 @@ msgstr ""
 msgid "Unable to allocate bitmap"
 msgstr "Impossibile allocare bitmap"
 
-#: devWindows.c:1816 devWindows.c:1850 devWindows.c:2173
+#: devWindows.c:1816 devWindows.c:1850 devWindows.c:2174
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Impossibile aprire file '%s' in scrittura"
@@ -572,74 +572,74 @@ msgstr "Impossibile aprire appunti per scrittura metafile"
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Memoria insufficiente per resize. Chiudo il dispositivo"
 
-#: devWindows.c:2129
+#: devWindows.c:2130
 #, fuzzy
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Memoria insufficiente per resize. Chiudo il dispositivo"
 
-#: devWindows.c:2158
+#: devWindows.c:2159
 msgid "A clipboard metafile can store only one figure."
 msgstr "Gli appunti possono memorizzare una sola figura."
 
-#: devWindows.c:2164
+#: devWindows.c:2165
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:3045 devWindows.c:3683
+#: devWindows.c:3046 devWindows.c:3684
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3059
+#: devWindows.c:3060
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: devWindows.c:3323
+#: devWindows.c:3324
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'opzione 'windowsTimeouts' dovrebbe essere un intero"
 
-#: devWindows.c:3344
+#: devWindows.c:3345
 #, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr "numero dispositivo non valido in savePlot"
 
-#: devWindows.c:3346
+#: devWindows.c:3347
 #, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr "dispositivo non valido in savePlot"
 
-#: devWindows.c:3349
+#: devWindows.c:3350
 msgid "invalid filename argument in savePlot"
 msgstr "nome file non valido in savePlot"
 
-#: devWindows.c:3354
+#: devWindows.c:3355
 #, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr "argomento type non valido in savePlot"
 
-#: devWindows.c:3381
+#: devWindows.c:3382
 msgid "unknown type in savePlot"
 msgstr "type sconosciuto in savePlot"
 
-#: devWindows.c:3426 devWindows.c:3459 devWindows.c:3488 devWindows.c:3520
-#: devWindows.c:3545
+#: devWindows.c:3427 devWindows.c:3460 devWindows.c:3489 devWindows.c:3521
+#: devWindows.c:3546
 msgid "processing of the plot ran out of memory"
 msgstr "mancanza di memoria nel processare il grafico"
 
-#: devWindows.c:3505
+#: devWindows.c:3506
 msgid "Impossible to open "
 msgstr "Impossibile aprire "
 
-#: devWindows.c:3532
+#: devWindows.c:3533
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossibile caricare Rbitmap.dll"
 
-#: devWindows.c:3574
+#: devWindows.c:3575
 #, fuzzy
 msgid "invalid 'width' or 'height'"
 msgstr "'width' o 'height' non validi in devWindows"
 
-#: devWindows.c:3777
+#: devWindows.c:3778
 #, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Impossibile caricare Rbitmap.dll"
