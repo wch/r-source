@@ -169,7 +169,7 @@
       \file{.so} file: this is helpful when debugging with
       \command{valgrind} (and especially when installing packages into
       \file{R.framework}).  [This can also be enabled by setting the
-      undocumented environment variable \env{PKG_NAKE_DSYM}, since \R
+      undocumented environment variable \env{PKG_MAKE_DSYM}, since \R
       2.12.0.]
 
       \item \command{R CMD INSTALL} will test loading under all installed
