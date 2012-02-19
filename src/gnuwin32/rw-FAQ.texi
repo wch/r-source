@@ -845,13 +845,10 @@ than the 32-bit build on a recent CPU (Intel Core 2 or later or AMD
 equivalent).
 
 For advanced users the choice may be dictated by whether the contributed
-packages needed are available in 64-bit builds (and if CRAN binary
-packages are not that is some indication that installing them from
-sources is problematic).  At the time of writing the most commonly-used
-CRAN packages without 64-bit versions were @code{BRugs} and
-@code{rggobi}.  The considerations can be more complex: for example
-32/64-bit @code{RODBC} need 32/64-bit ODBC drivers respectively, and
-where both exist they may not be able to be installed together.  An
+packages needed are available in 64-bit builds (although CRAN only
+offers 32/64-bit builds).  The considerations can be more complex: for
+example 32/64-bit @code{RODBC} need 32/64-bit ODBC drivers respectively,
+and where both exist they may not be able to be installed together.  An
 extreme example is the Microsoft Access/Excel ODBC drivers: if you have
 installed 64-bit Microsoft Office you can only install the 64-bit
 drivers and so need to use 64-bit @code{RODBC} and hence R.  (And
