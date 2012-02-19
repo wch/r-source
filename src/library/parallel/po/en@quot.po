@@ -27,7 +27,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.1\n"
+"Project-Id-Version: R 2.14.2\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-10-19 07:22+0100\n"
 "PO-Revision-Date: 2011-10-19 07:22+0100\n"
