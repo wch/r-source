@@ -116,7 +116,7 @@
 
       \item \code{predict.lm(*, type="terms", terms=*, se.fit=TRUE)} did
       not work.  (\PR{14817})
-      
+
       \item There is a partial workaround for errors in the TRE
       regular-expressions engine with named classes and repeat counts of
       at least 2 in a MBCS locale (\PR{14408}): these are avoided when
@@ -136,6 +136,9 @@
 
       \item \code{mclapply()} would fail in code assembling the translated
       error message if some (but not all) cores encountered an error.
+
+      \item \code{format.POSIXlt(x)} raised an arithmetic exception when
+      parts of \code{x} were empty.
     }
   }
 }

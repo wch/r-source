@@ -493,7 +493,7 @@ double currentTime(void)
 #else
     /* No known current OSes */
     time_t res = time(NULL);
-    if(res != (time_t)(-1)) /* -1 must be an error as the real value -1 
+    if(res != (time_t)(-1)) /* -1 must be an error as the real value -1
 			       was ca 1969 */
 	ans = (double) res;
 #endif
@@ -802,7 +802,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = getAttrib(x, install("tzone"));
 
     if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
-	/* If the format includes %Z or %z 
+	/* If the format includes %Z or %z
 	   we need to try to set TZ accordingly */
 	int needTZ = 0;
 	for(i = 0; i < m; i++) {
@@ -824,8 +824,12 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
 					  i > 0 ? INTSXP : REALSXP));
     }
+    if(n > 0) {
+	for(i = 0; i < 9; i++)
+	    if(nlen[i] == 0)
+		error(_("zero length component in non-empty POSIXlt structure"));
+    }
     if(n > 0) N = (m > n) ? m:n; else N = 0;
-
     PROTECT(ans = allocVector(STRSXP, N));
     for(i = 0; i < N; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
@@ -857,7 +861,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strcat(buf2, tm.tm_isdst > 0 ? tzname[1] : tzname[0]);
 		    strcat(buf2, p+2);
 		} else
-#endif		    
+#endif
 		    strcpy(buf2, q);
 
 		p = strstr(q, "%OS");
@@ -1008,7 +1012,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm.tm_isdst = -1;
 	    if (offset != NA_INTEGER) {
 		/* we know the offset, but not the timezone
-		   so all we can do is to convert to time_t, 
+		   so all we can do is to convert to time_t,
 		   adjust and convert back */
 		double t0;
 		memcpy(&tm2, &tm, sizeof(struct tm));
