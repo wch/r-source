@@ -3511,7 +3511,7 @@ function(package, dir, lib.loc = NULL)
             use_aliases_from_CRAN <- FALSE
         else
             CRAN_web_packages_dir <-
-                sprintf(sprintf("%s/web/packages", substring(CRAN, 8L)))
+                sprintf("%s/web/packages", substring(CRAN, 8L))
     }
 
     for (pkg in unique(thispkg[have_anchor])) {
@@ -5274,6 +5274,30 @@ function(dir)
     if(v_m <= max(v_d))
         out$bad_version <- list(v_m, v_d)
 
+    ## Check submission recency and frequency.
+    ## Currently, this requires getting the mtimes from a local CRAN
+    ## file:// mirror.
+    if(substring(CRAN, 1L, 7L) == "file://") {
+        CRAN_src_contrib_dir <-
+            sprintf("%s/src/contrib", substring(CRAN, 8L))
+        g <- sprintf("%s_*.tar.gz", package)
+        files <- Sys.glob(c(file.path(CRAN_src_contrib_dir, g),
+                            file.path(CRAN_src_contrib_dir, "Archive",
+                                      package, g)))
+        if(length(files)) {
+            deltas <- Sys.Date() -
+                as.Date(sort(file.info(files)$mtime, decreasing = TRUE))
+            ## Number of days since last update.
+            recency <- as.numeric(deltas[1L])
+            if(recency < 7)
+                out$recency <- recency
+            ## Number of updates in past 6 months.
+            frequency <- sum(deltas <= 180)
+            if(frequency > 6)
+                out$frequency <- frequency
+        }
+    }
+
     ## Watch out for maintainer changes.
     ## Note that we cannot get the maintainer info from the PACKAGES
     ## files.
@@ -5314,6 +5338,10 @@ function(x, ...)
       if(length(y <- x$bad_version))
           sprintf("Insufficient package version (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
+      if(length(y <- x$recency))
+          sprintf("Days since last update: %d", y),
+      if(length(y <- x$frequency))
+          sprintf("Number of updates in past 6 months: %d", y),
       if(length(y <- x$new_maintainer))
           c("New maintainer:",
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
