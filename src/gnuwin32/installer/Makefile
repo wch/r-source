@@ -157,7 +157,7 @@ extras:
 ## for Inno Setup installer
 
 R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
-   CustomMsg.txt imagedir fixups 32bit extras md5sums \
+   CustomMsg.iss imagedir fixups 32bit extras md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	../../../bin$(R_ARCH)/Rscript JRins.R \
 	  $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
