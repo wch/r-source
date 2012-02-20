@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-hooks.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-hooks}
@@ -66,6 +66,7 @@
   package becomes visible to the user (for example a start-up message)
   or need to be run after the package environment has been created.
 }
+
 \section{Good practice}{
   Loading a namespace should where possible be silent, with startup
   messages given by \code{.onAttach}.  These messages (and any essential
@@ -85,7 +86,13 @@
   display basic information about the package should use \code{format}
   on the computed package information object and pass this to
   \code{packageStartupMessage}.
+  
+  There should be no calls to \code{\link{installed.packages}} in startup
+  code: it is potentially very slow and may fail in versions of \R
+  before 2.14.2 if package installation is going on in parallel.  See
+  its help page for alternatives.
 }
+
 \seealso{
   \code{\link{setHook}} shows how users can set hooks on the same events, and 
   lists the sequence of events involving all of the hooks.
