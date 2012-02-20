@@ -458,19 +458,19 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 
 ## Read packages' Description and aggregate 'fields' into a character matrix
-## NB: this does not handle encodings, so only suitable for
-## ASCII-only fields.
+## NB: this does not handle encodings, so only suitable for ASCII-only fields.
 .readPkgDesc <- function(lib, fields, pkgs = list.files(lib))
 {
     ## to be used in installed.packages() and similar
-    ## FIXME: this is vulnerable to installs going on in parallel
     ## As from 2.13.0 only look at metadata.
     ret <- matrix(NA_character_, length(pkgs), 2L+length(fields))
     for(i in seq_along(pkgs)) {
         pkgpath <- file.path(lib, pkgs[i])
         if(file.access(pkgpath, 5L)) next
         if (file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
-            md <- readRDS(file)
+            ## this is vulnerable to installs going on in parallel
+            md <- try(readRDS(file))
+            if(inherits(md, "try-error")) next
             desc <- md$DESCRIPTION[fields]
             if (!length(desc)) {
                 warning(gettextf("metadata of %s is corrupt", sQuote(pkgpath)),

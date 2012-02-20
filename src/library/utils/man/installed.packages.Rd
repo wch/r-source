@@ -65,8 +65,9 @@ installed.packages(lib.loc = NULL, priority = NULL,
 \note{
   This can be slow when thousands of packages are installed, so do not
   use this to find out if a named package is installed (use
-  \code{\link{system.file}} or \code{\link{find.package}} from package
-  \pkg{base}) nor to find details of a small number of packages (use
+  \code{\link{system.file}} or \code{\link{find.package}}) nor to find
+  out if a package is usable (call \code{\link{require}} and check the
+  return value) nor to find details of a small number of packages (use
   \code{\link{packageDescription}}).  It needs to read several files per
   installed package, which will be slow on Windows and on some
   network-mounted file systems.
@@ -77,10 +78,11 @@ installed.packages(lib.loc = NULL, priority = NULL,
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
 \examples{
-str(ip <- installed.packages(priority = "high"))
+## confine search to .Library for speed
+str(ip <- installed.packages(.Library, priority = "high"))
 ip[, c(1,3:5)]
-plic <- installed.packages(priority = "high", fields="License")
+plic <- installed.packages(.Library, priority = "high", fields = "License")
 ## what licenses are there:
-table( plic[,"License"] )
+table( plic[, "License"] )
 }
 \keyword{utilities}

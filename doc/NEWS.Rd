@@ -125,6 +125,10 @@
       \item The internal \code{R_Srcref} variable is now updated
       before the browser stops on entering a function.  (Suggestion of
       \PR{14818}.)
+      
+      \item There are \sQuote{bare-bones} functions \code{.colSums()},
+      \code{.rowSums()}, \code{.colMeans()} and \code{.rowMeans()} for
+      use in programming where ultimate speed is required.
     }
   }
 
@@ -443,7 +447,11 @@
       error message if some (but not all) cores encountered an error.
 
       \item \code{format.POSIXlt(x)} raised an arithmetic exception when
-      parts of \code{x} were empty.
+      \code{x} was a valid object of class \code{"POSIXlt"} and parts
+      were empty.
+      
+      \item \code{installed.packages()} has some more protection against
+      package installs going on in parallel. 
     }
   }
 }
