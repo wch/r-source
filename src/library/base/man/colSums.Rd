@@ -1,6 +1,6 @@
 % File src/library/base/man/colSums.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{colSums}
@@ -8,6 +8,10 @@
 \alias{rowSums}
 \alias{colMeans}
 \alias{rowMeans}
+\alias{.colSums}
+\alias{.rowSums}
+\alias{.colMeans}
+\alias{.rowMeans}
 \title{Form Row and Column Sums and Means}
 \description{
   Form row and column sums and means for numeric arrays.
@@ -17,6 +21,11 @@ colSums (x, na.rm = FALSE, dims = 1)
 rowSums (x, na.rm = FALSE, dims = 1)
 colMeans(x, na.rm = FALSE, dims = 1)
 rowMeans(x, na.rm = FALSE, dims = 1)
+
+.colSums(X, m, n, na.rm = FALSE)
+.rowSums(X, m, n, na.rm = FALSE)
+.colMeans(X, m, n, na.rm = FALSE)
+.rowMeans(X, m, n, na.rm = FALSE)
 }
 \arguments{
   \item{x}{an array of two or more dimensions, containing numeric,
@@ -27,8 +36,8 @@ rowMeans(x, na.rm = FALSE, dims = 1)
     \sQuote{columns} to sum over.  For \code{row*}, the sum or mean is
     over dimensions \code{dims+1, \dots}; for \code{col*} it is over
     dimensions \code{1:dims}.}
-  % \item{\dots}{potential further arguments for methods, when these are
-  %   made into generic functions.}%% FIXME: Should rather use implicitGeneric()
+  \item{X}{a numeric matrix.}
+  \item{m, n}{the dimensions of X.}
 }
 \details{
   These functions are equivalent to use of \code{\link{apply}} with
@@ -44,11 +53,16 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   and vice versa.  To use only complete rows or columns, first select
   them with \code{\link{na.omit}} or \code{\link{complete.cases}}
   (possibly on the transpose of \code{x}). 
+  
+  The versions with an initial dot in the name are \sQuote{bare-bones}
+  versions for use in programming: they apply only to numeric matrices
+  and do not name the result.
 }
 \value{
-  A numeric or complex array of suitable size, or a vector if the result is
-  one-dimensional.  The \code{dimnames} (or \code{names} for a vector
-  result) are taken from the original array.
+  A numeric or complex array of suitable size, or a vector if the result
+  is one-dimensional.  For the first four functions the \code{dimnames}
+  (or \code{names} for a vector result) are taken from the original
+  array.
 
   If there are no values in a range to be summed over (after removing
   missing values with \code{na.rm = TRUE}), that

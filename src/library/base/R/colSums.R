@@ -97,3 +97,13 @@ rowMeans <- function(x, na.rm = FALSE, dims = 1L)
     } else  names(z) <- dimnames(x)[[1L]]
     z
 }
+
+.colSums <- function(X, m, n, na.rm = FALSE)
+    .Internal(colSums(X, m, n, na.rm))
+.colMeans <- function(X, m, n, na.rm = FALSE)
+    .Internal(colMeans(X, m, n, na.rm))
+
+.rowSums <- function(X, m, n, na.rm = FALSE)
+    .Internal(rowSums(X, m, n, na.rm))
+.rowMeans <- function(X, m, n, na.rm = FALSE)
+    .Internal(rowMeans(X, m, n, na.rm))

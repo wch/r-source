@@ -447,7 +447,7 @@
       error message if some (but not all) cores encountered an error.
 
       \item \code{format.POSIXlt(x)} raised an arithmetic exception when
-      \code{x} was a valid object of class \code{"POSIXlt"} and parts
+      \code{x} was an invalid object of class \code{"POSIXlt"} and parts
       were empty.
       
       \item \code{installed.packages()} has some more protection against
