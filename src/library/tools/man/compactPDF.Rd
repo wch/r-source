@@ -5,6 +5,7 @@
 
 \name{compactPDF}
 \alias{compactPDF}
+\alias{format.compactPDF}
 \title{
   Compact PDF Files
 }
@@ -13,26 +14,35 @@
   Support function for \command{R CMD build --compact-vignettes}.
 }
 \usage{
-compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
+compactPDF(paths,
+           qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
            gs_cmd = Sys.getenv("R_GSCMD", ""),
            gs_quality = Sys.getenv("GS_QUALITY", "none"),
            gs_extras = character())
+
+\method{format}{compactPDF}(x, ratio = 0.9, diff = 1e4, ...)
 }
 \arguments{
   \item{paths}{A character vector of paths to PDF files, or a length-one
     character vector naming a directory, when all \file{.pdf} files in
     that directory will be used.}
   \item{qpdf}{Character string giving the path to the \command{qpdf}
-    command.}
+    command.  If empty, \command{qpdf} will not be used.}
   \item{gs_cmd}{Character string giving the path to the GhostScript
     executable, if that is to be used.  On Windows this is the path to
-    \file{gswin32c.exe} or \file{gswin64c.exe}.}
+    \file{gswin32c.exe} or \file{gswin64c.exe}.  If \code{""}, the
+    function will try to find a platform-specific path to GhostScript.}
   \item{gs_quality}{A character string indicating the quality required:
     the options are \code{"none"} (so GhostScript is not used),
     \code{"printer"} (300dpi), \code{"ebook"} (150dpi) and
     \code{"screen"} (72dpi).}
   \item{gs_extras}{An optional character vector of further options to be
     passed to GhostScript.}
+  \item{x}{An object of class \code{"compactPDF"}.}
+  \item{ratio, diff}{Limits for reporting: files are only reported whose
+    sizes are reduced by both a factor of \code{ratio} and by
+    \code{diff} bytes.}
+  \item{\dots}{Further arguments to be passed to or from other methods.}
 }
 \details{
   This by default makes use of \command{qpdf}, available from
@@ -65,12 +75,21 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
   seem to be the default for MiKTeX's \command{pdflatex}.  For some PDF
   files (and especially package vignettes), using GhostScript can
   dramatically reduce the space taken by embedded images (often screenshots).
+  
+  Where both Ghostscript and \command{qpdf} are selected (when
+  \code{gs_quality != "none"} and both executables are found), they are
+  run in that order and the size reductions apply to the total
+  compression achieved.
 }
 
 \value{
-  An object of class \code{c("compactPDF", "data.frame")} with
-  \code{format} and \code{print} methods.  This has two columns, the old
-  and new sizes in bytes for the files that were changed.
+  An object of class \code{c("compactPDF", "data.frame")}.
+  This has two columns, the old and new sizes in bytes for the files
+  that were changed.
+
+  There are \code{format} and \code{print} methods: the latter passes
+  \code{\dots} to the format method, so will accept \code{ratio} and
+  \code{diff} arguments.
 }
 
 \note{

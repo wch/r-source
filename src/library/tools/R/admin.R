@@ -892,16 +892,15 @@ compactPDF <-
              gs_quality = Sys.getenv("GS_QUALITY", "none"),
              gs_extras = character())
 {
+    use_qpdf <- nzchar(qpdf)
+    gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
+    use_gs <- if(gs_quality != "none") nzchar(gs_cmd <- find_gs_cmd(gs_cmd)) else FALSE
+    if (!use_gs && !use_qpdf) return()
     if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
         paths <- Sys.glob(file.path(paths, "*.pdf"))
-    gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
-    tf <- tempfile("pdf")
-    tf2 <- tempfile("pdf")
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
-    use_gs <- if(gs_quality != "none") nzchar(gs_cmd <- find_gs_cmd(gs_cmd)) else FALSE
-    use_qpdf <- nzchar(Sys.which(qpdf))
-    if (!use_gs && !use_qpdf) return()
+    tf <- tempfile("pdf"); tf2 <- tempfile("pdf")
     for (p in paths) {
         res <- 0
         if (use_gs) {
@@ -913,7 +912,8 @@ compactPDF <-
                              sprintf("-sOutputFile=%s", tf),
                              gs_extras, p), FALSE, FALSE)
             if(!res && use_qpdf) {
-                file.copy(tf, tf2, overwrite = TRUE)
+                unlink(tf2) # precaution
+                file.rename(tf, tf2)
                 res <- system2(qpdf, c("--stream-data=compress",
                                        "--object-streams=generate",
                                        tf2, tf), FALSE, FALSE)

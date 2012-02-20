@@ -402,12 +402,21 @@ get_exclude_patterns <- function()
             length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE,
                                full.names = TRUE))) {
             messageLog(Log, "compacting vignettes and other PDF files")
-            gs_quality <-
-                ifelse(compact_vignettes %in% c("gs", "both"), "eZXSbook", "none")
+            if(compact_vignettes %in% c("gs", "both")) {
+                gs_cmd <- find_gs_cmd(Sys.getenv("R_GSCMD", ""))
+                gs_quality <- "ebook"
+            } else {
+                gs_cmd <- ""
+                gs_quality <- "none"
+            }
             qpdf <-
                 ifelse(compact_vignettes %in% c("qpdf", "both"),
                        Sys.which(Sys.getenv("R_QPDF", "qpdf")), "")
-            compactPDF(pdfs, qpdf = qpdf, gs_cmd = gs_cmd, gs_quality = gs_quality)
+            res <- compactPDF(pdfs, qpdf = qpdf,
+                              gs_cmd = gs_cmd, gs_quality = gs_quality)
+            res <- format(res, diff = 1e5)
+            if(length(res))
+                printLog(Log, paste(" ", format(res), collapse = "\n"), "\n")
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
