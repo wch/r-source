@@ -1097,12 +1097,32 @@ function(x)
 {
     if(is.character(x))
         x <- .read_authors_at_R_field(x)
+    header <- attr(x, "header")
+    footer <- attr(x, "footer")
     x <- sapply(x, .format_person_for_plain_author_spec)
     ## Drop persons with irrelevant roles.
     x <- x[x != ""]
     ## And format.
     if(!length(x)) return("")
-    paste(strwrap(x, indent = 0L, exdent = 4L), collapse = ",\n  ")
+    ## We need to ensure that the first line has no indentation, whereas
+    ## all subsequent lines are indented (as .write_description avoids
+    ## folding for Author fields).  We use a common indentation of 2,
+    ## with an extra indentation of 2 within single author descriptions.
+    out <- paste(lapply(strwrap(x, indent = 0L, exdent = 4L,
+                                simplify = FALSE),
+                        paste, collapse = "\n"),
+                 collapse = ",\n  ")
+    if(!is.null(header)) {
+        header <- paste(strwrap(header, indent = 0L, exdent = 2L),
+                        collapse = "\n")
+        out <- paste(header, out, sep = "\n  ")
+    }
+    if(!is.null(footer)) {
+        footer <- paste(strwrap(footer, indent = 2L, exdent = 2L),
+                        collapse = "\n")
+        out <- paste(out, footer, sep = ".\n")
+    }
+    out
 }
 
 .format_authors_at_R_field_for_maintainer <-
