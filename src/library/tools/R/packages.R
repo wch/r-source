@@ -283,6 +283,8 @@ function(packages = NULL, db,
                          }),
                   list(USE.NAMES = FALSE)))
 
+    depends <- lapply(depends, unique)
+
     if(!recursive && !reverse) {
         names(depends) <- db[, "Package"]
         if(length(out_of_db_packages)) {
