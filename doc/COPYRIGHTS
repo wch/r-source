@@ -300,6 +300,7 @@ src/main/dounzip.c, unzip.h
 
 src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
+src/main/valid_utf8.h
 
    Copyright (c) 1997-2012 University of Cambridge
    All rights reserved.

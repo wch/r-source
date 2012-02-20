@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Development Core Team
+ *  Copyright (C) 1997--2012  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1257,32 +1257,12 @@ Rboolean mbcsValid(const char *str)
     return  ((int)mbstowcs(NULL, str, 0) >= 0);
 }
 
-#include "pcre.h"
-/* This changed at 8.13 and again at 8.30: we don't allow < 8.0 */
-#if PCRE_MAJOR > 8 || PCRE_MINOR >= 30
-extern int _pcre_valid_utf(const char *string, int length, int *erroroffset);
 
+#include "valid_utf8.h"
 Rboolean utf8Valid(const char *str)
 {
-    int errp;
-    return  (_pcre_valid_utf(str, (int) strlen(str), &errp) == 0);
+    return valid_utf8(str, strlen(str)) == 0;
 }
-#elif PCRE_MINOR >= 13
-extern int _pcre_valid_utf8(const char *string, int length, int *erroroffset);
-
-Rboolean utf8Valid(const char *str)
-{
-    int errp;
-    return  (_pcre_valid_utf8(str, (int) strlen(str), &errp) == 0);
-}
-#else
-extern int _pcre_valid_utf8(const char *string, int length);
-
-Rboolean utf8Valid(const char *str)
-{
-    return  (_pcre_valid_utf8(str, (int) strlen(str)) < 0);
-}
-#endif
 
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */

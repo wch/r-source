@@ -68,11 +68,10 @@ printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
 serialize-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
-util-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
-util-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
+util-CPPFLAGS=-DLZMA_API_STATIC -I../extra/xz/api
 
 ifdef USE_ICU
-util-CPPFLAGS=-DUSE_ICU -I"$(ICU_PATH)"/include
+util-CPPFLAGS+=-DUSE_ICU -I"$(ICU_PATH)"/include
 endif
 
 libmain.a: $(OBJS)
