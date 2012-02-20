@@ -237,7 +237,7 @@ function(ap)
     if(length(stale_dups)) ap[-stale_dups, , drop = FALSE] else ap
 }
 
-.package_dependencies <-
+package_dependencies <-
 function(packages = NULL, db,
          which = c("Depends", "Imports", "LinkingTo"),
          recursive = FALSE, reverse = FALSE)
@@ -380,6 +380,16 @@ function(packages = NULL, db,
                         names = out_of_db_packages))
     }
     depends
+}
+
+
+.package_dependencies <- function(packages = NULL, db,
+         which = c("Depends", "Imports", "LinkingTo"),
+         recursive = FALSE, reverse = FALSE)
+{
+    .Deprecated("package_dependencies")
+    package_dependencies(packages = packages, db = db,
+         which = which, recursive = recursive, reverse = reverse)
 }
 
 .extract_dependency_package_names <-

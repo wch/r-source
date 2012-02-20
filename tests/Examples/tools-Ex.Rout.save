@@ -624,6 +624,29 @@ NULL
 > 
 > 
 > cleanEx()
+> nameEx("package_dependencies")
+> ### * package_dependencies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: package_dependencies
+> ### Title: Computations on the Dependency Hierarchy of Packages
+> ### Aliases: package_dependencies
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D pdb <- available.packages()
+> ##D deps <- package_dependencies(packages = "MASS", pdb,
+> ##D                     which = c("Depends", "Imports", "LinkingTo", "Suggests"),
+> ##D                     recursive = TRUE, reverse = TRUE)
+> ##D length(deps$MASS)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("parseLatex")
 > ### * parseLatex
 > 

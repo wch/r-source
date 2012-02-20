@@ -129,6 +129,12 @@
       \item There are \sQuote{bare-bones} functions \code{.colSums()},
       \code{.rowSums()}, \code{.colMeans()} and \code{.rowMeans()} for
       use in programming where ultimate speed is required.
+
+      \item The formerly internal function 
+      \code{.package_dependencies()} from package \pkg{tools} for 
+      calculating (recursive) (reverse) dependencies on package databases 
+      has been renamed to \code{package_dependencies()} and is now 
+      exported.
     }
   }
 

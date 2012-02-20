@@ -241,7 +241,7 @@ function(db)
     ## Now find the recursive reverse dependencies of these and the
     ## packages missing from the db.
     depends <-
-        tools:::.package_dependencies(db1$Package[ind], db = db1,
+        tools:::package_dependencies(db1$Package[ind], db = db1,
                                       reverse = TRUE, recursive = TRUE)
     depends <- unique(unlist(depends))
     ind[match(depends, db1$Package, nomatch = 0L)] <- TRUE
