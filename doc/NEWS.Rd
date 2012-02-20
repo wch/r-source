@@ -6,6 +6,7 @@
 \title{ R News}
 \encoding{UTF-8}
 
+
 \section{\Rlogo CHANGES IN R VERSION 2.14.2}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -138,7 +139,11 @@
       error message if some (but not all) cores encountered an error.
 
       \item \code{format.POSIXlt(x)} raised an arithmetic exception when
-      parts of \code{x} were empty.
+      \code{x} was an in valid object of class \code{"POSIXlt"} and parts
+      were empty.
+      
+      \item \code{installed.packages()} has some more protection against
+      package installs going on in parallel. 
     }
   }
 }

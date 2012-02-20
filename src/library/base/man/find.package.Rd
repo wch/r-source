@@ -42,7 +42,15 @@ path.package(package, quiet = FALSE)
   about packages found more than once are given.  For a package to be
   returned it must contain a either a \file{Meta} subdirectory or a
   \file{DESCRIPTION} file containing a valid \code{version} field, but
-  it need not be installed.
+  it need not be installed (it could be a source package if
+  \code{lib.loc} was set suitably).
+
+  \code{find.package} is not usually the right tool to find out if a
+  package is available for use: the only way to do that is to use
+  \code{\link{require}} to try to load it.  It need not be instaled for
+  the correct platform, it might have a version requirement not met by
+  the running version of \R, there might be dependencies which are not
+  available, \dots.
 
   \code{path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently attached packages.
