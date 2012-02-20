@@ -67,11 +67,11 @@ br.Internet0=Padrão
 br.Internet1=Internet2
 
 dk.regentries=Indgange i registreringsdatabasen:
-dk.associate=&Associere R med .RData filer
+dk.associate=&Associer R med .RData-filer
 dk.user=Brugerinstallation
 dk.compact=Minimal brugerinstallation
 dk.full=Luld installation
-dk.custom=Brugerdefinet installation
+dk.custom=Brugerdefineret installation
 dk.adminprivilegesrequired=Du skal helst være logget ind som administrator for at installere R
 dk.adminprivilegesrequired=Du skal helst være logget ind som administrator for at installere R
 dk.adminexplanation=Bemærk: En fuld R-installation kræver administratorrettigheder, og disse ser ikke ud til at være til stede. Hvis du fortsætter installationen, vil du ikke kunne associere R med .RData-filer. Installation skal være til en mappe, hvor du har skrivetilladelse til.
