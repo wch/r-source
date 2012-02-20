@@ -40,7 +40,7 @@ compactPDF(paths,
     passed to GhostScript.}
   \item{x}{An object of class \code{"compactPDF"}.}
   \item{ratio, diff}{Limits for reporting: files are only reported whose
-    sizes are reduced by both a factor of \code{ratio} and by
+    sizes are reduced both by a factor of \code{ratio} and by
     \code{diff} bytes.}
   \item{\dots}{Further arguments to be passed to or from other methods.}
 }
