@@ -4239,6 +4239,8 @@ function(x, ...)
         any(calls %in% .bad_call_names_in_startup_functions$load)
     has_bad_calls_for_output <-
         any(calls %in% .bad_call_names_in_startup_functions$output)
+    has_unsafe_calls <-
+        any(calls %in% .bad_call_names_in_startup_functions$unsafe)
 
     .fmt_entries_for_file <- function(e, f) {
         c(gettextf("File %s:", sQuote(f)),
@@ -4272,6 +4274,10 @@ function(x, ...)
       strwrap(gettextf("Package startup functions should use %s to generate messages.",
                        sQuote("packageStartupMessage")),
               exdent = 2L),
+      if(has_unsafe_calls)
+      strwrap(gettextf("Package startup functions should not call %s.",
+                       sQuote("installed.packages")),
+              exdent = 2L),
       gettextf("See section %s in ?.onAttach.",
                sQuote("Good practice")),
       ""
@@ -4287,7 +4293,8 @@ function(x, ...)
 
 .bad_call_names_in_startup_functions <-
     list(load = c("library", "require"),
-         output = c("cat", "message", "print", "writeLines"))
+         output = c("cat", "message", "print", "writeLines"),
+         unsafe = c("installed.packages", "utils::installed.packages"))
 
 .get_startup_function_calls <-
 function(dir, all = FALSE)
