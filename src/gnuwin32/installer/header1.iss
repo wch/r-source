@@ -39,7 +39,7 @@ Name: chs; MessagesFile: "ChineseSimp.isl"
 Name: cht; MessagesFile: "ChineseTrad.isl"
 Name: ko; MessagesFile: "Korean.isl"
 
-#include "CustomMsg.txt"
+#include "CustomMsg.iss"
 
 [Tasks]
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,5.0
