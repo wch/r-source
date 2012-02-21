@@ -47,7 +47,7 @@ path.package(package, quiet = FALSE)
 
   \code{find.package} is not usually the right tool to find out if a
   package is available for use: the only way to do that is to use
-  \code{\link{require}} to try to load it.  It need not be instaled for
+  \code{\link{require}} to try to load it.  It need not be installed for
   the correct platform, it might have a version requirement not met by
   the running version of \R, there might be dependencies which are not
   available, \dots.

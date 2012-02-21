@@ -141,7 +141,7 @@
       \code{hessian = TRUE} was forgotten.
 
       \item \code{.filled.contour()} is \sQuote{bare-bones} function to
-      add a filled-contour rectangulat plot to an already prepared plot
+      add a filled-contour rectangular plot to an already prepared plot
       region.
     }
   }
