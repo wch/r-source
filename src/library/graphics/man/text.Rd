@@ -44,7 +44,7 @@ text(x, \dots)
     by \code{\link{par}("cex")} yields the final character size.
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
   \item{col, font}{the color and (if \code{vfont = NULL}) font to be
-    used, possibly vectors. These default to the values of the global
+    used, possibly vectors.  These default to the values of the global
     \link{graphical parameters} in \code{\link{par}()}.}
   \item{\dots}{further \link{graphical parameters} (from \code{\link{par}}),
     such as \code{srt}, \code{family} and \code{xpd}.}
