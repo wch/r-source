@@ -442,6 +442,13 @@
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
                     for (file in dylib) system(paste0("dsymutil ", file))
 		}
+
+                if(config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
+                                                    "FALSE"))
+                   && !WINDOWS
+                   && file_test("-f", "symbols.rds")) {
+                    file.copy("symbols.rds", dest)
+                }
             }
         }
 
@@ -1718,6 +1725,11 @@
     ## TCLBIN is needed for tkrplot and tcltk2
     if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64 TCLBIN=64")
 
+    build_objects_symbol_tables <-
+        (config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
+                                          "FALSE"))
+         && !WINDOWS)
+    
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
                  p1(makeobjs))
     if (dry_run) {
@@ -1727,6 +1739,10 @@
     } else {
         if (preclean) system(paste(cmd, "shlib-clean"))
         res <- system(cmd)
+        if(build_objects_symbol_tables) {
+            ## Should only do this if the previous one went ok.
+            system(paste(cmd, "symbols.rds"))
+        }
         if (clean) system(paste(cmd, "shlib-clean"))
     }
     res # probably a multiple of 256

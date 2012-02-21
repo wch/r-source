@@ -192,16 +192,25 @@ function(x, ...)
 {
     if(!length(x)) return(character())
     entries <- split.data.frame(x, x[, "osname"])
+    objects <- attr(x, "objects")
+    if(!length(objects))
+        objects <- vector("list", length(entries))
     c(gettextf("File %s:", sQuote(attr(x, "file"))),
-      unlist(Map(function(u, v)
-                 strwrap(gettextf("Found %s, possibly from %s",
-                                  sQuote(v),
-                                  paste(sprintf("%s (%s)",
-                                                sQuote(u[, "ssname"]),
-                                                u[, "language"]),
-                                        collapse = ", ")),
-                         indent = 2L, exdent = 4L),
-                 entries, names(entries))))
+      unlist(Map(function(u, v, w)
+                 c(strwrap(gettextf("Found %s, possibly from %s",
+                                    sQuote(v),
+                                    paste(sprintf("%s (%s)",
+                                                  sQuote(u[, "ssname"]),
+                                                  u[, "language"]),
+                                          collapse = ", ")),
+                           indent = 2L, exdent = 4L),
+                   if(length(w)) {
+                       strwrap(sprintf("Objects: %s",
+                                       paste(sQuote(w), collapse =
+                                             ", ")),
+                               indent = 4L, exdent = 6L)
+                   }),
+                 entries, names(entries), objects)))
 }
 
 print.check_so_symbols <-
@@ -235,6 +244,39 @@ function(dir)
             Sys.glob(file.path(dir, "libs",
                                sprintf("*%s", .Platform$dynlib.ext)))
         bad <- Filter(length, lapply(so_files, check_so_symbols))
+        objects_symbol_tables_file <-
+            file.path(dir, "libs", "symbols.rds")
+        if(file_test("-f", objects_symbol_tables_file)) {
+            tables <- readRDS(objects_symbol_tables_file)
+            bad <-
+                lapply(bad,
+                       function(x) {
+                           ## Compare symbols in so and in objects:
+                           symbols <-
+                               Filter(length,
+                                      lapply(tables,
+                                             function(tab)
+                                             intersect(x[, "osname"],
+                                                       tab[, "name"])))
+                           ## Drop the so symbols not in any object.
+                           so <- attr(x, "file")
+                           ## (Alternatively, provide a subscript method
+                           ## for class "check_so_symbols".)
+                           osnames_in_objects <-
+                               unique(as.character(unlist(symbols)))
+                           x <- x[!is.na(match(x[, "osname"],
+                                               osnames_in_objects)), ,
+                                  drop = FALSE]
+                           attr(x, "file") <- so
+                           attr(x, "objects") <-
+                               split(rep.int(names(symbols),
+                                             sapply(symbols, length)),
+                                     unlist(symbols))
+                           class(x) <- "check_so_symbols"
+                           x
+                       })
+            bad <- Filter(length, bad)
+        }
     }
     class(bad) <- "check_compiled_code"
     bad
@@ -254,4 +296,13 @@ function(x, ...)
 {
     writeLines(format(x))
     invisible(x)
+}
+
+.shlib_objects_symbol_tables <-
+function(file = "symbols.rds")
+{
+    objects <- commandArgs(trailingOnly = TRUE)
+    tables <- lapply(objects, read_symbols_from_object_file)
+    names(tables) <- objects
+    saveRDS(tables, file = file)
 }
