@@ -238,6 +238,7 @@ get_exclude_patterns <- function()
             "  --compact-vignettes=  try to compact PDF files under inst/doc:",
             '                        "no" (default), "qpdf", "gs", "both"',
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
+            "  --md5                 add MD5 sums",
            "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -751,6 +752,7 @@ get_exclude_patterns <- function()
     force <- FALSE
     vignettes <- TRUE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
+    with_md5 <- FALSE
     INSTALL_opts <- character()
     pkgs <- character()
     options(showErrorCalls = FALSE, warn = 1)
@@ -808,8 +810,10 @@ get_exclude_patterns <- function()
             manual <- FALSE
         } else if (substr(a, 1, 20) == "--compact-vignettes=") {
             compact_vignettes <- substr(a, 21, 1000)
-       } else if (a == "--compact-vignettes") {
+        } else if (a == "--compact-vignettes") {
             compact_vignettes <- "qpdf"
+        } else if (a == "--md5") {
+            with_md5 <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -997,6 +1001,14 @@ get_exclude_patterns <- function()
 	    messageLog(Log, "creating default NAMESPACE file")
 	    writeDefaultNamespace(namespace)
 	}
+
+        if(with_md5) {
+	    messageLog(Log, "adding MD5 file")
+            .installMD5sums(pkgname)
+        } else {
+            ## remove any stale file
+            unlink(file.path(pkgname, "MD5"))
+        }
 
         ## Finalize
         filename <- paste0(pkgname, "_", desc["Version"], ".tar.gz")

@@ -241,6 +241,13 @@
        changed: the checks for unsafe and \code{.Internal()} calls and
        for partial matching of arguments in \R function calls are now
        done by default.
+       
+       \item \command{R CMD build} has a new option \option{--md5} to
+       add an \file{MD5} file (as done by CRAN): this is used by \code{R
+	 CMD INSTALL} to check the integrity of the distribution.
+
+       If this option is not specified, any existing (and probably
+       stale) \file{MD5} file is removed.
      }
    }
 

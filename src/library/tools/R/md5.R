@@ -23,7 +23,7 @@ md5sum <- function(files)
     if (is.null(dot))
         stop("current working directory cannot be ascertained")
     setwd(pkgDir)
-    x <- md5sum(dir(pkgDir, recursive=TRUE))
+    x <- md5sum(dir(".", recursive=TRUE))
     setwd(dot)
     x <- x[names(x) != "MD5"]
     cat(paste(x, names(x), sep=" *"), sep="\n",
