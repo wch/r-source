@@ -76,7 +76,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
     if(test_recommended) {
         ## Now add dummies for recommended packages (removed later if declared)
-        recommended <-  tools:::.get_standard_package_names()$recommended
+        recommended <-  .get_standard_package_names()$recommended
         ## grDevices has :: to KernSmooth
         ## stats has ::: to Matrix, Matrix depends on lattice
         ## These give false positives in aroma.core, MASS and Rcpp
@@ -706,7 +706,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
 
         if (subdirs != "no") {
-            Rcmd = "tools:::.check_package_subdirs(\".\")\n";
+            Rcmd <- "tools:::.check_package_subdirs(\".\")\n"
             ## We don't run this in the C locale, as we only require
             ## certain filenames to start with ASCII letters/digits, and not
             ## to be entirely ASCII.
@@ -807,7 +807,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             ## QC check function eventually ...
             .warnings <- NULL
             .error <- NULL
-            withCallingHandlers(tryCatch(tools:::.build_news_db_from_package_NEWS_Rd(nfile),
+            withCallingHandlers(tryCatch(.build_news_db_from_package_NEWS_Rd(nfile),
                                          error = function(e)
                                          .error <<- conditionMessage(e)),
                                 warning = function(e) {
@@ -2788,7 +2788,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         } else if (!grepl("^check", install)) {
             ## Check for package 'src' subdirectories with object
             ## files (but not if installation was already performed).
-            pat <- "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
+            pat <- "(a|o|[ls][ao]|sl|obj)" # Object file extensions.
             any <- FALSE
             srcd <- file.path(pkgdir, "src")
             if (dir.exists(srcd) &&

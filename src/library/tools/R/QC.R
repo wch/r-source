@@ -4161,7 +4161,7 @@ function(dir)
     ## Similar to .check_package_code_shlib():
     dfile <- file.path(dir, "DESCRIPTION")
     enc <- if(file.exists(dfile))
-        tools:::.read_description(dfile)["Encoding"] else NA
+        .read_description(dfile)["Encoding"] else NA
 
     bad_call_names <-
         unlist(.bad_call_names_in_startup_functions)
@@ -4300,13 +4300,13 @@ function(x, ...)
 function(dir, all = FALSE)
 {
     dfile <- file.path(dir, "DESCRIPTION")
-    if(is.na(encoding <- tools:::.read_description(dfile)["Encoding"]))
+    if(is.na(encoding <- .read_description(dfile)["Encoding"]))
         encoding <- NA
     files <- if(all)
-        tools::list_files_with_type(file.path(dir, "R"), "code")
+        list_files_with_type(file.path(dir, "R"), "code")
     else
-        tools::list_files_with_type(file.path(dir, "R"), "code",
-                                    OS_subdirs = c("unix", "windows"))
+        list_files_with_type(file.path(dir, "R"), "code",
+                             OS_subdirs = c("unix", "windows"))
     calls <-
         lapply(files, .get_startup_function_calls_in_file, encoding)
     as.list(unlist(calls, recursive = FALSE))
