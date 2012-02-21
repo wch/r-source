@@ -1,6 +1,6 @@
 % File src/library/graphics/man/par.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -234,9 +234,10 @@ par(\dots, no.readonly = FALSE)
       Note that some graphics functions such as
       \code{\link{plot.default}} have an \emph{argument} of this name
       which \emph{multiplies} this graphical parameter, and some
-      functions such as \code{\link{points}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
+      functions such as \code{\link{points}} and \code{\link{text}}
+      accept a vector of values which are recycled.  Other uses will
+      take just the first value if a vector of length greater than one
+      is supplied.
     }
     \item{\code{cex.axis}}{The magnification to be used for axis
       annotation relative to the current setting of \code{cex}.}
@@ -251,9 +252,10 @@ par(\dots, no.readonly = FALSE)
       as \code{cra}, expressed in different units.}
     \item{\code{col}}{A specification for the default plotting color.  See
       section \sQuote{Color Specification}.
-      (Some functions such as \code{\link{lines}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.)
+      (Some functions such as \code{\link{lines}} and \code{\link{text}}
+      accept a vector of values which are recycled and may be
+      interpreted slightly differently.  Other uses will take just the
+      first value if a vector of length greater than one is supplied.)
     }
     \item{\code{col.axis}}{The color to be used for axis
       annotation.  Defaults to \code{"black"}.}
@@ -600,10 +602,14 @@ par(\dots, no.readonly = FALSE)
   apparently some people have been assuming it, it is also possible to
   specify integers as character strings, e.g. \code{"3"}.)
 
-  Additionally, \code{"transparent"} or (integer) \code{NA} is
-  \emph{transparent}, useful for filled areas (such as the background!),
-  and just invisible for things like lines or text.  Semi-transparent
-  colors are available for use on devices that support them.
+  Additionally, \code{"transparent"} is \emph{transparent}, useful for
+  filled areas (such as the background!), and just invisible for things
+  like lines or text.  In most circumstances (integer) \code{NA}
+  is equivalent to \code{"transparent"} (but not for
+  \code{\link{text}} and \code{\link{mtext}}).
+
+  Semi-transparent colors are available for use on devices that support
+  them.
 
   The functions \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{hcl}},
   \code{\link{gray}} and \code{\link{rainbow}}
