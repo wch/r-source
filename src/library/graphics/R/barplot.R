@@ -49,7 +49,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     } else if (is.matrix(height)) {
 	## In the matrix case, we use "colors" by default.
 	if(is.null(col))
-	    col <- grey.colors(nrow(height))
+	    col <- gray.colors(nrow(height))
     }
     else
 	stop("'height' must be a vector or a matrix")

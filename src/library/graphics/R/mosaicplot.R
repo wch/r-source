@@ -290,7 +290,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         color <-
             if(is.logical(color))
                 if(color[1L])
-                    grey.colors(ncolors)
+                    gray.colors(ncolors)
                 else
                     rep.int(0, ncolors)
             else if(is.null(color))

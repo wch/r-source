@@ -1,4 +1,9 @@
-import(grDevices)
+importFrom(grDevices, as.graphicsAnnot, as.raster, axisTicks, blues9,
+           boxplot.stats, cm, cm.colors, colorRampPalette,
+           extendrange, gray, gray.colors, heat.colors, hsv,
+           nclass.FD, nclass.Sturges, nclass.scott, palette,
+           xy.coords, xyTable, xyz.coords)
+
 
 export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, bxp, cdplot,
