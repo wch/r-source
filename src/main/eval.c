@@ -1164,34 +1164,6 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 }
 
 
-SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP Cond, Stmt=R_NilValue;
-    int vis=0;
-
-    PROTECT(Cond = eval(CAR(args), rho));
-    if (asLogicalNoNA(Cond, call)) 
-        Stmt = CAR(CDR(args));
-    else {
-        if (length(args) > 2) 
-           Stmt = CAR(CDR(CDR(args)));
-        else
-           vis = 1;
-    } 
-    if( RDEBUG(rho) ) {
-	SrcrefPrompt("debug", R_Srcref);
-        PrintValue(Stmt);
-        do_browser(call, op, R_NilValue, rho);
-    } 
-    UNPROTECT(1);
-    if( vis ) {
-        R_Visible = FALSE; /* case of no 'else' so return invisible NULL */
-        return Stmt;
-    }
-    return (eval(Stmt, rho));
-}
-
-
 #define BodyHasBraces(body) \
     ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
 
@@ -1212,6 +1184,33 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_NAMED(v, 1); \
 	} \
     } while(0)
+
+SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP Cond, Stmt=R_NilValue;
+    int vis=0;
+
+    PROTECT(Cond = eval(CAR(args), rho));
+    if (asLogicalNoNA(Cond, call)) 
+        Stmt = CAR(CDR(args));
+    else {
+        if (length(args) > 2) 
+           Stmt = CAR(CDR(CDR(args)));
+        else
+           vis = 1;
+    } 
+    if( RDEBUG(rho) && !BodyHasBraces(Stmt)) {
+	SrcrefPrompt("debug", R_Srcref);
+        PrintValue(Stmt);
+        do_browser(call, op, R_NilValue, rho);
+    } 
+    UNPROTECT(1);
+    if( vis ) {
+        R_Visible = FALSE; /* case of no 'else' so return invisible NULL */
+        return Stmt;
+    }
+    return (eval(Stmt, rho));
+}
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

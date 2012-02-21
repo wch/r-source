@@ -140,9 +140,14 @@
       (approximate) Hessian for an \code{optim()} solution if
       \code{hessian = TRUE} was forgotten.
 
-      \item \code{.filled.contour()} is \sQuote{bare-bones} function to
+      \item \code{.filled.contour()} is a \sQuote{bare-bones} function to
       add a filled-contour rectangular plot to an already prepared plot
       region.
+      
+      \item The stepping in debugging and single-step browsing modes has
+      changed slightly: now left braces at the start of the body are
+      stepped over for \code{if} statements as well as for \code{for} and
+      \code{while} statements.  (Wish of \PR{14814}.)
     }
   }
 
