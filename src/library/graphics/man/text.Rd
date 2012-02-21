@@ -1,6 +1,6 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{text}
@@ -85,10 +85,10 @@ text(x, \dots)
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and
   extra values will be ignored).  \code{NA} values of \code{font} are
-  replaced by \code{par("font")}.
+  replaced by \code{par("font")}, and similarly for \code{col}.
 
-  Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
-  value is \code{NA} are omitted from the plot.
+  Labels whose \code{x}, \code{y} or \code{labels} value is \code{NA}
+  are omitted from the plot.
 
   What happens when \code{font = 5} (the symbol font) is selected can be
   both device- and locale-dependent.  Most often \code{labels} will be
