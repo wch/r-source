@@ -84,3 +84,16 @@ optim <- function(par, fn, gr = NULL, ...,
     }
     res
 }
+
+optimHess <- function(par, fn, gr = NULL, ..., control = list())
+{
+    fn1 <- function(par) fn(par,...)
+    gr1 <- if (!is.null(gr)) function(par) gr(par,...)
+    npar <- length(par)
+    con <- list(fnscale = 1, parscale = rep.int(1, npar),
+                ndeps = rep.int(1e-3, npar))
+    con[(names(control))] <- control
+    hess <- .Internal(optimhess(par, fn1, gr1, con))
+    if(!is.null(nm <- names(par))) dimnames(hess) <- list(nm, nm)
+    hess
+}

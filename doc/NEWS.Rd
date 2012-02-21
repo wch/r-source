@@ -135,6 +135,14 @@
       calculating (recursive) (reverse) dependencies on package databases 
       has been renamed to \code{package_dependencies()} and is now 
       exported.
+
+      \item There is a new function \code{optimHess()} to compute the
+      (approximate) Hessian for an \code{optim()} solution if
+      \code{hessian = TRUE} was forgotten.
+
+      \item \code{.filled.contour()} is \sQuote{bare-bones} function to
+      add a filled-contour rectangulat plot to an already prepared plot
+      region.
     }
   }
 

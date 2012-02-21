@@ -1,13 +1,16 @@
 % File src/library/stats/man/optim.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{optim}
 \alias{optim}
-\title{General-purpose Optimization}
+\alias{optimHess}
 \concept{minimization}
 \concept{maximization}
+
+\title{General-purpose Optimization}
+
 \description{
   General-purpose optimization based on Nelder--Mead, quasi-Newton and
   conjugate-gradient algorithms. It includes an option for
@@ -18,6 +21,8 @@ optim(par, fn, gr = NULL, \dots,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
       lower = -Inf, upper = Inf,
       control = list(), hessian = FALSE)
+
+optimHess(par, fn, gr = NULL, \dots, control = list())
 }
 \arguments{
  \item{par}{Initial values for the parameters to be optimized over.}
@@ -42,8 +47,10 @@ optim(par, fn, gr = NULL, \dots,
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
 
-  By default this function performs minimization, but it will maximize
-  if \code{control$fnscale} is negative.
+  By default \code{optim} performs minimization, but it will maximize
+  if \code{control$fnscale} is negative.  \code{optimHess} is an
+  auxiliary function to compute the Hessian at a later stage if
+  \code{hessian = TRUE} was forgotten.
 
   The default method is an implementation of that of Nelder and Mead
   (1965), that uses only function values and is robust but relatively
@@ -171,8 +178,9 @@ optim(par, fn, gr = NULL, \dots,
   \code{fn} and \code{gr}.  Note that no other attributes of \code{par}
   are copied over.
 }
+
 \value{
-  A list with components:
+  For \code{optim}, a list with components:
   \item{par}{The best set of parameters found.}
   \item{value}{The value of \code{fn} corresponding to \code{par}.}
   \item{counts}{A two-element integer vector giving the number of calls
@@ -198,11 +206,14 @@ optim(par, fn, gr = NULL, \dots,
     matrix giving an estimate of the Hessian at the solution found.  Note
     that this is the Hessian of the unconstrained problem even if the
     box constraints are active.}
+
+  For \code{optimHess}, the description of the \code{hessian} component
+  applies.
 }
 \note{
   \code{optim} will work with one-dimensional \code{par}s, but the
   default method does not work well (and will warn).  Method
-  \code{"Brent"} uses \code{\link{optimize}} provided bounds are available;
+  \code{"Brent"} uses \code{\link{optimize}} and needs bounds to be available;
   \code{"BFGS"} often works well enough if not.
 }
 \source{
@@ -261,7 +272,8 @@ grr <- function(x) { ## Gradient of 'fr'
        200 *      (x2 - x1 * x1))
 }
 optim(c(-1.2,1), fr)
-optim(c(-1.2,1), fr, grr, method = "BFGS")
+(res <- optim(c(-1.2,1), fr, grr, method = "BFGS"))
+optimHess(res$par, fr, grr)
 optim(c(-1.2,1), fr, NULL, method = "BFGS", hessian = TRUE)
 ## These do not converge in the default number of steps
 optim(c(-1.2,1), fr, grr, method = "CG")

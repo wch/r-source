@@ -1,12 +1,14 @@
 % File src/library/graphics/man/filled.contour.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{filled.contour}
 \alias{filled.contour}
+\alias{.filled.contour}
+
 \title{Level (Contour) Plots}
 \usage{
 filled.contour(x = seq(0, 1, length.out = nrow(z)),
@@ -21,15 +23,18 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
                plot.title, plot.axes, key.title, key.axes,
                asp = NA, xaxs = "i", yaxs = "i", las = 1,
                axes = TRUE, frame.plot = axes, \dots)
+
+.filled.contour(x, y, z, levels, col)
 }
 \arguments{
  \item{x, y}{locations of grid lines at which the values in \code{z} are
-    measured.  These must be in ascending order.  By default, equally
-    spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
-    its components \code{x$x} and \code{x$y} are used for \code{x}
-    and \code{y}, respectively. If the list has component \code{z} this
-    is used for \code{z}.}
- \item{z}{a matrix containing the values to be plotted..  Note that
+   measured.  These must be in ascending order.  (The rest of this
+   description does not apply to \code{.filled.contour}.)
+   By default, equally spaced values from 0 to 1 are used.  If \code{x}
+   is a \code{list}, its components \code{x$x} and \code{x$y} are used
+   for \code{x} and \code{y}, respectively.  If the list has component
+   \code{z} this is used for \code{z}.} 
+ \item{z}{a numeric matrix containing the values to be plotted..  Note that
    \code{x} can be used instead of \code{z} for convenience.}
  \item{xlim}{x limits for the plot.}
  \item{ylim}{y limits for the plot.}
@@ -43,7 +48,8 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
  \item{color.palette}{a color palette function to be used to assign
     colors in the plot.}
  \item{col}{an explicit set of colors to be used in the plot.
-    This argument overrides any palette function specification.}
+    This argument overrides any palette function specification.  There
+    should be one less color than levels}
  \item{plot.title}{statements which add titles to the main plot.}
  \item{plot.axes}{statements which draw axes (and a \code{\link{box}})
    on the main plot.  This overrides the default axes.}
@@ -76,6 +82,11 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
 
   As from \R 2.14.1 values to be plotted can be infinite: the effect is
   similar to that described for \code{NA} values.
+
+  \code{.filled.contour} is a \sQuote{bare bones} interface to add
+  just the contour plot to an already-set-up plot region.  It is is
+  intended for programmatic use, and the programmer is
+  responsible for checking the conditions on the arguments.
 }
 \references{
   Cleveland, W. S. (1993)
@@ -84,11 +95,8 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
 }
 \author{Ross Ihaka and R-core.}
 \note{
-  This function uses the \code{\link{layout}} function and so is
-  restricted to a full page display.  As an alternative consider the
-  \code{\link[lattice]{levelplot}} and
-  \code{\link[lattice:levelplot]{contourplot}} functions from the
-  \CRANpkg{lattice} package which work in multipanel displays.
+  \code{filled.contour} uses the \code{\link{layout}} function and so is
+  restricted to a full page display.
 
   The output produced by \code{filled.contour} is actually a combination
   of two plots; one is the filled contour and one is the legend.  Two
@@ -96,11 +104,13 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   are only used internally -- once the function has returned these
   coordinate systems are lost.  If you want to annotate the main contour
   plot, for example to add points, you can specify graphics commands in
-  the \code{plot.axes} argument.  An example is given below.
+  the \code{plot.axes} argument.  See the examples.
 }
-\seealso{\code{\link{contour}}, \code{\link{image}},
+\seealso{
+  \code{\link{contour}}, \code{\link{image}},
   \code{\link{palette}}; \code{\link[lattice:levelplot]{contourplot}}
-  from package \CRANpkg{lattice}.}
+  and \code{\link[lattice]{levelplot}} from package \CRANpkg{lattice}.
+}
 \examples{
 require(grDevices) # for colours
 filled.contour(volcano, color = terrain.colors, asp = 1)# simple

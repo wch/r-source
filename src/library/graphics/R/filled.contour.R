@@ -104,3 +104,13 @@ function (x = seq(0, 1, length.out = nrow(z)),
 	plot.title
     invisible()
 }
+
+.filled.contour <- function(x, y, z , levels, col)
+{
+    if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
+        stop("no proper 'z' matrix specified")
+    if (!is.double(z)) storage.mode(z) <- "double"
+    .Internal(filledcontour(as.double(x), as.double(y), z,
+                            as.double(levels), col))
+    invisible()
+}
