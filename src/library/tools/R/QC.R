@@ -5015,7 +5015,7 @@ function(x, ...)
 ### * .check_dotIntenal
 
 .check_dotInternal <-
-function(package, dir, lib.loc = NULL)
+function(package, dir, lib.loc = NULL, details = TRUE)
 {
     bad_closures <- character()
 
@@ -5061,7 +5061,21 @@ function(package, dir, lib.loc = NULL)
         }
     }
 
-    out <- list(bad_closures = bad_closures)
+    internals <- character()
+    if (length(bad_closures) && details) {
+        lapply(bad_closures, function(o) {
+            v <- get(o, envir = code_env)
+            calls <- .find_calls(v, recursive = TRUE)
+            if(!length(calls)) return()
+            cnames <- .call_names(calls)
+            calls <- calls[.call_names(calls) == ".Internal"]
+            calls2 <- lapply(calls, "[", 2)
+            calls3 <-
+                sapply(calls2, function(x) sub("\\(.*", "", deparse(x)[1]))
+            internals <<- c(internals, calls3)
+        })
+    }
+    out <- list(bad_closures = bad_closures, internals = internals)
     class(out) <- "check_dotInternal"
     out
 }
@@ -5074,11 +5088,12 @@ function(x, ...)
                         "Found .Internal call in the following function:",
                         "Found .Internal calls in the following functions:"
                         )
-        c(strwrap(msg),
-          .pretty_format(x$bad_closures))
-    } else {
-        character()
-    }
+        out <- c(strwrap(msg), .pretty_format(x$bad_closures))
+        if (length(unique(x$internals)))
+            out <- c(out, "with calls to .Internal functions",
+                     .pretty_format(sort(unique(x$internals))))
+        out
+    } else character()
 }
 
 print.check_dotInternal <-
