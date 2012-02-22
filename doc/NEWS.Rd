@@ -369,9 +369,17 @@
       executable.
 
       \item The included version of zlib has been updated to 1.2.6.
-
+    }
+  }
+  
+  \subsection{UTILITIES}{
+    \itemize{
       \item \command{R CMD check} now reports by default on licenses not
       according to the description in \sQuote{Writing R Extensions}.
+      
+      \item \command{R CMD check} has a new option \option{-as-cran} to
+      turn most of the customizations that CRAN uses of their incoming
+      checks.
     }
   }
 

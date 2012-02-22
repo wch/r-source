@@ -2890,6 +2890,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
+            "      --as-cran         select options used for CRAN checking",
             "",
             "The following options apply where sub-architectures are in use:",
             "      --extra-arch      do only runtime tests needed for an additional",
@@ -2949,6 +2950,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     spec_install <- FALSE
     multiarch <- NA
     force_multiarch <- FALSE
+    as_cran <- FALSE
 
     libdir <- ""
     outdir <- ""
@@ -3018,6 +3020,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             multiarch  <- FALSE
         } else if (a == "--force-multiarch") {
             force_multiarch  <- TRUE
+        } else if (a == "--as-cran") {
+            as_cran  <- TRUE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -3138,6 +3142,21 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
+
+    if (as_cran) {
+        if (extra_arch) {
+            message("--cran turns off --extra-arch")
+            extra_arch <- FALSE
+        }
+        Sys.setenv("_R_CHECK_TIMINGS_" = "10")
+        Sys.setenv("_R_CHECK_INSTALL_DEPENDS_" = "TRUE")
+        Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
+        R_check_vc_dirs <- TRUE
+        R_check_executables_exclusions <- FALSE
+        R_check_subdirs_nocase <-TRUE
+        R_check_doc_sizes2 <- TRUE
+        R_check_depends_only <- R_check_suggests_only <- TRUE
+    }
 
     if (extra_arch)
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
@@ -3334,7 +3353,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 }
             }
 
-            if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE")))
+            if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE"))) # FIXME || as_cran ?
                 check_CRAN_incoming()
 
             ## <NOTE>
