@@ -1605,11 +1605,14 @@ in use), and it may be safest to assume version 2.5.
 
 OpenMP support is expected to be available on Windows in the toolchain
 used for @R{} 2.15.0 and these macros will be set appropriately.  It is
-not available prior to @R{} 2.14.2.
+not available on Windows prior to @R{} 2.14.2.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
 are only beneficial if quite substantial tasks are run in parallel.
+
+Calling any of the @R{} API from threaded code is `for experts only':
+they will need to read the source code to determine if it is thread-safe.
 
 @node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
@@ -1664,9 +1667,9 @@ unambiguously determined without testing for yourself: however, that
 @samp{_REENTRANT} is defined@footnote{some Windows toolchains have the
 typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
-See also the comments on performance under OpenMP: on all known @R{}
-platforms OpenMP is implemented @emph{via} @code{pthreads} and the known
-performance issues are in the latter.
+See also the comments on thread-safety and performance under OpenMP: on
+all known @R{} platforms OpenMP is implemented @emph{via}
+@code{pthreads} and the known performance issues are in the latter.
 
 @node Compiling in sub-directories,  , Using pthreads, Using Makevars
 @subsubsection Compiling in sub-directories
@@ -2152,11 +2155,13 @@ of the @R{} package checker.  A subset of the checking steps can be
 selected by adding command-line options. It also allows customization by
 setting environment variables @w{@env{_R_CHECK_*_}:}, as described in
 @ifset UseExternalXrefs
-@ref{Tools, , Tools, R-ints, R Internals},
+@ref{Tools, , Tools, R-ints, R Internals}:
 @end ifset
 @ifclear UseExternalXrefs
-`R Internals',
+`R Internals':
 @end ifclear
+a set of these customizations similar to those used by
+@acronym{CRAN} can be selected by the option @option{--as-cran}.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -2250,10 +2255,11 @@ temporarily installed to execute them.  Post-execution binary copies of
 those pages containing build-time macros will be saved in
 @file{build/partial.rdb}.  If there are any install-time or render-time
 macros, a @file{.pdf} version of the package manual will be built and
-installed in the @file{build/} subdirectory.  (This allows CRAN or other
-repositories to display the manual even if they are unable to install
-the package.)  This can be suppressed by the option @option{--no-manual}
-or if package's description contains @samp{BuildManual: no} or similar.
+installed in the @file{build/} subdirectory.  (This allows
+@acronym{CRAN} or other repositories to display the manual even if they
+are unable to install the package.)  This can be suppressed by the
+option @option{--no-manual} or if package's description contains
+@samp{BuildManual: no} or similar.
 
 One of the checks that @command{R CMD build} runs is for empty source
 directories.  These are in most (but not all) cases unintentional, if
@@ -2590,11 +2596,11 @@ containing @file{@var{mypkg}} as a subdirectory.)
 
 @enumerate
 @item
-Run @code{R CMD build} to make the release @file{.tar.gz} file.
+Run @command{R CMD build} to make the release @file{.tar.gz} file.
 
 @item
-Run @code{R CMD check} on the @file{.tar.gz} file to check that the
-package will install and will run its examples, and that the
+Run @command{R CMD check --as-cran} on the @file{.tar.gz} file to check
+that the package will install and will run its examples, and that the
 documentation is complete and can be processed.  If the package contains
 code that needs to be compiled, try to enable a reasonable amount of
 diagnostic messaging (``warnings'') when compiling, such as e.g.@:
@@ -2680,10 +2686,11 @@ tab-delimited file which can be read into @R{} for further analysis.
 @noindent
 Please ensure that you can run through the complete procedure with only
 warnings that you understand and have reasons not to eliminate.  In
-principle, packages must pass @code{R CMD check} without warnings to be
-admitted to the main @acronym{CRAN} package area.  If there are warnings
-you cannot eliminate (for example because you believe them to be
-spurious) send an explanatory note as part of your covering email.
+principle, packages must pass @code{R CMD check} without warnings or
+significant notes to be admitted to the main @acronym{CRAN} package
+area.  If there are warnings you cannot eliminate (for example because
+you believe them to be spurious) send an explanatory note as part of
+your covering email.
 
 Also read the CRAN policies linked from
 @uref{http://cran.r-project.org/web/packages/} and note that by
@@ -2701,7 +2708,8 @@ folder.} and not @samp{sftp} to connect to this server, and passive
 @email{CRAN@@R-project.org} about it (with your package name in the
 subject line, and please do not submit a package by email).  The
 @acronym{CRAN} maintainers will run these tests before putting a
-submission online.
+submission online.  (They will use the latest development version of
+@R{}, so if at all possible so should you.)
 
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use the Debian TeXLive@footnote{currently

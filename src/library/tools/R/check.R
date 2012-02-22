@@ -599,7 +599,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
 
         if (subdirs != "no") {
-            Rcmd = "tools:::.check_package_subdirs(\".\")\n";
+            Rcmd <- "tools:::.check_package_subdirs(\".\")\n"
             ## We don't run this in the C locale, as we only require
             ## certain filenames to start with ASCII letters/digits, and not
             ## to be entirely ASCII.
@@ -700,7 +700,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## QC check function eventually ...
             .warnings <- NULL
             .error <- NULL
-            withCallingHandlers(tryCatch(tools:::.build_news_db_from_package_NEWS_Rd(nfile),
+            withCallingHandlers(tryCatch(.build_news_db_from_package_NEWS_Rd(nfile),
                                          error = function(e)
                                          .error <<- conditionMessage(e)),
                                 warning = function(e) {
@@ -2519,7 +2519,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else if (!grepl("^check", install)) {
             ## Check for package 'src' subdirectories with object
             ## files (but not if installation was already performed).
-            pat <- "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
+            pat <- "(a|o|[ls][ao]|sl|obj)" # Object file extensions.
             any <- FALSE
             srcd <- file.path(pkgdir, "src")
             if (dir.exists(srcd) &&
@@ -2604,6 +2604,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
+            "      --as-cran         select options used for CRAN checking",
             "",
             "The following options apply where sub-architectures are in use:",
             "      --extra-arch      do only runtime tests needed for an additional",
@@ -2661,6 +2662,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     spec_install <- FALSE
     multiarch <- NA
     force_multiarch <- FALSE
+    as_cran <- FALSE
 
     libdir <- ""
     outdir <- ""
@@ -2730,6 +2732,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             multiarch  <- FALSE
         } else if (a == "--force-multiarch") {
             force_multiarch  <- TRUE
+        } else if (a == "--as-cran") {
+            as_cran  <- TRUE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -2844,6 +2848,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
+
+    if (as_cran) {
+        if (extra_arch) {
+            message("--cran turns off --extra-arch")
+            extra_arch <- FALSE
+        }
+        R_check_vc_dirs <- TRUE
+        R_check_executables_exclusions <- FALSE
+        R_check_subdirs_nocase <-TRUE
+        R_check_dot_internal <- TRUE
+        Sys.setenv("_R_CHECK_CODETOOLS_PROFILE_" =
+                   "suppressPartialMatchArgs=FALSE")
+    }
 
     if (extra_arch)
         R_check_Rd_contents <- R_check_all_non_ISO_C <-

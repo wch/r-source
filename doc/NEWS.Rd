@@ -32,9 +32,17 @@
       executable.
 
       \item The included version of zlib has been updated to 1.2.6.
-
+    }
+  }
+  
+  \subsection{UTILITIES}{
+    \itemize{
       \item \command{R CMD check} now reports by default on licenses not
       according to the description in \sQuote{Writing R Extensions}.
+      
+      \item \command{R CMD check} has a new option \option{-as-cran} to
+      turn most of the customizations that CRAN uses of their incoming
+      checks.
     }
   }
 
@@ -139,7 +147,7 @@
       error message if some (but not all) cores encountered an error.
 
       \item \code{format.POSIXlt(x)} raised an arithmetic exception when
-      \code{x} was an in valid object of class \code{"POSIXlt"} and parts
+      \code{x} was an invalid object of class \code{"POSIXlt"} and parts
       were empty.
       
       \item \code{installed.packages()} has some more protection against
