@@ -338,7 +338,7 @@
       \item \code{merge()} is no longer allowed to create a data frame
       with duplicate column names (which confused \PR{14786}).
 
-      \item Fix for rendering raster images on X11 device
+      \item Fixes for rendering raster images on X11 and Windows devices
       when x-axis scale or y-axis scale is reversed.
     }
   }
