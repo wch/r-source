@@ -481,6 +481,9 @@
       
       \item \code{installed.packages()} has some more protection against
       package installs going on in parallel. 
+      
+      \item \code{.Primitive()} could be misused to call
+      \code{.Internal()} entry points.
     }
   }
 }
