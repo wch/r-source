@@ -1471,10 +1471,7 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
        mkCLOSXP can continue to overreact when its
        test fails (PR#1880, 7535, 7702) */
     if(isList(body) || isLanguage(body) || isSymbol(body)
-       || isExpression(body) || isVector(body)
-#ifdef BYTECODE
-       || isByteCode(body)
-#endif
+       || isExpression(body) || isVector(body) || isByteCode(body)
        )
 	    args =  mkCLOSXP(args, body, envir);
     else
@@ -1801,9 +1798,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case ANYSXP:
 	case EXPRSXP:
 	case EXTPTRSXP:
-#ifdef BYTECODE
 	case BCODESXP:
-#endif
 	case WEAKREFSXP:
 	    LOGICAL(ans)[0] = 1;
 	    break;

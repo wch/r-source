@@ -281,11 +281,9 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(NAMED(s) > 1)
 	    /* this copies but does not duplicate args or code */
 	    s = duplicate(s);
-#ifdef BYTECODE
 	if (TYPEOF(BODY(s)) == BCODESXP)
 	    /* switch to interpreted version if compiled */
 	    SET_BODY(s, R_ClosureExpr(CAR(args)));
-#endif
 	SET_CLOENV(s, env);
     }
     else if (isNull(env) || isEnvironment(env) ||

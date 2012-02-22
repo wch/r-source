@@ -478,15 +478,11 @@ void (SET_HASHVALUE)(SEXP x, int v);
 #define EXTPTR_PROT(x)	CDR(x)
 #define EXTPTR_TAG(x)	TAG(x)
 
-#ifdef BYTECODE
 /* Bytecode access macros */
 #define BCODE_CODE(x)	CAR(x)
 #define BCODE_CONSTS(x) CDR(x)
 #define BCODE_EXPR(x)	TAG(x)
 #define isByteCode(x)	(TYPEOF(x)==BCODESXP)
-#else
-#define isByteCode(x)	FALSE
-#endif
 
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	Rf_protect(s)
@@ -708,7 +704,6 @@ SEXP R_WeakRefKey(SEXP w);
 SEXP R_WeakRefValue(SEXP w);
 void R_RunWeakRefFinalizer(SEXP w);
 
-#ifdef BYTECODE
 SEXP R_PromiseExpr(SEXP);
 SEXP R_ClosureExpr(SEXP);
 void R_initialize_bcode(void);
@@ -716,10 +711,6 @@ SEXP R_bcEncode(SEXP);
 SEXP R_bcDecode(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
 #define BODY_EXPR(e) R_ClosureExpr(e)
-#else
-#define PREXPR(e) PRCODE(e)
-#define BODY_EXPR(e) BODY(e)
-#endif
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);

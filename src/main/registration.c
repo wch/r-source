@@ -231,11 +231,9 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_lazyLoadDBinsertValue, 5),
     CALLDEF(R_lazyLoadDBflush, 1),
 
-#ifdef BYTECODE
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
-#endif
 
     /* base graphics */
     CALLDEF(Rg_contourDef, 0),

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Development Core Team
+ *  Copyright (C) 1997--2012  The R Development Core Team
  *  Copyright (C) 2003, 2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -931,7 +931,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"Date2POSIXlt",do_D2POSIXlt,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"POSIXlt2Date",do_POSIXlt2D,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-#ifdef BYTECODE
 {"mkCode",     do_mkcode,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 {"bcClose",    do_bcclose,      0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
 {"is.builtin.internal",    do_is_builtin_internal,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
@@ -944,7 +943,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"getconst", do_getconst,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 {"enableJIT",    do_enablejit,  0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
 {"compilePKGS", do_compilepkgs, 0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
-#endif
 
 {"setNumMathThreads", do_setnumthreads,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
 {"setMaxNumMathThreads", do_setmaxnumthreads,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
@@ -1133,8 +1131,6 @@ extern SEXP framenames; /* from model.c */
 /* initialize the symbol table */
 void InitNames()
 {
-    int i;
-
     /* allocate the symbol table */
     if (!(R_SymbolTable = (SEXP *) calloc(HSIZE, sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for symbol table");
@@ -1165,18 +1161,15 @@ void InitNames()
     /* R_BlankString */
     R_BlankString = mkChar("");
     /* Initialize the symbol Table */
-    for (i = 0; i < HSIZE; i++)
-	R_SymbolTable[i] = R_NilValue;
+    for (int i = 0; i < HSIZE; i++) R_SymbolTable[i] = R_NilValue;
     /* Set up a set of globals so that a symbol table search can be
        avoided when matching something like dim or dimnames. */
     SymbolShortcuts();
     /*  Builtin Functions */
-    for (i = 0; R_FunTab[i].name; i++)
-	installFunTab(i);
+    for (int i = 0; R_FunTab[i].name; i++) installFunTab(i);
     framenames = R_NilValue;
-#ifdef BYTECODE
+
     R_initialize_bcode();
-#endif
 }
 
 
@@ -1233,7 +1226,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     flag = PRIMPRINT(INTERNAL(fun));
     R_Visible = flag != 1;
     ans = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
-    /* This resetting of R_Visible=FALSE  was to fix PR#7397,
+    /* This resetting of R_Visible = FALSE was to fix PR#7397,
        now fixed in GEText */
     if (flag < 2) R_Visible = flag != 1;
 #ifdef CHECK_VISIBILITY

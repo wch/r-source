@@ -157,10 +157,8 @@
 static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table);
 static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream);
 static SEXP ReadItem(SEXP ref_table, R_inpstream_t stream);
-#ifdef BYTECODE
 static void WriteBC(SEXP s, SEXP ref_table, R_outpstream_t stream);
 static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
-#endif
 
 /*
  * Constants
@@ -618,10 +616,8 @@ static int HashGet(SEXP item, SEXP ht)
 /* the following are speculative--we may or may not need them soon */
 #define CLASSREFSXP       246
 #define GENERICREFSXP     245
-#ifdef BYTECODE
 #define BCREPDEF          244
 #define BCREPREF          243
-#endif
 #define EMPTYENV_SXP	  242
 #define BASEENV_SXP	  241
 
@@ -635,10 +631,8 @@ static int HashGet(SEXP item, SEXP ht)
    still not preserved.  It the long run in might be better to change
    to a scheme in which all sharing is preserved and byte code objects
    don't need to be handled as a special case.  LT */
-#ifdef BYTECODE
 #define ATTRLANGSXP       240
 #define ATTRLISTSXP       239
-#endif
 
 /*
  * Type/Flag Packing and Unpacking
@@ -913,7 +907,6 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
     int ix; /* this could be a different type for longer vectors */
     SEXP t;
 
-#ifdef BYTECODE
     if (R_compile_pkgs && TYPEOF(s) == CLOSXP && TYPEOF(BODY(s)) != BCODESXP) {
 	SEXP new_s;
 	R_compile_pkgs = FALSE;
@@ -923,7 +916,6 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	R_compile_pkgs = TRUE;
 	return;
     }
-#endif
 
  tailcall:
     R_CheckStack();
@@ -1057,12 +1049,8 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 		WriteItem(VECTOR_ELT(s, ix), ref_table, stream);
 	    break;
 	case BCODESXP:
-#ifdef BYTECODE
 	    WriteBC(s, ref_table, stream);
 	    break;
-#else
-	    error("this version of R cannot write byte code objects");
-#endif
 	case RAWSXP:
 	    OutInteger(stream, LENGTH(s));
 	    switch (stream->type) {
@@ -1092,7 +1080,6 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
     }
 }
 
-#ifdef BYTECODE
 static SEXP MakeCircleHashTable(void)
 {
     return CONS(R_NilValue, allocVector(VECSXP, HASHSIZE));
@@ -1249,7 +1236,6 @@ static void WriteBC(SEXP s, SEXP ref_table, R_outpstream_t stream)
     WriteBC1(s, ref_table, reps, stream);
     UNPROTECT(1);
 }
-#endif
 
 void R_Serialize(SEXP s, R_outpstream_t stream)
 {
@@ -1622,12 +1608,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		SET_VECTOR_ELT(s, count, ReadItem(ref_table, stream));
 	    break;
 	case BCODESXP:
-#ifdef BYTECODE
 	    PROTECT(s = ReadBC(ref_table, stream));
 	    break;
-#else
-	    error("this version of R cannot read byte code objects");
-#endif
 	case CLASSREFSXP:
 	    error(_("this version of R cannot read class references"));
 	case GENERICREFSXP:
@@ -1674,7 +1656,6 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
     }
 }
 
-#ifdef BYTECODE
 static SEXP ReadBC1(SEXP ref_table, SEXP reps, R_inpstream_t stream);
 
 static SEXP ReadBCLang(int type, SEXP ref_table, SEXP reps,
@@ -1767,7 +1748,6 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream)
     UNPROTECT(1);
     return ans;
 }
-#endif
 
 static void DecodeVersion(int packed, int *v, int *p, int *s)
 {

@@ -102,11 +102,9 @@ SEXP R_get_primname(SEXP op) ;
 
 SEXP R_setFileTime(SEXP name, SEXP time);
 
-#ifdef BYTECODE
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);
 SEXP R_stopbcprof(void);
-#endif
 
 SEXP Rg_contourDef(void);
 

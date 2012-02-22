@@ -1503,13 +1503,8 @@ static void RunGenCollect(R_size_t size_needed)
 
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
 
-#ifdef BYTECODE
-    {
-	SEXP *sp;
-	for (sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
-	    FORWARD_NODE(*sp);
-    }
-#endif
+    for (SEXP *sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
+	FORWARD_NODE(*sp);
 
     /* main processing loop */
     PROCESS_NODES();
@@ -1922,23 +1917,22 @@ void attribute_hidden InitMemory()
     TAG(R_NilValue) = R_NilValue;
     ATTRIB(R_NilValue) = R_NilValue;
 
-#ifdef BYTECODE
     R_BCNodeStackBase = (SEXP *) malloc(R_BCNODESTACKSIZE * sizeof(SEXP));
     if (R_BCNodeStackBase == NULL)
 	R_Suicide("couldn't allocate node stack");
-# ifdef BC_INT_STACK
+#ifdef BC_INT_STACK
     R_BCIntStackBase =
       (IStackval *) malloc(R_BCINTSTACKSIZE * sizeof(IStackval));
     if (R_BCIntStackBase == NULL)
 	R_Suicide("couldn't allocate integer stack");
-# endif
+#endif
     R_BCNodeStackTop = R_BCNodeStackBase;
     R_BCNodeStackEnd = R_BCNodeStackBase + R_BCNODESTACKSIZE;
-# ifdef BC_INT_STACK
+#ifdef BC_INT_STACK
     R_BCIntStackTop = R_BCIntStackBase;
     R_BCIntStackEnd = R_BCIntStackBase + R_BCINTSTACKSIZE;
-# endif
 #endif
+
     R_weak_refs = R_NilValue;
 
     R_HandlerStack = R_RestartStack = R_NilValue;

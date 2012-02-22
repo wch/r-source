@@ -446,11 +446,9 @@ void (UNLOCK_BINDING)(SEXP b);
 
 #endif /* USE_RINTERNALS */
 
-#ifdef BYTECODE
 typedef SEXP R_bcstack_t;
-# ifdef BC_INT_STACK
+#ifdef BC_INT_STACK
 typedef union { void *p; int i; } IStackval;
-# endif
 #endif
 
 #ifdef R_USE_SIGNALS
@@ -480,11 +478,9 @@ typedef struct RCNTXT {
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
-#ifdef BYTECODE
     SEXP *nodestack;
-# ifdef BC_INT_STACK
+#ifdef BC_INT_STACK
     IStackval *intstack;
-# endif
 #endif
     SEXP srcref;	        /* The source line in effect */
 } RCNTXT, *context;
@@ -704,18 +700,16 @@ extern double elapsedLimitValue		INI_as(-1.0);
 
 void resetTimeLimits(void);
 
-#ifdef BYTECODE
 #define R_BCNODESTACKSIZE 100000
 extern0 SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
-# ifdef BC_INT_STACK
-#define R_BCINTSTACKSIZE 10000
+#ifdef BC_INT_STACK
+# define R_BCINTSTACKSIZE 10000
 extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
-# endif
+#endif
 extern0 int R_jit_enabled INI_as(0);
 extern0 int R_compile_pkgs INI_as(0);
 extern SEXP R_cmpfun(SEXP);
 extern void R_init_jit_enabled(void);
-#endif
 
 LibExtern int R_num_math_threads INI_as(1);
 LibExtern int R_max_num_math_threads INI_as(1);

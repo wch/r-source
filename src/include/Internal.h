@@ -541,7 +541,7 @@ SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_getS4DataSlot(SEXP obj, SEXPTYPE type);
 
-#ifdef BYTECODE
+/* bytecode */
 SEXP do_mkcode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bcclose(SEXP, SEXP, SEXP, SEXP);
 SEXP do_is_builtin_internal(SEXP, SEXP, SEXP, SEXP);
@@ -554,7 +554,6 @@ SEXP do_putconst(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getconst(SEXP, SEXP, SEXP, SEXP);
 SEXP do_enablejit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_compilepkgs(SEXP, SEXP, SEXP, SEXP);
-#endif
 
 /* Connections */
 SEXP do_stdin(SEXP, SEXP, SEXP, SEXP);

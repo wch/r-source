@@ -231,9 +231,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case ENVSXP:
     case SYMSXP:
     case WEAKREFSXP:
-#ifdef BYTECODE
     case BCODESXP: /**** is this the best approach? */
-#endif
 	return(x == y ? TRUE : FALSE);
     case EXTPTRSXP:
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);

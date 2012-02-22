@@ -33,10 +33,7 @@
 
 #define ARGUSED(x) LEVELS(x)
 
-
-#ifdef BYTECODE
 static SEXP bcEval(SEXP, SEXP, Rboolean);
-#endif
 
 /*#define BC_PROFILING*/
 #ifdef BC_PROFILING
@@ -396,11 +393,9 @@ SEXP eval(SEXP e, SEXP rho)
 	   expressions.  */
 	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
 	break;
-#ifdef BYTECODE
     case BCODESXP:
 	tmp = bcEval(e, rho, TRUE);
 	    break;
-#endif
     case SYMSXP:
 	if (e == R_DotsSymbol)
 	    error(_("'...' used in an incorrect context"));
@@ -551,7 +546,6 @@ void SrcrefPrompt(const char * prefix, SEXP srcref)
 
 /* Apply SEXP op of type CLOSXP to actuals */
 
-#ifdef BYTECODE
 static void loadCompilerNamespace(void)
 {
     SEXP fun, arg, expr;
@@ -671,7 +665,6 @@ SEXP attribute_hidden do_compilepkgs(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* forward declaration */
 static SEXP bytecodeExpr(SEXP);
-#endif
 
 /* this function gets the srcref attribute from a statement block, 
    and confirms it's in the expected format */
@@ -701,13 +694,8 @@ static R_INLINE SEXP getSrcref(SEXP srcrefs, int ind)
 
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 {
-#ifdef BYTECODE
     SEXP formals, actuals, savedrho;
     volatile SEXP body, newrho;
-#else
-    SEXP body, formals, actuals, savedrho;
-    volatile  SEXP newrho;
-#endif
     SEXP f, a, tmp;
     RCNTXT cntxt;
 
@@ -719,7 +707,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     body = BODY(op);
     savedrho = CLOENV(op);
 
-#ifdef BYTECODE
     if (R_jit_enabled > 0 && TYPEOF(body) != BCODESXP) {
 	int old_enabled = R_jit_enabled;
 	SEXP newop;
@@ -729,7 +716,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	SET_BODY(op, body);
 	R_jit_enabled = old_enabled;
     }
-#endif
 
     /*  Set up a context with the call in it so error has access to it */
 
@@ -808,11 +794,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	int old_bl = R_BrowseLines,
 	    blines = asInteger(GetOption1(install("deparse.max.lines")));
 	SEXP savesrcref;
-#ifdef BYTECODE
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
 	    body = bytecodeExpr(body);
-#endif
 	Rprintf("debugging in: ");
 	if(blines != NA_INTEGER && blines > 0)
 	    R_BrowseLines = blines;
@@ -887,17 +871,12 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 			  SEXP newrho)
 {
-#ifdef BYTECODE
     volatile SEXP body;
     SEXP tmp;
-#else
-    SEXP body, tmp;
-#endif
     RCNTXT cntxt;
 
     body = BODY(op);
 
-#ifdef BYTECODE
     if (R_jit_enabled > 0 && TYPEOF(body) != BCODESXP) {
 	int old_enabled = R_jit_enabled;
 	SEXP newop;
@@ -907,7 +886,6 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	SET_BODY(op, body);
 	R_jit_enabled = old_enabled;
     }
-#endif
 
     begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist, op);
 
@@ -922,11 +900,9 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(op)) {
         SEXP savesrcref;
-#ifdef BYTECODE
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
 	    body = bytecodeExpr(body);
-#endif
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
 	/* Find out if the body is function with only one statement. */
@@ -1232,12 +1208,10 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if ( !isSymbol(sym) ) errorcall(call, _("non-symbol loop variable"));
 
-#ifdef BYTECODE
     if (R_jit_enabled > 2) {
-	R_compileAndExecute(call, rho);
+	R_compileAndExecute(call, rho); 
 	return R_NilValue;
     }
-#endif
 
     PROTECT(args);
     PROTECT(rho);
@@ -1350,12 +1324,11 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-#ifdef BYTECODE
     if (R_jit_enabled > 2) {
 	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
-#endif
+
 
     dbg = RDEBUG(rho);
     body = CADR(args);
@@ -1384,12 +1357,10 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-#ifdef BYTECODE
     if (R_jit_enabled > 2) {
 	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
-#endif
 
     dbg = RDEBUG(rho);
     body = CAR(args);
@@ -2647,7 +2618,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     return 1;
 }
 
-#ifdef BYTECODE
+/* start of bytecode section */
 static int R_bcVersion = 7;
 static int R_bcMinVersion = 6;
 
@@ -5303,7 +5274,8 @@ SEXP R_getbcprofcounts() { return R_NilValue; }
 SEXP R_startbcprof() { return R_NilValue; }
 SEXP R_stopbcprof() { return R_NilValue; }
 #endif
-#endif
+
+/* end of byte code section */
 
 SEXP attribute_hidden do_setnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
