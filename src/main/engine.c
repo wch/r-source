@@ -3324,6 +3324,11 @@ void R_GE_rasterRotatedSize(int w, int h, double angle,
     double try2 = diag*sin(angle - theta);
     *wnew = (int) (fmax2(fabs(trx1), fabs(trx2)) + 0.5);
     *hnew = (int) (fmax2(fabs(try1), fabs(try2)) + 0.5);
+    /* 
+     * Rotated image may be shorter or thinner than original
+     */
+    *wnew = imax2(w, *wnew);
+    *hnew = imax2(h, *hnew);
 }
 
 /*

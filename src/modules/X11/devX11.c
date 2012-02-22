@@ -2162,6 +2162,44 @@ static void X11_Path(double *x, double *y,
     warning(_("%s not available for this device"), "Path drawing");
 }
 
+static unsigned int makeX11Pixel(unsigned int * rasterImage, int pixel) {
+    return GetX11Pixel(R_RED(rasterImage[pixel]), 
+                       R_GREEN(rasterImage[pixel]), 
+                       R_BLUE(rasterImage[pixel]));
+}
+
+static void flipRaster(unsigned int *rasterImage,
+                       int imageWidth, int imageHeight,
+                       int invertX, int invertY,
+                       unsigned int *flippedRaster) {
+    int i, j;
+    int rowInc, rowOff, colInc, colOff;
+
+    if (invertX) {
+        colInc = -1;
+        colOff = imageWidth - 1;
+    } else {
+        colInc = 1;
+        colOff = 0;
+    }
+    if (invertY) {
+        rowInc = -1;
+        rowOff = imageHeight - 1;
+    } else {
+        rowInc = 1;
+        rowOff = 0;
+    }
+
+    for (i = 0; i < imageHeight ;i++) {
+        for (j = 0; j < imageWidth; j++) {
+            int row = (rowInc*i + rowOff);
+            int col = (colInc*j + colOff);
+            flippedRaster[i*imageWidth + j] = 
+                rasterImage[row*imageWidth + col];
+        }
+    }
+}
+
 static void X11_Raster(unsigned int *raster, int w, int h,
                       double x, double y, 
                       double width, double height,
@@ -2170,21 +2208,36 @@ static void X11_Raster(unsigned int *raster, int w, int h,
                       const pGEcontext gc, pDevDesc dd)
 {
     int i, j, pixel;
-    int imageWidth = (int) (width + .5);
-    int imageHeight = (int) (height + .5);
+    int imageWidth;
+    int imageHeight;
+    int invertX = 0;
+    int invertY = 0;
     double angle = rot*M_PI/180;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     XImage *image;
     unsigned int *rasterImage;
     const void *vmax = vmaxget();
    
-    if (imageHeight < 0) {
-        imageHeight = -imageHeight;
-        /* convert (x, y) from bottom-left to top-right */
+    if (height < 0) {
+        imageHeight = (int) -(height - .5);
+        /* convert (x, y) from bottom-left to top-left */
         y = y - imageHeight*cos(angle);
         if (angle != 0) {
             x = x - imageHeight*sin(angle);
         }
+    } else {
+        imageHeight = (int) (height + .5);
+        invertY = 1;
+    }
+
+    if (width < 0) {
+        imageWidth = (int) -(width - .5);
+        x = x - imageWidth*cos(angle);
+        if (angle != 0)
+            y = y - imageWidth*sin(angle);
+        invertX = 1;
+    } else {
+        imageWidth = (int) (width + .5);
     }
 
     rasterImage = (unsigned int *) R_alloc(imageWidth * imageHeight,
@@ -2215,8 +2268,8 @@ static void X11_Raster(unsigned int *raster, int w, int h,
         rotatedRaster = (unsigned int *) R_alloc(newW * newH, 
                                                  sizeof(unsigned int));
         R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc,
-                          FALSE);
-
+                          FALSE);                          
+            
         /* 
          * Adjust (x, y) for resized and rotated image
          */
@@ -2228,7 +2281,17 @@ static void X11_Raster(unsigned int *raster, int w, int h,
         imageHeight = newH;
     }
 
-    image = XCreateImage(display, visual, depth, 
+    if (invertX || invertY) {
+        unsigned int *flippedRaster;
+
+        flippedRaster = (unsigned int *) R_alloc(imageWidth * imageHeight,
+                                                 sizeof(unsigned int));
+        flipRaster(rasterImage, imageWidth, imageHeight, 
+                   invertX, invertY, flippedRaster);
+        rasterImage = flippedRaster;
+    }
+
+    image = XCreateImage(display, visual, depth,
                          ZPixmap,
                          0, /* offset */
                          /* This is just provides (at least enough)
@@ -2245,11 +2308,8 @@ static void X11_Raster(unsigned int *raster, int w, int h,
 
     for (i = 0; i < imageHeight ;i++) {
         for (j = 0; j < imageWidth; j++) {
-            pixel = i * imageWidth + j;
-            XPutPixel(image, j, i, 
-                      GetX11Pixel(R_RED(rasterImage[pixel]), 
-                                  R_GREEN(rasterImage[pixel]), 
-                                  R_BLUE(rasterImage[pixel])));
+            pixel = i*imageWidth + j;
+            XPutPixel(image, j, i, makeX11Pixel(rasterImage, pixel));
         }
     }
 
