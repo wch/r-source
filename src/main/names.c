@@ -1027,31 +1027,30 @@ attribute_hidden FUNTAB R_FunTab[] =
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };
 
+/* also used in eval.c .  Also finds .Internal()s */
 SEXP attribute_hidden R_Primitive(const char *primname)
 {
-    int i;
-    for (i = 0; R_FunTab[i].name; i++)  /* all names are ASCII */
-	if (strcmp(primname, R_FunTab[i].name) == 0) {
-	    if ((R_FunTab[i].eval % 100 )/10)
-		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
-	    else
-		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
-	}
+    for (int i = 0; R_FunTab[i].name; i++) 
+	if (strcmp(primname, R_FunTab[i].name) == 0)  /* all names are ASCII */
+	    return mkPRIMSXP(i, R_FunTab[i].eval % 10);
     return(R_NilValue);		/* -Wall */
 }
 
 SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP name, prim;
     checkArity(op, args);
-    name = CAR(args);
+    SEXP name = CAR(args);
     if (!isString(name) || length(name) != 1 ||
 	STRING_ELT(name, 0) == R_NilValue)
 	errorcall(call, _("string argument required"));
-    prim = R_Primitive(CHAR(STRING_ELT(name, 0)));
-    if (prim == R_NilValue)
-	errorcall(call, _("no such primitive function"));
-    return prim;
+    const char *primname = CHAR(STRING_ELT(name, 0));
+    for (int i = 0; R_FunTab[i].name; i++) 
+	if (strcmp(primname, R_FunTab[i].name) == 0) {
+	    if ((R_FunTab[i].eval % 100 )/10) break;
+	    return mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	}
+    errorcall(call, _("no such primitive function"));
+    return R_NilValue; /* -Wall */
 }
 
 int StrToInternal(const char *s)
