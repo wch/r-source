@@ -5210,7 +5210,10 @@ function(dir)
 
     }
     db <- tryCatch(lapply(urls, .repository_db), error = identity)
-    if(inherits(db, "error")) return(out)
+    if(inherits(db, "error")) {
+        message("NB: need Internet access to use CRAN incoming checks")
+        return(out)
+    }
     db <- do.call(rbind, db)
 
     ## Assume the CRAN URL comes first.
@@ -5273,8 +5276,7 @@ function(dir)
     }
     ## For now, there should be no duplicates ...
 
-    ## Package versions should be newer than what we already have on
-    ## CRAN.
+    ## Package versions should be newer than what we already have on CRAN.
 
     v_m <- package_version(meta["Version"])
     v_d <- package_version(db[, "Version"])
@@ -5283,7 +5285,7 @@ function(dir)
 
     ## Check submission recency and frequency.
     ## Currently, this requires getting the mtimes from a local CRAN
-    ## file:// mirror.
+    ## file:// mirror including Archive.
     if(substring(CRAN, 1L, 7L) == "file://") {
         CRAN_src_contrib_dir <-
             sprintf("%s/src/contrib", substring(CRAN, 8L))

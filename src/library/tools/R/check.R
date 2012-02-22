@@ -288,7 +288,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      paste("  file", paste(sQuote(miss[f]), collapse = ", "),
                            "will not be installed: please remove it\n"))
         }
-        if (R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
+        if (dir.exists("inst/doc")) {
+            if (R_check_doc_sizes) check_doc_size()
+            else if (as_cran)
+                warningLog(Log, "'qpdf' is needed for checks on size reduction of PDFs")
+        }
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
 
         setwd(pkgoutdir)
@@ -1464,7 +1468,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             td <- tempfile('pdf')
             dir.create(td)
             file.copy(pdfs, td)
-            res <- compactPDF(td, gs_quality = "none") # we say we use qpdf
+            res <- compactPDF(td, gs_quality = "none") # use qpdf
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 noteLog(Log)
@@ -1481,7 +1485,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     res <- compactPDF(td, gs_cmd = gs_cmd, gs_quality = "ebook")
                     res <- format(res, diff = 2.5e5) # 250 KB for now
                     if(length(res)) {
-                        if (!any) noteLog(Log)
+                        if (!any) warningLog(Log)
                         any <- TRUE
                         printLog(Log,
                                  "  'gs+qpdf' made some significant size reductions:\n",
@@ -1489,7 +1493,12 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                  "\n",
                                  '  consider running tools::compactPDF(gs_quality = "ebook") on these files\n')
                     }
+                } else {
+                    if (!any) noteLog(Log)
+                    any <- TRUE
+                    printLog(Log, "Unable to find Ghostscript executable to run checks on size reduction\n")
                 }
+
             }
             if (!any) resultLog(Log, "OK")
         }
@@ -3155,7 +3164,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         R_check_executables_exclusions <- FALSE
         R_check_subdirs_nocase <-TRUE
         R_check_doc_sizes2 <- TRUE
-        R_check_depends_only <- R_check_suggests_only <- TRUE
+        R_check_suggests_only <- TRUE
     }
 
     if (extra_arch)
@@ -3353,7 +3362,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 }
             }
 
-            if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE"))) # FIXME || as_cran ?
+            if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE")) || as_cran)
                 check_CRAN_incoming()
 
             ## <NOTE>

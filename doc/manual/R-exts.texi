@@ -2161,7 +2161,8 @@ setting environment variables @w{@env{_R_CHECK_*_}:}, as described in
 `R Internals':
 @end ifclear
 a set of these customizations similar to those used by
-@acronym{CRAN} can be selected by the option @option{--as-cran}.
+@acronym{CRAN} can be selected by the option @option{--as-cran} (which
+works best if Internet access is available).
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
