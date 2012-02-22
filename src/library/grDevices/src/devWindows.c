@@ -155,7 +155,7 @@ static rect getregion(gadesc *xd)
    last update (by default).
 
    This runs on (asynchronous) timers for each device.
-   Macro SHOW does an immediate update, and records the update 
+   Macro SHOW does an immediate update, and records the update
    in GALastUpdate.
    SHOW is called for expose and mouse events, and newpage.
 
@@ -205,7 +205,7 @@ static int GA_holdflush(pDevDesc dd, int level)
     xd->holdlevel += level;
     if(xd->holdlevel <= 0) xd->holdlevel = 0;
     if(xd->holdlevel == 0) {
-	GA_xd = xd; 
+	GA_xd = xd;
 	gsetcursor(xd->gawin, ArrowCursor);
 	gbitblt(GA_xd->gawin, GA_xd->bm, pt(0,0), getrect(GA_xd->bm));
 	GALastUpdate = GetTickCount();
@@ -855,7 +855,7 @@ static void HelpMouseClick(window w, int button, point pt)
 	if (!xd->locator && !xd->confirmation && !dd->gettingEvent)
 	    return;
 	if (button & LeftButton) {
-	    int useBeep = xd->locator && 
+	    int useBeep = xd->locator &&
 		asLogical(GetOption1(install("locatorBell")));
 	    if(useBeep) gabeep();
 	    xd->clicked = 1;
@@ -2206,7 +2206,7 @@ static void GA_NewPage(const pGEcontext gc,
 	} else if(xd->kind == PNG) {
 	    DRAW(gfillrect(_d, PNG_TRANS, xd->clip));
 	}
-	if(xd->kind == PNG) 
+	if(xd->kind == PNG)
 	    xd->pngtrans = ggetpixel(xd->gawin, pt(0,0)) | 0xff000000;
     } else {
 	xd->clip = getregion(xd);
@@ -2792,8 +2792,8 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
 	gcopyalpha2(xd->gawin, img, dr);
     } else {
         gsetcliprect(xd->bm, xd->clip);
-	gcopyalpha2(xd->bm, img, dr); 
-        if(!xd->buffered) 
+	gcopyalpha2(xd->bm, img, dr);
+        if(!xd->buffered)
 	    gbitblt(xd->gawin, xd->bm, pt(0,0), getrect(xd->bm));
     }
 
@@ -2801,6 +2801,38 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
     delimage(img);
     SH;
     vmaxset(vmax);
+}
+
+static void flipRaster(unsigned int *rasterImage,
+                       int imageWidth, int imageHeight,
+                       int invertX, int invertY,
+                       unsigned int *flippedRaster) {
+    int i, j;
+    int rowInc, rowOff, colInc, colOff;
+
+    if (invertX) {
+        colInc = -1;
+        colOff = imageWidth - 1;
+    } else {
+        colInc = 1;
+        colOff = 0;
+    }
+    if (invertY) {
+        rowInc = -1;
+        rowOff = imageHeight - 1;
+    } else {
+        rowInc = 1;
+        rowOff = 0;
+    }
+
+    for (i = 0; i < imageHeight ;i++) {
+        for (j = 0; j < imageWidth; j++) {
+            int row = (rowInc*i + rowOff);
+            int col = (colInc*j + colOff);
+            flippedRaster[i*imageWidth + j] =
+                rasterImage[row*imageWidth + col];
+        }
+    }
 }
 
 static void GA_Raster(unsigned int *raster, int w, int h,
@@ -2814,12 +2846,17 @@ static void GA_Raster(unsigned int *raster, int w, int h,
     double angle = rot*M_PI/180;
     unsigned int *image = raster;
     int imageWidth = w, imageHeight = h;
-    Rboolean adjustXY = FALSE;
- 
+    Rboolean invertX = FALSE;
+    Rboolean invertY = TRUE;
+
     /* The alphablend code cannot handle negative width or height */
     if (height < 0) {
         height = -height;
-        adjustXY = TRUE;
+        invertY = FALSE;
+    }
+    if (width < 0) {
+        width = -width;
+        invertX = TRUE;
     }
 
     if (interpolate) {
@@ -2850,8 +2887,13 @@ static void GA_Raster(unsigned int *raster, int w, int h,
         imageHeight = newH;
     }
 
-    if (adjustXY) {
-        /* convert (x, y) from bottom-left to top-right */
+    if (invertX) {
+        /* convert (x, y) from bottom-left to top-left */
+        x -= imageWidth*cos(angle);
+        if (angle != 0) y -= imageWidth*sin(angle);
+    }
+    if (!invertY) {
+        /* convert (x, y) from bottom-left to top-left */
         y -= imageHeight*cos(angle);
         if (angle != 0) x -= imageHeight*sin(angle);
     }
@@ -2887,6 +2929,16 @@ static void GA_Raster(unsigned int *raster, int w, int h,
         image = rotatedRaster;
         imageWidth = newW;
         imageHeight = newH;
+    }
+
+    if (invertX || invertY) {
+        unsigned int *flippedRaster;
+
+        flippedRaster = (unsigned int *) R_alloc(imageWidth * imageHeight,
+                                                 sizeof(unsigned int));
+        flipRaster(image, imageWidth, imageHeight,
+                   invertX, invertY, flippedRaster);
+        image = flippedRaster;
     }
 
     doRaster(image, (int) (x + .5), (int) (y + .5),
@@ -2938,7 +2990,7 @@ static SEXP GA_Cap(pDevDesc dd)
 	/* Tidy up */
 	delimage(img);
     }
-    
+
 
     return raster;
 }
@@ -3648,7 +3700,7 @@ SEXP devga(SEXP args)
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
-			    restoreConsole, title, clickToConfirm, 
+			    restoreConsole, title, clickToConfirm,
 			    fillOddEven, family, quality)) {
 	    char type[100], *p;
 	    free(dev);
@@ -3754,7 +3806,7 @@ static int Load_Rcairo_Dll()
 	strcat(szFullPath, R_ARCH);
 	strcat(szFullPath, "/winCairo.dll");
 	if (((hRcairoDll = LoadLibrary(szFullPath)) != NULL) &&
-	    ((R_devCairo = 
+	    ((R_devCairo =
 	      (R_SaveAsBitmap)GetProcAddress(hRcairoDll, "in_Cairo"))
 	     != NULL)) {
 	    RcairoAlreadyLoaded = 1;
@@ -3774,7 +3826,7 @@ static int Load_Rcairo_Dll()
 */
 SEXP devCairo(SEXP args)
 {
-    if (!Load_Rcairo_Dll()) 
+    if (!Load_Rcairo_Dll())
 	error(_("Unable to load winCairo.dll: was it built?"));
     else (R_devCairo)(args);
     return R_NilValue;
