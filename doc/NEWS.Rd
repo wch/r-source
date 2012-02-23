@@ -71,7 +71,7 @@
       specified differently from \code{1:n}, see the discussion on R-devel,
       \url{https://stat.ethz.ch/pipermail/r-devel/2011-November/062586.html}.
 
-      \item new function \code{paste0()}, an efficient version of
+      \item New function \code{paste0()}, an efficient version of
       \code{paste(*, sep="")}, to be used in many places for more
       concise (and slightly more efficient) code.
 
@@ -113,7 +113,7 @@
       % https://stat.ethz.ch/pipermail/r-devel/2011-September/062113.html
 
       \item For consistency, circles with zero radius are omitted by
-      \code{points} and \code{grid.circle()}.  Previously this was
+      \code{points()} and \code{grid.circle()}.  Previously this was
       device-dependent, but they were usually invisible.
 
       \item \code{NROW(x)} and \code{NCOL(x)} now work whenever
@@ -169,11 +169,11 @@
 
       \item \code{makePSOCKCluster()} has a new option \code{useXDR =
 	FALSE} which can be used to avoid byte-shuffling for
-      serialization when all the nodes are known to little-endian (or
+      serialization when all the nodes are known to be little-endian (or
       all big-endian).
 
       \item \code{makeForkCluster()} and the multicore-based functions
-      all use native byte order for serialization.
+      use native byte order for serialization.
     }
   }
 
@@ -280,8 +280,8 @@
       to \code{library.dynam.unload()} and to \code{useDynLib}
       directives in \file{NAMESPACE} files.
 
-      \item The internal functions (but still used by some packages)
-      \code{.readRDS()} and \code{.saveRDS()} are now defunct.
+      \item The internal functions \code{.readRDS()} and
+      \code{.saveRDS()} are now defunct.
 
       \item The off-line \code{help()} types \samp{"postscript"} and
       \samp{"ps"} are defunct.
@@ -324,11 +324,12 @@
       has been changed from \code{0L} to \code{NA_integer_}.
       (\PR{14754})
 
-      \item The \code{exportMethods} directive now exports S4 generics as
-      necessary, as the extensions manual said it does.  The manual
-      has also been updated to be a little more informative on this point.
+      \item The \code{exportMethods} directive in a \file{NAMESPACE}
+      file now exports S4 generics as necessary, as the extensions
+      manual said it does.  The manual has also been updated to be a
+      little more informative on this point.
 
-      \item Reference methods can not safely use non-exported entries
+      \item Reference methods cannot safely use non-exported entries
       in the namespace.  We now do not do so, and warn in the documentation.
 
       \item The namespace import code was warning when identical
@@ -339,7 +340,7 @@
       with duplicate column names (which confused \PR{14786}).
 
       \item Fixes for rendering raster images on X11 and Windows devices
-      when x-axis scale or y-axis scale is reversed.
+      when the x-axis or y-axis scale is reversed.
     }
   }
 }
@@ -369,6 +370,10 @@
       executable.
 
       \item The included version of zlib has been updated to 1.2.6.
+
+      \item For consistency with the \code{logLik()} method,
+      \code{nobs()} for \code{"nls"} files now excludes observations
+      with zero weight.  (Reported by Berwin Turlach.)
     }
   }
   
@@ -378,7 +383,7 @@
       according to the description in \sQuote{Writing R Extensions}.
       
       \item \command{R CMD check} has a new option \option{-as-cran} to
-      turn most of the customizations that CRAN uses of their incoming
+      turn most of the customizations that CRAN uses for its incoming
       checks.
     }
   }
@@ -404,14 +409,15 @@
       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
       \file{Rconfig.h}) even though no OpenMP flags were populated.
 
-      \item The \code{getS3method()} implementation had a very old
-      and incorrect computation to find an S4 default method.
+      \item The \code{getS3method()} implementation had an old
+      computation to find an S4 default method.
 
       \item \code{readLines()} could overflow a buffer if the last line
       of the file was not terminated.  (\PR{14766})
 
       \item \command{R CMD check} could miss undocumented S4 objects in
-      packages which used S4 classes but did not \samp{Depends: methods}.
+      packages which used S4 classes but did not \samp{Depends: methods}
+      in their \file{DESCRIPTION} file.
 
       \item The HTML Help Search page had malformed links.
       (\PR{14769})
@@ -433,10 +439,6 @@
       \item Forgetting the \code{#endif} tag in an Rd file could cause
       the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
 
-      \item For consistency with the \code{logLik()} method,
-      \code{nobs()} for \code{"nls"} files now excludes observations
-      with zero weight.  (Reported by Berwin Turlach.)
-
       \item \code{str(*, ....., strict.width="cut")} now also obeys
       \code{list.len = n}.  (Reported by Sören Vogel.)
 
@@ -451,7 +453,7 @@
       argument. (\PR{14807})
 
       \item \code{svg()} could segfault if called with a non-existent
-      filename.  (\PR{14790})
+      file path.  (\PR{14790})
 
       \item \command{make install} can install to a path containing
       \samp{+} characters. (\PR{14798})
@@ -490,7 +492,7 @@
       \item \code{installed.packages()} has some more protection against
       package installs going on in parallel. 
       
-      \item \code{.Primitive()} could be misused to call
+      \item \code{.Primitive()} could be mis-used to call
       \code{.Internal()} entry points.
     }
   }
