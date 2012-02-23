@@ -45,7 +45,7 @@
       according to the description in \sQuote{Writing R Extensions}.
       
       \item \command{R CMD check} has a new option \option{-as-cran} to
-      turn most of the customizations that CRAN uses for its incoming
+      turn on most of the customizations that CRAN uses for its incoming
       checks.
     }
   }
