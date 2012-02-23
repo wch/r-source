@@ -113,6 +113,13 @@ OSI: open
 FSF: free_and_GPL_incompatible
 URL: http://www.mozilla.org/MPL/MPL-1.1.html
 
+Name: Mozilla Public License
+Abbrev: MPL
+Version: 2.0
+OSI: open
+FSF: free_and_GPL_compatible
+URL: http://www.mozilla.org/MPL/2.0
+
 Name: X11 License
 Abbrev: X11
 FSF: free_and_GPL_compatible
@@ -174,3 +181,7 @@ Abbrev: CC BY-SA 2.0
 FSF: free_and_GPL_incompatible
 OSI: open
 URL: http://creativecommons.org/licenses/by-sa/2.0
+
+Name: CC0
+FSF: free_and_GPL_compatible
+URL: http://creativecommons.org/publicdomain/zero/1.0/legalcode
