@@ -32,6 +32,10 @@
       executable.
 
       \item The included version of zlib has been updated to 1.2.6.
+
+      \item For consistency with the \code{logLik()} method,
+      \code{nobs()} for \code{"nls"} files now excludes observations
+      with zero weight.  (Reported by Berwin Turlach.)
     }
   }
   
@@ -41,7 +45,7 @@
       according to the description in \sQuote{Writing R Extensions}.
       
       \item \command{R CMD check} has a new option \option{-as-cran} to
-      turn most of the customizations that CRAN uses of their incoming
+      turn most of the customizations that CRAN uses for its incoming
       checks.
     }
   }
@@ -67,14 +71,15 @@
       set \code{HAVE_OPENMP} (internal) and \code{SUPPORT_OPENMP} (in
       \file{Rconfig.h}) even though no OpenMP flags were populated.
 
-      \item The \code{getS3method()} implementation had a very old
-      and incorrect computation to find an S4 default method.
+      \item The \code{getS3method()} implementation had an old
+      computation to find an S4 default method.
 
       \item \code{readLines()} could overflow a buffer if the last line
       of the file was not terminated.  (\PR{14766})
 
       \item \command{R CMD check} could miss undocumented S4 objects in
-      packages which used S4 classes but did not \samp{Depends: methods}.
+      packages which used S4 classes but did not \samp{Depends: methods}
+      in their \file{DESCRIPTION} file.
 
       \item The HTML Help Search page had malformed links.
       (\PR{14769})
@@ -96,10 +101,6 @@
       \item Forgetting the \code{#endif} tag in an Rd file could cause
       the parser to go into a loop.  (Reported by Hans-Jorg Bibiko.)
 
-      \item For consistency with the \code{logLik()} method,
-      \code{nobs()} for \code{"nls"} files now excludes observations
-      with zero weight.  (Reported by Berwin Turlach.)
-
       \item \code{str(*, ....., strict.width="cut")} now also obeys
       \code{list.len = n}.  (Reported by Sören Vogel.)
 
@@ -114,7 +115,7 @@
       argument. (\PR{14807})
 
       \item \code{svg()} could segfault if called with a non-existent
-      filename.  (\PR{14790})
+      file path.  (\PR{14790})
 
       \item \command{make install} can install to a path containing
       \samp{+} characters. (\PR{14798})
@@ -153,7 +154,7 @@
       \item \code{installed.packages()} has some more protection against
       package installs going on in parallel. 
       
-      \item \code{.Primitive()} could be misused to call
+      \item \code{.Primitive()} could be mis-used to call
       \code{.Internal()} entry points.
     }
   }
