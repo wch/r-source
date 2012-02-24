@@ -63,7 +63,7 @@
   n <- get(".SigLength", envir = fenv)
   anySig <- rep("ANY", n) # assert doesn't need to be a real signature
   anyLabel <- .sigLabel(anySig)
-  newMethods <- objects(newtable, all.names=TRUE)
+  newMethods <- objects(envir=newtable, all.names=TRUE)
   for(what in newMethods) {
     obj <- get(what, envir = newtable)
     if(is.primitive(obj))
