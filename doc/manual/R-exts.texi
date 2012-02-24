@@ -1626,13 +1626,13 @@ For reasonably recent versions of @command{gcc} the correct
 specification is
 
 @example
-PKG_CPPFLAGS = -pthreads
-PKG_LIBS = -pthreads
+PKG_CPPFLAGS = -pthread
+PKG_LIBS = -pthread
 @end example
 
 @noindent
-(and the singular version is also accepted).  For other platforms the
-specification is
+(and the plural version is also accepted on some systems/versions).  For
+other platforms the specification is
 
 @example
 PKG_CPPFLAGS = -D_REENTRANT
