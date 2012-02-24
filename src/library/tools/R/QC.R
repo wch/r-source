@@ -5246,8 +5246,9 @@ function(dir)
     ## in CRAN's src/contrib/Meta/archive.rds.
     con <- gzcon(url(sprintf("%s/src/contrib/Meta/archive.rds", CRAN),
                      "rb"))
-    packages_in_CRAN_archive <- names(readRDS(con))
+    CRAN_archive_db <- readRDS(con)
     close(con)
+    packages_in_CRAN_archive <- names(CRAN_archive_db)
 
     ## Package names must be unique within standard repositories when
     ## ignoring case.
@@ -5306,31 +5307,26 @@ function(dir)
         out$bad_version <- list(v_m, v_d)
 
     ## Check submission recency and frequency.
-    ## Currently, this requires getting the mtimes from a local CRAN
-    ## file:// mirror including Meta.
-    if(substring(CRAN, 1L, 7L) == "file://") {
-        CRAN_src_contrib_dir <-
-            file.path(substring(CRAN, 8L), "src", "contrib")
-        CRAN_archive_db_file <-
-            file.path(CRAN_src_contrib_dir, "Meta", "archive.rds")
-        mtimes <- if(file_test("-f", CRAN_archive_db_file))
-            c(file.info(Sys.glob(file.path(CRAN_src_contrib_dir,
-                                           sprintf("%s_*.tar.gz",
-                                                   package))))$mtime,
-              readRDS(CRAN_archive_db_file)[[package]]$mtime)
-        else
-            NULL
-        if(length(mtimes)) {
-            deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
-            ## Number of days since last update.
-            recency <- as.numeric(deltas[1L])
-            if(recency < 7)
-                out$recency <- recency
-            ## Number of updates in past 6 months.
-            frequency <- sum(deltas <= 180)
-            if(frequency > 6)
-                out$frequency <- frequency
-        }
+    con <- gzcon(url(sprintf("%s/src/contrib/Meta/current.rds", CRAN),
+                     "rb"))
+    CRAN_current_db <- readRDS(con)
+    close(con)
+    mtimes <- c(CRAN_current_db[match(package,
+                                      sub("_.*", "",
+                                          rownames(CRAN_current_db)),
+                                      nomatch = 0L),
+                                "mtime"],
+                CRAN_archive_db[[package]]$mtime)
+    if(length(mtimes)) {
+        deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
+        ## Number of days since last update.
+        recency <- as.numeric(deltas[1L])
+        if(recency < 7)
+            out$recency <- recency
+        ## Number of updates in past 6 months.
+        frequency <- sum(deltas <= 180)
+        if(frequency > 6)
+            out$frequency <- frequency
     }
 
     ## Watch out for maintainer changes.
