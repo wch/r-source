@@ -346,7 +346,7 @@
       when the x-axis or y-axis scale is reversed.
 
       \item \code{getAnywhere()} found S3 methods as seen from the
-      \pkg{utils} namespace and not from the enviroment from which it
+      \pkg{utils} namespace and not from the environment from which it
       was called.
     }
   }
