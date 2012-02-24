@@ -329,6 +329,9 @@
       manual said it does.  The manual has also been updated to be a
       little more informative on this point.
 
+      It is now required that there is an S4 generic (imported or
+      created in the package) when methods are to be exported.
+
       \item Reference methods cannot safely use non-exported entries
       in the namespace.  We now do not do so, and warn in the documentation.
 

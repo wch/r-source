@@ -587,11 +587,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                     ## the rest must be generic functions, implicit or local
                     ok <- sapply(addGenerics, function(what) methods::is(get(what, mode = "function", envir = ns), "genericFunction"))
                     if(!all(ok)) {
-                        warning(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
+                        stop(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
                                          sQuote(package),
                                          paste(sQuote(sort(unique(addGenerics[!ok]))), collapse = ", ")),
                                 domain = NA, call. = FALSE)
-                        addGenerics <- addGenerics[ok]
+                        # addGenerics <- addGenerics[ok]
                     }
                 }
 ### <note> Uncomment following to report any local generic functions
