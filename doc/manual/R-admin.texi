@@ -4379,7 +4379,7 @@ SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 
 @noindent
 but the use of @code{-nofstore} can be less numerically stable, and some
-packages (notably @pkg{mgcv} on @cputype{x86}) failed to compile at
+packages (notably @CRANpkg{mgcv} on @cputype{x86}) failed to compile at
 higher optimization levels with version 12.3.
 
 The Solaris Studio compilers provide several implementations of the C++
@@ -4951,9 +4951,9 @@ Some external software libraries will need to be re-compiled under the
 new toolchain: especially those providing a C++ interface.  Many of
 those used by @acronym{CRAN} packages are available from
 @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
-developing packages with @pkg{Rcpp} need to ensure that they use a
+developing packages with @CRANpkg{Rcpp} need to ensure that they use a
 version built with exactly the same toolchain as their package: the
-recommendation is to build @pkg{Rcpp} from its sources yourself.
+recommendation is to build @CRANpkg{Rcpp} from its sources yourself.
 
 There is support for OpenMP and pthreads in this toolchain.  As the
 performance of OpenMP on Windows is poor for small tasks, it is not used

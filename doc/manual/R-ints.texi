@@ -3708,7 +3708,7 @@ Default: false (but true for CRAN submission checks).
 
 This may give false positives on code which uses
 @code{grDevices::densCols} and @code{stats:::asSparse} as these invoke
-@pkg{KernSmooth} and @pkg{Matrix} respectively.
+@CRANpkg{KernSmooth} and @CRANpkg{Matrix} respectively.
 
 @item _R_CHECK_CODETOOLS_PROFILE_
 A string with comma-separated @code{@var{name}=@var{value}} pairs (with
