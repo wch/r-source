@@ -424,7 +424,9 @@ function(x)
         ## rather generous about using whitespace).
         ind <- ok & grepl("\\(", components)
         if(any(ind)) {
-            s <- sub("[[:space:]]*\\(", " \\(", components[ind])
+            s <- sub("[[:space:]]*\\([[:space:]]*", " \\(",
+                     components[ind])
+            s <- sub("[[:space:]]*\\)", "\\)", s)            
             s <- gsub("[[:space:]]*,[[:space:]]*", ", ", s)
             ## Really re_or(operators) ...
             s <- gsub("[[:space:]]+(<=?|>=?|==|!=)", " \\1", s)
