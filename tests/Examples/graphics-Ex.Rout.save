@@ -810,7 +810,7 @@ temperature no yes
 > 
 > ### Name: filled.contour
 > ### Title: Level (Contour) Plots
-> ### Aliases: filled.contour
+> ### Aliases: filled.contour .filled.contour
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
