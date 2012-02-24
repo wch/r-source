@@ -251,7 +251,7 @@
 
        \item The defaults for some of the options in \command{R CMD
 	 check} (described in the \sQuote{R Internals} manual) have
-       changed: the checks for unsafe and \code{.Internal()} calls and
+       changed: checks for unsafe and \code{.Internal()} calls and
        for partial matching of arguments in \R function calls are now
        done by default.
        
@@ -344,6 +344,10 @@
 
       \item Fixes for rendering raster images on X11 and Windows devices
       when the x-axis or y-axis scale is reversed.
+
+      \item \code{getAnywhere()} found S3 methods as seen from the
+      \pkg{utils} namespace and not from the enviroment from which it
+      was called.
     }
   }
 }

@@ -365,16 +365,20 @@ getAnywhere <- function(x)
         where <- names(pos)
         visible <- rep.int(TRUE, length(pos))
     }
-    ## next look for methods
+    ## next look for methods: a.b.c.d could be a method for a or a.b or a.b.c
     if(length(grep(".", x, fixed=TRUE))) {
         np <- length(parts <- strsplit(x, ".", fixed=TRUE)[[1L]])
         for(i in 2:np) {
             gen <- paste(parts[1L:(i-1)], collapse=".")
             cl <- paste(parts[i:np], collapse=".")
             if (gen == "" || cl == "") next
-            # f might be a special, not a closure, and not have an environment, so
-            # be careful below
-            if(!is.null(f <- getS3method(gen, cl, TRUE)) && !is.null(environment(f))) {
+            ## want to evaluate this in the parent, or the utils namespace
+            ## gets priority.
+            Call <- substitute(getS3method(gen, cl, TRUE), list(gen = gen, cl = cl))
+            f <- eval.parent(Call)
+            ## Now try to fathom out where it is from.
+            ## f might be a special, not a closure, and not have an environment,
+            if(!is.null(f) && !is.null(environment(f))) {
                 ev <- topenv(environment(f), baseenv())
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
@@ -386,7 +390,7 @@ getAnywhere <- function(x)
             }
         }
     }
-    ## now look in namespaces, visible or not
+    ## now look in loaded namespaces
     for(i in loadedNamespaces()) {
         ns <- asNamespace(i)
         if(exists(x, envir = ns, inherits = FALSE)) {
