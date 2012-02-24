@@ -3505,13 +3505,8 @@ function(package, dir, lib.loc = NULL)
         config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_",
                                          FALSE))
     if(use_aliases_from_CRAN) {
-        ## But only do so when using a local (file) CRAN mirror.
         CRAN <- .get_standard_repository_URLs()[1L]
-        if(substring(CRAN, 1L, 7L) != "file://")
-            use_aliases_from_CRAN <- FALSE
-        else
-            CRAN_web_packages_dir <-
-                sprintf("%s/web/packages", substring(CRAN, 8L))
+        CRAN_aliases_db <- NULL
     }
 
     for (pkg in unique(thispkg[have_anchor])) {
@@ -3534,11 +3529,22 @@ function(package, dir, lib.loc = NULL)
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
             db[this, "bad"] <- !good & !suspect
-        } else if(use_aliases_from_CRAN &&
-                  file_test("-f",
-                            afile <- file.path(CRAN_web_packages_dir,
-                                               pkg, "aliases.rds"))) {
-            aliases <- readRDS(afile)
+        } else if(use_aliases_from_CRAN) {
+            if(is.null(CRAN_aliases_db)) {
+                ## Not yet read in.
+                ## message("Reading in aliases db ...")
+                con <- gzcon(url(sprintf("%s/src/contrib/Meta/aliases.rds",
+                                         CRAN),
+                                 "rb"))
+                CRAN_aliases_db <- readRDS(con)
+                close(con)
+            }
+            aliases <- CRAN_aliases_db[[pkg]]
+            if(is.null(aliases)) {
+                unknown <- c(unknown, pkg)
+                next
+            }
+            ## message(sprintf("Using aliases db for package %s", pkg))
             nm <- sub("\\.[Rr]d", "", basename(names(aliases)))
             good <- thisfile[this] %in% nm
             suspect <- if(any(!good)) {
@@ -5237,8 +5243,9 @@ function(dir)
     CRAN <- urls[1L]
 
     ## For now, information about the CRAN package archive is provided
-    ## in CRAN's src/contrib/Archive.rds.
-    con <- gzcon(url(sprintf("%s/src/contrib/Archive.rds", CRAN), "rb"))
+    ## in CRAN's src/contrib/Meta/archive.rds.
+    con <- gzcon(url(sprintf("%s/src/contrib/Meta/archive.rds", CRAN),
+                     "rb"))
     packages_in_CRAN_archive <- names(readRDS(con))
     close(con)
 
@@ -5300,17 +5307,21 @@ function(dir)
 
     ## Check submission recency and frequency.
     ## Currently, this requires getting the mtimes from a local CRAN
-    ## file:// mirror including Archive.
+    ## file:// mirror including Meta.
     if(substring(CRAN, 1L, 7L) == "file://") {
         CRAN_src_contrib_dir <-
-            sprintf("%s/src/contrib", substring(CRAN, 8L))
-        g <- sprintf("%s_*.tar.gz", package)
-        files <- Sys.glob(c(file.path(CRAN_src_contrib_dir, g),
-                            file.path(CRAN_src_contrib_dir, "Archive",
-                                      package, g)))
-        if(length(files)) {
-            deltas <- Sys.Date() -
-                as.Date(sort(file.info(files)$mtime, decreasing = TRUE))
+            file.path(substring(CRAN, 8L), "src", "contrib")
+        CRAN_archive_db_file <-
+            file.path(CRAN_src_contrib_dir, "Meta", "archive.rds")
+        mtimes <- if(file_test("-f", CRAN_archive_db_file))
+            c(file.info(Sys.glob(file.path(CRAN_src_contrib_dir,
+                                           sprintf("%s_*.tar.gz",
+                                                   package))))$mtime,
+              readRDS(CRAN_archive_db_file)[[package]]$mtime)
+        else
+            NULL
+        if(length(mtimes)) {
+            deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
             ## Number of days since last update.
             recency <- as.numeric(deltas[1L])
             if(recency < 7)
