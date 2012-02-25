@@ -44,10 +44,9 @@ hasMethod(f, signature=character(), where)
   \item{where}{The position or environment in which to look for the
     method(s):  by default, the table of methods defined in the generic function itself is used.}
 
-  \item{optional}{ If the selection in  \code{selectMethod} does find a valid method
+  \item{optional}{If the selection in \code{selectMethod} does not find a valid method
     an error is generated, unless this argument is \code{TRUE}.  In that
-    case, the value returned is  \code{NULL} if no
-    method matches.}
+    case, the value returned is \code{NULL} if no method matches.}
   \item{mlist, fdef, useInherited, verbose, doCache}{Optional
       arguments  to  \code{getMethod} and \code{selectMethod} for
       internal use.  Avoid
