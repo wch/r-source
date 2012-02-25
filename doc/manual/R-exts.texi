@@ -3450,6 +3450,13 @@ respectively.
 Note that @code{importMethodsFrom} will also import any generics defined
 in the namespace on those methods.
 
+It is important if you export S4 methods that the corresponding
+generics are available: the requirementa on this are stricter as from @R{}
+2.15.0.  You may for example need to import @code{plot} from
+@pkg{graphics} to make visible a function to be converted into its
+implicit generic.  But it is better practice to make use of the generics
+exported by @pkg{stats4} as this enables multiple packages to
+unambiguously set methods on those generics.
 
 @node Writing portable packages, Diagnostic messages, Package namespaces, Creating R packages
 @section Writing portable packages
@@ -7247,6 +7254,14 @@ if the routine is present, @R{} will invoke it and pass it a single
 argument describing the DLL.  This is a value of type @code{DllInfo}
 which is defined in the @file{Rdynload.h} file in the @file{R_ext}
 directory.
+
+Note that there are some implicit restrictions on this mechanism as the
+basename of the DLL needs to be both a valid file name and valid as part
+of a C entry point (e.g.@: it cannot contain @samp{.}): for portable
+code it is best to confine DLL names to be ASCII alphanumeric plus
+underscore.  As from @R{} 2.15.0, if entry point @code{R_init_@var{lib}}
+is not found it is also looked for with @samp{.} replaced by @samp{_}.
+
 
 The following example shows templates for the initialization and
 unload routines for the @code{mylib} DLL.

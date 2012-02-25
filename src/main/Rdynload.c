@@ -565,6 +565,12 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
 	sprintf(tmp, "_%s%s","R_init_", info->name);
 #endif
 	f = (DllInfoInitCall) R_osDynSymbol->dlsym(info, tmp);
+	/* This is potentially unsafe in MBCSs, as '.' might be part of 
+	   a character: but is not in UTF-8 */
+	if(!f) {
+	    for(char *p = tmp; *p; p++) if(*p == '.') *p = '_';
+	    f = (DllInfoInitCall) R_osDynSymbol->dlsym(info, tmp);
+	}
 	free(tmp);
 	if(f)
 	    f(info);
