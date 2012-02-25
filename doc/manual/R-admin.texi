@@ -3073,6 +3073,9 @@ multithreaded Linux version of ACML available for recent versions of
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use ACML.
 
+The version last tested (5.1.0) failed the @file{reg-BLAS.R} test in its
+handling of @code{NA}s.
+
 @node Goto BLAS, MKL, ACML, BLAS
 @subsubsection Goto BLAS
 
