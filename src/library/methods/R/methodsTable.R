@@ -16,7 +16,7 @@
 
 ### merge version called from namespace imports code.  Hope to avoid using generic
 .mergeMethodsTable2 <- function(table, newtable, envir, metaname) {
-    old <- objects(table, all.names=TRUE)
+    old <- objects(envir=table, all.names=TRUE)
     mm <- 1
     for( what in old) {
       mm <- get(what, envir =table)
@@ -25,7 +25,7 @@
           break
       }
     }
-    new <- objects(newtable, all.names=TRUE)
+    new <- objects(envir=newtable, all.names=TRUE)
     ## check that signature length doesn't change
     canStore <- TRUE
     for(what in new) {
@@ -410,7 +410,7 @@
     anyLabel <- rep("ANY", n)
     anyPkg <- rep("methods", n)
     seqN <- 1L:n
-    labels <- objects(table, all.names = TRUE)
+    labels <- objects(envir=table, all.names = TRUE)
     for(what in labels) {
         method <- get(what, envir = table)
         if(is.primitive(method)) # stored as default ?
@@ -519,7 +519,7 @@
       labels <- labels[-1L] # drop exact match
     labels <- unique(labels)# only needed while contains slot can have duplicates(!)
     if(verbose) cat(" .fI> length(unique(method labels)) = ", length(labels))
-    allMethods <- objects(table, all.names=TRUE)
+    allMethods <- objects(envir=table, all.names=TRUE)
     found <- match(labels, allMethods, 0L) > 0L
     nFound <- length(lab.found <- labels[found])
     methods <- list() # =?= vector("list", nFound) ; but fails??
@@ -1010,7 +1010,7 @@
     p <- packageSlot(f)
     if(is.null(p)) p <- "base"
     deflt <- new("signature", generic, "ANY")
-    labels <- objects(table, all.names = TRUE)
+    labels <- objects(envir=table, all.names = TRUE)
     if(!is.null(classes) && length(labels)) {
 	sigL <- strsplit(labels, split = "#")
 	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
@@ -1097,7 +1097,7 @@ useMTable <- function(onOff = NA)
       stop("Invalid group generic function in search for inherited method (class \"",
            class(gen), "\"")
     table <- .getMethodsTable(gen)
-    allMethods <- objects(table, all.names = TRUE)
+    allMethods <- objects(envir=table, all.names = TRUE)
     ## TODO:  possible for .SigLength to differ between group &
     ## members.  Requires expanding labels to max. length
     newFound <- rep(FALSE, length(found))
@@ -1294,7 +1294,7 @@ tableNames <- function(generic, where, table) {
 	    if(missing(where)) .getMethodsTable(fdef)
 	    else get(.TableMetaName(fdef@generic, fdef@package),
                      envir = as.environment(where), inherits = FALSE)
-    objects(table, all.names=TRUE)
+    objects(envir=table, all.names=TRUE)
 }
 
 listFromMethods <- function(generic, where, table) {
@@ -1306,7 +1306,7 @@ listFromMethods <- function(generic, where, table) {
 		     envir = as.environment(where), inherits = FALSE)
     fev <- environment(fdef)
     nSigArgs <- .getGenericSigLength(fdef, fev)
-    names <- objects(table, all.names=TRUE)
+    names <- objects(envir=table, all.names=TRUE)
     methods <- lapply(names, function(x)get(x, envir = table))
     if(nSigArgs > 1) {
         n <- length(names)
@@ -1383,7 +1383,7 @@ listFromMethods <- function(generic, where, table) {
     else
         table <- new.env()
     value <- new("MethodsList", argument = as.name(generic@signature[[1]]))
-    allNames <- objects(table, all.names = TRUE)
+    allNames <- objects(envir=table, all.names = TRUE)
     if(length(allNames) == 0L)
       return(value)
     argNames <- generic@signature
