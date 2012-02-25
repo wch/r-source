@@ -1434,7 +1434,7 @@ stopifnot(identical(tt[1:2], tt))
 
 ## Test new defn of cmdscale()
 mds <- cmdscale(eurodist, eig = TRUE, k = 14)
-stopifnot(ncol(mds$points) == 11L)
+stopifnot(ncol(mds$points) < 14L) # usually 11.
 ## Used negative eigenvalues in 2.12.0
 
 

@@ -3049,7 +3049,8 @@ ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 Unfortunately it is usually built as a static library that on some
 platforms cannot be used with shared objects such as are used in @R{}
 packages.  Be careful when using pre-built versions of ATLAS (they seem
-to work on @cputype{ix86} platforms, but not on @cputype{x86_64} ones).
+to work on @cputype{ix86} platforms, but not always on @cputype{x86_64}
+ones).
 
 The usual way to specify ATLAS will be via
 
@@ -3065,6 +3066,11 @@ if the libraries are in the library path, otherwise by
 @end example
 
 @noindent
+For example, @cputype{x86_64} Fedora needs
+@example
+--with-blas="-L/usr/lib64/atlas -lf77blas -latlas"
+@end example
+
 For systems with multiple CPU cores it is possible to use a
 multi-threaded version of ATLAS, by specifying
 
@@ -3096,14 +3102,18 @@ the @command{gcc} version we could use
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRARY_PATH
-@file{/opt/acml4.4.0/gfortran64/lib}) is in the @env{LD_LIBRARY_PATH}.
+@file{/opt/acml5.1.0/gfortran64/lib}) is in the @env{LD_LIBRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for recent versions of
 @command{gfortran}.  To make use of this you will need something like
 
 @example
---with-blas="-L/opt/acml4.4.0/gfortran64_mp/lib -lacml_mp"
+--with-blas="-L/opt/acml5.1.0/gfortran64_mp/lib -lacml_mp"
 @end example
+
+@noindent
+(and you may need to arrange for the directory to be in @command{ld.so}
+cache).
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use ACML.
@@ -3232,7 +3242,7 @@ This has both advantages and disadvantages.
 @item
 It saves space by having only a single copy of the @acronym{BLAS}
 routines, which is helpful if there is an external static @acronym{BLAS}
-such as is standard for ATLAS.
+such as used to be standard for ATLAS.
 
 @item
 There may be performance disadvantages in using a shared @acronym{BLAS}.
@@ -3241,7 +3251,7 @@ and @R{} is @emph{not} built as a shared library, when it is possible to
 build the @acronym{BLAS} into @file{R.bin} (and @file{libR.a}) without
 using position-independent code.  However, experiments showed that in
 many cases using a shared @acronym{BLAS} was as fast, provided high
-levels (e.g., @option{-O3}) of compiler optimization are used.
+levels of compiler optimization are used.
 
 @item
 It is easy to change the @acronym{BLAS} without needing to re-install
@@ -3258,7 +3268,7 @@ dynamic @acronym{BLAS} library (such as ACML or Goto's) to
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml4.4.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
+ln -s /opt/acml5.1.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 will change the @acronym{BLAS} in use to multithreaded ACML.  A similar
 link works for recent versions of the Goto @acronym{BLAS} and perhaps
@@ -3285,7 +3295,7 @@ algebra may want to build a LAPACK library using the ATLAS-optimized
 subset of LAPACK.  To do so specify something like
 
 @example
---with-lapack="-L/path/to/libs -llapack -lcblas"
+--with-lapack="-L/path/to/ATLAS/libs -llapack -lcblas"
 @end example
 
 @noindent
