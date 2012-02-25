@@ -3094,7 +3094,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     R_check_use_install_log <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_INSTALL_LOG_", "TRUE"))
     R_check_subdirs_nocase <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_SUBDIRS_NOCASE_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_SUBDIRS_NOCASE_", "TRUE"))
     R_check_all_non_ISO_C <-
         config_val_to_logical(Sys.getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE"))
     R_check_subdirs_strict <-
@@ -3163,7 +3163,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
-        R_check_subdirs_nocase <-TRUE
         R_check_doc_sizes2 <- TRUE
         R_check_suggests_only <- TRUE
     }

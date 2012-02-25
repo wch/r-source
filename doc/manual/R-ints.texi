@@ -3532,7 +3532,7 @@ If true, check the cross-references in @file{.Rd} files.
 Default: true.
 @item _R_CHECK_SUBDIRS_NOCASE_
 If true, check the case of directories such as @file{R} and @file{man}.
-Default: false (but true for CRAN submission checks).
+Default: true
 @item _R_CHECK_SUBDIRS_STRICT_
 Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the
@@ -3726,8 +3726,8 @@ Default: false, except for CRAN submission checks.
 
 @item _R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_
 When checking anchored Rd xrefs, use Rd aliases from the CRAN package
-web areas (in case the CRAN repository has a @samp{file://} URL) in
-addition to those in the installed packages.  Default: false.
+web areas in addition to those in the packages installed locally.
+Default: false.
 
 @end vtable
 
@@ -3735,16 +3735,25 @@ CRAN's submission checks use something like
 
 @example
 _R_CHECK_CRAN_INCOMING_=TRUE
-_R_CHECK_FORCE_SUGGESTS_=FALSE
 _R_CHECK_VC_DIRS_=TRUE
 _R_CHECK_TIMINGS_=10
 _R_CHECK_INSTALL_DEPENDS_=TRUE
 _R_CHECK_SUGGESTS_ONLY_=TRUE
 _R_CHECK_NO_RECOMMENDED_=TRUE
-_R_CHECK_SUBDIRS_NOCASE_=TRUE
 _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
 _R_CHECK_DOC_SIZES2_=TRUE
 @end example
+
+@noindent
+These are turned on by @command{R CMD check --as-cran}: the incoming
+checks also use
+@example
+_R_CHECK_FORCE_SUGGESTS_=FALSE
+@end example
+
+@noindent
+since some packages do suggest other packages not available on CRAN or
+other commonly-used repositories.
 
 
 @node R coding standards, Testing R code, Tools, Top
