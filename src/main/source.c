@@ -135,15 +135,15 @@ void attribute_hidden parseError(SEXP call, int linenum)
 	    error(_("%s%d:%d: %s"),
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg);
 	    break;
-	case 1: // clang says 'use of '%n' is discouraged'
-	    sprintf(buffer, "%d: %n", R_ParseContextLine, &width); 
+	case 1: // replaces use of %n
+	    width = sprintf(buffer, "%d: ", R_ParseContextLine); 
 	    error(_("%s%d:%d: %s\n%d: %s\n%*s"),
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine, CHAR(STRING_ELT(context, 0)), 
 		  width+R_ParseErrorCol, "^");
 	    break;
 	default:
-	    sprintf(buffer, "%d: %n", R_ParseContextLine, &width);
+	    width = sprintf(buffer, "%d:", R_ParseContextLine);
 	    error(_("%s%d:%d: %s\n%d: %s\n%d: %s\n%*s"),
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine-1, CHAR(STRING_ELT(context, len-2)),
