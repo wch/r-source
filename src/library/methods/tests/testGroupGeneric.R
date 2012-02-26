@@ -16,6 +16,6 @@ removeClass("A")
 ### Find inherited group methods:
 stopifnot(require(Matrix))
 sm <- selectMethod("-", c("dgCMatrix", "numeric"))
-stopifnot(s@generic == "Arith")
+stopifnot(sm@generic == "Arith")
 ## was not ok, in R 2.14.1
 
