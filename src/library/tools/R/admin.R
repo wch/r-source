@@ -940,6 +940,7 @@ find_gs_cmd <- function(gs_cmd)
         if(.Platform$OS.type == "windows") {
             gs_cmd <- Sys.which("gswin64c")
             if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
+            gs_cmd
         } else Sys.which("gs")
     } else Sys.which(gs_cmd)
 }
