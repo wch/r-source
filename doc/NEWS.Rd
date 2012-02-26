@@ -148,6 +148,10 @@
       changed slightly: now left braces at the start of the body are
       stepped over for \code{if} statements as well as for \code{for} and
       \code{while} statements.  (Wish of \PR{14814}.)
+
+      \item \code{library(pkg)} no longer warns about a conflict with a
+      function from \code{package:base} if the function is an identical
+      copy of the base one but with a different environment.
     }
   }
 
