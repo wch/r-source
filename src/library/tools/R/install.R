@@ -680,9 +680,11 @@
                         ## These are packages which have arch-independent
                         ## code in configure.win
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
-                                            "PearsonDS", "RBGL", "RGtk2",
+                                            "PearsonDS", "RGtk2",
                                             "RNetCDF", "RODBC", "Rcpp",
-                                            "Runuran", "XML", "cairoDevice",
+                                            "Runuran", "XML",
+                                            "arulesSequences",
+                                            "cairoDevice",
                                             "diversitree", "foreign",
                                             "fastICA", "glmnet", "gstat",
                                             "igraph", "jpeg", "png", "proj4",
