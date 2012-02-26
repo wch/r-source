@@ -473,10 +473,15 @@
     if(hasGroup)
       groupGenerics <- .getAllGroups(list(fdef))
     doExcluded <- length(excluded) > 0L
-    if(verbose)
-      cat(" .findInheritedMethods(): (hasGroup, doCache, doExcluded)= (",
-	  paste(c("f","T")[1+c(hasGroup, doCache, doExcluded)],collapse=", "),
-	  ")\n", sep='')
+    if(verbose) {
+	plist <- function(x) paste(x, collapse = ", ")
+	cat(" .findInheritedMethods(): (hasGroup, doCache, doExcluded)= (",
+	    plist(c("f","T")[1+c(hasGroup, doCache, doExcluded)]), ")\n",
+	    if(hasGroup) paste0(" Group generics: ",
+				plist(vapply(groupGenerics, slot,
+					     character(1), "generic")), "\n"),
+	    sep='')
+    }
     nargs <- length(classes)
     if(!missing(useInherited) && length(useInherited) < nargs)
       useInherited <- rep(useInherited, length.out = nargs)
@@ -489,10 +494,11 @@
         ## inherited in the nextMethod sense, since they have the same signature
         label <- .sigLabel(classes)
         direct <- .getGroupMethods(label, groupGenerics, FALSE)
-        if(length(direct) && doCache) {
-            assign(label, direct[[1L]], envir = mtable)
-            return(direct)
-        }
+	if(length(direct)) {
+	    if(doCache)
+		assign(label, direct[[1L]], envir = mtable)
+	    return(direct)
+	}
         ## else, continue because we may want all defined methods
     }
     cl1 <- classes[[1L]]
@@ -518,7 +524,10 @@
     if(!returnAll)
       labels <- labels[-1L] # drop exact match
     labels <- unique(labels)# only needed while contains slot can have duplicates(!)
-    if(verbose) cat(" .fI> length(unique(method labels)) = ", length(labels))
+    if(verbose) {
+	cat(" .fI> length(unique(method labels)) = ", length(labels))
+	if(verbose >= 2) { cat(";  labels = \n") ; print(labels) }
+    }
     allMethods <- objects(envir=table, all.names=TRUE)
     found <- match(labels, allMethods, 0L) > 0L
     nFound <- length(lab.found <- labels[found])

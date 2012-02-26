@@ -125,15 +125,15 @@
       \item The internal \code{R_Srcref} variable is now updated
       before the browser stops on entering a function.  (Suggestion of
       \PR{14818}.)
-      
+
       \item There are \sQuote{bare-bones} functions \code{.colSums()},
       \code{.rowSums()}, \code{.colMeans()} and \code{.rowMeans()} for
       use in programming where ultimate speed is required.
 
-      \item The formerly internal function 
-      \code{.package_dependencies()} from package \pkg{tools} for 
-      calculating (recursive) (reverse) dependencies on package databases 
-      has been renamed to \code{package_dependencies()} and is now 
+      \item The formerly internal function
+      \code{.package_dependencies()} from package \pkg{tools} for
+      calculating (recursive) (reverse) dependencies on package databases
+      has been renamed to \code{package_dependencies()} and is now
       exported.
 
       \item There is a new function \code{optimHess()} to compute the
@@ -143,7 +143,7 @@
       \item \code{.filled.contour()} is a \sQuote{bare-bones} function to
       add a filled-contour rectangular plot to an already prepared plot
       region.
-      
+
       \item The stepping in debugging and single-step browsing modes has
       changed slightly: now left braces at the start of the body are
       stepped over for \code{if} statements as well as for \code{for} and
@@ -254,7 +254,7 @@
        changed: checks for unsafe and \code{.Internal()} calls and
        for partial matching of arguments in \R function calls are now
        done by default.
-       
+
        \item \command{R CMD build} has a new option \option{--md5} to
        add an \file{MD5} file (as done by CRAN): this is used by \code{R
 	 CMD INSTALL} to check the integrity of the distribution.
@@ -348,6 +348,9 @@
       \item \code{getAnywhere()} found S3 methods as seen from the
       \pkg{utils} namespace and not from the environment from which it
       was called.
+
+      \item \code{selectMethod(f, sig)} would not return inherited group
+      methods when caching was off (as it is by default).
     }
   }
 }
@@ -383,12 +386,12 @@
       with zero weight.  (Reported by Berwin Turlach.)
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now reports by default on licenses not
       according to the description in \sQuote{Writing R Extensions}.
-      
+
       \item \command{R CMD check} has a new option \option{-as-cran} to
       turn on most of the customizations that CRAN uses for its incoming
       checks.
@@ -495,10 +498,10 @@
       \item \code{format.POSIXlt(x)} raised an arithmetic exception when
       \code{x} was an invalid object of class \code{"POSIXlt"} and parts
       were empty.
-      
+
       \item \code{installed.packages()} has some more protection against
-      package installs going on in parallel. 
-      
+      package installs going on in parallel.
+
       \item \code{.Primitive()} could be mis-used to call
       \code{.Internal()} entry points.
     }
