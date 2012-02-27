@@ -1,7 +1,7 @@
 if(.Platform$OS.type == "windows") {
     read_symbols_from_dll <- function(f, rarch)
     {
-        ## reasonable to assume this in the path
+        ## reasonable to assume this on the path
         DLL_nm <- "objdump.exe"
         if(!nzchar(Sys.which(DLL_nm))) return()
         f <- file_path_as_absolute(f)
@@ -16,50 +16,27 @@ if(.Platform$OS.type == "windows") {
         s2 <- grep("\t[0-9a-f]+\t +[0-9]+", s1, value = TRUE)
         sub(".* ([_A-Za-z0-9]+)$", "\\1", s2)
     }
-    read_symbols_from_object_file <- function(f)
-    {
-        ## reasonable to assume this in the path
-        if(!nzchar(nm <- Sys.which("nm.exe"))) return()
-        f <- file_path_as_absolute(f)
-        if(!(file.info(f)$size)) return()
-        s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
-                             intern = TRUE),
-                      " +")
-        ## Cannot simply rbind() this because elements may have 2-4
-        ## entries.
-        n <- length(s)
-        tab <- matrix("", nrow = n, ncol = 4L)
-        colnames(tab) <- c("name", "type", "value", "size")
-        ## Compute desired i and j positions in tab.
-        i <- rep.int(seq_len(n), sapply(s, length))
-        j <- unlist(lapply(s, seq_along))
+}
 
-        tab[n * (j - 1L) + i] <- unlist(s)
-
-        tab
-    }
-} else {
-    read_symbols_from_object_file <- function(f)
-    {
-        if(!nzchar(nm <- Sys.which("nm"))) return()
-        f <- file_path_as_absolute(f)
-        if(!(file.info(f)$size)) return()
-        s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
-                             intern = TRUE),
-                      " +")
-        ## Cannot simply rbind() this because elements may have 2-4
-        ## entries.
-        n <- length(s)
-        tab <- matrix("", nrow = n, ncol = 4L)
-        colnames(tab) <- c("name", "type", "value", "size")
-        ## Compute desired i and j positions in tab.
-        i <- rep.int(seq_len(n), sapply(s, length))
-        j <- unlist(lapply(s, seq_along))
-
-        tab[n * (j - 1L) + i] <- unlist(s)
-
-        tab
-    }
+read_symbols_from_object_file <- function(f)
+{
+    ## reasonable to assume this on the path
+    if(!nzchar(nm <- Sys.which("nm"))) return()
+    f <- file_path_as_absolute(f)
+    if(!(file.info(f)$size)) return()
+    s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
+                         intern = TRUE),
+                  " +")
+    ## Cannot simply rbind() this because elements may have 2-4
+    ## entries.
+    n <- length(s)
+    tab <- matrix("", nrow = n, ncol = 4L)
+    colnames(tab) <- c("name", "type", "value", "size")
+    ## Compute desired i and j positions in tab.
+    i <- rep.int(seq_len(n), sapply(s, length))
+    j <- unlist(lapply(s, seq_along))
+    tab[n * (j - 1L) + i] <- unlist(s)
+    tab
 }
 
 get_system_ABI <- if(.Platform$OS.type == "windows") {
@@ -245,13 +222,16 @@ function(dir)
 
     r_arch <- .Platform$r_arch
 
-    compare <- function(x) {
+    compare <- function(x, strip_ = FALSE) {
         ## Compare symbols in the so and in objects:
         symbols <-
             Filter(length,
                    lapply(tables,
-                          function(tab)
-                          intersect(x[, "osname"], tab[, "name"])))
+                          function(tab) {
+                              nm <- tab[, "name"]
+                              if (strip_) nm <- sub("^_", "", nm)
+                              intersect(x[, "osname"], nm)
+                          }))
         if(FALSE) {
         ## Drop the so symbols not in any object.
         so <- attr(x, "file")
@@ -276,7 +256,7 @@ function(dir)
         objects_symbol_tables_file <- file.path(dir, "libs/i386", "symbols.rds")
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
-            bad <- Filter(length, lapply(bad, compare))
+            bad <- Filter(length, lapply(bad, compare, strip_ = TRUE))
         }
 
         so_files <-
