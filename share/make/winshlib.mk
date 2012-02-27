@@ -24,3 +24,8 @@ $(SHLIB): $(OBJECTS)
 .PHONY: all shlib-clean
 shlib-clean:
 	@rm -f $(OBJECTS)
+
+## FIXME: why not Rscript?
+symbols.rds: $(OBJECTS)
+	@$(ECHO) "tools:::.shlib_objects_symbol_tables()" | \
+	  $(R_HOME)/bin$(R_ARCH)/Rterm.exe --vanilla --slave --args $(OBJECTS)

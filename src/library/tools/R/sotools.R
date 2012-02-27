@@ -1,13 +1,8 @@
 if(.Platform$OS.type == "windows") {
     read_symbols_from_dll <- function(f, rarch)
     {
-        ## FIXME: should be able to use multilib objdump now
-        ff <- file.path(R.home("etc"), rarch, "Makeconf")
-        if(!file.exists(ff)) return()
-        etc <- readLines(ff)
-        bp <- grep("^BINPREF", etc, value = TRUE)
-        bp <- sub("^BINPREF = +", "", bp)
-        DLL_nm <- paste0(bp, "objdump.exe")
+        ## reasonable to assume this in the path
+        DLL_nm <- "objdump.exe"
         if(!nzchar(Sys.which(DLL_nm))) return()
         f <- file_path_as_absolute(f)
         s0 <- suppressWarnings(system2(DLL_nm, c("-x", shQuote(f)),
@@ -20,6 +15,28 @@ if(.Platform$OS.type == "windows") {
         s1 <- s0[(l1[1L] + 3L):(l2 - 4L)]
         s2 <- grep("\t[0-9a-f]+\t +[0-9]+", s1, value = TRUE)
         sub(".* ([_A-Za-z0-9]+)$", "\\1", s2)
+    }
+    read_symbols_from_object_file <- function(f)
+    {
+        ## reasonable to assume this in the path
+        if(!nzchar(nm <- Sys.which("nm.exe"))) return()
+        f <- file_path_as_absolute(f)
+        if(!(file.info(f)$size)) return()
+        s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
+                             intern = TRUE),
+                      " +")
+        ## Cannot simply rbind() this because elements may have 2-4
+        ## entries.
+        n <- length(s)
+        tab <- matrix("", nrow = n, ncol = 4L)
+        colnames(tab) <- c("name", "type", "value", "size")
+        ## Compute desired i and j positions in tab.
+        i <- rep.int(seq_len(n), sapply(s, length))
+        j <- unlist(lapply(s, seq_along))
+
+        tab[n * (j - 1L) + i] <- unlist(s)
+
+        tab
     }
 } else {
     read_symbols_from_object_file <- function(f)
@@ -118,7 +135,7 @@ so_symbol_names_table <-
       "solaris, Fortran, solf95, stop, _f90_stop_char",
 
       ## Windows statically links libstdc++, libgfortran
-      # "windows, C, gcc, abort, abort",  # lots of false positives
+      "windows, C, gcc, abort, abort",  # lots of false positives
       "windows, C, gcc, assert, _assert",
       "windows, C, gcc, exit, exit",
       "windows, C, gcc, printf, printf",
