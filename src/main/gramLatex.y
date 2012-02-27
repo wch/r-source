@@ -587,16 +587,27 @@ static void yyerror(const char *s)
     	if (expecting) *expecting = '\0';
     	for (i = 0; yytname_translations[i]; i += 2) {
     	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
-    	        sprintf(ParseErrorMsg, yychar < 256 ? _(yyshortunexpected): _(yylongunexpected), 
+    	    	if (yychar < 256)
+    	    	    sprintf(ParseErrorMsg, _(yyshortunexpected), 
     	    	        i/2 < YYENGLISH ? _(yytname_translations[i+1])
-    	    	                    : yytname_translations[i+1], CHAR(STRING_ELT(yylval, 0)));
+    	    	                        : yytname_translations[i+1]);
+    	    	else
+    	    	    sprintf(ParseErrorMsg, _(yylongunexpected), 
+    	    	        i/2 < YYENGLISH ? _(yytname_translations[i+1])
+    	    	                        : yytname_translations[i+1], 
+    	    	        CHAR(STRING_ELT(yylval, 0)));
     	    	translated = TRUE;
     	    	break;
     	    }
     	}
-    	if (!translated)
-    	    sprintf(ParseErrorMsg, yychar < 256 ? _(yyshortunexpected) : _(yylongunexpected),
-    	                             s + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
+    	if (!translated) {
+    	    if (yychar < 256) 
+    		sprintf(ParseErrorMsg, _(yyshortunexpected),
+    	            s + sizeof yyunexpected - 1);
+    	    else
+    	    	sprintf(ParseErrorMsg, _(yylongunexpected),
+    	            s + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
+    	}
     	if (expecting) {
  	    translated = FALSE;
     	    for (i = 0; yytname_translations[i]; i += 2) {
