@@ -199,10 +199,13 @@ function(x, ...)
                                                   u[, "language"]),
                                           collapse = ", ")),
                            indent = 2L, exdent = 4L),
-                   if(length(w)) {
+                   if(length(w) > 1L) {
                        strwrap(sprintf("Objects: %s",
                                        paste(sQuote(w), collapse =
                                              ", ")),
+                               indent = 4L, exdent = 6L)
+                   } else if(length(w)) {
+                       strwrap(sprintf("Object: %s", sQuote(w)),
                                indent = 4L, exdent = 6L)
                    }),
                  entries, names(entries), objects)))
