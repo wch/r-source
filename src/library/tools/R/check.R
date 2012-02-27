@@ -82,7 +82,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## which gives false positives in MASS and Rcpp
         ## codetools is really part of tools
         exceptions <- "codetools"
-        if (thispkg %in% c("MASS", "QCAGUI", "Rcpp"))
+        if (thispkg %in% c("MASS", "Rcpp"))
             exceptions <- c(exceptions, "Matrix", "lattice")
         if (thispkg %in%
             c("Modalclust", "aroma.core", "iWebPlots",
