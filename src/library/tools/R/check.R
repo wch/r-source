@@ -85,7 +85,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if (thispkg %in% c("MASS", "Rcpp"))
             exceptions <- c(exceptions, "Matrix", "lattice")
         if (thispkg %in%
-            c("Modalclust", "QCAGUI", "aroma.core", "iWebPlots",
+            c("Modalclust", "aroma.core", "iWebPlots",
               "openair", "oce", "pcalg", "tileHMM"))
             exceptions <- c(exceptions, "KernSmooth")
         recommended <- recommended[!recommended %in% exceptions]
