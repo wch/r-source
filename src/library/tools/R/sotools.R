@@ -244,8 +244,9 @@ function(dir)
             Sys.glob(file.path(dir, "libs",
                                sprintf("*%s", .Platform$dynlib.ext)))
         bad <- Filter(length, lapply(so_files, check_so_symbols))
-        objects_symbol_tables_file <-
-            file.path(dir, "libs", "symbols.rds")
+        objects_symbol_tables_file <- if(nzchar(r_arch))
+            file.path(dir, "libs", r_arch, "symbols.rds")
+        else file.path(dir, "libs", "symbols.rds")
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
             bad <-
