@@ -608,8 +608,7 @@
                            sQuote(fdef@generic)),
                   domain = NA)
     }
-    if(doCache && length(methods)) { ## Cache the newly found one
-        if(verbose) cat(" .fI> caching newly found methods ..\n")
+    if(length(methods)) {
         tlabel <- .sigLabel(classes)
         m <- methods[[1L]]
         if(is(m, "MethodDefinition"))  { # else, a primitive
@@ -620,7 +619,10 @@
               body(m) <- coerce
             methods[[1L]] <- m
         }
-        assign(tlabel, m, envir = mtable)
+	if(doCache) {
+	    if(verbose) cat(" .fI> caching newly found methods ..\n")
+	    assign(tlabel, m, envir = mtable)
+	}
     }
     methods
 }
@@ -678,11 +680,13 @@
     if(!length(what))
       what
     else {
-        if(simpleOnly)
-            eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple)
-        else # eliminate conditional inheritance
-            eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple || identical(body(x@test), TRUE))
-        what[eligible]
+	eligible <-
+	    sapply(contains,
+		   if(simpleOnly)
+		   function(x) (is.logical(x) && x) || x@simple
+		   else # eliminate conditional inheritance
+		   function(x) (is.logical(x) && x) || x@simple || identical(body(x@test), TRUE))
+	what[eligible]
     }
 }
 

@@ -1,6 +1,6 @@
 % File src/library/methods/man/getMethod.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getMethod}
@@ -30,7 +30,7 @@ existsMethod(f, signature = character(), where)
 findMethod(f, signature, where)
 
 selectMethod(f, signature, optional = FALSE, useInherited =,
-             mlist = , fdef = , verbose = , doCache = )
+             mlist = , fdef = , verbose = , doCache = , returnAll =)
 
 hasMethod(f, signature=character(), where)
 
@@ -47,7 +47,7 @@ hasMethod(f, signature=character(), where)
   \item{optional}{If the selection in \code{selectMethod} does not find a valid method
     an error is generated, unless this argument is \code{TRUE}.  In that
     case, the value returned is \code{NULL} if no method matches.}
-  \item{mlist, fdef, useInherited, verbose, doCache}{Optional
+  \item{mlist, fdef, useInherited, verbose, doCache, returnAll}{Optional
       arguments  to  \code{getMethod} and \code{selectMethod} for
       internal use.  Avoid
       these: some will work as expected and others will not, and none of them is required for normal use of the functions.

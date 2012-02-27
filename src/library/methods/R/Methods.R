@@ -852,7 +852,8 @@ selectMethod <-
     ## generic 'f' with arguments corresponding to the specified signature.
     function(f, signature, optional = FALSE, useInherited = TRUE,
 	     mlist = if(!is.null(fdef)) getMethodsForDispatch(fdef),
-	     fdef = getGeneric(f, !optional), verbose = FALSE, doCache = FALSE)
+	     fdef = getGeneric(f, !optional), verbose = FALSE, doCache = FALSE,
+             returnAll = FALSE)
 {
     if(is.environment(mlist))  {# using methods tables
         fenv <- environment(fdef)
@@ -886,6 +887,7 @@ selectMethod <-
 		    .findInheritedMethods(signature, fdef,
 					  mtable = allmethods, table = mlist,
 					  useInherited = useInherited,
+					  returnAll = returnAll,
                                           verbose = verbose,
                                           doCache = doCache)
 		    ##MM: TODO? allow 'excluded' to be passed
