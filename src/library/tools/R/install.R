@@ -445,7 +445,6 @@
 
                 if(config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
                                                     "FALSE"))
-                   && !WINDOWS
                    && file_test("-f", "symbols.rds")) {
                     file.copy("symbols.rds", dest)
                 }
@@ -1728,10 +1727,9 @@
     if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64 TCLBIN=64")
 
     build_objects_symbol_tables <-
-        (config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
-                                          "FALSE"))
-         && !WINDOWS)
-    
+        config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
+                                         "FALSE"))
+
     cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
                  p1(makeobjs))
     if (dry_run) {

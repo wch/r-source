@@ -1,6 +1,7 @@
 if(.Platform$OS.type == "windows") {
     read_symbols_from_dll <- function(f, rarch)
     {
+        ## FIXME: should be able to use multilib objdump now
         ff <- file.path(R.home("etc"), rarch, "Makeconf")
         if(!file.exists(ff)) return()
         etc <- readLines(ff)
@@ -223,19 +224,54 @@ function(x, ...)
 check_compiled_code <-
 function(dir)
 {
-    ## Check compiled code in the shared objects of an installed
-    ## package.
+    ## Check compiled code in the shared objects of an installed package.
+
     r_arch <- .Platform$r_arch
+
+    compare <- function(x) {
+        ## Compare symbols in the so and in objects:
+        symbols <-
+            Filter(length,
+                   lapply(tables,
+                          function(tab)
+                          intersect(x[, "osname"], tab[, "name"])))
+        if(FALSE) {
+        ## Drop the so symbols not in any object.
+        so <- attr(x, "file")
+        ## (Alternatively, provide a subscript method
+        ## for class "check_so_symbols".)
+        osnames_in_objects <- unique(as.character(unlist(symbols)))
+        x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
+        attr(x, "file") <- so
+        }
+        attr(x, "objects") <-
+            split(rep.int(names(symbols), sapply(symbols, length)),
+                  unlist(symbols))
+        class(x) <- "check_so_symbols"
+        x
+    }
+
     if(.Platform$OS.type == "windows") {
         so_files <-
             Sys.glob(file.path(dir, "libs/i386",
                                sprintf("*%s", .Platform$dynlib.ext)))
         bad <- Filter(length, lapply(so_files, check_so_symbols, rarch="i386"))
+        objects_symbol_tables_file <- file.path(dir, "libs/i386", "symbols.rds")
+        if(file_test("-f", objects_symbol_tables_file)) {
+            tables <- readRDS(objects_symbol_tables_file)
+            bad <- Filter(length, lapply(bad, compare))
+        }
+
         so_files <-
             Sys.glob(file.path(dir, "libs/x64",
                                sprintf("*%s", .Platform$dynlib.ext)))
-        bad <- rbind(bad, Filter(length, lapply(so_files, check_so_symbols,
-                                                rarch = "x64")))
+        bad2 <- Filter(length, lapply(so_files, check_so_symbols, rarch="x64"))
+        objects_symbol_tables_file <- file.path(dir, "libs/x64", "symbols.rds")
+        if(file_test("-f", objects_symbol_tables_file)) {
+            tables <- readRDS(objects_symbol_tables_file)
+            bad2 <- Filter(length, lapply(bad2, compare))
+        }
+        bad <- rbind(bad, bad2)
     } else {
         so_files <- if(nzchar(r_arch))
             Sys.glob(file.path(dir, "libs", r_arch,
@@ -249,34 +285,7 @@ function(dir)
         else file.path(dir, "libs", "symbols.rds")
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
-            bad <-
-                lapply(bad,
-                       function(x) {
-                           ## Compare symbols in so and in objects:
-                           symbols <-
-                               Filter(length,
-                                      lapply(tables,
-                                             function(tab)
-                                             intersect(x[, "osname"],
-                                                       tab[, "name"])))
-                           ## Drop the so symbols not in any object.
-                           so <- attr(x, "file")
-                           ## (Alternatively, provide a subscript method
-                           ## for class "check_so_symbols".)
-                           osnames_in_objects <-
-                               unique(as.character(unlist(symbols)))
-                           x <- x[!is.na(match(x[, "osname"],
-                                               osnames_in_objects)), ,
-                                  drop = FALSE]
-                           attr(x, "file") <- so
-                           attr(x, "objects") <-
-                               split(rep.int(names(symbols),
-                                             sapply(symbols, length)),
-                                     unlist(symbols))
-                           class(x) <- "check_so_symbols"
-                           x
-                       })
-            bad <- Filter(length, bad)
+            bad <- Filter(length, lapply(bad, compare))
         }
     }
     class(bad) <- "check_compiled_code"
