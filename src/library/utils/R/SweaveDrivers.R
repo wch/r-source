@@ -176,7 +176,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             }
         } else chunkout <- object$output
 
-        srcfile <- srcfilecopy(object$filename, chunk)
+        srcfile <- srcfilecopy(object$filename, chunk, isFile = TRUE)
 
         ## Note that we edit the error message below, so change both
         ## if you change this line:
