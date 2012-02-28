@@ -187,9 +187,10 @@ function(x, ...)
 {
     if(!length(x)) return(character())
     entries <- split.data.frame(x, x[, "osname"])
-    objects <- attr(x, "objects")
-    if(!length(objects))
-        objects <- vector("list", length(entries))
+    objects <- vector("list", length(entries))
+    names(objects) <- names(entries)
+    if(length(objs <- attr(x, "objects")))
+        objects[names(objs)] <- objs
     c(gettextf("File %s:", sQuote(attr(x, "file"))),
       unlist(Map(function(u, v, w)
                  c(strwrap(gettextf("Found %s, possibly from %s",
