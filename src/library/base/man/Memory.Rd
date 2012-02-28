@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -10,7 +10,7 @@
 \description{
   How \R manages its workspace.
   
-  \code{mem;limits} is deprecated as of \R 2.14.0
+  \code{mem.limits} is deprecated as of \R 2.14.0
 }
 \usage{
 mem.limits(nsize = NA, vsize = NA)
