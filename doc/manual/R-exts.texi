@@ -1640,7 +1640,7 @@ PKG_LIBS = -lpthread
 @end example
 @noindent
 (and note that the library name is singular).  This is what
-@option{-pthreads} does on all known current platforms (although earlier
+@option{-pthread} does on all known current platforms (although earlier
 version of OpenBSD used a different library name).
 
 For a tutorial see
