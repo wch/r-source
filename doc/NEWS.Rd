@@ -272,8 +272,9 @@
    \itemize{
       \item \command{R CMD Rd2dvi} is now defunct: use \command{R CMD Rd2pdf}.
 
-      \item Options such as \option{--max-nsize} and the function
-      \code{mem.limits()} are now defunct.
+      \item Options such \option{--max-nsize}, \option{--max-vsize} and
+      the function \code{mem.limits()} are now defunct.  (Options
+      \option{--min-nsize} and \option{--min-vsize} remain available.)
 
       \item Use of \code{library.dynam()} without specifying all the
       first three arguments is now disallowed.

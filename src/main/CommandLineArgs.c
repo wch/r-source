@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2008   The R Development Core Team
+ *  Copyright (C) 1997-2012   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -186,9 +186,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		     !strcmp(*av, "-quiet") ||
 		     !strcmp(*av, "-nsize") ||
 		     !strcmp(*av, "-vsize") ||
-		     !strncmp(*av, "--min-nsize", 11) ||
 		     !strncmp(*av, "--max-nsize", 11) ||
-		     !strncmp(*av, "--min-vsize", 11) ||
 		     !strncmp(*av, "--max-vsize", 11) ||
 		     !strcmp(*av, "-V") ||
 		     !strcmp(*av, "-n") ||
@@ -196,6 +194,39 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		snprintf(msg, 1024,
 			 _("WARNING: option '%s' no longer supported"), *av);
 		R_ShowMessage(msg);
+	    }
+	    /* mop up --min-[nv]size */
+	    else if( !strncmp(*av, "--min-nsize", 11) ||
+		     !strncmp(*av, "--min-vsize", 11) ) {
+		R_ShowMessage(msg);
+		if(strlen(*av) < 13) {
+		    if(ac > 1) {ac--; av++; p = *av;} else p = NULL;
+		}
+		else p = &(*av)[12];
+		if (p == NULL) {
+		    snprintf(msg, 1024,
+			     _("WARNING: no value given for '%s'"), *av);
+		    R_ShowMessage(msg);
+		    break;
+		}
+		int ierr;
+		R_size_t value;
+		value = R_Decode2Long(p, &ierr);
+		if(ierr) {
+		    if(ierr < 0)
+			snprintf(msg, 1024,
+				 _("WARNING: '%s' value is invalid: ignored"),
+				 *av);
+		    else
+			sprintf(msg,
+				_("WARNING: %s: too large and ignored"),
+				*av);
+		    R_ShowMessage(msg);
+
+		} else {
+		    if(!strncmp(*av, "--min-nsize", 11)) Rp->nsize = value;
+		    if(!strncmp(*av, "--min-vsize", 11)) Rp->vsize = value;
+		}
 	    }
 	    else if(strncmp(*av, "--max-ppsize", 12) == 0) {
 		if(strlen(*av) < 14) {

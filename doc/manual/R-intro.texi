@@ -6948,6 +6948,13 @@ for more information.  Command-line editing is enabled by default
 interactive use (see @option{--interactive}).  This option also affects
 tilde-expansion: see the help for @code{path.expand}.
 
+@item --min-vsize=@var{N}
+@itemx --min-nsize=@var{N}
+For expert use only: set the initial trigger sizes for garbage
+collection of vector heap (in bytes) and @emph{cons cells} (number)
+respectively.  Suffix @samp{M} specifies megabytes or millions of cells
+respectively.  The defaults are 6Mb and 350k respectively.
+
 @item --max-ppsize=@var{N}
 Specify the maximum size of the pointer protection stack as @var{N}
 locations.  This defaults to 10000, but can be increased to allow
