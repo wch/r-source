@@ -120,7 +120,8 @@ so_symbol_names_table <-
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
       "windows, C, gcc, vprintf, vprintf",
-      "windows, Fortran, gfortran, stop, exit"
+      "windows, Fortran, gfortran, stop, exit",
+      "windows, Fortran, gfortran, runtime, abort"
       )
 so_symbol_names_table <-
     do.call(rbind,
