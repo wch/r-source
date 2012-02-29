@@ -173,7 +173,9 @@ AC_DEFUN([R_PROG_MAKEINFO],
 [AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
 if test -n "${MAKEINFO}"; then
   _R_PROG_MAKEINFO_VERSION
-  AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  AC_PATH_PROGS(INSTALL_INFO,
+                [${INSTALL_INFO} ginstall-info install-info],
+                false)
   if test "ac_cv_path_INSTALL_INFO" = "false"; then
     if test "${r_cv_prog_perl_v5}" = yes; then
       INSTALL_INFO="perl \$(top_srcdir)/tools/install-info.pl"
