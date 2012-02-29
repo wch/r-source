@@ -397,7 +397,7 @@
       \item \command{R CMD check} now reports by default on licenses not
       according to the description in \sQuote{Writing R Extensions}.
 
-      \item \command{R CMD check} has a new option \option{-as-cran} to
+      \item \command{R CMD check} has a new option \option{--as-cran} to
       turn on most of the customizations that CRAN uses for its incoming
       checks.
     }
