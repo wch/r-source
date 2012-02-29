@@ -330,6 +330,26 @@ chs.custom=自定義安装
 chs.adminprivilegesrequired=在安装R的时候你必需以管理员身份登錄。
 chs.adminexplanation=请注意：在全部安装R时你必需具有管理员的特权，但目前看起来你好象没有这样的权利。你可以继续安装R，但它会没有DCOM这一功能，也不会自动将.RData文件同R相联接。你只能在有书写许可的文件目录下安装R。
 chs.recordversion=版本信息保存于注册表内。
+chs.startupt=启动选项
+chs.startupq=你想自定义启动选项吗?
+chs.startupi=请选yes或no，然后再点击Next.
+chs.startup0=Yes (自定义启动)
+chs.startup1=No (接受默认选项)
+chs.MDIt=显示模式
+chs.MDIq=你要用MDI还是SDI接口？
+chs.MDIi=请选MDI或SDI中的一个, 然后再点击Next.
+chs.MDI0=MDI (一个大的窗户)
+chs.MDI1=SDI (多个分开的窗户)
+chs.HelpStylet=帮助风格
+chs.HelpStyleq=你喜欢哪一种帮助显示？
+chs.HelpStylei=请选纯文本或HTML帮助，然后点击Next.
+chs.HelpStyle0=选纯文本
+chs.HelpStyle1=HTML帮助
+chs.Internett=互联网接入
+chs.Internetq=你想通过internet2.dll来使用Internet Explorer的代理设置吗？
+chs.Interneti=请指定标准或互联网2，然后再点击Next.
+chs.Internet0=标准
+chs.Internet1=互联网2
 
 
 ; Korean is in code page 949, which extends EUC-KR
