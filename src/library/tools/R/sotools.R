@@ -105,11 +105,22 @@ so_symbol_names_table <-
       "solaris, Fortran, solf95, print, __f90_eslw",
       "solaris, Fortran, solf95, print, __f90_slw_ch",
       "solaris, Fortran, solf95, print, __f90_sslw",
+
       "solaris, Fortran, solf95, write, __f90_eslw",
       "solaris, Fortran, solf95, write, __f90_slw_ch",
       "solaris, Fortran, solf95, write, __f90_sslw",
+
+      "solaris, Fortran, solf95, print, __f90_esfw",
+      "solaris, Fortran, solf95, print, __f90_sfw_ch",
+      "solaris, Fortran, solf95, print, __f90_ssfw",
+
+      "solaris, Fortran, solf95, write, __f90_esfw",
+      "solaris, Fortran, solf95, write, __f90_sfw_ch",
+      "solaris, Fortran, solf95, write, __f90_ssfw",
+
       "solaris, Fortran, solf95, stop, _f90_stop_int",
       "solaris, Fortran, solf95, stop, _f90_stop_char",
+      "solaris, Fortran, solf95, runtime, abort",
 
       ## Windows statically links libstdc++, libgfortran
       "windows, C, gcc, abort, abort",  # lots of false positives
