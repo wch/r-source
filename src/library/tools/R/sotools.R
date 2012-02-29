@@ -103,21 +103,10 @@ so_symbol_names_table <-
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
       "solaris, Fortran, solf95, print, __f90_eslw",
-      "solaris, Fortran, solf95, print, __f90_slw_ch",
-      "solaris, Fortran, solf95, print, __f90_sslw",
-
       "solaris, Fortran, solf95, write, __f90_eslw",
-      "solaris, Fortran, solf95, write, __f90_slw_ch",
-      "solaris, Fortran, solf95, write, __f90_sslw",
-
       "solaris, Fortran, solf95, print, __f90_esfw",
-      "solaris, Fortran, solf95, print, __f90_sfw_ch",
-      "solaris, Fortran, solf95, print, __f90_ssfw",
-
       "solaris, Fortran, solf95, write, __f90_esfw",
-      "solaris, Fortran, solf95, write, __f90_sfw_ch",
-      "solaris, Fortran, solf95, write, __f90_ssfw",
-
+      "solaris, Fortran, solf95, write, __f90_esuw",
       "solaris, Fortran, solf95, stop, _f90_stop_int",
       "solaris, Fortran, solf95, stop, _f90_stop_char",
       "solaris, Fortran, solf95, runtime, abort",
@@ -181,7 +170,8 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
     {
         if(!length(system_ABI)) return()
         tab <- read_symbols_from_object_file(so)
-        nms <- tab[tab[, "type"] == "U", "name"]
+        # nms <- tab[tab[, "type"] == "U", "name"]
+	nms <- tab[, "name"]
         sys <- system_ABI["system"]
         if(!is.null(snh <- so_symbol_names_handlers_db[[sys]]))
             nms <- snh(nms)
@@ -247,7 +237,7 @@ function(dir)
                               if (strip_) nm <- sub("^_", "", nm)
                               intersect(x[, "osname"], nm)
                           }))
-        if(FALSE) {
+        if(TRUE) {
         ## Drop the so symbols not in any object.
         so <- attr(x, "file")
         ## (Alternatively, provide a subscript method
