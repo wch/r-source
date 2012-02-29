@@ -880,7 +880,7 @@ function()
         } else {
             a <- .read_repositories(file.path(R.home("etc"),
                                               "repositories"))
-            c("http://cran.r-project.org", a[nms[-1L], "URL"])
+            c("http://CRAN.R-project.org", a[nms[-1L], "URL"])
         }
         names(repos) <- nms
     }
