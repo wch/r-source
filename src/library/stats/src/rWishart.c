@@ -6,6 +6,19 @@
 #include "mva.h"
 #include "stats.h"
 
+/* as in Defn.h */
+#ifdef __GNUC__
+# undef alloca
+# define alloca(x) __builtin_alloca((x))
+#else
+# ifdef HAVE_ALLOCA_H
+#  include <alloca.h>
+# endif
+# if !HAVE_DECL_ALLOCA
+extern void *alloca(size_t);
+# endif
+#endif
+
 /** alloca n elements of type t */
 #define Alloca(n, t)   (t *) alloca( (size_t) ( (n) * sizeof(t) ) )
 
@@ -68,6 +81,7 @@ R_rWishart(SEXP ns, SEXP nuP, SEXP scal)
     if (n <= 0) n = 1;
     psqr = dims[0] * dims[0];
     tmp = Alloca(psqr, double);
+    R_CheckStack();
     scCp = Alloca(psqr, double);
     R_CheckStack();
 
