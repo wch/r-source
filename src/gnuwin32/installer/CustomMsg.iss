@@ -321,7 +321,6 @@ ja.Interneti=「標準」か「Internet2」を選択し、「次へ」をクリ�
 ja.Internet0=標準
 ja.Internet1=Internet2
 
-; Simplified Chinese is in code page 936 
 
 chs.regentries=登記冊记录項:
 chs.associate=&把R程序同.RData文件联合起来
@@ -352,14 +351,11 @@ chs.Internet0=标准
 chs.Internet1=互联网2
 
 
-; Korean is in code page 949, which extends EUC-KR
-
 ko.regentries=레지스트리 항목:
 ko.associate=R를 확장자 .RData에 관련 집니다
 ko.user=이용자를 위한 인스톨
 ko.custom=커스텀 인스톨
 
-; Traditional Chinese is in code page 950 (a variation on Big5)
 
 cht.regentries=登錄表項目:
 cht.associate=將資料檔副檔名 .R 關聯至 R
