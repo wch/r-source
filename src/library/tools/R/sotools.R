@@ -113,7 +113,9 @@ so_symbol_names_table <-
       "solaris, Fortran, solf95, runtime, abort",
 
       ## Windows statically links libstdc++, libgfortran
-      "windows, C, gcc, abort, abort",  # lots of false positives
+      "windows, C, gcc, abort, abort",
+      "windows, C++, gxx, runtime, abort",
+      "windows, Fortran, gfortran, runtime, abort",
       "windows, C, gcc, assert, _assert",
       "windows, C, gcc, exit, exit",
       "windows, C, gcc, printf, printf",
@@ -121,8 +123,7 @@ so_symbol_names_table <-
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
       "windows, C, gcc, vprintf, vprintf",
-      "windows, Fortran, gfortran, stop, exit",
-      "windows, Fortran, gfortran, runtime, abort"
+      "windows, Fortran, gfortran, stop, exit"
       )
 so_symbol_names_table <-
     do.call(rbind,
@@ -228,6 +229,7 @@ function(dir)
     ## Check compiled code in the shared objects of an installed package.
 
     r_arch <- .Platform$r_arch
+    WINDOWS <- .Platform$OS.type == "windows"
 
     compare <- function(x, strip_ = FALSE) {
         ## Compare symbols in the so and in objects:
@@ -237,9 +239,10 @@ function(dir)
                           function(tab) {
                               nm <- tab[, "name"]
                               if (strip_) nm <- sub("^_", "", nm)
+                              if(WINDOWS)
+                                  nm <- sub("_gfortran_stop.*", "exit", nm)
                               intersect(x[, "osname"], nm)
                           }))
-        if(TRUE) {
         ## Drop the so symbols not in any object.
         so <- attr(x, "file")
         ## (Alternatively, provide a subscript method
@@ -247,7 +250,6 @@ function(dir)
         osnames_in_objects <- unique(as.character(unlist(symbols)))
         x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
         attr(x, "file") <- so
-        }
         attr(x, "objects") <-
             split(rep.int(names(symbols), sapply(symbols, length)),
                   unlist(symbols))
@@ -255,7 +257,7 @@ function(dir)
         x
     }
 
-    if(.Platform$OS.type == "windows") {
+    if(WINDOWS) {
         so_files <-
             Sys.glob(file.path(dir, "libs/i386",
                                sprintf("*%s", .Platform$dynlib.ext)))
