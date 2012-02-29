@@ -22,7 +22,7 @@
 
 void dblcen(double *a, int *na);
 
-void R_distance(double *x, int *nr, int *nc, double *d, int *diag, 
+void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p);
 /* double R_euclidean(double *x, int nr, int nc, int i1, int i2);
    double R_maximum  (double *x, int nr, int nc, int i1, int i2);
@@ -30,9 +30,10 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
    double R_canberra (double *x, int nr, int nc, int i1, int i2);
    double R_dist_binary(double *x, int nr, int nc, int i1, int i2); */
 
-
-
 SEXP R_cutree(SEXP merge, SEXP which);
+
+SEXP R_rWishart(SEXP ns, SEXP nuP, SEXP scal);
+
 
 void
 F77_SUB(hclust)(int *n, int *len, int *iopt, int *ia, int *ib,

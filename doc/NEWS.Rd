@@ -152,6 +152,9 @@
       \item \code{library(pkg)} no longer warns about a conflict with a
       function from \code{package:base} if the function is an identical
       copy of the base one but with a different environment.
+
+      \item New \code{rWishart()} generates Wishart distributed random
+      matrices.
     }
   }
 
@@ -652,7 +655,7 @@
       \item \code{source()} and related functions did not put the correct
       timestamp on the source references; \code{srcfilecopy()} has gained
       a new argument \code{timestamp} to support this fix. (\PR{14750})
-      
+
       \item \code{srcfilecopy()} has gained a new argument \code{isFile}
       and now records the working directory, to allow debuggers to find
       the original source file.  (\PR{14826})

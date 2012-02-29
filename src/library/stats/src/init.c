@@ -188,6 +188,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"logit_linkinv", (DL_FUNC) &logit_linkinv, 1},
     {"logit_mu_eta", (DL_FUNC) &logit_mu_eta, 1},
     {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
+    {"R_rWishart", (DL_FUNC) &R_rWishart, 3},
     {NULL, NULL, 0}
 };
 

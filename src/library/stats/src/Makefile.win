@@ -17,7 +17,7 @@ SOURCES_C = init.c kmeans.c \
   prho.c swilk.c \
   ksmooth.c loessc.c monoSpl.c isoreg.c Srunmed.c Trunmed.c \
   dblcen.c distance.c hclust-utils.c \
-  nls.c \
+  nls.c rWishart.c \
   HoltWinters.c PPsum.c arima.c burg.c filter.c \
   mAR.c pacf.c starma.c port.c family.c sbart.c \
   approx.c loglin.c lowess.c massdist.c splines.c
@@ -35,7 +35,7 @@ RESFLAGS = -I $(R_HOME)/include
 
 # OpenMP is too slow to be useful.
 PKG_CPPFLAGS = -DHAVE_CONFIG_H -I$(R_HOME)/src/include
-PKG_LIBS = $(BLAS_LIBS) $(FLIBS)
+PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 all: makeMakedeps shlib
 
