@@ -250,6 +250,22 @@ function(db)
     db[!ind, , drop = FALSE]
 }
 
+available_packages_filters_db$CRAN <-
+function(db)
+{
+    packages <- db[, "Package"]
+    dups <- packages[duplicated(packages)]
+    drop <- integer()
+    CRAN <- getOption("repos")["CRAN"]
+    for(d in dups) {
+        pos <- which(packages == d)
+        drop <- c(drop, pos[substring(db[pos, "Repository"], 1,
+                                      nchar(CRAN)) != CRAN])
+    }
+    if(length(drop)) db[-drop, , drop = FALSE] else db
+}
+    
+
 ## unexported helper function
 simplifyRepos <- function(repos, type)
 {
