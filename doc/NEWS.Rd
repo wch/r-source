@@ -359,6 +359,9 @@
 
       \item \code{selectMethod(f, sig)} would not return inherited group
       methods when caching was off (as it is by default).
+      
+      \item \code{dev.copy2pdf(out.type = "cairo")} gave an error.
+      (\PR{14827})
     }
   }
 }

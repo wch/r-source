@@ -234,6 +234,7 @@ dev.copy2pdf <- function(..., out.type = "pdf")
         oc$onefile <- FALSE
         if(is.null(oc$paper)) oc$paper <- "special"
     }
+    oc$out.type <- NULL
     din <- dev.size("in"); w <- din[1L]; h <- din[2L]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
