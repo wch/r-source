@@ -1614,7 +1614,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if(length(out) == 1L && grepl("^Note:", out)) {
             noteLog(Log)
-            printLog0(Log, out)
+            printLog0(Log, c(out, "\n"))
         } else if(length(out)) {
             noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
