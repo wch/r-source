@@ -1612,7 +1612,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-        if(length(out)) {
+        if(length(out) == 1L && grepl("^Note:", out)) {
+            noteLog(Log)
+            printLog0(Log, out)
+        } else if(length(out)) {
             noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("\nCompiled code should not call functions which",

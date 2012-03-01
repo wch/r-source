@@ -230,6 +230,7 @@ function(dir)
 
     r_arch <- .Platform$r_arch
     WINDOWS <- .Platform$OS.type == "windows"
+    useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
 
     compare <- function(x, strip_ = FALSE) {
         ## Compare symbols in the so and in objects:
@@ -266,6 +267,8 @@ function(dir)
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
             bad <- Filter(length, lapply(bad, compare, strip_ = TRUE))
+        } else if(useST) {
+            cat("Note: 'symbols.rds' is not available\n")
         }
 
         so_files <-
@@ -276,6 +279,8 @@ function(dir)
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
             bad2 <- Filter(length, lapply(bad2, compare))
+        } else if(useST) {
+            cat("Note: 'symbols.rds' is not available\n")
         }
         bad <- rbind(bad, bad2)
     } else {
@@ -292,6 +297,8 @@ function(dir)
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
             bad <- Filter(length, lapply(bad, compare))
+        } else if(useST) {
+            cat("Note: 'symbols.rds' is not available\n")
         }
     }
     class(bad) <- "check_compiled_code"
