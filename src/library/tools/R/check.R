@@ -1618,13 +1618,22 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         } else if(length(out)) {
             noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            wrapLog("\nCompiled code should not call functions which",
-                    "might terminate R nor write to stdout/stderr instead of",
-                    "to the console.  The detected symbols are linked into the",
-                    "code but might come from libraries and not actually",
-                    "be called.\n","\n",
-                    "See 'Writing portable packages'",
-                    "in the 'Writing R Extensions' manual.\n")
+            if(any(grepl("", out)))
+                wrapLog("\nCompiled code should not call functions which",
+                        "might terminate R nor write to stdout/stderr instead",
+                        "of to the console\n" ,
+                        "\n",
+                        "See 'Writing portable packages'",
+                        "in the 'Writing R Extensions' manual.\n")
+            else
+                wrapLog("\nCompiled code should not call functions which",
+                        "might terminate R nor write to stdout/stderr instead",
+                        "of to the console.  The detected symbols are linked into the",
+                        "code but might come from libraries and not actually",
+                        "be called.\n",
+                        "\n",
+                        "See 'Writing portable packages'",
+                        "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
     }
 
