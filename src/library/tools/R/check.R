@@ -1621,7 +1621,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(any(grepl("", out)))
                 wrapLog("\nCompiled code should not call functions which",
                         "might terminate R nor write to stdout/stderr instead",
-                        "of to the console\n" ,
+                        "of to the console.\n" ,
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")
