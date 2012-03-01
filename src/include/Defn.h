@@ -217,7 +217,7 @@ extern void R_ProcessEvents(void);
 /*	R_NSIZE	   The number of cons cells	 */
 /*	R_VSIZE	   The vector heap size in bytes */
 /*  These values are defaults and can be overridden in config.h
-    The maxima and minima are in ../unix/sys-common.c */
+    The maxima and minima are in startup.c */
 
 #ifndef R_PPSSIZE
 #define	R_PPSSIZE	50000L
