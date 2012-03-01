@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56+0000\n"
+"POT-Creation-Date: 2012-03-01 06:57+0000\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -442,14 +442,14 @@ msgstr "parametro 'family' non valido in %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "parametro 'fonts' non valido in %s"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3580 devWindows.c:3584
-#: devWindows.c:3592 devWindows.c:3603 devWindows.c:3609 devWindows.c:3616
-#: devWindows.c:3623 devWindows.c:3627
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3632 devWindows.c:3636
+#: devWindows.c:3644 devWindows.c:3655 devWindows.c:3661 devWindows.c:3668
+#: devWindows.c:3675 devWindows.c:3679
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "valore di 'bg' non valido in devWindows"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3660
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3712
 #, fuzzy, c-format
 msgid "unable to start %s() device"
 msgstr "impossibile aprire dispositivo pdf"
@@ -586,60 +586,60 @@ msgstr "Gli appunti possono memorizzare una sola figura."
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:3046 devWindows.c:3684
+#: devWindows.c:3098 devWindows.c:3736
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3060
+#: devWindows.c:3112
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: devWindows.c:3324
+#: devWindows.c:3376
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'opzione 'windowsTimeouts' dovrebbe essere un intero"
 
-#: devWindows.c:3345
+#: devWindows.c:3397
 #, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr "numero dispositivo non valido in savePlot"
 
-#: devWindows.c:3347
+#: devWindows.c:3399
 #, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr "dispositivo non valido in savePlot"
 
-#: devWindows.c:3350
+#: devWindows.c:3402
 msgid "invalid filename argument in savePlot"
 msgstr "nome file non valido in savePlot"
 
-#: devWindows.c:3355
+#: devWindows.c:3407
 #, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr "argomento type non valido in savePlot"
 
-#: devWindows.c:3382
+#: devWindows.c:3434
 msgid "unknown type in savePlot"
 msgstr "type sconosciuto in savePlot"
 
-#: devWindows.c:3427 devWindows.c:3460 devWindows.c:3489 devWindows.c:3521
-#: devWindows.c:3546
+#: devWindows.c:3479 devWindows.c:3512 devWindows.c:3541 devWindows.c:3573
+#: devWindows.c:3598
 msgid "processing of the plot ran out of memory"
 msgstr "mancanza di memoria nel processare il grafico"
 
-#: devWindows.c:3506
+#: devWindows.c:3558
 msgid "Impossible to open "
 msgstr "Impossibile aprire "
 
-#: devWindows.c:3533
+#: devWindows.c:3585
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossibile caricare Rbitmap.dll"
 
-#: devWindows.c:3575
+#: devWindows.c:3627
 #, fuzzy
 msgid "invalid 'width' or 'height'"
 msgstr "'width' o 'height' non validi in devWindows"
 
-#: devWindows.c:3778
+#: devWindows.c:3830
 #, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Impossibile caricare Rbitmap.dll"

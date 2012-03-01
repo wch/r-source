@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-01 06:58\n"
 "PO-Revision-Date: 2011-10-18 22:43-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -374,6 +374,14 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
 
+#, fuzzy
+msgid "Package startup functions should not call %s."
+msgstr "Стартовые функции пакета не должны менять путь поиска."
+
+#, fuzzy
+msgid "installed.packages"
+msgstr "неправильный пакет"
+
 msgid "See section %s in ?.onAttach."
 msgstr "См. раздел %s в ?.onAttach."
 
@@ -402,6 +410,9 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 #, fuzzy
 msgid "'data(package=)' call not declared from: %s"
 msgstr "не объявлен вызов 'library' или 'require' из: %ы"
+
+msgid "NB: need Internet access to use CRAN incoming checks"
+msgstr ""
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd-файлы с повторяющимся именем '%s':"
@@ -624,6 +635,9 @@ msgstr "начиная с R 2.12.0, конфигурационные файлы не поддерживаются"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' определен только для одной используемой субархитектуры"
+
+msgid "--cran turns off --extra-arch"
+msgstr ""
 
 msgid "Error: no packages were specified"
 msgstr "Ошибка: пакеты не определены"

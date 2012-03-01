@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36+0000\n"
+"POT-Creation-Date: 2012-03-01 06:57+0000\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -66,7 +66,6 @@ msgstr "distance(): distância inválida"
 
 #: family.c:21
 #, c-format
-#, c-format,
 msgid "Value %g out of range (0, 1)"
 msgstr "Valor %g fora do intervalo (0,1)"
 
@@ -225,7 +224,8 @@ msgstr "'d' deve ser um vetor numérico não-vazio"
 
 #: port.c:374
 msgid "When Hessian defined must also have gradient defined"
-msgstr "quando a hessiana for definida o gradiente também deve ser especificado"
+msgstr ""
+"quando a hessiana for definida o gradiente também deve ser especificado"
 
 #: port.c:377
 #, c-format
@@ -253,7 +253,8 @@ msgstr "'gradient' deve ser uma matriz numérica de dimensão (%d,%d)"
 #: port.c:492
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "fcn retornou modo %d, comprimento %d - esperado modo %d, comprimento %d"
+msgstr ""
+"fcn retornou modo %d, comprimento %d - esperado modo %d, comprimento %d"
 
 #: port.c:505
 msgid "invalid type for eval_check_store"
@@ -266,6 +267,18 @@ msgstr "m deve ser uma lista"
 #: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"
+
+#: rWishart.c:51
+msgid "inconsistent degrees of freedom and dimension"
+msgstr ""
+
+#: rWishart.c:84
+msgid "'scal' must be a square, real matrix"
+msgstr ""
+
+#: rWishart.c:96
+msgid "'scal' matrix is not positive-definite"
+msgstr ""
 
 #: smooth.c:79
 #, c-format

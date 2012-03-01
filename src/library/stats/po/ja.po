@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36+0000\n"
+"POT-Creation-Date: 2012-03-01 06:57+0000\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -263,6 +263,18 @@ msgstr " m はリストでなければなりません "
 #: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr " lowerb と upperb は数値ベクトルでなければなりません "
+
+#: rWishart.c:51
+msgid "inconsistent degrees of freedom and dimension"
+msgstr ""
+
+#: rWishart.c:84
+msgid "'scal' must be a square, real matrix"
+msgstr ""
+
+#: rWishart.c:96
+msgid "'scal' matrix is not positive-definite"
+msgstr ""
 
 #: smooth.c:79
 #, c-format

@@ -840,9 +840,8 @@ msgstr "程辑包%s没有名字空间，应该重新安装"
 msgid "package %s already present in search()"
 msgstr "search()里已经存在程辑包%s"
 
-#, fuzzy
 msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
-msgstr "'DESCRIPTION'有'Encoding'一域，但重新編碼是不可能的"
+msgstr "'DESCRIPTION'内有'Encoding'这个域，但重新編碼是不可能的"
 
 msgid "%sPackages in library %s:"
 msgstr "图书馆%2$s里有%1$s个程辑包："
@@ -956,7 +955,7 @@ msgid "Use of save versions prior to 2 is deprecated"
 msgstr "在R版本2号之前的保存功能不再有用"
 
 msgid "nothing specified to be save()d"
-msgstr ""
+msgstr "没有指定要save()的东西"
 
 msgid "'file' must be non-empty string"
 msgstr "'file'的值必需是长度大于零的字符串"
@@ -1110,6 +1109,7 @@ msgstr "程辑包%s没有名字空间"
 msgid "unable to load R code in package %s"
 msgstr "程辑包%s里的R写碼载入失败"
 
+#, fuzzy
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
 "%s"
@@ -1119,12 +1119,14 @@ msgid "in package %s classes %s were specified for export but not defined"
 msgstr "在%s程辑包中%s类别指定被用于出口，但它的定义并不存在"
 
 msgid "No function found corresponding to methods exports from %s for: %s"
-msgstr ""
+msgstr "从%s导出功能里找不到适用于%s的相应方法"
 
 msgid ""
 "Functions for exporting methods must have been made generic, explicitly or "
 "implicitly; not true when loading %s for %s"
 msgstr ""
+"出口方法的函数肯定已经被明确地或隐式地被泛型了; 但在为%2$s加载%1$s时却不是这"
+"样的"
 
 msgid "in %s methods for export not found: %s"
 msgstr "用于出口的%s方法不存在：%s "
@@ -1175,7 +1177,7 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr "%s函数有可进口的方法，但找不到它的同属方法"
 
 msgid "No methods found in \"%s\" for requests: %s"
-msgstr ""
+msgstr "在\"%s\"找不到%s需要的索取"
 
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "环境/程辑包%s里找不到所要求的方法：%s"
@@ -1184,6 +1186,8 @@ msgid ""
 "No generic function found corresponding to requested imported methods for "
 "\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
+"程序包\"%2$s\"里没有相应于为\"%1$s\"所要求的进口方法的泛型函数（是不是出口的"
+"格式不对？）"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封闭名字空间里进行出口加入"
@@ -1314,9 +1318,8 @@ msgstr "'length.out'参数的长度必需为一"
 msgid "first element used of 'length.out' argument"
 msgstr "用了'length.out'参数里的第一个元素"
 
-#, fuzzy
 msgid "extra argument(s) %s will be disregarded"
-msgstr "忽略drop参数"
+msgstr "额外参数%s忽略不用"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)里的(to - from)/by 有错"
@@ -1591,16 +1594,14 @@ msgstr "'stderr'的长度必需为一"
 msgid "'which' was not found on this platform"
 msgstr "这个平台上找不到'which'"
 
-#, fuzzy
 msgid "fewer 'from' files than 'to' files"
-msgstr "'from'的文件比'to'的文件要多"
+msgstr "'from'的文件比'to'的文件要少"
 
 msgid "link '%s' already exists"
-msgstr ""
+msgstr "已经存在'%s'这个链结"
 
-#, fuzzy
 msgid "failed to create directory for link '%s"
-msgstr "找不到关于%s的隐喻数据对象"
+msgstr "无法为'%s'这个链结创建目录"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console'的值必需是'TRUE'或'FALSE'值"
@@ -1644,7 +1645,6 @@ msgstr "项目"
 msgid "have been removed from the search path"
 msgstr "在搜索路径上被删除"
 
-#, fuzzy
 msgid "cannot find namespace environment"
 msgstr "找不到名字空间环境"
 

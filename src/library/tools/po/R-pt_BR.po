@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-01 06:58\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -347,6 +347,12 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr ""
 
+msgid "Package startup functions should not call %s."
+msgstr ""
+
+msgid "installed.packages"
+msgstr ""
+
 msgid "See section %s in ?.onAttach."
 msgstr ""
 
@@ -372,6 +378,9 @@ msgid "'data(package=)' calls not declared from:"
 msgstr ""
 
 msgid "'data(package=)' call not declared from: %s"
+msgstr ""
+
+msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr ""
 
 msgid "Rd files with duplicated name '%s':"
@@ -585,6 +594,9 @@ msgid "configuration files are not supported as from R 2.12.0"
 msgstr ""
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
+msgid "--cran turns off --extra-arch"
 msgstr ""
 
 msgid "Error: no packages were specified"

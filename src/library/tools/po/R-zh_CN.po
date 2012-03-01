@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-01 06:58\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -352,6 +352,14 @@ msgstr "程序包启动函数应该用%s来生成消息"
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
 
+#, fuzzy
+msgid "Package startup functions should not call %s."
+msgstr "程序包启动函数不应该改变搜索路径"
+
+#, fuzzy
+msgid "installed.packages"
+msgstr "程辑包无效."
+
 msgid "See section %s in ?.onAttach."
 msgstr "参见?.onAttach 里的%s章节"
 
@@ -373,13 +381,14 @@ msgstr "'library'或'require'调用没有被声明:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "'library'或'require'调用没有被声明: %s"
 
-#, fuzzy
 msgid "'data(package=)' calls not declared from:"
-msgstr "'library'或'require'调用没有被声明:"
+msgstr "'data(package=)'调用没有被声明:"
 
-#, fuzzy
 msgid "'data(package=)' call not declared from: %s"
-msgstr "'library'或'require'调用没有被声明: %s"
+msgstr "'data(package=)'调用没有被声明: %s"
+
+msgid "NB: need Internet access to use CRAN incoming checks"
+msgstr ""
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "有重复名字'%s'的Rd文件:"
@@ -480,9 +489,8 @@ msgstr "不能确定的当前工作目录"
 msgid "no inputs"
 msgstr "没有输入"
 
-#, fuzzy
 msgid "Error in running tools::texi2pdf"
-msgstr "调用tools::texi2dvi时出了错"
+msgstr "调用tools::texi2pdf时出了错"
 
 msgid "invalid value for '%s' : %s"
 msgstr "'%s'值无效：%s"
@@ -584,7 +592,7 @@ msgid "The default JSS style may not be modified."
 msgstr "不能对缺省JSS式样进行修改"
 
 msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
-msgstr ""
+msgstr "--compact-vignettes的值不对，用\"qpdf\""
 
 msgid "Error: cannot rename directory to"
 msgstr "错误：无法改变目录名字为"
@@ -597,6 +605,9 @@ msgstr "R 2.12.0以后的版本不支持设置文件"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch'只设定了一个可以用的子体系结构"
+
+msgid "--cran turns off --extra-arch"
+msgstr ""
 
 msgid "Error: no packages were specified"
 msgstr "错误：没有设定程序包"

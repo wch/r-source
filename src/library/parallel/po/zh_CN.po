@@ -1,0 +1,76 @@
+# Chinese translations for R package
+# Copyright (C) 2012 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@normipaiva.com>, 2012.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
+"PO-Revision-Date: 2012-02-29 14:00+0000\n"
+"Last-Translator: Fei Chen <feic@normipaiva.com>\n"
+"Language-Team: Chinese\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: fork.c:135 fork.c:138
+msgid "unable to create a pipe"
+msgstr "无法建立管道"
+
+#: fork.c:149
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "无法分叉，可能的原因是：%s"
+
+#: fork.c:178
+msgid "memory allocation error"
+msgstr "内存分配错误"
+
+#: fork.c:216
+msgid "only children can send data to the master process"
+msgstr "只有子进程才能给主进程发送数据"
+
+#: fork.c:218
+msgid "there is no pipe to the master process"
+msgstr "有没可以接到主进程的管道"
+
+#: fork.c:220
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "发送的内容必须是原始的，如果需要的话请用serialize（）"
+
+#: fork.c:229 fork.c:236
+msgid "write error, closing pipe to the master"
+msgstr "书写错误，请关闭通往主进程的管道"
+
+#: fork.c:249
+msgid "only the master process can send data to a child process"
+msgstr "只有主进程才能给子进程发送数据"
+
+#: fork.c:256
+#, c-format
+msgid "child %d does not exist"
+msgstr "不存在%d这个子进程"
+
+#: fork.c:262
+msgid "write error"
+msgstr "书写错误"
+
+#: fork.c:342 fork.c:464
+#, c-format
+msgid "error '%s' in select"
+msgstr "选择时出了'%s'这样一个错"
+
+#: fork.c:548
+msgid "mckill failed"
+msgstr "mckill失败"
+
+#: fork.c:558
+msgid "mcexit can only be used in a child process"
+msgstr "mcexit只能用于子进程"
+
+#: fork.c:578
+msgid "mcexit failed"
+msgstr "mcexit失败"

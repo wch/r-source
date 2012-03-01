@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-01 06:58\n"
 "PO-Revision-Date: 2011-10-13 15:53+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -372,6 +372,14 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
 
+#, fuzzy
+msgid "Package startup functions should not call %s."
+msgstr "Startfunktionen des Pakets sollten den Suchpfad nicht ändern."
+
+#, fuzzy
+msgid "installed.packages"
+msgstr "ungültiges Paket"
+
 msgid "See section %s in ?.onAttach."
 msgstr "Siehe Abschnitt %s in ?.onAttach."
 
@@ -400,6 +408,9 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 #, fuzzy
 msgid "'data(package=)' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+
+msgid "NB: need Internet access to use CRAN incoming checks"
+msgstr ""
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd-Dateien mit doppeltem Namen '%s':"
@@ -620,6 +631,9 @@ msgstr "Konfigurationsdateien sind ab R-2.12.0 nicht unterstützt"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' angegeben, obwohl es nur eine sub-Architektur gibt"
+
+msgid "--cran turns off --extra-arch"
+msgstr ""
 
 msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"

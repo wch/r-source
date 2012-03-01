@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56+0000\n"
+"POT-Creation-Date: 2012-03-01 06:57+0000\n"
 "PO-Revision-Date: 2011-10-18 19:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -443,14 +443,14 @@ msgstr "неправильный параметр 'family' в %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "неправильный параметр 'fonts' в %s"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3580 devWindows.c:3584
-#: devWindows.c:3592 devWindows.c:3603 devWindows.c:3609 devWindows.c:3616
-#: devWindows.c:3623 devWindows.c:3627
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3632 devWindows.c:3636
+#: devWindows.c:3644 devWindows.c:3655 devWindows.c:3661 devWindows.c:3668
+#: devWindows.c:3675 devWindows.c:3679
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "неправильное значение '%s'"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3660
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3712
 #, c-format
 msgid "unable to start %s() device"
 msgstr "не могу запустить устройство %s()"
@@ -582,56 +582,56 @@ msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 msgid "metafile '%s' could not be created"
 msgstr "метафайл '%s' не получается создать"
 
-#: devWindows.c:3046 devWindows.c:3684
+#: devWindows.c:3098 devWindows.c:3736
 msgid "R Graphics"
 msgstr "R-графика"
 
-#: devWindows.c:3060
+#: devWindows.c:3112
 msgid "attempt to use the locator after dev.hold()"
 msgstr "попытка использовать locator после dev.hold()"
 
-#: devWindows.c:3324
+#: devWindows.c:3376
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
-#: devWindows.c:3345
+#: devWindows.c:3397
 msgid "invalid device number in 'savePlot'"
 msgstr "неправильный номер устройства в 'savePlot'"
 
-#: devWindows.c:3347
+#: devWindows.c:3399
 msgid "invalid device in 'savePlot'"
 msgstr "неправильное устройство в 'savePlot'"
 
-#: devWindows.c:3350
+#: devWindows.c:3402
 msgid "invalid filename argument in savePlot"
 msgstr "неправильный аргумент имени файла в savePlot"
 
-#: devWindows.c:3355
+#: devWindows.c:3407
 msgid "invalid type argument in 'savePlot'"
 msgstr "неправильный тип аргумента в 'savePlot'"
 
-#: devWindows.c:3382
+#: devWindows.c:3434
 msgid "unknown type in savePlot"
 msgstr "неизвестный тип в savePlot"
 
-#: devWindows.c:3427 devWindows.c:3460 devWindows.c:3489 devWindows.c:3521
-#: devWindows.c:3546
+#: devWindows.c:3479 devWindows.c:3512 devWindows.c:3541 devWindows.c:3573
+#: devWindows.c:3598
 msgid "processing of the plot ran out of memory"
 msgstr "обработка графика исчерпала память"
 
-#: devWindows.c:3506
+#: devWindows.c:3558
 msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
-#: devWindows.c:3533
+#: devWindows.c:3585
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Невозможно загрузить Rbitmap.dll"
 
-#: devWindows.c:3575
+#: devWindows.c:3627
 msgid "invalid 'width' or 'height'"
 msgstr "неправильная 'width' или 'height'"
 
-#: devWindows.c:3778
+#: devWindows.c:3830
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Не могу загрузить winCairo.dll: его действительно собрали?"
 

@@ -155,9 +155,8 @@ msgstr "'ask'的值不对"
 msgid "Invalid object inserted on the display list"
 msgstr "显示列里所插入的对象不对"
 
-#, fuzzy
 msgid "Invalid modification of the display list"
-msgstr "显示单里的成分不对"
+msgstr "显示单修改得不对"
 
 msgid "Invalid 'grob' argument"
 msgstr "'grob'参数值不对"
@@ -351,10 +350,10 @@ msgid "shape must be between -1 and 1"
 msgstr "形状的值必需在-1和1之间"
 
 msgid "Must have exactly 4 control points"
-msgstr ""
+msgstr "一定要有4个控制点"
 
 msgid "Must have exactly 4 control points per Bezier curve"
-msgstr ""
+msgstr "每个Bezier曲线一定要有4个控制点"
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y'和'r'必需为单元值"
@@ -528,3 +527,4 @@ msgstr "卸载'grid'名字空间时关闭所有的设备"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

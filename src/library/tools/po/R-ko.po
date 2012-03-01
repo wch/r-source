@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-01 06:58\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -358,6 +358,12 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr ""
 
+msgid "Package startup functions should not call %s."
+msgstr ""
+
+msgid "installed.packages"
+msgstr ""
+
 msgid "See section %s in ?.onAttach."
 msgstr ""
 
@@ -383,6 +389,9 @@ msgid "'data(package=)' calls not declared from:"
 msgstr ""
 
 msgid "'data(package=)' call not declared from: %s"
+msgstr ""
+
+msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr ""
 
 #, fuzzy
@@ -609,6 +618,9 @@ msgid "configuration files are not supported as from R 2.12.0"
 msgstr ""
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
+msgid "--cran turns off --extra-arch"
 msgstr ""
 
 msgid "Error: no packages were specified"

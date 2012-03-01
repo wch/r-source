@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
-"PO-Revision-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-01 06:58\n"
+"PO-Revision-Date: 2012-03-01 06:58\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -382,6 +382,12 @@ msgstr "Package startup functions should use %s to generate messages."
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
 
+msgid "Package startup functions should not call %s."
+msgstr "Package startup functions should not call %s."
+
+msgid "installed.packages"
+msgstr "installed.packages"
+
 msgid "See section %s in ?.onAttach."
 msgstr "See section %s in ?.onAttach."
 
@@ -408,6 +414,9 @@ msgstr "‘data(package=)’ calls not declared from:"
 
 msgid "'data(package=)' call not declared from: %s"
 msgstr "‘data(package=)’ call not declared from: %s"
+
+msgid "NB: need Internet access to use CRAN incoming checks"
+msgstr "NB: need Internet access to use CRAN incoming checks"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd files with duplicated name '%s':"
@@ -626,6 +635,9 @@ msgstr "configuration files are not supported as from R 2.12.0"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "‘--multiarch’ specified with only one usable sub-architecture"
+
+msgid "--cran turns off --extra-arch"
+msgstr "--cran turns off --extra-arch"
 
 msgid "Error: no packages were specified"
 msgstr "Error: no packages were specified"

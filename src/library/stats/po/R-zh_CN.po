@@ -41,9 +41,8 @@ msgstr "乘法Holt-Winters的数据不能是零"
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "计算季節性初始值至少需要两个周期的数据"
 
-#, fuzzy
 msgid "optimization difficulties: %s"
-msgstr "优化失败"
+msgstr "优化困难： %s "
 
 msgid "optimization failure"
 msgstr "优化失败"
@@ -2002,9 +2001,8 @@ msgstr "所有的权数都必需是非负值"
 msgid "some weights should be positive"
 msgstr "至少有一些权数应该是正的"
 
-#, fuzzy
 msgid "'tol' must be strictly positive and finite"
-msgstr "'ratio'必需是单一的正数"
+msgstr "'tol'必需是有限的正数"
 
 msgid "need at least four unique 'x' values"
 msgstr "至少需要四个相互不同的'x'值"
@@ -2468,3 +2466,4 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
+

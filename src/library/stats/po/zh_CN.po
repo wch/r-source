@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36+0000\n"
+"POT-Creation-Date: 2012-03-01 06:57+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -262,6 +262,18 @@ msgstr "m必需为串列"
 #: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'和'upperb'必需为数字向量"
+
+#: rWishart.c:51
+msgid "inconsistent degrees of freedom and dimension"
+msgstr ""
+
+#: rWishart.c:84
+msgid "'scal' must be a square, real matrix"
+msgstr ""
+
+#: rWishart.c:96
+msgid "'scal' matrix is not positive-definite"
+msgstr ""
 
 #: smooth.c:79
 #, c-format
