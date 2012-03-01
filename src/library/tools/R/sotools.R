@@ -113,6 +113,12 @@ so_symbol_names_table <-
       "solaris, Fortran, solf95, runtime, abort",
 
       ## Windows statically links libstdc++, libgfortran
+      ## only in .o, positions hard-coded in check_so_symbols
+      "windows, C++, g++, std::cout, _ZSt4cout",
+      "windows, C++, g++, std::cerr, _ZSt4cerr",
+      "windows, Fortran, gfortran, write, _gfortran_st_write",
+      "windows, Fortran, gfortran, print, _gfortran_st_write",
+      ## in DLL
       "windows, C, gcc, abort, abort",
       "windows, C++, gxx, runtime, abort",
       "windows, Fortran, gfortran, runtime, abort",
@@ -158,11 +164,12 @@ function(x)
 }
 
 check_so_symbols <- if(.Platform$OS.type == "windows") {
-    function(so, rarch)
+    function(so, rarch, have_tables)
     {
         if(!length(system_ABI)) return()
         nms <- read_symbols_from_dll(so, rarch)
         ind <- so_symbol_names_table[, "osname"] %in% nms
+        if(have_tables) ind[1:4] <- TRUE
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
         class(tab) <- "check_so_symbols"
@@ -223,13 +230,13 @@ function(x, ...)
     invisible(x)
 }
 
+if(.Platform$OS.type == "windows") {
 check_compiled_code <-
 function(dir)
 {
-    ## Check compiled code in the shared objects of an installed package.
+    ## Check compiled code in the DLL(s) of an installed package.
 
     r_arch <- .Platform$r_arch
-    WINDOWS <- .Platform$OS.type == "windows"
     useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
 
     compare <- function(x, strip_ = FALSE) {
@@ -240,8 +247,71 @@ function(dir)
                           function(tab) {
                               nm <- tab[, "name"]
                               if (strip_) nm <- sub("^_", "", nm)
-                              if(WINDOWS)
-                                  nm <- sub("_gfortran_stop.*", "exit", nm)
+                              nm <- sub("_gfortran_stop.*", "exit", nm)
+                              intersect(x[, "osname"], nm)
+                          }))
+        ## Drop the so symbols not in any object.
+        so <- attr(x, "file")
+        osnames_in_objects <- unique(as.character(unlist(symbols)))
+        x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
+        attr(x, "file") <- so
+
+        attr(x, "objects") <-
+            split(rep.int(names(symbols), sapply(symbols, length)),
+                  unlist(symbols))
+        class(x) <- "check_so_symbols"
+        x
+    }
+
+    so_files <-
+        Sys.glob(file.path(dir, "libs/i386",
+                           sprintf("*%s", .Platform$dynlib.ext)))
+    objects_symbol_tables_file <- file.path(dir, "libs/i386", "symbols.rds")
+    if(file_test("-f", objects_symbol_tables_file)) {
+        bad <- Filter(length, lapply(so_files, check_so_symbols,
+                                     rarch = "i386", have_tables = TRUE))
+        tables <- readRDS(objects_symbol_tables_file)
+        bad <- Filter(length, lapply(bad, compare, strip_ = TRUE))
+    } else {
+        if(useST) cat("Note: 'i386/symbols.rds' is not available\n")
+        bad <- Filter(length, lapply(so_files, check_so_symbols, rarch="i386"))
+    }
+
+    so_files <-
+        Sys.glob(file.path(dir, "libs/x64",
+                           sprintf("*%s", .Platform$dynlib.ext)))
+    objects_symbol_tables_file <- file.path(dir, "libs/x64", "symbols.rds")
+    if(file_test("-f", objects_symbol_tables_file)) {
+        bad2 <- Filter(length, lapply(so_files, check_so_symbols,
+                                      rarch = "x64", have_tables = TRUE))
+        tables <- readRDS(objects_symbol_tables_file)
+        bad2 <- Filter(length, lapply(bad2, compare))
+    } else {
+        if(useST) cat("Note: 'x64/symbols.rds' is not available\n")
+        bad2 <- Filter(length, lapply(so_files, check_so_symbols, rarch="x64"))
+    }
+
+    bad <- rbind(bad, bad2)
+
+    class(bad) <- "check_compiled_code"
+    bad
+}
+} else {
+check_compiled_code <-
+function(dir)
+{
+    ## Check compiled code in the shared objects of an installed package.
+
+    r_arch <- .Platform$r_arch
+    useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
+
+    compare <- function(x) {
+        ## Compare symbols in the so and in objects:
+        symbols <-
+            Filter(length,
+                   lapply(tables,
+                          function(tab) {
+                              nm <- tab[, "name"]
                               intersect(x[, "osname"], nm)
                           }))
         ## Drop the so symbols not in any object.
@@ -258,51 +328,24 @@ function(dir)
         x
     }
 
-    if(WINDOWS) {
-        so_files <-
-            Sys.glob(file.path(dir, "libs/i386",
-                               sprintf("*%s", .Platform$dynlib.ext)))
-        bad <- Filter(length, lapply(so_files, check_so_symbols, rarch="i386"))
-        objects_symbol_tables_file <- file.path(dir, "libs/i386", "symbols.rds")
-        if(file_test("-f", objects_symbol_tables_file)) {
-            tables <- readRDS(objects_symbol_tables_file)
-            bad <- Filter(length, lapply(bad, compare, strip_ = TRUE))
-        } else if(useST) {
-            cat("Note: 'symbols.rds' is not available\n")
-        }
+    so_files <- if(nzchar(r_arch))
+        Sys.glob(file.path(dir, "libs", r_arch,
+                           sprintf("*%s", .Platform$dynlib.ext)))
+    else
+        Sys.glob(file.path(dir, "libs",
+                           sprintf("*%s", .Platform$dynlib.ext)))
+    bad <- Filter(length, lapply(so_files, check_so_symbols))
+    objects_symbol_tables_file <- if(nzchar(r_arch))
+        file.path(dir, "libs", r_arch, "symbols.rds")
+    else file.path(dir, "libs", "symbols.rds")
+    if(file_test("-f", objects_symbol_tables_file)) {
+        tables <- readRDS(objects_symbol_tables_file)
+        bad <- Filter(length, lapply(bad, compare))
+    } else if(useST) cat("Note: 'symbols.rds' is not available\n")
 
-        so_files <-
-            Sys.glob(file.path(dir, "libs/x64",
-                               sprintf("*%s", .Platform$dynlib.ext)))
-        bad2 <- Filter(length, lapply(so_files, check_so_symbols, rarch="x64"))
-        objects_symbol_tables_file <- file.path(dir, "libs/x64", "symbols.rds")
-        if(file_test("-f", objects_symbol_tables_file)) {
-            tables <- readRDS(objects_symbol_tables_file)
-            bad2 <- Filter(length, lapply(bad2, compare))
-        } else if(useST) {
-            cat("Note: 'symbols.rds' is not available\n")
-        }
-        bad <- rbind(bad, bad2)
-    } else {
-        so_files <- if(nzchar(r_arch))
-            Sys.glob(file.path(dir, "libs", r_arch,
-                               sprintf("*%s", .Platform$dynlib.ext)))
-        else
-            Sys.glob(file.path(dir, "libs",
-                               sprintf("*%s", .Platform$dynlib.ext)))
-        bad <- Filter(length, lapply(so_files, check_so_symbols))
-        objects_symbol_tables_file <- if(nzchar(r_arch))
-            file.path(dir, "libs", r_arch, "symbols.rds")
-        else file.path(dir, "libs", "symbols.rds")
-        if(file_test("-f", objects_symbol_tables_file)) {
-            tables <- readRDS(objects_symbol_tables_file)
-            bad <- Filter(length, lapply(bad, compare))
-        } else if(useST) {
-            cat("Note: 'symbols.rds' is not available\n")
-        }
-    }
     class(bad) <- "check_compiled_code"
     bad
+}
 }
 
 format.check_compiled_code <-
