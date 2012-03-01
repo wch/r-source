@@ -152,6 +152,11 @@
       \item \code{library(pkg)} no longer warns about a conflict with a
       function from \code{package:base} if the function is an identical
       copy of the base one but with a different environment.
+      
+      \item When deparsing very large language objects,
+      \code{as.character()} now inserts newlines after each line of
+      approximately 500 bytes, rather than truncating to the first
+      line.
 
       \item New \code{rWishart()} generates Wishart distributed random
       matrices.

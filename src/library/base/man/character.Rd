@@ -55,8 +55,9 @@ is.character(x)
   whether its argument is of character type or not.
 }
 \note{
-  \code{as.character} truncates components of language objects to 500
-  characters (was about 70 before 1.3.1).
+  \code{as.character} breaks lines in language objects at 500
+  characters, and inserts newlines.  Prior to 2.15.0 lines were
+  truncated (at about 70 characters before 1.3.1).
 }
 \seealso{
   \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
