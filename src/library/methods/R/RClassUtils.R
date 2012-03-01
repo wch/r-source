@@ -176,12 +176,10 @@ makePrototypeFromClassDef <-
         pwhat <- slot(prototype, what)
         slotClass <- getClassDef(slotDefs[[what]], where)
         if(is.null(slotClass) || !extends(class(pwhat), slotClass)) {
-            if(is.null(pwhat)) {
-#                 warning("In class \"", className,
-#                         "\", the prototype for slot \"", what, "\" (slot class \"",
-#                         slotDefs[[what]],
-#                         "\") is NULL; new() will fail for this class unless this slot is supplied in the call")
+            if(is.null(pwhat)) { # does this still apply??
             }
+            else if(is(slotClass, "classRepresentation") &&
+                    slotClass@virtual) {} # no nonvirtual prototype;e.g. S3 class
             else
                 check[match(what, pnames)] <- TRUE
         }
@@ -826,21 +824,27 @@ reconcilePropertiesAndPrototype <-
   }
 
 tryNew <-
-  ## Tries to generate a new element from this class, but if the attempt fails
-  ## (as, e.g., when the class is undefined or virtual) just returns NULL.
-  ##
-  ## This is inefficient and also not a good idea when actually generating objects,
-  ## but is useful in the initial definition of classes.
+    ## Tries to generate a new element from this class, but if
+    ## the class is undefined just returns NULL.
+    ##
+    ## For virtual classes, returns the class prototype
+    ## so that the object is valid member of class.
+    ## Otherwise tries to generate a new() object, but in rare
+    ## cases, this might fail if the install() method required
+    ## an argument, so this case is trapped as well.
   function(Class, where)
 {
     ClassDef <- getClassDef(Class, where)
-    if(is.null(ClassDef) || isVirtualClass(ClassDef))
+    if(is.null(ClassDef))
         return(NULL)
-    value <- tryCatch(new(ClassDef), error = function(e)e)
-    if(is(value, "error"))
-	NULL
-    else
-        value
+    else if(identical(ClassDef@virtual, TRUE))
+        ClassDef@prototype
+    else tryCatch(new(ClassDef),
+                  error = function(e) {
+                      value <- ClassDef@prototype
+                      class(value) <- ClassDef@className
+                      value
+                  })
 }
 
 empty.dump <- function() list()

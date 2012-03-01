@@ -112,7 +112,7 @@ extends <-
         maybe
 }
 
-
+.specialVirtual <- c("oldClass")
 
 setIs <-
   ## Defines class1 to be an extension of class2.
@@ -165,11 +165,26 @@ setIs <-
     if(!identical(ok, TRUE))
       stop(ok)
     where2 <- .findOrCopyClass(class2, classDef2, where, "subclass")
-        elNamed(classDef2@subclasses, class1) <- obj
-        if(doComplete)
-          classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
-        assignClassDef(class2, classDef2, where2, TRUE)
-        .removePreviousCoerce(class1, class2, where, prevIs)
+    elNamed(classDef2@subclasses, class1) <- obj
+    if(doComplete)
+        classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
+    ## try to provide a valid prototype for virtual classes
+    if(classDef2@virtual && is.na(match(class2, .specialVirtual))) {
+        ## For simplicity, we prefer NULL prototype if "NULL"
+        ## is a subclass of a virtual class; otherwise the
+        ## prototype is an element of class1 or its prototype if VIRTUAL
+        if(extends(classDef, "NULL"))
+            classDef2@prototype <- NULL
+        else if(is.null(classDef2@prototype)
+                && is.na(match("NULL", names(classDef2@subclasses)))) {
+            if(classDef@virtual)
+                classDef2@prototype <- classDef@prototype
+            else # new(), but without intialize(), which may require an arg.
+                classDef2@prototype <- .Call("R_do_new_object", classDef, PACKAGE = "base")
+        }
+    }
+    assignClassDef(class2, classDef2, where2, TRUE)
+    .removePreviousCoerce(class1, class2, where, prevIs)
     where1 <- .findOrCopyClass(class1, classDef, where, "superClass")
     ## insert the direct contains information in a valid spot
     .newDirectSuperclass(classDef@contains, class2, names(classDef2@contains)) <- obj

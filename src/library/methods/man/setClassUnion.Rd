@@ -36,6 +36,12 @@ isClassUnion(Class)
       union, as shown in the example below. Class unions can be
       members of other class unions.
 
+      The prototype object in the class union definition will be
+      \code{NULL} if class \code{"NULL"} is a member of the union and
+      the prototype object of the first member class otherwise (as of
+      version 2.15.0 of R; earlier versions had a \code{NULL} prototype even if
+      that was not valid).
+
   Class unions are the only way to create a class that is extended by
       a class whose definition is sealed (for example, the
       basic datatypes or other classes defined in the base or methods

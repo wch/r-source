@@ -588,3 +588,9 @@ if( identical(f, L$A) )
     stop("Oops! f is identical to L$A, even though not touched!")
 ## did not duplicate in 2.0.0 <= Rversion <= 2.11.1
 
+## prototypes for virtual classes:  NULL if legal, otherwise 1st member
+## OptionalPosixct above includes NULL
+stopifnot(is.null(getClass("OptionalPOSIXct")@prototype))
+## "IntOrChar" had invalid NULL prototype < 2.15.0
+setClassUnion("IntOrChar", c("integer", "character"))
+stopifnot(is.integer(getClass("IntOrChar")@prototype))

@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2011-12-06 r57837)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2012-03-01 r58547)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.8.0/x86_64 (64-bit)
 
@@ -851,4 +851,10 @@ Creating a new generic function for 'qqplot' in the global environment
 +     stop("Oops! f is identical to L$A, even though not touched!")
 > ## did not duplicate in 2.0.0 <= Rversion <= 2.11.1
 > 
+> ## prototypes for virtual classes:  NULL if legal, otherwise 1st member
+> ## OptionalPosixct above includes NULL
+> stopifnot(is.null(getClass("OptionalPOSIXct")@prototype))
+> ## "IntOrChar" had invalid NULL prototype < 2.15.0
+> setClassUnion("IntOrChar", c("integer", "character"))
+> stopifnot(is.integer(getClass("IntOrChar")@prototype))
 > 
