@@ -279,7 +279,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
         if(do_install &&
            dir.exists("src") &&
-           length(so_symbol_names_table))
+           length(so_symbol_names_table)) # suitable OS
             check_sos()
 
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
