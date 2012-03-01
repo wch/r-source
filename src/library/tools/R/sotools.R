@@ -164,7 +164,7 @@ function(x)
 }
 
 check_so_symbols <- if(.Platform$OS.type == "windows") {
-    function(so, rarch, have_tables)
+    function(so, rarch, have_tables = FALSE)
     {
         if(!length(system_ABI)) return()
         nms <- read_symbols_from_dll(so, rarch)
