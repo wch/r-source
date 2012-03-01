@@ -1618,7 +1618,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         } else if(length(out)) {
             noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            if(any(grepl("", out)))
+            if(any(grepl("^ *Object", out)))
                 wrapLog("\nCompiled code should not call functions which",
                         "might terminate R nor write to stdout/stderr instead",
                         "of to the console.\n" ,
