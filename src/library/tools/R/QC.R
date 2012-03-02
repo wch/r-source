@@ -849,8 +849,8 @@ function(x, ...)
                 writeLines(gettext("  Mismatches in argument default values:"))
             }
             for(i in ind) {
-                cv <- deparse(vffc[[i]])
-                dv <- deparse(vffd[[i]])
+                cv <- paste(deparse(vffc[[i]]), collapse = "\n")
+                dv <- paste(deparse(vffd[[i]]), collapse = "\n")
                 dv <- gsub("<unescaped bksl>", "\\", dv, fixed = TRUE)
                 writeLines(sprintf("    Name: '%s' Code: %s Docs: %s",
                                    nms[i], cv, dv))
