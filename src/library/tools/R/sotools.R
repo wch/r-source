@@ -339,7 +339,7 @@ if(.Platform$OS.type == "windows") {
         else
             Sys.glob(file.path(dir, "libs",
                                sprintf("*%s", .Platform$dynlib.ext)))
-        if(!length(so_files)) return(NULL) # typically a fake install
+        if(!length(so_files)) return(invisible(NULL)) # typically a fake install
 
         bad <- Filter(length, lapply(so_files, check_so_symbols))
         objects_symbol_tables_file <- if(nzchar(r_arch))
