@@ -3818,6 +3818,9 @@ case "${host_os}" in
   darwin*)
     R_SYSTEM_ABI="osx"
     ;;
+  freebsd*)
+    R_SYSTEM_ABI="freebsd"
+    ;;
   *)
     R_SYSTEM_ABI="?"
     ;;

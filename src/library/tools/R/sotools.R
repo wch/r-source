@@ -92,6 +92,23 @@ so_symbol_names_table <-
       "osx, Fortran, gfortran, stop, __gfortran_stop_numeric",
       "osx, Fortran, gfortran, stop, __gfortran_stop_string",
 
+      "freebsd, C, gcc, abort, abort",
+      "freebsd, C, gcc, assert, __assert",
+      "freebsd, C, gcc, exit, exit",
+      "freebsd, C, gcc, printf, printf",
+      "freebsd, C, gcc, printf, puts",
+      "freebsd, C, gcc, puts, puts",
+      "freebsd, C, gcc, putchar, putchar",
+      "freebsd, C, gcc, stderr, __stderrp",
+      "freebsd, C, gcc, stdout, __stdoutp",
+      "freebsd, C, gcc, vprintf, vprintf",
+      "freebsd, C++, gxx, std::cout, _ZSt4cout",
+      "freebsd, C++, gxx, std::cerr, _ZSt4cerr",
+      "freebsd, Fortran, gfortran, write, _gfortran_st_write",
+      "freebsd, Fortran, gfortran, print, _gfortran_st_write",
+      "freebsd, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
+      "freebsd, Fortran, gfortran, stop, _gfortran_stop_string",
+
       ## stdout, stderr do not show up on Solaris
       "solaris, C, solcc, abort, abort",
       "solaris, C, solcc, assert, __assert_c99",
@@ -160,6 +177,13 @@ function(x)
     ## Linux ELF symbol versioning, see
     ##  http://lists.debian.org/lsb-spec/1999/12/msg00017.html:
     ## name@version for alternatives, name@@version for the default.
+    sub("@.*", "", x)
+}
+
+so_symbol_names_handlers_db$freebsd <-
+function(x)
+{
+    ## same as Linux, most likely, lots of name@@VERSION
     sub("@.*", "", x)
 }
 
