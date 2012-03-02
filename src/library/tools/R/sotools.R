@@ -107,9 +107,9 @@ so_symbol_names_table <-
       "solaris, Fortran, solf95, print, __f90_esfw",
       "solaris, Fortran, solf95, write, __f90_esfw",
       "solaris, Fortran, solf95, write, __f90_esuw",
-      "solaris, Fortran, solf95, stop, _f90_stop",
-      "solaris, Fortran, solf95, stop, _f90_stop_int",
-      "solaris, Fortran, solf95, stop, _f90_stop_char",
+      "solaris, Fortran, solf95, stop, __f90_stop",
+      "solaris, Fortran, solf95, stop, __f90_stop_int",
+      "solaris, Fortran, solf95, stop, __f90_stop_char",
       "solaris, Fortran, solf95, runtime, abort",
 
       ## Windows statically links libstdc++, libgfortran
