@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-11-17 r57686)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.0 alpha (2012-03-02 r58556)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1881,7 +1881,7 @@ lines[GRID.lines.970]
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.632 0.022 2.682 0 0 
+Time elapsed:  2.107 0.027 2.147 0 0 
 > grDevices::dev.off()
 null device 
           1 
