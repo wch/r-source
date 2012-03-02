@@ -5,7 +5,7 @@
 
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
-# on CRAN can be found under http://www.stats.ox.ac.uk/pub/Rtools/multilib
+# on CRAN can be found under http://www.stats.ox.ac.uk/pub/Rtools/goodies
 LOCAL_SOFT =
 
 ## ============== configuration macros for building R ===================
@@ -93,8 +93,8 @@ EOPTS=-mtune=core2
 # define to -fopenmp if the toolchain has OpenMP support
 OPENMP = -fopenmp
 
-# define to -pthreads if the toolchain has pthreads support
-PTHREAD = -pthreads
+# define to -pthread if the toolchain has pthreads support
+PTHREAD = -pthread
 
 ## ====== configuration macros for building installer ===========
 
