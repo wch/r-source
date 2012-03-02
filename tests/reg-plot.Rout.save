@@ -1,8 +1,8 @@
 
-R version 2.13.0 Patched (2011-04-13 r55430)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.0 alpha (2012-03-02 r58556)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -18,14 +18,12 @@ Type 'q()' to quit R.
 
 > #### Regression tests for GRAPHICS & PLOTS
 > 
-> postscript("reg-plot.ps", paper="a4", horizontal=TRUE,
-+            encoding ="ISOLatin1.enc")
+> pdf("reg-plot.pdf", paper="a4r", encoding ="ISOLatin1.enc", compress = FALSE)
+> 
 > ## since we supply the font metrics, the results depend only on
 > ## the encoding used: Windows is different from Unix by default.
-> ## As from 2.1.0 we only test genuine Latin-1 chars: Adobe has dotlessi
-> ## and accents at 144:152, 154, 155, 157:159, but Unicode does not.
 > 
-> options(warn = 1)# print them as they occur
+> options(warn = 1) # print as they occur
 > 
 > plot(0) # this should remain constant
 > str(par(c("usr","xaxp","yaxp")))

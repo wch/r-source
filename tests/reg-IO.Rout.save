@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-11-01 r57541)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.0 alpha (2012-03-02 r58556)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.

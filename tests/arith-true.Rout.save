@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-05-27 r56000)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.0 alpha (2012-03-02 r58556)
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -315,5 +315,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.51 0 0.51 NA NA 
+Time elapsed:  0.37 0.004 0.376 0 0 
 > 
