@@ -320,9 +320,10 @@ if(.Platform$OS.type == "windows") {
             }
         } else NULL
 
+        if(!length(bad) && !length(bad2)) return(invisible(NULL))
+
         bad <- if(length(bad) && length(bad2)) rbind(bad, bad2)
         else if(length(bad2)) bad2 else bad
-
         class(bad) <- "check_compiled_code"
         bad
     }

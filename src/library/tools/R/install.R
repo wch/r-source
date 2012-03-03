@@ -681,14 +681,14 @@
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
                                             "PearsonDS", "RGtk2",
                                             "RNetCDF", "RODBC", "Rcpp",
-                                            "Runuran", "XML",
-                                            "arulesSequences",
-                                            "cairoDevice",
+                                            "Runuran", "SQLiteMap", "XML",
+                                            "arulesSequences", "cairoDevice",
                                             "diversitree", "foreign",
                                             "fastICA", "glmnet", "gstat",
                                             "igraph", "jpeg", "png", "proj4",
                                             "randtoolbox", "rgdal", "rngWELL",
-                                            "rphast", "rtfbs", "tcltk2"))
+                                            "rphast", "rtfbs", "sparsenet",
+                                            "tcltk2", "udunits2"))
                             one_only <- sum(nchar(readLines("../configure.win", warn = FALSE), "bytes")) > 0
                         if(one_only && !force_biarch)
                             warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain=NA)
