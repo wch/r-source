@@ -6,7 +6,18 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R 2.15.0}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item The behaviour of \code{unlink(recursive = TRUE)} for a
+      symbolic link to a directory has changed: it now removes the link
+      rather than the directory contents (just as \command{rm -r} does).
+
+      On Windows it no longer follows reparse points (including
+      junctions and symbolic links).
+    }
+  }
+  
   \subsection{NEW FEATURES}{
     \itemize{
       \item Environment variable \env{RD2DVI_INPUTENC} has been renamed
@@ -84,13 +95,6 @@
       its default for \code{last.str} from option \code{str.dendrogram.last}.
 
       \item New simple \code{fitted()} method for \code{"kmeans"} objects.
-
-      \item The behaviour of \code{unlink(recursive = TRUE)} for a
-      symbolic link to a directory has changed: it now removes the link
-      rather than the directory contents (as \command{rm -r} does).
-
-      On Windows it no longer follows reparse points (including
-      junctions and symbolic links).
 
       \item The \code{traceback()} function can now be called with
       an integer argument, to display a current stack trace. (Wish of
@@ -252,9 +256,6 @@
        \command{R CMD check} selected by environment variables -- see
        the \sQuote{Writing R Extensions} manual.
 
-       \item \command{R CMD build} has more options for
-       \option{--compact-vignettes}: see \command{R CMD build --help}.
-
        \item \command{R CMD check} now warns (rather than notes) on
        undeclared use of other packages in examples and tests:
        increasingly people are using the metadata in the
@@ -266,6 +267,18 @@
        changed: checks for unsafe and \code{.Internal()} calls and
        for partial matching of arguments in \R function calls are now
        done by default.
+
+       \item \command{R CMD check} has more comprehensive facilities for
+       checking compiled code and so gives fewer reports on entry points
+       linked into \file{.so}/\file{.dll} files from libraries
+       (including C++ and Fortran runtimes).
+
+       Checking compiled code is now done on FreeBSD (as well as the
+       existing supported platforms of Linux, Mac OS X, Solaris and
+       Windows).
+
+       \item \command{R CMD build} has more options for
+       \option{--compact-vignettes}: see \command{R CMD build --help}.
 
        \item \command{R CMD build} has a new option \option{--md5} to
        add an \file{MD5} file (as done by CRAN): this is used by \code{R

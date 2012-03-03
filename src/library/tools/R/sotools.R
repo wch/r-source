@@ -332,7 +332,7 @@ if(.Platform$OS.type == "windows") {
         ## Check compiled code in the shared objects of an installed package.
 
         r_arch <- .Platform$r_arch
-        useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
+        useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "TRUE"))
 
         compare <- function(x) {
             ## Compare symbols in the so and in objects:
