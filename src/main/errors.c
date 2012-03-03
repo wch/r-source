@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Development Core Team.
+ *  Copyright (C) 1995--2012  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -206,6 +205,18 @@ static void setupwarnings(void)
 }
 
 /* Rvsnprintf: like vsnprintf, but guaranteed to null-terminate. */
+#ifdef Win32
+int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
+		   va_list args);
+
+static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
+{
+    int val;
+    val = trio_vsnprintf(buf, size, format, ap);
+    buf[size-1] = '\0';
+    return val;
+}
+#else
 static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
 {
     int val;
@@ -213,6 +224,7 @@ static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
     buf[size-1] = '\0';
     return val;
 }
+#endif
 
 #define BUFSIZE 8192
 void warning(const char *format, ...)
