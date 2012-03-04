@@ -6,6 +6,14 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Placeholder.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 2.15.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -154,8 +162,9 @@
       \code{while} statements.  (Wish of \PR{14814}.)
 
       \item \code{library(pkg)} no longer warns about a conflict with a
-      function from \code{package:base} if the function is an identical
-      copy of the base one but with a different environment.
+      function from \code{package:base} if the function has the same
+      code as the base one but with a different environment.  (An
+      example is \code{Matrix::base}.)
       
       \item When deparsing very large language objects,
       \code{as.character()} now inserts newlines after each line of
