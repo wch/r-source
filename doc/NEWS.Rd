@@ -14,7 +14,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 2.15.0}{
+\section{\Rlogo CHANGES IN R VERSION 2.15.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item The behaviour of \code{unlink(recursive = TRUE)} for a
