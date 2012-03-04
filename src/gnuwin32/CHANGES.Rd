@@ -4,7 +4,7 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
-\section{CHANGES IN R 2.15.0}{
+\section{CHANGES IN R VERSION 2.15.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The 32-bit and 64-bit builds are now treated equally, as it
@@ -37,7 +37,7 @@
       junction points on NTFS file systems.
 
       \item C-level error formats now use the trio library, and so for
-      example use \samp{1.53e-11} (as required by C99) rather than
+      example output \samp{1.53e-11} (as required by C99) rather than
       \samp{1.53e-011}.
     }
   }
