@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-11   The R Development Core Team.
+ *  Copyright (C) 2000-12   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,6 +82,12 @@
 #include <R_ext/RS.h>		/* R_chk_calloc and Free */
 #include <R_ext/Riconv.h>
 #undef ERROR			/* for compilation on Windows */
+
+#ifdef Win32
+int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
+		   va_list args);
+# define vsnprintf trio_vsnprintf
+#endif
 
 int attribute_hidden R_OutputCon; /* used in printutils.c */
 

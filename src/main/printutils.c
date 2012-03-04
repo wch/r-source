@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2008  The R Development Core Team
+ *  Copyright (C) 1999--2012  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,6 +65,12 @@
 #include <Rconnections.h>
 
 #include "RBufferUtils.h"
+
+#ifdef Win32
+int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
+		   va_list args);
+# define vsnprintf trio_vsnprintf
+#endif
 
 extern int R_OutputCon; /* from connections.c */
 
@@ -670,21 +676,6 @@ const char *EncodeElement(SEXP x, int indx, int quote, char dec)
     }
     return res;
 }
-
-#if 0
-char *Rsprintf(char *format, ...)
-{
-    static char buffer[1001]; /* unsafe, as assuming max length, but all
-				 internal uses are for a few characters */
-    va_list(ap);
-
-    va_start(ap, format);
-    vsnprintf(buffer, 1000, format, ap);
-    va_end(ap);
-    buffer[1000] = '\0';
-    return buffer;
-}
-#endif
 
 void Rprintf(const char *format, ...)
 {
