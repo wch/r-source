@@ -197,8 +197,10 @@
   should treat arguments you receive through these interfaces as
   read-only.
 
-  Note that even if \code{DUP = FALSE} and the C code does not change
-  its inputs, the elements of the return value are copies of the inputs.
+  Note that if \code{DUP = TRUE} there are two copies involved, one when
+  the data from the argument is copied and the pointer to the data
+  passed to the compiled code, and one when the return value is prepared
+  from the data.
 }
 
 \section{Fortran symbol names}{
