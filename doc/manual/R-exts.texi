@@ -3451,7 +3451,7 @@ Note that @code{importMethodsFrom} will also import any generics defined
 in the namespace on those methods.
 
 It is important if you export S4 methods that the corresponding
-generics are available: the requirementa on this are stricter as from @R{}
+generics are available: the requirements on this are stricter as from @R{}
 2.15.0.  You may for example need to import @code{plot} from
 @pkg{graphics} to make visible a function to be converted into its
 implicit generic.  But it is better practice to make use of the generics
