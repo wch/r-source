@@ -1613,8 +1613,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                               file.path(libdir, pkgname)))
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if(length(out) == 1L && grepl("^Note:", out)) {
-            noteLog(Log)
-            printLog0(Log, c(out, "\n"))
+            ## This will be a note about symbols.rds not being available
+            if(!is_base_pkg) {
+                noteLog(Log)
+                printLog0(Log, c(out, "\n"))
+            } else resultLog(Log, "OK")
         } else if(length(out)) {
             noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))

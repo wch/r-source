@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -196,6 +196,9 @@
   Neither \code{.Call} nor \code{.External} copy their arguments.  You
   should treat arguments you receive through these interfaces as
   read-only.
+
+  Note that even if \code{DUP = FALSE} and the C code does not change
+  its inputs, the elements of the return value are copies of the inputs.
 }
 
 \section{Fortran symbol names}{
