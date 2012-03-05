@@ -236,7 +236,7 @@ get_exclude_patterns <- function()
             "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
             "  --compact-vignettes=  try to compact PDF files under inst/doc:",
-            '                        "no" (default), "qpdf", "gs", "both"',
+            '                        "no" (default), "qpdf", "gs", "gs+pdf", "both"',
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
             "  --md5                 add MD5 sums",
            "",
@@ -403,7 +403,7 @@ get_exclude_patterns <- function()
             length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE,
                                full.names = TRUE))) {
             messageLog(Log, "compacting vignettes and other PDF files")
-            if(compact_vignettes %in% c("gs", "both")) {
+            if(compact_vignettes %in% c("gs", "gs+pdf", "both")) {
                 gs_cmd <- find_gs_cmd(Sys.getenv("R_GSCMD", ""))
                 gs_quality <- "ebook"
             } else {
@@ -411,7 +411,7 @@ get_exclude_patterns <- function()
                 gs_quality <- "none"
             }
             qpdf <-
-                ifelse(compact_vignettes %in% c("qpdf", "both"),
+                ifelse(compact_vignettes %in% c("qpdf", "gs+pdf", "both"),
                        Sys.which(Sys.getenv("R_QPDF", "qpdf")), "")
             res <- compactPDF(pdfs, qpdf = qpdf,
                               gs_cmd = gs_cmd, gs_quality = gs_quality)
@@ -820,7 +820,7 @@ get_exclude_patterns <- function()
         args <- args[-1L]
     }
 
-    if(!compact_vignettes %in% c("no", "qpdf", "gs", "both")) {
+    if(!compact_vignettes %in% c("no", "qpdf", "gs", "gs+pdf", "both")) {
         warning('invalid value for --compact-vignettes, assuming "qpdf"')
         compact_vignettes <-"qpdf"
     }
