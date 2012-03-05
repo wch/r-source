@@ -79,6 +79,9 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
       Note that this does depend on the repository supplying license
       information.
     }
+    \item{\code{"CRAN"}}{use CRAN versions in preference to versions
+      from other repositories (even if these have a higher version
+      number).}
   }
   If all the filters are from this set they can be specified as a
   character vector; otherwise \code{filters} should be a list with
