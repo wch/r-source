@@ -76,7 +76,8 @@ removeCConverter(id)
   In the case that no such element was found, an error occurs.
 }
 \references{
-  \url{http://developer.R-project.org/CObjectConversion.pdf}
+  \url{http://cm.bell-labs.com/stat/duncan/SCConverters/CObjectConversion.pdf}
+  %  \url{http://developer.R-project.org/CObjectConversion.pdf}
 }
 \author{Duncan Temple Lang}
 

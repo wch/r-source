@@ -37,9 +37,10 @@
     add safety for packages, which can ensure by using this argument
     that no other package can override their external symbols, and also
     speeds up the search (see \sQuote{Note}).  Use
-    \code{PACKAGE="base"} for symbols linked in to \R.}
+    \code{PACKAGE = "base"} for symbols linked into \R.}
   \item{ENCODING}{optional name for an encoding to be assumed for
-    character vectors.  See \sQuote{Details}.}
+    character vectors.  Allowed but ignored for \code{.Fortran}.
+    See \sQuote{Details}.}
 }
 \value{
   The functions \code{.C} and \code{.Fortran} return a list similar to
@@ -63,9 +64,11 @@
   objects in the same way as internal \R functions: this allows for a
   variable number of arguments.
 
-  Specifying \code{ENCODING} overrides any declared encodings (see
-  \code{\link{Encoding}}) which are otherwise used to translate to the
-  current locale before passing the strings to the compiled code.
+  Character strings will be translated from the value of \code{ENCODING}
+  or any declared encoding (see \code{\link{Encoding}}) to the current
+  locale before being passed to the compiled code.  They will be
+  returned in the current locale unless \code{ENCODING} was specified,
+  when the output strings are translated to the specified encoding.
   
   These functions are all \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which if named must partially
@@ -174,32 +177,33 @@
   variable but the variable one level up.  This will be very hard to trace.
 
   The second is that lists are passed as a single \R \code{SEXP} with
-  \code{DUP=FALSE}, not as an array of \code{SEXP}. This means the
+  \code{DUP = FALSE}, not as an array of \code{SEXP}. This means the
   accessor macros in \file{Rinternals.h} are needed to get at the list
   elements and the lists cannot be passed to
   \code{call_S}/\code{call_R}.  New code using \R objects should be
   written using \code{.Call} or \code{.External}, so this is now only a
   minor issue.
 
-  In addition, character vectors and lists cannot be used with
-  \code{DUP=FALSE}.
+  In addition, character vectors cannot be used with \code{DUP = FALSE}.
 
-  It is safe and useful to set \code{DUP=FALSE} if you do not change any
+  It is safe and useful to set \code{DUP = FALSE} if you do not change any
   of the variables that might be affected, e.g.,
 
   \code{.C("Cfunction", input=x, output=numeric(10))}.
 
-  In this case the output variable did not exist before the call so it
-  cannot cause trouble (and as from \R 2.16.0, duplication is not done
-  in that case anyway).   If the input variable is not changed in the C
-  code of \code{Cfunction} you are safe.
+  In this case the \code{output} variable did not exist before the call
+  so it cannot cause trouble (and as from \R 2.16.0, duplication is not
+  done in that case anyway).  If the \code{input} variable is not
+  changed in the C code of \code{Cfunction} you are safe.
 
   Neither \code{.Call} nor \code{.External} copy their arguments.  You
   should treat arguments you receive through these interfaces as
   read-only.
 
-  Note that even if \code{DUP = FALSE} and the C code does not change
-  its inputs, the elements of the return value are copies of the inputs.
+  Note that if \code{DUP = TRUE} there are two copies involved, one when
+  the data from the argument is copied and the pointer to the data
+  passed to the compiled code, and one when the return value is prepared
+  from the data.
 }
 
 \section{Fortran symbol names}{
@@ -244,5 +248,11 @@
   \emph{Programming with Data.  A Guide to the S Language}.
   Springer. (\code{.Call}.)
 }
-\seealso{\code{\link{dyn.load}}.}
+\seealso{
+  \code{\link{dyn.load}}.
+  
+  \code{\link{getCConverterDescriptions}} for converters that might be
+  used when passing \R objects with explicit classes to and from
+  compiled code.
+}
 \keyword{programming}
