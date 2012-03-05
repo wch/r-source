@@ -3194,7 +3194,7 @@ The default number of threads will be chosen by the OpenMP software,
 but can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}.
 
-Static sequential MKL may be used with
+Static threaded MKL may be used with
 
 @example
 MKL="   -L$@{MKL_LIB_PATH@}                               \
