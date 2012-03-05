@@ -96,9 +96,13 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 }
 
 \examples{
-\donttest{% <- is not sensibly diff-ed against previous versions
 ## Build a db of all R news entries.
 db <- news()
+\dontshow{
+  stopifnot(sum(db$Version == "R-devel") <= 1)
+  vv <- capture.output(db)# without an error
+}
+\donttest{% <- is not sensibly diff-ed against previous versions
 ## Bug fixes with PR number in 2.11.0.
 news(Version == "2.11.0" & grepl("^BUG", Category) & grepl("PR#", Text),
      db = db)
