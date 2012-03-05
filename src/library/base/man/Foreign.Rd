@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -190,12 +190,16 @@
   \code{.C("Cfunction", input=x, output=numeric(10))}.
 
   In this case the output variable did not exist before the call so it
-  cannot cause trouble. If the input variable is not changed in the C
+  cannot cause trouble (and as from \R 2.16.0, duplication is not done
+  in that case anyway).   If the input variable is not changed in the C
   code of \code{Cfunction} you are safe.
 
   Neither \code{.Call} nor \code{.External} copy their arguments.  You
   should treat arguments you receive through these interfaces as
   read-only.
+
+  Note that even if \code{DUP = FALSE} and the C code does not change
+  its inputs, the elements of the return value are copies of the inputs.
 }
 
 \section{Fortran symbol names}{

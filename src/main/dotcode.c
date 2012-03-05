@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Development Core Team
+ *  Copyright (C) 1997--2012  The R Development Core Team
  *  Copyright (C) 2003	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -275,13 +275,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			const char *name, R_toCConverter **converter,
 			int targetType, char* encname, int named)
 {
-    Rbyte *rawptr;
-    int *iptr;
-    double *rptr;
-    char **cptr, *fptr;
-    Rcomplex *zptr;
-    SEXP *lptr, CSingSymbol = install("Csingle");
-    int i, l, n;
+    int n;
 
     if(converter) *converter = NULL;
 
@@ -312,58 +306,56 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     switch(TYPEOF(s)) {
     case RAWSXP:
 	n = LENGTH(s);
-	rawptr = RAW(s);
+	Rbyte *rawptr = RAW(s);
 	if (dup  && named) {
 	    rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
-	    for (i = 0; i < n; i++) rawptr[i] = RAW(s)[i];
+	    for (int i = 0; i < n; i++) rawptr[i] = RAW(s)[i];
 	}
 	return (void *) rawptr;
     break;
     case LGLSXP:
     case INTSXP:
 	n = LENGTH(s);
-	iptr = INTEGER(s);
+	int *iptr = INTEGER(s);
 	if(!naok)
-	    for (i = 0 ; i < n ; i++)
+	    for (int i = 0 ; i < n ; i++)
 		if(iptr[i] == NA_INTEGER)
 		    error(_("NAs in foreign function call (arg %d)"), narg);
 	if (dup && named) {
 	    iptr = (int*) R_alloc(n, sizeof(int));
-	    for (i = 0 ; i < n ; i++) iptr[i] = INTEGER(s)[i];
+	    for (int i = 0 ; i < n ; i++) iptr[i] = INTEGER(s)[i];
 	}
 	return (void*) iptr;
 	break;
     case REALSXP:
 	n = LENGTH(s);
-	rptr = REAL(s);
+	double *rptr = REAL(s);
 	if(!naok)
-	    for (i = 0 ; i < n ; i++)
+	    for (int i = 0 ; i < n ; i++)
 		if(!R_FINITE(rptr[i]))
 		    error(_("NA/NaN/Inf in foreign function call (arg %d)"), narg);
-	int isSingle = asLogical(getAttrib(s, CSingSymbol)) == 1;
-	if (isSingle || (dup && named)) {
-	    if(isSingle) {
-		float *sptr = (float*) R_alloc(n, sizeof(float));
-		for (i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
-		return (void*) sptr;
-	    } else {
-		rptr = (double*) R_alloc(n, sizeof(double));
-		for (i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
-		return (void*) rptr;
-	    }
+	int isSingle = asLogical(getAttrib(s, install("Csingle"))) == 1;
+	if(isSingle) {
+	    float *sptr = (float*) R_alloc(n, sizeof(float));
+	    for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
+	    return (void*) sptr;
+	} else if((dup && named)) {
+	    rptr = (double*) R_alloc(n, sizeof(double));
+	    for (int i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
+	    return (void*) rptr;
 	} else
 	    return (void*)rptr;
 	break;
     case CPLXSXP:
 	n = LENGTH(s);
-	zptr = COMPLEX(s);
+	Rcomplex *zptr = COMPLEX(s);
 	if(!naok)
-	    for (i = 0 ; i < n ; i++)
+	    for (int i = 0 ; i < n ; i++)
 		if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
 		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
 	if (dup && named) {
 	    zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
-	    for (i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
+	    for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
 	}
 	return (void*) zptr;
 	break;
@@ -375,12 +367,11 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    const char *ss = translateChar(STRING_ELT(s, 0));
 	    if(n > 1)
 		warning(_("only first string in char vector used in .Fortran"));
-	    l = strlen(ss);
-	    fptr = (char*) R_alloc(max(255, l) + 1, sizeof(char));
+	    char *fptr = (char*) R_alloc(max(255, strlen(ss)) + 1, sizeof(char));
 	    strcpy(fptr, ss);
 	    return (void*) fptr;
 	} else {
-	    cptr = (char**)R_alloc(n, sizeof(char*));
+	    char **cptr = (char**) R_alloc(n, sizeof(char*));
 	    if(strlen(encname)) {
 		char *outbuf;
 		const char *inbuf;
@@ -388,7 +379,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		void *obj = Riconv_open("", encname); /* (to, from) */
 		if(obj == (void *)-1)
 		    error(_("unsupported encoding '%s'"), encname);
-		for (i = 0 ; i < n ; i++) {
+		for (int i = 0 ; i < n ; i++) {
 		    inbuf = CHAR(STRING_ELT(s, i));
 		    inb = strlen(inbuf);
 		    outb0 = 3*inb;
@@ -409,10 +400,9 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		}
 		Riconv_close(obj);
 	    } else {
-		for (i = 0 ; i < n ; i++) {
+		for (int i = 0 ; i < n ; i++) {
 		    const char *ss = translateChar(STRING_ELT(s, i));
-		    l = strlen(ss);
-		    cptr[i] = (char*) R_alloc(l + 1, sizeof(char));
+		    cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
 		    strcpy(cptr[i], ss);
 		}
 	    }
@@ -424,8 +414,8 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    error(_("lists must be duplicated in .C"));
 	/* if (!dup) return (void*)VECTOR_PTR(s); ***** Dangerous to GC!!! */
 	n = length(s);
-	lptr = (SEXP*) R_alloc(n, sizeof(SEXP));
-	for (i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
+	SEXP *lptr = (SEXP*) R_alloc(n, sizeof(SEXP));
+	for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
 	return (void*) lptr;
 	break;
     case LISTSXP:
@@ -433,8 +423,8 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	/* Warning : The following looks like it could bite ... */
 	if(!dup) return (void*)s;
 	n = length(s);
-	cptr = (char**) R_alloc(n, sizeof(char*));
-	for(i = 0 ; i<n ; i++) {
+	char **cptr = (char**) R_alloc(n, sizeof(char*));
+	for(int i = 0 ; i<n ; i++) {
 	    cptr[i] = (char*)s;
 	    s = CDR(s);
 	}
