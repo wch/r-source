@@ -849,11 +849,21 @@ function(x, ...)
                 writeLines(gettext("  Mismatches in argument default values:"))
             }
             for(i in ind) {
-                cv <- paste(deparse(vffc[[i]]), collapse = "\n")
-                dv <- paste(deparse(vffd[[i]]), collapse = "\n")
+                multiline <- FALSE
+                cv <- deparse(vffc[[i]])
+                if(length(cv) > 1L) {
+                    cv <- paste(cv, collapse = "\n      ")
+                    multiline <- TRUE
+                }
+                dv <- deparse(vffd[[i]])
+                if(length(dv) > 1L) {
+                    dv <- paste(dv, collapse = "\n      ")
+                    multiline <- TRUE
+                }
                 dv <- gsub("<unescaped bksl>", "\\", dv, fixed = TRUE)
-                writeLines(sprintf("    Name: '%s' Code: %s Docs: %s",
-                                   nms[i], cv, dv))
+                sep <- if(multiline) "\n    " else " "
+                writeLines(sprintf("    Name: '%s'%sCode: %s%sDocs: %s",
+                                   nms[i], sep, cv, sep, dv))
             }
         }
     }
