@@ -7111,12 +7111,12 @@ the call is from the body of a function defined in a package with a
 namespace, the shared object loaded by the first (if any)
 @code{useDynLib} directive will be used.)
 
-For @code{.C} and @code{.Fortran} you can specify an @code{ENCODING}
-argument: this requests that (unless @code{DUP = FALSE}) character
-vectors be re-encoded to the requested encoding before being passed in,
-and re-encoded from the requested encoding when passed back.  Note that
-encoding names are not standardized: but this can be useful to allow
-code to work in a UTF-8 locale by specifying @code{ENCODING = "latin1"}.
+For @code{.C} you can specify an @code{ENCODING} argument: this requests
+that (unless @code{DUP = FALSE}) character vectors be re-encoded to the
+requested encoding before being passed in, and re-encoded from the
+requested encoding when passed back.  Note that encoding names are not
+standardized: but this can be useful to allow code to work in a UTF-8
+locale by specifying @code{ENCODING = "latin1"}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
@@ -7448,7 +7448,7 @@ a symbol.
 Examples of registering routines can be found in the different packages
 in the @R{} source tree (e.g., @pkg{stats}).  Also, there is a
 brief, high-level introduction in @emph{R News} (volume 1/3, September
-2001, pages 20-23).
+2001, pages 20--23, @uref{http://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
 
 @c These tools are not currently operational.
 @c Additionally, there are (experimental) tools that can be used to
