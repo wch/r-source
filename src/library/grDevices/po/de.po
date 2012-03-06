@@ -1,13 +1,13 @@
 # Translation of src/library/grDevices/po/grDevices.pot to German.
-# Copyright (C) 2005-2011 The R Foundation
+# Copyright (C) 2005-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.14.0\n"
+"Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2012-03-01 06:57+0000\n"
-"PO-Revision-Date: 2011-10-07 15:43+0200\n"
+"PO-Revision-Date: 2012-03-05 21:58+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -126,20 +126,19 @@ msgid "Invalid font name or more than one font name"
 msgstr "Ungültiger Zeichensatzname, oder mehr als einer"
 
 #: devPS.c:1594 devPS.c:1629
-#, fuzzy, c-format
+#, c-format
 msgid "font family '%s' not found in PostScript font database"
-msgstr ""
-"Zeichenstzfamilie in der PostScript-Zeichensatzdatenbank nicht gefunden"
+msgstr "Zeichensatzfamilie '%s' in der PostScript-Zeichensatzdatenbank nicht gefunden"
 
 #: devPS.c:1701 devPS.c:1783 devPS.c:1810
-#, fuzzy, c-format
+#, c-format
 msgid "font encoding for family '%s' not found in font database"
-msgstr "Zeichensatzkodierung in der Zeichensatzdatenbank nicht gefunden"
+msgstr "Zeichensatzkodierung für die Familie '%s' in der Zeichensatzdatenbank nicht gefunden"
 
 #: devPS.c:1728 devPS.c:1755
-#, fuzzy, c-format
+#, c-format
 msgid "font CMap for family '%s' not found in font database"
-msgstr "Zeichensatz CMap in der Zeichensatzdatenbank nicht gefunden"
+msgstr "Zeichensatz CMap für Familie '%s' in der Zeichensatzdatenbank nicht gefunden"
 
 #: devPS.c:1949 devPS.c:2028 devPS.c:2096
 #, c-format
@@ -407,13 +406,13 @@ msgid "increasing the PDF version to 1.3"
 msgstr "PDF Version auf 1.3 erhöht"
 
 #: devPS.c:7041
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
-msgstr "kann die 'postscript' Pipe nach '%s' nicht öffnen"
+msgstr "kann die 'pdf' Pipe nach '%s' nicht öffnen"
 
 #: devPS.c:7047
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
-msgstr ""
+msgstr "file = \"|cmd\" impliziert 'onefile = TRUE'"
 
 #: devPS.c:7189
 #, c-format

@@ -1,13 +1,13 @@
 # Translation of src/library/parallel/po/R-parallel.pot to German
-# Copyright (C) 2011 The R Foundation
+# Copyright (C) 2011-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2011-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2012-02-19 08:56\n"
-"PO-Revision-Date: 2011-10-12 13:48+0200\n"
+"PO-Revision-Date: 2012-03-06 09:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -24,6 +24,8 @@ msgstr "benötige mindestens ein Argument"
 
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
+"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge\n"
+"gemischt werden"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
@@ -35,7 +37,7 @@ msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nicht alle Elemente von 'MARGIN' sind Dimensionsnamen"
 
 msgid "no cluster supplied and none is registered"
-msgstr ""
+msgstr "kein Cluster angegeben und keiner registriert"
 
 msgid "not a valid cluster"
 msgstr "kein zulässiger Cluster"
@@ -59,7 +61,7 @@ msgid "host"
 msgstr "System"
 
 msgid "'nnodes' must be >= 1"
-msgstr ""
+msgstr "'nnodes' muss >= 1 sein"
 
 msgid "invalid 'child' argument"
 msgstr "unzulässiges Argument für 'child'"
@@ -78,7 +80,7 @@ msgid "'what' must be a character or raw vector"
 msgstr "'what' muss ein Zeichen oder ein ein raw Vektor sein"
 
 msgid "'mc.cores' must be >= 1"
-msgstr ""
+msgstr "'mc.cores' muss >= 1 sein"
 
 msgid "%d function calls resulted in an error"
 msgstr "%d Funktionsaufrufe endeten in einem Fehler"
@@ -99,20 +101,14 @@ msgstr ""
 msgid "fork clusters are not supported on Windows"
 msgstr "Fork-Cluster sind unter Windows nicht unterstützt"
 
-#, fuzzy
 msgid "'mc.cores' > 1 is not supported on Windows"
-msgstr "Fork-Cluster sind unter Windows nicht unterstützt"
+msgstr "'mc.cores' > 1 ist unter Windows nicht unterstützt"
 
-#, fuzzy
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"
 msgid_plural ""
 "scheduled cores %s encountered errors in user code, all values of the jobs "
 "will be affected"
-msgstr[0] ""
-"eingeplanter Kern %s berichtet Fehler in Benutzerkode, alle Werte des Jobs "
-"werden betroffen sein"
-msgstr[1] ""
-"eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs "
-"werden betroffen sein"
+msgstr[0] "eingeplanter Kern %s widerfuhr Fehler in Benutzerkode, alle Werte des Jobs werden betroffen sein"
+msgstr[1] "eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs werden betroffen sein"

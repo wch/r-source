@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-03-06 15:36+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -128,43 +128,43 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/character.c:1027 src/main/character.c:1031
 #: src/main/character.c:1264 src/main/character.c:1268
 #: src/main/character.c:1328 src/main/character.c:1331
-#: src/main/connections.c:962 src/main/connections.c:968
-#: src/main/connections.c:971 src/main/connections.c:975
-#: src/main/connections.c:1113 src/main/connections.c:1129
-#: src/main/connections.c:1134 src/main/connections.c:1735
-#: src/main/connections.c:1741 src/main/connections.c:1745
-#: src/main/connections.c:1749 src/main/connections.c:1754
-#: src/main/connections.c:2404 src/main/connections.c:2409
-#: src/main/connections.c:2412 src/main/connections.c:2415
-#: src/main/connections.c:2787 src/main/connections.c:2792
-#: src/main/connections.c:2798 src/main/connections.c:2801
-#: src/main/connections.c:2805 src/main/connections.c:2820
-#: src/main/connections.c:2870 src/main/connections.c:2875
-#: src/main/connections.c:2879 src/main/connections.c:2883
-#: src/main/connections.c:2887 src/main/connections.c:2893
-#: src/main/connections.c:2940 src/main/connections.c:2946
-#: src/main/connections.c:2950 src/main/connections.c:3000
-#: src/main/connections.c:3003 src/main/connections.c:3269
-#: src/main/connections.c:3272 src/main/connections.c:3275
-#: src/main/connections.c:3375 src/main/connections.c:3381
-#: src/main/connections.c:3384 src/main/connections.c:3535
-#: src/main/connections.c:3538 src/main/connections.c:3542
-#: src/main/connections.c:3545 src/main/connections.c:3665
-#: src/main/connections.c:3783 src/main/connections.c:3786
-#: src/main/connections.c:4122 src/main/connections.c:4147
-#: src/main/connections.c:4180 src/main/connections.c:4194
-#: src/main/connections.c:4202 src/main/connections.c:4228
-#: src/main/connections.c:4369 src/main/connections.c:4373
-#: src/main/connections.c:4498 src/main/connections.c:4500
-#: src/main/connections.c:4502 src/main/connections.c:4530
-#: src/main/connections.c:4660 src/main/connections.c:4686
-#: src/main/connections.c:4690 src/main/connections.c:4694
-#: src/main/connections.c:4698 src/main/context.c:593 src/main/context.c:602
+#: src/main/connections.c:968 src/main/connections.c:974
+#: src/main/connections.c:977 src/main/connections.c:981
+#: src/main/connections.c:1119 src/main/connections.c:1135
+#: src/main/connections.c:1140 src/main/connections.c:1741
+#: src/main/connections.c:1747 src/main/connections.c:1751
+#: src/main/connections.c:1755 src/main/connections.c:1760
+#: src/main/connections.c:2410 src/main/connections.c:2415
+#: src/main/connections.c:2418 src/main/connections.c:2421
+#: src/main/connections.c:2793 src/main/connections.c:2798
+#: src/main/connections.c:2804 src/main/connections.c:2807
+#: src/main/connections.c:2811 src/main/connections.c:2826
+#: src/main/connections.c:2876 src/main/connections.c:2881
+#: src/main/connections.c:2885 src/main/connections.c:2889
+#: src/main/connections.c:2893 src/main/connections.c:2899
+#: src/main/connections.c:2946 src/main/connections.c:2952
+#: src/main/connections.c:2956 src/main/connections.c:3006
+#: src/main/connections.c:3009 src/main/connections.c:3275
+#: src/main/connections.c:3278 src/main/connections.c:3281
+#: src/main/connections.c:3381 src/main/connections.c:3387
+#: src/main/connections.c:3390 src/main/connections.c:3541
+#: src/main/connections.c:3544 src/main/connections.c:3548
+#: src/main/connections.c:3551 src/main/connections.c:3671
+#: src/main/connections.c:3789 src/main/connections.c:3792
+#: src/main/connections.c:4128 src/main/connections.c:4153
+#: src/main/connections.c:4186 src/main/connections.c:4200
+#: src/main/connections.c:4208 src/main/connections.c:4234
+#: src/main/connections.c:4375 src/main/connections.c:4379
+#: src/main/connections.c:4504 src/main/connections.c:4506
+#: src/main/connections.c:4508 src/main/connections.c:4536
+#: src/main/connections.c:4666 src/main/connections.c:4692
+#: src/main/connections.c:4696 src/main/connections.c:4700
+#: src/main/connections.c:4704 src/main/context.c:593 src/main/context.c:602
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:361 src/main/devices.c:583 src/main/dotcode.c:739
-#: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
+#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -173,7 +173,7 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
-#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:937
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:949
 #: src/main/eval.c:267 src/main/eval.c:2030 src/main/eval.c:2059
 #: src/main/eval.c:2063 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
@@ -286,11 +286,11 @@ msgstr "geçersiz zaman aralığı"
 #: src/gnuwin32/extra.c:690 src/gnuwin32/extra.c:1870
 #: src/gnuwin32/extra.c:2051 src/gnuwin32/extra.c:2054
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
-#: src/main/connections.c:3277 src/main/context.c:639 src/main/context.c:658
+#: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:198 src/main/errors.c:838 src/main/errors.c:869
-#: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
-#: src/main/errors.c:1272 src/main/optimize.c:95 src/main/optimize.c:102
+#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
+#: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
 #: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
 #: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2283
@@ -334,11 +334,11 @@ msgstr "Bir tane seçin"
 msgid "argument must be a character vector or a raw vector"
 msgstr "argüman bir karakter vektörü yada ham vektör olmalıdır"
 
-#: src/gnuwin32/extra.c:1111 src/main/connections.c:1913
+#: src/gnuwin32/extra.c:1111 src/main/connections.c:1919
 msgid "Unable to open the clipboard"
 msgstr "Pano açılamadı"
 
-#: src/gnuwin32/extra.c:1116 src/main/connections.c:1917
+#: src/gnuwin32/extra.c:1116 src/main/connections.c:1923
 msgid "Unable to write to the clipboard"
 msgstr "Panoya yazılamadı"
 
@@ -447,9 +447,9 @@ msgid "truncate not enabled for this connection"
 msgstr "kırpma bu bağlantı için etkin değil"
 
 #: src/gnuwin32/run.c:722 src/gnuwin32/run.c:726 src/gnuwin32/run.c:739
-#: src/gnuwin32/run.c:767 src/main/connections.c:1068
-#: src/main/connections.c:1072 src/main/connections.c:1078
-#: src/main/connections.c:1092
+#: src/gnuwin32/run.c:767 src/main/connections.c:1074
+#: src/main/connections.c:1078 src/main/connections.c:1084
+#: src/main/connections.c:1098
 msgid "allocation of pipe connection failed"
 msgstr "pipe bağlantısı yerleştirmesinde hata"
 
@@ -502,10 +502,10 @@ msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<HATA: '%s' kodlamasını tekrar kodlamada hata>\n"
 
 #: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
-#: src/gnuwin32/system.c:1037 src/main/connections.c:563
-#: src/main/connections.c:568 src/main/dounzip.c:177 src/main/saveload.c:1949
-#: src/main/serialize.c:2439 src/main/serialize.c:2444
-#: src/main/serialize.c:2525 src/main/serialize.c:2570 src/unix/system.c:316
+#: src/gnuwin32/system.c:1037 src/main/connections.c:569
+#: src/main/connections.c:574 src/main/dounzip.c:177 src/main/saveload.c:1949
+#: src/main/serialize.c:2440 src/main/serialize.c:2445
+#: src/main/serialize.c:2526 src/main/serialize.c:2571 src/unix/system.c:316
 #: src/unix/system.c:336
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -757,7 +757,7 @@ msgstr "kayıtlı yerel sembol için yer ayrılamadı (%d bayt)"
 msgid "must pass package name or DllInfo reference"
 msgstr "DllInfo referansı veya paket adı verilmeli"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:129
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject'de tanımlanmamış tip %d"
@@ -1366,7 +1366,7 @@ msgstr "seçilen vektör boyutu çok büyük"
 
 #: src/main/builtin.c:71 src/main/builtin.c:80 src/main/builtin.c:280
 #: src/main/builtin.c:313 src/main/builtin.c:352 src/main/builtin.c:362
-#: src/main/coerce.c:1448 src/main/connections.c:2796 src/main/engine.c:2945
+#: src/main/coerce.c:1448 src/main/connections.c:2802 src/main/engine.c:2945
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
 #: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
@@ -1374,7 +1374,7 @@ msgstr "seçilen vektör boyutu çok büyük"
 #: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
 #: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4963
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
-#: src/main/saveload.c:2349 src/main/serialize.c:2592
+#: src/main/saveload.c:2349 src/main/serialize.c:2593
 msgid "use of NULL environment is defunct"
 msgstr "NULL ortamı kullanımı artık geçersiz"
 
@@ -1402,12 +1402,12 @@ msgstr "boş ortamın üst öğesi ayarlanamadı"
 msgid "'parent' is not an environment"
 msgstr "'parent' bir ortam değil"
 
-#: src/main/builtin.c:507 src/main/connections.c:3400
-#: src/main/connections.c:3777 src/main/connections.c:3811
-#: src/main/connections.c:4186 src/main/connections.c:4251
-#: src/main/connections.c:4456 src/main/connections.c:4460
-#: src/main/connections.c:4823 src/main/deparse.c:324 src/main/deparse.c:410
-#: src/main/scan.c:1709 src/main/serialize.c:1902
+#: src/main/builtin.c:507 src/main/connections.c:3406
+#: src/main/connections.c:3783 src/main/connections.c:3817
+#: src/main/connections.c:4192 src/main/connections.c:4257
+#: src/main/connections.c:4462 src/main/connections.c:4466
+#: src/main/connections.c:4829 src/main/deparse.c:349 src/main/deparse.c:435
+#: src/main/scan.c:1709 src/main/serialize.c:1903
 msgid "cannot write to this connection"
 msgstr "bu bağlantıya yazılamıyor"
 
@@ -1565,15 +1565,15 @@ msgstr "geçersiz 'mode' argümanı"
 msgid "applies only to lists and vectors"
 msgstr "sadece listelere ve vektörlere uygulanır"
 
-#: src/main/coerce.c:73 src/main/errors.c:1107
+#: src/main/coerce.c:73 src/main/errors.c:1119
 msgid "NAs introduced by coercion"
 msgstr "Zorlamadan dolayı ortaya çıkan NAs"
 
-#: src/main/coerce.c:75 src/main/errors.c:1108
+#: src/main/coerce.c:75 src/main/errors.c:1120
 msgid "inaccurate integer conversion in coercion"
 msgstr "zorlamadaki hatalı tamsayı çevrimi"
 
-#: src/main/coerce.c:77 src/main/errors.c:1109
+#: src/main/coerce.c:77 src/main/errors.c:1121
 msgid "imaginary parts discarded in coercion"
 msgstr "zorlamadaki hayali kısımlar çıkarıldı"
 
@@ -1655,8 +1655,8 @@ msgstr "%s() (liste veya vektör) olmayan '%s' tipinin"
 msgid "default method not implemented for type '%s'"
 msgstr "tanımlanmamış tip '%s', '%s' içinde\n"
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:773 src/main/dotcode.c:816
-#: src/main/dotcode.c:1639
+#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
+#: src/main/dotcode.c:1612
 msgid "'name' is missing"
 msgstr "'name' eksik"
 
@@ -1789,7 +1789,7 @@ msgstr "rgb 3 dize içermelidir (içsel olarak)"
 msgid "bad hsv to rgb color conversion"
 msgstr "hatalı hsv -> rgb dönüşümü"
 
-#: src/main/colors.c:1273 src/main/errors.c:1093 src/main/logic.c:166
+#: src/main/colors.c:1273 src/main/errors.c:1105 src/main/logic.c:166
 msgid "invalid argument type"
 msgstr "geçersiz argüman tipi"
 
@@ -1847,545 +1847,545 @@ msgstr "geçersiz çok terimli (polinomial) katsayı"
 msgid "root finding code failed"
 msgstr "kök bulan kod başarısız"
 
-#: src/main/connections.c:145
+#: src/main/connections.c:151
 msgid "all connections are in use"
 msgstr "tüm bağlantılar kullanımda"
 
-#: src/main/connections.c:156
+#: src/main/connections.c:162
 msgid "connection not found"
 msgstr "bağlantı bulunamadı"
 
-#: src/main/connections.c:168
+#: src/main/connections.c:174
 msgid "invalid connection"
 msgstr "geçersiz bağlantı"
 
-#: src/main/connections.c:200
+#: src/main/connections.c:206
 #, c-format
 msgid "closing unused connection %d (%s)\n"
 msgstr "kullanılmayan bağlantı kapatılıyor %d (%s)\n"
 
-#: src/main/connections.c:225 src/main/sysutils.c:624 src/main/sysutils.c:807
+#: src/main/connections.c:231 src/main/sysutils.c:624 src/main/sysutils.c:807
 #: src/main/sysutils.c:822 src/main/sysutils.c:916 src/main/sysutils.c:987
 #: src/main/sysutils.c:997 src/main/sysutils.c:1010 src/main/sysutils.c:1299
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr "'%s' den '%s' e desteklenmeyen dönüşüm"
 
-#: src/main/connections.c:277 src/main/connections.c:293
-#: src/main/connections.c:434 src/main/connections.c:440
-#: src/main/connections.c:446 src/main/connections.c:457
-#: src/main/connections.c:464
+#: src/main/connections.c:283 src/main/connections.c:299
+#: src/main/connections.c:440 src/main/connections.c:446
+#: src/main/connections.c:452 src/main/connections.c:463
+#: src/main/connections.c:470
 #, c-format
 msgid "%s not enabled for this connection"
 msgstr "%s bu bağlantı için etkin değil"
 
-#: src/main/connections.c:323 src/main/connections.c:340
-#: src/main/connections.c:2647
+#: src/main/connections.c:329 src/main/connections.c:346
+#: src/main/connections.c:2653
 msgid "printing of extremely long output is truncated"
 msgstr "aşırı uzun çıktının yazdırılması kısaltıldı"
 
-#: src/main/connections.c:363
+#: src/main/connections.c:369
 msgid "invalid char string in output conversion"
 msgstr "çıkış dönüşümünde geçersiz karakter dizesi "
 
-#: src/main/connections.c:417
+#: src/main/connections.c:423
 #, c-format
 msgid "invalid input found on input connection '%s'"
 msgstr "giriş bağlantısı '%s'de  geçersiz giriş bulundu"
 
-#: src/main/connections.c:663
+#: src/main/connections.c:669
 msgid "connection is not open for reading"
 msgstr "bağlantı okuma için açık değil"
 
-#: src/main/connections.c:668
+#: src/main/connections.c:674
 msgid "connection is not open for writing"
 msgstr "bağlantı yazma için açık değil"
 
-#: src/main/connections.c:706 src/main/connections.c:1968
+#: src/main/connections.c:712 src/main/connections.c:1974
 msgid "can only truncate connections open for writing"
 msgstr "sadece yazma için açık olan bağlantılar kırpılabilir"
 
-#: src/main/connections.c:710 src/main/connections.c:712
+#: src/main/connections.c:716 src/main/connections.c:718
 msgid "file truncation failed"
 msgstr "dosya kırpma başarısız"
 
-#: src/main/connections.c:714
+#: src/main/connections.c:720
 msgid "file truncation unavailable on this platform"
 msgstr "dosya kırpma bu platformda mevcut değil"
 
-#: src/main/connections.c:760 src/main/connections.c:764
-#: src/main/connections.c:770 src/main/connections.c:787
+#: src/main/connections.c:766 src/main/connections.c:770
+#: src/main/connections.c:776 src/main/connections.c:793
 msgid "allocation of file connection failed"
 msgstr "dosya bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:837
+#: src/main/connections.c:843
 #, c-format
 msgid "cannot create fifo '%s', reason '%s'"
 msgstr "fifo '%s' oluşturulamadı, sebep: %s"
 
-#: src/main/connections.c:843
+#: src/main/connections.c:849
 #, c-format
 msgid "'%s' exists but is not a fifo"
 msgstr "'%s' mevcut ancak bir fifo değil"
 
-#: src/main/connections.c:857
+#: src/main/connections.c:863
 #, c-format
 msgid "fifo '%s' is not ready"
 msgstr "fifo '%s' hazır değil"
 
-#: src/main/connections.c:858
+#: src/main/connections.c:864
 #, c-format
 msgid "cannot open fifo '%s'"
 msgstr "fifo '%s' açılamadı"
 
-#: src/main/connections.c:899 src/main/connections.c:910
-#: src/main/connections.c:1269 src/main/connections.c:1279
-#: src/main/connections.c:1398 src/main/connections.c:1459
-#: src/main/connections.c:1985 src/main/connections.c:2002
-#: src/main/connections.c:2311 src/main/connections.c:4996
-#: src/main/connections.c:5060
+#: src/main/connections.c:905 src/main/connections.c:916
+#: src/main/connections.c:1275 src/main/connections.c:1285
+#: src/main/connections.c:1404 src/main/connections.c:1465
+#: src/main/connections.c:1991 src/main/connections.c:2008
+#: src/main/connections.c:2317 src/main/connections.c:5002
+#: src/main/connections.c:5066
 msgid "too large a block specified"
 msgstr "çok geniş bir alan seçildi"
 
-#: src/main/connections.c:919 src/main/connections.c:923
-#: src/main/connections.c:929 src/main/connections.c:945
+#: src/main/connections.c:925 src/main/connections.c:929
+#: src/main/connections.c:935 src/main/connections.c:951
 msgid "allocation of fifo connection failed"
 msgstr "fifo bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:964 src/main/connections.c:1115
-#: src/main/connections.c:1737 src/main/connections.c:2942
-#: src/main/connections.c:4662
+#: src/main/connections.c:970 src/main/connections.c:1121
+#: src/main/connections.c:1743 src/main/connections.c:2948
+#: src/main/connections.c:4668
 msgid "only first element of 'description' argument used"
 msgstr "'description' argümanın sadece ilk öğesi kullanıldı"
 
-#: src/main/connections.c:981
+#: src/main/connections.c:987
 msgid ""
 "fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "fifo(\"\") sadece open = \"w+\" ve open = \"w+b\" destekler:ilki kullanılıyor"
 
-#: src/main/connections.c:995 src/main/connections.c:1152
-#: src/main/connections.c:1803 src/main/connections.c:2909
-#: src/main/connections.c:2962 src/main/connections.c:3010
-#: src/main/connections.c:3285 src/main/connections.c:3392
-#: src/main/connections.c:3553 src/main/connections.c:3804
-#: src/main/connections.c:4131 src/main/connections.c:4244
-#: src/main/connections.c:4452 src/main/connections.c:4800 src/main/dcf.c:65
-#: src/main/deparse.c:316 src/main/deparse.c:402 src/main/saveload.c:2255
+#: src/main/connections.c:1001 src/main/connections.c:1158
+#: src/main/connections.c:1809 src/main/connections.c:2915
+#: src/main/connections.c:2968 src/main/connections.c:3016
+#: src/main/connections.c:3291 src/main/connections.c:3398
+#: src/main/connections.c:3559 src/main/connections.c:3810
+#: src/main/connections.c:4137 src/main/connections.c:4250
+#: src/main/connections.c:4458 src/main/connections.c:4806 src/main/dcf.c:65
+#: src/main/deparse.c:341 src/main/deparse.c:427 src/main/saveload.c:2255
 #: src/main/saveload.c:2335 src/main/scan.c:906 src/main/scan.c:1017
-#: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:2071
-#: src/main/serialize.c:2122 src/main/source.c:261
+#: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:2072
+#: src/main/serialize.c:2123 src/main/source.c:261
 msgid "cannot open the connection"
 msgstr "bağlantı açılamadı"
 
-#: src/main/connections.c:1010
+#: src/main/connections.c:1016
 msgid "fifo connections are not available on this system"
 msgstr "fifo bağlantıları bu sistemde mevcut değil"
 
-#: src/main/connections.c:1042
+#: src/main/connections.c:1048
 #, c-format
 msgid "cannot open pipe() cmd '%s': %s"
 msgstr "pipe() komut dizesi '%s' açılamadı: %s"
 
-#: src/main/connections.c:1209 src/main/connections.c:1530
+#: src/main/connections.c:1215 src/main/connections.c:1536
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
 msgstr "sıkıştırılmış dosya '%s' açılamadı, muhtemel sebep: %s"
 
-#: src/main/connections.c:1249
+#: src/main/connections.c:1255
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence = \"end\" gzfile bağlantıları için tanımlanmadı"
 
-#: src/main/connections.c:1254
+#: src/main/connections.c:1260
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "gzfile dosyasında gezinme iç bir hata döndürdü"
 
-#: src/main/connections.c:1288 src/main/connections.c:1292
-#: src/main/connections.c:1298 src/main/connections.c:1315
+#: src/main/connections.c:1294 src/main/connections.c:1298
+#: src/main/connections.c:1304 src/main/connections.c:1321
 msgid "allocation of gzfile connection failed"
 msgstr "gzfile bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:1344
+#: src/main/connections.c:1350
 #, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
 msgstr "bzip sıkıştırılmış dosya '%s' açılamadı, muhtemel sebep: '%s'"
 
-#: src/main/connections.c:1353
+#: src/main/connections.c:1359
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "'%s' dosyası bzip2 ile sıkıştırılmamış gibi gözüküyor"
 
-#: src/main/connections.c:1362
+#: src/main/connections.c:1368
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
 msgstr "'%s' dosyası için bzip2 sıkıştırma başlangıcı başarısız"
 
-#: src/main/connections.c:1417
+#: src/main/connections.c:1423
 #, fuzzy
 msgid "allocation of overflow buffer for bzfile failed"
 msgstr "dosya bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:1424
+#: src/main/connections.c:1430
 #, fuzzy, c-format
 msgid ""
 "file '%s' has trailing content that appears not to be compressed by bzip2"
 msgstr "'%s' dosyası bzip2 ile sıkıştırılmamış gibi gözüküyor"
 
-#: src/main/connections.c:1470 src/main/connections.c:1474
-#: src/main/connections.c:1480 src/main/connections.c:1497
+#: src/main/connections.c:1476 src/main/connections.c:1480
+#: src/main/connections.c:1486 src/main/connections.c:1503
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile bağlanıtısı yer ayırması başarısız"
 
-#: src/main/connections.c:1543 src/main/connections.c:5600
+#: src/main/connections.c:1549 src/main/connections.c:5606
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "lzma çözücüsü başlatılamadı, hata %d"
 
-#: src/main/connections.c:1559
+#: src/main/connections.c:1565
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
 msgstr "lzma kodlayıcısı başlatılamadı, hata %d"
 
-#: src/main/connections.c:1687 src/main/connections.c:1691
-#: src/main/connections.c:1697 src/main/connections.c:1715
+#: src/main/connections.c:1693 src/main/connections.c:1697
+#: src/main/connections.c:1703 src/main/connections.c:1721
 msgid "allocation of xzfile connection failed"
 msgstr "xzfile bağlatısı yer ayırması başarısız"
 
-#: src/main/connections.c:1774
+#: src/main/connections.c:1780
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr "bu bir R'nin bu derlemesinin desteklemediği %s-sıkıştırılmış dosya"
 
-#: src/main/connections.c:1869 src/modules/X11/devX11.c:3343
+#: src/main/connections.c:1875 src/modules/X11/devX11.c:3343
 msgid "memory allocation to copy clipboard failed"
 msgstr "panoyu kopyalama için bellek yer ayırması başarısız"
 
-#: src/main/connections.c:1874 src/modules/X11/devX11.c:3322
+#: src/main/connections.c:1880 src/modules/X11/devX11.c:3322
 #: src/modules/X11/devX11.c:3327
 msgid "clipboard cannot be opened or contains no text"
 msgstr "pano açılamıyor veya metin içermiyor"
 
-#: src/main/connections.c:1885
+#: src/main/connections.c:1891
 msgid "memory allocation to open clipboard failed"
 msgstr "panoyu açmak için bellek ayırması başarısız"
 
-#: src/main/connections.c:1957
+#: src/main/connections.c:1963
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "pano alanı dışında tarama yapma girişimi"
 
-#: src/main/connections.c:2000
+#: src/main/connections.c:2006
 msgid "clipboard connection is open for reading only"
 msgstr "pano bağlantısı sadece okumaya açık"
 
-#: src/main/connections.c:2020
+#: src/main/connections.c:2026
 msgid "clipboard buffer is full and output lost"
 msgstr "pano önbelleği dolu, çıktı kayboldu"
 
-#: src/main/connections.c:2041
+#: src/main/connections.c:2047
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "pano için 'mode' 'r' veya 'w' olmalı"
 
-#: src/main/connections.c:2044
+#: src/main/connections.c:2050
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "pano için 'mode' Unix sistemlerde 'r' olmalıdır"
 
-#: src/main/connections.c:2047 src/main/connections.c:2053
-#: src/main/connections.c:2059 src/main/connections.c:2076
+#: src/main/connections.c:2053 src/main/connections.c:2059
+#: src/main/connections.c:2065 src/main/connections.c:2082
 msgid "allocation of clipboard connection failed"
 msgstr "pano bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:2145 src/main/connections.c:2149
-#: src/main/connections.c:2155
+#: src/main/connections.c:2151 src/main/connections.c:2155
+#: src/main/connections.c:2161
 msgid "allocation of terminal connection failed"
 msgstr "terminal bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:2288
+#: src/main/connections.c:2294
 msgid "attempting to add too many elements to raw vector"
 msgstr "ham bir vektöre çok fazla öğe ekleme deneniyor"
 
-#: src/main/connections.c:2340
+#: src/main/connections.c:2346
 msgid "attempt to seek outside the range of the raw connection"
 msgstr "ham bir bağlantı alanının dışında tarama denemesi"
 
-#: src/main/connections.c:2351 src/main/connections.c:2355
-#: src/main/connections.c:2361 src/main/connections.c:2387
+#: src/main/connections.c:2357 src/main/connections.c:2361
+#: src/main/connections.c:2367 src/main/connections.c:2393
 msgid "allocation of raw connection failed"
 msgstr "ham bağlantı yer ayırması başarısız"
 
-#: src/main/connections.c:2440
+#: src/main/connections.c:2446
 msgid "'con' is not a rawConnection"
 msgstr "'con' bir rawConnection değil"
 
-#: src/main/connections.c:2443
+#: src/main/connections.c:2449
 msgid "'con' is not an output rawConnection"
 msgstr "'con' bir çıktı rawConnection değil"
 
-#: src/main/connections.c:2479
+#: src/main/connections.c:2485
 msgid "cannot allocate memory for text connection"
 msgstr "metin bağlantısı için bellek ayrılamadı"
 
-#: src/main/connections.c:2527
+#: src/main/connections.c:2533
 msgid "seek is not relevant for text connection"
 msgstr "tarama metin bağlantısı ile ilişkili değil"
 
-#: src/main/connections.c:2535 src/main/connections.c:2539
-#: src/main/connections.c:2545 src/main/connections.c:2558
-#: src/main/connections.c:2742 src/main/connections.c:2746
-#: src/main/connections.c:2752 src/main/connections.c:2765
-#: src/main/connections.c:2771
+#: src/main/connections.c:2541 src/main/connections.c:2545
+#: src/main/connections.c:2551 src/main/connections.c:2564
+#: src/main/connections.c:2748 src/main/connections.c:2752
+#: src/main/connections.c:2758 src/main/connections.c:2771
+#: src/main/connections.c:2777
 msgid "allocation of text connection failed"
 msgstr "metin bağlantısı yer ayırması başarısız"
 
-#: src/main/connections.c:2719
+#: src/main/connections.c:2725
 msgid "text connection: appending to a non-existent char vector"
 msgstr "metin bağlantısı: var olmayan bir karakter vektörüne ekleniyor"
 
-#: src/main/connections.c:2823
+#: src/main/connections.c:2829
 msgid "unsupported mode"
 msgstr "desteklenmeyen mod"
 
-#: src/main/connections.c:2845
+#: src/main/connections.c:2851
 msgid "'con' is not a textConnection"
 msgstr "'con' bir metin bağantısı değil"
 
-#: src/main/connections.c:2848
+#: src/main/connections.c:2854
 msgid "'con' is not an output textConnection"
 msgstr "'con' bir çıktı textConnection'ı değil"
 
-#: src/main/connections.c:2922
+#: src/main/connections.c:2928
 msgid "sockets are not available on this system"
 msgstr "soketler bu sistemde mevcut değil"
 
-#: src/main/connections.c:2990 src/main/connections.c:3039
-#: src/main/connections.c:3050 src/main/connections.c:3097
-#: src/main/connections.c:3118 src/main/connections.c:3141
-#: src/main/connections.c:3153 src/main/connections.c:3265
-#: src/main/connections.c:3377 src/main/connections.c:5099
+#: src/main/connections.c:2996 src/main/connections.c:3045
+#: src/main/connections.c:3056 src/main/connections.c:3103
+#: src/main/connections.c:3124 src/main/connections.c:3147
+#: src/main/connections.c:3159 src/main/connections.c:3271
+#: src/main/connections.c:3383 src/main/connections.c:5105
 msgid "'con' is not a connection"
 msgstr "'con' bir bağlantı değil"
 
-#: src/main/connections.c:2993
+#: src/main/connections.c:2999
 msgid "cannot open standard connections"
 msgstr "standart bağlantılar açılamıyor"
 
-#: src/main/connections.c:2995
+#: src/main/connections.c:3001
 msgid "connection is already open"
 msgstr "bağlantı zaten açık"
 
-#: src/main/connections.c:3028
+#: src/main/connections.c:3034
 msgid "unknown 'rw' value"
 msgstr "bilinmeyen 'rw' değeri"
 
-#: src/main/connections.c:3099
+#: src/main/connections.c:3105
 msgid "cannot close standard connections"
 msgstr "standart bağlantılar kapatılamıyor"
 
-#: src/main/connections.c:3102
+#: src/main/connections.c:3108
 msgid "cannot close output sink connection"
 msgstr "sink çıktı bağlantısı kapatılamaz"
 
-#: src/main/connections.c:3104
+#: src/main/connections.c:3110
 msgid "cannot close messages sink connection"
 msgstr "sink bağlantısı mesajları kapatılamaz"
 
-#: src/main/connections.c:3120 src/main/connections.c:4822
-#: src/main/serialize.c:1892 src/main/serialize.c:1900
+#: src/main/connections.c:3126 src/main/connections.c:4828
+#: src/main/serialize.c:1893 src/main/serialize.c:1901
 msgid "connection is not open"
 msgstr "bağlantı açık değil"
 
-#: src/main/connections.c:3213 src/main/connections.c:3225
+#: src/main/connections.c:3219 src/main/connections.c:3231
 msgid "Line longer than buffer size"
 msgstr "Dize önbellek boyutundan uzun"
 
-#: src/main/connections.c:3292 src/main/connections.c:3294
-#: src/main/connections.c:3561 src/main/connections.c:4115
-#: src/main/connections.c:4139 src/main/dcf.c:72 src/main/scan.c:909
+#: src/main/connections.c:3298 src/main/connections.c:3300
+#: src/main/connections.c:3567 src/main/connections.c:4121
+#: src/main/connections.c:4145 src/main/dcf.c:72 src/main/scan.c:909
 #: src/main/scan.c:913 src/main/scan.c:1020 src/main/scan.c:1024
-#: src/main/serialize.c:1894 src/main/source.c:268
+#: src/main/serialize.c:1895 src/main/source.c:268
 msgid "cannot read from this connection"
 msgstr "bu bağlantıdan okunamıyor"
 
-#: src/main/connections.c:3306 src/main/connections.c:3326
+#: src/main/connections.c:3312 src/main/connections.c:3332
 msgid "cannot allocate buffer in readLines"
 msgstr "readLines içinde önbellek ayrılamıyor"
 
-#: src/main/connections.c:3349
+#: src/main/connections.c:3355
 #, c-format
 msgid "incomplete final line found on '%s'"
 msgstr "tamamlanmamış son dize bulundu: '%s'"
 
-#: src/main/connections.c:3355
+#: src/main/connections.c:3361
 msgid "too few lines read in readLines"
 msgstr "readLines'da çok az dize"
 
-#: src/main/connections.c:3458
+#: src/main/connections.c:3464
 msgid "incomplete string at end of file has been discarded"
 msgstr "dosya sonundaki eksik dize görmezden gelindi"
 
-#: src/main/connections.c:3464
+#: src/main/connections.c:3470
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr "null sonlandırıcısı bulunamadı: 10000 baytta dize sonlandırılıyor"
 
-#: src/main/connections.c:3529
+#: src/main/connections.c:3535
 msgid "can only read from a binary connection"
 msgstr "sadece ikili bir bağlantıdan okunabilir"
 
-#: src/main/connections.c:3578 src/main/connections.c:3885
+#: src/main/connections.c:3584 src/main/connections.c:3891
 msgid "size changing is not supported for complex vectors"
 msgstr "karmaşık vektörler için boyut değiştirme desteklenmiyor"
 
-#: src/main/connections.c:3616 src/main/connections.c:3634
-#: src/main/connections.c:3660 src/main/connections.c:3719
-#: src/main/connections.c:3739 src/main/connections.c:3866
-#: src/main/connections.c:3879 src/main/connections.c:3938
-#: src/main/connections.c:3970
+#: src/main/connections.c:3622 src/main/connections.c:3640
+#: src/main/connections.c:3666 src/main/connections.c:3725
+#: src/main/connections.c:3745 src/main/connections.c:3872
+#: src/main/connections.c:3885 src/main/connections.c:3944
+#: src/main/connections.c:3976
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "%d boyutu bu makinede desteklenmiyor"
 
-#: src/main/connections.c:3645
+#: src/main/connections.c:3651
 msgid "raw is always of size 1"
 msgstr "ham hep 1 uzunluğundadır"
 
-#: src/main/connections.c:3668
+#: src/main/connections.c:3674
 msgid "'signed = FALSE' is only valid for integers of sizes 1 and 2"
 msgstr ""
 
-#: src/main/connections.c:3769
+#: src/main/connections.c:3775
 msgid "'x' is not an atomic vector type"
 msgstr "'x' bir atomik vektör tipi değil"
 
-#: src/main/connections.c:3775
+#: src/main/connections.c:3781
 msgid "can only write to a binary connection"
 msgstr "sadece ikili bir bağlantıya yazabilir"
 
-#: src/main/connections.c:3794
+#: src/main/connections.c:3800
 msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr "bir ham vektöre sadece only 2^31-1 bayt yazılabilir"
 
-#: src/main/connections.c:3796
+#: src/main/connections.c:3802
 #, fuzzy
 msgid "only 2^31-1 bytes can be written in a single writeBin() call"
 msgstr "tek bir readBin() çağrısına sadece 2^31-1 bayt yazılabilir"
 
-#: src/main/connections.c:3845 src/main/connections.c:3998
-#: src/main/connections.c:4271 src/main/connections.c:4311
+#: src/main/connections.c:3851 src/main/connections.c:4004
+#: src/main/connections.c:4277 src/main/connections.c:4317
 msgid "problem writing to connection"
 msgstr "bağlantıya yazılırken hata"
 
-#: src/main/connections.c:3890
+#: src/main/connections.c:3896
 msgid "size changing is not supported for raw vectors"
 msgstr "ham vektörler için boyut değişikliği desteklenmiyor"
 
-#: src/main/connections.c:4033 src/main/connections.c:4037
-#: src/main/connections.c:4076
+#: src/main/connections.c:4039 src/main/connections.c:4043
+#: src/main/connections.c:4082
 msgid "invalid UTF-8 input in readChar()"
 msgstr "readChar()'da geçersiz UTF-8 girişi"
 
-#: src/main/connections.c:4142
+#: src/main/connections.c:4148
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
 msgstr "sadece UTF-8 MBCS yerelinde olmayanlardan bayt okuyabilir"
 
-#: src/main/connections.c:4211
+#: src/main/connections.c:4217
 msgid "'object' is too short"
 msgstr "'object' çok kısa"
 
-#: src/main/connections.c:4260
+#: src/main/connections.c:4266
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: dizede bulunandan daha fazla bayt talep edildi - sıfır eklenecek"
 
-#: src/main/connections.c:4285
+#: src/main/connections.c:4291
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: dizede bulunandan daha fazla karakter talep edildi - sıfır "
 "eklenecek"
 
-#: src/main/connections.c:4344 src/main/connections.c:4348
-#: src/main/connections.c:4384 src/main/connections.c:4390
+#: src/main/connections.c:4350 src/main/connections.c:4354
+#: src/main/connections.c:4390 src/main/connections.c:4396
 msgid "could not allocate space for pushBack"
 msgstr "pushBack için yer ayrılamadı"
 
-#: src/main/connections.c:4375
+#: src/main/connections.c:4381
 msgid "can only push back on open readable connections"
 msgstr "sadece açık okunabilir bağlantılara geri zorlanabilir"
 
-#: src/main/connections.c:4377
+#: src/main/connections.c:4383
 msgid "can only push back on text-mode connections"
 msgstr "sadece metin-modu bağlantılara geri zorlanabilir"
 
-#: src/main/connections.c:4437 src/main/connections.c:4507
+#: src/main/connections.c:4443 src/main/connections.c:4513
 msgid "sink stack is full"
 msgstr "sink yığını tamamen dolu"
 
-#: src/main/connections.c:4440
+#: src/main/connections.c:4446
 msgid "cannot switch output to stdin"
 msgstr "çıktı stdin'e değiştirilemez"
 
-#: src/main/connections.c:4467
+#: src/main/connections.c:4473
 msgid "no sink to remove"
 msgstr "kaldırılcak sink yok"
 
-#: src/main/connections.c:4589
+#: src/main/connections.c:4595
 #, c-format
 msgid "there is no connection %d"
 msgstr "bağlantı yok %d"
 
-#: src/main/connections.c:4724
+#: src/main/connections.c:4730
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") sadece open = \"w+\" ve open = \"w+b\" destekler: ilki "
 "kullanılıyor"
 
-#: src/main/connections.c:4778 src/modules/internet/internet.c:114
+#: src/main/connections.c:4784 src/modules/internet/internet.c:114
 #: src/modules/internet/internet.c:569
 msgid "unsupported URL scheme"
 msgstr "desteklenmeyen URL şeması"
 
-#: src/main/connections.c:4864
+#: src/main/connections.c:4870
 msgid "file stream does not have gzip magic number"
 msgstr "dosya akışı gzip magic numarasına sahip değil"
 
-#: src/main/connections.c:4875
+#: src/main/connections.c:4881
 msgid "file stream does not have valid gzip header"
 msgstr "dosya akışı geçerli gzip başlığı içermiyor"
 
-#: src/main/connections.c:4940
+#: src/main/connections.c:4946
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' bağlantısını temizlerken yazma hatası"
 
-#: src/main/connections.c:5042
+#: src/main/connections.c:5048
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc hatası %x %x\n"
 
-#: src/main/connections.c:5069
+#: src/main/connections.c:5075
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' bağlantısında yazma hatası"
 
-#: src/main/connections.c:5103
+#: src/main/connections.c:5109
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' 0 ... 9'dan biri olmalı"
 
-#: src/main/connections.c:5106
+#: src/main/connections.c:5112
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' TRUE veya FALSE olmalı"
 
-#: src/main/connections.c:5109
+#: src/main/connections.c:5115
 msgid "this is already a gzcon connection"
 msgstr "bir zaten bir gzcon bağlantısı"
 
-#: src/main/connections.c:5115
+#: src/main/connections.c:5121
 msgid "can only use read- or write- binary connections"
 msgstr "ikili bağlantılarda sadece read- veya write- işlemi yapılabilir"
 
-#: src/main/connections.c:5118
+#: src/main/connections.c:5124
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bir metin modu 'file' bağlantısı düzgün olarak çalışmayabilir"
 
-#: src/main/connections.c:5121
+#: src/main/connections.c:5127
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2393,24 +2393,24 @@ msgstr ""
 "yazılabilir textConnection'dan bir gzcon bağlantısı oluşturulamaz; "
 "rawConnection deneyin"
 
-#: src/main/connections.c:5124 src/main/connections.c:5128
-#: src/main/connections.c:5135 src/main/connections.c:5149
+#: src/main/connections.c:5130 src/main/connections.c:5134
+#: src/main/connections.c:5141 src/main/connections.c:5155
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' bağlantısı ayırması başarısız"
 
-#: src/main/connections.c:5308
+#: src/main/connections.c:5314
 msgid "not a list of sockets"
 msgstr "bir soket listesi değil"
 
-#: src/main/connections.c:5313
+#: src/main/connections.c:5319
 msgid "bad write indicators"
 msgstr "hatalı yazma göstericileri"
 
-#: src/main/connections.c:5324
+#: src/main/connections.c:5330
 msgid "not a socket connection"
 msgstr "bir soket bağlantısı değil"
 
-#: src/main/connections.c:5545
+#: src/main/connections.c:5551
 msgid "unknown compression, assuming none"
 msgstr "bilinmeyen sıkıştırma, sıkıştırma olmadığı varsayılıyor"
 
@@ -2596,30 +2596,30 @@ msgstr "deparse eksik olabilir"
 msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr "deparse R'nin 2.7.0 sürümünden önce source() yapılamayabilir"
 
-#: src/main/deparse.c:333 src/main/deparse.c:425 src/main/deparse.c:431
+#: src/main/deparse.c:358 src/main/deparse.c:450 src/main/deparse.c:456
 msgid "wrote too few characters"
 msgstr "çok az karakter yazıldı"
 
-#: src/main/deparse.c:355
+#: src/main/deparse.c:380
 msgid "character arguments expected"
 msgstr "karakter argümanı beklendi"
 
-#: src/main/deparse.c:358
+#: src/main/deparse.c:383
 msgid "zero length argument"
 msgstr "sıfır uzunlukta argüman"
 
-#: src/main/deparse.c:365
+#: src/main/deparse.c:390
 msgid "'opts' should be small non-negative integer"
 msgstr "'opts' negatif olmayan bir tamsayı olmalı"
 
-#: src/main/deparse.c:375 src/main/envir.c:1688 src/main/envir.c:1770
+#: src/main/deparse.c:400 src/main/envir.c:1688 src/main/envir.c:1770
 #: src/main/eval.c:407 src/main/eval.c:1062 src/main/eval.c:3337
-#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2610
+#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2611
 #, c-format
 msgid "object '%s' not found"
 msgstr "'%s' nesnesi bulunamadı"
 
-#: src/main/deparse.c:1435
+#: src/main/deparse.c:1460
 msgid "badly formed function expression"
 msgstr "hatalı biçimde fonksiyon ifadesi"
 
@@ -2674,167 +2674,167 @@ msgstr "aygıtı yerleştirmek için yeterli bellek yok (GEcreateDevDes içinde)
 msgid "Hit <Return> to see next plot: "
 msgstr "Sonraki çizimi görmek için <Enter>'a basın: "
 
-#: src/main/dotcode.c:108 src/main/dotcode.c:138
+#: src/main/dotcode.c:109 src/main/dotcode.c:139
 msgid "NULL value passed as symbol address"
 msgstr "NULL değeri sembol adresi olarak geçirildi"
 
-#: src/main/dotcode.c:143 src/main/dotcode.c:213
+#: src/main/dotcode.c:144 src/main/dotcode.c:214
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "'%s' sembolü çok uzun"
 
-#: src/main/dotcode.c:161
+#: src/main/dotcode.c:162
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name' bir dize (1 uzunluğunda) ya da yerel sembol referansı olmalıdır"
 
-#: src/main/dotcode.c:200 src/main/dotcode.c:825
+#: src/main/dotcode.c:201 src/main/dotcode.c:798
 msgid "too many arguments in foreign function call"
 msgstr "yabancı fonksiyon kullanımında çok fazla argüman"
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:243
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s sembol ismi \"%s\" \"%s\" paketi için DLL içinde değil"
 
-#: src/main/dotcode.c:246
+#: src/main/dotcode.c:247
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s sembol ismi \"%s\" yükleme tablosunda değil"
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:300
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:334
+#: src/main/dotcode.c:324
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA'lar (argüman %d)"
 
-#: src/main/dotcode.c:348
+#: src/main/dotcode.c:337
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:370
+#: src/main/dotcode.c:354
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "Dışarıdan fonksiyon çağrısında karmaşık NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:380
+#: src/main/dotcode.c:363
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "karakter değişkenler .C/.Fortran'da kopyalanmalıdır"
 
-#: src/main/dotcode.c:385
+#: src/main/dotcode.c:368
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran'da sadece karakter vektörünün ilk dizesi kullanıldı"
 
-#: src/main/dotcode.c:398 src/main/dotcode.c:525
+#: src/main/dotcode.c:380 src/main/dotcode.c:501
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "desteklenmeyen kodlama '%s'"
 
-#: src/main/dotcode.c:414
+#: src/main/dotcode.c:396
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "'%s'e tekrar kodlarken dönüşüm sorunu olluştu"
 
-#: src/main/dotcode.c:432
+#: src/main/dotcode.c:413
 msgid "lists must be duplicated in .C"
 msgstr ".C'de listeler kopyalanmalıdır"
 
-#: src/main/dotcode.c:442 src/main/dotcode.c:454
+#: src/main/dotcode.c:421 src/main/dotcode.c:430
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:540
+#: src/main/dotcode.c:516
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "'%s'de yeniden kodlarken dönüştürme sorunu"
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:579
 msgid "NAOK used more than once"
 msgstr "NAOK birden fazla kullanıldı"
 
-#: src/main/dotcode.c:610
+#: src/main/dotcode.c:583
 msgid "DUP used more than once"
 msgstr "DUP birden fazla kez kullanıldı"
 
-#: src/main/dotcode.c:616
+#: src/main/dotcode.c:589
 msgid "DLL name is too long"
 msgstr "DLL ismi çok uzun"
 
-#: src/main/dotcode.c:619 src/main/dotcode.c:679 src/main/dotcode.c:685
+#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE birden fazla kez kullanıldı"
 
-#: src/main/dotcode.c:658
+#: src/main/dotcode.c:631
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE argümanı tek bir karakter dizesi olmalı"
 
-#: src/main/dotcode.c:664
+#: src/main/dotcode.c:637
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE argümanı çok uzun"
 
-#: src/main/dotcode.c:708 src/main/dotcode.c:716
+#: src/main/dotcode.c:681 src/main/dotcode.c:689
 msgid "ENCODING used more than once"
 msgstr "ENCODING birden fazla kez kullanıldı"
 
-#: src/main/dotcode.c:710 src/main/dotcode.c:718
+#: src/main/dotcode.c:683 src/main/dotcode.c:691
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING argüman tek bir karakter dizesi olmalıdı"
 
-#: src/main/dotcode.c:735
+#: src/main/dotcode.c:708
 msgid "no arguments supplied"
 msgstr "argüman verilmedi"
 
-#: src/main/dotcode.c:736 src/main/seq.c:642
+#: src/main/dotcode.c:709 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "çok fazla argüman"
 
-#: src/main/dotcode.c:789 src/main/dotcode.c:832 src/main/dotcode.c:1660
+#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
 #, fuzzy, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Hatalı sayıda argüman (%d), %d adet bekleniyordu (%s için)"
 
-#: src/main/dotcode.c:1489 src/main/dotcode.c:2292
+#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
 msgid "too many arguments, sorry"
 msgstr "çok fazla argüman, üzgünüm"
 
-#: src/main/dotcode.c:1521 src/main/dotcode.c:1538
+#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
 msgid "Invalid graphics state"
 msgstr "Geçersiz grafik durumu"
 
-#: src/main/dotcode.c:1611
+#: src/main/dotcode.c:1584
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL'ye bakarken DLLInfoReference için NULL değeri"
 
-#: src/main/dotcode.c:1685
+#: src/main/dotcode.c:1659
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "%d . argüman için yanlış tip (%s çağrısı)"
 
-#: src/main/dotcode.c:2386
+#: src/main/dotcode.c:2357
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "\"%s\" tipi dillerarası çağrılarda desteklenmiyor"
 
-#: src/main/dotcode.c:2398
+#: src/main/dotcode.c:2369
 msgid "invalid function in call_R"
 msgstr "call_R'de geçersiz fonksiyon"
 
-#: src/main/dotcode.c:2400
+#: src/main/dotcode.c:2371
 msgid "invalid argument count in call_R"
 msgstr "call_R'de geçersiz sayıda argüman"
 
-#: src/main/dotcode.c:2402
+#: src/main/dotcode.c:2373
 msgid "invalid return value count in call_R"
 msgstr "call_R içinde geçersiz geri dönüş değeri sayısı"
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2407
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R içinde '%s' modu desteklenmiyor"
@@ -3306,30 +3306,30 @@ msgstr "bilinmeyen kodlama: %d"
 msgid "embedded nul in string: '%s'"
 msgstr "'%s' dizesi gömülü nul"
 
-#: src/main/errors.c:148 src/main/errors.c:185
+#: src/main/errors.c:147 src/main/errors.c:184
 msgid "interrupts suspended; signal ignored"
 msgstr "kesmeler durduruldu; sinyal görmezden gelindi"
 
-#: src/main/errors.c:278
+#: src/main/errors.c:290
 msgid "invalid option \"warning.expression\""
 msgstr "geçersiz seçenek \"warning.expression\""
 
-#: src/main/errors.c:308
+#: src/main/errors.c:320
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "%s (uyarıdan çevirildi)"
 
-#: src/main/errors.c:319
+#: src/main/errors.c:331
 #, c-format
 msgid "Warning: %s\n"
 msgstr "Uyarı: %s\n"
 
-#: src/main/errors.c:322 src/main/errors.c:324
+#: src/main/errors.c:334 src/main/errors.c:336
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr "%s'de uyarı: %s\n"
 
-#: src/main/errors.c:326
+#: src/main/errors.c:338
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3338,136 +3338,136 @@ msgstr ""
 "%s'de uyarı :\n"
 "  %s\n"
 
-#: src/main/errors.c:389 src/main/errors.c:407 src/main/errors.c:535
+#: src/main/errors.c:401 src/main/errors.c:419 src/main/errors.c:547
 msgid "Lost warning messages\n"
 msgstr "Kayıp uyarı mesajları\n"
 
-#: src/main/errors.c:419
+#: src/main/errors.c:431
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Uyarı mesajları:\n"
 
-#: src/main/errors.c:474
+#: src/main/errors.c:486
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "%d hata oluştu (görmek için warnings() kullanın)\n"
 
-#: src/main/errors.c:477
+#: src/main/errors.c:489
 #, fuzzy, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
 "50 yada daha fazla uyarı oluştu (ilk 50'sini görmek için warnings() "
 "kullanın)\n"
 
-#: src/main/errors.c:526
+#: src/main/errors.c:538
 msgid "Error during wrapup: "
 msgstr "wrapup sırasında hata: "
 
-#: src/main/errors.c:551
+#: src/main/errors.c:563
 msgid "Error in "
 msgstr "Hata oluştu: "
 
-#: src/main/errors.c:577 src/main/errors.c:582
+#: src/main/errors.c:589 src/main/errors.c:594
 #, c-format
 msgid "Error: "
 msgstr "Hata: "
 
-#: src/main/errors.c:601 src/main/errors.c:1224
+#: src/main/errors.c:613 src/main/errors.c:1236
 msgid "In addition: "
 msgstr "Ek olarak: "
 
-#: src/main/errors.c:722
+#: src/main/errors.c:734
 msgid "invalid option \"error\"\n"
 msgstr "geçersiz seçenecek \"error\"\n"
 
-#: src/main/errors.c:802
+#: src/main/errors.c:814
 msgid "Execution halted\n"
 msgstr "Çalıştırma durduruldu\n"
 
-#: src/main/errors.c:939
+#: src/main/errors.c:951
 msgid "'msg1' must be a character string"
 msgstr "'msg1' bir karakter dizesi olmalıdır"
 
-#: src/main/errors.c:941
+#: src/main/errors.c:953
 msgid "'msg2' must be a character string"
 msgstr "'msg2' bir karakter dizesi olmalıdır"
 
-#: src/main/errors.c:1036
+#: src/main/errors.c:1048
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.)'da geçersiz dize]"
 
-#: src/main/errors.c:1062
+#: src/main/errors.c:1074
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.)'de geçersiz dize]"
 
-#: src/main/errors.c:1077
+#: src/main/errors.c:1089
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\" e hatalı sayıda argüman"
 
-#: src/main/errors.c:1083 src/main/errors.c:1098
+#: src/main/errors.c:1095 src/main/errors.c:1110
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s de tanımlanmamış özellik"
 
-#: src/main/errors.c:1092
+#: src/main/errors.c:1104
 msgid "invalid number of arguments"
 msgstr "geçersiz sayıda argüman"
 
-#: src/main/errors.c:1095
+#: src/main/errors.c:1107
 msgid "time-series/vector length mismatch"
 msgstr "zaman-serisi/vektör uzunluğu uyuşmazlığı"
 
-#: src/main/errors.c:1096
+#: src/main/errors.c:1108
 msgid "incompatible arguments"
 msgstr "uyumsuz argümanlar"
 
-#: src/main/errors.c:1099
+#: src/main/errors.c:1111
 msgid "unknown error (report this!)"
 msgstr "bilinmeyen hata (rapor gönderin!)"
 
-#: src/main/errors.c:1111
+#: src/main/errors.c:1123
 msgid "unknown warning (report this!)"
 msgstr "bilinmeyen uyarı (rapor edin!)"
 
-#: src/main/errors.c:1189
+#: src/main/errors.c:1201
 msgid "No function to return from, jumping to top level"
 msgstr "Geri dönülecek fonksiyon yok, en üst seviyeye atlanıyor"
 
-#: src/main/errors.c:1205
+#: src/main/errors.c:1217
 msgid "top level inconsistency?"
 msgstr "üst seviye tutarsızlık?"
 
-#: src/main/errors.c:1381
+#: src/main/errors.c:1393
 msgid "bad handler data"
 msgstr "hatalı "
 
-#: src/main/errors.c:1531
+#: src/main/errors.c:1543
 msgid "error message not a string"
 msgstr "hata mesajı bir dize değil"
 
-#: src/main/errors.c:1606
+#: src/main/errors.c:1618
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "önceki yeniden başlatmada yönetici yada yeniden başlatma yığını uyuşmazlığı"
 
-#: src/main/errors.c:1632 src/main/errors.c:1648
+#: src/main/errors.c:1644 src/main/errors.c:1660
 msgid "bad error message"
 msgstr "yanlış hata mesajı"
 
-#: src/main/errors.c:1690
+#: src/main/errors.c:1702
 msgid "bad restart"
 msgstr "yanlış yeniden başlatma"
 
-#: src/main/errors.c:1722
+#: src/main/errors.c:1734
 msgid "restart not on stack"
 msgstr "restart yığında değil"
 
-#: src/main/errors.c:1739
+#: src/main/errors.c:1751
 msgid "not in a try context"
 msgstr "bir deneme içereiğinde değil"
 
-#: src/main/errors.c:1752
+#: src/main/errors.c:1764
 msgid "error message must be a character string"
 msgstr "hata mesajı bir karakter dizesi olmalıdır"
 
@@ -3731,7 +3731,7 @@ msgid "'file' must be non-empty string"
 msgstr "'dosya' boş olmayan bir dize olmalı"
 
 #: src/main/eval.c:5066 src/main/saveload.c:1932 src/main/saveload.c:2232
-#: src/main/serialize.c:2045
+#: src/main/serialize.c:2046
 msgid "'ascii' must be logical"
 msgstr "'ascii' mantıksal olmalı"
 
@@ -5997,8 +5997,8 @@ msgstr "karışık değerlerle geçersiz karşılaştırma "
 #: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
 #: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1370
 #: src/main/saveload.c:1375 src/main/saveload.c:1419 src/main/saveload.c:1487
-#: src/main/saveload.c:1496 src/main/serialize.c:328 src/main/serialize.c:335
-#: src/main/serialize.c:2278 src/main/serialize.c:2286
+#: src/main/saveload.c:1496 src/main/serialize.c:329 src/main/serialize.c:336
+#: src/main/serialize.c:2279 src/main/serialize.c:2287
 msgid "read error"
 msgstr "okuma hatası"
 
@@ -6136,8 +6136,8 @@ msgstr "bir karmaşık sayı verisi yazma hatası oluştu"
 msgid "an xdr complex data read error occurred"
 msgstr "bir xdr karışık sayı verisi okuma hatası oluştu"
 
-#: src/main/saveload.c:1772 src/main/serialize.c:1854
-#: src/main/serialize.c:2455 src/modules/internet/internet.c:351
+#: src/main/saveload.c:1772 src/main/serialize.c:1855
+#: src/main/serialize.c:2456 src/modules/internet/internet.c:351
 #: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
 msgid "write failed"
 msgstr "yazma başarısız"
@@ -6182,13 +6182,13 @@ msgstr "ilk argüman bir dosya ismi olmalıdır"
 msgid "unable to open file"
 msgstr "dosya açılamadı"
 
-#: src/main/saveload.c:2096 src/main/saveload.c:2122 src/main/serialize.c:810
-#: src/main/serialize.c:845 src/main/serialize.c:881
+#: src/main/saveload.c:2096 src/main/saveload.c:2122 src/main/serialize.c:811
+#: src/main/serialize.c:846 src/main/serialize.c:882
 msgid "XDR write failed"
 msgstr "XDR yazma başarısız"
 
-#: src/main/saveload.c:2109 src/main/saveload.c:2134 src/main/serialize.c:1336
-#: src/main/serialize.c:1370 src/main/serialize.c:1406
+#: src/main/saveload.c:2109 src/main/saveload.c:2134 src/main/serialize.c:1337
+#: src/main/serialize.c:1371 src/main/serialize.c:1407
 msgid "XDR read failed"
 msgstr "XDR okuma başarısız"
 
@@ -6197,12 +6197,12 @@ msgstr "XDR okuma başarısız"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "veri kaydedilemedi -- '%s': %s açılamadı"
 
-#: src/main/saveload.c:2242 src/main/serialize.c:2057
+#: src/main/saveload.c:2242 src/main/serialize.c:2058
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "sürüm %d biçiminde  bağlantılara kaydedilemez"
 
-#: src/main/saveload.c:2265 src/main/serialize.c:2082
+#: src/main/saveload.c:2265 src/main/serialize.c:2083
 msgid "connection not open for writing"
 msgstr "bağlantı yazma için açık değil"
 
@@ -6210,13 +6210,13 @@ msgstr "bağlantı yazma için açık değil"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "XDR biçimi bir metin modlu bağlantıya kaydedilemiyor"
 
-#: src/main/saveload.c:2283 src/main/serialize.c:1962
-#: src/main/serialize.c:1976 src/main/serialize.c:2158
-#: src/main/serialize.c:2180
+#: src/main/saveload.c:2283 src/main/serialize.c:1963
+#: src/main/serialize.c:1977 src/main/serialize.c:2159
+#: src/main/serialize.c:2181
 msgid "error writing to connection"
 msgstr "bağlantıya yazılırken hata"
 
-#: src/main/saveload.c:2344 src/main/serialize.c:2130
+#: src/main/saveload.c:2344 src/main/serialize.c:2131
 msgid "connection not open for reading"
 msgstr "bağlantı okumak için açık değil"
 
@@ -6382,76 +6382,76 @@ msgstr "'by' sonlu olmalı"
 msgid "argument must be coercible to non-negative integer"
 msgstr "argüman negatif olmayan tamsayıya zorlanabilmeli"
 
-#: src/main/serialize.c:222 src/main/serialize.c:252 src/main/serialize.c:275
+#: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
 msgstr "bilinmeyen veya uygun olmayan çıkış biçimi"
 
-#: src/main/serialize.c:501
+#: src/main/serialize.c:502
 msgid "must specify ascii, binary, or xdr format"
 msgstr "ascii, ikili, veya xdr biçimi seçilmeli"
 
-#: src/main/serialize.c:502
+#: src/main/serialize.c:503
 msgid "unknown output format"
 msgstr "bilinmeyen çıkış biçimi"
 
-#: src/main/serialize.c:533
+#: src/main/serialize.c:534
 msgid "unknown input format"
 msgstr "bilinmeyen giriş biçimi"
 
-#: src/main/serialize.c:538
+#: src/main/serialize.c:539
 msgid "input format does not match specified format"
 msgstr "giriş biçimi seçilen biçimle uyuşmuyor"
 
-#: src/main/serialize.c:749
+#: src/main/serialize.c:750
 msgid "no restore method available"
 msgstr "yeniden yükleme metodu mevcut değil"
 
-#: src/main/serialize.c:779
+#: src/main/serialize.c:780
 msgid "names in persistent strings are currently ignored"
 msgstr "kalıcı dizelerdeki isimler şuan görmezden geliniyor"
 
-#: src/main/serialize.c:944
+#: src/main/serialize.c:945
 #, c-format
 msgid "'%s' may not be available when loading"
 msgstr "'%s' yüklerken mevcut olmayabilir"
 
-#: src/main/serialize.c:951
+#: src/main/serialize.c:952
 msgid "namespaces may not be available when loading"
 msgstr "isimalanları yüklerken mevcut olmayabilir"
 
-#: src/main/serialize.c:1076
+#: src/main/serialize.c:1077
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem: bilinmeyen tip %i"
 
-#: src/main/serialize.c:1253
+#: src/main/serialize.c:1254
 #, c-format
 msgid "version %d not supported"
 msgstr "sürüm %d desteklenmiyor"
 
-#: src/main/serialize.c:1281
+#: src/main/serialize.c:1282
 msgid "reference index out of range"
 msgstr "referans indis alan dışında"
 
-#: src/main/serialize.c:1311
+#: src/main/serialize.c:1312
 msgid "names in persistent strings are not supported yet"
 msgstr "sürekli dizelerde isimler henüz desteklenmiyor"
 
-#: src/main/serialize.c:1614
+#: src/main/serialize.c:1615
 msgid "this version of R cannot read class references"
 msgstr "R'nin bu sürümü sınıf referanslarını okuyamaz"
 
-#: src/main/serialize.c:1616
+#: src/main/serialize.c:1617
 msgid "this version of R cannot read generic function references"
 msgstr "R'nin bu sürümü genel fonksiyon referanslarını okuyamaz"
 
-#: src/main/serialize.c:1634
+#: src/main/serialize.c:1635
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 "ReadItem: bilinmeyen tip %i, R'nin yeni bir sürümüyle yazılmış olabilir"
 
-#: src/main/serialize.c:1778
+#: src/main/serialize.c:1779
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d."
@@ -6460,7 +6460,7 @@ msgstr ""
 "yayınlanmamış çalışma alanı sürümü %d okunamıyor (deneysel R %d.%d.%d ile "
 "yazılmış)"
 
-#: src/main/serialize.c:1782
+#: src/main/serialize.c:1783
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6469,83 +6469,83 @@ msgstr ""
 "çalışma alanı sürümü %d okunamıyor (R %d.%d.%d ile yazılmış; R %d.%d.%d ya "
 "da daha yenisi gerekli)"
 
-#: src/main/serialize.c:1861
+#: src/main/serialize.c:1862
 msgid "read failed"
 msgstr "okuma başarısız"
 
-#: src/main/serialize.c:1924
+#: src/main/serialize.c:1925
 msgid "error reading from ascii connection"
 msgstr "ascii bağlantısında okunurken hata"
 
-#: src/main/serialize.c:1926
+#: src/main/serialize.c:1927
 msgid "unexpected format in ascii connection"
 msgstr "ascii bağlantısında beklenmeyen biçim"
 
-#: src/main/serialize.c:1931 src/main/serialize.c:1945
+#: src/main/serialize.c:1932 src/main/serialize.c:1946
 msgid "error reading from connection"
 msgstr "bağlantıdan okunurken hata"
 
-#: src/main/serialize.c:1986
+#: src/main/serialize.c:1987
 msgid "only ascii format can be written to text mode connections"
 msgstr "metin modu bağlantılara sadece ascii biçiminde yazılabilir"
 
-#: src/main/serialize.c:2000
+#: src/main/serialize.c:2001
 msgid "only ascii format can be read from text mode connections"
 msgstr "metin modu bağlantılardan sadece ascii biçiminde okunabilir"
 
-#: src/main/serialize.c:2055 src/main/serialize.c:2208
-#: src/main/serialize.c:2349
+#: src/main/serialize.c:2056 src/main/serialize.c:2209
+#: src/main/serialize.c:2350
 msgid "bad version value"
 msgstr "hatalı sürüm değeri"
 
-#: src/main/serialize.c:2080
+#: src/main/serialize.c:2081
 #, fuzzy
 msgid "binary-mode connection required for ascii=FALSE"
 msgstr "binary işlemleri iki argüman gerektirir"
 
-#: src/main/serialize.c:2239 src/main/serialize.c:2268
-#: src/main/serialize.c:2329
+#: src/main/serialize.c:2240 src/main/serialize.c:2269
+#: src/main/serialize.c:2330
 msgid "serialization is too large to store in a raw vector"
 msgstr "serileştirme bir ham vektörde saklamak için çok büyük"
 
-#: src/main/serialize.c:2249
+#: src/main/serialize.c:2250
 msgid "cannot allocate buffer"
 msgstr "önbellek ayrılamıyor"
 
-#: src/main/serialize.c:2433 src/main/serialize.c:2502
+#: src/main/serialize.c:2434 src/main/serialize.c:2503
 msgid "not a proper file name"
 msgstr "uygun bir dosya ismi değil"
 
-#: src/main/serialize.c:2435
+#: src/main/serialize.c:2436
 msgid "not a proper raw vector"
 msgstr "uygun bir ham vektör değil"
 
-#: src/main/serialize.c:2456
+#: src/main/serialize.c:2457
 msgid "could not determine file position"
 msgstr "dosya konumu belirlenemiyor"
 
-#: src/main/serialize.c:2504
+#: src/main/serialize.c:2505
 msgid "bad offset/length argument"
 msgstr "hatalı konum/uzunluk argümanı"
 
-#: src/main/serialize.c:2528 src/main/serialize.c:2541
-#: src/main/serialize.c:2550 src/main/serialize.c:2560
-#: src/main/serialize.c:2573
+#: src/main/serialize.c:2529 src/main/serialize.c:2542
+#: src/main/serialize.c:2551 src/main/serialize.c:2561
+#: src/main/serialize.c:2574
 #, c-format
 msgid "seek failed on %s"
 msgstr "%s'de tarama hatası"
 
-#: src/main/serialize.c:2545 src/main/serialize.c:2554
-#: src/main/serialize.c:2564 src/main/serialize.c:2577
+#: src/main/serialize.c:2546 src/main/serialize.c:2555
+#: src/main/serialize.c:2565 src/main/serialize.c:2578
 #, c-format
 msgid "read failed on %s"
 msgstr "%s'de okuma başarısız"
 
-#: src/main/serialize.c:2596
+#: src/main/serialize.c:2597
 msgid "bad environment"
 msgstr "hatalı ortam"
 
-#: src/main/serialize.c:2598
+#: src/main/serialize.c:2599
 msgid "bad variable names"
 msgstr "hatalı değişken isimleri"
 
@@ -6764,7 +6764,7 @@ msgstr "karakter dizesinin %d karaktere kırpılmış hali olası"
 msgid "unsupported type"
 msgstr "desteklenmeyen tip"
 
-#: src/main/startup.c:66
+#: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"
 msgstr "R_LibraryFileName: önbellek çok küçük"
 
