@@ -392,8 +392,8 @@
       \item \code{dev.copy2pdf(out.type = "cairo")} gave an error.
       (\PR{14827})
 
-      \item Virtual classes (e.g., class unions) had NULL prototype
-        even if that was not a legal subclass. See ?setClassUnion.
+      \item Virtual classes (e.g., class unions) had \code{NULL} prototype
+        even if that was not a legal subclass.  See \code{?setClassUnion}.
     }
   }
 }
