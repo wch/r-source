@@ -227,6 +227,13 @@
       the named packages plus the \samp{Suggests}, but only the
       essential dependencies of dependencies.  To get the previous
       behaviour, specify \code{dependencies} as a character vector.
+      
+      \item \command{R CMD INSTALL --merge-multiarch} is now supported
+      on OS X and other Unix-alikes using multiple sub-architectures.
+
+      \item \command{R CMD INSTALL --libs-only} now by default does a
+      test load on Unix-alikes as well as on Windows: suppress with
+      \option{--no-test-load}.
     }
   }
 
