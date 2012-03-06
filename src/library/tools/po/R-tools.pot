@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:58\n"
+"POT-Creation-Date: 2012-03-06 15:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -707,9 +707,6 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "--merge-multiarch is Windows-only"
-msgstr ""
-
 msgid "cannot create temporary directory"
 msgstr ""
 
@@ -717,6 +714,9 @@ msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr ""
 
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
+
+msgid "only one architecture so ignoring '--merge-multiarch'"
 msgstr ""
 
 msgid "invalid package"

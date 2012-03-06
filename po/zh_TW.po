@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-05 08:01+0000\n"
+"POT-Creation-Date: 2012-03-06 15:33+0000\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -161,8 +161,8 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:739
-#: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
+#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -286,7 +286,7 @@ msgstr "時間戳記不正確"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:198 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -745,7 +745,7 @@ msgstr "無法給已登記的原生符號 (%d 位元組) 配置記憶體"
 msgid "must pass package name or DllInfo reference"
 msgstr "必須傳給套件名稱或 DllInfo 參照"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:129
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject 中的類型 %d 尚未被實作"
@@ -1638,8 +1638,8 @@ msgstr "%s() 套用到非串列或向量類型 '%s'"
 msgid "default method not implemented for type '%s'"
 msgstr "預設方法尚未於類型 '%s' 中實作"
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:773 src/main/dotcode.c:816
-#: src/main/dotcode.c:1639
+#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
+#: src/main/dotcode.c:1612
 msgid "'name' is missing"
 msgstr "缺少 'name'"
 
@@ -2634,167 +2634,167 @@ msgstr "所需記憶體不足以配置裝置 (在 GEcreateDevDesc 中)"
 msgid "Hit <Return> to see next plot: "
 msgstr "按 <return> 鍵來看下一張圖: "
 
-#: src/main/dotcode.c:108 src/main/dotcode.c:138
+#: src/main/dotcode.c:109 src/main/dotcode.c:139
 msgid "NULL value passed as symbol address"
 msgstr "NULL 值被當作符號位址"
 
-#: src/main/dotcode.c:143 src/main/dotcode.c:213
+#: src/main/dotcode.c:144 src/main/dotcode.c:214
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "符號 '%s' 太長"
 
-#: src/main/dotcode.c:161
+#: src/main/dotcode.c:162
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name' 必須是字串 (長度為 1) 或是原生符號參照"
 
-#: src/main/dotcode.c:200 src/main/dotcode.c:825
+#: src/main/dotcode.c:201 src/main/dotcode.c:798
 msgid "too many arguments in foreign function call"
 msgstr "外接函數呼叫時引數太多"
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:243
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "套件 \"%3$s\" 的 DLL 中沒有 %1$s 的符號名稱 \"%2$s\""
 
-#: src/main/dotcode.c:246
+#: src/main/dotcode.c:247
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "載入表中沒有 %s 的符號名稱 \"%s\""
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:300
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr "呼叫 '%s' 時明確要求不要複製引數，但引數 %d 的類型不正確 (%d != %d)"
 
-#: src/main/dotcode.c:334
+#: src/main/dotcode.c:324
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "外部函數呼叫時不能有 NA (引數 %d)"
 
-#: src/main/dotcode.c:348
+#: src/main/dotcode.c:337
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外部函數呼叫時不能有 NA/NaN/Inf (引數 %d)"
 
-#: src/main/dotcode.c:370
+#: src/main/dotcode.c:354
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外部函數呼叫時不能有複數的 NA/NaN/Inf (引數 %d)"
 
-#: src/main/dotcode.c:380
+#: src/main/dotcode.c:363
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "在呼叫 .C/.Fortran 時字元變數必須被複製"
 
-#: src/main/dotcode.c:385
+#: src/main/dotcode.c:368
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran 只用了位元組向量中的第一個字串"
 
-#: src/main/dotcode.c:398 src/main/dotcode.c:525
+#: src/main/dotcode.c:380 src/main/dotcode.c:501
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "不支援這個編碼 '%s'"
 
-#: src/main/dotcode.c:414
+#: src/main/dotcode.c:396
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "轉換編碼 '%s' 時出了問題"
 
-#: src/main/dotcode.c:432
+#: src/main/dotcode.c:413
 msgid "lists must be duplicated in .C"
 msgstr "串列必須在 .C 中被重製"
 
-#: src/main/dotcode.c:442 src/main/dotcode.c:454
+#: src/main/dotcode.c:421 src/main/dotcode.c:430
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 
-#: src/main/dotcode.c:540
+#: src/main/dotcode.c:516
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "轉換編碼成 '%s' 出了問題"
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:579
 msgid "NAOK used more than once"
 msgstr "NAOK 被使用超過一次"
 
-#: src/main/dotcode.c:610
+#: src/main/dotcode.c:583
 msgid "DUP used more than once"
 msgstr "DUP 被使用超過一次"
 
-#: src/main/dotcode.c:616
+#: src/main/dotcode.c:589
 msgid "DLL name is too long"
 msgstr "DLL 的名稱太長"
 
-#: src/main/dotcode.c:619 src/main/dotcode.c:679 src/main/dotcode.c:685
+#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE 被使用超過一次"
 
-#: src/main/dotcode.c:658
+#: src/main/dotcode.c:631
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE 引數必須是單字元字串"
 
-#: src/main/dotcode.c:664
+#: src/main/dotcode.c:637
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE 引數太長"
 
-#: src/main/dotcode.c:708 src/main/dotcode.c:716
+#: src/main/dotcode.c:681 src/main/dotcode.c:689
 msgid "ENCODING used more than once"
 msgstr "ENCODING 被使用超過一次"
 
-#: src/main/dotcode.c:710 src/main/dotcode.c:718
+#: src/main/dotcode.c:683 src/main/dotcode.c:691
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING 引數必須是單字元字串"
 
-#: src/main/dotcode.c:735
+#: src/main/dotcode.c:708
 msgid "no arguments supplied"
 msgstr "沒有提供引數"
 
-#: src/main/dotcode.c:736 src/main/seq.c:642
+#: src/main/dotcode.c:709 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "引數太多"
 
-#: src/main/dotcode.c:789 src/main/dotcode.c:832 src/main/dotcode.c:1660
+#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "不正確的引數數量 (%d)，預期為 %d 用於 '%s'"
 
-#: src/main/dotcode.c:1489 src/main/dotcode.c:2292
+#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
 msgid "too many arguments, sorry"
 msgstr "對不起，引數太多"
 
-#: src/main/dotcode.c:1521 src/main/dotcode.c:1538
+#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
 msgid "Invalid graphics state"
 msgstr "繪圖狀態發生錯誤"
 
-#: src/main/dotcode.c:1611
+#: src/main/dotcode.c:1584
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "尋找 DLL 時 DLLInfoReference 的值是 NULL"
 
-#: src/main/dotcode.c:1685
+#: src/main/dotcode.c:1659
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "呼叫 %2$s 時引數 %1$d 的類型不正確"
 
-#: src/main/dotcode.c:2386
+#: src/main/dotcode.c:2357
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "語言間呼叫不支援此一類型 \"%s\""
 
-#: src/main/dotcode.c:2398
+#: src/main/dotcode.c:2369
 msgid "invalid function in call_R"
 msgstr "call_R 中的函數不正確"
 
-#: src/main/dotcode.c:2400
+#: src/main/dotcode.c:2371
 msgid "invalid argument count in call_R"
 msgstr "call_R 的引數數目不正確"
 
-#: src/main/dotcode.c:2402
+#: src/main/dotcode.c:2373
 msgid "invalid return value count in call_R"
 msgstr "call_R 的回傳值數目不正確"
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2407
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R 不支援 '%s' 型式"

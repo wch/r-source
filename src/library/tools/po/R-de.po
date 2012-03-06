@@ -1,13 +1,13 @@
 # Translation of src/library/tools/po/R-tools.pot to German.
-# Copyright (C) 2008-2011 The R Foundation
+# Copyright (C) 2008-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:58\n"
-"PO-Revision-Date: 2011-10-13 15:53+0200\n"
+"POT-Creation-Date: 2012-03-06 15:34\n"
+"PO-Revision-Date: 2012-03-06 09:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -372,19 +372,17 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
 
-#, fuzzy
 msgid "Package startup functions should not call %s."
-msgstr "Startfunktionen des Pakets sollten den Suchpfad nicht ändern."
+msgstr "Startfunktionen des Pakets sollten %s nicht aufrufen."
 
-#, fuzzy
 msgid "installed.packages"
-msgstr "ungültiges Paket"
+msgstr "installed.packages"
 
 msgid "See section %s in ?.onAttach."
 msgstr "Siehe Abschnitt %s in ?.onAttach."
 
 msgid "Good practice"
-msgstr "Gute Paxis"
+msgstr "Gute Praxis"
 
 msgid "package 'methods' is used but not declared"
 msgstr "Paket 'methods' wird benutzt, wurde aber nicht angemeldet"
@@ -401,16 +399,14 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
 
-#, fuzzy
 msgid "'data(package=)' calls not declared from:"
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+msgstr "Aufrufe von 'data(package=)' nicht angemeldet von:"
 
-#, fuzzy
 msgid "'data(package=)' call not declared from: %s"
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+msgstr "Aufruf von 'data(package=' nicht angemeldet von: %s"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
-msgstr ""
+msgstr "NB: benötige Internetzugang, um CRAN-Incoming zu checken"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd-Dateien mit doppeltem Namen '%s':"
@@ -513,7 +509,6 @@ msgstr "das aktuelle ARbeitsverzeichnis kann nicht bestimmt werden"
 msgid "no inputs"
 msgstr "keine Eingaben"
 
-#, fuzzy
 msgid "Error in running tools::texi2pdf"
 msgstr "Fehler bei der Ausführung von tools::texi2dvi"
 
@@ -618,7 +613,7 @@ msgid "The default JSS style may not be modified."
 msgstr "Der Standard JSS style darf nicht geändert werden"
 
 msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
-msgstr ""
+msgstr "unzulässiger Wert für --compact-vignettes, nehme \"qpdf\" an"
 
 msgid "Error: cannot rename directory to"
 msgstr "Fehler: kann  Verzeichnis nicht umbennen in"
@@ -633,7 +628,7 @@ msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' angegeben, obwohl es nur eine sub-Architektur gibt"
 
 msgid "--cran turns off --extra-arch"
-msgstr ""
+msgstr "--cran schaltet --extra-arch aus"
 
 msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"
@@ -787,9 +782,6 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
-msgid "--merge-multiarch is Windows-only"
-msgstr "--merge-multiarchist nur für Windows"
-
 msgid "cannot create temporary directory"
 msgstr "kann  temporäres Verzeichnis nicht erzeugen"
 
@@ -799,6 +791,9 @@ msgstr "Fehler: --merge-multiarch bezieht sich nur auf einen tarball"
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 msgstr ""
 "ERROR: --merge-multiarch can nur auf i386/x64 Installationen angewandt werden"
+
+msgid "only one architecture so ignoring '--merge-multiarch'"
+msgstr ""
 
 msgid "invalid package"
 msgstr "ungültiges Paket"
@@ -1266,6 +1261,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "--merge-multiarch is Windows-only"
+#~ msgstr "--merge-multiarchist nur für Windows"
 
 #~ msgid ""
 #~ "running Stangle on vignette '%s' failed with message:\n"

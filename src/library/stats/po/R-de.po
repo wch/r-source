@@ -1,14 +1,14 @@
 # Translation of /src/library/stats/po/R-stats.pot to German
-# Copyright (C) 2008-2011 The R Foundation
+# Copyright (C) 2008-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2012-02-19 08:56\n"
-"PO-Revision-Date: 2011-03-24 10:51+0100\n"
+"PO-Revision-Date: 2012-03-06 09:25+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -44,10 +44,10 @@ msgid "need at least 2 periods to compute seasonal start values."
 msgstr "benötige zumindest 2 Perioden, um saisonale Startwerte zu berechnen"
 
 msgid "optimization difficulties: %s"
-msgstr ""
+msgstr "Schwierigkeiten bei Optimierung: %s"
 
 msgid "optimization failure"
-msgstr ""
+msgstr "Optimierung fehlgeschlagen"
 
 msgid "time series has no or less than 2 periods"
 msgstr "Zeitreihe hat keine oder weniger als 2 Perioden"
@@ -2064,9 +2064,8 @@ msgstr "alle Gewichte sollten nicht-negativ sein"
 msgid "some weights should be positive"
 msgstr "einige Gewichte sollten positiv sein"
 
-#, fuzzy
 msgid "'tol' must be strictly positive and finite"
-msgstr "'ratio' muss eine einzelne positive Zahl sein"
+msgstr "'tol' muss strikt positiv und endlich sein"
 
 msgid "need at least four unique 'x' values"
 msgstr "benötige zumindest vier verschiedene 'x' Werte"

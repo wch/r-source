@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:58\n"
+"POT-Creation-Date: 2012-03-06 15:34\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -782,9 +782,6 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "--merge-multiarch is Windows-only"
-msgstr ""
-
 #, fuzzy
 msgid "cannot create temporary directory"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
@@ -793,6 +790,9 @@ msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr ""
 
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
+
+msgid "only one architecture so ignoring '--merge-multiarch'"
 msgstr ""
 
 msgid "invalid package"

@@ -1,13 +1,13 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2011 The R Foundation
+# Copyright (C) 2005-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.14.0\n"
+"Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-05 08:01+0000\n"
-"PO-Revision-Date: 2011-10-10 12:29+0200\n"
+"POT-Creation-Date: 2012-03-06 15:33+0000\n"
+"PO-Revision-Date: 2012-03-05 15:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -159,8 +159,8 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:739
-#: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
+#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -284,7 +284,7 @@ msgstr "ungültiger Zeitstempel"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:198 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -747,7 +747,7 @@ msgstr ""
 msgid "must pass package name or DllInfo reference"
 msgstr "es muss der Paketname oder DllInfo Referenz übergeben werden"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:129
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "Nicht implementierter Typ %d in createRSymbolObject"
@@ -1659,8 +1659,8 @@ msgstr "%s() auf nicht-(Liste oder Vektor) des Typs '%s' angewendet"
 msgid "default method not implemented for type '%s'"
 msgstr "nicht implementierte Standardmethode für Typ '%s'"
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:773 src/main/dotcode.c:816
-#: src/main/dotcode.c:1639
+#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
+#: src/main/dotcode.c:1612
 msgid "'name' is missing"
 msgstr "'name' fehlt"
 
@@ -2686,35 +2686,35 @@ msgstr "kann nicht genug Speicher für Device zuteilen (in GEcreateDevDesc)"
 msgid "Hit <Return> to see next plot: "
 msgstr "Drücke Eingabetaste für den nächsten Plot:"
 
-#: src/main/dotcode.c:108 src/main/dotcode.c:138
+#: src/main/dotcode.c:109 src/main/dotcode.c:139
 msgid "NULL value passed as symbol address"
 msgstr "NULL Wert als Symboladresse übergeben"
 
-#: src/main/dotcode.c:143 src/main/dotcode.c:213
+#: src/main/dotcode.c:144 src/main/dotcode.c:214
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "symbol '%s' ist zu lang"
 
-#: src/main/dotcode.c:161
+#: src/main/dotcode.c:162
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 "'name' muss entweder Zeichenkette der Länge 1 oder native Symbolreferenz sein"
 
-#: src/main/dotcode.c:200 src/main/dotcode.c:825
+#: src/main/dotcode.c:201 src/main/dotcode.c:798
 msgid "too many arguments in foreign function call"
 msgstr "zu viele Argumente im externen Funktionsaufruf"
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:243
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s Symbolname \"%s\" nicht in der DLL für Paket \"%s\""
 
-#: src/main/dotcode.c:246
+#: src/main/dotcode.c:247
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s Symbolname \"%s\" nicht in Ladeliste"
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:300
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2723,133 +2723,133 @@ msgstr ""
 "expliziter Wunsch Argumente im Aufruf von '%s' nicht zu duplizieren, aber "
 "Argument %d ist von falschem Typ (%d != %d)"
 
-#: src/main/dotcode.c:334
+#: src/main/dotcode.c:324
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "NAs in externem Funktionsaufruf (arg %d)"
 
-#: src/main/dotcode.c:348
+#: src/main/dotcode.c:337
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "NA/NaN/Inf in externem Funktionsaufruf (arg %d)"
 
-#: src/main/dotcode.c:370
+#: src/main/dotcode.c:354
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "komplexes NA/NaN/Inf in externem Funktionsaufruf (arg %d)"
 
-#: src/main/dotcode.c:380
+#: src/main/dotcode.c:363
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "Charakter Variablen müssen in .C/.Fortran dupliziert werden"
 
-#: src/main/dotcode.c:385
+#: src/main/dotcode.c:368
 msgid "only first string in char vector used in .Fortran"
 msgstr "nur erste Zeichenkette in Charaktervektor in .Fortran benutzt"
 
-#: src/main/dotcode.c:398 src/main/dotcode.c:525
+#: src/main/dotcode.c:380 src/main/dotcode.c:501
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "nicht unterstützte Kodierung '%s'"
 
-#: src/main/dotcode.c:414
+#: src/main/dotcode.c:396
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "Konvertierungsproblem bei der Rekodierung nach '%s'"
 
-#: src/main/dotcode.c:432
+#: src/main/dotcode.c:413
 msgid "lists must be duplicated in .C"
 msgstr "Listen müssen in .C dubliziert werden"
 
-#: src/main/dotcode.c:442 src/main/dotcode.c:454
+#: src/main/dotcode.c:421 src/main/dotcode.c:430
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "ungültiger Modus zur Übergabe nach Fortran (Arg. %d)"
 
-#: src/main/dotcode.c:540
+#: src/main/dotcode.c:516
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "Konvertierungsproblem bei der Rekodierung von '%s'"
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:579
 msgid "NAOK used more than once"
 msgstr "NAOK mehr als einmal benutzt"
 
-#: src/main/dotcode.c:610
+#: src/main/dotcode.c:583
 msgid "DUP used more than once"
 msgstr "DUP mehr als einmal benutzt"
 
-#: src/main/dotcode.c:616
+#: src/main/dotcode.c:589
 msgid "DLL name is too long"
 msgstr "DLL Name ist zu lang"
 
-#: src/main/dotcode.c:619 src/main/dotcode.c:679 src/main/dotcode.c:685
+#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE mehr als einmal benutzt"
 
-#: src/main/dotcode.c:658
+#: src/main/dotcode.c:631
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE Argument muss eine einfache Zeichenkette sein"
 
-#: src/main/dotcode.c:664
+#: src/main/dotcode.c:637
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE Argument ist zu lang"
 
-#: src/main/dotcode.c:708 src/main/dotcode.c:716
+#: src/main/dotcode.c:681 src/main/dotcode.c:689
 msgid "ENCODING used more than once"
 msgstr "ENCODING mehr als einmal benutzt"
 
-#: src/main/dotcode.c:710 src/main/dotcode.c:718
+#: src/main/dotcode.c:683 src/main/dotcode.c:691
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING Argument muss eine einfache Zeichenkette sein"
 
-#: src/main/dotcode.c:735
+#: src/main/dotcode.c:708
 msgid "no arguments supplied"
 msgstr "keine Argumente angegeben"
 
-#: src/main/dotcode.c:736 src/main/seq.c:642
+#: src/main/dotcode.c:709 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "zu viele Argumente"
 
-#: src/main/dotcode.c:789 src/main/dotcode.c:832 src/main/dotcode.c:1660
+#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Falsche Anzahl von Argumenten (%d), erwarte %d für '%s'"
 
-#: src/main/dotcode.c:1489 src/main/dotcode.c:2292
+#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
 msgid "too many arguments, sorry"
 msgstr "zu viele Argumente, sorry"
 
-#: src/main/dotcode.c:1521 src/main/dotcode.c:1538
+#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
 msgid "Invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
-#: src/main/dotcode.c:1611
+#: src/main/dotcode.c:1584
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "NULL Wert für DLLInfoReference bei der Suche nach DLL"
 
-#: src/main/dotcode.c:1685
+#: src/main/dotcode.c:1659
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Falscher Argumenttyp %d beim Aufruf von %s"
 
-#: src/main/dotcode.c:2386
+#: src/main/dotcode.c:2357
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "Typ \"%s\" wird nicht unterstützt bei Aufrufen über Sprachgrenzen"
 
-#: src/main/dotcode.c:2398
+#: src/main/dotcode.c:2369
 msgid "invalid function in call_R"
 msgstr "ungültiger Funktionsaufruf in call_R"
 
-#: src/main/dotcode.c:2400
+#: src/main/dotcode.c:2371
 msgid "invalid argument count in call_R"
 msgstr "ungültige Argumentanzahl in call_R"
 
-#: src/main/dotcode.c:2402
+#: src/main/dotcode.c:2373
 msgid "invalid return value count in call_R"
 msgstr "ungültige Zahl von Rückgabewerten in call_R"
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2407
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "Mode '%s' wird in call_R nicht unterstützt"
@@ -3138,9 +3138,8 @@ msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x) muss ein Charaktervektor so lang wie x sein"
 
 #: src/main/envir.c:1575
-#, fuzzy
 msgid "'envir' argument must be an environment"
-msgstr "'env' Argument muss eine Umgebung sein"
+msgstr "'envir' Argument muss eine Umgebung sein"
 
 #: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
@@ -3358,9 +3357,9 @@ msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "Es gab %d Warnungen (Anzeige mit warnings())\n"
 
 #: src/main/errors.c:489
-#, fuzzy, c-format
+#, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
-msgstr "Es gab 50 oder mehr Warnungen (Anzeige der ersten 50 mit warnings())\n"
+msgstr "Es gab %d oder mehr Warnungen (Anzeige der ersten %d mit warnings())\n"
 
 #: src/main/errors.c:538
 msgid "Error during wrapup: "
@@ -4293,6 +4292,7 @@ msgstr "toplevel task callback gibt keinen logischen Wert zurück"
 #: src/main/mapply.c:45
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
+"Eingaben mit Länge 0 können nicht mit Eingaben anderer Länge gemischt werden"
 
 #: src/main/mapply.c:62
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
@@ -4466,9 +4466,8 @@ msgid "argument is not a valid model"
 msgstr "Argument ist kein gültiges Modell"
 
 #: src/main/model.c:764
-#, fuzzy
 msgid "'specials' must be NULL or a character vector"
-msgstr "'path' muss eine Charaktervektor sein"
+msgstr "'specials' muss NULL oder eine Charaktervektor sein"
 
 #: src/main/model.c:777
 msgid "'data' argument is of the wrong type"
@@ -4729,7 +4728,7 @@ msgstr "benutze 'is()' statt 'inherits()' für S4 Objekte"
 
 #: src/main/objects.c:987
 msgid "could not find correct environment; please report!"
-msgstr ""
+msgstr "konnte die richtige Umgebung nicht finden: bitte melden!"
 
 #: src/main/objects.c:1082
 #, c-format
@@ -5280,14 +5279,13 @@ msgid "nothing to link"
 msgstr "nichts zu linken"
 
 #: src/main/platform.c:628
-#, fuzzy
 msgid "symbolic links are not supported on this version of Windows"
-msgstr "symbolische Links auf dieser Plattform nicht unterstützt"
+msgstr "symbolische Links auf dieser Version von Windows nicht unterstützt"
 
 #: src/main/platform.c:647
-#, fuzzy, c-format
+#, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
-msgstr "kann '%s' nicht auf '%s' symlinken. Grund '%s'"
+msgstr "kann '%ls' nicht auf '%ls' symlinken. Grund '%s'"
 
 #: src/main/platform.c:667
 #, c-format
@@ -6964,7 +6962,7 @@ msgstr "Indizierung bei einem Nicht-Vektor"
 
 #: src/main/subset.c:235
 msgid "dimensions would exceed maximum size of array"
-msgstr ""
+msgstr "Dimensionen würden die maximale Arraygröße überschreiten"
 
 #: src/main/subset.c:278 src/main/subset.c:307
 msgid "matrix subscripting not handled for this type"

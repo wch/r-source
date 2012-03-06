@@ -1,14 +1,14 @@
 # Translation of src/library/base/R-base.pot to German
-# Copyright (C) 2005-2011 The R Foundation
+# Copyright (C) 2005-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2011.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2012-01-13 11:23\n"
-"PO-Revision-Date: 2011-10-07 15:33+0200\n"
+"PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: \n"
@@ -788,7 +788,7 @@ msgid "'object' must be a list"
 msgstr "'object' muss eine Liste sein"
 
 msgid "'keep.source' is deprecated and will be ignored"
-msgstr ""
+msgstr "'keep.source' ist veraltet und wird ignoriert"
 
 msgid "package %s has not been installed properly"
 msgstr "Paket '%s' wurde nicht korrekt installiert"
@@ -863,7 +863,6 @@ msgstr "Paket %s hat keinen Namensraum und sollte neu installiert werden"
 msgid "package %s already present in search()"
 msgstr "Paket %s bereits in search()"
 
-#, fuzzy
 msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION' hat 'Encoding' Feld und Re-Kodieren ist nicht möglich"
 
@@ -982,7 +981,7 @@ msgid "Use of save versions prior to 2 is deprecated"
 msgstr "Sicherungen älter als Version 2 sind veraltet"
 
 msgid "nothing specified to be save()d"
-msgstr ""
+msgstr "keine Argumente für save() angegeben"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' muss nicht-leere Zeichenkette sein"
@@ -1155,11 +1154,15 @@ msgstr ""
 
 msgid "No function found corresponding to methods exports from %s for: %s"
 msgstr ""
+"Keine korrespondierende Funktion zum Methodenexport aus %s gefunden\n"
+"für : %s"
 
 msgid ""
 "Functions for exporting methods must have been made generic, explicitly or "
 "implicitly; not true when loading %s for %s"
 msgstr ""
+"Funktionen für Exportmethoden müssen generisch gemacht werden,\n"
+"explizit oder implizit; stimmt nicht wenn %s für %s geladen wird"
 
 msgid "in %s methods for export not found: %s"
 msgstr "in %s Methoden für den Export nicht gefunden: %s"
@@ -1215,7 +1218,7 @@ msgstr ""
 "selbst"
 
 msgid "No methods found in \"%s\" for requests: %s"
-msgstr ""
+msgstr "Keine Methoden in \"%s\" gefunden für Anforderungen: %s"
 
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "verlangte Methoden nicht gefunden in Umgebung/Paket %s: %s"
@@ -1224,6 +1227,8 @@ msgid ""
 "No generic function found corresponding to requested imported methods for "
 "\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
+"Keine generische Funktion, die mit der angeforderten Importmethode für\n"
+"\"%s\" aus Paket \"%s\" korrespondiert, gefunden (Fehler im Exportformat?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "kann keine Exporte zu versiegeltem Namensraum hinzufügen"
@@ -1354,9 +1359,8 @@ msgstr "Argument 'length.out' muss Länge 1 haben"
 msgid "first element used of 'length.out' argument"
 msgstr "erstes Element von 'length.out' Argument benutzt"
 
-#, fuzzy
 msgid "extra argument(s) %s will be disregarded"
-msgstr "drop Argument wird ignoriert"
+msgstr "zusätzliche(s) Argument(e) %s wird/werden verworfen"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "ungültiges (to - from)/by in seq(.)"
@@ -1634,16 +1638,14 @@ msgstr "'stderr' muss Länge 1 haben"
 msgid "'which' was not found on this platform"
 msgstr "'which' auf dieser Plattform nicht gefunden"
 
-#, fuzzy
 msgid "fewer 'from' files than 'to' files"
-msgstr "mehr 'from' Dateien als 'to' Dateien"
+msgstr "weniger 'from' Dateien als 'to' Dateien"
 
 msgid "link '%s' already exists"
-msgstr ""
+msgstr "link '%s' exisitiert bereits"
 
-#, fuzzy
 msgid "failed to create directory for link '%s"
-msgstr "Konnte Metadatenobjekt für \"%s\" nicht finden"
+msgstr "konnte Verzeichnis für link %s nicht anlegen"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' muss TRUE oder FALSE sein"
@@ -1687,7 +1689,6 @@ msgstr "Punkte"
 msgid "have been removed from the search path"
 msgstr "sind aus dem  Suchpfad entfernt worden"
 
-#, fuzzy
 msgid "cannot find namespace environment"
 msgstr "kann keine Namensraum-Umgebung finden"
 

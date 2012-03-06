@@ -1,13 +1,13 @@
 # Translation of src/library/graphics/po/R-grid.pot to German.
-# Copyright (C) 2005-2011 The R Foundation
+# Copyright (C) 2005-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-11-23 13:45\n"
-"PO-Revision-Date: 2011-10-07 15:47+0200\n"
+"PO-Revision-Date: 2012-03-05 22:01+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -156,9 +156,8 @@ msgstr "ungültiger Wert für 'ask'"
 msgid "Invalid object inserted on the display list"
 msgstr "unzulässiges Objekt in die Displayliste eingefügt"
 
-#, fuzzy
 msgid "Invalid modification of the display list"
-msgstr "unzulässiges Element in der Display-Liste"
+msgstr "Unzulässige Modifikation der Display-Liste"
 
 msgid "Invalid 'grob' argument"
 msgstr "unzulässiges 'grob' argument"
@@ -359,10 +358,10 @@ msgid "shape must be between -1 and 1"
 msgstr "shape muss zwischen -1 und 1 liegen"
 
 msgid "Must have exactly 4 control points"
-msgstr ""
+msgstr "Muss exakt 4 Kontrollpunkte haben"
 
 msgid "Must have exactly 4 control points per Bezier curve"
-msgstr ""
+msgstr "Muss je Bezier-Kurve exakt 4 Kontrollpunkte haben"
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y' und 'r' müssen Einheiten sein"

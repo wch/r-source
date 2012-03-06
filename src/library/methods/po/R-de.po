@@ -1,13 +1,13 @@
 # Translation of src/library/methods/po/R-methods.pot to German
-# Copyright (C) 2005-2011 The R Foundation
+# Copyright (C) 2005-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2012-01-23 08:16\n"
-"PO-Revision-Date: 2011-10-12 13:29+0200\n"
+"PO-Revision-Date: 2012-03-05 22:07+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -153,13 +153,12 @@ msgstr ""
 "\"%s\" ist eine primitive Funktion; es können Methoden definiert werden, die "
 "generische Funktion ist jedoch implizit und kann nicht geändert werden"
 
-#, fuzzy
 msgid ""
 "if the 'def' argument is supplied, it must be a function that calls "
 "standardGeneric(\"%s\") or is the default"
 msgstr ""
-"wenn das 'def' Argument angegeben wird, muss es eine Funktion sein, die "
-"standardGeneric(\"%s\") für den Methodendispatch aufruft"
+"wenn das 'def' Argument angegeben wird, muss es eine Funktion sein,\n"
+"die standardGeneric(\"%s\") aufruft oder der default ist"
 
 msgid ""
 "must supply a function skeleton for %s, explicitly or via an existing "
@@ -601,9 +600,8 @@ msgstr "%d: Ziel \"%s\": gewählt \"%s\" (andere: %s)"
 msgid "Notes: %s."
 msgstr "Bemerkung: %s."
 
-#, fuzzy
 msgid "Class generator function for class \"%s\" from package \"%s\""
-msgstr "Erzeuge generische Funktion für %s aus Paket %s in %s"
+msgstr "Klassenerzeuger Funktion für Klasse \"%s\" aus Paket \"%s\""
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -1241,11 +1239,10 @@ msgstr ""
 msgid "No package name supplied and no class definition found for %s"
 msgstr "Kein Name angegeben und keine Klassendefinition für %s gefunden"
 
-#, fuzzy
 msgid "argument classDef must be a class definition or the name of a class"
 msgstr ""
-"Argument S4Class muss eine Klassendefinition sein; bekam ein Objekt aus "
-"Klasse %s"
+"Argument classdef muss eine Klassendefinition oder der Name einer\n"
+"Klasse sein"
 
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
@@ -1671,13 +1668,12 @@ msgstr "\"%s\" ist keine Referenzklasse"
 msgid "\"%s\" is not a field in class %s"
 msgstr "\"%s\" ist kein Feld in Klasse %s"
 
-#, fuzzy
 msgid ""
 "Unnamed arguments to $new() must be objects from a reference class; got an "
 "object of class \"%s\""
 msgstr ""
-"das Argument %s muss NULL oder eine generisches Funktionsobjekt sein; bekam "
-"Objekt der Klasse %s"
+"Unbenannte Argumente für $new() müssen Objekte einer Referenzklasse\n"
+"sein; bekan ein Objekt der Klasse \"%s\""
 
 msgid "\"%s\" is not a valid field or method name for this class"
 msgstr ""
@@ -1854,12 +1850,12 @@ msgid "Arguments must all be character string names of fields"
 msgstr "Die Argumente müssen alle Feldnamen als Zeichenketten sein"
 
 msgid "Field \"%s\" is already locked"
-msgstr ""
+msgstr "Feld \"%s\" ist bereits gesichert"
 
 msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
 msgstr ""
 "Feld \"%s\" der Klasse %s hat eine nicht-standard Bindung und kann\n"
-"nicht abgeschlossen werden."
+"nicht gesichert werden."
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

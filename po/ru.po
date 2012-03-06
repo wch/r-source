@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-05 08:01+0000\n"
+"POT-Creation-Date: 2012-03-06 15:33+0000\n"
 "PO-Revision-Date: 2011-10-18 19:12-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -167,8 +167,8 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:739
-#: src/main/dotcode.c:743 src/main/dotcode.c:748 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
+#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -292,7 +292,7 @@ msgstr "неправильная временная метка"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:198 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -754,7 +754,7 @@ msgstr ""
 msgid "must pass package name or DllInfo reference"
 msgstr "должен передать имя пакета или ссылку DllInfo"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:129
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "Нереализованный тип %d у createRSymbolObject"
@@ -1655,8 +1655,8 @@ msgstr "%s() применен к не-списку/вектору типа '%s'"
 msgid "default method not implemented for type '%s'"
 msgstr "метод по умолчанию для типа '%s' не сделан"
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:773 src/main/dotcode.c:816
-#: src/main/dotcode.c:1639
+#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
+#: src/main/dotcode.c:1612
 msgid "'name' is missing"
 msgstr "'name' отсутствует"
 
@@ -2673,36 +2673,36 @@ msgstr "недостаточно памяти для размещения уст
 msgid "Hit <Return> to see next plot: "
 msgstr "Нажмите <Ввод>, чтобы увидеть следующий график:"
 
-#: src/main/dotcode.c:108 src/main/dotcode.c:138
+#: src/main/dotcode.c:109 src/main/dotcode.c:139
 msgid "NULL value passed as symbol address"
 msgstr "NULL-значение передано как символический адрес"
 
-#: src/main/dotcode.c:143 src/main/dotcode.c:213
+#: src/main/dotcode.c:144 src/main/dotcode.c:214
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "символ '%s' слишком длинен"
 
-#: src/main/dotcode.c:161
+#: src/main/dotcode.c:162
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 "'имя' должно быть строкой (единичной длины) или естественной символьной "
 "ссылкой"
 
-#: src/main/dotcode.c:200 src/main/dotcode.c:825
+#: src/main/dotcode.c:201 src/main/dotcode.c:798
 msgid "too many arguments in foreign function call"
 msgstr "слишком много аргументов при вызове внешней функции"
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:243
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s имя символа \"%s\" отсутствует в DLL пакета \"%s\""
 
-#: src/main/dotcode.c:246
+#: src/main/dotcode.c:247
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s имя символа \"%s\" отсутствует в таблице загрузки"
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:300
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2711,133 +2711,133 @@ msgstr ""
 "явный запрос не дублировать аргументы при вызове '%s', однако аргумент %d "
 "неправильного типа (%d != %d)"
 
-#: src/main/dotcode.c:334
+#: src/main/dotcode.c:324
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "NA при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:348
+#: src/main/dotcode.c:337
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "NA/NaN/Inf при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:370
+#: src/main/dotcode.c:354
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "комплексные NA/NaN/Inf при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:380
+#: src/main/dotcode.c:363
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "текстовые переменные должны быть дублированы в  .C/.Fortran"
 
-#: src/main/dotcode.c:385
+#: src/main/dotcode.c:368
 msgid "only first string in char vector used in .Fortran"
 msgstr "только первая строка текстового вектора использована в .Fortran"
 
-#: src/main/dotcode.c:398 src/main/dotcode.c:525
+#: src/main/dotcode.c:380 src/main/dotcode.c:501
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "не поддерживаемая кодировка '%s'"
 
-#: src/main/dotcode.c:414
+#: src/main/dotcode.c:396
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "проблема конвертации при перекодировке '%s'"
 
-#: src/main/dotcode.c:432
+#: src/main/dotcode.c:413
 msgid "lists must be duplicated in .C"
 msgstr "списки должны быть дублированы в .C"
 
-#: src/main/dotcode.c:442 src/main/dotcode.c:454
+#: src/main/dotcode.c:421 src/main/dotcode.c:430
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:540
+#: src/main/dotcode.c:516
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "проблема конвертации при перекодировке из '%s'"
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:579
 msgid "NAOK used more than once"
 msgstr "NAOK использован более одного раза"
 
-#: src/main/dotcode.c:610
+#: src/main/dotcode.c:583
 msgid "DUP used more than once"
 msgstr "DUP использован более одного раза"
 
-#: src/main/dotcode.c:616
+#: src/main/dotcode.c:589
 msgid "DLL name is too long"
 msgstr "имя DLL слишком длинное"
 
-#: src/main/dotcode.c:619 src/main/dotcode.c:679 src/main/dotcode.c:685
+#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE использован более одного раза"
 
-#: src/main/dotcode.c:658
+#: src/main/dotcode.c:631
 msgid "PACKAGE argument must be a single character string"
 msgstr "аргумент PACKAGE должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:664
+#: src/main/dotcode.c:637
 msgid "PACKAGE argument is too long"
 msgstr "аргумент PACKAGE слишком длинный"
 
-#: src/main/dotcode.c:708 src/main/dotcode.c:716
+#: src/main/dotcode.c:681 src/main/dotcode.c:689
 msgid "ENCODING used more than once"
 msgstr "ENCODING использована больше одного раза"
 
-#: src/main/dotcode.c:710 src/main/dotcode.c:718
+#: src/main/dotcode.c:683 src/main/dotcode.c:691
 msgid "ENCODING argument must be a single character string"
 msgstr "аргумент ENCODING должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:735
+#: src/main/dotcode.c:708
 msgid "no arguments supplied"
 msgstr "не заданы аргументы"
 
-#: src/main/dotcode.c:736 src/main/seq.c:642
+#: src/main/dotcode.c:709 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
-#: src/main/dotcode.c:789 src/main/dotcode.c:832 src/main/dotcode.c:1660
+#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Неправильное количество аргументов (%d), ожидается %d для '%s' "
 
-#: src/main/dotcode.c:1489 src/main/dotcode.c:2292
+#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
-#: src/main/dotcode.c:1521 src/main/dotcode.c:1538
+#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
 msgid "Invalid graphics state"
 msgstr "Неправильное графическое состояние"
 
-#: src/main/dotcode.c:1611
+#: src/main/dotcode.c:1584
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "значение NULL для DLLInfoReference во время поиска DLL"
 
-#: src/main/dotcode.c:1685
+#: src/main/dotcode.c:1659
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Неправильный тип аргумента %d при вызове %s"
 
-#: src/main/dotcode.c:2386
+#: src/main/dotcode.c:2357
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "тип \"%s\" не поддерживается при межязыковых вызовах"
 
-#: src/main/dotcode.c:2398
+#: src/main/dotcode.c:2369
 msgid "invalid function in call_R"
 msgstr "неправильная функция в call_R"
 
-#: src/main/dotcode.c:2400
+#: src/main/dotcode.c:2371
 msgid "invalid argument count in call_R"
 msgstr "неправильный счет аргументов в call_R"
 
-#: src/main/dotcode.c:2402
+#: src/main/dotcode.c:2373
 msgid "invalid return value count in call_R"
 msgstr "неправильный счет возвращаемого значения в call_R"
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2407
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "режим '%s' не поддерживается в call_R"

@@ -1,14 +1,14 @@
 # Translation of src/library/utils/po/R-utils.pot to German.
-# Copyright (C) 2008-2011 The R Foundation
+# Copyright (C) 2008-2012 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2012-02-12 08:59\n"
-"PO-Revision-Date: 2011-10-13 16:25+0200\n"
+"PO-Revision-Date: 2012-03-06 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -80,7 +80,7 @@ msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
 
 msgid "the output file '%s' has disappeared"
-msgstr ""
+msgstr "Die Ausgabedatei '%s' ist verschwunden"
 
 msgid "invalid value for %s : %s"
 msgstr "unzulässiger Wert für %s : %s"
@@ -142,34 +142,29 @@ msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
 msgstr ""
-"Nicht alle Argumente haben dieselbe Länge. Die folgenden werden recycled:\n"
+"Nicht alle Argumente haben dieselbe Länge. Die Folgenden werden recycled:\n"
 "%s"
 
 msgid ","
 msgstr ","
 
-#, fuzzy
 msgid "Use either %s or %s/%s but not both."
-msgstr "Nutze entweder 'family' oder 'last' aber nicht beide."
+msgstr "Nutze entweder %s oder %s/%s, aber nicht beide."
 
-#, fuzzy
 msgid "It is recommended to use %s instead of %s."
-msgstr "Es ist empfohlen 'given' anstelle von 'first' zu nutzen."
+msgstr "Es ist empfohlen %s anstelle von %s zu nutzen."
 
-#, fuzzy
 msgid "Use either %s or %s but not both."
-msgstr "Nutze entweder 'family' oder 'last' aber nicht beide."
+msgstr "Nutze entweder %s oder %s aber nicht beide."
 
 msgid "Invalid role specification(s): %s."
 msgstr "unzulässige Spezifikation(en) für role: %s."
 
-#, fuzzy
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
-msgstr "Es ist empfohlen 'given' anstelle von 'first' zu nutzen."
+msgstr "Es ist empfohlen %s/%s anstelle von %s/%s/%s zu nutzen."
 
-#, fuzzy
 msgid "method is just applicable to %s objects"
-msgstr "Methode kann nur auf Objekte vom Typ 'person' angewendet werden"
+msgstr "Methode kann gerade auf %s Objekte angewendet werden"
 
 msgid "all arguments must be of class \"person\""
 msgstr "Alle Argumente müssen zur Klasse \"person\" gehören"
@@ -180,21 +175,17 @@ msgstr "mindestens ein feld muss angegeben werden"
 msgid "all fields have to be named"
 msgstr "alle Felder müssen Namen haben"
 
-#, fuzzy
 msgid "%s has to be one of %s"
-msgstr "'bibtype' muss aus Folgenden sein"
+msgstr "%s muss einer aus %s sein"
 
-#, fuzzy
 msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr "' muss die Felder korrekt spezifizieren:"
+msgstr "Ein bibentry vom Typ %s muss das/die Feld(er) %s korrekt spezifizieren."
 
-#, fuzzy
 msgid "%s should be one of %s"
-msgstr "'style' muss einer von %s sein"
+msgstr "%s sollte einer von %s sein"
 
-#, fuzzy
 msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "' muss folgende Felder spezifizieren:"
+msgstr "Ein bibentry vom Typ %s muss das/die Feld(er) %s spezifizieren."
 
 msgid "package %s not found"
 msgstr "Paket %s nicht gefunden"
@@ -349,19 +340,17 @@ msgstr "zu viele Listenpunke (höchstens 26!)"
 msgid "too many list items (at most up to number 3899)"
 msgstr "zu viele Listenelemente (höchstens 3899!)"
 
-#, fuzzy
 msgid "no vector columns were selected"
-msgstr "keine Ereignisse aufgezeichnet"
+msgstr "keine Vektorspalten ausgewählt"
 
 msgid "non-vector columns will be ignored"
-msgstr ""
+msgstr "nicht-vector Spalten werden ignoriert"
 
-#, fuzzy
 msgid "at least one vector element is required"
-msgstr "mindestens ein feld muss angegeben werden"
+msgstr "mindestens ein Vektorelement ist nötig"
 
 msgid "non-vector elements will be ignored"
-msgstr ""
+msgstr "nicht-vektor Elemente werden ignoriert"
 
 msgid "'form' must be a two-sided formula"
 msgstr "'form' muss eine zweiseitige Formel sein"
@@ -525,10 +514,9 @@ msgstr "Metadaten für Paket '%s' sind korrumpiert"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "DESCRIPTION von Paket '%s' ist korrumpiert"
 
-#, fuzzy
 msgid ""
 "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
-msgstr "'DESCRIPTION' hat Feld 'Encoding' und rekodieren ist nicht möglich"
+msgstr "Die 'DESCRIPTION' Datei hat Feld 'Encoding' und rekodieren ist nicht möglich"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTIN von Paket '%s' fehlt oder zerstört"
@@ -619,11 +607,10 @@ msgid "Creating DESCRIPTION ..."
 msgstr "Erzeuge DESCRIPTION ..."
 
 msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr ""
+msgstr "Ab R-2.14.0 bekommt jedes Paket einen NAMESPACE"
 
-#, fuzzy
 msgid "Argument 'namespace' is deprecated."
-msgstr "Argument 'help.db' ist veraltet"
+msgstr "Argument 'namespace' ist veraltet"
 
 msgid "Creating NAMESPACE ..."
 msgstr "Erzeuge NAMESPACE ..."
@@ -776,13 +763,17 @@ msgstr "kann nicht erzeugen"
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
 msgstr ""
+"type == \"both\" kann nur unter Windows oder einem CRAN-build für MacOS\n"
+"X benutzt werden"
 
 msgid ""
 "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 msgstr ""
+"type == \"both\" kann nicht benutzt werden, wenn 'available' oder\n"
+"'contriburl' angegeben wurde"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
-msgstr ""
+msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"
 
 msgid "inferring 'repos = NULL' from the file name"
 msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
@@ -816,12 +807,11 @@ msgstr ""
 "Installation eines oder mehrer Pakete schlug fehl,\n"
 " vermutlich %s"
 
-#, fuzzy
 msgid ""
 "The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
-"Die heruntergeladenen Pakete sind in \n"
+"Die heruntergeladenen Quellpakete sind in \n"
 "\t%s"
 
 msgid "no object named '%s' to show"
@@ -849,13 +839,10 @@ msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
 "keine Doku des Typs %s zum Thema %s (oder Fehler in der Hilfeverarbeitung)"
 
-#, fuzzy
 msgid ""
 "the object of class %s in the function call %s could not be used as a "
 "documentation topic"
-msgstr ""
-"das Objekt der Klasse \"%s\" im Funktionsaufruf %s konnte nicht als Doku-"
-"Thema benutzt werden"
+msgstr "das Objekt der Klasse %s im Funktionsaufruf %s konnte nicht als Doku-Thema benutzt werden"
 
 msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
@@ -1028,9 +1015,8 @@ msgstr "Profil einthält keine Speicherinformation"
 msgid "no events were recorded"
 msgstr "keine Ereignisse aufgezeichnet"
 
-#, fuzzy
 msgid "invalid 'tarfile' argument"
-msgstr "unzulässiges 'data' Argument"
+msgstr "unzulässiges 'tarfile' Argument"
 
 msgid "'compressed' must be logical or character"
 msgstr "'commpressed' muss Boole'sch oder ein Charakter sein"
@@ -1173,12 +1159,11 @@ msgstr "kann temporäre Installation %s nicht nach %s verschieben"
 msgid "cannot remove prior installation of package"
 msgstr "kann alte Installation des Pakets nicht entfernen"
 
-#, fuzzy
 msgid ""
 "The downloaded binary packages are in\n"
 "\t%s"
 msgstr ""
-"Die heruntergeladenen Pakete sind in \n"
+"Die heruntergeladenen Binärpakete sind in \n"
 "\t%s"
 
 msgid "'memory.size()' is Windows-specific"
@@ -1246,11 +1231,10 @@ msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] "'lib' Element %s ist keine schreibbares Verzeichnis"
 msgstr[1] "'lib' Elemente %s sind keine schreibbaren Verzeichnisse"
 
-#, fuzzy
 msgid "installing the source package %s"
 msgid_plural "installing the source packages %s"
-msgstr[0] "installiere auch Abhängigkeit %s"
-msgstr[1] "installiere auch Abhängigkeiten %s"
+msgstr[0] "installiere Quellpaket %s"
+msgstr[1] "installiere Quellpakete %s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
