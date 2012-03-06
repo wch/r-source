@@ -114,16 +114,16 @@
             "      --byte-compile	byte-compile R code",
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
+            "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
-            "      --dsym               (Mac OS X only) generate dSYM directory",
+            "      --dsym            (Mac OS X only) generate dSYM directory",
             "\nand on Windows only",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
-            "      --merge-multiarch	bi-arch by merging from a tarball",
             "      --compile-both	compile both architectures on 32-bit Windows",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
@@ -1297,8 +1297,7 @@
         } else if (a == "--no-clean-on-error") {
             clean_on_error  <- FALSE
         } else if (a == "--merge-multiarch") {
-            if (WINDOWS) merge <- TRUE
-            else warning("--merge-multiarch is Windows-only", call.=FALSE)
+            merge <- TRUE
         } else if (a == "--compact-docs") {
             compact_docs <- TRUE
         } else if (a == "--with-keep.source") {
@@ -1322,37 +1321,70 @@
     if (merge) {
         if (length(pkgs) != 1L || !file_test("-f", pkgs))
             stop("ERROR: --merge-multiarch applies only to a single tarball",
-                 call.=FALSE)
-        f  <- dir(file.path(R.home(), "bin"))
-        archs <- f[f %in% c("i386", "x64")]
-        if (length(archs) < 2L)
-            stop("ERROR: --merge-multiarch can only be used on i386/x64 installations",
-                 call.=FALSE)
-        args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
-        cmd <- paste(file.path(R.home(), "bin", "i386", "Rcmd.exe"),
-                     "INSTALL", "--no-multiarch")
-        allargs <-  paste(args, collapse=" ")
-        cmd1 <- paste(cmd, allargs)
-        if (debug) message("about to run ", cmd1, domain = NA)
-        message("\n", "install for i386", "\n", domain=NA)
-        ## this will report '* DONE (foo)' if it works, which
-        ## R CMD check treats as an indication of success.
-        ## so use a backdoor to suppress it.
-        Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
-        res <- system(cmd1)
-        if(res == 0) {
-            cmd <- paste(file.path(R.home(), "bin", "x64", "Rcmd.exe"),
+                 call. = FALSE)
+        if (WINDOWS) {
+            f  <- dir(file.path(R.home(), "bin"))
+            archs <- f[f %in% c("i386", "x64")]
+            if (length(archs) < 2L)
+                stop("ERROR: --merge-multiarch can only be used on i386/x64 installations",
+                     call.=FALSE)
+            args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+            cmd <- paste(file.path(R.home(), "bin", "i386", "Rcmd.exe"),
                          "INSTALL", "--no-multiarch")
-            cmd1 <- paste(cmd, "--libs-only", if (zip_up) "--build", allargs)
+            allargs <-  paste(args, collapse=" ")
+            cmd1 <- paste(cmd, allargs)
             if (debug) message("about to run ", cmd1, domain = NA)
-            message("\n", "add DLL for x64", "\n", domain=NA)
-            Sys.unsetenv("_R_INSTALL_NO_DONE_")
+            message("\n", "install for i386", "\n", domain=NA)
+            ## this will report '* DONE (foo)' if it works, which
+            ## R CMD check treats as an indication of success.
+            ## so use a backdoor to suppress it.
+            Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
             res <- system(cmd1)
+            if(res == 0) {
+                cmd <- paste(file.path(R.home(), "bin", "x64", "Rcmd.exe"),
+                             "INSTALL", "--no-multiarch")
+                cmd1 <- paste(cmd, "--libs-only", if (zip_up) "--build", allargs)
+                if (debug) message("about to run ", cmd1, domain = NA)
+                message("\n", "add DLL for x64", "\n", domain=NA)
+                Sys.unsetenv("_R_INSTALL_NO_DONE_")
+                res <- system(cmd1)
+                if (res) do_exit_on_error()
+                do_cleanup()
+                on.exit()
+                return(invisible())
+            }
+        } else {
+            f  <- dir(file.path(R.home("bin"), "exec"))
+            if (length(f) > 1L) {
+                args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+                ## this will report '* DONE (foo)' if it works, which
+                ## R CMD check treats as an indication of success.
+                ## so use a backdoor to suppress it.
+                Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
+                last <- f[length(f)]
+                for (arch in f) {
+                    cmd <- c(file.path(R.home("bin"), "R"),
+                             "--arch", arch, "CMD", "INSTALL",
+                             args, "--no-multiarch")
+                    if (arch != f[1L]) cmd <- c(cmd, "--libs-only")
+                    if (arch == last) {
+                        Sys.unsetenv("_R_INSTALL_NO_DONE_")
+                        if(tar_up) cmd <- c(cmd, "--build")
+                    }
+                    cmd <- paste(cmd, collapse = " ")
+                    if (debug) message("about to run ", cmd, domain = NA)
+                    message("\n", "install for ", arch, "\n", domain = NA)
+                    res <- system(cmd)
+                    if(res) break
+                }
+                if (res) do_exit_on_error()
+                do_cleanup()
+                on.exit()
+                return(invisible())
+           } else {
+                message("only one architecture so ignoring '--merge-multiarch'")
+            }
         }
-        if (res) do_exit_on_error()
-        do_cleanup()
-        on.exit()
-        return(invisible())
     }
 
     ## now unpack tarballs and do some basic checks
@@ -1446,7 +1478,6 @@
              sQuote(lib), call. = FALSE)
 
     if (libs_only) {
-        tar_up <- FALSE
 	install_R <- FALSE
 	install_data <- FALSE
 	install_demo <- FALSE
@@ -1455,8 +1486,7 @@
 	install_help <- FALSE
     }
     more_than_libs <- !libs_only
-    ## probably desirable everywhere, but we know it works on Windows
-    if(!WINDOWS && !more_than_libs) test_load <- FALSE
+    ## if(!WINDOWS && !more_than_libs) test_load <- FALSE
 
 
     mk_lockdir <- function(lockdir)
