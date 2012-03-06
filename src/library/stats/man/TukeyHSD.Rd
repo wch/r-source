@@ -1,6 +1,6 @@
 % File src/library/stats/man/TukeyHSD.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -16,7 +16,7 @@
   means of the levels of a factor with the specified family-wise
   probability of coverage.  The intervals are based on the Studentized
   range statistic, Tukey's \sQuote{Honest Significant Difference}
-  method.  There is a \code{plot} method.
+  method.
 }
 \usage{
 TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
@@ -50,7 +50,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   returned by this function are based on this Studentized range
   statistics.
 
-  Technically the intervals constructed in this way would only apply to
+  The intervals constructed in this way would only apply exactly to
   balanced designs where there are the same number of observations made
   at each level of the factor.  This function incorporates an adjustment
   for sample size that produces sensible intervals for mildly unbalanced
@@ -60,12 +60,18 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   a warning: if no terms are left this is a an error.
 }
 \value{
-  A list with one component for each term requested in \code{which}.
+  A list of class \code{c("multicomp", "TukeyHSD")},
+  with one component for each term requested in \code{which}.
   Each component is a matrix with columns \code{diff} giving the
   difference in the observed means, \code{lwr} giving the lower
   end point of the interval, \code{upr} giving the upper end point
   and \code{p adj} giving the p-value after adjustment for the multiple
-  comparisons. 
+  comparisons.
+
+  There are \code{print} and \code{plot} methods for class
+  \code{"TukeyHSD"}.  The \code{plot} method does not accept
+  \code{xlab}, \code{ylab} or \code{main} arguments and creates its own
+  values for each plot.
 }
 \references{
   Miller, R. G. (1981)

@@ -101,21 +101,21 @@ print.TukeyHSD <- function(x, digits=getOption("digits"), ...)
 plot.TukeyHSD <- function (x, ...)
 {
     for (i in seq_along(x)) {
-        xi <- x[[i]][, -4, drop=FALSE] # drop p-values
+        xi <- x[[i]][, -4, drop = FALSE] # drop p-values
         yvals <- nrow(xi):1
         dev.hold(); on.exit(dev.flush())
+        ## xlab, main are set below, so block them from ...
         plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), type = "n",
-             axes = FALSE, xlab = "", ylab = "", ...)
+             axes = FALSE, xlab = "", ylab = "", main = NULL, ...)
         axis(1, ...)
-        axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1L]],
-             srt = 0, ...)
+        axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1L]], srt = 0, ...)
         abline(h = yvals, lty = 1, lwd = 0.5, col = "lightgray")
         abline(v = 0, lty = 2, lwd = 0.5, ...)
         segments(xi[, "lwr"], yvals, xi[, "upr"], yvals, ...)
         segments(as.vector(xi), rep.int(yvals - 0.1, 3), as.vector(xi),
                  rep.int(yvals + 0.1, 3), ...)
-        title(main = paste(format(100 * attr(x, "conf.level"),
-              2), "% family-wise confidence level\n", sep = ""),
+        title(main = paste(format(100 * attr(x, "conf.level"), digits=2),
+                           "% family-wise confidence level\n", sep = ""),
               xlab = paste("Differences in mean levels of", names(x)[i]))
         box()
     }
