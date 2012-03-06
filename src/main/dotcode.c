@@ -318,7 +318,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case INTSXP:
 	n = LENGTH(s);
 	int *iptr = INTEGER(s);
-	if(!naok)
+	if (!naok)
 	    for (int i = 0 ; i < n ; i++)
 		if(iptr[i] == NA_INTEGER)
 		    error(_("NAs in foreign function call (arg %d)"), narg);
@@ -331,24 +331,24 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case REALSXP:
 	n = LENGTH(s);
 	double *rptr = REAL(s);
-	if(!naok)
+	if (!naok)
 	    for (int i = 0 ; i < n ; i++)
 		if(!R_FINITE(rptr[i]))
 		    error(_("NA/NaN/Inf in foreign function call (arg %d)"), narg);
-	if(asLogical(getAttrib(s, CSingSymbol)) == 1) {
+	if (asLogical(getAttrib(s, CSingSymbol)) == 1) {
 	    float *sptr = (float*) R_alloc(n, sizeof(float));
 	    for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 	    return (void*) sptr;
-	} else if(dup) {
-	    double *rptr = (double*) R_alloc(n, sizeof(double));
+	} else if (dup) {
+	    rptr = (double*) R_alloc(n, sizeof(double));
 	    for (int i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
-	    return (void*) rptr;
-	} else return (void*) rptr;
+	} 
+	return (void*) rptr;
 	break;
     case CPLXSXP:
 	n = LENGTH(s);
 	Rcomplex *zptr = COMPLEX(s);
-	if(!naok)
+	if (!naok)
 	    for (int i = 0 ; i < n ; i++)
 		if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
 		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
@@ -359,24 +359,24 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	return (void*) zptr;
 	break;
     case STRSXP:
-	if(!dup)
+	if (!dup)
 	    error(_("character variables must be duplicated in .C/.Fortran"));
 	n = LENGTH(s);
-	if(Fort) {
+	if (Fort) {
 	    const char *ss = translateChar(STRING_ELT(s, 0));
-	    if(n > 1)
+	    if (n > 1)
 		warning(_("only first string in char vector used in .Fortran"));
 	    char *fptr = (char*) R_alloc(max(255, strlen(ss)) + 1, sizeof(char));
 	    strcpy(fptr, ss);
 	    return (void*) fptr;
 	} else {
 	    char **cptr = (char**) R_alloc(n, sizeof(char*));
-	    if(strlen(encname)) {
+	    if (strlen(encname)) {
 		char *outbuf;
 		const char *inbuf;
 		size_t inb, outb, outb0, res;
 		void *obj = Riconv_open("", encname); /* (to, from) */
-		if(obj == (void *)-1)
+		if (obj == (void *)-1)
 		    error(_("unsupported encoding '%s'"), encname);
 		for (int i = 0 ; i < n ; i++) {
 		    inbuf = CHAR(STRING_ELT(s, i));
@@ -409,7 +409,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	}
 	break;
     case VECSXP:
-	if(!dup)
+	if (!dup)
 	    error(_("lists must be duplicated in .C"));
 	/* if (!dup) return (void*)VECTOR_PTR(s); ***** Dangerous to GC!!! */
 	n = length(s);
@@ -418,19 +418,16 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	return (void*) lptr;
 	break;
     case LISTSXP:
-	if(Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
+	if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
 	/* Warning : The following looks like it could bite ... */
-	if(!dup) return (void*)s;
+	if (!dup) return (void*) s;
 	n = length(s);
 	char **cptr = (char**) R_alloc(n, sizeof(char*));
-	for(int i = 0 ; i < n ; i++) {
-	    cptr[i] = (char*)s;
-	    s = CDR(s);
-	}
+	for(int i = 0 ; i < n ; i++, s = CDR(s)) cptr[i] = (char*) s;
 	return (void*) cptr;
 	break;
     default:
-	if(Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
+	if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
 	return (void*) s;
     }
 }
@@ -440,25 +437,25 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		       R_NativePrimitiveArgType type, char *encname)
 {
     Rbyte *rawptr;
-    int *iptr, n=length(arg);
+    int *iptr, n = length(arg);
     float *sptr;
     double *rptr;
     char **cptr, buf[256];
     Rcomplex *zptr;
-    SEXP *lptr, CSingSymbol = install("Csingle");
+    SEXP *lptr;
     int i;
     SEXP s, t;
 
     switch(type) {
     case RAWSXP:
 	s = allocVector(type, n);
-	rawptr = (Rbyte *)p;
+	rawptr = (Rbyte *) p;
 	for (i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
 	break;
     case LGLSXP:
 	s = allocVector(type, n);
 	iptr = (int*)p;
-	for(i = 0 ; i < n ; i++) {
+	for (i = 0 ; i < n ; i++) {
 	    int tmp =  iptr[i];
 	    LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
 	}
@@ -471,7 +468,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     case REALSXP:
     case SINGLESXP:
 	s = allocVector(REALSXP, n);
-	if(type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+	if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 	    sptr = (float*) p;
 	    for(i = 0 ; i < n ; i++) REAL(s)[i] = (double) sptr[i];
 	} else {
@@ -482,7 +479,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     case CPLXSXP:
 	s = allocVector(type, n);
 	zptr = (Rcomplex*)p;
-	for(i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
+	for (i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
 	break;
     case STRSXP:
 	if(Fort) {
@@ -500,7 +497,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		char *outbuf, *p;
 		size_t inb, outb, outb0, res;
 		void *obj = Riconv_open(encname, ""); /* (to, from) */
-		if(obj == (void *)(-1))
+		if (obj == (void *)(-1))
 		    error(_("unsupported encoding '%s'"), encname);
 		for (i = 0 ; i < n ; i++) {
 		    inbuf = cptr[i]; inb = strlen(inbuf);
@@ -523,7 +520,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		}
 		Riconv_close(obj);
 	    } else {
-		for(i = 0 ; i < n ; i++)
+		for (i = 0 ; i < n ; i++)
 		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 	    }
 	    UNPROTECT(1);
@@ -537,11 +534,8 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	break;
     case LISTSXP:
 	PROTECT(t = s = allocList(n));
-	lptr = (SEXP*)p;
-	for(i = 0 ; i < n ; i++) {
-	    SETCAR(t, lptr[i]);
-	    t = CDR(t);
-	}
+	lptr = (SEXP*) p;
+	for(i = 0 ; i < n ; i++, t = CDR(t)) SETCAR(t, lptr[i]);
 	UNPROTECT(1);
     default:
 	s = (SEXP)p;
