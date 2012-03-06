@@ -390,7 +390,11 @@
       (\PR{14827})
 
       \item Virtual classes (e.g., class unions) had \code{NULL} prototype
-        even if that was not a legal subclass.  See \code{?setClassUnion}.
+      even if that was not a legal subclass.  See \code{?setClassUnion}.
+	
+      \item The prototypes for \code{zdotc} and \code{zdotu} in
+      \file{R_ext/BLAS.h} have been changed for the more modern style
+      rather than that used by \command{f2c}.  (Patch by Berwin Turlach.)
     }
   }
 }

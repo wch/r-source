@@ -244,12 +244,19 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
     BLAS_extern void
     F77_NAME(zcopy)(int *n, Rcomplex *zx, int *incx,
 		    Rcomplex *zy, int *incy);
+
+    /* WARNING!  The next two return a value that may not be
+       compatible between C and Fortran, and even if it is, this might
+       not be the right translation to C.  Only use after
+       configure-testing with your compilers.
+     */
     BLAS_extern Rcomplex
-    F77_NAME(zdotc)(Rcomplex * ret_val, int *n,
+    F77_NAME(zdotc)(int *n,
 		    Rcomplex *zx, int *incx, Rcomplex *zy, int *incy);
     BLAS_extern Rcomplex
-    F77_NAME(zdotu)(Rcomplex * ret_val, int *n,
+    F77_NAME(zdotu)(int *n,
 		    Rcomplex *zx, int *incx, Rcomplex *zy, int *incy);
+
     BLAS_extern void
     F77_NAME(zdrot)(int *n, Rcomplex *zx, int *incx, Rcomplex *zy,
 		int *incy, double *c, double *s);
