@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2012-03-06 15:36+0000\n"
-"PO-Revision-Date: 2011-10-15 14:49+0100\n"
+"PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -1640,12 +1640,12 @@ msgstr ""
 #: src/main/coerce.c:1045
 #, c-format
 msgid "(list) object cannot be coerced to type '%s'"
-msgstr "l'objet (list) ne peut être couverti automatiquement en un type '%s'"
+msgstr "l'objet (list) ne peut être converti automatiquement en un type '%s'"
 
 #: src/main/coerce.c:1068
 #, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
-msgstr "l'objet (symbol) ne peut être couverti automatiquement en un type '%s'"
+msgstr "l'objet (symbol) ne peut être converti automatiquement en un type '%s'"
 
 #: src/main/coerce.c:1084 src/main/coerce.c:1396
 msgid "no method for coercing this S4 class to a vector"
@@ -3215,9 +3215,8 @@ msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x) doit être un vecteur de caractères de la même longueur que x"
 
 #: src/main/envir.c:1575
-#, fuzzy
 msgid "'envir' argument must be an environment"
-msgstr "l'argument 'env' doit être un environnement"
+msgstr "l'argument 'envir' doit être un environnement"
 
 #: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
@@ -3437,10 +3436,10 @@ msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "Il y a eu %d avis (utilisez warnings() pour les visionner)\n"
 
 #: src/main/errors.c:489
-#, fuzzy, c-format
+#, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
-"Il y a eu 50 avis ou plus (utilisez warnings() pour voir les 50 premiers)\n"
+"Il y a eu %d avis ou plus (utilisez warnings() pour voir les %d premiers)\n"
 
 #: src/main/errors.c:538
 msgid "Error during wrapup: "
@@ -4398,6 +4397,8 @@ msgstr "la tâche de niveau le plus haut n'a pas renvoyé une valeur logique"
 #: src/main/mapply.c:45
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
+"Des entrées de longueur nulle ne peuvent être mélangés avec celles de "
+"longueur non nulle"
 
 #: src/main/mapply.c:62
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
@@ -4570,9 +4571,8 @@ msgid "argument is not a valid model"
 msgstr "l'argument n'est pas un modèle correct"
 
 #: src/main/model.c:764
-#, fuzzy
 msgid "'specials' must be NULL or a character vector"
-msgstr "'path' doit être un vecteur de chaîne de caractères"
+msgstr "'specials' doit être NULL ou un vecteur de chaîne de caractères"
 
 #: src/main/model.c:777
 msgid "'data' argument is of the wrong type"
@@ -4838,6 +4838,7 @@ msgstr "utilisez 'is()' à la place de 'inherits()' pour des objets S4"
 #: src/main/objects.c:987
 msgid "could not find correct environment; please report!"
 msgstr ""
+"impossible de trouver un environnement correct ; Veuillez reporter ceci !"
 
 #: src/main/objects.c:1082
 #, c-format
@@ -5391,15 +5392,15 @@ msgid "nothing to link"
 msgstr "rien à lier"
 
 #: src/main/platform.c:628
-#, fuzzy
 msgid "symbolic links are not supported on this version of Windows"
-msgstr "les liens symboliques ne sont pas supportés sur cette architecture"
+msgstr ""
+"les liens symboliques ne sont pas supportés sur cette version de Windows"
 
 #: src/main/platform.c:647
-#, fuzzy, c-format
+#, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
 msgstr ""
-"impossible de créer un lien symbolique de '%s' vers '%s', à cause de '%s'"
+"impossible de créer un lien symbolique de '%ls' vers '%ls', à cause de '%s'"
 
 #: src/main/platform.c:667
 #, c-format
@@ -7108,7 +7109,7 @@ msgstr "indiçage d'un élément non vectoriel"
 
 #: src/main/subset.c:235
 msgid "dimensions would exceed maximum size of array"
-msgstr ""
+msgstr "les dimensions excèderaient la taille maximale du tableau"
 
 #: src/main/subset.c:278 src/main/subset.c:307
 msgid "matrix subscripting not handled for this type"
