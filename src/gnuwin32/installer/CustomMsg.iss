@@ -350,12 +350,33 @@ chs.Interneti=请指定标准或互联网2，然后再点击Next.
 chs.Internet0=标准
 chs.Internet1=互联网2
 
-
-ko.regentries=레지스트리 항목:
-ko.associate=R를 확장자 .RData에 관련 집니다
-ko.user=이용자를 위한 인스톨
-ko.custom=커스텀 인스톨
-
+ko.regentries=레지스트리 항목들:
+ko.associate=R을 .RData 파일들과 연결합니다
+ko.user=사용자 편의를 위한 쉬운 설치
+ko.custom=사용자 정의 고급 설치
+ko.adminprivilegesrequired=R 설치를 위해서 당신은 반드시 관리자로서 로그인을 해야합니다
+ko.adminexplanation=Note: R 전체설치를 위해서는 관리자 권한이 요구되는데, 그렇지 않은 것 같습니다. 만약, 이 설치를 계속 진행한다면, 아마도 .RData 파일을 R 시스템과 연결하지 못 할수있습니다. 따라서 당신은 반드시 쓰기 권한을 가지고 있는 디렉토리에 설치해야 합니다.
+ko.recordversion=레지스트리에 버전정보를 저장하세요
+ko.startupt=스타트업 옵션
+ko.startupq=스타트업 옵션을 조정하길 원하시나요?
+ko.startupi=yes 혹은 no 를 선택하신 뒤에 Next 를 눌러주세요
+ko.startup0=Yes (스타트업 조정)
+ko.startup1=No (기본값 사용)
+ko.MDIt=디스플레이 모드
+ko.MDIq=당신은 MDI 혹은 SMI 중 어떤 인터페이스를 선호하나요?
+ko.MDIi=MDI 혹은 SDI 중 하나를 선택하신 뒤 Next 를 눌러주세요
+ko.MDI0=MDI (하나의 전체윈도우창을 사용)
+ko.MDI1=SDI (여러개의 윈도우창들을 사용)
+ko.HelpStylet=도움말 스타일
+ko.HelpStyleq=어떤 형식의 도움말 기능을 당신은 선호하나요?
+ko.HelpStylei=일반 텍스트 기반의 도움말 혹은 HTML 기반의 도움말을 사용할 것인지 선택하신 뒤, Next 를 눌러주세요
+ko.HelpStyle0=일반 텍스트 기반
+ko.HelpStyle1=HTML 기반의 도움말
+ko.Internett=인터넷 접속
+ko.Internetq=인터넷 익스플로러 프락시 설정을 위해서 internet2.dll 을 사용하길 원하시나요?
+ko.Interneti=표준 혹은 Internet2 중 하나를 선택하신 후 Next 를 눌러주세요
+ko.Internet0=표준
+ko.Internet1=Internet2
 
 cht.regentries=登錄表項目:
 cht.associate=將資料檔副檔名 .R 關聯至 R
@@ -365,7 +386,6 @@ cht.adminprivilegesrequired=安裝 R 時您必須以管理者身分登入
 cht.adminexplanation=說明: R 的完整安裝需要系統管理權限，但是看起來並無法取得。如果您繼續進行此程序，您將無法安裝 DCOM 的支援，也無法將資料檔副檔名 .R 關聯至 R。安裝作業必須在您有寫入權限的目錄之中進行。
 cht.recordversion=在登錄表中儲存版本號碼
 
-; Russian is encoded in code page 1251
 
 ru.regentries=Записи в системном регистре:
 ru.associate=Связать R с файлами .RData
