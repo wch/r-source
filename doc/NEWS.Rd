@@ -9,9 +9,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{.C()} and \code{.Fortran()} duplicate a little
-      less: for example \code{.C("sym", z = double(n))} no longer
-      duplicates \code{z}.  (Suggested by a question of Terry Therneau.)
+      \item Placeholder.
     }
   }
 }

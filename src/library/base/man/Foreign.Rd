@@ -192,8 +192,7 @@
   \code{.C("Cfunction", input=x, output=numeric(10))}.
 
   In this case the \code{output} variable did not exist before the call
-  so it cannot cause trouble (and as from \R 2.16.0, duplication is not
-  done in that case anyway).  If the \code{input} variable is not
+  so it cannot cause trouble.  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
 
   Neither \code{.Call} nor \code{.External} copy their arguments.  You
@@ -201,9 +200,9 @@
   read-only.
 
   Note that if \code{DUP = TRUE} there are two copies involved, one when
-  the data from the argument is copied and the pointer to the data
+  the data from the argument is copied and the pointer to the copied data
   passed to the compiled code, and one when the return value is prepared
-  from the data.
+  from the data accessed by the compiled code.
 }
 
 \section{Fortran symbol names}{
