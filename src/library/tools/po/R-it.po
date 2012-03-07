@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-03-07 08:04\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -787,9 +787,6 @@ msgid "cannot create temporary directory"
 msgstr "impossibile creare directory '%s'"
 
 msgid "ERROR: --merge-multiarch applies only to a single tarball"
-msgstr ""
-
-msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 msgstr ""
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
