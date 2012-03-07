@@ -1325,48 +1325,40 @@
         if (WINDOWS) {
             f  <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
-            if (length(archs) < 2L)
-                stop("ERROR: --merge-multiarch can only be used on i386/x64 installations",
-                     call.=FALSE)
-            args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
-            cmd <- paste(file.path(R.home(), "bin", "i386", "Rcmd.exe"),
-                         "INSTALL", "--no-multiarch")
-            allargs <-  paste(args, collapse=" ")
-            cmd1 <- paste(cmd, allargs)
-            if (debug) message("about to run ", cmd1, domain = NA)
-            message("\n", "install for i386", "\n", domain=NA)
-            ## this will report '* DONE (foo)' if it works, which
-            ## R CMD check treats as an indication of success.
-            ## so use a backdoor to suppress it.
-            Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
-            res <- system(cmd1)
-            if(res == 0) {
-                cmd <- paste(file.path(R.home(), "bin", "x64", "Rcmd.exe"),
-                             "INSTALL", "--no-multiarch")
-                cmd1 <- paste(cmd, "--libs-only", if (zip_up) "--build", allargs)
-                if (debug) message("about to run ", cmd1, domain = NA)
-                message("\n", "add DLL for x64", "\n", domain=NA)
-                Sys.unsetenv("_R_INSTALL_NO_DONE_")
-                res <- system(cmd1)
-                if (res) do_exit_on_error()
-                do_cleanup()
-                on.exit()
-                return(invisible())
-            }
-        } else {
-            f  <- dir(file.path(R.home("bin"), "exec"))
-            if (length(f) > 1L) {
+            if (length(archs) > 1L) {
                 args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
                 ## this will report '* DONE (foo)' if it works, which
                 ## R CMD check treats as an indication of success.
                 ## so use a backdoor to suppress it.
                 Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
-                last <- f[length(f)]
-                for (arch in f) {
+                for (arch in archs) {
+                    cmd <- c(file.path(R.home(), "bin", arch, "Rcmd.exe"),
+                             "INSTALL", args, "--no-multiarch")
+                    if (arch == "x64") {
+                        cmd <- c(cmd, "--libs-only", if(zip_up) "--build")
+                        Sys.unsetenv("_R_INSTALL_NO_DONE_")
+                    }
+                    cmd <- paste(cmd, collapse = " ")
+                    if (debug) message("about to run ", cmd, domain = NA)
+                    message("\n", "install for ", arch, "\n", domain = NA)
+                    res <- system(cmd)
+                    if(res) break
+                }
+            }
+        } else {
+            archs  <- dir(file.path(R.home("bin"), "exec"))
+            if (length(archs) > 1L) {
+                args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+                ## this will report '* DONE (foo)' if it works, which
+                ## R CMD check treats as an indication of success.
+                ## so use a backdoor to suppress it.
+                Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
+                last <- archs[length(archs)]
+                for (arch in archs) {
                     cmd <- c(file.path(R.home("bin"), "R"),
-                             "--arch", arch, "CMD", "INSTALL",
-                             args, "--no-multiarch")
-                    if (arch != f[1L]) cmd <- c(cmd, "--libs-only")
+                             "--arch", arch, "CMD",
+                             "INSTALL", args, "--no-multiarch")
+                    if (arch != archs[1L]) cmd <- c(cmd, "--libs-only")
                     if (arch == last) {
                         Sys.unsetenv("_R_INSTALL_NO_DONE_")
                         if(tar_up) cmd <- c(cmd, "--build")
@@ -1377,14 +1369,15 @@
                     res <- system(cmd)
                     if(res) break
                 }
-                if (res) do_exit_on_error()
-                do_cleanup()
-                on.exit()
-                return(invisible())
-           } else {
-                message("only one architecture so ignoring '--merge-multiarch'")
             }
         }
+        if (length(archs) > 1L) {
+            if (res) do_exit_on_error()
+            do_cleanup()
+            on.exit()
+            return(invisible())
+        }
+        message("only one architecture so ignoring '--merge-multiarch'")
     }
 
     ## now unpack tarballs and do some basic checks
