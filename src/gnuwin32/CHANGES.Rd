@@ -27,12 +27,6 @@
       permissions (and most will not).  It can link existing
       directories, and existing-or-not files.
 
-      \item The behaviour of \code{unlink()} for reparse points
-      (including junctions and symbolic links) has changed.  It no
-      longer follow links (deleting the contents of the link target
-      rather than the link), and it is able to delete the link itself
-      (given sufficient permissions).
-
       \item There is a new function \code{Sys.junction()} to create
       junction points on NTFS file systems.
 
@@ -45,7 +39,8 @@
   \subsection{INSTALLER}{
     \itemize{
       \item The installer has many fewer options with more files always
-      being installed, as file space is nowadays no longer an issue.
+      being installed, as a few Mb of file space is nowadays no longer
+      an issue.
 
       \item It is now possible to select \sQuote{64-bit Files}
       from the standard installer even on a 32-bit version of Windows.
@@ -57,7 +52,10 @@
       \item As the current toolchain uses only 32-bit executables, it is
       possible to compile a package for both architectures on 32-bit
       Windows provided both architectures of \R have been installed: use
-      \command{R CMD INSTALL --compile-both}.
+      \command{Rcmd INSTALL --compile-both}.
+
+      \item \code{Rcmd INSTALL --merge-multiarch} will work (but do a
+      normal install) if only one architecture is installed.
     }
   }
 }
