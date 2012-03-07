@@ -256,8 +256,8 @@
        \item \command{R CMD check} can optionally report timings on
        various parts of the check: this is controlled by environment
        variable \env{_R_CHECK_TIMINGS_} documented in \sQuote{Writing R
-	 Extensions}.  Timings (in the style of \command{R CMD BATCH} are
-       given at the foot of the output file from running each test and
+	 Extensions}.  Timings (in the style of \command{R CMD BATCH}) are
+       given at the foot of the output files from running each test and
        the \R code in each vignette.
 
        \item There are new options for more rigorous testing by
@@ -392,8 +392,8 @@
       \item Virtual classes (e.g., class unions) had \code{NULL} prototype
       even if that was not a legal subclass.  See \code{?setClassUnion}.
 	
-      \item The prototypes for \code{zdotc} and \code{zdotu} in
-      \file{R_ext/BLAS.h} have been changed for the more modern style
+      \item The C prototypes for \code{zdotc} and \code{zdotu} in
+      \file{R_ext/BLAS.h} have been changed to the more modern style
       rather than that used by \command{f2c}.  (Patch by Berwin Turlach.)
     }
   }

@@ -91,18 +91,25 @@ function(x, ...)
             cat(paste0("    o   ", gsub("\n", "\n\t", x)), sep = "\n\n")
         vchunks <- split(x, x$Version)
         ## Re-order according to decreasing version.
-        ## R NEWS has invalid "versions" such as ""2.4.1 patched" which
-        ## we map to 2.4.1.1.
-        vchunks <-
-            vchunks[order(as.numeric_version(sub(" *patched", ".1",
-                                                 names(vchunks))),
-                                 decreasing = TRUE)]
+        ## R NEWS has invalid "versions" such as "R-devel" and
+        ## "2.4.1 patched".  We can remap the latter (to e.g. 2.4.1.1)
+        ## and need to ensure the former come first.
+        vstrings <- names(vchunks)
+        ind <- vstrings != "R-devel"
+        pos <- c(which(!ind),
+                 which(ind)[order(as.numeric_version(sub(" *patched", ".1",
+                                                         vstrings[ind])),
+                                  decreasing = TRUE)])
+        vchunks <- vchunks[pos]
 	if(length(vchunks)) {
             dates <- sapply(vchunks, function(v) v$Date[1L])
+            vstrings <- names(vchunks)
+            ind <- vstrings != "R-devel"
+            vstrings[ind] <- sprintf("version %s", vstrings[ind])
             vheaders <-
-                sprintf("%sChanges in version %s%s:\n\n",
+                sprintf("%sChanges in %s%s:\n\n",
                         c("", rep.int("\n", length(vchunks) - 1L)),
-                        names(vchunks),
+                        vstrings,
                         ifelse(is.na(dates), "",
                                sprintf(" (%s)", dates)))
         }
