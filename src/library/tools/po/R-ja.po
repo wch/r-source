@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:34\n"
+"POT-Creation-Date: 2012-03-07 08:07\n"
 "PO-Revision-Date: 2011-10-23 00:23+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -812,10 +812,6 @@ msgstr " 一時ディレクトリを生成することが出来ません "
 msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr " エラー: --merge-multiarch は単一の tarball だけに適用可能です "
 
-msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
-msgstr ""
-" エラー: --merge-multiarch は i386/x64 へのインストールだけで利用可能です "
-
 msgid "only one architecture so ignoring '--merge-multiarch'"
 msgstr ""
 
@@ -1278,6 +1274,10 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+#~ msgstr ""
+#~ " エラー: --merge-multiarch は i386/x64 へのインストールだけで利用可能です "
 
 #~ msgid "--merge-multiarch is Windows-only"
 #~ msgstr " --merge-multiarch は Windows 専用です "
