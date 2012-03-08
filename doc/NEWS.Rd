@@ -419,6 +419,9 @@
       \item The C prototypes for \code{zdotc} and \code{zdotu} in
       \file{R_ext/BLAS.h} have been changed to the more modern style
       rather than that used by \command{f2c}.  (Patch by Berwin Turlach.)
+
+      \item \code{isGeneric()} produced an error for primitives that
+      can not have methods.
     }
   }
 }
