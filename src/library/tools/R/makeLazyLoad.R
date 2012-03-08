@@ -61,7 +61,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
         } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
-            ans <- strsplit(readLines(sv), ":")
+            ## BioC mess this file up, of course!
+            ans <- strsplit(readLines(sv, warn = FALSE), ":")
             nms <- lapply(ans, function(x) x[1L])
             ans <- lapply(ans, function(x)
                           if(length(x) == 1L) x[1L] else
