@@ -165,6 +165,9 @@
 
       \item New \code{rWishart()} generates Wishart distributed random
       matrices.
+
+      \item Packages may now specify actions to be taken when the
+      package is loaded (\code{setLoadActions()}).
     }
   }
 
