@@ -9,7 +9,8 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item \code{lm.fit()} does less copying of objects by using
+      \code{.Call()} rather than \code{.Fortran()}.
     }
   }
 }

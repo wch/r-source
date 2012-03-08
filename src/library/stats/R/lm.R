@@ -116,14 +116,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
                 " is disregarded.", domain = NA)
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
-    z <- .Fortran("dqrls",
-		  qr = x, n = n, p = p,
-		  y = y, ny = ny,
-		  tol = as.double(tol),
-		  coefficients = mat.or.vec(p, ny),
-		  residuals = y, effects = y, rank = integer(1L),
-		  pivot = 1L:p, qraux = double(p), work = double(2*p),
-                  PACKAGE="base")
+    z <- .Call(C_Cdqrls, x, y, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
@@ -200,17 +193,10 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                     fitted.values = 0 * y, weights = w, rank = 0L,
                     df.residual = length(y)))
     }
+    storage.mode(x) <- "double"
     storage.mode(y) <- "double"
     wts <- sqrt(w)
-    z <- .Fortran("dqrls",
-		  qr = x * wts, n = n, p = p,
-		  y  = y * wts, ny = ny,
-		  tol = as.double(tol),
-		  coefficients = mat.or.vec(p, ny), residuals = y,
-		  effects = mat.or.vec(n, ny),
-		  rank = integer(1L), pivot = 1L:p, qraux = double(p),
-		  work = double(2 * p),
-                  PACKAGE="base")
+    z <- .Call(C_Cdqrls, x * wts, y * wts, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
