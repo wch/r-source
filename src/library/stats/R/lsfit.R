@@ -79,12 +79,13 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
+    # Here y is a matrix, so z$residuals and z$effects will be
     z <- .Call(C_Cdqrls, x, y, tolerance)
 
     ## dimension and name output from linpack
 
-    resids <- array(NA, dim=dimy)
-    dim(z$residuals) <- c(nry, ncy)
+    resids <- array(NA, dim = dimy)
+    dim(z$residuals) <- c(nry, ncy) # should be true for this version
     if(!is.null(wt)) {
 	if(any(wt == 0)) {
 	    if(ncx == 1L) fitted.zeros <- xzero * z$coefficients
@@ -95,7 +96,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     }
     resids[good, ] <- z$residuals
     if(dimy[2L] == 1 && is.null(yname)) {
-	resids <- as.vector(resids)
+	resids <- as.vector(resids) # discards names!
 	names(z$coefficients) <- xnames
     }
     else {
@@ -106,7 +107,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     }
     z$qr <- as.matrix(z$qr)
     colnames(z$qr) <- xnames
-    output <- list(coefficients=z$coefficients, residuals=resids)
+    output <- list(coefficients = z$coefficients, residuals = resids)
 
     ## if X matrix was collinear, then the columns would have been
     ## pivoted hence xnames need to be corrected
@@ -127,10 +128,11 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 
     ## return rest of output
 
+    ## Neither qt nor tol are documented to be there.
     rqr <- list(qt = drop(z$effects), qr = z$qr, qraux = z$qraux, rank = z$rank,
 		pivot = z$pivot, tol = z$tol)
     oldClass(rqr) <- "qr"
-    output <- c(output, list(intercept=intercept, qr=rqr))
+    output <- c(output, list(intercept = intercept, qr = rqr))
     return(output)
 }
 
