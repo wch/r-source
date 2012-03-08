@@ -891,6 +891,7 @@ cacheMetaData <-
         methods <- .updateMethodsInTable(fdef, where, attach)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
     }
+    .doLoadActions(where, attach)
     invisible(NULL) ## as some people call this at the end of functions
 }
 
@@ -1552,7 +1553,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 
 .hasS4MetaData <- function(env)
   (length(objects(env, all.names = TRUE,
-                          pattern = "^[.]__[CT]_")))
+                          pattern = "^[.]__[CTA]_")))
 
 ## turn ordinary generic into one that dispatches on "..."
 ## currently only called in one place from setGeneric()
@@ -1784,4 +1785,95 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
         msgs <- msgs[ii]; level <- level[ii]
     }
     list(signature = signature, message = msgs, level = level)
+}
+
+.ActionMetaPattern <- function()
+    paste0("^[.]",substring(methodsPackageMetaName("A",""),2))
+
+.actionMetaName <- function(name)
+    methodsPackageMetaName("A", name)
+
+.doLoadActions <- function(where, attach) {
+    ## at the moment, no unload actions
+    if(!attach)return()
+    actionListName <- .actionMetaName("")
+    if(!exists(actionListName, envir = where, inherits = FALSE))
+        return(list())
+    actions <- get(actionListName, envir = where)
+    for(what in actions) {
+        aname <- .actionMetaName(what)
+        if(!exists(aname, envir = where, inherits = FALSE)) {
+            warning(gettextf("Missing  function for load action: %s", what))
+            next
+        }
+        f <- get(aname, envir = where)
+        value <- eval(substitute(tryCatch(FUN(WHERE), error = function(e)e),
+                            list(FUN = f, WHERE = where)), where)
+        if(is(value, "error"))
+            stop(gettextf("Error in load action %s for package %s: %s: %s",
+                          aname, getPackageName(where), value$call, value$message))
+    }
+}
+
+.assignActions <- function(actions, anames, where) {
+    ## check all the actions before assigning any
+    for(i in seq_along(actions)) {
+        f <- actions[[i]]
+        fname <- anames[[i]]
+        if(!is(f, "function"))
+            stop( gettextf("non-function action: \"%s", fname))
+        if(length(formals(f)) == 0)
+                stop(gettextf("action function \"%s\" has no arguments, should have at least 1",fname ))
+    }
+    for(i in seq_along(actions))
+        assign(.actionMetaName(anames[[i]]), actions[[i]], envir = where)
+}
+
+setLoadActions <- function(..., .where = topenv(parent.frame())) {
+    actionListName <- .actionMetaName("")
+    if(exists(actionListName, envir = .where, inherits = FALSE))
+        currentAnames <- get(actionListName, envir = .where)
+    else
+        currentAnames <- character()
+    actions <- list(...)
+    anames <- allNames(actions)
+    ## first, replacements
+    previous <- anames %in% currentAnames
+    if(any(previous)) {
+        .assignActions(actions[previous], anames[previous], .where)
+        if(all(previous))
+            return(list())
+        anames <- anames[!previous]
+        actions <- actions[!previous]
+    }
+    anon <- !nzchar(anames)
+    if(any(anon)) {
+        n <- length(currentAnames)
+        deflts <- paste0(".",seq(from = n+1, length.out = length(actions)))
+        anames[anon] <- deflts[anon]
+    }
+    .assignActions(actions, anames, .where)
+    assign(actionListName, c(currentAnames, anames), envir = .where)
+}
+
+hasLoadAction <- function(aname, where = topenv(parent.frame()))
+    exists(.actionMetaName(aname), envir = where, inherits = FALSE)
+
+getLoadActions <- function(where = topenv(parent.frame())) {
+    actionListName <- .actionMetaName("")
+    if(!exists(actionListName, envir = where, inherits = FALSE))
+        return(list())
+    actions <- get(actionListName, envir = where)
+    if(length(actions)) {
+        allExists <- sapply(actions, function(what) exists(.actionMetaName(what), envir = where, inherits = FALSE))
+        if(!all(allExists)) {
+            warning(gettextf("Some actions missing: %s", paste(actions[!allExists], collapse =", ")))
+            actions <- actions[allExists]
+        }
+        allFuns <- lapply(actions, function(what) get(.actionMetaName(what), envir = where))
+        names(allFuns) <- actions
+        allFuns
+    }
+    else
+        list()
 }
