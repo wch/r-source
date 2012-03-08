@@ -14,6 +14,17 @@
       \code{.Fortran()}. 
     }
   }
+  
+  \subsection{UTILITIES}{
+    \itemize{
+       \item \command{R CMD check} now gives a warning rather than a
+       note if it finds calls to \code{abort}, \code{assert} or
+       \code{exit} in compiled code, and has been able to find the
+       \file{.o} file in which the calls occur.
+
+       Such calls can terminate the \R process which loads the package.
+     }
+   }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.0}{

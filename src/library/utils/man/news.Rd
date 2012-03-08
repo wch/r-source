@@ -99,7 +99,6 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 ## Build a db of all R news entries.
 db <- news()
 \dontshow{
-  stopifnot(sum(db$Version == "R-devel") <= 1)
   vv <- capture.output(db)# without an error
 }
 \donttest{% <- is not sensibly diff-ed against previous versions
