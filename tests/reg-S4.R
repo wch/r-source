@@ -594,3 +594,6 @@ stopifnot(is.null(getClass("OptionalPOSIXct")@prototype))
 ## "IntOrChar" had invalid NULL prototype < 2.15.0
 setClassUnion("IntOrChar", c("integer", "character"))
 stopifnot(is.integer(getClass("IntOrChar")@prototype))
+## produced an error < 2.15.0
+stopifnot(identical(isGeneric("&&"), FALSE))
+

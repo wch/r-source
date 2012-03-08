@@ -273,7 +273,7 @@ isGeneric <-
         if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
         ## the definition of isGeneric() for a primitive is that methods are defined
         ## (other than the default primitive)
-        gen <- genericForPrimitive(f)
+        gen <- genericForPrimitive(f, mustFind = FALSE)
         return(is.function(gen) && length(objects(.getMethodsTable(gen), all.names=TRUE)) > 1L)
     }
     if(!is(fdef, "genericFunction"))
