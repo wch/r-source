@@ -1619,9 +1619,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 printLog0(Log, c(out, "\n"))
             } else resultLog(Log, "OK")
         } else if(length(out)) {
-            noteLog(Log)
+            ## If we have named objects then we have symbols.rds and
+            ## will not be picking up symbols just in system libraries.
+            haveObjs <- any(grepl("^ *Object", out))
+            if(haveObjs && any(grepl("(abort|assert|exit)", out))) warningLog(Log)
+            else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            if(any(grepl("^ *Object", out)))
+            if(haveObjs)
                 wrapLog("\nCompiled code should not call functions which",
                         "might terminate R nor write to stdout/stderr instead",
                         "of to the console.\n" ,
@@ -1631,9 +1635,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             else
                 wrapLog("\nCompiled code should not call functions which",
                         "might terminate R nor write to stdout/stderr instead",
-                        "of to the console.  The detected symbols are linked into the",
-                        "code but might come from libraries and not actually",
-                        "be called.\n",
+                        "of to the console.  The detected symbols are linked",
+                        "into the code but might come from libraries",
+                        "and not actually be called.\n",
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")
