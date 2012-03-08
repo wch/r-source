@@ -9,8 +9,9 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{lm.fit()} does less copying of objects by using
-      \code{.Call()} rather than \code{.Fortran()}.
+      \item \code{lm.fit()}, \code{glm.fit()} and \code{lsfit()} do less
+      copying of objects by using \code{.Call()} rather than
+      \code{.Fortran()}. 
     }
   }
 }
