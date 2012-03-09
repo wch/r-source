@@ -1815,6 +1815,17 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     }
 }
 
+setLoadAction <- function(action,
+              aname = paste0(".", length(currentAnames)+1),
+              where = topenv(parent.frame())) {
+    currentAnames <- .assignActionListNames()
+    .assignActions(list(action), aname, where)
+    if(is.na(match(aname, currentAnames))) {
+        actionListName <- .actionMetaName("")
+        assign(actionListName, c(currentAnames, aname), envir = where)
+    }
+}
+
 .assignActions <- function(actions, anames, where) {
     ## check all the actions before assigning any
     for(i in seq_along(actions)) {
@@ -1829,12 +1840,17 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
         assign(.actionMetaName(anames[[i]]), actions[[i]], envir = where)
 }
 
-setLoadActions <- function(..., .where = topenv(parent.frame())) {
+.assignActionListNames <- function() {
     actionListName <- .actionMetaName("")
     if(exists(actionListName, envir = .where, inherits = FALSE))
-        currentAnames <- get(actionListName, envir = .where)
+        get(actionListName, envir = .where)
     else
-        currentAnames <- character()
+        character()
+}
+
+setLoadActions <- function(..., .where = topenv(parent.frame())) {
+    actionListName <- .actionMetaName("")
+    currentAnames <- .assignActionListNames()
     actions <- list(...)
     anames <- allNames(actions)
     ## first, replacements
