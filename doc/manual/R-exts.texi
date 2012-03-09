@@ -619,9 +619,8 @@ OS-specific collation field (@samp{Collate.unix} or
 @samp{Collate.windows}) will be used instead of @samp{Collate}.
 
 The @samp{LazyData} logical field controls whether the @R{} datasets use
-lazy-loading.  The @samp{LazyLoad} field was used in versions prior to
-2.14.0, but now is ignored (with a warning if a false value is
-supplied).
+lazy-loading.  A @samp{LazyLoad} field was used in versions prior to
+2.14.0, but now is ignored.
 
 The @samp{KeepSource} logical field controls if the package code is sourced
 using @code{keep.source = TRUE} or @code{FALSE}: it might be needed
@@ -758,7 +757,7 @@ usable in some locales and may display incorrectly in others.
 
 @findex library.dynam
 Various @R{} functions in a package can be used to initialize and
-clean up.  @xref{Load hooks}.@footnote{Up to @R{}
+clean up.  @xref{Load hooks}.@footnote{Prior to @R{}
 version 2.14.0, the @code{.First.lib} and @code{.Last.lib} functions
 handled these tasks in packages without namespaces.  (In current @R{}
 versions, @emph{all} packages have namespaces.)  To help with
@@ -3911,15 +3910,14 @@ settings).
 @node R messages, Installing translations, C-level messages, Internationalization
 @subsection R messages
 
-Mechanisms to support the automatic translation of @R{} @code{stop},
-@code{warning} and @code{message} messages are in place, most easily
-if the package has a namespace.  They make use of message catalogs in
-the same way as C-level messages, but using domain @code{R-@var{pkg}}
-rather than @code{@var{pkg}}.  Translation of character strings inside
-@code{stop}, @code{warning} and @code{message} calls is automatically
-enabled, as well as other messages enclosed in calls to @code{gettext}
-or @code{gettextf}.  (To suppress this, use argument
-@code{domain=NA}.)
+Mechanisms are also available to support the automatic translation of
+@R{} @code{stop}, @code{warning} and @code{message} messages.  They make
+use of message catalogs in the same way as C-level messages, but using
+domain @code{R-@var{pkg}} rather than @code{@var{pkg}}.  Translation of
+character strings inside @code{stop}, @code{warning} and @code{message}
+calls is automatically enabled, as well as other messages enclosed in
+calls to @code{gettext} or @code{gettextf}.  (To suppress this, use
+argument @code{domain=NA}.)
 
 Tools to prepare the @file{R-@var{pkg}.pot} file are provided in package
 @pkg{tools}: @code{xgettext2pot} will prepare a file from all strings
@@ -4331,15 +4329,16 @@ uniquely named on a case-insensitive file system.} is the basename of
 the @file{Rd} file containing the documentation.  It is the ``name'' of
 the @file{Rd} object represented by the file and has to be unique in a
 package.  To avoid problems with indexing the package manual, it may not
-% Problems seen in 2.13.x but not 2.14.0 contain @samp{!}  @samp{|} nor
-@samp{@@}, and to avoid possible problems with the HTML help system it
-should not contain @samp{/} nor a space.  (@LaTeX{} special characters
-are allowed, but may not be collated correctly in the index.)  There can
-only be one @code{\name} entry in a file, and it must not contain any
-markup.  Entries in the package manual will be in alphabetic@footnote{in
-the current locale, and with special treatment for @LaTeX{} special
-characters and with any @samp{@var{pkgname}-package} topic moved to the
-top of the list.} order of the @code{\name} entries.
+@c Problems seen in 2.13.x but not 2.14.0 
+contain @samp{!}  @samp{|} nor @samp{@@}, and to avoid possible problems
+with the HTML help system it should not contain @samp{/} nor a space.
+(@LaTeX{} special characters are allowed, but may not be collated
+correctly in the index.)  There can only be one @code{\name} entry in a
+file, and it must not contain any markup.  Entries in the package manual
+will be in alphabetic@footnote{in the current locale, and with special
+treatment for @LaTeX{} special characters and with any
+@samp{@var{pkgname}-package} topic moved to the top of the list.} order
+of the @code{\name} entries.
 
 @item \alias@{@var{topic}@}
 @findex \alias
