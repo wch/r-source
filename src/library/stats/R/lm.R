@@ -125,19 +125,21 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     r2 <- if(z$rank < p) (z$rank+1L):p else integer()
     if (is.matrix(y)) {
 	coef[r2, ] <- NA
-	coef[pivot, ] <- coef
+	if(z$pivoted) coef[pivot, ] <- coef
 	dimnames(coef) <- list(dn, colnames(y))
 	dimnames(z$effects) <- list(nmeffects, colnames(y))
     } else {
 	coef[r2] <- NA
-	coef[pivot] <- coef
+        ## avoid copy
+	if(z$pivoted) coef[pivot] <- coef
 	names(coef) <- dn
 	names(z$effects) <- nmeffects
     }
     z$coefficients <- coef
     r1 <- y - z$residuals ; if(!is.null(offset)) r1 <- r1 + offset
+    ## avoid unnecessary copy
+    if(z$pivoted) colnames(z$qr) <- colnames(x)[z$pivot]
     qr <- z[c("qr", "qraux", "pivot", "tol", "rank")]
-    colnames(qr$qr) <- colnames(x)[qr$pivot]
     c(z[c("coefficients", "residuals", "effects", "rank")],
       list(fitted.values = r1, assign = attr(x, "assign"),
 	   qr = structure(qr, class="qr"),
@@ -202,12 +204,12 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     r2 <- if(z$rank < p) (z$rank+1L):p else integer()
     if (is.matrix(y)) {
 	coef[r2, ] <- NA
-	coef[pivot, ] <- coef
+	if(z$pivoted) coef[pivot, ] <- coef
 	dimnames(coef) <- list(dn, colnames(y))
 	dimnames(z$effects) <- list(nmeffects,colnames(y))
     } else {
 	coef[r2] <- NA
-	coef[pivot] <- coef
+	if(z$pivoted) coef[pivot] <- coef
 	names(coef) <- dn
 	names(z$effects) <- nmeffects
     }
@@ -236,8 +238,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     }
     if(!is.null(offset))
         z$fitted.values <- z$fitted.values + offset
+    if(z$pivoted) colnames(z$qr) <- colnames(x)[z$pivot]
     qr <- z[c("qr", "qraux", "pivot", "tol", "rank")]
-    colnames(qr$qr) <- colnames(x)[qr$pivot]
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
       list(assign = x.asgn,

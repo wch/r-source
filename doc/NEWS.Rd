@@ -10,21 +10,27 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{lm.fit()}, \code{glm.fit()} and \code{lsfit()} do less
-      copying of objects by using \code{.Call()} rather than
+      copying of objects, mainly by using \code{.Call()} rather than
       \code{.Fortran()}. 
     }
   }
   
   \subsection{UTILITIES}{
     \itemize{
-       \item \command{R CMD check} now gives a warning rather than a
-       note if it finds calls to \code{abort}, \code{assert} or
-       \code{exit} in compiled code, and has been able to find the
-       \file{.o} file in which the calls occur.
-
-       Such calls can terminate the \R process which loads the package.
-     }
-   }
+      \item \command{R CMD check} now gives a warning rather than a
+      note if it finds calls to \code{abort}, \code{assert} or
+      \code{exit} in compiled code, and has been able to find the
+      \file{.o} file in which the calls occur.
+      
+      Such calls can terminate the \R process which loads the package.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{lsfit()} lost the names from the residuals.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.0}{
@@ -422,9 +428,6 @@
 
       \item \code{isGeneric()} produced an error for primitives that
       can not have methods.
-
-      \item \code{lsfit()} with a univariate response lost names
-      from the residuals.
     }
   }
 }

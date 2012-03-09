@@ -40,7 +40,7 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
 {
     SEXP ans, ansnames;
     SEXP qr, coefficients, residuals, effects, pivot, qraux;
-    int n, ny, p, rank, nprotect = 4;
+    int n, ny, p, rank, nprotect = 4, pivoted = 0;
     double rtol = asReal(tol), *work;
 
 
@@ -66,8 +66,8 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
     for (int i = 0 ; i < LENGTH(y) ; i++)
 	if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'y'");
 
-    PROTECT(ans = allocVector(VECSXP, 8));
-    ansnames = allocVector(STRSXP, 8);
+    PROTECT(ans = allocVector(VECSXP, 9));
+    ansnames = allocVector(STRSXP, 9);
     setAttrib(ans, R_NamesSymbol, ansnames);
     SET_STRING_ELT(ansnames, 0, mkChar("qr"));
     SET_STRING_ELT(ansnames, 1, mkChar("coefficients"));
@@ -77,6 +77,7 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
     SET_STRING_ELT(ansnames, 5, mkChar("pivot"));
     SET_STRING_ELT(ansnames, 6, mkChar("qraux"));
     SET_STRING_ELT(ansnames, 7, mkChar("tol"));
+    SET_STRING_ELT(ansnames, 8, mkChar("pivoted"));
     SET_VECTOR_ELT(ans, 0, qr = duplicate(x));
     if (ny > 1) coefficients = allocMatrix(REALSXP, p, ny);
     else coefficients = allocVector(REALSXP, p);
@@ -97,6 +98,9 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
 		    REAL(coefficients), REAL(residuals), REAL(effects),
 		    &rank, INTEGER(pivot), REAL(qraux), work);
     SET_VECTOR_ELT(ans, 4, ScalarInteger(rank));
+    for(int i = 0; i < p; i++)
+	if(ip[i] != i+1) { pivoted = 1; break; }
+    SET_VECTOR_ELT(ans, 8, ScalarLogical(pivoted));
     UNPROTECT(nprotect);
     
     return ans;
