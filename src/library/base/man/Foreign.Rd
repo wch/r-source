@@ -165,24 +165,14 @@
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
 \section{Warning}{
-  \emph{\code{DUP=FALSE} is dangerous.}
+  \emph{\code{DUP = FALSE} is dangerous.}
 
-  There are two dangers with using \code{DUP=FALSE}.
-
-  The first is that if you pass a local variable to
-  \code{.C}/\code{.Fortran} with \code{DUP=FALSE}, your compiled code
-  can alter the local variable and not just the copy in the return list.
-  Worse, if you pass a local variable that is a formal parameter of
-  the calling function, you may be able to change not only the local
-  variable but the variable one level up.  This will be very hard to trace.
-
-  The second is that lists are passed as a single \R \code{SEXP} with
-  \code{DUP = FALSE}, not as an array of \code{SEXP}. This means the
-  accessor macros in \file{Rinternals.h} are needed to get at the list
-  elements and the lists cannot be passed to
-  \code{call_S}/\code{call_R}.  New code using \R objects should be
-  written using \code{.Call} or \code{.External}, so this is now only a
-  minor issue.
+  If you pass a local variable to \code{.C}/\code{.Fortran} with
+  \code{DUP = FALSE}, your compiled code can alter the local variable and
+  not just the copy in the return list.  Worse, if you pass a local
+  variable that is a formal parameter of the calling function, you may
+  be able to change not only the local variable but the variable one
+  level up.  This will be very hard to trace.
 
   In addition, character vectors cannot be used with \code{DUP = FALSE}.
 
