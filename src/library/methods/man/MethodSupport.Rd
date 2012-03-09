@@ -5,7 +5,6 @@
 
 \name{MethodSupport}
 \title{Additional (Support) Functions for Methods}
-\alias{.conflicts.OK}
 \alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
 \alias{cacheMethod}
