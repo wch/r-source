@@ -184,8 +184,8 @@
       approximately 500 bytes, rather than truncating to the first
       line.
 
-      \item New \code{rWishart()} generates Wishart distributed random
-      matrices.
+      \item New function \code{rWishart()} generates Wishart-distributed
+      random matrices.
 
       \item Packages may now specify actions to be taken when the
       package is loaded (\code{setLoadActions()}).
@@ -422,6 +422,9 @@
 
       \item \code{isGeneric()} produced an error for primitives that
       can not have methods.
+
+      \item \code{lsfit()} with a univariate response lost names
+      from the residuals.
     }
   }
 }

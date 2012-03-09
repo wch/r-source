@@ -90,10 +90,9 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     }
     resids[good, ] <- z$residuals
     if(dimy[2L] == 1 && is.null(yname)) {
-	resids <- as.vector(resids) # discards names!
+	resids <- drop(resids)
 	names(z$coefficients) <- xnames
-    }
-    else {
+    } else {
 	colnames(resids) <- yname
 	colnames(z$effects) <- yname
 	dim(z$coefficients) <- c(ncx, ncy)
@@ -103,8 +102,8 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     colnames(z$qr) <- xnames
     output <- list(coefficients = z$coefficients, residuals = resids)
 
-    ## if X matrix was collinear, then the columns would have been
-    ## pivoted hence xnames need to be corrected
+    ## if X matrix was collinear, then the columns may have been
+    ## pivoted hence xnames may need to be corrected
 
     if( z$rank != ncx ) {
 	xnames <- xnames[z$pivot]
