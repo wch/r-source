@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-09 06:26\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -134,7 +134,8 @@ msgid ""
 "if the 'def' argument is supplied, it must be a function that calls "
 "standardGeneric(\"%s\") or is the default"
 msgstr ""
-"如果设定了`def'参数的话，它要么是調用standardGeneric(\"%s\")的函数，要么是默认值"
+"如果设定了`def'参数的话，它要么是調用standardGeneric(\"%s\")的函数，要么是默"
+"认值"
 
 msgid ""
 "must supply a function skeleton for %s, explicitly or via an existing "
@@ -914,6 +915,24 @@ msgstr "%s类别存在多个定义；应该用className()指定其中的一个"
 
 msgid "No definition found for class %s"
 msgstr "类别%s的定义不存在"
+
+#, fuzzy
+msgid "Missing  function for load action: %s"
+msgstr "函数%s没有定义"
+
+#, fuzzy
+msgid "Error in load action %s for package %s: %s: %s"
+msgstr "从%3$s里的程辑包%2$s为%1$s建立新的泛型函数"
+
+#, fuzzy
+msgid "non-function action: \"%s"
+msgstr "没有'%s'这样一个函数定义"
+
+msgid "action function \"%s\" has no arguments, should have at least 1"
+msgstr ""
+
+msgid "Some actions missing: %s"
+msgstr ""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
@@ -1964,4 +1983,3 @@ msgstr[0] "类别%s的定义不存在"
 
 #~ msgid "trying to use new() on a virtual class"
 #~ msgstr "不能在虛擬类别上用new()这一函数"
-

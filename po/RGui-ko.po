@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2012-03-01 06:57+0000\n"
-"PO-Revision-Date: 2012-03-06 17:49+0200\n"
+"PO-Revision-Date: 2012-03-09 06:33+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Korean R Translation Council <gnustats@gmail.com>\n"
+"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -366,9 +366,9 @@ msgid "R Editor"
 msgstr "R 편집기"
 
 #: editor.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open file %s for reading"
-msgstr "파일을 읽기 위해 열 수 없습니다"
+msgstr "파일 %s 를 열수 없습니다 "
 
 #: editor.c:135
 #, c-format
@@ -632,9 +632,9 @@ msgid "Select 'Rconsole' file"
 msgstr "'Rconsole' 파일 선택"
 
 #: preferences.c:688
-#, fuzzy, c-format
+#, c-format
 msgid "Ignored '%s' at line %d of file %s"
-msgstr "파일 %2$s의 %1$d 줄에서 에러가 발생했습니다"
+msgstr "파일 %s 의 라인  %d 에서 '%s' 가 무시되었습니다 "
 
 #: preferences.c:789
 msgid "Rgui Configuration Editor"

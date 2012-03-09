@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-09 06:26\n"
 "PO-Revision-Date: 2011-10-18 21:48-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1064,6 +1064,24 @@ msgstr ""
 
 msgid "No definition found for class %s"
 msgstr "нет определения класса %s"
+
+#, fuzzy
+msgid "Missing  function for load action: %s"
+msgstr "нет существующего определения для функции %s"
+
+#, fuzzy
+msgid "Error in load action %s for package %s: %s: %s"
+msgstr "Создание новой общей функции для %s из пакета %s в %s"
+
+#, fuzzy
+msgid "non-function action: \"%s"
+msgstr "не найдено определение функции для \"%s\""
+
+msgid "action function \"%s\" has no arguments, should have at least 1"
+msgstr ""
+
+msgid "Some actions missing: %s"
+msgstr ""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""

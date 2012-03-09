@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-09 06:26\n"
 "PO-Revision-Date: 2011-10-23 22:33+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1071,6 +1071,24 @@ msgstr ""
 
 msgid "No definition found for class %s"
 msgstr " クラス %s に対する定義はありません "
+
+#, fuzzy
+msgid "Missing  function for load action: %s"
+msgstr " 関数 %s に対する既存の定義はありません "
+
+#, fuzzy
+msgid "Error in load action %s for package %s: %s: %s"
+msgstr " %s に対する総称関数をパッケージ %s (%s 中にある)から作成します "
+
+#, fuzzy
+msgid "non-function action: \"%s"
+msgstr " \"%s\" に対する関数定義はありません "
+
+msgid "action function \"%s\" has no arguments, should have at least 1"
+msgstr ""
+
+msgid "Some actions missing: %s"
+msgstr ""
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
