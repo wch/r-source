@@ -40,12 +40,23 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
 {
     SEXP ans, ansnames;
     SEXP qr, coefficients, residuals, effects, pivot, qraux;
-    int n, ny, p, rank;
+    int n, ny, p, rank, nprotect = 4;
     double rtol = asReal(tol), *work;
 
-    /* Sanity check: should be ensured in wrapper code */
-    if (TYPEOF(x) != REALSXP || TYPEOF(y) != REALSXP)
-	error("x and y must be double");
+
+    int *dims = INTEGER(getAttrib(x, R_DimSymbol));
+    n = dims[0]; p = dims[1];
+    ny = LENGTH(y)/n;  /* n x ny, or a vector */
+
+    /* These lose attributes, so do after we have extracted dims */
+    if (TYPEOF(x) != REALSXP) {
+	PROTECT(x = coerceVector(x, REALSXP)); 
+	nprotect++;
+    }
+    if (TYPEOF(y) != REALSXP) {
+	PROTECT(y = coerceVector(y, REALSXP));
+	nprotect++;
+    }
 
     double *rptr = REAL(x);
     for (int i = 0 ; i < LENGTH(x) ; i++)
@@ -54,11 +65,6 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
     rptr = REAL(y);
     for (int i = 0 ; i < LENGTH(y) ; i++)
 	if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'y'");
-
-
-    int *dims = INTEGER(getAttrib(x, R_DimSymbol));
-    n = dims[0]; p = dims[1];
-    ny = LENGTH(y)/n;  /* n x ny, or a vector */
 
     PROTECT(ans = allocVector(VECSXP, 8));
     ansnames = allocVector(STRSXP, 8);
@@ -91,7 +97,7 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
 		    REAL(coefficients), REAL(residuals), REAL(effects),
 		    &rank, INTEGER(pivot), REAL(qraux), work);
     SET_VECTOR_ELT(ans, 4, ScalarInteger(rank));
-    UNPROTECT(4);
+    UNPROTECT(nprotect);
     
     return ans;
 }

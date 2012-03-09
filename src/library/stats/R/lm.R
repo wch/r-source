@@ -114,8 +114,6 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     else if(length(dots) == 1L)
 	warning("extra argument ", sQuote(names(dots)),
                 " is disregarded.", domain = NA)
-    storage.mode(x) <- "double"
-    storage.mode(y) <- "double"
     z <- .Call(C_Cdqrls, x, y, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
@@ -193,8 +191,6 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                     fitted.values = 0 * y, weights = w, rank = 0L,
                     df.residual = length(y)))
     }
-    storage.mode(x) <- "double"
-    storage.mode(y) <- "double"
     wts <- sqrt(w)
     z <- .Call(C_Cdqrls, x * wts, y * wts, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")

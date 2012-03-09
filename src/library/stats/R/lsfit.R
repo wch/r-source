@@ -75,17 +75,11 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 	invmult <- 1/ifelse(wt == 0, 1, wtmult)
     }
 
-    ## call linpack
-
-    storage.mode(x) <- "double"
-    storage.mode(y) <- "double"
     # Here y is a matrix, so z$residuals and z$effects will be
     z <- .Call(C_Cdqrls, x, y, tolerance)
 
-    ## dimension and name output from linpack
-
     resids <- array(NA, dim = dimy)
-    dim(z$residuals) <- c(nry, ncy) # should be true for this version
+    dim(z$residuals) <- c(nry, ncy)
     if(!is.null(wt)) {
 	if(any(wt == 0)) {
 	    if(ncx == 1L) fitted.zeros <- xzero * z$coefficients
