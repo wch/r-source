@@ -318,7 +318,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     ## depend on methods
                     nogenerics <-
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
-                    if(warn.conflicts &&
+                    if(warn.conflicts && # never will with a namespace
                        !exists(".conflicts.OK", envir = env, inherits = FALSE))
                         checkConflicts(package, pkgname, pkgpath,
                                        nogenerics, ns)

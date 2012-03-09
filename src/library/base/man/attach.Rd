@@ -1,15 +1,17 @@
 % File src/library/base/man/attach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{attach}
+\alias{attach}
+\alias{.conflicts.OK}
+
 \title{Attach Set of R Objects to Search Path}
 \usage{
 attach(what, pos = 2, name = deparse(substitute(what)),
        warn.conflicts = TRUE)
 }
-\alias{attach}
 \arguments{
   \item{what}{\sQuote{database}.  This can be a
     \code{data.frame} or a \code{list} or a \R data file created with
