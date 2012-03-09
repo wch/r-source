@@ -617,7 +617,7 @@ If you want the @R{} home to be something other than
 @file{@var{libdir}/R}, use @option{rhome}: for example
 
 @example
-make install rhome=/usr/local/lib64/R-2.14.0
+make install rhome=/usr/local/lib64/R-2.15.0
 @end example
 
 @noindent
@@ -1037,8 +1037,8 @@ install the extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @file{@var{R_HOME}} below.
 
-The toolchain used from @R{} 2.14.2 differs from from that used for @R{}
-2.12.0 to @R{} 2.14.1.
+The toolchain used as from @R{} 2.14.2 differs from from that used for
+@R{} 2.12.0 to @R{} 2.14.1.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1947,7 +1947,7 @@ starting with a source tarball.
 @node Byte-compilation,  , Multiple sub-architectures, Installing packages
 @subsection Byte-compilation
 
-In @R{} 2.14.x only the base and recommended packages are byte-compiled
+As from @R{} 2.14.0 the base and recommended packages are byte-compiled
 by default.  Other packages can be byte-compiled on installation by
 using the option @option{--byte-compile} with @command{R CMD INSTALL} or
 with @code{install.packages(type = "source")}.
@@ -2445,7 +2445,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"2.14.0"}.
+string containing the current @R{} version, for example @code{"2.15.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
