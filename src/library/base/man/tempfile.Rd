@@ -1,6 +1,6 @@
 % File src/library/base/man/tempfile.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -42,15 +42,16 @@ tempdir()
   \code{tmpdir} is specified).  The filenames are guaranteed not to be
   currently in use.
 
-  The file name is made by concatenating the path given by \code{tmpdir},
-  the \code{pattern} string, a random string in
-  hex, and a suffix of \code{fileext}.  
+  The file name is made by concatenating the path given by
+  \code{tmpdir}, the \code{pattern} string, a random string in hex and
+  a suffix of \code{fileext}.
   
   By default, \code{tmpdir} will be the directory given by
-  \code{tempdir()}.  This will be a subdirectory of the temporary
-  directory found by the following rule.  The environment variables
-  \env{TMPDIR}, \env{TMP} and \env{TEMP} are checked in turn and the
-  first found which points to a writable directory is used:  
+  \code{tempdir()}.  This will be a subdirectory of the per-session
+  temporary directory found by the following rule when the \R session is
+  started.  The environment variables \env{TMPDIR}, \env{TMP} and
+  \env{TEMP} are checked in turn and the first found which points to a
+  writable directory is used:
 #ifdef unix
   if none succeeds \file{/tmp} is used.
 #endif
@@ -60,14 +61,17 @@ tempdir()
   contains a space in any of the components, the path returned will use
   the shortnames version of the path.
 #endif
+  Note that setting any of these environment variables in the \R session
+  has no effect on \code{tempdir()}: the per-session temporary directory
+  is created before the interpreter is started.
 }
 \section{Note on parallel}{
-  \R processes produced by function such as \code{\link{mclapply}} in
+  \R processes forked by functions such as \code{\link{mclapply}} in
   package \pkg{parallel} (or \CRANpkg{multicore}) share a per-session
   temporary directory.  Further, the \sQuote{guaranteed not to be
     currently in use} applies only at the time of asking, and two
   children could ask simultaneously.  As from \R 2.14.1 this is avoided
-  by ensuring that \code{tempfile} calls in different children look for
+  by ensuring that \code{tempfile} calls in different children try
   different names.
 }
 
