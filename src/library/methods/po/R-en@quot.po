@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-23 08:16\n"
-"PO-Revision-Date: 2012-01-23 08:16\n"
+"POT-Creation-Date: 2012-03-09 06:26\n"
+"PO-Revision-Date: 2012-03-09 06:26\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1059,6 +1059,21 @@ msgstr ""
 
 msgid "No definition found for class %s"
 msgstr "No definition found for class %s"
+
+msgid "Missing  function for load action: %s"
+msgstr "Missing  function for load action: %s"
+
+msgid "Error in load action %s for package %s: %s: %s"
+msgstr "Error in load action %s for package %s: %s: %s"
+
+msgid "non-function action: \"%s"
+msgstr "non-function action: \"%s"
+
+msgid "action function \"%s\" has no arguments, should have at least 1"
+msgstr "action function “%s” has no arguments, should have at least 1"
+
+msgid "Some actions missing: %s"
+msgstr "Some actions missing: %s"
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "“%s” has a sealed class definition and cannot be redefined"

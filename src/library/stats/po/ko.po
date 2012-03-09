@@ -9,294 +9,292 @@ msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2012-03-01 06:57+0000\n"
-"PO-Revision-Date: 2005-05-26 15:32+0900\n"
+"PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Korean R Translation Council <gnustats@gmail.com>\n"
+"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
-msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
+msgstr "중앙값의 bandwidth/span 가 n 보다 큽니다"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
-msgstr "qunsari()에서 확률이 [0,1]의 범위외입니다"
+msgstr "qunsari() 내에 확률이 [0,1] 범위외입니다"
 
 #: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
-msgstr ""
+msgstr "approx(): f 값이 잘못되었습니다 "
 
 #: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
-msgstr ""
+msgstr "approx(): 잘못된 보간법입니다 "
 
 #: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
-msgstr ""
+msgstr "approx(): NA 값들을 보간하려고 했습니다 "
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
-msgstr "부적절한 인수의 유형입니다"
+msgstr "인수의 유형이 잘못되었습니다 "
 
 #: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
-msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
+msgstr "arima0 는 최대 100 개까지의 파라미터들만 변환이 가능합니다 "
 
 #: arima.c:838
 msgid "maximum supported lag is 350"
-msgstr ""
+msgstr "지원되는 최대의 lag 은 350 입니다 "
 
 #: distance.c:155
-#, fuzzy
 msgid "treating non-finite values as NA"
-msgstr "dist(.,\"binary\"):유한하지 않은 값을 NA로서 취급합니다"
+msgstr "유한하지 않은 값들은 NA 처리됩니다 "
 
 #: distance.c:227
 msgid "distance(): invalid p"
-msgstr "distance(): 부적절한 p"
+msgstr "distance(): p 값이 잘못되었습니다 "
 
 #: distance.c:230
 msgid "distance(): invalid distance"
-msgstr "distance() : 부적절한 distance"
+msgstr "distance(): 거리가 잘못되었습니다 "
 
 #: family.c:21
 #, c-format
 msgid "Value %g out of range (0, 1)"
-msgstr ""
+msgstr "%g 값이 (0,1) 범위 외입니다 "
 
 #: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr ""
+msgstr "%s 인자는 반드시 수치형 벡터이어야 합니다 "
 
 #: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr ""
+msgstr "%s 는 길이가 1 이거나 %d 인 수치형 벡터이어야 합니다 "
 
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
-msgstr "sm.method=\"spline\"에서는 2500행까지만 취급할수 없습니다"
+msgstr "sm.method=\"spline\" 에서는 최대 2500 개의 행만을 가질 수 있습니다 "
 
 #: loessc.c:235
 msgid "span is too small"
-msgstr "범위(span)가 너무 작습니다"
+msgstr "범위가 너무 작습니다 "
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
-msgstr "qr_solve 에서의 특이 행렬입니다"
+msgstr "Singular matrix in qr_solve"
 
 #: mAR.c:510
 msgid "Singular matrix in ldet"
-msgstr "ldet에서의 특이 행렬입니다"
+msgstr "Singular matrix in ldet"
 
 #: mAR.c:697
 msgid "Invalid vmethod"
-msgstr "부적절한 vmethod입니다"
+msgstr "vmethod 가 잘못되었습니다 "
 
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
-msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니다"
+msgstr "Burg 의 알고리즘를 이용하여 부분상관관계를 찾는데 실패했습니다 "
 
 #: monoSpl.c:40
-#, fuzzy
 msgid "n must be at least two"
-msgstr "m는 리스트가 아니면 되지 않습니다"
+msgstr "n 은 반드시 최소 2 이상이어야 합니다 "
 
 #: monoSpl.c:73
 msgid "Argument m must be numeric"
-msgstr ""
+msgstr "인자 m 은 반드시 수치형이어야 합니다 "
 
 #: monoSpl.c:76
-#, fuzzy
 msgid "length(m) must be at least two"
-msgstr "m는 리스트가 아니면 되지 않습니다"
+msgstr "length(m) 은 반드시 2 이상이어야 합니다 "
 
 #: monoSpl.c:78
 msgid "Argument Sx must be numeric vector one shorter than m[]"
-msgstr ""
+msgstr "Sx 인자는 반드시 수치형 벡터이어야 하며, m[] 보다 짧아야합니다 "
 
 #: nls.c:97
 msgid "'control' must be a list"
-msgstr "'control'는 리스트가 아니면 되지 않습니다"
+msgstr "'control' 은 반드시 list 이어야 합니다 "
 
 #: nls.c:99
 msgid "'m' must be a list"
-msgstr "'m'는 리스트가 아니면 되지 않습니다"
+msgstr "'m' 은 반드시 list 이어야 합니다 "
 
 #: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
 #: nls.c:176 nls.c:181 nls.c:186 nls.c:191
 #, c-format
 msgid "'%s' absent"
-msgstr "'%s'가 없습니다"
+msgstr "'%s' 가 없습니다 "
 
 #: nls.c:232
 msgid "singular gradient"
-msgstr "구배가 특이합니다"
+msgstr "singular gradient"
 
 #: nls.c:253
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
-msgstr "step인자 %g는 %g의 'minFactor'이하에 감소했습니다"
+msgstr "step factor %g reduced below 'minFactor' of %g"
 
 #: nls.c:262
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
-msgstr "반복수가 최대치 %d를 넘었습니다"
+msgstr "최대 반복수 %d 를 초과했습니다 "
 
 #: nls.c:267
 msgid "converged"
-msgstr ""
+msgstr "수렴합니다 "
 
 #: nls.c:288
 msgid "'theta' should be of type character"
-msgstr "'theta'는 문자 유형이 아니면 되지 않습니다"
+msgstr "'theta' 는 반드시 문자형 이어야 합니다 "
 
 #: nls.c:290 port.c:366
 msgid "use of NULL environment is defunct"
-msgstr ""
+msgstr "use of NULL environment is defunct"
 
 #: nls.c:294
 msgid "'rho' should be an environment"
-msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
+msgstr "'rho' 는 반드시 환경이어야 합니다 "
 
 #: nls.c:297
 msgid "'dir' is not a numeric vector of the correct length"
-msgstr ""
+msgstr "'dir' 은 올바른 길이를 가진 수치형 벡터가 아닙니다 "
 
 #: nls.c:314 nls.c:342
 msgid "Missing value or an infinity produced when evaluating the model"
-msgstr "model를 평가할때 결손값 또는 무한대가 생성되었습니다"
+msgstr "모델 평가시 결측치 혹은 무한값이 생성되었습니다 "
 
 #: nls.c:320
 #, c-format
 msgid "variable '%s' is integer, not numeric"
-msgstr ""
+msgstr "변수 '%s' 는 수치형이 아닌 정수입니다 "
 
 #: nls.c:322
 #, c-format
 msgid "variable '%s' is not numeric"
-msgstr ""
+msgstr "변수 '%s' 는 수치형이 아닙니다 "
 
 #: pacf.c:81
 msgid "bad Starma struct"
-msgstr "부적절한 Starma struct입니다"
+msgstr "Starma struct 가 잘못되었습니다 "
 
 #: pacf.c:227
 #, c-format
 msgid "starma error code %d"
-msgstr "starma 에러 코드는 %d입니다"
+msgstr "starma 에러 코드는 %d 입니다"
 
 #: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
-msgstr "forkal 에러 code는 %d입니다"
+msgstr "forkal 에러코드는 %d 입니다"
 
 #: pacf.c:451
 msgid "invalid value of lag.max"
-msgstr "부적절한 lag.max 값입니다"
+msgstr "lag.max 값이 잘못되었습니다 "
 
 #: port.c:131
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
-msgstr ""
+msgstr "Rf_divset: alg=%d 는 1,2,3, 혹은 4 의 값을 가져야 합니다 "
 
 #: port.c:310
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr ""
+msgstr "기울기 함수는 길이가 %d 인 수치형 벡터를 반환해야 합니다  "
 
 #: port.c:320
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
+msgstr "Hessian 함수는 반드시 order 가 %d 인 수치형 정방행렬을 반환해야 합니다 "
 
 #: port.c:370
 msgid "'rho' must be an environment"
-msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
+msgstr "'rho' 는 반드시 환경이어야 합니다 "
 
 #: port.c:372 port.c:523
 msgid "'d' must be a nonempty numeric vector"
-msgstr ""
+msgstr "'d' 는 반드시 수치형 벡터이어야 합니다 "
 
 #: port.c:374
 msgid "When Hessian defined must also have gradient defined"
-msgstr ""
+msgstr "Hessian 이 정의되었다면 기울기도 정의되어야 합니다 "
 
 #: port.c:377
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr ""
+msgstr "환경 'rho' 은 반드시 길이가 %d 인 수치형 벡터 '.par' 를 포함해야 합니다  "
 
 #: port.c:391
 msgid "'lower' and 'upper' must be numeric vectors"
-msgstr ""
+msgstr "'lower' 와 'upper' 는 반드시 수치형 벡터이어야 합니다 "
 
 #: port.c:437
 msgid "'getElement' applies only to named lists"
-msgstr ""
+msgstr "'getElement' 는 명명된 list 에만 적용됩니다 "
 
 #: port.c:458
 #, c-format
 msgid "%s$%s() not found"
-msgstr ""
+msgstr "%s$%s() 를 찾을 수 없습니다 "
 
 #: port.c:471
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr ""
+msgstr "'gradient' 는 반드시 (%d,%d) 인 수치형 행렬이어야 합니다 "
 
 #: port.c:492
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr ""
+msgstr "fcn 은 모드 %d, 길이 %d 를 생성했고, 모드 %d, 길이 %d 를 요구합니다 "
 
 #: port.c:505
 msgid "invalid type for eval_check_store"
-msgstr ""
+msgstr "eval_check_store 에 대한 유형이 잘못되었습니다 "
 
 #: port.c:524
 msgid "m must be a list"
-msgstr "m는 리스트가 아니면 되지 않습니다"
+msgstr "m 은 반드시 list 이어야 합니다 "
 
 #: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr ""
+msgstr "'lowerb' 와 'upperb' 는 반드시 수치형 벡터이어야 합니다 "
 
 #: rWishart.c:51
 msgid "inconsistent degrees of freedom and dimension"
-msgstr ""
+msgstr "자유도와 차원이 일치하지 않습니다 "
 
 #: rWishart.c:84
 msgid "'scal' must be a square, real matrix"
-msgstr ""
+msgstr "'scal' 은 반드시 실수형 정방행렬이어야 합니다 "
 
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
-msgstr ""
+msgstr "'scal' 행렬이 positive-definite 가 아닙니다 "
 
 #: smooth.c:79
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
-msgstr "3점 이동의 중앙치 계산으로 end-rule이 부적절합니다: %d"
+msgstr "invalid end-rule for running median of 3: %d"
 
 #: smooth.c:231
 msgid "allocation error in smooth(*, '3RSR')."
-msgstr "smooth(*, '3RSR')에서의 할당 에러입니다"
+msgstr "smooth(*, '3RSR') 에서 할당에러가 발생했습니다 "
 
 #: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
-msgstr "smooth(*,'3RSS')에서의 할당 에러입니다"
+msgstr "smooth(*,'3RSS') 에서 할당 에러가 발생했습니다 "
 
 #: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
-msgstr "smooth(*,'3R')에서의 할당 에러입니다"
+msgstr "smooth(*,'3R') 에서 할당에러가 발생했습니다 "
 
 #: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
-msgstr "직전의 %d개의 관측치에서 결손값이 있습니다"
+msgstr "마지막 %d 개의 관측치가 결측치입니다 "
