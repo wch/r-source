@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/recordplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{recordPlot}
@@ -23,6 +23,10 @@ replayPlot(x)
   graphics device.  The returned object is of class
   \code{"recordedplot"}, and \code{replayPlot} acts as a \code{print}
   method for that class.
+
+  The returned object is stored as a pairlist, but the usual methods for
+  examining \R objects such as \code{\link{deparse}} and
+  \code{\link{str}} are liable to mislead. 
 }
 \section{Warning}{
   The format of recorded plots may change between \R versions.
