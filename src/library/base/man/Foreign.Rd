@@ -7,8 +7,6 @@
 \alias{Foreign}
 \alias{.C}
 \alias{.Fortran}
-\alias{.External}
-\alias{.Call}
 \title{Foreign Function Interface}
 \description{
   Functions to make calls to compiled code that has been loaded into \R.
@@ -16,8 +14,6 @@
 \usage{
        .C(.NAME, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
  .Fortran(.NAME, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
-.External(.NAME, \dots, PACKAGE)
-    .Call(.NAME, \dots, PACKAGE)
 }
 \arguments{
   \item{.NAME}{a character string giving the name of a C function or
@@ -33,64 +29,44 @@
     their address is passed to C or Fortran.}
   \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
     the DLL given by this argument (plus the conventional extension,
-    \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
-    add safety for packages, which can ensure by using this argument
-    that no other package can override their external symbols, and also
-    speeds up the search (see \sQuote{Note}).  Use
-    \code{PACKAGE = "base"} for symbols linked into \R.}
+    \file{.so}, \file{.dll}, \dots).
+
+    This is intended to add safety for packages, which can ensure by
+    using this argument that no other package can override their external
+    symbols, and also speeds up the search (see \sQuote{Note}).}
   \item{ENCODING}{optional name for an encoding to be assumed for
     character vectors.  Allowed but ignored for \code{.Fortran}.
     See \sQuote{Details}.}
 }
-\value{
-  The functions \code{.C} and \code{.Fortran} return a list similar to
-  the \code{\dots} list of arguments passed in, but reflecting any
-  changes made by the C or Fortran code.
 
-  \code{.External} and \code{.Call} return an (arbitrary) \R object.
-
-  These calls are typically made in conjunction with
-  \code{\link{dyn.load}} which links DLLs to \R.
-}
 \details{
-  The functions \code{.C} and \code{.Fortran} can be used to make calls
-  to compiled C and Fortran code.
-
-  \code{.Call} can be used to call compiled code
-  which makes use of internal \R objects, passing the arguments to
-  the C code as a sequence of \R objects.
-
-  \code{.External} can be used to call compiled code that uses \R
-  objects in the same way as internal \R functions: this allows for a
-  variable number of arguments.
+  These functions can be used to make calls to compiled C and Fortran 77
+  code.  Later interfaces are \code{\link{.Call}} and
+  \code{\link{.External}}.
 
   Character strings will be translated from the value of \code{ENCODING}
   or any declared encoding (see \code{\link{Encoding}}) to the current
-  locale before being passed to the compiled code.  They will be
-  returned in the current locale unless \code{ENCODING} was specified,
-  when the output strings are translated to the specified encoding.
+  locale before being passed to the compiled C code.  They will be
+  returned encoded in the current locale unless \code{ENCODING} was
+  specified, when the output strings are translated to the specified
+  encoding.
   
   These functions are all \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which if named must partially
   match \code{.NAME}).  The other named arguments follow \code{\dots}
-  and so cannot be abbreviated.  You should avoid using names in the
-  arguments passed to \code{\dots} that match or partially match
-  \code{.NAME} in case the argument handling in \code{.C} or
-  \code{.Fortran} should change to follow standard argument matching
-  conventions.
-  
-  For details about how to write code to use with \code{.Call} and
-  \code{.External}, see the chapter on \dQuote{System and foreign language
-    interfaces} in the \dQuote{Writing \R Extensions} manual.
-#ifdef windows
-
-  For Windows-specific details on producing the external code, see the
-  \dQuote{R Installation and Administration} manual.
-#endif
+  and so cannot be abbreviated.  For clarity, should avoid using names
+  in the arguments passed to \code{\dots} that match or partially match
+  \code{.NAME}.
 }
+
+\value{
+  A list similar to the \code{\dots} list of arguments passed in
+  (including any names given to the arguments), but reflecting any
+  changes made by the C or Fortran code.
+}
+
 \section{Argument types}{
-  The mapping of the types of \R arguments to C or Fortran arguments
-  in \code{.C} or \code{.Fortran} is
+  The mapping of the types of \R arguments to C or Fortran arguments is
 
   \tabular{lll}{
     \R \tab     C \tab     Fortran\cr
@@ -106,18 +82,16 @@
   }
 
   Numeric vectors in \R will be passed as type \code{double *} to C (and
-  as \code{double precision} to Fortran) unless (i) \code{.C} or
-  \code{.Fortran} is used, (ii) \code{DUP} is true and (iii) the
-  argument has attribute \code{Csingle} set to \code{TRUE} (use
-  \code{\link{as.single}} or \code{\link{single}}).  This mechanism is
-  only intended to be used to facilitate the interfacing of existing C
-  and Fortran code.
+  as \code{double precision} to Fortran) unless (i) \code{DUP} is true
+  and (ii) the argument has attribute \code{Csingle} set to \code{TRUE}
+  (use \code{\link{as.single}} or \code{\link{single}}).  This mechanism
+  is only intended to be used to facilitate the interfacing of existing
+  C and Fortran code.
 
   The C type \code{Rcomplex} is defined in \file{Complex.h} as a
-  \code{typedef struct {double r; double i;}}.  Fortran type
-  \code{double complex} is an extension to the Fortran standard, and the
-  availability of a mapping of \code{complex} to Fortran may be compiler
-  dependent.
+  \code{typedef struct {double r; double i;}}.  It may or may not be
+  equivalent to the C99 \code{double complex} type, depending on the
+  compiler used.
 
   Logical values are sent as \code{0} (\code{FALSE}), \code{1}
   (\code{TRUE}) or \code{INT_MIN = -2147483648} (\code{NA}, but only if
@@ -132,40 +106,36 @@
   
   \emph{Note:} The Fortran type corresponding to \code{logical} is
   \code{integer}, not \code{logical}: the difference matters on some
-  older Fortran compilers.
+  Fortran compilers.
   
-  The first character string of a character vector is passed as a C
-  character array to Fortran: that string may be usable as
-  \code{character*255} if its true length is passed separately.  Only up
-  to 255 characters of the string are passed back.  (How well this works,
-  or even if it works at all, depends on the C and Fortran compilers
-  and the platform.)
-
   Missing (\code{NA}) string values are passed to \code{.C} as the string
   "NA". As the C \code{char} type can represent all possible bit patterns
   there appears to be no way to distinguish missing strings from the
   string \code{"NA"}.  If this distinction is important use \code{.Call}.
 
-  Functions, expressions, environments and other language elements are
-  passed as the internal \R pointer type \code{SEXP}.  This type is
-  defined in \file{Rinternals.h} or the arguments can be declared as
-  generic pointers, \code{void *}.  Lists are passed as C arrays of
-  \code{SEXP} and can be declared as \code{void **} or \code{SEXP *}.
-  Note that you cannot assign values to the elements of the list within
-  the C routine.  Assigning values to elements of the array corresponding
-  to the list bypasses R's memory management/garbage collection and will
-  cause problems.  Essentially, the array corresponding to the list is
-  read-only.  If you need to return S objects created within the C
-  routine, use the \code{.Call} interface.
+  \code{.Fortran} passes the first (only )character string of a character
+  vector is passed as a C character array to Fortran: that may be usable
+  as \code{character*255} if its true length is passed separately.  Only
+  up to 255 characters of the string are passed back.  (How well this
+  works, and even if it works at all, depends on the C and Fortran
+  compilers and the platform.)
 
-  \R functions can be invoked using \code{call_S} or \code{call_R} and
-  can be passed lists or the simple types as arguments.  However, the
-  \code{.Call} interface is much preferred.
+  \R objects such as unctions, expressions, environments and other
+  language elements are passed as the \R pointer type \code{SEXP}.  This
+  type is defined in header \file{Rinternals.h} or the arguments can be
+  declared as generic pointers, \code{void *}.  Lists are passed as C
+  arrays of \code{SEXP} and can be declared as \code{void **} or
+  \code{SEXP *}: these should be regarded as read-only.  If you need to
+  return \R objects created within the C routine, use the
+  \code{\code{.Call}} interface.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
 \section{Warning}{
   \emph{\code{DUP = FALSE} is dangerous.}
+
+  People concerned about memory usage are strongly recommended to use
+  the \code{\link{.Call}} interface instead of these interfaces.
 
   If you pass a local variable to \code{.C}/\code{.Fortran} with
   \code{DUP = FALSE}, your compiled code can alter the local variable and
@@ -174,20 +144,16 @@
   be able to change not only the local variable but the variable one
   level up.  This will be very hard to trace.
 
-  In addition, character vectors cannot be used with \code{DUP = FALSE}.
+  Character vectors and lists cannot be used with \code{DUP = FALSE}.
 
   It is safe and useful to set \code{DUP = FALSE} if you do not change any
   of the variables that might be affected, e.g.,
 
-  \code{.C("Cfunction", input=x, output=numeric(10))}.
+  \code{.C("Cfunction", input = x, output = numeric(10))}.
 
   In this case the \code{output} variable did not exist before the call
   so it cannot cause trouble.  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
-
-  Neither \code{.Call} nor \code{.External} copy their arguments.  You
-  should treat arguments you receive through these interfaces as
-  read-only.
 
   Note that if \code{DUP = TRUE} there are two copies involved, one when
   the data from the argument is copied and the pointer to the data
@@ -208,40 +174,37 @@
   Fortran names containing underscores.
 
   Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
-  work if the Fortran 9x compiler used differs from the Fortran compiler
+  work if the Fortran 9x compiler used differs from the Fortran 77 compiler
   used when configuring \R, especially if the subroutine name is not
   lower-case or includes an underscore.  It is also possible to use
   \code{.C} and do any necessary symbol-name translation yourself.
 }
 
-\section{Header files for external code}{
-  Writing code for use with \code{.External} and \code{.Call} will need to
-  use internal \R structures defined in
-  \file{Rinternals.h} and/or the macros in \file{Rdefines.h}.
-}
-
 \note{
   If one of these functions is to be used frequently, do specify
   \code{PACKAGE} (to confine the search to a single DLL) or pass
-  \code{name} as one of the native symbol objects.
+  \code{.NAME} as one of the native symbol objects.  Searching for
+  symbols can take a long time, especially when many namespaces are loaded.
+  
+  You may see \code{PACKAGE = "base"} for symbols linked into \R.  Do
+  not use this in your own code: such symbols are not part of the API
+  and may be changed without warning.
   
   The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
-  was not as documented.  This has been corrected, but the \code{.Call}
-  and \code{.External} interfaces are much preferred for passing
-  anything other than atomic vectors.
+  was not as documented.  This has been corrected, but the
+  \code{\link{.Call}} and \code{\link{.External}} interfaces are much
+  preferred for passing anything other than atomic vectors.
 }
 
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (\code{.C} and \code{.Fortran}.)
-
-  Chambers, J. M. (1998)
-  \emph{Programming with Data.  A Guide to the S Language}.
-  Springer. (\code{.Call}.)
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{dyn.load}}.
+  \code{\link{dyn.load}}, \code{\link{.Call}}.
+
+  The \sQuote{Writing R Extensions} manual.
   
   \code{\link{getCConverterDescriptions}} for converters that might be
   used when passing \R objects with explicit classes to and from
