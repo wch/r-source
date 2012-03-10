@@ -361,6 +361,10 @@
       \item \code{.C()} now passes a pairlist as a \code{SEXP} to the
       compiled code.  This is documented, but pairlists were if fact
       handled differently as a legacy from the early days of \R.
+
+      \item \code{call_R} and \code{call_S} are deprecated.  They still
+      exist in the headers and as entry points, but are no longer
+      documented and should not be used for new code.
     }
   }
   
@@ -417,7 +421,7 @@
 
       \item \code{.C()} or \code{.Fortran()} had a protection error if
       the registration information resulted in an argument
-      being coered to another type.
+      being coerced to another type.
     }
   }
 }
