@@ -413,21 +413,18 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	if (!dup)
 	    error(_("lists must be duplicated in .C"));
 	n = length(s);
-	SEXP *lptr = (SEXP*) R_alloc(n, sizeof(SEXP));
+	SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
 	for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
 	return (void*) lptr;
 	break;
     case LISTSXP:
-	if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
-	/* Warning : The following looks like it could bite ... */
-	if (!dup) return (void*) s;
-	n = length(s);
-	char **cptr = (char**) R_alloc(n, sizeof(char*));
-	for(int i = 0 ; i < n ; i++, s = CDR(s)) cptr[i] = (char*) s;
-	return (void*) cptr;
-	break;
+	/* Temporary, added in R 2.15.0 */
+	warning("pairlists are passed as SEXP as from R 2.15.0");
+	/* fall through */
     default:
-	if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
+	/* Includes pairlists from R 2.15.0 */
+	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
+			type2char(TYPEOF(s)), narg);
 	return (void*) s;
     }
 }
@@ -436,53 +433,51 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		       R_NativePrimitiveArgType type, char *encname)
 {
-    Rbyte *rawptr;
-    int *iptr, n = length(arg);
-    float *sptr;
-    double *rptr;
-    char **cptr, buf[256];
-    Rcomplex *zptr;
-    SEXP *lptr;
-    int i;
-    SEXP s, t;
+    int n = length(arg);
+    SEXP s;
 
     switch(type) {
     case RAWSXP:
 	s = allocVector(type, n);
-	rawptr = (Rbyte *) p;
-	for (i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
+	Rbyte *rawptr = (Rbyte *) p;
+	for (int i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
 	break;
     case LGLSXP:
+    {
 	s = allocVector(type, n);
-	iptr = (int*)p;
-	for (i = 0 ; i < n ; i++) {
+	int *iptr = (int*) p;
+	for (int i = 0 ; i < n ; i++) {
 	    int tmp =  iptr[i];
 	    LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
 	}
 	break;
+    }
     case INTSXP:
+    {
 	s = allocVector(type, n);
-	iptr = (int*)p;
-	for(i = 0 ; i < n ; i++) INTEGER(s)[i] = iptr[i];
+	int *iptr = (int*) p;
+	for(int i = 0 ; i < n ; i++) INTEGER(s)[i] = iptr[i];
 	break;
+    }
     case REALSXP:
     case SINGLESXP:
 	s = allocVector(REALSXP, n);
 	if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
-	    sptr = (float*) p;
-	    for(i = 0 ; i < n ; i++) REAL(s)[i] = (double) sptr[i];
+	    float *sptr = (float*) p;
+	    for(int i = 0 ; i < n ; i++) REAL(s)[i] = (double) sptr[i];
 	} else {
-	    rptr = (double*) p;
-	    for(i = 0 ; i < n ; i++) REAL(s)[i] = rptr[i];
+	    double *rptr = (double*) p;
+	    for(int i = 0 ; i < n ; i++) REAL(s)[i] = rptr[i];
 	}
 	break;
     case CPLXSXP:
 	s = allocVector(type, n);
-	zptr = (Rcomplex*)p;
-	for (i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
+	Rcomplex *zptr = (Rcomplex*)p;
+	for (int i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
 	break;
     case STRSXP:
 	if(Fort) {
+	    char buf[256];
 	    /* only return one string: warned on the R -> Fortran step */
 	    strncpy(buf, (char*)p, 255);
 	    buf[255] = '\0';
@@ -491,7 +486,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	    UNPROTECT(1);
 	} else {
 	    PROTECT(s = allocVector(type, n));
-	    cptr = (char**) p;
+	    char **cptr = (char**) p;
 	    if(strlen(encname)) {
 		const char *inbuf;
 		char *outbuf, *p;
@@ -499,7 +494,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		void *obj = Riconv_open(encname, ""); /* (to, from) */
 		if (obj == (void *)(-1))
 		    error(_("unsupported encoding '%s'"), encname);
-		for (i = 0 ; i < n ; i++) {
+		for (int i = 0 ; i < n ; i++) {
 		    inbuf = cptr[i]; inb = strlen(inbuf);
 		    outb0 = 3*inb;
 		restart_out:
@@ -520,23 +515,29 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		}
 		Riconv_close(obj);
 	    } else {
-		for (i = 0 ; i < n ; i++)
+		for (int i = 0 ; i < n ; i++)
 		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 	    }
 	    UNPROTECT(1);
 	}
 	break;
     case VECSXP:
+    {
 	PROTECT(s = allocVector(VECSXP, n));
-	lptr = (SEXP*)p;
-	for (i = 0 ; i < n ; i++) SET_VECTOR_ELT(s, i, lptr[i]);
+	SEXP *lptr = (SEXP*) p;
+	for (int i = 0 ; i < n ; i++) SET_VECTOR_ELT(s, i, lptr[i]);
 	UNPROTECT(1);
 	break;
+    }
     case LISTSXP:
+    {
+	SEXP t;
 	PROTECT(t = s = allocList(n));
-	lptr = (SEXP*) p;
-	for(i = 0 ; i < n ; i++, t = CDR(t)) SETCAR(t, lptr[i]);
+	SEXP *lptr = (SEXP*) p;
+	for(int i = 0 ; i < n ; i++, t = CDR(t)) SETCAR(t, lptr[i]);
 	UNPROTECT(1);
+	break;
+    }
     default:
 	s = (SEXP)p;
     }
