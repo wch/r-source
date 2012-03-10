@@ -252,12 +252,6 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 }
 
 
-
-/* Convert an R object to a non-moveable C/Fortran object and return
-   a pointer to it.  This leaves pointers for anything other
-   than vectors and lists unaltered.
-*/
-
 static Rboolean
 checkNativeType(int targetType, int actualType)
 {
@@ -302,6 +296,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	}
 
 	if(targetType != SINGLESXP) {
+	    /* Cannot be called if DUP = FALSE, so only needs to live
+	       until copied later in this function.
+	       But R_alloc allocates, so missed protection < R 2.15.0.
+	    */
 	    PROTECT(s = coerceVector(s, targetType));
 	    nprotect++;
 	}
