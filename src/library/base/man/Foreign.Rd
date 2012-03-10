@@ -122,7 +122,7 @@
   Logical values are sent as \code{0} (\code{FALSE}), \code{1}
   (\code{TRUE}) or \code{INT_MIN = -2147483648} (\code{NA}, but only if
   \code{NAOK = TRUE}), and the compiled code should return one of these
-  three values: however non-zero value other than \code{INT_MIN} are
+  three values: however non-zero values other than \code{INT_MIN} are
   mapped to \code{TRUE}.
 
   \emph{Note:} The C types corresponding to \code{integer} and
@@ -149,8 +149,8 @@
   Functions, expressions, environments and other language elements are
   passed as the internal \R pointer type \code{SEXP}.  This type is
   defined in \file{Rinternals.h} or the arguments can be declared as
-  generic pointers, \code{void *}. Lists are passed as C arrays of
-  \code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+  generic pointers, \code{void *}.  Lists are passed as C arrays of
+  \code{SEXP} and can be declared as \code{void **} or \code{SEXP *}.
   Note that you cannot assign values to the elements of the list within
   the C routine.  Assigning values to elements of the array corresponding
   to the list bypasses R's memory management/garbage collection and will
@@ -158,9 +158,9 @@
   read-only.  If you need to return S objects created within the C
   routine, use the \code{.Call} interface.
 
-
   \R functions can be invoked using \code{call_S} or \code{call_R} and
-  can be passed lists or the simple types as arguments.
+  can be passed lists or the simple types as arguments.  However, the
+  \code{.Call} interface is much preferred.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
@@ -196,7 +196,7 @@
 }
 
 \section{Fortran symbol names}{
-  All Fortran compilers that can be used to compile \R map symbol names
+  All Fortran compilers known to be usable to compile \R map symbol names
   to lower case, and so does \code{.Fortran}.
 
   Symbol names containing underscores are not valid Fortran 77 (although
@@ -216,16 +216,19 @@
 
 \section{Header files for external code}{
   Writing code for use with \code{.External} and \code{.Call} will need to
-  use internal \R structures.  If possible use just those defined in
-  \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
-  as other header files are not installed and are even more
-  likely to be changed.
+  use internal \R structures defined in
+  \file{Rinternals.h} and/or the macros in \file{Rdefines.h}.
 }
 
 \note{
   If one of these functions is to be used frequently, do specify
   \code{PACKAGE} (to confine the search to a single DLL) or pass
   \code{name} as one of the native symbol objects.
+  
+  The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
+  was not as documented.  This has been corrected, but the \code{.Call}
+  and \code{.External} interfaces are much preferred for passing
+  anything other than atomic vectors.
 }
 
 \references{
