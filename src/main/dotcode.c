@@ -683,6 +683,7 @@ static SEXP enctrim(SEXP args, char *name, int len)
 	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
 		error(_("ENCODING argument must be a single character string"));
 	    strncpy(name, translateChar(STRING_ELT(sx, 0)), len);
+	    warning("ENCODING is deprecated and will be removed in R 2.16.0");
 	    return R_NilValue;
 	}
 	if(TAG(ss) == EncSymbol) {
@@ -691,6 +692,7 @@ static SEXP enctrim(SEXP args, char *name, int len)
 	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
 		error(_("ENCODING argument must be a single character string"));
 	    strncpy(name, translateChar(STRING_ELT(sx, 0)), len);
+	    warning("ENCODING is deprecated and will be removed in R 2.16.0");
 	    SETCDR(s, CDR(ss));
 	}
 	s = CDR(s);

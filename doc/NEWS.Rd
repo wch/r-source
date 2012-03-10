@@ -336,6 +336,11 @@
       \code{printNoClass()}, \code{provide()}, \code{read.table.url()},
       \code{restart()}, \code{scan.url()}, \code{symbol.C()},
       \code{symbol.For()} and \code{unix()}.
+      
+      \item The \code{ENCODING} argument to \code{.C()} is deprecated.
+      It was intended to smooth the transition to multi-byte character
+      strings, but can be replaced by the use of \code{iconv()} in the
+      rare cases where it is still needed.
     }
   }
 
