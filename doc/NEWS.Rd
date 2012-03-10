@@ -414,6 +414,10 @@
 
       \item \code{isGeneric()} produced an error for primitives that
       can not have methods.
+
+      \item \code{.C()} or \code{.Fortran()} had a protection error if
+      the registration information resulted in an argument
+      being coered to another type.
     }
   }
 }
