@@ -34,9 +34,8 @@
     This is intended to add safety for packages, which can ensure by
     using this argument that no other package can override their external
     symbols, and also speeds up the search (see \sQuote{Note}).}
-  \item{ENCODING}{optional name for an encoding to be assumed for
-    character vectors.  Allowed but ignored for \code{.Fortran}.
-    See \sQuote{Details}.}
+  
+  \item{ENCODING}{For back-compatibility, accepted but ignored.}
 }
 
 \details{
@@ -49,7 +48,7 @@
   locale before being passed to the compiled C code.  They will be
   returned encoded in the current locale unless \code{ENCODING} was
   specified, when the output strings are translated to the specified
-  encoding.
+  encoding.  This is deprecated: convert code to use \code{\link{iconv}}.
   
   These functions are all \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which if named must partially

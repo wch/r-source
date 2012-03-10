@@ -7101,13 +7101,6 @@ the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
 directive will be used.)
 
-For @code{.C} you can specify an @code{ENCODING} argument: this requests
-that (unless @code{DUP = FALSE}) character vectors be re-encoded to the
-requested encoding before being passed in, and re-encoded from the
-requested encoding when passed back.  Note that encoding names are not
-standardized: but this can be useful to allow code to work in a UTF-8
-locale by specifying @code{ENCODING = "latin1"}.
-
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
 subprograms should be subroutines.

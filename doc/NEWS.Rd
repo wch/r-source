@@ -26,6 +26,13 @@
     }
   }
   
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The \code{ENCODING} argument to \code{.C()} is defunct.
+      Use \code{iconv()} instead.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
@@ -363,6 +370,11 @@
       \code{printNoClass()}, \code{provide()}, \code{read.table.url()},
       \code{restart()}, \code{scan.url()}, \code{symbol.C()},
       \code{symbol.For()} and \code{unix()}.
+      
+      \item The \code{ENCODING} argument to \code{.C()} is deprecated.
+      It was intended to smooth the transition to multi-byte character
+      strings, but can be replaced by the use of \code{iconv()} in the
+      rare cases where it is still needed.
     }
   }
 
@@ -436,6 +448,10 @@
 
       \item \code{isGeneric()} produced an error for primitives that
       can not have methods.
+
+      \item \code{.C()} or \code{.Fortran()} had a protection error if
+      the registration information resulted in an argument
+      being coered to another type.
     }
   }
 }

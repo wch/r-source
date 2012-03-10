@@ -78,7 +78,6 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		     DllReference *dll);
 static SEXP pkgtrim(SEXP args, DllReference *dll);
-static SEXP enctrim(SEXP args, char *name, int len);
 
 /*
   Checks whether the specified object correctly identifies a native routine.
@@ -254,11 +253,6 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 
 
 
-/* Convert an R object to a non-moveable C/Fortran object and return
-   a pointer to it.  This leaves pointers for anything other
-   than vectors and lists unaltered.
-*/
-
 static Rboolean
 checkNativeType(int targetType, int actualType)
 {
@@ -274,9 +268,10 @@ checkNativeType(int targetType, int actualType)
 
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			const char *name, R_toCConverter **converter,
-			int targetType, char* encname)
+			int targetType)
 {
-    int n;
+    int n, nprotect = 0;
+    void *ans;
 
     if(converter) *converter = NULL;
 
@@ -301,7 +296,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		  name, narg + 1, targetType, TYPEOF(s));
 	}
 
-	if(targetType != SINGLESXP) s = coerceVector(s, targetType);
+	if(targetType != SINGLESXP) {
+	    PROTECT(s = coerceVector(s, targetType));
+	    nprotect++;
+	}
     }
 
     switch(TYPEOF(s)) {
@@ -312,8 +310,8 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
 	    for (int i = 0; i < n; i++) rawptr[i] = RAW(s)[i];
 	}
-	return (void *) rawptr;
-    break;
+	ans = (void *) rawptr;
+	break;
     case LGLSXP:
     case INTSXP:
 	n = LENGTH(s);
@@ -326,7 +324,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    iptr = (int*) R_alloc(n, sizeof(int));
 	    for (int i = 0 ; i < n ; i++) iptr[i] = INTEGER(s)[i];
 	}
-	return (void*) iptr;
+	ans = (void*) iptr;
 	break;
     case REALSXP:
 	n = LENGTH(s);
@@ -338,12 +336,12 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	if (asLogical(getAttrib(s, CSingSymbol)) == 1) {
 	    float *sptr = (float*) R_alloc(n, sizeof(float));
 	    for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
-	    return (void*) sptr;
+	    ans = (void*) sptr;
 	} else if (dup) {
 	    rptr = (double*) R_alloc(n, sizeof(double));
 	    for (int i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
-	} 
-	return (void*) rptr;
+	    ans = (void*) rptr;
+	} else ans = (void*) rptr;
 	break;
     case CPLXSXP:
 	n = LENGTH(s);
@@ -353,10 +351,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
 		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
 	if (dup) {
-	    zptr = (Rcomplex*)R_alloc(n, sizeof(Rcomplex));
+	    zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
 	    for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
 	}
-	return (void*) zptr;
+	ans = (void *) zptr;
 	break;
     case STRSXP:
 	if (!dup)
@@ -368,44 +366,15 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		warning(_("only first string in char vector used in .Fortran"));
 	    char *fptr = (char*) R_alloc(max(255, strlen(ss)) + 1, sizeof(char));
 	    strcpy(fptr, ss);
-	    return (void*) fptr;
+	    ans =  (void*) fptr;
 	} else {
 	    char **cptr = (char**) R_alloc(n, sizeof(char*));
-	    if (strlen(encname)) {
-		char *outbuf;
-		const char *inbuf;
-		size_t inb, outb, outb0, res;
-		void *obj = Riconv_open("", encname); /* (to, from) */
-		if (obj == (void *)-1)
-		    error(_("unsupported encoding '%s'"), encname);
-		for (int i = 0 ; i < n ; i++) {
-		    inbuf = CHAR(STRING_ELT(s, i));
-		    inb = strlen(inbuf);
-		    outb0 = 3*inb;
-		restart_in:
-		    cptr[i] = outbuf = (char*) R_alloc(outb0 + 1, sizeof(char));
-		    outb = 3*inb;
-		    Riconv(obj, NULL, NULL, &outbuf, &outb);
-		    errno = 0; /* precaution */
-		    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
-		    if(res == -1 && errno == E2BIG) {
-			outb0 *= 3;
-			goto restart_in;
-		    }
-		    if(res == -1)
-			error(_("conversion problem in re-encoding to '%s'"),
-			      encname);
-		    *outbuf = '\0';
-		}
-		Riconv_close(obj);
-	    } else {
-		for (int i = 0 ; i < n ; i++) {
-		    const char *ss = translateChar(STRING_ELT(s, i));
-		    cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
-		    strcpy(cptr[i], ss);
-		}
+	    for (int i = 0 ; i < n ; i++) {
+		const char *ss = translateChar(STRING_ELT(s, i));
+		cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
+		strcpy(cptr[i], ss);
 	    }
-	    return (void*) cptr;
+	    ans = (void*) cptr;
 	}
 	break;
     case VECSXP:
@@ -415,7 +384,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	n = length(s);
 	SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
 	for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
-	return (void*) lptr;
+	ans = (void*) lptr;
 	break;
     case LISTSXP:
 	/* Temporary, added in R 2.15.0 */
@@ -425,13 +394,15 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	/* Includes pairlists from R 2.15.0 */
 	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
 			type2char(TYPEOF(s)), narg);
-	return (void*) s;
+	ans =  (void*) s;
     }
+    if (nprotect) UNPROTECT(nprotect);
+    return ans;
 }
 
 
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
-		       R_NativePrimitiveArgType type, char *encname)
+		       R_NativePrimitiveArgType type)
 {
     int n = length(arg);
     SEXP s;
@@ -487,37 +458,8 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	} else {
 	    PROTECT(s = allocVector(type, n));
 	    char **cptr = (char**) p;
-	    if(strlen(encname)) {
-		const char *inbuf;
-		char *outbuf, *p;
-		size_t inb, outb, outb0, res;
-		void *obj = Riconv_open(encname, ""); /* (to, from) */
-		if (obj == (void *)(-1))
-		    error(_("unsupported encoding '%s'"), encname);
-		for (int i = 0 ; i < n ; i++) {
-		    inbuf = cptr[i]; inb = strlen(inbuf);
-		    outb0 = 3*inb;
-		restart_out:
-		    p = outbuf = (char*)R_alloc(outb0 + 1, sizeof(char));
-		    outb = outb0;
-		    Riconv(obj, NULL, NULL, &outbuf, &outb);
-		    errno = 0; /* precaution */
-		    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
-		    if(res == -1 && errno == E2BIG) {
-			outb0 *= 3;
-			goto restart_out;
-		    }
-		    if(res == -1)
-			error(_("conversion problem in re-encoding from '%s'"),
-			      encname);
-		    *outbuf = '\0';
-		    SET_STRING_ELT(s, i, mkChar(p));
-		}
-		Riconv_close(obj);
-	    } else {
-		for (int i = 0 ; i < n ; i++)
-		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
-	    }
+	    for (int i = 0 ; i < n ; i++)
+		SET_STRING_ELT(s, i, mkChar(cptr[i]));
 	    UNPROTECT(1);
 	}
 	break;
@@ -666,12 +608,10 @@ static SEXP pkgtrim(SEXP args, DllReference *dll)
     return args;
 }
 
-static SEXP enctrim(SEXP args, char *name, int len)
+static SEXP enctrim(SEXP args)
 {
     SEXP s, ss, sx;
-    int pkgused = 0;
 
-    strcpy(name, "");
     for(s = args ; s != R_NilValue;) {
 	ss = CDR(s);
 	/* Look for ENCODING=. We look at the next arg, unless
@@ -679,18 +619,12 @@ static SEXP enctrim(SEXP args, char *name, int len)
 	   and remove it */
 	if(ss == R_NilValue && TAG(s) == EncSymbol) {
 	    sx = CAR(s);
-	    if(pkgused++ == 1) warning(_("ENCODING used more than once"));
-	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
-		error(_("ENCODING argument must be a single character string"));
-	    strncpy(name, translateChar(STRING_ELT(sx, 0)), len);
+	    warning("ENCODING is defunct and will be ignored");
 	    return R_NilValue;
 	}
 	if(TAG(ss) == EncSymbol) {
 	    sx = CAR(ss);
-	    if(pkgused++ == 1) warning(_("ENCODING used more than once"));
-	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
-		error(_("ENCODING argument must be a single character string"));
-	    strncpy(name, translateChar(STRING_ELT(sx, 0)), len);
+	    warning("ENCODING is defunct and will be ignored");
 	    SETCDR(s, CDR(ss));
 	}
 	s = CDR(s);
@@ -1608,7 +1542,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     R_NativePrimitiveArgType *checkTypes = NULL;
     R_NativeArgStyle *argStyles = NULL;
     void *vmax;
-    char symName[MaxSymbolBytes], encname[101];
+    char symName[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'name' is missing"));
     check1arg(args, call, "name");
@@ -1624,7 +1558,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     if(which)
 	symbol.type = R_FORTRAN_SYM;
 
-    args = enctrim(args, encname, 100);
+    args = enctrim(args);
     args = resolveNativeRoutine(args, &ofun, &symbol, symName, &nargs,
 				&naok, &dup, call);
     fun = (VarFun) ofun;
@@ -1662,8 +1596,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1,
 				  which, symName, argConverters + nargs,
-				  checkTypes ? checkTypes[nargs] : 0,
-				  encname);
+				  checkTypes ? checkTypes[nargs] : 0);
 #ifdef R_MEMORY_PROFILING
 	if (RTRACE(CAR(pargs)) && dup)
 	    memtrace_report(CAR(pargs), cargs[nargs]);
@@ -2289,8 +2222,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(s);
 	    } else {
 		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which,
-				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs)),
-				       encname));
+				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs))));
 #if R_MEMORY_PROFILING
 		if (RTRACE(CAR(pargs))) {
 		    memtrace_report(cargs[nargs], s);
@@ -2359,6 +2291,63 @@ static int string2type(char *s)
     return 1; /* for -Wall */
 }
 
+/* This is entirely legacy, (Mar 2012) only used (call_S) 
+   by package locfit, with a double result.  
+
+   So we freeze the code involved. 
+ */
+
+static void *RObjToCPtr2(SEXP s)
+{
+    int n;
+
+    switch(TYPEOF(s)) {
+    case LGLSXP:
+    case INTSXP:
+	n = LENGTH(s);
+	int *iptr = INTEGER(s);
+	iptr = (int*) R_alloc(n, sizeof(int));
+	for (int i = 0 ; i < n ; i++) iptr[i] = INTEGER(s)[i];
+	return (void*) iptr;
+	break;
+    case REALSXP:
+	n = LENGTH(s);
+	double *rptr = REAL(s);
+	rptr = (double*) R_alloc(n, sizeof(double));
+	for (int i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
+	return (void*) rptr;
+	break;
+    case CPLXSXP:
+	n = LENGTH(s);
+	Rcomplex *zptr = COMPLEX(s);
+	zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
+	for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
+	return (void*) zptr;
+	break;
+    case STRSXP:
+	n = LENGTH(s);
+	char **cptr = (char**) R_alloc(n, sizeof(char*));
+	for (int i = 0 ; i < n ; i++) {
+	    const char *ss = translateChar(STRING_ELT(s, i));
+	    cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
+	    strcpy(cptr[i], ss);
+	}
+	return (void*) cptr;
+	break;
+	/* From here down, probably not right */
+    case VECSXP:
+	n = length(s);
+	SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
+	for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
+	return (void*) lptr;
+	break;
+    default:
+	return (void*) s;
+    }
+}
+
+
+
 void call_R(char *func, long nargs, void **arguments, char **modes,
 	    long *lengths, char **names, long nres, char **results)
 {
@@ -2419,23 +2408,19 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     case CPLXSXP:
     case STRSXP:
 	if(nres > 0)
-	    results[0] = (char *) RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL,
-					     NULL, 0, "");
+	    results[0] = (char *) RObjToCPtr2(s);
 	break;
     case VECSXP:
 	n = length(s);
 	if (nres < n) n = nres;
-	for (i = 0 ; i < n ; i++) {
-	    results[i] = (char *) RObjToCPtr(VECTOR_ELT(s, i), 1, 1, 0, 0,
-					     (const char *)NULL, NULL, 0, "");
-	}
+	for (i = 0 ; i < n ; i++)
+	    results[i] = (char *) RObjToCPtr2(VECTOR_ELT(s, i));
 	break;
     case LISTSXP:
 	n = length(s);
 	if(nres < n) n = nres;
 	for(i = 0 ; i < n ; i++) {
-	    results[i] =(char *) RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL,
-					    NULL, 0, "");
+	    results[i] = (char *) RObjToCPtr2(s);
 	    s = CDR(s);
 	}
 	break;
