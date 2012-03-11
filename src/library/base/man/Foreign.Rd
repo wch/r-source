@@ -127,8 +127,8 @@
   declared as generic pointers, \code{void *}.  Lists are passed as C
   arrays of \code{SEXP} and can be declared as \code{void **} or
   \code{SEXP *}.  All inputs apart from atomic vectors should be
-  regarded as read-only, and all apart from vectors (including lists)
-  and functions are now deprecated.
+  regarded as read-only, and all apart from vectors (including lists),
+  functions and environments are now deprecated.
 
   If you need to return \R objects created within the C routine, use the
   \code{.Call} interface.
