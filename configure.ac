@@ -30,7 +30,7 @@ m4_define([R_VERSION],
           m4_bpatsubst(m4_esyscmd([cat VERSION]),
                        [\([0-9.]*\)\(\w\|\W\)*],
                        [\1]))
-AC_INIT([R],[R_VERSION],[r-bugs@R-project.org],[R])
+AC_INIT([R],[R_VERSION],[http://bugs.r-project.org],[R],[http://www.r-project.org])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
 
