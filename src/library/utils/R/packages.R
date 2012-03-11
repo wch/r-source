@@ -264,7 +264,7 @@ function(db)
     }
     if(length(drop)) db[-drop, , drop = FALSE] else db
 }
-    
+
 
 ## unexported helper function
 simplifyRepos <- function(repos, type)
@@ -757,11 +757,13 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
 chooseBioCmirror <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot choose a BioC mirror non-interactively")
-    m <- c("Seattle (USA)"="http://www.bioconductor.org",
-           "Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror",
-           "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de",
-           "Bergen (Norway)"="http://bioconductor.uib.no/",
-           "Cambridge (UK)"="http://mirrors.ebi.ac.uk/bioconductor/")
+    m <- c("Seattle (USA)"="http://www.bioconductor.org"
+	   , "Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror"
+	   , "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de"
+	   , "Bergen (Norway)"="http://bioconductor.uib.no/"
+	   , "Cambridge (UK)"="http://mirrors.ebi.ac.uk/bioconductor/"
+	   , "Riken, Kobe (Japan)" = "http://bioconductor.jp/"
+	   )
     res <- menu(names(m), graphics, "BioC mirror")
     if(res > 0L) options("BioC_mirror" = m[res])
     invisible()
