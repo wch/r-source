@@ -359,7 +359,7 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \code{.C()} now passes a pairlist as a \code{SEXP} to the
-      compiled code.  This is documented, but pairlists were if fact
+      compiled code.  This is documented, but pairlists were in fact
       handled differently as a legacy from the early days of \R.
 
       \item \code{call_R} and \code{call_S} are deprecated.  They still
