@@ -392,9 +392,10 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item Passing \R objects other than atomic vectors, closures and
-      lists to \code{.C()} is now deprecated and will give a warning.
-      Most cases (especially \code{NULL}) are actually coding errors.
+      \item Passing \R objects other than atomic vectors, functions,
+      lists and environments to \code{.C()} is now deprecated and will
+      give a warning.  Most cases (especially \code{NULL}) are actually
+      coding errors.
 
       \code{.C()} now passes a pairlist as a \code{SEXP} to the compiled
       code.  This is as was documented, but pairlists were in reality
