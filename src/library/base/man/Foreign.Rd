@@ -121,14 +121,16 @@
   works, and even if it works at all, depends on the C and Fortran
   compilers and the platform.)
 
-  \R objects such as unctions, expressions, environments and other
+  \R objects such as functions, expressions, environments and other
   language elements are passed as the \R pointer type \code{SEXP}.  This
   type is defined in header \file{Rinternals.h} or the arguments can be
   declared as generic pointers, \code{void *}.  Lists are passed as C
   arrays of \code{SEXP} and can be declared as \code{void **} or
-  \code{SEXP *}: these should be regarded as read-only.  If you need to
-  return \R objects created within the C routine, use the
-  \code{\code{.Call}} interface.
+  \code{SEXP *}.  All inputs apart from atomic vectors should be
+  regarded as read-only.
+
+  If you need to return \R objects created within the C routine, use the
+  \code{.Call} interface.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
