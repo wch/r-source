@@ -401,6 +401,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     return ans;
 }
 
+/* Note: this is only called if dup = TRUE */
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		       R_NativePrimitiveArgType type)
 {
@@ -464,15 +465,16 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	}
 	break;
     case VECSXP:
-    {
+	/* This should probably simply return arg, since it is supposed
+	   to be read-only.  But rare enough not to optimize */
 	PROTECT(s = allocVector(VECSXP, n));
 	SEXP *lptr = (SEXP*) p;
 	for (int i = 0 ; i < n ; i++) SET_VECTOR_ELT(s, i, lptr[i]);
 	UNPROTECT(1);
 	break;
-     }
     default:
-	s = (SEXP)p;
+	/* Everything else is read-only, so we just return the original arg */
+	s = arg;
     }
     return s;
 }
@@ -1518,6 +1520,17 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 
 
 /* .C() {op=0}  or  .Fortran() {op=1} */
+/* Use of this except for atomic vectors is not allowed for .Fortran,
+   and is only kept for legacy code for .C.
+
+   CRAN packages R2Cuba, RCALI, ars, coxme, fCopulae, locfit, nlme,
+   splinesurv and survival pass functions, the case of RCALI as a list
+   of two functions.
+
+   RecordLinkage and locfit pass lists.
+
+   Quite a few packages pass NULL, mainly in error.
+*/
 SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs;
