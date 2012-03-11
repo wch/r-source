@@ -336,7 +336,7 @@
             "Using '-o \"\"' will choose an output filename by removing a '.Rd'",
             "extension from FILE and adding a suitable extension.",
             "",
-            "Report bugs to <r-bugs@r-project.org>.", sep = "\n")
+            "Report bugs at bugs.r-project.org .", sep = "\n")
     }
 
     options(showErrorCalls = FALSE, warn = 1)
@@ -659,7 +659,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             "The output papersize is set by the environment variable R_PAPERSIZE.",
             "The PDF previewer is set by the environment variable R_PDFVIEWER.",
             "",
-            "Report bugs to <r-bugs@r-project.org>.",
+            "Report bugs at bugs.r-project.org .",
             sep = "\n")
     }
 

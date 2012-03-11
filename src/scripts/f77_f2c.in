@@ -40,7 +40,7 @@ Options:
   -o FILE               place the output into FILE
   --verbose             display the programs invoked
 
-Report bugs to <r-bugs@r-project.org>."
+Report bugs at bugs.r-project.org ."
 
 ## Possible user overrides
 : ${F2C='f2c'}

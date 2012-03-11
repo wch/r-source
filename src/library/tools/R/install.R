@@ -130,7 +130,7 @@
             paste0("for this one it is ",
                    ifelse(static_html, "--html", "--no-html"), "."),
             "",
-            "Report bugs to <r-bugs@r-project.org>.", sep="\n")
+            "Report bugs at bugs.r-project.org .", sep="\n")
     }
 
     do_cleanup <- function()
@@ -1576,7 +1576,7 @@
             "Windows only:",
             "  -d, --debug		build a debug DLL",
             "",
-            "Report bugs to <r-bugs@r-project.org>.",
+            "Report bugs at bugs@r-project.org .",
             sep="\n")
 
     ## FIXME shQuote here?

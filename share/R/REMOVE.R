@@ -27,7 +27,7 @@ Usage <- function() {
         "  -v, --version		print REMOVE version info and exit",
         "  -l, --library=LIB	remove packages from library tree LIB",
         "",
-        "Report bugs to <r-bugs@r-project.org>.", sep="\n")
+        "Report bugs at bugs.r-project.org .", sep="\n")
 }
 
 options(showErrorCalls=FALSE)

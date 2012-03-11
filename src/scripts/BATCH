@@ -29,7 +29,7 @@ as '--' was not encountered, and are passed on to the R process, which
 by default is started with '$opts'.
 See also help('BATCH') inside R.
 
-Report bugs to <r-bugs@r-project.org>."
+Report bugs at bugs.r-project.org ."
 
 while test -n "${1}"; do
   case ${1} in

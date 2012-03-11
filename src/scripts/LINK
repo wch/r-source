@@ -26,7 +26,7 @@ needs to be manually ensured that the linker flags for the FORTRAN 77
 intrinsic and run-time libraries are present.  C++ is not supported
 (yet).
 
-Report bugs to <r-bugs@r-project.org>."
+Report bugs at bugs.r-project.org ."
 
 args=
 while test -n "${1}"; do

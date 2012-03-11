@@ -228,7 +228,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 "Further arguments starting with a '-' are considered as options as long\n",
 "as '--' was not encountered, and are passed on to the R process, which\n",
 "by default is started with '--restore --save'.\n\n",
-"Report bugs to <r-bugs@r-project.org>.");
+"Report bugs at bugs.r-project.org .");
 		return(0);
 	    }
 	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {

@@ -7221,10 +7221,11 @@ to do so: for example in most shells on Unix-alike OSes @command{R CMD
 BATCH foo.R &} runs a background job.
 
 You can pass parameters to scripts via additional arguments on the
-command line: for example
+command line: for example (where the exact quoting needed will depend on
+the shell in use)
 
 @example
-R CMD BATCH --args arg1 arg2 foo.R &
+R CMD BATCH "--args arg1 arg2" foo.R &
 @end example
 
 @noindent

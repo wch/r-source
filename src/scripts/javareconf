@@ -48,7 +48,7 @@ javareconf cannot detect automatically:
   JAVA_LIBS      libraries (as linker flags) necessary to compile
                  JNI programs
 
-Report bugs to <r-bugs@r-project.org>."
+Report bugs at bugs.r-project.org ."
 
 
 dry_run=no

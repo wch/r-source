@@ -28,7 +28,7 @@ Options:
 Other options of the form '-DMACRO' or 'VAR=VALUE' are passed on to the
 compilation.
 
-Report bugs to <r-bugs@r-project.org>."
+Report bugs at bugs.r-project.org ."
 
 makefiles="-f \"${R_HOME}/etc${R_ARCH}/Makeconf\""
 if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
