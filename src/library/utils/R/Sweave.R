@@ -422,7 +422,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --options=      comma-separated list of Sweave options",
             "  --pdf           convert to PDF document",
             "",
-            "Report bugs to <r-bugs@r-project.org>.",
+            "Report bugs at bugs.r-project.org .",
             sep = "\n")
     }
     do_exit <- function(status = 0L)
@@ -505,7 +505,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --encoding=enc  assume encoding 'enc' for file",
             "  --options=      comma-separated list of Stangle options",
             "",
-            "Report bugs to <r-bugs@r-project.org>.",
+            "Report bugs at bugs@r-project.org .",
             sep = "\n")
     }
     do_exit <- function(status = 0L)

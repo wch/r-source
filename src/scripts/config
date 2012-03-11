@@ -102,7 +102,7 @@ Variables:
 		flags needed for finding the tcl.h and tk.h headers
   TCLTK_LIBS    flags needed for linking against the Tcl and Tk libraries
 
-Report bugs to <r-bugs@r-project.org>."
+Report bugs at bugs.r-project.org ."
 
 ## <NOTE>
 ## The variables are basically the precious configure variables (with

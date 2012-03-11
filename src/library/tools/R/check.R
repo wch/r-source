@@ -2935,7 +2935,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             "",
             "By default, all test sections are turned on.",
             "",
-            "Report bugs to <r-bugs@r-project.org>.", sep="\n")
+            "Report bugs at bugs.r-project.org .", sep="\n")
     }
 
 ###--- begin{.check_packages()} "main" ---

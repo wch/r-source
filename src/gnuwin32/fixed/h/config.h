@@ -885,9 +885,6 @@
 /* Name of package */
 #define PACKAGE "R"
 
-/* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "r-bugs@R-project.org"
-
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "R"
 

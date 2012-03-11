@@ -240,7 +240,7 @@ get_exclude_patterns <- function()
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
             "  --md5                 add MD5 sums",
            "",
-            "Report bugs to <r-bugs@r-project.org>.", sep="\n")
+            "Report bugs at bugs.r-project.org .", sep="\n")
     }
 
     add_build_stamp_to_description_file <- function(ldpath) {
