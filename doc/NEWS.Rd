@@ -392,8 +392,12 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item \code{.C()} now passes a pairlist as a \code{SEXP} to the
-      compiled code.  This is documented, but pairlists were in fact
+      \item Passing \R objects other than atomic vectors, closures and
+      lists to \code{.C()} is now deprecated and will give a warning.
+      Most cases (especially \code{NULL}) are actually coding errors.
+
+      \code{.C()} now passes a pairlist as a \code{SEXP} to the compiled
+      code.  This is as was documented, but pairlists were in reality
       handled differently as a legacy from the early days of \R.
 
       \item \code{call_R} and \code{call_S} are deprecated.  They still
