@@ -9180,7 +9180,7 @@ Setting the type to @code{LANGSXP} makes this a call which can be evaluated.
 @subsection Zero-finding
 @cindex Zero-finding
 
-In this section we re-work the example Becker, Chambers & Wilks (1988,
+In this section we re-work the example of Becker, Chambers & Wilks (1988,
 pp.~205--10) on finding a zero of a univariate function.  The @R{} code
 and an example are
 

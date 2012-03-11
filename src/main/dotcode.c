@@ -292,7 +292,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     if(checkNativeType(targetType, TYPEOF(s)) == FALSE) {
 	if(!dup) {
 	    error(_("explicit request not to duplicate arguments in call to '%s', but argument %d is of the wrong type (%d != %d)"),
-		  name, narg + 1, targetType, TYPEOF(s));
+		  name, narg, targetType, TYPEOF(s));
 	}
 
 	if(targetType != SINGLESXP) {
