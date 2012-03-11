@@ -19,11 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8-FIXME>
-   Need to convert character strings to and from 8-bit.
-   Check other uses.
- */
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -403,7 +398,6 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     return ans;
 }
 
-
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		       R_NativePrimitiveArgType type)
 {
@@ -479,7 +473,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	SEXP t;
 	PROTECT(t = s = allocList(n));
 	SEXP *lptr = (SEXP*) p;
-	for(int i = 0 ; i < n ; i++, t = CDR(t)) SETCAR(t, lptr[i]);
+	for (int i = 0 ; i < n ; i++, t = CDR(t)) SETCAR(t, lptr[i]);
 	UNPROTECT(1);
 	break;
     }
@@ -1533,7 +1527,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs;
-    int dup, havenames, naok, nargs, which;
+    int dup, havenames, naok, nargs, Fort;
     DL_FUNC ofun = NULL;
     VarFun fun = NULL;
     SEXP ans, pargs, s;
@@ -1555,9 +1549,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     if (EncSymbol == NULL) EncSymbol = install("ENCODING");
     if (CSingSymbol == NULL) CSingSymbol = install("Csingle");
     vmax = vmaxget();
-    which = PRIMVAL(op);
-    if(which)
-	symbol.type = R_FORTRAN_SYM;
+    Fort = PRIMVAL(op);
+    if(Fort) symbol.type = R_FORTRAN_SYM;
 
     args = enctrim(args);
     args = resolveNativeRoutine(args, &ofun, &symbol, symName, &nargs,
@@ -1596,7 +1589,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		      nargs+1, symName);
 	}
 	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1,
-				  which, symName, argConverters + nargs,
+				  Fort, symName, argConverters + nargs,
 				  checkTypes ? checkTypes[nargs] : 0);
 #ifdef R_MEMORY_PROFILING
 	if (RTRACE(CAR(pargs)) && dup)
@@ -2222,7 +2215,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    s = R_NilValue; /* Presumably input-only */
 		PROTECT(s);
 	    } else {
-		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which,
+		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), Fort,
 				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs))));
 #if R_MEMORY_PROFILING
 		if (RTRACE(CAR(pargs))) {
@@ -2437,4 +2430,3 @@ void call_S(char *func, long nargs, void **arguments, char **modes,
     call_R(func, nargs, arguments, modes, lengths, names, nres, results);
 }
 #endif
-
