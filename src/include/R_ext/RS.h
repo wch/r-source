@@ -83,7 +83,9 @@ extern void R_chk_free(void *);
 #define F77_COM(x)     F77_CALL(x)
 #define F77_COMDECL(x) F77_CALL(x)
 
+#ifndef NO_CALL_R
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
+#endif
 
 #ifdef  __cplusplus
 }

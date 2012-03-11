@@ -69,9 +69,11 @@ typedef struct {
 # define complex S_complex
 #endif
 
+#ifndef NO_CALL_R
 /* Not quite full compatibility: beware! */
 /* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
 #define call_S call_R
+#endif
 
 
 #ifdef __cplusplus
