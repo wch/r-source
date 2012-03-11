@@ -427,6 +427,9 @@
       \item \code{.C()} or \code{.Fortran()} had a protection error if
       the registration information resulted in an argument
       being coerced to another type.
+      
+      \item \code{boxplot(x=x, at=at)} with non finite elements in \code{x}
+      and non integer \code{at} could not generate a warning but failed.
     }
   }
 }

@@ -175,7 +175,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 		warning(sprintf(ngettext(length(unique(out[inf])),
 				 "Outlier (%s) in boxplot %d is not drawn",
 				 "Outliers (%s) in boxplot %d are not drawn"),
-				paste(unique(out[inf]), collapse=", "), x),
+				paste(unique(out[inf]), collapse=", "), i),
 			domain = NA)
 	    }
 	}
