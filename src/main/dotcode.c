@@ -421,6 +421,9 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	/* Includes pairlists from R 2.15.0 */
 	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
 			type2char(TYPEOF(s)), narg);
+	SEXPTYPE t = TYPEOF(s);
+	if (t != CLOSXP && t != BUILTINSXP && t != SPECIALSXP) 
+	    warning("passing an object of type '%s' to .C (arg %d) is deprecated", type2char(TYPEOF(s)), narg);
 	ans =  (void*) s;
     }
     if (nprotect) UNPROTECT(nprotect);
