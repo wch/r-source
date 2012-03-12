@@ -472,12 +472,17 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
+	    else if (streql(CHAR(namei), "max.print")) {
+		k = asInteger(argi);
+		if (k < 1) error(_("invalid value for '%s'"), CHAR(namei));
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
+	    }
 	    else if (streql(CHAR(namei), "nwarnings")) {
 		k = asInteger(argi);
 		if (k < 1) error(_("invalid value for '%s'"), CHAR(namei));
 		R_nwarnings = k;
 		R_CollectWarnings = 0; /* force a reset */
-		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if ( streql(CHAR(namei), "error") ) {
 		if(isFunction(argi))
@@ -512,7 +517,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "max.contour.segments")) {
 		k = asInteger(argi);
-		if (k < 0 || k  == NA_INTEGER)
+		if (k < 0) // also many times above: rely on  NA_INTEGER  <  <finite_int>
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		max_contour_segments = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));

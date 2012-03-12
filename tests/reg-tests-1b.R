@@ -6,7 +6,7 @@ options(stringsAsFactors = TRUE)
 (Meps <- .Machine$double.eps)# and use it in this file
 
 assertError <- function(expr)
-    stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
+    stopifnot(inherits(tryCatch(expr, error=function(e)e), "error"))
 
 
 ## str() for list-alikes :
@@ -1738,6 +1738,14 @@ d0 <- strptime(as.Date(logical(0)), format="%Y-%m-%d", tz = "GMT")
 d0$mday <- 1
 try(format(d0))
 ## crashed (Arithmetic exception) for  R <= 2.14.1
+
+## options("max.print") :
+suppressWarnings({
+    assertError(options(max.print = Inf))
+    assertError(options(max.print = -2))
+    assertError(options(max.print = 1e100))
+})
+## gave only warnings (every print() time, ...)  in R <= 2.14.2
 
 
 proc.time()
