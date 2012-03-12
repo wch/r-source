@@ -587,11 +587,14 @@ loadNamespace <- function (package, lib.loc = NULL,
                     ## the rest must be generic functions, implicit or local
                     ok <- sapply(addGenerics, function(what) methods::is(get(what, mode = "function", envir = ns), "genericFunction"))
                     if(!all(ok)) {
-                        stop(gettextf("Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s",
-                                         sQuote(package),
-                                         paste(sQuote(sort(unique(addGenerics[!ok]))), collapse = ", ")),
-                                domain = NA, call. = FALSE)
-                        # addGenerics <- addGenerics[ok]
+                        bad <- sort(unique(addGenerics[!ok]))
+                        msg <-
+                            ngettext(length(bad),
+                                     "Function found when exporting methods from the namespace %s which is not S4 generic: %s",
+                                     "Functions found when exporting methods from the namespace %s which are not S4 generic: %s", domain = "R-base")
+                        stop(sprintf(msg, sQuote(package),
+                                     paste(sQuote(bad), collapse = ", ")),
+                             domain = NA, call. = FALSE)
                     }
                 }
 ### <note> Uncomment following to report any local generic functions
