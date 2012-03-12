@@ -108,7 +108,7 @@
 		ANS(i,j) = sum;						\
 	    }								\
 	    else							\
-		ANS(i,j) = NA_REAL;
+		ANS(i,j) = NA_REAL
 
 
 static void cov_pairwise1(int n, int ncx, double *x,
@@ -120,7 +120,7 @@ static void cov_pairwise1(int n, int ncx, double *x,
 	for (int j = 0 ; j <= i ; j++) {
 	    double *yy = &x[j * n];
 
-	    COV_PAIRWISE_BODY
+	    COV_PAIRWISE_BODY;
 
 	    ANS(j,i) = ANS(i,j);
 	}
@@ -136,7 +136,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 	for (int j = 0 ; j < ncy ; j++) {
 	    double *yy = &y[j * n];
 
-	    COV_PAIRWISE_BODY
+	    COV_PAIRWISE_BODY;
 	}
     }
 }
