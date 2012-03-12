@@ -68,17 +68,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R documentation files::  
-* Tidying and profiling R code::  
-* Debugging::                   
-* System and foreign language interfaces::  
-* The R API::                   
-* Generic functions and methods::  
-* Linking GUIs and other front-ends to R::  
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R documentation files::
+* Tidying and profiling R code::
+* Debugging::
+* System and foreign language interfaces::
+* The R API::
+* Generic functions and methods::
+* Linking GUIs and other front-ends to R::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -199,18 +199,18 @@ faster and use less (virtual) memory.
 
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Writing package vignettes::   
-* Submitting a package to CRAN::  
-* Package namespaces::          
-* Writing portable packages::   
-* Diagnostic messages::         
-* Internationalization::        
-* CITATION files::              
-* Package types::               
-* Services::                    
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Writing package vignettes::
+* Submitting a package to CRAN::
+* Package namespaces::
+* Writing portable packages::
+* Diagnostic messages::
+* Internationalization::
+* CITATION files::
+* Package types::
+* Services::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -263,7 +263,7 @@ Because some file systems (e.g., those on Windows and by default on Mac
 OS X) are not case-sensitive, to maintain portability it is strongly
 recommended that case distinctions not be used to distinguish different
 packages.  For example, if you have a package named @file{foo}, do not
-also create a package named @file{Foo}.  
+also create a package named @file{Foo}.
 
 To ensure that file names are valid across file systems and supported
 operating system platforms, the @acronym{ASCII} control characters as
@@ -297,12 +297,12 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::        
-* The INDEX file::              
-* Package subdirectories::      
-* Package bundles::             
-* Data in packages::            
-* Non-R scripts in packages::   
+* The DESCRIPTION file::
+* The INDEX file::
+* Package subdirectories::
+* Package bundles::
+* Data in packages::
+* Non-R scripts in packages::
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -1279,9 +1279,9 @@ $ pkg-config --exists 'QtCore >= 4.0.0'  # check the status
 $ pkg-config --modversion QtCore
 4.7.1
 $ pkg-config --cflags QtCore
--DQT_SHARED -I/usr/include/QtCore  
+-DQT_SHARED -I/usr/include/QtCore
 $ pkg-config --libs QtCore
--lQtCore  
+-lQtCore
 @end example
 
 @noindent
@@ -1299,18 +1299,18 @@ pkg-config --list-all | sort
 @end example
 
 @menu
-* Using Makevars::              
-* Configure example::           
-* Using F95 code::              
+* Using Makevars::
+* Configure example::
+* Using F95 code::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
 @subsection Using @file{Makevars}
 
 @menu
-* OpenMP support::              
-* Using pthreads::              
-* Compiling in sub-directories::  
+* OpenMP support::
+* Using pthreads::
+* Compiling in sub-directories::
 @end menu
 
 Sometimes writing your own @file{configure} script can be avoided by
@@ -1908,9 +1908,9 @@ this, but you may get more detailed error messages doing the checks
 directly.
 
 @menu
-* Checking packages::           
-* Building package tarballs::   
-* Building binary packages::    
+* Checking packages::
+* Building package tarballs::
+* Building binary packages::
 @end menu
 
 @quotation Note
@@ -2317,7 +2317,7 @@ binary package for Windows is usually supplied as a @file{.zip} file,
 and for the Mac platform the default binary package file extension is
 @file{.tgz}.
 
-The recommended method of building binary packages is to use 
+The recommended method of building binary packages is to use
 
 @command{R CMD INSTALL --build pkg}
 @noindent
@@ -2325,21 +2325,21 @@ where @file{pkg} is either the name of a source tarball (in the usual
 @file{.tar.gz} format) or the location of the directory of the package
 source to be built.
 
-@command{R CMD INSTALL --build} operates by first installing the package 
-and then packing the installed binaries into 
+@command{R CMD INSTALL --build} operates by first installing the package
+and then packing the installed binaries into
 the appropriate binary package file for the particular platform.
 
 By default, @command{R CMD INSTALL --build} will attempt to install the package
-into the default library tree for the local installation of @R{}. This has two 
+into the default library tree for the local installation of @R{}. This has two
 implications:
 
 @itemize @bullet
 @item
-If the installation is successful, it will overwrite any existing installation 
-of the same package. 
+If the installation is successful, it will overwrite any existing installation
+of the same package.
 
 @item
-The default library tree must have write permission; if not, the package will 
+The default library tree must have write permission; if not, the package will
 not install and the binary will not be created.
 
 @end itemize
@@ -2357,9 +2357,9 @@ where @file{location} is the chosen directory with write access. The package
 will be installed as a subdirectory of @file{location}, and the package binary
 will be created in the current directory.
 
-Other options for @command{R CMD INSTALL} can be found using 
+Other options for @command{R CMD INSTALL} can be found using
 @command{R CMD INSTALL --help}, and platform-specific details for special
-cases (e.g. handling Fortran sources on Mac OS X) are discussed in the 
+cases (e.g. handling Fortran sources on Mac OS X) are discussed in the
 platform-specific FAQs.
 
 
@@ -2381,7 +2381,7 @@ Windows platform.
 @cindex Sweave
 
 @menu
-* Encodings and vignettes::     
+* Encodings and vignettes::
 @end menu
 
 In addition to the help files in @file{Rd} format, @R{} packages allow
@@ -2464,7 +2464,7 @@ pdf: ABC-intro.pdf ABC-details.pdf
         texi2dvi --pdf $*
 
 clean:
-        rm *.tex ABC-details-*.pdf 
+        rm *.tex ABC-details-*.pdf
 @end example
 
 @noindent
@@ -2487,7 +2487,7 @@ Others you may see are @code{\VignettePackage} (currently ignored),
 @code{\VignetteDepends} and @code{\VignetteKeyword} (which replaced
 @code{\VignetteKeywords}).  These are processed at package installation
 time to create the saved data frame @file{Meta/vignette.rds}, but only
-the @code{\VignetteIndexEntry} and @code{\VignetteKeyword} statements 
+the @code{\VignetteIndexEntry} and @code{\VignetteKeyword} statements
 are currently used.
 
 At install time an @HTML{} index for all vignettes in the package is
@@ -2661,7 +2661,7 @@ double the actual size.  This can be disabled by setting
 @env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
 more than 5Mb, detailing directories of more than 1Mb.  It warns about
 inefficient compression of data: @command{R CMD build --resave-data}
-will compact data as best it can.  
+will compact data as best it can.
 
 Watch out for unnecessary files in @file{inst/doc}: @command{R CMD
 check} will note files of types that probably should be installed, but
@@ -2730,9 +2730,9 @@ corresponding style files to the @file{vignettes} (or for the legacy
 layout, @file{inst/doc}) subdirectory of their package.
 
 @menu
-* PDF size::                    
-* Package timing::              
-* Windows external software::   
+* PDF size::
+* Package timing::
+* Windows external software::
 @end menu
 
 @node PDF size, Package timing, Submitting a package to CRAN, Submitting a package to CRAN
@@ -2914,12 +2914,12 @@ in the sources.  However, not all versions of @R{} will read the
 @file{NAMESPACE} file if the package contains not @R{} code.
 
 @menu
-* Specifying imports and exports::  
-* Registering S3 methods::      
-* Load hooks::                  
-* An example::                  
-* Summary -- converting an existing package::  
-* Namespaces with S4 classes and methods::  
+* Specifying imports and exports::
+* Registering S3 methods::
+* Load hooks::
+* An example::
+* Summary -- converting an existing package::
+* Namespaces with S4 classes and methods::
 @end menu
 
 
@@ -3023,7 +3023,7 @@ S3method(print, foo)
 ensures that the method is registered and available for @code{UseMethod}
 dispatch, and the function @code{print.foo} does not need to be exported.
 Since the generic @code{print} is defined in @pkg{base} it does not need
-to be imported explicitly.  
+to be imported explicitly.
 
 (Note that function and class names may be quoted, and reserved words
 and non-standard names such as @code{[<-} and @code{function} must
@@ -3360,7 +3360,7 @@ export(mle)
 importFrom("graphics", plot)
 importFrom("stats", optim, qchisq)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
-importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile, 
+importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile,
            update, vcov)
 exportClasses(mle, profile.mle, summary.mle)
 ## All methods for imported generics:
@@ -3465,8 +3465,8 @@ unambiguously set methods on those generics.
 @section Writing portable packages
 
 @menu
-* Encoding issues::             
-* Binary distribution::         
+* Encoding issues::
+* Binary distribution::
 @end menu
 
 Portable packages should have simple file names: use only alphanumeric
@@ -3832,10 +3832,10 @@ archive mirrors and packaged with the @code{poEdit} package
 (@uref{http://poedit.sourceforge.net/@/download.php#win32}).
 
 @menu
-* C-level messages::            
-* R messages::                  
-* Installing translations::     
-* Makefile support::            
+* C-level messages::
+* R messages::
+* Installing translations::
+* Makefile support::
 @end menu
 
 @node C-level messages, R messages, Internationalization, Internationalization
@@ -4089,8 +4089,8 @@ so far in this chapter.  Currently two other types are recognized, both
 of which need write permission in the @R{} installation tree.
 
 @menu
-* Frontend::                    
-* Translation::                 
+* Frontend::
+* Translation::
 @end menu
 
 @node Frontend, Translation, Package types, Package types
@@ -4174,22 +4174,22 @@ for exchanging information between developers and/or interested useRs.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Figures::                     
-* Insertions::                  
-* Indices::                     
-* Platform-specific sections::  
-* Conditional text::            
-* Dynamic pages::               
-* User-defined macros::         
-* Encoding::                    
-* Processing Rd format::        
-* Editing Rd files::            
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Figures::
+* Insertions::
+* Indices::
+* Platform-specific sections::
+* Conditional text::
+* Dynamic pages::
+* User-defined macros::
+* Encoding::
+* Processing Rd format::
+* Editing Rd files::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -4312,10 +4312,10 @@ always do.  For the complete list of macros and rules for escapes, see
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
 
 @menu
-* Documenting functions::       
-* Documenting data sets::       
-* Documenting S4 classes and methods::  
-* Documenting packages::        
+* Documenting functions::
+* Documenting data sets::
+* Documenting S4 classes and methods::
+* Documenting packages::
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -4333,7 +4333,7 @@ uniquely named on a case-insensitive file system.} is the basename of
 the @file{Rd} file containing the documentation.  It is the ``name'' of
 the @file{Rd} object represented by the file and has to be unique in a
 package.  To avoid problems with indexing the package manual, it may not
-@c Problems seen in 2.13.x but not 2.14.0 
+@c Problems seen in 2.13.x but not 2.14.0
 contain @samp{!}  @samp{|} nor @samp{@@}, and to avoid possible problems
 with the HTML help system it should not contain @samp{/} nor a space.
 (@LaTeX{} special characters are allowed, but may not be collated
@@ -5193,7 +5193,7 @@ be used:
 The files containing the figures should be stored in the directory
 @file{man/figures}.  Files with extensions @file{.jpg}, @file{.pdf},
 @file{.png} and @file{.svg} from that directory will be copied to the
-@file{help/figures} directory at install time. (Figures 
+@file{help/figures} directory at install time. (Figures
 in PDF format will not display in most HTML browsers, but
 might be the best choice in reference manuals.)  Specify the filename
 relative to @file{man/figures} in the @code{\figure} directive.
@@ -5402,7 +5402,7 @@ and include the printed results verbatim.  (Invisible results will not print.)
 @item @code{results=rd}
 The result is assumed to be a character vector containing markup to
 be passed to @code{parse_Rd()}, with the result inserted in place.
-This could be used to insert computed aliases, for instance.  
+This could be used to insert computed aliases, for instance.
 As of @R{} 2.13.1-patched, @code{parse_Rd()} is called first
 with @code{fragment=FALSE} to allow a single Rd section
 macro to be inserted.  If that fails, it is called again with
@@ -5627,10 +5627,10 @@ example RStudio (@url{http://rstudio.org/}).
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::              
-* Profiling R code for speed::  
-* Profiling R code for memory use::  
-* Profiling compiled code::     
+* Tidying R code::
+* Profiling R code for speed::
+* Profiling R code for memory use::
+* Profiling compiled code::
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -5643,7 +5643,7 @@ chapter.
 @cindex Tidying R code
 
 @R{} treats function code loaded from packages and code entered by users
-differently.  By default code entered by users has the source code stored 
+differently.  By default code entered by users has the source code stored
 internally, and when the function is listed, the original source is
 reproduced.  Loading code from a package (by default) discards the
 source code, and the function listing is re-created from the parse tree
@@ -5655,7 +5655,7 @@ use of the ability to re-create a function listing from its parse tree
 to produce a tidy version of the function, for example with consistent
 indentation and spaces around operators.  If the original source
 does not follow the standard format this tidied version can be much
-easier to read.  
+easier to read.
 
 We can subvert the keeping of source in two ways.
 
@@ -5875,9 +5875,9 @@ collection. Memory is allocated at well-defined times in an @R{}
 program, but is freed whenever the garbage collector happens to run.
 
 @menu
-* Memory statistics from Rprof::  
-* Tracking memory allocations::  
-* Tracing copies of an object::  
+* Memory statistics from Rprof::
+* Tracking memory allocations::
+* Tracing copies of an object::
 @end menu
 
 @node Memory statistics from Rprof, Tracking memory allocations, Profiling R code for memory use, Profiling R code for memory use
@@ -5986,9 +5986,9 @@ libraries/objects as used by @R{} packages.  We know of no good way to
 profile DLLs on Windows.
 
 @menu
-* Linux::                       
-* Solaris::                     
-* Mac OS X::                    
+* Linux::
+* Solaris::
+* Mac OS X::
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code
@@ -6105,10 +6105,10 @@ contributed packages such as @CRANpkg{debug} on @acronym{CRAN}
 which provide complementary examples to those given here.)
 
 @menu
-* Browsing::                    
-* Debugging R code::            
-* Using gctorture and valgrind::  
-* Debugging compiled code::     
+* Browsing::
+* Debugging R code::
+* Using gctorture and valgrind::
+* Debugging compiled code::
 @end menu
 
 
@@ -6518,8 +6518,8 @@ apparent at the next garbage collection (or even at later garbage
 collections after objects have been deleted).
 
 @menu
-* Using gctorture::             
-* Using valgrind::              
+* Using gctorture::
+* Using valgrind::
 @end menu
 
 @node Using gctorture, Using valgrind, Using gctorture and valgrind, Using gctorture and valgrind
@@ -6792,8 +6792,8 @@ Program received signal SIGINT, Interrupt.
 Some ``tricks'' worth knowing follow:
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging compiled code, Debugging compiled code
@@ -6940,7 +6940,7 @@ created on another machine):
   @@100954d50 13 INTSXP g0c2 [NAM(2)] (len=3, tl=0) 1,2,3
   @@100954d88 13 INTSXP g0c2 [NAM(2)] (len=3, tl=0) 4,5,6
 ATTRIB:
-  @@102a70140 02 LISTSXP g0c0 [] 
+  @@102a70140 02 LISTSXP g0c0 []
     TAG: @@10083c478 01 SYMSXP g0c0 [MARK,NAM(2),gp=0x4000] "names"
     @@100954dc0 16 STRSXP g0c2 [NAM(2)] (len=2, tl=0)
       @@10099df28 09 CHARSXP g0c1 [MARK,gp=0x21] "a"
@@ -6970,21 +6970,21 @@ currently -1 (no limit) and 5 respectively.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Registering native routines::  
-* Creating shared objects::     
-* Interfacing C++ code::        
-* Fortran I/O::                 
-* Linking to other packages::   
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Parsing R code from C::       
-* External pointers and weak references::  
-* Vector accessor functions::   
-* Character encoding issues::   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Registering native routines::
+* Creating shared objects::
+* Interfacing C++ code::
+* Fortran I/O::
+* Linking to other packages::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Parsing R code from C::
+* External pointers and weak references::
+* Vector accessor functions::
+* Character encoding issues::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -7067,7 +7067,7 @@ compatible with the C99 @code{double complex} type: however, it may not
 be possible to pass @code{Rcomplex} to a C99 function expecting a
 @code{double complex} argument.  Nor need it be compatible with a C++
 @code{complex} type.  Moreover, the compatibility can depends on the
-optimization level set for the compiler.)  
+optimization level set for the compiler.)
 
 Only a single character string can be passed to or from FORTRAN, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
@@ -7200,7 +7200,7 @@ directory or, if it starts with @samp{~}, relative to the user's home
 directory.
 
 Loading is most often done automatically based on the @code{useDynLib()}
-declaration in the @file{NAMESPACE} file, but may be done 
+declaration in the @file{NAMESPACE} file, but may be done
 explicitly @emph{via} a call to @code{library.dynam}.
 @findex library.dynam
 This has the form
@@ -7263,7 +7263,7 @@ unload routines for the @code{mylib} DLL.
 void
 R_init_mylib(DllInfo *info)
 @{
-  /* Register routines, 
+  /* Register routines,
      allocate resources. */
 @}
 
@@ -7778,8 +7778,8 @@ desirable that the API provided by package @pkg{packB} remains
 backwards-compatible.
 
 @menu
-* Unix-alikes::                 
-* Windows::                     
+* Unix-alikes::
+* Windows::
 @end menu
 
 @node Unix-alikes, Windows, Linking to other packages, Linking to other packages
@@ -7827,7 +7827,7 @@ some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
 the @command{ld.so} cache (see @command{man ldconfig}).  On platforms
 that support it, the path to the dynamic library can be hardcoded at
 install time (which assumes that the location of package @pkg{packB}
-will not be changed nor the package updated to a changed API).  On 
+will not be changed) nor the package updated to a changed API).  On
 systems with the @acronym{GNU}
 linker (e.g.@: Linux) and some others (e.g.@: Mac OS X) this can be done
 by
@@ -8049,16 +8049,16 @@ code, much use is made of coercion to force the variant object to the
 right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Handling character data::     
-* Finding and setting variables::  
-* Some convenience functions::  
-* Named objects and copying::   
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Handling character data::
+* Finding and setting variables::
+* Some convenience functions::
+* Named objects and copying::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -8672,7 +8672,7 @@ length-one character strings to and from @code{SEXPTYPE} numbers, and
 @comment Want to encourage use of some of the more stable and useful R_*
 @comment and Rf_* functions:
 @menu
-* Semi-internal convenience functions::  
+* Semi-internal convenience functions::
 @end menu
 
 @node Semi-internal convenience functions,  , Some convenience functions, Some convenience functions
@@ -8783,9 +8783,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -8943,7 +8943,7 @@ SEXP showArgs(SEXP args)
 @{
     args = CDR(args); /* skip 'name' */
     for(int i = 0; args != R_NilValue; i++, args = CDR(args)) @{
-        const char *name = 
+        const char *name =
             isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
         SEXP el = CAR(args);
         if (length(el) == 0) @{
@@ -9176,8 +9176,8 @@ called) and two argument values, the first unnamed and the second named.
 Setting the type to @code{LANGSXP} makes this a call which can be evaluated.
 
 @menu
-* Zero-finding::                
-* Calculating numerical derivatives::  
+* Zero-finding::
+* Calculating numerical derivatives::
 @end menu
 
 @node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
@@ -9659,7 +9659,7 @@ Bioconductor package uses weak references.
 
 
 @menu
-* An external pointer example::  
+* An external pointer example::
 @end menu
 
 @node An external pointer example,  , External pointers and weak references, External pointers and weak references
@@ -9805,23 +9805,23 @@ to create marked character strings of a given length.
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from FORTRAN and vice versa::  
-* Numerical analysis subroutines::  
-* Optimization::                
-* Integration::                 
-* Utility functions::           
-* Re-encoding::                 
-* Allowing interrupts::         
-* Platform and version information::  
-* Inlining C functions::        
-* Controlling visibility::      
-* Standalone Mathlib::          
-* Organization of header files::  
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from FORTRAN and vice versa::
+* Numerical analysis subroutines::
+* Optimization::
+* Integration::
+* Utility functions::
+* Re-encoding::
+* Allowing interrupts::
+* Platform and version information::
+* Inlining C functions::
+* Controlling visibility::
+* Standalone Mathlib::
+* Organization of header files::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -9896,8 +9896,8 @@ compilers/loaders when using @R{} as a shared library) not exported.
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -10049,7 +10049,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::  
+* Error handling from FORTRAN::
 @end menu
 
 @node Error handling from FORTRAN,  , Error handling, Error handling
@@ -10203,7 +10203,7 @@ be a @acronym{GUI} console rather than a file, and can be re-directed by
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
-output stream.  
+output stream.
 
 Functions @code{Rvprintf} and @code{REvprintf} are analogues using the
 @code{vprintf} interface.  Because that is a C99 interface, they are
@@ -10215,7 +10215,7 @@ when using parallel computation on a cluster of computational nodes, as
 their output will be re-directed/logged appropriately.
 
 @menu
-* Printing from FORTRAN::       
+* Printing from FORTRAN::
 @end menu
 
 @node Printing from FORTRAN,  , Printing, Printing
@@ -10336,10 +10336,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::      
-* Mathematical functions::      
-* Numerical Utilities::         
-* Mathematical constants::      
+* Distribution functions::
+* Mathematical functions::
+* Numerical Utilities::
+* Mathematical constants::
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -11386,7 +11386,7 @@ Only add parameters and defaults to the generic if they make sense in
 all possible methods implementing it.
 
 @menu
-* Adding new generics::         
+* Adding new generics::
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -11442,8 +11442,8 @@ example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
 (part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
 @menu
-* Embedding R under Unix-alikes::  
-* Embedding R under Windows::   
+* Embedding R under Unix-alikes::
+* Embedding R under Windows::
 @end menu
 
 @node Embedding R under Unix-alikes, Embedding R under Windows, Linking GUIs and other front-ends to R, Linking GUIs and other front-ends to R
@@ -11585,11 +11585,11 @@ Note that @R{} expects to be run with the locale category
 not be embedded into an application which changes that.
 
 @menu
-* Compiling against the R library::  
-* Setting R callbacks::         
-* Registering symbols::         
-* Meshing event loops::         
-* Threading issues::            
+* Compiling against the R library::
+* Setting R callbacks::
+* Registering symbols::
+* Meshing event loops::
+* Threading issues::
 @end menu
 
 @node Compiling against the R library, Setting R callbacks, Embedding R under Unix-alikes, Embedding R under Unix-alikes
@@ -11959,9 +11959,9 @@ All Windows interfaces to @R{} call entry points in the DLL
 easier to use the indirect route @emph{via} @acronym{(D)COM}.
 
 @menu
-* Using (D)COM::                
-* Calling R.dll directly::      
-* Finding R_HOME::              
+* Using (D)COM::
+* Calling R.dll directly::
+* Finding R_HOME::
 @end menu
 
 @node Using (D)COM, Calling R.dll directly, Embedding R under Windows, Embedding R under Windows
