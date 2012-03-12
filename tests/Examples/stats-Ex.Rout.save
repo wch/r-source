@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-02-29 r58525)
+R Under development (unstable) (2012-03-12 r58696)
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x47fb388>
+<environment: 0x4ca92f8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4762,7 +4762,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x66bddf0>
+<bytecode: 0x72758c0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -6762,8 +6762,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x3828148>
-<environment: 0x79ac798>
+<bytecode: 0x3cba798>
+<environment: 0xa3468d8>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7165,7 +7165,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0xa0d8c28>
+<environment: 0x83758f0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7739,6 +7739,12 @@ attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
 > heatmap(Ca,             symm = TRUE, margins=c(6,6))# with reorder()
 > heatmap(Ca, Rowv=FALSE, symm = TRUE, margins=c(6,6))# _NO_ reorder()
+> ## slightly artificial with color bar, without and with ordering:
+> cc <- rainbow(nrow(Ca))
+> heatmap(Ca, Rowv=FALSE, symm = TRUE, RowSideColors=cc, ColSideColors=cc,
++ 	margins=c(6,6))
+> heatmap(Ca,		symm = TRUE, RowSideColors=cc, ColSideColors=cc,
++ 	margins=c(6,6))
 > 
 > ## For variable clustering, rather use distance based on cor():
 > symnum( cU <- cor(USJudgeRatings) )
@@ -11573,26 +11579,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x3833590>
-<environment: 0x727fba0>
+<bytecode: 0x3cc5848>
+<environment: 0x7fed958>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x38336e0>
-<environment: 0x727fba0>
+<bytecode: 0x3cc58b8>
+<environment: 0x7fed958>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x3833750>
-<environment: 0x727fba0>
+<bytecode: 0x3cc5928>
+<environment: 0x7fed958>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x3833910>
-<environment: 0x727fba0>
+<bytecode: 0x3cc5bc8>
+<environment: 0x7fed958>
 
 $name
 [1] "identity"
@@ -11603,14 +11609,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7280b58>
-<environment: 0x72647c0>
+<bytecode: 0x7fee8a0>
+<environment: 0x7fd99d8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x727fd08>
-<environment: 0x72647c0>
+<bytecode: 0x7feda50>
+<environment: 0x7fd99d8>
 
 > 
 > 
@@ -15296,8 +15302,8 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<bytecode: 0x4494528>
-<environment: 0x831c5c0>
+<bytecode: 0x494d4a0>
+<environment: 0x7e94570>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17513,7 +17519,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.847 0.376 12.861 0 0 
+Time elapsed:  12.226 0.263 13.254 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -164,6 +164,12 @@ round(Ca <- cor(attitude), 2)
 symnum(Ca) # simple graphic
 heatmap(Ca,             symm = TRUE, margins=c(6,6))# with reorder()
 heatmap(Ca, Rowv=FALSE, symm = TRUE, margins=c(6,6))# _NO_ reorder()
+## slightly artificial with color bar, without and with ordering:
+cc <- rainbow(nrow(Ca))
+heatmap(Ca, Rowv=FALSE, symm = TRUE, RowSideColors=cc, ColSideColors=cc,
+	margins=c(6,6))
+heatmap(Ca,		symm = TRUE, RowSideColors=cc, ColSideColors=cc,
+	margins=c(6,6))
 
 ## For variable clustering, rather use distance based on cor():
 symnum( cU <- cor(USJudgeRatings) )

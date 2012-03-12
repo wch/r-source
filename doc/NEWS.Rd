@@ -205,6 +205,9 @@
 
       \item \code{options(max.print = Inf)} and similar now give an
       error (instead of warnings later).
+
+      \item \code{heatmap(x, symm=TRUE, RowSideColors=*)} no longer
+      draws the colors in reversed order.
     }
   }
 
