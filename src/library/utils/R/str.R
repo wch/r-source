@@ -542,8 +542,7 @@ str.default <-
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:
 		cat(indent.str, paste0('- attr(*, "',nam[i],'")='),sep="")
 		strSub(a[[i]], give.length=give.length,
-                       indent.str= paste(indent.str,".."), nest.lev= nest.lev+1,
-                       vec.len = if(nam[i] == "source") 1 else vec.len)
+		       indent.str= paste(indent.str,".."), nest.lev= nest.lev+1)
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
