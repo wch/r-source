@@ -1748,4 +1748,13 @@ suppressWarnings({
 ## gave only warnings (every print() time, ...)  in R <= 2.14.2
 
 
+## attributes with units<-  (PR#14839)
+tt <- structure(500, units = "secs", class = "difftime", names = "a")
+tt
+units(tt) <- "mins"
+tt
+stopifnot(identical(names(tt), "a"))
+## R < 2.15.0 changed the name, but then it was not documented to be kept.
+
+
 proc.time()
