@@ -1141,7 +1141,7 @@ lapply("forward", switch, forward = "posS", reverse = "negS")
 
 
 ## evaluation of arguments of log2
-assertError(try(log2(quote(1:10))))
+assertError(tryCatch(log2(quote(1:10))))
 ## 'worked' in 2.10.x by evaluting the arg twice.
 
 

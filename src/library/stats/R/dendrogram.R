@@ -792,7 +792,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     ## draw the side bars
     if(!missing(RowSideColors)) {
 	par(mar = c(margins[1L],0, 0,0.5))
-	image(rbind(1L:nr), col = RowSideColors[rowInd], axes = FALSE)
+	image(rbind(if(revC) nr:1L else 1L:nr), col = RowSideColors[rowInd], axes = FALSE)
     }
     if(!missing(ColSideColors)) {
 	par(mar = c(0.5,0, 0,margins[2L]))
