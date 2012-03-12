@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:23\n"
+"POT-Creation-Date: 2012-03-12 09:01\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1067,9 +1067,6 @@ msgstr ""
 msgid "No function found corresponding to methods exports from %s for: %s"
 msgstr ""
 
-msgid "Functions for exporting methods must have been made generic, explicitly or implicitly; not true when loading %s for %s"
-msgstr ""
-
 msgid "in %s methods for export not found: %s"
 msgstr ""
 
@@ -1599,6 +1596,11 @@ msgstr[1]    ""
 
 msgid        "object %s not found"
 msgid_plural "objects %s not found"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
+msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
 msgstr[0]    ""
 msgstr[1]    ""
 
