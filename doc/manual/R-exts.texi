@@ -2706,11 +2706,15 @@ that URL in Internet Explorer and (depending on the version) follow the
 instructions to view it as a folder, then copy the submission to the
 folder.} and not @samp{sftp} to connect to this server, and passive
 @samp{ftp} is more often successful) and send a message to
-@email{CRAN@@R-project.org} about it (with your package name in the
-subject line, and please do not submit a package by email).  The
+@email{CRAN@@R-project.org} about it (with your package name and version
+in the subject line, and please do not submit a package by email).  The
 @acronym{CRAN} maintainers will run these tests before putting a
 submission online.  (They will use the latest development version of
 @R{}, so if at all possible so should you.)
+
+Please note that submissions without an accompanying email to
+@email{CRAN@@R-project.org} will not be processed, and that emails
+should not be sent personally to members of the CRAN team.
 
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use the Debian TeXLive@footnote{currently
