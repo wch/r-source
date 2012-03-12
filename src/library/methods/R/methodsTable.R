@@ -453,7 +453,6 @@
     function(classes, fdef, mtable = NULL,
              table = get(".MTable", envir = environment(fdef)),
              excluded = NULL, useInherited,
-             returnAll = !(doCache || doExcluded),
              simpleOnly = .simpleInheritanceGeneric(fdef), verbose = FALSE,
              doCache = is.environment(mtable))
 {
@@ -521,8 +520,7 @@
             supersList <- c(supersList, list(allLabels))
         }
     }
-    if(!returnAll)
-      labels <- labels[-1L] # drop exact match
+    labels <- labels[-1L] # drop exact match
     labels <- unique(labels)# only needed while contains slot can have duplicates(!)
     if(verbose) {
 	cat(" .fI> length(unique(method labels)) = ", length(labels))
@@ -548,7 +546,7 @@
     else
       fromGroup <- rep(FALSE, length(methods))
     ## remove default (ANY,..,ANY) if its not the only method:
-    if(length(methods) > 1L && !returnAll) {
+    if(length(methods) > 1L) {
         defaultLabel <- paste(rep.int("ANY", nargs), collapse = "#")
         i <- match(defaultLabel, names(methods), 0L)
         if(i > 0L) {
@@ -574,7 +572,7 @@
     }
     if(doExcluded)
       methods <- methods[is.na(match(names(methods), as.character(excluded)))]
-    if(length(methods) > 1L && !returnAll) {
+    if(length(methods) > 1L) {
         if(verbose) cat(" .fI> length(methods) = ", length(methods),
                         " --> ambiguity\n")
         ## have ambiguity to resolve
@@ -601,8 +599,9 @@
         methods <- methods[select]
     }
     if(simpleOnly && length(methods) == 0L) {
-        methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,
-                          verbose, returnAll, FALSE)
+	## Seems to be *unused* [below, 'simpleOnly' argument was missing for years!]
+	methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,
+			  simpleOnly, verbose, FALSE)
         if(length(methods) > 0L)
           message(gettextf("No simply inherited methods found for function %s; using non-simple method",
                            sQuote(fdef@generic)),
