@@ -4615,6 +4615,10 @@ comments in the processed help files: it need not be valid @R{} code but
 the escapes must still be used for @code{%}, @code{\} and unpaired
 braces as in other verbatim text.
 
+Example code must be capable of being run by @code{example}, which uses
+@code{source}.  This means that it should not access @file{stdin},
+e.g.@: to @code{scan()} data from the example file.
+
 Data needed for making the examples executable can be obtained by random
 number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets listed by @code{data()} (see @code{?data} for more
@@ -5610,7 +5614,7 @@ structure and detect mis-matched braces, and so on.
 The system most commonly used for this is some version of
 @command{Emacs} (including @command{XEmacs}) with the @acronym{ESS}
 package (@uref{http://ess.r-project.org/}: it is often is installed with
-@command{Emacs} but may need to be loaded, or even installed
+@command{Emacs} but may need to be loaded, or even installed,
 separately).
 
 Another is the Eclipse IDE with the Stat-ET plugin
