@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -90,8 +90,10 @@ as.difftime(tim, format = "\%X", units = "auto")
   group generic).
 
   The units of a \code{"difftime"} object can be extracted by the
-  \code{units} function, which also has an replacement form.  If the units
-  are changed, the numerical value is scaled accordingly.
+  \code{units} function, which also has a replacement form.  If the
+  units are changed, the numerical value is scaled accordingly.  As from
+  \R 2.15.0 the replacement version keeps attributes such as names and
+  dimensions.
 
   The \code{as.double} method returns the numeric value expressed in
   the specified units.  Using  \code{units = "auto"} means the units of the

@@ -172,8 +172,12 @@
       \item \code{options(max.print = Inf)} and similar now give an
       error (instead of warnings later).
 
-      \item \code{heatmap(x, symm=TRUE, RowSideColors=*)} no longer
+      \item \code{heatmap(x, symm = TRUE, RowSideColors = *)} no longer
       draws the colors in reversed order.
+
+      \item The \code{"difftime"} replacement method of \code{units}
+      tries harder to preserve other attributes of the argument.  (Wish
+      of \PR{14839}.)
     }
   }
 

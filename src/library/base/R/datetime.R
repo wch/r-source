@@ -505,7 +505,7 @@ units.difftime <- function(x) attr(x, "units")
     if (!(value %in% c("secs", "mins", "hours", "days", "weeks")))
         stop("invalid units specified")
     sc <- cumprod(c(secs=1, mins=60, hours=60, days=24, weeks=7))
-    newx <- as.vector(x)*sc[from]/sc[value]
+    newx <- unclass(x) * as.vector(sc[from]/sc[value])
     .difftime(newx, value)
 }
 
