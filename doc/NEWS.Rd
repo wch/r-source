@@ -11,28 +11,28 @@
     \itemize{
       \item \code{lm.fit()}, \code{glm.fit()} and \code{lsfit()} do less
       copying of objects, mainly by using \code{.Call()} rather than
-      \code{.Fortran()}. 
+      \code{.Fortran()}.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives a warning rather than a
       note if it finds calls to \code{abort}, \code{assert} or
       \code{exit} in compiled code, and has been able to find the
       \file{.o} file in which the calls occur.
-      
+
       Such calls can terminate the \R process which loads the package.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The \code{ENCODING} argument to \code{.C()} is defunct.
       Use \code{iconv()} instead.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
@@ -51,7 +51,7 @@
       junctions and symbolic links).
     }
   }
-  
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item Environment variable \env{RD2DVI_INPUTENC} has been renamed
@@ -191,7 +191,7 @@
       function from \code{package:base} if the function has the same
       code as the base one but with a different environment.  (An
       example is \code{Matrix::det()}.)
-      
+
       \item When deparsing very large language objects,
       \code{as.character()} now inserts newlines after each line of
       approximately 500 bytes, rather than truncating to the first
@@ -202,6 +202,9 @@
 
       \item Packages may now specify actions to be taken when the
       package is loaded (\code{setLoadActions()}).
+
+      \item \code{options(max.print = Inf)} and similar now give an
+      error (instead of warnings later).
     }
   }
 
@@ -264,7 +267,7 @@
       the named packages plus the \samp{Suggests}, but only the
       essential dependencies of dependencies.  To get the previous
       behaviour, specify \code{dependencies} as a character vector.
-      
+
       \item \command{R CMD INSTALL --merge-multiarch} is now supported
       on OS X and other Unix-alikes using multiple sub-architectures.
 
@@ -370,7 +373,7 @@
       \code{printNoClass()}, \code{provide()}, \code{read.table.url()},
       \code{restart()}, \code{scan.url()}, \code{symbol.C()},
       \code{symbol.For()} and \code{unix()}.
-      
+
       \item The \code{ENCODING} argument to \code{.C()} is deprecated.
       It was intended to smooth the transition to multi-byte character
       strings, but can be replaced by the use of \code{iconv()} in the
@@ -406,7 +409,7 @@
       documented and should not be used for new code.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{str(x, width)} now obeys its \code{width}
@@ -444,13 +447,13 @@
 
       \item \code{selectMethod(f, sig)} would not return inherited group
       methods when caching was off (as it is by default).
-      
+
       \item \code{dev.copy2pdf(out.type = "cairo")} gave an error.
       (\PR{14827})
 
       \item Virtual classes (e.g., class unions) had \code{NULL} prototype
       even if that was not a legal subclass.  See \code{?setClassUnion}.
-	
+
       \item The C prototypes for \code{zdotc} and \code{zdotu} in
       \file{R_ext/BLAS.h} have been changed to the more modern style
       rather than that used by \command{f2c}.  (Patch by Berwin Turlach.)
@@ -461,7 +464,7 @@
       \item \code{.C()} or \code{.Fortran()} had a protection error if
       the registration information resulted in an argument
       being coerced to another type.
-      
+
       \item \code{boxplot(x=x, at=at)} with non finite elements in \code{x}
       and non integer \code{at} could not generate a warning but failed.
     }
