@@ -163,8 +163,8 @@
       approximately 500 bytes, rather than truncating to the first
       line.
 
-      \item New \code{rWishart()} generates Wishart distributed random
-      matrices.
+      \item New function \code{rWishart()} generates Wishart-distributed
+      random matrices.
 
       \item Packages may now specify actions to be taken when the
       package is loaded (\code{setLoadActions()}).
@@ -371,7 +371,7 @@
       \item Passing \R objects other than atomic vectors, functions,
       lists and environments to \code{.C()} is now deprecated and will
       give a warning.  Most cases (especially \code{NULL}) are actually
-      coding errors.
+      coding errors.  \code{NULL} will be disallowed as from \R 2.15.1.
 
       \code{.C()} now passes a pairlist as a \code{SEXP} to the compiled
       code.  This is as was documented, but pairlists were in reality
