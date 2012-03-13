@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2012-03-12 09:01\n"
-"PO-Revision-Date: 2011-10-22 18:27+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2012-02-26 14:09+0200 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 msgid "'%s' is defunct."
 msgstr " '%s' は廃止されました。 "
@@ -864,7 +864,6 @@ msgstr ""
 msgid "package %s already present in search()"
 msgstr " パッケージ '%s' は既に search() 中に存在します "
 
-#, fuzzy
 msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
 " 'DESCRIPTION' は 'Encoding' フィールドを持っているので再エンコーディングは出"
@@ -988,7 +987,7 @@ msgid "Use of save versions prior to 2 is deprecated"
 msgstr " 二回以前の保存バージョンの使用は廃止予定です "
 
 msgid "nothing specified to be save()d"
-msgstr ""
+msgstr " save()されるべきものがありません "
 
 msgid "'file' must be non-empty string"
 msgstr " 'file' は空でない文字列でなければなりません "
@@ -1160,7 +1159,7 @@ msgstr ""
 "されていません "
 
 msgid "No function found corresponding to methods exports from %s for: %s"
-msgstr ""
+msgstr " %s から %s へエクスポートされるメソッドに対応する関数がありません "
 
 msgid "in %s methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートされるメソッドがありません： %s "
@@ -1216,7 +1215,7 @@ msgstr ""
 "ん "
 
 msgid "No methods found in \"%s\" for requests: %s"
-msgstr ""
+msgstr " \"%s\" 中には要求に対するメソッドが見つかりません: %s "
 
 msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
@@ -1227,6 +1226,8 @@ msgid ""
 "No generic function found corresponding to requested imported methods for "
 "\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
+" \"%s\" に対して要求されたインポートされたメソッド（パッケージ \"%s\" から"
+"の）に対応する総称的関数がありません (不正確なエクスポート？) "
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr " 封印された名前空間のエクスポートへ加えることができません "
@@ -1361,9 +1362,8 @@ msgstr " 引数 'length.out' は長さ 1 でなければなりません "
 msgid "first element used of 'length.out' argument"
 msgstr " 最初の要素は 引数 'length.out' として使われます "
 
-#, fuzzy
 msgid "extra argument(s) %s will be disregarded"
-msgstr " drop 引数は無視されます "
+msgstr "  余分な引数 %s は無視されます "
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "
@@ -1644,16 +1644,14 @@ msgstr " 'stderr' は長さ 1 でなければなりません "
 msgid "'which' was not found on this platform"
 msgstr " このプラットホームでは'which'が見つかりません "
 
-#, fuzzy
 msgid "fewer 'from' files than 'to' files"
-msgstr " コピー先ファイルよりも多くのコピー元ファイルがあります "
+msgstr " コピー先ファイルよりもコピー元ファイルが少ないです "
 
 msgid "link '%s' already exists"
-msgstr ""
+msgstr " リンク '%s' はすでに存在します "
 
-#, fuzzy
 msgid "failed to create directory for link '%s"
-msgstr " \"%s\" に対する metadata オブジェクトを見付けることができません "
+msgstr " リンク \"%s\" に対するディレクトリを作成できませんでした "
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr " 'show.output.on.console' は 'TRUE' か 'FALSE' でなければなりません "
@@ -1697,7 +1695,6 @@ msgstr " 項目 "
 msgid "have been removed from the search path"
 msgstr " 検索パスから抹消されています "
 
-#, fuzzy
 msgid "cannot find namespace environment"
 msgstr " 名前空間環境を見つけられません "
 
@@ -1750,6 +1747,13 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid ""
+#~ "Functions for exporting methods must have been made generic, explicitly "
+#~ "or implicitly; not true when loading %s for %s"
+#~ msgstr ""
+#~ " メッソドのエクスポートに対する関数は明示的もしくは暗黙に総称的にされてい"
+#~ "た必要があります； %s を %s に対してロードする場合はそうではありません "
 
 #~ msgid "'symbol.C' is not needed: please remove it"
 #~ msgstr " 'symbol.C' は必要ありません: 取り除いてください "

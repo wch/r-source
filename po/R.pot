@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:33+0000\n"
+"POT-Creation-Date: 2012-03-13 07:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,8 +161,8 @@ msgstr ""
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
-#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:707
+#: src/main/dotcode.c:711 src/main/dotcode.c:716 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -286,7 +286,7 @@ msgstr ""
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:193 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -743,7 +743,7 @@ msgstr ""
 msgid "must pass package name or DllInfo reference"
 msgstr ""
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:124
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr ""
@@ -1412,7 +1412,7 @@ msgstr ""
 msgid "cannot set length of non-vector"
 msgstr ""
 
-#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:590
+#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:595
 msgid "invalid argument"
 msgstr ""
 
@@ -1632,8 +1632,7 @@ msgstr ""
 msgid "default method not implemented for type '%s'"
 msgstr ""
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
-#: src/main/dotcode.c:1612
+#: src/main/coerce.c:2188
 msgid "'name' is missing"
 msgstr ""
 
@@ -2626,167 +2625,176 @@ msgstr ""
 msgid "Hit <Return> to see next plot: "
 msgstr ""
 
-#: src/main/dotcode.c:109 src/main/dotcode.c:139
+#: src/main/dotcode.c:103 src/main/dotcode.c:133
 msgid "NULL value passed as symbol address"
 msgstr ""
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:214
+#: src/main/dotcode.c:138 src/main/dotcode.c:208
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr ""
 
-#: src/main/dotcode.c:162
+#: src/main/dotcode.c:156
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 
-#: src/main/dotcode.c:201 src/main/dotcode.c:798
+#: src/main/dotcode.c:195 src/main/dotcode.c:793
 msgid "too many arguments in foreign function call"
 msgstr ""
 
-#: src/main/dotcode.c:243
+#: src/main/dotcode.c:237
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr ""
 
-#: src/main/dotcode.c:247
+#: src/main/dotcode.c:241
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr ""
 
-#: src/main/dotcode.c:300
+#: src/main/dotcode.c:289
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:324
+#: src/main/dotcode.c:320
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:337
+#: src/main/dotcode.c:333
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:354
+#: src/main/dotcode.c:350
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:363
+#: src/main/dotcode.c:359
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:368
+#: src/main/dotcode.c:364
 msgid "only first string in char vector used in .Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:380 src/main/dotcode.c:501
+#: src/main/dotcode.c:376 src/main/dotcode.c:497
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:396
+#: src/main/dotcode.c:392
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:413
-msgid "lists must be duplicated in .C"
-msgstr ""
-
-#: src/main/dotcode.c:421 src/main/dotcode.c:430
+#: src/main/dotcode.c:408
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:516
+#: src/main/dotcode.c:410
+msgid "lists must be duplicated in .C"
+msgstr ""
+
+#: src/main/dotcode.c:422
+#, c-format
+msgid "invalid mode (%s) to pass to Fortran (arg %d)"
+msgstr ""
+
+#: src/main/dotcode.c:512
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:579
+#: src/main/dotcode.c:572
 msgid "NAOK used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:583
+#: src/main/dotcode.c:576
 msgid "DUP used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:589
+#: src/main/dotcode.c:582
 msgid "DLL name is too long"
 msgstr ""
 
-#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
+#: src/main/dotcode.c:585 src/main/dotcode.c:645 src/main/dotcode.c:651
 msgid "PACKAGE used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:631
+#: src/main/dotcode.c:624
 msgid "PACKAGE argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:637
+#: src/main/dotcode.c:630
 msgid "PACKAGE argument is too long"
 msgstr ""
 
-#: src/main/dotcode.c:681 src/main/dotcode.c:689
+#: src/main/dotcode.c:674 src/main/dotcode.c:683
 msgid "ENCODING used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:683 src/main/dotcode.c:691
+#: src/main/dotcode.c:676 src/main/dotcode.c:685
 msgid "ENCODING argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:708
+#: src/main/dotcode.c:703
 msgid "no arguments supplied"
 msgstr ""
 
-#: src/main/dotcode.c:709 src/main/seq.c:642
+#: src/main/dotcode.c:704 src/main/seq.c:642
 msgid "too many arguments"
 msgstr ""
 
-#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
+#: src/main/dotcode.c:741 src/main/dotcode.c:784 src/main/dotcode.c:1607
+msgid "'.NAME' is missing"
+msgstr ""
+
+#: src/main/dotcode.c:757 src/main/dotcode.c:800 src/main/dotcode.c:1628
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
+#: src/main/dotcode.c:1457 src/main/dotcode.c:2260
 msgid "too many arguments, sorry"
 msgstr ""
 
-#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
+#: src/main/dotcode.c:1489 src/main/dotcode.c:1506
 msgid "Invalid graphics state"
 msgstr ""
 
-#: src/main/dotcode.c:1584
+#: src/main/dotcode.c:1579
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr ""
 
-#: src/main/dotcode.c:1659
+#: src/main/dotcode.c:1653
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr ""
 
-#: src/main/dotcode.c:2357
+#: src/main/dotcode.c:2351
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr ""
 
-#: src/main/dotcode.c:2369
+#: src/main/dotcode.c:2363
 msgid "invalid function in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2371
+#: src/main/dotcode.c:2365
 msgid "invalid argument count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2373
+#: src/main/dotcode.c:2367
 msgid "invalid return value count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2407
+#: src/main/dotcode.c:2401
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr ""
@@ -5003,16 +5011,17 @@ msgstr ""
 #: src/main/options.c:419 src/main/options.c:427 src/main/options.c:433
 #: src/main/options.c:441 src/main/options.c:448 src/main/options.c:453
 #: src/main/options.c:460 src/main/options.c:466 src/main/options.c:472
-#: src/main/options.c:477 src/main/options.c:486 src/main/options.c:492
-#: src/main/options.c:498 src/main/options.c:509 src/main/options.c:516
-#: src/main/options.c:522 src/main/options.c:530 src/main/options.c:537
-#: src/main/options.c:544 src/main/options.c:551 src/main/options.c:558
-#: src/main/options.c:566 src/main/options.c:575 src/main/options.c:578
+#: src/main/options.c:477 src/main/options.c:482 src/main/options.c:491
+#: src/main/options.c:497 src/main/options.c:503 src/main/options.c:514
+#: src/main/options.c:521 src/main/options.c:527 src/main/options.c:535
+#: src/main/options.c:542 src/main/options.c:549 src/main/options.c:556
+#: src/main/options.c:563 src/main/options.c:571 src/main/options.c:580
+#: src/main/options.c:583
 #, c-format
 msgid "invalid value for '%s'"
 msgstr ""
 
-#: src/main/options.c:571 src/main/options.c:593
+#: src/main/options.c:576 src/main/options.c:598
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr ""
 

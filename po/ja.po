@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:33+0000\n"
-"PO-Revision-Date: 2011-10-22 08:01+0900 \n"
-"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
+"POT-Creation-Date: 2012-03-13 07:45+0000\n"
+"PO-Revision-Date: 2012-02-26 14:21+0200 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: src/appl/binning.c:73
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
@@ -163,8 +163,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
-#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:707
+#: src/main/dotcode.c:711 src/main/dotcode.c:716 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -288,7 +288,7 @@ msgstr " タイムスタンプが不正です "
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:193 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -755,7 +755,7 @@ msgstr ""
 msgid "must pass package name or DllInfo reference"
 msgstr " パッケージ名か DllInfo の参照を渡すべきです "
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:124
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr " createRSymbolObject には型 %d は未実装です "
@@ -1444,7 +1444,7 @@ msgstr " ベクトル : モード \"%s\" のベクトルを作ることはでき
 msgid "cannot set length of non-vector"
 msgstr " ベクトルでないものの長さは設定できません "
 
-#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:590
+#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:595
 msgid "invalid argument"
 msgstr " 引数が不正です "
 
@@ -1664,8 +1664,7 @@ msgstr " %s() は型 '%s' のベクトル、リスト以外に適用されます
 msgid "default method not implemented for type '%s'"
 msgstr " 型 '%s' のデフォルトメソッドは実装されていません "
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
-#: src/main/dotcode.c:1612
+#: src/main/coerce.c:2188
 msgid "'name' is missing"
 msgstr " 'name'が見つかりません "
 
@@ -2687,36 +2686,36 @@ msgstr " (GEcreateDevDesc内で)デバイス割り当てに十分なメモリが
 msgid "Hit <Return> to see next plot: "
 msgstr " 次の図を見るためには<Return>キーを押して下さい:  "
 
-#: src/main/dotcode.c:109 src/main/dotcode.c:139
+#: src/main/dotcode.c:103 src/main/dotcode.c:133
 msgid "NULL value passed as symbol address"
 msgstr " シンボルのアドレスに対して NULL 値が渡されました "
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:214
+#: src/main/dotcode.c:138 src/main/dotcode.c:208
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr " シンボル '%s' が長すぎます "
 
-#: src/main/dotcode.c:162
+#: src/main/dotcode.c:156
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 " 'name' は（長さ1の）文字列またはネイティブなシンボル参照でなければなりませ"
 "ん "
 
-#: src/main/dotcode.c:201 src/main/dotcode.c:798
+#: src/main/dotcode.c:195 src/main/dotcode.c:793
 msgid "too many arguments in foreign function call"
 msgstr " 外部関数の呼び出しで引数が多すぎます "
 
-#: src/main/dotcode.c:243
+#: src/main/dotcode.c:237
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr " %s シンボル名 \"%s\" はパッケージ \"%s\" の DLL の中にありません "
 
-#: src/main/dotcode.c:247
+#: src/main/dotcode.c:241
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr " %s シンボル名 \"%s\" は load table にありません "
 
-#: src/main/dotcode.c:300
+#: src/main/dotcode.c:289
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2725,133 +2724,143 @@ msgstr ""
 " '%s' への呼出しで、引数を複製しないという明示的な要求ですが、引数 %d は誤っ"
 "たタイプです  (%d != %d)  "
 
-#: src/main/dotcode.c:324
+#: src/main/dotcode.c:320
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr " 外部関数呼出しの引数 %d が NA です "
 
-#: src/main/dotcode.c:337
+#: src/main/dotcode.c:333
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数の呼び出し(引数 %d) 中に NA/NaN/Inf があります "
 
-#: src/main/dotcode.c:354
+#: src/main/dotcode.c:350
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数呼出し (引数 %d) 中に複素数の NA/NaN/Inf 値があります "
 
-#: src/main/dotcode.c:363
+#: src/main/dotcode.c:359
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr " .C/.Fortran 中に文字列変数は重複していなければなりません "
 
-#: src/main/dotcode.c:368
+#: src/main/dotcode.c:364
 msgid "only first string in char vector used in .Fortran"
 msgstr " .Fortran に対する文字ベクトルとして，最初の文字列だけを使いました "
 
-#: src/main/dotcode.c:380 src/main/dotcode.c:501
+#: src/main/dotcode.c:376 src/main/dotcode.c:497
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr " '%s' というエンコーディングはサポートされていません "
 
-#: src/main/dotcode.c:396
+#: src/main/dotcode.c:392
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr " '%s' への再エンコーディング中に変換問題が生じました "
 
-#: src/main/dotcode.c:413
-msgid "lists must be duplicated in .C"
-msgstr " .C 中ではリストは重複していなければなりません "
-
-#: src/main/dotcode.c:421 src/main/dotcode.c:430
+#: src/main/dotcode.c:408
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:516
+#: src/main/dotcode.c:410
+msgid "lists must be duplicated in .C"
+msgstr " .C 中ではリストは重複していなければなりません "
+
+#: src/main/dotcode.c:422
+#, fuzzy, c-format
+msgid "invalid mode (%s) to pass to Fortran (arg %d)"
+msgstr " Fortran に渡された引数 %d のモードが不正です "
+
+#: src/main/dotcode.c:512
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr " '%s' からの再エンコーディング中に変換問題が生じました "
 
-#: src/main/dotcode.c:579
+#: src/main/dotcode.c:572
 msgid "NAOK used more than once"
 msgstr " NAOK が二回以上使われました "
 
-#: src/main/dotcode.c:583
+#: src/main/dotcode.c:576
 msgid "DUP used more than once"
 msgstr " DUP が二回以上使われました "
 
-#: src/main/dotcode.c:589
+#: src/main/dotcode.c:582
 msgid "DLL name is too long"
 msgstr " DLL の名前が長すぎます "
 
-#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
+#: src/main/dotcode.c:585 src/main/dotcode.c:645 src/main/dotcode.c:651
 msgid "PACKAGE used more than once"
 msgstr " PACKAGE が二回以上使われました "
 
-#: src/main/dotcode.c:631
+#: src/main/dotcode.c:624
 msgid "PACKAGE argument must be a single character string"
 msgstr " PACKAGE 引数は単一の文字列でなければなりません "
 
-#: src/main/dotcode.c:637
+#: src/main/dotcode.c:630
 msgid "PACKAGE argument is too long"
 msgstr " PACKAGE 引数が長すぎます "
 
-#: src/main/dotcode.c:681 src/main/dotcode.c:689
+#: src/main/dotcode.c:674 src/main/dotcode.c:683
 msgid "ENCODING used more than once"
 msgstr " ENCODING が二回以上使われました "
 
-#: src/main/dotcode.c:683 src/main/dotcode.c:691
+#: src/main/dotcode.c:676 src/main/dotcode.c:685
 msgid "ENCODING argument must be a single character string"
 msgstr " ENCODING 引数は単一の文字列でなければなりません "
 
-#: src/main/dotcode.c:708
+#: src/main/dotcode.c:703
 msgid "no arguments supplied"
 msgstr " 引数が与えられていません "
 
-#: src/main/dotcode.c:709 src/main/seq.c:642
+#: src/main/dotcode.c:704 src/main/seq.c:642
 msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
-#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
+#: src/main/dotcode.c:741 src/main/dotcode.c:784 src/main/dotcode.c:1607
+#, fuzzy
+msgid "'.NAME' is missing"
+msgstr " 'EXPR' がありません "
+
+#: src/main/dotcode.c:757 src/main/dotcode.c:800 src/main/dotcode.c:1628
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr " 引数の数(%1$d)が不正です。%3$s に対しては %2$d 個の引数が必要です "
 
-#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
+#: src/main/dotcode.c:1457 src/main/dotcode.c:2260
 msgid "too many arguments, sorry"
 msgstr " 引数が多すぎます（すみません…） "
 
-#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
+#: src/main/dotcode.c:1489 src/main/dotcode.c:1506
 msgid "Invalid graphics state"
 msgstr " 無効なグラフィックス状態です "
 
-#: src/main/dotcode.c:1584
+#: src/main/dotcode.c:1579
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr " DLL を探している際に，DLLInfoReference に NULL 値が見つかりました "
 
-#: src/main/dotcode.c:1659
+#: src/main/dotcode.c:1653
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr " %d 引数の型が不正です（%s の呼び出しにおいて） "
 
-#: src/main/dotcode.c:2357
+#: src/main/dotcode.c:2351
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr " 言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません "
 
-#: src/main/dotcode.c:2369
+#: src/main/dotcode.c:2363
 msgid "invalid function in call_R"
 msgstr " call_R 中の関数が不正です "
 
-#: src/main/dotcode.c:2371
+#: src/main/dotcode.c:2365
 msgid "invalid argument count in call_R"
 msgstr " call_R の引数の個数が不正です "
 
-#: src/main/dotcode.c:2373
+#: src/main/dotcode.c:2367
 msgid "invalid return value count in call_R"
 msgstr " call_R の戻り値の個数が不正です "
 
-#: src/main/dotcode.c:2407
+#: src/main/dotcode.c:2401
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr " call_R では \"%s\" というモードはサポートされていません "
@@ -3142,9 +3151,8 @@ msgid "names(x) must be a character vector of the same length as x"
 msgstr " names(x) はxと同じ長さの文字列ベクトルでなくてはなりません "
 
 #: src/main/envir.c:1575
-#, fuzzy
 msgid "'envir' argument must be an environment"
-msgstr " 'env' 引数は環境でなくてはなりません "
+msgstr " 'envir' 引数は環境でなくてはなりません "
 
 #: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
@@ -3363,10 +3371,11 @@ msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr " %d 件の警告がありました (警告を見るには warnings() を使って下さい) \n"
 
 #: src/main/errors.c:489
-#, fuzzy, c-format
+#, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
-" 50 件以上の警告がありました (警告を見るには warnings() を使って下さい) \n"
+" %d 件以上の警告がありました (最初の%d個の警告を見るには warnings() を使って"
+"下さい) \n"
 
 #: src/main/errors.c:538
 msgid "Error during wrapup: "
@@ -4291,7 +4300,7 @@ msgstr " トップレベルの task callback が論理値を返していませ�
 
 #: src/main/mapply.c:45
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
-msgstr ""
+msgstr " 長さゼロの入力は、長さゼロでないものと混在させることはできません "
 
 #: src/main/mapply.c:62
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
@@ -4463,9 +4472,8 @@ msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
 #: src/main/model.c:764
-#, fuzzy
 msgid "'specials' must be NULL or a character vector"
-msgstr " 'path' は文字ベクトルでなくてはなりません "
+msgstr " 'specials' はNULLまたは文字ベクタでなくてはなりません "
 
 #: src/main/model.c:777
 msgid "'data' argument is of the wrong type"
@@ -4727,7 +4735,7 @@ msgstr "S4 オブジェクトには 'inherits()' でなく 'is()' を使って�
 
 #: src/main/objects.c:987
 msgid "could not find correct environment; please report!"
-msgstr ""
+msgstr " 正しい環境を見つけられませんでした； 報告をお願いします! "
 
 #: src/main/objects.c:1082
 #, c-format
@@ -4885,7 +4893,7 @@ msgstr " REPORT は正の値でなければなりません (method = \"BFGS\") "
 
 #: src/main/optim.c:523
 msgid "initial value in 'vmmin' is not finite"
-msgstr " vmmin の初期値が有限ではありません "
+msgstr " 'vmmin' の初期値が有限ではありません "
 
 #: src/main/optim.c:671
 msgid "function cannot be evaluated at initial parameters"
@@ -5123,16 +5131,17 @@ msgstr " 'expression' パラメータが不正です: %d...%dが認められて�
 #: src/main/options.c:419 src/main/options.c:427 src/main/options.c:433
 #: src/main/options.c:441 src/main/options.c:448 src/main/options.c:453
 #: src/main/options.c:460 src/main/options.c:466 src/main/options.c:472
-#: src/main/options.c:477 src/main/options.c:486 src/main/options.c:492
-#: src/main/options.c:498 src/main/options.c:509 src/main/options.c:516
-#: src/main/options.c:522 src/main/options.c:530 src/main/options.c:537
-#: src/main/options.c:544 src/main/options.c:551 src/main/options.c:558
-#: src/main/options.c:566 src/main/options.c:575 src/main/options.c:578
+#: src/main/options.c:477 src/main/options.c:482 src/main/options.c:491
+#: src/main/options.c:497 src/main/options.c:503 src/main/options.c:514
+#: src/main/options.c:521 src/main/options.c:527 src/main/options.c:535
+#: src/main/options.c:542 src/main/options.c:549 src/main/options.c:556
+#: src/main/options.c:563 src/main/options.c:571 src/main/options.c:580
+#: src/main/options.c:583
 #, c-format
 msgid "invalid value for '%s'"
 msgstr " '%s' の値が不正です "
 
-#: src/main/options.c:571 src/main/options.c:593
+#: src/main/options.c:576 src/main/options.c:598
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr " \"par.ask.default\"は\"device.ask.default\"で置き換えられました "
 
@@ -5271,14 +5280,16 @@ msgid "nothing to link"
 msgstr " リンクすべきものがありません "
 
 #: src/main/platform.c:628
-#, fuzzy
 msgid "symbolic links are not supported on this version of Windows"
-msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
+msgstr ""
+" このWindowsのバージョンではシンボリックリンクはサポートされていません "
 
 #: src/main/platform.c:647
-#, fuzzy, c-format
+#, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
-msgstr " '%s'に対するシンボリックリンク'%s'を作成できません, 理由は '%s' です "
+msgstr ""
+" シンボリックリンク '%ls' （'%ls\" に対する）を作成できません, 理由は '%s' で"
+"す "
 
 #: src/main/platform.c:667
 #, c-format
@@ -6950,7 +6961,7 @@ msgstr " ベクトルでないものへの添え字操作 "
 
 #: src/main/subset.c:235
 msgid "dimensions would exceed maximum size of array"
-msgstr ""
+msgstr " 次元が配列の最大サイズを超えたかもしれません "
 
 #: src/main/subset.c:278 src/main/subset.c:307
 msgid "matrix subscripting not handled for this type"
