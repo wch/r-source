@@ -375,12 +375,8 @@ if(.Platform$OS.type == "windows") {
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
             bad <- Filter(length, lapply(bad, compare))
-<<<<<<< .working
-        } else if(useST) cat("Note: 'symbols.rds' is not available\n")
-=======
         } else if(useST)
             cat("Note: information on .o files is not available\n")
->>>>>>> .merge-right.r58723
 
         class(bad) <- "check_compiled_code"
         bad
