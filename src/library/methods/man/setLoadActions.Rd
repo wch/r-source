@@ -3,6 +3,8 @@
 \alias{setLoadActions}
 \alias{getLoadActions}
 \alias{hasLoadAction}
+\alias{evalOnLoad}
+\alias{evalqOnLoad}
 \title{
 Set Actions For Package Loading
 }
@@ -27,16 +29,24 @@ given a package's namespace as its argument.
 \code{hasLoadAction} returns \code{TRUE} if a load action
 corresponding to the given name has previously been set for the
 \code{where} namespace.
+
+\code{evalOnLoad()} and \code{evalqOnLoad()} schedule a specific expression for
+evaluation at load time.
 }
 \usage{
 
-setLoadAction(action, aname, where)
+setLoadAction(action, aname=, where=)
 
 setLoadActions(..., .where=)
 
 getLoadActions(where=)
 
 hasLoadAction(aname, where=)
+
+evalOnLoad(expr, where=, aname=)
+
+evalqOnLoad(expr, where=, aname=)
+
 }
 \arguments{
 
@@ -61,8 +71,20 @@ be needed if a package supplies load actions for another package.
     default uses the position in the sequence of actions specified
     (\code{".1"}, etc.).
 }
+
+\item{expr}{an expression to be evaluated in a load action in
+    environment \code{where}.  In the case of \code{evalqOnLoad()},
+    the expression is interpreted literally, in that of
+    \code{evalOnLoad()} it must be precomputed, typically as an object
+    of type \code{"language"}.
+}
 }
 \details{
+The \code{evalOnLoad()} and \code{evalqOnLoad()} functions are for
+convenience.
+They construct a function to evaluate the expression and call
+\code{setLoadAction()} to schedule a call to that function.
+
 Each of the functions supplied as an argument to \code{setLoadAction()} or
 \code{setLoadActions()} is saved as metadata in the
 namespace, typically that of the package containing the call to
