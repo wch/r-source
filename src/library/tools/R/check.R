@@ -3395,7 +3395,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (file.exists(file.path(pkgdir, "NAMESPACE")))
                 resultLog(Log, "OK")
             else {
-                warningLog(Log)
+                noteLog(Log)
                 wrapLog("As from R 2.14.0 all packages need a namespace.\n",
                         "One will be generated on installation,",
                         "but it is better to handcraft a NAMESPACE file:",
