@@ -3401,11 +3401,12 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (file.exists(file.path(pkgdir, "NAMESPACE")))
                 resultLog(Log, "OK")
             else {
-                noteLog(Log)
+                warningLog(Log)
                 wrapLog("As from R 2.14.0 all packages need a namespace.\n",
                         "One will be generated on installation,",
                         "but it is better to handcraft a NAMESPACE file:",
-                        "R CMD build will produce a suitable starting point.\n")
+                        "R CMD build will produce a suitable starting point.\n",
+                        "CRAN requires a NAMESPACE file for all submissions")
             }
 
             ## we need to do this before installation
