@@ -299,7 +299,8 @@ if(.Platform$OS.type == "windows") {
                 tables <- readRDS(objects_symbol_tables_file)
                 Filter(length, lapply(bad, compare, strip_ = TRUE))
             } else {
-                if(useST) cat("Note: 'i386/symbols.rds' is not available\n")
+                if(useST)
+                    cat("Note: information on .o files for i386 is not available\n")
                 Filter(length, lapply(so_files, check_so_symbols, rarch="i386"))
             }
         } else NULL
@@ -315,7 +316,8 @@ if(.Platform$OS.type == "windows") {
                 tables <- readRDS(objects_symbol_tables_file)
                 Filter(length, lapply(bad2, compare))
             } else {
-                if(useST) cat("Note: 'x64/symbols.rds' is not available\n")
+                if(useST)
+                    cat("Note: information on .o files for x64 is not available\n")
                 Filter(length, lapply(so_files, check_so_symbols, rarch="x64"))
             }
         } else NULL
@@ -373,7 +375,12 @@ if(.Platform$OS.type == "windows") {
         if(file_test("-f", objects_symbol_tables_file)) {
             tables <- readRDS(objects_symbol_tables_file)
             bad <- Filter(length, lapply(bad, compare))
+<<<<<<< .working
         } else if(useST) cat("Note: 'symbols.rds' is not available\n")
+=======
+        } else if(useST)
+            cat("Note: information on .o files is not available\n")
+>>>>>>> .merge-right.r58723
 
         class(bad) <- "check_compiled_code"
         bad

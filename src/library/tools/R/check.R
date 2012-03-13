@@ -3400,7 +3400,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                         "One will be generated on installation,",
                         "but it is better to handcraft a NAMESPACE file:",
                         "R CMD build will produce a suitable starting point.\n",
-                        "CRAN requires a NAMESPACE file for all submissions")
+                        "CRAN requires a NAMESPACE file for all submissions.")
             }
 
             ## we need to do this before installation
