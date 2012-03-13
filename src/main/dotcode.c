@@ -413,18 +413,26 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
 	ans = (void*) lptr;
 	break;
-    case LISTSXP:
-	/* Temporary, added in R 2.15.0 */
-	warning("pairlists are passed as SEXP as from R 2.15.0");
-	/* fall through */
-    default:
-	/* Includes pairlists from R 2.15.0 */
+    case CLOSXP:
+    case BUILTINSXP:
+    case SPECIALSXP:
+    case ENVSXP:
 	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
 			type2char(TYPEOF(s)), narg);
-	SEXPTYPE t = TYPEOF(s);
-	if (t != CLOSXP && t != BUILTINSXP && t != SPECIALSXP && t != ENVSXP)
-	    warning("passing an object of type '%s' to .C (arg %d) is deprecated", type2char(TYPEOF(s)), narg);
 	ans =  (void*) s;
+	break;
+    default:
+    {
+	/* Includes pairlists from R 2.15.0 */
+	SEXPTYPE t = TYPEOF(s);
+	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
+			type2char(t), narg);
+	warning("passing an object of type '%s' to .C (arg %d) is deprecated", 
+		type2char(t), narg);
+	if (t == LISTSXP)
+	    warning("pairlists are passed as SEXP as from R 2.15.0");
+	ans =  (void*) s;
+    }
     }
     if (nprotect) UNPROTECT(nprotect);
     return ans;
