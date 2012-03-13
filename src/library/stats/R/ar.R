@@ -219,7 +219,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
         pred <- if(p) {
             for(i in seq_len(n.ahead)) {
                 x[n+i,] <- ar[1L,,] %*% x[n+i-1L,] + xint
-                if(p > 1L) for(j in seq_len(p))
+		if(p > 1L) for(j in 2L:p)
                     x[n+i,] <- x[n+i,] + ar[j,,] %*% x[n+i-j,]
             }
             x[n + seq_len(n.ahead), ]
@@ -241,9 +241,9 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
             if(se.fit) {
                 npsi <- n.ahead - 1L
                 psi <- .C(C_artoma,
-                        as.integer(object$order), as.double(ar),
-                        psi = double(npsi+object$order+1L),
-                        as.integer(npsi+object$order+1L))$psi[seq_len(npsi)]
+			  as.integer(object$order), as.double(ar),
+			  psi = double(npsi+object$order+1L),
+			  as.integer(npsi+object$order+1L))$psi[seq_len(npsi)]
                 vars <- cumsum(c(1, psi^2))
                 se <- sqrt(object$var.pred*vars)[seq_len(n.ahead)]
             }

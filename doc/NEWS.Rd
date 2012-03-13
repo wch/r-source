@@ -172,9 +172,6 @@
       \item \code{options(max.print = Inf)} and similar now give an
       error (instead of warnings later).
 
-      \item \code{heatmap(x, symm = TRUE, RowSideColors = *)} no longer
-      draws the colors in reversed order.
-
       \item The \code{"difftime"} replacement method of \code{units}
       tries harder to preserve other attributes of the argument.  (Wish
       of \PR{14839}.)
@@ -440,6 +437,12 @@
 
       \item \code{boxplot(x=x, at=at)} with non finite elements in \code{x}
       and non integer \code{at} could not generate a warning but failed.
+
+      \item \code{heatmap(x, symm=TRUE, RowSideColors=*)} no longer
+      draws the colors in reversed order.
+
+      \item \code{predict(<ar>)} was incorrect in the multivariate case,
+      for p >= 2.
     }
   }
 }
