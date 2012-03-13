@@ -392,6 +392,12 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			type2char(TYPEOF(s)), narg);
 	ans =  (void*) s;
 	break;
+    case NILSXP:
+    {
+	error(_("invalid mode (%s) to pass to C or Fortran (arg %d)"), 
+	      type2char(TYPEOF(s)), narg);
+	ans =  (void*) s; /* -Wall */
+    }
     default:
     {
 	/* Includes pairlists from R 2.15.0 */
@@ -401,7 +407,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	warning("passing an object of type '%s' to .C (arg %d) is deprecated", 
 		type2char(t), narg);
 	if (t == LISTSXP)
-	    warning("pairlists are passed as SEXP as from R 2.15.0");
+	    warning(_("pairlists are passed as SEXP as from R 2.15.0"));
 	ans =  (void*) s;
     }
     }

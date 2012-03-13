@@ -40,6 +40,14 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Passing \code{NULL} to \code{.C()} is now disallowed.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R VERSION 2.15.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -405,7 +413,7 @@
       \item Passing \R objects other than atomic vectors, functions,
       lists and environments to \code{.C()} is now deprecated and will
       give a warning.  Most cases (especially \code{NULL}) are actually
-      coding errors.
+      coding errors.  \code{NULL} will be disallowed as from \R 2.15.1.
 
       \code{.C()} now passes a pairlist as a \code{SEXP} to the compiled
       code.  This is as was documented, but pairlists were in reality
