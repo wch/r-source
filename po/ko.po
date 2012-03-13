@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36+0000\n"
+"POT-Creation-Date: 2012-03-13 07:44+0000\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -166,8 +166,8 @@ msgstr "'%ls' 를 표시하는데 문제가 있습니다 "
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
-#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:638
+#: src/main/dotcode.c:642 src/main/dotcode.c:647 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -291,11 +291,11 @@ msgstr "타임스태프가 잘못되었습니다 "
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:193 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
-#: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
-#: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
+#: src/main/optimize.c:111 src/main/optimize.c:186 src/main/optimize.c:192
+#: src/main/optimize.c:201 src/main/plot.c:262 src/main/plot.c:277
 #: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2283
 #: src/main/plot.c:2290 src/main/plot.c:3322 src/main/plot.c:3324
 #: src/main/plot.c:3326 src/main/plot.c:3484 src/main/plot3d.c:1382
@@ -752,7 +752,7 @@ msgstr "등록된 네이티브 심볼을 위해 메모리를 할당할 수 없�
 msgid "must pass package name or DllInfo reference"
 msgstr "패키지 이름 또는 DllInfo 대한 참조를 전달해야 합니다"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:124
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject에서 %d는 구현되지 않았습니다"
@@ -1435,7 +1435,7 @@ msgstr "vector: cannot make a vector of mode '%s'."
 msgid "cannot set length of non-vector"
 msgstr "벡터 아닌 것은 길이를 설정할 수 없습니다"
 
-#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:590
+#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:595
 msgid "invalid argument"
 msgstr "인수가 잘못되었습니다"
 
@@ -1656,8 +1656,7 @@ msgstr "%s() applied to non-(list or vector) of type '%s'"
 msgid "default method not implemented for type '%s'"
 msgstr "default method not implemented for type '%s'"
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
-#: src/main/dotcode.c:1612
+#: src/main/coerce.c:2188
 msgid "'name' is missing"
 msgstr "'name'을 찾을 수 없습니다"
 
@@ -2672,34 +2671,34 @@ msgstr "(GEcreateDevDesc에서) 장치 할당에 충분한 메모리가 없습�
 msgid "Hit <Return> to see next plot: "
 msgstr "다음의 그림을보기 위하여는 <Return> 키를 누르십시오"
 
-#: src/main/dotcode.c:109 src/main/dotcode.c:139
+#: src/main/dotcode.c:103 src/main/dotcode.c:133
 msgid "NULL value passed as symbol address"
 msgstr "심볼의 주소로 NULL 값이 전달되었습니다"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:214
+#: src/main/dotcode.c:138 src/main/dotcode.c:208
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "기호 '%s'가 너무 깁니다"
 
-#: src/main/dotcode.c:162
+#: src/main/dotcode.c:156
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name' 은（길이가 1인）문자열 또는 네이티브 심볼 참조여야 합니다"
 
-#: src/main/dotcode.c:201 src/main/dotcode.c:798
+#: src/main/dotcode.c:195 src/main/dotcode.c:724
 msgid "too many arguments in foreign function call"
 msgstr "외부 함수 호출에서 인수가 너무 많습니다"
 
-#: src/main/dotcode.c:243
+#: src/main/dotcode.c:237
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s 심볼명 \"%s\" 가 패키지 \"%s\"의 DLL 안에 없습니다"
 
-#: src/main/dotcode.c:247
+#: src/main/dotcode.c:241
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s 심볼명 \"%s\" 가 로드 테이블에 없습니다"
 
-#: src/main/dotcode.c:300
+#: src/main/dotcode.c:289
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2708,133 +2707,120 @@ msgstr ""
 "'%s' 에 대한 호출 인수을 복제하지 말라는 명시적 요구가 있지만, 인수 %d는 잘못"
 "된 형식(%d != %d) 입니다"
 
-#: src/main/dotcode.c:324
+#: src/main/dotcode.c:320
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "외부 함수 호출의 인수%d가 NA입니다"
 
-#: src/main/dotcode.c:337
+#: src/main/dotcode.c:333
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "외부 함수의 호출(arg %d)에 NA/NaN/Inf가 있습니다"
 
-#: src/main/dotcode.c:354
+#: src/main/dotcode.c:350
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "외부함수를 호출한(인수 %d)중에 복소수의 NA/NaN/Inf값이 있습니다"
 
-#: src/main/dotcode.c:363
+#: src/main/dotcode.c:359
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "C/.Fortran에 문자열 변수는 중복하여야만 합니다"
 
-#: src/main/dotcode.c:368
+#: src/main/dotcode.c:364
 msgid "only first string in char vector used in .Fortran"
 msgstr "Fortran에 대한 문자 벡터으로서 최초의 문자열만을 사용했습니다"
 
-#: src/main/dotcode.c:380 src/main/dotcode.c:501
-#, c-format
-msgid "unsupported encoding '%s'"
-msgstr "'%s'인코딩은 지원되지 않습니다"
-
-#: src/main/dotcode.c:396
-#, c-format
-msgid "conversion problem in re-encoding to '%s'"
-msgstr "'%s'에 다시 인코딩하는 동안 변환 문제가 발생했습니다"
-
-#: src/main/dotcode.c:413
-msgid "lists must be duplicated in .C"
-msgstr ".C에서 리스트는 복제되어야 합니다"
-
-#: src/main/dotcode.c:421 src/main/dotcode.c:430
+#: src/main/dotcode.c:379
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
-#: src/main/dotcode.c:516
-#, c-format
-msgid "conversion problem in re-encoding from '%s'"
-msgstr "'%s'에서 다시 인코딩하는 동안 변환 문제가 발생했습니다"
+#: src/main/dotcode.c:381
+msgid "lists must be duplicated in .C"
+msgstr ".C에서 리스트는 복제되어야 합니다"
 
-#: src/main/dotcode.c:579
+#: src/main/dotcode.c:393
+#, fuzzy, c-format
+msgid "invalid mode (%s) to pass to Fortran (arg %d)"
+msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
+
+#: src/main/dotcode.c:515
 msgid "NAOK used more than once"
 msgstr "NAOK가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:583
+#: src/main/dotcode.c:519
 msgid "DUP used more than once"
 msgstr "DUP가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:589
+#: src/main/dotcode.c:525
 msgid "DLL name is too long"
 msgstr "DLL 이름은 너무 깁니다"
 
-#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
+#: src/main/dotcode.c:528 src/main/dotcode.c:588 src/main/dotcode.c:594
 msgid "PACKAGE used more than once"
 msgstr "패키지가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:631
+#: src/main/dotcode.c:567
 msgid "PACKAGE argument must be a single character string"
 msgstr "패키지 인수는 단일 문자열이어야만 합니다"
 
-#: src/main/dotcode.c:637
+#: src/main/dotcode.c:573
 msgid "PACKAGE argument is too long"
 msgstr "패키지 인수가 너무 깁니다"
 
-#: src/main/dotcode.c:681 src/main/dotcode.c:689
-msgid "ENCODING used more than once"
-msgstr "ENCODING가 2회이상 사용되었습니다"
-
-#: src/main/dotcode.c:683 src/main/dotcode.c:691
-msgid "ENCODING argument must be a single character string"
-msgstr "ENCODING 인수는 단일 문자열이어야만 합니다"
-
-#: src/main/dotcode.c:708
+#: src/main/dotcode.c:634
 msgid "no arguments supplied"
 msgstr "인수가 제공되어 있지 않습니다"
 
-#: src/main/dotcode.c:709 src/main/seq.c:642
+#: src/main/dotcode.c:635 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "인수의 수가 너무 많습니다"
 
-#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
+#: src/main/dotcode.c:672 src/main/dotcode.c:715 src/main/dotcode.c:1549
+#, fuzzy
+msgid "'.NAME' is missing"
+msgstr "'EXPR' 가 없습니다"
+
+#: src/main/dotcode.c:688 src/main/dotcode.c:731 src/main/dotcode.c:1570
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "인수의 개수 (%d)가 잘못되었습니다 : %d 개의 인수가 '%s'에 필요합니다"
 
-#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
+#: src/main/dotcode.c:1388 src/main/dotcode.c:2201
 msgid "too many arguments, sorry"
 msgstr "인수가 너무 많습니다(죄송합니다)"
 
-#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
+#: src/main/dotcode.c:1420 src/main/dotcode.c:1437
 msgid "Invalid graphics state"
 msgstr "잘못된 그래픽 상태입니다"
 
-#: src/main/dotcode.c:1584
+#: src/main/dotcode.c:1510
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL을 찾고 때 DLLInfoReference에 NULL 값이 발견되었습니다"
 
-#: src/main/dotcode.c:1659
+#: src/main/dotcode.c:1595
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "인수 %d의 형식이 %s의 호출에서 잘못되었습니다"
 
-#: src/main/dotcode.c:2357
+#: src/main/dotcode.c:2292
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "언어 간의 함수 호출에서 \"%s\" 형식이 지원되지 않습니다"
 
-#: src/main/dotcode.c:2369
+#: src/main/dotcode.c:2361
 msgid "invalid function in call_R"
 msgstr "call_R의 함수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2371
+#: src/main/dotcode.c:2363
 msgid "invalid argument count in call_R"
 msgstr "call_R 인수 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2373
+#: src/main/dotcode.c:2365
 msgid "invalid return value count in call_R"
 msgstr "call_R의 반환값의 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2407
+#: src/main/dotcode.c:2399
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R는 \"%s\" 라는 모드는 지원되지 않습니다"
@@ -4878,11 +4864,11 @@ msgstr "L-BFGS-B는 유한한 'fn'값이 필요합니다"
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "trace, REPORT는 양수값이어야 합니다 (method = \"SANN\") "
 
-#: src/main/optimize.c:53 src/main/optimize.c:136 src/main/optimize.c:390
+#: src/main/optimize.c:53 src/main/optimize.c:138 src/main/optimize.c:392
 msgid "NA replaced by maximum positive value"
 msgstr "NA는 최대 양수값으로 대체되었습니다"
 
-#: src/main/optimize.c:61 src/main/optimize.c:148 src/main/optimize.c:398
+#: src/main/optimize.c:61 src/main/optimize.c:150 src/main/optimize.c:400
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf는 최대 양수값으로 대체되었습니다"
 
@@ -4890,104 +4876,104 @@ msgstr "NA/Inf는 최대 양수값으로 대체되었습니다"
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'의 함수 값이 잘못되었습니다"
 
-#: src/main/optimize.c:88 src/main/optimize.c:178 src/main/optimize.c:591
+#: src/main/optimize.c:88 src/main/optimize.c:180 src/main/optimize.c:593
 msgid "attempt to minimize non-function"
 msgstr "함수가 아닌 것을 최소화하려고 했습니다"
 
-#: src/main/optimize.c:104 src/main/optimize.c:192
+#: src/main/optimize.c:104 src/main/optimize.c:194
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin'가 'xmax'보다 크거나 같습니다"
 
-#: src/main/optimize.c:145
+#: src/main/optimize.c:147
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf가 최대 음수값으로 교체되었습니다"
 
-#: src/main/optimize.c:158
+#: src/main/optimize.c:160
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin'의 함수값이 잘못되었습니다"
 
-#: src/main/optimize.c:205
+#: src/main/optimize.c:207
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'는 양수여야 합니다"
 
-#: src/main/optimize.c:233 src/main/optimize.c:239
+#: src/main/optimize.c:235 src/main/optimize.c:241
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "'%s'에 NA는 허용되지 않습니다"
 
-#: src/main/optimize.c:382
+#: src/main/optimize.c:384
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm'에 의해 무한값이 주어졌습니다"
 
-#: src/main/optimize.c:417
+#: src/main/optimize.c:419
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm'최적화 의해 함수 값이 잘못되었습니다"
 
-#: src/main/optimize.c:428 src/main/optimize.c:443
+#: src/main/optimize.c:430 src/main/optimize.c:445
 msgid "function value caching for optimization is seriously confused"
 msgstr "function value caching for optimization is seriously confused"
 
-#: src/main/optimize.c:458
+#: src/main/optimize.c:460
 msgid "numeric parameter expected"
 msgstr "수치 파라미터가 있어야 합니다"
 
-#: src/main/optimize.c:462
+#: src/main/optimize.c:464
 msgid "conflicting parameter lengths"
 msgstr "파라미터의 길이가 모순됩니다"
 
-#: src/main/optimize.c:466
+#: src/main/optimize.c:468
 msgid "invalid parameter length"
 msgstr "파라미터의 길이가 잘못되었습니다"
 
-#: src/main/optimize.c:476 src/main/optimize.c:483
+#: src/main/optimize.c:478 src/main/optimize.c:485
 msgid "missing value in parameter"
 msgstr "파라미터에 결손값이 있습니다"
 
-#: src/main/optimize.c:488
+#: src/main/optimize.c:490
 msgid "invalid parameter type"
 msgstr "파라미터의 유형이 잘못되었습니다"
 
-#: src/main/optimize.c:496
+#: src/main/optimize.c:498
 msgid "invalid NA value in parameter"
 msgstr "파라미터에  잘못된 NA 값이 있습니다"
 
-#: src/main/optimize.c:506
+#: src/main/optimize.c:508
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm의 파라미터가 양수값이 아닙니다"
 
-#: src/main/optimize.c:508
+#: src/main/optimize.c:510
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm는 1차원 문제에 효율이지 않습니다"
 
-#: src/main/optimize.c:510
+#: src/main/optimize.c:512
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm에 있어서 기울기의 허용값이 잘못되었습니다"
 
-#: src/main/optimize.c:512
+#: src/main/optimize.c:514
 msgid "invalid iteration limit in nlm"
 msgstr "nlm의 반복 횟수의 한계값이 잘못되었습니다"
 
-#: src/main/optimize.c:514
+#: src/main/optimize.c:516
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm에서 최소화 함수가 충분한 자리수를 가지지 못했습니다"
 
-#: src/main/optimize.c:516
+#: src/main/optimize.c:518
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm에서 확인할 해석적 기울기가 없습니다!"
 
-#: src/main/optimize.c:518
+#: src/main/optimize.c:520
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm중에서 체크해야할 분석Hessian행렬이 없습니다!"
 
-#: src/main/optimize.c:520
+#: src/main/optimize.c:522
 msgid "probable coding error in analytic gradient"
 msgstr "해석적 기울기에 코딩 오류가 있는 것 같습니다"
 
-#: src/main/optimize.c:522
+#: src/main/optimize.c:524
 msgid "probable coding error in analytic Hessian"
 msgstr "분석 Hessian 행렬식중에 코딩이 잘못된 가능성이 있습니다"
 
-#: src/main/optimize.c:524
+#: src/main/optimize.c:526
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -4996,23 +4982,23 @@ msgstr ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 
-#: src/main/optimize.c:535
+#: src/main/optimize.c:537
 msgid "Relative gradient close to zero.\n"
 msgstr "상대 기울기가 0에 가깝습니다 \n"
 
-#: src/main/optimize.c:536 src/main/optimize.c:540
+#: src/main/optimize.c:538 src/main/optimize.c:542
 msgid "Current iterate is probably solution.\n"
 msgstr "지금 일어나는 반복이 해법일 것입니다 \n"
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:541
 msgid "Successive iterates within tolerance.\n"
 msgstr "허용치 내의 연속적인 반복입니다 \n"
 
-#: src/main/optimize.c:543
+#: src/main/optimize.c:545
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Last global step failed to locate a point lower than x.\n"
 
-#: src/main/optimize.c:544
+#: src/main/optimize.c:546
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -5022,11 +5008,11 @@ msgstr ""
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 
-#: src/main/optimize.c:549
+#: src/main/optimize.c:551
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "반복 허용치를 초과하였습니다. 알고리즘 실패입니다. \n"
 
-#: src/main/optimize.c:552
+#: src/main/optimize.c:554
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -5040,12 +5026,12 @@ msgstr ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 
-#: src/main/optimize.c:671
+#: src/main/optimize.c:673
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "제공된 hessian 행렬은 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 
-#: src/main/optimize.c:675
+#: src/main/optimize.c:677
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "제공된 기울기는 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 
@@ -5087,16 +5073,17 @@ msgstr "'expression' 매개변수가 잘못되었습니다 : %d..%d이 허용됩
 #: src/main/options.c:419 src/main/options.c:427 src/main/options.c:433
 #: src/main/options.c:441 src/main/options.c:448 src/main/options.c:453
 #: src/main/options.c:460 src/main/options.c:466 src/main/options.c:472
-#: src/main/options.c:477 src/main/options.c:486 src/main/options.c:492
-#: src/main/options.c:498 src/main/options.c:509 src/main/options.c:516
-#: src/main/options.c:522 src/main/options.c:530 src/main/options.c:537
-#: src/main/options.c:544 src/main/options.c:551 src/main/options.c:558
-#: src/main/options.c:566 src/main/options.c:575 src/main/options.c:578
+#: src/main/options.c:477 src/main/options.c:482 src/main/options.c:491
+#: src/main/options.c:497 src/main/options.c:503 src/main/options.c:514
+#: src/main/options.c:521 src/main/options.c:527 src/main/options.c:535
+#: src/main/options.c:542 src/main/options.c:549 src/main/options.c:556
+#: src/main/options.c:563 src/main/options.c:571 src/main/options.c:580
+#: src/main/options.c:583
 #, c-format
 msgid "invalid value for '%s'"
 msgstr "'%s'의 값이 잘못되었습니다"
 
-#: src/main/options.c:571 src/main/options.c:593
+#: src/main/options.c:576 src/main/options.c:598
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "\"par.ask.default\" has been replaced by \"device.ask.default\""
 
@@ -8253,6 +8240,21 @@ msgstr "X11 모듈을 로드될 수 없습니다"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11을 사용할 수 없습니다"
+
+#~ msgid "unsupported encoding '%s'"
+#~ msgstr "'%s'인코딩은 지원되지 않습니다"
+
+#~ msgid "conversion problem in re-encoding to '%s'"
+#~ msgstr "'%s'에 다시 인코딩하는 동안 변환 문제가 발생했습니다"
+
+#~ msgid "conversion problem in re-encoding from '%s'"
+#~ msgstr "'%s'에서 다시 인코딩하는 동안 변환 문제가 발생했습니다"
+
+#~ msgid "ENCODING used more than once"
+#~ msgstr "ENCODING가 2회이상 사용되었습니다"
+
+#~ msgid "ENCODING argument must be a single character string"
+#~ msgstr "ENCODING 인수는 단일 문자열이어야만 합니다"
 
 #~ msgid "this version of R cannot write byte code objects"
 #~ msgstr "이 버전의 R에서는 바이트 부호 오브젝트를 쓸수가 없습니다"

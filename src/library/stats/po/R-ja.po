@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56\n"
-"PO-Revision-Date: 2011-10-22 19:04+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"POT-Creation-Date: 2012-03-06 15:36\n"
+"PO-Revision-Date: 2012-02-26 14:13+0200 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr " モデルは全て同じサイズの観測値に当てはめられませんでした "
@@ -39,9 +39,8 @@ msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなけれ
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
 
-#, fuzzy
 msgid "optimization difficulties: %s"
-msgstr " 最適化の失敗 "
+msgstr " 最適化の失敗: %s "
 
 msgid "optimization failure"
 msgstr " 最適化の失敗 "
@@ -2050,9 +2049,8 @@ msgstr " 重みは全て非負である必要があります "
 msgid "some weights should be positive"
 msgstr " 重みの幾つかは正である必要があります "
 
-#, fuzzy
 msgid "'tol' must be strictly positive and finite"
-msgstr " 比率('ratio')は単一の正値でなければなりません "
+msgstr "  'tol' は正で有限な数値でなければなりません "
 
 msgid "need at least four unique 'x' values"
 msgstr " 'x' には少なくとも 4 つの異なる値が必要です "

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36+0000\n"
+"POT-Creation-Date: 2012-03-13 07:44+0000\n"
 "PO-Revision-Date: 2011-10-18 19:12-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -167,8 +167,8 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:712
-#: src/main/dotcode.c:716 src/main/dotcode.c:721 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:638
+#: src/main/dotcode.c:642 src/main/dotcode.c:647 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -292,11 +292,11 @@ msgstr "неправильная временная метка"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:199 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:193 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
-#: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
-#: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
+#: src/main/optimize.c:111 src/main/optimize.c:186 src/main/optimize.c:192
+#: src/main/optimize.c:201 src/main/plot.c:262 src/main/plot.c:277
 #: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2283
 #: src/main/plot.c:2290 src/main/plot.c:3322 src/main/plot.c:3324
 #: src/main/plot.c:3326 src/main/plot.c:3484 src/main/plot3d.c:1382
@@ -754,7 +754,7 @@ msgstr ""
 msgid "must pass package name or DllInfo reference"
 msgstr "должен передать имя пакета или ссылку DllInfo"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:130
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:124
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "Нереализованный тип %d у createRSymbolObject"
@@ -1435,7 +1435,7 @@ msgstr "вектор: не могу сделать вектор типа '%s'."
 msgid "cannot set length of non-vector"
 msgstr "установить длину для не-вектора"
 
-#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:590
+#: src/main/builtin.c:868 src/main/devices.c:367 src/main/options.c:595
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
@@ -1655,8 +1655,7 @@ msgstr "%s() применен к не-списку/вектору типа '%s'"
 msgid "default method not implemented for type '%s'"
 msgstr "метод по умолчанию для типа '%s' не сделан"
 
-#: src/main/coerce.c:2188 src/main/dotcode.c:746 src/main/dotcode.c:789
-#: src/main/dotcode.c:1612
+#: src/main/coerce.c:2188
 msgid "'name' is missing"
 msgstr "'name' отсутствует"
 
@@ -2673,36 +2672,36 @@ msgstr "недостаточно памяти для размещения уст
 msgid "Hit <Return> to see next plot: "
 msgstr "Нажмите <Ввод>, чтобы увидеть следующий график:"
 
-#: src/main/dotcode.c:109 src/main/dotcode.c:139
+#: src/main/dotcode.c:103 src/main/dotcode.c:133
 msgid "NULL value passed as symbol address"
 msgstr "NULL-значение передано как символический адрес"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:214
+#: src/main/dotcode.c:138 src/main/dotcode.c:208
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "символ '%s' слишком длинен"
 
-#: src/main/dotcode.c:162
+#: src/main/dotcode.c:156
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 "'имя' должно быть строкой (единичной длины) или естественной символьной "
 "ссылкой"
 
-#: src/main/dotcode.c:201 src/main/dotcode.c:798
+#: src/main/dotcode.c:195 src/main/dotcode.c:724
 msgid "too many arguments in foreign function call"
 msgstr "слишком много аргументов при вызове внешней функции"
 
-#: src/main/dotcode.c:243
+#: src/main/dotcode.c:237
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s имя символа \"%s\" отсутствует в DLL пакета \"%s\""
 
-#: src/main/dotcode.c:247
+#: src/main/dotcode.c:241
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s имя символа \"%s\" отсутствует в таблице загрузки"
 
-#: src/main/dotcode.c:300
+#: src/main/dotcode.c:289
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2711,133 +2710,120 @@ msgstr ""
 "явный запрос не дублировать аргументы при вызове '%s', однако аргумент %d "
 "неправильного типа (%d != %d)"
 
-#: src/main/dotcode.c:324
+#: src/main/dotcode.c:320
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "NA при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:337
+#: src/main/dotcode.c:333
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "NA/NaN/Inf при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:354
+#: src/main/dotcode.c:350
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "комплексные NA/NaN/Inf при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:363
+#: src/main/dotcode.c:359
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "текстовые переменные должны быть дублированы в  .C/.Fortran"
 
-#: src/main/dotcode.c:368
+#: src/main/dotcode.c:364
 msgid "only first string in char vector used in .Fortran"
 msgstr "только первая строка текстового вектора использована в .Fortran"
 
-#: src/main/dotcode.c:380 src/main/dotcode.c:501
-#, c-format
-msgid "unsupported encoding '%s'"
-msgstr "не поддерживаемая кодировка '%s'"
-
-#: src/main/dotcode.c:396
-#, c-format
-msgid "conversion problem in re-encoding to '%s'"
-msgstr "проблема конвертации при перекодировке '%s'"
-
-#: src/main/dotcode.c:413
-msgid "lists must be duplicated in .C"
-msgstr "списки должны быть дублированы в .C"
-
-#: src/main/dotcode.c:421 src/main/dotcode.c:430
+#: src/main/dotcode.c:379
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:516
-#, c-format
-msgid "conversion problem in re-encoding from '%s'"
-msgstr "проблема конвертации при перекодировке из '%s'"
+#: src/main/dotcode.c:381
+msgid "lists must be duplicated in .C"
+msgstr "списки должны быть дублированы в .C"
 
-#: src/main/dotcode.c:579
+#: src/main/dotcode.c:393
+#, fuzzy, c-format
+msgid "invalid mode (%s) to pass to Fortran (arg %d)"
+msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
+
+#: src/main/dotcode.c:515
 msgid "NAOK used more than once"
 msgstr "NAOK использован более одного раза"
 
-#: src/main/dotcode.c:583
+#: src/main/dotcode.c:519
 msgid "DUP used more than once"
 msgstr "DUP использован более одного раза"
 
-#: src/main/dotcode.c:589
+#: src/main/dotcode.c:525
 msgid "DLL name is too long"
 msgstr "имя DLL слишком длинное"
 
-#: src/main/dotcode.c:592 src/main/dotcode.c:652 src/main/dotcode.c:658
+#: src/main/dotcode.c:528 src/main/dotcode.c:588 src/main/dotcode.c:594
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE использован более одного раза"
 
-#: src/main/dotcode.c:631
+#: src/main/dotcode.c:567
 msgid "PACKAGE argument must be a single character string"
 msgstr "аргумент PACKAGE должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:637
+#: src/main/dotcode.c:573
 msgid "PACKAGE argument is too long"
 msgstr "аргумент PACKAGE слишком длинный"
 
-#: src/main/dotcode.c:681 src/main/dotcode.c:689
-msgid "ENCODING used more than once"
-msgstr "ENCODING использована больше одного раза"
-
-#: src/main/dotcode.c:683 src/main/dotcode.c:691
-msgid "ENCODING argument must be a single character string"
-msgstr "аргумент ENCODING должен быть простой текстовой строкой"
-
-#: src/main/dotcode.c:708
+#: src/main/dotcode.c:634
 msgid "no arguments supplied"
 msgstr "не заданы аргументы"
 
-#: src/main/dotcode.c:709 src/main/seq.c:642
+#: src/main/dotcode.c:635 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
-#: src/main/dotcode.c:762 src/main/dotcode.c:805 src/main/dotcode.c:1634
+#: src/main/dotcode.c:672 src/main/dotcode.c:715 src/main/dotcode.c:1549
+#, fuzzy
+msgid "'.NAME' is missing"
+msgstr "'EXPR' отсутствует"
+
+#: src/main/dotcode.c:688 src/main/dotcode.c:731 src/main/dotcode.c:1570
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Неправильное количество аргументов (%d), ожидается %d для '%s' "
 
-#: src/main/dotcode.c:1462 src/main/dotcode.c:2266
+#: src/main/dotcode.c:1388 src/main/dotcode.c:2201
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
-#: src/main/dotcode.c:1494 src/main/dotcode.c:1511
+#: src/main/dotcode.c:1420 src/main/dotcode.c:1437
 msgid "Invalid graphics state"
 msgstr "Неправильное графическое состояние"
 
-#: src/main/dotcode.c:1584
+#: src/main/dotcode.c:1510
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "значение NULL для DLLInfoReference во время поиска DLL"
 
-#: src/main/dotcode.c:1659
+#: src/main/dotcode.c:1595
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Неправильный тип аргумента %d при вызове %s"
 
-#: src/main/dotcode.c:2357
+#: src/main/dotcode.c:2292
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "тип \"%s\" не поддерживается при межязыковых вызовах"
 
-#: src/main/dotcode.c:2369
+#: src/main/dotcode.c:2361
 msgid "invalid function in call_R"
 msgstr "неправильная функция в call_R"
 
-#: src/main/dotcode.c:2371
+#: src/main/dotcode.c:2363
 msgid "invalid argument count in call_R"
 msgstr "неправильный счет аргументов в call_R"
 
-#: src/main/dotcode.c:2373
+#: src/main/dotcode.c:2365
 msgid "invalid return value count in call_R"
 msgstr "неправильный счет возвращаемого значения в call_R"
 
-#: src/main/dotcode.c:2407
+#: src/main/dotcode.c:2399
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "режим '%s' не поддерживается в call_R"
@@ -4902,11 +4888,11 @@ msgstr "для 'L-BFGS-B' нужны конечные значения 'fn'"
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "'trace', 'REPORT' должен быть >= 0 (method = \"SANN\")"
 
-#: src/main/optimize.c:53 src/main/optimize.c:136 src/main/optimize.c:390
+#: src/main/optimize.c:53 src/main/optimize.c:138 src/main/optimize.c:392
 msgid "NA replaced by maximum positive value"
 msgstr "NA заменены максимальным положительным значением"
 
-#: src/main/optimize.c:61 src/main/optimize.c:148 src/main/optimize.c:398
+#: src/main/optimize.c:61 src/main/optimize.c:150 src/main/optimize.c:400
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf заменены максимальным положительным значением"
 
@@ -4914,104 +4900,104 @@ msgstr "NA/Inf заменены максимальным положительн�
 msgid "invalid function value in 'optimize'"
 msgstr "неправильное значение функции в 'optimize'"
 
-#: src/main/optimize.c:88 src/main/optimize.c:178 src/main/optimize.c:591
+#: src/main/optimize.c:88 src/main/optimize.c:180 src/main/optimize.c:593
 msgid "attempt to minimize non-function"
 msgstr "попытка минимизировать не-функцию"
 
-#: src/main/optimize.c:104 src/main/optimize.c:192
+#: src/main/optimize.c:104 src/main/optimize.c:194
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' не меньше чем 'xmax'"
 
-#: src/main/optimize.c:145
+#: src/main/optimize.c:147
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf заменены максимальным отрицательным значением"
 
-#: src/main/optimize.c:158
+#: src/main/optimize.c:160
 msgid "invalid function value in 'zeroin'"
 msgstr "неправильное значение функции в 'zeroin'"
 
-#: src/main/optimize.c:205
+#: src/main/optimize.c:207
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' должен быть положителен"
 
-#: src/main/optimize.c:233 src/main/optimize.c:239
+#: src/main/optimize.c:235 src/main/optimize.c:241
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "NA в '%s' не разрешается"
 
-#: src/main/optimize.c:382
+#: src/main/optimize.c:384
 msgid "non-finite value supplied by 'nlm'"
 msgstr "для 'nlm' установлено не конечное значение"
 
-#: src/main/optimize.c:417
+#: src/main/optimize.c:419
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "неправильное значение функции в оптимизаторе 'nlm'"
 
-#: src/main/optimize.c:428 src/main/optimize.c:443
+#: src/main/optimize.c:430 src/main/optimize.c:445
 msgid "function value caching for optimization is seriously confused"
 msgstr "не удалось получить предвычисленное значение функции"
 
-#: src/main/optimize.c:458
+#: src/main/optimize.c:460
 msgid "numeric parameter expected"
 msgstr "ожидается числовой параметр"
 
-#: src/main/optimize.c:462
+#: src/main/optimize.c:464
 msgid "conflicting parameter lengths"
 msgstr "конфликтующие длины параметров"
 
-#: src/main/optimize.c:466
+#: src/main/optimize.c:468
 msgid "invalid parameter length"
 msgstr "неправильный параметр длины"
 
-#: src/main/optimize.c:476 src/main/optimize.c:483
+#: src/main/optimize.c:478 src/main/optimize.c:485
 msgid "missing value in parameter"
 msgstr "пропущенное значение в параметре"
 
-#: src/main/optimize.c:488
+#: src/main/optimize.c:490
 msgid "invalid parameter type"
 msgstr "неправильный параметр типа"
 
-#: src/main/optimize.c:496
+#: src/main/optimize.c:498
 msgid "invalid NA value in parameter"
 msgstr "неправильное NA-значение в параметре"
 
-#: src/main/optimize.c:506
+#: src/main/optimize.c:508
 msgid "non-positive number of parameters in nlm"
 msgstr "не положительное количество параметров в nlm"
 
-#: src/main/optimize.c:508
+#: src/main/optimize.c:510
 msgid "nlm is inefficient for 1-d problems"
 msgstr "'nlm' неэффективен для одномерных проблем"
 
-#: src/main/optimize.c:510
+#: src/main/optimize.c:512
 msgid "invalid gradient tolerance in nlm"
 msgstr "неправильный допуск градиента в nlm"
 
-#: src/main/optimize.c:512
+#: src/main/optimize.c:514
 msgid "invalid iteration limit in nlm"
 msgstr "неправильный лимит итераций в nlm"
 
-#: src/main/optimize.c:514
+#: src/main/optimize.c:516
 msgid "minimization function has no good digits in nlm"
 msgstr "у функции минимизации в nlm нет хороших чисел"
 
-#: src/main/optimize.c:516
+#: src/main/optimize.c:518
 msgid "no analytic gradient to check in nlm!"
 msgstr "в nlm нет аналитического градиента для проверки!"
 
-#: src/main/optimize.c:518
+#: src/main/optimize.c:520
 msgid "no analytic Hessian to check in nlm!"
 msgstr "в nlm нет аналитического гессиана для проверки!"
 
-#: src/main/optimize.c:520
+#: src/main/optimize.c:522
 msgid "probable coding error in analytic gradient"
 msgstr "возможно, ошибка кодирования в аналитическом градиенте"
 
-#: src/main/optimize.c:522
+#: src/main/optimize.c:524
 msgid "probable coding error in analytic Hessian"
 msgstr "возможно, ошибка кодирования в аналитическом гессиане"
 
-#: src/main/optimize.c:524
+#: src/main/optimize.c:526
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -5020,24 +5006,24 @@ msgstr ""
 "*** неизвестное сообщение об ошибке (msg = %d) в nlm()\n"
 "*** не должно происходить!"
 
-#: src/main/optimize.c:535
+#: src/main/optimize.c:537
 msgid "Relative gradient close to zero.\n"
 msgstr "Относительный градиент близок к 0.\n"
 
-#: src/main/optimize.c:536 src/main/optimize.c:540
+#: src/main/optimize.c:538 src/main/optimize.c:542
 msgid "Current iterate is probably solution.\n"
 msgstr "Текущая итерация, возможно, является решением.\n"
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:541
 msgid "Successive iterates within tolerance.\n"
 msgstr "Последовательные итерации внутри допуска.\n"
 
-#: src/main/optimize.c:543
+#: src/main/optimize.c:545
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 "Последнему глобальному шагу не удалось определить точку, меньшую чем x.\n"
 
-#: src/main/optimize.c:544
+#: src/main/optimize.c:546
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -5047,11 +5033,11 @@ msgstr ""
 "либо функция для этого алгоритма слишкомнелинейна,\n"
 "либо 'steptol' слишком велико.\n"
 
-#: src/main/optimize.c:549
+#: src/main/optimize.c:551
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Лимит итераций превышен. Алгоритм завершился ошибкой.\n"
 
-#: src/main/optimize.c:552
+#: src/main/optimize.c:554
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -5065,11 +5051,11 @@ msgstr ""
 "сверху в том же направлении,\n"
 "либо 'stepmx' слишком мало.\n"
 
-#: src/main/optimize.c:671
+#: src/main/optimize.c:673
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "переданный гессиан неправильной длины или типа, и поэтому пропущен"
 
-#: src/main/optimize.c:675
+#: src/main/optimize.c:677
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "переданный градиент неправильной длины или типа, и поэтому пропущен"
 
@@ -5111,16 +5097,17 @@ msgstr "неправильный параметр 'expressions', разреша�
 #: src/main/options.c:419 src/main/options.c:427 src/main/options.c:433
 #: src/main/options.c:441 src/main/options.c:448 src/main/options.c:453
 #: src/main/options.c:460 src/main/options.c:466 src/main/options.c:472
-#: src/main/options.c:477 src/main/options.c:486 src/main/options.c:492
-#: src/main/options.c:498 src/main/options.c:509 src/main/options.c:516
-#: src/main/options.c:522 src/main/options.c:530 src/main/options.c:537
-#: src/main/options.c:544 src/main/options.c:551 src/main/options.c:558
-#: src/main/options.c:566 src/main/options.c:575 src/main/options.c:578
+#: src/main/options.c:477 src/main/options.c:482 src/main/options.c:491
+#: src/main/options.c:497 src/main/options.c:503 src/main/options.c:514
+#: src/main/options.c:521 src/main/options.c:527 src/main/options.c:535
+#: src/main/options.c:542 src/main/options.c:549 src/main/options.c:556
+#: src/main/options.c:563 src/main/options.c:571 src/main/options.c:580
+#: src/main/options.c:583
 #, c-format
 msgid "invalid value for '%s'"
 msgstr "неправильное значение '%s'"
 
-#: src/main/options.c:571 src/main/options.c:593
+#: src/main/options.c:576 src/main/options.c:598
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "\"par.ask.default\" заменен на \"device.ask.default\""
 
@@ -8288,6 +8275,21 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "unsupported encoding '%s'"
+#~ msgstr "не поддерживаемая кодировка '%s'"
+
+#~ msgid "conversion problem in re-encoding to '%s'"
+#~ msgstr "проблема конвертации при перекодировке '%s'"
+
+#~ msgid "conversion problem in re-encoding from '%s'"
+#~ msgstr "проблема конвертации при перекодировке из '%s'"
+
+#~ msgid "ENCODING used more than once"
+#~ msgstr "ENCODING использована больше одного раза"
+
+#~ msgid "ENCODING argument must be a single character string"
+#~ msgstr "аргумент ENCODING должен быть простой текстовой строкой"
 
 #~ msgid "this version of R cannot write byte code objects"
 #~ msgstr "эта версия R не может записывать побайтные объекты"
