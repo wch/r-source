@@ -23,7 +23,7 @@ $(SHLIB): $(OBJECTS)
 
 .PHONY: all shlib-clean
 shlib-clean:
-	@rm -f $(OBJECTS)
+	@rm -f $(OBJECTS) symbols.rds
 
 ## FIXME: why not Rscript?
 symbols.rds: $(OBJECTS)
