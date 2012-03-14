@@ -5243,6 +5243,7 @@ function(dir)
     db <- tryCatch(lapply(urls, .repository_db), error = identity)
     if(inherits(db, "error")) {
         message("NB: need Internet access to use CRAN incoming checks")
+        ## Actually, all repositories could be local file:// mirrors.
         return(out)
     }
     db <- do.call(rbind, db)
@@ -5294,15 +5295,23 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
-    ## Is this an update for package already on CRAN?
+    ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
              is.na(db[, "Path"]), , drop = FALSE]
     ## This drops packages in version-specific subdirectories.
     ## It also does not know about archived versions.
     if(!NROW(db)) {
-        if(package %in% packages_in_CRAN_archive)
+        if(package %in% packages_in_CRAN_archive) {
             out$CRAN_archive <- TRUE
+            v_m <- package_version(meta["Version"])
+            v_a <- sub("^.*_(.*)\\.tar.gz$", "\\1",
+                       basename(rownames(CRAN_archive_db[[package]])))
+            v_a <- max(package_version(v_a, strict = FALSE),
+                       na.rm = TRUE)
+            if(v_m <= v_a)
+                out$bad_version <- list(v_m, v_a)
+        }
         if(!foss)
             out$bad_license <- meta["License"]
         return(out)
