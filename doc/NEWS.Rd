@@ -443,6 +443,10 @@
 
       \item \code{predict(<ar>)} was incorrect in the multivariate case,
       for p >= 2.
+
+      \iten \code{print(x, max=m)} is now consistent when \code{x} is a
+      \code{"Date"}; also the \dQuote{reached ... max.print ..} messages
+      are now consistently using single brackets.
     }
   }
 }

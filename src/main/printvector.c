@@ -198,7 +198,7 @@ void printVector(SEXP x, int indx, int quote)
 	    break;
 	}
 	if(n_pr < n)
-		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]]\n",
+		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]\n",
 			n - n_pr);
     }
     else
@@ -338,7 +338,7 @@ void printNamedVector(SEXP x, SEXP names, int quote, const char *title)
 	    break;
 	}
 	if(n_pr < n)
-		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]]\n",
+		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]\n",
 			n - n_pr);
 
     }
