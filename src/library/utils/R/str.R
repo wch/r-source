@@ -131,7 +131,7 @@ str.default <-
 	if(any(iLong <- nchar(ss) > width)) { ## cut hard
 	    sL <- ss[iLong]
 	    k <- as.integer(width-2)
-	    if(any(i <- grepl("\"", substr(sL, k +1L, nchar(sL)))) {
+	    if(any(i <- grepl("\"", substr(sL, k +1L, nchar(sL))))) {
 		## care *not* to cut off the closing   "  at end of
 		## string that's already truncated {-> maybe_truncate()} :
 		ss[iLong[ i]] <- paste0(substr(sL[ i], 1, k-1L), "\"..")
