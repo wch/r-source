@@ -192,8 +192,10 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
         t = eval(t, R_BaseEnv);
         UNPROTECT(1);
     }
+    PROTECT(t);
     for (i = 0; i < LENGTH(t); i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
+    UNPROTECT(1);
     if (isClosure) {
 	if (isByteCode(BODY(s))) Rprintf("<bytecode: %p>\n", BODY(s));
 	t = CLOENV(s);
