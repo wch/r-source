@@ -128,9 +128,18 @@ str.default <-
 	    ss <- strwrap(ss, width = width, exdent = nind)
 					# wraps at white space (only)
 	}
-	if(any(iLong <- nchar(ss) > width))
-	    ss[iLong] <- sub(sprintf("^(.{1,%d}).*", width-2), "\\1..",
-			     ss[iLong])
+	if(any(iLong <- nchar(ss) > width)) { ## cut hard
+	    sL <- ss[iLong]
+	    k <- as.integer(width-2)
+	    if(any(i <- grepl("\"", substr(sL, k +1L, nchar(sL)))) {
+		## care *not* to cut off the closing   "  at end of
+		## string that's already truncated {-> maybe_truncate()} :
+		ss[iLong[ i]] <- paste0(substr(sL[ i], 1, k-1L), "\"..")
+		ss[iLong[!i]] <- paste0(substr(sL[!i], 1, k), "..")
+	    } else {
+		ss[iLong] <- paste0(substr(sL, 1, k),"..")
+	    }
+	}
 	cat(ss, sep="\n")
 	return(invisible())
     }
