@@ -104,14 +104,14 @@ format.Date <- function(x, ...)
 }
 
 ## could handle arrays for max.print
-print.Date <- function(x, ...)
+print.Date <- function(x, max = NULL, ...)
 {
-    max.print <- getOption("max.print", 9999L)
-    if(max.print < length(x)) {
-        print(format(x[seq_len(max.print)]), ...)
-        cat(' [ reached getOption("max.print") -- omitted',
-            length(x) - max.print, 'entries ]\n')
-    } else print(format(x), ...)
+    if(is.null(max)) max <- getOption("max.print", 9999L)
+    if(max < length(x)) {
+	print(format(x[seq_len(max)]), max=max, ...)
+	cat(' [ reached getOption("max.print") -- omitted',
+	    length(x) - max, 'entries ]\n')
+    } else print(format(x), max=max, ...)
     invisible(x)
 }
 

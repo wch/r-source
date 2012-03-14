@@ -482,13 +482,13 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     }
 #ifdef ENABLE_NLS
     if(r_pr < r) /* FIXME? use _P() and "Defn.h" ? */
-	Rprintf(ngettext(" [ reached getOption(\"max.print\") -- omitted last row ]]\n",
-			 " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n",
+	Rprintf(ngettext(" [ reached getOption(\"max.print\") -- omitted last row ]\n",
+			 " [ reached getOption(\"max.print\") -- omitted %d rows ]\n",
 			 r - r_pr),
 		r - r_pr);
 #else
     if(r_pr < r) /* FIXME? use _P() and "Defn.h" ? */
-	Rprintf(" [ reached getOption(\"max.print\") -- omitted %d rows ]]\n",
+	Rprintf(" [ reached getOption(\"max.print\") -- omitted %d rows ]\n",
 		r - r_pr);
 #endif
 }

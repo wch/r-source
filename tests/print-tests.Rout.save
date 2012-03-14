@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-05 r58592)
+R Under development (unstable) (2012-03-12 r58696)
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -548,4 +548,29 @@ b 1.2+11i 2.4+23.141593i
 [15] "-0.01234000000000+3.14159265358979i"
 > 
 > options(oDig)
+> 
+> e1 <- tryCatch(options(max.print=Inf), error=function(e)e)
+Warning message:
+In options(max.print = Inf) : NAs introduced by coercion
+> e2 <- tryCatch(options(max.print= 0),  error=function(e)e)
+> stopifnot(inherits(e1, "error"))
+> 
+> 
+> ## Printing of "Date"s
+> options(width = 80)
+> op <- options(max.print = 500)
+> dd <- as.Date("2012-03-12") + -10000:100
+> writeLines(t1 <- tail(capture.output(dd)))
+[476] "1986-02-12" "1986-02-13" "1986-02-14" "1986-02-15" "1986-02-16"
+[481] "1986-02-17" "1986-02-18" "1986-02-19" "1986-02-20" "1986-02-21"
+[486] "1986-02-22" "1986-02-23" "1986-02-24" "1986-02-25" "1986-02-26"
+[491] "1986-02-27" "1986-02-28" "1986-03-01" "1986-03-02" "1986-03-03"
+[496] "1986-03-04" "1986-03-05" "1986-03-06" "1986-03-07" "1986-03-08"
+ [ reached getOption("max.print") -- omitted 9601 entries ]
+> l6 <- length(capture.output(print(dd, max = 600)))
+> options(op)
+> t2 <- tail(capture.output(print(dd, max = 500)))
+> stopifnot(identical(t1, t2), l6 == 121)
+> ## not quite consistent in R <= 2.14.x
+> 
 > 
