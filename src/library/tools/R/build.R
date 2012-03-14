@@ -448,7 +448,8 @@ get_exclude_patterns <- function()
                     }
                     ## Also cleanup possible Unix leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
-                             paste0(pkgname, c(".a", ".dll", ".def"))))
+                             paste0(pkgname, c(".a", ".dll", ".def")),
+                             "symbols.rds"))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
@@ -471,7 +472,8 @@ get_exclude_patterns <- function()
                     }
                     ## Also cleanup possible Windows leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
-                             paste0(pkgname, c(".a", ".dll", ".def"))))
+                             paste0(pkgname, c(".a", ".dll", ".def")),
+                             "symbols.rds"))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
