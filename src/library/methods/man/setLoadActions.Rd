@@ -1,7 +1,10 @@
 \name{setLoadActions}
+\alias{setLoadAction}
 \alias{setLoadActions}
 \alias{getLoadActions}
 \alias{hasLoadAction}
+\alias{evalOnLoad}
+\alias{evalqOnLoad}
 \title{
 Set Actions For Package Loading
 }
@@ -15,7 +18,7 @@ at load time (such as locations in a dynamically linked library).
 
 
   A call to
-\code{setLoadActions()} specifies one or more functions
+\code{setLoadAction()}  or \code{setLoadActions()} specifies one or more functions
 to be
 called when the corresponding package is loaded, with the \dots{} argument
 names being used as identifying names for the actions.
@@ -26,18 +29,28 @@ given a package's namespace as its argument.
 \code{hasLoadAction} returns \code{TRUE} if a load action
 corresponding to the given name has previously been set for the
 \code{where} namespace.
+
+\code{evalOnLoad()} and \code{evalqOnLoad()} schedule a specific expression for
+evaluation at load time.
 }
 \usage{
+
+setLoadAction(action, aname=, where=)
 
 setLoadActions(..., .where=)
 
 getLoadActions(where=)
 
 hasLoadAction(aname, where=)
+
+evalOnLoad(expr, where=, aname=)
+
+evalqOnLoad(expr, where=, aname=)
+
 }
 \arguments{
 
-  \item{\dots}{
+  \item{action, \dots}{
 functions of one or more arguments, to be called when this package is
 loaded. The functions will be called with one argument (the package
 namespace) so all following arguments must have default values.
@@ -53,12 +66,27 @@ normally omitted if the call comes from the source code for the package itself, 
 be needed if a package supplies load actions for another package.
 }
 
-\item{aname}{the name for the action, a character string corresponding to the
-argument name that would have been supplied to \code{setLoadActions()}.
+\item{aname}{the name for the action.  If an action is set without
+    supplying a name,  the
+    default uses the position in the sequence of actions specified
+    (\code{".1"}, etc.).
+}
+
+\item{expr}{an expression to be evaluated in a load action in
+    environment \code{where}.  In the case of \code{evalqOnLoad()},
+    the expression is interpreted literally, in that of
+    \code{evalOnLoad()} it must be precomputed, typically as an object
+    of type \code{"language"}.
 }
 }
 \details{
-Each of the functions supplied as an argument is saved as metadata in the
+The \code{evalOnLoad()} and \code{evalqOnLoad()} functions are for
+convenience.
+They construct a function to evaluate the expression and call
+\code{setLoadAction()} to schedule a call to that function.
+
+Each of the functions supplied as an argument to \code{setLoadAction()} or
+\code{setLoadActions()} is saved as metadata in the
 namespace, typically that of the package containing the call to
 \code{setLoadActions()}.
 When this package's namespace is loaded, each of these functions will
@@ -69,11 +97,18 @@ The objects assigned have metadata names constructed from the names
 supplied in the call; unnamed arguments are taken to be named by their
 position in the list of actions (\code{".1"}, etc.).
 
-Multiple calls to \code{setLoadActions()} can be used in a package's
+Multiple calls to \code{setLoadAction()} or  \code{setLoadActions()} can be used in a package's
 code; the actions will be scheduled after any previously specified,
-except if the name given to \code{setLoadAction()} is that of an existing action.
+except if the name given to \code{setLoadAction()} is that of an
+existing action.
+In typical applications, \code{setLoadActions()} is more convenient
+when calling from the package's own code to set several actions.
+Calls to \code{setLoadAction()} are more convenient if the action name
+is to be constructed, which is more typical when one package
+constructs load actions for another package.
+
 Actions can be revised by assigning with the same name, actual or
-constructed, in a subsequent call to \code{setLoadActions()}.
+constructed, in a subsequent call.
 The replacement must still be a valid function, but can of course do
 nothing if the intention was to remove a previously specified action.
 
@@ -96,8 +131,7 @@ Load actions are part of the package code, and the list of actions is
 normally established when the package is installed.
 
 
-Load actions can be supplied directly by calls to
-\code{setLoadActions()} from the package source.
+Load actions can be supplied directly in the source code for a package.
 It is also possible and useful to provide facilities in one package to
 create load actions in another package.
 The software needs to be careful to assign the action
@@ -106,7 +140,7 @@ package.
 
 }
 \value{
-\code{setLoadActions()} is called for its side effect and returns no
+\code{setLoadAction()}  and \code{setLoadActions()} are called for their side effect and return no
 useful value.
 
 \code{getLoadActions()} returns a named list of the actions in the
@@ -126,7 +160,7 @@ setLoadActions(function(attach)
   function(ns) assign("myPointer", getMyExternalPointer(), envir = ns))
   ... somewhere later
 if(countShouldBe0)
-  setLoadActions(setCount = function(ns) assign("myCount", 0, envir = ns))
+  setLoadAction(function(ns) assign("myCount", 0, envir = ns), "setCount")
 }
 }
 \keyword{ package }
