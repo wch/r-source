@@ -242,3 +242,20 @@ sf(pi + 2.2i)
 sf(s + pi*1i)
 
 options(oDig)
+
+e1 <- tryCatch(options(max.print=Inf), error=function(e)e)
+e2 <- tryCatch(options(max.print= 0),  error=function(e)e)
+stopifnot(inherits(e1, "error"))
+
+
+## Printing of "Date"s
+options(width = 80)
+op <- options(max.print = 500)
+dd <- as.Date("2012-03-12") + -10000:100
+writeLines(t1 <- tail(capture.output(dd)))
+l6 <- length(capture.output(print(dd, max = 600)))
+options(op)
+t2 <- tail(capture.output(print(dd, max = 500)))
+stopifnot(identical(t1, t2), l6 == 121)
+## not quite consistent in R <= 2.14.x
+
