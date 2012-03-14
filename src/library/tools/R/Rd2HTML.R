@@ -699,8 +699,8 @@ Rd2HTML <-
 	    switch(blocktag,
 		"\\value"=,
 		"\\arguments" = of1("</table>\n"),
-		"\\itemize" = of1("</ul>\n"),
-		"\\enumerate" = of1("</ol>\n"),
+		"\\itemize" = of1("</li></ul>\n"),
+		"\\enumerate" = of1("</li></ol>\n"),
 		# "\\value"=,
 		"\\describe" = of1("</dl>\n"))
 	}
