@@ -569,7 +569,7 @@ SEXP attribute_hidden do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-static void GetAxisLimits(double left, double right, double *low, double *high)
+static void GetAxisLimits(double left, double right, Rboolean logflag, double *low, double *high)
 {
 /*	Called from do_axis()	such as
  *	GetAxisLimits(gpptr(dd)->usr[0], gpptr(dd)->usr[1], &low, &high)
@@ -577,6 +577,10 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
  *	Computes  *low < left, right < *high  (even if left=right)
  */
     double eps;
+    if (logflag) {
+	left = log(left);
+	right = log(right);
+    }
     if (left > right) {/* swap */
 	eps = left; left = right; right = eps;
     }
@@ -587,6 +591,11 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 	eps *= FLT_EPSILON;
     *low = left - eps;
     *high = right + eps;
+    
+    if (logflag) {
+	*low = exp(*low);
+	*high = exp(*high);
+    }
 }
 
 
@@ -1144,7 +1153,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
         getxlimits(limits, dd);
         /* Now override par("xpd") and force clipping to device region. */
         gpptr(dd)->xpd = 2;
-	GetAxisLimits(limits[0], limits[1], &low, &high);
+	GetAxisLimits(limits[0], limits[1], logflag, &low, &high);
 	axis_low  = GConvertX(fmin2(high, fmax2(low, REAL(at)[0])), USER, NFC, dd);
 	axis_high = GConvertX(fmin2(high, fmax2(low, REAL(at)[n-1])), USER, NFC, dd);
 	if (side == 1) {
@@ -1285,7 +1294,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
         getylimits(limits, dd);
         /* Now override par("xpd") and force clipping to device region. */
         gpptr(dd)->xpd = 2;
-	GetAxisLimits(limits[0], limits[1], &low, &high);
+	GetAxisLimits(limits[0], limits[1], logflag, &low, &high);
 	axis_low = GConvertY(fmin2(high, fmax2(low, REAL(at)[0])), USER, NFC, dd);
 	axis_high = GConvertY(fmin2(high, fmax2(low, REAL(at)[n-1])), USER, NFC, dd);
 	if (side == 2) {
