@@ -90,6 +90,9 @@ readCitationFile(file, meta = NULL)
 \value{
   An object inheriting from class \code{"\link{bibentry}"}.
 }
+\seealso{
+  \code{\link{bibentry}}
+}
 \keyword{misc}
 \examples{
 ## the basic R reference
