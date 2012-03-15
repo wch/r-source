@@ -700,10 +700,10 @@
     pkgs <- c(packageSlot(classes), rep("methods", n))[i]
 
   ## Simplified version ...
-  structure(as.character(classes)[i],
+  .asS4(structure(as.character(classes)[i],
             class = .signatureClassName,
             names = as.character(names)[i],
-            package = pkgs )
+            package = pkgs ))
  }
 
 .findNextFromTable <- function(method, f, optional, envir, prev = character()) {
