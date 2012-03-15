@@ -152,8 +152,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{year:}{The year of publication.}
   }
 }
-\note{
-  The bibentry functionality is still experimental.
+\seealso{
+  \code{\link{person}}
 }
 \examples{
 ## R reference
@@ -181,12 +181,14 @@ bref <- c(
      bibtype = "Manual",
      title = "boot: Bootstrap R (S-PLUS) Functions",
      author = c(
-       person("Angelo", "Canty", role = "aut", comment = "S original"),
+       person("Angelo", "Canty", role = "aut",
+         comment = "S original"),
        person(c("Brian", "D."), "Ripley", role = c("aut", "trl", "cre"),
-         comment = "R port", email = "ripley@stats.ox.ac.uk")
+         comment = "R port, author of parallel support",
+         email = "ripley@stats.ox.ac.uk")
      ),
-     year = "2010",
-     note = "R package version 1.2-42",
+     year = "2012",
+     note = "R package version 1.3-4",
      url = "http://CRAN.R-project.org/package=boot",
      key = "boot-package"
    ),

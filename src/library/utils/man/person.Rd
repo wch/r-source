@@ -137,7 +137,9 @@ person(given = NULL, family = NULL, middle = NULL,
   \code{personList()} for collections of these.  The new scheme employs
   a single class for information about an arbitrary positive number of
   persons, eliminating the need for the \code{personList} mechanism.
-
+}
+\seealso{
+  \code{\link{citation}}
 }
 \keyword{misc}
 \examples{
