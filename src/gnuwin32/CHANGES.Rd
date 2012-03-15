@@ -58,6 +58,14 @@
       normal install) if only one architecture is installed.
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Due to a race condition, some graphics changes were not
+      flushed to the display if another graphics window was closed at
+      nearly the same time.  (Reported by Michael Sumner.)      
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.14.2}{
