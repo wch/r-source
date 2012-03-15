@@ -3645,8 +3645,9 @@ Default: true if @command{qpdf} is found.
 @item _R_CHECK_DOC_SIZES2_
 Should @command{gs} be used to check the installed sizes of PDFs?  This
 is slower than (and in addition to) the previous check, but does detect
-figures with excessive detail (often hidden by over-plotting).  Requires
-that @env{R_GSCMD} is set to a valid program, or @command{gs} (or on Windows,
+figures with excessive detail (often hidden by over-plotting) or bitmap
+figures with too high a resolution.  Requires that @env{R_GSCMD} is set
+to a valid program, or @command{gs} (or on Windows,
 @command{gswin32.exe} or @command{gswin64c.exe}) is on the path.
 Default: false (but true for CRAN submission checks).
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
@@ -3729,6 +3730,12 @@ When checking anchored Rd xrefs, use Rd aliases from the CRAN package
 web areas in addition to those in the packages installed locally.
 Default: false.
 
+@item _R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_
+Make the checks of compiled code more accurate by recording the symbol
+tables for objects (@file{.o} files) at installation in a file
+@file{symbols.rds}.  (Only currently supported on Linux, Solaris, OS X,
+Windows and FreeBSD.)
+Default: true.
 @end vtable
 
 CRAN's submission checks use something like

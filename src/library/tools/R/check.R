@@ -3172,17 +3172,24 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
     if (as_cran) {
         if (extra_arch) {
-            message("--cran turns off --extra-arch")
+            message("--as-cran turns off --extra-arch")
             extra_arch <- FALSE
         }
         Sys.setenv("_R_CHECK_TIMINGS_" = "10")
         Sys.setenv("_R_CHECK_INSTALL_DEPENDS_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
+        Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
         R_check_suggests_only <- TRUE
+    } else {
+        ## do it this way so that INSTALL produces symbols.rds
+        ## when called from check but not in general.
+        if(is.na(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", NA)))
+            Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
     }
+
 
     if (extra_arch)
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
