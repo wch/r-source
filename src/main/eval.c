@@ -1434,7 +1434,7 @@ SEXP attribute_hidden do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue; /*NOTREACHED*/
 }
 
-
+/* Declated with a variable number of args in names.c */
 SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval, srcref;
@@ -1443,13 +1443,11 @@ SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 	op = forcePromise(op);
 	SET_NAMED(op, 2);
     }
-    if (length(args) < 2)
-	WrongArgCount("lambda");
+    if (length(args) < 2) WrongArgCount("function");
     CheckFormals(CAR(args));
     rval = mkCLOSXP(CAR(args), CADR(args), rho);
     srcref = CADDR(args);
-    if (!isNull(srcref))
-    	setAttrib(rval, R_SrcrefSymbol, srcref);
+    if (!isNull(srcref)) setAttrib(rval, R_SrcrefSymbol, srcref);
     return rval;
 }
 
