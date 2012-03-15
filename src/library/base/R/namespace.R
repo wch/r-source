@@ -585,7 +585,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                     ## skip primitives
                     addGenerics <- addGenerics[sapply(addGenerics, function(what) ! is.primitive(get(what, mode = "function", envir = ns)))]
                     ## the rest must be generic functions, implicit or local
-                    ok <- sapply(addGenerics, function(what) methods::is(get(what, mode = "function", envir = ns), "genericFunction"))
+                    ## or have been cached via a DEPENDS package
+                    ok <- sapply(addGenerics, methods:::.findsGeneric, ns)
                     if(!all(ok)) {
                         bad <- sort(unique(addGenerics[!ok]))
                         msg <-
@@ -596,6 +597,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                      paste(sQuote(bad), collapse = ", ")),
                              domain = NA, call. = FALSE)
                     }
+                    else if(any(ok > 1L))  #from the cache, don't add
+                        addGenerics <- addGenerics[ok < 2L]
                 }
 ### <note> Uncomment following to report any local generic functions
 ### that should have been exported explicitly.  But would be reported
