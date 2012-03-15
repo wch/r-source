@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -209,7 +209,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     
     \item{resolution:}{numeric (300), resolution in pixels per inch:
       used for PNG and JPEG graphics.  Note that the default is a fairly
-      high value, appropriate for high-quality plots.}
+      high value, appropriate for high-quality plots.  Something like
+      \code{100} is a better choice for package vignettes.}
     
     \item{concordance:}{logical (\code{FALSE}).  Write a concordance
       file to link the input line numbers to the output line numbers.
