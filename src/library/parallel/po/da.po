@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-10-19 07:22+0100\n"
+"PO-Revision-Date: 2011-11-29 09:15+0200\n"
+"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+#: fork.c:135 fork.c:138
+msgid "unable to create a pipe"
+msgstr "kan ikke oprette en datakanal"
+
+#: fork.c:149
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "kan ikke forgrene, mulig årsag: %s"
+
+#: fork.c:178
+msgid "memory allocation error"
+msgstr "allokeringsfejl for hukommelse"
+
+#: fork.c:216
+msgid "only children can send data to the master process"
+msgstr "kun underprocesser kan sende data til overprocessen"
+
+#: fork.c:218
+msgid "there is no pipe to the master process"
+msgstr "der er ingen datakanal til overprocessen"
+
+#: fork.c:220
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "indhold at sende skal være RAW (RÅ), brug serialize() hvis krævet"
+
+#: fork.c:229 fork.c:236
+msgid "write error, closing pipe to the master"
+msgstr "skrivefejl, lukke datakanal til overproces"
+
+#: fork.c:249
+msgid "only the master process can send data to a child process"
+msgstr "kun overprocessen kan sende data til en underproces"
+
+#: fork.c:256
+#, c-format
+msgid "child %d does not exist"
+msgstr "underproces %d findes ikke"
+
+#: fork.c:262
+msgid "write error"
+msgstr "skrivefejl"
+
+#: fork.c:342 fork.c:464
+#, c-format
+msgid "error '%s' in select"
+msgstr "fejl '%s' i select"
+
+#: fork.c:548
+msgid "mckill failed"
+msgstr "mckill fejlede"
+
+#: fork.c:558
+msgid "mcexit can only be used in a child process"
+msgstr "mcexit kan kun bruges i en underproces"
+
+#: fork.c:578
+msgid "mcexit failed"
+msgstr "mcexit fejlede"

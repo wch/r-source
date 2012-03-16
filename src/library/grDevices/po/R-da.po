@@ -1,0 +1,385 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2011-09-05 08:24\n"
+"PO-Revision-Date: 2012-01-28 17:40+0200\n"
+"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+msgid "invalid 'filename'"
+msgstr "ugyldig »filename«"
+
+msgid "'coef' must not be negative"
+msgstr "»coef« må ikke være negativ"
+
+msgid "no 'z' matrix specified"
+msgstr "ingen »z-matrix« angivet"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "øgende »x-« og »y-værdier« forventet"
+
+msgid "no proper 'z' matrix specified"
+msgstr "ingen korrekt »z-matrix« angivet"
+
+msgid "'bias' must be positive"
+msgstr "»bias« skal være positiv"
+
+msgid "at least 3 columns needed"
+msgstr "mindst 3 kolonner er krævet"
+
+msgid "rgb matrix must be numeric"
+msgstr "rgb-matrix skal være numerisk"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "rgb-matrix skal have 3 rækker"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "rgb-værdier skal være i [0, maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "»start« og »end« skal være unik og i [0, 1]."
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "»gamma« skal være en skala eller »sRGB«"
+
+msgid "Color space converter:"
+msgstr "Omdannelsesprogram for farverum:"
+
+msgid "Reference white:"
+msgstr "Hvid reference:"
+
+msgid "display gamma"
+msgstr "vis gamma"
+
+msgid "'from' must be a colorConverter or string"
+msgstr "»from« skal være en colorConverter eller streng"
+
+msgid "'to' must be a colorConverter or string"
+msgstr "»to« skal være en colorConverter eller streng"
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr "»from.ref.white« er ikke enig med definitionen for"
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr "»to.ref.white« er ikke enig med definitionen for"
+
+msgid "color spaces use different reference whites."
+msgstr "farverum bruger forskellige hvide referencer."
+
+msgid "'name' must be a character vector"
+msgstr "»name« skal være en tegnvektor"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "kan ikke lukke enhed 1 ned (null-enheden)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "kan ikke angive »which« og »device« på samme tidspunkt"
+
+msgid "cannot copy from the null device"
+msgstr "kan ikke kopiere fra null-enheden"
+
+msgid "cannot copy to the null device"
+msgstr "kan ikke kopiere til null-enheden"
+
+msgid "cannot copy device to itself"
+msgstr "kan ikke kopiere enhed til sig selv"
+
+msgid "'device' should be a function"
+msgstr "»device« skal være en funktion"
+
+msgid "no device to print from"
+msgstr "ingen enhed at udskrive fra"
+
+msgid "can only print from screen device"
+msgstr "kan kun udskrive fra skærmenhed"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "skal angive en af »width« og »height«"
+
+msgid "can only print from a screen device"
+msgstr "kan kun udskrive fra en skærmenhed"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "dev.controll() kaldt uden en åben grafikenhed"
+
+msgid "argument is missing with no default"
+msgstr "argument mangler uden standard"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() kald uden en åben grafikenhed"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "ugyldig indstilling for »getOption(\"device\")«"
+
+msgid "device '%s' not found"
+msgstr "enhed »%s« blev ikke fundet"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "intet egnet ubrugt filnavn for pdf()"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): bruger pdf(file=\"%s\")"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "intet egnet ubrugt filnavn for postscript()"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): bruger postscript(file=\"%s\")"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "ugyldige argumenter i »%s« (kræver navngivet argumenter)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "»name.opt« skal være et tegn, navn på en eksisterende liste"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "kan ikke nulstille ikkeeksisterende »%s«"
+
+msgid "invalid options in '%s'"
+msgstr "ugyldige indstillinger i »%s«"
+
+msgid "NOT changing"
+msgstr "ændrer sig IKKE"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "argument »append« er for baglæns kompatibilitet og vil blive ignoreret"
+
+msgid "unknown family '%s'"
+msgstr "ukendt familie »%s«"
+
+msgid "invalid 'family' argument"
+msgstr "ugyldigt argument for »family«"
+
+msgid "invalid 'file'"
+msgstr "ugyldig »file«"
+
+msgid "'maxRasters' is no longer needed, and will be ignored"
+msgstr "»maxRasters« er ikke længere krævet, og vil blive ignoreret"
+
+msgid "invalid PDF version"
+msgstr "ugyldig PDF-version"
+
+msgid "Invalid font type"
+msgstr "ugyldig skrifttype"
+
+msgid "invalid family name in font specification"
+msgstr "ugyldigt familienavn i skriftspecifikation"
+
+msgid "invalid metric information in font specification"
+msgstr "ugyldigt metrikinformation i skriftspecifikation"
+
+msgid "invalid encoding in font specification"
+msgstr "ugyldig kodning i skriftspecifikation"
+
+msgid "Not a CID font"
+msgstr "Ikke en CID-skrift"
+
+msgid "invalid CMap name in font specification"
+msgstr "ugyldig CMAP-navn i skriftspecifikation"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "ugyldig »cmapEncoding« i skriftspecifikation"
+
+msgid "invalid PDF resource in font specification"
+msgstr "ugyldig PDF-ressource i skriftspecifikation"
+
+msgid "Invalid font database name"
+msgstr "ugyldigt skriftdatabasenavn"
+
+msgid "font %s already in use"
+msgstr "skrift %s er allerede i brug"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "ugyldige argumenter i »%s« (skal være skriftnavne)"
+
+msgid "unknown font"
+msgstr "ukendt skrifttype"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "forskellige skriftkodninger »%s'/'%s«"
+
+msgid "'file' must be a non-empty character string"
+msgstr "»file« skal være en udfyldt tegnstreng"
+
+msgid "Invalid output format"
+msgstr "Ugyldigt uddataformat"
+
+msgid "status %d in running command '%s'"
+msgstr "status %s i kørende kommando »%s«"
+
+msgid "range too small for min.n"
+msgstr "interval for lille for min.n"
+
+msgid "A raster matrix must be character, or numeric, or logical"
+msgstr "En bitmapmatrix skal være tegn eller numerisk eller logisk"
+
+msgid "A raster array must be numeric"
+msgstr "En bitmaparray skal være numerisk"
+
+msgid "A raster array must have exactly 3 dimensions"
+msgstr "En bitmaparray skal have præcis 3 dimensioner"
+
+msgid "A raster array must have exactly 3 or 4 planes"
+msgstr "En bitmaparray skal have præcis 3 eller 4 plan"
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "»drop« er altid implicit FALSE i »[.raster«"
+
+msgid "invalid raster subsetting"
+msgstr "ugyldig bitmapundersætning"
+
+msgid "invalid raster subassignment"
+msgstr "ugyldig bitmapundertildeling"
+
+msgid "Operator not meaningful for raster objects"
+msgstr "Operatør er ikke meningsfuld for bitmapobjekter"
+
+msgid "no current device to record from"
+msgstr "ingen aktuel enhed at optage fra"
+
+msgid "argument is not of class \"recordedplot\""
+msgstr "argument er ikke af klasse »recordedplot«"
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr "Indlæser øjebliksbillede fra pre-2.0.0 R version"
+
+msgid "loading snapshot from different R version"
+msgstr "Indlæser øjebliksbillede fra anden R version"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "»nbin« skal være numerisk og af længde 1 eller 2"
+
+msgid "'bandwidth' must be numeric"
+msgstr "»bandwidth« skal være numerisk"
+
+msgid "'bandwidth' must be positive"
+msgstr "»bandwidth« skal være positiv"
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "»r« skal være et »range«, derfor af længde 2"
+
+msgid "invalid first argument"
+msgstr "ugyldigt første argument"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "»x« er en liste, men har ikke komponenterne »x« og »y«"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "længden på »x« og »y« er forskellig"
+
+msgid "invalid first argument [bad language object]"
+msgstr "ugyldigt første argument [ugyldigt sprogobjekt]"
+
+msgid "at least 2 columns needed"
+msgstr "mindst 2 kolonner er krævet"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "»x« er en liste, men har ikke komponenterne »x«, »y« og »z«"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "længden for »x«, »y« og »z« er forskellig"
+
+msgid "'file' is missing with no default"
+msgstr "»file« mangler uden standard"
+
+msgid "sorry, 'gs' cannot be found"
+msgstr "beklager, »gs« kan ikke findes"
+
+msgid "unrecognized format of gs -help"
+msgstr "formatet for gs -help blev ikke genkendt"
+
+msgid "device '%s' is not available"
+msgstr "enhed »%s« er ikke tilgængelig"
+
+msgid "Available devices are %s"
+msgstr "Tilgængelige enheder er %s"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "»res« skal angives med mindre »units = \"px\"«"
+
+msgid "invalid 'title'"
+msgstr "ugyldig »title«"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "ugyldig Quartz-skrift: skal være 4 strenge"
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr "ugyldige argumenter i quartzFonts (skal være skriftnavne)"
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr "ugyldige argumenter i quartzFonts (skal bruge navngivne argumenter)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr ""
+"kairobaserede typer er ikke understøttet på denne bygning - bruger »Xlib«"
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "ukendt familie for X11(type = »XLib«)"
+
+msgid "invalid X11 font specification:"
+msgstr "ugyldig X11-skriftspecifikation:"
+
+msgid "no such device"
+msgstr "ingen sådan enhed"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "kan kun kopiere fra enheder af typen »X11(type=\"*cairo\")«"
+
+msgid "invalid value for 'rescale'"
+msgstr "ugyldig værdi for »rescale«"
+
+msgid "can only bring windows devices to the front"
+msgstr "kan kun bringe windowsenheder forrest"
+
+msgid "'type' not applicable to the R console"
+msgstr "»type« kan ikke bruges i R-konsollen"
+
+msgid "can only manipulate windows devices"
+msgstr "kan kun manipulere windowsenheder"
+
+msgid "can only copy from 'windows' devices"
+msgstr "kan kun kopiere fra windowsenheder"
+
+msgid "subscript out of range"
+msgstr "underskript uden for interval"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "ugyldig Windowsskrift: skal være et enkelt skriftfamilienavn"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "ugyldige argumenter i »windowsFonts« (skal være skriftnavne)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "ugyldige argumenter i »windowsFonts« (kræver navngivne argumenter)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "ugyldigt argumentnavn %s i »%s«"
+msgstr[1] "ugyldige argumentnavne %s i »%s«"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "forskellig mellem ny og forrige"
+msgstr[1] "forskellige mellem ny og forrige"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d x værdi <= 0 udeladt fra logaritmisk plot"
+msgstr[1] "%d x værdier <= 0 udeladt fra logaritmisk plot"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d y værdi <= 0 udeladt fra logaritmisk plot"
+msgstr[1] "%d y værdier <= 0 udeladt fra logaritmisk plot"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
+msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"

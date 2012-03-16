@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"PO-Revision-Date: 2011-11-28 23:40+0200\n"
+"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+#: tcltk.c:63
+msgid "parse error in R expression"
+msgstr "fortolkningsfejl i R-udtryk"
+
+#: tcltk.c:159 tcltk.c:233
+msgid "tcl error.\n"
+msgstr "tcl-fejl.\n"
+
+#: tcltk.c:187 tcltk.c:700
+msgid "invalid argument"
+msgstr "ugyldigt argument"
+
+#: tcltk.c:282 tcltk.c:300 tcltk.c:370 tcltk.c:433 tcltk.c:485
+msgid "invalid tclObj -- perhaps saved from another session?"
+msgstr "ugyldigt tclObj - måske gemt fra en anden session?"
+
+#: tcltk.c:575
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr "argumentliste er for lang i tcltk-intern funktion 'callback_closure'"
+
+#: tcltk.c:608
+msgid "argument is not of correct type"
+msgstr "argument er ikke af korrekt type"
+
+#: tcltk.c:659
+msgid "no DISPLAY variable so Tk is not available"
+msgstr "ingen DISPLAY-variabel så Tk er ikke tilgængelig"
+
+#: tcltk_unix.c:86
+msgid "Tcl already loaded"
+msgstr "Tcl allerede indlæst"
+
+#: tcltk_unix.c:107
+msgid "Tcl is not loaded"
+msgstr "Tcl er ikke indlæst"
+
+#: tcltk_unix.c:115
+msgid "Tcl is not last loaded handler"
+msgstr "Tcl er ikke sidst indlæst håndtering"
