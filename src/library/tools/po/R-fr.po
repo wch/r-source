@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-07 08:07\n"
+"POT-Creation-Date: 2012-03-16 06:26\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -650,7 +650,8 @@ msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr ""
 "--multiarch spécifié alors qu'une seule sous-architecture est utilisable"
 
-msgid "--cran turns off --extra-arch"
+#, fuzzy
+msgid "--as-cran turns off --extra-arch"
 msgstr "--cran inactive --extra-arch"
 
 msgid "Error: no packages were specified"

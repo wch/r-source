@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-07 08:07\n"
-"PO-Revision-Date: 2011-10-18 22:43-0600\n"
+"POT-Creation-Date: 2012-03-16 06:26\n"
+"PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -374,13 +374,11 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr "packageStartupMessage"
 
-#, fuzzy
 msgid "Package startup functions should not call %s."
-msgstr "Стартовые функции пакета не должны менять путь поиска."
+msgstr "Стартовые функции пакета не должны вызывать %s."
 
-#, fuzzy
 msgid "installed.packages"
-msgstr "неправильный пакет"
+msgstr "installed.packages"
 
 msgid "See section %s in ?.onAttach."
 msgstr "См. раздел %s в ?.onAttach."
@@ -403,16 +401,14 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "не объявлен вызов 'library' или 'require' из: %ы"
 
-#, fuzzy
 msgid "'data(package=)' calls not declared from:"
-msgstr "не объявлены вызовы 'library' или 'require' из:"
+msgstr "'data(package=)' не объявлены в:"
 
-#, fuzzy
 msgid "'data(package=)' call not declared from: %s"
-msgstr "не объявлен вызов 'library' или 'require' из: %ы"
+msgstr "вызов 'data(package=)' не объявлен: %s"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
-msgstr ""
+msgstr "NB: для проверок приходящего в CRAN нужен доступ в Интернет"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "Rd-файлы с повторяющимся именем '%s':"
@@ -516,9 +512,8 @@ msgstr "невозможно перейти в текущий рабочий каталог"
 msgid "no inputs"
 msgstr "нет вводов"
 
-#, fuzzy
 msgid "Error in running tools::texi2pdf"
-msgstr "Ошибка запуска tools::texi2dvi"
+msgstr "Ошибка запуска tools::texi2pdf"
 
 msgid "invalid value for '%s' : %s"
 msgstr "неправильное значение '%s' : %s"
@@ -622,7 +617,7 @@ msgid "The default JSS style may not be modified."
 msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
 msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
-msgstr ""
+msgstr "неправильное значение --compact-vignettes, предполагаю \"qpdf\""
 
 msgid "Error: cannot rename directory to"
 msgstr "Ошибка: не могу переименовать папку в"
@@ -636,8 +631,9 @@ msgstr "начиная с R 2.12.0, конфигурационные файлы не поддерживаются"
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' определен только для одной используемой субархитектуры"
 
-msgid "--cran turns off --extra-arch"
-msgstr ""
+#, fuzzy
+msgid "--as-cran turns off --extra-arch"
+msgstr "--cran выключает --extra-arch"
 
 msgid "Error: no packages were specified"
 msgstr "Ошибка: пакеты не определены"
@@ -796,7 +792,7 @@ msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr "ОШИБКА: --merge-multiarch применим только к одному tar-архиву"
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
-msgstr ""
+msgstr "только одна архитектура, так что пропускаю '--merge-multiarch'"
 
 msgid "invalid package"
 msgstr "неправильный пакет"

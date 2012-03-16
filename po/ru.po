@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-13 07:45+0000\n"
-"PO-Revision-Date: 2011-10-18 19:12-0600\n"
+"POT-Creation-Date: 2012-03-16 06:19+0000\n"
+"PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -167,8 +167,8 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:707
-#: src/main/dotcode.c:711 src/main/dotcode.c:716 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:715
+#: src/main/dotcode.c:719 src/main/dotcode.c:724 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -178,8 +178,8 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
 #: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:949
-#: src/main/eval.c:267 src/main/eval.c:2030 src/main/eval.c:2059
-#: src/main/eval.c:2063 src/main/grep.c:757 src/main/grep.c:762
+#: src/main/eval.c:267 src/main/eval.c:2028 src/main/eval.c:2057
+#: src/main/eval.c:2061 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
 #: src/main/grep.c:1486 src/main/grep.c:1490 src/main/grep.c:1495
 #: src/main/grep.c:2298 src/main/grep.c:2303 src/main/grep.c:2590
@@ -205,11 +205,11 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
 #: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2572
 #: src/main/platform.c:2580 src/main/platform.c:2616 src/main/platform.c:2666
-#: src/main/plot.c:3109 src/main/plot.c:4251 src/main/plot.c:4255
-#: src/main/plot.c:4258 src/main/plot3d.c:2446 src/main/plot3d.c:2450
+#: src/main/plot.c:3118 src/main/plot.c:4260 src/main/plot.c:4264
+#: src/main/plot.c:4267 src/main/plot3d.c:2446 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2455 src/main/plot3d.c:2459 src/main/plot3d.c:2463
-#: src/main/plot3d.c:2467 src/main/print.c:233 src/main/print.c:239
-#: src/main/print.c:261 src/main/print.c:267 src/main/print.c:273
+#: src/main/plot3d.c:2467 src/main/print.c:235 src/main/print.c:241
+#: src/main/print.c:263 src/main/print.c:269 src/main/print.c:275
 #: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
 #: src/main/saveload.c:1938 src/main/saveload.c:1941 src/main/saveload.c:1944
 #: src/main/saveload.c:2060 src/main/saveload.c:2240 src/main/saveload.c:2245
@@ -297,9 +297,9 @@ msgstr "неправильная временная метка"
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
 #: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
-#: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2283
-#: src/main/plot.c:2290 src/main/plot.c:3322 src/main/plot.c:3324
-#: src/main/plot.c:3326 src/main/plot.c:3484 src/main/plot3d.c:1382
+#: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2292
+#: src/main/plot.c:2299 src/main/plot.c:3331 src/main/plot.c:3333
+#: src/main/plot.c:3335 src/main/plot.c:3493 src/main/plot3d.c:1382
 #: src/main/plot3d.c:2524 src/main/plot3d.c:2528 src/main/plot3d.c:2530
 #: src/main/seq.c:167 src/main/seq.c:265 src/main/seq.c:268
 #: src/main/sort.c:871 src/main/sort.c:971 src/main/source.c:216
@@ -1197,11 +1197,11 @@ msgstr "длина 'dimnames' [%d] не равна протяженности м
 #: src/main/attrib.c:1035 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:71 src/main/paste.c:285
-#: src/main/plot.c:1731 src/main/random.c:474
+#: src/main/plot.c:1740 src/main/random.c:474
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
 
-#: src/main/attrib.c:1038 src/main/plot.c:1738
+#: src/main/attrib.c:1038 src/main/plot.c:1747
 msgid "invalid second argument"
 msgstr "неправильный второй аргумент"
 
@@ -1323,7 +1323,7 @@ msgstr "повторный формальный аргумент 'use.names'"
 msgid "argument not a list"
 msgstr "аргумент не является списком"
 
-#: src/main/bind.c:1038 src/main/eval.c:2399 src/main/eval.c:2408
+#: src/main/bind.c:1038 src/main/eval.c:2397 src/main/eval.c:2406
 #: src/main/objects.c:311 src/main/objects.c:346 src/main/objects.c:721
 #: src/main/objects.c:738 src/main/objects.c:745
 #, c-format
@@ -1372,7 +1372,7 @@ msgstr "указанный размер вектора слишком велик
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
 #: src/main/envir.c:2857 src/main/envir.c:2886 src/main/envir.c:2907
 #: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
-#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4963
+#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4961
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2593
 msgid "use of NULL environment is defunct"
@@ -1449,8 +1449,8 @@ msgid "missing value for 'length'"
 msgstr "пропущено значение 'length'"
 
 #: src/main/builtin.c:897 src/main/eval.c:401 src/main/eval.c:518
-#: src/main/eval.c:1818 src/main/eval.c:1884 src/main/eval.c:1944
-#: src/main/eval.c:2279 src/main/eval.c:4377 src/main/eval.c:4486
+#: src/main/eval.c:1816 src/main/eval.c:1882 src/main/eval.c:1942
+#: src/main/eval.c:2277 src/main/eval.c:4375 src/main/eval.c:4484
 msgid "'...' used in an incorrect context"
 msgstr "'...' использовано в неправильном контексте"
 
@@ -1463,7 +1463,7 @@ msgstr "повторяющиеся значения по-молучанию в �
 msgid "'EXPR' is missing"
 msgstr "'EXPR' отсутствует"
 
-#: src/main/builtin.c:955 src/main/eval.c:4800
+#: src/main/builtin.c:955 src/main/eval.c:4798
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR должно быть вектором единичной длины"
 
@@ -1617,7 +1617,7 @@ msgstr "попытка конверсии не-фактора"
 msgid "list argument expected"
 msgstr "ожидается аргумент-список"
 
-#: src/main/coerce.c:1452 src/main/eval.c:4967
+#: src/main/coerce.c:1452 src/main/eval.c:4965
 msgid "invalid environment"
 msgstr "неправильное окружение"
 
@@ -2569,12 +2569,12 @@ msgstr "'tracemem' бесполезна для слабых ссылок и вн
 msgid "R was not compiled with support for memory profiling"
 msgstr "R не был скомпилирован с поддержкой профилирования памяти"
 
-#: src/main/deparse.c:151 src/main/plot.c:916 src/main/plot.c:1452
-#: src/main/plot.c:1776 src/main/plot.c:1844 src/main/plot.c:1922
-#: src/main/plot.c:1991 src/main/plot.c:2067 src/main/plot.c:2165
-#: src/main/plot.c:2243 src/main/plot.c:2524 src/main/plot.c:2702
-#: src/main/plot.c:2921 src/main/plot.c:3465 src/main/plot.c:3593
-#: src/main/plot.c:3672 src/main/plot.c:3841 src/main/plot.c:4123
+#: src/main/deparse.c:151 src/main/plot.c:925 src/main/plot.c:1461
+#: src/main/plot.c:1785 src/main/plot.c:1853 src/main/plot.c:1931
+#: src/main/plot.c:2000 src/main/plot.c:2076 src/main/plot.c:2174
+#: src/main/plot.c:2252 src/main/plot.c:2533 src/main/plot.c:2711
+#: src/main/plot.c:2930 src/main/plot.c:3474 src/main/plot.c:3602
+#: src/main/plot.c:3681 src/main/plot.c:3850 src/main/plot.c:4132
 #: src/main/plot3d.c:1344 src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr "слишком мало аргументов"
@@ -2612,7 +2612,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' должен быть малым положительным целым числом"
 
 #: src/main/deparse.c:400 src/main/envir.c:1688 src/main/envir.c:1770
-#: src/main/eval.c:407 src/main/eval.c:1062 src/main/eval.c:3337
+#: src/main/eval.c:407 src/main/eval.c:1062 src/main/eval.c:3335
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2611
 #, c-format
 msgid "object '%s' not found"
@@ -2687,7 +2687,7 @@ msgstr ""
 "'имя' должно быть строкой (единичной длины) или естественной символьной "
 "ссылкой"
 
-#: src/main/dotcode.c:195 src/main/dotcode.c:793
+#: src/main/dotcode.c:195 src/main/dotcode.c:801
 msgid "too many arguments in foreign function call"
 msgstr "слишком много аргументов при вызове внешней функции"
 
@@ -2733,7 +2733,7 @@ msgstr "текстовые переменные должны быть дубли
 msgid "only first string in char vector used in .Fortran"
 msgstr "только первая строка текстового вектора использована в .Fortran"
 
-#: src/main/dotcode.c:376 src/main/dotcode.c:497
+#: src/main/dotcode.c:376 src/main/dotcode.c:505
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "не поддерживаемая кодировка '%s'"
@@ -2752,101 +2752,100 @@ msgstr "неправильный режим для передачи в Fortran (
 msgid "lists must be duplicated in .C"
 msgstr "списки должны быть дублированы в .C"
 
-#: src/main/dotcode.c:422
-#, fuzzy, c-format
+#: src/main/dotcode.c:420 src/main/dotcode.c:428
+#, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
-msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
+msgstr "неправильный режим (%s) для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:512
+#: src/main/dotcode.c:520
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "проблема конвертации при перекодировке из '%s'"
 
-#: src/main/dotcode.c:572
+#: src/main/dotcode.c:580
 msgid "NAOK used more than once"
 msgstr "NAOK использован более одного раза"
 
-#: src/main/dotcode.c:576
+#: src/main/dotcode.c:584
 msgid "DUP used more than once"
 msgstr "DUP использован более одного раза"
 
-#: src/main/dotcode.c:582
+#: src/main/dotcode.c:590
 msgid "DLL name is too long"
 msgstr "имя DLL слишком длинное"
 
-#: src/main/dotcode.c:585 src/main/dotcode.c:645 src/main/dotcode.c:651
+#: src/main/dotcode.c:593 src/main/dotcode.c:653 src/main/dotcode.c:659
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE использован более одного раза"
 
-#: src/main/dotcode.c:624
+#: src/main/dotcode.c:632
 msgid "PACKAGE argument must be a single character string"
 msgstr "аргумент PACKAGE должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:630
+#: src/main/dotcode.c:638
 msgid "PACKAGE argument is too long"
 msgstr "аргумент PACKAGE слишком длинный"
 
-#: src/main/dotcode.c:674 src/main/dotcode.c:683
+#: src/main/dotcode.c:682 src/main/dotcode.c:691
 msgid "ENCODING used more than once"
 msgstr "ENCODING использована больше одного раза"
 
-#: src/main/dotcode.c:676 src/main/dotcode.c:685
+#: src/main/dotcode.c:684 src/main/dotcode.c:693
 msgid "ENCODING argument must be a single character string"
 msgstr "аргумент ENCODING должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:703
+#: src/main/dotcode.c:711
 msgid "no arguments supplied"
 msgstr "не заданы аргументы"
 
-#: src/main/dotcode.c:704 src/main/seq.c:642
+#: src/main/dotcode.c:712 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
-#: src/main/dotcode.c:741 src/main/dotcode.c:784 src/main/dotcode.c:1607
-#, fuzzy
+#: src/main/dotcode.c:749 src/main/dotcode.c:792 src/main/dotcode.c:1615
 msgid "'.NAME' is missing"
-msgstr "'EXPR' отсутствует"
+msgstr "'NAME' отсутствует"
 
-#: src/main/dotcode.c:757 src/main/dotcode.c:800 src/main/dotcode.c:1628
+#: src/main/dotcode.c:765 src/main/dotcode.c:808 src/main/dotcode.c:1636
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Неправильное количество аргументов (%d), ожидается %d для '%s' "
 
-#: src/main/dotcode.c:1457 src/main/dotcode.c:2260
+#: src/main/dotcode.c:1465 src/main/dotcode.c:2268
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
-#: src/main/dotcode.c:1489 src/main/dotcode.c:1506
+#: src/main/dotcode.c:1497 src/main/dotcode.c:1514
 msgid "Invalid graphics state"
 msgstr "Неправильное графическое состояние"
 
-#: src/main/dotcode.c:1579
+#: src/main/dotcode.c:1587
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "значение NULL для DLLInfoReference во время поиска DLL"
 
-#: src/main/dotcode.c:1653
+#: src/main/dotcode.c:1661
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Неправильный тип аргумента %d при вызове %s"
 
-#: src/main/dotcode.c:2351
+#: src/main/dotcode.c:2359
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "тип \"%s\" не поддерживается при межязыковых вызовах"
 
-#: src/main/dotcode.c:2363
+#: src/main/dotcode.c:2371
 msgid "invalid function in call_R"
 msgstr "неправильная функция в call_R"
 
-#: src/main/dotcode.c:2365
+#: src/main/dotcode.c:2373
 msgid "invalid argument count in call_R"
 msgstr "неправильный счет аргументов в call_R"
 
-#: src/main/dotcode.c:2367
+#: src/main/dotcode.c:2375
 msgid "invalid return value count in call_R"
 msgstr "неправильный счет возвращаемого значения в call_R"
 
-#: src/main/dotcode.c:2401
+#: src/main/dotcode.c:2409
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "режим '%s' не поддерживается в call_R"
@@ -3103,7 +3102,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d использовано в неправильном контексте, нет ... чтобы найти"
 
 #: src/main/envir.c:1320 src/main/envir.c:1766 src/main/eval.c:411
-#: src/main/eval.c:3328
+#: src/main/eval.c:3326
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "аргумент \"%s\" пропущен, умолчаний нет"
@@ -3135,9 +3134,8 @@ msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x) должен быть строковым вектором длиной, совпадающей с длиной x"
 
 #: src/main/envir.c:1575
-#, fuzzy
 msgid "'envir' argument must be an environment"
-msgstr "аргумент 'env' должен быть окружением"
+msgstr "аргумент 'envir' должен быть окружением"
 
 #: src/main/envir.c:1604
 msgid "cannot remove variables from base namespace"
@@ -3357,11 +3355,11 @@ msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "Было %d предупреждений (введите warnings() чтобы их просмотреть)\n"
 
 #: src/main/errors.c:489
-#, fuzzy, c-format
+#, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
-"Было 50 или более предупреждений (введите warnings() чтобы просмотреть "
-"первые 50)\n"
+"Было %d или более предупреждений (введите warnings() чтобы просмотреть "
+"первые %d)\n"
 
 #: src/main/errors.c:538
 msgid "Error during wrapup: "
@@ -3509,11 +3507,11 @@ msgstr ""
 "исполнение расположено слишком глубоко: неопределенная рекурсия / options"
 "(expressions=)?"
 
-#: src/main/eval.c:413 src/main/eval.c:3329
+#: src/main/eval.c:413 src/main/eval.c:3327
 msgid "argument is missing, with no default"
 msgstr "аргумент пропущен, умолчаний нет"
 
-#: src/main/eval.c:514 src/main/eval.c:4325
+#: src/main/eval.c:514 src/main/eval.c:4323
 msgid "attempt to apply non-function"
 msgstr "попытка применить не-функцию"
 
@@ -3552,7 +3550,7 @@ msgstr "аргумент нулевой длины"
 msgid "non-symbol loop variable"
 msgstr "несимвольная переменная цикла"
 
-#: src/main/eval.c:1300 src/main/eval.c:4094
+#: src/main/eval.c:1300 src/main/eval.c:4092
 msgid "invalid for() loop sequence"
 msgstr "неправильная циклическая последовательность for()"
 
@@ -3560,221 +3558,221 @@ msgstr "неправильная циклическая последовател
 msgid "multi-argument returns are not permitted"
 msgstr "многоаргументные возвраты не разрешены"
 
-#: src/main/eval.c:1480
+#: src/main/eval.c:1478
 msgid "invalid (NULL) left side of assignment"
 msgstr "неправильная (NULL) левая сторона присваивания"
 
-#: src/main/eval.c:1502
+#: src/main/eval.c:1500
 msgid "target of assignment expands to non-language object"
 msgstr "цель присваивания раскрывается в неязыковой объект"
 
-#: src/main/eval.c:1538
+#: src/main/eval.c:1536
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "слишком длинное имя в '%s'"
 
-#: src/main/eval.c:1598
+#: src/main/eval.c:1596
 msgid "cannot do complex assignments in base namespace"
 msgstr "не могу делать комплексные присваивания в базовом пространстве имен"
 
-#: src/main/eval.c:1600
+#: src/main/eval.c:1598
 msgid "cannot do complex assignments in base environment"
 msgstr "не могу делать комплексные присваивания в базовом окружении"
 
-#: src/main/eval.c:1637 src/main/eval.c:1664
+#: src/main/eval.c:1635 src/main/eval.c:1662
 msgid "invalid function in complex assignment"
 msgstr "неправильная функция в комплексном присвоении"
 
-#: src/main/eval.c:1742
+#: src/main/eval.c:1740
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "неправильная (do_set) левая сторона в присвоении"
 
-#: src/main/eval.c:1757
+#: src/main/eval.c:1755
 msgid "invalid assignment left-hand side"
 msgstr "неправильная левая сторона присвоения"
 
-#: src/main/eval.c:1822
+#: src/main/eval.c:1820
 #, c-format
 msgid "argument %d is empty"
 msgstr "аргумент %d пуст"
 
-#: src/main/eval.c:1825
+#: src/main/eval.c:1823
 #, c-format
 msgid "'%s' is missing"
 msgstr "'%s' отсутствует"
 
-#: src/main/eval.c:1975
+#: src/main/eval.c:1973
 msgid "invalid formal argument list for \"function\""
 msgstr "неправильный список формальных аргументов для \"функция\""
 
-#: src/main/eval.c:2056
+#: src/main/eval.c:2054
 msgid "numeric 'envir' arg not of length one"
 msgstr "числовой аргумент 'envir' не единичной длины"
 
-#: src/main/eval.c:2078 src/main/eval.c:2097
+#: src/main/eval.c:2076 src/main/eval.c:2095
 msgid "restarts not supported in 'eval'"
 msgstr "перезапуск не поддерживается в 'eval'"
 
-#: src/main/eval.c:2166 src/main/eval.c:2179
+#: src/main/eval.c:2164 src/main/eval.c:2177
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' вызвано снаружи вложения"
 
-#: src/main/eval.c:2272
+#: src/main/eval.c:2270
 msgid "value in '...' is not a promise"
 msgstr "значение в '...' не является перспективным"
 
-#: src/main/eval.c:2461 src/main/objects.c:712
+#: src/main/eval.c:2459 src/main/objects.c:712
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "слишком длинное имя вызова в '%s'"
 
-#: src/main/eval.c:2482
+#: src/main/eval.c:2480
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "у %s слишком длинное общее имя"
 
-#: src/main/eval.c:2545
+#: src/main/eval.c:2543
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Несовместимые методы (\"%s\", \"%s\") для \"%s\""
 
-#: src/main/eval.c:2609
+#: src/main/eval.c:2607
 msgid "dispatch error in group dispatch"
 msgstr "ошибка отправки в групповой отправке"
 
-#: src/main/eval.c:2922
+#: src/main/eval.c:2920
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "'%s' не является %s функцией"
 
-#: src/main/eval.c:3115
+#: src/main/eval.c:3113
 msgid "node stack overflow"
 msgstr "переполнение стека узла"
 
-#: src/main/eval.c:3121
+#: src/main/eval.c:3119
 msgid "integer stack overflow"
 msgstr "переполнение стека целых чисел"
 
-#: src/main/eval.c:3175
+#: src/main/eval.c:3173
 msgid "Bad opcode"
 msgstr "Неправильный 'opcode'"
 
-#: src/main/eval.c:3917
+#: src/main/eval.c:3915
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "неправильный тип %s в 'x %s y'"
 
-#: src/main/eval.c:3996
+#: src/main/eval.c:3994
 msgid "bytecode version mismatch; using eval"
 msgstr "несоответствие версии байтового кода; использую eval"
 
-#: src/main/eval.c:4001
+#: src/main/eval.c:3999
 msgid "bytecode version is too old"
 msgstr "версия байтового кода слишком старая"
 
-#: src/main/eval.c:4002
+#: src/main/eval.c:4000
 msgid "bytecode version is too new"
 msgstr "версия байтового кода слишком новая"
 
-#: src/main/eval.c:4036
+#: src/main/eval.c:4034
 msgid "byte code version mismatch"
 msgstr "несоответствие версии байтового кода"
 
-#: src/main/eval.c:4162
+#: src/main/eval.c:4160
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:4308 src/main/eval.c:4429
+#: src/main/eval.c:4306 src/main/eval.c:4427
 msgid "not a BUILTIN function"
 msgstr "не BUILTIN-функция"
 
-#: src/main/eval.c:4414 src/main/eval.c:4737 src/main/eval.c:4779
+#: src/main/eval.c:4412 src/main/eval.c:4735 src/main/eval.c:4777
 msgid "bad function"
 msgstr "неправильная функция"
 
-#: src/main/eval.c:4804
+#: src/main/eval.c:4802
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr ""
 "числовое выражение (EXPR) требуется для switch() без именованных альтернатив"
 
-#: src/main/eval.c:4807
+#: src/main/eval.c:4805
 msgid "bad character switch offsets"
 msgstr "неверное смещение строковых переключателей"
 
-#: src/main/eval.c:4809
+#: src/main/eval.c:4807
 msgid "bad switch names"
 msgstr "неправильное имя переключателя"
 
-#: src/main/eval.c:4823
+#: src/main/eval.c:4821
 msgid "bad numeric switch offsets"
 msgstr "неверное смещение числовых переключателей"
 
-#: src/main/eval.c:4900
+#: src/main/eval.c:4898
 msgid "cannot find index for threaded code address"
 msgstr "не могу найти индекс для нитевого адреса кода"
 
-#: src/main/eval.c:4960
+#: src/main/eval.c:4958
 msgid "invalid body"
 msgstr "неправильное тело"
 
-#: src/main/eval.c:4980
+#: src/main/eval.c:4978
 msgid "invalid symbol"
 msgstr "неправильный символ"
 
-#: src/main/eval.c:5024
+#: src/main/eval.c:5022
 msgid "argument is not a byte code object"
 msgstr "аргумент не является объектом байтового кода"
 
-#: src/main/eval.c:5045
+#: src/main/eval.c:5043
 msgid "bad file name"
 msgstr "неправильное имя файла"
 
-#: src/main/eval.c:5049 src/main/eval.c:5070
+#: src/main/eval.c:5047 src/main/eval.c:5068
 msgid "unable to open 'file'"
 msgstr "не могу открыть 'file'"
 
-#: src/main/eval.c:5064 src/main/saveload.c:1930
+#: src/main/eval.c:5062 src/main/saveload.c:1930
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
-#: src/main/eval.c:5066 src/main/saveload.c:1932 src/main/saveload.c:2232
+#: src/main/eval.c:5064 src/main/saveload.c:1932 src/main/saveload.c:2232
 #: src/main/serialize.c:2046
 msgid "'ascii' must be logical"
 msgstr "'ascii' должно быть логическим"
 
-#: src/main/eval.c:5095 src/main/eval.c:5102
+#: src/main/eval.c:5093 src/main/eval.c:5100
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: буфер слишком мал"
 
-#: src/main/eval.c:5135 src/main/eval.c:5184
+#: src/main/eval.c:5133 src/main/eval.c:5182
 msgid "constant buffer must be a generic vector"
 msgstr "константный буфер должен быть общим вектором"
 
-#: src/main/eval.c:5154
+#: src/main/eval.c:5152
 msgid "constBuf must be a generic vector"
 msgstr "constBuf должен быть общим вектором"
 
-#: src/main/eval.c:5158
+#: src/main/eval.c:5156
 msgid "bad constCount value"
 msgstr "неверное значение constCount"
 
-#: src/main/eval.c:5186
+#: src/main/eval.c:5184
 msgid "bad constant count"
 msgstr "неверное число констант"
 
-#: src/main/eval.c:5222
+#: src/main/eval.c:5220
 msgid "profile timer in use"
 msgstr "используется профильный таймер"
 
-#: src/main/eval.c:5224
+#: src/main/eval.c:5222
 msgid "already byte code profiling"
 msgstr "уже есть побайтное профилирование"
 
-#: src/main/eval.c:5242
+#: src/main/eval.c:5240
 msgid "setting profile timer failed"
 msgstr "установить профильный таймер не удалось"
 
-#: src/main/eval.c:5259
+#: src/main/eval.c:5257
 msgid "not byte code profiling"
 msgstr "не побайтное профилирование"
 
@@ -4295,7 +4293,7 @@ msgstr "обратный вызов задачи верхнего уровня �
 
 #: src/main/mapply.c:45
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
-msgstr ""
+msgstr "Ввод нулевого размера нельзя смешивать с ненулевым"
 
 #: src/main/mapply.c:62
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
@@ -4467,9 +4465,8 @@ msgid "argument is not a valid model"
 msgstr "аргумент не является правильной моделью"
 
 #: src/main/model.c:764
-#, fuzzy
 msgid "'specials' must be NULL or a character vector"
-msgstr "'path' должен быть текстовым вектором"
+msgstr "'specials' должен быть NULL или текстовым вектором"
 
 #: src/main/model.c:777
 msgid "'data' argument is of the wrong type"
@@ -4728,7 +4725,7 @@ msgstr "использование 'is()' вместо 'inherits()' для S4-о
 
 #: src/main/objects.c:987
 msgid "could not find correct environment; please report!"
-msgstr ""
+msgstr "не могу найти подходящее окружение, сигнализируйте об этом!"
 
 #: src/main/objects.c:1082
 #, c-format
@@ -5269,14 +5266,13 @@ msgid "nothing to link"
 msgstr "нечего связать"
 
 #: src/main/platform.c:628
-#, fuzzy
 msgid "symbolic links are not supported on this version of Windows"
-msgstr "символические ссылки на этой платформе не поддерживаются"
+msgstr "символические ссылки на этой версии Windows не поддерживаются"
 
 #: src/main/platform.c:647
-#, fuzzy, c-format
+#, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
-msgstr "не могу создать символическую ссылку '%s' на '%s' по причине '%s'"
+msgstr "не могу создать символическую ссылку '%ls' на '%ls' по причине '%s'"
 
 #: src/main/platform.c:667
 #, c-format
@@ -5487,254 +5483,254 @@ msgstr "нужны конечные значения 'ylim'"
 msgid "Logarithmic axis must have positive limits"
 msgstr "Логарифмическая ось должна иметь положительные границы"
 
-#: src/main/plot.c:649
+#: src/main/plot.c:658
 msgid "invalid type for axis labels"
 msgstr "неправильный тип меток осей"
 
-#: src/main/plot.c:927
+#: src/main/plot.c:936
 #, c-format
 msgid "invalid axis number %d"
 msgstr "неправильное количество осей %d"
 
-#: src/main/plot.c:1017
+#: src/main/plot.c:1026
 msgid "'hadj' must be of length one"
 msgstr "'hadj' должен быть единичной длины"
 
-#: src/main/plot.c:1024 src/main/plot.c:2577
+#: src/main/plot.c:1033 src/main/plot.c:2586
 msgid "zero length 'padj' specified"
 msgstr "указан 'padj' нулевой длины"
 
-#: src/main/plot.c:1093
+#: src/main/plot.c:1102
 msgid "'labels' is supplied and not 'at'"
 msgstr "есть 'labels', но нет 'at'"
 
-#: src/main/plot.c:1097
+#: src/main/plot.c:1106
 #, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
 msgstr "'at' и 'label' различаются по длине, %d != %d"
 
-#: src/main/plot.c:1114
+#: src/main/plot.c:1123
 msgid "no locations are finite"
 msgstr "нет конечных местоположений"
 
-#: src/main/plot.c:1468
+#: src/main/plot.c:1477
 msgid "invalid plotting structure"
 msgstr "неправильная структура графика"
 
-#: src/main/plot.c:1470
+#: src/main/plot.c:1479
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "длины 'x' и 'y' в %s() различаются"
 
-#: src/main/plot.c:1481
+#: src/main/plot.c:1490
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "тип графика '%s' будет обрезан до первого знака"
 
-#: src/main/plot.c:1485 src/main/plot.c:3187
+#: src/main/plot.c:1494 src/main/plot.c:3196
 msgid "invalid plot type"
 msgstr "неправильный тип графика"
 
-#: src/main/plot.c:1685
+#: src/main/plot.c:1694
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "неправильный тип графика '%c'"
 
-#: src/main/plot.c:1746
+#: src/main/plot.c:1755
 msgid "invalid third argument"
 msgstr "неправильный третий аргумент"
 
-#: src/main/plot.c:1754
+#: src/main/plot.c:1763
 msgid "invalid fourth argument"
 msgstr "неправильный четвертый аргумент"
 
-#: src/main/plot.c:1762
+#: src/main/plot.c:1771
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "не могу смешивать координаты нулевой длины с ненулевыми"
 
-#: src/main/plot.c:1951
+#: src/main/plot.c:1960
 msgid "unable to allocate memory (in GPath)"
 msgstr "не могу разместить память (в GPath)"
 
-#: src/main/plot.c:1957
+#: src/main/plot.c:1966
 msgid "invalid x or y (in GPath)"
 msgstr "неправильный x или y (в GPath)"
 
-#: src/main/plot.c:2080
+#: src/main/plot.c:2089
 msgid "invalid arrow head length"
 msgstr "неправильная длина наконечника стрелки"
 
-#: src/main/plot.c:2085
+#: src/main/plot.c:2094
 msgid "invalid arrow head angle"
 msgstr "неправильный угол наконечника стрелки"
 
-#: src/main/plot.c:2090
+#: src/main/plot.c:2099
 msgid "invalid arrow head specification"
 msgstr "неправильное определение наконечника стрелки"
 
-#: src/main/plot.c:2255 src/main/plot.c:3329
+#: src/main/plot.c:2264 src/main/plot.c:3338
 msgid "zero length 'labels'"
 msgstr "нулевые 'labels'"
 
-#: src/main/plot.c:2329
+#: src/main/plot.c:2338
 msgid "no coordinates were supplied"
 msgstr "не указаны координаты"
 
-#: src/main/plot.c:2535
+#: src/main/plot.c:2544
 msgid "zero length 'text' specified"
 msgstr "указана нулевая длина 'text'"
 
-#: src/main/plot.c:2541
+#: src/main/plot.c:2550
 msgid "zero length 'side' specified"
 msgstr "указана нулевая длина 'side'"
 
-#: src/main/plot.c:2548
+#: src/main/plot.c:2557
 msgid "zero length 'line' specified"
 msgstr "указан нулевая длина 'line'"
 
-#: src/main/plot.c:2556
+#: src/main/plot.c:2565
 msgid "zero length 'outer' specified"
 msgstr "указана нулевая длина 'outer'"
 
-#: src/main/plot.c:2563
+#: src/main/plot.c:2572
 msgid "zero length 'at' specified"
 msgstr "указана нулевая длина 'at'"
 
-#: src/main/plot.c:2570
+#: src/main/plot.c:2579
 msgid "zero length 'adj' specified"
 msgstr "указана нулевая длина 'adj'"
 
-#: src/main/plot.c:2584
+#: src/main/plot.c:2593
 msgid "zero length 'cex' specified"
 msgstr "указана нулевая длина 'cex'"
 
-#: src/main/plot.c:2592
+#: src/main/plot.c:2601
 msgid "zero length 'col' specified"
 msgstr "указана нулевая длина 'col'"
 
-#: src/main/plot.c:2599
+#: src/main/plot.c:2608
 msgid "zero length 'font' specified"
 msgstr "указана нулевая длина 'font'"
 
-#: src/main/plot.c:2962
+#: src/main/plot.c:2971
 msgid "invalid a=, b= specification"
 msgstr "неправильное указание a=, b="
 
-#: src/main/plot.c:2971
+#: src/main/plot.c:2980
 msgid "'a' and 'b' must be finite"
 msgstr "'a' и 'b' должны быть конечными"
 
-#: src/main/plot.c:3182
+#: src/main/plot.c:3191
 msgid "invalid number of points in locator()"
 msgstr "неправильное количество точек в locator()"
 
-#: src/main/plot.c:3318
+#: src/main/plot.c:3327
 msgid "invalid number of points in identify()"
 msgstr "неправильное количество точек в identify()"
 
-#: src/main/plot.c:3320
+#: src/main/plot.c:3329
 msgid "incorrect argument type"
 msgstr "неправильный аргумент 'type'"
 
-#: src/main/plot.c:3332
+#: src/main/plot.c:3341
 msgid "different argument lengths"
 msgstr "различные длины аргументов"
 
-#: src/main/plot.c:3334
+#: src/main/plot.c:3343
 msgid "more 'labels' than points"
 msgstr "'labels' больше чем точек"
 
-#: src/main/plot.c:3387
+#: src/main/plot.c:3396
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "предупреждение: нет точки в пределах %.2f дюйма\n"
 
-#: src/main/plot.c:3393
+#: src/main/plot.c:3402
 msgid "warning: nearest point already identified\n"
 msgstr "предупреждение: ближайшая точка уже определена\n"
 
-#: src/main/plot.c:3477
+#: src/main/plot.c:3486
 msgid "invalid units"
 msgstr "неправильные единицы"
 
-#: src/main/plot.c:3656 src/main/plot.c:3766
+#: src/main/plot.c:3665 src/main/plot.c:3775
 msgid "invalid dendrogram input"
 msgstr "неправильный ввод дендрограммы"
 
-#: src/main/plot.c:3823
+#: src/main/plot.c:3832
 msgid "invalid symbol parameter vector"
 msgstr "неправильный вектор символьных параметров"
 
-#: src/main/plot.c:3846
+#: src/main/plot.c:3855
 msgid "invalid symbol coordinates"
 msgstr "неправильные символьные координаты"
 
-#: src/main/plot.c:3854
+#: src/main/plot.c:3863
 msgid "x/y/parameter length mismatch"
 msgstr "несоответствие длин x/y/параметров"
 
-#: src/main/plot.c:3873
+#: src/main/plot.c:3882
 msgid "invalid circles data"
 msgstr "неправильные данные о кругах"
 
-#: src/main/plot.c:3875 src/main/plot.c:3896 src/main/plot.c:3921
-#: src/main/plot.c:3951
+#: src/main/plot.c:3884 src/main/plot.c:3905 src/main/plot.c:3930
+#: src/main/plot.c:3960
 msgid "invalid symbol parameter"
 msgstr "неправильный символьный параметр"
 
-#: src/main/plot.c:3894
+#: src/main/plot.c:3903
 msgid "invalid squares data"
 msgstr "неправильные данные о квадратах"
 
-#: src/main/plot.c:3919
+#: src/main/plot.c:3928
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "неправильные данные о прямоугольниках (нужны 2 колонки)"
 
-#: src/main/plot.c:3949
+#: src/main/plot.c:3958
 msgid "invalid stars data"
 msgstr "неправильные данные о звездочках"
 
-#: src/main/plot.c:3991
+#: src/main/plot.c:4000
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "неправильные данные о градусниках (нужно 3 или 4 колонки)"
 
-#: src/main/plot.c:3994
+#: src/main/plot.c:4003
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "неправильные 'thermometers[,%s]'"
 
-#: src/main/plot.c:3997
+#: src/main/plot.c:4006
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "'thermometers[,%s]' вне [0,1] -- может странно выглядеть"
 
-#: src/main/plot.c:4000
+#: src/main/plot.c:4009
 msgid "invalid thermometers[,1:2]"
 msgstr "неправильные 'thermometers[,1:2]'"
 
-#: src/main/plot.c:4039
+#: src/main/plot.c:4048
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "неправильные данные о ящиках-с-усами (нужно 5 колонок)"
 
-#: src/main/plot.c:4048
+#: src/main/plot.c:4057
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "'boxplots[,5]' вне [0,1] -- может странно выглядеть"
 
-#: src/main/plot.c:4050
+#: src/main/plot.c:4059
 msgid "invalid boxplots[, 1:4]"
 msgstr "неправильные 'boxplots[, 1:4]'"
 
-#: src/main/plot.c:4096
+#: src/main/plot.c:4105
 msgid "invalid symbol type"
 msgstr "неправильный тип символа"
 
-#: src/main/plot.c:4136 src/main/plot.c:4138 src/main/plot.c:4143
-#: src/main/plot.c:4145
+#: src/main/plot.c:4145 src/main/plot.c:4147 src/main/plot.c:4152
+#: src/main/plot.c:4154
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"
 
-#: src/main/plot.c:4162
+#: src/main/plot.c:4171
 msgid "unable to allocate memory (in do_xspline)"
 msgstr "не могу разместить память (в do_xspline)"
 
@@ -5859,7 +5855,7 @@ msgstr "группа неполна"
 msgid "Metric information not available for this family/device"
 msgstr "Метрическая информация для этого семейства/устройства недоступна"
 
-#: src/main/print.c:143 src/main/print.c:245
+#: src/main/print.c:143 src/main/print.c:247
 msgid "invalid 'na.print' specification"
 msgstr "неправильное указание 'na.print'"
 
@@ -5875,31 +5871,31 @@ msgstr "неправильные метки колонки"
 msgid "non-function argument to .Internal(print.function(.))"
 msgstr "нефункциональный аргумент для .Internal(print.function(.))"
 
-#: src/main/print.c:255
+#: src/main/print.c:257
 msgid "'gap' must be non-negative integer"
 msgstr "'gap' должен быть положительным целым числом"
 
-#: src/main/print.c:279
+#: src/main/print.c:281
 msgid "invalid 'tryS4' internal argument"
 msgstr "неправильный внутренний аргумент 'tryS4' "
 
-#: src/main/print.c:1009
+#: src/main/print.c:1011
 msgid "invalid character length in dblepr"
 msgstr "неправильная длина текста в 'dblepr'"
 
-#: src/main/print.c:1027
+#: src/main/print.c:1029
 msgid "invalid character length in intpr"
 msgstr "неправильная длина текста в 'intpr'"
 
-#: src/main/print.c:1046
+#: src/main/print.c:1048
 msgid "invalid character length in realpr"
 msgstr "неправильная длина текста 'realpr'"
 
-#: src/main/print.c:1056
+#: src/main/print.c:1058
 msgid "memory allocation error in realpr"
 msgstr "ошибка размещения памяти в 'realpr'"
 
-#: src/main/print.c:1072
+#: src/main/print.c:1074
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "процедура BLAS/LAPACK '%6s' вернуло ошибку с кодом %d"
@@ -5913,9 +5909,9 @@ msgid "too few column labels"
 msgstr "слишком мало меток колонок"
 
 #: src/main/printarray.c:485
-#, c-format
-msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
-msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"
+#, fuzzy, c-format
+msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
+msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] ""
 " [ достигнута getOption(\"max.print\") -- последняя %d строка пропущена ]]\n"
 msgstr[1] " [ достигнута getOption(\"max.print\") -- пропущено %d строки ]]\n"
@@ -6944,7 +6940,7 @@ msgstr "индексирование не-вектора"
 
 #: src/main/subset.c:235
 msgid "dimensions would exceed maximum size of array"
-msgstr ""
+msgstr "размерности превышают максимальный размер массива"
 
 #: src/main/subset.c:278 src/main/subset.c:307
 msgid "matrix subscripting not handled for this type"
