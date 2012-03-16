@@ -2696,7 +2696,7 @@ your covering email.
 Also read the CRAN policies linked from
 @uref{http://cran.r-project.org/web/packages/} and note that by
 submitting a package you are confirming that your package complies with
-them
+them.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
@@ -2707,8 +2707,11 @@ instructions to view it as a folder, then copy the submission to the
 folder.} and not @samp{sftp} to connect to this server, and passive
 @samp{ftp} is more often successful) and send a message to
 @email{CRAN@@R-project.org} about it (with your package name and version
-in the subject line, and please do not submit a package by email).  The
-@acronym{CRAN} maintainers will run these tests before putting a
+in the subject line, and please do not submit a package by email).  For
+a new submission, please note in the message that you have read and
+agreed to the CRAN policies.
+
+The @acronym{CRAN} maintainers will run these tests before putting a
 submission online.  (They will use the latest development version of
 @R{}, so if at all possible so should you.)
 
@@ -2725,9 +2728,11 @@ builder uses a reasonably recent version of MikTeX (including all
 packages available directly for MikTeX); the Mac OS X builders use a
 current full version of MacTeX, which includes all of the current
 TeXLive.  Developers wanting to have their vignettes use @TeX{} packages
-or style files not (yet) included in these distributions should add the
-corresponding style files to the @file{vignettes} (or for the legacy
-layout, @file{inst/doc}) subdirectory of their package.
+or style files not (yet) included in these distributions should
+add@footnote{if their license allows: this often requires also including
+the corresponding @file{.dtx} file.} the style files to the
+@file{vignettes} (or for the legacy layout, @file{inst/doc})
+subdirectory of their package.
 
 @menu
 * PDF size::
