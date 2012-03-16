@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-07 08:04\n"
+"POT-Creation-Date: 2012-03-16 06:28\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -628,7 +628,8 @@ msgstr "R 2.12.0 부터 configuration 파일들은 지원되지 않습니다 "
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' specified with only one usable sub-architecture"
 
-msgid "--cran turns off --extra-arch"
+#, fuzzy
+msgid "--as-cran turns off --extra-arch"
 msgstr "--cran 은 --extra-arch 를 꺼버렸습니다 "
 
 msgid "Error: no packages were specified"
