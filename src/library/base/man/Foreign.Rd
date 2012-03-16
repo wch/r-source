@@ -20,7 +20,7 @@
     Fortran subroutine, or an object of class
     \code{"\link{NativeSymbolInfo}"}, \code{"\link{RegisteredNativeSymbol}"}
     or \code{"\link{NativeSymbol}"} referring to such a name.}
-  \item{\dots}{arguments to be passed to the foreign function.}
+  \item{\dots}{arguments to be passed to the foreign function.  Up to 65.}
   \item{NAOK}{if \code{TRUE} then any \code{\link{NA}} or
     \code{\link{NaN}} or \code{\link{Inf}} values in the arguments are
     passed on to the foreign function.  If \code{FALSE}, the presence of

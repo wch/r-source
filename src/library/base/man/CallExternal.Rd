@@ -21,7 +21,8 @@
     \code{"\link{RegisteredNativeSymbol}"} or
     \code{"\link{NativeSymbol}"} referring to such a name.}
   
-  \item{\dots}{arguments to be passed to the compiled code.}
+  \item{\dots}{arguments to be passed to the compiled code. Up to 65 for
+    \code{.Call}.}
   
   \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
     the DLL given by this argument (plus the conventional extension,
