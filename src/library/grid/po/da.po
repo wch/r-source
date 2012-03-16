@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2012-01-13 11:24+0000\n"
+"PO-Revision-Date: 2011-11-28 23:18+0200\n"
+"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+#: grid.c:214
+msgid "Cannot clip to rotated viewport"
+msgstr "Kan ikke klippe til roteret viewport"
+
+#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
+msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgstr "Kan ikke pop topniveau-viewporten (gitter og grafiks uddata blandet?)"
+
+#: grid.c:952
+msgid "attempt to plot on null device"
+msgstr "forsøg på at plotte på null-enhed"
+
+#: grid.c:1232
+msgid "There is no layout defined"
+msgstr "Der er ingen layout defineret"
+
+#: grid.c:1452
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr "Polygonkant ikke fundet (nulbredde eller nulhøjde?)"
+
+#: grid.c:1461
+msgid "Polygon edge not found"
+msgstr "Polygonkant ikke fundet"
+
+#: grid.c:1615
+msgid "Require at least two points to draw arrow"
+msgstr "Kræver mindst to punkter at tegne pil"
+
+#: grid.c:1931
+msgid "Non-finite control point in Xspline"
+msgstr "Ikkebegrænsende kontrolpunkter i Xspline"
+
+#: grid.c:2796
+msgid "non-finite x or y in graphics path"
+msgstr "ikkebegrænsende x eller y i grafiksti"
+
+#: grid.c:3286
+msgid "invalid plotting symbol"
+msgstr "ugyldigt plotsymbol"
+
+#: grid.c:3372
+msgid "Unable to clip to rotated rectangle"
+msgstr "Kan ikke klippe til roteret rektangel"
+
+#: layout.c:519
+msgid "invalid layout.pos.row"
+msgstr "ugyldig layout.pos.row"
+
+#: layout.c:523
+msgid "invalid layout.pos.col"
+msgstr "ugyldig layout.pos.col"
+
+#: matrix.c:49
+msgid "singular transformation matrix"
+msgstr "entalstransformationsmatrix"
+
+#: state.c:169
+msgid "Unable to store grid state.  Too many devices open?"
+msgstr "Kan ikke lagre gittertilstand.  For mange enheder åbne?"
+
+#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+msgid "Unimplemented unit function"
+msgstr "Ikke implementeret enhedsfunktion"
+
+#: unit.c:893 unit.c:1639
+msgid "Illegal unit or unit not yet implemented"
+msgstr "Illegal enhed eller enhed er endnu ikke implementeret"
+
+#: unit.c:1798
+msgid "Invalid unit"
+msgstr "Ugyldig enhed"
+
+#: unit.c:1814
+msgid "Units must be character"
+msgstr "Enheder skal være tegn"
+
+#: unit.c:1817
+msgid "Units must be of length > 0"
+msgstr "Enheder skal have længde > 0"
+
+#: viewport.c:317
+msgid "Non-finite location and/or size for viewport"
+msgstr "Ikkebegrænsende placeirng og/eller størrelse for viewport"
