@@ -3425,6 +3425,12 @@ function(package, lib.loc = NULL)
 format.check_code_usage_in_package <-
 function(x, ...)
 {
+    if(length(x)) {
+        ## There seems no easy we can gather usage diagnostics by type,
+        ## so try to rearrange to some extent when formatting.
+        ind <- grepl(": partial argument match of", x, fixed = TRUE)
+        if(any(ind)) x <- c(x[ind], x[!ind])
+    }
     strwrap(x, indent = 0L, exdent = 2L)
 }
 
