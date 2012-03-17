@@ -70,7 +70,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   into the workspace by code that has been run will be kept (just as
   from the command line), but diagnostic information such as
   \code{\link{traceback}()} will contain additional calls to
-  \code{eval.with.vis}, an undocumented internal function.
+  \code{\link{withVisible}}.
 
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows) or CR
