@@ -28,6 +28,9 @@
     \itemize{
       \item The \code{ENCODING} argument to \code{.C()} is defunct.
       Use \code{iconv()} instead.
+
+      \item The \code{.Internal(eval.with.vis)} non-API function used
+      incorrectly by several packages has been removed.
     }
   }
 }
