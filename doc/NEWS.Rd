@@ -508,6 +508,9 @@
       
       \item Axis tick marks could go out of range when a log scale was
       used.  \PR{14833}
+
+      \item Signature objects in methods were not allocated as S4
+      objects (caused a problem with \code{trace()} reported by Martin Morgan).
     }
   }
 }
