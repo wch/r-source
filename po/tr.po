@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:31+0000\n"
+"POT-Creation-Date: 2012-03-17 05:23+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -163,8 +163,8 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/context.c:606 src/main/datetime.c:739 src/main/datetime.c:819
 #: src/main/datetime.c:821 src/main/datetime.c:825 src/main/datetime.c:988
 #: src/main/datetime.c:990 src/main/datetime.c:1154 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:652
-#: src/main/dotcode.c:656 src/main/dotcode.c:661 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:653
+#: src/main/dotcode.c:657 src/main/dotcode.c:662 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -288,7 +288,7 @@ msgstr "geçersiz zaman aralığı"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:671 src/main/datetime.c:741 src/main/datetime.c:992
-#: src/main/dotcode.c:193 src/main/errors.c:850 src/main/errors.c:881
+#: src/main/dotcode.c:194 src/main/errors.c:850 src/main/errors.c:881
 #: src/main/errors.c:982 src/main/errors.c:1007 src/main/errors.c:1012
 #: src/main/errors.c:1284 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:186 src/main/optimize.c:192
@@ -757,7 +757,7 @@ msgstr "kayıtlı yerel sembol için yer ayrılamadı (%d bayt)"
 msgid "must pass package name or DllInfo reference"
 msgstr "DllInfo referansı veya paket adı verilmeli"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:124
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:125
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject'de tanımlanmamış tip %d"
@@ -2673,163 +2673,163 @@ msgstr "aygıtı yerleştirmek için yeterli bellek yok (GEcreateDevDes içinde)
 msgid "Hit <Return> to see next plot: "
 msgstr "Sonraki çizimi görmek için <Enter>'a basın: "
 
-#: src/main/dotcode.c:103 src/main/dotcode.c:133
+#: src/main/dotcode.c:104 src/main/dotcode.c:134
 msgid "NULL value passed as symbol address"
 msgstr "NULL değeri sembol adresi olarak geçirildi"
 
-#: src/main/dotcode.c:138 src/main/dotcode.c:208
+#: src/main/dotcode.c:139 src/main/dotcode.c:209
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "'%s' sembolü çok uzun"
 
-#: src/main/dotcode.c:156
+#: src/main/dotcode.c:157
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name' bir dize (1 uzunluğunda) ya da yerel sembol referansı olmalıdır"
 
-#: src/main/dotcode.c:195 src/main/dotcode.c:738
+#: src/main/dotcode.c:196 src/main/dotcode.c:739
 msgid "too many arguments in foreign function call"
 msgstr "yabancı fonksiyon kullanımında çok fazla argüman"
 
-#: src/main/dotcode.c:237
+#: src/main/dotcode.c:238
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s sembol ismi \"%s\" \"%s\" paketi için DLL içinde değil"
 
-#: src/main/dotcode.c:241
+#: src/main/dotcode.c:242
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s sembol ismi \"%s\" yükleme tablosunda değil"
 
-#: src/main/dotcode.c:289
+#: src/main/dotcode.c:290
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:320
+#: src/main/dotcode.c:321
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA'lar (argüman %d)"
 
-#: src/main/dotcode.c:333
+#: src/main/dotcode.c:334
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:350
+#: src/main/dotcode.c:351
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "Dışarıdan fonksiyon çağrısında karmaşık NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:359
+#: src/main/dotcode.c:360
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "karakter değişkenler .C/.Fortran'da kopyalanmalıdır"
 
-#: src/main/dotcode.c:364
+#: src/main/dotcode.c:365
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran'da sadece karakter vektörünün ilk dizesi kullanıldı"
 
-#: src/main/dotcode.c:379
+#: src/main/dotcode.c:380
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:381
+#: src/main/dotcode.c:382
 msgid "lists must be duplicated in .C"
 msgstr ".C'de listeler kopyalanmalıdır"
 
-#: src/main/dotcode.c:391 src/main/dotcode.c:405
+#: src/main/dotcode.c:392 src/main/dotcode.c:406
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:397
+#: src/main/dotcode.c:398
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:410
+#: src/main/dotcode.c:411
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:529
+#: src/main/dotcode.c:530
 msgid "NAOK used more than once"
 msgstr "NAOK birden fazla kullanıldı"
 
-#: src/main/dotcode.c:533
+#: src/main/dotcode.c:534
 msgid "DUP used more than once"
 msgstr "DUP birden fazla kez kullanıldı"
 
-#: src/main/dotcode.c:539
+#: src/main/dotcode.c:540
 msgid "DLL name is too long"
 msgstr "DLL ismi çok uzun"
 
-#: src/main/dotcode.c:542 src/main/dotcode.c:602 src/main/dotcode.c:608
+#: src/main/dotcode.c:543 src/main/dotcode.c:603 src/main/dotcode.c:609
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE birden fazla kez kullanıldı"
 
-#: src/main/dotcode.c:581
+#: src/main/dotcode.c:582
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE argümanı tek bir karakter dizesi olmalı"
 
-#: src/main/dotcode.c:587
+#: src/main/dotcode.c:588
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE argümanı çok uzun"
 
-#: src/main/dotcode.c:648
+#: src/main/dotcode.c:649
 msgid "no arguments supplied"
 msgstr "argüman verilmedi"
 
-#: src/main/dotcode.c:649 src/main/seq.c:642
+#: src/main/dotcode.c:650 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "çok fazla argüman"
 
-#: src/main/dotcode.c:686 src/main/dotcode.c:729 src/main/dotcode.c:1563
+#: src/main/dotcode.c:687 src/main/dotcode.c:730 src/main/dotcode.c:1564
 #, fuzzy
 msgid "'.NAME' is missing"
 msgstr "'EXPR' eksik"
 
-#: src/main/dotcode.c:702 src/main/dotcode.c:745 src/main/dotcode.c:1584
+#: src/main/dotcode.c:703 src/main/dotcode.c:746 src/main/dotcode.c:1585
 #, fuzzy, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Hatalı sayıda argüman (%d), %d adet bekleniyordu (%s için)"
 
-#: src/main/dotcode.c:1402 src/main/dotcode.c:2215
+#: src/main/dotcode.c:1403 src/main/dotcode.c:2216
 msgid "too many arguments, sorry"
 msgstr "çok fazla argüman, üzgünüm"
 
-#: src/main/dotcode.c:1434 src/main/dotcode.c:1451
+#: src/main/dotcode.c:1435 src/main/dotcode.c:1452
 msgid "Invalid graphics state"
 msgstr "Geçersiz grafik durumu"
 
-#: src/main/dotcode.c:1524
+#: src/main/dotcode.c:1525
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL'ye bakarken DLLInfoReference için NULL değeri"
 
-#: src/main/dotcode.c:1609
+#: src/main/dotcode.c:1610
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "%d . argüman için yanlış tip (%s çağrısı)"
 
-#: src/main/dotcode.c:2306
+#: src/main/dotcode.c:2307
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "\"%s\" tipi dillerarası çağrılarda desteklenmiyor"
 
-#: src/main/dotcode.c:2375
+#: src/main/dotcode.c:2376
 msgid "invalid function in call_R"
 msgstr "call_R'de geçersiz fonksiyon"
 
-#: src/main/dotcode.c:2377
+#: src/main/dotcode.c:2378
 msgid "invalid argument count in call_R"
 msgstr "call_R'de geçersiz sayıda argüman"
 
-#: src/main/dotcode.c:2379
+#: src/main/dotcode.c:2380
 msgid "invalid return value count in call_R"
 msgstr "call_R içinde geçersiz geri dönüş değeri sayısı"
 
-#: src/main/dotcode.c:2413
+#: src/main/dotcode.c:2414
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R içinde '%s' modu desteklenmiyor"
