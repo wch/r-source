@@ -1,10 +1,10 @@
 library(compiler)
 
+#ev <- function(expr)
+#    tryCatch(.Internal(eval.with.vis(expr, parent.frame(), baseenv())),
+#             error = function(e) conditionMessage(e))
 ev <- function(expr)
-    tryCatch(.Internal(eval.with.vis(expr, parent.frame(), baseenv())),
-             error = function(e) conditionMessage(e))
-ev <- function(expr)
-    tryCatch(withVisible(expr), error = function(e) conditionMessage(e))
+    tryCatch(eval(expr), error = function(e) conditionMessage(e))
 
 
 f <- function(x) switch(x, x = 1, y = , z = 3, , w =, 6, v = )
