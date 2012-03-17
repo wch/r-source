@@ -1,6 +1,6 @@
 % File src/library/parallel/man/clusterApply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2003-11 R Core Development Team
+% Copyright 2003-12 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -121,7 +121,8 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
   \code{parRapply} and \code{parCapply} are parallel row and column
   \code{apply} functions for a matrix \code{x}; they may be slightly
-  more efficient than \code{parApply}.
+  more efficient than \code{parApply} but do less post-processing of the
+  result.
 }
 \value{
   For \code{clusterCall}, \code{clusterEvalQ} and \code{clusterSplit}, a
@@ -138,6 +139,11 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
   \code{parSapply} and \code{parApply} follow \code{\link{sapply}} and
   \code{\link{apply}} respectively.
+
+  \code{parRapply} and \code{parCapply} always return a vector.  If
+  \code{FUN} always returns a scalar result this will be of length the
+  number of rows or columns: otherwise it will be the concatentation of
+  the returned values.
   
   An error is signalled on the master if any of the workers produces an
   error.
