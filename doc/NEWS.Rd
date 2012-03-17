@@ -9,9 +9,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{lm.fit()}, \code{glm.fit()} and \code{lsfit()} do less
-      copying of objects, mainly by using \code{.Call()} rather than
-      \code{.Fortran()}.
+      \item Place holder.
     }
   }
 
@@ -32,18 +30,30 @@
       Use \code{iconv()} instead.
     }
   }
+}
+
+\section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{lm.fit()}, \code{glm.fit()} and \code{lsfit()} do less
+      copying of objects, mainly by using \code{.Call()} rather than
+      \code{.Fortran()}.
+
+      \item \code{source()} now uses \code{withVisible()} rather than an
+      internal call to \code{eval.with.vis}.  This may alter tracebacks
+      slightly.
+    }
+  }
+  
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Passing \code{NULL} to \code{.C()} is now disallowed.
+    }
+  }
 
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
-    }
-  }
-}
-
-\section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item Passing \code{NULL} to \code{.C()} is now disallowed.
     }
   }
 }
