@@ -78,8 +78,6 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
     if(any(is.na(x))) stop("missing values are not allowed in 'poly'")
     n <- degree + 1
     if(raw) {
-        if(degree >= length(unique(x)))
-            stop("'degree' must be less than number of unique points")
         Z <- outer(x, 1L:degree, "^")
         colnames(Z) <- 1L:degree
         attr(Z, "degree") <- 1L:degree
