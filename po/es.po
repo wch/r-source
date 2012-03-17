@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2012-03-16 06:19+0000\n"
-"PO-Revision-Date: 2011-03-30 16:08+0100\n"
-"Last-Translator: Dr. Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf."
-"de>\n"
+"PO-Revision-Date: 2012-03-16 15:59+0100\n"
+"Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1167,7 +1166,7 @@ msgstr "se intenta especificar un atributo 'class' no válido"
 #: src/main/attrib.c:766
 #, c-format
 msgid "Class '%s' has no 'names' slot"
-msgstr ""
+msgstr "Clase '%s' no tiene 'names' en slot"
 
 #: src/main/attrib.c:768
 #, c-format
@@ -1175,12 +1174,16 @@ msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
 msgstr ""
+"Clase '%s' no tiene 'names' en slot; asignar un nombre a un atributo creara "
+"un objeto no válido  "
 
 #: src/main/attrib.c:771
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
 msgstr ""
+"No es valido usar names()<- para dar 'names' a un slot en una clase que no "
+"es vector ('%s')"
 
 #: src/main/attrib.c:800
 msgid "incompatible 'names' argument"
@@ -1325,7 +1328,7 @@ msgstr "El evento GE_ScalePS requiere un único valor numérico"
 #: src/main/bind.c:149
 #, c-format
 msgid "resulting vector exceeds vector length limit in '%s'"
-msgstr ""
+msgstr "el vector resultante excede el limite del largo en '%s'"
 
 #: src/main/bind.c:282 src/main/bind.c:322 src/main/bind.c:375
 #: src/main/bind.c:453 src/main/bind.c:483
@@ -2279,7 +2282,7 @@ msgstr "modo raw es siempre de tamaño 1"
 
 #: src/main/connections.c:3674
 msgid "'signed = FALSE' is only valid for integers of sizes 1 and 2"
-msgstr ""
+msgstr "'signed = FALSE' es solo valido para enteros de tamaño 1 y 2"
 
 #: src/main/connections.c:3775
 msgid "'x' is not an atomic vector type"
@@ -4360,6 +4363,8 @@ msgstr "la llamada de tarea de nivel superior no devuelve un valor lógico"
 #: src/main/mapply.c:45
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
+"Entradas de longitud cero no pueden ser mescladas con otras de lengitud "
+"distinta de cero"
 
 #: src/main/mapply.c:62
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
@@ -4800,7 +4805,7 @@ msgstr "use 'is()' en lugar de 'inherits()' en objetos S4"
 
 #: src/main/objects.c:987
 msgid "could not find correct environment; please report!"
-msgstr ""
+msgstr "no se puede encontrar el entorno correcto; por favor reportar!"
 
 #: src/main/objects.c:1082
 #, c-format
@@ -5433,7 +5438,7 @@ msgstr ""
 
 #: src/main/platform.c:1789
 msgid "LC_MESSAGES exists on Windows but is not operational"
-msgstr ""
+msgstr "existen LC_MESSAGES en Windows pero no es operacional "
 
 #: src/main/platform.c:1816
 #, fuzzy, c-format
@@ -7088,7 +7093,7 @@ msgstr "intento de usar un subscrito en un objeto distinto a un vector"
 
 #: src/main/subset.c:235
 msgid "dimensions would exceed maximum size of array"
-msgstr ""
+msgstr "dimensiones deben execeder el maximo tamaño de un arreglo"
 
 #: src/main/subset.c:278 src/main/subset.c:307
 msgid "matrix subscripting not handled for this type"
@@ -8066,6 +8071,8 @@ msgstr ""
 #: src/modules/X11/devX11.c:1433
 msgid "cairo-based types may only work correctly on TrueColor visuals"
 msgstr ""
+"typos cairo-based solo pueden funcionar correctamente en visualizacion "
+"TrueColor"
 
 #: src/modules/X11/devX11.c:1443
 msgid "jpeg() does not support transparency: using white bg"
@@ -8115,7 +8122,7 @@ msgstr "imposible crear mapa de pixeles"
 
 #: src/modules/X11/devX11.c:2506
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr "intento de usar el localizador dev.hold()"
 
 #: src/modules/X11/devX11.c:3082
 #, c-format
@@ -8483,6 +8490,13 @@ msgstr "módulo X11 no puede ser cargado"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
+
+#, fuzzy
+#~ msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
+#~ msgstr "modo inválido para pasar a Fortran (arg %d)"
+
+#~ msgid "pairlists are passed as SEXP as from R 2.15.0"
+#~ msgstr "pares de lista son enviados como SEXP como desde R 2.15.0"
 
 #~ msgid "this version of R cannot write byte code objects"
 #~ msgstr "esta versióno de R no puede escribir objetos con código byte"
