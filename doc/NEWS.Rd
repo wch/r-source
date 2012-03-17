@@ -227,6 +227,9 @@
       \item The \code{"difftime"} replacement method of \code{units}
       tries harder to preserve other attributes of the argument.  (Wish
       of \PR{14839}.)
+      
+      \item \code{poly(raw = TRUE)} no longer requires more unique
+      points than the degree.  (Requested by John Fox.)
     }
   }
 
