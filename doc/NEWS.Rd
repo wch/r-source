@@ -29,8 +29,8 @@
       \item The \code{ENCODING} argument to \code{.C()} is defunct.
       Use \code{iconv()} instead.
 
-      \item The \code{.Internal(eval.with.vis)} non-API function used
-      incorrectly by several packages has been removed.
+      \item The \code{.Internal(eval.with.vis)} non-API function has
+      been removed.
     }
   }
 }
@@ -50,7 +50,7 @@
   
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item Passing \code{NULL} to \code{.C()} is now disallowed.
+      \item Passing \code{NULL} to \code{.C()} is now an error.
     }
   }
 
