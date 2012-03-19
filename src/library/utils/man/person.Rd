@@ -118,9 +118,9 @@ person(given = NULL, family = NULL, middle = NULL,
     \item{\code{"aut"}}{(Author) Use for full authors who have made
       substantial contributions to the package and should show up in the
       package citation.}
-    \item{\code{"com"}}{(Compiler) Use for package maintainers who
-      collected code (potentially in other languages) but did not make
-      further substantial contributions to the package.} 
+    \item{\code{"com"}}{(Compiler) Use for persons who collected code
+      (potentially in other languages) but did not make further
+      substantial contributions to the package.}  
     \item{\code{"ctb"}}{(Contributor) Use for authors who have made
       smaller contributions (such as code patches etc.) but should not
       show up in the package citation.}
