@@ -106,7 +106,8 @@
             out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
             ## people have file names with quotes in them.
             res <- Rd2latex(f, out, encoding = encoding,
-                            outputEncoding = outputEncoding)
+                            outputEncoding = outputEncoding,
+                            stages = c("build", "install", "render"))
             latexEncodings <- c(latexEncodings,
                                 attr(res,"latexEncoding"))
             lines <- readLines(out)
@@ -403,21 +404,25 @@
     switch(type,
            "txt" = {
                Rd2txt(files, out, package=pkg, defines=os,
-                      outputEncoding = enc)
+                      outputEncoding = enc,
+                      stages = c("build", "install", "render"))
            },
            "html" = {
                if (!nzchar(enc)) enc <- "UTF-8"
                Rd2HTML(files, out, package = pkg, defines = os,
-                       outputEncoding = enc, no_links = TRUE)
+                       outputEncoding = enc, no_links = TRUE,
+                       stages = c("build", "install", "render"))
            },
            "latex" = {
                if (!nzchar(enc)) enc <- "UTF-8"
                Rd2latex(files, out, defines = os,
-                        outputEncoding = enc)
+                        outputEncoding = enc,
+                        stages = c("build", "install", "render"))
            },
            "example" = {
                if (!nzchar(enc)) enc <- "UTF-8"
-               Rd2ex(files, out, defines = os, outputEncoding = enc)
+               Rd2ex(files, out, defines = os, outputEncoding = enc,
+                     stages = c("build", "install", "render"))
            },
            "unknown" = stop("no 'type' specified", call. = FALSE),
            stop("'type' must be one of 'txt', 'html', 'latex' or 'example'",
