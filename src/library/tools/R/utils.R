@@ -1032,7 +1032,7 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
                     "tab.bz2", "txt.bz2",
                     "tab.xz", "txt.xz",
                     "csv", "CSV",
-                    "csv.gz", "csv,bz2", "csv.xz"),
+                    "csv.gz", "csv.bz2", "csv.xz"),
            demo = c("R", "r"),
            docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
