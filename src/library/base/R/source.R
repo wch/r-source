@@ -210,7 +210,6 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    }
 	}
 	if (!tail) {
-###	    yy <- eval.with.vis(ei, envir)
 	    yy <- withVisible(eval(ei, envir))
 	    i.symbol <- mode(ei[[1L]]) == "name"
 	    if (!i.symbol) {
