@@ -106,12 +106,6 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   none were specified.
 }
 \note{
-  The data files can be many small files.  On some file systems it is
-  desirable to save space, and the files in the \file{data} directory of
-  an installed package can be zipped up as a zip archive
-  \file{Rdata.zip}.  You will need to provide a single-column file
-  \file{filelist} of file names in that directory.
-
   One can take advantage of the search order and the fact that a
   \file{.R} file will change directory.  If raw data are stored in
   \file{mydata.txt} then one can set up \file{mydata.R} to read
