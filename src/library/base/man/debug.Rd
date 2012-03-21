@@ -80,6 +80,10 @@ isdebugged(fun)
   The number of lines printed for the deparsed call when a function is
   entered for debugging can be limited by setting
   \code{\link{options}(deparse.max.lines)}.
+
+  When debugging is enabled on a byte compiled function then the
+  interpreted version of the function will be used until debugging is
+  disabled.
 }
 \seealso{
   \code{\link{browser}}, \code{\link{trace}};
