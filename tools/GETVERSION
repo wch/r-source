@@ -5,6 +5,7 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < ${TOOLS_DIR}/../VERSION`
   min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < ${TOOLS_DIR}/../VERSION`
   rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < ${TOOLS_DIR}/../VERSION`
+  nick=`cat ${TOOLS_DIR}/../VERSION-NICK`
   pl=`echo ${min} | sed 's/\..*//'`
   sl=`echo ${min} | sed 's/.*\.//'`
   ver=`expr ${maj} \\* 65536 + ${pl} \\* 256 + ${sl}`
@@ -31,6 +32,7 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo '#endif'
   echo
   echo "#define R_VERSION ${ver}"
+  echo "#define R_NICK \"${nick}\""
   echo "#define R_Version(v,p,s) (((v) * 65536) + ((p) * 256) + (s))"
   echo "#define R_MAJOR  \"${maj}\""
   echo "#define R_MINOR  \"${min}\""
