@@ -53,8 +53,10 @@ browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
     \item{\code{c}}{(or just an empty line, by default) exit the browser
     and continue execution at the next statement.}
     \item{\code{cont}}{synonym for \code{c}.}
-    \item{\code{n}}{enter the step-through debugger.  This changes the
-      meaning of \code{c}: see the documentation for \code{\link{debug}}.}
+    \item{\code{n}}{enter the step-through debugger if the function is
+      interpreted.  This changes the meaning of \code{c}: see the
+      documentation for \code{\link{debug}}. For byte compiled functions
+      \code{n} is equivalent to \code{c}.}
     \item{\code{where}}{print a stack trace of all active function calls.}
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}
