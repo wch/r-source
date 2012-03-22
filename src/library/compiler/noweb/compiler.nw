@@ -3708,14 +3708,13 @@ stack to the symbol specified by its constant pool index operand.  The
 local frame, and [[SETVAR2]] for superassignments.
 <<emit code for the symbol assignment instruction>>=
 ci <- cb$putconst(symbol)
-if (superAssign) {
-    if (! findVar(symbol, cntxt))
-        notifyNoSuperAssignVar(symbol, cntxt)
+if (superAssign)
     cb$putcode(SETVAR2.OP, ci)
-}
 else
     cb$putcode(SETVAR.OP, ci)
 @ %def
+The super-assignment case does not need to check for and warn about a
+missing binding since this is done in [[cmpAssign]].
 
 The [[SETVAR]] and [[SETVAR2]] instructions leave the value on the
 stack as the value of the assignment expression; if the expression

@@ -1451,11 +1451,8 @@ cmpSymbolAssign <- function(symbol, value, superAssign, cb, cntxt) {
     ncntxt <- make.nonTailCallContext(cntxt)
     cmp(value, cb, ncntxt)
     ci <- cb$putconst(symbol)
-    if (superAssign) {
-        if (! findVar(symbol, cntxt))
-            notifyNoSuperAssignVar(symbol, cntxt)
+    if (superAssign)
         cb$putcode(SETVAR2.OP, ci)
-    }
     else
         cb$putcode(SETVAR.OP, ci)
     if (cntxt$tailcall) {
