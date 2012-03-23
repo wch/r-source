@@ -68,7 +68,9 @@ merge(x, y, \dots)
   If the remaining columns in the data frames have any common names,
   these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
   appended to make the names of the result unique.  If columns with such
-  names already exist, an error is thrown.
+  names already exist, an error is thrown.  (Elements of
+  \code{suffixes} can be \code{""}, when no re-naming is done and it is
+  possible to create duplicate names.)
 
   The complexity of the algorithm used is proportional to the length of
   the answer.
@@ -78,7 +80,7 @@ merge(x, y, \dots)
   gives a \emph{natural join}, a special case of an \emph{inner
   join}. Specifying \code{all.x = TRUE} gives a \emph{left (outer)
   join}, \code{all.y = TRUE} a \emph{right (outer) join}, and both
-  (\code{all=TRUE} a \emph{(full) outer join}.  DBMSes do not match
+  (\code{all = TRUE} a \emph{(full) outer join}.  DBMSes do not match
   \code{NULL} records, equivalent to \code{incomparables = NA} in \R.
 }
 \value{

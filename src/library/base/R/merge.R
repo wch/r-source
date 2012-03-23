@@ -109,7 +109,7 @@ merge.data.frame <-
         lxy <- length(m$xi)             # == length(m$yi)
         ## x = [ by | x ] :
         has.common.nms <- any(cnm <- nm.x %in% nm.y)
-        if(has.common.nms) {
+        if(has.common.nms && nzchar(suffixes[1L])) {
             new <- paste0(nm.x[cnm], suffixes[1L])
             prob <- new %in% nm.x
             if(sum(prob) > 1L)
@@ -136,7 +136,7 @@ merge.data.frame <-
             #                               dimnames=list(NULL,nm.x))))
         }
         ## y (w/o 'by'):
-        if(has.common.nms) {
+        if(has.common.nms && nzchar(suffixes[2L])) {
             cnm <- nm.y %in% nm
             new <- paste0(nm.y[cnm], suffixes[2L])
             prob <- new %in% nm.y
