@@ -187,9 +187,10 @@ $(RPREFIX)-$(SUFF).msi: R.wxs License.rtf
 	 -ext WixUIExtension -sw1076 -sval -spdb >> $(RPREFIX).log 2>&1
 
 
+## occasionally this fails to empty directories.
 clean:
-	rm -rf R.iss *.log $(RPREFIX) R.wxs files.wxs R.wixobj \
-	  uuidgen.o uuidgen.exe uuids
+	rm -rf R.iss *.log R.wxs files.wxs R.wixobj uuidgen.o uuidgen.exe uuids
+	-rm -rf $(RPREFIX)
 
 distclean: clean
 	rm -f R*-win*.exe R*-win*.msi
