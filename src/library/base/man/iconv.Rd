@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -83,6 +83,10 @@ iconvlist()
   project (which does not support \samp{//TRANSLIT}) and there is an
   older FreeBSD port (\samp{libiconv} is usually used there): it has not
   been reported whether or not these work with \R.
+  
+  Note that you cannot rely on invalid inputs being detected, especially
+  for \code{to = "ASCII"} where some implementations allow 8-bit
+  characters and pass them through unchanged or with transliteration.
 }
 
 \value{
