@@ -57,6 +57,9 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
+      
+      \item More cases in which \code{merge()} could create a data frame
+      with duplicate column names are now errors.
     }
   }
 }
@@ -463,8 +466,9 @@
       S4 generic functions were imported more than once, but should
       not (reported by Brian Ripley, then Martin Morgan).
 
-      \item \code{merge()} is no longer allowed to create a data frame
-      with duplicate column names (which confused \PR{14786}).
+      \item \code{merge()} is no longer allowed (in some ways) to create
+      a data frame with duplicate column names (which confused
+      \PR{14786}).
 
       \item Fixes for rendering raster images on X11 and Windows devices
       when the x-axis or y-axis scale is reversed.
