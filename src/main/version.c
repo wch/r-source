@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011  The R Development Core Team
+ *  Copyright (C) 1998--2012  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128];
 
     checkArity(op, args);
-    PROTECT(value = allocVector(VECSXP,13));
-    PROTECT(names = allocVector(STRSXP,13));
+    PROTECT(value = allocVector(VECSXP,14));
+    PROTECT(names = allocVector(STRSXP,14));
 
     SET_STRING_ELT(names, 0, mkChar("platform"));
     SET_VECTOR_ELT(value, 0, mkString(R_PLATFORM));
@@ -84,6 +84,8 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     PrintVersionString(buf);
     SET_STRING_ELT(names, 12, mkChar("version.string"));
     SET_VECTOR_ELT(value, 12, mkString(buf));
+    SET_STRING_ELT(names, 13, mkChar("nickname"));
+    SET_VECTOR_ELT(value, 13, mkString(R_NICK));
 
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
