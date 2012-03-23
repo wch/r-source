@@ -1,8 +1,8 @@
 library(compiler)
 
 ev <- function(expr)
-    tryCatch(withVisible(eval(expr)), error = function(e) conditionMessage(e))
-
+    tryCatch(withVisible(eval(expr, parent.frame(), baseenv())),
+             error = function(e) conditionMessage(e))
 
 f <- function(x) switch(x, x = 1, y = , z = 3, , w =, 6, v = )
 fc <- cmpfun(f)
