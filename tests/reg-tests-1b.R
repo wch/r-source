@@ -1763,12 +1763,23 @@ stopifnot(identical(names(tt), "a"))
 
 ## predict( VAR(p >= 2) )
 set.seed(42)
-u <- matrix(rnorm(200),100,2)
-y <- filter(u,filter=0.8,"recursive")
-est <- ar(y, aic=FALSE, order.max=2) ## Estimate VAR(2)
-xpred <- predict(object=est, n.ahead=100, se.fit=FALSE)
-stopifnot(dim(xpred) == c(100,2), abs(range(xpred)) < 1)
+u <- matrix(rnorm(200), 100, 2)
+y <- filter(u, filter=0.8, "recursive")
+est <- ar(y, aic = FALSE, order.max = 2) ## Estimate VAR(2)
+xpred <- predict(object = est, n.ahead = 100, se.fit = FALSE)
+stopifnot(dim(xpred) == c(100, 2), abs(range(xpred)) < 1)
 ## values went to +- 1e23 in R <= 2.14.2
 
+
+## regression tests for merge
+d1 <- data.frame(a = 1:10, b = 1:10, b.x = 10:1)
+d2 <- data.frame(a = 1:10, b = 101:110)
+z <- try(merge(d1, d2, by = 'a'))
+stopifnot(inherits(z, "try-error"))
+merge(d1, d2, by = 'a', suffixes = c("", ".y"))
+z <- try(merge(d1, d2, by = 'a', suffixes = c(".z", ".z")))
+stopifnot(inherits(z, "try-error"))
+## First 'worked' in R < 2.15.0, second was disallowed in early 2012,
+## third 'worked' in R < 2.15.1.
 
 proc.time()
