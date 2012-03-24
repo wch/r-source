@@ -160,9 +160,9 @@
   changed in the C code of \code{Cfunction} you are safe.
 
   Note that if \code{DUP = TRUE} there are two copies involved, one when
-  the data from the argument is copied and the pointer to the data
+  the data from the argument is copied and the pointer to the copied data
   passed to the compiled code, and one when the return value is prepared
-  from the data.
+  from the data accessed by the compiled code.
 }
 
 \section{Fortran symbol names}{
