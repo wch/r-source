@@ -142,7 +142,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
   \code{parRapply} and \code{parCapply} always return a vector.  If
   \code{FUN} always returns a scalar result this will be of length the
-  number of rows or columns: otherwise it will be the concatentation of
+  number of rows or columns: otherwise it will be the concatenation of
   the returned values.
   
   An error is signalled on the master if any of the workers produces an
