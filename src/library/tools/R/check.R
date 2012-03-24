@@ -874,14 +874,14 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         out <- R_runR("tools:::.check_package_ASCII_code('.')",
                       R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
-            if (!is.na(desc["Encoding"])) noteLog(Log)
-            else warningLog(Log)
+            warningLog(Log)
             wrapLog("Found the following files with",
                     "non-ASCII characters:\n")
             printLog(Log, .format_lines_with_indent(out), "\n")
             wrapLog("Portable packages must use only ASCII",
                     "characters in their R code,\n",
-                    "except perhaps in comments.\n")
+                    "except perhaps in comments.\n",
+                    "Use \\uxxxx escapes for other characters.\n")
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "R files for syntax errors")
