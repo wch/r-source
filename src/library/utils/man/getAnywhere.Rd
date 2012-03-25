@@ -38,13 +38,14 @@ argsAnywhere(x)
 \value{
   For \code{getAnywhere()} an object of class \code{"getAnywhere"}.
   This is a list with components
-  \item{name}{the name searched for.}
+  \item{name}{the name searched for}
   \item{objs}{a list of objects found}
   \item{where}{a character vector explaining where the object(s) were found}
   \item{visible}{logical: is the object visible}
   \item{dups}{logical: is the object identical to one earlier in the
     list.}
-
+  In computing whether objects are identical, their environments are ignored.
+  
   Normally the structure will be hidden by the \code{print} method.
   There is a \code{[} method to extract one or more of the objects
   found.
