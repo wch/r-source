@@ -196,17 +196,17 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    vapply(same, exists, NA,
                            where = where, mode = "function", inherits = FALSE)
 		same <- same[same.isFn(i) == same.isFn(lib.pos)]
-		## if a package imports, and re-exports, there's no problem
-		not.Ident <- function(ch, TRAFO=identity)
-		    vapply(ch, function(.) !identical(TRAFO(get(., i)),
-						      TRAFO(get(., lib.pos))), NA)
+		## if a package imports and re-exports, there's no problem
+		not.Ident <- function(ch, TRAFO=identity, ...)
+		    vapply(ch, function(.)
+                           !identical(TRAFO(get(., i)),
+                                      TRAFO(get(., lib.pos)), ...),
+                           NA)
 		if(length(same)) same <- same[not.Ident(same)]
 		## if the package is 'base' it cannot be imported and re-exported,
 		## allow a "copy":
-		if(length(same) && identical(sp[i], "package:base")) {
-		    unenv <- function(x) { environment(x) <- emptyenv(); x }
-		    same <- same[not.Ident(same, TRAFO = unenv)]
-		}
+		if(length(same) && identical(sp[i], "package:base"))
+		    same <- same[not.Ident(same, ignore.environment = TRUE)]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE

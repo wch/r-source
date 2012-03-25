@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2001-2010 R Core Development Team
+% Copyright 2001-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -13,7 +13,7 @@
 }
 \usage{
 identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
-                ignore.bytecode = TRUE)
+                ignore.bytecode = TRUE, ignore.environment = FALSE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -31,7 +31,9 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
     \code{\link{slot}}s of S4 objects.  It may well be too strict to set
     \code{attrib.as.set = FALSE}.}
   \item{ignore.bytecode}{logical indicating if byte code should be
-    ignored when comparing functions.}
+    ignored when comparing \link{closures}.}
+  \item{ignore.environment}{logical indicating if their environments
+    should be ignored when comparing \link{closure}s.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in

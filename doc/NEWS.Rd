@@ -45,6 +45,10 @@
       \item \code{source()} now uses \code{withVisible()} rather than an
       internal call to \code{eval.with.vis}.  This may alter tracebacks
       slightly.
+
+      \item \code{identical()} has a new argument
+      \code{ignore.environment} used when comparing functions (with
+      default \code{FALSE} as before).
     }
   }
   
