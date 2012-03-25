@@ -1,6 +1,6 @@
 % File src/library/base/man/environment.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{environment}
@@ -17,6 +17,8 @@
 \alias{.BaseNamespaceEnv}
 \alias{environmentName}
 \alias{env.profile}
+\alias{enclosure}
+
 \title{Environment Access}
 \description{
   Get, set, test for and create environments.
@@ -92,12 +94,12 @@ env.profile(env)
 \details{
   Environments consist of a \emph{frame}, or collection of named
   objects, and a pointer to an \emph{enclosing environment}.  The most
-  common example is the frame of variables local to a function call;
-  its enclosure is the environment where the function was
-  defined.  The enclosing environment is distinguished from the
-  \emph{parent frame}:  the latter (returned by
-  \code{\link{parent.frame}}) refers to the environment of the caller
-  of a function.  Since confusion is so easy, it is best never to use
+  common example is the frame of variables local to a function call; its
+  \emph{enclosure} is the environment where the function was defined
+  (unless changed subsequently).  The enclosing environment is
+  distinguished from the \emph{parent frame}: the latter (returned by
+  \code{\link{parent.frame}}) refers to the environment of the caller of
+  a function.  Since confusion is so easy, it is best never to use
   \sQuote{parent} in connection with an environment (despite the
   presence of the function \code{parent.env}).
 
