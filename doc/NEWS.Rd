@@ -63,7 +63,8 @@
       \item \code{lsfit()} lost the names from the residuals.
       
       \item More cases in which \code{merge()} could create a data frame
-      with duplicate column names are now errors.
+      with duplicate column names now give warnings.  Cases where
+      names specified in \code{by} match multiple columns are errors.
     }
   }
 }

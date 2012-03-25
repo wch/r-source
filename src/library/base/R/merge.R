@@ -31,9 +31,13 @@ merge.data.frame <-
         if(is.null(by)) by <- numeric()
         by <- as.vector(by)
         nc <- ncol(df)
-        if(is.character(by))
-            by <- match(by, c("row.names", names(df))) - 1L
-        else if(is.numeric(by)) {
+        if(is.character(by)) {
+            poss <- c("row.names", names(df))
+            # names(df) are not necessarily unique, so check for multiple matches.
+            if(any(!charmatch(by, poss, 0L)))
+                stop("'by' must specify uniquely valid column(s)")
+            by <- match(by, poss) - 1L
+        } else if(is.numeric(by)) {
             if(any(by < 0L) || any(by > nc))
                 stop("'by' must match numbers of columns")
         } else if(is.logical(by)) {
@@ -50,7 +54,6 @@ merge.data.frame <-
     if((l.b <- length(by.x)) != length(by.y))
         stop("'by.x' and 'by.y' specify different numbers of columns")
     if(l.b == 0L) {
-        ## was: stop("no columns to match on")
         ## return the cartesian product of x and y, fixing up common names
         nm <- nm.x <- names(x)
         nm.y <- names(y)
@@ -139,12 +142,12 @@ merge.data.frame <-
         nm <- c(names(x), names(y))
         if(any(d <- duplicated(nm)))
             if(sum(d) > 1L)
-                stop("column names ",
-                     paste(sQuote(nm[d]), collapse = ", "),
-                     " would be duplicated in the result", domain = NA)
+                warning("column names ",
+                        paste(sQuote(nm[d]), collapse = ", "),
+                        " are duplicated in the result", domain = NA)
             else
-                stop("column name ", sQuote(nm[d]),
-                     " would be duplicated in the result", domain = NA)
+                warning("column name ", sQuote(nm[d]),
+                        " is duplicated in the result", domain = NA)
         res <- cbind(x, y)
 
         if (sort)

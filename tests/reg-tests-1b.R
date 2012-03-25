@@ -1774,12 +1774,22 @@ stopifnot(dim(xpred) == c(100, 2), abs(range(xpred)) < 1)
 ## regression tests for merge
 d1 <- data.frame(a = 1:10, b = 1:10, b.x = 10:1)
 d2 <- data.frame(a = 1:10, b = 101:110)
+op <- options(warn = 2)
 z <- try(merge(d1, d2, by = 'a'))
 stopifnot(inherits(z, "try-error"))
 merge(d1, d2, by = 'a', suffixes = c("", ".y"))
 z <- try(merge(d1, d2, by = 'a', suffixes = c(".z", ".z")))
 stopifnot(inherits(z, "try-error"))
-## First 'worked' in R < 2.15.0, second was disallowed in early 2012,
-## third 'worked' in R < 2.15.1.
+options(op)
+# First 'worked' in R < 2.15.0, second was disallowed in early 2012,
+# third 'worked' in R < 2.15.1.
+# example based on package SDMTools::compare.matrix
+# where 'by' is ambiguous.
+x <- expand.grid(x = 1:2, y = 1:2)
+y <- data.frame(x = c(1,2,1,2), y = c(1,1,2,2), z = c(5040,128,1123,3709))
+merge(x, y, all = TRUE)
+names(y)[3] <- "x"
+stopifnot(inherits(try(merge(x, y, all = TRUE)), "try-error"))
+## 'worked' in R < 2.15.1.
 
 proc.time()
