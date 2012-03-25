@@ -1,6 +1,6 @@
 % File src/library/base/man/function.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{function}
@@ -31,18 +31,6 @@
   
   If the end of a function is reached without calling \code{return}, the
   value of the last evaluated expression is returned.
-}
-\section{Warning}{
-  Prior to \R 1.8.0, \code{value} could be a series of non-empty
-  expressions separated by commas.  In that case the value
-  returned is a list of the evaluated expressions, with names set to
-  the expressions where these are the names of \R objects.  That is,
-  \code{a=foo()} names the list component \code{a} and gives it the value
-  which results from evaluating \code{foo()}.
-
-  This has been deprecated (and a warning is given), as it was never
-  documented in S, and whether or not the list is named differs by S
-  versions.  Supply a (named) list \code{value} instead.
 }
 \seealso{
   \code{\link{args}} and \code{\link{body}} for accessing the arguments
