@@ -3637,59 +3637,52 @@ particular if it is intended to be used in more than one locale.  It is
 possible to mark the encoding used in the @file{DESCRIPTION} file and in
 @file{.Rd} files, as discussed elsewhere in this manual.
 
-First, consider carefully if you really need non-@acronym{ASCII} text.  Most
-users of @R{} will only be able to view correctly text in their native
-language group (e.g.@: Western European, Eastern European, Simplified
-Chinese) and @acronym{ASCII}.  Other characters may not be rendered at all,
-rendered incorrectly, or cause your @R{} code to give an error.
-For documentation, marking the encoding and including @acronym{ASCII}
-transliterations is likely to do a reasonable job.
+First, consider carefully if you really need non-@acronym{ASCII} text.
+Many users of @R{} will only be able to view correctly text in their
+native language group (e.g.@: Western European, Eastern European,
+Simplified Chinese) and @acronym{ASCII}.  Other characters may not be
+rendered at all, rendered incorrectly, or cause your @R{} code to give
+an error.  For documentation, marking the encoding and including
+@acronym{ASCII} transliterations is likely to do a reasonable job.  The
+set of characters which is commonly supported is wider than it used to
+be around 2000, but non-Latin alphabets (Greek, Russion, Georgian,
+@dots{}) are still often problematic and those with double-width
+characters (Chinese, Japanese, Korean) often need specialist fonts to
+render correctly.
+
+Several CRAN packages have messages in their @R{} code in French (and a
+few in German).  A better way to tackle this is to use the
+internationalization facilities discussed elsewhere in this manual.
 
 Function @code{showNonASCIIfile} in package @pkg{tools} can help in
 finding non-@acronym{ASCII} bytes in files.
 
-
-The most favourable circumstance is using UTF-8-encoded text in a
-package that will only ever be used in a UTF-8 locale (and hence not on
-Windows, for example).  In that case it is likely that text will be
-rendered correctly in the terminal/console used to run @R{}, and files
-written will be readable by other UTF-8-aware applications.  However,
-plotting will be problematic.  On-screen plotting using the @samp{X11()}
-device needs to find a font that covers the glyphs used, and this will
-be machine-dependent: you may have Russian or Japanese fonts installed
-but your users may not.  Using @samp{postscript} or @samp{pdf} will
-choose a default 8-bit encoding depending on the language of the UTF-8
-locale, and your users would need to be told how to select the
-@samp{encoding} argument.  UTF-8-encoded text works reasonably well on
-Windows using the @code{Rgui} console and the @code{windows} family of
-devices, since they work internally in Unicode (UCS-2).
-
-Another fairly common scenario is where a package will only be used in
-one language, e.g.@: French.  It is not very safe to assume that all
-such users would have their computers set to a French locale, but let us
-assume so.  The problem then is that there are several possible
-encodings for French locales, the most common ones being @samp{CP1252}
-(Windows), @samp{ISO 8859-1} (Latin-1), @samp{ISO 8859-15} (Latin-9
-which includes the Euro), and @samp{UTF-8}.  For characters in the
-French language the first three agree, but they do not agree with
-@samp{UTF-8}.  Further, you (or different users of your machine) can run
-@R{} in different locales in different sessions, say @samp{fr_CA.UTF-8}
-one day and @samp{fr_CH.iso88591} the next.  Declaring the encoding as
-either @samp{latin1} or @samp{UTF-8} in the @file{DESCRIPTION} file will
-enable this to work.
-
-From @R{} 2.10.0 there is a fairly portable way to have arbitrary text
-in character strings (only) in your @R{} code, which is to supply them
-in Unicode as @code{\uxxxx} escapes.  If there are any characters not in
+From @R{} 2.10.0 there is a portable way to have arbitrary text in
+character strings (only) in your @R{} code, which is to supply them in
+Unicode as @code{\uxxxx} escapes.  If there are any characters not in
 the current encoding the parser will encode the character string as
-UTF-8 and mark it as such.  @R{} sessions running in non-UTF-8 locales
-will if possible re-encode such strings for display (although they may
-contain characters not covered by the fonts in use).
+UTF-8 and mark it as such.  This applies also to character strings in
+datasets: they can be prepared using @code{\uxxxx} escapes or encoded in
+UTF-8 in a UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.
+If you do this, make sure you have @samp{R (>= 2.10)} (or later) in the
+@samp{Depends:} field of the @file{DESCRIPTION} file.
+
+
+@R{} sessions running in non-UTF-8 locales will if possible re-encode
+such strings for display (and this is done by @command{RGui} on Windows,
+for example).  Suitable fonts will need to be selected or made
+available@footnote{Typically on a Unix-alike this is done by telling
+@command{fontconfig} where to find suitable fonts to select glyphs
+from.}  both for the console/terminal and graphics devices such as
+@samp{X11()} and @samp{windows()}.  Using @samp{postscript} or
+@samp{pdf} will choose a default 8-bit encoding depending on the
+language of the UTF-8 locale, and your users would need to be told how
+to select the @samp{encoding} argument.
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
-that sets the encoding you may need to specify a suitable locale
-@emph{via} environment variable @env{R_ENCODING_LOCALES}.  The default
-is equivalent to the value
+that sets a package encoding in its @file{DESCRIPTION} file you may need
+to specify a suitable locale @emph{via} environment variable
+@env{R_ENCODING_LOCALES}.  The default is equivalent to the value
 
 @example
 "latin1=en_US:latin2=pl_PL:UTF-8=en_US.UTF-8:latin9=fr_FR.iso885915@@euro"
@@ -3697,7 +3690,7 @@ is equivalent to the value
 
 @noindent
 (which is appropriate for a system based on @code{glibc}) except that if
-the current locale is UTF-8 when the package code is translated to UTF-8
+the current locale is UTF-8 then the package code is translated to UTF-8
 for syntax checking.
 
 @node Binary distribution,  , Encoding issues, Writing portable packages
