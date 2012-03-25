@@ -4,19 +4,22 @@
 % Distributed under GPL 2 or later
 
 \name{function}
+\alias{function}
+\alias{return}
+\alias{closure}
+
 \title{Function Definition}
 \usage{
 \special{function( arglist ) expr}
 \special{return(value)}
 }
-\alias{function}
-\alias{return}
 \description{
   These functions provide the base mechanisms for defining
   new functions in the \R language.
 }
 \arguments{
     \item{arglist}{Empty or one or more name or name=expression terms.}
+    \item{expr}{An expression.}
     \item{value}{An expression.}
 }
 \details{
@@ -32,9 +35,28 @@
   If the end of a function is reached without calling \code{return}, the
   value of the last evaluated expression is returned.
 }
+
+\section{Technical details}{
+  This type of function is not the only type in \R: they are called
+  \emph{closures} (a name with origins in LISP) to distinguish them from
+  \link{primitive} functions.
+
+  A closure has three components, its \code{\link{formals}} (its argument
+  list), its \code{\link{body}} (\code{expr} in the \sQuote{Usage}
+  section) and its \code{\link{environment}} which provides the
+  enclosure of the evaluation frame when the closure is used.
+
+  There is an optional further component if the closure has been
+  byte-compiled.  This is not normally user-visible, but it indicated
+  when functions are printed.
+}
+
 \seealso{
-  \code{\link{args}} and \code{\link{body}} for accessing the arguments
-  and body of a function.
+  \code{\link{args}}.
+
+  \code{\link{formals}}, \code{\link{body}} and
+  \code{\link{environment}} for accessing the component parts of a
+  function.
 
   \code{\link{debug}} for debugging; using \code{\link{invisible}} inside
   \code{return(.)} for returning \emph{invisibly}.
