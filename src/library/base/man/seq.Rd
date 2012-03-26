@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{seq}
@@ -29,7 +29,9 @@ seq_len(length.out)
 }
 \arguments{
   \item{\dots}{arguments passed to or from methods.}
-  \item{from, to}{the starting and (maximal) end value of the sequence.}
+  \item{from, to}{the starting and (maximal) end values of the
+    sequence.  Of length \code{1} unless just \code{from} is supplied as
+    an unnamed argument.}
   \item{by}{number: increment of the sequence.}
   \item{length.out}{desired length of the sequence.  A
     non-negative number, which for \code{seq} and \code{seq.int} will be

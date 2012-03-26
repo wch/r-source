@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev.capabilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-12 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev.capabilities}
@@ -30,8 +30,8 @@ dev.capabilities(what = NULL)
   backgrounds: generally the latter is found only in PDF and PNG plots.
 }
 \value{
-  A list with some of all of the following components, any of which may
-  be \code{NA}:
+  A named list with some or all of the following components, any of which may
+  take value \code{NA}:
   \item{semiTransparency}{logical:  Does the device support
     semi-transparent colours?}
   \item{transparentBackground}{character:  Does the device support
