@@ -38,16 +38,16 @@
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{lm.fit()}, \code{glm.fit()} and \code{lsfit()} do less
-      copying of objects, mainly by using \code{.Call()} rather than
-      \code{.Fortran()}.
+      \item \code{lm.fit()}, \code{lm.wfit()}, \code{glm.fit()} and
+      \code{lsfit()} do less copying of objects, mainly by using
+      \code{.Call()} rather than \code{.Fortran()}.
 
       \item \code{source()} now uses \code{withVisible()} rather than an
       internal call to \code{eval.with.vis}.  This may alter tracebacks
       slightly.
 
-      \item \code{identical()} has a new argument
-      \code{ignore.environment} used when comparing functions (with
+      \item \code{identical()} has a new argument,
+      \code{ignore.environment}, used when comparing functions (with
       default \code{FALSE} as before).
     }
   }
@@ -70,7 +70,7 @@
       \CRANpkg{plotrix}) are now errors.
 
       \item The residuals in the 5-number summary printed by
-      \code{summary()} on an \code{"lm"} object are not explicitly
+      \code{summary()} on an \code{"lm"} object are now explicitly
       labelled as weighted residuals when non-constant weights are
       present.  (Wish of\PR{14840}.)
     }
