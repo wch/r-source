@@ -307,7 +307,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	Rbyte *rawptr = RAW(s);
 	if (dup) {
 	    rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
-	    for (int i = 0; i < n; i++) rawptr[i] = RAW(s)[i];
+	    memcpy(rawptr, RAW(s), n * sizeof(Rbyte));
 	}
 	ans = (void *) rawptr;
 	break;
@@ -321,7 +321,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		    error(_("NAs in foreign function call (arg %d)"), narg);
 	if (dup) {
 	    iptr = (int*) R_alloc(n, sizeof(int));
-	    for (int i = 0 ; i < n ; i++) iptr[i] = INTEGER(s)[i];
+	    memcpy(iptr, INTEGER(s), n * sizeof(int));
 	}
 	ans = (void*) iptr;
 	break;
@@ -338,7 +338,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    ans = (void*) sptr;
 	} else if (dup) {
 	    rptr = (double*) R_alloc(n, sizeof(double));
-	    for (int i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
+	    memcpy(rptr, REAL(s), n * sizeof(double));
 	    ans = (void*) rptr;
 	} else ans = (void*) rptr;
 	break;
@@ -351,7 +351,8 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
 	if (dup) {
 	    zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
-	    for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
+	    memcpy(zptr, COMPLEX(s), n * sizeof(Rcomplex));
+	    //for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
 	}
 	ans = (void *) zptr;
 	break;
@@ -426,8 +427,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     switch(type) {
     case RAWSXP:
 	s = allocVector(type, n);
-	Rbyte *rawptr = (Rbyte *) p;
-	for (int i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
+	memcpy(RAW(s), p, n * sizeof(Rbyte));
 	break;
     case LGLSXP:
     {
@@ -442,8 +442,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     case INTSXP:
     {
 	s = allocVector(type, n);
-	int *iptr = (int*) p;
-	for(int i = 0 ; i < n ; i++) INTEGER(s)[i] = iptr[i];
+	memcpy(INTEGER(s), p, n * sizeof(int));
 	break;
     }
     case REALSXP:
@@ -452,15 +451,12 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 	    float *sptr = (float*) p;
 	    for(int i = 0 ; i < n ; i++) REAL(s)[i] = (double) sptr[i];
-	} else {
-	    double *rptr = (double*) p;
-	    for(int i = 0 ; i < n ; i++) REAL(s)[i] = rptr[i];
-	}
+	} else
+	    memcpy(REAL(s), p, n * sizeof(double));
 	break;
     case CPLXSXP:
 	s = allocVector(type, n);
-	Rcomplex *zptr = (Rcomplex*)p;
-	for (int i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
+	memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
 	break;
     case STRSXP:
 	if(Fort) {
