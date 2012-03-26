@@ -82,8 +82,7 @@ mckill <- function(process, signal = 2L)
 ## used by mcparallel, mclapply
 sendMaster <- function(what)
 {
-    # This is talking to the same machine, so no point in using xdr.
-    if (!is.raw(what)) what <- serialize(what, NULL, xdr = FALSE)
+    if (!is.raw(what)) what <- serialize(what, NULL)
     .Call(C_mc_send_master, what, PACKAGE = "parallel")
 }
 

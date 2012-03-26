@@ -201,9 +201,6 @@
 	FALSE} which can be used to avoid byte-shuffling for
       serialization when all the nodes are known to be little-endian (or
       all big-endian).
-
-      \item \code{makeForkCluster()} and the multicore-based functions
-      use native byte order for serialization.
     }
   }
 
