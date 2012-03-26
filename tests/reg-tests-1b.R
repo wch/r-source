@@ -1795,7 +1795,7 @@ stopifnot(inherits(try(merge(x, y, all = TRUE)), "try-error"))
 
 ## misuse of seq() by package 'plotrix'
 stopifnot(inherits(try(seq(1:50, by = 5)), "try-error"))
-## gave 1:50 in R < 2.15.1, with warnings.
+## gave 1:50 in R < 2.15.1, with warnings from seq().
 
 
 ## regression test for PR#14850 (misuse of dim<-)

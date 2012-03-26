@@ -67,7 +67,7 @@
       names specified in \code{by} match multiple columns are errors.
 
       \item Nonsense uses such as \code{seq(1:50, by = 5)} (from package
-      \CRANpkg{plotrix}) are now errors.
+      \CRANpkg{plotrix}) and \code{seq.int(1:50, by = 5)} are now errors.
 
       \item The residuals in the 5-number summary printed by
       \code{summary()} on an \code{"lm"} object are now explicitly
@@ -272,9 +272,6 @@
 	FALSE} which can be used to avoid byte-shuffling for
       serialization when all the nodes are known to be little-endian (or
       all big-endian).
-
-      \item \code{makeForkCluster()} and the multicore-based functions
-      use native byte order for serialization.
     }
   }
 
