@@ -114,11 +114,16 @@ void attribute_hidden PrintVersionString(char *s)
 		R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
     } else if(strcmp(R_STATUS, "Under development (unstable)") == 0) {
 	sprintf(s, "R %s (%s-%s-%s r%s)",
-		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION);	
+		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION);
     } else {
 	sprintf(s, "R version %s.%s %s (%s-%s-%s r%s)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 		R_SVN_REVISION);
+    }
+    if(strlen(R_NICK) != 0) {
+	char nick[64];
+	sprintf(nick, " -- \"%s\"", R_NICK);
+	strcat(s, nick);
     }
 }
 
