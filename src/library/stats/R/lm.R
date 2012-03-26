@@ -276,7 +276,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
             r <- sqrt(w) * r
         }
         resvar <- rss/rdf
-        ans <- z[c("call", "terms", "weights")]
+        ans <- z[c("call", "terms", if(!is.null(z$weights)) "weights")]
         class(ans) <- "summary.lm"
         ans$aliased <- is.na(coef(object))  # used in print method
         ans$residuals <- r
@@ -318,7 +318,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     se <- sqrt(diag(R) * resvar)
     est <- z$coefficients[Qr$pivot[p1]]
     tval <- est/se
-    ans <- z[c("call", "terms", "weights")]
+    ans <- z[c("call", "terms", if(!is.null(z$weights)) "weights")]
     ans$residuals <- r
     ans$coefficients <-
 	cbind(est, se, tval, 2*pt(abs(tval), rdf, lower.tail = FALSE))
