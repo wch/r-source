@@ -1019,7 +1019,7 @@ SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (s == R_NilValue) return x;
     }
     PROTECT(args = ans);
-    if (NAMED(x) > 1) SETCAR(args, duplicate(x));
+    if (NAMED(x) > 1) { SETCAR(args, duplicate(x)); x = CAR(args); }
     setAttrib(x, R_DimSymbol, CADR(args));
     setAttrib(x, R_NamesSymbol, R_NilValue);
     UNPROTECT(1);

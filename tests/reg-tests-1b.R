@@ -1798,4 +1798,11 @@ stopifnot(inherits(try(seq(1:50, by = 5)), "try-error"))
 ## gave 1:50 in R < 2.15.1, with warnings.
 
 
+## regression test for PR#14850 (misuse of dim<-)
+b <- a <- matrix(1:2, ncol = 2)
+`dim<-`(b, c(2, 1))
+stopifnot(ncol(a) == 2)
+## did not duplicate.
+
+
 proc.time()
