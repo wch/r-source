@@ -1792,4 +1792,10 @@ names(y)[3] <- "x"
 stopifnot(inherits(try(merge(x, y, all = TRUE)), "try-error"))
 ## 'worked' in R < 2.15.1.
 
+
+## misuse of seq() by package 'plotrix'
+stopifnot(inherits(try(seq(1:50, by = 5)), "try-error"))
+## gave 1:50 in R < 2.15.1, with warnings.
+
+
 proc.time()

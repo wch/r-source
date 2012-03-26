@@ -65,6 +65,9 @@
       \item More cases in which \code{merge()} could create a data frame
       with duplicate column names now give warnings.  Cases where
       names specified in \code{by} match multiple columns are errors.
+
+      \item Nonsense uses such as \code{seq(1:50, by = 5)} (from package
+      \CRANpkg{plotrix}) are now errors. 
     }
   }
 }
