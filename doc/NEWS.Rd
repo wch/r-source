@@ -49,6 +49,10 @@
       \item \code{identical()} has a new argument,
       \code{ignore.environment}, used when comparing functions (with
       default \code{FALSE} as before).
+
+      \item In package \pkg{parallel}, \code{makeForkCluster()} and the
+      multicore-based functions use native byte order for serialization
+      (deferred from 2.15.0).
     }
   }
   
