@@ -67,7 +67,12 @@
       names specified in \code{by} match multiple columns are errors.
 
       \item Nonsense uses such as \code{seq(1:50, by = 5)} (from package
-      \CRANpkg{plotrix}) are now errors. 
+      \CRANpkg{plotrix}) are now errors.
+
+      \item The residuals in the 5-number summary printed by
+      \code{summary()} on an \code{"lm"} object are not explicitly
+      labelled as weighted residuals when non-constant weights are
+      present.  (Wish of\PR{14840}.)
     }
   }
 }

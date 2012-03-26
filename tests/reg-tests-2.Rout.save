@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-05 r58592)
+R Under development (unstable) (2012-03-26 r58836) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6823,4 +6823,33 @@ Error in smooth.spline(aa, seq_along(aa)) :
 > fit <- smooth.spline(aa, seq_along(aa), tol = 0.1)
 > # actual output is too unstable to diff.
 > ## Better message from R 2.14.2
+> 
+> 
+> ## PR#14840
+> d <- data.frame(x = 1:9,
++                 y = 1:9 + 0.1*c(1, 2, -1, 0, 1, 1000, 0, 1, -1),
++                 w = c(1, 0.5, 2, 1, 2, 0, 1, 2, 1))
+> fit <- lm(y ~ x, data=d, weights=w)
+> summary(fit)
+
+Call:
+lm(formula = y ~ x, data = d, weights = w)
+
+Weighted Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.1883 -0.0310  0.0000  0.1006  0.1165 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.03949    0.08612   0.459    0.663    
+x            0.99788    0.01502  66.419 7.83e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.1232 on 6 degrees of freedom
+Multiple R-squared: 0.9986,	Adjusted R-squared: 0.9984 
+F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10 
+
+> ## issue is how the 5-number summary is labelled
+> ## (also seem in example(case.names))
 > 

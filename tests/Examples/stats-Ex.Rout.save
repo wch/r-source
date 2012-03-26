@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-12 r58696)
+R Under development (unstable) (2012-03-26 r58836) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -4067,7 +4067,7 @@ $ycenter
 Call:
 lm(formula = y ~ x + I(x^2) + I(x^3) + I((x - 10)^2), weights = ww)
 
-Residuals:
+Weighted Residuals:
     Min      1Q  Median      3Q     Max 
 -6.7160 -0.7047  0.0728  1.0174  3.9947 
 
