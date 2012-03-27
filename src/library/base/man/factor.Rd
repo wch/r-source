@@ -1,6 +1,6 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{factor}
@@ -43,7 +43,7 @@ is.ordered(x)
 as.factor(x)
 as.ordered(x)
 
-addNA(x, ifany=FALSE)
+addNA(x, ifany = FALSE)
 }
 \arguments{
   \item{x}{a vector of data, usually taking a small number of distinct
@@ -63,8 +63,8 @@ addNA(x, ifany=FALSE)
     as ordered (in the order given).}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
-  \item{ifany}{(in \code{addNA}): Only add an \code{NA} level if it is
-    used, i.e. if \code{any(is.na(x))}.}
+  \item{ifany}{(only add an \code{NA} level if it is used, i.e.
+    if \code{any(is.na(x))}.}
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
@@ -101,10 +101,11 @@ addNA(x, ifany=FALSE)
   and the model-fitting functions treat the two classes quite differently.
 
   The encoding of the vector happens as follows.  First all the values
-  in \code{exclude} are removed from \code{levels}. If \code{x[i]} equals
-  \code{levels[j]}, then the \code{i}-th element of the result is
-  \code{j}.  If no match is found for \code{x[i]} in \code{levels},
-  then the \code{i}-th element of the result is set to \code{\link{NA}}.
+  in \code{exclude} are removed from \code{levels}. If \code{x[i]}
+  equals \code{levels[j]}, then the \code{i}-th element of the result is
+  \code{j}.  If no match is found for \code{x[i]} in \code{levels}
+  (which will happen for excluded values) then the \code{i}-th element
+  of the result is set to \code{\link{NA}}.
 
   Normally the \sQuote{levels} used as an attribute of the result are
   the reduced set of levels after removing those in \code{exclude}, but

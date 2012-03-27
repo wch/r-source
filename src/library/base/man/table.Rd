@@ -1,6 +1,6 @@
 % File src/library/base/man/table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{table}
@@ -37,20 +37,21 @@ is.table(x)
     (including character strings), or a list (or data frame) whose
     components can be so interpreted.  (For \code{as.table} and
     \code{as.data.frame}, arguments passed to specific methods.)}
-  \item{exclude}{levels to remove
-    from all factors in \code{\dots}. If set to \code{NULL}, it implies
-    \code{useNA="always"}.} 
-  \item{useNA}{whether to include extra \code{NA} levels in the table.}
+  \item{exclude}{levels to remove for all factors in \code{\dots}.
+    If set to \code{NULL}, it implies \code{useNA = "always"}.  See
+    \sQuote{Details} for its interpretation for non-factor arguments.}
+  \item{useNA}{whether to include \code{NA} values in the table.
+    See \sQuote{Details}.}
   \item{dnn}{the names to be given to the dimensions in the result (the
     \emph{dimnames names}).}
   \item{deparse.level}{controls how the default \code{dnn} is
-    constructed.  See details.}
+    constructed.  See \sQuote{Details}.}
   \item{x}{an arbitrary \R object, or an object inheriting from class
     \code{"table"} for the \code{as.data.frame} method.}
   \item{row.names}{a character vector giving the row names for the data
     frame.}
-  \item{responseName}{The name to be used for the column of
-    table entries, usually counts.}
+  \item{responseName}{The name to be used for the column of table
+    entries, usually counts.}
   \item{stringsAsFactors}{logical: should the classifying factors be
     returned as factors (the default) or character vectors?}
 }
@@ -66,10 +67,22 @@ is.table(x)
   default), will \code{table} potentially drop levels of factor
   arguments.
 
+  \code{useNA} controls if the table includes counts of \code{NA}
+  values: the alllowed value correspond to never, only if the count is
+  positive and even for zero counts.  This is overridden by specifying
+  \code{exclude = NULL}.  Note that levels specified in \code{exclude}
+  are mapped to \code{NA} and so included in \code{NA} counts.
+
   Both \code{exclude} and \code{useNA} operate on an "all or none"
   basis.  If you want to control the dimensions of a multiway table
-  separately, modify each argument using \code{factor} or \code{addNA}.
-
+  separately, modify each argument using \code{\link{factor}} or
+  \code{\link{addNA}}.
+  
+  It is best to supply factors rather than rely on coercion.  In
+  particular, \code{exclude} will be used in coercion to a factor, and
+  so values (not levels) which appear in \code{exclude} before coercion
+  will be mapped to \code{NA} rather than be discarded.
+  
   The \code{summary} method for class \code{"table"} (used for objects
   created by \code{table} or \code{\link{xtabs}}) which gives basic
   information and performs a chi-squared test for independence of
