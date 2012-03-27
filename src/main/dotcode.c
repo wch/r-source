@@ -261,162 +261,6 @@ checkNativeType(int targetType, int actualType)
     return(TRUE);
 }
 
-static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
-			const char *name, R_toCConverter **converter,
-			int targetType)
-{
-    int n, nprotect = 0;
-    void *ans;
-
-    if(converter) *converter = NULL;
-
-    if(length(getAttrib(s, R_ClassSymbol))) {
-	R_CConvertInfo info;
-	int success;
-	void *ans;
-
-	info.naok = naok;
-	info.dup = dup;
-	info.narg = narg;
-	info.Fort = Fort;
-	info.name = name;
-
-	ans = Rf_convertToC(s, &info, &success, converter);
-	if(success) return(ans);
-    }
-
-    if(checkNativeType(targetType, TYPEOF(s)) == FALSE) {
-	if(!dup) {
-	    error(_("explicit request not to duplicate arguments in call to '%s', but argument %d is of the wrong type (%d != %d)"),
-		  name, narg, targetType, TYPEOF(s));
-	}
-
-	if(targetType != SINGLESXP) {
-	    /* Cannot be called if DUP = FALSE, so only needs to live
-	       until copied later in this function.
-	       But R_alloc allocates, so missed protection < R 2.15.0.
-	    */
-	    PROTECT(s = coerceVector(s, targetType));
-	    nprotect++;
-	}
-    }
-
-    switch(TYPEOF(s)) {
-    case RAWSXP:
-	n = LENGTH(s);
-	Rbyte *rawptr = RAW(s);
-	if (dup) {
-	    rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
-	    memcpy(rawptr, RAW(s), n * sizeof(Rbyte));
-	}
-	ans = (void *) rawptr;
-	break;
-    case LGLSXP:
-    case INTSXP:
-	n = LENGTH(s);
-	int *iptr = INTEGER(s);
-	if (!naok)
-	    for (int i = 0 ; i < n ; i++)
-		if(iptr[i] == NA_INTEGER)
-		    error(_("NAs in foreign function call (arg %d)"), narg);
-	if (dup) {
-	    iptr = (int*) R_alloc(n, sizeof(int));
-	    memcpy(iptr, INTEGER(s), n * sizeof(int));
-	}
-	ans = (void*) iptr;
-	break;
-    case REALSXP:
-	n = LENGTH(s);
-	double *rptr = REAL(s);
-	if (!naok)
-	    for (int i = 0 ; i < n ; i++)
-		if(!R_FINITE(rptr[i]))
-		    error(_("NA/NaN/Inf in foreign function call (arg %d)"), narg);
-	if (asLogical(getAttrib(s, CSingSymbol)) == 1) {
-	    float *sptr = (float*) R_alloc(n, sizeof(float));
-	    for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
-	    ans = (void*) sptr;
-	} else if (dup) {
-	    rptr = (double*) R_alloc(n, sizeof(double));
-	    memcpy(rptr, REAL(s), n * sizeof(double));
-	    ans = (void*) rptr;
-	} else ans = (void*) rptr;
-	break;
-    case CPLXSXP:
-	n = LENGTH(s);
-	Rcomplex *zptr = COMPLEX(s);
-	if (!naok)
-	    for (int i = 0 ; i < n ; i++)
-		if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
-		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
-	if (dup) {
-	    zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
-	    memcpy(zptr, COMPLEX(s), n * sizeof(Rcomplex));
-	    //for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
-	}
-	ans = (void *) zptr;
-	break;
-    case STRSXP:
-	if (!dup)
-	    error(_("character variables must be duplicated in .C/.Fortran"));
-	n = LENGTH(s);
-	if (Fort) {
-	    const char *ss = translateChar(STRING_ELT(s, 0));
-	    if (n > 1)
-		warning(_("only first string in char vector used in .Fortran"));
-	    char *fptr = (char*) R_alloc(max(255, strlen(ss)) + 1, sizeof(char));
-	    strcpy(fptr, ss);
-	    ans =  (void*) fptr;
-	} else {
-	    char **cptr = (char**) R_alloc(n, sizeof(char*));
-	    for (int i = 0 ; i < n ; i++) {
-		const char *ss = translateChar(STRING_ELT(s, i));
-		cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
-		strcpy(cptr[i], ss);
-	    }
-	    ans = (void*) cptr;
-	}
-	break;
-    case VECSXP:
-	if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
-	if (!dup)
-	    error(_("lists must be duplicated in .C"));
-	n = length(s);
-	SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
-	for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
-	ans = (void*) lptr;
-	break;
-    case CLOSXP:
-    case BUILTINSXP:
-    case SPECIALSXP:
-    case ENVSXP:
-	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
-			type2char(TYPEOF(s)), narg);
-	ans =  (void*) s;
-	break;
-    case NILSXP:
-    {
-	error(_("invalid mode (%s) to pass to C or Fortran (arg %d)"), 
-	      type2char(TYPEOF(s)), narg);
-	ans =  (void*) s; /* -Wall */
-    }
-    default:
-    {
-	/* Includes pairlists from R 2.15.0 */
-	SEXPTYPE t = TYPEOF(s);
-	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
-			type2char(t), narg);
-	warning("passing an object of type '%s' to .C (arg %d) is deprecated", 
-		type2char(t), narg);
-	if (t == LISTSXP)
-	    warning(_("pairlists are passed as SEXP as from R 2.15.0"));
-	ans =  (void*) s;
-    }
-    }
-    if (nprotect) UNPROTECT(nprotect);
-    return ans;
-}
-
 
 static Rboolean
 comparePrimitiveTypes(R_NativePrimitiveArgType type, SEXP s, Rboolean dup)
@@ -1478,8 +1322,10 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     DL_FUNC ofun = NULL;
     VarFun fun = NULL;
     SEXP ans, pa, s;
+#ifdef SUPPORT_CONVERTERS
     /* the post-call converters back to R objects. */
     R_toCConverter  *argConverters[65];
+#endif
     R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
     R_NativePrimitiveArgType *checkTypes = NULL;
     R_NativeArgStyle *argStyles = NULL;
@@ -1555,12 +1401,176 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, _("Wrong type for argument %d in call to %s"),
 		      na+1, symName);
 	}
-	cargs[na] = RObjToCPtr(CAR(pa), naok, dup, na + 1,
-				  Fort, symName, argConverters + na,
-				  checkTypes ? checkTypes[na] : 0);
+	int n, nprotect = 0,
+	    targetType =  checkTypes ? checkTypes[na] : 0;
+	s = CAR(pa);
+
+#ifdef SUPPORT_CONVERTERS
+	/* We could simplify this code, but we have no known examples */
+	R_toCConverter **converter = argConverters + na;
+	if(converter) *converter = NULL;
+	if(length(getAttrib(s, R_ClassSymbol))) {
+	    R_CConvertInfo info;
+	    int success;
+	    void *ans;
+
+	    info.naok = naok;
+	    info.dup = dup;
+	    info.narg = na + 1;
+	    info.Fort = Fort;
+	    info.name = symName;
+
+	    ans = Rf_convertToC(s, &info, &success, converter);
+	    if(success) cargs[na] = ans; // and should skip the rest
+	}
+#endif
+
+	if(checkNativeType(targetType, TYPEOF(s)) == FALSE) {
+	    if(!dup) {
+		error(_("explicit request not to duplicate arguments in call to '%s', but argument %d is of the wrong type (%d != %d)"),
+		      symName, na + 1, targetType, TYPEOF(s));
+	    }
+
+	    if(targetType != SINGLESXP) {
+		/* Cannot be called if DUP = FALSE, so only needs to live
+		   until copied in the switch.
+		   But R_alloc allocates, so missed protection < R 2.15.0.
+		*/
+		PROTECT(s = coerceVector(s, targetType));
+		nprotect++;
+	    }
+	}
+
+	switch(TYPEOF(s)) {
+	case RAWSXP:
+	    n = LENGTH(s);
+	    Rbyte *rawptr = RAW(s);
+	    if (dup) {
+		rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
+		memcpy(rawptr, RAW(s), n * sizeof(Rbyte));
+	    }
+	    cargs[na] = (void *) rawptr;
+	    break;
+	case LGLSXP:
+	case INTSXP:
+	    n = LENGTH(s);
+	    int *iptr = INTEGER(s);
+	    if (!naok)
+		for (int i = 0 ; i < n ; i++)
+		    if(iptr[i] == NA_INTEGER)
+			error(_("NAs in foreign function call (arg %d)"), na + 1);
+	    if (dup) {
+		iptr = (int*) R_alloc(n, sizeof(int));
+		memcpy(iptr, INTEGER(s), n * sizeof(int));
+	    }
+	    cargs[na] = (void*) iptr;
+	    break;
+	case REALSXP:
+	    n = LENGTH(s);
+	    double *rptr = REAL(s);
+	    if (!naok)
+		for (int i = 0 ; i < n ; i++)
+		    if(!R_FINITE(rptr[i]))
+			error(_("NA/NaN/Inf in foreign function call (arg %d)"), na + 1);
+	    if (asLogical(getAttrib(s, CSingSymbol)) == 1) {
+		float *sptr = (float*) R_alloc(n, sizeof(float));
+		for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
+		cargs[na] = (void*) sptr;
+	    } else if (dup) {
+		rptr = (double*) R_alloc(n, sizeof(double));
+		memcpy(rptr, REAL(s), n * sizeof(double));
+		cargs[na] = (void*) rptr;
+	    } else cargs[na] = (void*) rptr;
+	    break;
+	case CPLXSXP:
+	    n = LENGTH(s);
+	    Rcomplex *zptr = COMPLEX(s);
+	    if (!naok)
+		for (int i = 0 ; i < n ; i++)
+		    if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
+			error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), na + 1);
+	    if (dup) {
+		zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
+		memcpy(zptr, COMPLEX(s), n * sizeof(Rcomplex));
+	    }
+	    cargs[na] = (void *) zptr;
+	    break;
+	case STRSXP:
+	    if (!dup)
+		error(_("character variables must be duplicated in .C/.Fortran"));
+	    n = LENGTH(s);
+	    if (Fort) {
+		const char *ss = translateChar(STRING_ELT(s, 0));
+		if (n > 1)
+		    warning(_("only first string in char vector used in .Fortran"));
+		char *fptr = (char*) R_alloc(max(255, strlen(ss)) + 1, sizeof(char));
+		strcpy(fptr, ss);
+		cargs[na] =  (void*) fptr;
+	    } else {
+		char **cptr = (char**) R_alloc(n, sizeof(char*));
+		for (int i = 0 ; i < n ; i++) {
+		    const char *ss = translateChar(STRING_ELT(s, i));
+		    cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
+		    strcpy(cptr[i], ss);
+		}
+		cargs[na] = (void*) cptr;
+	    }
+	    break;
+	case VECSXP:
+	    if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), na + 1);
+	    if (!dup)
+		error(_("lists must be duplicated in .C"));
+	    n = length(s);
+	    SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
+	    for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
+	    cargs[na] = (void*) lptr;
+	    break;
+	case CLOSXP:
+	case BUILTINSXP:
+	case SPECIALSXP:
+	case ENVSXP:
+	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
+			    type2char(TYPEOF(s)), na + 1);
+	    cargs[na] =  (void*) s;
+	    break;
+	case NILSXP:
+	{
+	    error(_("invalid mode (%s) to pass to C or Fortran (arg %d)"), 
+		  type2char(TYPEOF(s)), na + 1);
+	    cargs[na] =  (void*) s; /* -Wall */
+	}
+	    break;
+	default:
+	{
+	    /* Includes pairlists from R 2.15.0 */
+	    SEXPTYPE t = TYPEOF(s);
+	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
+			    type2char(t), na + 1);
+	    warning("passing an object of type '%s' to .C (arg %d) is deprecated", 
+		    type2char(t), na + 1);
+	    if (t == LISTSXP)
+		warning(_("pairlists are passed as SEXP as from R 2.15.0"));
+	    cargs[na] =  (void*) s;
+	}
+	}
+	if (nprotect) UNPROTECT(nprotect);
+
+
 #ifdef R_MEMORY_PROFILING
 	if (RTRACE(CAR(pa)) && dup)
-	    memtrace_report(CAR(pa), cargs[na]);
+	    switch(TYPEOF(s)) {
+	    case RAWSXP:
+	    case LGLSXP:
+	    case INTSXP:
+	    case REALSXP:
+	    case CPLXSXP:
+	    case STRSXP:
+	    case VECSXP:
+		memtrace_report(CAR(pa), cargs[na]);
+		break;
+	    default:
+		break;
+	    }
 #endif
     }
 
@@ -2161,15 +2171,18 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (dup) {
+#ifdef SUPPORT_CONVERTERS
 	R_FromCConvertInfo info;
 	info.cargs = cargs;
 	info.allArgs = args;
 	info.nargs = nargs;
 	info.functionName = symName;
+#endif
 
 	for (na = 0, pa = args ; pa != R_NilValue ; pa = CDR(pa), na++) {
 	    if(argStyles && argStyles[na] == R_ARG_IN) {
 		PROTECT(s = R_NilValue);
+#ifdef SUPPORT_CONVERTERS
 	    } else if(argConverters[na]) {
 		if(argConverters[na]->reverse) {
 		    info.argIndex = na;
@@ -2179,11 +2192,12 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		} else
 		    s = R_NilValue; /* Presumably input-only */
 		PROTECT(s);
+#endif
 	    } else {
 		void *p = cargs[na];
 		SEXP arg = CAR(pa);
 		R_NativePrimitiveArgType type =
-		    checkTypes ? checkTypes[na] : TYPEOF(CAR(pa));
+		    checkTypes ? checkTypes[na] : TYPEOF(arg);
 	        int n = length(arg);
 
 		switch(type) {
@@ -2239,15 +2253,28 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    break;
 		default:
-		    /* Everything else is read-only, so we just return the original arg */
+		    /* Everything else is read-only, 
+		       so we just return the original arg */
 		    s = arg;
 		}
 		PROTECT(s);
 
 #if R_MEMORY_PROFILING
 		if (RTRACE(CAR(pa))) {
-		    memtrace_report(cargs[na], s);
-		    SET_RTRACE(s, 1);
+		    switch(type) {
+		    case RAWSXP:
+		    case LGLSXP:
+		    case INTSXP:
+		    case REALSXP:
+		    case SINGLESXP:
+		    case CPLXSXP:
+		    case STRSXP:
+			memtrace_report(cargs[na], s);
+			SET_RTRACE(s, 1);
+			break;
+		    default:
+			break;
+		    }
 		}
 #endif
 		DUPLICATE_ATTRIB(s, CAR(pa));
