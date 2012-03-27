@@ -68,11 +68,12 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
                 else {
                     ## The logic here is tricky because it tries to do
                     ## something sensible if both 'exclude' and
-                    ## 'useNA' is set. A non-null setting of 'exclude'
-                    ## sets the excluded levels to missing, which is
-                    ## different from the <NA> factor level. Excluded
-                    ## levels are NOT tabulated, even if 'useNA' is
-                    ## set.
+                    ## 'useNA' are set.
+                    ##
+                    ## A non-null setting of 'exclude' sets the
+                    ## excluded levels to missing, which is different
+                    ## from the <NA> factor level. Excluded levels are
+                    ## NOT tabulated, even if 'useNA' is set.
                     if (is.null(exclude) && useNA != "no")
                         addNA(a, ifany = (useNA == "ifany"))
                     else {
@@ -84,7 +85,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
                     }
                 }
             }
-            else {
+            else { # NB: this excludes first, unlike the case above.
                 a <- factor(a, exclude = exclude)
                 if (useNA != "no")
                     addNA(a, ifany = (useNA == "ifany"))
@@ -109,16 +110,8 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     y
 }
 
-## From  1999-12-19 till 2003-03-27:
-## print.table <-
-## function(x, digits = getOption("digits"), quote = FALSE, na.print = "", ...)
-## {
-##     print.default(unclass(x), digits = digits, quote = quote,
-## 		  na.print = na.print, ...)
-##     ## this does *not* return x !
-## }
 
-## Better (NA in dimnames *should* be printed):
+## NB: NA in dimnames should be printed.
 print.table <-
 function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 	  zero.print = "0",
