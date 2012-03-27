@@ -66,7 +66,7 @@ rlogis(n, location = 0, scale = 1)
   \emph{sigmoid function} in contexts such as neural networks.
 }
 \source{
-  \code{[dpr]logis} are calculated directly from the definitions.
+  \code{[dpq]logis} are calculated directly from the definitions.
 
   \code{rlogis} uses inversion.
 }
