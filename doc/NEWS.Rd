@@ -77,6 +77,10 @@
       \code{summary()} on an \code{"lm"} object are now explicitly
       labelled as weighted residuals when non-constant weights are
       present.  (Wish of\PR{14840}.)
+
+      \item \code{tracemem()} reported that all objects were copied
+      by \code{.C()} or \code{.Fortran()} whereas only some object types
+      are copied.
     }
   }
 }
