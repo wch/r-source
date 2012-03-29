@@ -59,6 +59,10 @@
       \item In package \pkg{parallel}, \code{makeForkCluster()} and the
       multicore-based functions use native byte order for serialization
       (deferred from 2.15.0).
+
+      \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
+      arguments which are raw, logical, integer, real or complex are not
+      copied.
     }
   }
   
@@ -81,6 +85,10 @@
       \item \code{tracemem()} reported that all objects were copied
       by \code{.C()} or \code{.Fortran()} whereas only some object types
       are copied.
+
+      \item The \code{plot()} method for class \code{"stepfun"} only
+      used the optional \code{xval} argument to compute \code{xlim} and
+      not the points at which to plot (as documented).  (\PR{14864})
     }
   }
 }

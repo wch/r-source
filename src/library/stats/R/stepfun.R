@@ -130,15 +130,15 @@ plot.stepfun <-
 
     } else dr <- diff(xlim)
 
-    knF <- knF[xlim[1L]-dr <= knF & knF <= xlim[2L]+dr]
+    xval <- xval[xlim[1L]-dr <= xval & xval <= xlim[2L]+dr]
 
     ## Careful for heights of horizontals -- these depend on f
-    ti <- c(xlim[1L]-dr, knF, xlim[2L]+dr)
+    ti <- c(xlim[1L]-dr, xval, xlim[2L]+dr)
     ti.l <- ti[-length(ti)]
     ti.r <- ti[-1L]
     y <- x(0.5*(ti.l + ti.r))
     n <- length(y)
-    Fn.kn <- x(knF)
+    Fn.kn <- x(xval)
 
     ##------------------------ Plotting ----------------------------
 
@@ -153,10 +153,10 @@ plot.stepfun <-
 	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd)
     }
     if(do.points)
-	points(knF, Fn.kn, pch=pch, col=col.points, cex=cex.points)
+	points(xval, Fn.kn, pch=pch, col=col.points, cex=cex.points)
 
     if(verticals)
-	segments(knF, y[-n], knF, y[-1L], col=col.vert, lty=lty, lwd=lwd)
+	segments(xval, y[-n], xval, y[-1L], col=col.vert, lty=lty, lwd=lwd)
     invisible(list(t = ti, y = y))
 }
 
