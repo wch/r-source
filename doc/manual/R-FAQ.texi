@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2012
-@set FAQ_DATE @value{FAQ_YEAR}-02-23
-@set REL_YEAR 2011
+@set FAQ_DATE @value{FAQ_YEAR}-03-29
+@set REL_YEAR 2012
 @set REL_MAJOR 2
-@set REL_MINOR 14
-@set REL_PATCHLEVEL 2
+@set REL_MINOR 15
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -212,7 +212,7 @@ described in the
 @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} and the
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
-OS X @acronym{FAQ}}.  If you have information on Macintosh or Windows
+OS X @acronym{FAQ}''}.  If you have information on Macintosh or Windows
 systems that you think should be added to this document, please let me
 know.
 
@@ -550,11 +550,11 @@ The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {Red Hat} {i386/x86_64} {hardy/karmic/lucid/maverick} {Martyn Plummer}
+@multitable {Red Hat} {i386/x86_64} {hardy/lucid/maverick/natty/oneiric} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
 @item Debian   @tab i386/amd64 @tab etch/lenny/squeeze @tab Johannes Ranke
 @item Red Hat  @tab i386/x86_64 @tab fedora10/fedora11 @tab Martyn Plummer
-@item Ubuntu   @tab i386/amd64 @tab hardy/lucid/maverick/natty @tab Michael Rutter
+@item Ubuntu   @tab i386/amd64 @tab hardy/lucid/maverick/natty/oneiric @tab Michael Rutter
 @end multitable
 @end quotation
 
@@ -1736,6 +1736,9 @@ relies on the popular and reliable open-source elements such as MySQL
 server (exchange and storage of the data), @uref{http://rstudio.org/,
 Rstudio} (R code designing and testing, file management), CKEditor
 (@HTML{} Layer design), and PHP.
+
+See @url{http://rwiki.sciviews.org/doku.php?id=faq-r#web_interfaces} for
+additional information.
 
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
