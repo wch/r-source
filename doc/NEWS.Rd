@@ -368,7 +368,7 @@
       \item Passing \R objects other than atomic vectors, functions,
       lists and environments to \code{.C()} is now deprecated and will
       give a warning.  Most cases (especially \code{NULL}) are actually
-      coding errors.  \code{NULL} will be disallowed as from \R 2.15.1.
+      coding errors.  \code{NULL} will be disallowed in future.
 
       \code{.C()} now passes a pairlist as a \code{SEXP} to the compiled
       code.  This is as was documented, but pairlists were in reality
@@ -433,8 +433,8 @@
       \item \code{isGeneric()} produced an error for primitives that
       can not have methods.
 
-      \item \code{.C()} or \code{.Fortran()} had a protection error if
-      the registration information resulted in an argument
+      \item \code{.C()} or \code{.Fortran()} had a lack-of-protection
+      error if the registration information resulted in an argument
       being coerced to another type.
 
       \item \code{boxplot(x=x, at=at)} with non finite elements in \code{x}
