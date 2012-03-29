@@ -31,7 +31,7 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
     \code{\link{slot}}s of S4 objects.  It may well be too strict to set
     \code{attrib.as.set = FALSE}.}
   \item{ignore.bytecode}{logical indicating if byte code should be
-    ignored when comparing \link{closures}.}
+    ignored when comparing \link{closure}s.}
   \item{ignore.environment}{logical indicating if their environments
     should be ignored when comparing \link{closure}s.}
 }
