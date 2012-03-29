@@ -28596,39 +28596,31 @@ $as_echo "#define MKTIME_SETS_ERRNO /**/" >>confdefs.h
 fi
 
 
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C99 double complex is supported" >&5
-$as_echo_n "checking whether C99 double complex is supported... " >&6; }
-if ${r_cv_c99_complex+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: " >&5
-$as_echo "" >&6; }
-  ac_fn_c_check_header_mongrel "$LINENO" "complex.h" "ac_cv_header_complex_h" "$ac_includes_default"
+ac_fn_c_check_header_mongrel "$LINENO" "complex.h" "ac_cv_header_complex_h" "$ac_includes_default"
 if test "x$ac_cv_header_complex_h" = xyes; then :
-  r_cv_c99_complex="yes"
+  r_c99_complex=yes
 else
-  r_cv_c99_complex="no"
+  r_c99_complex=no
 fi
 
 
-  if test "${r_cv_c99_complex}" = "yes"; then
-    ac_fn_c_check_type "$LINENO" "double complex" "ac_cv_type_double_complex" "#include <complex.h>
+if test "${r_c99_complex}" = "yes"; then
+  ac_fn_c_check_type "$LINENO" "double complex" "ac_cv_type_double_complex" "#include <complex.h>
 "
 if test "x$ac_cv_type_double_complex" = xyes; then :
 
 else
-  r_cv_c99_complex=no
+  r_c99_complex=no
 fi
 
-  fi
-    if test "${r_cv_c99_complex}" = "no"; then
-    as_fn_error $? "Support for C99 double complex type is required." "$LINENO" 5
-  fi
-
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_c99_complex" >&5
-$as_echo "$r_cv_c99_complex" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C99 double complex is supported" >&5
+$as_echo_n "checking whether C99 double complex is supported... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${r_c99_complex}" >&5
+$as_echo "${r_c99_complex}" >&6; }
+if test "${r_c99_complex}" = "no"; then
+  as_fn_error $? "Support for C99 double complex type is required." "$LINENO" 5
+fi
 for ac_func in cabs carg cexp clog csqrt cpow ccos csin ctan \
 	       cacos casin catan ccosh csinh ctanh
 do
@@ -32872,12 +32864,6 @@ fi
 
 
 ## XDR headers and library routines.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for XDR support" >&5
-$as_echo_n "checking for XDR support... " >&6; }
-if ${r_cv_xdr+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  save_CPPFLAGS=${CPPFLAGS}
 ac_fn_c_check_header_mongrel "$LINENO" "rpc/types.h" "ac_cv_header_rpc_types_h" "$ac_includes_default"
 if test "x$ac_cv_header_rpc_types_h" = xyes; then :
 
@@ -32896,11 +32882,15 @@ fi
 if test "${ac_cv_header_rpc_types_h}" = yes && \
    test "${ac_cv_header_rpc_xdr_h}" = yes && \
    test "${ac_cv_search_xdr_string}" != no ; then
-  r_cv_xdr=yes
+  r_xdr=yes
 else
-  r_cv_xdr=no
+  r_xdr=no
 fi
-if test "${r_cv_xdr}" = no ; then
+TIRPC_CPPFLAGS=
+if test "${r_xdr}" = no ; then
+  ## No RPC headers, so try for TI-RPC headers: need /usr/include/tirpc
+  ## on include path to find /usr/include/tirpc/netconfig.h
+  save_CPPFLAGS=${CPPFLAGS}
   CPPFLAGS="${CPPFLAGS} -I/usr/include/tirpc"
   ac_fn_c_check_header_mongrel "$LINENO" "tirpc/rpc/types.h" "ac_cv_header_tirpc_rpc_types_h" "$ac_includes_default"
 if test "x$ac_cv_header_tirpc_rpc_types_h" = xyes; then :
@@ -32918,18 +32908,18 @@ fi
 
   fi
   if test "${ac_cv_header_tirpc_rpc_types_h}" = yes && \
-    test "${ac_cv_header_tirpc_rpc_xdr_h}" = yes &&
-    test "${ac_cv_search_xdr_string}" != no ; then
+       test "${ac_cv_header_tirpc_rpc_xdr_h}" = yes &&
+       test "${ac_cv_search_xdr_string}" != no ; then
     TIRPC_CPPFLAGS=-I/usr/include/tirpc
-    r_cv_xdr=yes
+    r_xdr=yes
   fi
   CPPFLAGS="${save_CPPFLAGS}"
 fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_xdr" >&5
-$as_echo "$r_cv_xdr" >&6; }
- if test "x${r_cv_xdr}" = xno; then
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for XDR support" >&5
+$as_echo_n "checking for XDR support... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${r_xdr}" >&5
+$as_echo "${r_xdr}" >&6; }
+ if test "x${r_xdr}" = xno; then
   BUILD_XDR_TRUE=
   BUILD_XDR_FALSE='#'
 else
@@ -35879,11 +35869,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35882: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35872: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35886: \$? = $ac_status" >&5
+   echo "$as_me:35876: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35978,11 +35968,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35981: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35971: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35985: \$? = $ac_status" >&5
+   echo "$as_me:35975: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36030,11 +36020,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36033: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36023: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36037: \$? = $ac_status" >&5
+   echo "$as_me:36027: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
