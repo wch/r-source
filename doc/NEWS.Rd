@@ -33,6 +33,12 @@
       been removed.
     }
   }
+  
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Passing \code{NULL} to \code{.C()} is now an error.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
@@ -56,12 +62,6 @@
     }
   }
   
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item Passing \code{NULL} to \code{.C()} is now an error.
-    }
-  }
-
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
@@ -76,7 +76,7 @@
       \item The residuals in the 5-number summary printed by
       \code{summary()} on an \code{"lm"} object are now explicitly
       labelled as weighted residuals when non-constant weights are
-      present.  (Wish of\PR{14840}.)
+      present.  (Wish of \PR{14840}.)
 
       \item \code{tracemem()} reported that all objects were copied
       by \code{.C()} or \code{.Fortran()} whereas only some object types
@@ -447,7 +447,7 @@
       \item Passing \R objects other than atomic vectors, functions,
       lists and environments to \code{.C()} is now deprecated and will
       give a warning.  Most cases (especially \code{NULL}) are actually
-      coding errors.  \code{NULL} will be disallowed as from \R 2.15.1.
+      coding errors.  \code{NULL} will be disallowed in future.
 
       \code{.C()} now passes a pairlist as a \code{SEXP} to the compiled
       code.  This is as was documented, but pairlists were in reality
@@ -512,8 +512,8 @@
       \item \code{isGeneric()} produced an error for primitives that
       can not have methods.
 
-      \item \code{.C()} or \code{.Fortran()} had a protection error if
-      the registration information resulted in an argument
+      \item \code{.C()} or \code{.Fortran()} had a lack-of-protection
+      error if the registration information resulted in an argument
       being coerced to another type.
 
       \item \code{boxplot(x=x, at=at)} with non finite elements in \code{x}
