@@ -39,8 +39,8 @@ mauchly.test(object, ...)
   The basic method is for objects of
   class \code{SSD} the method for \code{mlm} objects just extracts the
   SSD matrix and invokes the corresponding method with the same options
-  and arguments.   
-  
+  and arguments.
+
   The \code{T} argument is used to transform the observations prior to
   testing. This typically involves transformation to intra-block
   differences, but more complicated within-block designs can be
@@ -60,8 +60,8 @@ mauchly.test(object, ...)
   functions in the \pkg{stats} namespace, namely \code{proj} which
   calculates projection matrices from design matrices or model formulas
   and \code{Thin.row} which removes linearly dependent rows from a
-  matrix until it has full row rank. 
-  
+  matrix until it has full row rank.
+
 }
 \value{An object of class \code{"htest"}} %% perhaps elaborate?
 
@@ -70,7 +70,9 @@ mauchly.test(object, ...)
   Statistical Analysis.} Wiley.
 }
 
-\seealso{\code{\link{SSD}}, \code{\link{anova.mlm}}}
+\seealso{\code{\link{SSD}}, \code{\link{anova.mlm}},
+  \code{\link{rWishart}}
+}
 
 \note{
   The p-value differs slightly from that of SAS because a second order term
@@ -82,7 +84,7 @@ mauchly.test(object, ...)
 utils::example(SSD) # Brings in the mlmfit and reacttime objects
 
 ### traditional test of intrasubj. contrasts
-mauchly.test(mlmfit, X=~1) 
+mauchly.test(mlmfit, X=~1)
 
 ### tests using intra-subject 3x2 design
 idata <- data.frame(deg=gl(3,1,6, labels=c(0,4,8)),
