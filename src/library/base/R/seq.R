@@ -42,6 +42,8 @@ seq.default <-
 	warning(gettextf("extra argument(s) %s will be disregarded",
 			 paste(sQuote(names(list(...))), collapse = ", ")),
 		domain = NA)
+    if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
+    if (!missing(to) && length(to) != 1L) stop("'to' must be of length 1")
     if(is.null(length.out))
 	if(missing(by))
 	    from:to

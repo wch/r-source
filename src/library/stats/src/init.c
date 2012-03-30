@@ -152,6 +152,9 @@ static const R_CMethodDef CEntries[]  = {
     {NULL, NULL, 0}
 };
 
+SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
+
+
 static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
@@ -189,6 +192,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"logit_mu_eta", (DL_FUNC) &logit_mu_eta, 1},
     {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
     {"R_rWishart", (DL_FUNC) &R_rWishart, 3},
+    {"Cdqrls", (DL_FUNC) &Cdqrls, 3},
     {NULL, NULL, 0}
 };
 

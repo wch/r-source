@@ -2016,6 +2016,10 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT cntxt;
 
     checkArity(op, args);
+
+    if (PRIMVAL(op)) {
+	warning(".Internal(eval.with.vis) should not be used and will be removed soon");
+    }
     expr = CAR(args);
     env = CADR(args);
     encl = CADDR(args);

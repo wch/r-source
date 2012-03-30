@@ -20,7 +20,7 @@ SOURCES_C = init.c kmeans.c \
   nls.c rWishart.c \
   HoltWinters.c PPsum.c arima.c burg.c filter.c \
   mAR.c pacf.c starma.c port.c family.c sbart.c \
-  approx.c loglin.c lowess.c massdist.c splines.c
+  approx.c loglin.c lowess.c massdist.c splines.c lm.c
 
 SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f \
   sgram.f sinerp.f sslvrg.f stxwx.f \

@@ -14,9 +14,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-identical <- function(x, y, num.eq = TRUE, single.NA = TRUE, 
-                      attrib.as.set = TRUE, ignore.bytecode = TRUE)
-    .Internal(identical(x,y, num.eq, single.NA, attrib.as.set, 
-                        ignore.bytecode))
+identical <- function(x, y, num.eq = TRUE, single.NA = TRUE,
+                      attrib.as.set = TRUE, ignore.bytecode = TRUE,
+                      ignore.environment = FALSE)
+    .Internal(identical(x,y, num.eq, single.NA, attrib.as.set,
+                        ignore.bytecode, ignore.environment))
 
 isTRUE <- function(x) identical(TRUE, x)

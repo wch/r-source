@@ -48,13 +48,16 @@ merge(x, y, \dots)
 \details{
   By default the data frames are merged on the columns with names they
   both have, but separate specifications of the columns can be given by
-  \code{by.x} and \code{by.y}.  Columns can be specified by name, number
-  or by a logical vector: the name \code{"row.names"} or the number
-  \code{0} specifies the row names.  The rows in the two data frames
-  that match on the specified columns are extracted, and joined
-  together.  If there is more than one match, all possible matches
-  contribute one row each.  For the precise meaning of \sQuote{match},
-  see \code{\link{match}}.
+  \code{by.x} and \code{by.y}.  The rows in the two data frames that
+  match on the specified columns are extracted, and joined together.  If
+  there is more than one match, all possible matches contribute one row
+  each.  For the precise meaning of \sQuote{match}, see
+  \code{\link{match}}.
+
+  Columns to merge on can be specified by name, number or by a logical
+  vector: the name \code{"row.names"} or the number \code{0} specifies
+  the row names.  If specified by name it must correspond uniquely to a
+  named column in the input.
 
   If \code{by} or both \code{by.x} and \code{by.y} are of length 0 (a
   length zero vector or \code{NULL}), the result, \code{r}, is the
@@ -67,10 +70,8 @@ merge(x, y, \dots)
 
   If the remaining columns in the data frames have any common names,
   these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
-  appended to make the names of the result unique.  If columns with such
-  names already exist, an error is thrown.  (Elements of
-  \code{suffixes} can be \code{""}, when no re-naming is done and it is
-  possible to create duplicate names.)
+  appended to try to make the names of the result unique.  If this is
+  not possible, an error is thrown.
 
   The complexity of the algorithm used is proportional to the length of
   the answer.

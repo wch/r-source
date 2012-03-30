@@ -403,14 +403,11 @@ getAnywhere <- function(x)
     # now check for duplicates
     ln <- length(objs)
     dups <- rep.int(FALSE, ln)
-    objs2 <- lapply(objs, function(x) {
-        if(is.function(x)) environment(x) <- baseenv()
-        x
-    })
     if(ln > 1L)
         for(i in 2L:ln)
             for(j in 1L:(i-1L))
-                if(identical(objs2[[i]], objs2[[j]])) {
+                if(identical(objs[[i]], objs[[j]],
+                             ignore.environment = TRUE)) {
                     dups[i] <- TRUE
                     break
                 }

@@ -31,6 +31,15 @@ function(cfile, encoding = NULL)
     ## we could simply convert to UTF-8.
     if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
         parse(file = cfile, encoding = encoding)
+    } else if(encoding %in% c("C", "ASCII")) {
+        ## We do want to make sure this is ASCII: in single-byte
+        ## locales 8-bit chars are likely to be parsed as bytes.
+        ## Based on showNonASCII()
+        x <- readLines(cfile, warn = FALSE)
+        asc <- iconv(x, "latin1", "ASCII")
+        if (any(is.na(asc) | asc != x))
+            stop("non-ASCII input in a CITATION file without a declared encoding")
+        parse(file = cfile)
     } else {
         con <- file(cfile, encoding = encoding)
         on.exit(close(con))

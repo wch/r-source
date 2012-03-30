@@ -23,16 +23,6 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
          continue.echo = getOption("continue"),
          skip.echo = 0, keep.source = getOption("keep.source"))
 {
-    ## eval.with.vis is retained for historical reasons, including
-    ## not changing tracebacks.
-    ## Use withVisible(eval(...)) for less critical applications.
-    ## A one line change is marked around line 166 to use it here as well.
-    eval.with.vis <-
-	function (expr, envir = parent.frame(),
-		  enclos = if (is.list(envir) || is.pairlist(envir))
-		  parent.frame() else baseenv())
-	.Internal(eval.with.vis(expr, envir, enclos))
-
     envir <- if (isTRUE(local)) {
         parent.frame()
     } else if(identical(local, FALSE)) {
@@ -86,7 +76,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	lines <- readLines(file, warn = FALSE)
 	    	on.exit()
 	    	close(file)
-            	srcfile <- srcfilecopy(filename, lines, file.info(filename)[1,"mtime"], 
+            	srcfile <- srcfilecopy(filename, lines, file.info(filename)[1,"mtime"],
             			       isFile = TRUE)
 	    } else
             	from_file <- TRUE
@@ -220,9 +210,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    }
 	}
 	if (!tail) {
-###  Switch comment below get rid of eval.with.vis
-	    yy <- eval.with.vis(ei, envir)
-###	    yy <- withVisible(eval(ei, envir))
+	    yy <- withVisible(eval(ei, envir))
 	    i.symbol <- mode(ei[[1L]]) == "name"
 	    if (!i.symbol) {
 		## ei[[1L]] : the function "<-" or other

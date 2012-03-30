@@ -881,7 +881,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             printLog(Log, .format_lines_with_indent(out), "\n")
             wrapLog("Portable packages must use only ASCII",
                     "characters in their R code,\n",
-                    "except perhaps in comments.\n")
+                    "except perhaps in comments.\n",
+                    "Use \\uxxxx escapes for other characters.\n")
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "R files for syntax errors")
@@ -1631,9 +1632,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             else
                 wrapLog("\nCompiled code should not call functions which",
                         "might terminate R nor write to stdout/stderr instead",
-                        "of to the console.  The detected symbols are linked into the",
-                        "code but might come from libraries and not actually",
-                        "be called.\n",
+                        "of to the console.  The detected symbols are linked",
+                        "into the code but might come from libraries",
+                        "and not actually be called.\n",
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")

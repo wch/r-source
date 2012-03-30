@@ -6,6 +6,58 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{lm.fit()}, \code{lm.wfit()}, \code{glm.fit()} and
+      \code{lsfit()} do less copying of objects, mainly by using
+      \code{.Call()} rather than \code{.Fortran()}.
+
+      \item \code{source()} now uses \code{withVisible()} rather than an
+      internal call to \code{eval.with.vis}.  This may alter tracebacks
+      slightly.
+
+      \item \code{identical()} has a new argument,
+      \code{ignore.environment}, used when comparing functions (with
+      default \code{FALSE} as before).
+
+      \item In package \pkg{parallel}, \code{makeForkCluster()} and the
+      multicore-based functions use native byte order for serialization
+      (deferred from 2.15.0).
+
+%      \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
+%      arguments which are raw, logical, integer, real or complex are not
+%      copied.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{lsfit()} lost the names from the residuals.
+      
+      \item More cases in which \code{merge()} could create a data frame
+      with duplicate column names now give warnings.  Cases where
+      names specified in \code{by} match multiple columns are errors.
+
+      \item Nonsense uses such as \code{seq(1:50, by = 5)} (from package
+      \CRANpkg{plotrix}) and \code{seq.int(1:50, by = 5)} are now errors.
+
+      \item The residuals in the 5-number summary printed by
+      \code{summary()} on an \code{"lm"} object are now explicitly
+      labelled as weighted residuals when non-constant weights are
+      present.  (Wish of \PR{14840}.)
+
+      \item \code{tracemem()} reported that all objects were copied
+      by \code{.C()} or \code{.Fortran()} whereas only some object types
+      are copied.
+
+      \item The \code{plot()} method for class \code{"stepfun"} only
+      used the optional \code{xval} argument to compute \code{xlim} and
+      not the points at which to plot (as documented).  (\PR{14864})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R VERSION 2.15.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{

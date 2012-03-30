@@ -114,16 +114,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     else if(length(dots) == 1L)
 	warning("extra argument ", sQuote(names(dots)),
                 " is disregarded.", domain = NA)
-    storage.mode(x) <- "double"
-    storage.mode(y) <- "double"
-    z <- .Fortran("dqrls",
-		  qr = x, n = n, p = p,
-		  y = y, ny = ny,
-		  tol = as.double(tol),
-		  coefficients = mat.or.vec(p, ny),
-		  residuals = y, effects = y, rank = integer(1L),
-		  pivot = 1L:p, qraux = double(p), work = double(2*p),
-                  PACKAGE="base")
+    z <- .Call(C_Cdqrls, x, y, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
@@ -134,19 +125,21 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     r2 <- if(z$rank < p) (z$rank+1L):p else integer()
     if (is.matrix(y)) {
 	coef[r2, ] <- NA
-	coef[pivot, ] <- coef
+	if(z$pivoted) coef[pivot, ] <- coef
 	dimnames(coef) <- list(dn, colnames(y))
 	dimnames(z$effects) <- list(nmeffects, colnames(y))
     } else {
 	coef[r2] <- NA
-	coef[pivot] <- coef
+        ## avoid copy
+	if(z$pivoted) coef[pivot] <- coef
 	names(coef) <- dn
 	names(z$effects) <- nmeffects
     }
     z$coefficients <- coef
     r1 <- y - z$residuals ; if(!is.null(offset)) r1 <- r1 + offset
+    ## avoid unnecessary copy
+    if(z$pivoted) colnames(z$qr) <- colnames(x)[z$pivot]
     qr <- z[c("qr", "qraux", "pivot", "tol", "rank")]
-    colnames(qr$qr) <- colnames(x)[qr$pivot]
     c(z[c("coefficients", "residuals", "effects", "rank")],
       list(fitted.values = r1, assign = attr(x, "assign"),
 	   qr = structure(qr, class="qr"),
@@ -200,17 +193,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                     fitted.values = 0 * y, weights = w, rank = 0L,
                     df.residual = length(y)))
     }
-    storage.mode(y) <- "double"
     wts <- sqrt(w)
-    z <- .Fortran("dqrls",
-		  qr = x * wts, n = n, p = p,
-		  y  = y * wts, ny = ny,
-		  tol = as.double(tol),
-		  coefficients = mat.or.vec(p, ny), residuals = y,
-		  effects = mat.or.vec(n, ny),
-		  rank = integer(1L), pivot = 1L:p, qraux = double(p),
-		  work = double(2 * p),
-                  PACKAGE="base")
+    z <- .Call(C_Cdqrls, x * wts, y * wts, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
@@ -220,12 +204,12 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     r2 <- if(z$rank < p) (z$rank+1L):p else integer()
     if (is.matrix(y)) {
 	coef[r2, ] <- NA
-	coef[pivot, ] <- coef
+	if(z$pivoted) coef[pivot, ] <- coef
 	dimnames(coef) <- list(dn, colnames(y))
 	dimnames(z$effects) <- list(nmeffects,colnames(y))
     } else {
 	coef[r2] <- NA
-	coef[pivot] <- coef
+	if(z$pivoted) coef[pivot] <- coef
 	names(coef) <- dn
 	names(z$effects) <- nmeffects
     }
@@ -254,8 +238,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     }
     if(!is.null(offset))
         z$fitted.values <- z$fitted.values + offset
+    if(z$pivoted) colnames(z$qr) <- colnames(x)[z$pivot]
     qr <- z[c("qr", "qraux", "pivot", "tol", "rank")]
-    colnames(qr$qr) <- colnames(x)[qr$pivot]
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
       list(assign = x.asgn,
@@ -292,7 +276,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
             r <- sqrt(w) * r
         }
         resvar <- rss/rdf
-        ans <- z[c("call", "terms")]
+        ans <- z[c("call", "terms", if(!is.null(z$weights)) "weights")]
         class(ans) <- "summary.lm"
         ans$aliased <- is.na(coef(object))  # used in print method
         ans$residuals <- r
@@ -334,7 +318,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     se <- sqrt(diag(R) * resvar)
     est <- z$coefficients[Qr$pivot[p1]]
     tval <- est/se
-    ans <- z[c("call", "terms")]
+    ans <- z[c("call", "terms", if(!is.null(z$weights)) "weights")]
     ans$residuals <- r
     ans$coefficients <-
 	cbind(est, se, tval, 2*pt(abs(tval), rdf, lower.tail = FALSE))
@@ -373,7 +357,7 @@ print.summary.lm <-
     resid <- x$residuals
     df <- x$df
     rdf <- df[2L]
-    cat(if(!is.null(x$w) && diff(range(x$w))) "Weighted ",
+    cat(if(!is.null(x$weights) && diff(range(x$weights))) "Weighted ",
         "Residuals:\n", sep="")
     if (rdf > 5L) {
 	nam <- c("Min", "1Q", "Median", "3Q", "Max")

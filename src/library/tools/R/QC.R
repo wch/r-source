@@ -3425,6 +3425,12 @@ function(package, lib.loc = NULL)
 format.check_code_usage_in_package <-
 function(x, ...)
 {
+    if(length(x)) {
+        ## There seems no easy we can gather usage diagnostics by type,
+        ## so try to rearrange to some extent when formatting.
+        ind <- grepl(": partial argument match of", x, fixed = TRUE)
+        if(any(ind)) x <- c(x[ind], x[!ind])
+    }
     strwrap(x, indent = 0L, exdent = 2L)
 }
 
@@ -5243,6 +5249,7 @@ function(dir)
     db <- tryCatch(lapply(urls, .repository_db), error = identity)
     if(inherits(db, "error")) {
         message("NB: need Internet access to use CRAN incoming checks")
+        ## Actually, all repositories could be local file:// mirrors.
         return(out)
     }
     db <- do.call(rbind, db)
@@ -5294,7 +5301,7 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
-    ## Is this an update for package already on CRAN?
+    ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
              is.na(db[, "Path"]), , drop = FALSE]

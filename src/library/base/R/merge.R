@@ -31,9 +31,13 @@ merge.data.frame <-
         if(is.null(by)) by <- numeric()
         by <- as.vector(by)
         nc <- ncol(df)
-        if(is.character(by))
-            by <- match(by, c("row.names", names(df))) - 1L
-        else if(is.numeric(by)) {
+        if(is.character(by)) {
+            poss <- c("row.names", names(df))
+            # names(df) are not necessarily unique, so check for multiple matches.
+            if(any(!charmatch(by, poss, 0L)))
+                stop("'by' must specify uniquely valid column(s)")
+            by <- match(by, poss) - 1L
+        } else if(is.numeric(by)) {
             if(any(by < 0L) || any(by > nc))
                 stop("'by' must match numbers of columns")
         } else if(is.logical(by)) {
@@ -50,7 +54,6 @@ merge.data.frame <-
     if((l.b <- length(by.x)) != length(by.y))
         stop("'by.x' and 'by.y' specify different numbers of columns")
     if(l.b == 0L) {
-        ## was: stop("no columns to match on")
         ## return the cartesian product of x and y, fixing up common names
         nm <- nm.x <- names(x)
         nm.y <- names(y)
@@ -109,18 +112,8 @@ merge.data.frame <-
         lxy <- length(m$xi)             # == length(m$yi)
         ## x = [ by | x ] :
         has.common.nms <- any(cnm <- nm.x %in% nm.y)
-        if(has.common.nms && nzchar(suffixes[1L])) {
-            new <- paste0(nm.x[cnm], suffixes[1L])
-            prob <- new %in% nm.x
-            if(sum(prob) > 1L)
-                stop("there are already columns named ",
-                     paste(sQuote(new[new %in% nm.x]), collapse = ", "),
-                     domain = NA)
-            else if(sum(prob) == 1L)
-                stop("there is already a column named ",
-                     sQuote(new[new %in% nm.x]), domain = NA)
-            nm.x[cnm] <- new
-        }
+        if(has.common.nms && nzchar(suffixes[1L]))
+            nm.x[cnm] <- paste0(nm.x[cnm], suffixes[1L])
         x <- x[c(m$xi, if(all.x) m$x.alone),
                c(by.x, seq_len(ncx)[-by.x]), drop=FALSE]
         names(x) <- c(nm.by, nm.x)
@@ -128,26 +121,15 @@ merge.data.frame <-
             ## need to have factor levels extended as well -> using [cr]bind
             ya <- y[m$y.alone, by.y, drop = FALSE]
             names(ya) <- nm.by
-            ## this used to use a logical matrix, but that is not good
+            ## this used to use a logical matrix, but that was not good
             ## enough as x could be zero-row.
             ya <- cbind(ya, x[rep.int(NA_integer_, nyy), nm.x, drop=FALSE ])
             x <- rbind(x, ya)
-            #x <- rbind(x, cbind(ya, matrix(NA, nyy, ncx-l.b,
-            #                               dimnames=list(NULL,nm.x))))
         }
         ## y (w/o 'by'):
         if(has.common.nms && nzchar(suffixes[2L])) {
             cnm <- nm.y %in% nm
-            new <- paste0(nm.y[cnm], suffixes[2L])
-            prob <- new %in% nm.y
-            if(sum(prob) > 1L)
-                stop("there are already columns named ",
-                     paste(sQuote(new[new %in% nm.y]), collapse = ", "),
-                     domain = NA)
-            else if(sum(prob) == 1L)
-                stop("there is already a column named ",
-                     sQuote(new[new %in% nm.y]), domain = NA)
-            nm.y[cnm] <- new
+            nm.y[cnm] <- paste0(nm.y[cnm], suffixes[2L])
         }
         y <- y[c(m$yi, if(all.x) rep.int(1L, nxx), if(all.y) m$y.alone),
                -by.y, drop = FALSE]
@@ -157,15 +139,22 @@ merge.data.frame <-
                 is.na(y[[i]]) <- (lxy+1L):(lxy+nxx)
 
         if(has.common.nms) names(y) <- nm.y
+        nm <- c(names(x), names(y))
+        if(any(d <- duplicated(nm)))
+            if(sum(d) > 1L)
+                warning("column names ",
+                        paste(sQuote(nm[d]), collapse = ", "),
+                        " are duplicated in the result", domain = NA)
+            else
+                warning("column name ", sQuote(nm[d]),
+                        " is duplicated in the result", domain = NA)
         res <- cbind(x, y)
 
         if (sort)
             res <- res[if(all.x || all.y) ## does NOT work
-                       do.call("order", x[, seq_len(l.b), drop=FALSE])
-            else sort.list(bx[m$xi]),, drop=FALSE]
+                       do.call("order", x[, seq_len(l.b), drop = FALSE])
+            else sort.list(bx[m$xi]),, drop = FALSE]
     }
-    ## avoid a copy
-    ## row.names(res) <- NULL
     attr(res, "row.names") <- .set_row_names(nrow(res))
     res
 }

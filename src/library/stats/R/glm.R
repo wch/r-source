@@ -229,18 +229,9 @@ glm.fit <-
             z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
             w <- sqrt((weights[good] * mu.eta.val[good]^2)/variance(mu)[good])
             ngoodobs <- as.integer(nobs - sum(!good))
-            ## call Fortran code
-            fit <- .Fortran("dqrls",
-                            qr = x[good, ] * w, n = ngoodobs,
-                            p = nvars, y = w * z, ny = 1L,
-                            tol = min(1e-7, control$epsilon/1000),
-                            coefficients = double(nvars),
-                            residuals = double(ngoodobs),
-                            effects = double(ngoodobs),
-                            rank = integer(1L),
-                            pivot = 1L:nvars, qraux = double(nvars),
-                            work = double(2 * nvars),
-                            PACKAGE = "base")
+            ## call Fortran code via C wrapper
+            fit <- .Call(C_Cdqrls, x[good, , drop = FALSE] * w, z * w,
+                         min(1e-7, control$epsilon/1000))
             if (any(!is.finite(fit$coefficients))) {
                 conv <- FALSE
                 warning(gettextf("non-finite coefficients at iteration %d", iter), domain = NA)

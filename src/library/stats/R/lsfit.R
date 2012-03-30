@@ -66,53 +66,33 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 	if(nwts != nry)
             stop(gettextf("number of weights = %d should equal %d (number of responses)", nwts, nry), domain = NA)
 	wtmult <- wt^0.5
-	if( any(wt==0) ) {
-	    xzero <- as.matrix(x)[wt==0, ]
-	    yzero <- as.matrix(y)[wt==0, ]
+	if(any(wt == 0)) {
+	    xzero <- as.matrix(x)[wt == 0, ]
+	    yzero <- as.matrix(y)[wt == 0, ]
 	}
 	x <- x*wtmult
 	y <- y*wtmult
-	invmult <- 1/ifelse(wt==0, 1, wtmult)
+	invmult <- 1/ifelse(wt == 0, 1, wtmult)
     }
 
-    ## call linpack
+    # Here y is a matrix, so z$residuals and z$effects will be
+    z <- .Call(C_Cdqrls, x, y, tolerance)
 
-    storage.mode(x) <- "double"
-    storage.mode(y) <- "double"
-    z <- .Fortran("dqrls",
-		  qr=x,
-		  n=nrx,
-		  p=ncx,
-		  y=y,
-		  ny=ncy,
-		  tol=tolerance,
-		  coefficients=mat.or.vec(ncx, ncy),
-		  residuals=mat.or.vec(nrx, ncy),
-		  effects=mat.or.vec(nrx, ncy),
-		  rank=integer(1L),
-		  pivot=as.integer(1L:ncx),
-		  qraux=double(ncx),
-		  work=double(2*ncx),
-                  PACKAGE="base")
-
-    ## dimension and name output from linpack
-
-    resids <- array(NA, dim=dimy)
+    resids <- array(NA, dim = dimy)
     dim(z$residuals) <- c(nry, ncy)
     if(!is.null(wt)) {
-	if(any(wt==0)) {
-	    if(ncx==1) fitted.zeros <- xzero * z$coefficients
+	if(any(wt == 0)) {
+	    if(ncx == 1L) fitted.zeros <- xzero * z$coefficients
 	    else fitted.zeros <- xzero %*% z$coefficients
-	    z$residuals[wt==0, ] <- yzero - fitted.zeros
+	    z$residuals[wt == 0, ] <- yzero - fitted.zeros
 	}
 	z$residuals <- z$residuals*invmult
     }
     resids[good, ] <- z$residuals
     if(dimy[2L] == 1 && is.null(yname)) {
-	resids <- as.vector(resids)
+	resids <- drop(resids)
 	names(z$coefficients) <- xnames
-    }
-    else {
+    } else {
 	colnames(resids) <- yname
 	colnames(z$effects) <- yname
 	dim(z$coefficients) <- c(ncx, ncy)
@@ -120,10 +100,10 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     }
     z$qr <- as.matrix(z$qr)
     colnames(z$qr) <- xnames
-    output <- list(coefficients=z$coefficients, residuals=resids)
+    output <- list(coefficients = z$coefficients, residuals = resids)
 
-    ## if X matrix was collinear, then the columns would have been
-    ## pivoted hence xnames need to be corrected
+    ## if X matrix was collinear, then the columns may have been
+    ## pivoted hence xnames may need to be corrected
 
     if( z$rank != ncx ) {
 	xnames <- xnames[z$pivot]
@@ -141,10 +121,11 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 
     ## return rest of output
 
-    rqr <- list(qt=z$effects, qr=z$qr, qraux=z$qraux, rank=z$rank,
-		pivot=z$pivot, tol=z$tol)
+    ## Neither qt nor tol are documented to be there.
+    rqr <- list(qt = drop(z$effects), qr = z$qr, qraux = z$qraux, rank = z$rank,
+		pivot = z$pivot, tol = z$tol)
     oldClass(rqr) <- "qr"
-    output <- c(output, list(intercept=intercept, qr=rqr))
+    output <- c(output, list(intercept = intercept, qr = rqr))
     return(output)
 }
 
