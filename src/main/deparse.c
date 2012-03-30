@@ -647,41 +647,16 @@ static void printcomment(SEXP s, LocalParseData *d)
 }
 
 
-static const char * backquotify(const char *s)
+static const char * quotify(SEXP name, int quote)
 {
-    /* backquotifying can at most double the length of the symbol in bytes,
-       plus surrounding quotes and terminator. */
-    static char buf[2*MAXIDSIZE+10];
-    char *t = buf;
+    const char *s = CHAR(name);
 
-    /* If a symbol is not a valid name, put it in backquotes, escaping
-     * any backquotes in the string itself */
-
-    /* NOTE: This could be fragile if sufficiently weird names are
-     * used. Ideally, we should insert backslash escapes, etc. */
+    /* If a symbol is not a valid name, put it in quotes, escaping
+     * any quotes in the string itself */
 
     if (isValidName(s) || *s == '\0') return s;
 
-    /* Don't translate 'impossible' error condition. */
-    if(strlen(s) > MAXIDSIZE)
-	error("symbol '%s' is too long to be a valid symbol", s);
-
-    *t++ = '`';
-    if(mbcslocale && !utf8locale) {
-	mbstate_t mb_st; int j, used;
-	mbs_init(&mb_st);
-	while( (used = Mbrtowc(NULL, s, MB_CUR_MAX, &mb_st)) ) {
-	    if ( *s  == '`' || *s == '\\' ) *t++ = '\\';
-	    for(j = 0; j < used; j++) *t++ = *s++;
-	}
-    } else
-	while ( *s ) {
-	    if ( *s  == '`' || *s == '\\' ) *t++ = '\\';
-	    *t++ = *s++;
-	}
-    *t++ = '`';
-    *t = '\0';
-    return buf;
+    return EncodeString(name, 0, quote, Rprt_adj_none);
 }
 
 /* This is the recursive part of deparsing. */
@@ -711,15 +686,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    print2buff("quote(", d);
 	}
 	if (localOpts & S_COMPAT) {
-	    const char *ss = CHAR(PRINTNAME(s));
-	    if (isValidName(ss)) print2buff(ss, d);
-	    else {
-		print2buff("\"", d);
-		print2buff(ss, d);
-		print2buff("\"", d);
-	    }
+	    print2buff(quotify(PRINTNAME(s), '"'), d);
 	} else if (d->backtick)
-	    print2buff(backquotify(CHAR(PRINTNAME(s))), d);
+	    print2buff(quotify(PRINTNAME(s), '`'), d);
 	else
 	    print2buff(CHAR(PRINTNAME(s)), d);
 	if (localOpts & QUOTEEXPRESSIONS) {
@@ -938,17 +907,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_FUNCALL:
 		case PP_RETURN:
-		    if (isValidName(CHAR(PRINTNAME(op)))) /* ASCII */
-			print2buff(CHAR(PRINTNAME(op)), d);
-		    else if (d->backtick) {
-			print2buff("`", d);
-			print2buff(CHAR(PRINTNAME(op)), d);
-			print2buff("`", d);
-		    } else {
-			print2buff("\"", d);
-			print2buff(CHAR(PRINTNAME(op)), d);
-			print2buff("\"", d);
-		    }
+		    if (d->backtick) 
+		        print2buff(quotify(PRINTNAME(op), '`'), d);
+		    else 
+		    	print2buff(quotify(PRINTNAME(op), '"'), d);
 		    print2buff("(", d);
 		    d->inlist++;
 		    args2buff(s, 0, 0, d);
@@ -1119,18 +1081,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    }
 		    else {
 			if ( isSymbol(CAR(s)) ){
-			    const char *ss = CHAR(PRINTNAME(CAR(s)));
-			    if (isValidName(ss))
-				print2buff(ss, d);
-			    else if(d->opts & S_COMPAT) {
-				print2buff("\'", d);
-				print2buff(ss, d);
-				print2buff("\'", d);
-			    } else {
-				print2buff("`", d);
-				print2buff(ss, d);
-				print2buff("`", d);
-			    }
+			    if(d->opts & S_COMPAT) 
+			        print2buff(quotify(PRINTNAME(CAR(s)), '\''), d);
+			    else 
+				print2buff(quotify(PRINTNAME(CAR(s)), '`'), d);
 			}
 			else
 			    deparse2buff(CAR(s), d);
@@ -1461,18 +1415,13 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 	if (TAG(arglist) != R_NilValue) {
 	    SEXP s = TAG(arglist);
 
-	    const char *ss = CHAR(PRINTNAME(s));
-	    if( s == R_DotsSymbol || isValidName(ss) )
-		print2buff(ss, d);
-	    else if(d->backtick) {
-		print2buff("`", d);
-		print2buff(ss, d);
-		print2buff("`", d);
-	    } else {
-		print2buff("\"", d);
-		print2buff(ss, d);
-		print2buff("\"", d);
-	    }
+	    if( s == R_DotsSymbol )
+		print2buff(CHAR(PRINTNAME(s)), d);
+	    else if(d->backtick) 
+		print2buff(quotify(PRINTNAME(s), '`'), d);
+	    else 
+	        print2buff(quotify(PRINTNAME(s), '"'), d);
+	    
 	    if(formals) {
 		if (CAR(arglist) != R_MissingArg) {
 		    print2buff(" = ", d);

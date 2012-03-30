@@ -89,6 +89,9 @@
       \item The \code{plot()} method for class \code{"stepfun"} only
       used the optional \code{xval} argument to compute \code{xlim} and
       not the points at which to plot (as documented).  (\PR{14864})
+      
+      \item Names containing special characters were not deparsed 
+      properly.  (PR#14846)
     }
   }
 }
