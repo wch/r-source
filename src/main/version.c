@@ -120,11 +120,6 @@ void attribute_hidden PrintVersionString(char *s)
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 		R_SVN_REVISION);
     }
-    if(strlen(R_NICK) != 0) {
-	char nick[64];
-	sprintf(nick, " -- \"%s\"", R_NICK);
-	strcat(s, nick);
-    }
 }
 
 void attribute_hidden PrintVersion_part_1(char *s)
@@ -133,6 +128,11 @@ void attribute_hidden PrintVersion_part_1(char *s)
     char tmp[128];
 
     PrintVersionString(s);
+    if(strlen(R_NICK) != 0) {
+	char nick[64];
+	sprintf(nick, " -- \"%s\"", R_NICK);
+	strcat(s, nick);
+    }
     SPRINTF_2("\nCopyright (C) %s The R Foundation for Statistical Computing\n",
 	      R_YEAR);
     strcat(s, "ISBN 3-900051-07-0\n");
