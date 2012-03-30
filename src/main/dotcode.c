@@ -1522,7 +1522,15 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	case VECSXP:
 	    if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), na + 1);
+	    /* read-only, so this is safe */
+#ifdef USE_RINTERNALS
 	    cargs[na] = (void*) DATAPTR(s);
+#else
+	    n = length(s);
+	    SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
+	    for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
+	    cargs[na] = (void*) lptr;
+#endif
 	    break;
 	case CLOSXP:
 	case BUILTINSXP:
