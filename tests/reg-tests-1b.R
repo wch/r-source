@@ -1805,4 +1805,9 @@ stopifnot(ncol(a) == 2)
 ## did not duplicate.
 
 
+## deparsing needs escape characters in names (PR#14846)
+f <- function(x) switch(x,"\\dbc"=2,3)
+parse(text=deparse(f))
+## Gave error about unrecognized escape
+
 proc.time()
