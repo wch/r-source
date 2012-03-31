@@ -1041,10 +1041,8 @@ determine whether the result should be visible from the arguments or
 user action.  Other functions themselves dispatch functions which may
 change the visibility flag: examples@footnote{the other current example
 is left brace, which is implemented as a primitive.} are
-@code{.Internal}, @code{do.call}, @code{eval},
-@code{eval.with.vis}@footnote{a @code{.Internal}-only function used in
-@code{source}, @code{withVisible} and a few other places.}, @code{if},
-@code{NextMethod}, @code{Recall}, @code{recordGraphics},
+@code{.Internal}, @code{do.call}, @code{eval}, @code{withVisible},
+@code{if}, @code{NextMethod}, @code{Recall}, @code{recordGraphics},
 @code{standardGeneric}, @code{switch} and @code{UseMethod}.
 
 `Special' primitive and internal functions evaluate their arguments
