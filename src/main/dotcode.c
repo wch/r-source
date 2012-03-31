@@ -305,9 +305,13 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case RAWSXP:
 	n = LENGTH(s);
 	Rbyte *rawptr = RAW(s);
-	if (dup) {
+	if (dup
+#ifdef USE_NAMED
+	    && NAMED(s)
+#endif
+	    ) {
 	    rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
-	    for (int i = 0; i < n; i++) rawptr[i] = RAW(s)[i];
+	    memcpy(rawptr, RAW(s), n * sizeof(Rbyte));
 	}
 	ans = (void *) rawptr;
 	break;
@@ -319,9 +323,13 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    for (int i = 0 ; i < n ; i++)
 		if(iptr[i] == NA_INTEGER)
 		    error(_("NAs in foreign function call (arg %d)"), narg);
-	if (dup) {
+	if (dup
+#ifdef USE_NAMED
+	    && NAMED(s)
+#endif
+	    ) {
 	    iptr = (int*) R_alloc(n, sizeof(int));
-	    for (int i = 0 ; i < n ; i++) iptr[i] = INTEGER(s)[i];
+	    memcpy(iptr, INTEGER(s), n * sizeof(int));
 	}
 	ans = (void*) iptr;
 	break;
@@ -336,9 +344,13 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    float *sptr = (float*) R_alloc(n, sizeof(float));
 	    for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 	    ans = (void*) sptr;
-	} else if (dup) {
+	} else if (dup
+#ifdef USE_NAMED
+		   && NAMED(s)
+#endif
+	    ) {
 	    rptr = (double*) R_alloc(n, sizeof(double));
-	    for (int i = 0 ; i < n ; i++) rptr[i] = REAL(s)[i];
+	    memcpy(rptr, REAL(s), n * sizeof(double));
 	    ans = (void*) rptr;
 	} else ans = (void*) rptr;
 	break;
@@ -349,9 +361,13 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    for (int i = 0 ; i < n ; i++)
 		if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
 		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
-	if (dup) {
+	if (dup
+#ifdef USE_NAMED
+	    && NAMED(s)
+#endif
+	    ) {
 	    zptr = (Rcomplex*) R_alloc(n, sizeof(Rcomplex));
-	    for (int i = 0 ; i < n ; i++) zptr[i] = COMPLEX(s)[i];
+	    memcpy(zptr, COMPLEX(s), n * sizeof(Rcomplex));
 	}
 	ans = (void *) zptr;
 	break;
@@ -420,7 +436,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case ENVSXP:
 	if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
 			type2char(TYPEOF(s)), narg);
-	ans =  (void*) s;
+	return (void*) s;
 	break;
     default:
     {
@@ -432,14 +448,18 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		type2char(t), narg);
 	if (t == LISTSXP)
 	    warning("pairlists are passed as SEXP as from R 2.15.0");
-	ans =  (void*) s;
+	return  (void*) s;
     }
     }
     if (nprotect) UNPROTECT(nprotect);
+#ifdef R_MEMORY_PROFILING
+    /* unnamed allocations won't be being traced */
+    if (RTRACE(s) && dup) memtrace_report(s, ans);
+#endif
     return ans;
 }
 
-
+/* Note: this is only called if dup = TRUE */
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		       R_NativePrimitiveArgType type, char *encname)
 {
@@ -449,8 +469,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     switch(type) {
     case RAWSXP:
 	s = allocVector(type, n);
-	Rbyte *rawptr = (Rbyte *) p;
-	for (int i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
+	memcpy(RAW(s), p, n * sizeof(Rbyte));
 	break;
     case LGLSXP:
     {
@@ -465,8 +484,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     case INTSXP:
     {
 	s = allocVector(type, n);
-	int *iptr = (int*) p;
-	for(int i = 0 ; i < n ; i++) INTEGER(s)[i] = iptr[i];
+	memcpy(INTEGER(s), p, n * sizeof(int));
 	break;
     }
     case REALSXP:
@@ -475,15 +493,12 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 	    float *sptr = (float*) p;
 	    for(int i = 0 ; i < n ; i++) REAL(s)[i] = (double) sptr[i];
-	} else {
-	    double *rptr = (double*) p;
-	    for(int i = 0 ; i < n ; i++) REAL(s)[i] = rptr[i];
-	}
+	} else
+	    memcpy(REAL(s), p, n * sizeof(double));
 	break;
     case CPLXSXP:
 	s = allocVector(type, n);
-	Rcomplex *zptr = (Rcomplex*)p;
-	for (int i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
+	memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
 	break;
     case STRSXP:
 	if(Fort) {
@@ -531,17 +546,12 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	    UNPROTECT(1);
 	}
 	break;
-    case VECSXP:
-    {
-	PROTECT(s = allocVector(VECSXP, n));
-	SEXP *lptr = (SEXP*) p;
-	for (int i = 0 ; i < n ; i++) SET_VECTOR_ELT(s, i, lptr[i]);
-	UNPROTECT(1);
-	break;
-    }
     default:
-	s = (SEXP)p;
+	return arg;
     }
+#if R_MEMORY_PROFILING
+    if (RTRACE(arg)) { memtrace_report(p, s); SET_RTRACE(s, 1); }
+#endif
     return s;
 }
 
@@ -1666,10 +1676,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 				  Fort, symName, argConverters + nargs,
 				  checkTypes ? checkTypes[nargs] : 0,
 				  encname);
-#ifdef R_MEMORY_PROFILING
-	if (RTRACE(CAR(pargs)) && dup)
-	    memtrace_report(CAR(pargs), cargs[nargs]);
-#endif
 	nargs++;
     }
 
@@ -2293,12 +2299,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), Fort,
 				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs)),
 				       encname));
-#if R_MEMORY_PROFILING
-		if (RTRACE(CAR(pargs))) {
-		    memtrace_report(cargs[nargs], s);
-		    SET_RTRACE(s, 1);
-		}
-#endif
 		DUPLICATE_ATTRIB(s, CAR(pargs));
 	    }
 	    if (TAG(pargs) != R_NilValue)
