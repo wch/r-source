@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-26 r58836) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-03-30 r58888) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -9287,7 +9287,7 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
   deg8NP   2840   3400   7760   7040  11200  13640
 > 
 > ### traditional test of intrasubj. contrasts
-> mauchly.test(mlmfit, X=~1) 
+> mauchly.test(mlmfit, X=~1)
 
 	Mauchly's test of sphericity
 	Contrasts orthogonal to

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-05 r58592)
+R Under development (unstable) (2012-03-30 r58888) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -30,7 +30,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 3643
+[1] 3700
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
