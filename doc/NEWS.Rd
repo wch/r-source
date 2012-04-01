@@ -32,6 +32,15 @@
     }
   }
   
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item The converters for use with \code{.C()} (see
+      \code{?getCConverterDescriptions}) are deprecated: use the
+      \code{.Call()} interface instead.  There are no known examples
+      (they were never fully documented).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.

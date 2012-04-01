@@ -12,6 +12,9 @@
 
 \title{Management of .C argument conversion list}
 \description{
+\strong{Warning}: these functions are deprecated and will be removed
+shortly.  Use the \code{\link{.Call}} interface instead.
+  
 These functions provide facilities to manage the extensible
 list of converters used to translate R objects to C
 pointers for use in \code{\link{.C}} calls.

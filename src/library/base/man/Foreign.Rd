@@ -213,9 +213,5 @@
   \code{\link{dyn.load}}, \code{\link{.Call}}.
 
   The \sQuote{Writing R Extensions} manual.
-  
-  \code{\link{getCConverterDescriptions}} for converters that might be
-  used when passing \R objects with explicit classes to and from
-  compiled code.
 }
 \keyword{programming}
