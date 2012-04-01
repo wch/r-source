@@ -9,7 +9,9 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Place holder.
+      \item \code{.C()} and \code{.Fortran()} do less copying:
+      raw, logical, integer, real or complex vectors are copied at most
+      once.
     }
   }
 
@@ -61,8 +63,9 @@
       (deferred from 2.15.0).
 
       \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
-      arguments which are raw, logical, integer, real or complex are not
-      copied.
+      arguments which are raw, logical, integer, real or complex vectors
+      are not copied before the call.  Lists are no longer copied (they
+      are supposed to be used read-only in the C code).
     }
   }
   
