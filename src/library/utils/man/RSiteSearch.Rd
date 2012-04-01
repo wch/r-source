@@ -6,12 +6,11 @@
 \name{RSiteSearch}
 \alias{RSiteSearch}
 \title{
-  Search for Key Words or Phrases in the R-help Mailing List Archives
-  or Documentation
+  Search for Key Words or Phrases in Documentation
 }
 \description{
-  Search for key words or phrases in the R-help mailing list
-  archives, help pages, vignettes or task views, using the search engine
+  Search for key words or phrases in
+  help pages, vignettes or task views, using the search engine
   at \url{http://search.r-project.org} and view them in a web browser.
 }
 \usage{
@@ -30,12 +29,6 @@ RSiteSearch(string,
     words in braces (see the first example).}
   \item{restrict}{a character vector, typically of length greater than one.
     Possible areas to search in:
-    \code{Rhelp10} for R-help mailing list archive starting January 2010,
-    \code{Rhelp08} for mailing list archive 2008--2009,
-    \code{Rhelp02} for mailing list archive 2002--2007,
-    \code{Rhelp01} for mailing list archive before 2002,
-    \code{R-devel} for R-devel mailing list,
-    \code{R-sig-mix} for R-sig-mix mailing list,    
     \code{functions} for help pages,
     \code{views} for task views and
     \code{vignettes} for package vignettes.}
@@ -71,18 +64,13 @@ RSiteSearch(string,
 
   \code{\link{browseURL}} for how the help file is displayed.
 }
-\examples{\donttest{ # need Internet connection
+\examples{\donttest{# need Internet connection
 RSiteSearch("{logistic regression}") # matches exact phrase
 Sys.sleep(5) # allow browser to open, take a quick look
-RSiteSearch("Baron Liaw", restrict = "Rhelp02")
-## Search in R-devel archive and recent R-help (and store the query-string):
-Sys.sleep(5)
-fullquery <- RSiteSearch("S4", restrict = c("R-dev", "Rhelp10", "Rhelp08"))
-fullquery # a string of ~ 116 characters
-## the latest purported bug reports, responses ...
+## Search in vignettes and store the query-string:
+fullquery <- RSiteSearch("lattice", restrict = "vignettes")
+fullquery # a string of ~ 110 characters
 %% FIXME: "/bug/ and other reg.exp.s seem to fail
-Sys.sleep(5)
-RSiteSearch("bug", restrict = "R-devel", sortby = "date:late")
 }}
 \keyword{utilities}
 \keyword{documentation}

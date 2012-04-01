@@ -27,8 +27,7 @@ RSiteSearch <- function(string,
     mpp <- paste0("max=", matchesPerPage)
     format <- paste0("result=", match.arg(format))
 
-    restrictVALS <- c("Rhelp10", "Rhelp08", "Rhelp01", "Rhelp02", "functions",
-                      "vignettes", "views","R-devel", "R-sig-mixed-models")
+    restrictVALS <- c("functions", "vignettes", "views")
     restr <- match.arg(restrict, choices = restrictVALS, several.ok = TRUE)
     restr <- paste(paste0("idxname=", restr), collapse = "&")
 
