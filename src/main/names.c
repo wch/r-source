@@ -1234,7 +1234,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(strcmp(nm, "eval") && strcmp(nm, "options") && strcmp(nm, "Recall")
 	   && strcmp(nm, "do.call") && strcmp(nm, "switch")
 	   && strcmp(nm, "recordGraphics") && strcmp(nm, "writeBin")
-	   && strcmp(nm, "NextMethod") && strcmp(nm, "eval.with.vis"))
+	   && strcmp(nm, "NextMethod"))
 	    printf("vis: internal %s\n", nm);
     }
 #endif

@@ -33,6 +33,11 @@
 
       \item The \code{.Internal(eval.with.vis)} non-API function has
       been removed.
+
+      \item Support for the converters for use with \code{.C()} is not
+      compiled in by default: compile \file{src/main/dotcode.c} with
+      \option{-DSUPPORT_CONVERTERS} to re-enable this (untested as we
+      know of no examples in packages).
     }
   }
   
@@ -66,6 +71,15 @@
       arguments which are raw, logical, integer, real or complex vectors
       are not copied before the call.  Lists are no longer copied (they
       are supposed to be used read-only in the C code).
+    }
+  }
+  
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item The converters for use with \code{.C()} (see
+      \code{?getCConverterDescriptions}) are deprecated: use the
+      \code{.Call()} interface instead.  There are no known examples
+      (they were never fully documented).
     }
   }
   
