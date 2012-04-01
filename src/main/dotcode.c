@@ -261,6 +261,8 @@ checkNativeType(int targetType, int actualType)
     return(TRUE);
 }
 
+#define USE_NAMED 1
+
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			const char *name, R_toCConverter **converter,
 			int targetType, char* encname)

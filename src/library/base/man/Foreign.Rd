@@ -163,10 +163,10 @@
   There may be one when the data from the argument is copied and the
   pointer to the copied data passed to the compiled code.  However,
   non-atomic-vector objects are not copied, and as from \R 2.15.1 nor
-  are such objects which are not otherwise used in the calling code
-  (such as \code{output} in the example above).  For atomic vectors
-  there is another copy when the return value is prepared from the data
-  accessed by the compiled code.
+  are objects which are not otherwise used in the calling code (such as
+  \code{output} in the example above).  For atomic vectors there is
+  another copy when the return value is prepared from the data accessed
+  by the compiled code.
 }
 
 \section{Fortran symbol names}{

@@ -25,9 +25,10 @@
       multicore-based functions use native byte order for serialization
       (deferred from 2.15.0).
 
-%      \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
-%      arguments which are raw, logical, integer, real or complex are not
-%      copied.
+      \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
+      arguments which are raw, logical, integer, real or complex vectors
+      are not copied before the call.  Lists are no longer copied (they
+      are supposed to be used read-only in the C code).
     }
   }
   
