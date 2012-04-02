@@ -3644,7 +3644,7 @@ rendered at all, rendered incorrectly, or cause your @R{} code to give
 an error.  For documentation, marking the encoding and including
 @acronym{ASCII} transliterations is likely to do a reasonable job.  The
 set of characters which is commonly supported is wider than it used to
-be around 2000, but non-Latin alphabets (Greek, Russion, Georgian,
+be around 2000, but non-Latin alphabets (Greek, Russian, Georgian,
 @dots{}) are still often problematic and those with double-width
 characters (Chinese, Japanese, Korean) often need specialist fonts to
 render correctly.
