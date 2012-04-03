@@ -1035,6 +1035,14 @@
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())
 		unloadNamespace(pkg_name)
+            deps_only <- !WINDOWS &&
+                config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
+            if(deps_only) {
+                env <- setRlibs()
+                libs0 <- .libPaths()
+		env <- sub("^.*=", "", env[1L])
+                .libPaths(c(lib0, env))
+            } else libs0 <- NULL
 	    res <- try({
                 suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))
                 makeLazyLoading(pkg_name, lib, keep.source = keep.source)
@@ -1042,6 +1050,7 @@
             if (BC) compiler::compilePKGS(0L)
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("lazy loading failed", pkg_name)
+            if (!is.null(libs0)) .libPaths(libs0)
 	}
 
 	if (install_help) {
@@ -1108,17 +1117,18 @@
             ## FIXME: maybe the quoting as 'lib' is not quite good enough
             ## On a Unix-alike this calls system(input=)
             ## and that uses a temporary file and redirection.
-            cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
-                         sep = "")
+            cmd <- paste0("tools:::.test_load_package('", pkg_name, "', '", lib, "')")
             ## R_LIBS was set already.  R_runR is in check.R
-            env <- if(!WINDOWS &&
-               config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE")))
-                setRlibs(lib0) else ""
+            deps_only <- !WINDOWS &&
+                config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
+            env <- if (deps_only) setRlibs(lib0) else ""
+            opts <- if (deps_only) "--vanilla --slave"
+            else "--no-save --slave"
             if (length(test_archs) > 1L) {
                 msgs <- character()
                 for (arch in test_archs) {
                     starsmsg("***", "arch - ", arch)
-                    res <- R_runR(cmd, "--no-save --slave", env = env,
+                    res <- R_runR(cmd, opts, env = env,
                                   stdout = "", stderr = "", arch = arch)
                     if (res) msgs <- c(msgs, arch)
                 }
@@ -1128,8 +1138,7 @@
                     errmsg(msg) # does not return
                 }
             } else {
-                res <- R_runR(cmd, "--no-save --slave",
-                              stdout = "", stderr = "")
+                res <- R_runR(cmd, opts, env = env, stdout = "", stderr = "")
                 if (res) errmsg("loading failed") # does not return
             }
         }
