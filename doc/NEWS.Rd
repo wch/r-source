@@ -27,8 +27,9 @@
 
       \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
       arguments which are raw, logical, integer, real or complex vectors
-      are not copied before the call.  Lists are no longer copied (they
-      are supposed to be used read-only in the C code).
+      are not copied before the call, and (named or not) they are not
+      copied after the call.  Lists are no longer copied (they are
+      supposed to be used read-only in the C code).
     }
   }
   

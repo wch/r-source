@@ -160,13 +160,13 @@
   changed in the C code of \code{Cfunction} you are safe.
 
   Note that if \code{DUP = TRUE} there are up to two copies involved.
-  There may be one when the data from the argument is copied and the
-  pointer to the copied data passed to the compiled code.  However,
-  non-atomic-vector objects are not copied, and as from \R 2.15.1 nor
-  are objects which are not otherwise used in the calling code (such as
-  \code{output} in the example above).  For atomic vectors there is
-  another copy when the return value is prepared from the data accessed
-  by the compiled code.
+  Prior to \R 2.15.1 this was always the case for vectors (one before
+  calling the compiled code and one to collect the results), and this is
+  still the case for character vectors.  For other atomic vectors, the
+  argument is copied before calling the compiled code if it is not
+  otherwise used in the calling code (such as \code{output} in the
+  example above).  Non-atomic-vector objects are read-only to the C code
+  and are never copied.
 }
 
 \section{Fortran symbol names}{
