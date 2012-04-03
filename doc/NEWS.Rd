@@ -89,8 +89,10 @@
         set to a true value (as done by \command{R CMD check --as-cran})
         now restricts the packages available when lazy-loading as well
 	as when test-loading (since packages such as \CRANpkg{ETLUtils}
-	\CRANpkg{agsemisc} had top-level calls to \code{library} for
+	and \CRANpkg{agsemisc} had top-level calls to \code{library} for
         undeclared packages).
+
+	This check is now also available on Windows.
     }
   }
   

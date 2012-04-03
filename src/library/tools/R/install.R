@@ -1035,7 +1035,7 @@
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())
 		unloadNamespace(pkg_name)
-            deps_only <- !WINDOWS &&
+            deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             if(deps_only) {
                 env <- setRlibs()
@@ -1119,7 +1119,7 @@
             ## and that uses a temporary file and redirection.
             cmd <- paste0("tools:::.test_load_package('", pkg_name, "', '", lib, "')")
             ## R_LIBS was set already.  R_runR is in check.R
-            deps_only <- !WINDOWS &&
+            deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             env <- if (deps_only) setRlibs(lib0) else ""
             opts <- if (deps_only) "--vanilla --slave"
