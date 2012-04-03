@@ -1471,7 +1471,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (dup && NAMED(s)) {
 		n = LENGTH(s);
 		SEXP ss = allocVector(t, n);
-		memcpy(RAW(ss), RAW(s), n * sizeof(int));
+		memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) RAW(ss);
 	    } else cargs[na] = (void *) RAW(s);
@@ -1518,7 +1518,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), na + 1);
 	    if (dup && NAMED(s)) {
 		SEXP ss = allocVector(t, n);
-		memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(double));
+		memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(Rcomplex));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) COMPLEX(ss);
 	    } else cargs[na] = (void *) zptr;
