@@ -82,6 +82,17 @@
       (they were never fully documented).
     }
   }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{R CMD INSTALL} with \env{_R_CHECK_INSTALL_DEPENDS_}
+        set to a true value (as done by \command{R CMD check --as-cran})
+        now restricts the packages available when lazy-loading as well
+	as when test-loading (since packages such as \CRANpkg{ETLUtils}
+	\CRANpkg{agsemisc} had top-level calls to \code{library} for
+        undeclared packages).
+    }
+  }
   
   \subsection{BUG FIXES}{
     \itemize{
