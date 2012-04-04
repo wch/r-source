@@ -123,7 +123,10 @@
       properly.  (PR#14846)
 
       \item Trying to update (recommended) packages in R_HOME/library without
-      write access, is now dealt with more gracefully (PR#14866).
+      write access, is now dealt with more gracefully.
+      Further, such package updates may be skipped (with a warning),
+      when a newer installed version is already going to be used from
+      \code{.libPaths()}.  (PR#14866)
     }
   }
 }
