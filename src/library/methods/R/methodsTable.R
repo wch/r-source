@@ -545,15 +545,6 @@
     }
     else
       fromGroup <- rep(FALSE, length(methods))
-    ## remove default (ANY,..,ANY) if its not the only method:
-    if(length(methods) > 1L) {
-        defaultLabel <- paste(rep.int("ANY", nargs), collapse = "#")
-        i <- match(defaultLabel, names(methods), 0L)
-        if(i > 0L) {
-            methods <- methods[-i]
-            fromGroup <- fromGroup[-i]
-        }
-    }
     ## resolve any duplicate-class ambiguities
     if(.duplicateClassesExist()) {
         found <- integer()
@@ -572,6 +563,15 @@
     }
     if(doExcluded)
       methods <- methods[is.na(match(names(methods), as.character(excluded)))]
+    ## remove default (ANY,..,ANY) if its not the only method:
+    if(length(methods) > 1L) {
+        defaultLabel <- paste(rep.int("ANY", nargs), collapse = "#")
+        i <- match(defaultLabel, names(methods), 0L)
+        if(i > 0L) {
+            methods <- methods[-i]
+            fromGroup <- fromGroup[-i]
+        }
+    }
     if(length(methods) > 1L) {
         if(verbose) cat(" .fI> length(methods) = ", length(methods),
                         " --> ambiguity\n")
