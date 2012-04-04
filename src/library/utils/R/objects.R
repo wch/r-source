@@ -246,7 +246,13 @@ getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
 
 assignInMyNamespace <- function(x, value)
 {
-    ns <- environment(sys.function(-1))
+    f <- sys.function(-1)
+    ns <- environment(f)
+    ## deal with subclasses of "function"
+    ## that may insert an environment in front of the namespace
+    if(isS4(f))
+        while(!isNamespace(ns))
+            ns <- parent.env(ns)
     if(bindingIsLocked(x, ns)) {
         unlockBinding(x, ns)
         assign(x, value, envir = ns, inherits = FALSE)
