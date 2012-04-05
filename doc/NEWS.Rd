@@ -9,7 +9,15 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Place holder.
+      \item There is a new option, \code{options(CBoundsCheck=)}, which
+      controls how \code{.C()} and \code{.Fortran()} pass arguments to
+      compiled code.  If true (which can be enabled by setting the
+      environment variable \env{R_C_BOUNDS_CHECK} to \samp{yes}), raw,
+      integer, double and complex arguments are always copied, and
+      checked for array over-runs on return from the compiled code.
+
+      This not intended for routine use, but can be very helpful in
+      finding segfaults in package code.
     }
   }
 
