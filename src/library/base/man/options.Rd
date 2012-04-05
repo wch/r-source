@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -74,6 +74,13 @@ getOption(x, default = NULL)
       true, a \link{warning} is produced whenever a
       vector (atomic or \code{\link{list}}) is extended, by something
       like \code{x <- 1:3; x[5] <- 6}.}
+
+    \item{\code{CBoundsCheck}:}{logical, controlling whether
+      \code{\link{.C}} and \code{\link{.Fortran}} make copies to check for
+      array over-runs on the atomic vector arguments.
+
+      Initially set from value of the environment variable
+      \env{R_C_BOUNDS_CHECK} (set to \code{yes} to enable).}
 
     \item{\code{continue}:}{a non-empty string setting the prompt used
       for lines which continue over one line.}

@@ -225,9 +225,9 @@ void attribute_hidden InitOptions(void)
     char *p;
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(15));
+    PROTECT(v = val = allocList(16));
 #else
-    PROTECT(v = val = allocList(14));
+    PROTECT(v = val = allocList(15));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -287,6 +287,13 @@ void attribute_hidden InitOptions(void)
 
     SET_TAG(v, install("browserNLdisabled"));
     SETCAR(v, ScalarLogical(FALSE));
+    v = CDR(v);
+
+    p = getenv("R_C_BOUNDS_CHECK");
+    R_CBoundsCheck = (p && (strcmp(p, "yes") == 0)) ? 1 : 0;
+
+    SET_TAG(v, install("CBoundsCheck"));
+    SETCAR(v, ScalarLogical(R_CBoundsCheck));
     v = CDR(v);
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
@@ -582,6 +589,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (k == NA_LOGICAL)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		R_DisableNLinBrowser = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
+	    else if (streql(CHAR(namei), "CBoundsCheck")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		k = asLogical(argi);
+		R_CBoundsCheck = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else {

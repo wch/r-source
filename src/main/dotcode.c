@@ -1315,15 +1315,13 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
    RecordLinkage and locfit pass lists.
 */
 
-/* This is not intended for routine use, 
-   and does not trace memory, for example */
-// #define ALWAYS_COPY 1
+#define FILL 0xee
 
 SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs;
     int dup, naok, na, nargs, Fort;
-    Rboolean havenames;
+    Rboolean havenames, copy = R_CBoundsCheck; /* options(CboundsCheck) */
     DL_FUNC ofun = NULL;
     VarFun fun = NULL;
     SEXP ans, pa, s;
@@ -1456,23 +1454,19 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXPTYPE t = TYPEOF(s);
 	switch(t) {
 	case RAWSXP:
-#ifdef ALWAYS_COPY
-	    if (dup) {
+	    if (copy && dup) {
 		n = LENGTH(s);
 		Rbyte *rawptr = (Rbyte *) R_alloc(n+10, sizeof(Rbyte));
-		memset(rawptr, 0xee, (n+10)*sizeof(Rbyte));
+		memset(rawptr, FILL, (n+10)*sizeof(Rbyte));
 		memcpy(rawptr, RAW(s), n * sizeof(Rbyte));
 		cargs[na] = (void *) rawptr;
-	    } else cargs[na] = (void *) RAW(s);
-#else
-	    if (dup && NAMED(s)) {
+	    } else if (dup && NAMED(s)) {
 		n = LENGTH(s);
 		SEXP ss = allocVector(t, n);
 		memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) RAW(ss);
 	    } else cargs[na] = (void *) RAW(s);
-#endif
 	    break;
 	case LGLSXP:
 	case INTSXP:
@@ -1482,21 +1476,17 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (int i = 0 ; i < n ; i++)
 		    if(iptr[i] == NA_INTEGER)
 			error(_("NAs in foreign function call (arg %d)"), na + 1);
-#ifdef ALWAYS_COPY
-	    if (dup) {
+	    if (copy && dup) {
 		iptr = (int*) R_alloc(n+10, sizeof(int));
-		memset(iptr, 0xee, (n+10)*sizeof(int));
+		memset(iptr, FILL, (n+10)*sizeof(int));
 		memcpy(iptr, INTEGER(s), n * sizeof(int));
 		cargs[na] = (void*) iptr;
-	    } else cargs[na] = (void*) iptr;
-#else
-	    if (dup && NAMED(s)) {
+	    } else if (dup && NAMED(s)) {
 		SEXP ss = allocVector(t, n);
 		memcpy(INTEGER(ss), INTEGER(s), n * sizeof(int));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) INTEGER(ss);
 	    } else cargs[na] = (void*) iptr;
-#endif
 	    break;
 	case REALSXP:
 	    n = LENGTH(s);
@@ -1509,22 +1499,18 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		float *sptr = (float*) R_alloc(n, sizeof(float));
 		for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 		cargs[na] = (void*) sptr;
-#ifdef ALWAYS_COPY
-	    } else if (dup) {
+	    } else if (copy && dup) {
 		double *rptr = REAL(s);
 		rptr = (double*) R_alloc(n+10, sizeof(double));
-		memset(rptr, 0xee, (n+10)*sizeof(double));
+		memset(rptr, FILL, (n+10)*sizeof(double));
 		memcpy(rptr, REAL(s), n * sizeof(double));
 		cargs[na] = (void*) rptr;
-	    } else cargs[na] = (void*) rptr;
-#else
 	    } else if (dup && NAMED(s)) {
 		SEXP ss  = allocVector(t, n);
 		memcpy(REAL(ss), REAL(s), n * sizeof(double));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) REAL(ss);
 	    } else cargs[na] = (void*) rptr;
-#endif
 	    break;
 	case CPLXSXP:
 	    n = LENGTH(s);
@@ -1533,21 +1519,17 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (int i = 0 ; i < n ; i++)
 		    if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
 			error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), na + 1);
-#ifdef ALWAYS_COPY
-	    if (dup) {
+	    if (copy && dup) {
 		zptr = (Rcomplex*) R_alloc(n+10, sizeof(Rcomplex));
-		memset(zptr, 0xee, (n+10)*sizeof(Rcomplex));
+		memset(zptr, FILL, (n+10)*sizeof(Rcomplex));
 		memcpy(zptr, COMPLEX(s), n * sizeof(double));
 		cargs[na] = (void*) zptr;
-	    } else cargs[na] = (void *) zptr;
-#else
-	    if (dup && NAMED(s)) {
+	    } else if (dup && NAMED(s)) {
 		SEXP ss = allocVector(t, n);
 		memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(Rcomplex));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) COMPLEX(ss);
 	    } else cargs[na] = (void *) zptr;
-#endif
 	    break;
 	case STRSXP:
 	    if (!dup)
@@ -1608,6 +1590,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (nprotect) UNPROTECT(nprotect);
 
+/* We will not be tracing unnamed args */
 #ifdef R_MEMORY_PROFILING
 	if (RTRACE(CAR(pa)) && dup) memtrace_report(CAR(pa), cargs[na]);
 #endif
@@ -2246,109 +2229,99 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	        int n = length(arg);
 
 		switch(type) {
-#ifdef ALWAYS_COPY
 		case RAWSXP:
-		{
-		    s = allocVector(type, n);
-		    Rbyte *rawptr = (Rbyte *) p;
-		    memcpy(RAW(s), rawptr, n * sizeof(Rbyte));
-		    rawptr += n;
-		    unsigned char *ptr = (unsigned char *) rawptr;
-		    for (int i = 0; i < 10 * sizeof(Rbyte); i++)
-			if(*ptr++ != 0xee)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n", 
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    break;
-		}
-		case INTSXP:
-		{
-		    s = allocVector(type, n);
-		    int *iptr = (int*) p;
-		    memcpy(INTEGER(s), iptr, n * sizeof(int));
-		    iptr += n;
-		    unsigned char *ptr = (unsigned char *) iptr;
-		    for (int i = 0; i < 10 * sizeof(int); i++)
-			if(*ptr++ != 0xee)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n", 
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    break;
-		}
-		case LGLSXP:
-		{
-		    s = allocVector(type, n);
-		    int *iptr = (int*) p, tmp;
-		    for (int i = 0 ; i < n ; i++) {
-			tmp =  iptr[i];
-			LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
-		    }
-		    iptr += n;
-		    unsigned char *ptr = (unsigned char *) iptr;
-		    for (int i = 0; i < 10 * sizeof(int);  i++)
-			if(*ptr++ != 0xee)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n", 
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    break;
-		}
-		case REALSXP:
-		case SINGLESXP:
-		    s = allocVector(REALSXP, n);
-		    if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
-			float *sptr = (float*) p;
-			for(int i = 0 ; i < n ; i++) 
-			    REAL(s)[i] = (double) sptr[i];
-		    } else {
-			double *rptr = (double*) p;
-			memcpy(REAL(s), rptr, n * sizeof(double));
-			rptr += n;
-			unsigned char *ptr = (unsigned char *) rptr;
-			for (int i = 0; i < 10 * sizeof(double); i++)
-			    if(*ptr++ != 0xee)
+		    if (copy) {
+			s = allocVector(type, n);
+			Rbyte *rawptr = (Rbyte *) p;
+			memcpy(RAW(s), rawptr, n * sizeof(Rbyte));
+			rawptr += n;
+			unsigned char *ptr = (unsigned char *) rawptr;
+			for (int i = 0; i < 10 * sizeof(Rbyte); i++)
+			    if(*ptr++ != FILL)
 				error("array over-run in %s(\"%s\") in %s argument %d\n", 
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
-
 		    }
 		    break;
-		case CPLXSXP:
-		{
-		    s = allocVector(type, n);
-		    Rcomplex *zptr = (Rcomplex*)p;
-		    memcpy(COMPLEX(s), zptr, n * sizeof(Rcomplex));
-		    zptr += n;
-		    unsigned char *ptr = (unsigned char *) zptr;
-		    for (int i = 0; i < 10 * sizeof(Rcomplex);  i++) 
-			if(*ptr++ != 0xee)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n", 
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
+		case INTSXP:
+		    if (copy) {
+			s = allocVector(type, n);
+			int *iptr = (int*) p;
+			memcpy(INTEGER(s), iptr, n * sizeof(int));
+			iptr += n;
+			unsigned char *ptr = (unsigned char *) iptr;
+			for (int i = 0; i < 10 * sizeof(int); i++)
+			    if(*ptr++ != FILL)
+				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				      Fort ? ".Fortran" : ".C",
+				      symName, type2char(type), na+1);
+		    }
 		    break;
-		}
-#else
 		case LGLSXP:
-		{
-		    int *iptr = INTEGER(arg), tmp;
-		    for (int i = 0 ; i < n ; i++) {
-			tmp =  iptr[i];
-			iptr[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
+		    if (copy) {
+			s = allocVector(type, n);
+			int *iptr = (int*) p, tmp;
+			for (int i = 0 ; i < n ; i++) {
+			    tmp =  iptr[i];
+			    LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
+			}
+			iptr += n;
+			unsigned char *ptr = (unsigned char *) iptr;
+			for (int i = 0; i < 10 * sizeof(int);  i++)
+			    if(*ptr++ != FILL)
+				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				      Fort ? ".Fortran" : ".C",
+				      symName, type2char(type), na+1);
+		    } else {
+			int *iptr = INTEGER(arg), tmp;
+			for (int i = 0 ; i < n ; i++) {
+			    tmp =  iptr[i];
+			    iptr[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
+			}
 		    }
 		    break;
-		}
 		case REALSXP:
 		case SINGLESXP:
-		    if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+		    if (copy) {
 			s = allocVector(REALSXP, n);
-			float *sptr = (float*) p;
-			for(int i = 0 ; i < n ; i++) 
-			    REAL(s)[i] = (double) sptr[i];
-#if R_MEMORY_PROFILING
-			if (RTRACE(arg)) {memtrace_report(p, s); SET_RTRACE(s, 1);}
-#endif
+			if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+			    float *sptr = (float*) p;
+			    for(int i = 0 ; i < n ; i++) 
+				REAL(s)[i] = (double) sptr[i];
+			} else {
+			    double *rptr = (double*) p;
+			    memcpy(REAL(s), rptr, n * sizeof(double));
+			    rptr += n;
+			    unsigned char *ptr = (unsigned char *) rptr;
+			    for (int i = 0; i < 10 * sizeof(double); i++)
+				if(*ptr++ != FILL)
+				    error("array over-run in %s(\"%s\") in %s argument %d\n", 
+					  Fort ? ".Fortran" : ".C",
+					  symName, type2char(type), na+1);
+			}
+		    } else {
+			if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+			    s = allocVector(REALSXP, n);
+			    float *sptr = (float*) p;
+			    for(int i = 0 ; i < n ; i++) 
+				REAL(s)[i] = (double) sptr[i];
+			}
+		    }
+		    break;			
+		case CPLXSXP:
+		    if (copy) {
+			s = allocVector(type, n);
+			Rcomplex *zptr = (Rcomplex*)p;
+			memcpy(COMPLEX(s), zptr, n * sizeof(Rcomplex));
+			zptr += n;
+			unsigned char *ptr = (unsigned char *) zptr;
+			for (int i = 0; i < 10 * sizeof(Rcomplex);  i++) 
+			    if(*ptr++ != FILL)
+				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				      Fort ? ".Fortran" : ".C",
+				      symName, type2char(type), na+1);
 		    }
 		    break;
-#endif
 		case STRSXP:
 		    if(Fort) {
 			char buf[256];
@@ -2363,9 +2336,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			char **cptr = (char**) p;
 			for (int i = 0 ; i < n ; i++)
 			    SET_STRING_ELT(s, i, mkChar(cptr[i]));
-#if R_MEMORY_PROFILING
-			if (RTRACE(arg)) {memtrace_report(p, s); SET_RTRACE(s, 1);}
-#endif
 			UNPROTECT(1);
 		    }
 		    break;
@@ -2376,6 +2346,12 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    PROTECT(s);
 		    DUPLICATE_ATTRIB(s, arg);
 		    SET_VECTOR_ELT(ans, na, s);
+#if R_MEMORY_PROFILING
+		    if (RTRACE(arg)) {
+			memtrace_report(p, s); 
+			SET_RTRACE(s, 1);
+		    }
+#endif
 		    UNPROTECT(1);
 		}
 	    }

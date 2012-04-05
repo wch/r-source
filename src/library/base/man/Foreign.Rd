@@ -156,15 +156,6 @@
   In this case the \code{output} variable did not exist before the call
   so it cannot cause trouble.  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
-
-  Note that if \code{DUP = TRUE} there are up to two copies involved.
-  Prior to \R 2.15.1 this was always the case for vectors (one before
-  calling the compiled code and one to collect the results), and this is
-  still the case for character vectors.  For other atomic vectors, the
-  argument is copied before calling the compiled code if it is not
-  otherwise used in the calling code (such as \code{output} in the
-  example above).  Non-atomic-vector objects are read-only to the C code
-  and are never copied.
 }
 
 \section{Fortran symbol names}{
@@ -184,6 +175,26 @@
   used when configuring \R, especially if the subroutine name is not
   lower-case or includes an underscore.  It is also possible to use
   \code{.C} and do any necessary symbol-name translation yourself.
+}
+
+\section{Copying of arguments}{
+  If \code{DUP = TRUE} there are up to two copies made of each argument
+  in \code{\dots}.
+
+  Prior to \R 2.15.1 there were always two for vectors (one before
+  calling the compiled code and one to collect the results), and this is
+  still the case for character vectors.  For other atomic vectors, the
+  argument is copied before calling the compiled code if it is not
+  otherwise used in the calling code (such as \code{output} in the
+  example above).  Non-atomic-vector objects are read-only to the C code
+  and are never copied.
+
+  This behaviour can be changed by setting
+  \code{\link{options}(CBoundsCheck = TRUE)}.  In that case raw,
+  logical, integer, double and complex vector arguments are copied both
+  before and after calling the compiled code.  The first copy made is
+  extended by guard bytes, and on return it is checked that these are
+  unaltered.
 }
 
 \note{
