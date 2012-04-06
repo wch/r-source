@@ -52,13 +52,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 }
 
 setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
-                     libdir = NULL)
+                     libdir = NULL, self = FALSE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
-    flink <- if(WINDOWS) {
-        if(TRUE) Sys.junction
-        else function(from, to) file.copy(from, to, recursive = TRUE)
-    } else file.symlink
+    flink <- function(from, to) {
+        res <- if(WINDOWS) {
+            if(TRUE) Sys.junction(from, to)
+            else file.copy(from, to, recursive = TRUE)
+        } else file.symlink(from, to)
+        if (!res) stop("cannot link from ", from)
+    }
 
     pi <- .split_description(.read_description(file.path(pkgdir, "DESCRIPTION")))
     thispkg <- unname(pi$DESCRIPTION["Package"])
@@ -130,6 +133,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         already <- c(already, m0)
         more <- unique(more[!more %in% already])
     }
+    if (self) flink(normalizePath(pkgdir), tmplib)
     # print(dir(tmplib))
     rlibs <- tmplib
     if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
