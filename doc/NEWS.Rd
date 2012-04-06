@@ -78,6 +78,10 @@
       are not copied before the call, and (named or not) they are not
       copied after the call.  Lists are no longer copied (they are
       supposed to be used read-only in the C code).
+
+      \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
+      has sanity checks that this is actually a binary package (as
+      people have tried it with incorrectly named source packages).
     }
   }
 
@@ -96,8 +100,8 @@
         set to a true value (as done by \command{R CMD check --as-cran})
         now restricts the packages available when lazy-loading as well
 	as when test-loading (since packages such as \CRANpkg{ETLUtils}
-	and \CRANpkg{agsemisc} had top-level calls to \code{library} for
-        undeclared packages).
+	and \CRANpkg{agsemisc} had top-level calls to \code{library()}
+	for undeclared packages).
 
 	This check is now also available on Windows.
     }
@@ -127,8 +131,8 @@
       used the optional \code{xval} argument to compute \code{xlim} and
       not the points at which to plot (as documented).  (\PR{14864})
 
-      \item Names containing special characters were not deparsed
-      properly.  (PR#14846)
+      \item Names containing characters which need to be escaped were
+      not deparsed properly.  (PR#14846)
 
       \item Trying to update (recommended) packages in R_HOME/library without
       write access, is now dealt with more gracefully.

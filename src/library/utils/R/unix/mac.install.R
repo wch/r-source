@@ -48,6 +48,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
 
     unpackPkg <- function(pkg, pkgname, lib, lock = FALSE)
     {
+        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
@@ -60,6 +61,19 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         on.exit(setwd(cDir), add = TRUE)
         res <- untar(pkg, tmpDir)
         setwd(tmpDir)
+        ## sanity check: people have tried to install source .tgz files
+        if (!file.exists(file <- file.path(pkgname, "Meta", "package.rds")))
+            stop(gettextf("file %s is not an OS X binary package", sQuote(pkg)),
+                 domain = NA, call. = FALSE)
+        desc <- readRDS(file)$DESCRIPTION
+        if (length(desc) < 1L)
+            stop(gettextf("file %s is not an OS X binary package", sQuote(pkg)),
+                 domain = NA, call. = FALSE)
+        desc <- as.list(desc)
+        if (is.null(desc$Built))
+            stop(gettextf("file %s is not an OS X binary package", sQuote(pkg)),
+                 domain = NA, call. = FALSE)
+
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
         if(!is.na(res) && res) {
             cat(gettextf("package %s successfully unpacked and MD5 sums checked\n",
@@ -69,7 +83,6 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
 
         instPath <- file.path(lib, pkgname)
         if(identical(lock, "pkglock") || isTRUE(lock)) {
-            dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 	    lockdir <- if(identical(lock, "pkglock"))
                 file.path(lib, paste("00LOCK", pkgname, sep="-"))
             else file.path(lib, "00LOCK")
