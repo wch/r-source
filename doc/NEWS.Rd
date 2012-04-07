@@ -29,6 +29,11 @@
       \file{.o} file in which the calls occur.
 
       Such calls can terminate the \R process which loads the package.
+
+      \item \command{R CMD check} now checks if a package can be loaded
+      by \code{library(pkgname, lib.loc = "somewhere")} without being on
+      the library search path (unless it is already installed in
+      \code{.Library}, when it always will be).
     }
   }
 

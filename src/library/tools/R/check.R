@@ -52,7 +52,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 }
 
 setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
-                     libdir = NULL, self = FALSE)
+                     libdir = NULL, self = FALSE, self2 = TRUE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
     flink <- function(from, to) {
@@ -103,7 +103,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
     deps <- unique(c(names(pi$Depends), names(pi$Imports), names(pi$LinkingTo),
                      if(suggests) names(pi$Suggests)))
-    if(length(libdir)) flink(file.path(libdir, thispkg), tmplib)
+    if(length(libdir) && self2) flink(file.path(libdir, thispkg), tmplib)
     ## .Library is not necessarily canonical, but the .libPaths version is.
     lp <- .libPaths()
     poss <- c(lp[length(lp)], .Library)
@@ -1732,6 +1732,23 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     out <- out[ll:length(out)]
                 }
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
+            } else resultLog(Log, "OK")
+        }
+
+        ## No point in this test if already installed in .Library
+        if (!pkgname %in% dir(.Library)) {
+            checkingLog(Log, "loading without being on the library search path")
+            Rcmd <- sprintf("library(%s, lib.loc = '%s')", pkgname, libdir)
+            opts <- if(nzchar(arch)) R_opts4 else R_opts2
+            env <- setRlibs(pkgdir = pkgdir, libdir = libdir, self2 = FALSE)
+            if(nzchar(arch)) env <- c(env, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR(Rcmd, opts, env, arch = arch)
+            if (any(grepl("^Error", out))) {
+                warningLog(Log)
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
+                wrapLog("\nIt looks like this package",
+                        "has a loading problem when not on .libPaths:",
+                        "see the messages for details.\n")
             } else resultLog(Log, "OK")
         }
     }
