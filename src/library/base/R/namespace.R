@@ -930,8 +930,10 @@ namespaceImportClasses <- function(self, ns, vars) {
 
 namespaceImportMethods <- function(self, ns, vars) {
     allVars <- character()
+    generics <- character()
+    packages <- character()
     allFuns <- methods:::.getGenerics(ns) # all the methods tables in ns
-    packages <- attr(allFuns, "package")
+    allPackages <- attr(allFuns, "package")
     pkg <- methods:::getPackageName(ns)
     if(!all(vars %in% allFuns)) {
         message(gettextf("No methods found in \"%s\" for requests: %s",
@@ -950,16 +952,23 @@ namespaceImportMethods <- function(self, ns, vars) {
         ## import methods tables if asked for
         ## or if the corresponding generic was imported
         g <- allFuns[[i]]
+        p <- allPackages[[i]]
         if(exists(g, envir = self, inherits = FALSE) # already imported
            || g %in% vars) { # requested explicitly
-            tbl <- methods:::.TableMetaName(g, packages[[i]])
-            if(is.null(.mergeImportMethods(self, ns, tbl))) # a new methods table
+            tbl <- methods:::.TableMetaName(g, p)
+            if(is.null(.mergeImportMethods(self, ns, tbl))) { # a new methods table
                allVars <- c(allVars, tbl) # import it;else, was merged
+               generics <- c(generics, g)
+               packages <- c(packages, p)
+            }
         }
         if(g %in% vars && !exists(g, envir = self, inherits = FALSE)) {
             if(exists(g, envir = ns) &&
-               methods:::is(get(g, envir = ns), "genericFunction"))
+               methods:::is(get(g, envir = ns), "genericFunction")) {
                 allVars <- c(allVars, g)
+                generics <- c(generics, g)
+                packages <- c(packages, p)
+            }
             else { # should be primitive
                 fun <- methods::getFunction(g, mustFind = FALSE, where = self)
                 if(is.primitive(fun) || methods::is(fun, "genericFunction")) {}
@@ -970,7 +979,7 @@ namespaceImportMethods <- function(self, ns, vars) {
             }
         }
     }
-    namespaceImportFrom(self, asNamespace(ns), allVars, allFuns, packages)
+    namespaceImportFrom(self, asNamespace(ns), allVars, generics, packages)
 }
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
