@@ -1177,14 +1177,13 @@ by the table entry.
 
 Version-2 serialization first writes a header indicating the format
 (normally @samp{X\n} for an XDR format binary save, but @samp{A\n},
-ASCII, and @samp{B\n}, native word-order binary@footnote{there is no
-@R{}-level interface to this format}, can also occur) and then three
-integers giving the version of the format and two @R{} versions (packed
-by the @code{R_Version} macro from @file{Rversion.h}).  (Unserialization
-interprets the two versions as the version of @R{} which wrote the file
-followed by the minimal version of @R{} needed to read the format.)
-Serialization then writes out the object recursively using function
-@code{WriteItem} in file @file{src/main/serialize.c}.
+ASCII, and @samp{B\n}, native word-order binary, can also occur) and
+then three integers giving the version of the format and two @R{}
+versions (packed by the @code{R_Version} macro from @file{Rversion.h}).
+(Unserialization interprets the two versions as the version of @R{}
+which wrote the file followed by the minimal version of @R{} needed to
+read the format.)  Serialization then writes out the object recursively
+using function @code{WriteItem} in file @file{src/main/serialize.c}.
 
 Some objects are written as if they were @code{SEXPTYPE}s: such
 pseudo-@code{SEXPTYPE}s cover @code{R_NilValue}, @code{R_EmptyEnv},
