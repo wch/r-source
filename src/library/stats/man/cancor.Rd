@@ -54,7 +54,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
 \seealso{
   \code{\link{qr}}, \code{\link{svd}}.
 }
-\examples{
+\examples{\donttest{## signs of results are random
 pop <- LifeCycleSavings[, 2:3]
 oec <- LifeCycleSavings[, -(2:3)]
 cancor(pop, oec)
@@ -66,5 +66,5 @@ all(abs(cor(x \%*\% cxy$xcoef,
             y \%*\% cxy$ycoef)[,1:3] - diag(cxy $ cor)) < 1e-15)
 all(abs(cor(x \%*\% cxy$xcoef) - diag(3)) < 1e-15)
 all(abs(cor(y \%*\% cxy$ycoef) - diag(5)) < 1e-15)
-}
+}}
 \keyword{multivariate}
