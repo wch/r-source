@@ -1500,7 +1500,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 		cargs[na] = (void*) sptr;
 	    } else if (copy && dup) {
-		double *rptr = REAL(s);
 		rptr = (double*) R_alloc(n+10, sizeof(double));
 		memset(rptr, FILL, (n+10)*sizeof(double));
 		memcpy(rptr, REAL(s), n * sizeof(double));
@@ -1522,7 +1521,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (copy && dup) {
 		zptr = (Rcomplex*) R_alloc(n+10, sizeof(Rcomplex));
 		memset(zptr, FILL, (n+10)*sizeof(Rcomplex));
-		memcpy(zptr, COMPLEX(s), n * sizeof(double));
+		memcpy(zptr, COMPLEX(s), n * sizeof(Rcomplex));
 		cargs[na] = (void*) zptr;
 	    } else if (dup && NAMED(s)) {
 		SEXP ss = allocVector(t, n);
