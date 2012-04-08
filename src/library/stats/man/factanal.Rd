@@ -201,7 +201,7 @@ cor(m1)
 factanal(m1, factors = 3) # varimax is the default
 \donttest{factanal(m1, factors = 3, rotation = "promax")}
 # The following shows the g factor as PC1
-prcomp(m1)
+\donttest{prcomp(m1) # signs may depend on platform}
 
 ## formula interface
 factanal(~v1+v2+v3+v4+v5+v6, factors = 3,

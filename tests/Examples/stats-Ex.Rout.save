@@ -3982,67 +3982,6 @@ X-squared = 0.0014, df = 1, p-value = 0.9704
 > 
 > ### ** Examples
 > 
-> pop <- LifeCycleSavings[, 2:3]
-> oec <- LifeCycleSavings[, -(2:3)]
-> cancor(pop, oec)
-$cor
-[1] 0.8247966 0.3652762
-
-$xcoef
-              [,1]        [,2]
-pop15 -0.009110856 -0.03622206
-pop75  0.048647514 -0.26031158
-
-$ycoef
-             [,1]          [,2]          [,3]
-sr   0.0084710221  3.337936e-02 -5.157130e-03
-dpi  0.0001307398 -7.588232e-05  4.543705e-06
-ddpi 0.0041706000 -1.226790e-02  5.188324e-02
-
-$xcenter
-  pop15   pop75 
-35.0896  2.2930 
-
-$ycenter
-       sr       dpi      ddpi 
-   9.6710 1106.7584    3.7576 
-
-> 
-> x <- matrix(rnorm(150), 50, 3)
-> y <- matrix(rnorm(250), 50, 5)
-> (cxy <- cancor(x, y))
-$cor
-[1] 0.53321740 0.30144642 0.08007852
-
-$xcoef
-            [,1]        [,2]        [,3]
-[1,] -0.14296261 -0.03120270  0.09043770
-[2,] -0.03267124 -0.11856663 -0.08155261
-[3,]  0.08664746 -0.09026474  0.09783821
-
-$ycoef
-            [,1]        [,2]         [,3]         [,4]        [,5]
-[1,]  0.12013347 -0.03407745 0.0074025558  0.029420699  0.07196163
-[2,]  0.02860290 -0.04412619 0.0928961072 -0.078303079 -0.02326130
-[3,]  0.05802770 -0.04186854 0.0001008608  0.100341655 -0.09037243
-[4,] -0.07631922 -0.01011231 0.0700839527  0.105665448  0.03633470
-[5,]  0.05199046  0.12587293 0.0423486329 -0.004856735 -0.01739531
-
-$xcenter
-[1]  0.1004483  0.1173265 -0.1524854
-
-$ycenter
-[1]  0.076869287 -0.031311697  0.090658767  0.109468516 -0.006264799
-
-> all(abs(cor(x %*% cxy$xcoef,
-+             y %*% cxy$ycoef)[,1:3] - diag(cxy $ cor)) < 1e-15)
-[1] TRUE
-> all(abs(cor(x %*% cxy$xcoef) - diag(3)) < 1e-15)
-[1] TRUE
-> all(abs(cor(y %*% cxy$ycoef) - diag(5)) < 1e-15)
-[1] TRUE
-> 
-> 
 > 
 > cleanEx()
 > nameEx("case.names")
@@ -6641,18 +6580,6 @@ Cumulative Var   0.316   0.630   0.929
 
 The degrees of freedom for the model is 0 and the fit was 0.4755 
 > # The following shows the g factor as PC1
-> prcomp(m1)
-Standard deviations:
-[1] 3.0368683 1.6313757 1.5818857 0.6344131 0.3190765 0.2649086
-
-Rotation:
-         PC1         PC2        PC3        PC4        PC5         PC6
-v1 0.4168038 -0.52292304  0.2354298 -0.2686501  0.5157193 -0.39907358
-v2 0.3885610 -0.50887673  0.2985906  0.3060519 -0.5061522  0.38865228
-v3 0.4182779  0.01521834 -0.5555132 -0.5686880 -0.4308467 -0.08474731
-v4 0.3943646  0.02184360 -0.5986150  0.5922259  0.3558110  0.09124977
-v5 0.4254013  0.47017231  0.2923345 -0.2789775  0.3060409  0.58397162
-v6 0.4047824  0.49580764  0.3209708  0.2866938 -0.2682391 -0.57719858
 > 
 > ## formula interface
 > factanal(~v1+v2+v3+v4+v5+v6, factors = 3,
@@ -11992,49 +11919,6 @@ Coefficients of ridge terms:
 > ### Keywords: multivariate
 > 
 > ### ** Examples
-> 
-> require(graphics)
-> 
-> ## the variances of the variables in the
-> ## USArrests data vary by orders of magnitude, so scaling is appropriate
-> prcomp(USArrests)  # inappropriate
-Standard deviations:
-[1] 83.732400 14.212402  6.489426  2.482790
-
-Rotation:
-                PC1         PC2         PC3         PC4
-Murder   0.04170432 -0.04482166  0.07989066 -0.99492173
-Assault  0.99522128 -0.05876003 -0.06756974  0.03893830
-UrbanPop 0.04633575  0.97685748 -0.20054629 -0.05816914
-Rape     0.07515550  0.20071807  0.97408059  0.07232502
-> prcomp(USArrests, scale = TRUE)
-Standard deviations:
-[1] 1.5748783 0.9948694 0.5971291 0.4164494
-
-Rotation:
-                PC1        PC2        PC3         PC4
-Murder   -0.5358995  0.4181809 -0.3412327  0.64922780
-Assault  -0.5831836  0.1879856 -0.2681484 -0.74340748
-UrbanPop -0.2781909 -0.8728062 -0.3780158  0.13387773
-Rape     -0.5434321 -0.1673186  0.8177779  0.08902432
-> prcomp(~ Murder + Assault + Rape, data = USArrests, scale = TRUE)
-Standard deviations:
-[1] 1.5357670 0.6767949 0.4282154
-
-Rotation:
-               PC1        PC2        PC3
-Murder  -0.5826006  0.5339532 -0.6127565
-Assault -0.6079818  0.2140236  0.7645600
-Rape    -0.5393836 -0.8179779 -0.1999436
-> plot(prcomp(USArrests))
-> summary(prcomp(USArrests, scale = TRUE))
-Importance of components:
-                          PC1    PC2     PC3     PC4
-Standard deviation     1.5749 0.9949 0.59713 0.41645
-Proportion of Variance 0.6201 0.2474 0.08914 0.04336
-Cumulative Proportion  0.6201 0.8675 0.95664 1.00000
-> biplot(prcomp(USArrests, scale = TRUE))
-> 
 > 
 > 
 > cleanEx()

@@ -1,6 +1,6 @@
 % File src/library/stats/man/prcomp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{prcomp}
@@ -127,7 +127,7 @@ prcomp(x, \dots)
   \code{\link{princomp}}, \code{\link{cor}}, \code{\link{cov}},
   \code{\link{svd}}, \code{\link{eigen}}.
 }
-\examples{
+\examples{\donttest{## signs are random
 require(graphics)
 
 ## the variances of the variables in the
@@ -138,5 +138,5 @@ prcomp(~ Murder + Assault + Rape, data = USArrests, scale = TRUE)
 plot(prcomp(USArrests))
 summary(prcomp(USArrests, scale = TRUE))
 biplot(prcomp(USArrests, scale = TRUE))
-}
+}}
 \keyword{multivariate}

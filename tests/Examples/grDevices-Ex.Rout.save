@@ -2042,9 +2042,9 @@ character(0)
 > 
 > ### ** Examples
 > 
-> (pal <- make.rgb(red=  c(0.6400,0.3300),
-+                  green=c(0.2900,0.6000),
-+                  blue= c(0.1500,0.0600),
+> (pal <- make.rgb(red=  c(0.6400, 0.3300),
++                  green=c(0.2900, 0.6000),
++                  blue= c(0.1500, 0.0600),
 +                  name = "PAL/SECAM RGB"))
 Color space converter: PAL/SECAM RGB
 Reference white: D65
@@ -2053,14 +2053,13 @@ display gamma = 2.2
 > ## converter for sRGB in #rrggbb format
 > hexcolor <- colorConverter(toXYZ = function(hex,...) {
 +                             rgb <- t(col2rgb(hex))/255
-+                             colorspaces$sRGB$toXYZ(rgb,...) },
++                             colorspaces$sRGB$toXYZ(rgb, ...) },
 +                            fromXYZ = function(xyz,...) {
-+                               rgb <- colorspaces$sRGB$fromXYZ(xyz,..)
++                               rgb <- colorspaces$sRGB$fromXYZ(xyz, ..)
 +                               rgb <- round(rgb,5)
 +                               if (min(rgb) < 0 || max(rgb) > 1)
 +                                    as.character(NA)
-+                               else
-+                                    rgb(rgb[1],rgb[2],rgb[3])},
++                               else rgb(rgb[1], rgb[2], rgb[3])},
 +                            white = "D65", name = "#rrggbb")
 > 
 > (cols <- t(col2rgb(palette())))
@@ -2073,16 +2072,16 @@ display gamma = 2.2
 [6,] 255     0  255
 [7,] 255   255    0
 [8,] 190   190  190
-> (luv <- convertColor(cols,from="sRGB", to="Luv", scale.in=255))
-            L             u             v
-[1,]  0.00000  0.000000e+00  0.000000e+00
-[2,] 53.48418  1.753647e+02  3.780017e+01
-[3,] 71.91841 -6.870661e+01  8.786408e+01
-[4,] 32.24075 -9.660595e+00 -1.301930e+02
-[5,] 91.01106 -7.117303e+01 -1.534147e+01
-[6,] 60.50231  8.456678e+01 -1.081465e+02
-[7,] 97.14950  7.898148e+00  1.064410e+02
-[8,] 76.97594 -2.777465e-14 -5.554930e-14
+> zapsmall(luv <- convertColor(cols,from="sRGB", to="Luv", scale.in=255))
+            L         u          v
+[1,]  0.00000   0.00000    0.00000
+[2,] 53.48418 175.36468   37.80017
+[3,] 71.91841 -68.70661   87.86408
+[4,] 32.24075  -9.66060 -130.19297
+[5,] 91.01106 -71.17303  -15.34147
+[6,] 60.50231  84.56678 -108.14654
+[7,] 97.14950   7.89815  106.44098
+[8,] 76.97594   0.00000    0.00000
 > (hex <- convertColor(luv, from="Luv",  to=hexcolor, scale.out=NULL))
 [1] "#000000" "#FF0000" "#00CD00" "#0000FF" "#00FFFF" "#FF00FF" "#FFFF00"
 [8] "#BEBEBE"
