@@ -77,7 +77,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         x <- strsplit(locale, ".", fixed=TRUE)[[1L]]
         enc <- if(length(x) == 2) gsub("@.*$o", "", x[2L]) else ""
         # AIX uses UTF-8, OS X utf-8
-        if(tolower(enc) == "UTF-8") enc <- "utf8"
+        if(toupper(enc) == "UTF-8") enc <- "utf8"
         if(nzchar(enc) && enc != "utf8") {
             enc <- tolower(enc)
             known <-
