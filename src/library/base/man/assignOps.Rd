@@ -36,14 +36,15 @@
   level (e.g., in the complete expression typed at the command prompt)
   or as one of the subexpressions in a braced list of expressions.
 
-  The operators \code{<<-} and \code{->>} cause a search to made through
-  the environment for an existing definition of the variable being
-  assigned.  If such a variable is found (and its binding is not locked)
-  then its value is redefined, otherwise assignment takes place in the
-  global environment.  Note that their semantics differ from that in the
-  S language, but are useful in conjunction with the scoping rules of
-  \R.  See \sQuote{The R Language Definition} manual for further details
-  and examples.
+  The operators \code{<<-} and \code{->>} are normally only used in
+  functions, and cause a search to made through parent environments
+  for an existing definition of the variable being assigned.  If such
+  a variable is found (and its binding is not locked) then its value
+  is redefined, otherwise assignment takes place in the global
+  environment.  Note that their semantics differ from that in the S
+  language, but are useful in conjunction with the scoping rules of
+  \R.  See \sQuote{The R Language Definition} manual for further
+  details and examples.
 
   In all the assignment operator expressions, \code{x} can be a name
   or an expression defining a part of an object to be replaced (e.g.,
