@@ -12,16 +12,17 @@ X <- hilbert(9)[,1:6]
 stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#  D = U' X V
 
+# The signs of the vectors are not determined here.
 X <- cbind(1, 1:7)
-(s <- svd(X)); D <- diag(s$d)
+s <- svd(X); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#  D = U' X V
 
 # test nu and nv
-svd(X, nu = 0)
-(s <- svd(X, nu = 7))
+s <- svd(X, nu = 0)
+s <- svd(X, nu = 7) # the last 5 columns are not determined here
 stopifnot(dim(s$u) == c(7,7))
-svd(X, nv = 0)
+s <- svd(X, nv = 0)
 
 # test of complex case
 
