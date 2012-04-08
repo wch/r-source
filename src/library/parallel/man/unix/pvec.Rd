@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/pvec.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Development Team
+% Copyright 2009-12 R Core Development Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -94,6 +94,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 x <- pvec(1:1000, sqrt)
 stopifnot(all(x == sqrt(1:1000)))
 
+\donttest{
 # One use is to convert date strings to unix time in large datasets
 # as that is a relatively slow operation.
 # So let's get some random dates first
@@ -104,14 +105,14 @@ dates <- sprintf('\%04d-\%02d-\%02d', as.integer(2000+rnorm(N)),
                  as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
 
 system.time(a <- as.POSIXct(dates))
+# This ought to be faster, but system overhead can be high
+# - and is on OS X Lion
 system.time(b <- pvec(dates, as.POSIXct))
-
 stopifnot(all(a == b))
 
-\dontrun{
 # using mclapply for this would much slower because each value
 # will require a separate call to as.POSIXct()
-# as like lapply(dates, as.POSIXct) does
+# as lapply(dates, as.POSIXct) does
 system.time(c <- unlist(mclapply(dates, as.POSIXct))
 }}
 \keyword{interface}
