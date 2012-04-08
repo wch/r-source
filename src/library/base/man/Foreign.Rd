@@ -193,8 +193,8 @@
   \code{\link{options}(CBoundsCheck = TRUE)}.  In that case raw,
   logical, integer, double and complex vector arguments are copied both
   before and after calling the compiled code.  The first copy made is
-  extended by guard bytes, and on return it is checked that these are
-  unaltered.
+  extended at each end by guard bytes, and on return it is checked that
+  these are unaltered.
 }
 
 \note{
