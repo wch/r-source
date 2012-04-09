@@ -36,7 +36,8 @@
 
 splineDesign <-
     ## Creates the "design matrix" for a collection of B-splines.
-    function(knots, x, ord = 4, derivs = integer(nx), outer.ok = FALSE)
+    function(knots, x, ord = 4, derivs = integer(nx), outer.ok = FALSE,
+             sparse = FALSE)
 {
     knots <- sort(as.numeric(knots))
     if((nk <- length(knots)) <= 0) stop("must have at least 'ord' knots")
@@ -44,6 +45,7 @@ splineDesign <-
     nx <- length(x)
     if(length(derivs) != nx)
 	stop("length of 'derivs' must match length of 'x'")
+    ord <- as.integer(ord)
     if(ord > nk || ord < 1)
 	stop("'ord' must be positive integer, at most the number of knots")
 
@@ -52,7 +54,7 @@ splineDesign <-
         stop(gettextf("need at least 2*ord -1 (=%d) knots", 2*ord -1),
              domain = NA)
 
-    o1 <- ord - 1
+    o1 <- ord - 1L
 ### FIXME: the 'outer.ok && need.outer' handling would more efficiently happen
 ###        in the underlying C code - with some programming effort though..
     if(need.outer <- any(out.x <- x < knots[ord] | knots[nk - o1] < x)) {
@@ -70,7 +72,6 @@ splineDesign <-
     }
     temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
     ncoef <- nk - ord
-    design <- matrix(double(nx * ncoef), nx, ncoef)
 
     ii <- if(need.outer && x.out) { # only assign non-zero for x[]'s "inside" knots
         rep.int((1L:nx)[in.x], rep.int(ord, nnx))
@@ -78,15 +79,37 @@ splineDesign <-
     jj <- c(outer(1L:ord, attr(temp, "Offsets"), "+"))
     ## stopifnot(length(ii) == length(jj))
 
-    if(need.outer) { ## shift column numbers and drop those "outside"
-        jj <- jj - o1
-        ok <- 1 <= jj & jj <= ncoef
-	design[cbind(ii, jj)[ok , , drop=FALSE]] <- temp[ok]
-    }
-    else
-        design[cbind(ii, jj)] <- temp
+    if(sparse) {
+	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+	    stop("splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed")
 
-    design
+	if(need.outer) { ## shift column numbers and drop those "outside"
+	    jj <- jj - o1 - 1L
+	    ok <- 0 <= jj & jj < ncoef
+	    as(new("dgTMatrix",
+		   i = ii[ok] - 1L,
+		   j = jj[ok],
+		   x = as.double(temp[ok]),
+		   Dim = c(nx, ncoef)), "CsparseMatrix")
+	}
+	else
+	    as(new("dgTMatrix",
+		   i = ii - 1L,
+		   j = jj - 1L,
+		   x = as.double(temp),
+		   Dim = c(nx, ncoef)), "CsparseMatrix")
+
+    } else { ## traditional (dense) matrix
+	design <- matrix(double(nx * ncoef), nx, ncoef)
+	if(need.outer) { ## shift column numbers and drop those "outside"
+	    jj <- jj - o1
+	    ok <- 1 <= jj & jj <= ncoef
+	    design[cbind(ii, jj)[ok , , drop=FALSE]] <- temp[ok]
+	}
+	else
+	    design[cbind(ii, jj)] <- temp
+	design
+    }
 }
 
 interpSpline <-

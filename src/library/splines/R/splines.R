@@ -52,19 +52,19 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         if(any(ol)) {
             k.pivot <- Boundary.knots[1L]
             xl <- cbind(1, outer(x[ol] - k.pivot, 1L:degree, "^"))
-            tt <- spline.des(Aknots, rep(k.pivot, ord), ord, derivs)$design
+            tt <- splineDesign(Aknots, rep(k.pivot, ord), ord, derivs)
             basis[ol,  ] <- xl %*% (tt/scalef)
         }
         if(any(or)) {
             k.pivot <- Boundary.knots[2L]
             xr <- cbind(1, outer(x[or] - k.pivot, 1L:degree, "^"))
-            tt <- spline.des(Aknots, rep(k.pivot, ord), ord, derivs)$design
+            tt <- splineDesign(Aknots, rep(k.pivot, ord), ord, derivs)
             basis[or,  ] <- xr %*% (tt/scalef)
         }
         if(any(inside <- !outside))
-            basis[inside,  ] <- spline.des(Aknots, x[inside], ord)$design
+            basis[inside,  ] <- splineDesign(Aknots, x[inside], ord)
     }
-    else basis <- spline.des(Aknots, x, ord)$design
+    else basis <- splineDesign(Aknots, x, ord)
     if(!intercept)
         basis <- basis[, -1L , drop = FALSE]
     n.col <- ncol(basis)
@@ -113,20 +113,20 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         if(any(ol)) {
             k.pivot <- Boundary.knots[1L]
             xl <- cbind(1, x[ol] - k.pivot)
-            tt <- spline.des(Aknots, rep(k.pivot, 2L), 4, c(0, 1))$design
+            tt <- splineDesign(Aknots, rep(k.pivot, 2L), 4, c(0, 1))
             basis[ol,  ] <- xl %*% tt
         }
         if(any(or)) {
             k.pivot <- Boundary.knots[2L]
             xr <- cbind(1, x[or] - k.pivot)
-            tt <- spline.des(Aknots, rep(k.pivot, 2L), 4, c(0, 1))$design
+            tt <- splineDesign(Aknots, rep(k.pivot, 2L), 4, c(0, 1))
             basis[or,  ] <- xr %*% tt
         }
         if(any(inside <- !outside))
-            basis[inside,  ] <- spline.des(Aknots, x[inside], 4)$design
+            basis[inside,  ] <- splineDesign(Aknots, x[inside], 4)
     }
-    else basis <- spline.des(Aknots, x, 4)$design
-    const <- spline.des(Aknots, Boundary.knots, 4, c(2, 2))$design
+    else basis <- splineDesign(Aknots, x, 4)
+    const <- splineDesign(Aknots, Boundary.knots, 4, c(2, 2))
     if(!intercept) {
         const <- const[, -1 , drop = FALSE]
         basis <- basis[, -1 , drop = FALSE]
@@ -186,10 +186,11 @@ makepredictcall.bs <- function(var, call)
 }
 
 
-spline.des <-
-    function(knots, x, ord = 4, derivs = integer(length(x)), outer.ok = FALSE)
+spline.des <- function(knots, x, ord = 4, derivs = integer(length(x)),
+		       outer.ok = FALSE, sparse = FALSE)
 {
     list(knots = sort(as.vector(knots)), order = ord, derivs = derivs,
-         design = splineDesign(knots, x, ord, derivs, outer.ok = outer.ok))
+	 design = splineDesign(knots, x, ord, derivs,
+	 outer.ok = outer.ok, sparse = sparse))
 }
 ## splineDesign() is in ./splineClasses.R

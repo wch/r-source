@@ -38,6 +38,10 @@
       \item \code{tabulate()} makes use of \code{.C(DUP = FALSE)} and
       hence does not copy \code{bin}.  (Suggested by Tim Hesterberg.)
       It also avoids making a copy of a factor argument \code{bin}.
+
+      \item \code{splineDesign()} and \code{spline.des()} in package
+      \pkg{splines} have an option \code{sparse} which can be used for
+      efficient construction of a sparse B-spline design matrix.
     }
   }
 

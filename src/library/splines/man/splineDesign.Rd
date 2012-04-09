@@ -1,6 +1,6 @@
 % File src/library/splines/man/splineDesign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{splineDesign}
@@ -12,8 +12,8 @@
   at the values in \code{x}.
 }
 \usage{
-splineDesign(knots, x, ord = 4, derivs, outer.ok = FALSE)
-spline.des(knots, x, ord = 4, derivs, outer.ok = FALSE)
+splineDesign(knots, x, ord = 4, derivs, outer.ok = FALSE, sparse = FALSE)
+spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE, sparse = FALSE)
 }
 \arguments{
   \item{knots}{a numeric vector of knot positions with non-decreasing
@@ -31,6 +31,8 @@ spline.des(knots, x, ord = 4, derivs, outer.ok = FALSE)
     vector of zeroes of the same length as \code{x}.}
   \item{outer.ok}{logical indicating if \code{x} should be allowed
     outside the \emph{inner} knots, see the \code{x} argument.}
+  \item{sparse}{logical indicating if the result should inherit from class
+    \code{\linkS4class{sparseMatrix}} (package \pkg{Matrix}).}
 }
 \value{
   A matrix with \code{length( x )} rows and \code{length( knots ) - ord}
@@ -50,6 +52,8 @@ spline.des(knots, x, ord = 4, derivs, outer.ok = FALSE)
 \examples{
 require(graphics)
 splineDesign(knots = 1:10, x = 4:7)
+## "visualize" band structure
+Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse=TRUE)))
 
 knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)# 10 => 10-4 = 6 Basis splines
 x <- seq(min(knots)-1, max(knots)+1, length.out=501)
