@@ -1470,7 +1470,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) RAW(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
 #endif
 	    } else cargs[na] = (void *) RAW(s);
 	    break;
@@ -1494,7 +1494,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) INTEGER(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
 #endif
 	    } else cargs[na] = (void*) iptr;
 	    break;
@@ -1524,7 +1524,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) REAL(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
 #endif
 	    } else cargs[na] = (void*) rptr;
 	    break;
@@ -1547,7 +1547,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) COMPLEX(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
 #endif
 	    } else cargs[na] = (void *) zptr;
 	    break;
