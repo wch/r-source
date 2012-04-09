@@ -42,6 +42,9 @@
       \item \code{splineDesign()} and \code{spline.des()} in package
       \pkg{splines} have an option \code{sparse} which can be used for
       efficient construction of a sparse B-spline design matrix.
+
+      \item \code{norm()} now allows \code{type = "2"} (the "spectral"
+      or 2-norm) as well, mainly for didactical completeness.
     }
   }
 
