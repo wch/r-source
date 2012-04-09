@@ -14,17 +14,20 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-tabulate <- function(bin, nbins = max(1L, bin, na.rm=TRUE))
+tabulate <- function(bin, nbins = max(1L, bin, na.rm = TRUE))
 {
     if(!is.numeric(bin) && !is.factor(bin))
 	stop("'bin' must be numeric or a factor")
+    ## avoid a copy for factors, since as.integer strips attributes
+    if (typeof(bin) != "integer") bin <- as.integer(bin)
+    ## could remove once we have long vectors ....
     if (nbins > .Machine$integer.max)
         stop("attempt to make a table with >= 2^31 elements")
+    ## DUP = FALSE avoids 'bin' being duplicated.
     .C("R_tabulate",
-       as.integer(bin),
-       as.integer(length(bin)),
+       bin, length(bin),
        as.integer(nbins),
        ans = integer(nbins),
        NAOK = TRUE,
-       PACKAGE="base")$ans
+       PACKAGE = "base", DUP = FALSE)$ans
 }
