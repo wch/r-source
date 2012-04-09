@@ -4125,19 +4125,19 @@ There are also FreeBSD packages for a small eclectic collection of
 @cindex OS X
 
 You can build @R{} as a Unix application on OS X using the Apple
-Developer Tools (`Xcode') and @command{gfortran}.  You may also need to
+Developer Tools (`Xcode') and @command{gfortran}.  (Recent versions of
+Xcode also need `Command Line Tools for Xcode'.)  You may also need to
 install an X sub-system or configure with @option{--without-x}.  The X
-window manager is part of the standard OS X distribution since
-OS X version 10.3 (Panther), but it is typically not pre-installed prior
-to 10.5 (Leopard).  You will also need @command{gfortran} and
-@code{libreadline} (or configure with @option{--without-readline}).
+window manager is part of the standard OS X distribution.  You will also
+need a version @command{gfortran} and @code{libreadline} (or configure
+with @option{--without-readline}).
 
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for
 Mac OS X @acronym{FAQ}} or look at
-@url{http://r.research.att.com/@/tools/}.  You will typically need to
-install Xcode and a matching version of @command{gfortran} from the
-tools page.
+@url{http://r.research.att.com/@/tools/}.  You will need to install a
+matching version of @command{gfortran} from the tools page, and for Lion
+you can also install a matched set of C/C++/Fortran compilers from there.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4174,17 +4174,19 @@ needed is to select suitable compiler options, e.g.@: for most Intel
 Macs
 
 @example
-CC='gcc -arch x86_64'
-CXX='g++ -arch x86_64'
-F77='gfortran -arch x86_64'
-FC='gfortran -arch x86_64'
-OBJC='gcc -arch x86_64'
+CC='gcc-4.2 -arch x86_64'
+CXX='g++-4.2 -arch x86_64'
+F77='gfortran-4.2 -arch x86_64'
+FC='gfortran-4.2 -arch x86_64'
+OBJC='gcc-4.2 -arch x86_64'
 @end example
 
 @noindent
-in @file{config.site} or on the @command{configure} command line.  (Or
-on Leopard specify @option{gcc-4.2} etc: those versions are the default
-on Snow Leopard.)
+in @file{config.site} or on the @command{configure} command line.
+
+Which version is the default depends on the precise version of the
+compiler used (which will depends on the OS version and where it came
+from).  For recent versions, 64-bit will be the default.
 
 @node Snow Leopard, Lion, 64-bit builds, Mac OS X
 @subsection Snow Leopard
@@ -4226,7 +4228,7 @@ LIBS=-L/usr/X11/lib
 @node Lion,  , Snow Leopard, Mac OS X
 @subsection Lion
 
-With Xcode 4.2 you need to install a package named like
+With Xcode 4.2 and later you need to install a package named like
 @url{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
 provide compilers named @command{gcc-4.2}, @command{g++-4.2} and
 @command{gfortran-4.2}.  These default to 64-bit, so for a 64-bit build
