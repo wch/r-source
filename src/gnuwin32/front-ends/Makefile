@@ -12,8 +12,8 @@ else
 endif
 CPPFLAGS=-I../../include $(arch_DEFS)
 
-## Increase stack size to 10Mb
-LARGE_STACK=-Wl,--stack=0xA00000
+## Increase stack size to 64Mb
+LARGE_STACK=-Wl,--stack=0x4000000
 ## allow 32-bit builds to address over 2Gb
 ifeq "$(WIN)" "32"
 LARGE_ADDR=-Wl,--large-address-aware

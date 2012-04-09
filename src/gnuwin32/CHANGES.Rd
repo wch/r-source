@@ -4,6 +4,16 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
+\section{CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The C stack size has been increased to 64MB (it has been
+      10MB since the days of 32MB RAM systems).
+    }
+  }
+}
+
+
 \section{CHANGES IN R VERSION 2.15.0}{
   \subsection{NEW FEATURES}{
     \itemize{
