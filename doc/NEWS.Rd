@@ -34,6 +34,10 @@
       \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
       has sanity checks that this is actually a binary package (as
       people have tried it with incorrectly named source packages).
+
+      \item \code{tabulate()} makes use of \code{.C(DUP = FALSE)} and
+      hence does not copy \code{bin}.  (Suggested by Tim Hesterberg.)
+      It also avoids making a copy of a factor argument \code{bin}.
     }
   }
 

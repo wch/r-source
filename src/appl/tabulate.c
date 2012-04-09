@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999        The R Development Core Team
+ *  Copyright (C) 1999-2012   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* Factor Tabulation */
+/* Integer vector tabulation */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -27,6 +27,7 @@
 #include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 
+/* read-only, apart from 'ans' */
 void R_tabulate(int *x, int *n, int *nbin, int *ans)
 {
     int i;
