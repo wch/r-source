@@ -86,7 +86,7 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
     } else {
 	cell = fmax2(fabs(*lo),fabs(*up));
 	/* U = upper bound on cell/unit */
-	U = 1 + (h5 >= 1.5*h+.5) ? 1/(1+h) : 1.5/(1+h5);
+	U = (1 + (h5 >= 1.5*h+.5)) ? 1/(1+h) : 1.5/(1+h5);
 	/* added times 3, as several calculations here */
 	i_small = dx < cell * U * imax2(1,*ndiv) * DBL_EPSILON *3;
     }
