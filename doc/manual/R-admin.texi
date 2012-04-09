@@ -1495,62 +1495,13 @@ binaries for OS X for a base distribution and a large number of
 add-on packages from @acronym{CRAN} to run on OS X 10.[567].
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
-double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
+double-click on the icon.  Note that Tcl/Tk and the compilers
 need to be installed separately if needed.
 
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
 
-@menu
-* Building from source on (Mac) OS X::  
-@end menu
-
-@node Building from source on (Mac) OS X,  , Installing R under (Mac) OS X, Installing R under (Mac) OS X
-@section Building from source on (Mac) OS X
-
-If you want to build this port from the sources, you should read the R for
-Mac OS X FAQ for full details.  You will need to collect and install
-some tools as explained in that document.  Then you have to unpack the
-@R{} sources and configure @R{} appropriately, for example
-
-@example
-tar -zxvf R-@value{VERSIONno}.tar.gz
-cd R-@value{VERSIONno}
-./configure --with-blas='-framework vecLib' --with-lapack \
-  --with-aqua --enable-R-framework
-make
-@end example
-
-@noindent
-and then sit back and wait.  The first two options are the default and
-use the BLAS and LAPACK built into OS X.  This has pros and cons: it
-used to be faster (but has not been on some recent multicore hardware)
-but less accurate.
-
-The second line of options are also default on OS X, but needed only
-if you want to build @R{} for use with @code{R.app} Console, and imply
-@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
-These options configure @R{} to be built and installed as a framework
-called @file{R.framework}.  The default installation path for
-@file{R.framework} is @file{/Library/Frameworks} but this can be changed
-at configure time by specifying the flag
-@option{--enable-R-framework[=@var{DIR}]} or at install time as
-
-@example
-make prefix=/where/you/want/R.framework/to/go install
-@end example
-
-@noindent
-(the final @file{R.framework} directory should not be included in the
-path).
-
-For compatibility with the @acronym{CRAN} distribution you may need to
-specify @option{--with-included-gettext} to avoid linking against a
-@samp{libintl} dynamic library you may have available, for example in
-@file{/usr/local/lib}.
-
-Note that building the @file{R.app} GUI console is a separate project:
-see the OS X FAQ for details.
+For building from source, see @ref{Mac OS X}.
 
 
 @node Running R, Add-on packages, Installing R under (Mac) OS X, Top
@@ -4125,19 +4076,16 @@ There are also FreeBSD packages for a small eclectic collection of
 @cindex OS X
 
 You can build @R{} as a Unix application on OS X using the Apple
-Developer Tools (`Xcode') and @command{gfortran}.  (Recent versions of
-Xcode also need `Command Line Tools for Xcode'.)  You may also need to
-install an X sub-system or configure with @option{--without-x}.  The X
-window manager is part of the standard OS X distribution.  You will also
-need a version @command{gfortran} and @code{libreadline} (or configure
-with @option{--without-readline}).
+Developer Tools (`Xcode') and a version of @command{gfortran}.  (Recent
+versions of Xcode need `Command Line Tools for Xcode'.)  You may also
+need to install an X sub-system or configure with @option{--without-x}.
+The X window manager is part of the standard OS X distribution.  You
+will also need a version of @command{gfortran} and @code{libreadline}
+(or configure with @option{--without-readline}).
 
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for
-Mac OS X @acronym{FAQ}} or look at
-@url{http://r.research.att.com/@/tools/}.  You will need to install a
-matching version of @command{gfortran} from the tools page, and for Lion
-you can also install a matched set of C/C++/Fortran compilers from there.
+Mac OS X @acronym{FAQ}}.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4161,17 +4109,37 @@ can be done (and is provided as an alternative in the binary
 distribution).
 
 @menu
+* 32-bit builds::               
 * 64-bit builds::               
 * Snow Leopard::                
 * Lion::                        
+* Frameworks::                  
 @end menu
 
-@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
+@node 32-bit builds, 64-bit builds, Mac OS X, Mac OS X
+@subsection 32-bit builds
+
+It is safest to tell the compilers explicitly to compile for 32-bit code
+by setting
+
+@example
+CC='gcc-4.2 -arch i386'
+CXX='g++-4.2 -arch i386'
+F77='gfortran-4.2 -arch i386'
+FC='gfortran-4.2 -arch i386'
+OBJC='gcc-4.2 -arch i386'
+@end example
+
+@noindent
+in @file{config.site} or on the @command{configure} command line.
+
+
+
+@node 64-bit builds, Snow Leopard, 32-bit builds, Mac OS X
 @subsection 64-bit builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
-needed is to select suitable compiler options, e.g.@: for most Intel
-Macs
+needed is to select suitable compiler options, e.g.@:
 
 @example
 CC='gcc-4.2 -arch x86_64'
@@ -4184,21 +4152,12 @@ OBJC='gcc-4.2 -arch x86_64'
 @noindent
 in @file{config.site} or on the @command{configure} command line.
 
-Which version is the default depends on the precise version of the
-compiler used (which will depends on the OS version and where it came
-from).  For recent versions, 64-bit will be the default.
-
 @node Snow Leopard, Lion, 64-bit builds, Mac OS X
 @subsection Snow Leopard
 
-On Snow Leopard you will most likely to need to specify @option{-arch
-i386} for a 32-bit build and @option{-arch x86_64} for a 64-bit build:
-the Apple compilers default to 64-bit but the @command{gfortran}
-supplied on @uref{http://r.research.att.com} defaults to 32-bit.
-
-Another quirk is that the X11 libraries are not in the default linking
-path, so something like @samp{LIBS=-L/usr/X11/lib} may be required (or
-you can use the @command{configure} options
+A quirk on Snow Leopard is that the X11 libraries are not in the default
+linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
+required (or you can use the @command{configure} options
 @option{--x-includes=/usr/X11/include --x-libraries=/usr/X11/lib.}).
 
 So for a 64-bit build of @R{} you need a file @file{config.site} in the
@@ -4213,19 +4172,7 @@ OBJC='gcc -arch x86_64'
 LIBS=-L/usr/X11/lib
 @end example
 
-@noindent
-whereas for a 32-bit build it should have
-
-@example
-CC='gcc -arch i386'
-CXX='g++ -arch i386'
-F77='gfortran -arch i386'
-FC='gfortran -arch i386'
-OBJC='gcc -arch i386'
-LIBS=-L/usr/X11/lib
-@end example
-
-@node Lion,  , Snow Leopard, Mac OS X
+@node Lion, Frameworks, Snow Leopard, Mac OS X
 @subsection Lion
 
 With Xcode 4.2 and later you need to install a package named like
@@ -4242,8 +4189,7 @@ FC=gfortran-4.2
 OBJC=gcc-4.2
 @end example
 
-and for a 32-bit build add @option{-arch i386} as displayed under Snow
-Leopard.
+and for a 32-bit build add @option{-arch i386} as displayed above.
 
 It is also possible to build @R{} using Apple's C/C++ compilers supplied
 with Xcode, but these do need to be supplemented by a Fortran compiler
@@ -4251,6 +4197,36 @@ with Xcode, but these do need to be supplemented by a Fortran compiler
 @command{llvm-gcc}, an LLVM-based compiler with a @command{gcc 4.2.1}
 front end, and @command{clang} can also be used (and @command{clang++}
 for C++).
+
+@node Frameworks,  , Lion, Mac OS X
+@subsection Frameworks
+
+The @acronym{CRAN} build of @R{} is installed as a framwork, which is
+selected by option
+
+@example
+./configure --with-blas='-framework vecLib' --with-lapack \
+  --with-aqua --enable-R-framework
+@end example
+
+The second line of options is only needed if you want to build @R{} for
+use with @code{R.app} Console, and imply @option{--enable-R-shlib} to
+build @R{} as a shared/dynamic library.  These options configure @R{} to
+be built and installed as a framework called @file{R.framework}.  The
+default installation path for @file{R.framework} is
+@file{/Library/Frameworks} but this can be changed at configure time by
+specifying the flag @option{--enable-R-framework[=@var{DIR}]} or at
+install time as
+
+@example
+make prefix=/where/you/want/R.framework/to/go install
+@end example
+
+
+Note that building the @file{R.app} GUI console is a separate project:
+see @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html,
+R for Mac OS X @acronym{FAQ}} for details.
+
 
 @node Solaris, AIX, Mac OS X, Platform notes
 @section Solaris
