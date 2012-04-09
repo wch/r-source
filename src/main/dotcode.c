@@ -1474,6 +1474,9 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) RAW(ss);
+#ifdef R_MEMORY_PROFILING
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+#endif
 	    } else cargs[na] = (void *) RAW(s);
 	    break;
 	case LGLSXP:
@@ -1489,6 +1492,9 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		memcpy(INTEGER(ss), INTEGER(s), n * sizeof(int));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) INTEGER(ss);
+#ifdef R_MEMORY_PROFILING
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+#endif
 	    } else cargs[na] = (void*) iptr;
 	    break;
 	case REALSXP:
@@ -1502,11 +1508,18 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		float *sptr = (float*) R_alloc(n, sizeof(float));
 		for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 		cargs[na] = (void*) sptr;
+#ifdef R_MEMORY_PROFILING
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+#endif
 	    } else if (dup && NAMED(s)) {
 		SEXP ss  = allocVector(t, n);
 		memcpy(REAL(ss), REAL(s), n * sizeof(double));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) REAL(ss);
+#ifdef R_MEMORY_PROFILING
+		if (RTRACE(s)) memtrace_report(s, ss);
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+#endif
 	    } else cargs[na] = (void*) rptr;
 	    break;
 	case CPLXSXP:
@@ -1521,6 +1534,9 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(Rcomplex));
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) COMPLEX(ss);
+#ifdef R_MEMORY_PROFILING
+		if (RTRACE(s)) {memtrace_report(s, ss); SET_TRACE(ss, 1);}
+#endif
 	    } else cargs[na] = (void *) zptr;
 	    break;
 	case STRSXP:
@@ -1571,6 +1587,9 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		}
 		cargs[na] = (void*) cptr;
+#ifdef R_MEMORY_PROFILING
+		if (RTRACE(s)) memtrace_report(s, cargs[na]);
+#endif
 	    }
 	    break;
 	case VECSXP:
@@ -1605,10 +1624,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    continue;
 	}
 	if (nprotect) UNPROTECT(nprotect);
-
-#ifdef R_MEMORY_PROFILING
-	if (RTRACE(CAR(pa)) && dup) memtrace_report(CAR(pa), cargs[na]);
-#endif
     }
 
 
