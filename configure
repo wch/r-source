@@ -26160,13 +26160,18 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
 ## SPARC has only an 8k global object table, 1024 entries on 64-bit,
 ## so need PIC not pic.  They are the same on other Solaris platforms.
     shlib_ldflags="-G"
-    shlib_cxxldflags="-G"
     if test "${GCC}" = yes; then
+      cpicflags="-fPIC"
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
 	main_ldflags="-Wl,-export-dynamic"
 	shlib_ldflags="-shared"
+        shlib_cxxldflags="-shared"
+      else
+        ## it seems gcc c 4.6.2 needs this with Solaris linker
+	shlib_ldflags="-shared"
+        shlib_cxxldflags="-shared"
       fi
     else
       cpicflags="-KPIC"
@@ -26178,10 +26183,14 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
         fi
       fi
     fi
+    ## G77 include gfortran
     if test "${G77}" != yes; then
       fpicflags="-PIC"
+    else
+      fpicflags="-fPIC"
     fi
     if test "${GXX}" = yes; then
+      cxxpicflags="-fPIC"
       ld=`${CXX} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
@@ -35869,11 +35878,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35872: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35881: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35876: \$? = $ac_status" >&5
+   echo "$as_me:35885: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35968,11 +35977,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35971: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35980: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35975: \$? = $ac_status" >&5
+   echo "$as_me:35984: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36020,11 +36029,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36023: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36032: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36027: \$? = $ac_status" >&5
+   echo "$as_me:36036: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
