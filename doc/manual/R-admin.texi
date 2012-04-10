@@ -4431,10 +4431,12 @@ needed
 @example
 CPPFLAGS=-I/opt/csw/include
 LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib"
+SHLIB_LDFLAGS=-shared
 @end example
 
 @noindent
-and for a 64-bit Sparc target
+(the @code{SHLIB_LDFLAGS} line is needed on some builds of
+@command{gcc}) and for a 64-bit Sparc target
 @example
 CC="gcc -m64"
 F77="gfortran -m64"
@@ -4463,16 +4465,27 @@ F77="/opt/csw/gcc4/bin/gfortran -m32"
 CXX="/opt/csw/gcc4/bin/g++ -m32"
 FC="/opt/csw/gcc4/bin/gfortran -m32"
 LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
+SHLIB_LDFLAGS=-shared
 @end example
 
 (@code{-L/opt/csw/lib} is needed since TexLive 2011 was built using
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
 
-For @cputype{amd64} the builds have failed to complete in several
-different ways, currently with relocation errors for @file{libRblas.so}.
+For an @cputype{amd64} target with @command{gcc}@tie{}4.6.2
+we used 
 
-
+@example
+CC="/opt/csw/gcc4/bin/gcc -m64"
+CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
+F77="/opt/csw/gcc4/bin/gfortran -m64"
+FPICFLAGS=-fPIC
+CXX="/opt/csw/gcc4/bin/g++ -m64"
+FC=$F77
+FCPICFLAGS=$FPICFLAGS
+LDFLAGS="-L/opt/csw/gcc4/lib/amd64 -L/opt/csw/lib/amd64"
+SHLIB_LDFLAGS=-shared
+@end example
 
 @node AIX, Cygwin, Solaris, Platform notes
 @section AIX
