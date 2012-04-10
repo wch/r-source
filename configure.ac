@@ -1477,12 +1477,18 @@ rm -f libconftest${DYLIB_EXT} conftest.c
 ## so need PIC not pic.  They are the same on other Solaris platforms.
     shlib_ldflags="-G"
     shlib_cxxldflags="-G"
-    if test "${GCC}" = yes; then
+   if test "${GCC}" = yes; then
+      cpicflags="-fPIC"
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
 	main_ldflags="-Wl,-export-dynamic"
 	shlib_ldflags="-shared"
+        shlib_cxxldflags="-shared"
+      else
+        ## it seems gcc c 4.6.2 needs this with Solaris linker
+	shlib_ldflags="-shared"
+        shlib_cxxldflags="-shared"
       fi
     else
       cpicflags="-KPIC"
@@ -1494,10 +1500,14 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         fi
       fi
     fi
+    ## G77 include gfortran
     if test "${G77}" != yes; then
       fpicflags="-PIC"
+    else
+      fpicflags="-fPIC"
     fi
     if test "${GXX}" = yes; then
+      cxxpicflags="-fPIC"
       ld=`${CXX} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then

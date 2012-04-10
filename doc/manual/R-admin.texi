@@ -4423,7 +4423,9 @@ If using @command{gcc}, ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.
+one version of Solaris on a later version.  The notes here are for
+@command{gcc} set up to use the Solaris linker: it can also be set up
+to use GNU @command{ld}, but that has not been tested.
 
 Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.6.2
 needed
@@ -4431,7 +4433,6 @@ needed
 @example
 CPPFLAGS=-I/opt/csw/include
 LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib"
-SHLIB_LDFLAGS=-shared
 @end example
 
 @noindent
@@ -4465,7 +4466,6 @@ F77="/opt/csw/gcc4/bin/gfortran -m32"
 CXX="/opt/csw/gcc4/bin/g++ -m32"
 FC="/opt/csw/gcc4/bin/gfortran -m32"
 LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
-SHLIB_LDFLAGS=-shared
 @end example
 
 (@code{-L/opt/csw/lib} is needed since TexLive 2011 was built using
@@ -4484,8 +4484,11 @@ CXX="/opt/csw/gcc4/bin/g++ -m64"
 FC=$F77
 FCPICFLAGS=$FPICFLAGS
 LDFLAGS="-L/opt/csw/gcc4/lib/amd64 -L/opt/csw/lib/amd64"
-SHLIB_LDFLAGS=-shared
 @end example
+
+@noindent
+(On the system tried there were relocation problems with the @code{X11}
+module.)
 
 @node AIX, Cygwin, Solaris, Platform notes
 @section AIX
