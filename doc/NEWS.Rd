@@ -64,10 +64,6 @@
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{lm.fit()}, \code{lm.wfit()}, \code{glm.fit()} and
-      \code{lsfit()} do less copying of objects, mainly by using
-      \code{.Call()} rather than \code{.Fortran()}.
-
       \item \code{source()} now uses \code{withVisible()} rather than an
       internal call to \code{eval.with.vis}.  This may alter tracebacks
       slightly.
@@ -76,9 +72,28 @@
       \code{ignore.environment}, used when comparing functions (with
       default \code{FALSE} as before).
 
+      \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
+      has sanity checks that this is actually a binary package (as
+      people have tried it with incorrectly named source packages).
+
+      \item \code{splineDesign()} and \code{spline.des()} in package
+      \pkg{splines} have a new option \code{sparse} which can be used
+      for efficient construction of a sparse B-spline design matrix.
+
+      \item \code{norm()} now allows \code{type = "2"} (the "spectral"
+      or 2-norm) as well, mainly for didactical completeness.
+    }
+  }
+
+  \subsection{PERFORMANCE IMPROVEMENTS}{
+    \itemize{
       \item In package \pkg{parallel}, \code{makeForkCluster()} and the
       multicore-based functions use native byte order for serialization
       (deferred from 2.15.0).
+
+      \item \code{lm.fit()}, \code{lm.wfit()}, \code{glm.fit()} and
+      \code{lsfit()} do less copying of objects, mainly by using
+      \code{.Call()} rather than \code{.Fortran()}.
 
       \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
       arguments which are raw, logical, integer, real or complex vectors
@@ -86,20 +101,9 @@
       copied after the call.  Lists are no longer copied (they are
       supposed to be used read-only in the C code).
 
-      \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
-      has sanity checks that this is actually a binary package (as
-      people have tried it with incorrectly named source packages).
-
       \item \code{tabulate()} makes use of \code{.C(DUP = FALSE)} and
       hence does not copy \code{bin}.  (Suggested by Tim Hesterberg.)
       It also avoids making a copy of a factor argument \code{bin}.
-
-      \item \code{splineDesign()} and \code{spline.des()} in package
-      \pkg{splines} have an option \code{sparse} which can be used for
-      efficient construction of a sparse B-spline design matrix.
-
-      \item \code{norm()} now allows \code{type = "2"} (the "spectral"
-      or 2-norm) as well, mainly for didactical completeness.
     }
   }
 
