@@ -26160,6 +26160,7 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
 ## SPARC has only an 8k global object table, 1024 entries on 64-bit,
 ## so need PIC not pic.  They are the same on other Solaris platforms.
     shlib_ldflags="-G"
+    shlib_cxxldflags="-G"
     if test "${GCC}" = yes; then
       cpicflags="-fPIC"
       ld=`${CC} -print-prog-name=ld`

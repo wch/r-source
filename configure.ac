@@ -1476,7 +1476,8 @@ rm -f libconftest${DYLIB_EXT} conftest.c
 ## SPARC has only an 8k global object table, 1024 entries on 64-bit,
 ## so need PIC not pic.  They are the same on other Solaris platforms.
     shlib_ldflags="-G"
-    if test "${GCC}" = yes; then
+    shlib_cxxldflags="-G"
+   if test "${GCC}" = yes; then
       cpicflags="-fPIC"
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
