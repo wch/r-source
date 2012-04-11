@@ -1,17 +1,18 @@
 % File src/library/datasets/man/morley.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{morley}
 \docType{data}
 \alias{morley}
-\title{Michaelson-Morley Speed of Light Data}
+\title{Michelson-Morley Speed of Light Data}
 \description{
-  The classical data of Michaelson and Morley on the speed of light.
-  The data consists of five experiments, each consisting of 20
-  consecutive \sQuote{runs}.  The response is the speed of light
-  measurement, suitably coded.
+  A classical data of Michelson (but not this one with  Morley) on
+  measurements done in 1879 on the speed of light.  The data consists of
+  five experiments, each consisting of 20 consecutive \sQuote{runs}.
+  The response is the speed of light measurement, suitably coded
+  (km/sec, with \code{299000} subtracted).
 }
 \usage{morley}
 \format{
@@ -33,6 +34,16 @@
   A. J. Weekes (1986)
   \emph{A Genstat Primer}.
   London: Edward Arnold.
+
+  S. M. Stigler (1977)
+  Do robust estimators work with real data?
+  \emph{Annals of Statistics} \bold{5}, 1055–-1098. (See Table 6.)
+
+  A. A. Michelson (1882)
+  Experimental determination of the velocity of light made at the United
+  States Naval Academy, Annapolis.
+  \emph{Astronomic Papers} \bold{1} 135--8.
+  U.S. Nautical Almanac Office.  (See Table 24.)
 }
 \examples{
 require(stats); require(graphics)
