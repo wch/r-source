@@ -105,10 +105,11 @@ SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static Rboolean random2(double (*f) (double, double), double *a, int na, double *b, int nb,
-		    double *x, int n)
+static Rboolean random2(double (*f) (double, double),
+			double *a, R_xlen_t na, double *b, R_xlen_t nb,
+			double *x, R_xlen_t n)
 {
-    double ai, bi; int i;
+    double ai, bi; R_xlen_t i;
     Rboolean naflag = FALSE;
     errno = 0;
     for (i = 0; i < n; i++) {
@@ -131,25 +132,32 @@ static Rboolean random2(double (*f) (double, double), double *a, int na, double 
 SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a, b;
-    int i, n, na, nb;
+    R_xlen_t i, n, na, nb;
     checkArity(op, args);
     if (!isVector(CAR(args)) ||
 	!isNumeric(CADR(args)) ||
 	!isNumeric(CADDR(args)))
 	invalid(call);
-    if (LENGTH(CAR(args)) == 1) {
+    if (XLENGTH(CAR(args)) == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	double dn = asReal(CAR(args));
+	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
+	    invalid(call);
+	n = dn;
+#else
 	n = asInteger(CAR(args));
 	if (n == NA_INTEGER || n < 0)
 	    invalid(call);
+#endif
     }
-    else n = LENGTH(CAR(args));
+    else n = XLENGTH(CAR(args));
     PROTECT(x = allocVector(REALSXP, n));
     if (n == 0) {
 	UNPROTECT(1);
 	return(x);
     }
-    na = LENGTH(CADR(args));
-    nb = LENGTH(CADDR(args));
+    na = XLENGTH(CADR(args));
+    nb = XLENGTH(CADDR(args));
     if (na < 1 || nb < 1) {
 	for (i = 0; i < n; i++)
 	    REAL(x)[i] = NA_REAL;

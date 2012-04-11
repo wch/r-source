@@ -364,7 +364,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(PRIMVAL(op) == 1) { /* mean */
 	long double s = 0., si = 0., t = 0., ti = 0.;
-	int i, n = LENGTH(CAR(args));
+	R_xlen_t i, n = XLENGTH(CAR(args));
 	SEXP x = CAR(args);
 	switch(TYPEOF(x)) {
 	case LGLSXP:
