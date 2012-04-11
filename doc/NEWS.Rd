@@ -14,7 +14,7 @@
       compiled code.  If true (which can be enabled by setting the
       environment variable \env{R_C_BOUNDS_CHECK} to \samp{yes}), raw,
       integer, double and complex arguments are always copied, and
-      checked for wrting off either end of the array on return from the
+      checked for writing off either end of the array on return from the
       compiled code.
 
       This not intended for routine use, but can be very helpful in

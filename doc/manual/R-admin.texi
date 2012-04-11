@@ -4200,7 +4200,7 @@ for C++).
 @node Frameworks,  , Lion, Mac OS X
 @subsection Frameworks
 
-The @acronym{CRAN} build of @R{} is installed as a framwork, which is
+The @acronym{CRAN} build of @R{} is installed as a framework, which is
 selected by option
 
 @example
