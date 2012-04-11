@@ -1204,7 +1204,11 @@ their attributes after themselves.  Atomic vector objects write their
 length followed by the data: generic vector-list objects write their
 length followed by a call to @code{WriteItem} for each element.  The
 code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
-length @code{-1} with no data.
+length @code{-1} with no data.  Prior to @R{} 2.16.0 the `length' is
+always written as a 32-bit integer: in later versions lengths no more
+than @code{2^31 - 1} are written in that way and larger lengths as
+@code{-1} followed by the upper and lower 32-bits as integers (regarded
+as unsigned).
 
 Environments are treated in several ways: as we have seen, some are
 written as specific pseudo-@code{SEXPTYPE}s.  Package and namespace
