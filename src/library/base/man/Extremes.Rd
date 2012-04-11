@@ -74,7 +74,7 @@ pmin.int(\dots, na.rm = FALSE)
   \code{NA} is \code{NA} even if it also contains an \code{NaN}.
   Note that \code{max(NA, Inf) == NA} even though the maximum would be
   \code{Inf} whatever the missing value actually is.
-  
+
   Character versions are sorted lexicographically, and this depends on
   the collating sequence of the locale in use: the help for
   \sQuote{\link{Comparison}} gives details.  The max/min of an empty
@@ -85,7 +85,8 @@ pmin.int(\dots, na.rm = FALSE)
 }
 \value{
   For \code{min} or \code{max}, a length-one vector.  For \code{pmin} or
-  \code{pmax}, a vector of length the longest of the input vectors.
+  \code{pmax}, a vector of length the longest of the input vectors, or
+  length zero if one of the inputs had zero length.
 
   The type of the result will be that of the highest of the inputs in
   the hierarchy integer < real < character.
@@ -129,6 +130,17 @@ x <- sort(rnorm(100));  cH <- 1.35
 pmin(cH, quantile(x)) # no names
 pmin(quantile(x), cH) # has names
 plot(x, pmin(cH, pmax(-cH, x)), type='b', main= "Huber's function")
+
+cut01 <- function(x) pmax(pmin(x, 1), 0)
+curve(      x^2 - 1/4, -1.4, 1.5, col=2)
+curve(cut01(x^2 - 1/4), col="blue", add=TRUE, n=500)
+## pmax(), pmin() preserve attributes of *first* argument
+D <- diag(x=(3:1)/4) ; n0 <- numeric()
+stopifnot(identical(D,  cut01(D) ),
+          identical(n0, cut01(n0)),
+          identical(n0, cut01(NULL)),
+          identical(n0, pmax(3:1, n0, 2)),
+          identical(n0, pmax(n0, 4)))
 }
 \keyword{univar}
 \keyword{arith}

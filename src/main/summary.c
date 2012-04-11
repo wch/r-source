@@ -1014,8 +1014,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* op = 0 is pmin, op = 1 is pmax
-   It seems that NULL and logicals are supposed to be handled as
-   if they have been coerced to integer.
+   NULL and logicals are handled as if they had been coerced to integer.
  */
 SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1060,8 +1059,11 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if(type > anstype) anstype = type;
 	n = length(x);
-	if ((len > 0) ^ (n > 0))
-	    error(_("cannot mix 0-length vectors with others"));
+	if ((len > 0) ^ (n > 0)) {
+	    // till 2.15.0:  error(_("cannot mix 0-length vectors with others"));
+	    len = 0;
+	    break;
+	}
 	len = imax2(len, n);
     }
     if(anstype < INTSXP) anstype = INTSXP;

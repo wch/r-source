@@ -2137,8 +2137,9 @@ substr(x, 1, 2) <- NA_character_; x
 ## regression tests for pmin/pmax, rewritten in C for 2.5.0
 # NULL == integer(0)
 pmin(NULL, integer(0))
-pmin(integer(0), NULL)
-try(pmin(NULL, 1:3))
+pmax(integer(0), NULL)
+pmin(NULL, 1:3)# now ok
+pmax(pi, NULL, 2:4)
 
 x <- c(1, NA, NA, 4, 5)
 y <- c(2, NA, 4, NA, 3)
