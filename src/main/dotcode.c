@@ -1396,10 +1396,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
 
-    /* Convert the arguments for use in foreign function calls.
-       Note that we copy twice: once here on the way into the call,
-       and once below on the way out. Unless DUP = FALSE ....
-    */
+    /* Convert the arguments for use in foreign function calls. */
     cargs = (void**) R_alloc(nargs, sizeof(void*));
     for(na = 0, pa = args ; pa != R_NilValue; pa = CDR(pa), na++) {
 	if(checkTypes &&
