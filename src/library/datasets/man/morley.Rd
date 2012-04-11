@@ -8,13 +8,15 @@
 \alias{morley}
 \title{Michelson-Morley Speed of Light Data}
 \description{
-  A classical data of Michelson (but not this one with  Morley) on
+  A classical data of Michelson (but not this one with Morley) on
   measurements done in 1879 on the speed of light.  The data consists of
   five experiments, each consisting of 20 consecutive \sQuote{runs}.
   The response is the speed of light measurement, suitably coded
   (km/sec, with \code{299000} subtracted).
 }
-\usage{morley}
+\usage{
+morley
+}
 \format{
   A data frame contains the following components:
   \describe{
@@ -29,6 +31,9 @@
   also be considered a quantitative variate to account for linear (or
   polynomial) changes in the measurement over the course of a single
   experiment.
+}
+\note{
+  This is the same dataset as \code{michelson} in package \pkg{MASS}.
 }
 \source{
   A. J. Weekes (1986)
