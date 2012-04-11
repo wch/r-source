@@ -29,7 +29,7 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 
-static R_xlen_t asVecSize(SEXP x)
+static R_len_t asVecSize(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
@@ -45,7 +45,7 @@ static R_xlen_t asVecSize(SEXP x)
 	    if(ISNAN(d)) error(_("vector size cannot be NA/NaN"));
 	    if(!R_FINITE(d)) error(_("vector size cannot be infinite"));
 	    if(d < 0) error(_("vector size cannot be negative"));
-	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
+	    if(d > R_LEN_T_MAX) error(_("vector size specified is too large"));
 	    return (R_size_t) d;
 	}
 	}
@@ -712,7 +712,7 @@ SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* vector(mode="logical", length=0) */
 SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_xlen_t len;
+    R_len_t len;
     SEXP s;
     SEXPTYPE mode;
     checkArity(op, args);
