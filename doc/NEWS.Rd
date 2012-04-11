@@ -27,6 +27,10 @@
 
       \item \code{norm()} now allows \code{type = "2"} (the "spectral"
       or 2-norm) as well, mainly for didactical completeness.
+
+      \item \code{pmin()} and \code{pmax(x,y,...)} now also work when one
+      of the inputs is of length zero and another is not, returning a
+      zero length vector, analogously to, say, \code{+}.
     }
   }
 
