@@ -53,9 +53,11 @@ INSTALL_OPTS2 =@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
 ## Avoid user/site libraries, pass down MAKE
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \
 	  MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
+	  _R_CHECK_INSTALL_DEPENDS_=no \
 	  $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	else \
 	  MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
+	  _R_CHECK_INSTALL_DEPENDS_=no \
 	  $(R) CMD INSTALL $(INSTALL_OPTS) $(INSTALL_OPTS2) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	fi
 	@cat $@.out; rm $@.out
