@@ -1122,10 +1122,9 @@
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             env <- if (deps_only) setRlibs(lib0, self = TRUE) else ""
-            opts <- if (deps_only) "--vanilla --slave"
-            else "--no-save --slave"
             if (length(test_archs) > 1L) {
                 msgs <- character()
+                opts <- "--no-save --slave"
                 for (arch in test_archs) {
                     starsmsg("***", "arch - ", arch)
                     res <- R_runR(cmd, opts, env = env,
@@ -1138,6 +1137,8 @@
                     errmsg(msg) # does not return
                 }
             } else {
+                opts <- if (deps_only) "--vanilla --slave"
+                else "--no-save --slave"
                 res <- R_runR(cmd, opts, env = env, stdout = "", stderr = "")
                 if (res) errmsg("loading failed") # does not return
             }
