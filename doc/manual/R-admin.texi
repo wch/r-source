@@ -1337,12 +1337,11 @@ make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 
 
 An alternative way to customize the installer starting with a binary
-distribution is to first make a full installation of R from the standard
-installer (that is, select @samp{Full Installation} from the
-@samp{Select Components} screen), then add packages and make other
-customizations to that installation.  Then (after having customized file
-@file{MkRules}, possibly @emph{via} @file{MkRules.local}, and having
-made R in the source tree) in @file{src/gnuwin32/installer} run
+distribution is to first make an installation of R from the standard
+installer, then add packages and make other customizations to that
+installation.  Then (after having customized file @file{MkRules},
+possibly @emph{via} @file{MkRules.local}, and having made R in the
+source tree) in @file{src/gnuwin32/installer} run
 
 @example
 make myR IMAGEDIR=rootdir
