@@ -54,11 +54,11 @@
     }
   }
 
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item Passing \code{NULL} to \code{.C()} is now an error.
-    }
-  }
+%   \subsection{C-LEVEL FACILITIES}{
+%     \itemize{
+%       \item Passing \code{NULL} to \code{.C()} is now an error.
+%     }
+%   }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
