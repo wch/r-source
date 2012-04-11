@@ -68,17 +68,15 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     dbl.n <- double(n)
     if(symmetric) {##--> real values
 	if(complex.x) {
-	    xr <- Re(x)
-	    xi <- Im(x)
 	    z <- .Fortran("ch",
 			  n,
 			  n,
-			  xr,
-			  xi,
+			  Re(x),
+			  Im(x),
 			  values = dbl.n,
 			  !only.values,
-			  vectors = xr,
-			  ivectors = xi,
+			  vectors = Re(x),
+			  ivectors = Im(x),
 			  dbl.n,
 			  dbl.n,
 			  double(2*n),

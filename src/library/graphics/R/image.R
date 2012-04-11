@@ -85,8 +85,10 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	    stop("must have one more break than colour")
 	if (any(!is.finite(breaks)))
 	    stop("breaks must all be finite")
+        if (!is.double(z)) storage.mode(z) <- "double"
+        if (!is.double(breaks)) storage.mode(breaks) <- "double"
 	zi <- .C("bincode",
-		 as.double(z), length(z), as.double(breaks), length(breaks),
+		 z, length(z), breaks, length(breaks),
 		 code = integer(length(z)), (TRUE), (TRUE), nok = TRUE,
 		 NAOK = TRUE, DUP = FALSE, PACKAGE = "base") $code - 1
     }

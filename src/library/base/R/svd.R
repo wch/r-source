@@ -33,6 +33,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
         return(list(d = res$d, u = if(nu) res$u, v = if(nv) t(res$vt)))
     }
 
+    ## LINPACK only from here on.
     if(nu == 0L) {
 	job <- 0L
 	u <- double()
@@ -54,26 +55,25 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 
     v <- if(job == 0L) double() else matrix(0, p, p)
 
-    mn <- min(n,p)
     mm <- min(n+1L,p)
     z <- .Fortran("dsvdc",
-		  as.double(x),
+		  x, # did storage.mode above
 		  n,
 		  n,
 		  p,
-		  d=double(mm),
+		  d = double(mm),
 		  double(p),
-		  u=u,
+		  u = u,
 		  n,
-		  v=v,
+		  v = v,
 		  p,
 		  double(n),
 		  as.integer(job),
-		  info=integer(1L),
-		  DUP=FALSE, PACKAGE="base")[c("d","u","v","info")]
+		  info = integer(1L),
+		  DUP = FALSE, PACKAGE = "base")[c("d","u","v","info")]
     if(z$info)
 	stop(gettextf("error %d in 'dsvdc'", z$info), domain = NA)
-    z$d <- z$d[1L:mn]
+    z$d <- z$d[seq_len(min(n, p))]
     if(nv && nv < p) z$v <- z$v[, 1L:nv, drop = FALSE]
     z[c("d", if(nu) "u", if(nv) "v")]
 }

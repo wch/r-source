@@ -96,14 +96,15 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 	    ##	dtrco  *differs* from Lapack's dtrcon() quite a bit
 	    ## even though dtrco's doc also say to compute the
 	    ## 1-norm reciprocal condition
+            if(!is.double(z)) storage.mode(z) <- "double"
 	    1 / .Fortran("dtrco",
-			 as.double(z),
+			 z,
 			 p,
 			 p,
 			 k = double(1),
 			 double(p),
 			 1L,
-			 PACKAGE="base")$k
+			 PACKAGE = "base")$k
 	}
 	else { ## Lapack
 	    storage.mode(z) <- "double"

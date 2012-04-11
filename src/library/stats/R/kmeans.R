@@ -22,9 +22,9 @@ function(x, centers, iter.max = 10, nstart = 1,
         Z <-
             switch(nmeth,
                    { # 1
-                       Z <- .Fortran(C_kmns, as.double(x), as.integer(m),
+                       Z <- .Fortran(C_kmns, x, as.integer(m),
                                 as.integer(ncol(x)),
-                                centers = as.double(centers),
+                                centers = centers,
                                 as.integer(k), c1 = integer(m), integer(m),
                                 nc = integer(k), double(k), double(k), integer(k),
                                 double(m), integer(k), integer(k),
@@ -41,9 +41,9 @@ function(x, centers, iter.max = 10, nstart = 1,
                        Z
                    },
                    { # 2
-                       Z <- .C(C_kmeans_Lloyd, as.double(x), as.integer(m),
+                       Z <- .C(C_kmeans_Lloyd, x, as.integer(m),
                                as.integer(ncol(x)),
-                               centers = as.double(centers), as.integer(k),
+                               centers = centers, as.integer(k),
                                c1 = integer(m), iter = as.integer(iter.max),
                                nc = integer(k), wss = double(k))
                        if(Z$iter > iter.max)
@@ -101,6 +101,8 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(iter.max < 1) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in 'x' and 'centers'")
+    if(!is.double(x)) storage.mode(x) <- "double"
+    if(!is.double(centers)) storage.mode(centers) <- "double"
     Z <- do_one(nmeth)
     best <- sum(Z$wss)
     if(nstart >= 2 && !is.null(cn))
