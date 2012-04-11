@@ -58,8 +58,9 @@ stl <- function(x, s.window,
     l.degree <- deg.check(l.degree)
     if(is.null(t.window))
 	t.window <- nextodd(ceiling( 1.5 * period / (1- 1.5/s.window)))
+    if (!is.double(x)) storage.mode(x) <- "double"
     z <- .Fortran(C_stl,
-		  as.double(x),
+		  x,
 		  as.integer(n),
 		  as.integer(period),
 		  as.integer(s.window),

@@ -65,6 +65,7 @@ hclust <- function(d, method="complete", members=NULL)
     else if(length(members) != n)
         stop("invalid length of members")
 
+    if (!is.double(d)) storage.mode(d) <- "double"
     hcl <- .Fortran(C_hclust,
 		    n = n,
 		    len = len,
@@ -76,7 +77,7 @@ hclust <- function(d, method="complete", members=NULL)
 		    nn = integer(n),
 		    disnn = double(n),
 		    flag = logical(n),
-		    diss = as.double(d), PACKAGE="stats")
+		    diss = d, PACKAGE="stats")
 
     ## 2nd step: interpret the information that we now have
     ## as merge, height, and order lists.
@@ -92,8 +93,8 @@ hclust <- function(d, method="complete", members=NULL)
     tree <- list(merge = cbind(hcass$iia[1L:(n-1)], hcass$iib[1L:(n-1)]),
 		 height= hcl$crit[1L:(n-1)],
 		 order = hcass$order,
-		 labels=attr(d, "Labels"),
-                 method=METHODS[method],
+		 labels = attr(d, "Labels"),
+                 method = METHODS[method],
                  call = match.call(),
                  dist.method = attr(d, "method"))
     class(tree) <- "hclust"

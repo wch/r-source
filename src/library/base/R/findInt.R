@@ -29,6 +29,7 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     if(has.na <- any(ix <- is.na(x))) x <- x[!ix]
     nx <- length(x)
     index <- integer(nx)
+    ## NB: this is naughty, and changes index in-place.
     ## lengths are always integer
     .C("find_interv_vec",
        xt = as.double(vec), n = length(vec),

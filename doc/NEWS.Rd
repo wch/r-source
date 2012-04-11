@@ -99,15 +99,21 @@
       \code{lsfit()} do less copying of objects, mainly by using
       \code{.Call()} rather than \code{.Fortran()}.
 
-      \item \code{.C()} and \code{.Fortran()} do less copying: unnamed
-      arguments which are raw, logical, integer, real or complex vectors
-      are not copied before the call, and (named or not) they are not
+      \item \code{.C()} and \code{.Fortran()} do less copying: arguments
+      which are raw, logical, integer, real or complex vectors and are
+      unnamed are not copied before the call, and (named or not) are not
       copied after the call.  Lists are no longer copied (they are
       supposed to be used read-only in the C code).
 
       \item \code{tabulate()} makes use of \code{.C(DUP = FALSE)} and
       hence does not copy \code{bin}.  (Suggested by Tim Hesterberg.)
       It also avoids making a copy of a factor argument \code{bin}.
+      
+      \item Other functions (often or always) doing less copying include
+      \code{cut()}, the complex case of \code{eigen()}, \code{hclust()},
+      \code{image()}, \code{kmeans()}, \code{loess()}, \code{stl()} and
+      \code{svd(LINPACK = TRUE)}.
+      
     }
   }
 
