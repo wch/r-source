@@ -6733,10 +6733,18 @@ Selection: 3
 Since the @R{} process may be damaged, the only really safe option is
 the first.
 
+A fairly common cause of such crashes is a package which uses @code{.C}
+or @code{.Fortran} and writes beyond (at either end) one of the
+arguments it is passed.  As from @R{} 2.16.0 there is a good way to
+detect this: using @code{options(CBoundsCheck = TRUE)} (which can be
+selected @emph{via} the environment variable @env{R_C_BOUNDS_CHECK=yes)}
+changes the way @code{.C} and @code{.Fortran} work to check if the
+compiled code writes in the 64 bytes at either end of an argument.
+
 Another cause of a `crash' is to overrun the C stack.  @R{} tries to
 track that in its own code, but it may happen in third-party compiled
-code.  For modern POSIX-compliant OSes we can safely catch that and
-return to the top-level prompt.
+code.  For modern POSIX-compliant OSes @R{} can safely catch that and
+return to the top-level prompt, so one gets something like
 
 @example
 > .C("aaa")
@@ -6746,7 +6754,11 @@ Error: segfault from C stack overflow
 
 @noindent
 However, C stack overflows are fatal under Windows and normally defeat
-attempts at debugging on that platform.
+attempts at debugging on that platform.  Further, the size of the stack
+is set when @R{} is compiled@footnote{For a long time the compilation
+default was 10MB, but this was increased to 64MB for @R{} 2.16.0.},
+whereas on POSIX OSes it can be set in the shell from which @R{} is
+launched.
 
 If you have a crash which gives a core dump you can use something like
 
