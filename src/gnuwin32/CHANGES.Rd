@@ -13,6 +13,14 @@
   }
 }
 
+\section{CHANGES IN R VERSION 2.15.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item For \code{tiff(type = "windows")}, the labelling of per-page
+      graphs except the last was off by one.      
+    }
+  }
+}
 
 \section{CHANGES IN R VERSION 2.15.0}{
   \subsection{NEW FEATURES}{
