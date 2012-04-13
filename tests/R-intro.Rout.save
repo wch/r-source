@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-05 r58590)
+R Under development (unstable) (2012-04-13 r58998) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -714,7 +714,7 @@ F-statistic:  169 on 1 and 18 DF,  p-value: 1.39e-10
 Call:
 lm(formula = y ~ x, data = dummy, weights = 1/w^2)
 
-Residuals:
+Weighted Residuals:
     Min      1Q  Median      3Q     Max 
 -1.3205 -0.4492 -0.0088  0.5088  1.2656 
 
