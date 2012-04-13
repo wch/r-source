@@ -3659,9 +3659,8 @@ probability of success
 > ## (modified to make printed result the same whether numeric() is
 > ##  compiled or interpreted)
 > ## try(numeric(2^31))
-> tryCatch(numeric(2^31),
-+          error = function(e) paste("Error:", conditionMessage(e)))
-[1] "Error: vector size specified is too large"
+> ## tryCatch(numeric(2^31),
+> ##          error = function(e) paste("Error:", conditionMessage(e)))
 > try(matrix( , 2^31, 1))
 Error in matrix(, 2^31, 1) : invalid 'nrow' value (too large or NA)
 In addition: Warning message:
