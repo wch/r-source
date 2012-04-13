@@ -90,6 +90,10 @@
       \item \code{colorRamp()} (and hence \code{colorRampPalette()}) now
       also works for the boundary case of just one color when the ramp is
       flat.
+
+      \item \code{qqline()} gets new optional arguments
+	\code{distribution}, \code{probs}, and \code{qtype}, following
+	the example of \pkg{lattice}'s \code{panel.qqmathline()}.
     }
   }
 
