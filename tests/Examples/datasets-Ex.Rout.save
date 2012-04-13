@@ -2576,7 +2576,7 @@ F-statistic: 330.3 on 6 and 9 DF,  p-value: 4.984e-10
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: morley
-> ### Title: Michaelson-Morley Speed of Light Data
+> ### Title: Michelson-Morley Speed of Light Data
 > ### Aliases: morley
 > ### Keywords: datasets
 > 

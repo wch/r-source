@@ -714,7 +714,7 @@ F-statistic:  169 on 1 and 18 DF,  p-value: 1.39e-10
 Call:
 lm(formula = y ~ x, data = dummy, weights = 1/w^2)
 
-Residuals:
+Weighted Residuals:
     Min      1Q  Median      3Q     Max 
 -1.3205 -0.4492 -0.0088  0.5088  1.2656 
 
