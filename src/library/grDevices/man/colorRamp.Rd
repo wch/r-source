@@ -19,11 +19,11 @@ colorRamp(colors, bias = 1, space = c("rgb", "Lab"),
 colorRampPalette(colors, \dots)
 }
 \arguments{
-  \item{colors}{colors to interpolate; must be valid argument to
+  \item{colors}{colors to interpolate; must be a valid argument to
     \code{\link{col2rgb}()}.}
   \item{bias}{a positive number.  Higher values give more widely spaced
     colors at the high end.}
-  \item{space}{a characterster string; interpolation in RGB or CIE Lab
+  \item{space}{a character string; interpolation in RGB or CIE Lab
     color spaces.}
   \item{interpolate}{use spline or linear interpolation.}
   \item{\dots}{arguments to pass to \code{colorRamp}.}
@@ -49,8 +49,8 @@ colorRampPalette(colors, \dots)
 }
 
 \seealso{
-  Good starting points for interpolation are the "sequential"
-  and "diverging" ColorBrewer palettes in the RColorBrewer package.
+  Good starting points for interpolation are the \dQuote{sequential}
+  and \dQuote{diverging} ColorBrewer palettes in the \pkg{RColorBrewer} package.
 
   \code{\link{splinefun}} or \code{\link{approxfun}} are used for
   interpolation.
