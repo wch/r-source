@@ -86,6 +86,9 @@
       \item \code{pmin()} and \code{pmax(x,y,...)} now also work when one
       of the inputs is of length zero and another is not, returning a
       zero length vector, analogously to, say, \code{+}.
+
+      \item \code{colorRamp()} (and hence \code{colorRampPalette()} now also
+      work for the boundary case of just one color when the ramp is flat.
     }
   }
 
@@ -108,12 +111,12 @@
       \item \code{tabulate()} makes use of \code{.C(DUP = FALSE)} and
       hence does not copy \code{bin}.  (Suggested by Tim Hesterberg.)
       It also avoids making a copy of a factor argument \code{bin}.
-      
+
       \item Other functions (often or always) doing less copying include
       \code{cut()}, the complex case of \code{eigen()}, \code{hclust()},
       \code{image()}, \code{kmeans()}, \code{loess()}, \code{stl()} and
       \code{svd(LINPACK = TRUE)}.
-      
+
     }
   }
 

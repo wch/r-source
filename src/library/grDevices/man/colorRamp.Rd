@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colorRamp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{colorRamp}
@@ -19,11 +19,13 @@ colorRamp(colors, bias = 1, space = c("rgb", "Lab"),
 colorRampPalette(colors, \dots)
 }
 \arguments{
-  \item{colors}{Colors to interpolate }
-  \item{bias}{A positive number. Higher values give more widely spaced
+  \item{colors}{colors to interpolate; must be valid argument to
+    \code{\link{col2rgb}()}.}
+  \item{bias}{a positive number.  Higher values give more widely spaced
     colors at the high end.}
-  \item{space}{Interpolation in RGB or CIE Lab color spaces}
-  \item{interpolate}{Use spline or linear interpolation.}
+  \item{space}{a characterster string; interpolation in RGB or CIE Lab
+    color spaces.}
+  \item{interpolate}{use spline or linear interpolation.}
   \item{\dots}{arguments to pass to \code{colorRamp}.}
 }
 \details{
@@ -38,7 +40,7 @@ colorRampPalette(colors, \dots)
   the colors produced with \code{space="Lab"}.
 }
 \value{
-  \code{colorRamp} returns a function that maps values between 0 and 1
+  \code{colorRamp} returns a \code{\link{function}} that maps values between 0 and 1
   to colors.
   \code{colorRampPalette} returns a function that takes an integer
   argument and returns that number of colors interpolating the given
@@ -48,10 +50,20 @@ colorRampPalette(colors, \dots)
 
 \seealso{
   Good starting points for interpolation are the "sequential"
-  and "diverging" ColorBrewer palettes in the RColorBrewer package
+  and "diverging" ColorBrewer palettes in the RColorBrewer package.
+
+  \code{\link{splinefun}} or \code{\link{approxfun}} are used for
+  interpolation.
 }
 
 \examples{
+## Both return a *function* :
+colorRamp(c("red","green"))( (0:4)/4 ) ## (x) , x in [0,1]
+colorRampPalette(c("blue","red"))( 4 ) ## (n)
+\dontshow{## special case, invalid in R <= 2.15.0:
+bb <- colorRampPalette(2)(4)
+stopifnot(bb[1] == bb)
+}
 require(graphics)
 
 ## Here space="rgb" gives palettes that vary only in saturation,
@@ -95,4 +107,3 @@ filled.contour(m, col = rgb.palette(20))
 filled.contour(m, col = Lab.palette(20))
 }
 \keyword{color}
-

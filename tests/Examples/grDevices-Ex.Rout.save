@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-01-27 r58210)
+R Under development (unstable) (2012-04-12 r58988) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1502,6 +1502,21 @@ List of 150
 > 
 > ### ** Examples
 > 
+> ## Both return a *function* :
+> colorRamp(c("red","green"))( (0:4)/4 ) ## (x) , x in [0,1]
+       [,1]   [,2] [,3]
+[1,] 255.00   0.00    0
+[2,] 191.25  63.75    0
+[3,] 127.50 127.50    0
+[4,]  63.75 191.25    0
+[5,]   0.00 255.00    0
+> colorRampPalette(c("blue","red"))( 4 ) ## (n)
+[1] "#0000FF" "#5500AA" "#AA0055" "#FF0000"
+> ## Don't show: 
+> ## special case, invalid in R <= 2.15.0:
+> bb <- colorRampPalette(2)(4)
+> stopifnot(bb[1] == bb)
+> ## End Don't show
 > require(graphics)
 > 
 > ## Here space="rgb" gives palettes that vary only in saturation,
@@ -3503,7 +3518,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.174 0.051 2.324 0 0 
+Time elapsed:  3.35 0.151 3.815 0 0 
 > grDevices::dev.off()
 null device 
           1 
