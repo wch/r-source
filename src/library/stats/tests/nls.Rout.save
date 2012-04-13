@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2011-03-04 r54667)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.0 Patched (2012-04-11 r58983) -- "Easter Beagle"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -106,7 +106,7 @@ c      NA 0.042807
 Call:
 lm(formula = yeps ~ x, weights = wts)
 
-Residuals:
+Weighted Residuals:
      Min       1Q   Median       3Q      Max 
 -0.01562 -0.00723 -0.00158  0.00403  0.02413 
 
@@ -658,5 +658,5 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  3.564 0.028 3.639 0 0 
+Time elapsed:  2.168 0.023 2.201 0 0 
 > 
