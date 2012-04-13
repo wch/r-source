@@ -35,23 +35,23 @@ colorRamp<-function(colors, bias=1, space=c("rgb","Lab"),
 
     if (space=="Lab"){
         colors<-convertColor(colors, from="sRGB", to="Lab")
-                                        #apply(colors,2,srgb2lab)
+        ## apply(colors,2,srgb2lab)
     }
 
 
     interpolate<-switch(interpolate, linear=stats::approxfun, spline=stats::splinefun)
 
-    x<-seq.int(0, 1, length.out=nrow(colors))^{bias}
-
+    if((nc <- nrow(colors)) == 1L) {
+        colors <- colors[c(1L,1L) ,]
+        nc <- 2L
+    }
+    x <- seq.int(0, 1, length.out= nc)^bias
     palette<-c(interpolate(x, colors[,1]),
                interpolate(x, colors[,2]),
                interpolate(x, colors[,3]))
 
-    roundcolor<-function(rgb){
-        rgb[rgb<0]<-0
-        rgb[rgb>1]<-1
-        rgb
-    }
+    roundcolor <- function(rgb) ## careful to preserve matrix:
+	pmax(pmin(rgb, 1), 0)
 
     if (space=="Lab"){
 
