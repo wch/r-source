@@ -32,8 +32,9 @@
       of the inputs is of length zero and another is not, returning a
       zero length vector, analogously to, say, \code{+}.
 
-      \item \code{colorRamp()} (and hence \code{colorRampPalette()} now also
-      work for the boundary case of just one color when the ramp is flat.
+      \item \code{colorRamp()} (and hence \code{colorRampPalette()}) now
+      also works for the boundary case of just one color when the ramp is
+      flat.
     }
   }
 
