@@ -50,7 +50,7 @@ png <- function(filename = "Rplot%03d.png",
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "png", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != 2L, TRUE, "", bg,
+                            antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 2L, g$width, g$height,
@@ -77,17 +77,17 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     if(!missing(type)) new$type <- match.arg(type)
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    antialias <- match(d$antialias, aa.cairo)
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "jpeg", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != 2L, TRUE, "", bg,
+                            antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 3L, g$width, g$height,
-                            pointsize, bg, res, match(d$antialias, aa.cairo),
-                            quality, d$family))
+                            pointsize, bg, res, antialias, quality, d$family))
     else
         .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
@@ -107,6 +107,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
     type <- if(!missing(type)) match.arg(type) else getOption("bitmapType")
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    antialias <- match(d$antialias, aa.cairo)
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     if(type == "quartz" && capabilities("aqua")) {
@@ -114,12 +115,11 @@ tiff <- function(filename = "Rplot%03d.tiff",
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "tiff", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != 2L, TRUE, "", bg,
+                            antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 8L, g$width, g$height,
-                            pointsize, bg, res, match(d$antialias, aa.cairo),
-                            comp, d$family))
+                            pointsize, bg, res, antialias, comp, d$family))
     else
         .Internal(X11(paste("tiff::", comp, ":", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
@@ -138,17 +138,17 @@ bmp <- function(filename = "Rplot%03d.bmp",
     type <- if(!missing(type)) match.arg(type) else getOption("bitmapType")
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    antialias <- match(d$antialias, aa.cairo)
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "bmp", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != 2L, TRUE, "", bg,
+                            antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 9L, g$width, g$height,
-                            pointsize, bg, res, match(d$antialias, aa.cairo),
-                            100L, d$family))
+                            pointsize, bg, res, antialias, 100L, d$family))
     else
         .Internal(X11(paste("bmp::", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
