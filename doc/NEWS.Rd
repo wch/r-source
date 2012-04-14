@@ -24,17 +24,21 @@
 
   \subsection{LONG VECTORS}{
     \itemize{
-      \item There is the beginnings of support for vectors longer than
+      \item There are the beginnings of support for vectors longer than
       \eqn{2^{31}-1}{2^31 - 1} elements on 64-bit platforms.  This
       applies to raw, logical, integer, double, complex and character
       vectors, as well as lists.  (Elements of character vectors remain
       limited to \eqn{2^{31}-1}{2^31 - 1} bytes.)
       
       \item What can be done with such vectors is currently very
-      limited, and most operations will return the error \samp{long
+      limited, and most operations will return the error \sQuote{long
       vectors not supported yet}.  They can be serialized and
-      unserialized, \code{object.size()} works and means can be
-      computed.
+      unserialized, \code{identical()} and \code{object.size()} work and
+      means can be computed.
+
+      \item \code{dist()} can produce dissimilarity objects for more
+      than 65536 rows (but for example \code{hclust()} cannot process
+      such objects).
 
       \item \code{serialize()} to a raw vector is no longer limited in
       size on 64-bit platforms.
@@ -74,14 +78,13 @@
       know of no examples in packages).
     }
   }
-
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      %       \item Passing \code{NULL} to \code{.C()} is now an error.
-      \item Added initial experimental framework for supporting vectors
-      with more than \code{INT_MAX} elements.
-    }
-  }
+  
+% This is deferred until we can get package maintainers to cooperate.
+%   \subsection{C-LEVEL FACILITIES}{
+%     \itemize{
+%       \item Passing \code{NULL} to \code{.C()} is now an error.
+%     }
+%   }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
@@ -188,7 +191,7 @@
 
       \item \code{tracemem()} reported that all objects were copied
       by \code{.C()} or \code{.Fortran()} whereas only some object types
-      are copied.
+      were ever copied.
 
       \item The \code{plot()} method for class \code{"stepfun"} only
       used the optional \code{xval} argument to compute \code{xlim} and
