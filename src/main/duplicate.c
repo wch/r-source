@@ -2,7 +2,7 @@
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *            (C) 2004  The R Foundation
- *  Copyright (C) 1998-2009 The R Development Core Team.
+ *  Copyright (C) 1998-2012 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,22 +40,17 @@
 
 /* This macro pulls out the common code in copying an atomic vector.
    The special handling of the scalar case (__n__ == 1) seems to make
-   a small but measurable difference, at least for some cases.
-   <FIXME>: surely memcpy would be faster here?
+   a small but measurable difference, at least for some cases 
+   and when (as prior to 2.16.0) a for() loop was used.
 */
-#define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do {\
-  int __n__ = LENGTH(from);\
+#define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do { \
+  R_xlen_t __n__ = XLENGTH(from); \
   PROTECT(from); \
   PROTECT(to = allocVector(TYPEOF(from), __n__)); \
   if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
-  else { \
-    int __i__; \
-    type *__fp__ = fun(from), *__tp__ = fun(to); \
-    for (__i__ = 0; __i__ < __n__; __i__++) \
-      __tp__[__i__] = __fp__[__i__]; \
-  } \
-  DUPLICATE_ATTRIB(to, from);		\
-  SET_TRUELENGTH(to, TRUELENGTH(from)); \
+  else memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
+  DUPLICATE_ATTRIB(to, from); \
+  SET_TRUELENGTH(to, XTRUELENGTH(from)); \
   UNPROTECT(2); \
 } while (0)
 
