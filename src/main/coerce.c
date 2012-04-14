@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2011  The R Development Core Team
+ *  Copyright (C) 1997-2012  The R Core Team
  *  Copyright (C) 2003-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -385,7 +385,7 @@ SEXP VectorToPairList(SEXP x)
     int i, len, named;
     len = length(x);
     PROTECT(x);
-    PROTECT(xnew = allocList(len));
+    PROTECT(xnew = allocList(len)); /* limited to int */
     PROTECT(xnames = getAttrib(x, R_NamesSymbol));
     named = (xnames != R_NilValue);
     xptr = xnew;
@@ -395,7 +395,7 @@ SEXP VectorToPairList(SEXP x)
 	    SET_TAG(xptr, install(translateChar(STRING_ELT(xnames, i))));
 	xptr = CDR(xptr);
     }
-    if (len>0)       /* can't set attributes on NULL */
+    if (len > 0)       /* can't set attributes on NULL */
 	copyMostAttrib(x, xnew);
     UNPROTECT(3);
     return xnew;
@@ -440,8 +440,9 @@ static SEXP coerceToSymbol(SEXP v)
 static SEXP coerceToLogical(SEXP v)
 {
     SEXP ans;
-    int i, n, warn = 0;
-    PROTECT(ans = allocVector(LGLSXP, n = length(v)));
+    int warn = 0;
+    R_xlen_t i, n;
+    PROTECT(ans = allocVector(LGLSXP, n = XLENGTH(v)));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
        memtrace_report(v,ans);
@@ -481,8 +482,9 @@ static SEXP coerceToLogical(SEXP v)
 static SEXP coerceToInteger(SEXP v)
 {
     SEXP ans;
-    int i, n, warn = 0;
-    PROTECT(ans = allocVector(INTSXP, n = LENGTH(v)));
+    int warn = 0;
+    R_xlen_t i, n;
+    PROTECT(ans = allocVector(INTSXP, n = XLENGTH(v)));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
        memtrace_report(v,ans);
@@ -522,8 +524,9 @@ static SEXP coerceToInteger(SEXP v)
 static SEXP coerceToReal(SEXP v)
 {
     SEXP ans;
-    int i, n, warn = 0;
-    PROTECT(ans = allocVector(REALSXP, n = LENGTH(v)));
+    int warn = 0;
+    R_xlen_t i, n;
+    PROTECT(ans = allocVector(REALSXP, n = XLENGTH(v)));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
        memtrace_report(v,ans);
@@ -563,8 +566,9 @@ static SEXP coerceToReal(SEXP v)
 static SEXP coerceToComplex(SEXP v)
 {
     SEXP ans;
-    int i, n, warn = 0;
-    PROTECT(ans = allocVector(CPLXSXP, n = LENGTH(v)));
+    int warn = 0;
+    R_xlen_t i, n;
+    PROTECT(ans = allocVector(CPLXSXP, n = XLENGTH(v)));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
        memtrace_report(v,ans);
@@ -604,9 +608,10 @@ static SEXP coerceToComplex(SEXP v)
 static SEXP coerceToRaw(SEXP v)
 {
     SEXP ans;
-    int i, n, warn = 0, tmp;
+    int warn = 0, tmp;
+    R_xlen_t i, n;
 
-    PROTECT(ans = allocVector(RAWSXP, n = LENGTH(v)));
+    PROTECT(ans = allocVector(RAWSXP, n = XLENGTH(v)));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
        memtrace_report(v,ans);
@@ -676,8 +681,10 @@ static SEXP coerceToRaw(SEXP v)
 static SEXP coerceToString(SEXP v)
 {
     SEXP ans;
-    int i, n, savedigits, warn = 0;
-    PROTECT(ans = allocVector(STRSXP, n = LENGTH(v)));
+    int savedigits, warn = 0;
+    R_xlen_t i, n;
+
+    PROTECT(ans = allocVector(STRSXP, n = XLENGTH(v)));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
        memtrace_report(v,ans);
@@ -723,9 +730,9 @@ static SEXP coerceToString(SEXP v)
 static SEXP coerceToExpression(SEXP v)
 {
     SEXP ans;
-    int i, n;
+    R_xlen_t i, n;
     if (isVectorAtomic(v)) {
-	n = LENGTH(v);
+	n = XLENGTH(v);
 	PROTECT(ans = allocVector(EXPRSXP, n));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
@@ -773,8 +780,8 @@ static SEXP coerceToExpression(SEXP v)
 static SEXP coerceToVectorList(SEXP v)
 {
     SEXP ans, tmp;
-    int i, n;
-    n = length(v);
+    R_xlen_t i, n;
+    n = xlength(v);
     PROTECT(ans = allocVector(VECSXP, n));
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(v)){
@@ -829,7 +836,7 @@ static SEXP coerceToPairList(SEXP v)
 {
     SEXP ans, ansp;
     int i, n;
-    n = LENGTH(v);
+    n = LENGTH(v); /* limited to len */
     PROTECT(ansp = ans = allocList(n));
     for (i = 0; i < n; i++) {
 	switch (TYPEOF(v)) {
@@ -958,7 +965,8 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 /* Coerce a vector list to the given type */
 static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 {
-    int i, n, warn = 0, tmp;
+    int warn = 0, tmp;
+    R_xlen_t i, n;
     SEXP rval, names;
 
     names = v;
@@ -979,7 +987,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
     }
 
     if (type == STRSXP) {
-	n = length(v);
+	n = xlength(v);
 	PROTECT(rval = allocVector(type, n));
 #ifdef R_MEMORY_PROFILING
 	if (RTRACE(v)){
@@ -988,7 +996,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
 #endif
 	for (i = 0; i < n;  i++) {
-	    if (isString(VECTOR_ELT(v, i)) && length(VECTOR_ELT(v, i)) == 1)
+	    if (isString(VECTOR_ELT(v, i)) && xlength(VECTOR_ELT(v, i)) == 1)
 		SET_STRING_ELT(rval, i, STRING_ELT(VECTOR_ELT(v, i), 0));
 #if 0
 	    /* this will make as.character(list(s)) not backquote
@@ -1008,7 +1016,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	return rval;
     }
     else if (isVectorizable(v)) {
-	n = length(v);
+	n = xlength(v);
 	PROTECT(rval = allocVector(type, n));
 	switch (type) {
 	case LGLSXP:
@@ -1289,7 +1297,7 @@ SEXP asCharacterFactor(SEXP x)
     if( !inherits(x, "factor") )
         error(_("attempting to coerce non-factor"));
 
-    int i, n = LENGTH(x);
+    R_xlen_t i, n = XLENGTH(x);
     SEXP labels = getAttrib(x, install("levels"));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
@@ -1528,7 +1536,7 @@ int asLogical(SEXP x)
     int warn = 0;
 
     if (isVectorAtomic(x)) {
-	if (LENGTH(x) < 1)
+	if (XLENGTH(x) < 1)
 	    return NA_LOGICAL;
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -1556,7 +1564,7 @@ int asInteger(SEXP x)
 {
     int warn = 0, res;
 
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+    if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    return IntegerFromLogical(LOGICAL(x)[0], &warn);
@@ -1590,7 +1598,7 @@ double asReal(SEXP x)
     int warn = 0;
     double res;
 
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+    if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    res = RealFromLogical(LOGICAL(x)[0], &warn);
@@ -1626,7 +1634,7 @@ Rcomplex asComplex(SEXP x)
     int warn = 0;
     Rcomplex z;
 
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+    if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    z = ComplexFromLogical(LOGICAL(x)[0], &warn);
@@ -1880,7 +1888,7 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, names, x;
-    int i, n;
+    R_xlen_t i, n;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -1894,7 +1902,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #endif
     x = CAR(args);
-    n = length(x);
+    n = xlength(x);
     PROTECT(ans = allocVector(LGLSXP, n));
     if (isVector(x)) {
 	PROTECT(dims = getAttrib(x, R_DimSymbol));
@@ -1993,7 +2001,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, names, x;
-    int i, n;
+    R_xlen_t i, n;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -2007,7 +2015,7 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall_return(call, "is.nan " R_MSG_list_vec);
 #endif
     x = CAR(args);
-    n = length(x);
+    n = xlength(x);
     PROTECT(ans = allocVector(LGLSXP, n));
     if (isVector(x)) {
 	PROTECT(dims = getAttrib(x, R_DimSymbol));
@@ -2056,7 +2064,7 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
-    int i, n;
+    R_xlen_t i, n;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -2068,7 +2076,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall_return(call, "is.finite " R_MSG_list_vec);
 #endif
     x = CAR(args);
-    n = length(x);
+    n = xlength(x);
     ans = allocVector(LGLSXP, n);
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
@@ -2116,7 +2124,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
     double xr, xi;
-    int i, n;
+    R_xlen_t i, n;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -2128,7 +2136,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall_return(call, "is.infinite " R_MSG_list_vec);
 #endif
     x = CAR(args);
-    n = length(x);
+    n = xlength(x);
     ans = allocVector(LGLSXP, n);
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
