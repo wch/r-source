@@ -1400,8 +1400,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, _("Wrong type for argument %d in call to %s"),
 		      na+1, symName);
 	}
-	int n, nprotect = 0,
-	    targetType =  checkTypes ? checkTypes[na] : 0;
+	int nprotect = 0, targetType =  checkTypes ? checkTypes[na] : 0;
+	R_xlen_t n;
 	s = CAR(pa);
 	/* start with return value a copy of the inputs, as that is
 	   what is needed for DUP = FALSE and for non-atomic-vector inputs */
@@ -1457,14 +1457,14 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	switch(t) {
 	case RAWSXP:
 	    if (copy && dup) {
-		n = LENGTH(s);
-		char *ptr= R_alloc(n * sizeof(Rbyte) + 2 * NG, 1);
+		n = XLENGTH(s);
+		char *ptr = R_alloc(n * sizeof(Rbyte) + 2 * NG, 1);
 		memset(ptr, FILL, n * sizeof(Rbyte) + 2 * NG);
 		ptr += NG;
 		memcpy(ptr, RAW(s), n);
 		cargs[na] = (void *) ptr;
 	    } else if (dup && NAMED(s)) {
-		n = LENGTH(s);
+		n = XLENGTH(s);
 		SEXP ss = allocVector(t, n);
 		memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
 		SET_VECTOR_ELT(ans, na, ss);
@@ -1476,10 +1476,10 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	case LGLSXP:
 	case INTSXP:
-	    n = LENGTH(s);
+	    n = XLENGTH(s);
 	    int *iptr = INTEGER(s);
 	    if (!naok)
-		for (int i = 0 ; i < n ; i++)
+		for (R_xlen_t i = 0 ; i < n ; i++)
 		    if(iptr[i] == NA_INTEGER)
 			error(_("NAs in foreign function call (arg %d)"), na + 1);
 	    if (copy && dup) {
@@ -1499,15 +1499,15 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else cargs[na] = (void*) iptr;
 	    break;
 	case REALSXP:
-	    n = LENGTH(s);
+	    n = XLENGTH(s);
 	    double *rptr = REAL(s);
 	    if (!naok)
-		for (int i = 0 ; i < n ; i++)
+		for (R_xlen_t i = 0 ; i < n ; i++)
 		    if(!R_FINITE(rptr[i]))
 			error(_("NA/NaN/Inf in foreign function call (arg %d)"), na + 1);
 	    if (asLogical(getAttrib(s, CSingSymbol)) == 1) {
 		float *sptr = (float*) R_alloc(n, sizeof(float));
-		for (int i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
+		for (R_xlen_t i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 		cargs[na] = (void*) sptr;
 #ifdef R_MEMORY_PROFILING
 		if (RTRACE(s)) memtrace_report(s, sptr);
@@ -1529,10 +1529,10 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else cargs[na] = (void*) rptr;
 	    break;
 	case CPLXSXP:
-	    n = LENGTH(s);
+	    n = XLENGTH(s);
 	    Rcomplex *zptr = COMPLEX(s);
 	    if (!naok)
-		for (int i = 0 ; i < n ; i++)
+		for (R_xlen_t i = 0 ; i < n ; i++)
 		    if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
 			error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), na + 1);
 	    if (copy && dup) {
@@ -1554,7 +1554,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	case STRSXP:
 	    if (!dup)
 		error(_("character variables must be duplicated in .C/.Fortran"));
-	    n = LENGTH(s);
+	    n = XLENGTH(s);
 	    if (Fort) {
 		const char *ss = translateChar(STRING_ELT(s, 0));
 		if (n > 1)
@@ -1564,7 +1564,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		cargs[na] =  (void*) fptr;
 	    } else {
 		char **cptr = (char**) R_alloc(n, sizeof(char*));
-		for (int i = 0 ; i < n ; i++) {
+		for (R_xlen_t i = 0 ; i < n ; i++) {
 		    const char *ss = translateChar(STRING_ELT(s, i));
 		    cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
 		    strcpy(cptr[i], ss);
@@ -1581,9 +1581,9 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef USE_RINTERNALS
 	    cargs[na] = (void*) DATAPTR(s);
 #else
-	    n = length(s);
+	    n = XLENGTH(s);
 	    SEXP *lptr = (SEXP *) R_alloc(n, sizeof(SEXP));
-	    for (int i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
+	    for (R_xlen_t i = 0 ; i < n ; i++) lptr[i] = VECTOR_ELT(s, i);
 	    cargs[na] = (void*) lptr;
 #endif
 	    break;
@@ -2246,7 +2246,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = VECTOR_ELT(ans, na);
 		R_NativePrimitiveArgType type =
 		    checkTypes ? checkTypes[na] : TYPEOF(arg);
-	        int n = length(arg);
+	        R_xlen_t n = xlength(arg);
 
 		switch(type) {
 		case RAWSXP:
@@ -2298,7 +2298,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			s = allocVector(type, n);
 			unsigned char *ptr = (unsigned char *) p;
 			int *iptr = (int*) ptr, tmp;
-			for (int i = 0 ; i < n ; i++) {
+			for (R_xlen_t i = 0 ; i < n ; i++) {
 			    tmp =  iptr[i];
 			    LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
 			}
@@ -2319,7 +2319,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		    } else {
 			int *iptr = INTEGER(arg), tmp;
-			for (int i = 0 ; i < n ; i++) {
+			for (R_xlen_t i = 0 ; i < n ; i++) {
 			    tmp =  iptr[i];
 			    iptr[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
 			}
@@ -2331,7 +2331,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			s = allocVector(REALSXP, n);
 			if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 			    float *sptr = (float*) p;
-			    for(int i = 0 ; i < n ; i++) 
+			    for(R_xlen_t i = 0 ; i < n ; i++) 
 				REAL(s)[i] = (double) sptr[i];
 #if R_MEMORY_PROFILING
 			    if (RTRACE(arg)) {memtrace_report(p, s); SET_RTRACE(s, 1);}
@@ -2398,7 +2398,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else {
 			PROTECT(s = allocVector(type, n));
 			char **cptr = (char**) p;
-			for (int i = 0 ; i < n ; i++)
+			for (R_xlen_t i = 0 ; i < n ; i++)
 			    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 #if R_MEMORY_PROFILING
 			if (RTRACE(arg)) {memtrace_report(p, s); SET_RTRACE(s, 1);}

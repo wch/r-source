@@ -146,35 +146,35 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case NILSXP:
 	return TRUE;
     case LGLSXP:
-	if (length(x) != length(y)) return FALSE;
+	if (xlength(x) != xlength(y)) return FALSE;
 	/* Use memcmp (which is ISO C) to speed up the comparison */
 	return memcmp((void *)LOGICAL(x), (void *)LOGICAL(y),
-		      length(x) * sizeof(int)) == 0 ? TRUE : FALSE;
+		      xlength(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case INTSXP:
-	if (length(x) != length(y)) return FALSE;
+	if (xlength(x) != xlength(y)) return FALSE;
 	/* Use memcmp (which is ISO C) to speed up the comparison */
 	return memcmp((void *)INTEGER(x), (void *)INTEGER(y),
-		      length(x) * sizeof(int)) == 0 ? TRUE : FALSE;
+		      xlength(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case REALSXP:
     {
-	int n = length(x);
-	if(n != length(y)) return FALSE;
+	R_xlen_t n = xlength(x);
+	if(n != xlength(y)) return FALSE;
 	else {
 	    double *xp = REAL(x), *yp = REAL(y);
-	    int i, ne_strict = NUM_EQ | (SINGLE_NA << 1);
-	    for(i = 0; i < n; i++)
+	    int ne_strict = NUM_EQ | (SINGLE_NA << 1);
+	    for(R_xlen_t i = 0; i < n; i++)
 		if(neWithNaN(xp[i], yp[i], ne_strict)) return FALSE;
 	}
 	return TRUE;
     }
     case CPLXSXP:
     {
-	int n = length(x);
-	if(n != length(y)) return FALSE;
+	R_xlen_t n = xlength(x);
+	if(n != xlength(y)) return FALSE;
 	else {
 	    Rcomplex *xp = COMPLEX(x), *yp = COMPLEX(y);
-	    int i, ne_strict = NUM_EQ | (SINGLE_NA << 1);
-	    for(i = 0; i < n; i++)
+	    int ne_strict = NUM_EQ | (SINGLE_NA << 1);
+	    for(R_xlen_t i = 0; i < n; i++)
 		if(neWithNaN(xp[i].r, yp[i].r, ne_strict) ||
 		   neWithNaN(xp[i].i, yp[i].i, ne_strict))
 		    return FALSE;
@@ -183,8 +183,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     }
     case STRSXP:
     {
-	int i, n = length(x);
-	if(n != length(y)) return FALSE;
+	R_xlen_t i, n = xlength(x);
+	if(n != xlength(y)) return FALSE;
 	for(i = 0; i < n; i++) {
 	    /* This special-casing for NAs is not needed */
 	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
@@ -203,8 +203,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case VECSXP:
     case EXPRSXP:
     {
-	int i, n = length(x);
-	if(n != length(y)) return FALSE;
+	R_xlen_t i, n = xlength(x);
+	if(n != xlength(y)) return FALSE;
 	for(i = 0; i < n; i++)
 	    if(!R_compute_identical(VECTOR_ELT(x, i),VECTOR_ELT(y, i), flags))
 		return FALSE;
@@ -242,10 +242,10 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case EXTPTRSXP:
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:
-	if (length(x) != length(y)) return FALSE;
+	if (xlength(x) != xlength(y)) return FALSE;
 	/* Use memcmp (which is ISO C) to speed up the comparison */
 	return memcmp((void *)RAW(x), (void *)RAW(y),
-		      length(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
+		      xlength(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
 
 	/*  case PROMSXP: args are evaluated, so will not be seen */
 	/* test for equality of the substituted expression -- or should

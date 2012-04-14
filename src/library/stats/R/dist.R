@@ -37,13 +37,13 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
 	    diag  = as.integer(FALSE),
 	    method= as.integer(method),
 	    p = as.double(p),
-	    DUP = FALSE, NAOK=TRUE, PACKAGE="stats")$d
+	    DUP = FALSE, NAOK = TRUE, PACKAGE = "stats")$d
     attr(d, "Size") <- N
     attr(d, "Labels") <- dimnames(x)[[1L]]
     attr(d, "Diag") <- diag
     attr(d, "Upper") <- upper
     attr(d, "method") <- METHODS[method]
-    if(method == 6) attr(d, "p") <- p
+    if(method == 6L) attr(d, "p") <- p
     attr(d, "call") <- match.call()
     class(d) <- "dist"
     return(d)

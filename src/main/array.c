@@ -393,7 +393,7 @@ SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    R_len_t len;
+    R_xlen_t len;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -402,7 +402,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 					     rho, &ans, 0, 1))
       return(ans);
 
-    len = length(CAR(args));
+    len = xlength(CAR(args));
     return ScalarInteger((len <= INT_MAX) ? len : NA_INTEGER);
 }
 

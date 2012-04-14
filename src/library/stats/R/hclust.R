@@ -55,6 +55,7 @@ hclust <- function(d, method="complete", members=NULL)
 	stop("invalid dissimilarities")
     if(n < 2)
         stop("must have n >= 2 objects to cluster")
+    if(is.na(n) || n > 65536L) stop("size cannot be NA nor exceed 65536")
     len <- as.integer(n*(n-1)/2)
     if(length(d) != len)
         (if (length(d) < len) stop else warning
