@@ -6643,9 +6643,9 @@ Clean up again.
 @end table
 
 The next section will look at data from the classical experiment of
-Michaelson and Morley to measure the speed of light.  This dataset
-is available in the @code{morley} object, but we will read it
-to illustrate the @code{read.table} function.
+Michelson to measure the speed of light.  This dataset is available in
+the @code{morley} object, but we will read it to illustrate the
+@code{read.table} function.
 
 @table @code
 @item filepath <- system.file("data", "morley.tab" , package="datasets")
@@ -6657,7 +6657,7 @@ Optional.  Look at the file.
 
 @item mm <- read.table(filepath)
 @itemx mm
-Read in the Michaelson and Morley data as a data frame, and look at it.
+Read in the Michelson data as a data frame, and look at it.
 There are five experiments (column @code{Expt}) and each has 20 runs
 (column @code{Run}) and @code{sl} is the recorded speed of light,
 suitably coded.

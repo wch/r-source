@@ -6,7 +6,7 @@
 \name{morley}
 \docType{data}
 \alias{morley}
-\title{Michelson-Morley Speed of Light Data}
+\title{Michelson Speed of Light Data}
 \description{
   A classical data of Michelson (but not this one with Morley) on
   measurements done in 1879 on the speed of light.  The data consists of
