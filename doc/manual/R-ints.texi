@@ -4074,7 +4074,7 @@ The remaining interfaces will need to cope with the changed
 @code{VECTOR_SEXPREC} types.  It seems likely that in most cases lengths
 are accessed by the @code{length} and @code{LENGTH}
 functions@footnote{but @code{LENGTH} is a macro under some internal
-uses.}  The currnet approach is to keep these returning 32-bit lengths and
+uses.}  The current approach is to keep these returning 32-bit lengths and
 introduce `long' versions @code{xlength} and @code{XLENGTH} which return
 @code{R_xlen_t} values.
 
