@@ -35,6 +35,10 @@
       \item \code{colorRamp()} (and hence \code{colorRampPalette()}) now
       also works for the boundary case of just one color when the ramp is
       flat.
+
+      \item \code{qqline()} gets new optional arguments
+	\code{distribution}, \code{probs}, and \code{qtype}, following
+	the example of \pkg{lattice}'s \code{panel.qqmathline()}.
     }
   }
 
@@ -59,9 +63,9 @@
       It also avoids making a copy of a factor argument \code{bin}.
 
       \item Other functions (often or always) doing less copying include
-      \code{cut()}, the complex case of \code{eigen()}, \code{hclust()},
-      \code{image()}, \code{kmeans()}, \code{loess()}, \code{stl()} and
-      \code{svd(LINPACK = TRUE)}.
+      \code{cut()}, \code{dist()}, the complex case of \code{eigen()},
+      \code{hclust()}, \code{image()}, \code{kmeans()}, \code{loess()},
+      \code{stl()} and \code{svd(LINPACK = TRUE)}.
 
     }
   }
@@ -106,7 +110,7 @@
 
       \item \code{tracemem()} reported that all objects were copied
       by \code{.C()} or \code{.Fortran()} whereas only some object types
-      are copied.
+      were ever copied.
 
       \item The \code{plot()} method for class \code{"stepfun"} only
       used the optional \code{xval} argument to compute \code{xlim} and
@@ -114,6 +118,12 @@
 
       \item Names containing characters which need to be escaped were
       not deparsed properly.  (PR#14846)
+
+      \item Trying to update (recommended) packages in R_HOME/library without
+      write access, is now dealt with more gracefully.
+      Further, such package updates may be skipped (with a warning),
+      when a newer installed version is already going to be used from
+      \code{.libPaths()}.  (PR#14866)
     }
   }
 }
