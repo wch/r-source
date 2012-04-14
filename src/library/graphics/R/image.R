@@ -66,7 +66,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
     if (length(y) > 1 && length(y) == ncol(z)) { # midpoints
         dy <- 0.5*diff(y)
         y <- c(y[1L] - dy[1L], y[-length(y)]+dy,
-               y[length(y)]+dy[length(y)-1])
+               y[length(y)]+dy[length(y)-1L])
     }
 
     if (missing(breaks)) {
@@ -85,8 +85,9 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	    stop("must have one more break than colour")
 	if (any(!is.finite(breaks)))
 	    stop("breaks must all be finite")
-        if (!is.double(z)) storage.mode(z) <- "double"
-        if (!is.double(breaks)) storage.mode(breaks) <- "double"
+        ## spatstat passes a factor matrix here.
+        if (!is.double(z)) z <- as.double(z)
+        if (!is.double(breaks)) breaks <- as.double(breaks)
 	zi <- .C("bincode",
 		 z, length(z), breaks, length(breaks),
 		 code = integer(length(z)), (TRUE), (TRUE), nok = TRUE,
