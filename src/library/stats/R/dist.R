@@ -29,24 +29,25 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
 	stop("ambiguous distance method")
 
     N <- nrow(x <- as.matrix(x))
+    if (!is.double(x)) storage.mode(x) <- "double"
     d <- .C(C_R_distance,
-	    x = as.double(x),
+	    x = x,
 	    nr = N,
-	    nc=  ncol(x),
+	    nc = ncol(x),
 	    d = double(N*(N - 1)/2),
 	    diag  = as.integer(FALSE),
-	    method= as.integer(method),
+	    method = as.integer(method),
 	    p = as.double(p),
 	    DUP = FALSE, NAOK = TRUE, PACKAGE = "stats")$d
-    attr(d, "Size") <- N
-    attr(d, "Labels") <- dimnames(x)[[1L]]
-    attr(d, "Diag") <- diag
-    attr(d, "Upper") <- upper
-    attr(d, "method") <- METHODS[method]
-    if(method == 6L) attr(d, "p") <- p
-    attr(d, "call") <- match.call()
-    class(d) <- "dist"
-    return(d)
+    attributes(d) <- if(method == 6L)
+        list(Size = N, Labels =  dimnames(x)[[1L]], Diag = diag,
+             Upper = upper, method = METHODS[method],
+             p = p, call = match.call(), class = "dist")
+    else
+        list(Size = N, Labels =  dimnames(x)[[1L]], Diag = diag,
+             Upper = upper, method = METHODS[method],
+             call = match.call(), class = "dist")
+    d
 }
 
 format.dist <- function(x, ...) format(as.vector(x), ...)
