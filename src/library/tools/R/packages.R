@@ -372,7 +372,8 @@ function(packages = NULL, db,
     }
     depends <-
         split(all_packages[pos[, 2L]],
-              factor(all_packages[pos[, 1L]], levels = packages))
+              factor(all_packages[pos[, 1L]],
+                     levels = unique(packages)))
     if(length(out_of_db_packages)) {
         depends <-
             c(depends,
