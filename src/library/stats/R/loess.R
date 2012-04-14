@@ -101,7 +101,7 @@ simpleLoess <-
     x <- as.matrix(x)
     if(!is.double(x)) storage.mode(x) <- "double"
     if(!is.double(y)) storage.mode(y) <- "double"
-    if(!is.double(weights)) storage.mode(weoghts) <- "double"
+    if(!is.double(weights)) storage.mode(weights) <- "double"
     max.kd <-  max(N, 200)
     robust <- rep(1, N)
     divisor<- rep(1, D)
