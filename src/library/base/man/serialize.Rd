@@ -76,9 +76,9 @@ unserialize(connection, refhook = NULL)
   versions of \R, so this interface should not be used for long-term
   storage of \R objects.
 
-  A raw vector is limited to \eqn{2^{31} - 1}{2^31 - 1} bytes, but \R
-  objects can exceed this and their serializations will normally be
-  larger than the objects.
+  On 32-bit platforms a raw vector is limited to \eqn{2^{31} - 1}{2^31 -
+  1} bytes, but \R objects can exceed this and their serializations will
+  normally be larger than the objects.
 }
 \value{
   For \code{serialize}, \code{NULL} unless \code{connection = NULL}, when
