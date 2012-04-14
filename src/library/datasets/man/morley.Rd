@@ -6,7 +6,7 @@
 \name{morley}
 \docType{data}
 \alias{morley}
-\title{Michelson-Morley Speed of Light Data}
+\title{Michelson Speed of Light Data}
 \description{
   A classical data of Michelson (but not this one with  Morley) on
   measurements done in 1879 on the speed of light.  The data consists of
@@ -29,6 +29,9 @@
   also be considered a quantitative variate to account for linear (or
   polynomial) changes in the measurement over the course of a single
   experiment.
+}
+\note{
+  This is the same dataset as \code{michelson} in package \pkg{MASS}.
 }
 \source{
   A. J. Weekes (1986)
