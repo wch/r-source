@@ -24,9 +24,11 @@
 runmed <- function(x, k, endrule = c("median","keep","constant"),
                    algorithm = NULL, print.level = 0)
 {
-    n <- length(x)
+    n <- as.integer(length(x))
+    if(is.na(n)) stop("invalid value of length(x)")
     k <- as.integer(k)
-    if(k < 0) stop("'k' must be positive")
+    if(is.na(k)) stop("invalid value of 'k'")
+   if(k < 0) stop("'k' must be positive")
     if(k%%2 == 0)
         warning("'k' must be odd!  Changing 'k' to ",
                 k <- as.integer(1+ 2*(k %/% 2)))

@@ -35,6 +35,10 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
     if(!pivot && !LINPACK)
         return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
 
+    ## sanity checks
+    n <- as.integer(n)
+    if(is.na(n)) stop("invalid nrow(x)")
+
     if(!is.double(x)) storage.mode(x) <- "double"
 
     if(pivot) { ## code could be used in the other case too
@@ -74,7 +78,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
     }
 }
 
-chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
+chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
 {
     if(!is.numeric(x))
 	stop("non-numeric argument to 'chol2inv'")
@@ -88,17 +92,19 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 	nr <- length(x)
 	nc <- 1L
     }
+    nr <- as.integer(nr)
+    if(is.na(nr)) stop("invalid nrow(x)")
     size <- as.integer(size)
-    if(size <= 0L || size > nr || size > nc)
+    if(is.na(size) || size <= 0L || size > nr || size > nc)
 	stop("invalid 'size' argument in 'chol2inv'")
     if(!is.double(x)) storage.mode(x) <- "double"
     z <- .Fortran("ch2inv",
-		  x=x,
+		  x = x,
 		  nr,
 		  size,
-		  v=matrix(0, nrow=size, ncol=size),
-		  info=integer(1L),
-		  DUP=FALSE, PACKAGE="base")
+		  v = matrix(0, nrow=size, ncol=size),
+		  info = integer(1L),
+		  DUP = FALSE, PACKAGE = "base")
     if(z$info)
 	stop("singular matrix in 'chol2inv'")
     z$v

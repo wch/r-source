@@ -39,7 +39,8 @@ stl <- function(x, s.window,
     }
     x <- na.action(as.ts(x))
     if(is.matrix(x)) stop("only univariate series are allowed")
-    n <- length(x)
+    n <- as.integer(length(x))
+    if (is.na(n)) stop("invalid length(x)")
     period <- frequency(x)
     if(period < 2 || n <= 2 * period)
 	stop("series is not periodic or has less than two periods")
@@ -59,9 +60,7 @@ stl <- function(x, s.window,
     if(is.null(t.window))
 	t.window <- nextodd(ceiling( 1.5 * period / (1- 1.5/s.window)))
     if (!is.double(x)) storage.mode(x) <- "double"
-    z <- .Fortran(C_stl,
-		  x,
-		  as.integer(n),
+    z <- .Fortran(C_stl, x, n,
 		  as.integer(period),
 		  as.integer(s.window),
 		  as.integer(t.window),

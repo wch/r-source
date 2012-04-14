@@ -50,7 +50,8 @@ density.default <-
         if (na.rm) x <- x[!x.na]
         else stop("'x' contains missing values")
     }
-    N <- nx <- length(x)
+    N <- nx <- as.integer(length(x))
+    if(is.na(N)) stop("invalid value of length(x)")
     x.finite <- is.finite(x)
     if(any(!x.finite)) {
         x <- x[x.finite]

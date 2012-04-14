@@ -52,6 +52,7 @@ smooth.spline <-
     if(!all(is.finite(c(x, y))))
         stop("missing or infinite values in inputs are not allowed")
     n <- length(x)
+    if(is.na(n)) stop("invalid number of points")
     w <-
 	if(is.null(w)) rep(1, n)
 	else {

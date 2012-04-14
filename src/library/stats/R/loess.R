@@ -93,9 +93,11 @@ simpleLoess <-
 {
     ## loess_ translated to R.
 
-    D <- NCOL(x)
+    D <- as.integer(NCOL(x))
+    if (is.na(D)) stop("invalid NCOL(X)")
     if(D > 4) stop("only 1-4 predictors are allowed")
-    N <- NROW(x)
+    N <- as.integer(NROW(x))
+    if (is.na(N)) stop("invalid NCOL(X)")
     if(!N || !D)	stop("invalid 'x'")
     if(!length(y))	stop("invalid 'y'")
     x <- as.matrix(x)
@@ -136,9 +138,7 @@ simpleLoess <-
         if (length(cell) != 1L) stop("invalid argument 'cell'")
         if (length(degree) != 1L) stop("invalid argument 'degree'")
 	z <- .C(C_loess_raw, # ../src/loessc.c
-		y, x, weights, robust,
-		as.integer(D),
-		as.integer(N),
+		y, x, weights, robust, D, N,
 		as.double(span),
 		as.integer(degree),
 		as.integer(nonparametric),
@@ -164,11 +164,8 @@ simpleLoess <-
 	}
 	fitted.residuals <- y - z$fitted.values
 	if(j < iterations)
-	    robust <- .Fortran(C_lowesw,
-			       fitted.residuals,
-			       as.integer(N),
-			       robust = double(N),
-			       integer(N))$robust
+	    robust <- .Fortran(C_lowesw, fitted.residuals, N,
+			       robust = double(N), integer(N))$robust
     }
     if(surface == "interpolate")
     {
@@ -189,9 +186,7 @@ simpleLoess <-
 				 pseudovalues = double(N))$pseudovalues
 	zz <- .C(C_loess_raw,
 		as.double(pseudovalues), # ? needed
-		x, weights, weights,
-		as.integer(D),
-		as.integer(N),
+		x, weights, weights, D, N,
 		as.double(span),
 		as.integer(degree),
 		as.integer(nonparametric),

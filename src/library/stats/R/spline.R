@@ -29,7 +29,8 @@ spline <-
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    nx <- length(x)
+    nx <- as.integer(length(x))
+    if(is.na(nx)) stop("invalid value of length(x)")
 
     if(nx == 0) stop("zero non-NA points")
     if(method == 1 && y[1L] != y[nx]) { # periodic
@@ -38,7 +39,7 @@ spline <-
     }
     z <- .C(C_spline_coef,
 	    method=as.integer(method),
-	    n=as.integer(nx),
+	    n=nx,
 	    x=x,
 	    y=y,
 	    b=double(nx),
