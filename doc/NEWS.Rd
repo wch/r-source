@@ -20,7 +20,28 @@
       This is not intended for routine use, but can be very helpful in
       finding segfaults in package code.
     }
+  }
 
+  \subsection{LONG VECTORS}{
+    \itemize{
+      \item There is the beginnings of support for vectors longer than
+      \eqn{2^{31}-1}{2^31 - 1} elements on 64-bit platforms.  This
+      applies to raw, logical, integer, double, complex and character
+      vectors, as well as lists.  (Elements of character vectors remain
+      limited to \eqn{2^{31}-1}{2^31 - 1} bytes.)
+      
+      \item What can be done with such vectors is currently very
+      limited, and most operations will return the error \samp{long
+      vectors not supported yet}.  They can be serialized and
+      unserialized, \code{object.size()} works and means can be
+      computed.
+
+      \item \code{serialize()} to a raw vector is no longer limited in
+      size on 64-bit platforms.
+      
+      \item The C-level function \code{R_alloc} can now allocate
+      \eqn{2^{34}}{2^34} or more bytes on 64-bit platforms.
+    }
   }
 
   \subsection{UTILITIES}{
