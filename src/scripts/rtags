@@ -7,7 +7,7 @@ revision='$Rev: 47214 $'
 version=`set - ${revision}; echo ${2}`
 version="rtags/etags front-end: ${R_VERSION} (r${version})
 
-Copyright (C) 2008 The R Core Development Team.
+Copyright (C) 2008 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 

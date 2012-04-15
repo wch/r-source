@@ -37,7 +37,7 @@ notice identical to this one except for the removal of this paragraph
 @titlepage
 @title R Data Import/Export
 @subtitle Version @value{VERSION}
-@author R Development Core Team
+@author R Core Team
 @page
 @vskip 0pt plus 1filll
 @permission{}

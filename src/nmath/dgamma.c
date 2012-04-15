@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000 The R Core Development Team
+ *	Copyright (C) 2000 The R Core Team
  *	Copyright (C) 2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify

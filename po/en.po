@@ -1,5 +1,5 @@
 # First pass at localization file for R
-# Copyright (C) 2005 The R Development Core Team
+# Copyright (C) 2005 The RCore Team
 # This file is distributed under the same license as the R package.
 #
 msgid ""

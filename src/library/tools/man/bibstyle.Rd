@@ -1,6 +1,6 @@
 % File src/library/tools/man/bibstyle.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010-1 R Core Development Team
+% Copyright 2010-2 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibstyle}
@@ -81,7 +81,7 @@ Duncan Murdoch
 refs <- 
 c(bibentry(bibtype = "manual",
     title = "R: A Language and Environment for Statistical Computing",
-    author = person("R Development Core Team"),
+    author = person("R Core Team"),
     organization = "R Foundation for Statistical Computing",
     address = "Vienna, Austria",
     year = 2010,

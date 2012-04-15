@@ -27,7 +27,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables@*
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
 Copyright @copyright{} 1997, 1998 M.@: Maechler@*
-Copyright @copyright{} 1997-- R Core Development Team@*
+Copyright @copyright{} 1997-- R Core Team@*
 @Rcopyright{1999}
 @end macro
 @end ifnottex
@@ -39,7 +39,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: Maechler
-Copyright @copyright{} 1997-- R Core Development Team@*
+Copyright @copyright{} 1997-- R Core Team@*
 @Rcopyright{1999}
 @end macro
 @end iftex
@@ -70,7 +70,7 @@ This is an introduction to R.
 @subtitle Notes on @R{}: A Programming Environment for Data Analysis and Graphics
 @subtitle Version @value{VERSION}
 @author W. N. Venables, D. M. Smith
-@author and the R Development Core Team
+@author and the R Core Team
 
 @page
 @vskip 0pt plus 1filll

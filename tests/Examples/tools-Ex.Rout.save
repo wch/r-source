@@ -1,8 +1,8 @@
 
-R version 2.15.0 alpha (2012-03-02 r58556)
+R version 2.15.0 Patched (2012-04-15 r59036) -- "Easter Beagle"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1476b88>
+<environment: 0x7ffd23f7db80>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1476b88>
+<environment: 0x7ffd23f7db80>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1476b88>
+<environment: 0x7ffd23f7db80>
 
 $showURLs
 [1] FALSE
@@ -216,7 +216,7 @@ $underline_titles
 > refs <- 
 + c(bibentry(bibtype = "manual",
 +     title = "R: A Language and Environment for Statistical Computing",
-+     author = person("R Development Core Team"),
++     author = person("R Core Team"),
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
 +     year = 2010,
@@ -232,11 +232,11 @@ $underline_titles
 +     pages = "211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +        .init = TRUE)
-<environment: 0x1e9d8a8>
+<environment: 0x7ffd245c4d90>
 > print(refs, .bibstyle = "unsorted")    
-R Development Core Team (2010). _R: A Language and Environment for
-Statistical Computing_. R Foundation for Statistical Computing, Vienna,
-Austria. ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
+R Core Team (2010). _R: A Language and Environment for Statistical
+Computing_. R Foundation for Statistical Computing, Vienna, Austria.
+ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
 
 Box GEP and Cox DR (1964). "An Analysis of Transformations." _Journal
 of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
@@ -892,7 +892,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.362 0.012 0.376 0 0 
+Time elapsed:  0.4 0.013 0.413 0 0 
 > grDevices::dev.off()
 null device 
           1 
