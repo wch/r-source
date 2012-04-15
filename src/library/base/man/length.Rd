@@ -1,12 +1,14 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{length}
 \alias{length}
 \alias{length<-}
 \alias{length<-.factor}
+\alias{xlength}
+\alias{xlength<-}
 \title{Length of an Object}
 \description{
   Get or set the length of vectors (including lists) and factors, and of
@@ -15,17 +17,41 @@
 \usage{
 length(x)
 length(x) <- value
+
+xlength(x)
+xlength(x) <- value
 }
 \arguments{
   \item{x}{an \R object.  For replacement, a vector or factor.}
-  \item{value}{an integer: double values will be coerced to integer.}
+  \item{value}{a non-negative integer or double (which will be rounded down).}
+}
+\details{
+  \code{length} and \code{xlength} differ only in the way they handle
+  the long vectors introduced in \R 2.16.0.
+  
+  All are generic: you can write methods to handle specific
+  classes of objects, see \link{InternalMethods}.  \code{length<-} has a
+  \code{"factor"} method.  The \code{xlength} versions will first try a
+  method for \code{xlength} then one of \code{length}.
+
+  The replacement form can be used to reset the length of a vector.  If
+  a vector is shortened, extra values are discarded and when a vector is
+  lengthened, it is padded out to its new length with \code{\link{NA}}s
+  (\code{nul} for raw vectors).
+  
+  All are \link{primitive} functions.
 }
 \value{
-  The default method currently returns an \code{\link{integer}} of
-  length 1.  Since this may change in the future and may
-  differ for other methods, programmers should not rely on it.
-  (Should the length exceed the maximum representable integer, it is
-  returned as \code{NA}.)
+  The default method for \code{length} currently returns an
+  \code{\link{integer}} of length 1.  Since this may change in the
+  future and may differ for other methods, programmers should not rely
+  on it.  (Should the length exceed the maximum representable integer,
+  it is returned as \code{NA}.)
+
+  On the other hand, the default method for \code{xlength} will return a
+  double value for vectors of more than \eqn{2^{31}-1}{2^31 - 1}
+  elements, and the default replacement method can set the length of
+  atomic vectors and list to such a length if \code{value} is double.
 
   For vectors (including lists) and factors the length is the number of
   elements.  For an environment it is the number of objects in the
@@ -34,20 +60,8 @@ length(x) <- value
   of the pairlist chain.  All other objects (including functions) have
   length one: note that for functions this differs from S.
 
-  The replacement form removes all the attributes of \code{x} except its
+  The replacement forms remove all the attributes of \code{x} except its
   names.  
-}
-\details{
-  Both functions are generic: you can write methods to handle specific
-  classes of objects, see \link{InternalMethods}.  \code{length<-} has a
-  \code{"factor"} method.
-
-  The replacement form can be used to reset the length of a vector.  If
-  a vector is shortened, extra values are discarded and when a vector is
-  lengthened, it is padded out to its new length with \code{\link{NA}}s
-  (\code{nul} for raw vectors).
-  
-  Both are \link{primitive} functions.
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2007   The R Development Core Team.
+ *  Copyright (C) 1999-20   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,7 @@
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
-/* Probably not able to use C99 semantics in gcc < 4.3.0 but who knows what
-   unofficial versions Debian or RedHat will distribute */
+/* Probably not able to use C99 semantics in gcc < 4.3.0 */
 #if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
 #define C99_INLINE_SEMANTICS 1
 #endif

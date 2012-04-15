@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2010   The R Development Core Team
+ *  Copyright (C) 1998-2012   The R Core Team
  *  Copyright (C) 2002--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -398,9 +398,20 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    if (PRIMVAL(op)) { /* xlength */
+	if(isObject(CAR(args)) && DispatchOrEval(call, op, "xlength", args,
+						 rho, &ans, 0, 1))
+	    return(ans);
+	if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
+						 rho, &ans, 0, 1))
+	    return(ans);
+
+	len = xlength(CAR(args));
+	return ScalarReal(len);
+    }
     if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
 					     rho, &ans, 0, 1))
-      return(ans);
+	return(ans);
 
     len = xlength(CAR(args));
     return ScalarInteger((len <= INT_MAX) ? len : NA_INTEGER);

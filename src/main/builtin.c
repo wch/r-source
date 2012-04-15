@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2011  The R Development Core Team.
+ *  Copyright (C) 1999-2012  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -759,13 +759,13 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* (if it is vectorizable). We could probably be fairly */
 /* clever with memory here if we wanted to. */
 
-SEXP lengthgets(SEXP x, R_len_t len)
+static SEXP xlengthgets(SEXP x, R_xlen_t len)
 {
-    R_len_t lenx, i;
+    R_xlen_t lenx, i;
     SEXP rval, names, xnames, t;
     if (!isVector(x) && !isVectorizable(x))
 	error(_("cannot set length of non-vector"));
-    lenx = length(x);
+    lenx = xlength(x);
     if (lenx == len)
 	return (x);
     PROTECT(rval = allocVector(TYPEOF(x), len));
@@ -851,27 +851,45 @@ SEXP lengthgets(SEXP x, R_len_t len)
     return rval;
 }
 
+SEXP lengthgets(SEXP x, R_len_t len)
+{
+    return xlengthgets(x, (R_xlen_t) len);
+}
+
 
 SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_len_t len;
     SEXP x, ans;
 
     checkArity(op, args);
     check1arg(args, call, "x");
 
     x = CAR(args);
+
+    if (PRIMVAL(op)) { /* xlength<- */
+	if(isObject(x) && DispatchOrEval(call, op, "xlength<-", args,
+					 rho, &ans, 0, 1))
+	    return(ans);
+	if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
+					 rho, &ans, 0, 1))
+	    return(ans);
+	if (!isVector(x) && !isVectorizable(x))
+	    error(_("invalid argument"));
+	if (length(CADR(args)) != 1)
+	    error(_("invalid value"));
+	R_xlen_t len = asVecSize(CADR(args));
+	return xlengthgets(x, len);
+    }
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
 				     rho, &ans, 0, 1))
 	return(ans);
     if (!isVector(x) && !isVectorizable(x))
-       error(_("invalid argument"));
+	error(_("invalid argument"));
     if (length(CADR(args)) != 1)
-       error(_("invalid value"));
-    len = asVecSize(CADR(args));
-    if (len == NA_INTEGER)
-       error(_("missing value for 'length'"));
+	error(_("invalid value"));
+    R_len_t len = asVecSize(CADR(args));
     if (len < 0) error(_("invalid value"));
+    if (len > R_LEN_T_MAX) error(_("vector size specified is too large"));
     return lengthgets(x, len);
 }
 
