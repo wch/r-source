@@ -3,7 +3,7 @@
 #
 # Copyright (C) 1997-1999  Adrian Trapletti
 #
-# Rewritten to use R indexing (C) 1999, 2006 R Core Development Team
+# Rewritten to use R indexing (C) 1999, 2006 R Core Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public

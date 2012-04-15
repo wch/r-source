@@ -4,9 +4,9 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2000, The R Core Team
  *  Changes to case a, b < 2, use logs to avoid underflow
- *	Copyright (C) 2006, The R Core Development Team
+ *	Copyright (C) 2006, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

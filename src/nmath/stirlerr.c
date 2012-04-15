@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2000, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
  *        write lgamma!)
  *
  * Merge in to R:
- * Copyright (C) 2000, The R Core Development Team
+ * Copyright (C) 2000, The R Core Team
  * R has lgammafn, and lgamma is not part of ISO C
  */
 
