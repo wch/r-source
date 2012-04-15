@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001  Robert Gentleman, Ross Ihaka and the
- *			      R Development Core Team
+ *  Copyright (C) 1998-2012  The R Core Team
  *  Copyright (C) 2002, 2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,6 +18,8 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  */
+
+/* As from R 2.16.0 this might need long vectors for result. */
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -200,7 +201,8 @@ enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY, MINKOWSKI };
 void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p)
 {
-    int dc, i, j, ij;
+    int dc, i, j;
+    size_t  ij;  /* can exceed 2^31 - 1 */
     double (*distfun)(double*, int, int, int, int) = NULL;
 #ifdef HAVE_OPENMP
     int nthreads;
@@ -267,4 +269,24 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 	    d[ij++] = (*method != MINKOWSKI) ?
 		distfun(x, *nr, *nc, i, j) : R_minkowski(x, *nr, *nc, i, j, *p);
 #endif
+}
+
+#include <Rinternals.h>
+
+SEXP Cdist(SEXP x, SEXP smethod, SEXP attrs, SEXP p)
+{
+    SEXP ans;
+    int nr = nrows(x), nc = ncols(x), method = asInteger(smethod);
+    int N, diag = 0;
+    double rp = asReal(p);
+    N = (double)nr * (nr-1)/2; /* avoid overflow for N ~ 50,000 */
+    PROTECT(ans = allocVector(REALSXP, N));
+    R_distance(REAL(x), &nr, &nc, REAL(ans), &diag, &method, &rp);
+    /* tack on attributes */
+    SEXP names = getAttrib(attrs, R_NamesSymbol);
+    for (int i = 0; i < LENGTH(attrs); i++)
+	setAttrib(ans, install(translateChar(STRING_ELT(names, i))),
+		  VECTOR_ELT(attrs, i));
+    UNPROTECT(1);
+    return ans;
 }

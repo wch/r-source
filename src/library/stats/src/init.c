@@ -153,6 +153,7 @@ static const R_CMethodDef CEntries[]  = {
 };
 
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
+SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
 
 
 static const R_CallMethodDef CallEntries[] = {
@@ -193,6 +194,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
     {"R_rWishart", (DL_FUNC) &R_rWishart, 3},
     {"Cdqrls", (DL_FUNC) &Cdqrls, 3},
+    {"Cdist", (DL_FUNC) &Cdist, 4},
     {NULL, NULL, 0}
 };
 
