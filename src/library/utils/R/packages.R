@@ -323,6 +323,21 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 	oldPkgs <- old.packages(lib.loc = lib.loc,
 				contriburl = contriburl, method = method,
 				available = available, checkBuilt = checkBuilt)
+	## prune package versions which are invisible to require()
+	if(!is.null(oldPkgs)) {
+	    pkg <- 0L
+	    while(pkg < nrow(oldPkgs)) {
+		pkg <- pkg + 1L
+		if(find.package(oldPkgs[pkg], lib.loc = lib.loc) !=
+		   find.package(oldPkgs[pkg], lib.loc = oldPkgs[pkg,2])) {
+		    warning(sprintf("package '%s' in library '%s' will not be updated",
+				    oldPkgs[pkg], oldPkgs[pkg, 2]),
+			    call. = FALSE, immediate. = TRUE)
+		    oldPkgs <- oldPkgs[-pkg, , drop = FALSE]
+		    pkg <- pkg - 1L
+		}
+	    }
+	}
 	if(is.null(oldPkgs))
 	    return(invisible())
     } else if (!(is.matrix(oldPkgs) && is.character(oldPkgs)))
