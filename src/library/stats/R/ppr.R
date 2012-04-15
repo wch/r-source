@@ -16,7 +16,7 @@
 
 ## file stats/R/ppr.R
 ## copyright (C) 1998 B. D. Ripley
-## Copyright (C) 2000-3 The R Development Core Team
+## Copyright (C) 2000-3 The R Core Team
 ## This version distributed under GPL (version 2 or later)
 
 ppr <- function(x, ...) UseMethod("ppr")

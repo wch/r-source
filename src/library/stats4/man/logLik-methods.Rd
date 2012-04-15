@@ -1,6 +1,6 @@
 % File src/library/stats4/man/logLik-methods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
 \name{logLik-methods}

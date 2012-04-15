@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-11  R Development Core Team
+ *  Copyright (C) 2000-11  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -233,7 +233,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    }
 	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 		fprintf(stderr, "BATCH %s\n%s%s%s\n", "1.2",
-"Copyright (C) 1997-2004 R Core Development Team.\n",
+"Copyright (C) 1997-2004 R Core Team.\n",
 "This is free software; see the GNU General Public Licence version 2\n",
 "or later for copying conditions.  There is NO warranty.");
 		return(0);

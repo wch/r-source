@@ -11,7 +11,7 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2009  The R Development Core Team
+ *  Copyright (C) 2000-2009  The R Core Team
  *  Copyright (C) 2003-2009  The R Foundation
  */
 

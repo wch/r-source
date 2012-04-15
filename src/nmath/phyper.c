@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 1999-2000  The R Development Core Team
+ *  Copyright (C) 1999-2000  The R Core Team
  *  Copyright (C) 2004	     Morten Welinder
  *  Copyright (C) 2004	     The R Foundation
  *

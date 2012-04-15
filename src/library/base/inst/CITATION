@@ -1,6 +1,6 @@
 bibentry("Manual",
          title = "R: A Language and Environment for Statistical Computing",
-         author = person("R Development Core Team"),
+         author = person("R Core Team"),
          organization = "R Foundation for Statistical Computing",
          address      = "Vienna, Austria",
          year         = version$year,
@@ -8,7 +8,7 @@ bibentry("Manual",
          url          = "http://www.R-project.org/",
          
          textVersion = 
-         paste("R Development Core Team (", version$year, "). ", 
+         paste("R Core Team (", version$year, "). ", 
                "R: A language and environment for statistical computing. ",
                "R Foundation for Statistical Computing, Vienna, Austria. ",
                "ISBN 3-900051-07-0, URL http://www.R-project.org/.",

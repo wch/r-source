@@ -3301,7 +3301,7 @@ void GMtext(const char *str, cetype_t enc, int side, double line, int outer,
 
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
- *  Copyright (C) 1998-2008  The R Development Core Team
+ *  Copyright (C) 1998-2008  The R Core Team
 
  */
 

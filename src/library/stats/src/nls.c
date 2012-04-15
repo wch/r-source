@@ -2,10 +2,10 @@
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
  *
- *  Copyright 1999-2001 Douglas M. Bates <bates@stat.wisc.edu>,
- *                      Saikat DebRoy <saikat@stat.wisc.edu>
+ *  Copyright 1999-2001 Douglas M. Bates
+ *                      Saikat DebRoy
  *
- *  Copyright 2005--2007  The R Development Core Team
+ *  Copyright 2005--2007  The R Core Team
  *  Copyright 2006	  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify

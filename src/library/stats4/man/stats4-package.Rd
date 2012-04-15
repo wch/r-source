@@ -1,6 +1,6 @@
 % File src/library/stats4/man/stats4-package.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stats4-package}
@@ -20,7 +20,7 @@
   with \code{\link{AIC}}.
 }
 \author{
-R Development Core Team and contributors worldwide
+R Core Team and contributors worldwide
 
 Maintainer: R Core Team \email{R-core@r-project.org}
 }

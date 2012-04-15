@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000-2008 The R Development Core Team
+ *  Copyright (C) 2000-2008 The R Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990

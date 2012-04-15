@@ -1,6 +1,6 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2011 R Core Team
 % Copyright 2003-2011 The R Foundation
 % Distributed under GPL 2 or later
 

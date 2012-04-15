@@ -1,6 +1,6 @@
 % File src/library/tools/man/toHTML.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010-1 R Core Development Team
+% Copyright 2010-1 R Core Team
 % Distributed under GPL 2 or later
 
 \name{toHTML}

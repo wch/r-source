@@ -1,6 +1,6 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2010 R Core Team
 % Copyright 2008-2010 The R Foundation
 % Distributed under GPL 2 or later
 
