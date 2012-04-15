@@ -29,7 +29,7 @@
       applies to raw, logical, integer, double, complex and character
       vectors, as well as lists.  (Elements of character vectors remain
       limited to \eqn{2^{31}-1}{2^31 - 1} bytes.)
-      
+
       \item What can be done with such vectors is currently very
       limited, and most operations will return the error \sQuote{long
       vectors not supported yet}.  They can be serialized and
@@ -42,7 +42,7 @@
 
       \item \code{serialize()} to a raw vector is no longer limited in
       size on 64-bit platforms.
-      
+
       \item The C-level function \code{R_alloc} can now allocate
       \eqn{2^{34}}{2^34} or more bytes on 64-bit platforms.
     }
@@ -78,7 +78,7 @@
       know of no examples in packages).
     }
   }
-  
+
 % This is deferred until we can get package maintainers to cooperate.
 %   \subsection{C-LEVEL FACILITIES}{
 %     \itemize{
@@ -205,6 +205,9 @@
       Further, such package updates may be skipped (with a warning),
       when a newer installed version is already going to be used from
       \code{.libPaths()}.  (PR#14866)
+
+      \item \code{hclust()} is now fast again (as up to end of 2003),
+      with a different fix for the "median"/"centroid" problem.  (PR#4195).
     }
   }
 }
