@@ -44,7 +44,7 @@ str.data.frame <- function(object, ...)
 str.Date <- str.POSIXt <- function(object, ...) {
     cl <- oldClass(object)
     ## be careful to be fast for large object:
-    n <- length(object)
+    n <- length(object) # FIXME, could be NA
     if(n == 0L) return(str.default(object))
     if(n > 1000L) object <- object[seq_len(1000L)]
 
@@ -61,7 +61,7 @@ str.Date <- str.POSIXt <- function(object, ...) {
 	    larg <- larg[ - iGiveHead ]
 	if(is.numeric(larg[["nest.lev"]]) &&
 	   is.numeric(v.len <- larg[["vec.len"]])) # typical call from data.frame
-	    ## diminuish length for typical call:
+	    ## reduce length for typical call:
 	    larg[["vec.len"]] <-
 		min(larg[["vec.len"]],
 		    (larg[["width"]]- nchar(larg[["indent.str"]]) -31)%/% 19)
@@ -145,7 +145,13 @@ str.default <-
     }
 
     oo <- options(digits = digits.d); on.exit(options(oo))
-    le <- length(object)
+    le <- xlength(object)
+    if(is.na(le)) {
+        warning("'str.default': 'le' is NA, so taken as 0", immediate. = TRUE)
+        le <- 0
+        vec.len <- 0
+    }
+
     maybe_truncate <- function(x, e.x = x, Sep = "\"", ch = "| __truncated__")
     {
 	trimmed <- strtrim(e.x, nchar.max)
@@ -508,9 +514,6 @@ str.default <-
 	    v.len <- round(.75 * v.len)
 	    format.fun <- formatNum
 	}
-
-	## Not sure, this is ever triggered:
-	if(is.na(le)) { warning("'str.default': 'le' is NA"); le <- 0}
 
 	if(char.like) {
 	    ## if object is very long, drop the rest which won't be used anyway:
