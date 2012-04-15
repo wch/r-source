@@ -30,15 +30,18 @@
       vectors, as well as lists.  (Elements of character vectors remain
       limited to \eqn{2^{31}-1}{2^31 - 1} bytes.)
 
-      \item What can be done with such vectors is currently very
+      All aspects are currently experimental.
+
+      \item What can be done with such vectors is currently rather
       limited, and most operations will return the error \sQuote{long
       vectors not supported yet}.  They can be serialized and
-      unserialized, \code{identical()} and \code{object.size()} work and
-      means can be computed.
+      unserialized, coercion, \code{identical()} and
+      \code{object.size()} work and means can be computed.  Their
+      lengths can be get and set by \code{xlength()}.
 
       \item \code{dist()} can produce dissimilarity objects for more
-      than 65536 rows (but for example \code{hclust()} cannot process
-      such objects).
+      than 65536 rows (but for example \code{cmdscale()} and
+      \code{hclust()} cannot process such objects).
 
       \item \code{serialize()} to a raw vector is no longer limited in
       size on 64-bit platforms.
@@ -144,9 +147,9 @@
       It also avoids making a copy of a factor argument \code{bin}.
 
       \item Other functions (often or always) doing less copying include
-      \code{cut()}, the complex case of \code{eigen()}, \code{hclust()},
-      \code{image()}, \code{kmeans()}, \code{loess()}, \code{stl()} and
-      \code{svd(LINPACK = TRUE)}.
+      \code{cut()}, \code{dist()}, the complex case of \code{eigen()},
+      \code{hclust()}, \code{image()}, \code{kmeans()}, \code{loess()},
+      \code{stl()} and \code{svd(LINPACK = TRUE)}.
 
     }
   }

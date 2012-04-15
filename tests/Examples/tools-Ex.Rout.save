@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-10-21 r57363)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2012-04-15 r59032) -- "Unsuffered Consequences"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -216,7 +216,7 @@ $underline_titles
 > refs <- 
 + c(bibentry(bibtype = "manual",
 +     title = "R: A Language and Environment for Statistical Computing",
-+     author = person("R Development Core Team"),
++     author = person("R Core Team"),
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
 +     year = 2010,
@@ -234,9 +234,9 @@ $underline_titles
 +        .init = TRUE)
 <environment: 0x3144360>
 > print(refs, .bibstyle = "unsorted")    
-R Development Core Team (2010). _R: A Language and Environment for
-Statistical Computing_. R Foundation for Statistical Computing, Vienna,
-Austria. ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
+R Core Team (2010). _R: A Language and Environment for Statistical
+Computing_. R Foundation for Statistical Computing, Vienna, Austria.
+ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
 
 Box GEP and Cox DR (1964). "An Analysis of Transformations." _Journal
 of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
@@ -892,7 +892,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.384 0.014 0.404 0 0 
+Time elapsed:  0.419 0.013 0.434 0 0 
 > grDevices::dev.off()
 null device 
           1 

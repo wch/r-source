@@ -720,7 +720,7 @@ To cite R in publications, use
 @@Manual@{,
   title        = @{R: A Language and Environment for Statistical
                   Computing@},
-  author       = @{@{R Development Core Team@}@},
+  author       = @{@{R Core Team@}@},
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
   year         = @value{REL_YEAR},

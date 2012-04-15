@@ -42,7 +42,7 @@ $\t\$%
 
 @c -- edit these here alone -- in order keep consistency
 @macro Rcopyright{year}
-Copyright @copyright{} \year\--2012 R Development Core Team
+Copyright @copyright{} \year\--2012 R Core Team
 @end macro
 
 @macro permission{}
@@ -58,7 +58,7 @@ permission notice identical to this one.
 Permission is granted to copy and distribute translations of this manual
 into another language, under the above conditions for modified versions,
 except that this permission notice may be stated in a translation
-approved by the R Development Core Team.
+approved by the R Core Team.
 @end macro
 
 @set ISBN-FAQ ISBN 3-900051-08-9
