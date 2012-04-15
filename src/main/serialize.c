@@ -1623,7 +1623,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case GENERICREFSXP:
 	    error(_("this version of R cannot read generic function references"));
 	case RAWSXP:
-	    len = InInteger(stream);
+	    len = ReadLENGTH(stream);
 	    PROTECT(s = allocVector(type, len));
 	    {
 		/* need to read longer vectors in chunks in future */
