@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1996-2004	Robert Gentleman and Ross Ihaka and the
- *				R Development Core Team
+ *				R Core Team
  *  Copyright (C) 2005		The R Foundation
 
  *  "HACKED" to allow weights by Adrian Baddeley

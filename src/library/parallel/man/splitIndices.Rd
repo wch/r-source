@@ -1,6 +1,6 @@
 % File src/library/parallel/man/splitIndices.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2003-11 R Core Development Team
+% Copyright 2003-11 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splitIndices}

@@ -1,11 +1,11 @@
 % File src/library/stats/man/ppr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
 % file stats/man/ppr.Rd
 % copyright (C) 1995-8 B. D. Ripley
-% copyright (C) 2000-3   The R Core Development Team
+% copyright (C) 2000-3   The R Core Team
 %
 \name{ppr}
 \alias{ppr}

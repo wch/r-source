@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/winProgressBar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winProgressBar}

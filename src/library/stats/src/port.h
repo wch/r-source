@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005   The R Development Core Team.
+ *  Copyright (C) 2005   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 /* Header file for the C utilities to accompany the Fortran
  * optimization routines for the port library.
  *
- * Copyright (C) 2005-5  the R Development Core Team
+ * Copyright (C) 2005-5  the R Core Team
  * Licensed under the GNU General Public License, version 2 or later.
  */
 

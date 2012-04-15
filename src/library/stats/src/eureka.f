@@ -2,7 +2,7 @@ c-----------------------------------------------------------------------
 c
 c  R : A Computer Language for Statistical Data Analysis
 c  Copyright (C) 1977        B.D. Ripley
-c  Copyright (C) 1999        the R Development Core Team
+c  Copyright (C) 1999        the R Core Team
 c
 c  This program is free software; you can redistribute it and/or modify
 c  it under the terms of the GNU General Public License as published by

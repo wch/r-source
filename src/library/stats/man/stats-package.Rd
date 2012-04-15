@@ -1,6 +1,6 @@
 % File src/library/stats/man/stats-package.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stats-package}
@@ -22,7 +22,7 @@ list of functions, use \code{library(help="stats")}.
 
 }
 \author{
-R Development Core Team and contributors worldwide
+R Core Team and contributors worldwide
 
 Maintainer: R Core Team \email{R-core@r-project.org}
 }

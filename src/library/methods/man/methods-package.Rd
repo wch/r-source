@@ -1,6 +1,6 @@
 % File src/library/methods/man/methods-package.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods-package}
@@ -37,7 +37,7 @@ other programming tools, as described in the references.
  Springer (For the original S4 version.) 
 }
 \author{
-R Development Core Team
+R Core Team
 
 Maintainer: R Core Team \email{R-core@r-project.org}
 }

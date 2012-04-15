@@ -1,6 +1,6 @@
 % File src/library/datasets/man/sleep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2010 R Core Team
 % Copyright 1999-2010 The R Foundation
 % Distributed under GPL 2 or later
 

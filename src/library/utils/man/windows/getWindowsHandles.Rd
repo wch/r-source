@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/getWindowsHandles.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-10 Duncan Murdoch and the R Core Development Team
+% Copyright 2009-10 Duncan Murdoch and the R Core Team
 % Distributed under GPL 2 or later
 
 \name{getWindowsHandles}

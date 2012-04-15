@@ -61,7 +61,7 @@
     cat(file = con, sep = "\n",
         '<?xml version="1.0" encoding="windows-1252"?>',
         '<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">',
-        '  <Product Manufacturer="R Development Core Team" ',
+        '  <Product Manufacturer="R Core Team" ',
         '   Id="*"',
         '   Language="1033"',
         sprintf('   Name="R%s %s (via msi)"',
@@ -73,7 +73,7 @@
         sprintf('     Keywords="R %s Installer"', Rver),
         sprintf('     Description="R %s Installer"', Rver),
         '     Comments="R Language and Environment"',
-        '     Manufacturer="R Development Core Team"',
+        '     Manufacturer="R Core Team"',
         if (have64bit) '     InstallerVersion="200"'
         else '     InstallerVersion="100"',
         if (have64bit) '     Platform="x64"',

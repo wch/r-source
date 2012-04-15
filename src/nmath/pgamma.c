@@ -727,7 +727,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 /* R_USE_OLD_PGAMMA */
 /*
  *  Copyright (C) 1998		Ross Ihaka
- *  Copyright (C) 1999-2000	The R Development Core Team
+ *  Copyright (C) 1999-2000	The R Core Team
  *  Copyright (C) 2003-2004	The R Foundation
  *  based on AS 239 (C) 1988 Royal Statistical Society
  *

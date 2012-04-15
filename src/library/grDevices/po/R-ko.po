@@ -1,7 +1,7 @@
 ## File R_HOME/src/library/grDevices/po/R-ko.po
 ## Managed by Chel Hee Lee (Korean, R Development Translation Team)
 ## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Development Core Team & R Develoment Translation Team
+## Copyright 1995-2012 R Core Team & R Develoment Translation Team
 ## Distributed under GPL 2 or later
 ##
 msgid ""
