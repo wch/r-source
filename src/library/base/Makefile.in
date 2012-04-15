@@ -45,7 +45,9 @@ mkR: mkRbase
 Rsimple:
 	@WHICH="@WHICH@" $(MAKE) mkRbase mkRsimple
 
+## Remove files to allow this to be done repeatedly
 Rlazy:
+	-@rm -f  $(top_builddir)/library/$(pkg)/R/$(pkg)*
 	@WHICH="@WHICH@" $(MAKE) mkRbase
 	@cat $(srcdir)/makebasedb.R | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
