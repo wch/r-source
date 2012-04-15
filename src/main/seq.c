@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012  The R Development Core Team.
+ *  Copyright (C) 1998-2012  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -89,13 +89,16 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 
 static SEXP seq_colon(double n1, double n2, SEXP call)
 {
-    int i, n, in1;
+    int in1;
+    R_xlen_t n;
     double r;
     SEXP ans;
     Rboolean useInt;
 
     r = fabs(n2 - n1);
+#ifndef LONG_VECTOR_SUPPORT
     if(r >= INT_MAX) errorcall(call,_("result would be too long a vector"));
+#endif
 
     n = r + 1 + FLT_EPSILON;
 
@@ -114,15 +117,15 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
     if (useInt) {
 	ans = allocVector(INTSXP, n);
 	if (n1 <= n2)
-	    for (i = 0; i < n; i++) INTEGER(ans)[i] = in1 + i;
+	    for (int i = 0; i < n; i++) INTEGER(ans)[i] = in1 + i;
 	else
-	    for (i = 0; i < n; i++) INTEGER(ans)[i] = in1 - i;
+	    for (int i = 0; i < n; i++) INTEGER(ans)[i] = in1 - i;
     } else {
 	ans = allocVector(REALSXP, n);
 	if (n1 <= n2)
-	    for (i = 0; i < n; i++) REAL(ans)[i] = n1 + i;
+	    for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = n1 + i;
 	else
-	    for (i = 0; i < n; i++) REAL(ans)[i] = n1 - i;
+	    for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = n1 - i;
     }
     return ans;
 }
@@ -349,6 +352,7 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
    rep(1:3,,8) matches length.out */
 
 /* This is a primitive SPECIALSXP with internal argument matching */
+/* FIXME: allow long vectors */
 SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, ap, times = R_NilValue /* -Wall */, ind;
@@ -652,9 +656,10 @@ done:
 SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    int i, len, *p;
+    R_xlen_t len;
     static SEXP length_op = NULL;
 
+    /* FIXME: should this use xlength? */
     /* Store the .Primitive for 'length' for DispatchOrEval to use. */
     if (length_op == NULL) {
 	SEXP R_lengthSymbol = install("length");
@@ -669,7 +674,7 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     check1arg(args, call, "along.with");
 
-    /* Try to dispatch to S3 or S4 metods for 'length'.  For cases
+    /* Try to dispatch to S3 or S4 methods for 'length'.  For cases
        where no methods are defined this is more efficient than an
        unconditional callback to R */
     if (isObject(CAR(args)) &&
@@ -677,30 +682,31 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 	len = asInteger(ans);
     }
     else
-	len = length(CAR(args));
+	len = xlength(CAR(args));
 
     ans = allocVector(INTSXP, len);
-    p = INTEGER(ans);
-    for(i = 0; i < len; i++) p[i] = i+1;
+    int *p = INTEGER(ans);
+    for(R_xlen_t i = 0; i < len; i++) p[i] = i+1;
     return ans;
 }
 
 SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    int i, len, *p;
+    double len;
 
     checkArity(op, args);
     check1arg(args, call, "length.out");
-    len = asInteger(CAR(args));
-    if(len == NA_INTEGER || len < 0)
+    len = asReal(CAR(args));
+    if(!R_FINITE(len) || len < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));
     if(length(CAR(args)) != 1)
 	warningcall(call, _("first element used of '%s' argument"),
 		    "length.out");
-    ans = allocVector(INTSXP, len);
-    p = INTEGER(ans);
-    for(i = 0; i < len; i++) p[i] = i+1;
+    R_xlen_t lx = len;
+    ans = allocVector(INTSXP, lx);
+    int *p = INTEGER(ans);
+    for(R_xlen_t i = 0; i < lx; i++) p[i] = i+1;
 
     return ans;
 }
