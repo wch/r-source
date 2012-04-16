@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -369,9 +369,11 @@ static SEXP nullSubscript(int n)
     return indx;
 }
 
-static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch, SEXP call)
+static SEXP 
+logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
 {
-    int canstretch, count, i, nmax;
+    R_xlen_t count, i, nmax;
+    int canstretch;
     SEXP indx;
     canstretch = *stretch;
     if (!canstretch && ns > nx) {
@@ -397,11 +399,11 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch, SEXP call)
     return indx;
 }
 
-static SEXP negativeSubscript(SEXP s, int ns, int nx, SEXP call)
+static SEXP negativeSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP call)
 {
     SEXP indx;
-    int stretch = 0;
-    int i, ix;
+    int ix, stretch = 0;
+    R_xlen_t i;
     PROTECT(indx = allocVector(LGLSXP, nx));
     for (i = 0; i < nx; i++)
 	LOGICAL(indx)[i] = 1;
@@ -415,10 +417,10 @@ static SEXP negativeSubscript(SEXP s, int ns, int nx, SEXP call)
     return s;
 }
 
-static SEXP positiveSubscript(SEXP s, int ns, int nx)
+static SEXP positiveSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx)
 {
     SEXP indx;
-    int i, zct = 0;
+    R_xlen_t i, zct = 0;
     for (i = 0; i < ns; i++) {
 	if (INTEGER(s)[i] == 0)
 	    zct++;
@@ -434,9 +436,11 @@ static SEXP positiveSubscript(SEXP s, int ns, int nx)
 	return s;
 }
 
-static SEXP integerSubscript(SEXP s, int ns, int nx, int *stretch, SEXP call)
+static SEXP 
+integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
 {
-    int i, ii, min, max, canstretch;
+    R_xlen_t i;
+    int ii, min, max, canstretch;
     Rboolean isna = FALSE;
     canstretch = *stretch;
     *stretch = 0;
@@ -485,11 +489,12 @@ typedef SEXP (*StringEltGetter)(SEXP x, int i);
  */
 
 static SEXP
-stringSubscript(SEXP s, int ns, int nx, SEXP names,
+stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
 		StringEltGetter strg, int *stretch, Rboolean in, SEXP call)
 {
     SEXP indx, indexnames;
-    int i, j, nnames, sub, extra;
+    R_xlen_t i, j, nnames, extra;
+    int sub;
     int canstretch = *stretch;
     /* product may overflow, so check factors as well. */
     Rboolean usehashing = in && ( ((ns > 1000 && nx) || (nx > 1000 && ns)) || (ns * nx > 15*nx + ns) );
@@ -639,17 +644,16 @@ arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
 
 SEXP attribute_hidden makeSubscript(SEXP x, SEXP s, int *stretch, SEXP call)
 {
-    int nx;
+    R_len_t nx;
     SEXP ans;
 
     ans = R_NilValue;
     if (isVector(x) || isList(x) || isLanguage(x)) {
-	nx = length(x);
+	nx = xlength(x);
 
 	ans = vectorSubscript(nx, s, stretch, getAttrib, (STRING_ELT),
 			      x, call);
-    }
-    else {
+    } else {
 	ECALL(call, _("subscripting on non-vector"));
     }
     return ans;
@@ -663,13 +667,12 @@ SEXP attribute_hidden makeSubscript(SEXP x, SEXP s, int *stretch, SEXP call)
 */
 
 static SEXP
-int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
+int_vectorSubscript(R_xlen_t nx, SEXP s, int *stretch, AttrGetter dng,
 		    StringEltGetter strg, SEXP x, Rboolean in, SEXP call)
 {
-    int ns;
     SEXP ans = R_NilValue, tmp;
 
-    ns = length(s);
+    R_xlen_t ns = xlength(s);
     /* special case for simple indices -- does not duplicate */
     if (ns == 1 && TYPEOF(s) == INTSXP && ATTRIB(s) == R_NilValue) {
 	int i = INTEGER(s)[0];

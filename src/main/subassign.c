@@ -95,9 +95,9 @@ static SEXP gcall;
    This allows to assign values "past the end" of the vector or list.
    Note that, unlike S, we only extend as much as is necessary.
 */
-static SEXP EnlargeVector(SEXP x, R_len_t newlen)
+static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 {
-    R_len_t i, len;
+    R_xlen_t i, len;
     SEXP newx, names, newnames;
 
     /* Sanity Checks */
@@ -105,7 +105,7 @@ static SEXP EnlargeVector(SEXP x, R_len_t newlen)
 	error(_("attempt to enlarge non-vector"));
 
     /* Enlarge the vector itself. */
-    len = length(x);
+    len = xlength(x);
     if (LOGICAL(GetOption1(install("check.bounds")))[0])
 	warning(_("assignment outside vector/list limits (extending from %d to %d)"),
 		len, newlen);
@@ -372,9 +372,9 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
 static SEXP DeleteListElements(SEXP x, SEXP which)
 {
     SEXP include, xnew, xnames, xnewnames;
-    R_len_t i, ii, len, lenw;
-    len = length(x);
-    lenw = length(which);
+    R_xlen_t i, ii, len, lenw;
+    len = xlength(x);
+    lenw = xlength(which);
     /* calculate the length of the result */
     PROTECT(include = allocVector(INTSXP, len));
     for (i = 0; i < len; i++)
@@ -420,7 +420,8 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     SEXP dim, indx, newnames;
-    int i, ii, iy, n, nx, ny, stretch, which;
+    R_xlen_t i, n, nx, ny;
+    int ii, iy, stretch, which;
     double ry;
 
     if (isNull(x) && isNull(y)) {
@@ -447,8 +448,8 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     stretch = 1;
     PROTECT(indx = makeSubscript(x, s, &stretch, R_NilValue));
-    n = length(indx);
-    if(length(y) > 1)
+    n = xlength(indx);
+    if(xlength(y) > 1)
 	for(i = 0; i < n; i++)
 	    if(INTEGER(indx)[i] == NA_INTEGER)
 		error(_("NAs are not allowed in subscripted assignments"));
@@ -462,8 +463,8 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	UNPROTECT(2);
 	return x;
     }
-    ny = length(y);
-    nx = length(x);
+    ny = xlength(y);
+    nx = xlength(x);
 
     PROTECT(x);
 
@@ -1340,8 +1341,8 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	oldtype = TYPEOF(x);
 	PROTECT(x = PairToVectorList(x));
     }
-    else if (length(x) == 0) {
-	if (length(y) == 0) {
+    else if (xlength(x) == 0) {
+	if (xlength(y) == 0) {
 	    UNPROTECT(1);
 	    return(x);
 	}
@@ -1405,11 +1406,11 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static SEXP DeleteOneVectorListItem(SEXP x, int which)
+static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 {
     SEXP y, xnames, ynames;
-    int i, k, n;
-    n = length(x);
+    R_xlen_t i, k, n;
+    n = xlength(x);
     if (0 <= which && which < n) {
 	PROTECT(y = allocVector(TYPEOF(x), n - 1));
 	k = 0;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2007   The R Core Team
+ *  Copyright (C) 1997-2012   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,11 +49,12 @@
 
 static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 {
-    int i, ii, n, nx, mode;
+    int i, ii, n, nx;
+    int mode;
     SEXP tmp, tmp2;
     mode = TYPEOF(x);
-    n = LENGTH(indx);
-    nx = length(x);
+    n = XLENGTH(indx);
+    nx = xlength(x);
     tmp = result;
 
     if (x == R_NilValue)
@@ -65,7 +66,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    ii--;
 	switch (mode) {
 	case LGLSXP:
-	    if (0 <= ii && ii < nx && ii != NA_LOGICAL)
+	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
 		LOGICAL(result)[i] = LOGICAL(x)[ii];
 	    else
 		LOGICAL(result)[i] = NA_INTEGER;
@@ -85,8 +86,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	case CPLXSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
 		COMPLEX(result)[i] = COMPLEX(x)[ii];
-	    }
-	    else {
+	    } else {
 		COMPLEX(result)[i].r = NA_REAL;
 		COMPLEX(result)[i].i = NA_REAL;
 	    }
@@ -134,7 +134,8 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
    matrix indexing of arrays */
 static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 {
-    int n, mode, stretch = 1;
+    R_xlen_t n;
+    int mode, stretch = 1;
     SEXP indx, result, attrib, nattrib;
 
     if (s == R_MissingArg) return duplicate(x);
@@ -162,7 +163,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     /* in the range 1:length(x). */
 
     PROTECT(indx = makeSubscript(x, s, &stretch, call));
-    n = LENGTH(indx);
+    n = XLENGTH(indx);
 
     /* Allocate the result. */
 
@@ -607,13 +608,13 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset_dflt(call, op, ans, rho);
 }
 
-static R_INLINE int scalarIndex(SEXP s)
+static R_INLINE R_xlen_t scalarIndex(SEXP s)
 {
     if (ATTRIB(s) == R_NilValue)
 	switch (TYPEOF(s)) {
 	case REALSXP:
 	    if (LENGTH(s) == 1 && ! ISNAN(REAL(s)[0]))
-		return REAL(s)[0];
+		return REAL(s)[0]; /* implicit conversion */
 	    else return -1;
 	case INTSXP:
 	    if (LENGTH(s) == 1 && INTEGER(s)[0] != NA_INTEGER)
@@ -641,18 +642,18 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP x = CAR(args);
 	if (ATTRIB(x) == R_NilValue) {
 	    SEXP s = CAR(cdrArgs);
-	    int i = scalarIndex(s);
+	    R_xlen_t i = scalarIndex(s);
 	    switch (TYPEOF(x)) {
 	    case REALSXP:
-		if (i >= 1 && i <= LENGTH(x))
+		if (i >= 1 && i <= XLENGTH(x))
 		    return ScalarReal( REAL(x)[i-1] );
 		break;
 	    case INTSXP:
-		if (i >= 1 && i <= LENGTH(x))
+		if (i >= 1 && i <= XLENGTH(x))
 		    return ScalarInteger( INTEGER(x)[i-1] );
 		break;
 	    case LGLSXP:
-		if (i >= 1 && i <= LENGTH(x))
+		if (i >= 1 && i <= XLENGTH(x))
 		    return ScalarLogical( LOGICAL(x)[i-1] );
 		break;
 	    default: break;
@@ -671,13 +672,13 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* x is a matrix */
 		SEXP si = CAR(cdrArgs);
 		SEXP sj = CAR(cddrArgs);
-		int i = scalarIndex(si);
-		int j = scalarIndex(sj);
+		R_xlen_t i = scalarIndex(si);
+		R_xlen_t j = scalarIndex(sj);
 		int nrow = INTEGER(dim)[0];
 		int ncol = INTEGER(dim)[1];
 		if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 		    /* indices are legal scalars */
-		    int k = i - 1 + nrow * (j - 1);
+		    R_xlen_t k = i - 1 + nrow * (j - 1);
 		    switch (TYPEOF(x)) {
 		    case REALSXP:
 			if (k < LENGTH(x))
@@ -713,7 +714,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return x;
     }
     subs = CDR(args);
-    nsubs = length(subs);
+    nsubs = length(subs); /* Will be short */
     type = TYPEOF(x);
 
     /* Here coerce pair-based objects into generic vectors. */
@@ -1087,7 +1088,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 
     /* Optimisation to prevent repeated recalculation */
     slen = strlen(translateChar(input));
-     /* The mechanism to allow  a class extending "environment" */
+     /* The mechanism to allow a class extending "environment" */
     if( IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP ){
         x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
@@ -1095,7 +1096,6 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     }
 
     /* If this is not a list object we return NULL. */
-    /* Or should this be allocVector(VECSXP, 0)? */
 
     if (isPairList(x)) {
 	SEXP xmatch = R_NilValue;
@@ -1138,10 +1138,11 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	return R_NilValue;
     }
     else if (isVectorList(x)) {
-	int i, n, havematch, imatch=-1;
+	R_xlen_t i, n;
+	int havematch, imatch=-1;
 	nlist = getAttrib(x, R_NamesSymbol);
 	UNPROTECT(2);
-	n = length(nlist);
+	n = xlength(nlist);
 	havematch = 0;
 	for (i = 0 ; i < n ; i = i + 1) {
 	    switch(pstrmatch(STRING_ELT(nlist, i), input, slen)) {
@@ -1202,7 +1203,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		SET_NAMED(y, NAMED(x));
 	    return(y);
 	}
-      return R_NilValue;
+	return R_NilValue;
     }
     else if( isVectorAtomic(x) ){
 	errorcall(call, "$ operator is invalid for atomic vectors");

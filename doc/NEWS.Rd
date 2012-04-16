@@ -39,6 +39,12 @@
       \code{object.size()} work and means can be computed.  Their
       lengths can be get and set by \code{xlength()}.
 
+      \item A limited amount of indexing is available.  As internally
+      indices are computed with integer vectors, it is only currently
+      possible to extract or replace the first \eqn{2^{31}-1}{2^31 - 1}
+      elements.  (One exception is extracting a single element with a
+      double index.)
+
       \item \code{dist()} can produce dissimilarity objects for more
       than 65536 rows (but for example \code{cmdscale()} and
       \code{hclust()} cannot process such objects).

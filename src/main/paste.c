@@ -50,11 +50,12 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x;
-    int i, j, k, maxlen, nx, pwidth, sepw, u_sepw, ienc;
+    int sepw, u_sepw, ienc;
+    R_xlen_t i, j, k, maxlen, nx, pwidth;
     const char *s, *cbuf, *csep=NULL, *u_csep=NULL;
     char *buf;
     Rboolean allKnown, anyKnown, use_UTF8, use_Bytes,
-	sepASCII=TRUE, sepUTF8=FALSE, sepBytes=FALSE, sepKnown=FALSE,
+	sepASCII = TRUE, sepUTF8 = FALSE, sepBytes = FALSE, sepKnown = FALSE,
 	use_sep = (PRIMVAL(op) == 0);
     const void *vmax;
 
@@ -69,7 +70,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     if (!isVectorList(x))
 	error(_("invalid first argument"));
-    nx = length(x);
+    nx = xlength(x);
 
     if(use_sep) { /* paste(..., sep, .) */
 	sep = CADR(args);
@@ -114,8 +115,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (!isString(VECTOR_ELT(x, j)))
 		error(_("non-string argument to Internal paste"));
 	}
-	if(length(VECTOR_ELT(x, j)) > maxlen)
-	    maxlen = length(VECTOR_ELT(x, j));
+	if(xlength(VECTOR_ELT(x, j)) > maxlen)
+	    maxlen = xlength(VECTOR_ELT(x, j));
     }
     if(maxlen == 0)
 	return (!isNull(collapse)) ? mkString("") : allocVector(STRSXP, 0);
@@ -139,7 +140,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	pwidth = 0;
 	for (j = 0; j < nx; j++) {
-	    k = length(VECTOR_ELT(x, j));
+	    k = xlength(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if(IS_UTF8(cs)) use_UTF8 = TRUE;
@@ -149,7 +150,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (use_Bytes) use_UTF8 = FALSE;
 	vmax = vmaxget();
 	for (j = 0; j < nx; j++) {
-	    k = length(VECTOR_ELT(x, j));
+	    k = xlength(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		if(use_Bytes)
 		    pwidth += strlen(CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k)));
@@ -167,10 +168,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    pwidth += (nx - 1) * (use_UTF8 ? u_sepw : sepw);
 	}
+	if (pwidth > INT_MAX)
+	    error(_("result would exceed 2^31-1 bytes"));
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	vmax = vmaxget();
 	for (j = 0; j < nx; j++) {
-	    k = length(VECTOR_ELT(x, j));
+	    k = xlength(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if (use_UTF8) {
@@ -235,6 +238,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else /* already translated */
 		pwidth += strlen(CHAR(STRING_ELT(ans, i)));
 	pwidth += (nx - 1) * sepw;
+	if (pwidth > INT_MAX)
+	    error(_("result would exceed 2^31-1 bytes"));
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	vmax = vmaxget();
 	for (i = 0; i < nx; i++) {
