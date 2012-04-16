@@ -634,7 +634,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* By default we drop extents of length 1 */
 
     /* Handle cases of extracting a single element from a simple vector
-       or matrix directly to improve speed for these simple case. */
+       or matrix directly to improve speed for these simple cases. */
     SEXP cdrArgs = CDR(args);
     SEXP cddrArgs = CDR(cdrArgs);
     if (cdrArgs != R_NilValue && cddrArgs == R_NilValue &&
@@ -842,9 +842,10 @@ SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, dimnames, indx, subs, x;
-    int i, ndims, nsubs, offset = 0;
+    int i, ndims, nsubs;
     int drop = 1, pok, exact = -1;
     int named_x;
+    R_xlen_t offset = 0;
 
     PROTECT(args);
     ExtractDropArg(args, &drop);
@@ -887,23 +888,21 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* split out ENVSXP for now */
     if( TYPEOF(x) == ENVSXP ) {
-      if( nsubs != 1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
-	errorcall(call, _("wrong arguments for subsetting an environment"));
-      ans = findVarInFrame(x, install(translateChar(STRING_ELT(CAR(subs), 0))));
-      if( TYPEOF(ans) == PROMSXP ) {
+	if( nsubs != 1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
+	    errorcall(call, _("wrong arguments for subsetting an environment"));
+	ans = findVarInFrame(x, install(translateChar(STRING_ELT(CAR(subs), 0))));
+	if( TYPEOF(ans) == PROMSXP ) {
 	    PROTECT(ans);
 	    ans = eval(ans, R_GlobalEnv);
 	    UNPROTECT(1);
-      } else {
-	    SET_NAMED(ans, 2);
-      }
+	} else SET_NAMED(ans, 2);
 
-      UNPROTECT(1);
-      if(ans == R_UnboundValue )
-	  return(R_NilValue);
-      if (NAMED(ans))
-	  SET_NAMED(ans, 2);
-      return(ans);
+	UNPROTECT(1);
+	if(ans == R_UnboundValue)
+	    return(R_NilValue);
+	if (NAMED(ans))
+	    SET_NAMED(ans, 2);
+	return ans;
     }
 
     /* back to the regular program */
@@ -920,7 +919,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    x = vectorIndex(x, thesub, 0, len-1, pok, call);
 	    
 	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
-			   length(x), pok, len > 1 ? len-1 : -1, call);
+			   xlength(x), pok, len > 1 ? len-1 : -1, call);
 	if (offset < 0 || offset >= length(x)) {
 	    /* a bold attempt to get the same behaviour for $ and [[ */
 	    if (offset < 0 && (isNewList(x) ||
@@ -945,8 +944,8 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ndn = length(dimnames);
 	for (i = 0; i < nsubs; i++) {
 	    INTEGER(indx)[i] =
-		get1index(CAR(subs), (i < ndn) ? VECTOR_ELT(dimnames, i) :
-			  R_NilValue,
+		get1index(CAR(subs), 
+			  (i < ndn) ? VECTOR_ELT(dimnames, i) : R_NilValue,
 			  INTEGER(indx)[i], pok, -1, call);
 	    subs = CDR(subs);
 	    if (INTEGER(indx)[i] < 0 ||

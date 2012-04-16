@@ -57,11 +57,11 @@ static int integerOneIndex(int i, int len, SEXP call)
 }
 
 /* Utility used (only in) do_subassign2_dflt(), i.e. "[[<-" in ./subassign.c : */
-int attribute_hidden
+R_xlen_t attribute_hidden
 OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call)
 {
     SEXP names;
-    int i, indx, nx;
+    R_xlen_t i, indx, nx;
 
     if (pos < 0 && length(s) > 1) {
 	ECALL(call, _("attempt to select more than one element"));
@@ -83,7 +83,7 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call
 	indx = integerOneIndex(REAL(s)[pos], len, call);
 	break;
     case STRSXP:
-	nx = length(x);
+	nx = xlength(x);
 	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
 	    /* Try for exact match */
@@ -115,7 +115,7 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call
 	*newname = STRING_ELT(s, pos);
 	break;
     case SYMSXP:
-	nx = length(x);
+	nx = xlength(x);
 	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
 	    for (i = 0; i < nx; i++)
@@ -139,7 +139,7 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call
     return indx;
 }
 
-int attribute_hidden
+R_xlen_t attribute_hidden
 get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 {
 /* Get a single index for the [[ operator.
@@ -147,9 +147,9 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
    pok : is "partial ok" ?
 	 if pok is -1, warn if partial matching occurs
 */
-    int indx, i, warn_pok = 0;
-    double dblind;
+    int  warn_pok = 0;
     const char *ss, *cur_name;
+    R_xlen_t indx;
 
     if (pok == -1) {
 	pok = 1;
@@ -171,15 +171,27 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	i = INTEGER(s)[pos];
+    {
+	int i = INTEGER(s)[pos];
 	if(i != NA_INTEGER)
 	    indx = integerOneIndex(i, len, call);
 	break;
+    }
     case REALSXP:
-	dblind = REAL(s)[pos];
-	if(!ISNAN(dblind))
-	    indx = integerOneIndex((int)dblind, len, call);
+    {
+	double dblind = REAL(s)[pos];
+	if(!ISNAN(dblind)) {
+	    if (dblind > 0) indx = dblind - 1;
+	    else if (dblind == 0 || len < 2) {
+		ECALL(call, _("attempt to select less than one element"));
+	    } else if (len == 2 && dblind > -3)
+		indx = 2 + dblind;
+	    else {
+		ECALL(call, _("attempt to select more than one element"));
+	    }
+	}
 	break;
+    }
     case STRSXP:
 	/* NA matches nothing */
 	if(STRING_ELT(s, pos) == NA_STRING) break;
@@ -188,7 +200,7 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 
 	/* Try for exact match */
 	ss = translateChar(STRING_ELT(s, pos));
-	for (i = 0; i < length(names); i++)
+	for (R_xlen_t i = 0; i < xlength(names); i++)
 	    if (STRING_ELT(names, i) != NA_STRING) {
 		if (streql(translateChar(STRING_ELT(names, i)), ss)) {
 		    indx = i;
@@ -198,7 +210,7 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 	/* Try for partial match */
 	if (pok && indx < 0) {
 	    len = strlen(ss);
-	    for(i = 0; i < length(names); i++) {
+	    for(R_xlen_t i = 0; i < xlength(names); i++) {
 		if (STRING_ELT(names, i) != NA_STRING) {
 		    cur_name = translateChar(STRING_ELT(names, i));
 		    if(!strncmp(cur_name, ss, len)) {
@@ -228,7 +240,7 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 	}
 	break;
     case SYMSXP:
-	for (i = 0; i < length(names); i++)
+	for (R_xlen_t i = 0; i < xlength(names); i++)
 	    if (STRING_ELT(names, i) != NA_STRING &&
 		streql(translateChar(STRING_ELT(names, i)),
 		       CHAR(PRINTNAME(s)))) {
@@ -278,9 +290,11 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call)
 /* A zero anywhere in a row will cause a zero in the same */
 /* position in the result. */
 
+
 SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 {
     int tdim, j, i, k, nrs = nrows(s);
+    R_xlen_t NR = nrs;
     SEXP rvec;
 
     if (ncols(s) != LENGTH(dims)) {
@@ -296,7 +310,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 	/* compute 0-based subscripts for a row (0 in the input gets -1
 	   in the output here) */
 	for (j = 0; j < LENGTH(dims); j++) {
-	    k = INTEGER(s)[i + j * nrs];
+	    k = INTEGER(s)[i + j * NR];
 	    if(k == NA_INTEGER) {
 		INTEGER(rvec)[i] = NA_INTEGER;
 		break;
@@ -311,6 +325,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 	    if (k > INTEGER(dims)[j]) {
 		ECALL(call, _("subscript out of bounds"));
 	    }
+	    /* FIXME: this can overflow */
 	    INTEGER(rvec)[i] += (k - 1) * tdim;
 	    tdim *= INTEGER(dims)[j];
 	}
@@ -333,20 +348,21 @@ a subscript out of bounds error.  */
 SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
 {
     /* XXX: assumes all args are protected */
-    int nr = nrows(s), i, j, v, idx;
+    int nr = nrows(s), i, j, v;
+    R_xlen_t idx, NR = nr;
     SEXP dnames, snames, si, sicol, s_elt;
     PROTECT(snames = allocVector(STRSXP, nr));
-    PROTECT(si = allocVector(INTSXP, length(s)));
+    PROTECT(si = allocVector(INTSXP, xlength(s)));
     dimgets(si, getAttrib(s, R_DimSymbol));
     for (i = 0; i < length(dnamelist); i++) {
         dnames = VECTOR_ELT(dnamelist, i);
         for (j = 0; j < nr; j++) {
-            SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * nr)));
+            SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * NR)));
         }
         PROTECT(sicol = match(dnames, snames, 0));
         for (j = 0; j < nr; j++) {
             v = INTEGER(sicol)[j];
-            idx = j + (i * nr);
+            idx = j + (i * NR);
             s_elt = STRING_ELT(s, idx);
             if (s_elt == NA_STRING) v = NA_INTEGER;
             if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
@@ -393,6 +409,8 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
 	if (LOGICAL(s)[i%ns]) {
 	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 		INTEGER(indx)[count++] = NA_INTEGER;
+	    else if (i >= INT_MAX)
+		error("logical subscript selected >= INT_MAX");
 	    else
 		INTEGER(indx)[count++] = i + 1;
 	}
@@ -421,19 +439,14 @@ static SEXP positiveSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx)
 {
     SEXP indx;
     R_xlen_t i, zct = 0;
-    for (i = 0; i < ns; i++) {
-	if (INTEGER(s)[i] == 0)
-	    zct++;
-    }
+    for (i = 0; i < ns; i++) if (INTEGER(s)[i] == 0) zct++;
     if (zct) {
 	indx = allocVector(INTSXP, (ns - zct));
 	for (i = 0, zct = 0; i < ns; i++)
 	    if (INTEGER(s)[i] != 0)
 		INTEGER(indx)[zct++] = INTEGER(s)[i];
 	return indx;
-    }
-    else
-	return s;
+    } else return s;
 }
 
 static SEXP 
