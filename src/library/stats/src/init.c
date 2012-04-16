@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2010   The R Core Team.
+ *  Copyright (C) 2001-2012   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,10 @@
 #include "ts.h"
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
+
+#ifdef WIN32
+# include <fcntl.h>
+#endif
 
 static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
@@ -225,4 +229,9 @@ void attribute_visible R_init_stats(DllInfo *dll)
     R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC)nlminb_iterate);
     R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC)nlsb_iterate);
     R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC)Rf_divset);
+#ifdef WIN32
+    /* gfortran initialization sets these to _O_BINARY */
+    setmode(1,_O_TEXT); /* stdout */
+    setmode(2,_O_TEXT); /* stderr */
+#endif
 }
