@@ -561,7 +561,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args), si;
     void * obj;
-    int i, j, nout;
+    int j, nout;
     const char *inbuf;
     char *outbuf;
     const char *sub;
@@ -641,7 +641,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(ans = duplicate(x));
 	}
 	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
-	for(i = 0; i < LENGTH(x); i++) {
+	for(R_xlen_t i = 0; i < XLENGTH(x); i++) {
 	    if (isRawlist) {
 		si = VECTOR_ELT(x, i);
 		if (TYPEOF(si) == NILSXP) {
@@ -1606,7 +1606,8 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans;
-    int i, n, res, dirmark;
+    R_xlen_t i, n; 
+    int res, dirmark;
     glob_t globbuf;
 #ifdef Win32
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
@@ -1615,7 +1616,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if (!isString(x = CAR(args)))
 	error(_("invalid '%s' argument"), "paths");
-    if (!LENGTH(x)) return allocVector(STRSXP, 0);
+    if (!XLENGTH(x)) return allocVector(STRSXP, 0);
     dirmark = asLogical(CADR(args));
     if (dirmark == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "dirmark");
@@ -1624,7 +1625,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("'dirmark = TRUE' is not supported on this platform"));
 #endif
 
-    for (i = 0; i < LENGTH(x); i++) {
+    for (i = 0; i < XLENGTH(x); i++) {
 	SEXP el = STRING_ELT(x, i);
 	if (el == NA_STRING) continue;
 #ifdef Win32

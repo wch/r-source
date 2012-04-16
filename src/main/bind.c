@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *  Copyright (C) 2002--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ static SEXP rbind(SEXP, SEXP, SEXPTYPE, SEXP, int);
 struct BindData {
  int  ans_flags;
  SEXP ans_ptr;
- int  ans_length;
+ R_xlen_t  ans_length;
  SEXP ans_names;
  int  ans_nnames;
 /* int  deparse_level; Initialize to 1. */
@@ -72,27 +72,27 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
 	break;
     case RAWSXP:
 	data->ans_flags |= 1;
-	data->ans_length += LENGTH(x);
+	data->ans_length += XLENGTH(x);
 	break;
     case LGLSXP:
 	data->ans_flags |= 2;
-	data->ans_length += LENGTH(x);
+	data->ans_length += XLENGTH(x);
 	break;
     case INTSXP:
 	data->ans_flags |= 16;
-	data->ans_length += LENGTH(x);
+	data->ans_length += XLENGTH(x);
 	break;
     case REALSXP:
 	data->ans_flags |= 32;
-	data->ans_length += LENGTH(x);
+	data->ans_length += XLENGTH(x);
 	break;
     case CPLXSXP:
 	data->ans_flags |= 64;
-	data->ans_length += LENGTH(x);
+	data->ans_length += XLENGTH(x);
 	break;
     case STRSXP:
 	data->ans_flags |= 128;
-	data->ans_length += LENGTH(x);
+	data->ans_length += XLENGTH(x);
 	break;
     case VECSXP:
     case EXPRSXP:
@@ -113,7 +113,7 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
 		data->ans_flags |= 512;
 	    else
 		data->ans_flags |= 256;
-	    data->ans_length += length(x);
+	    data->ans_length += xlength(x);
 	}
 	break;
     case LISTSXP:
@@ -145,8 +145,11 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
        31-bit so we cannot overflow across the 32-bit boundary). If
        our assumption (all lengths are signed) is violated, this won't
        work so check when switching length types! */
+
+#ifndef LONG_VECTOR_SUPPORT
     if (data->ans_length < 0)
 	errorcall(call, _("resulting vector exceeds vector length limit in '%s'"), "AnswerType");
+#endif
 }
 
 
@@ -162,37 +165,37 @@ ListAnswer(SEXP x, int recurse, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LGLSXP:
-	for (i = 0; i < LENGTH(x); i++)
+	for (i = 0; i < XLENGTH(x); i++)
 	    LIST_ASSIGN(ScalarLogical(LOGICAL(x)[i]));
 	break;
     case RAWSXP:
-	for (i = 0; i < LENGTH(x); i++)
+	for (i = 0; i < XLENGTH(x); i++)
 	    LIST_ASSIGN(ScalarRaw(RAW(x)[i]));
 	break;
     case INTSXP:
-	for (i = 0; i < LENGTH(x); i++)
+	for (i = 0; i < XLENGTH(x); i++)
 	    LIST_ASSIGN(ScalarInteger(INTEGER(x)[i]));
 	break;
     case REALSXP:
-	for (i = 0; i < LENGTH(x); i++)
+	for (i = 0; i < XLENGTH(x); i++)
 	    LIST_ASSIGN(ScalarReal(REAL(x)[i]));
 	break;
     case CPLXSXP:
-	for (i = 0; i < LENGTH(x); i++)
+	for (i = 0; i < XLENGTH(x); i++)
 	    LIST_ASSIGN(ScalarComplex(COMPLEX(x)[i]));
 	break;
     case STRSXP:
-	for (i = 0; i < LENGTH(x); i++)
+	for (i = 0; i < XLENGTH(x); i++)
 	    LIST_ASSIGN(ScalarString(STRING_ELT(x, i)));
 	break;
     case VECSXP:
     case EXPRSXP:
 	if (recurse) {
-	    for (i = 0; i < LENGTH(x); i++)
+	    for (i = 0; i < XLENGTH(x); i++)
 		ListAnswer(VECTOR_ELT(x, i), recurse, data, call);
 	}
 	else {
-	    for (i = 0; i < LENGTH(x); i++)
+	    for (i = 0; i < XLENGTH(x); i++)
 		LIST_ASSIGN(duplicate(VECTOR_ELT(x, i)));
 	}
 	break;
@@ -218,7 +221,7 @@ ListAnswer(SEXP x, int recurse, struct BindData *data, SEXP call)
 static void
 StringAnswer(SEXP x, struct BindData *data, SEXP call)
 {
-    int i, n;
+    R_xlen_t i, n;
     switch(TYPEOF(x)) {
     case NILSXP:
 	break;
@@ -230,13 +233,13 @@ StringAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     case EXPRSXP:
     case VECSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    StringAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     default:
 	PROTECT(x = coerceVector(x, STRSXP));
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(data->ans_ptr, data->ans_length++, STRING_ELT(x, i));
 	UNPROTECT(1);
@@ -247,7 +250,7 @@ StringAnswer(SEXP x, struct BindData *data, SEXP call)
 static void
 LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 {
-    int i, n;
+    R_xlen_t i, n;
     switch(TYPEOF(x)) {
     case NILSXP:
 	break;
@@ -259,22 +262,22 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     case EXPRSXP:
     case VECSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    LogicalAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case LGLSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    LOGICAL(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
 	break;
     case INTSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    LOGICAL(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
 	break;
     case RAWSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    LOGICAL(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
 	break;
@@ -287,7 +290,7 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 static void
 IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 {
-    int i, n;
+    R_xlen_t i, n;
     switch(TYPEOF(x)) {
     case NILSXP:
 	break;
@@ -299,22 +302,22 @@ IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     case EXPRSXP:
     case VECSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    IntegerAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case LGLSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    INTEGER(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
 	break;
     case INTSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    INTEGER(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
 	break;
     case RAWSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    INTEGER(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
 	break;
@@ -327,7 +330,8 @@ IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 static void
 RealAnswer(SEXP x, struct BindData *data, SEXP call)
 {
-    int i, n, xi;
+    R_xlen_t i, n;
+    int xi;
     switch(TYPEOF(x)) {
     case NILSXP:
 	break;
@@ -339,17 +343,17 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     case VECSXP:
     case EXPRSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    RealAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case REALSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    REAL(data->ans_ptr)[data->ans_length++] = REAL(x)[i];
 	break;
     case LGLSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = LOGICAL(x)[i];
 	    if (xi == NA_LOGICAL)
@@ -358,7 +362,7 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 	}
 	break;
     case INTSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = INTEGER(x)[i];
 	    if (xi == NA_INTEGER)
@@ -367,7 +371,7 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 	}
 	break;
     case RAWSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    REAL(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
 	break;
@@ -380,7 +384,8 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 static void
 ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 {
-    int i, n, xi;
+    R_xlen_t i, n; 
+    int xi;
     switch(TYPEOF(x)) {
     case NILSXP:
 	break;
@@ -392,12 +397,12 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     case EXPRSXP:
     case VECSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    ComplexAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case REALSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++) {
 	    COMPLEX(data->ans_ptr)[data->ans_length].r = REAL(x)[i];
 	    COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
@@ -405,12 +410,12 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	}
 	break;
     case CPLXSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    COMPLEX(data->ans_ptr)[data->ans_length++] = COMPLEX(x)[i];
 	break;
     case LGLSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = LOGICAL(x)[i];
 	    if (xi == NA_LOGICAL) {
@@ -425,7 +430,7 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	}
 	break;
     case INTSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = INTEGER(x)[i];
 	    if (xi == NA_INTEGER) {
@@ -441,7 +446,7 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
 
     case RAWSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++) {
 	    COMPLEX(data->ans_ptr)[data->ans_length].r = (int)RAW(x)[i];
 	    COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
@@ -458,7 +463,7 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 static void
 RawAnswer(SEXP x, struct BindData *data, SEXP call)
 {
-    int i, n;
+    R_xlen_t i, n;
     switch(TYPEOF(x)) {
     case NILSXP:
 	break;
@@ -470,12 +475,12 @@ RawAnswer(SEXP x, struct BindData *data, SEXP call)
 	break;
     case EXPRSXP:
     case VECSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    RawAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case RAWSXP:
-	n = LENGTH(x);
+	n = XLENGTH(x);
 	for (i = 0; i < n; i++)
 	    RAW(data->ans_ptr)[data->ans_length++] = RAW(x)[i];
 	break;
@@ -799,7 +804,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	else ListAnswer(args, recurse, &data, call);
-	data.ans_length = length(ans);
+	data.ans_length = xlength(ans);
     }
     else if (mode == STRSXP)
 	StringAnswer(args, &data, call);
@@ -922,7 +927,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 		ListAnswer(VECTOR_ELT(args, i), 0, &data, call);
 	}
 	else ListAnswer(args, recurse, &data, call);
-	data.ans_length = length(ans);
+	data.ans_length = xlength(ans);
     }
     else if (mode == STRSXP)
 	StringAnswer(args, &data, call);

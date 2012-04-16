@@ -1148,19 +1148,6 @@ aov(y ~ a + b - 1 + Error(c), data=test.df)
 binom.test(c(800,10))# p-value < epsilon
 
 
-## Misleading error messages on integer overflow
-## Uwe Ligges, R-devel, 2004-02-19
-## (modified to make printed result the same whether numeric() is
-##  compiled or interpreted)
-## try(numeric(2^31))
-## tryCatch(numeric(2^31),
-##          error = function(e) paste("Error:", conditionMessage(e)))
-try(matrix( , 2^31, 1))
-try(matrix( , 2^31/10, 100))
-try(array(dim=c(2^31/10, 100)))
-## reported negative values (really integer NA) for R < 1.9.0
-
-
 ## aov with a singular error model
 rd <- c(16.53, 12.12, 10.04, 15.32, 12.33, 10.1, 17.09, 11.69, 11.81, 14.75,
         10.72, 8.79, 13.14, 9.79, 8.36, 15.62, 9.64, 8.72, 15.32,

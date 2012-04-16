@@ -49,7 +49,8 @@
 
 static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 {
-    int i, ii, n, nx;
+    R_xlen_t i, n, nx;
+    int ii;
     int mode;
     SEXP tmp, tmp2;
     mode = TYPEOF(x);

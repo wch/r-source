@@ -158,12 +158,13 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static SEXP rep2(SEXP s, SEXP ncopy)
 {
-    int i, na, nc, n, j;
+    R_len_t i, na, nc, n;
+    int j;
     SEXP a, t, u;
 
     PROTECT(t = coerceVector(ncopy, INTSXP));
 
-    nc = length(ncopy);
+    nc = xlength(ncopy);
     na = 0;
     for (i = 0; i < nc; i++) {
 	if (INTEGER(t)[i] == NA_INTEGER || INTEGER(t)[i]<0)
@@ -252,7 +253,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 /* called in do_rep_int() only */
 static SEXP rep1(SEXP s, SEXP ncopy)
 {
-    int i, ns, na, nc;
+    R_xlen_t i, ns, na, nc;
     SEXP a, t;
 
     if (!isVector(ncopy))
@@ -261,16 +262,22 @@ static SEXP rep1(SEXP s, SEXP ncopy)
     if (!isVector(s) && (!isList(s)))
 	error(_("attempt to replicate non-vector"));
 
-    if ((length(ncopy) == length(s)))
-	return rep2(s, ncopy);
+    nc = xlength(ncopy);
+    /* FIXME: only want to do this for nc > 1 */
+    if (nc == xlength(s)) return rep2(s, ncopy);
+    if (nc != 1) error(_("invalid '%s' value"), "times");
 
-    if ((length(ncopy) != 1))
+#ifdef LONG_VECTOR_SUPPORT
+    double snc = asReal(ncopy);
+    if (!R_FINITE(snc) || snc < 0)
 	error(_("invalid '%s' value"), "times");
-
+    nc = snc;
+#else
     if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0)/* nc = 0 ok */
 	error(_("invalid '%s' value"), "times");
+#endif
 
-    ns = length(s);
+    ns = xlength(s);
     na = nc * ns;
     if (isVector(s))
 	a = allocVector(TYPEOF(s), na);

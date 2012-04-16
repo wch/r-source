@@ -134,7 +134,7 @@ const static char * const falsenames[] = {
 
 SEXP asChar(SEXP x)
 {
-    if (LENGTH(x) >= 1) {
+    if (XLENGTH(x) >= 1) {
 	if (isVectorAtomic(x)) {
 	    int w, d, e, wi, di, ei;
 	    char buf[MAXELTSIZE];  /* probably 100 would suffice */
@@ -940,7 +940,8 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, s;
-    int i, len, w, quote = 0, justify, na;
+    R_xlen_t i, len;
+    int w, quote = 0, justify, na;
     const char *cs;
     Rboolean findWidth;
 
@@ -968,7 +969,7 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     na = asLogical(CAD4R(args));
     if(na == NA_LOGICAL) error(_("invalid '%s' value"), "na.encode");
 
-    len = LENGTH(x);
+    len = XLENGTH(x);
     if(findWidth && justify < 3) {
 	w  = 0;
 	for(i = 0; i < len; i++) {
@@ -991,13 +992,13 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_encoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x;
-    int i, n;
+    R_xlen_t i, n;
     char *tmp;
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
 	error(_("a character vector argument expected"));
-    n = LENGTH(x);
+    n = XLENGTH(x);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	if(IS_BYTES(STRING_ELT(x, i))) tmp = "bytes";
@@ -1013,7 +1014,8 @@ SEXP attribute_hidden do_encoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, enc, tmp;
-    int i, m, n;
+    int m;
+    R_xlen_t i, n;
     const char *this;
 
     checkArity(op, args);
@@ -1026,7 +1028,7 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'value' must be of positive length"));
     if(NAMED(x)) x = duplicate(x);
     PROTECT(x);
-    n = LENGTH(x);
+    n = XLENGTH(x);
     for(i = 0; i < n; i++) {
 	cetype_t ienc = CE_NATIVE;
 	this = CHAR(STRING_ELT(enc, i % m)); /* ASCII */
@@ -1593,7 +1595,7 @@ double R_atof(const char *str)
 SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, el;
-    int i;
+    R_xlen_t i;
     Rboolean duped = FALSE;
 
     checkArity(op, args);
@@ -1602,7 +1604,7 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(CAR(args)))
 	errorcall(call, "argumemt is not a character vector");
     ans = CAR(args);
-    for (i = 0; i < LENGTH(ans); i++) {
+    for (i = 0; i < XLENGTH(ans); i++) {
 	el = STRING_ELT(ans, i);
 	if(PRIMVAL(op) && !known_to_be_utf8) { /* enc2utf8 */
 	    if(!IS_UTF8(el) && !IS_ASCII(el)) {

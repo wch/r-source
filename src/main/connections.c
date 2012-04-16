@@ -2248,7 +2248,7 @@ static void raw_init(Rconnection con, SEXP raw)
 
     this->data = NAMED(raw) ? duplicate(raw) : raw;
     R_PreserveObject(this->data);
-    this->nbytes = LENGTH(this->data);
+    this->nbytes = XLENGTH(this->data);
     this->pos = 0;
 }
 
@@ -2288,7 +2288,7 @@ static size_t raw_write(const void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     Rrawconn this = con->private;
-    size_t freespace = LENGTH(this->data) - this->pos, bytes = size*nitems;
+    size_t freespace = XLENGTH(this->data) - this->pos, bytes = size*nitems;
 
     if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
 	error(_("attempting to add too many elements to raw vector"));
@@ -2470,6 +2470,7 @@ typedef struct outtextconn {
 } *Routtextconn;
 
 /* read a R character vector into a buffer */
+/* It's not conceivable people would want to do this with a long vector */
 static void text_init(Rconnection con, SEXP text, int type)
 {
     int i, nlines = length(text), nchars = 0;
@@ -3369,7 +3370,7 @@ no_more_lines:
 /* writeLines(text, con = stdout(), sep = "\n", useBytes) */
 SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, con_num, useBytes;
+    int con_num, useBytes;
     Rboolean wasopen;
     Rconnection con=NULL;
     const char *ssep;
@@ -3418,7 +3419,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rconnection con0;
 	do {
 	    con0 = getConnection(con_num);
-	    for(i = 0; i < length(text); i++)
+	    for(R_xlen_t i = 0; i < xlength(text); i++)
 		Rconn_printf(con0, "%s%s",
 			     useBytes ? CHAR(STRING_ELT(text, i)) :
 			     translateChar0(STRING_ELT(text, i)), ssep);
@@ -3426,7 +3427,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    con_num = getActiveSink(j++);
 	} while (con_num > 0);
     } else {
-	for(i = 0; i < length(text); i++)
+	for(R_xlen_t i = 0; i < xlength(text); i++)
 	    Rconn_printf(con, "%s%s",
 			 useBytes ? CHAR(STRING_ELT(text, i)) :
 			 translateChar0(STRING_ELT(text, i)), ssep);

@@ -942,7 +942,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
    NOTE: all offsets here (in & out) are 0-based !! */
 static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
     Rbyte *haystack = RAW(text), *needle = RAW(pat);
-    R_len_t n = XLENGTH(text);
+    R_xlen_t n = XLENGTH(text);
     switch (LENGTH(pat)) { /* it may be silly but we optimize small needle
 			      searches, because they can be used to match
 			      single UTF8 chars (up to 3 bytes) */

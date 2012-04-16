@@ -43,7 +43,10 @@
       indices are computed with integer vectors, it is only currently
       possible to extract or replace the first \eqn{2^{31}-1}{2^31 - 1}
       elements.  (One exception is extracting a single element with a
-      double index.)
+      numeric index.)
+
+      \item There is some support for matrices with each dimension less
+      than \eqn{2^{31}}{2^31} but total length more than that.
 
       \item \code{dist()} can produce dissimilarity objects for more
       than 65536 rows (but for example \code{cmdscale()} and

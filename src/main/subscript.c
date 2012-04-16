@@ -644,15 +644,12 @@ arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
 
 SEXP attribute_hidden makeSubscript(SEXP x, SEXP s, int *stretch, SEXP call)
 {
-    R_len_t nx;
     SEXP ans;
 
     ans = R_NilValue;
     if (isVector(x) || isList(x) || isLanguage(x)) {
-	nx = xlength(x);
-
-	ans = vectorSubscript(nx, s, stretch, getAttrib, (STRING_ELT),
-			      x, call);
+	ans = vectorSubscript(xlength(x), s, stretch, getAttrib, 
+			      (STRING_ELT), x, call);
     } else {
 	ECALL(call, _("subscripting on non-vector"));
     }
