@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-10  The R Core Team
+ *  Copyright (C) 2000-12  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,14 +30,14 @@
 SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, names, X, XX, FUN;
-    int i, n;
+    R_len_t i, n;
     PROTECT_INDEX px;
 
     checkArity(op, args);
     PROTECT_WITH_INDEX(X = CAR(args), &px);
     PROTECT(XX = eval(CAR(args), rho));
     FUN = CADR(args);  /* must be unevaluated for use in e.g. bquote */
-    n = length(XX);
+    n = xlength(XX);
     if (n == NA_INTEGER) error(_("invalid length"));
 
     PROTECT(ans = allocVector(VECSXP, n));
@@ -87,7 +87,8 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, names=R_NilValue, rowNames=R_NilValue, X, XX, FUN, value, dim_v;
-    int i, n, commonLen, useNames,
+    R_xlen_t i, n; 
+    int commonLen, useNames,
 	rnk_v = -1; // = array_rank(value) := length(dim(value))
     Rboolean array_value;
     SEXPTYPE commonType;
@@ -102,7 +103,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     useNames = asLogical(eval(CADDDR(args), rho));
     if (useNames == NA_LOGICAL) error(_("invalid USE.NAMES value"));
 
-    n = length(XX);
+    n = xlength(XX);
     if (n == NA_INTEGER) error(_("invalid length"));
 
     commonLen = length(value);

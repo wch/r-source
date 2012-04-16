@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2010  The R Core Team.
+ *  Copyright (C) 1999--2012  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,7 +54,8 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 {
 /* logical binary : "&" or "|" */
     SEXP x, y, dims, tsp, klass, xnames, ynames;
-    int mismatch, nx, ny, xarray, yarray, xts, yts;
+    R_xlen_t mismatch, nx, ny;
+    int xarray, yarray, xts, yts;
     mismatch = 0;
     x = CAR(args);
     y = CADR(args);
@@ -89,8 +90,8 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));
     }
-    nx = length(x);
-    ny = length(y);
+    nx = XLENGTH(x);
+    ny = XLENGTH(y);
     if(nx > 0 && ny > 0) {
 	if(nx > ny) mismatch = nx % ny;
 	else mismatch = ny % nx;
@@ -103,13 +104,13 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else if (xts) {
-	    if (length(x) < length(y))
+	    if (XLENGTH(x) < XLENGTH(y))
 		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else /*(yts)*/ {
-	    if (length(y) < length(x))
+	    if (XLENGTH(y) < XLENGTH(x))
 		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
 	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
@@ -139,9 +140,9 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    setAttrib(x, R_DimNamesSymbol, ynames);
     }
     else {
-	if(length(x) == length(xnames))
+	if(XLENGTH(x) == XLENGTH(xnames))
 	    setAttrib(x, R_NamesSymbol, xnames);
-	else if(length(x) == length(ynames))
+	else if(XLENGTH(x) == XLENGTH(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
     }
 
@@ -157,9 +158,9 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 {
     SEXP x, dim, dimnames, names;
-    int i, len;
+    R_xlen_t i, len;
 
-    len = LENGTH(arg);
+    len = XLENGTH(arg);
     if (!isLogical(arg) && !isNumber(arg) && !isRaw(arg)) {
 	/* For back-compatibility */
 	if (!len) return allocVector(LGLSXP, 0);
@@ -261,12 +262,12 @@ SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 {
-    int i, n, n1, n2;
+    R_xlen_t i, n, n1, n2;
     int x1, x2;
     SEXP ans;
 
-    n1 = LENGTH(s1);
-    n2 = LENGTH(s2);
+    n1 = XLENGTH(s1);
+    n2 = XLENGTH(s2);
     n = (n1 > n2) ? n1 : n2;
     if (n1 == 0 || n2 == 0) {
 	ans = allocVector(LGLSXP, 0);
@@ -308,12 +309,12 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 
 static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
 {
-    int i, n, n1, n2;
+    R_xlen_t i, n, n1, n2;
     int x1, x2;
     SEXP ans;
 
-    n1 = LENGTH(s1);
-    n2 = LENGTH(s2);
+    n1 = XLENGTH(s1);
+    n2 = XLENGTH(s2);
     n = (n1 > n2) ? n1 : n2;
     if (n1 == 0 || n2 == 0) {
 	ans = allocVector(RAWSXP, 0);
@@ -343,9 +344,9 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
 #define _OP_ALL 1
 #define _OP_ANY 2
 
-static int checkValues(int op, int na_rm, int * x, int n)
+static int checkValues(int op, int na_rm, int *x, R_xlen_t n)
 {
-    int i;
+    R_xlen_t i;
     int has_na = 0;
     for (i = 0; i < n; i++) {
         if (!na_rm && x[i] == NA_LOGICAL) has_na = 1;
@@ -408,7 +409,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 			    type2char(TYPEOF(t)));
 	    t = coerceVector(t, LGLSXP);
 	}
-	val = checkValues(PRIMVAL(op), narm, LOGICAL(t), LENGTH(t));
+	val = checkValues(PRIMVAL(op), narm, LOGICAL(t), XLENGTH(t));
         if (val != NA_LOGICAL) {
             if ((PRIMVAL(op) == _OP_ANY && val)
                 || (PRIMVAL(op) == _OP_ALL && !val)) {

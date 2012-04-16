@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2011  The R Core Team
+ *  Copyright (C) 2002--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -94,7 +94,8 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     SEXP opt_costs, opt_bounds;
     int opt_icase, opt_value, opt_fixed, useBytes;
-    int i, j, n, nmatches, patlen;
+    R_xlen_t i, n;
+    int j, nmatches, patlen;
     Rboolean useWC = FALSE;
     const void *vmax = NULL;
 
@@ -130,7 +131,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(opt_icase) cflags |= REG_ICASE;
 
-    n = LENGTH(vec);
+    n = XLENGTH(vec);
     if(!useBytes) {
 	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
 	if(!haveBytes)

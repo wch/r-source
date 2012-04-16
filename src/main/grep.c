@@ -127,7 +127,7 @@ static SEXP mkCharW(const wchar_t *wc)
 SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP args0 = args, ans, tok, x;
-    int i, itok, j, len, tlen, ntok;
+    R_xlen_t i, itok, j, len, tlen, ntok;
     int fixed_opt, perl_opt, useBytes;
     char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp;
@@ -152,8 +152,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(x) || !isString(tok)) error(_("non-character argument"));
 
 
-    len = LENGTH(x);
-    tlen = LENGTH(tok);
+    len = XLENGTH(x);
+    tlen = XLENGTH(tok);
 
     /* treat split = NULL as split = "" */
     if (!tlen) { tlen = 1; SETCADR(args0, tok = mkString("")); }
@@ -722,7 +722,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ind, ans;
     regex_t reg;
-    int i, j, n, nmatches = 0, ov[3], rc;
+    R_xlen_t i, j, n;
+    int nmatches = 0, ov[3], rc;
     int igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
     const char *spat = NULL;
     pcre *re_pcre = NULL /* -Wall */;
@@ -761,7 +762,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    n = LENGTH(text);
+    n = XLENGTH(text);
     if (STRING_ELT(pat, 0) == NA_STRING) {
 	if (value_opt) {
 	    SEXP nmold = getAttrib(text, R_NamesSymbol);
@@ -941,7 +942,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
    NOTE: all offsets here (in & out) are 0-based !! */
 static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
     Rbyte *haystack = RAW(text), *needle = RAW(pat);
-    R_size_t n = LENGTH(text);
+    R_len_t n = XLENGTH(text);
     switch (LENGTH(pat)) { /* it may be silly but we optimize small needle
 			      searches, because they can be used to match
 			      single UTF8 chars (up to 3 bytes) */
@@ -1003,7 +1004,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     int res_alloc = 512; /* must be divisible by 2 since we may store
 			    offset+length it is the initial size of
 			    the integer vector of matches */
-    R_size_t res_ptr, offset, i;
+    R_xlen_t res_ptr, offset, i;
     int igcase_opt, fixed_opt, all, value, invert;
 
     checkArity(op, args);
@@ -1040,7 +1041,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "pattern");
     if (!isRaw(text))
 	error(_("invalid '%s' argument"), "text");
-    if (offset > LENGTH(text))
+    if (offset > XLENGTH(text))
 	return allocVector(INTSXP, 0);
 
     offset--; /* reduce offset to base 0 */
@@ -1058,14 +1059,14 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		Rbyte *ansp;
 		if (res == -1) return value ? text : ScalarInteger(1);
 		if (!value) return ScalarInteger(((res == 0) ? LENGTH(pat) : 0) + 1);
-		ans = allocVector(RAWSXP, LENGTH(text) - LENGTH(pat));
+		ans = allocVector(RAWSXP, XLENGTH(text) - LENGTH(pat));
 		ansp = RAW(ans);
 		if (res) {
 		    memcpy(ansp, RAW(text), res);
 		    ansp += res; 
 		}
 		res += LENGTH(pat);
-		if (res < LENGTH(text))
+		if (res < XLENGTH(text))
 		    memcpy(ansp, RAW(text) + res, LENGTH(text) - res);
 		return ans;
 	    }
@@ -1083,7 +1084,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    */
 #define MAX_MATCHES_MINIBUF 32
 	    int matches[MAX_MATCHES_MINIBUF];
-	    R_size_t n = LENGTH(text);
+	    R_xlen_t n = XLENGTH(text);
 	    while (offset < n) {
 		offset = fgrepraw1(pat, text, offset);
 		if (offset == -1)
@@ -1096,7 +1097,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (value) {
 		if (invert) { /* invert is actually useful here as it
 				 is performing something like strsplit */
-		    R_size_t pos = 0;
+		    R_xlen_t pos = 0;
 		    SEXP elt, mvec = NULL;
 		    int *fmatches = (int*) matches; /* either the minbuffer or an allocated maxibuffer */
 
@@ -1123,7 +1124,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ans = PROTECT(allocVector(VECSXP, nmatches + 1));
 		    /* add all pieces before matches */
 		    for (i = 0; i < nmatches; i++) {
-			R_size_t elt_size = fmatches[i] - 1 - pos;
+			R_xlen_t elt_size = fmatches[i] - 1 - pos;
 			elt = allocVector(RAWSXP, elt_size);
 			SET_VECTOR_ELT(ans, i, elt);
 			if (elt_size)
@@ -1448,7 +1449,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, rep, text, ans;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, j, n, ns, nns, nmatch, offset, rc;
+    R_xlen_t i, n;
+    int j, ns, nns, nmatch, offset, rc;
     int global, igcase_opt, perl_opt, fixed_opt, useBytes, eflags, last_end;
     char *u, *cbuf;
     const char *spat = NULL, *srep = NULL, *s = NULL;
@@ -1494,7 +1496,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    n = LENGTH(text);
+    n = XLENGTH(text);
     /* This contradicts the code below that has NA matching NA */
     if (STRING_ELT(pat, 0) == NA_STRING) {
 	PROTECT(ans = allocVector(STRSXP, n));
@@ -1602,7 +1604,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     for (i = 0 ; i < n ; i++) {
 	/* NA pattern was handled above */
-	if (STRING_ELT(text,i) == NA_STRING) {
+	if (STRING_ELT(text, i) == NA_STRING) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	    continue;
 	}
@@ -2262,7 +2264,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, rc, n, igcase_opt, perl_opt, fixed_opt, useBytes;
+    R_xlen_t i, n;
+    int rc, igcase_opt, perl_opt, fixed_opt, useBytes;
     const char *spat = NULL; /* -Wall */
     const char *s = NULL;
     pcre *re_pcre = NULL /* -Wall */;
@@ -2302,7 +2305,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    n = LENGTH(text);
+    n = XLENGTH(text);
     if (!useBytes) {
 	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
 	if (onlyASCII)
@@ -2562,7 +2565,8 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     size_t nmatch;
     regmatch_t *pmatch;
-    int i, j, n, so;
+    R_xlen_t i, n;
+    int j, so;
     int rc, cflags = REG_EXTENDED;
 
     checkArity(op, args);
@@ -2594,7 +2598,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(vec))
 	error(_("invalid '%s' argument"), "text");
 
-    n = LENGTH(vec);
+    n = XLENGTH(vec);
 
     if(!useBytes) {
         haveBytes = IS_BYTES(STRING_ELT(pat, 0));

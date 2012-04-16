@@ -103,7 +103,7 @@ SET_C99_COMPLEX(Rcomplex *x, int i, double complex value)
 
 SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
-    int i, n;
+    R_xlen_t i, n;
     SEXP ans;
 
     switch(code) {
@@ -111,7 +111,7 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 	return s1;
     case MINUSOP:
 	ans = duplicate(s1);
-	n = LENGTH(s1);
+	n = XLENGTH(s1);
 	for (i = 0; i < n; i++) {
 	    Rcomplex x = COMPLEX(s1)[i];
 	    COMPLEX(ans)[i].r = -x.r;
@@ -202,12 +202,12 @@ static double complex mycpow (double complex X, double complex Y)
 
 SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
-    int i,i1, i2, n, n1, n2;
+    R_xlen_t i,i1, i2, n, n1, n2;
     SEXP ans;
 
     /* Note: "s1" and "s2" are protected in the calling code. */
-    n1 = LENGTH(s1);
-    n2 = LENGTH(s2);
+    n1 = XLENGTH(s1);
+    n2 = XLENGTH(s2);
      /* S4-compatibility change: if n1 or n2 is 0, result is of length 0 */
     if (n1 == 0 || n2 == 0) return(allocVector(CPLXSXP, 0));
 
@@ -283,14 +283,14 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y = R_NilValue;	/* -Wall*/
-    int i, n;
+    R_xlen_t i, n;
 
     checkArity(op, args);
     check1arg(args, call, "z");
     if (DispatchGroup("Complex", call, op, args, env, &x))
 	return x;
     x = CAR(args);
-    n = length(x);
+    n = xlength(x);
     if (isComplex(x)) {
 	switch(PRIMVAL(op)) {
 	case 1:	/* Re */
@@ -621,11 +621,11 @@ static Rboolean cmath1(double complex (*f)(double complex),
 SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
-    int n;
+    R_xlen_t n;
     Rboolean naflag = FALSE;
 
     PROTECT(x = CAR(args));
-    n = length(x);
+    n = xlength(x);
     PROTECT(y = allocVector(CPLXSXP, n));
 
     switch (PRIMVAL(op)) {
@@ -699,7 +699,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 typedef void (*cm2_fun)(Rcomplex *, Rcomplex *, Rcomplex *);
 SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, n, na, nb;
+    R_xlen_t i, n, na, nb;
     Rcomplex ai, bi, *a, *b, *y;
     SEXP sa, sb, sy;
     Rboolean naflag = FALSE;
@@ -722,7 +722,7 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(sa = coerceVector(CAR(args), CPLXSXP));
     PROTECT(sb = coerceVector(CADR(args), CPLXSXP));
-    na = length(sa); nb = length(sb);
+    na = XLENGTH(sa); nb = XLENGTH(sb);
     if ((na == 0) || (nb == 0)) return(allocVector(CPLXSXP, 0));
     n = (na < nb) ? nb : na;
     PROTECT(sy = allocVector(CPLXSXP, n));
@@ -754,14 +754,14 @@ SEXP attribute_hidden do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* complex(length, real, imaginary) */
     SEXP ans, re, im;
-    int i, na, nr, ni;
+    R_xlen_t i, na, nr, ni;
     na = asInteger(CAR(args));
     if(na == NA_INTEGER || na < 0)
 	error(_("invalid length"));
     PROTECT(re = coerceVector(CADR(args), REALSXP));
     PROTECT(im = coerceVector(CADDR(args), REALSXP));
-    nr = length(re);
-    ni = length(im);
+    nr = XLENGTH(re);
+    ni = XLENGTH(im);
     /* is always true: if (na >= 0) {*/
     na = (nr > na) ? nr : na;
     na = (ni > na) ? ni : na;
