@@ -131,7 +131,6 @@ makeCluster <-
            PSOCK = makePSOCKcluster(spec, ...),
            FORK = makeForkCluster(spec, ...),
            SOCK = snow::makeSOCKcluster(spec, ...),
-           PVM = snow::makePVMcluster(spec, ...),
            MPI = snow::makeMPIcluster(spec, ...),
            NWS = snow::makeNWScluster(spec, ...),
            stop("unknown cluster type"))
@@ -230,19 +229,15 @@ closeNode.NWSnode <- function(node) snow::closeNode.NWSnode(node)
 
 recvData.MPInode <- function(node) snow::recvData.MPInode(node)
 recvData.NWSnode <- function(node) snow::recvData.NWSnode(node)
-recvData.PVMnode <- function(node) snow::recvData.PVMnode(node)
 
 recvOneData.MPIcluster <- function(cl) snow::recvOneData.MPIclusted(cl)
 recvOneData.NWScluster <- function(cl) snow::recvOneData.NWScluster(cl)
-recvOneData.PVMcluster <- function(cl) snow::recvOneData.PVMcluster(cl)
 
 sendData.MPInode <- function(node, data) snow::sendData.MPInode(node, data)
 sendData.NWSnode <- function(node, data) snow::sendData.NWSnode(node, data)
-sendData.PVMnode <- function(node, data) snow::sendData.PVMnode(node, data)
 
 stopCluster.MPIcluster <- function(cl) snow::stopCluster.MPIcluster(cl)
 stopCluster.NWScluster <- function(cl) snow::stopCluster.NWScluster(cl)
-stopCluster.PVMcluster <- function(cl) snow::stopCluster.PVMcluster(cl)
 stopCluster.spawnedMPIcluster <-
     function(cl) snow::stopCluster.spawnedMPIcluster(cl)
 
