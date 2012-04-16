@@ -1810,7 +1810,8 @@ f <- function(x) switch(x,"\\dbc"=2,3)
 parse(text=deparse(f))
 ## Gave error about unrecognized escape
 
-## hclust()'s original algo was not ok for "median" (and "centroid") -- PR#4195
+
+## hclust()'s original algo was not ok for "median" (nor "centroid") -- PR#4195
 n <- 12; p <- 3
 set.seed(46)
 d <- dist(matrix(round(rnorm(n*p), digits = 2), n,p), "manhattan")
@@ -1821,9 +1822,10 @@ stopifnot(all.equal(hc$height[5:11],
                       3.21380039, 2.9653438476, 6.1418258), tol = 1e-9))
 ## Also ensure that hclust() remains fast:
 set.seed(1); nn <- 2000
-dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1), nn, nn))
-stopifnot(print(system.time(hc <- hclust(dst, method="average"))) < 1)
-## 0.25 ; was ~ 14.7 (2011 mod. icore i5) from R 1.9.0 up to R 2.15.0
+tm0 <- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1), nn, nn)))
+(tm <- system.time(hc <- hclust(dst, method="average")))
+stopifnot(tm[1] < tm0[1])
+## was slow  from R 1.9.0 up to R 2.15.0
 
 
 proc.time()
