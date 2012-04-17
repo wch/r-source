@@ -400,8 +400,8 @@ SEXP attribute_hidden do_devprev(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_devset(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    checkArity_length;
     int devNum = INTEGER(CAR(args))[0] - 1;
-    checkArity(op, args);
     return ScalarInteger( selectDevice(devNum) + 1 );
 }
 
