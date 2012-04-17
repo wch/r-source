@@ -872,7 +872,7 @@ function()
         repos <-
             .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
     } else {
-        nms <- c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp")
+        nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
         p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
         repos <- if(file_test("-f", p)) {
             a <- .read_repositories(p)

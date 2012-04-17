@@ -5254,9 +5254,7 @@ function(dir)
     }
     db <- do.call(rbind, db)
 
-    ## Assume the CRAN URL comes first.
-    ## Note that .get_standard_repository_URLs() currently [2011-07-26]
-    ## does not provide repository names.
+    ## Note that .get_standard_repository_URLs() puts the CRAN master first.
     CRAN <- urls[1L]
 
     ## For now, information about the CRAN package archive is provided
