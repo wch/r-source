@@ -2577,7 +2577,7 @@ function(dir, force_suggests = TRUE)
             have_ver <- unlist(lapply(lreqs, function(x) length(x) == 3L))
             lreqs3 <- lreqs[have_ver]
             if(length(lreqs3)) {
-                bad <- character(0)
+                bad <- character()
                 for (r in lreqs3) {
                     pkg <- r[[1L]]
                     op <- r[[2L]]

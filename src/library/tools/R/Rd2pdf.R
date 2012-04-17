@@ -514,7 +514,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         "\\Rdcontents{\\R{} topics documented:}"
     } else ""
 
-    latexEncodings <- character(0)
+    latexEncodings <- character()
     hasFigures <- FALSE
     ## if this looks like a package with no man pages, skip body
     if (file.exists(file.path(pkgdir, "DESCRIPTION")) &&

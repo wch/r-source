@@ -143,7 +143,7 @@ as.hclust.dendrogram <- function(x, ...)
         x
     }
     ## apply recursively:
-    add.I(x, integer(0))
+    add.I(x, integer())
 }
 
 

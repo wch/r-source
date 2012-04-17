@@ -39,7 +39,7 @@ function(topic, package = NULL, lib.loc = NULL,
     tf <- tempfile("Rex")
     tools::Rd2ex(.getHelpFile(file), tf)
     if (!file.exists(tf)) {
-	if(give.lines) return(character(0))
+	if(give.lines) return(character())
         warning(gettextf("%s has a help file but no examples", sQuote(topic)),
                 domain = NA)
         return(invisible())

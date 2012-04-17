@@ -1,6 +1,6 @@
 % File src/library/stats/man/ARMAacf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ARMAacf}
@@ -11,7 +11,7 @@
  autocorrelation function for an ARMA process.
 }
 \usage{
-ARMAacf(ar = numeric(0), ma = numeric(0), lag.max = r, pacf = FALSE)
+ARMAacf(ar = numeric(), ma = numeric(), lag.max = r, pacf = FALSE)
 }
 \arguments{
   \item{ar}{numeric vector of AR coefficients}

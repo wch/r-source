@@ -24,7 +24,7 @@ diff.default <- function(x, lag = 1L, differences = 1L, ...)
         lag < 1L || differences < 1L)
 	stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
-	return(x[0]) # empty of proper mode
+	return(x[0L]) # empty, but of proper mode
     r <- unclass(x)  # don't want class-specific subset methods
     i1 <- -seq_len(lag)
     if (ismat)

@@ -17,7 +17,7 @@
 
 RdTags <- function(Rd) {
     res <- sapply(Rd, attr, "Rd_tag")
-    if (!length(res)) res <- character(0)
+    if (!length(res)) res <- character()
     res
 }
 

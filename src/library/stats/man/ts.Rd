@@ -1,6 +1,6 @@
 % File src/library/stats/man/ts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ts}
@@ -21,7 +21,7 @@
   test whether an object is a time series.
 }
 \usage{
-ts(data = NA, start = 1, end = numeric(0), frequency = 1,
+ts(data = NA, start = 1, end = numeric(), frequency = 1,
    deltat = 1, ts.eps = getOption("ts.eps"), class = , names = )
 as.ts(x, \dots)
 is.ts(x)

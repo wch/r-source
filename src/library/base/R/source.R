@@ -145,8 +145,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         ## same-named one in Sweave
 	trySrcLines <- function(srcfile, showfrom, showto) {
 	    lines <- try(suppressWarnings(getSrcLines(srcfile, showfrom, showto)), silent=TRUE)
-	    if (inherits(lines, "try-error"))
-    	    	lines <- character(0)
+	    if (inherits(lines, "try-error")) lines <- character()
     	    lines
 	}
     }

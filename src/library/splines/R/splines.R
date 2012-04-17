@@ -140,7 +140,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         basis <- nmat
     }
     dimnames(basis) <- list(nx, 1L:n.col)
-    a <- list(degree = 3, knots = if(is.null(knots)) numeric(0) else knots,
+    a <- list(degree = 3, knots = if(is.null(knots)) numeric() else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
     class(basis) <- c("ns", "basis", "matrix")

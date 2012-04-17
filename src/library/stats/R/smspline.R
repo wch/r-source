@@ -161,7 +161,7 @@ smooth.spline <-
 		    iparms = iparms,
 		    spar = spar,
 		    parms = unlist(contr.sp[1:4]),
-		    isetup = as.integer(0),
+		    isetup = 0L,
 		    scratch = double(17L * nk + 1L),
 		    ld4  = 4L,
 		    ldnk = 1L,
