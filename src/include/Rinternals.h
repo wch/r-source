@@ -1054,6 +1054,7 @@ Rboolean R_compute_identical(SEXP, SEXP, int);
 #define VectorToPairList	Rf_VectorToPairList
 #define warningcall		Rf_warningcall
 #define warningcall_immediate	Rf_warningcall_immediate
+#define xlength(x)		Rf_xlength(x)
 
 #endif
 
@@ -1115,6 +1116,7 @@ SEXP	 Rf_ScalarLogical(int);
 SEXP	 Rf_ScalarRaw(Rbyte);
 SEXP	 Rf_ScalarReal(double);
 SEXP	 Rf_ScalarString(SEXP);
+R_xlen_t  Rf_xlength(SEXP);
 #endif
 
 #ifdef USE_RINTERNALS
