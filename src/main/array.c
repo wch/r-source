@@ -472,19 +472,21 @@ static void matprod(double *x, int nrx, int ncx,
 
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
 	/* Don't trust the BLAS to handle NA/NaNs correctly: PR#4582
-	 * The test is only O(n) here
+	 * The test is only O(n) here.
+	 * How about long vectors?
 	 */
-	for (i = 0; i < nrx*ncx; i++)
+	R_xlen_t NRX = nrx, NRY = nry;
+	for (R_xlen_t i = 0; i < NRX*ncx; i++)
 	    if (ISNAN(x[i])) {have_na = TRUE; break;}
 	if (!have_na)
-	    for (i = 0; i < nry*ncy; i++)
+	    for (R_xlen_t i = 0; i < NRY*ncy; i++)
 		if (ISNAN(y[i])) {have_na = TRUE; break;}
 	if (have_na) {
 	    for (i = 0; i < nrx; i++)
 		for (k = 0; k < ncy; k++) {
 		    sum = 0.0;
 		    for (j = 0; j < ncx; j++)
-			sum += x[i + j * nrx] * y[j + k * nry];
+			sum += x[i + j * NRX] * y[j + k * NRY];
 		    z[i + k * nrx] = sum;
 		}
 	} else
@@ -514,25 +516,26 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
     double xij_r, xij_i, yjk_r, yjk_i;
     long double sum_i, sum_r;
 
+    R_xlen_t NRX = nrx, NRY = nry;
     for (i = 0; i < nrx; i++)
 	for (k = 0; k < ncy; k++) {
-	    z[i + k * nrx].r = NA_REAL;
-	    z[i + k * nrx].i = NA_REAL;
+	    z[i + k * NRX].r = NA_REAL;
+	    z[i + k * NRX].i = NA_REAL;
 	    sum_r = 0.0;
 	    sum_i = 0.0;
 	    for (j = 0; j < ncx; j++) {
-		xij_r = x[i + j * nrx].r;
-		xij_i = x[i + j * nrx].i;
-		yjk_r = y[j + k * nry].r;
-		yjk_i = y[j + k * nry].i;
+		xij_r = x[i + j * NRX].r;
+		xij_i = x[i + j * NRX].i;
+		yjk_r = y[j + k * NRY].r;
+		yjk_i = y[j + k * NRY].i;
 		if (ISNAN(xij_r) || ISNAN(xij_i)
 		    || ISNAN(yjk_r) || ISNAN(yjk_i))
 		    goto next_ik;
 		sum_r += (xij_r * yjk_r - xij_i * yjk_i);
 		sum_i += (xij_r * yjk_i + xij_i * yjk_r);
 	    }
-	    z[i + k * nrx].r = sum_r;
-	    z[i + k * nrx].i = sum_i;
+	    z[i + k * NRX].r = sum_r;
+	    z[i + k * NRX].i = sum_i;
 	next_ik:
 	    ;
 	}
