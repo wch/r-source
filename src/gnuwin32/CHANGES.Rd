@@ -15,6 +15,10 @@
       session) would switch line endings on \file{stdout} and
       \code{stdout} from CRLF to LF.  This affected \command{Rterm} and
       \command{R CMD BATCH}.
+      
+      \item The compatibility function \code{x11()} had not kept up
+      with changes to \code{windows()}, and issued warnings about bad
+      parameters. (\PR{14880})
     }
   }
 }
