@@ -397,12 +397,27 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
     }
     nmax = (ns > nx) ? ns : nx;
     *stretch = (ns > nx) ? ns : 0;
-    if (ns == 0)
-	return(allocVector(INTSXP, 0));
+    if (ns == 0) return(allocVector(INTSXP, 0));
+#ifdef LONG_VECTOR_SUPPORT
+    if (nmax > INT_MAX) {
+	count = 0;
+	for (i = 0; i < nmax; i++)
+	    if (LOGICAL(s)[i%ns]) count++;
+	indx = allocVector(INTSXP, count);
+	count = 0;
+	for (i = 0; i < nmax; i++)
+	    if (LOGICAL(s)[i%ns]) {
+		if (LOGICAL(s)[i%ns] == NA_LOGICAL)
+		    REAL(indx)[count++] = NA_REAL;
+		else
+		    REAL(indx)[count++] = i + 1;
+	    }
+	return indx;
+    }
+#endif
     count = 0;
     for (i = 0; i < nmax; i++)
-	if (LOGICAL(s)[i%ns])
-	    count++;
+	if (LOGICAL(s)[i%ns]) count++;
     indx = allocVector(INTSXP, count);
     count = 0;
     for (i = 0; i < nmax; i++)
@@ -417,6 +432,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
     return indx;
 }
 
+/* FIXME: this is rather inefficient */
 static SEXP negativeSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP call)
 {
     SEXP indx;
@@ -446,6 +462,7 @@ static SEXP positiveSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx)
 	    if (INTEGER(s)[i] != 0)
 		INTEGER(indx)[zct++] = INTEGER(s)[i];
 	return indx;
+
     } else return s;
 }
 
@@ -481,6 +498,98 @@ integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
 	}
     }
     else return positiveSubscript(s, ns, nx);
+    return R_NilValue;
+}
+
+static SEXP 
+realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
+{
+    R_xlen_t i;
+    int canstretch;
+    double ii, min, max;
+    Rboolean isna = FALSE;
+    canstretch = *stretch;
+    *stretch = 0;
+    min = 0;
+    max = 0;
+    for (i = 0; i < ns; i++) {
+	ii = REAL(s)[i];
+	if (R_FINITE(ii)) {
+	    if (ii < min) min = ii;
+	    if (ii > max) max = ii;
+	} else isna = TRUE;
+    }
+    if (max > nx) {
+#ifndef LONG_VECTOR_SUPPORT
+	if (max > INT_MAX) {
+	    ECALL(call, _("subscript too large for 32-bit R"));
+	}
+#endif
+	if(canstretch) *stretch = max;
+	else {
+	    ECALL(call, _("subscript out of bounds"));
+	}
+    }
+    if (min < 0) {
+	if (max == 0 && !isna) {
+	    SEXP indx;
+	    int stretch = 0;
+	    double dx;
+	    R_xlen_t i, ix;
+	    PROTECT(indx = allocVector(LGLSXP, nx));
+	    for (i = 0; i < nx; i++) LOGICAL(indx)[i] = 1;
+	    for (i = 0; i < ns; i++) {
+		dx = REAL(s)[i];
+		if (R_FINITE(dx) && dx != 0  && -dx <= nx) {
+		    ix = -dx - 1;
+		    LOGICAL(indx)[ix] = 0;
+	    }
+	    }
+	    s = logicalSubscript(indx, nx, nx, &stretch, call);
+	    UNPROTECT(1);
+	    return s;
+	} else {
+	    ECALL(call, _("only 0's may be mixed with negative subscripts"));
+	}
+    } else {
+	/* Only return a REALSXP index if we need to */
+	SEXP indx;
+	R_xlen_t i, cnt = 0;
+	Rboolean int_ok = TRUE;
+	for (i = 0; i < ns; i++) {
+	    double ds = REAL(s)[i];
+	    if (!R_FINITE(ds)) {
+		if (ds > INT_MAX) int_ok = FALSE;
+		cnt++;
+	    } else if (ds != 0) cnt++;
+	}
+	if (int_ok) {
+	    indx = allocVector(INTSXP, cnt);
+	    for (i = 0, cnt = 0; i < ns; i++) {
+		double ds = REAL(s)[i];
+		if (!R_FINITE(ds)) ii = NA_INTEGER;
+		else ii = ds;
+		if (ii != 0) INTEGER(indx)[cnt++] = ii;
+	    }
+	} else {
+	    indx = allocVector(REALSXP, cnt);
+	    for (i = 0, cnt = 0; i < ns; i++)
+		if (REAL(s)[i] != 0) REAL(indx)[cnt++] = REAL(s)[i];
+	}
+	return indx;
+/*
+	SEXP indx;
+	R_xlen_t i, zct = 0;
+	for (i = 0; i < ns; i++) if (REAL(s)[i] == 0) zct++;
+	if (zct) {
+	    indx = allocVector(REALSXP, (ns - zct));
+	    for (i = 0, zct = 0; i < ns; i++)
+		if (REAL(s)[i] != 0) REAL(indx)[zct++] = REAL(s)[i];
+	    return indx;
+	    
+	} else return s;
+*/
+    }
     return R_NilValue;
 }
 
@@ -614,6 +723,7 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
     case INTSXP:
 	return integerSubscript(s, ns, nd, &stretch, call);
     case REALSXP:
+	/* We don't yet allow subscripts > INT_MAX */
 	PROTECT(tmp = coerceVector(s, INTSXP));
 	tmp = integerSubscript(tmp, ns, nd, &stretch, call);
 	UNPROTECT(1);
@@ -680,7 +790,7 @@ static SEXP
 int_vectorSubscript(R_xlen_t nx, SEXP s, int *stretch, AttrGetter dng,
 		    StringEltGetter strg, SEXP x, Rboolean in, SEXP call)
 {
-    SEXP ans = R_NilValue, tmp;
+    SEXP ans = R_NilValue;
 
     R_xlen_t ns = xlength(s);
     /* special case for simple indices -- does not duplicate */
@@ -707,9 +817,7 @@ int_vectorSubscript(R_xlen_t nx, SEXP s, int *stretch, AttrGetter dng,
 	ans = integerSubscript(s, ns, nx, stretch, call);
 	break;
     case REALSXP:
-	PROTECT(tmp = coerceVector(s, INTSXP));
-	ans = integerSubscript(tmp, ns, nx, stretch, call);
-	UNPROTECT(1);
+	ans = realSubscript(s, ns, nx, stretch, call);
 	break;
     case STRSXP:
     {

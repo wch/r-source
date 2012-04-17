@@ -7,6 +7,17 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item There is a subtle change in behaviour for numeric index
+      values \code{2^31} and larger.  These used never to be legitimate,
+      and so were treated as \code{NA}, sometimes with a warning.  They
+      are now legal for long vectors so there is no longer a warning,
+      and \code{x[2^31] <- y} will now extend the vector on a 64-bit
+      platform and give an error on a 32-bit one. 
+    }
+  }
+  
   \subsection{NEW FEATURES}{
     \itemize{
       \item There is a new option, \code{options(CBoundsCheck=)}, which
@@ -39,11 +50,9 @@
       \code{object.size()} work and means can be computed.  Their
       lengths can be get and set by \code{xlength()}.
 
-      \item A limited amount of indexing is available.  As internally
-      indices are computed with integer vectors, it is only currently
-      possible to extract or replace the first \eqn{2^{31}-1}{2^31 - 1}
-      elements.  (One exception is extracting a single element with a
-      numeric index.)
+      \item A limited amount of indexing is available.  Generally
+      double-valued indices can be used to access elements beyond
+      \eqn{2^{31}-1}{2^31 - 1}.
 
       \item There is some support for matrices with each dimension less
       than \eqn{2^{31}}{2^31} but total length more than that.

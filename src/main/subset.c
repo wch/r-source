@@ -44,16 +44,16 @@
 #undef _S4_subsettable
 
 
-/* ExtractSubset does the transfer of elements from "x" to "result" */
-/* according to the integer subscripts given in "indx". */
+/* ExtractSubset does the transfer of elements from "x" to "result"
+   according to the integer/real subscripts given in "indx". */
 
 static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 {
-    R_xlen_t i, n, nx;
-    int ii;
-    int mode;
+    R_xlen_t i, ii, n, nx;
+    int mode, mi;
     SEXP tmp, tmp2;
     mode = TYPEOF(x);
+    mi = TYPEOF(indx);
     n = XLENGTH(indx);
     nx = xlength(x);
     tmp = result;
@@ -62,10 +62,17 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	return x;
 
     for (i = 0; i < n; i++) {
-	ii = INTEGER(indx)[i];
-	if (ii != NA_INTEGER)
-	    ii--;
+	switch(mi) {
+	case REALSXP:
+	    if(!R_FINITE(REAL(indx)[i])) ii = NA_INTEGER;
+	    else ii = REAL(indx)[i] - 1;
+	    break;
+	default:
+	    ii = INTEGER(indx)[i];
+	    if (ii != NA_INTEGER) ii--;
+	}
 	switch (mode) {
+	    /* NA_INTEGER < 0, so some of this is redundant */
 	case LGLSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
 		LOGICAL(result)[i] = LOGICAL(x)[ii];
