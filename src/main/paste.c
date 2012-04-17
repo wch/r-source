@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {
+    if(collapse != R_NilValue && (nx = XLENGTH(ans)) > 0) {
 	sep = STRING_ELT(collapse, 0);
 	use_UTF8 = IS_UTF8(sep);
 	use_Bytes = IS_BYTES(sep);

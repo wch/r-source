@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2009   The R Core Team
+ *  Copyright (C) 1998-2012   The R Core Team
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -81,11 +81,11 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
 
 Rboolean isUnsorted(SEXP x, Rboolean strictly)
 {
-    int n, i;
+    R_xlen_t n, i;
 
     if (!isVectorAtomic(x))
 	error(_("only atomic vectors can be tested to be sorted"));
-    n = LENGTH(x);
+    n = XLENGTH(x);
     if(n >= 2)
 	switch (TYPEOF(x)) {
 
@@ -150,7 +150,7 @@ Rboolean isUnsorted(SEXP x, Rboolean strictly)
 
 SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int strictly, n;
+    int strictly;
     SEXP x, ans;
     int res = TRUE;
 
@@ -159,7 +159,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     strictly = asLogical(CADR(args));
     if(strictly == NA_LOGICAL)
 	errorcall(call, _("invalid '%s' argument"), "strictly");
-    n = length(x);
+    R_xlen_t n = xlength(x);
     if(n < 2) return ScalarLogical(FALSE);
     if(isVectorAtomic(x))
 	return ScalarLogical(isUnsorted(x, strictly));
@@ -324,12 +324,24 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* faster versions of shellsort, following Sedgewick (1986) */
 
-static const int incs[16] = {1073790977, 268460033, 67121153, 16783361, 4197377,
-		       1050113, 262913, 65921, 16577, 4193, 1073, 281, 77,
-		       23, 8, 1};
+/* c(1, 4^k +3*2^(k-1)+1) */
+#ifdef LONG_VECTOR_SUPPORT
+#define NI 19
+static const R_xlen_t incs[19] = {
+    68719869953L, 17180065793L, 4295065601L,
+    1073790977L, 268460033L, 67121153L, 16783361L, 4197377L, 1050113L, 
+    262913L, 65921L, 16577L, 4193L, 1073L, 281L, 77L, 23L, 8L, 1L
+};
+#else
+#define NI 16
+static const int incs[NI] = {
+    1073790977, 268460033, 67121153, 16783361, 4197377, 1050113, 
+    262913, 65921, 16577, 4193, 1073, 281, 77, 23, 8, 1
+};
+#endif
 
 #define sort2_body \
-    for (h = incs[t]; t < 16; h = incs[++t]) \
+    for (h = incs[t]; t < NI; h = incs[++t]) \
 	for (i = h; i < n; i++) { \
 	    v = x[i]; \
 	    j = i; \
@@ -338,10 +350,10 @@ static const int incs[16] = {1073790977, 268460033, 67121153, 16783361, 4197377,
 	}
 
 
-static void R_isort2(int *x, int n, Rboolean decreasing)
+static void R_isort2(int *x, R_xlen_t n, Rboolean decreasing)
 {
     int v;
-    int i, j, h, t;
+    R_xlen_t i, j, h, t;
 
     for (t = 0; incs[t] > n; t++);
     if(decreasing)
@@ -354,10 +366,10 @@ static void R_isort2(int *x, int n, Rboolean decreasing)
 #undef less
 }
 
-static void R_rsort2(double *x, int n, Rboolean decreasing)
+static void R_rsort2(double *x, R_xlen_t n, Rboolean decreasing)
 {
     double v;
-    int i, j, h, t;
+    R_xlen_t i, j, h, t;
 
     for (t = 0; incs[t] > n; t++);
     if(decreasing)
@@ -370,13 +382,13 @@ static void R_rsort2(double *x, int n, Rboolean decreasing)
 #undef less
 }
 
-static void R_csort2(Rcomplex *x, int n, Rboolean decreasing)
+static void R_csort2(Rcomplex *x, R_xlen_t n, Rboolean decreasing)
 {
     Rcomplex v;
-    int i, j, h, t;
+    R_xlen_t i, j, h, t;
 
     for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < 16; h = incs[++t])
+    for (h = incs[t]; t < NI; h = incs[++t])
 	for (i = h; i < n; i++) {
 	    v = x[i];
 	    j = i;
@@ -392,13 +404,13 @@ static void R_csort2(Rcomplex *x, int n, Rboolean decreasing)
 	}
 }
 
-static void ssort2(SEXP *x, int n, Rboolean decreasing)
+static void ssort2(SEXP *x, R_xlen_t n, Rboolean decreasing)
 {
     SEXP v;
-    int i, j, h, t;
+    R_xlen_t i, j, h, t;
 
     for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < 16; h = incs[++t])
+    for (h = incs[t]; t < NI; h = incs[++t])
 	for (i = h; i < n; i++) {
 	    v = x[i];
 	    j = i;
@@ -414,7 +426,7 @@ static void ssort2(SEXP *x, int n, Rboolean decreasing)
 
 void sortVector(SEXP s, Rboolean decreasing)
 {
-    int n = LENGTH(s);
+    R_xlen_t n = XLENGTH(s);
     if (n >= 2 && (decreasing || isUnsorted(s, FALSE)))
 	switch (TYPEOF(s)) {
 	case LGLSXP:
@@ -554,6 +566,7 @@ void cPsort(Rcomplex *x, int n, int k)
 
 
 /* FUNCTION psort(x, indices) */
+/* Indices are integers, so cannot be done for long vectors */
 SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i, k, n;
@@ -583,6 +596,8 @@ SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 			/*--- Part IV : Rank & Order ---*/
+
+/* This cannot be done for long vectors, as it returns integers */
 
 static int equal(int i, int j, SEXP x, Rboolean nalast, SEXP rho)
 {
@@ -702,7 +717,7 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
     int itmp;
 
     for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < 16; h = incs[++t])
+    for (h = incs[t]; t < NI; h = incs[++t])
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
 	    j = i;
@@ -717,7 +732,7 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 }
 
 #define sort2_with_index \
-	    for (h = incs[t]; t < 16; h = incs[++t]) \
+	    for (h = incs[t]; t < NI; h = incs[++t]) \
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
@@ -956,11 +971,12 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include <R_ext/RS.h>
 
+/* also returns integers (a method for sort.list) */
 SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans;
     Rboolean nalast, decreasing;
-    R_len_t i, n;
+    int i, n;
     int tmp, xmax = NA_INTEGER, xmin = NA_INTEGER, off, napos;
 
     checkArity(op, args);
@@ -1003,7 +1019,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for(i = 1; i <= xmax+1; i++) cnts[i] += cnts[i-1];
     if(decreasing)
-	for(i = 0; i < n; i++){
+	for(i = 0; i < n; i++) {
 	    tmp = INTEGER(x)[i];
 	    INTEGER(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] = i+1;
 	}

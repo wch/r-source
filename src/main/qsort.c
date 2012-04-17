@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002   The R Core Team.
+ *  Copyright (C) 2002-2012   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sx;
-    int indx_ret, n;
+    int indx_ret;
     double *vx = NULL;
     int *ivx = NULL;
     Rboolean x_real, x_int;
@@ -57,9 +57,11 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
        if (!isNull(getAttrib(sx, R_NamesSymbol)))
 	   setAttrib(sx, R_NamesSymbol, R_NilValue); */
     indx_ret = asLogical(CADR(args));
-    n = LENGTH(x);
+    R_xlen_t n = LENGTH(x);
     if(x_int) ivx = INTEGER(sx); else vx = REAL(sx);
     if(indx_ret) {
+	if (n > INT_MAX) 
+	    error(_("long vectors are not supported for index.return"));
 	SEXP ans, ansnames, indx;
 	int i, *ix;
 	/* answer will have x = sorted x , ix = index :*/

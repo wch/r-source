@@ -30,7 +30,7 @@
 SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, names, X, XX, FUN;
-    R_len_t i, n;
+    R_xlen_t i, n;
     PROTECT_INDEX px;
 
     checkArity(op, args);

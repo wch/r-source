@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* This is currently restricted to vectors of length < 2^30 */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -817,6 +818,9 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	return matchE(CADR(args), CAR(args), nomatch, env);
 }
+
+/* pmatch and charmatch return integer positions, so cannot be used
+   for long vectors (in general) */
 
 /* Partial Matching of Strings */
 /* Fully S Compatible version. */

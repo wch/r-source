@@ -13,16 +13,22 @@
  * This version incorporates the modification in the remark by Peto.
 */
 
-    int il[31], iu[31];
+#ifdef qsort_Index
+# define INT int
+#else
+# define INT R_xlen_t
+#endif
+
+    INT il[40], iu[40]; /* was 31 */
     /* Arrays iu[k] and il[k] permit sorting up to 2^(k+1)-1 elements;
      * originally k = 20 -> n_max =    2'097'151
      * now        k = 31 -> n_max = 4294'967'295
      */
     NUMERIC vt, vtt;
     double R = 0.375;
-    int ii, ij, k, l, m;
+    INT ii, ij, k, l, m;
 #ifdef qsort_Index
-    int it, tt;
+    INT it, tt;
 #endif
 
 
@@ -41,7 +47,7 @@
       L20:
 	k = i;
 	/* ij = (j + i) >> 1; midpoint */
-	ij = i + (int)((j - i)*R);
+	ij = i + (INT)((j - i)*R);
 #ifdef qsort_Index
 	it = I[ij];
 #endif
@@ -142,3 +148,5 @@
     v[k + 1] = vt;
     goto L100;
 } /* R_qsort{i} */
+
+#undef INT

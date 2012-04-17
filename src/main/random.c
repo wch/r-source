@@ -60,22 +60,29 @@ static Rboolean random1(double (*f) (double), double *a, int na, double *x, int 
 SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a;
-    int i, n, na;
+    R_xlen_t i, n, na;
     checkArity(op, args);
     if (!isVector(CAR(args)) || !isNumeric(CADR(args)))
 	invalid(call);
-    if (LENGTH(CAR(args)) == 1) {
+    if (XLENGTH(CAR(args)) == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	double dn = asReal(CAR(args));
+	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
+	    invalid(call);
+	n = dn;
+#else
 	n = asInteger(CAR(args));
 	if (n == NA_INTEGER || n < 0)
 	    invalid(call);
+#endif
     }
-    else n = LENGTH(CAR(args));
+    else n = XLENGTH(CAR(args));
     PROTECT(x = allocVector(REALSXP, n));
     if (n == 0) {
 	UNPROTECT(1);
 	return(x);
     }
-    na = LENGTH(CADR(args));
+    na = XLENGTH(CADR(args));
     if (na < 1) {
 	for (i = 0; i < n; i++)
 	    REAL(x)[i] = NA_REAL;
@@ -225,15 +232,22 @@ static Rboolean random3(double (*f) (double, double, double), double *a, int na,
 SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a, b, c;
-    int i, n, na, nb, nc;
+    R_xlen_t i, n, na, nb, nc;
     checkArity(op, args);
     if (!isVector(CAR(args))) invalid(call);
     if (LENGTH(CAR(args)) == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	double dn = asReal(CAR(args));
+	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
+	    invalid(call);
+	n = dn;
+#else
 	n = asInteger(CAR(args));
 	if (n == NA_INTEGER || n < 0)
 	    invalid(call);
+#endif
     }
-    else n = LENGTH(CAR(args));
+    else n = XLENGTH(CAR(args));
     PROTECT(x = allocVector(REALSXP, n));
     if (n == 0) {
 	UNPROTECT(1);
@@ -245,9 +259,9 @@ SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args); c = CAR(args);
     if (!isNumeric(a) || !isNumeric(b) || !isNumeric(c))
 	invalid(call);
-    na = LENGTH(a);
-    nb = LENGTH(b);
-    nc = LENGTH(c);
+    na = XLENGTH(a);
+    nb = XLENGTH(b);
+    nc = XLENGTH(c);
     if (na < 1 || nb < 1 || nc < 1) {
 	for (i = 0; i < n; i++)
 	    REAL(x)[i] = NA_REAL;
@@ -341,7 +355,7 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
      */
     if(n <= SMALL) {
 	/* might do this repeatedly, so speed matters */
-	HL = (int *)alloca(n * sizeof(int));
+	HL = (int *) alloca(n * sizeof(int));
 	q = (double *) alloca(n * sizeof(double));
 	R_CheckStack();
     } else {
@@ -416,7 +430,7 @@ static void ProbSampleNoReplace(int n, double *p, int *perm,
 
 /* Equal probability sampling; with-replacement case */
 
-static void SampleReplace(int k, int n, int *y)
+static void R_INLINE SampleReplace(int k, int n, int *y)
 {
     int i;
     for (i = 0; i < k; i++)
@@ -425,7 +439,7 @@ static void SampleReplace(int k, int n, int *y)
 
 /* Equal probability sampling; without-replacement case */
 
-static void SampleNoReplace(int k, int n, int *y, int *x)
+static void R_INLINE SampleNoReplace(int k, int n, int *y, int *x)
 {
     int i, j;
     for (i = 0; i < n; i++)
