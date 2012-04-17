@@ -117,16 +117,19 @@
       not the points at which to plot (as documented).  (\PR{14864})
 
       \item Names containing characters which need to be escaped were
-      not deparsed properly.  (PR#14846)
+      not deparsed properly.  (\PR{14846})
 
       \item Trying to update (recommended) packages in R_HOME/library without
       write access, is now dealt with more gracefully.
       Further, such package updates may be skipped (with a warning),
       when a newer installed version is already going to be used from
-      \code{.libPaths()}.  (PR#14866)
+      \code{.libPaths()}.  (\PR{14866})
 
       \item \code{hclust()} is now fast again (as up to end of 2003),
-      with a different fix for the "median"/"centroid" problem.  (PR#4195).
+      with a different fix for the "median"/"centroid" problem.  (\PR{4195}).
+      
+      \item \code{get_all_vars()} failed when the data came entirely
+      from vectors in the global environment. (\PR{14847})
     }
   }
 }
