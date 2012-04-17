@@ -76,7 +76,7 @@ The current version of this document is @value{VERSION}.
 * R coding standards::          
 * Testing R code::              
 * Use of TeX dialects::         
-* Future directions::           
+* Current and  future directions::  
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -1689,11 +1689,9 @@ static R_StringBuffer ex_buff = @{NULL, 0, MAXELTSIZE@};
 @subsection Internals of R_alloc
 
 The memory used by @code{R_alloc} is allocated as @R{} vectors, of type
-@code{RAWSXP} for `small' allocations (less than 2^31 - 1 bytes) and of
-type @code{REALSXP} for allocations up to 2^34 - 1 bytes on 64-bit
-machines.  Thus the allocation is in units of 8 bytes, and is rounded
-up.  For historical reasons 1 byte is added before rounding up, so the
-allocation is always 1--8 bytes more than was asked for.
+@code{RAWSXP}.  Thus the allocation is in units of 8 bytes, and is
+rounded up.  For historical reasons 1 byte is added before rounding up,
+so the allocation is always 1--8 bytes more than was asked for.
 
 The vectors allocated are protected via the setting of @code{R_VStack},
 as the garbage collector marks everything that can be reached from that
@@ -1706,8 +1704,9 @@ value that has previously be obtained @emph{via} @code{vmaxget}:
 allocations after the value was obtained will no longer be protected and
 hence available for garbage collection.
 
-From @R{} 2.16.0 long vectors could be used for allocations of 2^31
-bytes or more.
+Prior to @R{} 2.16.0, type @code{RAWSXP} for `small' allocations (less
+than 2^31 - 1 bytes) and type @code{REALSXP} for allocations up to 2^34
+- 1 bytes on 64-bit machines.
 
 @node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments
@@ -3916,7 +3915,7 @@ list'' in @file{tests/no-segfault.Rin}.
 [To be revised: use @command{make check-devel}, check the write barrier
 if you change internal structures.]
 
-@node Use of TeX dialects, Future directions, Testing R code, Top
+@node Use of TeX dialects, Current and  future directions, Testing R code, Top
 @chapter Use of TeX dialects
 
 Various dialects of TeX and used for different purposes in @R{}.  The
@@ -3959,11 +3958,12 @@ at run time.  The latter can be important for binary distributions: one
 does not want to be tied to, for example, TeXLive 2007.
 
 
-@node Future directions, Function and variable index, Use of TeX dialects, Top
-@chapter Future directions
+@node Current and  future directions, Function and variable index, Use of TeX dialects, Top
+@chapter Current and future directions
 
-This chapter is for notes about possible future changes to @R{}: there
-is no commitment to make such changes, let alone to a timescale.
+This chapter is for notes about possible in-progress and future changes
+to @R{}: there is no commitment to release such changes, let alone to a
+timescale.
 
 @menu
 * Long vectors::                
@@ -3971,25 +3971,25 @@ is no commitment to make such changes, let alone to a timescale.
 * Large matrices::              
 @end menu
 
-@node Long vectors, 64-bit types, Future directions, Future directions
+@node Long vectors, 64-bit types, Current and  future directions, Current and  future directions
 @section Long vectors
 
-Vectors in @R{} were limited to a length of 2^31 - 1 elements (about 2
-billion), as the length is stored in the @code{SEXPREC} as a C
-@code{int}, and that type is used extensively to record lengths and
-element numbers, including in packages.  (It is the latter that
-precludes a simple change to @code{unsigned int}).
+Vectors in @R{} before version 2.16.0 were limited to a length of 2^31 -
+1 elements (about 2 billion), as the length is stored in the
+@code{SEXPREC} as a C @code{int}, and that type is used extensively to
+record lengths and element numbers, including in packages.
 
-Note that longer vectors are impossible under 32-bit platforms because
-of their address limit, so this section applies only on 64-bit
-platforms.  The internals are unchanged on a 32-bit build of @R{}.
+Note that longer vectors are effectively impossible under 32-bit
+platforms because of their address limit, so this section applies only
+on 64-bit platforms.  The internals are unchanged on a 32-bit build of
+@R{}.
 
 A single object with 2^31 or more elements will take up at least 8GB of
 memory if integer or logical and 16GB if numeric or character, so
 routine use of such objects is still some way off.
 
-As from @R{} 2.16.0 there is some support for long vectors.  This applies
-to raw, logical, integer, numeric and character vectors, and lists and
+There is now some support for long vectors.  This applies to raw,
+logical, integer, numeric and character vectors, and lists and
 expression vectors.  (Elements of character vectors (@code{CHARSXP}s)
 remain limited to 2^31 - 1 bytes.)  Some considerations:
 
@@ -4024,9 +4024,27 @@ required.  People do try to use @R{} internals in C++, but C++98
 compilers are not required to support these types (and there are
 currently no C++11 compilers).
 
+@item
+Indexing can be done via the use of doubles.  The internal indexing code
+used to work with positive integer indices (and negative, logical and
+matrix indices were all converted to positive integers): it now works
+with either @code{INTSXP} or @code{REALSXP} indices.
+
+@item
+@R{} function @code{length} was documented to currently return an
+integer, possibly @code{NA}.  A lot of code has been written that
+assumes that, and even code which calls @code{as.integer(length(x))}
+before passing to @code{.C}/@code{.Fortran} rarely checks for an
+@code{NA} result.
+
+There is a new function @code{xlength} which works for long vectors and
+returns a double value if the length exceeds 2^31-1. At present
+@code{length} returns @code{NA} for long vectors, but it may be safer to
+make that an error.
+
 @end itemize
 
-@node 64-bit types, Large matrices, Long vectors, Future directions
+@node 64-bit types, Large matrices, Long vectors, Current and  future directions
 @section 64-bit types
 
 There is also some desire to be able to store larger integers in @R{},
@@ -4034,10 +4052,7 @@ although the possibility of storing these as @code{double} is often
 overlooked (and e.g.@: file pointers as returned by @code{seek} are
 already stored as @code{double}).
 
-There also needs to be a way to refer to the length of long vectors
-and to create indices to subset them: @R{}'s @code{integer} type is no
-longer necessarily suitable.  Much code has been written assuming that
-it is!  Different routes have been proposed:
+Different routes have been proposed:
 
 @itemize
 
@@ -4061,14 +4076,14 @@ indices, and return @code{double} only when necessary.
 The third has the advantages of minimal disruption to existing code and
 not increasing memory requirements. In the first and third scenarios
 both @R{}'s own code and user code would have to be adapted for lengths
-that were not of type @code{integer}, and code branches for long vectors
-would be tested rarely.
+that were not of type @code{integer}, and in the third code branches for
+long vectors would be tested rarely.
 
 Most users of the @code{.C} and @code{.Fortran} interfaces use
 @code{as.integer} for lengths and element numbers, but a few omit these
-in the knowledge that these were of type @code{integer}.  It might be
-reasonable to suppose that these interfaces were not intended to be used
-with long vectors and make passing a long vector to them an error.
+in the knowledge that these were of type @code{integer}.  It may be
+reasonable to assume that these are never intended to be used with long
+vectors.
 
 The remaining interfaces will need to cope with the changed
 @code{VECTOR_SEXPREC} types.  It seems likely that in most cases lengths
@@ -4081,7 +4096,7 @@ introduce `long' versions @code{xlength} and @code{XLENGTH} which return
 
 See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 
-@node Large matrices,  , 64-bit types, Future directions
+@node Large matrices,  , 64-bit types, Current and  future directions
 @section Large matrices
 
 Matrices are stored as vectors and so were also limited to 2^31-1
@@ -4100,7 +4115,7 @@ those which do, care is needed that any external functions which are
 called have versions for 64-bit integers and the correct versions are
 called.
 
-It is also possible that the existing code when compiled with 32-bit
+It is also possible that some existing code when compiled with 32-bit
 @code{INTEGER} on a 64-bit platform would allow matrices each of whose
 dimensions is less than 2^31 but with more than 2^31 elements.
 
@@ -4110,7 +4125,7 @@ contemplated, not least under the single-thread implementation supplied by
 @R{}.
 
 
-@node Function and variable index, Concept index, Future directions, Top
+@node Function and variable index, Concept index, Current and  future directions, Top
 @unnumbered Function and variable index
 
 @printindex vr

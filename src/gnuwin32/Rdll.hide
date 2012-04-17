@@ -394,7 +394,6 @@
  Rf_ucstomb
  Rf_unbindVar
  Rf_utf8toucs
- Rf_vectorSubscript
  Rf_wcstoutf8
  Rf_yychar
  Rf_yylval
