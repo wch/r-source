@@ -270,10 +270,10 @@ str.default <-
 							 inherits= TRUE))))) {
 		## str.default is a 'NextMethod' : omit the 'List of ..'
 		std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
-	    } else {
+	    } else { # need as.character here for double xlengths.
 		cat(if(i.pl) "Dotted pair list" else
 		    if(irregCl) paste(pClass(cl), "hidden list") else "List",
-		    " of ", le, "\n", sep="")
+		    " of ", as.character(le), "\n", sep="")
 	    }
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nam.ob <-
