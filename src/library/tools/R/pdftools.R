@@ -21,7 +21,7 @@
 ## * Variables
 
 pdf_bytes_whitespaces <-
-    c(charToRaw("\t\n\f\r "), as.raw(0))
+    c(charToRaw("\t\n\f\r "), as.raw(0L))
 pdf_bytes_delimiters <-
     charToRaw("()<>[]{}/%")
 pdf_bytes_non_regulars <-

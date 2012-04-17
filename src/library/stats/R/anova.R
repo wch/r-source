@@ -54,7 +54,7 @@ printCoefmat <-
 	     signif.stars = getOption("show.signif.stars"),
              signif.legend = signif.stars,
 	     dig.tst = max(1, min(5, digits - 1)),
-	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
+	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0L),
 	     P.values = NULL,
 	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc], 1, 3) == "Pr(",
              eps.Pvalue = .Machine$double.eps,

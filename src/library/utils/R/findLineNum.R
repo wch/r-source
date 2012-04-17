@@ -1,7 +1,7 @@
 #  File src/library/utils/R/fineLineNum.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright 2009-2011 Duncan Murdoch and the R Core Team
+#  Copyright 2009-2012 Duncan Murdoch and the R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(),
     if (!is.environment(envir))
     	envir <- environment(envir)
 
-    fns <- character(0)
+    fns <- character()
     envirs <- list()
     e <- envir
     repeat {

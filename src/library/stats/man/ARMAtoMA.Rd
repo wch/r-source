@@ -1,6 +1,6 @@
 % File src/library/stats/man/ARMAtoMA.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ARMAtoMA}
@@ -10,7 +10,7 @@
   Convert ARMA process to infinite MA process.
 }
 \usage{
-ARMAtoMA(ar = numeric(0), ma = numeric(0), lag.max)
+ARMAtoMA(ar = numeric(), ma = numeric(), lag.max)
 }
 \arguments{
   \item{ar}{numeric vector of AR coefficients}

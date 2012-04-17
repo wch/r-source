@@ -193,7 +193,7 @@ Rd2HTML <-
     of1 <- function(text)
         writeLinesUTF8(text, con, outputEncoding, sep = "")
 
-    pendingClose <- pendingOpen <- character(0)  # Used for infix methods
+    pendingClose <- pendingOpen <- character()  # Used for infix methods
 
     inEqn <- FALSE		# Should we do edits needed in an eqn?
     sectionLevel <- 0L		# How deeply nested within section/subsection
@@ -525,7 +525,7 @@ Rd2HTML <-
                "\\S4method" = {
                    # Should not get here
                },
-               "\\tabular" = writeTabular(block), 
+               "\\tabular" = writeTabular(block),
                "\\subsection" = writeSection(block, tag),
                "\\if" =,
                "\\ifelse" =

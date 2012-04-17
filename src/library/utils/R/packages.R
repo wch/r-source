@@ -537,7 +537,7 @@ installed.packages <-
     }
 
     fields <- .instPkgFields(fields)
-    retval <- matrix(character(0), 0L, 2L + length(fields))
+    retval <- matrix(character(), 0L, 2L + length(fields))
     for(lib in lib.loc) {
         if(noCache) {
             ret0 <- .readPkgDesc(lib, fields)

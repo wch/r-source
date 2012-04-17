@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 # Copyright (C) 2006  Deepayan Sarkar <Deepayan.Sarkar@R-project.org>
-# Copyright (C) 2006-2009  The R Core Team
+# Copyright (C) 2006-2012  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@
     UseMethod(".DollarNames")
 
 .DollarNames.default <- function(x, pattern = "") {
-    if (is.atomic(x) || is.symbol(x)) character(0)
+    if (is.atomic(x) || is.symbol(x)) character()
     else grep(pattern, names(x), value = TRUE)
 }
 
