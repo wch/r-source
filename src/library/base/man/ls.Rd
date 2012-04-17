@@ -74,7 +74,7 @@ objects(name, pos= -1, envir = as.environment(pos),
 \examples{
 .Ob <- 1
 ls(pattern = "O")
-ls(pattern= " O", all.names = TRUE)    # also shows ".[foo]"
+ls(pattern= "O", all.names = TRUE)    # also shows ".[foo]"
 
 # shows an empty list because inside myfunc no variables are defined
 myfunc <- function() {ls()}
