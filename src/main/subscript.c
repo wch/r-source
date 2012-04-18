@@ -377,7 +377,7 @@ SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
 
 static SEXP nullSubscript(int n)
 {
-    intt i;
+    int i;
     SEXP indx;
     indx = allocVector(INTSXP, n);
     for (i = 0; i < n; i++)
