@@ -1,15 +1,16 @@
 % File src/library/base/man/Deprecated.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Deprecated}
 \title{Marking Objects as Deprecated}
 \alias{Deprecated}
 \alias{.Deprecated}
+\alias{deprecated}
 
 \description{
-  When an object is about removed from \R it is first deprecated and
+  When an object is about to be removed from \R it is first deprecated and
   should include a call to \code{.Deprecated}.
 }
 \usage{

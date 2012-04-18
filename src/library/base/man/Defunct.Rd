@@ -7,6 +7,7 @@
 \title{Marking Objects as Defunct}
 \alias{Defunct}
 \alias{.Defunct}
+\alias{defunct}
 
 \description{
   When a function is removed from \R it should be replaced by a function
