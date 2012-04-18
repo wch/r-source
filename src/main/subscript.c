@@ -543,7 +543,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
 		if (R_FINITE(dx) && dx != 0  && -dx <= nx) {
 		    ix = -dx - 1;
 		    LOGICAL(indx)[ix] = 0;
-	    }
+		}
 	    }
 	    s = logicalSubscript(indx, nx, nx, &stretch, call);
 	    UNPROTECT(1);
@@ -556,39 +556,32 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, int *stretch, SEXP call)
 	SEXP indx;
 	R_xlen_t i, cnt = 0;
 	Rboolean int_ok = TRUE;
+	/* NB, indices will be truncated eventually,
+	   so need to do that to take '0' into account */
 	for (i = 0; i < ns; i++) {
 	    double ds = REAL(s)[i];
 	    if (!R_FINITE(ds)) {
 		if (ds > INT_MAX) int_ok = FALSE;
 		cnt++;
-	    } else if (ds != 0) cnt++;
+	    } else if ((R_xlen_t) ds != 0) cnt++;
 	}
 	if (int_ok) {
 	    indx = allocVector(INTSXP, cnt);
 	    for (i = 0, cnt = 0; i < ns; i++) {
 		double ds = REAL(s)[i];
-		if (!R_FINITE(ds)) ii = NA_INTEGER;
-		else ii = ds;
-		if (ii != 0) INTEGER(indx)[cnt++] = ii;
+		int ia;
+		if (!R_FINITE(ds)) ia = NA_INTEGER;
+		else ia = ds;
+		if (ia != 0) INTEGER(indx)[cnt++] = ia;
 	    }
 	} else {
 	    indx = allocVector(REALSXP, cnt);
-	    for (i = 0, cnt = 0; i < ns; i++)
-		if (REAL(s)[i] != 0) REAL(indx)[cnt++] = REAL(s)[i];
+	    for (i = 0, cnt = 0; i < ns; i++) {
+		R_xlen_t ia = REAL(s)[i];
+		if (ia != 0) REAL(indx)[cnt++] = REAL(s)[i];
+	    }
 	}
 	return indx;
-/*
-	SEXP indx;
-	R_xlen_t i, zct = 0;
-	for (i = 0; i < ns; i++) if (REAL(s)[i] == 0) zct++;
-	if (zct) {
-	    indx = allocVector(REALSXP, (ns - zct));
-	    for (i = 0, zct = 0; i < ns; i++)
-		if (REAL(s)[i] != 0) REAL(indx)[zct++] = REAL(s)[i];
-	    return indx;
-	    
-	} else return s;
-*/
     }
     return R_NilValue;
 }
