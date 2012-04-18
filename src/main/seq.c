@@ -158,7 +158,7 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static SEXP rep2(SEXP s, SEXP ncopy)
 {
-    R_len_t i, na, nc, n;
+    R_xlen_t i, na, nc, n;
     int j;
     SEXP a, t, u;
 
@@ -411,7 +411,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(lx == 0) {
 	UNPROTECT(3);
 	if(len == NA_INTEGER) return x;
-	else return lengthgets(duplicate(x), len);
+	else return lengthgets(duplicate(x), (R_len_t) len);
     }
 
     if(len != NA_INTEGER) { /* takes precedence over times */
@@ -442,7 +442,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ind = allocVector(INTSXP, len));
     if(len > 0 && each == 0)
 	errorcall(call, _("invalid '%s' argument"), "each");
-    if(nt == 1)
+    if(nt == 1)  // FIXME: this could overflow
 	for(i = 0; i < len; i++) INTEGER(ind)[i] = 1 + ((i/each) % lx);
     else {
 	R_xlen_t j, k, k2, k3;
@@ -450,7 +450,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_xlen_t sum = 0;
 	    for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
 	    for(k3 = 0; k3 < sum; k3++) {
-		INTEGER(ind)[k2++] = i+1;
+		INTEGER(ind)[k2++] = i+1; // FIXME could overflow
 		if(k2 == len) goto done;
 	    }
 	}
@@ -597,7 +597,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ans = allocVector(INTSXP, nn+1);
 		ia = INTEGER(ans);
 		for(i = 0; i <= nn; i++)
-		    ia[i] = ifrom + i * iby;
+		    ia[i] = ifrom + i * iby;  // FIXME: could overflow
 	    } else {
 		nn = (int)(n + FEPS);
 		ans = allocVector(REALSXP, nn+1);
@@ -675,10 +675,9 @@ done:
 SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    R_xlen_t len;
+    int i, len, *p;
     static SEXP length_op = NULL;
 
-    /* FIXME: should this use xlength? */
     /* Store the .Primitive for 'length' for DispatchOrEval to use. */
     if (length_op == NULL) {
 	SEXP R_lengthSymbol = install("length");
@@ -701,31 +700,30 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 	len = asInteger(ans);
     }
     else
-	len = xlength(CAR(args));
+	len = length(CAR(args));
 
     ans = allocVector(INTSXP, len);
-    int *p = INTEGER(ans);
-    for(R_xlen_t i = 0; i < len; i++) p[i] = i+1;
+    p = INTEGER(ans);
+    for(i = 0; i < len; i++) p[i] = i+1;
     return ans;
 }
 
 SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    double len;
+    int i, len, *p;
 
     checkArity(op, args);
     check1arg(args, call, "length.out");
-    len = asReal(CAR(args));
-    if(!R_FINITE(len) || len < 0)
+    len = asInteger(CAR(args));
+    if(len == NA_INTEGER || len < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));
     if(length(CAR(args)) != 1)
 	warningcall(call, _("first element used of '%s' argument"),
 		    "length.out");
-    R_xlen_t lx = len;
-    ans = allocVector(INTSXP, lx);
-    int *p = INTEGER(ans);
-    for(R_xlen_t i = 0; i < lx; i++) p[i] = i+1;
+    ans = allocVector(INTSXP, len);
+    p = INTEGER(ans);
+    for(i = 0; i < len; i++) p[i] = i+1;
 
     return ans;
 }

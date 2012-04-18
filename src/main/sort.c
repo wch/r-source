@@ -738,6 +738,12 @@ static int FNAME(int i, int j,						\
     }									\
 }
 
+#define NI 16
+static const int sincs[NI] = {
+    1073790977, 268460033, 67121153, 16783361, 4197377, 1050113,
+    262913, 65921, 16577, 4193, 1073, 281, 77, 23, 8, 1
+};
+
 // Needs indx set to  0:(n-1)  initially :
 static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 			Rboolean decreasing, int greater_sub(int, int, SEXP, Rboolean, Rboolean))
@@ -745,8 +751,8 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
     int i, j, h, t;
     int itmp;
 
-    for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < NI; h = incs[++t])
+    for (t = 0; sincs[t] > n; t++);
+    for (h = sincs[t]; t < NI; h = sincs[++t])
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
 	    j = i;
@@ -766,8 +772,8 @@ void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,			\
 {									\
     int t;								\
     for(t=0; t < n; t++) indx[t] = t; /* indx[] <- 0:(n-1) */		\
-    for(t=0; incs[t] > n; t++);						\
-    for (int h = incs[t]; t < NI; h = incs[++t])			\
+    for(t=0; sincs[t] > n; t++);						\
+    for (int h = sincs[t]; t < NI; h = sincs[++t])			\
 	for (int i = h; i < n; i++) {					\
 	    int itmp = indx[i], j = i;					\
 	    while (j >= h &&						\
@@ -794,7 +800,7 @@ ORD_2_BODY(R_order2int_dbl,    int, double, intdbl2greater)
 
 
 #define sort2_with_index \
-	    for (h = incs[t]; t < NI; h = incs[++t]) \
+	    for (h = sincs[t]; t < NI; h = sincs[++t]) \
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
@@ -879,7 +885,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 	    case STRSXP:
 	    case CPLXSXP:
 		if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
-		for (t = 0; incs[t] > n; t++);
+		for (t = 0; sincs[t] > n; t++);
 #define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
 		sort2_with_index
 #undef less
@@ -888,7 +894,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
     }
 
     /* Shell sort isn't stable, so add test on index */
-    for (t = 0; incs[t] > hi-lo+1; t++);
+    for (t = 0; sincs[t] > hi-lo+1; t++);
 
     if (isObject(key) && !isNull(rho)) {
 /* only reached from do_rank */

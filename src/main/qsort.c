@@ -63,19 +63,19 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n > INT_MAX) 
 	    error(_("long vectors are not supported for index.return"));
 	SEXP ans, ansnames, indx;
-	int i, *ix;
+	int i, *ix, nn = n;
 	/* answer will have x = sorted x , ix = index :*/
 	PROTECT(ans      = allocVector(VECSXP, 2));
 	PROTECT(ansnames = allocVector(STRSXP, 2));
 	PROTECT(indx = allocVector(INTSXP, n));
 	ix = INTEGER(indx);
-	for(i = 0; i < n; i++)
+	for(i = 0; i < nn; i++)
 	    ix[i] = i+1;
 
 	if(x_int)
-	    R_qsort_int_I(ivx, ix, 1, n);
+	    R_qsort_int_I(ivx, ix, 1, nn);
 	else
-	    R_qsort_I(vx, ix, 1, n);
+	    R_qsort_I(vx, ix, 1, nn);
 
 	SET_VECTOR_ELT(ans, 0, sx);
 	SET_VECTOR_ELT(ans, 1, indx);
@@ -110,7 +110,6 @@ void F77_SUB(qsort3)(double *v, int *ii, int *jj)
     R_qsort(v, *ii, *jj);
 }
 
-
 #define qsort_Index
 #define NUMERIC double
 void R_qsort_I(double *v, int *I, int i, int j)
@@ -124,6 +123,7 @@ void R_qsort_int_I(int *v, int *I, int i, int j)
 
 #undef qsort_Index
 
+//FIXME: need versions with R_xlen_t, in Utils.h
 #define NUMERIC double
 void R_qsort(double *v, int i, int j)
 #include "qsort-body.c"

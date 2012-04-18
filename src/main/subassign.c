@@ -441,8 +441,8 @@ static R_INLINE int gi(SEXP indx, R_xlen_t i)
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     SEXP dim, indx, newnames;
-    R_xlen_t i, n, nx, ny;
-    int ii, iy, stretch, which;
+    R_xlen_t i, ii, n, nx, ny;
+    int iy, stretch, which;
     double ry;
 
     if (isNull(x) && isNull(y)) {
@@ -1481,7 +1481,8 @@ SEXP attribute_hidden
 do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, indx, names, newname, subs, x, xtop, xup, y, thesub = R_NilValue, xOrig = R_NilValue;
-    int i, ndims, nsubs, offset, off = -1 /* -Wall */, stretch, which, len = 0 /* -Wall */;
+    int i, ndims, nsubs, stretch, which, len = 0 /* -Wall */;
+    R_xlen_t  offset, off = -1; /* -Wall */
     Rboolean S4, recursed=FALSE;
 
     PROTECT(args);
