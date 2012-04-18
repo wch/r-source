@@ -17,8 +17,8 @@
 lcm <- function(x) paste(x, "cm")#-> 3 characters (used in layout!)
 
 layout <-
-    function(mat, widths = rep(1, ncol(mat)),
-	     heights = rep(1, nrow(mat)), respect = FALSE)
+    function(mat, widths = rep.int(1, ncol(mat)),
+	     heights = rep.int(1, nrow(mat)), respect = FALSE)
 {
     storage.mode(mat) <- "integer"
     mat <- as.matrix(mat) # or barf
