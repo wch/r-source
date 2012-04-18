@@ -87,9 +87,8 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, names=R_NilValue, rowNames=R_NilValue, X, XX, FUN, value, dim_v;
-    R_xlen_t i, n; 
-    int commonLen, useNames,
-	rnk_v = -1; // = array_rank(value) := length(dim(value))
+    R_xlen_t i, n, commonLen; 
+    int useNames, rnk_v = -1; // = array_rank(value) := length(dim(value))
     Rboolean array_value;
     SEXPTYPE commonType;
     PROTECT_INDEX index;
@@ -106,7 +105,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = xlength(XX);
     if (n == NA_INTEGER) error(_("invalid length"));
 
-    commonLen = length(value);
+    commonLen = xlength(value);
     commonType = TYPEOF(value);
     dim_v = getAttrib(value, R_DimSymbol);
     array_value = (TYPEOF(dim_v) == INTSXP && LENGTH(dim_v) >= 1) ? TRUE : FALSE;
@@ -150,9 +149,15 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXPTYPE tmpType;
 	    INTEGER(ind)[0] = i + 1;
 	    tmp = eval(R_fcall, rho);
+#ifdef LONG_VECTOR_SUPPORT
+	    if (xlength(tmp) != commonLen)
+	    	error(_("values must be length %ld,\n but FUN(X[[%ld]]) result is length %ld"),
+	               commonLen, i+1, xlength(tmp));
+#else
 	    if (length(tmp) != commonLen)
 	    	error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
 	               commonLen, i+1, length(tmp));
+#endif
 	    tmpType = TYPEOF(tmp);
 	    if (tmpType != commonType) {
 	    	Rboolean okay = FALSE;
