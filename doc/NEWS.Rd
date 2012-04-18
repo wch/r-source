@@ -30,6 +30,9 @@
 
       This is not intended for routine use, but can be very helpful in
       finding segfaults in package code.
+
+      \item In \code{layout()}, the limits on the grid size have been
+	raised (again).
     }
   }
 

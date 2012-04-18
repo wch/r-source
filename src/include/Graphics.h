@@ -34,9 +34,9 @@
 typedef unsigned int rcolor;
 
 /* base.c, graphics.c, par.c */
-#define MAX_LAYOUT_ROWS 50
-#define MAX_LAYOUT_COLS 50
-#define MAX_LAYOUT_CELLS 500 /* must be less than 65535, 
+#define MAX_LAYOUT_ROWS 200
+#define MAX_LAYOUT_COLS 200
+#define MAX_LAYOUT_CELLS 10007 /* must be less than 65535,
 				3 copies, 3bytes each */
 
 typedef struct {
@@ -48,16 +48,16 @@ typedef struct {
 
 typedef struct {
     /* Plot State */
-    /* 
+    /*
        When the device driver is started this is 0
        After the first call to plot.new/perps it is 1
        Every graphics operation except plot.new/persp
-       should fail if state = 0 
+       should fail if state = 0
        This is checked at the highest internal function
-       level (e.g., do_lines, do_axis, do_plot_xy, ...) 
+       level (e.g., do_lines, do_axis, do_plot_xy, ...)
     */
 
-    int	state;		/* plot state: 1 if GNewPlot has been called 
+    int	state;		/* plot state: 1 if GNewPlot has been called
 			   (by plot.new or persp) */
     Rboolean valid;	/* valid layout ?  Used in GCheckState & do_playDL */
 
@@ -80,7 +80,7 @@ typedef struct {
     double din[2];	/* device size in inches */
     int	err;		/* Error repporting level */
     rcolor fg;		/* **R ONLY** Foreground Color */
-    char family[201];  /* **R ONLY** Font family 
+    char family[201];  /* **R ONLY** Font family
 			   Simple name which is mapped by device-specific
 			   font database to device-specific name.
 			   Only used if not "".
@@ -293,7 +293,7 @@ SEXP FixupLwd(SEXP, double);
 SEXP FixupVFont(SEXP);
 SEXP labelformat(SEXP);
 
-/* 
+/*
  * Function to generate an R_GE_gcontext from Rf_gpptr info
  *
  * from graphics.c, used in plot.c, plotmath.c
