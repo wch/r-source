@@ -57,7 +57,7 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
        if (!isNull(getAttrib(sx, R_NamesSymbol)))
 	   setAttrib(sx, R_NamesSymbol, R_NilValue); */
     indx_ret = asLogical(CADR(args));
-    R_xlen_t n = LENGTH(x);
+    R_xlen_t n = XLENGTH(x);
     if(x_int) ivx = INTEGER(sx); else vx = REAL(sx);
     if(indx_ret) {
 	if (n > INT_MAX) 

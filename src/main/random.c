@@ -34,11 +34,12 @@ static void invalid(SEXP call)
     error(_("invalid arguments"));
 }
 
-static Rboolean random1(double (*f) (double), double *a, int na, double *x, int n)
+static Rboolean 
+random1(double (*f) (double), double *a, R_xlen_t na, double *x, R_xlen_t n)
 {
     Rboolean naflag = FALSE;
     double ai;
-    int i;
+    R_xlen_t i;
     errno = 0;
     for (i = 0; i < n; i++) {
 	ai = a[i % na];
@@ -203,11 +204,13 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static Rboolean random3(double (*f) (double, double, double), double *a, int na, double *b, int nb,
-			double *c, int nc, double *x, int n)
+static Rboolean 
+random3(double (*f) (double, double, double), double *a, 
+	R_xlen_t na, double *b, R_xlen_t nb, double *c, R_xlen_t nc,
+	double *x, R_xlen_t n)
 {
     double ai, bi, ci;
-    int i;
+    R_xlen_t i;
     Rboolean naflag = FALSE;
     errno = 0;
     for (i = 0; i < n; i++) {

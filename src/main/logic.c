@@ -395,7 +395,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 	t = CAR(s);
 	/* Avoid memory waste from coercing empty inputs, and also
 	   avoid warnings with empty lists coming from sapply */
-	if(length(t) == 0) continue;
+	if(xlength(t) == 0) continue;
 	/* coerceVector protects its argument so this actually works
 	   just fine */
 	if (TYPEOF(t) != LGLSXP) {
