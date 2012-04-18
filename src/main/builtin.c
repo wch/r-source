@@ -736,7 +736,8 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	s = allocVector(mode, len);
 	break;
     case LISTSXP:
-	s = allocList(len); // FIXME
+	if (len > INT_MAX) error("too long for a pairlist");
+	s = allocList((int) len);
 	break;
     default:
 	error(_("vector: cannot make a vector of mode '%s'."),
@@ -890,7 +891,7 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t len = asVecSize(CADR(args));
     if (len < 0) error(_("invalid value"));
     if (len > R_LEN_T_MAX) error(_("vector size specified is too large"));
-    return lengthgets(x, len);
+    return lengthgets(x, (R_len_t) len);
 }
 
 /* Expand dots in args, but do not evaluate */

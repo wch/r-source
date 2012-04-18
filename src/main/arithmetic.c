@@ -1256,7 +1256,7 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI,
 		    double (*f)(double, double, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb;
+    R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int m_opt;
     int naflag;
@@ -1299,7 +1299,7 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
 		    double (*f)(double, double, int, int), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb;
+    R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int i_1, i_2;
     int naflag;
@@ -1342,7 +1342,7 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
 		   SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb;
+    R_xlen_t i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int naflag;
     double amax, *work;

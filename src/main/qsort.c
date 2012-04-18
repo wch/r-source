@@ -63,7 +63,7 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n > INT_MAX) 
 	    error(_("long vectors are not supported for index.return"));
 	SEXP ans, ansnames, indx;
-	int i, *ix, nn = n;
+	int i, *ix, nn = (int) n;
 	/* answer will have x = sorted x , ix = index :*/
 	PROTECT(ans      = allocVector(VECSXP, 2));
 	PROTECT(ansnames = allocVector(STRSXP, 2));

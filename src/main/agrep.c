@@ -260,7 +260,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	for (j = i = 0 ; i < n ; i++)
 	    if(LOGICAL(ind)[i] == 1)
-		INTEGER(ans)[j++] = i + 1;
+		INTEGER(ans)[j++] = i + 1; //FIXME: could overflow
     }
 
     UNPROTECT(2);

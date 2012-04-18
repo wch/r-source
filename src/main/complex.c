@@ -602,9 +602,9 @@ static double complex z_atanh(double complex z)
 }
 
 static Rboolean cmath1(double complex (*f)(double complex),
-		       Rcomplex *x, Rcomplex *y, int n)
+		       Rcomplex *x, Rcomplex *y, R_xlen_t n)
 {
-    int i;
+    R_xlen_t i;
     Rboolean naflag = FALSE;
     for (i = 0 ; i < n ; i++) {
 	if (ISNA(x[i].r) || ISNA(x[i].i)) {

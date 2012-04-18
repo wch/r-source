@@ -174,8 +174,10 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 
     if (isVector(s))
 	a = allocVector(TYPEOF(s), na);
-    else
-	a = allocList(na);
+    else {
+	if (na > INT_MAX) error("too long for a pairlist");
+	a = allocList((int) na);
+    }
     PROTECT(a);
     n = 0;
     switch (TYPEOF(s)) {
@@ -212,9 +214,9 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	break;
     case LISTSXP:
 	u = a;
-	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++) {
-		SETCAR(u, duplicate(CAR(nthcdr(s, i))));
+	for (int ii = 0; ii < (int)nc; ii++)
+	    for (j = 0; j < (INTEGER(t)[ii]); j++) {
+		SETCAR(u, duplicate(CAR(nthcdr(s, ii))));
 		u = CDR(u);
 	    }
 	break;
@@ -281,8 +283,10 @@ static SEXP rep1(SEXP s, SEXP ncopy)
     na = nc * ns;
     if (isVector(s))
 	a = allocVector(TYPEOF(s), na);
-    else
-	a = allocList(na);
+    else {
+	if (na > INT_MAX) error("too long for a pairlist");
+	a = allocList((int) na);
+    }
     PROTECT(a);
 
 #ifdef _S4_rep_keepClass
@@ -314,14 +318,16 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	    SET_STRING_ELT(a, i, STRING_ELT(s, i% ns));
 	break;
     case LISTSXP:
-	i = 0;
+    {
+	int i = 0;
 	for (t = a; t != R_NilValue; t = CDR(t), i++)
 	    SETCAR(t, duplicate(CAR(nthcdr(s, (i % ns)))));
+    }
 	break;
     case VECSXP:
 	i = 0;
 	for (i = 0; i < na; i++)
-	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i% ns)));
+	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
 	break;
     case RAWSXP:
 	for (i = 0; i < na; i++)

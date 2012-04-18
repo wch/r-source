@@ -105,11 +105,18 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (nc < 0)
 	    error(_("invalid 'ncol' value (< 0)"));
     }
-    if (miss_nr && miss_nc) nr = lendat; // FIXME
-    else if (miss_nr) nr = ceil(lendat/(double) nc);
-    else if (miss_nc) nc = ceil(lendat/(double) nr);
+    if (miss_nr && miss_nc) {
+	if (lendat > INT_MAX) error("data is too long");
+	nr = (int) lendat;
+    } else if (miss_nr) {
+	if (lendat > (double) nc * INT_MAX) error("data is too long");
+	nr = (int) ceil(lendat/(double) nc);
+    } else if (miss_nc) {
+	if (lendat > (double) nr * INT_MAX) error("data is too long");
+	nc = (int) ceil(lendat/(double) nr);
+    }
 
-    if(lendat > 0 ) {
+    if(lendat > 0) {
 	R_xlen_t nrc = (R_xlen_t) nr * nc;
 	if (lendat > 1 && nrc % lendat != 0) {
 	    if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
@@ -244,10 +251,9 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 {
     SEXP array;
     int i;
-    R_xlen_t n;
-    double dn;
+    R_xlen_t n = 1;
+    double dn = 1;
 
-    dn = n = 1;
     for (i = 0; i < LENGTH(dims); i++) {
 	dn *= INTEGER(dims)[i];
 #ifndef LONG_VECTOR_SUPPORT
@@ -418,7 +424,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return(ans);
 
 	len = xlength(CAR(args));
-	return ScalarReal(len);
+	return ScalarReal((double) len);
     }
     if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
 					     rho, &ans, 0, 1))

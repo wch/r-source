@@ -1188,7 +1188,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	struct tr_spec *trs_old, **trs_old_ptr;
 	struct tr_spec *trs_new, **trs_new_ptr;
 
-	for (i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
+	for (unsigned int ii = 0; ii <= UCHAR_MAX; ii++) xtable[ii] = ii;
 
 	/* Initialize the old and new tr_spec lists. */
 	trs_old = Calloc(1, struct tr_spec);

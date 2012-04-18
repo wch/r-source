@@ -930,7 +930,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	ans = allocVector(INTSXP, nmatches);
 	j = 0;
-	for (i = 0 ; i < n ; i++)
+	for (i = 0 ; i < n ; i++)  // FIXME, can overflow
 	    if (invert ^ LOGICAL(ind)[i]) INTEGER(ans)[j++] = i + 1;
     }
     UNPROTECT(1);
@@ -942,7 +942,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
    NOTE: all offsets here (in & out) are 0-based !! */
 static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
     Rbyte *haystack = RAW(text), *needle = RAW(pat);
-    R_xlen_t n = XLENGTH(text);
+    R_size_t n = LENGTH(text);
     switch (LENGTH(pat)) { /* it may be silly but we optimize small needle
 			      searches, because they can be used to match
 			      single UTF8 chars (up to 3 bytes) */
@@ -995,6 +995,7 @@ static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
 }
 
 /* grepRaw(pattern, text, offset, ignore.case, fixed, value, all, invert) */
+// FIXME:  allow long vectors.
 SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, res_head, res_tail;
@@ -1004,7 +1005,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     int res_alloc = 512; /* must be divisible by 2 since we may store
 			    offset+length it is the initial size of
 			    the integer vector of matches */
-    R_xlen_t res_ptr, offset, i;
+    R_size_t res_ptr, offset, i;
     int igcase_opt, fixed_opt, all, value, invert;
 
     checkArity(op, args);
@@ -1041,7 +1042,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "pattern");
     if (!isRaw(text))
 	error(_("invalid '%s' argument"), "text");
-    if (offset > XLENGTH(text))
+    if (offset > LENGTH(text))
 	return allocVector(INTSXP, 0);
 
     offset--; /* reduce offset to base 0 */
@@ -1059,14 +1060,14 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		Rbyte *ansp;
 		if (res == -1) return value ? text : ScalarInteger(1);
 		if (!value) return ScalarInteger(((res == 0) ? LENGTH(pat) : 0) + 1);
-		ans = allocVector(RAWSXP, XLENGTH(text) - LENGTH(pat));
+		ans = allocVector(RAWSXP, LENGTH(text) - LENGTH(pat));
 		ansp = RAW(ans);
 		if (res) {
 		    memcpy(ansp, RAW(text), res);
 		    ansp += res; 
 		}
 		res += LENGTH(pat);
-		if (res < XLENGTH(text))
+		if (res < LENGTH(text))
 		    memcpy(ansp, RAW(text) + res, LENGTH(text) - res);
 		return ans;
 	    }
@@ -1084,7 +1085,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    */
 #define MAX_MATCHES_MINIBUF 32
 	    int matches[MAX_MATCHES_MINIBUF];
-	    R_xlen_t n = XLENGTH(text);
+	    R_size_t n = LENGTH(text);
 	    while (offset < n) {
 		offset = fgrepraw1(pat, text, offset);
 		if (offset == -1)
@@ -1097,7 +1098,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (value) {
 		if (invert) { /* invert is actually useful here as it
 				 is performing something like strsplit */
-		    R_xlen_t pos = 0;
+		    R_size_t pos = 0;
 		    SEXP elt, mvec = NULL;
 		    int *fmatches = (int*) matches; /* either the minbuffer or an allocated maxibuffer */
 
@@ -1124,7 +1125,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ans = PROTECT(allocVector(VECSXP, nmatches + 1));
 		    /* add all pieces before matches */
 		    for (i = 0; i < nmatches; i++) {
-			R_xlen_t elt_size = fmatches[i] - 1 - pos;
+			R_size_t elt_size = fmatches[i] - 1 - pos;
 			elt = allocVector(RAWSXP, elt_size);
 			SET_VECTOR_ELT(ans, i, elt);
 			if (elt_size)
@@ -2420,6 +2421,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
 	if (perl_opt && capture_count) {
+	    // FIXME: will not work for long vectors.
 	    SEXP dmn;
 	    PROTECT(dmn = allocVector(VECSXP, 2));
 	    SET_VECTOR_ELT(dmn, 1, capture_names);
