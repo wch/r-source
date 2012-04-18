@@ -52,6 +52,10 @@ void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
 void	iPsort(int*,    int, int);
 void	rPsort(double*, int, int);
 void	cPsort(Rcomplex*, int, int);
+void	R_order2double (int *indx, int n, double *x, double *y, Rboolean nalast, Rboolean decreasing);
+void	R_order2int    (int *indx, int n, int    *x, int    *y, Rboolean nalast, Rboolean decreasing);
+void	R_order2dbl_int(int *indx, int n, double *x, int    *y, Rboolean nalast, Rboolean decreasing);
+void	R_order2int_dbl(int *indx, int n, int    *x, double *y, Rboolean nalast, Rboolean decreasing);
 
 /* ../../main/qsort.c : */
 void R_qsort    (double *v,         int i, int j);
@@ -89,7 +93,7 @@ void	rgb2hsv(double r, double g, double b,
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);
-    
+
 
 /* ../../appl/interv.c: also in Applic.h */
 int findInterval(double *xt, int n, double x,

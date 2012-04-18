@@ -14,10 +14,10 @@
       and so were treated as \code{NA}, sometimes with a warning.  They
       are now legal for long vectors so there is no longer a warning,
       and \code{x[2^31] <- y} will now extend the vector on a 64-bit
-      platform and give an error on a 32-bit one. 
+      platform and give an error on a 32-bit one.
     }
   }
-  
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item There is a new option, \code{options(CBoundsCheck=)}, which
@@ -100,12 +100,15 @@
     }
   }
 
-% This is deferred until we can get package maintainers to cooperate.
-%   \subsection{C-LEVEL FACILITIES}{
-%     \itemize{
-%       \item Passing \code{NULL} to \code{.C()} is now an error.
-%     }
-%   }
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      % This is deferred until we can get package maintainers to cooperate.
+      %       \item Passing \code{NULL} to \code{.C()} is now an error.
+
+      \item new C functions \code{R_orderVector()}, \code{R_order2double()},
+      etc, corresponding to \R's \code{order(..)}.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
@@ -139,8 +142,8 @@
       flat.
 
       \item \code{qqline()} gets new optional arguments
-	\code{distribution}, \code{probs}, and \code{qtype}, following
-	the example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      \code{distribution}, \code{probs}, and \code{qtype}, following
+      the example of \pkg{lattice}'s \code{panel.qqmathline()}.
     }
   }
 
@@ -229,7 +232,7 @@
 
       \item \code{hclust()} is now fast again (as up to end of 2003),
       with a different fix for the "median"/"centroid" problem.  (\PR{4195}).
-      
+
       \item \code{get_all_vars()} failed when the data came entirely
       from vectors in the global environment. (\PR{14847})
     }

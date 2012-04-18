@@ -903,6 +903,10 @@ int R_system(const char *);
 */
 Rboolean R_compute_identical(SEXP, SEXP, int);
 
+// C version of R's  indx <- order(..., na.last, decreasing) :
+//  e.g.  arglist = Rf_lang2(x,y)  or  Rf_lang3(x,y,z)
+void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean decreasing);
+
 #ifndef R_NO_REMAP
 #define acopy_string		Rf_acopy_string
 #define alloc3DArray            Rf_alloc3DArray
