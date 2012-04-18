@@ -512,7 +512,7 @@ dpnorm (double x, int lower_tail, double lp)
 
 	return 1 / sum;
     } else {
-	double d = dnorm (x, 0, 1, FALSE);
+	double d = dnorm (x, 0., 1., FALSE);
 	return d / exp (lp);
     }
 }

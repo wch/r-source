@@ -87,8 +87,8 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 
     lo = floor(x[0]  *c/mu)*mu;
     hi = floor(x[n-1]*c/mu)*mu;
-    ldigits = (lo < 0) ? floor(log10(-lo))+1 : 0;
-    hdigits = (hi > 0) ? floor(log10(hi))    : 0;
+    ldigits = (lo < 0) ? floor(log10(-(double)lo))+1 : 0;
+    hdigits = (hi > 0) ? floor(log10((double)hi))    : 0;
     ndigits = (ldigits < hdigits) ? hdigits : ldigits;
 
     /* Starting cell */
