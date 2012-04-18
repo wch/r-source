@@ -721,6 +721,8 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     return x;
 }
 
+SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
+
 static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     int i, j, ii, jj, iy, which;
@@ -738,10 +740,8 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* No GC problems here. */
 
     dim = getAttrib(x, R_DimSymbol);
-    sr = SETCAR(s, arraySubscript(0, CAR(s), dim, getAttrib,
-				  (STRING_ELT), x));
-    sc = SETCADR(s, arraySubscript(1, CADR(s), dim, getAttrib,
-				   (STRING_ELT), x));
+    sr = SETCAR(s, int_arraySubscript(0, CAR(s), dim, x, call));
+    sc = SETCADR(s, int_arraySubscript(1, CADR(s), dim, x, call));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
     if(ny > 1) {
@@ -1013,8 +1013,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     tmp = s;
     for (i = 0; i < k; i++) {
-	SETCAR(tmp, arraySubscript(i, CAR(tmp), dims, getAttrib,
-				   (STRING_ELT), x));
+	SETCAR(tmp, int_arraySubscript(i, CAR(tmp), dims, x, call));
 	tmp = CDR(tmp);
     }
 

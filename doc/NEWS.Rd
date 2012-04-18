@@ -75,6 +75,9 @@
 
       \item The C-level function \code{R_alloc} can now allocate
       \eqn{2^{34}}{2^34} or more bytes on 64-bit platforms.
+      
+      \item \code{agrep()} and \code{grep()} will return double vectors
+      of indices for long vector inputs.
     }
   }
 
@@ -114,8 +117,12 @@
       % This is deferred until we can get package maintainers to cooperate.
       %       \item Passing \code{NULL} to \code{.C()} is now an error.
 
-      \item new C functions \code{R_orderVector()}, \code{R_order2double()},
+      \item New C functions \code{R_orderVector()}, \code{R_order2double()},
       etc, corresponding to \R's \code{order(..)}.
+
+      \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
+      start end as \code{size_t} to allow them to work with longer
+      vectors on 64-bit platforms.
     }
   }
 }

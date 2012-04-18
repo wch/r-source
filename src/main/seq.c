@@ -445,19 +445,41 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
             len = sum;
 	}
     }
-    PROTECT(ind = allocVector(INTSXP, len));
     if(len > 0 && each == 0)
 	errorcall(call, _("invalid '%s' argument"), "each");
-    if(nt == 1)  // FIXME: this could overflow
-	for(i = 0; i < len; i++) INTEGER(ind)[i] = 1 + ((i/each) % lx);
-    else {
-	R_xlen_t j, k, k2, k3;
-	for(i = 0, k = 0, k2 = 0; i < lx; i++) {
-	    R_xlen_t sum = 0;
-	    for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
-	    for(k3 = 0; k3 < sum; k3++) {
-		INTEGER(ind)[k2++] = i+1; // FIXME could overflow
-		if(k2 == len) goto done;
+ #ifdef LONG_VECTOR_SUPPORT
+    if (len > INT_MAX) {
+	PROTECT(ind = allocVector(REALSXP, len));
+	if(nt == 1)
+	    for(i = 0; i < len; i++)
+		REAL(ind)[i] = (double)( 1 + ((i/each) % lx));
+	else {
+	    R_xlen_t j, k, k2, k3;
+	    for(i = 0, k = 0, k2 = 0; i < lx; i++) {
+		R_xlen_t sum = 0;
+		for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
+		for(k3 = 0; k3 < sum; k3++) {
+		    REAL(ind)[k2++] = (double)(i+1);
+		    if(k2 == len) goto done;
+		}
+	    }
+	}
+    } else
+#endif
+    {
+	PROTECT(ind = allocVector(INTSXP, len));
+	if(nt == 1)
+	    for(i = 0; i < len; i++)
+		INTEGER(ind)[i] = (int)( 1 + ((i/each) % lx));
+	else {
+	    R_xlen_t j, k, k2, k3;
+	    for(i = 0, k = 0, k2 = 0; i < lx; i++) {
+		R_xlen_t sum = 0;
+		for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
+		for(k3 = 0; k3 < sum; k3++) {
+		    INTEGER(ind)[k2++] = (int)(i+1);
+		    if(k2 == len) goto done;
+		}
 	    }
 	}
     }
@@ -486,6 +508,7 @@ done:
  */
 
 #define FEPS 1e-10
+#define myabs(x) (x < 0 ? x : -x)
 /* to match seq.default */
 SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -596,14 +619,14 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   reduced below 1/INT_MAX this is the same as the
 		   next, so this is future-proofing against longer integers.
 		*/
-		nn = (R_xlen_t) n;
 		/* seq.default gives integer result from
 		   from + (0:n)*by
 		*/
+		nn = (R_xlen_t) n;
 		ans = allocVector(INTSXP, nn+1);
 		ia = INTEGER(ans);
 		for(i = 0; i <= nn; i++)
-		    ia[i] = ifrom + i * iby;  // FIXME: could overflow
+		    ia[i] = (int)(ifrom + i * iby);
 	    } else {
 		nn = (int)(n + FEPS);
 		ans = allocVector(REALSXP, nn+1);
@@ -681,7 +704,7 @@ done:
 SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    int i, len, *p;
+    R_xlen_t len;
     static SEXP length_op = NULL;
 
     /* Store the .Primitive for 'length' for DispatchOrEval to use. */
@@ -706,30 +729,48 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 	len = asInteger(ans);
     }
     else
-	len = length(CAR(args));
+	len = xlength(CAR(args));
 
-    ans = allocVector(INTSXP, len);
-    p = INTEGER(ans);
-    for(i = 0; i < len; i++) p[i] = i+1;
+#ifdef LONG_VECTOR_SUPPORT
+    if (len > INT_MAX) {
+	ans = allocVector(REALSXP, len);
+	double *p = REAL(ans);
+	for(R_xlen_t i = 0; i < len; i++) p[i] = (double) (i+1);
+    } else
+#endif
+    {
+	ans = allocVector(INTSXP, len);
+	int *p = INTEGER(ans);
+	for(int i = 0; i < len; i++) p[i] = i+1;
+    }
     return ans;
 }
 
 SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    int i, len, *p;
 
     checkArity(op, args);
     check1arg(args, call, "length.out");
-    len = asInteger(CAR(args));
-    if(len == NA_INTEGER || len < 0)
+    double dlen = asReal(CAR(args));
+    if(!R_FINITE(dlen) || dlen < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));
     if(length(CAR(args)) != 1)
 	warningcall(call, _("first element used of '%s' argument"),
 		    "length.out");
-    ans = allocVector(INTSXP, len);
-    p = INTEGER(ans);
-    for(i = 0; i < len; i++) p[i] = i+1;
+    R_xlen_t len = (R_xlen_t) dlen;
 
+ #ifdef LONG_VECTOR_SUPPORT
+    if (len > INT_MAX) {
+	ans = allocVector(REALSXP, len);
+	double *p = REAL(ans);
+	for(R_xlen_t i = 0; i < len; i++) p[i] = (double) (i+1);
+    } else
+#endif
+    {
+	ans = allocVector(INTSXP, len);
+	int *p = INTEGER(ans);
+	for(int i = 0; i < len; i++) p[i] = i+1;
+    }
     return ans;
 }

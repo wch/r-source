@@ -240,10 +240,8 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     tre_regfree(&reg);
 
-    PROTECT(ans = opt_value
-	    ? allocVector(STRSXP, nmatches)
-	    : allocVector(INTSXP, nmatches));
     if(opt_value) {
+	PROTECT(ans = allocVector(STRSXP, nmatches));
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
 	for (j = i = 0 ; i < n ; i++) {
 	    if(LOGICAL(ind)[i])
@@ -257,10 +255,20 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
 	    setAttrib(ans, R_NamesSymbol, nm);
 	}
-    } else {
+    }
+#ifdef LONG_VECTOR_SUPPORT
+    else if (n > INT_MAX) {
+	PROTECT(ans = allocVector(REALSXP, nmatches));
 	for (j = i = 0 ; i < n ; i++)
 	    if(LOGICAL(ind)[i] == 1)
-		INTEGER(ans)[j++] = i + 1; //FIXME: could overflow
+		REAL(ans)[j++] = (double)(i + 1);
+    }
+#endif
+    else {
+	PROTECT(ans = allocVector(INTSXP, nmatches));
+	for (j = i = 0 ; i < n ; i++)
+	    if(LOGICAL(ind)[i] == 1)
+		INTEGER(ans)[j++] = (int)(i + 1);
     }
 
     UNPROTECT(2);

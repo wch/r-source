@@ -62,9 +62,10 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
     else
 	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
 
+    Rboolean realIndx = longest > INT_MAX;
     for(j = m - 1; j >= 0; j--) {
 	SET_VECTOR_ELT(mindex, j, ScalarInteger(j + 1));
-	SET_VECTOR_ELT(nindex, j, allocVector(INTSXP, 1));
+	SET_VECTOR_ELT(nindex, j, allocVector(realIndx ? REALSXP : INTSXP, 1));
 	PROTECT(tmp1 = lang3(R_Bracket2Symbol,
 			     install("dots"),
 			     VECTOR_ELT(mindex, j)));
@@ -85,7 +86,10 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
     for(i = 0; i < longest; i++) {
 	for(j = 0; j < m; j++) {
 	    counters[j] = (++counters[j] > lengths[j]) ? 1 : counters[j];
-	    INTEGER(VECTOR_ELT(nindex, j))[0] = counters[j]; // FIXME
+	    if (realIndx) 
+		REAL(VECTOR_ELT(nindex, j))[0] = (double) counters[j];
+	    else
+		INTEGER(VECTOR_ELT(nindex, j))[0] = (int) counters[j];
 	}
 	SET_VECTOR_ELT(ans, i, eval(fcall, rho));
     }

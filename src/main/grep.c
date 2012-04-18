@@ -928,10 +928,21 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
     } else {
-	ans = allocVector(INTSXP, nmatches);
-	j = 0;
-	for (i = 0 ; i < n ; i++)  // FIXME, can overflow
-	    if (invert ^ LOGICAL(ind)[i]) INTEGER(ans)[j++] = i + 1;
+#ifdef LONG_VECTOR_SUPPORT
+	if (n > INT_MAX) {
+	    ans = allocVector(REALSXP, nmatches);
+	    j = 0;
+	    for (i = 0 ; i < n ; i++)
+		if (invert ^ LOGICAL(ind)[i]) REAL(ans)[j++] = i + 1;
+	} else 
+#endif
+	{
+	    ans = allocVector(INTSXP, nmatches);
+	    j = 0;
+	    for (i = 0 ; i < n ; i++)
+		if (invert ^ LOGICAL(ind)[i]) 
+		    INTEGER(ans)[j++] = (int) (i + 1);
+	}
     }
     UNPROTECT(1);
     return ans;
@@ -2421,14 +2432,15 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
 	if (perl_opt && capture_count) {
-	    // FIXME: will not work for long vectors.
+	    if (n > INT_MAX) error("too long a vector");
+	    int nn = (int) n;
 	    SEXP dmn;
 	    PROTECT(dmn = allocVector(VECSXP, 2));
 	    SET_VECTOR_ELT(dmn, 1, capture_names);
-	    PROTECT(capture_start = allocMatrix(INTSXP, n, capture_count));
+	    PROTECT(capture_start = allocMatrix(INTSXP, nn, capture_count));
 	    setAttrib(capture_start, R_DimNamesSymbol, dmn);
 	    setAttrib(ans, install("capture.start"), capture_start);
-	    PROTECT(capturelen = allocMatrix(INTSXP, n, capture_count));
+	    PROTECT(capturelen = allocMatrix(INTSXP, nn, capture_count));
 	    setAttrib(capturelen, R_DimNamesSymbol, dmn);
 	    setAttrib(ans, install("capture.length"), capturelen);
 	    setAttrib(ans, install("capture.names"), capture_names);
@@ -2478,6 +2490,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (rc >= 0) {
 			extract_match_and_groups(use_UTF8, ovector, 
 						 capture_count,
+						 // don't use this for large i
 						 INTEGER(ans) + i,
 						 INTEGER(matchlen) + i,
 						 is + i, il + i,
@@ -2485,7 +2498,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else {
 			INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 			for(int cn = 0; cn < capture_count; cn++) {
-			    int ind = i + cn*n;
+			    R_xlen_t ind = i + cn*n;
 			    is[ind] = il[ind] = -1;
 			}
 		    }

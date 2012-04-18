@@ -10896,9 +10896,9 @@ similarly to @code{R_orderVector()} above.  See the note about @var{indx} there.
 @end deftypefun
 
 
-@deftypefun  void R_qsort   (double *@var{v}, int @var{i}, int @var{j})
+@deftypefun  void R_qsort   (double *@var{v}, size_t @var{i}, size_t @var{j})
 @deftypefunx void R_qsort_I (double *@var{v}, int *@var{I}, int @var{i}, int @var{j})
-@deftypefunx void R_qsort_int   (int *@var{iv}, int @var{i}, int @var{j})
+@deftypefunx void R_qsort_int   (int *@var{iv}, size_t @var{i}, size_t @var{j})
 @deftypefunx void R_qsort_int_I (int *@var{iv}, int *@var{I}, int @var{i}, int @var{j})
 
 

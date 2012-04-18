@@ -25,6 +25,7 @@
 
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
+#include <stddef.h>
 
 #define revsort       Rf_revsort
 #define iPsort        Rf_iPsort
@@ -58,9 +59,9 @@ void	R_order2dbl_int(int *indx, int n, double *x, int    *y, Rboolean nalast, Rb
 void	R_order2int_dbl(int *indx, int n, int    *x, double *y, Rboolean nalast, Rboolean decreasing);
 
 /* ../../main/qsort.c : */
-void R_qsort    (double *v,         int i, int j);
+void R_qsort    (double *v,         size_t i, size_t j);
 void R_qsort_I  (double *v, int *I, int i, int j);
-void R_qsort_int  (int *iv,         int i, int j);
+void R_qsort_int  (int *iv,         size_t i, size_t j);
 void R_qsort_int_I(int *iv, int *I, int i, int j);
 #ifdef R_RS_H
 void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);

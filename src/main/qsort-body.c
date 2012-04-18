@@ -16,7 +16,7 @@
 #ifdef qsort_Index
 # define INT int
 #else
-# define INT R_xlen_t
+# define INT size_t
 #endif
 
     INT il[40], iu[40]; /* was 31 */

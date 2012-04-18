@@ -123,13 +123,12 @@ void R_qsort_int_I(int *v, int *I, int i, int j)
 
 #undef qsort_Index
 
-//FIXME: need versions with R_xlen_t, in Utils.h
 #define NUMERIC double
-void R_qsort(double *v, int i, int j)
+void R_qsort(double *v, size_t i, size_t j)
 #include "qsort-body.c"
 #undef NUMERIC
 
 #define NUMERIC int
-void R_qsort_int(int *v, int i, int j)
+void R_qsort_int(int *v, size_t i, size_t j)
 #include "qsort-body.c"
 #undef NUMERIC

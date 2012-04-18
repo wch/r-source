@@ -770,7 +770,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 		INTEGER(ans)[i] = NA_INTEGER;
 	    else
-		INTEGER(ans)[i] = floor((double)x1 / (double)x2);
+		INTEGER(ans)[i] = (int) floor((double)x1 / (double)x2);
 	}
 	break;
     }
