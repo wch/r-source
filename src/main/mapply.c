@@ -85,7 +85,7 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
     for(i = 0; i < longest; i++) {
 	for(j = 0; j < m; j++) {
 	    counters[j] = (++counters[j] > lengths[j]) ? 1 : counters[j];
-	    INTEGER(VECTOR_ELT(nindex, j))[0] = counters[j];
+	    INTEGER(VECTOR_ELT(nindex, j))[0] = counters[j]; // FIXME
 	}
 	SET_VECTOR_ELT(ans, i, eval(fcall, rho));
     }

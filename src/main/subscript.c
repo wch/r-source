@@ -692,7 +692,7 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
     x is the array to be subscripted.
 */
 
-static SEXP
+attribute_hidden SEXP
 int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
 {
     int nd, ns, stretch = 0;

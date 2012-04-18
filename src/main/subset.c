@@ -65,7 +65,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	switch(mi) {
 	case REALSXP:
 	    if(!R_FINITE(REAL(indx)[i])) ii = NA_INTEGER;
-	    else ii = REAL(indx)[i] - 1;
+	    else ii = (R_xlen_t) (REAL(indx)[i] - 1);
 	    break;
 	default:
 	    ii = INTEGER(indx)[i];
@@ -115,8 +115,9 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	case LISTSXP:
 	    /* cannot happen: pairlists are coerced to lists */
 	case LANGSXP:
+	    // FIXME: check nx <= INT_MAX
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
-		tmp2 = nthcdr(x, ii);
+		tmp2 = nthcdr(x, (int) ii);
 		SETCAR(tmp, CAR(tmp2));
 		SET_TAG(tmp, TAG(tmp2));
 	    }
@@ -219,6 +220,8 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     return result;
 }
 
+SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
+
 
 static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 {
@@ -233,10 +236,8 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     /* The following ensures that pointers remain protected. */
     dim = getAttrib(x, R_DimSymbol);
 
-    sr = SETCAR(s, arraySubscript(0, CAR(s), dim, getAttrib,
-				  (STRING_ELT), x));
-    sc = SETCADR(s, arraySubscript(1, CADR(s), dim, getAttrib,
-				   (STRING_ELT), x));
+    sr = SETCAR(s, int_arraySubscript(0, CAR(s), dim, x, call));
+    sc = SETCADR(s, int_arraySubscript(1, CADR(s), dim, x, call));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
     /* Check this does not overflow */
@@ -390,8 +391,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     n = 1;
     r = s;
     for (i = 0; i < k; i++) {
-	SETCAR(r, arraySubscript(i, CAR(r), xdims, getAttrib,
-				 (STRING_ELT), x));
+	SETCAR(r, int_arraySubscript(i, CAR(r), xdims, x, call));
 	bound[i] = LENGTH(CAR(r));
 	n *= bound[i];
 	r = CDR(r);
@@ -622,7 +622,7 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
 	switch (TYPEOF(s)) {
 	case REALSXP:
 	    if (XLENGTH(s) == 1 && ! ISNAN(REAL(s)[0]))
-		return REAL(s)[0]; /* implicit conversion */
+		return (R_xlen_t) REAL(s)[0];
 	    else return -1;
 	case INTSXP:
 	    if (XLENGTH(s) == 1 && INTEGER(s)[0] != NA_INTEGER)
@@ -925,8 +925,9 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (len > 1)
 	    x = vectorIndex(x, thesub, 0, len-1, pok, call);
 	    
+	// FIXME, long vector
 	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
-			   xlength(x), pok, len > 1 ? len-1 : -1, call);
+			   length(x), pok, len > 1 ? len-1 : -1, call);
 	if (offset < 0 || offset >= length(x)) {
 	    /* a bold attempt to get the same behaviour for $ and [[ */
 	    if (offset < 0 && (isNewList(x) ||

@@ -94,8 +94,8 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     SEXP opt_costs, opt_bounds;
     int opt_icase, opt_value, opt_fixed, useBytes;
-    R_xlen_t i, n;
-    int j, nmatches, patlen;
+    R_xlen_t i, j, n;
+    int nmatches, patlen;
     Rboolean useWC = FALSE;
     const void *vmax = NULL;
 

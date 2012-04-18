@@ -533,7 +533,7 @@ INLINE_FUN Rboolean isNumber(SEXP s)
 /* As from R 2.4.0 we check that the value is allowed. */
 INLINE_FUN SEXP ScalarLogical(int x)
 {
-    SEXP ans = allocVector(LGLSXP, 1);
+    SEXP ans = allocVector(LGLSXP, (R_xlen_t)1);
     if (x == NA_LOGICAL) LOGICAL(ans)[0] = NA_LOGICAL;
     else LOGICAL(ans)[0] = (x != 0);
     return ans;
@@ -541,14 +541,14 @@ INLINE_FUN SEXP ScalarLogical(int x)
 
 INLINE_FUN SEXP ScalarInteger(int x)
 {
-    SEXP ans = allocVector(INTSXP, 1);
+    SEXP ans = allocVector(INTSXP, (R_xlen_t)1);
     INTEGER(ans)[0] = x;
     return ans;
 }
 
 INLINE_FUN SEXP ScalarReal(double x)
 {
-    SEXP ans = allocVector(REALSXP, 1);
+    SEXP ans = allocVector(REALSXP, (R_xlen_t)1);
     REAL(ans)[0] = x;
     return ans;
 }
@@ -556,7 +556,7 @@ INLINE_FUN SEXP ScalarReal(double x)
 
 INLINE_FUN SEXP ScalarComplex(Rcomplex x)
 {
-    SEXP ans = allocVector(CPLXSXP, 1);
+    SEXP ans = allocVector(CPLXSXP, (R_xlen_t)1);
     COMPLEX(ans)[0] = x;
     return ans;
 }
@@ -565,15 +565,15 @@ INLINE_FUN SEXP ScalarString(SEXP x)
 {
     SEXP ans;
     PROTECT(x);
-    ans = allocVector(STRSXP, 1);
-    SET_STRING_ELT(ans, 0, x);
+    ans = allocVector(STRSXP, (R_xlen_t)1);
+    SET_STRING_ELT(ans, (R_xlen_t)0, x);
     UNPROTECT(1);
     return ans;
 }
 
 INLINE_FUN SEXP ScalarRaw(Rbyte x)
 {
-    SEXP ans = allocVector(RAWSXP, 1);
+    SEXP ans = allocVector(RAWSXP, (R_xlen_t)1);
     RAW(ans)[0] = x;
     return ans;
 }
@@ -586,11 +586,11 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 {
     if (s == R_NilValue) return TRUE;
     else if (isNewList(s)) {
-	int i, n;
+	R_xlen_t i, n;
 
-	n = LENGTH(s);
+	n = XLENGTH(s);
 	for (i = 0 ; i < n; i++)
-	    if (!isVector(VECTOR_ELT(s, i)) || LENGTH(VECTOR_ELT(s, i)) > 1)
+	    if (!isVector(VECTOR_ELT(s, i)) || XLENGTH(VECTOR_ELT(s, i)) > 1)
 		return FALSE;
 	return TRUE;
     }
@@ -617,7 +617,7 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 INLINE_FUN SEXP mkNamed(SEXPTYPE TYP, const char **names)
 {
     SEXP ans, nms;
-    int i, n;
+    R_xlen_t i, n;
 
     for (n = 0; strlen(names[n]) > 0; n++) {}
     ans = PROTECT(allocVector(TYP, n));
@@ -637,8 +637,8 @@ INLINE_FUN SEXP mkString(const char *s)
 {
     SEXP t;
 
-    PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkChar(s));
+    PROTECT(t = allocVector(STRSXP, (R_xlen_t)1));
+    SET_STRING_ELT(t, (R_xlen_t)0, mkChar(s));
     UNPROTECT(1);
     return t;
 }

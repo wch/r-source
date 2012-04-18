@@ -954,7 +954,7 @@ static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
 		    return offset;
 		offset++;
 	    }
-	    return -1;
+	    return (R_size_t) -1;
 	}
     case 2:
 	{
@@ -964,7 +964,7 @@ static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
 		    return offset;
 		offset++;
 	    }
-	    return -1;
+	    return (R_size_t) -1;
 	}
     case 3:
 	{
@@ -976,7 +976,7 @@ static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
 		    return offset;
 		offset++;
 	    }
-	    return -1;
+	    return (R_size_t) -1;
 	}
     default:
 	{

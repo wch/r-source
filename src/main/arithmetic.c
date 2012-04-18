@@ -541,7 +541,8 @@ SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
 
 static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
-    R_xlen_t i, n, x;
+    R_xlen_t i, n;
+    int x;
     SEXP ans;
 
     switch (code) {

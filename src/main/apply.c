@@ -68,6 +68,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 				LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
 	for(i = 0; i < n; i++) {
+	    // FIXME, need to use double
 	    INTEGER(ind)[0] = i + 1;
 	    tmp = eval(R_fcall, rho);
 	    if (NAMED(tmp))
@@ -147,7 +148,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(i = 0; i < n; i++) {
 	    int j;
 	    SEXPTYPE tmpType;
-	    INTEGER(ind)[0] = i + 1;
+	    INTEGER(ind)[0] = i + 1;  // FIXME
 	    tmp = eval(R_fcall, rho);
 #ifdef LONG_VECTOR_SUPPORT
 	    if (xlength(tmp) != commonLen)
@@ -202,8 +203,8 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for(int j=0; j < rnk_v; j++)
 		INTEGER(dim)[j] = INTEGER(dim_v)[j];
 	else
-	    INTEGER(dim)[0] = commonLen;
-	INTEGER(dim)[rnk_v] = n;
+	    INTEGER(dim)[0] = commonLen; // FIXME
+	INTEGER(dim)[rnk_v] = n; // FIXME
 	setAttrib(ans, R_DimSymbol, dim);
 	UNPROTECT(1);
     }

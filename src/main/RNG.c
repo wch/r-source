@@ -447,7 +447,7 @@ static void RNGkind(RNGtype newkind)
 	error(_("RNGkind: unimplemented RNG kind %d"), newkind);
     }
     GetRNGstate();
-    RNG_Init(newkind, unif_rand() * UINT_MAX);
+    RNG_Init(newkind, (Int32) (unif_rand() * UINT_MAX));
     RNG_kind = newkind;
     PutRNGstate();
 }
@@ -674,7 +674,7 @@ static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 static long ran_arr_cycle(void)
 {
   ran_array(ran_arr_buf,QUALITY);
-  ran_arr_buf[KK]=-1;
+  ran_arr_buf[KK]=(long)(-1);
   ran_arr_ptr=ran_arr_buf+1;
   return ran_arr_buf[0];
 }
@@ -741,7 +741,7 @@ static void RNG_Init_R_KT(Int32 seed)
     fun = findVar1(install(".TAOCP1997init"), R_BaseEnv, CLOSXP, FALSE);
     if(fun == R_UnboundValue)
 	error("function '.TAOCP1997init' is missing");
-    PROTECT(sseed = ScalarInteger(seed % 1073741821));
+    PROTECT(sseed = ScalarInteger((int)(seed % 1073741821)));
     PROTECT(call = lang2(fun, sseed));
     ans = eval(call, R_GlobalEnv);
     memcpy(dummy, INTEGER(ans), 100*sizeof(int));

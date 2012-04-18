@@ -2338,11 +2338,11 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	break;
     case LANGSXP:
 	if(length == 0) return R_NilValue;
-	s = allocList(length);
+	s = allocList(length); // FIXME
 	TYPEOF(s) = LANGSXP;
 	return s;
     case LISTSXP:
-	return allocList(length);
+	return allocList(length); // FIXME
     default:
 	error(_("invalid type/length (%s/%d) in vector allocation"),
 	      type2char(type), length);
@@ -3040,14 +3040,14 @@ const char *(R_CHAR)(SEXP x) {
     return (const char *)CHAR(x);
 }
 
-SEXP (STRING_ELT)(SEXP x, int i) {
+SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
     return CHK(STRING_ELT(x, i));
 }
 
-SEXP (VECTOR_ELT)(SEXP x, int i) {
+SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
     /* We need to allow vector-like types here */
     if(TYPEOF(x) != VECSXP &&
        TYPEOF(x) != EXPRSXP &&
@@ -3101,7 +3101,7 @@ SEXP *(VECTOR_PTR)(SEXP x)
   return NULL;
 }
 
-void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
+void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)));
@@ -3112,7 +3112,7 @@ void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
     STRING_ELT(x, i) = v;
 }
 
-SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
+SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     /*  we need to allow vector-like types here */
     if(TYPEOF(x) != VECSXP &&
        TYPEOF(x) != EXPRSXP &&

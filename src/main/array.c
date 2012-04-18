@@ -105,7 +105,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (nc < 0)
 	    error(_("invalid 'ncol' value (< 0)"));
     }
-    if (miss_nr && miss_nc) nr = lendat;
+    if (miss_nr && miss_nc) nr = lendat; // FIXME
     else if (miss_nr) nr = ceil(lendat/(double) nc);
     else if (miss_nc) nc = ceil(lendat/(double) nr);
 
@@ -425,7 +425,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return(ans);
 
     len = xlength(CAR(args));
-    return ScalarInteger((len <= INT_MAX) ? len : NA_INTEGER);
+    return ScalarInteger((len <= INT_MAX) ? (int) len : NA_INTEGER);
 }
 
 
@@ -946,13 +946,13 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cnames = R_NilValue;
 	switch(ldim) {
 	case 0:
-	    nrow = len = LENGTH(a);
+	    len = nrow = LENGTH(a);
 	    ncol = 1;
 	    rnames = getAttrib(a, R_NamesSymbol);
 	    dimnames = rnames;/* for isNull() below*/
 	    break;
 	case 1:
-	    nrow = len = LENGTH(a);
+	    len = nrow = LENGTH(a);
 	    ncol = 1;
 	    dimnames = getAttrib(a, R_DimNamesSymbol);
 	    if (dimnames != R_NilValue) {

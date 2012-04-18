@@ -50,7 +50,7 @@
   if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
   else memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
   DUPLICATE_ATTRIB(to, from); \
-  SET_TRUELENGTH(to, XTRUELENGTH(from)); \
+  SET_TRUELENGTH(to, TRUELENGTH(from)); \
   UNPROTECT(2); \
 } while (0)
 
@@ -322,7 +322,8 @@ void attribute_hidden copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
 
 void copyMatrix(SEXP s, SEXP t, Rboolean byrow)
 {
-    int i, j, k, nr, nc, nt;
+    int i, j, nr, nc;
+    R_xlen_t k, nt;
 
     nr = nrows(s);
     nc = ncols(s);

@@ -348,7 +348,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP colors, ans, names, dmns;
     double col, bg;
     unsigned int icol;
-    R_xlen_t n, i, i4;
+    int n, i, i4;
 
     checkArity(op, args);
     colors = CAR(args);
@@ -358,7 +358,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (TYPEOF(colors) != INTSXP)
 	    error(_("invalid '%s' value"), "col");
     }
-    n = XLENGTH(colors);
+    n = LENGTH(colors);
 
     /* First set up the output matrix */
     PROTECT(ans = allocMatrix(INTSXP, 4, n));

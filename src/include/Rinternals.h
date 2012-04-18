@@ -439,10 +439,10 @@ int  *(INTEGER)(SEXP x);
 Rbyte *(RAW)(SEXP x);
 double *(REAL)(SEXP x);
 Rcomplex *(COMPLEX)(SEXP x);
-SEXP (STRING_ELT)(SEXP x, int i);
-SEXP (VECTOR_ELT)(SEXP x, int i);
-void SET_STRING_ELT(SEXP x, int i, SEXP v);
-SEXP SET_VECTOR_ELT(SEXP x, int i, SEXP v);
+SEXP (STRING_ELT)(SEXP x, R_xlen_t i);
+SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i);
+void SET_STRING_ELT(SEXP x, R_xlen_t i, SEXP v);
+SEXP SET_VECTOR_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP *(STRING_PTR)(SEXP x);
 SEXP *(VECTOR_PTR)(SEXP x);
 
