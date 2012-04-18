@@ -15,6 +15,12 @@
       are now legal for long vectors so there is no longer a warning,
       and \code{x[2^31] <- y} will now extend the vector on a 64-bit
       platform and give an error on a 32-bit one.
+
+      \item It is now possible for 64-bit builds to allocate amounts of
+      memory limited only by the OS, since long vectors are allowed.  It
+      may be wise to use OS facilities (e.g. \command{ulimit} in
+      \command{bash}) to set limits on overall memory consumption of an
+      \R process, particularly in a multi-user environment.
     }
   }
 
