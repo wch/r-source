@@ -50,7 +50,7 @@
   if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
   else memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
   DUPLICATE_ATTRIB(to, from); \
-  SET_TRUELENGTH(to, TRUELENGTH(from)); \
+  SET_TRUELENGTH(to, XTRUELENGTH(from)); \
   UNPROTECT(2); \
 } while (0)
 

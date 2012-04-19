@@ -296,15 +296,15 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
       SEXP sl__x__ = (x); \
       R_xlen_t sl__v__ = (v); \
       if (IS_LONG_VEC(sl__x__)) \
-	  SET_LONG_VEC_LENGTH(sl__x__, sl__v__); \
-      else SET_SHORT_VEC_LENGTH(sl__x__, sl__v__); \
+	  SET_LONG_VEC_LENGTH(sl__x__,  sl__v__); \
+      else SET_SHORT_VEC_LENGTH(sl__x__, (R_len_t) sl__v__); \
   } while (0)
 # define SET_TRUELENGTH(x,v) do { \
       SEXP sl__x__ = (x); \
       R_xlen_t sl__v__ = (v); \
       if (IS_LONG_VEC(sl__x__)) \
 	  SET_LONG_VEC_TRUELENGTH(sl__x__, sl__v__); \
-      else SET_SHORT_VEC_TRUELENGTH(sl__x__, sl__v__); \
+      else SET_SHORT_VEC_TRUELENGTH(sl__x__, (R_len_t) sl__v__); \
   } while (0)
 #else
 # define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
