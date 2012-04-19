@@ -261,7 +261,7 @@ static double mktime00 (struct tm *tm)
 {
     int day = 0;
     int i, year, year0;
-    int excess = 0;
+    double excess = 0.0;
 
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
@@ -290,7 +290,7 @@ static double mktime00 (struct tm *tm)
     if ((tm->tm_wday = (day + 4) % 7) < 0) tm->tm_wday += 7;
 
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ (day + excess * 730485.0) * 86400.0;
+	+ (day + excess * 730485) * 86400.0;
 }
 
 static double guess_offset (struct tm *tm)
@@ -465,7 +465,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	res->tm_isdst = -1;
 
 	/* Try to fix up timezone differences */
-	diff = (int)(guess_offset(res)/60);
+	diff = guess_offset(res)/60;
 	shift = res->tm_min + 60*res->tm_hour;
 	res->tm_min -= diff;
 	validate_tm(res);
@@ -473,7 +473,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	/* now this might be a different day */
 	if(shift - diff < 0) res->tm_yday--;
 	if(shift - diff > 24) res->tm_yday++;
-	diff2 = (int)(guess_offset(res)/60);
+	diff2 = guess_offset(res)/60;
 	if(diff2 != diff) {
 	    res->tm_min += (diff - diff2);
 	    validate_tm(res);
@@ -553,15 +553,13 @@ unsigned int TimeToSeed(void)
     {
 	struct timespec tp;
 	clock_gettime(CLOCK_REALTIME, &tp);
-	seed = (unsigned int)
-	    (((uint_least64_t) tp.tv_nsec << 16) ^ tp.tv_sec);
+	seed = ((uint_least64_t) tp.tv_nsec << 16) ^ tp.tv_sec;
     }
 #elif defined(HAVE_GETTIMEOFDAY)
     {
 	struct timeval tv;
 	gettimeofday (&tv, NULL);
-	seed = (unsigned int)
-	    (((uint_least64_t) tv.tv_usec << 16) ^ tv.tv_sec);
+	seed = ((uint_least64_t) tv.tv_usec << 16) ^ tv.tv_sec;
     }
 #else
     /* C89, so must work */
@@ -776,7 +774,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(REALSXP, n));
     for(i = 0; i < n; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
-	tm.tm_sec   = (int) fsecs;
+	tm.tm_sec   = fsecs;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -859,7 +857,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, N));
     for(i = 0; i < N; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
-	tm.tm_sec   = (int) fsecs;
+	tm.tm_sec   = fsecs;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -876,7 +874,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		const char *q = CHAR(STRING_ELT(sformat, i%m));
-		int n = (int) strlen(q) + 50;
+		int n = strlen(q) + 50;
 		char buf2[n];
 #ifdef Win32
 		/* We want to override Windows' TZ names */

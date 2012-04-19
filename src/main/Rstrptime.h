@@ -215,7 +215,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		     int *poffset)
 {
     int cnt;
-    int val;
+    size_t val;
     int have_I, is_pm;
     int century, want_century;
     int have_wday, want_xday;
@@ -558,7 +558,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		    sval = wcstod(rp, &end);
 		    if( sval >= 0.0 && sval <= 61.0) {
 			tm->tm_sec = sval;
-			*psecs = (int) sval;
+			*psecs = sval;
 		    }
 		    rp = end;
 		}
@@ -674,7 +674,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		   int *poffset)
 {
     int cnt;
-    int val;
+    size_t val;
     int have_I, is_pm;
     int century, want_century;
     int have_wday, want_xday;
@@ -1021,7 +1021,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		       sval = strtod(rp, &end);
 		       if( sval >= 0.0 && sval <= 61.0) {
 			   tm->tm_sec = sval;
-			   *psecs = (int) sval;
+			   *psecs = sval;
 		       }
 		       rp = end;
 		   }
