@@ -82,7 +82,7 @@ double attribute_hidden R_FileMtime(const char *path)
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
 	error(_("cannot determine file modification time of '%s'"), path);
-    return sb.st_mtime;
+    return (double) sb.st_mtime;
 }
 #endif
 
@@ -1047,7 +1047,7 @@ next_char:
 }
 
 
-extern void *Rf_AdobeSymbol2utf8(char* work, const char *c0, int nwork); /* from util.c */
+extern void *Rf_AdobeSymbol2utf8(char* work, const char *c0, size_t nwork); /* from util.c */
 
 const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
 {
