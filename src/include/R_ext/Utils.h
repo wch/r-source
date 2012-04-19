@@ -32,8 +32,6 @@
 #define rPsort        Rf_rPsort
 #define cPsort        Rf_cPsort
 #define IndexWidth    Rf_IndexWidth
-#define setIVector    Rf_setIVector
-#define setRVector    Rf_setRVector
 #define StringFalse   Rf_StringFalse
 #define StringTrue    Rf_StringTrue
 #define isBlankString Rf_isBlankString
@@ -72,8 +70,6 @@ void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 int	IndexWidth(int);
 /* ../../main/util.c  and others : */
 const char *R_ExpandFileName(const char *);
-void	setIVector(int*, int, int);
-void	setRVector(double*, int, double);
 Rboolean StringFalse(const char *);
 Rboolean StringTrue(const char *);
 Rboolean isBlankString(const char *);

@@ -684,7 +684,6 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_PrintValue(SEXP);
 SEXP Rf_protect(SEXP);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
-void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
 SEXPTYPE Rf_str2type(const char *);
 Rboolean Rf_StringBlank(SEXP);
@@ -1043,7 +1042,6 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define ScalarString		Rf_ScalarString
 #define ScalarRaw		Rf_ScalarRaw
 #define setAttrib		Rf_setAttrib
-#define setSVector		Rf_setSVector
 #define setVar			Rf_setVar
 #define str2type		Rf_str2type
 #define StringBlank		Rf_StringBlank

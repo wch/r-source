@@ -477,32 +477,6 @@ SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* formerly used in subscript.c, in Utils.h */
-void attribute_hidden setIVector(int * vec, int len, int val)
-{
-    int i;
-    for (i = 0; i < len; i++)
-	vec[i] = val;
-}
-
-
-/* unused in R, in Utils.h */
-void attribute_hidden setRVector(double * vec, int len, double val)
-{
-    int i;
-    for (i = 0; i < len; i++)
-	vec[i] = val;
-}
-
-/* unused in R, in Rinternals.h */
-void setSVector(SEXP * vec, int len, SEXP val)
-{
-    int i;
-    for (i = 0; i < len; i++)
-	vec[i] = val;
-}
-
-
 Rboolean isFree(SEXP val)
 {
     SEXP t;
@@ -1433,7 +1407,7 @@ static int s2u[224] = {
     0xF8F8, 0xF8F9, 0xF8FA, 0xF8FB, 0xF8FC, 0xF8FD, 0xF8FE, 0x0020
 };
 
-void *Rf_AdobeSymbol2utf8(char *work, const char *c0, int nwork)
+void *Rf_AdobeSymbol2utf8(char *work, const char *c0, size_t nwork)
 {
     const unsigned char *c = (unsigned char *) c0;
     unsigned char *t = (unsigned char *) work;
