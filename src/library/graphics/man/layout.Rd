@@ -1,6 +1,6 @@
 % File src/library/graphics/man/layout.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{layout}
@@ -15,8 +15,8 @@
   row-heights specified in the respective arguments.
 }
 \usage{
-layout(mat, widths = rep(1, ncol(mat)),
-       heights = rep(1, nrow(mat)), respect = FALSE)
+layout(mat, widths = rep.int(1, ncol(mat)),
+       heights = rep.int(1, nrow(mat)), respect = FALSE)
 
 layout.show(n = 1)
 lcm(x)
