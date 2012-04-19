@@ -229,7 +229,7 @@ SEXP mc_send_master(SEXP what)
 	error(_("write error, closing pipe to the master"));
     }
     while (i < len) {
-	int n = write(master_fd, b + i, len - i);
+	ssize_t n = write(master_fd, b + i, len - i);
 	if (n < 1) {
 	    close(master_fd);
 	    master_fd = -1;
@@ -258,7 +258,7 @@ SEXP mc_send_child_stdin(SEXP sPid, SEXP what)
     b = RAW(what);
     fd = ci -> sifd;
     while (i < len) {
-	int n = write(fd, b + i, len - i);
+	ssize_t n = write(fd, b + i, len - i);
 	if (n < 1) error(_("write error"));
 	i += n;
     }
@@ -374,7 +374,7 @@ static SEXP read_child_ci(child_info_t *ci)
 {
     unsigned int len = 0;
     int fd = ci->pfd;
-    int n = read(fd, &len, sizeof(len));
+    ssize_t n = read(fd, &len, sizeof(len));
 #ifdef MC_DEBUG
     Dprintf(" read_child_ci(%d) - read length returned %d\n", ci->pid, n);
 #endif
