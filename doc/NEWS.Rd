@@ -121,8 +121,8 @@
       etc, corresponding to \R's \code{order(..)}.
 
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
-      start end as \code{size_t} to allow them to work with longer
-      vectors on 64-bit platforms.
+      \code{start} and \code{end} as \code{size_t} to allow them to work
+      with longer vectors on 64-bit platforms.
     }
   }
 }
