@@ -493,7 +493,7 @@ static void matprod(double *x, int nrx, int ncx,
 		    sum = 0.0;
 		    for (j = 0; j < ncx; j++)
 			sum += x[i + j * NRX] * y[j + k * NRY];
-		    z[i + k * nrx] = sum;
+		    z[i + k * nrx] = (double) sum;
 		}
 	} else
 	    F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
@@ -1321,7 +1321,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNIMPLEMENTED_TYPEt("do_colsum", type);
 	    }
 	    if (OP == 1) sum /= cnt;
-	    REAL(ans)[j] = sum;
+	    REAL(ans)[j] = (double) sum;
 	}
     }
 
@@ -1360,7 +1360,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    Free(Cnt);
 		}
 	    }
-	    for (i = 0; i < n; i++) REAL(ans)[i] = rans[i];
+	    for (i = 0; i < n; i++) REAL(ans)[i] = (double) rans[i];
 	    if(n > 10000) Free(rans);
 	    UNPROTECT(1);
 	    return ans;
@@ -1385,7 +1385,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNIMPLEMENTED_TYPEt("do_colsum", type);
 	    }
 	    if (OP == 3) sum /= cnt; /* gives NaN for cnt = 0 */
-	    REAL(ans)[i] = sum;
+	    REAL(ans)[i] = (double) sum;
 	}
     }
 

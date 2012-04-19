@@ -2494,7 +2494,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 						 INTEGER(ans) + i,
 						 INTEGER(matchlen) + i,
 						 is + i, il + i,
-						 s, n);
+						 s, (int) n);
 		    } else {
 			INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 			for(int cn = 0; cn < capture_count; cn++) {

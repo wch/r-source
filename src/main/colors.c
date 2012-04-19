@@ -238,9 +238,9 @@ SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (L < 0 || L > WHITE_Y || C < 0 || A < 0 || A > 1)
 	    error(_("invalid hcl color"));
 	hcl2rgb(H, C, L, &r, &g, &b);
-	ir = 255 * r + .5;
-	ig = 255 * g + .5;
-	ib = 255 * b + .5;
+	ir = (int) (255 * r + .5);
+	ig = (int) (255 * g + .5);
+	ib = (int) (255 * b + .5);
 	if (FixupColor(&ir, &ig, &ib) && !fixup)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else
@@ -334,7 +334,7 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 	level = REAL(lev)[i];
 	if (ISNAN(level) || level < 0 || level > 1)
 	    error(_("invalid gray level, must be in [0,1]."));
-	ilevel = 255 * level + 0.5;
+	ilevel = (int)(255 * level + 0.5);
 	SET_STRING_ELT(ans, i, mkChar(RGB2rgb(ilevel, ilevel, ilevel)));
     }
     UNPROTECT(2);
@@ -1371,7 +1371,7 @@ static double number2col(const char *nm, double bg)
 {
     int indx;
     char *ptr;
-    indx = strtod(nm, &ptr);
+    indx = (int) strtod(nm, &ptr);
     if(*ptr) error(_("invalid color specification '%s'"), nm);
     if(indx == 0) return bg;
     else return R_ColorTable[(indx-1) % R_ColorTableSize];
@@ -1489,7 +1489,7 @@ unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 	break;
     case REALSXP:
 	if(!R_FINITE(REAL(x)[i])) return R_TRANWHITE;
-	indx = REAL(x)[i];
+	indx = (int) REAL(x)[i];
 	break;
 	   default:
 	   warning(_("supplied color is not numeric nor character"));

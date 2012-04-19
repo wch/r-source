@@ -144,7 +144,8 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 {
     R_xlen_t n;
-    int mode, stretch = 1;
+    int mode;
+    R_xlen_t stretch = 1;
     SEXP indx, result, attrib, nattrib;
 
     if (s == R_MissingArg) return duplicate(x);
@@ -925,10 +926,9 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (len > 1)
 	    x = vectorIndex(x, thesub, 0, len-1, pok, call);
 	    
-	// FIXME, long vector
 	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
-			   length(x), pok, len > 1 ? len-1 : -1, call);
-	if (offset < 0 || offset >= length(x)) {
+			   xlength(x), pok, len > 1 ? len-1 : -1, call);
+	if (offset < 0 || offset >= xlength(x)) {
 	    /* a bold attempt to get the same behaviour for $ and [[ */
 	    if (offset < 0 && (isNewList(x) ||
 			       isExpression(x) ||
@@ -951,7 +951,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	dimnames = getAttrib(x, R_DimNamesSymbol);
 	ndn = length(dimnames);
 	for (i = 0; i < nsubs; i++) {
-	    INTEGER(indx)[i] =
+	    INTEGER(indx)[i] = (int)
 		get1index(CAR(subs), 
 			  (i < ndn) ? VECTOR_ELT(dimnames, i) : R_NilValue,
 			  INTEGER(indx)[i], pok, -1, call);
@@ -968,7 +968,9 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if(isPairList(x)) {
-	ans = CAR(nthcdr(x, offset)); // FIXME
+	if (offset > INT_MAX)
+	    error("invalid subscript for pairlist");
+	ans = CAR(nthcdr(x, (int) offset));
 	if (named_x > NAMED(ans))
 	    SET_NAMED(ans, named_x);
     } else if(isVectorList(x)) {

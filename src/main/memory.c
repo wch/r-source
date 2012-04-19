@@ -364,7 +364,7 @@ void attribute_hidden R_SetMaxNSize(R_size_t size)
 
 void R_SetPPSize(R_size_t size)
 {
-    R_PPStackSize = size;
+    R_PPStackSize = (int) size;
 }
 
 /* Miscellaneous Globals. */
@@ -779,7 +779,7 @@ static void GetNewPage(int node_class)
     SEXP s, base;
     char *data;
     PAGE_HEADER *page;
-    int node_size, page_count, i;
+    int node_size, page_count, i;  // FIXME: longer type?
 
     node_size = NODE_SIZE(node_class);
     page_count = (R_PAGE_SIZE - sizeof(PAGE_HEADER)) / node_size;

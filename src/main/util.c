@@ -477,6 +477,7 @@ SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* formerly used in subscript.c */
 void attribute_hidden setIVector(int * vec, int len, int val)
 {
     int i;

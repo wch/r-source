@@ -157,16 +157,16 @@ double unif_rand(void)
 
 	p1 = a12 * (unsigned int)II(1) - a13n * (unsigned int)II(0);
 	/* p1 % m1 would surely do */
-	k = p1 / m1;
+	k = (int) (p1 / m1);
 	p1 -= k * m1;
 	if (p1 < 0.0) p1 += m1;
-	II(0) = II(1); II(1) = II(2); II(2) = p1;
+	II(0) = II(1); II(1) = II(2); II(2) = (int) p1;
 
 	p2 = a21 * (unsigned int)II(5) - a23n * (unsigned int)II(3);
 	k = p2 / m2;
 	p2 -= k * m2;
 	if (p2 < 0.0) p2 += m2;
-	II(3) = II(4); II(4) = II(5); II(5) = p2;
+	II(3) = II(4); II(4) = II(5); II(5) = (int) p2;
 
 	return ((p1 > p2) ? (p1 - p2) : (p1 - p2 + m1)) * normc;
     }

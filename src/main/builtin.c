@@ -488,7 +488,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     int ifile;
     Rconnection con;
     int append;
-    int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
+    int i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
+    size_t w;
     char buf[512];
     const char *p = "";
 
