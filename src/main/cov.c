@@ -43,7 +43,7 @@
 /** Compute   Cov(xx[], yy[])  or  Cor(.,.)  with n = length(xx)
  */
 #define COV_PAIRWISE_BODY						\
-	long double sum, xmean =0., ymean =0., xsd, ysd, xm, ym;		\
+	long double sum, xmean = 0., ymean = 0., xsd, ysd, xm, ym;	\
         int k, nobs, n1 = -1;	/* -Wall initializing */		\
 									\
 	    nobs = 0;							\
@@ -105,7 +105,7 @@
 		else if(!kendall)					\
 		    sum /= n1;						\
 									\
-		ANS(i,j) = sum;						\
+		ANS(i,j) = (double) sum;       				\
 	    }								\
 	    else							\
 		ANS(i,j) = NA_REAL

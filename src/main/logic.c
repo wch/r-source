@@ -310,7 +310,7 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
 {
     R_xlen_t i, n, n1, n2;
-    int x1, x2;
+    Rbyte x1, x2;
     SEXP ans;
 
     n1 = XLENGTH(s1);

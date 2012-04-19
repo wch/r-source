@@ -60,7 +60,7 @@ static R_INLINE int imin2(int x, int y)
 
 
 static unsigned char ConsoleBuf[CONSOLE_BUFFER_SIZE+1], *ConsoleBufp;
-static int  ConsoleBufCnt;
+static size_t  ConsoleBufCnt;
 static char ConsolePrompt[CONSOLE_PROMPT_SIZE];
 
 typedef struct {
@@ -153,7 +153,7 @@ static int Strtoi(const char *nptr, int base)
     /* next can happen on a 64-bit platform */
     if (res > INT_MAX || res < INT_MIN) res = NA_INTEGER;
     if (errno == ERANGE) res = NA_INTEGER;
-    return(res);
+    return (int) res;
 }
 
 static double
@@ -1781,13 +1781,15 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(isna(xj, i)) tmp = cna;
 		else {
 		    if(!isNull(levels[j])) {
-			/* We cannot assume factors have integer levels */
+			/* We do not assume factors have integer levels,
+			   although they should. */
 			if(TYPEOF(xj) == INTSXP)
 			    tmp = EncodeElement2(levels[j], INTEGER(xj)[i] - 1,
 						 quote_col[j], qmethod,
 						 &strBuf, cdec);
 			else if(TYPEOF(xj) == REALSXP)
-			    tmp = EncodeElement2(levels[j], REAL(xj)[i] - 1,
+			    tmp = EncodeElement2(levels[j], 
+						 (int) (REAL(xj)[i] - 1),
 						 quote_col[j], qmethod,
 						 &strBuf, cdec);
 			else

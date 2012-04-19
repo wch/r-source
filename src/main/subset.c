@@ -1091,7 +1091,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 {
     SEXP y, nlist;
-    int slen;
+    size_t slen;
 
     PROTECT(x);
     PROTECT(input);

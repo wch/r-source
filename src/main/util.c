@@ -477,7 +477,7 @@ SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* formerly used in subscript.c */
+/* formerly used in subscript.c, in Utils.h */
 void attribute_hidden setIVector(int * vec, int len, int val)
 {
     int i;
@@ -486,6 +486,7 @@ void attribute_hidden setIVector(int * vec, int len, int val)
 }
 
 
+/* unused in R, in Utils.h */
 void attribute_hidden setRVector(double * vec, int len, double val)
 {
     int i;
@@ -493,7 +494,7 @@ void attribute_hidden setRVector(double * vec, int len, double val)
 	vec[i] = val;
 }
 
-
+/* unused in R, in Rinternals.h */
 void setSVector(SEXP * vec, int len, SEXP val)
 {
     int i;

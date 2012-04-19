@@ -314,7 +314,8 @@ static size_t inttomb(char *s, const int wc)
 SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x;
-    int multiple, len, used;
+    int multiple;
+    size_t used, len;
     char buf[10], *tmp;
 
     checkArity(op, args);

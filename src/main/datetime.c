@@ -261,7 +261,7 @@ static double mktime00 (struct tm *tm)
 {
     int day = 0;
     int i, year, year0;
-    double excess = 0.0;
+    int excess = 0;
 
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
@@ -290,7 +290,7 @@ static double mktime00 (struct tm *tm)
     if ((tm->tm_wday = (day + 4) % 7) < 0) tm->tm_wday += 7;
 
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ (day + excess * 730485) * 86400.0;
+	+ (day + excess * 730485.0) * 86400.0;
 }
 
 static double guess_offset (struct tm *tm)

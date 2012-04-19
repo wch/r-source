@@ -67,7 +67,7 @@ static void Init_R_Machine(SEXP rho)
 	   &R_AccuracyInfo.xmin,
 	   &R_AccuracyInfo.xmax);
 
-    R_dec_min_exponent = floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
+    R_dec_min_exponent = (int) floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
     PROTECT(ans = allocVector(VECSXP, 18));
     PROTECT(nms = allocVector(STRSXP, 18));
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
@@ -461,7 +461,8 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n1 == 1) { /* common case */
 	FILE *fp1, *fp2;
 	char buf[APPENDBUFSIZE];
-	int nchar, status = 0;
+	int status = 0;
+	size_t nchar;
 	if (STRING_ELT(f1, 0) == NA_STRING ||
 	    !(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
 	   goto done;
@@ -1504,14 +1505,14 @@ static int R_unlink(const char *name, int recursive, int force)
 	DIR *dir;
 	struct dirent *de;
 	char p[PATH_MAX];
-	int n, ans = 0;
+	int ans = 0;
 
 	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = opendir(name)) != NULL) {
 		while ((de = readdir(dir))) {
 		    if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 			continue;
-		    n = strlen(name);
+		    size_t n = strlen(name);
 		    if (name[n] == R_FileSep[0])
 			snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		    else
@@ -1643,7 +1644,6 @@ static void chmod_one(const char *name)
 #else
     struct stat sb;
 #endif
-    int n;
 #ifndef Win32
     mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR, /* 0644 */
 	dirmask = mask | S_IXUSR | S_IXGRP | S_IXOTH; /* 0755 */
@@ -1666,7 +1666,7 @@ static void chmod_one(const char *name)
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		n = strlen(name);
+		size_t n = strlen(name);
 		if (name[n-1] == R_FileSep[0])
 		    snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		else
@@ -2396,7 +2396,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		   int over, int recursive, int perms)
 {
     struct stat sb;
-    int nc, nfail = 0, res, mask;
+    int nfail = 0, res, mask;
     char dest[PATH_MAX], this[PATH_MAX];
 
 #ifdef HAVE_UMASK
@@ -2415,7 +2415,6 @@ static int do_copy(const char* from, const char* name, const char* to,
 	char p[PATH_MAX];
 
 	if (!recursive) return 1;
-	nc = strlen(to);
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
 	/* If a directory does not have write permission for the user,
 	   we will fail to create files in that directory, so defer
@@ -2446,7 +2445,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 	char buf[APPENDBUFSIZE];
 
 	nfail = 0;
-	nc = strlen(to);
+	size_t nc = strlen(to);
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
 	if (over || !R_FileExists(dest)) {
 	    /* REprintf("copying %s to %s\n", this, dest); */
@@ -2688,6 +2687,7 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     PROTECT(ans = allocVector(INTSXP, 4));
     PROTECT(nms = allocVector(STRSXP, 4));
+    /* FIXME: could be out of range */
     INTEGER(ans)[0] = (R_CStackLimit == -1) ? NA_INTEGER : R_CStackLimit;
     INTEGER(ans)[1] = (R_CStackLimit == -1) ? NA_INTEGER :
 	R_CStackDir * (R_CStackStart - (uintptr_t) &ans);

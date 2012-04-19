@@ -160,7 +160,7 @@ static void format_via_sprintf(double r, int d, int *kpower, int *nsig)
     static char buff[NB];
     int i;
     snprintf(buff, NB, "%#.*e", d - 1, r);
-    *kpower = strtol(buff + (d + 2), NULL, 10);
+    *kpower = (int) strtol(buff + (d + 2), NULL, 10);
     for (i = d; i >= 2; i--)
         if (buff[i] != '0') break;
     *nsig = i;
@@ -203,7 +203,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig)
             format_via_sprintf(r, R_print.digits, kpower, nsig);
             return;
         }
-        kp = floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
+        kp = (int) floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
 #if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
         long double r_prec = r;
         /* use exact scaling factor in long double precision, if possible */
@@ -226,7 +226,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig)
         /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits
 	   accuracy limited by double rounding problem,
 	   alpha already rounded to 64 bits */
-        alpha = R_nearbyintl(r_prec);
+        alpha = (double) R_nearbyintl(r_prec);
 #else
         /* use exact scaling factor in double precision, if possible */
         if (abs(kp) <= 22) {

@@ -64,7 +64,7 @@ characters is still checked.
 */
 
 static int
-valid_utf8(const char *string, int length)
+valid_utf8(const char *string, size_t length) // R change int->size_t
 {
     const char *p;
 

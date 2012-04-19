@@ -70,7 +70,7 @@ SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double dn = asReal(CAR(args));
 	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
 	    invalid(call);
-	n = dn;
+	n = (R_xlen_t) dn;
 #else
 	n = asInteger(CAR(args));
 	if (n == NA_INTEGER || n < 0)
@@ -151,7 +151,7 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double dn = asReal(CAR(args));
 	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
 	    invalid(call);
-	n = dn;
+	n = (R_xlen_t) dn;
 #else
 	n = asInteger(CAR(args));
 	if (n == NA_INTEGER || n < 0)
@@ -243,7 +243,7 @@ SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double dn = asReal(CAR(args));
 	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
 	    invalid(call);
-	n = dn;
+	n = (R_xlen_t) dn;
 #else
 	n = asInteger(CAR(args));
 	if (n == NA_INTEGER || n < 0)
@@ -437,7 +437,7 @@ static void R_INLINE SampleReplace(int k, int n, int *y)
 {
     int i;
     for (i = 0; i < k; i++)
-	y[i] = n * unif_rand() + 1;
+	y[i] = (int)(n * unif_rand() + 1);
 }
 
 /* Equal probability sampling; without-replacement case */
@@ -448,7 +448,7 @@ static void R_INLINE SampleNoReplace(int k, int n, int *y, int *x)
     for (i = 0; i < n; i++)
 	x[i] = i;
     for (i = 0; i < k; i++) {
-	j = n * unif_rand();
+	j = (int)(n * unif_rand());
 	y[i] = x[j] + 1;
 	x[j] = x[--n];
     }

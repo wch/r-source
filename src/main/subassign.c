@@ -1223,7 +1223,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
     if (stretch) {
 	SEXP t = CAR(s);
-	SEXP yi = allocList(stretch - nx);
+	SEXP yi = allocList((int)(stretch - nx));
 	/* This is general enough for only usage */
 	if(isString(t) && length(t) == stretch - nx) {
 	    SEXP z = yi;
@@ -1232,7 +1232,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 		SET_TAG(z, install(translateChar(STRING_ELT(t, i))));
 	}
 	PROTECT(x = listAppend(x, yi));
-	nx = stretch;
+	nx = (int) stretch;
     }
     else PROTECT(x);
 
@@ -1556,7 +1556,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
 	    error(_("[[ ]] with missing subscript"));
 	if (nsubs == 1) {
-	    offset = OneIndex(x, thesub, xlength(x), 0, &newname, 
+	    offset = OneIndex(x, thesub, length(x), 0, &newname, 
 			      recursed ? len-1 : -1, R_NilValue);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
@@ -1769,7 +1769,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = (ndims - 1); i > 0; i--)
 		offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
 	    offset += INTEGER(indx)[0];
-	    SETCAR(nthcdr(x, offset), duplicate(y));
+	    SETCAR(nthcdr(x, (int) offset), duplicate(y));
 	    /* FIXME: add name */
 	    UNPROTECT(1);
 	}

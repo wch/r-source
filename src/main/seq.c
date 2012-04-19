@@ -39,7 +39,7 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 {
     SEXP a, la, ls, lt, rs, rt;
-    int i, j, k, n, nls, nlt, vs, vt;
+    int i, j, k, n, nls, nlt;
     char *cbuf;
 
     if (length(s) != length(t))
@@ -53,8 +53,8 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
     PROTECT(rs = coerceVector(s, INTSXP));
     PROTECT(rt = coerceVector(t, INTSXP));
     for (i = 0; i < n; i++) {
-	vs = INTEGER(rs)[i];
-	vt = INTEGER(rt)[i];
+	int vs = INTEGER(rs)[i];
+	int vt = INTEGER(rt)[i];
 	if ((vs == NA_INTEGER) || (vt == NA_INTEGER))
 	    INTEGER(a)[i] = NA_INTEGER;
 	else
@@ -67,10 +67,10 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 	/* FIXME: possibly UTF-8 version */
 	for (i = 0; i < nls; i++) {
 	    const char *vi = translateChar(STRING_ELT(ls, i));
-	    vs = strlen(vi);
+	    size_t vs = strlen(vi);
 	    for (j = 0; j < nlt; j++) {
 		const char *vj = translateChar(STRING_ELT(lt, j));
-		vt = strlen(vj);
+		size_t vt = strlen(vj);
 		cbuf = R_AllocStringBuffer(vs + vt + 1, &cbuff);
 		sprintf(cbuf, "%s:%s", vi, vj);
 		SET_STRING_ELT(la, k, mkChar(cbuf));
@@ -319,7 +319,7 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	break;
     case LISTSXP:
     {
-	int i = 0, nss = ns;
+	int i = 0, nss = (int) ns;
 	for (t = a; t != R_NilValue; t = CDR(t), i++)
 	    SETCAR(t, duplicate(CAR(nthcdr(s, (i % nss)))));
     }
@@ -670,7 +670,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   && rto <= INT_MAX && rto >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);
 	    for(i = 0; i < lout; i++)
-		INTEGER(ans)[i] = rfrom + i*rby;
+		INTEGER(ans)[i] = (int)(rfrom + i*rby);
 	} else {
 	    ans = allocVector(REALSXP, lout);
 	    for(i = 0; i < lout; i++)
@@ -687,7 +687,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   && rto <= INT_MAX && rto >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);
 	    for(i = 0; i < lout; i++)
-		INTEGER(ans)[i] = rto - (lout - 1 - i)*rby;
+		INTEGER(ans)[i] = (int)(rto - (lout - 1 - i)*rby);
 	} else {
 	    ans = allocVector(REALSXP, lout);
 	    for(i = 0; i < lout; i++)
