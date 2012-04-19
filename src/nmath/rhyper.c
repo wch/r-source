@@ -111,9 +111,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
 	ML_ERR_return_NAN;
 
-    nn1 = floor(nn1in+0.5);
-    nn2 = floor(nn2in+0.5);
-    kk	= floor(kkin +0.5);
+    nn1 = (int) floor(nn1in+0.5);
+    nn2 = (int) floor(nn2in+0.5);
+    kk	= (int) floor(kkin +0.5);
 
     if (nn1 < 0 || nn2 < 0 || kk < 0 || kk > nn1 + nn2)
 	ML_ERR_return_NAN;
@@ -142,7 +142,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if (setup2) {
 	ks = kk;
 	if (kk + kk >= tn) {
-	    k = tn - kk;
+	    k = (int)(tn - kk);
 	} else {
 	    k = kk;
 	}

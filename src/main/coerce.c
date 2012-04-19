@@ -161,7 +161,7 @@ IntegerFromString(SEXP x, int *warn)
 		return INT_MIN;
 	    }
 	    else
-		return xdouble;
+		return (int) xdouble;
 	}
 	else *warn |= WARN_NA;
     }

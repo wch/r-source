@@ -379,7 +379,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		s += INTEGER(x)[i];
 	    }
-	    REAL(ans)[0] = (double) s/n;
+	    REAL(ans)[0] = (double) (s/n);
 	    break;
 	case REALSXP:
 	    PROTECT(ans = allocVector(REALSXP, 1));

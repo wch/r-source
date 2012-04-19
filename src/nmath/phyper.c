@@ -69,8 +69,9 @@ static double pdhyper (double x, double NR, double NB, double n, int log_p)
 	sum += term;
 	x--;
     }
-
-    return log_p ? log1p(sum) : 1 + sum;
+    
+    double ss = sum;
+    return log_p ? log1p(ss) : 1 + ss;
 }
 
 

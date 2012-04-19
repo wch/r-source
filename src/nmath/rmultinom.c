@@ -74,7 +74,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
 	p_tot += pp;
 	rN[k] = 0;
     }
-    if(fabs(p_tot - 1.) > 1e-7)
+    if(fabs((double)(p_tot - 1.)) > 1e-7)
 	MATHLIB_ERROR(_("rbinom: probability sum should be 1, but is %g"), 
 		      (double) p_tot);
     if (n == 0) return;
@@ -84,7 +84,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
 
     for(k = 0; k < K-1; k++) { /* (p_tot, n) are for "remaining binomial" */
 	if(prob[k]) {
-	    pp = prob[k] / p_tot;
+	    pp = (double)(prob[k] / p_tot);
 	    /* printf("[%d] %.17f\n", k+1, pp); */
 	    rN[k] = ((pp < 1.) ? (int) rbinom((double) n,  pp) :
 		     /*>= 1; > 1 happens because of rounding */

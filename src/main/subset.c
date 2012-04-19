@@ -1018,7 +1018,7 @@ enum pmatch {
 /* Returns: */
 static
 enum pmatch
-pstrmatch(SEXP target, SEXP input, int slen)
+pstrmatch(SEXP target, SEXP input, size_t slen)
 {
     const char *st = "";
 

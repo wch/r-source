@@ -111,7 +111,8 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
     Rboolean rm_trailing_0 = (*digits) >= 0;
     Rboolean do_fg = !strcmp("fg",*format);/* TRUE  iff  format == "fg" */
     double xx;
-    int iex, j, len_flag = strlen(*flag);
+    int iex;
+    size_t j, len_flag = strlen(*flag);
 
     char *f0  =	 R_alloc((size_t) do_fg ? 1+1+len_flag+3 : 1, sizeof(char));
     char *form = R_alloc((size_t) 1+1+len_flag+3 + strlen(*format),

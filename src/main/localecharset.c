@@ -674,7 +674,7 @@ char *locale2charset(const char *locale)
 	    strncpy(charset, (enc[3] == '-') ? enc+4: enc+3, sizeof(charset));
 	    if(strncmp(charset, "euc", 3)) {
 		if (charset[3] != '-') {
-		    for(i = strlen(charset)-3; 0 < i; i--)
+		    for(i = (int) strlen(charset)-3; 0 < i; i--)
 			charset[i+1] = charset[i];
 		    charset[3] = '-';
 		}
