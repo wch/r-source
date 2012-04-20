@@ -16,8 +16,8 @@
 \section{CHANGES IN R VERSION 2.15.0 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item For \code{tiff(type = "windows")}, the labelling of per-page
-      graphs except the last was off by one.
+      \item For \code{tiff(type = "windows")}, the numbering of per-page
+      files except the last was off by one.
 
       \item Loading package \pkg{stats} (which is done for a default
       session) would switch line endings on \file{stdout} and
@@ -29,7 +29,7 @@
       parameters. (\PR{14880})
       
       \item The \code{Sys.glob()} function didn't handle UNC paths
-      as it was designed to do. (\PR{14884})
+      as it was designed to try to do. (\PR{14884})
     }
   }
 }
