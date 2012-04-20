@@ -67,7 +67,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     thispkg <- unname(pi$DESCRIPTION["Package"])
 
     ## We need to make some assumptions about layout: this version
-    ## asssumes .Library contains standard and recommended packages
+    ## assumes .Library contains standard and recommended packages
     ## and nothing else.
     tmplib <- tempfile("RLIBS_")
     dir.create(tmplib)
@@ -122,9 +122,17 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if (pkg == "nlme") unlink(file.path(tmplib, "lattice"), TRUE)
             }
             where <- find.package(pkg, quiet = TRUE)
-            ## here we assume that dependencies from .Library are also in .Library
-            if(length(where) && !(dirname(where) %in% poss)) {
-                flink(where, tmplib)
+            if(length(where)) {
+                if (!(dirname(where) %in% poss))
+                    flink(where, tmplib)
+                else if (!test_recommended) 
+                    # If the package is in the standard library we can
+                    # assume dependencies have been met, but we can
+                    # only skip the traversal if we aren't testing recommended 
+                    # packages, because loading will fail if there is
+                    # an indirect dependency to one that has been hidden
+                    # by a dummy in tmplib.
+                    next
                 pi <- readRDS(file.path(where, "Meta", "package.rds"))
                 more <- c(more, names(pi$Depends), names(pi$Imports),
                           names(pi$LinkingTo))

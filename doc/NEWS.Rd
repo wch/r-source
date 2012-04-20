@@ -251,6 +251,11 @@
 
       \item \code{get_all_vars()} failed when the data came entirely
       from vectors in the global environment. (\PR{14847})
+      
+      \item \command{R CMD check} with \env{_R_CHECK_NO_RECOMMENDED_}
+      set to a true value (as done by the \command{--as-cran} option)
+      could issue false errors if there was an indirect dependency
+      on a recommended package.
     }
   }
 }
