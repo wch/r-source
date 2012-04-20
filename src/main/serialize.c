@@ -892,7 +892,7 @@ static R_INLINE void OutComplexVec(R_outpstream_t stream, SEXP s, int length)
         for (done = 0; done < length; done += this) {
 	    this = min2(CHUNK_SIZE, length - done);
 	    stream->OutBytes(stream, COMPLEX(s) + done, 
-			     sizeof(Rcomplex) * length);
+			     sizeof(Rcomplex) * this);
 	}
 	break;
     }
