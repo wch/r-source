@@ -1031,7 +1031,7 @@ SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr(void);
 RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
-R_xlen_t OneIndex(SEXP, SEXP, int, int, SEXP*, int, SEXP);
+R_xlen_t OneIndex(SEXP, SEXP, R_xlen_t, int, SEXP*, int, SEXP);
 SEXP parse(FILE*, int);
 void PrintDefaults(void);
 void PrintGreeting(void);
