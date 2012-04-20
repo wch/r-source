@@ -52,7 +52,7 @@ void massdist(double *x,
     for(i=0; i < *nx ; i++) {
 	if(R_FINITE(x[i])) {
 	    xpos = (x[i] - *xlow) / xdelta;
-	    ix = floor(xpos);
+	    ix = (int) floor(xpos);
 	    fx = xpos - ix;
 	    xmi = xmass[i];   /* AB: new line  */
 	    if(ixmin <= ix && ix <= ixmax) {

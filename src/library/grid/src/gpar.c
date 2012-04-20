@@ -190,7 +190,7 @@ double gpLex(SEXP gp, int i) {
  */
 static unsigned int combineAlpha(double alpha, int col) 
 {
-    unsigned int newAlpha = (alpha*(R_ALPHA(col)/255.0))*255;
+    unsigned int newAlpha = (unsigned int)((alpha*(R_ALPHA(col)/255.0))*255);
     return R_RGBA(R_RED(col), R_GREEN(col), R_BLUE(col), newAlpha);
 }
 
