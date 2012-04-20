@@ -115,7 +115,10 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	case LISTSXP:
 	    /* cannot happen: pairlists are coerced to lists */
 	case LANGSXP:
-	    // FIXME: check nx <= INT_MAX
+#ifdef LONG_VECTOR_SUPPORT
+	    if (ii > R_SHORT_LEN_MAX)
+		error("invalid subscript for pairlist");
+#endif
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
 		tmp2 = nthcdr(x, (int) ii);
 		SETCAR(tmp, CAR(tmp2));
@@ -968,8 +971,10 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if(isPairList(x)) {
-	if (offset > INT_MAX)
+#ifdef LONG_VECTOR_SUPPORT
+	if (offset > R_SHORT_LEN_MAX)
 	    error("invalid subscript for pairlist");
+#endif
 	ans = CAR(nthcdr(x, (int) offset));
 	if (named_x > NAMED(ans))
 	    SET_NAMED(ans, named_x);

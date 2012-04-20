@@ -2250,7 +2250,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	    R_SmallVallocSize += alloc_size;
 	    ATTRIB(s) = R_NilValue;
 	    TYPEOF(s) = type;
-	    SET_SHORT_VEC_LENGTH(s, length);
+	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length); // is 1
 	    SET_SHORT_VEC_TRUELENGTH(s, 0);
 	    NAMED(s) = 0;
 	    return(s);
@@ -2338,11 +2338,17 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	break;
     case LANGSXP:
 	if(length == 0) return R_NilValue;
-	s = allocList(length); // FIXME
+#ifdef LONG_VECTOR_SUPPORT
+	if (length > R_SHORT_LEN_MAX) error("invalid length for pairlist");
+#endif
+	s = allocList((int) length);
 	TYPEOF(s) = LANGSXP;
 	return s;
     case LISTSXP:
-	return allocList(length); // FIXME
+#ifdef LONG_VECTOR_SUPPORT
+	if (length > R_SHORT_LEN_MAX) error("invalid length for pairlist");
+#endif
+	return allocList((int) length);
     default:
 	error(_("invalid type/length (%s/%d) in vector allocation"),
 	      type2char(type), length);
@@ -2389,7 +2395,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
-	    SET_SHORT_VEC_LENGTH(s, length);
+	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
 	}
 	else {
 	    Rboolean success = FALSE;
@@ -2418,7 +2424,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 		    }
 		    else {
 			s = mem;
-			SET_SHORT_VEC_LENGTH(s, length);
+			SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
 		    }
 #else
 		    s = mem;
@@ -2460,7 +2466,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
     }
     else {
 	GC_PROT(s = allocSExpNonCons(type));
-	SET_SHORT_VEC_LENGTH(s, length);
+	SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
     }
     SET_SHORT_VEC_TRUELENGTH(s, 0);
     NAMED(s) = 0;
