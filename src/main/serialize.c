@@ -210,7 +210,7 @@ static void OutInteger(R_outpstream_t stream, int i)
 	    Rsnprintf(buf, sizeof(buf), "NA\n");
 	else
 	    Rsnprintf(buf, sizeof(buf), "%d\n", i);
-	stream->OutBytes(stream, buf, strlen(buf));
+	stream->OutBytes(stream, buf, (int)strlen(buf));
 	break;
     case R_pstream_binary_format:
 	stream->OutBytes(stream, &i, sizeof(int));
@@ -240,7 +240,7 @@ static void OutReal(R_outpstream_t stream, double d)
 	else
 	    /* 16: full precision; 17 gives 999, 000 &c */
 	    Rsnprintf(buf, sizeof(buf), "%.16g\n", d);
-	stream->OutBytes(stream, buf, strlen(buf));
+	stream->OutBytes(stream, buf, (int)strlen(buf));
 	break;
     case R_pstream_binary_format:
 	stream->OutBytes(stream, &d, sizeof(double));
@@ -266,7 +266,7 @@ static void OutByte(R_outpstream_t stream, Rbyte i)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	Rsnprintf(buf, sizeof(buf), "%02x\n", i);
-	stream->OutBytes(stream, buf, strlen(buf));
+	stream->OutBytes(stream, buf, (int)strlen(buf));
 	break;
     case R_pstream_binary_format:
     case R_pstream_xdr_format:
@@ -307,7 +307,7 @@ static void OutString(R_outpstream_t stream, const char *s, int length)
 		else
 		    sprintf(buf, "%c", s[i]);
 	    }
-	    stream->OutBytes(stream, buf, strlen(buf));
+	    stream->OutBytes(stream, buf, (int)strlen(buf));
 	}
 	stream->OutChar(stream, '\n');
     }
@@ -908,7 +908,7 @@ OutComplexVec(R_outpstream_t stream, SEXP s, R_xlen_t length)
         for (done = 0; done < length; done += this) {
 	    this = min2(CHUNK_SIZE, length - done);
 	    stream->OutBytes(stream, COMPLEX(s) + done, 
-			     sizeof(Rcomplex) * length);
+			     sizeof(Rcomplex) * this);
 	}
 	break;
     }
@@ -1030,8 +1030,8 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	case SPECIALSXP:
 	case BUILTINSXP:
 	    /* Builtin functions */
-	    OutInteger(stream, strlen(PRIMNAME(s)));
-	    OutString(stream, PRIMNAME(s), strlen(PRIMNAME(s)));
+	    OutInteger(stream, (int)strlen(PRIMNAME(s)));
+	    OutString(stream, PRIMNAME(s), (int)strlen(PRIMNAME(s)));
 	    break;
 	case CHARSXP:
 	    if (s == NA_STRING)
@@ -1666,7 +1666,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		R_xlen_t done, this;
 		for (done = 0; done < len; done += this) {
 		    this = min2(CHUNK_SIZE, len - done);
-		    stream->InBytes(stream, RAW(s) + done, this);
+		    stream->InBytes(stream, RAW(s) + done, (int) this);
 		}
 	    }
 	    break;

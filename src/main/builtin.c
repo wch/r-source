@@ -622,7 +622,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 			strncpy(buf, p, 512); buf[511] = '\0';
 			p = buf;
 		    }
-		    w = strlen(p);
+		    w = (int) strlen(p);
 		    cat_sepwidth(sepr, &sepw, ntot);
 		    /* This is inconsistent with the version above.
 		       As from R 2.3.0, fill <= 0 is ignored. */
