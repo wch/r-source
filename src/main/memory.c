@@ -2430,7 +2430,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 #ifdef R_MEMORY_PROFILING
 		R_ReportAllocation(hdrsize + size * sizeof(VECREC));
 #endif
-	    }
+	    } else s = NULL; /* suppress warning */
 	    if (! success) {
 		double dsize = (double)size * sizeof(VECREC)/1024.0;
 		/* reset the vector heap limit */

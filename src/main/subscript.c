@@ -40,11 +40,15 @@
 /* We might get a call with R_NilValue from subassignment code */
 #define ECALL(call, yy) if(call == R_NilValue) error(yy); else errorcall(call, yy);
 
-static int integerOneIndex(int i, int len, SEXP call)
+/* This allows for the unusual case where x is of length 2,
+   and x[[-m]] selects one element for m = 1, 2.
+   So 'len' is only used if it is 2 and i is negative.
+*/
+static R_INLINE int integerOneIndex(int i, R_xlen_t len, SEXP call)
 {
     int indx = -1;
 
-    if (i > 0)
+    if (i > 0) /* a regular 1-based index from R */
 	indx = i - 1;
     else if (i == 0 || len < 2) {
 	ECALL(call, _("attempt to select less than one element"));
@@ -53,12 +57,12 @@ static int integerOneIndex(int i, int len, SEXP call)
     else {
 	ECALL(call, _("attempt to select more than one element"));
     }
-    return(indx);
+    return indx;
 }
 
 /* Utility used (only in) do_subassign2_dflt(), i.e. "[[<-" in ./subassign.c : */
 R_xlen_t attribute_hidden
-OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, 
+OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname, 
 	 int pos, SEXP call)
 {
     SEXP names;
@@ -140,13 +144,20 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname,
     return indx;
 }
 
+/* used here and in subset.c and subassign.c */
 R_xlen_t attribute_hidden
 get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 {
-/* Get a single index for the [[ operator.
-   Check that only one index is being selected.
+/* Get a single index for the [[ and [[<- operators.
+   Checks that only one index is being selected.
+   Returns -1 for no match.
+
+   s is the subscript
+   len is the length of the object or dimension, with names its (dim)names.
+   pos is len-1 or -1 for [[, -1 for [[<-
+     -1 means use the only element of length-1 s.
    pok : is "partial ok" ?
-	 if pok is -1, warn if partial matching occurs
+	 if pok is -1, warn if partial matching occurs, but allow.
 */
     int  warn_pok = 0;
     const char *ss, *cur_name;
@@ -174,19 +185,20 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
     case INTSXP:
     {
 	int i = INTEGER(s)[pos];
-	if(i != NA_INTEGER)
-	    indx = integerOneIndex(i, (int) len, call);
+	if (i != NA_INTEGER)
+	    indx = integerOneIndex(i, len, call);
 	break;
     }
     case REALSXP:
     {
 	double dblind = REAL(s)[pos];
 	if(!ISNAN(dblind)) {
-	    if (dblind > 0) indx = dblind - 1;
+	    /* see comment above integerOneIndex */
+	    if (dblind > 0) indx = (R_xlen_t)(dblind - 1);
 	    else if (dblind == 0 || len < 2) {
 		ECALL(call, _("attempt to select less than one element"));
 	    } else if (len == 2 && dblind > -3)
-		indx = 2 + dblind;
+		indx = (R_xlen_t)(2 + dblind);
 	    else {
 		ECALL(call, _("attempt to select more than one element"));
 	    }
@@ -258,6 +270,10 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
     return indx;
 }
 
+/* This is used for [[ and [[<- with a vector of indices of length > 1 .
+   x is a list or pairlist, and it is indexed recusively from 
+   level start to level stop-1.  ( 0...len-1 or 0..len-2 then len-1).
+ */
 SEXP attribute_hidden
 vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call) 
 {
@@ -272,7 +288,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call)
 		errorcall(call, _("attempt to select more than one element"));
 	}
 	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
-		           xlength(x), pok, i, call);  // must be less than len
+		           xlength(x), pok, i, call);
 	if(offset < 0 || offset >= xlength(x))
 	    errorcall(call, _("no such index at level %d\n"), i+1);
 	if(isPairList(x)) {
@@ -336,7 +352,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 		if (k > INTEGER(dims)[j]) {
 		    ECALL(call, _("subscript out of bounds"));
 		}
-		REAL(rvec)[i] += (k - 1) * tdim;
+		REAL(rvec)[i] += (double) ((k - 1) * tdim);
 		tdim *= INTEGER(dims)[j];
 	    }
 	    /* transform to 1 based subscripting (0 in the input gets 0
