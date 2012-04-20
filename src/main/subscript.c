@@ -292,8 +292,10 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call)
 	if(offset < 0 || offset >= xlength(x))
 	    errorcall(call, _("no such index at level %d\n"), i+1);
 	if(isPairList(x)) {
+#ifdef LONG_VECTOR_SUPPORT
 	    if (offset > R_SHORT_LEN_MAX)
 		error("invalid subscript for pairlist");
+#endif
 	    x = CAR(nthcdr(x, (int) offset));
 	} else {
 	    x = VECTOR_ELT(x, offset);
@@ -492,8 +494,10 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	if (LOGICAL(s)[i%ns]) {
 	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 		INTEGER(indx)[count++] = NA_INTEGER;
+#ifdef LONG_VECTOR_SUPPORT
 	    else if (i >= R_SHORT_LEN_MAX)
 		error("logical subscript selected >= R_SHORT_LEN_MAX");
+#endif
 	    else
 		INTEGER(indx)[count++] = (int)(i + 1);
 	}
@@ -587,7 +591,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	} else isna = TRUE;
     }
     if (max > nx) {
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
 	if (max > R_SHORT_LEN_MAX) {
 	    ECALL(call, _("subscript too large for 32-bit R"));
 	}
@@ -628,7 +632,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	for (i = 0; i < ns; i++) {
 	    double ds = REAL(s)[i];
 	    if (!R_FINITE(ds)) {
-		if (ds > R_SHORT_LEN_MAX) int_ok = FALSE;
+		if (ds > INT_MAX) int_ok = FALSE;
 		cnt++;
 	    } else if ((R_xlen_t) ds != 0) cnt++;
 	}

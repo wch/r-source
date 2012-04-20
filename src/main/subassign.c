@@ -423,6 +423,7 @@ static R_INLINE R_xlen_t gi(SEXP indx, R_xlen_t i)
 	return INTEGER(indx)[i];
 }
 #else
+#define R_SHORT_LEN_MAX INT_MAX
 static R_INLINE int gi(SEXP indx, R_xlen_t i)
 {
     if (TYPEOF(indx) == REALSXP) {
