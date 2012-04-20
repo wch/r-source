@@ -886,7 +886,7 @@ OutComplexVec(R_outpstream_t stream, SEXP s, R_xlen_t length)
     case R_pstream_xdr_format:
     {
         static char buf[CHUNK_SIZE * sizeof(Rcomplex)];
-	int done, this;
+	R_xlen_t done, this;
 	XDR xdrs;
 	Rcomplex *c = COMPLEX(s);
         for (done = 0; done < length; done += this) {
@@ -1083,7 +1083,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 		R_xlen_t done, this;
 		for (done = 0; done < len; done += this) {
 		    this = min2(CHUNK_SIZE, len - done);
-		    stream->OutBytes(stream, RAW(s) + done, this);
+		    stream->OutBytes(stream, RAW(s) + done, (int) this);
 		}
 		break;
 	    }
@@ -2503,8 +2503,8 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
     if (pos == -1) error(_("could not determine file position"));
 
     val = allocVector(INTSXP, 2);
-    INTEGER(val)[0] = pos;
-    INTEGER(val)[1] = len;
+    INTEGER(val)[0] = (int) pos;
+    INTEGER(val)[1] = (int) len;
     return val;
 }
 
@@ -2587,7 +2587,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 		    fclose(fp);
 		    error(_("seek failed on %s"), cfile);
 		}
-		in = fread(p, 1, filelen, fp);
+		in = (int) fread(p, 1, filelen, fp);
 		fclose(fp);
 		if (filelen != in) error(_("read failed on %s"), cfile);
 		memcpy(RAW(val), p+offset, len);
@@ -2596,7 +2596,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 		    fclose(fp);
 		    error(_("seek failed on %s"), cfile);
 		}
-		in = fread(RAW(val), 1, len, fp);
+		in = (int) fread(RAW(val), 1, len, fp);
 		fclose(fp);
 		if (len != in) error(_("read failed on %s"), cfile);
 	    }
@@ -2606,7 +2606,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 		fclose(fp);
 		error(_("seek failed on %s"), cfile);
 	    }
-	    in = fread(RAW(val), 1, len, fp);
+	    in = (int) fread(RAW(val), 1, len, fp);
 	    fclose(fp);
 	    if (len != in) error(_("read failed on %s"), cfile);
 	    return val;
@@ -2619,7 +2619,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 	fclose(fp);
 	error(_("seek failed on %s"), cfile);
     }
-    in = fread(RAW(val), 1, len, fp);
+    in = (int) fread(RAW(val), 1, len, fp);
     fclose(fp);
     if (len != in) error(_("read failed on %s"), cfile);
     return val;
