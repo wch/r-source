@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:26\n"
+"POT-Creation-Date: 2012-04-22 15:25\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -587,6 +587,9 @@ msgstr ""
 msgid "Error: cannot rename directory to"
 msgstr ""
 
+msgid "cannot link from"
+msgstr ""
+
 msgid "-l option without value"
 msgstr ""
 
@@ -609,6 +612,9 @@ msgid "package dir"
 msgstr ""
 
 msgid "does not exist"
+msgstr ""
+
+msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
 
 msgid "No files in this directory"

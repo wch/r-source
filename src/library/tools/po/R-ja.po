@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:26\n"
+"POT-Creation-Date: 2012-04-22 15:25\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -636,6 +636,9 @@ msgstr " --compact-vignettes に対する不正な値です、 \"qpdf\" であ�
 msgid "Error: cannot rename directory to"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
+msgid "cannot link from"
+msgstr ""
+
 msgid "-l option without value"
 msgstr " 値のない -l オプション "
 
@@ -660,6 +663,9 @@ msgstr " パッケージ dir "
 
 msgid "does not exist"
 msgstr " は存在しません "
+
+msgid "non-ASCII input in a CITATION file without a declared encoding"
+msgstr ""
 
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "

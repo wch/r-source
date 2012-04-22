@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:26\n"
+"POT-Creation-Date: 2012-04-22 15:25\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -611,6 +611,9 @@ msgstr ""
 msgid "Error: cannot rename directory to"
 msgstr "impossibile creare directory '%s'"
 
+msgid "cannot link from"
+msgstr ""
+
 msgid "-l option without value"
 msgstr ""
 
@@ -636,6 +639,9 @@ msgstr ""
 #, fuzzy
 msgid "does not exist"
 msgstr "il file '%s' non esiste"
+
+msgid "non-ASCII input in a CITATION file without a declared encoding"
+msgstr ""
 
 msgid "No files in this directory"
 msgstr ""

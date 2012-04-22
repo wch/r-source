@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:26\n"
+"POT-Creation-Date: 2012-04-22 15:25\n"
 "PO-Revision-Date: 2012-03-06 09:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -618,6 +618,9 @@ msgstr "unzulässiger Wert für --compact-vignettes, nehme \"qpdf\" an"
 msgid "Error: cannot rename directory to"
 msgstr "Fehler: kann  Verzeichnis nicht umbennen in"
 
+msgid "cannot link from"
+msgstr ""
+
 msgid "-l option without value"
 msgstr "-l Option ohne Wert"
 
@@ -642,6 +645,9 @@ msgstr "Paket Verzeichnis"
 
 msgid "does not exist"
 msgstr "existiert nicht"
+
+msgid "non-ASCII input in a CITATION file without a declared encoding"
+msgstr ""
 
 msgid "No files in this directory"
 msgstr "Keine Dateien in diesem Verzeichnis"
