@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -49,16 +49,16 @@ msgstr "posso trasformare al più 100 parametri in arima0"
 msgid "maximum supported lag is 350"
 msgstr ""
 
-#: distance.c:155
+#: distance.c:156
 #, fuzzy
 msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"): valori infiniti trattati come NA"
 
-#: distance.c:227
+#: distance.c:229
 msgid "distance(): invalid p"
 msgstr "distance(): p non valido"
 
-#: distance.c:230
+#: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): distanza non valida"
 

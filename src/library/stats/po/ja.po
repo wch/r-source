@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -49,15 +49,15 @@ msgstr " arima0 では 100 個のパラメータまでしか変換出来ませ�
 msgid "maximum supported lag is 350"
 msgstr " サポートされているラグの最大値は350です "
 
-#: distance.c:155
+#: distance.c:156
 msgid "treating non-finite values as NA"
 msgstr " 有限でない値をNAとして取り扱います "
 
-#: distance.c:227
+#: distance.c:229
 msgid "distance(): invalid p"
 msgstr " distance(): 不正な p "
 
-#: distance.c:230
+#: distance.c:232
 msgid "distance(): invalid distance"
 msgstr " distance(): 不正な距離 "
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:01\n"
+"POT-Creation-Date: 2012-04-22 16:14\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1062,6 +1062,10 @@ msgstr "'trim' muss nummerisch sein und Länge 1 haben"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "getrimmte Mittelwerte sind für komplexe Daten nicht definiert"
+
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "'by' muss gültige Spalte(n) spezifizieren"
 
 msgid "'by' must match numbers of columns"
 msgstr "'by' muss zu den Anzahlen der Spalten passen"

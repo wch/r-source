@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
-"PO-Revision-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"PO-Revision-Date: 2012-04-22 16:14+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -71,15 +71,15 @@ msgstr "can only transform 100 pars in arima0"
 msgid "maximum supported lag is 350"
 msgstr "maximum supported lag is 350"
 
-#: distance.c:155
+#: distance.c:156
 msgid "treating non-finite values as NA"
 msgstr "treating non-finite values as NA"
 
-#: distance.c:227
+#: distance.c:229
 msgid "distance(): invalid p"
 msgstr "distance(): invalid p"
 
-#: distance.c:230
+#: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): invalid distance"
 

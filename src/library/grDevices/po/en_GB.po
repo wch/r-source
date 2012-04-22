@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:26+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -221,7 +221,7 @@ msgstr ""
 msgid "invalid page type '%s' (postscript)"
 msgstr ""
 
-#: devPS.c:3454 devPS.c:4567 devWindows.c:2336
+#: devPS.c:3454 devPS.c:4567 devWindows.c:2337
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -430,14 +430,14 @@ msgstr ""
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3641 devWindows.c:3645
-#: devWindows.c:3653 devWindows.c:3664 devWindows.c:3670 devWindows.c:3677
-#: devWindows.c:3684 devWindows.c:3688
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3642 devWindows.c:3646
+#: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
+#: devWindows.c:3685 devWindows.c:3689
 #, c-format
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3721
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr ""
@@ -567,56 +567,56 @@ msgstr ""
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:3107 devWindows.c:3745
+#: devWindows.c:3108 devWindows.c:3746
 msgid "R Graphics"
 msgstr ""
 
-#: devWindows.c:3121
+#: devWindows.c:3122
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: devWindows.c:3385
+#: devWindows.c:3386
 msgid "option 'windowsTimeouts' should be integer"
 msgstr ""
 
-#: devWindows.c:3406
+#: devWindows.c:3407
 msgid "invalid device number in 'savePlot'"
 msgstr ""
 
-#: devWindows.c:3408
+#: devWindows.c:3409
 msgid "invalid device in 'savePlot'"
 msgstr ""
 
-#: devWindows.c:3411
+#: devWindows.c:3412
 msgid "invalid filename argument in savePlot"
 msgstr ""
 
-#: devWindows.c:3416
+#: devWindows.c:3417
 msgid "invalid type argument in 'savePlot'"
 msgstr ""
 
-#: devWindows.c:3443
+#: devWindows.c:3444
 msgid "unknown type in savePlot"
 msgstr ""
 
-#: devWindows.c:3488 devWindows.c:3521 devWindows.c:3550 devWindows.c:3582
-#: devWindows.c:3607
+#: devWindows.c:3489 devWindows.c:3522 devWindows.c:3551 devWindows.c:3583
+#: devWindows.c:3608
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:3567
+#: devWindows.c:3568
 msgid "Impossible to open "
 msgstr ""
 
-#: devWindows.c:3594
+#: devWindows.c:3595
 msgid "Impossible to load Rbitmap.dll"
 msgstr ""
 
-#: devWindows.c:3636
+#: devWindows.c:3637
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: devWindows.c:3839
+#: devWindows.c:3840
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr ""
 

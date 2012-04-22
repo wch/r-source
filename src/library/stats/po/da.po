@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,15 +49,15 @@ msgstr "kan kun transformere 100 par i arima0"
 msgid "maximum supported lag is 350"
 msgstr "maksimal understøttet forsinkelse er 350"
 
-#: distance.c:155
+#: distance.c:156
 msgid "treating non-finite values as NA"
 msgstr "behandler ikkebegrænsende værdier som NA"
 
-#: distance.c:227
+#: distance.c:229
 msgid "distance(): invalid p"
 msgstr "distance(): ugyldig p"
 
-#: distance.c:230
+#: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): ugyldig afstand"
 

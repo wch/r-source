@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -49,15 +49,15 @@ msgstr "arima0里只能转换100个参数"
 msgid "maximum supported lag is 350"
 msgstr "滞后不能大于350"
 
-#: distance.c:155
+#: distance.c:156
 msgid "treating non-finite values as NA"
 msgstr "所有无限值都作为NA来处理"
 
-#: distance.c:227
+#: distance.c:229
 msgid "distance(): invalid p"
 msgstr "distance(): p值不对"
 
-#: distance.c:230
+#: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance()：距离值不对"
 

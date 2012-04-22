@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:01\n"
+"POT-Creation-Date: 2012-04-22 16:14\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1034,6 +1034,10 @@ msgstr "'trim'必需是长度必需为一的数值"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "复数数据不能算切尾平均值"
+
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "'by'所指定的那些列有错"
 
 msgid "'by' must match numbers of columns"
 msgstr "'by'的长度一定得和列的长度相同"

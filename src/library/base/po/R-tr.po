@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:01\n"
+"POT-Creation-Date: 2012-04-22 16:14\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1024,6 +1024,9 @@ msgid "'trim' must be numeric of length one"
 msgstr ""
 
 msgid "trimmed means are not defined for complex data"
+msgstr ""
+
+msgid "'by' must specify uniquely valid column(s)"
 msgstr ""
 
 msgid "'by' must match numbers of columns"

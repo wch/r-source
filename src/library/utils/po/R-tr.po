@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-12 08:59\n"
+"POT-Creation-Date: 2012-04-22 16:14\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -627,6 +627,9 @@ msgstr ""
 msgid "Invalid 'filters' argument."
 msgstr ""
 
+msgid "package '%s' in library '%s' will not be updated"
+msgstr ""
+
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
@@ -707,12 +710,6 @@ msgid ""
 msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
-msgstr ""
-
-msgid ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
 msgstr ""
 
 msgid "unable to install packages"
@@ -1071,6 +1068,9 @@ msgid "download had nonzero exit status"
 msgstr ""
 
 msgid "'tar' returned non-zero exit code %d"
+msgstr ""
+
+msgid "file %s is not an OS X binary package"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"

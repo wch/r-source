@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:01\n"
+"POT-Creation-Date: 2012-04-22 16:14\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1066,6 +1066,10 @@ msgstr " 'trim' は長さ 1 の数値でなければなりません "
 
 msgid "trimmed means are not defined for complex data"
 msgstr " 複素数データに対しては刈込み平均は定義されません "
+
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr " 'by' は有効な列を指定しなければなりません "
 
 msgid "'by' must match numbers of columns"
 msgstr " 'by' は列数にマッチしなければなりません "

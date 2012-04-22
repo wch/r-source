@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:26+0000\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -221,7 +221,7 @@ msgstr "postscript(print.it=TRUE)不能用在空印刷命令里"
 msgid "invalid page type '%s' (postscript)"
 msgstr "页类别'%s'(postscript)不对"
 
-#: devPS.c:3454 devPS.c:4567 devWindows.c:2336
+#: devPS.c:3454 devPS.c:4567 devWindows.c:2337
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -434,14 +434,14 @@ msgstr "%s里的'system'参数不对"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3641 devWindows.c:3645
-#: devWindows.c:3653 devWindows.c:3664 devWindows.c:3670 devWindows.c:3677
-#: devWindows.c:3684 devWindows.c:3688
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3642 devWindows.c:3646
+#: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
+#: devWindows.c:3685 devWindows.c:3689
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "'%s'的值不对"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3721
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr "无法启动%s()装置"
@@ -571,56 +571,56 @@ msgstr "剪輯板元文本只能保存一个图片."
 msgid "metafile '%s' could not be created"
 msgstr "无法建立元文本'%s'"
 
-#: devWindows.c:3107 devWindows.c:3745
+#: devWindows.c:3108 devWindows.c:3746
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3121
+#: devWindows.c:3122
 msgid "attempt to use the locator after dev.hold()"
 msgstr "调用dev.hold()后不能再用定位器"
 
-#: devWindows.c:3385
+#: devWindows.c:3386
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "'windowsTimeouts'选择项必需是整数"
 
-#: devWindows.c:3406
+#: devWindows.c:3407
 msgid "invalid device number in 'savePlot'"
 msgstr "'savePlot'里的装置数目出了错"
 
-#: devWindows.c:3408
+#: devWindows.c:3409
 msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'装置出错"
 
-#: devWindows.c:3411
+#: devWindows.c:3412
 msgid "invalid filename argument in savePlot"
 msgstr "savePlot文本名字参数不对"
 
-#: devWindows.c:3416
+#: devWindows.c:3417
 msgid "invalid type argument in 'savePlot'"
 msgstr "'savePlot'类别参数不对"
 
-#: devWindows.c:3443
+#: devWindows.c:3444
 msgid "unknown type in savePlot"
 msgstr "savePlot里没有类别"
 
-#: devWindows.c:3488 devWindows.c:3521 devWindows.c:3550 devWindows.c:3582
-#: devWindows.c:3607
+#: devWindows.c:3489 devWindows.c:3522 devWindows.c:3551 devWindows.c:3583
+#: devWindows.c:3608
 msgid "processing of the plot ran out of memory"
 msgstr "处理图象时内存用完了"
 
-#: devWindows.c:3567
+#: devWindows.c:3568
 msgid "Impossible to open "
 msgstr "无法打开"
 
-#: devWindows.c:3594
+#: devWindows.c:3595
 msgid "Impossible to load Rbitmap.dll"
 msgstr "无法载入Rbitmap.dll"
 
-#: devWindows.c:3636
+#: devWindows.c:3637
 msgid "invalid 'width' or 'height'"
 msgstr "'width'或'height'的值不对"
 
-#: devWindows.c:3839
+#: devWindows.c:3840
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "无法载入winCairo.dll: 构建了这个动态链接库没有？"
 

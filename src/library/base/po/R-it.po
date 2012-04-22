@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:01\n"
+"POT-Creation-Date: 2012-04-22 16:14\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1130,6 +1130,10 @@ msgstr "'origin' deve avere lunghezza 1"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "le medie troncate non sono definite per dati complex"
+
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "'by' deve specificare colonne(a) valide"
 
 msgid "'by' must match numbers of columns"
 msgstr "'by' deve essere compatibile col numero di colonne"
