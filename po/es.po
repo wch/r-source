@@ -585,7 +585,7 @@ msgstr "subíndice fuera de  los límites"
 #: src/include/Errormsg.h:26
 #, c-format
 msgid "object of type '%s' is not subsettable"
-msgstr "objeto de tipo '% s' no es subconjunto"
+msgstr "objeto de tipo '%s' no es subconjunto"
 
 #: src/main/CConverters.c:305
 msgid "no R-to-C converter found corresponding to identifier"
@@ -888,7 +888,7 @@ msgid ""
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
 "Los valores deben ser de longitud %d, \n"
-"pero el resultado FUN(X [[% d]]) es la longitud %d "
+"pero el resultado FUN(X [[%d]]) es la longitud %d "
 
 #: src/main/apply.c:165
 #, c-format
@@ -1723,7 +1723,7 @@ msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 msgstr ""
-"Configuración de clase (x) a varias cadenas (\"% s \", \"% s \", ...); "
+"Configuración de clase (x) a varias cadenas (\"%s \", \"%s \", ...); "
 "resultado ya no será un objeto S4"
 
 #: src/main/coerce.c:2448
@@ -1732,7 +1732,7 @@ msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr ""
-"Configuración de clase(x) a \"% s\" establece atribuibles a NULL; resultado "
+"Configuración de clase(x) a \"%s\" establece atribuibles a NULL; resultado "
 "ya no será un objeto S4"
 
 #: src/main/coerce.c:2479
@@ -2070,12 +2070,12 @@ msgstr "falla en la asignación de la conección bzfile"
 #: src/main/connections.c:1549 src/main/connections.c:5606
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
-msgstr "No se puede inicializar decodificador lzma, error% d"
+msgstr "No se puede inicializar decodificador lzma, error %d"
 
 #: src/main/connections.c:1565
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
-msgstr "No se puede inicializar el codificador lzma, error% d"
+msgstr "No se puede inicializar el codificador lzma, error %d"
 
 #: src/main/connections.c:1693 src/main/connections.c:1697
 #: src/main/connections.c:1703 src/main/connections.c:1721
@@ -2570,12 +2570,12 @@ msgstr "no se puede asignar memoria para 'read.dcf'"
 #: src/main/dcf.c:126
 #, c-format
 msgid "Found continuation line starting '%s ...' at begin of record."
-msgstr "Se encontró línea de inicio '% s ... \" al comenzo de un registro."
+msgstr "Se encontró línea de inicio '%s ... \" al comenzo de un registro."
 
 #: src/main/dcf.c:258
 #, c-format
 msgid "Line starting '%s ...' is malformed!"
-msgstr "Línea de inicio '% s ...esta mal formateada!"
+msgstr "Línea de inicio '%s ...esta mal formateada!"
 
 #: src/main/debug.c:44
 msgid "argument must be a closure"
@@ -3360,7 +3360,7 @@ msgstr "codificación '%s' no soportada"
 #: src/main/envir.c:3520
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr "nul incrustado en la cadena: '% s' \""
+msgstr "nul incrustado en la cadena: '%s' \""
 
 #: src/main/errors.c:147 src/main/errors.c:184
 msgid "interrupts suspended; signal ignored"
@@ -7996,7 +7996,7 @@ msgstr "Error de protocolo X11: %s"
 #: src/modules/X11/devX11.c:1236
 #, c-format
 msgid "X11 I/O error while opening X11 connection to '%s'"
-msgstr "X11 I/O error al abrir la conexión X11 a \"% s\""
+msgstr "X11 I/O error al abrir la conexión X11 a \"%s\""
 
 #: src/modules/X11/devX11.c:1254
 msgid "X11 fatal IO error: please save work and shut down R"
@@ -8444,7 +8444,7 @@ msgstr "error interno en el código unz"
 #: src/unix/sys-unix.c:293
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
-msgstr "comando ejecuta '%s' tiene estatus %d y mensaje de error '% s' "
+msgstr "comando ejecuta '%s' tiene estatus %d y mensaje de error '%s' "
 
 #: src/unix/sys-unix.c:394
 msgid "Sys.info() is not implemented on this system"

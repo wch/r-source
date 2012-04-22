@@ -772,7 +772,7 @@ msgid "generating debug symbols (dSYM)"
 msgstr "디버그 심볼 (dSYM) 을 생성하는 중입니다 "
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "패키지 % 가 성공적으로 압축해제 되었고, MD5 sums  가 확인되었습니다 "
+msgstr "패키지 %s 가 성공적으로 압축해제 되었고, MD5 sums  가 확인되었습니다 "
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
