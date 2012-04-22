@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:28\n"
+"POT-Creation-Date: 2012-04-22 15:29\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -639,6 +639,9 @@ msgstr "valeur incorrecte pour --compact-vignettes, \"qpdf\" sera utilisée"
 msgid "Error: cannot rename directory to"
 msgstr "Erreur: impossible de renommer le répertoire"
 
+msgid "cannot link from"
+msgstr ""
+
 msgid "-l option without value"
 msgstr "option -l sans valeur"
 
@@ -665,6 +668,9 @@ msgstr "le répertoire"
 
 msgid "does not exist"
 msgstr "n'existe pas"
+
+msgid "non-ASCII input in a CITATION file without a declared encoding"
+msgstr ""
 
 msgid "No files in this directory"
 msgstr "Pas de fichiers dans ce répertoire"
