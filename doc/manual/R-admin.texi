@@ -4485,10 +4485,6 @@ FCPICFLAGS=$FPICFLAGS
 LDFLAGS="-L/opt/csw/gcc4/lib/amd64 -L/opt/csw/lib/amd64"
 @end example
 
-@noindent
-(On the system tried there were relocation problems with the @code{X11}
-module.)
-
 @node AIX, Cygwin, Solaris, Platform notes
 @section AIX
 @cindex AIX
