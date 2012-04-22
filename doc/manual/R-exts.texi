@@ -7167,11 +7167,12 @@ a @code{char **} array, and on exit the elements of the C array are
 copied to create new elements of a character vector.  This means that
 the contents of the character strings of the @code{char **} array can be
 changed, including to @code{\0} to shorten the string, but the strings
-cannot be lengthened.  It is possible to allocate a new string
-@emph{via} @code{R_alloc} and replace an entry in the @code{char **}
-array by the new string.  However, when character vectors are used other
-than in a read-only way, the @code{.Call} interface is much to be
-preferred.
+cannot be lengthened.  It is possible@footnote{Note that this is then
+not checked for over-runs by option @code{CBoundsCheck = TRUE}.} to
+allocate a new string @emph{via} @code{R_alloc} and replace an entry in
+the @code{char **} array by the new string.  However, when character
+vectors are used other than in a read-only way, the @code{.Call}
+interface is much to be preferred.
 
 Passing character strings to FORTRAN code needs even more care, and
 should be avoided where possible.  Only the first element of the

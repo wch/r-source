@@ -83,7 +83,7 @@ msgid "malformed version string"
 msgstr "잘못된 버전 문자열 "
 
 msgid "target is %s, current is %s"
-msgstr "목표는 % s입니다, 현재는 % s입니다"
+msgstr "목표는 %s 입니다, 현재는 %s 입니다"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(x)은 양의 값을 가져야 합니다 "
@@ -943,7 +943,7 @@ msgid "package %s required by %s could not be found"
 msgstr "%s 에 필요한 패키지 %s 를 찾을 수 없습니다 "
 
 msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "패키지 %s %s 가 검색되었지만, %s %s 는 % 를 필요로 합니다 "
+msgstr "패키지 %s %s 가 검색되었지만, %s %s 는 %s 를 필요로 합니다 "
 
 msgid "package %s could not be loaded"
 msgstr "패키지 %s 는 로드될 수 없습니다 "

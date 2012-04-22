@@ -170,7 +170,7 @@ msgid ""
 "Creating a generic function for %s from %s in %s\n"
 "    (from the saved implicit definition)"
 msgstr ""
-" %s に対する総称的関数を %s (% s 中の)から作成します \n"
+" %s に対する総称的関数を %s (%s 中の)から作成します \n"
 " (セーブされた暗黙の定義から) "
 
 msgid "Creating a new generic function for %s in %s"

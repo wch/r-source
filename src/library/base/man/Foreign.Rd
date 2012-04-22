@@ -194,7 +194,8 @@
   logical, integer, double and complex vector arguments are copied both
   before and after calling the compiled code.  The first copy made is
   extended at each end by guard bytes, and on return it is checked that
-  these are unaltered.
+  these are unaltered.  For \code{.C}, each element of a character
+  vector uses guard bytes.
 }
 
 \note{

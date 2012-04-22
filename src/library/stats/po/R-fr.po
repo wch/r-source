@@ -1376,7 +1376,7 @@ msgid "%d missing values deleted"
 msgstr "%d valeurs manquantes supprimées"
 
 msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr "la matrice 'X' a % réponses, 'Y' a %d réponses"
+msgstr "la matrice 'X' a %d réponses, 'Y' a %d réponses"
 
 msgid "%d responses, but only %d variables"
 msgstr "%d réponse, mais seulement %d variables"

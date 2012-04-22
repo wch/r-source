@@ -977,7 +977,7 @@ msgid "found encoding"
 msgstr "encodage trouvé"
 
 msgid "%s must be a character string or a file/raw connection"
-msgstr "% doit être une chaîne de caractères ou une connexion fichier/raw"
+msgstr "%s doit être une chaîne de caractères ou une connexion fichier/raw"
 
 msgid "PDF header not found"
 msgstr "Entête PDF introuvable"

@@ -634,12 +634,12 @@ msgstr "경고: '--max-ppsize' 값이 너무 커서 무시됩니다 "
 #: src/main/RNG.c:174
 #, c-format
 msgid "unif_rand: unimplemented RNG kind %d"
-msgstr "unif_rand :  RNG 종류 % d 는 구현되지 않았습니다"
+msgstr "unif_rand :  RNG 종류 %d 는 구현되지 않았습니다"
 
 #: src/main/RNG.c:259
 #, c-format
 msgid "FixupSeeds: unimplemented RNG kind %d"
-msgstr "FixupSeeds : RNG 종류 % d 는 구현되지 않았습니다"
+msgstr "FixupSeeds : RNG 종류 %d 는 구현되지 않았습니다"
 
 #: src/main/RNG.c:301
 msgid "'user_unif_rand' not in load table"
@@ -1066,7 +1066,7 @@ msgstr "'a'는 명명된 차원 이름이 없습니다"
 #: src/main/array.c:1084
 #, c-format
 msgid "perm[%d] does not match a dimension name"
-msgstr "perm [% d]는 차원 이름과 일치하지 않습니다"
+msgstr "perm [%d] 는 차원 이름과 일치하지 않습니다"
 
 #: src/main/array.c:1091
 msgid "'perm' is of wrong length"
@@ -1342,7 +1342,7 @@ msgstr "행렬의 행 개수와 일치해야합니다 (%d 번째 인수를 참�
 #: src/main/bind.c:1430
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
-msgstr "행렬의 열 개수와 일치해야합니다 (% d 번째 인수를 참조)"
+msgstr "행렬의 열 개수와 일치해야합니다 (%d 번째 인수를 참조)"
 
 #: src/main/builtin.c:39
 msgid "vector size cannot be NA"
@@ -2357,7 +2357,7 @@ msgstr "'gzcon'연결의 종료중에 쓰기 오류가 발생했습니다"
 #: src/main/connections.c:5048
 #, c-format
 msgid "crc error %x %x\n"
-msgstr "crc 오류 % x % x \n"
+msgstr "crc 오류 %x %x \n"
 
 #: src/main/connections.c:5075
 msgid "write error on 'gzcon' connection"
@@ -3970,12 +3970,12 @@ msgstr "plot 영역이 너무 큽니다"
 #: src/main/graphics.c:1883
 #, c-format
 msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
-msgstr "값의 상대 범위 = % 4.0f * EPS는 작습니다 (축 %d)"
+msgstr "값의 상대 범위 = %4.0f * EPS는 작습니다 (축 %d)"
 
 #: src/main/graphics.c:1934
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
-msgstr "축의 한계가 유한하지 않습니다 [GScale (% g,%g, %d,); log = %d]"
+msgstr "축의 한계가 유한하지 않습니다 [GScale (%g,%g, %d,); log = %d]"
 
 #: src/main/graphics.c:1964
 #, c-format
@@ -4332,7 +4332,7 @@ msgstr "메모리를 다 사용했습니다 (한계 도달?)"
 #: src/main/memory.c:1975 src/main/memory.c:1981
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
-msgstr "크기 % 0.1f Gb의 메모리 블록을 할당할 수 없습니다"
+msgstr "크기 %0.1f Gb의 메모리 블록을 할당할 수 없습니다"
 
 #: src/main/memory.c:2251
 msgid "negative length vectors are not allowed"
@@ -4352,17 +4352,17 @@ msgstr "벡터 할당에서 형식 또는 길이 (%s 또는 %d)가 잘못되었�
 #: src/main/memory.c:2402
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
-msgstr "크기 % 0.1f Gb 벡터를 할당할 수 없습니다"
+msgstr "크기 %0.1f Gb 벡터를 할당할 수 없습니다"
 
 #: src/main/memory.c:2406
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
-msgstr "크기 % 0.1f Mb 벡터를 할당할 수 없습니다"
+msgstr "크기 %0.1f Mb 벡터를 할당할 수 없습니다"
 
 #: src/main/memory.c:2410
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "크기 % 0.f Kb 벡터를 할당할 수 없습니다"
+msgstr "크기 %0.f Kb 벡터를 할당할 수 없습니다"
 
 #: src/main/memory.c:2743
 msgid "protect(): protection stack overflow"
@@ -5251,7 +5251,7 @@ msgstr "이 플랫폼에서는 심볼릭 링크는 지원되지 않습니다"
 #: src/main/platform.c:715
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
-msgstr "'% ls'을 '% ls'에 연결할 수 없습니다, 이유는 '%s'입니다"
+msgstr "'%ls'을 '%ls'에 연결할 수 없습니다, 이유는 '%s'입니다"
 
 #: src/main/platform.c:735
 #, c-format
@@ -7995,7 +7995,7 @@ msgstr ""
 #: src/nmath/bessel_y.c:77 src/nmath/bessel_y.c:122
 #, c-format
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
-msgstr "bessel_y (% g, nu = % g) : 결과의 정밀도가 손실되었습니다\n"
+msgstr "bessel_y (%g, nu = %g) : 결과의 정밀도가 손실되었습니다\n"
 
 #: src/nmath/nmath.h:126
 #, c-format
@@ -8203,7 +8203,7 @@ msgstr "명령을 실행하는 동안 오류가 발생했습니다"
 #: src/unix/sys-unix.c:293
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
-msgstr "명령 '%s'의 실행으로 % d 가 되고 오류 메시지 '%s'을 가졌습니다"
+msgstr "명령 '%s'의 실행으로 %d 가 되고 오류 메시지 '%s'을 가졌습니다"
 
 #: src/unix/sys-unix.c:394
 msgid "Sys.info() is not implemented on this system"
