@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:00\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -154,6 +154,10 @@ msgstr "Autoloader konnte '%s' nicht in '%s' finden"
 msgid "invalid argument values in 'backsolve'"
 msgstr "ungültige Argumentwerte in 'backsolve'"
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "ungültiger Wert"
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
 
@@ -168,6 +172,10 @@ msgstr "nicht-quadratische Matrix in 'chol'"
 
 msgid "non-matrix argument to 'chol'"
 msgstr "nicht-matrix Argument für 'chol'"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "ungültiger Name"
 
 msgid "matrix not positive definite"
 msgstr "Matrix nicht positiv definit"
@@ -1063,6 +1071,10 @@ msgstr "'trim' muss nummerisch sein und Länge 1 haben"
 msgid "trimmed means are not defined for complex data"
 msgstr "getrimmte Mittelwerte sind für komplexe Daten nicht definiert"
 
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "'by' muss gültige Spalte(n) spezifizieren"
+
 msgid "'by' must match numbers of columns"
 msgstr "'by' muss zu den Anzahlen der Spalten passen"
 
@@ -1295,8 +1307,22 @@ msgstr "'u5.bias' muss nicht negativ numerisch sein"
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' muss 0, 1 oder 2 sein"
 
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "ungültiger Name"
+
 msgid "first argument must be a QR decomposition"
 msgstr "erstes Argument muss eine QR-Zerlegung sein"
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr "ungültiger Name"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr' und 'y' müssen gleiche Zeilenanzahl haben"
@@ -1306,6 +1332,9 @@ msgstr "exakte Singularität in 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
 msgstr "Argument ist keine QR Zerlegung"
+
+msgid "invalid NCOL(y)"
+msgstr ""
 
 msgid "not implemented for complex 'qr'"
 msgstr "für komplexes 'qr' nicht implementiert"
@@ -1318,6 +1347,9 @@ msgstr "'k' ist zu groß"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
+
+msgid "invalid NCOL(R)"
+msgstr ""
 
 msgid "'x' must be an atomic vector"
 msgstr "'x' muss ein atomarer Vektor sein"
@@ -1539,6 +1571,14 @@ msgstr "'x' ist kein Array"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' muss numerisch oder Faktor sein"
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "ungültiger Wert"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "ungültiger Wert"
 
 msgid "arguments must have same length"
 msgstr "Argumente müssen die selbe Länge haben"
@@ -1864,9 +1904,6 @@ msgstr[1] "Warnmeldungen:\n"
 
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
 #~ msgstr "S3 Methode '%s' wurde in NAMESPACE deklariert, aber nicht gefunden"
-
-#~ msgid "invalid name"
-#~ msgstr "ungültiger Name"
 
 #~ msgid "is required by"
 #~ msgstr "wird benötigt von"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:28+0000\n"
+"POT-Creation-Date: 2012-04-22 16:15+0100\n"
 "PO-Revision-Date: 2012-03-05 21:58+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -230,7 +230,7 @@ msgstr "postscript(print.it=TRUE) mit leerem Druckkommando benutzt"
 msgid "invalid page type '%s' (postscript)"
 msgstr "ungültiger Seitentyp '%s' (postscript)"
 
-#: devPS.c:3454 devPS.c:4567 devWindows.c:2336
+#: devPS.c:3454 devPS.c:4567 devWindows.c:2337
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -445,14 +445,14 @@ msgstr "ungültiger 'family' Parameter in %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "ungültiger 'fonts' Parameter in %s<"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3641 devWindows.c:3645
-#: devWindows.c:3653 devWindows.c:3664 devWindows.c:3670 devWindows.c:3677
-#: devWindows.c:3684 devWindows.c:3688
+#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3642 devWindows.c:3646
+#: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
+#: devWindows.c:3685 devWindows.c:3689
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "unzulässiger Wert von '%s'"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3721
+#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr "kann %s()-Gerät nicht starten"
@@ -584,56 +584,56 @@ msgstr "Ein Zwischenablagemetafile kann nur eine Figur speichern."
 msgid "metafile '%s' could not be created"
 msgstr "Das Metafile '%s' kann nicht erzeugt werden"
 
-#: devWindows.c:3107 devWindows.c:3745
+#: devWindows.c:3108 devWindows.c:3746
 msgid "R Graphics"
 msgstr "R Grafiken"
 
-#: devWindows.c:3121
+#: devWindows.c:3122
 msgid "attempt to use the locator after dev.hold()"
 msgstr "Versuch den Lokator zu nutzen nach Aufruf von dev.hold()"
 
-#: devWindows.c:3385
+#: devWindows.c:3386
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "Option 'windowsTimeouts' sollte ganzzahlig sein"
 
-#: devWindows.c:3406
+#: devWindows.c:3407
 msgid "invalid device number in 'savePlot'"
 msgstr "unzulässige Gerätenummer in 'savePlot'"
 
-#: devWindows.c:3408
+#: devWindows.c:3409
 msgid "invalid device in 'savePlot'"
 msgstr "unzulässiges Gerät in 'savePlot'"
 
-#: devWindows.c:3411
+#: devWindows.c:3412
 msgid "invalid filename argument in savePlot"
 msgstr "unzulässiges Dateinamenargument in savePlot"
 
-#: devWindows.c:3416
+#: devWindows.c:3417
 msgid "invalid type argument in 'savePlot'"
 msgstr "unzulässiges Typ Argument in 'savePlot'"
 
-#: devWindows.c:3443
+#: devWindows.c:3444
 msgid "unknown type in savePlot"
 msgstr "unbekannter Typ in savePlot"
 
-#: devWindows.c:3488 devWindows.c:3521 devWindows.c:3550 devWindows.c:3582
-#: devWindows.c:3607
+#: devWindows.c:3489 devWindows.c:3522 devWindows.c:3551 devWindows.c:3583
+#: devWindows.c:3608
 msgid "processing of the plot ran out of memory"
 msgstr "Bei Bearbeitung der Grafik ging der Speicher aus"
 
-#: devWindows.c:3567
+#: devWindows.c:3568
 msgid "Impossible to open "
 msgstr "Kann nicht öffnen"
 
-#: devWindows.c:3594
+#: devWindows.c:3595
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Kann Rbitmap.dll nicht laden"
 
-#: devWindows.c:3636
+#: devWindows.c:3637
 msgid "invalid 'width' or 'height'"
 msgstr "unzulässige 'with' oder 'height'"
 
-#: devWindows.c:3839
+#: devWindows.c:3840
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Kann winCairo.dll nicht laden: wurde sie erstellt?"
 

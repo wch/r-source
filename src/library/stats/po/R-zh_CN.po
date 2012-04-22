@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -258,6 +258,10 @@ msgstr "折拢'x'成相互不同的值"
 msgid "invalid interpolation method"
 msgstr "内插方法不对"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "成员长度不对"
+
 msgid "need at least two non-NA values to interpolate"
 msgstr "调用内插至少需要两个非NA值的数据"
 
@@ -272,6 +276,10 @@ msgstr "'vec'含NA"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'必需由小到大排序"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "成员长度不对"
 
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'必需大于等于一"
@@ -461,6 +469,10 @@ msgstr "'d'里不允许有NA值"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "距离必需是'dist'计算出结果或是正方形矩阵"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "参数'n'不对"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k'必需是{1, 2, ..  n - 1}中的一个"
@@ -667,6 +679,9 @@ msgstr "参数'x'必需是数值"
 
 msgid "'x' contains missing values"
 msgstr "'x'内含遺漏值"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x'和'weights'的长度必需相同"
@@ -1092,6 +1107,9 @@ msgstr "群集方法不明确"
 msgid "invalid dissimilarities"
 msgstr "dissimilarities不对"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "用群集时必需有n >= 2的对象"
 
@@ -1188,6 +1206,14 @@ msgstr "没有聚合于"
 msgid "iterations"
 msgstr "迭代"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "'x'不对"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "'x'不对"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers'必需是个数字或矩阵"
 
@@ -1230,6 +1256,10 @@ msgid ""
 msgstr ""
 "y数值必需存在。\n"
 "用density()来估计密度"
+
+#, fuzzy
+msgid "invalid value oflength(x)"
+msgstr "群集方法不对"
 
 msgid "'k' is not an integer"
 msgstr "'k'不是整数"
@@ -1315,6 +1345,9 @@ msgstr "'object'没有'effects'组件"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "'se.fit'参数还没有为\"mlm\"对象实现"
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "非NA残差的长度与拟合时所用的案例不相符"
 
@@ -1332,6 +1365,10 @@ msgstr "'span'和'enp.target'同时有设定：只用'span'的值"
 
 msgid "invalid 'control' argument"
 msgstr "'control'参数不对"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "'x'不对"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "只允许有一到四个従属変数"
@@ -1950,6 +1987,10 @@ msgid ""
 "times"
 msgstr "varying的长度必需是v.names和times长度的乘積"
 
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr "参数'n'不对"
+
 msgid "'k' must be positive"
 msgstr "'k'必需是正数"
 
@@ -1991,6 +2032,10 @@ msgstr "'control.spar'不对"
 
 msgid "missing or infinite values in inputs are not allowed"
 msgstr "输入里是不允许有遺漏值或无限值"
+
+#, fuzzy
+msgid "invalid number of points"
+msgstr "従属変数数目不对"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "'x'和'w'的长度必需相等"
@@ -2466,4 +2511,3 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
-

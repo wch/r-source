@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -654,6 +654,10 @@ msgstr " リポジトリー %s に対する索引にアクセスできません 
 msgid "Invalid 'filters' argument."
 msgstr " 不正な 'filters' 引数 "
 
+#, fuzzy
+msgid "package '%s' in library '%s' will not be updated"
+msgstr " パッケージ '%s' は使用中ですから、インストールされません "
+
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
@@ -745,15 +749,6 @@ msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
-
-msgid ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
-msgstr ""
-" パッケージをインストールするために個人的なライブラリ \n"
-" '%s' \n"
-" を作りたいのですか？ "
 
 msgid "unable to install packages"
 msgstr " パッケージをインストール出来ませんでした "
@@ -1018,11 +1013,12 @@ msgstr " 不正な options('str') -- 代わりに既定値を使います "
 msgid "invalid components in options('str'):"
 msgstr " options('str')の中に不正な要素があります "
 
+#, fuzzy
+msgid "'str.default': 'le' is NA, so taken as 0"
+msgstr " 'str.default': 'le' が NA です "
+
 msgid "'object' does not have valid levels()"
 msgstr " 'object' は有効な levels() を持ちません "
-
-msgid "'str.default': 'le' is NA"
-msgstr " 'str.default': 'le' が NA です "
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
@@ -1156,6 +1152,9 @@ msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
 msgid "'tar' returned non-zero exit code %d"
 msgstr " 'tar' がゼロでない終了コード %d を返しました "
 
+msgid "file %s is not an OS X binary package"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr " パッケージ %s は無事に展開され、MD5 サムもチェックされました "
 
@@ -1254,6 +1253,15 @@ msgstr[0] " ソースパッケージ %s をインストール中です "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid ""
+#~ "Would you like to create a personal library\n"
+#~ "%s\n"
+#~ "to install packages into?"
+#~ msgstr ""
+#~ " パッケージをインストールするために個人的なライブラリ \n"
+#~ " '%s' \n"
+#~ " を作りたいのですか？ "
 
 #~ msgid "Postscript offline help is deprecated"
 #~ msgstr "Postscript のオフラインヘルプは廃止されました  "

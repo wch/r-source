@@ -1,14 +1,14 @@
-## File R_HOME/src/library/splines/po/R-ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/splines/po/R-ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2012-03-06 18:25+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -33,7 +33,13 @@ msgstr "적어도  2*ord -1 (=%d) 개의 knots 가 필요합니다"
 
 msgid ""
 "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
-msgstr "'outer.ok = TRUE' 으로 지정되지 않았다면 데이터 'x' 는 %g 에서 %g 의 범위내에 있어야 합니다 "
+msgstr ""
+"'outer.ok = TRUE' 으로 지정되지 않았다면 데이터 'x' 는 %g 에서 %g 의 범위내"
+"에 있어야 합니다 "
+
+msgid ""
+"splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
 
 msgid "values of 'x' must be distinct"
 msgstr "'x' 의 값들이 모두 달라야 합니다 "
@@ -75,4 +81,6 @@ msgid "'df' was too small; have used"
 msgstr "'df' 가 너무 작아 다음의 값이 사용되었습니다 "
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
-msgstr "knots 가 가져야 할 범위에 존재하지 않는 어떤 'x' 값은 올바르지 않은 베이시스들을 유발할 수 있습니다 "
+msgstr ""
+"knots 가 가져야 할 범위에 존재하지 않는 어떤 'x' 값은 올바르지 않은 베이시스"
+"들을 유발할 수 있습니다 "

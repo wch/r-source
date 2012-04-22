@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2012-01-08 00:28+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,6 +178,10 @@ msgstr ""
 msgid "'x' must be numeric"
 msgstr ""
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "ugyldig »log«"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr ""
 
@@ -191,6 +195,9 @@ msgid "invalid number of 'breaks'"
 msgstr ""
 
 msgid "hist.default: pretty() error, breaks="
+msgstr ""
+
+msgid "invalid length(breaks)"
 msgstr ""
 
 msgid "'breaks' are not strictly increasing"
@@ -238,7 +245,9 @@ msgstr ""
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 
-msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n ="
+msgid ""
+"layout matrix must contain at least one reference\n"
+"to each of the values {1..n}; here  n ="
 msgstr ""
 
 msgid "invalid title"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:00\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -152,6 +152,9 @@ msgstr ""
 msgid "invalid argument values in 'backsolve'"
 msgstr ""
 
+msgid "invalid value of ncol(x)"
+msgstr ""
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
 
@@ -165,6 +168,9 @@ msgid "non-square matrix in 'chol'"
 msgstr ""
 
 msgid "non-matrix argument to 'chol'"
+msgstr ""
+
+msgid "invalid nrow(x)"
 msgstr ""
 
 msgid "matrix not positive definite"
@@ -1026,6 +1032,9 @@ msgstr ""
 msgid "trimmed means are not defined for complex data"
 msgstr ""
 
+msgid "'by' must specify uniquely valid column(s)"
+msgstr ""
+
 msgid "'by' must match numbers of columns"
 msgstr ""
 
@@ -1244,7 +1253,19 @@ msgstr ""
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
+msgid "invalid ncol(x)"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
+msgstr ""
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(y)"
 msgstr ""
 
 msgid "'qr' and 'y' must have the same number of rows"
@@ -1254,6 +1275,9 @@ msgid "exact singularity in 'qr.coef'"
 msgstr ""
 
 msgid "argument is not a QR decomposition"
+msgstr ""
+
+msgid "invalid NCOL(y)"
 msgstr ""
 
 msgid "not implemented for complex 'qr'"
@@ -1266,6 +1290,9 @@ msgid "'k' is too large"
 msgstr ""
 
 msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr ""
+
+msgid "invalid NCOL(R)"
 msgstr ""
 
 msgid "'x' must be an atomic vector"
@@ -1483,6 +1510,12 @@ msgid "'x' is not an array"
 msgstr ""
 
 msgid "'bin' must be numeric or a factor"
+msgstr ""
+
+msgid "invalid value of length(bin)"
+msgstr ""
+
+msgid "invalid value of nbins"
 msgstr ""
 
 msgid "arguments must have same length"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,6 +255,9 @@ msgstr ""
 msgid "invalid interpolation method"
 msgstr ""
 
+msgid "invalid length(x)"
+msgstr ""
+
 msgid "need at least two non-NA values to interpolate"
 msgstr ""
 
@@ -268,6 +271,9 @@ msgid "'vec' contains NAs"
 msgstr ""
 
 msgid "'vec' must be sorted non-decreasingly"
+msgstr ""
+
+msgid "invalid length(vec)"
 msgstr ""
 
 msgid "'order.max' must be >= 1"
@@ -457,6 +463,9 @@ msgid "NA values not allowed in 'd'"
 msgstr ""
 
 msgid "distances must be result of 'dist' or a square matrix"
+msgstr ""
+
+msgid "invalid value of 'n'"
 msgstr ""
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -663,6 +672,9 @@ msgid "argument 'x' must be numeric"
 msgstr ""
 
 msgid "'x' contains missing values"
+msgstr ""
+
+msgid "invalid value of length(x)"
 msgstr ""
 
 msgid "'x' and 'weights' have unequal length"
@@ -1087,6 +1099,9 @@ msgstr ""
 msgid "invalid dissimilarities"
 msgstr ""
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr ""
 
@@ -1183,6 +1198,12 @@ msgstr ""
 msgid "iterations"
 msgstr ""
 
+msgid "invalid nrow(x)"
+msgstr ""
+
+msgid "invalid ncol(x)"
+msgstr ""
+
 msgid "'centers' must be a number or a matrix"
 msgstr ""
 
@@ -1222,6 +1243,9 @@ msgstr ""
 msgid ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
+msgstr ""
+
+msgid "invalid value oflength(x)"
 msgstr ""
 
 msgid "'k' is not an integer"
@@ -1306,6 +1330,9 @@ msgstr ""
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr ""
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 
@@ -1322,6 +1349,9 @@ msgid "both 'span' and 'enp.target' specified: 'span' will be used"
 msgstr ""
 
 msgid "invalid 'control' argument"
+msgstr ""
+
+msgid "invalid NCOL(X)"
 msgstr ""
 
 msgid "only 1-4 predictors are allowed"
@@ -1937,6 +1967,9 @@ msgid ""
 "times"
 msgstr ""
 
+msgid "invalid value of 'k'"
+msgstr ""
+
 msgid "'k' must be positive"
 msgstr ""
 
@@ -1977,6 +2010,9 @@ msgid "invalid 'control.spar'"
 msgstr ""
 
 msgid "missing or infinite values in inputs are not allowed"
+msgstr ""
+
+msgid "invalid number of points"
 msgstr ""
 
 msgid "lengths of 'x' and 'w' must match"

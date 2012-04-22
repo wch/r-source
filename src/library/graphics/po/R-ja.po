@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2011-10-22 08:06+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -184,6 +184,10 @@ msgstr " 不正確な寸法(geometry)の指定です "
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr " 無効な 'log' です "
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr " 'breaks' が指定された時は、'nclass' は使用されません "
 
@@ -198,6 +202,10 @@ msgstr " 'breaks' の数が無効です "
 
 msgid "hist.default: pretty() error, breaks="
 msgstr " hist.default: pretty() の間違いです。分割点 = "
+
+#, fuzzy
+msgid "invalid length(breaks)"
+msgstr " 無効な座標長です "
 
 msgid "'breaks' are not strictly increasing"
 msgstr " 'breaks' が狭義増加ではありません "

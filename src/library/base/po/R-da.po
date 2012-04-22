@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:00\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,6 +148,10 @@ msgstr "autoindlæser fandt ikke '%s' i '%s'"
 msgid "invalid argument values in 'backsolve'"
 msgstr "ugyldigt argumentværdier i 'backsolve'"
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "ugyldigt antal intervaller"
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "entalsmatrix i 'backsolve'. Første nul i diagonal [%d]"
 
@@ -162,6 +166,9 @@ msgstr ""
 
 msgid "non-matrix argument to 'chol'"
 msgstr "ikke matrix argument for 'chol'"
+
+msgid "invalid nrow(x)"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr ""
@@ -1038,6 +1045,9 @@ msgstr ""
 msgid "trimmed means are not defined for complex data"
 msgstr ""
 
+msgid "'by' must specify uniquely valid column(s)"
+msgstr ""
+
 msgid "'by' must match numbers of columns"
 msgstr ""
 
@@ -1254,7 +1264,19 @@ msgstr ""
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
+msgid "invalid ncol(x)"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
+msgstr ""
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(y)"
 msgstr ""
 
 msgid "'qr' and 'y' must have the same number of rows"
@@ -1264,6 +1286,9 @@ msgid "exact singularity in 'qr.coef'"
 msgstr ""
 
 msgid "argument is not a QR decomposition"
+msgstr ""
+
+msgid "invalid NCOL(y)"
 msgstr ""
 
 msgid "not implemented for complex 'qr'"
@@ -1276,6 +1301,9 @@ msgid "'k' is too large"
 msgstr ""
 
 msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr ""
+
+msgid "invalid NCOL(R)"
 msgstr ""
 
 msgid "'x' must be an atomic vector"
@@ -1495,6 +1523,14 @@ msgstr ""
 
 msgid "'bin' must be numeric or a factor"
 msgstr ""
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "ugyldig længde for 'row.names'"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "ugyldigt antal intervaller"
 
 msgid "arguments must have same length"
 msgstr ""

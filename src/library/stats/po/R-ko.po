@@ -1,14 +1,14 @@
-## File R_HOME/src/library/stats/po/R-ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/stats/po/R-ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -276,6 +276,10 @@ msgstr "유일한 'x'값을 얻기 위해서 축소했습니다"
 msgid "invalid interpolation method"
 msgstr "무효인 보간법입니다"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "멤버의 길이가 무효입니다"
+
 msgid "need at least two non-NA values to interpolate"
 msgstr "보간을 위해서 적어도 2개의 non-NA값이 필요합니다"
 
@@ -290,6 +294,10 @@ msgstr "'vec'가 NA를 포함하고 있습니다"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "멤버의 길이가 무효입니다"
 
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'는 1 이상의 아니면 되지 않습니다"
@@ -484,6 +492,10 @@ msgstr "'d'에서 NA값은 허용되지 않습니다"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "거리는 'dist'의 결과 또는 정방 행렬이 필요가 있습니다"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "무효인 인수 'omit'입니다"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k'는 {1,2,...n - 1}내에 있을 필요가 있습니다"
@@ -704,6 +716,9 @@ msgstr "인수 'x'는 수치가 아니면 되지 않습니다"
 
 msgid "'x' contains missing values"
 msgstr "'x'는 결측치를 포함하고 있습니다"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 #, fuzzy
 msgid "'x' and 'weights' have unequal length"
@@ -1175,6 +1190,9 @@ msgstr "애매한 clustering 메소드입니다"
 msgid "invalid dissimilarities"
 msgstr "무효인 비유사도입니다"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "cluster해야할 2 이상의 오브젝트가 필요합니다"
 
@@ -1275,6 +1293,14 @@ msgstr "한꺼번에 묶지 않습니다"
 msgid "iterations"
 msgstr "반복"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "무효인 'x'"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "무효인 'x'"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "중심('centers')은 수치 또는 행렬이 아니면 되지 않습니다"
 
@@ -1320,6 +1346,10 @@ msgid ""
 msgstr ""
 "y를 제공하지 않으면 되지 않습니다. \n"
 "밀도의 추정에는 density()를 사용합시다"
+
+#, fuzzy
+msgid "invalid value oflength(x)"
+msgstr "무효인 clustering 메소드입니다"
 
 msgid "'k' is not an integer"
 msgstr "'k'는 정수가 아닙니다"
@@ -1412,6 +1442,9 @@ msgstr "오브젝트는 효과성분을 가지지 않습니다"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "'se,fit' 인수는 \"mlm\"의 오브젝트에 대해서는 실제 적용되지 않습니다"
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 "NA가 나오지 않는 나머지 길이가 적용시키고자 사용된 cases와 일치하지 않습니다"
@@ -1431,6 +1464,10 @@ msgstr "'span'와 'enp.target'의 쌍방이 지정되었습니다.'span'가 사�
 #, fuzzy
 msgid "invalid 'control' argument"
 msgstr "무효인 대비 인수('contrasts.arg')입니다"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "무효인 'x'"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "1-4개의 예측자만에 허용되지 않습니다"
@@ -2115,6 +2152,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "invalid value of 'k'"
+msgstr "무효인 인수 'omit'입니다"
+
+#, fuzzy
 msgid "'k' must be positive"
 msgstr "'iter.max'는 positive이 아니면 되지 않습니다"
 
@@ -2157,6 +2198,10 @@ msgstr "무효인 'control.spar'입니다"
 #, fuzzy
 msgid "missing or infinite values in inputs are not allowed"
 msgstr "결손 또는 negative의 중량감은 허용되지 않습니다"
+
+#, fuzzy
+msgid "invalid number of points"
+msgstr "예측자의 수가 잘못되어 있습니다"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "'x'와 'w'의 길이는 일치하지 않으면 되지 않습니다"

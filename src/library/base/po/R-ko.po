@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-12 09:00\n"
+"POT-Creation-Date: 2012-04-22 16:15\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -154,6 +154,10 @@ msgstr "자동로더는 '%s' 를 '%s' 에서 찾을 수 없습니다 "
 msgid "invalid argument values in 'backsolve'"
 msgstr "'backsolve' 의 인자값이 잘못되었습니다 "
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "잘못된 값입니다 "
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 
@@ -168,6 +172,10 @@ msgstr "'chol' 에 비정방행렬이 있습니다 "
 
 msgid "non-matrix argument to 'chol'"
 msgstr "'chol' 에 행렬이 아닌 인수입니다"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "부적절한 이름입니다"
 
 msgid "matrix not positive definite"
 msgstr "향렬이 positive definite 가 아닙니다 "
@@ -1054,6 +1062,10 @@ msgstr "'trim' 은 반드시 길이가 1인 수치형이어야 합니다 "
 msgid "trimmed means are not defined for complex data"
 msgstr "복소수 데이터에 대한 절사평균은 정의되지 않았습니다 "
 
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "'by' 에 올바른 열이 지정되어야 합니다 "
+
 msgid "'by' must match numbers of columns"
 msgstr "'by' 는 열의 개수와 반드시 일치해야 합니다 "
 
@@ -1281,8 +1293,22 @@ msgstr "'u5.bias' 는 반드시 양수이어야 합니다 "
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.corect' 는 반드시 0, 1, 또는 2 일 것입니다 "
 
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "부적절한 이름입니다"
+
 msgid "first argument must be a QR decomposition"
 msgstr "첫번째 인수가 QR 분해이어야 합니다 "
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr "부적절한 이름입니다"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr' 과 'y' 는 행의 개수가 동일해야 합니다 "
@@ -1292,6 +1318,9 @@ msgstr "exact singularity in 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
 msgstr "인수가 QR 분해가 아닙니다 "
+
+msgid "invalid NCOL(y)"
+msgstr ""
 
 msgid "not implemented for complex 'qr'"
 msgstr "복소수 'qr' 은 구현되지 않았습니다 "
@@ -1304,6 +1333,9 @@ msgstr "'k' 는 너무 큽니다 "
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "pivoting 이 발생하도록 'ncol' 에 더 큰값이 필요합니다 "
+
+msgid "invalid NCOL(R)"
+msgstr ""
 
 msgid "'x' must be an atomic vector"
 msgstr "'x' 는 반드시 atomic 벡터이어야 합니다 "
@@ -1529,6 +1561,14 @@ msgstr "'x' 는 배열이 아닙니다"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' 는 수치 또는 요인이어야 합니다 "
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "잘못된 값입니다 "
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "잘못된 값입니다 "
 
 msgid "arguments must have same length"
 msgstr "인수들은 모두 동일한 길이를 가져야 합니다 "
@@ -1818,9 +1858,6 @@ msgstr[0] "경고 매시지: \n"
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
 #~ msgstr ""
 #~ "S3 메소드 '%s'가 NAMESPACE안으로 정의되었습니다만, 검색되지 않습니다"
-
-#~ msgid "invalid name"
-#~ msgstr "부적절한 이름입니다"
 
 #~ msgid "is required by"
 #~ msgstr "이하에 의해 요구되었습니다 :"

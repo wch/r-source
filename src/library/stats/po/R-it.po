@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -275,6 +275,10 @@ msgstr "si riduce a valori unici di 'x'"
 msgid "invalid interpolation method"
 msgstr "metodo di interpolazione non valido"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "lunghezza dei membri non valida"
+
 msgid "need at least two non-NA values to interpolate"
 msgstr "ci vogliono almeno due valori non-NA per interpolare"
 
@@ -289,6 +293,10 @@ msgstr "'vec' contiene NA"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve essere ordinata in modo non-decrescente"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "lunghezza dei membri non valida"
 
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' deve essere >= 1"
@@ -483,6 +491,10 @@ msgstr "valori NA non ammessi in 'd'"
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr ""
 "le distanze devono essere il risultato di 'dist' o una matrice quadrata"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "argomento 'omit' non valido"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' deve essere in {1, 2, ..  n - 1}"
@@ -708,6 +720,9 @@ msgstr "l'argomento 'x' deve essere numerico"
 
 msgid "'x' contains missing values"
 msgstr "'x' contiene valori mancanti"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 #, fuzzy
 msgid "'x' and 'weights' have unequal length"
@@ -1175,6 +1190,9 @@ msgstr "metodo di cluster ambiguo"
 msgid "invalid dissimilarities"
 msgstr "dissimilarità non valide"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "si devono avere n >= 2 oggetti per una cluster"
 
@@ -1274,6 +1292,14 @@ msgstr "non converge in"
 msgid "iterations"
 msgstr "iterazioni"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "'x' non valida"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "'x' non valida"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers' deve essere un numero o una matrice"
 
@@ -1319,6 +1345,10 @@ msgid ""
 msgstr ""
 "si deve specificare y.\n"
 "Per la stima di densità usare density()"
+
+#, fuzzy
+msgid "invalid value oflength(x)"
+msgstr "metodo di cluster non valido"
 
 msgid "'k' is not an integer"
 msgstr "'k' non è intero"
@@ -1408,6 +1438,9 @@ msgstr "'object' non ha la componente 'effects'"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "l'argomento 'se.fit' non è ancora implementato per l'oggetto \"mlm\""
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 
@@ -1426,6 +1459,10 @@ msgstr "specificati sia 'span' che 'enp.target': verrà usato 'span'"
 #, fuzzy
 msgid "invalid 'control' argument"
 msgstr "argomento 'contrasts.arg' non valido"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "'x' non valida"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "permessi solo 1-4 predittori"
@@ -2105,6 +2142,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "invalid value of 'k'"
+msgstr "argomento 'omit' non valido"
+
+#, fuzzy
 msgid "'k' must be positive"
 msgstr "'iter.max' deve essere positivo"
 
@@ -2147,6 +2188,10 @@ msgstr "'control.spar' non valido"
 #, fuzzy
 msgid "missing or infinite values in inputs are not allowed"
 msgstr "non sono ammessi pesi negativi o mancanti"
+
+#, fuzzy
+msgid "invalid number of points"
+msgstr "numero di predittori sbagliato"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "le lunghezze di 'x' e 'w' devono coincidere"

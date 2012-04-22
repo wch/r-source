@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
-"PO-Revision-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
+"PO-Revision-Date: 2012-04-22 16:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -276,6 +276,9 @@ msgstr "collapsing to unique ‘x’ values"
 msgid "invalid interpolation method"
 msgstr "invalid interpolation method"
 
+msgid "invalid length(x)"
+msgstr "invalid length(x)"
+
 msgid "need at least two non-NA values to interpolate"
 msgstr "need at least two non-NA values to interpolate"
 
@@ -290,6 +293,9 @@ msgstr "‘vec’ contains NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "‘vec’ must be sorted non-decreasingly"
+
+msgid "invalid length(vec)"
+msgstr "invalid length(vec)"
 
 msgid "'order.max' must be >= 1"
 msgstr "‘order.max’ must be >= 1"
@@ -479,6 +485,9 @@ msgstr "NA values not allowed in ‘d’"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "distances must be result of ‘dist’ or a square matrix"
+
+msgid "invalid value of 'n'"
+msgstr "invalid value of ‘n’"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "‘k’ must be in {1, 2, ..  n - 1}"
@@ -687,6 +696,9 @@ msgstr "argument ‘x’ must be numeric"
 
 msgid "'x' contains missing values"
 msgstr "‘x’ contains missing values"
+
+msgid "invalid value of length(x)"
+msgstr "invalid value of length(x)"
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "‘x’ and ‘weights’ have unequal length"
@@ -1118,6 +1130,9 @@ msgstr "ambiguous clustering method"
 msgid "invalid dissimilarities"
 msgstr "invalid dissimilarities"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr "size cannot be NA nor exceed 65536"
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "must have n >= 2 objects to cluster"
 
@@ -1214,6 +1229,12 @@ msgstr "did not converge in"
 msgid "iterations"
 msgstr "iterations"
 
+msgid "invalid nrow(x)"
+msgstr "invalid nrow(x)"
+
+msgid "invalid ncol(x)"
+msgstr "invalid ncol(x)"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "‘centers’ must be a number or a matrix"
 
@@ -1256,6 +1277,9 @@ msgid ""
 msgstr ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
+
+msgid "invalid value oflength(x)"
+msgstr "invalid value oflength(x)"
 
 msgid "'k' is not an integer"
 msgstr "‘k’ is not an integer"
@@ -1344,6 +1368,9 @@ msgstr "‘object’ has no ‘effects’ component"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "the ‘se.fit’ argument is not yet implemented for “mlm” objects"
 
+msgid "invalid model QR matrix"
+msgstr "invalid model QR matrix"
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "non-NA residual length does not match cases used in fitting"
 
@@ -1361,6 +1388,9 @@ msgstr "both ‘span’ and ‘enp.target’ specified: ‘span’ will be used"
 
 msgid "invalid 'control' argument"
 msgstr "invalid ‘control’ argument"
+
+msgid "invalid NCOL(X)"
+msgstr "invalid NCOL(X)"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "only 1-4 predictors are allowed"
@@ -1988,6 +2018,9 @@ msgstr ""
 "length of varying must be the product of length of v.names and length of "
 "times"
 
+msgid "invalid value of 'k'"
+msgstr "invalid value of ‘k’"
+
 msgid "'k' must be positive"
 msgstr "‘k’ must be positive"
 
@@ -2029,6 +2062,9 @@ msgstr "invalid ‘control.spar’"
 
 msgid "missing or infinite values in inputs are not allowed"
 msgstr "missing or infinite values in inputs are not allowed"
+
+msgid "invalid number of points"
+msgstr "invalid number of points"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "lengths of ‘x’ and ‘w’ must match"

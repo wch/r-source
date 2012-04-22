@@ -1,14 +1,14 @@
-## File R_HOME/src/library/utils/po/R-ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/utils/po/R-ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-12 08:59\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -272,7 +272,8 @@ msgid "Enter an environment number, or 0 to exit"
 msgstr "종료하기 위해서는 환경번호 또는 0을 입력하세요 "
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+"recover called non-interactively; frames dumped, use debugger() to view"
 
 msgid "No suitable frames for recover()"
 msgstr "recover() 를 위한 적합한 프레임들이 없습니다 "
@@ -354,7 +355,8 @@ msgid "'form' must be a two-sided formula"
 msgstr "'form' 은 반드시 양방향의 포뮬러이어야 합니다 "
 
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr "'form' 은 반드시 각각의 변이 한 개의 항을 가지고 있는 양방향의 포뮬러입니다 "
+msgstr ""
+"'form' 은 반드시 각각의 변이 한 개의 항을 가지고 있는 양방향의 포뮬러입니다 "
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic' 은 이름, 길이가 1인 문자 벡터, 또는 예약어 이어야 합니다 "
@@ -371,7 +373,9 @@ msgstr "??"
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
-msgstr "주제 %s 에 대한 도움말은 로드된 어떠한 패키지에서도 찾을 수 없으나, 다음과 같은 패키지에서 찾을 수 있을지도 모릅니다: "
+msgstr ""
+"주제 %s 에 대한 도움말은 로드된 어떠한 패키지에서도 찾을 수 없으나, 다음과 같"
+"은 패키지에서 찾을 수 있을지도 모릅니다: "
 
 msgid "Package"
 msgstr "패키지"
@@ -400,7 +404,9 @@ msgstr "%s 인자가 잘못되었습니다 "
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
-msgstr "패키지 %s 는 존재하지만 R >=2.10.0 버전에서는 설치할 수 없습니다. 따라서 도움말을 사용할 수 없습니다 "
+msgstr ""
+"패키지 %s 는 존재하지만 R >=2.10.0 버전에서는 설치할 수 없습니다. 따라서 도움"
+"말을 사용할 수 없습니다 "
 
 msgid "creation of %s failed"
 msgstr "%s 의 생성이 실패했습니다 "
@@ -451,7 +457,8 @@ msgid "done"
 msgstr "완료 "
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr "유효하지 않은 멀티바이트 문자 데이터를 가진 모든 엔트리를 제거중입니다 "
+msgstr ""
+"유효하지 않은 멀티바이트 문자 데이터를 가진 모든 엔트리를 제거중입니다 "
 
 msgid "saving the database ..."
 msgstr "데이터베이스를 저장중입니다 ..."
@@ -460,7 +467,9 @@ msgid "... database rebuilt"
 msgstr "... 데이터베이스가 재구축되었습니다 "
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr "패키지 %s 에 대한 데이터베이스 정보가 없습니다: 'rebuild = TRUE' 가 필요한가요?"
+msgstr ""
+"패키지 %s 에 대한 데이터베이스 정보가 없습니다: 'rebuild = TRUE' 가 필요한가"
+"요?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 에 대한 설명이 잘못되었습니다 "
@@ -484,7 +493,9 @@ msgstr ""
 msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
 "and you must switch to its window."
-msgstr "만약 '%s' 에 의해서 열린 브라우저가 이미 실행중이라면, 재시작되지 않을 것이고, 당신은 윈도우를 변경해야만 합니다. "
+msgstr ""
+"만약 '%s' 에 의해서 열린 브라우저가 이미 실행중이라면, 재시작되지 않을 것이"
+"고, 당신은 윈도우를 변경해야만 합니다. "
 
 msgid "Otherwise, be patient ..."
 msgstr "만약 그렇지 않다면, 조금만 더 참아주세요... "
@@ -506,7 +517,8 @@ msgstr "패키지 '%s' 의 DESCRIPTION 파일이 손상되었습니다 "
 
 msgid ""
 "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
-msgstr "'DESCRPTION' 파일은 'Encoding' 필드를 가지고 있으며 재인코딩이 불가능합니다 "
+msgstr ""
+"'DESCRPTION' 파일은 'Encoding' 필드를 가지고 있으며 재인코딩이 불가능합니다 "
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "패키지 '%s'의 DESCRIPTION 파일이 없거나 손상되었습니다 "
@@ -527,7 +539,8 @@ msgid "menu() cannot be used non-interactively"
 msgstr "menu() 는 인터랙티브하게 사용할 수 없습니다 "
 
 msgid "Enter an item from the menu, or 0 to exit"
-msgstr "종료하기 위해서는 메뉴에서 해당 항목을 누르고 엔터를 치거나 0 을 입력합니다 "
+msgstr ""
+"종료하기 위해서는 메뉴에서 해당 항목을 누르고 엔터를 치거나 0 을 입력합니다 "
 
 msgid "invalid query"
 msgstr "올바르지 않은 쿼리입니다 "
@@ -610,7 +623,9 @@ msgstr "함수들과 데이터를 저장중 ..."
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the code_files= argument"
-msgstr "제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 버려질 수 없습니다; code_files= argument 를 사용하세요 "
+msgstr ""
+"제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 버려질 수 없습니다; code_files= "
+"argument 를 사용하세요 "
 
 msgid "Copying code files ..."
 msgstr "코드 파일들을 복사중 ..."
@@ -639,9 +654,15 @@ msgstr "저장소 %s 에 대한 인덱스에 접근할 수 없습니다 "
 msgid "Invalid 'filters' argument."
 msgstr "'filters' 인자가 잘못되었습니다 "
 
+#, fuzzy
+msgid "package '%s' in library '%s' will not be updated"
+msgstr "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
-msgstr "'oldPkgs' 가 잘못되었습니다; 반드시 문자형 벡터이거나 old.packages() 의 결과이어야 합니다 "
+msgstr ""
+"'oldPkgs' 가 잘못되었습니다; 반드시 문자형 벡터이거나 old.packages() 의 결과"
+"이어야 합니다 "
 
 msgid "illformed 'instPkgs' matrix"
 msgstr "잘못된 형식의 'instPkgs' 행렬입니다 "
@@ -727,15 +748,6 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\"' 는 기록할 수 없습니다 "
 
-msgid ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
-msgstr ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
-
 msgid "unable to install packages"
 msgstr "패키지를 설치할 수 없습니다 "
 
@@ -744,11 +756,14 @@ msgstr "생성할 수 없습니다 "
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
-msgstr "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
 
 msgid ""
 "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
-msgstr "type == \"both\" 은 'available' 혹은 'contriburl' 이 지정되었다면 함께 사용할 수 없습니다 "
+msgstr ""
+"type == \"both\" 은 'available' 혹은 'contriburl' 이 지정되었다면 함께 사용"
+"할 수 없습니다 "
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" 는 'repos = NULL' 와 함께 사용될 수 없습니다 "
@@ -814,12 +829,15 @@ msgid "Edit the file and move it to the appropriate directory."
 msgstr "파일을 편집한 후 적절한 디렉토리로 이동시켜 주세요 "
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
-msgstr "유형 %s 와 주제 %s 에 대한 문서가 없습니다 (혹은 도움말 파일을 처리하는데 문제가 있습니다) "
+msgstr ""
+"유형 %s 와 주제 %s 에 대한 문서가 없습니다 (혹은 도움말 파일을 처리하는데 문"
+"제가 있습니다) "
 
 msgid ""
 "the object of class %s in the function call %s could not be used as a "
 "documentation topic"
-msgstr "함수 호출 %s 시에 클래스 %s 의 객체는 문서 주제로서 사용될 수 없습니다 "
+msgstr ""
+"함수 호출 %s 시에 클래스 %s 의 객체는 문서 주제로서 사용될 수 없습니다 "
 
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "%s 에 대한 메소드들이 없으며, 함수로서 이와 연관된 문서들도 없습니다 "
@@ -843,13 +861,17 @@ msgid "row and column counts not found"
 msgstr "행과 열의 개수들을 찾을 수 없습니다 "
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr "헤더 내에 지정된 것보다 더 많은 행들이 있습니다. 'transpose=TRUE' 를 이용해보세요 "
+msgstr ""
+"헤더 내에 지정된 것보다 더 많은 행들이 있습니다. 'transpose=TRUE' 를 이용해보"
+"세요 "
 
 msgid "Unrecognized special data value"
 msgstr "인식할 수 없는 특별한 데이터 값입니다 "
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr "헤더안에 지정된 것보다 더 많은 열들이 있습니다. 'transpose=TRUE' 를 이용해보세요"
+msgstr ""
+"헤더안에 지정된 것보다 더 많은 열들이 있습니다. 'transpose=TRUE' 를 이용해보"
+"세요"
 
 msgid "Unrecognized value indicator"
 msgstr "인식할 수 없는 값에 대한 지시자입니다 "
@@ -972,14 +994,16 @@ msgstr "options('str') 이 잘못되었습니다 -- 대신 기본값을 사용�
 msgid "invalid components in options('str'):"
 msgstr "options('str') 에 대한 구성요소가 잘못되었습니다 "
 
+#, fuzzy
+msgid "'str.default': 'le' is NA, so taken as 0"
+msgstr "'str.default': 'le' 는 NA입니다"
+
 msgid "'object' does not have valid levels()"
 msgstr "'object' 는 유효한 levels() 을 가지고 있지 않습니다 "
 
-msgid "'str.default': 'le' is NA"
-msgstr "'str.default': 'le' 는 NA입니다"
-
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr "'digits' 와 'digits.d' 는 모두 지정되지 않았고, 후자는 사용되지 않습니다 "
+msgstr ""
+"'digits' 와 'digits.d' 는 모두 지정되지 않았고, 후자는 사용되지 않습니다 "
 
 msgid "no lines found in %s"
 msgstr "%s 에 아무런 라인이 없습니다 "
@@ -1047,7 +1071,9 @@ msgstr "'title' 은 반드시 NULL 이거나 길이가 1인 문자 벡터이어�
 
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "한 개 혹은 그 이상의 숫자를 스페이스를 활용하여 입력하고, 취소하고 할 때에는 빈 줄을 입력하세요 "
+msgstr ""
+"한 개 혹은 그 이상의 숫자를 스페이스를 활용하여 입력하고, 취소하고 할 때에는 "
+"빈 줄을 입력하세요 "
 
 msgid "Invalid input, please try again"
 msgstr "잘못된 입력입니다. 다시 시도하세요 "
@@ -1077,11 +1103,15 @@ msgid "'unzip' must be a single character string"
 msgstr "'unzip' 은 반드시 단일 문자열이어야 합니다 "
 
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr "'files' 는 반드시 한개 혹은 그 이상의 파일패스들을 지정하는 문자 벡터이어야 합니다 "
+msgstr ""
+"'files' 는 반드시 한개 혹은 그 이상의 파일패스들을 지정하는 문자 벡터이어야 "
+"합니다 "
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
-msgstr "'mailto:' URI 를 열수 있는 프로그램을 찾을 수 없습니다. 'method=\"none\"' 로 되돌립니다 "
+msgstr ""
+"'mailto:' URI 를 열수 있는 프로그램을 찾을 수 없습니다. 'method=\"none\"' 로 "
+"되돌립니다 "
 
 msgid "Using the browser to open a mailto: URI"
 msgstr "mailto:URI 를 열기 위해 브라우저를 이용합니다 "
@@ -1103,6 +1133,9 @@ msgstr "다운로드는 0이 아닌 종료상태를 가지고 있었습니다 "
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' 는 0 이 아닌 종료코드 %d 를 반환했습니다 "
+
+msgid "file %s is not an OS X binary package"
+msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "패키지 %s 는 성공적으로 압축을 해제하고 MD5 sums 를 확인했습니다 "
@@ -1204,6 +1237,15 @@ msgstr[0] "소스패키지 %s 를 설치중입니다 "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#~ msgid ""
+#~ "Would you like to create a personal library\n"
+#~ "%s\n"
+#~ "to install packages into?"
+#~ msgstr ""
+#~ "Would you like to create a personal library\n"
+#~ "%s\n"
+#~ "to install packages into?"
 
 #, fuzzy
 #~ msgid "running %s failed"

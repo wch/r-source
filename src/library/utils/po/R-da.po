@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -636,6 +636,9 @@ msgstr ""
 msgid "Invalid 'filters' argument."
 msgstr ""
 
+msgid "package '%s' in library '%s' will not be updated"
+msgstr ""
+
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
@@ -716,12 +719,6 @@ msgid ""
 msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
-msgstr ""
-
-msgid ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
 msgstr ""
 
 msgid "unable to install packages"
@@ -952,10 +949,10 @@ msgstr ""
 msgid "invalid components in options('str'):"
 msgstr ""
 
-msgid "'object' does not have valid levels()"
+msgid "'str.default': 'le' is NA, so taken as 0"
 msgstr ""
 
-msgid "'str.default': 'le' is NA"
+msgid "'object' does not have valid levels()"
 msgstr ""
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
@@ -1081,6 +1078,9 @@ msgid "download had nonzero exit status"
 msgstr ""
 
 msgid "'tar' returned non-zero exit code %d"
+msgstr ""
+
+msgid "file %s is not an OS X binary package"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"

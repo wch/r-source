@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -264,6 +264,10 @@ msgstr "colapsando para valores de 'x' únicos"
 msgid "invalid interpolation method"
 msgstr "método de interpolação inválido"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "comprimento inválido dos membros"
+
 msgid "need at least two non-NA values to interpolate"
 msgstr "são precisos ao menos dois valores não-NA para interpolar"
 
@@ -278,6 +282,10 @@ msgstr "'vec' contém NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de forma crescente"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "comprimento inválido dos membros"
 
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' deve ser >= 1"
@@ -470,6 +478,10 @@ msgstr "valores NA não permitidos em 'd'"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "distâncias deve ser resultado de \"dist\", ou de uma matriz quadrada"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "argumento 'omit' inválido"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' deve estar em {1, 2, ..  n - 1}"
@@ -692,6 +704,9 @@ msgstr "argumento 'x ' deve ser numérico"
 
 msgid "'x' contains missing values"
 msgstr "'x' contém valores ausentes"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x' e 'weights'  têm comprimento desigual"
@@ -1141,6 +1156,9 @@ msgstr "método de agrupamento ambíguo"
 msgid "invalid dissimilarities"
 msgstr "dissimilaridades inválidas"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "deve ter n >= 2 objetos para agrupar"
 
@@ -1237,6 +1255,14 @@ msgstr "não convergiu em"
 msgid "iterations"
 msgstr "iterações"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "'x' inválido"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "'x' inválido"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers' deve ser um número ou uma matriz"
 
@@ -1281,6 +1307,10 @@ msgid ""
 msgstr ""
 "y numérico deve ser fornecido.\n"
 "Para estimar a densidade use density()"
+
+#, fuzzy
+msgid "invalid value oflength(x)"
+msgstr "método de agrupamento inválido"
 
 msgid "'k' is not an integer"
 msgstr "'k' não é inteiro"
@@ -1372,6 +1402,9 @@ msgstr "'object' não tem componente 'effects'"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "o argumento 'se.fit' ainda não foi implementado para objetos \"mlm\""
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "comprimento residual não-NA não corresponde aos casos usados no ajuste"
 
@@ -1389,6 +1422,10 @@ msgstr "tanto 'span' quanto 'enp.target' especificados: 'span' será usado"
 
 msgid "invalid 'control' argument"
 msgstr "argumento 'control' inválido"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "'x' inválido"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "somente 1-4 prognosticadores são permitidos"
@@ -2039,6 +2076,10 @@ msgid ""
 "times"
 msgstr ""
 
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr "argumento 'omit' inválido"
+
 msgid "'k' must be positive"
 msgstr ""
 
@@ -2081,6 +2122,10 @@ msgstr ""
 #, fuzzy
 msgid "missing or infinite values in inputs are not allowed"
 msgstr "pesos faltando ou negativos não são permitidos"
+
+#, fuzzy
+msgid "invalid number of points"
+msgstr "argumento 'omit' inválido"
 
 #, fuzzy
 msgid "lengths of 'x' and 'w' must match"

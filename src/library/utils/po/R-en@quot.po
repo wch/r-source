@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-06 15:36\n"
-"PO-Revision-Date: 2012-03-06 15:36\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
+"PO-Revision-Date: 2012-04-22 16:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -666,6 +666,9 @@ msgstr "unable to access index for repository %s"
 msgid "Invalid 'filters' argument."
 msgstr "Invalid ‘filters’ argument."
 
+msgid "package '%s' in library '%s' will not be updated"
+msgstr "package ‘%s’ in library ‘%s’ will not be updated"
+
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
@@ -754,15 +757,6 @@ msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "‘lib = “%s”’ is not writable"
-
-msgid ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
-msgstr ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
 
 msgid "unable to install packages"
 msgstr "unable to install packages"
@@ -1004,11 +998,11 @@ msgstr "invalid options('str') -- using defaults instead"
 msgid "invalid components in options('str'):"
 msgstr "invalid components in options('str'):"
 
+msgid "'str.default': 'le' is NA, so taken as 0"
+msgstr "'str.default': ‘le’ is NA, so taken as 0"
+
 msgid "'object' does not have valid levels()"
 msgstr "‘object’ does not have valid levels()"
-
-msgid "'str.default': 'le' is NA"
-msgstr "'str.default': ‘le’ is NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "‘digits’ and ‘digits.d’ are both specified and the latter is not used"
@@ -1137,6 +1131,9 @@ msgstr "download had nonzero exit status"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "‘tar’ returned non-zero exit code %d"
+
+msgid "file %s is not an OS X binary package"
+msgstr "file %s is not an OS X binary package"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "package %s successfully unpacked and MD5 sums checked"

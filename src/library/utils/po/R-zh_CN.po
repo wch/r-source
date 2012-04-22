@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-12 08:59\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -500,7 +500,6 @@ msgstr "程序包'%s'里元数据出了错"
 msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
 
-
 msgid ""
 "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
@@ -636,6 +635,10 @@ msgstr "无法在貯藏處%s中读写索引"
 msgid "Invalid 'filters' argument."
 msgstr "'filters'参数不对"
 
+#, fuzzy
+msgid "package '%s' in library '%s' will not be updated"
+msgstr "正在使用%s这个程序包，因此不会被安装"
+
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr "'oldPkgs'的值不对；必需字符矢量或从old.packages()得到的结果"
@@ -724,15 +727,6 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib=\"%s\"'不可写"
 
-msgid ""
-"Would you like to create a personal library\n"
-"%s\n"
-"to install packages into?"
-msgstr ""
-"你是不是想建立一个用户定义库\n"
-"%s\n"
-"用来安装程序包?"
-
 msgid "unable to install packages"
 msgstr "无法安装程序包"
 
@@ -745,7 +739,8 @@ msgstr "type == \"both\"只适用在Windows上或在为Mac OS X的CRAN构建上"
 
 msgid ""
 "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
-msgstr "如果已经设定了'available'或'contriburl'的话，不能再设定type == \"both\""
+msgstr ""
+"如果已经设定了'available'或'contriburl'的话，不能再设定type == \"both\""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "设定了'repos = NULL'后就不能再设定type == \"both\""
@@ -968,11 +963,12 @@ msgstr "options('str')不对，使用默认值"
 msgid "invalid components in options('str'):"
 msgstr "options('str')内元件无效："
 
+#, fuzzy
+msgid "'str.default': 'le' is NA, so taken as 0"
+msgstr "'str.default': 'le'的值是NA"
+
 msgid "'object' does not have valid levels()"
 msgstr "'object'的levels()的值不对"
-
-msgid "'str.default': 'le' is NA"
-msgstr "'str.default': 'le'的值是NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
@@ -1100,6 +1096,9 @@ msgstr "下载退出状态不是零"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'退出码为%d"
 
+msgid "file %s is not an OS X binary package"
+msgstr ""
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "程序包%s打开成功，MD5和检查也通过"
 
@@ -1198,6 +1197,15 @@ msgstr[0] "安装源码包%s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid ""
+#~ "Would you like to create a personal library\n"
+#~ "%s\n"
+#~ "to install packages into?"
+#~ msgstr ""
+#~ "你是不是想建立一个用户定义库\n"
+#~ "%s\n"
+#~ "用来安装程序包?"
 
 #~ msgid "Postscript offline help is deprecated"
 #~ msgstr "Postscript offline 脱机帮助已经不再用了"
@@ -1430,4 +1438,3 @@ msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
-

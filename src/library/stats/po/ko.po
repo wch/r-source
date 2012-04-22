@@ -1,14 +1,14 @@
-## File R_HOME/src/library/stats/po/ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/stats/po/ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-01 06:57+0000\n"
+"POT-Creation-Date: 2012-04-22 16:15+0100\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -51,15 +51,15 @@ msgstr "arima0 는 최대 100 개까지의 파라미터들만 변환이 가능�
 msgid "maximum supported lag is 350"
 msgstr "지원되는 최대의 lag 은 350 입니다 "
 
-#: distance.c:155
+#: distance.c:156
 msgid "treating non-finite values as NA"
 msgstr "유한하지 않은 값들은 NA 처리됩니다 "
 
-#: distance.c:227
+#: distance.c:229
 msgid "distance(): invalid p"
 msgstr "distance(): p 값이 잘못되었습니다 "
 
-#: distance.c:230
+#: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): 거리가 잘못되었습니다 "
 
@@ -211,7 +211,8 @@ msgstr "기울기 함수는 길이가 %d 인 수치형 벡터를 반환해야 �
 #: port.c:320
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "Hessian 함수는 반드시 order 가 %d 인 수치형 정방행렬을 반환해야 합니다 "
+msgstr ""
+"Hessian 함수는 반드시 order 가 %d 인 수치형 정방행렬을 반환해야 합니다 "
 
 #: port.c:370
 msgid "'rho' must be an environment"
@@ -228,7 +229,8 @@ msgstr "Hessian 이 정의되었다면 기울기도 정의되어야 합니다 "
 #: port.c:377
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "환경 'rho' 은 반드시 길이가 %d 인 수치형 벡터 '.par' 를 포함해야 합니다  "
+msgstr ""
+"환경 'rho' 은 반드시 길이가 %d 인 수치형 벡터 '.par' 를 포함해야 합니다  "
 
 #: port.c:391
 msgid "'lower' and 'upper' must be numeric vectors"

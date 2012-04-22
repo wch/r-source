@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-02-19 08:56\n"
+"POT-Creation-Date: 2012-04-22 16:16\n"
 "PO-Revision-Date: 2012-03-06 09:25+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -266,6 +266,10 @@ msgstr "Reduktion auf einmalige 'x' Werte"
 msgid "invalid interpolation method"
 msgstr "unzulässige Interpolationsmehtode"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "unzulässige Anzahl von Teilnehmern"
+
 msgid "need at least two non-NA values to interpolate"
 msgstr "benötige mindestens zwei nicht-NA Werte zur Interpolation"
 
@@ -280,6 +284,10 @@ msgstr "'vec' enthält NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' muss nicht-fallend sortiert sein"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "unzulässige Anzahl von Teilnehmern"
 
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' muss >= 1 sein"
@@ -471,6 +479,10 @@ msgstr "NAs sind in 'd' nicht erlaubt"
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr ""
 "Distanzen müssen Ergebnisse von 'dist' oder eine quadratische Matrix sein"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "unzulässiges Argument 'n'"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' muss in {1, 2, .. n-1} liegen"
@@ -680,6 +692,9 @@ msgstr "Argument 'x' muss numerisch sein"
 
 msgid "'x' contains missing values"
 msgstr "'x' enthält fehlende Werte"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x' und 'weights' sind nicht gleich lang"
@@ -1129,6 +1144,9 @@ msgstr "zweideutige Clustering-Methode"
 msgid "invalid dissimilarities"
 msgstr "unzulässige Unähnlichkeiten"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "n >= 2 Objekte nötig, um zu clustern"
 
@@ -1225,6 +1243,14 @@ msgstr "keine Konvergenz nach"
 msgid "iterations"
 msgstr "Schritten"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "unzulässiges 'x'"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "unzulässiges 'x'"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers' müssen eine Zahl oder eine Matrix sein"
 
@@ -1269,6 +1295,10 @@ msgid ""
 msgstr ""
 "numerisches y muss angegeben werden.\n"
 "Zur Dichteschätzung bitte density() nutzen"
+
+#, fuzzy
+msgid "invalid value oflength(x)"
+msgstr "unzulässige Clustring-Methode"
 
 msgid "'k' is not an integer"
 msgstr "'k' ist keine ganze Zahl"
@@ -1359,6 +1389,9 @@ msgstr "'object' hat keine 'effects' Komponente"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "das 'se.fit' Argument ist für \"mlm\" Objekte noch nicht implementiert"
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "Länge der nicht-NA Rsiduen passt nicht zur Anzahl Fälle im Fit"
 
@@ -1376,6 +1409,10 @@ msgstr "sowohl 'span' als auch 'enp.target' angegeben: benutze 'span'"
 
 msgid "invalid 'control' argument"
 msgstr "unzulässiges 'control' Argument"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "unzulässiges 'x'"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "nur 1-4 Prediktoren erlaubt"
@@ -2013,6 +2050,10 @@ msgid ""
 "times"
 msgstr "Länge von varying muss Produkt der Längen von v.names und times sein"
 
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr "unzulässiges Argument 'n'"
+
 msgid "'k' must be positive"
 msgstr "'k' muss positiv sein"
 
@@ -2054,6 +2095,10 @@ msgstr "unzulässiges 'control.spar'"
 
 msgid "missing or infinite values in inputs are not allowed"
 msgstr "fehlende oder unendliche Werte sind als Eingaben nicht zugelassen"
+
+#, fuzzy
+msgid "invalid number of points"
+msgstr "falsche Anzahl Prediktoren"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "Längen von 'x' und 'w' müssen übereinstimmen"
