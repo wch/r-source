@@ -257,6 +257,9 @@
       set to a true value (as done by the \command{--as-cran} option)
       could issue false errors if there was an indirect dependency
       on a recommended package.
+      
+      \item \code{formatC()} uses the C entry point \code{str_signif}
+      which could write beyond the length allocated for the output string.
     }
   }
 }

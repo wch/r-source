@@ -194,7 +194,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    digits = as.integer(digits),
 	    format = as.character(format),
 	    flag   = as.character(flag),
-	    result = blank.chars(i.strlen),
+	    result = blank.chars(i.strlen + 2L), # used to overrun
 	    PACKAGE = "base")$result
     if (some.special)
 	r[!Ok] <- format.char(rQ, width=width, flag=flag)

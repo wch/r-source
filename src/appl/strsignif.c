@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001-2011 the R Core Team
+ *  Copyright (C) 2001-2012 the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -130,8 +130,9 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 	    strcat(form, "*d");
 	}
 	if (strcmp("integer", *type) == 0)
-	    for (i=0; i < nn; i++)
-		sprintf(result[i], form, wid, ((int *)x)[i]);
+	    for (i = 0; i < nn; i++)
+		snprintf(result[i], strlen(result[i]) + 1,
+			 form, wid, ((int *)x)[i]);
 	else
 	    error(_(".C(..): 'type' must be \"integer\" for  \"d\"-format"));
     }
@@ -181,7 +182,8 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 			}
 			if(iex < -4) {
 				/* "g" would result in 'e-' representation:*/
-			    sprintf(result[i], f0, dig-1 + -iex, xx);
+			    snprintf(result[i], strlen(result[i]) + 1,
+				     f0, dig-1 + -iex, xx);
 #ifdef DEBUG
 			    fprintf(stderr, " x[%d]=%g, iex=%d\n", i, xx, iex);
 			    fprintf(stderr, "\tres. = '%s'; ", result[i]);
@@ -206,14 +208,15 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 			    fprintf(stderr, "\t  iex >= -4; using %d for 'dig'\n",
 				    (iex >= dig) ? (iex+1) : dig);
 #endif
-			    sprintf(result[i], form, wid,
-				    (iex >= dig) ? (iex+1) : dig, xx);
+			    snprintf(result[i], strlen(result[i]) + 1,
+				     form, wid, (iex >= dig) ? (iex+1) : dig, xx);
 			}
 		    } /* xx != 0 */
 		} /* if(do_fg) for(i..) */
 	    else
 		for (i=0; i < nn; i++) {
-		    sprintf(result[i], form, wid, dig, ((double *)x)[i]);
+		    snprintf(result[i], strlen(result[i])+1, 
+			     form, wid, dig, ((double *)x)[i]);
 		}
 	} else
 	    error(_(".C(..): 'type' must be \"real\" for this format"));
