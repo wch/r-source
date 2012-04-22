@@ -2421,12 +2421,16 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if (cptr[i] == cptr0[i]) {
 				for (int i = 0; i < NG; i++)
 				    if(*--ptr != FILL)
-					error("array under-run in .C(\"%s\") in character argument %d, element %d\n", symName, na+1, i+1);
+					error("array under-run in .C(\"%s\") in character argument %d, element %d\n'%s' -> '%s'", 
+					      symName, na+1, i+1, 
+					      translateChar(STRING_ELT(arg, i)), cptr[i]);
 				ptr = (unsigned char *) cptr[i];
 				ptr += strlen(translateChar(STRING_ELT(ss, i))) + 1;
 				for (int i = 0; i < NG;  i++) 
 				    if(*ptr++ != FILL)
-					error("array over-run in .C(\"%s\") in character argument %d, element %d\n", symName, na+1, i+1);
+					error("array over-run in .C(\"%s\") in character argument %d, element %d\n'%s'->'%s'\n", 
+					      symName, na+1, i+1, 
+					      translateChar(STRING_ELT(arg, i)), cptr[i]);
 			    }
 			}
 #if R_MEMORY_PROFILING
