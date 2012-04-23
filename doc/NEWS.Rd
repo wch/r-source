@@ -39,6 +39,12 @@
       \item \code{qqline()} gets new optional arguments
 	\code{distribution}, \code{probs}, and \code{qtype}, following
 	the example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      
+      \item \code{.C()} gains some protection against the misuse of
+      character vector arguments.  (An all too common error is to pass
+      \code{character(N)}, which initializes the elements to \code{""},
+      and then attempt to edit the strings in-place, sometimes forgetting
+      to terminate them.)
     }
   }
 

@@ -1578,8 +1578,17 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		} else {
 		    for (int i = 0 ; i < n ; i++) {
 			const char *ss = translateChar(STRING_ELT(s, i));
-			cptr[i] = (char*) R_alloc(strlen(ss) + 1, sizeof(char));
-			strcpy(cptr[i], ss);
+			int nn = strlen(ss) + 1;
+			if(nn > 1) {
+			    cptr[i] = (char*) R_alloc(nn, sizeof(char));
+			    strcpy(cptr[i], ss);
+			} else {
+			    /* Protect ourselves against those who like to
+			       extend "", maybe using strncpy */
+			    nn = 128;
+			    cptr[i] = (char*) R_alloc(nn, sizeof(char));
+			    memset(cptr[i], 0, nn);
+			}
 		    }
 		}
 		cargs[na] = (void*) cptr;
@@ -1590,7 +1599,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	case VECSXP:
 	    if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), na + 1);
-	    /* read-only, so this is safe */
+	    /* Used read-only, so this is safe */
 #ifdef USE_RINTERNALS
 	    cargs[na] = (void*) DATAPTR(s);
 #else
