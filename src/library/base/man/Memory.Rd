@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -15,11 +15,11 @@
   sized automatically.
 #ifdef windows
   
-  On Windows the \option{--max-mem-size} option sets the maximum memory
-  allocation: it has a minimum allowed value of 32M.  This is intended
-  to catch attempts to allocate excessive amounts of memory which may
-  cause other processes to run out of resources.  See also
-  \code{\link{memory.limit}}.
+  On Windows the \option{--max-mem-size} option (or environment variable
+  \env{R_MAX_MEM_SIZE}) sets the maximum memory allocation: it has a
+  minimum allowed value of 32M.  This is intended to catch attempts to
+  allocate excessive amounts of memory which may cause other processes
+  to run out of resources.  See also \code{\link{memory.limit}}.
 #endif
 
   \R maintains separate areas for fixed and variable sized objects.  The

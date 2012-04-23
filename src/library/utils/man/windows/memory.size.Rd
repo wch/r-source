@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/memory.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memory.size}
@@ -38,6 +38,9 @@ memory.limit(size = NA)
   of \R under 64-bit Windows the limit is currently 8Tb.
 
   Memory limits can only be increased.
+
+  Environment variable \env{R_MAX_MEM_SIZE} provides another way to
+  specify the initial limit.
 }
 \value{
   Size in Mb (1048576 bytes), rounded to 0.01 Mb for \code{memory.size}

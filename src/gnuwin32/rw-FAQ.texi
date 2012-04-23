@@ -314,8 +314,10 @@ running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
-@option{--max-mem-size} (@pxref{How do I install R for Windows?}). For a
-64-bit build of R it defaults to the amount of RAM.
+@option{--max-mem-size} (@pxref{How do I install R for Windows?}) or by
+environment variable @env{R_MAX_MEM_SIZE}. 
+
+For a 64-bit build of R it defaults to the amount of RAM.
 
 For a 32-bit build of R it defaults to the smaller of the amount of
 physical RAM in the machine and 0.5GB less than the limit on user
@@ -553,10 +555,11 @@ We have had several reports of this, although they do work for us on
 
 (a) Use the alternative @file{internet2.dll} by starting R with the flag
 @option{--internet2} (@pxref{How do I install R for Windows?}) or
-calling @code{setInternet2(TRUE)}.  These cause R to use the Internet
-Explorer internals, which may already be configured for use with
-proxies.  Note that this does @emph{not} work with proxies that need
-authentication.
+calling @code{setInternet2(TRUE)}, or setting the environnent variable
+@env{R_WIN_INTERNET2} to a non-empty value.  These cause R to use the
+Internet Explorer internals, which may already be configured for use
+with proxies.  Note that this does @emph{not} work with proxies that
+need authentication.
 
 (b) A proxy needs to be set up: see @code{?download.file}.  Here are two
 versions of an example (a real one, but from a machine that is only
