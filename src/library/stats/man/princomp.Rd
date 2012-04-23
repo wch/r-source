@@ -1,6 +1,6 @@
 % File src/library/stats/man/princomp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -153,5 +153,11 @@ USArrests[1, 2] <- NA
 pc.cr <- princomp(~ Murder + Assault + UrbanPop,
                   data = USArrests, na.action=na.exclude, cor = TRUE)
 \donttest{pc.cr$scores[1:5, ]}
+
+## (Simple) Robust PCA:
+## Classical:
+(pc.cl  <- princomp(stackloss))
+## Robust:
+(pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
 }
 \keyword{multivariate}
