@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-26 r58836) -- "Unsuffered Consequences"
+R version 2.15.0 Patched (2012-04-22 r59138) -- "Easter Beagle"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x32c9090>
+<environment: 0x39e13a8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4701,7 +4701,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x50747c8>
+<bytecode: 0x5265608>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -6689,8 +6689,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x20a4858>
-<environment: 0x6ea3df8>
+<bytecode: 0x318f7b8>
+<environment: 0x9404de0>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7092,7 +7092,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x8a127f8>
+<environment: 0x7a3f618>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11506,26 +11506,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x20a6fc0>
-<environment: 0x6b2ba28>
+<bytecode: 0x3191f90>
+<environment: 0x6c7e730>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x20a70d8>
-<environment: 0x6b2ba28>
+<bytecode: 0x3192000>
+<environment: 0x6c7e730>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x20a7148>
-<environment: 0x6b2ba28>
+<bytecode: 0x3192070>
+<environment: 0x6c7e730>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x20a73e8>
-<environment: 0x6b2ba28>
+<bytecode: 0x31912c8>
+<environment: 0x6c7e730>
 
 $name
 [1] "identity"
@@ -11536,14 +11536,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x6b2c9e0>
-<environment: 0x6af1b28>
+<bytecode: 0x6c7f608>
+<environment: 0x6c70078>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x6b2caf8>
-<environment: 0x6af1b28>
+<bytecode: 0x6c7f758>
+<environment: 0x6c70078>
 
 > 
 > 
@@ -12755,6 +12755,28 @@ Standard deviations:
 > USArrests[1, 2] <- NA
 > pc.cr <- princomp(~ Murder + Assault + UrbanPop,
 +                   data = USArrests, na.action=na.exclude, cor = TRUE)
+> 
+> ## (Simple) Robust PCA:
+> ## Classical:
+> (pc.cl  <- princomp(stackloss))
+Call:
+princomp(x = stackloss)
+
+Standard deviations:
+   Comp.1    Comp.2    Comp.3    Comp.4 
+13.596589  4.676077  2.617533  1.366320 
+
+ 4  variables and  21 observations.
+> ## Robust:
+> (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
+Call:
+princomp(x = stackloss, covmat = MASS::cov.rob(stackloss))
+
+Standard deviations:
+   Comp.1    Comp.2    Comp.3    Comp.4 
+7.8322873 4.0077676 1.9114016 0.7624211 
+
+ 4  variables and  21 observations.
 > 
 > 
 > 
@@ -15186,8 +15208,8 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<bytecode: 0x2617f18>
-<environment: 0x7987648>
+<bytecode: 0x33e61f0>
+<environment: 0x75968f8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17403,7 +17425,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.13 0.325 12.522 0 0 
+Time elapsed:  11.695 0.216 12.475 0 0 
 > grDevices::dev.off()
 null device 
           1 
