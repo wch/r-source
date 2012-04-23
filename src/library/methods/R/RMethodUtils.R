@@ -1793,6 +1793,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 .actionMetaName <- function(name)
     methodsPackageMetaName("A", name)
 
+
 .doLoadActions <- function(where, attach) {
     ## at the moment, no unload actions
     if(!attach)return()
@@ -1800,6 +1801,11 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     if(!exists(actionListName, envir = where, inherits = FALSE))
         return(list())
     actions <- get(actionListName, envir = where)
+    ## check sanity:  methods must be loaded
+    if(! "package:methods" %in% search()) {
+        warning("Trying to execute load actions without methods package")
+        library(methods)
+    }
     for(what in actions) {
         aname <- .actionMetaName(what)
         if(!exists(aname, envir = where, inherits = FALSE)) {
@@ -1809,9 +1815,11 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
         f <- get(aname, envir = where)
         value <- eval(substitute(tryCatch(FUN(WHERE), error = function(e)e),
                             list(FUN = f, WHERE = where)), where)
-        if(is(value, "error"))
+        if(is(value, "error")) {
+            callString <- deparse(value$call)[[1]]
             stop(gettextf("Error in load action %s for package %s: %s: %s",
-                          aname, getPackageName(where), value$call, value$message))
+                          aname, getPackageName(where), callString, value$message))
+        }
     }
 }
 
