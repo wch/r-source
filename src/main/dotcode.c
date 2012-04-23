@@ -2419,18 +2419,23 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			    unsigned char *ptr = (unsigned char *) cptr[i];
 			    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 			    if (cptr[i] == cptr0[i]) {
-				for (int i = 0; i < NG; i++)
+				    const char *z = translateChar(STRING_ELT(ss, i));
+				for (int j = 0; j < NG; j++)
 				    if(*--ptr != FILL)
-					error("array under-run in .C(\"%s\") in character argument %d, element %d\n'%s' -> '%s'", 
-					      symName, na+1, i+1, 
-					      translateChar(STRING_ELT(arg, i)), cptr[i]);
+					error("array under-run in .C(\"%s\") in character argument %d, element %d", 
+					      symName, na+1, (int)(i+1));
 				ptr = (unsigned char *) cptr[i];
-				ptr += strlen(translateChar(STRING_ELT(ss, i))) + 1;
-				for (int i = 0; i < NG;  i++) 
-				    if(*ptr++ != FILL)
+				ptr += strlen(z) + 1;
+				for (int j = 0; j < NG;  j++) 
+				    if(*ptr++ != FILL) {
+					 // force termination
+					unsigned char *p = ptr;
+					for (int k = 1; k < NG - j; k++, p++)
+					    if (*p == FILL) *p = '\0';
 					error("array over-run in .C(\"%s\") in character argument %d, element %d\n'%s'->'%s'\n", 
-					      symName, na+1, i+1, 
-					      translateChar(STRING_ELT(arg, i)), cptr[i]);
+					      symName, na+1, (int)(i+1), 
+					      z, cptr[i]);
+				    }
 			    }
 			}
 #if R_MEMORY_PROFILING
