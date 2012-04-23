@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -80,7 +80,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   not supported.
 #endif
 #ifdef windows
-  only supported if \option{--internet2} or
+  only supported if \option{--internet2} or environment varable
+  \env{R_WIN_INTERNET2} was set or 
   \code{\link{setInternet2}(TRUE)} was used (to make use of Internet
   Explorer internals), and then only if the certificate is considered to
   be valid.

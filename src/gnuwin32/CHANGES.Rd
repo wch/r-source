@@ -37,8 +37,9 @@
       If \env{R_WIN_INTERNET2} is set to a non-empty value, it is as if
       \option{--internet2} was used.
 
-      If \env{R_MAX_MEM_SIZE} is set, it is the default for
-      \option{--max-mem-size}, invalid values being ignored.
+      If \env{R_MAX_MEM_SIZE} is set, it gives the default memory limit
+      if \option{--max-mem-size} is not specified: invalid values being
+      ignored.
     }
   }
 }
