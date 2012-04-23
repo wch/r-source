@@ -12756,6 +12756,28 @@ Standard deviations:
 > pc.cr <- princomp(~ Murder + Assault + UrbanPop,
 +                   data = USArrests, na.action=na.exclude, cor = TRUE)
 > 
+> ## (Simple) Robust PCA:
+> ## Classical:
+> (pc.cl  <- princomp(stackloss))
+Call:
+princomp(x = stackloss)
+
+Standard deviations:
+   Comp.1    Comp.2    Comp.3    Comp.4 
+13.596589  4.676077  2.617533  1.366320 
+
+ 4  variables and  21 observations.
+> ## Robust:
+> (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
+Call:
+princomp(x = stackloss, covmat = MASS::cov.rob(stackloss))
+
+Standard deviations:
+   Comp.1    Comp.2    Comp.3    Comp.4 
+7.8322873 4.0077676 1.9114016 0.7624211 
+
+ 4  variables and  21 observations.
+> 
 > 
 > 
 > cleanEx()
