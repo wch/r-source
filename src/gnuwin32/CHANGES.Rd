@@ -22,6 +22,15 @@
       
       \item The \code{Sys.glob()} function didn't handle UNC paths
       as it was designed to try to do. (\PR{14884})
+
+      \item There are two new environment variables which control the
+      defaults for command-line options.
+
+      If \env{R_WIN_INTERNET2} is set to a non-empty value, it is as if
+      \option{--internet2} was used.
+
+      If \env{R_MAX_MEM_SIZE} is set, it is the default for
+      \option{--max-mem-size}, invalid values being ignored.
     }
   }
 }

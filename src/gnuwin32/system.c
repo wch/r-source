@@ -958,6 +958,17 @@ int cmdlineoptions(int ac, char **av)
 
     R_common_command_line(&ac, av, Rp);
 
+    char *q = getenv("R_WIN_INTERNET2");
+    if (q && q[0]) UseInternet2 = TRUE;
+    q = getenv("R_MAX_MEM_SIZE");
+    if (q && q[0]) {
+	value = R_Decode2Long(q, &ierr);
+	if(ierr || value < 32 * Mega || value > Virtual) {
+	    sprintf(s, _("WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"));
+	    R_ShowMessage(s);
+	} else R_max_memory = value;
+    }
+
     cmdlines[0] = '\0';
     while (--ac) {
 	if (processing && **++av == '-') {
