@@ -80,7 +80,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   not supported.
 #endif
 #ifdef windows
-  only supported if \option{--internet2} or environment varable
+  only supported if \option{--internet2} or environment variable
   \env{R_WIN_INTERNET2} was set or 
   \code{\link{setInternet2}(TRUE)} was used (to make use of Internet
   Explorer internals), and then only if the certificate is considered to
