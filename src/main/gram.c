@@ -4672,7 +4672,7 @@ int isValidName(const char *name)
     if(mbcslocale) {
 	/* the only way to establish which chars are alpha etc is to
 	   use the wchar variants */
-	int n = strlen(name), used;
+	size_t n = strlen(name), used;
 	wchar_t wc;
 	used = Mbrtowc(&wc, p, n, NULL); p += used; n -= used;
 	if(used == 0) return 0;

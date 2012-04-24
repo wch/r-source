@@ -259,13 +259,14 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 			     SIMPLEDEPARSE, -1));
     if ((lines = length(temp)) > 1) {
 	char *buf;
-	int i, len;
+	int i;
+	size_t len;
 	const void *vmax;
 	cetype_t enc = CE_NATIVE;
-	for (len=0, i = 0; i < length(temp); i++) {
+	for (len = 0, i = 0; i < length(temp); i++) {
 	    SEXP s = STRING_ELT(temp, i);
 	    cetype_t thisenc = getCharCE(s);
-	    len += strlen(CHAR(s));
+	    len += strlen(CHAR(s));  // FIXME: check for overflow?
 	    if (thisenc != CE_NATIVE) 
 	    	enc = thisenc; /* assume only one non-native encoding */ 
 	}    

@@ -495,7 +495,7 @@ L450:
 
     } else {
 	by[0] = 0.;
-	*ncalc = imin2(*nb,0) - 1;
+	*ncalc = imin2(*nb,0) - 1; // FIXME, should be for longs
     }
 }
 

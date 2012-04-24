@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-11 The R Core Team
+ *  Copyright (C) 2000-12 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ double fprec(double x, double digits)
     double l10, pow10, sgn, p10, P10;
     int e10, e2, do_round, dig;
     /* Max.expon. of 10 (=308.2547) */
-    const static int max10e = DBL_MAX_EXP * M_LOG10_2;
+    const static int max10e = (int) (DBL_MAX_EXP * M_LOG10_2);
 
     if (ISNAN(x) || ISNAN(digits))
 	return x + digits;

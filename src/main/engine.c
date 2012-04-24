@@ -1774,7 +1774,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 				    if(mbcslocale && enc2 == CE_NATIVE) {
 					/* FIXME: This assumes that wchar_t is UCS-2/4,
 					   since that is what GEMetricInfo expects */
-					int n = strlen(ss), used;
+					size_t n = strlen(ss), used;
 					wchar_t wc;
 					mbstate_t mb_st;
 					mbs_init(&mb_st);
@@ -3090,7 +3090,7 @@ static int nlinetype = (sizeof(linetype)/sizeof(LineTYPE)-2);
 unsigned int GE_LTYpar(SEXP value, int ind)
 {
     const char *p;
-    int i, code, shift, digit, len;
+    int i, code, shift, digit;
     double rcode;
 
     if(isString(value)) {
@@ -3102,7 +3102,7 @@ unsigned int GE_LTYpar(SEXP value, int ind)
 	code = 0;
 	shift = 0;
 	p = CHAR(STRING_ELT(value, ind));
-	len = strlen(p);
+	size_t len = strlen(p);
 	if(len < 2 || len > 8 || len % 2 == 1)
 	    error(_("invalid line type: must be length 2, 4, 6 or 8"));
 	for(; *p; p++) {

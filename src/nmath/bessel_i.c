@@ -316,7 +316,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 			p = plast * tover;
 			--n;
 			en -= 2.;
-			nend = imin2(*nb,n);
+			nend = imin2(*nb,n); // FIXME, should be for longs
 			for (l = nstart; l <= nend; ++l) {
 			    *ncalc = l;
 			    pold = psavel;
@@ -526,6 +526,6 @@ L230:
 	    }
 	}
     } else { /* argument out of range */
-	*ncalc = imin2(*nb,0) - 1;
+	*ncalc = imin2(*nb,0) - 1;  // FIXME, should be for longs
     }
 }

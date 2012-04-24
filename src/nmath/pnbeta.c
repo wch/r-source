@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000-2008 The R Core Team
+ *  Copyright (C) 2000-2012 The R Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
@@ -88,11 +88,11 @@ pnbeta2(double x, double o_x, double a, double b, double ncp,
     long double ans= pnbeta_raw(x, o_x, a,b, ncp);
 
     /* return R_DT_val(ans), but we want to warn about cancellation here */
-    if(lower_tail) return log_p	? log(ans) : ans;
+    if(lower_tail) return (double) (log_p ? logl(ans) : ans);
     else {
 	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnbeta");
-	ans = fmin2(ans, 1.0);  /* Precaution */
-	return log_p ? log1p(-ans) : (1 - ans);
+	if (ans > 1.0) ans = 1.0;  /* Precaution */
+	return (double) (log_p ? log1pl(-ans) : (1 - ans));
     }
 }
 

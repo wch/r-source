@@ -51,7 +51,7 @@ struct Rconn {
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
     size_t (*write)(const void *, size_t, size_t, struct Rconn *);
-    int nPushBack, posPushBack; /* number of lines, position on top line */
+    int nPushBack; size_t posPushBack; /* number of lines, position on top line */
     char **PushBack;
     int save, save2;
     char encname[101];

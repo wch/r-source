@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-8 The R Core Team
+ *  Copyright (C) 2000-12 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     term = dbeta(x, a + kMax, b, /* log = */ TRUE);
     p_k = dpois_raw(kMax, ncp2,              TRUE);
     if(x == 0. || !R_FINITE(term) || !R_FINITE(p_k)) /* if term = +Inf */
-	return R_D_exp(p_k + term);
+	return R_D_exp((double)(p_k + term));
 
     /* Now if s_k := p_k * t_k  {here = exp(p_k + term)} would underflow,
      * we should rather scale everything and re-scale at the end:*/
@@ -118,5 +118,5 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 	sum += term;
     } while (term > sum * eps);
 
-    return R_D_exp(p_k + log(sum));
+    return R_D_exp((double)(p_k + logl(sum)));
 }
