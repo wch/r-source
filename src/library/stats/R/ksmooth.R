@@ -31,7 +31,7 @@ ksmooth <-
 	    sort(x.points)
 	}
     nx <- as.integer(length(x))
-    if(is.na(nx)) stop("invalid value oflength(x)")
+    if(is.na(nx)) stop("invalid value of length(x)")
     ord <- order(x)
     z <- .C(C_BDRksmooth,
 	    as.double(x[ord]),
