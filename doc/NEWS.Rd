@@ -147,6 +147,10 @@
 
       \item Missing default argument added to implicit generic for
       \code{backsolve()} (\PR{14883})
+
+      \item Some bugs fixed in handling load actions that could fail
+      to export assigned items or generate spurious warnings in
+      \code{CMD check} on loading.
     }
   }
 }
