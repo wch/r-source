@@ -182,7 +182,7 @@
 	       signature = c("x", "type"), where = where)
     setGenericImplicit("norm", where, FALSE)
 
-    setGeneric("backsolve", function(r, x, k, upper.tri = TRUE, transpose = FALSE, ...)
+    setGeneric("backsolve", function(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE, ...)
 	       standardGeneric("backsolve"),
 	       useAsDefault =
 	       function(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE, ...)

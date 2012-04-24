@@ -1904,3 +1904,17 @@ evalOnLoad <- function(expr, where = topenv(parent.frame()), aname = "") {
 
 evalqOnLoad <- function(expr, where = topenv(parent.frame()), aname = "")
     evalOnLoad(substitute(expr), where, aname)
+
+## a utility function used to flag non-generics at the loadNamespace phase
+## The calculation there used to ignore the generic cache, which is wrong logic
+## if the package being loaded had a DEPENDS on a package containing the generic
+## version of the function.
+.findsGeneric <- function(what, ns) {
+    if(is(get(what, mode = "function", envir = ns), "genericFunction"))
+        1L
+    else if(!is.null(.getGenericFromCache(what, ns)))
+        2L
+    else
+        0L
+}
+

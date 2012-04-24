@@ -144,6 +144,9 @@
       
       \item \code{formatC()} uses the C entry point \code{str_signif}
       which could write beyond the length allocated for the output string.
+
+      \item Missing default argument added to implicit generic for
+      \code{backsolve()} (\PR{14883})
     }
   }
 }
