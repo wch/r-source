@@ -220,6 +220,15 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item C entry points \code{mkChar} and \code{mkCharCE} now check
+      that the length of the string they are passed does not exceed
+      \eqn{2^{31}-1}{2^31-1} bytes: they used to overflow with
+      unpredictable consequences.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
