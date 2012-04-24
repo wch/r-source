@@ -3362,7 +3362,10 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP mkCharCE(const char *name, cetype_t enc)
 {
-    return mkCharLenCE(name, strlen(name), enc);
+    size_t len =  strlen(name);
+    if (len > INT_MAX)
+	error("R character strings are limited to 2^31-1 bytes");
+   return mkCharLenCE(name, (int) len, enc);
 }
 
 /* no longer used in R but docuented in 2.7.x */
@@ -3373,7 +3376,10 @@ SEXP mkCharLen(const char *name, int len)
 
 SEXP mkChar(const char *name)
 {
-    return mkCharLenCE(name, strlen(name), CE_NATIVE);
+    size_t len =  strlen(name);
+    if (len > INT_MAX)
+	error("R character strings are limited to 2^31-1 bytes");
+    return mkCharLenCE(name, (int) len, CE_NATIVE);
 }
 
 /* Global CHARSXP cache and code for char-based hash tables */

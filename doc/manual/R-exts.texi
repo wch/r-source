@@ -8552,6 +8552,11 @@ it will create a new one and add it to the cache before returning it to
 you.   The variant @code{mkCharLen} can be used to create a
 @code{CHARSXP} from part of a buffer and will ensure null-termination.
 
+Note that @R{} character strings are restricted to @code{2^31 - 1}
+bytes, and hence so should the input to @code{mkChar} be (C allows
+longer strings on 64-bit platforms): the function itself did not check
+prior to @R{} 2.15.1.
+
 @node Finding and setting variables, Some convenience functions, Handling character data, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
@@ -9774,7 +9779,8 @@ and these should only be used on non-@acronym{ASCII} strings.  Value
 Value @code{CE_ANY} is used to indicate a character string that will not
 need re-encoding -- this is used for character strings known to be in
 @acronym{ASCII}, and can also be used as an input parameter where the
-intention is that the string is treated as a series of bytes.
+intention is that the string is treated as a series of bytes.  (See the
+comments under @code{mkChar} about the length of input allowed.)
 
 Function
 
@@ -9797,7 +9803,7 @@ with any other value causing the byte to produce no output.
 There is also
 
 @example
-SEXP mkCharLenCE(const char *, int, cetype_t);
+SEXP mkCharLenCE(const char *, size_t, cetype_t);
 @end example
 
 @noindent
