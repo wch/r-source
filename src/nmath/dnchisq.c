@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-12 The R Core Team
+ *  Copyright (C) 2000-8 The R Core Team
  *  Copyright (C) 2004-8 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -97,5 +97,5 @@ double dnchisq(double x, double df, double ncp, int give_log)
 	sum += term;
 	if (q < 1 && term * q <= (1-q)*eps) break;
     }
-    return R_D_val((double) sum);
+    return R_D_val(sum);
 }

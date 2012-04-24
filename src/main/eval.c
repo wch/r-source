@@ -213,7 +213,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
 #endif
     int interval;
 
-    interval = (int)(1e6 * dinterval + 0.5);
+    interval = 1e6 * dinterval + 0.5;
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)
@@ -3658,7 +3658,7 @@ static R_INLINE int bcStackIndex(R_bcstack_t *s)
 	if (LENGTH(idx) == 1) {
 	    double val = REAL(idx)[0];
 	    if (! ISNAN(val) && val <= INT_MAX && val > INT_MIN)
-		return (int) val;
+		return val;
 	    else return -1;
 	}
 	else return -1;

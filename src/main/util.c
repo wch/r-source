@@ -1792,7 +1792,7 @@ int Scollate(SEXP a, SEXP b)
     UErrorCode  status = U_ZERO_ERROR;
     UCharIterator aIter, bIter;
     const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
-    int len1 = (int) strlen(as), len2 = (int) strlen(bs);
+    size_t len1 = strlen(as), len2 = strlen(bs);
 
     if (collator == NULL && strcmp("C", setlocale(LC_COLLATE, NULL)) ) {
 	/* do better later */

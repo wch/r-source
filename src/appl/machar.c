@@ -118,7 +118,7 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 	do {
 		b = b + b;
 		temp = a + b;
-		itemp = (int)(temp - a);
+		itemp = temp - a;
 	}
 	while (itemp == 0);
 	*ibeta = itemp;

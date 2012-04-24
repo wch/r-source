@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 1999-2012  The R Core Team
+ *  Copyright (C) 1999-2000  The R Core Team
  *  Copyright (C) 2004	     Morten Welinder
  *  Copyright (C) 2004	     The R Foundation
  *
@@ -70,7 +70,7 @@ static double pdhyper (double x, double NR, double NB, double n, int log_p)
 	x--;
     }
     
-    double ss = (double) sum;
+    double ss = sum;
     return log_p ? log1p(ss) : 1 + ss;
 }
 

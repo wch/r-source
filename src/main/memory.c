@@ -967,8 +967,8 @@ static void ReleaseLargeFreeVectors(void)
 
 static void AdjustHeapSize(R_size_t size_needed)
 {
-    R_size_t R_MinNFree = (R_size_t)(orig_R_NSize * R_MinFreeFrac);
-    R_size_t R_MinVFree = (R_size_t)(orig_R_VSize * R_MinFreeFrac);
+    R_size_t R_MinNFree = orig_R_NSize * R_MinFreeFrac;
+    R_size_t R_MinVFree = orig_R_VSize * R_MinFreeFrac;
     R_size_t NNeeded = R_NodesInUse + R_MinNFree;
     R_size_t VNeeded = R_SmallVallocSize + R_LargeVallocSize
 	+ size_needed + R_MinVFree;
@@ -976,7 +976,7 @@ static void AdjustHeapSize(R_size_t size_needed)
     double vect_occup =	((double) VNeeded) / R_VSize;
 
     if (node_occup > R_NGrowFrac) {
-	R_size_t change = (R_size_t)(R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize);
+	R_size_t change = R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize;
 	if (R_MaxNSize >= R_NSize + change)
 	    R_NSize += change;
     }
@@ -991,7 +991,7 @@ static void AdjustHeapSize(R_size_t size_needed)
     if (vect_occup > 1.0 && VNeeded < R_MaxVSize)
 	R_VSize = VNeeded;
     if (vect_occup > R_VGrowFrac) {
-	R_size_t change = (R_size_t)(R_VGrowIncrMin + R_VGrowIncrFrac * R_VSize);
+	R_size_t change = R_VGrowIncrMin + R_VGrowIncrFrac * R_VSize;
 	if (R_MaxVSize - R_VSize >= change)
 	    R_VSize += change;
     }
@@ -1860,7 +1860,7 @@ static void mem_err_malloc(R_size_t size)
 /* This includes: stack space, node space and vector space */
 
 #define PP_REDZONE_SIZE 1000L
-static int R_StandardPPStackSize, R_RealPPStackSize;
+static R_size_t R_StandardPPStackSize, R_RealPPStackSize;
 
 void attribute_hidden InitMemory()
 {
@@ -2767,7 +2767,7 @@ SEXP attribute_hidden do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void reset_pp_stack(void *data)
 {
-    int *poldpps = data;
+    R_size_t *poldpps = data;
     R_PPStackSize =  *poldpps;
 }
 
@@ -2775,7 +2775,7 @@ SEXP protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize) {
 	RCNTXT cntxt;
-	int oldpps = R_PPStackSize;
+	R_size_t oldpps = R_PPStackSize;
 
 	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		     R_NilValue, R_NilValue);
@@ -2842,7 +2842,7 @@ void R_Reprotect(SEXP s, PROTECT_INDEX i)
 SEXP R_CollectFromIndex(PROTECT_INDEX i)
 {
     SEXP res;
-    int top = R_PPStackTop, j = 0;
+    R_size_t top = R_PPStackTop, j = 0;
     if (i > top) i = top;
     res = protect(allocVector(VECSXP, top - i));
     while (i < top)

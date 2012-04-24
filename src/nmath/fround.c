@@ -94,9 +94,9 @@ double fround(double x, double digits) {
     } else if (dig > 0) {
         pow10 = R_pow_di(10., dig);
 	intx = floor(x);
-	return (double)(sgn * (intx + R_rint((double)((x-intx) * pow10)) / pow10));
+	return (double)(sgn * (intx + R_rint((x-intx) * pow10) / pow10));
     } else {
         pow10 = R_pow_di(10., -dig);
-        return (double)(sgn * R_rint((double)(x/pow10)) * pow10);
+        return (double)(sgn * R_rint(x/pow10) * pow10);
     }
 }

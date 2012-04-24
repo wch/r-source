@@ -113,7 +113,7 @@ static int ConsoleGetchar(void)
 	    return R_EOF;
 	}
 	ConsoleBufp = ConsoleBuf;
-	ConsoleBufCnt = (int) strlen((char *)ConsoleBuf);
+	ConsoleBufCnt = strlen((char *)ConsoleBuf);
 	ConsoleBufCnt--;
     }
     /* at this point we need to use unsigned char or similar */
@@ -1457,7 +1457,7 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    return ScalarInteger((int)first);
+    return ScalarInteger(first);
 }
 
 /* readTableHead(file, nlines, comment.char, blank.lines.skip, quote, sep) */

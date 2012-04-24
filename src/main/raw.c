@@ -305,7 +305,7 @@ static size_t inttomb(char *s, const int wc)
 	*b-- = 0x80 | (cvalue & 0x3f);
 	cvalue >>= 6;
     }
-    *b = (char)(utf8_table2[i] | cvalue);
+    *b = utf8_table2[i] | cvalue;
     return i + 1;
 }
 
@@ -364,7 +364,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	    len += used;
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkCharLenCE(tmp, (int) len, CE_UTF8));
+	SET_STRING_ELT(ans, 0, mkCharLenCE(tmp, (int)len, CE_UTF8));
 	if(len >= 10000) Free(tmp);
     }
     UNPROTECT(2);

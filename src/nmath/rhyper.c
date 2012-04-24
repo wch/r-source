@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2012 The R Core Team
+ *  Copyright (C) 2000-2001 The R Core Team
  *  Copyright (C) 2005	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -148,7 +148,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	}
     }
     if (setup1 || setup2) {
-	m = (int) ((k + 1.0) * (n1 + 1.0) / (tn + 2.0));
+	m = (k + 1.0) * (n1 + 1.0) / (tn + 2.0);
 	minjx = imax2(0, k - n2);
 	maxjx = imin2(n1, k);
     }
@@ -225,14 +225,14 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	u = unif_rand() * p3;
 	v = unif_rand();
 	if (u < p1) {		/* rectangular region */
-	    ix = (int) (xl + u);
+	    ix = xl + u;
 	} else if (u <= p2) {	/* left tail */
-	    ix = (int) (xl + log(v) / lamdl);
+	    ix = xl + log(v) / lamdl;
 	    if (ix < minjx)
 		goto L30;
 	    v = v * (u - p1) * lamdl;
 	} else {		/* right tail */
-	    ix = (int) (xr - log(v) / lamdr);
+	    ix = xr - log(v) / lamdr;
 	    if (ix > maxjx)
 		goto L30;
 	    v = v * (u - p2) * lamdr;

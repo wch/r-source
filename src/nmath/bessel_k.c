@@ -245,7 +245,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 
     ex = *x;
     nu = *alpha;
-    *ncalc = imin2(*nb,0) - 2; // FIXME, should be for longs
+    *ncalc = imin2(*nb,0) - 2;
     if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
 	if(ex <= 0 || (*ize == 1 && ex > xmax_BESS_K)) {
 	    if(ex <= 0) {
@@ -499,7 +499,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 	if (iend == 1)
 	    return;
 
-	m = imin2((long) (wminf - nu),iend); // FIXME, should be for longs
+	m = imin2((long) (wminf - nu),iend);
 	for (i = 2; i <= m; ++i) {
 	    t1 = bk1;
 	    bk1 = bk2;

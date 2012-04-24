@@ -1246,6 +1246,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ap, argList, s, t, tag = R_NilValue, alist, ans;
     const char *str;
+    size_t n;
     int nargs = length(args), exact = 0;
     enum { NONE, PARTIAL, PARTIAL2, FULL } match = NONE;
 
@@ -1278,7 +1279,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
     str = translateChar(STRING_ELT(t, 0));
-    size_t n = strlen(str);
+    n = strlen(str);
 
     /* try to find a match among the attributes list */
     for (alist = ATTRIB(s); alist != R_NilValue; alist = CDR(alist)) {
