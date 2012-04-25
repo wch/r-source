@@ -1,6 +1,6 @@
 % File src/library/base/man/sprintf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sprintf}
@@ -38,8 +38,12 @@ gettextf(fmt, \dots, domain = NULL)
   hence some types (e.g., \code{"symbol"} or \code{"language"}, see
   \code{\link{typeof}}) are not allowed.
 
-  The following is abstracted from Kernighan and Ritchie
-  (see References).  The string \code{fmt} contains normal characters,
+  The following is abstracted from Kernighan and Ritchie (see
+  References): however the actual implementation will follow the C99
+  standard and fine details (especially the behaviour under user error)
+  may depend on the platform.
+
+  The string \code{fmt} contains normal characters,
   which are passed through to the output string, and also conversion
   specifications which operate on the arguments provided through
   \code{\dots}.  The allowed conversion specifications start with a
@@ -166,12 +170,20 @@ gettextf(fmt, \dots, domain = NULL)
   does perform sanity checks on the format, and since \R 2.10.0, we have
   not seen crashes anymore.  But not all possible user errors on all
   platforms have been tested, and some might be terminal.
+  
+  The behaviour on inputs not documented here is \sQuote{undefined},
+  which means it is allowed to differ by platform.
 }
 
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
   \emph{The C Programming Language.} Second edition, Prentice Hall.
-  describes the format options in table B-1 in the Appendix.
+  Describes the format options in table B-1 in the Appendix.
+
+  The C Standards, especially ISO/IEC 9899:1999 for \sQuote{C99}.  Links
+  can be found at \url{http://developer.r-project.org/Portability.html}.
+
+  \command{man sprintf} on a Unix-alike system.
 }
 
 \author{
