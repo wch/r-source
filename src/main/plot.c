@@ -690,7 +690,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
     else { /* ------ log axis ----- */
 	Rboolean reversed = FALSE;
 
-	n = (axp[2] + 0.5);
+	n = (int)(axp[2] + 0.5);
 	/* {xy}axp[2] for 'log': GLpretty() [./graphics.c] sets
 	   n < 0: very small scale ==> linear axis, above, or
 	   n = 1,2,3.  see switch() below */
@@ -1073,8 +1073,8 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Deferred processing */
     if (!R_FINITE(line)) {
 	/* Except that here mgp values are not relative to themselves */
-	line = (int) gpptr(dd)->mgp[2];
-	lineoff = line;
+	line = gpptr(dd)->mgp[2];
+	lineoff = (int) line;
     }
     if (!R_FINITE(pos)) pos = NA_REAL; else lineoff = 0;
 
@@ -2700,8 +2700,8 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	 ...) */
 
     SEXP Main, xlab, ylab, sub, string;
-    double adj, adjy, cex, offset, line, hpos, vpos, where;
-    int i, n, font, outer;
+    double adj, adjy, cex, offset, line, hpos, vpos;
+    int i, n, font, outer, where;
     rcolor col;
     SEXP originalArgs = args;
     pGEDevDesc dd = GEcurrentDevice();
@@ -3157,7 +3157,8 @@ static void drawPointsLines(double xp, double yp, double xold, double yold,
 SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, nobs, ans, saveans, stype = R_NilValue;
-    int i, n, type='p';
+    int i, n;
+    char type = 'p';
     double xp, yp, xold=0, yold=0;
     pGEDevDesc dd = GEcurrentDevice();
 
