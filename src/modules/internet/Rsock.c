@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
 
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2003   The R Core Team
+ *  Copyright (C) 1998-2012   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ static void check_init(void)
 void in_Rsockopen(int *port)
 {
     check_init();
-    *port = enter_sock(Sock_open(*port, NULL));
+    *port = enter_sock(Sock_open((Sock_port_t)*port, NULL));
 }
 
 void in_Rsocklisten(int *sockp, char **buf, int *len)
@@ -91,7 +91,7 @@ void in_Rsockconnect(int *port, char **host)
 #ifdef DEBUG
     printf("connect to %d at %s\n",*port, *host);
 #endif
-    *port = enter_sock(Sock_connect(*port, *host, NULL));
+    *port = enter_sock(Sock_connect((Sock_port_t)*port, *host, NULL));
 }
 
 void in_Rsockclose(int *sockp)
@@ -281,12 +281,12 @@ int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
 	    if (mytimeout < 0 || R_wait_usec / 1e-6 < mytimeout - used)
 		delta = R_wait_usec;
 	    else
-		delta = 1e6 * (mytimeout - used);
+		delta = (int)(1e6 * (mytimeout - used));
 	    tv.tv_sec = 0;
 	    tv.tv_usec = delta;
 	} else if (mytimeout >= 0) {
-	    tv.tv_sec = mytimeout - used;
-	    tv.tv_usec = 1e6 * (mytimeout - used - tv.tv_sec);
+	    tv.tv_sec = (int)(mytimeout - used);
+	    tv.tv_usec = (int)(1e6 * (mytimeout - used - tv.tv_sec));
 	} else {  /* always poll occationally--not really necessary */
 	    tv.tv_sec = 60;
 	    tv.tv_usec = 0;
@@ -507,7 +507,7 @@ int R_SockRead(int sockp, void *buf, int len, int blocking, int timeout)
 int R_SockOpen(int port)
 {
     check_init();
-    return Sock_open(port, NULL);
+    return Sock_open((Sock_port_t)port, NULL);
 }
 
 int R_SockListen(int sockp, char *buf, int len, int timeout)

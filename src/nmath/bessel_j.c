@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2005 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
 #endif
+
+#define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
 static void J_bessel(double *x, double *alpha, long *nb,
 		     double *b, long *ncalc);
@@ -408,7 +410,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 			p = plast * tover;
 			--n;
 			en -= 2.;
-			nend = imin2(*nb,n); // FIXME, should be for longs
+			nend = min0(*nb,n);
 			for (l = nstart; l <= nend; ++l) {
 			    pold = psavel;
 			    psavel = psave;
@@ -570,6 +572,6 @@ L250:
     else {
       /* Error return -- X, NB, or ALPHA is out of range : */
 	b[1] = 0.;
-	*ncalc = imin2(*nb,0) - 1; // FIXME, should be for longs
+	*ncalc = min0(*nb,0) - 1;
     }
 }

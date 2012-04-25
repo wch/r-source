@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2003 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
 #endif
+
+#define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
 static void Y_bessel(double *x, double *alpha, long *nb,
 		     double *by, long *ncalc);
@@ -495,7 +497,7 @@ L450:
 
     } else {
 	by[0] = 0.;
-	*ncalc = imin2(*nb,0) - 1; // FIXME, should be for longs
+	*ncalc = min0(*nb,0) - 1;
     }
 }
 

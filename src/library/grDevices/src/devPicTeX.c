@@ -193,7 +193,7 @@ static Rboolean PicTeX_Open(pDevDesc, picTeXDesc*);
 
 	/* Support routines */
 
-static void SetLinetype(int newlty, int newlwd, pDevDesc dd)
+static void SetLinetype(int newlty, double newlwd, pDevDesc dd)
 {
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
@@ -202,7 +202,8 @@ static void SetLinetype(int newlty, int newlwd, pDevDesc dd)
     if (ptd->lty) {
 	fprintf(ptd->texfp,"\\setdashpattern <");
 	for(i=0 ; i<8 && newlty&15 ; i++) {
-	    fprintf(ptd->texfp,"%dpt", newlwd * newlty&15);
+	    int lwd = (int)newlwd * newlty;
+	    fprintf(ptd->texfp,"%dpt", lwd & 15);
 	    templty = newlty>>4;
 	    if ((i+1)<8 && templty&15) fprintf(ptd->texfp,", ");
 	    newlty = newlty>>4;
@@ -469,15 +470,15 @@ static double PicTeX_StrWidth(const char *str,
     int size;
     double sum;
 
-    size = gc->cex * gc->ps + 0.5;
+    size = (int)(gc->cex * gc->ps + 0.5);
     SetFont(gc->fontface, size, ptd);
     sum = 0;
     if(mbcslocale && ptd->fontface != 5) {
 	/* This version at least uses the state of the MBCS */
-	int i, status, ucslen = mbcsToUcs2(str, NULL, 0, CE_NATIVE);
+	size_t i, ucslen = mbcsToUcs2(str, NULL, 0, CE_NATIVE);
 	if (ucslen != (size_t)-1) {
 	    ucs2_t ucs[ucslen];
-	    status = (int) mbcsToUcs2(str, ucs, ucslen, CE_NATIVE);
+	    int status = (int) mbcsToUcs2(str, ucs, (int)ucslen, CE_NATIVE);
 	    if (status >= 0) 
 		for (i = 0; i < ucslen; i++)
 		    if(ucs[i] < 128) sum += charwidth[ptd->fontface-1][ucs[i]];
@@ -593,7 +594,7 @@ static void PicTeX_Text(double x, double y, const char *str,
     double xoff = 0.0, yoff = 0.0;
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
-    size = gc->cex * gc->ps + 0.5;
+    size = (int)(gc->cex * gc->ps + 0.5);
     SetFont(gc->fontface, size, ptd);
     if(ptd->debug) 
 	fprintf(ptd->texfp,

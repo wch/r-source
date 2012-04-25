@@ -116,7 +116,7 @@ void
 qansari(Sint *len, double *x, Sint *m, Sint *n)
 {
     Sint i, l, u;
-    double c, p, q, xi;
+    double c, p, xi;
     double ***w;
 
     w = w_init(*m, *n);
@@ -132,8 +132,8 @@ qansari(Sint *len, double *x, Sint *m, Sint *n)
 	else if(xi == 1)
 	    x[i] = u;
 	else {
-	    p = 0;
-	    q = 0;
+	    p = 0.;
+	    int q = 0;
 	    for(;;) {
 		p += cansari(q, (Sint)*m, (Sint)*n, w) / c;
 		if (p >= xi)

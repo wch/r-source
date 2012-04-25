@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2001 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
  *  Copyright (C) 2002-3    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,8 @@
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
 #endif
+
+#define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
 static void K_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bk, long *ncalc);
@@ -245,7 +247,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 
     ex = *x;
     nu = *alpha;
-    *ncalc = imin2(*nb,0) - 2; // FIXME, should be for longs
+    *ncalc = min0(*nb,0) - 2;
     if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
 	if(ex <= 0 || (*ize == 1 && ex > xmax_BESS_K)) {
 	    if(ex <= 0) {
@@ -499,7 +501,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 	if (iend == 1)
 	    return;
 
-	m = imin2((long) (wminf - nu),iend); // FIXME, should be for longs
+	m = min0((long) (wminf - nu),iend);
 	for (i = 2; i <= m; ++i) {
 	    t1 = bk1;
 	    bk1 = bk2;
