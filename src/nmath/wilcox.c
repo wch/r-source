@@ -278,7 +278,7 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 	for (;;) {
 	    p += cwilcox(q, mm, nn) / c;
 	    if (p > x) {
-		q = m * n - q;
+		q = (int) (m * n - q);
 		break;
 	    }
 	    q++;
@@ -315,7 +315,7 @@ double rwilcox(double m, double n)
     for (i = 0; i < k; i++)
 	x[i] = i;
     for (i = 0; i < n; i++) {
-	j = floor(k * unif_rand());
+	j = (int) floor(k * unif_rand());
 	r += x[j];
 	x[j] = x[--k];
     }

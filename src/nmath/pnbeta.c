@@ -28,10 +28,10 @@ pnbeta_raw(double x, double o_x, double a, double b, double ncp)
     const int    itrmax = 10000;  /* 100 is not enough for pf(ncp=200)
 				     see PR#11277 */
 
-    double a0, ax, lbeta, c, errbd, temp, x0, tmp_c;
+    double a0, lbeta, c, errbd, x0, temp, tmp_c;
     int j, ierr;
 
-    long double ans, gx, q, sumq;
+    long double ans, ax, gx, q, sumq;
 
     if (ncp < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
 
@@ -59,7 +59,7 @@ pnbeta_raw(double x, double o_x, double a, double b, double ncp)
     ans = ax = q * temp;
 
 	/* recurse over subsequent terms until convergence is achieved */
-    j = x0;
+    j = (int) x0;
     do {
 	j++;
 	temp -= gx;

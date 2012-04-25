@@ -1762,10 +1762,10 @@ static void R_WriteMagic(FILE *fp, int number)
 	strcpy((char*)buf, "RDX2");
 	break;
     default:
-	buf[0] = (number/1000) % 10 + '0';
-	buf[1] = (number/100) % 10 + '0';
-	buf[2] = (number/10) % 10 + '0';
-	buf[3] = number % 10 + '0';
+	buf[0] = (char)((number/1000) % 10 + '0');
+	buf[1] = (char)((number/100) % 10 + '0');
+	buf[2] = (char)((number/10) % 10 + '0');
+	buf[3] = (char)(number % 10 + '0');
     }
     buf[4] = '\n';
     res = fwrite((char*)buf, sizeof(char), 5, fp);

@@ -81,7 +81,7 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	/* Approx. from	 Abramowitz & Stegun 26.7.10 (p.949) */
 	s = 1./(4.*df);
 
-	return pnorm(tt*(1. - s), del, 
+	return pnorm((double)(tt*(1. - s)), del, 
 		     sqrt((double) (1. + tt*tt*2.*s)),
 		     lower_tail != negdel, log_p);
     }

@@ -1182,7 +1182,7 @@ static void print2buff(const char *strng, LocalParseData *d)
     bufflen = strlen(d->buffer.data);
     R_AllocStringBuffer(bufflen + tlen, &(d->buffer));
     strcat(d->buffer.data, strng);
-    d->len += tlen;
+    d->len += (int) tlen; // FIXME
 }
 
 static void vector2buff(SEXP vector, LocalParseData *d)
