@@ -345,7 +345,7 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
 	   SEXP sh, SEXP fast)
 {
     SEXP res, forecasts, se;
-    int  n = asReal(nahead), p = LENGTH(sa0);
+    int  n = asInteger(nahead), p = LENGTH(sa0);
     double *Z = REAL(sZ), *a = REAL(sa0), *P = REAL(sP0), *T = REAL(sT),
 	*V = REAL(sV), h = asReal(sh);
     int i, j, k, l;
