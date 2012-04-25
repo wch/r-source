@@ -255,17 +255,26 @@ checkPoFile <- function(f, strictPlural = FALSE) {
 		    location <- paste0(f, ":", j)
 		    if (inherits(f2, "try-error"))
 			diff <- conditionMessage(attr(f2, "condition"))
-		    else if (length(f1) < length(f2))
-			diff <- "too many entries"
-		    else if (length(f1) > length(f2))
-			diff <- "too few entries"
 		    else {
+		    	if (length(f1) < length(f2)) {
+			    diff <- "too many entries"
+			    length(f2) <- length(f1)
+		    	} else if (length(f1) > length(f2)) {
+			    diff <- "too few entries"
+			    length(f1) <- length(f2)
+			} else
+			    diff <- ""
 			diffs <- which(f1 != f2)
-			if (length(diffs) > 1)
-			    diff <- paste("differences in entries", 
-			                  paste(diffs, collapse=","))
-			else
-			    diff <- paste("difference in entry", diffs)
+			if (length(diffs)) {
+			    if (diff != "")
+			    	diff <- paste0(diff, ", ")
+			    if (length(diffs) > 1)
+				diff <- paste(paste0(diff, "differences in entries"), 
+			                      paste(diffs, collapse=","))
+			    else
+				diff <- paste(paste0(diff, "difference in entry"), 
+				              diffs)
+			}
 		    }
 		    result <- rbind(result, c(location, ref, diff, s1, s2)) 
 		}
