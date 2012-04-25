@@ -252,7 +252,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    *q = '\0';
 			    nf = strlen(fmt2);
 			    if (nf > MAXLINE)
-				error(_("the '%*' constructed 'fmt2' length exceeds maximum of %d"),
+				error(_("'fmt' length exceeds maximal format length %d"),
 				      MAXLINE);
 			    fmtp = fmt2;
 			} else fmtp = fmt;
