@@ -410,28 +410,34 @@ SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    R_xlen_t len;
 
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    SEXP x = CAR(args);
+
     if (PRIMVAL(op)) { /* xlength */
-	if(isObject(CAR(args)) && DispatchOrEval(call, op, "xlength", args,
-						 rho, &ans, 0, 1))
+	if(isObject(x) && DispatchOrEval(call, op, "xlength", args,
+					 rho, &ans, 0, 1))
 	    return(ans);
-	if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
-						 rho, &ans, 0, 1))
+	if(isObject(x) && DispatchOrEval(call, op, "length", args,
+					 rho, &ans, 0, 1))
 	    return(ans);
 
-	len = xlength(CAR(args));
-	return ScalarReal((double) len);
+	return ScalarReal((double) xlength(x));
     }
-    if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
-					     rho, &ans, 0, 1))
+    if(isObject(x) && DispatchOrEval(call, op, "length", args,
+				     rho, &ans, 0, 1))
 	return(ans);
 
-    len = xlength(CAR(args));
-    return ScalarInteger((len <= INT_MAX) ? (int) len : NA_INTEGER);
+#ifdef LONG_VECTOR_SUPPORT
+    R_xlen_t len = xlength(x);
+    if (len > INT_MAX)
+	errorcall(call, _("length() requested for a long vector: use xlength() instead"));
+    return ScalarInteger((int) len);
+#else
+    return ScalarInteger(length(x));
+#endif
 }
 
 

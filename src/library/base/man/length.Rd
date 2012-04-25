@@ -27,7 +27,7 @@ xlength(x) <- value
 }
 \details{
   \code{length} and \code{xlength} differ only in the way they handle
-  the long vectors introduced in \R 2.16.0.
+  the long vectors introduced for 64-bit builds in \R 2.16.0.
   
   All are generic: you can write methods to handle specific
   classes of objects, see \link{InternalMethods}.  \code{length<-} has a
@@ -45,8 +45,9 @@ xlength(x) <- value
   The default method for \code{length} currently returns an
   \code{\link{integer}} of length 1.  Since this may change in the
   future and may differ for other methods, programmers should not rely
-  on it.  (Should the length exceed the maximum representable integer,
-  it is returned as \code{NA}.)
+  on it.  It gives an error for long vectors: the default method will
+  only ever return a non-negative integer (and never \code{NA}), but
+  other methods are not so restricted.
 
   On the other hand, the default method for \code{xlength} will return a
   double value for vectors of more than \eqn{2^{31}-1}{2^31 - 1}

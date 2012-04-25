@@ -58,7 +58,8 @@
       vectors not supported yet}.  They can be serialized and
       unserialized, coercion, \code{identical()} and
       \code{object.size()} work and means can be computed.  Their
-      lengths can be get and set by \code{xlength()}.
+      lengths can be get and set by \code{xlength()}: calling
+      \code{length()} on a long vector will throw an error.
 
       \item A limited amount of indexing is available.  Generally
       double-valued indices can be used to access elements beyond
