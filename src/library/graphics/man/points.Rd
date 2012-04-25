@@ -114,7 +114,7 @@ points(x, \dots)
   and even viewer-specific for \code{\link{pdf}}).
 
   The difference between \code{pch=16} and \code{pch=19} is that the
-  latter uses a border and so is perceptibly larger when \code{lty} is
+  latter uses a border and so is perceptibly larger when \code{lwd} is
   large relative to \code{cex}.
 
   Values \code{pch=26:31} are currently unused and \code{pch=32:127}
@@ -150,7 +150,7 @@ points(x, \dots)
   Not all negative numbers are valid as Unicode points, and no check is
   done.  A display device is likely to use a rectangle for (or omit)
   Unicode points that do not exist or which it does not have a glyph.
-  
+
   What happens for very small or zero values of \code{cex} is
   device-dependent: symbols or characters may become invisible or
   they may be plotted at a fixed minimum size.   As
@@ -228,17 +228,19 @@ pchShow(NULL, cex = 4, cextext = 0, main = NULL)
 # Standard cases in a MBCS locale will not plot the top half.
 TestChars <- function(sign=1, font=1, ...)
 {
-   if(font == 5) { sign <- 1; r <- c(32:126, 160:254)
-   } else if (l10n_info()$MBCS) r <- 32:126 else r <- 32:255
+   MB <- l10n_info()$MBCS
+   r <- if(font == 5) { sign <- 1; c(32:126, 160:254)
+       } else if(MB) 32:126 else 32:255
    if (sign == -1) r <- c(32:126, 160:255)
    par(pty="s")
-   plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="",
-        xaxs="i", yaxs="i")
-   grid(17, 17, lty=1)
+   plot(c(-1,16), c(-1,16), type="n", xlab="",ylab="", xaxs="i", yaxs="i",
+        main=sprintf("sign = \%d, font = \%d", sign,font))
+   grid(17, 17, lty=1) ; mtext(paste("MBCS:", MB))
    for(i in r) try(points(i\%\%16, i\%/\%16, pch=sign*i, font=font,...))
 }
 TestChars()
 try(TestChars(sign=-1))
-TestChars(font=5) # Euro might be at 160.  Mac OS has apple at 240.
+TestChars(font=5) # Euro might be at 160 (0+10*16).  Mac OS has apple at 240 (0+15*16).
+try(TestChars(-1, font=2))# bold
 }}
 \keyword{aplot}
