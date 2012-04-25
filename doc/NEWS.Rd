@@ -118,6 +118,26 @@
     }
   }
 
+  \subsection{PACKAGE parallel}{
+    \itemize{
+      \item There is a new function \code{mcaffinity()} which allows to
+      get or set the CPU affinity mask for the current \R process on
+      systems that supports this (currently only Linux was tested
+      successfully). It has no effect on systems that do not support
+      process affinity. Users are not expected to use this function
+      directly (with the exception of fixing libraries that break
+      affinity settings like OpenBLAS) -- the function is rather
+      intended to support affinity control in high-level parallel
+      functions. In the future, \R may supplement lack of affinity
+      control in the OS by its own bookkeeping via \code{mcaffinity}
+      related to processes and threads it spawns.
+      
+      \item \code{mcparallel} has a new argument \code{mc.affinity}
+      which attempts to set the affinity of the child process according
+      to the specification contained therein.
+    }
+  }
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       % This is deferred until we can get package maintainers to cooperate.

@@ -4,7 +4,7 @@ useDynLib("parallel", .registration = TRUE, .fixes = "C_")
 export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream)
 
 if(tools:::.OStype() == "unix") {
-    export(mccollect, mcparallel, mc.reset.stream)
+    export(mccollect, mcparallel, mc.reset.stream, mcaffinity)
 }
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,

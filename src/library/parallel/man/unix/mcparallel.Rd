@@ -19,7 +19,7 @@
   \code{mccollect} collects results from one or more parallel processes.
 }
 \usage{
-mcparallel(expr, name, mc.set.seed = TRUE, silent = FALSE)
+mcparallel(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL)
 
 mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }
@@ -31,6 +31,9 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   \item{mc.set.seed}{logical: see section \sQuote{Random numbers}.}
   \item{silent}{if set to \code{TRUE} then all output on stdout will be
     suppressed (stderr is not affected).}
+  \item{mc.affinity}{either a numeric vector specifying CPUs to restrict
+    the child process to (1-based) or \code{NULL} to not modify the CPU
+    affinity}
   \item{jobs}{list of jobs (or a single job) to collect results
     for.  Alternatively \code{jobs} can also be an integer vector of
     process IDs.  If omitted \code{collect} will wait for all currently
@@ -67,6 +70,11 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   them correctly.  \code{mccollect} will return \code{NULL} for a
   terminating job that has sent its results already after which the
   job is no longer available.
+
+  The \code{mc.affinity} parameter can be used to try to restrict
+  the chlid process to specific CPUs. The availability and the extent of
+  this feature is system-dependent (e.g., some systems will only
+  consider the CPU count, others will ignore it completely).
 }
 \value{
   \code{mcparallel} returns an object of the class \code{"parallelJob"}

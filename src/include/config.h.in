@@ -581,6 +581,15 @@
 /* Define to 1 if you have the `rl_completion_matches' function. */
 #undef HAVE_RL_COMPLETION_MATCHES
 
+/* Define to 1 if you have the `sched_getaffinity' function. */
+#undef HAVE_SCHED_GETAFFINITY
+
+/* Define to 1 if you have the <sched.h> header file. */
+#undef HAVE_SCHED_H
+
+/* Define to 1 if you have the `sched_setaffinity' function. */
+#undef HAVE_SCHED_SETAFFINITY
+
 /* Define to 1 if you have the `setenv' function. */
 #undef HAVE_SETENV
 
