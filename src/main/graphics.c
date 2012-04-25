@@ -1302,8 +1302,8 @@ static void layoutRegions(double widths[], double heights[],
 }
 
 static void subRegion(double *left, double *right, double *bottom, double *top,
-		      double mincol, double maxcol,
-		      double minrow, double maxrow,
+		      int mincol, int maxcol,
+		      int minrow, int maxrow,
 		      double widths[], double heights[], pGEDevDesc dd)
 {
     double totalWidth = sumRegions(widths, 0, gpptr(dd)->numcols-1);

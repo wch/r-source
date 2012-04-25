@@ -95,7 +95,7 @@ static SEXP FixupPch(SEXP pch, int dflt)
     else if (isReal(pch)) {
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = R_FINITE(REAL(pch)[i]) ?
-		REAL(pch)[i] : NA_INTEGER;
+		(int) REAL(pch)[i] : NA_INTEGER;
     }
     else if (isString(pch)) {
 	for (i = 0; i < n; i++) {
@@ -190,7 +190,7 @@ static SEXP FixupFont(SEXP font, int dflt)
     else if (isReal(font)) {
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
-	    k = REAL(font)[i];
+	    k = (int) REAL(font)[i];
 #ifndef Win32
 	    if (k < 1 || k > 5) k = NA_INTEGER;
 #else
@@ -676,7 +676,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
     double umin, umax, dn, rng, small;
     int i, n, ne;
     if (!logflag || axp[2] < 0) { /* --- linear axis --- Only use axp[] arg. */
-	n = fabs(axp[2]) + 0.25;/* >= 0 */
+	n = (int)(fabs(axp[2]) + 0.25);/* >= 0 */
 	dn = imax2(1, n);
 	rng = axp[1] - axp[0];
 	small = fabs(rng)/(100.*dn);
@@ -728,7 +728,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	 */
 	switch(n) {
 	case 1: /* large range:	1	 * 10^k */
-	    i = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
+	    i = (int)(floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25);
 	    ne = i / nint + 1;
 #ifdef DEBUG_axis
 	    REprintf("CreateAtVector [log-axis(), case 1]: (nint, ne) = (%d,%d)\n",
@@ -1073,7 +1073,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Deferred processing */
     if (!R_FINITE(line)) {
 	/* Except that here mgp values are not relative to themselves */
-	line = gpptr(dd)->mgp[2];
+	line = (int) gpptr(dd)->mgp[2];
 	lineoff = line;
     }
     if (!R_FINITE(pos)) pos = NA_REAL; else lineoff = 0;
@@ -2329,7 +2329,7 @@ SEXP attribute_hidden do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Done here so 'vfont' trumps inline 'family' */
     if (!isNull(vfont) && !isExpression(txt)) {
 	strncpy(gpptr(dd)->family, "Her ", 201);
-	gpptr(dd)->family[3] = INTEGER(vfont)[0];
+	gpptr(dd)->family[3] = (char) INTEGER(vfont)[0];
 	vectorFonts = TRUE;
     }
 
@@ -3500,7 +3500,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
     /* 'vfont' trumps inline 'family' */				\
     if (!isNull(vfont) && !isExpression(str)) {				\
 	strncpy(gpptr(dd)->family, "Her ", 201);			\
-	gpptr(dd)->family[3] = INTEGER(vfont)[0];			\
+	gpptr(dd)->family[3] = (char)INTEGER(vfont)[0];			\
 	gpptr(dd)->font = INTEGER(vfont)[1];				\
     } else gpptr(dd)->font = INTEGER(font)[0];				\
 									\

@@ -211,7 +211,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    error(_("symbol '%s' is too long"), p);
 	q = buf;
 	while ((*q = *p) != '\0') {
-	    if(symbol->type == R_FORTRAN_SYM) *q = tolower(*q);
+	    if(symbol->type == R_FORTRAN_SYM) *q = (char) tolower(*q);
 	    p++;
 	    q++;
 	}
@@ -1568,7 +1568,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    **cptr0 = (char**) R_alloc(n, sizeof(char*));
 		for (R_xlen_t i = 0 ; i < n ; i++) {
 		    const char *ss = translateChar(STRING_ELT(s, i));
-		    int nn = strlen(ss) + 1 + 2 * NG;
+		    size_t nn = strlen(ss) + 1 + 2 * NG;
 		    char *ptr = (char*) R_alloc(nn, sizeof(char));
 		    memset(ptr, FILL, nn);
 		    cptr[i] = cptr0[i] = ptr + NG;
@@ -1583,7 +1583,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		char **cptr = (char**) R_alloc(n, sizeof(char*));
 		for (R_xlen_t i = 0 ; i < n ; i++) {
 		    const char *ss = translateChar(STRING_ELT(s, i));
-		    int nn = strlen(ss) + 1;
+		    size_t nn = strlen(ss) + 1;
 		    if(nn > 1) {
 			cptr[i] = (char*) R_alloc(nn, sizeof(char));
 			strcpy(cptr[i], ss);
@@ -2575,7 +2575,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	error(_("invalid argument count in call_R"));
     if (nres < 0)
 	error(_("invalid return value count in call_R"));
-    PROTECT(pcall = call = allocList(nargs + 1));
+    PROTECT(pcall = call = allocList((int) nargs + 1));
     SET_TYPEOF(call, LANGSXP);
     SETCAR(pcall, (SEXP)func);
     s = R_NilValue;		/* -Wall */
@@ -2585,22 +2585,22 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	switch(type) {
 	case LGLSXP:
 	case INTSXP:
-	    n = lengths[i];
+	    n = (int) lengths[i];
 	    SETCAR(pcall, allocVector(type, n));
 	    memcpy(INTEGER(CAR(pcall)), arguments[i], n * sizeof(int));
 	    break;
 	case REALSXP:
-	    n = lengths[i];
+	    n = (int) lengths[i];
 	    SETCAR(pcall, allocVector(REALSXP, n));
 	    memcpy(REAL(CAR(pcall)), arguments[i], n * sizeof(double));
 	    break;
 	case CPLXSXP:
-	    n = lengths[i];
+	    n = (int) lengths[i];
 	    SETCAR(pcall, allocVector(CPLXSXP, n));
 	    memcpy(REAL(CAR(pcall)), arguments[i], n * sizeof(Rcomplex));
 	    break;
 	case STRSXP:
-	    n = lengths[i];
+	    n = (int) lengths[i];
 	    SETCAR(pcall, allocVector(STRSXP, n));
 	    for (j = 0 ; j < n ; j++) {
 		char *str = (char*)(arguments[i]);
@@ -2626,13 +2626,13 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	break;
     case VECSXP:
 	n = length(s);
-	if (nres < n) n = nres;
+	if (nres < n) n = (int) nres;
 	for (i = 0 ; i < n ; i++)
 	    results[i] = (char *) RObjToCPtr2(VECTOR_ELT(s, i));
 	break;
     case LISTSXP:
 	n = length(s);
-	if(nres < n) n = nres;
+	if(nres < n) n = (int) nres;
 	for(i = 0 ; i < n ; i++) {
 	    results[i] = (char *) RObjToCPtr2(s);
 	    s = CDR(s);

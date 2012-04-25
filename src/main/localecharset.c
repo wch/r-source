@@ -654,7 +654,7 @@ char *locale2charset(const char *locale)
     if (0 == strcmp(enc, "UTF-8")) strcpy(enc, "utf8");
 
     if(strcmp(enc, "") && strcmp(enc, "utf8")) {
-	for(i = 0; enc[i]; i++) enc[i] = tolower(enc[i]);
+	for(i = 0; enc[i]; i++) enc[i] = (char) tolower(enc[i]);
 
 	for(i = 0; i < known_count; i++)
 	    if (0 == strcmp(known[i].name,enc)) return known[i].value;
@@ -679,7 +679,7 @@ char *locale2charset(const char *locale)
 		    charset[3] = '-';
 		}
 		for(i = 0; charset[i]; i++)
-		    charset[i] = toupper(charset[i]);
+		    charset[i] = (char) toupper(charset[i]);
 		return charset;
 	    }
 	}
