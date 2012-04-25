@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"POT-Creation-Date: 2012-04-25 15:01+0100\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -49,11 +49,11 @@ msgstr ""
 msgid ".C(..): Width cannot be zero"
 msgstr ".C(..): ширина не может = 0"
 
-#: src/appl/strsignif.c:135
+#: src/appl/strsignif.c:136
 msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
 msgstr ".C(..): для  \"d\"-формата 'тип' должно быть \"integer\" "
 
-#: src/appl/strsignif.c:218
+#: src/appl/strsignif.c:221
 msgid ".C(..): 'type' must be \"real\" for this format"
 msgstr ".C(..): для этого формата 'тип' должен быть \"real\""
 
@@ -505,8 +505,8 @@ msgstr "кодировка '%s' не распознана"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ОШИБКА: неудачная перекодировка из '%s'>\n"
 
-#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
-#: src/gnuwin32/system.c:1037 src/main/connections.c:569
+#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1036
+#: src/gnuwin32/system.c:1048 src/main/connections.c:569
 #: src/main/connections.c:574 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
 #: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
@@ -520,58 +520,63 @@ msgstr "не могу открыть файл '%s': %s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): файл '%s' не существует\n"
 
-#: src/gnuwin32/system.c:988
+#: src/gnuwin32/system.c:967
+#, fuzzy, c-format
+msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
+msgstr "ВНИМАНИЕ: '%s' значение неправильное: пропущено"
+
+#: src/gnuwin32/system.c:999
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ВНИМАНИЕ: не задан max-mem-size\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:1005
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: значение --max-mem-size неверное: пропущено\n"
 
-#: src/gnuwin32/system.c:996
+#: src/gnuwin32/system.c:1007
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "ВНИМАНИЕ: --max-mem-size=%lu%c: слишком велик и пропущен\n"
 
-#: src/gnuwin32/system.c:1001
+#: src/gnuwin32/system.c:1012
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "ВНИМАНИЕ: --max-mem-size =%4.1fM слишком мал и пропущен\n"
 
-#: src/gnuwin32/system.c:1005
+#: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "ВНИМАНИЕ: --max-mem-size =%4.0fM: слишком велик, установлен в %uM\n"
 
-#: src/gnuwin32/system.c:1048 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "WARNING: '-e %s', пропущенная при вводе, слишком длинная\n"
 
-#: src/gnuwin32/system.c:1052 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:369
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ВНИМАНИЕ: неизвестный параметр '%s'\n"
 
-#: src/gnuwin32/system.c:1074 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:373
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "АРГУМЕНТ '%s' __пропущен__\n"
 
-#: src/gnuwin32/system.c:1080 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:380
 msgid "cannot use -e with -f or --file"
 msgstr "не могу использовать -e вместе с -f или --file"
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1109
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "создание временного файла не удалось -- установить подходящую TMPDIR?"
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:430
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "Вы должны задать '--save', '--no-save' или '--vanilla'"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1133
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -2750,7 +2755,7 @@ msgstr "'NAME' отсутствует"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Неправильное количество аргументов (%d), ожидается %d для '%s' "
 
-#: src/main/dotcode.c:1183 src/main/dotcode.c:2218
+#: src/main/dotcode.c:1183 src/main/dotcode.c:2227
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
@@ -2809,38 +2814,38 @@ msgstr "не поддерживаемая кодировка '%s'"
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "проблема конвертации при перекодировке '%s'"
 
-#: src/main/dotcode.c:1592
+#: src/main/dotcode.c:1601
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:1607 src/main/dotcode.c:1613
+#: src/main/dotcode.c:1616 src/main/dotcode.c:1622
 #, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "неправильный режим (%s) для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:1618
+#: src/main/dotcode.c:1627
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2339
+#: src/main/dotcode.c:2348
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "тип \"%s\" не поддерживается при межязыковых вызовах"
 
-#: src/main/dotcode.c:2406
+#: src/main/dotcode.c:2415
 msgid "invalid function in call_R"
 msgstr "неправильная функция в call_R"
 
-#: src/main/dotcode.c:2408
+#: src/main/dotcode.c:2417
 msgid "invalid argument count in call_R"
 msgstr "неправильный счет аргументов в call_R"
 
-#: src/main/dotcode.c:2410
+#: src/main/dotcode.c:2419
 msgid "invalid return value count in call_R"
 msgstr "неправильный счет возвращаемого значения в call_R"
 
-#: src/main/dotcode.c:2444
+#: src/main/dotcode.c:2453
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "режим '%s' не поддерживается в call_R"
@@ -3291,12 +3296,12 @@ msgid "exported symbol '%s' has no value"
 msgstr "экспортируемый символ '%s' не имеет значения"
 
 # fuzzy, c-format
-#: src/main/envir.c:3500
+#: src/main/envir.c:3506
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "неизвестная кодировка: %d"
 
-#: src/main/envir.c:3520
+#: src/main/envir.c:3526
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "внутреннее nul в строке: '%s'"
@@ -6690,7 +6695,7 @@ msgstr "неправильный тип аргумента [%d]: '%s'"
 msgid "arguments cannot be recycled to the same length"
 msgstr "аргументы не могут самоповторяться до одинаковой длины"
 
-#: src/main/sprintf.c:149
+#: src/main/sprintf.c:149 src/main/sprintf.c:255
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "длина 'fmt' превышает максимальную длину формата %d"
@@ -6714,10 +6719,6 @@ msgstr ""
 #: src/main/sprintf.c:226
 msgid "argument for '*' conversion specification must be a number"
 msgstr "аргумент у '*'-указания конверсии должен быть числом"
-
-#: src/main/sprintf.c:255
-msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-msgstr "длина '%*', сделанной 'fmt2', превышает максимум %d"
 
 #: src/main/sprintf.c:264
 msgid "coercion has changed vector length to 0"
@@ -8285,6 +8286,9 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
+#~ msgstr "длина '%*', сделанной 'fmt2', превышает максимум %d"
 
 #~ msgid "lists must be duplicated in .C"
 #~ msgstr "списки должны быть дублированы в .C"

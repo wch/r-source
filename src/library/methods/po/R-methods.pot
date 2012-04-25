@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-09 06:26\n"
+"POT-Creation-Date: 2012-04-25 14:04\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -675,6 +675,9 @@ msgid "Multiple definitions exist for class %s; should specify one of them (%s),
 msgstr ""
 
 msgid "No definition found for class %s"
+msgstr ""
+
+msgid "Trying to execute load actions without methods package"
 msgstr ""
 
 msgid "Missing  function for load action: %s"

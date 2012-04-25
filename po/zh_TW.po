@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"POT-Creation-Date: 2012-04-25 15:01+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -43,11 +43,11 @@ msgstr "rcont2 [%d,%d]: exp 向下溢位到 0; 演算法失敗"
 msgid ".C(..): Width cannot be zero"
 msgstr ".C(..): 寬度不能為零"
 
-#: src/appl/strsignif.c:135
+#: src/appl/strsignif.c:136
 msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
 msgstr ".C(..): 'type' 如果用於 \"d\"-格式的話必須是 \"integer\""
 
-#: src/appl/strsignif.c:218
+#: src/appl/strsignif.c:221
 msgid ".C(..): 'type' must be \"real\" for this format"
 msgstr ".C(..): 'type' 用於這種格式的話必須是 \"real\""
 
@@ -499,8 +499,8 @@ msgstr "編碼 '%s' 無法確認"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<錯誤：從編碼 '%s' 重新編碼時失敗>\n"
 
-#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
-#: src/gnuwin32/system.c:1037 src/main/connections.c:569
+#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1036
+#: src/gnuwin32/system.c:1048 src/main/connections.c:569
 #: src/main/connections.c:574 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
 #: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
@@ -514,58 +514,63 @@ msgstr "無法開啟檔案 '%s' ：%s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): 檔案 '%s' 不存在\n"
 
-#: src/gnuwin32/system.c:988
+#: src/gnuwin32/system.c:967
+#, fuzzy, c-format
+msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
+msgstr "警告：'%s' 值無效：已忽略"
+
+#: src/gnuwin32/system.c:999
 msgid "WARNING: no max-mem-size given\n"
 msgstr "警告: max-mem-size 沒有定義\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:1005
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "警告: --max-mem-size 值不正確: 忽略不用\n"
 
-#: src/gnuwin32/system.c:996
+#: src/gnuwin32/system.c:1007
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "警告：--max-mem-size=%lu%c：太大因而忽略\n"
 
-#: src/gnuwin32/system.c:1001
+#: src/gnuwin32/system.c:1012
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "警告：--max-mem-size=%4.1fM：太小因而忽略\n"
 
-#: src/gnuwin32/system.c:1005
+#: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "警告：--max-mem-size=%4.0fM：太大因而視為 %uM\n"
 
-#: src/gnuwin32/system.c:1048 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "警告：'-e %s' 因為輸入太長而被省略\n"
 
-#: src/gnuwin32/system.c:1052 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:369
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 沒有 '%s' 這樣的選項\n"
 
-#: src/gnuwin32/system.c:1074 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:373
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引數 '%s' 忽略不用\n"
 
-#: src/gnuwin32/system.c:1080 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:380
 msgid "cannot use -e with -f or --file"
 msgstr "無法將 -e 與 -f 或 --file 共同使用"
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1109
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "建立暫存檔時失敗 -- 已適當設定了 TMPDIR？"
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:430
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "您必須指定 '--save'、'--no-save' 或 '--vanilla' 其中的一個"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1133
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "無法建立 'reader thread'；您必須釋放一些系統資源"
@@ -2710,7 +2715,7 @@ msgstr "缺少 'EXPR'"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "不正確的引數數量 (%d)，預期為 %d 用於 '%s'"
 
-#: src/main/dotcode.c:1183 src/main/dotcode.c:2218
+#: src/main/dotcode.c:1183 src/main/dotcode.c:2227
 msgid "too many arguments, sorry"
 msgstr "對不起，引數太多"
 
@@ -2767,38 +2772,38 @@ msgstr "不支援這個編碼 '%s'"
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "轉換編碼 '%s' 時出了問題"
 
-#: src/main/dotcode.c:1592
+#: src/main/dotcode.c:1601
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 
-#: src/main/dotcode.c:1607 src/main/dotcode.c:1613
+#: src/main/dotcode.c:1616 src/main/dotcode.c:1622
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 
-#: src/main/dotcode.c:1618
+#: src/main/dotcode.c:1627
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2339
+#: src/main/dotcode.c:2348
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "語言間呼叫不支援此一類型 \"%s\""
 
-#: src/main/dotcode.c:2406
+#: src/main/dotcode.c:2415
 msgid "invalid function in call_R"
 msgstr "call_R 中的函數不正確"
 
-#: src/main/dotcode.c:2408
+#: src/main/dotcode.c:2417
 msgid "invalid argument count in call_R"
 msgstr "call_R 的引數數目不正確"
 
-#: src/main/dotcode.c:2410
+#: src/main/dotcode.c:2419
 msgid "invalid return value count in call_R"
 msgstr "call_R 的回傳值數目不正確"
 
-#: src/main/dotcode.c:2444
+#: src/main/dotcode.c:2453
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R 不支援 '%s' 型式"
@@ -3249,12 +3254,12 @@ msgstr "導入和導出名稱的長度必須相等"
 msgid "exported symbol '%s' has no value"
 msgstr "導出的符號 '%s' 沒有值"
 
-#: src/main/envir.c:3500
+#: src/main/envir.c:3506
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "不明編碼：%d"
 
-#: src/main/envir.c:3520
+#: src/main/envir.c:3526
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "空值嵌入於字串中：'%s'"
@@ -6597,7 +6602,7 @@ msgstr "無效的引數 [%d] 類型：'%s'"
 msgid "arguments cannot be recycled to the same length"
 msgstr "不是所有的引數都一樣長"
 
-#: src/main/sprintf.c:149
+#: src/main/sprintf.c:149 src/main/sprintf.c:255
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' 長度超出格式長度的最大值 %d"
@@ -6620,10 +6625,6 @@ msgstr "在每個轉換規格中只支援最多一個星號 '*'"
 #: src/main/sprintf.c:226
 msgid "argument for '*' conversion specification must be a number"
 msgstr "用於 '*' 轉換規格的引數必須是一個數字"
-
-#: src/main/sprintf.c:255
-msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-msgstr "'%*' 所建構的 'fmt2' 長度超出了最大值 %d"
 
 #: src/main/sprintf.c:264
 msgid "coercion has changed vector length to 0"
@@ -8161,6 +8162,9 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "無法使用 X11"
+
+#~ msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
+#~ msgstr "'%*' 所建構的 'fmt2' 長度超出了最大值 %d"
 
 #~ msgid "lists must be duplicated in .C"
 #~ msgstr "串列必須在 .C 中被重製"

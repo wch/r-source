@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-09 06:26\n"
+"POT-Creation-Date: 2012-04-25 14:04\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1069,6 +1069,9 @@ msgstr ""
 
 msgid "No definition found for class %s"
 msgstr " クラス %s に対する定義はありません "
+
+msgid "Trying to execute load actions without methods package"
+msgstr ""
 
 #, fuzzy
 msgid "Missing  function for load action: %s"

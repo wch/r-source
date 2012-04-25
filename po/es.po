@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"POT-Creation-Date: 2012-04-25 15:01+0100\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -43,12 +43,12 @@ msgstr "rcont2 [%d,%d]: exp se convierte en 0; problemas en el algoritmo"
 msgid ".C(..): Width cannot be zero"
 msgstr ".C(..): el ancho no puede ser cero"
 
-#: src/appl/strsignif.c:135
+#: src/appl/strsignif.c:136
 msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
 msgstr ""
 ".C(..): 'type' debe ser \"entero\" para poder utilizar el formato \"d\""
 
-#: src/appl/strsignif.c:218
+#: src/appl/strsignif.c:221
 msgid ".C(..): 'type' must be \"real\" for this format"
 msgstr ".C(..): 'type' debe ser \"real\" para este formato"
 
@@ -502,8 +502,8 @@ msgstr "codificación'%s' no reconocida"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ERROR: entrada no válida para codificación '%s'>\n"
 
-#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1025
-#: src/gnuwin32/system.c:1037 src/main/connections.c:569
+#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1036
+#: src/gnuwin32/system.c:1048 src/main/connections.c:569
 #: src/main/connections.c:574 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
 #: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
@@ -517,60 +517,65 @@ msgstr "no fue posible abrir el archivo '%s': %s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): archivo '%s' no existe\n"
 
-#: src/gnuwin32/system.c:988
+#: src/gnuwin32/system.c:967
+#, fuzzy, c-format
+msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
+msgstr "ATENCIÓN: el valor '%s' no es válido: ignorado\n"
+
+#: src/gnuwin32/system.c:999
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ATENCIÓN: falta el argumento max-mem-size\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:1005
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ATENCIÓN: valor de --max-mem-size =E9 no válido: ignorado\n"
 
-#: src/gnuwin32/system.c:996
+#: src/gnuwin32/system.c:1007
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "ATENCIÓN: --max-mem-size=%lu%c: demasiado grande e ignorada\n"
 
-#: src/gnuwin32/system.c:1001
+#: src/gnuwin32/system.c:1012
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "ATENCIÓN: --max-mem-size =%4.1fM: demasiado pequeña e ignorada\n"
 
-#: src/gnuwin32/system.c:1005
+#: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "ATENCIÓN: max-mem-size =%4.0fM demasiado grande y tomada como %uM\n"
 
-#: src/gnuwin32/system.c:1048 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "ATENCION: se omite entrada de  '-e %s' (muy larga)\n"
 
-#: src/gnuwin32/system.c:1052 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:369
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATENCIÓN: opción desconocida '%s'\n"
 
-#: src/gnuwin32/system.c:1074 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:373
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTO '%s' __ignorado__\n"
 
 # Fijate si asi se entiende. Lo deje como estaba
-#: src/gnuwin32/system.c:1080 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:380
 msgid "cannot use -e with -f or --file"
 msgstr "no es posible utilizar -e con -f o --file"
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1109
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr ""
 "fallo la creación de archivo tmpfile - establecer TMPDIR adecuadamente?"
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:430
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "se debe especificar '--save', '--no-save' o '--vanilla'"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1133
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -2789,7 +2794,7 @@ msgstr "'EXPR' esta perdida"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Número incorreto de argumentos (%d), esperando %d para %s"
 
-#: src/main/dotcode.c:1183 src/main/dotcode.c:2218
+#: src/main/dotcode.c:1183 src/main/dotcode.c:2227
 msgid "too many arguments, sorry"
 msgstr "demasiados argumentos, disculpe"
 
@@ -2848,38 +2853,38 @@ msgstr "codificación '%s' no soportada"
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "problema de conversión en la recodificación a '%s'"
 
-#: src/main/dotcode.c:1592
+#: src/main/dotcode.c:1601
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "modo inválido para pasar a Fortran (arg %d)"
 
-#: src/main/dotcode.c:1607 src/main/dotcode.c:1613
+#: src/main/dotcode.c:1616 src/main/dotcode.c:1622
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "modo inválido para pasar a Fortran (arg %d)"
 
-#: src/main/dotcode.c:1618
+#: src/main/dotcode.c:1627
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr "pares de lista son enviados como SEXP como desde R 2.15.0"
 
-#: src/main/dotcode.c:2339
+#: src/main/dotcode.c:2348
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "tipo \"%s\" no soportado en llamadas entre lenguajes"
 
-#: src/main/dotcode.c:2406
+#: src/main/dotcode.c:2415
 msgid "invalid function in call_R"
 msgstr "función inválida en call_R"
 
-#: src/main/dotcode.c:2408
+#: src/main/dotcode.c:2417
 msgid "invalid argument count in call_R"
 msgstr "conteo de argumento inválido en call_R"
 
-#: src/main/dotcode.c:2410
+#: src/main/dotcode.c:2419
 msgid "invalid return value count in call_R"
 msgstr "conteo de valor de retorno inválido en call_R"
 
-#: src/main/dotcode.c:2444
+#: src/main/dotcode.c:2453
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "el modo '%s' no es soportado en call_R"
@@ -3347,12 +3352,12 @@ msgstr "la longitud de los nombres de importación y exportación debe coincidir"
 msgid "exported symbol '%s' has no value"
 msgstr "símbolo exportado '%s' no tiene valor"
 
-#: src/main/envir.c:3500
+#: src/main/envir.c:3506
 #, fuzzy, c-format
 msgid "unknown encoding: %d"
 msgstr "codificación '%s' no soportada"
 
-#: src/main/envir.c:3520
+#: src/main/envir.c:3526
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "nul incrustado en la cadena: '%s' \""
@@ -6831,7 +6836,7 @@ msgstr "'type' (%s) de argumento no válido"
 msgid "arguments cannot be recycled to the same length"
 msgstr "argumentos no pueden ser reciclados al mismo tamaño"
 
-#: src/main/sprintf.c:149
+#: src/main/sprintf.c:149 src/main/sprintf.c:255
 #, fuzzy, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "longitud de 'fmt' excede la longitud máxima %d de buffer"
@@ -6857,11 +6862,6 @@ msgstr ""
 #, fuzzy
 msgid "argument for '*' conversion specification must be a number"
 msgstr "argumento para especificación de conversión `*' debe ser un número"
-
-#: src/main/sprintf.c:255
-#, fuzzy
-msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-msgstr "longitud de 'fmt' excede la longitud máxima %d de buffer"
 
 #: src/main/sprintf.c:264
 msgid "coercion has changed vector length to 0"
@@ -8481,6 +8481,10 @@ msgstr "módulo X11 no puede ser cargado"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
+
+#, fuzzy
+#~ msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
+#~ msgstr "longitud de 'fmt' excede la longitud máxima %d de buffer"
 
 #~ msgid "lists must be duplicated in .C"
 #~ msgstr ""
