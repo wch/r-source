@@ -231,6 +231,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    const char *p = buf;
 		    size_t used;
 		    mbstate_t mb_st;
+		    ssize_t nt;  /* need to check error on size_t */
 
 		    if (use_UTF8) {
 			for (ntok = 0; *p; p += used, ntok++)
@@ -242,9 +243,10 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			    memcpy(bf, p, used); bf[used] = '\0';
 			    SET_STRING_ELT(t, j, mkCharCE(bf, CE_UTF8));
 			}
-		    } else if ((ntok = mbstowcs(NULL, buf, 0)) < 0) {
+		    } else if ((nt = mbstowcs(NULL, buf, 0)) < 0) {
 			PROTECT(t = ScalarString(NA_STRING));
 		    } else {
+			ntok = nt;
 			mbs_init(&mb_st);
 			PROTECT(t = allocVector(STRSXP, ntok));
 			for (j = 0; j < ntok; j++, p += used) {
@@ -1960,7 +1962,7 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC)
 	    matchIndex++;
 	    foundAny = 1;
 	    st = regmatch[0].rm_so;
-	    INTEGER(matchbuf)[matchIndex] = offset + st + 1; /* index from one */
+	    INTEGER(matchbuf)[matchIndex] = (int)(offset + st + 1); /* index from one */
 	    INTEGER(matchlenbuf)[matchIndex] = regmatch[0].rm_eo - st;
 	    if (INTEGER(matchlenbuf)[matchIndex] == 0)
 		offset += st + 1;
@@ -2051,7 +2053,7 @@ gregexpr_fixed(const char *pattern, const char *string,
 		}
 		matchIndex++;
 		/* index from one */
-		INTEGER(matchbuf)[matchIndex] = curpos + st + 1;
+		INTEGER(matchbuf)[matchIndex] = (int)(curpos + st + 1);
 		INTEGER(matchlenbuf)[matchIndex] = patlen;
 	    } else foundAll = 1;
 	}

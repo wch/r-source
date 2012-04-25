@@ -2215,7 +2215,7 @@ void GRestore(pGEDevDesc dd)
 
 static double	adjsave;	/* adj */
 static int	annsave;	/* ann */
-static int	btysave;	/* bty */
+static char	btysave;	/* bty */
 static double	cexsave;	/* cex */
 static double   lheightsave;
 static double	cexbasesave;	/* cexbase */
@@ -2252,12 +2252,12 @@ static double	srtsave;	/* string rotation */
 static double	tcksave;	/* tick mark length */
 static double	tclsave;	/* tick mark length in LINES */
 static double	xaxpsave[3];	/* x axis parameters */
-static int	xaxssave;	/* x axis calculation style */
-static int	xaxtsave;	/* x axis type */
+static char	xaxssave;	/* x axis calculation style */
+static char	xaxtsave;	/* x axis type */
 static int	xpdsave;	/* clipping control */
 static double	yaxpsave[3];	/* y axis parameters */
-static int	yaxssave;	/* y axis calculation style */
-static int	yaxtsave;	/* y axis type */
+static char	yaxssave;	/* y axis calculation style */
+static char	yaxtsave;	/* y axis type */
 
 
 /* Make a temporary copy of the inline parameter values. */
@@ -3133,11 +3133,11 @@ void GLPretty(double *ul, double *uh, int *n)
  * The real work happens when the axis is drawn. */
     int p1, p2;
     double dl = *ul, dh = *uh;
-    p1 = ceil(log10(dl));
-    p2 = floor(log10(dh));
+    p1 = (int) ceil(log10(dl));
+    p2 = (int) floor(log10(dh));
     if(p2 <= p1 &&  dh/dl > 10.0) {
-	p1 = ceil(log10(dl) - 0.5);
-	p2 = floor(log10(dh) + 0.5);
+	p1 = (int) ceil(log10(dl) - 0.5);
+	p2 = (int) floor(log10(dh) + 0.5);
     }
 
     if (p2 <= p1) { /* floor(log10(uh)) <= ceil(log10(ul))

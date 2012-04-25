@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2008  R Core Team
+ *  Copyright (C) 1998--2012  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ typedef struct {
     double adj;		/* String adjustment */
     Rboolean ann;	/* Should annotation take place */
     rcolor bg;		/* **R ONLY** Background color */
-    int	bty;		/* Box type */
+    char bty;		/* Box type */
     double cex;		/* Character expansion */
     double lheight;     /* Line height
 			   The height of a line of text is:
@@ -116,23 +116,23 @@ typedef struct {
 			/* [1] = coordinate of upper tick */
 			/* [2] = num tick intervals */
 			/* almost always used internally */
-    int	xaxs;		/* X Axis style */
-    int	xaxt;		/* X Axis type */
+    char xaxs;		/* X Axis style */
+    char xaxt;		/* X Axis type */
     Rboolean xlog;	/* Log Axis for X */
     int	xpd;		/* Clip to plot region indicator */
     int	oldxpd;
     double yaxp[3];	/* Y Axis annotation */
-    int	yaxs;		/* Y Axis style */
-    int	yaxt;		/* Y Axis type */
+    char yaxs;		/* Y Axis style */
+    char yaxt;		/* Y Axis type */
     Rboolean ylog;	/* Log Axis for Y */
 
     /* Annotation Parameters */
 
-    float cexbase;	/* Base character size */
-    float cexmain;	/* Main title size */
-    float cexlab;	/* xlab and ylab size */
-    float cexsub;	/* Sub title size */
-    float cexaxis;	/* Axis label size */
+    double cexbase;	/* Base character size */
+    double cexmain;	/* Main title size */
+    double cexlab;	/* xlab and ylab size */
+    double cexsub;	/* Sub title size */
+    double cexaxis;	/* Axis label size */
 
     int	fontmain;	/* Main title font */
     int	fontlab;	/* Xlab and ylab font */
@@ -196,7 +196,7 @@ typedef struct {
 			/* [0] = bottom, [1] = left */
 			/* [2] = top, [3] = right */
     GUnit oUnits;	/* outer margin units */
-    int	pty;		/* Plot type */
+    char pty;		/* Plot type */
 
     /* Layout parameters which can be set by the user, but */
     /* almost always get automatically calculated anyway */

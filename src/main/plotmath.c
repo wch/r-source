@@ -2108,7 +2108,7 @@ static BBOX RenderDelim(int which, double dist, int draw, mathContext *mc,
 		- (bboxHeight(topBBox) + bboxDepth(topBBox));
 	    ybot = axisHeight - dist
 		+ (bboxHeight(botBBox) + bboxDepth(botBBox));
-	    n = ceil((ytop - ybot) / (0.99 * extHeight));
+	    n = (int) ceil((ytop - ybot) / (0.99 * extHeight));
 	    if (n > 0) {
 		delta = (ytop - ybot) / n;
 		for (i = 0; i < n; i++) {

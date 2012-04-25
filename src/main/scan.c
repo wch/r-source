@@ -347,9 +347,9 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		    if (c == R_EOF) break;
 		    if(c != quote) buffer->data[m++] = '\\';
 		}
-		buffer->data[m++] = c;
+		buffer->data[m++] = (char) c;
 		if(dbcslocale && btowc(c) == WEOF)
-		    buffer->data[m++] = scanchar2(d);
+		    buffer->data[m++] = (char) scanchar2(d);
 	    }
 	    c = scanchar(FALSE, d);
 	    mm = m;
@@ -360,9 +360,9 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		    nbuf *= 2;
 		    R_AllocStringBuffer(nbuf, buffer);
 		}
-		buffer->data[m++] = c;
+		buffer->data[m++] = (char) c;
 		if(dbcslocale && btowc(c) == WEOF)
-		    buffer->data[m++] = scanchar2(d);
+		    buffer->data[m++] = (char) scanchar2(d);
 		c = scanchar(FALSE, d);
 	    } while (!Rspace(c) && c != R_EOF);
 	}
@@ -395,9 +395,9 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			    nbuf *= 2;
 			    R_AllocStringBuffer(nbuf, buffer);
 			}
-			buffer->data[m++] = c;
+			buffer->data[m++] = (char) c;
 			if(dbcslocale && btowc(c) == WEOF)
-			    buffer->data[m++] = scanchar2(d);
+			    buffer->data[m++] = (char) scanchar2(d);
 		    }
 		    c = scanchar(TRUE, d); /* only peek at lead byte
 					      unless ASCII */
@@ -406,7 +406,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			    nbuf *= 2;
 			    R_AllocStringBuffer(nbuf, buffer);
 			}
-			buffer->data[m++] = quote;
+			buffer->data[m++] = (char) quote;
 			goto inquote; /* FIXME: Ick! Clean up logic */
 		    }
 		    mm = m;
@@ -424,9 +424,9 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			nbuf *= 2;
 			R_AllocStringBuffer(nbuf, buffer);
 		    }
-		    buffer->data[m++] = c;
+		    buffer->data[m++] = (char) c;
 		    if(dbcslocale && btowc(c) == WEOF)
-			buffer->data[m++] = scanchar2(d);
+			buffer->data[m++] = (char) scanchar2(d);
 		}
 	    }
 	filled = c; /* last lead byte in a DBCS */
@@ -950,7 +950,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
        So pushback if possible */
     if (data.save && !data.ttyflag && data.wasopen) {
 	char line[2] = " ";
-	line[0] = data.save;
+	line[0] = (char) data.save;
 	con_pushback(data.con, FALSE, line);
     }
     if (!data.ttyflag && !data.wasopen)
@@ -1104,7 +1104,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
        So pushback if possible */
     if (data.save && !data.ttyflag && data.wasopen) {
 	char line[2] = " ";
-	line[0] = data.save;
+	line[0] = (char) data.save;
 	con_pushback(data.con, FALSE, line);
     }
     if(!data.wasopen) data.con->close(data.con);
@@ -1398,10 +1398,10 @@ SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* skip space or tab */
 	while ((c = ConsoleGetchar()) == ' ' || c == '\t') ;
 	if (c != '\n' && c != R_EOF) {
-	    *bufp++ = c;
+	    *bufp++ = (char) c;
 	    while ((c = ConsoleGetchar())!= '\n' && c != R_EOF) {
 		if (bufp >= &buffer[MAXELTSIZE - 2]) continue;
-		*bufp++ = c;
+		*bufp++ = (char) c;
 	    }
 	}
 	/* now strip white space off the end as well */
@@ -1439,7 +1439,7 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     while ((c = ConsoleGetchar()) != '\n' && c != R_EOF) {
 	if (bufp >= &buffer[MAXELTSIZE - 2]) continue;
-	*bufp++ = c;
+	*bufp++ = (char) c;
     }
     *bufp++ = '\0';
     ConsolePrompt[0] = '\0';
@@ -1544,19 +1544,19 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(quote) {
 		if(data.sepchar == 0 && c == '\\') {
 		    /* all escapes should be passed through */
-		    buf[nbuf++] = c;
+		    buf[nbuf++] = (char) c;
 		    c = scanchar(TRUE, &data);
 		    if(c == R_EOF)
 			error(_("\\ followed by EOF"));
-		    buf[nbuf++] = c;
+		    buf[nbuf++] = (char) c;
 		    continue;
 		} else if(quote && c == quote) {
 		    if(data.sepchar == 0)
 			quote = 0;
 		    else { /* need to check for doubled quote */
-			char c2 = scanchar(TRUE, &data);
+			char c2 = (char) scanchar(TRUE, &data);
 			if(c2 == quote)
-			    buf[nbuf++] = c; /* and c = c2 */
+			    buf[nbuf++] = (char) c; /* and c = c2 */
 			else {
 			    unscanchar(c2, &data);
 			    quote = 0;
@@ -1572,7 +1572,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(empty && !skip)
 		if(c != '\n' && c != data.comchar) empty = FALSE;
 	    if(!quote && !skip && c == data.comchar) skip = TRUE;
-	    if(quote || c != '\n') buf[nbuf++] = c; else break;
+	    if(quote || c != '\n') buf[nbuf++] = (char) c; else break;
 	}
 	buf[nbuf] = '\0';
 	if(data.ttyflag && empty) goto no_more_lines;

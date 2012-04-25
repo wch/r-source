@@ -453,7 +453,7 @@ R_GE_lineend GE_LENDpar(SEXP value, int ind)
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
 	    error(_("invalid line end"));
-	code = rcode;
+	code = (int) rcode;
 	if (code > 0)
 	    code = (code-1) % nlineend + 1;
 	return lineend[code].end;
@@ -518,7 +518,7 @@ R_GE_linejoin GE_LJOINpar(SEXP value, int ind)
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
 	    error(_("invalid line join"));
-	code = rcode;
+	code = (int) rcode;
 	if (code > 0)
 	    code = (code-1) % nlinejoin + 1;
 	return linejoin[code].join;
@@ -1175,7 +1175,7 @@ static int clipCircleCode(double x, double y, double r,
 	       roughly const * sqrt(r) so there'd be little point in
 	       enforcing an upper limit. */
 
-	    result = (r <= 6) ? 10 : 2 * M_PI/acos(1 - 1/r) ;
+	    result = (r <= 6) ? 10 : (int)(2 * M_PI/acos(1 - 1/r));
 	}
     }
     return result;
@@ -1664,7 +1664,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
     if (vfontcode >= 100) {
 	R_GE_VText(x, y, str, enc, xc, yc, rot, gc, dd);
     } else if (vfontcode >= 0) {
-	gc->fontfamily[3] = vfontcode;
+	gc->fontfamily[3] = (char) vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	R_GE_VText(x, y, str, enc, xc, yc, rot, gc, dd);
     } else {
@@ -1796,7 +1796,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 					}
 					done = TRUE;
 				    } else if (enc2 == CE_UTF8) {
-					int used;
+					size_t used;
 					wchar_t wc;
 					while ((used = utf8toucs(&wc, ss)) > 0) {
 					    GEMetricInfo(-(int) wc, gc, &h, &d, &w, dd);
@@ -1995,7 +1995,7 @@ void GESymbol(double x, double y, int pch, double size,
 	char str[16];
 	if(gc->fontface == 5)
 	    error("use of negative pch with symbol font is invalid");
-	res = ucstoutf8(str, -pch);
+	res = (int) ucstoutf8(str, -pch);
 	if(res == -1) error("invalid multibyte string '%s'", str);
 	str[res] = '\0';
 	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);
@@ -2026,7 +2026,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	} else {
 	    char str[2];
-	    str[0] = pch;
+	    str[0] = (char) pch;
 	    str[1] = '\0';
 	    GEText(x, y, str,
 		   (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE,
@@ -2341,7 +2341,7 @@ void GEPretty(double *lo, double *up, int *ndiv)
 	    ns++;
 	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit)
 	    nu--;
-	*ndiv = nu - ns;
+	*ndiv = (int)(nu - ns);
     }
     *lo = ns * unit;
     *up = nu * unit;
@@ -2444,7 +2444,7 @@ double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc
     if (vfontcode >= 100)
 	return R_GE_VStrWidth(str, enc, gc, dd);
     else if (vfontcode >= 0) {
-	gc->fontfamily[3] = vfontcode;
+	gc->fontfamily[3] = (char) vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrWidth(str, enc, gc, dd);
     } else {
@@ -2504,7 +2504,7 @@ double GEStrHeight(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDes
     if (vfontcode >= 100)
 	return R_GE_VStrHeight(str, enc, gc, dd);
     else if (vfontcode >= 0) {
-	gc->fontfamily[3] = vfontcode;
+	gc->fontfamily[3] = (char) vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrHeight(str, enc, gc, dd);
     } else {
@@ -3126,7 +3126,7 @@ unsigned int GE_LTYpar(SEXP value, int ind)
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
 	    error(_("invalid line type"));
-	code = rcode;
+	code = (int) rcode;
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
@@ -3464,8 +3464,8 @@ void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
                         (16 - xf) * yf * R_ALPHA(word01) +
                         xf * yf * R_ALPHA(word11) + 128) / 256;
             } else {
-                aval = fmax2(fmax2(R_ALPHA(word00), R_ALPHA(word10)),
-                             fmax2(R_ALPHA(word01), R_ALPHA(word11)));
+                aval = (int)fmax2(fmax2(R_ALPHA(word00), R_ALPHA(word10)),
+				  fmax2(R_ALPHA(word01), R_ALPHA(word11)));
             }
             *(dline + j) = R_RGBA(rval, gval, bval, aval);
         }

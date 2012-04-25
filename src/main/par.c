@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Core Team.
+ *  Copyright (C) 1997--2012  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -252,6 +252,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
  */
     double x;
     int ix = 0;
+    char cx = '\0';
 
     /* If we get here, Query has already checked that 'what' is valid */
 
@@ -585,9 +586,9 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
     else if (streql(what, "pty")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING_ELT(value, 0))[0];
-	if (ix == 'm' || ix == 's') {
-	    R_DEV__(pty) = ix;
+	cx = CHAR(STRING_ELT(value, 0))[0];
+	if (cx == 'm' || cx == 's') {
+	    R_DEV__(pty) = cx;
 	    R_DEV__(defaultPlot) = TRUE;
 	}
 	else par_error(what);
@@ -674,6 +675,7 @@ static void Specify2(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 {
     double x;
     int ix = 0, ptype = ParCode(what);
+    char cx = '\0';
 
     if (ptype == 1 || ptype == -3) {
 	/* 1: these are valid, but not settable inline
@@ -977,7 +979,7 @@ static SEXP Query(const char *what, pGEDevDesc dd)
 	if (known_to_be_latin1 && val <= -32 && val >= -255) val = -val;
 	if(val >= ' ' && val <= (mbcslocale ? 127 : 255)) {
 	    char buf[2];
-	    buf[0] = val;
+	    buf[0] = (char) val;
 	    buf[1] = '\0';
 	    value = mkString(buf);
 	} else {
@@ -1000,7 +1002,7 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     else if (streql(what, "ps")) {
 	value = allocVector(INTSXP, 1);
 	/* was reporting unscaled prior to 2.7.0 */
-	INTEGER(value)[0] = dpptr(dd)->ps * dpptr(dd)->scale;
+	INTEGER(value)[0] = (int)(dpptr(dd)->ps * dpptr(dd)->scale);
     }
     else if (streql(what, "pty")) {
 	char buf[2];
@@ -1214,7 +1216,7 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     /* mat[i,j] == order[i+j*nrow] : */
     for (i = 0; i < nrow * ncol; i++)
 	dpptr(dd)->order[i] = gpptr(dd)->order[i] =
-	    INTEGER(CAR(args))[i];
+	    (unsigned short) INTEGER(CAR(args))[i];
     args = CDR(args);
 
     /* num.figures: */
@@ -1258,7 +1260,7 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     /* respect.mat */
     for (i = 0; i < nrow * ncol; i++)
 	dpptr(dd)->respect[i] = gpptr(dd)->respect[i]
-		= INTEGER(CAR(args))[i];
+	    = (unsigned char)INTEGER(CAR(args))[i];
 
     /*------------------------------------------------------*/
 

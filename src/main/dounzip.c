@@ -259,7 +259,7 @@ static SEXP ziplist(const char *zipname)
     err = unzGetGlobalInfo64 (uf, &gi);
     if (err != UNZ_OK)
         error("error %d with zipfile in unzGetGlobalInfo", err);
-    nfiles = gi.number_entry;
+    nfiles = (int) gi.number_entry;
     /* name, length, datetime */
     PROTECT(ans = allocVector(VECSXP, 3));
     SET_VECTOR_ELT(ans, 0, names = allocVector(STRSXP, nfiles));
@@ -458,7 +458,7 @@ static size_t unz_read(void *ptr, size_t size, size_t nitems,
 		       Rconnection con)
 {
     unzFile uf = ((Runzconn)(con->private))->uf;
-    return unzReadCurrentFile(uf, ptr, size*nitems)/size;
+    return unzReadCurrentFile(uf, ptr, (unsigned int)(size*nitems))/size;
 }
 
 static int null_vfprintf(Rconnection con, const char *format, va_list ap)

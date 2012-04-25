@@ -78,7 +78,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid separator"));
 	sep = STRING_ELT(sep, 0);
 	csep = translateChar(sep);
-	u_sepw = sepw = strlen(csep);
+	u_sepw = sepw = (int) strlen(csep); // will be short
 	sepASCII = strIsASCII(csep);
 	sepKnown = ENC_KNOWN(sep) > 0;
 	sepUTF8 = IS_UTF8(sep);
@@ -164,7 +164,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(use_sep) {
 	    if (use_UTF8 && !u_csep) {
 		u_csep = translateCharUTF8(sep);
-		u_sepw = strlen(u_csep);
+		u_sepw = (int) strlen(u_csep); // will be short
 	    }
 	    pwidth += (nx - 1) * (use_UTF8 ? u_sepw : sepw);
 	}
@@ -226,7 +226,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    csep = translateCharUTF8(sep);
 	else
 	    csep = translateChar(sep);
-	sepw = strlen(csep);
+	sepw = (int) strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
 	allKnown = anyKnown || strIsASCII(csep);
 	pwidth = 0;
@@ -297,7 +297,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
     csep = CHAR(sep);
-    sepw = strlen(csep); /* hopefully 1 */
+    sepw = (int) strlen(csep); /* hopefully 1 */
 
     /* Any zero-length argument gives zero-length result */
     maxlen = 0; nzero = 0;
