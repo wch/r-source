@@ -11,7 +11,7 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2009  The R Core Team
+ *  Copyright (C) 2000-2012  The R Core Team
  *  Copyright (C) 2003-2009  The R Foundation
  */
 
@@ -83,7 +83,8 @@ pnchisq_raw(double x, double f, double theta,
 #endif
 
     if(theta < 80) { /* use 110 for Inf, as ppois(110, 80/2, lower.tail=FALSE) is 2e-20 */
-	long double sum = 0, sum2 = 0, lambda = 0.5*theta, pr = exp(-lambda);
+	long double sum = 0, sum2 = 0, lambda = 0.5*theta, 
+	    pr = expl(-lambda); // does this need a feature test?
 	double ans;
 	int i;
 	/* we need to renormalize here: the result could be very close to 1 */
@@ -92,7 +93,7 @@ pnchisq_raw(double x, double f, double theta,
 	    sum += pr * pchisq(x, f+2*i, lower_tail, FALSE);
 	    if (sum2 >= 1-1e-15) break;
 	}
-	ans = sum/sum2;
+	ans = (double) (sum/sum2);
 	return ans;
     }
 
@@ -151,7 +152,7 @@ pnchisq_raw(double x, double f, double theta,
 	ans = term = t = 0.;
     }
     else {
-	t = exp(lt);
+	t = expl(lt);
 #ifdef DEBUG_pnch
  	REprintf(", t=exp(lt)= %g\n", t);
 #endif
@@ -201,7 +202,7 @@ pnchisq_raw(double x, double f, double theta,
                 REprintf(" n=%d; nomore underflow in u = exp(lu) ==> change\n",
 			 n);
 #endif
-                v = u = exp(lu); /* the first non-0 'u' */
+                v = u = expl(lu); /* the first non-0 'u' */
                 lamSml = FALSE;
             }
         } else {
@@ -216,7 +217,7 @@ pnchisq_raw(double x, double f, double theta,
                 REprintf("  n=%d; nomore underflow in t = exp(lt) ==> change\n",
 			 n);
 #endif
-                t = exp(lt); /* the first non-0 't' */
+                t = expl(lt); /* the first non-0 't' */
                 tSml = FALSE;
             }
         } else {
@@ -236,5 +237,5 @@ pnchisq_raw(double x, double f, double theta,
 #ifdef DEBUG_pnch
     REprintf("\n == L_End: n=%d; term= %g; bound=%g\n",n,term,bound);
 #endif
-    return lower_tail ? ans : 1 - ans;
+    return (double) (lower_tail ? ans : 1 - ans);
 }
