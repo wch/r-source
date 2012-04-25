@@ -4342,7 +4342,9 @@ void con_pushback(Rconnection con, Rboolean newLine, char *line)
 {
     int nexists = con->nPushBack;
     char **q;
-
+    
+    if (nexists == INT_MAX) 
+	error(_("maximum number of pushback lines exceeded"));
     if(nexists > 0) {
 	q = (char **) realloc(con->PushBack, (nexists+1)*sizeof(char *));
     } else {
@@ -4747,10 +4749,10 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* check if this is a compressed file */
 		    FILE *fp = fopen(R_ExpandFileName(url), "rb");
 		    char buf[7];
-		    int res, ztype = -1, subtype = 0, compress = 0;
+		    int ztype = -1, subtype = 0, compress = 0;
 		    if (fp) {
 			memset(buf, 0, 7);
-			res = fread(buf, 5, 1, fp);
+			size_t res = fread(buf, 5, 1, fp);
 			fclose(fp);
 			if(res == 1) {
 			    if(buf[0] == '\x1f' && buf[1] == '\x8b') ztype = 0;

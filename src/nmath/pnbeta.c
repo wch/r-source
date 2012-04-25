@@ -62,13 +62,13 @@ pnbeta_raw(double x, double o_x, double a, double b, double ncp)
     j = (int) x0;
     do {
 	j++;
-	temp -= gx;
+	temp -= (double) gx;
 	gx *= x * (a + b + j - 1.) / (a + j);
 	q *= c / j;
 	sumq -= q;
 	ax = temp * q;
 	ans += ax;
-	errbd = (temp - gx) * sumq;
+	errbd = (double)((temp - gx) * sumq);
     }
     while (errbd > errmax && j < itrmax + x0);
 
