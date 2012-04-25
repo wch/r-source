@@ -6,16 +6,16 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "add_datalist", "bibstyle", "buildVignettes",
        "charset_to_Unicode", "checkDocFiles", "checkDocStyle",
        "checkFF", "checkMD5sums", "checkNEWS", "checkRd",
-       "checkRdaFiles", "checkReplaceFuns", "checkS3methods",
-       "checkTnF", "checkVignettes", "codoc", "codocClasses",
-       "codocData", "compactPDF", "delimMatch", "deparseLatex",
-       "dependsOnPkgs", "encoded_text_to_latex", "file_ext",
-       "file_path_as_absolute", "file_path_sans_ext", "findHTMLlinks",
-       "getDepList", "installFoundDepends", "latexToUtf8",
-       "list_files_with_exts", "list_files_with_type", "md5sum",
-       "package.dependencies", "package_dependencies", "parseLatex", 
-       "parse_Rd", "pkgDepends",
-       "pkgVignettes", "pskill", "psnice", "read.00Index", "readNEWS",
+       "checkPoFile", "checkPoFiles", "checkRdaFiles", "checkReplaceFuns",
+       "checkS3methods", "checkTnF", "checkVignettes", "codoc",
+       "codocClasses", "codocData", "compactPDF", "delimMatch",
+       "deparseLatex", "dependsOnPkgs", "encoded_text_to_latex",
+       "file_ext", "file_path_as_absolute", "file_path_sans_ext",
+       "findHTMLlinks", "getDepList", "installFoundDepends",
+       "latexToUtf8", "list_files_with_exts", "list_files_with_type",
+       "md5sum", "package.dependencies", "package_dependencies",
+       "parseLatex", "parse_Rd", "pkgDepends", "pkgVignettes",
+       "pskill", "psnice", "read.00Index", "readNEWS",
        "resaveRdaFiles", "showNonASCII", "showNonASCIIfile",
        "startDynamicHelp", "testInstalledBasic",
        "testInstalledPackage", "testInstalledPackages", "texi2dvi",
@@ -118,6 +118,7 @@ S3method("print", "check_package_license")
 S3method("print", "check_package_datasets")
 S3method("print", "check_package_compact_datasets")
 S3method("print", "check_packages_used")
+S3method("print", "check_po_files")
 S3method("print", "check_so_symbols")
 S3method("print", "check_vignette_index")
 
