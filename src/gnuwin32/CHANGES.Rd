@@ -21,7 +21,7 @@
 
       \item Loading package \pkg{stats} (which is done for a default
       session) would switch line endings on \file{stdout} and
-      \code{stdout} from CRLF to LF.  This affected \command{Rterm} and
+      \file{stderr} from CRLF to LF.  This affected \command{Rterm} and
       \command{R CMD BATCH}.
       
       \item The compatibility function \code{x11()} had not kept up
