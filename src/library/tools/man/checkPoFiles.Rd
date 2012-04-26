@@ -58,11 +58,6 @@ checkPoFiles(language, dir)
   Items marked as \sQuote{fuzzy} in the \file{.po} file are not
   processed (as they are ignored by the message compiler).
 }
-\note{
-  The code will currently report differences where the \samp{\%2$d}
-  notation is used to re-order the formats: such translations need to be
-  checked manually.
-}
 \value{
   Both functions return an object of S3 class \code{"check_po_files"}.  A
   \code{print} method is defined for this class to display a report on
