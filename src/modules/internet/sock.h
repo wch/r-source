@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2006   Robert Gentleman, Ross Ihaka and the
- *                            R Core Team
+ *  Copyright (C) 1998-2012   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,8 +54,8 @@ int R_SockOpen(int port);
 int R_SockListen(int sockp, char *buf, int len, int timeout);
 int R_SockConnect(int port, char *host, int timeout);
 int R_SockClose(int sockp);
-int R_SockRead(int sockp, void *buf, int maxlen, int blocking, int timeout);
-int R_SockWrite(int sockp, const void *buf, int len, int timeout);
+ssize_t R_SockRead(int sockp, void *buf, size_t maxlen, int blocking, int timeout);
+ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout);
 
 /* from Rhttpd.c */
 int in_R_HTTPDCreate(const char *ip, int port);

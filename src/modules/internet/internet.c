@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-10   The R Core Team.
+ *  Copyright (C) 2000-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -169,10 +169,10 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     switch(type) {
     case HTTPSsh:
     case HTTPsh:
-	n = in_R_HTTPRead(ctxt, ptr, size*nitems);
+	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     case FTPsh:
-	n = in_R_FTPRead(ctxt, ptr, size*nitems);
+	n = in_R_FTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     }
     return n/size;

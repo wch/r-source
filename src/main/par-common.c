@@ -54,22 +54,22 @@
     else if (streql(what, "cex.main")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
-	R_DEV__(cexmain) = (float) x;
+	R_DEV__(cexmain) = x;
     }
     else if (streql(what, "cex.lab")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
-	R_DEV__(cexlab) = (float) x;
+	R_DEV__(cexlab) = x;
     }
     else if (streql(what, "cex.sub")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
-	R_DEV__(cexsub) = (float) x;
+	R_DEV__(cexsub) = x;
     }
     else if (streql(what, "cex.axis")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
-	R_DEV__(cexaxis) = (float) x;
+	R_DEV__(cexaxis) = x;
     }
     else if (streql(what, "col")) {
 	/* col can be a vector of length > 1, so pick off first value

@@ -32,6 +32,7 @@
 #endif
 
 #define min0(x, y) (((x) <= (y)) ? (x) : (y))
+#define max0(x, y) (((x) <= (y)) ? (y) : (x))
 
 static void K_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bk, long *ncalc);
@@ -541,7 +542,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 		bk2 *= ratio;
 	    }
 	}
-	*ncalc = imax2(1, mplus1 - k);
+	*ncalc = max0(1, mplus1 - k);
 	if (*ncalc == 1)
 	    bk[0] = bk2;
 	if (*nb == 1)

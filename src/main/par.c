@@ -274,7 +274,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	R_DEV__(cex) = 1.0; /* ! (highlevel par, i.e.  Specify2(), set x ! */
-	R_DEV__(cexbase) = (float) x;
+	R_DEV__(cexbase) = x;
     }
 
     else if (streql(what, "fg")) {
@@ -406,11 +406,11 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 	R_DEV_2(defaultFigure) = TRUE;
 	R_DEV_2(layout) = FALSE;
 	if (nrow > 2 || ncol > 2) {
-	    R_DEV_2(cexbase) = (float) 0.66;
+	    R_DEV_2(cexbase) = 0.66;
 	    R_DEV_2(mex) = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    R_DEV_2(cexbase) = (float) 0.83;
+	    R_DEV_2(cexbase) = 0.83;
 	    R_DEV_2(mex) = 1.0;
 	}
 	else {
@@ -435,11 +435,11 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 	R_DEV_2(defaultFigure) = TRUE;
 	R_DEV_2(layout) = FALSE;
 	if (nrow > 2 || ncol > 2) {
-	    R_DEV_2(cexbase) = (float) 0.66;
+	    R_DEV_2(cexbase) = 0.66;
 	    R_DEV_2(mex) = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    R_DEV_2(cexbase) = (float) 0.83;
+	    R_DEV_2(cexbase) = 0.83;
 	    R_DEV_2(mex) = 1.0;
 	}
 	else {
@@ -1265,11 +1265,11 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     /*------------------------------------------------------*/
 
     if (nrow > 2 || ncol > 2) {
-	gpptr(dd)->cexbase = dpptr(dd)->cexbase = (float) 0.66;
+	gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.66;
 	gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
     }
     else if (nrow == 2 && ncol == 2) {
-	gpptr(dd)->cexbase = dpptr(dd)->cexbase = (float) 0.83;
+	gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.83;
 	gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
     }
     else {

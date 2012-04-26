@@ -495,12 +495,12 @@ int R_SockClose(int sockp)
     return closesocket(sockp);
 }
 
-int R_SockRead(int sockp, void *buf, int len, int blocking, int timeout)
+ssize_t R_SockRead(int sockp, void *buf, size_t len, int blocking, int timeout)
 {
-    int res;
+    ssize_t res;
 
     if(blocking && R_SocketWait(sockp, 0, timeout) != 0) return 0;
-    res = (int) recv(sockp, buf, len, 0);
+    res = recv(sockp, buf, len, 0);
     return (res >= 0) ? res : -socket_errno();
 }
 
@@ -520,9 +520,9 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
     return Sock_listen(sockp, buf, len, NULL);
 }
 
-int R_SockWrite(int sockp, const void *buf, int len, int timeout)
+ssize_t R_SockWrite(int sockp, const void *buf, size_t len, int timeout)
 {
-    int res, out = 0;
+    ssize_t res, out = 0;
 
     /* Rprintf("socket %d writing |%s|\n", sockp, buf); */
     /* This function is not passed a `blocking' argument so the code
@@ -532,7 +532,7 @@ int R_SockWrite(int sockp, const void *buf, int len, int timeout)
        has been written.  LT */
     do {
 	if(R_SocketWait(sockp, 1, timeout) != 0) return out;
-	res = (int) send(sockp, buf, len, 0);
+	res = send(sockp, buf, len, 0);
 	if (res < 0 && socket_errno() != EWOULDBLOCK)
 	    return -socket_errno();
 	else {

@@ -455,7 +455,7 @@ SEXP attribute_hidden do_getfmts(SEXP call, SEXP op, SEXP args, SEXP env)
     int cnt, v, nfmt;
     char fmt[MAXLINE+1], bit[MAXLINE+1],
 	*formatString;
-    size_t n, cur, chunk, maxlen=0;
+    size_t n, cur, chunk, maxlen = 0;
 
     SEXP format, res;
     int nthis, nstar;
@@ -571,5 +571,5 @@ SEXP attribute_hidden do_getfmts(SEXP call, SEXP op, SEXP args, SEXP env)
 	}  /* end for ( each chunk ) */
 
     UNPROTECT(1);
-    return lengthgets(res, maxlen);
+    return lengthgets(res, (int) maxlen);
 }
