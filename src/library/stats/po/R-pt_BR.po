@@ -1593,7 +1593,6 @@ msgstr "'termobj' deve ser um objeto da classe \"terms\""
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr ""
 "variável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi "
-"fornecidovariável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi "
 "fornecido"
 
 msgid "variables %s were specified with different types from the fit"

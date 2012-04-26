@@ -385,7 +385,7 @@ msgstr "Editor R"
 #: editor.c:119
 #, c-format
 msgid "unable to open file %s for reading"
-msgstr "No es posible abrir el archivo% s para la lectura"
+msgstr "No es posible abrir el archivo %s para la lectura"
 
 #: editor.c:135
 #, c-format

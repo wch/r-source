@@ -165,7 +165,7 @@ msgid "Invalid role specification(s): %s."
 msgstr "Spécification(s) de rôle incorrecte(s) : %s"
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
-msgstr "Il est recommandé d'utiliser %s à la place de %s/%s/%s."
+msgstr "Il est recommandé d'utiliser %s/%s à la place de %s/%s/%s."
 
 msgid "method is just applicable to %s objects"
 msgstr "la méthode n'est applicable qu'à des objets %s"

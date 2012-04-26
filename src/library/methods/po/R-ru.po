@@ -369,6 +369,7 @@ msgstr "ожидаю непустую текстовую строку для имени аргумента"
 msgid "generic function supplied was not created for \"%s\""
 msgstr "указанная для \"%s\" общая функция не создана"
 
+#, fuzzy
 msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
 msgstr "\"class\" является примитивной функцией и не может быть переопределен"
 
@@ -1951,6 +1952,7 @@ msgstr "Новые функции сейчас не вставлены (не не-отслеживаемы): %s"
 msgid "Modified functions inserted through trace(): %s"
 msgstr "Измененные функции вставлены через trace(): %s"
 
+#, fuzzy
 msgid ""
 "%s() is not a generic function in the target environment--methods will not "
 "be inserted"

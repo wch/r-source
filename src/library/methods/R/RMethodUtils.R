@@ -40,7 +40,7 @@
     }
     if(missing(fdef)) {
         if(missing(fdefault))
-            stop(gettextf("Must supply either a generic function or a function as default for \"#s\"", #
+            stop(gettextf("Must supply either a generic function or a function as default for \"%s\"", #
                           f),
                  domain = NA)
         else if(is.primitive(fdefault)) {

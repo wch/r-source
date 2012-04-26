@@ -1511,7 +1511,7 @@ msgstr ""
 "zurückgegeben"
 
 msgid "Selecting %d methods of min. distance"
-msgstr "Wähle %s Methoden minimaler Distanz"
+msgstr "Wähle %d Methoden minimaler Distanz"
 
 msgid "Selecting %d non-group methods"
 msgstr "Wähle %d gruppenfremde Methoden"
@@ -1919,7 +1919,7 @@ msgid ""
 "Can't untrace method for \"%s\"; no method defined for this signature: %s"
 msgstr ""
 "Kann die Verfolgung von \"%s\" nicht aufheben; keine Methodendefinition für "
-"diese Signatur"
+"diese Signatur: %s"
 
 msgid ".TraceWithMethods: untrace case"
 msgstr ".TRaceWithMethods: Fall für Verfolgung aufheben"

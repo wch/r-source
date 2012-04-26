@@ -1747,6 +1747,7 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "la package %s n'est pas chargé"
 msgstr[1] "les packages %s ne sont pas chargés"
 
+#, fuzzy
 msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "aucun package nommé '%s' n'est trouvé"

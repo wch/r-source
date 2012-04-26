@@ -219,6 +219,7 @@ msgstr ""
 msgid "no existing definition for function %s"
 msgstr " 関数 %s に対する既存の定義はありません "
 
+#, fuzzy
 msgid "Creating a generic function from function %s in %s"
 msgstr " 関数 %s から総称関数を生成します "
 
@@ -584,6 +585,7 @@ msgid ""
 "class %s"
 msgstr " クラス %s のオブジェクト(要求されたクラス %s ではなく)を初期化 "
 
+#, fuzzy
 msgid "Reported %d ambiguous selections out of %d for function %s"
 msgstr " 関数 %s に対し、%d 個の曖昧な選択が %d 個中報告されました "
 
@@ -1485,6 +1487,7 @@ msgstr " %d 個の非グループメソッドを選択 "
 msgid "Selecting %d partially exact-matching method(s)"
 msgstr " %d 個の部分的に正確なマッチングメソッドを選択 "
 
+#, fuzzy
 msgid "Choosing method %s from %d ambiguous possibilities"
 msgstr " %d 個の曖昧な可能性からメソッド %s を選択 "
 

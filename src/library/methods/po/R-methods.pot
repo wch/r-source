@@ -545,7 +545,7 @@ msgstr ""
 msgid "the function being used as %s in making a generic function for \"%s\" is currently traced; the function used will have tracing removed"
 msgstr ""
 
-msgid "Must supply either a generic function or a function as default for \"#s\""
+msgid "Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
 
 msgid "the %s argument must be NULL or a generic function object; got an object of class %s"

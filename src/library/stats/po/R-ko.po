@@ -1647,11 +1647,11 @@ msgstr "변수 %s는 적용시키기 위한 것과는 다른 클래스로서 지
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data'는 행렬이나 배열은 아니고, data.frame이 아니면 되지 않습니다"
 
+#, fuzzy
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr ""
 "'newdata'는 행렬이나 배열은 아니고, 데이터 프레임이 아니면 되지 않습니다"
 
-#, fuzzy
 msgid "character variable '%s' changed to a factor"
 msgstr "변수 '%s'는 인자가 아닙니다"
 
@@ -2541,6 +2541,7 @@ msgstr ""
 "Weibull 성장 모델이 적용시키기에는 모든'x'값은 non-negative가 나오지 않으면 "
 "되지 않습니다"
 
+#, fuzzy
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "개의 에러 terms가 있습니다. 하나만 허용됩니다"
@@ -2559,6 +2560,7 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
+msgstr[1] ""
 "모델식에서 파라미터(복수) %s가 없습니다"
 
 #~ msgid "extra arguments"

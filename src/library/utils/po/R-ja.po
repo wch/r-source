@@ -1167,6 +1167,7 @@ msgstr ""
 " 変更中 \n"
 " 除去を試みています "
 
+#, fuzzy
 msgid "ERROR: failed to create lock directory"
 msgstr " 排他的ディレクトリ '%s' を作ることが出来ません "
 
@@ -1229,6 +1230,7 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] " オブジェクト '%s' が見付かりません "
 
+#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
 msgstr[0] " パッケージ %s が利用できません "

@@ -4469,7 +4469,7 @@ msgstr "no se puede ubicar un vector de tamaño  %0.1f Mb"
 #: src/main/memory.c:2410
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "no se puede ubicar un vector de tamaño  %0.1f Kb"
+msgstr "no se puede ubicar un vector de tamaño  %0.f Kb"
 
 #: src/main/memory.c:2743
 msgid "protect(): protection stack overflow"

@@ -373,6 +373,7 @@ msgstr "l'échantillon est trop clairsemé pour estimer alph2"
 msgid "no solution in the specified range of bandwidths"
 msgstr "pas de solution dans l'intervalle de largeur de fenêtre"
 
+#, fuzzy
 msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
 msgstr "augmentation de l'intervalle de recherche bw.SJ() à [%.4g,%.4g]"
 

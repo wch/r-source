@@ -539,7 +539,7 @@ msgstr "Warnung: --max-mem-size =%4.1fM: zu klein und wird ignoriert\n"
 #: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
-msgstr "Warnung: --max-mem-size =%4.1fM: zu groß und wird als %uM angenommen\n"
+msgstr "Warnung: --max-mem-size =%4.0fM: zu groß und wird als %uM angenommen\n"
 
 #: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format
@@ -3060,7 +3060,7 @@ msgstr "ungültiger Grafikzustand"
 
 #: src/main/engine.c:3029 src/main/engine.c:3037
 msgid "invalid multibyte char in pch=\"c\""
-msgstr "ungültiges multibyte zeichen in pch=\"%c\""
+msgstr "ungültiges multibyte zeichen in pch=\"c\""
 
 #: src/main/engine.c:3107
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -4407,7 +4407,7 @@ msgstr "kann Vektor der Größe %0.1f MB nicht allozieren"
 #: src/main/memory.c:2410
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "kann Vektor der Größe %0.1f KB nicht allozieren"
+msgstr "kann Vektor der Größe %0.f KB nicht allozieren"
 
 #: src/main/memory.c:2743
 msgid "protect(): protection stack overflow"

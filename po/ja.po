@@ -544,7 +544,7 @@ msgstr " 警告: max-mem-size =%4.1fM は小さすぎるので無視されます
 #: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
-msgstr " 警告: max-mem-size =%4.1fM は大きすぎるので %uM とされました \n"
+msgstr " 警告: max-mem-size =%4.0fM は大きすぎるので %uM とされました \n"
 
 #: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format

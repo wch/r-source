@@ -119,6 +119,7 @@ msgstr "%2$s需要程辑包%1$s，但它与目前的版本不相容"
 msgid "package %s is required by %s so will not be detached"
 msgstr "%2$s需要程辑包%1$s，因此不能将之分离"
 
+#, fuzzy
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
@@ -790,13 +791,16 @@ msgstr "程辑包%s是为%s建造的"
 msgid "package %s is not installed for 'arch=%s'"
 msgstr "程辑包%s没有安装在'arch=%s'中"
 
+#, fuzzy
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
 msgstr "程辑包％s的许可证要求你在交互式会议时先接受它"
 
+#, fuzzy
 msgid "Package %s has a license that you need to accept after viewing"
 msgstr "程辑包％s的许可证要求你在看完后接受它"
 
+#, fuzzy
 msgid ""
 "Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
@@ -807,6 +811,7 @@ msgstr ""
 msgid "License"
 msgstr "许可证"
 
+#, fuzzy
 msgid "License for package %s not accepted"
 msgstr "程辑包％s的许可证没有被接受"
 
@@ -1216,6 +1221,7 @@ msgstr "S3方法%s有声明但并不存在"
 msgid "bad method"
 msgstr "方法有错"
 
+#, fuzzy
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "在载入名字空间的时候没有找到'%s'对象"
 
