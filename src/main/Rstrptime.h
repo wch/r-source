@@ -215,7 +215,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		     int *poffset)
 {
     int cnt;
-    size_t val;
+    int val;
     int have_I, is_pm;
     int century, want_century;
     int have_wday, want_xday;
@@ -674,7 +674,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		   int *poffset)
 {
     int cnt;
-    size_t val;
+    int val;
     int have_I, is_pm;
     int century, want_century;
     int have_wday, want_xday;

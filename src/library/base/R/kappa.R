@@ -85,7 +85,8 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
         kappa.default(z, exact = TRUE) ## using "2 - norm" !
     }
     else { ## norm is "1" ("O") or "I(nf)" :
-	p <- nrow(z)
+        p <- as.integer(nrow(z))
+        if(is.na(p)) stop("invalid nrow(x)")
 	if(p != ncol(z)) stop("triangular matrix should be square")
 	if(is.null(norm)) norm <- "1"
 	if(is.complex(z))

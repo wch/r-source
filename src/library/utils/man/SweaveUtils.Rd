@@ -32,5 +32,7 @@ SweaveHooks(options, run = FALSE, envir = .GlobalEnv)
 makeRweaveLatexCodeRunner(evalFunc=RweaveEvalWithOpt)
 }
 \author{Friedrich Leisch, with contributions by Seth Falcon}
+\seealso{The \code{\link{Sweave}}, \code{\link{RweaveLatex}} help pages.
+}
 \keyword{utilities}
 \keyword{internal}

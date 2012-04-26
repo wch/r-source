@@ -8,7 +8,7 @@
 \alias{morley}
 \title{Michelson Speed of Light Data}
 \description{
-  A classical data of Michelson (but not this one with  Morley) on
+  A classical data of Michelson (but not this one with Morley) on
   measurements done in 1879 on the speed of light.  The data consists of
   five experiments, each consisting of 20 consecutive \sQuote{runs}.
   The response is the speed of light measurement, suitably coded

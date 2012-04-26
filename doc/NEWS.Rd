@@ -37,8 +37,8 @@
       flat.
 
       \item \code{qqline()} gets new optional arguments
-	\code{distribution}, \code{probs}, and \code{qtype}, following
-	the example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      \code{distribution}, \code{probs} and \code{qtype}, following the
+      example of \pkg{lattice}'s \code{panel.qqmathline()}.
       
       \item \code{.C()} gains some protection against the misuse of
       character vector arguments.  (An all too common error is to pass
@@ -142,7 +142,7 @@
 
       \item \code{hclust()} is now fast again (as up to end of 2003),
       with a different fix for the "median"/"centroid" problem.  (\PR{4195}).
-      
+
       \item \code{get_all_vars()} failed when the data came entirely
       from vectors in the global environment. (\PR{14847})
       

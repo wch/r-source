@@ -444,7 +444,7 @@ SEXP RTcl_ObjAsIntVector(SEXP args)
     ans = allocVector(INTSXP, count);
     for (i = 0 ; i < count ; i++){
 	ret = Tcl_GetIntFromObj(RTcl_interp, elem[i], &x);
-	if (ret != TCL_OK) x = NA_REAL;
+	if (ret != TCL_OK) x = NA_INTEGER;
 	INTEGER(ans)[i] = x;
     }
     return ans;

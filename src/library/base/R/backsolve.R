@@ -25,8 +25,10 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
     if(!x.mat) x <- as.matrix(x) # k  x	nb
     storage.mode(x) <- "double"
     k <- as.integer(k)
-    if(k <= 0 || nrow(x) < k) stop("invalid argument values in 'backsolve'")
-    nb <- ncol(x)
+    if(is.na(k) || k <= 0 || nrow(x) < k)
+        stop("invalid argument values in 'backsolve'")
+    nb <- as.integer(ncol(x))
+    if(is.na(nb)) stop("invalid value of ncol(x)")
     upper.tri <- as.logical(upper.tri)
     transpose <- as.logical(transpose)
     job <- as.integer(upper.tri + 10L*transpose)

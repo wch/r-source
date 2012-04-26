@@ -500,10 +500,10 @@ void GEonExit(void);
 void GEnullDevice(void);
 
 
-// From ../../main/plot.c, used by ../../library/grid/src/grid.c :
+/* From ../../main/plot.c, used by ../../library/grid/src/grid.c */
 #define CreateAtVector		Rf_CreateAtVector
 SEXP CreateAtVector(double*, double*, int, Rboolean);
-// From ../../main/graphics.c, used by ../../library/grDevices/src/axis_scales.c :
+/* From ../../main/graphics.c, used by ../../library/grDevices/src/axis_scales.c */
 #define GAxisPars 		Rf_GAxisPars
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis);
 

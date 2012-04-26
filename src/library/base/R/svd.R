@@ -34,6 +34,11 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     }
 
     ## LINPACK only from here on.
+    n <- as.integer(n)
+    if(is.na(n)) stop("invalid nrow(x)")
+    p <- as.integer(p)
+    if(is.na(p)) stop("invalid ncol(x)")
+
     if(nu == 0L) {
 	job <- 0L
 	u <- double()
