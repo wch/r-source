@@ -196,17 +196,17 @@ checkPoFile <- function(f, strictPlural = FALSE)
     while (i < length(lines)) {
 	i <- i + 1
 
-	if (grepl("^#,", lines[i])) {
-	    noCformat <- noCformat || grepl("no-c-format", lines[i])
-	    fuzzy <- fuzzy || grepl("fuzzy", lines[i])
-	} else if (grepl("^#:", lines[i])) {
+	if (grepl("^#,", lines[i], useBytes = TRUE)) {
+	    noCformat <- noCformat || grepl("no-c-format", lines[i], useBytes = TRUE)
+	    fuzzy <- fuzzy || grepl("fuzzy", lines[i], useBytes = TRUE)
+	} else if (grepl("^#:", lines[i], useBytes = TRUE)) {
 	    if (!is.na(ref))
 		ref <- paste(ref, "etc.")
 	    else
 		ref <- sub("^#:[[:blank:]]*", "", lines[i])
-	} else if (grepl("^msgid ", lines[i])) {
+	} else if (grepl("^msgid ", lines[i], useBytes = TRUE)) {
 	    s1 <- sub('^msgid[[:blank:]]+["](.*)["][[:blank:]]*$', "\\1", lines[i])
-	    while (grepl('^["]', lines[i+1])) {
+	    while (grepl('^["]', lines[i+1], useBytes = TRUE)) {
 		i <- i + 1
 		s1 <- paste0(s1, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[i]))
 	    }
@@ -219,18 +219,18 @@ checkPoFile <- function(f, strictPlural = FALSE)
 	    }
 
 	    while (j <= length(lines)) {
-		if (grepl("^msgid_plural[[:blank:]]", lines[j]))
+		if (grepl("^msgid_plural[[:blank:]]", lines[j], useBytes = TRUE))
 		    statement <- "msgid_plural"
-		else if (grepl("^msgstr[[:blank:]]", lines[j]))
+		else if (grepl("^msgstr[[:blank:]]", lines[j], useBytes = TRUE))
 		    statement <- "msgstr"
-		else if (grepl("^msgstr\\[[[:digit:]]+\\][[:blank:]]", lines[j]))
+		else if (grepl("^msgstr\\[[[:digit:]]+\\][[:blank:]]", lines[j], useBytes = TRUE))
 		    statement <- sub("^(msgstr)\\[([[:digit:]]+)\\].*$", "\\1\\\\[\\2\\\\]", lines[j])
 		else
 		    break
 
 		s2 <- sub( paste0("^", statement, "[[:blank:]]+[\"](.*)[\"][[:blank:]]*$"),
 		                 "\\1", lines[j])
-		while (grepl('^["]', lines[j+1])) {
+		while (grepl('^["]', lines[j+1], useBytes = TRUE)) {
 		    j <- j + 1
 		    s2 <- paste0(s2, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[j]))
 		}

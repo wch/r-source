@@ -20,6 +20,8 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     Terms <- if(missing(data)) terms(formula, "Error")
     else terms(formula, "Error", data = data)
     indError <- attr(Terms, "specials")$Error
+    ## NB: this is only used for n > 1, so singular form makes no sense
+    ## in English.  But some languages have multiple plurals.
     if(length(indError) > 1L)
         stop(sprintf(ngettext(length(indError),
                               "there are %d Error terms: only 1 is allowed",
