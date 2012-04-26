@@ -740,8 +740,9 @@ msgstr ""
 "在为'%2$s'制造泛型函数时用的%1$s这一个函数现在已经被追踪；因此删除了对所用函"
 "数的追踪"
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr "必需为\"#s\"提供一个作默认用的泛型函数或函数"
 
 msgid ""

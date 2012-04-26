@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:19+0000\n"
+"POT-Creation-Date: 2012-04-26 07:30+0100\n"
 "PO-Revision-Date: 2011-04-02 18:17+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1033,7 +1033,7 @@ msgid "Enhanced metafiles"
 msgstr "Gelişmiş metafile'lar"
 
 #: ../library/grDevices/src/devWindows.c:989
-#: ../library/grDevices/src/devWindows.c:3433
+#: ../library/grDevices/src/devWindows.c:3434
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "seçilen dosya yolu çok uzun: sadece 512 bayta kadar izin verilir"
 
@@ -1178,14 +1178,14 @@ msgstr "Metafile olarak farklı kaydet..."
 msgid "Save as postscript..."
 msgstr "Postscript olarak farklı kaydet"
 
-#: ../library/grDevices/src/devWindows.c:3133
+#: ../library/grDevices/src/devWindows.c:3134
 msgid "Locator is active"
 msgstr "Konumlayıcı aktif "
 
-#: ../library/grDevices/src/devWindows.c:3756
+#: ../library/grDevices/src/devWindows.c:3757
 msgid "Waiting to confirm page change..."
 msgstr "Sayfa değişikliği onayı bekleniyor..."
 
-#: ../library/grDevices/src/devWindows.c:3768
+#: ../library/grDevices/src/devWindows.c:3769
 msgid "Click or hit ENTER for next page"
 msgstr "Sonraki sayfa için ENTER'a basın yada tıklayın"

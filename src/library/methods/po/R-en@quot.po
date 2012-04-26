@@ -857,9 +857,9 @@ msgstr ""
 "currently traced; the function used will have tracing removed"
 
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
-"Must supply either a generic function or a function as default for “#s”"
+"Must supply either a generic function or a function as default for “%s”"
 
 msgid ""
 "the %s argument must be NULL or a generic function object; got an object of "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:19+0000\n"
+"POT-Creation-Date: 2012-04-26 07:30+0100\n"
 "PO-Revision-Date: 2007-11-06 13:34+0800\n"
 "Last-Translator: Yihui Xie <xie@yihui.name>\n"
 "Language-Team: Chinese\n"
@@ -1009,7 +1009,7 @@ msgid "Enhanced metafiles"
 msgstr "增强型图元文件"
 
 #: ../library/grDevices/src/devWindows.c:989
-#: ../library/grDevices/src/devWindows.c:3433
+#: ../library/grDevices/src/devWindows.c:3434
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "选择文件路径太长：最多只能有512字节"
 
@@ -1154,15 +1154,15 @@ msgstr "保存为图元文件..."
 msgid "Save as postscript..."
 msgstr "保存为postscript..."
 
-#: ../library/grDevices/src/devWindows.c:3133
+#: ../library/grDevices/src/devWindows.c:3134
 msgid "Locator is active"
 msgstr "定位器已激活"
 
-#: ../library/grDevices/src/devWindows.c:3756
+#: ../library/grDevices/src/devWindows.c:3757
 msgid "Waiting to confirm page change..."
 msgstr "等待页面改变的确认..."
 
-#: ../library/grDevices/src/devWindows.c:3768
+#: ../library/grDevices/src/devWindows.c:3769
 msgid "Click or hit ENTER for next page"
 msgstr "按ENTER看下一页"
 

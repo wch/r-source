@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-03-16 06:19+0000\n"
+"POT-Creation-Date: 2012-04-26 07:30+0100\n"
 "PO-Revision-Date: 2011-01-28 10:51+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1028,7 +1028,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafile"
 
 #: ../library/grDevices/src/devWindows.c:989
-#: ../library/grDevices/src/devWindows.c:3433
+#: ../library/grDevices/src/devWindows.c:3434
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "for lang filadresse: maksgrensa er på 512 byte"
 
@@ -1173,14 +1173,14 @@ msgstr "Lagra som metafil …"
 msgid "Save as postscript..."
 msgstr "Lagra som PostScript …"
 
-#: ../library/grDevices/src/devWindows.c:3133
+#: ../library/grDevices/src/devWindows.c:3134
 msgid "Locator is active"
 msgstr "Posisjonslesar køyrer"
 
-#: ../library/grDevices/src/devWindows.c:3756
+#: ../library/grDevices/src/devWindows.c:3757
 msgid "Waiting to confirm page change..."
 msgstr "Ventar på stadfesting av sideskifte …"
 
-#: ../library/grDevices/src/devWindows.c:3768
+#: ../library/grDevices/src/devWindows.c:3769
 msgid "Click or hit ENTER for next page"
 msgstr "Klikk eller trykk «Enter» for neste side"

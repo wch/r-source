@@ -880,8 +880,9 @@ msgstr ""
 "wird momentan verfolgt; die aktuell genutzte Funktion wird die  Verfolgung "
 "entfernen"
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
 "Enweder eine generische Funktion oder eine Standardfunktion muss für \"%s\" "
 "angegeben werden"

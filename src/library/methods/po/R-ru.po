@@ -851,8 +851,9 @@ msgstr ""
 "функция, используемая как %s при создании общей функции для \"%s\" в данный "
 "момент отслеживается; для используемой функции трассировка будет удалена"
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
 "Надо определить либо общую функцию, либо функцию по умолчанию для \"#s\""
 

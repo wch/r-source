@@ -861,8 +861,9 @@ msgstr ""
 " %s として使われている関数(\"%s\" に対する総称的関数の作成時)は現在トレースさ"
 "れています；使われた関数は tracing を取り除かれるでしょう "
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
 " \"#s\" に対する既定値として、総称的関数か関数をあたえる必要があります "
 
