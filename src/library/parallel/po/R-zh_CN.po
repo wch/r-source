@@ -54,7 +54,7 @@ msgid "socket cluster with %d nodes on host %s"
 msgstr "主机%2$s上%1$d个节点的插座集群"
 
 msgid "node of a socket cluster on host %s with pid %d"
-msgstr "pid是%2$d的在主机％1$s上插座集群的节点"
+msgstr "pid是%2$d的在主机%1$s上插座集群的节点"
 
 msgid "host"
 msgstr "主机"
