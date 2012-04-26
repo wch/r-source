@@ -184,8 +184,8 @@
       flat.
 
       \item \code{qqline()} gets new optional arguments
-      \code{distribution}, \code{probs}, and \code{qtype}, following
-      the example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      \code{distribution}, \code{probs} and \code{qtype}, following the
+      example of \pkg{lattice}'s \code{panel.qqmathline()}.
       
       \item \code{.C()} gains some protection against the misuse of
       character vector arguments.  (An all too common error is to pass
@@ -300,6 +300,13 @@
       
       \item \code{formatC()} uses the C entry point \code{str_signif}
       which could write beyond the length allocated for the output string.
+
+      \item Missing default argument added to implicit generic for
+      \code{backsolve()} (\PR{14883})
+
+      \item Some bugs fixed in handling load actions that could fail
+      to export assigned items or generate spurious warnings in
+      \code{CMD check} on loading.
     }
   }
 }
