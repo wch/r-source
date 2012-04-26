@@ -55,9 +55,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      libdir = NULL, self = FALSE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
+    useJunctions <- WINDOWS && !nzchar(Sys.getenv("R_WIN_NO_JUNCTIONS"))
     flink <- function(from, to) {
         res <- if(WINDOWS) {
-            if(TRUE) Sys.junction(from, to)
+            if(useJunctions) Sys.junction(from, to)
             else file.copy(from, to, recursive = TRUE)
         } else file.symlink(from, to)
         if (!res) stop("cannot link from ", from)
@@ -125,10 +126,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(length(where)) {
                 if (!(dirname(where) %in% poss))
                     flink(where, tmplib)
-                else if (!test_recommended) 
+                else if (!test_recommended)
                     # If the package is in the standard library we can
                     # assume dependencies have been met, but we can
-                    # only skip the traversal if we aren't testing recommended 
+                    # only skip the traversal if we aren't testing recommended
                     # packages, because loading will fail if there is
                     # an indirect dependency to one that has been hidden
                     # by a dummy in tmplib.

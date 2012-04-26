@@ -32,6 +32,12 @@
       If \env{R_MAX_MEM_SIZE} is set, it gives the default memory limit
       if \option{--max-mem-size} is not specified: invalid values being
       ignored.
+      
+      \item A few people have reported problems with junctions, although
+      they were tested on Windows 7, XP and Server 2008 machines.
+      Setting the environment variable \env{R_WIN_NO_JUNCTIONS} to a
+      non-empty value (e.g. in \file{~/.R/check.Renviron} will force
+      \command{R CMD check} to use copies instead.
     }
   }
 }
