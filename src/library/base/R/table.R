@@ -189,9 +189,9 @@ as.data.frame.table <-
     function(x, row.names = NULL, ..., responseName = "Freq",
              stringsAsFactors = TRUE)
 {
-    x <- as.table(x)
     ex <- quote(data.frame(do.call("expand.grid",
-                                   c(dimnames(x),
+				   c(dimnames(provideDimnames(x)),
+				     KEEP.OUT.ATTRS = FALSE,
                                      stringsAsFactors = stringsAsFactors)),
                            Freq = c(x),
                            row.names = row.names))
@@ -209,17 +209,8 @@ as.table.default <- function(x, ...)
 	x <- as.array(x)
 	if(any(dim(x) == 0L))
 	    stop("cannot coerce into a table")
-	## Try providing dimnames where missing.
-	dnx <- dimnames(x)
-	if(is.null(dnx))
-	    dnx <- vector("list", length(dim(x)))
-	for(i in which(vapply(dnx, is.null, NA)))
-	    dnx[[i]] <-
-                make.unique(LETTERS[seq.int(from=0, length.out = dim(x)[i]) %% 26 + 1],
-                            sep = "")
-	dimnames(x) <- dnx
-	class(x) <- c("table", oldClass(x))
-	return(x)
+	structure(class = c("table", oldClass(x)),
+		  provideDimnames(x))
     }
     else
 	stop("cannot coerce into a table")

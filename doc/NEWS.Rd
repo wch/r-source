@@ -40,10 +40,12 @@
 
       \item In \code{layout()}, the limits on the grid size have been
       raised (again).
-        
+
       \item New functions \code{checkPoFiles()} and \code{checkPoFile()}
-      have been added to the \pkg{tools} package to check for 
+      have been added to the \pkg{tools} package to check for
       consistency of format strings in translation files.
+
+      \item New simple \code{provideDimnames()} utility.
     }
   }
 
@@ -81,7 +83,7 @@
 
       \item The C-level function \code{R_alloc} can now allocate
       \eqn{2^{34}}{2^34} or more bytes on 64-bit platforms.
-      
+
       \item \code{agrep()} and \code{grep()} will return double vectors
       of indices for long vector inputs.
     }
@@ -131,7 +133,7 @@
       functions. In the future, \R may supplement lack of affinity
       control in the OS by its own bookkeeping via \code{mcaffinity}
       related to processes and threads it spawns.
-      
+
       \item \code{mcparallel} has a new argument \code{mc.affinity}
       which attempts to set the affinity of the child process according
       to the specification contained therein.
@@ -186,7 +188,7 @@
       \item \code{qqline()} gets new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
-      
+
       \item \code{.C()} gains some protection against the misuse of
       character vector arguments.  (An all too common error is to pass
       \code{character(N)}, which initializes the elements to \code{""},
@@ -253,7 +255,7 @@
       unpredictable consequences.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{lsfit()} lost the names from the residuals.
@@ -292,12 +294,12 @@
 
       \item \code{get_all_vars()} failed when the data came entirely
       from vectors in the global environment. (\PR{14847})
-      
+
       \item \command{R CMD check} with \env{_R_CHECK_NO_RECOMMENDED_}
       set to a true value (as done by the \command{--as-cran} option)
       could issue false errors if there was an indirect dependency
       on a recommended package.
-      
+
       \item \code{formatC()} uses the C entry point \code{str_signif}
       which could write beyond the length allocated for the output string.
 

@@ -51,3 +51,21 @@ function(x, MARGIN)
     dim(y) <- d
     y
 }
+
+provideDimnames <- function(x, sep="", base = list(LETTERS)) {
+    ## provide dimnames where missing - not copying x unnecessarily
+    dx <- dim(x)
+    dnx <- dimnames(x)
+    if(new <- is.null(dnx))
+	dnx <- vector("list", length(dx))
+    k <- length(M <- vapply(base, length, 1L))
+    for(i in which(vapply(dnx, is.null, NA))) {
+	ii <- 1L+(i-1L) %% k # recycling
+	dnx[[i]] <-
+	    make.unique(base[[ii]][1L+ 0:(dx[i]-1L) %% M[ii]],
+			sep = sep)
+	new <- TRUE
+    }
+    if(new) dimnames(x) <- dnx
+    x
+}
