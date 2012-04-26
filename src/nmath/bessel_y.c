@@ -60,7 +60,7 @@ double bessel_y(double x, double alpha)
 		bessel_j(x, -alpha) * sin(M_PI * alpha)));
     }
     nb = 1+ (long)na;/* nb-1 <= alpha < nb */
-    alpha -= (double)nb-1);
+    alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     by = (double *) calloc(nb, sizeof(double));
     if (!by) MATHLIB_ERROR("%s", _("bessel_y allocation error"));
