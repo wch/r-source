@@ -276,6 +276,12 @@ checkPoFile <- function(f, strictPlural = FALSE)
 				diff <- paste(paste0(diff, "difference in entry"),
 				              diffs)
 			}
+			if (grepl("\u066A", s2, fixed=TRUE))
+			    diff <- paste0(diff, ", translation contains arabic percent sign U+066A")
+			if (grepl("\uFE6A", s2, fixed=TRUE))
+			    diff <- paste0(diff, ", translation contains small percent sign U+FE6A")
+			if (grepl("\uFF05", s2, fixed=TRUE))
+			    diff <- paste0(diff, ", translation contains wide percent sign U+FF05")
 		    }
                     if (!fuzzy)
                         result <- rbind(result, c(location, ref, diff, s1, s2))
@@ -292,7 +298,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
     structure(result, class = "check_po_files")
 }
 
-checkPoFiles <- function(language, dir)
+checkPoFiles <- function(language, dir=".")
 {
     files <- list.files(path = dir, pattern = paste0(language, "[.]po$"),
                         full.names = TRUE, recursive = TRUE)

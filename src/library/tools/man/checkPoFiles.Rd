@@ -17,7 +17,7 @@
 }
 \usage{
 checkPoFile(f, strictPlural = FALSE)
-checkPoFiles(language, dir)
+checkPoFiles(language, dir=".")
 }
 \arguments{
   \item{f}{a character string giving a single filepath.}
@@ -57,6 +57,11 @@ checkPoFiles(language, dir)
   
   Items marked as \sQuote{fuzzy} in the \file{.po} file are not
   processed (as they are ignored by the message compiler).
+  
+  If a difference is found, the translated string is checked for variant
+  percent signs (e.g. the wide percent sign \code{"\uFF05"}).  Such signs
+  will not be recognized as format specifiers, and are likely to be 
+  errors.
 }
 \value{
   Both functions return an object of S3 class \code{"check_po_files"}.  A
