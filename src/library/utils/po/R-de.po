@@ -1132,7 +1132,7 @@ msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
 
 msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' hatte Exit-Status ungleich 0"
+msgstr "'tar' hatte Exit-Status %d"
 
 msgid "file %s is not an OS X binary package"
 msgstr ""

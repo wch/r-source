@@ -510,6 +510,7 @@ msgstr "унарный '-' не определен для объектов \"POSIXt\""
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "могу вычитать лишь числа из объектов 'POSIXt'"
 
+#, fuzzy
 msgid "unary '%s' not defined for \"POSIXt\" objects"
 msgstr "унарный '-' не определен для объектов \"POSIXt\""
 

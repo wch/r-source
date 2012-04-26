@@ -28,6 +28,7 @@ msgstr "程序包%2$s里没有%1$s这样一本说明书"
 msgid "document not found"
 msgstr "找不到这个说明书"
 
+#, fuzzy
 msgid "A search query has been submitted to"
 msgstr "檢索查詢疑問%s已被提出于"
 
@@ -190,7 +191,7 @@ msgid "broken installation, no CITATION file in the base package."
 msgstr "安装出错，基本程序包里没有CITATION这一文件。"
 
 msgid "no date field in DESCRIPTION file of package %s"
-msgstr "程序包's里的DESCRIPTION文件中没有日期这一域"
+msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "无法从程序包的DESCRIPTION文件中为%s确定年份"
@@ -505,7 +506,7 @@ msgid ""
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr "程序包'%d'里要么没有DESCRIPTION这个文件，要么出了错"
+msgstr "程序包'%s'里要么没有DESCRIPTION这个文件，要么出了错"
 
 msgid "package"
 msgstr "程序包"
@@ -928,7 +929,7 @@ msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"
 
 msgid "Invalid roman numeral(s): %s"
-msgstr "罗马数字不对：%S"
+msgstr "罗马数字不对：%s"
 
 msgid "length mismatch: bug in code!"
 msgstr "长度不对：程序里有虫!"
@@ -1018,6 +1019,7 @@ msgstr "文件通路太长"
 msgid "linked path is too long"
 msgstr "链结的通路太长"
 
+#, fuzzy
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -85,7 +85,7 @@ msgstr "аргумент %s должен быть числовым вектором длины 1 или %d"
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "только 2500 строк разрешается для sm.method=\"spline\""
 
-#: loessc.c:235
+#: loessc.c:233
 msgid "span is too small"
 msgstr "перекрытие слишком мало"
 

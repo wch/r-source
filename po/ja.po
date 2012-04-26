@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -544,7 +544,7 @@ msgstr " 警告: max-mem-size =%4.1fM は小さすぎるので無視されます
 #: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
-msgstr " 警告: max-mem-size =%4.1fM は大きすぎるので %uM とされました \n"
+msgstr " 警告: max-mem-size =%4.0fM は大きすぎるので %uM とされました \n"
 
 #: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format
@@ -4586,32 +4586,32 @@ msgstr " モデル行列中では複素数は現在許されていません "
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr " タイプ '%s' の変数はモデル行列中では許されません "
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr " 文字列引数が要求されています "
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr " そのようなプリミティブ関数はありません "
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr " 長さ0の変数名を使おうとしました "
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr " 変数名は%dバイトが上限です "
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr " .Internal() 引数が不正です "
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr " 内部関数が不正です "
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr " 内部関数 \"%s\" がありません "
@@ -6732,11 +6732,11 @@ msgstr " 　因子が不正な水準を持ちます "
 msgid "required resulting string length %d is > maximal %d"
 msgstr " 要求された結果の文字列長 %d が上限 %d を超えています "
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 msgid "'fmt' is not a character vector"
 msgstr " 'fmt' は文字ベクトルではありません "
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr " %d 引数だけが許されます "
@@ -6750,12 +6750,12 @@ msgstr " 不正な型の引数 [%d]: '%s’ "
 msgid "arguments cannot be recycled to the same length"
 msgstr " 引数は同じ長さにリサイクルできません "
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr " 'fmt' の長さが書式の最大長 %d を超えました "
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr " 理解不能なフォーマット指定 '%s'  "
@@ -6766,7 +6766,7 @@ msgstr " 理解不能なフォーマット指定 '%s'  "
 msgid "reference to non-existent argument %d"
 msgstr " 存在しない引数 %d を参照しました "
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr " それぞれの変換で指定できるアスタリスク'*'は最大でひとつです。 "
 
@@ -6812,6 +6812,11 @@ msgstr " 文字列は%d文字に丸められた可能性があります "
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr " サポートされていないタイプです "
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr " 'fromLast' は長さ1でなければなりません "
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

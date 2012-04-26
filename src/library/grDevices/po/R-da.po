@@ -212,7 +212,7 @@ msgid "Invalid output format"
 msgstr "Ugyldigt uddataformat"
 
 msgid "status %d in running command '%s'"
-msgstr "status %s i kørende kommando »%s«"
+msgstr "status %d i kørende kommando »%s«"
 
 msgid "range too small for min.n"
 msgstr "interval for lille for min.n"

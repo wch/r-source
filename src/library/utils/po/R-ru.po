@@ -1233,6 +1233,7 @@ msgstr[0] "зависимость '%s' недоступна"
 msgstr[1] "зависимости '%s' недоступны"
 msgstr[2] "зависимости '%s' недоступны"
 
+#, fuzzy
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "устанавливаю также зависимость"

@@ -324,6 +324,7 @@ msgstr " もう使われていない %s が Rd xrefs　中にあります "
 msgid "Package(s) unavailable to check Rd xrefs: %s"
 msgstr "Rd xrefs をチェックするためのパッケージがありません: %s "
 
+#, fuzzy
 msgid "Unknown package(s) %s in Rd xrefs"
 msgstr " Rd xrefs 中に未知のパッケージがあります "
 
@@ -404,6 +405,7 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
+#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 " 'library' もしくは 'requires' 呼出しが以下から宣言されていません： ％ｓ "
@@ -621,6 +623,7 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr " エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
+#, fuzzy
 msgid "loading failed"
 msgstr " '%s' のロードに失敗しました "
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-09 06:26\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -917,9 +917,10 @@ msgstr ""
 "니다;\n"
 "사용되는 함수는 결과가 제거될것입니다"
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
-msgstr ""
+"Must supply either a generic function or a function as default for \"%s\""
+msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
 #, fuzzy
 msgid ""
@@ -1140,6 +1141,9 @@ msgstr ""
 #, fuzzy
 msgid "No definition found for class %s"
 msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+msgid "Trying to execute load actions without methods package"
+msgstr ""
 
 #, fuzzy
 msgid "Missing  function for load action: %s"
@@ -2113,10 +2117,6 @@ msgstr ""
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "검색되는 클래스 \"%s\"의 정의가 아닙니다"
-
-#, fuzzy
-#~ msgid "the supplied generic function definition for"
-#~ msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
 #, fuzzy
 #~ msgid ""

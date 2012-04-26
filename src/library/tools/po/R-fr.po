@@ -1055,7 +1055,7 @@ msgid "unsupported flatedecode predictor %d"
 msgstr "flatedecode predictor %d non supporté"
 
 msgid "unsupported PNG filter %d"
-msgstr "filtre PNG %s non supporté"
+msgstr "filtre PNG %d non supporté"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "l'argument 'pkg' doit être de longueur 1"

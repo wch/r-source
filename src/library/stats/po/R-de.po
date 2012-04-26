@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2012-03-06 09:25+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -390,7 +390,7 @@ msgid "no solution in the specified range of bandwidths"
 msgstr "keine Lösung im angegebenen Bandbreitenbereich"
 
 msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
-msgstr "vergrößere bw.SJ() Suchintervall (%d) auf [%4g,%4g]"
+msgstr "vergrößere bw.SJ() Suchintervall (%d) auf [%.4g,%.4g]"
 
 msgid "minimum occurred at one end of the range"
 msgstr "Minimum trat am Rand der Bereichs auf"
@@ -800,7 +800,7 @@ msgid "factor analysis requires at least three variables"
 msgstr "Faktorenanalyse benötigt zumindest drei Variablen"
 
 msgid "%d factors is too many for %d variables"
-msgstr "%s Faktoren sind zu viel für %d variablen"
+msgstr "%d Faktoren sind zu viel für %d variablen"
 
 msgid "'start' must have %d rows"
 msgstr "'start' muss %d Zeilen haben"
@@ -926,7 +926,7 @@ msgid "length of 'init' must equal length of 'filter'"
 msgstr "Länge von 'init' muss der Länge von 'filter' entsprechen"
 
 msgid "'init'; must have 1 or %d cols"
-msgstr "'init': muss eine oder %s Spalten haben"
+msgstr "'init': muss eine oder %d Spalten haben"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' muss mindestens 2 Zeilen und Spalten haben"
@@ -1295,10 +1295,6 @@ msgid ""
 msgstr ""
 "numerisches y muss angegeben werden.\n"
 "Zur Dichteschätzung bitte density() nutzen"
-
-#, fuzzy
-msgid "invalid value oflength(x)"
-msgstr "unzulässige Clustring-Methode"
 
 msgid "'k' is not an integer"
 msgstr "'k' ist keine ganze Zahl"
@@ -2503,6 +2499,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "Parameter %s kommt in der Modellgleichung nicht vor"
 msgstr[1] "Parameter %s kommen in der Modellgleichung nicht vor"
+
+#, fuzzy
+#~ msgid "invalid value oflength(x)"
+#~ msgstr "unzulässige Clustring-Methode"
 
 #~ msgid "extra arguments"
 #~ msgstr "zusätzliche Argumente"

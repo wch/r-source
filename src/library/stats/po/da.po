@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgstr "argument %s skal være en numerisk vektor af længde 1 eller længde %d"
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "kun 2.500 rækker er tilladt for sm.method=\"spline\""
 
-#: loessc.c:235
+#: loessc.c:233
 msgid "span is too small"
 msgstr "spænd er for lille"
 

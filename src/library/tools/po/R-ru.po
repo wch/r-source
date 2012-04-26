@@ -398,6 +398,7 @@ msgstr "'::' или ':::' импорт не определен из: %s"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
+#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "не объявлен вызов 'library' или 'require' из: %ы"
 
@@ -692,6 +693,7 @@ msgstr "Ссылка %s в пакете %s не найдена"
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
 
+#, fuzzy
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
@@ -1031,7 +1033,7 @@ msgid "unsupported flatedecode predictor %d"
 msgstr "неподдерживаемый flatedecode predictor %d"
 
 msgid "unsupported PNG filter %d"
-msgstr "неподдерживаемый фильтр PNG %s"
+msgstr "неподдерживаемый фильтр PNG %d"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "аргумент 'pkg' должен быть единичной длины"

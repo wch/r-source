@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -4410,7 +4410,7 @@ msgstr "kan ikkje reservera vektor av storleik %0.1f Mb"
 #: src/main/memory.c:2454
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "kan ikkje reservera vektor av storleik %0.1f Kb"
+msgstr "kan ikkje reservera vektor av storleik %0.f Kb"
 
 #: src/main/memory.c:2787
 msgid "protect(): protection stack overflow"
@@ -4589,32 +4589,32 @@ msgstr "kan ikkje bruka komplekse variablar i modellmatriser"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "kan ikkje bruka variablar av typen «%s» i modellmatriser"
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr "krev strengargument"
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr "primitivfunksjonen finst ikkje"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr "variabelnamn av lengd null"
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "variabelnamn må vera mindre enn %d byte"
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr "ugyldig .Internal()-argument"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr "ugyldig internfunksjon"
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "internfunksjonen «%s» finst ikkje"
@@ -6727,11 +6727,11 @@ msgid "required resulting string length %d is > maximal %d"
 msgstr ""
 "strenglengd til resultatstrengen er %d, som er større enn maksverdien %d"
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 msgid "'fmt' is not a character vector"
 msgstr "«fmt» må vera ein teiknvektor"
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "berre %d argument er tillatne"
@@ -6745,12 +6745,12 @@ msgstr "ugyldig «type»-argument[%d]: «%s»"
 msgid "arguments cannot be recycled to the same length"
 msgstr "argumenta kan ikkje resirkulerast til same lengd"
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "«fmt» er større enn makslengda til formatet, %d"
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "ikkje attkjend formatspesifisering: %s"
@@ -6761,7 +6761,7 @@ msgstr "ikkje attkjend formatspesifisering: %s"
 msgid "reference to non-existent argument %d"
 msgstr "referanse til ikkje-eksisterande argument %d"
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "høgst éin asterisk «*» er støtta i kvar konverteringsspesifikasjon"
 
@@ -6807,6 +6807,11 @@ msgstr "truleg trunkering av teiknstreng til %d teikn"
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr "ikkje-støtta type"
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr "«%s» må ha lengd 1"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

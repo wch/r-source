@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-09 06:26\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -925,9 +925,10 @@ msgid ""
 "currently traced; the function used will have tracing removed"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
-msgstr ""
+"Must supply either a generic function or a function as default for \"%s\""
+msgstr "a definição genérica de função fornecida para"
 
 #, fuzzy
 msgid ""
@@ -1111,6 +1112,9 @@ msgstr ""
 #, fuzzy
 msgid "No definition found for class %s"
 msgstr "nenhuma definição existente para função '%s'"
+
+msgid "Trying to execute load actions without methods package"
+msgstr ""
 
 #, fuzzy
 msgid "Missing  function for load action: %s"
@@ -1992,9 +1996,6 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
-
-#~ msgid "the supplied generic function definition for"
-#~ msgstr "a definição genérica de função fornecida para"
 
 #~ msgid "no generic function \"'%s\" found"
 #~ msgstr "nenhuma função genérica \"%s\" encontrada"

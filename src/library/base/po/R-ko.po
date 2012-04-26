@@ -354,6 +354,7 @@ msgstr ""
 "치환 요소 %d 는 %d 의 행의 개수를 가진 행렬 혹은 데이터 프레임이므로 %d행이 "
 "필요합니다"
 
+#, fuzzy
 msgid "replacement element %d has %d rows, need %d"
 msgstr "치환은 %d의 항목을 가지므로 %d 가 필요합니다 "
 

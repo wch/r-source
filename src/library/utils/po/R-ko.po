@@ -44,6 +44,7 @@ msgstr "reference to unknown chunk %s"
 msgid "no Sweave file with name %s found"
 msgstr "%s 이름을 가진 Sweave 파일을 찾을 수 없습니다 "
 
+#, fuzzy
 msgid "%d Sweave files for basename %s found:"
 msgstr "'%s' 라는 기본이름을 가진 %d 개의 Sweave 파일들을 찾았습니다: "
 
@@ -96,6 +97,7 @@ msgstr "'strip.white' 옵션의 값은 반드시 소문자 이어야합니다 "
 msgid "elements of 'what' after the first will be ignored"
 msgstr "첫번째 다음에 오는 'what' 요소들은 모두 무시될 것입니다 "
 
+#, fuzzy
 msgid "%d occurrences in %s"
 msgstr "%s 에서 %d 가 발생했습니다 "
 
@@ -148,6 +150,7 @@ msgstr "모든 인자가 동일한 길이를 가지고 있지 않으므로 재�
 msgid ","
 msgstr ","
 
+#, fuzzy
 msgid "Use either %s or %s/%s but not both."
 msgstr "%s 혹은  %s 하나를 사용하세요 "
 
@@ -160,6 +163,7 @@ msgstr "%s 혹은 %s 중 하나를 이용하세요 "
 msgid "Invalid role specification(s): %s."
 msgstr "Invalid role specification(s): %s."
 
+#, fuzzy
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "%s/%s 를 이용하는 것이 권장됩니다 (%s/%s 대신에)"
 

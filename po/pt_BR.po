@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -4614,32 +4614,32 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "variáveis de tipo '%s' não são permitidas em matrizes de modelo"
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr "argumento string requerido"
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr "não existe tal função primitiva"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr "tentativa de usar um nome de variável com comprimento zero"
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nomes de variáveis são limitados a %d bytes"
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr "argumento .Internal() inválido"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr "função interna inválida"
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nenhuma função interna \"%s\""
@@ -6768,11 +6768,11 @@ msgstr "fator tem um nível com problema"
 msgid "required resulting string length %d is > maximal %d"
 msgstr "string de resultado com comprimento %d é maior que o máximo %d"
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' não é um vetor de caracteres"
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "somente %d argumentos são permitidos"
@@ -6786,12 +6786,12 @@ msgstr "tipo de argumento inválido[%d]: '%s'"
 msgid "arguments cannot be recycled to the same length"
 msgstr "argumentos não podem ser reciclados para o mesmo tamanho"
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "comprimento de 'fmt' excede o comprimento máximo do formato %d"
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "especificação de formato não reconhecida '%s'"
@@ -6802,7 +6802,7 @@ msgstr "especificação de formato não reconhecida '%s'"
 msgid "reference to non-existent argument %d"
 msgstr "referência a um argumento não existente %d"
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 "no máximo um asterisco `*' é suportado em cada especificação de conversão"
@@ -6849,6 +6849,11 @@ msgstr "provável truncamento de string de caracteres para %d caracteres"
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr "tipo não suportado"
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr "'fromLast' deve ter comprimento 1"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

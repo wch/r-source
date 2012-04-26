@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2012-03-05 15:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -539,7 +539,7 @@ msgstr "Warnung: --max-mem-size =%4.1fM: zu klein und wird ignoriert\n"
 #: src/gnuwin32/system.c:1016
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
-msgstr "Warnung: --max-mem-size =%4.1fM: zu groß und wird als %uM angenommen\n"
+msgstr "Warnung: --max-mem-size =%4.0fM: zu groß und wird als %uM angenommen\n"
 
 #: src/gnuwin32/system.c:1059 src/unix/system.c:355
 #, c-format
@@ -3058,7 +3058,7 @@ msgstr "ungültiger Grafikzustand"
 
 #: src/main/engine.c:3029 src/main/engine.c:3037
 msgid "invalid multibyte char in pch=\"c\""
-msgstr "ungültiges multibyte zeichen in pch=\"%c\""
+msgstr "ungültiges multibyte zeichen in pch=\"c\""
 
 #: src/main/engine.c:3107
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -4410,7 +4410,7 @@ msgstr "kann Vektor der Größe %0.1f MB nicht allozieren"
 #: src/main/memory.c:2454
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "kann Vektor der Größe %0.1f KB nicht allozieren"
+msgstr "kann Vektor der Größe %0.f KB nicht allozieren"
 
 #: src/main/memory.c:2787
 msgid "protect(): protection stack overflow"
@@ -4588,32 +4588,32 @@ msgstr "Komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "Variablen des Typs '%s' sind in Modellmatrizen nicht erlaubt"
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr "Zeichenkettenargument benötigt"
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr "keine solche primitive Funktion"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr "Versuch einen Variablennamen der Länge 0 zu nutzen"
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "Variablennamen sind auf %d Bytes beschränkt"
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr "ungültiges Argument für .Internal()"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr "ungültige interne Funktion"
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "keine interne Funktion \"%s\""
@@ -6738,11 +6738,11 @@ msgid "required resulting string length %d is > maximal %d"
 msgstr ""
 "die benötigte Ergebniszeichenkettenlänge %d ist länger als das Maximum %d"
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' ist kein Charakter-Vektor"
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "nur %d Argumente zugelassen"
@@ -6758,12 +6758,12 @@ msgstr ""
 "Argumente können nicht durch Wiederverwendung auf gleiche Länge gebraucht "
 "werden"
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' Länge überschreitet maximale Formatlänge %d"
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "unbekannte Formatspezifikation '%s'"
@@ -6774,7 +6774,7 @@ msgstr "unbekannte Formatspezifikation '%s'"
 msgid "reference to non-existent argument %d"
 msgstr "Referenz auf nicht existierendes Argument %d"
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 "höchstens ein Stern `*' wird in jeder Konvertierungsspezifikation unterstützt"
@@ -6821,6 +6821,11 @@ msgstr "Wahrscheinlich wurde Zeichenkette bei %d Zeichen abgeschnitten"
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr "nicht unterstützter Typ"
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr "'fromLast' muss Länge 1 haben"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

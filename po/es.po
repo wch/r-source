@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -4472,7 +4472,7 @@ msgstr "no se puede ubicar un vector de tamaño  %0.1f Mb"
 #: src/main/memory.c:2454
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "no se puede ubicar un vector de tamaño  %0.1f Kb"
+msgstr "no se puede ubicar un vector de tamaño  %0.f Kb"
 
 #: src/main/memory.c:2787
 msgid "protect(): protection stack overflow"
@@ -4655,32 +4655,32 @@ msgstr "no se permiten variables complejas en matrices de modelos"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "valores negativos no son permitidos en subscrito de matriz"
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr "se requiere el argumento del string"
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr "no existe esta función primitiva"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr "se intenta usar un nombre de varible de longitud cero"
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nombres de variables se limitan a %d bytes"
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr "el argumento .Internal() no es válido"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr "la función interna no es válida"
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no hay ninguna función interna \"%s\""
@@ -6850,12 +6850,12 @@ msgstr "factor con mal nivel"
 msgid "required resulting string length %d is > maximal %d"
 msgstr "requerido como resultado longitud de la cadena %d es > máxima %d"
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 #, fuzzy
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' debe ser un vector de caracteres no vacío"
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, fuzzy, c-format
 msgid "only %d arguments are allowed"
 msgstr "solo 100 argumentos son permitidos"
@@ -6869,12 +6869,12 @@ msgstr "'type' (%s) de argumento no válido"
 msgid "arguments cannot be recycled to the same length"
 msgstr "argumentos no pueden ser reciclados al mismo tamaño"
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, fuzzy, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "longitud de 'fmt' excede la longitud máxima %d de buffer"
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, fuzzy, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "especificación de color inválida '%s"
@@ -6885,7 +6885,7 @@ msgstr "especificación de color inválida '%s"
 msgid "reference to non-existent argument %d"
 msgstr "referencia a un argumento no existente %d"
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 #, fuzzy
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
@@ -6934,6 +6934,11 @@ msgstr "Probable truncamento de string de caracteres"
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr "tipo no soportado"
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr "'%s' debe tener longitud 1"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

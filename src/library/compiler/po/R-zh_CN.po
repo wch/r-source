@@ -28,7 +28,7 @@ msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
 
 msgid "bad assignment: %s"
-msgstr "坏的分配：％S"
+msgstr "坏的分配：%s"
 
 msgid "cannot constant fold literal promises"
 msgstr "无法对字面承诺进行不恒定折叠"

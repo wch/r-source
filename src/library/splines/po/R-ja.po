@@ -23,6 +23,7 @@ msgstr " 'ord' は正の整数で，多くてもノット数です "
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr " 少なくとも 2*ord -1 (=%d) 個のノット必要です "
 
+#, fuzzy
 msgid ""
 "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1308,10 +1308,6 @@ msgstr ""
 "y numérico deve ser fornecido.\n"
 "Para estimar a densidade use density()"
 
-#, fuzzy
-msgid "invalid value oflength(x)"
-msgstr "método de agrupamento inválido"
-
 msgid "'k' is not an integer"
 msgstr "'k' não é inteiro"
 
@@ -1629,9 +1625,7 @@ msgstr "'termobj' deve ser um objeto da classe \"terms\""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr ""
-"variável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi "
-"fornecidovariável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi "
-"fornecido"
+"variável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi fornecido"
 
 msgid "variables %s were specified with different types from the fit"
 msgstr "variáveis %s foram especificadas com tipos diferentes do ajuste"
@@ -2518,6 +2512,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "invalid value oflength(x)"
+#~ msgstr "método de agrupamento inválido"
 
 #~ msgid "extra arguments"
 #~ msgstr "argumentos adicionais"

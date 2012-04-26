@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1289,10 +1289,6 @@ msgstr ""
 " 数値の y を与えなければなりません。 \n"
 " 密度の推定には density() を使いましょう "
 
-#, fuzzy
-msgid "invalid value oflength(x)"
-msgstr " 無効なクラスタリング法です "
-
 msgid "'k' is not an integer"
 msgstr " 'k' は整数でありません "
 
@@ -2473,6 +2469,10 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#, fuzzy
+#~ msgid "invalid value oflength(x)"
+#~ msgstr " 無効なクラスタリング法です "
 
 #~ msgid "extra arguments"
 #~ msgstr " 余分な引数 "

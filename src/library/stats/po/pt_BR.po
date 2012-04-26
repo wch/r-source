@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -83,7 +83,7 @@ msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "são permitidas apenas 2500 linhas para sm.method=\"spline\""
 
-#: loessc.c:235
+#: loessc.c:233
 msgid "span is too small"
 msgstr "vão é muito pequeno"
 

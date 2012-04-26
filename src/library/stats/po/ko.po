@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -82,7 +82,7 @@ msgstr "%s 는 길이가 1 이거나 %d 인 수치형 벡터이어야 합니다 
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "sm.method=\"spline\" 에서는 최대 2500 개의 행만을 가질 수 있습니다 "
 
-#: loessc.c:235
+#: loessc.c:233
 msgid "span is too small"
 msgstr "범위가 너무 작습니다 "
 

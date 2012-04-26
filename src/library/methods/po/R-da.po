@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-09 06:26\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -706,7 +706,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
 
 msgid ""
@@ -872,6 +872,9 @@ msgid ""
 msgstr ""
 
 msgid "No definition found for class %s"
+msgstr ""
+
+msgid "Trying to execute load actions without methods package"
 msgstr ""
 
 msgid "Missing  function for load action: %s"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -4701,32 +4701,32 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "valori negativi non ammessi come indici di matrice"
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr "necessario argomento stringa"
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr "funzione primitiva non esistente"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr "tentativo di utilizzo di un nome variabile di lunghezza zero"
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr "argomento .Internal() non valido"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr "funzione interna non valida"
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nessuna funzione interna \"%s\""
@@ -6890,12 +6890,12 @@ msgstr ""
 msgid "required resulting string length %d is > maximal %d"
 msgstr ""
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 #, fuzzy
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' deve essere un vettore di caratteri non vuoto"
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, fuzzy, c-format
 msgid "only %d arguments are allowed"
 msgstr "sono permessi solo 100 argomenti"
@@ -6909,12 +6909,12 @@ msgstr "argomento 'mode' non valido"
 msgid "arguments cannot be recycled to the same length"
 msgstr "gli argomenti non possono essere riutilizzati alla stessa lunghezza"
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, fuzzy, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "lunghezza 'fmt' eccede la lunghezza massima del buffer %d"
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, fuzzy, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "specificazione colore non valida"
@@ -6925,7 +6925,7 @@ msgstr "specificazione colore non valida"
 msgid "reference to non-existent argument %d"
 msgstr "riferiment ad argomento non esistente %d"
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
@@ -6971,6 +6971,11 @@ msgstr "La stringa di caratteri verrà probabilmente troncata"
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr "tipo non supportato"
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr "'which' deve essere di lunghezza 1"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

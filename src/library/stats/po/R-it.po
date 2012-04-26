@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1346,10 +1346,6 @@ msgstr ""
 "si deve specificare y.\n"
 "Per la stima di densità usare density()"
 
-#, fuzzy
-msgid "invalid value oflength(x)"
-msgstr "metodo di cluster non valido"
-
 msgid "'k' is not an integer"
 msgstr "'k' non è intero"
 
@@ -2611,6 +2607,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "invalid value oflength(x)"
+#~ msgstr "metodo di cluster non valido"
 
 #~ msgid "extra arguments"
 #~ msgstr "argomenti extra"

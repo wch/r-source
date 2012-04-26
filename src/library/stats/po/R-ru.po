@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1302,10 +1302,6 @@ msgstr ""
 "надо указать числовой y.\n"
 "Для определения плотности пользуйтесь density()"
 
-#, fuzzy
-msgid "invalid value oflength(x)"
-msgstr "неправильный метод кластеризации"
-
 msgid "'k' is not an integer"
 msgstr "'k' не является целым числом"
 
@@ -2515,6 +2511,10 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#, fuzzy
+#~ msgid "invalid value oflength(x)"
+#~ msgstr "неправильный метод кластеризации"
 
 #~ msgid "extra arguments"
 #~ msgstr "дополнительные аргументы"

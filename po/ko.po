@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:02+0100\n"
+"POT-Creation-Date: 2012-04-26 07:32+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -4558,32 +4558,32 @@ msgstr "복소수는 현재 모델 행렬에서 허용되지 않습니다"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "유형 '%s'변수는 모델 행렬에서 허용되지 않습니다"
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr "문자열 인수가 요구되고 있습니다"
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr "그런 원시함수는 없습니다"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr "길이가 0 인 변수 이름을 사용하려 했습니다"
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "변수 이름은 %d 바이트가 상한입니다"
 
-#: src/main/names.c:1216
+#: src/main/names.c:1217
 msgid "invalid .Internal() argument"
 msgstr ".Internal()의 인수가 잘못되었습니다"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1220
 msgid "invalid internal function"
 msgstr "내부 함수가 잘못되었습니다"
 
-#: src/main/names.c:1221
+#: src/main/names.c:1222
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "내부 함수 \"%s \" 가 없습니다"
@@ -6684,11 +6684,11 @@ msgstr "인자가 잘못된 수준을 가집니다"
 msgid "required resulting string length %d is > maximal %d"
 msgstr "요청한 결과 문자열 길이 %d이 최대 %d를 초과합니다"
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 msgid "'fmt' is not a character vector"
 msgstr "'fmt'는 문자 벡터가 아닙니다"
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "%d 인수만이 허용됩니다"
@@ -6702,12 +6702,12 @@ msgstr "잘못된 형식의 인수 [%d] : '%s'"
 msgid "arguments cannot be recycled to the same length"
 msgstr "수는 동일 길이에 리사이클 될 수 없습니다"
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt'의 길이가 형식의 최대 길이 %d를 초과했습니다"
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "이해할 수 없는 형식 지정 '%s'"
@@ -6718,7 +6718,7 @@ msgstr "이해할 수 없는 형식 지정 '%s'"
 msgid "reference to non-existent argument %d"
 msgstr "존재하지 않는 인수 %d를 참조했습니다"
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "각각의 변환 지정에서 별표 '*'는 최대 하나만 지원됩니다"
 
@@ -6764,6 +6764,11 @@ msgstr "likely truncation of character string to %d characters"
 #: src/main/sprintf.c:415
 msgid "unsupported type"
 msgstr "지원되지 않는 유형입니다"
+
+#: src/main/sprintf.c:484
+#, fuzzy
+msgid "'fmt' must be length 1"
+msgstr "'fromLast'는 길이가 1이어야 합니다"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"

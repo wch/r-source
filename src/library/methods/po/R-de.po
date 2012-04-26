@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-03-09 06:26\n"
+"POT-Creation-Date: 2012-04-26 07:32\n"
 "PO-Revision-Date: 2012-03-05 22:07+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -880,8 +880,9 @@ msgstr ""
 "wird momentan verfolgt; die aktuell genutzte Funktion wird die  Verfolgung "
 "entfernen"
 
+#, fuzzy
 msgid ""
-"Must supply either a generic function or a function as default for \"#s\""
+"Must supply either a generic function or a function as default for \"%s\""
 msgstr ""
 "Enweder eine generische Funktion oder eine Standardfunktion muss für \"%s\" "
 "angegeben werden"
@@ -1097,6 +1098,9 @@ msgstr ""
 
 msgid "No definition found for class %s"
 msgstr "Keine Definition der Klasse %s gefunden"
+
+msgid "Trying to execute load actions without methods package"
+msgstr ""
 
 #, fuzzy
 msgid "Missing  function for load action: %s"
@@ -1508,7 +1512,7 @@ msgstr ""
 "zurückgegeben"
 
 msgid "Selecting %d methods of min. distance"
-msgstr "Wähle %s Methoden minimaler Distanz"
+msgstr "Wähle %d Methoden minimaler Distanz"
 
 msgid "Selecting %d non-group methods"
 msgstr "Wähle %d gruppenfremde Methoden"
@@ -1916,7 +1920,7 @@ msgid ""
 "Can't untrace method for \"%s\"; no method defined for this signature: %s"
 msgstr ""
 "Kann die Verfolgung von \"%s\" nicht aufheben; keine Methodendefinition für "
-"diese Signatur"
+"diese Signatur: %s"
 
 msgid ".TraceWithMethods: untrace case"
 msgstr ".TRaceWithMethods: Fall für Verfolgung aufheben"
