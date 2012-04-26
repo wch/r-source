@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14\n"
+"POT-Creation-Date: 2012-04-26 11:35\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -158,6 +158,10 @@ msgstr "le chargement automatique n'a pas trouvé '%s' dans '%s'"
 msgid "invalid argument values in 'backsolve'"
 msgstr "valeurs d'arguments incorrectes dans 'backsolve'"
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "valeur incorrecte"
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
 "matrice singulière dans 'backsolve'. Premier zéro dans la diagonale [%d]"
@@ -173,6 +177,10 @@ msgstr "la matrice doit être carrée pour 'chol'"
 
 msgid "non-matrix argument to 'chol'"
 msgstr "l'argument doit être une matrice pour 'chol'"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "nom incorrect"
 
 msgid "matrix not positive definite"
 msgstr "la matrice n'est pas définie positive"
@@ -1338,8 +1346,22 @@ msgstr "'u5.bias' doit être un nombre positif ou nul"
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' doit être 0, 1 ou 2"
 
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "nom incorrect"
+
 msgid "first argument must be a QR decomposition"
 msgstr "le premier argument doit être une décomposition QR"
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr "nom incorrect"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr' et 'y' doivent avoir le même nombre de lignes"
@@ -1349,6 +1371,9 @@ msgstr "singularité parfaite dans 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
 msgstr "l'argument n'est pas une décomposition QR"
+
+msgid "invalid NCOL(y)"
+msgstr ""
 
 msgid "not implemented for complex 'qr'"
 msgstr "pas implémenté pour un 'qr' complexe"
@@ -1363,6 +1388,9 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "une valeur plus grande de 'ncol' est nécessaire car un pivotement s'est "
 "produit"
+
+msgid "invalid NCOL(R)"
+msgstr ""
 
 msgid "'x' must be an atomic vector"
 msgstr "'x' doit être un vecteur atomique"
@@ -1917,9 +1945,6 @@ msgstr[1] "Messages d'avis :\n"
 
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
 #~ msgstr "la méthode S3 '%s' est déclarée dans NAMESPACE mais est introuvable"
-
-#~ msgid "invalid name"
-#~ msgstr "nom incorrect"
 
 #~ msgid "is required by"
 #~ msgstr "est requis par"

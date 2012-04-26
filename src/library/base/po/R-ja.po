@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14\n"
+"POT-Creation-Date: 2012-04-26 11:35\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -150,6 +150,10 @@ msgstr " 自動ローダーは '%s' を '%s' 中に見つけられませんで�
 msgid "invalid argument values in 'backsolve'"
 msgstr " 'backsolve' に無効な引数値が与えられました "
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr " 無効な値です "
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr " 'backsolve' に特異行列。対角線 [%d] の最初の要素がゼロです "
 
@@ -164,6 +168,10 @@ msgstr " 'chol' 中に非正方行列 "
 
 msgid "non-matrix argument to 'chol'"
 msgstr " 'chol' へ行列でない引数 "
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr " 不当な名前です "
 
 msgid "matrix not positive definite"
 msgstr " 行列は正定値符号ではありません "
@@ -1309,8 +1317,22 @@ msgstr " 'u5.bias' は非負の数値でなければなりません "
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr " 'eps.correct' は 0, 1 または 2 でなければなりません "
 
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr " 不当な名前です "
+
 msgid "first argument must be a QR decomposition"
 msgstr " 最初の引数は QR 分解でなければなりません "
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr " 不当な名前です "
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr " 'qr' そして 'y' は同じ行数を持たなければなりません "
@@ -1320,6 +1342,9 @@ msgstr " 'qr.coef' は正確に特異です "
 
 msgid "argument is not a QR decomposition"
 msgstr " 引数は QR 分解ではありません "
+
+msgid "invalid NCOL(y)"
+msgstr ""
 
 msgid "not implemented for complex 'qr'"
 msgstr " 複素数の 'qr' に対しては実装されていません "
@@ -1332,6 +1357,9 @@ msgstr " 'k' は大きすぎます "
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr " ピボット操作が起きたので、より大きな 'ncol' 値が必要です "
+
+msgid "invalid NCOL(R)"
+msgstr ""
 
 msgid "'x' must be an atomic vector"
 msgstr " 'x' はベクトルでなければなりません "
@@ -1876,9 +1904,6 @@ msgstr[0] " 警告メッセージ： \n"
 
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
 #~ msgstr " S3 メソッド '%s' が名前空間中で宣言されましたが、見付かりません "
-
-#~ msgid "invalid name"
-#~ msgstr " 不当な名前です "
 
 #~ msgid "is required by"
 #~ msgstr " が以下により要求されました： "

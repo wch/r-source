@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14\n"
+"POT-Creation-Date: 2012-04-26 11:35\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -153,6 +153,10 @@ msgstr "自动载入器在'%2$s'找不到'%1$s' "
 msgid "invalid argument values in 'backsolve'"
 msgstr "'backsolve'的参数有错"
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "无效值"
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "'backsolve'的矩阵奇异。对角[%d]第一个零点"
 
@@ -167,6 +171,10 @@ msgstr "'chol'的矩阵不是正方形的"
 
 msgid "non-matrix argument to 'chol'"
 msgstr "'chol'的参数不是矩阵"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "名字不对"
 
 msgid "matrix not positive definite"
 msgstr "非正定矩阵"
@@ -1264,8 +1272,22 @@ msgstr "'u5.bias'必需为非负数值"
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct'的值只能为零，一，或二"
 
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "名字不对"
+
 msgid "first argument must be a QR decomposition"
 msgstr "第一个参数必需是QR分解"
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr "名字不对"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr'和'y'必需有相同的行数"
@@ -1275,6 +1297,9 @@ msgstr "'qr.coef'里出现了精确奇异"
 
 msgid "argument is not a QR decomposition"
 msgstr "参数不是QR分解"
+
+msgid "invalid NCOL(y)"
+msgstr ""
 
 msgid "not implemented for complex 'qr'"
 msgstr "没有在复数'qr'内实现"
@@ -1287,6 +1312,9 @@ msgstr "'k'值太大"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "因为产生了主轴，需要大一点的'ncol'值"
+
+msgid "invalid NCOL(R)"
+msgstr ""
 
 msgid "'x' must be an atomic vector"
 msgstr "'x'必需为原子矢量"
@@ -1818,9 +1846,6 @@ msgstr[0] "警告信息：\n"
 
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
 #~ msgstr "S3方法'%s'在NAMESPACE里有声明但不存在"
-
-#~ msgid "invalid name"
-#~ msgstr "名字不对"
 
 #~ msgid "is required by"
 #~ msgstr "需要"

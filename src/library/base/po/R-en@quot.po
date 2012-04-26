@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14\n"
-"PO-Revision-Date: 2012-04-22 16:14\n"
+"POT-Creation-Date: 2012-04-26 11:35\n"
+"PO-Revision-Date: 2012-04-26 11:35\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -169,6 +169,9 @@ msgstr "autoloader did not find ‘%s’ in ‘%s’"
 msgid "invalid argument values in 'backsolve'"
 msgstr "invalid argument values in ‘backsolve’"
 
+msgid "invalid value of ncol(x)"
+msgstr "invalid value of ncol(x)"
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 
@@ -183,6 +186,9 @@ msgstr "non-square matrix in ‘chol’"
 
 msgid "non-matrix argument to 'chol'"
 msgstr "non-matrix argument to ‘chol’"
+
+msgid "invalid nrow(x)"
+msgstr "invalid nrow(x)"
 
 msgid "matrix not positive definite"
 msgstr "matrix not positive definite"
@@ -1283,8 +1289,20 @@ msgstr "‘u5.bias’ must be non-negative numeric"
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "‘eps.correct’ must be 0, 1, or 2"
 
+msgid "invalid ncol(x)"
+msgstr "invalid ncol(x)"
+
 msgid "first argument must be a QR decomposition"
 msgstr "first argument must be a QR decomposition"
+
+msgid "invalid nrow(qr$qr)"
+msgstr "invalid nrow(qr$qr)"
+
+msgid "invalid ncol(qr$qr)"
+msgstr "invalid ncol(qr$qr)"
+
+msgid "invalid ncol(y)"
+msgstr "invalid ncol(y)"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "‘qr’ and ‘y’ must have the same number of rows"
@@ -1294,6 +1312,9 @@ msgstr "exact singularity in ‘qr.coef’"
 
 msgid "argument is not a QR decomposition"
 msgstr "argument is not a QR decomposition"
+
+msgid "invalid NCOL(y)"
+msgstr "invalid NCOL(y)"
 
 msgid "not implemented for complex 'qr'"
 msgstr "not implemented for complex ‘qr’"
@@ -1306,6 +1327,9 @@ msgstr "‘k’ is too large"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "need larger value of ‘ncol’ as pivoting occurred"
+
+msgid "invalid NCOL(R)"
+msgstr "invalid NCOL(R)"
 
 msgid "'x' must be an atomic vector"
 msgstr "‘x’ must be an atomic vector"

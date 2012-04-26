@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14\n"
+"POT-Creation-Date: 2012-04-26 11:35\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -163,6 +163,10 @@ msgstr "l'autocaricatore non trova '%s' in '%s'"
 msgid "invalid argument values in 'backsolve'"
 msgstr "parametri non valid in 'backsolve'"
 
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "valore 'n' non valido"
+
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "matrice singolare in backsolve. Primo zero sulla diagonale [%d]"
 
@@ -177,6 +181,10 @@ msgstr "matrice non quadrata in 'chol'"
 
 msgid "non-matrix argument to 'chol'"
 msgstr "argomento di 'chol' deve essere una matrice"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "nome non valido"
 
 msgid "matrix not positive definite"
 msgstr "matrice non definita positiva"
@@ -1382,8 +1390,22 @@ msgstr "'u5.bias' deve essere numeric non negativo"
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' deve essere 0, 1, o 2"
 
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "nome non valido"
+
 msgid "first argument must be a QR decomposition"
 msgstr "il primo argomento deve essere una decomposizione QR"
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr "nome non valido"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr' e 'y' devono avere lo stesso numero di righe"
@@ -1393,6 +1415,9 @@ msgstr "singolarità perfetta in 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
 msgstr "l'argomento non è una decomposizione QR"
+
+msgid "invalid NCOL(y)"
+msgstr ""
 
 msgid "not implemented for complex 'qr'"
 msgstr "implementato per 'qr' complex"
@@ -1407,6 +1432,9 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "c'è bisogno di un valore più grande di 'ncol' poiché si utilizzato il "
 "pivoting"
+
+msgid "invalid NCOL(R)"
+msgstr ""
 
 #, fuzzy
 msgid "'x' must be an atomic vector"
@@ -1937,9 +1965,6 @@ msgstr[1] "Messaggi di avvertimento:\n"
 
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
 #~ msgstr "dichiarato in NAMESPACE ma non trovato"
-
-#~ msgid "invalid name"
-#~ msgstr "nome non valido"
 
 #~ msgid "is required by"
 #~ msgstr "richiesto da"
