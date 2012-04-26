@@ -194,7 +194,7 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
     /* vsize >0 to catch long->int overflow */
     if (vsize < 1000 && vsize > 0) {
 	R_ShowMessage("WARNING: vsize ridiculously low, Megabytes assumed\n");
-	vsize *= Mega;
+	vsize *= (R_size_t) Mega;
     }
     if(vsize < Min_Vsize || vsize > Max_Vsize) {
 	sprintf(msg, "WARNING: invalid v(ector heap)size `%lu' ignored\n"

@@ -2289,7 +2289,7 @@ static void resize_buffer(membuf_t mb, R_size_t needed)
     if(needed < 10000000) /* ca 10MB */
 	needed = (1+2*needed/INCR) * INCR;
     if(needed < 1000000000) /* ca 1GB */
-	needed = (int)((1+1.2*needed/INCR) * INCR);
+	needed = (int)((1+1.2*(double)needed/INCR) * INCR);
     else if(needed < INT_MAX - INCR)
 	needed = (1+needed/INCR) * INCR;
     unsigned char *tmp = realloc(mb->buf, needed);

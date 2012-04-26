@@ -108,7 +108,7 @@ typedef R_StringBuffer DeparseBuffer;
 
 typedef struct {
     int linenumber;
-    int len;
+    int len; // FIXME: size_t
     int incurly;
     int inlist;
     Rboolean startline; /* = TRUE; */
@@ -1183,7 +1183,7 @@ static void print2buff(const char *strng, LocalParseData *d)
     bufflen = strlen(d->buffer.data);
     R_AllocStringBuffer(bufflen + tlen, &(d->buffer));
     strcat(d->buffer.data, strng);
-    d->len += tlen;
+    d->len += (int) tlen;
 }
 
 static void vector2buff(SEXP vector, LocalParseData *d)

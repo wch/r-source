@@ -1812,7 +1812,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 						if (h > maxHeight) maxHeight = h;
 						if (d > maxDepth) maxDepth = d;
 					    }
-					    ss += used; n -=used;
+					    ss += used;
 					}
 					done = TRUE;
 				    }

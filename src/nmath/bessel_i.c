@@ -63,7 +63,7 @@ double bessel_i(double x, double alpha, double expo)
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
     }
     nb = 1 + (long)na;/* nb-1 <= alpha < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bi = (double *) calloc(nb, sizeof(double));
     if (!bi) MATHLIB_ERROR("%s", _("bessel_i allocation error"));
@@ -78,7 +78,7 @@ double bessel_i(double x, double alpha, double expo)
 			     x, ncalc, nb, alpha);
 	else
 	    MATHLIB_WARNING2(_("bessel_i(%g,nu=%g): precision lost in result\n"),
-			     x, alpha+nb-1);
+			     x, alpha+(double)nb-1);
     }
     x = bi[nb-1];
 #ifdef MATHLIB_STANDALONE
@@ -115,7 +115,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
     }
     nb = 1 + (long)na;/* nb-1 <= alpha < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
 	if(ncalc < 0)
@@ -123,7 +123,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 			     x, ncalc, nb, alpha);
 	else
 	    MATHLIB_WARNING2(_("bessel_i(%g,nu=%g): precision lost in result\n"),
-			     x, alpha+nb-1);
+			     x, alpha+(double)nb-1);
     }
     x = bi[nb-1];
     return x;

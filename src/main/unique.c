@@ -136,9 +136,9 @@ static int chash(SEXP x, int indx, HashData *d)
 static int cshash(SEXP x, int indx, HashData *d)
 {
     intptr_t z = (intptr_t) STRING_ELT(x, indx);
-    unsigned int z1 = z & 0xffffffff, z2 = 0;
+    unsigned int z1 = (unsigned int)(z & 0xffffffff), z2 = 0;
 #if SIZEOF_LONG == 8
-    z2 = z/0x100000000L;
+    z2 = (unsigned int)(z/0x100000000L);
 #endif
     return scatter(z1 ^ z2, d);
 }

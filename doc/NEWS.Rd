@@ -39,7 +39,7 @@
       finding segfaults in package code.
 
       \item In \code{layout()}, the limits on the grid size have been
-	raised (again).
+      raised (again).
         
       \item New functions \code{checkPoFiles()} and \code{checkPoFile()}
       have been added to the \pkg{tools} package to check for 

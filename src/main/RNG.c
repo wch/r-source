@@ -168,7 +168,7 @@ double unif_rand(void)
 	if (p2 < 0.0) p2 += m2;
 	II(3) = II(4); II(4) = II(5); II(5) = (int) p2;
 
-	return ((p1 > p2) ? (p1 - p2) : (p1 - p2 + m1)) * normc;
+	return (double)((p1 > p2) ? (p1 - p2) : (p1 - p2 + m1)) * normc;
     }
     default:
 	error(_("unif_rand: unimplemented RNG kind %d"), RNG_kind);
