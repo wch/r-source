@@ -4007,8 +4007,9 @@ signed C99 type @code{ptrdiff_t}, which is typedef-ed to
 
 @item
 These can in theory have 63-bit lengths, but note that current 64-bit
-OSes do not even theoretically offer 64-bit address spaces and it is
-likely that a 48-bit length would suffice for another 25 years or more.
+OSes do not even theoretically offer 64-bit address spaces and there is
+currently a 52-bit limit (which exceeds the theoretical limit of current
+OSes and ensures that such lengths can be stored exactly in doubles).
 
 @item
 The serialization format has been changed to accommodate longer lengths,

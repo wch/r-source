@@ -53,6 +53,8 @@ xlength(x) <- value
   double value for vectors of more than \eqn{2^{31}-1}{2^31 - 1}
   elements, and the default replacement method can set the length of
   atomic vectors and list to such a length if \code{value} is double.
+  (Note that long vectors are limited to \eqn{2^{52}}{2^52} elements, and
+  so their lengths can be stored exactly in a double.)
 
   For vectors (including lists) and factors the length is the number of
   elements.  For an environment it is the number of objects in the

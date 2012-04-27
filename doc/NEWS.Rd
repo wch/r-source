@@ -46,6 +46,9 @@
       consistency of format strings in translation files.
 
       \item New simple \code{provideDimnames()} utility.
+      
+      \item \code{length()} checks the values returned by (S3 or S4)
+      methods, coercing non-intger values if possible (with a warning).
     }
   }
 
@@ -151,6 +154,10 @@
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.
+      
+      \item \code{R_alloc} used to always allocate at least one byte
+      more than requested: it may no longer do so (although the number
+      of bytes allocated is still rounded up to a multiple of 8).
     }
   }
 }

@@ -422,13 +422,25 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return(ans);
 	if(isObject(x) && DispatchOrEval(call, op, "length", args,
 					 rho, &ans, 0, 1))
-	    return(ans);
+	    return ans;
 
 	return ScalarReal((double) xlength(x));
     }
     if(isObject(x) && DispatchOrEval(call, op, "length", args,
-				     rho, &ans, 0, 1))
-	return(ans);
+				     rho, &ans, 0, 1)) {
+	/* sanity check */
+	if (length(x) != 1)
+	    errorcall(call, _("a method returned other than single value"));
+	if (TYPEOF(ans) != INTSXP) {
+	    warningcall(call, _("a method returned a non-integer value"));
+	    int l = asInteger(ans);
+	    if (l != NA_INTEGER && l >= 0) return ScalarInteger(l);
+	} else if (INTEGER(ans)[0] == NA_INTEGER)
+	    warningcall(call, _("a method returned NA"));
+	else if  (INTEGER(ans)[0] < 0)
+	    errorcall(call, _("a method returned a negative value"));
+	return ans;
+    }
 
 #ifdef LONG_VECTOR_SUPPORT
     R_xlen_t len = xlength(x);
