@@ -6,6 +6,26 @@
 
 
 \section{CHANGES IN R VERSION 2.15.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item There are two new environment variables which control the
+      defaults for command-line options.
+
+      If \env{R_WIN_INTERNET2} is set to a non-empty value, it is as if
+      \option{--internet2} was used.
+
+      If \env{R_MAX_MEM_SIZE} is set, it gives the default memory limit
+      if \option{--max-mem-size} is not specified: invalid values being
+      ignored.
+      
+      \item A few people have reported problems with junctions, although
+      they were tested on Windows 7, XP and Server 2008 machines.
+      Setting the environment variable \env{R_WIN_NO_JUNCTIONS} to a
+      non-empty value (e.g. in \file{~/.R/check.Renviron} will force
+      \command{R CMD check} to use copies instead.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item For \code{tiff(type = "windows")}, the numbering of per-page
@@ -22,22 +42,6 @@
       
       \item The \code{Sys.glob()} function didn't handle UNC paths
       as it was designed to try to do. (\PR{14884})
-
-      \item There are two new environment variables which control the
-      defaults for command-line options.
-
-      If \env{R_WIN_INTERNET2} is set to a non-empty value, it is as if
-      \option{--internet2} was used.
-
-      If \env{R_MAX_MEM_SIZE} is set, it gives the default memory limit
-      if \option{--max-mem-size} is not specified: invalid values being
-      ignored.
-      
-      \item A few people have reported problems with junctions, although
-      they were tested on Windows 7, XP and Server 2008 machines.
-      Setting the environment variable \env{R_WIN_NO_JUNCTIONS} to a
-      non-empty value (e.g. in \file{~/.R/check.Renviron} will force
-      \command{R CMD check} to use copies instead.
     }
   }
 }
