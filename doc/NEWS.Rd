@@ -45,6 +45,11 @@
       \code{character(N)}, which initializes the elements to \code{""},
       and then attempt to edit the strings in-place, sometimes forgetting
       to terminate them.)
+
+      \item Calls to the new function \code{globalVariables()} declare
+      that functions and other objects in a package should be treated as
+      globally defined, so that \code{CMD check} will not complain
+      about them.
     }
   }
 

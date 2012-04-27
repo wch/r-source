@@ -517,3 +517,39 @@ install.packages <-
 
     invisible()
 }
+
+## treat variables as global in a package, for codetools & check
+globalVariables <- function(names, package, add = TRUE) {
+    .listFile <- ".__global__"
+    .simplePackageName <- function(env) {
+        if(exists(".packageName", envir = env, inherits = FALSE))
+           get(".packageName", envir = env)
+        else
+            "(unknown package)"
+    }
+    if(missing(package)) {
+        env <- topenv(parent.frame())
+        package <- .simplePackageName(env)
+    }
+    else if(is.environment(package)) {
+        env <- package
+        package <- .simplePackageName(env)
+    }
+    else
+        env <- asNamespace(package)
+    if(exists(.listFile, envir = env, inherits = FALSE))
+        current <- get(.listFile, envir = env)
+    else
+        current <- character()
+    if(! missing(names)) {
+        if(environmentIsLocked(env))
+            stop(gettextf("The namespace for package \"%s\" is locked; no changes in the global variables list may be made.",
+                          package))
+        if(add)
+            current <- unique(c(current, names))
+        else
+            current <- names
+        assign(.listFile, current, envir = env)
+    }
+    current
+}
