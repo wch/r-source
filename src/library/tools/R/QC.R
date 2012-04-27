@@ -3412,6 +3412,12 @@ function(package, lib.loc = NULL)
             lapply(sub(".*=[[:space:]]*", "", opts),
                    config_val_to_logical)
     }
+    ## look for globalVariables declaration in package
+    .glbs <- utils::globalVariables(,package)
+    if(length(.glbs))
+        ## codetools doesn't allow adding to its default
+        args$suppressUndefined <-
+            c(codetools:::dfltSuppressUndefined, .glbs)
 
     args <- c(list(package, report = foo), args)
     suppressMessages(do.call(codetools::checkUsagePackage, args))

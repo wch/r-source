@@ -489,6 +489,18 @@ getRefSuperClasses <- function(classes, classDefs) {
     newMethods <- insertClassMethods(allMethods, className, methodDefs, names(def@fieldClasses), FALSE)
     for(what in names(newMethods))
         assign(what, newMethods[[what]], envir = methodsEnv)
+    ## calls to $methods() only work in package source or
+    ## as load actions.  Use the topenv() if that seems like
+    ## the namespace in preparation, or the namespace if available
+    env <- topenv(parent.frame()); declare <- TRUE
+    if(exists(".packageName", envir = env) &&
+       get(".packageName", envir = env) == def@package) {}
+    else if(def@package %in% loadedNamespaces())
+        env <- asNamespace(def@package)
+    else
+        declare <- FALSE
+    if(declare)
+        utils::globalVariables(names(newMethods), env)
     invisible(methodsEnv)
 },
 
@@ -884,6 +896,7 @@ setRefClass <- function(Class, fields = character(),
     env <- as.environment(value)
     env$def <- classDef
     env$className <- Class
+    .declareVariables(classDef, where)
     value
 }
 
@@ -1145,4 +1158,11 @@ all.equal.environment <- function(target, current, ...) {
     }
     .setLockedFieldNames(def, lockedFields)
     invisible(env)
+}
+
+## declare field and method names global to avoid spurious
+## messages from codetools
+.declareVariables <- function(def, env) {
+    utils::globalVariables(c(names(def@fieldClasses), objects(def@refMethods)),
+                           env)
 }
