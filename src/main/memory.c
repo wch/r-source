@@ -1631,15 +1631,15 @@ static void RunGenCollect(R_size_t size_needed)
 	for(s=NEXT_NODE(R_GenHeap[i].New); s!=R_GenHeap[i].Free; s=NEXT_NODE(s)){
 	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[i]*sizeof(VECREC));
 # if VALGRIND_LEVEL > 2
-	    VALGRIND_MAKE_NOACCESS(&ATTRIB(s), sizeof(void *));
-            VALGRIND_MAKE_NOACCESS(s, 3);
+	    VALGRIND_MAKE_NOACCESS(&ATTRIB(s),sizeof(void *));
+            VALGRIND_MAKE_NOACCESS(s,3);
 # endif
 	}
     }
 #if VALGRIND_LEVEL > 2
     for(s=NEXT_NODE(R_GenHeap[0].New);s!=R_GenHeap[0].Free; s=NEXT_NODE(s)){
-            VALGRIND_MAKE_NOACCESS(&(s->u), 3*(sizeof(void *)));
-            VALGRIND_MAKE_NOACCESS(s, 3);
+            VALGRIND_MAKE_NOACCESS(&(s->u),3*(sizeof(void *)));
+            VALGRIND_MAKE_NOACCESS(s,3);
     }
 #endif
 #endif
@@ -1969,27 +1969,36 @@ char *R_alloc(size_t nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;
     double dsize = (double) nelem * eltsize;
-    if (dsize > 0) { /* precaution against integer overflow on 32-bit */
+    if (dsize > 0) { /* precaution against integer overflow */
 	SEXP s;
-#if SIZEOF_SIZE_T > 4
-	/* 64-bit platform, so have long vectors */
-	if(dsize > R_XLEN_T_MAX)  /* currently 4096 TB */
-	    error(_("cannot allocate memory block of size %0.f Tb"),
-		  dsize/pow(1024.0, 4.0));
-	s = allocVector(RAWSXP, size);
+#ifdef LONG_VECTOR_SUPPORT
+	/* Must be 64-bit platform, so calculation is done as 64-bit.
+	   Eventually should worry about the 2^63-1 limit */
+	s = allocVector(RAWSXP, size + 1);
+#elif SIZEOF_SIZE_T > 4
+	/* In this case by allocating larger units we can get up to
+	   size(double) * (2^31 - 1) bytes, approx 16Gb */
+	if(dsize < R_LEN_T_MAX)
+	    s = allocVector(RAWSXP, size + 1);
+	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
+	    s = allocVector(REALSXP, (int)(0.99+dsize/sizeof(double)));
+	else {
+	    error(_("cannot allocate memory block of size %0.1f Gb"),
+		  dsize/1024.0/1024.0/1024.0);
+	    s = R_NilValue; /* -Wall */
+	}
 #else
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
 	    error(_("cannot allocate memory block of size %0.1f Gb"),
 		  dsize/1024.0/1024.0/1024.0);
-	s = allocVector(RAWSXP, size);
+	s = allocVector(RAWSXP, size + 1);
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
 #if VALGRIND_LEVEL > 0
-	/* was (int) dsize, but with long vectors this is the same */
-	VALGRIND_MAKE_WRITABLE(DATAPTR(s), size);
+	VALGRIND_MAKE_WRITABLE(DATAPTR(s), (int) dsize);
         VALGRIND_MAKE_WRITABLE(&(ATTRIB(s)), sizeof(void *));
-        VALGRIND_MAKE_WRITABLE(s, 3);
+        VALGRIND_MAKE_WRITABLE(s,3);
 #endif
 	return (char *)DATAPTR(s);
     }
