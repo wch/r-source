@@ -563,9 +563,9 @@ length.unit.arithmetic <- function(x) {
          "+"=max(length(x$arg1), length(x$arg2)),
          "-"=max(length(x$arg1), length(x$arg2)),
          "*"=max(length(x$arg1), length(x$arg2)),
-         "min"=1,
-         "max"=1,
-         "sum"=1)
+         "min" = 1L,
+         "max" = 1L,
+         "sum" = 1L)
 }
 
 # Vestige of when length was not generic
