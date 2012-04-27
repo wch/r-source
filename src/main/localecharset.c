@@ -579,7 +579,7 @@ static char* name_value_search(const char *name, const name_value table[],
 }
 #endif
 
-char *locale2charset(const char *locale)
+const char *locale2charset(const char *locale)
 {
     static char charset[128];
 
@@ -706,7 +706,7 @@ char *locale2charset(const char *locale)
     if(0 == strcmp(enc, "utf8")) return "UTF-8";
 
     value = name_value_search(la_loc, guess, guess_count);
-    return value == NULL ? (char *) "ASCII" : value;
+    return value == NULL ? "ASCII" : value;
 #endif
 }
 

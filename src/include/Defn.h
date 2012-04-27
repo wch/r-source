@@ -1199,7 +1199,7 @@ double R_atof(const char *str);
 void set_rl_word_breaks(const char *str);
 
 /* From localecharset.c */
-extern char *locale2charset(const char *);
+extern const char *locale2charset(const char *);
 
 /* Localization */
 
