@@ -760,7 +760,8 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* (if it is vectorizable). We could probably be fairly */
 /* clever with memory here if we wanted to. */
 
-static SEXP xlengthgets(SEXP x, R_xlen_t len)
+/* used in connections.c */
+SEXP xlengthgets(SEXP x, R_xlen_t len)
 {
     R_xlen_t lenx, i;
     SEXP rval, names, xnames, t;
@@ -852,6 +853,7 @@ static SEXP xlengthgets(SEXP x, R_xlen_t len)
     return rval;
 }
 
+/* public older version */
 SEXP lengthgets(SEXP x, R_len_t len)
 {
     return xlengthgets(x, (R_xlen_t) len);

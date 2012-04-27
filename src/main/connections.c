@@ -2456,12 +2456,12 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 
 typedef struct textconn {
     char *data;  /* all the data */
-    int cur, nchars; /* current pos and number of chars */
+    size_t cur, nchars; /* current pos and number of chars */
     char save; /* pushback */
 } *Rtextconn;
 
 typedef struct outtextconn {
-    int len;  /* number of lines */
+    size_t len;  /* number of lines */
     SEXP namesymbol;
     SEXP data;
     char *lastline;
@@ -2469,18 +2469,20 @@ typedef struct outtextconn {
 } *Routtextconn;
 
 /* read a R character vector into a buffer */
-/* It's not conceivable people would want to do this with a long vector */
 static void text_init(Rconnection con, SEXP text, int type)
 {
-    int i, nlines = length(text);
-    size_t nchars = 0;
+    R_xlen_t i, nlines = xlength(text);  // not very plausible that this is long
+    size_t nchars;
+    double dnc = 0.0;
     Rtextconn this = con->private;
 
-    /* FIXME: check for overflow on 32-bit platforms */
     for(i = 0; i < nlines; i++)
-	nchars += strlen(type == 1 ? translateChar(STRING_ELT(text, i))
+	dnc += strlen(type == 1 ? translateChar(STRING_ELT(text, i))
 			 : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
-			    : CHAR(STRING_ELT(text, i))) ) + 1;    
+			    : CHAR(STRING_ELT(text, i))) ) + 1;
+    if (dnc >= SIZE_MAX) 
+ 	error(_("too many characters for text connection"));
+    else nchars = (size_t) dnc;
     this->data = (char *) malloc(nchars+1);
     if(!this->data) {
 	free(this); free(con->description); free(con->class); free(con);
@@ -2494,7 +2496,7 @@ static void text_init(Rconnection con, SEXP text, int type)
 		  : CHAR(STRING_ELT(text, i))) );
 	strcat(this->data, "\n");
     }
-    this->nchars = (int) nchars;
+    this->nchars = nchars;
     this->cur = this->save = 0;
 }
 
@@ -2588,7 +2590,7 @@ static void outtext_close(Rconnection con)
        findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
 	R_unLockBinding(this->namesymbol, env);
     if(strlen(this->lastline) > 0) {
-	PROTECT(tmp = lengthgets(this->data, ++this->len));
+	PROTECT(tmp = xlengthgets(this->data, ++this->len));
 	SET_STRING_ELT(tmp, this->len - 1, mkCharLocal(this->lastline));
 	if(this->namesymbol) defineVar(this->namesymbol, tmp, env);
 	SET_NAMED(tmp, 2);
@@ -2618,7 +2620,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     char buf[BUFSIZE], *b = buf, *p, *q;
     const void *vmax = vmaxget();
     int res = 0, usedRalloc = FALSE, buffree,
-	already = (int) strlen(this->lastline);
+	already = (int) strlen(this->lastline); // we do not allow longer lines
     SEXP tmp;
 
     va_list aq;
@@ -2632,7 +2634,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     } else {
 	strcpy(b, this->lastline);
 	p = b + already;
-	buffree = BUFSIZE - (int) already; // checked < BUFSIZE above
+	buffree = BUFSIZE - already; // checked < BUFSIZE above
 	res = vsnprintf(p, buffree, format, aq);
     }
     va_end(aq);
@@ -2663,7 +2665,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    int idx = ConnIndex(con);
 	    SEXP env = VECTOR_ELT(OutTextData, idx);
 	    *q = '\0';
-	    PROTECT(tmp = lengthgets(this->data, ++this->len));
+	    PROTECT(tmp = xlengthgets(this->data, ++this->len));
 	    SET_STRING_ELT(tmp, this->len - 1, mkCharLocal(p));
 	    if(this->namesymbol) {
 		if(findVarInFrame3(env, this->namesymbol, FALSE)

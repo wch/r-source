@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2009     The R Core Team
+ *  Copyright (C) 2002--2012     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -571,5 +571,5 @@ SEXP attribute_hidden do_getfmts(SEXP call, SEXP op, SEXP args, SEXP env)
 	}  /* end for ( each chunk ) */
 
     UNPROTECT(1);
-    return lengthgets(res, (int) maxlen);
+    return xlengthgets(res, maxlen);
 }

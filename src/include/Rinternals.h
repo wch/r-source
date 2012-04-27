@@ -668,6 +668,7 @@ Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isUnordered(SEXP);
 Rboolean Rf_isUnsorted(SEXP, Rboolean);
 SEXP Rf_lengthgets(SEXP, R_len_t);
+SEXP Rf_xlengthgets(SEXP, R_xlen_t);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
@@ -1059,6 +1060,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define warningcall		Rf_warningcall
 #define warningcall_immediate	Rf_warningcall_immediate
 #define xlength(x)		Rf_xlength(x)
+#define xlengthgets		Rf_xlengthgets
 
 #endif
 
