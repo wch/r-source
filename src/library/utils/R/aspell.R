@@ -415,6 +415,8 @@ function(which = NULL, dir = NULL, drop = "\\references",
     
     if(is.null(which)) {
         which <- tools:::.get_standard_package_names()$base
+        # CHANGES.Rd could be dropped from checks in the future;
+        # it will not be updated post 2.15.0
         files <- c(file.path(dir, "doc", "NEWS.Rd"),
                    file.path(dir, "src", "gnuwin32", "CHANGES.Rd"))
         files <- files[file_test("-f", files)]
