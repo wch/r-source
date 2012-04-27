@@ -122,8 +122,8 @@ static void R_ReplFile(FILE *fp, SEXP rho)
 static int prompt_type;
 static char BrowsePrompt[20];
 
-
-char *R_PromptString(int browselevel, int type)
+/* This is in no header, so non-API */
+const char *R_PromptString(int browselevel, int type)
 {
     if (R_Slave) {
 	BrowsePrompt[0] = '\0';
@@ -135,10 +135,10 @@ char *R_PromptString(int browselevel, int type)
 		sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
 		return BrowsePrompt;
 	    }
-	    return (char *)CHAR(STRING_ELT(GetOption1(install("prompt")), 0));
+	    return CHAR(STRING_ELT(GetOption1(install("prompt")), 0));
 	}
 	else {
-	    return (char *)CHAR(STRING_ELT(GetOption1(install("continue")), 0));
+	    return CHAR(STRING_ELT(GetOption1(install("continue")), 0));
 	}
     }
 }
