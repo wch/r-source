@@ -57,8 +57,8 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     const static double eps = 1.e-15;
 
     int kMax;
-    double k, ncp2, dx2, d, D;
-    long double sum, term, p_k, q;
+    double k, ncp2, dx2, d, D, term;
+    long double sum, p_k, q;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
@@ -89,7 +89,7 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
     /* The starting "middle term" --- first look at it's log scale: */
     term = dbeta(x, a + kMax, b, /* log = */ TRUE);
     p_k = dpois_raw(kMax, ncp2,              TRUE);
-    if(x == 0. || !R_FINITE(term) || !R_FINITE(p_k)) /* if term = +Inf */
+    if(x == 0. || !R_FINITE(term) || !R_FINITE((double)p_k)) /* if term = +Inf */
 	return R_D_exp((double)(p_k + term));
 
     /* Now if s_k := p_k * t_k  {here = exp(p_k + term)} would underflow,
