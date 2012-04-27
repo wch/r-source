@@ -2472,7 +2472,7 @@ typedef struct outtextconn {
 static void text_init(Rconnection con, SEXP text, int type)
 {
     R_xlen_t i, nlines = xlength(text);  // not very plausible that this is long
-    size_t nchars;
+    size_t nchars = 0; /* -Wall */
     double dnc = 0.0;
     Rtextconn this = con->private;
 
