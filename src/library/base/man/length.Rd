@@ -62,7 +62,13 @@ xlength(x) <- value
   length one: note that for functions this differs from S.
 
   The replacement forms remove all the attributes of \code{x} except its
-  names.  
+  names.
+}
+\section{Warning}{
+  Package authors have written methods that return a result of
+  length other than one (\pkg{Formula}) and that return a vector type
+  \code{\link{double}} (\pkg{Matrix}), even with non-integer values
+  (\pkg{sets}).
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.
