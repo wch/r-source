@@ -90,6 +90,16 @@
     }
   }
 
+  \subsection{UTILITES}{
+    \itemize{
+      \item For \command{R CMD check}, a few people have reported
+      problems with junctions on Windows (although they were tested on
+      Windows 7, XP and Server 2008 machines).  Setting the environment
+      variable \env{R_WIN_NO_JUNCTIONS} to a non-empty value (e.g. in
+      \file{~/.R/check.Renviron}) will force copies to be used instead. 
+    }
+  }
+  
   \subsection{INSTALLATION}{
     \itemize{
       \item \command{R CMD INSTALL} with \env{_R_CHECK_INSTALL_DEPENDS_}
@@ -114,11 +124,11 @@
   
   \subsection{WINDOWS-SPECIFIC CHANGES}{
     \itemize{
-      \item Windows-specific changes will now be announced in this
-      file (\file{NEWS}). Older changes remain in the \file{CHANGES}
-      file.
+      \item Windows-specific changes will now be announced in this file
+      (\file{NEWS}).  Changes up and including \R 2.15.0 remain in the
+      \file{CHANGES} file.
       
-      \item On Windows there are two new environment variables which
+      \item There are two new environment variables which
       control the defaults for command-line options.
 
       If \env{R_WIN_INTERNET2} is set to a non-empty value, it is as if
@@ -126,13 +136,7 @@
 
       If \env{R_MAX_MEM_SIZE} is set, it gives the default memory limit
       if \option{--max-mem-size} is not specified: invalid values being
-      ignored.
-      
-      \item A few people have reported problems with junctions, although
-      they were tested on Windows 7, XP and Server 2008 machines.
-      Setting the environment variable \env{R_WIN_NO_JUNCTIONS} to a
-      non-empty value (e.g. in \file{~/.R/check.Renviron} will force
-      \command{R CMD check} to use copies instead.
+      ignored.      
     }
   }
 
@@ -190,20 +194,20 @@
       to export assigned items or generate spurious warnings in
       \code{CMD check} on loading.
       
-      \item For \code{tiff(type = "windows")} in Windows, the numbering of per-page
+      \item For \code{tiff(type = "windows")}, the numbering of per-page
       files except the last was off by one.
       
-      \item In Windows, loading package \pkg{stats} (which is done for
+      \item On Windows, loading package \pkg{stats} (which is done for
       a default session) would switch line endings on \file{stdout}
       and \file{stderr} from CRLF to LF.  This affected
       \command{Rterm} and \command{R CMD BATCH}.
 
-      \item In Windows, the compatibility function \code{x11()} had
+      \item On Windows, the compatibility function \code{x11()} had
       not kept up with changes to \code{windows()}, and issued
       warnings about bad parameters. (\PR{14880})
 
-      \item In Windows, the \code{Sys.glob()} function didn't handle UNC paths
-      as it was designed to try to do. (\PR{14884})
+      \item On Windows, the \code{Sys.glob()} function didn't handle UNC
+      paths as it was designed to try to do. (\PR{14884})
     }
   }
 }
