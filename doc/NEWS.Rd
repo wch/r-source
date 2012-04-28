@@ -17,10 +17,12 @@
       platform and give an error on a 32-bit one.
 
       \item It is now possible for 64-bit builds to allocate amounts of
-      memory limited only by the OS, since long vectors are allowed.  It
-      may be wise to use OS facilities (e.g. \command{ulimit} in
-      \command{bash}) to set limits on overall memory consumption of an
-      \R process, particularly in a multi-user environment.
+      memory limited only by the OS.  It may be wise to use OS
+      facilities (e.g. \command{ulimit} in a \command{bash} shell,
+      \command{limit} in \command{csh}) to set limits on overall memory
+      consumption of an \R process, particularly in a multi-user
+      environment.  A number of packages, particularly those using Java,
+      need at least 4GB of virtual memory.
     }
   }
 
@@ -48,7 +50,11 @@
       \item New simple \code{provideDimnames()} utility.
 
       \item Where methods for \code{length()} return a double value
-      which is representable as an integer, this is converted to an integer.
+      which is representable as an integer (as often happens for package
+      \CRANpkg{Matrix}), this is converted to an integer.
+      
+      \item On Windows, the C stack size has been increased to 64MB (it
+      has been 10MB since the days of 32MB RAM systems).
     }
   }
 
@@ -62,7 +68,7 @@
 
       All aspects are currently experimental.
 
-      \item What can be done with such vectors is currently rather
+      \item What can be done with such vectors is currently somewhat
       limited, and most operations will return the error \sQuote{long
       vectors not supported yet}.  They can be serialized and
       unserialized, coercion, \code{identical()} and
@@ -70,7 +76,7 @@
       lengths can be get and set by \code{xlength()}: calling
       \code{length()} on a long vector will throw an error.
 
-      \item A limited amount of indexing is available.  Generally
+      \item Most aspects of indexing are available.  Generally
       double-valued indices can be used to access elements beyond
       \eqn{2^{31}-1}{2^31 - 1}.
 
@@ -129,15 +135,15 @@
       get or set the CPU affinity mask for the current \R process on
       systems that supports this (currently only Linux was tested
       successfully). It has no effect on systems that do not support
-      process affinity. Users are not expected to use this function
+      process affinity.  Users are not expected to use this function
       directly (with the exception of fixing libraries that break
       affinity settings like OpenBLAS) -- the function is rather
       intended to support affinity control in high-level parallel
-      functions. In the future, \R may supplement lack of affinity
+      functions.  In the future, \R may supplement lack of affinity
       control in the OS by its own bookkeeping via \code{mcaffinity}
       related to processes and threads it spawns.
 
-      \item \code{mcparallel} has a new argument \code{mc.affinity}
+      \item \code{mcparallel()} has a new argument \code{mc.affinity}
       which attempts to set the affinity of the child process according
       to the specification contained therein.
     }
@@ -149,14 +155,11 @@
       %       \item Passing \code{NULL} to \code{.C()} is now an error.
 
       \item New C functions \code{R_orderVector()}, \code{R_order2double()},
-      etc, corresponding to \R's \code{order(..)}.
+      etc, corresponding to \R's \code{order()}.
 
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.
-      
-      \item On Windows, the C stack size has been increased to 64MB (it has been
-      10MB since the days of 32MB RAM systems).
     }
   }
 }
@@ -200,6 +203,11 @@
       \code{character(N)}, which initializes the elements to \code{""},
       and then attempt to edit the strings in-place, sometimes forgetting
       to terminate them.)
+
+      \item Calls to the new function \code{globalVariables()} in
+      \pkg{utils} declare that functions and other objects in a package
+      should be treated as globally defined, so that \code{CMD check}
+      will not note them.
     }
   }
 

@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+utils::globalVariables("n", add = TRUE)
+
 ### This function fits a generalized linear model via
 ### iteratively reweighted least squares for any family.
 ### Written by Simon Davies, Dec 1995
