@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -24,8 +24,6 @@ length(x) <- value
   The default method currently returns an \code{\link{integer}} of
   length 1.  Since this may change in the future and may
   differ for other methods, programmers should not rely on it.
-  (Should the length exceed the maximum representable integer, it is
-  returned as \code{NA}.)
 
   For vectors (including lists) and factors the length is the number of
   elements.  For an environment it is the number of objects in the
@@ -35,8 +33,9 @@ length(x) <- value
   length one: note that for functions this differs from S.
 
   The replacement form removes all the attributes of \code{x} except its
-  names.  
+  names.
 }
+
 \details{
   Both functions are generic: you can write methods to handle specific
   classes of objects, see \link{InternalMethods}.  \code{length<-} has a
@@ -49,6 +48,14 @@ length(x) <- value
   
   Both are \link{primitive} functions.
 }
+
+\section{Warning}{
+  Package authors have written methods that return a result of
+  length other than one (\pkg{Formula}) and that return a vector type
+  \code{\link{double}} (\pkg{Matrix}), even with non-integer values
+  (\pkg{sets}).
+}
+
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.
 }
