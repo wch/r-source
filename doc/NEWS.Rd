@@ -39,17 +39,17 @@
       \item \code{qqline()} gets new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
-      
+
       \item \code{.C()} gains some protection against the misuse of
       character vector arguments.  (An all too common error is to pass
       \code{character(N)}, which initializes the elements to \code{""},
       and then attempt to edit the strings in-place, sometimes forgetting
       to terminate them.)
 
-      \item Calls to the new function \code{globalVariables()} declare
-      that functions and other objects in a package should be treated as
-      globally defined, so that \code{CMD check} will not complain
-      about them.
+      \item Calls to the new function \code{globalVariables()} in
+      \pkg{utils} declare that functions and other objects in a package
+      should be treated as globally defined, so that \code{CMD check}
+      will not note them.
     }
   }
 
@@ -178,12 +178,12 @@
 
       \item \code{get_all_vars()} failed when the data came entirely
       from vectors in the global environment. (\PR{14847})
-      
+
       \item \command{R CMD check} with \env{_R_CHECK_NO_RECOMMENDED_}
       set to a true value (as done by the \command{--as-cran} option)
       could issue false errors if there was an indirect dependency
       on a recommended package.
-      
+
       \item \code{formatC()} uses the C entry point \code{str_signif}
       which could write beyond the length allocated for the output string.
 
