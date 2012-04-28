@@ -26,6 +26,9 @@
 ## As from 2.5.0 c(NA, n > 0) indicates deliberately assigned row names,
 ## and c(NA, n < 0) automatic row names.
 
+## We cannot allow long vectors as elements until we can handle
+## duplication of row names.
+
 .row_names_info <- function(x, type = 1L)
     .Call("R_shortRowNames", x, type, PACKAGE = "base")
 
@@ -52,7 +55,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if(n == 0L) {
         ## we have to be careful here.  This could be a
         ## 0-row data frame or an invalid one being constructed.
-        if(!is.null(attr(x, "row.names")) && length(value) > 0L)
+        if(!is.null(attr(x, "row.names")) && xlength(value) > 0L)
            stop("invalid 'row.names' length")
     }
     else if (length(value) != n)

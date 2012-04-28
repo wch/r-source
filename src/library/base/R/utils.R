@@ -25,7 +25,7 @@ shQuote <- function(string, type = c("sh", "csh", "cmd"))
     if(type == "cmd") {
         paste0('"', gsub('"', '\\\\"', string), '"')
     } else {
-        if(!length(string)) return("")
+        if(!xlength(string)) return("")
         has_single_quote <- grep("'", string)
         if(!length(has_single_quote))
             return(paste0("'", string, "'"))

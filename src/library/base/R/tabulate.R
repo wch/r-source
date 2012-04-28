@@ -21,7 +21,7 @@ tabulate <- function(bin, nbins = max(1L, bin, na.rm = TRUE))
     ## avoid a copy for factors, since as.integer strips attributes
     if (typeof(bin) != "integer") bin <- as.integer(bin)
     nb <- as.integer(length(bin))
-    if (is.na(nb)) stop("invalid value of length(bin)")
+    if (is.na(nb)) stop("invalid value of length(bin)") # no long vectors
     nbins <- as.integer(nbins)
     if (is.na(nbins)) stop("invalid value of nbins")
     ## could remove once we have long vectors ....

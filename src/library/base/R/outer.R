@@ -24,7 +24,7 @@ outer <- function (X, Y, FUN = "*", ...)
         nx <- dimnames(X)
         no.nx <- is.null(nx)
     } else { # a vector
-        dX <- length(X)
+        dX <- length(X)  # cannot be long, as form a matrix below
         no.nx <- is.null(names(X))
         if(!no.nx) nx <- list(names(X))
     }

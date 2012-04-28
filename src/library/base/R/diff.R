@@ -19,7 +19,7 @@ diff <- function(x, ...) UseMethod("diff")
 diff.default <- function(x, lag = 1L, differences = 1L, ...)
 {
     ismat <- is.matrix(x)
-    xlen <- if(ismat) dim(x)[1L] else length(x)
+    xlen <- if(ismat) dim(x)[1L] else xlength(x)
     if (length(lag) > 1L || length(differences) > 1L ||
         lag < 1L || differences < 1L)
 	stop("'lag' and 'differences' must be integers >= 1")
@@ -33,7 +33,7 @@ diff.default <- function(x, lag = 1L, differences = 1L, ...)
                 r[-nrow(r):-(nrow(r)-lag+1L), , drop = FALSE]
     else
         for (i in seq_len(differences))
-            r <- r[i1] - r[-length(r):-(length(r)-lag+1L)]
+            r <- r[i1] - r[-xlength(r):-(xlength(r)-lag+1L)]
     class(r) <- oldClass(x)
     r
 }

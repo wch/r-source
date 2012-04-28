@@ -45,7 +45,7 @@ as.Date.character <- function(x, format="", ...)
 	xx <- x[1L]
         if(is.na(xx)) {
             j <- 1L
-            while(is.na(xx) && (j <- j+1L) <= length(x)) xx <- x[j]
+            while(is.na(xx) && (j <- j+1L) <= xlength(x)) xx <- x[j]
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
 	if(is.na(xx) ||
@@ -107,10 +107,10 @@ format.Date <- function(x, ...)
 print.Date <- function(x, max = NULL, ...)
 {
     if(is.null(max)) max <- getOption("max.print", 9999L)
-    if(max < length(x)) {
+    if(max < xlength(x)) {
 	print(format(x[seq_len(max)]), max=max, ...)
 	cat(' [ reached getOption("max.print") -- omitted',
-	    length(x) - max, 'entries ]\n')
+	    xlength(x) - max, 'entries ]\n')
     } else print(format(x), max=max, ...)
     invisible(x)
 }
@@ -206,7 +206,7 @@ Summary.Date <- function (..., na.rm)
 
 `[<-.Date` <- function(x, ..., value)
 {
-    if(!length(value)) return(x)
+    if(!xlength(value)) return(x)
     value <- unclass(as.Date(value))
     cl <- oldClass(x)
     class(x) <- NULL
@@ -238,7 +238,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         if (length(as.Date(to)) != 1L) stop("'to' must be of length 1")
     }
     if (!missing(along.with)) {
-        length.out <- length(along.with)
+        length.out <- xlength(along.with)
     }  else if (!is.null(length.out)) {
         if (length(length.out) != 1L) stop("'length.out' must be of length 1")
         length.out <- ceiling(length.out)
@@ -276,7 +276,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if(valid <= 2L) { # days or weeks
         from <- unclass(as.Date(from))
         if(!is.null(length.out))
-            res <- seq.int(from, by=by, length.out=length.out)
+            res <- seq.int(from, by = by, length.out = length.out)
         else {
             to0 <- unclass(as.Date(to))
             ## defeat test in seq.default

@@ -46,6 +46,9 @@
       consistency of format strings in translation files.
 
       \item New simple \code{provideDimnames()} utility.
+
+      \item Where methods for \code{length()} return a double value
+      which is representable as an integer, this is converted to an integer.
     }
   }
 

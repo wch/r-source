@@ -26,7 +26,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
 	x <- x[!is.na(x)]
     if(!is.numeric(trim) || length(trim) != 1L)
         stop("'trim' must be numeric of length one")
-    n <- length(x)
+    n <- xlength(x)
     if(trim > 0 && n) {
 	if(is.complex(x))
 	    stop("trimmed means are not defined for complex data")
@@ -34,7 +34,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
 	if(trim >= 0.5) return(stats::median(x, na.rm=FALSE))
 	lo <- floor(n*trim)+1
 	hi <- n+1-lo
-	x <- sort.int(x, partial=unique(c(lo, hi)))[lo:hi]
+	x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
     }
     .Internal(mean(x))
 }

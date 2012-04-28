@@ -165,6 +165,6 @@ xtfrm.AsIs <- function(x)
 
 .gtn <- function(x, strictly)
 {
-    n <- length(x)
+    n <- xlength(x)
     if(strictly) all(x[-1L] > x[-n]) else all(x[-1L] >= x[-n])
 }

@@ -14,17 +14,17 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-sample <- function(x, size, replace=FALSE, prob=NULL)
+sample <- function(x, size, replace = FALSE, prob = NULL)
 {
     if(length(x) == 1L && is.numeric(x) && x >= 1) {
 	if(missing(size)) size <- x
 	.Internal(sample(x, size, replace, prob))
-    }
-    else {
+    } else {
+        ## result is integer, so do not yet allow long vectors
 	if(missing(size)) size <- length(x)
 	x[.Internal(sample(length(x), size, replace, prob))]
     }
 }
 
-sample.int  <- function(n, size=n, replace=FALSE, prob=NULL)
+sample.int  <- function(n, size = n, replace = FALSE, prob = NULL)
     .Internal(sample(n, size, replace, prob))

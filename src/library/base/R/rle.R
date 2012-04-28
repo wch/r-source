@@ -18,7 +18,7 @@ rle <- function(x)
 {
     if (!is.vector(x) && !is.list(x))
         stop("'x' must be an atomic vector")
-    n <- length(x)
+    n <- xlength(x)
     if (n == 0L)
 	return(structure(list(lengths = integer(), values = x),
 			 class = "rle"))
@@ -41,7 +41,7 @@ print.rle <- function(x, digits = getOption("digits"), prefix = "", ...)
 inverse.rle <- function(x, ...)
 {
     if(is.null(le <- x$lengths) ||
-       is.null(v  <- x$values) || length(le) != length(v))
+       is.null(v  <- x$values) || xlength(le) != xlength(v))
         stop("invalid 'rle' structure")
     rep.int(v, le)
 }

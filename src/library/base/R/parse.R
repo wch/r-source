@@ -19,8 +19,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
 {
     keep.source <- isTRUE(getOption("keep.source"))
     if(!is.null(text)) {
-    	if (length(text) == 0L)
-	    return(expression())
+    	if (xlength(text) == 0L) return(expression())
 	if (missing(srcfile) && keep.source)
 	    srcfile <- srcfilecopy("<text>", text)
     }
@@ -35,7 +34,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
             	file <- stdin()
         	srcfile <- srcfilecopy(filename, text, file.info(filename)[1,"mtime"],
         	                       isFile = TRUE)
-            } else 	
+            } else
                 on.exit(close(file))
         }
     .Internal(parse(file, n, text, prompt, srcfile, encoding))

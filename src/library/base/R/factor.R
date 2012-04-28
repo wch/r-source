@@ -103,7 +103,7 @@ as.logical.factor <- function(x,...) as.logical(levels(x))[x]
 
 as.list.factor <- function(x,...)
 {
-    res <- vector("list", length(x))
+    res <- vector("list", xlength(x))
     for(i in seq_along(x)) res[[i]] <- x[i]
     res
 }
@@ -113,7 +113,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
                           width = getOption("width"), ...)
 {
     ord <- is.ordered(x)
-    if (length(x) == 0L)
+    if (xlength(x) == 0L)
         cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
     else {
         ## The idea here is to preserve all relevant attributes such as
@@ -157,7 +157,7 @@ Ops.factor <- function(e1, e2)
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
     if(!ok) {
 	warning(.Generic, " not meaningful for factors")
-	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
+	return(rep.int(NA, max(xlength(e1), if(!missing(e2)) xlength(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
     ## Need this for NA *levels* as opposed to missing
@@ -255,7 +255,7 @@ Ops.ordered <- function (e1, e2)
     if(!ok) {
 	warning(sprintf("'%s' is not meaningful for ordered factors",
                         .Generic))
-	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
+	return(rep.int(NA, max(xlength(e1), if(!missing(e2)) xlength(e2))))
     }
     if (.Generic %in% c("==", "!="))
       return(NextMethod(.Generic))  ##not S-PLUS compatible, but saner

@@ -41,7 +41,7 @@ summary.default <-
 	    c(qq, "NA's" = sum(nas))
 	else qq
     } else if(is.recursive(object) && !is.language(object) &&
-	      (n <- length(object))) {
+	      (n <- length(object))) { # do not allow long dims
 	sumry <- array("", c(n, 3L), list(names(object),
                                           c("Length", "Class", "Mode")))
 	ll <- numeric(n)

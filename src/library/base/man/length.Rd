@@ -46,8 +46,8 @@ xlength(x) <- value
   \code{\link{integer}} of length 1.  Since this may change in the
   future and may differ for other methods, programmers should not rely
   on it.  It gives an error for long vectors: the default method will
-  only ever return a non-negative integer (and never \code{NA}), but
-  other methods are not so restricted.
+  only return a non-negative integer (and never \code{NA}), but
+  see section \sQuote{Warning}.
 
   On the other hand, the default method for \code{xlength} will return a
   double value for vectors of more than \eqn{2^{31}-1}{2^31 - 1}
@@ -68,7 +68,9 @@ xlength(x) <- value
   Package authors have written methods that return a result of
   length other than one (\pkg{Formula}) and that return a vector type
   \code{\link{double}} (\pkg{Matrix}), even with non-integer values
-  (\pkg{sets}).
+  (\pkg{sets}).  As from \R 2.16.0, where a single double value is
+  returned that can be represented as an integer, it is returned as a
+  length-one integer vector.
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.

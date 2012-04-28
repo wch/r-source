@@ -130,7 +130,7 @@ function(x = 0.1)
     ##
     ## Unspecified bounds are taken as NA_real_, and set to INT_MAX by
     ## the C code.
-    
+
     if(!is.list(x)) {
         ## Sanity checks.
         if(!is.numeric(x) || (x < 0))
@@ -186,14 +186,14 @@ function(x = NULL)
             stop("cost components must be non-negative")
         costs[pos] <- x
     }
-    
+
     costs
 }
 
 regmatches <-
 function(x, m, invert = FALSE)
 {
-    if(length(x) != length(m))
+    if(xlength(x) != xlength(m))
         stop(gettextf("%s and %s must have the same length",
                       sQuote("x"), sQuote("m")),
              domain = NA)
@@ -278,8 +278,8 @@ function(x, m, invert = FALSE)
 `regmatches<-` <-
 function(x, m, invert = FALSE, value)
 {
-    if(!length(x)) return(x)
-    
+    if(!xlength(x)) return(x)
+
     y <- regmatches(x, m, !invert)
 
     ili <- is.list(m)
@@ -293,8 +293,8 @@ function(x, m, invert = FALSE, value)
             stop("missing replacement values are not allowed")
         ## Entries for matched elements have length 2.
         pos <- which(sapply(y, length) == 2L)
-        np <- length(pos)
-        nv <- length(value)
+        np <- xlength(pos)
+        nv <- xlength(value)
         if(np != nv) {
             if(!nv)
                 stop("must have replacement values for matches")
@@ -312,7 +312,7 @@ function(x, m, invert = FALSE, value)
     value <- lapply(value, as.character)
     if(any(is.na(unlist(value))))
         stop("missing replacement values are not allowed")
-    if(!length(value))
+    if(!xlength(value))
         stop("value does not provide any replacement values")
     value <- rep(value, length.out = length(x))
 
@@ -321,8 +321,8 @@ function(x, m, invert = FALSE, value)
         ## An element of x with k matches has a corresponding y element
         ## of length k, and needs k + 1 replacement values.
         Map(function(u, v) {
-            nu <- length(u)
-            nv <- length(v)
+            nu <- xlength(u)
+            nv <- xlength(v)
             if(nv != (nu + 1L)) {
                 if(!nv)
                     stop("must have replacements for non-matches")
@@ -336,8 +336,8 @@ function(x, m, invert = FALSE, value)
         ## An element of x with k matches has a corresponding y element
         ## of length k + 1, and needs k replacement values.
         Map(function(u, v) {
-            nu <- length(u)
-            nv <- length(v)
+            nu <- xlength(u)
+            nv <- xlength(v)
             if(nv != (nu - 1L)) {
                 if(!nv)
                     stop("must have replacements for matches")

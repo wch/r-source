@@ -1,6 +1,6 @@
 % File src/library/base/man/append.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{append}
@@ -10,7 +10,7 @@
   Add elements to a vector.
 }
 \usage{
-append(x, values, after = length(x))
+append(x, values, after = xlength(x))
 }
 \arguments{
   \item{x}{the vector to be modified.}
