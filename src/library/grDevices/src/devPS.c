@@ -7012,7 +7012,8 @@ static void PDF_endfile(PDFDesc *pd)
 	int nc;
 	pd->pdffp = R_fopen(pd->filename, "rb"); 
 	while((nc = fread(buf, 1, APPENDBUFSIZE, pd->pdffp))) {
-	    fwrite(buf, 1, nc, pd->pipefp);
+	    if(nc != fwrite(buf, 1, nc, pd->pipefp))
+		error("write error");
 	    if (nc < APPENDBUFSIZE) break;
 	}
 	fclose(pd->pdffp);
