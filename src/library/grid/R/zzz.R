@@ -29,6 +29,8 @@ assign(".GRID.STATE", vector("list", 64L), envir = .GridEvalEnv)
 
 .noGenerics <- TRUE
 
+utils::globalVariables(c("n", "vp", "path"))
+
 .onLoad <- function(libname, pkgname)
 {
     ## want eval in C code to see unexported objects

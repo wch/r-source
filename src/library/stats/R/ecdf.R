@@ -74,7 +74,8 @@ plot.ecdf <- function(x, ..., ylab="Fn(x)", verticals = FALSE,
     abline(h = c(0,1), col = col.01line, lty = 2)
 }
 
+utils::globalVariables("y", add = TRUE)
 quantile.ecdf <- function (x, ...)
     ## == quantile( sort( <original sample> ) ) :
-    quantile(evalq(rep.int(x, diff(c(0,round(nobs*y)))), environment(x)), ...)
+    quantile(evalq(rep.int(x, diff(c(0, round(nobs*y)))), environment(x)), ...)
 
