@@ -161,10 +161,10 @@
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.
       
-      \item \code{R_alloc} used to over-allocate by at least one byte:
-      it no longer does do (but still rounds up to a multiple of 8
-      bytes).  This aligns the allocation with that reported to
-      \command{valgrind}.
+%       \item \code{R_alloc} used to over-allocate by at least one byte:
+%       it no longer does do (but still rounds up to a multiple of 8
+%       bytes).  This aligns the allocation with that reported to
+%       \command{valgrind}.
     }
   }
 }

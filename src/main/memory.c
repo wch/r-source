@@ -1972,7 +1972,7 @@ char *R_alloc(size_t nelem, int eltsize)
     double dsize = (double) nelem * eltsize;
     if (dsize > 0) {
 	SEXP s;
-#if LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
 	/* 64-bit platform: previous version used REALSXPs */
 	if(dsize > R_XLEN_T_MAX)  /* currently 4096 TB */
 	    error(_("cannot allocate memory block of size %0.f Tb"),
