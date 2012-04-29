@@ -1508,7 +1508,7 @@ unsigned int RGBpar(SEXP x, int i)
 /*
  * Is element i of a colour object NA (or NULL)?
  */
-Rboolean attribute_hidden isNAcol(SEXP col, int index, int ncol)
+Rboolean isNAcol(SEXP col, int index, int ncol)
 {
     Rboolean result = TRUE; /* -Wall */
 

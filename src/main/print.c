@@ -69,7 +69,7 @@
 
 
 /* Global print parameter struct: */
-attribute_hidden R_print_par_t R_print;
+R_print_par_t R_print;
 
 static void printAttributes(SEXP, SEXP, Rboolean);
 static void PrintSpecial(SEXP);
