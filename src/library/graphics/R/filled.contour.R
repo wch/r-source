@@ -25,7 +25,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
           color.palette = cm.colors,
           col = color.palette(length(levels) - 1),
           plot.title, plot.axes, key.title, key.axes,
-          asp = NA, xaxs="i", yaxs="i", las = 1, axes = TRUE,
+          asp = NA, xaxs = "i", yaxs = "i", las = 1, axes = TRUE,
           frame.plot = axes, ...)
 {
     if (missing(z)) {
@@ -53,7 +53,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     on.exit(par(par.orig))
 
     w <- (3 + mar.orig[2L]) * par("csi") * 2.54
-    layout(matrix(c(2, 1), ncol=2L), widths=c(1, lcm(w)))
+    layout(matrix(c(2, 1), ncol = 2L), widths = c(1, lcm(w)))
     par(las = las)
 
     ## Plot the 'plot key' (scale):
@@ -62,7 +62,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     mar[2L] <- 1
     par(mar = mar)
     plot.new()
-    plot.window(xlim=c(0,1), ylim=range(levels), xaxs="i", yaxs="i")
+    plot.window(xlim = c(0,1), ylim = range(levels), xaxs = "i", yaxs = "i")
     rect(0, levels[-length(levels)], 1, levels[-1L], col = col)
     if (missing(key.axes)) {
         if (axes)
@@ -76,24 +76,20 @@ function (x = seq(0, 1, length.out = nrow(z)),
     ## Plot contour-image::
     mar <- mar.orig
     mar[4L] <- 1
-    par(mar=mar)
+    par(mar = mar)
     plot.new()
-    plot.window(xlim, ylim, "", xaxs=xaxs, yaxs=yaxs, asp=asp)
+    plot.window(xlim, ylim, "", xaxs = xaxs, yaxs = yaxs, asp = asp)
 
     if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
         stop("no proper 'z' matrix specified")
-    if (!is.double(z))
-        storage.mode(z) <- "double"
-    .Internal(filledcontour(as.double(x),
-                            as.double(y),
-                            z,
-                            as.double(levels),
-                            col = col))
+    if (!is.double(z)) storage.mode(z) <- "double"
+    .Internal(filled.contour(as.double(x), as.double(y), z,
+                            as.double(levels), col = col))
     if (missing(plot.axes)) {
         if (axes) {
-            title(main="", xlab="", ylab="")
-            Axis(x, side=1)
-            Axis(y, side=2)
+            title(main = "", xlab = "", ylab = "")
+            Axis(x, side = 1)
+            Axis(y, side = 2)
         }
     }
     else plot.axes
@@ -110,7 +106,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
         stop("no proper 'z' matrix specified")
     if (!is.double(z)) storage.mode(z) <- "double"
-    .Internal(filledcontour(as.double(x), as.double(y), z,
-                            as.double(levels), col))
+    .Internal(filled.contour(as.double(x), as.double(y), z,
+                             as.double(levels), col))
     invisible()
 }
