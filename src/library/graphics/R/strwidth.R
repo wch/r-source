@@ -20,9 +20,9 @@ strwidth <-
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
                    fontindex= pmatch(vfont[2L], Hershey$fontindex))
-    .Internal(strwidth(as.graphicsAnnot(s),
+    .External.graphics(C_strWidth, as.graphicsAnnot(s),
                        pmatch(units, c("user", "figure", "inches")),
-                       cex, font, vfont, ...))
+                       cex, font, vfont, ...)
 }
 
 strheight <-
@@ -31,7 +31,7 @@ strheight <-
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
                    fontindex= pmatch(vfont[2L], Hershey$fontindex))
-    .Internal(strheight(as.graphicsAnnot(s),
-                        pmatch(units, c("user", "figure", "inches")),
-                        cex, font, vfont, ...))
+    .External.graphics(C_strHeight, as.graphicsAnnot(s),
+                       pmatch(units, c("user", "figure", "inches")),
+                       cex, font, vfont, ...)
 }

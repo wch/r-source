@@ -331,7 +331,7 @@ text.formula <- function(formula, data = parent.frame(), ..., subset)
 plot.xy <- function(xy, type, pch = par("pch"), lty = par("lty"),
                     col = par("col"), bg = NA, cex = 1, lwd = par("lwd"),
                     ...)
-    .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, lwd, ...))
+    invisible(.External.graphics(C_plotXY, xy, type, pch, lty, col, bg, cex, lwd, ...))
 
 
 plot.new <- function()
@@ -352,7 +352,10 @@ plot.new <- function()
 frame <- plot.new
 
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
-    .Internal(plot.window(xlim, ylim, log, asp, ...))
+{
+    .External.graphics(C_plot_window, xlim, ylim, log, asp, ...)
+    invisible()
+}
 
 plot.data.frame <- function (x, ...)
 {
@@ -392,12 +395,12 @@ grconvertX <- function(x, from = "user", to = "user")
 {
     from <- pmatch(from, .units)
     to <- pmatch(to, .units)
-    .Internal(grconvertX(as.double(x), from, to))
+    .External(C_convertX, as.double(x), from, to)
 }
 
 grconvertY <- function(y, from = "user", to = "user")
 {
     from <- pmatch(from, .units)
     to <- pmatch(to, .units)
-    .Internal(grconvertY(as.double(y), from, to))
+    .External(C_convertY, as.double(y), from, to)
 }

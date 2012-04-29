@@ -20,6 +20,7 @@ arrows <-
 {
     if (missing(x1) && missing(y1))
         stop("one of 'x1' and 'y1' must be given")
-    .Internal(arrows(x0, y0, x1, y1, length=length, angle=angle, code=code,
-                     col=col, lty=lty, lwd=lwd, ...))
+    .External.graphics(C_arrows, x0, y0, x1, y1, length=length, angle=angle,
+                       code=code, col=col, lty=lty, lwd=lwd, ...)
+    invisible()
 }

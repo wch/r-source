@@ -17,9 +17,10 @@
 rasterImage <- function (image, xleft, ybottom, xright, ytop,
                          angle = 0, interpolate = TRUE, ...)
 {
-    .Internal(raster(if (inherits(image, "nativeRaster")) image else as.raster(image),
-                     as.double(xleft), as.double(ybottom),
-                     as.double(xright), as.double(ytop),
-                     as.double(angle), as.logical(interpolate),
-                     ...))
+    .External.graphics(C_raster,
+                       if (inherits(image, "nativeRaster")) image else as.raster(image),
+                       as.double(xleft), as.double(ybottom),
+                       as.double(xright), as.double(ytop),
+                       as.double(angle), as.logical(interpolate), ...)
+    invisible()
 }

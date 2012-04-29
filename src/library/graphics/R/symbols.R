@@ -70,5 +70,5 @@ function (x, y = NULL, circles, squares, rectangles, stars,
 	plot(NA, NA, type = "n", xlim = xlim, ylim = ylim,
 	     xlab = xlab, ylab = ylab, main = main, ...)
     }
-    .Internal(symbols(x, y, type, data, inches, bg, fg, ...))
+    invisible(.External.graphics(C_symbols, x, y, type, data, inches, bg, fg, ...))
 }

@@ -28,6 +28,7 @@ function(x, y = NULL, labels = seq_along(x),
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
                    fontindex= pmatch(vfont[2L], Hershey$fontindex))
-    .Internal(text(xy.coords(x,y, recycle = TRUE), labels,
-                   adj, pos, offset, vfont, cex, col, font, ...))
+    .External.graphics(C_text, xy.coords(x,y, recycle = TRUE), labels,
+                       adj, pos, offset, vfont, cex, col, font, ...)
+    invisible()
 }

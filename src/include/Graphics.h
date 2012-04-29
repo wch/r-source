@@ -281,7 +281,7 @@ void copyGPar(GPar *, GPar *);
 double R_Log10(double);
 
 /* from par.c, called in plot.c, plot3d.c */
-void ProcessInlinePars(SEXP, pGEDevDesc, SEXP call);
+void ProcessInlinePars(SEXP, pGEDevDesc);
 
 /* from device.c */
 void recordGraphicOperation(SEXP, SEXP, pGEDevDesc);

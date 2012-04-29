@@ -19,7 +19,7 @@ abline <- function(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 {
     int_abline <- function(a, b, h, v, untf, col = par("col"),
                            lty = par("lty"), lwd = par("lwd"), ...)
-        .Internal(abline(a, b, h, v, untf, col, lty, lwd, ...))
+        .External.graphics(C_abline, a, b, h, v, untf, col, lty, lwd, ...)
 
     if(!is.null(reg)) {
         if(!is.null(a)) warning("'a' is overridden by 'reg'")

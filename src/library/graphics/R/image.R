@@ -138,7 +138,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         rasterImage(as.raster(zc),
                     min(x), min(y), max(x), max(y),
                     interpolate=FALSE)
-     } else .External.graphics(Image, as.double(x), as.double(y),
+     } else .External.graphics(C_image, as.double(x), as.double(y),
                                as.integer(zi), col)
     invisible()
 }

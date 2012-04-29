@@ -61,7 +61,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     }
     ticktype <- pmatch(ticktype, c("simple", "detailed"))
     plot.new()
-    r <- .External.graphics(Persp, x, y, z, xlim, ylim, zlim, theta, phi, r, d,
+    r <- .External.graphics(C_persp, x, y, z, xlim, ylim, zlim, theta, phi, r, d,
                             scale, expand, col, border, ltheta, lphi, shade,
                             box, axes, nticks, ticktype,
                             as.character(xlab), as.character(ylab),
