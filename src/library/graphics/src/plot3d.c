@@ -1070,7 +1070,7 @@ static void PerspAxes(double *x, double *y, double *z,
 SEXP C_persp(SEXP args)
 {
     SEXP x, y, z, xlim, ylim, zlim;
-    SEXP depth, indx, originalArgs;
+    SEXP depth, indx;
     SEXP col, border, xlab, ylab, zlab;
     double theta, phi, r, d;
     double ltheta, lphi;
@@ -1082,7 +1082,6 @@ SEXP C_persp(SEXP args)
     args = CDR(args);
     if (length(args) < 24)  /* 24 plus any inline par()s */
 	error(_("too few parameters"));
-    originalArgs = args;
 
     PROTECT(x = coerceVector(CAR(args), REALSXP));
     if (length(x) < 2) error(_("invalid '%s' argument"), "x");

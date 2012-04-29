@@ -3109,6 +3109,7 @@ SEXP C_box(SEXP args)
     return R_NilValue;
 }
 
+#if 0
 static void drawPointsLines(double xp, double yp, double xold, double yold,
 			    char type, int first, pGEDevDesc dd)
 {
@@ -3427,6 +3428,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     }
 }
+#endif
 
 /* strheight(str, units, cex, font, vfont, ...)  ||  strwidth() */
 #define DO_STR_DIM(KIND)						\
