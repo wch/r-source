@@ -19,7 +19,7 @@
       \item It is now possible for 64-bit builds to allocate amounts of
       memory limited only by the OS.  It may be wise to use OS
       facilities (e.g. \command{ulimit} in a \command{bash} shell,
-      \command{limit} in \command{csh}) to set limits on overall memory
+      \command{limit} in \command{csh}), to set limits on overall memory
       consumption of an \R process, particularly in a multi-user
       environment.  A number of packages, particularly those using Java,
       need at least 4GB of virtual memory.
@@ -160,6 +160,11 @@
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.
+      
+      \item \code{R_alloc} used to over-allocate by at least one byte:
+      it no longer does do (but still rounds up to a multiple of 8
+      bytes).  This aligns the allocation with that reported to
+      \command{valgrind}.
     }
   }
 }

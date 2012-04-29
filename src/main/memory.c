@@ -46,8 +46,8 @@
    the value is 0.
 
    level 0 is no additional instrumentation
-   level 1 marks uninitialized numeric, logical, integer vectors
-	   and R_alloc memory
+   level 1 marks uninitialized numeric, logical, integer, raw, 
+          complex vectors and R_alloc memory
    level 2 marks the data section of vector nodes as inaccessible
            when they are freed.
    level 3 marks the first three bytes of sxpinfo and the ATTRIB
@@ -58,7 +58,7 @@
    compiler on a supported architecture if it has different
    syntax for inline assembly language from gcc.
 
-   For Win32, Valgrind is useful only if running under Wine,
+   For Win32, Valgrind is useful only if running under Wine.
 */
 #ifdef Win32
 # ifndef USE_VALGRIND_FOR_WINE
@@ -1968,11 +1968,12 @@ void vmaxset(const void *ovmax)
 char *R_alloc(size_t nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;
+    /* doubles are a precaution against integer overflow on 32-bit */
     double dsize = (double) nelem * eltsize;
-    if (dsize > 0) { /* precaution against integer overflow on 32-bit */
+    if (dsize > 0) {
 	SEXP s;
-#if SIZEOF_SIZE_T > 4
-	/* 64-bit platform, so have long vectors */
+#if LONG_VECTOR_SUPPORT
+	/* 64-bit platform: previous version used REALSXPs */
 	if(dsize > R_XLEN_T_MAX)  /* currently 4096 TB */
 	    error(_("cannot allocate memory block of size %0.f Tb"),
 		  dsize/pow(1024.0, 4.0));
@@ -1980,18 +1981,12 @@ char *R_alloc(size_t nelem, int eltsize)
 #else
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
 	    error(_("cannot allocate memory block of size %0.1f Gb"),
-		  dsize/1024.0/1024.0/1024.0);
+		  dsize/pow(1024.0, 3.0));
 	s = allocVector(RAWSXP, size + 1); // historical
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
-#if VALGRIND_LEVEL > 0
-	/* was (int) dsize, but with long vectors this is the same */
-	VALGRIND_MAKE_WRITABLE(DATAPTR(s), size);
-        VALGRIND_MAKE_WRITABLE(&(ATTRIB(s)), sizeof(void *));
-        VALGRIND_MAKE_WRITABLE(s, 3);
-#endif
-	return (char *)DATAPTR(s);
+	return (char *) DATAPTR(s);
     }
     else return NULL;
 }
