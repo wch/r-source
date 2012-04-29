@@ -434,7 +434,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
        DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
 	if (length(ans) == 1 && TYPEOF(ans) == REALSXP) {
 	    double d = REAL(ans)[0];
-	    if (R_FINITE(d) && d >= 0. && d <= INT_MAX)
+	    if (R_FINITE(d) && d >= 0. && d <= INT_MAX && floor(d) == d)
 		return coerceVector(ans, INTSXP);
 	}
 	return(ans);
