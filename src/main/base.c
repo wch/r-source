@@ -314,7 +314,6 @@ unregisterBase(void) {
 /* FIXME: Make this a macro to avoid function call overhead?
    Inline it if you really think it matters.
  */
-attribute_hidden
 GPar* gpptr(pGEDevDesc dd) {
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     return &(bss->gp);

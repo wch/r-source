@@ -203,7 +203,6 @@ static SEXP FixupFont(SEXP font, int dflt)
     return ans;
 }
 
-attribute_hidden
 SEXP FixupCol(SEXP col, unsigned int dflt)
 {
     int i, n;
@@ -601,7 +600,7 @@ static void GetAxisLimits(double left, double right, Rboolean logflag, double *l
 
 /* axis(side, at, labels, ...) */
 
-SEXP attribute_hidden labelformat(SEXP labels)
+SEXP labelformat(SEXP labels)
 {
     /* format(labels): i.e. from numbers to strings */
     SEXP ans = R_NilValue;/* -Wall*/

@@ -1291,7 +1291,6 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ProcessInLinePars handles inline par specifications
    in graphics functions. */
 
-attribute_hidden
 void ProcessInlinePars(SEXP s, pGEDevDesc dd, SEXP call)
 {
     if (isList(s)) {

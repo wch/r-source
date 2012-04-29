@@ -287,7 +287,6 @@
  Rf_DispatchGroup
  Rf_DispatchOrEval
  Rf_EnsureString
- Rf_FixupCol
  Rf_FixupLty
  Rf_FixupLwd
  Rf_FixupVFont
@@ -315,14 +314,12 @@
  Rf_LogicalFromReal
  Rf_LogicalFromString
  Rf_OneIndex
- Rf_PrintDefaults
  Rf_PrintGreeting
  Rf_PrintValueEnv
  Rf_PrintValueRec
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_PrintVersion_part_1
- Rf_ProcessInlinePars
  Rf_RealFromComplex
  Rf_RealFromInteger
  Rf_RealFromLogical
@@ -354,11 +351,8 @@
  Rf_gamma_cody
  Rf_gammalims
  Rf_get1index
- Rf_gpptr
  Rf_i1mach
- Rf_internalTypeCheck
  Rf_isNAcol
- Rf_labelformat
  Rf_lfastchoose
  Rf_lgammacor
  Rf_lookupCachedSymbol
