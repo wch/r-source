@@ -26,7 +26,7 @@ PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
 
 all: Makefile Makedeps
 	@$(MAKE) Makedeps
-	@$(MAKE) shlib @BUILD_DEVCAIRO_TRUE@ cairodevice
+	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
