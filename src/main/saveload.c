@@ -814,7 +814,7 @@ static SEXP NewLoadSpecialHook (SEXPTYPE type)
 
 #define HASHSIZE 1099
 
-#define PTRHASH(obj) (((uintptr_t) (obj)) >> 2)
+#define PTRHASH(obj) (((R_size_t) (obj)) >> 2)
 
 #define HASH_TABLE_KEYS_LIST(ht) CAR(ht)
 #define SET_HASH_TABLE_KEYS_LIST(ht, v) SETCAR(ht, v)
@@ -846,7 +846,7 @@ static void FixHashEntries(SEXP ht)
 
 static void HashAdd(SEXP obj, SEXP ht)
 {
-    int pos = PTRHASH(obj) % HASH_TABLE_SIZE(ht);
+    R_size_t pos = PTRHASH(obj) % HASH_TABLE_SIZE(ht);
     int count = HASH_TABLE_COUNT(ht) + 1;
     SEXP val = ScalarInteger(count);
     SEXP cell = CONS(val, HASH_BUCKET(ht, pos));
@@ -860,7 +860,7 @@ static void HashAdd(SEXP obj, SEXP ht)
 
 static int HashGet(SEXP item, SEXP ht)
 {
-    int pos = PTRHASH(item) % HASH_TABLE_SIZE(ht);
+    R_size_t pos = PTRHASH(item) % HASH_TABLE_SIZE(ht);
     SEXP cell;
     for (cell = HASH_BUCKET(ht, pos); cell != R_NilValue; cell = CDR(cell))
 	if (item == TAG(cell))
@@ -1276,7 +1276,7 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp,
     default:
 	error(_("NewReadItem: unknown type %i"), type);
     }
-    SETLEVELS(s, levs);
+    SETLEVELS(s, (unsigned short) levs);
     SET_OBJECT(s, objf);
     SET_ATTRIB(s, NewReadItem(sym_table, env_table, fp, m, d));
     UNPROTECT(1); /* s */
@@ -1762,10 +1762,10 @@ static void R_WriteMagic(FILE *fp, int number)
 	strcpy((char*)buf, "RDX2");
 	break;
     default:
-	buf[0] = (number/1000) % 10 + '0';
-	buf[1] = (number/100) % 10 + '0';
-	buf[2] = (number/10) % 10 + '0';
-	buf[3] = number % 10 + '0';
+	buf[0] = (unsigned char)((number/1000) % 10 + '0');
+	buf[1] = (unsigned char)((number/100) % 10 + '0');
+	buf[2] = (unsigned char)((number/10) % 10 + '0');
+	buf[3] = (unsigned char)(number % 10 + '0');
     }
     buf[4] = '\n';
     res = fwrite((char*)buf, sizeof(char), 5, fp);

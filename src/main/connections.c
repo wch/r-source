@@ -407,7 +407,7 @@ int dummy_fgetc(Rconnection con)
 	    if(checkBOM && con->inavail >= 2 &&
 	       ((int)con->iconvbuff[0] & 0xff) == 255 &&
 	       ((int)con->iconvbuff[1] & 0xff) == 254) {
-		con->inavail -= 2;
+		con->inavail -= (short) 2;
 		memmove(con->iconvbuff, con->iconvbuff+2, con->inavail);
 	    }
 	    ib = con->iconvbuff; inb = con->inavail;
@@ -2477,9 +2477,10 @@ static void text_init(Rconnection con, SEXP text, int type)
     Rtextconn this = con->private;
 
     for(i = 0; i < nlines; i++)
-	dnc += strlen(type == 1 ? translateChar(STRING_ELT(text, i))
-			 : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
-			    : CHAR(STRING_ELT(text, i))) ) + 1;
+	dnc += 
+	    (double) strlen(type == 1 ? translateChar(STRING_ELT(text, i))
+			    : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
+			       : CHAR(STRING_ELT(text, i))) ) + 1;
     if (dnc >= SIZE_MAX) 
  	error(_("too many characters for text connection"));
     else nchars = (size_t) dnc;

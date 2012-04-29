@@ -268,7 +268,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
 #define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
-#define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
+#define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK (1<<4)

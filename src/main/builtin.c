@@ -612,7 +612,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    for (i = 0; i < n; i++, ntot++) {
 		Rprintf("%s", p);
-		width += w + sepw;
+		width += (int)(w + sepw);
 		if (i < (n - 1)) {
 		    cat_printsep(sepr, ntot);
 		    if (isString(s))
