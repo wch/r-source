@@ -561,12 +561,13 @@ SEXP mc_exit(SEXP sRes)
 #endif
     if (is_master) error(_("mcexit can only be used in a child process"));
     if (master_fd != -1) { /* send 0 to signify that we're leaving */
-	unsigned int len = 0;
+	size_t len = 0;
 	/* assign result for Fedora security settings */
-	write(master_fd, &len, sizeof(len));
+	ssize_t n = write(master_fd, &len, sizeof(len));
 	/* make sure the pipe is closed before we enter any waiting */
 	close(master_fd);
 	master_fd = -1;
+	if (n < 0) error(_("write error, closing pipe to the master"));
     }
     if (!child_can_exit) {
 #ifdef MC_DEBUG
