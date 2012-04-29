@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011  The R Core Team.
+ *  Copyright (C) 1998--2012  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,8 +46,8 @@
    the value is 0.
 
    level 0 is no additional instrumentation
-   level 1 marks uninitialized numeric, logical, integer vectors
-	   and R_alloc memory
+   level 1 marks uninitialized numeric, logical, integer, raw, 
+          complex vectors and R_alloc memory
    level 2 marks the data section of vector nodes as inaccessible
            when they are freed.
    level 3 marks the first three bytes of sxpinfo and the ATTRIB
@@ -58,7 +58,7 @@
    compiler on a supported architecture if it has different
    syntax for inline assembly language from gcc.
 
-   For Win32, Valgrind is useful only if running under Wine,
+   For Win32, Valgrind is useful only if running under Wine.
 */
 #ifdef Win32
 # ifndef USE_VALGRIND_FOR_WINE
@@ -1624,15 +1624,15 @@ static void RunGenCollect(R_size_t size_needed)
 	for(s=NEXT_NODE(R_GenHeap[i].New); s!=R_GenHeap[i].Free; s=NEXT_NODE(s)){
 	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[i]*sizeof(VECREC));
 # if VALGRIND_LEVEL > 2
-	    VALGRIND_MAKE_NOACCESS(&ATTRIB(s),sizeof(void *));
-            VALGRIND_MAKE_NOACCESS(s,3);
+	    VALGRIND_MAKE_NOACCESS(&ATTRIB(s), sizeof(void *));
+            VALGRIND_MAKE_NOACCESS(s, 3);
 # endif
 	}
     }
 #if VALGRIND_LEVEL > 2
     for(s=NEXT_NODE(R_GenHeap[0].New);s!=R_GenHeap[0].Free; s=NEXT_NODE(s)){
-            VALGRIND_MAKE_NOACCESS(&(s->u),3*(sizeof(void *)));
-            VALGRIND_MAKE_NOACCESS(s,3);
+            VALGRIND_MAKE_NOACCESS(&(s->u), 3*(sizeof(void *)));
+            VALGRIND_MAKE_NOACCESS(s, 3);
     }
 #endif
 #endif
@@ -1962,7 +1962,7 @@ char *R_alloc(size_t nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;
     double dsize = (double)nelem * eltsize;
-    if (dsize > 0) { /* precaution against integer overflow */
+    if (dsize > 0) { /* precaution against integer overflow on 32-bit*/
 	SEXP s;
 #if SIZEOF_SIZE_T > 4
 	/* In this case by allocating larger units we can get up to
@@ -1984,12 +1984,7 @@ char *R_alloc(size_t nelem, int eltsize)
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
-#if VALGRIND_LEVEL > 0
-	VALGRIND_MAKE_WRITABLE(DATAPTR(s), (int) dsize);
-        VALGRIND_MAKE_WRITABLE(&(ATTRIB(s)), sizeof(void *));
-        VALGRIND_MAKE_WRITABLE(s,3);
-#endif
-	return (char *)DATAPTR(s);
+	return (char *) DATAPTR(s);
     }
     else return NULL;
 }
