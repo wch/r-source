@@ -271,7 +271,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
-#define S4_OBJECT_MASK (1<<4)
+#define S4_OBJECT_MASK ((unsigned short)(1<<4))
 #define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
 #define SET_S4_OBJECT(x) (((x)->sxpinfo.gp) |= S4_OBJECT_MASK)
 #define UNSET_S4_OBJECT(x) (((x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)

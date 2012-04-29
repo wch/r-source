@@ -681,7 +681,7 @@ extern0   Rboolean WinUTF8out  INI_as(FALSE);  /* Use UTF-8 for output */
 extern0   void WinCheckUTF8(void);
 #endif
 
-extern0 char OutDec	INI_as('.');  /* decimal point used for output */
+extern char OutDec	INI_as('.');  /* decimal point used for output */
 extern0 Rboolean R_DisableNLinBrowser	INI_as(FALSE);
 
 /* Initialization of the R environment when it is embedded */
