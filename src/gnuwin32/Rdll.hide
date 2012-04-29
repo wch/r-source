@@ -255,7 +255,6 @@
  R_num_math_threads
  R_osDynSymbol
  R_possible_dispatch
- R_print
  R_restore_globals
  R_run_onexits
  R_seemsOldStyleS4Object
@@ -341,7 +340,6 @@
  Rf_copyMostAttribNoTs
  Rf_d1mach
  Rf_deparse1s
- Rf_dpptr
  Rf_evalList
  Rf_evalListKeepMissing
  Rf_findVar1
@@ -351,7 +349,6 @@
  Rf_gammalims
  Rf_get1index
  Rf_i1mach
- Rf_isNAcol
  Rf_lfastchoose
  Rf_lgammacor
  Rf_lookupCachedSymbol
@@ -1115,7 +1112,6 @@
  framenames
  freeConsoleData
  freemenuitems
- gcontextFromGP
  getActive
  getActiveSink
  getAttrib0
