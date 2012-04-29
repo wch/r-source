@@ -2571,6 +2571,7 @@ AC_CONFIG_FILES(
   src/library/datasets/Makefile
   src/library/graphics/DESCRIPTION
   src/library/graphics/Makefile
+  src/library/graphics/src/Makefile
   src/library/grDevices/DESCRIPTION
   src/library/grDevices/Makefile
   src/library/grDevices/src/Makefile

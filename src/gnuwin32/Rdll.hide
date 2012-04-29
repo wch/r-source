@@ -727,7 +727,6 @@
  do_filerename
  do_fileshow
  do_filesymlink
- do_filledcontour
  do_first_min
  do_flush
  do_flushconsole
@@ -784,7 +783,6 @@
  do_identical
  do_identify
  do_if
- do_image
  do_importIntoEnv
  do_indexsearch
  do_inherits
@@ -905,7 +903,6 @@
  do_paste
  do_path
  do_pathexpand
- do_persp
  do_pgsub
  do_pipe
  do_playSnapshot

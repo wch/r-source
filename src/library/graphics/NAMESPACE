@@ -1,3 +1,5 @@
+useDynLib(graphics, FilledContour, Image, Persp)
+
 import(grDevices)
 
 export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
