@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Foreign-internal}
@@ -33,8 +33,8 @@
   \code{.External2} is an enhanced version of \code{.External} which
   passes additional information in more arguments.
 
-  Currently \code{.Call.graphics} is used in package \pkg{grid} and
-  \code{.External.graphics} and \code{.External2} and use in package
+  \code{.Call.graphics} is used in package \pkg{grid} and
+  \code{.External.graphics} and \code{.External2} are used in package
   \code{graphics}.
 
   These are primitive functions.
