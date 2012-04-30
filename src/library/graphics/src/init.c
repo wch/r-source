@@ -51,7 +51,9 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(C_dend, -1),
     EXTDEF(C_dendwindow, -1),
     EXTDEF(C_erase, -1),
+    EXTDEF(C_layout, -1),
     EXTDEF(C_mtext, -1),
+    EXTDEF(C_par, -1),
     EXTDEF(C_path, -1),
     EXTDEF(C_plotXY, -1),
     EXTDEF(C_plot_window, -1),
@@ -65,6 +67,10 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(C_text, -1),
     EXTDEF(C_title, -1),
     EXTDEF(C_xspline, -1),
+
+    EXTDEF(C_plot_new, 0),
+    EXTDEF(C_locator, -1),
+    EXTDEF(C_identify, -1),
     {NULL, NULL, 0}
 };
 

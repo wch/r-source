@@ -20,7 +20,7 @@ locator <- function(n = 512, type="n", ...)
         opar <- par(extras)
         on.exit(par(opar))
     }
-    z <- .Internal(locator(n, type=type))# n <= 0 gives error
+    z <- .External2(C_locator, n, type = type) # n <= 0 gives error
     x <- z[[1L]]
     y <- z[[2L]]
     if((n <- z[[3L]]) > 0) list(x=x[1L:n], y=y[1L:n])

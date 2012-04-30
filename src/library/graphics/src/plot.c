@@ -122,7 +122,6 @@ static SEXP FixupPch(SEXP pch, int dflt)
     return ans;
 }
 
-attribute_hidden
 SEXP FixupLty(SEXP lty, int dflt)
 {
     int i, n;
@@ -139,7 +138,6 @@ SEXP FixupLty(SEXP lty, int dflt)
     return ans;
 }
 
-attribute_hidden
 SEXP FixupLwd(SEXP lwd, double dflt)
 {
     int i, n;
@@ -272,7 +270,6 @@ static SEXP FixupCex(SEXP cex, double dflt)
     return ans;
 }
 
-attribute_hidden
 SEXP FixupVFont(SEXP vfont) {
     SEXP ans = R_NilValue;
     if (!isNull(vfont)) {
@@ -408,14 +405,11 @@ GetTextArg(SEXP spec, SEXP *ptxt, rcolor *pcol, double *pcex, int *pfont)
 
     /* GRAPHICS FUNCTION ENTRY POINTS */
 
-#if 0
-SEXP attribute_hidden do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_plot_new(SEXP call, SEXP op, SEXP args)
 {
     /* plot.new() - create a new plot "frame" */
 
     pGEDevDesc dd;
-
-    checkArity(op, args);
 
     dd = GEcurrentDevice();
     /*
@@ -437,7 +431,6 @@ SEXP attribute_hidden do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 	GErecordGraphicOperation(op, args, dd);
     return R_NilValue;
 }
-#endif
 
 
 /*
@@ -2945,7 +2938,6 @@ SEXP C_box(SEXP args)
     return R_NilValue;
 }
 
-#if 0
 static void drawPointsLines(double xp, double yp, double xold, double yold,
 			    char type, int first, pGEDevDesc dd)
 {
@@ -2955,7 +2947,7 @@ static void drawPointsLines(double xp, double yp, double xold, double yold,
 	GLine(xold, yold, xp, yp, DEVICE, dd);
 }
 
-SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_locator(SEXP call, SEXP op, SEXP args)
 {
     SEXP x, y, nobs, ans, saveans, stype = R_NilValue;
     int i, n;
@@ -2963,6 +2955,7 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     double xp, yp, xold=0, yold=0;
     pGEDevDesc dd = GEcurrentDevice();
 
+    args = CDR(args);
     /* If replaying, just draw the points and lines that were recorded */
     if (call == R_NilValue) {
 	x = CAR(args); args = CDR(args);
@@ -2987,7 +2980,6 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	GCheckState(dd);
 
-	checkArity(op, args);
 	n = asInteger(CAR(args));
 	if (n <= 0 || n == NA_INTEGER)
 	    error(_("invalid number of points in locator()"));
@@ -3031,6 +3023,7 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	SETCADDR(saveans, nobs);
 	SETCADDDR(saveans, CAR(args));
 	/* Record the points and lines that were drawn in the display list */
+	// FIXME: should only be if recording
 	GErecordGraphicOperation(op, saveans, dd);
 	UNPROTECT(5);
 	return ans;
@@ -3068,14 +3061,14 @@ static void drawLabel(double xi, double yi, int pos, double offset,
     }
 }
 
-/* This manages R_Visible */
-SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_identify(SEXP call, SEXP op, SEXP args)
 {
     SEXP ans, x, y, l, ind, pos, Offset, draw, saveans;
     double xi, yi, xp, yp, d, dmin, offset, tol;
     int atpen, i, imin, k, n, nl, npts, plot, posi, warn;
     pGEDevDesc dd = GEcurrentDevice();
 
+    args = CDR(args);
     /* If we are replaying the display list, then just redraw the
        labels beside the identified points */
     if (call == R_NilValue) {
@@ -3116,7 +3109,6 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	GCheckState(dd);
 
-	checkArity(op, args);
 	x = CAR(args); args = CDR(args);
 	y = CAR(args); args = CDR(args);
 	l = CAR(args); args = CDR(args);
@@ -3143,10 +3135,6 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("different argument lengths"));
 	if (nl > n)
 	    warning(_("more 'labels' than points"));
-	if (n <= 0) {
-	    R_Visible = FALSE;
-	    return NULL;
-	}
 
 	/*
 	 * Most of the appropriate settings have been set up in
@@ -3264,7 +3252,6 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     }
 }
-#endif
 
 /* strheight(str, units, cex, font, vfont, ...)  ||  strwidth() */
 #define DO_STR_DIM(KIND)						\

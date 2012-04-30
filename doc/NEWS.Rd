@@ -133,9 +133,9 @@
     \itemize{
       \item The C code underlying base graphics is in the process of
       being migrated to the \pkg{graphics} package (and hence no longer
-      uses \code{.Internal()} calls.  This may require some S4-using
-      packages which captured the old versions of the \R interfaces to
-      be installed.
+      uses \code{.Internal()} calls.  This may require re-installing
+      some S4-using packages (e.g. \CRANpkg{timeDate}) which captured
+      the old versions of the \R interfaces.
     }
   }
 

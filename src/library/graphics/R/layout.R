@@ -61,15 +61,16 @@ layout <-
     } else {# respect: logical	|--> 0 or 1
 	respect.mat <- matrix(0L, num.rows, num.cols)
     }
-    .Internal(layout(num.rows, num.cols,
-		     mat,# integer
-		     as.integer(num.figures),
-		     col.widths = widths,
-		     row.heights = heights,
-		     cm.widths,
-		     cm.heights,
-		     respect = as.integer(respect),
-		     respect.mat))
+    .External.graphics(C_layout,
+                       num.rows, num.cols,
+                       mat,# integer
+                       as.integer(num.figures),
+                       col.widths = widths,
+                       row.heights = heights,
+                       cm.widths,
+                       cm.heights,
+                       respect = as.integer(respect),
+                       respect.mat)
     invisible(num.figures)
 }
 

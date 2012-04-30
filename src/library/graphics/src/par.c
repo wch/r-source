@@ -1110,14 +1110,14 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     return value;
 }
 
-SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_par(SEXP call, SEXP op, SEXP args)
 {
     SEXP value;
     SEXP originalArgs = args;
     pGEDevDesc dd;
     int new_spec, nargs;
 
-    checkArity(op, args);
+    args = CDR(args);
 
     dd = GEcurrentDevice();
     new_spec = 0;
@@ -1188,13 +1188,12 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
  *  )
  */
 
-SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_layout(SEXP args)
 {
     int i, j, nrow, ncol, ncmrow, ncmcol;
-    SEXP originalArgs = args;
     pGEDevDesc dd;
 
-    checkArity(op, args);
+    args = CDR(args);
 
     dd = GEcurrentDevice();
 
@@ -1281,8 +1280,6 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GReset(dd);
 
-    if (GRecording(call, dd))
-	GErecordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
 

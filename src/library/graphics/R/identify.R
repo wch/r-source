@@ -34,8 +34,8 @@ identify.default <-
         else
             return(numeric())
     }
-    z <- .Internal(identify(x, y, as.character(labels), n, plot, offset,
-                            tolerance, atpen))
+    z <- .External2(C_identify, x, y, as.character(labels), n, plot,
+                    offset, tolerance, atpen)
     i <- seq.int(z[[1L]])[z[[1L]]]
     if(pos) list(ind = i, pos = z[[2L]][z[[1L]]]) else i
 }

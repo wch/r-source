@@ -341,7 +341,7 @@ plot.new <- function()
         if (is.character(fun)) fun <- get(fun)
         try(fun())
     }
-    .Internal(plot.new())
+    .External2(C_plot_new)
     for(fun in getHook("plot.new")) {
         if(is.character(fun)) fun <- get(fun)
         try(fun())

@@ -41,6 +41,7 @@ SEXP C_convertY(SEXP args);
 SEXP C_dend(SEXP args);
 SEXP C_dendwindow(SEXP args);
 SEXP C_erase(SEXP args);
+SEXP C_layout(SEXP args);
 SEXP C_mtext(SEXP args);
 SEXP C_path(SEXP args);
 SEXP C_plotXY(SEXP args);
@@ -56,3 +57,8 @@ SEXP C_text(SEXP args);
 SEXP C_title(SEXP args);
 SEXP C_xspline(SEXP args);
 
+
+SEXP C_par(SEXP call, SEXP op, SEXP args);
+SEXP C_plot_new(SEXP call, SEXP op, SEXP args);
+SEXP C_locator(SEXP call, SEXP op, SEXP args);
+SEXP C_identify(SEXP call, SEXP op, SEXP args);
