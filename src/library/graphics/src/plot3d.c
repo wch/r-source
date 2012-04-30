@@ -268,6 +268,7 @@ SEXP C_filledcontour(SEXP args)
 }
 
 
+
 	/*  I m a g e   R e n d e r i n g  */
 
 
@@ -1270,6 +1271,170 @@ SEXP C_persp(SEXP args)
 
 /* in src/main */
 #include "contour-common.h"
+
+static
+void FindCorners(double width, double height, SEXP label,
+		 double x0, double y0, double x1, double y1,
+		 pGEDevDesc dd) {
+    double delta = height / width;
+    double dx = GConvertXUnits(x1 - x0, USER, INCHES, dd) * delta;
+    double dy = GConvertYUnits(y1 - y0, USER, INCHES, dd) * delta;
+    dx = GConvertYUnits(dx, INCHES, USER, dd);
+    dy = GConvertXUnits(dy, INCHES, USER, dd);
+
+    REAL(label)[0] = x0 + dy;
+    REAL(label)[4] = y0 - dx;
+    REAL(label)[1] = x0 - dy;
+    REAL(label)[5] = y0 + dx;
+    REAL(label)[3] = x1 + dy;
+    REAL(label)[7] = y1 - dx;
+    REAL(label)[2] = x1 - dy;
+    REAL(label)[6] = y1 + dx;
+}
+static
+int TestLabelIntersection(SEXP label1, SEXP label2) {
+
+    int i, j, l1, l2;
+    double Ax, Bx, Ay, By, ax, ay, bx, by;
+    double dom;
+    double result1, result2;
+
+    for (i = 0; i < 4; i++) {
+	Ax = REAL(label1)[i];
+	Ay = REAL(label1)[i+4];
+	Bx = REAL(label1)[(i+1)%4];
+	By = REAL(label1)[(i+1)%4+4];
+	for (j = 0; j < 4; j++) {
+	    ax = REAL(label2)[j];
+	    ay = REAL(label2)[j+4];
+	    bx = REAL(label2)[(j+1)%4];
+	    by = REAL(label2)[(j+1)%4+4];
+
+	    dom = Bx*by - Bx*ay - Ax*by + Ax*ay - bx*By + bx*Ay + ax*By - ax*Ay;
+	    if (dom == 0.0) {
+		result1 = -1;
+		result2 = -1;
+	    }
+	    else {
+		result1 = (bx*Ay - ax*Ay - ay*bx - Ax*by + Ax*ay + by*ax) / dom;
+
+		if (bx - ax == 0.0) {
+		    if (by - ay == 0.0)
+			result2 = -1;
+		    else
+			result2 = (Ay + (By - Ay) * result1 - ay) / (by - ay);
+		}
+		else
+		    result2 = (Ax + (Bx - Ax) * result1 - ax) / (bx - ax);
+
+	    }
+	    l1 = (result1 >= 0.0) && (result1 <= 1.0);
+	    l2 = (result2 >= 0.0) && (result2 <= 1.0);
+	    if (l1 && l2) return 1;
+	}
+    }
+
+    return 0;
+}
+
+/*** Checks whether a label window is inside view region ***/
+static int LabelInsideWindow(SEXP label, pGEDevDesc dd) {
+    int i = 0;
+    double x, y;
+
+    while (i < 4) {
+	x = REAL(label)[i];
+	y = REAL(label)[i+4];
+	GConvert(&x, &y, USER, NDC, dd);
+	/*	x = GConvertXUnits(REAL(label)[i], USER, NDC, dd);
+		y = GConvertYUnits(REAL(label)[i+4], USER, NDC, dd); */
+
+	if ((x < 0) || (x > 1) ||
+	    (y < 0) || (y > 1))
+	    return 1;
+	i += 1;
+    }
+    return 0;
+}
+
+static
+int findGapUp(double *xxx, double *yyy, int ns, double labelDistance,
+	      pGEDevDesc dd) {
+    double dX, dY;
+    double dXC, dYC;
+    double distanceSum = 0;
+    int n = 0;
+    int jjj = 1;
+    while ((jjj < ns) && (distanceSum < labelDistance)) {
+	/* Find a gap big enough for the label
+	   use several segments if necessary
+	*/
+	dX = xxx[jjj] - xxx[jjj - n - 1]; /* jjj - n - 1 == 0 */
+	dY = yyy[jjj] - yyy[jjj - n - 1];
+	dXC = GConvertXUnits(dX, USER, INCHES, dd);
+	dYC = GConvertYUnits(dY, USER, INCHES, dd);
+	distanceSum = hypot(dXC, dYC);
+	jjj++;
+	n++;
+    }
+    if (distanceSum < labelDistance)
+	return 0;
+    else
+	return n;
+}
+
+static
+int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
+		pGEDevDesc dd) {
+    double dX, dY;
+    double dXC, dYC;
+    double distanceSum = 0;
+    int n = 0;
+    int jjj = ns - 2;
+    while ((jjj > -1) && (distanceSum < labelDistance)) {
+	/* Find a gap big enough for the label
+	   use several segments if necessary
+	*/
+	dX = xxx[jjj] - xxx[jjj + n + 1]; /*jjj + n + 1 == ns -1 */
+	dY = yyy[jjj] - yyy[jjj + n + 1];
+	dXC = GConvertXUnits(dX, USER, INCHES, dd);
+	dYC = GConvertYUnits(dY, USER, INCHES, dd);
+	distanceSum = hypot(dXC, dYC);
+	jjj--;
+	n++;
+    }
+    if (distanceSum < labelDistance)
+	return 0;
+    else
+	return n;
+}
+
+/* labelList, label1, and label2 are all SEXPs rather than being allocated
+   using R_alloc because they need to persist across calls to contour().
+   In do_contour() there is a vmaxget() ... vmaxset() around each call to
+   contour() to release all of the memory used in the drawing of the
+   contour _lines_ at each contour level.  We need to keep track of the
+   contour _labels_ for _all_ contour levels, hence we have to use a
+   different memory allocation mechanism.
+*/
+
+static
+double distFromEdge(double *xxx, double *yyy, int iii, pGEDevDesc dd) {
+    return fmin2(fmin2(xxx[iii]-gpptr(dd)->usr[0], gpptr(dd)->usr[1]-xxx[iii]),
+		 fmin2(yyy[iii]-gpptr(dd)->usr[2], gpptr(dd)->usr[3]-yyy[iii]));
+}
+
+static SEXP labelList;
+static SEGP *ctr_SegDB;
+
+static
+Rboolean useStart(double *xxx, double *yyy, int ns, pGEDevDesc dd) {
+    if (distFromEdge(xxx, yyy, 0, dd) < distFromEdge(xxx, yyy, ns-1, dd))
+	return TRUE;
+    else
+	return FALSE;
+}
+
 
 static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		    double zc,
