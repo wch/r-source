@@ -72,7 +72,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   job is no longer available.
 
   The \code{mc.affinity} parameter can be used to try to restrict
-  the chlid process to specific CPUs. The availability and the extent of
+  the child process to specific CPUs. The availability and the extent of
   this feature is system-dependent (e.g., some systems will only
   consider the CPU count, others will ignore it completely).
 }

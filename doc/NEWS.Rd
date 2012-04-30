@@ -263,7 +263,7 @@
     }
   }
 
-  \subsection{UTILITES}{
+  \subsection{UTILITIES}{
     \itemize{
       \item For \command{R CMD check}, a few people have reported
       problems with junctions on Windows (although they were tested on
