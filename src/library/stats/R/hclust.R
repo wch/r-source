@@ -120,20 +120,19 @@ plot.hclust <-
     labels <-
 	if(missing(labels) || is.null(labels)) {
 	    if (is.null(x$labels))
-		paste(1L:(n+1))
+		paste(1L:(n+1L))
 	    else
 		as.character(x$labels)
 	} else {
 	    if(is.logical(labels) && !labels)# FALSE
-		character(n+1)
+		character(n+1L)
 	    else
 		as.character(labels)
 	}
 
     dev.hold(); on.exit(dev.flush())
     plot.new()
-    .Internal(dend.window(n, merge, height,                 hang, labels, ...))
-    .Internal(dend       (n, merge, height, order(x$order), hang, labels, ...))
+    graphics:::plotHclust(n, merge, height, order(x$order), hang, labels, ...)
     if(axes)
         axis(2, at=pretty(range(height)), ...)
     if (frame.plot)

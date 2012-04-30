@@ -404,3 +404,12 @@ grconvertY <- function(y, from = "user", to = "user")
     to <- pmatch(to, .units)
     .External(C_convertY, as.double(y), from, to)
 }
+
+## unexported helper for stats::plot.hclust
+plotHclust <-
+    function (n, merge, height, order, hang, labels, ...)
+{
+    .External.graphics(C_dendwindow, n, merge, height, hang, labels, ...)
+    .External.graphics(C_dend, n, merge, height, order, hang, labels, ...)
+}
+

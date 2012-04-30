@@ -59,5 +59,6 @@ par <- function (..., no.readonly = FALSE)
     if(!is.null(names(args))) invisible(value) else value
 }
 
-clip <- function(x1, x2, y1, y2) .Internal(clip(x1, x2, y1, y2))
+clip <- function(x1, x2, y1, y2)
+    invisible(.External.graphics(C_clip, x1, x2, y1, y2))
 
