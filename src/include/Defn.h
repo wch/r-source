@@ -740,7 +740,7 @@ typedef struct {
 
 LibExtern AccuracyInfo R_AccuracyInfo;
 
-extern0 unsigned int max_contour_segments INI_as(25000);
+extern unsigned int max_contour_segments INI_as(25000);
 
 extern0 Rboolean known_to_be_latin1 INI_as(FALSE);
 extern0 Rboolean known_to_be_utf8 INI_as(FALSE);

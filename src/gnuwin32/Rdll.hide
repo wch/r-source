@@ -1360,7 +1360,6 @@
  lzma_vli_encode
  lzma_vli_size
  mallinfo
- max_contour_segments
  mb_char_len
  memtrace_report
  menuclear
