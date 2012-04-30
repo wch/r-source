@@ -37,6 +37,7 @@
 
 /*--->> Documentation now in  ../include/Rgraphics.h  "API" ----- */
 
+#if 0
 /*-------------------------------------------------------------------
  *
  *  TRANSFORMATIONS
@@ -92,7 +93,7 @@
  *
  */
 
-double attribute_hidden R_Log10(double x)
+double R_Log10(double x)
 {
     return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
@@ -1652,7 +1653,6 @@ void GMapWin2Fig(pGEDevDesc dd)
     }
 }
 
-
 /*  mapping -- Set up mappings between coordinate systems  */
 /*  This is the user's interface to the mapping routines above */
 
@@ -1678,7 +1678,6 @@ void mapping(pGEDevDesc dd, int which)
     }
 }
 
-
 /*  GReset -- Reset coordinate systems mappings and unit yardsticks */
 
 void GReset(pGEDevDesc dd)
@@ -1690,8 +1689,170 @@ void GReset(pGEDevDesc dd)
     /* Recompute Mappings */
     mapping(dd, 0);
 }
+#endif
 
+/*  Is the figure region too big ? */
 
+/* Why is this FLT_EPSILON? */
+static Rboolean validFigureRegion(pGEDevDesc dd)
+{
+    return ((gpptr(dd)->fig[0] > 0-FLT_EPSILON) &&
+	    (gpptr(dd)->fig[1] < 1+FLT_EPSILON) &&
+	    (gpptr(dd)->fig[2] > 0-FLT_EPSILON) &&
+	    (gpptr(dd)->fig[3] < 1+FLT_EPSILON));
+}
+
+/*  Is the figure region too small ? */
+
+static Rboolean validOuterMargins(pGEDevDesc dd)
+{
+    return ((gpptr(dd)->fig[0] < gpptr(dd)->fig[1]) &&
+	    (gpptr(dd)->fig[2] < gpptr(dd)->fig[3]));
+}
+
+/* Is the plot region too big ? */
+
+static Rboolean validPlotRegion(pGEDevDesc dd)
+{
+    return ((gpptr(dd)->plt[0] > 0-FLT_EPSILON) &&
+	    (gpptr(dd)->plt[1] < 1+FLT_EPSILON) &&
+	    (gpptr(dd)->plt[2] > 0-FLT_EPSILON) &&
+	    (gpptr(dd)->plt[3] < 1+FLT_EPSILON));
+}
+
+/* Is the plot region too small ? */
+
+static Rboolean validFigureMargins(pGEDevDesc dd)
+{
+    return ((gpptr(dd)->plt[0] < gpptr(dd)->plt[1]) &&
+	    (gpptr(dd)->plt[2] < gpptr(dd)->plt[3]));
+}
+
+static void invalidError(const char *message, pGEDevDesc dd)
+{
+    dpptr(dd)->currentFigure -= 1;
+    if (dpptr(dd)->currentFigure < 1)
+	dpptr(dd)->currentFigure = dpptr(dd)->lastFigure;
+    gpptr(dd)->currentFigure = dpptr(dd)->currentFigure;
+    error(message);
+}
+
+Rboolean GRecording(SEXP call, pGEDevDesc dd)
+{
+    return GErecording(call, dd);
+}
+
+/*  GNewPlot -- Begin a new plot (advance to new frame if needed)  */
+pGEDevDesc GNewPlot(Rboolean recording)
+{
+    pGEDevDesc dd;
+
+    /* Restore Default Parameters */
+
+    dd = GEcurrentDevice();
+    GRestore(dd);
+
+    /* GNewPlot always starts a new plot UNLESS the user has set
+     * gpptr(dd)->new to TRUE by par(new=TRUE)
+     * If gpptr(dd)->new is FALSE, we leave it that way (further GNewPlot's
+     * will move on to subsequent plots)
+     * If gpptr(dd)->new is TRUE, any subsequent drawing will dirty the plot
+     * and reset gpptr(dd)->new to FALSE
+     */
+
+    /* we can call par(mfg) before any plotting.
+       That sets new = TRUE and also sets currentFigure <= lastFigure
+       so treat separately. */
+    if (!gpptr(dd)->new) {
+	R_GE_gcontext gc;
+	gcontextFromGP(&gc, dd);
+	dpptr(dd)->currentFigure += 1;
+	gpptr(dd)->currentFigure = dpptr(dd)->currentFigure;
+	if (gpptr(dd)->currentFigure > gpptr(dd)->lastFigure) {
+	    if (recording) {
+		if (dd->ask) {
+		    NewFrameConfirm(dd->dev);
+		    /*
+		     * User may have killed device during pause for prompt
+		     */
+		    if (NoDevices())
+			error(_("attempt to plot on null device"));
+		    else
+			dd = GEcurrentDevice();
+		}
+		GEinitDisplayList(dd);
+	    }
+	    GENewPage(&gc, dd);
+	    dpptr(dd)->currentFigure = gpptr(dd)->currentFigure = 1;
+	}
+
+	GReset(dd);
+	GForceClip(dd);
+    } else if(!gpptr(dd)->state) { /* device is unused */
+	R_GE_gcontext gc;
+	gcontextFromGP(&gc, dd);
+	if (recording) {
+	    if (dd->ask) {
+		NewFrameConfirm(dd->dev);
+		/*
+		 * User may have killed device during pause for prompt
+		 */
+		if (NoDevices())
+		    error(_("attempt to plot on null device"));
+		else
+		    dd = GEcurrentDevice();
+	    }
+	    GEinitDisplayList(dd);
+	}
+	GENewPage(&gc, dd);
+	dpptr(dd)->currentFigure = gpptr(dd)->currentFigure = 1;
+	GReset(dd);
+	GForceClip(dd);
+    }
+
+    /* IF the division of the device into separate regions */
+    /* has resulted in any invalid regions ... */
+    /* IF this was a user command (i.e., we are recording) */
+    /* send an error message to the command line */
+    /* IF we are replaying then draw a message in the output */
+
+#define G_ERR_MSG(msg)			\
+	if (recording)			\
+	    invalidError(msg, dd);	\
+	else {				\
+	    int xpdsaved = gpptr(dd)->xpd; \
+	    gpptr(dd)->xpd = 2; \
+	    GText(0.5,0.5, NFC, msg, -1, 0.5,0.5,  0, dd);  \
+	    gpptr(dd)->xpd = xpdsaved; \
+	}
+
+    dpptr(dd)->valid = gpptr(dd)->valid = FALSE;
+    if (!validOuterMargins(dd)) {
+	G_ERR_MSG(_("outer margins too large (fig.region too small)"));
+    } else if (!validFigureRegion(dd)) {
+	G_ERR_MSG(_("figure region too large"));
+    } else if (!validFigureMargins(dd)) {
+	G_ERR_MSG(_("figure margins too large"));
+    } else if (!validPlotRegion(dd)) {
+	G_ERR_MSG(_("plot region too large"));
+    } else {
+	dpptr(dd)->valid = gpptr(dd)->valid = TRUE;
+	/*
+	 * At this point, base output has been successfully
+	 * produced on the device, so mark the device "dirty"
+	 * with respect to base graphics.
+	 * This is used when checking whether the device is
+	 * "valid" with respect to base graphics
+	 */
+	Rf_setBaseDevice(TRUE, dd);
+	GEdirtyDevice(dd);
+    }
+
+    return dd;
+}
+#undef G_ERR_MSG
+
+#if 0
 // used in GScale(), but also ../library/grDevices/src/axis_scales.c :
 // (usr, log, n_inp) |--> (axp, n_out) :
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
@@ -1740,52 +1901,155 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 	t_ = *min; *min = *max; *max = t_;
     }
 }
+#endif
 
-#define LPR_SMALL  2
-#define LPR_MEDIUM 3
-
-void GLPretty(double *ul, double *uh, int *n)
+void GScale(double min, double max, int axis, pGEDevDesc dd)
 {
-/* Generate pretty tick values --	LOGARITHMIC scale
- * __ ul < uh __
- * This only does a very simple setup.
- * The real work happens when the axis is drawn. */
-    int p1, p2;
-    double dl = *ul, dh = *uh;
-    p1 = (int) ceil(log10(dl));
-    p2 = (int) floor(log10(dh));
-    if(p2 <= p1 &&  dh/dl > 10.0) {
-	p1 = (int) ceil(log10(dl) - 0.5);
-	p2 = (int) floor(log10(dh) + 0.5);
+/* GScale: used to default axis information
+ *	   i.e., if user has NOT specified par(usr=...)
+ * NB: can have min > max !
+ */
+#define EPS_FAC_1  16
+
+    Rboolean is_xaxis = (axis == 1 || axis == 3);
+    int log, n, style;
+    double temp, min_o = 0., max_o = 0., tmp2 = 0.;/*-Wall*/
+
+    if(is_xaxis) {
+	n = gpptr(dd)->lab[0];
+	style = gpptr(dd)->xaxs;
+	log = gpptr(dd)->xlog;
+    }
+    else {
+	n = gpptr(dd)->lab[1];
+	style = gpptr(dd)->yaxs;
+	log = gpptr(dd)->ylog;
     }
 
-    if (p2 <= p1) { /* floor(log10(uh)) <= ceil(log10(ul))
-			 * <==>	 log10(uh) - log10(ul) < 2
-			 * <==>		uh / ul	       < 100 */
-	/* Very small range : Use tickmarks from a LINEAR scale
-	 *		      Splus uses n = 9 here, but that is dumb */
-	GPretty(ul, uh, n);
-	*n = -*n;
+    if (log) {
+	/*  keep original  min, max - to use in extremis */
+	min_o = min; max_o = max;
+	min = log10(min);
+	max = log10(max);
     }
-    else { /* extra tickmarks --> CreateAtVector() in ./plot.c */
-	/* round to nice "1e<N>" */
-	*ul = pow(10., (double)p1);
-	*uh = pow(10., (double)p2);
-	if (p2 - p1 <= LPR_SMALL)
-	    *n = 3; /* Small range :	Use 1,2,5,10 times 10^k tickmarks */
-	else if (p2 - p1 <= LPR_MEDIUM)
-	    *n = 2; /* Medium range :	Use 1,5 times 10^k tickmarks */
-	else
-	    *n = 1; /* Large range :	Use 10^k tickmarks
-		     *			But decimate, when there are too many*/
+    if(!R_FINITE(min) || !R_FINITE(max)) {
+	warning(_("nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"),
+		min, max, axis, log);
+	if(!R_FINITE(min)) min = - .45 * DBL_MAX;
+	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
+	/* max - min is now finite */
     }
+    /* Version <= 1.2.0 had
+       if (min == max)	 -- exact equality for real numbers */
+    temp = fmax2(fabs(max), fabs(min));
+    if(temp == 0) {/* min = max = 0 */
+	min = -1;
+	max =  1;
+    }
+    else if(fabs(max - min) < temp * EPS_FAC_1 * DBL_EPSILON) {
+	temp *= (min == max) ? .4 : 1e-2;
+	min -= temp;
+	max += temp;
+    }
+
+    switch(style) {
+    case 'r':
+	temp = 0.04 * (max-min);
+	min -= temp;
+	max += temp;
+	break;
+    case 'i':
+	break;
+    case 's':/* FIXME --- implement  's' and 'e' axis styles ! */
+    case 'e':
+    default:
+	error(_("axis style \"%c\" unimplemented"), style);
+    }
+
+    if (log) { /* 10^max may have gotten +Inf ; or  10^min has become 0 */
+	if((temp = pow(10., min)) == 0.) {/* or < 1.01*DBL_MIN */
+	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
+	    min = log10(temp);
+	}
+	if(max >= 308.25) { /* overflows */
+	    tmp2 = fmax2(max_o, .99 * DBL_MAX);
+	    max = log10(tmp2);
+	} else tmp2 = pow(10., max);
+    }
+    if(is_xaxis) {
+	if (log) {
+	    gpptr(dd)->usr[0] = dpptr(dd)->usr[0] = temp;
+	    gpptr(dd)->usr[1] = dpptr(dd)->usr[1] = tmp2;
+	    gpptr(dd)->logusr[0] = dpptr(dd)->logusr[0] = min;
+	    gpptr(dd)->logusr[1] = dpptr(dd)->logusr[1] = max;
+	} else {
+	    gpptr(dd)->usr[0] = dpptr(dd)->usr[0] = min;
+	    gpptr(dd)->usr[1] = dpptr(dd)->usr[1] = max;
+	}
+    } else {
+	if (log) {
+	    gpptr(dd)->usr[2] = dpptr(dd)->usr[2] = temp;
+	    gpptr(dd)->usr[3] = dpptr(dd)->usr[3] = tmp2;
+	    gpptr(dd)->logusr[2] = dpptr(dd)->logusr[2] = min;
+	    gpptr(dd)->logusr[3] = dpptr(dd)->logusr[3] = max;
+	} else {
+	    gpptr(dd)->usr[2] = dpptr(dd)->usr[2] = min;
+	    gpptr(dd)->usr[3] = dpptr(dd)->usr[3] = max;
+	}
+    }
+
+    /* This is not directly needed when [xy]axt = "n",
+     * but may later be different in another call to axis(), e.g.:
+      > plot(1, xaxt = "n");  axis(1)
+     * In that case, do_axis() should do the following:
+     */
+
+    // Computation of [xy]axp[0:2] == (min,max,n) :
+    GAxisPars(&min, &max, &n, log, axis);
+
+#define G_Store_AXP(is_X)			\
+    if(is_X) {					\
+	gpptr(dd)->xaxp[0] = dpptr(dd)->xaxp[0] = min;	\
+	gpptr(dd)->xaxp[1] = dpptr(dd)->xaxp[1] = max;	\
+	gpptr(dd)->xaxp[2] = dpptr(dd)->xaxp[2] = n;	\
+    }						\
+    else {					\
+	gpptr(dd)->yaxp[0] = dpptr(dd)->yaxp[0] = min;	\
+	gpptr(dd)->yaxp[1] = dpptr(dd)->yaxp[1] = max;	\
+	gpptr(dd)->yaxp[2] = dpptr(dd)->yaxp[2] = n;	\
+    }
+
+    G_Store_AXP(is_xaxis);
 }
+#undef EPS_FAC_1
+#undef EPS_FAC_2
 
-void GPretty(double *lo, double *up, int *ndiv)
+void GSetupAxis(int axis, pGEDevDesc dd)
 {
-    GEPretty(lo, up, ndiv);
-}
+/*  GSetupAxis -- Set up the default axis information
+ *		  called when user specifies	par(usr =...) */
+/*  What should happen if			------------
+ *   xlog or ylog = TRUE ? */
+    double min, max;
+    int n;
+    Rboolean is_xaxis = (axis == 1 || axis == 3);
 
+    if(is_xaxis) {
+	n = gpptr(dd)->lab[0];
+	min = gpptr(dd)->usr[0];
+	max = gpptr(dd)->usr[1];
+    }
+    else {
+	n = gpptr(dd)->lab[1];
+	min = gpptr(dd)->usr[2];
+	max = gpptr(dd)->usr[3];
+    }
+
+    GPretty(&min, &max, &n);
+
+    G_Store_AXP(is_xaxis);
+}
+#undef G_Store_AXP
 
 /*-------------------------------------------------------------------
  *
@@ -1794,6 +2058,7 @@ void GPretty(double *lo, double *up, int *ndiv)
  */
 
 
+#if 0
 /* Set default graphics parameter values in a GPar.
  * This initialises the plot state, plus the graphical
  * parameters that are not the responsibility of the device initialisation.
@@ -1801,7 +2066,7 @@ void GPretty(double *lo, double *up, int *ndiv)
  * Called from baseCallback.
  */
 
-void attribute_hidden GInit(GPar *dp)
+void GInit(GPar *dp)
 {
     dp->state = 0;
     dp->valid = FALSE;
@@ -1927,10 +2192,1258 @@ void attribute_hidden GInit(GPar *dp)
     dp->usr[3] = 1.0;
 }
 
-
 /* Copy a GPar structure from source to dest. */
 void copyGPar(GPar *source, GPar *dest)
 {
     memcpy(dest, source, sizeof(GPar));
 }
+#endif
 
+
+/* Restore the graphics parameters from the device copy. */
+void GRestore(pGEDevDesc dd)
+{
+    if (NoDevices())
+	error(_("No graphics device is active"));
+    copyGPar(dpptr(dd), gpptr(dd));
+}
+
+
+/* FIXME: reorganize this as a memcpy */
+
+/*  Saving and restoring of "inline" graphical	*/
+/*  parameters.	 These are the ones which can be  */
+/*  specified as a arguments to high-level  */
+/*  graphics functions.	 */
+
+static double	adjsave;	/* adj */
+static int	annsave;	/* ann */
+static char	btysave;	/* bty */
+static double	cexsave;	/* cex */
+static double   lheightsave;
+static double	cexbasesave;	/* cexbase */
+static double	cexmainsave;	/* cex.main */
+static double	cexlabsave;	/* cex.lab */
+static double	cexsubsave;	/* cex.sub */
+static double	cexaxissave;	/* cex.axis */
+static int	colsave;	/* col */
+static int	fgsave;		/* fg */
+static int	bgsave;		/* bg */
+static int	colmainsave;	/* col.main */
+static int	collabsave;	/* col.lab */
+static int	colsubsave;	/* col.sub */
+static int	colaxissave;	/* col.axis */
+static double	crtsave;	/* character rotation */
+static char     familysave[201];
+static int	fontsave;	/* font */
+static int	fontmainsave;	/* font.main */
+static int	fontlabsave;	/* font.lab */
+static int	fontsubsave;	/* font.sub */
+static int	fontaxissave;	/* font.axis */
+static int	errsave;	/* error mode */
+static int	labsave[3];	/* axis labelling parameters */
+static int	lassave;	/* label style */
+static int	ltysave;	/* line type */
+static double	lwdsave;	/* line width */
+static R_GE_lineend lendsave;
+static R_GE_linejoin ljoinsave;
+static double   lmitresave;
+static double	mgpsave[3];	/* margin position for annotation */
+static double	mkhsave;	/* mark height */
+static int	pchsave;	/* plotting character */
+static double	srtsave;	/* string rotation */
+static double	tcksave;	/* tick mark length */
+static double	tclsave;	/* tick mark length in LINES */
+static double	xaxpsave[3];	/* x axis parameters */
+static char	xaxssave;	/* x axis calculation style */
+static char	xaxtsave;	/* x axis type */
+static int	xpdsave;	/* clipping control */
+static double	yaxpsave[3];	/* y axis parameters */
+static char	yaxssave;	/* y axis calculation style */
+static char	yaxtsave;	/* y axis type */
+
+
+/* Make a temporary copy of the inline parameter values. */
+void GSavePars(pGEDevDesc dd)
+{
+    adjsave = gpptr(dd)->adj;
+    annsave = gpptr(dd)->ann;
+    btysave = gpptr(dd)->bty;
+    cexsave = gpptr(dd)->cex;
+    lheightsave = gpptr(dd)->lheight;
+    cexbasesave = gpptr(dd)->cexbase;
+    cexlabsave = gpptr(dd)->cexlab;
+    cexmainsave = gpptr(dd)->cexmain;
+    cexsubsave = gpptr(dd)->cexsub;
+    cexaxissave = gpptr(dd)->cexaxis;
+    colsave = gpptr(dd)->col;
+    fgsave = gpptr(dd)->fg;
+    bgsave = gpptr(dd)->bg;
+    collabsave = gpptr(dd)->collab;
+    colmainsave = gpptr(dd)->colmain;
+    colsubsave = gpptr(dd)->colsub;
+    colaxissave = gpptr(dd)->colaxis;
+    crtsave = gpptr(dd)->crt;
+    errsave = gpptr(dd)->err;
+    strncpy(familysave, gpptr(dd)->family, 201);
+    fontsave = gpptr(dd)->font;
+    fontmainsave = gpptr(dd)->fontmain;
+    fontlabsave = gpptr(dd)->fontlab;
+    fontsubsave = gpptr(dd)->fontsub;
+    fontaxissave = gpptr(dd)->fontaxis;
+    labsave[0] = gpptr(dd)->lab[0];
+    labsave[1] = gpptr(dd)->lab[1];
+    labsave[2] = gpptr(dd)->lab[2];
+    lassave = gpptr(dd)->las;
+    ltysave = gpptr(dd)->lty;
+    lwdsave = gpptr(dd)->lwd;
+    lendsave = gpptr(dd)->lend;
+    ljoinsave = gpptr(dd)->ljoin;
+    lmitresave = gpptr(dd)->lmitre;
+    mgpsave[0] = gpptr(dd)->mgp[0];
+    mgpsave[1] = gpptr(dd)->mgp[1];
+    mgpsave[2] = gpptr(dd)->mgp[2];
+    mkhsave = gpptr(dd)->mkh;
+    pchsave = gpptr(dd)->pch;
+    srtsave = gpptr(dd)->srt;
+    tcksave = gpptr(dd)->tck;
+    tclsave = gpptr(dd)->tcl;
+    xaxpsave[0] = gpptr(dd)->xaxp[0];
+    xaxpsave[1] = gpptr(dd)->xaxp[1];
+    xaxpsave[2] = gpptr(dd)->xaxp[2];
+    xaxssave = gpptr(dd)->xaxs;
+    xaxtsave = gpptr(dd)->xaxt;
+    xpdsave = gpptr(dd)->xpd;
+    yaxpsave[0] = gpptr(dd)->yaxp[0];
+    yaxpsave[1] = gpptr(dd)->yaxp[1];
+    yaxpsave[2] = gpptr(dd)->yaxp[2];
+    yaxssave = gpptr(dd)->yaxs;
+    yaxtsave = gpptr(dd)->yaxt;
+}
+
+
+/*  Restore temporarily saved inline parameter values	*/
+void GRestorePars(pGEDevDesc dd)
+{
+    gpptr(dd)->adj = adjsave;
+    gpptr(dd)->ann = annsave;
+    gpptr(dd)->bty = btysave;
+    gpptr(dd)->cex = cexsave;
+    gpptr(dd)->lheight = lheightsave;
+    gpptr(dd)->cexbase = cexbasesave;
+    gpptr(dd)->cexlab = cexlabsave;
+    gpptr(dd)->cexmain = cexmainsave;
+    gpptr(dd)->cexsub = cexsubsave;
+    gpptr(dd)->cexaxis = cexaxissave;
+    gpptr(dd)->col = colsave;
+    gpptr(dd)->fg = fgsave;
+    gpptr(dd)->bg = bgsave;
+    gpptr(dd)->collab = collabsave;
+    gpptr(dd)->colmain = colmainsave;
+    gpptr(dd)->colsub = colsubsave;
+    gpptr(dd)->colaxis = colaxissave;
+    gpptr(dd)->crt = crtsave;
+    gpptr(dd)->err = errsave;
+    strncpy(gpptr(dd)->family, familysave, 201);
+    gpptr(dd)->font = fontsave;
+    gpptr(dd)->fontmain = fontmainsave;
+    gpptr(dd)->fontlab = fontlabsave;
+    gpptr(dd)->fontsub = fontsubsave;
+    gpptr(dd)->fontaxis = fontaxissave;
+    gpptr(dd)->lab[0] = labsave[0];
+    gpptr(dd)->lab[1] = labsave[1];
+    gpptr(dd)->lab[2] = labsave[2];
+    gpptr(dd)->las = lassave;
+    gpptr(dd)->lty = ltysave;
+    gpptr(dd)->lwd = lwdsave;
+    gpptr(dd)->lend = lendsave;
+    gpptr(dd)->ljoin = ljoinsave;
+    gpptr(dd)->lmitre = lmitresave;
+    gpptr(dd)->mgp[0] = mgpsave[0];
+    gpptr(dd)->mgp[1] = mgpsave[1];
+    gpptr(dd)->mgp[2] = mgpsave[2];
+    gpptr(dd)->mkh = mkhsave;
+    gpptr(dd)->pch = pchsave;
+    gpptr(dd)->srt = srtsave;
+    gpptr(dd)->tck = tcksave;
+    gpptr(dd)->tcl = tclsave;
+    gpptr(dd)->xaxp[0] = xaxpsave[0];
+    gpptr(dd)->xaxp[1] = xaxpsave[1];
+    gpptr(dd)->xaxp[2] = xaxpsave[2];
+    gpptr(dd)->xaxs = xaxssave;
+    gpptr(dd)->xaxt = xaxtsave;
+    gpptr(dd)->xpd = xpdsave;
+    gpptr(dd)->yaxp[0] = yaxpsave[0];
+    gpptr(dd)->yaxp[1] = yaxpsave[1];
+    gpptr(dd)->yaxp[2] = yaxpsave[2];
+    gpptr(dd)->yaxs = yaxssave;
+    gpptr(dd)->yaxt = yaxtsave;
+}
+
+/*-------------------------------------------------------------------
+ *
+ *  DEVICE STATE FUNCTIONS
+ *
+ */
+
+
+/* This records whether GNewPlot has been called. */
+void GSetState(int newstate, pGEDevDesc dd)
+{
+    dpptr(dd)->state = gpptr(dd)->state = newstate;
+}
+
+
+
+/* Enquire whether GNewPlot has been called. */
+void GCheckState(pGEDevDesc dd)
+{
+    if(gpptr(dd)->state == 0)
+	error(_("plot.new has not been called yet"));
+    if (!gpptr(dd)->valid)
+	error(_("invalid graphics state"));
+}
+
+/*-------------------------------------------------------------------
+ * GRAPHICAL PRIMITIVES
+ *
+ */
+
+/* CLIPPING paradigm:
+
+   R uses both the clipping capabilities of the device (if present)
+   and its own internal clipping algorithms.
+   If the device has no clipping capabilities (canClip = FALSE) then R
+   does all of the clipping internally.
+   If the device has clipping capabilities, R still does some internal
+   clipping (to the device extent).  This is to avoid "silly" values
+   being sent to the device (e.g., X11 and Ghostview will barf if you
+   send a ridiculously large number to them).  Call this silly-clipping.
+
+       The problem with getting R to do some of the clipping is that it is
+       not necessarily as good as the device at clipping (e.g., R's text
+       clipping is very crude).  This is the motivation for leaving as much
+       of the clipping as possible to the device.
+       R does different amounts of silly-clipping for different primitives.
+       See the individual routines for more info.
+*/
+
+
+static void setClipRect(double *x1, double *y1, double *x2, double *y2,
+			int coords, pGEDevDesc dd)
+{
+    /*
+     * xpd = 0 means clip to current plot region
+     * xpd = 1 means clip to current figure region
+     * xpd = 2 means clip to device region
+     */
+    *x1 = 0.0;
+    *y1 = 0.0;
+    *x2 = 1.0;
+    *y2 = 1.0;
+    switch (gpptr(dd)->xpd) {
+    case 0:
+	GConvert(x1, y1, NPC, coords, dd);
+	GConvert(x2, y2, NPC, coords, dd);
+	break;
+    case 1:
+	GConvert(x1, y1, NFC, coords, dd);
+	GConvert(x2, y2, NFC, coords, dd);
+	break;
+    case 2:
+	GConvert(x1, y1, NDC, coords, dd);
+	GConvert(x2, y2, NDC, coords, dd);
+	break;
+    }
+}
+
+/* Update the device clipping region (depends on GP->xpd). */
+void GClip(pGEDevDesc dd)
+{
+    if (gpptr(dd)->xpd != gpptr(dd)->oldxpd) {
+	double x1, y1, x2, y2;
+	setClipRect(&x1, &y1, &x2, &y2, DEVICE, dd);
+	GESetClip(x1, y1, x2, y2, dd);
+	gpptr(dd)->oldxpd = gpptr(dd)->xpd;
+    }
+}
+
+
+/*  Forced update of the device clipping region. */
+void GForceClip(pGEDevDesc dd)
+{
+    double x1, y1, x2, y2;
+    if (gpptr(dd)->state == 0) return;
+    setClipRect(&x1, &y1, &x2, &y2, DEVICE, dd);
+    GESetClip(x1, y1, x2, y2, dd);
+}
+
+/*
+ * Function to generate an R_GE_gcontext from gpptr info
+ *
+ * In some cases, the settings made here will need to be overridden
+ * (eps. the fill setting)
+ */
+/* Used here and in do_xspline */
+void gcontextFromGP(pGEcontext gc, pGEDevDesc dd)
+{
+    gc->col = gpptr(dd)->col;
+    gc->fill = gpptr(dd)->bg;  /* This may need manual adjusting */
+    gc->gamma = gpptr(dd)->gamma;
+    /*
+     * Scale by "zoom" factor to allow for fit-to-window resizing in Windows
+     */
+    gc->lwd = gpptr(dd)->lwd * gpptr(dd)->scale;
+    gc->lty = gpptr(dd)->lty;
+    gc->lend = gpptr(dd)->lend;
+    gc->ljoin = gpptr(dd)->ljoin;
+    gc->lmitre = gpptr(dd)->lmitre;
+    gc->cex = gpptr(dd)->cex;
+    /*
+     * Scale by "zoom" factor to allow for fit-to-window resizing in Windows
+     */
+    gc->ps = (double) gpptr(dd)->ps * gpptr(dd)->scale;
+    gc->lineheight = gpptr(dd)->lheight;
+    gc->fontface = gpptr(dd)->font;
+    strncpy(gc->fontfamily, gpptr(dd)->family, 201);
+}
+
+/* Draw a line. */
+/* If the device canClip, R clips line to device extent and
+   device does all other clipping. */
+void GLine(double x1, double y1, double x2, double y2, int coords, pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    if (gpptr(dd)->lty == LTY_BLANK) return;
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x1, &y1, coords, DEVICE, dd);
+    GConvert(&x2, &y2, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    if(R_FINITE(x1) && R_FINITE(y1) && R_FINITE(x2) && R_FINITE(y2))
+	GELine(x1, y1, x2, y2, &gc, dd);
+}
+
+/* Read the current "pen" position. */
+Rboolean GLocator(double *x, double *y, int coords, pGEDevDesc dd)
+{
+    if(dd->dev->locator && dd->dev->locator(x, y, dd->dev)) {
+	GConvert(x, y, DEVICE, coords, dd);
+	return TRUE;
+    } else return FALSE;
+}
+
+/* Access character font metric information.  */
+void GMetricInfo(int c, double *ascent, double *descent, double *width,
+		 GUnit units, pGEDevDesc dd)
+{
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
+    dd->dev->metricInfo(c & 0xFF, &gc, ascent, descent, width, dd->dev);
+    if (units != DEVICE) {
+	*ascent = GConvertYUnits(*ascent, DEVICE, units, dd);
+	*descent = GConvertYUnits(*descent, DEVICE, units, dd);
+	*width = GConvertXUnits(*width, DEVICE, units, dd);
+    }
+}
+
+
+/* Check that everything is initialized :
+	Interpretation :
+	mode = 0, graphics off
+	mode = 1, graphics on
+	mode = 2, graphical input on (ignored by most drivers)
+*/
+void GMode(int mode, pGEDevDesc dd)
+{
+    if (NoDevices())
+	error(_("No graphics device is active"));
+    if(mode != gpptr(dd)->devmode) GEMode(mode, dd); /* dd->dev->mode(mode, dd->dev); */
+    gpptr(dd)->new = dpptr(dd)->new = FALSE;
+    gpptr(dd)->devmode = dpptr(dd)->devmode = mode;
+}
+
+
+/*
+***********************************
+* START GClipPolygon code
+*
+* Everything up to END GClipPolygon code
+* is just here to support GClipPolygon
+* which only exists to satisfy the
+* Rgraphics.h API (which should be
+* superceded by the API provided by
+* GraphicsDevice.h and GraphicsEngine.h)
+***********************************
+*/
+/*
+ * If device can't clip we should use something like Sutherland-Hodgman here
+ *
+ * NOTE:  most of this code (up to GPolygon) is only now used by
+ * GClipPolygon -- GPolygon runs the new GEPolygon in engine.c
+ */
+typedef enum {
+    Left = 0,
+    Right = 1,
+    Bottom = 2,
+    Top = 3
+} Edge;
+
+/* Clipper State Variables */
+typedef struct {
+    int first;    /* true if we have seen the first point */
+    double fx;    /* x coord of the first point */
+    double fy;    /* y coord of the first point */
+    double sx;    /* x coord of the most recent point */
+    double sy;    /* y coord of the most recent point */
+}
+GClipState;
+
+/* The Clipping Rectangle */
+typedef struct {
+    double xmin;
+    double xmax;
+    double ymin;
+    double ymax;
+}
+GClipRect;
+
+static
+int inside (Edge b, double px, double py, GClipRect *clip)
+{
+    switch (b) {
+    case Left:   if (px < clip->xmin) return 0; break;
+    case Right:  if (px > clip->xmax) return 0; break;
+    case Bottom: if (py < clip->ymin) return 0; break;
+    case Top:    if (py > clip->ymax) return 0; break;
+    }
+    return 1;
+}
+
+static
+int cross (Edge b, double x1, double y1, double x2, double y2,
+	   GClipRect *clip)
+{
+    if (inside (b, x1, y1, clip) == inside (b, x2, y2, clip))
+	return 0;
+    else return 1;
+}
+
+static
+void intersect (Edge b, double x1, double y1, double x2, double y2,
+		double *ix, double *iy, GClipRect *clip)
+{
+    double m = 0;
+
+    if (x1 != x2) m = (y1 - y2) / (x1 - x2);
+    switch (b) {
+    case Left:
+	*ix = clip->xmin;
+	*iy = y2 + (clip->xmin - x2) * m;
+	break;
+    case Right:
+	*ix = clip->xmax;
+	*iy = y2 + (clip->xmax - x2) * m;
+	break;
+    case Bottom:
+	*iy = clip->ymin;
+	if (x1 != x2) *ix = x2 + (clip->ymin - y2) / m;
+	else *ix = x2;
+	break;
+    case Top:
+	*iy = clip->ymax;
+	if (x1 != x2) *ix = x2 + (clip->ymax - y2) / m;
+	else *ix = x2;
+	break;
+    }
+}
+
+static
+void clipPoint (Edge b, double x, double y,
+		double *xout, double *yout, int *cnt, int store,
+		GClipRect *clip, GClipState *cs)
+{
+    double ix = 0.0, iy = 0.0 /* -Wall */;
+
+    if (!cs[b].first) {
+	/* No previous point exists for this edge. */
+	/* Save this point. */
+	cs[b].first = 1;
+	cs[b].fx = x;
+	cs[b].fy = y;
+    }
+    else
+	/* A previous point exists.  */
+	/* If 'p' and previous point cross edge, find intersection.  */
+	/* Clip against next boundary, if any.  */
+	/* If no more edges, add intersection to output list. */
+	if (cross (b, x, y, cs[b].sx, cs[b].sy, clip)) {
+	    intersect (b, x, y, cs[b].sx, cs[b].sy, &ix, &iy, clip);
+	    if (b < Top)
+		clipPoint (b + 1, ix, iy, xout, yout, cnt, store,
+			   clip, cs);
+	    else {
+		if (store) {
+		    xout[*cnt] = ix;
+		    yout[*cnt] = iy;
+		}
+		(*cnt)++;
+	    }
+	}
+
+    /* Save as most recent point for this edge */
+    cs[b].sx = x;
+    cs[b].sy = y;
+
+    /* For all, if point is 'inside' */
+    /* proceed to next clip edge, if any */
+    if (inside (b, x, y, clip)) {
+	if (b < Top)
+	    clipPoint (b + 1, x, y, xout, yout, cnt, store, clip, cs);
+	else {
+	    if (store) {
+		xout[*cnt] = x;
+		yout[*cnt] = y;
+	    }
+	    (*cnt)++;
+	}
+    }
+}
+
+static
+void closeClip (double *xout, double *yout, int *cnt, int store,
+		GClipRect *clip, GClipState *cs)
+{
+    double ix = 0.0, iy = 0.0 /* -Wall */;
+    Edge b;
+
+    for (b = Left; b <= Top; b++) {
+	if (cross (b, cs[b].sx, cs[b].sy, cs[b].fx, cs[b].fy, clip)) {
+	    intersect (b, cs[b].sx, cs[b].sy,
+		       cs[b].fx, cs[b].fy, &ix, &iy, clip);
+	    if (b < Top)
+		clipPoint (b + 1, ix, iy, xout, yout, cnt, store, clip, cs);
+	    else {
+		if (store) {
+		    xout[*cnt] = ix;
+		    yout[*cnt] = iy;
+		}
+		(*cnt)++;
+	    }
+	}
+    }
+}
+
+int GClipPolygon(double *x, double *y, int n, int coords, int store,
+		 double *xout, double *yout, pGEDevDesc dd)
+{
+    int i, cnt = 0;
+    GClipState cs[4];
+    GClipRect clip;
+    for (i = 0; i < 4; i++)
+	cs[i].first = 0;
+    /* Set up the cliprect here for R. */
+    setClipRect(&clip.xmin, &clip.ymin, &clip.xmax, &clip.ymax, coords, dd);
+    /* If necessary, swap the clip region extremes */
+    if (clip.xmax < clip.xmin) {
+	double swap = clip.xmax;
+	clip.xmax = clip.xmin;
+	clip.xmin = swap;
+    }
+    if (clip.ymax < clip.ymin) {
+	double swap = clip.ymax;
+	clip.ymax = clip.ymin;
+	clip.ymin = swap;
+    }
+    for (i = 0; i < n; i++)
+	clipPoint (Left, x[i], y[i], xout, yout, &cnt, store, &clip, cs);
+    closeClip (xout, yout, &cnt, store, &clip, cs);
+    return (cnt);
+}
+/*
+***********************************
+* END GClipPolygon code
+***********************************
+*/
+
+/*
+ * This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code (in plot.c) still calls this.
+ */
+/* GPolygon -- Draw a polygon
+ *	Filled with color bg and outlined with color fg
+ *	These may both be NA_INTEGER
+ */
+void GPolygon(int n, double *x, double *y, int coords,
+	      int bg, int fg, pGEDevDesc dd)
+{
+    int i;
+    double *xx;
+    double *yy;
+    const void *vmaxsave = vmaxget();
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    if (gpptr(dd)->lty == LTY_BLANK)
+	fg = R_TRANWHITE; /* transparent for the border */
+
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    xx = (double*) R_alloc(n, sizeof(double));
+    yy = (double*) R_alloc(n, sizeof(double));
+    if (!xx || !yy)
+	error(_("unable to allocate memory (in GPolygon)"));
+    for (i=0; i<n; i++) {
+	xx[i] = x[i];
+	yy[i] = y[i];
+	GConvert(&(xx[i]), &(yy[i]), coords, DEVICE, dd);
+    }
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GEPolygon(n, xx, yy, &gc, dd);
+    vmaxset(vmaxsave);
+}
+
+#include <stdio.h>
+
+/* Draw a series of line segments. */
+/* If the device canClip, R clips to the device extent and the device
+   does all other clipping */
+void GPolyline(int n, double *x, double *y, int coords, pGEDevDesc dd)
+{
+    int i;
+    double *xx;
+    double *yy;
+    const void *vmaxsave = vmaxget();
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    xx = (double*) R_alloc(n, sizeof(double));
+    yy = (double*) R_alloc(n, sizeof(double));
+    if (!xx || !yy)
+	error(_("unable to allocate memory (in GPolygon)"));
+    for (i=0; i<n; i++) {
+	xx[i] = x[i];
+	yy[i] = y[i];
+	GConvert(&(xx[i]), &(yy[i]), coords, DEVICE, dd);
+    }
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GEPolyline(n, xx, yy, &gc, dd);
+    vmaxset(vmaxsave);
+}
+
+
+/*
+ * This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code (do_symbol in plot.c) still calls this.
+ *
+ * NB: this fiddles with radius = 0.
+ */
+void GCircle(double x, double y, int coords,
+	     double radius, int bg, int fg, pGEDevDesc dd)
+{
+    double ir;
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    ir = radius/dd->dev->ipr[0];
+    ir = (ir > 0) ? ir : 1;
+
+    if (gpptr(dd)->lty == LTY_BLANK)
+	fg = R_TRANWHITE; /* transparent for the border */
+
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x, &y, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GECircle(x, y, ir, &gc, dd);
+}
+
+/* Draw a rectangle	*/
+/* Filled with color bg and outlined with color fg  */
+/* These may both be NA_INTEGER	 */
+void GRect(double x0, double y0, double x1, double y1, int coords,
+	   int bg, int fg, pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    if (gpptr(dd)->lty == LTY_BLANK)
+	fg = R_TRANWHITE; /* transparent for the border */
+
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x0, &y0, coords, DEVICE, dd);
+    GConvert(&x1, &y1, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GERect(x0, y0, x1, y1, &gc, dd);
+}
+
+void GPath(double *x, double *y,
+           int npoly, int *nper,
+           Rboolean winding,
+           int bg, int fg, pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    if (gpptr(dd)->lty == LTY_BLANK)
+	fg = R_TRANWHITE; /* transparent for the border */
+
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GEPath(x, y, npoly, nper, winding, &gc, dd);
+}
+
+void GRaster(unsigned int* image, int w, int h,
+             double x0, double y0, double x1, double y1,
+             double angle, Rboolean interpolate,
+             pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+
+    GERaster(image, w, h, x0, y0, x1, y1, angle, interpolate,
+             &gc, dd);
+}
+
+/* Compute string width. */
+double GStrWidth(const char *str, cetype_t enc, GUnit units, pGEDevDesc dd)
+{
+    double w;
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    w = GEStrWidth(str, (gc.fontface == 5) ? CE_SYMBOL:enc, &gc, dd);
+    if (units != DEVICE)
+	w = GConvertXUnits(w, DEVICE, units, dd);
+    return w;
+}
+
+
+/* Compute string height. */
+
+double GStrHeight(const char *str, cetype_t enc, GUnit units, pGEDevDesc dd)
+{
+    double h;
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    h = GEStrHeight(str, (gc.fontface == 5) ? CE_SYMBOL:enc, &gc, dd);
+    if (units != DEVICE)
+	h = GConvertYUnits(h, DEVICE, units, dd);
+    return h;
+}
+
+/* Draw text in a plot. */
+/* If you want EXACT centering of text (e.g., like in GSymbol) */
+/* then pass NA_REAL for xc and yc */
+void GText(double x, double y, int coords, const char *str, cetype_t enc,
+	   double xc, double yc, double rot, pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x, &y, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GEText(x, y, str, (gc.fontface == 5) ? CE_SYMBOL:enc, xc, yc, rot, &gc, dd);
+}
+
+/*-------------------------------------------------------------------
+ *
+ *  GRAPHICAL UTILITIES
+ *
+ */
+
+
+/* GArrow -- Draw an arrow. */
+/* NOTE that the length parameter is in inches. */
+void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
+	    double length, double angle, int code, pGEDevDesc dd)
+{
+
+    double xfromInch = xfrom;
+    double yfromInch = yfrom;
+    double xtoInch = xto;
+    double ytoInch = yto;
+    double rot, xc, yc;
+    double x[3], y[3];
+    double eps = 1.e-3;
+
+    GLine(xfrom, yfrom, xto, yto, coords, dd);
+
+    GConvert(&xfromInch, &yfromInch, coords, INCHES, dd);
+    GConvert(&xtoInch, &ytoInch, coords, INCHES, dd);
+    if((code & 3) == 0) return; /* no arrows specified */
+    if(length == 0) return; /* zero-length arrow heads */
+
+    if(hypot(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
+	/* effectively 0-length arrow */
+	warning(_("zero-length arrow is of indeterminate angle and so skipped"));
+	return;
+    }
+    angle *= DEG2RAD;
+    if(code & 1) {
+	xc = xtoInch - xfromInch;
+	yc = ytoInch - yfromInch;
+	rot= atan2(yc, xc);
+	x[0] = xfromInch + length * cos(rot+angle);
+	y[0] = yfromInch + length * sin(rot+angle);
+	x[1] = xfromInch;
+	y[1] = yfromInch;
+	x[2] = xfromInch + length * cos(rot-angle);
+	y[2] = yfromInch + length * sin(rot-angle);
+	GPolyline(3, x, y, INCHES, dd);
+    }
+    if(code & 2) {
+	xc = xfromInch - xtoInch;
+	yc = yfromInch - ytoInch;
+	rot= atan2(yc, xc);
+	x[0] = xtoInch + length * cos(rot+angle);
+	y[0] = ytoInch + length * sin(rot+angle);
+	x[1] = xtoInch;
+	y[1] = ytoInch;
+	x[2] = xtoInch + length * cos(rot-angle);
+	y[2] = ytoInch + length * sin(rot-angle);
+	GPolyline(3, x, y, INCHES, dd);
+    }
+}
+
+
+/* Draw a box about one of several regions:  box(which) */
+void GBox(int which, pGEDevDesc dd)
+{
+    double x[7], y[7];
+    if (which == 1) {/* plot */
+	x[0] = gpptr(dd)->plt[0]; y[0] = gpptr(dd)->plt[2];/* <- , __ */
+	x[1] = gpptr(dd)->plt[1]; y[1] = gpptr(dd)->plt[2];/* -> , __ */
+	x[2] = gpptr(dd)->plt[1]; y[2] = gpptr(dd)->plt[3];/* -> , ^  */
+	x[3] = gpptr(dd)->plt[0]; y[3] = gpptr(dd)->plt[3];/* <- , ^  */
+	x[4] = x[0];	      y[4] = y[0];	   /* <- , __ */
+	x[5] = x[1];	      y[5] = y[1];	   /* -> , __ */
+	x[6] = x[2];	      y[6] = y[2];	   /* -> , __ */
+    }
+    else {/* "figure", "inner", or "outer" */
+	x[0] = 0.; y[0] = 0.;
+	x[1] = 1.; y[1] = 0.;
+	x[2] = 1.; y[2] = 1.;
+	x[3] = 0.; y[3] = 1.;
+    }
+    switch(which) {
+    case 1: /* Plot */
+	switch(gpptr(dd)->bty) {
+	case 'o':
+	case 'O':
+	    GPolygon(4, x, y, NFC,
+		     R_TRANWHITE, gpptr(dd)->col, dd);
+	    break;
+	case 'l':
+	case 'L':
+	    GPolyline(3, x+3, y+3, NFC, dd);
+	    break;
+	case '7':
+	    GPolyline(3, x+1, y+1, NFC, dd);
+	    break;
+	case 'c':
+	case 'C':
+	case '[':
+	    GPolyline(4, x+2, y+2, NFC, dd);
+	    break;
+	case ']':/* new */
+	    GPolyline(4, x, y, NFC, dd);
+	    break;
+	case 'u':
+	case 'U':
+	    GPolyline(4, x+3, y+3, NFC, dd);
+	    break;
+	case 'n':
+	case 'N': /* nothing */
+	    break;
+	default:
+	    warning(_("invalid par(\"bty\") = '%c'; no box() drawn"),
+		    gpptr(dd)->bty);
+	}
+	break;
+    case 2: /* Figure */
+	GPolygon(4, x, y, NFC,
+		 R_TRANWHITE, gpptr(dd)->col, dd);
+	break;
+    case 3: /* Inner Region */
+	GPolygon(4, x, y, NIC,
+		 R_TRANWHITE, gpptr(dd)->col, dd);
+	break;
+    case 4: /* "outer": Device border */
+	GPolygon(4, x, y, NDC,
+		 R_TRANWHITE, gpptr(dd)->col, dd);
+	break;
+    default:
+	error(_("invalid argument to GBox"));
+    }
+}
+
+
+#define LPR_SMALL  2
+#define LPR_MEDIUM 3
+
+void GLPretty(double *ul, double *uh, int *n)
+{
+/* Generate pretty tick values --	LOGARITHMIC scale
+ * __ ul < uh __
+ * This only does a very simple setup.
+ * The real work happens when the axis is drawn. */
+    int p1, p2;
+    double dl = *ul, dh = *uh;
+    p1 = (int) ceil(log10(dl));
+    p2 = (int) floor(log10(dh));
+    if(p2 <= p1 &&  dh/dl > 10.0) {
+	p1 = (int) ceil(log10(dl) - 0.5);
+	p2 = (int) floor(log10(dh) + 0.5);
+    }
+
+    if (p2 <= p1) { /* floor(log10(uh)) <= ceil(log10(ul))
+			 * <==>	 log10(uh) - log10(ul) < 2
+			 * <==>		uh / ul	       < 100 */
+	/* Very small range : Use tickmarks from a LINEAR scale
+	 *		      Splus uses n = 9 here, but that is dumb */
+	GPretty(ul, uh, n);
+	*n = -*n;
+    }
+    else { /* extra tickmarks --> CreateAtVector() in ./plot.c */
+	/* round to nice "1e<N>" */
+	*ul = pow(10., (double)p1);
+	*uh = pow(10., (double)p2);
+	if (p2 - p1 <= LPR_SMALL)
+	    *n = 3; /* Small range :	Use 1,2,5,10 times 10^k tickmarks */
+	else if (p2 - p1 <= LPR_MEDIUM)
+	    *n = 2; /* Medium range :	Use 1,5 times 10^k tickmarks */
+	else
+	    *n = 1; /* Large range :	Use 10^k tickmarks
+		     *			But decimate, when there are too many*/
+    }
+}
+
+void GPretty(double *lo, double *up, int *ndiv)
+{
+    GEPretty(lo, up, ndiv);
+}
+
+
+#define SMALL	0.25
+#define RADIUS	0.375
+#define SQRC	0.88622692545275801364		/* sqrt(pi / 4) */
+#define DMDC	1.25331413731550025119		/* sqrt(pi / 4) * sqrt(2) */
+#define TRC0	1.55512030155621416073		/* sqrt(4 * pi/(3 * sqrt(3))) */
+#define TRC1	1.34677368708859836060		/* TRC0 * sqrt(3) / 2 */
+#define TRC2	0.77756015077810708036		/* TRC0 / 2 */
+#define CMAG	1.0				/* Circle magnifier, now defunct */
+#define GSTR_0  dpptr(dd)->scale * dd->dev->cra[1] * 0.5 * dd->dev->ipr[1] * gpptr(dd)->cex
+/* NOTE: This cex is already multiplied with cexbase */
+
+/* Draw one of the R special symbols. */
+void GSymbol(double x, double y, int coords, int pch, pGEDevDesc dd)
+{
+    double size = GConvertYUnits(GSTR_0, INCHES, DEVICE, dd);
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x, &y, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    /*
+     * Force line type LTY_SOLID
+     * i.e., current par(lty) is ignored when drawing symbols
+     */
+    gc.lty = LTY_SOLID;
+    /*
+     * special case for pch = "."
+     */
+    if(pch == 46) size = gpptr(dd)->cex;
+    GESymbol(x, y, pch, size, &gc, dd);
+}
+
+
+/* Draw text in plot margins. */
+void GMtext(const char *str, cetype_t enc, int side, double line, int outer,
+	    double at, int las, double yadj, pGEDevDesc dd)
+{
+/* "las" gives the style of axis labels:
+	 0 = always parallel to the axis [= default],
+	 1 = always horizontal,
+	 2 = always perpendicular to the axis.
+	 3 = always vertical.
+*/
+    double angle, xadj;
+    int coords;
+
+    /* Init to keep -Wall happy: */
+    angle = 0.;
+    coords = 0;
+
+    xadj = gpptr(dd)->adj;	/* ALL cases */
+    if(outer) {
+	switch(side) {
+	case 1:	    coords = OMA1;	break;
+	case 2:	    coords = OMA2;	break;
+	case 3:	    coords = OMA3;	break;
+	case 4:	    coords = OMA4;	break;
+	}
+    }
+    else {
+	switch(side) {
+	case 1:	    coords = MAR1;	break;
+	case 2:	    coords = MAR2;	break;
+	case 3:	    coords = MAR3;	break;
+	case 4:	    coords = MAR4;	break;
+	}
+    }
+    /* Note: I changed gpptr(dd)->yLineBias to 0.3 here. */
+    /* Purely visual tuning. RI */
+    /* This has been replaced by a new argument padj (=yadj here) to axis()
+       and mtext() and that can either be set manually or is determined in
+       a somehow fuzzy manner with respect to current side and las settings.
+       Uwe L.
+    */
+    /* Note from PR#14532:
+       yLineBias is the proportion of line height that is white
+       space. The manipulation of "line" below is pure visual tuning
+       such that when we plot horizontal text on side 1 (or vertical
+       text on side 4) with padj=0 (i.e. text written *above* the
+       specified y-value), it is symmetric w.r.t text written on sides
+       1 and 2 with padj=0.
+    */
+    switch(side) {
+    case 1:
+	if(las == 2 || las == 3) {
+	    angle = 90;
+	}
+	else {
+	    line += (1/gpptr(dd)->mex)*(1 - dd->dev->yLineBias);
+	    angle = 0;
+	}
+	break;
+    case 2:
+	if(las == 1 || las == 2) {
+	    angle = 0;
+	}
+	else {
+	    line += (1/gpptr(dd)->mex)*dd->dev->yLineBias;
+	    angle = 90;
+	}
+	break;
+    case 3:
+	if(las == 2 || las == 3) {
+	    angle = 90;
+	}
+	else {
+	    line += (1/gpptr(dd)->mex)*dd->dev->yLineBias;
+	    angle = 0;
+	}
+	break;
+    case 4:
+	if(las == 1 || las == 2) {
+	    angle = 0;
+	}
+	else {
+	    line += (1/gpptr(dd)->mex)*(1 - dd->dev->yLineBias);
+	    angle = 90;
+	}
+	break;
+    }
+    GText(at, line, coords, str, enc, xadj, yadj, angle, dd);
+}/* GMtext */
+
+/* ------------------------------------------------------------
+   code below here moved from plotmath.c, which said
+
+ *  This source code module:
+ *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
+ *  Copyright (C) 1998-2008  The R Core Team
+
+ */
+
+double GExpressionWidth(SEXP expr, GUnit units, pGEDevDesc dd)
+{
+    R_GE_gcontext gc;
+    double width;
+    gcontextFromGP(&gc, dd);
+    width = GEExpressionWidth(expr, &gc, dd);
+    if (units == DEVICE)
+	return width;
+    else
+	return GConvertXUnits(width, DEVICE, units, dd);
+}
+
+double GExpressionHeight(SEXP expr, GUnit units, pGEDevDesc dd)
+{
+    R_GE_gcontext gc;
+    double height;
+    gcontextFromGP(&gc, dd);
+    height = GEExpressionHeight(expr, &gc, dd);
+    if (units == DEVICE)
+	return height;
+    else
+	return GConvertYUnits(height, DEVICE, units, dd);
+}
+
+/* Comment is NOT true: used in plot.c for strwidth and strheight.
+ *
+ * This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code no longer calls this -- the base
+ * graphics system directly calls the graphics engine for mathematical
+ * annotation (GEMathText)
+ */
+void GMathText(double x, double y, int coords, SEXP expr,
+	       double xc, double yc, double rot,
+	       pGEDevDesc dd)
+{
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
+    GConvert(&x, &y, coords, DEVICE, dd);
+    GClip(dd);
+    GEMathText(x, y, expr, xc, yc, rot, &gc, dd);
+}
+
+void GMMathText(SEXP str, int side, double line, int outer,
+		double at, int las, double yadj, pGEDevDesc dd)
+{
+    int coords = 0;
+    double xadj, angle = 0;
+
+    /* IF font metric information is not available for device */
+    /* then bail out */
+    double ascent, descent, width;
+    GMetricInfo('M', &ascent, &descent, &width, DEVICE, dd);
+    if ((ascent == 0) && (descent == 0) && (width == 0))
+	error(_("Metric information not available for this device"));
+
+    xadj = gpptr(dd)->adj;
+
+    /* This is MOSTLY the same as the same section of GMtext
+     * BUT it differs because it sets different values for yadj for
+     * different situations.
+     * Paul
+     */
+     /* changed to unify behaviour with changes in GMText. Uwe */
+    if(outer) {
+	switch(side) {
+	case 1:	    coords = OMA1;	break;
+	case 2:	    coords = OMA2;	break;
+	case 3:	    coords = OMA3;	break;
+	case 4:	    coords = OMA4;	break;
+	}
+    }
+    else {
+	switch(side) {
+	case 1:	    coords = MAR1;	break;
+	case 2:	    coords = MAR2;	break;
+	case 3:	    coords = MAR3;	break;
+	case 4:	    coords = MAR4;	break;
+	}
+    }
+    switch(side) {
+    case 1:
+	if(las == 2 || las == 3) {
+	    angle = 90;
+	}
+	else {
+	    /*	    line = line + 1 - gpptr(dd)->yLineBias;
+		    angle = 0;
+		    yadj = NA_REAL; */
+	    line += (1/gpptr(dd)->mex)*(1 - dd->dev->yLineBias);
+	    angle = 0;
+	}
+	break;
+    case 2:
+	if(las == 1 || las == 2) {
+	    angle = 0;
+	}
+	else {
+	    /*	    line = line + gpptr(dd)->yLineBias;
+		    angle = 90;
+		    yadj = NA_REAL; */
+	    /* The following line is needed for symmetry with plain text
+	       but changes existing output */
+	    line += (1/gpptr(dd)->mex)*dd->dev->yLineBias;
+	    angle = 90;
+	}
+	break;
+    case 3:
+	if(las == 2 || las == 3) {
+	    angle = 90;
+	}
+	else {
+	    /*   line = line + gpptr(dd)->yLineBias;
+		 angle = 0;
+		 yadj = NA_REAL; */
+	    /* The following line is needed for symmetry with plain text
+	       but changes existing output */
+	    line += (1/gpptr(dd)->mex)*dd->dev->yLineBias;
+	    angle = 0;
+	}
+	break;
+    case 4:
+	if(las == 1 || las == 2) {
+	    angle = 0;
+	}
+	else {
+	    /*   line = line + 1 - gpptr(dd)->yLineBias;
+		 angle = 90;
+		 yadj = NA_REAL; */
+	    line += (1/gpptr(dd)->mex)*(1 - dd->dev->yLineBias);
+	    angle = 90;
+	}
+	break;
+    }
+    GMathText(at, line, coords, str, xadj, yadj, angle, dd);
+}/* GMMathText */
+
+/* -------------------- end of code from plotmath ------------- */

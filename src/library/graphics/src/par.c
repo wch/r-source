@@ -46,11 +46,6 @@
 #include <Rmath.h>
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
 
-static double Log10(double x)
-{
-    return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
-}
-
 
 typedef struct {
     char *name;
@@ -618,8 +613,8 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	else {
 	    R_DEV_2(usr[0]) = REAL(value)[0];
 	    R_DEV_2(usr[1]) = REAL(value)[1];
-	    R_DEV_2(logusr[0]) = Log10(REAL(value)[0]);
-	    R_DEV_2(logusr[1]) = Log10(REAL(value)[1]);
+	    R_DEV_2(logusr[0]) = R_Log10(REAL(value)[0]);
+	    R_DEV_2(logusr[1]) = R_Log10(REAL(value)[1]);
 	}
 	if (gpptr(dd)->ylog) {
 	    R_DEV_2(logusr[2]) = REAL(value)[2];
@@ -630,8 +625,8 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	else {
 	    R_DEV_2(usr[2]) = REAL(value)[2];
 	    R_DEV_2(usr[3]) = REAL(value)[3];
-	    R_DEV_2(logusr[2]) = Log10(REAL(value)[2]);
-	    R_DEV_2(logusr[3]) = Log10(REAL(value)[3]);
+	    R_DEV_2(logusr[2]) = R_Log10(REAL(value)[2]);
+	    R_DEV_2(logusr[3]) = R_Log10(REAL(value)[3]);
 	}
 	/* Reset Mapping and Axis Parameters */
 	GMapWin2Fig(dd);
