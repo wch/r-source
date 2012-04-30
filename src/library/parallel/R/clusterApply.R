@@ -124,23 +124,23 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
     else answer
 }
 
-splitIndices <- function(nx, ncl)
-{
-    i <- seq_len(nx)
-    if (ncl == 1L) i
-    else structure(split(i, cut(i, ncl)), names = NULL)
-}
+## splitIndices <- function(nx, ncl)
+## {
+##     i <- seq_len(nx)
+##     if (ncl == 1L) i
+##     else structure(split(i, cut(i, ncl)), names = NULL)
+## }
 
 # The fuzz used by cut() is too small when nx and ncl are both large
 # and causes some groups to be empty. The definition below avoids that
 # while minimizing changes from the results produced by the definition
 # above.
 splitIndices <- function(nx, ncl) {
-    i <- 1:nx;
-    if (ncl == 1) i
+    i <- 1L:nx
+    if (ncl == 1L || nx == 1L) i
     else {
-        fuzz <- min((nx - 1) / 1000, 0.4 * nx / ncl)
-        breaks <- seq(1 - fuzz, nx + fuzz, length = ncl + 1)
+        fuzz <- min((nx - 1L) / 1000, 0.4 * nx / ncl)
+        breaks <- seq(1 - fuzz, nx + fuzz, length = ncl + 1L)
         structure(split(i, cut(i, breaks)), names = NULL)
     }
 }
