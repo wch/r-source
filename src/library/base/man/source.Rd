@@ -28,9 +28,10 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     of the file or URL to read from.  \code{""} indicates the connection
     \code{\link{stdin}()}.}
   \item{local}{\code{TRUE}, \code{FALSE} or an environment, determining
-    where the parsed expressions are evaluated.  \code{TRUE} corresponds
-    to the user's workspace (the global environment) and \code{FALSE} to
-    the environment from \code{source} is called.}
+    where the parsed expressions are evaluated.  \code{FALSE} (the
+    default) corresponds to the user's workspace (the global
+    environment) and \code{TRUE} to the environment from which
+    \code{source} is called.}
   \item{echo}{logical; if \code{TRUE}, each expression is printed
     after parsing, before evaluation.}
   \item{print.eval}{logical; if \code{TRUE}, the result of

@@ -33,6 +33,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     iser <- seq_len(nser)
     if(rescale) {
         sc <- sqrt(drop(apply(x, 2L, var)))
+        sc[sc == 0] <- 1
         x <- x/rep.int(sc, rep.int(n.used, nser))
     } else sc <- rep.int(1, nser)
 
