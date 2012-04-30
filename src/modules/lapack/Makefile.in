@@ -27,7 +27,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win \
 	Rlapackrc.rc dllversion.rc \
-	$(HEADERS) Lapack.c \
+	$(HEADERS) Lapack.c init_win.c \
 	vecLibg95c.c vecLibg95f.f \
 	cmplx.f \
 	dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f
