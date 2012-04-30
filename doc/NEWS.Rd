@@ -208,6 +208,9 @@
 
       \item On Windows, the \code{Sys.glob()} function didn't handle UNC
       paths as it was designed to try to do. (\PR{14884})
+      
+      \item In package \pkg{parallel}, \code{clusterApply()} and similar
+      failed to handle a (pretty pointless) length-1 argument. (\{PR{14898})
     }
   }
 }
