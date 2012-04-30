@@ -37,6 +37,11 @@
 
 /*--->> Documentation now in  ../include/Rgraphics.h  "API" ----- */
 
+double R_Log10(double x)
+{
+    return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
+}
+
 #if 0
 /*-------------------------------------------------------------------
  *
@@ -93,10 +98,6 @@
  *
  */
 
-double R_Log10(double x)
-{
-    return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
-}
 
 /* In interpreted R, units are as follows:
  *	1 = "user"
