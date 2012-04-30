@@ -27,9 +27,16 @@
 #include "graphics.h"
 #include <R_ext/Rdynload.h>
 
+static const R_CallMethodDef CallEntries[] = {
+    {"C_contourDef", (DL_FUNC) &C_contourDef, 0},
+    {NULL, NULL, 0}
+};
+
+
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_ExternalMethodDef ExtEntries[] = {
+    EXTDEF(C_contour, -1),
     EXTDEF(C_filledcontour, 4),
     EXTDEF(C_image, 4),
     EXTDEF(C_persp, -1),
@@ -64,6 +71,6 @@ static const R_ExternalMethodDef ExtEntries[] = {
 
 void R_init_graphics(DllInfo *dll)
 {
-    R_registerRoutines(dll, NULL, NULL, NULL, ExtEntries);
+    R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
 }

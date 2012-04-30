@@ -1,4 +1,4 @@
-useDynLib(graphics, C_filledcontour, C_image, C_persp,
+useDynLib(graphics, C_contour, C_contourDef, C_filledcontour, C_image, C_persp,
           C_abline, C_arrows, C_axis, C_box, C_clip, C_convertX,
           C_convertY, C_dend, C_dendwindow, C_erase, C_mtext, C_path,
           C_plotXY, C_plot_window, C_polygon, C_raster, C_rect, C_segments,

@@ -857,7 +857,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"layout",	do_layout,	0,	111,	10,	{PP_FUNCALL, PREC_FN,	0}},
 {"locator",	do_locator,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"identify",	do_identify,	0,	211,	8,	{PP_FUNCALL, PREC_FN,	0}},
-{"contour",	do_contour,	0,	11,	12,	{PP_FUNCALL, PREC_FN,	0}},
 {"contourLines",do_contourLines,0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"getSnapshot",	do_getSnapshot,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"playSnapshot",do_playSnapshot,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},

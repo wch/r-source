@@ -318,6 +318,7 @@ SEXP FixupVFont(SEXP vfont) {
     return ans;
 }
 
+
 /* GetTextArg() : extract and possibly set text arguments
  *  ("label", col=, cex=, font=)
  *

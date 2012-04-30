@@ -1177,7 +1177,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /*  Call dynamically loaded "internal" graphics functions
-    .External.graphics (unused) and  .Call.graphics (used in grid).
+    .External.graphics (used in graphics) and  .Call.graphics (used in grid).
 
     If there is an error or user-interrupt in the above
     evaluation, dd->recordGraphics is set to TRUE

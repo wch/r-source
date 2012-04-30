@@ -129,6 +129,16 @@
     }
   }
 
+  \subsection{PACKAGE graphics}{
+    \itemize{
+      \item The C code underlying base graphics is in the process of
+      being migrated to the \pkg{graphics} package (and hence no longer
+      uses \code{.Internal()} calls.  This may require some S4-using
+      packages which captured the old versions of the \R interfaces to
+      be installed.
+    }
+  }
+
   \subsection{PACKAGE parallel}{
     \itemize{
       \item There is a new function \code{mcaffinity()} which allows to

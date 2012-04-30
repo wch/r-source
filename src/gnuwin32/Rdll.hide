@@ -285,9 +285,6 @@
  Rf_DispatchGroup
  Rf_DispatchOrEval
  Rf_EnsureString
- Rf_FixupLty
- Rf_FixupLwd
- Rf_FixupVFont
  Rf_GInit
  Rf_IndexWidth
  Rf_InitArithmetic

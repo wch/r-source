@@ -51,6 +51,7 @@ HEADERS = \
 	RBufferUtils.h Rstrptime.h \
 	arithmetic.h \
 	basedecl.h \
+	contour-common.c \
 	gzio.h \
 	par-common.c \
 	qsort-body.c \

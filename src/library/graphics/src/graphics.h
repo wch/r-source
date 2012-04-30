@@ -25,6 +25,8 @@
 #define _(String) (String)
 #endif
 
+SEXP C_contour(SEXP);
+SEXP C_contourDef(void);
 SEXP C_filledcontour(SEXP);
 SEXP C_image(SEXP);
 SEXP C_persp(SEXP);
