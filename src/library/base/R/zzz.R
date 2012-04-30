@@ -59,6 +59,7 @@ assign(".Fortran",
 assign(".Call", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
 assign(".Call.graphics", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
 assign(".External", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".External2", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
 assign(".External.graphics", function(.NAME, ..., PACKAGE) NULL,
        envir = .ArgsEnv)
 assign(".Internal", function(call) NULL, envir = .ArgsEnv)
