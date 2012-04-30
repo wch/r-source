@@ -760,7 +760,11 @@ static void QuartzCocoa_NewPage(QuartzDesc_t dev,void *userInfo, int flags) {
 static void QuartzCocoa_Sync(QuartzDesc_t dev,void *userInfo) {
     QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
     if (!ci || !ci->view || ci->pdfMode) return;
-    [ci->view setNeedsDisplay: YES];
+    /* we have to force display now, enqueuing it on the event loop
+     * via setNeedsDisplay: YES has issues since dev.flush() won't
+     * be synchronous and thus animation using dev.flush(); dev.hold()
+     * will break by the time the event loop is run */
+    [ci->view display];
 }
 
 static void QuartzCocoa_State(QuartzDesc_t dev, void *userInfo, int state) {

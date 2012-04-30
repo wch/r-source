@@ -211,6 +211,12 @@
       
       \item In package \pkg{parallel}, \code{clusterApply()} and similar
       failed to handle a (pretty pointless) length-1 argument. (\PR{14898})
+      
+      \item Quartz Cocoa display reacted asynchronously to
+      \code{dev.flush()} which means that the redraw could be performed
+      after the plot has been already modified by subsequent code. The
+      redraw is now done synchronously in \code{dev.flush()} to allow
+      animations without sleep cycles.
     }
   }
 }
