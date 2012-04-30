@@ -3248,7 +3248,6 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args)
 	    GErecordGraphicOperation(op, saveans, dd);
 	UNPROTECT(6);
 
-	R_Visible = TRUE;
 	return ans;
     }
 }

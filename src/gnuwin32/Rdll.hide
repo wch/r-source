@@ -386,7 +386,6 @@
  Rf_yylval
  Rf_yynerrs
  Rf_yyparse
- Rg_contourDef
  RgetMDIsize
  RguiCommonHelp
  RguiPackageMenu
@@ -546,6 +545,7 @@
  do_D
  do_D2POSIXlt
  do_External
+ do_External2
  do_Externalgr
  do_ICUset
  do_Math2
@@ -556,7 +556,6 @@
  do_Rprof
  do_Rprofmem
  do_abbrev
- do_abline
  do_abs
  do_addCondHands
  do_addRestart
@@ -585,7 +584,6 @@
  do_attrgets
  do_attributes
  do_attributesgets
- do_axis
  do_baseenv
  do_basename
  do_bcclose
@@ -597,7 +595,6 @@
  do_bndIsLocked
  do_body
  do_bodyCode
- do_box
  do_break
  do_bringtotop
  do_browser
@@ -617,7 +614,6 @@
  do_class
  do_classgets
  do_clearpushback
- do_clip
  do_close
  do_closewinprogressbar
  do_cmathfuns
@@ -631,9 +627,7 @@
  do_compcases
  do_compilepkgs
  do_complex
- do_contour
  do_contourLines
- do_convertXY
  do_countfields
  do_cov
  do_cum
@@ -642,8 +636,6 @@
  do_date
  do_debug
  do_delayed
- do_dend
- do_dendwindow
  do_deparse
  do_deparseRd
  do_deriv
@@ -695,7 +687,6 @@
  do_envirName
  do_envirgets
  do_envprofile
- do_erase
  do_eval
  do_expression
  do_fft
@@ -768,7 +759,6 @@
  do_hsv
  do_iconv
  do_identical
- do_identify
  do_if
  do_importIntoEnv
  do_indexsearch
@@ -799,7 +789,6 @@
  do_isvector
  do_l10n_info
  do_lapply
- do_layout
  do_lazyLoadDBfetch
  do_length
  do_lengthgets
@@ -814,7 +803,6 @@
  do_loadfile
  do_loadhistory
  do_localeconv
- do_locator
  do_lockBnd
  do_lockEnv
  do_log
@@ -856,7 +844,6 @@
  do_modelframe
  do_modelmatrix
  do_msgwindow
- do_mtext
  do_mvfft
  do_names
  do_namesgets
@@ -879,7 +866,6 @@
  do_order
  do_packBits
  do_palette
- do_par
  do_paren
  do_parentenv
  do_parentenvgets
@@ -888,17 +874,12 @@
  do_parseLatex
  do_parseRd
  do_paste
- do_path
  do_pathexpand
  do_pgsub
  do_pipe
  do_playSnapshot
- do_plot_new
- do_plot_window
- do_plot_xy
  do_pmatch
  do_pmin
- do_polygon
  do_polyroot
  do_pos2env
  do_primitive
@@ -921,7 +902,6 @@
  do_range
  do_rank
  do_rapply
- do_raster
  do_rawShift
  do_rawToBits
  do_rawToChar
@@ -939,7 +919,6 @@
  do_readtablehead
  do_recall
  do_recordGraphics
- do_rect
  do_regFinaliz
  do_regNS
  do_regexec
@@ -965,7 +944,6 @@
  do_scan
  do_search
  do_seek
- do_segments
  do_selectlist
  do_seq
  do_seq_along
@@ -1006,12 +984,10 @@
  do_stop
  do_stopHTTPD
  do_storage_mode
- do_strheight
  do_strptime
  do_strsplit
  do_strtoi
  do_strtrim
- do_strwidth
  do_subassign
  do_subassign2
  do_subassign2_dflt
@@ -1028,7 +1004,6 @@
  do_sumconnection
  do_summary
  do_switch
- do_symbols
  do_sys
  do_sysbrowser
  do_syschmod
@@ -1042,11 +1017,9 @@
  do_tempdir
  do_tempfile
  do_termsform
- do_text
  do_textconnection
  do_textconvalue
  do_tilde
- do_title
  do_tolower
  do_trace
  do_tracemem
@@ -1087,7 +1060,6 @@
  do_writechar
  do_writelines
  do_writetable
- do_xspline
  do_xtfrm
  do_zeroin
  do_zeroin2
