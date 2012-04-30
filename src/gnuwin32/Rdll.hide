@@ -43,7 +43,6 @@
  ENC_KNOWN
  EhiWakeUp
  EncodeReal2
- GRecording
  IS_ACTIVE_BINDING
  IS_ASCII
  IS_BYTES
@@ -1116,8 +1115,6 @@
  intpr0_
  invalidate_cached_recodings
  isMethodsDispatchOn
- known_to_be_latin1
- known_to_be_utf8
  latin1locale
  libintl_bind_textdomain_codeset
  libintl_bindtextdomain

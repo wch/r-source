@@ -1737,7 +1737,7 @@ static void invalidError(const char *message, pGEDevDesc dd)
     error(message);
 }
 
-Rboolean attribute_hidden GRecording(SEXP call, pGEDevDesc dd)
+Rboolean GRecording(SEXP call, pGEDevDesc dd)
 {
     return GErecording(call, dd);
 }
