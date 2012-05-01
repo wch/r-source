@@ -102,3 +102,13 @@ Note to Mac OS X users
 NB: these commands did not run correctly on at least one Mac OS X
 installation.  There were problems with the sed scripts used for the
 en@quot translations (in how \n was handled).
+
+
+Subversion note
+===============
+
+If you need to add a en@auot file, the current incantation appears to be
+
+svn add .../en@quot.po@
+
+with a trailing @.
