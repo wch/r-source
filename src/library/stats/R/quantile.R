@@ -48,23 +48,22 @@ quantile.default <-
             lo <- floor(index)
             hi <- ceiling(index)
             x <- sort(x, partial = unique(c(lo, hi)))
-            i <- index > lo
             qs <- x[lo]
-            i <- seq_along(i)[i & !is.na(i)]
-            h <- (index - lo)[i]
-##          qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
-            qs[i] <- ifelse(h == 0, qs[i], (1 - h) * qs[i] + h * x[hi[i]])
+	    i <- which(index > lo)
+	    h <- (index - lo)[i] # > 0	by construction
+##	    qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
+##	    qs[i] <- ifelse(h == 0, qs[i], (1 - h) * qs[i] + h * x[hi[i]])
+	    qs[i] <- (1 - h) * qs[i] + h * x[hi[i]]
         } else {
             if (type <= 3) {
                 ## Types 1, 2 and 3 are discontinuous sample qs.
                 nppm <- if (type == 3) n * probs - .5 # n * probs + m; m = -0.5
                 else n * probs          # m = 0
                 j <- floor(nppm)
-                switch(type,
-                       h <- ifelse(nppm > j, 1, 0), # type 1
-                       h <- ifelse(nppm > j, 1, 0.5), # type 2
-                       h <- ifelse((nppm == j) &
-                                   ((j %% 2L) == 0L), 0, 1)) # type 3
+		h <- switch(type,
+			    (nppm > j),		# type 1
+			    ((nppm > j) + 1)/2, # type 2
+			    (nppm != j) | ((j %% 2L) == 1L)) # type 3
             } else {
                 ## Types 4 through 9 are continuous sample qs.
                 switch(type - 3,
@@ -79,7 +78,7 @@ quantile.default <-
                 nppm <- a + probs * (n + 1 - a - b) # n*probs + m
                 j <- floor(nppm + fuzz) # m = a + probs*(1 - a - b)
                 h <- nppm - j
-                h <- ifelse(abs(h) < fuzz, 0, h)
+                if(any(sml <- abs(h) < fuzz)) h[sml] <- 0
             }
             x <- sort(x, partial =
                       unique(c(1, j[j>0L & j<=n], (j+1)[j>0L & j<n], n))
@@ -90,7 +89,7 @@ quantile.default <-
             ## also h*x might be invalid ... e.g. Dates and ordered factors
             qs <- x[j+2L]
             qs[h == 1] <- x[j+3L][h == 1]
-            other <- (h > 0) & (h < 1)
+            other <- (0 < h) & (h < 1)
             if(any(other)) qs[other] <- ((1-h)*x[j+2L] + h*x[j+3L])[other]
         }
     } else {
