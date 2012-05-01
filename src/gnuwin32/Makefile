@@ -144,6 +144,7 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
+## FIXME: Rdll.hide has decoration which 64-bit build lack
 R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 	@$(ECHO) EXPORTS > R.def
 	@$(NM) $^ | $(SED) -n  $(SYMPAT)  | $(SORT) | uniq > R0.def
