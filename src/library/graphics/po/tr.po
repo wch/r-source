@@ -1,0 +1,601 @@
+# Turkish translations for R package
+# R paketi için Türkçe çeviriler.
+# Copyright (C) 2010 The R Foundation
+# This file is distributed under the same license as the R package.
+#
+# Murat Alkan <muratalk@gmail.com>, 2010, 2011.
+# Özlem Alpu <ozlem.alpu@gmail.com>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.13.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2012-05-01 07:06+0100\n"
+"PO-Revision-Date: 2011-04-02 18:24+0200\n"
+"Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
+"Language-Team: Turkish <muratalk@gmail.com>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: base.c:295
+msgid "Event GE_ScalePS requires a single numeric value"
+msgstr "GE_Scaleps olayı bir tekil sayısal veri gerektirir"
+
+#: graphics.c:289
+#, c-format
+msgid "bad units specified in '%s'"
+msgstr "'%s' içinde hatalı birimler seçildi"
+
+#: graphics.c:1778 graphics.c:1800
+msgid "attempt to plot on null device"
+msgstr "boş aygıtta grafik denemesi"
+
+#: graphics.c:1830
+msgid "outer margins too large (fig.region too small)"
+msgstr "dış sınırlar çok geniş (şekil sınırı çok küçük)"
+
+#: graphics.c:1832
+msgid "figure region too large"
+msgstr "şekil bölgesi çok geniş"
+
+#: graphics.c:1834
+msgid "figure margins too large"
+msgstr "şekil sınırları çok geniş"
+
+#: graphics.c:1836
+msgid "plot region too large"
+msgstr "grafik bölgesi çok geniş"
+
+#: graphics.c:1883
+#, c-format
+msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+msgstr "%4.0f * EPS değerlerinin göreceli aralığı küçük (eksen %d)"
+
+#: graphics.c:1935
+#, c-format
+msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
+msgstr "sonlu olmayan eksen sınırları [GScale(%g,%g,%d, .); log=%d]"
+
+#: graphics.c:1965
+#, c-format
+msgid "axis style \"%c\" unimplemented"
+msgstr "eksen biçimi \"%c\" tanımlanmamış"
+
+#: graphics.c:2204 graphics.c:2562
+msgid "No graphics device is active"
+msgstr "Hiç bir grafik aygıtı aktif değil"
+
+#: graphics.c:2399
+msgid "plot.new has not been called yet"
+msgstr "plot.new henüz çağırılmadı"
+
+#: graphics.c:2401
+msgid "invalid graphics state"
+msgstr "geçersiz grafik durumu"
+
+#: graphics.c:2801 graphics.c:2837
+msgid "unable to allocate memory (in GPolygon)"
+msgstr "hafıza ayrılamıyor (GPolygon içinde)"
+
+#: graphics.c:3021
+msgid "zero-length arrow is of indeterminate angle and so skipped"
+msgstr "belirsiz açıda sıfır uzunlukta ok, atlandı"
+
+#: graphics.c:3102
+#, c-format
+msgid "invalid par(\"bty\") = '%c'; no box() drawn"
+msgstr "geçersiz par(\"bty\") = '%c'; box() çizilmedi"
+
+#: graphics.c:3119
+msgid "invalid argument to GBox"
+msgstr "GBox a geçersiz argüman"
+
+#: graphics.c:3364
+msgid "Metric information not available for this device"
+msgstr "Bu aygıtta metrik bilgisi bulunmuyor"
+
+#: par.c:158
+#, c-format
+msgid "invalid value specified for graphical parameter \"%s\""
+msgstr "grafiksel parametre \"%s\" için geçersiz değer berlirlendi"
+
+#: par.c:165
+#, c-format
+msgid "graphical parameter \"%s\" has the wrong length"
+msgstr "grafiksel parametre \"%s\" yanlış uzunlukta"
+
+#: par.c:260 par.c:695
+#, c-format
+msgid "graphical parameter \"%s\" cannot be set"
+msgstr "grafiksel parametre \"%s\" belirlenemez"
+
+#: par.c:328 par.c:723
+msgid "graphical parameter 'family' has a maximum length of 200 bytes"
+msgstr "grafiksel parametre 'family' 200 bayt üst sınırına sahip"
+
+#: par.c:457
+msgid "parameter \"mfg\" has the wrong length"
+msgstr "\"mfg\" parametresi yanlış uzunlukta"
+
+#: par.c:465
+msgid "parameter \"i\" in \"mfg\" is out of range"
+msgstr "\"mfg\" içindeki \"i\" parametresi sınırlar dışında"
+
+#: par.c:467
+msgid "parameter \"j\" in \"mfg\" is out of range"
+msgstr "\"mfg\" içindeki \"j\" parametresi sınırlar dışında"
+
+#: par.c:472
+msgid "value of nr in \"mfg\" is wrong and will be ignored"
+msgstr "\"mfg\" içindeki nr değeri yanlış, görmezden gelinecek"
+
+#: par.c:474
+msgid "value of nc in \"mfg\" is wrong and will be ignored"
+msgstr "\"mfg\" içindeki nc değeri yanlış, görmezden gelinecek"
+
+#: par.c:500
+msgid "calling par(new=TRUE) with no plot"
+msgstr "çizim olmadan par(new=TRUE) çağırılıyor"
+
+#: par.c:687 par.c:1104
+#, c-format
+msgid "graphical parameter \"%s\" is obsolete"
+msgstr "grafiksel parametre \"%s\" çok eski"
+
+#: par.c:691 par.c:1108
+#, c-format
+msgid "\"%s\" is not a graphical parameter"
+msgstr "\"%s\" bir grafiksel parametre değil"
+
+#: par.c:1161
+msgid "invalid argument passed to par()"
+msgstr "par()'a geçersiz bir argüman geçirildi"
+
+#: par.c:1205
+#, c-format
+msgid "too many rows in layout, limit %d"
+msgstr "yerleşimde çok fazla sütun var, sınır %d"
+
+#: par.c:1211
+#, c-format
+msgid "too many columns in layout, limit %d"
+msgstr "yerleşimde çok fazla dize var, sınır %d"
+
+#: par.c:1213
+#, c-format
+msgid "too many cells in layout, limit %d"
+msgstr "yerleşimde çok fazla hücre var, sınır %d"
+
+#: plot.c:118
+msgid "only NA allowed in logical plotting symbol"
+msgstr "mantıksal grafik çizme sembolünde sadece NA'ya izni veriliyor"
+
+#: plot.c:120
+msgid "invalid plotting symbol"
+msgstr "geçersiz grafik sembolü"
+
+#: plot.c:209
+msgid "invalid font specification"
+msgstr "geçersiz yazıtipi özelliği"
+
+#: plot.c:268 plot.c:282 plot.c:473 plot.c:478 plot.c:2101 plot.c:2108
+#: plot.c:3125 plot.c:3127 plot.c:3129 plot.c:3281 plot3d.c:1166 plot3d.c:1170
+#: plot3d.c:1172 plot3d.c:1911
+#, c-format
+msgid "invalid '%s' value"
+msgstr "geçersiz '%s' değeri"
+
+#: plot.c:285
+msgid "invalid 'vfont' value [typeface]"
+msgstr "geçersiz 'vfont' değeri [typeface]"
+
+#: plot.c:309
+#, c-format
+msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
+msgstr "geçersiz 'vfont' değeri [typeface = %d, fontindex = %d]"
+
+#: plot.c:383
+msgid "invalid graphics parameter"
+msgstr "geçersiz grafik parametresi"
+
+#: plot.c:469
+msgid "at least 3 arguments required"
+msgstr "en az 3 argüman gereklidir"
+
+#: plot.c:484
+msgid "\"log=\" specification must be character"
+msgstr "\"log=\" özelliği karakter olmalıdır"
+
+#: plot.c:495
+#, c-format
+msgid "invalid \"log=%s\" specification"
+msgstr "geçersiz \"log=%s\" özelliği"
+
+#: plot.c:510
+msgid "NAs not allowed in 'xlim'"
+msgstr "NAs a 'xlim' izin verilmiyor"
+
+#: plot.c:516
+msgid "need finite 'xlim' values"
+msgstr "sonlu 'xlim' değerleri gerekli"
+
+#: plot.c:522
+msgid "NAs not allowed in 'ylim'"
+msgstr "NAs a 'ylim' izin verilmiyor"
+
+#: plot.c:528
+msgid "need finite 'ylim' values"
+msgstr "sonlu 'ylim' değerleri gerekli"
+
+#: plot.c:534
+msgid "Logarithmic axis must have positive limits"
+msgstr "Logaritmik eksen pozitif limitlere sahip olmalıdır"
+
+#: plot.c:656
+msgid "invalid type for axis labels"
+msgstr "eksen etiketleri için geçersiz yazım"
+
+#: plot.c:757 plot.c:1290 plot.c:1611 plot.c:1676 plot.c:1751 plot.c:1817
+#: plot.c:1890 plot.c:1985 plot.c:2061 plot.c:2339 plot.c:2513 plot.c:2729
+#: plot.c:3263 plot.c:3390 plot.c:3466 plot.c:3632 plot.c:3912 plot3d.c:1875
+msgid "too few arguments"
+msgstr "çok az argüman"
+
+#: plot.c:768
+#, c-format
+msgid "invalid axis number %d"
+msgstr "geçersiz eksen numarası %d"
+
+#: plot.c:858
+msgid "'hadj' must be of length one"
+msgstr "'hadj' bir birim uzunluğunda olmalıdır"
+
+#: plot.c:865 plot.c:2392
+msgid "zero length 'padj' specified"
+msgstr "sıfır birim uzunlukta 'padj' seçildi"
+
+#: plot.c:934
+msgid "'labels' is supplied and not 'at'"
+msgstr "'labels' verildi ama 'at verilmedi"
+
+#: plot.c:938
+#, c-format
+msgid "'at' and 'labels' lengths differ, %d != %d"
+msgstr "'at' ve 'labels' uzunlukları farklı, %d != %d"
+
+#: plot.c:955
+msgid "no locations are finite"
+msgstr "hiçbir bölge sonlu değil"
+
+#: plot.c:1306
+msgid "invalid plotting structure"
+msgstr "geçersiz grafik yapısı"
+
+#: plot.c:1308
+#, c-format
+msgid "'x' and 'y' lengths differ in %s()"
+msgstr "%s() içinde 'x' ve 'y' uzunlukları farklı "
+
+#: plot.c:1319
+#, c-format
+msgid "plot type '%s' will be truncated to first character"
+msgstr "çizim tipi '%s' in ilk karakteri kullanılacak"
+
+#: plot.c:1323 plot.c:2990
+msgid "invalid plot type"
+msgstr "geçersiz grafik tipi"
+
+#: plot.c:1523
+#, c-format
+msgid "invalid plot type '%c'"
+msgstr "geçersiz grafik tipi '%c'"
+
+#: plot.c:1566
+msgid "invalid first argument"
+msgstr "geçersiz ilk argüman"
+
+#: plot.c:1573
+msgid "invalid second argument"
+msgstr "geçeriz ikinci argüman"
+
+#: plot.c:1581
+msgid "invalid third argument"
+msgstr "geçersiz üçüncü argüman"
+
+#: plot.c:1589
+msgid "invalid fourth argument"
+msgstr "geçersiz dördüncü argüman"
+
+#: plot.c:1597
+msgid "cannot mix zero-length and non-zero-length coordinates"
+msgstr ""
+"sıfır uzunlukta ve sıfır olmayan uzunluktaki koordinatlar karıştırılamadı"
+
+#: plot.c:1780
+msgid "unable to allocate memory (in GPath)"
+msgstr "bellek ayrılamadı (GPath de) "
+
+#: plot.c:1786
+msgid "invalid x or y (in GPath)"
+msgstr "geçersiz x veya y (GPath de)"
+
+#: plot.c:1903
+msgid "invalid arrow head length"
+msgstr "geçersiz ok başı uzunluğu"
+
+#: plot.c:1908
+msgid "invalid arrow head angle"
+msgstr "geçersiz ok başı açısı"
+
+#: plot.c:1913
+msgid "invalid arrow head specification"
+msgstr "geçersiz ok başı özelliği"
+
+#: plot.c:2073 plot.c:3132
+msgid "zero length 'labels'"
+msgstr "sıfır birim uzunlukta 'labels'"
+
+#: plot.c:2147
+msgid "no coordinates were supplied"
+msgstr "koordinat girilmedi"
+
+#: plot.c:2350
+msgid "zero length 'text' specified"
+msgstr "sıfır birim uzunlukta 'text' belirlendi"
+
+#: plot.c:2356
+msgid "zero length 'side' specified"
+msgstr "sıfır birim uzunlukta 'side' belirlendi"
+
+#: plot.c:2363
+msgid "zero length 'line' specified"
+msgstr "sıfır birim uzunlukta 'line' belirlendi"
+
+#: plot.c:2371
+msgid "zero length 'outer' specified"
+msgstr "sıfır birim uzunlukta 'outer' belirlendi"
+
+#: plot.c:2378
+msgid "zero length 'at' specified"
+msgstr "sıfır birim uzunluğunda 'at' belirlendi"
+
+#: plot.c:2385
+msgid "zero length 'adj' specified"
+msgstr "sıfır birim uzunluğunda 'adj' belirlendi"
+
+#: plot.c:2399
+msgid "zero length 'cex' specified"
+msgstr "sıfır birim uzunluğu 'cex' belirlendi"
+
+#: plot.c:2407
+msgid "zero length 'col' specified"
+msgstr "sıfır birim uzunluğu 'col' belirlendi"
+
+#: plot.c:2414
+msgid "zero length 'font' specified"
+msgstr "sıfır birim uzunluğunda 'font' belirlendi"
+
+#: plot.c:2770
+msgid "invalid a=, b= specification"
+msgstr "geçersiz a=, b= belirlemesi"
+
+#: plot.c:2779
+msgid "'a' and 'b' must be finite"
+msgstr "'a' ve 'b' sonlu olmalıdır"
+
+#: plot.c:2914 plot.c:4032 plot.c:4036 plot.c:4039 plot.c:4059 plot.c:4063
+#: plot.c:4066 plot3d.c:1088 plot3d.c:1092 plot3d.c:1097 plot3d.c:1101
+#: plot3d.c:1105 plot3d.c:1109
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "hatalı '%s' argümanı"
+
+#: plot.c:2985
+msgid "invalid number of points in locator()"
+msgstr "locator() içinde geçersiz nokta sayısı"
+
+#: plot.c:3121
+msgid "invalid number of points in identify()"
+msgstr "identify() içinde geçersiz nokta sayısı"
+
+#: plot.c:3123
+msgid "incorrect argument type"
+msgstr "hatalı argüman yazımı"
+
+#: plot.c:3135
+msgid "different argument lengths"
+msgstr "farklı argüman uzunlukları"
+
+#: plot.c:3137
+msgid "more 'labels' than points"
+msgstr "noktalardan çok 'labels'"
+
+#: plot.c:3186
+#, c-format
+msgid "warning: no point within %.2f inches\n"
+msgstr "uyarı: %.2f inç içinde nokta yok\n"
+
+#: plot.c:3192
+msgid "warning: nearest point already identified\n"
+msgstr "uyarı: en yakın nokta zaten zaten tanımlanmış\n"
+
+#: plot.c:3274
+msgid "invalid units"
+msgstr "geçersiz birimler"
+
+#: plot.c:3450 plot.c:3557
+msgid "invalid dendrogram input"
+msgstr "geçersiz dendrogram girişi"
+
+#: plot.c:3614
+msgid "invalid symbol parameter vector"
+msgstr "geçersiz sembol parametre vektörü"
+
+#: plot.c:3637
+msgid "invalid symbol coordinates"
+msgstr "geçersiz sembol koordinatları"
+
+#: plot.c:3645
+msgid "x/y/parameter length mismatch"
+msgstr "x/y/parametre uzunluğu uyumsuzluğu"
+
+#: plot.c:3664
+msgid "invalid circles data"
+msgstr "geçersiz daire verisi"
+
+#: plot.c:3666 plot.c:3687 plot.c:3712 plot.c:3742
+msgid "invalid symbol parameter"
+msgstr "geçersiz sembol parametresi"
+
+#: plot.c:3685
+msgid "invalid squares data"
+msgstr "geçersiz kare verisi"
+
+#: plot.c:3710
+msgid "invalid rectangles data (need 2 columns)"
+msgstr "geçersiz dikdörtgen verisi (2 sütun gerekli)"
+
+#: plot.c:3740
+msgid "invalid stars data"
+msgstr "geçersiz yıldız verisi"
+
+#: plot.c:3782
+msgid "invalid thermometers data (need 3 or 4 columns)"
+msgstr "geçersiz termometre verisi (3 veya 4 sütun gerekli)"
+
+#: plot.c:3785
+#, c-format
+msgid "invalid thermometers[,%s]"
+msgstr "geçersiz thermometers[,%s]"
+
+#: plot.c:3788
+#, c-format
+msgid "thermometers[,%s] not in [0,1] -- may look funny"
+msgstr "thermometers[,%s] [0,1] içide değil -- komik görünebilir"
+
+#: plot.c:3791
+msgid "invalid thermometers[,1:2]"
+msgstr "geçersiz thermometers[,1:2]"
+
+#: plot.c:3830
+msgid "invalid boxplots data (need 5 columns)"
+msgstr "geçersiz kutu bıyık grafiği verisi (6 sütun gerekli)"
+
+#: plot.c:3839
+msgid "boxplots[,5] outside [0,1] -- may look funny"
+msgstr "boxplots[,5] [0,1] dışında -- komik görünebilir"
+
+#: plot.c:3841
+msgid "invalid boxplots[, 1:4]"
+msgstr "geçersiz boxplots[, 1:4]"
+
+#: plot.c:3887
+msgid "invalid symbol type"
+msgstr "geçersiz sembol tipi"
+
+#: plot.c:3925 plot.c:3927 plot.c:3932 plot.c:3934
+#, c-format
+msgid "incorrect length for '%s' argument"
+msgstr "'%s' argümanı için hatalı uzunluk"
+
+#: plot.c:3951
+#, fuzzy
+msgid "unable to allocate memory (in xspline)"
+msgstr "bellek ayrılamadı (do_xspline içinde)"
+
+#: plot3d.c:196 plot3d.c:1937
+msgid "insufficient 'x' or 'y' values"
+msgstr "yetersiz 'x' veya 'y' değerleri"
+
+#: plot3d.c:199 plot3d.c:1940
+msgid "dimension mismatch"
+msgstr "boyut uyumsuzluğu"
+
+#: plot3d.c:202 plot3d.c:1943
+msgid "no contour values"
+msgstr "çevre değeri yok"
+
+#: plot3d.c:264
+msgid "invalid x / y values or limits"
+msgstr "geçersiz x / y değerleri veya sınırları"
+
+#: plot3d.c:266
+msgid "invalid contour levels: must be strictly increasing"
+msgstr "geçersiz çevre seviyeleri: kesinlikle artan olmalı"
+
+#: plot3d.c:1052 plot3d.c:1065
+msgid "Axis orientation not calculated"
+msgstr "Eksen yönelimi hesaplanmadı"
+
+#: plot3d.c:1085
+msgid "too few parameters"
+msgstr "çok az parametre"
+
+#: plot3d.c:1115
+msgid "invalid 'x' limits"
+msgstr "geçersiz 'x' sınırları"
+
+#: plot3d.c:1117
+msgid "invalid 'y' limits"
+msgstr "geçersiz 'y' sınırları"
+
+#: plot3d.c:1119
+msgid "invalid 'z' limits"
+msgstr "geçersiz 'z' sınırları"
+
+#: plot3d.c:1140
+msgid "'xlab' must be a character vector of length 1"
+msgstr "'xlab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
+
+#: plot3d.c:1142
+msgid "'ylab' must be a character vector of length 1"
+msgstr "'ylab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
+
+#: plot3d.c:1144
+msgid "'zlab' must be a character vector of length 1"
+msgstr "'zlab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
+
+#: plot3d.c:1164
+msgid "invalid viewing parameters"
+msgstr "geçersiz görüntüleme parametreleri"
+
+#: plot3d.c:1182 plot3d.c:1186
+#, c-format
+msgid "invalid '%s' specification"
+msgstr "geçersiz '%s' tanımlaması"
+
+#: plot3d.c:1532
+#, fuzzy, c-format
+msgid "contour(): circular/long seglist -- set %s > %d?"
+msgstr "contour(): dairesel/uzun seglist -- bug.report()!"
+
+#: plot3d.c:1947
+msgid "missing 'x' values"
+msgstr "eksik 'x' değerleri"
+
+#: plot3d.c:1949
+msgid "increasing 'x' values expected"
+msgstr "artan 'x' değerleri beklendi"
+
+#: plot3d.c:1954
+msgid "missing 'y' values"
+msgstr "eksik 'y' değerleri"
+
+#: plot3d.c:1956
+msgid "increasing 'y' values expected"
+msgstr "artan 'y' değeri beklendi"
+
+#: plot3d.c:1961
+msgid "invalid NA contour values"
+msgstr "geçersiz NA çevre değerleri"
+
+#: plot3d.c:1973
+msgid "all z values are equal"
+msgstr "tüm z değerleri eşit"
+
+#: plot3d.c:1975
+msgid "all z values are NA"
+msgstr "tüm z değerleri NA"
