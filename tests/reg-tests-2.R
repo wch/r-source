@@ -707,8 +707,11 @@ options(oldcon)
 
 
 ## quantile extremes, MM 13 Apr 2000 and PR#1852
-for(k in 0:5)
-    print(quantile(c(rep(-Inf,k+1), 0:k, rep(Inf, k)), pr=seq(0,1, .1)))
+(qq <- sapply(0:5, function(k) {
+    x <- c(rep(-Inf,k+1), 0:k, rep(Inf, k))
+    sapply(1:9, function(typ)
+           quantile(x, pr=(2:10)/10, type=typ))
+}, simplify="array"))
 x <- c(-Inf, -Inf, Inf, Inf)
 median(x)
 quantile(x)
