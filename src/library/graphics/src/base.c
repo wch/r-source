@@ -34,6 +34,8 @@
 extern int baseRegisterIndex;
 
 static R_INLINE GPar* dpSavedptr(pGEDevDesc dd) {
+    if (baseRegisterIndex == -1)
+	error(_("no base graphics system is registered"));
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     return &(bss->dpSaved);
 }
@@ -309,22 +311,30 @@ registerBase(void) {
 void
 unregisterBase(void) {
     GEunregisterSystem(baseRegisterIndex);
+    baseRegisterIndex = -1;   
 }
 
 /* FIXME: Make this a macro to avoid function call overhead?
    Inline it if you really think it matters.
  */
 GPar* gpptr(pGEDevDesc dd) {
+    if (baseRegisterIndex == -1)
+	error(_("the base graphics system is not registered"));
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     return &(bss->gp);
 }
 
 GPar* dpptr(pGEDevDesc dd) {
+    if (baseRegisterIndex == -1)
+	error(_("the base graphics system is not registered"));
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     return &(bss->dp);
 }
 
+/* called in GNewPlot to mark device as 'dirty' */
 void Rf_setBaseDevice(Rboolean val, pGEDevDesc dd) {
+    if (baseRegisterIndex == -1)
+	error(_("the base graphics system is not registered"));
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     bss->baseDevice = val;
 }

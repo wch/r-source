@@ -341,6 +341,8 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* This is in package grDevices, but mixes up the base graphics concept
+   of a background colour */
 SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
@@ -388,7 +390,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
 	    if (col == BG_NEEDED)
 	    	col = bg = dpptr(GEcurrentDevice())->bg;
-	    icol = (unsigned int)col;
+	    icol = (unsigned int) col;
 	    INTEGER(ans)[i4 +0] = R_RED(icol);
 	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
 	    INTEGER(ans)[i4 +2] = R_BLUE(icol);
@@ -398,11 +400,11 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = INTEGER(colors)[i];
 	    if      (col == NA_INTEGER) col = R_TRANWHITE;
-	    else if (col == 0)          col = bg;
-	    else 		        col = R_ColorTable[(unsigned int)(col-1) % R_ColorTableSize];
+	    else if (col == 0) col = bg;
+	    else col = R_ColorTable[(unsigned int)(col-1) % R_ColorTableSize];
 	    if (col == BG_NEEDED)
 	    	col = bg = dpptr(GEcurrentDevice())->bg;
-	    icol = (unsigned int)col;
+	    icol = (unsigned int) col;
 	    INTEGER(ans)[i4 +0] = R_RED(icol);
 	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
 	    INTEGER(ans)[i4 +2] = R_BLUE(icol);

@@ -39,6 +39,8 @@
 int baseRegisterIndex = -1;
 
 GPar* dpptr(pGEDevDesc dd) {
+    if (baseRegisterIndex == -1)
+	error(_("the base graphics system is not registered"));
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     return &(bss->dp);
 }
@@ -356,7 +358,10 @@ void KillAllDevices(void)
      * but this is a good proxy for now.
      */
     // unregisterBase();
-    GEunregisterSystem(baseRegisterIndex);
+    if (baseRegisterIndex != -1) {
+	GEunregisterSystem(baseRegisterIndex);
+	baseRegisterIndex = -1; 
+    }
 }
 
 
