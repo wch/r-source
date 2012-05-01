@@ -55,6 +55,9 @@
       
       \item On Windows, the C stack size has been increased to 64MB (it
       has been 10MB since the days of 32MB RAM systems).
+      
+      \item Matrix indexing of dataframes by two column numeric indices 
+      is now supported for replacement as well as extraction.
     }
   }
 

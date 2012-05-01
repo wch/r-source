@@ -46,14 +46,14 @@
 }
 \details{
   Data frames can be indexed in several modes.  When \code{[} and
-  \code{[[} are used with a single index (\code{x[i]} or \code{x[[i]]}),
-  they index the data frame as if it were a list.  In this usage a
-  \code{drop} argument is ignored, with a warning.
+  \code{[[} are used with a single vector index (\code{x[i]} or 
+  \code{x[[i]]}), they index the data frame as if it were a list.  In
+  this usage a \code{drop} argument is ignored, with a warning.
 
-  Note that there is no \code{data.frame} method for \code{$}, so
-  \code{x$name} uses the default method which treats \code{x} as a
-  list.  There is a replacement method which checks \code{value} for
-  the correct number of rows, and replicates it if necessary.
+  There is no \code{data.frame} method for \code{$}, so \code{x$name}
+  uses the default method which treats \code{x} as a list.  There is a
+  replacement method which checks \code{value} for the correct number
+  of rows, and replicates it if necessary.
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
   and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can
@@ -89,10 +89,11 @@
   columns to be deleted.  (See the Examples.)
 
   Matrix indexing (\code{x[i]} with a logical or a 2-column integer
-  matrix \code{i}) using \code{[} is not recommended, and barely
-  supported.  For extraction, \code{x} is first coerced to a matrix.
-  For replacement, a logical matrix (only) can be used to select the
-  elements to be replaced in the same way as for a matrix.
+  matrix \code{i}) using \code{[} is not recommended.  For extraction,
+  \code{x} is first coerced to a matrix. For replacement, logical
+  matrix indices must be of the same dimension as \code{x}.
+  Replacements are done one column at a time, with multiple type
+  coercions possibly taking place.
 
   Both \code{[} and \code{[[} extraction methods partially match row
   names.  By default neither partially match column names, but

@@ -697,7 +697,15 @@ data.frame <-
             if(is.null(value)) return(x[logical()])
         } else { # case df[ind]
             ## really ambiguous, but follow common use as if list
-            ## except for a full-sized logical matrix
+            ## except for two column numeric matrix or full-sized logical matrix
+            if(is.numeric(i) && is.matrix(i) && ncol(i) == 2) {
+                # Rewrite i as a logical index
+                index <- rep(FALSE, prod(dim(x)))
+                dim(index) <- dim(x)
+                tryCatch(index[i] <- TRUE, 
+                         error = function(e) stop(conditionMessage(e), call.=FALSE))
+                i <- index
+            }
             if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {
                 nreplace <- sum(i, na.rm=TRUE)
                 if(!nreplace) return(x) # nothing to replace
@@ -706,7 +714,7 @@ data.frame <-
                 if(N > 1L && N < nreplace && (nreplace %% N) == 0L)
                     value <- rep(value, length.out = nreplace)
                 if(N > 1L && (length(value) != nreplace))
-                    stop("rhs is the wrong length for indexing by a logical matrix")
+                    stop("rhs is the wrong length")
                 n <- 0L
                 nv <- nrow(x)
                 for(v in seq_len(dim(i)[2L])) {
@@ -723,7 +731,7 @@ data.frame <-
                 return(x)
             }  # end of logical matrix
             if(is.matrix(i))
-                stop("only logical matrix subscripts are allowed in replacement")
+                stop("illegal matrix index in replacement")
             j <- i
             i <- NULL
             has.i <- FALSE
