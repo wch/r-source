@@ -24,7 +24,6 @@ src/main/apply.c
 src/main/arithmetic.c
 src/main/array.c
 src/main/attrib.c
-src/main/base.c
 src/main/bind.c
 src/main/builtin.c
 src/main/character.c
@@ -77,7 +76,7 @@ src/main/par-common.c
 src/main/par.c
 src/main/paste.c
 src/main/platform.c
-src/main/plot.c
+#src/main/plot.c
 src/main/plot3d.c
 src/main/plotmath.c
 src/main/print.c

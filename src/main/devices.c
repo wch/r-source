@@ -33,10 +33,15 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-//#include <GraphicsBase.h> /* registerBase */
+#include <GraphicsBase.h> 
 #include <R_ext/GraphicsEngine.h>
 
-int attribute_hidden baseRegisterIndex = -1;
+int baseRegisterIndex = -1;
+
+GPar* dpptr(pGEDevDesc dd) {
+    baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+    return &(bss->dp);
+}
 
 static SEXP R_INLINE getSymbolValue(SEXP symbol)
 {
