@@ -15,8 +15,8 @@
  BZ2_bzReadGetUnused@16
  BZ2_bzReadOpen@24
  BZ2_bzWrite@16
- BZ2_bzWriteClose@20
  BZ2_bzWriteClose64@28
+ BZ2_bzWriteClose@20
  BZ2_bzWriteOpen@20
  BZ2_bz__AssertH__fail
  BZ2_bzclose@4
