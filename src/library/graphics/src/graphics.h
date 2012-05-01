@@ -62,3 +62,6 @@ SEXP C_par(SEXP call, SEXP op, SEXP args);
 SEXP C_plot_new(SEXP call, SEXP op, SEXP args);
 SEXP C_locator(SEXP call, SEXP op, SEXP args);
 SEXP C_identify(SEXP call, SEXP op, SEXP args);
+
+void registerBase(void);
+void unregisterBase(void);

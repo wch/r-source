@@ -32,6 +32,11 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
+static R_CMethodDef CEntries [] = {
+    {"unregisterBase", (DL_FUNC) unregisterBase, 0},
+    {NULL, NULL, 0}
+};
+
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
@@ -81,6 +86,7 @@ __attribute__ ((visibility ("default")))
 #endif
 R_init_graphics(DllInfo *dll)
 {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
+    R_registerRoutines(dll, CEntries, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
+    registerBase();
 }

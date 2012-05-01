@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-8   The R Core Team.
+ *  Copyright (C) 2001-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@
 #include <Colors.h>
 #include <GraphicsBase.h>
 
-int attribute_hidden baseRegisterIndex = -1;
+/* From src/main/devices.c */
+extern int baseRegisterIndex;
 
 static R_INLINE GPar* dpSavedptr(pGEDevDesc dd) {
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
@@ -300,16 +301,15 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 
 /* (un)Register the base graphics system with the graphics engine
  */
-void attribute_hidden
+void
 registerBase(void) {
     GEregisterSystem(baseCallback, &baseRegisterIndex);
 }
 
-void attribute_hidden
+void
 unregisterBase(void) {
     GEunregisterSystem(baseRegisterIndex);
 }
-
 
 /* FIXME: Make this a macro to avoid function call overhead?
    Inline it if you really think it matters.

@@ -33,7 +33,10 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <GraphicsBase.h> /* registerBase */
+//#include <GraphicsBase.h> /* registerBase */
+#include <R_ext/GraphicsEngine.h>
+
+int attribute_hidden baseRegisterIndex = -1;
 
 static SEXP R_INLINE getSymbolValue(SEXP symbol)
 {
@@ -347,7 +350,8 @@ void KillAllDevices(void)
     /* FIXME: There should really be a formal graphics finaliser
      * but this is a good proxy for now.
      */
-    unregisterBase();
+    // unregisterBase();
+    GEunregisterSystem(baseRegisterIndex);
 }
 
 
@@ -553,7 +557,7 @@ void attribute_hidden InitGraphics(void)
 
     /* Register the base graphics system with the graphics engine
      */
-    registerBase();
+    // registerBase();
 }
 
 

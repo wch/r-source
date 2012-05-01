@@ -42,7 +42,6 @@ double R_Log10(double x)
     return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
 
-#if 0
 /*-------------------------------------------------------------------
  *
  *  TRANSFORMATIONS
@@ -1690,7 +1689,6 @@ void GReset(pGEDevDesc dd)
     /* Recompute Mappings */
     mapping(dd, 0);
 }
-#endif
 
 /*  Is the figure region too big ? */
 
@@ -1854,7 +1852,7 @@ pGEDevDesc GNewPlot(Rboolean recording)
 #undef G_ERR_MSG
 
 #if 0
-// used in GScale(), but also ../library/grDevices/src/axis_scales.c :
+/* in src/main/graphics.c */
 // (usr, log, n_inp) |--> (axp, n_out) :
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 {
@@ -2059,7 +2057,6 @@ void GSetupAxis(int axis, pGEDevDesc dd)
  */
 
 
-#if 0
 /* Set default graphics parameter values in a GPar.
  * This initialises the plot state, plus the graphical
  * parameters that are not the responsibility of the device initialisation.
@@ -2198,7 +2195,6 @@ void copyGPar(GPar *source, GPar *dest)
 {
     memcpy(dest, source, sizeof(GPar));
 }
-#endif
 
 
 /* Restore the graphics parameters from the device copy. */
@@ -3124,7 +3120,8 @@ void GBox(int which, pGEDevDesc dd)
     }
 }
 
-
+#if 0
+/* in src/main/graphics.c */
 #define LPR_SMALL  2
 #define LPR_MEDIUM 3
 
@@ -3169,7 +3166,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 {
     GEPretty(lo, up, ndiv);
 }
-
+#endif
 
 #define SMALL	0.25
 #define RADIUS	0.375
