@@ -704,6 +704,14 @@ data.frame <-
                 dim(index) <- dim(x)
                 tryCatch(index[i] <- TRUE, 
                          error = function(e) stop(conditionMessage(e), call.=FALSE))
+                # Put values in the right order
+                o <- order(i[,2], i[,1])
+                N <- length(value)
+                if (length(o) %% N != 0L)
+                    warning("number of items to replace is not a multiple of replacement length")
+                if (N < length(o))
+                    value <- rep(value, length.out=length(o))
+                value <- value[o]    
                 i <- index
             }
             if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {
