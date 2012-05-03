@@ -141,8 +141,10 @@ srcref(srcfile, lloc)
 
 \code{srcref} returns a \code{srcref} object.
 }
+\seealso{
+\code{\link{getSrcFilename}} for extracting information from a source reference.
+}
 \author{Duncan Murdoch}
-
 \examples{\donttest{ # has timestamp
 src <- srcfile(system.file("DESCRIPTION", package = "base"))
 summary(src)

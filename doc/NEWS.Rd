@@ -217,6 +217,9 @@
       after the plot has been already modified by subsequent code. The
       redraw is now done synchronously in \code{dev.flush()} to allow
       animations without sleep cycles.
+      
+      \item Source locations reported in \code{traceback()} were
+      incorrect when byte-compiled code was in the stack.
     }
   }
 }

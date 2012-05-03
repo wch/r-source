@@ -781,6 +781,10 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     else
 	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist, op);
 
+    /* Get the srcref record from the closure object */
+    
+    R_Srcref = getAttrib(op, R_SrcrefSymbol);
+    
     /* The default return value is NULL.  FIXME: Is this really needed
        or do we always get a sensible value returned?  */
 
