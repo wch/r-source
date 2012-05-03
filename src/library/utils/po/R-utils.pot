@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-05-03 08:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -714,6 +714,9 @@ msgid "installation of one of more packages failed,\n  probably %s"
 msgstr ""
 
 msgid "The downloaded source packages are in\n\t%s"
+msgstr ""
+
+msgid "The namespace for package \"%s\" is locked; no changes in the global variables list may be made."
 msgstr ""
 
 msgid "no object named '%s' to show"

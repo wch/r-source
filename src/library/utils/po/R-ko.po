@@ -1,14 +1,15 @@
-# # File R_HOME/src/library/utils/po/R-ko.po
-# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
-# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
-# # Distributed under GPL 2 or later
-# #
+# File R_HOME/src/library/utils/po/R-ko.po
+# Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# Distributed under GPL 2 or later
+# Date: 2012-05-01
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:16\n"
+"POT-Creation-Date: 2012-05-03 08:16\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -27,7 +28,7 @@ msgstr ""
 "함께 사용되어야 합니다"
 
 msgid "no documentation for %s found in package %s"
-msgstr "패키지 %s 내에서 %s 에 대한 문서가 없습니다 "
+msgstr "%s 에 대한 문서를 패키지 %s 로부터 찾을 수 없습니다"
 
 msgid "document not found"
 msgstr "문서를 찾을 수 없습니다 "
@@ -36,23 +37,22 @@ msgid "A search query has been submitted to"
 msgstr "서치쿼리가 다음부분으로 넘겨졌습니다 "
 
 msgid "The results page should open in your browser shortly"
-msgstr "결과물이 곧 당신의 브라우저에서 열릴 것입니다"
+msgstr "브라우저에서 결과를 확인할 수 있습니다"
 
 msgid "reference to unknown chunk %s"
 msgstr "reference to unknown chunk %s"
 
 msgid "no Sweave file with name %s found"
-msgstr "%s 이름을 가진 Sweave 파일을 찾을 수 없습니다 "
+msgstr "%s 라는 이름을 가진 Sweave 파일을 찾을 수 없습니다 "
 
-#, fuzzy
 msgid "%d Sweave files for basename %s found:"
-msgstr "'%s' 라는 기본이름을 가진 %d 개의 Sweave 파일들을 찾았습니다: "
+msgstr "%d Sweave 파일들이 베이스네임 %s 와 관련이 있습니다: "
 
 msgid "more than one syntax specification found, using the first one"
-msgstr "1개 이상의 문법이 발견되었고, 첫번째를 이용합니다"
+msgstr "한개 이상의 구문이 사용되었으므로, 첫번째를 사용합니다"
 
 msgid "object %s does not have class \"SweaveSyntax\""
-msgstr "객체 %s 는 \"SweaveSyntax' 클래스를 가지지 않습니다 "
+msgstr "객체 %s 는 \"SweaveSyntax\" 클래스를 가지지 않습니다 "
 
 msgid "recursive Sweave input %s in stack"
 msgstr "스택에 재귀적인 Sweave 입력 %s 입니다"
@@ -97,9 +97,8 @@ msgstr "'strip.white' 옵션의 값은 반드시 소문자 이어야합니다 "
 msgid "elements of 'what' after the first will be ignored"
 msgstr "첫번째 다음에 오는 'what' 요소들은 모두 무시될 것입니다 "
 
-#, fuzzy
 msgid "%d occurrences in %s"
-msgstr "%s 에서 %d 가 발생했습니다 "
+msgstr "%d 가 %s 내에서 발생했습니다"
 
 msgid "No suitable spell check program found."
 msgstr "적절한 스펠링 체크 프로그램을 찾지 못했습니다 "
@@ -108,7 +107,7 @@ msgid "Filter '%s' is not available."
 msgstr "필터 '%s' 는 사용가능하지 않습니다 "
 
 msgid "Invalid 'filter' argument."
-msgstr "'filter' 인자가 잘못되었습니다 "
+msgstr "'filter' 인자가 부적절합니다"
 
 msgid "Processing file %s"
 msgstr "%s 파일을 처리중입니다 "
@@ -125,7 +124,7 @@ msgid ""
 " to list the vignettes in all <strong>available</strong> packages."
 msgstr ""
 "Use <code> %s </code> \n"
-"to list the vignettes in all <strong>available</strong> packages."
+" to list the vignettes in all <strong>available</strong> packages."
 
 msgid "No vignettes found by"
 msgstr "비니에트를 찾을 수 없습니다 "
@@ -145,17 +144,18 @@ msgstr "인수가 잘못되었습니다 "
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
-msgstr "모든 인자가 동일한 길이를 가지고 있지 않으므로 재이용되었습니다: %s"
+msgstr ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
 
 msgid ","
 msgstr ","
 
-#, fuzzy
 msgid "Use either %s or %s/%s but not both."
-msgstr "%s 혹은  %s 하나를 사용하세요 "
+msgstr "%s 혹은  %s/%s 중 하나를 사용하세요."
 
 msgid "It is recommended to use %s instead of %s."
-msgstr "%s 를 이용하는 것이 권장됩니다 (%s 대신에) "
+msgstr "%s 를 사용하는 것을 %s 를 이용하는 것보다 권장됩니다."
 
 msgid "Use either %s or %s but not both."
 msgstr "%s 혹은 %s 중 하나를 이용하세요 "
@@ -163,18 +163,17 @@ msgstr "%s 혹은 %s 중 하나를 이용하세요 "
 msgid "Invalid role specification(s): %s."
 msgstr "Invalid role specification(s): %s."
 
-#, fuzzy
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
-msgstr "%s/%s 를 이용하는 것이 권장됩니다 (%s/%s 대신에)"
+msgstr "%s/%s 를 이용하는 것이 %s/%s/%s 를 사용하는 것보다 권장됩니다."
 
 msgid "method is just applicable to %s objects"
-msgstr "%s 객체에만 적용이 가능한 메소드입니다 "
+msgstr "%s 객체들에만 적용이 가능한 메소드입니다 "
 
 msgid "all arguments must be of class \"person\""
-msgstr "모든 인수는 \"person\" 이라는 클래스이어야 합니다 "
+msgstr "모든 인수는 \"person\" 이라는 클래스 내에 정의되어 있어야 합니다"
 
 msgid "at least one field has to be specified"
-msgstr "최소한 한 항목은 명시되어야 합니다 "
+msgstr "최소한 한 개 이상의 항목이 명시되어야 합니다"
 
 msgid "all fields have to be named"
 msgstr "모든 항목들에 이름이 주어져야 합니다 "
@@ -183,13 +182,15 @@ msgid "%s has to be one of %s"
 msgstr "%s 은 %s 중에 하나이어야 합니다 "
 
 msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr "비브타입 %s 의 비브엔트리는 다음 항목을 명시해야합니다: %s"
+msgstr ""
+"비브타입 %s 을 가지는 비브엔트리는 다음 항목(들)을 올바르게 명시해야합니다: "
+"%s"
 
 msgid "%s should be one of %s"
-msgstr "%s  은 %s 중 하나이어야 합니다 "
+msgstr "%s 은 %s 중 하나이어야 합니다"
 
 msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "비브타입 %s 의 비브엔트리는 다음 항목을 명시해야합니다: %s"
+msgstr "비브타입 %s 를 가지는 비브엔트리는 다음 항목(들)을 명시해야합니다: %s"
 
 msgid "package %s not found"
 msgstr "패키지 %s 를 찾을 수 없습니다 "
@@ -201,7 +202,7 @@ msgid "no date field in DESCRIPTION file of package %s"
 msgstr "패키지 %s 의 DESCRIPTION 파일에 date 항목이 없습니다 "
 
 msgid "could not determine year for %s from package DESCRIPTION file"
-msgstr "패키지 DESCRIPTION 파일로부터%s 에 대한 년도를 정할 수 없습니다 "
+msgstr "패키지 DESCRIPTION 파일로부터 %s 에 대한 년도를 정할 수 없습니다 "
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -228,7 +229,7 @@ msgid "data index for package %s is invalid and will be ignored"
 msgstr "패키지 %s 내의 데이터 인덱스가 잘못되어 무시되어집니다 "
 
 msgid "file 'filelist' is missing for directory %s"
-msgstr "디렉토리 %s 에서 'filelist' 파일이 없습니다 "
+msgstr "file 'filelist' is missing for directory %s"
 
 msgid "data set %s not found"
 msgstr "데이터 셋 %s 를 찾을 수 없습니다 "
@@ -273,7 +274,7 @@ msgid "Available environments had calls:"
 msgstr "이용가능한 환경이 다음을 호출했습니다: "
 
 msgid "Enter an environment number, or 0 to exit"
-msgstr "종료하기 위해서는 환경번호 또는 0을 입력하세요 "
+msgstr "종료하기 위해서는 환경번호 또는 0 을 입력하세요 "
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
@@ -289,8 +290,8 @@ msgid ""
 "Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"주제 %s 에 대한 데모가 한개 이상입니다. \n"
-" %s 에서 한개를 찾아냈습니다 "
+"Demo for topic %s' found more than once,\n"
+"using the one found in %s"
 
 msgid "invalid 'data' argument"
 msgstr "'data' 인수가 잘못되었습니다 "
@@ -314,10 +315,10 @@ msgid "edited row names contain duplicates and will be ignored"
 msgstr "편집된 열의 이름들이 중복되어 무시될 것입니다 "
 
 msgid "invalid input matrix"
-msgstr "입력된 행렬이 잘못되었습니다 "
+msgstr "입력된 행렬이 올바르지 않습니다"
 
 msgid "class(es) of 'name' will be discarded"
-msgstr "'names' 라는 클래스(들)이 제거 될 것입니다 "
+msgstr "'name' 라는 클래스(들)이 제거 될 것입니다 "
 
 msgid "cannot edit NULL row names"
 msgstr "행의 이름이 NULL 이면 편집할 수 없습니다 "
@@ -332,7 +333,7 @@ msgid "test '%s' is not available"
 msgstr "테스트 '%s' 는 이용할 수 없습니다 "
 
 msgid "Line number missing"
-msgstr "줄정보가 없습니다 "
+msgstr "라이넘버가 없습니다 "
 
 msgid "'fix' requires a name"
 msgstr "'fix' 는 이름이 필요합니다 "
@@ -359,11 +360,10 @@ msgid "'form' must be a two-sided formula"
 msgstr "'form' 은 반드시 양방향의 포뮬러이어야 합니다 "
 
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr ""
-"'form' 은 반드시 각각의 변이 한 개의 항을 가지고 있는 양방향의 포뮬러입니다 "
+msgstr "'form' must be a two-sided formula with one term on each side"
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr "'topic' 은 이름, 길이가 1인 문자 벡터, 또는 예약어 이어야 합니다 "
+msgstr "'topic' 은 이름, 길이가 한개인 문자 벡터, 또는 예약어 이어야 합니다 "
 
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "지정된 패키지들 혹은 라이브러리에서 %s 에 대한 문서가 없습니다: "
@@ -378,8 +378,8 @@ msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
 msgstr ""
-"주제 %s 에 대한 도움말은 로드된 어떠한 패키지에서도 찾을 수 없으나, 다음과 같"
-"은 패키지에서 찾을 수 있을지도 모릅니다: "
+"Help for topic %s is not in any loaded package but can be found in the "
+"following packages:"
 
 msgid "Package"
 msgstr "패키지"
@@ -394,7 +394,7 @@ msgid "Choose one"
 msgstr "하나를 선택하세요 "
 
 msgid "Using the first match ..."
-msgstr "첫번째로 일치하는 것을 사용하세요 "
+msgstr "첫번째로 일치하는 항목을 사용하여 ..."
 
 msgid "HTML help is unavailable"
 msgstr "HTML 형식의 도움말이 이용가능하지 않습니다 "
@@ -409,8 +409,8 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
 msgstr ""
-"패키지 %s 는 존재하지만 R >=2.10.0 버전에서는 설치할 수 없습니다. 따라서 도움"
-"말을 사용할 수 없습니다 "
+"패키지 %s 는 존재하지만 R >= 2.10.0 버전에서는 설치되지 않습니다 따라서 도움"
+"말을 열 수 없습니다"
 
 msgid "creation of %s failed"
 msgstr "%s 의 생성이 실패했습니다 "
@@ -440,13 +440,13 @@ msgid "..."
 msgstr "..."
 
 msgid "Packages {readRDS() sequentially}:"
-msgstr "패키지 {readRDS() 순차적으로}: "
+msgstr "Packages {readRDS() sequentially}:"
 
 msgid "."
 msgstr "."
 
 msgid "could not find package %s"
-msgstr "%s 패키지를 찾을 수 없습니다 "
+msgstr "패키지 %s 를 찾을 수 없습니다 "
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "패키지 %s 는 비어있는 hsearch 데이터 입니다 - 이상합니다 "
@@ -472,8 +472,8 @@ msgstr "... 데이터베이스가 재구축되었습니다 "
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
-"패키지 %s 에 대한 데이터베이스 정보가 없습니다: 'rebuild = TRUE' 가 필요한가"
-"요?"
+"패키지 %s 에 대한 정보가 데이터베이스 내에 없습니다: 'rebuild = TRUE' 가 필요"
+"한가요?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 에 대한 설명이 잘못되었습니다 "
@@ -482,27 +482,28 @@ msgid "matched %d objects."
 msgstr "일치된 %d 객체들입니다."
 
 msgid "invalid browser name, check options(\"browser\")."
-msgstr "브라우저 이름이 잘못되었습니다 options(\"browser\")  로 확인해보세요."
+msgstr ""
+"올바르지 않은 브라우저 이름이므로, options(\"browser\") 을 확인해보세요."
 
 msgid "help.start() requires the HTTP server to be running"
-msgstr "help.start() 는 HTTP 서버가 실행되져야 사용가능합니다 "
+msgstr "help.start() 는 HTTP 서버가 실행되어야만 이용가능합니다"
 
 msgid ""
 "If nothing happens, you should open\n"
 "'%s' yourself"
 msgstr ""
-"만약 아무것도 일어나지 않았다면, \n"
-" 직접 '%s' 를 열어보세요 "
+"만약 아무것도 일어나지 않았다면, 당신이 직접 \n"
+"'%s' 를 열어보세요 "
 
 msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
 "and you must switch to its window."
 msgstr ""
-"만약 '%s' 에 의해서 열린 브라우저가 이미 실행중이라면, 재시작되지 않을 것이"
-"고, 당신은 윈도우를 변경해야만 합니다. "
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
 
 msgid "Otherwise, be patient ..."
-msgstr "만약 그렇지 않다면, 조금만 더 참아주세요... "
+msgstr "만약 그렇지 않다면, 조금만 더 기다려 주세요 ..."
 
 msgid "'url' must be a non-empty character string"
 msgstr "'url' 은 반드시 비어있지 않은 문자열이어야 합니다 "
@@ -537,7 +538,7 @@ msgid "cannot update HTML package index"
 msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
 
 msgid "Making packages.html  ..."
-msgstr "package.html  을 만들고 있습니다 ... "
+msgstr "packages.html  을 만들고 있습니다 ... "
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() 는 인터랙티브하게 사용할 수 없습니다 "
@@ -553,7 +554,7 @@ msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr "'%s' 는 제네릭 함수입니다; S3 메소드들은 아마 찾을 수 없을 것입니다 "
 
 msgid "no function '%s' is visible"
-msgstr "함수'%s' 는 찾을 수 없을 것입니다 "
+msgstr "함수 '%s' 는 찾을 수 없을 것입니다 "
 
 msgid "function '%s' appears not to be generic"
 msgstr "'%s' 는 제네릭 함수가 아닐 것입니다 "
@@ -601,7 +602,7 @@ msgid "no R objects specified or available"
 msgstr "R 객체들이 지정될 수 없거나 사용가능하지 않습니다 "
 
 msgid "Creating directories ..."
-msgstr "디렉토리들을 생성중입니다..."
+msgstr "디렉토리들을 생성중입니다 ..."
 
 msgid "directory '%s' already exists"
 msgstr "디렉토리 '%s' 는 이미 존재합니다"
@@ -616,10 +617,10 @@ msgid "Argument 'namespace' is deprecated."
 msgstr "인수 'namespace' 가 무시되었습니다 "
 
 msgid "Creating NAMESPACE ..."
-msgstr "NAMESPACE 를 생성중 ... "
+msgstr "NAMESPACE 를 생성중 ..."
 
 msgid "Creating Read-and-delete-me ..."
-msgstr "Read-and-delete-me 를 생성중..."
+msgstr "Read-and-delete-me 를 생성중 ..."
 
 msgid "Saving functions and data ..."
 msgstr "함수들과 데이터를 저장중 ..."
@@ -628,76 +629,75 @@ msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the code_files= argument"
 msgstr ""
-"제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 버려질 수 없습니다; code_files= "
-"argument 를 사용하세요 "
+"제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 버려질 수 없습니다; 다음을 이용하"
+"세요the code_files= argument "
 
 msgid "Copying code files ..."
 msgstr "코드 파일들을 복사중 ..."
 
 msgid "Invalid file name(s) for R code in"
-msgstr "R 코드에 대한 파일 이름(들) 이 잘못되었습니다 "
+msgstr "R 코드에 대한 파일 이름(들)이 잘못되었습니다 "
 
 msgid ":"
 msgstr ":"
 
 msgid "are now renamed to 'z<name>.R'"
-msgstr "'z<name>.R' 로 이름이 변경되었습니다 "
+msgstr "'z<name>.R' 로 이름이 변경되었습니다"
 
 msgid "Making help files ..."
-msgstr "도움말 파일들을 만드는 중... "
+msgstr "도움말 파일들을 만드는 중 ..."
 
 msgid "Done."
 msgstr "완료."
 
 msgid "Further steps are described in '%s'."
-msgstr "추가적인 설명은 '%s' 에서 찾을 수 있습니다 "
+msgstr "더 해야하 할 내용들은 '%s' 에 기록되어 있습니다"
 
 msgid "unable to access index for repository %s"
-msgstr "저장소 %s 에 대한 인덱스에 접근할 수 없습니다 "
+msgstr "저장소 %s 에 대한 인덱스에 접근할 수 없습니다"
 
 msgid "Invalid 'filters' argument."
 msgstr "'filters' 인자가 잘못되었습니다 "
 
-#, fuzzy
 msgid "package '%s' in library '%s' will not be updated"
-msgstr "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+msgstr "패키지 '%s' 는 라이브러리 '%s' 내에서 업데이트 되지 않을 것입니다"
 
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
-"'oldPkgs' 가 잘못되었습니다; 반드시 문자형 벡터이거나 old.packages() 의 결과"
-"이어야 합니다 "
+"잘못된 'oldPkgs' 입니다; 반드시 문자형 벡터이거나 old.packages() 의 결과이어"
+"야 합니다"
 
 msgid "illformed 'instPkgs' matrix"
 msgstr "잘못된 형식의 'instPkgs' 행렬입니다 "
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
-msgstr "'lib.loc=%s' 를 위해 설치된 패키지가 없습니다 "
+msgstr "no installed packages for (invalid?) 'lib.loc=%s'"
 
 msgid "no new packages are available"
 msgstr "새로운 패키지들이 없습니다 "
 
 msgid "metadata of %s is corrupt"
-msgstr "%s 의 메타데이터가 손상되었습니다 "
+msgstr "메타데이터 %s 가 손상되었습니다 "
 
 msgid "'priority' must be character or NULL"
-msgstr "'prority' 는 반드시 문자 또는 NULL이어야만 합니다"
+msgstr "'priority' 는 반드시 문자 또는 NULL 이어야만 합니다"
 
 msgid "Updating HTML index of packages in '.Library'"
-msgstr "'.Library' 에 있는 HTML 형식의 패키지 목록을 갱신중입니다 "
+msgstr "'.Library' 내의 HTML 패키지 목록을 갱신중입니다"
 
 msgid ""
 "Removing package(s) from %s\n"
 "(as %s is unspecified)"
 msgstr ""
-"%s 로부터 패키지(들)을 삭제중입니다 \n"
+"%s 로부터 패키지(들)을 삭제중입니다\n"
 "(%s 가 지정되지 않았기 때문입니다)"
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir' 는 디렉토리가 아닙니다"
 
 msgid "no package %s at the repositories"
-msgstr "저장소에서 패키지 %s 를 찾을 수 없습니다 "
+msgstr "저장소들로부터 패키지 %s 를 찾을 수 없습니다 "
 
 msgid "package %s does not exist on the local repository"
 msgstr "지역저장소에서 패키지 %s 를 찾을 수 없습니다 "
@@ -706,22 +706,22 @@ msgid "download of package %s failed"
 msgstr "패키지 %s 의 다운로드가 실패했습니다 "
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr "--- 현재 세션에서 사용할 CRAN 미러를 선택해 주세요 --- "
+msgstr "--- 본 세션에서 사용될 CRAN 미러를 선택해주세요 ---"
 
 msgid "trying to use CRAN without setting a mirror"
-msgstr "미러를 설정하지 않고 CRAN 을 사용하려고 합니다 "
+msgstr "미러 설정 없이 CRAN 을 사용하려고 합니다 "
 
 msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "CRAN 미러는 인터랙티브하게 선택할 수 없습니다 "
+msgstr "CRAN 미러는 인터랙티브하게 선택해야 합니다"
 
 msgid "cannot choose a BioC mirror non-interactively"
-msgstr "BioC 미러는 인터랙티브하게 선택할 수 없습니다 "
+msgstr "BioC 미러는 인터랙티브하게 선택해야 합니다"
 
 msgid "cannot set repositories non-interactively"
-msgstr "저장소들을 인터랙티브하게 설정할 수 없습니다 "
+msgstr "저장소들을 인터랙티브하게 설정해야 합니다"
 
 msgid "--- Please select repositories for use in this session ---"
-msgstr "--- 현재 세션에서 사용할 저장소를 선택해 주세요 --- "
+msgstr "--- 본 세션에서 사용할 저장소를 선택해 주세요 --- "
 
 msgid "%s must be supplied"
 msgstr "%s 는 반드시 제공되어야 합니다 "
@@ -740,17 +740,17 @@ msgstr ""
 "skipping dependencies"
 
 msgid "no packages were specified"
-msgstr "패키지들이 지정되지 않았습니다 "
+msgstr "지정된 패키지들이 없습니다"
 
 msgid ""
 "Installing package(s) into %s\n"
 "(as %s is unspecified)"
 msgstr ""
-"패키지(들)이 %s 에 설치중입니다 \n"
-" (%s 가 지정되지 않았기 때문입니다)"
+"패키지(들)을 %s 에 설치중입니다\n"
+"(왜냐하면 %s 가 지정되지 않았기 때문입니다)"
 
 msgid "'lib = \"%s\"' is not writable"
-msgstr "'lib = \"%s\"' 는 기록할 수 없습니다 "
+msgstr "'lib = \"%s\"' 에 기록할 수 없습니다"
 
 msgid "unable to install packages"
 msgstr "패키지를 설치할 수 없습니다 "
@@ -766,11 +766,11 @@ msgstr ""
 msgid ""
 "type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 msgstr ""
-"type == \"both\" 은 'available' 혹은 'contriburl' 이 지정되었다면 함께 사용"
-"할 수 없습니다 "
+"type == \"both\" 은 'available' 혹은 'contriburl' 이 지정되었다면 사용될 수 "
+"없습니다"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
-msgstr "type == \"both\" 는 'repos = NULL' 와 함께 사용될 수 없습니다 "
+msgstr "type == \"both\" 는 'repos = NULL' 와 함께 사용할 수 없습니다 "
 
 msgid "inferring 'repos = NULL' from the file name"
 msgstr "파일이름으로부터 'repos = NULL' 임을 알 수 있습니다 "
@@ -788,11 +788,11 @@ msgid ""
 "This version of R is not set up to install source packages\n"
 "If it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
-"현재 버전의  R 은 소스패키지를 설정할 수 없습니다 \n"
-" 만약 RPM 으로부터 설치하려고 한다면, R-devel RPM 이 필요합니다 "
+"현재 버전의  R 은 소스패키지를 설치 할 수 없습니다\n"
+"만약 RPM 으로부터 설치하려고 한다면, R-devel RPM 이 필요합니다 "
 
 msgid "installation of package %s had non-zero exit status"
-msgstr "패키지 %s 의 설치는 0 이 아닌 종료상태를 가지고 있습니다 "
+msgstr "패키지 %s 의 설치는 0 이 아닌 종료상태를 가지고 있습니다"
 
 msgid "unable to create temporary directory %s"
 msgstr "임시 디렉토리 %s 를 생성할 수 없습니다 "
@@ -801,47 +801,53 @@ msgid ""
 "installation of one of more packages failed,\n"
 "  probably %s"
 msgstr ""
-"한 개 혹은 그 이상의 패키지들이 설치에 실패했습니다 \n"
-"아마도 %s 일 것입니다 "
+"installation of one of more packages failed,\n"
+"  probably %s"
 
 msgid ""
 "The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
-"다운로드된 소스 패키지들은 다음의 경로에 위치해 있습니다 \n"
-" \t %s "
+"다운로드된 소스 패키지들은 다음에 위치해 있습니다\n"
+"\t%s"
+
+msgid ""
+"The namespace for package \"%s\" is locked; no changes in the global "
+"variables list may be made."
+msgstr ""
 
 msgid "no object named '%s' to show"
-msgstr "'%s' 이라는 이름의 객체는 없습니다 "
+msgstr "'%s' 이라는 이름의 객체는 보여지지 않습니다"
 
 msgid "'file' must be \"\" or an open connection object"
-msgstr "'file' 은 반드시 \"\" 혹은 열린 커넥션 객체이어야 합니다 "
+msgstr "'file' 은 반드시 \"\" 혹은 열린 커넥션 객체이어야 합니다"
 
 msgid "must have max > min"
 msgstr "반드시 max > min 이어야 합니다 "
 
 msgid "'pb' is not from class \"txtProgressBar\""
-msgstr "'pb' 는 \"txtProgressBar\" 라는 클래스로부터 나온 것이 아닙니다 "
+msgstr "'pb' 는 클래스 \"txtProgressBar\" 로부터 나온 것이 아닙니다"
 
 msgid "cannot determine a usable name"
 msgstr "사용가능한 이름을 결정할 수 없습니다 "
 
 msgid "Created file named %s."
-msgstr "%s 이라는 파일이 생성되었습니다 "
+msgstr "%s 이라는 파일이 생성되었습니다."
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "파일을 편집한 후 적절한 디렉토리로 이동시켜 주세요 "
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
-"유형 %s 와 주제 %s 에 대한 문서가 없습니다 (혹은 도움말 파일을 처리하는데 문"
-"제가 있습니다) "
+"유형 %s 와 주제 %s 에 대한 문서가 없습니다 (혹은 도움말 처리에 문제가 있습니"
+"다)"
 
 msgid ""
 "the object of class %s in the function call %s could not be used as a "
 "documentation topic"
 msgstr ""
-"함수 호출 %s 시에 클래스 %s 의 객체는 문서 주제로서 사용될 수 없습니다 "
+"the object of class %s in the function call %s could not be used as a "
+"documentation topic"
 
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "%s 에 대한 메소드들이 없으며, 함수로서 이와 연관된 문서들도 없습니다 "
@@ -865,17 +871,13 @@ msgid "row and column counts not found"
 msgstr "행과 열의 개수들을 찾을 수 없습니다 "
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
-"헤더 내에 지정된 것보다 더 많은 행들이 있습니다. 'transpose=TRUE' 를 이용해보"
-"세요 "
+msgstr "More rows than specified in header; maybe use 'transpose=TRUE'"
 
 msgid "Unrecognized special data value"
 msgstr "인식할 수 없는 특별한 데이터 값입니다 "
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
-"헤더안에 지정된 것보다 더 많은 열들이 있습니다. 'transpose=TRUE' 를 이용해보"
-"세요"
+msgstr "More columns than specified in header; maybe use 'transpose=TRUE'"
 
 msgid "Unrecognized value indicator"
 msgstr "인식할 수 없는 값에 대한 지시자입니다 "
@@ -893,7 +895,7 @@ msgid "more column names than columns"
 msgstr "열의 이름들이 열의 개수보다 많습니다 "
 
 msgid "rows are empty: giving up"
-msgstr "행들이 비어있습니다: 중단합니다  "
+msgstr "행들이 비어있습니다: 중단합니다"
 
 msgid "not all columns named in 'colClasses' exist"
 msgstr "'colClasses' 안에 지정된 모든 열들이 존재하지 않습니다 "
@@ -905,7 +907,7 @@ msgid "not all columns named in 'as.is' exist"
 msgstr "'as.is' 내에 명명된 모든 열들이 존재하지 않습니다 "
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' 는 잘못된 길이의 %d != cols = %d "
+msgstr "'as.is' 는 잘못된 길이의 %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "'row.names' 정보가 잘못되었습니다 "
@@ -926,7 +928,7 @@ msgid "invalid format"
 msgstr "잘못된 형식입니다 "
 
 msgid "last record incomplete, %d lines discarded"
-msgstr "마지막 레코드는 완성되지 않았으며,  %d 라인들이 삭제되었습니다 "
+msgstr "마지막 레코드는 완성되지 않았으며, %d 라인들이 삭제되었습니다 "
 
 msgid "transfer failure"
 msgstr "전송실패 "
@@ -950,7 +952,7 @@ msgid "relist() requires recursively unlisted objects."
 msgstr "relist() 는 unlisted 객체들의 재귀적인 호출이 필요합니다 "
 
 msgid "The flesh argument does not contain a skeleton attribute."
-msgstr "flesh 인자는 skeleton 속성을 가지고 있지 않습니다 "
+msgstr "flesh 인자는 skeleton 속성을 가지고 있지 않습니다."
 
 msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
@@ -960,7 +962,7 @@ msgstr ""
 "separately."
 
 msgid "cannot coerce 'x' to roman"
-msgstr "'x'  를  roman 으로 강제변환 할 수 없습니다 "
+msgstr "'x' 를  roman 으로 강제변환 할 수 없습니다 "
 
 msgid "Invalid roman numeral(s): %s"
 msgstr "Invalid roman numeral(s): %s"
@@ -996,7 +998,7 @@ msgid "invalid options('str') -- using defaults instead"
 msgstr "options('str') 이 잘못되었습니다 -- 대신 기본값을 사용합니다 "
 
 msgid "invalid components in options('str'):"
-msgstr "options('str') 에 대한 구성요소가 잘못되었습니다 "
+msgstr "options('str') 에 대한 잘못된 구성요소:"
 
 #, fuzzy
 msgid "'str.default': 'le' is NA, so taken as 0"
@@ -1007,7 +1009,7 @@ msgstr "'object' 는 유효한 levels() 을 가지고 있지 않습니다 "
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
-"'digits' 와 'digits.d' 는 모두 지정되지 않았고, 후자는 사용되지 않습니다 "
+"'digits' 와 'digits.d' 는 모두 지정되지 않았고, 후자는 사용되지 않습니다"
 
 msgid "no lines found in %s"
 msgstr "%s 에 아무런 라인이 없습니다 "
@@ -1019,7 +1021,7 @@ msgid "no events were recorded"
 msgstr "어떠한 이벤트들도 기록되지 않았습니다 "
 
 msgid "invalid 'tarfile' argument"
-msgstr "'tarfile' 인자는 잘못되었습니다 "
+msgstr "잘못된 'tarfile' 인자입니다"
 
 msgid "'compressed' must be logical or character"
 msgstr "'compressed' 는 논리형 혹은 문자형이어야 합니다 "
@@ -1037,7 +1039,7 @@ msgid "incomplete block on file"
 msgstr "incomplete block on file"
 
 msgid "checksum error for entry '%s'"
-msgstr "checksum error for entry '%s'"
+msgstr "항목 '%s' 에 대한 checksum 에러입니다"
 
 msgid "failed to copy %s to %s"
 msgstr "%s 를 %s 로 복사하는데 실패했습니다 "
@@ -1058,7 +1060,7 @@ msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"두개 이상의 비니에트 %s 를 찾았습니다 \n"
+"두개 이상의 비니에트 %s 를 찾았으며,\n"
 "%s 중 하나만 이용합니다 "
 
 msgid "vignette %s not found"
@@ -1076,8 +1078,7 @@ msgstr "'title' 은 반드시 NULL 이거나 길이가 1인 문자 벡터이어�
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr ""
-"한 개 혹은 그 이상의 숫자를 스페이스를 활용하여 입력하고, 취소하고 할 때에는 "
-"빈 줄을 입력하세요 "
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
 
 msgid "Invalid input, please try again"
 msgstr "잘못된 입력입니다. 다시 시도하세요 "
@@ -1101,21 +1102,18 @@ msgid "appending column names to file"
 msgstr "열의 이름들을 파일에 추가합니다 "
 
 msgid "attempt to set '%s' ignored"
-msgstr "'%s' 을 설정하고자 하는 시도가 무시되었습니다 "
+msgstr "'%s' 을 설정하고자 하는 시도가 무시되었습니다"
 
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' 은 반드시 단일 문자열이어야 합니다 "
 
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr ""
-"'files' 는 반드시 한개 혹은 그 이상의 파일패스들을 지정하는 문자 벡터이어야 "
-"합니다 "
+msgstr "'files' 는 한개 이상의 파일패스들을 지정하는 문자형 벡터이야 합니다"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
-"'mailto:' URI 를 열수 있는 프로그램을 찾을 수 없습니다. 'method=\"none\"' 로 "
-"되돌립니다 "
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
 msgstr "mailto:URI 를 열기 위해 브라우저를 이용합니다 "
@@ -1133,16 +1131,16 @@ msgid "no download method found"
 msgstr "다운로드 메소드를 찾을 수 없습니다 "
 
 msgid "download had nonzero exit status"
-msgstr "다운로드는 0이 아닌 종료상태를 가지고 있었습니다 "
+msgstr "다운로드가 0 이 아닌 종료상태를 가졌습니다"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' 는 0 이 아닌 종료코드 %d 를 반환했습니다 "
 
 msgid "file %s is not an OS X binary package"
-msgstr ""
+msgstr "파일 %s 는 OS X 바이너리 패키지가 아닙니다"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "패키지 %s 는 성공적으로 압축을 해제하고 MD5 sums 를 확인했습니다 "
+msgstr "패키지 %s 는 성공적으로 압축을 해제하고 MD5 sums 를 확인했습니다"
 
 msgid "ERROR: failed to lock directory"
 msgstr "에러: 디렉토리를 잠그는데 실패했습니다 "
@@ -1170,8 +1168,8 @@ msgid ""
 "The downloaded binary packages are in\n"
 "\t%s"
 msgstr ""
-"다운로드된 패키지들은 아래의 경로에 있습니다 \n"
-"\t %s"
+"다운로드된 패키지들은 다음의 경로에 있습니다\n"
+"\t%s"
 
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' 는 Windows 전용함수입니다 "
@@ -1186,8 +1184,8 @@ msgid ""
 "If nothing happens, you should open\n"
 "%s yourself"
 msgstr ""
-"만약, 아무것도 일어나지 않았다면 \n"
-"직접  %s 를 열어야 합니다 "
+"If nothing happens, you should open\n"
+"%s yourself"
 
 msgid "zipfile %s not found"
 msgstr "zipfile %s 를 찾을 수 없습니다 "
@@ -1216,7 +1214,7 @@ msgstr[0] "class discarded from column %s"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
-msgstr[0] "객체 '%s' 는 찾을 수 없습니다 "
+msgstr[0] "객체 '%s' 를 찾을 수 없습니다 "
 
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
@@ -1241,174 +1239,3 @@ msgstr[0] "소스패키지 %s 를 설치중입니다 "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
-
-#~ msgid ""
-#~ "Would you like to create a personal library\n"
-#~ "%s\n"
-#~ "to install packages into?"
-#~ msgstr ""
-#~ "Would you like to create a personal library\n"
-#~ "%s\n"
-#~ "to install packages into?"
-
-#, fuzzy
-#~ msgid "running %s failed"
-#~ msgstr "패키지 '%s'의 다운로드는 실패했습니다"
-
-#, fuzzy
-#~ msgid "Postscript offline help is deprecated"
-#~ msgstr "인수 'help.db'는 반대합니다"
-
-#, fuzzy
-#~ msgid "'namespace' must be a single logical"
-#~ msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
-
-#, fuzzy
-#~ msgid "Package '"
-#~ msgstr "패키지"
-
-#~ msgid "You can now run LaTeX on '%s'"
-#~ msgstr "현재 '%s'에서 LaTeX를 실행할수 있습니다"
-
-#~ msgid "updating HTML package descriptions"
-#~ msgstr "갱신하는 HTML 패키지 기술입니다"
-
-#~ msgid "argument 'lib' is missing: using %s"
-#~ msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
-
-#, fuzzy
-#~ msgid "argument 'lib' is missing: using '%s'"
-#~ msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
-
-#~ msgid "Enter zero or more numbers separated by space"
-#~ msgstr "space에 의해서 분리된 0 이상의 수를 입력합니다"
-
-#~ msgid "more than one help file found: using package '%s'"
-#~ msgstr ""
-#~ "하나의 help를 넘는 지원 파일은 검색되었습니다: 패키지 '%s'의 사용입니다"
-
-#~ msgid "options(\"browser\") not set"
-#~ msgstr "세트 되지않는 옵션(\"browser\")입니다"
-
-#~ msgid ""
-#~ "No text help for '%s' is available:\n"
-#~ "corresponding file is missing"
-#~ msgstr ""
-#~ "'%s'의 text 지원은 얻을 수 없습니다: \n"
-#~ "대응하는 파일은 잘못되었습니다"
-
-#~ msgid ""
-#~ "No offline help for '%s' is available:\n"
-#~ "corresponding file is missing"
-#~ msgstr ""
-#~ "'%s'의 offline help는 얻을 수 없습니다:\n"
-#~ "대응하는 파일은 잘못되었습니다"
-
-#~ msgid "malformed bundle DESCRIPTION file, no Contains field"
-#~ msgstr "기형의 다발 DESCRIPTION 파일, Contains 필드가 없습니다"
-
-#~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-#~ msgstr "다발 '%s'는 성공적으로 unpack 하였고 MD5 합계가 체크되었습니다"
-
-#~ msgid ""
-#~ "No HTML help for '%s' is available:\n"
-#~ "corresponding file is missing"
-#~ msgstr ""
-#~ "'%s'의 HTML help는 얻을 수 없습니다:\n"
-#~ "대응하는 파일은 잘못되었습니다"
-
-#~ msgid "Compiled HTML is not installed"
-#~ msgstr "Compile 되어진 HTML는 인스톨 되지 않았습니다"
-
-#~ msgid "CHM file could not be displayed"
-#~ msgstr "CHM 파일을 표시 할수 없을지도 모릅니다"
-
-#, fuzzy
-#~ msgid ""
-#~ "No CHM help for '%s' in package '%s' is available:\n"
-#~ "the CHM file for the package is missing"
-#~ msgstr ""
-#~ "패키지 '%s'로 '%s'의 CHM help는 얻을 수 없습니다: \n"
-#~ "CHM 파일은 패키지으로 잘못되어져 있습니다"
-
-#~ msgid "problems running R CMD Rdconv"
-#~ msgstr "R CMD Rdconv를 실행하는 문제입니다"
-
-#~ msgid ""
-#~ "Changing the default browser (as specified by the 'browser' option) to "
-#~ "the given browser so that it gets used for all future help requests."
-#~ msgstr ""
-#~ "그것이 얻도록 주어진 브라우저('browser' 옵션에 의해서 지정되었습니다)를 변"
-#~ "경하는 것은\n"
-#~ "모든 미래의 help 요구를 위해서 사용했습니다"
-
-#~ msgid "Making links in per-session dir ..."
-#~ msgstr "\"per-session의 dir에서 link를 작성하는것..."
-
-#~ msgid "cannot create HTML package index"
-#~ msgstr "HTML 패키지 인덱스를 작성할 수 없습니다"
-
-#~ msgid "cannot create HTML search index"
-#~ msgstr "HTML 탐색 인덱스를 작성할 수 없습니다"
-
-#~ msgid "unable to find the HTML help"
-#~ msgstr "HTML help를 검색되지 못합니다"
-
-#~ msgid "updating HTML package listing"
-#~ msgstr "HTML 패키지의 리스트를 갱신합니다"
-
-#~ msgid "fixing URLs in non-standard libraries"
-#~ msgstr "non-standard 라이브러리에 고정하는 URL입니다"
-
-#~ msgid "cannot update '%s'"
-#~ msgstr "'%s'를 갱신할 수 없습니다"
-
-#~ msgid "Found invalid multi-byte character data."
-#~ msgstr "무효의 다중 바이트 문자 데이터를 검색되어졌습니다"
-
-#~ msgid "Cannot re-encode because 'iconv' is not available."
-#~ msgstr "'iconv'가 이용 가능하지 않기 때문에 re-encode를 할수가 없습니다"
-
-#~ msgid "Try running R in a single-byte locale."
-#~ msgstr "single-byte locale의 R를 실행해주십시오"
-
-#~ msgid "bundle '%s' is incompletely installed"
-#~ msgstr "bundle '%s'는 불완전하게 인스톨됩니다"
-
-#~ msgid "bundle '%s' has extra contents %s"
-#~ msgstr "bundle '%s'는 여분의 내용 %s를 가지고 있습니다"
-
-#~ msgid "this function is intended to work with the Aqua GUI"
-#~ msgstr "이 함수는 Aqua GUI로 작업하도록 의도됩니다"
-
-#, fuzzy
-#~ msgid "package title"
-#~ msgstr "패키지"
-
-#~ msgid "cannot update HTML search index"
-#~ msgstr "HTML 탐색 인덱스를 갱신할 수 없습니다"
-
-#~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-#~ msgstr ""
-#~ "'format'는 \"normal\" 또는 \"short\" 이어야만 합니다. \"normal\"를 사용해"
-#~ "주십시오"
-
-#~ msgid "wrong 'sortby' specified. Using sortby=\"score\""
-#~ msgstr ""
-#~ "'sortby'는 지정이 잘못되었습니다. \"sortby=\"score\"를 사용해주십시오"
-
-#~ msgid ""
-#~ "wrong restriction specified.\n"
-#~ "Using '%s'"
-#~ msgstr ""
-#~ "제한은 잘못된 지정을 했습니다.\n"
-#~ "'%s'를 사용 해주십시오"
-
-#~ msgid "Unable to create temporary directory '%s'"
-#~ msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
-
-#~ msgid "dependency '%s' is not available"
-#~ msgid_plural "dependencies '%s' are not available"
-#~ msgstr[0] ""
-#~ "dependency '%s'는 이용 가능하지는 않습니다\n"
-#~ "dependencies '%s'는 이용 가능하지는 않습니다"
