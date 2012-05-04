@@ -134,11 +134,13 @@
 
   \subsection{PACKAGE graphics}{
     \itemize{
-      \item The C code underlying base graphics is in the process of
-      being migrated to the \pkg{graphics} package (and hence no longer
-      uses \code{.Internal()} calls.  This may require re-installing
-      some S4-using packages (e.g. \CRANpkg{timeDate}) which captured
-      the old versions of the \R interfaces.
+      \item The C code underlying base graphics has been migrated to the
+      \pkg{graphics} package (and hence no longer uses
+      \code{.Internal()} calls).
+
+      This may require re-installing some S4-using packages
+      (e.g. \CRANpkg{timeDate}) which captured the old versions of the
+      \R interfaces.
     }
   }
 

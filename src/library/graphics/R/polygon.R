@@ -256,7 +256,7 @@ polygon <-
                                           ..debug.hatch = ..debug.hatch, ...)
                     }
 
-                ## compatible with .Internal(polygon)
+                ## compatible with C_polygon:
                 ## only cycle through col, lty, etc. on non-empty polygons
                 i <- i + 1
             }
