@@ -96,10 +96,10 @@
       problems with junctions on Windows (although they were tested on
       Windows 7, XP and Server 2008 machines).  Setting the environment
       variable \env{R_WIN_NO_JUNCTIONS} to a non-empty value (e.g. in
-      \file{~/.R/check.Renviron}) will force copies to be used instead. 
+      \file{~/.R/check.Renviron}) will force copies to be used instead.
     }
   }
-  
+
   \subsection{INSTALLATION}{
     \itemize{
       \item \command{R CMD INSTALL} with \env{_R_CHECK_INSTALL_DEPENDS_}
@@ -121,13 +121,13 @@
       unpredictable consequences.
     }
   }
-  
+
   \subsection{WINDOWS-SPECIFIC CHANGES}{
     \itemize{
       \item Windows-specific changes will now be announced in this file
       (\file{NEWS}).  Changes up and including \R 2.15.0 remain in the
       \file{CHANGES} file.
-      
+
       \item There are two new environment variables which
       control the defaults for command-line options.
 
@@ -136,7 +136,7 @@
 
       If \env{R_MAX_MEM_SIZE} is set, it gives the default memory limit
       if \option{--max-mem-size} is not specified: invalid values being
-      ignored.      
+      ignored.
     }
   }
 
@@ -193,10 +193,10 @@
       \item Some bugs fixed in handling load actions that could fail
       to export assigned items or generate spurious warnings in
       \code{CMD check} on loading.
-      
+
       \item For \code{tiff(type = "windows")}, the numbering of per-page
       files except the last was off by one.
-      
+
       \item On Windows, loading package \pkg{stats} (which is done for
       a default session) would switch line endings on \file{stdout}
       and \file{stderr} from CRLF to LF.  This affected
@@ -208,18 +208,21 @@
 
       \item On Windows, the \code{Sys.glob()} function didn't handle UNC
       paths as it was designed to try to do. (\PR{14884})
-      
+
       \item In package \pkg{parallel}, \code{clusterApply()} and similar
       failed to handle a (pretty pointless) length-1 argument. (\PR{14898})
-      
+
       \item Quartz Cocoa display reacted asynchronously to
       \code{dev.flush()} which means that the redraw could be performed
       after the plot has been already modified by subsequent code. The
       redraw is now done synchronously in \code{dev.flush()} to allow
       animations without sleep cycles.
-      
+
       \item Source locations reported in \code{traceback()} were
       incorrect when byte-compiled code was in the stack.
+
+      \item \code{plogis(x, lower=FALSE, log.p=TRUE)} no longer
+      underflows early for large x (e.g. x=800).
     }
   }
 }

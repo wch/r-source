@@ -20,6 +20,18 @@
 #include "nmath.h"
 #include "dpq.h"
 
+/* Compute  log(1 + exp(x))  without overflow (and fast for x > 18)
+   For the two cutoffs, consider
+   curve(log1p(exp(x)) - x,       33.1, 33.5, n=2^10)
+   curve(x+exp(-x) - log1p(exp(x)), 15, 25,   n=2^11)
+*/
+double log1pexp(double x) {
+    if(x <= 18.) return log1p(exp(x));
+    if(x > 33.3) return x;
+    // else: 18.0 < x <= 33.3 :
+    return x + exp(-x);
+}
+
 double plogis(double x, double location, double scale,
 	      int lower_tail, int log_p)
 {
@@ -33,7 +45,11 @@ double plogis(double x, double location, double scale,
     if (ISNAN(x))	ML_ERR_return_NAN;
     R_P_bounds_Inf_01(x);
 
-    x = exp(lower_tail ? -x : x);
-    return (log_p ? -log1p(x) : 1 / (1 + x));
+    if(log_p) {
+	// log(1 / (1 + exp( +- x ))) = -log(1 + exp( +- x))
+	return -log1pexp(lower_tail ? -x : x);
+    } else {
+	return 1 / (1 + exp(lower_tail ? -x : x));
+    }
 }
 
