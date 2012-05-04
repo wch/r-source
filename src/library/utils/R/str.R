@@ -179,7 +179,7 @@ str.default <-
     has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
-    deParse <- function(.) deparse(., width.cutoff = max(20, width - 10))
+    deParse <- function(.) deparse(., width.cutoff = min(500,max(20, width-10)))
 
     if (is.null(object))
 	cat(" NULL\n")
