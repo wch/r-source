@@ -748,8 +748,13 @@ stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
 ## logit() == qlogit() on the right extreme:
 x <- c(10:80, 80 + 5*(1:24), 200 + 20*(1:25))
 stopifnot(All.eq(x, qlogis(plogis(x, log.p=TRUE),
-                           log.p=TRUE)))
+			   log.p=TRUE)))
 ## qlogis() gave Inf much too early for R <= 2.12.1
+## Part 2:
+x <- c(x, seq(700, 800, by=10))
+stopifnot(All.eq(x, qlogis(plogis(x, lower=FALSE, log.p=TRUE),
+			   lower=FALSE, log.p=TRUE)))
+# plogis() underflowed to -Inf too early for R <= 2.15.0
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

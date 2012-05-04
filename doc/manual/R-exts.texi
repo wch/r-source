@@ -10555,6 +10555,13 @@ Computes @code{log(1 + @var{x}) - @var{x}} (@emph{log 1 @b{p}lus x @b{m}inus @b{
 accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
+@deftypefun double log1pexp (double @var{x})
+Computes @code{log(1 + exp(@var{x}))} (@emph{log 1 @b{p}lus @b{exp}}),
+accurately, notably for large @var{x}, e.g., @eqn{x > 720, x > 720}.
+@end deftypefun
+
+@c  log1mexp(.) to come
+
 @deftypefun double expm1 (double @var{x})
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
