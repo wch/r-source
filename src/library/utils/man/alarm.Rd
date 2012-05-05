@@ -20,7 +20,7 @@ alarm()
   to the user (unless standard output has been redirected).
 
   As from \R 2.14.0 it attempts to flush the console (see
-  \code{\link{flush.console}}.
+  \code{\link{flush.console}}).
 }
 \value{
   No useful value is returned.
