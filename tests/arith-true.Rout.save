@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-05 r58592)
+R Under development (unstable) (2012-05-04 r59318) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -103,8 +103,19 @@ Warning message:
 In log(-1) : NaNs produced
 > 
 > rp <- c(1:2,Inf); rn <- rev(- rp)
-> r <- c(rn, 0, rp)
+> r <- c(rn, 0, rp, NA, NaN)
 > all(r^0 == 1)
+[1] TRUE
+> ir <- suppressWarnings(as.integer(r))
+> all(ir^0  == 1)
+[1] TRUE
+> all(ir^0L == 1)# not in R <= 2.15.0
+[1] TRUE
+> all( 1^r  == 1)# not in R 0.64
+[1] TRUE
+> all(1L^r  == 1)
+[1] TRUE
+> all(1L^ir == 1)# not in R <= 2.15.0
 [1] TRUE
 > all((rn ^ -3) == -((-rn) ^ -3))
 [1] TRUE
@@ -118,8 +129,6 @@ In log(-1) : NaNs produced
 > .9 ^ -Inf == Inf
 [1] TRUE
 > ## Wasn't ok in 0.64:
-> all(1^c(-Inf,Inf) == 1)
-[1] TRUE
 > all(is.nan(rn ^ .5))# in some C's : (-Inf) ^ .5 gives Inf, instead of NaN
 [1] TRUE
 > 
@@ -315,5 +324,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.373 0.001 0.377 0 0 
+Time elapsed:  0.428 0.004 0.433 0 0 
 > 

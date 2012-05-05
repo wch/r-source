@@ -401,6 +401,10 @@
 
       \item \code{plogis(x, lower=FALSE, log.p=TRUE)} no longer
       underflows early for large x (e.g. x=800).
+
+      \item \code{?Arithmetic}'s \dQuote{\code{1 ^ y} and \code{y ^ 0}
+	are \code{1}, \emph{always}} now also applies for \code{integer}
+      values.
     }
   }
 }

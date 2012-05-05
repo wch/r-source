@@ -62,8 +62,14 @@ log(0) == -Inf
 is.nan(log(-1))# TRUE and warning
 
 rp <- c(1:2,Inf); rn <- rev(- rp)
-r <- c(rn, 0, rp)
+r <- c(rn, 0, rp, NA, NaN)
 all(r^0 == 1)
+ir <- suppressWarnings(as.integer(r))
+all(ir^0  == 1)
+all(ir^0L == 1)# not in R <= 2.15.0
+all( 1^r  == 1)# not in R 0.64
+all(1L^r  == 1)
+all(1L^ir == 1)# not in R <= 2.15.0
 all((rn ^ -3) == -((-rn) ^ -3))
 #
 all(c(1.1,2,Inf) ^ Inf == Inf)
@@ -71,7 +77,6 @@ all(c(1.1,2,Inf) ^ -Inf == 0)
 .9 ^ Inf == 0
 .9 ^ -Inf == Inf
 ## Wasn't ok in 0.64:
-all(1^c(-Inf,Inf) == 1)
 all(is.nan(rn ^ .5))# in some C's : (-Inf) ^ .5 gives Inf, instead of NaN
 
 
