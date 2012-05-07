@@ -405,6 +405,9 @@
       \item \code{?Arithmetic}'s \dQuote{\code{1 ^ y} and \code{y ^ 0}
 	are \code{1}, \emph{always}} now also applies for \code{integer}
       values.
+
+      \item X11-based pixmap devices like \code{png(type="Xlib")} were trying 
+      to set the curstor style, which triggered some warnings and hangs.
     }
   }
 }
