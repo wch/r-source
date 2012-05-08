@@ -114,6 +114,14 @@
       by \code{library(pkgname, lib.loc = "somewhere")} without being on
       the library search path (unless it is already installed in
       \code{.Library}, when it always will be).
+
+      \item The location of the build and check environment files can
+      now be specified by the environment variables
+      \env{R_BUILD_ENVIRON} and \env{R_CHECK_ENVIRON}, respectively.
+
+      \item \command{R CMD Sweave} gains a \option{--compact} option
+      to control possibly reducing the size of the PDF file it creates
+      (when \option{--pdf} is given).
     }
   }
 
