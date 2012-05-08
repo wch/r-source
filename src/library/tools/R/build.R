@@ -759,12 +759,21 @@ get_exclude_patterns <- function()
     pkgs <- character()
     options(showErrorCalls = FALSE, warn = 1)
 
-    ## read in ~/.R/build.Renviron[.rarch]
-    rarch <- .Platform$r_arch
-    if (nzchar(rarch) &&
-        file.exists(Renv <- paste("~/.R/build.Renviron", rarch, sep = ".")))
-        readRenviron(Renv)
-    else if (file.exists(Renv <- "~/.R/build.Renviron")) readRenviron(Renv)
+    ## Read in build environment file.
+    Renv <- Sys.getenv("R_BUILD_ENVIRON", unset = NA)
+    if(!is.na(Renv)) {
+        ## Do not read any build environment file if R_BUILD_ENVIRON is
+        ## set to empty of something non-existent.
+        if(nzchar(Renv) && file.exists(Renv)) readRenviron(Renv)
+    } else {
+        ## Read in ~/.R/build.Renviron[.rarch] (if existent).
+        rarch <- .Platform$r_arch
+        if (nzchar(rarch) &&
+            file.exists(Renv <- paste("~/.R/build.Renviron", rarch, sep = ".")))
+            readRenviron(Renv)
+        else if (file.exists(Renv <- "~/.R/build.Renviron"))
+            readRenviron(Renv)
+    }
 
     ## Configurable variables.
     compact_vignettes <- Sys.getenv("_R_BUILD_COMPACT_VIGNETTES_", "no")

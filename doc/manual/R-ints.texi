@@ -3512,7 +3512,7 @@ which require the package to be installed.
 
 The following environment variables can be used to customize the
 operation of @command{check}: a convenient place to set these is the
-file @file{~/.R/check.Renviron}.
+check environment file.
 
 @vtable @code
 @item _R_CHECK_ALL_NON_ISO_C_

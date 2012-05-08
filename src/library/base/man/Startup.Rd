@@ -158,8 +158,12 @@
   
   \command{R CMD check} and \command{R CMD build} do not always read the
   standard startup files, but they do always read specific
-  \samp{Renviron} files such as \file{~/.R/check.Renviron},
-  \file{~/.R/build.Renviron} or sub-architecture-specific versions.
+  \samp{Renviron} files.  The location of these can be controlled by the
+  environment variables \env{R_CHECK_ENVIRON} and \env{R_BUILD_ENVIRON}.
+  If these are set their value is used as the path for the
+  \samp{Renviron} file; otherwise, files \file{~/.R/check.Renviron} or
+  \file{~/.R/build.Renviron} or sub-architecture-specific versions are
+  employed.
 
   If you want \code{~/.Renviron} or \code{~/.Rprofile} to be ignored by
   child \R processes (such as those run by \command{R CMD check} and

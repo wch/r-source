@@ -2967,12 +2967,22 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
     options(showErrorCalls=FALSE, warn = 1)
 
-    ## read in ~/.R/check.Renviron[.rarch]
-    rarch <- .Platform$r_arch
-    if (nzchar(rarch) &&
-        file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
-        readRenviron(Renv)
-    else if (file.exists(Renv <- "~/.R/check.Renviron")) readRenviron(Renv)
+    ## Read in check environment file.
+    Renv <- Sys.getenv("R_CHECK_ENVIRON", unset = NA)
+    if(!is.na(Renv)) {
+        ## Do not read any check environment file if R_CHECK_ENVIRON is
+        ## set to empty of something non-existent.
+        if(nzchar(Renv) && file.exists(Renv)) readRenviron(Renv)
+    } else {
+        ## Read in ~/.R/check.Renviron[.rarch] (if existent).
+        rarch <- .Platform$r_arch
+        if (nzchar(rarch) &&
+            file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
+            readRenviron(Renv)
+        else if (file.exists(Renv <- "~/.R/check.Renviron"))
+            readRenviron(Renv)
+    }
+    
     td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
     if (is.na(td0)) td0 <- Inf
 
