@@ -223,6 +223,9 @@
 
       \item \code{plogis(x, lower=FALSE, log.p=TRUE)} no longer
       underflows early for large x (e.g. x=800).
+
+      \item X11-based pixmap devices like \code{png(type="Xlib")} were trying 
+      to set the cursor style, which triggered some warnings and hangs.
     }
   }
 }
