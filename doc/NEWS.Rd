@@ -407,7 +407,7 @@
       values.
 
       \item X11-based pixmap devices like \code{png(type="Xlib")} were trying 
-      to set the curstor style, which triggered some warnings and hangs.
+      to set the cursor style, which triggered some warnings and hangs.
     }
   }
 }
