@@ -32,9 +32,14 @@ plot.function <-
 	if(missing(to))	to <- xlim[2L]
     }
     if (is.null(ylab)) {
-        xname <- list(...)[["xname"]]
-        if (is.null(xname)) xname <- "x"
-       ylab <- paste0(substitute(x), "(", xname, ")")
+        sx <- substitute(x)
+        ylab <- if(mode(x) != "name")
+            deparse(sx)[1L]
+        else {
+            xname <- list(...)[["xname"]]
+            if (is.null(xname)) xname <- "x"
+            paste0(sx, "(", xname, ")")
+        }
     }
     ## name args to avoid partial matches from ...
     curve(expr = x, from = from, to = to, xlim = xlim, ylab = ylab, ...)
