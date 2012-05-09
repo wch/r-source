@@ -1219,13 +1219,18 @@ static void SetLinetype(const pGEcontext gc, pX11Desc xd)
     }
 }
 
+/* Error handling. FIXME: This is rather sloppy; we ought to respect
+   any 3rd party handlers by checking whether dsp is "our" display and
+   calling the previous handler otherwise. */
+
 static int R_X11Err(Display *dsp, XErrorEvent *event)
 {
     char buff[1000];
+    /* for tcl/tk */
+    if (event->error_code == BadWindow) return 0;
+
     XGetErrorText(dsp, event->error_code, buff, 1000);
-    /* for R commander */
-    if(strncmp(buff, "BadWindow (invalid Window parameter)", 36) != 0)
-	warning(_("X11 protocol error: %s"), buff);
+    warning(_("X11 protocol error: %s"), buff);
     return 0;
 }
 

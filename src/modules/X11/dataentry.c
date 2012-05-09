@@ -1859,13 +1859,18 @@ static const int x_resource_count = XtNumber(x_resources);
 static gx_device_X xdev;
 #endif
 
+/* NB: Keep this in sync with similar handler in devX11.c */
 static int R_X11Err(Display *dsp, XErrorEvent *event)
 {
     char buff[1000];
+    /* for tcl/tk */
+    if (event->error_code == BadWindow) return 0;
+
     XGetErrorText(dsp, event->error_code, buff, 1000);
-    warning("X11 protocol error: %s", buff);
+    warning(_("X11 protocol error: %s"), buff);
     return 0;
 }
+
 
 static int R_X11IOErr(Display *dsp)
 {
