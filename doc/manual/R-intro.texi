@@ -1140,10 +1140,6 @@ assignment, in which case the assignment operation is performed
 the form @code{vector[@var{index_vector}]} as having an arbitrary
 expression in place of the vector name does not make much sense here.
 
-The vector assigned must match the length of the index vector, and in
-the case of a logical index vector it must again be the same length as
-the vector it is indexing.
-
 For example
 
 @example
