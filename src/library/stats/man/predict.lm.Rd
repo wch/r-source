@@ -28,7 +28,8 @@
   \item{interval}{Type of interval calculation.}
   \item{level}{Tolerance/confidence level}
   \item{type}{Type of prediction (response or model term).}
-  \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
+  \item{terms}{If \code{type="terms"}, which terms (default is all
+    terms), a \code{\link{character}} vector.}
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
   \item{pred.var}{the variance(s) for future observations to be assumed
@@ -132,6 +133,14 @@ predict(wfit, interval = "prediction")
 predict(wfit, new, interval = "prediction")
 predict(wfit, new, interval = "prediction", weights = (new$x)^2)
 predict(wfit, new, interval = "prediction", weights = ~x^2)
-}
 
+##-- From  aov(.) example ---- predict(.. terms)
+utils::data(npk, package="MASS")
+npk.aov <- aov(yield ~ block + N*P*K, npk)
+(termL <- attr(terms(npk.aov),"term.labels"))
+(pt <- predict(npk.aov, type="terms"))
+pt. <- predict(npk.aov, type="terms", terms = termL[1:4])
+stopifnot(all.equal(pt[,1:4], pt.,
+                    check.attr=FALSE, tol = 1e-12))
+}
 \keyword{regression}
