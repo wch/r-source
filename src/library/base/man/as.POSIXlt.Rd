@@ -68,13 +68,13 @@ as.POSIXlt(x, tz = "", \dots)
   Alternatively, \code{format} can be specified for character vectors or
   factors: if it is not specified and no standard format works for
   all non-\code{NA} inputs an error is thrown.
-  
+
   If \code{format} is specified, remember that some of the format
   specifications are locale-specific, and you may need to set the
   \code{LC_TIME} category appropriately \emph{via}
   \code{\link{Sys.setlocale}}.  This most often affects the use of
   \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
-  
+
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.
 
@@ -119,11 +119,11 @@ as.POSIXct(strptime('2010-10-31 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
   assumed by ISO 8601:2004 is that there was a year zero, even though
   current year numbering (and zero) is a much later concept (525 AD for
   year numbers from 1 AD).
-  
+
   If you want to extract specific aspects of a time (such as the day of
   the week) just convert it to class \code{"POSIXlt"} and extract the
   relevant component(s) of the list, or if you want a character
-  representation (such as a named day of the week) use the 
+  representation (such as a named day of the week) use the
   \code{\link[base:format.POSIXlt]{format}} method.
 
   If a timezone is needed and that specified is invalid on your system,
@@ -134,18 +134,20 @@ as.POSIXct(strptime('2010-10-31 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
   \link{DateTimeClasses} for details of the classes;
   \code{\link{strptime}} for conversion to and from character
   representations.
-  
+
   \code{\link{Sys.timezone}} for details of the (system-specific) naming
   of time zones.
-  
-  \link{locales} for locale-specific aspects.  
+
+  \link{locales} for locale-specific aspects.
 }
 \examples{\donttest{
 (z <- Sys.time())             # the current datetime, as class "POSIXct"
 unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01 (UTC)
-(z <- as.POSIXlt(Sys.time())) # the current datetime, as class "POSIXlt"
-unlist(unclass(z))            # a list shown as a named vector
+(now <- as.POSIXlt(Sys.time())) # the current datetime, as class "POSIXlt"
+unlist(unclass(now))          # a list shown as a named vector
+now$year + 1900               # see ?DateTimeClasses
+months(now); weekdays(now)    # see ?months
 
 ## suppose we have a time in seconds since 1960-01-01 00:00:00 GMT
 ## (the origin used by SAS)
