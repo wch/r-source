@@ -1,6 +1,6 @@
 % File src/library/stats/man/termplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -32,7 +32,9 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   \item{envir}{environment in which variables in \code{model} can be found}
   \item{partial.resid}{logical; should partial residuals be plotted?}
   \item{rug}{add \link{rug}plots (jittered 1-d histograms) to the axes?}
-  \item{terms}{which terms to plot (default \code{NULL} means all terms)}
+  \item{terms}{which terms to plot (default \code{NULL} means all
+    terms); a \code{\link{character}} vector, passed to
+    \code{\link{predict}(.., term="terms", terms = *)}.}
   \item{se}{plot pointwise standard errors?}
   \item{xlabs}{vector of labels for the x axes}
   \item{ylabs}{vector of labels for the y axes}
@@ -61,7 +63,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
 }
 \details{
   The model object must have a \code{predict} method that accepts
-  \code{type=terms}, eg \code{\link{glm}} in the \pkg{base} package,
+  \code{type=terms}, e.g., \code{\link{glm}} in the \pkg{base} package,
   \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in
   the \CRANpkg{survival} package.
 
