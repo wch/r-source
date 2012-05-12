@@ -146,7 +146,8 @@ cov <- function(x, y = NULL, use = "everything",
 
     if(method == "pearson")
 	.Internal(cov(x, y, na.method, method == "kendall"))
-    else if (na.method %in% c(2L, 5L)) {
+    else if (na.method %in% c(2L, 5L)) { ## "complete.obs"  or  "na.or.complete"
+
         if (is.null(y)) {
             .Internal(cov(Rank(na.omit(x)), NULL, na.method,
                           method == "kendall"))
@@ -160,12 +161,12 @@ cov <- function(x, y = NULL, use = "everything",
             .Internal(cov(Rank(dropNA(x, nas)), Rank(dropNA(y, nas)),
                           na.method, method == "kendall"))
         }
-    } else if (na.method != 3L) {
+    } else if (na.method != 3L) { ## 1 or 4: "all.obs"  or  "everything"
 	x <- Rank(x)
 	if(!is.null(y)) y <- Rank(y)
 	.Internal(cov(x, y, na.method, method == "kendall"))
     }
-    else
+    else ##  "pairwise.complete.obs"
 	stop("cannot handle 'pairwise.complete.obs'")
 }
 

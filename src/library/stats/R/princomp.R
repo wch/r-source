@@ -95,8 +95,8 @@ princomp.default <-
     dimnames(edc$vectors) <- if(missing(x))
         list(dimnames(cv)[[2L]], cn) else list(dimnames(x)[[2L]], cn)
     sdev <- sqrt(ev)
-    sc <- if (cor) sds else rep(1, ncol(cv))
-    names(sc) <- colnames(cv)
+    sc <- setNames(if (cor) sds else rep.int(1, ncol(cv)),
+		   colnames(cv))
     scr <- if (scores && !missing(x) && !is.null(cen))
         scale(z, center = cen, scale = sc) %*% edc$vectors
     if (is.null(cen)) cen <- rep(NA_real_, nrow(cv))

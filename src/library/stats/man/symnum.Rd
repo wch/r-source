@@ -88,7 +88,7 @@ symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
   \code{\link{as.character}}; \code{\link{image}}
 }
 \examples{
-ii <- 0:8; names(ii) <- ii
+ii <- setNames(0:8, 0:8)
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=TRUE)
 

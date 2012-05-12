@@ -136,8 +136,8 @@ smooth.spline <-
 	    dofoff <- df
 	} else warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
     }
-    iparms <- as.integer(c(icrit,ispar, contr.sp$maxit))
-    names(iparms) <- c("icrit", "ispar", "iter")
+    iparms <- setNames(as.integer(c(icrit,ispar, contr.sp$maxit)),
+		       c("icrit", "ispar", "iter"))
 
     keep.stuff <- FALSE ## << to become an argument in the future
     ans.names <- c("coef","ty","lev","spar","parms","crit","iparms","ier",

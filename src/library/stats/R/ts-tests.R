@@ -22,7 +22,7 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"), fitdf=0)
     type <- match.arg(type)
     cor <- acf (x, lag.max = lag, plot = FALSE, na.action = na.pass)
     n <- sum(!is.na(x))
-    PARAMETER <- lag-fitdf
+    PARAMETER <- c(df = lag-fitdf)
     obs <- cor$acf[2:(lag+1)]
     if (type=="Box-Pierce")
     {
@@ -37,7 +37,6 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"), fitdf=0)
         PVAL <- 1-pchisq(STATISTIC, lag-fitdf)
     }
     names(STATISTIC) <- "X-squared"
-    names(PARAMETER) <- "df"
     structure(list(statistic = STATISTIC,
                    parameter = PARAMETER,
                    p.value = PVAL,

@@ -121,8 +121,8 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	METHOD <- "Chi-squared test for given probabilities"
 	E <- n * p
         V <- n * p * (1 - p)
-	names(E) <- names(x)
 	STATISTIC <- sum((x - E) ^ 2 / E)
+	names(E) <- names(x)
 	if(simulate.p.value) {
 	    setMETH()
 	    nx <- length(x)

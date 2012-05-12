@@ -721,8 +721,8 @@ print.summary.glm <-
 	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
     cat("Deviance Residuals: \n")
     if(x$df.residual > 5) {
-	x$deviance.resid <- quantile(x$deviance.resid,na.rm=TRUE)
-	names(x$deviance.resid) <- c("Min", "1Q", "Median", "3Q", "Max")
+	x$deviance.resid <- setNames(quantile(x$deviance.resid,na.rm=TRUE),
+				     c("Min", "1Q", "Median", "3Q", "Max"))
     }
     xx <- zapsmall(x$deviance.resid, digits + 1)
     print.default(xx, digits=digits, na.print = "", print.gap = 2)

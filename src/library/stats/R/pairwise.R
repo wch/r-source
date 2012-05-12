@@ -118,8 +118,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
 pairwise.table <-
 function(compare.levels, level.names, p.adjust.method)
 {
-    ix <- seq_along(level.names)
-    names(ix) <- level.names
+    ix <- setNames(seq_along(level.names), level.names)
     pp <- outer(ix[-1L], ix[-length(ix)],function(ivec, jvec)
           sapply(seq_along(ivec), function(k) {
               i<-ivec[k]

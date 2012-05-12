@@ -50,8 +50,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             xaic[i+1L] <- fit$aic
             var.pred[i+1L] <- fit$sigma2
         }
-        xaic <- xaic - min(xaic)
-        names(xaic) <- 0L:order.max
+        xaic <- setNames(xaic - min(xaic), 0L:order.max)
         order <- (0L:order.max)[xaic == 0L]
         ar <- coefs[order+1L, seq_len(order)]
         x.mean <- coefs[order+1L, order+1L]

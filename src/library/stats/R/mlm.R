@@ -33,16 +33,14 @@ summary.mlm <- function(object, ...)
     ind <- ynames == ""
     if(any(ind)) ynames[ind] <-  paste0("Y", seq_len(ny))[ind]
 
-    value <- vector("list", ny)
-    names(value) <- paste("Response", ynames)
+    value <- setNames(vector("list", ny), paste("Response", ynames))
     cl <- oldClass(object)
     class(object) <- cl[match("mlm", cl):length(cl)][-1L]
     # Need to put the evaluated formula in place
     object$call$formula <- formula(object)
     for(i in seq(ny)) {
-	object$coefficients <- coef[, i]
+	object$coefficients <- setNames(coef[, i], rownames(coef))
         ## if there is one coef, above drops names
-        names(object$coefficients) <- rownames(coef)
 	object$residuals <- resid[, i]
 	object$fitted.values <- fitted[, i]
 	object$effects <- effects[, i]

@@ -57,8 +57,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         1)), c(3, 2, 1))[-1, , , drop = FALSE]
     var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max +
         1)), c(3, 2, 1))
-    xaic <- z$aic - min(z$aic)
-    names(xaic) <- 0:order.max
+    xaic <- setNames(z$aic - min(z$aic), 0:order.max)
     order <- z$order
     resid <- x
     if (order > 0) {

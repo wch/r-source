@@ -58,6 +58,9 @@
 
       \item Matrix indexing of dataframes by two column numeric indices
       is now supported for replacement as well as extraction.
+
+      \item \code{setNames()} gets a default for \code{object}, useful
+      for character result.
     }
   }
 
@@ -414,7 +417,7 @@
 	are \code{1}, \emph{always}} now also applies for \code{integer}
       values.
 
-      \item X11-based pixmap devices like \code{png(type="Xlib")} were trying 
+      \item X11-based pixmap devices like \code{png(type="Xlib")} were trying
       to set the cursor style, which triggered some warnings and hangs.
 
       \item Code executed by the built-in HTTP server no longer allows

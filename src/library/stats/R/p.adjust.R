@@ -24,8 +24,8 @@ p.adjust <- function(p, method = p.adjust.methods, n = length(p))
     method <- match.arg(method)
     if(method == "fdr") method <- "BH"	# back compatibility
     nm <- names(p)
-    p <- as.numeric(p); names(p) <- nm
-    p0 <- p
+    p <- as.numeric(p)
+    p0 <- setNames(p, nm)
     if(all(nna <- !is.na(p))) nna <- TRUE
     p <- p[nna]
     lp <- length(p)

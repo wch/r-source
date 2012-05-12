@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-04-13 r58998) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-05-11 r59334) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -51,9 +51,8 @@ Type 'q()' to quit R.
 +     if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
 +     xmid <- NLSstClosestX(xy, 0.5 * Asym)
 +     scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
-+     value <- c(Asym, xmid, scal)
-+     names(value) <- mCall[c("Asym", "xmid", "scal")]
-+     value
++     setNames(c(Asym, xmid, scal),
++ 	     mCall[c("Asym", "xmid", "scal")])
 + }
 > logist <- selfStart(logist, initial = logistInit) ##-> Error in R 1.5.0
 > str(logist)
@@ -658,8 +657,8 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.039 0.015 2.056 0 0 
+Time elapsed:  2.548 0.02 2.578 0 0 
 > 
 > proc.time()
    user  system elapsed 
-  2.242   0.041   2.273 
+  2.728   0.040   2.775 

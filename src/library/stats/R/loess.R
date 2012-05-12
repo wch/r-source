@@ -40,8 +40,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     if(any(sapply(x, is.factor))) stop("predictors must all be numeric")
     x <- as.matrix(x)
     D <- ncol(x)
-    nmx <- colnames(x)
-    names(nmx) <- nmx
+    nmx <- setNames(nm = colnames(x))
     drop.square <- match(nmx, nmx[drop.square], 0L) > 0L
     parametric <- match(nmx, nmx[parametric], 0L) > 0L
     if(!match(degree, 0L:2L, 0L)) stop("'degree' must be 0, 1 or 2")
@@ -169,8 +168,8 @@ simpleLoess <-
     }
     if(surface == "interpolate")
     {
-	pars <- z$parameter
-	names(pars) <- c("d", "n", "vc", "nc", "nv", "liv", "lv")
+	pars <- setNames(z$parameter,
+			 c("d", "n", "vc", "nc", "nv", "liv", "lv"))
 	enough <- (D + 1) * pars["nv"]
 	fit.kd <- list(parameter=pars, a=z$a[1L:pars[4L]], xi=z$xi[1L:pars[4L]],
 		       vert=z$vert, vval=z$vval[1L:enough])

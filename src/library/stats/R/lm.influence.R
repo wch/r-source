@@ -116,9 +116,7 @@ influence.glm <- function(model, do.coef = TRUE, ...) {
 hatvalues <- function(model, ...) UseMethod("hatvalues")
 hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
 {
-    hat <- infl$hat
-    names(hat) <- names(infl$wt.res)
-    hat
+    setNames(infl$hat, names(infl$wt.res))
 }
 
 rstandard <- function(model, ...) UseMethod("rstandard")

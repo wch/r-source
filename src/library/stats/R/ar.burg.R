@@ -53,8 +53,8 @@ ar.burg.default <-
     var.pred <- if(var.method == 1L) z$var1 else z$var2
     xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
     maic <- min(aic)
-    xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
-    names(xaic) <- 0L:order.max
+    xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
+		     ifelse(xaic == maic, 0, Inf), 0L:order.max)
     order <- if (aic) (0L:order.max)[xaic == 0] else order.max
     ar <- if (order) coefs[order, 1L:order] else numeric()
     var.pred <- var.pred[order+1L]

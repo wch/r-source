@@ -1,13 +1,14 @@
 % File src/library/stats/man/setNames.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
+% Copyright 2005-2012 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{setNames}
 \alias{setNames}
 \title{Set the Names in an Object}
 \usage{
-setNames(object, nm)
+setNames(object = nm, nm)
 }
 \arguments{
  \item{object}{an object for which a \code{names} attribute will be meaningful }
@@ -31,5 +32,8 @@ setNames( 1:3, c("foo", "bar", "baz") )
 tmp <- 1:3
 names(tmp) <-  c("foo", "bar", "baz")
 tmp
+
+## special case of character vector, using default
+setNames(nm = c("First", "2nd"))
 }
 \keyword{list}

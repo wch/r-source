@@ -42,19 +42,18 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     }
     else {
 	dname <- deparse(substitute(x))
-	if( paired ) stop("'y' is missing for paired test")
+	if (paired) stop("'y' is missing for paired test")
 	xok <- !is.na(x)
 	yok <- NULL
     }
     x <- x[xok]
-    if( paired ) {
+    if (paired) {
 	x <- x-y
 	y <- NULL
     }
     nx <- length(x)
     mx <- mean(x)
     vx <- var(x)
-    estimate <- mx
     if(is.null(y)) {
         if(nx < 2) stop("not enough 'x' observations")
 	df <- nx-1
@@ -62,8 +61,9 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         if(stderr < 10 *.Machine$double.eps * abs(mx))
             stop("data are essentially constant")
 	tstat <- (mx-mu)/stderr
-	method <- ifelse(paired,"Paired t-test","One Sample t-test")
-	names(estimate) <- ifelse(paired,"mean of the differences","mean of x")
+	method <- if(paired) "Paired t-test" else "One Sample t-test"
+	estimate <-
+	    setNames(mx, if(paired)"mean of the differences" else "mean of x")
     } else {
 	ny <- length(y)
         if(nx < 1 || (!var.equal && nx < 2))
@@ -139,8 +139,7 @@ function(formula, data, subset, na.action, ...)
     g <- factor(mf[[-response]])
     if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
-    DATA <- split(mf[[response]], g)
-    names(DATA) <- c("x", "y")
+    DATA <- setNames(split(mf[[response]], g), c("x", "y"))
     y <- do.call("t.test", c(DATA, list(...)))
     y$data.name <- DNAME
     if(length(y$estimate) == 2L)

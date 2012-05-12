@@ -40,8 +40,7 @@ cutree <- function(tree, k=NULL, h=NULL)
     ans <- .Call(C_R_cutree, tree$merge, k, PACKAGE = "stats")
 
     if(length(k) == 1L) {
-        ans <- as.vector(ans)
-        names(ans) <- tree$labels
+        ans <- setNames(as.vector(ans), tree$labels)
     }
     else{
         colnames(ans) <- if(!is.null(h)) h else k

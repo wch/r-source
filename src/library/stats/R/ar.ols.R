@@ -111,8 +111,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     E <- drop(rbind(matrix(NA, m, nser), t(Y - YH)))
 
     maic <- min(aic)
-    xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
-    names(xaic) <- order.min:order.max
+    xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
+		     ifelse(xaic == maic, 0, Inf), order.min:order.max)
     dim(ar) <- c(nser, nser, m)
     ar <- aperm(ar, c(3L,1L,2L))
     ses <- seA[[m - order.min + 1L]]

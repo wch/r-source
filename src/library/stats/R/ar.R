@@ -115,8 +115,7 @@ ar.yw.default <-
                 partialacf[m + 1L, , ] <- -A[m + 2L, , ]
             }
         }
-        xaic <- xaic - min(xaic)
-        names(xaic) <- 0L:order.max
+        xaic <- setNames(xaic - min(xaic), 0L:order.max)
         resid <- cal.resid()
         if(order) {
             ar <- -ar[2L:(order + 1L), , , drop = FALSE]
@@ -140,8 +139,9 @@ ar.yw.default <-
         var.pred <- c(r[1L], z$vars)
         xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
         maic <- min(aic)
-        xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
-        names(xaic) <- 0L:order.max
+	xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
+			 ifelse(xaic == maic, 0, Inf),
+			 0L:order.max)
         order <- if (aic) (0L:order.max)[xaic == 0L] else order.max
         ar <- if (order) coefs[order, seq_len(order)] else numeric()
         var.pred <- var.pred[order+1L]
@@ -176,8 +176,8 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     } else { ## univariate case
         if(x$order) {
             cat("Coefficients:\n")
-            coef <- round(drop(x$ar), digits = digits)
-            names(coef) <- seq_len(x$order)
+	    coef <- setNames(round(drop(x$ar), digits = digits),
+			     seq_len(x$order))
             print.default(coef, print.gap = 2L)
         }
         if(!is.null(xint <- x$x.intercept) && !is.na(xint))

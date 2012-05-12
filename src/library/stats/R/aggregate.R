@@ -134,8 +134,8 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
 
     if(is.matrix(mf[[1L]])) {
         ## LHS is a cbind() combo, convert to data frame and fix names.
-        lhs <- as.data.frame(mf[[1L]])
-        names(lhs) <- as.character(m[[2L]][[2L]])[-1L]
+	lhs <- setNames(as.data.frame(mf[[1L]]),
+			as.character(m[[2L]][[2L]])[-1L])
         aggregate.data.frame(lhs, mf[-1L], FUN = FUN, ...)
     }
     else

@@ -60,9 +60,7 @@ port_v_nms <-
       FLSTGD = 12L, GTSLST = 14L,
       PLSTGD = 15L, RADFAC = 16L, DSTSAV = 18L)
 port_get_named_v <- function(v) {
-    v <- v[port_v_nms]
-    names(v) <- names(port_v_nms)
-    v
+    setNames(v[port_v_nms], names(port_v_nms))
 }
 
 
@@ -71,8 +69,7 @@ nlminb <-
              scale = 1, control = list(), lower =  - Inf, upper = Inf)
 {
     ## Establish the working vectors and check and set options
-    par <- as.double(start)
-    names(par) <- names(start)
+    par <- setNames(as.double(start), names(start))
     n <- length(par)
     iv <- integer(78 + 3 * n)
     v <- double(130 + (n * (n + 27)) / 2)

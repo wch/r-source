@@ -51,8 +51,7 @@ function(x, y, ratio = 1,
     }
     ESTIMATE <- V.x / V.y
     STATISTIC <- ESTIMATE / ratio
-    PARAMETER <- c(DF.x, DF.y)
-
+    PARAMETER <- c("num df" = DF.x, "denom df" = DF.y)
     PVAL <- pf(STATISTIC, DF.x, DF.y)
     if (alternative == "two.sided") {
         PVAL <- 2 * min(PVAL, 1 - PVAL)
@@ -67,7 +66,6 @@ function(x, y, ratio = 1,
     else
         CINT <- c(0, ESTIMATE / qf(1 - conf.level, DF.x, DF.y))
     names(STATISTIC) <- "F"
-    names(PARAMETER) <- c("num df", "denom df")
     names(ESTIMATE) <- names(ratio) <- "ratio of variances"
     attr(CINT, "conf.level") <- conf.level
     RVAL <- list(statistic = STATISTIC,
@@ -102,8 +100,7 @@ function(formula, data, subset, na.action, ...)
     g <- factor(mf[[-response]])
     if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
-    DATA <- split(mf[[response]], g)
-    names(DATA) <- c("x", "y")
+    DATA <- setNames(split(mf[[response]], g), c("x", "y"))
     y <- do.call("var.test", c(DATA, list(...)))
     y$data.name <- DNAME
     y

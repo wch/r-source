@@ -266,9 +266,9 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             col.vars[[k]] <- s[-1L]
             names(col.vars)[k] <- s[1L]
         }
-        row.vars <- vector("list", length = n.row.vars)
-        names(row.vars) <- scan(file, what = "", sep = sep, quote =
-                                quote, nlines = 1, quiet = TRUE)
+	row.vars <- setNames(vector("list", length = n.row.vars),
+			     scan(file, what = "", sep = sep, quote = quote,
+				  nlines = 1, quiet = TRUE))
         z <- z[-(1 : (n.col.vars + 1))]
     }
     else {
@@ -302,8 +302,8 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                 stop("'row.var.names' missing")
             }
             n.row.vars <- length(row.var.names)
-            row.vars <- vector("list", length = n.row.vars)
-            names(row.vars) <- as.character(row.var.names)
+	    row.vars <- setNames(vector("list", length = n.row.vars),
+				 as.character(row.var.names))
             if(missing(col.vars) || !is.list(col.vars)) {
                 ## 'col.vars' should be a list.
                 stop("'col.vars' missing or incorrect")

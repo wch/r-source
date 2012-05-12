@@ -131,7 +131,7 @@ print.ppr <- function(x, ...)
     }
     mu <- x$mu; ml <- x$ml
     cat("\nGoodness of fit:\n")
-    gof <- x$gofn; names(gof) <- paste(1L:ml, "terms")
+    gof <- setNames(x$gofn, paste(1L:ml, "terms"))
     print(format(gof[mu:ml], ...), quote=FALSE)
     invisible(x)
 }
@@ -152,7 +152,7 @@ print.summary.ppr <- function(x, ...)
     print(format(x$beta, ...), quote=FALSE)
     if(any(x$edf >0)) {
 	cat("\nEquivalent df for ridge terms:\n")
-	edf <- x$edf; names(edf) <- paste("term", 1L:mu)
+	edf <- setNames(x$edf, paste("term", 1L:mu))
 	print(round(edf,2), ...)
     }
     invisible(x)

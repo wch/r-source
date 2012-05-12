@@ -70,8 +70,8 @@ optim <- function(par, fn, gr = NULL, ...,
         res$value <- res$value * con$fnscale
 	res <- c(res, list(counts = c(NA, NA), convergence = 0L, message= NULL))
     } else {
-	res <- .Internal(optim(par, fn1, gr1, method, con, lower, upper))
-	names(res) <- c("par", "value", "counts", "convergence", "message")
+	res <- setNames(.Internal(optim(par, fn1, gr1, method, con, lower, upper)),
+			c("par", "value", "counts", "convergence", "message"))
     }
     names(res$counts) <- c("function", "gradient")
     nm <- names(par)

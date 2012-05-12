@@ -76,9 +76,8 @@ SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
     parameters(xy) <- list(xmid = aux[1], scal = aux[2])
     pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
                              data = xy, algorithm = "plinear")))
-    value <- c(pars[3], pars[1], pars[2])
-    names(value) <- mCall[c("Asym", "xmid", "scal")]
-    value
+    setNames(c(pars[3], pars[1], pars[2]),
+             mCall[c("Asym", "xmid", "scal")])
   }, c("Asym", "xmid", "scal"))
 
 # 'first.order.log.model' is a function object defining a first order

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-04-13 r58992) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-05-11 r59334) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4d462f0>
+<environment: 0x402dfd0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -3997,8 +3997,8 @@ X-squared = 0.0014, df = 1, p-value = 0.9704
 > ### ** Examples
 > 
 > x <- 1:20
-> y <-  x + (x/4 - 2)^3 + rnorm(20, sd=3)
-> names(y) <- paste("O",x,sep=".")
+> y <-  setNames(x + (x/4 - 2)^3 + rnorm(20, sd=3),
++                paste("O",x,sep="."))
 > ww <- rep(1,20); ww[13] <- 0
 > summary(lmxy <- lm(y ~ x + I(x^2)+I(x^3) + I((x-10)^2),
 +                    weights = ww), cor = TRUE)
@@ -4701,7 +4701,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x7331b28>
+<bytecode: 0x5ae7bb8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -6689,8 +6689,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x4633290>
-<environment: 0xa278088>
+<bytecode: 0x396d150>
+<environment: 0x93434a0>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7092,7 +7092,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x83e9148>
+<environment: 0x79daf88>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11506,26 +11506,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x4630c40>
-<environment: 0x7a8d438>
+<bytecode: 0x396ab00>
+<environment: 0x75af800>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x4630bd0>
-<environment: 0x7a8d438>
+<bytecode: 0x396aa90>
+<environment: 0x75af800>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x4630b60>
-<environment: 0x7a8d438>
+<bytecode: 0x396aa20>
+<environment: 0x75af800>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x46309a0>
-<environment: 0x7a8d438>
+<bytecode: 0x396a860>
+<environment: 0x75af800>
 
 $name
 [1] "identity"
@@ -11536,14 +11536,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x770f338>
-<environment: 0x79be918>
+<bytecode: 0x75b07b8>
+<environment: 0x75a5420>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x770f488>
-<environment: 0x79be918>
+<bytecode: 0x75b08d0>
+<environment: 0x75a5420>
 
 > 
 > 
@@ -12301,6 +12301,43 @@ Warning in predict.lm(wfit, new, interval = "prediction") :
 11  2.40747468  1.0020775  3.81287188
 12  2.99515202  1.6850045  4.30529950
 13  3.58282936  2.2662384  4.89942029
+> 
+> ##-- From  aov(.) example ---- predict(.. terms)
+> utils::data(npk, package="MASS")
+> npk.aov <- aov(yield ~ block + N*P*K, npk)
+> (termL <- attr(terms(npk.aov),"term.labels"))
+[1] "block" "N"     "P"     "K"     "N:P"   "N:K"   "P:K"   "N:P:K"
+> (pt <- predict(npk.aov, type="terms"))
+    block      N          P          K        N:P    N:K        P:K N:P:K
+1  -0.850 -4.925  0.2083333 -0.9583333  0.9416667  1.175  0.4250000     0
+2  -0.850  4.925  0.2083333  0.9583333 -2.8250000  1.175 -0.1416667     0
+3  -0.850 -4.925 -0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+4  -0.850  4.925 -0.2083333 -0.9583333  0.9416667 -3.525 -0.1416667     0
+5   2.575  4.925 -0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+6   2.575  4.925  0.2083333 -0.9583333 -2.8250000 -3.525  0.4250000     0
+7   2.575 -4.925 -0.2083333 -0.9583333  0.9416667  1.175 -0.1416667     0
+8   2.575 -4.925  0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+9   5.900 -4.925  0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+10  5.900  4.925  0.2083333 -0.9583333 -2.8250000 -3.525  0.4250000     0
+11  5.900  4.925 -0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+12  5.900 -4.925 -0.2083333 -0.9583333  0.9416667  1.175 -0.1416667     0
+13 -4.750  4.925 -0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+14 -4.750  4.925  0.2083333 -0.9583333 -2.8250000 -3.525  0.4250000     0
+15 -4.750 -4.925 -0.2083333 -0.9583333  0.9416667  1.175 -0.1416667     0
+16 -4.750 -4.925  0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+17 -4.350  4.925  0.2083333  0.9583333 -2.8250000  1.175 -0.1416667     0
+18 -4.350 -4.925 -0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+19 -4.350  4.925 -0.2083333 -0.9583333  0.9416667 -3.525 -0.1416667     0
+20 -4.350 -4.925  0.2083333 -0.9583333  0.9416667  1.175  0.4250000     0
+21  1.475  4.925 -0.2083333 -0.9583333  0.9416667 -3.525 -0.1416667     0
+22  1.475  4.925  0.2083333  0.9583333 -2.8250000  1.175 -0.1416667     0
+23  1.475 -4.925  0.2083333 -0.9583333  0.9416667  1.175  0.4250000     0
+24  1.475 -4.925 -0.2083333  0.9583333  0.9416667  1.175 -0.1416667     0
+attr(,"constant")
+[1] 54.875
+> pt. <- predict(npk.aov, type="terms", terms = termL[1:4])
+> stopifnot(all.equal(pt[,1:4], pt.,
++                     check.attr=FALSE, tol = 1e-12))
 > 
 > 
 > 
@@ -14501,9 +14538,8 @@ eff.vl> options(contrasts = old)
 +     parameters(xy) <- list(xmid = aux[1], scal = aux[2])
 +     pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
 +                              data = xy, algorithm = "plinear")))
-+     value <- c(pars[3], pars[1], pars[2])
-+     names(value) <- mCall[c("Asym", "xmid", "scal")]
-+     value
++     setNames(c(pars[3], pars[1], pars[2]),
++              mCall[c("Asym", "xmid", "scal")])
 +   }, c("Asym", "xmid", "scal"))
 > 
 > # 'first.order.log.model' is a function object defining a first order
@@ -14564,6 +14600,11 @@ foo bar baz
 > tmp
 foo bar baz 
   1   2   3 
+> 
+> ## special case of character vector, using default
+> setNames(nm = c("First", "2nd"))
+  First     2nd 
+"First"   "2nd" 
 > 
 > 
 > 
@@ -15217,8 +15258,8 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<bytecode: 0x4a0ca80>
-<environment: 0x774f4a8>
+<bytecode: 0x29cba78>
+<environment: 0x786e790>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15554,7 +15595,7 @@ Rape     -0.54          0.82
 > 
 > ### ** Examples
 > 
-> ii <- 0:8; names(ii) <- ii
+> ii <- setNames(0:8, 0:8)
 > symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ $ 
@@ -17434,7 +17475,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.738 0.256 12.578 0 0 
+Time elapsed:  11.916 0.204 12.158 0 0 
 > grDevices::dev.off()
 null device 
           1 

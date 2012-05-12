@@ -63,8 +63,7 @@ function(x, y = NULL, z = NULL,
             conf.level < 0 || conf.level > 1))
             stop("'conf.level' must be a single number between 0 and 1")
 
-        NVAL <- 1
-        names(NVAL) <- "common odds ratio"
+        NVAL <- c("common odds ratio" = 1)
 
         if(!exact) {
             ## Classical Mantel-Haenszel 2 x 2 x K test
@@ -72,7 +71,7 @@ function(x, y = NULL, z = NULL,
             s.y <- apply(x, c(2L, 3L), sum)
             n <- as.double(apply(x, 3L, sum)) # avoid overflows below
             DELTA <- sum(x[1, 1, ] - s.x[1, ] * s.y[1, ] / n)
-            YATES <- ifelse(correct && (abs(DELTA) >= .5), .5, 0)
+	    YATES <- if(correct && (abs(DELTA) >= .5)) .5 else 0
             STATISTIC <- ((abs(DELTA) - YATES)^2 /
                           sum(apply(rbind(s.x, s.y), 2L, prod)
                               / (n^2 * (n - 1))))
@@ -88,7 +87,7 @@ function(x, y = NULL, z = NULL,
             names(STATISTIC) <- "Mantel-Haenszel X-squared"
             names(PARAMETER) <- "df"
             METHOD <- paste("Mantel-Haenszel chi-squared test",
-                            ifelse(YATES, "with", "without"),
+                            if(YATES) "with" else "without",
                             "continuity correction")
             s.diag <- sum(x[1, 1, ] * x[2, 2, ] / n)
             s.offd <- sum(x[1, 2, ] * x[2, 1, ] / n)
@@ -254,9 +253,7 @@ function(x, y = NULL, z = NULL,
                                c(ncp.L(s, alpha), ncp.U(s, alpha))
                            })
 
-            STATISTIC <- s
-            names(STATISTIC) <- "S"
-
+            STATISTIC <- c(S = s)
             RVAL <- list(statistic = STATISTIC,
                          p.value = PVAL)
         }

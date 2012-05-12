@@ -154,8 +154,7 @@ as.ts.default <- function(x, ...)
         tsps <- sapply(sers, tsp)
     }
     if(dframe) {
-        x <- vector("list", nser)
-        names(x) <- nmsers
+	x <- setNames(vector("list", nser), nmsers)
     } else {
         ns <- sum(nsers)
         x <- matrix(, n, ns)
