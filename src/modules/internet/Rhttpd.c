@@ -172,6 +172,12 @@ struct buffer {
     char data[1];
 };
 
+/* we have to protect re-entrance and not continue processing if there is
+   a worker inside R already. If we did not then another client connection
+   would trigger handler and pile up eval on top of the stack, leading to
+   exhaustion very quickly and a big mess */
+static int in_process;
+
 /* --- connection/worker structure holding all data for an active connection --- */
 typedef struct httpd_conn {
     SOCKET sock;         /* client socket */
@@ -547,8 +553,9 @@ static SEXP handler_for_path(const char *path) {
 }
 
 /* process a request by calling the httpd() function in R */
-static void process_request(httpd_conn_t *c)
+static void process_request_(void *ptr)
 {
+    httpd_conn_t *c = (httpd_conn_t*) ptr;
     const char *ct = "text/html";
     char *query = 0, *s;
     SEXP sHeaders = R_NilValue;
@@ -731,6 +738,16 @@ static void process_request(httpd_conn_t *c)
     c->attr |= CONNECTION_CLOSE; /* force close */
 }
 
+/* wrap the actual call with ToplevelExec since we need to have a guaranteed
+   return so we can track the presence of a worker code inside R to prevent
+   re-entrance from other clients */
+static void process_request(httpd_conn_t *c)
+{
+    in_process = 1;
+    R_ToplevelExec(process_request_, c);
+    in_process = 0;
+}
+
 #ifdef WIN32
 #undef process_request
 #endif
@@ -742,6 +759,8 @@ static void worker_input_handler(void *data) {
 
     DBG(printf("worker_input_handler, data=%p\n", data));
     if (!c) return;
+
+    if (in_process) return; /* we don't allow recursive entrance */
 
     DBG(printf("input handler for worker %p (sock=%d, part=%d, method=%d, line_pos=%d)\n", (void*) c, (int)c->sock, (int)c->part, (int)c->method, (int)c->line_pos));
 

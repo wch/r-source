@@ -416,6 +416,10 @@
 
       \item X11-based pixmap devices like \code{png(type="Xlib")} were trying 
       to set the cursor style, which triggered some warnings and hangs.
+
+      \item Code executed by the built-in HTTP server no longer allows
+      other HTTP clients to re-enter R until the current worker
+      evaluation finishes to prevent cascades.
     }
   }
 }
