@@ -1235,7 +1235,7 @@ function(txt)
 ### ** .read_description
 
 .keep_white_description_fields <-
-    c("Description", "Author", "Built", "Packaged")
+    c("Description", "Authors@R", "Author", "Built", "Packaged")
 
 .read_description <-
 function(dfile)
@@ -1291,7 +1291,7 @@ function(x, dfile)
     }
     ## Avoid declared encodings when writing out.
     Encoding(x) <- "unknown"
-    ## Avoid folding for Description, Author, Built, and Packaged.
+    ## Avoid folding for fields where we keep whitespace when reading.
     write.dcf(rbind(x), dfile,
               keep.white = .keep_white_description_fields)
 }
