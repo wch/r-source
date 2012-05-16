@@ -1367,8 +1367,8 @@ double-complex BLAS routines, but no single-precision or complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be@footnote{at least on Unix-alikes: the Windows build currently
 resolves such dependencies to a static FORTRAN library when
-@file{Rblas.dll} is built.}, as most BLAS libraries are written at least
-partially in FORTRAN.
+@file{Rblas.dll} is built.} included following it, as most BLAS
+libraries are written at least partially in FORTRAN.
 
 @item LAPACK_LIBS
 @vindex LAPACK_LIBS
@@ -1385,7 +1385,7 @@ all the double-precision and double-complex routines, and some do not
 provide all the auxiliary routines.]
 
 For portability, the macros @code{BLAS_LIBS} and @code{FLIBS} should
-always be included @emph{after} @code{LAPACK_LIBS}.
+always be included @emph{after} @code{LAPACK_LIBS} (and in that order).
 
 @item SAFE_FFLAGS
 @vindex SAFE_FFLAGS
