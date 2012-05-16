@@ -50,6 +50,8 @@
       \pkg{utils} declare that functions and other objects in a package
       should be treated as globally defined, so that \code{CMD check}
       will not note them.
+
+      \item \code{zlib} has been updated to version 1.2.7.
     }
   }
 
