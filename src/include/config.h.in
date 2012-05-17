@@ -438,6 +438,9 @@
 /* Define to 1 if you have the `log1p' function. */
 #undef HAVE_LOG1P
 
+/* Define to 1 if you have the `log1pl' function. */
+#undef HAVE_LOG1PL
+
 /* Define to 1 if you have the `log2' function. */
 #undef HAVE_LOG2
 

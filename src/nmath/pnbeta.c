@@ -85,14 +85,19 @@ pnbeta2(double x, double o_x, double a, double b, double ncp,
 	/* o_x  == 1 - x  but maybe more accurate */
 	int lower_tail, int log_p)
 {
-    long double ans= pnbeta_raw(x, o_x, a,b, ncp);
+    long double ans = pnbeta_raw(x, o_x, a,b, ncp);
 
     /* return R_DT_val(ans), but we want to warn about cancellation here */
-    if(lower_tail) return (double) (log_p ? logl(ans) : ans);
+    if (lower_tail) return (double) (log_p ? logl(ans) : ans);
     else {
-	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnbeta");
+	if (ans > 1. - 1e-10) ML_ERROR(ME_PRECISION, "pnbeta");
 	if (ans > 1.0) ans = 1.0;  /* Precaution */
-	return (double) (log_p ? log1pl(-ans) : (1 - ans));
+#ifdef HAVE_LOG1PL
+	return (double) (log_p ? log1pl(-ans) : (1. - ans));
+#else
+	/* include standalone case */
+	return (double) (log_p ? log1p((double)-ans) : (1. - ans));
+#endif
     }
 }
 

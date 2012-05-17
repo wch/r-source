@@ -414,6 +414,9 @@
 /* Define to 1 if you have the `readline' library (-lreadline). */
 /* #undef HAVE_LIBREADLINE */
 
+/* Define to 1 if you have the `rt' library (-lrt). */
+#undef HAVE_LIBRT
+
 /* Define to 1 if you have the `termcap' library (-ltermcap). */
 /* #undef HAVE_LIBTERMCAP */
 
@@ -437,6 +440,9 @@
 
 /* Define to 1 if you have the `log1p' function. */
 #define HAVE_LOG1P 1
+
+/* Define to 1 if you have the `log1pl' function. */
+#define HAVE_LOG1PL 1
 
 /* Define to 1 if you have the `log2' function. */
 #define HAVE_LOG2 1
@@ -585,6 +591,15 @@
 
 /* Define to 1 if you have the `rl_completion_matches' function. */
 /* #undef HAVE_RL_COMPLETION_MATCHES */
+
+/* Define to 1 if you have the `sched_getaffinity' function. */
+#undef HAVE_SCHED_GETAFFINITY
+
+/* Define to 1 if you have the <sched.h> header file. */
+#undef HAVE_SCHED_H
+
+/* Define to 1 if you have the `sched_setaffinity' function. */
+#undef HAVE_SCHED_SETAFFINITY
 
 /* Define to 1 if you have the `setenv' function. */
 /* #undef HAVE_SETENV */
@@ -885,6 +900,9 @@
 /* Name of package */
 #define PACKAGE "R"
 
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT "https://bugs.r-project.org"
+
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "R"
 
@@ -936,9 +954,9 @@
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
 #ifdef WIN64
-#define R_PLATFORM "x86_64-pc-mingw32"
+#define R_PLATFORM "x86_64-w64-mingw32"
 #else
-#define R_PLATFORM "i386-pc-mingw32"
+#define R_PLATFORM "i386-w64-mingw32"
 #endif
 
 /* Define this to be printing command on your system. */
@@ -951,7 +969,7 @@
 #define R_SOCKLEN_T int
 
 /* Define this to be the name of the vendor of your system. */
-#define R_VENDOR "pc"
+#define R_VENDOR "w64"
 
 /* Define this to be the extension used for shared objects on your system. */
 #define SHLIB_EXT ".dll"
