@@ -1988,6 +1988,7 @@ char *R_alloc(size_t nelem, int eltsize)
 	R_VStack = s;
 	return (char *) DATAPTR(s);
     }
+    /* One programmer has relied on this, but it is undocumented! */
     else return NULL;
 }
 
