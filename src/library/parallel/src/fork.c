@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-11 Simon Urbanek
- *      Copyright 2011 R Core Team.
+ *      Copyright 2011-2 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -592,7 +592,7 @@ SEXP mc_exit(SEXP sRes)
 #include <sched.h>
 #endif
 
-#ifdef CPU_ZERO
+#if defined(CPU_ZERO) && defined(CPU_COUNT) && defined(CPU_SETSIZE) && defined(CPU_SET) && defined(CPU_SET_S) && defined(CPU_ISSET)
 #define WORKING_MC_AFFINITY
 #endif
 #endif
