@@ -599,6 +599,7 @@ SEXP mc_exit(SEXP sRes)
 
 #ifdef WORKING_MC_AFFINITY
 
+/* req is one-based, cpu_set is zero-based */
 SEXP mc_affinity(SEXP req) {
     if (req != R_NilValue && TYPEOF(req) != INTSXP && TYPEOF(req) != REALSXP)
 	error(_("Invalid CPU affinity specification"));
@@ -612,6 +613,7 @@ SEXP mc_affinity(SEXP req) {
 	    if (v[i] < 1)
 		error(_("Invalid CPU affinity specification"));
 	}
+	/* These are both one-based */
 	if (max_cpu <= CPU_SETSIZE) { /* can use static set */
 	    cpu_set_t cs;
 	    CPU_ZERO(&cs);
@@ -631,10 +633,14 @@ SEXP mc_affinity(SEXP req) {
 #endif
 	}
     }
-    { /* FIXME: in theory we may want to use *_S versions as well, but that would require
-	 some knowledge about the number of available CPUs and comparing that to
-	 CPU_SETSIZE, so for now we just use static cpu_set -- the mask will be still
-	 set correctly, just the returned set will be truncated at CPU_SETSIZE */
+
+    {
+	/* FIXME: in theory we may want to use *_S versions as well,
+	 but that would require some knowledge about the number of
+	 available CPUs and comparing that to CPU_SETSIZE, so for now
+	 we just use static cpu_set -- the mask will be still set
+	 correctly, just the returned set will be truncated at
+	 CPU_SETSIZE */
 	cpu_set_t cs;
 	CPU_ZERO(&cs);
 	if (sched_getaffinity(0, sizeof(cs), &cs)) {
