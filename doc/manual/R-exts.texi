@@ -7187,6 +7187,11 @@ Up to 255 characters are passed back to a length-one character vector.
 How well this works (or even if it works at all) depends on the C and
 FORTRAN compilers on each platform.
 
+It is possible to pass @R{} objects other than atomic vectors via
+@code{.C}, but this is only supported for historical compatibility: use
+the @code{.Call} or @code{.External} interfaces for such objects.  Any
+C/C++ code that includes @file{Rinternals.h} should be called via
+@code{.Call} or @code{.External}.
 
 @node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}

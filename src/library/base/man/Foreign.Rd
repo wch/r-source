@@ -110,7 +110,7 @@
   Missing (\code{NA}) string values are passed to \code{.C} as the string
   "NA". As the C \code{char} type can represent all possible bit patterns
   there appears to be no way to distinguish missing strings from the
-  string \code{"NA"}.  If this distinction is important use \code{.Call}.
+  string \code{"NA"}.  If this distinction is important use \code{\link{.Call}}.
 
   \code{.Fortran} passes the first (only )character string of a character
   vector is passed as a C character array to Fortran: that may be usable
@@ -118,18 +118,12 @@
   up to 255 characters of the string are passed back.  (How well this
   works, and even if it works at all, depends on the C and Fortran
   compilers and the platform.)
-
-  \R objects such as functions, expressions, environments and other
-  language elements are passed as the \R pointer type \code{SEXP}.  This
-  type is defined in header \file{Rinternals.h} or the arguments can be
-  declared as generic pointers, \code{void *}.  Lists are passed as C
-  arrays of \code{SEXP} and can be declared as \code{void **} or
-  \code{SEXP *}.  All inputs apart from atomic vectors should be
-  regarded as read-only, and all apart from vectors (including lists),
-  functions and environments are now deprecated.
-
-  If you need to return \R objects created within the C routine, use the
-  \code{\link{.Call}} interface.
+  
+  Lists, functions are other \R objects can (for historical reasons) be
+  passed to \code{.C}, but the \code{\link{.Call}} interface is much
+  preferred.  All inputs apart from atomic vectors should be regarded as
+  read-only, and all apart from vectors (including lists), functions and
+  environments are now deprecated.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
@@ -154,7 +148,8 @@
   \code{.C("Cfunction", input = x, output = numeric(10))}.
 
   In this case the \code{output} variable did not exist before the call
-  so it cannot cause trouble.  If the \code{input} variable is not
+  so it cannot cause trouble (but as from \R 2.15.1 it is not copied
+  even with \code{DUP = TRUE}).  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
 }
 
