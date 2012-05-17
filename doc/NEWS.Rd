@@ -220,12 +220,13 @@
       \pkg{splines} have a new option \code{sparse} which can be used
       for efficient construction of a sparse B-spline design matrix.
 
-      \item \code{norm()} now allows \code{type = "2"} (the "spectral"
-      or 2-norm) as well, mainly for didactical completeness.
+      \item \code{norm()} now allows \code{type = "2"} (the
+      \sQuote{spectral} or 2-norm) as well, mainly for didactical
+      completeness.
 
-      \item \code{pmin()} and \code{pmax(x,y,...)} now also work when one
-      of the inputs is of length zero and another is not, returning a
-      zero length vector, analogously to, say, \code{+}.
+      \item \code{pmin()} and \code{pmax())} now also work when one of
+      the inputs is of length zero and others are not, returning a
+      zero-length vector, analogously to, say, \code{+}.
 
       \item \code{colorRamp()} (and hence \code{colorRampPalette()}) now
       also works for the boundary case of just one color when the ramp is
@@ -246,14 +247,15 @@
       should be treated as globally defined, so that \code{CMD check}
       will not note them.
 
-      \item \code{zlib} has been updated to version 1.2.7.
+      \item The included copy of \code{zlib} has been updated to version
+      1.2.7.
     }
   }
 
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
       \item In package \pkg{parallel}, \code{makeForkCluster()} and the
-      multicore-based functions use native byte order for serialization
+      multicore-based functions use native byte-order for serialization
       (deferred from 2.15.0).
 
       \item \code{lm.fit()}, \code{lm.wfit()}, \code{glm.fit()} and
@@ -403,8 +405,8 @@
       not kept up with changes to \code{windows()}, and issued
       warnings about bad parameters. (\PR{14880})
 
-      \item On Windows, the \code{Sys.glob()} function didn't handle UNC
-      paths as it was designed to try to do. (\PR{14884})
+      \item On Windows, the \code{Sys.glob()} function did not handle
+      UNC paths as it was designed to try to do. (\PR{14884})
 
       \item In package \pkg{parallel}, \code{clusterApply()} and similar
       failed to handle a (pretty pointless) length-1 argument. (\PR{14898})
@@ -416,21 +418,22 @@
       animations without sleep cycles.
 
       \item Source locations reported in \code{traceback()} were
-      incorrect when byte-compiled code was in the stack.
+      incorrect when byte-compiled code was on the stack.
 
       \item \code{plogis(x, lower=FALSE, log.p=TRUE)} no longer
-      underflows early for large x (e.g. x=800).
+      underflows early for large x (e.g. 800).
 
       \item \code{?Arithmetic}'s \dQuote{\code{1 ^ y} and \code{y ^ 0}
 	are \code{1}, \emph{always}} now also applies for \code{integer}
-      values.
+      vectors \code{y}.
 
-      \item X11-based pixmap devices like \code{png(type="Xlib")} were trying
-      to set the cursor style, which triggered some warnings and hangs.
+      \item X11-based pixmap devices like \code{png(type="Xlib")} were
+      trying to set the cursor style, which triggered some warnings and
+      hangs.
 
       \item Code executed by the built-in HTTP server no longer allows
-      other HTTP clients to re-enter R until the current worker
-      evaluation finishes to prevent cascades.
+      other HTTP clients to re-enter \R until the current worker
+      evaluation finishes, to prevent cascades.
     }
   }
 }
