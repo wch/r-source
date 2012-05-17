@@ -60,7 +60,13 @@
       is now supported for replacement as well as extraction.
 
       \item \code{setNames()} gets a default for \code{object}, useful
-      for character result.
+      for a character result.
+
+      \item \code{StrucTS()} has a revised additive constant in the
+      \code{loglik} component of the result: the previous definition is
+      returned as the \code{loglik0} component.  However, the help page has
+      always warned of a lack of comparability of log-likelihoods for
+      non-stationary models.  (Suggested by Jouni Helske.)
     }
   }
 

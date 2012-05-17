@@ -141,8 +141,9 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
                           "trend" = c("level", "slope", "epsilon"),
                           "BSM" = c("level", "slope", "seas", "epsilon")
                           )
-    loglik <- -length(y) * res$value + length(y) * log(2 * pi)
-    res <- list(coef = coef, loglik = loglik, data = y,
+    loglik <- -length(y) * res$value - 0.5 * sum(!is.na(y)) * log(2 * pi)
+    loglik0 <- -length(y) * res$value + length(y) * log(2 * pi)
+    res <- list(coef = coef, loglik = loglik, loglik0 = loglik0, data = y,
                 residuals = resid, fitted = states,
                 call = match.call(), series = series,
                 code = res$convergence, model = Z, model0 = Z0, xtsp = xtsp)
