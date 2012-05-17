@@ -2,35 +2,31 @@ R @FULLVERSION@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows XP and later (including 64-bit versions of Windows, perhaps
-also Windows 2000) on ix86 and x86_64 chips.  It is designed to be as
-close as possible to the implementation on Unix, but see the list of
-differences below.  The port was by Guido Masarotto, Brian Ripley and
-Duncan Murdoch.
-
-See the file 'CHANGES' for the new features of this version.
-(CHANGES.Rd if you got R by subversion.)
+Windows XP and later (including 64-bit versions of Windows) on ix86
+and x86_64 chips.  It is designed to be as close as possible to the
+implementation on Unix, but see the list of differences below.  The
+port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
 
 
 Installation
 ============
 
-The distribution is distributed as a 37Mb installer @RWVER@-win.exe.
-
-Just run this for a Windows-style installer.  It contains all the R
+The distribution is distributed as an installer @RWVER@-win.exe.  Just
+run this for a Windows-style installer.  It contains all the R
 components, and you can select what you want installed.
 
-For more details, including command-line options for the installer
-and how to uninstall, see the rw-FAQ.  If you are reading this as part of
-an installed version of R, that's both file rw-FAQ in this directory
+For more details, including command-line options for the installer and
+how to uninstall, see the rw-FAQ.  If you are reading this as part of
+an installed version of R, that is both file rw-FAQ in this directory
 and file doc\html\rw-FAQ.html.
 
 
 Usage
 =====
 
-There are two versions of the R executable in @RWVER@\bin\i386 (32-bit) or 
-@RWVER@\bin\x64 (64-bit).
+There are two versions of the R executable in @RWVER@\bin\i386 (32-bit) 
+and @RWVER@\bin\x64 (64-bit).  By default only the first is
+installed on 32-bit versions of Windows, and both on 64-bit OSes.
 
 GUI:
 
@@ -87,18 +83,16 @@ to run batch jobs. You can also use it via R CMD BATCH: see ?BATCH or
 R CMD BATCH --help.
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
-under NTEmacs, for example with ess-5.3.x.  The pager is
-automatically set to "console" so text help will be displayed in emacs
-buffers.
+under NTEmacs.  The pager is automatically set to "console" so text
+help will be displayed in emacs buffers.
 
 
 GRAPHICS:
 
-The screen device is called windows().  This is launched automatically,
-and can also be launched explicitly by windows() or win.graph() (or
-x11()) from both Rgui.exe and Rterm.exe.  A printer device can be
-opened using win.print(), and graphs drawn as metafiles by
-win.metafile().
+The screen device is called windows().  This is launched
+automatically, and can also be launched explicitly by windows() from
+both Rgui.exe and Rterm.exe.  A printer device can be opened using
+win.print(), and graphs drawn as metafiles by win.metafile().
 
 The graphics device pops up a separate window which has two menus.  The
 device's File menu allows saving or printing or to run dev.off().
@@ -130,13 +124,13 @@ colours) can be customized by editing the file etc\Rconsole, and a
 copy with a user's settings can be put in her HOME directory or in the
 working directory.  (The exact sequence is to search the directory
 pointed to by the first found of the environment variables R_USER then
-HOME, then the Windows "personal" directory (typically 'C:\Documents
-and Settings\username\My Documents' in Windows XP and
-'C:\Users\username\My Documents' on Vista/7) then
-{HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
-This also applies to .Renviron and other uses of 'HOME' in our
-documentation.)  The file contains a description of the settings that
-can be altered.  See also ?Rconsole.
+HOME, then the Windows "personal" directory (typically
+'C:\Users\username\My Documents' on Windows Vista/7 and 'C:\Documents
+and Settings\username\My Documents' on XP) then {HOMEDRIVE}{HOMEPATH}
+then the working directory, finally R_HOME\etc.  This also applies to
+.Renviron and other uses of 'HOME' in our documentation.)  The file
+contains a description of the settings that can be altered.  See also
+?Rconsole.
 
 An alternative way to edit the Rconsole file is to use the GUI
 preferences item on the Edit menu in Rgui.exe.  This can change some
@@ -152,12 +146,12 @@ device and the printer device.
 Many R defaults can be set in the file R_HOME\etc\Rprofile or a user's
 file .Rprofile.  In particular:
 
-- The pager is set by options(pager=).  The default is "internal" which
-  brings up a separate console-like window.  The internal pager can use
-  a single window or a different window for each topic shown
-  (configurable in Rconsole).  Other possibilities we have
-  used are "notepad" and "pfe32 /v", and "console" to list the files in
-  the console (Rgui.exe) or terminal window (Rterm.exe).
+- The pager is set by options(pager=).  The default is "internal"
+  which brings up a separate console-like window.  The internal pager
+  can use a single window or a different window for each topic shown
+  (configurable in Rconsole).  Other possibilities we have used are
+  "notepad" and "console" to list the files in the console (Rgui.exe)
+  or terminal window (Rterm.exe).
 
 
 Adding packages
@@ -221,7 +215,7 @@ Building From Source
 ====================
 
 See the 'R Installation and Adminstration' Manual
-(doc\manual\R-admin.html) and the rw-FAQ.
+(doc\manual\R-admin.html).
 
 
 Feedback
