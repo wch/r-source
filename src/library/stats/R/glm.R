@@ -102,11 +102,15 @@ glm <- function(formula, family = gaussian, data, weights,
     ## re-calculated by setting an offset (provided there is an intercept).
     ## Prior to 2.4.0 this was only done for non-zero offsets.
     if(length(offset) && attr(mt, "intercept") > 0L) {
-        fit$null.deviance <-
+        fit2 <-
             eval(call(if(is.function(method)) "method" else method,
                       x = X[, "(Intercept)", drop=FALSE], y = Y,
                       weights = weights, offset = offset, family = family,
-                      control = control, intercept = TRUE))$deviance
+                      control = control, intercept = TRUE))
+        ## That fit might not have converged ....
+        if(!fit2$converged)
+            warning("fitting to calculate the null deviance did not converge -- increase maxit?")
+        fit$null.deviance <- fit2$deviance
     }
     if(model) fit$model <- mf
     fit$na.action <- attr(mf, "na.action")
