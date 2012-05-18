@@ -54,10 +54,7 @@ Axis.table <- function(x, at, ..., side = 1, labels)
          x0 <- if (is.num) xx else seq.int(x)
          if(missing(at)) at <- x0
          if(missing(labels)) labels <- nx
-         xaxt <- if (length(as <- list(...))) {
-             if (!is.null(as$axes) && !as$axes) "n" else as$xaxt
-         }## else NULL
-         axis(side, at = at, labels = labels, xaxt = xaxt)
+         axis(side, at = at, labels = labels, ...)
      }
      else stop("only for 1-D table")
 }

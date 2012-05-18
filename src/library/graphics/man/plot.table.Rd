@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plot.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.table}
@@ -30,7 +30,8 @@
   \item{frame.plot}{logical indicating if a frame (\code{\link{box}})
     should be drawn in the 1D case.  Defaults to true when \code{x} has
     \code{\link{dimnames}} coerce-able to numbers.}
-  \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.}
+  \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.
+    \code{axes = FALSE} is accepted.}
 }
 \seealso{
   \code{\link{plot.factor}}, the \code{\link{plot}} method for factors.
