@@ -121,13 +121,11 @@ plot.table <-
 	plot(x0, unclass(x), type = type,
 	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
 	     lwd = lwd, ..., xaxt = "n")
-	xaxt <-
-	    if(length(as <- list(...))) {
-		if(!is.null(as$axes) && !as$axes) "n" else as$xaxt
-	    }## else NULL
-	axis(1, at = x0, labels = nx, xaxt = xaxt)
+        localaxis <- function(..., col, bg, pch, cex, lty) axis(...)
+	if(!identical(list(...)$axes, FALSE))
+            localaxis(1, at = x0, labels = nx, ...)
     } else {
-	if(length(as <- list(...)) && !is.null(as$main)) # use 'main'
+	if(length(dots <- list(...)) && !is.null(dots$main)) # use 'main'
 	    mosaicplot(x, xlab = xlab, ylab = ylab, ...)
 	else # default main
 	    mosaicplot(x, xlab = xlab, ylab = ylab, main = xnam, ...)

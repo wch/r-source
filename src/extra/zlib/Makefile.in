@@ -12,8 +12,9 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 ZLIB_CPPFLAGS = -I$(srcdir) @USE_MMAP_ZLIB_TRUE@ -DUSE_MMAP
+ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ## need to be PIC for use in grDevices
-ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS) $(CPICFLAGS)
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(R_OPENMP_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS) $(CPICFLAGS)
 
 SOURCES = adler32.c compress.c crc32.c deflate.c infback.c \
   inffast.c inflate.c inftrees.c trees.c uncompr.c zutil.c

@@ -239,6 +239,10 @@
       \item Code executed by the built-in HTTP server no longer allows
       other HTTP clients to re-enter \R until the current worker
       evaluation finishes, to prevent cascades.
+      
+      \item The \code{plot()} and \code{Axis()} methods for class
+      \code{"table"} now respect graphical parameters such as
+      \code{cex.axis}.  (Reported by Martin Becker.)
     }
   }
 }
