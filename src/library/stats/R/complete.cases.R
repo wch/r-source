@@ -14,4 +14,4 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-complete.cases <- function(...) .Internal(complete.cases(...))
+complete.cases <- function(...) .External(C_compcases, ...)

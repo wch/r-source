@@ -530,7 +530,6 @@
  det_ge_real
  do_AT
  do_Cstack_info
- do_D
  do_D2POSIXlt
  do_External
  do_Externalgr
@@ -608,12 +607,10 @@
  do_commandArgs
  do_comment
  do_commentgets
- do_compcases
  do_compilepkgs
  do_complex
  do_contourLines
  do_countfields
- do_cov
  do_cum
  do_dataentry
  do_dataviewer
@@ -622,7 +619,6 @@
  do_delayed
  do_deparse
  do_deparseRd
- do_deriv
  do_detach
  do_devAskNewPage
  do_devcap

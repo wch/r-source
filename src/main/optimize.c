@@ -162,6 +162,7 @@ static double fcn2(double x, struct callinfo *info)
 
 }
 
+/* FIXME: unused */
 /* zeroin(f, xmin, xmax, tol, maxiter) */
 SEXP attribute_hidden do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

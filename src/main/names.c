@@ -249,7 +249,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"pmatch",	do_pmatch,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"charmatch",	do_charmatch,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"match.call",	do_matchcall,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"complete.cases",do_compcases,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"crossprod",	do_matprod,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"tcrossprod",	do_matprod,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 
@@ -471,8 +470,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 {"mean",	do_summary,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"range",	do_range,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"cov",		do_cov,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"cor",		do_cov,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Note that the number of arguments in this group only applies
    to the default method */
@@ -875,7 +872,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 {"nlm",		do_nlm,		0,	11,	11,	{PP_FUNCALL, PREC_FN,	0}},
 {"fmin",	do_fmin,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"zeroin",	do_zeroin,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"zeroin2",	do_zeroin2,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optim",	do_optim,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optimhess",	do_optimhess,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
@@ -883,9 +879,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"update.formula",do_updateform,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"model.frame",	do_modelframe,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"model.matrix",do_modelmatrix,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-
-{"D",		do_D,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"deriv.default",do_deriv,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* History manipulation */
 {"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

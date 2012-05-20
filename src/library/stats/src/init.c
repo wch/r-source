@@ -154,7 +154,8 @@ static const R_CMethodDef CEntries[]  = {
 
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
-
+SEXP cor(SEXP x, SEXP y, SEXP na_method, SEXP method);
+SEXP cov(SEXP x, SEXP y, SEXP na_method, SEXP method);
 
 static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
@@ -195,6 +196,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_rWishart", (DL_FUNC) &R_rWishart, 3},
     {"Cdqrls", (DL_FUNC) &Cdqrls, 3},
     {"Cdist", (DL_FUNC) &Cdist, 4},
+    {"cor", (DL_FUNC) &cor, 4},
+    {"cov", (DL_FUNC) &cov, 4},
     {NULL, NULL, 0}
 };
 
@@ -217,9 +220,23 @@ static const R_FortranMethodDef FortEntries[] = {
     {NULL, NULL, 0}
 };
 
+SEXP compcases(SEXP args);
+SEXP doD(SEXP args);
+SEXP deriv(SEXP args);
+
+#define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
+
+static const R_ExternalMethodDef ExtEntries[] = {
+    EXTDEF(compcases, -1),
+    EXTDEF(doD, 2),
+    EXTDEF(deriv, 5),
+    {NULL, NULL, 0}
+};
+
+
 void attribute_visible R_init_stats(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
+    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
 
     R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC)nlminb_iterate);
