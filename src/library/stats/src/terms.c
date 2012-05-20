@@ -134,9 +134,7 @@ static int InstallVar(SEXP var)
 /* the variable on the lhs. If so they shouldn't be included */
 /* in the factors */
 
-/* from memory.c */
-extern SEXP framenames;		/* variables names for specified frame */
-/* NOTE: framenames is on the R_PreciousList, so protected from gc */
+static SEXP framenames;		/* variables names for specified frame */
 static Rboolean haveDot;	/* does RHS of formula contain `.'? */
 
 
@@ -761,6 +759,7 @@ SEXP termsform(SEXP args)
     else
 	error(_("'data' argument is of the wrong type"));
 
+    PROTECT(framenames);
     if (framenames != R_NilValue) {
 	if(length(framenames)) hadFrameNames = TRUE;
 	if (length(CAR(args))== 3) CheckRHS(CADR(CAR(args)));
@@ -1052,7 +1051,7 @@ SEXP termsform(SEXP args)
 
     SETCDR(a, R_NilValue);  /* truncate if necessary */
 
-    UNPROTECT(4);
+    UNPROTECT(5);
     return ans;
 }
 
