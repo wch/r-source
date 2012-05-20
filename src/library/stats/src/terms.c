@@ -1244,7 +1244,7 @@ SEXP updateform(SEXP args)
 
     SET_ATTRIB(_new, R_NilValue);
     SET_OBJECT(_new, 0);
-    static DotEnvSymbol = nstall(".Environment");
+    static SEXP DotEnvSymbol = nstall(".Environment");
     setAttrib(_new, DotEnvSymbol, getAttrib(old, DotEnvSymbol));
 
     return _new;
