@@ -274,7 +274,7 @@ void copyMostAttrib(SEXP inp, SEXP ans)
 }
 
 /* version that does not preserve ts information, for subsetting */
-void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
+void copyMostAttribNoTs(SEXP inp, SEXP ans)
 {
     SEXP s;
 

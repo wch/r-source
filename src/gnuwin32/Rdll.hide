@@ -330,7 +330,6 @@
  Rf_con_pushback
  Rf_convertToC
  Rf_copyListMatrix
- Rf_copyMostAttribNoTs
  Rf_d1mach
  Rf_deparse1s
  Rf_evalList
