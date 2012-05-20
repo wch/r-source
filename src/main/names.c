@@ -1089,7 +1089,7 @@ static void SymbolShortcuts(void)
     R_dot_GenericDefEnv = install(".GenericDefEnv");
 }
 
-extern SEXP framenames; /* from model.c */
+extern SEXP framenames; /* from memory.c */
 
 /* initialize the symbol table */
 void InitNames()
@@ -1208,3 +1208,23 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 #undef __R_Names__
+
+/* moved from model.c */
+
+	/* Internal code for the ~ operator */
+
+SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    if (isObject(call))
+	return duplicate(call);
+    else {
+	SEXP klass;
+	PROTECT(call = duplicate(call));
+	PROTECT(klass = mkString("formula"));
+	setAttrib(call, R_ClassSymbol, klass);
+	setAttrib(call, R_DotEnvSymbol, rho);
+	UNPROTECT(2);
+	return call;
+    }
+}
+
