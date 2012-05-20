@@ -25,7 +25,7 @@ SOURCES_C = \
 	gevents.c gram.c gram-ex.c gramLatex.c gramRd.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
-	main.c mapply.c match.c memory.c model.c \
+	main.c mapply.c match.c memory.c \
 	names.c \
 	objects.c optim.c optimize.c options.c \
 	paste.c platform.c plot.c plot3d.c plotmath.c \

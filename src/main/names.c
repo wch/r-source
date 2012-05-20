@@ -875,10 +875,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"zeroin2",	do_zeroin2,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optim",	do_optim,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optimhess",	do_optimhess,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"terms.formula",do_termsform,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"update.formula",do_updateform,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"model.frame",	do_modelframe,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
-{"model.matrix",do_modelmatrix,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* History manipulation */
 {"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1089,8 +1085,6 @@ static void SymbolShortcuts(void)
     R_dot_GenericDefEnv = install(".GenericDefEnv");
 }
 
-extern SEXP framenames; /* from memory.c */
-
 /* initialize the symbol table */
 void InitNames()
 {
@@ -1130,7 +1124,6 @@ void InitNames()
     SymbolShortcuts();
     /*  Builtin Functions */
     for (int i = 0; R_FunTab[i].name; i++) installFunTab(i);
-    framenames = R_NilValue;
 
     R_initialize_bcode();
 }

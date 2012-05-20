@@ -814,8 +814,6 @@
  do_mkUnbound
  do_mkcode
  do_mkjunction
- do_modelframe
- do_modelmatrix
  do_msgwindow
  do_mvfft
  do_names
@@ -988,7 +986,6 @@
  do_syswhich
  do_tempdir
  do_tempfile
- do_termsform
  do_textconnection
  do_textconvalue
  do_tilde
@@ -1010,7 +1007,6 @@
  do_untracemem
  do_unz
  do_unzip
- do_updateform
  do_url
  do_usemethod
  do_utf8ToInt
@@ -1034,7 +1030,6 @@
  do_writelines
  do_writetable
  do_xtfrm
- do_zeroin
  do_zeroin2
  dos_wglob
  dos_wglobfree

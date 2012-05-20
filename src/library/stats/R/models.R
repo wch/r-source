@@ -212,8 +212,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data, optional=TRUE)
-    terms <- .Internal(terms.formula(x, specials, data, keep.order,
-                                     allowDotAsName))
+    terms <- .External(C_termsform, x, specials, data, keep.order,
+                       allowDotAsName)
     if (simplify) {
         a <- attributes(terms)
         terms <- fixFormulaObject(terms)
@@ -408,8 +408,9 @@ model.frame.default <-
     extranames <- names(extras[-1L])
     extras <- eval(extras, data, env)
     subset <- eval(substitute(subset), data, env)
-    data <- .Internal(model.frame(formula, rownames, variables, varnames,
-				  extras, extranames, subset, na.action))
+    rho <- sys.frame()
+    data <- .External(C_modelframe, formula, rownames, variables, varnames,
+                      extras, extranames, subset, na.action, rho)
     ## fix up the levels
     if(length(xlev)) {
 	for(nm in names(xlev))
@@ -518,7 +519,8 @@ model.matrix.default <- function(object, data = environment(object),
         isF <-  FALSE
         data <- list(x=rep(0, nrow(data)))
     }
-    ans <- .Internal(model.matrix(t, data))
+    rho <- sys.frame()
+    ans <- .External(C_modelmatrix, t, data, rho)
     cons <- if(any(isF))
 	lapply(data[isF], attr, "contrasts") ## else NULL
     attr(ans, "contrasts") <- cons
