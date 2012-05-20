@@ -171,7 +171,7 @@ SEXP attribute_hidden do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 #ifndef R_MEMORY_PROFILING
-void attribute_hidden memtrace_report(void* old, void *_new) {
+void memtrace_report(void* old, void *_new) {
     return;
 }
 #else
@@ -191,7 +191,7 @@ static void memtrace_stack_dump(void)
     Rprintf("\n");
 }
 
-void attribute_hidden memtrace_report(void * old, void * _new)
+void memtrace_report(void * old, void * _new)
 {
     if (!R_current_trace_state()) return;
     Rprintf("tracemem[%p -> %p]: ", (void *) old, _new);
