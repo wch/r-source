@@ -442,6 +442,12 @@
       \item The \code{plot()} and \code{Axis()} methods for class
       \code{"table"} now respect graphical parameters such as
       \code{cex.axis}.  (Reported by Martin Becker.)
+
+      \item Under some circumstances \code{package.skeleton()} would
+      give out progress reports that could not be translated and so were
+      reproduced by question marks.  Now they are always in English.
+      (This was seen for CJK locales on Windows, but may have occurred
+      elsewhere.)
     }
   }
 }

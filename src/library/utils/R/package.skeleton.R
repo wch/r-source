@@ -61,7 +61,8 @@ package.skeleton <-
     curLocale <- Sys.getlocale("LC_CTYPE")
     on.exit(Sys.setlocale("LC_CTYPE", curLocale), add = TRUE)
     if(Sys.setlocale("LC_CTYPE", "C") != "C")
-        warning("cannot turn off locale-specific chars via LC_CTYPE")
+        warning("cannot turn off locale-specific chars via LC_CTYPE",
+                domain = NA)
 
     have <- unlist(lapply(list, exists, envir = environment))
     if(any(!have))
@@ -74,7 +75,7 @@ package.skeleton <-
     if(!length(list))
 	stop("no R objects specified or available")
 
-    message("Creating directories ...")
+    message("Creating directories ...", domain = NA)
     ## Make the directories
     dir <- file.path(path, name)
     if(file.exists(dir) && !force)
@@ -86,7 +87,7 @@ package.skeleton <-
     safe.dir.create(data_dir <- file.path(dir, "data"))
 
     ## DESCRIPTION
-    message("Creating DESCRIPTION ...")
+    message("Creating DESCRIPTION ...", domain = NA)
     description <- file(file.path(dir, "DESCRIPTION"), "wt")
     cat("Package: ", name, "\n",
 	"Type: Package\n",
@@ -103,14 +104,14 @@ package.skeleton <-
 
     if(!namespace)
 	warning("From R 2.14.0 on, every package gets a NAMESPACE.",
-		" Argument 'namespace' is deprecated.")
+		" Argument 'namespace' is deprecated.", domain = NA)
     ## NAMESPACE
     ## <NOTE>
     ## For the time being, we export all non-internal objects using the pattern
     ## of names beginning with alpha.  All S4 methods and classes are exported.
     ## S3 methods will be exported if the function's name would be exported.
     ## </NOTE>
-    message("Creating NAMESPACE ...")
+    message("Creating NAMESPACE ...", domain = NA)
     out <- file(file.path(dir, "NAMESPACE"), "wt")
     writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
     if(length(methodsList)) {
@@ -124,7 +125,7 @@ package.skeleton <-
     close(out)
 
     ## Read-and-delete-me
-    message("Creating Read-and-delete-me ...")
+    message("Creating Read-and-delete-me ...", domain = NA)
     out <- file(file.path(dir, "Read-and-delete-me"), "wt")
     msg <-
         c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
@@ -148,7 +149,7 @@ package.skeleton <-
 
     ## Dump the items in 'data' or 'R'
     if(!use_code_files) {
-        message("Saving functions and data ...")
+        message("Saving functions and data ...", domain = NA)
         if(length(internalObjInds))
             dump(internalObjs,
                  file = file.path(code_dir,
@@ -166,7 +167,7 @@ package.skeleton <-
                          file = file.path(data_dir, sprintf("%s.rda", item))))
         }
     } else {
-        message("Copying code files ...")
+        message("Copying code files ...", domain = NA)
         file.copy(code_files, code_dir)
         ## Only "abc.R"-like files are really ok:
 	R_files <- tools::list_files_with_type(code_dir, "code",
@@ -177,7 +178,7 @@ package.skeleton <-
 	if(length(wrong)) {
 	    warning("Invalid file name(s) for R code in ", code_dir,":\n",
 		    strwrap(paste(sQuote(wrong), collapse = ", "), indent=2),
-		    "\n are now renamed to 'z<name>.R'")
+		    "\n are now renamed to 'z<name>.R'", domain = NA)
 	    file.rename(from = file.path(code_dir, wrong),
 			to = file.path(code_dir,
 			paste0("z", sub("(\\.[^.]*)?$", ".R", wrong))))
@@ -185,7 +186,7 @@ package.skeleton <-
     }
 
     ## Make help file skeletons in 'man'
-    message("Making help files ...")
+    message("Making help files ...", domain = NA)
     ## Suppress partially inappropriate messages from prompt().
     yy <- try(suppressMessages({
 	promptPackage(name,
@@ -235,8 +236,8 @@ package.skeleton <-
     if(length(list.files(data_dir)) == 0L)
         unlink(data_dir, recursive = TRUE)
 
-    message("Done.")
-    message(gettextf("Further steps are described in '%s'.",
+    message("Done.", domain = NA)
+    message(sprintf("Further steps are described in '%s'.",
                      file.path(dir, "Read-and-delete-me")),
             domain = NA)
 }
