@@ -687,7 +687,6 @@
  do_first_min
  do_flush
  do_flushconsole
- do_fmin
  do_for
  do_formals
  do_format
@@ -825,7 +824,6 @@
  do_nextmethod
  do_nextn
  do_ngettext
- do_nlm
  do_normalizepath
  do_nsl
  do_nzchar
@@ -1033,8 +1031,6 @@
  do_writelines
  do_writetable
  do_xtfrm
- do_zeroin
- do_zeroin2
  dos_wglob
  dos_wglobfree
  dpois_raw

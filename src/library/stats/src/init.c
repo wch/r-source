@@ -231,6 +231,9 @@ SEXP doD(SEXP args);
 SEXP deriv(SEXP args);
 SEXP modelframe(SEXP args);
 SEXP modelmatrix(SEXP args);
+SEXP do_fmin(SEXP args);
+SEXP nlm(SEXP args);
+SEXP zeroin2(SEXP args);
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
@@ -240,6 +243,9 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(deriv, 5),
     EXTDEF(modelframe, 9),
     EXTDEF(modelmatrix, 3),
+    EXTDEF(do_fmin, 5),
+    EXTDEF(nlm, 11),
+    EXTDEF(zeroin2, 8),
     {NULL, NULL, 0}
 };
 

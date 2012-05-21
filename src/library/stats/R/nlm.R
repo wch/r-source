@@ -26,20 +26,22 @@ nlm <- function(f, p, ..., hessian=FALSE, typsize=rep(1,length(p)),
     ## msg is collection of bits, i.e., sum of 2^k (k = 0,..,4):
     msg <- (1 + c(8,0,16))[1+print.level]
     if(!check.analyticals) msg <- msg + (2 + 4)
-    .Internal(nlm(function(x) f(x, ...), p, hessian, typsize, fscale,
-                  msg, ndigit, gradtol, stepmax, steptol, iterlim))
+    rho <- sys.frame()
+    .External(C_nlm, function(x) f(x, ...), p, hessian, typsize, fscale,
+              msg, ndigit, gradtol, stepmax, steptol, iterlim, rho)
 }
 
 optimize <- function(f, interval, ...,
 		     lower=min(interval), upper=max(interval),
 		     maximum=FALSE, tol=.Machine$double.eps^0.25)
 {
+    rho <- sys.frame()
     if(maximum) {
-	val <- .Internal(fmin(function(arg) -f(arg, ...), lower, upper, tol))
-	list(maximum = val, objective= f(val, ...))
+	val <- .External(C_do_fmin,function(arg) -f(arg, ...), lower, upper, tol, rho)
+	list(maximum = val, objective = f(val, ...))
     } else {
-	val <- .Internal(fmin(function(arg) f(arg, ...), lower, upper, tol))
-	list(minimum = val, objective= f(val, ...))
+	val <- .External(C_do_fmin, function(arg) f(arg, ...), lower, upper, tol, rho)
+	list(minimum = val, objective = f(val, ...))
     }
 }
 
@@ -59,9 +61,10 @@ uniroot <- function(f, interval, ...,
     if(is.na(f.upper)) stop("f.upper = f(upper) is NA")
     if(f.lower * f.upper > 0)
 	stop("f() values at end points not of opposite sign")
-    val <- .Internal(zeroin2(function(arg) f(arg, ...),
-                             lower, upper, f.lower, f.upper,
-			     tol, as.integer(maxiter)))
+    rho <- sys.frame()
+    val <- .External(C_zeroin2, function(arg) f(arg, ...),
+                     lower, upper, f.lower, f.upper,
+                     tol, as.integer(maxiter), rho)
     iter <- as.integer(val[2L])
     if(iter < 0) {
 	warning("_NOT_ converged in ", maxiter, " iterations")

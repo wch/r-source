@@ -27,7 +27,7 @@ SOURCES_C = \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
 	names.c \
-	objects.c optim.c optimize.c options.c \
+	objects.c optim.c options.c \
 	paste.c platform.c plot.c plot3d.c plotmath.c \
 	print.c printarray.c printvector.c printutils.c qsort.c \
 	random.c raw.c registration.c relop.c rlocale.c \

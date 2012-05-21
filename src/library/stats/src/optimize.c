@@ -72,13 +72,13 @@ static double fcn1(double x, struct callinfo *info)
 }
 
 /* fmin(f, xmin, xmax tol) */
-SEXP attribute_hidden do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_fmin(SEXP args)
 {
     double xmin, xmax, tol;
     SEXP v, res;
     struct callinfo info;
 
-    checkArity(op, args);
+    args = CDR(args);
     PrintDefaults();
 
     /* the function to be minimized */
@@ -110,7 +110,8 @@ SEXP attribute_hidden do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!R_FINITE(tol) || tol <= 0.0)
 	error(_("invalid '%s' value"), "tol");
 
-    info.R_env = rho;
+    args = CDR(args);
+    info.R_env = CAR(args);
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
     PROTECT(res = allocVector(REALSXP, 1));
     SETCADR(info.R_fcall, allocVector(REALSXP, 1));
@@ -163,7 +164,7 @@ static double fcn2(double x, struct callinfo *info)
 }
 
 /* zeroin2(f, ax, bx, f.ax, f.bx, tol, maxiter) */
-SEXP attribute_hidden do_zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP zeroin2(SEXP args)
 {
     double f_ax, f_bx;
     double xmin, xmax, tol;
@@ -171,7 +172,7 @@ SEXP attribute_hidden do_zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP v, res;
     struct callinfo info;
 
-    checkArity(op, args);
+    args = CDR(args);
     PrintDefaults();
 
     /* the function to be minimized */
@@ -209,7 +210,8 @@ SEXP attribute_hidden do_zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
     iter = asInteger(CAR(args));
     if (iter <= 0) error(_("'maxiter' must be positive"));
 
-    info.R_env = rho;
+    args = CDR(args);
+    info.R_env = CAR(args);
     PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
     SETCADR(info.R_fcall, allocVector(REALSXP, 1));
     PROTECT(res = allocVector(REALSXP, 3));
@@ -420,7 +422,7 @@ static void Cd2fcn(int nr, int n, const double x[], double *h,
 }
 
 
-static double *fixparam(SEXP p, int *n, SEXP call)
+static double *fixparam(SEXP p, int *n)
 {
     double *x;
     int i;
@@ -460,13 +462,6 @@ static double *fixparam(SEXP p, int *n, SEXP call)
     }
     return x;
 }
-
-
-static void invalid_na(SEXP call)
-{
-    error(_("invalid NA value in parameter"));
-}
-
 
 	/* Fatal errors - we don't deliver an answer */
 
@@ -532,7 +527,7 @@ from above in some direction,\n"\
 
 /* NOTE: The actual Dennis-Schnabel algorithm `optif9' is in ../appl/uncmin.c */
 
-SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP nlm(SEXP args)
 {
     SEXP value, names, v, R_gradientSymbol, R_hessianSymbol;
 
@@ -549,14 +544,13 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
     function_info *state;
 
-    checkArity(op, args);
+    args = CDR(args);
     PrintDefaults();
 
     state = (function_info *) R_alloc(1, sizeof(function_info));
 
     /* the function to be minimized */
 
-    state->R_env = rho;
     v = CAR(args);
     if (!isFunction(v))
 	error(_("attempt to minimize non-function"));
@@ -566,7 +560,7 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* `p' : inital parameter value */
 
     n = 0;
-    x = fixparam(CAR(args), &n, call);
+    x = fixparam(CAR(args), &n);
     args = CDR(args);
 
     /* `hessian' : H. required? */
@@ -577,40 +571,42 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* `typsize' : typical size of parameter elements */
 
-    typsiz = fixparam(CAR(args), &n, call);
+    typsiz = fixparam(CAR(args), &n);
     args = CDR(args);
 
     /* `fscale' : expected function size */
 
     fscale = asReal(CAR(args));
-    if (ISNA(fscale)) invalid_na(call);
+    if (ISNA(fscale)) error(_("invalid NA value in parameter"));
     args = CDR(args);
 
     /* `msg' (bit pattern) */
     omsg = msg = asInteger(CAR(args));
-    if (msg == NA_INTEGER) invalid_na(call);
+    if (msg == NA_INTEGER) error(_("invalid NA value in parameter"));
     args = CDR(args);
 
     ndigit = asInteger(CAR(args));
-    if (ndigit == NA_INTEGER) invalid_na(call);
+    if (ndigit == NA_INTEGER) error(_("invalid NA value in parameter"));
     args = CDR(args);
 
     gradtl = asReal(CAR(args));
-    if (ISNA(gradtl)) invalid_na(call);
+    if (ISNA(gradtl)) error(_("invalid NA value in parameter"));
     args = CDR(args);
 
     stepmx = asReal(CAR(args));
-    if (ISNA(stepmx)) invalid_na(call);
+    if (ISNA(stepmx)) error(_("invalid NA value in parameter"));
     args = CDR(args);
 
     steptol = asReal(CAR(args));
-    if (ISNA(steptol)) invalid_na(call);
+    if (ISNA(steptol)) error(_("invalid NA value in parameter"));
     args = CDR(args);
 
     /* `iterlim' (def. 100) */
     itnlim = asInteger(CAR(args));
-    if (itnlim == NA_INTEGER) invalid_na(call);
+    if (itnlim == NA_INTEGER) error(_("invalid NA value in parameter"));
     args = CDR(args);
+
+    state->R_env = CAR(args);
 
     /* force one evaluation to check for the gradient and hessian */
     iagflg = 0;			/* No analytic gradient */
