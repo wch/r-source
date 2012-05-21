@@ -68,10 +68,8 @@ static int nvar;		/* Number of variables in the formula */
 static int nwords;		/* # of words (ints) to code a term */
 static int nterm;		/* # of model terms */
 static SEXP varlist;		/* variables in the model */
-attribute_hidden
-SEXP framenames;		/* variables names for specified frame */
-/* NOTE: framenames can't be static because it must be protected from
-   garbage collection. */
+static PROTECT_INDEX vpi;
+static SEXP framenames;		/* variables names for specified frame */
 static Rboolean haveDot;	/* does RHS of formula contain `.'? */
 
 static int isZeroOne(SEXP x)
@@ -173,7 +171,7 @@ static void CheckRHS(SEXP v)
 		    else
 			SET_STRING_ELT(t, j, STRING_ELT(framenames, j+1));
 		}
-		framenames = t;
+		REPROTECT(framenames = t, vpi);
 	    }
 	}
     }
@@ -770,6 +768,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	framenames = getAttrib(data, R_NamesSymbol);
     else
 	error(_("'data' argument is of the wrong type"));
+    PROTECT_WITH_INDEX(framenames, &vpi);
 
     if (framenames != R_NilValue) {
 	if(length(framenames)) hadFrameNames = TRUE;
@@ -1063,7 +1062,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SETCDR(a, R_NilValue);  /* truncate if necessary */
 
-    UNPROTECT(4);
+    UNPROTECT(5);
     return ans;
 }
 
