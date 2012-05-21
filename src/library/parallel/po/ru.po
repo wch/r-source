@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
 "PO-Revision-Date: 2011-10-18 22:15-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -44,7 +44,7 @@ msgstr "нет трубы к мастер-процессу"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
-#: fork.c:233 fork.c:240
+#: fork.c:233 fork.c:240 fork.c:570
 msgid "write error, closing pipe to the master"
 msgstr "ошибка записи, закрываю трубу к мастеру"
 
@@ -74,18 +74,18 @@ msgstr "mckill не удался"
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit может быть использован только в дочернем процессе"
 
-#: fork.c:582
+#: fork.c:583
 msgid "mcexit failed"
 msgstr "mcexit не удался"
 
-#: fork.c:603 fork.c:612
+#: fork.c:605 fork.c:614
 msgid "Invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:622
+#: fork.c:625
 msgid "Requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:641
+#: fork.c:648
 msgid "Retrieving CPU affinity set failed"
 msgstr ""

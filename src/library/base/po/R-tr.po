@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -242,6 +242,9 @@ msgstr ""
 msgid "labels/breaks length conflict"
 msgstr ""
 
+msgid "invalid value of length(x)"
+msgstr ""
+
 msgid "invalid 'row.names' length"
 msgstr ""
 
@@ -311,10 +314,13 @@ msgstr ""
 msgid "named arguments are discouraged"
 msgstr ""
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
+msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 
-msgid "only logical matrix subscripts are allowed in replacement"
+msgid "rhs is the wrong length"
+msgstr ""
+
+msgid "illegal matrix index in replacement"
 msgstr ""
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1227,6 +1233,9 @@ msgid "'x' cannot be coerced to 'octmode'"
 msgstr ""
 
 msgid "'x' cannot be coerced to hexmode"
+msgstr ""
+
+msgid "using ... with FUN = \"*\" is an error"
 msgstr ""
 
 msgid "no arguments"

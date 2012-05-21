@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -50,6 +50,10 @@ msgstr ""
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "нужны по крайней мере 3 периода, чтобы вычислить стартовые значения сезона."
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "неправильная длина членов"
 
 msgid "optimization difficulties: %s"
 msgstr "трудности оптимизации: %s"
@@ -272,10 +276,6 @@ msgstr "свертывается в уникальные значения 'x'"
 
 msgid "invalid interpolation method"
 msgstr "неправильный метод интерполяции"
-
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "неправильная длина членов"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "для интерполяции нужны по крайней мере два не-NA значения"
@@ -1046,6 +1046,10 @@ msgstr "отрицательные веса не разрешены"
 
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "количество смещений %d, а должно быть %d (количество наблюдений)"
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
+msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
 msgstr "значение 'epsilon' должно быть > 0"
@@ -1927,9 +1931,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' не имеет правильного количества колонок"
 
-msgid "wrong number of predictors"
-msgstr "неправильное число предикторов"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "указаны и 'x', и 'covmat': 'x' будет пропущено"
 
@@ -2511,6 +2512,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "неправильное число предикторов"
 
 #, fuzzy
 #~ msgid "invalid value oflength(x)"

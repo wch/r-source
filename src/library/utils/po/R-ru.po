@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-03 08:16\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -77,6 +77,10 @@ msgid "Warning: unknown option"
 msgstr "Предупреждение: неизвестная опция"
 
 msgid "Created PDF document"
+msgstr "Созданный документ PDF"
+
+#, fuzzy
+msgid "Compacting PDF document"
 msgstr "Созданный документ PDF"
 
 msgid "path to %s contains spaces,"
@@ -594,35 +598,11 @@ msgstr "'code_files' должны быть текстовым вектором"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr "не могу выключить специфичные для локали символы через LC_CTYPE"
-
 msgid "no R objects specified or available"
 msgstr "R-объекты не указаны или недоступны"
 
-msgid "Creating directories ..."
-msgstr "Создаю папки..."
-
 msgid "directory '%s' already exists"
 msgstr "папка '%s' уже есть"
-
-msgid "Creating DESCRIPTION ..."
-msgstr "Создаю DESCRIPTION..."
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr "Начиная с R 2.14.0, каждый пакет получает NAMESPACE."
-
-msgid "Argument 'namespace' is deprecated."
-msgstr "аргумент 'namespace' устарел и не рекомендуется."
-
-msgid "Creating NAMESPACE ..."
-msgstr "Создаю NAMESPACE..."
-
-msgid "Creating Read-and-delete-me ..."
-msgstr "Создаю Read-and-delete-me..."
-
-msgid "Saving functions and data ..."
-msgstr "Сохраняю функции и данные..."
 
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -630,27 +610,6 @@ msgid ""
 msgstr ""
 "Общие функции и другие объекты S4 (например, '%s') не могут быть сброшены; "
 "используйте аргумент code_files="
-
-msgid "Copying code files ..."
-msgstr "Копирую файлы с кодом..."
-
-msgid "Invalid file name(s) for R code in"
-msgstr "Неправильное имя файла(ов) для кода R в"
-
-msgid ":"
-msgstr ":"
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr "теперь переименован в 'z<name>.R'"
-
-msgid "Making help files ..."
-msgstr "Делаю файлы помощи..."
-
-msgid "Done."
-msgstr "Готово."
-
-msgid "Further steps are described in '%s'."
-msgstr "Дальнейшее указано в '%s'."
 
 msgid "unable to access index for repository %s"
 msgstr "недоступен индекс для хранилища %s"
@@ -1262,6 +1221,51 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr "не могу выключить специфичные для локали символы через LC_CTYPE"
+
+#~ msgid "Creating directories ..."
+#~ msgstr "Создаю папки..."
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr "Создаю DESCRIPTION..."
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr "Начиная с R 2.14.0, каждый пакет получает NAMESPACE."
+
+#~ msgid "Argument 'namespace' is deprecated."
+#~ msgstr "аргумент 'namespace' устарел и не рекомендуется."
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr "Создаю NAMESPACE..."
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr "Создаю Read-and-delete-me..."
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr "Сохраняю функции и данные..."
+
+#~ msgid "Copying code files ..."
+#~ msgstr "Копирую файлы с кодом..."
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr "Неправильное имя файла(ов) для кода R в"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr "теперь переименован в 'z<name>.R'"
+
+#~ msgid "Making help files ..."
+#~ msgstr "Делаю файлы помощи..."
+
+#~ msgid "Done."
+#~ msgstr "Готово."
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr "Дальнейшее указано в '%s'."
 
 #~ msgid ""
 #~ "Would you like to create a personal library\n"

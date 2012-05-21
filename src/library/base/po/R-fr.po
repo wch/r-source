@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -253,6 +253,10 @@ msgstr "'breaks' ne sont pas des valeurs uniques"
 msgid "labels/breaks length conflict"
 msgstr "longueurs de 'labels' et 'breaks' non conformes"
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "valeur incorrecte"
+
 msgid "invalid 'row.names' length"
 msgstr "longueur de 'row.names' incorrecte"
 
@@ -327,12 +331,15 @@ msgstr "les arguments nommés autres que 'exact' ne sont pas conseillés"
 msgid "named arguments are discouraged"
 msgstr "les arguments nommés ne sont pas conseillés"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
+msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
-"la partie de droite a une taille incorrecte pour l'indiçage par une matrice "
-"logique"
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "les noms de lignes donnés ne sont pas de la bonne longueur"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr ""
 "seuls les indices logiques sont permis pour le remplacement dans la matrice"
 
@@ -1322,6 +1329,9 @@ msgstr "impossible de convertir automatiquement 'x' en 'octmode'"
 msgid "'x' cannot be coerced to hexmode"
 msgstr "impossible de convertir automatiquement 'x' en mode hexadécimal"
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr "pas d'arguments"
 
@@ -1828,6 +1838,11 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr ""
+#~ "la partie de droite a une taille incorrecte pour l'indiçage par une "
+#~ "matrice logique"
 
 #~ msgid ""
 #~ "Functions for exporting methods must have been made generic, explicitly "

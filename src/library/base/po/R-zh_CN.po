@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -245,6 +245,10 @@ msgstr "'breaks' 的值有重复"
 msgid "labels/breaks length conflict"
 msgstr "label/breaks两个参数的长度不一样"
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "无效值"
+
 msgid "invalid 'row.names' length"
 msgstr "'row.names'的长度不对"
 
@@ -314,10 +318,15 @@ msgstr "除了'exact'之外最好不用带名字的参数"
 msgid "named arguments are discouraged"
 msgstr "最好不用带名字的参数"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
-msgstr "用逻辑矩阵做指标的话等式右手的长度不对"
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr ""
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "行名长度不对"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr "替换时只能用逻辑矩阵下标"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1248,6 +1257,9 @@ msgstr "不能强迫把'x'改变成'octmode'"
 msgid "'x' cannot be coerced to hexmode"
 msgstr "不能强迫把'x'改变成'hexmode'"
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr "没有参数"
 
@@ -1734,6 +1746,9 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr "用逻辑矩阵做指标的话等式右手的长度不对"
 
 #~ msgid ""
 #~ "Functions for exporting methods must have been made generic, explicitly "

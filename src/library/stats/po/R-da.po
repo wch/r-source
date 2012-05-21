@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,9 @@ msgstr "data skal være forskellig fra nul for multiplikativ Holt-Winters."
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "kræver mindst 2 perioder for at beregne startværdier for sæson"
+
+msgid "invalid length(x)"
+msgstr ""
 
 #, fuzzy
 msgid "optimization difficulties: %s"
@@ -253,9 +256,6 @@ msgid "collapsing to unique 'x' values"
 msgstr ""
 
 msgid "invalid interpolation method"
-msgstr ""
-
-msgid "invalid length(x)"
 msgstr ""
 
 msgid "need at least two non-NA values to interpolate"
@@ -996,6 +996,10 @@ msgid "negative weights not allowed"
 msgstr ""
 
 msgid "number of offsets is %d should equal %d (number of observations)"
+msgstr ""
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1840,9 +1844,6 @@ msgid ""
 msgstr ""
 
 msgid "'newdata' does not have the correct number of columns"
-msgstr ""
-
-msgid "wrong number of predictors"
 msgstr ""
 
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"

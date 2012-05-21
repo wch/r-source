@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -247,6 +247,10 @@ msgstr "'breaks' sind nicht eindeutig"
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks unterschiedlicher Länge"
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "ungültiger Wert"
+
 msgid "invalid 'row.names' length"
 msgstr "ungültige 'row.names' Länge"
 
@@ -318,11 +322,15 @@ msgstr "benannte Argumente außer 'exact' sollten nicht benutzt werden"
 msgid "named arguments are discouraged"
 msgstr "benannte Argumente sollten nicht benutzt werden"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
+msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
-"rechte Seite hat die falsche Länge für Indizierung mit einer logischen Matrix"
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "angegebene Zeilennamen haben falsche Länge"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr "in Ersetzungen sind nur logische Matrizen als Teilmengen erlaubt"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1284,6 +1292,9 @@ msgstr "'x' kann nicht in 'octmode' umgewandelt werden"
 msgid "'x' cannot be coerced to hexmode"
 msgstr "'x' kann nicht in hexmode umgewandelt werden"
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr "keine Argumente"
 
@@ -1784,6 +1795,11 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr ""
+#~ "rechte Seite hat die falsche Länge für Indizierung mit einer logischen "
+#~ "Matrix"
 
 #~ msgid ""
 #~ "Functions for exporting methods must have been made generic, explicitly "

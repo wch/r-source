@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-01 07:06+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -17,9 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
 
-#: base.c:295
+#: base.c:38
+msgid "no base graphics system is registered"
+msgstr ""
+
+#: base.c:297
 msgid "Event GE_ScalePS requires a single numeric value"
 msgstr " イベント GE_ScalePS は単一の数値を必要とします "
+
+#: base.c:322 base.c:329 base.c:337
+msgid "the base graphics system is not registered"
+msgstr ""
 
 #: graphics.c:289
 #, c-format

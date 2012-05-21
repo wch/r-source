@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -43,6 +43,10 @@ msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "sono necessari almeno 3 periodi per poter calcolare valori stagionali "
 "iniziali"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "lunghezza dei membri non valida"
 
 msgid "optimization difficulties: %s"
 msgstr ""
@@ -274,10 +278,6 @@ msgstr "si riduce a valori unici di 'x'"
 
 msgid "invalid interpolation method"
 msgstr "metodo di interpolazione non valido"
-
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "lunghezza dei membri non valida"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "ci vogliono almeno due valori non-NA per interpolare"
@@ -1078,6 +1078,10 @@ msgstr "non sono ammessi pesi negativi"
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr ""
 "il numero degli offest è %d, dovrebbe essere %d (numero di osservazioni)"
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
+msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
 msgstr "il valore di 'epsilon' deve essere > 0"
@@ -2003,9 +2007,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' ha un numero di colonne non corretto"
 
-msgid "wrong number of predictors"
-msgstr "numero di predittori sbagliato"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "specificati sia 'x' che 'covmat': 'x' verrà ignorata"
 
@@ -2607,6 +2608,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "numero di predittori sbagliato"
 
 #, fuzzy
 #~ msgid "invalid value oflength(x)"

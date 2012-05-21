@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -257,6 +257,10 @@ msgstr "i 'breaks' non sono distinti"
 msgid "labels/breaks length conflict"
 msgstr "lunghezze di labels e breaks differenti"
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "valore 'n' non valido"
+
 msgid "invalid 'row.names' length"
 msgstr "lunghezza di 'row.names' non ammissibile"
 
@@ -333,12 +337,15 @@ msgstr "'row.names' mancanti non sono permesse"
 msgid "named arguments are discouraged"
 msgstr "'row.names' duplicate non sono permesse"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
+msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
-"il termine di destra ha una lunghezza sbagliata per poter inidicizzare "
-"usando una matrice logica"
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "row.names forniti sono di lunghezza sbagliata"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr "si possono utilizzare solo matrici indice logiche per la sostituzione"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1364,6 +1371,9 @@ msgstr "non posso trasformarlo in una table"
 msgid "'x' cannot be coerced to hexmode"
 msgstr "non posso trasformarlo in una table"
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 #, fuzzy
 msgid "no arguments"
 msgstr "argomento sbagliato"
@@ -1887,6 +1897,11 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr ""
+#~ "il termine di destra ha una lunghezza sbagliata per poter inidicizzare "
+#~ "usando una matrice logica"
 
 #~ msgid "'pattern' must be a non-empty character string"
 #~ msgstr "il 'pattern' deve essere una stringa di caratteri non vuota"

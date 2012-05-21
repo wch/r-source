@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32+0100\n"
-"PO-Revision-Date: 2012-04-26 07:32+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"PO-Revision-Date: 2012-05-21 13:03+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -71,6 +71,77 @@ msgstr "can only transform 100 pars in arima0"
 msgid "maximum supported lag is 350"
 msgstr "maximum supported lag is 350"
 
+#: complete_cases.c:26
+#, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "invalid ‘type’ (%s) of argument"
+
+#: complete_cases.c:112
+msgid "no input has determined the number of cases"
+msgstr "no input has determined the number of cases"
+
+#: complete_cases.c:215
+msgid "not all arguments have the same length"
+msgstr "not all arguments have the same length"
+
+#: cov.c:551
+msgid "missing observations in cov/cor"
+msgstr "missing observations in cov/cor"
+
+#: cov.c:629
+msgid "'x' is NULL"
+msgstr "‘x’ is NULL"
+
+#: cov.c:648 cov.c:654
+msgid "incompatible dimensions"
+msgstr "incompatible dimensions"
+
+#: cov.c:673 cov.c:714 cov.c:747
+msgid "no complete element pairs"
+msgstr "no complete element pairs"
+
+#: cov.c:686
+msgid "invalid 'use' (computational method)"
+msgstr "invalid ‘use’ (computational method)"
+
+#: cov.c:689
+msgid "'x' is empty"
+msgstr "‘x’ is empty"
+
+#: cov.c:783
+msgid "the standard deviation is zero"
+msgstr "the standard deviation is zero"
+
+#: deriv.c:119
+msgid "invalid form in unary minus check"
+msgstr "invalid form in unary minus check"
+
+#: deriv.c:526
+#, c-format
+msgid "Function '%s' is not in the derivatives table"
+msgstr "Function ‘%s’ is not in the derivatives table"
+
+#: deriv.c:633
+msgid "variable must be a character string"
+msgstr "variable must be a character string"
+
+#: deriv.c:635
+msgid "only the first element is used as variable name"
+msgstr "only the first element is used as variable name"
+
+#: deriv.c:648
+#, c-format
+msgid "invalid expression in '%s'"
+msgstr "invalid expression in ‘%s’"
+
+#: deriv.c:924 model.c:90
+msgid "invalid variable names"
+msgstr "invalid variable names"
+
+#: deriv.c:933
+msgid "invalid tag"
+msgstr "invalid tag"
+
 #: distance.c:156
 msgid "treating non-finite values as NA"
 msgstr "treating non-finite values as NA"
@@ -98,6 +169,26 @@ msgstr "Argument %s must be a nonempty numeric vector"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument %s must be a numeric vector of length 1 or length %d"
 
+#: fourier.c:50 fourier.c:137
+msgid "non-numeric argument"
+msgstr "non-numeric argument"
+
+#: fourier.c:68 fourier.c:83 fourier.c:151
+msgid "fft factorization error"
+msgstr "fft factorization error"
+
+#: fourier.c:123
+msgid "vector-valued (multivariate) series required"
+msgstr "vector-valued (multivariate) series required"
+
+#: fourier.c:196
+msgid "no factors"
+msgstr "no factors"
+
+#: fourier.c:199
+msgid "invalid factors"
+msgstr "invalid factors"
+
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "only 2500 rows are allowed for sm.method=“spline”"
@@ -121,6 +212,96 @@ msgstr "Invalid vmethod"
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's algorithm failed to find partial correlation"
+
+#: model.c:88
+msgid "invalid variables"
+msgstr "invalid variables"
+
+#: model.c:92 model.c:97
+msgid "number of variables != number of variable names"
+msgstr "number of variables != number of variable names"
+
+#: model.c:95
+msgid "invalid extra variables"
+msgstr "invalid extra variables"
+
+#: model.c:99
+msgid "invalid extra variable names"
+msgstr "invalid extra variable names"
+
+#: model.c:120
+#, c-format
+msgid "overlong names in '%s'"
+msgstr "overlong names in ‘%s’"
+
+#: model.c:147
+#, c-format
+msgid "invalid type (%s) for variable '%s'"
+msgstr "invalid type (%s) for variable ‘%s’"
+
+#: model.c:152
+#, c-format
+msgid "variable lengths differ (found for '%s')"
+msgstr "variable lengths differ (found for '%s')"
+
+#: model.c:206
+msgid "invalid result from na.action"
+msgstr "invalid result from na.action"
+
+#: model.c:362 model.c:370
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "invalid ‘%s’ argument"
+
+#: model.c:381
+msgid "invalid model frame"
+msgstr "invalid model frame"
+
+#: model.c:383
+msgid "do not know how many cases"
+msgstr "do not know how many cases"
+
+#: model.c:408
+#, c-format
+msgid "variable lengths differ (found for variable %d)"
+msgstr "variable lengths differ (found for variable %d)"
+
+#: model.c:412 model.c:419
+#, c-format
+msgid "variable %d has no levels"
+msgstr "variable %d has no levels"
+
+#: model.c:531
+msgid "the response appeared on the right-hand side and was dropped"
+msgstr "the response appeared on the right-hand side and was dropped"
+
+#: model.c:551
+#, c-format
+msgid "term %d would require %.0g columns"
+msgstr "term %d would require %.0g columns"
+
+#: model.c:555
+#, c-format
+msgid "matrix would require %.0g columns"
+msgstr "matrix would require %.0g columns"
+
+#: model.c:566
+#, c-format
+msgid "problem with term %d in model.matrix: no columns are assigned"
+msgstr "problem with term %d in model.matrix: no columns are assigned"
+
+#: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
+msgid "term names will be truncated"
+msgstr "term names will be truncated"
+
+#: model.c:629
+msgid "complex variables are not currently allowed in model matrices"
+msgstr "complex variables are not currently allowed in model matrices"
+
+#: model.c:653
+#, c-format
+msgid "variables of type '%s' are not allowed in model matrices"
+msgstr "variables of type ‘%s’ are not allowed in model matrices"
 
 #: monoSpl.c:40
 msgid "n must be at least two"
@@ -199,6 +380,183 @@ msgstr "variable ‘%s’ is integer, not numeric"
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variable ‘%s’ is not numeric"
+
+#: optimize.c:53 optimize.c:139 optimize.c:363
+msgid "NA replaced by maximum positive value"
+msgstr "NA replaced by maximum positive value"
+
+#: optimize.c:61 optimize.c:151 optimize.c:371
+msgid "NA/Inf replaced by maximum positive value"
+msgstr "NA/Inf replaced by maximum positive value"
+
+#: optimize.c:70
+msgid "invalid function value in 'optimize'"
+msgstr "invalid function value in ‘optimize’"
+
+#: optimize.c:88 optimize.c:180 optimize.c:556
+msgid "attempt to minimize non-function"
+msgstr "attempt to minimize non-function"
+
+#: optimize.c:95 optimize.c:102 optimize.c:111 optimize.c:185 optimize.c:190
+#: optimize.c:206
+#, c-format
+msgid "invalid '%s' value"
+msgstr "invalid ‘%s’ value"
+
+#: optimize.c:104 optimize.c:191
+msgid "'xmin' not less than 'xmax'"
+msgstr "‘xmin’ not less than ‘xmax’"
+
+#: optimize.c:148
+msgid "-Inf replaced by maximally negative value"
+msgstr "-Inf replaced by maximally negative value"
+
+#: optimize.c:161
+msgid "invalid function value in 'zeroin'"
+msgstr "invalid function value in ‘zeroin’"
+
+#: optimize.c:196 optimize.c:201
+#, c-format
+msgid "NA value for '%s' is not allowed"
+msgstr "NA value for ‘%s’ is not allowed"
+
+#: optimize.c:211
+msgid "'maxiter' must be positive"
+msgstr "‘maxiter’ must be positive"
+
+#: optimize.c:355
+msgid "non-finite value supplied by 'nlm'"
+msgstr "non-finite value supplied by ‘nlm’"
+
+#: optimize.c:390
+msgid "invalid function value in 'nlm' optimizer"
+msgstr "invalid function value in ‘nlm’ optimizer"
+
+#: optimize.c:401 optimize.c:416
+msgid "function value caching for optimization is seriously confused"
+msgstr "function value caching for optimization is seriously confused"
+
+#: optimize.c:431
+msgid "numeric parameter expected"
+msgstr "numeric parameter expected"
+
+#: optimize.c:435
+msgid "conflicting parameter lengths"
+msgstr "conflicting parameter lengths"
+
+#: optimize.c:439
+msgid "invalid parameter length"
+msgstr "invalid parameter length"
+
+#: optimize.c:449 optimize.c:456
+msgid "missing value in parameter"
+msgstr "missing value in parameter"
+
+#: optimize.c:461
+msgid "invalid parameter type"
+msgstr "invalid parameter type"
+
+#: optimize.c:472
+msgid "non-positive number of parameters in nlm"
+msgstr "non-positive number of parameters in nlm"
+
+#: optimize.c:474
+msgid "nlm is inefficient for 1-d problems"
+msgstr "nlm is inefficient for 1-d problems"
+
+#: optimize.c:476
+msgid "invalid gradient tolerance in nlm"
+msgstr "invalid gradient tolerance in nlm"
+
+#: optimize.c:478
+msgid "invalid iteration limit in nlm"
+msgstr "invalid iteration limit in nlm"
+
+#: optimize.c:480
+msgid "minimization function has no good digits in nlm"
+msgstr "minimization function has no good digits in nlm"
+
+#: optimize.c:482
+msgid "no analytic gradient to check in nlm!"
+msgstr "no analytic gradient to check in nlm!"
+
+#: optimize.c:484
+msgid "no analytic Hessian to check in nlm!"
+msgstr "no analytic Hessian to check in nlm!"
+
+#: optimize.c:486
+msgid "probable coding error in analytic gradient"
+msgstr "probable coding error in analytic gradient"
+
+#: optimize.c:488
+msgid "probable coding error in analytic Hessian"
+msgstr "probable coding error in analytic Hessian"
+
+#: optimize.c:490
+#, c-format
+msgid ""
+"*** unknown error message (msg = %d) in nlm()\n"
+"*** should not happen!"
+msgstr ""
+"*** unknown error message (msg = %d) in nlm()\n"
+"*** should not happen!"
+
+#: optimize.c:501
+msgid "Relative gradient close to zero.\n"
+msgstr "Relative gradient close to zero.\n"
+
+#: optimize.c:502 optimize.c:506
+msgid "Current iterate is probably solution.\n"
+msgstr "Current iterate is probably solution.\n"
+
+#: optimize.c:505
+msgid "Successive iterates within tolerance.\n"
+msgstr "Successive iterates within tolerance.\n"
+
+#: optimize.c:509
+msgid "Last global step failed to locate a point lower than x.\n"
+msgstr "Last global step failed to locate a point lower than x.\n"
+
+#: optimize.c:510
+msgid ""
+"Either x is an approximate local minimum of the function,\n"
+"the function is too non-linear for this algorithm,\n"
+"or steptol is too large.\n"
+msgstr ""
+"Either x is an approximate local minimum of the function,\n"
+"the function is too non-linear for this algorithm,\n"
+"or steptol is too large.\n"
+
+#: optimize.c:515
+msgid "Iteration limit exceeded.  Algorithm failed.\n"
+msgstr "Iteration limit exceeded.  Algorithm failed.\n"
+
+#: optimize.c:518
+msgid ""
+"Maximum step size exceeded 5 consecutive times.\n"
+"Either the function is unbounded below,\n"
+"becomes asymptotic to a finite value\n"
+"from above in some direction,\n"
+"or stepmx is too small.\n"
+msgstr ""
+"Maximum step size exceeded 5 consecutive times.\n"
+"Either the function is unbounded below,\n"
+"becomes asymptotic to a finite value\n"
+"from above in some direction,\n"
+"or stepmx is too small.\n"
+
+#: optimize.c:580 optimize.c:585 optimize.c:589 optimize.c:593 optimize.c:597
+#: optimize.c:601 optimize.c:606
+msgid "invalid NA value in parameter"
+msgstr "invalid NA value in parameter"
+
+#: optimize.c:638
+msgid "hessian supplied is of the wrong length or mode, so ignored"
+msgstr "hessian supplied is of the wrong length or mode, so ignored"
+
+#: optimize.c:642
+msgid "gradient supplied is of the wrong length or mode, so ignored"
+msgstr "gradient supplied is of the wrong length or mode, so ignored"
 
 #: pacf.c:81
 msgid "bad Starma struct"

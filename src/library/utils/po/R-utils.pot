@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-03 08:16\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,9 @@ msgid "Warning: unknown option"
 msgstr ""
 
 msgid "Created PDF document"
+msgstr ""
+
+msgid "Compacting PDF document"
 msgstr ""
 
 msgid "path to %s contains spaces,"
@@ -536,58 +539,13 @@ msgstr ""
 msgid "'list' must be a character vector naming R objects"
 msgstr ""
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
-
 msgid "no R objects specified or available"
-msgstr ""
-
-msgid "Creating directories ..."
 msgstr ""
 
 msgid "directory '%s' already exists"
 msgstr ""
 
-msgid "Creating DESCRIPTION ..."
-msgstr ""
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr ""
-
-msgid "Argument 'namespace' is deprecated."
-msgstr ""
-
-msgid "Creating NAMESPACE ..."
-msgstr ""
-
-msgid "Creating Read-and-delete-me ..."
-msgstr ""
-
-msgid "Saving functions and data ..."
-msgstr ""
-
 msgid "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the code_files= argument"
-msgstr ""
-
-msgid "Copying code files ..."
-msgstr ""
-
-msgid "Invalid file name(s) for R code in"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr ""
-
-msgid "Making help files ..."
-msgstr ""
-
-msgid "Done."
-msgstr ""
-
-msgid "Further steps are described in '%s'."
 msgstr ""
 
 msgid "unable to access index for repository %s"

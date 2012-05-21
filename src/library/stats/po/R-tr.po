@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -41,6 +41,10 @@ msgstr ""
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "mevsimsel başlangıç değerlerini hesaplamak için en az 2 dönem gerekli"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "geçersiz 'x'"
 
 msgid "optimization difficulties: %s"
 msgstr ""
@@ -256,10 +260,6 @@ msgstr ""
 
 msgid "invalid interpolation method"
 msgstr "geçersiz interpolasyon yöntemi"
-
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "geçersiz 'x'"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "interpolasyon için en az 2 NA-olmayan değer gerekli"
@@ -1014,6 +1014,10 @@ msgid "negative weights not allowed"
 msgstr "negatif sıklığa izin verilmiyor"
 
 msgid "number of offsets is %d should equal %d (number of observations)"
+msgstr ""
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1878,9 +1882,6 @@ msgid ""
 msgstr ""
 
 msgid "'newdata' does not have the correct number of columns"
-msgstr ""
-
-msgid "wrong number of predictors"
 msgstr ""
 
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"

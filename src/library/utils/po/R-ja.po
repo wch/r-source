@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-03 08:16\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -67,6 +67,10 @@ msgid "Warning: unknown option"
 msgstr " 警告：　未知のオプション "
 
 msgid "Created PDF document"
+msgstr "PDF 文章を作成 "
+
+#, fuzzy
+msgid "Compacting PDF document"
 msgstr "PDF 文章を作成 "
 
 msgid "path to %s contains spaces,"
@@ -590,35 +594,11 @@ msgid "'list' must be a character vector naming R objects"
 msgstr ""
 " 'list' は R オブジェクトの名前を与える文字ベクトルでなければなりません "
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr " LC_CTYPE 経由でロケール固有の文字を使用停止にできません "
-
 msgid "no R objects specified or available"
 msgstr " 如何なる R オブジェクトも指定されていないか利用可能ではありません "
 
-msgid "Creating directories ..."
-msgstr " ディレクトリを作成中 ... "
-
 msgid "directory '%s' already exists"
 msgstr " ディレクトリ '%s' は既に存在します "
-
-msgid "Creating DESCRIPTION ..."
-msgstr " DESCRIPTION を作成中 ... "
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr "R 2.14.0以降、すべてのパッケージは名前空間を持つ必要があります。 "
-
-msgid "Argument 'namespace' is deprecated."
-msgstr " 引数 'namespace' は廃止される予定です。 "
-
-msgid "Creating NAMESPACE ..."
-msgstr " NAMESPACE を作成中 ... "
-
-msgid "Creating Read-and-delete-me ..."
-msgstr " Read-and-delete-me を作成中 ... "
-
-msgid "Saving functions and data ..."
-msgstr " 関数とデータを保存中 ... "
 
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -626,27 +606,6 @@ msgid ""
 msgstr ""
 " ジェネリック関数と他のS4オブジェクト（例えば %s）をダンプできません。 "
 "code_files = argumentを使ってください。 "
-
-msgid "Copying code files ..."
-msgstr " コードファイルをコピー中 ... "
-
-msgid "Invalid file name(s) for R code in"
-msgstr " Rコードに不正なファイル名 "
-
-msgid ":"
-msgstr " : "
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr " の名前は 'z<name>.R' に変更されました "
-
-msgid "Making help files ..."
-msgstr " ヘルプファイルを作成中 ... "
-
-msgid "Done."
-msgstr " 終了。 "
-
-msgid "Further steps are described in '%s'."
-msgstr " これ以上のステップが '%s' 中に説明されています "
 
 msgid "unable to access index for repository %s"
 msgstr " リポジトリー %s に対する索引にアクセスできません "
@@ -1260,6 +1219,51 @@ msgstr[0] " ソースパッケージ %s をインストール中です "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr " LC_CTYPE 経由でロケール固有の文字を使用停止にできません "
+
+#~ msgid "Creating directories ..."
+#~ msgstr " ディレクトリを作成中 ... "
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr " DESCRIPTION を作成中 ... "
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr "R 2.14.0以降、すべてのパッケージは名前空間を持つ必要があります。 "
+
+#~ msgid "Argument 'namespace' is deprecated."
+#~ msgstr " 引数 'namespace' は廃止される予定です。 "
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr " NAMESPACE を作成中 ... "
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr " Read-and-delete-me を作成中 ... "
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr " 関数とデータを保存中 ... "
+
+#~ msgid "Copying code files ..."
+#~ msgstr " コードファイルをコピー中 ... "
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr " Rコードに不正なファイル名 "
+
+#~ msgid ":"
+#~ msgstr " : "
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr " の名前は 'z<name>.R' に変更されました "
+
+#~ msgid "Making help files ..."
+#~ msgstr " ヘルプファイルを作成中 ... "
+
+#~ msgid "Done."
+#~ msgstr " 終了。 "
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr " これ以上のステップが '%s' 中に説明されています "
 
 #~ msgid ""
 #~ "Would you like to create a personal library\n"

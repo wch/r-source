@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -248,6 +248,10 @@ msgstr "'breaks' не уникальны"
 msgid "labels/breaks length conflict"
 msgstr "длины labels/breaks конфликтуют"
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "неправильное значение"
+
 msgid "invalid 'row.names' length"
 msgstr "неправильная длина 'row.names'"
 
@@ -317,12 +321,15 @@ msgstr "именованные аргументы иные, чем 'exact', не допускаются"
 msgid "named arguments are discouraged"
 msgstr "именованные аргументы не допускаются"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
+msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
-"неправильная длина правой стороны выражения для того, чтобы проиндексировать "
-"логическую матрицу"
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "предложенные имена строк неправильной длины"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr "только логические матричные индексы разрешены для замены"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1264,6 +1271,9 @@ msgstr "'x' нельзя преобразовать в 'octmode'"
 msgid "'x' cannot be coerced to hexmode"
 msgstr "'x' нельзя преобразовать в 'hexmode'"
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr "нет аргументов"
 
@@ -1780,6 +1790,11 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr ""
+#~ "неправильная длина правой стороны выражения для того, чтобы "
+#~ "проиндексировать логическую матрицу"
 
 #~ msgid "'symbol.C' is not needed: please remove it"
 #~ msgstr "'symbol.C' не нужен: удалите его"

@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32+0100\n"
-"PO-Revision-Date: 2012-04-26 07:32+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"PO-Revision-Date: 2012-05-21 13:03+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -64,7 +64,7 @@ msgstr "there is no pipe to the master process"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "content to send must be RAW, use serialize() if needed"
 
-#: fork.c:233 fork.c:240
+#: fork.c:233 fork.c:240 fork.c:570
 msgid "write error, closing pipe to the master"
 msgstr "write error, closing pipe to the master"
 
@@ -94,18 +94,18 @@ msgstr "mckill failed"
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit can only be used in a child process"
 
-#: fork.c:582
+#: fork.c:583
 msgid "mcexit failed"
 msgstr "mcexit failed"
 
-#: fork.c:603 fork.c:612
+#: fork.c:605 fork.c:614
 msgid "Invalid CPU affinity specification"
 msgstr "Invalid CPU affinity specification"
 
-#: fork.c:622
+#: fork.c:625
 msgid "Requested CPU set is too large for this system"
 msgstr "Requested CPU set is too large for this system"
 
-#: fork.c:641
+#: fork.c:648
 msgid "Retrieving CPU affinity set failed"
 msgstr "Retrieving CPU affinity set failed"

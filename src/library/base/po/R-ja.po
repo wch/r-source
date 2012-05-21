@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -243,6 +243,10 @@ msgstr " 'breaks' が一意的ではありません "
 msgid "labels/breaks length conflict"
 msgstr " ラベルまたは分割点の長さが矛盾しています "
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr " 無効な値です "
+
 msgid "invalid 'row.names' length"
 msgstr " 無効な 'row.names' 長です "
 
@@ -314,10 +318,15 @@ msgstr " 'exact'以外での名前付き引数は推奨されません "
 msgid "named arguments are discouraged"
 msgstr " 名前付き引数は推奨されません "
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
-msgstr " 右辺は論理値行列によって添字操作するには間違った長さです "
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr ""
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr " 与えられた列名は誤った長さです "
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr " 置き換えでは、論理値の行列の添字だけが許されます "
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1293,6 +1302,9 @@ msgstr " 'x' は 'octmode' に強制変換できません "
 msgid "'x' cannot be coerced to hexmode"
 msgstr " 'x' は hexmode に強制変換できません "
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr " 引数がありません "
 
@@ -1787,6 +1799,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr " 右辺は論理値行列によって添字操作するには間違った長さです "
 
 #~ msgid ""
 #~ "Functions for exporting methods must have been made generic, explicitly "

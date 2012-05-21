@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -239,6 +239,10 @@ msgstr "'breaks' er ikke unikke"
 msgid "labels/breaks length conflict"
 msgstr "længdekonflikt for etiketter/skift"
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "ugyldig længde for 'row.names'"
+
 msgid "invalid 'row.names' length"
 msgstr "ugyldig længde for 'row.names'"
 
@@ -308,10 +312,15 @@ msgstr "navngivne argumenter udover 'exact' frarådes"
 msgid "named arguments are discouraged"
 msgstr "navngivne argumenter frarådes"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
-msgstr "rhs er den forkerte længde for indeksering med en logisk matrix"
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr ""
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "rækkenavne angivet er af forkert længde"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr "kun logiske underskripter for matrix er tilladt som erstatning"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1240,6 +1249,9 @@ msgstr ""
 msgid "'x' cannot be coerced to hexmode"
 msgstr ""
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr ""
 
@@ -1735,6 +1747,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr "rhs er den forkerte længde for indeksering med en logisk matrix"
 
 #~ msgid "'symbol.C' is not needed: please remove it"
 #~ msgstr "'symbol.C' er ikke krævet: fjern det venligst"

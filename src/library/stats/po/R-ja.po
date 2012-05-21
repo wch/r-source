@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -38,6 +38,10 @@ msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなけれ
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr " メンバーの長さが無効です "
 
 msgid "optimization difficulties: %s"
 msgstr " 最適化の失敗: %s "
@@ -259,10 +263,6 @@ msgstr " ユニークな 'x' 値を得るため縮小します "
 
 msgid "invalid interpolation method"
 msgstr " 無効な補間法です "
-
-#, fuzzy
-msgid "invalid length(x)"
-msgstr " メンバーの長さが無効です "
 
 msgid "need at least two non-NA values to interpolate"
 msgstr " 補間のためには少なくとも 2 つの非 NA 値が必要です "
@@ -1034,6 +1034,10 @@ msgstr " 負の重みは許されません "
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr ""
 " オフセットの数は %d ですが、%d (観測値の数)に等しくなければなりません "
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
+msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
 msgstr " 'epsilon' の値は正でなければなりません "
@@ -1908,9 +1912,6 @@ msgstr " 'newdata' は、元の列の一つ以上とマッチする名前つき�
 msgid "'newdata' does not have the correct number of columns"
 msgstr " 'newdata' は正しい列数を持ちません "
 
-msgid "wrong number of predictors"
-msgstr " 予測子の数が間違っています "
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr " 'x' と 'covmat' の双方が与えられました。'x' は無視されます "
 
@@ -2469,6 +2470,9 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#~ msgid "wrong number of predictors"
+#~ msgstr " 予測子の数が間違っています "
 
 #, fuzzy
 #~ msgid "invalid value oflength(x)"

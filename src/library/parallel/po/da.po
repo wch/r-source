@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
 "PO-Revision-Date: 2011-11-29 09:15+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr "der er ingen datakanal til overprocessen"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "indhold at sende skal være RAW (RÅ), brug serialize() hvis krævet"
 
-#: fork.c:233 fork.c:240
+#: fork.c:233 fork.c:240 fork.c:570
 msgid "write error, closing pipe to the master"
 msgstr "skrivefejl, lukke datakanal til overproces"
 
@@ -72,18 +72,18 @@ msgstr "mckill fejlede"
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit kan kun bruges i en underproces"
 
-#: fork.c:582
+#: fork.c:583
 msgid "mcexit failed"
 msgstr "mcexit fejlede"
 
-#: fork.c:603 fork.c:612
+#: fork.c:605 fork.c:614
 msgid "Invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:622
+#: fork.c:625
 msgid "Requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:641
+#: fork.c:648
 msgid "Retrieving CPU affinity set failed"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-01 07:06+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: base.c:295
+#: base.c:38
+msgid "no base graphics system is registered"
+msgstr ""
+
+#: base.c:297
 msgid "Event GE_ScalePS requires a single numeric value"
+msgstr ""
+
+#: base.c:322 base.c:329 base.c:337
+msgid "the base graphics system is not registered"
 msgstr ""
 
 #: graphics.c:289

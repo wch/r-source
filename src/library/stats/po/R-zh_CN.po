@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -40,6 +40,10 @@ msgstr "乘法Holt-Winters的数据不能是零"
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "计算季節性初始值至少需要两个周期的数据"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "成员长度不对"
 
 msgid "optimization difficulties: %s"
 msgstr "优化困难： %s "
@@ -257,10 +261,6 @@ msgstr "折拢'x'成相互不同的值"
 
 msgid "invalid interpolation method"
 msgstr "内插方法不对"
-
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "成员长度不对"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "调用内插至少需要两个非NA值的数据"
@@ -1005,6 +1005,10 @@ msgstr "权数不能是负的"
 
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "偏置的个数是%d，应该同观察量的个数%d相等"
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
+msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
 msgstr "'epsilon'的值必需大于零"
@@ -1861,9 +1865,6 @@ msgstr "'newdata'的列名同原始数据的列名没有任何相同的"
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata'列的数目不对"
 
-msgid "wrong number of predictors"
-msgstr "従属変数数目不对"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "同时提供了'x'和'covmat': 'x'略过不用"
 
@@ -2410,6 +2411,9 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "従属変数数目不对"
 
 #, fuzzy
 #~ msgid "invalid value oflength(x)"

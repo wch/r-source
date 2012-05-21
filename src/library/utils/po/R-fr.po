@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-03 08:16\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-06 22:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -74,6 +74,10 @@ msgid "Warning: unknown option"
 msgstr "Avis : option inconnue"
 
 msgid "Created PDF document"
+msgstr "Document PDF créé"
+
+#, fuzzy
+msgid "Compacting PDF document"
 msgstr "Document PDF créé"
 
 msgid "path to %s contains spaces,"
@@ -609,38 +613,11 @@ msgstr "'code_files' devrait être un vecteur de type caractère"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
-"impossible the transformer les caractères spécifiques de la localisation via "
-"LC_TYPE"
-
 msgid "no R objects specified or available"
 msgstr "aucun objet R spécifié ou disponible"
 
-msgid "Creating directories ..."
-msgstr "Création des répertoires..."
-
 msgid "directory '%s' already exists"
 msgstr "le répertoire '%s' existe déjà"
-
-msgid "Creating DESCRIPTION ..."
-msgstr "Création de DESCRIPTION..."
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr ""
-"A partir de R 2.14.0, chaque package reçoit un espace de noms (NAMESPACE)."
-
-msgid "Argument 'namespace' is deprecated."
-msgstr "L'argument 'namespace' est obsolète"
-
-msgid "Creating NAMESPACE ..."
-msgstr "Création de NAMESPACE..."
-
-msgid "Creating Read-and-delete-me ..."
-msgstr "Création de 'Read-and-delete-me'..."
-
-msgid "Saving functions and data ..."
-msgstr "Sauvegarde des fonctions et des données..."
 
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -648,27 +625,6 @@ msgid ""
 msgstr ""
 "Les fonctions génériques et autres objets S4 (e.g., '%s') ne peuvent être "
 "retranscrits à l'aide de dump ; utilisez l'argument code_files="
-
-msgid "Copying code files ..."
-msgstr "Recopiage des fichiers de code..."
-
-msgid "Invalid file name(s) for R code in"
-msgstr "Nom(s) de fichier(s) invalide(s) pour du code R"
-
-msgid ":"
-msgstr ":"
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr "sont maintenant renommés vers 'z<nom>.R'"
-
-msgid "Making help files ..."
-msgstr "Création des fichiers d'aide ..."
-
-msgid "Done."
-msgstr "Terminé."
-
-msgid "Further steps are described in '%s'."
-msgstr "Les étapes suivantes sont décrites dans '%s'."
 
 msgid "unable to access index for repository %s"
 msgstr "impossible d'accéder à l'index de l'entrepôt %s"
@@ -1284,6 +1240,54 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr ""
+#~ "impossible the transformer les caractères spécifiques de la localisation "
+#~ "via LC_TYPE"
+
+#~ msgid "Creating directories ..."
+#~ msgstr "Création des répertoires..."
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr "Création de DESCRIPTION..."
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr ""
+#~ "A partir de R 2.14.0, chaque package reçoit un espace de noms (NAMESPACE)."
+
+#~ msgid "Argument 'namespace' is deprecated."
+#~ msgstr "L'argument 'namespace' est obsolète"
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr "Création de NAMESPACE..."
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr "Création de 'Read-and-delete-me'..."
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr "Sauvegarde des fonctions et des données..."
+
+#~ msgid "Copying code files ..."
+#~ msgstr "Recopiage des fichiers de code..."
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr "Nom(s) de fichier(s) invalide(s) pour du code R"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr "sont maintenant renommés vers 'z<nom>.R'"
+
+#~ msgid "Making help files ..."
+#~ msgstr "Création des fichiers d'aide ..."
+
+#~ msgid "Done."
+#~ msgstr "Terminé."
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr "Les étapes suivantes sont décrites dans '%s'."
 
 #~ msgid ""
 #~ "Would you like to create a personal library\n"

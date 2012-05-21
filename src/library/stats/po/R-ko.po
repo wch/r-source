@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -47,6 +47,10 @@ msgstr ""
 #, fuzzy
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "계절적 개시값을 계산하기에는 적어도 3개가 필요합니다"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "멤버의 길이가 무효입니다"
 
 msgid "optimization difficulties: %s"
 msgstr ""
@@ -275,10 +279,6 @@ msgstr "유일한 'x'값을 얻기 위해서 축소했습니다"
 
 msgid "invalid interpolation method"
 msgstr "무효인 보간법입니다"
-
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "멤버의 길이가 무효입니다"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "보간을 위해서 적어도 2개의 non-NA값이 필요합니다"
@@ -1080,6 +1080,10 @@ msgstr "negative 중량감은 허용되지 않습니다"
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr ""
 "offsets의 수는 %d입니다만, %d(관측값의 수)에 동일 하지 않으면 되지 않습니다"
+
+msgid ""
+"fitting to calculate the null deviance did not converge -- increase maxit?"
+msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
 msgstr "'epsilon'의 값은 아니면 되지 않습니다"
@@ -2015,9 +2019,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'coef'의 길이가 적절하지 않습니다"
 
-msgid "wrong number of predictors"
-msgstr "예측자의 수가 잘못되어 있습니다"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "'x'와 'covmat'의 쌍방이 주어졌습니다. 'x'는 무시됩니다"
 
@@ -2599,6 +2600,9 @@ msgstr[0] ""
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "모델식에서 파라미터 %s가 없습니다\n"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "예측자의 수가 잘못되어 있습니다"
 
 #, fuzzy
 #~ msgid "invalid value oflength(x)"

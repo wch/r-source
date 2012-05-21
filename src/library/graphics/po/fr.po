@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-01 07:06+0100\n"
+"POT-Creation-Date: 2012-05-21 13:03+0100\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -19,9 +19,17 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: base.c:295
+#: base.c:38
+msgid "no base graphics system is registered"
+msgstr ""
+
+#: base.c:297
 msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "L'événement GE_ScalePS exige une valeur numérique unique"
+
+#: base.c:322 base.c:329 base.c:337
+msgid "the base graphics system is not registered"
+msgstr ""
 
 #: graphics.c:289
 #, c-format

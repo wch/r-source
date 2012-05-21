@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:15\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -246,6 +246,10 @@ msgstr "'breaks' 가 고유하지 않습니다 "
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks 의 길이가 일치하지 않습니다 "
 
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "잘못된 값입니다 "
+
 msgid "invalid 'row.names' length"
 msgstr "'row.names' 길이가 잘못되었습니다 "
 
@@ -318,10 +322,15 @@ msgstr "named arguments other than 'exact' are discouraged"
 msgid "named arguments are discouraged"
 msgstr "named arguments are discouraged"
 
-msgid "rhs is the wrong length for indexing by a logical matrix"
-msgstr "rhs is the wrong length for indexing by a logical matrix"
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr ""
 
-msgid "only logical matrix subscripts are allowed in replacement"
+#, fuzzy
+msgid "rhs is the wrong length"
+msgstr "row names supplied are of the wrong length"
+
+#, fuzzy
+msgid "illegal matrix index in replacement"
 msgstr "치환에서 논리값의 행렬첨자만이 허용됩니다"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -1270,6 +1279,9 @@ msgstr "'x' 는 'octmode' 로 강제변환 할 수 없습니다 "
 msgid "'x' cannot be coerced to hexmode"
 msgstr "'x' 는 hexmode 로 강제변환 할 수 없습니다 "
 
+msgid "using ... with FUN = \"*\" is an error"
+msgstr ""
+
 msgid "no arguments"
 msgstr "잘 못된 인수입니다 "
 
@@ -1763,6 +1775,9 @@ msgstr[0] "S3 메소드 %s 는 NAMESPACE 안에 선언되었으나 찾을 수 �
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "rhs is the wrong length for indexing by a logical matrix"
+#~ msgstr "rhs is the wrong length for indexing by a logical matrix"
 
 #~ msgid ""
 #~ "Functions for exporting methods must have been made generic, explicitly "

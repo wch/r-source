@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-03 08:16\n"
-"PO-Revision-Date: 2012-05-03 08:16\n"
+"POT-Creation-Date: 2012-05-21 13:03\n"
+"PO-Revision-Date: 2012-05-21 13:03\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -89,6 +89,9 @@ msgstr "Warning: unknown option"
 
 msgid "Created PDF document"
 msgstr "Created PDF document"
+
+msgid "Compacting PDF document"
+msgstr "Compacting PDF document"
 
 msgid "path to %s contains spaces,"
 msgstr "path to %s contains spaces,"
@@ -602,35 +605,11 @@ msgstr "‘code_files’ must be a character vector"
 msgid "'list' must be a character vector naming R objects"
 msgstr "‘list’ must be a character vector naming R objects"
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr "cannot turn off locale-specific chars via LC_CTYPE"
-
 msgid "no R objects specified or available"
 msgstr "no R objects specified or available"
 
-msgid "Creating directories ..."
-msgstr "Creating directories ..."
-
 msgid "directory '%s' already exists"
 msgstr "directory ‘%s’ already exists"
-
-msgid "Creating DESCRIPTION ..."
-msgstr "Creating DESCRIPTION ..."
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr "From R 2.14.0 on, every package gets a NAMESPACE."
-
-msgid "Argument 'namespace' is deprecated."
-msgstr "Argument ‘namespace’ is deprecated."
-
-msgid "Creating NAMESPACE ..."
-msgstr "Creating NAMESPACE ..."
-
-msgid "Creating Read-and-delete-me ..."
-msgstr "Creating Read-and-delete-me ..."
-
-msgid "Saving functions and data ..."
-msgstr "Saving functions and data ..."
 
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -638,27 +617,6 @@ msgid ""
 msgstr ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the code_files= argument"
-
-msgid "Copying code files ..."
-msgstr "Copying code files ..."
-
-msgid "Invalid file name(s) for R code in"
-msgstr "Invalid file name(s) for R code in"
-
-msgid ":"
-msgstr ":"
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr "are now renamed to ‘z<name>.R’"
-
-msgid "Making help files ..."
-msgstr "Making help files ..."
-
-msgid "Done."
-msgstr "Done."
-
-msgid "Further steps are described in '%s'."
-msgstr "Further steps are described in '%s'."
 
 msgid "unable to access index for repository %s"
 msgstr "unable to access index for repository %s"
