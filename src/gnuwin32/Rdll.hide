@@ -330,7 +330,6 @@
  Rf_con_pushback
  Rf_convertToC
  Rf_copyListMatrix
- Rf_copyMostAttribNoTs
  Rf_d1mach
  Rf_deparse1s
  Rf_evalList
@@ -1291,7 +1290,6 @@
  lzma_vli_size
  mallinfo
  mb_char_len
- memtrace_report
  menuclear
  menuconfig
  menueditornew

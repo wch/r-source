@@ -312,8 +312,6 @@ SEXP do_menu(SEXP, SEXP, SEXP, SEXP);
 SEXP do_merge(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mget(SEXP, SEXP, SEXP, SEXP);
 SEXP do_missing(SEXP, SEXP, SEXP, SEXP);
-SEXP do_modelframe(SEXP, SEXP, SEXP, SEXP);
-SEXP do_modelmatrix(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mvfft(SEXP, SEXP, SEXP, SEXP);
 SEXP do_names(SEXP, SEXP, SEXP, SEXP);
 SEXP do_namesgets(SEXP, SEXP, SEXP, SEXP);

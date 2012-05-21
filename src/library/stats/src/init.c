@@ -223,6 +223,8 @@ static const R_FortranMethodDef FortEntries[] = {
 SEXP compcases(SEXP args);
 SEXP doD(SEXP args);
 SEXP deriv(SEXP args);
+SEXP modelframe(SEXP args);
+SEXP modelmatrix(SEXP args);
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
@@ -230,6 +232,8 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(compcases, -1),
     EXTDEF(doD, 2),
     EXTDEF(deriv, 5),
+    EXTDEF(modelframe, 9),
+    EXTDEF(modelmatrix, 3),
     {NULL, NULL, 0}
 };
 
