@@ -242,7 +242,7 @@ distclean: clean
 maintainer-clean: distclean
 	@$(ECHO) "This command is intended for maintainers to use; it"
 	@$(ECHO) "deletes files that may need special rules to rebuild"
-	@-rm -f $(srcdir)/gram.c $(srcdir)/gramRd.c
+	@-rm -f $(srcdir)/gram.c $(srcdir)/gramLatex.c $(srcdir)/gramRd.c
 
 tags: TAGS
 TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
@@ -257,9 +257,6 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@if test -f $(srcdir)/TAOCP1997.c ; then \
-	  cp -p $(srcdir)/TAOCP1997.c $(distdir)/TAOCP1997.c; \
-	fi
 
 ## Automagically generated dependencies:
 
