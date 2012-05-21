@@ -9552,6 +9552,38 @@ attribute would be attached to the result, containing a list of
 @code{srcref} objects of the same length as the expression, to allow it to be
 echoed with its original formatting.
 
+@menu
+* Accessing source references::
+@end menu
+
+@node Accessing source references, , Parsing R code from C, Parsing R code from C
+@subsection Accessing source references
+
+The source references added by the parser are recorded by @R{}'s evaluator 
+as it evaluates code. Two functions
+make these available to debuggers running C code:
+@findex R_Srcref
+@findex R_GetCurrentSrcref
+@findex R_GetSrcFilename
+
+@example
+SEXP R_GetCurrentSrcref(int skip);
+@end example
+
+This function checks @code{R_Srcref} and the current evaluation stack
+for entries that contain source reference information.  The
+@code{skip} argument tells how many source references to skip before
+returning the @code{SEXP} of the @code{srcref} object.  If fewer than
+@code{skip+1} are found, @code{NULL} is returned.
+
+@example
+SEXP R_GetSrcFilename(SEXP srcref);
+@end example
+
+This function extracts the filename from the source reference for
+display, returning a length 1 character vector containing the
+filename.  If no name is found, @code{""} is returned.
+
 @node External pointers and weak references, Vector accessor functions, Parsing R code from C, System and foreign language interfaces
 @section External pointers and weak references
 

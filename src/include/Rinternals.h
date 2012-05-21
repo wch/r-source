@@ -552,6 +552,10 @@ LibExtern SEXP  R_dot_target;       /* ".target" */
 LibExtern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
 LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
+/* srcref related functions */
+SEXP R_GetCurrentSrcref(int);
+SEXP R_GetSrcFilename(SEXP);
+
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 /* Type Coercions of all kinds */
