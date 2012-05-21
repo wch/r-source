@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14\n"
+"POT-Creation-Date: 2012-05-21 13:00\n"
 "PO-Revision-Date: 2012-03-06 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -592,36 +592,11 @@ msgstr "'code_files' muss ein Charaktervektor sein"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list' muss ein Charaktervektor sein, mit Namen von R Objekten"
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
-"kann die lokalisierungs-spezifischen Zeichen nicht via LC_CTYPE abschalten"
-
 msgid "no R objects specified or available"
 msgstr "keine R Objekte spezifiziert oder verfügbar"
 
-msgid "Creating directories ..."
-msgstr "Erzeuge Verzeichnisse ..."
-
 msgid "directory '%s' already exists"
 msgstr "Verzeichnis '%s' exisitiert bereits"
-
-msgid "Creating DESCRIPTION ..."
-msgstr "Erzeuge DESCRIPTION ..."
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr "Ab R-2.14.0 bekommt jedes Paket einen NAMESPACE"
-
-msgid "Argument 'namespace' is deprecated."
-msgstr "Argument 'namespace' ist veraltet"
-
-msgid "Creating NAMESPACE ..."
-msgstr "Erzeuge NAMESPACE ..."
-
-msgid "Creating Read-and-delete-me ..."
-msgstr "Erzeuge Read-and-delete-me ..."
-
-msgid "Saving functions and data ..."
-msgstr "Speichere Funktionen und Daten ..."
 
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -629,27 +604,6 @@ msgid ""
 msgstr ""
 "Generische Funktionen und andere S4 Objekte (z.B. '%s') können nicht "
 "gedumped werden: nutze code_files= Argument"
-
-msgid "Copying code files ..."
-msgstr "Kopiere Code-Dateien ..."
-
-msgid "Invalid file name(s) for R code in"
-msgstr "Ungültige Dateiname(n) für R Kode in"
-
-msgid ":"
-msgstr ":"
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr "sind nun unbenannt nach 'z<name>.R'"
-
-msgid "Making help files ..."
-msgstr "Erzeuge Hilfedateien ..."
-
-msgid "Done."
-msgstr "Fertig."
-
-msgid "Further steps are described in '%s'."
-msgstr "Die nächsten Schritte werden in '%s' beschrieben."
 
 msgid "unable to access index for repository %s"
 msgstr "kann nicht auf den Index für das Repository %s zugreifen"
@@ -810,6 +764,11 @@ msgid ""
 msgstr ""
 "Die heruntergeladenen Quellpakete sind in \n"
 "\t%s"
+
+msgid ""
+"The namespace for package \"%s\" is locked; no changes in the global "
+"variables list may be made."
+msgstr ""
 
 msgid "no object named '%s' to show"
 msgstr "kein Objket namens '%s' anzuzeigen"
@@ -1242,6 +1201,52 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr ""
+#~ "kann die lokalisierungs-spezifischen Zeichen nicht via LC_CTYPE abschalten"
+
+#~ msgid "Creating directories ..."
+#~ msgstr "Erzeuge Verzeichnisse ..."
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr "Erzeuge DESCRIPTION ..."
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr "Ab R-2.14.0 bekommt jedes Paket einen NAMESPACE"
+
+#~ msgid "Argument 'namespace' is deprecated."
+#~ msgstr "Argument 'namespace' ist veraltet"
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr "Erzeuge NAMESPACE ..."
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr "Erzeuge Read-and-delete-me ..."
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr "Speichere Funktionen und Daten ..."
+
+#~ msgid "Copying code files ..."
+#~ msgstr "Kopiere Code-Dateien ..."
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr "Ungültige Dateiname(n) für R Kode in"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr "sind nun unbenannt nach 'z<name>.R'"
+
+#~ msgid "Making help files ..."
+#~ msgstr "Erzeuge Hilfedateien ..."
+
+#~ msgid "Done."
+#~ msgstr "Fertig."
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr "Die nächsten Schritte werden in '%s' beschrieben."
 
 #~ msgid ""
 #~ "Would you like to create a personal library\n"

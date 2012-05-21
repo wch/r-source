@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-03 08:16\n"
+"POT-Creation-Date: 2012-05-21 13:00\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -595,35 +595,11 @@ msgstr "'code_files' 는 반드시 문자형 벡터이어야 합니다 "
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list' 는 반드시 R 객체를 이름짓는 문자형 벡터이어야 합니다 "
 
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr "LC_CTYPE 을 통해서 로케일 특정문자를 사용못하게 할 수 없습니다 "
-
 msgid "no R objects specified or available"
 msgstr "R 객체들이 지정될 수 없거나 사용가능하지 않습니다 "
 
-msgid "Creating directories ..."
-msgstr "디렉토리들을 생성중입니다 ..."
-
 msgid "directory '%s' already exists"
 msgstr "디렉토리 '%s' 는 이미 존재합니다"
-
-msgid "Creating DESCRIPTION ..."
-msgstr "DESCRIPTION 을 생성중 ... "
-
-msgid "From R 2.14.0 on, every package gets a NAMESPACE."
-msgstr "R 2.14.0 부터는 모든 패키지들이 NAMESPACE 를 가집니다 "
-
-msgid "Argument 'namespace' is deprecated."
-msgstr "인수 'namespace' 가 무시되었습니다 "
-
-msgid "Creating NAMESPACE ..."
-msgstr "NAMESPACE 를 생성중 ..."
-
-msgid "Creating Read-and-delete-me ..."
-msgstr "Read-and-delete-me 를 생성중 ..."
-
-msgid "Saving functions and data ..."
-msgstr "함수들과 데이터를 저장중 ..."
 
 msgid ""
 "Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -631,27 +607,6 @@ msgid ""
 msgstr ""
 "제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 버려질 수 없습니다; 다음을 이용하"
 "세요the code_files= argument "
-
-msgid "Copying code files ..."
-msgstr "코드 파일들을 복사중 ..."
-
-msgid "Invalid file name(s) for R code in"
-msgstr "R 코드에 대한 파일 이름(들)이 잘못되었습니다 "
-
-msgid ":"
-msgstr ":"
-
-msgid "are now renamed to 'z<name>.R'"
-msgstr "'z<name>.R' 로 이름이 변경되었습니다"
-
-msgid "Making help files ..."
-msgstr "도움말 파일들을 만드는 중 ..."
-
-msgid "Done."
-msgstr "완료."
-
-msgid "Further steps are described in '%s'."
-msgstr "더 해야하 할 내용들은 '%s' 에 기록되어 있습니다"
 
 msgid "unable to access index for repository %s"
 msgstr "저장소 %s 에 대한 인덱스에 접근할 수 없습니다"
@@ -1000,12 +955,12 @@ msgstr "options('str') 이 잘못되었습니다 -- 대신 기본값을 사용�
 msgid "invalid components in options('str'):"
 msgstr "options('str') 에 대한 잘못된 구성요소:"
 
-#, fuzzy
-msgid "'str.default': 'le' is NA, so taken as 0"
-msgstr "'str.default': 'le' 는 NA입니다"
-
 msgid "'object' does not have valid levels()"
 msgstr "'object' 는 유효한 levels() 을 가지고 있지 않습니다 "
+
+#, fuzzy
+msgid "'str.default': 'le' is NA"
+msgstr "'str.default': 'le' 는 NA입니다"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
@@ -1239,3 +1194,48 @@ msgstr[0] "소스패키지 %s 를 설치중입니다 "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr "LC_CTYPE 을 통해서 로케일 특정문자를 사용못하게 할 수 없습니다 "
+
+#~ msgid "Creating directories ..."
+#~ msgstr "디렉토리들을 생성중입니다 ..."
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr "DESCRIPTION 을 생성중 ... "
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr "R 2.14.0 부터는 모든 패키지들이 NAMESPACE 를 가집니다 "
+
+#~ msgid "Argument 'namespace' is deprecated."
+#~ msgstr "인수 'namespace' 가 무시되었습니다 "
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr "NAMESPACE 를 생성중 ..."
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr "Read-and-delete-me 를 생성중 ..."
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr "함수들과 데이터를 저장중 ..."
+
+#~ msgid "Copying code files ..."
+#~ msgstr "코드 파일들을 복사중 ..."
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr "R 코드에 대한 파일 이름(들)이 잘못되었습니다 "
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr "'z<name>.R' 로 이름이 변경되었습니다"
+
+#~ msgid "Making help files ..."
+#~ msgstr "도움말 파일들을 만드는 중 ..."
+
+#~ msgid "Done."
+#~ msgstr "완료."
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr "더 해야하 할 내용들은 '%s' 에 기록되어 있습니다"

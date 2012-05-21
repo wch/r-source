@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-25 15:01+0100\n"
+"POT-Creation-Date: 2012-05-21 12:59+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -171,12 +171,12 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
 #: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:949
-#: src/main/eval.c:267 src/main/eval.c:2032 src/main/eval.c:2061
-#: src/main/eval.c:2065 src/main/grep.c:757 src/main/grep.c:762
+#: src/main/eval.c:267 src/main/eval.c:2036 src/main/eval.c:2065
+#: src/main/eval.c:2069 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
 #: src/main/grep.c:1486 src/main/grep.c:1490 src/main/grep.c:1495
 #: src/main/grep.c:2298 src/main/grep.c:2303 src/main/grep.c:2590
-#: src/main/grep.c:2595 src/main/memory.c:3378 src/main/model.c:1612
+#: src/main/grep.c:2595 src/main/memory.c:3373 src/main/model.c:1612
 #: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:93
 #: src/main/paste.c:376 src/main/paste.c:383 src/main/paste.c:390
 #: src/main/paste.c:395 src/main/paste.c:400 src/main/paste.c:405
@@ -1310,7 +1310,7 @@ msgstr "不能有重复的正式参数'use.names' "
 msgid "argument not a list"
 msgstr "参数不是串列"
 
-#: src/main/bind.c:1038 src/main/eval.c:2401 src/main/eval.c:2410
+#: src/main/bind.c:1038 src/main/eval.c:2405 src/main/eval.c:2414
 #: src/main/objects.c:311 src/main/objects.c:346 src/main/objects.c:721
 #: src/main/objects.c:738 src/main/objects.c:745
 #, c-format
@@ -1359,7 +1359,7 @@ msgstr "矢量size设得太大了"
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
 #: src/main/envir.c:2857 src/main/envir.c:2886 src/main/envir.c:2907
 #: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
-#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4965
+#: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4969
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2600
 msgid "use of NULL environment is defunct"
@@ -1436,8 +1436,8 @@ msgid "missing value for 'length'"
 msgstr "'length'不能是遗漏值"
 
 #: src/main/builtin.c:897 src/main/eval.c:401 src/main/eval.c:518
-#: src/main/eval.c:1816 src/main/eval.c:1882 src/main/eval.c:1942
-#: src/main/eval.c:2281 src/main/eval.c:4379 src/main/eval.c:4488
+#: src/main/eval.c:1820 src/main/eval.c:1886 src/main/eval.c:1946
+#: src/main/eval.c:2285 src/main/eval.c:4383 src/main/eval.c:4492
 msgid "'...' used in an incorrect context"
 msgstr "'...'用在的上下文不对"
 
@@ -1450,7 +1450,7 @@ msgstr "重复开关默认值：'%s'和'%s'"
 msgid "'EXPR' is missing"
 msgstr "缺少'EXPR'"
 
-#: src/main/builtin.c:955 src/main/eval.c:4802
+#: src/main/builtin.c:955 src/main/eval.c:4806
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR必需是长度为一的矢量"
 
@@ -1604,7 +1604,7 @@ msgstr "不能强迫改变非因子"
 msgid "list argument expected"
 msgstr "需要串列参数"
 
-#: src/main/coerce.c:1452 src/main/eval.c:4969
+#: src/main/coerce.c:1452 src/main/eval.c:4973
 msgid "invalid environment"
 msgstr "环境不对"
 
@@ -2577,7 +2577,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts'必需是小的非负整数"
 
 #: src/main/deparse.c:400 src/main/envir.c:1688 src/main/envir.c:1770
-#: src/main/eval.c:407 src/main/eval.c:1062 src/main/eval.c:3339
+#: src/main/eval.c:407 src/main/eval.c:1066 src/main/eval.c:3343
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2618
 #, c-format
 msgid "object '%s' not found"
@@ -3059,7 +3059,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d所在的上下文出了错, 没有可以搜索的..."
 
 #: src/main/envir.c:1320 src/main/envir.c:1766 src/main/eval.c:411
-#: src/main/eval.c:3330
+#: src/main/eval.c:3334
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少参数\"%s\",也没有缺省值"
@@ -3452,11 +3452,11 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "评估嵌套太深：无穷递归/ options(expressions=)?"
 
-#: src/main/eval.c:413 src/main/eval.c:3331
+#: src/main/eval.c:413 src/main/eval.c:3335
 msgid "argument is missing, with no default"
 msgstr "缺少参数, 也没有缺省值"
 
-#: src/main/eval.c:514 src/main/eval.c:4327
+#: src/main/eval.c:514 src/main/eval.c:4331
 msgid "attempt to apply non-function"
 msgstr "不适用于非函数"
 
@@ -3465,258 +3465,258 @@ msgstr "不适用于非函数"
 msgid "%s at %s#%d: "
 msgstr "%s在%s#%d: "
 
-#: src/main/eval.c:989
+#: src/main/eval.c:993
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "类属函数环境里没有这个\"%s\"符号"
 
-#: src/main/eval.c:1007
+#: src/main/eval.c:1011
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "方法环境里没有\"%s\"这个符号"
 
-#: src/main/eval.c:1117
+#: src/main/eval.c:1121
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "条件的长度大于一，因此只能用其第一元素"
 
-#: src/main/eval.c:1134
+#: src/main/eval.c:1138
 msgid "missing value where TRUE/FALSE needed"
 msgstr "需要TRUE/FALSE值的地方不可以用缺少值"
 
-#: src/main/eval.c:1135
+#: src/main/eval.c:1139
 msgid "argument is not interpretable as logical"
 msgstr "参数不能作为逻辑值来用"
 
-#: src/main/eval.c:1136
+#: src/main/eval.c:1140
 msgid "argument is of length zero"
 msgstr "参数长度为零"
 
-#: src/main/eval.c:1209
+#: src/main/eval.c:1213
 msgid "non-symbol loop variable"
 msgstr "非符号循环变数"
 
-#: src/main/eval.c:1300 src/main/eval.c:4096
+#: src/main/eval.c:1304 src/main/eval.c:4100
 msgid "invalid for() loop sequence"
 msgstr "for()循环顺序不对"
 
-#: src/main/eval.c:1429
+#: src/main/eval.c:1433
 msgid "multi-argument returns are not permitted"
 msgstr "不允许多参数回覆值"
 
-#: src/main/eval.c:1478
+#: src/main/eval.c:1482
 msgid "invalid (NULL) left side of assignment"
 msgstr "赋值公式左手不能是(NULL)值"
 
-#: src/main/eval.c:1500
+#: src/main/eval.c:1504
 msgid "target of assignment expands to non-language object"
 msgstr "赋值目标擴充到非语言对象"
 
-#: src/main/eval.c:1536
+#: src/main/eval.c:1540
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s'中的名字太长"
 
-#: src/main/eval.c:1596
+#: src/main/eval.c:1600
 msgid "cannot do complex assignments in base namespace"
 msgstr "无法在基本名字空间里赋复数值"
 
-#: src/main/eval.c:1598
+#: src/main/eval.c:1602
 msgid "cannot do complex assignments in base environment"
 msgstr "无法在基本环境里赋复数值"
 
-#: src/main/eval.c:1635 src/main/eval.c:1662
+#: src/main/eval.c:1639 src/main/eval.c:1666
 msgid "invalid function in complex assignment"
 msgstr "复数赋值里的函数不对"
 
-#: src/main/eval.c:1740
+#: src/main/eval.c:1744
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "(do_set)赋值公式左手不对"
 
-#: src/main/eval.c:1755
+#: src/main/eval.c:1759
 msgid "invalid assignment left-hand side"
 msgstr "赋值公式左手不对"
 
-#: src/main/eval.c:1820
+#: src/main/eval.c:1824
 #, c-format
 msgid "argument %d is empty"
 msgstr "%d元素是空的"
 
-#: src/main/eval.c:1823
+#: src/main/eval.c:1827
 #, c-format
 msgid "'%s' is missing"
 msgstr "缺少'%s'"
 
-#: src/main/eval.c:1973
+#: src/main/eval.c:1977
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"正式参数串列不对"
 
-#: src/main/eval.c:2058
+#: src/main/eval.c:2062
 msgid "numeric 'envir' arg not of length one"
 msgstr "数值'envir'参数的长度不是一"
 
-#: src/main/eval.c:2080 src/main/eval.c:2099
+#: src/main/eval.c:2084 src/main/eval.c:2103
 msgid "restarts not supported in 'eval'"
 msgstr "'eval'不支持重新启动"
 
-#: src/main/eval.c:2168 src/main/eval.c:2181
+#: src/main/eval.c:2172 src/main/eval.c:2185
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall'在封閉包外调用"
 
-#: src/main/eval.c:2274
+#: src/main/eval.c:2278
 msgid "value in '...' is not a promise"
 msgstr "'... '里的值不是允諾"
 
-#: src/main/eval.c:2463 src/main/objects.c:712
+#: src/main/eval.c:2467 src/main/objects.c:712
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s'里调用的名字太长"
 
-#: src/main/eval.c:2484
+#: src/main/eval.c:2488
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s'里的类属名字太长"
 
-#: src/main/eval.c:2547
+#: src/main/eval.c:2551
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "不可兼容的方法(\"%s\", \"%s\")和\"%s\""
 
-#: src/main/eval.c:2611
+#: src/main/eval.c:2615
 msgid "dispatch error in group dispatch"
 msgstr "组分派错误"
 
-#: src/main/eval.c:2924
+#: src/main/eval.c:2928
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "\"%s\"不是%s函数"
 
-#: src/main/eval.c:3117
+#: src/main/eval.c:3121
 msgid "node stack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/eval.c:3123
+#: src/main/eval.c:3127
 msgid "integer stack overflow"
 msgstr "整数堆叠上溢"
 
-#: src/main/eval.c:3177
+#: src/main/eval.c:3181
 msgid "Bad opcode"
 msgstr "op代码不对"
 
-#: src/main/eval.c:3919
+#: src/main/eval.c:3923
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %2$s y'中%1$s种类不对"
 
-#: src/main/eval.c:3998
+#: src/main/eval.c:4002
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不配; 用eval"
 
-#: src/main/eval.c:4003
+#: src/main/eval.c:4007
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太旧"
 
-#: src/main/eval.c:4004
+#: src/main/eval.c:4008
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:4038
+#: src/main/eval.c:4042
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不配"
 
-#: src/main/eval.c:4164
+#: src/main/eval.c:4168
 msgid "invalid sequence argument in for loop"
 msgstr "循环里的顺序参数不对"
 
-#: src/main/eval.c:4310 src/main/eval.c:4431
+#: src/main/eval.c:4314 src/main/eval.c:4435
 msgid "not a BUILTIN function"
 msgstr "非BUILTIN函数"
 
-#: src/main/eval.c:4416 src/main/eval.c:4739 src/main/eval.c:4781
+#: src/main/eval.c:4420 src/main/eval.c:4743 src/main/eval.c:4785
 msgid "bad function"
 msgstr "函数不对"
 
-#: src/main/eval.c:4806
+#: src/main/eval.c:4810
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr "没有名字替代的开关需要数值EXPR"
 
-#: src/main/eval.c:4809
+#: src/main/eval.c:4813
 msgid "bad character switch offsets"
 msgstr "字符开关偏移不对"
 
-#: src/main/eval.c:4811
+#: src/main/eval.c:4815
 msgid "bad switch names"
 msgstr "开关名字不对"
 
-#: src/main/eval.c:4825
+#: src/main/eval.c:4829
 msgid "bad numeric switch offsets"
 msgstr "数字开关偏移设定不对"
 
-#: src/main/eval.c:4902
+#: src/main/eval.c:4906
 msgid "cannot find index for threaded code address"
 msgstr "找不到线程代码地址的索引"
 
-#: src/main/eval.c:4962
+#: src/main/eval.c:4966
 msgid "invalid body"
 msgstr "函数体不对"
 
-#: src/main/eval.c:4982
+#: src/main/eval.c:4986
 msgid "invalid symbol"
 msgstr "符号不对"
 
-#: src/main/eval.c:5026
+#: src/main/eval.c:5030
 msgid "argument is not a byte code object"
 msgstr "参数不是位元组码对象"
 
-#: src/main/eval.c:5047
+#: src/main/eval.c:5051
 msgid "bad file name"
 msgstr "文件名字不对"
 
-#: src/main/eval.c:5051 src/main/eval.c:5072
+#: src/main/eval.c:5055 src/main/eval.c:5076
 msgid "unable to open 'file'"
 msgstr "无法打开'file'"
 
-#: src/main/eval.c:5066 src/main/saveload.c:1930
+#: src/main/eval.c:5070 src/main/saveload.c:1930
 msgid "'file' must be non-empty string"
 msgstr "'file'必需是非空字符串"
 
-#: src/main/eval.c:5068 src/main/saveload.c:1932 src/main/saveload.c:2232
+#: src/main/eval.c:5072 src/main/saveload.c:1932 src/main/saveload.c:2232
 #: src/main/serialize.c:2053
 msgid "'ascii' must be logical"
 msgstr "'ascii’必需是逻辑值"
 
-#: src/main/eval.c:5097 src/main/eval.c:5104
+#: src/main/eval.c:5101 src/main/eval.c:5108
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: 缓冲区太小"
 
-#: src/main/eval.c:5137 src/main/eval.c:5186
+#: src/main/eval.c:5141 src/main/eval.c:5190
 msgid "constant buffer must be a generic vector"
 msgstr "常量缓冲区必须是矢量类属"
 
-#: src/main/eval.c:5156
+#: src/main/eval.c:5160
 msgid "constBuf must be a generic vector"
 msgstr "constBuf必需是矢量类属"
 
-#: src/main/eval.c:5160
+#: src/main/eval.c:5164
 msgid "bad constCount value"
 msgstr "constCount值不对"
 
-#: src/main/eval.c:5188
+#: src/main/eval.c:5192
 msgid "bad constant count"
 msgstr "常量数目不对"
 
-#: src/main/eval.c:5224
+#: src/main/eval.c:5228
 msgid "profile timer in use"
 msgstr "程序概要分析计时器在运行中"
 
-#: src/main/eval.c:5226
+#: src/main/eval.c:5230
 msgid "already byte code profiling"
 msgstr "已经在进行位元组码程序概要分析"
 
-#: src/main/eval.c:5244
+#: src/main/eval.c:5248
 msgid "setting profile timer failed"
 msgstr "程序概要分析计时器设制失败"
 
-#: src/main/eval.c:5261
+#: src/main/eval.c:5265
 msgid "not byte code profiling"
 msgstr "非位元组码程序概要分析"
 
@@ -4084,9 +4084,9 @@ msgstr "无法读写模块里的互联网例行程序"
 msgid "internet routines cannot be loaded"
 msgstr "无法载入互联网例行程序"
 
-#: src/main/internet.c:117 src/main/memory.c:3105 src/main/memory.c:3114
-#: src/main/memory.c:3125 src/main/memory.c:3138 src/main/memory.c:3154
-#: src/main/memory.c:3171
+#: src/main/internet.c:117 src/main/memory.c:3100 src/main/memory.c:3109
+#: src/main/memory.c:3120 src/main/memory.c:3133 src/main/memory.c:3149
+#: src/main/memory.c:3166
 msgid "bad value"
 msgstr "值不对"
 
@@ -4299,68 +4299,68 @@ msgstr "内存用完了(达到了极限?)"
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "无法分配大小为%0.1f Gb的内存块"
 
-#: src/main/memory.c:2251
+#: src/main/memory.c:2246
 msgid "negative length vectors are not allowed"
 msgstr "不能有负长度矢量"
 
-#: src/main/memory.c:2277 src/main/memory.c:2290 src/main/memory.c:2303
-#: src/main/memory.c:2318
+#: src/main/memory.c:2272 src/main/memory.c:2285 src/main/memory.c:2298
+#: src/main/memory.c:2313
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "无法分配长度为%d的矢量"
 
-#: src/main/memory.c:2333
+#: src/main/memory.c:2328
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "矢量分配的种类/长度(%s/%d)不对"
 
-#: src/main/memory.c:2402
+#: src/main/memory.c:2397
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "无法分配大小为%0.1f Gb的矢量"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2401
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "无法分配大小为%0.1f Mb的矢量"
 
-#: src/main/memory.c:2410
+#: src/main/memory.c:2405
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "无法分配大小为%0.f Kb的矢量"
 
-#: src/main/memory.c:2743
+#: src/main/memory.c:2738
 msgid "protect(): protection stack overflow"
 msgstr "protect()：防护堆叠上溢"
 
-#: src/main/memory.c:2759
+#: src/main/memory.c:2754
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect():只有%d个保护项"
 
-#: src/main/memory.c:2773
+#: src/main/memory.c:2768
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到指针"
 
-#: src/main/memory.c:2829
+#: src/main/memory.c:2824
 #, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc无法分配(%2$u的%1$.0f)内存"
 
-#: src/main/memory.c:2840
+#: src/main/memory.c:2835
 #, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc 无法重新分配(大小为%.0f)的内存"
 
-#: src/main/memory.c:3059
+#: src/main/memory.c:3054
 msgid "not safe to return vector pointer"
 msgstr "回覆矢量指针不是安全的做法"
 
-#: src/main/memory.c:3299
+#: src/main/memory.c:3294
 msgid "memory profiling is not available on this system"
 msgstr "本系统没有记忆概要分析这个功能"
 
-#: src/main/memory.c:3364
+#: src/main/memory.c:3359
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: 无法输出文件'%s'"
