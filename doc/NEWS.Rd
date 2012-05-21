@@ -318,9 +318,13 @@
       that the length of the string they are passed does not exceed
       \eqn{2^{31}-1}{2^31-1} bytes: they used to overflow with
       unpredictable consequences.
+
+      \item C entry points \code{R_GetCurrentSrcref} and
+      \code{R_GetSrcFilename}, have been added to the API to allow
+      debuggers access to the source references on the stack.      
     }
   }
-
+  
   \subsection{WINDOWS-SPECIFIC CHANGES}{
     \itemize{
       \item Windows-specific changes will now be announced in this file

@@ -1785,4 +1785,37 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(orig_value);
 }
 
+/* These functions are to be used in error messages, and available for others to use in the API 
+   GetCurrentSrcref returns the first non-NULL srcref after skipping skip of them.  If it
+   doesn't find one it returns NULL. */
+
+SEXP
+R_GetCurrentSrcref(int skip)
+{
+    RCNTXT *c = R_GlobalContext;
+    SEXP srcref = R_Srcref;
+    while (c && (skip || !srcref || srcref == R_NilValue)) {
+    	if (srcref && srcref != R_NilValue && skip >= 0) 
+    	  skip--;
+    	srcref = c->srcref;
+    	c = c->nextcontext;
+    }
+    if (skip || !srcref)
+    	srcref = R_NilValue;
+    return srcref;
+}
+
+/* Return the filename corresponding to a srcref, or "" if none is found */
+
+SEXP 
+R_GetSrcFilename(SEXP srcref)
+{
+    SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
+    if (TYPEOF(srcfile) != ENVSXP) 
+    	return ScalarString(mkChar(""));
+    srcfile = findVar(install("filename"), srcfile);	
+    if (TYPEOF(srcfile) != STRSXP)
+        return ScalarString(mkChar(""));
+    return srcfile;
+}
 
