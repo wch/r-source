@@ -40,8 +40,9 @@ update.default <-
     else call
 }
 
-update.formula <- function (old, new, ...) {
-    tmp <- .Internal(update.formula(as.formula(old), as.formula(new)))
+update.formula <- function (old, new, ...)
+{
+    tmp <- .Call(C_updateform, as.formula(old), as.formula(new))
     out <- formula(terms.formula(tmp, simplify = TRUE))
     return(out)
 }

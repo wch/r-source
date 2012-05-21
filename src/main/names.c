@@ -870,7 +870,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"optim",	do_optim,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optimhess",	do_optimhess,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"terms.formula",do_termsform,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"update.formula",do_updateform,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+
 
 /* History manipulation */
 {"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

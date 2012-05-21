@@ -156,6 +156,7 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
 SEXP cor(SEXP x, SEXP y, SEXP na_method, SEXP method);
 SEXP cov(SEXP x, SEXP y, SEXP na_method, SEXP method);
+SEXP updateform(SEXP old, SEXP new);
 SEXP fft(SEXP z, SEXP inverse);
 SEXP mvfft(SEXP z, SEXP inverse);
 SEXP nextn(SEXP n, SEXP factors);
@@ -201,6 +202,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"Cdist", (DL_FUNC) &Cdist, 4},
     {"cor", (DL_FUNC) &cor, 4},
     {"cov", (DL_FUNC) &cov, 4},
+    {"updateform", (DL_FUNC) &updateform, 2},
     {"fft", (DL_FUNC) &fft, 2},
     {"mvfft", (DL_FUNC) &mvfft, 2},
     {"nextn", (DL_FUNC) &nextn, 2},

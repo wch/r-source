@@ -745,3 +745,205 @@ SEXP modelmatrix(SEXP args)
     UNPROTECT(14);
     return x;
 }
+
+/* Update a model formula by the replacement of "." templates. */
+
+static SEXP tildeSymbol = NULL;
+static SEXP plusSymbol  = NULL;
+static SEXP minusSymbol = NULL;
+static SEXP timesSymbol = NULL;
+static SEXP slashSymbol = NULL;
+static SEXP colonSymbol = NULL;
+static SEXP powerSymbol = NULL;
+static SEXP dotSymbol   = NULL;
+static SEXP parenSymbol = NULL;
+static SEXP inSymbol    = NULL;
+
+static SEXP ExpandDots(SEXP object, SEXP value)
+{
+    SEXP op;
+
+    if (TYPEOF(object) == SYMSXP) {
+	if (object == dotSymbol)
+	    object = duplicate(value);
+	return object;
+    }
+
+    if (TYPEOF(object) == LANGSXP) {
+	if (TYPEOF(value) == LANGSXP) op = CAR(value);
+	else op = NULL;
+	PROTECT(object);
+	if (CAR(object) == plusSymbol) {
+	    if (length(object) == 2) {
+		SETCADR(object, ExpandDots(CADR(object), value));
+	    }
+	    else if (length(object) == 3) {
+		SETCADR(object, ExpandDots(CADR(object), value));
+		SETCADDR(object, ExpandDots(CADDR(object), value));
+	    }
+	    else goto badformula;
+	}
+	else if (CAR(object) == minusSymbol) {
+	    if (length(object) == 2) {
+		if (CADR(object) == dotSymbol &&
+		   (op == plusSymbol || op == minusSymbol))
+		    SETCADR(object, lang2(parenSymbol,
+					  ExpandDots(CADR(object), value)));
+		else
+		    SETCADR(object, ExpandDots(CADR(object), value));
+	    }
+	    else if (length(object) == 3) {
+		if (CADR(object) == dotSymbol &&
+		   (op == plusSymbol || op == minusSymbol))
+		    SETCADR(object, lang2(parenSymbol,
+					  ExpandDots(CADR(object), value)));
+		else
+		    SETCADR(object, ExpandDots(CADR(object), value));
+		if (CADDR(object) == dotSymbol &&
+		   (op == plusSymbol || op == minusSymbol))
+		    SETCADDR(object, lang2(parenSymbol,
+					   ExpandDots(CADDR(object), value)));
+		else
+		    SETCADDR(object, ExpandDots(CADDR(object), value));
+	    }
+	    else goto badformula;
+	}
+	else if (CAR(object) == timesSymbol || CAR(object) == slashSymbol) {
+	    if (length(object) != 3)
+		goto badformula;
+	    if (CADR(object) == dotSymbol &&
+	       (op == plusSymbol || op == minusSymbol))
+		SETCADR(object, lang2(parenSymbol,
+				      ExpandDots(CADR(object), value)));
+	    else
+		SETCADR(object, ExpandDots(CADR(object), value));
+	    if (CADDR(object) == dotSymbol &&
+	       (op == plusSymbol || op == minusSymbol))
+		SETCADDR(object, lang2(parenSymbol,
+				       ExpandDots(CADDR(object), value)));
+	    else
+		SETCADDR(object, ExpandDots(CADDR(object), value));
+	}
+	else if (CAR(object) == colonSymbol) {
+	    if (length(object) != 3)
+		goto badformula;
+	    if (CADR(object) == dotSymbol &&
+	       (op == plusSymbol || op == minusSymbol ||
+		op == timesSymbol || op == slashSymbol))
+		SETCADR(object, lang2(parenSymbol,
+				      ExpandDots(CADR(object), value)));
+	    else
+		SETCADR(object, ExpandDots(CADR(object), value));
+	    if (CADDR(object) == dotSymbol &&
+	       (op == plusSymbol || op == minusSymbol))
+		SETCADDR(object, lang2(parenSymbol,
+				       ExpandDots(CADDR(object), value)));
+	    else
+		SETCADDR(object, ExpandDots(CADDR(object), value));
+	}
+	else if (CAR(object) == powerSymbol) {
+	    if (length(object) != 3)
+		goto badformula;
+	    if (CADR(object) == dotSymbol &&
+	       (op == plusSymbol || op == minusSymbol ||
+		op == timesSymbol || op == slashSymbol ||
+		op == colonSymbol))
+		SETCADR(object, lang2(parenSymbol,
+				      ExpandDots(CADR(object), value)));
+	    else
+		SETCADR(object, ExpandDots(CADR(object), value));
+	    if (CADDR(object) == dotSymbol &&
+	       (op == plusSymbol || op == minusSymbol))
+		SETCADDR(object, lang2(parenSymbol,
+				       ExpandDots(CADDR(object), value)));
+	    else
+		SETCADDR(object, ExpandDots(CADDR(object), value));
+	}
+	else {
+	    op = object;
+	    while(op != R_NilValue) {
+		SETCAR(op, ExpandDots(CAR(op), value));
+		op = CDR(op);
+	    }
+	}
+	UNPROTECT(1);
+	return object;
+    }
+    else return object;
+
+ badformula:
+    error(_("invalid formula in 'update'"));
+    return R_NilValue; /*NOTREACHED*/
+}
+
+SEXP updateform(SEXP old, SEXP new)
+{
+    SEXP _new;
+
+    /* Always fetch these values rather than trying */
+    /* to remember them between calls.  The overhead */
+    /* is minimal and we don't have to worry about */
+    /* intervening dump/restore problems. */
+
+    tildeSymbol = install("~");
+    plusSymbol  = install("+");
+    minusSymbol = install("-");
+    timesSymbol = install("*");
+    slashSymbol = install("/");
+    colonSymbol = install(":");
+    powerSymbol = install("^");
+    dotSymbol   = install(".");
+    parenSymbol = install("(");
+    inSymbol = install("%in%");
+
+    /* We must duplicate here because the */
+    /* formulae may be part of the parse tree */
+    /* and we don't want to modify it. */
+
+    PROTECT(_new = duplicate(new));
+
+    /* Check of new and old formulae. */
+    if (TYPEOF(old) != LANGSXP ||
+       (TYPEOF(_new) != LANGSXP && CAR(old) != tildeSymbol) ||
+       CAR(_new) != tildeSymbol)
+	error(_("formula expected"));
+
+    if (length(old) == 3) {
+	SEXP lhs = CADR(old);
+	SEXP rhs = CADDR(old);
+	/* We now check that new formula has a valid lhs.
+	   If it doesn't, we add one and set it to the rhs of the old
+	   formula. */
+	if (length(_new) == 2)
+	    SETCDR(_new, CONS(lhs, CDR(_new)));
+	/* Now we check the left and right sides of the new formula
+	   and substitute the correct value for any "." templates.
+	   We must parenthesize the rhs or we might upset arity and
+	   precedence. */
+	PROTECT(rhs);
+	SETCADR(_new, ExpandDots(CADR(_new), lhs));
+	SETCADDR(_new, ExpandDots(CADDR(_new), rhs));
+	UNPROTECT(1);
+    }
+    else {
+	/* The old formula had no lhs, so we only expand the rhs of the
+	   new formula. */
+	SEXP rhs = CADR(old);
+	if (length(_new) == 3)
+	    SETCADDR(_new, ExpandDots(CADDR(_new), rhs));
+	else
+	    SETCADR(_new, ExpandDots(CADR(_new), rhs));
+    }
+
+    /* It might be overkill to zero the */
+    /* the attribute list of the returned */
+    /* value, but it can't hurt. */
+
+    SET_ATTRIB(_new, R_NilValue);
+    SET_OBJECT(_new, 0);
+    SEXP DotEnvSymbol = install(".Environment");
+    setAttrib(_new, DotEnvSymbol, getAttrib(old, DotEnvSymbol));
+
+    UNPROTECT(1);
+    return _new;
+}
