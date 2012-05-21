@@ -14,16 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-fft <- function(z, inverse=FALSE)
-    .Internal(fft(z, inverse))
+fft <- function(z, inverse=FALSE) .Call(C_fft, z, inverse)
 
-mvfft <- function(z, inverse=FALSE)
-    .Internal(mvfft(z, inverse))
+mvfft <- function(z, inverse=FALSE) .Call(C_mvfft, z, inverse)
 
-nextn <- function(n, factors=c(2,3,5))
-    .Internal(nextn(n, factors))
+nextn <- function(n, factors=c(2,3,5)) .Call(C_nextn, n, factors)
 
-convolve <- function(x, y, conj=TRUE, type=c("circular","open","filter")) {
+convolve <- function(x, y, conj=TRUE, type=c("circular","open","filter"))
+{
     type <- match.arg(type)
     n <- length(x)
     ny <- length(y)
