@@ -819,9 +819,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"unlink",	do_unlink,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Complex Valued Functions */
-{"fft",		do_fft,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"mvfft",	do_mvfft,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"nextn",	do_nextn,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"polyroot",	do_polyroot,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Device Drivers */
