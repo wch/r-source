@@ -796,10 +796,6 @@
       \item Building with a positive value of
       \option{--with-valgrind-instrumentation} now also instruments logical,
       complex and raw vectors.
-
-      \item There is experimental support for \emph{link-time
-	optimization} with \command{gcc} 4.5.0 or later on platforms
-      which support it.
     }
   }
 
