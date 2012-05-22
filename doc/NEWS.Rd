@@ -149,7 +149,7 @@
     }
   }
 
-  \subsection{PACKAGE graphics}{
+  \subsection{CODE MIGRATION}{
     \itemize{
       \item The C code underlying base graphics has been migrated to the
       \pkg{graphics} package (and hence no longer uses
@@ -158,6 +158,18 @@
       This may require re-installing some S4-using packages
       (e.g. \CRANpkg{timeDate}) which captured the old versions of the
       \R interfaces.
+
+      \item Most of the \code{.Internal()} calls used in the \pkg{stats}
+      package have been migrated to C code in that package.
+
+      This means that a number of \code{.Internal()} calls which have
+      been used by packages no longer exist, including
+      \code{.Internal(cor)} \code{.Internal(cov)} and
+      \code{.Internal(update.packages)}.
+
+      It also means that packages such as \CRANpkg{compositions} which
+      make copies of \pkg{stats} functions at installation need to be
+      re-installed.
     }
   }
 
@@ -166,13 +178,13 @@
       \item There is a new function \code{mcaffinity()} which allows to
       get or set the CPU affinity mask for the current \R process on
       systems that supports this (currently only Linux was tested
-      successfully). It has no effect on systems that do not support
+      successfully).  It has no effect on systems that do not support
       process affinity.  Users are not expected to use this function
       directly (with the exception of fixing libraries that break
       affinity settings like OpenBLAS) -- the function is rather
       intended to support affinity control in high-level parallel
       functions.  In the future, \R may supplement lack of affinity
-      control in the OS by its own bookkeeping via \code{mcaffinity}
+      control in the OS by its own bookkeeping via \code{mcaffinity()}
       related to processes and threads it spawns.
 
       \item \code{mcparallel()} has a new argument \code{mc.affinity}
@@ -293,7 +305,8 @@
     \itemize{
       \item For \command{R CMD check}, a few people have reported
       problems with junctions on Windows (although they were tested on
-      Windows 7, XP and Server 2008 machines).  Setting the environment
+      Windows 7, XP and Server 2008 machines and it is unknown under
+      what circumstances the problems occur).  Setting the environment
       variable \env{R_WIN_NO_JUNCTIONS} to a non-empty value (e.g. in
       \file{~/.R/check.Renviron}) will force copies to be used instead.
     }
@@ -320,7 +333,7 @@
       unpredictable consequences.
 
       \item C entry points \code{R_GetCurrentSrcref} and
-      \code{R_GetSrcFilename}, have been added to the API to allow
+      \code{R_GetSrcFilename} have been added to the API to allow
       debuggers access to the source references on the stack.      
     }
   }
@@ -445,7 +458,7 @@
 
       \item Under some circumstances \code{package.skeleton()} would
       give out progress reports that could not be translated and so were
-      reproduced by question marks.  Now they are always in English.
+      displayed by question marks.  Now they are always in English.
       (This was seen for CJK locales on Windows, but may have occurred
       elsewhere.)
     }
