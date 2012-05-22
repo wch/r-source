@@ -8,6 +8,7 @@ CSOURCES = \
 	fft.c fmin.c integrate.c interv.c \
 	lbfgsb.c \
 	machar.c maxcol.c \
+	optim.c \
 	pretty.c \
 	rcont.c rowsum.c \
 	stem.c strsignif.c \
