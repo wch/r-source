@@ -408,9 +408,8 @@ model.frame.default <-
     extranames <- names(extras[-1L])
     extras <- eval(extras, data, env)
     subset <- eval(substitute(subset), data, env)
-    rho <- sys.frame()
-    data <- .External(C_modelframe, formula, rownames, variables, varnames,
-                      extras, extranames, subset, na.action, rho)
+    data <- .External2(C_modelframe, formula, rownames, variables, varnames,
+                       extras, extranames, subset, na.action)
     ## fix up the levels
     if(length(xlev)) {
 	for(nm in names(xlev))
@@ -519,8 +518,7 @@ model.matrix.default <- function(object, data = environment(object),
         isF <-  FALSE
         data <- list(x=rep(0, nrow(data)))
     }
-    rho <- sys.frame()
-    ans <- .External(C_modelmatrix, t, data, rho)
+    ans <- .External2(C_modelmatrix, t, data)
     cons <- if(any(isF))
 	lapply(data[isF], attr, "contrasts") ## else NULL
     attr(ans, "contrasts") <- cons

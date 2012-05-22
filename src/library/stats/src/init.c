@@ -231,12 +231,12 @@ static const R_FortranMethodDef FortEntries[] = {
 SEXP compcases(SEXP args);
 SEXP doD(SEXP args);
 SEXP deriv(SEXP args);
-SEXP modelframe(SEXP args);
-SEXP modelmatrix(SEXP args);
+SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP termsform(SEXP args);
-SEXP do_fmin(SEXP args);
-SEXP nlm(SEXP args);
-SEXP zeroin2(SEXP args);
+SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 

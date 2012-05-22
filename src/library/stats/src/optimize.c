@@ -72,7 +72,7 @@ static double fcn1(double x, struct callinfo *info)
 }
 
 /* fmin(f, xmin, xmax tol) */
-SEXP do_fmin(SEXP args)
+SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     double xmin, xmax, tol;
     SEXP v, res;
@@ -110,8 +110,7 @@ SEXP do_fmin(SEXP args)
     if (!R_FINITE(tol) || tol <= 0.0)
 	error(_("invalid '%s' value"), "tol");
 
-    args = CDR(args);
-    info.R_env = CAR(args);
+    info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
     PROTECT(res = allocVector(REALSXP, 1));
     SETCADR(info.R_fcall, allocVector(REALSXP, 1));
@@ -164,7 +163,7 @@ static double fcn2(double x, struct callinfo *info)
 }
 
 /* zeroin2(f, ax, bx, f.ax, f.bx, tol, maxiter) */
-SEXP zeroin2(SEXP args)
+SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     double f_ax, f_bx;
     double xmin, xmax, tol;
@@ -210,8 +209,7 @@ SEXP zeroin2(SEXP args)
     iter = asInteger(CAR(args));
     if (iter <= 0) error(_("'maxiter' must be positive"));
 
-    args = CDR(args);
-    info.R_env = CAR(args);
+    info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
     SETCADR(info.R_fcall, allocVector(REALSXP, 1));
     PROTECT(res = allocVector(REALSXP, 3));
@@ -527,7 +525,7 @@ from above in some direction,\n"\
 
 /* NOTE: The actual Dennis-Schnabel algorithm `optif9' is in ../appl/uncmin.c */
 
-SEXP nlm(SEXP args)
+SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names, v, R_gradientSymbol, R_hessianSymbol;
 
@@ -604,9 +602,8 @@ SEXP nlm(SEXP args)
     /* `iterlim' (def. 100) */
     itnlim = asInteger(CAR(args));
     if (itnlim == NA_INTEGER) error(_("invalid NA value in parameter"));
-    args = CDR(args);
 
-    state->R_env = CAR(args);
+    state->R_env = rho;
 
     /* force one evaluation to check for the gradient and hessian */
     iagflg = 0;			/* No analytic gradient */

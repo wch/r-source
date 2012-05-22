@@ -63,10 +63,10 @@ static R_INLINE Rboolean isOrdered_int(SEXP s)
 /* model.frame(terms, rownames, variables, varnames, */
 /*             dots, dotnames, subset, na.action) */
 
-SEXP modelframe(SEXP args)
+SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;
-    SEXP ans, row_names, subset, tmp, rho;
+    SEXP ans, row_names, subset, tmp;
     char buf[256];
     int i, j, nr, nc;
     int nvars, ndots, nactualdots;
@@ -79,8 +79,7 @@ SEXP modelframe(SEXP args)
     dots = CAR(args); args = CDR(args);
     dotnames = CAR(args); args = CDR(args);
     subset = CAR(args); args = CDR(args);
-    na_action = CAR(args); args = CDR(args);
-    rho = CAR(args);
+    na_action = CAR(args);
 
     /* Argument Sanity Checks */
 
@@ -314,9 +313,9 @@ static SEXP ColumnNames(SEXP x)
 	return VECTOR_ELT(dn, 1);
 }
 
-SEXP modelmatrix(SEXP args)
+SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rho, expr, factors, terms, vars, vnames, assign;
+    SEXP expr, factors, terms, vars, vnames, assign;
     SEXP xnames, tnames, rnames;
     SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
     SEXP variable, var_i;
@@ -381,7 +380,6 @@ SEXP modelmatrix(SEXP args)
 	error(_("invalid model frame"));
     if (length(vars) == 0)
 	error(_("do not know how many cases"));
-    rho = CADDR(args);
 
     n = nrows(VECTOR_ELT(vars, 0));
     /* This could be generated, so need to protect it */
