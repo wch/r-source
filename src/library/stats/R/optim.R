@@ -70,14 +70,14 @@ optim <- function(par, fn, gr = NULL, ...,
         res$value <- res$value * con$fnscale
 	res <- c(res, list(counts = c(NA, NA), convergence = 0L, message= NULL))
     } else {
-	res <- setNames(.External(C_optim, par, fn1, gr1, method, con, lower, upper),
+	res <- setNames(.Internal(optim(par, fn1, gr1, method, con, lower, upper)),
 			c("par", "value", "counts", "convergence", "message"))
     }
     names(res$counts) <- c("function", "gradient")
     nm <- names(par)
     if(!is.null(nm)) names(res$par) <- nm
     if (hessian) {
-        hess <- .External(C_optimhess, res$par, fn1, gr1, con)
+        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
         hess <- 0.5*(hess + t(hess))
         if(!is.null(nm)) dimnames(hess) <- list(nm, nm)
         res$hessian <- hess
@@ -93,7 +93,7 @@ optimHess <- function(par, fn, gr = NULL, ..., control = list())
     con <- list(fnscale = 1, parscale = rep.int(1, npar),
                 ndeps = rep.int(1e-3, npar))
     con[(names(control))] <- control
-    hess <- .External(C_optimhess, par, fn1, gr1, con)
+    hess <- .Internal(optimhess(par, fn1, gr1, con))
     if(!is.null(nm <- names(par))) dimnames(hess) <- list(nm, nm)
     hess
 }

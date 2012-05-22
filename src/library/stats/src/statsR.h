@@ -39,5 +39,3 @@ SEXP termsform(SEXP args);
 SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP optim(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP optimhess(SEXP call, SEXP op, SEXP args, SEXP rho);

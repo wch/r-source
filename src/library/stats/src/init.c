@@ -232,8 +232,6 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(do_fmin, 5),
     EXTDEF(nlm, 11),
     EXTDEF(zeroin2, 8),
-    EXTDEF(optim, 5),
-    EXTDEF(optimhess, 5),
     {NULL, NULL, 0}
 };
 
