@@ -25,8 +25,10 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 #include <R_ext/Applic.h>
+
+#include "statsR.h"
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 

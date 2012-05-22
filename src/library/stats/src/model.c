@@ -24,6 +24,8 @@
 
 #include <Defn.h>
 
+#include "statsR.h"
+
 /* inline-able versions, used just once! */
 static R_INLINE Rboolean isUnordered_int(SEXP s)
 {

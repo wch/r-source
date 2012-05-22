@@ -28,6 +28,7 @@
 #include "nls.h"
 #include "port.h"
 #include "stats.h"
+#include "statsR.h"
 #include "ts.h"
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
@@ -152,15 +153,6 @@ static const R_CMethodDef CEntries[]  = {
     {NULL, NULL, 0}
 };
 
-SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
-SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
-SEXP cor(SEXP x, SEXP y, SEXP na_method, SEXP method);
-SEXP cov(SEXP x, SEXP y, SEXP na_method, SEXP method);
-SEXP updateform(SEXP old, SEXP new);
-SEXP fft(SEXP z, SEXP inverse);
-SEXP mvfft(SEXP z, SEXP inverse);
-SEXP nextn(SEXP n, SEXP factors);
-
 static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
@@ -227,16 +219,6 @@ static const R_FortranMethodDef FortEntries[] = {
     {"lminfl", (DL_FUNC) &F77_SUB(lminfl), 11},
     {NULL, NULL, 0}
 };
-
-SEXP compcases(SEXP args);
-SEXP doD(SEXP args);
-SEXP deriv(SEXP args);
-SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP termsform(SEXP args);
-SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 

@@ -25,6 +25,8 @@
 #include <Defn.h>
 #include <Rmath.h>
 
+#include "statsR.h"
+
 static SEXP corcov(SEXP x, SEXP y, SEXP na_method, SEXP kendall, Rboolean cor);
 
 

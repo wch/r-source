@@ -29,6 +29,7 @@
 #include <R_ext/Applic.h>
 #include <R_ext/RS.h>	       	/* for Memcpy */
 
+#include "statsR.h"
 
 /* One Dimensional Minimization --- just wrapper for
  * Brent's "fmin" --> ../appl/fmin.c */

@@ -21,6 +21,8 @@
 #include <Rinternals.h>
 #include <R_ext/Applic.h>
 
+#include "statsR.h"
+
 /* A wrapper to replace
 
     z <- .Fortran("dqrls",
