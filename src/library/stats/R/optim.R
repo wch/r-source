@@ -61,27 +61,18 @@ optim <- function(par, fn, gr = NULL, ...,
 	stop('method = "Brent" is only available for one-dimensional optimization')
     lower <- as.double(rep(lower, length.out = npar))
     upper <- as.double(rep(upper, length.out = npar))
-    if(method == "Brent") { ## 1-D
+    res <- if(method == "Brent") { ## 1-D
         if(any(!is.finite(c(upper, lower))))
            stop("'lower' and 'upper' must be finite values")
 	res <- optimize(function(par) fn(par,...)/con$fnscale,
                         lower = lower, upper = upper, tol = con$reltol)
 	names(res)[names(res) == c("minimum", "objective")] <- c("par", "value")
         res$value <- res$value * con$fnscale
-	res <- c(res, list(counts = c(NA, NA), convergence = 0L, message= NULL))
-    } else {
-	res <- setNames(.Internal(optim(par, fn1, gr1, method, con, lower, upper)),
-			c("par", "value", "counts", "convergence", "message"))
-    }
-    names(res$counts) <- c("function", "gradient")
-    nm <- names(par)
-    if(!is.null(nm)) names(res$par) <- nm
-    if (hessian) {
-        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
-        hess <- 0.5*(hess + t(hess))
-        if(!is.null(nm)) dimnames(hess) <- list(nm, nm)
-        res$hessian <- hess
-    }
+	c(res, list(counts = c(`function` = NA, gradient = NA),
+                    convergence = 0L, message = NULL))
+    } else .External2(C_optim, par, fn1, gr1, method, con, lower, upper)
+    if (hessian)
+        res$hessian <- .External2(C_optimhess, res$par, fn1, gr1, con)
     res
 }
 
@@ -93,7 +84,5 @@ optimHess <- function(par, fn, gr = NULL, ..., control = list())
     con <- list(fnscale = 1, parscale = rep.int(1, npar),
                 ndeps = rep.int(1e-3, npar))
     con[(names(control))] <- control
-    hess <- .Internal(optimhess(par, fn1, gr1, con))
-    if(!is.null(nm <- names(par))) dimnames(hess) <- list(nm, nm)
-    hess
+    .External2(C_optimhess, par, fn1, gr1, con)
 }

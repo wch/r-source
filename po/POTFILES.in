@@ -67,7 +67,6 @@ src/main/mkdtemp.c
 src/main/model.c
 src/main/names.c
 src/main/objects.c
-src/main/optim.c
 src/main/options.c
 src/main/paste.c
 src/main/platform.c

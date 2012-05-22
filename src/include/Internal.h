@@ -321,8 +321,6 @@ SEXP do_normalizepath(SEXP, SEXP, SEXP, SEXP);
 SEXP do_nzchar(SEXP,SEXP,SEXP,SEXP);
 SEXP do_objectsize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_onexit(SEXP, SEXP, SEXP, SEXP);
-SEXP do_optim(SEXP, SEXP, SEXP, SEXP);
-SEXP do_optimhess(SEXP, SEXP, SEXP, SEXP);
 SEXP do_options(SEXP, SEXP, SEXP, SEXP);
 SEXP do_order(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pack(SEXP, SEXP, SEXP, SEXP);
