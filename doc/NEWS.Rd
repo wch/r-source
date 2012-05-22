@@ -98,7 +98,8 @@
     \itemize{
       \item For \command{R CMD check}, a few people have reported
       problems with junctions on Windows (although they were tested on
-      Windows 7, XP and Server 2008 machines).  Setting the environment
+      Windows 7, XP and Server 2008 machines and it is unknown under
+      what circumstances the problems occur).  Setting the environment
       variable \env{R_WIN_NO_JUNCTIONS} to a non-empty value (e.g. in
       \file{~/.R/check.Renviron}) will force copies to be used instead.
     }
@@ -125,7 +126,7 @@
       unpredictable consequences.
 
       \item C entry points \code{R_GetCurrentSrcref} and
-      \code{R_GetSrcFilename}, have been added to the API to allow
+      \code{R_GetSrcFilename} have been added to the API to allow
       debuggers access to the source references on the stack.      
     }
   }
@@ -250,7 +251,7 @@
 
       \item Under some circumstances \code{package.skeleton()} would
       give out progress reports that could not be translated and so were
-      reproduced by question marks.  Now they are always in English.
+      displayed by question marks.  Now they are always in English.
       (This was seen for CJK locales on Windows, but may have occurred
       elsewhere.)
     }
