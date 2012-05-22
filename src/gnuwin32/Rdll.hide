@@ -830,8 +830,6 @@
  do_objectsize
  do_onexit
  do_open
- do_optim
- do_optimhess
  do_options
  do_order
  do_packBits
