@@ -869,7 +869,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 {"optim",	do_optim,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"optimhess",	do_optimhess,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"terms.formula",do_termsform,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
 
 /* History manipulation */
@@ -1197,3 +1196,20 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 #undef __R_Names__
+
+	/* Internal code for the ~ operator */
+
+SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    if (isObject(call))
+	return duplicate(call);
+    else {
+	SEXP klass;
+	PROTECT(call = duplicate(call));
+	PROTECT(klass = mkString("formula"));
+	setAttrib(call, R_ClassSymbol, klass);
+	setAttrib(call, R_DotEnvSymbol, rho);
+	UNPROTECT(2);
+	return call;
+    }
+}

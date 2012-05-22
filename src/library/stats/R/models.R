@@ -212,8 +212,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data, optional=TRUE)
-    terms <- .Internal(terms.formula(x, specials, data, keep.order,
-                                     allowDotAsName))
+    terms <-
+        .External(C_termsform, x, specials, data, keep.order, allowDotAsName)
     if (simplify) {
         a <- attributes(terms)
         terms <- fixFormulaObject(terms)

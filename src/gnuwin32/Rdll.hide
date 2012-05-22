@@ -985,7 +985,6 @@
  do_syswhich
  do_tempdir
  do_tempfile
- do_termsform
  do_textconnection
  do_textconvalue
  do_tilde
