@@ -435,10 +435,10 @@ SEXP optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     // now symmetrize
     for (i = 0; i < npar; i++) 
-	for (j = 0; j < npar; j++) {
-	    if (i == j) continue;
-	    REAL(ans)[i * npar + j] =
+	for (j = 0; j < i; j++) {
+	    double tmp =
 		0.5 * (REAL(ans)[i * npar + j] + REAL(ans)[j * npar + i]);
+	    REAL(ans)[i * npar + j] = REAL(ans)[j * npar + i] = tmp;
 	}
     SEXP nm = getAttrib(par, R_NamesSymbol);
     if(!isNull(nm)) {
