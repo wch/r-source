@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2007  The R Core Team
+ *  Copyright (C) 1999-2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -243,8 +243,23 @@ SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < npar; i++)
 	dpar[i] = REAL(par)[i] / (OS->parscale[i]);
     PROTECT(res = allocVector(VECSXP, 5));
+    SEXP names;
+    PROTECT(names = allocVector(STRSXP, 5));
+    SET_STRING_ELT(names, 0, mkChar("par"));
+    SET_STRING_ELT(names, 1, mkChar("value"));
+    SET_STRING_ELT(names, 2, mkChar("counts"));
+    SET_STRING_ELT(names, 3, mkChar("convergence"));
+    SET_STRING_ELT(names, 4, mkChar("message"));
+    setAttrib(res, R_NamesSymbol, names);
+    UNPROTECT(1);
     PROTECT(value = allocVector(REALSXP, 1));
     PROTECT(counts = allocVector(INTSXP, 2));
+    SEXP countnames;
+    PROTECT(countnames = allocVector(STRSXP, 2));
+    SET_STRING_ELT(countnames, 0, mkChar("function"));
+    SET_STRING_ELT(countnames, 1, mkChar("gradient"));
+    setAttrib(counts, R_NamesSymbol, countnames);
+    UNPROTECT(1);
     PROTECT(conv = allocVector(INTSXP, 1));
     abstol = asReal(getListElement(options, "abstol"));
     reltol = asReal(getListElement(options, "reltol"));
@@ -380,6 +395,7 @@ SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
 	error(_("unknown 'method'"));
 
+    if(!isNull(OS->names)) setAttrib(par, R_NamesSymbol, OS->names);
     REAL(value)[0] = val * (OS->fnscale);
     SET_VECTOR_ELT(res, 0, par); SET_VECTOR_ELT(res, 1, value);
     INTEGER(counts)[0] = fncount; INTEGER(counts)[1] = grcount;
@@ -447,6 +463,22 @@ SEXP attribute_hidden do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(ans)[i * npar + j] = (OS->fnscale) * (df1[j] - df2[j])/
 		(2 * eps * (OS->parscale[i]) * (OS->parscale[j]));
 	dpar[i] = dpar[i] + eps;
+    }
+    // now symmetrize
+    for (i = 0; i < npar; i++) 
+	for (j = 0; j < i; j++) {
+	    double tmp =
+		0.5 * (REAL(ans)[i * npar + j] + REAL(ans)[j * npar + i]);
+	    REAL(ans)[i * npar + j] = REAL(ans)[j * npar + i] = tmp;
+	}
+    SEXP nm = getAttrib(par, R_NamesSymbol);
+    if(!isNull(nm)) {
+	SEXP dm;
+	PROTECT(dm = allocVector(VECSXP, 2));
+	SET_VECTOR_ELT(dm, 0, duplicate(nm));
+	SET_VECTOR_ELT(dm, 1, duplicate(nm));
+	setAttrib(ans, R_DimNamesSymbol, dm);
+	UNPROTECT(1);
     }
     UNPROTECT(4);
     return ans;
