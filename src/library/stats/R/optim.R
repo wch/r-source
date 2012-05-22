@@ -72,7 +72,7 @@ optim <- function(par, fn, gr = NULL, ...,
                     convergence = 0L, message = NULL))
     } else .Internal(optim(par, fn1, gr1, method, con, lower, upper))
     if (hessian)
-        res$hessian <- .External2(C_optimhess, res$par, fn1, gr1, con)
+        res$hessian <- .Internal(optimhess(res$par, fn1, gr1, con))
     res
 }
 
