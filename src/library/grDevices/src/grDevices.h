@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-11   The R Core Team.
+ *  Copyright (C) 2004-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,3 +69,15 @@ SEXP devga(SEXP);
 SEXP savePlot(SEXP);
 #endif
 
+SEXP devcap(SEXP args);
+SEXP devcapture(SEXP args);
+SEXP devcontrol(SEXP args);
+SEXP devcopy(SEXP args);
+SEXP devcur(SEXP args);
+SEXP devdisplaylist(SEXP args);
+SEXP devholdflush(SEXP args);
+SEXP devnext(SEXP args);
+SEXP devoff(SEXP args);
+SEXP devprev(SEXP args);
+SEXP devset(SEXP args);
+SEXP devsize(SEXP args);

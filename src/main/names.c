@@ -830,14 +830,14 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Graphics */
 
-{"dev.control",	do_devcontrol,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.displaylist",do_devcontrol,1,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.copy",	do_devcopy,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.cur",	do_devcur,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.next",	do_devnext,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.off",	do_devoff,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.prev",	do_devprev,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"dev.set",	do_devset,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.control",	do_devcontrol,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.displaylist",do_devcontrol,1,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.copy",	do_devcopy,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.cur",	do_devcur,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.next",	do_devnext,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.off",	do_devoff,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.prev",	do_devprev,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"dev.set",	do_devset,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb",		do_rgb,		0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb256",	do_rgb,		1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb2hsv",	do_RGB2hsv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -854,10 +854,10 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"getGraphicsEventEnv",do_getGraphicsEventEnv,0,11,1,{PP_FUNCALL, PREC_FN, 0}},
 {"setGraphicsEventEnv",do_setGraphicsEventEnv,0,11,2,{PP_FUNCALL, PREC_FN, 0}},
 {"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
-{"dev.size",	do_devsize,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
-{"devHoldFlush",do_devholdflush,0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
-{"dev.capabilities", do_devcap,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
-{"devCapture"  , do_devcapture,	0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
+//{"dev.size",	do_devsize,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
+//{"devHoldFlush",do_devholdflush,0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
+//{"dev.capabilities", do_devcap,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
+//{"devCapture"  , do_devcapture,	0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
