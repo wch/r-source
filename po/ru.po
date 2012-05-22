@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-05-22 12:53+0100\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -29,6 +29,51 @@ msgstr "NA в .C(\"bincode\",... NAOK=FALSE)"
 #: src/appl/binning.c:111
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr "NA в .C(\"bincount\",... NAOK=FALSE)"
+
+#: src/appl/optim.c:59
+msgid "non-finite value supplied by optim"
+msgstr "бесконечное значение передано из 'optim'"
+
+#: src/appl/optim.c:66
+#, c-format
+msgid "candidate point in optim evaluated to length %d not %d"
+msgstr "полученная длина точки-кандидата в 'optim' -- %d, а не %d"
+
+#: src/appl/optim.c:135
+msgid "REPORT must be > 0 (method = \"BFGS\")"
+msgstr "'REPORT' должен быть > 0 (method = \"BFGS\")"
+
+#: src/appl/optim.c:146
+msgid "initial value in 'vmmin' is not finite"
+msgstr "исходное значение в 'vmmin' не конечно"
+
+#: src/appl/optim.c:294
+msgid "function cannot be evaluated at initial parameters"
+msgstr "не могу вычислить значение функции при исходных значениях параметров"
+
+#: src/appl/optim.c:488
+msgid "unknown 'type' in CG method of optim"
+msgstr "неизвестный 'type' в CG-методе 'optim'"
+
+#: src/appl/optim.c:501
+msgid "Function cannot be evaluated at initial parameters"
+msgstr "Yе могу вычислить значение функции при исходных значениях параметров"
+
+#: src/appl/optim.c:556
+msgid "unknown type in CG method of optim"
+msgstr "Неизвестный тип в CG-методе 'optim'"
+
+#: src/appl/optim.c:649
+msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
+msgstr "'REPORT' должен быть > 0 (method = \"L-BFGS-B\")"
+
+#: src/appl/optim.c:673
+msgid "L-BFGS-B needs finite values of 'fn'"
+msgstr "для 'L-BFGS-B' нужны конечные значения 'fn'"
+
+#: src/appl/optim.c:728
+msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
+msgstr "'trace', 'REPORT' должен быть >= 0 (method = \"SANN\")"
 
 #: src/appl/pretty.c:106
 msgid "Internal(pretty()): very small range.. corrected"
@@ -183,57 +228,57 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/grep.c:1056 src/main/grep.c:1058 src/main/grep.c:1060
 #: src/main/grep.c:1505 src/main/grep.c:1509 src/main/grep.c:1514
 #: src/main/grep.c:2317 src/main/grep.c:2322 src/main/grep.c:2613
-#: src/main/grep.c:2618 src/main/memory.c:3412 src/main/optim.c:225
-#: src/main/paste.c:94 src/main/paste.c:381 src/main/paste.c:388
-#: src/main/paste.c:395 src/main/paste.c:400 src/main/paste.c:405
-#: src/main/paste.c:410 src/main/paste.c:413 src/main/paste.c:421
-#: src/main/paste.c:587 src/main/paste.c:592 src/main/platform.c:296
-#: src/main/platform.c:298 src/main/platform.c:300 src/main/platform.c:316
-#: src/main/platform.c:327 src/main/platform.c:450 src/main/platform.c:452
-#: src/main/platform.c:773 src/main/platform.c:775 src/main/platform.c:1131
-#: src/main/platform.c:1137 src/main/platform.c:1140 src/main/platform.c:1143
-#: src/main/platform.c:1146 src/main/platform.c:1149 src/main/platform.c:1152
-#: src/main/platform.c:1251 src/main/platform.c:1254 src/main/platform.c:1257
-#: src/main/platform.c:1296 src/main/platform.c:1353 src/main/platform.c:1356
-#: src/main/platform.c:1562 src/main/platform.c:1565 src/main/platform.c:1568
-#: src/main/platform.c:1604 src/main/platform.c:1607 src/main/platform.c:1610
-#: src/main/platform.c:1692 src/main/platform.c:1707 src/main/platform.c:1744
-#: src/main/platform.c:1746 src/main/platform.c:1811 src/main/platform.c:1895
-#: src/main/platform.c:2170 src/main/platform.c:2216 src/main/platform.c:2346
-#: src/main/platform.c:2349 src/main/platform.c:2352 src/main/platform.c:2355
-#: src/main/platform.c:2358 src/main/platform.c:2491 src/main/platform.c:2494
-#: src/main/platform.c:2497 src/main/platform.c:2500 src/main/platform.c:2503
-#: src/main/platform.c:2573 src/main/platform.c:2581 src/main/platform.c:2617
-#: src/main/platform.c:2667 src/main/print.c:235 src/main/print.c:241
-#: src/main/print.c:263 src/main/print.c:269 src/main/print.c:275
-#: src/main/random.c:493 src/main/random.c:497 src/main/random.c:501
-#: src/main/saveload.c:1939 src/main/saveload.c:1942 src/main/saveload.c:1945
-#: src/main/saveload.c:2061 src/main/saveload.c:2241 src/main/saveload.c:2246
-#: src/main/saveload.c:2249 src/main/saveload.c:2352 src/main/scan.c:665
-#: src/main/scan.c:832 src/main/scan.c:845 src/main/scan.c:849
-#: src/main/scan.c:851 src/main/scan.c:862 src/main/scan.c:889
-#: src/main/scan.c:892 src/main/scan.c:945 src/main/scan.c:982
-#: src/main/scan.c:986 src/main/scan.c:996 src/main/scan.c:1210
-#: src/main/scan.c:1436 src/main/scan.c:1487 src/main/scan.c:1499
-#: src/main/scan.c:1503 src/main/scan.c:1509 src/main/scan.c:1725
-#: src/main/scan.c:1726 src/main/scan.c:1728 src/main/scan.c:1729
-#: src/main/scan.c:1730 src/main/scan.c:1731 src/main/scan.c:1732
-#: src/main/scan.c:1733 src/main/seq.c:399 src/main/seq.c:404
-#: src/main/seq.c:412 src/main/seq.c:432 src/main/seq.c:436 src/main/seq.c:442
-#: src/main/seq.c:449 src/main/sort.c:161 src/main/sysutils.c:589
-#: src/main/sysutils.c:593 src/main/sysutils.c:597 src/main/sysutils.c:603
-#: src/main/sysutils.c:607 src/main/sysutils.c:1618 src/main/sysutils.c:1622
-#: src/main/unique.c:855 src/main/unique.c:1181 src/main/unique.c:1241
-#: src/main/unique.c:1248 src/main/util.c:569 src/main/util.c:572
-#: src/main/util.c:1753 src/modules/internet/internet.c:284
-#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
-#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
-#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
-#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1077
-#: src/modules/X11/devX11.c:3214 src/modules/X11/devX11.c:3217
-#: src/modules/X11/devX11.c:3220 src/modules/X11/devX11.c:3244
-#: src/unix/sys-std.c:1212 src/unix/sys-std.c:1235
+#: src/main/grep.c:2618 src/main/memory.c:3407 src/main/paste.c:94
+#: src/main/paste.c:381 src/main/paste.c:388 src/main/paste.c:395
+#: src/main/paste.c:400 src/main/paste.c:405 src/main/paste.c:410
+#: src/main/paste.c:413 src/main/paste.c:421 src/main/paste.c:587
+#: src/main/paste.c:592 src/main/platform.c:296 src/main/platform.c:298
+#: src/main/platform.c:300 src/main/platform.c:316 src/main/platform.c:327
+#: src/main/platform.c:450 src/main/platform.c:452 src/main/platform.c:773
+#: src/main/platform.c:775 src/main/platform.c:1131 src/main/platform.c:1137
+#: src/main/platform.c:1140 src/main/platform.c:1143 src/main/platform.c:1146
+#: src/main/platform.c:1149 src/main/platform.c:1152 src/main/platform.c:1251
+#: src/main/platform.c:1254 src/main/platform.c:1257 src/main/platform.c:1296
+#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1562
+#: src/main/platform.c:1565 src/main/platform.c:1568 src/main/platform.c:1604
+#: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1692
+#: src/main/platform.c:1707 src/main/platform.c:1744 src/main/platform.c:1746
+#: src/main/platform.c:1811 src/main/platform.c:1895 src/main/platform.c:2170
+#: src/main/platform.c:2216 src/main/platform.c:2346 src/main/platform.c:2349
+#: src/main/platform.c:2352 src/main/platform.c:2355 src/main/platform.c:2358
+#: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
+#: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2573
+#: src/main/platform.c:2581 src/main/platform.c:2617 src/main/platform.c:2667
+#: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
+#: src/main/print.c:269 src/main/print.c:275 src/main/random.c:493
+#: src/main/random.c:497 src/main/random.c:501 src/main/saveload.c:1939
+#: src/main/saveload.c:1942 src/main/saveload.c:1945 src/main/saveload.c:2061
+#: src/main/saveload.c:2241 src/main/saveload.c:2246 src/main/saveload.c:2249
+#: src/main/saveload.c:2352 src/main/scan.c:665 src/main/scan.c:832
+#: src/main/scan.c:845 src/main/scan.c:849 src/main/scan.c:851
+#: src/main/scan.c:862 src/main/scan.c:889 src/main/scan.c:892
+#: src/main/scan.c:945 src/main/scan.c:982 src/main/scan.c:986
+#: src/main/scan.c:996 src/main/scan.c:1210 src/main/scan.c:1436
+#: src/main/scan.c:1487 src/main/scan.c:1499 src/main/scan.c:1503
+#: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
+#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
+#: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
+#: src/main/seq.c:399 src/main/seq.c:404 src/main/seq.c:412 src/main/seq.c:432
+#: src/main/seq.c:436 src/main/seq.c:442 src/main/seq.c:449
+#: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
+#: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
+#: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
+#: src/main/unique.c:1181 src/main/unique.c:1241 src/main/unique.c:1248
+#: src/main/util.c:569 src/main/util.c:572 src/main/util.c:1753
+#: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:299
+#: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
+#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
+#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
+#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3214
+#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
+#: src/modules/X11/devX11.c:3244 src/unix/sys-std.c:1212
+#: src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
@@ -1087,7 +1132,7 @@ msgstr "'x' должен быть числом"
 
 #: src/main/attrib.c:39 src/main/attrib.c:226 src/main/attrib.c:260
 #: src/main/attrib.c:282 src/main/attrib.c:399 src/main/attrib.c:446
-#: src/main/attrib.c:495
+#: src/main/attrib.c:496
 msgid "attempt to set an attribute on NULL"
 msgstr "попытка присвоения атрибута на NULL"
 
@@ -1135,20 +1180,20 @@ msgstr "не могу присвоить 'tsp' нулевому вектору"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "попытка установить неправильный атрибут 'comment' "
 
-#: src/main/attrib.c:504
+#: src/main/attrib.c:505
 msgid "adding class \"factor\" to an invalid object"
 msgstr "добавление класса \"factor\" к неправильному объекту"
 
-#: src/main/attrib.c:512
+#: src/main/attrib.c:513
 msgid "attempt to set invalid 'class' attribute"
 msgstr "попытка установить неправильный атрибут 'class'"
 
-#: src/main/attrib.c:766
+#: src/main/attrib.c:768
 #, c-format
 msgid "Class '%s' has no 'names' slot"
 msgstr "У класса '%s' нет позиции 'names'"
 
-#: src/main/attrib.c:768
+#: src/main/attrib.c:770
 #, c-format
 msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
@@ -1157,7 +1202,7 @@ msgstr ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
 
-#: src/main/attrib.c:771
+#: src/main/attrib.c:773
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
@@ -1165,129 +1210,129 @@ msgstr ""
 "Нельзя использовать names()<- чтобы установить позицию 'names' в невекторном "
 "классе ('%s')"
 
-#: src/main/attrib.c:800
+#: src/main/attrib.c:803
 msgid "incompatible 'names' argument"
 msgstr "несовместимый аргумент 'names'"
 
-#: src/main/attrib.c:855
+#: src/main/attrib.c:858
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "неправильный (%s) тип установки атрибута 'names'"
 
-#: src/main/attrib.c:925
+#: src/main/attrib.c:929
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' применены для не-многомерной матрицы"
 
-#: src/main/attrib.c:930
+#: src/main/attrib.c:934
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' должны быть списком"
 
-#: src/main/attrib.c:933 src/main/attrib.c:956
+#: src/main/attrib.c:937 src/main/attrib.c:960
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "длина 'dimnames' [%d] должна соответствовать 'dims' [%d]"
 
-#: src/main/attrib.c:962
+#: src/main/attrib.c:966
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "неправильный (%s) тип 'dimnames' (должен быть вектор)"
 
-#: src/main/attrib.c:965
+#: src/main/attrib.c:969
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimnames' [%d] не равна протяженности многомерной матрицы"
 
-#: src/main/attrib.c:1036 src/main/builtin.c:62 src/main/builtin.c:99
+#: src/main/attrib.c:1041 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:72 src/main/paste.c:290
 #: src/main/random.c:499
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
 
-#: src/main/attrib.c:1039
+#: src/main/attrib.c:1044
 msgid "invalid second argument"
 msgstr "неправильный второй аргумент"
 
-#: src/main/attrib.c:1047
+#: src/main/attrib.c:1052
 msgid "length-0 dimension vector is invalid"
 msgstr "вектор размерности нулевой длины недопустим"
 
-#: src/main/attrib.c:1052
+#: src/main/attrib.c:1057
 msgid "the dims contain missing values"
 msgstr "измерения содержат пропущенные значения"
 
-#: src/main/attrib.c:1054
+#: src/main/attrib.c:1059
 msgid "the dims contain negative values"
 msgstr "змерения содержат отрицательные значения"
 
-#: src/main/attrib.c:1059
+#: src/main/attrib.c:1064
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr "измерения [произведение %d] не соответствуют длине объекта [%d]"
 
-#: src/main/attrib.c:1061
+#: src/main/attrib.c:1066
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "измерения [произведение %d] не соответствуют длине объекта [%d]"
 
-#: src/main/attrib.c:1128
+#: src/main/attrib.c:1133
 msgid "duplicated levels will not be allowed in factors anymore"
 msgstr "повторяющиейся уровни в факторах больше не разрешены"
 
-#: src/main/attrib.c:1158
+#: src/main/attrib.c:1163
 msgid "attributes must be a list or NULL"
 msgstr "атрибуты должны быть списком или NULL"
 
-#: src/main/attrib.c:1163
+#: src/main/attrib.c:1168
 msgid "attributes must be named"
 msgstr "атрибуты должны быть именованы"
 
-#: src/main/attrib.c:1167
+#: src/main/attrib.c:1172
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "все атрибуты должны иметь имена [%d не имеет]"
 
-#: src/main/attrib.c:1266
+#: src/main/attrib.c:1271
 msgid "'which' must be of mode character"
 msgstr "'which' должен быть текстом"
 
-#: src/main/attrib.c:1268
+#: src/main/attrib.c:1273
 msgid "exactly one attribute 'which' must be given"
 msgstr "должен быть задан в точности один атрибут 'which'"
 
-#: src/main/attrib.c:1326 src/main/attrib.c:1349 src/main/subscript.c:234
+#: src/main/attrib.c:1331 src/main/attrib.c:1354 src/main/subscript.c:234
 #: src/main/subscript.c:238 src/main/subset.c:1146 src/main/subset.c:1197
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "частичное соответствие между '%s' и '%s'"
 
-#: src/main/attrib.c:1381
+#: src/main/attrib.c:1386
 msgid "'name' must be non-null character string"
 msgstr "'name' должно быть непустой строкой"
 
-#: src/main/attrib.c:1503 src/main/attrib.c:1574 src/main/attrib.c:1611
+#: src/main/attrib.c:1509 src/main/attrib.c:1580 src/main/attrib.c:1617
 msgid "invalid type or length for slot name"
 msgstr "неправильный тип или длина для имени слота"
 
-#: src/main/attrib.c:1537
+#: src/main/attrib.c:1543
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "не могу получить слот (\"%s\") из объекта типа \"%s\""
 
-#: src/main/attrib.c:1548
+#: src/main/attrib.c:1554
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "нет слота имени \"%s\" для этого объекта класса \"%s\""
 
-#: src/main/attrib.c:1565
+#: src/main/attrib.c:1571
 msgid "attempt to set slot on NULL object"
 msgstr "попытка установить слот на NULL объект"
 
-#: src/main/attrib.c:1606
+#: src/main/attrib.c:1612
 msgid "formal classes cannot be used without the methods package"
 msgstr "формальные классы не могут использоваться без пакета 'methods'"
 
-#: src/main/attrib.c:1618
+#: src/main/attrib.c:1624
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1295,7 +1340,7 @@ msgid ""
 msgstr ""
 "попытка получить слот \"%s\" из объекта базового класса (\"%s\") без слотов"
 
-#: src/main/attrib.c:1622
+#: src/main/attrib.c:1628
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -3999,9 +4044,9 @@ msgstr "средства Интернет не доступны из модул�
 msgid "internet routines cannot be loaded"
 msgstr "средства Интернет не могут быть загружены"
 
-#: src/main/internet.c:117 src/main/memory.c:3139 src/main/memory.c:3148
-#: src/main/memory.c:3159 src/main/memory.c:3172 src/main/memory.c:3188
-#: src/main/memory.c:3205
+#: src/main/internet.c:117 src/main/memory.c:3134 src/main/memory.c:3143
+#: src/main/memory.c:3154 src/main/memory.c:3167 src/main/memory.c:3183
+#: src/main/memory.c:3200
 msgid "bad value"
 msgstr "неправильное значение"
 
@@ -4177,203 +4222,154 @@ msgstr "частичное соответствие между аргумент�
 msgid "unused argument(s) %s"
 msgstr "неиспользованный аргумент(ы) %s"
 
-#: src/main/memory.c:1136
+#: src/main/memory.c:1134
 msgid "can only weakly reference/finalize reference objects"
 msgstr "могу сослаться на/завершить ссылочные объекты только слабо"
 
-#: src/main/memory.c:1170
+#: src/main/memory.c:1168
 msgid "finalizer must be a function or NULL"
 msgstr "завершитель должен быть функцией или NULL"
 
-#: src/main/memory.c:1221 src/main/memory.c:1229 src/main/memory.c:1240
+#: src/main/memory.c:1219 src/main/memory.c:1227 src/main/memory.c:1238
 msgid "not a weak reference"
 msgstr "не является слабой ссылкой"
 
-#: src/main/memory.c:1356
+#: src/main/memory.c:1354
 msgid "first argument must be environment or external pointer"
 msgstr "первый аргумент должен быть окружением или внешним указателем"
 
-#: src/main/memory.c:1358
+#: src/main/memory.c:1356
 msgid "second argument must be a function"
 msgstr "второй аргумент должен быть функцией"
 
-#: src/main/memory.c:1362
+#: src/main/memory.c:1360
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "третий аргумент должен быть 'TRUE' или 'FALSE'"
 
-#: src/main/memory.c:1845
+#: src/main/memory.c:1840
 msgid "vector memory exhausted (limit reached?)"
 msgstr "векторная память вышла (достигнут предел?)"
 
-#: src/main/memory.c:1851
+#: src/main/memory.c:1846
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons-память вышла (достигнут предел?)"
 
-#: src/main/memory.c:1856
+#: src/main/memory.c:1851
 msgid "memory exhausted (limit reached?)"
 msgstr "память исчерпана (достигнут предел?)"
 
-#: src/main/memory.c:1978
+#: src/main/memory.c:1973
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "не могу разместить блок памяти размером %0.1f Gb"
 
-#: src/main/memory.c:1983
+#: src/main/memory.c:1978
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "не могу разместить блок памяти размером %0.1f Gb"
 
-#: src/main/memory.c:2249
+#: src/main/memory.c:2244
 #, fuzzy
 msgid "vector is too large"
 msgstr "указанный размер вектора слишком велик"
 
-#: src/main/memory.c:2252
+#: src/main/memory.c:2247
 msgid "negative length vectors are not allowed"
 msgstr "не разрешена отрицательная длина векторов"
 
-#: src/main/memory.c:2278 src/main/memory.c:2291 src/main/memory.c:2304
-#: src/main/memory.c:2319
+#: src/main/memory.c:2273 src/main/memory.c:2286 src/main/memory.c:2299
+#: src/main/memory.c:2314
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "не могу разместить вектор длины %d"
 
-#: src/main/memory.c:2340
+#: src/main/memory.c:2335
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "неправильный тип/длина (%s/%d) для размещения вектора"
 
-#: src/main/memory.c:2433
+#: src/main/memory.c:2428
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "не могу разместить вектор размером %0.1f Gb"
 
-#: src/main/memory.c:2437
+#: src/main/memory.c:2432
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "не могу разместить вектор размером %0.1f Mb"
 
-#: src/main/memory.c:2441
+#: src/main/memory.c:2436
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "не могу разместить вектор размером %0.f Kb"
 
-#: src/main/memory.c:2774
+#: src/main/memory.c:2769
 msgid "protect(): protection stack overflow"
 msgstr "protect(): переполнение стека защиты"
 
-#: src/main/memory.c:2790
+#: src/main/memory.c:2785
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): только %d защищенных элементов"
 
-#: src/main/memory.c:2804
+#: src/main/memory.c:2799
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: указатель не найден"
 
-#: src/main/memory.c:2860
+#: src/main/memory.c:2855
 #, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc' не может выделить память (%.0f из %u байт)"
 
-#: src/main/memory.c:2871
+#: src/main/memory.c:2866
 #, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc' не может переразместить память (%.0f байт)"
 
-#: src/main/memory.c:3093
+#: src/main/memory.c:3088
 msgid "not safe to return vector pointer"
 msgstr "небезопасно возвращать указатель вектора"
 
-#: src/main/memory.c:3333
+#: src/main/memory.c:3328
 msgid "memory profiling is not available on this system"
 msgstr "профилирование памяти в этой системе недоступно"
 
-#: src/main/memory.c:3398
+#: src/main/memory.c:3393
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 
-#: src/main/memory.c:3507
+#: src/main/memory.c:3502
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/model.c:140
-msgid "invalid term in model formula"
-msgstr "неправильный терм в модельной формуле"
-
-#: src/main/model.c:215
-msgid "invalid model formula"
-msgstr "неправильная модельная формула"
-
-#: src/main/model.c:241 src/main/model.c:485
-msgid "invalid power in formula"
-msgstr "неправильная степень в формуле"
-
-#: src/main/model.c:277
-msgid "invalid model formula in ExtractVars"
-msgstr "неправильная модельная формула в ExtractVars"
-
-#: src/main/model.c:607
-#, c-format
-msgid "duplicated name '%s' in data frame using '.'"
-msgstr "повторяющееся имя '%s' в таблице данных, использую '.'"
-
-#: src/main/model.c:664
-msgid "invalid model formula in EncodeVars"
-msgstr "неправильная модельная формула в EncodeVars"
-
-#: src/main/model.c:754
-msgid "argument is not a valid model"
-msgstr "аргумент не является правильной моделью"
-
-#: src/main/model.c:764
-msgid "'specials' must be NULL or a character vector"
-msgstr "'specials' должен быть NULL или текстовым вектором"
-
-#: src/main/model.c:777
-msgid "'data' argument is of the wrong type"
-msgstr "аргумент 'data' неправильного типа"
-
-#: src/main/model.c:1042
-msgid "'.' in formula and no 'data' argument"
-msgstr "'.' в формуле и нет аргумента 'data'"
-
-#: src/main/model.c:1190
-msgid "invalid formula in 'update'"
-msgstr "неправильная формула в 'update'"
-
-#: src/main/model.c:1228
-msgid "formula expected"
-msgstr "ожидается формула"
-
-#: src/main/names.c:1007
+#: src/main/names.c:1000
 msgid "string argument required"
 msgstr "нужен текстовый аргумент"
 
-#: src/main/names.c:1010
+#: src/main/names.c:1003
 msgid "no such primitive function"
 msgstr "нет такой примитивной функции"
 
-#: src/main/names.c:1141
+#: src/main/names.c:1131
 msgid "attempt to use zero-length variable name"
 msgstr "попытка использовать имя переменной нулевой длины"
 
-#: src/main/names.c:1143
+#: src/main/names.c:1133
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "имена переменных ограничены %d байтами"
 
-#: src/main/names.c:1170
+#: src/main/names.c:1160
 msgid "invalid .Internal() argument"
 msgstr "неправильный .Internal() аргумент"
 
-#: src/main/names.c:1173
+#: src/main/names.c:1163
 msgid "invalid internal function"
 msgstr "неправильная внутренняя функция"
 
-#: src/main/names.c:1175
+#: src/main/names.c:1165
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "нет внутренней функции \"%s\""
@@ -4600,91 +4596,6 @@ msgstr "'R_get_primname' вызван на непримитив"
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr "Экземпляр класса \"%s\" не является валидным объектом S3"
-
-#: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
-msgid "non-finite value supplied by optim"
-msgstr "бесконечное значение передано из 'optim'"
-
-#: src/main/optim.c:80
-#, c-format
-msgid "objective function in optim evaluates to length %d not 1"
-msgstr "целевая функция в 'optim' возвращает объект длины %d, а не 1"
-
-#: src/main/optim.c:107
-#, c-format
-msgid "gradient in optim evaluated to length %d not %d"
-msgstr "полученная длина градиента в 'optim' -- %d, а не %d"
-
-#: src/main/optim.c:191
-#, c-format
-msgid "candidate point in optim evaluated to length %d not %d"
-msgstr "полученная длина точки-кандидата в 'optim' -- %d, а не %d"
-
-#: src/main/optim.c:221 src/main/optim.c:409
-msgid "'fn' is not a function"
-msgstr "'fn' не является функцией"
-
-#: src/main/optim.c:238 src/main/optim.c:415
-msgid "'parscale' is of the wrong length"
-msgstr "'parscale' неправильной длины"
-
-#: src/main/optim.c:252
-msgid "'maxit' is not an integer"
-msgstr "'maxit' не является целым числом"
-
-#: src/main/optim.c:271
-msgid "'tmax' is not an integer"
-msgstr "'tmax' не является целым числом"
-
-#: src/main/optim.c:273 src/main/optim.c:290 src/main/optim.c:315
-#: src/main/optim.c:345 src/main/optim.c:423
-msgid "'gr' is not a function"
-msgstr "'gr' не является функцией"
-
-#: src/main/optim.c:296 src/main/optim.c:321 src/main/optim.c:351
-#: src/main/optim.c:429
-msgid "'ndeps' is of the wrong length"
-msgstr "'ndeps' неправильной длины"
-
-#: src/main/optim.c:381
-msgid "unknown 'method'"
-msgstr "неизвестный 'method'"
-
-#: src/main/optim.c:512
-msgid "REPORT must be > 0 (method = \"BFGS\")"
-msgstr "'REPORT' должен быть > 0 (method = \"BFGS\")"
-
-#: src/main/optim.c:523
-msgid "initial value in 'vmmin' is not finite"
-msgstr "исходное значение в 'vmmin' не конечно"
-
-#: src/main/optim.c:671
-msgid "function cannot be evaluated at initial parameters"
-msgstr "не могу вычислить значение функции при исходных значениях параметров"
-
-#: src/main/optim.c:865
-msgid "unknown 'type' in CG method of optim"
-msgstr "неизвестный 'type' в CG-методе 'optim'"
-
-#: src/main/optim.c:878
-msgid "Function cannot be evaluated at initial parameters"
-msgstr "Yе могу вычислить значение функции при исходных значениях параметров"
-
-#: src/main/optim.c:933
-msgid "unknown type in CG method of optim"
-msgstr "Неизвестный тип в CG-методе 'optim'"
-
-#: src/main/optim.c:1026
-msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
-msgstr "'REPORT' должен быть > 0 (method = \"L-BFGS-B\")"
-
-#: src/main/optim.c:1050
-msgid "L-BFGS-B needs finite values of 'fn'"
-msgstr "для 'L-BFGS-B' нужны конечные значения 'fn'"
-
-#: src/main/optim.c:1105
-msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr "'trace', 'REPORT' должен быть >= 0 (method = \"SANN\")"
 
 #: src/main/options.c:116 src/main/options.c:164
 msgid "corrupted options list"
@@ -7467,6 +7378,69 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "invalid term in model formula"
+#~ msgstr "неправильный терм в модельной формуле"
+
+#~ msgid "invalid model formula"
+#~ msgstr "неправильная модельная формула"
+
+#~ msgid "invalid power in formula"
+#~ msgstr "неправильная степень в формуле"
+
+#~ msgid "invalid model formula in ExtractVars"
+#~ msgstr "неправильная модельная формула в ExtractVars"
+
+#~ msgid "duplicated name '%s' in data frame using '.'"
+#~ msgstr "повторяющееся имя '%s' в таблице данных, использую '.'"
+
+#~ msgid "invalid model formula in EncodeVars"
+#~ msgstr "неправильная модельная формула в EncodeVars"
+
+#~ msgid "argument is not a valid model"
+#~ msgstr "аргумент не является правильной моделью"
+
+#~ msgid "'specials' must be NULL or a character vector"
+#~ msgstr "'specials' должен быть NULL или текстовым вектором"
+
+#~ msgid "'data' argument is of the wrong type"
+#~ msgstr "аргумент 'data' неправильного типа"
+
+#~ msgid "'.' in formula and no 'data' argument"
+#~ msgstr "'.' в формуле и нет аргумента 'data'"
+
+#~ msgid "invalid formula in 'update'"
+#~ msgstr "неправильная формула в 'update'"
+
+#~ msgid "formula expected"
+#~ msgstr "ожидается формула"
+
+#~ msgid "objective function in optim evaluates to length %d not 1"
+#~ msgstr "целевая функция в 'optim' возвращает объект длины %d, а не 1"
+
+#~ msgid "gradient in optim evaluated to length %d not %d"
+#~ msgstr "полученная длина градиента в 'optim' -- %d, а не %d"
+
+#~ msgid "'fn' is not a function"
+#~ msgstr "'fn' не является функцией"
+
+#~ msgid "'parscale' is of the wrong length"
+#~ msgstr "'parscale' неправильной длины"
+
+#~ msgid "'maxit' is not an integer"
+#~ msgstr "'maxit' не является целым числом"
+
+#~ msgid "'tmax' is not an integer"
+#~ msgstr "'tmax' не является целым числом"
+
+#~ msgid "'gr' is not a function"
+#~ msgstr "'gr' не является функцией"
+
+#~ msgid "'ndeps' is of the wrong length"
+#~ msgstr "'ndeps' неправильной длины"
+
+#~ msgid "unknown 'method'"
+#~ msgstr "неизвестный 'method'"
 
 #~ msgid "Event GE_ScalePS requires a single numeric value"
 #~ msgstr "Событие GE_ScalePS требует единичного числового значения"

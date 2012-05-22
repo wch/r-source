@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-05-22 12:53+0100\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -25,6 +25,51 @@ msgstr "NA's en .C(\"códigobinario\",... NAOK=FALSO)"
 #: src/appl/binning.c:111
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr "NA's en .C(\"númerobinario\",... NAOK=FALSO)"
+
+#: src/appl/optim.c:59
+msgid "non-finite value supplied by optim"
+msgstr "valor no finito provisto por optim"
+
+#: src/appl/optim.c:66
+#, c-format
+msgid "candidate point in optim evaluated to length %d not %d"
+msgstr "se evaluó el punto candidato en optim de tamaño %d, no %d"
+
+#: src/appl/optim.c:135
+msgid "REPORT must be > 0 (method = \"BFGS\")"
+msgstr "REPORT debe ser > 0 (método = \"BFGS\")"
+
+#: src/appl/optim.c:146
+msgid "initial value in 'vmmin' is not finite"
+msgstr "valor inicial en 'vmmin' no es finito"
+
+#: src/appl/optim.c:294
+msgid "function cannot be evaluated at initial parameters"
+msgstr "la función no se puede evaluar en los parámetros iniciales"
+
+#: src/appl/optim.c:488
+msgid "unknown 'type' in CG method of optim"
+msgstr "'type' desconocido en el método CG de optim"
+
+#: src/appl/optim.c:501
+msgid "Function cannot be evaluated at initial parameters"
+msgstr "La función no se puede evaluar en los parámetros iniciales"
+
+#: src/appl/optim.c:556
+msgid "unknown type in CG method of optim"
+msgstr "'type' desconocido en el método CG de optim"
+
+#: src/appl/optim.c:649
+msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
+msgstr "REPORT debe ser > 0 (método = \"L-BFGS-B\")"
+
+#: src/appl/optim.c:673
+msgid "L-BFGS-B needs finite values of 'fn'"
+msgstr "L-BFGS-B necesita valores finitos de 'fn'"
+
+#: src/appl/optim.c:728
+msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
+msgstr "trace, REPORT debe ser > 0 (método = \"SANN\")"
 
 #: src/appl/pretty.c:106
 msgid "Internal(pretty()): very small range.. corrected"
@@ -178,57 +223,57 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/grep.c:1056 src/main/grep.c:1058 src/main/grep.c:1060
 #: src/main/grep.c:1505 src/main/grep.c:1509 src/main/grep.c:1514
 #: src/main/grep.c:2317 src/main/grep.c:2322 src/main/grep.c:2613
-#: src/main/grep.c:2618 src/main/memory.c:3412 src/main/optim.c:225
-#: src/main/paste.c:94 src/main/paste.c:381 src/main/paste.c:388
-#: src/main/paste.c:395 src/main/paste.c:400 src/main/paste.c:405
-#: src/main/paste.c:410 src/main/paste.c:413 src/main/paste.c:421
-#: src/main/paste.c:587 src/main/paste.c:592 src/main/platform.c:296
-#: src/main/platform.c:298 src/main/platform.c:300 src/main/platform.c:316
-#: src/main/platform.c:327 src/main/platform.c:450 src/main/platform.c:452
-#: src/main/platform.c:773 src/main/platform.c:775 src/main/platform.c:1131
-#: src/main/platform.c:1137 src/main/platform.c:1140 src/main/platform.c:1143
-#: src/main/platform.c:1146 src/main/platform.c:1149 src/main/platform.c:1152
-#: src/main/platform.c:1251 src/main/platform.c:1254 src/main/platform.c:1257
-#: src/main/platform.c:1296 src/main/platform.c:1353 src/main/platform.c:1356
-#: src/main/platform.c:1562 src/main/platform.c:1565 src/main/platform.c:1568
-#: src/main/platform.c:1604 src/main/platform.c:1607 src/main/platform.c:1610
-#: src/main/platform.c:1692 src/main/platform.c:1707 src/main/platform.c:1744
-#: src/main/platform.c:1746 src/main/platform.c:1811 src/main/platform.c:1895
-#: src/main/platform.c:2170 src/main/platform.c:2216 src/main/platform.c:2346
-#: src/main/platform.c:2349 src/main/platform.c:2352 src/main/platform.c:2355
-#: src/main/platform.c:2358 src/main/platform.c:2491 src/main/platform.c:2494
-#: src/main/platform.c:2497 src/main/platform.c:2500 src/main/platform.c:2503
-#: src/main/platform.c:2573 src/main/platform.c:2581 src/main/platform.c:2617
-#: src/main/platform.c:2667 src/main/print.c:235 src/main/print.c:241
-#: src/main/print.c:263 src/main/print.c:269 src/main/print.c:275
-#: src/main/random.c:493 src/main/random.c:497 src/main/random.c:501
-#: src/main/saveload.c:1939 src/main/saveload.c:1942 src/main/saveload.c:1945
-#: src/main/saveload.c:2061 src/main/saveload.c:2241 src/main/saveload.c:2246
-#: src/main/saveload.c:2249 src/main/saveload.c:2352 src/main/scan.c:665
-#: src/main/scan.c:832 src/main/scan.c:845 src/main/scan.c:849
-#: src/main/scan.c:851 src/main/scan.c:862 src/main/scan.c:889
-#: src/main/scan.c:892 src/main/scan.c:945 src/main/scan.c:982
-#: src/main/scan.c:986 src/main/scan.c:996 src/main/scan.c:1210
-#: src/main/scan.c:1436 src/main/scan.c:1487 src/main/scan.c:1499
-#: src/main/scan.c:1503 src/main/scan.c:1509 src/main/scan.c:1725
-#: src/main/scan.c:1726 src/main/scan.c:1728 src/main/scan.c:1729
-#: src/main/scan.c:1730 src/main/scan.c:1731 src/main/scan.c:1732
-#: src/main/scan.c:1733 src/main/seq.c:399 src/main/seq.c:404
-#: src/main/seq.c:412 src/main/seq.c:432 src/main/seq.c:436 src/main/seq.c:442
-#: src/main/seq.c:449 src/main/sort.c:161 src/main/sysutils.c:589
-#: src/main/sysutils.c:593 src/main/sysutils.c:597 src/main/sysutils.c:603
-#: src/main/sysutils.c:607 src/main/sysutils.c:1618 src/main/sysutils.c:1622
-#: src/main/unique.c:855 src/main/unique.c:1181 src/main/unique.c:1241
-#: src/main/unique.c:1248 src/main/util.c:569 src/main/util.c:572
-#: src/main/util.c:1753 src/modules/internet/internet.c:284
-#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
-#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
-#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
-#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1077
-#: src/modules/X11/devX11.c:3214 src/modules/X11/devX11.c:3217
-#: src/modules/X11/devX11.c:3220 src/modules/X11/devX11.c:3244
-#: src/unix/sys-std.c:1212 src/unix/sys-std.c:1235
+#: src/main/grep.c:2618 src/main/memory.c:3407 src/main/paste.c:94
+#: src/main/paste.c:381 src/main/paste.c:388 src/main/paste.c:395
+#: src/main/paste.c:400 src/main/paste.c:405 src/main/paste.c:410
+#: src/main/paste.c:413 src/main/paste.c:421 src/main/paste.c:587
+#: src/main/paste.c:592 src/main/platform.c:296 src/main/platform.c:298
+#: src/main/platform.c:300 src/main/platform.c:316 src/main/platform.c:327
+#: src/main/platform.c:450 src/main/platform.c:452 src/main/platform.c:773
+#: src/main/platform.c:775 src/main/platform.c:1131 src/main/platform.c:1137
+#: src/main/platform.c:1140 src/main/platform.c:1143 src/main/platform.c:1146
+#: src/main/platform.c:1149 src/main/platform.c:1152 src/main/platform.c:1251
+#: src/main/platform.c:1254 src/main/platform.c:1257 src/main/platform.c:1296
+#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1562
+#: src/main/platform.c:1565 src/main/platform.c:1568 src/main/platform.c:1604
+#: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1692
+#: src/main/platform.c:1707 src/main/platform.c:1744 src/main/platform.c:1746
+#: src/main/platform.c:1811 src/main/platform.c:1895 src/main/platform.c:2170
+#: src/main/platform.c:2216 src/main/platform.c:2346 src/main/platform.c:2349
+#: src/main/platform.c:2352 src/main/platform.c:2355 src/main/platform.c:2358
+#: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
+#: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2573
+#: src/main/platform.c:2581 src/main/platform.c:2617 src/main/platform.c:2667
+#: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
+#: src/main/print.c:269 src/main/print.c:275 src/main/random.c:493
+#: src/main/random.c:497 src/main/random.c:501 src/main/saveload.c:1939
+#: src/main/saveload.c:1942 src/main/saveload.c:1945 src/main/saveload.c:2061
+#: src/main/saveload.c:2241 src/main/saveload.c:2246 src/main/saveload.c:2249
+#: src/main/saveload.c:2352 src/main/scan.c:665 src/main/scan.c:832
+#: src/main/scan.c:845 src/main/scan.c:849 src/main/scan.c:851
+#: src/main/scan.c:862 src/main/scan.c:889 src/main/scan.c:892
+#: src/main/scan.c:945 src/main/scan.c:982 src/main/scan.c:986
+#: src/main/scan.c:996 src/main/scan.c:1210 src/main/scan.c:1436
+#: src/main/scan.c:1487 src/main/scan.c:1499 src/main/scan.c:1503
+#: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
+#: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
+#: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
+#: src/main/seq.c:399 src/main/seq.c:404 src/main/seq.c:412 src/main/seq.c:432
+#: src/main/seq.c:436 src/main/seq.c:442 src/main/seq.c:449
+#: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
+#: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
+#: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
+#: src/main/unique.c:1181 src/main/unique.c:1241 src/main/unique.c:1248
+#: src/main/util.c:569 src/main/util.c:572 src/main/util.c:1753
+#: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:299
+#: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
+#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
+#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
+#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3214
+#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
+#: src/modules/X11/devX11.c:3244 src/unix/sys-std.c:1212
+#: src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
@@ -1109,7 +1154,7 @@ msgstr "'x' debe ser numérico"
 
 #: src/main/attrib.c:39 src/main/attrib.c:226 src/main/attrib.c:260
 #: src/main/attrib.c:282 src/main/attrib.c:399 src/main/attrib.c:446
-#: src/main/attrib.c:495
+#: src/main/attrib.c:496
 msgid "attempt to set an attribute on NULL"
 msgstr "se intenta especificar un atributo en un NULL"
 
@@ -1158,20 +1203,20 @@ msgstr "no se puede asignar 'tsp' a un vector de longitud 0"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "se intenta especificar un atributo 'comment' no válido"
 
-#: src/main/attrib.c:504
+#: src/main/attrib.c:505
 msgid "adding class \"factor\" to an invalid object"
 msgstr "se agregó una clase\"factor\" a un objeto no válido"
 
-#: src/main/attrib.c:512
+#: src/main/attrib.c:513
 msgid "attempt to set invalid 'class' attribute"
 msgstr "se intenta especificar un atributo 'class' no válido"
 
-#: src/main/attrib.c:766
+#: src/main/attrib.c:768
 #, c-format
 msgid "Class '%s' has no 'names' slot"
 msgstr "Clase '%s' no tiene 'names' en slot"
 
-#: src/main/attrib.c:768
+#: src/main/attrib.c:770
 #, c-format
 msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
@@ -1180,7 +1225,7 @@ msgstr ""
 "Clase '%s' no tiene 'names' en slot; asignar un nombre a un atributo creara "
 "un objeto no válido  "
 
-#: src/main/attrib.c:771
+#: src/main/attrib.c:773
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
@@ -1188,130 +1233,130 @@ msgstr ""
 "No es valido usar names()<- para dar 'names' a un slot en una clase que no "
 "es vector ('%s')"
 
-#: src/main/attrib.c:800
+#: src/main/attrib.c:803
 msgid "incompatible 'names' argument"
 msgstr "argumento 'names' incompatible"
 
-#: src/main/attrib.c:855
+#: src/main/attrib.c:858
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "tipo inválido (%s)  para especificar el atributo de 'names'"
 
-#: src/main/attrib.c:925
+#: src/main/attrib.c:929
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' aplicado a un objeto que no es un arreglo"
 
-#: src/main/attrib.c:930
+#: src/main/attrib.c:934
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' debe ser una lista"
 
-#: src/main/attrib.c:933 src/main/attrib.c:956
+#: src/main/attrib.c:937 src/main/attrib.c:960
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "la longitud de 'dimnames' [%d] debe coincidir con la de 'dims' [%d]"
 
-#: src/main/attrib.c:962
+#: src/main/attrib.c:966
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "tipo inválido (%s) para 'dimnames' (debe ser un vector)"
 
-#: src/main/attrib.c:965
+#: src/main/attrib.c:969
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "la longitud de 'dimnames' [%d] no es igual a la extensión del arreglo"
 
-#: src/main/attrib.c:1036 src/main/builtin.c:62 src/main/builtin.c:99
+#: src/main/attrib.c:1041 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:72 src/main/paste.c:290
 #: src/main/random.c:499
 msgid "invalid first argument"
 msgstr "primer argumento inválido"
 
-#: src/main/attrib.c:1039
+#: src/main/attrib.c:1044
 msgid "invalid second argument"
 msgstr "segundo argumento inválido"
 
-#: src/main/attrib.c:1047
+#: src/main/attrib.c:1052
 msgid "length-0 dimension vector is invalid"
 msgstr "vector de dimensión de longitud 0 es inválido"
 
-#: src/main/attrib.c:1052
+#: src/main/attrib.c:1057
 msgid "the dims contain missing values"
 msgstr "el dims contiene valores missing"
 
-#: src/main/attrib.c:1054
+#: src/main/attrib.c:1059
 msgid "the dims contain negative values"
 msgstr "el dims contiene valores negativos"
 
-#: src/main/attrib.c:1059
+#: src/main/attrib.c:1064
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr "dims [producto %d] no coincide con la longitud del objeto [%d]"
 
-#: src/main/attrib.c:1061
+#: src/main/attrib.c:1066
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [producto %d] no coincide con la longitud del objeto [%d]"
 
-#: src/main/attrib.c:1128
+#: src/main/attrib.c:1133
 msgid "duplicated levels will not be allowed in factors anymore"
 msgstr "no se permitirán  más niveles duplicados en los factores"
 
-#: src/main/attrib.c:1158
+#: src/main/attrib.c:1163
 msgid "attributes must be a list or NULL"
 msgstr "los atributos deben estar en una lista o NULL"
 
-#: src/main/attrib.c:1163
+#: src/main/attrib.c:1168
 msgid "attributes must be named"
 msgstr "los atributos deben tener nombre"
 
-#: src/main/attrib.c:1167
+#: src/main/attrib.c:1172
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "todos los atributos deben tener nombre [%d no lo tiene]"
 
-#: src/main/attrib.c:1266
+#: src/main/attrib.c:1271
 msgid "'which' must be of mode character"
 msgstr "which' debe ser de modo carácter"
 
-#: src/main/attrib.c:1268
+#: src/main/attrib.c:1273
 msgid "exactly one attribute 'which' must be given"
 msgstr "exactamente 1 atributo 'which' debe ser especificado"
 
-#: src/main/attrib.c:1326 src/main/attrib.c:1349 src/main/subscript.c:234
+#: src/main/attrib.c:1331 src/main/attrib.c:1354 src/main/subscript.c:234
 #: src/main/subscript.c:238 src/main/subset.c:1146 src/main/subset.c:1197
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr " encuentros parciales de '%s' to '%s'"
 
-#: src/main/attrib.c:1381
+#: src/main/attrib.c:1386
 msgid "'name' must be non-null character string"
 msgstr "'name' debe ser una cadena de caracteres no nula"
 
-#: src/main/attrib.c:1503 src/main/attrib.c:1574 src/main/attrib.c:1611
+#: src/main/attrib.c:1509 src/main/attrib.c:1580 src/main/attrib.c:1617
 msgid "invalid type or length for slot name"
 msgstr "tipo o longitud inválido para el nombre de slot"
 
-#: src/main/attrib.c:1537
+#: src/main/attrib.c:1543
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "no es posible obtener un slot (\"%s\") de un objeto de tipo \"%s\""
 
-#: src/main/attrib.c:1548
+#: src/main/attrib.c:1554
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "no hay un slot de nombre \"%s\" para ese objeto de clase \"%s\""
 
-#: src/main/attrib.c:1565
+#: src/main/attrib.c:1571
 #, fuzzy
 msgid "attempt to set slot on NULL object"
 msgstr "se intenta especificar un atributo en un NULL"
 
-#: src/main/attrib.c:1606
+#: src/main/attrib.c:1612
 msgid "formal classes cannot be used without the methods package"
 msgstr "no pueden utilizarse clases formales  sin el paquete métodos"
 
-#: src/main/attrib.c:1618
+#: src/main/attrib.c:1624
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1320,7 +1365,7 @@ msgstr ""
 "tentativa de obtener un slot \"%s\" de un objeto de una clase básica (\"%s"
 "\") sin slots"
 
-#: src/main/attrib.c:1622
+#: src/main/attrib.c:1628
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -4061,9 +4106,9 @@ msgstr "rutinas de internet no pueden ser abiertas en el módulo"
 msgid "internet routines cannot be loaded"
 msgstr "rutinas de internet no pueden ser cargadas"
 
-#: src/main/internet.c:117 src/main/memory.c:3139 src/main/memory.c:3148
-#: src/main/memory.c:3159 src/main/memory.c:3172 src/main/memory.c:3188
-#: src/main/memory.c:3205
+#: src/main/internet.c:117 src/main/memory.c:3134 src/main/memory.c:3143
+#: src/main/memory.c:3154 src/main/memory.c:3167 src/main/memory.c:3183
+#: src/main/memory.c:3200
 msgid "bad value"
 msgstr "valor incorrecto"
 
@@ -4248,205 +4293,155 @@ msgstr " argumentos parcialmente correctos de '%s' a '%s'"
 msgid "unused argument(s) %s"
 msgstr "el argumento(s) no fue utilizado(s) %s"
 
-#: src/main/memory.c:1136
+#: src/main/memory.c:1134
 msgid "can only weakly reference/finalize reference objects"
 msgstr "puede sólo referenciar/finalizar debilmente objetos de referencia"
 
-#: src/main/memory.c:1170
+#: src/main/memory.c:1168
 msgid "finalizer must be a function or NULL"
 msgstr "el finalizador debe ser una función o NULL"
 
-#: src/main/memory.c:1221 src/main/memory.c:1229 src/main/memory.c:1240
+#: src/main/memory.c:1219 src/main/memory.c:1227 src/main/memory.c:1238
 msgid "not a weak reference"
 msgstr "no es una referencia débil"
 
-#: src/main/memory.c:1356
+#: src/main/memory.c:1354
 msgid "first argument must be environment or external pointer"
 msgstr "el primer argumento debe ser un indicador de entorno o externo"
 
-#: src/main/memory.c:1358
+#: src/main/memory.c:1356
 msgid "second argument must be a function"
 msgstr "el segundo argumento debe ser una función"
 
-#: src/main/memory.c:1362
+#: src/main/memory.c:1360
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "el tercer argumento debe ser TRUE o FALSE"
 
-#: src/main/memory.c:1845
+#: src/main/memory.c:1840
 msgid "vector memory exhausted (limit reached?)"
 msgstr "la memoria vectorial está agotada (se alcanzó el límite?)"
 
-#: src/main/memory.c:1851
+#: src/main/memory.c:1846
 msgid "cons memory exhausted (limit reached?)"
 msgstr "la memoria cons está agotada (se alcanzó el límite?)"
 
-#: src/main/memory.c:1856
+#: src/main/memory.c:1851
 msgid "memory exhausted (limit reached?)"
 msgstr "la memoria está agotada (se alcanzó el límite?)"
 
-#: src/main/memory.c:1978
+#: src/main/memory.c:1973
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "no se puede asignar un bloque de memoria de tamaño %0.1f Gb"
 
-#: src/main/memory.c:1983
+#: src/main/memory.c:1978
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "no se puede asignar un bloque de memoria de tamaño %0.1f Gb"
 
-#: src/main/memory.c:2249
+#: src/main/memory.c:2244
 #, fuzzy
 msgid "vector is too large"
 msgstr "tamaño del vector especificado es muy grande"
 
-#: src/main/memory.c:2252
+#: src/main/memory.c:2247
 msgid "negative length vectors are not allowed"
 msgstr "no se permiten vectores de longitud negativa"
 
-#: src/main/memory.c:2278 src/main/memory.c:2291 src/main/memory.c:2304
-#: src/main/memory.c:2319
+#: src/main/memory.c:2273 src/main/memory.c:2286 src/main/memory.c:2299
+#: src/main/memory.c:2314
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "no se puede asignar un vector de longitud %d"
 
-#: src/main/memory.c:2340
+#: src/main/memory.c:2335
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "tipo/longitud no válido (%s/%d) en la asignación del vector"
 
-#: src/main/memory.c:2433
+#: src/main/memory.c:2428
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "no se puede ubicar un vector de tamaño  %0.1f Gb"
 
-#: src/main/memory.c:2437
+#: src/main/memory.c:2432
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "no se puede ubicar un vector de tamaño  %0.1f Mb"
 
-#: src/main/memory.c:2441
+#: src/main/memory.c:2436
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "no se puede ubicar un vector de tamaño  %0.f Kb"
 
-#: src/main/memory.c:2774
+#: src/main/memory.c:2769
 msgid "protect(): protection stack overflow"
 msgstr "protect(): protección del desborde de la pila"
 
-#: src/main/memory.c:2790
+#: src/main/memory.c:2785
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): solo %d proteje items"
 
-#: src/main/memory.c:2804
+#: src/main/memory.c:2799
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: no se encontró el puntero"
 
-#: src/main/memory.c:2860
+#: src/main/memory.c:2855
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc no puede asignar memoria (%d de %d)"
 
-#: src/main/memory.c:2871
+#: src/main/memory.c:2866
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc no puede re-asignar memoria (tamaño %d)"
 
-#: src/main/memory.c:3093
+#: src/main/memory.c:3088
 msgid "not safe to return vector pointer"
 msgstr "no es seguro devolver un puntero de vector"
 
-#: src/main/memory.c:3333
+#: src/main/memory.c:3328
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "'R profiling' no disponible en este sistema"
 
-#: src/main/memory.c:3398
+#: src/main/memory.c:3393
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: no puede abrir el archivo de perfil '%s'"
 
-#: src/main/memory.c:3507
+#: src/main/memory.c:3502
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/model.c:140
-msgid "invalid term in model formula"
-msgstr "término inválido en la fórmula del modelo"
-
-#: src/main/model.c:215
-msgid "invalid model formula"
-msgstr "la fórmula del modelo no es válida"
-
-#: src/main/model.c:241 src/main/model.c:485
-msgid "invalid power in formula"
-msgstr "No es válida la potencia en la fórmula"
-
-#: src/main/model.c:277
-msgid "invalid model formula in ExtractVars"
-msgstr "es inválida la fórmula del modelo en ExtractVars"
-
-#: src/main/model.c:607
-#, c-format
-msgid "duplicated name '%s' in data frame using '.'"
-msgstr "usando '.' se duplica el nombre '%s' en la estructura de datos"
-
-#: src/main/model.c:664
-msgid "invalid model formula in EncodeVars"
-msgstr "la fórmula del modelo en EncodeVars no es válida"
-
-#: src/main/model.c:754
-msgid "argument is not a valid model"
-msgstr "el argumento no es un modelo válido"
-
-#: src/main/model.c:764
-#, fuzzy
-msgid "'specials' must be NULL or a character vector"
-msgstr "'path' debe ser un vector de caracteres"
-
-#: src/main/model.c:777
-msgid "'data' argument is of the wrong type"
-msgstr "el argumento 'data' es de tipo equivocado"
-
-#: src/main/model.c:1042
-msgid "'.' in formula and no 'data' argument"
-msgstr "'.' en la fórmula y no hay argumento 'data'"
-
-#: src/main/model.c:1190
-msgid "invalid formula in 'update'"
-msgstr "formula inválida en 'update'"
-
-#: src/main/model.c:1228
-msgid "formula expected"
-msgstr "se espera una fórmula"
-
-#: src/main/names.c:1007
+#: src/main/names.c:1000
 msgid "string argument required"
 msgstr "se requiere el argumento del string"
 
-#: src/main/names.c:1010
+#: src/main/names.c:1003
 msgid "no such primitive function"
 msgstr "no existe esta función primitiva"
 
-#: src/main/names.c:1141
+#: src/main/names.c:1131
 msgid "attempt to use zero-length variable name"
 msgstr "se intenta usar un nombre de varible de longitud cero"
 
-#: src/main/names.c:1143
+#: src/main/names.c:1133
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nombres de variables se limitan a %d bytes"
 
-#: src/main/names.c:1170
+#: src/main/names.c:1160
 msgid "invalid .Internal() argument"
 msgstr "el argumento .Internal() no es válido"
 
-#: src/main/names.c:1173
+#: src/main/names.c:1163
 msgid "invalid internal function"
 msgstr "la función interna no es válida"
 
-#: src/main/names.c:1175
+#: src/main/names.c:1165
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no hay ninguna función interna \"%s\""
@@ -4684,91 +4679,6 @@ msgstr "'R_get_primname' invocado en un ambiente no-primitivo"
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr "Objeto de la clase \"%s\" no corresponde a un objeto válido S3"
-
-#: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
-msgid "non-finite value supplied by optim"
-msgstr "valor no finito provisto por optim"
-
-#: src/main/optim.c:80
-#, c-format
-msgid "objective function in optim evaluates to length %d not 1"
-msgstr "función objetivo en optim evalúa que el tamaño %d no es 1"
-
-#: src/main/optim.c:107
-#, c-format
-msgid "gradient in optim evaluated to length %d not %d"
-msgstr "se evaluó el gradiente en optim de tamaño %d, no %d"
-
-#: src/main/optim.c:191
-#, c-format
-msgid "candidate point in optim evaluated to length %d not %d"
-msgstr "se evaluó el punto candidato en optim de tamaño %d, no %d"
-
-#: src/main/optim.c:221 src/main/optim.c:409
-msgid "'fn' is not a function"
-msgstr "'fn' no es una función"
-
-#: src/main/optim.c:238 src/main/optim.c:415
-msgid "'parscale' is of the wrong length"
-msgstr "'parscale' tiene tamaño incorrecto"
-
-#: src/main/optim.c:252
-msgid "'maxit' is not an integer"
-msgstr "'maxit' no es un número entero"
-
-#: src/main/optim.c:271
-msgid "'tmax' is not an integer"
-msgstr "'tmax' no es un número entero"
-
-#: src/main/optim.c:273 src/main/optim.c:290 src/main/optim.c:315
-#: src/main/optim.c:345 src/main/optim.c:423
-msgid "'gr' is not a function"
-msgstr "'gr' no es una función"
-
-#: src/main/optim.c:296 src/main/optim.c:321 src/main/optim.c:351
-#: src/main/optim.c:429
-msgid "'ndeps' is of the wrong length"
-msgstr "'ndeps' tiene tamaño incorrecto"
-
-#: src/main/optim.c:381
-msgid "unknown 'method'"
-msgstr "'method' desconocido"
-
-#: src/main/optim.c:512
-msgid "REPORT must be > 0 (method = \"BFGS\")"
-msgstr "REPORT debe ser > 0 (método = \"BFGS\")"
-
-#: src/main/optim.c:523
-msgid "initial value in 'vmmin' is not finite"
-msgstr "valor inicial en 'vmmin' no es finito"
-
-#: src/main/optim.c:671
-msgid "function cannot be evaluated at initial parameters"
-msgstr "la función no se puede evaluar en los parámetros iniciales"
-
-#: src/main/optim.c:865
-msgid "unknown 'type' in CG method of optim"
-msgstr "'type' desconocido en el método CG de optim"
-
-#: src/main/optim.c:878
-msgid "Function cannot be evaluated at initial parameters"
-msgstr "La función no se puede evaluar en los parámetros iniciales"
-
-#: src/main/optim.c:933
-msgid "unknown type in CG method of optim"
-msgstr "'type' desconocido en el método CG de optim"
-
-#: src/main/optim.c:1026
-msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
-msgstr "REPORT debe ser > 0 (método = \"L-BFGS-B\")"
-
-#: src/main/optim.c:1050
-msgid "L-BFGS-B needs finite values of 'fn'"
-msgstr "L-BFGS-B necesita valores finitos de 'fn'"
-
-#: src/main/optim.c:1105
-msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr "trace, REPORT debe ser > 0 (método = \"SANN\")"
 
 #: src/main/options.c:116 src/main/options.c:164
 msgid "corrupted options list"
@@ -7653,6 +7563,70 @@ msgstr "módulo X11 no puede ser cargado"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
+
+#~ msgid "invalid term in model formula"
+#~ msgstr "término inválido en la fórmula del modelo"
+
+#~ msgid "invalid model formula"
+#~ msgstr "la fórmula del modelo no es válida"
+
+#~ msgid "invalid power in formula"
+#~ msgstr "No es válida la potencia en la fórmula"
+
+#~ msgid "invalid model formula in ExtractVars"
+#~ msgstr "es inválida la fórmula del modelo en ExtractVars"
+
+#~ msgid "duplicated name '%s' in data frame using '.'"
+#~ msgstr "usando '.' se duplica el nombre '%s' en la estructura de datos"
+
+#~ msgid "invalid model formula in EncodeVars"
+#~ msgstr "la fórmula del modelo en EncodeVars no es válida"
+
+#~ msgid "argument is not a valid model"
+#~ msgstr "el argumento no es un modelo válido"
+
+#, fuzzy
+#~ msgid "'specials' must be NULL or a character vector"
+#~ msgstr "'path' debe ser un vector de caracteres"
+
+#~ msgid "'data' argument is of the wrong type"
+#~ msgstr "el argumento 'data' es de tipo equivocado"
+
+#~ msgid "'.' in formula and no 'data' argument"
+#~ msgstr "'.' en la fórmula y no hay argumento 'data'"
+
+#~ msgid "invalid formula in 'update'"
+#~ msgstr "formula inválida en 'update'"
+
+#~ msgid "formula expected"
+#~ msgstr "se espera una fórmula"
+
+#~ msgid "objective function in optim evaluates to length %d not 1"
+#~ msgstr "función objetivo en optim evalúa que el tamaño %d no es 1"
+
+#~ msgid "gradient in optim evaluated to length %d not %d"
+#~ msgstr "se evaluó el gradiente en optim de tamaño %d, no %d"
+
+#~ msgid "'fn' is not a function"
+#~ msgstr "'fn' no es una función"
+
+#~ msgid "'parscale' is of the wrong length"
+#~ msgstr "'parscale' tiene tamaño incorrecto"
+
+#~ msgid "'maxit' is not an integer"
+#~ msgstr "'maxit' no es un número entero"
+
+#~ msgid "'tmax' is not an integer"
+#~ msgstr "'tmax' no es un número entero"
+
+#~ msgid "'gr' is not a function"
+#~ msgstr "'gr' no es una función"
+
+#~ msgid "'ndeps' is of the wrong length"
+#~ msgstr "'ndeps' tiene tamaño incorrecto"
+
+#~ msgid "unknown 'method'"
+#~ msgstr "'method' desconocido"
 
 #~ msgid "Event GE_ScalePS requires a single numeric value"
 #~ msgstr "El evento GE_ScalePS requiere un único valor numérico"

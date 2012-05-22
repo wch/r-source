@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-05-22 12:54+0100\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -64,31 +64,31 @@ msgstr ""
 msgid "not all arguments have the same length"
 msgstr ""
 
-#: cov.c:551
+#: cov.c:553
 msgid "missing observations in cov/cor"
 msgstr ""
 
-#: cov.c:629
+#: cov.c:631
 msgid "'x' is NULL"
 msgstr ""
 
-#: cov.c:648 cov.c:654
+#: cov.c:650 cov.c:656
 msgid "incompatible dimensions"
 msgstr ""
 
-#: cov.c:673 cov.c:714 cov.c:747
+#: cov.c:675 cov.c:716 cov.c:749
 msgid "no complete element pairs"
 msgstr ""
 
-#: cov.c:686
+#: cov.c:688
 msgid "invalid 'use' (computational method)"
 msgstr ""
 
-#: cov.c:689
+#: cov.c:691
 msgid "'x' is empty"
 msgstr ""
 
-#: cov.c:783
+#: cov.c:785
 msgid "the standard deviation is zero"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "invalid expression in '%s'"
 msgstr ""
 
-#: deriv.c:924 model.c:90
+#: deriv.c:924 model.c:91
 #, fuzzy
 msgid "invalid variable names"
 msgstr "lag.max 값이 잘못되었습니다 "
@@ -151,23 +151,23 @@ msgstr "%s 인자는 반드시 수치형 벡터이어야 합니다 "
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "%s 는 길이가 1 이거나 %d 인 수치형 벡터이어야 합니다 "
 
-#: fourier.c:50 fourier.c:137
+#: fourier.c:52 fourier.c:139
 msgid "non-numeric argument"
 msgstr ""
 
-#: fourier.c:68 fourier.c:83 fourier.c:151
+#: fourier.c:70 fourier.c:85 fourier.c:153
 msgid "fft factorization error"
 msgstr ""
 
-#: fourier.c:123
+#: fourier.c:125
 msgid "vector-valued (multivariate) series required"
 msgstr ""
 
-#: fourier.c:196
+#: fourier.c:198
 msgid "no factors"
 msgstr ""
 
-#: fourier.c:199
+#: fourier.c:201
 #, fuzzy
 msgid "invalid factors"
 msgstr "vmethod 가 잘못되었습니다 "
@@ -196,52 +196,52 @@ msgstr "vmethod 가 잘못되었습니다 "
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg 의 알고리즘를 이용하여 부분상관관계를 찾는데 실패했습니다 "
 
-#: model.c:88
+#: model.c:89
 msgid "invalid variables"
 msgstr ""
 
-#: model.c:92 model.c:97
+#: model.c:93 model.c:98
 msgid "number of variables != number of variable names"
 msgstr ""
 
-#: model.c:95
+#: model.c:96
 msgid "invalid extra variables"
 msgstr ""
 
-#: model.c:99
+#: model.c:100
 msgid "invalid extra variable names"
 msgstr ""
 
-#: model.c:120
+#: model.c:121
 #, c-format
 msgid "overlong names in '%s'"
 msgstr ""
 
-#: model.c:147
+#: model.c:148
 #, fuzzy, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "eval_check_store 에 대한 유형이 잘못되었습니다 "
 
-#: model.c:152
+#: model.c:153
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr ""
 
-#: model.c:206
+#: model.c:207
 msgid "invalid result from na.action"
 msgstr ""
 
-#: model.c:362 model.c:370
+#: model.c:363 model.c:371 optim.c:194
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "인수의 유형이 잘못되었습니다 "
 
-#: model.c:381
+#: model.c:382
 #, fuzzy
 msgid "invalid model frame"
 msgstr "lag.max 값이 잘못되었습니다 "
 
-#: model.c:383
+#: model.c:384
 msgid "do not know how many cases"
 msgstr ""
 
@@ -285,6 +285,61 @@ msgstr ""
 #: model.c:653
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
+msgstr ""
+
+#: model.c:875
+#, fuzzy
+msgid "invalid formula in 'update'"
+msgstr "lag.max 값이 잘못되었습니다 "
+
+#: model.c:909
+msgid "formula expected"
+msgstr ""
+
+#: model.c:1026
+#, fuzzy
+msgid "invalid term in model formula"
+msgstr "lag.max 값이 잘못되었습니다 "
+
+#: model.c:1101
+#, fuzzy
+msgid "invalid model formula"
+msgstr "lag.max 값이 잘못되었습니다 "
+
+#: model.c:1127 model.c:1371
+#, fuzzy
+msgid "invalid power in formula"
+msgstr "lag.max 값이 잘못되었습니다 "
+
+#: model.c:1163
+#, fuzzy
+msgid "invalid model formula in ExtractVars"
+msgstr "lag.max 값이 잘못되었습니다 "
+
+#: model.c:1493
+#, c-format
+msgid "duplicated name '%s' in data frame using '.'"
+msgstr ""
+
+#: model.c:1550
+#, fuzzy
+msgid "invalid model formula in EncodeVars"
+msgstr "lag.max 값이 잘못되었습니다 "
+
+#: model.c:1636
+msgid "argument is not a valid model"
+msgstr ""
+
+#: model.c:1646
+msgid "'specials' must be NULL or a character vector"
+msgstr ""
+
+#: model.c:1658
+msgid "'data' argument is of the wrong type"
+msgstr ""
+
+#: model.c:1924
+msgid "'.' in formula and no 'data' argument"
 msgstr ""
 
 #: monoSpl.c:40
@@ -365,29 +420,71 @@ msgstr "변수 '%s' 는 수치형이 아닌 정수입니다 "
 msgid "variable '%s' is not numeric"
 msgstr "변수 '%s' 는 수치형이 아닙니다 "
 
-#: optimize.c:53 optimize.c:139 optimize.c:363
+#: optim.c:73 optim.c:100
+msgid "non-finite value supplied by optim"
+msgstr ""
+
+#: optim.c:80
+#, c-format
+msgid "objective function in optim evaluates to length %d not 1"
+msgstr ""
+
+#: optim.c:107
+#, c-format
+msgid "gradient in optim evaluated to length %d not %d"
+msgstr ""
+
+#: optim.c:190 optim.c:394
+msgid "'fn' is not a function"
+msgstr ""
+
+#: optim.c:207 optim.c:400
+msgid "'parscale' is of the wrong length"
+msgstr ""
+
+#: optim.c:236
+msgid "'maxit' is not an integer"
+msgstr ""
+
+#: optim.c:255
+msgid "'tmax' is not an integer"
+msgstr ""
+
+#: optim.c:257 optim.c:274 optim.c:299 optim.c:329 optim.c:408
+msgid "'gr' is not a function"
+msgstr ""
+
+#: optim.c:280 optim.c:305 optim.c:335 optim.c:414
+msgid "'ndeps' is of the wrong length"
+msgstr ""
+
+#: optim.c:365
+msgid "unknown 'method'"
+msgstr ""
+
+#: optimize.c:54 optimize.c:139 optimize.c:362
 msgid "NA replaced by maximum positive value"
 msgstr ""
 
-#: optimize.c:61 optimize.c:151 optimize.c:371
+#: optimize.c:62 optimize.c:151 optimize.c:370
 msgid "NA/Inf replaced by maximum positive value"
 msgstr ""
 
-#: optimize.c:70
+#: optimize.c:71
 msgid "invalid function value in 'optimize'"
 msgstr ""
 
-#: optimize.c:88 optimize.c:180 optimize.c:556
+#: optimize.c:89 optimize.c:180 optimize.c:555
 msgid "attempt to minimize non-function"
 msgstr ""
 
-#: optimize.c:95 optimize.c:102 optimize.c:111 optimize.c:185 optimize.c:190
+#: optimize.c:96 optimize.c:103 optimize.c:112 optimize.c:185 optimize.c:190
 #: optimize.c:206
 #, fuzzy, c-format
 msgid "invalid '%s' value"
 msgstr "approx(): f 값이 잘못되었습니다 "
 
-#: optimize.c:104 optimize.c:191
+#: optimize.c:105 optimize.c:191
 msgid "'xmin' not less than 'xmax'"
 msgstr ""
 
@@ -409,112 +506,112 @@ msgstr "변수 '%s' 는 수치형이 아닙니다 "
 msgid "'maxiter' must be positive"
 msgstr "'m' 은 반드시 list 이어야 합니다 "
 
-#: optimize.c:355
+#: optimize.c:354
 msgid "non-finite value supplied by 'nlm'"
 msgstr ""
 
-#: optimize.c:390
+#: optimize.c:389
 msgid "invalid function value in 'nlm' optimizer"
 msgstr ""
 
-#: optimize.c:401 optimize.c:416
+#: optimize.c:400 optimize.c:415
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 
-#: optimize.c:431
+#: optimize.c:430
 msgid "numeric parameter expected"
 msgstr ""
 
-#: optimize.c:435
+#: optimize.c:434
 msgid "conflicting parameter lengths"
 msgstr ""
 
-#: optimize.c:439
+#: optimize.c:438
 #, fuzzy
 msgid "invalid parameter length"
 msgstr "인수의 유형이 잘못되었습니다 "
 
-#: optimize.c:449 optimize.c:456
+#: optimize.c:448 optimize.c:455
 #, fuzzy
 msgid "missing value in parameter"
 msgstr "마지막 %d 개의 관측치가 결측치입니다 "
 
-#: optimize.c:461
+#: optimize.c:460
 #, fuzzy
 msgid "invalid parameter type"
 msgstr "인수의 유형이 잘못되었습니다 "
 
-#: optimize.c:472
+#: optimize.c:471
 msgid "non-positive number of parameters in nlm"
 msgstr ""
 
-#: optimize.c:474
+#: optimize.c:473
 msgid "nlm is inefficient for 1-d problems"
 msgstr ""
 
-#: optimize.c:476
+#: optimize.c:475
 msgid "invalid gradient tolerance in nlm"
 msgstr ""
 
-#: optimize.c:478
+#: optimize.c:477
 msgid "invalid iteration limit in nlm"
 msgstr ""
 
-#: optimize.c:480
+#: optimize.c:479
 msgid "minimization function has no good digits in nlm"
 msgstr ""
 
-#: optimize.c:482
+#: optimize.c:481
 msgid "no analytic gradient to check in nlm!"
 msgstr ""
 
-#: optimize.c:484
+#: optimize.c:483
 msgid "no analytic Hessian to check in nlm!"
 msgstr ""
 
-#: optimize.c:486
+#: optimize.c:485
 msgid "probable coding error in analytic gradient"
 msgstr ""
 
-#: optimize.c:488
+#: optimize.c:487
 msgid "probable coding error in analytic Hessian"
 msgstr ""
 
-#: optimize.c:490
+#: optimize.c:489
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr ""
 
-#: optimize.c:501
+#: optimize.c:500
 msgid "Relative gradient close to zero.\n"
 msgstr ""
 
-#: optimize.c:502 optimize.c:506
+#: optimize.c:501 optimize.c:505
 msgid "Current iterate is probably solution.\n"
 msgstr ""
 
-#: optimize.c:505
+#: optimize.c:504
 msgid "Successive iterates within tolerance.\n"
 msgstr ""
 
-#: optimize.c:509
+#: optimize.c:508
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 
-#: optimize.c:510
+#: optimize.c:509
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr ""
 
-#: optimize.c:515
+#: optimize.c:514
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr ""
 
-#: optimize.c:518
+#: optimize.c:517
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -523,17 +620,17 @@ msgid ""
 "or stepmx is too small.\n"
 msgstr ""
 
-#: optimize.c:580 optimize.c:585 optimize.c:589 optimize.c:593 optimize.c:597
-#: optimize.c:601 optimize.c:606
+#: optimize.c:579 optimize.c:584 optimize.c:588 optimize.c:592 optimize.c:596
+#: optimize.c:600 optimize.c:605
 #, fuzzy
 msgid "invalid NA value in parameter"
 msgstr "lag.max 값이 잘못되었습니다 "
 
-#: optimize.c:638
+#: optimize.c:636
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 
-#: optimize.c:642
+#: optimize.c:640
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 

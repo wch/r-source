@@ -64,7 +64,6 @@ src/main/mapply.c
 src/main/match.c
 src/main/memory.c
 src/main/mkdtemp.c
-src/main/model.c
 src/main/names.c
 src/main/objects.c
 src/main/options.c
