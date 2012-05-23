@@ -217,7 +217,7 @@ faster and use less (virtual) memory.
 @section Package structure
 @cindex Package structure
 
-The sources of a @R{} package consists of a subdirectory containing a
+The sources of an @R{} package consists of a subdirectory containing a
 file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po},
 @file{src}, and @file{tests} (some of which can be missing, but which
@@ -805,7 +805,7 @@ There are default @command{make} variables and rules for this
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
 C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is not supported.
 If you have Ratfor source code, you need to convert it to FORTRAN.  Only
-FORTRAN-77 (which we write in upper case) is supported on all platforms,
+FORTRAN 77 (which we write in upper case) is supported on all platforms,
 but most also support Fortran-95 (for which we use title case).  If you
 want to ship Ratfor source files, please do so in a subdirectory of
 @file{src} and not in the main subdirectory.}, Objective C and Objective
@@ -1104,7 +1104,7 @@ files created by @command{configure}.
 As an example consider we want to use functionality provided by a (C or
 FORTRAN) library @code{foo}.  Using Autoconf, we can create a configure
 script which checks for the library, sets variable @code{HAVE_FOO} to
-@code{TRUE} if it was found and with @code{FALSE} otherwise, and then
+@code{TRUE} if it was found and to @code{FALSE} otherwise, and then
 substitutes this value into output files (by replacing instances of
 @samp{@@HAVE_FOO@@} in input files with the value of @code{HAVE_FOO}).
 For example, if a function named @code{bar} is to be made available by
@@ -1228,12 +1228,12 @@ used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
 which is a minimal version of Bourne-style @command{sh}.)  When
 @file{configure.win} is run the environment variables @env{R_HOME}
-(which uses @code{/} as the file separator) and @env{R_ARCH} will be
+(which uses @samp{/} as the file separator) and @env{R_ARCH} will be
 set.  Use @env{R_ARCH} to decide if this is a 64-bit build (its value
 there is @samp{/x64}) and to install DLLs to the correct place
-(@code{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use @env{R_ARCH_BIN} to find the
+(@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use @env{R_ARCH_BIN} to find the
 correct place under the @file{bin} directory, e.g.@:
-@code{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
+@file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
@@ -1394,7 +1394,7 @@ over-optimization of FORTRAN code: it is typically @samp{-g -O2
 -ffloat-store} on @cputype{ix86} platforms using @command{gfortran}.
 Note that this is @strong{not} an additional flag to be used as part of
 @code{PKG_FFLAGS}, but a replacement for @code{FFLAGS}, and that it is
-intended for the FORTRAN-77 compiler @samp{F77} and not necessarily for
+intended for the FORTRAN 77 compiler @samp{F77} and not necessarily for
 the Fortran 90/95 compiler @samp{FC}.  See the example later in this
 section.
 @end table
@@ -1680,18 +1680,18 @@ One simple way is simply to set @code{OBJECTS} to be all the objects
 that need to be compiled, including in sub-directories.  For example,
 CRAN package @CRANpkg{RSiena} has
 
-@example
+@smallexample
 SOURCES = $(wildcard data/*.cpp network/*.cpp utils/*.cpp model/*.cpp model/*/*.cpp model/*/*/*.cpp)
 
 OBJECTS = siena07utilities.o siena07internals.o siena07setup.o siena07models.o $(SOURCES:.cpp=.o)
-@end example
+@end smallexample
 
 @noindent
 One problem with that approach is that unless GNU make extensions are
 used, the source files need to be listed and kept up-to-date.  As in the
 following from CRAN package @CRANpkg{lossDev}:
 
-@example
+@smallexample
 OBJECTS.samplers = samplers/ExpandableArray.o samplers/Knots.o \
   samplers/RJumpSpline.o samplers/RJumpSplineFactory.o \
   samplers/RealSlicerOV.o samplers/SliceFactoryOV.o samplers/MNorm.o
@@ -1701,12 +1701,12 @@ OBJECTS.distributions = distributions/DSpline.o \
 OBJECTS.root = RJump.o
 
 OBJECTS = $(OBJECTS.samplers) $(OBJECTS.distributions) $(OBJECTS.root)
-@end example
+@end smallexample
 
 Where the subdirectory is self-contained code with a suitable makefile,
 the best approach is something like
 
-@example
+@smallexample
 PKG_LIBS = -LCsdp/lib -lsdp $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 $(SHLIB): Csdp/lib/libsdp.a
@@ -1714,7 +1714,7 @@ $(SHLIB): Csdp/lib/libsdp.a
 Csdp/lib/libsdp.a
         @@(cd Csdp/lib && $(MAKE) libsdp.a \
           CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
-@end example
+@end smallexample
 
 @noindent
 Note the quotes: the macros can contain spaces, e.g.@: @code{gcc -m64
@@ -1916,11 +1916,14 @@ directly.
 @code{R CMD check} and @code{R CMD build} run @R{} with
 @option{--vanilla}, so none of the user's startup files are read.  If
 you need @env{R_LIBS} set (to find packages in a non-standard library)
-you can set it in the environment: also you can use files@footnote{On
-systems which use sub-architectures, architecture-specific versions such
-as @file{~/.R/check.Renviron.i386} take precedence.}
-@file{~/.R/check.Renviron} and @file{~/.R/build.Renviron} to set
-environment variables when using these utilities.
+you can set it in the environment: also you can use the check and build
+environment files (as specified by the environment variables
+@env{R_CHECK_ENVIRON} and @env{R_BUILD_ENVIRON}; if unset,
+files@footnote{On systems which use sub-architectures,
+architecture-specific versions such as @file{~/.R/check.Renviron.i386}
+take precedence.}  @file{~/.R/check.Renviron} and
+@file{~/.R/build.Renviron} are used) to set environment variables when
+using these utilities.
 @end quotation
 
 @quotation Note to Windows users
@@ -6738,8 +6741,8 @@ the first.
 
 Another cause of a `crash' is to overrun the C stack.  @R{} tries to
 track that in its own code, but it may happen in third-party compiled
-code.  For modern POSIX-compliant OSes we can safely catch that and
-return to the top-level prompt.
+code.  For modern POSIX-compliant OSes @R{} can safely catch that and
+return to the top-level prompt, so one gets something like
 
 @example
 > .C("aaa")
@@ -7171,6 +7174,11 @@ Up to 255 characters are passed back to a length-one character vector.
 How well this works (or even if it works at all) depends on the C and
 FORTRAN compilers on each platform.
 
+It is possible to pass @R{} objects other than atomic vectors via
+@code{.C}, but this is only supported for historical compatibility: use
+the @code{.Call} or @code{.External} interfaces for such objects.  Any
+C/C++ code that includes @file{Rinternals.h} should be called via
+@code{.Call} or @code{.External}.
 
 @node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}

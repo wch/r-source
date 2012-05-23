@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/col2rgb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{col2rgb}
@@ -23,10 +23,11 @@ col2rgb(col, alpha = FALSE)
 }
 \details{
   For integer colors, \code{0} is shorthand for the current
-  \code{par("bg")} (and hence is only relevant to base graphics and not
-  grid graphics), and \code{\link{NA}} means transparent.
+  \code{\link{par}("bg")} (and hence is only relevant to base graphics
+  and not grid graphics, and is an error if \pkg{graphics} is not
+  loaded), and \code{\link{NA}} means transparent.
 
-  For character colors, \code{"NA"} is equivalent to \code{NA} above.
+  For character colors, \code{"NA"} is equivalent to \code{NA}, transparent.
 }
 \value{
   an integer matrix with three or four rows and number of columns the length
