@@ -467,6 +467,10 @@
       
       \item The evaluator now keeps track of source references outside
       of functions, e.g. when \code{source()} executes a script.
+      
+      \item The replacement method for \code{windows()} now works
+      correctly for multiple time series of class \code{"mts"}.
+      (\PR{14925}})
     }
   }
 }

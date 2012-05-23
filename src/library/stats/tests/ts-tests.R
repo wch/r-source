@@ -134,4 +134,10 @@ par(mfrow=c(1,2))
 plot(cbind(ap, fitted(fit)), plot.type = "single")
 plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
 
+## PR14925
+a <- ts(matrix(1:36, 12), start = 2000, freq = 12)
+b <- ts(matrix(1:48, 16), start = c(1999,9), freq = 12)
+window(a, start = c(2000,6)) <- window(b, start = c(2000,6), end = c(2000,12))
+## failed in R < 2.15.1
+
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

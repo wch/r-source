@@ -712,7 +712,7 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     if(any(is.na(ind))) stop("times to be replaced do not match")
 
     len <- length(ind)
-    val_len <- length(value)
+    val_len <- NROW(value)
     if(!val_len) stop("no replacement values supplied")
     if(val_len > len) stop("too many replacement values supplied")
     if(val_len > 1L && (len %% val_len))
