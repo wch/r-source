@@ -2085,13 +2085,16 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else if (TYPEOF(expr) == EXPRSXP) {
 	int i, n;
+	SEXP srcrefs = getBlockSrcrefs(expr);
 	PROTECT(expr);
 	n = LENGTH(expr);
 	tmp = R_NilValue;
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
-	    for(i = 0 ; i < n ; i++)
+	    for(i = 0 ; i < n ; i++) {
+	    	R_Srcref = getSrcref(srcrefs, i); 
 		tmp = eval(VECTOR_ELT(expr, i), env);
+	    }
 	else {
 	    tmp = R_ReturnedValue;
 	    if (tmp == R_RestartToken) {
