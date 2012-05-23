@@ -259,6 +259,9 @@
       should be treated as globally defined, so that \code{CMD check}
       will not note them.
 
+      \item \code{print(packageDescription(*))} trims the \code{Collate}
+      field by default.
+
       \item The included copy of \code{zlib} has been updated to version
       1.2.7.
     }
@@ -334,10 +337,10 @@
 
       \item C entry points \code{R_GetCurrentSrcref} and
       \code{R_GetSrcFilename} have been added to the API to allow
-      debuggers access to the source references on the stack.      
+      debuggers access to the source references on the stack.
     }
   }
-  
+
   \subsection{WINDOWS-SPECIFIC CHANGES}{
     \itemize{
       \item Windows-specific changes will now be announced in this file
@@ -451,7 +454,7 @@
       \item Code executed by the built-in HTTP server no longer allows
       other HTTP clients to re-enter \R until the current worker
       evaluation finishes, to prevent cascades.
-      
+
       \item The \code{plot()} and \code{Axis()} methods for class
       \code{"table"} now respect graphical parameters such as
       \code{cex.axis}.  (Reported by Martin Becker.)
