@@ -470,7 +470,7 @@
       
       \item The replacement method for \code{windows()} now works
       correctly for multiple time series of class \code{"mts"}.
-      (\PR{14925}})
+      (\PR{14925}.)
     }
   }
 }
