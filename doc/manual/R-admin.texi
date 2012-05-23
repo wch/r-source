@@ -3095,12 +3095,20 @@ The order of the libraries is important.  The option
 @option{--with-lapack} is used since MKL contains a copy of LAPACK as
 well as @acronym{BLAS} (@pxref{LAPACK}).
 
-Threaded MKL may be used by replacing the line defining the variable @code{MKL} 
-with
+Threaded MKL may be used (according to Zhang Zhang of Intel) by
+replacing the line defining the variable @code{MKL} with (Intel OMP)
+
+@example
+MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_intel_thread \
+     -lmkl_lapack -lmkl_core -liomp5 -lpthread"
+@end example
+
+@noindent
+or (GNU OMP)
 
 @example
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
-     -lmkl_lapack -lmkl_core -liomp5 -lpthread"
+     -lmkl_lapack -lmkl_core -fopenmp -lpthread"
 @end example
 
 @noindent
@@ -3108,7 +3116,7 @@ The default number of threads will be chosen by the OpenMP software,
 but can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}.
 
-Static threaded MKL may be used with
+Static threaded MKL may be used (GNU OpenMP) with
 
 @example
 MKL="   -L$@{MKL_LIB_PATH@}                               \
