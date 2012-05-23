@@ -117,25 +117,46 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
     m$... <- m$FUN <- NULL
     m[[1L]] <- as.name("model.frame")
 
-    if(as.character(formula[[2L]] == ".")) {
+    if (formula[[2L]] == ".") {
         ## LHS is a dot, expand it ...
-        rhs <- unlist(strsplit(deparse(formula[[3L]]), " *[:+] *"))
+        ##rhs <- unlist(strsplit(deparse(formula[[3L]]), " *[:+] *"))
         ## <NOTE>
         ## Note that this will not do quite the right thing in case the
         ## RHS contains transformed variables, such that
         ##   setdiff(rhs, names(data))
         ## is non-empty ...
-        lhs <- sprintf("cbind(%s)",
-                       paste(setdiff(names(data), rhs), collapse = ","))
+        ##lhs <- sprintf("cbind(%s)",
+        ##              paste(setdiff(names(data), rhs), collapse = ","))
+        ## formula[[2L]] <- parse(text = lhs)[[1L]]
         ## </NOTE>
-        m[[2L]][[2L]] <- parse(text = lhs)[[1L]]
+      
+        ## New logic May 2012 --pd
+
+        ## Dot expansion:
+        ## lhs ends up as quote(cbind(v1, v2, ....)) using all variables in
+        ## data, except those that are used on the RHS.
+
+        ## This version uses terms() to get the rhs variables, which means
+        ## that it will NOT remove a variable from the expansion if a
+        ## transformation of it is on the RHS of the formula. 
+
+        rhs <- as.list(attr(terms(formula[-2L]),"variables")[-1])
+        lhs <- as.call(c(quote(cbind),
+                         setdiff(lapply(names(data), as.name),
+                                 rhs)
+                         )
+                       )      
+        formula[[2L]] <- lhs
+        m[[2L]] <- formula
     }
     mf <- eval(m, parent.frame())
 
     if(is.matrix(mf[[1L]])) {
         ## LHS is a cbind() combo, convert to data frame and fix names.
-	lhs <- setNames(as.data.frame(mf[[1L]]),
-			as.character(m[[2L]][[2L]])[-1L])
+        ## Commented out May 2012 (seems to work without it) -- pd 
+	##lhs <- setNames(as.data.frame(mf[[1L]]),
+	##		as.character(m[[2L]][[2L]])[-1L])
+        lhs <- as.data.frame(mf[[1L]])
         aggregate.data.frame(lhs, mf[-1L], FUN = FUN, ...)
     }
     else

@@ -67,6 +67,10 @@
       returned as the \code{loglik0} component.  However, the help page has
       always warned of a lack of comparability of log-likelihoods for
       non-stationary models.  (Suggested by Jouni Helske.)
+
+      \item The logic in \code{aggregate.formula} has been revised. It is now
+      possible to use a formula stored in a variable; previously, it had to be
+      given explicitly in the function call. 
     }
   }
 
