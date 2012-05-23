@@ -1794,9 +1794,20 @@ R_GetCurrentSrcref(int skip)
 {
     RCNTXT *c = R_GlobalContext;
     SEXP srcref = R_Srcref;
+    if (skip < 0) { /* to count up from the bottom, we need to count them all first */
+    	while (c) {
+    	    if (srcref && srcref != R_NilValue) 
+		skip++;
+    	    srcref = c->srcref;
+    	    c = c->nextcontext;
+    	};
+    	if (skip < 0) return R_NilValue; /* not enough there */
+    	c = R_GlobalContext;
+    	srcref = R_Srcref;
+    }
     while (c && (skip || !srcref || srcref == R_NilValue)) {
-    	if (srcref && srcref != R_NilValue && skip >= 0) 
-    	  skip--;
+    	if (srcref && srcref != R_NilValue) 
+	    skip--;
     	srcref = c->srcref;
     	c = c->nextcontext;
     }
