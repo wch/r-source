@@ -9573,8 +9573,10 @@ SEXP R_GetCurrentSrcref(int skip);
 This function checks @code{R_Srcref} and the current evaluation stack
 for entries that contain source reference information.  The
 @code{skip} argument tells how many source references to skip before
-returning the @code{SEXP} of the @code{srcref} object.  If fewer than
-@code{skip+1} are found, @code{NULL} is returned.
+returning the @code{SEXP} of the @code{srcref} object, counting from
+the top of the stack.  If @code{skip < 0}, @code{abs(skip)} locations
+are counted up from the bottom of the stack. If too few or no source
+references are found, @code{NULL} is returned.
 
 @example
 SEXP R_GetSrcFilename(SEXP srcref);
