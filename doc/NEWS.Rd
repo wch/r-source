@@ -254,6 +254,9 @@
       displayed by question marks.  Now they are always in English.
       (This was seen for CJK locales on Windows, but may have occurred
       elsewhere.)
+      
+      \item The evaluator now keeps track of source references outside
+      of functions, e.g. when \code{source()} executes a script.
     }
   }
 }
