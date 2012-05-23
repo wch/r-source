@@ -34,8 +34,8 @@
       environment variable \env{R_C_BOUNDS_CHECK} to \samp{yes}), raw,
       integer, double and complex arguments are always copied, and
       checked for writing off either end of the array on return from the
-      compiled code.  This also checks individual elements of character
-      vectors passed to \code{.C()}.
+      compiled code (when a second copy is made).  This also checks
+      individual elements of character vectors passed to \code{.C()}.
 
       This is not intended for routine use, but can be very helpful in
       finding segfaults in package code.
@@ -168,8 +168,8 @@
 
       This means that a number of \code{.Internal()} calls which have
       been used by packages no longer exist, including
-      \code{.Internal(cor)} \code{.Internal(cov)} and
-      \code{.Internal(update.packages)}.
+      \code{.Internal(cor)} \code{.Internal(cov)},
+      \code{.Internal(optimhess)} and \code{.Internal(update.formula)}.
 
       It also means that packages such as \CRANpkg{compositions} which
       make copies of \pkg{stats} functions at installation need to be
