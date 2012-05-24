@@ -27,8 +27,6 @@ void Rsocklisten(int *, char **, int *);
 void Rsockclose(int *);
 void Rsockread(int *, char **, int *);
 void Rsockwrite(int *, char **, int *, int *, int *);
-SEXP call_dqagi(SEXP);
-SEXP call_dqags(SEXP);
 SEXP La_svd(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP La_rs(SEXP, SEXP);
 SEXP La_rg(SEXP, SEXP);
@@ -74,18 +72,12 @@ SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP do_mapply(SEXP, SEXP, SEXP, SEXP);
 
-SEXP R_r2dtable(SEXP, SEXP, SEXP);
 SEXP R_shortRowNames(SEXP);
 SEXP R_copyDFattr(SEXP, SEXP);
 
 void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);
 void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);
-
-#if 0
-void Rf_InitGraphics(void);
-void Rf_InitColors(void);
-#endif
 
 SEXP R_compress1(SEXP);
 SEXP R_decompress1(SEXP);

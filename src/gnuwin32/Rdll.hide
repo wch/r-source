@@ -891,7 +891,6 @@
  do_retracemem
  do_return
  do_rgb
- do_rmultinom
  do_rowscols
  do_sample
  do_save

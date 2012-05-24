@@ -21,6 +21,7 @@
 
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
+SEXP r2dtable(SEXP n, SEXP r, SEXP c);
 SEXP cor(SEXP x, SEXP y, SEXP na_method, SEXP method);
 SEXP cov(SEXP x, SEXP y, SEXP na_method, SEXP method);
 SEXP updateform(SEXP old, SEXP new);
@@ -41,3 +42,6 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP optim(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP optimhess(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP Rmultinom(SEXP args);
+SEXP call_dqagi(SEXP);
+SEXP call_dqags(SEXP);

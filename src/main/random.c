@@ -25,7 +25,7 @@
 
 #include <Defn.h>
 #include <R_ext/Random.h>
-#include <R_ext/Applic.h>	/* for rcont2() */
+#include <R_ext/RS.h>		/* for Calloc() */
 #include <Rmath.h>		/* for rxxx functions */
 #include <errno.h>
 
@@ -534,104 +534,4 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     PutRNGstate();
     UNPROTECT(1);
     return y;
-}
-
-SEXP attribute_hidden do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP prob, ans, nms;
-    int n, size, k, i, ik;
-    checkArity(op, args);
-    n	 = asInteger(CAR(args)); args = CDR(args);/* n= #{samples} */
-    size = asInteger(CAR(args)); args = CDR(args);/* X ~ Multi(size, prob) */
-    if (n == NA_INTEGER || n < 0)
-	error(_("invalid first argument 'n'"));
-    if (size == NA_INTEGER || size < 0)
-	error(_("invalid second argument 'size'"));
-    prob = CAR(args);
-    prob = coerceVector(prob, REALSXP);
-    k = length(prob);/* k = #{components or classes} = X-vector length */
-    if (NAMED(prob)) prob = duplicate(prob);/*as `do_sample' -- need this line? */
-    PROTECT(prob);
-    /* check and make sum = 1: */
-    FixupProb(REAL(prob), k, /*require_k = */ 0, TRUE);
-    GetRNGstate();
-    PROTECT(ans = allocMatrix(INTSXP, k, n));/* k x n : natural for columnwise store */
-    for(i=ik = 0; i < n; i++, ik += k)
-	rmultinom(size, REAL(prob), k, &INTEGER(ans)[ik]);
-    PutRNGstate();
-    if(!isNull(nms = getAttrib(prob, R_NamesSymbol))) {
-	SEXP dimnms;
-	PROTECT(nms);
-	PROTECT(dimnms = allocVector(VECSXP, 2));
-	SET_VECTOR_ELT(dimnms, 0, nms);
-	setAttrib(ans, R_DimNamesSymbol, dimnms);
-	UNPROTECT(2);
-    }
-    UNPROTECT(2);
-    return ans;
-}
-
-SEXP
-R_r2dtable(SEXP n, SEXP r, SEXP c)
-{
-    int nr, nc, *row_sums, *col_sums, i, *jwork;
-    int n_of_samples, n_of_cases;
-    double *fact;
-    SEXP ans, tmp;
-    const void *vmax = vmaxget();
-
-    nr = length(r);
-    nc = length(c);
-
-    /* Note that the R code in r2dtable() also checks for missing and
-       negative values.
-       Should maybe do the same here ...
-    */
-    if(!isInteger(n) || (length(n) == 0) ||
-       !isInteger(r) || (nr <= 1) ||
-       !isInteger(c) || (nc <= 1))
-	error(_("invalid arguments"));
-
-    n_of_samples = INTEGER(n)[0];
-    row_sums = INTEGER(r);
-    col_sums = INTEGER(c);
-
-    /* Compute total number of cases as the sum of the row sums.
-       Note that the R code in r2dtable() also checks whether this is
-       the same as the sum of the col sums.
-       Should maybe do the same here ...
-    */
-    n_of_cases = 0;
-    jwork = row_sums;
-    for(i = 0; i < nr; i++)
-	n_of_cases += *jwork++;
-
-    /* Log-factorials from 0 to n_of_cases.
-       (I.e., lgamma(1), ..., lgamma(n_of_cases + 1).)
-    */
-    fact = (double *) R_alloc(n_of_cases + 1, sizeof(double));
-    fact[0] = 0.;
-    for(i = 1; i <= n_of_cases; i++)
-	fact[i] = lgammafn((double) (i + 1));
-
-    jwork = (int *) R_alloc(nc, sizeof(int));
-
-    PROTECT(ans = allocVector(VECSXP, n_of_samples));
-
-    GetRNGstate();
-
-    for(i = 0; i < n_of_samples; i++) {
-	PROTECT(tmp = allocMatrix(INTSXP, nr, nc));
-	rcont2(&nr, &nc, row_sums, col_sums, &n_of_cases, fact,
-	       jwork, INTEGER(tmp));
-	SET_VECTOR_ELT(ans, i, tmp);
-	UNPROTECT(1);
-    }
-
-    PutRNGstate();
-
-    UNPROTECT(1);
-    vmaxset(vmax);
-
-    return(ans);
 }

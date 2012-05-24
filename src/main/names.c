@@ -455,7 +455,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 {"rhyper",	do_random3,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"rmultinom",	do_rmultinom,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"sample",	do_sample,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"RNGkind",	do_RNGkind,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},

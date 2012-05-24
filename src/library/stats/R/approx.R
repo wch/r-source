@@ -123,6 +123,8 @@ approxfun <- function(x, y = NULL, method = "linear",
         PACKAGE = "stats")$xout
 }
 
+### duplicate from base/R/findint.R
+if(FALSE) {
 ### This is a `variant' of  approx( method = "constant" ) :
 findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 {
@@ -155,4 +157,5 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 	ii[!ix] <- index
 	ii
     } else index
+}
 }

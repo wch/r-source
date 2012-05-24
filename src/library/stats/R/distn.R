@@ -140,7 +140,7 @@ dmultinom <- function(x, size=NULL, prob, log = FALSE)
     r <- lgamma(size+1) + sum(x*log(prob) - lgamma(x+1))
     if(log) r else exp(r)
 }
-rmultinom <- function(n, size, prob) .Internal(rmultinom(n, size, prob))
+rmultinom <- function(n, size, prob) .External(C_rmultinom, n, size, prob)
 
 dchisq <- function(x, df, ncp=0, log = FALSE) {
     if(missing(ncp)) .Internal(dchisq(x, df, log))

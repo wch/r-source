@@ -203,10 +203,6 @@ static R_CallMethodDef callMethods [] = {
     /* mapply */
     CALLDEF(do_mapply, 4),
 
-    /* in ../main/random.c to generate 'sequences' of random 2-d tables
-     * using Patefield's algorithm.
-     */
-    CALLDEF(R_r2dtable, 3),
     CALLDEF(R_shortRowNames, 2),
     CALLDEF(R_copyDFattr, 2),
 
@@ -242,15 +238,6 @@ static R_CallMethodDef callMethods [] = {
 
     CALLDEF(crc64ToString, 1),
 
-    {NULL, NULL, 0}
-};
-
-
-#define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
-
-static R_ExternalMethodDef externalMethods [] = {
-    EXTDEF(call_dqags, 7),
-    EXTDEF(call_dqagi, 7),
     {NULL, NULL, 0}
 };
 
@@ -291,7 +278,6 @@ static R_FortranMethodDef fortranMethods[] = {
 void attribute_hidden
 R_init_base(DllInfo *dll)
 {
-    R_registerRoutines(dll, cMethods, callMethods,
-		       fortranMethods, externalMethods);
+    R_registerRoutines(dll, cMethods, callMethods, fortranMethods, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

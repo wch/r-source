@@ -153,6 +153,8 @@ static const R_CMethodDef CEntries[]  = {
     {NULL, NULL, 0}
 };
 
+#define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
+
 static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
@@ -198,6 +200,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"fft", (DL_FUNC) &fft, 2},
     {"mvfft", (DL_FUNC) &mvfft, 2},
     {"nextn", (DL_FUNC) &nextn, 2},
+    {"r2dtable", (DL_FUNC) &r2dtable, 3},
     {NULL, NULL, 0}
 };
 
@@ -234,6 +237,9 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(zeroin2, 8),
     EXTDEF(optim, 5),
     EXTDEF(optimhess, 4),
+    EXTDEF(call_dqags, 7),
+    EXTDEF(call_dqagi, 7),
+    {"rmultinom", (DL_FUNC) &Rmultinom, 3},
     {NULL, NULL, 0}
 };
 
