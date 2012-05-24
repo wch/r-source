@@ -24,7 +24,8 @@ splinefun <- function(x, y=NULL,
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    nx <- length(x)
+    nx <- as.integer(length(x))
+    if(is.na(nx)) stop("invalid value of length(x)")
     if(nx == 0) stop("zero non-NA points")
     method <- match.arg(method)
     if(method == "periodic" && y[1L] != y[nx]) {
@@ -50,7 +51,7 @@ splinefun <- function(x, y=NULL,
     iMeth <- match(method, c("periodic", "natural", "fmm", "monoH.FC"))
     z <- .C(C_spline_coef,
 	    method=as.integer(iMeth),
-	    n=as.integer(nx),
+	    n=nx,
 	    x=x,
 	    y=y,
 	    b=double(nx),

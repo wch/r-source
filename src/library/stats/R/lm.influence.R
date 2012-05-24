@@ -55,6 +55,7 @@ lm.influence <- function (model, do.coef = TRUE)
         e[abs(e) < 100 * .Machine$double.eps * median(abs(e))] <- 0
         mqr <- qr.lm(model)
         n <- as.integer(nrow(mqr$qr))
+        if (is.na(n)) stop("invalid model QR matrix")
         k <- as.integer(mqr$rank)
         ## in na.exclude case, omit NAs; also drop 0-weight cases
         if(NROW(e) != n)

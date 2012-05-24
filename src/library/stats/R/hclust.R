@@ -53,6 +53,7 @@ hclust <- function(d, method="complete", members=NULL)
     n <- as.integer(attr(d, "Size"))
     if(is.null(n))
 	stop("invalid dissimilarities")
+    if(is.na(n) || n > 65536L) stop("size cannot be NA nor exceed 65536")
     if(n < 2)
         stop("must have n >= 2 objects to cluster")
     len <- as.integer(n*(n-1)/2)
@@ -119,12 +120,12 @@ plot.hclust <-
     labels <-
 	if(missing(labels) || is.null(labels)) {
 	    if (is.null(x$labels))
-		paste(1L:(n+1))
+		paste(1L:(n+1L))
 	    else
 		as.character(x$labels)
 	} else {
 	    if(is.logical(labels) && !labels)# FALSE
-		character(n+1)
+		character(n+1L)
 	    else
 		as.character(labels)
 	}

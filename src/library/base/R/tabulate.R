@@ -20,13 +20,15 @@ tabulate <- function(bin, nbins = max(1L, bin, na.rm = TRUE))
 	stop("'bin' must be numeric or a factor")
     ## avoid a copy for factors, since as.integer strips attributes
     if (typeof(bin) != "integer") bin <- as.integer(bin)
+    nb <- as.integer(length(bin))
+    if (is.na(nb)) stop("invalid value of length(bin)")
+    nbins <- as.integer(nbins)
+    if (is.na(nbins)) stop("invalid value of nbins")
+    ## could remove once we have long vectors ....
     if (nbins > .Machine$integer.max)
         stop("attempt to make a table with >= 2^31 elements")
     ## DUP = FALSE avoids 'bin' being duplicated.
     .C("R_tabulate",
-       bin, length(bin),
-       as.integer(nbins),
-       ans = integer(nbins),
-       NAOK = TRUE,
-       PACKAGE = "base", DUP = FALSE)$ans
+       bin, nb, nbins, ans = integer(nbins),
+       NAOK = TRUE, PACKAGE = "base", DUP = FALSE)$ans
 }

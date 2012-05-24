@@ -35,11 +35,14 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
             d <- d0 + t(d0)
         }
     }
+    n <- as.integer(n)
+    ## we need to handle nxn internally in dblcen
+    if(is.na(n) || n > 46340) stop("invalid value of 'n'")
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
     storage.mode(x) <- "double"
     ## doubly center x in-place
-    .C(C_dblcen, x, as.integer(n), DUP = FALSE)
+    .C(C_dblcen, x, n, DUP = FALSE)
 
     if(add) { ## solve the additive constant problem
         ## it is c* = largest eigenvalue of 2 x 2 (n x n) block matrix Z:
@@ -47,14 +50,14 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         Z <- matrix(0, 2L*n, 2L*n)
         Z[cbind(i2,i)] <- -1
         Z[ i, i2] <- -x
-        Z[i2, i2] <- .C(C_dblcen, x = 2*d, as.integer(n))$x
+        Z[i2, i2] <- .C(C_dblcen, x = 2*d, n)$x
         e <- eigen(Z, symmetric = FALSE, only.values = TRUE)$values
         add.c <- max(Re(e))
         ## and construct a new x[,] matrix:
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)
         x[non.diag] <- (d[non.diag] + add.c)^2
-        .C(C_dblcen, x, as.integer(n), DUP = FALSE)
+        .C(C_dblcen, x, n, DUP = FALSE)
     }
     e <- eigen(-x/2, symmetric = TRUE)
     ev <- e$values[seq_len(k)]

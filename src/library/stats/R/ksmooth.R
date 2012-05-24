@@ -15,8 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 ksmooth <-
-  function(x, y, kernel=c("box", "normal"), bandwidth=0.5, range.x=range(x),
-	   n.points=max(100, length(x)), x.points)
+  function(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
+           range.x = range(x), n.points = max(100, length(x)), x.points)
 {
     ## box is [-0.5, 0.5]. normal is sd = 1.4826/4
     if(missing(y) || is.null(y))
@@ -30,11 +30,13 @@ ksmooth <-
 	    n.points <- length(x.points)
 	    sort(x.points)
 	}
+    nx <- as.integer(length(x))
+    if(is.na(nx)) stop("invalid value of length(x)")
     ord <- order(x)
     z <- .C(C_BDRksmooth,
 	    as.double(x[ord]),
 	    as.double(y[ord]),
-	    as.integer(length(x)),
+	    nx,
 	    xp=as.double(x.points),
 	    yp=double(n.points),
 	    as.integer(n.points),
