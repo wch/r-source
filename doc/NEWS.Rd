@@ -485,6 +485,9 @@
       \item The replacement method for \code{window()} now works
       correctly for multiple time series of class \code{"mts"}.
       (\PR{14925})
+      
+      \item \code{is.unsorted()} gave incorrect results on non-atomic
+      objects such as dataframes.  (Reported by Matthew Dowle.)
     }
   }
 }

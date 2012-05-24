@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-05-01 r59301) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-05-24 r59440) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-w64-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6902,5 +6902,16 @@ Multiple R-squared: 0.9986,	Adjusted R-squared: 0.9984
 F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10 
 
 > ## issue is how the 5-number summary is labelled
-> ## (also seem in example(case.names))
+> ## (also seen in example(case.names))
+> 
+> 
+> ## is.unsorted got it backwards for dataframes
+> ## it is supposed to look for violations of x[2] > x[1], x[3] > x[2], etc.
+> is.unsorted(data.frame(x=2:1))
+[1] FALSE
+> is.unsorted(data.frame(x=1:2, y=3:4))
+[1] FALSE
+> is.unsorted(data.frame(x=3:4, y=1:2))
+[1] TRUE
+> ## R < 2.15.1 got these as FALSE, TRUE, FALSE.
 > 

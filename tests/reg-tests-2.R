@@ -2610,4 +2610,12 @@ d <- data.frame(x = 1:9,
 fit <- lm(y ~ x, data=d, weights=w)
 summary(fit)
 ## issue is how the 5-number summary is labelled
-## (also seem in example(case.names))
+## (also seen in example(case.names))
+
+
+## is.unsorted got it backwards for dataframes
+## it is supposed to look for violations of x[2] > x[1], x[3] > x[2], etc.
+is.unsorted(data.frame(x=2:1))
+is.unsorted(data.frame(x=1:2, y=3:4))
+is.unsorted(data.frame(x=3:4, y=1:2))
+## R < 2.15.1 got these as FALSE, TRUE, FALSE.
