@@ -268,6 +268,13 @@
 
       \item The included copy of \code{zlib} has been updated to version
       1.2.7.
+      
+      \item A new option \code{"show.error.locations"} has been added.
+      When set to \code{TRUE}, error messages will contain the
+      location of the most recent call containing source reference
+      information. (Other values are supported as well; see
+      \code{?options}.      
+      )
     }
   }
 
