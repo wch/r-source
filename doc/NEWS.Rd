@@ -302,7 +302,10 @@
       \code{cut()}, \code{dist()}, the complex case of \code{eigen()},
       \code{hclust()}, \code{image()}, \code{kmeans()}, \code{loess()},
       \code{stl()} and \code{svd(LINPACK = TRUE)}.
-
+      
+      \item There is less copying when using primitive replacement
+      functions such as \code{names()}, \code{attr()} and
+      \code{attributes()}.
     }
   }
 
@@ -417,8 +420,8 @@
       \item \code{formatC()} uses the C entry point \code{str_signif}
       which could write beyond the length allocated for the output string.
 
-      \item Missing default argument added to implicit generic for
-      \code{backsolve()} (\PR{14883})
+      \item Missing default argument added to implicit S4 generic for
+      \code{backsolve()}. (\PR{14883})
 
       \item Some bugs fixed in handling load actions that could fail
       to export assigned items or generate spurious warnings in
@@ -458,7 +461,7 @@
 	are \code{1}, \emph{always}} now also applies for \code{integer}
       vectors \code{y}.
 
-      \item X11-based pixmap devices like \code{png(type="Xlib")} were
+      \item X11-based pixmap devices like \code{png(type = "Xlib")} were
       trying to set the cursor style, which triggered some warnings and
       hangs.
 
@@ -481,7 +484,7 @@
       
       \item The replacement method for \code{windows()} now works
       correctly for multiple time series of class \code{"mts"}.
-      (\PR{14925}.)
+      (\PR{14925})
     }
   }
 }
