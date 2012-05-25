@@ -173,7 +173,8 @@
 
       It also means that packages such as \CRANpkg{compositions} which
       make copies of \pkg{stats} functions at installation need to be
-      re-installed.
+      re-installed.  As may packages which have been byte-compiled,
+      since some \code{.Internal()} calls are inlined by the compiler.
     }
   }
 
