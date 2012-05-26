@@ -1,8 +1,8 @@
 
-R version 2.15.0 Patched (2012-05-04 r59314) -- "Easter Beagle"
+R version 2.15.0 Patched (2012-05-24 r59442) -- "Easter Beagle"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -248,8 +248,8 @@ n= 47 : ......................
 +              pgamma(Inf,Inf,scale=Inf))))
 [1] TRUE
 Warning messages:
-1: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced
-2: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced
+1: In pgamma(Inf, 1, scale = Inf) : NaNs produced
+2: In pgamma(Inf, Inf, scale = Inf) : NaNs produced
 > scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
 > stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
 +           pgamma(xMax,1, scale=Inf) == 0,
@@ -343,8 +343,8 @@ df = 100[1] TRUE
 + is.nan(qnorm(-.1)) # + warn
 [1] TRUE
 Warning messages:
-1: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced
-2: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced
+1: In qnorm(1.1) : NaNs produced
+2: In qnorm(-0.1) : NaNs produced
 > 
 > x <- c(-Inf, -1e100, 1:6, 1e200, Inf)
 > rbind(d.s0 =dnorm(x,3,s=0),   p.s0 = pnorm(x,3,s=0),
@@ -1294,5 +1294,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.192 0.012 1.208 0 0 
+Time elapsed:  1.003 0.02 1.024 0 0 
 > 

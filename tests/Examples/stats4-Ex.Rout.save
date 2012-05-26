@@ -1,8 +1,8 @@
 
-R version 2.15.0 alpha (2012-03-02 r58556)
+R version 2.15.0 Patched (2012-05-24 r59442) -- "Easter Beagle"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -167,7 +167,8 @@ lxhalf  1.6615  6.4794
 > ll <- function(ymax=15, xhalf=6)
 +     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
 > fit <- mle(ll)
-Warning in dpois(x, lambda, log) : NaNs produced
+Warning in stats::dpois(y, lambda = ymax/(1 + x/xhalf), log = TRUE) :
+  NaNs produced
 > ## note the recorded call contains ..1, a problem with S4 dispatch
 > update(fit, fixed=list(xhalf=3))
 
@@ -183,7 +184,7 @@ Coefficients:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.758 0.009 0.771 0 0 
+Time elapsed:  0.7 0.007 0.709 0 0 
 > grDevices::dev.off()
 null device 
           1 

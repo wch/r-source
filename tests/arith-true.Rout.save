@@ -1,8 +1,8 @@
 
-R version 2.15.0 Patched (2012-05-08 r59340) -- "Easter Beagle"
+R version 2.15.0 Patched (2012-05-24 r59442) -- "Easter Beagle"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -215,7 +215,7 @@ In gamma(0:-47) : NaNs produced
 +           all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
 Warning messages:
 1: In digamma(x) : NaNs produced
-2: In psigamma(x, deriv) : NaNs produced
+2: In psigamma(x, 0) : NaNs produced
 > ## very large x:
 > x <- 1e30 ^ (1:10)
 > a.relE <- function(appr, true) abs(1 - appr/true)
@@ -324,5 +324,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.348 0.002 0.352 0 0 
+Time elapsed:  0.333 0.003 0.336 0 0 
 > 
