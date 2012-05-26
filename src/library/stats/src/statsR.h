@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+SEXP getListElement(SEXP list, char *str);
+
 /* Declarations for .Call entry points */
 
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
@@ -45,3 +47,9 @@ SEXP optimhess(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP Rmultinom(SEXP args);
 SEXP call_dqagi(SEXP);
 SEXP call_dqags(SEXP);
+SEXP Random1(SEXP args);
+SEXP Random2(SEXP args);
+SEXP Random3(SEXP args);
+SEXP distn2(SEXP args);
+SEXP distn3(SEXP args);
+SEXP distn4(SEXP args);

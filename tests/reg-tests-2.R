@@ -2613,7 +2613,7 @@ summary(fit)
 ## (also seen in example(case.names))
 
 
-## is.unsorted got it backwards for dataframes
+## is.unsorted got it backwards for dataframes of more than one column
 ## it is supposed to look for violations of x[2] > x[1], x[3] > x[2], etc.
 is.unsorted(data.frame(x=2:1))
 is.unsorted(data.frame(x=1:2, y=3:4))

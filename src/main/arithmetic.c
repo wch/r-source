@@ -1060,8 +1060,8 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
-    if(naflag)
-	warningcall(lcall, R_MSG_NA);
+    /* These are primitives, so need to use the call */
+    if(naflag) warningcall(lcall, R_MSG_NA);
 
     DUPLICATE_ATTRIB(sy, sa);
     UNPROTECT(2);
@@ -1241,8 +1241,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
     }
 
 #define FINISH_Math2				\
-    if(naflag)					\
-	warningcall(lcall, R_MSG_NA);		\
+    if(naflag) warning(R_MSG_NA);		\
     if (n == na)  DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
     UNPROTECT(3)
@@ -1621,8 +1620,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     naflag = 0
 
 #define FINISH_Math3				\
-    if(naflag)					\
-	warningcall(lcall, R_MSG_NA);		\
+    if(naflag) warning(R_MSG_NA);		\
 						\
     if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
@@ -1901,8 +1899,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
     }
 
 #define FINISH_Math4				\
-    if(naflag)					\
-	warningcall(lcall, R_MSG_NA);		\
+    if(naflag) warning(R_MSG_NA);		\
 						\
     if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
@@ -2087,8 +2084,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
     }
 
 #define FINISH_Math5				\
-    if(naflag)					\
-	warningcall(lcall, R_MSG_NA);		\
+    if(naflag) warning(R_MSG_NA);		\
 						\
     if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
     else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\

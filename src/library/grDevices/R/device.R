@@ -76,7 +76,7 @@ dev.next <-
 {
     if(!exists(".Devices"))
 	.Devices <- list("null.device")
-    num.device <- .External(C_dev.next, as.integer(which))
+    num.device <- .External(C_devnext, as.integer(which))
     names(num.device) <- .Devices[[num.device]]
     num.device
 }

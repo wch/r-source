@@ -26,7 +26,7 @@
 
 #include "statsR.h"
 
-static SEXP getListElement(SEXP list, char *str)
+SEXP getListElement(SEXP list, char *str)
 {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;

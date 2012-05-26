@@ -27,6 +27,206 @@
 #include <R_ext/Random.h>
 #include <R_ext/Applic.h>	/* for rcont2() */
 #include <Rmath.h>		/* for lgammafn, rmultinom */
+#include <errno.h>
+#include "statsR.h"
+
+typedef double (*ran1) (double);
+typedef double (*ran2) (double, double);
+typedef double (*ran3) (double, double, double);
+
+/* random sampling from 1 parameter families. */
+
+SEXP Random1(SEXP args)
+{
+    SEXP x, a;
+    R_xlen_t i, n, na;
+    ran1 fn = NULL; /* -Wall */
+    const char *dn = CHAR(STRING_ELT(getListElement(CAR(args), "name"), 0));
+    if (streql(dn, "rchisq")) fn = &rchisq;
+    else if (streql(dn, "rexp")) fn = &rexp;
+    else if (streql(dn, "rgeom")) fn = &rgeom;
+    else if (streql(dn, "rpois")) fn = &rpois;
+    else if (streql(dn, "rt")) fn = &rt;
+    else if (streql(dn, "rsignrank")) fn = &rsignrank;
+    else error(_("invalid arguments"));
+
+    args = CDR(args);
+    if (!isVector(CAR(args)) || !isNumeric(CADR(args)))
+	error(_("invalid arguments"));
+    if (XLENGTH(CAR(args)) == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	double dn = asReal(CAR(args));
+	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
+	    error(_("invalid arguments"));
+	n = (R_xlen_t) dn;
+#else
+	n = asInteger(CAR(args));
+	if (n == NA_INTEGER || n < 0)
+	    error(_("invalid arguments"));
+#endif
+    }
+    else n = XLENGTH(CAR(args));
+    PROTECT(x = allocVector(REALSXP, n));
+    if (n == 0) {
+	UNPROTECT(1);
+	return(x);
+    }
+    na = XLENGTH(CADR(args));
+    if (na < 1) {
+	for (i = 0; i < n; i++) REAL(x)[i] = NA_REAL;
+	warning(_("NAs produced"));
+    } else {
+	Rboolean naflag = FALSE;
+	PROTECT(a = coerceVector(CADR(args), REALSXP));
+	GetRNGstate();
+	double *ra = REAL(a), *rx = REAL(x);
+	errno = 0;
+	for (R_xlen_t i = 0; i < n; i++) {
+	    rx[i] = fn(ra[i % na]);
+	    if (ISNAN(rx[i])) naflag = TRUE;
+	}
+	if (naflag) warning(_("NAs produced"));
+	PutRNGstate();
+	UNPROTECT(1);
+    }
+    UNPROTECT(1);
+    return x;
+}
+
+/* random sampling from 2 parameter families. */
+
+SEXP Random2(SEXP args)
+{
+    SEXP x, a, b;
+    R_xlen_t i, n, na, nb;
+    ran2 fn = NULL; /* -Wall */
+    const char *dn = CHAR(STRING_ELT(getListElement(CAR(args), "name"), 0));
+    if (streql(dn, "rbeta")) fn = &rbeta;
+    else if (streql(dn, "rbinom")) fn = &rbinom;
+    else if (streql(dn, "rcauchy")) fn = &rcauchy;
+    else if (streql(dn, "rf")) fn = &rf;
+    else if (streql(dn, "rgamma")) fn = &rgamma;
+    else if (streql(dn, "rlnorm")) fn = &rlnorm;
+    else if (streql(dn, "rlogis")) fn = &rlogis;
+    else if (streql(dn, "rnbinom")) fn = &rnbinom;
+    else if (streql(dn, "rnorm")) fn = &rnorm;
+    else if (streql(dn, "runif")) fn = &runif;
+    else if (streql(dn, "rweibull")) fn = &rweibull;
+    else if (streql(dn, "rwilcox")) fn = &rwilcox;
+    else if (streql(dn, "rnchisq")) fn = &rnchisq;
+    else if (streql(dn, "rnbinom_mu")) fn = &rnbinom_mu;
+    else error(_("invalid arguments"));
+
+    args = CDR(args);
+    if (!isVector(CAR(args)) ||
+	!isNumeric(CADR(args)) ||
+	!isNumeric(CADDR(args)))
+	error(_("invalid arguments"));
+    if (XLENGTH(CAR(args)) == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	double dn = asReal(CAR(args));
+	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
+	    error(_("invalid arguments"));
+	n = (R_xlen_t) dn;
+#else
+	n = asInteger(CAR(args));
+	if (n == NA_INTEGER || n < 0)
+	    error(_("invalid arguments"));
+#endif
+    }
+    else n = XLENGTH(CAR(args));
+    PROTECT(x = allocVector(REALSXP, n));
+    if (n == 0) {
+	UNPROTECT(1);
+	return(x);
+    }
+    na = XLENGTH(CADR(args));
+    nb = XLENGTH(CADDR(args));
+    if (na < 1 || nb < 1) {
+	for (i = 0; i < n; i++) REAL(x)[i] = NA_REAL;
+	warning(_("NAs produced"));
+    }
+    else {
+	Rboolean naflag = FALSE;
+	PROTECT(a = coerceVector(CADR(args), REALSXP));
+	PROTECT(b = coerceVector(CADDR(args), REALSXP));
+	GetRNGstate();
+	double *ra = REAL(a), *rb = REAL(b), *rx = REAL(x);
+	errno = 0;
+	for (R_xlen_t i = 0; i < n; i++) {
+	    rx[i] = fn(ra[i % na], rb[i % nb]);
+	    if (ISNAN(rx[i])) naflag = TRUE;
+	}
+	if (naflag) warning(_("NAs produced"));
+	PutRNGstate();
+	UNPROTECT(2);
+    }
+    UNPROTECT(1);
+    return x;
+}
+
+/* random sampling from 3 parameter families. */
+
+SEXP Random3(SEXP args)
+{
+    SEXP x, a, b, c;
+    R_xlen_t i, n, na, nb, nc;
+    ran3 fn = rhyper;  /* the only current example */
+
+    args = CDR(args);
+    if (!isVector(CAR(args))) error(_("invalid arguments"));
+    if (LENGTH(CAR(args)) == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	double dn = asReal(CAR(args));
+	if (ISNAN(dn) || dn < 0 || dn > R_XLEN_T_MAX)
+	    error(_("invalid arguments"));
+	n = (R_xlen_t) dn;
+#else
+	n = asInteger(CAR(args));
+	if (n == NA_INTEGER || n < 0)
+	    error(_("invalid arguments"));
+#endif
+    }
+    else n = XLENGTH(CAR(args));
+    PROTECT(x = allocVector(REALSXP, n));
+    if (n == 0) {
+	UNPROTECT(1);
+	return(x);
+    }
+
+    args = CDR(args); a = CAR(args);
+    args = CDR(args); b = CAR(args);
+    args = CDR(args); c = CAR(args);
+    if (!isNumeric(a) || !isNumeric(b) || !isNumeric(c))
+	error(_("invalid arguments"));
+    na = XLENGTH(a);
+    nb = XLENGTH(b);
+    nc = XLENGTH(c);
+    if (na < 1 || nb < 1 || nc < 1) {
+	for (i = 0; i < n; i++) REAL(x)[i] = NA_REAL;
+	warning(_("NAs produced"));
+    }
+    else {
+	Rboolean naflag = FALSE;
+	PROTECT(a = coerceVector(a, REALSXP));
+	PROTECT(b = coerceVector(b, REALSXP));
+	PROTECT(c = coerceVector(c, REALSXP));
+	GetRNGstate();
+	double *ra = REAL(a), *rb = REAL(b), *rc = REAL(c), *rx = REAL(x);
+	errno = 0;
+	for (R_xlen_t i = 0; i < n; i++) {
+	    rx[i] = fn(ra[i % na], rb[i % nb], rc[i % nc]);
+	    if (ISNAN(rx[i])) naflag = TRUE;
+	}
+	if (naflag) warning(_("NAs produced"));
+
+	PutRNGstate();
+	UNPROTECT(3);
+    }
+    UNPROTECT(1);
+    return x;
+}
+
 
 SEXP Rmultinom(SEXP args)
 {

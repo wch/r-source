@@ -41,8 +41,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
                 if(!suppress) strings <<- c(strings, e)
             } else if(is.call(e)) {
                 if(is.name(e[[1L]])
-                   && (as.character(e[[1L]])
-                       %in% c("gettext", "gettextf"))) {
+                   && (as.character(e[[1L]]) %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
                     if(as.character(e[[1L]]) %in% "gettextf")
@@ -148,7 +147,7 @@ function(dir, potFile)
     tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc
     con <- file(potFile, "wt")
     on.exit(close(con))
-    writeLines(con=con,
+    writeLines(con = con,
                c('msgid ""',
                  'msgstr ""',
                  sprintf('"Project-Id-Version: R %s.%s\\n"',
@@ -181,6 +180,7 @@ function(dir, potFile)
             }
 }
 
+## not exported
 getfmts <- function(s) .Internal(getfmts(s))
 
 checkPoFile <- function(f, strictPlural = FALSE)
@@ -192,9 +192,9 @@ checkPoFile <- function(f, strictPlural = FALSE)
     ref <- NA
     fuzzy <- FALSE
 
-    result <- matrix(character(0), ncol = 5, nrow = 0)
+    result <- matrix(character(), ncol = 5L, nrow = 0L)
     while (i < length(lines)) {
-	i <- i + 1
+	i <- i + 1L
 
 	if (grepl("^#,", lines[i], useBytes = TRUE)) {
 	    noCformat <- noCformat || grepl("no-c-format", lines[i], useBytes = TRUE)
@@ -206,12 +206,12 @@ checkPoFile <- function(f, strictPlural = FALSE)
 		ref <- sub("^#:[[:blank:]]*", "", lines[i])
 	} else if (grepl("^msgid ", lines[i], useBytes = TRUE)) {
 	    s1 <- sub('^msgid[[:blank:]]+["](.*)["][[:blank:]]*$', "\\1", lines[i])
-	    while (grepl('^["]', lines[i+1], useBytes = TRUE)) {
-		i <- i + 1
+	    while (grepl('^["]', lines[i+1L], useBytes = TRUE)) {
+		i <- i + 1L
 		s1 <- paste0(s1, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[i]))
 	    }
 	    f1 <- try(.Internal(getfmts(s1)), silent = TRUE)
-	    j <- i + 1
+	    j <- i + 1L
 
 	    if (noCformat || inherits(f1, "try-error")) {
 		noCformat <- FALSE
@@ -230,8 +230,8 @@ checkPoFile <- function(f, strictPlural = FALSE)
 
 		s2 <- sub( paste0("^", statement, "[[:blank:]]+[\"](.*)[\"][[:blank:]]*$"),
 		                 "\\1", lines[j])
-		while (grepl('^["]', lines[j+1], useBytes = TRUE)) {
-		    j <- j + 1
+		while (grepl('^["]', lines[j+1L], useBytes = TRUE)) {
+		    j <- j+1L
 		    s2 <- paste0(s2, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[j]))
 		}
 
@@ -246,7 +246,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 		if (statement == "msgid_plural") {
 		    if (!strictPlural) {
 			f1_plural <- f2
-			j <- j+1
+			j <- j+1L
 			next
 		    }
 		}
@@ -286,9 +286,9 @@ checkPoFile <- function(f, strictPlural = FALSE)
                     if (!fuzzy)
                         result <- rbind(result, c(location, ref, diff, s1, s2))
 		}
-		j <- j+1
+		j <- j+1L
 	    }
-	    i <- j-1
+	    i <- j-1L
 	    noCformat <- FALSE
 	    f1_plural <- NULL
 	    ref <- NA
@@ -302,10 +302,10 @@ checkPoFiles <- function(language, dir=".")
 {
     files <- list.files(path = dir, pattern = paste0(language, "[.]po$"),
                         full.names = TRUE, recursive = TRUE)
-    result <- matrix(character(0), ncol = 5, nrow = 0)
+    result <- matrix(character(), ncol = 5L, nrow = 0L)
     for (f in files) {
 	errs <- checkPoFile(f, strictPlural = grepl("^R-", basename(f)))
-	if (nrow(errs) > 0) result <- rbind(result, errs)
+	if (nrow(errs)) result <- rbind(result, errs)
     }
     structure(result, class = "check_po_files")
 }
@@ -316,7 +316,7 @@ print.check_po_files <- function(x, ...)
 	cat("No errors\n")
     else
 	for (i in 1:nrow(x)) {
-	    if (is.na(x[i, 2])) cols <- c(1, 3:5)
+	    if (is.na(x[i, 2L])) cols <- c(1L, 3:5)
 	    else cols <- 1:5
 	    cat(x[i, cols], sep = "\n")
 	    cat("\n")

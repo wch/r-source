@@ -22,7 +22,7 @@ SOURCES_C = init.c kmeans.c \
   mAR.c pacf.c starma.c port.c family.c sbart.c \
   approx.c loglin.c lowess.c massdist.c splines.c lm.c \
   complete_cases.c cov.c deriv.c fourier.c model.c optim.c optimize.c \
-  integrate.c random.c
+  integrate.c random.c distn.c
 
 SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f \
   sgram.f sinerp.f sslvrg.f stxwx.f \

@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-05-24 r59440) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-05-24 r59442) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-w64-mingw32/i386 (32-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6905,7 +6905,7 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 > ## (also seen in example(case.names))
 > 
 > 
-> ## is.unsorted got it backwards for dataframes
+> ## is.unsorted got it backwards for dataframes of more than one column
 > ## it is supposed to look for violations of x[2] > x[1], x[3] > x[2], etc.
 > is.unsorted(data.frame(x=2:1))
 [1] FALSE
