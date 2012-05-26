@@ -1178,6 +1178,10 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* Mathematical Functions of Two Numeric Arguments (plus 1 int) */
 
+/* math2_1 and math2_2 and related can be removed  once the byte
+  compiler knows how to optimize to .External rather than
+  .Internal */
+
 #define if_NA_Math2_set(y,a,b)				\
 	if      (ISNA (a) || ISNA (b)) y = NA_REAL;	\
 	else if (ISNAN(a) || ISNAN(b)) y = R_NaN;
@@ -1587,6 +1591,11 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* Mathematical Functions of Three (Real) Arguments */
 
+/* math3_1 and math3_2 and related can be removed once the byte
+  compiler knows how to optimize to .External rather than
+  .Internal */
+
+
 #define if_NA_Math3_set(y,a,b,c)			        \
 	if      (ISNA (a) || ISNA (b)|| ISNA (c)) y = NA_REAL;	\
 	else if (ISNAN(a) || ISNAN(b)|| ISNAN(c)) y = R_NaN;
@@ -1838,6 +1847,9 @@ SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 } /* do_math3() */
 
 /* Mathematical Functions of Four (Real) Arguments */
+
+/* This can be removed completely once the byte compiler knows how to
+  optimize to .External rather than .Internal */
 
 #define if_NA_Math4_set(y,a,b,c,d)				\
 	if      (ISNA (a)|| ISNA (b)|| ISNA (c)|| ISNA (d)) y = NA_REAL;\

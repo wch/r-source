@@ -29,6 +29,8 @@
 #include <Rmath.h>		/* for rxxx functions */
 #include <errno.h>
 
+/* Code down to do_random3 (inclusive) can be removed once the byte
+  compiler knows how to optimize to .External rather than .Internal */
 static void invalid(SEXP call)
 {
     error(_("invalid arguments"));

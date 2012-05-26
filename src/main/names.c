@@ -305,6 +305,12 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"lchoose",	do_math2,	4,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"choose",	do_math2,	5,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
+/*
+  Can remove all the [dpqr]xxx once the compiler knows how to optimize
+  to .External.
+
+  This is most of the do_math[23], and all of the do_math4, do_random[123]
+*/
 {"dchisq",	do_math2,	6,	11,	2+1,	{PP_FUNCALL, PREC_FN,	0}},
 {"pchisq",	do_math2,	7,	11,	2+2,	{PP_FUNCALL, PREC_FN,	0}},
 {"qchisq",	do_math2,	8,	11,	2+2,	{PP_FUNCALL, PREC_FN,	0}},
