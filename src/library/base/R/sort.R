@@ -157,14 +157,16 @@ xtfrm.AsIs <- function(x)
     NextMethod("xtfrm")
 }
 
+## callback from C code for rank/order
 .gt <- function(x, i, j)
 {
     xi <- x[i]; xj <- x[j]
     if (xi == xj) 0L else if(xi > xj) 1L else -1L;
 }
 
+## callback for C code for is.unsorted, hence negation.
 .gtn <- function(x, strictly)
 {
     n <- length(x)
-    if(strictly) all(x[-1L] > x[-n]) else all(x[-1L] >= x[-n])
+    if(strictly) !all(x[-1L] > x[-n]) else !all(x[-1L] >= x[-n])
 }

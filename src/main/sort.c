@@ -167,7 +167,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* try dispatch */
 	SEXP call;
 	PROTECT(call = lang3(install(".gtn"), x, CADR(args)));
-	ans = ScalarLogical(!LOGICAL(eval(call, rho))[0]); /* negate the result */
+	ans = eval(call, rho);
 	UNPROTECT(1);
 	return ans;
     } else res = NA_LOGICAL;
