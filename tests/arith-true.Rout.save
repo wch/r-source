@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-05-04 r59318) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-05-26 r59449) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -215,7 +215,7 @@ In gamma(0:-47) : NaNs produced
 +           all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
 Warning messages:
 1: In digamma(x) : NaNs produced
-2: In psigamma(x, deriv) : NaNs produced
+2: In psigamma(x, 0) : NaNs produced
 > ## very large x:
 > x <- 1e30 ^ (1:10)
 > a.relE <- function(appr, true) abs(1 - appr/true)
@@ -324,5 +324,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.428 0.004 0.433 0 0 
+Time elapsed:  0.488 0.004 0.505 0 0 
 > 
