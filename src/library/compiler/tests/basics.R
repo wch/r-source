@@ -92,9 +92,10 @@ stopifnot(identical(p, pp))
 
 
 ## Check assumption about simple .Internals
-stopifnot(all(sapply(compiler:::safeStatsInternals,
-                     function(f)
-                     compiler:::is.simpleInternal(get(f, "package:stats")))))
+## These are .External calls now.
+## stopifnot(all(sapply(compiler:::safeStatsInternals,
+##                      function(f)
+##                      compiler:::is.simpleInternal(get(f, "package:stats")))))
 
 stopifnot(all(sapply(compiler:::safeBaseInternals,
                      function(f)
