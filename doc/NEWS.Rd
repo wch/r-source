@@ -9,8 +9,8 @@
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{source()} now uses \code{withVisible()} rather than an
-      internal call to \code{eval.with.vis}.  This may alter tracebacks
+      \item \code{source()} now uses \code{withVisible()} rather than
+      \code{.Internal(eval.with.vis)}.  This may alter tracebacks
       slightly.
 
       \item \code{identical()} has a new argument,
@@ -23,7 +23,8 @@
 
       \item \code{splineDesign()} and \code{spline.des()} in package
       \pkg{splines} have a new option \code{sparse} which can be used
-      for efficient construction of a sparse B-spline design matrix.
+      for efficient construction of a sparse B-spline design matrix
+      (\emph{via} \pkg{Matrix}).
 
       \item \code{norm()} now allows \code{type = "2"} (the
       \sQuote{spectral} or 2-norm) as well, mainly for didactical
@@ -62,11 +63,10 @@
       When set to \code{TRUE}, error messages will contain the
       location of the most recent call containing source reference
       information. (Other values are supported as well; see
-      \code{?options}.
+      \code{?options}.)
 
       \item The NA warning messages from e.g. \code{pchisq} now report the
       call to the closure and not that of the \code{.Internal}.
-      )
     }
   }
 
@@ -215,9 +215,9 @@
       \item Missing default argument added to implicit S4 generic for
       \code{backsolve()}. (\PR{14883})
 
-      \item Some bugs fixed in handling load actions that could fail
-      to export assigned items or generate spurious warnings in
-      \code{CMD check} on loading.
+      \item Some bugs have been fixed in handling load actions that
+      could fail to export assigned items or generate spurious warnings
+      in \code{CMD check} on loading.
 
       \item For \code{tiff(type = "windows")}, the numbering of per-page
       files except the last was off by one.
@@ -280,6 +280,9 @@
       
       \item \code{is.unsorted()} gave incorrect results on non-atomic
       objects such as dataframes.  (Reported by Matthew Dowle.)
+      
+      \item The value returned by \code{tools::psnice()} for invalid
+      \code{pid} values was not always \code{NA} as documented.
     }
   }
 }

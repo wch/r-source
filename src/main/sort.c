@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2009   The R Core Team
+ *  Copyright (C) 1998-2012   The R Core Team
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include <Defn.h> /* => Utils.h with the protos from here */
+#include <Defn.h> /* => Utils.h with the protos from here; Rinternals.h */
 #include <Rmath.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
 
@@ -727,8 +727,8 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 		}
 
 
-/* Needs indx set to 1...n initially.
-   Also used by do_options, src/gnuwin32/extra.c
+/* Needs indx set to  0:(n-1)  initially.
+   Also used by do_options and  ../gnuwin32/extra.c
    Called with rho != R_NilValue only from do_rank, when NAs are not involved.
  */
 void attribute_hidden
@@ -914,11 +914,9 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (args == R_NilValue)
 	return R_NilValue;
     x = CAR(args);
-//    if (!isVectorAtomic(x))
-//	error(_("argument is not an atomic vector"));
     if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
-    n = LENGTH(x);
+    n = length(x); // FIXME: mignt need to dispatch to length() method
     ties_str = CHAR(asChar(CADR(args)));
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
@@ -956,6 +954,7 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include <R_ext/RS.h>
 
+/* also returns integers (a method for sort.list) */
 SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans;
@@ -1003,7 +1002,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for(i = 1; i <= xmax+1; i++) cnts[i] += cnts[i-1];
     if(decreasing)
-	for(i = 0; i < n; i++){
+	for(i = 0; i < n; i++) {
 	    tmp = INTEGER(x)[i];
 	    INTEGER(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] = i+1;
 	}
@@ -1032,5 +1031,5 @@ SEXP attribute_hidden do_xtfrm(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = applyClosure(call, fn, prargs, rho, R_NilValue);
     UNPROTECT(2);
     return ans;
-    
+
 }

@@ -270,7 +270,7 @@ SEXP type2symbol(SEXPTYPE t)
        character string and to the symbol would be better */
     for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
-	    return install((char *) &TypeTable[i].str);
+	    return install((const char *)&TypeTable[i].str);
     }
     error(_("type %d is unimplemented in '%s'"), t, "type2symbol");
     return R_NilValue; /* for -Wall */
@@ -492,7 +492,7 @@ void attribute_hidden setRVector(double * vec, int len, double val)
 	vec[i] = val;
 }
 
-
+/* unused in R, in Rinternals.h */
 void setSVector(SEXP * vec, int len, SEXP val)
 {
     int i;
@@ -1747,6 +1747,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
     UErrorCode  status = U_ZERO_ERROR;
 
     for (; args != R_NilValue; args = CDR(args)) {
+	if (isNull(TAG(args))) error(_("alll arguments must be named"));
 	const char *this = CHAR(PRINTNAME(TAG(args)));
 	const char *s;
 
