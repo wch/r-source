@@ -1165,9 +1165,9 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid .Internal() argument"));
     fun = CAR(s);
     if (!isSymbol(fun))
-	errorcall(call, _("invalid internal function"));
+	errorcall(call, _("invalid .Internal() argument"));
     if (INTERNAL(fun) == R_NilValue)
-	errorcall(call, _("no internal function \"%s\""),
+	errorcall(call, _("there is no .Internal function '%s'"),
 		  CHAR(PRINTNAME(fun)));
     args = CDR(s);
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
