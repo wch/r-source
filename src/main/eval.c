@@ -4314,7 +4314,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	value = INTERNAL(symbol);
 	if (TYPEOF(value) != BUILTINSXP)
-	  error(_("not a BUILTIN function"));
+	  error(_("there is no .Internal function '%s'"),
+		CHAR(PRINTNAME(symbol)));
 
 	/* push the function and push space for creating the argument list. */
 	ftype = TYPEOF(value);
