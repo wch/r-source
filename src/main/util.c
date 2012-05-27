@@ -1745,6 +1745,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
     UErrorCode  status = U_ZERO_ERROR;
 
     for (; args != R_NilValue; args = CDR(args)) {
+	if (isNull(TAG(args))) error(_("alll arguments must be named"));
 	const char *this = CHAR(PRINTNAME(TAG(args)));
 	const char *s;
 

@@ -68,9 +68,9 @@
       always warned of a lack of comparability of log-likelihoods for
       non-stationary models.  (Suggested by Jouni Helske.)
 
-      \item The logic in \code{aggregate.formula} has been revised. It is now
-      possible to use a formula stored in a variable; previously, it had to be
-      given explicitly in the function call. 
+      \item The logic in \code{aggregate.formula()} has been revised.
+      It is now possible to use a formula stored in a variable;
+      previously, it had to be given explicitly in the function call.
     }
   }
 
@@ -175,6 +175,11 @@
       make copies of \pkg{stats} functions at installation need to be
       re-installed.  As may packages which have been byte-compiled,
       since some \code{.Internal()} calls are inlined by the compiler.
+
+      \item Some \code{.External()} calls to the \code{base} package
+      (really to the \R executable or shared library) have been moved to
+      more appropriate packages.  Packages should not have been using
+      such calls, but some did (mainly those used by \code{integrate()}.
     }
   }
 
@@ -182,8 +187,8 @@
     \itemize{
       \item There is a new function \code{mcaffinity()} which allows to
       get or set the CPU affinity mask for the current \R process on
-      systems that supports this (currently only Linux was tested
-      successfully).  It has no effect on systems that do not support
+      systems that supports this (currently only Linux has been tested
+      successfully).  It has no effect on systems which do not support
       process affinity.  Users are not expected to use this function
       directly (with the exception of fixing libraries that break
       affinity settings like OpenBLAS) -- the function is rather
@@ -208,7 +213,8 @@
 
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
       \code{start} and \code{end} as \code{size_t} to allow them to work
-      with longer vectors on 64-bit platforms.
+      with longer vectors on 64-bit platforms.  Code using them should
+      be recompiled.
 
 %       \item \code{R_alloc} used to over-allocate by at least one byte:
 %       it no longer does do (but still rounds up to a multiple of 8
@@ -221,8 +227,8 @@
 \section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{source()} now uses \code{withVisible()} rather than an
-      internal call to \code{eval.with.vis}.  This may alter tracebacks
+      \item \code{source()} now uses \code{withVisible()} rather than
+      \code{.Internal(eval.with.vis)}.  This may alter tracebacks
       slightly.
 
       \item \code{identical()} has a new argument,
@@ -235,7 +241,8 @@
 
       \item \code{splineDesign()} and \code{spline.des()} in package
       \pkg{splines} have a new option \code{sparse} which can be used
-      for efficient construction of a sparse B-spline design matrix.
+      for efficient construction of a sparse B-spline design matrix
+      (\emph{via} \pkg{Matrix}).
 
       \item \code{norm()} now allows \code{type = "2"} (the
       \sQuote{spectral} or 2-norm) as well, mainly for didactical
@@ -274,11 +281,10 @@
       When set to \code{TRUE}, error messages will contain the
       location of the most recent call containing source reference
       information. (Other values are supported as well; see
-      \code{?options}.
+      \code{?options}.)
 
       \item The NA warning messages from e.g. \code{pchisq} now report the
       call to the closure and not that of the \code{.Internal}.
-      )
     }
   }
 
@@ -427,9 +433,9 @@
       \item Missing default argument added to implicit S4 generic for
       \code{backsolve()}. (\PR{14883})
 
-      \item Some bugs fixed in handling load actions that could fail
-      to export assigned items or generate spurious warnings in
-      \code{CMD check} on loading.
+      \item Some bugs have been fixed in handling load actions that
+      could fail to export assigned items or generate spurious warnings
+      in \code{CMD check} on loading.
 
       \item For \code{tiff(type = "windows")}, the numbering of per-page
       files except the last was off by one.
@@ -492,6 +498,9 @@
       
       \item \code{is.unsorted()} gave incorrect results on non-atomic
       objects such as dataframes.  (Reported by Matthew Dowle.)
+      
+      \item The value returned by \code{tools::psnice()} for invalid
+      \code{pid} values was not always \code{NA} as documented.
     }
   }
 }

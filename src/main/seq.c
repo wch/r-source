@@ -96,9 +96,8 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
     Rboolean useInt;
 
     r = fabs(n2 - n1);
-#ifndef LONG_VECTOR_SUPPORT
-    if(r >= INT_MAX) errorcall(call,_("result would be too long a vector"));
-#endif
+    if(r >= R_XLEN_T_MAX) 
+	errorcall(call, _("result would be too long a vector"));
 
     n = (R_xlen_t)(r + 1 + FLT_EPSILON);
 

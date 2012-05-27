@@ -1010,11 +1010,9 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (args == R_NilValue)
 	return R_NilValue;
     x = CAR(args);
-//    if (!isVectorAtomic(x))
-//	error(_("argument is not an atomic vector"));
     if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
-    n = LENGTH(x);
+    n = length(x); // FIXME: mignt need to dispatch to length() method
     ties_str = CHAR(asChar(CADR(args)));
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;

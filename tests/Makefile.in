@@ -91,7 +91,7 @@ clean:
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
 	-@rm -rf anRpackage myTst* myLib
-	-@rm -f *.tar.gz
+	-@rm -f *.tar.gz *.Rd
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 
 distclean: clean
