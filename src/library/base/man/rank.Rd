@@ -47,8 +47,8 @@ rank(x, na.last = TRUE,
   \strong{NB}: \code{rank} is not itself generic but \code{\link{xtfrm}}
   is, and \code{rank(xtfrm(x), ....)} will have the desired result if
   there is a \code{xtfrm} method.  Otherwise, \code{rank} will make use
-  of \code{==}, \code{>} and \code{is.na} methods for classed objects,
-  possibly rather slowly.
+  of \code{==}, \code{>}, \code{is.na} and extraction methods for
+  classed objects, possibly rather slowly.
 }
 \value{
   A numeric vector of the same length as \code{x} with names copied from

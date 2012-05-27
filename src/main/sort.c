@@ -996,24 +996,22 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* FUNCTION: rank(x) */
+/* FUNCTION: rank(x, length, ties.method) */
 SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rank, indx, x;
-    int *in, *ik = NULL /* -Wall */;
+    int *ik = NULL /* -Wall */;
     double *rk = NULL /* -Wall */;
-    int i, j, k, n;
-    const char *ties_str;
     enum {AVERAGE, MAX, MIN} ties_kind = AVERAGE;
 
     checkArity(op, args);
-    if (args == R_NilValue)
-	return R_NilValue;
     x = CAR(args);
     if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
-    n = length(x); // FIXME: mignt need to dispatch to length() method
-    ties_str = CHAR(asChar(CADR(args)));
+    int n = asInteger(CADR(args));
+    if (n == NA_INTEGER || n < 0)
+	error(_("invalid '%s' value"), "length(xx)");
+    const char *ties_str = CHAR(asChar(CADDR(args)));
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
     else if(!strcmp(ties_str, "min"))	ties_kind = MIN;
@@ -1027,7 +1025,8 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ik = INTEGER(rank);
     }
     if (n > 0) {
-	in = INTEGER(indx);
+	int i, j, k;
+	int *in = INTEGER(indx);
 	for (i = 0; i < n; i++) in[i] = i;
 	orderVector1(in, n, x, TRUE, FALSE, rho);
 	for (i = 0; i < n; i = j+1) {
