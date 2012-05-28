@@ -4092,7 +4092,7 @@ msgstr "unità mal specificata in %s, si prega segnalare!"
 
 #: src/main/graphics.c:1779 src/main/graphics.c:1801
 msgid "attempt to plot on null device"
-msgstr "tantaivo di disegnare sul dispositivo null"
+msgstr "tentaivo di disegnare sul dispositivo null"
 
 #: src/main/graphics.c:1831
 msgid "outer margins too large (fig.region too small)"
