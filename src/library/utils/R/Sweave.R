@@ -422,7 +422,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --options=      comma-separated list of Sweave options",
             "  --pdf           convert to PDF document",
             "  --compact=      try to compact PDF document:",
-            '                  "no" (default), "qpdf", "gs", "gs+pdf", "both"',
+            '                  "no" (default), "qpdf", "gs", "gs+qpdf", "both"',
             "  --compact       same as --compact=qpdf",
             "",
             "Report bugs at bugs.r-project.org .",
@@ -494,14 +494,14 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             ## Same code as used for --compact-vignettes in
             ## .build_packages() ...
             message("Compacting PDF document")
-            if(compact %in% c("gs", "gs+pdf", "both")) {
+            if(compact %in% c("gs", "gs+qpdf", "both")) {
                 gs_cmd <- tools:::find_gs_cmd(Sys.getenv("R_GSCMD", ""))
                 gs_quality <- "ebook"
             } else {
                 gs_cmd <- ""
                 gs_quality <- "none"
             }
-            qpdf <- if(compact %in% c("qpdf", "gs+pdf", "both"))
+            qpdf <- if(compact %in% c("qpdf", "gs+qpdf", "both"))
                 Sys.which(Sys.getenv("R_QPDF", "qpdf"))
             else ""
             res <- tools::compactPDF(ofile, qpdf = qpdf,

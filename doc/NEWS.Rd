@@ -23,6 +23,11 @@
       consumption of an \R process, particularly in a multi-user
       environment.  A number of packages, particularly those using Java,
       need at least 4GB of virtual memory.
+
+      Windows builds of \R are by default limited to the amount of RAM
+      installed: this limit can be changed by command-line option
+      \option{--max-mem-size} or setting environment variable
+      \env{R_MAX_MEM_SIZE}.
     }
   }
 
@@ -59,8 +64,8 @@
       \item Matrix indexing of dataframes by two column numeric indices
       is now supported for replacement as well as extraction.
 
-      \item \code{setNames()} gets a default for \code{object}, useful
-      for a character result.
+      \item \code{setNames()} now has a default for its \code{object}
+      argument, useful for a character result.
 
       \item \code{StrucTS()} has a revised additive constant in the
       \code{loglik} component of the result: the previous definition is
@@ -134,7 +139,7 @@
 
       \item \command{R CMD Sweave} gains a \option{--compact} option
       to control possibly reducing the size of the PDF file it creates
-      (when \option{--pdf} is given).
+      when \option{--pdf} is given.
     }
   }
 
@@ -179,14 +184,14 @@
       \item Some \code{.External()} calls to the \code{base} package
       (really to the \R executable or shared library) have been moved to
       more appropriate packages.  Packages should not have been using
-      such calls, but some did (mainly those used by \code{integrate()}.
+      such calls, but some did (mainly those used by \code{integrate()}).
     }
   }
 
   \subsection{PACKAGE parallel}{
     \itemize{
-      \item There is a new function \code{mcaffinity()} which allows to
-      get or set the CPU affinity mask for the current \R process on
+      \item There is a new function \code{mcaffinity()} which allows
+      getting or setting the CPU affinity mask for the current \R process on
       systems that supports this (currently only Linux has been tested
       successfully).  It has no effect on systems which do not support
       process affinity.  Users are not expected to use this function
@@ -256,7 +261,7 @@
       also works for the boundary case of just one color when the ramp is
       flat.
 
-      \item \code{qqline()} gets new optional arguments
+      \item \code{qqline()} has new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
 
@@ -464,7 +469,7 @@
       \item Source locations reported in \code{traceback()} were
       incorrect when byte-compiled code was on the stack.
 
-      \item \code{plogis(x, lower=FALSE, log.p=TRUE)} no longer
+      \item \code{plogis(x, lower = FALSE, log.p = TRUE)} no longer
       underflows early for large x (e.g. 800).
 
       \item \code{?Arithmetic}'s \dQuote{\code{1 ^ y} and \code{y ^ 0}
@@ -497,7 +502,7 @@
       (\PR{14925})
       
       \item \code{is.unsorted()} gave incorrect results on non-atomic
-      objects such as dataframes.  (Reported by Matthew Dowle.)
+      objects such as data frames.  (Reported by Matthew Dowle.)
       
       \item The value returned by \code{tools::psnice()} for invalid
       \code{pid} values was not always \code{NA} as documented.
