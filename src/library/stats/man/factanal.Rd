@@ -1,6 +1,6 @@
 % File src/library/stats/man/factanal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -145,7 +145,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{call}{The matched call.}
   \item{na.action}{If relevant.}
   \item{STATISTIC, PVAL}{The significance-test statistic and P value, if
-    if can be computed.}
+    it can be computed.}
 }
 
 \note{
