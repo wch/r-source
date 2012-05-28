@@ -2391,7 +2391,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 these <- files[chunk]
                 files <- files[-chunk]
                 lines <- suppressWarnings(system2("file", shQuote(these), TRUE, TRUE))
-                ex <- grepl("executable", lines, useBytes=TRUE)
+                ## avoid match to is_executable.Rd
+                ex <- grepl(" executable", lines, useBytes=TRUE)
 		ex2 <- grepl("script", lines, useBytes=TRUE) &
 		       grepl("text", lines, useBytes=TRUE)
                 execs <- c(execs, lines[ex & !ex2])
@@ -2982,7 +2983,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         else if (file.exists(Renv <- "~/.R/check.Renviron"))
             readRenviron(Renv)
     }
-    
+
     td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
     if (is.na(td0)) td0 <- Inf
 
