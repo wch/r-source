@@ -1,6 +1,6 @@
 % File src/library/stats/man/integrate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{integrate}
@@ -12,7 +12,7 @@
   infinite interval.
 }
 \usage{
-integrate(f, lower, upper, \dots, subdivisions=100,
+integrate(f, lower, upper, \dots, subdivisions = 100L,
           rel.tol = .Machine$double.eps^0.25, abs.tol = rel.tol,
           stop.on.error = TRUE, keep.xy = FALSE, aux = NULL)
 }
