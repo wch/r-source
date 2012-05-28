@@ -44,7 +44,7 @@ msgstr "unità mal specificata in %s, si prega segnalare!"
 
 #: graphics.c:1778 graphics.c:1800
 msgid "attempt to plot on null device"
-msgstr "tantaivo di disegnare sul dispositivo null"
+msgstr "tentaivo di disegnare sul dispositivo null"
 
 #: graphics.c:1830
 msgid "outer margins too large (fig.region too small)"
