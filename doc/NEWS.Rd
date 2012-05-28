@@ -38,7 +38,7 @@
       also works for the boundary case of just one color when the ramp is
       flat.
 
-      \item \code{qqline()} gets new optional arguments
+      \item \code{qqline()} has new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
 
@@ -246,7 +246,7 @@
       \item Source locations reported in \code{traceback()} were
       incorrect when byte-compiled code was on the stack.
 
-      \item \code{plogis(x, lower=FALSE, log.p=TRUE)} no longer
+      \item \code{plogis(x, lower = FALSE, log.p = TRUE)} no longer
       underflows early for large x (e.g. 800).
 
       \item \code{?Arithmetic}'s \dQuote{\code{1 ^ y} and \code{y ^ 0}
@@ -279,7 +279,7 @@
       (\PR{14925})
       
       \item \code{is.unsorted()} gave incorrect results on non-atomic
-      objects such as dataframes.  (Reported by Matthew Dowle.)
+      objects such as data frames.  (Reported by Matthew Dowle.)
       
       \item The value returned by \code{tools::psnice()} for invalid
       \code{pid} values was not always \code{NA} as documented.
