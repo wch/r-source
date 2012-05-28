@@ -2541,6 +2541,8 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
 	else
 	    handleEvent(event);
     }
+    /* In case it got closed asynchronously, PR#14872 */
+    if (!displayOpen) return 0;
     /* if it was a Button1 succeed, otherwise fail */
     if(xd->type==WINDOW) XDefineCursor(display, xd->window, arrow_cursor);
     XSync(display, 0);
