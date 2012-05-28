@@ -283,6 +283,9 @@
       
       \item The value returned by \code{tools::psnice()} for invalid
       \code{pid} values was not always \code{NA} as documented.
+
+      \item Closing an \code{X11()} window while \code{locator()} was
+      active could abort the \R process.
     }
   }
 }
