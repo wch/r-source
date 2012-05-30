@@ -723,23 +723,26 @@ getMethod <-
         }
     }
     if(!is(fdef, "genericFunction")) {
-        if(optional)
-          return(NULL)
-        else
-          stop(gettextf('No generic function found for "%s"', f), domain = NA)
+	if(optional)
+	    return(NULL)
+	## else
+	if(!is.character(f)) f <- deparse(substitute(f))
+	stop(gettextf('No generic function found for "%s"', f), domain = NA)
     }
     if(missing(mlist)) {
-        if(missing(where))
-            mlist <- getMethodsForDispatch(fdef)
-        else
-            mlist <- .getMethodsTableMetaData(fdef, where, optional)
+	if(missing(where))
+	    mlist <- getMethodsForDispatch(fdef)
+	else
+	    mlist <- .getMethodsTableMetaData(fdef, where, optional)
     }
     if(is.environment(mlist)) {
-        signature <- matchSignature(signature, fdef)
-        value <- .findMethodInTable(signature, mlist, fdef)
-        if(is.null(value) && !optional)
-          stop(gettextf('No method found for function "%s" and signature %s',
-                        f, paste(signature, collapse = ", ")))
+	signature <- matchSignature(signature, fdef)
+	value <- .findMethodInTable(signature, mlist, fdef)
+	if(is.null(value) && !optional) {
+	    if(!is.character(f)) f <- deparse(substitute(f))
+	    stop(gettextf('No method found for function "%s" and signature %s',
+			  f, paste(signature, collapse = ", ")))
+	}
         return(value)
     }
     else if(is.null(mlist))
