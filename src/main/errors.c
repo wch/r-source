@@ -1383,7 +1383,7 @@ static char * R_ConciseTraceback(SEXP call, int skip)
     /* don't add Calls if it adds no extra information */
     /* However: do we want to include the call in the list if it is a
        primitive? */
-    if (ncalls == 1 && call != R_NilValue) {
+    if (ncalls == 1 && TYPEOF(call) == LANGSXP) {
 	SEXP fun = CAR(call);
 	const char *this = (TYPEOF(fun) == SYMSXP) ?
 	    CHAR(PRINTNAME(fun)) : "<Anonymous>";
