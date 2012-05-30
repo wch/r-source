@@ -512,6 +512,10 @@
 
       \item \code{getMethod(f, sig)} produced a \emph{wrong} error
       message in two different cases (when \code{f} was not a string).
+      
+      \item Using a string as a \dQuote{call} in an error condition
+      with \code{options(showErrorCalls=TRUE)} could cause a segfault.
+      (\PR{14931})      
     }
   }
 }
