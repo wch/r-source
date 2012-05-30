@@ -1443,7 +1443,8 @@ testInstalledPackages("recommended", errorsAreFatal = FALSE)
 runs the basic tests and then all the tests on the standard and
 recommended packages.  These tests can be run from anywhere: they write
 their results in the @file{tests} folder of the @R{} home directory (as
-given by @code{R.home()}).
+given by @code{R.home()}), and hence may need to be run under the
+account used to install @R{}.
 
 
 @node Installing R under (Mac) OS X, Running R, Installing R under Windows, Top
@@ -3064,7 +3065,7 @@ versions of MKL for Mac OS X and Windows, but they do not work with the
 standard compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
-following notes apply to version 10.0, and prior to that 9.
+following notes apply exactly only to version 10.0.
 
 Version 10 of MKL supports two linking models: the default model, which
 is backward compatible with version 9 (see below), and the pure layered
@@ -3089,8 +3090,9 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_sequential -lmkl_lapack -lmkl_core"
 
 @noindent
 The order of the libraries is important.  The option
-@option{--with-lapack} is used since MKL contains a copy of LAPACK as
-well as @acronym{BLAS} (@pxref{LAPACK}).
+@option{--with-lapack} is used since MKL contains a tuned copy of LAPACK
+as well as @acronym{BLAS} (@pxref{LAPACK}), although this (and the
+corresponding library) can be omitted.
 
 Threaded MKL may be used (according to Zhang Zhang of Intel) by
 replacing the line defining the variable @code{MKL} with (Intel OMP)
@@ -3113,7 +3115,7 @@ The default number of threads will be chosen by the OpenMP software,
 but can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}.
 
-Static threaded MKL may be used (GNU OpenMP) with
+Static threaded MKL may be used (GNU OpenMP) with something like
 
 @example
 MKL="   -L$@{MKL_LIB_PATH@}                               \
@@ -3128,7 +3130,7 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
 @noindent
 (Thanks to Ei-ji Nakama).
 
-The default linking model, which is also used by version 9 of MKL, can
+The default linking model, which was also used by version 9 of MKL, can
 be used by
 
 @example
@@ -3136,9 +3138,10 @@ be used by
 @end example
 
 @noindent
-This is multi-threaded, but in version 9 the number of threads defaults
-to 1.  It can be increased by setting @code{OMP_NUM_THREADS}.  (Thanks to
-Andy Liaw for the information.)
+but this may not match your compiler on a 64-bit platform.  This is
+multi-threaded, but in version 9 the number of threads defaults to 1.
+It can be increased by setting @code{OMP_NUM_THREADS}.  (Thanks to Andy
+Liaw for the information.)
 
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
