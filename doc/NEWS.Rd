@@ -281,7 +281,7 @@
 
       \item The included copy of \code{zlib} has been updated to version
       1.2.7.
-      
+
       \item A new option \code{"show.error.locations"} has been added.
       When set to \code{TRUE}, error messages will contain the
       location of the most recent call containing source reference
@@ -317,7 +317,7 @@
       \code{cut()}, \code{dist()}, the complex case of \code{eigen()},
       \code{hclust()}, \code{image()}, \code{kmeans()}, \code{loess()},
       \code{stl()} and \code{svd(LINPACK = TRUE)}.
-      
+
       \item There is less copying when using primitive replacement
       functions such as \code{names()}, \code{attr()} and
       \code{attributes()}.
@@ -493,22 +493,25 @@
       displayed by question marks.  Now they are always in English.
       (This was seen for CJK locales on Windows, but may have occurred
       elsewhere.)
-      
+
       \item The evaluator now keeps track of source references outside
       of functions, e.g. when \code{source()} executes a script.
-      
+
       \item The replacement method for \code{window()} now works
       correctly for multiple time series of class \code{"mts"}.
       (\PR{14925})
-      
+
       \item \code{is.unsorted()} gave incorrect results on non-atomic
       objects such as data frames.  (Reported by Matthew Dowle.)
-      
+
       \item The value returned by \code{tools::psnice()} for invalid
       \code{pid} values was not always \code{NA} as documented.
 
       \item Closing an \code{X11()} window while \code{locator()} was
       active could abort the \R process.
+
+      \item \code{getMethod(f, sig)} produced a \emph{wrong} error
+      message in two different cases (when \code{f} was not a string).
     }
   }
 }
