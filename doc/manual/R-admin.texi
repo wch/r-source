@@ -1423,23 +1423,20 @@ build systems.
 @section Testing an Installation
 
 The Windows installer contains a set of test files used when building
-@R{}.  These are an optional part of the installation, and if it is
-desired to run tests on the installation these should be selected as
-well as the help source files (perhaps most easily by doing a `Full
-Installation').
+@R{}.
 
 The @code{Rtools} are not needed to run these tests. but more
 comprehensive analysis of errors will be given if @command{diff} is in
-the path.
+the path (and @code{errorsAreFatal = FALSE} is then not needed below).
 
-Once this has been done, launch either @code{Rgui} or @code{Rterm},
-preferably with @option{--vanilla}.  Then
+Launch either @code{Rgui} or @code{Rterm}, preferably with
+@option{--vanilla}.  Then run
 
 @example
 library("tools")
 testInstalledBasic("both")
-testInstalledPackages("base")
-testInstalledPackages("recommended")
+testInstalledPackages("base", errorsAreFatal = FALSE)
+testInstalledPackages("recommended", errorsAreFatal = FALSE)
 @end example
 
 @noindent
