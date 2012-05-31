@@ -185,6 +185,8 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 }
 
 
+## Arguments abb and neg.out are a legacy from S
+## simplify=TRUE was the default in R < 1.7.0
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 			  neg.out = TRUE, keep.order = FALSE,
                           simplify = FALSE, ..., allowDotAsName = FALSE)
@@ -197,7 +199,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
         if(length(ind)) tmp[ind] <- paste("(", tmp[ind], ")")
         ## need to add back any offsets
         if(length(ind <- attr(Terms, "offset"))) {
-            ## can't look at rownames of factors, as not there y ~ offset(x)
+            ## can't look at rownames of factors, as not there for y ~ offset(x)
             tmp2 <- as.character(attr(Terms, "variables"))[-1L]
             tmp <- c(tmp, tmp2[ind])
         }
@@ -211,7 +213,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     }
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
-	data <- as.data.frame(data, optional=TRUE)
+	data <- as.data.frame(data, optional = TRUE)
     terms <-
         .External(C_termsform, x, specials, data, keep.order, allowDotAsName)
     if (simplify) {

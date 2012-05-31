@@ -22,11 +22,11 @@
     special in the \code{terms} object?  A character vector or \code{NULL}.}
   \item{abb}{Not implemented in \R.}
   \item{data}{a data frame from which the meaning of the special symbol
-    \code{.} can be inferred. It is unused if there is no \code{.} in
+    \code{.} can be inferred.  It is unused if there is no \code{.} in
     the formula.}
   \item{neg.out}{Not implemented in \R.}
   \item{keep.order}{a logical value indicating whether the terms should
-    keep their positions. If \code{FALSE} the terms are reordered so
+    keep their positions.  If \code{FALSE} the terms are reordered so
     that main effects come first, followed by the interactions,
     all second-order, all third-order and so on.  Effects of a given
     order are kept in the order specified.}

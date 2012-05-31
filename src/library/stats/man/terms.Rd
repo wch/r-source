@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{terms}
@@ -36,7 +36,7 @@ terms(x, \dots)
 }
 \value{
   An object of class \code{c("terms", "formula")} which contains the
-  \emph{terms} representation of a symbolic model. See
+  \emph{terms} representation of a symbolic model.  See
   \code{\link{terms.object}} for its structure.
 }
 \references{
