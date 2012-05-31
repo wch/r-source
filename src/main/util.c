@@ -1484,14 +1484,14 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	ans = R_NaN;
 	p += 3;
 	goto done;
-    } else if (strncasecmp(p, "Inf", 3) == 0) {
-	ans = R_PosInf;
-	p += 3;
-	goto done;
-    /* C99 specifies this */
+    /* C99 specifies this: must come first to avoid 'inf' match */
     } else if (strncasecmp(p, "infinity", 8) == 0) {
 	ans = R_PosInf;
 	p += 8;
+	goto done;
+    } else if (strncasecmp(p, "Inf", 3) == 0) {
+	ans = R_PosInf;
+	p += 3;
 	goto done;
     }
 

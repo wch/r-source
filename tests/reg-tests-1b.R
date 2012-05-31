@@ -1828,4 +1828,9 @@ stopifnot(tm[1] < tm0[1])
 ## was slow  from R 1.9.0 up to R 2.15.0
 
 
+## 'infinity' partially matched 'inf'
+stopifnot(as.numeric("infinity") == Inf)
+## was NA in R < 2.15.1
+
+
 proc.time()

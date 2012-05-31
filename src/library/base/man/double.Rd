@@ -57,9 +57,13 @@ as.single(x, \dots)
   attributes, use \code{\link{storage.mode}}.)  Character strings
   containing optional whitespace followed by either a decimal
   representation or a hexadecimal representation (starting with
-  \code{0x} or \code{0X}) can be converted.  \code{as.double} for
-  factors yields the codes underlying the factor levels, not the numeric
-  representation of the labels, see also \code{\link{factor}}.
+  \code{0x} or \code{0X}) can be converted, as can special values such
+  as \code{"NA"}, \code{"NaN"}, \code{"Inf"} and \code{"infinity"},
+  irrespective of case.
+
+  \code{as.double} for factors yields the codes underlying the factor
+  levels, not the numeric representation of the labels, see also
+  \code{\link{factor}}.
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double \link{type} or not.
