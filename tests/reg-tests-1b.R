@@ -1823,4 +1823,9 @@ stopifnot(all.equal(hc$height[5:11],
 ##
 
 
+## 'infinity' partially matched 'inf'
+stopifnot(as.numeric("infinity") == Inf)
+## was NA in R < 2.15.1
+
+
 proc.time()

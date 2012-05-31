@@ -1,6 +1,6 @@
 % File src/library/base/man/NumericConstants.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NumericConstants}
@@ -17,8 +17,9 @@
   floating-point constants.
 
   \code{\link{Inf}} and \code{\link{NaN}} are numeric constants (with
-  \code{\link{typeof}(.) "double"}).  These are recognized ignoring case,
-  as is \code{infinity} as an alternative to \code{Inf}.
+  \code{\link{typeof}(.) "double"}).  In text input (e.g. in
+  \code{\link{scan}} and \code{\link{as.double}}), these are recognized
+  ignoring case as is \code{infinity} as an alternative to \code{Inf}.
   \code{\link{NA_real_}} and \code{\link{NA_integer_}} are constants of
   types \code{"double"} and \code{"integer"} representing missing
   values.  All other numeric constants start with a digit or period and

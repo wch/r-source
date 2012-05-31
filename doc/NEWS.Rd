@@ -293,6 +293,9 @@
       \item Using a string as a \dQuote{call} in an error condition
       with \code{options(showErrorCalls=TRUE)} could cause a segfault.
       (\PR{14931})      
+      
+      \item The string \code{"infinity"} allowed by C99 was not accepted
+      as a numerical string value. (\PR{14933})
     }
   }
 }
