@@ -30,7 +30,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 3790
+[1] 3829
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -310,8 +310,7 @@ In url("http://foo.bar", "r") : unable to resolve 'foo.bar'
 +     strsplit(data, "\n")[[1]]
 + }
 > 
-> if(nchar(Sys.getenv("http_proxy")) > 0
-+    || nchar(Sys.getenv("HTTP_PROXY")) > 0) {
+> if(nzchar(Sys.getenv("http_proxy")) || nzchar(Sys.getenv("HTTP_PROXY"))) {
 +     cat("http proxy is set, so skip test of http over sockets\n")
 + } else {
 +     httpget("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
