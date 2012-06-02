@@ -4394,11 +4394,13 @@ If using @command{gcc}, ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.  The notes here are for
-@command{gcc} set up to use the Solaris linker: it can also be set up
-to use GNU @command{ld}, but that has not been tested.
+one version of Solaris on a later version.  
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.6.2
+The notes here are for @command{gcc} set up to use the Solaris linker:
+it can also be set up to use GNU @command{ld}, but that has not been
+tested.
+
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.7.0
 needed
 
 @example
@@ -4407,8 +4409,7 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib"
 @end example
 
 @noindent
-(the @code{SHLIB_LDFLAGS} line is needed on some builds of
-@command{gcc}) and for a 64-bit Sparc target
+and for a 64-bit Sparc target
 @example
 CC="gcc -m64"
 F77="gfortran -m64"
@@ -4427,7 +4428,7 @@ be in the
 The compilation can be tuned to a particular cpu: the CRAN check system
 uses @code{-mtune=niagara2}.
 
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.6.2
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.7.0
 needed
 
 @example
@@ -4443,7 +4444,7 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
 
-For an @cputype{amd64} target with @command{gcc}@tie{}4.6.2
+For an @cputype{amd64} target with @command{gcc}@tie{}4.7.0
 we used 
 
 @example
