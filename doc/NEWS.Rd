@@ -523,6 +523,11 @@
       \item The string \code{"infinity"} allowed by C99 was not accepted
       as a numerical string value by e.g. \code{scan()} and
       \code{as.character()}.  (\PR{14933})
+      
+      \item In \code{legend()}, setting some entries of \code{lwd} to
+      \code{NA} was inconsistent (depending on the graphics device) in
+      whether it would suppress those lines; now it consistently does
+      so.  (\PR{14926})
     }
   }
 }

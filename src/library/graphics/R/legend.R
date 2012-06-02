@@ -232,7 +232,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 	if(missing(lty)) lty <- 1
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
-	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0)
+	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0) & !is.na(lwd)
 	if(trace)
 	    catn("  segments2(",xt[ok.l] + x.off*xchar, ",", yt[ok.l],
 		 ", dx=", seg.len*xchar, ", dy=0, ...)")
