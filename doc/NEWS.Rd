@@ -295,7 +295,8 @@
       (\PR{14931})      
       
       \item The string \code{"infinity"} allowed by C99 was not accepted
-      as a numerical string value. (\PR{14933})
+      as a numerical string value by e.g. \code{scan()} and
+      \code{as.character()}.  (\PR{14933})
     }
   }
 }
