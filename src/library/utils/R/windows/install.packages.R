@@ -15,7 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 ## Unexported helper
-unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
+unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
+                         lock = FALSE, quiet = FALSE)
 {
     .zip.unpack <- function(zipname, dest)
     {
@@ -44,7 +45,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     res <- .zip.unpack(pkg, tmpDir)
     setwd(tmpDir)
     res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
-    if(!is.na(res) && res) {
+    if(!quiet && !is.na(res) && res) {
         cat(gettextf("package %s successfully unpacked and MD5 sums checked\n",
                      sQuote(pkgname)))
         flush.console()
@@ -224,7 +225,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
 
     if(is.null(contriburl)) {
         for(i in seq_along(pkgs))
-            unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock)
+            unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock, quiet)
         return(invisible())
     }
     tmpd <- destdir

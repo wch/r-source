@@ -75,7 +75,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
                  domain = NA, call. = FALSE)
 
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
-        if(!is.na(res) && res) {
+        if(!quiet && !is.na(res) && res) {
             cat(gettextf("package %s successfully unpacked and MD5 sums checked\n",
                          sQuote(pkgname)))
             flush.console()
