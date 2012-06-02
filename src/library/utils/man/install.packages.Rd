@@ -161,9 +161,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{c("--html", "--no-multiarch")}.
   }
   \item{\dots}{
-    Arguments to be passed to \code{\link{download.file}}, or to the
-    functions for binary installs on Mac OS X and Windows (which accept
-    an argument \code{"lock"}: the the section on \sQuote{Locking}).
+    Arguments to be passed to \code{\link{download.file}} (e.g.
+    \code{quiet = TRUE}), or to the functions for binary installs on Mac
+    OS X and Windows (which accept an argument \code{"lock"}: see the
+    section on \sQuote{Locking}).
   }
 }
 \details{
