@@ -18,7 +18,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  configure.args = getOption("configure.args"),
                  configure.vars = getOption("configure.vars"),
                  clean = FALSE, Ncpus = getOption("Ncpus", 1L),
-                 libs_only = FALSE, INSTALL_opts, \dots)
+                 libs_only = FALSE, INSTALL_opts, quiet = FALSE, \dots)
 }
 \arguments{
   \item{pkgs}{character vector of the names of packages whose
@@ -160,11 +160,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \command{R CMD INSTALL} for a source package install.  E.g.
     \code{c("--html", "--no-multiarch")}.
   }
+  \item{quiet}{logical: if true, reduce the amount of output.}
   \item{\dots}{
-    Arguments to be passed to \code{\link{download.file}} (e.g.
-    \code{quiet = TRUE}), or to the functions for binary installs on Mac
-    OS X and Windows (which accept an argument \code{"lock"}: see the
-    section on \sQuote{Locking}).
+    Arguments to be passed to \code{\link{download.file}} or to the
+    functions for binary installs on Mac OS X and Windows (which accept
+    an argument \code{"lock"}: see the section on \sQuote{Locking}).
   }
 }
 \details{

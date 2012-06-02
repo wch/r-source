@@ -76,6 +76,9 @@
       \item The logic in \code{aggregate.formula()} has been revised.
       It is now possible to use a formula stored in a variable;
       previously, it had to be given explicitly in the function call.
+     
+      \item \code{install.packages()} has a new argument \code{quiet} to
+      reduce the amount of output shown.
     }
   }
 

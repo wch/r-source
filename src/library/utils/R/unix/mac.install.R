@@ -20,8 +20,8 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type="mac.binary"),
              method, available = NULL, destdir = NULL,
-             lock = getOption("install.lock", FALSE),
              dependencies = FALSE,
+             lock = getOption("install.lock", FALSE), quiet = FALSE,
              ...)
     {}
 } else {
@@ -32,7 +32,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
              contriburl = contrib.url(repos, type="mac.binary"),
              method, available = NULL, destdir = NULL,
              dependencies = FALSE,
-             lock = getOption("install.lock", FALSE),
+             lock = getOption("install.lock", FALSE), quiet = FALSE,
              ...)
 {
     untar <- function(what, where)
@@ -161,7 +161,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
-                                   type = "mac.binary", ...)
+                                   type = "mac.binary", quiet = quiet, ...)
 
     if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
@@ -176,7 +176,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
                               lock = lock)
             }
         }
-        if(!is.null(tmpd) && is.null(destdir))
+        if(!quiet && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded binary packages are in\n\t%s", tmpd),
                 "\n", sep = "")
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, recursive = TRUE)

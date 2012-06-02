@@ -199,7 +199,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
              dependencies = FALSE, libs_only = FALSE,
-             lock = getOption("install.lock", FALSE), ...)
+             lock = getOption("install.lock", FALSE), quiet = FALSE, ...)
 {
     if(!length(pkgs)) return(invisible())
     ## look for package in use.
@@ -244,13 +244,13 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
-                                   type = "win.binary", ...)
+                                   type = "win.binary", quiet = quiet, ...)
 
     if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         for(lib in unique(update[,"LibPath"])) {
-            oklib <- lib==update[,"LibPath"]
+            oklib <- lib == update[,"LibPath"]
             for(p in update[oklib, "Package"])
             {
                 okp <- p == foundpkgs[, 1L]
@@ -259,7 +259,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                                  lib, libs_only, lock)
             }
         }
-        if(!is.null(tmpd) && is.null(destdir))
+        if(!quiet && !is.null(tmpd) && is.null(destdir))
             ## tends to be a long path on Windows
             cat("\n", gettextf("The downloaded binary packages are in\n\t%s",
                                normalizePath(tmpd, mustWork = FALSE)),
