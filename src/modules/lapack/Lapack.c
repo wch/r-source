@@ -972,7 +972,8 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 	error(_("argument %d of Lapack routine %s had invalid value"),
 	      -info, "dgesv");
     if (info > 0)
-	error(_("Lapack routine dgesv: system is exactly singular"));
+	error(_("Lapack routine %s: system is exactly singular: U[%d,%d] = 0"),
+	      "dgesv", info, info);
     anorm = F77_CALL(dlange)("1", &n, &n, REAL(A), &n, (double*) NULL);
     work = (double *) R_alloc(4*n, sizeof(double));
     F77_CALL(dgecon)("1", &n, avals, &n, &anorm, &rcond, work, ipiv, &info);
