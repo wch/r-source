@@ -108,6 +108,7 @@ install.packages <-
              configure.args = getOption("configure.args"),
              configure.vars = getOption("configure.vars"),
              clean = FALSE, Ncpus = getOption("Ncpus", 1L),
+	     verbose = getOption("verbose"),
              libs_only = FALSE, INSTALL_opts, quiet = FALSE, ...)
 {
     if (is.logical(clean) && clean)
@@ -303,8 +304,7 @@ install.packages <-
                                      "installing the source packages %s"),
                         paste(sQuote(pkgs), collapse=", ")),
                 "\n", domain = NA)
-            flush.console()
-
+	flush.console()
     }
 
     ## check if we should infer repos=NULL
@@ -369,6 +369,7 @@ install.packages <-
     libpath <- libpath[! libpath %in% .Library]
     if(length(libpath)) libpath <- paste(libpath, collapse=.Platform$path.sep)
     cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
+    ## INSTALL ~= ../../../scripts/INSTALL --> ../../tools/R/
     if(length(libpath))
         if(.Platform$OS.type == "windows") {
             ## We don't have a way to set an environment variable for
@@ -386,6 +387,7 @@ install.packages <-
     if (!missing(INSTALL_opts))
         cmd0 <- paste(cmd0, paste(INSTALL_opts, collapse = " "))
 
+    if(verbose) message("system (cmd0): ", cmd0)
     if(is.null(repos) & missing(contriburl)) {
         ## install from local source tarball(s)
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
@@ -400,6 +402,7 @@ install.packages <-
                  "installation of package %s had non-zero exit status",
                                 sQuote(update[i, 1L])),
                         domain = NA)
+	    else if(verbose) message(sprintf("%d): succeeded '%s'", i, cmd))
         }
         return(invisible())
     }
@@ -426,10 +429,12 @@ install.packages <-
     ## at this point 'pkgs' may contain duplicates,
     ## the same pkg in different libs
     if(length(foundpkgs)) {
+	if(verbose) message("foundpkgs: ", paste(foundpkgs, collapse=", "))
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         found <- pkgs %in% foundpkgs[, 1L]
         files <- foundpkgs[match(pkgs[found], foundpkgs[, 1L]), 2L]
+	if(verbose) message("files: ", paste(files, collapse=", \n\t"))
         update <- cbind(update[found, , drop=FALSE], file = files)
         if(nrow(update) > 1L) {
             upkgs <- unique(pkgs <- update[, 1L])
@@ -503,6 +508,7 @@ install.packages <-
                 if(status > 0L)
                     warning(gettextf("installation of package %s had non-zero exit status",
                                      sQuote(update[i, 1L])), domain = NA)
+		else if(verbose) message(sprintf("%d): succeeded '%s'", i, cmd))
             }
         }
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))
