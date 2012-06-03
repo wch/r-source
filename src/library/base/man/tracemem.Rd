@@ -29,18 +29,19 @@ retracemem(x, previous = NULL)
   traced.  \code{tracemem} and \code{untracemem} give errors when R is not
   compiled with memory profiling; \code{retracemem} does not (so it can be
   left in code during development).
-#ifdef Windows
-  It is enabled in a standard Windows build of \R.
-#endif
+
+  It is enabled in the standard Mac OS X and Windows builds of \R.
   
   When an object is traced any copying of the object by the C function
-  \code{duplicate} or by arithmetic or mathematical operations produces a
-  message to standard output.  The message consists of the string
-  \code{tracemem}, the identifying strings for the object being copied and
-  the new object being created, and a stack trace showing where the
-  duplication occurred.  \code{retracemem()} is used to indicate that a
-  variable should be considered a copy of a previous variable (e.g. after
-  subscripting).
+  \code{duplicate} produces a message to standard output, as does type
+  coercion and some uses in arithmetic, and copying by \code{.C} or
+  \code{.Fortran}.
+
+  The message consists of the string \code{tracemem}, the identifying
+  strings for the object being copied and the new object being created,
+  and a stack trace showing where the duplication occurred.
+  \code{retracemem()} is used to indicate that a variable should be
+  considered a copy of a previous variable (e.g. after subscripting).
 
   The messages can be turned off with \code{\link{tracingState}}.
 
