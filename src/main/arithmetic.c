@@ -1041,12 +1041,6 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     /* coercion can lose the object bit */
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sy = allocVector(REALSXP, n));
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa)){
-       memtrace_report(sa, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
     a = REAL(sa);
     y = REAL(sy);
     naflag = 0;
@@ -1213,21 +1207,6 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 
     SETUP_Math2;
 
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb)) {
-       if (RTRACE(sa) && RTRACE(sb)){
-	  if (na > nb)
-	      memtrace_report(sa, sy);
-	  else
-	      memtrace_report(sb, sy);
-       } else if (RTRACE(sa))
-	   memtrace_report(sa, sy);
-       else /* only s2 */
-	   memtrace_report(sb, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
-
     mod_iterate(na, nb, ia, ib) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1264,21 +1243,6 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI,
     SETUP_Math2;
     m_opt = asInteger(sI);
 
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb)) {
-       if (RTRACE(sa) && RTRACE(sb)) {
-	  if (na > nb)
-	      memtrace_report(sa, sy);
-	  else
-	      memtrace_report(sb, sy);
-       } else if (RTRACE(sa))
-	   memtrace_report(sa, sy);
-       else /* only s2 */
-	   memtrace_report(sb, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
-
     mod_iterate(na, nb, ia, ib) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1306,21 +1270,6 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
     SETUP_Math2;
     i_1 = asInteger(sI1);
     i_2 = asInteger(sI2);
-
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb)) {
-       if (RTRACE(sa) && RTRACE(sb)) {
-	  if (na > nb)
-	      memtrace_report(sa, sy);
-	  else
-	      memtrace_report(sb, sy);
-       } else if (RTRACE(sa))
-	   memtrace_report(sa, sy);
-       else /* only s2 */
-	   memtrace_report(sb, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
 
     mod_iterate(na, nb, ia, ib) {
 	ai = a[ia];
@@ -1351,21 +1300,6 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
     /* for 0-length a we want the attributes of a, not those of b
        as no recycling will occur */
     SETUP_Math2;
-
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb)) {
-       if (RTRACE(sa) && RTRACE(sb)) {
-	  if (na > nb)
-	      memtrace_report(sa, sy);
-	  else
-	      memtrace_report(sb, sy);
-       } else if (RTRACE(sa))
-	   memtrace_report(sa, sy);
-       else /* only s2 */
-	   memtrace_report(sb, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
 
     /* allocate work array for BesselJ, BesselY large enough for all
        arguments */
@@ -1637,18 +1571,6 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
     SETUP_Math3;
     i_1 = asInteger(sI);
 
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb) || RTRACE(sc)) {
-       if (RTRACE(sa))
-	  memtrace_report(sa, sy);
-       else if (RTRACE(sb))
-	  memtrace_report(sb, sy);
-       else if (RTRACE(sc))
-	  memtrace_report(sc, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
-
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1677,19 +1599,6 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ,
     i_1 = asInteger(sI);
     i_2 = asInteger(sJ);
 
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb) || RTRACE(sc)) {
-       if (RTRACE(sa))
-	  memtrace_report(sa, sy);
-       else if (RTRACE(sb))
-	  memtrace_report(sb, sy);
-       else if (RTRACE(sc))
-	  memtrace_report(sc, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
-
-
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1716,18 +1625,6 @@ static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
     long nw;
 
     SETUP_Math3;
-
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb) || RTRACE(sc)) {
-       if (RTRACE(sa))
-	  memtrace_report(sa, sy);
-       else if (RTRACE(sb))
-	  memtrace_report(sb, sy);
-       else if (RTRACE(sc))
-	  memtrace_report(sc, sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
 
     /* allocate work array for BesselI, BesselK large enough for all
        arguments */
