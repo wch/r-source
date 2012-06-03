@@ -66,7 +66,7 @@ delim_match(SEXP x, SEXP delims)
 
     delim_start = translateChar(STRING_ELT(delims, 0));
     delim_end = translateChar(STRING_ELT(delims, 1));
-    lstart = strlen(delim_start); lend = strlen(delim_end);
+    lstart = (int) strlen(delim_start); lend = (int) strlen(delim_end);
     equal_start_and_end_delims = strcmp(delim_start, delim_end) == 0;
 
     n = length(x);
@@ -91,7 +91,7 @@ delim_match(SEXP x, SEXP delims)
 	    else if(c == '%') {
 		while((c != '\0') && (c != '\n')) {
 		    if(mbcslocale) {
-			used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
+			used = (int) Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
 			if(used == 0) break;
 			s += used; c = *s;
 		    } else
@@ -115,7 +115,7 @@ delim_match(SEXP x, SEXP delims)
 		delim_depth++;
 	    }
 	    if(mbcslocale) {
-		used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
+		used = (int) Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
 		if(used == 0) break;
 		s += used;
 	    } else
@@ -229,13 +229,13 @@ SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 str
     	    if (0x80 <= (unsigned char)*input && (unsigned char)*input <= 0xBF)
     		start--;
     	    else if (*input == '\n')
-    	    	start = buffer-b-1;
+    	    	start = (int)(buffer-b-1);
     	    if (*input == '\t') do {
     	    	*b++ = ' ';
     	    } while (((b-buffer+start) & 7) != 0);
     	    else *b++ = *input;
     	    if (b - buffer >= bufsize - 8) {
-    	    	int pos = b - buffer;
+    	    	int pos = (int)(b - buffer);
 		char *tmp;
     	        bufsize *= 2;
     	    	tmp = realloc(buffer, bufsize*sizeof(char));
