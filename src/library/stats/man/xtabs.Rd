@@ -104,7 +104,7 @@ ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
 
 if(require("Matrix")) {
  ## similar to "nlme"s  'ergoStool' :
- d.ergo <- data.frame(Type = paste("T", rep(1:4, 9*4), sep=""),
+ d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
                       Subj = gl(9,4, 36*4))
  print(xtabs(~ Type + Subj, data=d.ergo)) # 4 replicates each
  set.seed(15) # a subset of cases:

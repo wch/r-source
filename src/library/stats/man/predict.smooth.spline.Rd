@@ -54,7 +54,7 @@ for(d in 1:3){
   n <- length(pp$x)
   plot(pp$x, diff.quot(pp$x,pp$y), type = 'l', xlab="x", ylab="",
        col = "blue", col.main = "red",
-       main= paste("s",paste(rep("'",d), collapse=""),"(x)", sep=""))
+       main= paste0("s",paste(rep("'",d), collapse=""),"(x)"))
   mtext("Difference quotient approx.(last)", col = "blue")
   lines(pp <- predict(cars.spl, xx, deriv = d), col = "red")
 \dontshow{

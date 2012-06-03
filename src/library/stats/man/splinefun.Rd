@@ -158,7 +158,7 @@ plot(x.,y.)
 curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
 curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
 legend("topleft",
-       paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
+       paste0("splinefun( \"", c("fmm", "monoH.CS"), "\" )"),
        col = 2:3, lty = 1)
 }
 \keyword{math}
