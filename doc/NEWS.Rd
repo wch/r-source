@@ -79,6 +79,11 @@
      
       \item \code{install.packages()} has a new argument \code{quiet} to
       reduce the amount of output shown.
+      
+      \item Setting graphics parameter \code{lwd} to a non-finite
+      (e.g. \code{NA}), zero or negative value now always causes the
+      line to be omitted: the behaviour was previously undocumented and
+      hence device-dependent.
     }
   }
 

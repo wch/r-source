@@ -396,6 +396,11 @@ par(\dots, no.readonly = FALSE)
       Some functions such as \code{\link{lines}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
       a vector of length greater than one is supplied.
+
+      As from \R 2.16.0, specifying a non-finite (e.g. \code{NA}), zero
+      or negative value causes the line to be omitted from the plot: in
+      earlier versions of \R this was a user error and the effect was
+      device-dependent.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the margin size specified in
