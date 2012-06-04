@@ -645,29 +645,6 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
     else
 	ans = allocVector(INTSXP, n);
     if (n1 == 0 || n2 == 0) return(ans);
-    /* note: code below was surely wrong in DIVOP and POWOP cases,
-       since ans was a REALSXP.
-     */
-
-/*    if (n1 < 1 || n2 < 1) {
-	for (i = 0; i < n; i++)
-	    INTEGER(ans)[i] = NA_INTEGER;
-	return ans;
-	} */
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(s1) || RTRACE(s2)) {
-       if (RTRACE(s1) && RTRACE(s2)) {
-	  if (n1 > n2)
-	      memtrace_report(s1, ans);
-	  else
-	      memtrace_report(s2, ans);
-       } else if (RTRACE(s1))
-	   memtrace_report(s1, ans);
-       else /* only s2 */
-	   memtrace_report(s2, ans);
-       SET_RTRACE(ans, 1);
-    }
-#endif
 
     switch (code) {
     case PLUSOP:
@@ -810,26 +787,6 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 
     n = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(REALSXP, n));
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(s1) || RTRACE(s2)) {
-       if (RTRACE(s1) && RTRACE(s2)) {
-	  if (n1 > n2)
-	      memtrace_report(s1, ans);
-	  else
-	      memtrace_report(s2, ans);
-       } else if (RTRACE(s1))
-	   memtrace_report(s1,ans);
-       else /* only s2 */
-	   memtrace_report(s2, ans);
-       SET_RTRACE(ans, 1);
-    }
-#endif
-
-/*    if (n1 < 1 || n2 < 1) {
-      for (i = 0; i < n; i++)
-      REAL(ans)[i] = NA_REAL;
-      return ans;
-      } */
 
     switch (code) {
     case PLUSOP:
