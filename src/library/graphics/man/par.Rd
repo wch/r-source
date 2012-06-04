@@ -477,6 +477,10 @@ par(\dots, no.readonly = FALSE)
       \code{\link{points}} for possible values and their interpretation.
       Note that only integers and single-character strings can
       be set as a graphics parameter (and not \code{NA} nor \code{NULL}).
+
+      Some functions such as \code{\link{points}} accept a vector of values
+      which are recycled.  Other uses will take just the first value if
+      a vector of length greater than one is supplied.
     }
     \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
       in inches.}
