@@ -9,10 +9,9 @@
 \alias{retracemem}
 \title{Trace Copying of Objects}
 \description{
-This function marks an object so that a message is printed whenever the
-internal function \code{duplicate} is called.   This happens when two
-objects share the same memory  and one of them is modified.  It is a
-major cause of hard-to-predict memory use in R.  
+  This function marks an object so that a message is printed whenever the
+  internal code copies the object.  It is a
+  major cause of hard-to-predict memory use in R.  
 }
 \usage{
 tracemem(x)
@@ -34,7 +33,7 @@ retracemem(x, previous = NULL)
   
   When an object is traced any copying of the object by the C function
   \code{duplicate} produces a message to standard output, as does type
-  coercion and some uses in arithmetic, and copying by \code{.C} or
+  coercion  and copying by \code{.C} or
   \code{.Fortran}.
 
   The message consists of the string \code{tracemem}, the identifying
