@@ -85,11 +85,11 @@
       default.  This works as a multiple of \code{\link{par}("cex")}.
       \code{NULL} and \code{NA} are equivalent to \code{1.0}.  Note that
       this does not affect annotation: see below.}
-    \item{\code{lty}}{the line type, see \code{\link{par}}.}
+    \item{\code{lty}}{a vector of line types, see \code{\link{par}}.}
     \item{\code{cex.main}, \code{col.lab}, \code{font.sub},
       etc}{settings for main- and sub-title and axis annotation, see
       \code{\link{title}} and \code{\link{par}}.}
-    \item{\code{lwd}}{the line width, see \code{\link{par}}.}
+    \item{\code{lwd}}{a vector of line widths, see \code{\link{par}}.}
   }
 }
 \note{
