@@ -31,6 +31,18 @@
 	lengthCheck(what, value, 1);	ix = asLogical(value);
 	R_DEV__(ann) = (ix != 0);/* NA |-> TRUE */
     }
+    else if (streql(what, "bg")) {
+	/* in par() this means the plot region, inline it means filled points */
+#ifdef FOR_PAR
+	lengthCheck(what, value, 1);
+#else
+	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
+#endif
+	R_DEV__(bg) = RGBpar3(value, 0, dpptr(dd)->bg);
+#ifdef FOR_PAR
+	R_DEV__(new) = FALSE;
+#endif
+    }
     else if (streql(what, "bty")) {
 	lengthCheck(what, value, 1);
 	if (!isString(value))
@@ -51,6 +63,17 @@
 	}
     }
 
+    else if (streql(what, "cex")) {
+#ifdef FOR_PAR
+	lengthCheck(what, value, 1); // not as documented in ?par
+#endif
+	x = asReal(value);
+	posRealCheck(x, what);
+	R_DEV__(cex) = 1.0;
+#ifdef FOR_PAR
+	R_DEV__(cexbase) = x;
+#endif
+    }
     else if (streql(what, "cex.main")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
@@ -104,8 +127,28 @@
 	    R_DEV__(err) = ix;
 	else par_error(what);
     }
-
-    else if (streql(what, "font")) {
+     else if (streql(what, "family")) {
+	const char *ss;
+	value = coerceVector(value, STRSXP);
+	lengthCheck(what, value, 1);
+	ss = translateChar(STRING_ELT(value, 0));
+	if(strlen(ss) > 200)
+	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
+#ifdef FOR_PAR
+	strncpy(dpptr(dd)->family, ss, 201);
+#endif
+	strncpy(gpptr(dd)->family, ss, 201);
+    }
+    else if (streql(what, "fg")) {
+	lengthCheck(what, value, 1);
+	ix = RGBpar3(value, 0, dpptr(dd)->bg);
+#ifdef FOR_PAR
+	/* par(fg=) sets BOTH "fg" and "col" */
+	R_DEV__(col) = ix;
+#endif
+	R_DEV__(fg) = ix;
+     }
+     else if (streql(what, "font")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	R_DEV__(font) = ix;

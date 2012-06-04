@@ -153,9 +153,9 @@ par(\dots, no.readonly = FALSE)
   \code{\link{box}}, \code{\link{contour}}, \code{\link{filled.contour}}
   and \code{\link{image}}.  Such settings will be active during the
   execution of the function, only.  However, see the comments on
-  \code{bg}, \code{cex}, \code{lty}, \code{lwd} and \code{pch} which may
-  be taken as \emph{arguments} to certain plot functions rather than as
-  graphical parameters.
+  \code{bg}, \code{cex}, \code{col}, \code{lty}, \code{lwd} and
+  \code{pch} which may be taken as \emph{arguments} to certain plot
+  functions rather than as graphical parameters.
 
   The meaning of \sQuote{character size} is not well-defined: this is
   set up for the device taking \code{pointsize} into account but often

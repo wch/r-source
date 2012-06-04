@@ -260,9 +260,10 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	warning(_("graphical parameter \"%s\" cannot be set"), what);
 	return;
     }
+#define FOR_PAR
 #include "par-common.c"
-/*	  ------------
- *--- now, these are *different* from  "Specify2() use" : */
+#undef FOR_PAR
+/*	  ------------ */
     else if (streql(what, "bg")) {
 	lengthCheck(what, value, 1);
 	ix = RGBpar3(value, 0, dpptr(dd)->bg);
@@ -270,22 +271,6 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	R_DEV__(bg) = ix;
 	R_DEV__(new) = FALSE;
     }
-    else if (streql(what, "cex")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
-	posRealCheck(x, what);
-	R_DEV__(cex) = 1.0; /* ! (highlevel par, i.e.  Specify2(), set x ! */
-	R_DEV__(cexbase) = x;
-    }
-
-    else if (streql(what, "fg")) {
-	/* par(fg=) sets BOTH "fg" and "col" */
-	lengthCheck(what, value, 1);
-	ix = RGBpar3(value, 0, dpptr(dd)->bg);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(col) = R_DEV__(fg) = ix;
-    }
-
-
 /*--- and these are "Specify() only" {i.e. par(nam = val)} : */
     else if (streql(what, "ask")) {
 	lengthCheck(what, value, 1);	ix = asLogical(value);
@@ -318,16 +303,6 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	    GReset(dd);
 	}
 	else par_error(what);
-    }
-    else if (streql(what, "family")) {
-	const char *ss;
-	value = coerceVector(value, STRSXP);
-	lengthCheck(what, value, 1);
-	ss = translateChar(STRING_ELT(value, 0));
-	if(strlen(ss) > 200)
-	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
-	strncpy(dpptr(dd)->family, ss, 201);
-	strncpy(gpptr(dd)->family, ss, 201);
     }
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
@@ -697,39 +672,6 @@ static void Specify2(const char *what, SEXP value, pGEDevDesc dd)
     }
 
 #include "par-common.c"
-/*	  ------------
- *  these are *different* from Specify() , i.e., par(<NAM> = .) use : */
-    else if (streql(what, "bg")) {
-	/* bg can be a vector of length > 1, so pick off first value
-	   (as e.g. pch always did) */
-	if (!isVector(value) || LENGTH(value) < 1)
-	    par_error(what);
-	R_DEV__(bg) = RGBpar3(value, 0, dpptr(dd)->bg);
-    }
-    else if (streql(what, "cex")) {
-	/* cex can be a vector of length > 1, so pick off first value
-	   (as e.g. pch always did) */
-	x = asReal(value);
-	posRealCheck(x, what);
-	R_DEV__(cex) = x;
-	/* not setting cexbase here (but in Specify()) */
-    }
-    else if (streql(what, "family")) {
-	const char *ss;
-	value = coerceVector(value, STRSXP);
-	lengthCheck(what, value, 1);
-	ss = translateChar(STRING_ELT(value, 0));
-	if(strlen(ss) > 200)
-	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
-	strncpy(gpptr(dd)->family, ss, 201);
-    }
-    else if (streql(what, "fg")) {
-	/* highlevel arg `fg = ' does *not* set `col' (as par(fg=.) does!*/
-	lengthCheck(what, value, 1);
-	ix = RGBpar3(value, 0, dpptr(dd)->bg);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(fg) = ix;
-    }
 } /* Specify2 */
 
 
