@@ -388,7 +388,7 @@ par(\dots, no.readonly = FALSE)
       which are recycled.  Other uses will take just the first value if
       a vector of length greater than one is supplied.
     }
-    \item{\code{lwd}}{The line width, a \emph{positive} number,
+    \item{\code{lwd}}{The line width, a \emph{non-negative} number,
       defaulting to \code{1}.  The interpretation is device-specific,
       and some devices do not implement line widths less than one.
       (See the help on the device for details of the interpretation.)
@@ -397,10 +397,8 @@ par(\dots, no.readonly = FALSE)
       which are recycled.  Other uses will take just the first value if
       a vector of length greater than one is supplied.
 
-      As from \R 2.16.0, specifying a non-finite (e.g. \code{NA}), zero
-      or negative value causes the line to be omitted from the plot: in
-      earlier versions of \R this was a user error and the effect was
-      device-dependent.
+      Lines with values \code{NA}, \code{NaN} or \code{0} are omitted:
+      negative and infinite values are errors.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the margin size specified in

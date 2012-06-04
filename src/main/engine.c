@@ -756,8 +756,9 @@ void GELine(double x1, double y1, double x2, double y2,
 	    const pGEcontext gc, pGEDevDesc dd)
 {
     Rboolean clip_ok;
-    if (!R_FINITE(gc->lwd) || gc->lwd <= 0) return;
-    if (gc->lty == LTY_BLANK) return;
+    if (gc->lwd == R_PosInf || gc->lwd < 0.0)
+	error(_("'lwd' must be non-negative and finite"));
+    if (ISNAN(gc->lwd) || gc->lwd == 0.0 || gc->lty == LTY_BLANK) return;
     if (dd->dev->canClip) {
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, 1, dd);
     }
@@ -859,8 +860,9 @@ static void clipPolyline(int n, double *x, double *y,
    does all other clipping */
 void GEPolyline(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
 {
-    if (gc->lty == LTY_BLANK) return;
-    if (!R_FINITE(gc->lwd) || gc->lwd <= 0) return;
+    if (gc->lwd == R_PosInf || gc->lwd < 0.0)
+	error(_("'lwd' must be non-negative and finite"));
+    if (ISNAN(gc->lwd) || gc->lwd == 0.0 || gc->lty == LTY_BLANK) return;
     if (dd->dev->canClip) {
 	clipPolyline(n, x, y, gc, 1, dd);  /* clips to device extent
 						  then draws */
@@ -1091,8 +1093,9 @@ void GEPolygon(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
      * after any R_alloc's done by functions I call.
      */
     const void *vmaxsave = vmaxget();
-    if (!R_FINITE(gc->lwd) || gc->lwd <= 0) return;
-    if (gc->lty == LTY_BLANK)
+    if (gc->lwd == R_PosInf || gc->lwd < 0.0)
+	error(_("'lwd' must be non-negative and finite"));
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
     if (dd->dev->canClip) {
@@ -1197,8 +1200,9 @@ void GECircle(double x, double y, double radius, const pGEcontext gc, pGEDevDesc
     /* There is no point in trying to plot a circle of zero radius */
     if (radius <= 0.0) return;
 
-    if (!R_FINITE(gc->lwd) || gc->lwd <= 0) return;
-    if (gc->lty == LTY_BLANK)
+    if (gc->lwd == R_PosInf || gc->lwd < 0.0)
+	error(_("'lwd' must be non-negative and finite"));
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
     /*
@@ -1319,8 +1323,9 @@ void GERect(double x0, double y0, double x1, double y1,
     double *xc, *yc;
     int result;
 
-    if (!R_FINITE(gc->lwd) || gc->lwd <= 0) return;
-    if (gc->lty == LTY_BLANK)
+    if (gc->lwd == R_PosInf || gc->lwd < 0.0)
+	error(_("'lwd' must be non-negative and finite"));
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
     /*
@@ -1382,8 +1387,9 @@ void GEPath(double *x, double *y,
     }
     /* FIXME: what about clipping? (if the device can't) 
     */
-    if (!R_FINITE(gc->lwd) || gc->lwd <= 0) return;
-    if (gc->lty == LTY_BLANK)
+    if (gc->lwd == R_PosInf || gc->lwd < 0.0)
+	error(_("'lwd' must be non-negative and finite"));
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
 	gc->col = R_TRANWHITE;
     if (npoly > 0) {
         int i;
