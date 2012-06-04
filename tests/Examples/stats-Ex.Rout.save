@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-05-30 r59478) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-06-04 r59507) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin11.4.0/x86_64 (64-bit)
@@ -6711,7 +6711,7 @@ function (eta)
 +     mu.eta <- function(eta) days * plogis(eta)^(days-1) *
 +       .Call("logit_mu_eta", eta, PACKAGE = "stats")
 +     valideta <- function(eta) TRUE
-+     link <- paste("logexp(", days, ")", sep="")
++     link <- paste0("logexp(", days, ")")
 +     structure(list(linkfun = linkfun, linkinv = linkinv,
 +                    mu.eta = mu.eta, valideta = valideta, name = link),
 +               class = "link-glm")
@@ -7096,7 +7096,7 @@ attr(,".Environment")
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
-> xnam <- paste("x", 1:25, sep="")
+> xnam <- paste0("x", 1:25)
 > (fmla <- as.formula(paste("y ~ ", paste(xnam, collapse= "+"))))
 y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + 
     x12 + x13 + x14 + x15 + x16 + x17 + x18 + x19 + x20 + x21 + 
@@ -12578,7 +12578,7 @@ attr(,"class")
 +   n <- length(pp$x)
 +   plot(pp$x, diff.quot(pp$x,pp$y), type = 'l', xlab="x", ylab="",
 +        col = "blue", col.main = "red",
-+        main= paste("s",paste(rep("'",d), collapse=""),"(x)", sep=""))
++        main= paste0("s",paste(rep("'",d), collapse=""),"(x)"))
 +   mtext("Difference quotient approx.(last)", col = "blue")
 +   lines(pp <- predict(cars.spl, xx, deriv = d), col = "red")
 + ## Don't show: 
@@ -15148,7 +15148,7 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
 > curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
 > legend("topleft",
-+        paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
++        paste0("splinefun( \"", c("fmm", "monoH.CS"), "\" )"),
 +        col = 2:3, lty = 1)
 > 
 > 
@@ -17320,7 +17320,7 @@ B    L                 27 14 29 19 29 31 41 20 44
 > 
 > if(require("Matrix")) {
 +  ## similar to "nlme"s  'ergoStool' :
-+  d.ergo <- data.frame(Type = paste("T", rep(1:4, 9*4), sep=""),
++  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
 +                       Subj = gl(9,4, 36*4))
 +  print(xtabs(~ Type + Subj, data=d.ergo)) # 4 replicates each
 +  set.seed(15) # a subset of cases:
