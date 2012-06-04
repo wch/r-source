@@ -306,6 +306,9 @@
       \code{NA} was inconsistent (depending on the graphics device) in
       whether it would suppress those lines; now it consistently does
       so.  (\PR{14926})
+      
+      \item \code{by()} failed for a zero-row data frame.  (Reported by
+      Weiqiang Qian)
     }
   }
 }
