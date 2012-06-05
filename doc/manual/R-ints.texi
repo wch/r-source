@@ -3515,7 +3515,7 @@ of a vector argument.  Originally the interpretation of arguments was
 mainly left to the device, but as from @R{} 2.16.0 some of this is
 pre-empted in the graphics engine (but for example the handling of
 @code{lwd = 0} remains device-specific, with some interpreting it as a
-`thinnest possible' line.
+`thinnest possible' line).
 
 @node Grid graphics,  , Base graphics, Graphics Devices
 @section Grid graphics
