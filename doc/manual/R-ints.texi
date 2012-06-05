@@ -1690,8 +1690,10 @@ static R_StringBuffer ex_buff = @{NULL, 0, MAXELTSIZE@};
 
 The memory used by @code{R_alloc} is allocated as @R{} vectors, of type
 @code{RAWSXP}.  Thus the allocation is in units of 8 bytes, and is
-rounded up.  For historical reasons 1 byte is added before rounding up,
-so the allocation is always 1--8 bytes more than was asked for.
+rounded up.  A request for zero bytes currently returns @code{NULL} (but
+this should not be relied on).  For historical reasons, in all other
+cases 1 byte is added before rounding up so the allocation is always
+1--8 bytes more than was asked for: again this should not be relied on.
 
 The vectors allocated are protected via the setting of @code{R_VStack},
 as the garbage collector marks everything that can be reached from that
