@@ -393,7 +393,8 @@ par(\dots, no.readonly = FALSE)
 
       Functions such as \code{\link{lines}} and \code{\link{segments}}
       accept a vector of values which are recycled: in such uses lines
-      corresponding to values \code{NA}, \code{NaN} or \code{0} are omitted.
+      corresponding to values \code{NA} or \code{NaN} are omitted.  The
+      interpetation of \code{0} is device-specific.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the margin size specified in

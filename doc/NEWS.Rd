@@ -82,8 +82,8 @@
       
       \item Setting an element of the graphics argument \code{lwd} to a
       negative or infinite value is now an error.  Lines corresponding
-      to elements with values \code{NA}, \code{NaN} or \code{0} are
-      silently omitted.
+      to elements with values \code{NA} or \code{NaN} are silently
+      omitted.
 
       Previously the behaviour was device-dependent.
 

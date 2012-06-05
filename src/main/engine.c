@@ -758,7 +758,7 @@ void GELine(double x1, double y1, double x2, double y2,
     Rboolean clip_ok;
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
-    if (ISNAN(gc->lwd) || gc->lwd == 0.0 || gc->lty == LTY_BLANK) return;
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK) return;
     if (dd->dev->canClip) {
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, 1, dd);
     }
@@ -862,7 +862,7 @@ void GEPolyline(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
 {
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
-    if (ISNAN(gc->lwd) || gc->lwd == 0.0 || gc->lty == LTY_BLANK) return;
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK) return;
     if (dd->dev->canClip) {
 	clipPolyline(n, x, y, gc, 1, dd);  /* clips to device extent
 						  then draws */
@@ -1095,7 +1095,7 @@ void GEPolygon(int n, double *x, double *y, const pGEcontext gc, pGEDevDesc dd)
     const void *vmaxsave = vmaxget();
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
-    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
     if (dd->dev->canClip) {
@@ -1202,7 +1202,7 @@ void GECircle(double x, double y, double radius, const pGEcontext gc, pGEDevDesc
 
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
-    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
     /*
@@ -1325,7 +1325,7 @@ void GERect(double x0, double y0, double x1, double y1,
 
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
-    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	/* "transparent" border */
 	gc->col = R_TRANWHITE;
     /*
@@ -1389,7 +1389,7 @@ void GEPath(double *x, double *y,
     */
     if (gc->lwd == R_PosInf || gc->lwd < 0.0)
 	error(_("'lwd' must be non-negative and finite"));
-    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK || gc->lwd == 0.0)
+    if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	gc->col = R_TRANWHITE;
     if (npoly > 0) {
         int i;
