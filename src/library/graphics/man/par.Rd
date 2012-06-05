@@ -115,7 +115,7 @@ par(\dots, no.readonly = FALSE)
   device is the null device, \code{par} will open a new device before
   querying/setting parameters.  (What device is controlled by
   \code{\link{options}("device")}.)
-  
+
   Parameters are queried by giving one or more character vectors of
   parameter names to \code{par}.
 
@@ -153,9 +153,9 @@ par(\dots, no.readonly = FALSE)
   \code{\link{box}}, \code{\link{contour}}, \code{\link{filled.contour}}
   and \code{\link{image}}.  Such settings will be active during the
   execution of the function, only.  However, see the comments on
-  \code{bg}, \code{cex}, \code{lty}, \code{lwd} and \code{pch} which may
-  be taken as \emph{arguments} to certain plot functions rather than as
-  graphical parameters.
+  \code{bg}, \code{cex}, \code{col}, \code{lty}, \code{lwd} and
+  \code{pch} which may be taken as \emph{arguments} to certain plot
+  functions rather than as graphical parameters.
 
   The meaning of \sQuote{character size} is not well-defined: this is
   set up for the device taking \code{pointsize} into account but often
@@ -192,7 +192,7 @@ par(\dots, no.readonly = FALSE)
       left-justified text, \code{0.5} (the default) centered text and \code{1}
       right-justified text.  (Any value in \eqn{[0, 1]} is allowed, and
       on most devices values outside that interval will also work.)
-      
+
       Note that the \code{adj} \emph{argument} of \code{\link{text}} also
       allows \code{adj = c(x, y)} for different adjustment in x- and y-
       directions.  Note that whereas for \code{text} it refers to
@@ -236,9 +236,7 @@ par(\dots, no.readonly = FALSE)
       \code{\link{plot.default}} have an \emph{argument} of this name
       which \emph{multiplies} this graphical parameter, and some
       functions such as \code{\link{points}} and \code{\link{text}}
-      accept a vector of values which are recycled.  Other uses will
-      take just the first value if a vector of length greater than one
-      is supplied.
+      accept a vector of values which are recycled.
     }
     \item{\code{cex.axis}}{The magnification to be used for axis
       annotation relative to the current setting of \code{cex}.}
@@ -253,19 +251,19 @@ par(\dots, no.readonly = FALSE)
       as \code{cra}, expressed in different units.}
     \item{\code{col}}{A specification for the default plotting color.  See
       section \sQuote{Color Specification}.
-      (Some functions such as \code{\link{lines}} and \code{\link{text}}
+      
+      Some functions such as \code{\link{lines}} and \code{\link{text}}
       accept a vector of values which are recycled and may be
-      interpreted slightly differently.  Other uses will take just the
-      first value if a vector of length greater than one is supplied.)
+      interpreted slightly differently.
     }
     \item{\code{col.axis}}{The color to be used for axis
       annotation.  Defaults to \code{"black"}.}
     \item{\code{col.lab}}{The color to be used for x and y labels.
-      Defaults to \code{"black"}.} 
+      Defaults to \code{"black"}.}
     \item{\code{col.main}}{The color to be used for plot main titles.
-      Defaults to \code{"black"}.} 
+      Defaults to \code{"black"}.}
     \item{\code{col.sub}}{The color to be used for plot sub-titles.
-      Defaults to \code{"black"}.} 
+      Defaults to \code{"black"}.}
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
       \code{(width, height)} in \sQuote{rasters} (pixels).  Some devices
       have no concept of pixels and so assume an arbitrary pixel size,
@@ -385,18 +383,16 @@ par(\dots, no.readonly = FALSE)
       which are alternatively drawn and skipped.  See section
       \sQuote{Line Type Specification}.
 
-      Some functions such as \code{\link{lines}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
+      Functions such as \code{\link{lines}} and \code{\link{segments}}
+      accept a vector of values which are recycled.
     }
     \item{\code{lwd}}{The line width, a \emph{positive} number,
       defaulting to \code{1}.  The interpretation is device-specific,
       and some devices do not implement line widths less than one.
       (See the help on the device for details of the interpretation.)
-      
-      Some functions such as \code{\link{lines}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
+
+      Functions such as \code{\link{lines}} and \code{\link{segments}}
+      accept a vector of values which are recycled.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the margin size specified in
@@ -477,8 +473,7 @@ par(\dots, no.readonly = FALSE)
       be set as a graphics parameter (and not \code{NA} nor \code{NULL}).
 
       Some functions such as \code{\link{points}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
+      which are recycled.
     }
     \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
       in inches.}
