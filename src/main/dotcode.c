@@ -450,8 +450,8 @@ SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(val);
 }
 
-/*   Call dynamically loaded "internal" functions
-     code by Jean Meloche <jean@stat.ubc.ca> */
+/*   Call dynamically loaded "internal" functions.
+     Original code by Jean Meloche <jean@stat.ubc.ca> */
 
 typedef SEXP (*R_ExternalRoutine)(SEXP);
 
@@ -1210,7 +1210,7 @@ SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->recordGraphics = FALSE;
     PROTECT(retval = do_External(call, op, args, env));
     dd->recordGraphics = record;
-    if (GErecording(call, dd)) {
+    if (GErecording(call, dd)) { // which is record && call != R_NilValue
 	if (!GEcheckState(dd))
 	    errorcall(call, _("Invalid graphics state"));
 	GErecordGraphicOperation(op, args, dd);
@@ -1472,7 +1472,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) RAW(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
+		if (RTRACE(s)) memtrace_report(s, ss);
 #endif
 	    } else cargs[na] = (void *) RAW(s);
 	    break;
@@ -1490,7 +1490,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) INTEGER(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
+		if (RTRACE(s)) memtrace_report(s, ss);
 #endif
 	    } else cargs[na] = (void*) iptr;
 	    break;
@@ -1514,7 +1514,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) REAL(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
+		if (RTRACE(s)) memtrace_report(s, ss);
 #endif
 	    } else cargs[na] = (void*) rptr;
 	    break;
@@ -1531,7 +1531,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, na, ss);
 		cargs[na] = (void*) COMPLEX(ss);
 #ifdef R_MEMORY_PROFILING
-		if (RTRACE(s)) {memtrace_report(s, ss); SET_RTRACE(ss, 1);}
+		if (RTRACE(s)) memtrace_report(s, ss);
 #endif
 	    } else cargs[na] = (void *) zptr;
 	    break;
@@ -2280,9 +2280,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			float *sptr = (float*) p;
 			for(int i = 0 ; i < n ; i++) 
 			    REAL(s)[i] = (double) sptr[i];
-#if R_MEMORY_PROFILING
-			if (RTRACE(arg)) {memtrace_report(p, s); SET_RTRACE(s, 1);}
-#endif
 		    }
 		    break;
 		case STRSXP:
@@ -2299,9 +2296,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			char **cptr = (char**) p;
 			for (int i = 0 ; i < n ; i++)
 			    SET_STRING_ELT(s, i, mkChar(cptr[i]));
-#if R_MEMORY_PROFILING
-			if (RTRACE(arg)) {memtrace_report(p, s); SET_RTRACE(s, 1);}
-#endif
 			UNPROTECT(1);
 		    }
 		    break;

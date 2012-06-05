@@ -185,9 +185,8 @@
       by \code{.C()} or \code{.Fortran()} whereas only some object types
       were ever copied.
 
-      It also reported as copies when objects were used in
-      e.g. \code{dexp(x, rate)}, but only if the traced object was the
-      longer of \code{x} and \code{rate}: it no longer does so.
+      It also reported and marked as copies \emph{some} transformations
+      such as \code{rexp(x)}: it no longer does so.
 
       \item The \code{plot()} method for class \code{"stepfun"} only
       used the optional \code{xval} argument to compute \code{xlim} and
