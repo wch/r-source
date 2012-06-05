@@ -236,9 +236,7 @@ par(\dots, no.readonly = FALSE)
       \code{\link{plot.default}} have an \emph{argument} of this name
       which \emph{multiplies} this graphical parameter, and some
       functions such as \code{\link{points}} and \code{\link{text}}
-      accept a vector of values which are recycled.  Other uses will
-      take just the first value if a vector of length greater than one
-      is supplied.
+      accept a vector of values which are recycled.
     }
     \item{\code{cex.axis}}{The magnification to be used for axis
       annotation relative to the current setting of \code{cex}.}
@@ -253,10 +251,10 @@ par(\dots, no.readonly = FALSE)
       as \code{cra}, expressed in different units.}
     \item{\code{col}}{A specification for the default plotting color.  See
       section \sQuote{Color Specification}.
-      (Some functions such as \code{\link{lines}} and \code{\link{text}}
+      
+      Some functions such as \code{\link{lines}} and \code{\link{text}}
       accept a vector of values which are recycled and may be
-      interpreted slightly differently.  Other uses will take just the
-      first value if a vector of length greater than one is supplied.)
+      interpreted slightly differently.
     }
     \item{\code{col.axis}}{The color to be used for axis
       annotation.  Defaults to \code{"black"}.}
@@ -385,21 +383,17 @@ par(\dots, no.readonly = FALSE)
       which are alternatively drawn and skipped.  See section
       \sQuote{Line Type Specification}.
 
-      Some functions such as \code{\link{lines}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
+      Functions such as \code{\link{lines}} and \code{\link{segments}}
+      accept a vector of values which are recycled.
     }
-    \item{\code{lwd}}{The line width, a \emph{non-negative} number,
+    \item{\code{lwd}}{The line width, a \emph{positive} number,
       defaulting to \code{1}.  The interpretation is device-specific,
       and some devices do not implement line widths less than one.
       (See the help on the device for details of the interpretation.)
 
-      Some functions such as \code{\link{lines}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
-
-      Lines with values \code{NA}, \code{NaN} or \code{0} are omitted:
-      negative and infinite values are errors.
+      Functions such as \code{\link{lines}} and \code{\link{segments}}
+      accept a vector of values which are recycled: in such uses lines
+      corresponding to values \code{NA}, \code{NaN} or \code{0} are omitted.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the margin size specified in
@@ -480,8 +474,7 @@ par(\dots, no.readonly = FALSE)
       be set as a graphics parameter (and not \code{NA} nor \code{NULL}).
 
       Some functions such as \code{\link{points}} accept a vector of values
-      which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.
+      which are recycled.
     }
     \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
       in inches.}

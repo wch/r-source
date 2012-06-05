@@ -80,11 +80,17 @@
       \item \code{install.packages()} has a new argument \code{quiet} to
       reduce the amount of output shown.
       
-      \item Setting graphics parameter \code{lwd} to a negative or
-      infinite value is now an error.  Lines with values \code{NA},
-      \code{NaN} or \code{0} are silently omitted.
+      \item Setting an element of the graphics argument \code{lwd} to a
+      negative or infinite value is now an error.  Lines corresponding
+      to elements with values \code{NA}, \code{NaN} or \code{0} are
+      silently omitted.
 
-      Previosuly the behaviour was device-dependent.
+      Previously the behaviour was device-dependent.
+
+      \item Setting graphical parameters \code{cex}, \code{col},
+      \code{lty}, \code{lwd} and \code{pch} in \code{par()} now requires a
+      length-one argument.   Previously some silently took the first
+      element of a longer vector, but not always when documented to do so.
     }
   }
 

@@ -65,7 +65,7 @@
 
     else if (streql(what, "cex")) {
 #ifdef FOR_PAR
-	lengthCheck(what, value, 1); // not as documented in ?par
+	lengthCheck(what, value, 1);
 #endif
 	x = asReal(value);
 	posRealCheck(x, what);
@@ -95,9 +95,11 @@
 	R_DEV__(cexaxis) = x;
     }
     else if (streql(what, "col")) {
-	/* col can be a vector of length > 1, so pick off first value
-	   (as e.g. pch always did) */
+#ifdef FOR_PAR
+	lengthCheck(what, value, 1);
+#else
 	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
+#endif
 	R_DEV__(col) = RGBpar3(value, 0, dpptr(dd)->bg);
     }
     else if (streql(what, "col.main")) {
@@ -206,15 +208,19 @@
 	R_DEV__(lmitre) = x;
     }
     else if (streql(what, "lty")) {
-	/* lty can be a vector of length > 1, so pick off first value
-	   (as e.g. pch always did) */
-	if (!isVector(value) || LENGTH(value) < 1)
-	    par_error(what);
+#ifdef FOR_PAR
+	lengthCheck(what, value, 1);
+#else
+	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
+#endif
 	R_DEV__(lty) = GE_LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
-	/* lwd can be a vector of length > 1, so pick off first value
-	   (as e.g. pch always did) */
+#ifdef FOR_PAR
+	lengthCheck(what, value, 1);
+#else
+	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
+#endif
 	x = asReal(value);
 	posRealCheck(x, what);
 	R_DEV__(lwd) = x;
@@ -239,7 +245,11 @@
 	R_DEV__(mkh) = x;
     }
     else if (streql(what, "pch")) {
+#ifdef FOR_PAR
+	lengthCheck(what, value, 1);
+#else
 	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
+#endif
 	if (isString(value)) {
 	    ix = GEstring_to_pch(STRING_ELT(value, 0));
 	} else if (isNumeric(value)) {
