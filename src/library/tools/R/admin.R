@@ -944,7 +944,10 @@ find_gs_cmd <- function(gs_cmd)
             if (!nzchar(gs_cmd)) gs_cmd <- Sys.which("gswin32c")
             gs_cmd
         } else Sys.which("gs")
-    } else Sys.which(gs_cmd)
+    } else {
+        ## apparently on Windows Sys.which does not handle absolute paths
+        if (file.exists(gs_cmd)) gs_cmd else Sys.which(gs_cmd)
+    }
 }
 
 format.compactPDF <- function(x, ratio = 0.9, diff = 1e4, ...)

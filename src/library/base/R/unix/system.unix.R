@@ -112,6 +112,8 @@ Sys.which <- function(names)
         return(res)
     }
     for(i in names) {
+        ## NB: this does not quote names, so user has to.
+        ## This is documented as from R 2.15.1
         ans <- suppressWarnings(system(paste(which, i), intern=TRUE,
                                        ignore.stderr=TRUE))
         ## Solaris' which gives 'no foo in ...' message on stdout,

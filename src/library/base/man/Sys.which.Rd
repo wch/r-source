@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.which.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007-10 R Core Team
+% Copyright 2007-12 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.which}
@@ -16,8 +16,9 @@ Sys.which(names)
   \item{names}{Character vector of names of possible executables.}
 }
 \details{
-  The system command \code{which} reports on the full names of an
-  executable (including an executable script) found on the current path.
+  The system command \command{which} reports on the full path names of
+  an executable (including an executable script) as would be executed by
+  a shell, accepting either absolute paths or looking on the path.
 
   On Windows an \sQuote{executable} is a file with extension
   \file{.exe}, \file{.com}, \file{.cmd} or \file{.bat}.  Such files need
@@ -25,8 +26,11 @@ Sys.which(names)
   tries.
   
   On a Unix-alike the full path to \code{which} (usually
-  \file{/usr/bin/which}) is found when \R is installed and (currently)
-  stored in environment variable \code{WHICH}.
+  \file{/usr/bin/which}) is found when \R is installed.
+
+  Arguments containing spaces or other metacharacters need to be escaped
+  as they would be for a shell: for example Windows paths containing
+  spaces need to be enclosed in double quotes.
 }
 \value{
   A character vector of the same length as \code{names}, named by
@@ -39,6 +43,12 @@ Sys.which(names)
   The paths will be short paths (8+3 components, no spaces) with
   \code{\\} as the path delimiter.
 #endif  
+}
+\note{
+  Except on Windows this calls the system command \command{which}: since
+  that is not part of e.g. the POSIX standards, exactly what it does is
+  OS-dependent.  It will usually do tilde-expansion and it may make use
+  of \command{csh} aliases.
 }
 \examples{
 ## the first two are likely to exist everywhere

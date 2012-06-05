@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007-2011 R Core Team
+% Copyright 2007-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -80,7 +80,9 @@
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_GSCMD}:}{Optional.  The path to Ghostscript, used by
       \code{\link{dev2bitmap}}, \code{\link{bitmap}} and
-      \code{\link{embedFonts}}.  Consulted when those functions are invoked.}
+      \code{\link{embedFonts}}.  Consulted when those functions are
+      invoked.  Since it will be treated as if passed to
+      \code{\link{system}}, spaces and shell metacharacters should be escaped.}
     \item{\env{R_HISTFILE}:}{Optional.  The path of the history file:
       see \link{Startup}.  Consulted at startup and when the history is
       saved.}

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2bitmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
@@ -46,7 +46,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   and post-processing the output as \sQuote{printing}.
 
   You will need \code{ghostscript}: the full path to the executable can
-  be set by the environment variable \env{R_GSCMD}. It this is unset, a
+  be set by the environment variable \env{\link{R_GSCMD}}. It this is unset, a
   GhostScript executable will be looked for by name on your path: on a
   Unix alike \code{"gs"} is used, and on Windows the setting of the
   environment variable \env{GSC} is used, otherwise commands
