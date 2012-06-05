@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/embedFonts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{embedFonts}
@@ -39,10 +39,10 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   something like \code{options="-sFONTPATH=path/to/font"}.
 
   You will need \code{ghostscript}: the full path to the executable can
-  be set by the environment variable \env{R_GSCMD}. It this is unset, a
-  GhostScript executable will be looked for by name on your path: on a
-  Unix alike \code{"gs"} is used, and on Windows the setting of the
-  environment variable \env{GSC} is used, otherwise commands
+  be set by the environment variable \env{\link{R_GSCMD}}. It this is
+  unset, a GhostScript executable will be looked for by name on your
+  path: on a Unix alike \code{"gs"} is used, and on Windows the setting
+  of the environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
 
   Note that Ghostscript may do font substitution, so the font embedded
