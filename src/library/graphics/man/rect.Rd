@@ -1,6 +1,6 @@
 % File src/library/graphics/man/rect.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rect}
@@ -31,7 +31,8 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
     lines, \code{border = TRUE} means use the same colour for
     the border as for the shading lines.}
   \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
-  \item{lwd}{line width for borders and shading.}
+  \item{lwd}{line width for borders and shading.  Note that the use of
+    \code{lwd = 0} (as in the examples) is device-dependent.}
   \item{\dots}{\link{graphical parameters} such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as
     arguments.}
