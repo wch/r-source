@@ -3428,12 +3428,12 @@ viewers.)
 @node Base graphics, Grid graphics, Colours, Graphics Devices
 @section Base graphics
 
-The base graphics system is likely to move to package @pkg{graphics} at
-some stage, but it currently implemented in files in @file{src/main}.
+The base graphics system was migrated to package @pkg{graphics} in @R{} 2.16.0:
+it was previously implemented in files in @file{src/main}.
 
 For historical reasons it is largely implemented in two layers.
 Files @file{plot.c}, @code{plot3d.c} and @code{par.c} contain the code
-for the around 30 @code{.Internal} calls that implement the basic
+for the around 30 @code{.External} calls that implement the basic
 graphics operations.  This code then calls functions with names starting
 with @code{G} and declared in header @file{Rgraphics.h} in file
 @file{graphics.c}, which in turn call the graphics engine (whose
@@ -3473,11 +3473,49 @@ high-level graphics calls (handled by @code{ProcessInlinePars}).
 Snapshots of the base subsystem record the `saved device copy' of the
 @code{GPar} structure.
 
-There remain quite a number of anomalies.  For example, function
-@code{GEcontourLines} is (despite its name) coded in file
-@file{plot3d.c} and used to support function @code{contourLines} in
-package @pkg{grDevices}.
+@menu
+* Arguments and parameters::    
+@end menu
 
+@node Arguments and parameters,  , Base graphics, Base graphics
+@subsection Arguments and parameters
+
+There is an unforunate confusion between some of the graphical
+parameters (as set by @code{par}) and arguments to base graphic
+functions of the same name.  This description may help set the record
+straight.
+
+Most of the high-level plotting functions accept graphical parameters as
+additional arguments, which are then often passed to lower-level
+functions if not already named arguments (which is the main source of
+confusion).
+
+Graphical parameter @code{bg} is the background colour of the plot.
+Argument @code{bg} refers to the fill colour for the filled symbols
+@code{21} to @code{25}.  It is an argument to the function
+@code{plot.xy}, but normally passed by the default method of
+@code{points}, often from a @code{plot} method.
+
+Graphics parameters @code{cex}, @code{col}, @code{lty}, @code{lwd} and
+@code{pch} also appear as arguments of @code{plot.xy} and so are often
+passed as argumnets from higher-level plot functions such as
+@code{lines}, @code{points} and @code{plot} methods.  They appear as
+arguments of @code{legend}, @code{col}, @code{lty} and @code{lwd} are
+arguments of @code{arrows} and @code{segments}.  When used as arguments
+they can be vectors, recycled to control the various lines, points and
+segments.  When set a graphical parameters they set the default
+rendering: in addition @code{par(cex=)} sets the overall character
+expansion which subsequent calls (as arguments or on-line graphical
+parameters) multiply.
+
+The handling of missing values differs in the two classes of uses.
+Generally these are errors when used in @code{par} but cause the
+corresponding element of the plot to be omitted when used as an element
+of a vector argument.  Originally the interpretation of arguments was
+mainly left to the device, but as from @R{} 2.16.0 some of this is
+pre-empted in the graphics engine (but for example the handling of
+@code{lwd = 0} remains device-specific, with some interpreting it as a
+`thinnest possible' line.
 
 @node Grid graphics,  , Base graphics, Graphics Devices
 @section Grid graphics
