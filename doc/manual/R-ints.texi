@@ -1688,7 +1688,10 @@ The memory used by @code{R_alloc} is allocated as @R{} vectors, of type
 @code{RAWSXP} for `small' allocations (less than 2^31 - 1 bytes) and of
 type @code{REALSXP} for allocations up to 2^34 - 1 bytes on 64-bit
 machines.  Thus the allocation is in units of 8 bytes, and is rounded
-up.
+up.  A request for zero bytes currently returns @code{NULL} (but
+this should not be relied on).  For historical reasons, in all other
+cases 1 byte is added before rounding up so the allocation is always
+1--8 bytes more than was asked for: again this should not be relied on.
 
 The vectors allocated are protected via the setting of @code{R_VStack},
 as the garbage collector marks everything that can be reached from that
