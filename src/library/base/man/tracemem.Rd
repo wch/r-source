@@ -33,7 +33,7 @@ retracemem(x, previous = NULL)
   
   When an object is traced any copying of the object by the C function
   \code{duplicate} produces a message to standard output, as does type
-  coercion  and copying by \code{.C} or
+  coercion and copying when passing arguments to \code{.C} or
   \code{.Fortran}.
 
   The message consists of the string \code{tracemem}, the identifying
@@ -72,7 +72,7 @@ b <- a
 b[1] <- 1
 untracemem(a)
 
-## copying in lm
+## copying in lm: less than R <= 2.15.0
 d <- stats::rnorm(10)
 tracemem(d)
 lm(d ~ a+log(b))
