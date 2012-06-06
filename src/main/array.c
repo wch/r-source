@@ -1264,11 +1264,8 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans = R_NilValue;
-    int OP, n, p, cnt = 0, i, j, type;
+    int OP, n, p, j, type;
     Rboolean NaRm, keepNA;
-    int *ix;
-    double *rx;
-    long double sum = 0.0;
 #ifdef HAVE_OPENMP
     int nthreads;
 #endif
@@ -1295,7 +1292,6 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if (OP == 0 || OP == 1) { /* columns */
-	cnt = n;
 	PROTECT(ans = allocVector(REALSXP, p));
 #ifdef HAVE_OPENMP
 	/* This gives a spurious -Wunused-but-set-variable error */
@@ -1304,11 +1300,13 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    nthreads = 1; /* for now */
 #pragma omp parallel for num_threads(nthreads) default(none) \
-    private(j, i, ix, rx) \
-    firstprivate(x, ans, n, p, type, cnt, sum, \
-		 NaRm, keepNA, R_NaReal, R_NaInt, OP)
+    firstprivate(x, ans, n, p, type, NaRm, keepNA, R_NaReal, R_NaInt, OP)
 #endif
-	for (j = 0; j < p; j++) {
+	for (int j = 0; j < p; j++) {
+	    int cnt = n, i;
+	    int *ix;
+	    double *rx;
+	    long double sum = 0.0;
 	    switch (type) {
 	    case REALSXP:
 		rx = REAL(x) + n*j;
@@ -1332,77 +1330,77 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if (*ix != NA_LOGICAL) {cnt++; sum += *ix;}
 		    else if (keepNA) {sum = NA_REAL; break;}
 		break;
-	    default:
-		/* we checked the type above, but be sure */
-		UNIMPLEMENTED_TYPEt("do_colsum", type);
 	    }
-	    if (OP == 1) sum /= cnt;
+	    if (OP == 1) sum /= cnt; /* gives NaN for cnt = 0 */
 	    REAL(ans)[j] = (double) sum;
 	}
     }
-
-    if (OP == 2 || OP == 3) { /* rows */
-	cnt = p;
+    else { /* rows */
 	PROTECT(ans = allocVector(REALSXP, n));
 
-	/* interchange summation order to improve cache hits */
-	if (type == REALSXP) {
-	    int *Cnt = NULL, *c;
-	    long double *rans, *ra;
-	    if(n <= 10000) {
-		rans = (long double *) alloca(n * sizeof(long double));
-		R_CheckStack();
-		memset(rans, 0, n*sizeof(long double));
-	    } else rans = Calloc(n, long double);
-	    rx = REAL(x);
-	    if (!keepNA && OP == 3) Cnt = Calloc(n, int);
-	    for (j = 0; j < p; j++) {
-		ra = rans;
+	/* allocate scratch storage to allow accumulating by columns
+	   to improve cache hits */
+	int *Cnt = NULL;
+	long double *rans;
+	if(n <= 10000) {
+	    rans = (long double *) alloca(n * sizeof(long double));
+	    R_CheckStack();
+	    memset(rans, 0, n*sizeof(long double));
+	} else rans = Calloc(n, long double);
+	if (!keepNA && OP == 3) Cnt = Calloc(n, int);
+
+	double *rx;
+	int *ix;
+	for (j = 0; j < p; j++) {
+	    long double *ra = rans;
+	    switch (type) {
+	    case REALSXP:
+		rx = REAL(x) + n * j;
 		if (keepNA)
-		    for (i = 0; i < n; i++) *ra++ += *rx++;
+		    for (int i = 0; i < n; i++) *ra++ += *rx++;
 		else
-		    for (c = Cnt, i = 0; i < n; i++, ra++, rx++, c++)
+		    for (int i = 0; i < n; i++, ra++, rx++)
 			if (!ISNAN(*rx)) {
 			    *ra += *rx;
-			    if (OP == 3) (*c)++;
+			    if (OP == 3) Cnt[i]++;
 			}
-	    }
-	    if (OP == 3) {
-		if (keepNA)
-		    for (ra = rans, i = 0; i < n; i++) *ra++ /= p;
-		else {
-		    for (ra = rans, c = Cnt, i = 0; i < n; i++, c++)
-			*ra++ /= *c;
-		    Free(Cnt);
-		}
-	    }
-	    for (i = 0; i < n; i++) REAL(ans)[i] = (double) rans[i];
-	    if(n > 10000) Free(rans);
-	    UNPROTECT(1);
-	    return ans;
-	}
-
-	for (i = 0; i < n; i++) {
-	    switch (type) {
+		break;
 	    case INTSXP:
-		ix = INTEGER(x) + i;
-		for (cnt = 0, sum = 0., j = 0; j < p; j++, ix += n)
-		    if (*ix != NA_INTEGER) {cnt++; sum += *ix;}
-		    else if (keepNA) {sum = NA_REAL; break;}
+		ix = INTEGER(x) + n * j;
+		for (int i = 0; i < n; i++, ra++, ix++)
+		    if (keepNA) {
+			if (*ix != NA_INTEGER) *ra += *ix;
+			else *ra = NA_REAL;
+		    }
+		    else if (*ix != NA_INTEGER) {
+			*ra += *ix;
+			if (OP == 3) Cnt[i]++;
+		    }
 		break;
 	    case LGLSXP:
-		ix = LOGICAL(x) + i;
-		for (cnt = 0, sum = 0., j = 0; j < p; j++, ix += n)
-		    if (*ix != NA_LOGICAL) {cnt++; sum += *ix;}
-		    else if (keepNA) {sum = NA_REAL; break;}
+		ix = LOGICAL(x) + n * j;
+		for (int i = 0; i < n; i++, ra++, ix++)
+		    if (keepNA) {
+			if (*ix != NA_LOGICAL) *ra += *ix;
+			else *ra = NA_REAL;
+		    }
+		    else if (*ix != NA_LOGICAL) {
+			*ra += *ix;
+			if (OP == 3) Cnt[i]++;
+		    }
 		break;
-	    default:
-		/* we checked the type above, but be sure */
-		UNIMPLEMENTED_TYPEt("do_colsum", type);
 	    }
-	    if (OP == 3) sum /= cnt; /* gives NaN for cnt = 0 */
-	    REAL(ans)[i] = (double) sum;
 	}
+	if (OP == 3) {
+	    if (keepNA)
+		for (int i = 0; i < n; i++) rans[i] /= p;
+	    else 
+		for (int i = 0; i < n; i++) rans[i] /= Cnt[i];
+	}
+	for (int i = 0; i < n; i++) REAL(ans)[i] = (double) rans[i];
+
+	if (!keepNA && OP == 3) Free(Cnt);
+	if(n > 10000) Free(rans);
     }
 
     UNPROTECT(1);
