@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2012  The R Core Team
+ *  Copyright (C) 2001-2010  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,43 +42,37 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 /* .Internal(identical(..)) */
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1, 
-	ignore_env = 0, nargs = length(args), flags;
-    /* avoid problems with earlier version captured in S4 methods:
-       but this should be fixed where it is caused, in 'methods'!
-
-       checkArity(op, args); */
-    if (nargs < 6)
+    int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1, nargs = length(args), flags;
+    /* avoid problems with earlier (and future) versions captured in S4 methods */
+    /* checkArity(op, args); */
+    if (nargs < 5)
 	error("%d arguments passed to .Internal(%s) which requires %d",
 	      length(args), PRIMNAME(op), PRIMARITY(op));
 
-    SEXP x = CAR(args); args = CDR(args);
-    SEXP y = CAR(args); args = CDR(args);
-    num_eq = asLogical(CAR(args)); args = CDR(args);
-    single_NA = asLogical(CAR(args)); args = CDR(args);
-    attr_as_set = asLogical(CAR(args)); args = CDR(args);
-    ignore_bytecode = asLogical(CAR(args));
-    if (nargs >= 7) 
-	ignore_env = asLogical(CADR(args));
+    if (nargs >= 5) {
+	num_eq      = asLogical(CADDR(args));
+	single_NA   = asLogical(CADDDR(args));
+	attr_as_set = asLogical(CAD4R(args));
+    }
+    if (nargs >= 6) 
+	ignore_bytecode = asLogical(CAD4R(CDR(args)));
 
-    if(num_eq == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
-    if(single_NA == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
+    if(num_eq      == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
+    if(single_NA   == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
     if(attr_as_set == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
     if(ignore_bytecode == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.bytecode");
-    if(ignore_env == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
     
-    flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) + 
-	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16);
-    return ScalarLogical(R_compute_identical(x, y, flags));
+    flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) + (ignore_bytecode ? 0 : 8); 
+    return ScalarLogical(R_compute_identical(CAR(args), CADR(args), flags));
 }
 
 #define NUM_EQ 		(!(flags & 1))
 #define SINGLE_NA       (!(flags & 2))
 #define ATTR_AS_SET     (!(flags & 4))
 #define IGNORE_BYTECODE (!(flags & 8))
-#define IGNORE_ENV      (!(flags & 16))
 
-/* do the two objects compute as identical?  Also used in unique.c */
+/* do the two objects compute as identical?
+   used in unique.c */
 Rboolean
 R_compute_identical(SEXP x, SEXP y, int flags)
 {
@@ -228,7 +222,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case CLOSXP:
 	return(R_compute_identical(FORMALS(x), FORMALS(y), flags) &&
 	       R_compute_identical(BODY_EXPR(x), BODY_EXPR(y), flags) &&
-	       (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE) &&
+	       (CLOENV(x) == CLOENV(y) ? TRUE : FALSE) &&
 	       (IGNORE_BYTECODE || R_compute_identical(BODY(x), BODY(y), flags))
 	       );
     case SPECIALSXP:

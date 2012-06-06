@@ -13,10 +13,6 @@
       \code{.Internal(eval.with.vis)}.  This may alter tracebacks
       slightly.
 
-      \item \code{identical()} has a new argument,
-      \code{ignore.environment}, used when comparing functions (with
-      default \code{FALSE} as before).
-
       \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
       has sanity checks that this is actually a binary package (as
       people have tried it with incorrectly named source packages).
