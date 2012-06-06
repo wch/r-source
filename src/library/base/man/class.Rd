@@ -33,6 +33,9 @@ oldClass(x) <- value
 }
 
 \details{
+  Here, we describe the so called \dQuote{S3} classes (and methods). For
+  \dQuote{S4} classes (and methods), see \sQuote{Formal classes} below.
+
   Many \R objects have a \code{class} attribute, a character vector
   giving the names of the classes from which the object \emph{inherits}.
   If the object does not have a class attribute, it has an implicit
@@ -65,10 +68,10 @@ oldClass(x) <- value
   is \code{TRUE} then an integer vector of the same length as
   \code{what} is returned.  Each element indicates the position in the
   \code{class(x)} matched by the element of \code{what}; zero indicates
-  no match. If \code{which} is \code{FALSE} then \code{TRUE} is 
+  no match. If \code{which} is \code{FALSE} then \code{TRUE} is
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
-  
+
   All but \code{inherits} are \link{primitive} functions.
 }
 
@@ -83,14 +86,16 @@ oldClass(x) <- value
 }
 
 \section{Formal classes}{
-  An additional mechanism of \emph{formal} classes is available in
+  An additional mechanism of \emph{formal} classes, nicknamed
+  \dQuote{S4}, is available in
   packages \pkg{methods} which is attached by default.  For objects
   which have a formal class, its name is returned by \code{class}
-  as a character vector of length one.  However, S3 method selection
+  as a character vector of length one and method dispatch can happen on
+  \emph{several} arguments, instead of only the first. However, S3 method selection
   attempts to treat objects from an S4 class as if they had the
   appropriate S3 class attribute, as does \code{inherits}.  Therefore,
-  S3 methods can be defined for S4 classes.  See
-  \link{Methods} for details.
+  S3 methods can be defined for S4 classes.  See the \sQuote{\link{Classes}}
+  and \sQuote{\link{Methods}} help pages for details.
 
   The replacement version of the function sets the class to the value
   provided.  For classes that have a formal definition, directly
@@ -99,8 +104,8 @@ oldClass(x) <- value
   particular class.
 
   The analogue of \code{inherits} for formal classes is
-  \code{\link{is}}. The two functions behave consistently
-  objects with one exception:  S4 classes can have conditional
+  \code{\link{is}}.  The two functions behave consistently
+  with one exception:  S4 classes can have conditional
   inheritance, with an explicit test.  In this case, \code{is} will
   test the condition, but \code{inherits} ignores all conditional
   superclasses.
