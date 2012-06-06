@@ -44,8 +44,9 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1, 
 	ignore_env = 0, nargs = length(args), flags;
-    /* avoid problems with earlier version captured in S4 methods:
-       but this should be fixed where it is caused, in 'methods'!
+    /* avoid problems with earlier (and future) versions captured in S4
+       methods: but this should be fixed where it is caused, in
+       'methods'!
 
        checkArity(op, args); */
     if (nargs < 6)

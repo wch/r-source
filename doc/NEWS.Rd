@@ -33,6 +33,10 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
+      \item \code{identical()} has a new argument,
+      \code{ignore.environment}, used when comparing functions (with
+      default \code{FALSE} as before).
+
       \item There is a new option, \code{options(CBoundsCheck=)}, which
       controls how \code{.C()} and \code{.Fortran()} pass arguments to
       compiled code.  If true (which can be enabled by setting the
@@ -258,10 +262,6 @@
       \item \code{source()} now uses \code{withVisible()} rather than
       \code{.Internal(eval.with.vis)}.  This may alter tracebacks
       slightly.
-
-      \item \code{identical()} has a new argument,
-      \code{ignore.environment}, used when comparing functions (with
-      default \code{FALSE} as before).
 
       \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
       has sanity checks that this is actually a binary package (as
