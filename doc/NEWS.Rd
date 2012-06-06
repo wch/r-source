@@ -91,6 +91,14 @@
       \code{lty}, \code{lwd} and \code{pch} in \code{par()} now requires a
       length-one argument.   Previously some silently took the first
       element of a longer vector, but not always when documented to do so.
+      
+      \item The \code{model.frame()} method for \code{"lm"} uses
+      \code{xlevels}: this is safer if \code{data} was supplied or
+      \code{model = FALSE} was uses and the levels of factors used in
+      the fit had been re-ordered since fitting.
+
+      Similarly, \code{model.frame.lm(fm, data=<data>)} copies across
+      the variables use for safe prediction from the fit.
     }
   }
 

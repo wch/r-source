@@ -25,7 +25,7 @@ lm <- function (formula, data, subset, weights, na.action,
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     m <- match(c("formula", "data", "subset", "weights", "na.action", "offset"),
-	       names(mf), 0L)
+               names(mf), 0L)
     mf <- mf[c(1L, m)]
     mf$drop.unused.levels <- TRUE
     mf[[1L]] <- as.name("model.frame")
@@ -509,11 +509,17 @@ model.frame.lm <- function(formula, ...)
     dots <- list(...)
     nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
     if (length(nargs) || is.null(formula$model)) {
+        ## mimic lm(method = "model.frame")
         fcall <- formula$call
-        fcall$method <- "model.frame"
-        fcall[[1L]] <- as.name("lm")
+        m <- match(c("formula", "data", "subset", "weights", "na.action",
+                     "offset"), names(fcall), 0L)
+        fcall <- fcall[c(1L, m)]
+        fcall$drop.unused.levels <- TRUE
+        fcall[[1L]] <- as.name("model.frame")
+        fcall$xlev <- formula$xlevels
+        ## We want to copy over attributes here, especially predvars.
+        fcall$formula <- terms(formula)
         fcall[names(nargs)] <- nargs
-#	env <- environment(fcall$formula)  # always NULL
         env <- environment(formula$terms)
 	if (is.null(env)) env <- parent.frame()
         eval(fcall, env, parent.frame())
