@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:26\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -740,6 +740,14 @@ msgstr "'vec' contient des valeurs manquantes (NAs)"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' doit être trié par ordre croissant"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "valeur incorrecte"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "valeur incorrecte"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "utilisation du premier élément de 'value' de type expression"

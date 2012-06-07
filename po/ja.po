@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-27 16:02+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -164,8 +164,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:126 src/main/agrep.c:130
 #: src/main/agrep.c:763 src/main/agrep.c:768 src/main/apply.c:288
 #: src/main/apply.c:290 src/main/apply.c:293 src/main/array.c:86
-#: src/main/array.c:1150 src/main/array.c:1282 src/main/array.c:1284
-#: src/main/array.c:1285 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1150 src/main/array.c:1279 src/main/array.c:1281
+#: src/main/array.c:1282 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -271,9 +271,9 @@ msgstr " '%ls'の表示に問題があります "
 #: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
 #: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3214
-#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
-#: src/modules/X11/devX11.c:3244 src/unix/sys-std.c:1212
+#: src/modules/lapack/Lapack.c:1080 src/modules/X11/devX11.c:3216
+#: src/modules/X11/devX11.c:3219 src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3246 src/unix/sys-std.c:1212
 #: src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
@@ -336,10 +336,10 @@ msgstr " タイムスタンプが不正です "
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
 #: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3115 src/modules/X11/devX11.c:3142
-#: src/modules/X11/devX11.c:3147 src/modules/X11/devX11.c:3152
-#: src/modules/X11/devX11.c:3162 src/modules/X11/devX11.c:3167
-#: src/modules/X11/devX11.c:3171 src/modules/X11/devX11.c:3175
+#: src/modules/X11/devX11.c:3117 src/modules/X11/devX11.c:3144
+#: src/modules/X11/devX11.c:3149 src/modules/X11/devX11.c:3154
+#: src/modules/X11/devX11.c:3164 src/modules/X11/devX11.c:3169
+#: src/modules/X11/devX11.c:3173 src/modules/X11/devX11.c:3177
 #: src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
@@ -896,7 +896,7 @@ msgstr " 入力文字列 y[%d] はこのロケールでは不適切です "
 msgid "regcomp error: '%s'"
 msgstr " regcompのエラー: '%s' "
 
-#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:760
+#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:746
 msgid "invalid length"
 msgstr " 長さが不正です "
 
@@ -985,35 +985,35 @@ msgstr " 不正な単項演算子です "
 msgid "NAs produced by integer overflow"
 msgstr " 整数の桁あふれにより NA が生成されました "
 
-#: src/main/arithmetic.c:1123
+#: src/main/arithmetic.c:1074
 msgid "unimplemented real function of 1 argument"
 msgstr " 1個の引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1137 src/main/complex.c:650 src/main/complex.c:720
+#: src/main/arithmetic.c:1088 src/main/complex.c:636 src/main/complex.c:706
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
-#: src/main/arithmetic.c:1457 src/main/arithmetic.c:1844
-#: src/main/arithmetic.c:2020 src/main/arithmetic.c:2131
+#: src/main/arithmetic.c:1348 src/main/arithmetic.c:1698
+#: src/main/arithmetic.c:1874 src/main/arithmetic.c:1985
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr " %d 個の数値引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1487
+#: src/main/arithmetic.c:1378
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 " '%d' 個の引数が '%s' に渡されましたが，1つまたは2つが必要とされています "
 
-#: src/main/arithmetic.c:1506
+#: src/main/arithmetic.c:1397
 msgid "invalid second argument of length 0"
 msgstr " 二番目の長さ 0 の引数が不正です "
 
-#: src/main/arithmetic.c:1576
+#: src/main/arithmetic.c:1467
 msgid "invalid argument 'base' of length 0"
 msgstr " 長さ 0 の 'base ' 引数です "
 
-#: src/main/arithmetic.c:1584
+#: src/main/arithmetic.c:1475
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1131,13 +1131,13 @@ msgstr " 'perm' 中の値が範囲を超えています "
 msgid "'resize' must be TRUE or FALSE"
 msgstr " 'resize' は TRUE か FALSE でなければなりません "
 
-#: src/main/array.c:1294
+#: src/main/array.c:1291
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
 
 #: src/main/attrib.c:39 src/main/attrib.c:226 src/main/attrib.c:260
-#: src/main/attrib.c:282 src/main/attrib.c:399 src/main/attrib.c:446
-#: src/main/attrib.c:496
+#: src/main/attrib.c:282 src/main/attrib.c:395 src/main/attrib.c:442
+#: src/main/attrib.c:492
 msgid "attempt to set an attribute on NULL"
 msgstr " NULL に対して属性を設定しようとしました "
 
@@ -1151,54 +1151,54 @@ msgstr " 列の名前は'文字'又は'整数'です. \"%s\"ではありませ�
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr " getAttrib：TAG に対する型(%s) が不正です "
 
-#: src/main/attrib.c:374
+#: src/main/attrib.c:370
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr " 'names' の型(%s)が不正です（ベクトルでなければなりません） "
 
-#: src/main/attrib.c:377
+#: src/main/attrib.c:373
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr " 'names' 属性 [%d] はベクトル [%d] の長さと同じでなければなりません "
 
-#: src/main/attrib.c:382
+#: src/main/attrib.c:378
 msgid "names() applied to a non-vector"
 msgstr " names 関数がベクトルでないものに適用されました "
 
-#: src/main/attrib.c:390
+#: src/main/attrib.c:386
 msgid "invalid time series parameters specified"
 msgstr " 不正な時系列パラメータが指定されました "
 
-#: src/main/attrib.c:403
+#: src/main/attrib.c:399
 msgid "'tsp' attribute must be numeric"
 msgstr " 'tsp' 属性は数値でなくてはなりません "
 
-#: src/main/attrib.c:409
+#: src/main/attrib.c:405
 msgid "'tsp' attribute must be numeric of length three"
 msgstr " 'tsp' 属性は長さ3の数値でなくてはなりません "
 
-#: src/main/attrib.c:426
+#: src/main/attrib.c:422
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr " 長さ0のベクトルには属性 'tsp' を与えられません "
 
-#: src/main/attrib.c:457
+#: src/main/attrib.c:453
 msgid "attempt to set invalid 'comment' attribute"
 msgstr " 不正な 'comment' 属性を設定しようとしました "
 
-#: src/main/attrib.c:505
+#: src/main/attrib.c:501
 msgid "adding class \"factor\" to an invalid object"
 msgstr " 無効のオブジェクトにクラス \"factor\" を追加 "
 
-#: src/main/attrib.c:513
+#: src/main/attrib.c:509
 msgid "attempt to set invalid 'class' attribute"
 msgstr " 不正な 'class' 属性を設定しようとしました "
 
-#: src/main/attrib.c:768
+#: src/main/attrib.c:764
 #, c-format
 msgid "Class '%s' has no 'names' slot"
 msgstr " クラス '%s' には、'names' スロットがありません "
 
-#: src/main/attrib.c:770
+#: src/main/attrib.c:766
 #, c-format
 msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
@@ -1207,7 +1207,7 @@ msgstr ""
 " クラス '%s' には、'names' スロットがありませんから、names 属性を付加すると不"
 "正なオブジェクトが生成されます "
 
-#: src/main/attrib.c:773
+#: src/main/attrib.c:769
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
@@ -1215,133 +1215,133 @@ msgstr ""
 " ベクタでないクラス ('%s') の 'names' スロットに値をセットするために names()"
 "<- を使うことはできません "
 
-#: src/main/attrib.c:803
+#: src/main/attrib.c:799
 msgid "incompatible 'names' argument"
 msgstr " 'names' 引数に互換性がありません "
 
-#: src/main/attrib.c:858
+#: src/main/attrib.c:854
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr " 'names' 属性として設定するには不正な型(%s)です "
 
-#: src/main/attrib.c:929
+#: src/main/attrib.c:925
 msgid "'dimnames' applied to non-array"
 msgstr " 'dimnames' が配列以外に適用されました "
 
-#: src/main/attrib.c:934
+#: src/main/attrib.c:930
 msgid "'dimnames' must be a list"
 msgstr " 'dimnames' はリストでなくてはなりません "
 
-#: src/main/attrib.c:937 src/main/attrib.c:960
+#: src/main/attrib.c:933 src/main/attrib.c:956
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 " 'dimnames' の長さ [%d] は 'dims' の長さ [%d] と同じでなくてはなりません "
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:962
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr " 'dimnames' の型(%s)が不正です（ベクトルでなければなりません） "
 
-#: src/main/attrib.c:969
+#: src/main/attrib.c:965
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr " 'dimnames' の長さ [%d] が配列の大きさと違っています "
 
-#: src/main/attrib.c:1041 src/main/builtin.c:62 src/main/builtin.c:99
+#: src/main/attrib.c:1037 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:72 src/main/paste.c:290
 #: src/main/random.c:501
 msgid "invalid first argument"
 msgstr " 一番目の引数が不正です "
 
-#: src/main/attrib.c:1044
+#: src/main/attrib.c:1040
 msgid "invalid second argument"
 msgstr " 二番目の引数が不正です "
 
-#: src/main/attrib.c:1052
+#: src/main/attrib.c:1048
 msgid "length-0 dimension vector is invalid"
 msgstr " 長さ 0 の次元のベクトルは無効です "
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1053
 msgid "the dims contain missing values"
 msgstr " dims 変数は欠損値を含みます "
 
-#: src/main/attrib.c:1059
+#: src/main/attrib.c:1055
 msgid "the dims contain negative values"
 msgstr " dims 変数は負の値を含みます "
 
-#: src/main/attrib.c:1064
+#: src/main/attrib.c:1060
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr " dims [product %d] はオブジェクト  [%d] の長さに整合しません "
 
-#: src/main/attrib.c:1066
+#: src/main/attrib.c:1062
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr " dims [product %d] はオブジェクト  [%d] の長さに整合しません "
 
-#: src/main/attrib.c:1133
+#: src/main/attrib.c:1129
 msgid "duplicated levels will not be allowed in factors anymore"
 msgstr " 因子では重複する水準はもはや許されません "
 
-#: src/main/attrib.c:1163
+#: src/main/attrib.c:1159
 msgid "attributes must be a list or NULL"
 msgstr " 属性はリストもしくはNULLでなければなりません "
 
-#: src/main/attrib.c:1168
+#: src/main/attrib.c:1164
 msgid "attributes must be named"
 msgstr " 属性は名前が付けられていなければなりません "
 
-#: src/main/attrib.c:1172
+#: src/main/attrib.c:1168
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr " 全ての属性は名前を持っていなければなりません[%d が持っていません] "
 
-#: src/main/attrib.c:1271
+#: src/main/attrib.c:1267
 msgid "'which' must be of mode character"
 msgstr " 'which' は文字列モードでなくてはなりません "
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1269
 msgid "exactly one attribute 'which' must be given"
 msgstr " 性格に一つの属性 'which' が与えらなければなりません "
 
-#: src/main/attrib.c:1331 src/main/attrib.c:1354 src/main/subscript.c:234
+#: src/main/attrib.c:1327 src/main/attrib.c:1350 src/main/subscript.c:234
 #: src/main/subscript.c:238 src/main/subset.c:1146 src/main/subset.c:1197
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr " '%s' の '%s'　への部分的マッチ "
 
-#: src/main/attrib.c:1386
+#: src/main/attrib.c:1382
 msgid "'name' must be non-null character string"
 msgstr " 'name' は NULL でない文字列でなければなりません "
 
-#: src/main/attrib.c:1509 src/main/attrib.c:1580 src/main/attrib.c:1617
+#: src/main/attrib.c:1505 src/main/attrib.c:1576 src/main/attrib.c:1613
 msgid "invalid type or length for slot name"
 msgstr " スロット名の型または長さが不正です "
 
-#: src/main/attrib.c:1543
+#: src/main/attrib.c:1539
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 " 型 \"%s\" のオブジェクトからはスロット (\"%s\") を得ることは出来ません "
 
-#: src/main/attrib.c:1554
+#: src/main/attrib.c:1550
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 " 名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
 "ん "
 
-#: src/main/attrib.c:1571
+#: src/main/attrib.c:1567
 msgid "attempt to set slot on NULL object"
 msgstr " NULL オブジェクトに対して スロットを設定しようとしました "
 
-#: src/main/attrib.c:1612
+#: src/main/attrib.c:1608
 msgid "formal classes cannot be used without the methods package"
 msgstr " メソッドパッケージなしにフォーマルクラス（formal class）は使えません "
 
-#: src/main/attrib.c:1624
+#: src/main/attrib.c:1620
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1350,7 +1350,7 @@ msgstr ""
 " スロット \"%s\"を、スロットを持たない基本クラス(\"%s\")のオブジェクトから得"
 "ようとしました "
 
-#: src/main/attrib.c:1628
+#: src/main/attrib.c:1624
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1425,7 +1425,7 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 
 #: src/main/builtin.c:71 src/main/builtin.c:80 src/main/builtin.c:280
 #: src/main/builtin.c:313 src/main/builtin.c:352 src/main/builtin.c:362
-#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2945
+#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2957
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
 #: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
@@ -1856,7 +1856,7 @@ msgstr " 未知のパレットです（2色以上必要です） "
 msgid "maximum number of colors exceeded"
 msgstr " 色の数が最大値を超えてしまいました "
 
-#: src/main/colors.c:1315 src/main/engine.c:3084
+#: src/main/colors.c:1315 src/main/engine.c:3096
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr " 'color' または 'lty' 中の16進数が不正です "
 
@@ -1886,19 +1886,19 @@ msgstr " 色の指定が不正です "
 msgid "invalid complex unary operator"
 msgstr " 不正な複素単項演算子です "
 
-#: src/main/complex.c:265
+#: src/main/complex.c:251
 msgid "unimplemented complex operation"
 msgstr " 未実装の複素演算です "
 
-#: src/main/complex.c:368
+#: src/main/complex.c:354
 msgid "non-numeric argument to function"
 msgstr " 関数の引数が数値ではありません "
 
-#: src/main/complex.c:821
+#: src/main/complex.c:807
 msgid "invalid polynomial coefficient"
 msgstr " 多項式の係数が不正です "
 
-#: src/main/complex.c:826
+#: src/main/complex.c:812
 msgid "root finding code failed"
 msgstr " 根を見つけるコードが失敗しました "
 
@@ -2112,12 +2112,12 @@ msgstr " xzfile 接続の割り当てに失敗しました "
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr " これは R のこのビルトがサポートしていない %s-圧縮ファイルです。 "
 
-#: src/main/connections.c:1874 src/modules/X11/devX11.c:3348
+#: src/main/connections.c:1874 src/modules/X11/devX11.c:3350
 msgid "memory allocation to copy clipboard failed"
 msgstr " クリップボードのコピーでメモリ確保に失敗しました "
 
-#: src/main/connections.c:1879 src/modules/X11/devX11.c:3327
-#: src/modules/X11/devX11.c:3332
+#: src/main/connections.c:1879 src/modules/X11/devX11.c:3329
+#: src/modules/X11/devX11.c:3334
 msgid "clipboard cannot be opened or contains no text"
 msgstr " クリップボードを開くことができないか，中身がありません "
 
@@ -2813,24 +2813,24 @@ msgstr " Fortran に渡された引数 %d のモードが不正です "
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2496
+#: src/main/dotcode.c:2472
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr " 言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません "
 
-#: src/main/dotcode.c:2563
+#: src/main/dotcode.c:2539
 msgid "invalid function in call_R"
 msgstr " call_R 中の関数が不正です "
 
-#: src/main/dotcode.c:2565
+#: src/main/dotcode.c:2541
 msgid "invalid argument count in call_R"
 msgstr " call_R の引数の個数が不正です "
 
-#: src/main/dotcode.c:2567
+#: src/main/dotcode.c:2543
 msgid "invalid return value count in call_R"
 msgstr " call_R の戻り値の個数が不正です "
 
-#: src/main/dotcode.c:2601
+#: src/main/dotcode.c:2577
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr " call_R では \"%s\" というモードはサポートされていません "
@@ -2952,99 +2952,105 @@ msgstr " 行末が不正です "
 msgid "invalid line join"
 msgstr " 行をまとめられません "
 
-#: src/main/engine.c:795
+#: src/main/engine.c:760 src/main/engine.c:864 src/main/engine.c:1097
+#: src/main/engine.c:1204 src/main/engine.c:1327 src/main/engine.c:1391
+#, fuzzy
+msgid "'lwd' must be non-negative and finite"
+msgstr " 'gap' は，非負の整数でなくてはなりません "
+
+#: src/main/engine.c:797
 msgid "out of memory while clipping polyline"
 msgstr " polyline をクリッピングしている間にメモリが尽きました "
 
-#: src/main/engine.c:1375
+#: src/main/engine.c:1385
 msgid "Path rendering is not implemented for this device"
 msgstr " このデバイスではパスのレンダリングは実装されていません "
 
-#: src/main/engine.c:1393
+#: src/main/engine.c:1405
 msgid "Invalid graphics path"
 msgstr " 無効なグラフィックスパスです "
 
-#: src/main/engine.c:1412
+#: src/main/engine.c:1424
 msgid "Raster rendering is not implemented for this device"
 msgstr " このデバイスでは ラスタレンダリングは実装されていません "
 
-#: src/main/engine.c:1436
+#: src/main/engine.c:1448
 msgid "Raster capture is not available for this device"
 msgstr " このデバイスではラスタ取り込みは使用できません "
 
-#: src/main/engine.c:1643
+#: src/main/engine.c:1655
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 " フォントフェース %d はフォントファミリー '%s' ではサポートされていません "
 
-#: src/main/engine.c:1959
+#: src/main/engine.c:1971
 msgid "no graphics device is active"
 msgstr " 有効なグラフィックスデバイスがありません "
 
-#: src/main/engine.c:2037
+#: src/main/engine.c:2049
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr " pchの値 '%d' は現在のロケールでは不正です "
 
-#: src/main/engine.c:2294
+#: src/main/engine.c:2306
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr " pch の値 '%d' は未実装です "
 
-#: src/main/engine.c:2317
+#: src/main/engine.c:2329
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr " 不正な軸範囲です [GEPretty(.,.,n=%d) "
 
-#: src/main/engine.c:2321
+#: src/main/engine.c:2333
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr " 無限に軸が伸ばされています [GEPretty(%g,%g,%d)]  "
 
-#: src/main/engine.c:2359
+#: src/main/engine.c:2371
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.) : new *lo = %g < %g = x1  "
 
-#: src/main/engine.c:2361
+#: src/main/engine.c:2373
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.) : new *up = %g > %g = x2  "
 
-#: src/main/engine.c:2757
+#: src/main/engine.c:2769
 msgid "Display list redraw incomplete"
 msgstr " ディスプレイリストが不完全に再描画されました "
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2953
 msgid "'expr' argument must be an expression"
 msgstr " 'expr' 引数は式でなくてはなりません "
 
-#: src/main/engine.c:2943
+#: src/main/engine.c:2955
 msgid "'list' argument must be a list"
 msgstr " 'list' 引数はリストでなくてはなりません "
 
-#: src/main/engine.c:2949
+#: src/main/engine.c:2961
 msgid "'env' argument must be an environment"
 msgstr " 'env' 引数は環境でなくてはなりません "
 
-#: src/main/engine.c:2971
+#: src/main/engine.c:2983
 msgid "invalid graphics state"
 msgstr " グラフィックスの状態が不正です "
 
-#: src/main/engine.c:3029 src/main/engine.c:3037
+#: src/main/engine.c:3041 src/main/engine.c:3049
 msgid "invalid multibyte char in pch=\"c\""
 msgstr " pch=\"c\" 中に不正なマルチバイトの char があります "
 
-#: src/main/engine.c:3107
+#: src/main/engine.c:3119
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr " 行のタイプが不正です : 行の長さは 2,4,6,8 のいずれかにして下さい "
 
-#: src/main/engine.c:3111
+#: src/main/engine.c:3123
 msgid "invalid line type: zeroes are not allowed"
 msgstr " 不正な線種：ゼロは許されません "
 
-#: src/main/engine.c:3120 src/main/engine.c:3128 src/main/engine.c:3135
+#: src/main/engine.c:3132 src/main/engine.c:3140 src/main/engine.c:3147
 msgid "invalid line type"
 msgstr " 行のタイプが不正です "
 
@@ -6679,11 +6685,11 @@ msgstr " 'method' は文字列でなければなりません "
 #: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
 #: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
 #: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1006
-#: src/modules/lapack/Lapack.c:1012 src/modules/lapack/Lapack.c:1051
-#: src/modules/lapack/Lapack.c:1058 src/modules/lapack/Lapack.c:1062
-#: src/modules/lapack/Lapack.c:1091 src/modules/lapack/Lapack.c:1098
-#: src/modules/lapack/Lapack.c:1123
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
+#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
+#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
+#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1126
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr " エラーコード %d がLapack ルーチン '%s' から返されました "
@@ -6794,12 +6800,12 @@ msgid "argument %d of Lapack routine %s had invalid value"
 msgstr " Lapack ルーチン%2$sの %1$d 引数が不正な値を持っています "
 
 #: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1044 src/modules/lapack/Lapack.c:1084
+#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr " 右辺は %d 個の行を持つべきです（%d 行ではなくて） "
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1118
+#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
 msgid "'a' must be a square matrix"
 msgstr " 'a' は正方行列でなければなりません "
 
@@ -6813,8 +6819,8 @@ msgid "the leading minor of order %d is not positive definite"
 msgstr " 次数 %d の主対角行列が正定値ではありません "
 
 #: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:993
-#: src/modules/lapack/Lapack.c:1111
+#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
+#: src/modules/lapack/Lapack.c:1114
 msgid "'a' must be a numeric matrix"
 msgstr " 'a' は数値行列でなければなりません "
 
@@ -6837,21 +6843,22 @@ msgstr " 'size' は行数 nrow(x) = %d を超えることはできません "
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr " 要素 (%d, %d) が0なので，逆数が計算できません "
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1037
-#: src/modules/lapack/Lapack.c:1075
+#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
+#: src/modules/lapack/Lapack.c:1078
 msgid "'b' must be a numeric matrix"
 msgstr " 'b' は数値行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:975
-msgid "Lapack routine dgesv: system is exactly singular"
+#, fuzzy, c-format
+msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr " Lapack routine dgesv: 線形方程式系は正確に特異です "
 
-#: src/modules/lapack/Lapack.c:980
+#: src/modules/lapack/Lapack.c:982
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr " システムは数値的に特異です：条件数の逆数 = %g "
 
-#: src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1116
 msgid "argument 'logarithm' must be logical"
 msgstr " 引数 'logarithm' は論理型でなくてはなりません "
 
@@ -7034,50 +7041,50 @@ msgstr " XImage を作れません "
 msgid "attempt to use the locator after dev.hold()"
 msgstr " dev.hold() の実行後にロケーターを使おうとしました "
 
-#: src/modules/X11/devX11.c:3087
+#: src/modules/X11/devX11.c:3089
 #, c-format
 msgid "unable to start device %s"
 msgstr " デバイス '%s' を開始できません "
 
-#: src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3113
 msgid "invalid 'width' or 'height'"
 msgstr " 'width' または 'height' が不正です "
 
-#: src/modules/X11/devX11.c:3118
+#: src/modules/X11/devX11.c:3120
 msgid "invalid colortype passed to X11 driver"
 msgstr " 不正な色タイプが X11 ドライバーに引き渡されました "
 
-#: src/modules/X11/devX11.c:3132
+#: src/modules/X11/devX11.c:3134
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr " 未知のX11カラーモデルです（モノクロを使用します） "
 
-#: src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3224
 msgid "no plot on device to save"
 msgstr " デバイス上に保存すべきプロットがありません "
 
-#: src/modules/X11/devX11.c:3224
+#: src/modules/X11/devX11.c:3226
 msgid "not an open X11cairo device"
 msgstr " X11cairoデバイスを開けません "
 
-#: src/modules/X11/devX11.c:3233
+#: src/modules/X11/devX11.c:3235
 #, c-format
 msgid "cannot open file '%s'"
 msgstr " ファイル '%s' を開くことができません "
 
-#: src/modules/X11/devX11.c:3250
+#: src/modules/X11/devX11.c:3252
 msgid "savePlot() is not supported on this build"
 msgstr " このビルドではsavePlot()はサポートされていません "
 
-#: src/modules/X11/devX11.c:3290
+#: src/modules/X11/devX11.c:3292
 msgid "unable to contact X11 display"
 msgstr " X11ディスプレイに接続できません "
 
-#: src/modules/X11/devX11.c:3339
+#: src/modules/X11/devX11.c:3341
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
 msgstr " クリップボードの内容を読み込めません(エラーコード %d) "
 
-#: src/modules/X11/devX11.c:3373
+#: src/modules/X11/devX11.c:3375
 msgid "cannot allocate memory for X11Routines structure"
 msgstr " X11Routines ストラクチャにメモリを割り当てることができません "
 

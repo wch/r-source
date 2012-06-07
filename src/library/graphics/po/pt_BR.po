@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -102,6 +102,10 @@ msgstr "argumento inválido para GBox"
 msgid "Metric information not available for this device"
 msgstr "informação métrica não disponível para este dispositivo"
 
+#: par-common.c:138
+msgid "graphical parameter 'family' has a maximum length of 200 bytes"
+msgstr "parâmetro gráfico 'family' tem o comprimento máximo de 200 bytes"
+
 #: par.c:158
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
@@ -112,64 +116,60 @@ msgstr "valor inválido especificado para parâmetro gráfico \"%s\""
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "parâmetro gráfico \"%s\" tem o comprimento errado"
 
-#: par.c:260 par.c:695
+#: par.c:260 par.c:670
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "parâmetro gráfico \"%s\" não pode ser especificado"
 
-#: par.c:328 par.c:723
-msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "parâmetro gráfico 'family' tem o comprimento máximo de 200 bytes"
-
-#: par.c:457
+#: par.c:432
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "parâmetro \"mfg\" tem o comprimento errado"
 
-#: par.c:465
+#: par.c:440
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "parâmetro  \"i\" em \"mfg\" fora dos limites"
 
-#: par.c:467
+#: par.c:442
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "parâmetro  \"j\" em \"mfg\" fora dos limites"
 
-#: par.c:472
+#: par.c:447
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "valor de nr em \"mfg\" está errado e vai ser ignorado"
 
-#: par.c:474
+#: par.c:449
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "valor de nc em \"mfg\" está errado e vai ser ignorado"
 
-#: par.c:500
+#: par.c:475
 msgid "calling par(new=TRUE) with no plot"
 msgstr "chamada de par(new=TRUE) sem plot"
 
-#: par.c:687 par.c:1104
+#: par.c:662 par.c:1046
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "parâmetro gráfico \"%s\" é obsoleto"
 
-#: par.c:691 par.c:1108
+#: par.c:666 par.c:1050
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" não é um parâmetro gráfico"
 
-#: par.c:1161
+#: par.c:1103
 msgid "invalid argument passed to par()"
 msgstr "argumento inválido passado para par()"
 
-#: par.c:1205
+#: par.c:1147
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "muitas linhas no layout, limite %d"
 
-#: par.c:1211
+#: par.c:1153
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "muitas colunas no layout, limite %d"
 
-#: par.c:1213
+#: par.c:1155
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "muitas células no layout, limite %d"

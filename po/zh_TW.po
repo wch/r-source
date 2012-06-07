@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-27 16:02+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -162,8 +162,8 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:126 src/main/agrep.c:130
 #: src/main/agrep.c:763 src/main/agrep.c:768 src/main/apply.c:288
 #: src/main/apply.c:290 src/main/apply.c:293 src/main/array.c:86
-#: src/main/array.c:1150 src/main/array.c:1282 src/main/array.c:1284
-#: src/main/array.c:1285 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1150 src/main/array.c:1279 src/main/array.c:1281
+#: src/main/array.c:1282 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -269,9 +269,9 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
 #: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3214
-#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
-#: src/modules/X11/devX11.c:3244 src/unix/sys-std.c:1212
+#: src/modules/lapack/Lapack.c:1080 src/modules/X11/devX11.c:3216
+#: src/modules/X11/devX11.c:3219 src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3246 src/unix/sys-std.c:1212
 #: src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
@@ -334,10 +334,10 @@ msgstr "時間戳記不正確"
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
 #: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3115 src/modules/X11/devX11.c:3142
-#: src/modules/X11/devX11.c:3147 src/modules/X11/devX11.c:3152
-#: src/modules/X11/devX11.c:3162 src/modules/X11/devX11.c:3167
-#: src/modules/X11/devX11.c:3171 src/modules/X11/devX11.c:3175
+#: src/modules/X11/devX11.c:3117 src/modules/X11/devX11.c:3144
+#: src/modules/X11/devX11.c:3149 src/modules/X11/devX11.c:3154
+#: src/modules/X11/devX11.c:3164 src/modules/X11/devX11.c:3169
+#: src/modules/X11/devX11.c:3173 src/modules/X11/devX11.c:3177
 #: src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
@@ -886,7 +886,7 @@ msgstr "輸入字串 y[%d] 在這個語區無效"
 msgid "regcomp error: '%s'"
 msgstr "正規表示式編譯錯誤：'%s'"
 
-#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:760
+#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:746
 msgid "invalid length"
 msgstr "長度不正確"
 
@@ -975,34 +975,34 @@ msgstr "一元運算子不正確"
 msgid "NAs produced by integer overflow"
 msgstr "整數向上溢位產生了 NA"
 
-#: src/main/arithmetic.c:1123
+#: src/main/arithmetic.c:1074
 msgid "unimplemented real function of 1 argument"
 msgstr "單引數的實數函數目前還沒有實作"
 
-#: src/main/arithmetic.c:1137 src/main/complex.c:650 src/main/complex.c:720
+#: src/main/arithmetic.c:1088 src/main/complex.c:636 src/main/complex.c:706
 msgid "unimplemented complex function"
 msgstr "尚未實作複數功能"
 
-#: src/main/arithmetic.c:1457 src/main/arithmetic.c:1844
-#: src/main/arithmetic.c:2020 src/main/arithmetic.c:2131
+#: src/main/arithmetic.c:1348 src/main/arithmetic.c:1698
+#: src/main/arithmetic.c:1874 src/main/arithmetic.c:1985
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d 個數值引數的實數函數尚未實作"
 
-#: src/main/arithmetic.c:1487
+#: src/main/arithmetic.c:1378
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d 個引數傳遞給 '%s'，但它最多只能用兩個引數"
 
-#: src/main/arithmetic.c:1506
+#: src/main/arithmetic.c:1397
 msgid "invalid second argument of length 0"
 msgstr "第二引數長度為 0，不正確"
 
-#: src/main/arithmetic.c:1576
+#: src/main/arithmetic.c:1467
 msgid "invalid argument 'base' of length 0"
 msgstr "長度為 0 的無效引數 '基底'"
 
-#: src/main/arithmetic.c:1584
+#: src/main/arithmetic.c:1475
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "給了 'log' %d 個引數，但它最多只能用兩個引數"
@@ -1117,13 +1117,13 @@ msgstr "'perm' 的值在範圍外"
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'resize' 必須為真或假"
 
-#: src/main/array.c:1294
+#: src/main/array.c:1291
 msgid "'x' must be numeric"
 msgstr "'x' 必須是數值"
 
 #: src/main/attrib.c:39 src/main/attrib.c:226 src/main/attrib.c:260
-#: src/main/attrib.c:282 src/main/attrib.c:399 src/main/attrib.c:446
-#: src/main/attrib.c:496
+#: src/main/attrib.c:282 src/main/attrib.c:395 src/main/attrib.c:442
+#: src/main/attrib.c:492
 msgid "attempt to set an attribute on NULL"
 msgstr "試圖在 NULL 上設定屬性"
 
@@ -1137,196 +1137,196 @@ msgstr "列名稱必須是 '字元' 或 '整數' ，而不是 '%s'"
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: 標記的類型 (%s) 不正確"
 
-#: src/main/attrib.c:374
+#: src/main/attrib.c:370
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "'names' 的類型 (%s) 不正確: 必須是向量"
 
-#: src/main/attrib.c:377
+#: src/main/attrib.c:373
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr "'names' 屬性 [%d] 必須和向量的長度 [%d] 一樣"
 
-#: src/main/attrib.c:382
+#: src/main/attrib.c:378
 msgid "names() applied to a non-vector"
 msgstr "names() 被用於非向量"
 
-#: src/main/attrib.c:390
+#: src/main/attrib.c:386
 msgid "invalid time series parameters specified"
 msgstr "時間序列參數設定不正確"
 
-#: src/main/attrib.c:403
+#: src/main/attrib.c:399
 msgid "'tsp' attribute must be numeric"
 msgstr "'tsp' 屬性必須是數值"
 
-#: src/main/attrib.c:409
+#: src/main/attrib.c:405
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "'tsp' 屬性必須是長度為三的數值"
 
-#: src/main/attrib.c:426
+#: src/main/attrib.c:422
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "零長度向量不能指派為 'tsp'"
 
-#: src/main/attrib.c:457
+#: src/main/attrib.c:453
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "試圖設定無效的 'comment' 屬性"
 
-#: src/main/attrib.c:505
+#: src/main/attrib.c:501
 msgid "adding class \"factor\" to an invalid object"
 msgstr "加入 \"factor\" 類別到無效的物件"
 
-#: src/main/attrib.c:513
+#: src/main/attrib.c:509
 msgid "attempt to set invalid 'class' attribute"
 msgstr "試圖設定無效的 'class' 屬性"
 
-#: src/main/attrib.c:768
+#: src/main/attrib.c:764
 #, c-format
 msgid "Class '%s' has no 'names' slot"
 msgstr "類別 '%s' 沒有任何 'names' 插槽"
 
-#: src/main/attrib.c:770
+#: src/main/attrib.c:766
 #, c-format
 msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
 msgstr "類別 '%s' 沒有任何 'names' 插槽；指派名稱屬性將建立無效的物件"
 
-#: src/main/attrib.c:773
+#: src/main/attrib.c:769
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
 msgstr "在非向量類別 ('%s') 中使用 names()<- 以設定 'names' 插槽是不合法的"
 
-#: src/main/attrib.c:803
+#: src/main/attrib.c:799
 msgid "incompatible 'names' argument"
 msgstr "不相容的 'names' 引數"
 
-#: src/main/attrib.c:858
+#: src/main/attrib.c:854
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "以無效的類型 (%s) 設定 'names' 屬性"
 
-#: src/main/attrib.c:929
+#: src/main/attrib.c:925
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' 被應用於非陣列"
 
-#: src/main/attrib.c:934
+#: src/main/attrib.c:930
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' 必須是串列"
 
-#: src/main/attrib.c:937 src/main/attrib.c:960
+#: src/main/attrib.c:933 src/main/attrib.c:956
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames' 的長度 [%d] 必須同 'dims' 的長度 [%d] 相等"
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:962
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "設 'dimnames' 時的類型 (%s) 不正確 (必須是向量)"
 
-#: src/main/attrib.c:969
+#: src/main/attrib.c:965
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames' 的長度 [%d] 必須與陣列範圍相等"
 
-#: src/main/attrib.c:1041 src/main/builtin.c:62 src/main/builtin.c:99
+#: src/main/attrib.c:1037 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:72 src/main/paste.c:290
 #: src/main/random.c:501
 msgid "invalid first argument"
 msgstr "第一個引數不正確"
 
-#: src/main/attrib.c:1044
+#: src/main/attrib.c:1040
 msgid "invalid second argument"
 msgstr "第二個引數不正確"
 
-#: src/main/attrib.c:1052
+#: src/main/attrib.c:1048
 msgid "length-0 dimension vector is invalid"
 msgstr "長度為零的維度向量無效"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1053
 msgid "the dims contain missing values"
 msgstr "維度包含缺少值"
 
-#: src/main/attrib.c:1059
+#: src/main/attrib.c:1055
 msgid "the dims contain negative values"
 msgstr "維度包含負值"
 
-#: src/main/attrib.c:1064
+#: src/main/attrib.c:1060
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr "維度 [product %d] 不符合物件 [%d] 的長度"
 
-#: src/main/attrib.c:1066
+#: src/main/attrib.c:1062
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "維度 [product %d] 不符合物件 [%d] 的長度"
 
-#: src/main/attrib.c:1133
+#: src/main/attrib.c:1129
 msgid "duplicated levels will not be allowed in factors anymore"
 msgstr "重複等級將不再被允許存在因子中"
 
-#: src/main/attrib.c:1163
+#: src/main/attrib.c:1159
 msgid "attributes must be a list or NULL"
 msgstr "屬性必須是串列或空值"
 
-#: src/main/attrib.c:1168
+#: src/main/attrib.c:1164
 msgid "attributes must be named"
 msgstr "屬性必須命名"
 
-#: src/main/attrib.c:1172
+#: src/main/attrib.c:1168
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的屬性都必須有名稱 [%d 卻沒有]"
 
-#: src/main/attrib.c:1271
+#: src/main/attrib.c:1267
 msgid "'which' must be of mode character"
 msgstr "'which' 的模式必須是字元"
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1269
 msgid "exactly one attribute 'which' must be given"
 msgstr "必須給定 'which' 剛好一個屬性"
 
-#: src/main/attrib.c:1331 src/main/attrib.c:1354 src/main/subscript.c:234
+#: src/main/attrib.c:1327 src/main/attrib.c:1350 src/main/subscript.c:234
 #: src/main/subscript.c:238 src/main/subset.c:1146 src/main/subset.c:1197
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s' 部份匹配到 '%s'"
 
-#: src/main/attrib.c:1386
+#: src/main/attrib.c:1382
 msgid "'name' must be non-null character string"
 msgstr "'name' 必須是非空字串"
 
-#: src/main/attrib.c:1509 src/main/attrib.c:1580 src/main/attrib.c:1617
+#: src/main/attrib.c:1505 src/main/attrib.c:1576 src/main/attrib.c:1613
 msgid "invalid type or length for slot name"
 msgstr "名稱插槽的類型或長度不正確"
 
-#: src/main/attrib.c:1543
+#: src/main/attrib.c:1539
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "類型 \"%2$s\" 的物件中沒有 \"%1$s\" 這樣一個插槽"
 
-#: src/main/attrib.c:1554
+#: src/main/attrib.c:1550
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\" 插槽名不存在於 \"%2$s\" 類型物件中"
 
-#: src/main/attrib.c:1571
+#: src/main/attrib.c:1567
 msgid "attempt to set slot on NULL object"
 msgstr "試圖設在空值物件上定插槽"
 
-#: src/main/attrib.c:1612
+#: src/main/attrib.c:1608
 msgid "formal classes cannot be used without the methods package"
 msgstr "一定要有方法套件才能使用正式類別"
 
-#: src/main/attrib.c:1624
+#: src/main/attrib.c:1620
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "無法從沒有插槽的基本類別 (\"%2$s\") 的物件中取得 \"%1$s\" 插槽"
 
-#: src/main/attrib.c:1628
+#: src/main/attrib.c:1624
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1399,7 +1399,7 @@ msgstr "指定的向量大小太大"
 
 #: src/main/builtin.c:71 src/main/builtin.c:80 src/main/builtin.c:280
 #: src/main/builtin.c:313 src/main/builtin.c:352 src/main/builtin.c:362
-#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2945
+#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2957
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
 #: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
@@ -1820,7 +1820,7 @@ msgstr "沒有這種調色盤 (需要 >= 兩種顏色)"
 msgid "maximum number of colors exceeded"
 msgstr "顏色的數目已超過最大值"
 
-#: src/main/colors.c:1315 src/main/engine.c:3084
+#: src/main/colors.c:1315 src/main/engine.c:3096
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "十六進位 'color' 設定或 'lty' 設定不正確"
 
@@ -1850,19 +1850,19 @@ msgstr "無效的顏色規格"
 msgid "invalid complex unary operator"
 msgstr "單一複數運算子不正確"
 
-#: src/main/complex.c:265
+#: src/main/complex.c:251
 msgid "unimplemented complex operation"
 msgstr "複數運算目前還沒有實作"
 
-#: src/main/complex.c:368
+#: src/main/complex.c:354
 msgid "non-numeric argument to function"
 msgstr "函數不能有非數值引數"
 
-#: src/main/complex.c:821
+#: src/main/complex.c:807
 msgid "invalid polynomial coefficient"
 msgstr "多項式係數不正確"
 
-#: src/main/complex.c:826
+#: src/main/complex.c:812
 msgid "root finding code failed"
 msgstr "求根運算執行失敗"
 
@@ -2073,12 +2073,12 @@ msgstr "xzfile 連接配置時失敗"
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr "這是 %s 壓縮過的檔案，這版組建的 R 並不支援它"
 
-#: src/main/connections.c:1874 src/modules/X11/devX11.c:3348
+#: src/main/connections.c:1874 src/modules/X11/devX11.c:3350
 msgid "memory allocation to copy clipboard failed"
 msgstr "複製剪貼簿時記憶體配置失敗"
 
-#: src/main/connections.c:1879 src/modules/X11/devX11.c:3327
-#: src/modules/X11/devX11.c:3332
+#: src/main/connections.c:1879 src/modules/X11/devX11.c:3329
+#: src/modules/X11/devX11.c:3334
 msgid "clipboard cannot be opened or contains no text"
 msgstr "打不開剪貼簿，或是剪貼簿不含文字"
 
@@ -2756,24 +2756,24 @@ msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2496
+#: src/main/dotcode.c:2472
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "語言間呼叫不支援此一類型 \"%s\""
 
-#: src/main/dotcode.c:2563
+#: src/main/dotcode.c:2539
 msgid "invalid function in call_R"
 msgstr "call_R 中的函數不正確"
 
-#: src/main/dotcode.c:2565
+#: src/main/dotcode.c:2541
 msgid "invalid argument count in call_R"
 msgstr "call_R 的引數數目不正確"
 
-#: src/main/dotcode.c:2567
+#: src/main/dotcode.c:2543
 msgid "invalid return value count in call_R"
 msgstr "call_R 的回傳值數目不正確"
 
-#: src/main/dotcode.c:2601
+#: src/main/dotcode.c:2577
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R 不支援 '%s' 型式"
@@ -2894,98 +2894,104 @@ msgstr "線條終點發生錯誤"
 msgid "invalid line join"
 msgstr "線條接合發生錯誤"
 
-#: src/main/engine.c:795
+#: src/main/engine.c:760 src/main/engine.c:864 src/main/engine.c:1097
+#: src/main/engine.c:1204 src/main/engine.c:1327 src/main/engine.c:1391
+#, fuzzy
+msgid "'lwd' must be non-negative and finite"
+msgstr "'gap' 必須是正整數"
+
+#: src/main/engine.c:797
 msgid "out of memory while clipping polyline"
 msgstr "剪裁多邊形的時候記憶體不足"
 
-#: src/main/engine.c:1375
+#: src/main/engine.c:1385
 msgid "Path rendering is not implemented for this device"
 msgstr "路徑潤算尚未於這個裝置上實作"
 
-#: src/main/engine.c:1393
+#: src/main/engine.c:1405
 msgid "Invalid graphics path"
 msgstr "無效的圖形路徑"
 
-#: src/main/engine.c:1412
+#: src/main/engine.c:1424
 msgid "Raster rendering is not implemented for this device"
 msgstr "點陣潤算尚未於這個裝置上實作"
 
-#: src/main/engine.c:1436
+#: src/main/engine.c:1448
 msgid "Raster capture is not available for this device"
 msgstr "點陣擷取於這個裝置上無法使用"
 
-#: src/main/engine.c:1643
+#: src/main/engine.c:1655
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "字模家族 '%2$s' 中沒有字模 %1$d"
 
-#: src/main/engine.c:1959
+#: src/main/engine.c:1971
 msgid "no graphics device is active"
 msgstr "沒有作用中的繪圖裝置"
 
-#: src/main/engine.c:2037
+#: src/main/engine.c:2049
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "pch 值 '%d' 在這個語區中無效"
 
-#: src/main/engine.c:2294
+#: src/main/engine.c:2306
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "尚未實作pch '%d' 的值"
 
-#: src/main/engine.c:2317
+#: src/main/engine.c:2329
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "座標範圍不正確 [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2321
+#: src/main/engine.c:2333
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "無限的座標範圍值 [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2359
+#: src/main/engine.c:2371
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
 
-#: src/main/engine.c:2361
+#: src/main/engine.c:2373
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
-#: src/main/engine.c:2757
+#: src/main/engine.c:2769
 msgid "Display list redraw incomplete"
 msgstr "顯示串列重新整理時不完整"
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2953
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引數必須是運算式"
 
-#: src/main/engine.c:2943
+#: src/main/engine.c:2955
 msgid "'list' argument must be a list"
 msgstr "'list' 引數必須是串列"
 
-#: src/main/engine.c:2949
+#: src/main/engine.c:2961
 msgid "'env' argument must be an environment"
 msgstr "'env' 引數必須是環境物件"
 
-#: src/main/engine.c:2971
+#: src/main/engine.c:2983
 msgid "invalid graphics state"
 msgstr "繪圖狀態不正確"
 
-#: src/main/engine.c:3029 src/main/engine.c:3037
+#: src/main/engine.c:3041 src/main/engine.c:3049
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\" 中的多位元組字元不正確"
 
-#: src/main/engine.c:3107
+#: src/main/engine.c:3119
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "無效的列類型: 長度必須是 2, 4, 6 或 8"
 
-#: src/main/engine.c:3111
+#: src/main/engine.c:3123
 msgid "invalid line type: zeroes are not allowed"
 msgstr "無效的線條類型：不允許多個零"
 
-#: src/main/engine.c:3120 src/main/engine.c:3128 src/main/engine.c:3135
+#: src/main/engine.c:3132 src/main/engine.c:3140 src/main/engine.c:3147
 msgid "invalid line type"
 msgstr "無效的列類型"
 
@@ -6557,11 +6563,11 @@ msgstr "'method' 必須是字串"
 #: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
 #: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
 #: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1006
-#: src/modules/lapack/Lapack.c:1012 src/modules/lapack/Lapack.c:1051
-#: src/modules/lapack/Lapack.c:1058 src/modules/lapack/Lapack.c:1062
-#: src/modules/lapack/Lapack.c:1091 src/modules/lapack/Lapack.c:1098
-#: src/modules/lapack/Lapack.c:1123
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
+#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
+#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
+#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1126
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "錯誤程式碼 %d，Lapack 例行程式 '%s'"
@@ -6672,12 +6678,12 @@ msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "Lapack 例行程式 %2$s 的引數 %1$d 具有不正確的值"
 
 #: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1044 src/modules/lapack/Lapack.c:1084
+#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "公式右側應該有 %d 而不是 %d 列"
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1118
+#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
 msgid "'a' must be a square matrix"
 msgstr "'a' 必須是正方形矩陣"
 
@@ -6691,8 +6697,8 @@ msgid "the leading minor of order %d is not positive definite"
 msgstr "序列 %d 前置的次要符號並非肯定明確"
 
 #: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:993
-#: src/modules/lapack/Lapack.c:1111
+#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
+#: src/modules/lapack/Lapack.c:1114
 msgid "'a' must be a numeric matrix"
 msgstr "'a' 必須是數值矩陣"
 
@@ -6715,21 +6721,22 @@ msgstr "'size' 不能超過 nrow(x)=%d"
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "元素 (%d,%d) 為零，因此無法逆向求值"
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1037
-#: src/modules/lapack/Lapack.c:1075
+#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
+#: src/modules/lapack/Lapack.c:1078
 msgid "'b' must be a numeric matrix"
 msgstr "'b' 必須是數值矩陣"
 
 #: src/modules/lapack/Lapack.c:975
-msgid "Lapack routine dgesv: system is exactly singular"
+#, fuzzy, c-format
+msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "Lapack 例行程式 dgesv: 系統正好是獨特的"
 
-#: src/modules/lapack/Lapack.c:980
+#: src/modules/lapack/Lapack.c:982
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "系統計算上是獨特的: 互反條件數=%g"
 
-#: src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1116
 msgid "argument 'logarithm' must be logical"
 msgstr "引數 'logarithm' 必須是邏輯值"
 
@@ -6906,50 +6913,50 @@ msgstr "無法建立 XImage"
 msgid "attempt to use the locator after dev.hold()"
 msgstr "於 dev.hold() 之後試圖使用定位器"
 
-#: src/modules/X11/devX11.c:3087
+#: src/modules/X11/devX11.c:3089
 #, c-format
 msgid "unable to start device %s"
 msgstr "無法開啟裝置 %s"
 
-#: src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3113
 msgid "invalid 'width' or 'height'"
 msgstr "'width' 或 'height' 不正確"
 
-#: src/modules/X11/devX11.c:3118
+#: src/modules/X11/devX11.c:3120
 msgid "invalid colortype passed to X11 driver"
 msgstr "傳給 X11 驅動器的顏色類型不正確"
 
-#: src/modules/X11/devX11.c:3132
+#: src/modules/X11/devX11.c:3134
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "沒有這種 X11 顏色/顏色模型 -- 使用黑白顏色"
 
-#: src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3224
 msgid "no plot on device to save"
 msgstr "裝置上沒有插槽可以儲存"
 
-#: src/modules/X11/devX11.c:3224
+#: src/modules/X11/devX11.c:3226
 msgid "not an open X11cairo device"
 msgstr "不是一個開啟的 X11cairo 裝置"
 
-#: src/modules/X11/devX11.c:3233
+#: src/modules/X11/devX11.c:3235
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "無法開啟檔案 '%s'"
 
-#: src/modules/X11/devX11.c:3250
+#: src/modules/X11/devX11.c:3252
 msgid "savePlot() is not supported on this build"
 msgstr "這次組建並未支援 savePlot()"
 
-#: src/modules/X11/devX11.c:3290
+#: src/modules/X11/devX11.c:3292
 msgid "unable to contact X11 display"
 msgstr "無法連結到 X11 顯示"
 
-#: src/modules/X11/devX11.c:3339
+#: src/modules/X11/devX11.c:3341
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
 msgstr "無法讀取剪貼簿 (錯誤碼 %d)"
 
-#: src/modules/X11/devX11.c:3373
+#: src/modules/X11/devX11.c:3375
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "無法為 X11Routines 結構配置記憶體"
 

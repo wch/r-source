@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:27\n"
 "PO-Revision-Date: 2012-03-06 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -749,11 +749,23 @@ msgstr ""
 "Diese Version von R ist nicht vorbereitet, um Source-Pakete zu installieren\n"
 "Wenn es  aus einem RPM installiert wurde, benötigen Sie evtl. das R-devel RPM"
 
+msgid "system (cmd0):"
+msgstr ""
+
 msgid "installation of package %s had non-zero exit status"
 msgstr "Installation des Pakets %s hatte Exit-Status ungleich 0"
 
+msgid "%d): succeeded '%s'"
+msgstr ""
+
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
+
+msgid "foundpkgs:"
+msgstr ""
+
+msgid "files:"
+msgstr ""
 
 msgid ""
 "installation of one of more packages failed,\n"

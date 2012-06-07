@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:26\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -700,6 +700,14 @@ msgstr "'vec' indeholder NA'er"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' skal sorteres ikkefaldende"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "ugyldig længde for 'row.names'"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "ugyldig længde for 'row.names'"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "bruger det første element for 'value' for typeudtryk"

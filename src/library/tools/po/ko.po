@@ -1,14 +1,14 @@
-## File R_HOME/src/library/tools/po/ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/tools/po/ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2012-06-07 15:27+0100\n"
 "PO-Revision-Date: 2012-03-06 17:56+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -32,7 +32,7 @@ msgstr "파일 '%s' 에서 md5 가 작동하지 않습니다 "
 msgid "pskill() is not supported on this platform"
 msgstr "이 플랫폼에서는 pskill() 이 지원되지 않습니다 "
 
-#: signals.c:137
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "이 플랫폼에서는 psnice() 가 지원되지 않습니다 "
 

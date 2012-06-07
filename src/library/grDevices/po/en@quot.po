@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
-"PO-Revision-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
+"PO-Revision-Date: 2012-06-07 15:26+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -651,6 +651,14 @@ msgstr "invalid ‘width’ or ‘height’"
 #: devWindows.c:3840
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Unable to load winCairo.dll: was it built?"
+
+#: devices.c:43
+msgid "argument must have positive length"
+msgstr "argument must have positive length"
+
+#: devices.c:52
+msgid "invalid argument"
+msgstr "invalid argument"
 
 #: qdBitmap.c:79
 #, c-format

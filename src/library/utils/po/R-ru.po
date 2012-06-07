@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:27\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -751,11 +751,23 @@ msgstr ""
 "Эта версия R не подготовлена для инсталляции пакетов из исходников\n"
 "Если она была поставлена из RPM, Вам, возможно, потребуется R-devel RPM"
 
+msgid "system (cmd0):"
+msgstr ""
+
 msgid "installation of package %s had non-zero exit status"
 msgstr "установка пакета %s имеет ненулевой статус выхода"
 
+msgid "%d): succeeded '%s'"
+msgstr ""
+
 msgid "unable to create temporary directory %s"
 msgstr "не могу создать временную директорию %s"
+
+msgid "foundpkgs:"
+msgstr ""
+
+msgid "files:"
+msgstr ""
 
 msgid ""
 "installation of one of more packages failed,\n"

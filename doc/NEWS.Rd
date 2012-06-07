@@ -313,6 +313,8 @@
 
       \item The NA warning messages from e.g. \code{pchisq} now report the
       call to the closure and not that of the \code{.Internal}.
+
+      \item Added Polish translations by Łukasz Daniel.
     }
   }
 

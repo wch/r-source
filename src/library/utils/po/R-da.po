@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:27\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -714,10 +714,22 @@ msgid ""
 "If it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
 
+msgid "system (cmd0):"
+msgstr ""
+
 msgid "installation of package %s had non-zero exit status"
 msgstr ""
 
+msgid "%d): succeeded '%s'"
+msgstr ""
+
 msgid "unable to create temporary directory %s"
+msgstr ""
+
+msgid "foundpkgs:"
+msgstr ""
+
+msgid "files:"
 msgstr ""
 
 msgid ""

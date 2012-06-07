@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -659,6 +659,15 @@ msgstr "devWindow에서 무효인 폭 또는 높이 입니다"
 #, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Rbitmap.dll를 적재 할수가 없습니다"
+
+#: devices.c:43
+msgid "argument must have positive length"
+msgstr ""
+
+#: devices.c:52
+#, fuzzy
+msgid "invalid argument"
+msgstr "무효의 문자열 인수입니다"
 
 #: qdBitmap.c:79
 #, c-format

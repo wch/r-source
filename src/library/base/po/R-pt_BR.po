@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:26\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -719,6 +719,14 @@ msgstr "'vec' contem NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de forma não-decrescente"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "valor inválido"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "valor inválido"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "usando o primeiro elemento de 'value' da expressão de tipo"

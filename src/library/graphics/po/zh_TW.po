@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -103,6 +103,10 @@ msgstr "GBox 引數不正確"
 msgid "Metric information not available for this device"
 msgstr "無法取得這個裝置的度量資訊"
 
+#: par-common.c:138
+msgid "graphical parameter 'family' has a maximum length of 200 bytes"
+msgstr "繪圖參數 'family' 具有最大為 200 位元組的長度"
+
 #: par.c:158
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
@@ -113,64 +117,60 @@ msgstr "繪圖參數 \"%s\" 的值設得不正確"
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "繪圖參數 \"%s\" 的長度不正確"
 
-#: par.c:260 par.c:695
+#: par.c:260 par.c:670
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "無法設定繪圖參數 \"%s\""
 
-#: par.c:328 par.c:723
-msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "繪圖參數 'family' 具有最大為 200 位元組的長度"
-
-#: par.c:457
+#: par.c:432
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "參數 \"mfg\" 的長度不正確"
 
-#: par.c:465
+#: par.c:440
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\" 中的參數 \"i\" 超出範圍"
 
-#: par.c:467
+#: par.c:442
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\" 中的參數 \"j\" 超出範圍"
 
-#: par.c:472
+#: par.c:447
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" 中的 nr 值不正確，忽略不用"
 
-#: par.c:474
+#: par.c:449
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" 中的 nc 值不正確，忽略不用"
 
-#: par.c:500
+#: par.c:475
 msgid "calling par(new=TRUE) with no plot"
 msgstr "呼叫 par(new=TRUE) 而不繪圖"
 
-#: par.c:687 par.c:1104
+#: par.c:662 par.c:1046
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "繪圖參數 \"%s\" 已過時"
 
-#: par.c:691 par.c:1108
+#: par.c:666 par.c:1050
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" 不是一個繪圖參數"
 
-#: par.c:1161
+#: par.c:1103
 msgid "invalid argument passed to par()"
 msgstr "傳給 par() 的引數無效"
 
-#: par.c:1205
+#: par.c:1147
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout 中的列數太多, 極值為 %d"
 
-#: par.c:1211
+#: par.c:1153
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout 中的行數太多, 極值為 %d"
 
-#: par.c:1213
+#: par.c:1155
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout 中的元素太多, 極值為 %d"

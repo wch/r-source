@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-27 16:02+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -166,8 +166,8 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:126 src/main/agrep.c:130
 #: src/main/agrep.c:763 src/main/agrep.c:768 src/main/apply.c:288
 #: src/main/apply.c:290 src/main/apply.c:293 src/main/array.c:86
-#: src/main/array.c:1150 src/main/array.c:1282 src/main/array.c:1284
-#: src/main/array.c:1285 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1150 src/main/array.c:1279 src/main/array.c:1281
+#: src/main/array.c:1282 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -273,9 +273,9 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
 #: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3214
-#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
-#: src/modules/X11/devX11.c:3244 src/unix/sys-std.c:1212
+#: src/modules/lapack/Lapack.c:1080 src/modules/X11/devX11.c:3216
+#: src/modules/X11/devX11.c:3219 src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3246 src/unix/sys-std.c:1212
 #: src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
@@ -340,10 +340,10 @@ msgstr "marque (timestamp) incorrecte"
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
 #: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3115 src/modules/X11/devX11.c:3142
-#: src/modules/X11/devX11.c:3147 src/modules/X11/devX11.c:3152
-#: src/modules/X11/devX11.c:3162 src/modules/X11/devX11.c:3167
-#: src/modules/X11/devX11.c:3171 src/modules/X11/devX11.c:3175
+#: src/modules/X11/devX11.c:3117 src/modules/X11/devX11.c:3144
+#: src/modules/X11/devX11.c:3149 src/modules/X11/devX11.c:3154
+#: src/modules/X11/devX11.c:3164 src/modules/X11/devX11.c:3169
+#: src/modules/X11/devX11.c:3173 src/modules/X11/devX11.c:3177
 #: src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
@@ -919,7 +919,7 @@ msgstr ""
 msgid "regcomp error: '%s'"
 msgstr "erreur regcomp : '%s'"
 
-#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:760
+#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:746
 msgid "invalid length"
 msgstr "taille incorrecte"
 
@@ -1010,34 +1010,34 @@ msgstr "opérateur unitaire incorrect"
 msgid "NAs produced by integer overflow"
 msgstr "NA produit par débordement d'entier par le haut"
 
-#: src/main/arithmetic.c:1123
+#: src/main/arithmetic.c:1074
 msgid "unimplemented real function of 1 argument"
 msgstr "fonction réelle à un argument non implémentée"
 
-#: src/main/arithmetic.c:1137 src/main/complex.c:650 src/main/complex.c:720
+#: src/main/arithmetic.c:1088 src/main/complex.c:636 src/main/complex.c:706
 msgid "unimplemented complex function"
 msgstr "fonction complexe non implémentée"
 
-#: src/main/arithmetic.c:1457 src/main/arithmetic.c:1844
-#: src/main/arithmetic.c:2020 src/main/arithmetic.c:2131
+#: src/main/arithmetic.c:1348 src/main/arithmetic.c:1698
+#: src/main/arithmetic.c:1874 src/main/arithmetic.c:1985
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "fonction réelle de %d arguments numériques non implémentée"
 
-#: src/main/arithmetic.c:1487
+#: src/main/arithmetic.c:1378
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d arguments passés à '%s' qui en exige 1 ou 2"
 
-#: src/main/arithmetic.c:1506
+#: src/main/arithmetic.c:1397
 msgid "invalid second argument of length 0"
 msgstr "second argument de taille nulle incorrect"
 
-#: src/main/arithmetic.c:1576
+#: src/main/arithmetic.c:1467
 msgid "invalid argument 'base' of length 0"
 msgstr "argument 'base' de taille nulle incorrect"
 
-#: src/main/arithmetic.c:1584
+#: src/main/arithmetic.c:1475
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d arguments passés à 'log' qui en exige 1 ou 2"
@@ -1158,13 +1158,13 @@ msgstr "valeur de 'perm' hors intervalle"
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'resize' doit être TRUE ou FALSE"
 
-#: src/main/array.c:1294
+#: src/main/array.c:1291
 msgid "'x' must be numeric"
 msgstr "'x' doit être numérique"
 
 #: src/main/attrib.c:39 src/main/attrib.c:226 src/main/attrib.c:260
-#: src/main/attrib.c:282 src/main/attrib.c:399 src/main/attrib.c:446
-#: src/main/attrib.c:496
+#: src/main/attrib.c:282 src/main/attrib.c:395 src/main/attrib.c:442
+#: src/main/attrib.c:492
 msgid "attempt to set an attribute on NULL"
 msgstr "tentative de changer un attribut en NULL"
 
@@ -1180,54 +1180,54 @@ msgstr ""
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib : type incorrect (%s) pour TAG"
 
-#: src/main/attrib.c:374
+#: src/main/attrib.c:370
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "type incorrect (%s) pour 'names' : doit être un vecteur"
 
-#: src/main/attrib.c:377
+#: src/main/attrib.c:373
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr "attribut 'names' [%d] doit être de même longueur que le vecteur [%d]"
 
-#: src/main/attrib.c:382
+#: src/main/attrib.c:378
 msgid "names() applied to a non-vector"
 msgstr "names() appliqué à un object autre qu'un vecteur"
 
-#: src/main/attrib.c:390
+#: src/main/attrib.c:386
 msgid "invalid time series parameters specified"
 msgstr "paramètres de série temporelle fournis incorrects"
 
-#: src/main/attrib.c:403
+#: src/main/attrib.c:399
 msgid "'tsp' attribute must be numeric"
 msgstr "l'attribut 'tsp' doit être numérique"
 
-#: src/main/attrib.c:409
+#: src/main/attrib.c:405
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "l'attribut 'tsp' doit être numérique de longueur 3"
 
-#: src/main/attrib.c:426
+#: src/main/attrib.c:422
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "impossible d'affecter 'tsp' à un vecteur de longueur nulle"
 
-#: src/main/attrib.c:457
+#: src/main/attrib.c:453
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "tentative de changer l'attribut 'comment' à une valeur incorrecte"
 
-#: src/main/attrib.c:505
+#: src/main/attrib.c:501
 msgid "adding class \"factor\" to an invalid object"
 msgstr "ajout d'une classe \"factor\" à un objet incorrect"
 
-#: src/main/attrib.c:513
+#: src/main/attrib.c:509
 msgid "attempt to set invalid 'class' attribute"
 msgstr "tentative de changer l'attribut 'class' à une valeur incorrecte"
 
-#: src/main/attrib.c:768
+#: src/main/attrib.c:764
 #, c-format
 msgid "Class '%s' has no 'names' slot"
 msgstr "La classe '%s' n'a pas de slot 'names'"
 
-#: src/main/attrib.c:770
+#: src/main/attrib.c:766
 #, c-format
 msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
@@ -1236,7 +1236,7 @@ msgstr ""
 "La classe '%s' n'a pas de slot 'names'; l'affectation d'un attribut 'names' "
 "créera un object incorrect"
 
-#: src/main/attrib.c:773
+#: src/main/attrib.c:769
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
@@ -1244,133 +1244,133 @@ msgstr ""
 "L'utilisation de names()<- pour changer le slot 'names' dans une classe non "
 "vectorielle ('%s') est interdite"
 
-#: src/main/attrib.c:803
+#: src/main/attrib.c:799
 msgid "incompatible 'names' argument"
 msgstr "argument 'names' incompatible"
 
-#: src/main/attrib.c:858
+#: src/main/attrib.c:854
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "type incorrect (%s) pour l'attribut 'names'"
 
-#: src/main/attrib.c:929
+#: src/main/attrib.c:925
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' appliqué à autre chose qu'un tableau"
 
-#: src/main/attrib.c:934
+#: src/main/attrib.c:930
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' doit être une liste"
 
-#: src/main/attrib.c:937 src/main/attrib.c:960
+#: src/main/attrib.c:933 src/main/attrib.c:956
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 "la longueur de 'dimnames' [%d] doit correspondre à celle de 'dims' [%d]"
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:962
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "type incorrect (%s) pour 'dimnames' (doit être un vecteur)"
 
-#: src/main/attrib.c:969
+#: src/main/attrib.c:965
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "la longueur de 'dimnames' [%d] n'est pas égale à l'étendue du tableau"
 
-#: src/main/attrib.c:1041 src/main/builtin.c:62 src/main/builtin.c:99
+#: src/main/attrib.c:1037 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:72 src/main/paste.c:290
 #: src/main/random.c:501
 msgid "invalid first argument"
 msgstr "premier argument incorrect"
 
-#: src/main/attrib.c:1044
+#: src/main/attrib.c:1040
 msgid "invalid second argument"
 msgstr "second argument incorrect"
 
-#: src/main/attrib.c:1052
+#: src/main/attrib.c:1048
 msgid "length-0 dimension vector is invalid"
 msgstr "vecteur dimension de longueur nulle incorrect"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1053
 msgid "the dims contain missing values"
 msgstr "les dimensions contiennent des valeurs manquantes"
 
-#: src/main/attrib.c:1059
+#: src/main/attrib.c:1055
 msgid "the dims contain negative values"
 msgstr "les dimensions contiennent des valeurs négatives"
 
-#: src/main/attrib.c:1064
+#: src/main/attrib.c:1060
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr "dims [produit %d] ne correspond pas à la longueur de l'objet [%d]"
 
-#: src/main/attrib.c:1066
+#: src/main/attrib.c:1062
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [produit %d] ne correspond pas à la longueur de l'objet [%d]"
 
-#: src/main/attrib.c:1133
+#: src/main/attrib.c:1129
 msgid "duplicated levels will not be allowed in factors anymore"
 msgstr ""
 "les niveaux dupliqués ne seront plus acceptés pour les variables de type "
 "'factor'"
 
-#: src/main/attrib.c:1163
+#: src/main/attrib.c:1159
 msgid "attributes must be a list or NULL"
 msgstr "les attributs doivent être dans une liste, ou alors la valeur 'NULL'"
 
-#: src/main/attrib.c:1168
+#: src/main/attrib.c:1164
 msgid "attributes must be named"
 msgstr "les attributs doivent être nommés"
 
-#: src/main/attrib.c:1172
+#: src/main/attrib.c:1168
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "tous les attributs doivent être nommés [%d ne l'est pas]"
 
-#: src/main/attrib.c:1271
+#: src/main/attrib.c:1267
 msgid "'which' must be of mode character"
 msgstr "'which' doit être en mode caractère"
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1269
 msgid "exactly one attribute 'which' must be given"
 msgstr "un et un seul attribut 'which' doit être fourni"
 
-#: src/main/attrib.c:1331 src/main/attrib.c:1354 src/main/subscript.c:234
+#: src/main/attrib.c:1327 src/main/attrib.c:1350 src/main/subscript.c:234
 #: src/main/subscript.c:238 src/main/subset.c:1146 src/main/subset.c:1197
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "correspondance partielle de '%s' en '%s'"
 
-#: src/main/attrib.c:1386
+#: src/main/attrib.c:1382
 msgid "'name' must be non-null character string"
 msgstr "'name' doit être une chaîne de caractères non nulle"
 
-#: src/main/attrib.c:1509 src/main/attrib.c:1580 src/main/attrib.c:1617
+#: src/main/attrib.c:1505 src/main/attrib.c:1576 src/main/attrib.c:1613
 msgid "invalid type or length for slot name"
 msgstr "type ou longueur incorrect pour le nom d'un slot"
 
-#: src/main/attrib.c:1543
+#: src/main/attrib.c:1539
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "impossible d'obtenir un slot (\"%s\") d'un objet de type \"%s\""
 
-#: src/main/attrib.c:1554
+#: src/main/attrib.c:1550
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "aucun slot de nom \"%s\" pour cet objet de la classe \"%s\""
 
-#: src/main/attrib.c:1571
+#: src/main/attrib.c:1567
 msgid "attempt to set slot on NULL object"
 msgstr "tentative de changer le slot d'un objet en NULL"
 
-#: src/main/attrib.c:1612
+#: src/main/attrib.c:1608
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 "les classes formelles ne peuvent être utilisées sans le package 'methods'"
 
-#: src/main/attrib.c:1624
+#: src/main/attrib.c:1620
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1379,7 +1379,7 @@ msgstr ""
 "tentative d'obtenir le slot \"%s\" d'un objet d'une classe élémentaire (\"%s"
 "\") sans slots"
 
-#: src/main/attrib.c:1628
+#: src/main/attrib.c:1624
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1457,7 +1457,7 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 
 #: src/main/builtin.c:71 src/main/builtin.c:80 src/main/builtin.c:280
 #: src/main/builtin.c:313 src/main/builtin.c:352 src/main/builtin.c:362
-#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2945
+#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2957
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
 #: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
@@ -1898,7 +1898,7 @@ msgstr "palette de couleurs inconnue (nécessite >= 2 couleurs)"
 msgid "maximum number of colors exceeded"
 msgstr "nombre maximum de couleurs dépassé"
 
-#: src/main/colors.c:1315 src/main/engine.c:3084
+#: src/main/colors.c:1315 src/main/engine.c:3096
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "nombre hexadécimal incorrect dans 'color' ou 'lty'"
 
@@ -1929,19 +1929,19 @@ msgstr "Spécification de couleur incorrecte"
 msgid "invalid complex unary operator"
 msgstr "opérateur complexe unitaire incorrect"
 
-#: src/main/complex.c:265
+#: src/main/complex.c:251
 msgid "unimplemented complex operation"
 msgstr "opération complexe non implémentée"
 
-#: src/main/complex.c:368
+#: src/main/complex.c:354
 msgid "non-numeric argument to function"
 msgstr "argument non numérique pour une fonction"
 
-#: src/main/complex.c:821
+#: src/main/complex.c:807
 msgid "invalid polynomial coefficient"
 msgstr "coefficient de polynôme incorrect"
 
-#: src/main/complex.c:826
+#: src/main/complex.c:812
 msgid "root finding code failed"
 msgstr "le code de recherche de zéro a échoué"
 
@@ -2160,12 +2160,12 @@ msgstr ""
 "ceci est un fichier compressé par %s pour lequel cette version de R ne "
 "propose pas de support"
 
-#: src/main/connections.c:1874 src/modules/X11/devX11.c:3348
+#: src/main/connections.c:1874 src/modules/X11/devX11.c:3350
 msgid "memory allocation to copy clipboard failed"
 msgstr "l'allocation de mémoire pour une copie dans le presse-papier a échoué"
 
-#: src/main/connections.c:1879 src/modules/X11/devX11.c:3327
-#: src/modules/X11/devX11.c:3332
+#: src/main/connections.c:1879 src/modules/X11/devX11.c:3329
+#: src/modules/X11/devX11.c:3334
 msgid "clipboard cannot be opened or contains no text"
 msgstr "presse-papier impossible à ouvrir ou ne contenant aucun texte"
 
@@ -2886,24 +2886,24 @@ msgstr "mode incorrect à passer vers le Fortran (argument %d)"
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2496
+#: src/main/dotcode.c:2472
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type \"%s\" indisponible dans les appels entre langages"
 
-#: src/main/dotcode.c:2563
+#: src/main/dotcode.c:2539
 msgid "invalid function in call_R"
 msgstr "fonction incorrecte dans call_R"
 
-#: src/main/dotcode.c:2565
+#: src/main/dotcode.c:2541
 msgid "invalid argument count in call_R"
 msgstr "mauvais nombre d'arguments dans call_R"
 
-#: src/main/dotcode.c:2567
+#: src/main/dotcode.c:2543
 msgid "invalid return value count in call_R"
 msgstr "mauvais nombre de valeurs renvoyées par call_R"
 
-#: src/main/dotcode.c:2601
+#: src/main/dotcode.c:2577
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode '%s' non supporté dans call_R"
@@ -3024,99 +3024,105 @@ msgstr "fin de ligne incorrecte"
 msgid "invalid line join"
 msgstr "jonction de ligne incorrecte"
 
-#: src/main/engine.c:795
+#: src/main/engine.c:760 src/main/engine.c:864 src/main/engine.c:1097
+#: src/main/engine.c:1204 src/main/engine.c:1327 src/main/engine.c:1391
+#, fuzzy
+msgid "'lwd' must be non-negative and finite"
+msgstr "'gap' doit être un entier positif ou nul"
+
+#: src/main/engine.c:797
 msgid "out of memory while clipping polyline"
 msgstr "manque de mémoire lors de la coupure d'une ligne brisée"
 
-#: src/main/engine.c:1375
+#: src/main/engine.c:1385
 msgid "Path rendering is not implemented for this device"
 msgstr "Résolution de chemin d'accès non implémenté pour ce périphérique"
 
-#: src/main/engine.c:1393
+#: src/main/engine.c:1405
 msgid "Invalid graphics path"
 msgstr "Chemin graphique incorrect"
 
-#: src/main/engine.c:1412
+#: src/main/engine.c:1424
 msgid "Raster rendering is not implemented for this device"
 msgstr "Rendu en mode pixel (raster) non implémenté pour ce périphérique"
 
-#: src/main/engine.c:1436
+#: src/main/engine.c:1448
 msgid "Raster capture is not available for this device"
 msgstr "Capture en mode point (raster) non disponible pour ce périphérique"
 
-#: src/main/engine.c:1643
+#: src/main/engine.c:1655
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 "la police de caractère %d n'est pas disponible pour la famille de fontes '%s'"
 
-#: src/main/engine.c:1959
+#: src/main/engine.c:1971
 msgid "no graphics device is active"
 msgstr "aucun périphérique graphiques actif"
 
-#: src/main/engine.c:2037
+#: src/main/engine.c:2049
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "valeur pch '%d' incorrecte dans cet environnement linguistique"
 
-#: src/main/engine.c:2294
+#: src/main/engine.c:2306
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "valeur '%d' de pch non implémentée"
 
-#: src/main/engine.c:2317
+#: src/main/engine.c:2329
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "étendue de l'axe incorrecte [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2321
+#: src/main/engine.c:2333
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "étendue de l'axe infinie [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2359
+#: src/main/engine.c:2371
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.) : nouveau *lo = %g < %g = x1"
 
-#: src/main/engine.c:2361
+#: src/main/engine.c:2373
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.) : nouveau *up = %g > %g = x2"
 
-#: src/main/engine.c:2757
+#: src/main/engine.c:2769
 msgid "Display list redraw incomplete"
 msgstr "Liste de retraçage des affichages incomplète"
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2953
 msgid "'expr' argument must be an expression"
 msgstr "l'argument 'expr' doit être une expression"
 
-#: src/main/engine.c:2943
+#: src/main/engine.c:2955
 msgid "'list' argument must be a list"
 msgstr "l'argument 'list' doit être une liste"
 
-#: src/main/engine.c:2949
+#: src/main/engine.c:2961
 msgid "'env' argument must be an environment"
 msgstr "l'argument 'env' doit être un environnement"
 
-#: src/main/engine.c:2971
+#: src/main/engine.c:2983
 msgid "invalid graphics state"
 msgstr "état des graphiques incorrect"
 
-#: src/main/engine.c:3029 src/main/engine.c:3037
+#: src/main/engine.c:3041 src/main/engine.c:3049
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "caractère multioctet incorrect dans pch=\"c\""
 
-#: src/main/engine.c:3107
+#: src/main/engine.c:3119
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "type de ligne incorrect : doit être de longueur 2, 4, 6 ou 8"
 
-#: src/main/engine.c:3111
+#: src/main/engine.c:3123
 msgid "invalid line type: zeroes are not allowed"
 msgstr "type de ligne incorrect : les zéros ne sont pas autorisés"
 
-#: src/main/engine.c:3120 src/main/engine.c:3128 src/main/engine.c:3135
+#: src/main/engine.c:3132 src/main/engine.c:3140 src/main/engine.c:3147
 msgid "invalid line type"
 msgstr "type de ligne incorrect"
 
@@ -6830,11 +6836,11 @@ msgstr "'method' doit être une chaîne de caractères"
 #: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
 #: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
 #: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1006
-#: src/modules/lapack/Lapack.c:1012 src/modules/lapack/Lapack.c:1051
-#: src/modules/lapack/Lapack.c:1058 src/modules/lapack/Lapack.c:1062
-#: src/modules/lapack/Lapack.c:1091 src/modules/lapack/Lapack.c:1098
-#: src/modules/lapack/Lapack.c:1123
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
+#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
+#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
+#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1126
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "code d'erreur %d dans le sous-programme Lapack '%s'"
@@ -6947,12 +6953,12 @@ msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "valeur incorrecte pour l'argument %d du sous-programme Lapack %s"
 
 #: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1044 src/modules/lapack/Lapack.c:1084
+#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "le membre de droite devrait avoir %d lignes et non %d"
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1118
+#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
 msgid "'a' must be a square matrix"
 msgstr "'a' doit être une matrice carrée"
 
@@ -6966,8 +6972,8 @@ msgid "the leading minor of order %d is not positive definite"
 msgstr "le mineur dominant d'ordre %d n'est pas défini positif"
 
 #: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:993
-#: src/modules/lapack/Lapack.c:1111
+#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
+#: src/modules/lapack/Lapack.c:1114
 msgid "'a' must be a numeric matrix"
 msgstr "'a' doit être une matrice numérique"
 
@@ -6990,23 +6996,24 @@ msgstr "l'argument 'size' ne doit pas dépasser nrow(x) = %d"
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "l'élément (%d, %d) est nul, donc l'inverse ne peut être calculé"
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1037
-#: src/modules/lapack/Lapack.c:1075
+#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
+#: src/modules/lapack/Lapack.c:1078
 msgid "'b' must be a numeric matrix"
 msgstr "'b' doit être une matrice numérique"
 
 #: src/modules/lapack/Lapack.c:975
-msgid "Lapack routine dgesv: system is exactly singular"
+#, fuzzy, c-format
+msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "sous-programme Lapack dgesv : le système est exactement singulier"
 
-#: src/modules/lapack/Lapack.c:980
+#: src/modules/lapack/Lapack.c:982
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 "le système est numériquement singulier : conditionnement de la réciproque = "
 "%g"
 
-#: src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1116
 msgid "argument 'logarithm' must be logical"
 msgstr "l'argument 'logarithm' doit être de type logique"
 
@@ -7193,50 +7200,50 @@ msgstr "impossible de créer un 'XImage'"
 msgid "attempt to use the locator after dev.hold()"
 msgstr "tentative d'utilisation du localisateur (locator) après dev.hold()"
 
-#: src/modules/X11/devX11.c:3087
+#: src/modules/X11/devX11.c:3089
 #, c-format
 msgid "unable to start device %s"
 msgstr "inpossible de démarrer le périphérique %s"
 
-#: src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3113
 msgid "invalid 'width' or 'height'"
 msgstr "'width' ou 'height' incorrecte"
 
-#: src/modules/X11/devX11.c:3118
+#: src/modules/X11/devX11.c:3120
 msgid "invalid colortype passed to X11 driver"
 msgstr "colorimétrie incorrecte passée au pilote X11"
 
-#: src/modules/X11/devX11.c:3132
+#: src/modules/X11/devX11.c:3134
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "couleur / modèle de couleur X11 inconnu -- monochrome utilisé"
 
-#: src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3224
 msgid "no plot on device to save"
 msgstr "aucun graphique disponible dans ce périphérique pour la sauvegarde"
 
-#: src/modules/X11/devX11.c:3224
+#: src/modules/X11/devX11.c:3226
 msgid "not an open X11cairo device"
 msgstr "ceci n'est pas un périphérique X11cairo ouvert"
 
-#: src/modules/X11/devX11.c:3233
+#: src/modules/X11/devX11.c:3235
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "impossible d'ouvrir le fichier '%s'"
 
-#: src/modules/X11/devX11.c:3250
+#: src/modules/X11/devX11.c:3252
 msgid "savePlot() is not supported on this build"
 msgstr "savePlot() ne fonctionne pas dans cette compilation"
 
-#: src/modules/X11/devX11.c:3290
+#: src/modules/X11/devX11.c:3292
 msgid "unable to contact X11 display"
 msgstr "incapable de rentrer en contact avec l'affichage X11"
 
-#: src/modules/X11/devX11.c:3339
+#: src/modules/X11/devX11.c:3341
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
 msgstr "presse-papier impossible à ouvrir en lecture (code d'erreur %d)"
 
-#: src/modules/X11/devX11.c:3373
+#: src/modules/X11/devX11.c:3375
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "affectation mémoire impossible pour la structure X11Routines"
 

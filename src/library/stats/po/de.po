@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-22 12:54+0100\n"
+"POT-Creation-Date: 2012-06-07 15:27+0100\n"
 "PO-Revision-Date: 2012-03-06 09:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -132,6 +132,14 @@ msgstr "distance(): unzulässiges p"
 #: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): unzulässige distance"
+
+#: distn.c:31
+msgid "NaNs produced"
+msgstr ""
+
+#: distn.c:32
+msgid "Non-numeric argument to mathematical function"
+msgstr ""
 
 #: family.c:21
 #, c-format
@@ -734,6 +742,27 @@ msgstr "'scal' muss eine quadratische, reelwertige Matrix sein"
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
 msgstr "'scal' Matrix ist nicht positiv definit"
+
+#: random.c:51 random.c:55 random.c:60 random.c:65 random.c:118 random.c:124
+#: random.c:129 random.c:134 random.c:177 random.c:182 random.c:187
+#: random.c:201 random.c:285
+#, fuzzy
+msgid "invalid arguments"
+msgstr "unzulässiger Argumenttyp"
+
+#: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
+msgid "NAs produced"
+msgstr ""
+
+#: random.c:240
+#, fuzzy
+msgid "invalid first argument 'n'"
+msgstr "unzulässiger Argumenttyp"
+
+#: random.c:242
+#, fuzzy
+msgid "invalid second argument 'size'"
+msgstr "unzulässiger Argumenttyp"
 
 #: smooth.c:79
 #, c-format

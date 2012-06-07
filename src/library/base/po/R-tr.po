@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:26\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -687,6 +687,12 @@ msgid "'vec' contains NAs"
 msgstr ""
 
 msgid "'vec' must be sorted non-decreasingly"
+msgstr ""
+
+msgid "invalid length(x)"
+msgstr ""
+
+msgid "invalid length(vec)"
 msgstr ""
 
 msgid "using the first element of 'value' of type expression"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -623,6 +623,15 @@ msgstr "'width'或'height'的值不对"
 #: devWindows.c:3840
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "无法载入winCairo.dll: 构建了这个动态链接库没有？"
+
+#: devices.c:43
+msgid "argument must have positive length"
+msgstr ""
+
+#: devices.c:52
+#, fuzzy
+msgid "invalid argument"
+msgstr "'file'参数不对"
 
 #: qdBitmap.c:79
 #, c-format

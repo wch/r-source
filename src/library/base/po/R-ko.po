@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:26\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -713,6 +713,14 @@ msgstr "'vec' 에 NA 가 있습니다"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' 는 비감소순으로 정렬되어야합니다 "
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "잘못된 값입니다 "
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "잘못된 값입니다 "
 
 msgid "using the first element of 'value' of type expression"
 msgstr "using the first element of 'value' of type expression"

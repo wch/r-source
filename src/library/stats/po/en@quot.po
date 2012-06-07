@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-22 12:54+0100\n"
-"PO-Revision-Date: 2012-05-22 12:54+0100\n"
+"POT-Creation-Date: 2012-06-07 15:27+0100\n"
+"PO-Revision-Date: 2012-06-07 15:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -153,6 +153,14 @@ msgstr "distance(): invalid p"
 #: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): invalid distance"
+
+#: distn.c:31
+msgid "NaNs produced"
+msgstr "NaNs produced"
+
+#: distn.c:32
+msgid "Non-numeric argument to mathematical function"
+msgstr "Non-numeric argument to mathematical function"
 
 #: family.c:21
 #, c-format
@@ -745,6 +753,24 @@ msgstr "‘scal’ must be a square, real matrix"
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
 msgstr "‘scal’ matrix is not positive-definite"
+
+#: random.c:51 random.c:55 random.c:60 random.c:65 random.c:118 random.c:124
+#: random.c:129 random.c:134 random.c:177 random.c:182 random.c:187
+#: random.c:201 random.c:285
+msgid "invalid arguments"
+msgstr "invalid arguments"
+
+#: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
+msgid "NAs produced"
+msgstr "NAs produced"
+
+#: random.c:240
+msgid "invalid first argument 'n'"
+msgstr "invalid first argument ‘n’"
+
+#: random.c:242
+msgid "invalid second argument 'size'"
+msgstr "invalid second argument ‘size’"
 
 #: smooth.c:79
 #, c-format

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -105,6 +105,10 @@ msgstr "GBox a geçersiz argüman"
 msgid "Metric information not available for this device"
 msgstr "Bu aygıtta metrik bilgisi bulunmuyor"
 
+#: par-common.c:138
+msgid "graphical parameter 'family' has a maximum length of 200 bytes"
+msgstr "grafiksel parametre 'family' 200 bayt üst sınırına sahip"
+
 #: par.c:158
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
@@ -115,64 +119,60 @@ msgstr "grafiksel parametre \"%s\" için geçersiz değer berlirlendi"
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "grafiksel parametre \"%s\" yanlış uzunlukta"
 
-#: par.c:260 par.c:695
+#: par.c:260 par.c:670
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "grafiksel parametre \"%s\" belirlenemez"
 
-#: par.c:328 par.c:723
-msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "grafiksel parametre 'family' 200 bayt üst sınırına sahip"
-
-#: par.c:457
+#: par.c:432
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "\"mfg\" parametresi yanlış uzunlukta"
 
-#: par.c:465
+#: par.c:440
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\" içindeki \"i\" parametresi sınırlar dışında"
 
-#: par.c:467
+#: par.c:442
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\" içindeki \"j\" parametresi sınırlar dışında"
 
-#: par.c:472
+#: par.c:447
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" içindeki nr değeri yanlış, görmezden gelinecek"
 
-#: par.c:474
+#: par.c:449
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" içindeki nc değeri yanlış, görmezden gelinecek"
 
-#: par.c:500
+#: par.c:475
 msgid "calling par(new=TRUE) with no plot"
 msgstr "çizim olmadan par(new=TRUE) çağırılıyor"
 
-#: par.c:687 par.c:1104
+#: par.c:662 par.c:1046
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "grafiksel parametre \"%s\" çok eski"
 
-#: par.c:691 par.c:1108
+#: par.c:666 par.c:1050
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" bir grafiksel parametre değil"
 
-#: par.c:1161
+#: par.c:1103
 msgid "invalid argument passed to par()"
 msgstr "par()'a geçersiz bir argüman geçirildi"
 
-#: par.c:1205
+#: par.c:1147
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "yerleşimde çok fazla sütun var, sınır %d"
 
-#: par.c:1211
+#: par.c:1153
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "yerleşimde çok fazla dize var, sınır %d"
 
-#: par.c:1213
+#: par.c:1155
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "yerleşimde çok fazla hücre var, sınır %d"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-22 12:54+0100\n"
+"POT-Creation-Date: 2012-06-07 15:27+0100\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -138,6 +138,14 @@ msgstr "distance(): неправильный p"
 #: distance.c:232
 msgid "distance(): invalid distance"
 msgstr "distance(): неправильное расстояние"
+
+#: distn.c:31
+msgid "NaNs produced"
+msgstr ""
+
+#: distn.c:32
+msgid "Non-numeric argument to mathematical function"
+msgstr ""
 
 #: family.c:21
 #, c-format
@@ -738,6 +746,27 @@ msgstr "'scal' должен быть настоящей квадратной матрицей"
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
 msgstr "матрица 'scal' не положительно-определенная"
+
+#: random.c:51 random.c:55 random.c:60 random.c:65 random.c:118 random.c:124
+#: random.c:129 random.c:134 random.c:177 random.c:182 random.c:187
+#: random.c:201 random.c:285
+#, fuzzy
+msgid "invalid arguments"
+msgstr "неправильный тип аргумента"
+
+#: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
+msgid "NAs produced"
+msgstr ""
+
+#: random.c:240
+#, fuzzy
+msgid "invalid first argument 'n'"
+msgstr "неправильный тип аргумента"
+
+#: random.c:242
+#, fuzzy
+msgid "invalid second argument 'size'"
+msgstr "неправильный тип аргумента"
 
 #: smooth.c:79
 #, c-format

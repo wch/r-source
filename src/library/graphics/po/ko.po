@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -105,6 +105,10 @@ msgstr "GBox의 인수가 잘못되었습니다"
 msgid "Metric information not available for this device"
 msgstr "이 장치에 대한 메트릭 정보를 사용할 수 없습니다"
 
+#: par-common.c:138
+msgid "graphical parameter 'family' has a maximum length of 200 bytes"
+msgstr "그래픽 매개 변수 'family'의 최대 길이는 200 바이트입니다"
+
 #: par.c:158
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
@@ -115,64 +119,60 @@ msgstr "그래픽 매개 변수 \"%s\"에 잘못된 값이 지정되었습니다
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "그래픽 매개 변수 \"%s\"의 길이가 잘못되었습니다"
 
-#: par.c:260 par.c:695
+#: par.c:260 par.c:670
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "그래픽 매개 변수 \"%s\"를 설정할 수 없습니다"
 
-#: par.c:328 par.c:723
-msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "그래픽 매개 변수 'family'의 최대 길이는 200 바이트입니다"
-
-#: par.c:457
+#: par.c:432
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "\"mfg\" 매개 변수의 길이가 잘못되었습니다"
 
-#: par.c:465
+#: par.c:440
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\"의 파라미터 \"i\"가 범위밖입니다"
 
-#: par.c:467
+#: par.c:442
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\"의 파라미터  \"j\"가 범위밖입니다"
 
-#: par.c:472
+#: par.c:447
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" 안의 nr의 값은 잘못되어 무시됩니다"
 
-#: par.c:474
+#: par.c:449
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"안의  nc의 값은 잘못되어 무시됩니다"
 
-#: par.c:500
+#: par.c:475
 msgid "calling par(new=TRUE) with no plot"
 msgstr "calling par(new=TRUE) with no plot"
 
-#: par.c:687 par.c:1104
+#: par.c:662 par.c:1046
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "그래픽 매개 변수 \"%s\"는 더 이상 지원되지 않습니다"
 
-#: par.c:691 par.c:1108
+#: par.c:666 par.c:1050
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"는 그래픽 매개 변수가 아닙니다\""
 
-#: par.c:1161
+#: par.c:1103
 msgid "invalid argument passed to par()"
 msgstr "par()에 잘못된 매개 변수가 전달되었습니다"
 
-#: par.c:1205
+#: par.c:1147
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout의 행 개수가 너무 많습니다 (한계값은 %d)"
 
-#: par.c:1211
+#: par.c:1153
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout의 열 개수가 너무 많습니다 (한계값은 %d)"
 
-#: par.c:1213
+#: par.c:1155
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout의 셀 개수가 너무 많습니다 (한계값은 %d)"

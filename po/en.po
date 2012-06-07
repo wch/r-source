@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-27 16:02+0100\n"
+"POT-Creation-Date: 2012-06-07 15:26+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -159,8 +159,8 @@ msgstr ""
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:126 src/main/agrep.c:130
 #: src/main/agrep.c:763 src/main/agrep.c:768 src/main/apply.c:288
 #: src/main/apply.c:290 src/main/apply.c:293 src/main/array.c:86
-#: src/main/array.c:1150 src/main/array.c:1282 src/main/array.c:1284
-#: src/main/array.c:1285 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1150 src/main/array.c:1279 src/main/array.c:1281
+#: src/main/array.c:1282 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -266,9 +266,9 @@ msgstr ""
 #: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
 #: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
 #: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3214
-#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
-#: src/modules/X11/devX11.c:3244 src/unix/sys-std.c:1212
+#: src/modules/lapack/Lapack.c:1080 src/modules/X11/devX11.c:3216
+#: src/modules/X11/devX11.c:3219 src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3246 src/unix/sys-std.c:1212
 #: src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
@@ -331,10 +331,10 @@ msgstr ""
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
 #: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3115 src/modules/X11/devX11.c:3142
-#: src/modules/X11/devX11.c:3147 src/modules/X11/devX11.c:3152
-#: src/modules/X11/devX11.c:3162 src/modules/X11/devX11.c:3167
-#: src/modules/X11/devX11.c:3171 src/modules/X11/devX11.c:3175
+#: src/modules/X11/devX11.c:3117 src/modules/X11/devX11.c:3144
+#: src/modules/X11/devX11.c:3149 src/modules/X11/devX11.c:3154
+#: src/modules/X11/devX11.c:3164 src/modules/X11/devX11.c:3169
+#: src/modules/X11/devX11.c:3173 src/modules/X11/devX11.c:3177
 #: src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
@@ -881,7 +881,7 @@ msgstr ""
 msgid "regcomp error: '%s'"
 msgstr ""
 
-#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:760
+#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:746
 msgid "invalid length"
 msgstr ""
 
@@ -966,34 +966,34 @@ msgstr ""
 msgid "NAs produced by integer overflow"
 msgstr ""
 
-#: src/main/arithmetic.c:1123
+#: src/main/arithmetic.c:1074
 msgid "unimplemented real function of 1 argument"
 msgstr ""
 
-#: src/main/arithmetic.c:1137 src/main/complex.c:650 src/main/complex.c:720
+#: src/main/arithmetic.c:1088 src/main/complex.c:636 src/main/complex.c:706
 msgid "unimplemented complex function"
 msgstr ""
 
-#: src/main/arithmetic.c:1457 src/main/arithmetic.c:1844
-#: src/main/arithmetic.c:2020 src/main/arithmetic.c:2131
+#: src/main/arithmetic.c:1348 src/main/arithmetic.c:1698
+#: src/main/arithmetic.c:1874 src/main/arithmetic.c:1985
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr ""
 
-#: src/main/arithmetic.c:1487
+#: src/main/arithmetic.c:1378
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 
-#: src/main/arithmetic.c:1506
+#: src/main/arithmetic.c:1397
 msgid "invalid second argument of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1576
+#: src/main/arithmetic.c:1467
 msgid "invalid argument 'base' of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1584
+#: src/main/arithmetic.c:1475
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1108,13 +1108,13 @@ msgstr ""
 msgid "'resize' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/array.c:1294
+#: src/main/array.c:1291
 msgid "'x' must be numeric"
 msgstr ""
 
 #: src/main/attrib.c:39 src/main/attrib.c:226 src/main/attrib.c:260
-#: src/main/attrib.c:282 src/main/attrib.c:399 src/main/attrib.c:446
-#: src/main/attrib.c:496
+#: src/main/attrib.c:282 src/main/attrib.c:395 src/main/attrib.c:442
+#: src/main/attrib.c:492
 msgid "attempt to set an attribute on NULL"
 msgstr ""
 
@@ -1128,195 +1128,195 @@ msgstr ""
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr ""
 
-#: src/main/attrib.c:374
+#: src/main/attrib.c:370
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr ""
 
-#: src/main/attrib.c:377
+#: src/main/attrib.c:373
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr ""
 
-#: src/main/attrib.c:382
+#: src/main/attrib.c:378
 msgid "names() applied to a non-vector"
 msgstr ""
 
-#: src/main/attrib.c:390
+#: src/main/attrib.c:386
 msgid "invalid time series parameters specified"
 msgstr ""
 
-#: src/main/attrib.c:403
+#: src/main/attrib.c:399
 msgid "'tsp' attribute must be numeric"
 msgstr ""
 
-#: src/main/attrib.c:409
+#: src/main/attrib.c:405
 msgid "'tsp' attribute must be numeric of length three"
 msgstr ""
 
-#: src/main/attrib.c:426
+#: src/main/attrib.c:422
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr ""
 
-#: src/main/attrib.c:457
+#: src/main/attrib.c:453
 msgid "attempt to set invalid 'comment' attribute"
 msgstr ""
 
-#: src/main/attrib.c:505
+#: src/main/attrib.c:501
 msgid "adding class \"factor\" to an invalid object"
 msgstr ""
 
-#: src/main/attrib.c:513
+#: src/main/attrib.c:509
 msgid "attempt to set invalid 'class' attribute"
 msgstr ""
 
-#: src/main/attrib.c:768
+#: src/main/attrib.c:764
 #, c-format
 msgid "Class '%s' has no 'names' slot"
 msgstr ""
 
-#: src/main/attrib.c:770
+#: src/main/attrib.c:766
 #, c-format
 msgid ""
 "Class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
 msgstr ""
 
-#: src/main/attrib.c:773
+#: src/main/attrib.c:769
 #, c-format
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
 msgstr ""
 
-#: src/main/attrib.c:803
+#: src/main/attrib.c:799
 msgid "incompatible 'names' argument"
 msgstr ""
 
-#: src/main/attrib.c:858
+#: src/main/attrib.c:854
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr ""
 
-#: src/main/attrib.c:929
+#: src/main/attrib.c:925
 msgid "'dimnames' applied to non-array"
 msgstr ""
 
-#: src/main/attrib.c:934
+#: src/main/attrib.c:930
 msgid "'dimnames' must be a list"
 msgstr ""
 
-#: src/main/attrib.c:937 src/main/attrib.c:960
+#: src/main/attrib.c:933 src/main/attrib.c:956
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:962
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr ""
 
-#: src/main/attrib.c:969
+#: src/main/attrib.c:965
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
-#: src/main/attrib.c:1041 src/main/builtin.c:62 src/main/builtin.c:99
+#: src/main/attrib.c:1037 src/main/builtin.c:62 src/main/builtin.c:99
 #: src/main/envir.c:1532 src/main/envir.c:1658 src/main/envir.c:1720
 #: src/main/envir.c:1843 src/main/paste.c:72 src/main/paste.c:290
 #: src/main/random.c:501
 msgid "invalid first argument"
 msgstr ""
 
-#: src/main/attrib.c:1044
+#: src/main/attrib.c:1040
 msgid "invalid second argument"
 msgstr ""
 
-#: src/main/attrib.c:1052
+#: src/main/attrib.c:1048
 msgid "length-0 dimension vector is invalid"
 msgstr ""
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1053
 msgid "the dims contain missing values"
 msgstr ""
 
-#: src/main/attrib.c:1059
+#: src/main/attrib.c:1055
 msgid "the dims contain negative values"
 msgstr ""
 
-#: src/main/attrib.c:1064
+#: src/main/attrib.c:1060
 msgid "dims do not match the length of object"
 msgstr ""
 
-#: src/main/attrib.c:1066
+#: src/main/attrib.c:1062
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr ""
 
-#: src/main/attrib.c:1133
+#: src/main/attrib.c:1129
 msgid "duplicated levels will not be allowed in factors anymore"
 msgstr ""
 
-#: src/main/attrib.c:1163
+#: src/main/attrib.c:1159
 msgid "attributes must be a list or NULL"
 msgstr ""
 
-#: src/main/attrib.c:1168
+#: src/main/attrib.c:1164
 msgid "attributes must be named"
 msgstr ""
 
-#: src/main/attrib.c:1172
+#: src/main/attrib.c:1168
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 
-#: src/main/attrib.c:1271
+#: src/main/attrib.c:1267
 msgid "'which' must be of mode character"
 msgstr ""
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1269
 msgid "exactly one attribute 'which' must be given"
 msgstr ""
 
-#: src/main/attrib.c:1331 src/main/attrib.c:1354 src/main/subscript.c:234
+#: src/main/attrib.c:1327 src/main/attrib.c:1350 src/main/subscript.c:234
 #: src/main/subscript.c:238 src/main/subset.c:1146 src/main/subset.c:1197
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr ""
 
-#: src/main/attrib.c:1386
+#: src/main/attrib.c:1382
 msgid "'name' must be non-null character string"
 msgstr ""
 
-#: src/main/attrib.c:1509 src/main/attrib.c:1580 src/main/attrib.c:1617
+#: src/main/attrib.c:1505 src/main/attrib.c:1576 src/main/attrib.c:1613
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1543
+#: src/main/attrib.c:1539
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1554
+#: src/main/attrib.c:1550
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1571
+#: src/main/attrib.c:1567
 msgid "attempt to set slot on NULL object"
 msgstr ""
 
-#: src/main/attrib.c:1612
+#: src/main/attrib.c:1608
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 
-#: src/main/attrib.c:1624
+#: src/main/attrib.c:1620
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1628
+#: src/main/attrib.c:1624
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1389,7 +1389,7 @@ msgstr ""
 
 #: src/main/builtin.c:71 src/main/builtin.c:80 src/main/builtin.c:280
 #: src/main/builtin.c:313 src/main/builtin.c:352 src/main/builtin.c:362
-#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2945
+#: src/main/coerce.c:1456 src/main/connections.c:2808 src/main/engine.c:2957
 #: src/main/envir.c:941 src/main/envir.c:994 src/main/envir.c:1084
 #: src/main/envir.c:1541 src/main/envir.c:1663 src/main/envir.c:1731
 #: src/main/envir.c:1852 src/main/envir.c:2525 src/main/envir.c:2585
@@ -1810,7 +1810,7 @@ msgstr ""
 msgid "maximum number of colors exceeded"
 msgstr ""
 
-#: src/main/colors.c:1315 src/main/engine.c:3084
+#: src/main/colors.c:1315 src/main/engine.c:3096
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
@@ -1840,19 +1840,19 @@ msgstr ""
 msgid "invalid complex unary operator"
 msgstr ""
 
-#: src/main/complex.c:265
+#: src/main/complex.c:251
 msgid "unimplemented complex operation"
 msgstr ""
 
-#: src/main/complex.c:368
+#: src/main/complex.c:354
 msgid "non-numeric argument to function"
 msgstr ""
 
-#: src/main/complex.c:821
+#: src/main/complex.c:807
 msgid "invalid polynomial coefficient"
 msgstr ""
 
-#: src/main/complex.c:826
+#: src/main/complex.c:812
 msgid "root finding code failed"
 msgstr ""
 
@@ -2063,12 +2063,12 @@ msgstr ""
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 
-#: src/main/connections.c:1874 src/modules/X11/devX11.c:3348
+#: src/main/connections.c:1874 src/modules/X11/devX11.c:3350
 msgid "memory allocation to copy clipboard failed"
 msgstr ""
 
-#: src/main/connections.c:1879 src/modules/X11/devX11.c:3327
-#: src/modules/X11/devX11.c:3332
+#: src/main/connections.c:1879 src/modules/X11/devX11.c:3329
+#: src/modules/X11/devX11.c:3334
 msgid "clipboard cannot be opened or contains no text"
 msgstr ""
 
@@ -2740,24 +2740,24 @@ msgstr ""
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2496
+#: src/main/dotcode.c:2472
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr ""
 
-#: src/main/dotcode.c:2563
+#: src/main/dotcode.c:2539
 msgid "invalid function in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2565
+#: src/main/dotcode.c:2541
 msgid "invalid argument count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2567
+#: src/main/dotcode.c:2543
 msgid "invalid return value count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2601
+#: src/main/dotcode.c:2577
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr ""
@@ -2878,98 +2878,103 @@ msgstr ""
 msgid "invalid line join"
 msgstr ""
 
-#: src/main/engine.c:795
+#: src/main/engine.c:760 src/main/engine.c:864 src/main/engine.c:1097
+#: src/main/engine.c:1204 src/main/engine.c:1327 src/main/engine.c:1391
+msgid "'lwd' must be non-negative and finite"
+msgstr ""
+
+#: src/main/engine.c:797
 msgid "out of memory while clipping polyline"
 msgstr ""
 
-#: src/main/engine.c:1375
+#: src/main/engine.c:1385
 msgid "Path rendering is not implemented for this device"
 msgstr ""
 
-#: src/main/engine.c:1393
+#: src/main/engine.c:1405
 msgid "Invalid graphics path"
 msgstr ""
 
-#: src/main/engine.c:1412
+#: src/main/engine.c:1424
 msgid "Raster rendering is not implemented for this device"
 msgstr ""
 
-#: src/main/engine.c:1436
+#: src/main/engine.c:1448
 msgid "Raster capture is not available for this device"
 msgstr ""
 
-#: src/main/engine.c:1643
+#: src/main/engine.c:1655
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 
-#: src/main/engine.c:1959
+#: src/main/engine.c:1971
 msgid "no graphics device is active"
 msgstr ""
 
-#: src/main/engine.c:2037
+#: src/main/engine.c:2049
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: src/main/engine.c:2294
+#: src/main/engine.c:2306
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: src/main/engine.c:2317
+#: src/main/engine.c:2329
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr ""
 
-#: src/main/engine.c:2321
+#: src/main/engine.c:2333
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr ""
 
-#: src/main/engine.c:2359
+#: src/main/engine.c:2371
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ""
 
-#: src/main/engine.c:2361
+#: src/main/engine.c:2373
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ""
 
-#: src/main/engine.c:2757
+#: src/main/engine.c:2769
 msgid "Display list redraw incomplete"
 msgstr ""
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2953
 msgid "'expr' argument must be an expression"
 msgstr ""
 
-#: src/main/engine.c:2943
+#: src/main/engine.c:2955
 msgid "'list' argument must be a list"
 msgstr ""
 
-#: src/main/engine.c:2949
+#: src/main/engine.c:2961
 msgid "'env' argument must be an environment"
 msgstr ""
 
-#: src/main/engine.c:2971
+#: src/main/engine.c:2983
 msgid "invalid graphics state"
 msgstr ""
 
-#: src/main/engine.c:3029 src/main/engine.c:3037
+#: src/main/engine.c:3041 src/main/engine.c:3049
 msgid "invalid multibyte char in pch=\"c\""
 msgstr ""
 
-#: src/main/engine.c:3107
+#: src/main/engine.c:3119
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 
-#: src/main/engine.c:3111
+#: src/main/engine.c:3123
 msgid "invalid line type: zeroes are not allowed"
 msgstr ""
 
-#: src/main/engine.c:3120 src/main/engine.c:3128 src/main/engine.c:3135
+#: src/main/engine.c:3132 src/main/engine.c:3140 src/main/engine.c:3147
 msgid "invalid line type"
 msgstr ""
 
@@ -6505,11 +6510,11 @@ msgstr ""
 #: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
 #: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
 #: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1006
-#: src/modules/lapack/Lapack.c:1012 src/modules/lapack/Lapack.c:1051
-#: src/modules/lapack/Lapack.c:1058 src/modules/lapack/Lapack.c:1062
-#: src/modules/lapack/Lapack.c:1091 src/modules/lapack/Lapack.c:1098
-#: src/modules/lapack/Lapack.c:1123
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
+#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
+#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
+#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1126
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr ""
@@ -6619,12 +6624,12 @@ msgid "argument %d of Lapack routine %s had invalid value"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1044 src/modules/lapack/Lapack.c:1084
+#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1118
+#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
 msgid "'a' must be a square matrix"
 msgstr ""
 
@@ -6638,8 +6643,8 @@ msgid "the leading minor of order %d is not positive definite"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:993
-#: src/modules/lapack/Lapack.c:1111
+#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
+#: src/modules/lapack/Lapack.c:1114
 msgid "'a' must be a numeric matrix"
 msgstr ""
 
@@ -6662,21 +6667,22 @@ msgstr ""
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1037
-#: src/modules/lapack/Lapack.c:1075
+#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
+#: src/modules/lapack/Lapack.c:1078
 msgid "'b' must be a numeric matrix"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:975
-msgid "Lapack routine dgesv: system is exactly singular"
+#, c-format
+msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:980
+#: src/modules/lapack/Lapack.c:982
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1116
 msgid "argument 'logarithm' must be logical"
 msgstr ""
 
@@ -6849,50 +6855,50 @@ msgstr ""
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3087
+#: src/modules/X11/devX11.c:3089
 #, c-format
 msgid "unable to start device %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3111
+#: src/modules/X11/devX11.c:3113
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3118
+#: src/modules/X11/devX11.c:3120
 msgid "invalid colortype passed to X11 driver"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3132
+#: src/modules/X11/devX11.c:3134
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3222
+#: src/modules/X11/devX11.c:3224
 msgid "no plot on device to save"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3224
+#: src/modules/X11/devX11.c:3226
 msgid "not an open X11cairo device"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3233
+#: src/modules/X11/devX11.c:3235
 #, c-format
 msgid "cannot open file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3250
+#: src/modules/X11/devX11.c:3252
 msgid "savePlot() is not supported on this build"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3290
+#: src/modules/X11/devX11.c:3292
 msgid "unable to contact X11 display"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3339
+#: src/modules/X11/devX11.c:3341
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3373
+#: src/modules/X11/devX11.c:3375
 msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 

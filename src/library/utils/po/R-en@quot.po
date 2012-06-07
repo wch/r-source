@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 13:03\n"
-"PO-Revision-Date: 2012-05-21 13:03\n"
+"POT-Creation-Date: 2012-06-07 15:27\n"
+"PO-Revision-Date: 2012-06-07 15:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -754,11 +754,23 @@ msgstr ""
 "This version of R is not set up to install source packages\n"
 "If it was installed from an RPM, you may need the R-devel RPM"
 
+msgid "system (cmd0):"
+msgstr "system (cmd0):"
+
 msgid "installation of package %s had non-zero exit status"
 msgstr "installation of package %s had non-zero exit status"
 
+msgid "%d): succeeded '%s'"
+msgstr "%d): succeeded ‘%s’"
+
 msgid "unable to create temporary directory %s"
 msgstr "unable to create temporary directory %s"
+
+msgid "foundpkgs:"
+msgstr "foundpkgs:"
+
+msgid "files:"
+msgstr "files:"
 
 msgid ""
 "installation of one of more packages failed,\n"
