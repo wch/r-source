@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2011-11-28 22:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "md5 fejlede på fil '%s'"
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() er ikke understøttet på denne platform"
 
-#: signals.c:137
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() er ikke understøttet på denne platform"
 

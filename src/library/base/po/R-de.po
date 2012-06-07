@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -246,6 +246,10 @@ msgstr "'breaks' sind nicht eindeutig"
 
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks unterschiedlicher Länge"
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "ungültiger Wert"
 
 msgid "invalid 'row.names' length"
 msgstr "ungültige 'row.names' Länge"
@@ -709,6 +713,14 @@ msgstr "'vec' enthält NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' muss nicht-abfallend sortiert werden"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "ungültiger Name"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "ungültiger Name"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "nutze das erste Element von 'value' vom Typ Ausdruck"
@@ -1572,6 +1584,14 @@ msgstr "'x' ist kein Array"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' muss numerisch oder Faktor sein"
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "ungültiger Wert"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "ungültiger Wert"
 
 msgid "arguments must have same length"
 msgstr "Argumente müssen die selbe Länge haben"

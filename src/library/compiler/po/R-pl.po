@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2011-10-03 18:50\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"X-Poedit-Language: Polish\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid "expected a single logical value for the S4 state flag"
+msgstr "oczekiwano pojedynczej wartości logicznej dla flagi statusu S4"
+
+msgid "not a proper evaluation environment"
+msgstr "nieodpowiednie środowisko obliczeniowe"
+
+msgid "'ns' must be a namespace or a namespace imports environment"
+msgstr ""
+"'ns' musi być przestrzenią nazw lub przestrzenią nazw importującą środowisko"
+
+msgid "bad assignment: %s"
+msgstr "złe przypisanie: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr "nie można ukryć stałych z dosłownymi obietnicami"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "nie można ukryć stałych  obiektami z dosłownymi bajtami kodu"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "nie zarejestrowano przesunięcia dla etykiety \"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "nie można skompilować dosłownych bajtów kodu w kod"
+
+msgid "cannot compile promise literals in code"
+msgstr "nie można skompilować dosłownych obietnic w kodzie"
+
+msgid "possible error in '%s': %s"
+msgstr "prawdopodobny błąd w '%s': %s"
+
+msgid "bad namespace import frame"
+msgstr "zła przestrzeń nazw ramki"
+
+msgid "bad assignment 1"
+msgstr "złe przypisanie 1"
+
+msgid "bad assignment 2"
+msgstr "złe przypisanie 2"
+
+msgid "invalid function in complex assignment"
+msgstr "niepoprawna funkcja w zespolonym przypisaniu"
+
+msgid "missing arguments are not allowed"
+msgstr "brakujące argumenty nie są dozwolone"
+
+msgid "empty alternative in numeric switch"
+msgstr "pusta alternatywa w numerycznej instrukcji switch"
+
+msgid "no visible global function definition for '%s'"
+msgstr "brak widocznej globalnej definicji funkcjii dla '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "brak widocznego wiązania dla zmiennej globalnej '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "brak widocznego wiązania dla przypisania '<<-' do '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "błędna liczba argumentów w '%s'"
+
+msgid "more than one default provided in switch call"
+msgstr "więcej niż jedna wartość domyślna dostarczona w wywołaniu 'switch'"
+
+msgid "cannot compile a non-function"
+msgstr "nie można skompilować nie-funkcji"
+
+msgid "compiling '%s'"
+msgstr "kompilowanie '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "zapisywanie do pliku \"%s\" ..."
+
+msgid "done"
+msgstr "wykonano"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' musi być środowiskiem o najwyższym poziomie"
+
+msgid "input and output file names are the same"
+msgstr "nazwy plików wejścia i wyjścia są takie same"
+
+msgid "empty input file; no output written"
+msgstr "pusty plik wejściowy; brak zapisanego wyjścia"
+
+msgid "file '%s' does not exist"
+msgstr "plik '%s' nie istnieje"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' nie jest prawidłową opcją kompilatora"
+
+msgid "function is not compiled"
+msgstr "funkcja nie jest skompilowana"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "lokalne przypisanie do funkcji syntaktycznej:"
+msgstr[1] "lokalne przypisania do funkcji syntaktycznych:"
+msgstr[2] "lokalne przypisania do funkcji syntaktycznych:"

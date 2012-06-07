@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -30,7 +30,7 @@ msgstr "md5 falhou no arquivo '%s'"
 msgid "pskill() is not supported on this platform"
 msgstr ""
 
-#: signals.c:137
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr ""
 

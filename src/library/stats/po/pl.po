@@ -1,0 +1,301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"X-Poedit-Language: Polish\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+#: Srunmed.c:58
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "pasmo/rozpiętość ruchomych median jest większe niż n"
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr "prawdopodobieństwa poza [0,1] w qansari()"
+
+#: approx.c:110 approx.c:142
+msgid "approx(): invalid f value"
+msgstr "approx(): niepoprawna wartość f"
+
+#: approx.c:115 approx.c:145
+msgid "approx(): invalid interpolation method"
+msgstr "approx(): niepoprawna metoda interpolacji"
+
+#: approx.c:121 approx.c:151
+msgid "approx(): attempted to interpolate NA values"
+msgstr "approx(): próbowano interpolować wartości NA"
+
+#: arima.c:69 arima.c:183 arima.c:359
+msgid "invalid argument type"
+msgstr "niepoprawny typ argumentu"
+
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+msgid "can only transform 100 pars in arima0"
+msgstr "można przekształcić tylko do 100 par w arima0"
+
+#: arima.c:838
+msgid "maximum supported lag is 350"
+msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
+
+#: distance.c:156
+msgid "treating non-finite values as NA"
+msgstr "traktowanie nieskończonych wartości jako NA"
+
+#: distance.c:229
+msgid "distance(): invalid p"
+msgstr "distance(): niepoprawne p"
+
+#: distance.c:232
+msgid "distance(): invalid distance"
+msgstr "distance(): niepoprawna odległość"
+
+#: family.c:21
+#, c-format
+msgid "Value %g out of range (0, 1)"
+msgstr "Wartość %g jest poza zakresem (0, 1)"
+
+#: family.c:42 family.c:56 family.c:74
+#, c-format
+msgid "Argument %s must be a nonempty numeric vector"
+msgstr "Argument %s musi być nuepustym wektorem liczbowym"
+
+#: family.c:107 family.c:110
+#, c-format
+msgid "argument %s must be a numeric vector of length 1 or length %d"
+msgstr "argument %s musi być wektorem liczbowym o długości 1 lub długości %d"
+
+#: ksmooth.c:65
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr "tylko 2500 wierszy jest dozwolonych dla sm.method=\"spline\""
+
+#: loessc.c:235
+msgid "span is too small"
+msgstr "rozpiętość jest za mała"
+
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr "Osobliwa macierz w qr_solve"
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr "Osobliwa macierz w ldet"
+
+#: mAR.c:697
+msgid "Invalid vmethod"
+msgstr "Niepoprawne vmethod"
+
+#: mAR.c:833
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr ""
+"Algorytm Burga nie powiódł się przy próbie znalezienia częściowej korelacji"
+
+#: monoSpl.c:40
+msgid "n must be at least two"
+msgstr "n musi być co najmniej 2"
+
+#: monoSpl.c:73
+msgid "Argument m must be numeric"
+msgstr "Argument m musi być liczbą"
+
+#: monoSpl.c:76
+msgid "length(m) must be at least two"
+msgstr "length(m) musi być co najmniej dwa"
+
+#: monoSpl.c:78
+msgid "Argument Sx must be numeric vector one shorter than m[]"
+msgstr "Argument Sx musi być wektorem liczbowym o jeden którszym niż m[]"
+
+#: nls.c:97
+msgid "'control' must be a list"
+msgstr "'control' musi być listą"
+
+#: nls.c:99
+msgid "'m' must be a list"
+msgstr "'m' musi być listą"
+
+#: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
+#: nls.c:176 nls.c:181 nls.c:186 nls.c:191
+#, c-format
+msgid "'%s' absent"
+msgstr "'%s' jest niedostępny"
+
+#: nls.c:232
+msgid "singular gradient"
+msgstr "osobliwy gradient"
+
+#: nls.c:253
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr "czynnik kroku %g zmiejszony poniżej  'minFactor' %g"
+
+#: nls.c:262
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr "liczba iteracji przekroczyła maksymalną liczbę %d"
+
+#: nls.c:267
+msgid "converged"
+msgstr "zbiegł się"
+
+#: nls.c:288
+msgid "'theta' should be of type character"
+msgstr "'theta' powinna być znakiem"
+
+#: nls.c:290 port.c:366
+msgid "use of NULL environment is defunct"
+msgstr "użycie wartości NULL dla środowiska zostało zlikwidowane"
+
+#: nls.c:294
+msgid "'rho' should be an environment"
+msgstr "'rho' powinno być środowiskiem"
+
+#: nls.c:297
+msgid "'dir' is not a numeric vector of the correct length"
+msgstr "'dir' nie jest wektorem liczbowym o poprawnej długości"
+
+#: nls.c:314 nls.c:342
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr ""
+"Brakuje wartości lub wyprodukowano wartości nieskończone podczas wyliczania "
+"modelu"
+
+#: nls.c:320
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr "zmienna '%s' jest liczbą całkowitą, a nie rzeczywistyą"
+
+#: nls.c:322
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr "zmienna '%s' nie jest liczbą rzeczywistą"
+
+#: pacf.c:81
+msgid "bad Starma struct"
+msgstr "zła struktura Starma"
+
+#: pacf.c:227
+#, c-format
+msgid "starma error code %d"
+msgstr "starma: kod błędu %d"
+
+#: pacf.c:287
+#, c-format
+msgid "forkal error code %d"
+msgstr "forkal: kod błędu %d"
+
+#: pacf.c:451
+msgid "invalid value of lag.max"
+msgstr "niepoprawna wartość lag.max"
+
+#: port.c:131
+#, c-format
+msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
+msgstr "Rf_divset: alg = %d musi być 1, 2, 3, lub 4"
+
+#: port.c:310
+#, c-format
+msgid "gradient function must return a numeric vector of length %d"
+msgstr "funkcja gradientu musi zwrócić wektor liczbowy o długości %d"
+
+#: port.c:320
+#, c-format
+msgid "Hessian function must return a square numeric matrix of order %d"
+msgstr "Funkcja hesjana musi zwrócić kwadratową macierz liczbową rzędu %d"
+
+#: port.c:370
+msgid "'rho' must be an environment"
+msgstr "'rho' musi być środowiskiem"
+
+#: port.c:372 port.c:523
+msgid "'d' must be a nonempty numeric vector"
+msgstr "'d' musi być niepustym wektorem liczbowym"
+
+#: port.c:374
+msgid "When Hessian defined must also have gradient defined"
+msgstr "Kiedy jest zdefiniowany Hesjan musi być również zdefiniowany gradient"
+
+#: port.c:377
+#, c-format
+msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
+msgstr "środowisko 'rho' musi zawierać wektor liczbowy '.par' o długości %d"
+
+#: port.c:391
+msgid "'lower' and 'upper' must be numeric vectors"
+msgstr "'lower' oraz 'upper' muszą być wektorami liczbowymi"
+
+#: port.c:437
+msgid "'getElement' applies only to named lists"
+msgstr "'getElement' stosuje się jedynie do nazwanych list"
+
+#: port.c:458
+#, c-format
+msgid "%s$%s() not found"
+msgstr "nie znaleziono %s$%s()"
+
+#: port.c:471
+#, c-format
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
+msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
+
+#: port.c:492
+#, c-format
+msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
+msgstr "fcn wyprodukował tryb %d, długość %d - oczekiwano tryb %d, długość %d"
+
+#: port.c:505
+msgid "invalid type for eval_check_store"
+msgstr "niepoprawny typ dla eval_check_store"
+
+#: port.c:524
+msgid "m must be a list"
+msgstr "m musi być listą"
+
+#: port.c:544
+msgid "'lowerb' and 'upperb' must be numeric vectors"
+msgstr "'lowerb' oraz 'upperb' muszą być wektorami liczbowymi"
+
+#: rWishart.c:51
+msgid "inconsistent degrees of freedom and dimension"
+msgstr "niespójna liczba stopni swodoby oraz wymiaru"
+
+#: rWishart.c:84
+msgid "'scal' must be a square, real matrix"
+msgstr "'scal' musi być kwadratową, rzeczywistą macierzą"
+
+#: rWishart.c:96
+msgid "'scal' matrix is not positive-definite"
+msgstr "macierz 'scal' nie jest dodatnio określona"
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr "błąd alokacji w smooth(*, '3RSR')."
+
+#: smooth.c:244 smooth.c:254
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr "błąd alokacji w smooth(*, '3RSS')."
+
+#: smooth.c:264
+msgid "allocation error in smooth(*, '3R')."
+msgstr "błąd alokacji w smooth(*, '3R')."
+
+#: starma.c:366
+#, c-format
+msgid "missing value in last %d observations"
+msgstr "brakuje wartości w ostatnich %d obserwacjach"

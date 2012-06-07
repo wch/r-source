@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -45,7 +45,7 @@ msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 msgid "unknown AFM entity encountered"
 msgstr "충돌한 AFM entity를 알수가 없습니다 "
 
-#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7897 devPicTeX.c:486
+#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7898 devPicTeX.c:486
 #: devPicTeX.c:488
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
@@ -177,7 +177,7 @@ msgid "Invalid line mitre"
 msgstr "무효의 라인 mitre입니다"
 
 #: devPS.c:2874 devPS.c:3767 devPS.c:4215 devPS.c:4242 devPS.c:5250
-#: devPS.c:7747 devPS.c:7792
+#: devPS.c:7748 devPS.c:7793
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "font 1과 변경할 수 있던 무효의 font %d를 사용하기 위하여 시도합니다"
@@ -202,7 +202,7 @@ msgstr "encoding 패스는 너무 깁니다"
 msgid "failed to load encoding file in %s()"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
-#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7628
+#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7629
 #, fuzzy
 msgid "Invalid font type"
 msgstr "무효의 font 명세입니다"
@@ -244,7 +244,7 @@ msgstr ""
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "'%s'에 'postscript' pipe를 열 수가 없습니다"
 
-#: devPS.c:3580 devPS.c:4970 devPS.c:4981 devPS.c:7057 qdPDF.c:98
+#: devPS.c:3580 devPS.c:4970 devPS.c:4981 devPS.c:7058 qdPDF.c:98
 #, fuzzy, c-format
 msgid "cannot open file '%s'"
 msgstr "afm file %s를 읽을 수가 없습니다"
@@ -283,7 +283,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
-#: devPS.c:4403 devPS.c:5295 devPS.c:7882
+#: devPS.c:4403 devPS.c:5295 devPS.c:7883
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -331,7 +331,7 @@ msgstr "xfig(%s(onefile=FALSE)는  마지막 slot만을 돌려줄것이다"
 msgid "empty file name"
 msgstr "비어 있는 파일명입니다"
 
-#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7116
+#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7117
 msgid "write failed"
 msgstr ""
 
@@ -421,16 +421,16 @@ msgstr "PDF 디바이스에서의 Corrupt가 있는 encode 입니다"
 msgid "increasing the PDF version to 1.3"
 msgstr ""
 
-#: devPS.c:7041
+#: devPS.c:7042
 #, fuzzy, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr "'%s'에 'postscript' pipe를 열 수가 없습니다"
 
-#: devPS.c:7047
+#: devPS.c:7048
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr ""
 
-#: devPS.c:7189
+#: devPS.c:7190
 #, fuzzy, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -439,33 +439,33 @@ msgstr ""
 "'pdf'파일 인수 '%s'를 열 수가 없습니다\n"
 " PDFdevice를 shut down 헤주십시오"
 
-#: devPS.c:7653 devPS.c:8014 devPS.c:8061
+#: devPS.c:7654 devPS.c:8015 devPS.c:8062
 msgid "Failed to find or load PDF font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:7836 devPS.c:7969
+#: devPS.c:7837 devPS.c:7970
 #, fuzzy
 msgid "Failed to find or load PDF CID font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:8200 devPS.c:8204 devPS.c:8364 devPS.c:8368
+#: devPS.c:8201 devPS.c:8205 devPS.c:8365 devPS.c:8369
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s 에서 무효의 'family' 파라미터 입니다"
 
-#: devPS.c:8222 devPS.c:8380
+#: devPS.c:8223 devPS.c:8381
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에서 무효의 'fonts' 파라미터 입니다"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3642 devWindows.c:3646
+#: devPS.c:8229 devPS.c:8391 devPS.c:8394 devWindows.c:3642 devWindows.c:3646
 #: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
 #: devWindows.c:3685 devWindows.c:3689
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "devWindows에서 'bg'의 무효인 값입니다"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3722
+#: devPS.c:8242 devPS.c:8309 devPS.c:8408 devPicTeX.c:741 devWindows.c:3722
 #, fuzzy, c-format
 msgid "unable to start %s() device"
 msgstr "디바이스 pdf를 시작할수가 없습니다"

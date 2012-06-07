@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 12:59\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -38,6 +38,10 @@ msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなけれ
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr " メンバーの長さが無効です "
 
 msgid "optimization difficulties: %s"
 msgstr " 最適化の失敗: %s "
@@ -275,6 +279,10 @@ msgstr " 'vec' が NA を含んでいます "
 msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければなりません "
 
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr " メンバーの長さが無効です "
+
 msgid "'order.max' must be >= 1"
 msgstr " 'order.max' は 1 以上でなければなりません "
 
@@ -467,6 +475,10 @@ msgstr " 'd' 中には NA 値は許されません "
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr " 距離は 'dist' の結果であるか、正方行列である必要があります "
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr " 無効な引数 'n' です "
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr " 'k' は {1, 2,.. n - 1} 内にある必要があります "
@@ -1127,6 +1139,9 @@ msgstr " 曖昧なクラスタリング法です "
 msgid "invalid dissimilarities"
 msgstr " 無効な非類似度です "
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr " クラスタリングすべき 2 以上のオブジェクトが必要です "
 
@@ -1224,6 +1239,14 @@ msgstr " 収束しませんでした "
 msgid "iterations"
 msgstr " 繰り返し "
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr " 無効な 'x' "
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr " 無効な 'x' "
+
 msgid "'centers' must be a number or a matrix"
 msgstr " 中心('centers')は数値か行列でなければなりません "
 
@@ -1266,6 +1289,9 @@ msgid ""
 msgstr ""
 " 数値の y を与えなければなりません。 \n"
 " 密度の推定には density() を使いましょう "
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'k' is not an integer"
 msgstr " 'k' は整数でありません "
@@ -1356,6 +1382,9 @@ msgstr " オブジェクト('object')は効果('effects')成分を持ちませ�
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr " 'se.fit' 引数は \"mlm\" のオブジェクトに対してはまだ未実装です "
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr " NA でない残差の長さが、当てはめで使われたケースと一致しません "
 
@@ -1373,6 +1402,10 @@ msgstr " 'span' と 'enp.target' の双方が指定されました。'span' が�
 
 msgid "invalid 'control' argument"
 msgstr " 無効な 'control' 引数です "
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr " 無効な 'x' "
 
 msgid "only 1-4 predictors are allowed"
 msgstr " 1-4 個の予測子しか許されません "
@@ -2001,6 +2034,10 @@ msgid ""
 "times"
 msgstr ""
 " varying の長さは v.names の長さと times の長さの積でなければなりません "
+
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr " 無効な引数 'n' です "
 
 msgid "'k' must be positive"
 msgstr " 'k' は正でなければなりません "

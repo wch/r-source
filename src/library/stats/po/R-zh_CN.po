@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 12:59\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -40,6 +40,10 @@ msgstr "乘法Holt-Winters的数据不能是零"
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "计算季節性初始值至少需要两个周期的数据"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "成员长度不对"
 
 msgid "optimization difficulties: %s"
 msgstr "优化困难： %s "
@@ -273,6 +277,10 @@ msgstr "'vec'含NA"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'必需由小到大排序"
 
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "成员长度不对"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'必需大于等于一"
 
@@ -461,6 +469,10 @@ msgstr "'d'里不允许有NA值"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "距离必需是'dist'计算出结果或是正方形矩阵"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "参数'n'不对"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k'必需是{1, 2, ..  n - 1}中的一个"
@@ -1096,6 +1108,9 @@ msgstr "群集方法不明确"
 msgid "invalid dissimilarities"
 msgstr "dissimilarities不对"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "用群集时必需有n >= 2的对象"
 
@@ -1192,6 +1207,14 @@ msgstr "没有聚合于"
 msgid "iterations"
 msgstr "迭代"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "'x'不对"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "'x'不对"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers'必需是个数字或矩阵"
 
@@ -1234,6 +1257,9 @@ msgid ""
 msgstr ""
 "y数值必需存在。\n"
 "用density()来估计密度"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'k' is not an integer"
 msgstr "'k'不是整数"
@@ -1319,6 +1345,9 @@ msgstr "'object'没有'effects'组件"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "'se.fit'参数还没有为\"mlm\"对象实现"
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr "非NA残差的长度与拟合时所用的案例不相符"
 
@@ -1336,6 +1365,10 @@ msgstr "'span'和'enp.target'同时有设定：只用'span'的值"
 
 msgid "invalid 'control' argument"
 msgstr "'control'参数不对"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "'x'不对"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "只允许有一到四个従属変数"
@@ -1953,6 +1986,10 @@ msgid ""
 "length of varying must be the product of length of v.names and length of "
 "times"
 msgstr "varying的长度必需是v.names和times长度的乘積"
+
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr "参数'n'不对"
 
 msgid "'k' must be positive"
 msgstr "'k'必需是正数"

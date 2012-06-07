@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -242,6 +242,10 @@ msgstr " 'breaks' が一意的ではありません "
 
 msgid "labels/breaks length conflict"
 msgstr " ラベルまたは分割点の長さが矛盾しています "
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr " 無効な値です "
 
 msgid "invalid 'row.names' length"
 msgstr " 無効な 'row.names' 長です "
@@ -706,6 +710,14 @@ msgstr " 'vec' は NA 値を含んでいます "
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr " 不当な名前です "
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr " 不当な名前です "
 
 msgid "using the first element of 'value' of type expression"
 msgstr " タイプ表現 'value' の最初の要素だけを使います "
@@ -1584,6 +1596,14 @@ msgstr " 'x' は配列ではありません "
 
 msgid "'bin' must be numeric or a factor"
 msgstr " 'bin' は数値または因子でなければなりません "
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr " 無効な値です "
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr " 無効な値です "
 
 msgid "arguments must have same length"
 msgstr " 引数は同じ長さでなければなりません "

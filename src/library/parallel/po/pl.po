@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-10-19 07:24+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"X-Poedit-Language: Polish\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+#: fork.c:135 fork.c:138
+msgid "unable to create a pipe"
+msgstr "nie można utworzyć potoku"
+
+#: fork.c:149
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "nie można rozdzielić, prawdopodobny powód: %s"
+
+#: fork.c:178
+msgid "memory allocation error"
+msgstr "błąd alokacji pamięci"
+
+#: fork.c:216
+msgid "only children can send data to the master process"
+msgstr "tylko pochodne procesy mogą przesłać dane do procesu głównego"
+
+#: fork.c:218
+msgid "there is no pipe to the master process"
+msgstr "nie ma potoku do procesu głównego"
+
+#: fork.c:220
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "zawartość do wysłania musi być PUSTA, użyj serialize() jeśli konieczne"
+
+#: fork.c:229 fork.c:236
+msgid "write error, closing pipe to the master"
+msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
+
+#: fork.c:249
+msgid "only the master process can send data to a child process"
+msgstr "tylko główny proces może przesłać dane do pochodnego procesu"
+
+#: fork.c:256
+#, c-format
+msgid "child %d does not exist"
+msgstr "pochodny proces %d nie istnieje"
+
+#: fork.c:262
+msgid "write error"
+msgstr "błąd zapisu"
+
+#: fork.c:342 fork.c:464
+#, c-format
+msgid "error '%s' in select"
+msgstr "błąd '%s' przy wyborze"
+
+#: fork.c:548
+msgid "mckill failed"
+msgstr "mckill nie powiodło się"
+
+#: fork.c:558
+msgid "mcexit can only be used in a child process"
+msgstr "mcexit może być użyty jedynie w pochodnym procesie"
+
+#: fork.c:578
+msgid "mcexit failed"
+msgstr "mcexit nie powiodło się"

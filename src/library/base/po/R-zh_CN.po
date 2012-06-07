@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -244,6 +244,10 @@ msgstr "'breaks' 的值有重复"
 
 msgid "labels/breaks length conflict"
 msgstr "label/breaks两个参数的长度不一样"
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "无效值"
 
 msgid "invalid 'row.names' length"
 msgstr "'row.names'的长度不对"
@@ -691,6 +695,14 @@ msgstr "'vec'内有NA值"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'的顺序一定得从小到大"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "名字不对"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "名字不对"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "用种类表现'value'的第一个元素"
@@ -1534,6 +1546,14 @@ msgstr "'x'不是陈列"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin'必需是数值或是因子"
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "无效值"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "无效值"
 
 msgid "arguments must have same length"
 msgstr "参数的长度必需相同"

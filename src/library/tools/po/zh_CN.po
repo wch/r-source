@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -30,7 +30,7 @@ msgstr "用于'%s'文件的md5运行失败"
 msgid "pskill() is not supported on this platform"
 msgstr "这个平台不支持pskill()"
 
-#: signals.c:137
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "这个平台不支持psnice()"
 

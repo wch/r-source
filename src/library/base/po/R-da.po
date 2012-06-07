@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -238,6 +238,10 @@ msgstr "'breaks' er ikke unikke"
 
 msgid "labels/breaks length conflict"
 msgstr "længdekonflikt for etiketter/skift"
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "ugyldigt antal intervaller"
 
 msgid "invalid 'row.names' length"
 msgstr "ugyldig længde for 'row.names'"
@@ -691,6 +695,14 @@ msgstr "'vec' indeholder NA'er"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' skal sorteres ikkefaldende"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "ugyldigt antal intervaller"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "ugyldig længde for 'row.names'"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "bruger det første element for 'value' for typeudtryk"
@@ -1523,6 +1535,14 @@ msgstr ""
 
 msgid "'bin' must be numeric or a factor"
 msgstr ""
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "ugyldigt antal intervaller"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "ugyldigt antal intervaller"
 
 msgid "arguments must have same length"
 msgstr ""

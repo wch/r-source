@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-22 16:14+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -47,7 +47,7 @@ msgstr "CharInfo не разбирается"
 msgid "unknown AFM entity encountered"
 msgstr "встречен неизвестный раздел AFM"
 
-#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7897 devPicTeX.c:486
+#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7898 devPicTeX.c:486
 #: devPicTeX.c:488
 #, c-format
 msgid "invalid string in '%s'"
@@ -174,7 +174,7 @@ msgid "Invalid line mitre"
 msgstr "Неправильный конец линии"
 
 #: devPS.c:2874 devPS.c:3767 devPS.c:4215 devPS.c:4242 devPS.c:5250
-#: devPS.c:7747 devPS.c:7792
+#: devPS.c:7748 devPS.c:7793
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "попытка использования неправильного шрифта %d; заменил шрифтом 1"
@@ -199,7 +199,7 @@ msgstr "путь к кодировке слишком длинный в %s()"
 msgid "failed to load encoding file in %s()"
 msgstr "не могу загрузить файл кодировки в %s()"
 
-#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7628
+#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7629
 msgid "Invalid font type"
 msgstr "Неправильный тип шрифта"
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "не могу открыть канал 'postscript' в '%s'"
 
-#: devPS.c:3580 devPS.c:4970 devPS.c:4981 devPS.c:7057 qdPDF.c:98
+#: devPS.c:3580 devPS.c:4970 devPS.c:4981 devPS.c:7058 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "не могу открыть файл '%s'"
@@ -280,7 +280,7 @@ msgstr "ошибка конвертации '%s' в 'mbcsToSbcs': точка заменена на <%02x>"
 msgid "failed open converter to encoding '%s'"
 msgstr "не удалась конверсия в кодировку '%s'"
 
-#: devPS.c:4403 devPS.c:5295 devPS.c:7882
+#: devPS.c:4403 devPS.c:5295 devPS.c:7883
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "не удалась конверсия текста в кодировку '%s'"
@@ -325,7 +325,7 @@ msgstr "xfig(%s, onefile=FALSE) вернет только последний график"
 msgid "empty file name"
 msgstr "пустое имя файла"
 
-#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7116
+#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7117
 msgid "write failed"
 msgstr "запись не удалась"
 
@@ -407,16 +407,16 @@ msgstr "Поврежденные кодировки в устройстве PDF"
 msgid "increasing the PDF version to 1.3"
 msgstr "увеличиваю версию PDF до 1.3"
 
-#: devPS.c:7041
+#: devPS.c:7042
 #, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr "не могу открыть канал 'pdf' в '%s'"
 
-#: devPS.c:7047
+#: devPS.c:7048
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\" предполагает 'onefile = TRUE'"
 
-#: devPS.c:7189
+#: devPS.c:7190
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -425,32 +425,32 @@ msgstr ""
 "не могу открыть 'pdf'-файл аргумента '%s'\n"
 "  пожалуйста, выключите PDFdevice"
 
-#: devPS.c:7653 devPS.c:8014 devPS.c:8061
+#: devPS.c:7654 devPS.c:8015 devPS.c:8062
 msgid "Failed to find or load PDF font"
 msgstr "Не удалось найти или загрузить шрифт PDF"
 
-#: devPS.c:7836 devPS.c:7969
+#: devPS.c:7837 devPS.c:7970
 msgid "Failed to find or load PDF CID font"
 msgstr "Не удалось найти или загрузить CID-шрифт PDF"
 
-#: devPS.c:8200 devPS.c:8204 devPS.c:8364 devPS.c:8368
+#: devPS.c:8201 devPS.c:8205 devPS.c:8365 devPS.c:8369
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "неправильный параметр 'family' в %s"
 
-#: devPS.c:8222 devPS.c:8380
+#: devPS.c:8223 devPS.c:8381
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "неправильный параметр 'fonts' в %s"
 
-#: devPS.c:8228 devPS.c:8390 devPS.c:8393 devWindows.c:3642 devWindows.c:3646
+#: devPS.c:8229 devPS.c:8391 devPS.c:8394 devWindows.c:3642 devWindows.c:3646
 #: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
 #: devWindows.c:3685 devWindows.c:3689
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "неправильное значение '%s'"
 
-#: devPS.c:8241 devPS.c:8308 devPS.c:8407 devPicTeX.c:741 devWindows.c:3722
+#: devPS.c:8242 devPS.c:8309 devPS.c:8408 devPicTeX.c:741 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr "не могу запустить устройство %s()"

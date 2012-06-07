@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-05-29 14:58+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -857,7 +857,7 @@ msgstr "입력 문자열 y[%d] 는 이 로케일에서 잘못되었습니다"
 msgid "regcomp error: '%s'"
 msgstr "regcomp 오류 : '%s'"
 
-#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:760
+#: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:746
 msgid "invalid length"
 msgstr "길이가 잘못되었습니다"
 
@@ -942,34 +942,34 @@ msgstr "잘못된 단항 연산자입니다"
 msgid "NAs produced by integer overflow"
 msgstr "정수 자리가 넘쳐서 NA가 생성되었습니다"
 
-#: src/main/arithmetic.c:1121
+#: src/main/arithmetic.c:1072
 msgid "unimplemented real function of 1 argument"
 msgstr "1 개의 인수를 가지는 구현되지 않은 수학 함수"
 
-#: src/main/arithmetic.c:1135 src/main/complex.c:650 src/main/complex.c:720
+#: src/main/arithmetic.c:1086 src/main/complex.c:636 src/main/complex.c:706
 msgid "unimplemented complex function"
 msgstr "구현되지 않은 복소 함수"
 
-#: src/main/arithmetic.c:1451 src/main/arithmetic.c:1833
-#: src/main/arithmetic.c:2006 src/main/arithmetic.c:2117
+#: src/main/arithmetic.c:1342 src/main/arithmetic.c:1687
+#: src/main/arithmetic.c:1860 src/main/arithmetic.c:1971
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d 개의 수치 인수를 가지는 구현되지 않은 수학 함수"
 
-#: src/main/arithmetic.c:1481
+#: src/main/arithmetic.c:1372
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "'%d'개의 인수가 '%s' 에 건네졌으나，1개나 2개만 필요합니다"
 
-#: src/main/arithmetic.c:1500
+#: src/main/arithmetic.c:1391
 msgid "invalid second argument of length 0"
 msgstr "길이 0인 두번째 인수가 잘못되었습니다"
 
-#: src/main/arithmetic.c:1570
+#: src/main/arithmetic.c:1461
 msgid "invalid argument 'base' of length 0"
 msgstr "길이 0인 'base' 인수가 잘못되었습니다"
 
-#: src/main/arithmetic.c:1578
+#: src/main/arithmetic.c:1469
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1835,19 +1835,19 @@ msgstr "색상 지정이 잘못되었습니다"
 msgid "invalid complex unary operator"
 msgstr "잘못된 복소 단항 연산자입니다"
 
-#: src/main/complex.c:265
+#: src/main/complex.c:251
 msgid "unimplemented complex operation"
 msgstr "구현되지 않은 복소 연산입니다"
 
-#: src/main/complex.c:368
+#: src/main/complex.c:354
 msgid "non-numeric argument to function"
 msgstr "함수의 인수가 숫자가 아닙니다"
 
-#: src/main/complex.c:821
+#: src/main/complex.c:807
 msgid "invalid polynomial coefficient"
 msgstr "다항식의 계수가 잘못되었습니다"
 
-#: src/main/complex.c:826
+#: src/main/complex.c:812
 msgid "root finding code failed"
 msgstr "제곱근을 찾는 코드가 실패했습니다"
 
@@ -2826,24 +2826,24 @@ msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2348
+#: src/main/dotcode.c:2342
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "언어 간의 함수 호출에서 \"%s\" 형식이 지원되지 않습니다"
 
-#: src/main/dotcode.c:2415
+#: src/main/dotcode.c:2409
 msgid "invalid function in call_R"
 msgstr "call_R의 함수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2417
+#: src/main/dotcode.c:2411
 msgid "invalid argument count in call_R"
 msgstr "call_R 인수 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2419
+#: src/main/dotcode.c:2413
 msgid "invalid return value count in call_R"
 msgstr "call_R의 반환값의 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2453
+#: src/main/dotcode.c:2447
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R는 \"%s\" 라는 모드는 지원되지 않습니다"

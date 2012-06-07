@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -252,6 +252,10 @@ msgstr "'breaks' ne sont pas des valeurs uniques"
 
 msgid "labels/breaks length conflict"
 msgstr "longueurs de 'labels' et 'breaks' non conformes"
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "valeur incorrecte"
 
 msgid "invalid 'row.names' length"
 msgstr "longueur de 'row.names' incorrecte"
@@ -733,6 +737,14 @@ msgstr "'vec' contient des valeurs manquantes (NAs)"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' doit être trié par ordre croissant"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "nom incorrect"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "nom incorrect"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "utilisation du premier élément de 'value' de type expression"
@@ -1613,6 +1625,14 @@ msgstr "'x' n'est pas un tableau"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' doit être numérique ou un facteur"
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "valeur incorrecte"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "valeur incorrecte"
 
 msgid "arguments must have same length"
 msgstr "les arguments doivent avoir même longueur"

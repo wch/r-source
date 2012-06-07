@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 12:59\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-03-06 21:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -47,6 +47,10 @@ msgstr ""
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "il faut au moins 2 périodes pour calculer les valeurs de départ saisonnières."
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "longueur des membres incorrecte"
 
 msgid "optimization difficulties: %s"
 msgstr "difficultés d'optimisation : %s"
@@ -294,6 +298,10 @@ msgstr "'vec' contient des NA"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' doit être trié de façon non décroissante"
 
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "longueur des membres incorrecte"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' doit être >= 1"
 
@@ -484,6 +492,10 @@ msgstr "NA non autorisées dans 'd'"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "les distances doivent provenir de 'dist' ou d'une matrice carrée"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "argument 'n' incorrect"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' doit être dans {1, 2, ..  n - 1}"
@@ -1171,6 +1183,9 @@ msgstr "méthode de classification ambigüe"
 msgid "invalid dissimilarities"
 msgstr "dissimilarités incorrectes"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "il faut n >= 2 objets pour une classification"
 
@@ -1267,6 +1282,14 @@ msgstr "pas de convergence en"
 msgid "iterations"
 msgstr "itérations"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "'x' incorrect"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "'x' incorrect"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers' doit être une matrice numérique"
 
@@ -1313,6 +1336,9 @@ msgid ""
 msgstr ""
 "y doit être fourni.\n"
 "Pour l'estimation de la densité, utilisez density()"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'k' is not an integer"
 msgstr "'k' n'est pas un entier"
@@ -1410,6 +1436,9 @@ msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr ""
 "l'argument 'se.fit' n'est pas encore implémenté pour les objets \"mlm\""
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 "le nombre de résidus non manquants ne correspond pas a l'effectif utilisé "
@@ -1430,6 +1459,10 @@ msgstr ""
 
 msgid "invalid 'control' argument"
 msgstr "argument 'control' incorrect"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "'x' incorrect"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "pas plus de 4 prédicteurs autorisés"
@@ -2090,6 +2123,10 @@ msgid ""
 msgstr ""
 "la longueur de 'varying' doit être le produit des longueurs de v.names et "
 "times"
+
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr "argument 'n' incorrect"
 
 msgid "'k' must be positive"
 msgstr "'k' doit être positif"

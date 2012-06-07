@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -245,6 +245,10 @@ msgstr "'breaks' 가 고유하지 않습니다 "
 
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks 의 길이가 일치하지 않습니다 "
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "잘못된 값입니다 "
 
 msgid "invalid 'row.names' length"
 msgstr "'row.names' 길이가 잘못되었습니다 "
@@ -704,6 +708,14 @@ msgstr "'vec' 에 NA 가 있습니다"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' 는 비감소순으로 정렬되어야합니다 "
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "부적절한 이름입니다"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "부적절한 이름입니다"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "using the first element of 'value' of type expression"
@@ -1562,6 +1574,14 @@ msgstr "'x' 는 배열이 아닙니다"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' 는 수치 또는 요인이어야 합니다 "
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "잘못된 값입니다 "
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "잘못된 값입니다 "
 
 msgid "arguments must have same length"
 msgstr "인수들은 모두 동일한 길이를 가져야 합니다 "

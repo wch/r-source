@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -245,6 +245,10 @@ msgstr "'breaks' não são únicos"
 
 msgid "labels/breaks length conflict"
 msgstr "conflito de tamanho entre labels e breaks"
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "valor inválido"
 
 msgid "invalid 'row.names' length"
 msgstr "'row.names' com comprimento inválido"
@@ -712,6 +716,14 @@ msgstr "'vec' contem NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de forma não-decrescente"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "valor inválido"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "valor inválido"
 
 msgid "using the first element of 'value' of type expression"
 msgstr "usando o primeiro elemento de 'value' da expressão de tipo"
@@ -1622,6 +1634,14 @@ msgstr "'x' não é um array"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' deve ser numérico ou um fator"
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "valor inválido"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "valor inválido"
 
 msgid "arguments must have same length"
 msgstr "argumentos devem ter o mesmo comprimento"

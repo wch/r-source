@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2011-10-22 21:52+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -30,7 +30,7 @@ msgstr " md5 はファイル '%s' で失敗しました "
 msgid "pskill() is not supported on this platform"
 msgstr " pskill()はこのプラットホームではサポートされていません "
 
-#: signals.c:137
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr " psnice()はこのプラットホームではサポートされていません "
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 12:59\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,9 @@ msgstr "data skal være forskellig fra nul for multiplikativ Holt-Winters."
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "kræver mindst 2 perioder for at beregne startværdier for sæson"
+
+msgid "invalid length(x)"
+msgstr ""
 
 #, fuzzy
 msgid "optimization difficulties: %s"
@@ -270,6 +273,9 @@ msgstr ""
 msgid "'vec' must be sorted non-decreasingly"
 msgstr ""
 
+msgid "invalid length(vec)"
+msgstr ""
+
 msgid "'order.max' must be >= 1"
 msgstr ""
 
@@ -457,6 +463,9 @@ msgid "NA values not allowed in 'd'"
 msgstr ""
 
 msgid "distances must be result of 'dist' or a square matrix"
+msgstr ""
+
+msgid "invalid value of 'n'"
 msgstr ""
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -1091,6 +1100,9 @@ msgstr ""
 msgid "invalid dissimilarities"
 msgstr ""
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr ""
 
@@ -1187,6 +1199,12 @@ msgstr ""
 msgid "iterations"
 msgstr ""
 
+msgid "invalid nrow(x)"
+msgstr ""
+
+msgid "invalid ncol(x)"
+msgstr ""
+
 msgid "'centers' must be a number or a matrix"
 msgstr ""
 
@@ -1226,6 +1244,9 @@ msgstr ""
 msgid ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
+msgstr ""
+
+msgid "invalid value of length(x)"
 msgstr ""
 
 msgid "'k' is not an integer"
@@ -1310,6 +1331,9 @@ msgstr ""
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr ""
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 
@@ -1326,6 +1350,9 @@ msgid "both 'span' and 'enp.target' specified: 'span' will be used"
 msgstr ""
 
 msgid "invalid 'control' argument"
+msgstr ""
+
+msgid "invalid NCOL(X)"
 msgstr ""
 
 msgid "only 1-4 predictors are allowed"
@@ -1939,6 +1966,9 @@ msgstr ""
 msgid ""
 "length of varying must be the product of length of v.names and length of "
 "times"
+msgstr ""
+
+msgid "invalid value of 'k'"
 msgstr ""
 
 msgid "'k' must be positive"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-05-21 12:59\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -50,6 +50,10 @@ msgstr ""
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "нужны по крайней мере 3 периода, чтобы вычислить стартовые значения сезона."
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "неправильная длина членов"
 
 msgid "optimization difficulties: %s"
 msgstr "трудности оптимизации: %s"
@@ -288,6 +292,10 @@ msgstr "'vec' содержит NAs"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' должен быть сортирован не по уменьшению"
 
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "неправильная длина членов"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' должен быть >= 1"
 
@@ -481,6 +489,10 @@ msgstr "NA в 'd' не разрешены"
 
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "расстояния должны быть результатом 'dist' или квадратной матрицей"
+
+#, fuzzy
+msgid "invalid value of 'n'"
+msgstr "неправильный аргумент 'n'"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' должен быть из {1, 2, ..  n - 1}"
@@ -1139,6 +1151,9 @@ msgstr "сомнительный метод кластеризации"
 msgid "invalid dissimilarities"
 msgstr "неправильные различия"
 
+msgid "size cannot be NA nor exceed 65536"
+msgstr ""
+
 msgid "must have n >= 2 objects to cluster"
 msgstr "для кластеризации нужно иметь n >= 2 объектов"
 
@@ -1235,6 +1250,14 @@ msgstr "не сошлось за"
 msgid "iterations"
 msgstr "итераций"
 
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "неправильный 'x'"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "неправильный 'x'"
+
 msgid "'centers' must be a number or a matrix"
 msgstr "'centers' должны быть числом или матрицей"
 
@@ -1279,6 +1302,9 @@ msgid ""
 msgstr ""
 "надо указать числовой y.\n"
 "Для определения плотности пользуйтесь density()"
+
+msgid "invalid value of length(x)"
+msgstr ""
 
 msgid "'k' is not an integer"
 msgstr "'k' не является целым числом"
@@ -1370,6 +1396,9 @@ msgstr "'object' не имеет компонента 'effects'"
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
 msgstr "аргумент 'se.fit' для \"mlm\"-объектов еще не реализован"
 
+msgid "invalid model QR matrix"
+msgstr ""
+
 msgid "non-NA residual length does not match cases used in fitting"
 msgstr ""
 "не-NA остаточная длина не соответствует случаям, использованным в подгонке"
@@ -1388,6 +1417,10 @@ msgstr "указаны и 'span', и 'enp.target': использую 'span'"
 
 msgid "invalid 'control' argument"
 msgstr "неправильный аргумент 'control'"
+
+#, fuzzy
+msgid "invalid NCOL(X)"
+msgstr "неправильный 'x'"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "разрешены только 1-4 предиктора"
@@ -2022,6 +2055,10 @@ msgid ""
 "times"
 msgstr ""
 "длина 'varying' должна быть произведением длины 'v.names' и длины 'times'"
+
+#, fuzzy
+msgid "invalid value of 'k'"
+msgstr "неправильный аргумент 'n'"
 
 msgid "'k' must be positive"
 msgstr "'k' должен быть положителен"

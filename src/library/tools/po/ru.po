@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-09-05 08:24+0100\n"
+"POT-Creation-Date: 2012-06-07 15:52+0100\n"
 "PO-Revision-Date: 2011-10-18 22:44-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -33,7 +34,7 @@ msgstr "md5 на файле '%s' не удался"
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() на этой платформе не поддерживается"
 
-#: signals.c:137
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "psnice()  на этой платформе не поддерживается"
 
@@ -41,8 +42,6 @@ msgstr "psnice()  на этой платформе не поддерживается"
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: text.c:222
-#: text.c:244
+#: text.c:222 text.c:244
 msgid "out of memory"
 msgstr "не хватает памяти"
-

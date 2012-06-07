@@ -1,0 +1,1277 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2012-05-21 13:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"X-Poedit-Language: Polish\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
+"'RShowDoc()' powinien być użyty z argumentem tekstowym określającym\n"
+"   plik dokumentacji"
+
+msgid "no documentation for %s found in package %s"
+msgstr "nie znaleziono dokumentacji dla %s w pakiecie %s"
+
+msgid "document not found"
+msgstr "dokument nie został znaleziony"
+
+msgid "A search query has been submitted to"
+msgstr "Zapytanie zostało przekazane do"
+
+msgid "The results page should open in your browser shortly"
+msgstr "Za moment strona z wynikami powinna otworzyć sie w twojej przeglądarce"
+
+msgid "reference to unknown chunk %s"
+msgstr "referencja do nieznanego fragmentu %s"
+
+msgid "no Sweave file with name %s found"
+msgstr "nie znaleziono pliku 'Sweave' o nazwie '%s'"
+
+msgid "%d Sweave files for basename %s found:"
+msgstr "Znaleziono %d plików 'Sweave' dla nazwy bazowej %s:"
+
+msgid "more than one syntax specification found, using the first one"
+msgstr "znaleziono więcej niż jedno określenie składni, używanie pierwszego"
+
+msgid "object %s does not have class \"SweaveSyntax\""
+msgstr "obiekt %s nie posiada klasy\"SweaveSyntax\""
+
+msgid "recursive Sweave input %s in stack"
+msgstr "rekursywne wejście 'Sweave' %s na stosie"
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr "docelowa składnia nie jest klasy \"SweaveSyntax\""
+
+msgid "target syntax contains no translation table"
+msgstr "docelowa składnia nie zawiera tablicy tłumaczenia"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+"błąd parsowania lub pusta opcja w\n"
+"%s"
+
+msgid "Warning: unknown option"
+msgstr "Ostrzeżenie: nieznana opcja"
+
+msgid "Created PDF document"
+msgstr "Utworzono dokument PDF"
+
+msgid "path to %s contains spaces,"
+msgstr "ścieżka do %s zawiera spacje,"
+
+msgid "this may cause problems when running LaTeX"
+msgstr "to może spowodować problemy podczas działania LaTeX'a"
+
+msgid "the output file '%s' has disappeared"
+msgstr "plik wyjściowy '%s' zniknął"
+
+msgid "invalid value for %s : %s"
+msgstr "niepoprawna wartość dla %s : %s"
+
+msgid "value of 'results' option should be lowercase"
+msgstr "wartość opcji 'results' powinna być pisana małymi literami"
+
+msgid "value of 'strip.white' option should be lowercase"
+msgstr "wartość opcji 'strip.white' powinna być pisana małymi literami"
+
+msgid "elements of 'what' after the first will be ignored"
+msgstr "elementy 'what' po pierwszym będą zignorowane"
+
+msgid "%d occurrences in %s"
+msgstr "ilość wystąpień: %d w %s"
+
+msgid "No suitable spell check program found."
+msgstr "Nie znaleziono odpowiedniego programu do sprawdzania pisowni."
+
+msgid "Filter '%s' is not available."
+msgstr "Filtr '%s' nie jest dostępny."
+
+msgid "Invalid 'filter' argument."
+msgstr "Niepoprawny argument 'filter'."
+
+msgid "Processing file %s"
+msgstr "Przetwarzanie pliku %s"
+
+msgid ""
+"Running aspell failed with diagnostics:\n"
+"%s"
+msgstr ""
+"Uruchomienie 'aspell' nie powiodło się z przyczyn:\n"
+"%s"
+
+msgid ""
+"Use <code> %s </code> \n"
+" to list the vignettes in all <strong>available</strong> packages."
+msgstr ""
+"Użycie <code> %s </code> \n"
+" aby wylistować winiety we wszystkich <strong>dostępnych</strong> pakietach."
+
+msgid "No vignettes found by"
+msgstr "Nie znaleziono winiet w"
+
+msgid "call"
+msgstr "wezwanie"
+
+msgid "Package %s: DESCRIPTION not found"
+msgstr "Pakiet %s: nie znaleziono DESCRIPTION"
+
+msgid "'file' must be NULL, a character string or a connection"
+msgstr "'file' musi być wartością NULL, ciągiem tekstowym lub połączeniem"
+
+msgid "bad argument"
+msgstr "niepoprawny argument"
+
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+"Nie wszystkie argumenty sa tej samej długości, te muszą być powtórzone "
+"cyklicznie: %s"
+
+msgid ","
+msgstr ","
+
+msgid "Use either %s or %s/%s but not both."
+msgstr "Użyj albo %s albo %s/%s ale nie obu na raz."
+
+msgid "It is recommended to use %s instead of %s."
+msgstr "Rekomendowane jest użycie %s zamiast %s."
+
+msgid "Use either %s or %s but not both."
+msgstr "Użyj albo %s albo %s ale nie obu."
+
+msgid "Invalid role specification(s): %s."
+msgstr "Niepoprawne specyfikacje ról: %s."
+
+msgid "It is recommended to use %s/%s instead of %s/%s/%s."
+msgstr "Rekomendowane jest użycie %s/%s zamiast %s/%s/%s."
+
+msgid "method is just applicable to %s objects"
+msgstr "metoda jest stosowalna jedynie do obiektów %s"
+
+msgid "all arguments must be of class \"person\""
+msgstr "wszystkie argumenty muszą być klasami \"person\""
+
+msgid "at least one field has to be specified"
+msgstr "przynajmniej jedno pole musi być określone"
+
+msgid "all fields have to be named"
+msgstr "wszystkie pola muszą być nazwane"
+
+msgid "%s has to be one of %s"
+msgstr "%s musi być jednym z %s"
+
+msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+msgstr "Bibliograficzny wpis typu %s musi poprawnie określać pola:: %s"
+
+msgid "%s should be one of %s"
+msgstr "%s powinno być jednym z %s"
+
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr "Bibliograficzny wpis typu %s musi określać pola: %s"
+
+msgid "package %s not found"
+msgstr "pakiet %s nie został znaleziony"
+
+msgid "broken installation, no CITATION file in the base package."
+msgstr "uszkodzona instalacja, brak pliku CITATION w bazowym pakiecie"
+
+msgid "no date field in DESCRIPTION file of package %s"
+msgstr "brak pola daty w pliku DESCRIPTION pakietu %s"
+
+msgid "could not determine year for %s from package DESCRIPTION file"
+msgstr "nie można było określić roku dla %s z pliku DESCRIPTION pakietu"
+
+msgid "m < 0"
+msgstr "m < 0"
+
+msgid "n < m"
+msgstr "n < m"
+
+msgid "'FUN' must be a function or NULL"
+msgstr "'FUN' musi być funkcją lub wartością NULL"
+
+msgid "Can't handle S4 methods yet"
+msgstr "Jeszcze nie można obsłużyć metod S4"
+
+msgid "'package' must be a character string or NULL"
+msgstr "'package' musi być ciągiem tekstowym lub wartością NULL"
+
+msgid "datasets have been moved from package 'base' to package 'datasets'"
+msgstr ""
+"zbiory danych zostanie przeniesione z pakietu 'base' do pakietu 'datasets'"
+
+msgid "datasets have been moved from package 'stats' to package 'datasets'"
+msgstr ""
+"zbiory danych zostanie przeniesione z pakietu 'stats' do pakietu 'datasets'"
+
+msgid "data index for package %s is invalid and will be ignored"
+msgstr "indeks danych dla pakietu %s jest niepoprawny i zostanie zignorowany"
+
+msgid "file 'filelist' is missing for directory %s"
+msgstr "brakuje pliku 'filelist' w takalogu %s"
+
+msgid "data set %s not found"
+msgstr "zbiór danych %s nie został znaleziony"
+
+msgid "kind '%s' not yet implemented"
+msgstr "rodzaj '%s' nie został jeszcze zaimplementowany"
+
+msgid "wrong number of table row entries"
+msgstr "błędna liczba wpisów w wierszach tabeli"
+
+msgid "wrong argument to 'dataentry'"
+msgstr "niepoprawny argument przekazany do 'dataentry'"
+
+msgid "could not restore type information"
+msgstr "nie można przywrócić informacji o typie"
+
+msgid "modes argument ignored"
+msgstr "argument 'modes' został zignorowany"
+
+msgid "'names' argument ignored"
+msgstr "argument 'names' zignorowano"
+
+msgid "'modes' argument ignored"
+msgstr "argument 'modes' zignorowano"
+
+msgid "could not restore variables properly"
+msgstr "nie można było poprawnie przywrócić zmiennych"
+
+msgid "did not assign() anything"
+msgstr "nie mogę wykonać 'assign()'"
+
+msgid "Browsing in the environment with call:"
+msgstr "Przeglądanie w środowisku z wywołaniem:"
+
+msgid "'dump' is not an object of class 'dump.frames'"
+msgstr "'dump' nie jest obiektem klasy 'dump.frames'"
+
+msgid "Message:"
+msgstr "Wiadomość:"
+
+msgid "Available environments had calls:"
+msgstr "Dostępne środowiska miały wywołania:"
+
+msgid "Enter an environment number, or 0 to exit"
+msgstr "Wpisz numer środowiska, lub 0 aby wyjść"
+
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+"przywrócenie wywołano nieinteraktywnie; ramki odrzucono, używanie 'debugger"
+"()' aby przeglądać"
+
+msgid "No suitable frames for recover()"
+msgstr "Brak odpowiednik ramek dla 'recover()'"
+
+msgid "No demo found for topic %s"
+msgstr "Nie znaleziono dema dla tematu %s"
+
+msgid ""
+"Demo for topic %s' found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"Demo dla tematu %s' znaleziono więcej niż raz,\n"
+"używanie tego znalezionego w %s"
+
+msgid "invalid 'data' argument"
+msgstr "niepoprawny argument 'data'"
+
+msgid "invalid 'modes' argument"
+msgstr "niepoprawny argument 'modes'"
+
+msgid "invalid 'x' argument"
+msgstr "niepoprawny argument 'x'"
+
+msgid "can only handle vector and factor elements"
+msgstr "można obsłużyć jedynie elementy wektora oraz czynnika"
+
+msgid "invalid factor levels in '%s'"
+msgstr "niepoprawne poziomy czynnika w '%s'"
+
+msgid "added factor levels in '%s'"
+msgstr "dodane poziomy czynnika w '%s'"
+
+msgid "edited row names contain duplicates and will be ignored"
+msgstr "przeedytowane nazwy wierszy zawierają duplikaty i zostaną zignorowane"
+
+msgid "invalid input matrix"
+msgstr "niepoprawna macierz wejściowa"
+
+msgid "class(es) of 'name' will be discarded"
+msgstr "klasy \"name' będą odrzucone"
+
+msgid "cannot edit NULL row names"
+msgstr "nie można edytować nazw wierszy o wartości NULL"
+
+msgid "no help found for %s"
+msgstr "nie znaleziono pomocy dla %s"
+
+msgid "%s has a help file but no examples"
+msgstr "%s posiada plik pomocy, ale nie ma przykładów"
+
+msgid "test '%s' is not available"
+msgstr "test '%s' nie jest dostępny"
+
+msgid "Line number missing"
+msgstr "Brakuje numeru linii"
+
+msgid "'fix' requires a name"
+msgstr "'fix' wymaga nazwy"
+
+msgid "too many list items (at most up to number 26)"
+msgstr "zbyt dużo pozycji listy (co najwyżej do liczby 26)"
+
+msgid "too many list items (at most up to number 3899)"
+msgstr "zbyt dużo pozycji w liście (co najwyżej do liczby 3899)"
+
+msgid "no vector columns were selected"
+msgstr "nie wybrano żadnej kolumny wektora"
+
+msgid "non-vector columns will be ignored"
+msgstr "niewektorowe kolumny będą zignorowane"
+
+msgid "at least one vector element is required"
+msgstr "przynajmnej jeden element wektora jest wymagany"
+
+msgid "non-vector elements will be ignored"
+msgstr "elementy niewektora będą zignorowane"
+
+msgid "'form' must be a two-sided formula"
+msgstr "'form' musi być dwustronną formułą"
+
+msgid "'form' must be a two-sided formula with one term on each side"
+msgstr "'form' musi być dwustronną formułą z jednym członej po każdej stronie"
+
+msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr ""
+"'topic' powinien być nazwą, wektorem tekstowym o długości jeden albo "
+"zarezerwowanym słowem"
+
+msgid "No documentation for %s in specified packages and libraries:"
+msgstr "Brak dokumentacji dla %s we wskazanych pakietach oraz bibliotekach:"
+
+msgid "you could try %s"
+msgstr "mógłbyś spróbować %s"
+
+msgid "??"
+msgstr "??"
+
+msgid ""
+"Help for topic %s is not in any loaded package but can be found in the "
+"following packages:"
+msgstr ""
+"Pomocy dla tematu %s nie ma w żadnym załadowanym pakiecie ale może zostać "
+"znaleziona w następujących pakietach:"
+
+msgid "Package"
+msgstr "Pakiet"
+
+msgid "Library"
+msgstr "Biblioteka"
+
+msgid "Help on topic %s was found in the following packages:"
+msgstr "Pomoc na temat %s została znaleziona w następujących pakietach:"
+
+msgid "Choose one"
+msgstr "Wybierz jeden"
+
+msgid "Using the first match ..."
+msgstr "Używanie pierwszego dopasowania ..."
+
+msgid "HTML help is unavailable"
+msgstr "Pomoc HTML jest niedostępna"
+
+msgid "R Help on %s"
+msgstr "Pomoc R na temat %s"
+
+msgid "invalid %s argument"
+msgstr "niepoprawny argument %s"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
+"pakiet %s istnienie ale nie został zainstalowany pod R >= 2.10.0 tak więc "
+"pomoc jest niedostępna"
+
+msgid "creation of %s failed"
+msgstr "tworzenie %s nie powiodło się"
+
+msgid "Saving help page to"
+msgstr "Zapisywanie strony pomocy w"
+
+msgid "argument %s must be a single character string"
+msgstr "argument %s musi być pojedynczym ciągiem tekstowym"
+
+msgid "incorrect field specification"
+msgstr "niepoprawne określenie pola"
+
+msgid "do not know what to search"
+msgstr "nie wiadomo czego szukać"
+
+msgid "incorrect type specification"
+msgstr "niepoprawne określenie typu"
+
+msgid "argument 'help.db' is deprecated"
+msgstr "argument 'help.db' jest przestarzały"
+
+msgid "Rebuilding the help.search() database"
+msgstr "Przebudowywanie bazy danych 'help.search() '"
+
+msgid "..."
+msgstr "..."
+
+msgid "Packages {readRDS() sequentially}:"
+msgstr "Pakiety {'readRDS()' sekwencyjnie}:"
+
+msgid "."
+msgstr "."
+
+msgid "could not find package %s"
+msgstr "nie można było znaleźć pakietu %s"
+
+msgid "package %s has empty hsearch data - strangely"
+msgstr "pakiet %s ma puste dane 'hsearch' - dziwne"
+
+msgid "no hsearch.rds meta data for package"
+msgstr "brak metadanych 'hsearch.rds' dla pakietu"
+
+msgid "reencoding ..."
+msgstr "przekodowanie tablicy znaków ..."
+
+msgid "done"
+msgstr "wykonano"
+
+msgid "removing all entries with invalid multi-byte character data"
+msgstr ""
+"usuwanie wszystkich wpisów z niepoprawnymi danymi o wielobajtowych znakach"
+
+msgid "saving the database ..."
+msgstr "zapisywanie bazy danych..."
+
+msgid "... database rebuilt"
+msgstr "... baza danych przebudowana"
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+"brak informacji w bazie danych dla pakietu %s: potrzeba 'rebuild = TRUE'?"
+
+msgid "incorrect 'agrep' specification"
+msgstr "niepoprawne określenie 'agrep'"
+
+msgid "matched %d objects."
+msgstr "dopasowano %d obiekt(ów)."
+
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "niepoprawna nazwa przeglądarki, sprawdź options(\"browser\")."
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr "'help.start()' wymaga aby serwer HTTP był uruchomiony"
+
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
+msgstr ""
+"Jeśli nic sie nie stanie, powinieneś otworzyć\n"
+"'%s' samemu"
+
+msgid ""
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
+msgstr ""
+"JEśli przeglądarka uruchomiona przez '%s' już działa, *nie* zostanie "
+"zrestartowana, a ty musisz przejść na jej okno."
+
+msgid "Otherwise, be patient ..."
+msgstr "W przeciwnym razie, bądź cierpliwy ..."
+
+msgid "'url' must be a non-empty character string"
+msgstr "'url' musi być niepustym ciągiem tekstowym"
+
+msgid "'browser' must be a non-empty character string"
+msgstr "'browser' musi być niepustym ciągiem tekstowym"
+
+msgid "no package '%s' was found"
+msgstr "nie znaleziono pakietu '%s'"
+
+msgid "metadata of package '%s' is corrupt"
+msgstr "plik metadanych dla pakietu '%s' jest uszkodzony"
+
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "plik DESCRIPTION pakietu '%s' jest uszkodzony"
+
+msgid ""
+"'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
+msgstr ""
+"plilk 'DESCRIPTION' posiada pole 'Encoding' i ponowne kodowanie nie jest "
+"możliwe"
+
+msgid "DESCRIPTION file of package '%s' is missing or broken"
+msgstr "brakuje pliku DESCRIPTION pakietu '%s' lub jest on uszkodzony"
+
+msgid "package"
+msgstr "pakiet"
+
+msgid "not found"
+msgstr "nie znaleziono"
+
+msgid "cannot update HTML package index"
+msgstr "nie można zaktualizować indeksu HTML pakietu"
+
+msgid "Making packages.html  ..."
+msgstr "Tworzenie packages.html  ..."
+
+msgid "menu() cannot be used non-interactively"
+msgstr "funkcja 'menu()' nie może zostać użyta nieinteraktywnie"
+
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr "Wprowadź pozycję z menu lub 0 aby wyjść"
+
+msgid "invalid query"
+msgstr "niepoprawne zapytanie"
+
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
+msgstr ""
+"'%s' jest formalną ogólną funkcją; metody S3 prawdopodobnie nie zostaną "
+"znalezione"
+
+msgid "no function '%s' is visible"
+msgstr "nie ma widocznej funkcji '%s'"
+
+msgid "function '%s' appears not to be generic"
+msgstr "wygląda na to, że funkcja '%s' nie jest ogólna"
+
+msgid "generic function '%s' dispatches methods for generic '%s'"
+msgstr "ogólna funkcja '%s' rozdziela metody dla ogólnej '%s'"
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr "potrzeba dostarczyć 'generic.function' lub 'class'"
+
+msgid "no function '%s' could be found"
+msgstr "nie znaleziono fukcjii '%s'"
+
+msgid "S3 method '%s' not found"
+msgstr "Nie znaleziono metody S3 '%s'"
+
+msgid "environment specified is not a package"
+msgstr "określone środowisko nie jest pakietem"
+
+msgid "changing locked binding for %s in %s whilst loading %s"
+msgstr "zmienianie zablokowanego powiązania dla %s w %s podczas ładowania %s"
+
+msgid "changing locked binding for %s in %s"
+msgstr "zmienianie zablokowanego powiązania dla %s w %s"
+
+msgid "'fixInNamespace' requires a name"
+msgstr "'fixInNamespace' wymaga nazwy"
+
+msgid "only numeric indices can be used"
+msgstr "tylko indeksy liczbowe mogą być użyte"
+
+msgid "cannot create directory '%s'"
+msgstr "nie można utworzyć katalogu '%s'"
+
+msgid "'code_files' must be a character vector"
+msgstr "'code_files' musi być wektorem tekstowym"
+
+msgid "'list' must be a character vector naming R objects"
+msgstr "'list' musi być wektorem tekstowym określającym nazwy obiektów R"
+
+msgid "no R objects specified or available"
+msgstr "nie określono obiektów R lub są niedostępne"
+
+msgid "directory '%s' already exists"
+msgstr "katalog '%s' już istnieje"
+
+msgid ""
+"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the code_files= argument"
+msgstr ""
+"Ogólne funkcje oraz inne obiekty S4 (na przykład, '%s') nie mogą zostać "
+"zrzucone; użyj 'code_files= argument'"
+
+msgid "unable to access index for repository %s"
+msgstr "nie można dostać się do indeksu dla repozytorium %s"
+
+msgid "Invalid 'filters' argument."
+msgstr "Niepoprawny argument 'filters'."
+
+#, fuzzy
+msgid "package '%s' in library '%s' will not be updated"
+msgstr "pakiet '%s' jest w użyciu i nie zostanie zainstalowany"
+
+msgid ""
+"invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
+msgstr ""
+"niepoprawny 'oldPkgs'; musi być wektorem tekstowym lub wynikiem pochodzącym "
+"z 'old.packages()'"
+
+msgid "illformed 'instPkgs' matrix"
+msgstr "Błędnie utworzona macierz 'instPkgs'"
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr "brak zainstalowanych pakietów dla (niepoprawnego?) 'lib.loc=%s'"
+
+msgid "no new packages are available"
+msgstr "nie ma dostępnych nowych pakietów"
+
+msgid "metadata of %s is corrupt"
+msgstr "metadane dla %s są uszkodzone"
+
+msgid "'priority' must be character or NULL"
+msgstr "'priority' musi być znakiem lub wartością NULL"
+
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "Aktualizowanie indeksu HTML pakietów w '.Library'"
+
+msgid ""
+"Removing package(s) from %s\n"
+"(as %s is unspecified)"
+msgstr ""
+"Usuwanie pakietów z %s\n"
+"(jako że %s jest nieokreślone)"
+
+msgid "'destdir' is not a directory"
+msgstr "wartość 'destdir' nie jest katalogiem"
+
+msgid "no package %s at the repositories"
+msgstr "brak pakietu '%s' w repozytoriach"
+
+msgid "package %s does not exist on the local repository"
+msgstr "pakiet %s nie istnieje w lokalnym repozytorium"
+
+msgid "download of package %s failed"
+msgstr "pobieranie pakietu '%s' nie powiodło się"
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr "--- Proszę wybrać serwer lustrzany CRAN do używania w tej sesji ---"
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr "próba użycia CRAN bez ustawienia serwera lustrzanego"
+
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr "nie można wybrać serweru lustrzanego CRAN nieinteraktywnie"
+
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr "nie można wybrać serweru lustrzanego BioC nieinteraktywnie"
+
+msgid "cannot set repositories non-interactively"
+msgstr "nie można ustawićrepozytoriów nieinteraktywnie"
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr "--- Proszę wybrać repozytoria do wykorzystania w tej sesji ---"
+
+msgid "%s must be supplied"
+msgstr "%s musi być dostarczone"
+
+msgid "every package depends on at least one other"
+msgstr "każdy pakiet zaleźy na co najmniej od innego"
+
+msgid "packages %s are mutually dependent"
+msgstr "pakiety %s są wzajemnie zależne"
+
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+"Nie wiadomo, do którego elementu 'lib' zainstalować zależności\n"
+"pomijanie zależności"
+
+msgid "no packages were specified"
+msgstr "nie określono pakietów"
+
+msgid ""
+"Installing package(s) into %s\n"
+"(as %s is unspecified)"
+msgstr ""
+"Instalowanie pakietu(ów) w %s\n"
+"(jako, że %s nie jest określony)"
+
+msgid "'lib = \"%s\"' is not writable"
+msgstr "'lib = \"%s\"' nie jest zapisywalna"
+
+msgid "unable to install packages"
+msgstr "nie można zainstalować pakietów"
+
+msgid "unable to create"
+msgstr "nie można utworzyć"
+
+msgid ""
+"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgstr ""
+"'type == \"both\"' może być użyte jedynie w systemie Windows lub kompilacji "
+"CRAN dla systemów Mac OS X"
+
+msgid ""
+"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
+msgstr ""
+"'type == \"both\"' nie może być użyte jeśli 'available' lub 'contriburl' są "
+"określone"
+
+msgid "type == \"both\" cannot be used with 'repos = NULL'"
+msgstr "type == \"both\" nie może być użyty z 'repos = NULL'"
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr "wnioskowanie 'repos = NULL' z nazwy pliku"
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr ""
+"nie można zainstalować pakietów binarnych dla MacOS na systemie Windows"
+
+msgid "cannot install MacOS X binary packages on this platform"
+msgstr "nie można zainstalować pakietów binarnych dla MacOS na tej platformie"
+
+msgid "cannot install Windows binary packages on this platform"
+msgstr ""
+"nie można zainstalować pakietów binarnych dla systemu Windows na tej "
+"platformie"
+
+msgid ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+"Ta wersja R nie jest ustawiona na instalowanie pakietów źródłowych\n"
+"Jeśli była instalowana z RPM, możesz potrzebować R-devel RPM"
+
+msgid "installation of package %s had non-zero exit status"
+msgstr "instalacja pakietu %s miała niezerowy status wyjścia"
+
+msgid "unable to create temporary directory %s"
+msgstr "nie można utworzyć katalogu tymczasowego %s"
+
+msgid ""
+"installation of one of more packages failed,\n"
+"  probably %s"
+msgstr ""
+"instalacja jednego lub więcej pakietów nie powiodła się,\n"
+"  prawdopodobnie %s"
+
+msgid ""
+"The downloaded source packages are in\n"
+"\t%s"
+msgstr ""
+"Pobrane pakiety źródłowe są w\n"
+"\t%s"
+
+msgid ""
+"The namespace for package \"%s\" is locked; no changes in the global "
+"variables list may be made."
+msgstr ""
+
+msgid "no object named '%s' to show"
+msgstr "brak obiektu '%s' do pokazania"
+
+msgid "'file' must be \"\" or an open connection object"
+msgstr "'file' musi być \"\" lub obiektem otwartego połączenia"
+
+msgid "must have max > min"
+msgstr "musi mieć max > min"
+
+msgid "'pb' is not from class \"txtProgressBar\""
+msgstr "'pb' nie jest z klasy \"txtProgressBar\""
+
+msgid "cannot determine a usable name"
+msgstr "nie można wyznaczyć użytecznej nazwy"
+
+msgid "Created file named %s."
+msgstr "Utworzono plik o nazwie %s."
+
+msgid "Edit the file and move it to the appropriate directory."
+msgstr "Edytuj ten plik i przenieś go do odpowiedniego katalogu."
+
+msgid "no documentation of type %s and topic %s (or error in processing help)"
+msgstr ""
+"brak dokumentacji o typie %s oraz temacie %s (lub błąd w przetwarzaniu "
+"pomocy)"
+
+msgid ""
+"the object of class %s in the function call %s could not be used as a "
+"documentation topic"
+msgstr ""
+"obiekt klasy %s w wywołaniu funkcji %s nie mógł być użyty jako temat "
+"dokumentacji"
+
+msgid "no methods for %s and no documentation for it as a function"
+msgstr "brak metod dla %s oraz brak dla niego dokumentacji jako funkcji"
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "błąd podczas próby obliczenia wyrażenia dla argumentu %s (%s)"
+
+msgid "no method defined for function %s and signature %s"
+msgstr "brak zdefiniowanej metody dla funkcji %s oraz sygnatury %s"
+
+msgid "no documentation for function %s and signature %s"
+msgstr "brak dokumentacji dla funkcji %s oraz sygnatury %s"
+
+msgid "No DIF data on clipboard"
+msgstr "Brak danych DIF w schowku"
+
+msgid "file had no lines"
+msgstr "plik nie miał żadnych linii"
+
+msgid "row and column counts not found"
+msgstr "liczniki wierszy i kolumn nie zostały znalezione"
+
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr "Więcej wierszy niż określono w nagłówku; może użyj 'transpose=TRUE'"
+
+msgid "Unrecognized special data value"
+msgstr "Nierozpoznana specjalna wartość danej"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr "Więcej kolumn niż określono w nagłówku; może użyj 'transpose=TRUE'"
+
+msgid "Unrecognized value indicator"
+msgstr "Nierozpoznany wskaźnik wartości"
+
+msgid "no lines available in input"
+msgstr "nie ma dostępnych linii na wejściu"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr "nagłówke oraz 'col.names' mają różne długości"
+
+msgid "more columns than column names"
+msgstr "więcej kolumn niż nazw kolumn"
+
+msgid "more column names than columns"
+msgstr "więcej nazw kolumn niż kolumn"
+
+msgid "rows are empty: giving up"
+msgstr "wiersze są puste: poddawanie się"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "nie wszystkie kolumny nazwane w 'colClasses' istnieją"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "niepoprawne wyrażenie liczbowe w 'as.is'"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "nie wszystkie kolumny nazwane w 'as.is' istnieją"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "u 'as.is' posiada niepoprawną długość %d != cols = %d"
+
+msgid "invalid 'row.names' specification"
+msgstr "niepoprawne określenie 'row.names'"
+
+msgid "invalid 'row.names' length"
+msgstr "niepoprawna długość 'row.names'"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "powtórzone 'row.names' nie sa dozwolone"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "brakujące wartości w 'row.names' nie są dozwolone"
+
+msgid "missing lengths for some fields"
+msgstr "brakuje długości dla niektórych pól"
+
+msgid "invalid format"
+msgstr "niepoprawny format"
+
+msgid "last record incomplete, %d lines discarded"
+msgstr "ostatni wiersz jest niekompletny, %d linii odrzucono"
+
+msgid "transfer failure"
+msgstr "niepowodzenie przesyłu"
+
+msgid "HTTPUserAgent"
+msgstr "HTTPUserAgent"
+
+msgid "option must be a length one character vector or NULL"
+msgstr ""
+"'option' musi być wektorem tekstowym o długości jeden lub wartością NULL"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' musi być ciągiem tekstowym lub połączeniem"
+
+msgid "empty beginning of file"
+msgstr "puste rozpoczęcie pliku"
+
+msgid "first five rows are empty: giving up"
+msgstr "pierwsze pięć pierwszych rzędów jest puste: poddawanie się"
+
+msgid "relist() requires recursively unlisted objects."
+msgstr "'relist()' wymaga obiektów niewymienionych rekurencyjnie"
+
+msgid "The flesh argument does not contain a skeleton attribute."
+msgstr "Argument 'flesh' nie zawieraatrybutu 'skeleton'."
+
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
+"Albo upewnij się, że odłączyłeś od listy wylistowany obiekt, albo określ "
+"strukturę oddzielnie."
+
+msgid "cannot coerce 'x' to roman"
+msgstr "nie można przekształcić 'x' na liczby rzymskie"
+
+msgid "Invalid roman numeral(s): %s"
+msgstr "Niepoprawna rzymska numeracja: %s"
+
+msgid "length mismatch: bug in code!"
+msgstr "niezgodność długości: w kodzie jest błąd!"
+
+msgid "Processing file"
+msgstr "Przetwarzanie pliku"
+
+msgid "no valid packages were specified"
+msgstr "nie określono poprawnych pakietów"
+
+msgid "invalid 'socket' argument"
+msgstr "niepoprawny argument 'socket'"
+
+msgid "'port' must be integer of length 1"
+msgstr "'port' musi być liczbą całkowitą o długości 1"
+
+msgid "'host' must be character of length 1"
+msgstr "'host' musi być znakiem o długości 1"
+
+msgid "can only receive calls on local machine"
+msgstr "można odbierać wywołania jedynie na lokalnej maszynie"
+
+msgid "socket not established"
+msgstr "gniazdo nie zostało ustanowione"
+
+msgid "str.data.frame() called with non-data.frame -- coercing to one."
+msgstr "'str.data.frame()' wywołane z nie-ramką -- przekształcanie w ramkę."
+
+msgid "invalid options('str') -- using defaults instead"
+msgstr "niepoprawne 'options('str')' -- używanie w zamian wartości domyślnych"
+
+msgid "invalid components in options('str'):"
+msgstr "niepoprawne komponenty w 'options('str')':"
+
+msgid "'object' does not have valid levels()"
+msgstr "'object' nie posiada poprawnych levels()"
+
+msgid "'str.default': 'le' is NA"
+msgstr "'str.default': 'le' ma wartość NA"
+
+msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr ""
+"obydwa 'digits' oraz 'digits.d' są zdefiniowane i ostatni nie jest używany"
+
+msgid "no lines found in %s"
+msgstr "nie znaleziono linii w '%s'"
+
+msgid "profile does not contain memory information"
+msgstr "profil nie zawiera informacji o pamięci"
+
+msgid "no events were recorded"
+msgstr "nie zarejestrowano żadnych zdarzeń"
+
+msgid "invalid 'tarfile' argument"
+msgstr "niepoprawny argument 'tarfile'"
+
+msgid "'compressed' must be logical or character"
+msgstr "'compressed' musi być wartością logiczną lub znakiem"
+
+msgid "failed to create directory %s"
+msgstr "nie udało się utworzyć katalogu %s"
+
+msgid "invalid octal digit"
+msgstr "niepoprawna cyfra ósemkowa"
+
+msgid "'tarfile' must be a character string or a connection"
+msgstr "'tarfile' musi być ciągiem tekstowym lub połączeniem"
+
+msgid "incomplete block on file"
+msgstr "niekompletny blok w pliku"
+
+msgid "checksum error for entry '%s'"
+msgstr "błąd sumy kontrolnej dla wpisu '%s'"
+
+msgid "failed to copy %s to %s"
+msgstr "kopiowanie %s do %s nie powiodło się"
+
+msgid "unsupported entry type"
+msgstr "niewspierany typ wpisu"
+
+msgid "file '%s' not found"
+msgstr "plik '%s' nie został znaleziony"
+
+msgid "file path is too long"
+msgstr "ścieżka do pliku jest zbyt długa"
+
+msgid "linked path is too long"
+msgstr "połączona ścieżka jest zbyt długa"
+
+msgid ""
+"vignette %s found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"winieta '%s' została znaleziona więcej niż raz,\n"
+"używanie tej znalezionej w %s"
+
+msgid "vignette %s not found"
+msgstr "winieta '%s' nie została znaleziona"
+
+msgid "vignette %s has no PDF"
+msgstr "winieta '%s' nie posiada PDF"
+
+msgid "select.list() cannot be used non-interactively"
+msgstr "'select.list()' nie może być użyta nieinteraktywnie"
+
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'title' musi być wartością NULL lub wektorem tekstowym o długości 1"
+
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr ""
+"Wprowadź jedną lub więcej liczb oddzielonych spacją, lub pustą linię aby "
+"anulować"
+
+msgid "Invalid input, please try again"
+msgstr "Niepoprawne wejście, proszę spróbować ponownie"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr "'quote' musi być 'TRUE', 'FALSE' lub liczbą"
+
+msgid "invalid numbers in 'quote'"
+msgstr "niepoprawne liczby w 'quote'"
+
+msgid "invalid 'quote' specification"
+msgstr "niepoprawne określenie 'quote'"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "'col.names = NA' nie ma sensu kiedy 'row.names = FALSE'"
+
+msgid "invalid 'col.names' specification"
+msgstr "niepoprawne określenie 'col.names'"
+
+msgid "appending column names to file"
+msgstr "dołączanie nazw kolumn do pliku"
+
+msgid "attempt to set '%s' ignored"
+msgstr "próba ustawienia '%s' została zignorowana"
+
+msgid "'unzip' must be a single character string"
+msgstr "'unzip' musi być pojedynczym ciągiem tekstowym"
+
+msgid "'files' must a character vector specifying one or more filepaths"
+msgstr ""
+"'files' musi być wektorem tekstowym określającym jedną lub więcej ścieżek do "
+"plików"
+
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+"nie można znaleźć programu do otwarcia 'mailto:' URI: przywracanie 'method="
+"\"none\"'"
+
+msgid "Using the browser to open a mailto: URI"
+msgstr "Używanie przeglądarki do otwarcia 'mailto': URI"
+
+msgid "must specify 'address'"
+msgstr "musisz określić 'address'"
+
+msgid "'subject' is missing"
+msgstr "brakuje 'subject'"
+
+msgid "'ccaddress' must be of length 1"
+msgstr "'ccaddress' musi być dłygości 1"
+
+msgid "no download method found"
+msgstr "nie znaleziono metody pobierania"
+
+msgid "download had nonzero exit status"
+msgstr "pobieranie miało niezerowy status wyjściowy"
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr "funkcja 'tar' zwróciła niezerowy kod wyjścia %d"
+
+msgid "file %s is not an OS X binary package"
+msgstr ""
+
+msgid "package %s successfully unpacked and MD5 sums checked"
+msgstr ""
+"pakiet %s został pomyślnie rozpakowany oraz sumy MD% zostały sprawdzone"
+
+msgid "ERROR: failed to lock directory"
+msgstr "BŁĄD: nie udało się zablokować katalogu"
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+"do modyfikowania.\n"
+"Spróbuj usunąć"
+
+msgid "ERROR: failed to create lock directory"
+msgstr "BŁĄD: nie udało się utworzyć blokady katalogu"
+
+msgid "restored %s"
+msgstr "przywrócono %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "nie można usunąć tymczasowej instalacji %s w %s"
+
+msgid "cannot remove prior installation of package"
+msgstr "nie można usunąć poprzedniej instalacji pakietu"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Pobrane pakiety binarne są w\n"
+"\t%s"
+
+msgid "'memory.size()' is Windows-specific"
+msgstr "'memory.size()' jest specyficzna dla systemów Windows"
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr "'memory.limit()' jest specyficzna dla systemów Windows"
+
+msgid "method 'mailx' is Unix-only"
+msgstr "metoda 'mailx' jest tylko dla systemów Unix"
+
+msgid ""
+"If nothing happens, you should open\n"
+"%s yourself"
+msgstr ""
+"Jeśli nic się nie stanie, powinieneś otworzyć\n"
+"'%s' samemu"
+
+msgid "zipfile %s not found"
+msgstr "plik zip %s nie został znaleziony"
+
+msgid "failed to create %s"
+msgstr "nie udało się utworzyć %s"
+
+msgid "there is no 'libs' directory in package %s"
+msgstr "nie ma katalogu 'libs' w pakiecie '%s'"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "nie można usunąć poprzedniej instalacji pakietu %s"
+
+msgid "winDialog() cannot be used non-interactively"
+msgstr "'winDialog()' nie może być użyty nieinteraktywnie"
+
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "'winDialogString()' nie może być użyty nieinteraktywnie"
+
+msgid "'pb' is not from class \"winProgressBar\""
+msgstr "'pb' nie pochodzi z klasy \"winProgressBar\""
+
+msgid "class discarded from column %s"
+msgid_plural "classes discarded from columns %s"
+msgstr[0] "klasa usunięta z kolumny %s"
+msgstr[1] "klasy usunięte z kolumn %s"
+msgstr[2] "klasy usunięte z kolumn %s"
+
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "obiekt '%s' nie został znaleziony"
+msgstr[1] "obiekty '%s' nie zostały znalezione"
+msgstr[2] "obiekty '%s' nie zostały znalezione"
+
+msgid "package %s is not available (for %s)"
+msgid_plural "packages %s are not available (for %s)"
+msgstr[0] "pakiet '%s' nie jest dostępny (dla '%s')"
+msgstr[1] "pakiety '%s' nie są dostępne (dla '%s')"
+msgstr[2] "pakiety '%s' nie są dostępne (dla '%s')"
+
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0] "zależność %s nie jest dostępna"
+msgstr[1] "zależności %s nie są dostępne"
+msgstr[2] "zależności %s nie są dostępne"
+
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] "instalowanie dodatkowych zależności %s"
+msgstr[1] "instalowanie dodatkowych zależności %s"
+msgstr[2] "instalowanie dodatkowych zależności %s"
+
+msgid "'lib' element %s is not a writable directory"
+msgid_plural "'lib' elements %s are not writable directories"
+msgstr[0] "element 'lib'  '%s' nie jest zapisywalnym katalogiem"
+msgstr[1] "elementy 'lib'  '%s' nie są zapisywalnymi katalogami"
+msgstr[2] "elementy 'lib'  '%s' nie są zapisywalnymi katalogami"
+
+msgid "installing the source package %s"
+msgid_plural "installing the source packages %s"
+msgstr[0] "instalowanie pakietu źródłowego %s"
+msgstr[1] "instalowanie pakietów źródłowych %s"
+msgstr[2] "instalowanie pakietów źródłowych %s"
+
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0] "pakiet '%s' jest w użyciu i nie zostanie zainstalowany"
+msgstr[1] "pakiety '%s' są w użyciu i nie zostaną zainstalowane"
+msgstr[2] "pakiety '%s' są w użyciu i nie zostaną zainstalowane"
+
+#~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
+#~ msgstr ""
+#~ "nie można wyłączyć znaków specjalnych dla lokalizacji poprzez LC_CTYPE"
+
+#~ msgid "Creating directories ..."
+#~ msgstr "Tworzenie katalogów ..."
+
+#~ msgid "Creating DESCRIPTION ..."
+#~ msgstr "Tworzenie DESCRIPTION ..."
+
+#~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
+#~ msgstr "Od wersji R 2.14.0, każdy pakiet otrzymuje NAMESPACE."
+
+#~ msgid "Argument 'namespace' is deprecated."
+#~ msgstr "Argument 'namespace' jest przestarzały."
+
+#~ msgid "Creating NAMESPACE ..."
+#~ msgstr "Tworzenie NAMESPACE ..."
+
+#~ msgid "Creating Read-and-delete-me ..."
+#~ msgstr "Tworzenie pliku Read-and-delete-me ..."
+
+#~ msgid "Saving functions and data ..."
+#~ msgstr "Zapisywanie funkcji oraz danych ..."
+
+#~ msgid "Copying code files ..."
+#~ msgstr "Kopiowanie plików kodu ..."
+
+#~ msgid "Invalid file name(s) for R code in"
+#~ msgstr "Niepoprawne nazwy plików dla kodu R w"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "are now renamed to 'z<name>.R'"
+#~ msgstr "są teraz zamienione na 'z<name>.R'"
+
+#~ msgid "Making help files ..."
+#~ msgstr "Tworzenie plików pomocy ..."
+
+#~ msgid "Done."
+#~ msgstr "Wykonano."
+
+#~ msgid "Further steps are described in '%s'."
+#~ msgstr "Dalsze kroki są opisane w '%s'."
+
+#~ msgid ""
+#~ "Would you like to create a personal library\n"
+#~ "%s\n"
+#~ "to install packages into?"
+#~ msgstr ""
+#~ "Czy chciałbyś utworzyć osobistą bibliotekę\n"
+#~ "%s\n"
+#~ "by w niej zainstalować pakiety?"

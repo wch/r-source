@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 11:35\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,9 @@ msgid "'breaks' are not unique"
 msgstr ""
 
 msgid "labels/breaks length conflict"
+msgstr ""
+
+msgid "invalid value of length(x)"
 msgstr ""
 
 msgid "invalid 'row.names' length"
@@ -654,6 +657,12 @@ msgid "'vec' contains NAs"
 msgstr ""
 
 msgid "'vec' must be sorted non-decreasingly"
+msgstr ""
+
+msgid "invalid length(x)"
+msgstr ""
+
+msgid "invalid length(vec)"
 msgstr ""
 
 msgid "using the first element of 'value' of type expression"
@@ -1458,6 +1467,12 @@ msgid "'x' is not an array"
 msgstr ""
 
 msgid "'bin' must be numeric or a factor"
+msgstr ""
+
+msgid "invalid value of length(bin)"
+msgstr ""
+
+msgid "invalid value of nbins"
 msgstr ""
 
 msgid "arguments must have same length"

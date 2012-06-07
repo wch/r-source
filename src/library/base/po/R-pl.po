@@ -1,0 +1,1820 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2012-06-07 15:52\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"na-Revision-Date: 2012-05-29 07:55+0100\n"
+"X-Poedit-Language: Polish\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s' został zlikwidowany."
+
+msgid "Use '%s' instead."
+msgstr "Użyj '%s' w zamian."
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "Zobacz help(\"Defunct\") oraz help(\"%s-defunct\")."
+
+msgid "See help(\"Defunct\")"
+msgstr "Zobacz help(\"Defunct\")"
+
+msgid "'%s' is deprecated."
+msgstr "'%s' jest przestarzałe."
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "Zobacz help(\"Deprecated\") oraz help(\"%s-deprecated\")."
+
+msgid "See help(\"Deprecated\")"
+msgstr "Zobacz help(\"Deprecated\")"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "argument przekazywany do 'La.svd' musi być liczbowy lub zespolony"
+
+msgid "infinite or missing values in 'x'"
+msgstr "wartość nieskończona lub brakuje wartości w 'x'"
+
+msgid "0 extent dimensions"
+msgstr "wymiary o zerowym zakresie"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu' musi mieć wartość  0, nrow(x) lub ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv' musi mieć wartość 0, nrow(x) lub ncol(x)"
+
+msgid "second argument must be a list"
+msgstr "drugi argument musi być listą"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist' nie jest dostępne w tym systemie"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind' musi być ciągiem tekstowym o długości 1 (zostanie użyty RNG)."
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' nie jest poprawnym skrótem dla RNG"
+
+msgid "'normal.kind' must be a character string of length 1"
+msgstr "'normal.kind' musi być ciągiem tekstowym o długości 1"
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s' nie jest poprawnym wyborem"
+
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr "Użyto błędnej wersji generatora Kindermana-Ramage'a"
+
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
+msgstr "Błędna wersja generatora Kindermana-Ramage'a nie jest dozwolona"
+
+msgid "malformed version string"
+msgstr "zniekształcony ciąg wersji"
+
+msgid "target is %s, current is %s"
+msgstr "cel: %s, bieżące: %s"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) musi mieć dodatnią długość"
+
+msgid "'X' must have named dimnames"
+msgstr "'X' musi mieć nazwane wymiary"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
+
+msgid "'dim' specifies too large an array"
+msgstr "'dim' określa zbyć dużą tablicę"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "niepoprawna wartość dla 'MARGIN'"
+
+msgid "you cannot be serious"
+msgstr "nie mówisz na serio"
+
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+msgstr "*** 'pos=1' nie jest możliwe; ustawianie 'pos=2' na chwilę obecną."
+
+msgid "*** Note that 'pos=1' will give an error in the future"
+msgstr "*** Zwróć uwagę, że 'pos=1' będzie zwracał błąd w przyszłości"
+
+msgid "file '%s' not found"
+msgstr "plik '%s' nie został znaleziony"
+
+msgid "invalid 'name' argument"
+msgstr "niepoprawny argument 'name'"
+
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr ""
+"pakiet %s jest wymagany przez %s, który z kolei może nie działać poprawnie"
+
+msgid "package %s is required by %s so will not be detached"
+msgstr "pakiet '%s' jest wymagany przez  '%s' tak więc nie zostanie odłączony"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
+"'%s' nie powiodło się w '%s()' dla '%s', szczegóły:\n"
+"  wywołanie: '%s'\n"
+"  błąd:  '%s'"
+
+msgid "namespace cannot be unloaded:"
+msgstr "przestrzeń nazw nie może zostać usunięta:"
+
+msgid "converted to character string"
+msgstr "zamienione na ciąg znaków"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "zastąpiono wzór wyrażenia regularnego '[' przez '\\\\['"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "zastąpiono '[<-' przez '\\\\[<-' we wzorcu wyrażenia regularnego"
+
+msgid "RHS must be list"
+msgstr "prawa strona musi być listą"
+
+msgid "an object with that name already exists"
+msgstr "obiekt o tej nazwie już istnieje"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "automat ładujący nie znalazł '%s' w '%s'"
+
+msgid "invalid argument values in 'backsolve'"
+msgstr "niepoprawne wartości argumentów w 'backsolve'"
+
+#, fuzzy
+msgid "invalid value of ncol(x)"
+msgstr "niepoprawna wartość"
+
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "macierz osobliwa w 'backsolve'. Pierwsze zero na diagonali [%d]"
+
+msgid "complex matrices not permitted at present"
+msgstr "macierze zespolone nie są dozwolone na chwilę obecną"
+
+msgid "non-numeric argument to 'chol'"
+msgstr "nieliczbowy argument przekazany do 'chol'"
+
+msgid "non-square matrix in 'chol'"
+msgstr "macierz w 'chol' nie jest kwadratowa"
+
+msgid "non-matrix argument to 'chol'"
+msgstr "argument przekazany do 'chol' nie jest macierzą"
+
+msgid "invalid nrow(x)"
+msgstr ""
+
+msgid "matrix not positive definite"
+msgstr "macierz nie jest dodatnio określona"
+
+msgid "non-positive definite matrix in 'chol'"
+msgstr "macierz w 'chol' nie jest dodatnio określona"
+
+msgid "non-numeric argument to 'chol2inv'"
+msgstr "nieliczbowy argument przekazany do 'chol2inv'"
+
+msgid "invalid 'size' argument in 'chol2inv'"
+msgstr "niepoprawny argument 'size' w 'chol2inv'"
+
+msgid "singular matrix in 'chol2inv'"
+msgstr "macierz osobliwa w 'chol2inv'"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "'x' musi być tablicą o co najmniej dwóch wymiarach"
+
+msgid "invalid 'dims'"
+msgstr "niepoprawne 'dims'"
+
+msgid "bad handler specification"
+msgstr "niepoprawne określenie obsługi"
+
+msgid "no 'restart' '%s' found"
+msgstr "nie znaleziono 'restart' '%s'"
+
+msgid "not an interactive session"
+msgstr "nie interaktywna sesja"
+
+msgid "not a valid restart specification"
+msgstr "nie jest poprawnym określeniem restartu"
+
+msgid "argument 'where' of length 0"
+msgstr "argument 'where' o długości 0"
+
+msgid "argument 'object' must deparse to a single character string"
+msgstr "argument 'object' musi być konwertowalny do pojedynczego ciągu znaków"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr "'origin' musi być jednym ze 'start', 'current' lub 'end'"
+
+msgid "can only truncate an open connection"
+msgstr "można obciąć jedynie otwarte połączenie"
+
+msgid "can only write vector objects"
+msgstr "można jedynie zapisać obiekty wektorowe"
+
+msgid "can only write character objects"
+msgstr "można jedynie zapisać obiekty tekstowe"
+
+msgid "supplied timeout must be NULL or a non-negative number"
+msgstr ""
+"dostarczony limit czasu oczekiwania musi być wartością NULL lub nieujemną "
+"liczbą"
+
+msgid "'from' must be raw or character"
+msgstr "'from' musi być typem pustym lub znakiem"
+
+msgid "'x' must be numeric"
+msgstr "'x' musi być liczbą"
+
+msgid "invalid number of intervals"
+msgstr "niepoprawna liczba interwałów"
+
+msgid "'breaks' are not unique"
+msgstr "'breaks' nie są unikalne"
+
+msgid "labels/breaks length conflict"
+msgstr "konflikt długości etykiet/przerw"
+
+#, fuzzy
+msgid "invalid value of length(x)"
+msgstr "niepoprawna wartość"
+
+msgid "invalid 'row.names' length"
+msgstr "niepoprawna długość 'row.names'"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "powtórzone 'row.names' nie są dozwolone"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "brakujące wartości w 'row.names' nie są dozwolone"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "niepoprawne 'dimnames' dla ramki"
+
+msgid "cannot coerce class '%s' into a data.frame"
+msgstr "nie można przekształcić klasy '%s' w ramkę"
+
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr "niepoprawny 'row.names', długość %d dla ramki z %d wierszami"
+
+msgid "supplied %d row names for %d rows"
+msgstr "dostarczono %d nazwę wiersza dla %d wierszy"
+
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+"options('stringsAsFactors') nie została ustawiona na 'TRUE' lub 'FALSE'"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "niedopasowanie nazw wiersza w argumentach 'data.frame', pozycja %d"
+
+msgid "some row.names duplicated:"
+msgstr "niektóre wartości 'row.names' są powtórzone:"
+
+msgid ","
+msgstr ","
+
+msgid "--> row.names NOT used"
+msgstr "--> row.names NIE używane"
+
+msgid "row names contain missing values"
+msgstr "nazwy wierszy zawierają brakujące wartości"
+
+msgid "duplicate row.names:"
+msgstr "zduplikowane wartości row.names:"
+
+msgid "arguments imply differing number of rows:"
+msgstr "argumenty sugerują różne liczby wierszy:"
+
+msgid "row.names should specify one of the variables"
+msgstr "'row.names' powinny określać jedną ze zmiennych"
+
+msgid "row names supplied are of the wrong length"
+msgstr "dostarczone nazwy wierszy są niepoprawnej długości"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr ""
+"nazwy wierszy zostały znalezione z krótkiem zmiennej i zostały odrzucone"
+
+msgid "named arguments other than 'drop' are discouraged"
+msgstr "nazwane argumenty inne, niż 'drop' są odrzucone"
+
+msgid "drop argument will be ignored"
+msgstr "argument 'drop' będzie zignorowany"
+
+msgid "undefined columns selected"
+msgstr "wybrano niezdefiniowane kolumny"
+
+msgid "named arguments other than 'exact' are discouraged"
+msgstr "nazwane argumenty inne, niż 'exact' są odrzucone"
+
+msgid "named arguments are discouraged"
+msgstr "nazwane argumenty są odrzucane"
+
+msgid "rhs is the wrong length for indexing by a logical matrix"
+msgstr ""
+"prawa strona ma niepoprawną długość dla indeksownia przez macierz logiczną"
+
+msgid "only logical matrix subscripts are allowed in replacement"
+msgstr "tylko indeksy macierzy logicznej są dozwolone w zamianie"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "potrzeba 0, 1, lub 2 indeksów"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr ""
+"brakujace wartości nie sa dozwolone w indeksowanych przypisaniach ramek"
+
+msgid "non-existent rows not allowed"
+msgstr "nieistniejące wiersze nie są dozwolone"
+
+msgid "column name \"\" cannot match any column"
+msgstr "nazwy \"\" kolumny nie można dopasować do żadnej kolumny"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "nowe kolumny zostawiłyby dziury po istniejących kolumnach"
+
+msgid "duplicate subscripts for columns"
+msgstr "powtórzone indeksy dla kolumn"
+
+msgid "replacement has %d rows, data has %d"
+msgstr "zamiana ma %d wierszy, dane mają %d"
+
+msgid "replacement has %d items, need %d"
+msgstr "zamiana ma %d pozycji, potrzeba %d"
+
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr "element zamiany %d jest macierzą/ramką o %d wierszach, potrzeba %d"
+
+msgid "replacement element %d has %d rows, need %d"
+msgstr "element zamiany %d posiada %d wierszy, potrzeba %d"
+
+msgid "replacement element %d has %d rows to replace %d rows"
+msgstr "element zamiany %d posiada %d wierszy do zastąpienia %d wierszy"
+
+msgid "%d rows in value to replace %d rows"
+msgstr "%d wierszy w wartości do zastąpienia %d wierszy"
+
+msgid "replacement data has %d rows to replace %d rows"
+msgstr "zamiana danych posiada %d wierszy do zastąpienia %d wierszy"
+
+msgid "provided %d variables to replace %d variables"
+msgstr "dostarczono %d zmiennych do zastąpienia %d zmiennych"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr ""
+"jedynymi poprawnymi przywołaniami są x[[j]] <- wartość lub x[[i,j]] <- "
+"wartość"
+
+msgid "replacing element in non-existent column:"
+msgstr "zastępowanie elementu w nieistniejącej kolumnie:"
+
+msgid "only a single element should be replaced"
+msgstr "tylko pojedynczy element powinień być zamieniony"
+
+msgid "names do not match previous names"
+msgstr "nazwy nie zgadzają się z poprzednimi nazwami"
+
+msgid "numbers of columns of arguments do not match"
+msgstr "liczba kolumn argumentów nie zgadza się"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr ""
+"niepoprawny argument spiska: dliny wsjech pjerjemjennych muszą być rawny"
+
+msgid "data frame with 0 columns and %d rows"
+msgstr "ramka z zerową liczbą kolumn oraz liczbą wierszy równą %d"
+
+msgid "<0 rows> (or 0-length row.names)"
+msgstr "<0 wierszy> (lub row.names o zerowej długości)"
+
+msgid "non-numeric variable in data frame:"
+msgstr "zmienna nie-liczbowa w ramce:"
+
+msgid "only defined for equally-sized data frames"
+msgstr "zdefiniowane jedynie dla ramek o równych rozmiarach"
+
+msgid "list of length %d not meaningful"
+msgstr "lista o długości %d nie ma znaczenia"
+
+msgid "only defined on a data frame with all numeric variables"
+msgstr "zdefiniowane jedynie na ramce z wszystkimi zmiennymi będącymi liczbami"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "ciąg znaków nie jest w standardowym jednoznacznym formacie"
+
+msgid "'origin' must be supplied"
+msgstr "'origin' musi zostać dostarczone"
+
+msgid "do not know how to convert '%s' to class \"Date\""
+msgstr "nie wiem jak przekonwertować klasę '%s' na klasę \"Date\""
+
+msgid "'%s' is not a \"date\" object"
+msgstr "'%s' nie jest obiektem typu \"date\""
+
+msgid "'%s' is not a \"dates\" object"
+msgstr "'%s' nie jest obiektem typu \"dates\""
+
+msgid "binary + is not defined for Date objects"
+msgstr "dwuargumentowy operator '+' nie jest określony dla obiektów Date"
+
+msgid "Can only subtract from Date objects"
+msgstr "Można odejmować jedynie od obiektów 'Date'"
+
+msgid "unary - is not defined for Date objects"
+msgstr "jednoargumentowy '-' nie jest określony dla obiektów Date"
+
+msgid "can only subtract numbers from Date objects"
+msgstr "można odejmować liczby jedynie od obiektów 'Date'"
+
+msgid "unary"
+msgstr "jednoargumentówy"
+
+msgid "not defined for Date objects"
+msgstr "nie jest określone dla obiektów Date"
+
+msgid "'from' must be specified"
+msgstr "'from' musi być określone"
+
+msgid "'from' must be a Date object"
+msgstr "'from' musi być obiektem typu data"
+
+msgid "'from' must be of length 1"
+msgstr "'from' musi być długości 1"
+
+msgid "'to' must be a Date object"
+msgstr "'to' musi być obiektem typu data"
+
+msgid "'to' must be of length 1"
+msgstr "'to' musi być długości 1"
+
+msgid "'length.out' must be of length 1"
+msgstr "'length.out' musi być dłygości 1"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr ""
+"dokładnie dwa z 'to', 'by' oraz 'length.out' / 'along.with' muszą być "
+"określone"
+
+msgid "'by' must be of length 1"
+msgstr "'by' musi być długości 1"
+
+msgid "invalid 'by' string"
+msgstr "błędny ciąg 'by'"
+
+msgid "invalid string for 'by'"
+msgstr "błędny ciąg dla 'by'"
+
+msgid "invalid mode for 'by'"
+msgstr "błędny tryb dla 'by'"
+
+msgid "'by' is NA"
+msgstr "'by' posiada wartość NA"
+
+msgid "'x' must be a date-time object"
+msgstr "'x' musi być obiektem typu data-czas"
+
+msgid "invalid specification of 'breaks'"
+msgstr "niepoprawne określenie dla 'breaks'"
+
+msgid "'origin' must be of length one"
+msgstr "'origin' musi być długości 1"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "'lag' oraz 'differences' muszą być liczbami całkowitymi >= 1"
+
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXlt\""
+
+msgid "do not know how to convert '%s' to class \"POSIXct\""
+msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXct\""
+
+msgid "wrong class"
+msgstr "zła klasa"
+
+msgid "binary '+' is not defined for \"POSIXt\" objects"
+msgstr "binarny '+' nie jest określony dla obiektów \"POSIXt\""
+
+msgid "Can only subtract from POSIXt objects"
+msgstr "Można odjąć jedynie od obiektów POSIXt"
+
+msgid "unary '-' is not defined for \"POSIXt\" objects"
+msgstr "jednoargumentówy '-' nie jest określony dla obiektów \"POSIXt\""
+
+msgid "can only subtract numbers from POSIXt objects"
+msgstr "liczby można odjąć jedynie od obiektów POSIXt"
+
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr ""
+"jednoargumentówy operator '%s' nie jest zdefiniowany dla obiektów \"POSIXt\""
+
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "'%s' nie jest określone dla obiektów \"POSIXt\""
+
+msgid "'tzone' attributes are inconsistent"
+msgstr "atrybuty 'tzone' sa niespójne"
+
+msgid "'tim' is not character or numeric"
+msgstr "'tim' nie jest znakiem ani liczbą"
+
+msgid "need explicit units for numeric conversion"
+msgstr "potrzeba jawnych jednostek dla konwersji liczbowej"
+
+msgid "invalid units specified"
+msgstr "niepoprawne określenie jednostek"
+
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "jednoargumentówy '%s' nie jest określony dla obiektów \"difftime\""
+
+msgid "'%s' not defined for \"difftime\" objects"
+msgstr "'%s' nie jest określony dla obiektów \"difftime\""
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "oba argumenty \"*\" nie mogą być obiektami \"difftime\""
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "drugi argument \"/\" nie może być obiektem \"difftime\""
+
+msgid "'from' must be a POSIXt object"
+msgstr "'from' musi być obiektem POSIXt"
+
+msgid "'to' must be a POSIXt object"
+msgstr "'to' musi być obiektem POSIXt"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' musi być ciągiem tekstowym lub połączeniem"
+
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"Niepoprawny format DCF.\n"
+"Regularne linie muszą mieć znacznik.\n"
+"Przeszkadzające linie rozpoczynają się z:\n"
+"%s"
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"Niepoprawny format DCF.\n"
+"Linie uzupełniające nie mogą rozpoczynać rekordu.\n"
+"Przeszkadzające linie rozpoczynają się z:\n"
+"%s"
+
+msgid "'x' must be a square matrix"
+msgstr "'x' musi być macierzą kwadratową"
+
+msgid "determinant not currently defined for complex matrices"
+msgstr "wyznacznik nie jest obecnie zdefiniowany dla macierzy zespolonych"
+
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr "'nrow' ani 'ncol' nie mogą być określone kiedy 'x' jest macierzą"
+
+msgid "'x' is an array, but not 1D."
+msgstr "'x' jest tablicą, ale nie jest jednowymiarowa."
+
+msgid "only matrix diagonals can be replaced"
+msgstr "tylko elementy diagonalne macierzy mogą zostać zastąpione"
+
+msgid "replacement diagonal has wrong length"
+msgstr "zamiana elementów diagonalnych ma niepoprawną długość"
+
+msgid "MARGIN ="
+msgstr "MARGINES ="
+
+msgid "is invalid for dim ="
+msgstr "jest niepoprawne dla dim ="
+
+msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgstr "potrzeba przekazać nazwę pakietu, DLLInfo lub obiekt DllInfoReference"
+
+msgid "No DLL currently loaded with name or path"
+msgstr "Brak biblioteki DLL aktualnie załadowanej o nazwie lub ścieżce"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "wielokrotna zgodność plików DLL z '%s'. Używanie '%s'"
+
+msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgstr "potrzeba określić DLL przez obiekt DLLInfo. Zobacz 'getLoadedDLLs()'"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr ""
+"funkcja nie jest w przestrzeni nazw tak więc można zlokalizować powiązanego "
+"pliku DLL"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"poszukiwanie pliku DLL po wywołanie rodzimej procedury, ale brak plików DLL "
+"w przestrzeni nazw wywołania"
+
+msgid "0 x 0 matrix"
+msgstr "macierz 0 x 0"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "macierz w 'eigen' nie jest kwadratowa"
+
+msgid "'ch' returned code %d in 'eigen'"
+msgstr "'ch' zwrócił kod %d w 'eigen'"
+
+msgid "'rs' returned code %d in 'eigen'"
+msgstr "'rs' zwrócił %d w 'eigen'"
+
+msgid "'cg' returned code %d in 'eigen'"
+msgstr "'cg' zwrócił %d w 'eigen'"
+
+msgid "'rg' returned code %d in 'eigen'"
+msgstr "'rg' zwrócił kod %d w 'eigen'"
+
+msgid "invalid labels; length %d should be 1 or %d"
+msgstr "nieprawidłowe etykiety; długość %d powinna wynosić 1 lub %d"
+
+msgid "number of levels differs"
+msgstr "liczba poziomów różni się"
+
+msgid "not meaningful for factors"
+msgstr "nie ma sensu dla czynników"
+
+msgid "level sets of factors are different"
+msgstr "poziomy faktorów są różne"
+
+msgid "invalid factor level, NAs generated"
+msgstr "niepoprawny poziom czynnika, wygenerowano wartości NA"
+
+msgid "invalid factor level, NA generated"
+msgstr "niepoprawny poziom czynnika, wygenerowano wartość NA"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "'%s' nie ma znaczenia dla uporządkowanych czynników"
+
+msgid "'%s' not defined for ordered factors"
+msgstr "'%s' nie jest określone dla uporządkowanych czynników"
+
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr ""
+"'%s' ma sens tylko dla uporządkowanych czynników jeśli wszystkie argumenty "
+"mają ten sam zbiór poziomów"
+
+msgid "no files to copy to"
+msgstr "brak plików do skopiowania"
+
+msgid "more 'from' files than 'to' files"
+msgstr "więcej plików 'from' niż plików 'to'"
+
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
+"'recursive' będzie zignorowany, z uwagi na to, że 'to' nie jest pojedynczym "
+"istniejącym katalogiem"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "plik nie może być skopiowany jednocześnie z 'from' oraz 'to'"
+
+msgid "no files to link from"
+msgstr "brak plików z których można łączyć"
+
+msgid "no files/directory to link to"
+msgstr "brak plików/katalogu do których można łączyć"
+
+msgid "no files to link to"
+msgstr "brak plików do których można łączyć"
+
+msgid "'package' must be of length 1"
+msgstr "'package' musi być długości 1"
+
+msgid "no file found"
+msgstr "nie znaleziono pliku"
+
+msgid "invalid 'path' argument"
+msgstr "niepoprawny argument 'path'"
+
+msgid "invalid 'time' argument"
+msgstr "niepoprawny argument 'time'"
+
+msgid "'vec' contains NAs"
+msgstr "'vec' zawiera wartości NA"
+
+msgid "'vec' must be sorted non-decreasingly"
+msgstr "'vec' musi zostać posortowany w sposób niemalejący"
+
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "niepoprawna wartość"
+
+#, fuzzy
+msgid "invalid length(vec)"
+msgstr "niepoprawna wartość"
+
+msgid "using the first element of 'value' of type expression"
+msgstr "używanie pierwszego elementu 'value' typu wyrażenia"
+
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "'mode' musi być \"double\" (\"real\"), \"integer\" lub \"character\""
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "przekształcanie argumentu w \"character\" dla 'format=\"s\"'"
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+"'format' musi być jednym z {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+
+msgid "'digits' reduced to"
+msgstr "'digits' zredukowano do"
+
+msgid "'flag' can contain only '0+- #'"
+msgstr "'flag' może zawierać jedynie '0+- #'"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr ""
+"uszkodzona ramka: kolumny będą obcięte lub uzupełnione wartościami 'NA'"
+
+msgid "'zero.print' has length > 1"
+msgstr "'zero.print' ma długość > 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr "'zero.print' musi być znakiem, wartością logiczną lub NULL"
+
+msgid "'subset' must evaluate to logical"
+msgstr "'subset' musi wyliczać wartość logiczną"
+
+msgid "'subset' must be logical"
+msgstr "'subset' musi być zmienną logiczną"
+
+msgid "value for '"
+msgstr "wartości dla '"
+
+msgid "' not found"
+msgstr "' nie znaleziono"
+
+msgid "all arguments must be named"
+msgstr "wszystkie argumenty muszą być nazwane"
+
+msgid "match distance components must be non-negative"
+msgstr "komponenty o dopasowanej odległości muszą być nieujemne"
+
+msgid "unknown match distance components ignored"
+msgstr "nieznane komponenty o dopasowanej odległości zostały zignorowane"
+
+msgid "unknown cost components ignored"
+msgstr "nieznane komponenty kosztowe zostały zignorowane"
+
+msgid "cost components must be non-negative"
+msgstr "komponenty kosztowe muszą być nieujemne"
+
+msgid "%s and %s must have the same length"
+msgstr "%s oraz %s muszą mieć tę samą długość"
+
+msgid "need non-overlapping matches for %s"
+msgstr "potrzeba niepokrywających się dopasowań dla %s"
+
+msgid "missing replacement values are not allowed"
+msgstr "brakujące wartości dla zamiany nie są dozwolone"
+
+msgid "must have replacement values for matches"
+msgstr "potrzeba mieć wartości zamianaów dla dopasowań"
+
+msgid "value does not provide any replacement values"
+msgstr "wartości nie dostarczają żadnych wartości zamianaów"
+
+msgid "must have replacements for non-matches"
+msgstr "potrzeba mieć zamianai dla niedopasowań"
+
+msgid "must have replacements for matches"
+msgstr "potrzeba mieć zamianai dla dopasowań"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr "norma '%s' aktualnie zawsze używa dokładnej wartości = FALSE"
+
+msgid "triangular matrix should be square"
+msgstr "macierz trójkątna powinna mieć równą liczbę wierszy i kolumn"
+
+msgid "'object' must be a list"
+msgstr "'object' musi być listą"
+
+msgid "'keep.source' is deprecated and will be ignored"
+msgstr "'keep.source' jest przestarzałe i będzie zignorowane"
+
+msgid "package %s has not been installed properly"
+msgstr "pakiet '%s' nie został zainstalowany poprawnie"
+
+msgid "package %s was built before R 2.10.0: please re-install it"
+msgstr "pakiet '%s' został zbudowany przed R 2.10.0: proszę go przeinstalować"
+
+msgid "This is R %s, package %s needs %s %s"
+msgstr "To jest R %s, pakiet %s potrzebuje %s %s"
+
+msgid "package %s was built under R version %s"
+msgstr "pakiet %s został zbudowany w wersji R %s"
+
+msgid "package %s was built for %s"
+msgstr "pakiet %s został zbudowany dla %s"
+
+msgid "package %s is not installed for 'arch=%s'"
+msgstr "pakiet '%s' nie jest zainstalowany dla 'arch=%s'"
+
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr ""
+"Pakiet %s posiada licencję, którą musisz zaakceptować w interaktywnej sesji"
+
+msgid "Package %s has a license that you need to accept after viewing"
+msgstr ""
+"Pakiet %s posiada licencję, którą musisz zaakceptować po przeglądnięciu"
+
+msgid ""
+"Package %s has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+"Pakiet '%s' posiada licencję, którą musisz zaakceptować:\n"
+"zgodnie z opisem w pliku DESCRIPTION jest to"
+
+msgid "License"
+msgstr "Licencja"
+
+msgid "License for package %s not accepted"
+msgstr "Licencja dla pakietu '%s' nie została zaakceptowana"
+
+msgid "Attaching package: %s"
+msgstr "Dołączanie pakietu: %s"
+
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+"oba 'verbose' oraz 'quietly' są ustawione na tak; przyjmuję w takim razie "
+"tryb 'verbose' .."
+
+msgid "invalid package name"
+msgstr "błędna nazwa pakietu"
+
+msgid "there is no package called %s"
+msgstr "nie ma pakietu o nazwie %s"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr "nie znaleziono drzew bibliotek w 'lib.loc'"
+
+msgid "%s is not a valid installed package"
+msgstr "%s nie jest poprawnie zainstalowanym pakietem"
+
+msgid "%s not found on search path, using pos = 2"
+msgstr "'%s' nie zostało znalezione w ścieżce wyszukiwania, używanie 'pos = 2'"
+
+msgid "package/namespace load failed for %s"
+msgstr "ładowanie pakietu/przestrzeni nazw nie powiodło się dla '%s'"
+
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr ""
+"pakiet '%s' nie posiada przestrzeni nazw i powinien być zainstalowany "
+"ponownie"
+
+msgid "package %s already present in search()"
+msgstr "pakiet %s jest już obecny w 'search()'"
+
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
+msgstr ""
+"'DESCRIPTION' posiada pole 'Encoding' i ponowne enkodowanie nie jest możliwe"
+
+msgid "%sPackages in library %s:"
+msgstr "%s Pakietów w bibliotece %s:"
+
+msgid "no packages found"
+msgstr "nie znaleziono pakietów"
+
+msgid "R packages available"
+msgstr "Dostępne pakiety R"
+
+msgid "DLL %s not found: maybe not installed for this architecture?"
+msgstr ""
+"plik DLL '%s' nie został znaleziony: być może nie został zainstalowany dla "
+"tej architektury?"
+
+msgid "shared object %s not found"
+msgstr "współdzielony obiekt '%s' nie został znaleziony"
+
+msgid "DLL %s already loaded"
+msgstr "plik DLL %s jest już załadowany"
+
+msgid "shared object '%s' already loaded"
+msgstr "współdzielony obiekt '%s' jest już załadowany"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "teraz dyn.load(\"%s\") ..."
+
+msgid "no DLL was specified"
+msgstr "nie określono pliku DLL"
+
+msgid "no shared object was specified"
+msgstr "nie określono współdzielonego obiektu"
+
+msgid "DLL %s was not loaded"
+msgstr "plik DLL %s nie został załadowany"
+
+msgid "shared object %s was not loaded"
+msgstr "współdzielony obiekt '%s' nie został załadowany"
+
+msgid "DLL %s not found"
+msgstr "plik DLL %s nie został znaleziony"
+
+msgid "shared object '%s' not found"
+msgstr "współdzielony obiekt '%s' nie został znaleziony"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "teraz dyn.unload(\"%s\") ..."
+
+msgid "Loading required package: %s"
+msgstr "Ładowanie wymaganego pakietu: %s"
+
+msgid "none of the packages are loaded"
+msgstr "żaden z tych pakietów nie został załadowany"
+
+msgid ""
+"package %s found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"pakiet %s znaleziono więcej niż raz,\n"
+"używanie tego znalezionego w %s"
+
+msgid ""
+"Further information is available in the following vignettes in directory %s:"
+msgstr ""
+"Dalsza informacja jest dostępna w następujących winietach w katalogu %s:"
+
+msgid "doc"
+msgstr "doc"
+
+msgid "Description:"
+msgstr "Opis:"
+
+msgid "Index:"
+msgstr "Indeks:"
+
+msgid "Information on package %s"
+msgstr "Informacja dotycząca pakietu %s"
+
+msgid "Documentation for package %s"
+msgstr "Dokumentacja dla pakietu %s"
+
+msgid "package %s required by %s could not be found"
+msgstr "pakiet '%s' wymagany przez '%s' nie mógł zostać znaleziony"
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr "pakiet '%s %s' został znaleziony, ale '%s %s' jest wymagane przez '%s'"
+
+msgid "package %s could not be loaded"
+msgstr "pakiet '%s' nie mógł zostać załadowany"
+
+msgid "package %s %s is loaded, but %s %s is required by %s"
+msgstr "pakiet %s %s jest załadowany, ale %s %s jest wymagane przez %s"
+
+msgid "empty (zero-byte) input file"
+msgstr "pusty (zero bajtów) plik wejściowy"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "wejście zostało uszkodzone z LF zastąpionym przez CR"
+
+msgid ""
+"file %s has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+"plik %s posiada magiczną liczbę '%s'\n"
+"   Użycie wersji zapisu wcześniejszych niż 2 jest przestarzałe"
+
+msgid "bad 'file' argument"
+msgstr "błędny argument 'file'"
+
+msgid "'file' must be specified"
+msgstr "'file' musi być określone"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr "Użycie wersji zapisu wcześniejszych niż 2 jest przestarzałe"
+
+msgid "nothing specified to be save()d"
+msgstr "nic nie zostało określone do zapisu przy pomocy funkcji 'save()'"
+
+msgid "'file' must be non-empty string"
+msgstr "'file' musi być niepustym ciągiem tekstowym"
+
+msgid "'compress' must be logical or character"
+msgstr "'compress' musi być typem logicznym lub znakiem"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr "'compress = \"%s\"' jest niepoprawne"
+
+msgid "bad file argument"
+msgstr "błędny argument pliku"
+
+msgid "can only save to a binary connection"
+msgstr "można zapisać tylko do połączenia binarnego"
+
+msgid "image could not be renamed and is left in"
+msgstr "nazwa obrazu nie mogła zostać zmieniona; obraz pozostał w"
+
+msgid "[Previously saved workspace restored]"
+msgstr "[Poprzednio zapisany obszar roboczy został przywrócony]"
+
+msgid "Attempting to load the environment %s"
+msgstr "Próbowanie załadowania środowiska '%s'"
+
+msgid "not found: using .GlobalEnv instead"
+msgstr "nie znaleziono: zamiast tego używanie '.GlobalEnv'"
+
+msgid "invalid 'category' argument"
+msgstr "niepoprawny argument 'category'"
+
+msgid "must specify formal argument names to vectorize"
+msgstr "potrzeba określić nazwy formalnych argumentów aby zwektoryzować"
+
+msgid "'arg' must be NULL or a character vector"
+msgstr "'arg' musi być NULL lub wektorem tekstowym"
+
+msgid "'arg' must be of length 1"
+msgstr "'arg' musi mieć długość 1"
+
+msgid "'arg' must be of length >= 1"
+msgstr "'arg' musi mieć długość >= 1"
+
+msgid "'arg' should be one of %s"
+msgstr "'arg' powinien być jednym z %s"
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "jest więcej niż jedno dopasowanie w 'match.arg'"
+
+msgid "no match"
+msgstr "nie ma dopasowania"
+
+msgid "'input' must have length 1"
+msgstr "'input' musi mieć długość 1"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "'input' oraz 'target' muszą być wektorami tekstowymi"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s' nie jest funkcją, znakiem ani symbolem"
+
+msgid "found non-function '%s'"
+msgstr "znaleziono nie-funkcję '%s'"
+
+msgid "attempt to set rownames on object with no dimensions"
+msgstr "próba ustawienia nazw wierszy dla obiektu bez wymiarów"
+
+msgid "attempt to set colnames on object with less than two dimensions"
+msgstr "próba ustawienia nazw kolumn dla obiektu z mniej niż dwoma wymiarami"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr ""
+"argument nie jest wartością liczbową ani logiczną: zwracanie wartości 'NA'"
+
+msgid "'trim' must be numeric of length one"
+msgstr "'trim' musi być liczą o długości jeden"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "przycięte średnie nie są zdefiniowane dla danych złożonych"
+
+#, fuzzy
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "'by' musi określać poprawne kolumny"
+
+msgid "'by' must match numbers of columns"
+msgstr "'by' musi zgadzać się z liczbą kolumn"
+
+msgid "'by' must match number of columns"
+msgstr "'by' musi zgadzać się z liczbą kolumn"
+
+msgid "'by' must specify column(s) as numbers, names or logical"
+msgstr "'by' musi określać kolumny jako liczby, nazwy lub warunki logiczne"
+
+msgid "'by' must specify valid column(s)"
+msgstr "'by' musi określać poprawne kolumny"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "'by.x' oraz 'by.y' określają różne liczby kolumn"
+
+msgid "additional arguments ignored in message()"
+msgstr "zignorowano dodatkowe argumenty w 'message()'"
+
+msgid "(loaded the methods namespace)"
+msgstr "(załadowano przestrzeń nazw metod)"
+
+msgid ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+msgstr ""
+"Trassirowka funkcje wymaga pakietu 'methods', no ya nie można zagruzit jego "
+"przestrzeń nazw"
+
+msgid "Expected a single logical value for the S4 state flag"
+msgstr "Oczekiwano pojedynczej wartości logicznej dla flagi stanu S4"
+
+msgid "Expected a single logical value for the S3 state flag"
+msgstr "Oczekiwano pojedynczej wartości logicznej dla flagi stanu S3"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr "niepoprane jest zmienianie trybu przechowywania faktora"
+
+msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr "'%s' nie jest eksportowanym obiektem z 'namespace:%s'"
+
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
+msgstr ""
+"uruchamianie '.First.lib()' dla pakietu '%s' z powodu, że '.onLoad/."
+"onAttach' nie zostały znalezione"
+
+msgid "namespace is already attached"
+msgstr "przestrzeń nazw jest już dołączona"
+
+msgid "%s not found"
+msgstr "%s nie został znaleziony"
+
+msgid "namespace %s is already sealed in loadNamespace"
+msgstr "przestrzeń nazw '%s' jest już zamknięta w 'loadNamespace'"
+
+msgid "failed to assign RegisteredNativeSymbol for"
+msgstr "nie udało się przypisać 'RegisteredNativeSymbol' dla"
+
+msgid "to"
+msgstr "do"
+
+msgid "since"
+msgstr "od"
+
+msgid "is already defined in the"
+msgstr "jest już zdefiniowane w"
+
+msgid "namespace"
+msgstr "przestrzeń nazw"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr "nie udało się przypisać 'NativeSymbolInfo' dla"
+
+msgid "package %s does not have a namespace"
+msgstr "pakiet '%s' nie zawiera przestrzeni nazw"
+
+msgid "unable to load R code in package %s"
+msgstr "nie można załadować kodu R w pakiecie '%s'"
+
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"%s"
+msgstr ""
+"'exportClassPattern' określono w 'NAMESPACE' ale brak pasujących klas w "
+"pakiecie '%s'"
+
+msgid "in package %s classes %s were specified for export but not defined"
+msgstr ""
+"w pakiecie '%s' klasy '%s' zostały określone do eksportu ale nie zostały "
+"zdefiniowane"
+
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr "Nie znaleziono funkcji odpowiadającej eksportom funkcji z %s dla: %s"
+
+msgid "in %s methods for export not found: %s"
+msgstr "w %s metodach do eksportu nie znaleziono: %s"
+
+msgid "multiple methods tables found for %s"
+msgstr "wiele tablic metod znaleziono dla %s"
+
+msgid "failed to find metadata object for %s"
+msgstr "nie udało się znaleźć obiektu metadanych dla  %s"
+
+msgid "in package %s methods %s were specified for export but not defined"
+msgstr ""
+"w pakiecie '%s' metody '%s' zostały określone do eksportu ale nie zostały "
+"zdefiniowane"
+
+msgid "Loading required namespace: %s"
+msgstr "Ładowanie wymaganej przestrzeni nazw: %s"
+
+msgid "not found"
+msgstr "nie znaleziono"
+
+msgid "not loading a namespace"
+msgstr "nie ładuję przestrzeni nazw"
+
+msgid "namespace %s is imported by %s so cannot be unloaded"
+msgstr ""
+"przestrzeń nazw '%s' jest zaimportowana przez '%s' nie może być więc usunięta"
+
+msgid "not a namespace"
+msgstr "nie jest przestrzenią nazw"
+
+msgid "operation not allowed on base namespace"
+msgstr "operacja niedozwolona na bazowej przestrzeni nazw"
+
+msgid "duplicate import names"
+msgstr "powtórzone nazwy importu"
+
+msgid "replacing local value with import %s when loading %s"
+msgstr "zastępowanie lokalnej wartości z importu %s kiedy ładowanie %s"
+
+msgid "cannot import into a sealed namespace"
+msgstr "nie można zaimportować do zamkniętej przestrzeni nazw"
+
+msgid "replacing previous import %s when loading %s"
+msgstr "zastępowanie poprzedniego importu '%s' kiedy ładowanie '%s'"
+
+msgid "invalid import target"
+msgstr "niepoprawny cel importu"
+
+msgid "found methods to import for function %s but not the generic itself"
+msgstr ""
+"znaleziono metody do importu dla funkcji %s ale nie znaleziono samej funkcji "
+"ogólnej"
+
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr "Nie znaleziono metod w \"%s\" dla żądań: %s"
+
+msgid "requested methods not found in environment/package %s: %s"
+msgstr "zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
+"Nie znaleziono ogólne funkcji odpowiadającej zażądanym zaimportowanym "
+"metodom dla \"%s\" z pakietu \"%s\" (uszkodzone eksporty?)"
+
+msgid "cannot add to exports of a sealed namespace"
+msgstr "nie można dodać do eksportów zamkniętych przestrzeni nazw"
+
+msgid "undefined exports:"
+msgstr "niezdefiniowane eksporty:"
+
+msgid "package %s has no NAMESPACE file"
+msgstr "pakiet '%s' nie posiada pliku NAMESPACE"
+
+msgid "empty name in directive '%s' in NAMESPACE file"
+msgstr "pusta nazwa w dyrektywie '%s' w pliku NAMESPACE"
+
+msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+msgstr "powtórzone nazwy symboli '%s' w 'useDynlib(\"%s\")'"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "niepoprawna dyrektywa 'S3method': %s"
+
+msgid "too many 'S3method' directives"
+msgstr "zbyć dużo dyrektyw 'S3method'"
+
+msgid "unknown namespace directive: %s"
+msgstr "nieznana dyrektywa przestrzeni nazw: %s"
+
+msgid "S3 method %s was declared but not found"
+msgstr "metoda S3  '%s' została zadeklarowana ale nie została znaleziona"
+
+msgid "bad method"
+msgstr "zła metoda"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "nie znaleziono obiektu '%s' podczas ładowania przestrzeni nazw '%s'"
+
+msgid "found an S4 version of %s so it has not been imported correctly"
+msgstr "znaleziono wersję S4 '%s' tak więc nie został poprawnie zaimportowany"
+
+msgid "'%s' is not implemented yet"
+msgstr "'%s' nie jest jeszcze zaimplementowane"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "argument '%s' nie jest (jeszcze) użyty"
+
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "'x' nie może zostać zamienione na system ósemkowy"
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr "'x' nie może zostać zamienione na system szesnastkowy 'hexmode'"
+
+msgid "no arguments"
+msgstr "brak argumentów"
+
+msgid "an argument will be fractionally recycled"
+msgstr "argument będzie częściowo powtórzony"
+
+msgid "invalid 'n' value"
+msgstr "niepoprawna wartość 'n'"
+
+msgid "'shrink.sml' must be numeric > 0"
+msgstr "'shrink.sml' musi być liczbą > 0"
+
+msgid "'min.n' must be non-negative integer <= n"
+msgstr "'min.n' musi być nieujemną liczbą całkowitą <= n"
+
+msgid "'high.u.bias' must be non-negative numeric"
+msgstr "'high.u.bias' musi być nieujemną liczbą"
+
+msgid "'u5.bias' must be non-negative numeric"
+msgstr "'u5.bias' musi być nieujemnym argumentem"
+
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr "'eps.correct' musi być 0, 1, lub 2"
+
+#, fuzzy
+msgid "invalid ncol(x)"
+msgstr "niepoprawna wartość"
+
+msgid "first argument must be a QR decomposition"
+msgstr "pierwszy argument musi być dekompozycją QR"
+
+msgid "invalid nrow(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(y)"
+msgstr "niepoprawna wartość"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "'qr' oraz 'y' muszą mieć tę samą liczbę wierszy"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "ścisła osobliwość w 'qr.coef'"
+
+msgid "argument is not a QR decomposition"
+msgstr "argument nie jest dekompozycją QR"
+
+msgid "invalid NCOL(y)"
+msgstr ""
+
+msgid "not implemented for complex 'qr'"
+msgstr "niezaimplementowane dla zespolonego 'qr'"
+
+msgid "not supported for LAPACK QR"
+msgstr "nie wspierane przez ' LAPACK QR'"
+
+msgid "'k' is too large"
+msgstr "'k' jest zbyć duże"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "potrzeba większej wartości 'ncol' z uwagi na to, że nastąpił obrót"
+
+msgid "invalid NCOL(R)"
+msgstr ""
+
+msgid "'x' must be an atomic vector"
+msgstr "'x' musi być wektorem atomowym"
+
+msgid "invalid 'rle' structure"
+msgstr "niepoprawna struktura 'rle'"
+
+msgid "... must contain names or character strings"
+msgstr "... musi zawierać nazwy lub ciągi znaków"
+
+msgid "incorrect length for 'group'"
+msgstr "niepoprawna długość dla 'group'"
+
+msgid "missing values for 'group'"
+msgstr "brakujące wartości w 'group'"
+
+msgid "not a data frame"
+msgstr "brak ramki"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "długość 'center' musi równać się liczbie kolumn 'x'"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "długość 'scale' musi równać się liczbie kolumn 'x'"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "określ albo 'nmax' albo 'n', ale nie oba naraz"
+
+msgid "argument 'length.out' must be of length 1"
+msgstr "argument 'length.out' musi mieć długość 1"
+
+msgid "first element used of 'length.out' argument"
+msgstr "użyto pierwszego elementu argumentu 'length.out'"
+
+msgid "extra argument(s) %s will be disregarded"
+msgstr "ekstra argumenty %s będą odrzucone"
+
+msgid "invalid (to - from)/by in seq(.)"
+msgstr "niepoprawne (to - from)/by w seq(.)"
+
+msgid "wrong sign in 'by' argument"
+msgstr "błędny znak w argumencie 'by'"
+
+msgid "'by' argument is much too small"
+msgstr "argument 'by' jest znacznie za mały"
+
+msgid "length must be non-negative number"
+msgstr "długość musi być liczbą nieujemną"
+
+msgid "too many arguments"
+msgstr "zbyć dużo argumentów"
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr "'compress' jest ignorowany chyba, że 'file' jest nazwą pliku"
+
+msgid "'connection' must be a connection"
+msgstr "'connection' musi być połączeniem"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "'file' musi być wartością NULL lub już otwartym połączeniem"
+
+msgid "cannot split the message connection"
+msgstr "nie można rozdzielić komunikatu wiadomości"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "'file' musi być wartością NULL, połączeniem lub ciągiem tekstowym"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "to jest metoda \"qr\" dla ogólnej funkcji 'solve()'"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "osobliwa macierz 'a' w 'solve'"
+
+msgid "only square matrices can be inverted"
+msgstr "tylko kwadratowe macierze można odwrócić"
+
+msgid "'b' must be compatible with 'a'"
+msgstr "'b' musi być kompatybilne z 'a'"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr "'solve.default' wywołane z obiektem \"qr\": używanie 'qr.solve'"
+
+msgid "singular matrix 'a' in solve"
+msgstr "osobliwa macierz 'a' w 'solve'"
+
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr ""
+"'decreasing' musi być wektorem logicznym o długości o jeden mniejszym.\n"
+"Czy był zamiar ustawić 'partial'?"
+
+msgid "'index.return' only for non-factors"
+msgstr "'index.return' tylko dla nie-faktorów"
+
+msgid "'x' must be atomic"
+msgstr "'x' musi być atomowe"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "'index.return' tylko dla 'na.last = NA'"
+
+msgid "unsupported options for partial sorting"
+msgstr "niewspierane opcje dla częściowego sortowania"
+
+msgid "non-finite 'partial'"
+msgstr "nieskończona wartość 'partial'"
+
+msgid "argument lengths differ"
+msgstr "długości argumentów różnią się"
+
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
+msgstr ""
+"'x' musi być typem atomowym dla 'sort.list'\n"
+"Czy wywołano 'sort' na liście?"
+
+msgid "method=\"quick\" is only for numeric 'x'"
+msgstr "'method=\"quick\"' jest tylko dla liczbowych 'x'"
+
+msgid "method=\"radix\" is only for integer 'x'"
+msgstr "'method=\"radix\"' jest tylko dla liczb całkowitych 'x'"
+
+msgid "'local' must be TRUE, FALSE or an environment"
+msgstr "'local' musi być TRUE, FALSE lub być środowiskiem"
+
+msgid "'echo' must be logical"
+msgstr "'echo' musi być wartością logiczną"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "'verbose' jest TRUE, 'echo' nie; ... przekształcanie 'echo <- TRUE'"
+
+msgid "unable to find a plausible encoding"
+msgstr "nie można znaleźć wiarygnodnego enkodowania"
+
+msgid "encoding = \"%s\" chosen"
+msgstr "wybrano 'encoding = \"%s\"'"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr "'chdir = TRUE' nie ma sensu dla adresu URL"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "nie można wykonać 'chdir' dlatego, że bieżący katalog nie jest znany"
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr "'chdir = TRUE' nie ma sensu dla połączenia"
+
+msgid "'%s' is not an existing file"
+msgstr "'%s' nie jest istniejącym plikiem"
+
+msgid "Timestamp of '"
+msgstr "Sygnatura czasu dla '"
+
+msgid "' has changed"
+msgstr "' zmieniła się"
+
+msgid "additional arguments ignored in stop()"
+msgstr "zignorowano dodatkowe argumenty w 'stop()'"
+
+msgid "is not"
+msgstr "nie jest"
+
+msgid "all"
+msgstr "wszystko"
+
+msgid "TRUE"
+msgstr "PRAWDA"
+
+msgid "additional arguments ignored in warning()"
+msgstr "zignorowano dodatkowe argumenty w 'warning()'"
+
+msgid "incorrect value for 'x'"
+msgstr "niepoprawna wartość dla 'x'"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "'x' oraz 'y' muszą mieć tę samą długość"
+
+msgid "incorrect values of 'indent' and 'width'"
+msgstr "niepoprawne wartości 'indent' oraz 'width'"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr "prawdopodobnie błędne kodowanie w kolumnie 'names(.)'"
+
+msgid "'nv' must be 0 or ncol(x)"
+msgstr "'nv' musi być 0 lub 'ncol(x)'"
+
+msgid "error %d in 'dsvdc'"
+msgstr "błąd %d w 'dsvdc'"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr "STATS jest dłuższe nić rozmiar 'dim(x)[MARGIN]'"
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr "STATS nie potwarza się dokładnie zgodnie z MARGIN"
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr "'length(STATS)' lub 'dim(STATS)' nie zgada się z 'dim(x)[MARGIN]'"
+
+msgid "nothing to tabulate"
+msgstr "nic do tabulacji"
+
+msgid "all arguments must have the same length"
+msgstr "wszystkie argumenty muszą mieć tę samą długość"
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr "próba utworzenia tabeli z >= 2^31 elementami"
+
+msgid "'object' must inherit from class \"table\""
+msgstr "'object' musi dziedziczyć z klasy \"table\""
+
+msgid "'x' must inherit from class \"summary.table\""
+msgstr "'x' musi dziedziczyć z klasy \"summary.table\""
+
+msgid "cannot coerce into a table"
+msgstr "nie można przekształcić w tabelę"
+
+msgid "'x' is not an array"
+msgstr "'x' nie jest tablicą"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "'bin' musi być liczbą lub czynnikiem"
+
+#, fuzzy
+msgid "invalid value of length(bin)"
+msgstr "niepoprawna wartość"
+
+#, fuzzy
+msgid "invalid value of nbins"
+msgstr "niepoprawna wartość"
+
+msgid "arguments must have same length"
+msgstr "argumenty muszą mieć tę samą długość"
+
+msgid "handler must be a function"
+msgstr "przewodnik musi być funkcją"
+
+msgid "no such element '%s'"
+msgstr "nie ma elementu '%s'"
+
+msgid "Removing"
+msgstr "Usuwanie"
+
+msgid "Registering evaluate as low-level callback"
+msgstr "Rejestrowanie obliczenia jako wywołania zwrotnego niskiego poziomu"
+
+msgid "user"
+msgstr "użytkownik"
+
+msgid "system"
+msgstr "system"
+
+msgid "elapsed"
+msgstr "upłynęło"
+
+msgid "'width' must be positive"
+msgstr "'width' musi być dodatnia"
+
+msgid "No traceback available"
+msgstr "Śledzenie nie jest dostepne"
+
+msgid "invalid version specification"
+msgstr "niepoprawne określenie wersji"
+
+msgid "wrong argument"
+msgstr "błędny argument"
+
+msgid "invalid value"
+msgstr "niepoprawna wartość"
+
+msgid "unary '%s' not defined for \"numeric_version\" objects"
+msgstr ""
+"jednoargumentówy '%s' nie jest określony dla obiektów \"numeric_version\""
+
+msgid "'%s' not defined for \"numeric_version\" objects"
+msgstr "'%s' nie jest określone dla obiektów \"numeric_version\""
+
+msgid "not defined for numeric_version objects"
+msgstr "nie jest określone dla obiektów 'numeric_version'"
+
+msgid "<0 elements>"
+msgstr "<0 elementów>"
+
+msgid "invalid 'digits'"
+msgstr "niepoprawne 'digits'"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"argumenty 'show.output.on.console', 'minimized' oraz 'invisible' są tylko "
+"dla systemu Windows"
+
+msgid "'intern' must be TRUE or FALSE"
+msgstr "'intern' musi być TRUE lub FALSE"
+
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "'ignore.stdout' musi być TRUE lub FALSE"
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "'ignore.stderr' musi być TRUE lub FALSE"
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr "'wait' musi być TRUE lub FALSE"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' musi być wektorem tekstowym lub wartością 'NULL'"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr "argumenty 'minimized' oraz 'invisible' są tylko dla systemu Windows"
+
+msgid "setting stdout = TRUE"
+msgstr "stawianie stdout = TRUE"
+
+msgid "'stdout' must be of length 1"
+msgstr "'stdout' musi mieć długość 1"
+
+msgid "'stderr' must be of length 1"
+msgstr "'stderr' musi mieć długość 1"
+
+msgid "'which' was not found on this platform"
+msgstr "'which' nie zostało znalezione na tej platformie"
+
+msgid "fewer 'from' files than 'to' files"
+msgstr "mniej plików 'from' niż plików 'to'"
+
+msgid "link '%s' already exists"
+msgstr "połączenie '%s' już istnieje"
+
+msgid "failed to create directory for link '%s"
+msgstr "nie udało się utworzyć katalogu dla łącza '%s"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "'show.output.on.console' musi być TRUE lub FALSE"
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "'minimized' musi być TRUE lub FALSE"
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "'invisible' musi być TRUE lub FALSE"
+
+msgid "'%s' could not be run"
+msgstr "'%s' nie mógł zostać uruchomiony"
+
+msgid "'%s' execution failed with error code %d"
+msgstr "'%s' wykonywanie nie powiodło się zwracając kod błędu %d"
+
+msgid "-l option without value"
+msgstr "opcja -l bez wartości"
+
+msgid "ERROR: no packages specified"
+msgstr "BŁĄD: nie określono pakietów"
+
+msgid "Removing from library"
+msgstr "Usuwanie z biblioteki"
+
+msgid "ERROR: cannot cd to directory"
+msgstr "BŁĄD: nie można wejść do katalogu"
+
+msgid "ERROR: no permission to remove from directory"
+msgstr "BŁĄD: brak uprawnień aby usunąć z katalogu"
+
+msgid "T used instead of TRUE"
+msgstr "Użyto T zamiast TRUE"
+
+msgid "F used instead of FALSE"
+msgstr "Użyto F zamiast FALSE"
+
+msgid "items"
+msgstr "pozycje"
+
+msgid "have been removed from the search path"
+msgstr "został usunięty z ścieżki wyszukiwania"
+
+msgid "cannot find namespace environment"
+msgstr "nie można znaleźć środowiska przestrzeni nazw"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "opcja parsowania %s nie jest rozpoznana"
+msgstr[1] "opcje parsowania %s nie są rozpoznane"
+msgstr[2] "opcje parsowania %s nie są rozpoznane"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "biblioteka %s nie zawiera pakietów"
+msgstr[1] "biblioteki %s nie zawierają pakietów"
+msgstr[2] "biblioteki %s nie zawierają pakietów"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "pakiet %s nie jest załadowany"
+msgstr[1] "pakiety %s nie są załadowane"
+msgstr[2] "pakiety %s nie są załadowane"
+
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "nie ma pakietu zwanego"
+msgstr[1] "nie ma pakietów zwanych"
+msgstr[2] "nie ma pakietów zwanych"
+
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "nie znaleziono obiektu %s"
+msgstr[1] "nie znaleziono obiektów %s"
+msgstr[2] "nie znaleziono obiektów %s"
+
+msgid ""
+"Function found when exporting methods from the namespace %s which is not S4 "
+"generic: %s"
+msgid_plural ""
+"Functions found when exporting methods from the namespace %s which are not "
+"S4 generic: %s"
+msgstr[0] ""
+"Funkcja została znaleziona podczas eksportowania metod z przestrzeni nazw "
+"'%s' która nie jest ogólną S4: %s"
+msgstr[1] ""
+"Funkcje zostały znalezione podczas eksportowania metod z przestrzeni nazw "
+"'%s' która nie są ogólnymi S4: %s"
+msgstr[2] ""
+"Funkcje zostały znalezione podczas eksportowania metod z przestrzeni nazw "
+"'%s' która nie są ogólnymi S4: %s"
+
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] "klasa '%s' nie jest wyeksportowana przez 'namespace:%s'"
+msgstr[1] "klasy '%s' nie są wyeksportowane przez 'namespace:%s'"
+msgstr[2] "klasy '%s' nie są wyeksportowane przez 'namespace:%s'"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "obiekt '%s' nie jest eksportowany przez 'namespace:%s'"
+msgstr[1] "obiekty '%s' nie są eksportowane przez 'namespace:%s'"
+msgstr[2] "obiekty '%s' nie są eksportowane przez 'namespace:%s'"
+
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
+msgstr[0] "poprzedni eksport '%s' jest zastąpiony"
+msgstr[1] "poprzednie eksporty '%s' są zastąpione"
+msgstr[2] "poprzednie eksporty '%s' są zastąpione"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] ""
+"Metoda S3 '%s' została zadeklarowana w NAMESPACE ale nie została znaleziona"
+msgstr[1] ""
+"Metody S3 '%s' zostały zadeklarowane w NAMESPACE ale nie zostały znalezione"
+msgstr[2] ""
+"Metody S3 '%s' zostały zadeklarowane w NAMESPACE ale nie zostały znalezione"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "Komunikat ostrzegawczy:\n"
+msgstr[1] "Komunikaty ostrzegawcze:\n"
+msgstr[2] "Komunikaty ostrzegawcze:\n"
