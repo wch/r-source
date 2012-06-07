@@ -444,21 +444,22 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ## (BioC) 2.5, 2.9.x to 2.4, ..., 2.1.x to 1.6, but what if R 3.0.0
 ## comes out? Also, pre-2.12.0 is out weeks before all of BioC 2.7)
 ## E.g. pre-2.13.0 was out ca Sept 20, BioC 2.8 was ready Nov 17.
-## Things are more complicated from R-2.15.0 with still two BioC 
+## Things are more complicated from R-2.15.0 with still two BioC
 ## releases a year
 
 ### ** .vc_dir_names
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
 ## (arch), .bzr, .git, .hg (mercurial) and _darcs (Darcs)
+## And it seems .metadata (eclipse) is in the same category.
 
 .vc_dir_names <-
-    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs")
+    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs", ".metadata")
 
 ## and RE version (beware of the need for escapes if amending)
 
 .vc_dir_names_re <-
-    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs)(/|$)"
+    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs|\\.metadata)(/|$)"
 
 ### * Internal utility functions.
 

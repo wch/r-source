@@ -167,6 +167,9 @@
       \item \command{R CMD Sweave} gains a \option{--compact} option
       to control possibly reducing the size of the PDF file it creates
       when \option{--pdf} is given.
+
+      \item \command{R CMD build} now skips Eclipse's \file{.metadata}
+      directories.
     }
   }
 
