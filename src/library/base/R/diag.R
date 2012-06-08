@@ -45,7 +45,7 @@ diag <- function(x = 1, nrow, ncol)
     if(missing(ncol))
 	ncol <- n
     p <- ncol
-    y <- array(0, c(n, p))
+    y <- matrix(0, nrow = n, ncol = p)
     if((m <- min(n, p)) > 0L) y[1L + 0L:(m - 1L) * (n + 1L)] <- x
     y
 }
