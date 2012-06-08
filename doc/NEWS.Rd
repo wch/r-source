@@ -98,11 +98,15 @@
       
       \item The \code{model.frame()} method for \code{"lm"} uses
       \code{xlevels}: this is safer if \code{data} was supplied or
-      \code{model = FALSE} was uses and the levels of factors used in
+      \code{model = FALSE} was used and the levels of factors used in
       the fit had been re-ordered since fitting.
 
       Similarly, \code{model.frame.lm(fm, data=<data>)} copies across
-      the variables use for safe prediction from the fit.
+      the variables used for safe prediction from the fit.
+      
+      \item \code{Sys.which()} when used with inputs which would be
+      unsafe in a shell (e.g. absolute paths containing spaces) now uses
+      appropriate quoting.
     }
   }
 
@@ -168,7 +172,7 @@
       to control possibly reducing the size of the PDF file it creates
       when \option{--pdf} is given.
 
-      \item \command{R CMD build} now skips Eclipse's \file{.metadata}
+      \item \command{R CMD build} now omits Eclipse's \file{.metadata}
       directories.
     }
   }
