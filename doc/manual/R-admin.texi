@@ -1273,7 +1273,7 @@ building all the parts in the sequence:
 
 @example
 rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
-rpackage @r{(the base packages)}
+rpackages @r{(the base packages)}
 htmldocs @r{(the HTML documentation)}
 bitmapdll @r{(the bitmap support files)}
 cairodevices @r{(the cairo-based graphics devices)}
