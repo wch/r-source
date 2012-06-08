@@ -49,7 +49,7 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
        'methods'!
 
        checkArity(op, args); */
-    if (nargs < 6)
+    if (nargs < 5)
 	error("%d arguments passed to .Internal(%s) which requires %d",
 	      length(args), PRIMNAME(op), PRIMARITY(op));
 
@@ -58,7 +58,8 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
     num_eq = asLogical(CAR(args)); args = CDR(args);
     single_NA = asLogical(CAR(args)); args = CDR(args);
     attr_as_set = asLogical(CAR(args)); args = CDR(args);
-    ignore_bytecode = asLogical(CAR(args));
+    if (nargs >= 6) 
+	ignore_bytecode = asLogical(CAR(args));
     if (nargs >= 7) 
 	ignore_env = asLogical(CADR(args));
 
@@ -79,7 +80,8 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 #define IGNORE_BYTECODE (!(flags & 8))
 #define IGNORE_ENV      (!(flags & 16))
 
-/* do the two objects compute as identical?  Also used in unique.c */
+/* do the two objects compute as identical?
+   Also used in unique.c */
 Rboolean
 R_compute_identical(SEXP x, SEXP y, int flags)
 {
@@ -91,7 +93,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     if(OBJECT(x) != OBJECT(y))
 	return FALSE;
 
-    /* Skip attribute checks for CHARSXP -- such attributes can be used for internal purposes */
+    /* Skip attribute checks for CHARSXP
+       -- such attributes are used for the cache.  */
     if(TYPEOF(x) == CHARSXP)
     {
 	/* This matches NAs */
@@ -108,8 +111,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 
        This code is not very efficient, but then neither is using
        pairlists for attributes.  If long attribute lists become more
-       common (and they are used for S4 slots) we should store them in a hash
-       table.
+       common (and they are used for S4 slots) we should store them in
+       a hash table.
     */
     else if(ax != R_NilValue || ay != R_NilValue) {
 	if(ax == R_NilValue || ay == R_NilValue)
@@ -148,12 +151,12 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	return TRUE;
     case LGLSXP:
 	if (xlength(x) != xlength(y)) return FALSE;
-	/* Use memcmp (which is ISO C) to speed up the comparison */
+	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)LOGICAL(x), (void *)LOGICAL(y),
 		      xlength(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case INTSXP:
 	if (xlength(x) != xlength(y)) return FALSE;
-	/* Use memcmp (which is ISO C) to speed up the comparison */
+	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)INTEGER(x), (void *)INTEGER(y),
 		      xlength(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case REALSXP:
@@ -244,11 +247,11 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:
 	if (xlength(x) != xlength(y)) return FALSE;
-	/* Use memcmp (which is ISO C) to speed up the comparison */
+	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)RAW(x), (void *)RAW(y),
 		      xlength(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
 
-	/*  case PROMSXP: args are evaluated, so will not be seen */
+/*  case PROMSXP: args are evaluated, so will not be seen */
 	/* test for equality of the substituted expression -- or should
 	   we require both expression and environment to be identical? */
 	/*#define PREXPR(x)	((x)->u.promsxp.expr)
