@@ -169,7 +169,7 @@ getOption(x, default = NULL)
       \code{\link{file.show}}.
 #ifdef unix
       Defaults to \file{\var{\link{R_HOME}}/bin/pager},
-      which selects a pager via the \env{\link{PAGER}} environment variable
+      which selects a pager via the \env{PAGER} environment variable
       (and that usually defaults to \code{less}).
 #endif
 #ifdef windows

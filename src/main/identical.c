@@ -72,7 +72,7 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 #define IGNORE_BYTECODE (!(flags & 8))
 
 /* do the two objects compute as identical?
-   used in unique.c */
+   Also used in unique.c */
 Rboolean
 R_compute_identical(SEXP x, SEXP y, int flags)
 {
@@ -84,7 +84,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     if(OBJECT(x) != OBJECT(y))
 	return FALSE;
 
-    /* Skip attribute checks for CHARSXP -- such attributes can be used for internal purposes */
+    /* Skip attribute checks for CHARSXP
+       -- such attributes are used for the cache.  */
     if(TYPEOF(x) == CHARSXP)
     {
 	/* This matches NAs */
@@ -101,8 +102,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 
        This code is not very efficient, but then neither is using
        pairlists for attributes.  If long attribute lists become more
-       common (and they are used for S4 slots) we should store them in a hash
-       table.
+       common (and they are used for S4 slots) we should store them in
+       a hash table.
     */
     else if(ax != R_NilValue || ay != R_NilValue) {
 	if(ax == R_NilValue || ay == R_NilValue)
@@ -141,12 +142,12 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	return TRUE;
     case LGLSXP:
 	if (length(x) != length(y)) return FALSE;
-	/* Use memcmp (which is ISO C) to speed up the comparison */
+	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)LOGICAL(x), (void *)LOGICAL(y),
 		      length(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case INTSXP:
 	if (length(x) != length(y)) return FALSE;
-	/* Use memcmp (which is ISO C) to speed up the comparison */
+	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)INTEGER(x), (void *)INTEGER(y),
 		      length(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case REALSXP:
@@ -237,11 +238,11 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:
 	if (length(x) != length(y)) return FALSE;
-	/* Use memcmp (which is ISO C) to speed up the comparison */
+	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)RAW(x), (void *)RAW(y),
 		      length(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
 
-	/*  case PROMSXP: args are evaluated, so will not be seen */
+/*  case PROMSXP: args are evaluated, so will not be seen */
 	/* test for equality of the substituted expression -- or should
 	   we require both expression and environment to be identical? */
 	/*#define PREXPR(x)	((x)->u.promsxp.expr)
