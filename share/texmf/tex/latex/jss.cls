@@ -1,8 +1,8 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{2.0}
+\def\fileversion{2.1}
 \def\filename{jss}
-\def\filedate{2009/09/24}
+\def\filedate{2012/06/07}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
 %% License: GPL-2
@@ -21,6 +21,7 @@
 \newif\if@nojss
 \newif\if@notitle
 \newif\if@noheadings
+\newif\if@nofooter
 
 \@articletrue
 \@codesnippetfalse
@@ -31,6 +32,7 @@
 \@nojssfalse
 \@notitlefalse
 \@noheadingsfalse
+\@nofooterfalse
 
 \DeclareOption{article}{\@articletrue%
   \@codesnippetfalse \@bookreviewfalse \@softwarereviewfalse}
@@ -44,6 +46,7 @@
 \DeclareOption{nojss}{\@nojsstrue}
 \DeclareOption{notitle}{\@notitletrue}
 \DeclareOption{noheadings}{\@noheadingstrue}
+\DeclareOption{nofooter}{\@nofootertrue}
 
 \ProcessOptions
 \LoadClass[11pt,a4paper,twoside]{article}
@@ -228,7 +231,11 @@
     \end{samepage}
   \fi
 }
-\AtEndDocument{\makefooter}
+\if@nofooter
+  %% \AtEndDocument{\makefooter}
+\else
+  \AtEndDocument{\makefooter}
+\fi
 %% required packages
 \RequirePackage{hyperref}
 %% new \maketitle
@@ -449,15 +456,17 @@
   \AtBeginDocument{\maketitle}
 \fi
 %% commands
-\makeatletter
 \newcommand\code{\bgroup\@makeother\_\@makeother\~\@makeother\$\@codex}
 \def\@codex#1{{\normalfont\ttfamily\hyphenchar\font=-1 #1}\egroup}
-\makeatother
 %%\let\code=\texttt
 \let\proglang=\textsf
 \newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
 \newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
-\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\normalfont\texttt{doi:#1}}}
+\ifx\csname urlstyle\endcsname\relax
+  \newcommand\@doi[1]{doi:\discretionary{}{}{}#1}\else
+  \newcommand\@doi{doi:\discretionary{}{}{}\begingroup
+\urlstyle{tt}\Url}\fi
+\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\normalfont\texttt{\@doi{#1}}}}
 \newcommand{\E}{\mathsf{E}}
 \newcommand{\VAR}{\mathsf{VAR}}
 \newcommand{\COV}{\mathsf{COV}}
