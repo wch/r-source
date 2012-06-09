@@ -3480,7 +3480,7 @@ Snapshots of the base subsystem record the `saved device copy' of the
 @node Arguments and parameters,  , Base graphics, Base graphics
 @subsection Arguments and parameters
 
-There is an unforunate confusion between some of the graphical
+There is an unfortunate confusion between some of the graphical
 parameters (as set by @code{par}) and arguments to base graphic
 functions of the same name.  This description may help set the record
 straight.
@@ -3498,7 +3498,7 @@ Argument @code{bg} refers to the fill colour for the filled symbols
 
 Graphics parameters @code{cex}, @code{col}, @code{lty}, @code{lwd} and
 @code{pch} also appear as arguments of @code{plot.xy} and so are often
-passed as argumnets from higher-level plot functions such as
+passed as arguments from higher-level plot functions such as
 @code{lines}, @code{points} and @code{plot} methods.  They appear as
 arguments of @code{legend}, @code{col}, @code{lty} and @code{lwd} are
 arguments of @code{arrows} and @code{segments}.  When used as arguments
