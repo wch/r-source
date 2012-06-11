@@ -98,8 +98,9 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	    if (simulate.p.value)
 		warning("cannot compute simulated p-value with zero marginals")
 	    if (correct && nrow(x) == 2 && ncol(x) == 2) {
-		YATES <- 0.5
-		METHOD <- paste(METHOD, "with Yates' continuity correction")
+		YATES <- min(0.5, abs(x-E))
+                if (YATES > 0)
+		    METHOD <- paste(METHOD, "with Yates' continuity correction")
 	    }
 	    else
 		YATES <- 0
