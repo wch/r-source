@@ -263,7 +263,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R VERSION 2.15.0 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.15.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{source()} now uses \code{withVisible()} rather than
@@ -563,6 +563,10 @@
       
       \item \code{by()} failed for a zero-row data frame.  (Reported by
       Weiqiang Qian)
+
+      \item Yates correction in \code{chisq.test()} could be bigger than 
+      the terms it corrected, leading to an infinite test statistic in 
+      some corner cases. 
     }
   }
 }

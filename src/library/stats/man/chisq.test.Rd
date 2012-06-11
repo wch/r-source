@@ -23,7 +23,8 @@ chisq.test(x, y = NULL, correct = TRUE,
     \code{x} is a factor, \code{y} should be a factor of the same length.}
   \item{correct}{a logical indicating whether to apply continuity
     correction when computing the test statistic for 2 by 2 tables: one
-    half is subtracted from all \eqn{|O - E|} differences.  No correction
+    half is subtracted from all \eqn{|O - E|} differences; however, the 
+    correction will not be bigger than the differences themselves.  No correction
     is done if \code{simulate.p.value = TRUE}.}
   \item{p}{a vector of probabilities of the same length of \code{x}.
     An error is given if any entry of \code{p} is negative.}
