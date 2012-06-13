@@ -310,6 +310,9 @@
       \item Yates correction in \code{chisq.test()} could be bigger than 
       the terms it corrected, leading to an infinite test statistic in 
       some corner cases. 
+      
+      \item \code{xgettext()} and related functions sometimes returned
+      items that were not strings for translation. (\PR{14935})
     }
   }
 }
