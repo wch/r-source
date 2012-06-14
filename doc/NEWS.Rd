@@ -290,29 +290,33 @@
 
       \item \code{getMethod(f, sig)} produced a \emph{wrong} error
       message in two different cases (when \code{f} was not a string).
-      
+
       \item Using a string as a \dQuote{call} in an error condition
       with \code{options(showErrorCalls=TRUE)} could cause a segfault.
-      (\PR{14931})      
-      
+      (\PR{14931})
+
       \item The string \code{"infinity"} allowed by C99 was not accepted
       as a numerical string value by e.g. \code{scan()} and
       \code{as.character()}.  (\PR{14933})
-      
+
       \item In \code{legend()}, setting some entries of \code{lwd} to
       \code{NA} was inconsistent (depending on the graphics device) in
       whether it would suppress those lines; now it consistently does
       so.  (\PR{14926})
-      
+
       \item \code{by()} failed for a zero-row data frame.  (Reported by
       Weiqiang Qian)
 
-      \item Yates correction in \code{chisq.test()} could be bigger than 
-      the terms it corrected, leading to an infinite test statistic in 
-      some corner cases. 
-      
+      \item Yates correction in \code{chisq.test()} could be bigger than
+      the terms it corrected, leading to an infinite test statistic in
+      some corner cases.
+
       \item \code{xgettext()} and related functions sometimes returned
       items that were not strings for translation. (\PR{14935})
+
+      \item \code{plot(<lm>, which=5)} now correctly labels the factor
+      level combinations for the special case where all
+      \eqn{h_ii}{h[i,i]} are the same. (\PR{14837})
     }
   }
 }
