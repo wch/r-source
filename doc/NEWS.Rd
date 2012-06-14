@@ -80,10 +80,10 @@
       \item The logic in \code{aggregate.formula()} has been revised.
       It is now possible to use a formula stored in a variable;
       previously, it had to be given explicitly in the function call.
-     
+
       \item \code{install.packages()} has a new argument \code{quiet} to
       reduce the amount of output shown.
-      
+
       \item Setting an element of the graphics argument \code{lwd} to a
       negative or infinite value is now an error.  Lines corresponding
       to elements with values \code{NA} or \code{NaN} are silently
@@ -95,7 +95,7 @@
       \code{lty}, \code{lwd} and \code{pch} in \code{par()} now requires a
       length-one argument.   Previously some silently took the first
       element of a longer vector, but not always when documented to do so.
-      
+
       \item The \code{model.frame()} method for \code{"lm"} uses
       \code{xlevels}: this is safer if \code{data} was supplied or
       \code{model = FALSE} was used and the levels of factors used in
@@ -103,7 +103,7 @@
 
       Similarly, \code{model.frame.lm(fm, data=<data>)} copies across
       the variables used for safe prediction from the fit.
-      
+
       \item \code{Sys.which()} when used with inputs which would be
       unsafe in a shell (e.g. absolute paths containing spaces) now uses
       appropriate quoting.
@@ -547,29 +547,33 @@
 
       \item \code{getMethod(f, sig)} produced a \emph{wrong} error
       message in two different cases (when \code{f} was not a string).
-      
+
       \item Using a string as a \dQuote{call} in an error condition
       with \code{options(showErrorCalls=TRUE)} could cause a segfault.
-      (\PR{14931})      
-      
+      (\PR{14931})
+
       \item The string \code{"infinity"} allowed by C99 was not accepted
       as a numerical string value by e.g. \code{scan()} and
       \code{as.character()}.  (\PR{14933})
-      
+
       \item In \code{legend()}, setting some entries of \code{lwd} to
       \code{NA} was inconsistent (depending on the graphics device) in
       whether it would suppress those lines; now it consistently does
       so.  (\PR{14926})
-      
+
       \item \code{by()} failed for a zero-row data frame.  (Reported by
       Weiqiang Qian)
 
-      \item Yates correction in \code{chisq.test()} could be bigger than 
-      the terms it corrected, leading to an infinite test statistic in 
-      some corner cases. 
-      
+      \item Yates correction in \code{chisq.test()} could be bigger than
+      the terms it corrected, leading to an infinite test statistic in
+      some corner cases.
+
       \item \code{xgettext()} and related functions sometimes returned
       items that were not strings for translation. (\PR{14935})
+
+      \item \code{plot(<lm>, which=5)} now correctly labels the factor
+      level combinations for the special case where all
+      \eqn{h_ii}{h[i,i]} are the same. (\PR{14837})
     }
   }
 }
