@@ -117,7 +117,9 @@ function(dir, verbose = FALSE)
         if(is.call(e) && is.name(e[[1L]])
            && as.character(e[[1L]]) %in% "ngettext") {
 	    e <- match.call(ngettext, e)
-	    strings <<- c(strings, list(c(msg1=e[["msg1"]], msg2=e[["msg2"]])))
+	    if (is.character(e[["msg1"]]) && is.character(e[["msg2"]]))
+	    	strings <<- c(strings, list(c(msg1=e[["msg1"]], 
+	    				      msg2=e[["msg2"]])))
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
     }
