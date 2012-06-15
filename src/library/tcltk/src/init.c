@@ -48,6 +48,8 @@ static const R_ExternalMethodDef ExternEntries[] = {
     {"RTcl_ObjFromCharVector", (DL_FUNC) &RTcl_ObjFromCharVector, 2},
     {"RTcl_ObjFromDoubleVector", (DL_FUNC) &RTcl_ObjFromDoubleVector, 2},
     {"RTcl_ObjFromIntVector", (DL_FUNC) &RTcl_ObjFromIntVector, 2},
+    {"RTcl_ObjFromRawVector", (DL_FUNC) &RTcl_ObjFromRawVector, 1},
+    /* (..FromRaw... has only 1 arg, no drop=) */
     {"RTcl_ServiceMode", (DL_FUNC) &RTcl_ServiceMode, 1},
     {"RTcl_GetArrayElem", (DL_FUNC) &RTcl_GetArrayElem, 2},
     {"RTcl_RemoveArrayElem", (DL_FUNC) &RTcl_RemoveArrayElem, 2},

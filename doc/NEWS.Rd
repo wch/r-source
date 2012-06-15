@@ -107,6 +107,10 @@
       \item \code{Sys.which()} when used with inputs which would be
       unsafe in a shell (e.g. absolute paths containing spaces) now uses
       appropriate quoting.
+
+      \item \code{as.tclObj} has been extended to handle raw vectors. 
+      Previously, it only worked in the other direction. 
+      Contributed by Charlie Friedemann, \PR{14939}. 
     }
   }
 

@@ -224,7 +224,9 @@ tclRequire(package, warn = TRUE)
   This works by using objects of class \code{tclObj}.  The string
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
-  \code{"double"}, \code{"integer"}, \code{"logical"}.  Conversely, such
+  \code{"double"}, \code{"integer"}, \code{"logical"}, and \code{"raw"} 
+  is performed using the standard coercion functions \code{as.character}, 
+  etc.  Conversely, such 
   vectors can be converted using \code{as.tclObj}.  There is an
   ambiguity as to what should happen for length one vectors, controlled
   by the \code{drop} argument; there are cases where the distinction
