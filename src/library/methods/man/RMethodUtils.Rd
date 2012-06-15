@@ -44,6 +44,7 @@
 \alias{addNextMethod,MethodWithNext-method}
 \alias{addNextMethod}
 \alias{.valueClassTest}
+\alias{insertClassMethods}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -102,6 +103,8 @@ unRematchDefinition(definition)
 asMethodDefinition(def, signature, sealed = FALSE, fdef)
 
 addNextMethod(method, f, mlist, optional, envir)
+
+insertClassMethods(methods, Class, value, fieldNames, returnAll)
 }
 \section{Summary of Functions}{
 
