@@ -45,8 +45,13 @@ function(dir, verbose = FALSE, asCall = TRUE)
                        %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
-                    if(as.character(e[[1L]]) %in% "gettextf")
-                        e <- e[2L] # just look at first arg
+                    if(as.character(e[[1L]]) == "gettextf") {	
+                        e <- match.call(gettextf, e)
+                        e <- e["fmt"] # just look at fmt arg
+                    } else if(as.character(e[[1L]]) == "gettext" &&
+                              !is.null(names(e))) {
+                        e <- e[!(names(e) == "domain")] # remove domain arg
+                    }
                 }
                 for(i in seq_along(e)) find_strings2(e[[i]], suppress)
             }
