@@ -7,13 +7,14 @@
 \alias{Sys.which}
 \title{Find Full Paths to Executables}
 \description{
-  This is an interface to the system command \code{which}.
+  This is an interface to the system command \code{which}, or to an
+  emulation on Windows.
 }
 \usage{
 Sys.which(names)
 }
 \arguments{
-  \item{names}{Character vector of names of possible executables.}
+  \item{names}{Character vector of names or paths of possible executables.}
 }
 \details{
   The system command \command{which} reports on the full path names of
@@ -39,10 +40,8 @@ Sys.which(names)
   found.  Typically the indication is \code{""}, but this does depend on
   the OS (and the known exceptions are changed to \code{""}).
 
-#ifdef windows
-  The paths will be short paths (8+3 components, no spaces) with
-  \code{\\} as the path delimiter.
-#endif  
+  On Windows the paths will be short paths (8+3 components, no spaces)
+  with \code{\\} as the path delimiter.
 }
 \note{
   Except on Windows this calls the system command \command{which}: since

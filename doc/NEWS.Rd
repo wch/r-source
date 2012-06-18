@@ -10,7 +10,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{source()} now uses \code{withVisible()} rather than
-      \code{.Internal(eval.with.vis)}.  This may alter tracebacks
+      \code{.Internal(eval.with.vis)}.  This sometimes alters tracebacks
       slightly.
 
       \item \code{install.packages("pkg_version.tgz")} on Mac OS X now
@@ -45,9 +45,9 @@
       to terminate them.)
 
       \item Calls to the new function \code{globalVariables()} in
-      \pkg{utils} declare that functions and other objects in a package
-      should be treated as globally defined, so that \code{CMD check}
-      will not note them.
+      package \pkg{utils} declare that functions and other objects in a
+      package should be treated as globally defined, so that \code{CMD
+      check} will not note them.
 
       \item \code{print(packageDescription(*))} trims the \code{Collate}
       field by default.
@@ -61,8 +61,8 @@
       information. (Other values are supported as well; see
       \code{?options}.)
 
-      \item The NA warning messages from e.g. \code{pchisq} now report the
-      call to the closure and not that of the \code{.Internal}.
+      \item The NA warning messages from e.g. \code{pchisq()} now report
+      the call to the closure and not that of the \code{.Internal}.
 
       \item Added Polish translations by Łukasz Daniel.
     }
@@ -184,7 +184,7 @@
       were ever copied.
 
       It also reported and marked as copies \emph{some} transformations
-      such as \code{rexp(x)}: it no longer does so.
+      such as \code{rexp(n, x)}: it no longer does so.
 
       \item The \code{plot()} method for class \code{"stepfun"} only
       used the optional \code{xval} argument to compute \code{xlim} and
@@ -193,11 +193,11 @@
       \item Names containing characters which need to be escaped were
       not deparsed properly.  (\PR{14846})
 
-      \item Trying to update (recommended) packages in R_HOME/library without
-      write access, is now dealt with more gracefully.
-      Further, such package updates may be skipped (with a warning),
-      when a newer installed version is already going to be used from
-      \code{.libPaths()}.  (\PR{14866})
+      \item Trying to update (recommended) packages in
+      \file{R_HOME/library} without write access is now dealt with more
+      gracefully.  Further, such package updates may be skipped (with a
+      warning), when a newer installed version is already going to be
+      used from \code{.libPaths()}.  (\PR{14866})
 
       \item \code{hclust()} is now fast again (as up to end of 2003),
       with a different fix for the "median"/"centroid" problem.  (\PR{4195}).
@@ -288,8 +288,8 @@
       \item Closing an \code{X11()} window while \code{locator()} was
       active could abort the \R process.
 
-      \item \code{getMethod(f, sig)} produced a \emph{wrong} error
-      message in two different cases (when \code{f} was not a string).
+      \item \code{getMethod(f, sig)} produced an incorrect error message
+      in some cases when \code{f} was not a string).
 
       \item Using a string as a \dQuote{call} in an error condition
       with \code{options(showErrorCalls=TRUE)} could cause a segfault.
@@ -308,8 +308,9 @@
       Weiqiang Qian)
 
       \item Yates correction in \code{chisq.test()} could be bigger than
-      the terms it corrected, leading to an infinite test statistic in
-      some corner cases.
+      the terms it corrected, previously leading to an infinite test
+      statistic in some corner cases which are now reported as
+      \code{NaN}.
 
       \item \code{xgettext()} and related functions sometimes returned
       items that were not strings for translation. (\PR{14935})
