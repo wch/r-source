@@ -495,6 +495,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 		INTEGER(indx)[count++] = NA_INTEGER;
 #ifdef LONG_VECTOR_SUPPORT
+	    /*** is this possible given that large nmax is handled above? */
 	    else if (i >= R_SHORT_LEN_MAX)
 		error("logical subscript selected >= R_SHORT_LEN_MAX");
 #endif
@@ -591,7 +592,8 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	} else isna = TRUE;
     }
     if (max > nx) {
-#ifdef LONG_VECTOR_SUPPORT
+#ifndef LONG_VECTOR_SUPPORT
+	/* changed 'ifdef' to 'ifndef' is this intended for the 32 bit case only? */
 	if (max > R_SHORT_LEN_MAX) {
 	    ECALL(call, _("subscript too large for 32-bit R"));
 	}
@@ -631,10 +633,16 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	   so need to do that to take '0' into account */
 	for (i = 0; i < ns; i++) {
 	    double ds = REAL(s)[i];
+#ifdef OLDCODE_LONG_VECTOR
 	    if (!R_FINITE(ds)) {
 		if (ds > INT_MAX) int_ok = FALSE;
 		cnt++;
 	    } else if ((R_xlen_t) ds != 0) cnt++;
+#else
+	    if (R_FINITE(ds) && ds > INT_MAX) 
+		int_ok = FALSE;
+	    if ((R_xlen_t) ds != 0) cnt++;
+#endif
 	}
 	if (int_ok) {
 	    indx = allocVector(INTSXP, cnt);
