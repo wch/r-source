@@ -1,5 +1,5 @@
 
-R version 2.15.0 RC (2012-03-29 r58863)
+R version 2.15.1 RC (2012-06-16 r59569) -- "Roasted Marshmallows"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -30,7 +30,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 3809
+[1] 3874
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
