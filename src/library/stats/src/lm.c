@@ -61,11 +61,11 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
     }
 
     double *rptr = REAL(x);
-    for (int i = 0 ; i < LENGTH(x) ; i++)
+    for (R_xlen_t i = 0 ; i < XLENGTH(x) ; i++)
 	if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'x'");
     
     rptr = REAL(y);
-    for (int i = 0 ; i < LENGTH(y) ; i++)
+    for (R_xlen_t i = 0 ; i < XLENGTH(y) ; i++)
 	if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'y'");
 
     PROTECT(ans = allocVector(VECSXP, 9));
