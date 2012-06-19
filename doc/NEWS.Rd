@@ -265,6 +265,13 @@
 %       \command{valgrind}.
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item On Windows, starting \R via \command{R.exe} caused Ctrl-C to misbehave.
+      (\PR{14948})
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.1}{

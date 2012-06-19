@@ -67,6 +67,8 @@ int AppMain(int argc, char **argv)
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
+    /* The following restores Ctrl-C handling if we were started from R.exe */
+    SetConsoleCtrlHandler(NULL, FALSE);
     signal(SIGBREAK, my_onintr);
     GA_initapp(0, NULL);
     readconsolecfg();
