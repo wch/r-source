@@ -142,7 +142,8 @@ latexToUtf8 <- function(x) {
 		} else 
 		    i <- j
 	    }
-	}    
+	} else if (tag == "BLOCK")
+	    x[[i]] <- latexToUtf8(a)
     }
     x
 }    
