@@ -592,8 +592,8 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	} else isna = TRUE;
     }
     if (max > nx) {
-#ifndef LONG_VECTOR_SUPPORT
-	/* changed 'ifdef' to 'ifndef' is this intended for the 32 bit case only? */
+#ifdef LONG_VECTOR_SUPPORT_X
+	/* disabled this -- is this intended for the 32 bit case only? */
 	if (max > R_SHORT_LEN_MAX) {
 	    ECALL(call, _("subscript too large for 32-bit R"));
 	}
