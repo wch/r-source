@@ -512,14 +512,17 @@ function(style)
 }
 
 format.bibentry <-
-function(x, style = "text", .bibstyle = "JSS", ...)
+function(x, style = "text", .bibstyle=NULL, ...)
 {
     style <- .match_bibentry_format_style(style)
 
+    x <- sort(x, .bibstyle=.bibstyle)
+    
     .format_bibentry_via_Rd <- function(f) {
         out <- file()
         saveopt <- tools::Rd2txt_options(width = getOption("width"))
         on.exit({tools::Rd2txt_options(saveopt); close(out)})
+        x$index <- as.list(seq_along(x))
         sapply(x,
                function(y) {
                    rd <- tools::toRd(y, style = .bibstyle)
@@ -574,14 +577,14 @@ function(x, style = "text", .bibstyle = "JSS", ...)
 }
 
 print.bibentry <-
-function(x, style = "text", .bibstyle = "JSS", ...)
+function(x, style = "text", .bibstyle=NULL, ...)
 {
     style <- .match_bibentry_format_style(style)
 
     if(style == "R") {
         writeLines(format(x, "R", collapse = TRUE))
     } else {
-        y <- format(x, style)
+        y <- format(x, style, .bibstyle)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
             ## (which however may be empty), so it is handled
@@ -830,6 +833,10 @@ function(object, ...)
     class(rval) <- "Bibtex"
     rval
 }
+
+sort.bibentry <- function(x, decreasing = FALSE, .bibstyle=NULL, ...) 
+    x[ order( tools::bibstyle(.bibstyle)$sortKeys(x), 
+              decreasing = decreasing) ]
 
 ######################################################################
 
@@ -1139,3 +1146,119 @@ function(x)
     paste(format(x, include = c("given", "family", "email")),
           collapse = ",\n  ")
 }
+
+# Cite using the default style (which is usually citeNatbib)
+
+cite <- function(keys, bib, ...) {
+    fn <- tools::bibstyle()$cite
+    if (is.null(fn))
+    	fn <- citeNatbib
+    fn(keys, bib, ...)
+}
+
+# Cite using natbib-like options.  A bibstyle would normally
+# choose some of these options and just have a cite(keys, bib, previous)
+# function within it.
+
+citeNatbib <- local({
+    cited <- c()
+    
+    function(keys, bib, textual=FALSE, before=NULL, after=NULL,
+    		 mode = c("authoryear", "numbers", "super"),
+	         abbreviate=TRUE, longnamesfirst=TRUE, 
+                 bibpunct=c("(", ")", ";", "a", "", ","),
+                 previous) {
+
+	shortName <- function(person) {
+	    if (length(person$family)) 
+		paste(tools:::cleanupLatex(person$family), collapse=" ")
+	    else
+		paste(tools:::cleanupLatex(person$given), collapse=" ")
+	}
+
+	authorList <- function(paper) 
+	    names <- sapply(paper$author, shortName)
+
+	if (!missing(previous)) 
+	    cited <<- previous
+	    
+	if (!missing(mode)) 
+	    mode <- match.arg(mode)
+	else
+	    mode <- switch(bibpunct[4],
+	    	n = "numbers",
+	    	s = "super",
+	    	"authoryear")
+        numeric <- mode %in% c('numbers', 'super')
+
+	if (numeric)
+	    bib <- sort(bib)
+	    
+	keys <- unlist(strsplit(keys, " *, *"))
+	if (!length(keys)) return("")
+	
+        n <- length(keys)
+	first <- !(keys %in% cited)
+	cited <<- unique(c(cited, keys))
+	
+	bibkeys <- unlist(bib$key)
+	# Use year to hold numeric entry; makes things
+	# simpler below
+	year <- match(keys, bibkeys)
+	papers <- bib[year]
+	
+        if (textual || !numeric) {
+	    auth <- character(n)
+	    if (!numeric)
+	    	year <- unlist(papers$year)
+	    authorLists <- lapply(papers, authorList)
+	    lastAuthors <- NULL
+	    for (i in seq_along(keys)) {
+		authors <- authorLists[[i]]
+		if (identical(lastAuthors, authors)) 
+		    auth[i] <- ""
+		else {
+		    if (length(authors) > 1)
+			authors[length(authors)] <- paste("and", authors[length(authors)])
+		    if (length(authors) > 2) {
+			if (!abbreviate || (first[i] && longnamesfirst))
+			    auth[i] <- paste(authors, collapse=", ")
+			else
+			    auth[i] <- paste(authors[1], "et al.")
+		    } else
+			auth[i] <- paste(authors, collapse=" ")
+            	}
+            	lastAuthors <- authors
+            }  
+            suppressauth <- which(!nzchar(auth))
+            if (length(suppressauth)) {
+                for (i in suppressauth)
+                    year[i-1] <- paste0(year[i-1], bibpunct[6], " ", year[i])
+                auth <- auth[-suppressauth]
+                year <- year[-suppressauth]
+            }
+        }
+        if (!is.null(before))
+            before <- paste0(before, " ")
+        if (!is.null(after))
+            after <- paste0(" ", after)
+        if (textual) {
+            result <- paste0(bibpunct[1], before, year, after, bibpunct[2])
+            if (mode == "super")
+            	result <- paste0(auth, "^{", result, "}")
+            else
+            	result <- paste0(auth, " ", result) 
+            result <- paste(result, collapse = paste0(bibpunct[3], " "))
+        } else if (numeric) {
+            result <- paste(year, collapse=paste0(bibpunct[3], " "))
+            result <- paste0(bibpunct[1], before, result, after, bibpunct[2])
+            if (mode == "super")
+            	result <- paste0("^{", result, "}")
+        } else {
+            result <- paste0(auth, bibpunct[5], " ", year)
+            result <- paste(result, collapse = paste0(bibpunct[3], " "))
+            result <- paste0(bibpunct[1], before, result, after, bibpunct[2])
+        }
+        result
+    }    
+})

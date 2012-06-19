@@ -15,7 +15,7 @@
 bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
          key = NULL, ..., other = list(),
          mheader = NULL, mfooter = NULL)
-\method{print}{bibentry}(x, style = "text", .bibstyle = "JSS", ...)
+\method{print}{bibentry}(x, style = "text", .bibstyle, ...)
 }
 \arguments{
   \item{bibtype}{a character string with a BibTeX entry type.
@@ -42,8 +42,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{mfooter}{a character string with optional \dQuote{outer} footer
     text.}
   \item{x}{an object inheriting from class \code{"bibentry"}.}
-  \item{style}{a character string specifying the print style.
-    Must be a unique abbreviation (with case ignored) of the available
+  \item{style}{an optional character string specifying the print style.
+    If present, must be a unique abbreviation (with case ignored) of the available
     styles, see \bold{Details}.}
   \item{.bibstyle}{a character string naming a bibliography style.}
 }
@@ -163,7 +163,7 @@ rref <- bibentry(
    author = person("R Core Team"),
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
-   year = 2010,
+   year = 2012,
    isbn = "3-900051-07-0",
    url = "http://www.R-project.org/")
 

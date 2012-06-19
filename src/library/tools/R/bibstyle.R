@@ -1,5 +1,16 @@
 # Functions for making Rd and human readable versions of bibentry records.
 
+# Clean up LaTeX accents and braces
+cleanupLatex <- function(x) {
+    if (!length(x)) return(x)
+    latex <- try(parseLatex(x), silent=TRUE)
+    if (inherits(latex, "try-error")) {
+    	x
+    } else {
+    	deparseLatex(latexToUtf8(latex), dropBraces=TRUE)
+    }
+}
+
 makeJSS <- function()
     local({
 
@@ -20,28 +31,17 @@ makeJSS <- function()
 	    }
 	}
 
-	# Clean up LaTeX accents and braces
-	cleanup <- function(x) {
-	    if (!length(x)) return(x)
-	    latex <- try(parseLatex(x), silent=TRUE)
-	    if (inherits(latex, "try-error")) {
-	    	x
-	    } else {
-	    	deparseLatex(latexToUtf8(latex), dropBraces=TRUE)
-	    }
-	}
-
 	# Now some simple markup
 
 	plain <- function(pages)
 	    if (length(pages)) collapse(pages)
 
-	plainclean <- function(s) plain(cleanup(s))
+	plainclean <- function(s) plain(cleanupLatex(s))
 
 	emph <- function(s)
 	    if (length(s)) paste0("\\emph{", collapse(s), "}")
 
-        emphclean <- function(s) emph(cleanup(s))
+        emphclean <- function(s) emph(cleanupLatex(s))
 
 	# This creates a function to label a field by adding a prefix or suffix (or both)
 
@@ -53,7 +53,7 @@ makeJSS <- function()
 
 	labelclean <- function(prefix=NULL, suffix=NULL, style=plain) {
 	    f <- label(prefix, suffix, style)
-	    function(s) f(cleanup(s))
+	    function(s) f(cleanupLatex(s))
 	}
 
 	# Now the formatters for each particular field.  These take
@@ -78,7 +78,7 @@ makeJSS <- function()
 	fmtUrl <- label(prefix="\\url{", suffix="}")
 	fmtTitle <- function(title)
 	    if (length(title)) paste("\\dQuote{",
-				     addPeriod(collapse(cleanup(title))), "}", sep="")
+				     addPeriod(collapse(cleanupLatex(title))), "}", sep="")
 
 	fmtYear <- function(year) {
 	    if (!length(year)) year <- "????"
@@ -98,15 +98,15 @@ makeJSS <- function()
 	## Format one person object in short "Murdoch DJ" format
 	shortName <- function(person) {
 	    if (length(person$family)) {
-		result <- cleanup(person$family)
+		result <- cleanupLatex(person$family)
 		if (length(person$given))
 		    paste(result,
-			  paste(substr(sapply(person$given, cleanup),
+			  paste(substr(sapply(person$given, cleanupLatex),
 				       1, 1), collapse=""))
 		else result
 	    }
 	    else
-		paste(cleanup(person$given), collapse=" ")
+		paste(cleanupLatex(person$given), collapse=" ")
 	}
 
 	# Format all authors for one paper
@@ -161,9 +161,9 @@ makeJSS <- function()
 
 	procOrganization <- function(paper) {
 	    if (length(paper$organization)) {
-		result <- collapse(cleanup(paper$organization))
+		result <- collapse(cleanupLatex(paper$organization))
 		if (length(paper$address))
-		    result <- paste(result, collapse(cleanup(paper$address)), sep=", ")
+		    result <- paste(result, collapse(cleanupLatex(paper$address)), sep=", ")
 		result
 	    }
 	}
@@ -284,6 +284,11 @@ makeJSS <- function()
 	    }
 	    result
 	}
+	
+	refPrefix <- function(i) NULL
+	
+	cite <- function(key, bib, ...)
+	    utils::citeNatbib(key, bib, ...) # the defaults are JSS style
 
 	environment()
     })
@@ -291,10 +296,10 @@ makeJSS <- function()
 bibstyle <- local({
     styles <- list(JSS = makeJSS())
     default <- "JSS"
-    function(style, envir, ..., .init = FALSE, .default=FALSE) {
+    function(style, envir, ..., .init = FALSE, .default=TRUE) {
         newfns <- list(...)
         if (missing(style) || is.null(style)) {
-            if (!missing(envir) || length(newfns) || .init || .default)
+            if (!missing(envir) || length(newfns) || .init)
             	stop("Changes require specified 'style'")
             style <- default
         } else {
@@ -314,16 +319,23 @@ bibstyle <- local({
     }
 })
 
+getBibstyle <- function(all = FALSE) {
+    if (all)
+    	names(environment(bibstyle)$styles)
+    else
+    	environment(bibstyle)$default
+}
+
 toRd.bibentry <- function(obj, style=NULL, ...) {
-    env <- new.env(hash = FALSE, parent = bibstyle(style)) # small
-    env$obj <- obj
-    o <- with(env, order(sortKeys(obj)))
-    rm("obj", envir=env)
-    bib <- unclass(obj[o])
+    obj <- sort(obj, .bibstyle=style)
+    style <- bibstyle(style)
+    env <- new.env(hash = FALSE, parent = style)
+    bib <- unclass(obj)
     result <- character(length(bib))
     for (i in seq_along(bib)) {
     	env$paper <- bib[[i]]
-    	result[i] <- with(env,
+    	result[i] <- with(env, 
+    	    paste(refPrefix(paper$index),
     	    switch(attr(paper, "bibtype"),
     	    Article = formatArticle(paper),
     	    Book = formatBook(paper),
@@ -337,8 +349,7 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     	    Proceedings = formatProceedings(paper),
     	    TechReport = formatTechreport(paper),
     	    Unpublished = formatUnpublished(paper),
-    	    paste("bibtype", attr(paper, "bibtype"),"not implemented") ))
+    	    paste("bibtype", attr(paper, "bibtype"),"not implemented") )))
     }
     result
 }
-
