@@ -285,7 +285,7 @@ makeJSS <- function()
 	    result
 	}
 	
-	refPrefix <- function(i) NULL
+	refPrefix <- function(paper) NULL
 	
 	cite <- function(key, bib, ...)
 	    utils::citeNatbib(key, bib, ...) # the defaults are JSS style
@@ -335,7 +335,7 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     for (i in seq_along(bib)) {
     	env$paper <- bib[[i]]
     	result[i] <- with(env, 
-    	    paste(refPrefix(paper$index),
+    	    paste(refPrefix(paper),
     	    switch(attr(paper, "bibtype"),
     	    Article = formatArticle(paper),
     	    Book = formatBook(paper),

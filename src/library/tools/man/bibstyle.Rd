@@ -75,8 +75,10 @@ The other routines are as follows.  \code{sortKeys}, a function to
 produce a sort key to sort the entries, is passed the original
 \code{\link{bibentry}} vector and should produce a sortable vector of
 the same length to define the sort order.  \code{refPrefix} is passed
-a scalar \code{i}, and should produce a prefix to use in the reference
-list for the \code{i}th entry, or \code{NULL} for no prefix. Finally,
+a single record and should produce a prefix to use in the reference
+list regardless of the entry type, or \code{NULL} for no prefix. (A
+field \code{"index"} will have been added to the record to represent its
+1-based index in the full list of papers.)  Finally,
 the optional function \code{cite} should have the same argument list
 as \code{utils::\link{cite}}, and should produce a citation to be used
 in text.
