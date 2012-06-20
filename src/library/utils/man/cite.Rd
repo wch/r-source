@@ -138,7 +138,7 @@ cite("R, boot-package", refs)
 ## Cite numerically
 savestyle <- tools::getBibstyle()
 tools::bibstyle("JSSnumbered", .init=TRUE,
-         refPrefix = function(paper) paste0("[", paper$index, "]"),
+         fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
          cite = function(key, bib, ...) 
          	citeNatbib(key, bib, mode="numbers",
          	    bibpunct = c("[", "]", ";", "n", "", ","), ...)               

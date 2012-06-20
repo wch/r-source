@@ -169,7 +169,8 @@ makeJSS <- function()
 	}
 
 	formatArticle <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	             sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		     fmtTitle(paper$title),
 		     sentence(fmtBook(paper$journal), volNum(paper), fmtPages(paper$pages)),
 		     sentence(fmtISSN(paper$issn), extraInfo(paper))))
@@ -180,7 +181,8 @@ makeJSS <- function()
 	    if (is.null(authors))
 		authors <- editorList(book)
 
-	    collapse(c(sentence(authors, fmtYear(book$year), sep=" "),
+	    collapse(c(fmtPrefix(book),
+	               sentence(authors, fmtYear(book$year), sep=" "),
 		       sentence(fmtBtitle(book$title), bookVolume(book), fmtEdition(book$edition)),
 		       sentence(bookPublisher(book)),
 		       sentence(fmtISBN(book$isbn), extraInfo(book))))
@@ -193,7 +195,8 @@ makeJSS <- function()
 		authors <- editors
 		editors <- NULL
 	    }
-	    collapse(c(sentence(authors, fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	               sentence(authors, fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
 		       paste("In", sentence(editors, fmtBtitle(paper$fmtBtitle), bookVolume(paper),
 					    fmtChapter(paper$chapter),
@@ -203,7 +206,8 @@ makeJSS <- function()
 	}
 
 	formatIncollection <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
 		       paste("In", sentence(editorList(paper), fmtBtitle(paper$fmtBtitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
@@ -212,7 +216,8 @@ makeJSS <- function()
 	}
 
 	formatInProceedings <- function(paper)
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
 		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
@@ -220,28 +225,32 @@ makeJSS <- function()
 		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
 
 	formatManual <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       sentence(fmtBtitle(paper$title), bookVolume(paper), fmtEdition(paper$edition)),
 		       sentence(procOrganization(paper)),
 		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
 	}
 
 	formatMastersthesis <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       sentence(fmtBtitle(paper$title)),
 		       sentence("Master's thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
 		       sentence(extraInfo(paper))))
 	}
 
 	formatPhdthesis <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	    	       sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       sentence(fmtBtitle(paper$title)),
 		       sentence("PhD thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
 		       sentence(extraInfo(paper))))
 	}
 
 	formatMisc <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
 		       sentence(fmtHowpublished(paper$howpublished)),
 		       sentence(extraInfo(paper))))
@@ -250,7 +259,8 @@ makeJSS <- function()
 	formatProceedings <- function(book) {
 	    if (is.null(book$editor)) editor <- "Anonymous (ed.)"
 	    else editor <- editorList(book)
-	    collapse(c(sentence(editor, fmtYear(book$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	    	       sentence(editor, fmtYear(book$year), sep=" "),
 		       sentence(fmtBtitle(book$title), bookVolume(book)),
 		       sentence(procOrganization(book)),
 		       sentence(fmtISBN(book$isbn), fmtISSN(book$issn),
@@ -258,7 +268,8 @@ makeJSS <- function()
 	}
 
 	formatTechreport <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	    	       sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
 		       sentence(fmtTechreportnumber(paper$number),
 				fmtInstitution(paper$institution),
@@ -267,7 +278,8 @@ makeJSS <- function()
 	}
 
 	formatUnpublished <- function(paper) {
-	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    collapse(c(fmtPrefix(paper),
+	    	       sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
 		       sentence(extraInfo(paper))))
 	}
@@ -285,7 +297,12 @@ makeJSS <- function()
 	    result
 	}
 	
-	refPrefix <- function(paper) NULL
+	# Replace this if you want a bibliography style
+	# that puts a prefix on each entry, e.g. [n] 
+	# The formatting routine will have added a field .index
+	# as a 1-based index within the complete list.
+	
+	fmtPrefix <- function(paper) NULL
 	
 	cite <- function(key, bib, ...)
 	    utils::citeNatbib(key, bib, ...) # the defaults are JSS style
@@ -335,7 +352,6 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     for (i in seq_along(bib)) {
     	env$paper <- bib[[i]]
     	result[i] <- with(env, 
-    	    paste(refPrefix(paper),
     	    switch(attr(paper, "bibtype"),
     	    Article = formatArticle(paper),
     	    Book = formatBook(paper),
@@ -349,7 +365,7 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     	    Proceedings = formatProceedings(paper),
     	    TechReport = formatTechreport(paper),
     	    Unpublished = formatUnpublished(paper),
-    	    paste("bibtype", attr(paper, "bibtype"),"not implemented") )))
+    	    paste("bibtype", attr(paper, "bibtype"),"not implemented") ))
     }
     result
 }

@@ -74,14 +74,18 @@ vector (possibly containing newlines).
 The other routines are as follows.  \code{sortKeys}, a function to
 produce a sort key to sort the entries, is passed the original
 \code{\link{bibentry}} vector and should produce a sortable vector of
-the same length to define the sort order.  \code{refPrefix} is passed
-a single record and should produce a prefix to use in the reference
-list regardless of the entry type, or \code{NULL} for no prefix. (A
-field \code{"index"} will have been added to the record to represent its
-1-based index in the full list of papers.)  Finally,
+the same length to define the sort order.  Finally,
 the optional function \code{cite} should have the same argument list
 as \code{utils::\link{cite}}, and should produce a citation to be used
 in text.
+
+The \code{\link{format}} method for \code{"bibentry"} objects adds a
+field named \code{".index"} to each entry after sorting and before
+formatting.  This is a 1-based index within the complete object that
+can be used in styles that require numbering.  Although the
+\code{"JSS"} style doesn't use numbers, it includes a
+\code{fmtPrefix()} stub function that may be used to display them.
+See the example below.
 }
 \value{
 \code{bibstyle} returns the environment which has been selected or created.
@@ -114,7 +118,9 @@ c(bibentry(bibtype = "manual",
     journal = "Journal of the Royal Statistical Society, Series B",
     volume = 26,
     pages = "211-252"))
+    
 bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
+    fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
        .init = TRUE)
 print(refs, .bibstyle = "unsorted")    
 }

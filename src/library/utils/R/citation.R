@@ -517,12 +517,12 @@ function(x, style = "text", .bibstyle=NULL, ...)
     style <- .match_bibentry_format_style(style)
 
     x <- sort(x, .bibstyle=.bibstyle)
+    x$.index <- as.list(seq_along(x))
     
     .format_bibentry_via_Rd <- function(f) {
         out <- file()
         saveopt <- tools::Rd2txt_options(width = getOption("width"))
         on.exit({tools::Rd2txt_options(saveopt); close(out)})
-        x$index <- as.list(seq_along(x))
         sapply(x,
                function(y) {
                    rd <- tools::toRd(y, style = .bibstyle)
