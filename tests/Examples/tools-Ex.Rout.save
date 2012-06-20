@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-04-26 r59216) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-06-19 r59583) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin11.3.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x7fbd5b2b82a8>
+<environment: 0x3254a40>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x7fbd5b2b82a8>
+<environment: 0x3254a40>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x7fbd5b2b82a8>
+<environment: 0x3254a40>
 
 $showURLs
 [1] FALSE
@@ -205,7 +205,7 @@ $underline_titles
 > 
 > ### Name: bibstyle
 > ### Title: Select or define a bibliography style.
-> ### Aliases: bibstyle
+> ### Aliases: bibstyle getBibstyle
 > ### Keywords: utilties documentation
 > 
 > ### ** Examples
@@ -219,7 +219,7 @@ $underline_titles
 +     author = person("R Core Team"),
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
-+     year = 2010,
++     year = 2012,
 +     isbn = "3-900051-07-0",
 +     url = "http://www.R-project.org"),  
 +   bibentry(bibtype = "article",
@@ -232,9 +232,9 @@ $underline_titles
 +     pages = "211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +        .init = TRUE)
-<environment: 0x7fbd5b5d0508>
+<environment: 0x34ffc90>
 > print(refs, .bibstyle = "unsorted")    
-R Core Team (2010). _R: A Language and Environment for Statistical
+R Core Team (2012). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
 
@@ -911,7 +911,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.346 0.012 0.359 0 0 
+Time elapsed:  0.369 0.014 0.4 0 0 
 > grDevices::dev.off()
 null device 
           1 
