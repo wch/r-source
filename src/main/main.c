@@ -680,7 +680,7 @@ void setup_Rmainloop(void)
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
-    char deferred_warnings[6][250];
+    char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
 
     InitConnections(); /* needed to get any output at all */
