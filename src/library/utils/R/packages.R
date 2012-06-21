@@ -778,6 +778,8 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"))
 	   , "Bergen (Norway)"="http://bioconductor.uib.no/"
 	   , "Cambridge (UK)"="http://mirrors.ebi.ac.uk/bioconductor/"
 	   , "Riken, Kobe (Japan)" = "http://bioconductor.jp/"
+	   , "Canberra (Australia)" = "http://mirror.aarnet.edu.au/pub/bioconductor/"
+	   , "Sao Paulo (Brazil)" = "http://bioconductor.fmrp.usp.br/"
 	   )
     res <- menu(names(m), graphics, "BioC mirror")
     if(res > 0L) options("BioC_mirror" = m[res])
