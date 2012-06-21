@@ -1,11 +1,11 @@
 % File src/library/base/man/strtrim.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strtrim}
 \alias{strtrim}
-\title{Trim Character Strings to Specified Widths}
+\title{Trim Character Strings to Specified Display Widths}
 \description{
   Trim character strings to specified display widths.
 }
@@ -24,7 +24,8 @@ strtrim(x, width)
   may be included in the count or they may be omitted).
 
   Using this function rather than \code{\link{substr}} is important when
-  there might be double-width characters in character vectors
+  there might be double-width (e.g. Chinese/Japanese/Korean) characters
+  in the character vector.
 }
 \value{
   A character vector of the same length and with the same attributes
