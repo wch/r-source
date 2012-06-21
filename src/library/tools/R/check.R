@@ -2754,7 +2754,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 do_exit(1L)
             } else if(length(res$bad_version))
                 warningLog(Log)
-            else noteLog(Log)
+            else if(length(res) > 1L) noteLog(Log)
+            else resultLog(Log, "OK")
             printLog(Log, paste(c(out, ""), collapse = "\n"))
         } else resultLog(Log, "OK")
     }
