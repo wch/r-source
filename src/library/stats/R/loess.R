@@ -438,7 +438,7 @@ scatter.smooth <-
     ylab <- if (is.null(ylab)) xy$ylab else ylab
     prediction <- loess.smooth(x, y, span, degree, family, evaluation)
     plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, ...)
-    lines(prediction)
+    lines(prediction, ...)
     invisible()
 }
 

@@ -1,6 +1,6 @@
 % File src/library/stats/man/scatter.smooth.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scatter.smooth}
@@ -34,7 +34,9 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{ylim}{the y limits of the plot.}
   \item{evaluation}{number of points at which to evaluate the smooth
     curve.}
-  \item{\dots}{graphical parameters.}
+  \item{\dots}{For \code{scatter.smooth}, graphical parameters.
+    For \code{loess.smooth}, control parameters passed to
+    \code{\link{loess.control}}.}
 }
 \details{
   \code{loess.smooth} is an auxiliary function which evaluates the

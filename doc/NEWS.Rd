@@ -123,6 +123,9 @@
       \item The \code{bibstyle()} function now defaults to setting the
       default bibliography style. The \code{getBibstyle()} function
       has been added to report the name of the current default style.
+      
+      \item \code{scatter.smooth()} now passes \code{\dots} to
+      \code{lines()}.
     }
   }
 
