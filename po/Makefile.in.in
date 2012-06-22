@@ -24,6 +24,7 @@ RGUI_CATALOGS = \
   RGui-ja.po RGui-ja.gmo \
   RGui-ko.po RGui-ko.gmo \
   RGui-nn.po RGui-nn.gmo \
+  RGui-pl.po RGui-pl.gmo \
   RGui-pt_BR.po RGui-pt_BR.gmo \
   RGui-ru.po RGui-ru.gmo \
   RGui-tr.po RGui-tr.gmo \
