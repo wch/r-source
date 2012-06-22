@@ -12,6 +12,7 @@
 #
 # Origin: gettext-0.16
 ## Much modified by the R-core team for use in the R project.
+## Modifications Copyright (C) 2005-12 R Core Team
 
 ## add other languages for the R domain to LINGUAS
 ## add both RGui-ll.po and RGui-ll.gmo files to RGUI_CATALOGS
