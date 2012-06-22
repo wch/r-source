@@ -5239,6 +5239,7 @@ function(dir)
 
     meta <- .get_package_metadata(dir, FALSE)
     foss <- analyze_license(meta["License"])$is_verified
+    out$Maintainer <- meta["Maintainer"]
 
     urls <- .get_standard_repository_URLs()
     ## We do not want to use utils::available.packages() for now, as
@@ -5378,6 +5379,9 @@ format.check_package_CRAN_incoming <-
 function(x, ...)
 {
     c(character(),
+      if(length(x$Maintainer))
+          sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
+      else "No maintainer field in DESCRIPTION file",
       if(length(x$new_submission))
           "New submission",
       if(length(y <- x$bad_package))
