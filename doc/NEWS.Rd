@@ -297,7 +297,7 @@
 
       \item The string \code{"infinity"} allowed by C99 was not accepted
       as a numerical string value by e.g. \code{scan()} and
-      \code{as.character()}.  (\PR{14933})
+      \code{as.numeric()}.  (\PR{14933})
 
       \item In \code{legend()}, setting some entries of \code{lwd} to
       \code{NA} was inconsistent (depending on the graphics device) in
@@ -305,7 +305,7 @@
       so.  (\PR{14926})
 
       \item \code{by()} failed for a zero-row data frame.  (Reported by
-      Weiqiang Qian)
+      Weiqiang Qian.)
 
       \item Yates correction in \code{chisq.test()} could be bigger than
       the terms it corrected, previously leading to an infinite test
