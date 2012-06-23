@@ -14,8 +14,8 @@
 scatter.smooth(x, y = NULL, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"),
     xlab = NULL, ylab = NULL,
-    ylim = range(y, prediction$y, na.rm = TRUE),
-    evaluation = 50, \dots)
+    ylim = range(y, pred$y, na.rm = TRUE),
+    evaluation = 50, \dots, lpars = list())
 
 loess.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"), evaluation = 50, \dots)
@@ -34,9 +34,11 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{ylim}{the y limits of the plot.}
   \item{evaluation}{number of points at which to evaluate the smooth
     curve.}
-  \item{\dots}{For \code{scatter.smooth}, graphical parameters.
-    For \code{loess.smooth}, control parameters passed to
-    \code{\link{loess.control}}.}
+  \item{\dots}{For \code{scatter.smooth()}, graphical parameters, passed
+    to \code{plot()} only.  For \code{loess.smooth}, control parameters
+    passed to \code{\link{loess.control}}.}
+  \item{lpars}{a \code{\link{list}} of arguments to be passed to
+    \code{\link{lines}()}.}
 }
 \details{
   \code{loess.smooth} is an auxiliary function which evaluates the
@@ -58,5 +60,8 @@ loess.smooth(x, y, span = 2/3, degree = 1,
 require(graphics)
 
 with(cars, scatter.smooth(speed, dist))
+## or with dotted thick smoothed line results :
+with(cars, scatter.smooth(speed, dist, lpars =
+                    list(col="red", lwd=3, lty=3)))
 }
 \keyword{smooth}

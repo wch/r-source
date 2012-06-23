@@ -426,8 +426,8 @@ scatter.smooth <-
     function(x, y = NULL, span = 2/3, degree = 1,
 	     family = c("symmetric", "gaussian"),
 	     xlab = NULL, ylab = NULL,
-	     ylim = range(y, prediction$y, na.rm = TRUE),
-             evaluation = 50, ...)
+	     ylim = range(y, pred$y, na.rm = TRUE),
+             evaluation = 50, ..., lpars = list())
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
@@ -436,9 +436,9 @@ scatter.smooth <-
     y <- xy$y
     xlab <- if (is.null(xlab)) xy$xlab else xlab
     ylab <- if (is.null(ylab)) xy$ylab else ylab
-    prediction <- loess.smooth(x, y, span, degree, family, evaluation)
+    pred <- loess.smooth(x, y, span, degree, family, evaluation)
     plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, ...)
-    lines(prediction, ...)
+    do.call(lines, c(list(pred), lpars))
     invisible()
 }
 

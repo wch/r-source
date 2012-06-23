@@ -108,24 +108,24 @@
       unsafe in a shell (e.g. absolute paths containing spaces) now uses
       appropriate quoting.
 
-      \item \code{as.tclObj()} has been extended to handle raw vectors. 
-      Previously, it only worked in the other direction. 
-      (Contributed by Charlie Friedemann, \PR{14939}.) 
-      
+      \item \code{as.tclObj()} has been extended to handle raw vectors.
+      Previously, it only worked in the other direction.
+      (Contributed by Charlie Friedemann, \PR{14939}.)
+
       \item The \code{cite()} and \code{citeNatbib()} functions have
       been added, to allow generation of in-text citations from
       \code{"bibentry"} objects.  A \code{cite()} function may be
       added to \code{bibstyle()} environments.
-      
+
       \item A \code{sort()} method has been added for \code{"bibentry"}
-      objects.  
-      
+      objects.
+
       \item The \code{bibstyle()} function now defaults to setting the
       default bibliography style. The \code{getBibstyle()} function
       has been added to report the name of the current default style.
-      
-      \item \code{scatter.smooth()} now passes \code{\dots} to
-      \code{lines()}.
+
+      \item \code{scatter.smooth()} now has an argument \code{lpars} to
+      pass arguments to \code{lines()}.
     }
   }
 
@@ -275,7 +275,7 @@
       be recompiled.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Place holder.
@@ -288,8 +288,8 @@
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
       caused Ctrl-C to misbehave.  (\PR{14948})
-      
-      \item The \code{tools::latexToUtf8()} function missed conversions that 
+
+      \item The \code{tools::latexToUtf8()} function missed conversions that
       were contained within braces.
     }
   }
