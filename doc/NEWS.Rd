@@ -6,6 +6,18 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item On Windows, starting \command{Rterm} via \command{R.exe}
+      caused Ctrl-C to misbehave.  (\PR{14948})
+      
+      \item The \code{tools::latexToUtf8()} function missed conversions that 
+      were contained within braces.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R VERSION 2.15.1}{
   \subsection{NEW FEATURES}{
     \itemize{
