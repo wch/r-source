@@ -273,18 +273,21 @@
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.  Code using them should
       be recompiled.
-
-%       \item \code{R_alloc} used to over-allocate by at least one byte:
-%       it no longer does do (but still rounds up to a multiple of 8
-%       bytes).  This aligns the allocation with that reported to
-%       \command{valgrind}.
     }
   }
   
   \subsection{BUG FIXES}{
     \itemize{
-      \item On Windows, starting \R via \command{R.exe} caused Ctrl-C to misbehave.
-      (\PR{14948})
+      \item Place holder.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item On Windows, starting \command{Rterm} via \command{R.exe}
+      caused Ctrl-C to misbehave.  (\PR{14948})
       
       \item The \code{tools::latexToUtf8()} function missed conversions that 
       were contained within braces.
