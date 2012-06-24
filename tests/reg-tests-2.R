@@ -2634,7 +2634,8 @@ assertErrorPrint( getMethod(show, "bar") )
 
 
 ## corner cases for array
-array(1, integer())
+# allowed, gave non-array prior for 2.16.0
+try(array(1, integer()))
 # if no dims, an error to supply dimnames
 try(array(1, integer(), list(1, 2)))
 ##

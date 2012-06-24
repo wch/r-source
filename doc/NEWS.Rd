@@ -209,6 +209,9 @@
       compiled in by default: compile \file{src/main/dotcode.c} with
       \option{-DSUPPORT_CONVERTERS} to re-enable this (untested as we
       know of no examples in packages).
+      
+      \item Use of \code{array()} with a 0-length \code{dim} argument is
+      now an error.
     }
   }
 
@@ -288,6 +291,13 @@
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
       \item \code{array()} is now implemented in C code, for speed.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item Use of \code{array()} with a 0-length \code{dim} argument is
+      deprecated.
     }
   }
   

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-06-22 r59612) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-06-24 r59621) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6931,11 +6931,11 @@ Asserted Error: No method found for function "show" and signature bar
 > 
 > 
 > ## corner cases for array
-> array(1, integer())
-[1] 1
+> # allowed, gave non-array prior for 2.16.0
+> try(array(1, integer()))
+Error in array(1, integer()) : 'dims' cannot be of length 0
 > # if no dims, an error to supply dimnames
 > try(array(1, integer(), list(1, 2)))
-Error in array(1, integer(), list(1, 2)) : 
-  'dimnames' applied to non-array
+Error in array(1, integer(), list(1, 2)) : 'dims' cannot be of length 0
 > ##
 > 

@@ -1453,14 +1453,13 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     dimnames = CADDR(args);
     PROTECT(dims = coerceVector(dims, INTSXP));
     int nd = LENGTH(dims);
-    if (nd) {
-	double d = 1.0;
-	for (int j = 0; j < nd; j++) d *= INTEGER(dims)[j];
+    if (nd == 0) error(_("'dims' cannot be of length 0"));
+    double d = 1.0;
+    for (int j = 0; j < nd; j++) d *= INTEGER(dims)[j];
 #ifndef LONG_VECTOR_SUPPORT
-	if (d > INT_MAX) error(_("too many elements specified"));
+    if (d > INT_MAX) error(_("too many elements specified"));
 #endif
-	nans = (R_xlen_t) d;
-    } else nans = 1;
+    nans = (R_xlen_t) d;
 
     PROTECT(ans = allocVector(TYPEOF(vals), nans));
     switch(TYPEOF(vals)) {
@@ -1518,15 +1517,12 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
 
-    if (nd) {
-	ans = dimgets(ans, dims);
-	if (TYPEOF(dimnames) == VECSXP && LENGTH(dimnames)) {
-	    PROTECT(ans);
-	    ans = dimnamesgets(ans, dimnames);
-	    UNPROTECT(1);
-	}
-    } else if (TYPEOF(dimnames) == VECSXP && LENGTH(dimnames))
-	error(_("'dimnames' applied to non-array"));
+    ans = dimgets(ans, dims);
+    if (TYPEOF(dimnames) == VECSXP && LENGTH(dimnames)) {
+	PROTECT(ans);
+	ans = dimnamesgets(ans, dimnames);
+	UNPROTECT(1);
+    }
 	
     UNPROTECT(2);
     return ans;
