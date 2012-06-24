@@ -1,13 +1,15 @@
 % File src/library/base/man/Syntax.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
+
+% = is treated specially in the parser: see PR#14595
 
 \name{Syntax}
 \alias{Syntax}
 \title{Operator Syntax and Precedence}
 \description{
-  Outlines \R syntax and gives the precedence of operators
+  Outlines \R syntax and gives the precedence of operators.
 }
 \details{
   The following unary and binary operators are defined.  They are listed
@@ -28,12 +30,13 @@
     \code{| ||}\tab or\cr
     \code{~}\tab as in formulae\cr
     \code{-> ->>}\tab rightwards assignment\cr
-    \code{=}\tab assignment (right to left)\cr
     \code{<- <<-}\tab assignment (right to left)\cr
+    \code{=}\tab assignment (right to left)\cr
     \code{?}\tab help (unary and binary)\cr
   }
   Within an expression operators of equal precedence are evaluated
-  from left to right except where indicated.
+  from left to right except where indicated.  (Note that \code{=} is not
+  necessarily an operator.)
 
   The binary operators \code{::}, \code{:::}, \code{$} and \code{@} require
   names or string constants on the right hand side, and the first two
