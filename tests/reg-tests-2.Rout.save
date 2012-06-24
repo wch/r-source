@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-05-28 r59470) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-06-22 r59612) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6915,6 +6915,7 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 [1] TRUE
 > ## R < 2.15.1 got these as FALSE, TRUE, FALSE.
 > 
+> 
 > ## Error in constructing the error message
 > assertErrorPrint <- function(expr) {
 +     stopifnot(inherits(e <- tryCatch(expr, error=function(e)e), "error"))
@@ -6928,4 +6929,13 @@ Asserted Error: No method found for function "show" and signature bar
 > ## R < 2.15.1 gave
 > ##   cannot coerce type 'closure' to vector of type 'character'
 > 
+> 
+> ## corner cases for array
+> array(1, integer())
+[1] 1
+> # if no dims, an error to supply dimnames
+> try(array(1, integer(), list(1, 2)))
+Error in array(1, integer(), list(1, 2)) : 
+  'dimnames' applied to non-array
+> ##
 > 

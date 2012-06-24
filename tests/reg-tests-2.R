@@ -2620,6 +2620,7 @@ is.unsorted(data.frame(x=1:2, y=3:4))
 is.unsorted(data.frame(x=3:4, y=1:2))
 ## R < 2.15.1 got these as FALSE, TRUE, FALSE.
 
+
 ## Error in constructing the error message
 assertErrorPrint <- function(expr) {
     stopifnot(inherits(e <- tryCatch(expr, error=function(e)e), "error"))
@@ -2631,3 +2632,9 @@ assertErrorPrint( getMethod(show, "bar") )
 ## R < 2.15.1 gave
 ##   cannot coerce type 'closure' to vector of type 'character'
 
+
+## corner cases for array
+array(1, integer())
+# if no dims, an error to supply dimnames
+try(array(1, integer(), list(1, 2)))
+##
