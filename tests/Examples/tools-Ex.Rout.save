@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-06-19 r59583) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-06-23 r59615) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin11.4.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x3254a40>
+<environment: 0x7f9f23545778>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x3254a40>
+<environment: 0x7f9f23545778>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x3254a40>
+<environment: 0x7f9f23545778>
 
 $showURLs
 [1] FALSE
@@ -230,16 +230,19 @@ $underline_titles
 +     journal = "Journal of the Royal Statistical Society, Series B",
 +     volume = 26,
 +     pages = "211-252"))
+>     
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
++     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x34ffc90>
+<environment: 0x7f9f237e7358>
 > print(refs, .bibstyle = "unsorted")    
-R Core Team (2012). _R: A Language and Environment for Statistical
+[1] R Core Team (2012). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
 
-Box GEP and Cox DR (1964). "An Analysis of Transformations." _Journal
-of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
+[2] Box GEP and Cox DR (1964). "An Analysis of Transformations."
+_Journal of the Royal Statistical Society, Series B_, *26*, pp.
+211-252.
 > 
 > 
 > 
@@ -911,7 +914,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.369 0.014 0.4 0 0 
+Time elapsed:  0.377 0.012 0.39 0 0 
 > grDevices::dev.off()
 null device 
           1 
