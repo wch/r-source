@@ -10,7 +10,7 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item There is a subtle change in behaviour for numeric index
-      values \code{2^31} and larger.  These used never to be legitimate,
+      values \code{2^31} and larger.  These used never to be legitimate
       and so were treated as \code{NA}, sometimes with a warning.  They
       are now legal for long vectors so there is no longer a warning,
       and \code{x[2^31] <- y} will now extend the vector on a 64-bit
@@ -22,11 +22,11 @@
       \command{limit} in \command{csh}), to set limits on overall memory
       consumption of an \R process, particularly in a multi-user
       environment.  A number of packages, particularly those using Java,
-      need at least 4GB of virtual memory.
+      need a limit of at least 4GB of virtual memory.
 
-      Windows builds of \R are by default limited to the amount of RAM
-      installed: this limit can be changed by command-line option
-      \option{--max-mem-size} or setting environment variable
+      Windows builds of \R are by default limited in memory usage to the
+      amount of RAM installed: this limit can be changed by command-line
+      option \option{--max-mem-size} or setting environment variable
       \env{R_MAX_MEM_SIZE}.
     }
   }
@@ -151,8 +151,9 @@
       double-valued indices can be used to access elements beyond
       \eqn{2^{31}-1}{2^31 - 1}.
 
-      \item There is some support for matrices with each dimension less
-      than \eqn{2^{31}}{2^31} but total number of elements more than that.
+      \item There is some support for matrices and arrays with each
+      dimension less than \eqn{2^{31}}{2^31} but total number of
+      elements more than that.
 
       \item \code{dist()} can produce dissimilarity objects for more
       than 65536 rows (but for example \code{cmdscale()} and
@@ -284,6 +285,12 @@
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+  \subsection{PERFORMANCE IMPROVEMENTS}{
+    \itemize{
+      \item \code{array()} is now implemented in C code, for speed.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
@@ -596,9 +603,9 @@
       \item \code{by()} failed for a zero-row data frame.  (Reported by
       Weiqiang Qian.)
 
-      \item Yates correction in \code{chisq.test()} could be bigger than
-      the terms it corrected, previously leading to an infinite test
-      statistic in some corner cases which are now reported as
+      \item The Yates' correction in \code{chisq.test()} could be bigger
+      than the terms it corrected, previously leading to an infinite
+      test statistic in some corner cases which are now reported as
       \code{NaN}.
 
       \item \code{xgettext()} and related functions sometimes returned

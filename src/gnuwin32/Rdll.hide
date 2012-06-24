@@ -554,6 +554,7 @@
  do_args
  do_arith
  do_arrangeWindows
+ do_array
  do_asPOSIXct
  do_asPOSIXlt
  do_as_environment
