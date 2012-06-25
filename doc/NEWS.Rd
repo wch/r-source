@@ -210,8 +210,8 @@
       \option{-DSUPPORT_CONVERTERS} to re-enable this (untested as we
       know of no examples in packages).
       
-      \item Use of \code{array()} with a 0-length \code{dim} argument is
-      now an error.
+      \item Use of \code{array()} with a 0-length \code{dim} argument and
+      \code{tapply()} with a 0-length \code{INDEX} list are now errors.
     }
   }
 
