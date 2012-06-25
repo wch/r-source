@@ -67,7 +67,7 @@ is.array(x)
   vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
   In the deprecated case that \code{dims} has length 0, the result will
-  be a vector.
+  be a vector of length 1 and a warning will be given.
 
   \code{as.array} is a generic function for coercing to arrays.  The
   default method does so by attaching a \code{\link{dim}} attribute to
