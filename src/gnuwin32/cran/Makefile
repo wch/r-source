@@ -34,6 +34,7 @@ all:
 	@(zip -q dosfiles.zip CHANGES.$(RPREFIX) NEWS.$(RPREFIX) README.$(RPREFIX) ReadMe; \
 	 unzip -aqo dosfiles.zip; \
 	 $(RM) dosfiles.zip)
+	$(ECHO) set target=$(RPREFIX) >target.cmd
 
 
 clean:
