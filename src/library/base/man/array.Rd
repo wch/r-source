@@ -79,6 +79,9 @@ is.array(x)
 }
 \note{
   \code{is.array} is a \link{primitive} function.
+
+  Versions of \R prior to 2.16.0 allowed (although documented not to) a
+  zero-length \code{dim} argument, and returned a vector of length one.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
