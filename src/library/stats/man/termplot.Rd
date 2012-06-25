@@ -73,7 +73,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   \code{termplot} may be unable to reconstruct the original data
   frame. Using \code{na.action=na.exclude} makes these problems less likely.
 
-  Nothing sensible happens for interaction terms.
+  Nothing sensible happens for interaction terms, and they may cause errors.
 }
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}

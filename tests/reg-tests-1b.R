@@ -1839,4 +1839,14 @@ by(a, a["ppg.id"], function(x){
 })
 ## failed in 2.15.0
 
+## JMC's version of class<- did not work as documented. (PR#14942)
+x <- 1:10
+class(x) <- character()
+class(x) <- "foo"
+class(x) <- character()
+oldClass(x) <- "foo"
+oldClass(x) <- character()
+## class<- version failed: required NULL
+
+
 proc.time()

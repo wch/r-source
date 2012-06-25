@@ -1,6 +1,6 @@
 % File src/library/stats/man/decompose.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{decompose}
@@ -22,7 +22,7 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   \item{type}{The type of seasonal component. Can be abbreviated.}
   \item{filter}{A vector of filter coefficients in reverse time order (as for
     AR or MA coefficients), used for filtering out the seasonal
-    component. If \code{NULL}, a moving average with symmetric window is
+    component.  If \code{NULL}, a moving average with symmetric window is
   performed.}
 }
 \details{
@@ -32,13 +32,15 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   \deqn{Y_t = T_t\,S_t\, e_t}{Y[t] = T[t] * S[t] * e[t]}
   
   The function first determines the trend component using a moving
-  average (if \code{filter} is \code{NULL}, a symmetric window with equal
-  weights is used), and removes it from the time series.  Then, 
-  the seasonal figure is computed by averaging, for each time unit,
-  over all periods. The seasonal figure is then centered.
-  Finally, the error component is determined by
-  removing trend and seasonal figure (recycled as needed) from the original
-  time series.
+  average (if \code{filter} is \code{NULL}, a symmetric window with
+  equal weights is used), and removes it from the time series.  Then,
+  the seasonal figure is computed by averaging, for each time unit, over
+  all periods.  The seasonal figure is then centered.   Finally, the error
+  component is determined by removing trend and seasonal figure
+  (recycled as needed) from the original time series.
+
+  This only works well if \code{x} covers an integer number of complete
+  periods.
 }
 \note{
   The function \code{\link{stl}} provides a much more sophisticated

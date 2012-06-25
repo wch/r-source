@@ -2456,7 +2456,8 @@ static SEXP do_unsetS4(SEXP obj, SEXP newClass) {
 static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 {
     int nProtect = 0;
-    if(isNull(value)) {
+    // use of zero-length vector used to be documented.
+    if(!length(value)) { // usually NULL
 	setAttrib(obj, R_ClassSymbol, value);
 	if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
 	  do_unsetS4(obj, value);
