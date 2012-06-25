@@ -16,8 +16,24 @@
 
 array <-
 function(data = NA, dim = length(data), dimnames = NULL)
-    .Internal(array(if (is.object(data) || !is.atomic(data)) as.vector(data)
-                    else data, dim, dimnames))
+{
+    data <- as.vector(data)
+    dim <- as.integer(dim)
+    if (!length(dim)) stop("'dims' cannot be of length 0")
+    ## packages bit64 and rv have as.vector() methods which leave this classed
+    if(is.object(data)) {
+        vl <- prod(dim)
+        if(length(data) != vl) {
+            ## C code allows long vectors, but rep() does not.
+            if(vl > .Machine$integer.max)
+                stop("'dim' specifies too large an array")
+            data <- rep(data, length.out=vl)
+        }
+        if(length(dim)) dim(data) <- dim
+        if(is.list(dimnames) && length(dimnames)) dimnames(data) <- dimnames
+        data
+    } else .Internal(array(data, dim, dimnames))
+}
 
 slice.index <-
 function(x, MARGIN)
