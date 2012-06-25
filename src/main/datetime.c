@@ -599,7 +599,7 @@ static int set_tz(const char *tz, char *oldtz)
 #elif defined(HAVE_PUTENV)
     {
 	static char buff[1010];
-	if (strlen() > 1000)
+	if (strlen(tz) > 1000)
 	    error("time zone specification is too long");
 	strcpy(buff, "TZ="); strcat(buff, tz);
 	if(putenv(buff)) warning(_("problem with setting timezone"));
