@@ -1,6 +1,6 @@
 % File src/library/base/man/tapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tapply}
@@ -16,8 +16,8 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \arguments{
   \item{X}{an atomic object, typically a vector.}
-  \item{INDEX}{list of factors, each of same length as \code{X}.  The
-    elements are coerced to factors by \code{\link{as.factor}}.}
+  \item{INDEX}{list of one of more factors, each of same length as
+    \code{X}.  The elements are coerced to factors by \code{\link{as.factor}}.}
   \item{FUN}{the function to be applied, or \code{NULL}.  In the case of
     functions like \code{+}, \code{\%*\%}, etc., the function name must
     be backquoted or quoted.  If \code{FUN} is \code{NULL}, tapply

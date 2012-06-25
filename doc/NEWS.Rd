@@ -297,7 +297,10 @@
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item Use of \code{array()} with a 0-length \code{dim} argument is
-      deprecated.
+      deprecated with a warning (and was contrary to the documentation).
+
+      \item Use of \code{tapply()} with a 0-length \code{INDEX} list is
+      deprecated with a warning.
     }
   }
   
