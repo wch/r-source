@@ -19,18 +19,21 @@ function(data = NA, dim = length(data), dimnames = NULL)
 {
     data <- as.vector(data)
     dim <- as.integer(dim)
-    vl <- prod(dim)
-    if(length(data) != vl) {
-        if(vl > .Machine$integer.max)
-            stop("'dim' specifies too large an array")
-        data <- rep(data, length.out=vl)
-    }
-    if(length(dim))
-	dim(data) <- dim
-    if(is.list(dimnames) && length(dimnames))
-	dimnames(data) <- dimnames
-    data
+    if (!length(dim)) warning("use of 0-length dim is deprecated")
+    ## package bit64 has an as.vector() method which leaves this classed
+    if(is.object(data)) {
+        vl <- prod(dim)
+        if(length(data) != vl) {
+            if(vl > .Machine$integer.max)
+                stop("'dim' specifies too large an array")
+            data <- rep(data, length.out=vl)
+        }
+        if(length(dim)) dim(data) <- dim
+        if(is.list(dimnames) && length(dimnames)) dimnames(data) <- dimnames
+        data
+    } else .Internal(array(data, dim, dimnames))
 }
+
 
 slice.index <-
 function(x, MARGIN)

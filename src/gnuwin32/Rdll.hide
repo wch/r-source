@@ -583,6 +583,7 @@
  do_args
  do_arith
  do_arrangeWindows
+ do_array
  do_arrows
  do_asPOSIXct
  do_asPOSIXlt

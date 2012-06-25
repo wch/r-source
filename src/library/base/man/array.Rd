@@ -66,7 +66,7 @@ is.array(x)
   length zero, \code{NA} of an appropriate type is used for atomic
   vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
-  In the exceptional case that \code{dims} has length 0, the result will
+  In the deprecated case that \code{dims} has length 0, the result will
   be a vector.
 
   \code{as.array} is a generic function for coercing to arrays.  The

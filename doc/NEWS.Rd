@@ -7,12 +7,25 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+  \subsection{PERFORMANCE IMPROVEMENTS}{
+    \itemize{
+      \item \code{array()} is now implemented in C code, for speed.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item Use of \code{array()} with a 0-length \code{dim} argument is
+      deprecated.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
       caused Ctrl-C to misbehave.  (\PR{14948})
-      
-      \item The \code{tools::latexToUtf8()} function missed conversions that 
+
+      \item The \code{tools::latexToUtf8()} function missed conversions that
       were contained within braces.
     }
   }
@@ -319,9 +332,9 @@
       \item \code{by()} failed for a zero-row data frame.  (Reported by
       Weiqiang Qian.)
 
-      \item Yates correction in \code{chisq.test()} could be bigger than
-      the terms it corrected, previously leading to an infinite test
-      statistic in some corner cases which are now reported as
+      \item The Yates' correction in \code{chisq.test()} could be bigger
+      than the terms it corrected, previously leading to an infinite
+      test statistic in some corner cases which are now reported as
       \code{NaN}.
 
       \item \code{xgettext()} and related functions sometimes returned
