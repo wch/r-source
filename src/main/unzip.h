@@ -55,6 +55,11 @@ extern "C" {
 #include <stdint.h>
 typedef uint64_t ZPOS64_T;
 
+/* apparently needed for zlib > 1.2.5 with --with-system-zlib, PR#14951 */
+#ifndef OF
+# define OF(x) x
+#endif
+
 #define ZLIB_FILEFUNC_SEEK_CUR (1)
 #define ZLIB_FILEFUNC_SEEK_END (2)
 #define ZLIB_FILEFUNC_SEEK_SET (0)
