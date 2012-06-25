@@ -588,13 +588,19 @@ static int set_tz(const char *tz, char *oldtz)
 
     strcpy(oldtz, "");
     p = getenv("TZ");
-    if(p) strcpy(oldtz, p);
+    if(p) {
+	if (strlen(p) > 1000)
+	    error("time zone specification is too long");
+	strcpy(oldtz, p);
+    }
 #ifdef HAVE_SETENV
     if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
     settz = 1;
 #elif defined(HAVE_PUTENV)
     {
-	static char buff[200];
+	static char buff[1010];
+	if (strlen() > 1000)
+	    error("time zone specification is too long");
 	strcpy(buff, "TZ="); strcat(buff, tz);
 	if(putenv(buff)) warning(_("problem with setting timezone"));
     }
@@ -662,7 +668,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, klass, tzone;
     int i, n, isgmt = 0, valid, settz = 0;
-    char oldtz[20] = "";
+    char oldtz[1001] = "";
     const char *tz = NULL;
 
     checkArity(op, args);

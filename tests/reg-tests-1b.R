@@ -1866,4 +1866,14 @@ stopifnot(identical(as.vector(m1[,2]), as.vector(m2[,2])))
 ## differed in R < 2.16.0
 
 
+## JMC's version of class<- did not work as documented. (PR#14942)
+x <- 1:10
+class(x) <- character()
+class(x) <- "foo"
+class(x) <- character()
+oldClass(x) <- "foo"
+oldClass(x) <- character()
+## class<- version failed: required NULL
+
+
 proc.time()

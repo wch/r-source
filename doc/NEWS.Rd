@@ -308,6 +308,13 @@
 
       \item The \code{tools::latexToUtf8()} function missed conversions that
       were contained within braces.
+
+      \item Long timezone specifications (such as a file name preceded
+      by \code{:}) could crash \code{as.POSIXlt}.  (PR#14945.)
+      
+      \item \code{R CMD build --resave-data} could fail if there was no
+      \file{data} directory but there was an \file{R/sysdata.rda} file.
+      (PR#14947.)
     }
   }
 }

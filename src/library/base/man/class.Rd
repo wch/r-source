@@ -56,8 +56,8 @@ oldClass(x) <- value
 
   The function \code{class} prints the vector of names of classes an
   object inherits from.  Correspondingly, \code{class<-} sets the
-  classes an object inherits from.  Assigning a zero-length vector or
-  \code{NULL} removes the class attribute.
+  classes an object inherits from.  Assigning \code{NULL} removes the
+  class attribute.
 
   \code{unclass} returns (a copy of) its argument with its class
   attribute removed.  (It is not allowed for objects which cannot be
@@ -83,19 +83,24 @@ oldClass(x) <- value
   than \code{oldClass}.  \emph{However}, \link{group generic}s dispatch
   on the \code{oldClass} for efficiency, and \link{internal generic}s
   only dispatch on objects for which \code{\link{is.object}} is true.
+
+  In some versions of \R, assigning a zero-length vector with
+  \code{class} removes the class: in others it is an error (whereas it
+  works for \code{oldClass}.  It is clearer to always assign \code{NULL}
+  to remove the class.
 }
 
 \section{Formal classes}{
   An additional mechanism of \emph{formal} classes, nicknamed
-  \dQuote{S4}, is available in
-  packages \pkg{methods} which is attached by default.  For objects
-  which have a formal class, its name is returned by \code{class}
-  as a character vector of length one and method dispatch can happen on
-  \emph{several} arguments, instead of only the first. However, S3 method selection
-  attempts to treat objects from an S4 class as if they had the
-  appropriate S3 class attribute, as does \code{inherits}.  Therefore,
-  S3 methods can be defined for S4 classes.  See the \sQuote{\link{Classes}}
-  and \sQuote{\link{Methods}} help pages for details.
+  \dQuote{S4}, is available in package \pkg{methods} which is attached
+  by default.  For objects which have a formal class, its name is
+  returned by \code{class} as a character vector of length one and
+  method dispatch can happen on \emph{several} arguments, instead of
+  only the first.  However, S3 method selection attempts to treat objects
+  from an S4 class as if they had the appropriate S3 class attribute, as
+  does \code{inherits}.  Therefore, S3 methods can be defined for S4
+  classes.  See the \sQuote{\link{Classes}} and \sQuote{\link{Methods}}
+  help pages for details.
 
   The replacement version of the function sets the class to the value
   provided.  For classes that have a formal definition, directly
