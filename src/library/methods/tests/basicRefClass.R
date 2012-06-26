@@ -231,9 +231,18 @@ stopifnot(all.equal(xx$data, xMat))
 mEditor$methods(
      save = function(file) {
        'Save the current object on the file
-        in R external object format.
-       '
+ in R external object format.
+'
          base::save(.self, file = file)
+     },
+     counter = function(i) {
+         'The number of items in the i-th edit.
+ (Used to test usingMethods())
+'
+         if(i > 0 && i <= length(edits))
+             length(edits[[i]][[3]])
+         else
+             0L
      }
 )
 
@@ -277,10 +286,18 @@ mv$methods( initialize = function(file = "./matrixView.pdf", ...) {
     setMarkViewer("OFF")
   })
 
+## a counts method to test usingMethods()
+mv$methods( counts = function() {
+    usingMethods("counter")
+    sapply(seq_along(edits), "counter")
+})
+
+
 ff <- mv$new( data = xMat)
 stopifnot(identical(markViewer, "ON")) # check initialize
 ff$edit(2,2,0)
 ff$data
+stopifnot(identical(ff$counts(), length(ff$edits[[1]][[3]])))
 ff$undo()
 stopifnot(all.equal(ff$data, xMat))
 rm(ff)

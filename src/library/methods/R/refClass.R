@@ -104,6 +104,14 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
 makeClassMethod <- function(def, name, Class, superClassMethod = "", allMethods) {
     depends <- .getGlobalFuns(def)
     ## find the field methods called ...
+    if("usingMethods" %in% depends) { # including those declared
+        declared <- .declaredMethods(def)
+        ## look for invalid declared methods
+        if(length(declared) && any(! declared %in% allMethods))
+            warning(gettextf("Methods declared in usingMethods() but not found: %s",
+                paste0(declared[! declared %in% allMethods], collapse = ", ")))
+        depends <- c(declared, depends)
+    }
     depends <- depends[match(depends, allMethods, 0) > 0]
     new("refMethodDef", def, mayCall = depends, name = name,
         refClassName = Class, superClassMethod = superClassMethod)
@@ -368,6 +376,16 @@ that class itself, but then you could just overrwite the object).
                  cat('Field "', fi, '":\n', sep = "")
                  methods::show(field(fi))
              }
+         },
+         usingMethods = function(...) {
+             ' Reference methods used by this method are named as the arguments
+ either quoted or unquoted.  In the code analysis phase of installing the
+ the present method, the declared methods will be included.  It is essntial
+ to declare any methods used in a nonstandard way (e.g., via an apply function).
+ Methods called directly do not need to be declared, but it is harmless to do so.
+ $usingMethods() does nothing at run time.
+'
+             NULL
          }
          )
 
@@ -1165,4 +1183,26 @@ all.equal.environment <- function(target, current, ...) {
 .declareVariables <- function(def, env) {
     utils::globalVariables(c(names(def@fieldClasses), objects(def@refMethods)),
                            env)
+}
+
+.declaredMethods <- function(method) {
+    methods <- character()
+    if(!.hasCodeTools())
+        return(methods)
+    .theseMethods <- function(e, w) {
+        if(length(e) < 2) character()
+        else
+            sapply(as.list(e)[-1], function(what)
+                   methods <<- c(methods, if(is.symbol(what)) as.character(what) else if(is.character(what)) what else character()))
+    }
+    walker <- codetools::makeCodeWalker(
+                handler = function(v, w) {
+                    if(identical(v, "usingMethods"))
+                        .theseMethods
+                    else
+                        NULL
+                },
+                leaf = function(e, w) NULL)
+    codetools::walkCode(body(method), walker)
+    unique(methods)
 }

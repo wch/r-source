@@ -122,7 +122,8 @@ others, support a version of classes and methods assuming reference
 semantics.
 The corresponding programming mechanism
 is to invoke a method on an object.
-In the \R syntax that we use for this operation, one invokes a method,
+In the \R syntax that we use \code{"$"} %$
+for this operation; one invokes a method,
 \code{m1} say, on an object \code{x} by the expression
 \code{x$m1(...)}. %$
 
@@ -202,9 +203,6 @@ used to access fields and other methods.
 In particular, methods should not use non-exported entries in the
 package's namespace, because the methods may be inherited by a
 reference class in another package.
-(This is one context in which use of the \code{"..."} operator to
-refer explicitly to such entries may be reasonable.  The reference
-method definition is in the same package source as these entries.)
 
 Reference methods can not themselves be generic functions; if you want
 additional function-based method dispatch, write a separate generic
@@ -227,6 +225,17 @@ behave according to reference semantics, unlike fields.
 
 The methods available include methods inherited from superclasses, as
 discussed in the next section.
+
+Only methods actually used will be included in the environment
+corresponding to an individual object.  If a method requires a
+particular other method, then the first method should include a call
+to \code{$usingMethods()} %$
+with the name of the other method as an argument.
+Declaring the methods this way is essential if the other method is used indirectly (e.g., via \code{\link{sapply}()}
+or \code{\link{do.call}()}).
+If it is called directly, code analysis will find it.
+Declaring the method is harmless in any case, however, and may aid
+readability of the source code.
 
 Documentation for the methods can be obtained by the \code{$help} %$}
 method for the generator object.
@@ -368,6 +377,15 @@ meaningful.
 
 The reference method can be invoked on either an object or the
 generator for the class.  See the section on Debugging below for details.
+}
+
+\item{\code{$usingMethods(...)}}{ %$
+Reference methods used by this method are named as the arguments
+ either quoted or unquoted.  In the code analysis phase of installing the
+ the present method, the declared methods will be included.  It is essntial
+ to declare any methods used in a nonstandard way (e.g., via an apply function).
+ Methods called directly do not need to be declared, but it is harmless to do so.
+ \code{$usingMethods()} does nothing at run time. %$
 }
 } % end describe
 
