@@ -80,7 +80,10 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 
 is.na.data.frame <- function (x)
 {
-    y <- do.call("cbind", lapply(x, "is.na")) # gives a matrix
+    ## need to special-case no columns
+    y <- if (length(x)) {
+        do.call("cbind", lapply(x, "is.na")) # gives a matrix
+    } else matrix(FALSE, length(row.names(x)), 0)
     if(.row_names_info(x) > 0L) rownames(y) <- row.names(x)
     y
 }
@@ -362,7 +365,7 @@ data.frame <-
 	else function(current, new, i) {
 	    if(is.null(current)) {
 		if(anyDuplicated(new)) {
-		    warning("some row.names duplicated: ",
+		    stop("some row.names duplicated: ",
                             paste(which(duplicated(new)), collapse=","),
                             " --> row.names NOT used")
 		    current
@@ -703,7 +706,7 @@ data.frame <-
                 # Rewrite i as a logical index
                 index <- rep(FALSE, prod(dim(x)))
                 dim(index) <- dim(x)
-                tryCatch(index[i] <- TRUE, 
+                tryCatch(index[i] <- TRUE,
                          error = function(e) stop(conditionMessage(e), call.=FALSE))
                 # Put values in the right order
                 o <- order(i[,2], i[,1])
@@ -712,7 +715,7 @@ data.frame <-
                     warning("number of items to replace is not a multiple of replacement length")
                 if (N < length(o))
                     value <- rep(value, length.out=length(o))
-                value <- value[o]    
+                value <- value[o]
                 i <- index
             }
             if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {

@@ -2639,3 +2639,10 @@ try(array(1, integer()))
 # if no dims, an error to supply dimnames
 try(array(1, integer(), list(1, 2)))
 ##
+
+
+## is.na() on an empty dataframe (PR#14059)
+DF <- data.frame(row.names=1:3)
+is.na(DF); str(.Last.value)
+is.na(DF[FALSE, ]); str(.Last.value)
+## first failed in R 2.15.1, second gave NULL
