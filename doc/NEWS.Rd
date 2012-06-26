@@ -37,6 +37,9 @@
       \item \code{R CMD build --resave-data} could fail if there was no
       \file{data} directory but there was an \file{R/sysdata.rda} file.
       (PR#14947.)
+
+      \item \code{is.na()} disbehaved on a 0-column data frame.
+      (\PR{14959}.)
     }
   }
 }
