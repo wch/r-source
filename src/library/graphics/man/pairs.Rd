@@ -142,5 +142,6 @@ panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
 pairs(USJudgeRatings, lower.panel=panel.smooth, upper.panel=panel.cor)
 
 pairs(iris[-5], log = "xy") # plot all variables on log scale
+pairs(iris, log = 1:4)
 }
 \keyword{hplot}

@@ -127,8 +127,9 @@
       \item \code{scatter.smooth()} now has an argument \code{lpars} to
       pass arguments to \code{lines()}.
 
-      \item \code{pairs()} has a new \code{log} argument.
-      (Wish of \PR{14919}.) 
+      \item \code{pairs()} has a new \code{log} argument, to allow some
+      or all variables to be plotted on logarithmic scale.
+      (In part, wish of \PR{14919}.) 
     }
   }
 

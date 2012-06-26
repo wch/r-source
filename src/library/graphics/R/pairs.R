@@ -54,9 +54,9 @@ function (x, labels, panel = points, ...,
       ## it was most likely meant for the data points and
       ## not for the axis.
         xpd <- NA
-        if(side %% 2 == 1L && grepl("x", log)) xpd <- FALSE
-        if(side %% 2 == 0L && grepl("y", log)) xpd <- FALSE
-        if(side %%2 == 1) Axis(x, side = side, xpd = xpd, ...)
+        if(side %% 2L == 1L && xl[j]) xpd <- FALSE
+        if(side %% 2L == 0L && yl[i]) xpd <- FALSE
+        if(side %% 2L == 1L) Axis(x, side = side, xpd = xpd, ...)
         else Axis(y, side = side, xpd = xpd, ...)
     }
 
@@ -110,22 +110,24 @@ function (x, labels, panel = points, ...,
     on.exit(par(opar))
     dev.hold(); on.exit(dev.flush(), add = TRUE)
 
-    xlp <- if(grepl("x", log)) 10^0.5 else 0.5
-    ylp <- if(grepl("y", log)) 10^label.pos else label.pos
+    xl <- yl <- logical(nc)
+    if (is.numeric(log)) xl[log] <- yl[log] <- TRUE
+    else {xl[] <- grepl("x", log); yl[] <- grepl("y", log)}
     for (i in if(row1attop) 1L:nc else nc:1L)
         for (j in 1L:nc) {
+            l <- paste0(ifelse(xl[j], "x", ""), ifelse(yl[i], "y", ""))
             localPlot(x[, j], x[, i], xlab = "", ylab = "",
-                      axes = FALSE, type = "n", ..., log = log)
+                      axes = FALSE, type = "n", ..., log = l)
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {
                 box()
-                if(i == 1  && (!(j %% 2) || !has.upper || !has.lower ))
-                    localAxis(1 + 2*row1attop, x[, j], x[, i], ...)
-                if(i == nc && (  j %% 2  || !has.upper || !has.lower ))
-                    localAxis(3 - 2*row1attop, x[, j], x[, i], ...)
-                if(j == 1  && (!(i %% 2) || !has.upper || !has.lower ))
-                    localAxis(2, x[, j], x[, i], ...)
-                if(j == nc && (  i %% 2  || !has.upper || !has.lower ))
-                    localAxis(4, x[, j], x[, i], ...)
+                if(i == 1  && (!(j %% 2L) || !has.upper || !has.lower ))
+                    localAxis(1L + 2L*row1attop, x[, j], x[, i], ...)
+                if(i == nc && (  j %% 2L  || !has.upper || !has.lower ))
+                    localAxis(3L - 2L*row1attop, x[, j], x[, i], ...)
+                if(j == 1  && (!(i %% 2L) || !has.upper || !has.lower ))
+                    localAxis(2L, x[, j], x[, i], ...)
+                if(j == nc && (  i %% 2L  || !has.upper || !has.lower ))
+                    localAxis(4L, x[, j], x[, i], ...)
                 mfg <- par("mfg")
                 if(i == j) {
                     if (has.diag) localDiagPanel(as.vector(x[, i]), ...)
@@ -135,6 +137,8 @@ function (x, labels, panel = points, ...,
                             l.wid <- strwidth(labels, "user")
                             cex.labels <- max(0.8, min(2, .9 / max(l.wid)))
                         }
+                        xlp <- if(xl[i]) 10^0.5 else 0.5
+                        ylp <- if(yl[j]) 10^label.pos else label.pos
                         text.panel(xlp, ylp, labels[i],
                                    cex = cex.labels, font = font.labels)
                     }
