@@ -7,6 +7,19 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The \code{X11()} window gains an icon: the
+      latter may be especially useful on Ubuntu's \sQuote{Unity}
+      interface.
+
+      The \code{WM_CLASS} should be set in circumstances where the
+      Window Manager failed to make use of Xt settings.
+
+      (Contributed by Philip Johnson.)
+    }
+  }
+  
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
       \item \code{array()} is now implemented in C code, for speed.
