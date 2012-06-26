@@ -16,11 +16,11 @@
 
 split <- function(x, f, drop = FALSE, ...) UseMethod("split")
 
-split.default <- function(x, f, drop = FALSE, ...)
+split.default <- function(x, f, drop = FALSE, sep = ".", ...)
 {
     if(length(list(...))) .NotYetUsed(deparse(...), error = FALSE)
 
-    if (is.list(f)) f <- interaction(f, drop = drop)
+    if (is.list(f)) f <- interaction(f, drop = drop, sep = sep)
     else if (drop || !is.factor(f)) # drop extraneous levels
 	f <- factor(f)
     storage.mode(f) <- "integer"  # some factors have double
@@ -39,24 +39,6 @@ split.default <- function(x, f, drop = FALSE, ...)
 split.data.frame <- function(x, f, drop = FALSE, ...)
     lapply(split(x = seq_len(nrow(x)), f = f, drop = drop, ...),
            function(ind) x[ind, , drop = FALSE])
-
-## split.data.frame <- function(x, f, drop = FALSE, ...)
-## {
-##     inds <- split(seq_len(nrow(x)), f, drop = drop, ...)
-##     rn <- row.names(x)
-##     cl <- class(x)
-##     class(x) <- NULL
-##     a <- attributes(x)
-##     a <- a[names(a) != "row.names"]
-##     lapply(inds, function(i) {
-##         z <- lapply(x, "[", i)
-##         if(length(a)) attributes(z) <- a
-##         class(z) <- cl
-##         attr(z, "row.names") <- rn[i]
-##         z
-##     })
-## }
-
 
 `split<-` <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
 

@@ -129,7 +129,9 @@
 
       \item \code{pairs()} has a new \code{log} argument, to allow some
       or all variables to be plotted on logarithmic scale.
-      (In part, wish of \PR{14919}.) 
+      (In part, wish of \PR{14919}.)
+
+      \item \code{split()} gains a \code{sep} argument.
     }
   }
 

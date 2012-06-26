@@ -2646,3 +2646,12 @@ DF <- data.frame(row.names=1:3)
 is.na(DF); str(.Last.value)
 is.na(DF[FALSE, ]); str(.Last.value)
 ## first failed in R 2.15.1, second gave NULL
+
+
+## split() with dots in levels
+df <- data.frame(x = rep(c("a", "a.b"), 3L), y = rep(c("b.c", "c"), 3L),
+                 z = 1:6)
+df
+split(df, df[, 1:2]) # default is sep = "."
+split(df, df[, 1:2], sep = ":")
+##
