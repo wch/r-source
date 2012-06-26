@@ -132,6 +132,9 @@
       (In part, wish of \PR{14919}.)
 
       \item \code{split()} gains a \code{sep} argument.
+
+      \item \code{termplot()} does a better job when given a model with
+      interactions (and no longer attempts to plot interaction terms).
     }
   }
 

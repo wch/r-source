@@ -48,6 +48,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     use.rows <- if (NROW(tms) < NROW(data))
         match(rownames(tms), rownames(data)) ## else NULL
     nmt <- colnames(tms)
+    if (any(grepl(":", nmt, fixed = TRUE)))
+        warning("'model' appears to involve interactions: see the help page",
+                domain = NA, immediate. = TRUE)
     cn <- parse(text = nmt)
     ## Defaults:
     if (!is.null(smooth))
@@ -80,8 +83,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     if (partial.resid || !is.null(smooth)){
 	pres <- residuals(model, "partial")
         if (!is.null(which.terms)) pres <- pres[, which.terms, drop = FALSE]
-      }
-    is.fac <- sapply(nmt, function(i) is.factor(mf[, i]))
+    }
+    in.mf <- nmt %in% names(mf)
+    is.fac <- sapply(nmt, function(i) i %in% names(mf) && is.factor(mf[, i]))
 
     se.lines <- function(x, iy, i, ff = 2) {
         tt <- ff * terms$se.fit[iy, i]
@@ -120,8 +124,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             if (rug)
                 ylims[1L] <- ylims[1L] - 0.07*diff(ylims)
         }
+        if (!in.mf[i]) next
 	if (is.fac[i]) {
-	    ff <- mf[,nmt[i]]
+	    ff <- mf[, nmt[i]]
             if (!is.null(model$na.action))
               ff <- naresid(model$na.action, ff)
 	    ll <- levels(ff)
