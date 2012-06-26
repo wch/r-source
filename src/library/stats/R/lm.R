@@ -622,7 +622,7 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
 	table <- stat.anova(table = table, test = test,
 			    scale = scale,
                             df.scale = resdf[bigmodel],
-			    n = length(objects[bigmodel$residuals]))
+			    n = length(objects[[bigmodel]]$residuals))
     }
     structure(table, heading = c(title, topnote),
               class = c("anova", "data.frame"))

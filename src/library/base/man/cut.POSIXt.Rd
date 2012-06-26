@@ -32,7 +32,7 @@
   \item{labels}{
     labels for the levels of the resulting category.  By default,
     labels are constructed from the left-hand end of the intervals
-    (which are include for the default value of \code{right}).  If
+    (which are included for the default value of \code{right}).  If
     \code{labels = FALSE}, simple integer codes are returned instead
     of a factor.
   }
@@ -47,6 +47,9 @@
   Using \code{breaks = "quarter"} will create intervals of 3 calendar
   months, with the intervals beginning on January 1, April 1,
   July 1 or October 1, based upon \code{min(x)} as appropriate.
+  
+  As from \R 2.15.2 a vector \code{break} will be sorted before use:
+  \code{labels} will then correpond to the sorted vector.
 }
 \value{
   A factor is returned, unless \code{labels = FALSE} which returns
