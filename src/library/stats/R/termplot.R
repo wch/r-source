@@ -48,6 +48,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     use.rows <- if (NROW(tms) < NROW(data))
         match(rownames(tms), rownames(data)) ## else NULL
     nmt <- colnames(tms)
+    if (any(grepl(":", nmt, fixed = TRUE)))
+        warning("'model' appears to involve interactions: see the help page",
+                domain = NA, immediate. = TRUE)
     cn <- parse(text = nmt)
     ## Defaults:
     if (!is.null(smooth))
