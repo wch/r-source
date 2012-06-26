@@ -115,8 +115,9 @@ libRmath.a: $(libRmath_a_OBJECTS)
 	$(AR) cr $@ $(libRmath_a_OBJECTS)
 	$(RANLIB) $@
 
+## under peculiar circumstances, $(LIBM) here helps.
 $(libRmath_la): $(libRmath_la_OBJECTS)
-	$(DYLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS)
+	$(DYLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS) $(LIBM)
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
