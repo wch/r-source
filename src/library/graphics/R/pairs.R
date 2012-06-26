@@ -43,7 +43,7 @@ function (x, labels, panel = points, ...,
           diag.panel = NULL, text.panel = textPanel,
           label.pos = 0.5 + has.diag/3,
           cex.labels = NULL, font.labels = 1,
-          row1attop = TRUE, gap = 1)
+          row1attop = TRUE, gap = 1, log = "")
 {
     textPanel <-
         function(x = 0.5, y = 0.5, txt, cex, font)
@@ -53,8 +53,11 @@ function (x, labels, panel = points, ...,
       ## Explicitly ignore any color argument passed in as
       ## it was most likely meant for the data points and
       ## not for the axis.
-        if(side %%2 == 1) Axis(x, side=side, xpd=NA, ...)
-        else Axis(y, side=side, xpd=NA, ...)
+        xpd <- NA
+        if(side %% 2 == 1L && grepl("x", log)) xpd <- FALSE
+        if(side %% 2 == 0L && grepl("y", log)) xpd <- FALSE
+        if(side %%2 == 1) Axis(x, side = side, xpd = xpd, ...)
+        else Axis(y, side = side, xpd = xpd, ...)
     }
 
     localPlot <- function(..., main, oma, font.main, cex.main) plot(...)
@@ -107,10 +110,12 @@ function (x, labels, panel = points, ...,
     on.exit(par(opar))
     dev.hold(); on.exit(dev.flush(), add = TRUE)
 
+    xlp <- if(grepl("x", log)) 10^0.5 else 0.5
+    ylp <- if(grepl("y", log)) 10^label.pos else label.pos
     for (i in if(row1attop) 1L:nc else nc:1L)
         for (j in 1L:nc) {
             localPlot(x[, j], x[, i], xlab = "", ylab = "",
-                      axes = FALSE, type = "n", ...)
+                      axes = FALSE, type = "n", ..., log = log)
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {
                 box()
                 if(i == 1  && (!(j %% 2) || !has.upper || !has.lower ))
@@ -130,7 +135,7 @@ function (x, labels, panel = points, ...,
                             l.wid <- strwidth(labels, "user")
                             cex.labels <- max(0.8, min(2, .9 / max(l.wid)))
                         }
-                        text.panel(0.5, label.pos, labels[i],
+                        text.panel(xlp, ylp, labels[i],
                                    cex = cex.labels, font = font.labels)
                     }
                 } else if(i < j)

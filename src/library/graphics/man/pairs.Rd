@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pairs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pairs}
@@ -23,7 +23,7 @@ pairs(x, \dots)
       diag.panel = NULL, text.panel = textPanel,
       label.pos = 0.5 + has.diag/3,
       cex.labels = NULL, font.labels = 1,
-      row1attop = TRUE, gap = 1)
+      row1attop = TRUE, gap = 1, log = "")
 }
 \arguments{
   \item{x}{the coordinates of points given as numeric columns of a 
@@ -63,7 +63,10 @@ pairs(x, \dots)
   \item{cex.labels, font.labels}{graphics parameters for the text panel.}
   \item{row1attop}{logical. Should the layout be matrix-like with row 1
     at the top, or graph-like with row 1 at the bottom?}
-  \item{gap}{Distance between subplots, in margin lines.}
+  \item{gap}{distance between subplots, in margin lines.}
+  \item{log}{a character string indicating if logarithmic axes are to be
+    used: see \code{\link{plot.default}}. \code{log = "xy"} specifies
+    logarithmic axes for all variables.}
 }
 \details{
   The \eqn{ij}th scatterplot contains \code{x[,i]} plotted against
@@ -137,5 +140,7 @@ panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
     text(0.5, 0.5, txt, cex = cex.cor * r)
 }
 pairs(USJudgeRatings, lower.panel=panel.smooth, upper.panel=panel.cor)
+
+pairs(iris[-5], log = "xy") # plot all variables on log scale
 }
 \keyword{hplot}

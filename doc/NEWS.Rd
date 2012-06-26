@@ -126,6 +126,9 @@
 
       \item \code{scatter.smooth()} now has an argument \code{lpars} to
       pass arguments to \code{lines()}.
+
+      \item \code{pairs()} has a new \code{log} argument.
+      (Wish of \PR{14919}.) 
     }
   }
 
