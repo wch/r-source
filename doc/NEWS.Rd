@@ -307,6 +307,11 @@
       Window Manager failed to make use of Xt settings.
 
       (Contributed by Philip Johnson.)
+
+      \item The \code{"Date"} and \code{"POSIXt"} methods for
+      \code{cut()} will accept an unsorted \code{breaks} argument (as
+      the default method does, although this was undocumented).
+      (Wish of \PR{14961}.)
     }
   }
   
@@ -343,6 +348,12 @@
 
       \item \code{is.na()} misbehaved on a 0-column data frame.
       (\PR{14959}.)
+
+      \item \code{anova.lmlist()} failed if \code{test} was
+      supplied.  (\PR{14960}.)
+
+      It was unable to compute Cp tests for object of class \code{"lm"}
+      (it assumed class \code{"glm"}).
     }
   }
 }

@@ -57,6 +57,10 @@ cut(x, \dots)
   A larger value (up to 12) will be used if needed to distinguish
   between any pair of  endpoints: if this fails labels such as
   \code{"Range3"} will be used.
+
+  The defailt method will sort \code{breaks}, but other methods are not
+  required to and \code{labels} will correspond to the intervals after
+  sorting.
 }
 \value{
   A \code{\link{factor}} is returned, unless \code{labels = FALSE} which

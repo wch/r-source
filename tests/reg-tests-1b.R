@@ -1876,4 +1876,14 @@ oldClass(x) <- character()
 ## class<- version failed: required NULL
 
 
+## anova.lmlist could fail (PR#14960)
+set.seed(1)
+y <- rnorm(20)
+x <- rnorm(20)
+f <- factor(rep(letters[1:2], each = 10))
+model1 <- lm(y ~ x)
+model2 <- lm(y ~ x + f)
+anova(model1, model2, test = "F")
+##
+
 proc.time()

@@ -322,7 +322,7 @@ cut.Date <-
     x <- as.Date(x)
 
     if (inherits(breaks, "Date")) {
-	breaks <- as.Date(breaks)
+	breaks <- sort(as.Date(breaks))
     } else if(is.numeric(breaks) && length(breaks) == 1L) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1L) {
