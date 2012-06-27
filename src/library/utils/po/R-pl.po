@@ -1105,7 +1105,7 @@ msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
-"pakiet %s został pomyślnie rozpakowany oraz sumy MD% zostały sprawdzone"
+"pakiet %s został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone"
 
 msgid "ERROR: failed to lock directory"
 msgstr "BŁĄD: nie udało się zablokować katalogu"

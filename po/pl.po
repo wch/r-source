@@ -852,7 +852,7 @@ msgstr "wejściowy ciąg y[%d] jest niepoprawny w tej lokalizacji"
 #: src/main/agrep.c:812 src/main/grep.c:2637
 #, c-format
 msgid "regcomp error: '%s'"
-msgstr "Błąd regcomp: '% s'"
+msgstr "Błąd regcomp: '%s'"
 
 #: src/main/apply.c:41 src/main/apply.c:106 src/main/complex.c:746
 msgid "invalid length"
@@ -873,7 +873,7 @@ msgid ""
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
 "wartości muszą mieć długość %d,\n"
-"ale wynik FUN (X [[% d]]) ma długość %d"
+"ale wynik FUN (X [[%d]]) ma długość %d"
 
 #: src/main/apply.c:165
 #, c-format
