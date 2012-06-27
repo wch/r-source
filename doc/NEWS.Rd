@@ -72,6 +72,10 @@
 
       It was unable to compute Cp tests for object of class \code{"lm"}
       (it assumed class \code{"glm"}).
+
+      \item The \code{formula} method for \code{sunflowerplot()} now
+      allows \code{xlab} and \code{ylab} to be set.  (Reported by Gerrit
+      Eichner.)
     }
   }
 }
