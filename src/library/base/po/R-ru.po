@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:52\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -95,6 +95,10 @@ msgstr "'x' должен иметь именованные измерения"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "не все элементы 'MARGIN' есть имена измерений"
+
+#, fuzzy
+msgid "use of 0-length dim is deprecated"
+msgstr "использование 'save' не рекомендуется"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' определяет слишком большую многомерную матрицу"
@@ -1575,6 +1579,10 @@ msgstr "неправильное значение"
 msgid "invalid value of nbins"
 msgstr "неправильное значение"
 
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'x' должен быть длиной 1"
+
 msgid "arguments must have same length"
 msgstr "аргументы должны иметь одинаковую длину"
 
@@ -1834,9 +1842,6 @@ msgstr[2] "Предупреждения:\n"
 #~ msgid "no files to copy from"
 #~ msgstr "нет файлов, чтобы скопировать с"
 
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "использование 'save' не рекомендуется"
-
 #~ msgid "save != FALSE is defunct"
 #~ msgstr "save != FALSE больше не работает"
 
@@ -1873,9 +1878,6 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "invalid digits"
 #~ msgstr "неправильное количество знаков после запятой"
-
-#~ msgid "'x' must be of length 1"
-#~ msgstr "'x' должен быть длиной 1"
 
 #~ msgid "The following object(s) are masked"
 #~ msgstr "Следующие объект(ы) скрыты"

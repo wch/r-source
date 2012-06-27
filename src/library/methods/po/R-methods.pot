@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-25 14:04\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1065,6 +1065,9 @@ msgid "Method %s from class %s was not processed into a class method until being
 msgstr ""
 
 msgid "a call to superClass() is in the method \"%s\" but there is no superclass definition of this method for class %s"
+msgstr ""
+
+msgid "Methods declared in usingMethods() but not found: %s"
 msgstr ""
 
 msgid "\"%s\" is not a reference class"

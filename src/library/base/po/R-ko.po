@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:52\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -93,6 +93,10 @@ msgstr "'X' 는 반드시 dimnames 를 가지고 있어야 합니다 "
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "not all elements of 'MARGIN' are names of dimensions"
+
+#, fuzzy
+msgid "use of 0-length dim is deprecated"
+msgstr "'%s'는 없어져 버릴 예정입니다"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' 은 너무 큰 배열을 지정합니다 "
@@ -1583,6 +1587,10 @@ msgstr "잘못된 값입니다 "
 msgid "invalid value of nbins"
 msgstr "잘못된 값입니다 "
 
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
+
 msgid "arguments must have same length"
 msgstr "인수들은 모두 동일한 길이를 가져야 합니다 "
 
@@ -1821,10 +1829,6 @@ msgstr[0] "경고 매시지: \n"
 #~ msgstr "복사한부터 파일이 없습니다"
 
 #, fuzzy
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "'%s'는 없어져 버릴 예정입니다"
-
-#, fuzzy
 #~ msgid "save != FALSE is defunct"
 #~ msgstr "'%s'는 없어져 버렸습니다"
 
@@ -1856,10 +1860,6 @@ msgstr[0] "경고 매시지: \n"
 #, fuzzy
 #~ msgid "invalid digits"
 #~ msgstr "무효인 'digits'입니다"
-
-#, fuzzy
-#~ msgid "'x' must be of length 1"
-#~ msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
 
 #~ msgid "argument to 'which' is not logical"
 #~ msgstr "'which'에서 인수는 논리값이 아닙니다"

@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-25 14:04\n"
-"PO-Revision-Date: 2012-04-25 14:04\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
+"PO-Revision-Date: 2012-06-27 09:10\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1616,6 +1616,9 @@ msgid ""
 msgstr ""
 "a call to superClass() is in the method “%s” but there is no superclass "
 "definition of this method for class %s"
+
+msgid "Methods declared in usingMethods() but not found: %s"
+msgstr "Methods declared in usingMethods() but not found: %s"
 
 msgid "\"%s\" is not a reference class"
 msgstr "“%s” is not a reference class"

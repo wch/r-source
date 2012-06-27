@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:52\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -91,6 +91,10 @@ msgstr "'X'必需有带名字的维名"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "所有'MARGIN'的元素都必需是维的名字不是'缘'的所有元素都是尺寸名称"
+
+#, fuzzy
+msgid "use of 0-length dim is deprecated"
+msgstr "'save'不再有用。"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim'的值太大"
@@ -1555,6 +1559,10 @@ msgstr "无效值"
 msgid "invalid value of nbins"
 msgstr "无效值"
 
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'x'的长度必需为一"
+
 msgid "arguments must have same length"
 msgstr "参数的长度必需相同"
 
@@ -1795,9 +1803,6 @@ msgstr[0] "警告信息：\n"
 #~ msgid "no files to copy from"
 #~ msgstr "拷贝时没有可以读的文件"
 
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "'save'不再有用。"
-
 #, fuzzy
 #~ msgid "save != FALSE is defunct"
 #~ msgstr "'%s'不再有用。"
@@ -1833,9 +1838,6 @@ msgstr[0] "警告信息：\n"
 
 #~ msgid "invalid digits"
 #~ msgstr "数字无效"
-
-#~ msgid "'x' must be of length 1"
-#~ msgstr "'x'的长度必需为一"
 
 #~ msgid "The following object(s) are masked"
 #~ msgstr "以下的对象被遮蔽"

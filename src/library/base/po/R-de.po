@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:52\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -92,6 +92,10 @@ msgstr "'X' muss benannte Dimensionen besitzten"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nicht alle Elemente von 'MARGIN' sind Namen von Dimensionen"
+
+#, fuzzy
+msgid "use of 0-length dim is deprecated"
+msgstr "Benutzung von 'save' ist veraltet."
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' spezifiziert ein zu großes Array"
@@ -1593,6 +1597,10 @@ msgstr "ungültiger Wert"
 msgid "invalid value of nbins"
 msgstr "ungültiger Wert"
 
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'x' muss Länge 1 haben"
+
 msgid "arguments must have same length"
 msgstr "Argumente müssen die selbe Länge haben"
 
@@ -1845,9 +1853,6 @@ msgstr[1] "Warnmeldungen:\n"
 #~ msgid "no files to copy from"
 #~ msgstr "keine Dateien, um daraus zu kopieren"
 
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "Benutzung von 'save' ist veraltet."
-
 #~ msgid "save != FALSE is defunct"
 #~ msgstr "save != FALSE ist nicht mehr möglich."
 
@@ -1884,9 +1889,6 @@ msgstr[1] "Warnmeldungen:\n"
 
 #~ msgid "invalid digits"
 #~ msgstr "ungültige 'digits'"
-
-#~ msgid "'x' must be of length 1"
-#~ msgstr "'x' muss Länge 1 haben"
 
 #~ msgid "The following object(s) are masked"
 #~ msgstr "Die folgenden Objekte sind maskiert"

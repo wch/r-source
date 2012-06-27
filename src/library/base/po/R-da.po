@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:52\n"
+"POT-Creation-Date: 2012-06-27 09:10\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,6 +87,10 @@ msgstr "'X' skal have navngivne dimnavne"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "ikke alle elementer for 'MARGIN' er navne på dimensioner"
+
+#, fuzzy
+msgid "use of 0-length dim is deprecated"
+msgstr "Brug af save-versioner før 2 er forældet"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' angiver en for stor array"
@@ -1543,6 +1547,10 @@ msgstr "ugyldigt antal intervaller"
 #, fuzzy
 msgid "invalid value of nbins"
 msgstr "ugyldigt antal intervaller"
+
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'to' skal være af længde 1"
 
 msgid "arguments must have same length"
 msgstr ""
