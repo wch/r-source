@@ -22,6 +22,11 @@
       \code{cut()} will accept an unsorted \code{breaks} argument (as
       the default method does, although this was undocumented).
       (Wish of \PR{14961}.)
+
+      \item Reference class methods that use other methods in an
+      indirect way (e.g., by \code{sapply()}) must tell the code
+      analysis to include that method.  They can now do so by invoking
+      \code{$usingMethods()}. %$ 
     }
   }
   
