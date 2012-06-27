@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:26\n"
-"PO-Revision-Date: 2012-06-07 15:26\n"
+"POT-Creation-Date: 2012-06-27 09:16\n"
+"PO-Revision-Date: 2012-06-27 09:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -108,6 +108,9 @@ msgstr "‘X’ must have named dimnames"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "not all elements of ‘MARGIN’ are names of dimensions"
+
+msgid "'dims' cannot be of length 0"
+msgstr "‘dims’ cannot be of length 0"
 
 msgid "'dim' specifies too large an array"
 msgstr "‘dim’ specifies too large an array"
@@ -1572,6 +1575,9 @@ msgstr "invalid value of length(bin)"
 
 msgid "invalid value of nbins"
 msgstr "invalid value of nbins"
+
+msgid "'INDEX' is of length zero"
+msgstr "‘INDEX’ is of length zero"
 
 msgid "arguments must have same length"
 msgstr "arguments must have same length"

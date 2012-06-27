@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:26\n"
+"POT-Creation-Date: 2012-06-27 09:16\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -93,6 +93,10 @@ msgstr "'x' doit avoir des dimensions nommées"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "les éléments de 'MARGIN' ne sont pas tous les noms des dimensions"
+
+#, fuzzy
+msgid "'dims' cannot be of length 0"
+msgstr "'x' doit être de longeur 1"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' est trop large pour un tableau"
@@ -1640,6 +1644,10 @@ msgstr "valeur incorrecte"
 msgid "invalid value of nbins"
 msgstr "valeur incorrecte"
 
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'x' doit être de longeur 1"
+
 msgid "arguments must have same length"
 msgstr "les arguments doivent avoir même longueur"
 
@@ -1943,9 +1951,6 @@ msgstr[1] "Messages d'avis :\n"
 
 #~ msgid "invalid digits"
 #~ msgstr "nombre de chiffres incorrect"
-
-#~ msgid "'x' must be of length 1"
-#~ msgstr "'x' doit être de longeur 1"
 
 #~ msgid "The following object(s) are masked"
 #~ msgstr "Objet(s) masqués : "

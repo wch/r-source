@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:26\n"
+"POT-Creation-Date: 2012-06-27 09:16\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -87,6 +87,10 @@ msgstr " 'x' は名前付きの次元名でなければなりません "
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr " `MARGIN` に次元名でない要素があります "
+
+#, fuzzy
+msgid "'dims' cannot be of length 0"
+msgstr " 'x' は長さ 1 でなければなりません "
 
 msgid "'dim' specifies too large an array"
 msgstr " 'dim' は余りに大きな配列を指定しています "
@@ -1613,6 +1617,10 @@ msgstr " 無効な値です "
 msgid "invalid value of nbins"
 msgstr " 無効な値です "
 
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr " 'x' は長さ 1 でなければなりません "
+
 msgid "arguments must have same length"
 msgstr " 引数は同じ長さでなければなりません "
 
@@ -1902,9 +1910,6 @@ msgstr[0] " 警告メッセージ： \n"
 
 #~ msgid "invalid digits"
 #~ msgstr " 無効な桁数です "
-
-#~ msgid "'x' must be of length 1"
-#~ msgstr " 'x' は長さ 1 でなければなりません "
 
 #~ msgid "The following object(s) are masked"
 #~ msgstr " 次のオブジェクトは "

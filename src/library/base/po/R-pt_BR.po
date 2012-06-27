@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-06-07 15:26\n"
+"POT-Creation-Date: 2012-06-27 09:16\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -92,6 +92,10 @@ msgstr "'X' deve ser dimnames nomeados"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nem todos elementos de 'MARGIN'  são nomes de dimensões"
+
+#, fuzzy
+msgid "'dims' cannot be of length 0"
+msgstr "'from' deve ter comprimento 1"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' especifica um array muito grande"
@@ -1648,6 +1652,10 @@ msgstr "valor inválido"
 #, fuzzy
 msgid "invalid value of nbins"
 msgstr "valor inválido"
+
+#, fuzzy
+msgid "'INDEX' is of length zero"
+msgstr "'to' deve ter comprimento 1"
 
 msgid "arguments must have same length"
 msgstr "argumentos devem ter o mesmo comprimento"

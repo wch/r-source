@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32\n"
+"POT-Creation-Date: 2012-06-27 09:16\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1627,6 +1627,9 @@ msgstr ""
 msgid ""
 "a call to superClass() is in the method \"%s\" but there is no superclass "
 "definition of this method for class %s"
+msgstr ""
+
+msgid "Methods declared in usingMethods() but not found: %s"
 msgstr ""
 
 #, fuzzy

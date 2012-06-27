@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2012-06-27 09:17+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -25,7 +25,7 @@ msgstr "Błąd składni w wyrażeniu R"
 msgid "tcl error.\n"
 msgstr "błąd tcl.\n"
 
-#: tcltk.c:187 tcltk.c:700
+#: tcltk.c:187 tcltk.c:714
 msgid "invalid argument"
 msgstr "niepoprawny argument"
 
@@ -33,17 +33,17 @@ msgstr "niepoprawny argument"
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "niepoprawny tclObj -- być może zapisany z innej sesji?"
 
-#: tcltk.c:575
+#: tcltk.c:589
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "lista argumentów jest zbyt długa w wewnętrznej funkcji tcltk "
 "'callback_closure'"
 
-#: tcltk.c:608
+#: tcltk.c:622
 msgid "argument is not of correct type"
 msgstr "argument nie jest poprawnego typu"
 
-#: tcltk.c:659
+#: tcltk.c:673
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "brak zmienne WYŚWIETLANIA więc Tk nie jest dostępne"
 
