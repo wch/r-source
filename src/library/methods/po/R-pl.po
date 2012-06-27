@@ -373,7 +373,7 @@ msgstr "dostarczona funkcja ogólna nie została utworzona dla \"%s\""
 
 msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
 msgstr ""
-"\"class\" jest elementarną funkcją; jej ogólna forma nie może być "
+"\"%s\" jest elementarną funkcją; jej ogólna forma nie może być "
 "przedefiniowana"
 
 msgid ""

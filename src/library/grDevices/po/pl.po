@@ -82,7 +82,7 @@ msgstr ""
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
-"niepoprawny znak (%04x) wysłany do 'PostScriptCIDMetricInfo' w jedno-"
+"niepoprawny znak wysłany do 'PostScriptCIDMetricInfo' w jedno-"
 "bajtowej lokalizacji"
 
 #: devPS.c:993
