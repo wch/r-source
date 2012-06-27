@@ -14,7 +14,7 @@
       interface.
 
       The \code{WM_CLASS} should be set in circumstances where the
-      Window Manager failed to make use of Xt settings.
+      Window Manager failed to make use of X11 resource settings.
 
       (Contributed by Philip Johnson.)
 
@@ -27,6 +27,9 @@
       indirect way (e.g., by \code{sapply()}) must tell the code
       analysis to include that method.  They can now do so by invoking
       \code{$usingMethods()}. %$ 
+
+      \item More Polish translations are available: for the
+      \command{RGui} menus and for several recommended packages.
     }
   }
   
