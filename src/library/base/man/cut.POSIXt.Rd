@@ -49,7 +49,7 @@
   July 1 or October 1, based upon \code{min(x)} as appropriate.
   
   As from \R 2.15.2 a vector \code{break} will be sorted before use:
-  \code{labels} will then correpond to the sorted vector.
+  \code{labels} will then correspond to the sorted vector.
 }
 \value{
   A factor is returned, unless \code{labels = FALSE} which returns

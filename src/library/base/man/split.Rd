@@ -52,8 +52,8 @@ unsplit(value, f, drop = FALSE)
   Any missing values in \code{f} are dropped together with the
   corresponding values of \code{x}.
 
-  The default method calls \code{\link{interaction}}.  If the levesl of
-  the factors contain \code{"."} they may not be split as expected, so
+  The default method calls \code{\link{interaction}}.  If the levels of
+  the factors contain \samp{.} they may not be split as expected, so
   the method has argument \code{sep} which is use to join the levels.
 }
 \value{
