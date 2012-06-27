@@ -102,7 +102,7 @@ principal authors of the packages mentioned are
 @item @CRANpkg{RNetCDF} @tab Pavel Michna
 @item @CRANpkg{RODBC} @tab Michael Lapsley and Brian Ripley
 @item @CRANpkg{ROracle} @tab David A, James
-@item @CRANpkg{RPostgreSQL} @tab Sameer Kumar Prayaga
+@item @CRANpkg{RPostgreSQL} @tab Sameer Kumar Prayaga and Tomoaki Nishiyama
 @item @pkg{RSPerl} @tab Duncan Temple Lang
 @item @pkg{RSPython} @tab Duncan Temple Lang
 @item @CRANpkg{RSQLite} @tab David A, James
