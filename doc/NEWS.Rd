@@ -304,7 +304,7 @@
       interface.
 
       The \code{WM_CLASS} should be set in circumstances where the
-      Window Manager failed to make use of Xt settings.
+      Window Manager failed to make use of X11 resource settings.
 
       (Contributed by Philip Johnson.)
 
@@ -312,6 +312,9 @@
       \code{cut()} will accept an unsorted \code{breaks} argument (as
       the default method does, although this was undocumented).
       (Wish of \PR{14961}.)
+
+      \item More Polish translations are available: for the
+      \command{RGui} menus and for several recommended packages.
     }
   }
   
