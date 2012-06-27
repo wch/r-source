@@ -382,7 +382,7 @@ generator for the class.  See the section on Debugging below for details.
 \item{\code{$usingMethods(...)}}{ %$
 Reference methods used by this method are named as the arguments
  either quoted or unquoted.  In the code analysis phase of installing the
- the present method, the declared methods will be included.  It is essntial
+ the present method, the declared methods will be included.  It is essential
  to declare any methods used in a nonstandard way (e.g., via an apply function).
  Methods called directly do not need to be declared, but it is harmless to do so.
  \code{$usingMethods()} does nothing at run time. %$

@@ -58,7 +58,7 @@ cut(x, \dots)
   between any pair of  endpoints: if this fails labels such as
   \code{"Range3"} will be used.
 
-  The defailt method will sort \code{breaks}, but other methods are not
+  The default method will sort \code{breaks}, but other methods are not
   required to and \code{labels} will correspond to the intervals after
   sorting.
 }
