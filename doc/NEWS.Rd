@@ -313,6 +313,11 @@
       the default method does, although this was undocumented).
       (Wish of \PR{14961}.)
 
+      \item Reference class methods that use other methods in an
+      indirect way (e.g., by \code{sapply()}) must tell the code
+      analysis to include that method.  They can now do so by invoking
+      \code{$usingMethods()}. %$ 
+
       \item More Polish translations are available: for the
       \command{RGui} menus and for several recommended packages.
     }
@@ -357,6 +362,10 @@
 
       It was unable to compute Cp tests for object of class \code{"lm"}
       (it assumed class \code{"glm"}).
+
+      \item The \code{formula} method for \code{sunflowerplot()} now
+      allows \code{xlab} and \code{ylab} to be set.  (Reported by Gerrit
+      Eichner.)
     }
   }
 }

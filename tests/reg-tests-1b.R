@@ -1886,4 +1886,10 @@ model2 <- lm(y ~ x + f)
 anova(model1, model2, test = "F")
 ##
 
+
+## regression test for sunflowerplot's formula method
+sunflowerplot( Sepal.Length ~ Sepal.Width, data = iris, xlab = "A")
+## failed in 2.15.1
+
+
 proc.time()

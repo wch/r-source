@@ -93,7 +93,7 @@ sunflowerplot.formula <-
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
-    m$... <- NULL
+    m$xlab <- m$ylab <- m$... <- NULL
     m$na.action <- na.action # force use of default for this method
     require(stats, quietly = TRUE)
     m[[1L]] <- as.name("model.frame")
