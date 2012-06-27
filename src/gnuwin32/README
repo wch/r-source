@@ -17,8 +17,8 @@ components, and you can select what you want installed.
 
 For more details, including command-line options for the installer and
 how to uninstall, see the rw-FAQ.  If you are reading this as part of
-an installed version of R, that is both file rw-FAQ in this directory
-and file doc\html\rw-FAQ.html.
+an installed version of R, that is both a file rw-FAQ in this directory
+and a file doc\html\rw-FAQ.html.
 
 
 Usage
