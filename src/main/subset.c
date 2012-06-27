@@ -230,8 +230,8 @@ SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 {
     SEXP attr, result, sr, sc, dim;
-    int nr, nc, nrs, ncs;
-    int i, j, ii, jj, ij, iijj;
+    R_xlen_t nr, nc, nrs, ncs;
+    R_xlen_t i, j, ii, jj, ij, iijj;
 
     nr = nrows(x);
     nc = ncols(x);
@@ -245,7 +245,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
     /* Check this does not overflow */
-    if ((double)nrs * (double)ncs > INT_MAX)
+    if ((double)nrs * (double)ncs > R_XLEN_T_MAX)
 	error(_("dimensions would exceed maximum size of array"));
     PROTECT(sr);
     PROTECT(sc);
