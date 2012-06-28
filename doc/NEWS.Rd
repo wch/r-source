@@ -32,10 +32,19 @@
       \command{RGui} menus and for several recommended packages.
     }
   }
-  
+
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
       \item \code{array()} is now implemented in C code, for speed.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now checks if a package can be loaded
+      by \code{library(pkgname, lib.loc = "somewhere")} without being on
+      the library search path (unless it is already installed in
+      \code{.Library}, when it always will be).
     }
   }
 
@@ -48,7 +57,7 @@
       deprecated with a warning.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
