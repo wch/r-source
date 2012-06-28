@@ -518,7 +518,7 @@ function(x, style = "text", .bibstyle=NULL, ...)
 
     x <- sort(x, .bibstyle=.bibstyle)
     x$.index <- as.list(seq_along(x))
-    
+
     .format_bibentry_via_Rd <- function(f) {
         out <- file()
         saveopt <- tools::Rd2txt_options(width = getOption("width"))
@@ -834,8 +834,8 @@ function(object, ...)
     rval
 }
 
-sort.bibentry <- function(x, decreasing = FALSE, .bibstyle=NULL, ...) 
-    x[ order( tools::bibstyle(.bibstyle)$sortKeys(x), 
+sort.bibentry <- function(x, decreasing = FALSE, .bibstyle=NULL, ...)
+    x[ order( tools::bibstyle(.bibstyle)$sortKeys(x),
               decreasing = decreasing) ]
 
 ######################################################################
@@ -1099,6 +1099,8 @@ function(x) {
     out
 }
 
+## NB: because of the use of strwrap(), this always outputs
+## in the current locale even if the input has a marked encoding.
 .format_authors_at_R_field_for_author <-
 function(x)
 {
@@ -1132,6 +1134,7 @@ function(x)
     out
 }
 
+## preserves encoding if marked.
 .format_authors_at_R_field_for_maintainer <-
 function(x)
 {
@@ -1162,27 +1165,27 @@ cite <- function(keys, bib, ...) {
 
 citeNatbib <- local({
     cited <- c()
-    
+
     function(keys, bib, textual=FALSE, before=NULL, after=NULL,
     		 mode = c("authoryear", "numbers", "super"),
-	         abbreviate=TRUE, longnamesfirst=TRUE, 
+	         abbreviate=TRUE, longnamesfirst=TRUE,
                  bibpunct=c("(", ")", ";", "a", "", ","),
                  previous) {
 
 	shortName <- function(person) {
-	    if (length(person$family)) 
+	    if (length(person$family))
 		paste(tools:::cleanupLatex(person$family), collapse=" ")
 	    else
 		paste(tools:::cleanupLatex(person$given), collapse=" ")
 	}
 
-	authorList <- function(paper) 
+	authorList <- function(paper)
 	    names <- sapply(paper$author, shortName)
 
-	if (!missing(previous)) 
+	if (!missing(previous))
 	    cited <<- previous
-	    
-	if (!missing(mode)) 
+
+	if (!missing(mode))
 	    mode <- match.arg(mode)
 	else
 	    mode <- switch(bibpunct[4],
@@ -1193,20 +1196,20 @@ citeNatbib <- local({
 
 	if (numeric)
 	    bib <- sort(bib)
-	    
+
 	keys <- unlist(strsplit(keys, " *, *"))
 	if (!length(keys)) return("")
-	
+
         n <- length(keys)
 	first <- !(keys %in% cited)
 	cited <<- unique(c(cited, keys))
-	
+
 	bibkeys <- unlist(bib$key)
 	# Use year to hold numeric entry; makes things
 	# simpler below
 	year <- match(keys, bibkeys)
 	papers <- bib[year]
-	
+
         if (textual || !numeric) {
 	    auth <- character(n)
 	    if (!numeric)
@@ -1215,7 +1218,7 @@ citeNatbib <- local({
 	    lastAuthors <- NULL
 	    for (i in seq_along(keys)) {
 		authors <- authorLists[[i]]
-		if (identical(lastAuthors, authors)) 
+		if (identical(lastAuthors, authors))
 		    auth[i] <- ""
 		else {
 		    if (length(authors) > 1)
@@ -1229,7 +1232,7 @@ citeNatbib <- local({
 			auth[i] <- paste(authors, collapse=" ")
             	}
             	lastAuthors <- authors
-            }  
+            }
             suppressauth <- which(!nzchar(auth))
             if (length(suppressauth)) {
                 for (i in suppressauth)
@@ -1247,7 +1250,7 @@ citeNatbib <- local({
             if (mode == "super")
             	result <- paste0(auth, "^{", result, "}")
             else
-            	result <- paste0(auth, " ", result) 
+            	result <- paste0(auth, " ", result)
             result <- paste(result, collapse = paste0(bibpunct[3], " "))
         } else if (numeric) {
             result <- paste(year, collapse=paste0(bibpunct[3], " "))
@@ -1260,5 +1263,5 @@ citeNatbib <- local({
             result <- paste0(bibpunct[1], before, result, after, bibpunct[2])
         }
         result
-    }    
+    }
 })

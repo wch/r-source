@@ -1325,12 +1325,16 @@ function(x)
 .expand_package_description_db_R_fields <-
 function(x)
 {
+    enc <- x["Encoding"]
     y <- character()
     if(!is.na(aar <- x["Authors@R"])) {
         aar <- utils:::.read_authors_at_R_field(aar)
-        if(is.na(x["Author"]))
-            y["Author"] <-
-                utils:::.format_authors_at_R_field_for_author(aar)
+        if(is.na(x["Author"])) {
+            tmp <- utils:::.format_authors_at_R_field_for_author(aar)
+            ## uses strwrap, so will be in current locale
+            if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
+            y["Author"] <- tmp
+        }
         if(is.na(x["Maintainer"]))
             y["Maintainer"] <-
                 utils:::.format_authors_at_R_field_for_maintainer(aar)
