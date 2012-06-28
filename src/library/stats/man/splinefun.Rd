@@ -1,6 +1,6 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
@@ -158,7 +158,7 @@ plot(x.,y.)
 curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
 curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
 legend("topleft",
-       paste0("splinefun( \"", c("fmm", "monoH.CS"), "\" )"),
+       paste0("splinefun( \"", c("fmm", "monoH.FC"), "\" )"),
        col = 2:3, lty = 1)
 }
 \keyword{math}
