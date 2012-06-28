@@ -292,9 +292,10 @@
       tries harder to expand the \code{authors@R} field in the specified
       encoding.  (PR{14958}.)
 
-      \item What \command{R CMD INSTALL} is required to expand the
-      \code{authors@R} field, it tries harder to do so in the encoding
-      specified for the package (rather than using ASCII escapes).
+      \item If \command{R CMD INSTALL} is required to expand the
+      \code{authors@R} field of the \file{DESCRIPTION} file, it tries
+      harder to do so in the encoding specified for the package (rather
+      than using ASCII escapes).
     }
   }
 }
