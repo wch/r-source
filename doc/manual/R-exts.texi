@@ -467,7 +467,10 @@ contributors, among others.  See @code{?person} for more information.
 Note that no role is assumed by default.  Auto-generated package
 citation information takes advantage of this specification; in @R{}
 2.14.0 or later, the @samp{Author} and @samp{Maintainer} fields are
-auto-generated from it if needed when building or installing.
+auto-generated from it if needed when building@footnote{at least if this
+is done in a locale which matches the package encoding.} or
+installing@footnote{installation generates an ASCII version prior to
+@R{} 2.16.0.}.
 
 Several optional fields take @emph{logical values}: these can be
 specified as @samp{yes}, @samp{true}, @samp{no} or @samp{false}:
@@ -1916,7 +1919,8 @@ directly.
 
 If your package specifies an encoding in its @file{DESCRIPTION} file,
 you should run these tools in a locale which makes use of that encoding:
-they may not work at all or may work incorrectly in other locales.
+they may not work at all or may work incorrectly in other locales
+(although UTF-8 locales will most likely work).
 
 @quotation Note
 @code{R CMD check} and @code{R CMD build} run @R{} with

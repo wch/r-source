@@ -616,11 +616,7 @@
                     Sys.chmod(file.path(instdir, f), "644")
                 }
 
-            ## This cannot be done in a MBCS: write.dcf fails
-            ctype <- Sys.getlocale("LC_CTYPE")
-            Sys.setlocale("LC_CTYPE", "C")
             res <- try(.install_package_description('.', instdir))
-            Sys.setlocale("LC_CTYPE", ctype)
             if (inherits(res, "try-error"))
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
             if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
