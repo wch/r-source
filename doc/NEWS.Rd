@@ -188,11 +188,6 @@
 
       Such calls can terminate the \R process which loads the package.
 
-      \item \command{R CMD check} now checks if a package can be loaded
-      by \code{library(pkgname, lib.loc = "somewhere")} without being on
-      the library search path (unless it is already installed in
-      \code{.Library}, when it always will be).
-
       \item The location of the build and check environment files can
       now be specified by the environment variables
       \env{R_BUILD_ENVIRON} and \env{R_CHECK_ENVIRON}, respectively.
@@ -202,7 +197,7 @@
       when \option{--pdf} is given.
 
       \item \command{R CMD build} now omits Eclipse's \file{.metadata}
-      directories.
+      directories, and \command{R CMD check} warns if it finds them.
     }
   }
 
@@ -219,8 +214,9 @@
       \option{-DSUPPORT_CONVERTERS} to re-enable this (untested as we
       know of no examples in packages).
       
-      \item Use of \code{array()} with a 0-length \code{dim} argument and
-      \code{tapply()} with a 0-length \code{INDEX} list are now errors.
+      \item The previously deprecated uses of \code{array()} with a
+      0-length \code{dim} argument and \code{tapply()} with a 0-length
+      \code{INDEX} list are now errors.
     }
   }
 
@@ -322,10 +318,19 @@
       \command{RGui} menus and for several recommended packages.
     }
   }
-  
+
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
       \item \code{array()} is now implemented in C code, for speed.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now checks if a package can be loaded
+      by \code{library(pkgname, lib.loc = "somewhere")} without being on
+      the library search path (unless it is already installed in
+      \code{.Library}, when it always will be).
     }
   }
 
@@ -338,7 +343,7 @@
       deprecated with a warning.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
