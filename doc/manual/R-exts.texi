@@ -347,8 +347,9 @@ tab.  The @samp{Package}, @samp{Version}, @samp{License},
 @samp{Description}, @samp{Title}, @samp{Author}, and @samp{Maintainer}
 fields are mandatory, all other fields are optional.  For @R{} 2.14.0 or
 later, @samp{Author} and @samp{Maintainer} can be auto-generated from
-@samp{Authors@@R}, and should be omitted if the latter is provided (and
-the package depends on @code{R (>= 2.14)}: see below for details).
+@samp{Authors@@R}, and may be omitted if the latter is provided (and
+the package depends on @code{R (>= 2.14)}: see below for details):
+however if they are not ASCII we recommend that they are provided.
 
 For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
@@ -655,7 +656,8 @@ running @command{R CMD check}, and it is used for the encoding of the
 @code{CITATION} file.  Only encoding names @code{latin1}, @code{latin2}
 and @code{UTF-8} are known to be portable.  (Do not specify an encoding
 unless one is actually needed: doing so makes the package @emph{less}
-portable.)
+portable.  If a package has a specified encoding, you should run
+@command{R CMD build} etc in a locale using that encoding.)
 
 The @samp{OS_type} field specifies the OS(es) for which the
 package is intended.  If present, it should be one of @code{unix} or
@@ -1911,6 +1913,10 @@ directly.
 * Building package tarballs::
 * Building binary packages::
 @end menu
+
+If your package specifies an encoding in its @file{DESCRIPTION} file,
+you should run these tools in a locale which makes use of that encoding:
+they may not work at all or may work incorrectly in other locales.
 
 @quotation Note
 @code{R CMD check} and @code{R CMD build} run @R{} with
