@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist.POSIXt}
@@ -61,7 +61,7 @@
 \examples{
 hist(.leap.seconds, "years", freq = TRUE)
 hist(.leap.seconds,
-     seq(ISOdate(1970, 1, 1), ISOdate(2010, 1, 1), "5 years"))
+     seq(ISOdate(1970, 1, 1), ISOdate(2015, 1, 1), "5 years"))
 
 ## 100 random dates in a 10-week period
 random.dates <- as.Date("2001/1/1") + 70*stats::runif(100)
