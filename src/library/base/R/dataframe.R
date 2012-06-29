@@ -365,7 +365,7 @@ data.frame <-
 	else function(current, new, i) {
 	    if(is.null(current)) {
 		if(anyDuplicated(new)) {
-		    stop("some row.names duplicated: ",
+		    warning("some row.names duplicated: ",
                             paste(which(duplicated(new)), collapse=","),
                             " --> row.names NOT used")
 		    current
