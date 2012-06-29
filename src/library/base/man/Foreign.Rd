@@ -179,7 +179,7 @@
   Prior to \R 2.15.1 there were always two for vectors (one before
   calling the compiled code and one to collect the results), and this is
   still the case for character vectors.  For other atomic vectors, the
-  argument is copied before calling the compiled code if it is not
+  argument is not copied before calling the compiled code if it is not
   otherwise used in the calling code (such as \code{output} in the
   example above).  Non-atomic-vector objects are read-only to the C code
   and are never copied.
