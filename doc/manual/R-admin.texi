@@ -848,8 +848,8 @@ this manual are either standard @command{autoconf} options not relevant
 to @R{} or intended for specialist uses by the @R{} developers.
 
 One that may be useful when working on @R{} itself is the option
-@option{--disable-byte-compilation}, which ensures that the base and
-recommended packages are lazyloaded but not byte-compiled.
+@option{--disable-byte-compiled-packages}, which ensures that the base
+and recommended packages are lazyloaded but not byte-compiled.
 (Alternatively the (make or environment) variable
 @env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
 of the build.)
@@ -1069,11 +1069,11 @@ version.
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
-@uref{http://download.osgeo.org/@/libtiff/}.  The earliest versions
-that have been tested are @file{libpng-1.5.4.tar.gz},
-@file{jpegsrc.v8c.tar.gz}, @file{tiff-3.9.4.tar.gz} (including betas of
-@file{tiff-4.0.0}).  It is also possible to use @samp{libjpeg-turbo}
-from @uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
+@uref{http://download.osgeo.org/@/libtiff/}.  The earliest versions that
+have been tested are @file{libpng-1.5.4.tar.gz},
+@file{jpegsrc.v8c.tar.gz} and @file{tiff-3.9.4.tar.gz}.  It is also
+possible to use @samp{libjpeg-turbo} from
+@uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
@@ -2746,8 +2746,8 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
 @code{zlib} or @code{libtiff} (any recent version of 3.x.y -- 3.9.[45]
-have been tested) respectively.  They also need support for either
-@code{X11} or @code{cairo} (see above).
+have been tested -- 4.0.x is expected to work) respectively.  They
+also need support for either @code{X11} or @code{cairo} (see above).
 
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
