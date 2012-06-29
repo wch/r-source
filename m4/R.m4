@@ -2007,15 +2007,17 @@ if test "${use_libpng}" = yes; then
 	      [Define if you have the PNG headers and libraries.])
   fi
 fi
-AC_CHECK_HEADERS(tiffio.h)
-# may need to resolve jpeg routines
-AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [${BITMAP_LIBS}])
-if test "x${ac_cv_header_tiffio_h}" = xyes ; then
-  if test "x${have_tiff}" = xyes; then
-    AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
-    BITMAP_LIBS="-ltiff ${BITMAP_LIBS}"
-  else
-    have_tiff=no
+if test "${use_libtiff}" = yes; then
+  AC_CHECK_HEADERS(tiffio.h)
+  # may need to resolve jpeg routines
+  AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no], [${BITMAP_LIBS}])
+  if test "x${ac_cv_header_tiffio_h}" = xyes ; then
+    if test "x${have_tiff}" = xyes; then
+      AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+      BITMAP_LIBS="-ltiff ${BITMAP_LIBS}"
+    else
+      have_tiff=no
+    fi
   fi
 fi
 AC_SUBST(BITMAP_LIBS)

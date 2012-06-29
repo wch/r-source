@@ -284,6 +284,14 @@
       be recompiled.
     }
   }
+  
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item There is a new \command{configure} options
+      \option{--use-libtiff} (mainly in case the system installation
+      needs to be avoided).
+    }
+  }
 
   \subsection{BUG FIXES}{
     \itemize{
