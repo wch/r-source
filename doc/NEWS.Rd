@@ -1,4 +1,4 @@
-\newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
+\newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#-1)}}
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
@@ -387,6 +387,10 @@
       \item The \code{formula} method for \code{sunflowerplot()} now
       allows \code{xlab} and \code{ylab} to be set.  (Reported by Gerrit
       Eichner.)
+
+      \item The \code{"POSIXt"} and \code{"Date"} methods for \code{hist()}
+      could fail on Windows where adjustments to the right-hand boundary
+      crossed a DST transition time.
     }
   }
 }
