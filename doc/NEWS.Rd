@@ -85,6 +85,10 @@
       \item The \code{formula} method for \code{sunflowerplot()} now
       allows \code{xlab} and \code{ylab} to be set.  (Reported by Gerrit
       Eichner.)
+
+      \item The \code{"POSIXt"} and \code{"Date"} methods for \code{hist()}
+      could fail on Windows where adjustments to the right-hand boundary
+      crossed a DST transition time.
     }
   }
 }
