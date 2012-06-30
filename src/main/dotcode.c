@@ -1500,6 +1500,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		float *sptr = (float*) R_alloc(n, sizeof(float));
 		for (R_xlen_t i = 0 ; i < n ; i++) sptr[i] = (float) REAL(s)[i];
 		cargs[na] = (void*) sptr;
+		if (!dup) warning(_("single values not returned if not duplicated"));
 #ifdef R_MEMORY_PROFILING
 		if (RTRACE(s)) memtrace_report(s, sptr);
 #endif

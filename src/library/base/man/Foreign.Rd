@@ -80,12 +80,12 @@
     other \tab SEXP\tab not allowed\cr
   }
 
-  Numeric vectors in \R will be passed as type \code{double *} to C (and
-  as \code{double precision} to Fortran) unless (i) \code{DUP} is true
-  and (ii) the argument has attribute \code{Csingle} set to \code{TRUE}
-  (use \code{\link{as.single}} or \code{\link{single}}).  This mechanism
-  is only intended to be used to facilitate the interfacing of existing
-  C and Fortran code.
+  Numeric vectors in \R will be passed as type \code{double *} to C
+  (and as \code{double precision} to Fortran) unless the argument has
+  attribute \code{Csingle} set to \code{TRUE} (use
+  \code{\link{as.single}} or \code{\link{single}}).  This mechanism is
+  only intended to be used to facilitate the interfacing of existing C
+  and Fortran code.
 
   The C type \code{Rcomplex} is defined in \file{Complex.h} as a
   \code{typedef struct {double r; double i;}}.  It may or may not be
@@ -140,7 +140,8 @@
   be able to change not only the local variable but the variable one
   level up.  This will be very hard to trace.
 
-  Character vectors cannot be used with \code{DUP = FALSE}.
+  With \code{DUP = FALSE}, character vectors cannot be used, and single
+  precision values will not be returned.
 
   It is safe and useful to set \code{DUP = FALSE} if you do not change any
   of the variables that might be affected, e.g.,

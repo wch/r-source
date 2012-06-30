@@ -275,6 +275,10 @@
     \itemize{
       % This is deferred until we can get package maintainers to cooperate.
       %       \item Passing \code{NULL} to \code{.C()} is now an error.
+      
+      \item \code{.C()} and \code{.Fortran()} now warn if
+      \code{"single"} arguments are used with \code{dup=FALSE}, as 
+      changes to such arguments are not returned to the caller.
 
       \item New C functions \code{R_orderVector()}, \code{R_order2double()},
       etc, corresponding to \R's \code{order()}.
