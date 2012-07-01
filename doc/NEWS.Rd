@@ -36,7 +36,9 @@
 
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
-      \item \code{array()} is now implemented in C code, for speed.
+      \item \code{array()} is now implemented in C code (for speed) when
+      \code{data} is atomic or an unclassed list (so it is known that
+      \code{as.vector(data)} will have no class to be used by \code{rep()}).
     }
   }
 

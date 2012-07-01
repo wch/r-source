@@ -17,10 +17,12 @@
 array <-
 function(data = NA, dim = length(data), dimnames = NULL)
 {
-    data <- as.vector(data)
     dim <- as.integer(dim)
     if (!length(dim)) warning("use of 0-length dim is deprecated")
-    ## package bit64 has an as.vector() method which leaves this classed
+    ## fast code for commonest case: loses all attributes from data
+    if(is.atomic(data)) return(.Internal(array(data, dim, dimnames)))
+    data <- as.vector(data)
+    ## package rv has an as.vector() method which leave this as a classed list
     if(is.object(data)) {
         vl <- prod(dim)
         if(length(data) != vl) {
