@@ -71,6 +71,9 @@ is.matrix(x)
   data frames will be coerced to a logical matrix, mixed logical-integer
   will give a integer matrix, etc.
 
+  The default method for \code{as.matrix} calls \code{as.vector(x)}, and
+  hence e.g. coerces factors to character vectors.
+
   When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.
   

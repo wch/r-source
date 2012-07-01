@@ -68,7 +68,7 @@ is.array(x)
 
   Unlike \code{\link{matrix}}, \code{array} does not currently remove
   any attributes left by \code{as.vector} from a classed list
-  \code{data}, so can returned a list array with a class attribute.
+  \code{data}, so can return a list array with a class attribute.
 
   \code{as.array} is a generic function for coercing to arrays.  The
   default method does so by attaching a \code{\link{dim}} attribute to
