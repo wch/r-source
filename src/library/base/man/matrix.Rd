@@ -1,6 +1,6 @@
 % File src/library/base/man/matrix.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matrix}
@@ -28,8 +28,8 @@ is.matrix(x)
 }
 \arguments{
   \item{data}{an optional data vector (including a list or
-    \code{\link{expression}} vector).  Other \R objects are coerced by
-    \code{\link{as.vector}}.}
+    \code{\link{expression}} vector).  Non-atomic classed \R objects are
+    coerced by \code{\link{as.vector}} and all attributes discarded.}
   \item{nrow}{the desired number of rows.}
   \item{ncol}{the desired number of columns.}
   \item{byrow}{logical. If \code{FALSE} (the default) the matrix is

@@ -17,13 +17,13 @@
 array <-
 function(data = NA, dim = length(data), dimnames = NULL)
 {
-    dim <- as.integer(dim)
-    if (!length(dim)) stop("'dims' cannot be of length 0")
     ## fast code for commonest case: loses all attributes from data
     if(is.atomic(data)) return(.Internal(array(data, dim, dimnames)))
     data <- as.vector(data)
     ## package rv has an as.vector() method which leave this as a classed list
     if(is.object(data)) {
+        dim <- as.integer(dim)
+        if (!length(dim)) stop("'dims' cannot be of length 0")
         vl <- prod(dim)
         if(length(data) != vl) {
             ## C code allows long vectors, but rep() does not.
