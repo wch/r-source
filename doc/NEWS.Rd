@@ -90,6 +90,10 @@
       \item The \code{"POSIXt"} and \code{"Date"} methods for \code{hist()}
       could fail on Windows where adjustments to the right-hand boundary
       crossed a DST transition time.
+
+      \item On Windows, the code in \code{as.POSIXct()} to handle
+      incorrectly specified \code{isdst} fields might have resulted in
+      \code{NA} being returned.
     }
   }
 }
