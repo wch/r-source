@@ -2723,7 +2723,8 @@ instructions to view it as a folder, then copy the submission to the
 folder.} and not @samp{sftp} to connect to this server, and passive
 @samp{ftp} is more often successful) and send a message to
 @email{CRAN@@R-project.org} about it (with your package name and version
-in the subject line, and please do not submit a package by email).  For
+in the subject line of the form ``CRAN submission package version'', and please 
+do not submit a package by email).  For
 a new submission, please note in the message that you have read and
 agreed to the CRAN policies.
 
