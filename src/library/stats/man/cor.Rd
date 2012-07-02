@@ -3,6 +3,8 @@
 % Copyright 1995-2010 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{cor}
 \title{Correlation, Variance and Covariance (Matrices)}
 \usage{
@@ -12,7 +14,7 @@ cov(x, y = NULL, use = "everything",
     method = c("pearson", "kendall", "spearman"))
 
 cor(x, y = NULL, use = "everything",
-     method = c("pearson", "kendall", "spearman"))
+    method = c("pearson", "kendall", "spearman"))
 
 cov2cor(V)
 }
@@ -114,6 +116,12 @@ cov2cor(V)
   \code{\link{sweep}(.., FUN = "/")} twice.  The \code{cov2cor} function
   is even a bit more efficient, and provided mostly for didactical
   reasons.
+}
+\note{
+  Some people have noted that the code for Kendall's tau is slow for
+  very large datasets (many more than 1000 cases).  It rarely makes
+  sense to do such a computation, but see function
+  \code{\link[pcaPP:cor.fk]{cor.fk}} in package \CRANpkg{pcaPP}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
