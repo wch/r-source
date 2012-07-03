@@ -68,7 +68,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         nmstrata <- c("(Intercept)", nmstrata)
         qr.e <- er.fit$qr
         rank.e <- er.fit$rank
-        if(rank.e < length(er.fit$coefficients))
+        if(rank.e < NROW(er.fit$coefficients))
             warning("Error() model is singular")
         qty <- er.fit$residuals
         maov <- is.matrix(qty)
