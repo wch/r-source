@@ -17,6 +17,9 @@
 array <-
 function(data = NA, dim = length(data), dimnames = NULL)
 {
+    ## allow for as.vector.factor (converts to character)
+    if(is.atomic(data) && !is.object(data))
+        return(.Internal(array(data, dim, dimnames)))
     data <- as.vector(data)
     ## package rv has an as.vector() method which leave this as a classed list
     if(is.object(data)) {
@@ -33,7 +36,6 @@ function(data = NA, dim = length(data), dimnames = NULL)
         data
     } else .Internal(array(data, dim, dimnames))
 }
-
 
 slice.index <-
 function(x, MARGIN)
