@@ -217,7 +217,7 @@
       compiled in by default: compile \file{src/main/dotcode.c} with
       \option{-DSUPPORT_CONVERTERS} to re-enable this (untested as we
       know of no examples in packages).
-      
+
       \item The previously deprecated uses of \code{array()} with a
       0-length \code{dim} argument and \code{tapply()} with a 0-length
       \code{INDEX} list are now errors.
@@ -278,9 +278,9 @@
     \itemize{
       % This is deferred until we can get package maintainers to cooperate.
       %       \item Passing \code{NULL} to \code{.C()} is now an error.
-      
+
       \item \code{.C()} and \code{.Fortran()} now warn if
-      \code{"single"} arguments are used with \code{dup=FALSE}, as 
+      \code{"single"} arguments are used with \code{dup=FALSE}, as
       changes to such arguments are not returned to the caller.
 
       \item New C functions \code{R_orderVector()}, \code{R_order2double()},
@@ -292,7 +292,7 @@
       be recompiled.
     }
   }
-  
+
   \subsection{INSTALLATION}{
     \itemize{
       \item There is a new \command{configure} options
@@ -313,7 +313,7 @@
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
 
-      \item \code{aov()} and \code{manova()} gave spurious warning about 
+      \item \code{aov()} and \code{manova()} gave spurious warning about
       singular error model in the multiresponse case.
     }
   }
@@ -339,7 +339,7 @@
       \item Reference class methods that use other methods in an
       indirect way (e.g., by \code{sapply()}) must tell the code
       analysis to include that method.  They can now do so by invoking
-      \code{$usingMethods()}. %$ 
+      \code{$usingMethods()}. %$
 
       \item More Polish translations are available: for the
       \command{RGui} menus and for several recommended packages.
@@ -383,7 +383,7 @@
 
       \item Long timezone specifications (such as a file name preceded
       by \code{:}) could crash \code{as.POSIXlt}.  (PR#14945.)
-      
+
       \item \code{R CMD build --resave-data} could fail if there was no
       \file{data} directory but there was an \file{R/sysdata.rda} file.
       (PR#14947.)
@@ -408,6 +408,10 @@
       \item On Windows, the code in \code{as.POSIXct()} to handle
       incorrectly specified \code{isdst} fields might have resulted in
       \code{NA} being returned.
+
+      \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
+      is now equivalent to omitting it, also when \code{df} is
+      specified.  (\PR{14970})
     }
   }
 }
