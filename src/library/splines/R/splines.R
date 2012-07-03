@@ -30,8 +30,8 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 
     ord <- 1 + (degree <- as.integer(degree))
     if(ord <= 1) stop("'degree' must be integer >= 1")
-    if(!missing(df) && missing(knots)) {
-        nIknots <- df - ord + (1 - intercept)
+    if(!is.null(df) && is.null(knots)) {
+	nIknots <- df - ord + (1 - intercept) # ==  #{inner knots}
         if(nIknots < 0) {
             nIknots <- 0
             warning("'df' was too small; have used  ", ord - (1 - intercept))
@@ -94,7 +94,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         outside <- (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
     }
     else outside <- FALSE # rep(FALSE, length = length(x))
-    if(!missing(df) && missing(knots)) {
+    if(!is.null(df) && is.null(knots)) {
         ## df = number(interior knots) + 1 + intercept
         nIknots <- df - 1 - intercept
         if(nIknots < 0) {

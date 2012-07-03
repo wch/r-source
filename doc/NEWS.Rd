@@ -27,7 +27,7 @@
       \item Reference class methods that use other methods in an
       indirect way (e.g., by \code{sapply()}) must tell the code
       analysis to include that method.  They can now do so by invoking
-      \code{$usingMethods()}. %$ 
+      \code{$usingMethods()}. %$
 
       \item More Polish translations are available: for the
       \command{RGui} menus and for several recommended packages.
@@ -74,7 +74,7 @@
 
       \item Long timezone specifications (such as a file name preceded
       by \code{:}) could crash \code{as.POSIXlt}.  (PR#14945.)
-      
+
       \item \code{R CMD build --resave-data} could fail if there was no
       \file{data} directory but there was an \file{R/sysdata.rda} file.
       (PR#14947.)
@@ -100,8 +100,12 @@
       incorrectly specified \code{isdst} fields might have resulted in
       \code{NA} being returned.
 
-      \item \code{aov()} and \code{manova()} gave spurious warning about 
+      \item \code{aov()} and \code{manova()} gave spurious warning about
       singular error model in the multiresponse case.
+
+      \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
+      is now equivalent to omitting it, also when \code{df} is
+      specified.  (\PR{14970})
     }
   }
 }

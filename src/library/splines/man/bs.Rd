@@ -1,6 +1,6 @@
 % File src/library/splines/man/bs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bs}
@@ -18,7 +18,8 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   \item{df}{degrees of freedom; one can specify \code{df} rather than
     \code{knots}; \code{bs()} then chooses \code{df-degree} (minus one
     if there is an intercept) knots at suitable quantiles of \code{x}
-    (which will ignore missing values).}
+    (which will ignore missing values).  The default, \code{NULL},
+    corresponds to \emph{no} inner knots, i.e., \code{degree - intercept}.}
   \item{knots}{the \emph{internal} breakpoints that define the
     spline.  The default is \code{NULL}, which results in a basis for
     ordinary polynomial regression.  Typical values are the mean or
@@ -67,10 +68,11 @@ summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, length.out = 200)
 lines(ht, predict(fm1, data.frame(height=ht)))
-\dontrun{
+\dontshow{
 ## Consistency:
 x <- c(1:3,5:6)
 stopifnot(identical(bs(x), bs(x, df = 3)),
+          identical(bs(x, df=4), bs(x, df=4, knots=NULL)),# not true till 2.15.2
           !is.null(kk <- attr(bs(x), "knots")),# not true till 1.5.1
           length(kk) == 0)
 }}

@@ -1,6 +1,6 @@
 % File src/library/splines/man/ns.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns}
@@ -17,7 +17,8 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
   \item{x}{the predictor variable.  Missing values are allowed.}
   \item{df}{degrees of freedom. One can supply \code{df} rather than
     knots; \code{ns()} then chooses \code{df - 1 - intercept} knots at
-    suitably chosen quantiles of \code{x} (which will ignore missing values).}
+    suitably chosen quantiles of \code{x} (which will ignore missing
+    values).  The default, \code{df = 1}, corresponds to \emph{no} knots.}
   \item{knots}{breakpoints that define the spline.  The default is no
     knots; together with the natural boundary conditions this results in
     a basis for linear regression on \code{x}.  Typical values are the
@@ -66,5 +67,13 @@ summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, length.out = 200)
 lines(ht, predict(fm1, data.frame(height=ht)))
+\dontshow{
+## Consistency:
+x <- c(1:3,5:6)
+stopifnot(identical(ns(x), ns(x, df = 1)),
+          identical(ns(x, df=2), ns(x, df=2, knots=NULL)),# not true till 2.15.2
+          !is.null(kk <- attr(ns(x), "knots")),# not true till 1.5.1
+          length(kk) == 0)
+}
 }
 \keyword{smooth}
