@@ -136,6 +136,9 @@
 
       \item \code{termplot()} does a better job when given a model with
       interactions (and no longer attempts to plot interaction terms).
+
+      \item Multistratum MANOVA works. In fact, it seems to have done so
+      for years in spite of the help page claiming it did not.
     }
   }
 
@@ -309,6 +312,9 @@
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
+
+      \item \code{aov()} and \code{manova()} gave spurious warning about 
+      singular error model in the multiresponse case.
     }
   }
 }
@@ -718,6 +724,7 @@
       \item \code{plot(<lm>, which=5)} now correctly labels the factor
       level combinations for the special case where all
       \eqn{h_ii}{h[i,i]} are the same. (\PR{14837})
+
     }
   }
 }

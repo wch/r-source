@@ -6356,7 +6356,7 @@ Empirical CDF:	  10 unique values with summary
 Call:
 aov(formula = Yield ~ A * B * C + Error(Block), data = aovdat)
 
-Grand Mean: 291.5938 
+Grand Mean: 291.5937 
 
 Stratum 1: Block
 
@@ -8962,6 +8962,115 @@ List of 5
 > 
 > 
 > 
+> cleanEx()
+> nameEx("manova")
+> ### * manova
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: manova
+> ### Title: Multivariate Analysis of Variance
+> ### Aliases: manova
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> ## From Venables and Ripley (2002) p.165.
+> utils::data(npk, package="MASS")
+> 
+> ## Set orthogonal contrasts.
+> op <- options(contrasts=c("contr.helmert", "contr.poly"))
+> 
+> ## Fake a 2nd response variable
+> npk2 <- within(npk, foo <- rnorm(24))
+> ( npk2.aov <- manova(cbind(yield, foo) ~ block + N*P*K, npk2) )
+Call:
+   manova(cbind(yield, foo) ~ block + N * P * K, npk2)
+
+Terms:
+                   block        N        P        K      N:P      N:K      P:K
+resp 1          343.2950 189.2817   8.4017  95.2017  21.2817  33.1350   0.4817
+resp 2            2.9548   0.0223   1.3807   0.0097   2.7585   0.9724   5.5258
+Deg. of Freedom        5        1        1        1        1        1        1
+                Residuals
+resp 1           185.2867
+resp 2             7.8286
+Deg. of Freedom        12
+
+Residual standard error: 3.929447 0.8077039 
+1 out of 13 effects not estimable
+Estimated effects are balanced
+> summary(npk2.aov)
+          Df  Pillai approx F num Df den Df  Pr(>F)  
+block      5 0.89478   1.9430     10     24 0.08861 .
+N          1 0.50586   5.6304      2     11 0.02071 *
+P          1 0.17088   1.1336      2     11 0.35677  
+K          1 0.34430   2.8879      2     11 0.09815 .
+N:P        1 0.30158   2.3750      2     11 0.13888  
+N:K        1 0.21654   1.5201      2     11 0.26127  
+P:K        1 0.41992   3.9814      2     11 0.05003 .
+Residuals 12                                         
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> 
+> ( npk2.aovE <- manova(cbind(yield, foo) ~  N*P*K + Error(block), npk2) )
+
+Call:
+manova(cbind(yield, foo) ~ N * P * K + Error(block), npk2)
+
+Grand Means:
+     yield        foo 
+54.8750000  0.1498669 
+
+Stratum 1: block
+
+Terms:
+                    N:P:K Residuals
+resp 1           37.00167 306.29333
+resp 2            0.06988   2.88496
+Deg. of Freedom         1         4
+
+Residual standard error: 8.750619 0.8492579 
+Estimated effects are balanced
+
+Stratum 2: Within
+
+Terms:
+                        N         P         K       N:P       N:K       P:K
+resp 1          189.28167   8.40167  95.20167  21.28167  33.13500   0.48167
+resp 2            0.02235   1.38066   0.00966   2.75852   0.97240   5.52584
+Deg. of Freedom         1         1         1         1         1         1
+                Residuals
+resp 1          185.28667
+resp 2            7.82863
+Deg. of Freedom        12
+
+Residual standard error: 3.929447 0.8077039 
+Estimated effects are balanced
+> summary(npk2.aovE)
+
+Error: block
+          Df  Pillai approx F num Df den Df Pr(>F)
+N:P:K      1 0.20004   0.3751      2      3 0.7155
+Residuals  4                                      
+
+Error: Within
+          Df  Pillai approx F num Df den Df  Pr(>F)  
+N          1 0.50586   5.6304      2     11 0.02071 *
+P          1 0.17088   1.1336      2     11 0.35677  
+K          1 0.34430   2.8879      2     11 0.09815 .
+N:P        1 0.30158   2.3750      2     11 0.13888  
+N:K        1 0.21654   1.5201      2     11 0.26127  
+P:K        1 0.41992   3.9814      2     11 0.05003 .
+Residuals 12                                         
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> 
+> 
+> 
+> 
+> 
+> options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > cleanEx()
 > nameEx("mantelhaen.test")
 > ### * mantelhaen.test
@@ -14461,7 +14570,7 @@ eff.vl> (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
 Call:
 aov(formula = Yield ~ A * B * C + Error(Block), data = aovdat)
 
-Grand Mean: 291.5938 
+Grand Mean: 291.5937 
 
 Stratum 1: Block
 

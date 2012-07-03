@@ -24,10 +24,10 @@ manova(\dots)
 \value{
   See \code{\link{aov}} and the comments in \sQuote{Details} here.
 }
-\note{
-  \code{manova} does not support multistratum analysis of variance, so
-  the formula should not include an \code{Error} term.
-}
+% \note{
+%   \code{manova} does not support multistratum analysis of variance, so
+%   the formula should not include an \code{Error} term.
+% }
 \references{
   Krzanowski, W. J. (1988) \emph{Principles of Multivariate Analysis. A
     User's Perspective.} Oxford.
@@ -36,7 +36,23 @@ manova(\dots)
   \emph{Multivariate Analysis of Variance and Repeated Measures.}
   Chapman and Hall.
 }
+\examples{
+## From Venables and Ripley (2002) p.165.
+utils::data(npk, package="MASS")
 
+## Set orthogonal contrasts.
+op <- options(contrasts=c("contr.helmert", "contr.poly"))
+
+## Fake a 2nd response variable
+npk2 <- within(npk, foo <- rnorm(24))
+( npk2.aov <- manova(cbind(yield, foo) ~ block + N*P*K, npk2) )
+summary(npk2.aov)
+
+( npk2.aovE <- manova(cbind(yield, foo) ~  N*P*K + Error(block), npk2) )
+summary(npk2.aovE)
+
+
+}
 \seealso{
   \code{\link{aov}}, \code{\link{summary.manova}}, the latter containing
   examples.
