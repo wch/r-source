@@ -100,12 +100,10 @@ function (x, labels, panel = points, ...,
         if (is.null(labels)) labels <- paste("var", 1L:nc)
     }
     else if(is.null(labels)) has.labs <- FALSE
-    oma <- if("oma" %in% nmdots) dots$oma else NULL
-    main <- if("main" %in% nmdots) dots$main else NULL
-    if (is.null(oma)) {
-        oma <- c(4, 4, 4, 4)
-        if (!is.null(main)) oma[3L] <- 6
-    }
+    oma <- if("oma" %in% nmdots) dots$oma
+    main <- if("main" %in% nmdots) dots$main
+    if (is.null(oma))
+	oma <- c(4, 4, if(!is.null(main)) 6 else 4, 4)
     opar <- par(mfrow = c(nc, nc), mar = rep.int(gap/2, 4), oma = oma)
     on.exit(par(opar))
     dev.hold(); on.exit(dev.flush(), add = TRUE)

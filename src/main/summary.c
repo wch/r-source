@@ -312,11 +312,11 @@ static Rboolean cprod(Rcomplex *x, R_xlen_t n, Rcomplex *value, Rboolean narm)
 
 SEXP fixup_NaRm(SEXP args)
 {
-    SEXP a, r, t, na_value, prev = R_NilValue;
+    SEXP t, na_value;
 
     /* Need to make sure na.rm is last and exists */
     na_value = ScalarLogical(FALSE);
-    for(a = args ; a != R_NilValue; a = CDR(a)) {
+    for(SEXP a = args, prev = R_NilValue; a != R_NilValue; a = CDR(a)) {
 	if(TAG(a) == R_NaRmSymbol) {
 	    if(CDR(a) == R_NilValue) return args;
 	    na_value = CAR(a);
@@ -334,7 +334,7 @@ SEXP fixup_NaRm(SEXP args)
     if (args == R_NilValue)
 	args = t;
     else {
-	r = args;
+	SEXP r = args;
 	while (CDR(r) != R_NilValue) r = CDR(r);
 	SETCDR(r, t);
     }

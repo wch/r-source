@@ -37,5 +37,5 @@ double rexp(double scale)
 	/* else */
 	ML_ERR_return_NAN;
     }
-    return scale * exp_rand();
+    return scale * exp_rand(); // --> in ./sexp.c
 }

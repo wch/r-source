@@ -7,7 +7,6 @@ importFrom(grDevices, dev.interactive, palette, extendrange, xy.coords)
 importFrom(utils, str)
 
 
-# exportPattern("^[^\\.]")
 export(.checkMFClasses, .getXlevels, .MFclass)
 
 export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
