@@ -726,8 +726,8 @@ static double
 	ucslen = mbcsToUcs2((char *)str, NULL, 0, enc);
 	if (ucslen != (size_t)-1) {
 	    /* We convert the characters but not the terminator here */
-	    R_CheckStack2(ucslen * sizeof(ucs2_t));
 	    ucs2_t ucs2s[ucslen];
+	    R_CheckStack();
 	    status = (int) mbcsToUcs2((char *)str, ucs2s, ucslen, enc);
 	    if (status >= 0)
 		for(i = 0 ; i < ucslen ; i++) {
@@ -749,9 +749,9 @@ static double
 	    * see postscriptFonts()
 	    */
 	   (face % 5) != 0) {
-	    R_CheckStack2(strlen((char *)str)+1);
 	    char buff[strlen((char *)str)+1];
 	    /* Output string cannot be longer */
+	    R_CheckStack();
 	    mbcsToSbcs((char *)str, buff, encoding, enc);
 	    str1 = (unsigned char *)buff;
 	}
@@ -4387,8 +4387,8 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 		return;
 	    }
 
-	    R_CheckStack2(buflen);
 	    unsigned char buf[buflen];
+	    R_CheckStack();
 
 	    i_buf = (char *)str;
 	    o_buf = (char *)buf;
@@ -4428,8 +4428,8 @@ static void PS_Text0(double x, double y, const char *str, int enc,
        CJK MBCS.
     */
     if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str)) {
-	R_CheckStack2(strlen(str)+1);
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	R_CheckStack();
 	mbcsToSbcs(str, buff, convname(gc->fontfamily, pd), enc);
 	str1 = buff;
     }
@@ -5283,8 +5283,8 @@ static void XFig_Text(double x, double y, const char *str,
 	    if(cd == (void*)-1) {
 		warning(_("unable to use encoding '%s'"), pd->encoding);
 	    } else {
-		R_CheckStack2(buflen);
 		buf = (char *) alloca(buflen);
+		R_CheckStack();
 		i_buf = (char *) str;
 		o_buf = buf;
 		i_len = strlen(str) + 1; /* including terminator */
@@ -7866,8 +7866,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 				    (enc == CE_UTF8) ? "UTF-8": "");
 	    if(cd  == (void*)-1) return;
 
-	    R_CheckStack2(buflen);
 	    unsigned char buf[buflen];
+	    R_CheckStack();
 
 	    i_buf = (char *)str;
 	    o_buf = (char *)buf;
@@ -7906,8 +7906,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	    a, b, bm, a, x, y);
     if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
 	/* face 5 handled above */
-	R_CheckStack2(strlen(str)+1);
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	R_CheckStack();
 	mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
 	str1 = buff;
     } else str1 = str;

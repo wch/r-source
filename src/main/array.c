@@ -1343,8 +1343,8 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int *Cnt = NULL;
 	long double *rans;
 	if(n <= 10000) {
-	    R_CheckStack2(n * sizeof(long double));
 	    rans = (long double *) alloca(n * sizeof(long double));
+	    R_CheckStack();
 	    memset(rans, 0, n*sizeof(long double));
 	} else rans = Calloc(n, long double);
 	if (!keepNA && OP == 3) Cnt = Calloc(n, int);

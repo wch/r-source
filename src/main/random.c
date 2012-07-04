@@ -359,10 +359,10 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
        By rounding error we could have q[i] < 1. or > 1. for all entries.
      */
     if(n <= SMALL) {
-	R_CheckStack2(n *(sizeof(int) + sizeof(double)));
 	/* might do this repeatedly, so speed matters */
 	HL = (int *) alloca(n * sizeof(int));
 	q = (double *) alloca(n * sizeof(double));
+	R_CheckStack();
     } else {
 	/* Slow enough anyway not to risk overflow */
 	HL = Calloc(n, int);
