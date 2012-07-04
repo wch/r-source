@@ -343,6 +343,9 @@
 
       \item More Polish translations are available: for the
       \command{RGui} menus and for several recommended packages.
+
+      \item Multistratum MANOVA works. In fact, it seems to have done so
+      for years in spite of the help page claiming it did not.
     }
   }
 
@@ -408,6 +411,9 @@
       \item On Windows, the code in \code{as.POSIXct()} to handle
       incorrectly specified \code{isdst} fields might have resulted in
       \code{NA} being returned.
+
+      \item \code{aov()} and \code{manova()} gave spurious warning about
+      singular error model in the multiresponse case.
 
       \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
       is now equivalent to omitting it, also when \code{df} is
