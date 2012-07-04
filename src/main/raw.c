@@ -355,8 +355,8 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (len >= 10000) {
 	    tmp = Calloc(len+1, char);
 	} else {
+	    R_CheckStack2(len+1);
 	    tmp = alloca(len+1); tmp[len] = '\0';
-	    R_CheckStack();
 	}
 	for (i = 0, len = 0; i < nc; i++) {
 	    used = inttomb(buf, INTEGER(x)[i]);

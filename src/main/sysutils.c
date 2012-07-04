@@ -382,8 +382,8 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
 		int n = wcslen(w), N = 3*n+1; /* UCS-2 maps to <=3 UTF-8 */
+		R_CheckStack2(N);
 		char buf[N];
-		R_CheckStack();
 		wcstoutf8(buf, w, N); buf[N-1] = '\0'; /* safety */
 		SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
 	    }

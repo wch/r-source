@@ -514,8 +514,8 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		    il = Rstrlen(STRING_ELT(xx, i), 0);
 		    cnt = imax2(cnt, LENGTH(STRING_ELT(xx, i)) + imax2(0, w-il));
 		} else if (na) cnt  = imax2(cnt, R_print.na_width + imax2(0, w-R_print.na_width));
+	    R_CheckStack2(cnt+1);
 	    char buff[cnt+1];
-	    R_CheckStack();
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
 		if(!na && STRING_ELT(xx, i) == NA_STRING) {
