@@ -27,6 +27,7 @@ extern void *alloca(size_t);
 #define Alloca(n, t)   (t *) alloca( (size_t) ( (n) * sizeof(t) ) )
 
 /** zero an array */
+/* FIXME: use memcpy */
 #define AZERO(x, n) {int _I_, _SZ_ = (n); for(_I_ = 0; _I_ < _SZ_; _I_++) (x)[_I_] = 0;}
 
 
@@ -83,18 +84,17 @@ R_rWishart(SEXP ns, SEXP nuP, SEXP scal)
     if (!isMatrix(scal) || !isReal(scal) || dims[0] != dims[1])
 	error(_("'scal' must be a square, real matrix"));
     if (n <= 0) n = 1;
+    // allocate early to avoid memory leaks in Callocs below.
+    PROTECT(ans = alloc3DArray(REALSXP, dims[0], dims[0], n));
     psqr = dims[0] * dims[0];
-    tmp = Alloca(psqr, double);
-    R_CheckStack();
-    scCp = Alloca(psqr, double);
-    R_CheckStack();
+    tmp = Calloc(psqr, double);
+    scCp = Calloc(psqr, double);
 
     Memcpy(scCp, REAL(scal), psqr);
     AZERO(tmp, psqr);
     F77_CALL(dpotrf)("U", &(dims[0]), scCp, &(dims[0]), &info);
     if (info)
 	error(_("'scal' matrix is not positive-definite"));
-    PROTECT(ans = alloc3DArray(REALSXP, dims[0], dims[0], n));
     ansp = REAL(ans);
     GetRNGstate();
     for (int j = 0; j < n; j++) {
@@ -112,6 +112,7 @@ R_rWishart(SEXP ns, SEXP nuP, SEXP scal)
     }
 
     PutRNGstate();
+    Free(scCp); Free(tmp);
     UNPROTECT(1);
     return ans;
 }

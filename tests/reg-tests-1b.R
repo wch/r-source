@@ -1892,4 +1892,8 @@ sunflowerplot( Sepal.Length ~ Sepal.Width, data = iris, xlab = "A")
 ## failed in 2.15.1
 
 
+## misuse of alloca
+for(n in c(200, 722, 1000)) x <- rWishart(1, n, diag(n))
+## failed in various ways in R <= 2.15.1
+
 proc.time()

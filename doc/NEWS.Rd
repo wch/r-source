@@ -415,6 +415,10 @@
       
       \item \code{sprintf()} did not accept numbered arguments ending
       in zero.  (\PR{14975})
+
+      \item \code{rWishart()} could overflow the C stack and maybe crash
+      the \R process for dimensions of several hundreds or more.
+      (Reported by Michael Braun on R-sig-mac.)
     }
   }
 }
