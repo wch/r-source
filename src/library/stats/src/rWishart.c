@@ -1,3 +1,22 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2012   The R Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, a copy is available at
+ *  http://www.r-project.org/Licenses/
+ */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -9,25 +28,6 @@
 
 #include "mva.h"
 #include "stats.h"
-
-/* as in Defn.h */
-#ifdef __GNUC__
-# undef alloca
-# define alloca(x) __builtin_alloca((x))
-#else
-# ifdef HAVE_ALLOCA_H
-#  include <alloca.h>
-# endif
-# if !HAVE_DECL_ALLOCA
-extern void *alloca(size_t);
-# endif
-#endif
-
-/** alloca n elements of type t */
-#define Alloca(n, t)   (t *) alloca( (size_t) ( (n) * sizeof(t) ) )
-
-/** zero an array */
-#define AZERO(x, n) {int _I_, _SZ_ = (n); for(_I_ = 0; _I_ < _SZ_; _I_++) (x)[_I_] = 0;}
 
 
 /**
@@ -50,7 +50,7 @@ static double
     if (nu < (double) p || p <= 0)
 	error(_("inconsistent degrees of freedom and dimension"));
 
-    AZERO(ans, p * p);
+    memset(ans, 0, p * p * sizeof(double));
     for (int j = 0; j < p; j++) {	/* jth column */
 	ans[j * pp1] = sqrt(rchisq(nu - (double) j));
 	for (int i = 0; i < j; i++) {
@@ -90,7 +90,7 @@ R_rWishart(SEXP ns, SEXP nuP, SEXP scal)
     scCp = Calloc(psqr, double);
 
     Memcpy(scCp, REAL(scal), psqr);
-    AZERO(tmp, psqr);
+    memset(tmp, 0, psqr * sizeof(double));
     F77_CALL(dpotrf)("U", &(dims[0]), scCp, &(dims[0]), &info);
     if (info)
 	error(_("'scal' matrix is not positive-definite"));
