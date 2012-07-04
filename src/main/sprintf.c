@@ -179,7 +179,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				error(_("reference to non-existent argument %d"), v);
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+3, strlen(fmt)-2);
-			} else if(fmt[2] >= '1' && fmt[2] <= '9' && fmt[3] == '$') {
+			} else if(fmt[2] >= '0' && fmt[2] <= '9' && fmt[3] == '$') {
 			    v = 10*v + fmt[2] - '0';
 			    if(v > nargs)
 				error(_("reference to non-existent argument %d"), v);
@@ -198,7 +198,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    error(_("reference to non-existent argument %d"), v);
 				nstar = v-1;
 				memmove(starc+1, starc+3, strlen(starc)-2);
-			    } else if(starc[2] >= '1' && starc[2] <= '9'
+			    } else if(starc[2] >= '0' && starc[2] <= '9'
 				      && starc[3] == '$') {
 				v = 10*v + starc[2] - '0';
 				if(v > nargs)
@@ -516,7 +516,7 @@ SEXP attribute_hidden do_getfmts(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(fmt[2] == '$') {
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+3, strlen(fmt)-2);
-			} else if(fmt[2] >= '1' && fmt[2] <= '9' && fmt[3] == '$') {
+			} else if(fmt[2] >= '0' && fmt[2] <= '9' && fmt[3] == '$') {
 			    v = 10*v + fmt[2] - '0';
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+4, strlen(fmt)-3);
@@ -531,7 +531,7 @@ SEXP attribute_hidden do_getfmts(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if(starc[2] == '$') {
 				nstar = v-1;
 				memmove(starc+1, starc+3, strlen(starc)-2);
-			    } else if(starc[2] >= '1' && starc[2] <= '9'
+			    } else if(starc[2] >= '0' && starc[2] <= '9'
 				      && starc[3] == '$') {
 				v = 10*v + starc[2] - '0';
 				nstar = v-1;

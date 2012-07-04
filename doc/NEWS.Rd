@@ -382,17 +382,17 @@
       were contained within braces.
 
       \item Long timezone specifications (such as a file name preceded
-      by \code{:}) could crash \code{as.POSIXlt}.  (PR#14945.)
+      by \code{:}) could crash \code{as.POSIXlt}.  (\PR{14945})
 
       \item \code{R CMD build --resave-data} could fail if there was no
       \file{data} directory but there was an \file{R/sysdata.rda} file.
-      (PR#14947.)
+      (\PR{14947})
 
       \item \code{is.na()} misbehaved on a 0-column data frame.
-      (\PR{14959}.)
+      (\PR{14959})
 
       \item \code{anova.lmlist()} failed if \code{test} was
-      supplied.  (\PR{14960}.)
+      supplied.  (\PR{14960})
 
       It was unable to compute Cp tests for object of class \code{"lm"}
       (it assumed class \code{"glm"}).
@@ -412,6 +412,9 @@
       \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
       is now equivalent to omitting it, also when \code{df} is
       specified.  (\PR{14970})
+      
+      \item \code{sprintf()} did not accept numbered arguments ending
+      in zero.  (\PR{14975})
     }
   }
 }
