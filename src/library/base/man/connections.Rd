@@ -324,7 +324,7 @@ isIncomplete(con)
   \code{open = "w"} when the connection is created or
   \code{\link{unlink}} the file before creating the connection.)
   
-  For write-mode connections, \code{compress} specifies now hard the
+  For write-mode connections, \code{compress} specifies how hard the
   compressor works to minimize the file size, and higher values need
   more CPU time and more working memory (up to ca 800Mb for
   \code{xzfile(compress = 9)}).  For \code{xzfile} negative values of
