@@ -130,7 +130,7 @@
   class.  To include a literal \samp{]}, place it first in the list.
   Similarly, to include a literal \samp{^}, place it anywhere but first.
   Finally, to include a literal \samp{-}, place it first or last (or,
-  for \code{perl = TRUE} only, precede it by a backslash.).  (Only
+  for \code{perl = TRUE} only, precede it by a backslash).  (Only
   \samp{^ - \\ ]} are special inside character classes.)
 
   The period \samp{.} matches any single character.  The symbol
