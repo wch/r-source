@@ -34,6 +34,10 @@
 
       \item Multistratum MANOVA works. In fact, it seems to have done so
       for years in spite of the help page claiming it did not.
+
+      \item \code{qqline()} has new optional arguments
+      \code{distribution}, \code{probs} and \code{qtype}, following the
+      example of \pkg{lattice}'s \code{panel.qqmathline()}.
     }
   }
 
@@ -144,10 +148,6 @@
       \item \code{colorRamp()} (and hence \code{colorRampPalette()}) now
       also works for the boundary case of just one color when the ramp is
       flat.
-
-      \item \code{qqline()} has new optional arguments
-      \code{distribution}, \code{probs} and \code{qtype}, following the
-      example of \pkg{lattice}'s \code{panel.qqmathline()}.
 
       \item \code{.C()} gains some protection against the misuse of
       character vector arguments.  (An all too common error is to pass
