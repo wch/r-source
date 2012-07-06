@@ -59,7 +59,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 \seealso{\code{\link{approx}(*, method = "constant")} which is a
   generalization of \code{findInterval()}, \code{\link{ecdf}} for
   computing the empirical distribution function which is (up to a factor
-  of \eqn{n}) also basically the same as findInterval(.).
+  of \eqn{n}) also basically the same as \code{findInterval(.)}.
 }
 \examples{
 N <- 100

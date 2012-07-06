@@ -83,7 +83,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   seasonal component using moving averages (see function
   \code{\link{decompose}}) on the \code{start.periods} first periods (a simple
   linear regression on the trend component is used for starting level
-  and trend.). For level/trend-models (no seasonal component), start
+  and trend). For level/trend-models (no seasonal component), start
   values for \code{a} and \code{b} are \code{x[2]} and \code{x[2] -
   x[1]}, respectively. For level-only models (ordinary exponential
   smoothing), the start value for \code{a} is \code{x[1]}.

@@ -1367,7 +1367,7 @@ another client using @pkg{mongodb}'s C driver.
 
 Package @CRANpkg{RMySQL} on @acronym{CRAN} provides an interface to the
 MySQL database system (see @uref{http://www.mysql.com} and Dubois,
-2000.).  The description here applies to version @code{0.5-0}: earlier
+2000).  The description here applies to version @code{0.5-0}: earlier
 versions had a substantially different interface.  The current version
 requires the @CRANpkg{DBI} package, and this description will apply with
 minor changes to all the other back-ends to @CRANpkg{DBI}.
