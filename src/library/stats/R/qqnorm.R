@@ -44,10 +44,12 @@ qqnorm.default <-
 
 ## Splus also has qqnorm.aov(), qqnorm.aovlist(), qqnorm.maov() ...
 
-qqline <- function(y, datax = FALSE, ...)
+qqline <- function(y, datax = FALSE, distribution = qnorm,
+                   probs = c(0.25, 0.75), qtype = 7, ...)
 {
-    y <- quantile(y[!is.na(y)],c(0.25, 0.75))
-    x <- qnorm(c(0.25, 0.75))
+    stopifnot(length(probs) == 2, is.function(distribution))
+    y <- quantile(y, probs, names=FALSE, type=qtype, na.rm = TRUE)
+    x <- distribution(probs)
     if (datax) {
         slope <- diff(x)/diff(y)
         int <- x[1L] - slope*y[1L]

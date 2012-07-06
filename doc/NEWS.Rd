@@ -106,7 +106,7 @@
       \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
       is now equivalent to omitting it, also when \code{df} is
       specified.  (\PR{14970})
-      
+
       \item \code{sprintf()} did not accept numbered arguments ending
       in zero.  (\PR{14975})
 

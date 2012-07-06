@@ -1,6 +1,6 @@
 % File src/library/stats/man/qqnorm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{qqnorm}
@@ -11,7 +11,8 @@ qqnorm(y, \dots)
        xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
        plot.it = TRUE, datax = FALSE, \dots)
 
-qqline(y, datax = FALSE, \dots)
+qqline(y, datax = FALSE, distribution = qnorm,
+       probs = c(0.25, 0.75), qtype = 7, \dots)
 
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
        ylab = deparse(substitute(y)), \dots)
@@ -29,13 +30,19 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
     refer to the y and x axes respectively if \code{datax = TRUE}.}
   \item{plot.it}{logical. Should the result be plotted?}
   \item{datax}{logical. Should data values be on the x-axis?}
+  \item{distribution}{quantile function for reference theoretical distribution.}
+  \item{probs}{numeric vector of length two, representing probabilities.
+    Corresponding quantile pairs define the line drawn.}
+  \item{qtype}{the \code{type} of quantile computation used in \code{\link{quantile}}.}
+
   \item{ylim, \dots}{graphical parameters.}
 }
 \description{
   \code{qqnorm} is a generic function the default method of which
   produces a normal QQ plot of the values in \code{y}.
-  \code{qqline} adds a line to a normal quantile-quantile plot which
-  passes through the first and third quartiles.
+  \code{qqline} adds a line to a \dQuote{theoretical}, by default
+  normal, quantile-quantile plot which passes through the \code{probs}
+  quantiles, by default the first and third quartiles.
 
   \code{qqplot} produces a QQ plot of two datasets.
 
@@ -65,6 +72,15 @@ qqnorm(y); qqline(y, col = 2)
 qqplot(y, rt(300, df = 5))
 
 qqnorm(precip, ylab = "Precipitation [in/yr] for 70 US cities")
+
+## "QQ-Chisquare" : --------------------------
+y <- rchisq(500, df=3)
+## Q-Q plot for Chi^2 data against true theoretical distribution:
+qqplot(qchisq(ppoints(500), df=3), y,
+       main = expression("Q-Q plot for" ~~ {chi^2}[nu==3]))
+qqline(y, distribution = function(p) qchisq(p, df=3),
+       prob = c(0.1, 0.6), col=2)
+mtext("qqline(*, dist = qchisq(., df=3), prob = c(0.1, 0.6))")
 }
 \keyword{hplot}
 \keyword{distribution}
