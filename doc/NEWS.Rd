@@ -276,8 +276,7 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      % This is deferred until we can get package maintainers to cooperate.
-      %       \item Passing \code{NULL} to \code{.C()} is now an error.
+      \item Passing \code{NULL} to \code{.C()} is now an error.
 
       \item \code{.C()} and \code{.Fortran()} now warn if
       \code{"single"} arguments are used with \code{dup=FALSE}, as

@@ -1612,13 +1612,11 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			    type2char(TYPEOF(s)), na + 1);
 	    cargs[na] =  (void*) s;
 	    break;
-/*
 	case NILSXP:
 	    error(_("invalid mode (%s) to pass to C or Fortran (arg %d)"), 
 		  type2char(t), na + 1);
 	    cargs[na] =  (void*) s;
 	    break;
-*/
 	default:
 	    /* Includes pairlists from R 2.15.0 */
 	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
