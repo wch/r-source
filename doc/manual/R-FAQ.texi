@@ -3226,7 +3226,7 @@ There is not an option in the GUI to enable/disable anti-aliasing.
 From a console command line, use:
 @smallexample
 $ kwriteconfig --file okularpartrc --group 'Dlg Performance' \
-               --key TextAntialias Disabled
+               --key GraphicsAntialias Disabled
 @end smallexample
 Then restart Okular.  Change the final word to @samp{Enabled} to restore
 the original setting.
