@@ -1,6 +1,6 @@
 % File src/library/stats/man/AIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{AIC}
@@ -9,7 +9,7 @@
 \alias{BIC}
 \title{Akaike's An Information Criterion}
 \description{
-  Generic function calculating Akaike's information criterion for
+  Generic function calculating Akaike's \sQuote{An Information Criterion} for
   one or several fitted model objects for which a log-likelihood value
   can be obtained, according to the formula
   \eqn{-2 \mbox{log-likelihood} + k n_{par}}{-2*log-likelihood + k*npar},
