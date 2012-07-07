@@ -428,6 +428,9 @@
       \item \code{rWishart()} could overflow the C stack and maybe crash
       the \R process for dimensions of several hundreds or more.
       (Reported by Michael Braun on R-sig-mac.)
+      
+      \item Base package vignettes (e.g. \code{vignette("Sweave")}) were 
+      not fully installed in builds of \R from the tarball.
     }
   }
 }

@@ -589,7 +589,6 @@ function(dir, outDir, keep.source = TRUE)
                   sub("$", ".pdf",
                       basename(file_path_sans_ext(vigns$docs))))
     upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
-    if(all(upToDate)) return(invisible())
 
     ## The primary use of this function is to build and install
     ## vignettes in base packages.
