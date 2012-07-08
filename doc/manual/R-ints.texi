@@ -1633,6 +1633,16 @@ mechanism will warn far enough from the stack limit to allow for modest
 use of alloca).  (@code{do_makeunique} in file @file{src/main/unique.c}
 provides an example of both points.)
 
+As from @R{} 2.16.0 there is an alternative check,
+@findex R_CheckStack2
+@example
+    R_CheckStack2(size_t extra);
+@end example
+
+@noindent
+to be called immediately @emph{before} trying an allocation of
+@code{extra} bytes.
+
 An alternative strategy has been used for various functions which
 require intermediate blocks of storage of varying but usually small
 size, and this has been consolidated into the routines in the header
