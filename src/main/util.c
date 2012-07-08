@@ -1224,9 +1224,9 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 	/* This gets called from the menu setup in RGui */
 	if (!R_Is_Running) return (size_t)-1;
 	/* let's try to print out a readable version */
+	R_CheckStack2(4*strlen(s) + 10);
 	char err[4*strlen(s) + 1], *q;
 	const char *p;
-	R_CheckStack();
 	for(p = s, q = err; *p; ) {
 	    /* don't do the first to keep ps state straight */
 	    if(p > s) used = mbrtowc(NULL, p, n, ps);
@@ -1827,8 +1827,8 @@ void attribute_hidden resetICUcollator(void) {}
 
 static int Rstrcoll(const char *s1, const char *s2)
 {
+    R_CheckStack2(sizeof(wchar_t) * (2 + strlen(s1) + strlen(s2)));
     wchar_t w1[strlen(s1)+1], w2[strlen(s2)+1];
-    R_CheckStack();
     utf8towcs(w1, s1, strlen(s1));
     utf8towcs(w2, s2, strlen(s2));
     return wcscoll(w1, w2);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2005    The R Core Team
+ *  Copyright (C) 1998-2012    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -94,6 +94,7 @@ void	rgb2hsv(double r, double g, double b,
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);
+void R_CheckStack2(size_t);
 
 
 /* ../../appl/interv.c: also in Applic.h */

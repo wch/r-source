@@ -1426,9 +1426,9 @@ SEXP C_plotXY(SEXP args)
 	double *xtemp, *ytemp;
 	int n0 = 0;
 	if(n <= 1000) {
+	    R_CheckStack2(4*n*sizeof(double));
 	    xtemp = (double *) alloca(2*n*sizeof(double));
 	    ytemp = (double *) alloca(2*n*sizeof(double));
-	    R_CheckStack();
 	} else {
 	    vmax = vmaxget();
 	    xtemp = (double *) R_alloc(2*n, sizeof(double));
@@ -1464,9 +1464,9 @@ SEXP C_plotXY(SEXP args)
 	double *xtemp, *ytemp;
 	int n0 = 0;
 	if(n < 1000) {
+	    R_CheckStack2(4*n*sizeof(double));
 	    xtemp = (double *) alloca(2*n*sizeof(double));
 	    ytemp = (double *) alloca(2*n*sizeof(double));
-	    R_CheckStack();
 	} else {
 	    vmax = vmaxget();
 	    xtemp = (double *) R_alloc(2*n, sizeof(double));
