@@ -1710,15 +1710,15 @@ as the garbage collector marks everything that can be reached from that
 location.  When a vector is @code{R_alloc}ated, its @code{ATTRIB}
 pointer is set to the current @code{R_VStack}, and @code{R_VStack} is
 set to the latest allocation.  Thus @code{R_VStack} is a single-linked
-chain of vectors currently allocated via @code{R_alloc}.  Function
+chain of the vectors currently allocated via @code{R_alloc}.  Function
 @code{vmaxset} resets the location @code{R_VStack}, and should be to a
 value that has previously be obtained @emph{via} @code{vmaxget}:
 allocations after the value was obtained will no longer be protected and
 hence available for garbage collection.
 
-Prior to @R{} 2.16.0, type @code{RAWSXP} for `small' allocations (less
-than 2^31 - 1 bytes) and type @code{REALSXP} for allocations up to 2^34
-- 1 bytes on 64-bit machines.
+Prior to @R{} 2.16.0, type @code{RAWSXP} was used for `small'
+allocations (less than 2^31 - 1 bytes) and type @code{REALSXP} for
+allocations up to 2^34 - 1 bytes on 64-bit machines.
 
 @node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments
