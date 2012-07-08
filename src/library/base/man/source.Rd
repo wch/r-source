@@ -1,6 +1,6 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -142,8 +142,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
  sourceDir <- function(path, trace = TRUE, ...) {
-    for (nm in list.files(path, pattern = "\\\\.[RrSsQq]$")) {
-       if(trace) cat(nm,":")           %   ^^^^ doubled in *.Rd file
+    for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+       if(trace) cat(nm,":") 
        source(file.path(path, nm), ...)
        if(trace) cat("\n")
     }
