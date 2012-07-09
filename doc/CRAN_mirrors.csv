@@ -37,7 +37,7 @@ India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology 
 "Indonesia (Jakarta 2)",Indonesia,Jakarta,http://cran.repo.bppt.go.id/,"Agency for The Application and Assessment of Technology","Imam Cartealy <icx # biotek.bppt.go.id>",1,id
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet, Dublin","Brian McArdle <brian.mcardle # heanet.ie>",1,ie
-"Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
+"Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo # dssm.unipa.it, alf # dssm.unipa.it",1,it
 "Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",1,jp
