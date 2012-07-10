@@ -69,7 +69,7 @@ WIN = 32
 ICU_PATH=/sources/icu
 
 # optional overrides for making bitmapdll: names of source directories
-# JPEGDIR = jpeg-8c
+# JPEGDIR = jpeg-8d
 # PNGDIR = libpng
 # TIFFDIR = libtiff
 
