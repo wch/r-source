@@ -230,7 +230,7 @@ SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 {
     SEXP attr, result, sr, sc, dim;
-    R_xlen_t nr, nc, nrs, ncs;
+    R_len_t nr, nc, nrs, ncs;
     R_xlen_t i, j, ii, jj, ij, iijj;
 
     nr = nrows(x);
