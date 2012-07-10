@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011  The R Core Team
+ *  Copyright (C) 1998--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -770,7 +770,7 @@ static void cell_cursor_init(DEstruct DE)
 	}
     }
     buf[BOOSTED_BUF_SIZE-1] = '\0';
-    clength = strlen(buf);
+    clength = (int) strlen(buf);
     bufp = buf + clength;
 }
 
@@ -804,14 +804,14 @@ static int get_col_width(DEstruct DE, int col)
 	if(lab != NA_STRING) strp = CHAR(lab); else strp = "var12";
 	PrintDefaults();
 
-	w = textwidth(DE, strp, strlen(strp));
+	w = textwidth(DE, strp, (int) strlen(strp));
 	for (i = 0; i < INTEGER(DE->lens)[col - 1]; i++) {
 	    strp = EncodeElement(tmp, i, 0, '.');
-	    w1 = textwidth(DE, strp, strlen(strp));
+	    w1 = textwidth(DE, strp, (int) strlen(strp));
 	    if (w1 > w) w = w1;
 	}
-	if(w < 0.5*DE->box_w) w = 0.5*DE->box_w;
-	if(w < 0.8*DE->box_w) w+= 0.1*DE->box_w;
+	if(w < 0.5*DE->box_w) w = (int) (0.5*DE->box_w);
+	if(w < 0.8*DE->box_w) w+= (int) (0.1*DE->box_w);
 	if(w > 600) w = 600;
 	return w+8;
     }
@@ -847,7 +847,7 @@ static void drawcol(DEstruct DE, int whichcol)
 
     /* now fill it in if it is active */
     clab = get_col_name(DE, whichcol);
-    printstring(DE, clab, strlen(clab), 0, col, 0);
+    printstring(DE, clab, (int) strlen(clab), 0, col, 0);
 
    if (DE->xmaxused >= whichcol) {
 	tmp = VECTOR_ELT(DE->work, whichcol - 1);
@@ -873,7 +873,7 @@ static void drawrow(DEstruct DE, int whichrow)
     drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
     sprintf(rlab, DE->labform, whichrow);
-    printstring(DE, rlab, strlen(rlab), row, 0, 0);
+    printstring(DE, rlab, (int)strlen(rlab), row, 0, 0);
 
     w = DE->bwidth + DE->boxw[0];
     for (i = DE->colmin; i <= DE->colmax; i++) {
@@ -903,12 +903,12 @@ static void printelt(DEstruct DE, SEXP invec, int vrow, int ssrow, int sscol)
     PrintDefaults();
     if (TYPEOF(invec) == REALSXP) {
 	strp = EncodeElement(invec, vrow, 0, '.');
-	printstring(DE ,strp, strlen(strp), ssrow, sscol, 0);
+	printstring(DE ,strp, (int) strlen(strp), ssrow, sscol, 0);
     }
     else if (TYPEOF(invec) == STRSXP) {
 	if (STRING_ELT(invec, vrow) != ssNA_STRING) {
 	    strp = EncodeElement(invec, vrow, 0, '.');
-	    printstring(DE ,strp, strlen(strp), ssrow, sscol, 0);
+	    printstring(DE ,strp, (int) strlen(strp), ssrow, sscol, 0);
 	}
     }
     else
@@ -924,7 +924,7 @@ static void drawelt(DEstruct DE, int whichrow, int whichcol)
 
     if (whichrow == 0) {
 	clab = get_col_name(DE, whichcol + DE->colmin - 1);
-	printstring(DE ,clab, strlen(clab), 0, whichcol, 0);
+	printstring(DE ,clab, (int) strlen(clab), 0, whichcol, 0);
     } else {
 	if (DE->xmaxused >= whichcol + DE->colmin - 1) {
 	    tmp = VECTOR_ELT(DE->work, whichcol + DE->colmin - 2);
@@ -1119,10 +1119,10 @@ static void closerect(DEstruct DE)
 		    DE->xmaxused = wcol;
 		}
 		SET_STRING_ELT(DE->names, wcol - 1, mkChar(buf));
-		printstring(DE ,buf, strlen(buf), 0, wcol, 0);
+		printstring(DE ,buf, (int) strlen(buf), 0, wcol, 0);
 	    } else {
 		sprintf(buf, "var%d", DE->ccol);
-		printstring(DE ,buf, strlen(buf), 0, wcol, 0);
+		printstring(DE ,buf, (int) strlen(buf), 0, wcol, 0);
 	    }
 	} else {
 	    newcol = getccol(DE);
@@ -1211,7 +1211,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
 	    w_p=wcs;
 	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-	    if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
+	    if (textwidth(DE, s, (int) strlen(s)) < (bw - DE->text_offset)) break;
 	    *(++wcspc) = L'<';
 	}
     } else {
@@ -1221,7 +1221,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
 	    w_p=wcs;
 	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-	    if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
+	    if (textwidth(DE, s, (int) strlen(s)) < (bw - DE->text_offset)) break;
 	    *(wcspbuf + i - 2) = L'>';
 	    *(wcspbuf + i - 1) = L'\0';
 	}
@@ -1301,7 +1301,7 @@ static void handlechar(DEstruct DE, char *text)
 
     if (currentexp == 1) {	/* we are parsing a number */
 	char *mbs = text;
-	int i, cnt = mbsrtowcs(wcs, (const char **)&mbs, strlen(text)+1, NULL);
+	int i, cnt = mbsrtowcs(wcs, (const char **)&mbs, (int) strlen(text)+1, NULL);
 
 	for(i = 0; i < cnt; i++) {
 	    switch (wcs[i]) {
@@ -1331,7 +1331,7 @@ static void handlechar(DEstruct DE, char *text)
     }
     if (currentexp == 3) {
 	char *mbs = text;
-	int i, cnt = mbsrtowcs(wcs, (const char **)&mbs, strlen(text)+1, NULL);
+	int i, cnt = mbsrtowcs(wcs, (const char **)&mbs, (int) strlen(text)+1, NULL);
 	for(i = 0; i < cnt; i++) {
 	    if (iswspace(wcs[i])) goto donehc;
 	    if (clength == 0 && wcs[i] != L'.' && !iswalpha(wcs[i]))
@@ -1350,7 +1350,7 @@ static void handlechar(DEstruct DE, char *text)
        pointed to by bufp had already been zeroed, so the undefined
        byte was in fact zero.  */
     strcpy(bufp, text);
-    bufp += (j = strlen(text));
+    bufp += (j = (int) strlen(text));
     clength += j;
     printstring(DE, buf, clength, DE->crow, DE->ccol, 1);
     return;
@@ -1367,11 +1367,11 @@ static void printlabs(DEstruct DE)
 
     for (i = DE->colmin; i <= DE->colmax; i++) {
 	p = get_col_name(DE, i);
-	printstring(DE, p, strlen(p), 0, i - DE->colmin + 1, 0);
+	printstring(DE, p, (int) strlen(p), 0, i - DE->colmin + 1, 0);
     }
     for (i = DE->rowmin; i <= DE->rowmax; i++) {
 	sprintf(clab, DE->labform, i);
-	printstring(DE, clab, strlen(clab), i - DE->rowmin + 1, 0, 0);
+	printstring(DE, clab, (int) strlen(clab), i - DE->rowmin + 1, 0, 0);
     }
 }
 
@@ -1953,7 +1953,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     DE->nboxchars = asInteger(GetOption1(install("de.cellwidth")));
     if (DE->nboxchars == NA_INTEGER || DE->nboxchars < 0) DE->nboxchars = 0;
 
-    twidth = textwidth(DE, digits, strlen(digits));
+    twidth = textwidth(DE, digits, (int) strlen(digits));
 
     if (DE->nboxchars > 0) twidth = (twidth * DE->nboxchars)/10;
     DE->box_w = twidth + 4;
@@ -1971,9 +1971,9 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     }
     DE->windowHeight = 26 * DE->box_h + DE->hht + 2;
     /* this used to presume 4 chars sufficed for row numbering */
-    labdigs = max(3, 1+floor(log10((double)DE->ymaxused)));
+    labdigs = max(3, 1+ (int) floor(log10((double)DE->ymaxused)));
     sprintf(DE->labform, "%%%dd", labdigs);
-    DE->boxw[0] = 0.1*labdigs*textwidth(DE, "0123456789", 10) +
+    DE->boxw[0] = (int)( 0.1*labdigs*textwidth(DE, "0123456789", 10)) +
 	textwidth(DE, " ", 1) + 8;
     for(i = 1; i < 100; i++) DE->boxw[i] = get_col_width(DE, i);
 
@@ -2173,8 +2173,8 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 
     /* font size consideration */
     for(i = 0; i < (sizeof(menu_label)/sizeof(char *)); i++)
-	twidth = (twidth<textwidth(DE, menu_label[i],strlen(menu_label[i]))) ?
-	    textwidth(DE, menu_label[i],strlen(menu_label[i])) : twidth;
+	twidth = (twidth<textwidth(DE, menu_label[i],(int) strlen(menu_label[i]))) ?
+	    textwidth(DE, menu_label[i],(int) strlen(menu_label[i])) : twidth;
 
     menuwindow = XCreateSimpleWindow(iodisplay, root, 0, 0, twidth,
 				     4 * DE->box_h, 2, ioblack, iowhite);
@@ -2353,17 +2353,17 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 	    Xutf8DrawString(iodisplay,
 			    menupanes[0],
 			    font_set, DE->iogc, 3, DE->box_h - 3, name,
-			    strlen(name));
+			    (int) strlen(name));
 	else
 #endif
 	    XmbDrawString(iodisplay,
 			  menupanes[0],
 			  font_set, DE->iogc, 3, DE->box_h - 3, name,
-			  strlen(name));
+			  (int) strlen(name));
     else
 	XDrawString(iodisplay,
 		    menupanes[0], DE->iogc, 3, DE->box_h - 3, name,
-		    strlen(name));
+		    (int) strlen(name));
     for (i = 1; i < 4; i++)
 	if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWSTRING
@@ -2371,17 +2371,17 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 		Xutf8DrawString(iodisplay,
 				menupanes[i],
 				font_set, DE->iogc, 3, DE->box_h - 3,
-				menu_label[i - 1], strlen(menu_label[i - 1]));
+				menu_label[i - 1], (int) strlen(menu_label[i - 1]));
 	    else
 #endif
 		XmbDrawString(iodisplay,
 			      menupanes[i],
 			      font_set, DE->iogc, 3, DE->box_h - 3,
-			      menu_label[i - 1], strlen(menu_label[i - 1]));
+			      menu_label[i - 1], (int) strlen(menu_label[i - 1]));
 	else
 	    XDrawString(iodisplay,
 			menupanes[i], DE->iogc, 3, DE->box_h - 3,
-			menu_label[i - 1], strlen(menu_label[i - 1]));
+			menu_label[i - 1], (int) strlen(menu_label[i - 1]));
 
     if (isNull(tvec) || TYPEOF(tvec) == REALSXP)
 	if(mbcslocale)
@@ -2477,11 +2477,11 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 	else if (event.type == Expose) {
 	    if (event.xexpose.window == menuwindow) {
 		XDrawString(iodisplay, menupanes[0], DE->iogc, 3,
-			    DE->box_h - 3, name, strlen(name));
+			    DE->box_h - 3, name, (int) strlen(name));
 		for (i = 1; i < 4; i++)
 		    XDrawString(iodisplay, menupanes[i], DE->iogc, 3,
 				DE->box_h - 3,
-				menu_label[i - 1], strlen(menu_label[i - 1]));
+				menu_label[i - 1], (int) strlen(menu_label[i - 1]));
 	    }
 	}
     }
@@ -2538,7 +2538,7 @@ static void pastecell(DEstruct DE, int row, int col)
     DE->crow = row; DE->ccol = col;
     if (strlen(copycontents)) {
 	strcpy(buf, copycontents);
-	clength = strlen(copycontents);
+	clength = (int) strlen(copycontents);
 	bufp = buf + clength;
 	CellModified = TRUE;
     }
@@ -2600,7 +2600,7 @@ static int last_wchar_bytes(char *str)
     memset(&mb_st,0, sizeof(mbstate_t));
 
     if((size_t)-1 == (cnt = mbsrtowcs(wcs, (const char **)&mbs,
-				      strlen(mbs), &mb_st))) {
+				      (int) strlen(mbs), &mb_st))) {
 	return 0;
     }
     if(wcs[0] == L'\0') return 0;

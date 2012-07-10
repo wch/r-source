@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-11  The R Core Team
+ *  first part Copyright (C) 2002-12  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1993,14 +1993,14 @@ static int unzReadCurrentFile  (unzFile file, voidp buf, unsigned len)
             pfile_in_zip_read_info->bstream.avail_in       = 
 		pfile_in_zip_read_info->stream.avail_in;
             pfile_in_zip_read_info->bstream.total_in_lo32  = 
-		pfile_in_zip_read_info->stream.total_in;
+		(unsigned int) pfile_in_zip_read_info->stream.total_in;
             pfile_in_zip_read_info->bstream.total_in_hi32  = 0;
             pfile_in_zip_read_info->bstream.next_out       = 
 		(char*)pfile_in_zip_read_info->stream.next_out;
             pfile_in_zip_read_info->bstream.avail_out      = 
 		pfile_in_zip_read_info->stream.avail_out;
             pfile_in_zip_read_info->bstream.total_out_lo32 = 
-		pfile_in_zip_read_info->stream.total_out;
+		(unsigned int) pfile_in_zip_read_info->stream.total_out;
             pfile_in_zip_read_info->bstream.total_out_hi32 = 0;
 
             uTotalOutBefore = pfile_in_zip_read_info->bstream.total_out_lo32;
