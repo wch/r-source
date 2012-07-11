@@ -403,10 +403,15 @@ in the document's preamble, to tell \LaTeX{} to translate the input to
 its own escapes.  There is a wide range of input encodings which are
 supported, at least partially, and the more recent \LaTeX{} package
 \texttt{inputenx} supports more.  Other encodings commonly encountered
-in Sweave documents are \texttt{latin9}, \texttt{utf8} (but that only
-covers a subset of UTF-8, larger with \texttt{inputenx} than
-\texttt{inputenc}) and \texttt{ansinew} (the CP1252 codepage on
-Windows).
+in Sweave documents are \texttt{latin9}, \texttt{utf8} and
+\texttt{ansinew} (the CP1252 codepage on Windows).  Greater
+coverage\footnote{including Eastern European, Greek and Hebrew
+  letters.}  of UTF-8 can be obtained by
+\begin{quote}
+  \verb|\usepackage[utf8]{inputenx}|
+  \verb|\input{ix-utf8enc.dfu}|
+\end{quote}
+
 
 The previous paragraph covered the documentation sections, but what of
 the code sections where \LaTeX{} escapes cannot be used?  The first
