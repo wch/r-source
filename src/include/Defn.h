@@ -601,9 +601,10 @@ LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern0 SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern0 SEXP*	R_SymbolTable;	    /* The symbol table */
 #ifdef R_USE_SIGNALS
-LibExtern RCNTXT R_Toplevel;	    /* Storage for the toplevel environment */
-LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel environment */
-LibExtern RCNTXT* R_GlobalContext;    /* The global environment */
+LibExtern RCNTXT R_Toplevel;	      /* Storage for the toplevel context */
+LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel context */
+LibExtern RCNTXT* R_GlobalContext;    /* The global context */
+LibExtern RCNTXT* R_SessionContext;   /* The session toplevel context */
 #endif
 extern0 Rboolean R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
