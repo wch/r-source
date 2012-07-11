@@ -300,6 +300,13 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item The management of translations is being converted to \R
+      code: see \code{?tools::update_pkg_po}.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item When \command{R CMD build} is run in an encoding other than

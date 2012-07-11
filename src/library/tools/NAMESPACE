@@ -19,7 +19,9 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "resaveRdaFiles", "showNonASCII", "showNonASCIIfile",
        "startDynamicHelp", "testInstalledBasic",
        "testInstalledPackage", "testInstalledPackages", "texi2dvi",
-       "texi2pdf", "toHTML", "toRd", "undoc", "vignetteDepends",
+       "texi2pdf", "toHTML", "toRd", "undoc",
+       "update_pkg_po",
+       "vignetteDepends",
        "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext")
 
 exportPattern("^SIG.+")
