@@ -4839,10 +4839,9 @@ install @LaTeX{} on first use.
 @section The Inno Setup installer
 
 To make the installer package (@file{@value{RWVERSION}-win.exe}) we
-currently require Inno Setup 5.3.7 or later (including 5.4.x) from
-@uref{http://jrsoftware.org/}.  We use the Unicode version and recommend
-that version be used.  This is @emph{not} included in
-@file{Rtools*.exe}.
+currently require the Unicode version of Inno Setup 5.3.7 or later
+(including 5.4.x and 5.5.x) from @uref{http://jrsoftware.org/}. This is
+@emph{not} included in @file{Rtools*.exe}.
 
 Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the

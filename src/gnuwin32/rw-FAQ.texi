@@ -940,8 +940,7 @@ CMD /K setpath.bat
 @node The installer does not offer my language, I want R in English!, Languages and Internationalization, Languages and Internationalization
 @section The installer does not offer my language.
 
-Only a limited range of languages is supported (but still wider
-than those for which R has translations), currently
+Only a limited range of languages is supported, currently
 Brazilian Portuguese,
 Catalan,
 both Simplified and Traditional Chinese,
@@ -951,6 +950,7 @@ Dutch,
 Finnish,
 French,
 German,
+Greek,
 Hebrew,
 Hungarian,
 Italian,
@@ -960,9 +960,10 @@ Norwegian,
 Polish,
 Portuguese,
 Russian,
-Slovak,
+Serbian,
 Slovenian
-and Spanish (Spain).
+Spanish (Spain)
+and Ukranian
 
 @c In earlier versions only languages which could be displayed using the
 @c current codepage were offered so you could only install in Japanese if
@@ -1017,9 +1018,9 @@ control panel, and the appropriate language has to be set under
 @emph{both} the `Regional Options' and `Advanced' tabs.
 
 When using @command{Rterm} the window in which it is run has to be set
-up to use a suitable font (e.g. @code{Lucida Console}, not the OEM
-raster fonts) and a suitable codepage (which for the Windows Cmd shell
-can be done using @command{chcp}).
+up to use a suitable font (e.g. @code{Lucida Console} or
+@code{Consolas}, not the OEM raster fonts) and a suitable codepage
+(which for the Windows Cmd shell can be done using @command{chcp}).
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
 @section I selected English for installation but R runs in Chinese.
