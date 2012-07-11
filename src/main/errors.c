@@ -856,7 +856,9 @@ static void jump_to_top_ex(Rboolean traceback,
        LT. */
     R_run_onexits(R_ToplevelContext);
 
-    if ( !R_Interactive && !haveHandler ) {
+    if ( !R_Interactive && !haveHandler
+	 /* only bail out if at session top level, not in R_tryEval calls */
+	 && R_ToplevelContext == R_SessionContext ) {
 	REprintf(_("Execution halted\n"));
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
