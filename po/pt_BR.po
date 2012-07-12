@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-06-27 09:10+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 13:07+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -171,7 +171,7 @@ msgstr "problema ao mostrar '%ls'"
 #: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
-#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:995
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:997
 #: src/main/eval.c:267 src/main/eval.c:2036 src/main/eval.c:2065
 #: src/main/eval.c:2069 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
@@ -286,9 +286,9 @@ msgstr "etiqueta de tempo inválida"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:194 src/main/errors.c:896 src/main/errors.c:927
-#: src/main/errors.c:1028 src/main/errors.c:1053 src/main/errors.c:1058
-#: src/main/errors.c:1330 src/main/optimize.c:95 src/main/optimize.c:102
+#: src/main/dotcode.c:194 src/main/errors.c:898 src/main/errors.c:929
+#: src/main/errors.c:1030 src/main/errors.c:1055 src/main/errors.c:1060
+#: src/main/errors.c:1332 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
 #: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
 #: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2292
@@ -1099,7 +1099,7 @@ msgstr "'x' deve ser numérico"
 msgid "'dim' specifies too large an array"
 msgstr "tamanho de vetor especificado é muito grande"
 
-#: src/main/array.c:1479 src/main/attrib.c:929
+#: src/main/array.c:1483 src/main/attrib.c:929
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' aplicado a um objeto diferente de array"
 
@@ -1584,15 +1584,15 @@ msgstr "argumento 'mode' inválido"
 msgid "applies only to lists and vectors"
 msgstr "se aplica somente a listas e vetores"
 
-#: src/main/coerce.c:73 src/main/errors.c:1165
+#: src/main/coerce.c:73 src/main/errors.c:1167
 msgid "NAs introduced by coercion"
 msgstr "NAs introduzidos por coerção"
 
-#: src/main/coerce.c:75 src/main/errors.c:1166
+#: src/main/coerce.c:75 src/main/errors.c:1168
 msgid "inaccurate integer conversion in coercion"
 msgstr "conversão inteira inacurada na coerção"
 
-#: src/main/coerce.c:77 src/main/errors.c:1167
+#: src/main/coerce.c:77 src/main/errors.c:1169
 msgid "imaginary parts discarded in coercion"
 msgstr "partes imaginárias descartadas na coerção"
 
@@ -1808,7 +1808,7 @@ msgstr "rgb deve ter 3 linhas (internamente)"
 msgid "bad hsv to rgb color conversion"
 msgstr "conversão de cor rgb hsv inválida"
 
-#: src/main/colors.c:1273 src/main/errors.c:1151 src/main/logic.c:166
+#: src/main/colors.c:1273 src/main/errors.c:1153 src/main/logic.c:166
 msgid "invalid argument type"
 msgstr "argumento de tipo inválido"
 
@@ -3407,7 +3407,7 @@ msgstr ""
 msgid "Error: "
 msgstr "Erro: "
 
-#: src/main/errors.c:659 src/main/errors.c:1282
+#: src/main/errors.c:659 src/main/errors.c:1284
 msgid "In addition: "
 msgstr "Além disso: "
 
@@ -3415,95 +3415,95 @@ msgstr "Além disso: "
 msgid "invalid option \"error\"\n"
 msgstr "opção inválida \"error\"\n"
 
-#: src/main/errors.c:860
+#: src/main/errors.c:862
 msgid "Execution halted\n"
 msgstr "Execução interrompida\n"
 
-#: src/main/errors.c:997
+#: src/main/errors.c:999
 msgid "'msg1' must be a character string"
 msgstr "'msg1' deve ser uma string de caracteres"
 
-#: src/main/errors.c:999
+#: src/main/errors.c:1001
 msgid "'msg2' must be a character string"
 msgstr "'msg2' deve ser uma string de caracteres"
 
-#: src/main/errors.c:1094
+#: src/main/errors.c:1096
 msgid " [invalid string in stop(.)]"
 msgstr " [string inválida em stop(.)]"
 
-#: src/main/errors.c:1120
+#: src/main/errors.c:1122
 msgid " [invalid string in warning(.)]"
 msgstr " [string inválida em warning(.)]"
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1137
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "número de argumentos inválidos para \"%s\""
 
-#: src/main/errors.c:1141 src/main/errors.c:1156
+#: src/main/errors.c:1143 src/main/errors.c:1158
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "recurso não implementado em %s"
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1152
 msgid "invalid number of arguments"
 msgstr "número inválido de argumentos"
 
-#: src/main/errors.c:1153
+#: src/main/errors.c:1155
 msgid "time-series/vector length mismatch"
 msgstr "comprimento de séries temporais/vetor incompatível"
 
-#: src/main/errors.c:1154
+#: src/main/errors.c:1156
 msgid "incompatible arguments"
 msgstr "argumentos incompatíveis"
 
-#: src/main/errors.c:1157
+#: src/main/errors.c:1159
 msgid "unknown error (report this!)"
 msgstr "erro desconhecido (avise isso!)"
 
-#: src/main/errors.c:1169
+#: src/main/errors.c:1171
 msgid "unknown warning (report this!)"
 msgstr "aviso desconhecido (avise isso!)"
 
-#: src/main/errors.c:1247
+#: src/main/errors.c:1249
 msgid "No function to return from, jumping to top level"
 msgstr "Nenhuma função de onde retornar, pulando para o nível superior"
 
-#: src/main/errors.c:1263
+#: src/main/errors.c:1265
 msgid "top level inconsistency?"
 msgstr "nível superior inconsistente?"
 
-#: src/main/errors.c:1439
+#: src/main/errors.c:1441
 msgid "bad handler data"
 msgstr "manipulador de dados defeituoso"
 
-#: src/main/errors.c:1589
+#: src/main/errors.c:1591
 msgid "error message not a string"
 msgstr "mensagem de erro não é uma string"
 
-#: src/main/errors.c:1664
+#: src/main/errors.c:1666
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "incompatibilidade no manipulador ou pilha de reinício durante o reinício "
 "antigo"
 
-#: src/main/errors.c:1690 src/main/errors.c:1706
+#: src/main/errors.c:1692 src/main/errors.c:1708
 msgid "bad error message"
 msgstr "mensagem de erro inválida"
 
-#: src/main/errors.c:1748
+#: src/main/errors.c:1750
 msgid "bad restart"
 msgstr "reinício defeituoso"
 
-#: src/main/errors.c:1780
+#: src/main/errors.c:1782
 msgid "restart not on stack"
 msgstr "reínicio não está na pilha"
 
-#: src/main/errors.c:1797
+#: src/main/errors.c:1799
 msgid "not in a try context"
 msgstr "não está em um contexto try"
 
-#: src/main/errors.c:1810
+#: src/main/errors.c:1812
 msgid "error message must be a character string"
 msgstr "mensagem de erro deve ser uma cadeia de caracteres"
 

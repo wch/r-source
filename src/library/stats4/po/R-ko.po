@@ -1,14 +1,14 @@
-## File R_HOME/src/library/stats4/po/R-ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/stats4/po/R-ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
-"Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 13:10\n"
 "PO-Revision-Date: 2012-03-06 18:03+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -30,11 +30,15 @@ msgstr "'start' 는 이름이 주어진 list 이어야 합니다 "
 msgid ""
 "some named arguments in 'start' are not arguments to the supplied log-"
 "likelihood"
-msgstr "'start' 에 일부 이름이 주어진 인자들은 log-likelihood 에서 지원하는 인자들이 아닙니다 "
+msgstr ""
+"'start' 에 일부 이름이 주어진 인자들은 log-likelihood 에서 지원하는 인자들이 "
+"아닙니다 "
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
-msgstr "profiling 이 더 적합한 해를 찾았으므로 초기 적합은 수렴하지 않았음을 의미합니다 "
+msgstr ""
+"profiling 이 더 적합한 해를 찾았으므로 초기 적합은 수렴하지 않았음을 의미합니"
+"다 "
 
 msgid "levels truncated to positive values only"
 msgstr "levels 는 양의 정수값만 가집니다 "

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-06-27 09:10+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 13:07+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -171,7 +171,7 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
-#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:995
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:997
 #: src/main/eval.c:267 src/main/eval.c:2036 src/main/eval.c:2065
 #: src/main/eval.c:2069 src/main/grep.c:757 src/main/grep.c:762
 #: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
@@ -286,9 +286,9 @@ msgstr "時間戳記不正確"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3283 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:194 src/main/errors.c:896 src/main/errors.c:927
-#: src/main/errors.c:1028 src/main/errors.c:1053 src/main/errors.c:1058
-#: src/main/errors.c:1330 src/main/optimize.c:95 src/main/optimize.c:102
+#: src/main/dotcode.c:194 src/main/errors.c:898 src/main/errors.c:929
+#: src/main/errors.c:1030 src/main/errors.c:1055 src/main/errors.c:1060
+#: src/main/errors.c:1332 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
 #: src/main/optimize.c:199 src/main/plot.c:262 src/main/plot.c:277
 #: src/main/plot.c:471 src/main/plot.c:476 src/main/plot.c:2292
@@ -1082,7 +1082,7 @@ msgstr "'x' 必須是數值"
 msgid "'dim' specifies too large an array"
 msgstr "指定的向量大小太大"
 
-#: src/main/array.c:1479 src/main/attrib.c:929
+#: src/main/array.c:1483 src/main/attrib.c:929
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' 被應用於非陣列"
 
@@ -1558,15 +1558,15 @@ msgstr "無效的 'mode' 引數"
 msgid "applies only to lists and vectors"
 msgstr "只能用於串列和向量"
 
-#: src/main/coerce.c:73 src/main/errors.c:1165
+#: src/main/coerce.c:73 src/main/errors.c:1167
 msgid "NAs introduced by coercion"
 msgstr "強制變更過程中產生了 NA"
 
-#: src/main/coerce.c:75 src/main/errors.c:1166
+#: src/main/coerce.c:75 src/main/errors.c:1168
 msgid "inaccurate integer conversion in coercion"
 msgstr "強制變更造成整數不精確"
 
-#: src/main/coerce.c:77 src/main/errors.c:1167
+#: src/main/coerce.c:77 src/main/errors.c:1169
 msgid "imaginary parts discarded in coercion"
 msgstr "強制變更時丟棄了虛數部分"
 
@@ -1772,7 +1772,7 @@ msgstr "rgb 必須有三列 (內部)"
 msgid "bad hsv to rgb color conversion"
 msgstr "hsv 到 rgb 顏色轉換不正確"
 
-#: src/main/colors.c:1273 src/main/errors.c:1151 src/main/logic.c:166
+#: src/main/colors.c:1273 src/main/errors.c:1153 src/main/logic.c:166
 msgid "invalid argument type"
 msgstr "引數類型不正確"
 
@@ -3338,7 +3338,7 @@ msgstr ""
 msgid "Error: "
 msgstr "錯誤: "
 
-#: src/main/errors.c:659 src/main/errors.c:1282
+#: src/main/errors.c:659 src/main/errors.c:1284
 msgid "In addition: "
 msgstr "此外: "
 
@@ -3346,93 +3346,93 @@ msgstr "此外: "
 msgid "invalid option \"error\"\n"
 msgstr "選項 \"error\" 不正確\n"
 
-#: src/main/errors.c:860
+#: src/main/errors.c:862
 msgid "Execution halted\n"
 msgstr "停止執行\n"
 
-#: src/main/errors.c:997
+#: src/main/errors.c:999
 msgid "'msg1' must be a character string"
 msgstr "'msg1' 必須是字串"
 
-#: src/main/errors.c:999
+#: src/main/errors.c:1001
 msgid "'msg2' must be a character string"
 msgstr "'msg2' 必須是字串"
 
-#: src/main/errors.c:1094
+#: src/main/errors.c:1096
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.) 中的字串不正確]"
 
-#: src/main/errors.c:1120
+#: src/main/errors.c:1122
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.) 中的字串不正確]"
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1137
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\" 中的引數數目不正確"
 
-#: src/main/errors.c:1141 src/main/errors.c:1156
+#: src/main/errors.c:1143 src/main/errors.c:1158
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s 中的功能尚未實作"
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1152
 msgid "invalid number of arguments"
 msgstr "引數數目不正確"
 
-#: src/main/errors.c:1153
+#: src/main/errors.c:1155
 msgid "time-series/vector length mismatch"
 msgstr "時間序列/向量長度不等"
 
-#: src/main/errors.c:1154
+#: src/main/errors.c:1156
 msgid "incompatible arguments"
 msgstr "不相容的引數"
 
-#: src/main/errors.c:1157
+#: src/main/errors.c:1159
 msgid "unknown error (report this!)"
 msgstr "不明錯誤 (請報告!)"
 
-#: src/main/errors.c:1169
+#: src/main/errors.c:1171
 msgid "unknown warning (report this!)"
 msgstr "不明警告 (請報告!)"
 
-#: src/main/errors.c:1247
+#: src/main/errors.c:1249
 msgid "No function to return from, jumping to top level"
 msgstr "沒有可回返的函數, 跳到最高層"
 
-#: src/main/errors.c:1263
+#: src/main/errors.c:1265
 msgid "top level inconsistency?"
 msgstr "最高層不一致？"
 
-#: src/main/errors.c:1439
+#: src/main/errors.c:1441
 msgid "bad handler data"
 msgstr "不當的控柄資料"
 
-#: src/main/errors.c:1589
+#: src/main/errors.c:1591
 msgid "error message not a string"
 msgstr "錯誤訊息不是字串"
 
-#: src/main/errors.c:1664
+#: src/main/errors.c:1666
 msgid "handler or restart stack mismatch in old restart"
 msgstr "舊重新啟動中的控柄或重新啟動堆疊不符合"
 
-#: src/main/errors.c:1690 src/main/errors.c:1706
+#: src/main/errors.c:1692 src/main/errors.c:1708
 msgid "bad error message"
 msgstr "不當的錯誤訊息"
 
-#: src/main/errors.c:1748
+#: src/main/errors.c:1750
 msgid "bad restart"
 msgstr "不當的重新啟動"
 
-#: src/main/errors.c:1780
+#: src/main/errors.c:1782
 msgid "restart not on stack"
 msgstr "未在堆疊上重新啟動"
 
-#: src/main/errors.c:1797
+#: src/main/errors.c:1799
 msgid "not in a try context"
 msgstr "不在 try 的上下文中"
 
-#: src/main/errors.c:1810
+#: src/main/errors.c:1812
 msgid "error message must be a character string"
 msgstr "錯誤訊息必須是字串"
 

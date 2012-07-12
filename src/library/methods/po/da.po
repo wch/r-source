@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 13:07+0100\n"
 "PO-Revision-Date: 2011-11-29 09:10+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,8 +141,8 @@ msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr ""
-"fejl under evaluering af argument '%s' under valg af metode for funktion '%"
-"s': %s"
+"fejl under evaluering af argument '%s' under valg af metode for funktion "
+"'%s': %s"
 
 #: methods_list_dispatch.c:622
 #, c-format
