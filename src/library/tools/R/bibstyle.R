@@ -259,7 +259,7 @@ makeJSS <- function()
 	formatProceedings <- function(book) {
 	    if (is.null(book$editor)) editor <- "Anonymous (ed.)"
 	    else editor <- editorList(book)
-	    collapse(c(fmtPrefix(paper),
+	    collapse(c(fmtPrefix(book), # not paper
 	    	       sentence(editor, fmtYear(book$year), sep=" "),
 		       sentence(fmtBtitle(book$title), bookVolume(book)),
 		       sentence(procOrganization(book)),
@@ -296,14 +296,14 @@ makeJSS <- function()
 	    }
 	    result
 	}
-	
+
 	# Replace this if you want a bibliography style
-	# that puts a prefix on each entry, e.g. [n] 
+	# that puts a prefix on each entry, e.g. [n]
 	# The formatting routine will have added a field .index
 	# as a 1-based index within the complete list.
-	
+
 	fmtPrefix <- function(paper) NULL
-	
+
 	cite <- function(key, bib, ...)
 	    utils::citeNatbib(key, bib, ...) # the defaults are JSS style
 
@@ -351,7 +351,7 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     result <- character(length(bib))
     for (i in seq_along(bib)) {
     	env$paper <- bib[[i]]
-    	result[i] <- with(env, 
+    	result[i] <- with(env,
     	    switch(attr(paper, "bibtype"),
     	    Article = formatArticle(paper),
     	    Book = formatBook(paper),
