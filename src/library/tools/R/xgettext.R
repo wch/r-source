@@ -44,7 +44,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
                    && (as.character(e[[1L]]) %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
-                    if(as.character(e[[1L]]) == "gettextf") {	
+                    if(as.character(e[[1L]]) == "gettextf") {
                         e <- match.call(gettextf, e)
                         e <- e["fmt"] # just look at fmt arg
                     } else if(as.character(e[[1L]]) == "gettext" &&
@@ -122,7 +122,7 @@ function(dir, verbose = FALSE)
            && as.character(e[[1L]]) %in% "ngettext") {
 	    e <- match.call(ngettext, e)
 	    if (is.character(e[["msg1"]]) && is.character(e[["msg2"]]))
-	    	strings <<- c(strings, list(c(msg1=e[["msg1"]], 
+	    	strings <<- c(strings, list(c(msg1=e[["msg1"]],
 	    				      msg2=e[["msg2"]])))
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
@@ -139,7 +139,7 @@ function(dir, verbose = FALSE)
 }
 
 xgettext2pot <-
-function(dir, potFile)
+function(dir, potFile, name = "R", version)
 {
     dir <- file_path_as_absolute(dir)
     if(missing(potFile))
@@ -150,11 +150,12 @@ function(dir, potFile)
 	tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc
     con <- file(potFile, "wt")
     on.exit(close(con))
+    if(missing(version))
+        version <- paste(R.version$major, R.version$minor, sep = ".")
     writeLines(con = con,
                c('msgid ""',
                  'msgstr ""',
-                 sprintf('"Project-Id-Version: R %s.%s\\n"',
-                         R.version$major, R.version$minor),
+                 sprintf('"Project-Id-Version: %s %s\\n"', name, version),
                  '"Report-Msgid-Bugs-To: bugs.r-project.org\\n"',
                  paste0('"POT-Creation-Date: ',
                         format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable
