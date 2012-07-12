@@ -155,7 +155,7 @@ function(dir, potFile)
                  'msgstr ""',
                  sprintf('"Project-Id-Version: R %s.%s\\n"',
                          R.version$major, R.version$minor),
-                 '"Report-Msgid-Bugs-To: bugs@r-project.org\\n"',
+                 '"Report-Msgid-Bugs-To: bugs.r-project.org\\n"',
                  paste0('"POT-Creation-Date: ',
                         format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable
                         '\\n"'),

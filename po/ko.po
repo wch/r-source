@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-06-27 09:16+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 12:56+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -221,7 +221,7 @@ msgstr "'%ls' 를 표시하는데 문제가 있습니다 "
 #: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
-#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:996
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:1023
 #: src/main/eval.c:267 src/main/eval.c:2032 src/main/eval.c:2061
 #: src/main/eval.c:2065 src/main/grep.c:763 src/main/grep.c:768
 #: src/main/grep.c:1056 src/main/grep.c:1058 src/main/grep.c:1060
@@ -332,9 +332,9 @@ msgstr "타임스태프가 잘못되었습니다 "
 #: src/gnuwin32/extra.c:2057 src/main/character.c:592 src/main/colors.c:361
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:194 src/main/errors.c:897 src/main/errors.c:928
-#: src/main/errors.c:1029 src/main/errors.c:1054 src/main/errors.c:1059
-#: src/main/errors.c:1331 src/main/seq.c:170 src/main/seq.c:269
+#: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
+#: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
+#: src/main/errors.c:1358 src/main/seq.c:170 src/main/seq.c:269
 #: src/main/seq.c:274 src/main/seq.c:278 src/main/sort.c:967
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
@@ -1617,15 +1617,15 @@ msgstr "'mode'인수가 잘못되었습니다"
 msgid "applies only to lists and vectors"
 msgstr "리스트 그리고 벡터에만 적용이 될수 있습니다"
 
-#: src/main/coerce.c:73 src/main/errors.c:1166
+#: src/main/coerce.c:73 src/main/errors.c:1193
 msgid "NAs introduced by coercion"
 msgstr "강제 변환에 의해 NA가 생성되었습니다"
 
-#: src/main/coerce.c:75 src/main/errors.c:1167
+#: src/main/coerce.c:75 src/main/errors.c:1194
 msgid "inaccurate integer conversion in coercion"
 msgstr "강제 변환 중에 부정확한 정수 변환을 했습니다"
 
-#: src/main/coerce.c:77 src/main/errors.c:1168
+#: src/main/coerce.c:77 src/main/errors.c:1195
 msgid "imaginary parts discarded in coercion"
 msgstr "강제 변환 중에 허수부분이 버려졌습니다"
 
@@ -1839,7 +1839,7 @@ msgstr "rgb는 3행이 되어야만 합니다(내부적으로)"
 msgid "bad hsv to rgb color conversion"
 msgstr "bad hsv로부터 rgb에서 색 변경이 잘 되지 않습니다"
 
-#: src/main/colors.c:1276 src/main/errors.c:1152 src/main/logic.c:167
+#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:167
 msgid "invalid argument type"
 msgstr "인수의 유형이 부적절합니다"
 
@@ -2738,7 +2738,7 @@ msgstr "'EXPR' 가 없습니다"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "인수의 개수 (%d)가 잘못되었습니다 : %d 개의 인수가 '%s'에 필요합니다"
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2227
+#: src/main/dotcode.c:1161 src/main/dotcode.c:2226
 msgid "too many arguments, sorry"
 msgstr "인수가 너무 많습니다(죄송합니다)"
 
@@ -2774,51 +2774,60 @@ msgstr "외부 함수 호출의 인수%d가 NA입니다"
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "외부 함수의 호출(arg %d)에 NA/NaN/Inf가 있습니다"
 
-#: src/main/dotcode.c:1528
+#: src/main/dotcode.c:1503
+msgid "single values not returned if not duplicated"
+msgstr ""
+
+#: src/main/dotcode.c:1529
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "외부함수를 호출한(인수 %d)중에 복소수의 NA/NaN/Inf값이 있습니다"
 
-#: src/main/dotcode.c:1547
+#: src/main/dotcode.c:1548
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "C/.Fortran에 문자열 변수는 중복하여야만 합니다"
 
-#: src/main/dotcode.c:1552
+#: src/main/dotcode.c:1553
 msgid "only first string in char vector used in .Fortran"
 msgstr "Fortran에 대한 문자 벡터으로서 최초의 문자열만을 사용했습니다"
 
-#: src/main/dotcode.c:1595
+#: src/main/dotcode.c:1596
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
-#: src/main/dotcode.c:1610 src/main/dotcode.c:1623
+#: src/main/dotcode.c:1611 src/main/dotcode.c:1622
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
-#: src/main/dotcode.c:1628
+#: src/main/dotcode.c:1616
+#, fuzzy, c-format
+msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
+msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
+
+#: src/main/dotcode.c:1627
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2472
+#: src/main/dotcode.c:2471
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "언어 간의 함수 호출에서 \"%s\" 형식이 지원되지 않습니다"
 
-#: src/main/dotcode.c:2539
+#: src/main/dotcode.c:2538
 msgid "invalid function in call_R"
 msgstr "call_R의 함수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2541
+#: src/main/dotcode.c:2540
 msgid "invalid argument count in call_R"
 msgstr "call_R 인수 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2543
+#: src/main/dotcode.c:2542
 msgid "invalid return value count in call_R"
 msgstr "call_R의 반환값의 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2577
+#: src/main/dotcode.c:2576
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R는 \"%s\" 라는 모드는 지원되지 않습니다"
@@ -3288,30 +3297,30 @@ msgstr "알 수없는 인코딩 입니다 : %d"
 msgid "embedded nul in string: '%s'"
 msgstr "문자열에 nul이 포함되어 있습니다 : '%s'"
 
-#: src/main/errors.c:147 src/main/errors.c:184
+#: src/main/errors.c:172 src/main/errors.c:209
 msgid "interrupts suspended; signal ignored"
 msgstr "인터럽트가 중단되었습니다;신호는 무시되었습니다"
 
-#: src/main/errors.c:290
+#: src/main/errors.c:315
 msgid "invalid option \"warning.expression\""
 msgstr "옵션 \"warnig.expression\"는 잘못되었습니다"
 
-#: src/main/errors.c:320
+#: src/main/errors.c:345
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(경고에서 변환되었습니다) %s"
 
-#: src/main/errors.c:331
+#: src/main/errors.c:356
 #, c-format
 msgid "Warning: %s\n"
 msgstr "경고 : %s \n"
 
-#: src/main/errors.c:334 src/main/errors.c:336
+#: src/main/errors.c:359 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr "%s에서 경고가 발생했습니다 : %s \n"
 
-#: src/main/errors.c:338
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3320,140 +3329,140 @@ msgstr ""
 "%s에서 다음과 같은 경고가 발생했습니다 :\n"
 "  %s\n"
 
-#: src/main/errors.c:401 src/main/errors.c:419 src/main/errors.c:566
+#: src/main/errors.c:426 src/main/errors.c:444 src/main/errors.c:591
 msgid "Lost warning messages\n"
 msgstr "경고 메시지가 손실되었습니다\n"
 
-#: src/main/errors.c:431
+#: src/main/errors.c:456
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 메시지가 손실되었습니다\n"
 
-#: src/main/errors.c:486
+#: src/main/errors.c:511
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "%d 개의 경고가있었습니다 (경고를 보려면 warnings()를 사용하세요)\n"
 
-#: src/main/errors.c:489
+#: src/main/errors.c:514
 #, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
 "%d 건이상의 경고가 발생하였습니다 (첫번째 %d 개의 경고를 보려면 warnings()를 "
 "사용하세요)\n"
 
-#: src/main/errors.c:557
+#: src/main/errors.c:582
 msgid "Error during wrapup: "
 msgstr "wrapup할 동안 오류가 발생했습니다"
 
-#: src/main/errors.c:582
+#: src/main/errors.c:607
 msgid "Error in "
 msgstr "다음에 오류"
 
-#: src/main/errors.c:583
+#: src/main/errors.c:608
 #, c-format
 msgid " (from %s) : "
 msgstr ""
 
-#: src/main/errors.c:634 src/main/errors.c:640
+#: src/main/errors.c:659 src/main/errors.c:665
 #, c-format
 msgid "Error: "
 msgstr "에러:"
 
-#: src/main/errors.c:660 src/main/errors.c:1283
+#: src/main/errors.c:685 src/main/errors.c:1310
 msgid "In addition: "
 msgstr "추가정보:"
 
-#: src/main/errors.c:781
+#: src/main/errors.c:806
 msgid "invalid option \"error\"\n"
 msgstr "옵션 \"error\"는 부적절합니다\n"
 
-#: src/main/errors.c:861
+#: src/main/errors.c:888
 msgid "Execution halted\n"
 msgstr "실행이 정지되었습니다\n"
 
-#: src/main/errors.c:998
+#: src/main/errors.c:1025
 msgid "'msg1' must be a character string"
 msgstr "'msg1'는 문자열이어야만 합니다"
 
-#: src/main/errors.c:1000
+#: src/main/errors.c:1027
 msgid "'msg2' must be a character string"
 msgstr "'msg2'는 문자열이어야만 합니다"
 
-#: src/main/errors.c:1095
+#: src/main/errors.c:1122
 msgid " [invalid string in stop(.)]"
 msgstr "[stop(.) 의 인수가 잘못된 문자열입니다]"
 
-#: src/main/errors.c:1121
+#: src/main/errors.c:1148
 msgid " [invalid string in warning(.)]"
 msgstr "[warning(.)  인수가 잘못된 문자열입니다]"
 
-#: src/main/errors.c:1136
+#: src/main/errors.c:1163
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\"에 인수의 개수가 올바르지 않습니다"
 
-#: src/main/errors.c:1142 src/main/errors.c:1157
+#: src/main/errors.c:1169 src/main/errors.c:1184
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s의 구현되지 않은 기능입니다"
 
-#: src/main/errors.c:1151
+#: src/main/errors.c:1178
 msgid "invalid number of arguments"
 msgstr "인수의 개수가 잘못되었습니다"
 
-#: src/main/errors.c:1154
+#: src/main/errors.c:1181
 msgid "time-series/vector length mismatch"
 msgstr "시계열 또는 벡터의 길이가 일치하지 않습니다"
 
-#: src/main/errors.c:1155
+#: src/main/errors.c:1182
 msgid "incompatible arguments"
 msgstr "호환되지 않는 인수입니다"
 
-#: src/main/errors.c:1158
+#: src/main/errors.c:1185
 msgid "unknown error (report this!)"
 msgstr "알수 없는 에러입니다(이것을 보고해주십시오!)"
 
-#: src/main/errors.c:1170
+#: src/main/errors.c:1197
 msgid "unknown warning (report this!)"
 msgstr "알수 없는 경고 입니다(이것을 보고해주십시오!)"
 
-#: src/main/errors.c:1248
+#: src/main/errors.c:1275
 msgid "No function to return from, jumping to top level"
 msgstr "함수에 리턴값이 없기 때문에 최상위로 이동합니다"
 
-#: src/main/errors.c:1264
+#: src/main/errors.c:1291
 msgid "top level inconsistency?"
 msgstr "최상위 불일치?"
 
-#: src/main/errors.c:1441
+#: src/main/errors.c:1468
 msgid "bad handler data"
 msgstr "handler data가 잘못되었습니다"
 
-#: src/main/errors.c:1591
+#: src/main/errors.c:1618
 msgid "error message not a string"
 msgstr "오류 메시지가 문자열이 아닙니다"
 
-#: src/main/errors.c:1666
+#: src/main/errors.c:1693
 msgid "handler or restart stack mismatch in old restart"
 msgstr "handler 또는 restart stack가 오랜된 restart와 일치하지 않습니다"
 
-#: src/main/errors.c:1692 src/main/errors.c:1708
+#: src/main/errors.c:1719 src/main/errors.c:1735
 msgid "bad error message"
 msgstr "잘못된 오류 메시지입니다"
 
-#: src/main/errors.c:1750
+#: src/main/errors.c:1777
 msgid "bad restart"
 msgstr "잘못된 재시작입니다"
 
-#: src/main/errors.c:1782
+#: src/main/errors.c:1809
 msgid "restart not on stack"
 msgstr "스택 아닌 곳에서 다시 시작하였습니다"
 
-#: src/main/errors.c:1799
+#: src/main/errors.c:1826
 msgid "not in a try context"
 msgstr "try 문맥이 아닙니다"
 
-#: src/main/errors.c:1812
+#: src/main/errors.c:1839
 msgid "error message must be a character string"
 msgstr "오류 메시지는 문자열이어야 합니다"
 
@@ -8052,10 +8061,6 @@ msgstr "X11을 사용할 수 없습니다"
 
 #~ msgid "lists must be duplicated in .C"
 #~ msgstr ".C에서 리스트는 복제되어야 합니다"
-
-#, fuzzy
-#~ msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
-#~ msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
 #~ msgid "character vector element does not have type CHARSXP"
 #~ msgstr "문자열 벡터 요소는 유형 CHARSXP이 없습니다"

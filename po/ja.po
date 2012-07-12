@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-06-27 09:16+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 12:56+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -218,7 +218,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
-#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:996
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:1023
 #: src/main/eval.c:267 src/main/eval.c:2032 src/main/eval.c:2061
 #: src/main/eval.c:2065 src/main/grep.c:763 src/main/grep.c:768
 #: src/main/grep.c:1056 src/main/grep.c:1058 src/main/grep.c:1060
@@ -329,9 +329,9 @@ msgstr " タイムスタンプが不正です "
 #: src/gnuwin32/extra.c:2057 src/main/character.c:592 src/main/colors.c:361
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:194 src/main/errors.c:897 src/main/errors.c:928
-#: src/main/errors.c:1029 src/main/errors.c:1054 src/main/errors.c:1059
-#: src/main/errors.c:1331 src/main/seq.c:170 src/main/seq.c:269
+#: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
+#: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
+#: src/main/errors.c:1358 src/main/seq.c:170 src/main/seq.c:269
 #: src/main/seq.c:274 src/main/seq.c:278 src/main/sort.c:967
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
@@ -1625,15 +1625,15 @@ msgstr " 'mode' 引数が不正です "
 msgid "applies only to lists and vectors"
 msgstr " リストとベクトルのみに適用できます "
 
-#: src/main/coerce.c:73 src/main/errors.c:1166
+#: src/main/coerce.c:73 src/main/errors.c:1193
 msgid "NAs introduced by coercion"
 msgstr " 強制変換により NA が生成されました "
 
-#: src/main/coerce.c:75 src/main/errors.c:1167
+#: src/main/coerce.c:75 src/main/errors.c:1194
 msgid "inaccurate integer conversion in coercion"
 msgstr " 強制変換中に不正確な整数変換が行われました "
 
-#: src/main/coerce.c:77 src/main/errors.c:1168
+#: src/main/coerce.c:77 src/main/errors.c:1195
 msgid "imaginary parts discarded in coercion"
 msgstr " 複素数の虚部は，コネクションで捨てられました "
 
@@ -1849,7 +1849,7 @@ msgstr " rgb は3行なければなりません（内部的に） "
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色の変換が上手くいきません "
 
-#: src/main/colors.c:1276 src/main/errors.c:1152 src/main/logic.c:167
+#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:167
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
@@ -2755,7 +2755,7 @@ msgstr " 'EXPR' がありません "
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr " 引数の数(%1$d)が不正です。%3$s に対しては %2$d 個の引数が必要です "
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2227
+#: src/main/dotcode.c:1161 src/main/dotcode.c:2226
 msgid "too many arguments, sorry"
 msgstr " 引数が多すぎます（すみません…） "
 
@@ -2791,51 +2791,60 @@ msgstr " 外部関数呼出しの引数 %d が NA です "
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数の呼び出し(引数 %d) 中に NA/NaN/Inf があります "
 
-#: src/main/dotcode.c:1528
+#: src/main/dotcode.c:1503
+msgid "single values not returned if not duplicated"
+msgstr ""
+
+#: src/main/dotcode.c:1529
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数呼出し (引数 %d) 中に複素数の NA/NaN/Inf 値があります "
 
-#: src/main/dotcode.c:1547
+#: src/main/dotcode.c:1548
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr " .C/.Fortran 中に文字列変数は重複していなければなりません "
 
-#: src/main/dotcode.c:1552
+#: src/main/dotcode.c:1553
 msgid "only first string in char vector used in .Fortran"
 msgstr " .Fortran に対する文字ベクトルとして，最初の文字列だけを使いました "
 
-#: src/main/dotcode.c:1595
+#: src/main/dotcode.c:1596
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1610 src/main/dotcode.c:1623
+#: src/main/dotcode.c:1611 src/main/dotcode.c:1622
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1628
+#: src/main/dotcode.c:1616
+#, fuzzy, c-format
+msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
+msgstr " Fortran に渡された引数 %d のモードが不正です "
+
+#: src/main/dotcode.c:1627
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2472
+#: src/main/dotcode.c:2471
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr " 言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません "
 
-#: src/main/dotcode.c:2539
+#: src/main/dotcode.c:2538
 msgid "invalid function in call_R"
 msgstr " call_R 中の関数が不正です "
 
-#: src/main/dotcode.c:2541
+#: src/main/dotcode.c:2540
 msgid "invalid argument count in call_R"
 msgstr " call_R の引数の個数が不正です "
 
-#: src/main/dotcode.c:2543
+#: src/main/dotcode.c:2542
 msgid "invalid return value count in call_R"
 msgstr " call_R の戻り値の個数が不正です "
 
-#: src/main/dotcode.c:2577
+#: src/main/dotcode.c:2576
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr " call_R では \"%s\" というモードはサポートされていません "
@@ -3309,30 +3318,30 @@ msgstr " 未知のエンコーディングです: '%d' "
 msgid "embedded nul in string: '%s'"
 msgstr " 文字列の中にnulが埋め込まれています: '%s' "
 
-#: src/main/errors.c:147 src/main/errors.c:184
+#: src/main/errors.c:172 src/main/errors.c:209
 msgid "interrupts suspended; signal ignored"
 msgstr " 割り込みが中断されました；シグナルは無視されました "
 
-#: src/main/errors.c:290
+#: src/main/errors.c:315
 msgid "invalid option \"warning.expression\""
 msgstr " オプション  \"warnig.expression\" は不正です "
 
-#: src/main/errors.c:320
+#: src/main/errors.c:345
 #, c-format
 msgid "(converted from warning) %s"
 msgstr " (警告から変換されました) %s "
 
-#: src/main/errors.c:331
+#: src/main/errors.c:356
 #, c-format
 msgid "Warning: %s\n"
 msgstr " 警告： %s \n"
 
-#: src/main/errors.c:334 src/main/errors.c:336
+#: src/main/errors.c:359 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr " %s 中で警告がありました： %s \n"
 
-#: src/main/errors.c:338
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3341,140 +3350,140 @@ msgstr ""
 " %s 中で警告がありました： \n"
 " %s \n"
 
-#: src/main/errors.c:401 src/main/errors.c:419 src/main/errors.c:566
+#: src/main/errors.c:426 src/main/errors.c:444 src/main/errors.c:591
 msgid "Lost warning messages\n"
 msgstr " 警告メッセージが失われました \n"
 
-#: src/main/errors.c:431
+#: src/main/errors.c:456
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
 
-#: src/main/errors.c:486
+#: src/main/errors.c:511
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr " %d 件の警告がありました (警告を見るには warnings() を使って下さい) \n"
 
-#: src/main/errors.c:489
+#: src/main/errors.c:514
 #, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
 " %d 件以上の警告がありました (最初の%d個の警告を見るには warnings() を使って"
 "下さい) \n"
 
-#: src/main/errors.c:557
+#: src/main/errors.c:582
 msgid "Error during wrapup: "
 msgstr " wrapup 中にエラーが起こりました "
 
-#: src/main/errors.c:582
+#: src/main/errors.c:607
 msgid "Error in "
 msgstr " 以下にエラー "
 
-#: src/main/errors.c:583
+#: src/main/errors.c:608
 #, c-format
 msgid " (from %s) : "
 msgstr ""
 
-#: src/main/errors.c:634 src/main/errors.c:640
+#: src/main/errors.c:659 src/main/errors.c:665
 #, c-format
 msgid "Error: "
 msgstr " エラー： "
 
-#: src/main/errors.c:660 src/main/errors.c:1283
+#: src/main/errors.c:685 src/main/errors.c:1310
 msgid "In addition: "
 msgstr " 追加情報:  "
 
-#: src/main/errors.c:781
+#: src/main/errors.c:806
 msgid "invalid option \"error\"\n"
 msgstr " オプション \"error\" は不正です \n"
 
-#: src/main/errors.c:861
+#: src/main/errors.c:888
 msgid "Execution halted\n"
 msgstr " 実行が停止されました \n"
 
-#: src/main/errors.c:998
+#: src/main/errors.c:1025
 msgid "'msg1' must be a character string"
 msgstr " 'msg1' は文字列でなければなりません "
 
-#: src/main/errors.c:1000
+#: src/main/errors.c:1027
 msgid "'msg2' must be a character string"
 msgstr " 'msg2' は文字列でなければなりません "
 
-#: src/main/errors.c:1095
+#: src/main/errors.c:1122
 msgid " [invalid string in stop(.)]"
 msgstr " stop 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1121
+#: src/main/errors.c:1148
 msgid " [invalid string in warning(.)]"
 msgstr " warning 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1136
+#: src/main/errors.c:1163
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr " \"%s\" への引数の個数が正しくありません "
 
-#: src/main/errors.c:1142 src/main/errors.c:1157
+#: src/main/errors.c:1169 src/main/errors.c:1184
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr " %s 中の未実装の機能です "
 
-#: src/main/errors.c:1151
+#: src/main/errors.c:1178
 msgid "invalid number of arguments"
 msgstr " 引数の個数が不正です "
 
-#: src/main/errors.c:1154
+#: src/main/errors.c:1181
 msgid "time-series/vector length mismatch"
 msgstr " 時系列またはベクトル の長さが合致しません "
 
-#: src/main/errors.c:1155
+#: src/main/errors.c:1182
 msgid "incompatible arguments"
 msgstr " 互換性のない引数です "
 
-#: src/main/errors.c:1158
+#: src/main/errors.c:1185
 msgid "unknown error (report this!)"
 msgstr " 未知のエラーです（報告して！） "
 
-#: src/main/errors.c:1170
+#: src/main/errors.c:1197
 msgid "unknown warning (report this!)"
 msgstr " 未知の警告です（報告して！） "
 
-#: src/main/errors.c:1248
+#: src/main/errors.c:1275
 msgid "No function to return from, jumping to top level"
 msgstr " 戻るべき関数がないので，トップレベルへジャンプします "
 
-#: src/main/errors.c:1264
+#: src/main/errors.c:1291
 msgid "top level inconsistency?"
 msgstr " トップレベルの不整合？ "
 
-#: src/main/errors.c:1441
+#: src/main/errors.c:1468
 msgid "bad handler data"
 msgstr " ハンドラーデータ（handler data）が不正です "
 
-#: src/main/errors.c:1591
+#: src/main/errors.c:1618
 msgid "error message not a string"
 msgstr " エラーメッセージが文字列ではありません "
 
-#: src/main/errors.c:1666
+#: src/main/errors.c:1693
 msgid "handler or restart stack mismatch in old restart"
 msgstr " handler stack か restart stack が，古い restart と一致しません "
 
-#: src/main/errors.c:1692 src/main/errors.c:1708
+#: src/main/errors.c:1719 src/main/errors.c:1735
 msgid "bad error message"
 msgstr " 不正なエラーメッセージです "
 
-#: src/main/errors.c:1750
+#: src/main/errors.c:1777
 msgid "bad restart"
 msgstr " 不正な再起動です "
 
-#: src/main/errors.c:1782
+#: src/main/errors.c:1809
 msgid "restart not on stack"
 msgstr " スタックからではない再実行です "
 
-#: src/main/errors.c:1799
+#: src/main/errors.c:1826
 msgid "not in a try context"
 msgstr " トライ (try) 文脈ではありません "
 
-#: src/main/errors.c:1812
+#: src/main/errors.c:1839
 msgid "error message must be a character string"
 msgstr " エラーメッセージは文字列であるに違いありません "
 
@@ -8106,10 +8115,6 @@ msgstr " X11 が利用できません "
 
 #~ msgid "lists must be duplicated in .C"
 #~ msgstr " .C 中ではリストは重複していなければなりません "
-
-#, fuzzy
-#~ msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
-#~ msgstr " Fortran に渡された引数 %d のモードが不正です "
 
 #~ msgid "character vector element does not have type CHARSXP"
 #~ msgstr " 文字列ベクトル要素は型 CHARSXP を持ちません "

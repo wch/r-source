@@ -1,14 +1,14 @@
-## File R_HOME/src/library/grid/po/ko.po
-## Managed by Chel Hee Lee (Korean, R Development Translation Team)
-## Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-## Copyright 1995-2012 R Core Team & R Develoment Translation Team
-## Distributed under GPL 2 or later
-##
+# # File R_HOME/src/library/grid/po/ko.po
+# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
+# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
+# # Distributed under GPL 2 or later
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-01-13 11:24+0000\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 12:56+0100\n"
 "PO-Revision-Date: 2012-03-09 06:45+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -25,7 +25,9 @@ msgstr "회전시킨 보임창에 고정시킬 수 없습니다 "
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
-msgstr "최상단의 보임창에 띄울 수 없습니다 (그리드와 그래픽 출력을 혼용하고 있지 않습니까?) "
+msgstr ""
+"최상단의 보임창에 띄울 수 없습니다 (그리드와 그래픽 출력을 혼용하고 있지 않습"
+"니까?) "
 
 #: grid.c:952
 msgid "attempt to plot on null device"
@@ -77,7 +79,8 @@ msgstr "비정칙 변환행렬 "
 
 #: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
-msgstr "그리드 상태를 저장할 수 없습니다. 너무 많은 장치들을 열고 있는것은 아닙니까? "
+msgstr ""
+"그리드 상태를 저장할 수 없습니다. 너무 많은 장치들을 열고 있는것은 아닙니까? "
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
 msgid "Unimplemented unit function"

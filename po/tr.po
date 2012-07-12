@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-06-27 09:16+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 12:56+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -218,7 +218,7 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/envir.c:1888 src/main/envir.c:1894 src/main/envir.c:1898
 #: src/main/envir.c:2115 src/main/envir.c:2236 src/main/envir.c:2495
 #: src/main/envir.c:2702 src/main/envir.c:2716 src/main/envir.c:2723
-#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:996
+#: src/main/envir.c:2739 src/main/envir.c:3302 src/main/errors.c:1023
 #: src/main/eval.c:267 src/main/eval.c:2032 src/main/eval.c:2061
 #: src/main/eval.c:2065 src/main/grep.c:763 src/main/grep.c:768
 #: src/main/grep.c:1056 src/main/grep.c:1058 src/main/grep.c:1060
@@ -329,9 +329,9 @@ msgstr "geçersiz zaman aralığı"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:592 src/main/colors.c:361
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:194 src/main/errors.c:897 src/main/errors.c:928
-#: src/main/errors.c:1029 src/main/errors.c:1054 src/main/errors.c:1059
-#: src/main/errors.c:1331 src/main/seq.c:170 src/main/seq.c:269
+#: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
+#: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
+#: src/main/errors.c:1358 src/main/seq.c:170 src/main/seq.c:269
 #: src/main/seq.c:274 src/main/seq.c:278 src/main/sort.c:967
 #: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
 #: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
@@ -1616,15 +1616,15 @@ msgstr "geçersiz 'mode' argümanı"
 msgid "applies only to lists and vectors"
 msgstr "sadece listelere ve vektörlere uygulanır"
 
-#: src/main/coerce.c:73 src/main/errors.c:1166
+#: src/main/coerce.c:73 src/main/errors.c:1193
 msgid "NAs introduced by coercion"
 msgstr "Zorlamadan dolayı ortaya çıkan NAs"
 
-#: src/main/coerce.c:75 src/main/errors.c:1167
+#: src/main/coerce.c:75 src/main/errors.c:1194
 msgid "inaccurate integer conversion in coercion"
 msgstr "zorlamadaki hatalı tamsayı çevrimi"
 
-#: src/main/coerce.c:77 src/main/errors.c:1168
+#: src/main/coerce.c:77 src/main/errors.c:1195
 msgid "imaginary parts discarded in coercion"
 msgstr "zorlamadaki hayali kısımlar çıkarıldı"
 
@@ -1839,7 +1839,7 @@ msgstr "rgb 3 dize içermelidir (içsel olarak)"
 msgid "bad hsv to rgb color conversion"
 msgstr "hatalı hsv -> rgb dönüşümü"
 
-#: src/main/colors.c:1276 src/main/errors.c:1152 src/main/logic.c:167
+#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:167
 msgid "invalid argument type"
 msgstr "geçersiz argüman tipi"
 
@@ -2739,7 +2739,7 @@ msgstr "'EXPR' eksik"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Hatalı sayıda argüman (%d), %d adet bekleniyordu (%s için)"
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2227
+#: src/main/dotcode.c:1161 src/main/dotcode.c:2226
 msgid "too many arguments, sorry"
 msgstr "çok fazla argüman, üzgünüm"
 
@@ -2773,51 +2773,60 @@ msgstr "dış fonksiyon çağrısında NA'lar (argüman %d)"
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:1528
+#: src/main/dotcode.c:1503
+msgid "single values not returned if not duplicated"
+msgstr ""
+
+#: src/main/dotcode.c:1529
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "Dışarıdan fonksiyon çağrısında karmaşık NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:1547
+#: src/main/dotcode.c:1548
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "karakter değişkenler .C/.Fortran'da kopyalanmalıdır"
 
-#: src/main/dotcode.c:1552
+#: src/main/dotcode.c:1553
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran'da sadece karakter vektörünün ilk dizesi kullanıldı"
 
-#: src/main/dotcode.c:1595
+#: src/main/dotcode.c:1596
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:1610 src/main/dotcode.c:1623
+#: src/main/dotcode.c:1611 src/main/dotcode.c:1622
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:1628
+#: src/main/dotcode.c:1616
+#, fuzzy, c-format
+msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
+msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
+
+#: src/main/dotcode.c:1627
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2472
+#: src/main/dotcode.c:2471
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "\"%s\" tipi dillerarası çağrılarda desteklenmiyor"
 
-#: src/main/dotcode.c:2539
+#: src/main/dotcode.c:2538
 msgid "invalid function in call_R"
 msgstr "call_R'de geçersiz fonksiyon"
 
-#: src/main/dotcode.c:2541
+#: src/main/dotcode.c:2540
 msgid "invalid argument count in call_R"
 msgstr "call_R'de geçersiz sayıda argüman"
 
-#: src/main/dotcode.c:2543
+#: src/main/dotcode.c:2542
 msgid "invalid return value count in call_R"
 msgstr "call_R içinde geçersiz geri dönüş değeri sayısı"
 
-#: src/main/dotcode.c:2577
+#: src/main/dotcode.c:2576
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R içinde '%s' modu desteklenmiyor"
@@ -3299,30 +3308,30 @@ msgstr "bilinmeyen kodlama: %d"
 msgid "embedded nul in string: '%s'"
 msgstr "'%s' dizesi gömülü nul"
 
-#: src/main/errors.c:147 src/main/errors.c:184
+#: src/main/errors.c:172 src/main/errors.c:209
 msgid "interrupts suspended; signal ignored"
 msgstr "kesmeler durduruldu; sinyal görmezden gelindi"
 
-#: src/main/errors.c:290
+#: src/main/errors.c:315
 msgid "invalid option \"warning.expression\""
 msgstr "geçersiz seçenek \"warning.expression\""
 
-#: src/main/errors.c:320
+#: src/main/errors.c:345
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "%s (uyarıdan çevirildi)"
 
-#: src/main/errors.c:331
+#: src/main/errors.c:356
 #, c-format
 msgid "Warning: %s\n"
 msgstr "Uyarı: %s\n"
 
-#: src/main/errors.c:334 src/main/errors.c:336
+#: src/main/errors.c:359 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr "%s'de uyarı: %s\n"
 
-#: src/main/errors.c:338
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3331,141 +3340,141 @@ msgstr ""
 "%s'de uyarı :\n"
 "  %s\n"
 
-#: src/main/errors.c:401 src/main/errors.c:419 src/main/errors.c:566
+#: src/main/errors.c:426 src/main/errors.c:444 src/main/errors.c:591
 msgid "Lost warning messages\n"
 msgstr "Kayıp uyarı mesajları\n"
 
-#: src/main/errors.c:431
+#: src/main/errors.c:456
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Uyarı mesajları:\n"
 
-#: src/main/errors.c:486
+#: src/main/errors.c:511
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "%d hata oluştu (görmek için warnings() kullanın)\n"
 
-#: src/main/errors.c:489
+#: src/main/errors.c:514
 #, fuzzy, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
 "50 yada daha fazla uyarı oluştu (ilk 50'sini görmek için warnings() "
 "kullanın)\n"
 
-#: src/main/errors.c:557
+#: src/main/errors.c:582
 msgid "Error during wrapup: "
 msgstr "wrapup sırasında hata: "
 
-#: src/main/errors.c:582
+#: src/main/errors.c:607
 msgid "Error in "
 msgstr "Hata oluştu: "
 
-#: src/main/errors.c:583
+#: src/main/errors.c:608
 #, c-format
 msgid " (from %s) : "
 msgstr ""
 
-#: src/main/errors.c:634 src/main/errors.c:640
+#: src/main/errors.c:659 src/main/errors.c:665
 #, c-format
 msgid "Error: "
 msgstr "Hata: "
 
-#: src/main/errors.c:660 src/main/errors.c:1283
+#: src/main/errors.c:685 src/main/errors.c:1310
 msgid "In addition: "
 msgstr "Ek olarak: "
 
-#: src/main/errors.c:781
+#: src/main/errors.c:806
 msgid "invalid option \"error\"\n"
 msgstr "geçersiz seçenecek \"error\"\n"
 
-#: src/main/errors.c:861
+#: src/main/errors.c:888
 msgid "Execution halted\n"
 msgstr "Çalıştırma durduruldu\n"
 
-#: src/main/errors.c:998
+#: src/main/errors.c:1025
 msgid "'msg1' must be a character string"
 msgstr "'msg1' bir karakter dizesi olmalıdır"
 
-#: src/main/errors.c:1000
+#: src/main/errors.c:1027
 msgid "'msg2' must be a character string"
 msgstr "'msg2' bir karakter dizesi olmalıdır"
 
-#: src/main/errors.c:1095
+#: src/main/errors.c:1122
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.)'da geçersiz dize]"
 
-#: src/main/errors.c:1121
+#: src/main/errors.c:1148
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.)'de geçersiz dize]"
 
-#: src/main/errors.c:1136
+#: src/main/errors.c:1163
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\" e hatalı sayıda argüman"
 
-#: src/main/errors.c:1142 src/main/errors.c:1157
+#: src/main/errors.c:1169 src/main/errors.c:1184
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s de tanımlanmamış özellik"
 
-#: src/main/errors.c:1151
+#: src/main/errors.c:1178
 msgid "invalid number of arguments"
 msgstr "geçersiz sayıda argüman"
 
-#: src/main/errors.c:1154
+#: src/main/errors.c:1181
 msgid "time-series/vector length mismatch"
 msgstr "zaman-serisi/vektör uzunluğu uyuşmazlığı"
 
-#: src/main/errors.c:1155
+#: src/main/errors.c:1182
 msgid "incompatible arguments"
 msgstr "uyumsuz argümanlar"
 
-#: src/main/errors.c:1158
+#: src/main/errors.c:1185
 msgid "unknown error (report this!)"
 msgstr "bilinmeyen hata (rapor gönderin!)"
 
-#: src/main/errors.c:1170
+#: src/main/errors.c:1197
 msgid "unknown warning (report this!)"
 msgstr "bilinmeyen uyarı (rapor edin!)"
 
-#: src/main/errors.c:1248
+#: src/main/errors.c:1275
 msgid "No function to return from, jumping to top level"
 msgstr "Geri dönülecek fonksiyon yok, en üst seviyeye atlanıyor"
 
-#: src/main/errors.c:1264
+#: src/main/errors.c:1291
 msgid "top level inconsistency?"
 msgstr "üst seviye tutarsızlık?"
 
-#: src/main/errors.c:1441
+#: src/main/errors.c:1468
 msgid "bad handler data"
 msgstr "hatalı "
 
-#: src/main/errors.c:1591
+#: src/main/errors.c:1618
 msgid "error message not a string"
 msgstr "hata mesajı bir dize değil"
 
-#: src/main/errors.c:1666
+#: src/main/errors.c:1693
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "önceki yeniden başlatmada yönetici yada yeniden başlatma yığını uyuşmazlığı"
 
-#: src/main/errors.c:1692 src/main/errors.c:1708
+#: src/main/errors.c:1719 src/main/errors.c:1735
 msgid "bad error message"
 msgstr "yanlış hata mesajı"
 
-#: src/main/errors.c:1750
+#: src/main/errors.c:1777
 msgid "bad restart"
 msgstr "yanlış yeniden başlatma"
 
-#: src/main/errors.c:1782
+#: src/main/errors.c:1809
 msgid "restart not on stack"
 msgstr "restart yığında değil"
 
-#: src/main/errors.c:1799
+#: src/main/errors.c:1826
 msgid "not in a try context"
 msgstr "bir deneme içereiğinde değil"
 
-#: src/main/errors.c:1812
+#: src/main/errors.c:1839
 msgid "error message must be a character string"
 msgstr "hata mesajı bir karakter dizesi olmalıdır"
 
@@ -8094,10 +8103,6 @@ msgstr "X11 mevcut değil"
 
 #~ msgid "lists must be duplicated in .C"
 #~ msgstr ".C'de listeler kopyalanmalıdır"
-
-#, fuzzy
-#~ msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
-#~ msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
 #~ msgid "character vector element does not have type CHARSXP"
 #~ msgstr "karakter vektör öğesi CHARSXP tipine sahip değil"

@@ -23,9 +23,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
-"Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2012-04-22 15:29\n"
-"PO-Revision-Date: 2012-04-22 15:29\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 12:59\n"
+"PO-Revision-Date: 2012-07-12 12:59\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1164,6 +1164,18 @@ msgstr "running regexp regression tests"
 
 msgid "running tests to possibly trigger segfaults"
 msgstr "running tests to possibly trigger segfaults"
+
+msgid "running msgmerge failed"
+msgstr "running msgmerge failed"
+
+msgid "running msginit failed"
+msgstr "running msginit failed"
+
+msgid "running msgconv failed"
+msgstr "running msgconv failed"
+
+msgid "running xgettext failed"
+msgstr "running xgettext failed"
 
 msgid "'x' must be a single character string"
 msgstr "‘x’ must be a single character string"
