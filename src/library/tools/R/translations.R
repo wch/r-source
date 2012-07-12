@@ -40,13 +40,14 @@ en_quote <- function(lines)
     lines
 }
 
+## FIXME: this needs to set the copyright holder, the bugs address ....
 update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
 {
     same <- function(a, b)
     {
         tmpa <- readLines(a); tmpb <- readLines(b)
-        tmpa <- grep("^POT-Creation-Date: .*$", tmpa, invert = TRUE, value = TRUE)
-        tmpb <- grep("^POT-Creation-Date: .*$", tmpb, invert = TRUE, value = TRUE)
+        tmpa <- grep('^"POT-Creation-Date:', tmpa, invert = TRUE, value = TRUE)
+        tmpb <- grep('^"POT-Creation-Date:', tmpb, invert = TRUE, value = TRUE)
         identical(tmpa, tmpb)
     }
     ## Follow previous version by always collating in C.
@@ -82,12 +83,30 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     for (f in pofiles[newer]) {
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
         cat("  R-", lang, ":", sep = "")
+        ## This seems not to update the file dates.
         cmd <- paste("msgmerge --update", f, potfile)
-        if(system(cmd) != 0L) stop("running msgmerge failed")
+        if(system(cmd) != 0L) {
+            warning("running msgmerge on ", sQuote(f), " failed")
+            next
+        }
         res <- checkPoFile(f, TRUE)
-        if(nrow(res)) print(res)
+        if(nrow(res)) {
+            print(res)
+            next
+        }
+        dest <- file.path("inst", "po", lang, "LC_MESSAGES")
+        dir.create(dest, FALSE, TRUE)
+        dest <- file.path(dest, sprintf("R-%s.mo", pkg))
+        if(file_test("-ot", f, dest)) next
+        cmd <- paste("msgfmt -c --statistics -o", dest, f)
+        if(system(cmd) != 0L)
+            warning(sprintf("running msgfmt on %s failed", basename(f)),
+                    domain = NA, immediate. = TRUE)
     }
+
     ## do en@quot
+    lang <- "en@quot"
+    cat("  R-", lang, ":\n", sep = "")
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
     if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
@@ -97,19 +116,13 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
     writeLines(lines, "po/R-en@quot.po", useBytes = TRUE)
-    pofiles <- c(pofiles, "po/R-en@quot.po")
-
-    for (f in pofiles) {
-        lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
-        dest <- file.path("inst", "po", lang, "LC_MESSAGES")
-        dir.create(dest, FALSE)
-        dest <- file.path(dest, sprintf("R-%s.mo", pkg))
-        cat("  R-", lang, ":", sep = "")
-        cmd <- paste("msgfmt -c --statistics -o", dest, f)
-        if(system(cmd) != 0L)
-            warning(sprintf("running msgfmt on %s failed", basename(f)),
-                    domain = NA, immediate. = TRUE)
-    }
+    dest <- file.path("inst", "po", lang, "LC_MESSAGES")
+    dir.create(dest, FALSE, TRUE)
+    dest <- file.path(dest, sprintf("R-%s.mo", pkg))
+    cmd <- paste("msgfmt -c --statistics -o", dest, f)
+    if(system(cmd) != 0L)
+        warning(sprintf("running msgfmt on %s failed", basename(f)),
+                domain = NA, immediate. = TRUE)
 
     if(!have_src) return(invisible())
 
@@ -117,7 +130,9 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     cfiles <- dir(".", pattern = "[.]c$")
     ofile <- tempfile()
     cmd <- sprintf("xgettext --keyword=_ --keyword=N_ -o %s", shQuote(ofile))
-    cmd <- c(cmd, "--add-comments=TRANSLATORS:",
+    cmd <- c(cmd, paste("--package-name", name, sep = "="),
+             paste("--package-version", version, sep = "="),
+             "--add-comments=TRANSLATORS:",
              '--copyright-holder="The R Foundation"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
@@ -134,37 +149,49 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         lang <- sub("[.]po", "", basename(f))
         cat("  ", lang, ":", sep = "")
         cmd <- paste("msgmerge --update", f, potfile)
-        if(system(cmd) != 0L) stop("running msgmerge failed")
+        if(system(cmd) != 0L) {
+            warning("running msgmerge on ",  f, " failed")
+            next
+        }
         res <- checkPoFile(f, TRUE)
-        if(nrow(res)) print(res)
-    }
-    ## do en@quot
-    tfile <- tempfile()
-    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
-    tfile2 <- tempfile()
-    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed")
-    lines <- readLines(tfile2)
-    lines <- sub("Project-Id-Version: PACKAGE VERSION",
-                 ## FIXME: use package version
-                 paste("Project-Id-Version: R", getRversion()),
-                 lines, useBytes = TRUE)
-    lines <- en_quote(lines)
-    writeLines(lines, "po/en@quot.po", useBytes = TRUE)
-    pofiles <- c(pofiles, "po/en@quot.po")
-
-    for (f in pofiles) {
-        lang <- sub("[.]po", "", basename(f))
+        if(nrow(res)) {
+            print(res)
+            next
+        }
         dest <- file.path("inst", "po", lang, "LC_MESSAGES")
-        dir.create(dest, FALSE)
+        dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, sprintf("%s.mo", pkg))
-        cat("  ", lang, ":", sep = "")
+        if(file_test("-ot", f, dest)) next
         cmd <- paste("msgfmt -c --statistics -o", dest, f)
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),
                     domain = NA)
     }
+    ## do en@quot
+    lang <- "en@quot"
+    cat("  ", lang, ":\n", sep = "")
+    tfile <- tempfile()
+    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
+    if(system(cmd, ignore.stderr = TRUE) != 0L) {
+        warning("running msginit failed")
+        next
+    }
+    tfile2 <- tempfile()
+    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
+    if(system(cmd) != 0L) {
+        warning("running msgconv failed")
+        next
+    }
+    lines <- readLines(tfile2)
+    lines <- en_quote(lines)
+    writeLines(lines, "po/en@quot.po", useBytes = TRUE)
+    dest <- file.path("inst", "po", lang, "LC_MESSAGES")
+    dir.create(dest, FALSE, TRUE)
+    dest <- file.path(dest, sprintf("%s.mo", pkg))
+    cmd <- paste("msgfmt -c --statistics -o", dest, f)
+    if(system(cmd) != 0L)
+        warning(sprintf("running msgfmt on %s failed", basename(f)),
+                domain = NA)
 
     invisible()
 }
@@ -174,8 +201,8 @@ update_po <- function(srcdir)
     same <- function(a, b)
     {
         tmpa <- readLines(a); tmpb <- readLines(b)
-        tmpa <- grep("^POT-Creation-Date: .*$", tmpa, invert = TRUE, value = TRUE)
-        tmpb <- grep("^POT-Creation-Date: .*$", tmpb, invert = TRUE, value = TRUE)
+        tmpa <- grep('^"POT-Creation-Date:', tmpa, invert = TRUE, value = TRUE)
+        tmpb <- grep('^"POT-Creation-Date:', tmpb, invert = TRUE, value = TRUE)
         identical(tmpa, tmpb)
     }
     ## Follow previous version by always collating in C.
@@ -183,41 +210,70 @@ update_po <- function(srcdir)
     coll <- Sys.getlocale("LC_COLLATE")
     on.exit({Sys.setlocale("LC_COLLATE", coll); setwd(pwd)})
     Sys.setlocale("LC_COLLATE", "C")
-    setwd(file.path(srcdir))
+    setwd(srcdir)
     potfile <- "po/R.pot"
     ofile <- tempfile()
     cfiles <- readLines("po/POTFILES.in")
     cfiles <- grep("^#", cfiles, value = TRUE, invert = TRUE)
     cmd <- sprintf("xgettext --keyword=_ --keyword=N_ -o %s", shQuote(ofile))
-    cmd <- c(cmd, "--add-comments=TRANSLATORS:",
+    cmd <- c(cmd, "--package-name=R",
+             paste("--package-version", getRversion(), sep = "="),
+             "--add-comments=TRANSLATORS:",
              '--copyright-holder="The R Foundation"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
     if(system(cmd) != 0L) stop("running xgettext failed")
-    ## compare ofile and po/RGui.pot, ignoring dates.
+    ## compare ofile and po/R.pot, ignoring dates.
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^[^R]*[.]po$", full.names = TRUE)
+    pofiles <- pofiles[pofiles != "po/en@quot.po"]
     newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles[newer]) {
         lang <- sub("[.]po", "", basename(f))
         cat("  ", lang, ":", sep = "")
         cmd <- paste("msgmerge --update", f, potfile)
-        if(system(cmd) != 0L) stop("running msgmerge failed")
-#        res <- checkPoFile(f, TRUE)
-#        if(nrow(res)) print(res)
+        if(system(cmd) != 0L) {
+            warning("running msgmerge failed")
+            next
+        }
+        res <- checkPoFile(f, FALSE)
+        if(nrow(res)) {
+            print(res)
+            next
+        }
+        dest <- sprintf("po/%s.gmo", lang)
+        if (file_test("-ot", f, dest)) next
+        cmd <- paste("msgfmt -c --statistics -o", dest, f)
+        if(system(cmd) != 0L)
+            warning(sprintf("running msgfmt on %s failed", basename(f)),
+                    domain = NA)
     }
 
-    for (f in pofiles) {
-        lang <- sub("[.]po", "", basename(f))
-        dest <- sprintf("po/%s.gmo", lang)
-        if (file_test("-ot", dest, f)) {
-            cat("  ", lang, ":", sep = "")
-            cmd <- paste("msgfmt -c --statistics -o", dest, f)
-            if(system(cmd) != 0L)
-                warning(sprintf("running msgfmt on %s failed", basename(f)),
-                        domain = NA)
-        }
+    ## do en@quot
+    lang <- "en@quot"
+    cat("  ", lang, ":\n", sep = "")
+    tfile <- tempfile()
+    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
+    if(system(cmd, ignore.stderr = TRUE) != 0L) {
+        warning("running msginit failed")
+        next
     }
+    tfile2 <- tempfile()
+    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
+    if(system(cmd) != 0L) {
+        warning("running msgconv failed")
+        next
+    }
+    lines <- readLines(tfile2)
+    lines <- en_quote(lines)
+    writeLines(lines, "po/en@quot.po", useBytes = TRUE)
+    dest <- file.path("inst", "po", lang, "LC_MESSAGES")
+    dir.create(dest, FALSE, TRUE)
+    dest <- sprintf("po/%s.gmo", lang)
+    cmd <- paste("msgfmt -c --statistics -o", dest, f)
+    if(system(cmd) != 0L)
+        warning(sprintf("running msgfmt on %s failed", basename(f)),
+                domain = NA)
 
     invisible()
 }
@@ -227,8 +283,8 @@ update_RGui_po <- function(srcdir)
     same <- function(a, b)
     {
         tmpa <- readLines(a); tmpb <- readLines(b)
-        tmpa <- grep("^POT-Creation-Date: .*$", tmpa, invert = TRUE, value = TRUE)
-        tmpb <- grep("^POT-Creation-Date: .*$", tmpb, invert = TRUE, value = TRUE)
+        tmpa <- grep('^"POT-Creation-Date:', tmpa, invert = TRUE, value = TRUE)
+        tmpb <- grep('^"POT-Creation-Date:', tmpb, invert = TRUE, value = TRUE)
         identical(tmpa, tmpb)
     }
     ## Follow previous version by always collating in C.
@@ -236,20 +292,21 @@ update_RGui_po <- function(srcdir)
     coll <- Sys.getlocale("LC_COLLATE")
     on.exit({Sys.setlocale("LC_COLLATE", coll); setwd(pwd)})
     Sys.setlocale("LC_COLLATE", "C")
-    setwd(file.path(srcdir))
-    cfiles <- file.path("src/gnuwin32",
-                        c("console.c", "dataentry.c",  "editor.c",  "extra.c",
-                          "pager.c", "preferences.c", "rui.c", "system.c"))
-    cfiles <- c(cfiles, "src/extra/graphapp/clipboard.c",
-                "src/extra/graphapp/dialogs.c",
-                "src/extra/graphapp/gmenus.c",
-                "src/extra/graphapp/metafile.c",
-                "src/extra/graphapp/printer.c",
+    setwd(srcdir)
+    cfiles <- c(file.path("src/gnuwin32",
+                          c("console.c", "dataentry.c",  "editor.c",  "extra.c",
+                            "pager.c", "preferences.c", "rui.c", "system.c")),
+                file.path("src/extra/graphapp",
+                          c("clipboard.c", "dialogs.c", "gmenus.c",
+                            "metafile.c", "printer.c")),
                 "src/library/grDevices/src/devWindows.c")
     potfile <- "po/RGui.pot"
     ofile <- tempfile()
-    cmd <- sprintf("xgettext --keyword=_ --keyword=N_ -o %s", shQuote(ofile))
-    cmd <- c(cmd, "--add-comments=TRANSLATORS:",
+    ofile <- '/tmp/foo.pot'
+    cmd <- sprintf("xgettext --keyword= --keyword=G_ --keyword=GN_ -o %s", shQuote(ofile))
+    cmd <- c(cmd, "--package-name=R",
+             paste("--package-version", getRversion(), sep = "="),
+             "--add-comments=TRANSLATORS:",
              '--copyright-holder="The R Foundation"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
@@ -262,22 +319,21 @@ update_RGui_po <- function(srcdir)
         lang <- sub("[.]po", "", basename(f))
         cat("  ", lang, ":", sep = "")
         cmd <- paste("msgmerge --update", f, potfile)
-        if(system(cmd) != 0L) stop("running msgmerge failed")
-        res <- checkPoFile(f, TRUE)
-        if(nrow(res)) print(res)
-    }
-
-    for (f in pofiles) {
-        lang <- sub("[.]po", "", basename(f))
-        dest <- sprintf("po/RGui-%s.gmo", lang)
-        if (file_test("-ot", dest, f)) {
-            cat("  ", lang, ":", sep = "")
-            cmd <- paste("msgfmt -c --statistics -o", dest, f)
-            if(system(cmd) != 0L)
-                warning(sprintf("running msgfmt on %s failed", basename(f)),
-                        domain = NA)
+        if(system(cmd) != 0L) {
+            warning("running msgmerge failed")
+            next
         }
-    }
+        res <- checkPoFile(f, FALSE)
+        if(nrow(res)) {
+            print(res)
+            next
+        }
+        dest <- sprintf("po/%s.gmo", lang)
+        cmd <- paste("msgfmt -c --statistics -o", dest, f)
+        if(system(cmd) != 0L)
+            warning(sprintf("running msgfmt on %s failed", basename(f)),
+                    domain = NA)
+   }
 
     invisible()
 }
