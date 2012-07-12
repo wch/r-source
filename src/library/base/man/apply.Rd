@@ -35,6 +35,15 @@ apply(X, MARGIN, FUN, \dots)
   is either a function or a symbol (e.g. a backquoted name) or a
   character string specifying a function to be searched for from the
   environment of the call to \code{apply}.
+
+  Arguments in \code{\dots} cannot have the same name as any of the
+  other arguments, and care may be needed to avoid partial matching to
+  \code{MARGIN} or \code{FUN}.  In general-purpose code it is good
+  practice to name the first three arguments if \code{\dots} is passed
+  through: this both avoids partial matching to \code{MARGIN}
+  or \code{FUN} and ensures that a sensible error message is given if
+  arguments named \code{X}, \code{MARGIN} or \code{FUN} are passed
+  through \code{\dots}.
 }
 \value{
   If each call to \code{FUN} returns a vector of length \code{n}, then
