@@ -2599,7 +2599,7 @@ msgstr[0] ""
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
-msgstr[0] "모델식에서 파라미터 %s가 없습니다\n"
+msgstr[0] "모델식에서 파라미터 %s가 없습니다"
 
 #~ msgid "wrong number of predictors"
 #~ msgstr "예측자의 수가 잘못되어 있습니다"
