@@ -45,7 +45,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
                        %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
-                    if(as.character(e[[1L]]) == "gettextf") {	
+                    if(as.character(e[[1L]]) == "gettextf") {
                         e <- match.call(gettextf, e)
                         e <- e["fmt"] # just look at fmt arg
                     } else if(as.character(e[[1L]]) == "gettext" &&
@@ -123,7 +123,7 @@ function(dir, verbose = FALSE)
            && as.character(e[[1L]]) %in% "ngettext") {
 	    e <- match.call(ngettext, e)
 	    if (is.character(e[["msg1"]]) && is.character(e[["msg2"]]))
-	    	strings <<- c(strings, list(c(msg1=e[["msg1"]], 
+	    	strings <<- c(strings, list(c(msg1=e[["msg1"]],
 	    				      msg2=e[["msg2"]])))
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
@@ -156,7 +156,7 @@ function(dir, potFile)
                  'msgstr ""',
                  sprintf('"Project-Id-Version: R %s.%s\\n"',
                          R.version$major, R.version$minor),
-                 '"Report-Msgid-Bugs-To: bugs@r-project.org\\n"',
+                 '"Report-Msgid-Bugs-To: bugs.r-project.org\\n"',
                  paste0('"POT-Creation-Date: ',
                         format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable
                         '\\n"'),
