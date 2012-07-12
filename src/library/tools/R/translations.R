@@ -115,7 +115,10 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     if(system(cmd) != 0L) stop("running msgconv failed")
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
-    writeLines(lines, "po/R-en@quot.po", useBytes = TRUE)
+    f <- "po/R-en@quot.po"
+    con <- file(f, "wb")
+    writeLines(lines, con, useBytes = TRUE)
+    close(con)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- file.path(dest, sprintf("R-%s.mo", pkg))
@@ -172,19 +175,17 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     cat("  ", lang, ":\n", sep = "")
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L) {
-        warning("running msginit failed")
-        next
-    }
+    if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
     tfile2 <- tempfile()
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) {
-        warning("running msgconv failed")
-        next
-    }
+    if(system(cmd) != 0L) stop("running msgconv failed")
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
-    writeLines(lines, "po/en@quot.po", useBytes = TRUE)
+    f <- "po/en@quot.po"
+    ## in case this is done on Windows
+    con <- file(f, "wb")
+    writeLines(lines, con, useBytes = TRUE)
+    close(con)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- file.path(dest, sprintf("%s.mo", pkg))
@@ -254,19 +255,16 @@ update_po <- function(srcdir)
     cat("  ", lang, ":\n", sep = "")
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L) {
-        warning("running msginit failed")
-        next
-    }
+    if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
     tfile2 <- tempfile()
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) {
-        warning("running msgconv failed")
-        next
-    }
+    if(system(cmd) != 0L) stop("running msgconv failed")
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
-    writeLines(lines, "po/en@quot.po", useBytes = TRUE)
+    f <- "po/en@quot.po"
+    con <- file(f, "wb")
+    writeLines(lines, con, useBytes = TRUE)
+    close(con)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- sprintf("po/%s.gmo", lang)
