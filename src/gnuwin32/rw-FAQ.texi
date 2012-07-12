@@ -960,10 +960,8 @@ Norwegian,
 Polish,
 Portuguese,
 Russian,
-Serbian,
 Slovenian
-Spanish (Spain)
-and Ukranian
+and Spanish (Spain).
 
 @c In earlier versions only languages which could be displayed using the
 @c current codepage were offered so you could only install in Japanese if
