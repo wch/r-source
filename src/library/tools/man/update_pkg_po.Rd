@@ -16,10 +16,10 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL)
 }
 \arguments{
   \item{pkgdir}{The path to the package directory.}
-  \item{pkg}{The package name: if \code{NULL} derived from the package's
-  \file{DESCRIPTION} file.}
-  \item{version}{The package version: if \code{NULL} derived from the package's
-  \file{DESCRIPTION} file.}
+  \item{pkg}{The package name: if \code{NULL} it is read from the package's
+    \file{DESCRIPTION} file.}
+  \item{version}{The package version: if \code{NULL} it is read from the
+    package's \file{DESCRIPTION} file.}
 }
 \details{
   This performs a series of steps to prepare for or update messages in
@@ -27,30 +27,30 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL)
   \itemize{
     \item If the package sources do not already have a \file{po}
     directory, one is created.
-    \item \code{\link{xgettesxt2pot}} is called to create/update a file
+    \item \code{\link{xgettext2pot}} is called to create/update a file
     \file{po/R-\var{pkgname}.pot} containing the translatable messages
     in the package.
     \item All existing files in directory \code{po} with names
     \file{R-\var{lang}.po} are updated from \file{R-\var{pkgname}.pot}.
     \item \code{\link{checkPoFile}} is called on each
-    \code{R-\var{lang}.po} file.
+    \file{po/R-\var{lang}.po} file.
     \item A file \file{po/R-en@quot.po} is created with UTF-8 directional
     quotes.
-    \item All the \file{R-\var{lang}.po} files are compiled and installed under
-    \file{inst/po}.
+    \item All the \file{po/R-\var{lang}.po} files are compiled and
+    installed under \file{inst/po}.
     \item The remaining steps are done only if file
-    \file{\var{pkgname}.pot} already exists.  All the \code{src/*.c}
+    \file{po/\var{pkgname}.pot} already exists.  All the \code{src/*.c}
     files in the package are examined to create a file
-    \file{po/\var{pkgname}.po}  containing the translatable messages
+    \file{po/\var{pkgname}.po} containing the translatable messages
     in the C files.
     \item All existing files in directory \code{po} with names
     \file{\var{lang}.po} are updated from \file{\var{pkgname}.pot}.
     \item \code{\link{checkPoFile}} is called on each
-    \code{\var{lang}.po} file.
+    \file{po/\var{lang}.po} file.
     \item A file \file{po/en@quot.po} is created with UTF-8 directional
     quotes.
-    \item All the \file{\var{lang}.po} files are compiled and installed under
-    \file{inst/po}.
+    \item All the \file{po/\var{lang}.po} files are compiled and
+    installed under \file{inst/po}.
   }
 }
 \section{System requirements}{
@@ -63,6 +63,6 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL)
   \url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
 }
 \seealso{
-  \code{\link{xgettesxt2pot}}.
+  \code{\link{xgettext2pot}}.
 }
 \keyword{ utilities }
