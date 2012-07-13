@@ -160,7 +160,8 @@ R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
    CustomMsg.iss imagedir fixups 32bit extras md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	../../../bin$(R_ARCH)/Rscript JRins.R \
-	  $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+	  $(RPREFIX) $(RPREFIX) $(MDISDI) \
+	  $(HelpStyle) $(Internet) $(Producer) "$(ISDIR)"
 
 $(RPREFIX)-win.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
