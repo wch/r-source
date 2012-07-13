@@ -440,7 +440,7 @@ pkg-update: remove-potcdate.sed en@quot.insert-header
 	echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
 	LC_ALL=C; export LC_ALL; \
 	cd $(srcdir); \
-	if $(MSGINIT) -i $${psrc}/R-$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/R-$$lang.new.po; then \
+	if $(MSGINIT) -i $${psrc}/R-$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e "s/PACKAGE VERSION/R $(VERSION)/" | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/R-$$lang.new.po; then \
 	  if cmp $${psrc}/R-$$lang.po $$tmpdir/R-$$lang.new.po >/dev/null 2>&1; then \
 	    rm -f $$tmpdir/R-$$lang.new.po; \
 	  else \
