@@ -589,7 +589,7 @@ msgstr "creation of tmpfile failed -- set TMPDIR suitably?"
 
 #: src/gnuwin32/system.c:1128 src/unix/system.c:430
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
-msgstr "you must specify '--save', ‘--no-save’ or ‘--vanilla’"
+msgstr "you must specify ‘--save’, ‘--no-save’ or ‘--vanilla’"
 
 #: src/gnuwin32/system.c:1133
 msgid ""
@@ -899,7 +899,7 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
-"values must be type '%s',\n"
+"values must be type ‘%s’,\n"
 " but FUN(X[[%d]]) result is type ‘%s’"
 
 #: src/main/apply.c:184
@@ -1119,7 +1119,7 @@ msgstr "attempt to set an attribute on NULL"
 #: src/main/attrib.c:71
 #, c-format
 msgid "row names must be 'character' or 'integer', not '%s'"
-msgstr "row names must be ‘character’ or 'integer', not ‘%s’"
+msgstr "row names must be ‘character’ or ‘integer’, not ‘%s’"
 
 #: src/main/attrib.c:123
 #, c-format
@@ -1942,7 +1942,7 @@ msgstr "allocation of file connection failed"
 #: src/main/connections.c:843
 #, c-format
 msgid "cannot create fifo '%s', reason '%s'"
-msgstr "cannot create fifo '%s', reason ‘%s’"
+msgstr "cannot create fifo ‘%s’, reason ‘%s’"
 
 #: src/main/connections.c:849
 #, c-format
@@ -2011,7 +2011,7 @@ msgstr "cannot open pipe() cmd '%s': %s"
 #: src/main/connections.c:1215 src/main/connections.c:1536
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
-msgstr "cannot open compressed file '%s', probable reason ‘%s’"
+msgstr "cannot open compressed file ‘%s’, probable reason ‘%s’"
 
 #: src/main/connections.c:1255
 msgid "whence = \"end\" is not implemented for gzfile connections"
@@ -2029,7 +2029,7 @@ msgstr "allocation of gzfile connection failed"
 #: src/main/connections.c:1350
 #, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
-msgstr "cannot open bzip2-ed file '%s', probable reason ‘%s’"
+msgstr "cannot open bzip2-ed file ‘%s’, probable reason ‘%s’"
 
 #: src/main/connections.c:1359
 #, c-format
@@ -2787,7 +2787,7 @@ msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
-"explicit request not to duplicate arguments in call to '%s', but argument %d "
+"explicit request not to duplicate arguments in call to ‘%s’, but argument %d "
 "is of the wrong type (%d != %d)"
 
 #: src/main/dotcode.c:1486
@@ -4046,7 +4046,7 @@ msgstr "Metric information not available for this device"
 #: src/main/grep.c:89
 #, c-format
 msgid "invalid regular expression '%s', reason '%s'"
-msgstr "invalid regular expression '%s', reason ‘%s’"
+msgstr "invalid regular expression ‘%s’, reason ‘%s’"
 
 #: src/main/grep.c:91
 #, c-format
@@ -4264,11 +4264,11 @@ msgstr "unrecognized value of ‘save’"
 
 #: src/main/main.c:1209
 msgid "invalid 'status', 0 assumed"
-msgstr "invalid 'status', 0 assumed"
+msgstr "invalid ‘status’, 0 assumed"
 
 #: src/main/main.c:1214
 msgid "invalid 'runLast', FALSE assumed"
-msgstr "invalid 'runLast', FALSE assumed"
+msgstr "invalid ‘runLast’, FALSE assumed"
 
 #: src/main/main.c:1245
 msgid "cannot allocate space for toplevel callback element"
@@ -5234,7 +5234,7 @@ msgstr "invalid filename argument"
 #: src/main/platform.c:530
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
-msgstr "cannot create file '%s', reason ‘%s’"
+msgstr "cannot create file ‘%s’, reason ‘%s’"
 
 #: src/main/platform.c:545 src/main/platform.c:615 src/main/platform.c:693
 msgid "invalid first filename"
@@ -5243,7 +5243,7 @@ msgstr "invalid first filename"
 #: src/main/platform.c:557
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
-msgstr "cannot remove file '%s', reason ‘%s’"
+msgstr "cannot remove file ‘%s’, reason ‘%s’"
 
 #: src/main/platform.c:617 src/main/platform.c:695
 msgid "invalid second filename"
@@ -5260,12 +5260,12 @@ msgstr "symbolic links are not supported on this version of Windows"
 #: src/main/platform.c:647
 #, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
-msgstr "cannot symlink ‘%ls’ to '%ls', reason ‘%s’"
+msgstr "cannot symlink ‘%ls’ to ‘%ls’, reason ‘%s’"
 
 #: src/main/platform.c:667
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
-msgstr "cannot symlink ‘%s’ to '%s', reason ‘%s’"
+msgstr "cannot symlink ‘%s’ to ‘%s’, reason ‘%s’"
 
 #: src/main/platform.c:675
 msgid "symlinks are not supported on this platform"
@@ -5274,12 +5274,12 @@ msgstr "symlinks are not supported on this platform"
 #: src/main/platform.c:715
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
-msgstr "cannot link ‘%ls’ to '%ls', reason ‘%s’"
+msgstr "cannot link ‘%ls’ to ‘%ls’, reason ‘%s’"
 
 #: src/main/platform.c:735
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
-msgstr "cannot link ‘%s’ to '%s', reason ‘%s’"
+msgstr "cannot link ‘%s’ to ‘%s’, reason ‘%s’"
 
 #: src/main/platform.c:744
 msgid "(hard) links are not supported on this platform"
@@ -5300,7 +5300,7 @@ msgstr "expanded ‘to’ name too long"
 #: src/main/platform.c:804
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
-msgstr "cannot rename file ‘%s’ to '%s', reason ‘%s’"
+msgstr "cannot rename file ‘%s’ to ‘%s’, reason ‘%s’"
 
 #: src/main/platform.c:1155
 msgid "invalid 'pattern' regular expression"
@@ -5362,7 +5362,7 @@ msgstr "‘%s’ already exists"
 #: src/main/platform.c:2200
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
-msgstr "cannot create dir '%s', reason ‘%s’"
+msgstr "cannot create dir ‘%s’, reason ‘%s’"
 
 #: src/main/platform.c:2246
 #, c-format
@@ -5372,7 +5372,7 @@ msgstr "‘%ls’ already exists"
 #: src/main/platform.c:2250
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
-msgstr "cannot create dir '%ls', reason ‘%s’"
+msgstr "cannot create dir ‘%ls’, reason ‘%s’"
 
 #: src/main/platform.c:2280
 #, c-format
@@ -6216,7 +6216,7 @@ msgstr ""
 #: src/main/scan.c:466
 #, c-format
 msgid "scan() expected '%s', got '%s'"
-msgstr "scan() expected '%s', got ‘%s’"
+msgstr "scan() expected ‘%s’, got ‘%s’"
 
 #: src/main/scan.c:652
 msgid "empty 'what' specified"
@@ -7375,13 +7375,13 @@ msgstr "Download progress"
 #: src/modules/internet/internet.c:339
 #, c-format
 msgid "cannot open URL '%s', reason '%s'"
-msgstr "cannot open URL '%s', reason ‘%s’"
+msgstr "cannot open URL ‘%s’, reason ‘%s’"
 
 #: src/modules/internet/internet.c:346 src/modules/internet/internet.c:372
 #: src/modules/internet/internet.c:474
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
-msgstr "cannot open destfile '%s', reason ‘%s’"
+msgstr "cannot open destfile ‘%s’, reason ‘%s’"
 
 #: src/modules/internet/internet.c:377 src/modules/internet/internet.c:479
 #, c-format
@@ -7524,12 +7524,12 @@ msgstr "argument type[1]='%s' must be a character string of string length 1"
 #: src/modules/lapack/Lapack.c:53
 #, c-format
 msgid "argument type[1]='%s' must be one of 'M','1','O','I','F' or 'E'"
-msgstr "argument type[1]='%s' must be one of 'M','1','O','I','F' or ‘E’"
+msgstr "argument type[1]='%s' must be one of ‘M’,'1','O','I','F' or ‘E’"
 
 #: src/modules/lapack/Lapack.c:70
 #, c-format
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
-msgstr "argument type[1]='%s' must be one of '1','O', or ‘I’"
+msgstr "argument type[1]='%s' must be one of ‘1’,'O', or ‘I’"
 
 #: src/modules/lapack/Lapack.c:84 src/modules/lapack/Lapack.c:705
 msgid "'jobu' and 'jobv' must be character strings"
@@ -8191,7 +8191,7 @@ msgstr "‘intern’ must be logical and not NA"
 #: src/unix/sys-unix.c:265
 #, c-format
 msgid "cannot popen '%s', probable reason '%s'"
-msgstr "cannot popen '%s', probable reason ‘%s’"
+msgstr "cannot popen ‘%s’, probable reason ‘%s’"
 
 #: src/unix/sys-unix.c:270
 #, c-format
@@ -8224,12 +8224,12 @@ msgstr "WARNING: --gui or -g without value ignored"
 #: src/unix/system.c:267
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
-msgstr "WARNING: unknown gui '%s', using X11\n"
+msgstr "WARNING: unknown gui ‘%s’, using X11\n"
 
 #: src/unix/system.c:270
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
-msgstr "WARNING: unknown gui '%s', using none\n"
+msgstr "WARNING: unknown gui ‘%s’, using none\n"
 
 #: src/unix/system.c:382
 msgid "creating temporary file for '-e' failed"

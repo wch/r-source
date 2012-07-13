@@ -127,7 +127,7 @@ msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
 msgstr ""
-"invalid environment in checking for missing argument, '%s', in methods "
+"invalid environment in checking for missing argument, ‘%s’, in methods "
 "dispatch: got an object of class “%s”"
 
 #: methods_list_dispatch.c:574
@@ -170,7 +170,7 @@ msgstr ""
 #: methods_list_dispatch.c:622
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr "no matching method for function ‘%s’ (argument '%s', with class “%s”)"
+msgstr "no matching method for function ‘%s’ (argument ‘%s’, with class “%s”)"
 
 #: methods_list_dispatch.c:629
 #, c-format
@@ -192,7 +192,7 @@ msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
 msgstr ""
-"in processing 'callNextMethod', found a ‘...’ in the matched call, but no "
+"in processing ‘callNextMethod’, found a ‘...’ in the matched call, but no "
 "corresponding ‘...’ argument"
 
 #: methods_list_dispatch.c:705

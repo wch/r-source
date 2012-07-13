@@ -154,7 +154,7 @@ msgid "unable to write code files"
 msgstr "unable to write code files"
 
 msgid "you must specify 'package', 'dir' or 'file'"
-msgstr "you must specify 'package', ‘dir’ or ‘file’"
+msgstr "you must specify ‘package’, ‘dir’ or ‘file’"
 
 msgid "file '%s' does not exist"
 msgstr "file ‘%s’ does not exist"
@@ -243,7 +243,7 @@ msgid ""
 "Entries must be names of packages optionally followed by '<=' or '>=', white "
 "space, and a valid version number in parentheses."
 msgstr ""
-"Entries must be names of packages optionally followed by ‘<=’ or '>=', white "
+"Entries must be names of packages optionally followed by ‘<=’ or ‘>=’, white "
 "space, and a valid version number in parentheses."
 
 msgid "Entries with infeasible comparison operator:"
@@ -510,7 +510,7 @@ msgid "no 'type' specified"
 msgstr "no ‘type’ specified"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr "‘type’ must be one of 'txt', 'html', ‘latex’ or ‘example’"
+msgstr "‘type’ must be one of ‘txt’, ‘html’, ‘latex’ or ‘example’"
 
 msgid "current working directory cannot be ascertained"
 msgstr "current working directory cannot be ascertained"

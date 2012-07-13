@@ -101,7 +101,7 @@ msgid "'formula' missing or incorrect"
 msgstr "‘formula’ missing or incorrect"
 
 msgid "'at' must have same length as 'z$n', i.e."
-msgstr "‘at’ must have same length as 'z$n', i.e."
+msgstr "‘at’ must have same length as ‘z$n’, i.e."
 
 msgid "invalid boxplot widths"
 msgstr "invalid boxplot widths"
@@ -218,7 +218,7 @@ msgid "'breaks' are not strictly increasing"
 msgstr "‘breaks’ are not strictly increasing"
 
 msgid "'probability' is an alias for '!freq', however they differ."
-msgstr "‘probability’ is an alias for '!freq', however they differ."
+msgstr "‘probability’ is an alias for ‘!freq’, however they differ."
 
 msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 msgstr "negative 'counts'. Internal Error in C-code for “bincount”"

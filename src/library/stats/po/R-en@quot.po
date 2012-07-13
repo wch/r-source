@@ -1506,7 +1506,7 @@ msgid "if 'x' is not an array, 'z' must be given"
 msgstr "if ‘x’ is not an array, ‘z’ must be given"
 
 msgid "'x', 'y', and 'z' must have the same length"
-msgstr "'x', 'y', and ‘z’ must have the same length"
+msgstr "'x', ‘y’, and ‘z’ must have the same length"
 
 msgid "sample size in each stratum must be > 1"
 msgstr "sample size in each stratum must be > 1"
@@ -1838,7 +1838,7 @@ msgstr "‘r’ must be a single positive number"
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
-"exactly one of 'n', 'delta', 'sd', 'power', and ‘sig.level’ must be NULL"
+"exactly one of ‘n’, ‘delta’, ‘sd’, ‘power’, and ‘sig.level’ must be NULL"
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr "‘sig.level’ must be numeric in [0, 1]"
@@ -1847,13 +1847,13 @@ msgid "internal error"
 msgstr "internal error"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
-msgstr "exactly one of 'n', 'p1', 'p2', 'power', and ‘sig.level’ must be NULL"
+msgstr "exactly one of ‘n’, ‘p1’, ‘p2’, ‘power’, and ‘sig.level’ must be NULL"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
 msgstr ""
-"exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and ‘sig."
+"exactly one of ‘groups’, ‘n’, ‘between.var’, ‘within.var’, ‘power’, and ‘sig."
 "level’ must be NULL"
 
 msgid "number of groups must be at least 2"
