@@ -24,10 +24,11 @@ If you add a package, R-level catalogs are produced automatically but
 for a C-level catalog you need to touch path/to/package/po/package.pot.
 
 To add a new translation, add the lang.po file to this directory and
-add the language to LINGUAS.  If there are no problems with the
-translations 'make all R' (in the builddir, if separate) will do the
-rest (create ll.gmo and install it as required).  For fuller manual
-control, use
+add the language to LINGUAS, and translators to THANKS.
+
+If there are no problems with the translations 'make all R' (in the
+builddir, if separate) will do the rest (create ll.gmo and install it
+as required).  For fuller manual control, use
 
 	msgfmt -c --statistics -o ll.gmo ll.po
 
@@ -96,9 +97,9 @@ template files, and update and install any new translations that have
 been added in ${PKGDIR}/po.
 
 
-Note to Mac OS X users
-======================
+Note to FreeBSD and OS X users
+==============================
 
-NB: these commands did not run correctly on at least one Mac OS X
-installation.  There were problems with the sed scripts used for the
-en@quot translations (in how \n was handled).
+NB: FreeBSD's sed does not work correctly (it appends LF to every
+line), so GNU sed is required.  Set the environment variable SED as
+needed.
