@@ -12,7 +12,7 @@
   Prepare the \file{po} directory of a packages.
 }
 \usage{
-update_pkg_po(pkgdir, pkg = NULL, version = NULL)
+update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
 }
 \arguments{
   \item{pkgdir}{The path to the package directory.}
@@ -20,6 +20,9 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL)
     \file{DESCRIPTION} file.}
   \item{version}{The package version: if \code{NULL} it is read from the
     package's \file{DESCRIPTION} file.}
+  \item{copyright, bugs}{optional character strings for the
+    \samp{Copyright} and \samp{Report-Msgid-Bugs-To} details in the
+    template file.}
 }
 \details{
   This performs a series of steps to prepare for or update messages in

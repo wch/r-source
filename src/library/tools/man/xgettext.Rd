@@ -20,7 +20,7 @@ xgettext(dir, verbose = FALSE, asCall = TRUE)
 
 xngettext(dir, verbose = FALSE)
 
-xgettext2pot(dir, potFile, name = "R", version)
+xgettext2pot(dir, potFile, name = "R", version, bugs)
 }
 \arguments{
   \item{dir}{the directory of a source package.}
@@ -31,8 +31,9 @@ xgettext2pot(dir, potFile, name = "R", version)
   \item{potFile}{name of \code{po} template file to be produced.
     Defaults to \file{R-\var{pkgname}.pot} where
     \var{pkgname} is the basename of \file{dir}.}
-  \item{name, version}{as recorded in the template file: \code{version}
-    defaults the version number of the currently running \R.}
+  \item{name, version, bugs}{as recorded in the template file:
+    \code{version} defaults the version number of the currently running
+    \R, and \code{bugs} to \code{"bugs.r-project.org"}.}
 }
 \details{
   Leading and trailing white space (space, tab and linefeed) is removed

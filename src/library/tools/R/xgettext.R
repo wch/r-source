@@ -139,7 +139,7 @@ function(dir, verbose = FALSE)
 }
 
 xgettext2pot <-
-function(dir, potFile, name = "R", version)
+function(dir, potFile, name = "R", version, bugs)
 {
     dir <- file_path_as_absolute(dir)
     if(missing(potFile))
@@ -152,11 +152,12 @@ function(dir, potFile, name = "R", version)
     on.exit(close(con))
     if(missing(version))
         version <- paste(R.version$major, R.version$minor, sep = ".")
+    if(missing(bugs)) bugs <- "bugs.r-project.org"
     writeLines(con = con,
                c('msgid ""',
                  'msgstr ""',
                  sprintf('"Project-Id-Version: %s %s\\n"', name, version),
-                 '"Report-Msgid-Bugs-To: bugs.r-project.org\\n"',
+                 sprintf('"Report-Msgid-Bugs-To: %s\\n"', bugs),
                  paste0('"POT-Creation-Date: ',
                         format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable
                         '\\n"'),

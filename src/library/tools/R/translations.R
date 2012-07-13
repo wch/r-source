@@ -40,8 +40,43 @@ en_quote <- function(lines)
     lines
 }
 
-## FIXME: this needs to set the copyright holder, the bugs address ....
-update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
+enquote <- function(potfile, out)
+{
+    tfile <- tempfile()
+    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
+    if(system(cmd, ignore.stderr = TRUE) != 0L)
+        stop("running msginit failed", domain = NA)
+    tfile2 <- tempfile()
+    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
+    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
+    lines <- readLines(tfile2)
+    lines <- en_quote(lines)
+    ## in case this is done on Windows
+    con <- file(out, "wb")
+    writeLines(lines, con, useBytes = TRUE)
+    close(con)
+}
+
+## But for now
+enquote <- function(potfile, out)
+{
+    SED <- Sys.getenv("SED", "sed") # but needs to be "gnused" on a Mac
+    tfile <- tempfile()
+    cmd <- paste("msginit -i", shQuote(potfile),
+                 "--no-translator -l en -o", shQuote(tfile))
+    if(system(cmd, ignore.stderr = TRUE) != 0L)
+        stop("running msginit failed", domain = NA)
+    tfile2 <- tempfile()
+    cmd <- paste("msgconv -t UTF-8 -o", shQuote(tfile2), shQuote(tfile))
+    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
+    cmd <- paste("msgfilter -i", shQuote(tfile2), "-o", out, SED,
+                 "-f", shQuote(system.file(package="tools", "po","quot.sed")))
+    if(system(cmd, ignore.stderr = TRUE) != 0L)
+        stop("running msgfilter failed", domain = NA)
+}
+
+
+update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
 {
     same <- function(a, b)
     {
@@ -64,16 +99,20 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         desc <- read.dcf(desc, fields = c("Package", "Version"))
         pkg <- name <- desc[1L]
         version <- desc[2L]
+        if (missing(copyright)) copyright <- NULL
+        if (missing(bugs)) bugs <- NULL
     } else { # A base package
         pkg <- basename(pkgdir)
         name <- "R"
         version <- as.character(getRversion())
+        copyright <- "The R Core Team"
+        bugs <- "bugs.r-project.org"
     }
     have_src <- paste0(pkg, ".pot") %in% files
 
     ## do R-pkg domain first
     ofile <- tempfile()
-    xgettext2pot(".", ofile, name, version)
+    xgettext2pot(".", ofile, name, version, bugs)
     potfile <- file.path("po", paste0("R-", pkg, ".pot"))
     if(file.exists(potfile) && same(potfile, ofile)) {
     } else file.copy(ofile, potfile, overwrite = TRUE)
@@ -84,7 +123,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
         cat("  R-", lang, ":", sep = "")
         ## This seems not to update the file dates.
-        cmd <- paste("msgmerge --update", f, potfile)
+        cmd <- paste("msgmerge --update", f, shQuote(potfile))
         if(system(cmd) != 0L) {
             warning("running msgmerge on ", sQuote(f), " failed", domain = NA)
             next
@@ -98,7 +137,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, sprintf("R-%s.mo", pkg))
         if(file_test("-ot", f, dest)) next
-        cmd <- paste("msgfmt -c --statistics -o", dest, f)
+        cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),
                     domain = NA, immediate. = TRUE)
@@ -107,23 +146,12 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     ## do en@quot
     lang <- "en@quot"
     cat("  R-", lang, ":\n", sep = "")
-    tfile <- tempfile()
-    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L)
-        stop("running msginit failed", domain = NA)
-    tfile2 <- tempfile()
-    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
-    lines <- readLines(tfile2)
-    lines <- en_quote(lines)
     f <- "po/R-en@quot.po"
-    con <- file(f, "wb")
-    writeLines(lines, con, useBytes = TRUE)
-    close(con)
+    enquote(potfile, f)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- file.path(dest, sprintf("R-%s.mo", pkg))
-    cmd <- paste("msgfmt -c --statistics -o", dest, f)
+    cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
     if(system(cmd) != 0L)
         warning(sprintf("running msgfmt on %s failed", basename(f)),
                 domain = NA, immediate. = TRUE)
@@ -137,8 +165,10 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     cmd <- c(cmd, paste("--package-name", name, sep = "="),
              paste("--package-version", version, sep = "="),
              "--add-comments=TRANSLATORS:",
-             '--copyright-holder="The R Foundation"',
-             '--msgid-bugs-address="bugs.r-project.org"')
+             if(!is.null(copyright))
+                 sprintf('--copyright-holder="%s"', copyright),
+             if(!is.null(bugs))
+                 sprintf('--msgid-bugs-address="%s"', bugs))
     cmd <- paste(c(cmd, cfiles), collapse=" ")
     if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     setwd("..")
@@ -152,7 +182,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     for (f in pofiles[newer]) {
         lang <- sub("[.]po", "", basename(f))
         cat("  ", lang, ":", sep = "")
-        cmd <- paste("msgmerge --update", f, potfile)
+        cmd <- paste("msgmerge --update", shQuote(f), shQuote(potfile))
         if(system(cmd) != 0L) {
             warning("running msgmerge on ",  f, " failed", domain = NA)
             next
@@ -166,7 +196,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, sprintf("%s.mo", pkg))
         if(file_test("-ot", f, dest)) next
-        cmd <- paste("msgfmt -c --statistics -o", dest, f)
+        cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),
                     domain = NA)
@@ -174,24 +204,12 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     ## do en@quot
     lang <- "en@quot"
     cat("  ", lang, ":\n", sep = "")
-    tfile <- tempfile()
-    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L)
-        stop("running msginit failed", domain = NA)
-    tfile2 <- tempfile()
-    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
-    lines <- readLines(tfile2)
-    lines <- en_quote(lines)
     f <- "po/en@quot.po"
-    ## in case this is done on Windows
-    con <- file(f, "wb")
-    writeLines(lines, con, useBytes = TRUE)
-    close(con)
+    enquote(potfile, f)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- file.path(dest, sprintf("%s.mo", pkg))
-    cmd <- paste("msgfmt -c --statistics -o", dest, f)
+    cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
     if(system(cmd) != 0L)
         warning(sprintf("running msgfmt on %s failed", basename(f)),
                 domain = NA)
@@ -255,19 +273,8 @@ update_po <- function(srcdir)
     ## do en@quot
     lang <- "en@quot"
     cat("  ", lang, ":\n", sep = "")
-    tfile <- tempfile()
-    cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L)
-        stop("running msginit failed", domain = NA)
-    tfile2 <- tempfile()
-    cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
-    lines <- readLines(tfile2)
-    lines <- en_quote(lines)
     f <- "po/en@quot.po"
-    con <- file(f, "wb")
-    writeLines(lines, con, useBytes = TRUE)
-    close(con)
+    enquote(potfile, f)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- sprintf("po/%s.gmo", lang)
@@ -293,14 +300,6 @@ install_po <- function(srcdir, Rlocaledir)
     }
 }
 
-## uninstallation is just
-## rm -rf $(Rlocaledir)
-
-uninstall_po <- function(buildddir)
-{
-    Rlocaledir <- ""
-
-}
 
 update_RGui_po <- function(srcdir)
 {
@@ -327,7 +326,7 @@ update_RGui_po <- function(srcdir)
     potfile <- "po/RGui.pot"
     ofile <- tempfile()
     ofile <- '/tmp/foo.pot'
-    cmd <- sprintf("xgettext --keyword= --keyword=G_ --keyword=GN_ -o %s", shQuote(ofile))
+    cmd <- sprintf("xgettext --keyword --keyword=G_ --keyword=GN_ -o %s", shQuote(ofile))
     cmd <- c(cmd, "--package-name=R",
              paste("--package-version", getRversion(), sep = "="),
              "--add-comments=TRANSLATORS:",

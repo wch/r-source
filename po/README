@@ -53,7 +53,7 @@ and     mv R-<ll>.gmo ../inst/po/<ll>/LC_MESSAGES/R-tools.mo
 Windows RGui translations
 =========================
 
-These are contained in RGui.pot, and ranslations should be called
+These are contained in RGui.pot, and translations should be called
 RGui-ll.po for language 'll'.
 
 To re-make RGui.pot and all the translations use 'make update-RGui'
@@ -69,6 +69,13 @@ Adding translations to other packages
 
 See 'Writing R Extensions'.
 
+
+Note to FreeBSD and OS X users
+==============================
+
+NB: FreeBSD's sed does not work correctly (it appends LF to every
+line), so GNU sed is required.  Set the environment variable SED as
+needed.
 
 
 Subversion note
