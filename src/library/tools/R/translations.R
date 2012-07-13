@@ -86,7 +86,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         ## This seems not to update the file dates.
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
-            warning("running msgmerge on ", sQuote(f), " failed")
+            warning("running msgmerge on ", sQuote(f), " failed", domain = NA)
             next
         }
         res <- checkPoFile(f, TRUE)
@@ -109,10 +109,11 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     cat("  R-", lang, ":\n", sep = "")
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
+    if(system(cmd, ignore.stderr = TRUE) != 0L)
+        stop("running msginit failed", domain = NA)
     tfile2 <- tempfile()
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed")
+    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
     f <- "po/R-en@quot.po"
@@ -139,7 +140,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
              '--copyright-holder="The R Foundation"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
-    if(system(cmd) != 0L) stop("running xgettext failed")
+    if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     setwd("..")
 
     ## compare ofile and po/pkg.pot, ignoring dates.
@@ -153,7 +154,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
         cat("  ", lang, ":", sep = "")
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
-            warning("running msgmerge on ",  f, " failed")
+            warning("running msgmerge on ",  f, " failed", domain = NA)
             next
         }
         res <- checkPoFile(f, TRUE)
@@ -175,10 +176,11 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL)
     cat("  ", lang, ":\n", sep = "")
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
+    if(system(cmd, ignore.stderr = TRUE) != 0L)
+        stop("running msginit failed", domain = NA)
     tfile2 <- tempfile()
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed")
+    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
     f <- "po/en@quot.po"
@@ -223,7 +225,7 @@ update_po <- function(srcdir)
              '--copyright-holder="The R Foundation"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
-    if(system(cmd) != 0L) stop("running xgettext failed")
+    if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     ## compare ofile and po/R.pot, ignoring dates.
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^[^R]*[.]po$", full.names = TRUE)
@@ -234,7 +236,7 @@ update_po <- function(srcdir)
         cat("  ", lang, ":", sep = "")
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
-            warning("running msgmerge failed")
+            warning("running msgmerge failed", domain = NA)
             next
         }
         res <- checkPoFile(f, FALSE)
@@ -255,10 +257,11 @@ update_po <- function(srcdir)
     cat("  ", lang, ":\n", sep = "")
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
-    if(system(cmd, ignore.stderr = TRUE) != 0L) stop("running msginit failed")
+    if(system(cmd, ignore.stderr = TRUE) != 0L)
+        stop("running msginit failed", domain = NA)
     tfile2 <- tempfile()
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
-    if(system(cmd) != 0L) stop("running msgconv failed")
+    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2)
     lines <- en_quote(lines)
     f <- "po/en@quot.po"
@@ -279,7 +282,7 @@ update_po <- function(srcdir)
 install_po <- function(srcdir, Rlocaledir)
 {
     podir <- file.path(srcdir, "po")
-    message("installing translations:")
+    message("installing translations:", domain = NA)
     langs <- dir(podir, pattern = "^[^R].*.gmo")
     langs <- sub("[.]gmo$", "", langs)
     for(lang in langs) {
@@ -331,17 +334,17 @@ update_RGui_po <- function(srcdir)
              '--copyright-holder="The R Foundation"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
-    if(system(cmd) != 0L) stop("running xgettext failed")
+    if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     ## compare ofile and po/RGui.pot, ignoring dates.
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^RGui-.*[.]po$", full.names = TRUE)
     newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles[newer]) {
         lang <- sub("[.]po", "", basename(f))
-        message("  ", lang, ":", appendLF = FALSE)
+        message("  ", lang, ":", appendLF = FALSE, domain = NA)
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
-            warning("running msgmerge failed")
+            warning("running msgmerge failed", domain = NA)
             next
         }
         res <- checkPoFile(f, FALSE)
