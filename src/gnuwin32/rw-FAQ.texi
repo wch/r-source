@@ -941,7 +941,6 @@ CMD /K setpath.bat
 @section The installer does not offer my language.
 
 Only a limited range of languages is supported, currently
-Brazilian Portuguese,
 Catalan,
 both Simplified and Traditional Chinese,
 Czech,
@@ -958,14 +957,12 @@ Japanese,
 Korean,
 Norwegian,
 Polish,
-Portuguese,
+Portuguese (Brazil),
+Portuguese (Portugal),
 Russian,
 Slovenian
-and Spanish (Spain).
-
-@c In earlier versions only languages which could be displayed using the
-@c current codepage were offered so you could only install in Japanese if
-@c running Windows in Japanese: this changed for R 2.10.0.
+Spanish (Spain)
+and Ukranian.
 
 @node I want R in English!, I want to run R in Chinese/Japanese/Korean, The installer does not offer my language, Languages and Internationalization
 @section I want R in English (and not in French/Chinese/...)!

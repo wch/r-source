@@ -18,7 +18,7 @@
 ### JRins.R Rversion srcdir MDISDI HelpStyle Internet Producer
 
 .make_R.iss <- function(RW, srcdir, MDISDI=0, HelpStyle=1, Internet=0,
-                       Producer = "R-core")
+                       Producer = "R-core", ISDIR)
 {
     have32bit <- file_test("-d", file.path(srcdir, "bin", "i386"))
     have64bit <- file_test("-d", file.path(srcdir, "bin", "x64"))
@@ -56,7 +56,17 @@
         else paste("AppPublisher=", Producer, sep = ""),
         file = con, sep = "\n")
 
-    writeLines(readLines("header1.iss"), con)
+    ## different versions of the installer have different translation files
+    lines <- readLines("header1.iss")
+    check <- grepl("Languages\\", lines, fixed = TRUE)
+    langs <- sub(".*\\\\", "", lines[check])
+    langs <- sub('"$', "", langs)
+    avail <- dir(file.path(ISDIR, "Languages"), pattern = "[.]isl$")
+    drop <- !(langs %in% avail)
+    if(any(drop))
+        lines <- grep(paste0("(", paste(langs[drop], collapse = "|"), ")"),
+                      lines, value = TRUE, invert = TRUE)
+    writeLines(lines, con)
 
     lines <- readLines(regfile)
     lines <- gsub("@RVER@", Rver, lines)

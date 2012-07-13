@@ -35,7 +35,7 @@ en_quote <- function(lines)
 #    tmp <- gsub(" '([^`']*)'$", ' ‘\\1’', tmp)
 #    tmp <- gsub("^'([^`']*)' ", '‘\\1’ ', tmp)
 #    tmp <- gsub("“”", '""', tmp)
-    tmp <- gsub("'([^`']*)'",'‘\\1’', tmp)
+    tmp <- gsub("'([^`']*)'",'‘\\1’', tmp, useBytes = TRUE)
     lines[good] <- tmp
     lines
 }
@@ -274,6 +274,29 @@ update_po <- function(srcdir)
                 domain = NA)
 
     invisible()
+}
+
+install_po <- function(srcdir, Rlocaledir)
+{
+    podir <- file.path(srcdir, "po")
+    message("installing translations:")
+    langs <- dir(podir, pattern = "^[^R].*.gmo")
+    langs <- sub("[.]gmo$", "", langs)
+    for(lang in langs) {
+        dest <- file.path(Rlocaledir, lang, "LC_MESSAGES")
+        dir.create(dest, FALSE, TRUE)
+        file.copy(file.path(srcdir, "po", paste0(lang, ".gmo")),
+                  file.path(dest, "R.mo"))
+    }
+}
+
+## uninstallation is just
+## rm -rf $(Rlocaledir)
+
+uninstall_po <- function(buildddir)
+{
+    Rlocaledir <- ""
+
 }
 
 update_RGui_po <- function(srcdir)

@@ -302,7 +302,7 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item The management of translations is being converted to \R
+      \item The management of translations has been converted to \R
       code: see \code{?tools::update_pkg_po}.
     }
   }
