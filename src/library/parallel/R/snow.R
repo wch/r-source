@@ -232,7 +232,7 @@ recvData.MPInode <- function(node) snow::recvData.MPInode(node)
 recvData.NWSnode <- function(node) snow::recvData.NWSnode(node)
 recvData.PVMnode <- function(node) snow::recvData.PVMnode(node)
 
-recvOneData.MPIcluster <- function(cl) snow::recvOneData.MPIclusted(cl)
+recvOneData.MPIcluster <- function(cl) snow::recvOneData.MPIcluster(cl)
 recvOneData.NWScluster <- function(cl) snow::recvOneData.NWScluster(cl)
 recvOneData.PVMcluster <- function(cl) snow::recvOneData.PVMcluster(cl)
 
