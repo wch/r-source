@@ -376,6 +376,11 @@
       by \code{library(pkgname, lib.loc = "somewhere")} without being on
       the library search path (unless it is already installed in
       \code{.Library}, when it always will be).
+      
+      \item When \code{R CMD Rd2pdf} is used with \file{inputenx.sty},
+      it allows further characters (mainly for Eastern European
+      languages) by including \file{ix-utf8enc.dfu} (if available).
+      (Wish of \PR{14989}.)
     }
   }
 
