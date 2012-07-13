@@ -1,5 +1,6 @@
 #-*- Makefile -*-
 
+# Originally based on
 # Makefile for PO directory in any package using GNU gettext.
 # Copyright (C) 1995-1997, 2000-2006 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
 #
@@ -11,15 +12,17 @@
 # General Public License and is *not* in the public domain.
 #
 # Origin: gettext-0.16
-## Much modified by the R-core team for use in the R project.
-## Modifications Copyright (C) 2005-12 R Core Team
 
-## add other languages for the R domain to LINGUAS
+## Much modified by the R-core team for use in the R project, and there
+## isn't much left of the original.
+
+## Modifications Copyright (C) 2005-12 R Core Team
 
 VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
+subdir = po
 top_builddir = ..
 
 include $(top_builddir)/Makeconf
@@ -31,38 +34,22 @@ Rlocaledir = "$(Rsharedir)/locale"
 
 mkinstalldirs = $(MKINSTALLDIRS)
 
-POFILES = @POFILES@
-GMOFILES = @GMOFILES@
+DOMAIN = $(PACKAGE)
+
+POFILES =  $(srcdir)/da.po $(srcdir)/en.po $(srcdir)/en_GB.po $(srcdir)/es.po $(srcdir)/fr.po $(srcdir)/de.po $(srcdir)/it.po $(srcdir)/ja.po $(srcdir)/ko.po $(srcdir)/nn.po $(srcdir)/pl.po $(srcdir)/pt_BR.po $(srcdir)/ru.po $(srcdir)/tr.po $(srcdir)/zh_CN.po $(srcdir)/zh_TW.po $(srcdir)/en@quot.po
+
+GMOFILES =  $(srcdir)/da.gmo $(srcdir)/en.gmo $(srcdir)/en_GB.gmo $(srcdir)/es.gmo $(srcdir)/fr.gmo $(srcdir)/de.gmo $(srcdir)/it.gmo $(srcdir)/ja.gmo $(srcdir)/ko.gmo $(srcdir)/nn.gmo $(srcdir)/pl.gmo $(srcdir)/pt_BR.gmo $(srcdir)/ru.gmo $(srcdir)/tr.gmo $(srcdir)/zh_CN.gmo $(srcdir)/zh_TW.gmo $(srcdir)/en@quot.gmo
+
 RGUI_CATALOGS =`ls $(srcdir)/RGui-*.po $(srcdir)/RGui-*.gmo`
 
-DISTFILES.common = README RGui.pot THANKS Makefile.in.in Makefile.win remove-potcdate.sin \
-$(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
+DISTFILES.common = README RGui.pot THANKS Makefile.in Makefile.win
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot \
-$(POFILES) $(GMOFILES) $(RGUI_CATALOGS) \
-$(DISTFILES.extra1) $(DISTFILES.extra2) $(DISTFILES.extra3)
+$(POFILES) $(GMOFILES) $(RGUI_CATALOGS)
 
-POTFILES = \
-
-CATALOGS = @CATALOGS@
-
-# Makevars gets inserted here. (Don't remove this line!)
+CATALOGS =  da.gmo en.gmo en_GB.gmo es.gmo fr.gmo de.gmo it.gmo ja.gmo ko.gmo nn.gmo pl.gmo pt_BR.gmo ru.gmo tr.gmo zh_CN.gmo zh_TW.gmo en@quot.gmo
 
 .SUFFIXES:
-.SUFFIXES: .po .gmo .mo .sed .sin .nop .po-create .po-update .pkg-update
 
-.po.mo:
-	@echo "$(MSGFMT) -c -o $@ $<"; \
-	$(MSGFMT) -c -o t-$@ $< && mv t-$@ $@
-
-.po.gmo:
-	@lang=`echo $* | sed -e 's,.*/,,'`; \
-	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
-	echo "$${cdcmd}rm -f $${lang}.gmo && $(GMSGFMT) -c --statistics -o $${lang}.gmo $${lang}.po"; \
-	cd $(srcdir) && rm -f $${lang}.gmo && $(GMSGFMT) -c --statistics -o t-$${lang}.gmo $${lang}.po && mv t-$${lang}.gmo $${lang}.gmo
-
-.sin.sed:
-	@sed -e '/^#/d' $< > t-$@
-	@mv t-$@ $@
 
 all: all-@USE_NLS@
 
@@ -72,23 +59,6 @@ R:
 
 all-yes: stamp-po
 all-no:
-
-# stamp-po is a timestamp denoting the last time at which the CATALOGS have
-# been loosely updated. Its purpose is that when a developer or translator
-# checks out the package via CVS, and the $(DOMAIN).pot file is not in CVS,
-# "make" will update the $(DOMAIN).pot and the $(CATALOGS), but subsequent
-# invocations of "make" will do nothing. This timestamp would not be necessary
-# if updating the $(CATALOGS) would always touch them; however, the rule for
-# $(POFILES) has been designed to not touch files that don't need to be
-# changed.
-stamp-po: $(srcdir)/$(DOMAIN).pot
-	@test ! -f $(srcdir)/$(DOMAIN).pot || \
-	  test -z "$(GMOFILES)" || $(MAKE) $(GMOFILES)
-	@test ! -f $(srcdir)/$(DOMAIN).pot || { \
-	  echo "touch stamp-po" && \
-	  echo timestamp > stamp-poT && \
-	  mv stamp-poT stamp-po; \
-	}
 
 install: install-exec install-data
 install-exec:
@@ -197,7 +167,6 @@ check: all
 info dvi ps pdf html tags TAGS ctags CTAGS ID:
 
 mostlyclean:
-	@rm -f remove-potcdate.sed
 	@rm -f stamp-poT
 	@rm -f core core.* $(DOMAIN).po $(DOMAIN).1po $(DOMAIN).2po *.new.po
 	@rm -fr *.o
@@ -205,18 +174,15 @@ mostlyclean:
 clean: mostlyclean
 
 distclean: clean
-	@rm -f Makefile Makefile.in POTFILES *.mo
+	@rm -f Makefile
 
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
-	rm -f stamp-po $(GMOFILES)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 dist distdir:
-	@dists="$(DISTFILES)"; \
-	if test -f $(srcdir)/LINGUAS; then dists="$$dists LINGUAS"; fi; \
-	for file in $$dists; do \
+	@for file in $(DISTFILES); do \
 	  if test -f $$file; then \
 	    cp -p $$file $(distdir) || exit 1; \
 	  else \
@@ -227,10 +193,8 @@ dist distdir:
 ## NB datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
 
-Makefile: Makefile.in.in $(top_builddir)/config.status @POMAKEFILEDEPS@
-	@cd $(top_builddir) \
-	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
-	       $(SHELL) ./config.status
+Makefile: Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 update-po:
 	@echo "tools:::update_po(\"$(top_srcdir)\")" | \

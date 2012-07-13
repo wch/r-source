@@ -2471,13 +2471,12 @@ fi
 AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
                [test "x${use_recommended_packages}" = xyes])
 
-# i18n support.  To update to a new version of gettext, run (untested):
-# gettextize -f -c --intl
+# i18n support.
 AM_NLS
 if test "${USE_NLS}" = "yes"; then
   echo
   echo "Configuring src/extra/intl directory"
-  AM_GNU_GETTEXT_VERSION(0.14.5)
+  AM_GNU_GETTEXT_VERSION(0.16.1)
   AM_GNU_GETTEXT([no-libtool], [need-ngettext], [../extra/intl])
   if test -n "$INTL_MACOSX_LIBS"; then
     XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
@@ -2550,7 +2549,7 @@ AC_CONFIG_FILES(
   etc/Renviron
   etc/ldpaths
   m4/Makefile
-  po/Makefile.in 
+  po/Makefile 
   share/Makefile
   src/Makefile
   src/appl/Makefile

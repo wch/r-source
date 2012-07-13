@@ -16,7 +16,7 @@
 
 #### R based engine for managing translations
 
-en_quote <- function(potfile, out)
+en_quote <- function(potfile, outfile)
 {
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
@@ -25,16 +25,28 @@ en_quote <- function(potfile, out)
     tfile2 <- tempfile()
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
     if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
-    lines <- readLines(tfile2)
-    ## This needs to be improved: strip msgstr: "",
-    ## and deal with continuation lines.
-    good <- grepl("^msgstr", lines)
-    tmp <- lines[good]
-    tmp <- gsub("'([^`']*)'",'‘\\1’', tmp, useBytes = TRUE)
-    lines[good] <- tmp
+    lines <- readLines(tfile2) # will be in UTF-8
+    starts <- grep("^msgstr", lines)
+    current <- 1L
+    for (s in starts) {
+        if (current < s)
+            out <- c(out, lines[seq.int(current, s-1L, 1L)])
+        start <- sub('([^"]*)"(.*)"$', "\\1", lines[s])
+        this <- sub('([^"]*)"(.*)"$', "\\2", lines[s])
+        current <- s+1L
+        while(grepl('^"', lines[current])) {
+            this <- c(this, sub('^"(.*)"$', "\\1", lines[current]))
+            current <- current + 1L
+        }
+        this <- paste0(this, collapse="")
+        this <- gsub("'([^`']*)'",'‘\\1’', this)
+        out <- c(out, paste0(start, '"', this , '"'))
+    }
+    if(current <= length(lines))
+        out <- c(out, lines[seq.int(current, length(lines), 1L)])
     ## in case this is done on Windows
-    con <- file(out, "wb")
-    writeLines(lines, con, useBytes = TRUE)
+    con <- file(outfile, "wb")
+    writeLines(out, con, useBytes = TRUE)
     close(con)
 }
 
@@ -42,6 +54,7 @@ en_quote <- function(potfile, out)
 en_quote <- function(potfile, out)
 {
     SED <- Sys.getenv("SED", "sed") # but needs to be "gnused" on my Mac
+    SED <- "gnused"
     tfile <- tempfile()
     cmd <- paste("msginit -i", shQuote(potfile),
                  "--no-translator -l en -o", shQuote(tfile))
@@ -215,7 +228,7 @@ update_po <- function(srcdir)
     setwd(srcdir)
     potfile <- "po/R.pot"
     ofile <- tempfile()
-    cfiles <- readLines("po/POTFILES.in")
+    cfiles <- readLines("po/POTFILES")
     cfiles <- grep("^#", cfiles, value = TRUE, invert = TRUE)
     cmd <- sprintf("xgettext --keyword=_ --keyword=N_ -o %s", shQuote(ofile))
     cmd <- c(cmd, "--package-name=R",
