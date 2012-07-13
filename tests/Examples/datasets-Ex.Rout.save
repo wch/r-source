@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-04-12 r58988) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-07-13 r59807) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2894,6 +2894,16 @@ mean of the differences
                   -1.58 
 
 > 
+> ## The sleep *prolongations*
+> sleep1 <- with(sleep, extra[group == 2] - extra[group == 1])
+> summary(sleep1)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    1.05    1.30    1.58    1.70    4.60 
+> stripchart(sleep1, method = "stack", xlab = "hours",
++            main = "Sleep prolongation (n = 10)")
+> boxplot(sleep1, horizontal=TRUE, add=TRUE,
++         at = .6, pars=list(boxwex = .5, staplewex = .25))
+> 
 > 
 > 
 > cleanEx()
@@ -3426,7 +3436,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.735 0.087 3.006 0 0 
+Time elapsed:  2.872 0.112 3.348 0 0 
 > grDevices::dev.off()
 null device 
           1 
