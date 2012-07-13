@@ -35,3 +35,8 @@ all:
 
 clean:
 	rm -rf $(Rlocaledir)
+
+R_EXE = ../bin/R --vanilla --slave
+update-RGui:
+	@echo "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null

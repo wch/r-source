@@ -15,22 +15,6 @@
 ## Modifications Copyright (C) 2005-12 R Core Team
 
 ## add other languages for the R domain to LINGUAS
-## add both RGui-ll.po and RGui-ll.gmo files to RGUI_CATALOGS
-RGUI_CATALOGS = \
-  RGui-da.po RGui-da.gmo \
-  RGui-de.po RGui-de.gmo \
-  RGui-es.po RGui-es.gmo \
-  RGui-fr.po RGui-fr.gmo \
-  RGui-it.po RGui-it.gmo \
-  RGui-ja.po RGui-ja.gmo \
-  RGui-ko.po RGui-ko.gmo \
-  RGui-nn.po RGui-nn.gmo \
-  RGui-pl.po RGui-pl.gmo \
-  RGui-pt_BR.po RGui-pt_BR.gmo \
-  RGui-ru.po RGui-ru.gmo \
-  RGui-tr.po RGui-tr.gmo \
-  RGui-zh_CN.po RGui-zh_CN.gmo \
-  RGui-zh_TW.po RGui-zh_TW.gmo
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -58,6 +42,7 @@ POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 UPDATEPOFILES = @UPDATEPOFILES@
 DUMMYPOFILES = @DUMMYPOFILES@
+RGUI_CATALOGS =`ls $(srcdir)/RGui-*.po $(srcdir)/RGui-*.gmo`
 DISTFILES.common = README RGui.pot THANKS Makefile.in.in Makefile.win remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot \
@@ -142,34 +127,6 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	    fi; \
 	  else \
 	    mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
-	  fi; \
-	}
-
-RGui.pot-update: remove-potcdate.sed
-	(cd $(top_srcdir)/src/gnuwin32; $(XGETTEXT) --default-domain=RGui \
-	  --keyword= --keyword=G_ --keyword=GN_ \
-	  --add-comments=TRANSLATORS: \
-	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	   -o - console.c dataentry.c editor.c extra.c pager.c preferences.c rui.c \
-	    system.c \
-	    ../extra/graphapp/clipboard.c ../extra/graphapp/dialogs.c \
-	    ../extra/graphapp/gmenus.c \
-	    ../extra/graphapp/metafile.c ../extra/graphapp/printer.c \
-	    ../library/grDevices/src/devWindows.c) \
-	  > RGui.po
-	test ! -f RGui.po || { \
-	  if test -f $(srcdir)/RGui.pot; then \
-	    sed -f remove-potcdate.sed < $(srcdir)/RGui.pot > RGui.1po && \
-	    sed -f remove-potcdate.sed < RGui.po > RGui.2po && \
-	    if cmp RGui.1po RGui.2po >/dev/null 2>&1; then \
-	      rm -f RGui.1po RGui.2po RGui.po; \
-	    else \
-	      rm -f RGui.1po RGui.2po $(srcdir)/RGui.pot && \
-	      mv RGui.po $(srcdir)/RGui.pot; \
-	    fi; \
-	  else \
-	    mv RGui.po $(srcdir)/RGui.pot; \
 	  fi; \
 	}
 
@@ -500,19 +457,10 @@ Makefile: Makefile.in.in $(top_builddir)/config.status @POMAKEFILEDEPS@
 	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
 	       $(SHELL) ./config.status
 
-update-RGui: Makefile remove-potcdate.sed RGui.pot-update
-	@trs=`cd $(srcdir) && ls RGui-*.po 2> /dev/null`; \
-	if test -n "$${trs}"; then \
-	  for tr in $${trs}; do \
-	    lang=`echo $${tr} | sed -e 's/^RGui-//' -e 's/\.po$$//'`; \
-	    out=`echo $${tr} | sed -e 's/\.po$$/.gmo/'`; \
-	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	    (cd $(srcdir) && $(MSGMERGE_UPDATE) $${tr} RGui.pot); \
-	    (cd $(srcdir) && $(MSGFMT) -c --statistics -o $${out} $${tr}) ; \
-	  done; \
-	fi
-
-
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
+update-RGui:
+	@echo "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 
 force:

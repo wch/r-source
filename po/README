@@ -1,3 +1,6 @@
+NB: this is in the process of conversion of R scripts.  These
+instructions may not be current.
+
 The Makefile.in.in here was originally produced by gettextize, but has
 since been modified extensively.
 
@@ -50,59 +53,22 @@ and     mv R-<ll>.gmo ../inst/po/<ll>/LC_MESSAGES/R-tools.mo
 Windows RGui translations
 =========================
 
-These are contained in RGui.pot, created by running 'make RGui.pot-update'.
+These are contained in RGui.pot, and ranslations should be called
+RGui-ll.po for language 'll'.
 
-Translations should be called RGui-ll.po for language 'll': such a file is
-compiled by
+To re-make RGui.pot and all the translations use 'make update-RGui'
+('make -f Makefile.win update-RGui' on Windows).
 
-	msgfmt -c --statistics -o RGui-ll.gmo RGui-ll.po
-
-To add a translation, add both the .po and .gmo files to the
-RGUI-CATALOGS macro in Makefile.in.in: it will then be automatically
-distributed.
-
-To test a translation on Windows, use
-
-	cp RGui-ll.gmo ../share/locale/ll/LC_MESSAGES/RGui.mo
-
-and then startup RGui.exe in an appropriate locale, or set LANGUAGE=ll
-on the command line.  (All RGui-*.gmo files will installed to the
-right places when 'make -f Makefile.win' is run in this directory,
-which is part of the main 'make' process.)
-
-To re-make RGui.pot and all the translations use 'make update-RGui'.
+(All RGui-*.gmo files will installed to the right places when 'make -f
+Makefile.win' is run in this directory, which is part of the main
+'make' process on Windows.)
 
 
 Adding translations to other packages
 =====================================
 
-To create the .pot files for a package PKG with absolute path PKGDIR, use
+See 'Writing R Extensions'.
 
-   mkdir ${PKGDIR}/po
-
-and (only) if there are marked translations in the C source code
-
-    touch ${PKGDIR}/po/${PKG}.pot
-
-Then run from this directory
-
-     make pkg-update PKG=${PKG} PKGDIR=${PKGDIR}
-
-This will create ${PKGDIR}/po/R-${PKG}.pot, and update
-${PKGDIR}/po/${PKG}.pot if it already exists.  It will then create
-en@quot translations and install them.
-
-Running the same make command at a later stage will update the
-template files, and update and install any new translations that have
-been added in ${PKGDIR}/po.
-
-
-Note to Mac OS X users
-======================
-
-NB: these commands did not run correctly on at least one Mac OS X
-installation.  There were problems with the sed scripts used for the
-en@quot translations (in how \n was handled).
 
 
 Subversion note

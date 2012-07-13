@@ -338,7 +338,7 @@ update_RGui_po <- function(srcdir)
     newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles[newer]) {
         lang <- sub("[.]po", "", basename(f))
-        cat("  ", lang, ":", sep = "")
+        message("  ", lang, ":", appendLF = FALSE)
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
             warning("running msgmerge failed")

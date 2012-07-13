@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.12.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2012-04-26 07:32+0100\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-13 06:04+0100\n"
 "PO-Revision-Date: 2010-10-01 20:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -19,24 +19,25 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: console.c:1167 console.c:1209
+#: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
 msgid "Not enough memory"
 msgstr "Pas assez de mémoire"
 
-#: console.c:1256 console.c:1260
+#: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Mémoire insuffisante : le texte n'est pas copié dans le presse-papier"
 
-#: console.c:1296 ../extra/graphapp/clipboard.c:53
-#: ../extra/graphapp/clipboard.c:79
+#: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
+#: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Impossible d'ouvrir le presse-papier"
 
-#: console.c:1914
+#: src/gnuwin32/console.c:1914
 msgid "Insufficient memory. Please close the console"
 msgstr "Mémoire insuffisante. Veuillez refermer la console, s'il-vous-plait"
 
-#: console.c:1969 console.c:2022 preferences.c:333
+#: src/gnuwin32/console.c:1969 src/gnuwin32/console.c:2022
+#: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -45,23 +46,23 @@ msgstr ""
 "La police %s-%d-%d est introuvable.\n"
 "La police système non proportionnelle est utilisée"
 
-#: console.c:2127
+#: src/gnuwin32/console.c:2127
 msgid "Save selection to"
 msgstr "Sauver la sélection dans"
 
-#: console.c:2129
+#: src/gnuwin32/console.c:2129
 msgid "Save console contents to"
 msgstr "Sauver le contenu de la console dans"
 
-#: console.c:2228
+#: src/gnuwin32/console.c:2228
 msgid "Scrolling.\n"
 msgstr "Défilement.\n"
 
-#: console.c:2229
+#: src/gnuwin32/console.c:2229
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  Clavier : PageHaut, PageBas, Ctrl+Flèches, Ctrl+Début, Ctrl+Fin,\n"
 
-#: console.c:2230
+#: src/gnuwin32/console.c:2230
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -69,78 +70,78 @@ msgstr ""
 "  Souris : utilisez les barres de défilement.\n"
 "\n"
 
-#: console.c:2231
+#: src/gnuwin32/console.c:2231
 msgid "Editing.\n"
 msgstr "Edition.\n"
 
-#: console.c:2232
+#: src/gnuwin32/console.c:2232
 msgid "  Moving the cursor: \n"
 msgstr "  Déplacement du curseur : \n"
 
-#: console.c:2233
+#: src/gnuwin32/console.c:2233
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr ""
 "     Flèche gauche ou Ctrl+B : se déplacer d'un caractère vers la gauche ;\n"
 
-#: console.c:2234
+#: src/gnuwin32/console.c:2234
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr ""
 "     Flèche droite ou Ctrl+F : se déplacer d'un caractère vers la droite ;\n"
 
-#: console.c:2235
+#: src/gnuwin32/console.c:2235
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Début ou Ctrl+A : aller au début de la ligne ;\n"
 
-#: console.c:2236
+#: src/gnuwin32/console.c:2236
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     Fin ou Ctrl+E : aller à la fin de la ligne ;\n"
 
-#: console.c:2237
+#: src/gnuwin32/console.c:2237
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Historique : flèches haut et bas, Ctrl+P, Ctrl+N\n"
 
-#: console.c:2238
+#: src/gnuwin32/console.c:2238
 msgid "  Deleting:\n"
 msgstr "  Effacement :\n"
 
-#: console.c:2239
+#: src/gnuwin32/console.c:2239
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del ou Ctrl+D : effacer le caractère courant ou la sélection ;\n"
 
-#: console.c:2240
+#: src/gnuwin32/console.c:2240
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Suppr. arrière: effacer le caractère précédent ;\n"
 
-#: console.c:2241
+#: src/gnuwin32/console.c:2241
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     Ctrl+Suppr ou Ctrl+K : effacer le texte du caractère sous le curseur "
 "jusqu'à la fin.\n"
 
-#: console.c:2242
+#: src/gnuwin32/console.c:2242
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U : effacer tout le texte de la ligne courante.\n"
 
-#: console.c:2243
+#: src/gnuwin32/console.c:2243
 msgid "  Copy and paste.\n"
 msgstr "  Copier et coller.\n"
 
-#: console.c:2244
+#: src/gnuwin32/console.c:2244
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     Utilisez la souris (bouton gauche enfoncé) pour marquer (sélectionner) "
 "du texte.\n"
 
-#: console.c:2245
+#: src/gnuwin32/console.c:2245
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Utilisez Shift+Suppr (ou Ctrl+C) pour copier le texte marqué dans le "
 "presse-papier et\n"
 
-#: console.c:2246
+#: src/gnuwin32/console.c:2246
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -148,28 +149,28 @@ msgstr ""
 "     Shift+Ins (ou Ctrl+V ou Ctrl+Y) pour coller le contenu du presse-"
 "papier\n"
 
-#: console.c:2247
+#: src/gnuwin32/console.c:2247
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     dans la console, Ctrl+X copie et colle en une fois\n"
 
-#: console.c:2248
+#: src/gnuwin32/console.c:2248
 msgid "  Misc:\n"
 msgstr "  Divers :\n"
 
-#: console.c:2249
+#: src/gnuwin32/console.c:2249
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L : Effacer la console.\n"
 
-#: console.c:2250
+#: src/gnuwin32/console.c:2250
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
 "     Ctrl+O ou INS : Bascule le mode surimpression ; désactivé au départ.\n"
 
-#: console.c:2251
+#: src/gnuwin32/console.c:2251
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T : Echange le caractère courant avec le précédent.\n"
 
-#: console.c:2252
+#: src/gnuwin32/console.c:2252
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -178,7 +179,7 @@ msgstr ""
 "Note: la console est mise-à-jour quand elle est prête à recevoir une "
 "commande.\n"
 
-#: console.c:2253
+#: src/gnuwin32/console.c:2253
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -186,7 +187,7 @@ msgstr ""
 "  Utilisez Ctrl+W pour (dés)activer ce comportement.\n"
 "\n"
 
-#: console.c:2254
+#: src/gnuwin32/console.c:2254
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -194,7 +195,7 @@ msgstr ""
 "Utilisez ECHAPPE pour arrêter le calcul.\n"
 "\n"
 
-#: console.c:2255
+#: src/gnuwin32/console.c:2255
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -202,80 +203,81 @@ msgstr ""
 "TAB pour compléter le mot courant.\n"
 "\n"
 
-#: console.c:2256
+#: src/gnuwin32/console.c:2256
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Les raccourcis Windows standard sont utilisables pour activer\n"
 
-#: console.c:2257
+#: src/gnuwin32/console.c:2257
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 "les périphériques graphiques (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
 
-#: dataentry.c:223 dataentry.c:1851 dataentry.c:1854 dataentry.c:1885
+#: src/gnuwin32/dataentry.c:223 src/gnuwin32/dataentry.c:1851
+#: src/gnuwin32/dataentry.c:1854 src/gnuwin32/dataentry.c:1885
 msgid "invalid argument"
 msgstr "argument incorrect"
 
-#: dataentry.c:270
+#: src/gnuwin32/dataentry.c:270
 msgid "invalid type for value"
 msgstr "valeur de type incorrecte"
 
-#: dataentry.c:281
+#: src/gnuwin32/dataentry.c:281
 msgid "Data Editor"
 msgstr "Editeur de données"
 
-#: dataentry.c:282 dataentry.c:1892
+#: src/gnuwin32/dataentry.c:282 src/gnuwin32/dataentry.c:1892
 msgid "invalid device"
 msgstr "périphérique incorrect"
 
-#: dataentry.c:331
+#: src/gnuwin32/dataentry.c:331
 msgid "dataentry: internal memory problem"
 msgstr "dataentry : problème interne de mémoire"
 
-#: dataentry.c:634 dataentry.c:1221
+#: src/gnuwin32/dataentry.c:634 src/gnuwin32/dataentry.c:1221
 msgid "dataentry: internal memory error"
 msgstr "dataentry : erreur interne de mémoire"
 
-#: dataentry.c:757 dataentry.c:770
+#: src/gnuwin32/dataentry.c:757 src/gnuwin32/dataentry.c:770
 msgid "internal type error in dataentry"
 msgstr "erreur de type interne dans dataentry"
 
-#: dataentry.c:852
+#: src/gnuwin32/dataentry.c:852
 msgid "dataentry: parse error on string"
 msgstr "dataentry : erreur d'analyse de chaîne de caractères"
 
-#: dataentry.c:995
+#: src/gnuwin32/dataentry.c:995
 msgid "dataentry: expression too long"
 msgstr "dataentry : expression trop longue"
 
-#: dataentry.c:1472
+#: src/gnuwin32/dataentry.c:1472
 msgid "column names cannot be blank"
 msgstr "les noms de colonnes ne peuvent être vides"
 
-#: dataentry.c:1518
+#: src/gnuwin32/dataentry.c:1518
 msgid "Variable editor"
 msgstr "Editeur de variable"
 
-#: dataentry.c:1523
+#: src/gnuwin32/dataentry.c:1523
 msgid "variable name"
 msgstr "nom de variable"
 
-#: dataentry.c:1525
+#: src/gnuwin32/dataentry.c:1525
 msgid "type"
 msgstr "type"
 
-#: dataentry.c:1639
+#: src/gnuwin32/dataentry.c:1639
 msgid "Cell width(s)"
 msgstr "Longueur(s) de cellule(s)"
 
-#: dataentry.c:1645
+#: src/gnuwin32/dataentry.c:1645
 msgid "Cell width"
 msgstr "Longueur de cellule"
 
-#: dataentry.c:1648
+#: src/gnuwin32/dataentry.c:1648
 msgid "variable"
 msgstr "variable"
 
-#: dataentry.c:1691
+#: src/gnuwin32/dataentry.c:1691
 msgid ""
 "Navigation.\n"
 "  Keyboard: cursor keys move selection\n"
@@ -318,292 +320,306 @@ msgstr ""
 "  Clic droit pour un menu copier, coller, dimensionnement auto\n"
 "\n"
 
-#: dataentry.c:1697 dataentry.c:1807 editor.c:781 rui.c:1184
+#: src/gnuwin32/dataentry.c:1697 src/gnuwin32/dataentry.c:1807
+#: src/gnuwin32/editor.c:781 src/gnuwin32/rui.c:1184
 msgid "Help"
 msgstr "Aide"
 
-#: dataentry.c:1699
+#: src/gnuwin32/dataentry.c:1699
 msgid "Copy selected cell"
 msgstr "Copier la cellule active"
 
-#: dataentry.c:1700
+#: src/gnuwin32/dataentry.c:1700
 msgid "Paste to selected cell"
 msgstr "Coller dans la cellule active"
 
-#: dataentry.c:1701
+#: src/gnuwin32/dataentry.c:1701
 msgid "Autosize column"
 msgstr "Dimensionnement auto"
 
-#: dataentry.c:1703 pager.c:310 rui.c:867
-#: ../library/grDevices/src/devWindows.c:1684
+#: src/gnuwin32/dataentry.c:1703 src/gnuwin32/pager.c:310
+#: src/gnuwin32/rui.c:867 src/library/grDevices/src/devWindows.c:1684
 msgid "Stay on top"
 msgstr "Rester au dessus"
 
-#: dataentry.c:1705 dataentry.c:1792 pager.c:312 pager.c:475
+#: src/gnuwin32/dataentry.c:1705 src/gnuwin32/dataentry.c:1792
+#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
 msgid "Close"
 msgstr "Fermer"
 
-#: dataentry.c:1790 editor.c:727 pager.c:467 rui.c:1120
-#: ../library/grDevices/src/devWindows.c:1624
+#: src/gnuwin32/dataentry.c:1790 src/gnuwin32/editor.c:727
+#: src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1120
+#: src/library/grDevices/src/devWindows.c:1624
 msgid "File"
 msgstr "Fichier"
 
-#: dataentry.c:1796 editor.c:745 pager.c:477 rui.c:1141
+#: src/gnuwin32/dataentry.c:1796 src/gnuwin32/editor.c:745
+#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1141
 msgid "Edit"
 msgstr "Edition"
 
-#: dataentry.c:1797
+#: src/gnuwin32/dataentry.c:1797
 msgid "Copy  \tCTRL+C"
 msgstr "Copier  \tCTRL+C"
 
-#: dataentry.c:1799
+#: src/gnuwin32/dataentry.c:1799
 msgid "Paste \tCTRL+V"
 msgstr "Coller \tCTRL+V"
 
-#: dataentry.c:1801
+#: src/gnuwin32/dataentry.c:1801
 msgid "Delete\tDEL"
 msgstr "Effacer\tSUPPR"
 
-#: dataentry.c:1804
+#: src/gnuwin32/dataentry.c:1804
 msgid "Cell widths ..."
 msgstr "Largeur de cellules..."
 
-#: dataentry.c:1808
+#: src/gnuwin32/dataentry.c:1808
 msgid "Data editor"
 msgstr "Editeur de données"
 
-#: editor.c:88 editor.c:90
+#: src/gnuwin32/editor.c:88 src/gnuwin32/editor.c:90
 msgid "R Editor"
 msgstr "Editeur R"
 
-#: editor.c:119
+#: src/gnuwin32/editor.c:119
 #, c-format
 msgid "unable to open file %s for reading"
 msgstr "Impossible d'ouvrir le fichier %s en lecture"
 
-#: editor.c:135
+#: src/gnuwin32/editor.c:135
 #, c-format
 msgid "Could not read from file '%s'"
 msgstr "Impossible de lire depuis le fichier '%s'"
 
-#: editor.c:166
+#: src/gnuwin32/editor.c:166
 #, c-format
 msgid "Could not save file '%s'"
 msgstr "Impossible de sauver dans le fichier '%s'"
 
-#: editor.c:182
+#: src/gnuwin32/editor.c:182
 msgid "Save script as"
 msgstr "Sauver le script comme"
 
-#: editor.c:375 editor.c:692 pager.c:431 rui.c:1074
+#: src/gnuwin32/editor.c:375 src/gnuwin32/editor.c:692
+#: src/gnuwin32/pager.c:431 src/gnuwin32/rui.c:1074
 msgid "Open script"
 msgstr "Ouvrir un script"
 
-#: editor.c:498 pager.c:185 pager.c:205
+#: src/gnuwin32/editor.c:498 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
 msgid "No RGui console to paste to"
 msgstr "Pas de console RGui où coller"
 
-#: editor.c:600
+#: src/gnuwin32/editor.c:600
 msgid "R EDITOR\n"
 msgstr "EDITEUR R\n"
 
-#: editor.c:602
+#: src/gnuwin32/editor.c:602
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "Un éditeur de texte standard pour éditer et exécuter du code R.\n"
 
-#: editor.c:604
+#: src/gnuwin32/editor.c:604
 msgid "RUNNING COMMANDS\n"
 msgstr "COMMANDES D'EXECUTION\n"
 
-#: editor.c:605
+#: src/gnuwin32/editor.c:605
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr "Pour exécuter une ligne ou une section de code R, sélectionnez-la et\n"
 
-#: editor.c:606
+#: src/gnuwin32/editor.c:606
 msgid "     Press Ctrl-R\n"
 msgstr "     Appuyez Ctrl-R\n"
 
-#: editor.c:607
+#: src/gnuwin32/editor.c:607
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
 "     Sélectionnez \"Exécuter la ligne ou sélection\" du menu \"Edition\"\n"
 
-#: editor.c:608
+#: src/gnuwin32/editor.c:608
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
 "     Enfoncez le bouton \"Exécuter la ligne ou sélection\" de la barre "
 "d'outils\n"
 
-#: editor.c:609
+#: src/gnuwin32/editor.c:609
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "Cela copie le code sélectionné et l'évalue dans la console\n"
 
-#: editor.c:610
+#: src/gnuwin32/editor.c:610
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
 "S'il n'y a aucune sélection, la ligne courante est exécutée et le curseur\n"
 
-#: editor.c:611
+#: src/gnuwin32/editor.c:611
 msgid "the cursor by one line.\n"
 msgstr "avance d'une ligne.\n"
 
-#: editor.c:623 editor.c:700 editor.c:761
+#: src/gnuwin32/editor.c:623 src/gnuwin32/editor.c:700
+#: src/gnuwin32/editor.c:761
 msgid "Run line or selection"
 msgstr "Exécuter la ligne ou sélection"
 
-#: editor.c:625 editor.c:746
+#: src/gnuwin32/editor.c:625 src/gnuwin32/editor.c:746
 msgid "Undo"
 msgstr "Annuler"
 
-#: editor.c:627 editor.c:749
+#: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:749
 msgid "Cut"
 msgstr "Couper"
 
-#: editor.c:628 editor.c:751 pager.c:305 pager.c:478 rui.c:857 rui.c:1086
-#: rui.c:1142
+#: src/gnuwin32/editor.c:628 src/gnuwin32/editor.c:751
+#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:857
+#: src/gnuwin32/rui.c:1086 src/gnuwin32/rui.c:1142
 msgid "Copy"
 msgstr "Copier"
 
-#: editor.c:629 editor.c:753 rui.c:858 rui.c:1090 rui.c:1143
+#: src/gnuwin32/editor.c:629 src/gnuwin32/editor.c:753 src/gnuwin32/rui.c:858
+#: src/gnuwin32/rui.c:1090 src/gnuwin32/rui.c:1143
 msgid "Paste"
 msgstr "Coller"
 
-#: editor.c:630 editor.c:755
+#: src/gnuwin32/editor.c:630 src/gnuwin32/editor.c:755
 msgid "Delete"
 msgstr "Effacer"
 
-#: editor.c:632 editor.c:757 pager.c:308 pager.c:484 rui.c:864 rui.c:1147
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:757
+#: src/gnuwin32/pager.c:308 src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:864
+#: src/gnuwin32/rui.c:1147
 msgid "Select all"
 msgstr "Sélectionner tout"
 
-#: editor.c:696
+#: src/gnuwin32/editor.c:696
 msgid "Save script"
 msgstr "Sauver le script"
 
-#: editor.c:704 pager.c:451 ../library/grDevices/src/devWindows.c:1592
+#: src/gnuwin32/editor.c:704 src/gnuwin32/pager.c:451
+#: src/library/grDevices/src/devWindows.c:1592
 msgid "Return focus to Console"
 msgstr "Activer la console"
 
-#: editor.c:707
+#: src/gnuwin32/editor.c:707
 msgid "Print script"
 msgstr "Imprimer le script"
 
-#: editor.c:709 pager.c:446 rui.c:1102
-#: ../library/grDevices/src/devWindows.c:1586
+#: src/gnuwin32/editor.c:709 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1102
+#: src/library/grDevices/src/devWindows.c:1586
 msgid "Print"
 msgstr "Imprimer"
 
-#: editor.c:728 pager.c:468 rui.c:1122
+#: src/gnuwin32/editor.c:728 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1122
 msgid "New script"
 msgstr "Nouveau script"
 
-#: editor.c:730 pager.c:469 rui.c:1123
+#: src/gnuwin32/editor.c:730 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1123
 msgid "Open script..."
 msgstr "Ouvrir un script..."
 
-#: editor.c:732
+#: src/gnuwin32/editor.c:732
 msgid "Save"
 msgstr "Sauver"
 
-#: editor.c:734
+#: src/gnuwin32/editor.c:734
 msgid "Save as..."
 msgstr "Sauver sous..."
 
-#: editor.c:737 pager.c:470 rui.c:1136
-#: ../library/grDevices/src/devWindows.c:1687
+#: src/gnuwin32/editor.c:737 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1136
+#: src/library/grDevices/src/devWindows.c:1687
 msgid "Print..."
 msgstr "Imprimer..."
 
-#: editor.c:740
+#: src/gnuwin32/editor.c:740
 msgid "Close script"
 msgstr "Fermer le script"
 
-#: editor.c:759 rui.c:1148
+#: src/gnuwin32/editor.c:759 src/gnuwin32/rui.c:1148
 msgid "Clear console"
 msgstr "Effacer la console"
 
-#: editor.c:763
+#: src/gnuwin32/editor.c:763
 msgid "Run all"
 msgstr "Exécuter tout"
 
-#: editor.c:766
+#: src/gnuwin32/editor.c:766
 msgid "Find..."
 msgstr "Rechercher..."
 
-#: editor.c:768
+#: src/gnuwin32/editor.c:768
 msgid "Replace..."
 msgstr "Remplacer..."
 
-#: editor.c:771 rui.c:1152
+#: src/gnuwin32/editor.c:771 src/gnuwin32/rui.c:1152
 msgid "GUI preferences..."
 msgstr "Préférences..."
 
-#: editor.c:782
+#: src/gnuwin32/editor.c:782
 msgid "Editor"
 msgstr "Editeur"
 
-#: editor.c:841
+#: src/gnuwin32/editor.c:841
 msgid "Maximum number of editors reached"
 msgstr "Nombre maximum d'éditeurs atteint"
 
-#: editor.c:846
+#: src/gnuwin32/editor.c:846
 msgid "Unable to create editor window"
 msgstr "Impossible de créer la fenêtre d'édition"
 
-#: editor.c:854
+#: src/gnuwin32/editor.c:854
 msgid "Untitled"
 msgstr "Sans titre"
 
-#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
+#: src/gnuwin32/extra.c:903 src/extra/graphapp/dialogs.c:622
+#: src/extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
-#: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
-#: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
+#: src/gnuwin32/extra.c:904 src/extra/graphapp/dialogs.c:602
+#: src/extra/graphapp/dialogs.c:620 src/extra/graphapp/dialogs.c:626
+#: src/extra/graphapp/dialogs.c:725 src/extra/graphapp/dialogs.c:739
+#: src/extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "Annuler"
 
-#: extra.c:2161 rui.c:1222
+#: src/gnuwin32/extra.c:2161 src/gnuwin32/rui.c:1222
 msgid "Select file"
 msgstr "Sélectionner un fichier"
 
-#: pager.c:89
+#: src/gnuwin32/pager.c:89
 msgid "Error opening file"
 msgstr "Erreur à l'ouverture du fichier"
 
-#: pager.c:96
+#: src/gnuwin32/pager.c:96
 msgid "Insufficient memory to display file in internal pager"
 msgstr ""
 "Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
 
-#: pager.c:177 pager.c:189 pager.c:209 rui.c:236 rui.c:263
+#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
+#: src/gnuwin32/rui.c:236 src/gnuwin32/rui.c:263
 msgid "No selection"
 msgstr "Pas de sélection"
 
-#: pager.c:306 pager.c:436 pager.c:480
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
 msgid "Paste to console"
 msgstr "Coller dans la console"
 
-#: pager.c:307 pager.c:441 pager.c:482
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
 msgid "Paste commands to console"
 msgstr "Coller les commandes dans la console"
 
-#: pager.c:472 rui.c:1137
+#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1137
 msgid "Save to File..."
 msgstr "Sauver dans le fichier..."
 
-#: pager.c:487 rui.c:1154
+#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1154
 msgid "View"
 msgstr "Voir"
 
-#: pager.c:519
+#: src/gnuwin32/pager.c:519
 msgid "Unable to create pager window"
 msgstr "Impossible de créer la fenêtre de l'afficheur"
 
-#: preferences.c:302
+#: src/gnuwin32/preferences.c:302
 msgid ""
 "The overall console properties cannot be changed\n"
 "on a running console.\n"
@@ -615,7 +631,7 @@ msgstr ""
 "\n"
 "Sauvez les préférences et redémarrez Rgui pour les appliquer\n"
 
-#: preferences.c:306
+#: src/gnuwin32/preferences.c:306
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
@@ -627,13 +643,13 @@ msgstr ""
 "\n"
 "Sauvez les préférences et redémarrez Rgui pour les appliquer.\n"
 
-#: preferences.c:371
+#: src/gnuwin32/preferences.c:371
 msgid "Changes in pager size will not apply to any open pagers"
 msgstr ""
 "Les modifications dans la taille de l'afficheur ne seront pas appliquées aux "
 "afficheurs existants"
 
-#: preferences.c:377
+#: src/gnuwin32/preferences.c:377
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
@@ -641,556 +657,556 @@ msgstr ""
 "Ne changez pas le type d'afficheur lorsqu'un afficheur est ouvert\n"
 "Procéder quand même ?"
 
-#: preferences.c:410
+#: src/gnuwin32/preferences.c:410
 msgid "Select directory for file 'Rconsole'"
 msgstr "Sélectionnez le répertoire pour le fichier 'Rconsole'"
 
-#: preferences.c:503
+#: src/gnuwin32/preferences.c:503
 msgid "Select 'Rconsole' file"
 msgstr "Sélectionner un fichier 'Rconsole'"
 
-#: preferences.c:688
+#: src/gnuwin32/preferences.c:688
 #, c-format
 msgid "Ignored '%s' at line %d of file %s"
 msgstr "'%s' ignoré à la ligne %d du fichier %s"
 
-#: preferences.c:789
+#: src/gnuwin32/preferences.c:789
 msgid "Rgui Configuration Editor"
 msgstr "Editeur de configuration Rgui"
 
-#: rui.c:139
+#: src/gnuwin32/rui.c:139
 msgid "Select file to source"
 msgstr "Sélectionner un fichier de code à sourcer"
 
-#: rui.c:160
+#: src/gnuwin32/rui.c:160
 msgid "Select image to load"
 msgstr "Sélectionner une image d'environnement à charger"
 
-#: rui.c:175
+#: src/gnuwin32/rui.c:175
 msgid "Save image in"
 msgstr "Sauver l'image d'environnement dans"
 
-#: rui.c:189
+#: src/gnuwin32/rui.c:189
 msgid "Load history from"
 msgstr "Charger l'historique des commandes depuis"
 
-#: rui.c:198
+#: src/gnuwin32/rui.c:198
 msgid "Save history in"
 msgstr "Sauver l'historique des commandes dans"
 
-#: rui.c:245 rui.c:254
+#: src/gnuwin32/rui.c:245 src/gnuwin32/rui.c:254
 msgid "No text available"
 msgstr "Pas de texte disponible"
 
-#: rui.c:303
+#: src/gnuwin32/rui.c:303
 msgid "Name of data frame or matrix"
 msgstr "Nom du tableau ou de la matrice"
 
-#: rui.c:310
+#: src/gnuwin32/rui.c:310
 #, c-format
 msgid "'%s' cannot be found"
 msgstr "'%s' introuvable"
 
-#: rui.c:449
+#: src/gnuwin32/rui.c:449
 msgid "Are you sure?"
 msgstr "Etes-vous certain ?"
 
-#: rui.c:544
+#: src/gnuwin32/rui.c:544
 msgid "Help on"
 msgstr "Aide sur"
 
-#: rui.c:600
+#: src/gnuwin32/rui.c:600
 msgid "Search help"
 msgstr "Chercher dans l'aide"
 
-#: rui.c:615
+#: src/gnuwin32/rui.c:615
 msgid "Search for words in help list archives and documentation"
 msgstr ""
 "Chercher des mots dans la documentation et les archives des listes d'aide"
 
-#: rui.c:630
+#: src/gnuwin32/rui.c:630
 msgid "Apropos"
 msgstr "A propos"
 
-#: rui.c:853
+#: src/gnuwin32/rui.c:853
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Glissez-déposez seulement des fichiers .R, .RData ou .rda"
 
-#: rui.c:859 rui.c:1144
+#: src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1144
 msgid "Paste commands only"
 msgstr "Coller les commandes seulement"
 
-#: rui.c:860 rui.c:1094
+#: src/gnuwin32/rui.c:860 src/gnuwin32/rui.c:1094
 msgid "Copy and paste"
 msgstr "Copier et coller"
 
-#: rui.c:862
+#: src/gnuwin32/rui.c:862
 msgid "Clear window"
 msgstr "Effacer la fenêtre"
 
-#: rui.c:866 rui.c:1167
+#: src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1167
 msgid "Buffered output"
 msgstr "Sorties groupées"
 
-#: rui.c:906
+#: src/gnuwin32/rui.c:906
 msgid "Packages"
 msgstr "Packages"
 
-#: rui.c:907
+#: src/gnuwin32/rui.c:907
 msgid "Load package..."
 msgstr "Charger le package..."
 
-#: rui.c:909
+#: src/gnuwin32/rui.c:909
 msgid "Set CRAN mirror..."
 msgstr "Choisir le site miroir de CRAN..."
 
-#: rui.c:911
+#: src/gnuwin32/rui.c:911
 msgid "Select repositories..."
 msgstr "Choisir les entrepôts..."
 
-#: rui.c:913
+#: src/gnuwin32/rui.c:913
 msgid "Install package(s)..."
 msgstr "Installer le(s) package(s)..."
 
-#: rui.c:915
+#: src/gnuwin32/rui.c:915
 msgid "Update packages..."
 msgstr "Mettre à jour les packages..."
 
-#: rui.c:918
+#: src/gnuwin32/rui.c:918
 msgid "Install package(s) from local zip files..."
 msgstr "Installer le(s) package(s) depuis des fichiers zip..."
 
-#: rui.c:942
+#: src/gnuwin32/rui.c:942
 msgid "FAQ on R"
 msgstr "FAQ sur R"
 
-#: rui.c:944
+#: src/gnuwin32/rui.c:944
 msgid "FAQ on R for &Windows"
 msgstr "FAQ sur R pour &Windows"
 
-#: rui.c:950 rui.c:953
+#: src/gnuwin32/rui.c:950 src/gnuwin32/rui.c:953
 msgid "Manuals (in PDF)"
 msgstr "Manuels (en PDF)"
 
-#: rui.c:983
+#: src/gnuwin32/rui.c:983
 msgid "R functions (text)..."
 msgstr "Fonctions R (texte)..."
 
-#: rui.c:985
+#: src/gnuwin32/rui.c:985
 msgid "Html help"
 msgstr "Aide HTML"
 
-#: rui.c:987
+#: src/gnuwin32/rui.c:987
 msgid "Search help..."
 msgstr "Rechercher dans l'aide..."
 
-#: rui.c:992
+#: src/gnuwin32/rui.c:992
 msgid "Apropos..."
 msgstr "A propos de R..."
 
-#: rui.c:994
+#: src/gnuwin32/rui.c:994
 msgid "R Project home page"
 msgstr "Page d'accueil du projet R"
 
-#: rui.c:995
+#: src/gnuwin32/rui.c:995
 msgid "CRAN home page"
 msgstr "Page d'accueil de CRAN"
 
-#: rui.c:997
+#: src/gnuwin32/rui.c:997
 msgid "About"
 msgstr "A propos de Rgui"
 
-#: rui.c:1006 ../extra/graphapp/gmenus.c:52
+#: src/gnuwin32/rui.c:1006 src/extra/graphapp/gmenus.c:52
 msgid "Windows"
 msgstr "Fenêtres"
 
-#: rui.c:1007 ../extra/graphapp/gmenus.c:53
+#: src/gnuwin32/rui.c:1007 src/extra/graphapp/gmenus.c:53
 msgid "Cascade"
 msgstr "En cascade"
 
-#: rui.c:1008 ../extra/graphapp/gmenus.c:54
+#: src/gnuwin32/rui.c:1008 src/extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
 msgstr "Empiler &Horizontalement"
 
-#: rui.c:1009 ../extra/graphapp/gmenus.c:55
+#: src/gnuwin32/rui.c:1009 src/extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
 msgstr "Empiler &Verticalement"
 
-#: rui.c:1010
+#: src/gnuwin32/rui.c:1010
 msgid "Minimize group"
 msgstr "Minimiser le groupe"
 
-#: rui.c:1011
+#: src/gnuwin32/rui.c:1011
 msgid "Restore group"
 msgstr "Restaurer le groupe"
 
-#: rui.c:1078
+#: src/gnuwin32/rui.c:1078
 msgid "Load workspace"
 msgstr "Charger l'environnement de travail"
 
-#: rui.c:1082
+#: src/gnuwin32/rui.c:1082
 msgid "Save workspace"
 msgstr "Sauver l'environnement de travail"
 
-#: rui.c:1098
+#: src/gnuwin32/rui.c:1098
 msgid "Stop current computation"
 msgstr "Arrêter le calcul"
 
-#: rui.c:1121
+#: src/gnuwin32/rui.c:1121
 msgid "Source R code..."
 msgstr "Sourcer du code R..."
 
-#: rui.c:1124
+#: src/gnuwin32/rui.c:1124
 msgid "Display file(s)..."
 msgstr "Afficher le(s) fichier(s)..."
 
-#: rui.c:1126
+#: src/gnuwin32/rui.c:1126
 msgid "Load Workspace..."
 msgstr "Charger l'environnement de travail..."
 
-#: rui.c:1127
+#: src/gnuwin32/rui.c:1127
 msgid "Save Workspace..."
 msgstr "Sauver l'environnement de travail..."
 
-#: rui.c:1129
+#: src/gnuwin32/rui.c:1129
 msgid "Load History..."
 msgstr "Charger l'historique des commandes..."
 
-#: rui.c:1131
+#: src/gnuwin32/rui.c:1131
 msgid "Save History..."
 msgstr "Sauver l'historique des commandes..."
 
-#: rui.c:1134
+#: src/gnuwin32/rui.c:1134
 msgid "Change dir..."
 msgstr "Changer le répertoire courant..."
 
-#: rui.c:1139
+#: src/gnuwin32/rui.c:1139
 msgid "Exit"
 msgstr "Sortir"
 
-#: rui.c:1146
+#: src/gnuwin32/rui.c:1146
 msgid "Copy and Paste"
 msgstr "Copier et coller"
 
-#: rui.c:1150
+#: src/gnuwin32/rui.c:1150
 msgid "Data editor..."
 msgstr "Editer les données..."
 
-#: rui.c:1155
+#: src/gnuwin32/rui.c:1155
 msgid "Toolbar"
 msgstr "Barre d'outils"
 
-#: rui.c:1156
+#: src/gnuwin32/rui.c:1156
 msgid "Statusbar"
 msgstr "Barre de statut"
 
-#: rui.c:1160
+#: src/gnuwin32/rui.c:1160
 msgid "Misc"
 msgstr "Misc"
 
-#: rui.c:1161
+#: src/gnuwin32/rui.c:1161
 msgid "Stop current computation           \tESC"
 msgstr "Arrêter le calcul    \tECHAPPE"
 
-#: rui.c:1163
+#: src/gnuwin32/rui.c:1163
 msgid "Stop all computations"
 msgstr "Arrêter tous les calculs"
 
-#: rui.c:1165
+#: src/gnuwin32/rui.c:1165
 msgid "Break to debugger"
 msgstr "Interrompre vers le débuggeur"
 
-#: rui.c:1168
+#: src/gnuwin32/rui.c:1168
 msgid "Word completion"
 msgstr "Complétude de mot"
 
-#: rui.c:1170
+#: src/gnuwin32/rui.c:1170
 msgid "Filename completion"
 msgstr "Complétude de nom de fichier"
 
-#: rui.c:1177
+#: src/gnuwin32/rui.c:1177
 msgid "List objects"
 msgstr "Lister les objets"
 
-#: rui.c:1178
+#: src/gnuwin32/rui.c:1178
 msgid "Remove all objects"
 msgstr "Effacer tous les objets"
 
-#: rui.c:1179
+#: src/gnuwin32/rui.c:1179
 msgid "List search &path"
 msgstr "Lister les chemins de recherche"
 
-#: rui.c:1185
+#: src/gnuwin32/rui.c:1185
 msgid "Console"
 msgstr "Console"
 
-#: rui.c:1266
+#: src/gnuwin32/rui.c:1266
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname' est limité à 1000 bytes"
 
-#: rui.c:1308
+#: src/gnuwin32/rui.c:1308
 #, c-format
 msgid "menu %s does not exist"
 msgstr "le menu %s n'existe pas"
 
-#: rui.c:1361
+#: src/gnuwin32/rui.c:1361
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu' est limité à 500 bytes"
 
-#: rui.c:1371
+#: src/gnuwin32/rui.c:1371
 msgid "base menu does not exist"
 msgstr "le menu parent n'existe pas"
 
-#: rui.c:1386
+#: src/gnuwin32/rui.c:1386
 msgid "failed to allocate menu"
 msgstr "erreur lors de la création du menu"
 
-#: rui.c:1403 rui.c:1527
+#: src/gnuwin32/rui.c:1403 src/gnuwin32/rui.c:1527
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menu + entrée est limité à 1000 bytes"
 
-#: rui.c:1411 rui.c:1494
+#: src/gnuwin32/rui.c:1411 src/gnuwin32/rui.c:1494
 msgid "menu does not exist"
 msgstr "le menu n'existe pas"
 
-#: rui.c:1429 rui.c:1452 rui.c:1457
+#: src/gnuwin32/rui.c:1429 src/gnuwin32/rui.c:1452 src/gnuwin32/rui.c:1457
 msgid "failed to allocate char storage"
 msgstr "l'allocation d'un espace de stockage de caratères a échoué"
 
-#: rui.c:1465
+#: src/gnuwin32/rui.c:1465
 msgid "failed to allocate menuitem"
 msgstr "l'allocation de l'entrée de menu a échoué"
 
-#: rui.c:1517
+#: src/gnuwin32/rui.c:1517
 msgid "menu not found"
 msgstr "menu introuvable"
 
-#: rui.c:1535
+#: src/gnuwin32/rui.c:1535
 msgid "menu or item does not exist"
 msgstr "le menu ou l'entrée de menu n'existe pas"
 
-#: system.c:442
+#: src/gnuwin32/system.c:442
 msgid "Save workspace image?"
 msgstr "Sauver une image de la session ?"
 
-#: ../extra/graphapp/clipboard.c:69 ../extra/graphapp/clipboard.c:73
+#: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "Mémoire insuffisante : cellule non copiée vers le presse-papier"
 
-#: ../extra/graphapp/dialogs.c:147 ../extra/graphapp/dialogs.c:164
-#: ../extra/graphapp/dialogs.c:181
+#: src/extra/graphapp/dialogs.c:147 src/extra/graphapp/dialogs.c:164
+#: src/extra/graphapp/dialogs.c:181
 msgid "Question"
 msgstr "Question"
 
-#: ../extra/graphapp/dialogs.c:202
+#: src/extra/graphapp/dialogs.c:202
 msgid " Change working directory to:"
 msgstr "Changer le répertoire courant vers :"
 
-#: ../extra/graphapp/dialogs.c:205
+#: src/extra/graphapp/dialogs.c:205
 #, c-format
 msgid "Unable to set '%s' as working directory"
 msgstr "Impossible de spécifier '%s' comme répertoire courant"
 
-#: ../extra/graphapp/dialogs.c:733
+#: src/extra/graphapp/dialogs.c:733
 msgid "User"
 msgstr "Utilisateur"
 
-#: ../extra/graphapp/dialogs.c:734
+#: src/extra/graphapp/dialogs.c:734
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ../extra/graphapp/dialogs.c:900 ../extra/graphapp/dialogs.c:906
+#: src/extra/graphapp/dialogs.c:900 src/extra/graphapp/dialogs.c:906
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" introuvable"
 
-#: ../extra/graphapp/gmenus.c:56
+#: src/extra/graphapp/gmenus.c:56
 msgid "Arrange Icons"
 msgstr "Arranger les icônes"
 
-#: ../library/grDevices/src/devWindows.c:931
+#: src/library/grDevices/src/devWindows.c:931
 msgid "Portable network graphics file"
 msgstr "Fichier PNG"
 
-#: ../library/grDevices/src/devWindows.c:934
+#: src/library/grDevices/src/devWindows.c:934
 msgid "Windows bitmap file"
 msgstr "Fichier bitmap Windows"
 
-#: ../library/grDevices/src/devWindows.c:937
+#: src/library/grDevices/src/devWindows.c:937
 msgid "TIFF file"
 msgstr "Fichier TIFF"
 
-#: ../library/grDevices/src/devWindows.c:940
+#: src/library/grDevices/src/devWindows.c:940
 msgid "Jpeg file"
 msgstr "Fichier JPEG"
 
-#: ../library/grDevices/src/devWindows.c:962
+#: src/library/grDevices/src/devWindows.c:962
 msgid "Postscript file"
 msgstr "Fichier postscript"
 
-#: ../library/grDevices/src/devWindows.c:974
+#: src/library/grDevices/src/devWindows.c:974
 msgid "PDF file"
 msgstr "Fichier PDF"
 
-#: ../library/grDevices/src/devWindows.c:986
+#: src/library/grDevices/src/devWindows.c:986
 msgid "Enhanced metafiles"
 msgstr "Métafichier avancé EMF"
 
-#: ../library/grDevices/src/devWindows.c:989
-#: ../library/grDevices/src/devWindows.c:3434
+#: src/library/grDevices/src/devWindows.c:989
+#: src/library/grDevices/src/devWindows.c:3434
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "chemin sélectionné trop long : 512 caractères maximum"
 
-#: ../library/grDevices/src/devWindows.c:1200
+#: src/library/grDevices/src/devWindows.c:1200
 msgid "No plot to replace!"
 msgstr "Aucun graphe à remplacer !"
 
-#: ../library/grDevices/src/devWindows.c:1248
+#: src/library/grDevices/src/devWindows.c:1248
 msgid "Variable name"
 msgstr "Nom de la variable"
 
-#: ../library/grDevices/src/devWindows.c:1255
+#: src/library/grDevices/src/devWindows.c:1255
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "La variable n'existe pas ou ne contient aucun graphique!"
 
-#: ../library/grDevices/src/devWindows.c:1271
+#: src/library/grDevices/src/devWindows.c:1271
 msgid "Name of variable to save to"
 msgstr "Nom de la variable où sauver les graphes"
 
-#: ../library/grDevices/src/devWindows.c:1580
+#: src/library/grDevices/src/devWindows.c:1580
 msgid "Copy to the clipboard as a metafile"
 msgstr "Copier au format vectoriel dans le presse-papier"
 
-#: ../library/grDevices/src/devWindows.c:1598
-#: ../library/grDevices/src/devWindows.c:1609
+#: src/library/grDevices/src/devWindows.c:1598
+#: src/library/grDevices/src/devWindows.c:1609
 msgid "Stop locator"
 msgstr "Arrêter le mode de localisation à la souris"
 
-#: ../library/grDevices/src/devWindows.c:1608
-#: ../library/grDevices/src/devWindows.c:1612
+#: src/library/grDevices/src/devWindows.c:1608
+#: src/library/grDevices/src/devWindows.c:1612
 msgid "Stop"
 msgstr "Arrêter"
 
-#: ../library/grDevices/src/devWindows.c:1614
+#: src/library/grDevices/src/devWindows.c:1614
 msgid "Continue"
 msgstr "Continuer"
 
-#: ../library/grDevices/src/devWindows.c:1618
+#: src/library/grDevices/src/devWindows.c:1618
 msgid "Next"
 msgstr "Suivant"
 
-#: ../library/grDevices/src/devWindows.c:1619
+#: src/library/grDevices/src/devWindows.c:1619
 msgid "Next plot"
 msgstr "Graphique suivant"
 
-#: ../library/grDevices/src/devWindows.c:1625
+#: src/library/grDevices/src/devWindows.c:1625
 msgid "Save as"
 msgstr "Sauver sous"
 
-#: ../library/grDevices/src/devWindows.c:1634
-#: ../library/grDevices/src/devWindows.c:1636
-#: ../library/grDevices/src/devWindows.c:1638
+#: src/library/grDevices/src/devWindows.c:1634
+#: src/library/grDevices/src/devWindows.c:1636
+#: src/library/grDevices/src/devWindows.c:1638
 #, c-format
 msgid "%s quality..."
 msgstr "Qualité %s..."
 
-#: ../library/grDevices/src/devWindows.c:1640
+#: src/library/grDevices/src/devWindows.c:1640
 msgid "Copy to the clipboard"
 msgstr "Copier vers le presse-papier"
 
-#: ../library/grDevices/src/devWindows.c:1641
+#: src/library/grDevices/src/devWindows.c:1641
 msgid "as a Bitmap\tCTRL+C"
 msgstr "comme bitmap   \tCTRL+C"
 
-#: ../library/grDevices/src/devWindows.c:1642
+#: src/library/grDevices/src/devWindows.c:1642
 msgid "as a Metafile\tCTRL+W"
 msgstr "comme vectoriel\tCTRL+W"
 
-#: ../library/grDevices/src/devWindows.c:1645
+#: src/library/grDevices/src/devWindows.c:1645
 msgid "Print...\tCTRL+P"
 msgstr "Imprimer...\tCTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1647
+#: src/library/grDevices/src/devWindows.c:1647
 msgid "close Device"
 msgstr "Fermer le périphérique"
 
-#: ../library/grDevices/src/devWindows.c:1648
+#: src/library/grDevices/src/devWindows.c:1648
 msgid "History"
 msgstr "Historique"
 
-#: ../library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1649
 msgid "Recording"
 msgstr "Enregistrer"
 
-#: ../library/grDevices/src/devWindows.c:1652
+#: src/library/grDevices/src/devWindows.c:1652
 msgid "Add\tINS"
 msgstr "Ajouter\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1653
+#: src/library/grDevices/src/devWindows.c:1653
 msgid "Replace"
 msgstr "Remplacer"
 
-#: ../library/grDevices/src/devWindows.c:1655
+#: src/library/grDevices/src/devWindows.c:1655
 msgid "Previous\tPgUp"
 msgstr "Précédent\tPgHaut"
 
-#: ../library/grDevices/src/devWindows.c:1656
+#: src/library/grDevices/src/devWindows.c:1656
 msgid "Next\tPgDown"
 msgstr "Suivant\tPgBas"
 
-#: ../library/grDevices/src/devWindows.c:1658
+#: src/library/grDevices/src/devWindows.c:1658
 msgid "Save to variable..."
 msgstr "Sauver dans la variable..."
 
-#: ../library/grDevices/src/devWindows.c:1659
+#: src/library/grDevices/src/devWindows.c:1659
 msgid "Get from variable..."
 msgstr "Récupérer depuis la variable..."
 
-#: ../library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1661
 msgid "Clear history"
 msgstr "Effacer l'historique"
 
-#: ../library/grDevices/src/devWindows.c:1662
+#: src/library/grDevices/src/devWindows.c:1662
 msgid "Resize"
 msgstr "Redimensionnement"
 
-#: ../library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1663
 msgid "R mode"
 msgstr "Mode R"
 
-#: ../library/grDevices/src/devWindows.c:1665
+#: src/library/grDevices/src/devWindows.c:1665
 msgid "Fit to window"
 msgstr "Ajuster à la fenêtre"
 
-#: ../library/grDevices/src/devWindows.c:1667
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "Fixed size"
 msgstr "Taille fixe"
 
-#: ../library/grDevices/src/devWindows.c:1674
+#: src/library/grDevices/src/devWindows.c:1674
 msgid "Copy as metafile"
 msgstr "Copier comme vectoriel"
 
-#: ../library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1676
 msgid "Copy as bitmap"
 msgstr "Copier comme bitmap"
 
-#: ../library/grDevices/src/devWindows.c:1679
+#: src/library/grDevices/src/devWindows.c:1679
 msgid "Save as metafile..."
 msgstr "Sauver comme vectoriel..."
 
-#: ../library/grDevices/src/devWindows.c:1681
+#: src/library/grDevices/src/devWindows.c:1681
 msgid "Save as postscript..."
 msgstr "Sauver comme postscript..."
 
-#: ../library/grDevices/src/devWindows.c:3134
+#: src/library/grDevices/src/devWindows.c:3134
 msgid "Locator is active"
 msgstr "Le mode de localisation à la souris est actif"
 
-#: ../library/grDevices/src/devWindows.c:3757
+#: src/library/grDevices/src/devWindows.c:3757
 msgid "Waiting to confirm page change..."
 msgstr "Changement de page : attente de confirmation..."
 
-#: ../library/grDevices/src/devWindows.c:3769
+#: src/library/grDevices/src/devWindows.c:3769
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
 
