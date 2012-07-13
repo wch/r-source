@@ -16,31 +16,7 @@
 
 #### R based engine for managing translations
 
-en_quote <- function(lines)
-{
-    ## msgfilter with quot.sed did
-    ## s/"\([^"]*\)"/“\1”/g
-    ## s/`\([^`']*\)'/‘\1’/g
-    ## s/ '\([^`']*\)' / ‘\1’ /g
-    ## s/ '\([^`']*\)'$/ ‘\1’/g
-    ## s/^'\([^`']*\)' /‘\1’ /g
-    ## s/“”/""/g
-    good <- grepl("^msgstr", lines)
-    tmp <- lines[good]
-    ## This needs to be improved: strip msgstr: "",
-    ## and deal with continuation lines.
-#    tmp <- gsub('"([^"]*)"', '“\\1”', tmp)
-#    tmp <- gsub("`([^`']*)'",'‘\\1', tmp)
-#    tmp <- gsub(" '([^`']*)' ", ' ‘\\1’ ', tmp)
-#    tmp <- gsub(" '([^`']*)'$", ' ‘\\1’', tmp)
-#    tmp <- gsub("^'([^`']*)' ", '‘\\1’ ', tmp)
-#    tmp <- gsub("“”", '""', tmp)
-    tmp <- gsub("'([^`']*)'",'‘\\1’', tmp, useBytes = TRUE)
-    lines[good] <- tmp
-    lines
-}
-
-enquote <- function(potfile, out)
+en_quote <- function(potfile, out)
 {
     tfile <- tempfile()
     cmd <- paste("msginit -i", potfile, "--no-translator -l en -o", tfile)
@@ -50,7 +26,12 @@ enquote <- function(potfile, out)
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
     if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2)
-    lines <- en_quote(lines)
+    ## This needs to be improved: strip msgstr: "",
+    ## and deal with continuation lines.
+    good <- grepl("^msgstr", lines)
+    tmp <- lines[good]
+    tmp <- gsub("'([^`']*)'",'‘\\1’', tmp, useBytes = TRUE)
+    lines[good] <- tmp
     ## in case this is done on Windows
     con <- file(out, "wb")
     writeLines(lines, con, useBytes = TRUE)
@@ -58,9 +39,9 @@ enquote <- function(potfile, out)
 }
 
 ## But for now
-enquote <- function(potfile, out)
+en_quote <- function(potfile, out)
 {
-    SED <- Sys.getenv("SED", "sed") # but needs to be "gnused" on a Mac
+    SED <- Sys.getenv("SED", "sed") # but needs to be "gnused" on my Mac
     tfile <- tempfile()
     cmd <- paste("msginit -i", shQuote(potfile),
                  "--no-translator -l en -o", shQuote(tfile))
@@ -121,7 +102,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles[newer]) {
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
-        cat("  R-", lang, ":", sep = "")
+        message("  R-", lang, ":", domain = NA, appendLF = FALSE)
         ## This seems not to update the file dates.
         cmd <- paste("msgmerge --update", f, shQuote(potfile))
         if(system(cmd) != 0L) {
@@ -145,9 +126,9 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
 
     ## do en@quot
     lang <- "en@quot"
-    cat("  R-", lang, ":\n", sep = "")
+    message("  R-", lang, ":", domain = NA)
     f <- "po/R-en@quot.po"
-    enquote(potfile, f)
+    en_quote(potfile, f)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- file.path(dest, sprintf("R-%s.mo", pkg))
@@ -181,7 +162,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles[newer]) {
         lang <- sub("[.]po", "", basename(f))
-        cat("  ", lang, ":", sep = "")
+        message("  ", lang, ":", appendLF = FALSE, domain = NA)
         cmd <- paste("msgmerge --update", shQuote(f), shQuote(potfile))
         if(system(cmd) != 0L) {
             warning("running msgmerge on ",  f, " failed", domain = NA)
@@ -203,9 +184,9 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     }
     ## do en@quot
     lang <- "en@quot"
-    cat("  ", lang, ":\n", sep = "")
+    message("  ", lang, ":", domain = NA)
     f <- "po/en@quot.po"
-    enquote(potfile, f)
+    en_quote(potfile, f)
     dest <- file.path("inst", "po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
     dest <- file.path(dest, sprintf("%s.mo", pkg))
@@ -251,7 +232,7 @@ update_po <- function(srcdir)
     newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles[newer]) {
         lang <- sub("[.]po", "", basename(f))
-        cat("  ", lang, ":", sep = "")
+        message("  ", lang, ":", domain = NA, appendLF = FALSE)
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
             warning("running msgmerge failed", domain = NA)
@@ -272,11 +253,9 @@ update_po <- function(srcdir)
 
     ## do en@quot
     lang <- "en@quot"
-    cat("  ", lang, ":\n", sep = "")
+    message("  ", lang, ":", domain = NA)
     f <- "po/en@quot.po"
-    enquote(potfile, f)
-    dest <- file.path("inst", "po", lang, "LC_MESSAGES")
-    dir.create(dest, FALSE, TRUE)
+    en_quote(potfile, f)
     dest <- sprintf("po/%s.gmo", lang)
     cmd <- paste("msgfmt -c --statistics -o", dest, f)
     if(system(cmd) != 0L)

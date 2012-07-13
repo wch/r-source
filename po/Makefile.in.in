@@ -24,25 +24,17 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
+
 Rsharedir = "$(DESTDIR)${rsharedir}"
 Rlocaledir = "$(Rsharedir)/locale"
 
 mkinstalldirs = $(MKINSTALLDIRS)
 
-GMSGFMT = @GMSGFMT@
-MSGFMT = @MSGFMT@
-XGETTEXT = @XGETTEXT@
-MSGMERGE = msgmerge
-MSGMERGE_UPDATE = @MSGMERGE@ --update
-MSGINIT = msginit
-MSGCONV = msgconv
-MSGFILTER = msgfilter
-
 POFILES = @POFILES@
 GMOFILES = @GMOFILES@
-UPDATEPOFILES = @UPDATEPOFILES@
-DUMMYPOFILES = @DUMMYPOFILES@
 RGUI_CATALOGS =`ls $(srcdir)/RGui-*.po $(srcdir)/RGui-*.gmo`
+
 DISTFILES.common = README RGui.pot THANKS Makefile.in.in Makefile.win remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot \
@@ -97,57 +89,6 @@ stamp-po: $(srcdir)/$(DOMAIN).pot
 	  echo timestamp > stamp-poT && \
 	  mv stamp-poT stamp-po; \
 	}
-
-# Note: Target 'all' must not depend on target '$(DOMAIN).pot-update',
-# otherwise packages like GCC can not be built if only parts of the source
-# have been downloaded.
-
-# This target rebuilds $(DOMAIN).pot; it is an expensive operation.
-# Note that $(DOMAIN).pot is not touched if it doesn't need to be changed.
-$(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
-	if test -n '$(MSGID_BUGS_ADDRESS)' || test '$(PACKAGE_BUGREPORT)' = '@'PACKAGE_BUGREPORT'@'; then \
-	  msgid_bugs_address='$(MSGID_BUGS_ADDRESS)'; \
-	else \
-	  msgid_bugs_address='$(PACKAGE_BUGREPORT)'; \
-	fi; \
-	$(XGETTEXT) --default-domain=$(DOMAIN) --directory=$(top_srcdir) \
-	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
-	  --files-from=$(srcdir)/POTFILES.in \
-	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	  --msgid-bugs-address="$$msgid_bugs_address"
-	test ! -f $(DOMAIN).po || { \
-	  if test -f $(srcdir)/$(DOMAIN).pot; then \
-	    sed -f remove-potcdate.sed < $(srcdir)/$(DOMAIN).pot > $(DOMAIN).1po && \
-	    sed -f remove-potcdate.sed < $(DOMAIN).po > $(DOMAIN).2po && \
-	    if cmp $(DOMAIN).1po $(DOMAIN).2po >/dev/null 2>&1; then \
-	      rm -f $(DOMAIN).1po $(DOMAIN).2po $(DOMAIN).po; \
-	    else \
-	      rm -f $(DOMAIN).1po $(DOMAIN).2po $(srcdir)/$(DOMAIN).pot && \
-	      mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
-	    fi; \
-	  else \
-	    mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
-	  fi; \
-	}
-
-# This rule has no dependencies: we don't need to update $(DOMAIN).pot at
-# every "make" invocation, only create it when it is missing.
-# Only "make $(DOMAIN).pot-update" or "make update-po" will force an update.
-$(srcdir)/$(DOMAIN).pot:
-	$(MAKE) $(DOMAIN).pot-update
-
-# This target rebuilds a PO file if $(DOMAIN).pot has changed.
-# Note that a PO file is not touched if it doesn't need to be changed.
-$(POFILES): $(srcdir)/$(DOMAIN).pot
-	@lang=`echo $@ | sed -e 's,.*/,,' -e 's/\.po$$//'`; \
-	if test -f "$(srcdir)/$${lang}.po"; then \
-	  test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
-	  echo "$${cdcmd}$(MSGMERGE_UPDATE) $${lang}.po $(DOMAIN).pot"; \
-	  cd $(srcdir) && $(MSGMERGE_UPDATE) $${lang}.po $(DOMAIN).pot; \
-	else \
-	  $(MAKE) $${lang}.po-create; \
-	fi
-
 
 install: install-exec install-data
 install-exec:
@@ -273,10 +214,6 @@ maintainer-clean: distclean
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 dist distdir:
-#	$(MAKE) update-po
-	@$(MAKE) dist2
-# This is a separate target because 'update-po' must be executed before.
-dist2: # $(DISTFILES)
 	@dists="$(DISTFILES)"; \
 	if test -f $(srcdir)/LINGUAS; then dists="$$dists LINGUAS"; fi; \
 	for file in $$dists; do \
@@ -287,180 +224,28 @@ dist2: # $(DISTFILES)
 	  fi; \
 	done
 
-update-po: Makefile
-	$(MAKE) $(DOMAIN).pot-update
-	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
-	$(MAKE) update-gmo
-
 ## NB datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
-
-update-pkg-po: Makefile remove-potcdate.sed en@quot.insert-header
-	@for pkg in $(R_PKGS_PO); do \
-	  $(MAKE) pkg-update PKG=$${pkg}; \
-	done
-
-R_EXE = $(top_builddir)/bin/R --vanilla
-
-## default for 'make update-pkg-po', overridden by end users.
-PKGDIR = $(top_srcdir)/src/library/$(PKG)
-
-## use as 'make pkg-update PKG=foo PKGDIR=/path/to/foo'
-pkg-update: remove-potcdate.sed en@quot.insert-header
-	@pkg=$(PKG); \
-	tmpdir=`pwd`; \
-	src=`(cd $(PKGDIR) && pwd)`; \
-	psrc=$${src}/po; \
-	cdcmd="cd $${src}/po"; \
-	if test -f $${src}/po/$${pkg}.pot; then \
-	  echo $(ECHO_N) "updating $${pkg}.pot $(ECHO_C)"; \
-	  (cd $${src}/src; $(XGETTEXT) \
-	   --keyword=_ --keyword=N_ \
-	   --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
-	   --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	   --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	   -o - `LC_COLLATE=C ls *.c`) > $${pkg}.po ; \
-	    sed -f remove-potcdate.sed < $${src}/po/$${pkg}.pot > $${pkg}.1po && \
-	    sed -f remove-potcdate.sed < $${pkg}.po > $${pkg}.2po && \
-	    if cmp $${pkg}.1po $${pkg}.2po >/dev/null 2>&1; then \
-	      rm -f $${pkg}.1po $${pkg}.2po $${pkg}.po; \
-	    else \
-	      rm -f $${pkg}.1po $${pkg}.2po $${src}/po/$${pkg}.pot && \
-	      mv $${pkg}.po $${src}/po/$${pkg}.pot; \
-	    fi; \
-	  echo "and translations"; \
-	  trs=`$${cdcmd} && ls *.po 2> /dev/null`; \
-	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//g' -e s/en@quot.po//`; \
-	  if test -n "$${trs}"; then \
-	    for tr in $${trs}; do \
-	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
-	      echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	      ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} $${pkg}.pot); \
-	      mkdir -p $${src}/inst/po/$$lang/LC_MESSAGES; \
-	      ($${cdcmd} && $(MSGFMT) -c --statistics -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr}) ; \
-	    done; \
-	  fi ; \
-	  lang=en@quot; \
-	  echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	  LC_ALL=C; export LC_ALL; \
-	  cd $(srcdir); \
-	  if $(MSGINIT) -i $${psrc}/$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/$$lang.new.po; then \
-	    if cmp $${psrc}/$$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
-	      rm -f $$tmpdir/$$lang.new.po; \
-	    else \
-	      if mv -f $$tmpdir/$$lang.new.po $${psrc}/$$lang.po; then \
-		:; \
-	      else \
-		echo "creation of $$lang.po failed: cannot move $$tmpdir/$$lang.new.po to $$lang.po" 1>&2; \
-		exit 1; \
-	      fi; \
-	    fi; \
-	    mkdir -p $${src}/inst/po/$$lang/LC_MESSAGES; \
-	    ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $$lang.po) ; \
-	    echo " done."; \
-	  else \
-	    echo "creation of $$lang.po failed!" 1>&2; \
-	    rm -f $$tmpdir/$$lang.new.po; \
-	  fi ; \
-	fi ; \
-	cd $$tmpdir; \
-	if test -f "$${src}/po/R-$${pkg}.pot"; then \
-	  echo $(ECHO_N) "updating R-$${pkg}.pot $(ECHO_C)"; \
-        else \
-	  echo $(ECHO_N) "creating R-$${pkg}.pot $(ECHO_C)"; \
-	  touch "$${src}/po/R-$${pkg}.pot"; \
-	fi ; \
-	echo "tools::xgettext2pot('$${src}', 'R-$${pkg}.po')" \
-	  | R_DEFAULT_PACKAGES= LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
-	sed -f remove-potcdate.sed < $${src}/po/R-$${pkg}.pot > R-$${pkg}.1po && \
-	sed -f remove-potcdate.sed < R-$${pkg}.po > R-$${pkg}.2po && \
-	if cmp R-$${pkg}.1po R-$${pkg}.2po >/dev/null 2>&1; then \
-	  rm -f R-$${pkg}.1po R-$${pkg}.2po R-$${pkg}.po; \
-	else \
-	  rm -f R-$${pkg}.1po R-$${pkg}.2po $${src}/po/R-$${pkg}.pot && \
-	  mv R-$${pkg}.po $${src}/po/R-$${pkg}.pot; \
-	fi ; \
-	echo "and translations"; \
-	trs=`$${cdcmd} && ls R-*.po 2> /dev/null`; \
-	trs=`echo $${trs} | sed -e s/R-en@quot.po//`; \
-	if test -n "$${trs}"; then \
-	  for tr in $${trs}; do \
-	    lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
-	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	    ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} R-$${pkg}.pot); \
-	    mkdir -p $${src}/inst/po/$$lang/LC_MESSAGES; \
-	    ($${cdcmd} && $(MSGFMT) -c --statistics -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr}) ; \
-	  done; \
-	fi ; \
-	lang=en@quot; \
-	echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	LC_ALL=C; export LC_ALL; \
-	cd $(srcdir); \
-	if $(MSGINIT) -i $${psrc}/R-$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/R-$$lang.new.po; then \
-	  if cmp $${psrc}/R-$$lang.po $$tmpdir/R-$$lang.new.po >/dev/null 2>&1; then \
-	    rm -f $$tmpdir/R-$$lang.new.po; \
-	  else \
-	    if mv -f $$tmpdir/R-$$lang.new.po $${psrc}/R-$$lang.po; then \
-	      :; \
-	    else \
-	      echo "creation of R-$$lang.po failed: cannot move $$tmpdir/R-$$lang.new.po to R-$$lang.po" 1>&2; \
-	      exit 1; \
-	    fi; \
-	  fi; \
-	  mkdir -p $${src}/inst/po/$$lang/LC_MESSAGES; \
-	  ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo R-$$lang.po) ; \
-	  echo " done."; \
-	else \
-	  echo "creation of R-$$lang.po failed!" 1>&2; \
-	  rm -f $$tmpdir/R-$$lang.new.po; \
-	fi
-
-# General rule for creating PO files.
-
-.nop.po-create:
-	@lang=`echo $@ | sed -e 's/\.po-create$$//'`; \
-	echo "File $$lang.po does not exist. If you are a translator, you can create it through 'msginit'." 1>&2; \
-	exit 1
-
-# General rule for updating PO files.
-
-.nop.po-update:
-	@lang=`echo $@ | sed -e 's/\.po-update$$//'`; \
-	tmpdir=`pwd`; \
-	echo "$$lang:"; \
-	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
-	echo "$${cdcmd}$(MSGMERGE) $$lang.po $(DOMAIN).pot -o $$lang.new.po"; \
-	cd $(srcdir); \
-	if $(MSGMERGE) $$lang.po $(DOMAIN).pot -o $$tmpdir/$$lang.new.po; then \
-	  if cmp $$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
-	    rm -f $$tmpdir/$$lang.new.po; \
-	  else \
-	    if mv -f $$tmpdir/$$lang.new.po $$lang.po; then \
-	      :; \
-	    else \
-	      echo "msgmerge for $$lang.po failed: cannot move $$tmpdir/$$lang.new.po to $$lang.po" 1>&2; \
-	      exit 1; \
-	    fi; \
-	  fi; \
-	else \
-	  echo "msgmerge for $$lang.po failed!" 1>&2; \
-	  rm -f $$tmpdir/$$lang.new.po; \
-	fi
-
-$(DUMMYPOFILES):
-
-update-gmo: Makefile $(GMOFILES)
-	@:
 
 Makefile: Makefile.in.in $(top_builddir)/config.status @POMAKEFILEDEPS@
 	@cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
 	       $(SHELL) ./config.status
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+update-po:
+	@echo "tools:::update_po(\"$(top_srcdir)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+
 update-RGui:
 	@echo "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+
+update-pkg-po:
+	@for pkg in $(R_PKGS_PO); do \
+	   echo "updating translations for $${pkg}"; \
+	   echo "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\")" | \
+	     R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null; \
+	done
 
 
 force:
