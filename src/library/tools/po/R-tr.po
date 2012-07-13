@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-13 08:12\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1101,18 +1101,6 @@ msgid "running regexp regression tests"
 msgstr ""
 
 msgid "running tests to possibly trigger segfaults"
-msgstr ""
-
-msgid "running msgmerge failed"
-msgstr ""
-
-msgid "running msginit failed"
-msgstr ""
-
-msgid "running msgconv failed"
-msgstr ""
-
-msgid "running xgettext failed"
 msgstr ""
 
 msgid "'x' must be a single character string"

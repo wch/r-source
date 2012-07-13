@@ -442,7 +442,7 @@ msgstr "non-generic function ‘%s’ given to findMethods()"
 
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
-"Only FALSE is meaningful for 'inherited', when ‘where’ is supplied (got"
+"Only FALSE is meaningful for ‘inherited’, when ‘where’ is supplied (got"
 
 msgid "argument \"f\" must be a generic function or %s"
 msgstr "argument “f” must be a generic function or %s"

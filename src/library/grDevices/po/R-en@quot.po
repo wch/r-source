@@ -302,7 +302,7 @@ msgid "at least 2 columns needed"
 msgstr "at least 2 columns needed"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr "‘x’ is a list, but does not have components 'x', ‘y’  and ‘z’"
+msgstr "‘x’ is a list, but does not have components ‘x’, ‘y’  and ‘z’"
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "'x', ‘y’ and ‘z’ lengths differ"

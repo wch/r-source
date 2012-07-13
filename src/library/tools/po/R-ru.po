@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-13 08:12\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1164,22 +1164,6 @@ msgstr "запускаю регрессионные тесты на регулярные выражения"
 msgid "running tests to possibly trigger segfaults"
 msgstr "запускаю тесты на возможное переключение ошибок сегментации"
 
-#, fuzzy
-msgid "running msgmerge failed"
-msgstr "не удался запуск 'make'"
-
-#, fuzzy
-msgid "running msginit failed"
-msgstr "не удался запуск 'zip'"
-
-#, fuzzy
-msgid "running msgconv failed"
-msgstr "не удался запуск 'make'"
-
-#, fuzzy
-msgid "running xgettext failed"
-msgstr "не удался запуск 'make'"
-
 msgid "'x' must be a single character string"
 msgstr "аргумент 'x' должен быть текстовой строкой"
 
@@ -1287,6 +1271,22 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#, fuzzy
+#~ msgid "running msgmerge failed"
+#~ msgstr "не удался запуск 'make'"
+
+#, fuzzy
+#~ msgid "running msginit failed"
+#~ msgstr "не удался запуск 'zip'"
+
+#, fuzzy
+#~ msgid "running msgconv failed"
+#~ msgstr "не удался запуск 'make'"
+
+#, fuzzy
+#~ msgid "running xgettext failed"
+#~ msgstr "не удался запуск 'make'"
 
 #~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 #~ msgstr ""

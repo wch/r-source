@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-13 08:12\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -1129,22 +1129,6 @@ msgstr "执行正规表现回归检验"
 msgid "running tests to possibly trigger segfaults"
 msgstr "执行触发程序段故障检验"
 
-#, fuzzy
-msgid "running msgmerge failed"
-msgstr "调用'make'失败"
-
-#, fuzzy
-msgid "running msginit failed"
-msgstr "调用'zip'失败"
-
-#, fuzzy
-msgid "running msgconv failed"
-msgstr "调用'make'失败"
-
-#, fuzzy
-msgid "running xgettext failed"
-msgstr "调用'make'失败"
-
 msgid "'x' must be a single character string"
 msgstr "'x'必需是单字符串"
 
@@ -1234,6 +1218,22 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#, fuzzy
+#~ msgid "running msgmerge failed"
+#~ msgstr "调用'make'失败"
+
+#, fuzzy
+#~ msgid "running msginit failed"
+#~ msgstr "调用'zip'失败"
+
+#, fuzzy
+#~ msgid "running msgconv failed"
+#~ msgstr "调用'make'失败"
+
+#, fuzzy
+#~ msgid "running xgettext failed"
+#~ msgstr "调用'make'失败"
 
 #~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 #~ msgstr "错误：--merge-multiarch只适用i386/x64安装"

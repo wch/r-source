@@ -98,14 +98,14 @@ msgid ""
 "Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
 "before', or 'col.after'"
 msgstr ""
-"Cannot specify more than one of 'side=[“left”, “right”]', 'col', 'col."
-"before', or ‘col.after’"
+"Cannot specify more than one of ‘side=[“left”, “right”]’, ‘col’, ‘col."
+"before’, or ‘col.after’"
 
 msgid ""
 "Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
 "before', or 'row.after'"
 msgstr ""
-"Must specify exactly one of 'side=[“top”, “bottom”]', 'row', 'row.before', "
+"Must specify exactly one of ‘side=[“top”, “bottom”]’, ‘row’, ‘row.before’, "
 "or ‘row.after’"
 
 msgid "Invalid 'n'"
@@ -345,7 +345,7 @@ msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr "‘x’ and ‘y’ and ‘id.lengths’ must specify same overall length"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
-msgstr "'x0', 'y0', 'x1', and ‘y1’ must be units"
+msgstr "'x0', ‘y0’, ‘x1’, and ‘y1’ must be units"
 
 msgid "'x' and 'y' must be units or NULL"
 msgstr "‘x’ and ‘y’ must be units or NULL"
@@ -361,7 +361,7 @@ msgstr ""
 "functions."
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr "The ‘grob’ argument must be a 'line.to', 'lines', or ‘segments’ grob"
+msgstr "The ‘grob’ argument must be a ‘line.to’, ‘lines’, or ‘segments’ grob"
 
 msgid "x and y must be units"
 msgstr "x and y must be units"
@@ -376,10 +376,10 @@ msgid "Must have exactly 4 control points per Bezier curve"
 msgstr "Must have exactly 4 control points per Bezier curve"
 
 msgid "'x', 'y', and 'r' must be units"
-msgstr "'x', 'y', and ‘r’ must be units"
+msgstr "'x', ‘y’, and ‘r’ must be units"
 
 msgid "'x', 'y', 'width', and 'height' must be units"
-msgstr "'x', 'y', 'width', and ‘height’ must be units"
+msgstr "'x', ‘y’, ‘width’, and ‘height’ must be units"
 
 msgid "Invalid 'rot' value"
 msgstr "Invalid ‘rot’ value"
@@ -394,7 +394,7 @@ msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr "‘x’ and ‘y’ must be unit objects and have the same length"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr "'x', 'y', 'width', and ‘height’ must all be units of length 1"
+msgstr "'x', ‘y’, ‘width’, and ‘height’ must all be units of length 1"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "‘x’ and ‘y’ must all be units of length 1"
@@ -403,7 +403,7 @@ msgid "'r' must be a unit object"
 msgstr "‘r’ must be a unit object"
 
 msgid "'x', 'y', 'width', and 'height' must have length 1"
-msgstr "'x', 'y', 'width', and ‘height’ must have length 1"
+msgstr "'x', ‘y’, ‘width’, and ‘height’ must have length 1"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "‘x’ and ‘units’ must have length > 0"

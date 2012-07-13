@@ -315,7 +315,7 @@ msgstr "unimplemented line texture %08x: using Dash-double-dotted"
 #: devPS.c:4676
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
-msgstr "unknown postscript font family '%s', using Helvetica"
+msgstr "unknown postscript font family ‘%s’, using Helvetica"
 
 #: devPS.c:4748
 msgid "invalid foreground/background color (xfig)"
@@ -411,7 +411,7 @@ msgstr "increasing the PDF version to 1.4"
 
 #: devPS.c:6331 devPS.c:6378
 msgid "unknown 'colormodel', using 'srgb'"
-msgstr "unknown 'colormodel', using ‘srgb’"
+msgstr "unknown ‘colormodel’, using ‘srgb’"
 
 #: devPS.c:6572
 msgid "Failed to load sRGB colorspace file"

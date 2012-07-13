@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
-"PO-Revision-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-13 08:12\n"
+"PO-Revision-Date: 2012-07-13 08:12\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,7 @@ msgid "unable to write code files"
 msgstr "unable to write code files"
 
 msgid "you must specify 'package', 'dir' or 'file'"
-msgstr "you must specify 'package', ‘dir’ or ‘file’"
+msgstr "you must specify ‘package’, ‘dir’ or ‘file’"
 
 msgid "file '%s' does not exist"
 msgstr "file ‘%s’ does not exist"
@@ -243,7 +243,7 @@ msgid ""
 "Entries must be names of packages optionally followed by '<=' or '>=', white "
 "space, and a valid version number in parentheses."
 msgstr ""
-"Entries must be names of packages optionally followed by ‘<=’ or '>=', white "
+"Entries must be names of packages optionally followed by ‘<=’ or ‘>=’, white "
 "space, and a valid version number in parentheses."
 
 msgid "Entries with infeasible comparison operator:"
@@ -510,7 +510,7 @@ msgid "no 'type' specified"
 msgstr "no ‘type’ specified"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr "‘type’ must be one of 'txt', 'html', ‘latex’ or ‘example’"
+msgstr "‘type’ must be one of ‘txt’, ‘html’, ‘latex’ or ‘example’"
 
 msgid "current working directory cannot be ascertained"
 msgstr "current working directory cannot be ascertained"
@@ -1164,18 +1164,6 @@ msgstr "running regexp regression tests"
 
 msgid "running tests to possibly trigger segfaults"
 msgstr "running tests to possibly trigger segfaults"
-
-msgid "running msgmerge failed"
-msgstr "running msgmerge failed"
-
-msgid "running msginit failed"
-msgstr "running msginit failed"
-
-msgid "running msgconv failed"
-msgstr "running msgconv failed"
-
-msgid "running xgettext failed"
-msgstr "running xgettext failed"
 
 msgid "'x' must be a single character string"
 msgstr "‘x’ must be a single character string"

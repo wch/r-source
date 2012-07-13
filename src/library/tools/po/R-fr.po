@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-13 08:12\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1190,22 +1190,6 @@ msgstr "exécution des tests de régression regexp"
 msgid "running tests to possibly trigger segfaults"
 msgstr "exécution de tests pour générer éventuellement des 'segfaults'"
 
-#, fuzzy
-msgid "running msgmerge failed"
-msgstr "l'exécution de 'make' a échoué"
-
-#, fuzzy
-msgid "running msginit failed"
-msgstr "l'exécution de 'zip' a échoué"
-
-#, fuzzy
-msgid "running msgconv failed"
-msgstr "l'exécution de 'make' a échoué"
-
-#, fuzzy
-msgid "running xgettext failed"
-msgstr "l'exécution de 'make' a échoué"
-
 msgid "'x' must be a single character string"
 msgstr "'x' doit être une chaîne de caractères unique"
 
@@ -1311,6 +1295,22 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#, fuzzy
+#~ msgid "running msgmerge failed"
+#~ msgstr "l'exécution de 'make' a échoué"
+
+#, fuzzy
+#~ msgid "running msginit failed"
+#~ msgstr "l'exécution de 'zip' a échoué"
+
+#, fuzzy
+#~ msgid "running msgconv failed"
+#~ msgstr "l'exécution de 'make' a échoué"
+
+#, fuzzy
+#~ msgid "running xgettext failed"
+#~ msgstr "l'exécution de 'make' a échoué"
 
 #~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 #~ msgstr ""
