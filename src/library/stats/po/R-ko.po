@@ -2598,7 +2598,7 @@ msgstr[0] ""
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
-msgstr[0] "모델식에서 파라미터 %s가 없습니다\n"
+msgstr[0] "모델식에서 파라미터 %s가 없습니다"
 
 #~ msgid "extra arguments"
 #~ msgstr "여분의 인수"
