@@ -230,7 +230,7 @@ closeNode.NWSnode <- function(node) snow::closeNode.NWSnode(node)
 recvData.MPInode <- function(node) snow::recvData.MPInode(node)
 recvData.NWSnode <- function(node) snow::recvData.NWSnode(node)
 
-recvOneData.MPIcluster <- function(cl) snow::recvOneData.MPIclusted(cl)
+recvOneData.MPIcluster <- function(cl) snow::recvOneData.MPIcluster(cl)
 recvOneData.NWScluster <- function(cl) snow::recvOneData.NWScluster(cl)
 
 sendData.MPInode <- function(node, data) snow::sendData.MPInode(node, data)
