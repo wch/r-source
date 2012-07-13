@@ -38,6 +38,9 @@
       \item \code{qqline()} has new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      
+      \item The handling of single quotes in the \code{en@quot} has been
+      slightly improved.
     }
   }
 
