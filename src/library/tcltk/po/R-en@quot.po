@@ -88,7 +88,7 @@ msgid "Cancel"
 msgstr "Cancel"
 
 msgid "'pb' is not from class \"tkProgressBar\""
-msgstr "‘pb’ is not from class “tkProgressBar”"
+msgstr "‘pb’ is not from class \"tkProgressBar\""
 
 msgid "'filters' must be a 2-column character matrix"
 msgstr "‘filters’ must be a 2-column character matrix"

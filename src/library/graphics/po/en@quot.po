@@ -67,7 +67,7 @@ msgstr "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 #: graphics.c:1965
 #, c-format
 msgid "axis style \"%c\" unimplemented"
-msgstr "axis style “%c” unimplemented"
+msgstr "axis style \"%c\" unimplemented"
 
 #: graphics.c:2204 graphics.c:2562
 msgid "No graphics device is active"
@@ -92,7 +92,7 @@ msgstr "zero-length arrow is of indeterminate angle and so skipped"
 #: graphics.c:3102
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-msgstr "invalid par(“bty”) = ‘%c’; no box() drawn"
+msgstr "invalid par(\"bty\") = ‘%c’; no box() drawn"
 
 #: graphics.c:3119
 msgid "invalid argument to GBox"
@@ -109,37 +109,37 @@ msgstr "graphical parameter ‘family’ has a maximum length of 200 bytes"
 #: par.c:158
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
-msgstr "invalid value specified for graphical parameter “%s”"
+msgstr "invalid value specified for graphical parameter \"%s\""
 
 #: par.c:165
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
-msgstr "graphical parameter “%s” has the wrong length"
+msgstr "graphical parameter \"%s\" has the wrong length"
 
 #: par.c:260 par.c:670
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
-msgstr "graphical parameter “%s” cannot be set"
+msgstr "graphical parameter \"%s\" cannot be set"
 
 #: par.c:432
 msgid "parameter \"mfg\" has the wrong length"
-msgstr "parameter “mfg” has the wrong length"
+msgstr "parameter \"mfg\" has the wrong length"
 
 #: par.c:440
 msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr "parameter “i” in “mfg” is out of range"
+msgstr "parameter \"i\" in \"mfg\" is out of range"
 
 #: par.c:442
 msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr "parameter “j” in “mfg” is out of range"
+msgstr "parameter \"j\" in \"mfg\" is out of range"
 
 #: par.c:447
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
-msgstr "value of nr in “mfg” is wrong and will be ignored"
+msgstr "value of nr in \"mfg\" is wrong and will be ignored"
 
 #: par.c:449
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
-msgstr "value of nc in “mfg” is wrong and will be ignored"
+msgstr "value of nc in \"mfg\" is wrong and will be ignored"
 
 #: par.c:475
 msgid "calling par(new=TRUE) with no plot"
@@ -148,12 +148,12 @@ msgstr "calling par(new=TRUE) with no plot"
 #: par.c:662 par.c:1046
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
-msgstr "graphical parameter “%s” is obsolete"
+msgstr "graphical parameter \"%s\" is obsolete"
 
 #: par.c:666 par.c:1050
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr "“%s” is not a graphical parameter"
+msgstr "\"%s\" is not a graphical parameter"
 
 #: par.c:1103
 msgid "invalid argument passed to par()"
@@ -212,12 +212,12 @@ msgstr "at least 3 arguments required"
 
 #: plot.c:484
 msgid "\"log=\" specification must be character"
-msgstr "“log=” specification must be character"
+msgstr "\"log=\" specification must be character"
 
 #: plot.c:495
 #, c-format
 msgid "invalid \"log=%s\" specification"
-msgstr "invalid “log=%s” specification"
+msgstr "invalid \"log=%s\" specification"
 
 #: plot.c:510
 msgid "NAs not allowed in 'xlim'"

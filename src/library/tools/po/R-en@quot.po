@@ -600,7 +600,7 @@ msgid "The default JSS style may not be modified."
 msgstr "The default JSS style may not be modified."
 
 msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
-msgstr "invalid value for --compact-vignettes, assuming “qpdf”"
+msgstr "invalid value for --compact-vignettes, assuming \"qpdf\""
 
 msgid "Error: cannot rename directory to"
 msgstr "Error: cannot rename directory to"
@@ -1212,8 +1212,8 @@ msgstr[1] "Note: found %d marked UTF-8 strings"
 
 msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
-msgstr[0] "Note: found %d string marked as “bytes”"
-msgstr[1] "Note: found %d strings marked as “bytes”"
+msgstr[0] "Note: found %d string marked as \"bytes\""
+msgstr[1] "Note: found %d strings marked as \"bytes\""
 
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"

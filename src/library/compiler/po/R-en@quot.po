@@ -31,7 +31,7 @@ msgid "cannot constant fold literal bytecode objects"
 msgstr "cannot constant fold literal bytecode objects"
 
 msgid "no offset recorded for label \"%s\""
-msgstr "no offset recorded for label “%s”"
+msgstr "no offset recorded for label \"%s\""
 
 msgid "cannot compile byte code literals in code"
 msgstr "cannot compile byte code literals in code"
@@ -82,7 +82,7 @@ msgid "compiling '%s'"
 msgstr "compiling ‘%s’"
 
 msgid "saving to file \"%s\" ..."
-msgstr "saving to file “%s” ..."
+msgstr "saving to file \"%s\" ..."
 
 msgid "done"
 msgstr "done"

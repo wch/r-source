@@ -19,11 +19,11 @@ msgstr ""
 
 #: src/appl/binning.c:73
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
-msgstr "NA's in .C(“bincode”,... NAOK=FALSE)"
+msgstr "NA's in .C(\"bincode\",... NAOK=FALSE)"
 
 #: src/appl/binning.c:111
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
-msgstr "NA's in .C(“bincount”,... NAOK=FALSE)"
+msgstr "NA's in .C(\"bincount\",... NAOK=FALSE)"
 
 #: src/appl/optim.c:59
 msgid "non-finite value supplied by optim"
@@ -36,7 +36,7 @@ msgstr "candidate point in optim evaluated to length %d not %d"
 
 #: src/appl/optim.c:135
 msgid "REPORT must be > 0 (method = \"BFGS\")"
-msgstr "REPORT must be > 0 (method = “BFGS”)"
+msgstr "REPORT must be > 0 (method = \"BFGS\")"
 
 #: src/appl/optim.c:146
 msgid "initial value in 'vmmin' is not finite"
@@ -60,7 +60,7 @@ msgstr "unknown type in CG method of optim"
 
 #: src/appl/optim.c:649
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
-msgstr "REPORT must be > 0 (method = “L-BFGS-B”)"
+msgstr "REPORT must be > 0 (method = \"L-BFGS-B\")"
 
 #: src/appl/optim.c:673
 msgid "L-BFGS-B needs finite values of 'fn'"
@@ -68,7 +68,7 @@ msgstr "L-BFGS-B needs finite values of ‘fn’"
 
 #: src/appl/optim.c:728
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr "trace, REPORT must be >= 0 (method = “SANN”)"
+msgstr "trace, REPORT must be >= 0 (method = \"SANN\")"
 
 #: src/appl/pretty.c:106
 msgid "Internal(pretty()): very small range.. corrected"
@@ -89,11 +89,11 @@ msgstr ".C(..): Width cannot be zero"
 
 #: src/appl/strsignif.c:137
 msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
-msgstr ".C(..): ‘type’ must be “integer” for  “d”-format"
+msgstr ".C(..): ‘type’ must be \"integer\" for  \"d\"-format"
 
 #: src/appl/strsignif.c:222
 msgid ".C(..): 'type' must be \"real\" for this format"
-msgstr ".C(..): ‘type’ must be “real” for this format"
+msgstr ".C(..): ‘type’ must be \"real\" for this format"
 
 #: src/gnuwin32/dynload.c:155
 #, c-format
@@ -1180,7 +1180,7 @@ msgstr "attempt to set invalid ‘comment’ attribute"
 
 #: src/main/attrib.c:501
 msgid "adding class \"factor\" to an invalid object"
-msgstr "adding class “factor” to an invalid object"
+msgstr "adding class \"factor\" to an invalid object"
 
 #: src/main/attrib.c:509
 msgid "attempt to set invalid 'class' attribute"
@@ -1313,12 +1313,12 @@ msgstr "invalid type or length for slot name"
 #: src/main/attrib.c:1539
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
-msgstr "cannot get a slot (“%s”) from an object of type “%s”"
+msgstr "cannot get a slot (\"%s\") from an object of type \"%s\""
 
 #: src/main/attrib.c:1550
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
-msgstr "no slot of name “%s” for this object of class “%s”"
+msgstr "no slot of name \"%s\" for this object of class \"%s\""
 
 #: src/main/attrib.c:1567
 msgid "attempt to set slot on NULL object"
@@ -1334,7 +1334,8 @@ msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
-"trying to get slot “%s” from an object of a basic class (“%s”) with no slots"
+"trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
+"slots"
 
 #: src/main/attrib.c:1624
 #, c-format
@@ -1342,7 +1343,8 @@ msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
-"trying to get slot “%s” from an object (class “%s”) that is not an S4 object "
+"trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
+"object "
 
 #: src/main/bind.c:151
 #, c-format
@@ -1518,7 +1520,7 @@ msgstr "‘%s’ requires a character vector"
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
 msgstr ""
-"number of characters is not computable for element %d in “bytes” encoding"
+"number of characters is not computable for element %d in \"bytes\" encoding"
 
 #: src/main/character.c:168 src/main/character.c:196 src/main/character.c:650
 #: src/main/character.c:747
@@ -1529,7 +1531,7 @@ msgstr "invalid multibyte string %d"
 #: src/main/character.c:184
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
-msgstr "width is not computable for element %d in “bytes” encoding"
+msgstr "width is not computable for element %d in \"bytes\" encoding"
 
 #: src/main/character.c:262
 msgid "extracting substrings from a non-character object"
@@ -1680,7 +1682,7 @@ msgstr "invalid argument list"
 
 #: src/main/coerce.c:1832
 msgid "type \"single\" unimplemented in R"
-msgstr "type “single” unimplemented in R"
+msgstr "type \"single\" unimplemented in R"
 
 #: src/main/coerce.c:1834
 msgid "unimplemented predicate"
@@ -1734,7 +1736,7 @@ msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 msgstr ""
-"Setting class(x) to multiple strings (“%s”, “%s”, ...); result will no "
+"Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 
 #: src/main/coerce.c:2456
@@ -1743,8 +1745,8 @@ msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr ""
-"Setting class(x) to “%s” sets attribute to NULL; result will no longer be an "
-"S4 object"
+"Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
+"an S4 object"
 
 #: src/main/coerce.c:2488
 msgid "invalid replacement object to be a class string"
@@ -1755,7 +1757,7 @@ msgstr "invalid replacement object to be a class string"
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
-"“%s” can only be set as the class if the object has this type; found “%s”"
+"\"%s\" can only be set as the class if the object has this type; found \"%s\""
 
 #: src/main/coerce.c:2527
 #, c-format
@@ -1770,7 +1772,7 @@ msgstr ""
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
-"cannot set class to “array” unless the dimension attribute has length > 0"
+"cannot set class to \"array\" unless the dimension attribute has length > 0"
 
 #: src/main/coerce.c:2571
 msgid "'value' must be non-null character string"
@@ -2001,7 +2003,7 @@ msgstr "only first element of ‘description’ argument used"
 msgid ""
 "fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
-"fifo(\"\") only supports open = “w+” and open = “w+b”: using the former"
+"fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 
 #: src/main/connections.c:1001 src/main/connections.c:1158
 #: src/main/connections.c:1808 src/main/connections.c:2921
@@ -2033,7 +2035,7 @@ msgstr "cannot open compressed file ‘%s’, probable reason ‘%s’"
 
 #: src/main/connections.c:1255
 msgid "whence = \"end\" is not implemented for gzfile connections"
-msgstr "whence = “end” is not implemented for gzfile connections"
+msgstr "whence = \"end\" is not implemented for gzfile connections"
 
 #: src/main/connections.c:1260
 msgid "seek on a gzfile connection returned an internal error"
@@ -2380,7 +2382,7 @@ msgstr "there is no connection %d"
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
-"file(\"\") only supports open = “w+” and open = “w+b”: using the former"
+"file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 
 #: src/main/connections.c:4793 src/modules/internet/internet.c:114
 #: src/modules/internet/internet.c:569
@@ -2670,12 +2672,12 @@ msgstr "too many arguments in foreign function call"
 #: src/main/dotcode.c:238
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
-msgstr "%s symbol name “%s” not in DLL for package “%s”"
+msgstr "%s symbol name \"%s\" not in DLL for package \"%s\""
 
 #: src/main/dotcode.c:242
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
-msgstr "%s symbol name “%s” not in load table"
+msgstr "%s symbol name \"%s\" not in load table"
 
 #: src/main/dotcode.c:298
 msgid "NAOK used more than once"
@@ -2793,7 +2795,7 @@ msgstr "pairlists are passed as SEXP as from R 2.15.0"
 #: src/main/dotcode.c:2471
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
-msgstr "type “%s” not supported in interlanguage calls"
+msgstr "type \"%s\" not supported in interlanguage calls"
 
 #: src/main/dotcode.c:2538
 msgid "invalid function in call_R"
@@ -3014,7 +3016,7 @@ msgstr "invalid graphics state"
 
 #: src/main/engine.c:3041 src/main/engine.c:3049
 msgid "invalid multibyte char in pch=\"c\""
-msgstr "invalid multibyte char in pch=“c”"
+msgstr "invalid multibyte char in pch=\"c\""
 
 #: src/main/engine.c:3119
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -3072,12 +3074,12 @@ msgstr "..%d used in an incorrect context, no ... to look in"
 #: src/main/eval.c:3321
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
-msgstr "argument “%s” is missing, with no default"
+msgstr "argument \"%s\" is missing, with no default"
 
 #: src/main/envir.c:1325
 #, c-format
 msgid "could not find function \"%s\""
-msgstr "could not find function “%s”"
+msgstr "could not find function \"%s\""
 
 #: src/main/envir.c:1348
 msgid "cannot assign values in the empty environment"
@@ -3165,7 +3167,7 @@ msgstr "‘attach’ only works for lists, data frames and environments"
 
 #: src/main/envir.c:2231
 msgid "detaching \"package:base\" is not allowed"
-msgstr "detaching “package:base” is not allowed"
+msgstr "detaching \"package:base\" is not allowed"
 
 #: src/main/envir.c:2532 src/main/envir.c:2587
 msgid "argument must be an environment"
@@ -3182,7 +3184,7 @@ msgstr "no enclosing environment"
 #: src/main/envir.c:2762
 #, c-format
 msgid "no item called \"%s\" on the search list"
-msgstr "no item called “%s” on the search list"
+msgstr "no item called \"%s\" on the search list"
 
 #: src/main/envir.c:2785
 msgid "using 'as.environment(NULL)' is defunct"
@@ -3190,7 +3192,7 @@ msgstr "using ‘as.environment(NULL)’ is defunct"
 
 #: src/main/envir.c:2791
 msgid "S4 object does not extend class \"environment\""
-msgstr "S4 object does not extend class “environment”"
+msgstr "S4 object does not extend class \"environment\""
 
 #: src/main/envir.c:2806
 msgid "invalid object for 'as.environment'"
@@ -3211,7 +3213,7 @@ msgstr "not a symbol"
 #: src/main/envir.c:2997
 #, c-format
 msgid "no binding for \"%s\""
-msgstr "no binding for “%s”"
+msgstr "no binding for \"%s\""
 
 #: src/main/envir.c:2928
 msgid "not a function"
@@ -3282,7 +3284,7 @@ msgstr "interrupts suspended; signal ignored"
 
 #: src/main/errors.c:315
 msgid "invalid option \"warning.expression\""
-msgstr "invalid option “warning.expression”"
+msgstr "invalid option \"warning.expression\""
 
 #: src/main/errors.c:345
 #, c-format
@@ -3352,7 +3354,7 @@ msgstr "In addition: "
 
 #: src/main/errors.c:806
 msgid "invalid option \"error\"\n"
-msgstr "invalid option “error”\n"
+msgstr "invalid option \"error\"\n"
 
 #: src/main/errors.c:888
 msgid "Execution halted\n"
@@ -3377,7 +3379,7 @@ msgstr " [invalid string in warning(.)]"
 #: src/main/errors.c:1163
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
-msgstr "incorrect number of arguments to “%s”"
+msgstr "incorrect number of arguments to \"%s\""
 
 #: src/main/errors.c:1169 src/main/errors.c:1184
 #, c-format
@@ -3491,12 +3493,12 @@ msgstr "%s at %s#%d: "
 #: src/main/eval.c:993
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
-msgstr "could not find symbol “%s” in environment of the generic function"
+msgstr "could not find symbol \"%s\" in environment of the generic function"
 
 #: src/main/eval.c:1011
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
-msgstr "symbol “%s” not in environment of method"
+msgstr "symbol \"%s\" not in environment of method"
 
 #: src/main/eval.c:1121
 msgid "the condition has length > 1 and only the first element will be used"
@@ -3571,7 +3573,7 @@ msgstr "‘%s’ is missing"
 
 #: src/main/eval.c:1977
 msgid "invalid formal argument list for \"function\""
-msgstr "invalid formal argument list for “function”"
+msgstr "invalid formal argument list for \"function\""
 
 #: src/main/eval.c:2058
 msgid "numeric 'envir' arg not of length one"
@@ -3602,7 +3604,7 @@ msgstr "generic name too long in ‘%s’"
 #: src/main/eval.c:2538
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
-msgstr "Incompatible methods (“%s”, “%s”) for “%s”"
+msgstr "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 
 #: src/main/eval.c:2602
 msgid "dispatch error in group dispatch"
@@ -3611,7 +3613,7 @@ msgstr "dispatch error in group dispatch"
 #: src/main/eval.c:2915
 #, c-format
 msgid "\"%s\" is not a %s function"
-msgstr "“%s” is not a %s function"
+msgstr "\"%s\" is not a %s function"
 
 #: src/main/eval.c:3108
 msgid "node stack overflow"
@@ -3860,7 +3862,7 @@ msgstr "unable to allocate buffer for long string at line %d"
 #: src/main/gram.y:2116
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
-msgstr "‘\\x’ used without hex digits in character string starting “%s”"
+msgstr "‘\\x’ used without hex digits in character string starting \"%s\""
 
 #: src/main/gram.y:2130
 #, c-format
@@ -3870,7 +3872,7 @@ msgstr "\\uxxxx sequences not supported inside backticks (line %d)"
 #: src/main/gram.y:2145
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
-msgstr "‘\\u’ used without hex digits in character string starting “%s”"
+msgstr "‘\\u’ used without hex digits in character string starting \"%s\""
 
 #: src/main/gram.y:2153
 #, c-format
@@ -3885,7 +3887,7 @@ msgstr "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 #: src/main/gram.y:2180
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
-msgstr "‘\\U’ used without hex digits in character string starting “%s”"
+msgstr "‘\\U’ used without hex digits in character string starting \"%s\""
 
 #: src/main/gram.y:2188
 #, c-format
@@ -3895,7 +3897,7 @@ msgstr "invalid \\U{xxxxxxxx} sequence (line %d)"
 #: src/main/gram.y:2228
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr "‘\\%c’ is an unrecognized escape in character string starting “%s”"
+msgstr "‘\\%c’ is an unrecognized escape in character string starting \"%s\""
 
 #: src/main/gram.y:2281
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
@@ -4130,11 +4132,11 @@ msgstr "cannot quit from browser"
 
 #: src/main/main.c:1193
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
-msgstr "one of “yes”, “no”, “ask” or “default” expected."
+msgstr "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 
 #: src/main/main.c:1198
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
-msgstr "save=“ask” in non-interactive use: command-line default will be used"
+msgstr "save=\"ask\" in non-interactive use: command-line default will be used"
 
 #: src/main/main.c:1206
 msgid "unrecognized value of 'save'"
@@ -4185,7 +4187,7 @@ msgstr "invalid partial string match"
 #: src/main/objects.c:65
 #, c-format
 msgid "formal argument \"%s\" matched by multiple actual arguments"
-msgstr "formal argument “%s” matched by multiple actual arguments"
+msgstr "formal argument \"%s\" matched by multiple actual arguments"
 
 #: src/main/match.c:225 src/main/match.c:260
 #, c-format
@@ -4391,7 +4393,7 @@ msgstr "first argument must be a generic name"
 #: src/main/objects.c:464
 #, c-format
 msgid "no applicable method for '%s' applied to an object of class \"%s\""
-msgstr "no applicable method for ‘%s’ applied to an object of class “%s”"
+msgstr "no applicable method for ‘%s’ applied to an object of class \"%s\""
 
 #: src/main/objects.c:525
 msgid "'NextMethod' called from outside a function"
@@ -4474,7 +4476,7 @@ msgstr "could not find correct environment; please report!"
 #: src/main/objects.c:1082
 #, c-format
 msgid "unable to find a non-generic version of function \"%s\""
-msgstr "unable to find a non-generic version of function “%s”"
+msgstr "unable to find a non-generic version of function \"%s\""
 
 #: src/main/objects.c:1114
 msgid ""
@@ -4492,7 +4494,7 @@ msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr ""
-"call to standardGeneric(“%s”) apparently not from the body of that generic "
+"call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 
 #: src/main/objects.c:1151
@@ -4505,8 +4507,8 @@ msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
 "\"set\", or \"suppress\""
 msgstr ""
-"invalid primitive methods code (“%s”): should be “clear”, “reset”, “set”, or "
-"“suppress”"
+"invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
+"\"set\", or \"suppress\""
 
 #: src/main/objects.c:1226
 msgid "invalid object: must be a primitive function"
@@ -4524,7 +4526,7 @@ msgstr ""
 #: src/main/objects.c:1303
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
-msgstr "object returned as generic function “%s” doesn't appear to be one"
+msgstr "object returned as generic function \"%s\" doesn't appear to be one"
 
 #: src/main/objects.c:1401
 msgid "invalid primitive operation given for dispatch"
@@ -4540,7 +4542,7 @@ msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
 msgstr ""
-"primitive function “%s” has been set for methods but no generic function "
+"primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
 
 #: src/main/objects.c:1465
@@ -4558,7 +4560,7 @@ msgstr "C level NEW macro called with null class definition pointer"
 #: src/main/objects.c:1505
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
-msgstr "trying to generate an object from a virtual class (“%s”)"
+msgstr "trying to generate an object from a virtual class (\"%s\")"
 
 #: src/main/objects.c:1550
 msgid "'R_get_primname' called on a non-primitive"
@@ -4567,7 +4569,7 @@ msgstr "‘R_get_primname’ called on a non-primitive"
 #: src/main/objects.c:1580
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
-msgstr "Object of class “%s” does not correspond to a valid S3 object"
+msgstr "Object of class \"%s\" does not correspond to a valid S3 object"
 
 #: src/main/options.c:116 src/main/options.c:164
 msgid "corrupted options list"
@@ -4583,7 +4585,7 @@ msgstr "invalid printing digits, used 7"
 
 #: src/main/options.c:149
 msgid "invalid value for \"device.ask.default\", using FALSE"
-msgstr "invalid value for “device.ask.default”, using FALSE"
+msgstr "invalid value for \"device.ask.default\", using FALSE"
 
 #: src/main/options.c:377
 msgid "list argument has no valid names"
@@ -4619,7 +4621,7 @@ msgstr "invalid value for ‘%s’"
 
 #: src/main/options.c:583 src/main/options.c:612
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
-msgstr "“par.ask.default” has been replaced by “device.ask.default”"
+msgstr "\"par.ask.default\" has been replaced by \"device.ask.default\""
 
 #: src/main/paste.c:78 src/main/paste.c:297
 msgid "invalid separator"
@@ -4769,7 +4771,7 @@ msgstr "LC_MESSAGES exists on Windows but is not operational"
 #: src/main/platform.c:1817
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
-msgstr "OS reports request to set locale to “%s” cannot be honored"
+msgstr "OS reports request to set locale to \"%s\" cannot be honored"
 
 #: src/main/platform.c:2119
 msgid "'hostname' must be a character vector of length 1"
@@ -4948,8 +4950,8 @@ msgstr "too few column labels"
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
-msgstr[0] " [ reached getOption(“max.print”) -- omitted last row ]\n"
-msgstr[1] " [ reached getOption(“max.print”) -- omitted %d rows ]\n"
+msgstr[0] " [ reached getOption(\"max.print\") -- omitted last row ]\n"
+msgstr[1] " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -5669,7 +5671,7 @@ msgstr "%s"
 #: src/main/source.c:160
 #, c-format
 msgid "%s in \"%s\""
-msgstr "%s in “%s”"
+msgstr "%s in \"%s\""
 
 #: src/main/source.c:164
 #, c-format
@@ -5689,7 +5691,7 @@ msgstr "coercion of ‘text’ to character was unsuccessful"
 #: src/main/source.c:227
 #, c-format
 msgid "argument '%s = \"%s\"' will be ignored"
-msgstr "argument ‘%s = “%s”’ will be ignored"
+msgstr "argument ‘%s = \"%s\"’ will be ignored"
 
 #: src/main/split.c:38
 msgid "first argument must be a vector"
@@ -5871,7 +5873,7 @@ msgstr "result is zero-length and so cannot be a language object"
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
-"[[<- defined for objects of type “S4” only for subclasses of environment"
+"[[<- defined for objects of type \"S4\" only for subclasses of environment"
 
 #: src/main/subassign.c:1531
 msgid "wrong args for environment subassignment"
@@ -6135,7 +6137,7 @@ msgstr "‘%s’ must be called on a CHARSXP"
 
 #: src/main/sysutils.c:794 src/main/sysutils.c:909 src/main/sysutils.c:982
 msgid "translating strings with \"bytes\" encoding is not allowed"
-msgstr "translating strings with “bytes” encoding is not allowed"
+msgstr "translating strings with \"bytes\" encoding is not allowed"
 
 #: src/main/sysutils.c:1008
 #, c-format
@@ -6805,7 +6807,7 @@ msgid ""
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
 "Error: X11 cannot allocate additional graphics colors.\n"
-"Consider using X11 with colortype=“pseudo.cube” or “gray”."
+"Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 
 #: src/modules/X11/devX11.c:1016
 msgid ""

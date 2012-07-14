@@ -177,7 +177,7 @@ msgstr "invalid factors"
 
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
-msgstr "only 2500 rows are allowed for sm.method=“spline”"
+msgstr "only 2500 rows are allowed for sm.method=\"spline\""
 
 #: loessc.c:233
 msgid "span is too small"
