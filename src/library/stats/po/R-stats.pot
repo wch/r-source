@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-14 13:04\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1589,13 +1589,7 @@ msgstr ""
 msgid "control argument must be a named list"
 msgstr ""
 
-msgid "unrecognized control element(s) named `"
-msgstr ""
-
-msgid "' ignored"
-msgstr ""
-
-msgid "Logical `hessian' argument not allowed.  See documentation."
+msgid "Logical 'hessian' argument not allowed.  See documentation."
 msgstr ""
 
 msgid "'params' has wrong length"
@@ -1625,22 +1619,16 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr ""
 
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr ""
+
 msgid "'data' must be a list or an environment"
 msgstr ""
 
 msgid "No starting values specified"
-msgstr ""
-
-msgid "No starting values specified for some parameters."
-msgstr ""
-
-msgid "Initializing"
-msgstr ""
-
-msgid "to '1.'."
-msgstr ""
-
-msgid "Consider specifying 'start' or using a selfStart model"
 msgstr ""
 
 msgid "parameters without starting value in 'data':"
