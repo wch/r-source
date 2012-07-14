@@ -130,6 +130,8 @@ extern void * __libc_stack_end;
 
 int R_running_as_main_program = 0;
 
+extern void BindDomain(char *R_Home);
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -139,9 +141,6 @@ int Rf_initialize_R(int ac, char **av)
     Rstart Rp = &rstart;
     Rboolean force_interactive = FALSE;
 
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX+20];
-#endif
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
 {
@@ -206,21 +205,7 @@ int Rf_initialize_R(int ac, char **av)
 
     if((R_Home = R_HomeDir()) == NULL)
 	R_Suicide("R home directory is not defined");
-#ifdef ENABLE_NLS
-    setlocale(LC_MESSAGES,"");
-    textdomain(PACKAGE);
-    {
-	char *p = getenv("R_SHARE_DIR");
-	if(p) {
-	    strcpy(localedir, p);
-	    strcat(localedir, "/locale");
-	} else {
-	    strcpy(localedir, R_Home);
-	    strcat(localedir, "/share/locale");
-	}
-    }
-    bindtextdomain(PACKAGE, localedir);
-#endif
+    BindDomain(R_Home);
 
     process_system_Renviron();
 

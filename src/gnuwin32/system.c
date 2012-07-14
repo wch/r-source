@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -839,6 +839,8 @@ static int isDir(char *path)
     return isdir;
 }
 
+extern void BindDomain(char *R_Home);
+
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
@@ -859,11 +861,7 @@ int cmdlineoptions(int ac, char **av)
     InitFunctionHashing();
     sprintf(RHome, "R_HOME=%s", R_Home);
     putenv(RHome);
-#ifdef ENABLE_NLS
-    strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
-    bindtextdomain("RGui", localedir);
-    bindtextdomain(PACKAGE, localedir);
-#endif
+    BindDomain(R_Home);
 
     R_setStartTime();
 

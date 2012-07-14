@@ -226,14 +226,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
     }
 
-    bindTranslations <- function(pkgname, pkgpath)
-    {
-        popath <- file.path(pkgpath, "po")
-        if(!file.exists(popath)) return()
-        bindtextdomain(pkgname, popath)
-        bindtextdomain(paste("R", pkgname, sep="-"), popath)
-    }
-
     if(verbose && quietly)
 	message("'verbose' and 'quietly' are both true; being verbose then ..")
     if(!missing(package)) {

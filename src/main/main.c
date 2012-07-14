@@ -671,15 +671,35 @@ unsigned int TimeToSeed(void); /* datetime.c */
 
 const char* get_workspace_name();  /* from startup.c */
 
+void attribute_hidden BindDomain(char *R_Home)
+{
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX+20];
+    setlocale(LC_MESSAGES,"");
+    textdomain(PACKAGE);
+    {
+	char *p = getenv("R_SHARE_DIR");
+	if(p) {
+	    strcpy(localedir, p);
+	    strcat(localedir, "/locale");
+	} else {
+	    strcpy(localedir, R_Home);
+	    strcat(localedir, "/share/locale");
+	}
+    }
+    bindtextdomain(PACKAGE, localedir); // PACKAGE = DOMAIN = "R"
+# ifdef WIN32
+    bindtextdomain("RGui", localedir);
+# endif
+#endif
+}
+
 void setup_Rmainloop(void)
 {
     volatile int doneit;
     volatile SEXP baseEnv;
     SEXP cmd;
     FILE *fp;
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX+20];
-#endif
     char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
 
@@ -754,23 +774,6 @@ void setup_Rmainloop(void)
 		 "Setting LC_MEASUREMENT failed, using \"C\"\n");
 #endif
 #endif /* not Win32 */
-#ifdef ENABLE_NLS
-    /* This ought to have been done earlier, but be sure */
-    textdomain(PACKAGE);
-    {
-	char *p = getenv("R_SHARE_DIR");
-	if(p) {
-	    strcpy(localedir, p);
-	    strcat(localedir, "/locale");
-	} else {
-	    strcpy(localedir, R_Home);
-	    strcat(localedir, "/share/locale");
-	}
-    }
-    bindtextdomain(PACKAGE, localedir);
-    strcpy(localedir, R_Home); strcat(localedir, "/library/base/po");
-    bindtextdomain("R-base", localedir);
-#endif
 #endif
 
     /* make sure srand is called before R_tmpnam, PR#14381 */

@@ -35,6 +35,7 @@
  BZ2_hbMakeCodeLengths
  BZ2_indexIntoF
  BZ2_rNums
+ BindDomain
  CPFun
  ConsoleAcceptCmd
  DebugMenuitem
