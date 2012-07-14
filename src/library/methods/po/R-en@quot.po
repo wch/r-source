@@ -1796,7 +1796,7 @@ msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "
 "object of class %s"
 msgstr ""
-"invalid call to 'classLabel': expected a name or a class definition, got an "
+"invalid call to ‘classLabel’: expected a name or a class definition, got an "
 "object of class %s"
 
 msgid "Argument signature= is not meaningful for tracing reference methods"

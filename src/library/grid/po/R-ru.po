@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2012-03-15 11:27-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -36,7 +36,8 @@ msgstr "логическая 'label' нулевой длины"
 msgid "End points must not be identical"
 msgstr "Конечные точки не должны быть одинаковы"
 
-msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+#, fuzzy
+msgid "'x1', 'y1', 'x2', and 'y2' must be units"
 msgstr "'x1', 'y1' ,'x2', и 'y2' должны быть единицами"
 
 msgid "'shape' must be between -1 and 1"

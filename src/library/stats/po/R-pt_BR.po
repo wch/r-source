@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1708,13 +1708,8 @@ msgstr "_NÃO_ convergido em"
 msgid "control argument must be a named list"
 msgstr "argumento controle deve ser uma lista nomeada"
 
-msgid "unrecognized control element(s) named `"
-msgstr "elemento(s) controle não reconhecido(s) chamado(s) `"
-
-msgid "' ignored"
-msgstr "' ignorado"
-
-msgid "Logical `hessian' argument not allowed.  See documentation."
+#, fuzzy
+msgid "Logical 'hessian' argument not allowed.  See documentation."
 msgstr "Argumento `hessian' lógico não é permitido.  Veja documentação."
 
 msgid "'params' has wrong length"
@@ -1746,24 +1741,17 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "matriz gradiente singular com estimativas de parâmetros iniciais"
 
+msgid "unrecognized control element(s) named `"
+msgstr "elemento(s) controle não reconhecido(s) chamado(s) `"
+
+msgid "' ignored"
+msgstr "' ignorado"
+
 msgid "'data' must be a list or an environment"
 msgstr "'data' deve ser uma lista ou um ambiente"
 
 msgid "No starting values specified"
 msgstr "Nenhum valor inicial fornecido"
-
-msgid "No starting values specified for some parameters."
-msgstr "Sem valores iniciais especificados para alguns parâmetros."
-
-#, fuzzy
-msgid "Initializing"
-msgstr "Inicializando"
-
-msgid "to '1.'."
-msgstr "para '1.'."
-
-msgid "Consider specifying 'start' or using a selfStart model"
-msgstr "Considere especificando 'start' ou usando um modelo selfStart"
 
 msgid "parameters without starting value in 'data':"
 msgstr "parâmetros sem valor inicial em 'data':"
@@ -2513,6 +2501,19 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "No starting values specified for some parameters."
+#~ msgstr "Sem valores iniciais especificados para alguns parâmetros."
+
+#, fuzzy
+#~ msgid "Initializing"
+#~ msgstr "Inicializando"
+
+#~ msgid "to '1.'."
+#~ msgstr "para '1.'."
+
+#~ msgid "Consider specifying 'start' or using a selfStart model"
+#~ msgstr "Considere especificando 'start' ou usando um modelo selfStart"
 
 #, fuzzy
 #~ msgid "invalid value oflength(x)"

@@ -92,7 +92,7 @@ msgstr "zero-length arrow is of indeterminate angle and so skipped"
 #: graphics.c:3102
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-msgstr "invalid par(“bty”) = '%c'; no box() drawn"
+msgstr "invalid par(“bty”) = ‘%c’; no box() drawn"
 
 #: graphics.c:3119
 msgid "invalid argument to GBox"

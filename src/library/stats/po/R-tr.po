@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1651,13 +1651,8 @@ msgstr ""
 msgid "control argument must be a named list"
 msgstr ""
 
-msgid "unrecognized control element(s) named `"
-msgstr ""
-
-msgid "' ignored"
-msgstr "' görmezden gelindi"
-
-msgid "Logical `hessian' argument not allowed.  See documentation."
+#, fuzzy
+msgid "Logical 'hessian' argument not allowed.  See documentation."
 msgstr "Mantıksal 'hessian' argümanına izin verilmiyor. Belgeleri inceleyin"
 
 msgid "'params' has wrong length"
@@ -1687,24 +1682,17 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr ""
 
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr "' görmezden gelindi"
+
 msgid "'data' must be a list or an environment"
 msgstr "'data' bir liste veya bir çevrebirim olmalı"
 
 msgid "No starting values specified"
 msgstr "Başlangıç değeri belirlenmedi"
-
-msgid "No starting values specified for some parameters."
-msgstr ""
-
-#, fuzzy
-msgid "Initializing"
-msgstr "Yükleniyor"
-
-msgid "to '1.'."
-msgstr ""
-
-msgid "Consider specifying 'start' or using a selfStart model"
-msgstr ""
 
 msgid "parameters without starting value in 'data':"
 msgstr ""
@@ -2442,6 +2430,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "Initializing"
+#~ msgstr "Yükleniyor"
 
 #~ msgid "extra arguments"
 #~ msgstr "ekstra argümanlar"

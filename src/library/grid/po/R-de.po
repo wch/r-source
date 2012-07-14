@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2012-03-05 22:01+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -31,7 +31,8 @@ msgstr "boolescher 'label' bei Länge 0 angegeben"
 msgid "End points must not be identical"
 msgstr "Endpunkte dürfen nicht identisch sein"
 
-msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+#, fuzzy
+msgid "'x1', 'y1', 'x2', and 'y2' must be units"
 msgstr "'x1', 'y1', 'x2' und 'y2' müssen Einheiten sein"
 
 msgid "'shape' must be between -1 and 1"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgid "End points must not be identical"
 msgstr "Slutpunkter må ikke være identiske"
 
 #, fuzzy
-msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+msgid "'x1', 'y1', 'x2', and 'y2' must be units"
 msgstr "»x1«, »y1« ,»x2« og »y2« skal være enheder"
 
 msgid "'shape' must be between -1 and 1"

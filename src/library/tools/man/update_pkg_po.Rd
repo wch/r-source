@@ -64,6 +64,9 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
   on Unix-alikes (including Mac OS X).  Pre-compiled versions for
   (32- or 64-bit) Windows are available from
   \url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
+  
+  It may not work correctly for \code{en@auot} translations except in a
+  UTF-8 locale, so these are skipped elsewhere.
 }
 \seealso{
   \code{\link{xgettext2pot}}.

@@ -16,6 +16,8 @@
 
 #### R based engine for managing translations
 
+## This only works in a UTF-8 locale: specifically substr needs to count
+## UTF-8 chars
 en_quote <- function(potfile, outfile)
 {
     tfile <- tempfile()
@@ -27,7 +29,7 @@ en_quote <- function(potfile, outfile)
     if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2) # will be in UTF-8
     starts <- grep("^msgstr", lines)
-    current <- 1L
+    current <- 1L; out <- character()
     for (s in starts) {
         if (current < s)
             out <- c(out, lines[seq.int(current, s-1L, 1L)])
@@ -38,23 +40,38 @@ en_quote <- function(potfile, outfile)
             this <- c(this, sub('^"(.*)"$', "\\1", lines[current]))
             current <- current + 1L
         }
+        nc <- nchar(this); n <- length(nc)
         this <- paste0(this, collapse="")
         this <- gsub("'([^`']*)'",'‘\\1’', this)
-        out <- c(out, paste0(start, '"', this , '"'))
+        out <- if (n > 1L) {
+            ## now split where it was before
+            this1 <- character()
+            sc <- c(0, cumsum(nc))
+            for(i in seq_along(nc)) {
+                if(!nc[i]) this1 <- c(this1, "")
+                else {
+                    this1 <- c(this1, substr(this, sc[i]+1L, sc[i+1]))
+                }
+            }
+            c(out,
+              paste0(start, '"', this1[1L] , '"'),
+              paste0('"', this1[-1L] , '"'))
+        } else
+            c(out, paste0(start, '"', this , '"'))
     }
     if(current <= length(lines))
         out <- c(out, lines[seq.int(current, length(lines), 1L)])
-    ## in case this is done on Windows
+    ## in case this is done on Windows, force LF line endings
     con <- file(outfile, "wb")
     writeLines(out, con, useBytes = TRUE)
     close(con)
 }
 
 ## But for now
-en_quote <- function(potfile, out)
+en_quote0 <- function(potfile, out)
 {
-    SED <- Sys.getenv("SED", "sed") # but needs to be "gnused" on my Mac
-    SED <- "gnused"
+    SED <- Sys.getenv("SED", "sed") # but needs to be GNU sed on my Mac
+#    SED <- "gnused"
     tfile <- tempfile()
     cmd <- paste("msginit -i", shQuote(potfile),
                  "--no-translator -l en -o", shQuote(tfile))
@@ -138,17 +155,19 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     }
 
     ## do en@quot
-    lang <- "en@quot"
-    message("  R-", lang, ":", domain = NA)
-    f <- "po/R-en@quot.po"
-    en_quote(potfile, f)
-    dest <- file.path("inst", "po", lang, "LC_MESSAGES")
-    dir.create(dest, FALSE, TRUE)
-    dest <- file.path(dest, sprintf("R-%s.mo", pkg))
-    cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
-    if(system(cmd) != 0L)
-        warning(sprintf("running msgfmt on %s failed", basename(f)),
-                domain = NA, immediate. = TRUE)
+    if (l10n_info()[["UTF-8"]]) {
+        lang <- "en@quot"
+        message("  R-", lang, ":", domain = NA)
+        f <- "po/R-en@quot.po"
+        en_quote(potfile, f)
+        dest <- file.path("inst", "po", lang, "LC_MESSAGES")
+        dir.create(dest, FALSE, TRUE)
+        dest <- file.path(dest, sprintf("R-%s.mo", pkg))
+        cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
+        if(system(cmd) != 0L)
+            warning(sprintf("running msgfmt on %s failed", basename(f)),
+                    domain = NA, immediate. = TRUE)
+    }
 
     if(!have_src) return(invisible())
 
@@ -196,17 +215,19 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
                     domain = NA)
     }
     ## do en@quot
-    lang <- "en@quot"
-    message("  ", lang, ":", domain = NA)
-    f <- "po/en@quot.po"
-    en_quote(potfile, f)
-    dest <- file.path("inst", "po", lang, "LC_MESSAGES")
-    dir.create(dest, FALSE, TRUE)
-    dest <- file.path(dest, sprintf("%s.mo", pkg))
-    cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
-    if(system(cmd) != 0L)
-        warning(sprintf("running msgfmt on %s failed", basename(f)),
-                domain = NA)
+    if (l10n_info()[["UTF-8"]]) {
+        lang <- "en@quot"
+        message("  ", lang, ":", domain = NA)
+        f <- "po/en@quot.po"
+        en_quote(potfile, f)
+        dest <- file.path("inst", "po", lang, "LC_MESSAGES")
+        dir.create(dest, FALSE, TRUE)
+        dest <- file.path(dest, sprintf("%s.mo", pkg))
+        cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
+        if(system(cmd) != 0L)
+            warning(sprintf("running msgfmt on %s failed", basename(f)),
+                    domain = NA)
+    }
 
     invisible()
 }
@@ -251,11 +272,11 @@ update_po <- function(srcdir)
             warning("running msgmerge failed", domain = NA)
             next
         }
-        res <- checkPoFile(f, FALSE)
-        if(nrow(res)) {
-            print(res)
-            next
-        }
+##         res <- checkPoFile(f, FALSE)
+##         if(nrow(res)) {
+##             print(res)
+##             next
+##         }
         dest <- sprintf("po/%s.gmo", lang)
         if (file_test("-ot", f, dest)) next
         cmd <- paste("msgfmt -c --statistics -o", dest, f)
@@ -264,7 +285,11 @@ update_po <- function(srcdir)
                     domain = NA)
     }
 
-    ## do en@quot
+    ## do en@quot: assume UTF-8 locale
+    if (!l10n_info()[["UTF-8"]])
+        warning("UTF-8 locale required", domain = NA,
+                immediate. = TRUE, call. = FALSE)
+
     lang <- "en@quot"
     message("  ", lang, ":", domain = NA)
     f <- "po/en@quot.po"

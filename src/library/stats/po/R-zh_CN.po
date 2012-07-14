@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1635,13 +1635,8 @@ msgstr "_没有_聚合于"
 msgid "control argument must be a named list"
 msgstr "控制参数必需是串列"
 
-msgid "unrecognized control element(s) named `"
-msgstr "没有叫这个名字的控制元素"
-
-msgid "' ignored"
-msgstr "' 略过不用"
-
-msgid "Logical `hessian' argument not allowed.  See documentation."
+#, fuzzy
+msgid "Logical 'hessian' argument not allowed.  See documentation."
 msgstr "不能有逻辑值的`hessian'参数。请参考说明书。' "
 
 msgid "'params' has wrong length"
@@ -1671,23 +1666,17 @@ msgstr "setVarying : 'vary'的长度必需同参数的长度相符"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
+msgid "unrecognized control element(s) named `"
+msgstr "没有叫这个名字的控制元素"
+
+msgid "' ignored"
+msgstr "' 略过不用"
+
 msgid "'data' must be a list or an environment"
 msgstr "'data'必需是串列或是环境"
 
 msgid "No starting values specified"
 msgstr "没有设定初始值"
-
-msgid "No starting values specified for some parameters."
-msgstr "有些参数没有设定初始值"
-
-msgid "Initializing"
-msgstr "初始"
-
-msgid "to '1.'."
-msgstr "到'1.'."
-
-msgid "Consider specifying 'start' or using a selfStart model"
-msgstr "请考虑设'start'的值，或使用一个自我设定初始值的模型"
 
 msgid "parameters without starting value in 'data':"
 msgstr "'data'里的参数没有被设定初始值"
@@ -2411,6 +2400,18 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "No starting values specified for some parameters."
+#~ msgstr "有些参数没有设定初始值"
+
+#~ msgid "Initializing"
+#~ msgstr "初始"
+
+#~ msgid "to '1.'."
+#~ msgstr "到'1.'."
+
+#~ msgid "Consider specifying 'start' or using a selfStart model"
+#~ msgstr "请考虑设'start'的值，或使用一个自我设定初始值的模型"
 
 #~ msgid "wrong number of predictors"
 #~ msgstr "従属変数数目不对"

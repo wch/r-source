@@ -19,7 +19,7 @@ Rlocaledir = "$(Rsharedir)/locale"
 LANGS = `cd $(srcdir); ls *.po | sed -e 's/\.po//' -e /^RGui/d`
 ## LANGS = da en en_GB es fr de it ja ko nn pl pt_BR ru tr zh_CN zh_TW en@quot
 
-## datasets does not have any po, tcltk has src but no tcltk.pot
+## datasets does not have any translations
 R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
 
 .SUFFIXES:
@@ -82,9 +82,10 @@ maintainer-clean: distclean
 Makefile: Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+## en@quot has to be done in a UTF-8 locale
 update-po:
 	@$(ECHO) "tools:::update_po(\"$(top_srcdir)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) > /dev/null
 
 update-RGui:
 	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
@@ -94,5 +95,5 @@ update-pkg-po:
 	@for pkg in $(R_PKGS_PO); do \
 	   $(ECHO) "updating translations for $${pkg}"; \
 	   $(ECHO) "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\")" | \
-	     R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null; \
+	     R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) > /dev/null; \
 	done

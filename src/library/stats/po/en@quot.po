@@ -228,7 +228,7 @@ msgstr "invalid type (%s) for variable ‘%s’"
 #: model.c:153
 #, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr "variable lengths differ (found for '%s')"
+msgstr "variable lengths differ (found for ‘%s’)"
 
 #: model.c:207
 msgid "invalid result from na.action"
@@ -757,15 +757,15 @@ msgstr "invalid end-rule for running median of 3: %d"
 
 #: smooth.c:231
 msgid "allocation error in smooth(*, '3RSR')."
-msgstr "allocation error in smooth(*, '3RSR')."
+msgstr "allocation error in smooth(*, ‘3RSR’)."
 
 #: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
-msgstr "allocation error in smooth(*, '3RSS')."
+msgstr "allocation error in smooth(*, ‘3RSS’)."
 
 #: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
-msgstr "allocation error in smooth(*, '3R')."
+msgstr "allocation error in smooth(*, ‘3R’)."
 
 #: starma.c:366
 #, c-format

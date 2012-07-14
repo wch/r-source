@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1676,13 +1676,8 @@ msgstr " 収束しませんでした "
 msgid "control argument must be a named list"
 msgstr " 制御引数は名前付きリストでなければなりません "
 
-msgid "unrecognized control element(s) named `"
-msgstr " 以下の名前を持つ認識されない制御要素 ` "
-
-msgid "' ignored"
-msgstr " 、は無視されました "
-
-msgid "Logical `hessian' argument not allowed.  See documentation."
+#, fuzzy
+msgid "Logical 'hessian' argument not allowed.  See documentation."
 msgstr " 論理値の `hessian' は許されません。ドキュメントを見てください。 "
 
 msgid "'params' has wrong length"
@@ -1712,23 +1707,17 @@ msgstr " setVarying: 'vary' 長はパラメータの長さに一致しなけれ�
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr " パラメータの初期値で勾配行列が特異です "
 
+msgid "unrecognized control element(s) named `"
+msgstr " 以下の名前を持つ認識されない制御要素 ` "
+
+msgid "' ignored"
+msgstr " 、は無視されました "
+
 msgid "'data' must be a list or an environment"
 msgstr " 'data' はリストか環境でなければなりません "
 
 msgid "No starting values specified"
 msgstr " 初期値が与えられていません "
-
-msgid "No starting values specified for some parameters."
-msgstr " いくつかのパラメータに対する初期値が与えられていません "
-
-msgid "Initializing"
-msgstr " 初期化中 "
-
-msgid "to '1.'."
-msgstr " '1.' へ "
-
-msgid "Consider specifying 'start' or using a selfStart model"
-msgstr " 'start' を指定するか、selfStart モデルの使用を考慮してください "
 
 msgid "parameters without starting value in 'data':"
 msgstr " 'data' 中に初期値の無いパラメータがあります "
@@ -2470,6 +2459,18 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#~ msgid "No starting values specified for some parameters."
+#~ msgstr " いくつかのパラメータに対する初期値が与えられていません "
+
+#~ msgid "Initializing"
+#~ msgstr " 初期化中 "
+
+#~ msgid "to '1.'."
+#~ msgstr " '1.' へ "
+
+#~ msgid "Consider specifying 'start' or using a selfStart model"
+#~ msgstr " 'start' を指定するか、selfStart モデルの使用を考慮してください "
 
 #~ msgid "wrong number of predictors"
 #~ msgstr " 予測子の数が間違っています "

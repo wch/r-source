@@ -69,7 +69,7 @@ msgid ""
 "invalid generic function object for method selection for function '%s': "
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
-"invalid generic function object for method selection for function '%s': "
+"invalid generic function object for method selection for function ‘%s’: "
 "expected a function or a primitive, got an object of class “%s”"
 
 #: methods_list_dispatch.c:486
@@ -123,7 +123,7 @@ msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
 "be used for methods dispatch"
 msgstr ""
-"(in selecting a method for function '%s') ‘...’ and related variables cannot "
+"(in selecting a method for function ‘%s’) ‘...’ and related variables cannot "
 "be used for methods dispatch"
 
 #: methods_list_dispatch.c:588
@@ -132,7 +132,7 @@ msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
-"(in selecting a method for function '%s') the ‘environment’ argument for "
+"(in selecting a method for function ‘%s’) the ‘environment’ argument for "
 "dispatch must be an R environment; got an object of class “%s”"
 
 #: methods_list_dispatch.c:602 methods_list_dispatch.c:614
@@ -143,7 +143,7 @@ msgid ""
 "'%s': %s"
 msgstr ""
 "error in evaluating the argument ‘%s’ in selecting a method for function "
-"'%s': %s"
+"‘%s’: %s"
 
 #: methods_list_dispatch.c:622
 #, c-format
@@ -162,7 +162,7 @@ msgid ""
 "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
 "frame of the method call"
 msgstr ""
-"internal error in 'callNextMethod': ‘.nextMethod’ was not assigned in the "
+"internal error in ‘callNextMethod’: ‘.nextMethod’ was not assigned in the "
 "frame of the method call"
 
 #: methods_list_dispatch.c:692

@@ -34,7 +34,7 @@ msgid "at least one entry of 'x' must be positive"
 msgstr "at least one entry of ‘x’ must be positive"
 
 msgid "incorrect 'col': must be length 2"
-msgstr "incorrect 'col': must be length 2"
+msgstr "incorrect ‘col’: must be length 2"
 
 msgid "only for 1-D table"
 msgstr "only for 1-D table"
@@ -205,7 +205,7 @@ msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "‘probability’ is an alias for ‘!freq’, however they differ."
 
 msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
-msgstr "negative 'counts'. Internal Error in C-code for “bincount”"
+msgstr "negative ‘counts’. Internal Error in C-code for “bincount”"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "some ‘x’ not counted; maybe ‘breaks’ do not span range of ‘x’"

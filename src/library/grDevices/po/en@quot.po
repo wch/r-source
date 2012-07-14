@@ -269,7 +269,7 @@ msgstr "unknown encoding ‘%s’ in ‘mbcsToSbcs’"
 #: devPS.c:4307
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr "conversion failure on ‘%s’ in 'mbcsToSbcs': dot substituted for <%02x>"
+msgstr "conversion failure on ‘%s’ in ‘mbcsToSbcs’: dot substituted for <%02x>"
 
 #: devPS.c:4385
 #, c-format

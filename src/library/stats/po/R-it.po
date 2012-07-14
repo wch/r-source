@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:19\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1751,13 +1751,7 @@ msgstr "_NON_ converge in"
 msgid "control argument must be a named list"
 msgstr "l'argomento 'split' deve essere di tipo list"
 
-msgid "unrecognized control element(s) named `"
-msgstr ""
-
-msgid "' ignored"
-msgstr ""
-
-msgid "Logical `hessian' argument not allowed.  See documentation."
+msgid "Logical 'hessian' argument not allowed.  See documentation."
 msgstr ""
 
 msgid "'params' has wrong length"
@@ -1790,6 +1784,12 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "matrice gradiente singolare per le stime iniziali dei parametri"
 
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr ""
+
 #, fuzzy
 msgid "'data' must be a list or an environment"
 msgstr "'newdata' deve essere una matrice o un data frame"
@@ -1797,19 +1797,6 @@ msgstr "'newdata' deve essere una matrice o un data frame"
 #, fuzzy
 msgid "No starting values specified"
 msgstr "valori iniziali non specificati"
-
-#, fuzzy
-msgid "No starting values specified for some parameters."
-msgstr "valori iniziali non specificati"
-
-msgid "Initializing"
-msgstr ""
-
-msgid "to '1.'."
-msgstr ""
-
-msgid "Consider specifying 'start' or using a selfStart model"
-msgstr ""
 
 msgid "parameters without starting value in 'data':"
 msgstr ""
@@ -2608,6 +2595,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "No starting values specified for some parameters."
+#~ msgstr "valori iniziali non specificati"
 
 #~ msgid "wrong number of predictors"
 #~ msgstr "numero di predittori sbagliato"
