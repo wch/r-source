@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 14:07\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -934,10 +934,12 @@ msgstr "套介面还没有建立"
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame()被調用时使用了非数据的框--将之強制改变。"
 
-msgid "invalid options('str') -- using defaults instead"
+#, fuzzy
+msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "options('str')不对，使用默认值"
 
-msgid "invalid components in options('str'):"
+#, fuzzy
+msgid "invalid components in options(\"str\"):"
 msgstr "options('str')内元件无效："
 
 #, fuzzy

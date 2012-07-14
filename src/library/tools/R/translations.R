@@ -42,7 +42,10 @@ en_quote <- function(potfile, outfile)
         }
         nc <- nchar(this); n <- length(nc)
         this <- paste0(this, collapse="")
-        this <- gsub("'([^`']*)'",'‘\\1’', this)
+        ## This is the fixup: need to avoid apostrophes, which follow alnum
+        this <- gsub("^'([^`']*)'",'‘\\1’', this)
+#        this <- gsub("( |\\(|\\\\n|/)'([^`']*)'",'\\1‘\\2’', this)
+        this <- gsub("([^[:alpha:]]|\\\\\n)'([^`']*)'",'\\1‘\\2’', this)
         out <- if (n > 1L) {
             ## now split where it was before
             this1 <- character()
@@ -68,7 +71,7 @@ en_quote <- function(potfile, outfile)
 }
 
 ## But for now
-en_quote <- function(potfile, out)
+en_quote0 <- function(potfile, out)
 {
     SED <- Sys.getenv("SED", "sed") # but needs to be GNU sed on my Mac
 #    SED <- "gnused"

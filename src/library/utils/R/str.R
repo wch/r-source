@@ -100,12 +100,12 @@ str.default <-
     ## from
     strO <- getOption("str")
     if (!is.list(strO)) {
-	warning("invalid options('str') -- using defaults instead")
+	warning('invalid options("str") -- using defaults instead')
 	strO <- strOptions()
     }
     else {
         if (!all(names(strO) %in% oDefs))
-            warning("invalid components in options('str'): ",
+            warning('invalid components in options("str"): ',
                     paste(setdiff(names(strO), oDefs), collapse = ", "))
         strO <- modifyList(strOptions(), strO)
     }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 14:07\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -983,10 +983,12 @@ msgstr ""
 " str.data.frame() が非データフレームで呼び出されました -- データフレーム強制"
 "変換します. "
 
-msgid "invalid options('str') -- using defaults instead"
+#, fuzzy
+msgid "invalid options(\"str\") -- using defaults instead"
 msgstr " 不正な options('str') -- 代わりに既定値を使います "
 
-msgid "invalid components in options('str'):"
+#, fuzzy
+msgid "invalid components in options(\"str\"):"
 msgstr " options('str')の中に不正な要素があります "
 
 #, fuzzy

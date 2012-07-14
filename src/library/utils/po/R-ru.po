@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 14:07\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -968,10 +968,12 @@ msgstr "сокет не создан"
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame() вызвана с не-data.frame -- соединяю в одно."
 
-msgid "invalid options('str') -- using defaults instead"
+#, fuzzy
+msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "неправильная options('str') -- использую вместо нее умолчания"
 
-msgid "invalid components in options('str'):"
+#, fuzzy
+msgid "invalid components in options(\"str\"):"
 msgstr "неправильные компоненты в options('str'):"
 
 #, fuzzy

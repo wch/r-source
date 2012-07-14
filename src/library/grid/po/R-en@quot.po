@@ -28,7 +28,7 @@ msgid "End points must not be identical"
 msgstr "End points must not be identical"
 
 msgid "'x1', 'y1', 'x2', and 'y2' must be units"
-msgstr "'x1', ‘y1’, ‘x2’, and ‘y2’ must be units"
+msgstr "‘x1’, ‘y1’, ‘x2’, and ‘y2’ must be units"
 
 msgid "'shape' must be between -1 and 1"
 msgstr "‘shape’ must be between -1 and 1"
@@ -323,7 +323,7 @@ msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr "‘x’ and ‘y’ and ‘id.lengths’ must specify same overall length"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
-msgstr "'x0', ‘y0’, ‘x1’, and ‘y1’ must be units"
+msgstr "‘x0’, ‘y0’, ‘x1’, and ‘y1’ must be units"
 
 msgid "'x' and 'y' must be units or NULL"
 msgstr "‘x’ and ‘y’ must be units or NULL"
@@ -354,10 +354,10 @@ msgid "Must have exactly 4 control points per Bezier curve"
 msgstr "Must have exactly 4 control points per Bezier curve"
 
 msgid "'x', 'y', and 'r' must be units"
-msgstr "'x', ‘y’, and ‘r’ must be units"
+msgstr "‘x’, ‘y’, and ‘r’ must be units"
 
 msgid "'x', 'y', 'width', and 'height' must be units"
-msgstr "'x', ‘y’, ‘width’, and ‘height’ must be units"
+msgstr "‘x’, ‘y’, ‘width’, and ‘height’ must be units"
 
 msgid "Invalid 'rot' value"
 msgstr "Invalid ‘rot’ value"
@@ -366,13 +366,13 @@ msgid "zero-length 'pch'"
 msgstr "zero-length ‘pch’"
 
 msgid "'x', 'y' and 'size' must be units"
-msgstr "'x', ‘y’ and ‘size’ must be units"
+msgstr "‘x’, ‘y’ and ‘size’ must be units"
 
 msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr "‘x’ and ‘y’ must be unit objects and have the same length"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr "'x', ‘y’, ‘width’, and ‘height’ must all be units of length 1"
+msgstr "‘x’, ‘y’, ‘width’, and ‘height’ must all be units of length 1"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "‘x’ and ‘y’ must all be units of length 1"
@@ -381,7 +381,7 @@ msgid "'r' must be a unit object"
 msgstr "‘r’ must be a unit object"
 
 msgid "'x', 'y', 'width', and 'height' must have length 1"
-msgstr "'x', ‘y’, ‘width’, and ‘height’ must have length 1"
+msgstr "‘x’, ‘y’, ‘width’, and ‘height’ must have length 1"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "‘x’ and ‘units’ must have length > 0"

@@ -85,7 +85,7 @@ msgid "invalid boxplot widths"
 msgstr "invalid boxplot widths"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr "some notches went outside hinges ('box'): maybe set notch=FALSE"
+msgstr "some notches went outside hinges (‘box’): maybe set notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "‘formula’ should specify exactly two variables"

@@ -196,7 +196,7 @@ msgid "bad handler specification"
 msgstr "bad handler specification"
 
 msgid "no 'restart' '%s' found"
-msgstr "no ‘restart’ '%s' found"
+msgstr "no ‘restart’ ‘%s’ found"
 
 msgid "not an interactive session"
 msgstr "not an interactive session"

@@ -25,10 +25,10 @@ msgid "object not interpretable as a factor"
 msgstr "object not interpretable as a factor"
 
 msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
-msgstr "cannot fit models without level ('alpha' must not be 0 or FALSE)."
+msgstr "cannot fit models without level (‘alpha’ must not be 0 or FALSE)."
 
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
-msgstr "'alpha', ‘beta’ and ‘gamma’ must be within the unit interval."
+msgstr "‘alpha’, ‘beta’ and ‘gamma’ must be within the unit interval."
 
 msgid "data must be non-zero for multiplicative Holt-Winters."
 msgstr "data must be non-zero for multiplicative Holt-Winters."
@@ -898,7 +898,7 @@ msgid "length of 'init' must equal length of 'filter'"
 msgstr "length of ‘init’ must equal length of ‘filter’"
 
 msgid "'init'; must have 1 or %d cols"
-msgstr "'init'; must have 1 or %d cols"
+msgstr "‘init’; must have 1 or %d cols"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "‘x’ must have at least 2 rows and columns"
@@ -1485,7 +1485,7 @@ msgid "if 'x' is not an array, 'z' must be given"
 msgstr "if ‘x’ is not an array, ‘z’ must be given"
 
 msgid "'x', 'y', and 'z' must have the same length"
-msgstr "'x', ‘y’, and ‘z’ must have the same length"
+msgstr "‘x’, ‘y’, and ‘z’ must have the same length"
 
 msgid "sample size in each stratum must be > 1"
 msgstr "sample size in each stratum must be > 1"
@@ -1912,7 +1912,7 @@ msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr "NA's are not allowed in ‘groups’ or ‘blocks’"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr "'y', ‘groups’ and ‘blocks’ must have the same length"
+msgstr "‘y’, ‘groups’ and ‘blocks’ must have the same length"
 
 msgid "'formula' missing"
 msgstr "‘formula’ missing"

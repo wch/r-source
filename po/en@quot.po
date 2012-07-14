@@ -1205,7 +1205,7 @@ msgstr ""
 msgid ""
 "Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"
 msgstr ""
-"Illegal to use names()<- to set the ‘names’ slot in a non-vector class ('%s')"
+"Illegal to use names()<- to set the ‘names’ slot in a non-vector class (‘%s’)"
 
 #: src/main/attrib.c:799
 msgid "incompatible 'names' argument"
@@ -1564,12 +1564,12 @@ msgstr "non-character argument"
 #: src/main/character.c:802
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
-msgstr "decreasing range specification ('%lc-%lc')"
+msgstr "decreasing range specification (‘%lc-%lc’)"
 
 #: src/main/character.c:888
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
-msgstr "decreasing range specification ('%c-%c')"
+msgstr "decreasing range specification (‘%c-%c’)"
 
 #: src/main/character.c:1076
 msgid "invalid UTF-8 string 'old'"
@@ -4098,7 +4098,7 @@ msgstr "invalid ‘y’ type in ‘x %s y’"
 
 #: src/main/logic.c:304
 msgid "Unary operator `!' called with two arguments"
-msgstr "Unary operator ‘!’ called with two arguments"
+msgstr "Unary operator `!' called with two arguments"
 
 #: src/main/logic.c:408
 #, c-format
@@ -4863,7 +4863,7 @@ msgstr "all z values are NA"
 
 #: src/main/plotmath.c:306
 msgid "invalid `which' in TeX"
-msgstr "invalid ‘which’ in TeX"
+msgstr "invalid `which' in TeX"
 
 #: src/main/plotmath.c:333
 msgid "invalid math style encountered"
@@ -6018,7 +6018,7 @@ msgstr "Integer overflow - use sum(as.numeric(.))"
 #: src/main/summary.c:480
 #, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "internal error ('op = %d' in do_summary).\t Call a Guru"
+msgstr "internal error (‘op = %d’ in do_summary).\t Call a Guru"
 
 #: src/main/summary.c:687
 msgid "no non-missing arguments, returning NA"
@@ -6375,7 +6375,7 @@ msgid ""
 msgstr ""
 "R is a collaborative project with many contributors.\n"
 "Type ‘contributors()’ for more information and\n"
-"‘citation()’ on how to cite R or R packages in publications.\n"
+"'citation()' on how to cite R or R packages in publications.\n"
 "\n"
 
 #: src/main/version.c:42
@@ -6386,8 +6386,8 @@ msgid ""
 "\n"
 msgstr ""
 "Type ‘demo()’ for some demos, ‘help()’ for on-line help, or\n"
-"‘help.start()’ for an HTML browser interface to help.\n"
-"Type ‘q()’ to quit R.\n"
+"'help.start()‘ for an HTML browser interface to help.\n"
+"Type ’q()' to quit R.\n"
 "\n"
 
 #: src/main/vfonts.c:50
@@ -6583,17 +6583,17 @@ msgstr "allocation of socket connection failed"
 #: src/modules/lapack/Lapack.c:45 src/modules/lapack/Lapack.c:64
 #, c-format
 msgid "argument type[1]='%s' must be a character string of string length 1"
-msgstr "argument type[1]='%s' must be a character string of string length 1"
+msgstr "argument type[1]=‘%s’ must be a character string of string length 1"
 
 #: src/modules/lapack/Lapack.c:53
 #, c-format
 msgid "argument type[1]='%s' must be one of 'M','1','O','I','F' or 'E'"
-msgstr "argument type[1]='%s' must be one of ‘M’,'1','O','I','F' or ‘E’"
+msgstr "argument type[1]=‘%s’ must be one of ‘M’,‘1’,‘O’,‘I’,‘F’ or ‘E’"
 
 #: src/modules/lapack/Lapack.c:70
 #, c-format
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
-msgstr "argument type[1]='%s' must be one of ‘1’,'O', or ‘I’"
+msgstr "argument type[1]=‘%s’ must be one of ‘1’,‘O’, or ‘I’"
 
 #: src/modules/lapack/Lapack.c:84 src/modules/lapack/Lapack.c:705
 msgid "'jobu' and 'jobv' must be character strings"
@@ -6649,7 +6649,7 @@ msgstr "error [%d] from Lapack ‘dgetrf()’"
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
 msgstr ""
-"exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
+"exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack ‘dgetrf()’}"
 
 #: src/modules/lapack/Lapack.c:390
 #, c-format

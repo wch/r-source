@@ -202,7 +202,7 @@ msgid "unknown font"
 msgstr "unknown font"
 
 msgid "font encoding mismatch '%s'/'%s'"
-msgstr "font encoding mismatch '%s'/'%s'"
+msgstr "font encoding mismatch ‘%s’/‘%s’"
 
 msgid "'file' must be a non-empty character string"
 msgstr "‘file’ must be a non-empty character string"
@@ -283,7 +283,7 @@ msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
 msgstr "‘x’ is a list, but does not have components ‘x’, ‘y’  and ‘z’"
 
 msgid "'x', 'y' and 'z' lengths differ"
-msgstr "'x', ‘y’ and ‘z’ lengths differ"
+msgstr "‘x’, ‘y’ and ‘z’ lengths differ"
 
 msgid "'file' is missing with no default"
 msgstr "‘file’ is missing with no default"
