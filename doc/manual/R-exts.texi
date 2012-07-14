@@ -2714,7 +2714,8 @@ your covering email.
 Also read the CRAN policies linked from
 @uref{http://cran.r-project.org/web/packages/} and note that by
 submitting a package you are confirming that your package complies with
-them.
+them.  If this a package new to CRAN, confirm that you have read and
+agree to those policies in your submission email.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
