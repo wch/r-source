@@ -1,22 +1,6 @@
 #-*- Makefile -*-
 
-# Originally based on
-# Makefile for PO directory in any package using GNU gettext.
-# Copyright (C) 1995-1997, 2000-2006 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
-#
-# This file can be copied and used freely without restrictions.  It can
-# be used in projects which are not available under the GNU General Public
-# License but which still want to provide support for the GNU gettext
-# functionality.
-# Please note that the actual code of GNU gettext is covered by the GNU
-# General Public License and is *not* in the public domain.
-#
-# Origin: gettext-0.16
-
-## Much modified by the R-core team for use in the R project, and there
-## isn't much left of the original.
-
-## Modifications Copyright (C) 2005-12 R Core Team
+## Copyright (C) 2005-12 R Core Team
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -32,32 +16,24 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 Rsharedir = "$(DESTDIR)${rsharedir}"
 Rlocaledir = "$(Rsharedir)/locale"
 
-mkinstalldirs = $(MKINSTALLDIRS)
+## FIXME: compute these from a directory listing
+LANGS = da en en_GB es fr de it ja ko nn pl pt_BR ru tr zh_CN zh_TW en@quot
 
-DOMAIN = $(PACKAGE)
+## datasets does not have any po, tcltk has src but no tcltk.pot
+R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
 
-POFILES =  $(srcdir)/da.po $(srcdir)/en.po $(srcdir)/en_GB.po $(srcdir)/es.po $(srcdir)/fr.po $(srcdir)/de.po $(srcdir)/it.po $(srcdir)/ja.po $(srcdir)/ko.po $(srcdir)/nn.po $(srcdir)/pl.po $(srcdir)/pt_BR.po $(srcdir)/ru.po $(srcdir)/tr.po $(srcdir)/zh_CN.po $(srcdir)/zh_TW.po $(srcdir)/en@quot.po
 
-GMOFILES =  $(srcdir)/da.gmo $(srcdir)/en.gmo $(srcdir)/en_GB.gmo $(srcdir)/es.gmo $(srcdir)/fr.gmo $(srcdir)/de.gmo $(srcdir)/it.gmo $(srcdir)/ja.gmo $(srcdir)/ko.gmo $(srcdir)/nn.gmo $(srcdir)/pl.gmo $(srcdir)/pt_BR.gmo $(srcdir)/ru.gmo $(srcdir)/tr.gmo $(srcdir)/zh_CN.gmo $(srcdir)/zh_TW.gmo $(srcdir)/en@quot.gmo
-
-RGUI_CATALOGS =`ls $(srcdir)/RGui-*.po $(srcdir)/RGui-*.gmo`
-
-DISTFILES.common = README RGui.pot THANKS Makefile.in Makefile.win
-DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot \
-$(POFILES) $(GMOFILES) $(RGUI_CATALOGS)
-
-CATALOGS =  da.gmo en.gmo en_GB.gmo es.gmo fr.gmo de.gmo it.gmo ja.gmo ko.gmo nn.gmo pl.gmo pt_BR.gmo ru.gmo tr.gmo zh_CN.gmo zh_TW.gmo en@quot.gmo
+DISTFILES = README RGui.pot THANKS Makefile.in Makefile.win POTFILES R.pot \
+  `ls $(srcdir)/*.po $(srcdir)/*.gmo`
 
 .SUFFIXES:
 
-
 all: all-@USE_NLS@
-
 
 R: 
 	@$(MAKE) install Rsharedir=${top_builddir}/share
 
-all-yes: stamp-po
+all-yes: update-po
 all-no:
 
 install: install-exec install-data
@@ -65,45 +41,13 @@ install-exec:
 install-data: install-data-@USE_NLS@
 install-data-no:
 install-data-yes:
-	@$(mkinstalldirs) $(Rsharedir)
-	@catalogs='$(CATALOGS)'; \
-	echo "installing translations:"; \
-	for cat in $$catalogs; do \
-	  cat=`basename $$cat`; \
-	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
-	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
-	  $(mkinstalldirs) $$dir; \
-	  if test -r $$cat; then realcat=$$cat; else realcat=$(srcdir)/$$cat; fi; \
-	  $(INSTALL_DATA) $$realcat $$dir/$(DOMAIN).mo; \
+	@$(MKINSTALLDIRS) $(Rsharedir)
+	echo "installing translations:"
+	@for lang in $(LANGS); do \
 	  echo "  $$lang"; \
-	  for lc in '' $(EXTRA_LOCALE_CATEGORIES); do \
-	    if test -n "$$lc"; then \
-	      if (cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
-	        link=`cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
-	        mv $(Rlocaledir)/$$lang/$$lc $(Rlocaledir)/$$lang/$$lc.old; \
-	        mkdir $(Rlocaledir)/$$lang/$$lc; \
-	        (cd $(Rlocaledir)/$$lang/$$lc.old && \
-	         for file in *; do \
-	           if test -f $$file; then \
-	             ln -s ../$$link/$$file $(Rlocaledir)/$$lang/$$lc/$$file; \
-	           fi; \
-	         done); \
-	        rm -f $(Rlocaledir)/$$lang/$$lc.old; \
-	      else \
-	        if test -d $(Rlocaledir)/$$lang/$$lc; then \
-	          :; \
-	        else \
-	          rm -f $(Rlocaledir)/$$lang/$$lc; \
-	          mkdir $(Rlocaledir)/$$lang/$$lc; \
-	        fi; \
-	      fi; \
-	      rm -f $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
-	      ln -s ../LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
-	      ln $(Rlocaledir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
-	      cp -p $(Rlocaledir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
-	      echo "  $$lang"; \
-	    fi; \
-	  done; \
+	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
+	  $(MKINSTALLDIRS) $$dir; \
+	  $(INSTALL_DATA) $(srcdir)/$${lang}.gmo $$dir/R.mo; \
 	done
 
 install-strip: install
@@ -113,36 +57,10 @@ installdirs-exec:
 installdirs-data: installdirs-data-@USE_NLS@
 installdirs-data-no:
 installdirs-data-yes:
-	$(mkinstalldirs) $(Rsharedir)
-	@catalogs='$(CATALOGS)'; \
-	for cat in $$catalogs; do \
-	  cat=`basename $$cat`; \
-	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
+	$(MKINSTALLDIRS) $(Rsharedir)
+	@for lang in $(LANGS); do \
 	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
-	  $(mkinstalldirs) $$dir; \
-	  for lc in '' $(EXTRA_LOCALE_CATEGORIES); do \
-	    if test -n "$$lc"; then \
-	      if (cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
-	        link=`cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
-	        mv $(Rlocaledir)/$$lang/$$lc $(Rlocaledir)/$$lang/$$lc.old; \
-	        mkdir $(Rlocaledir)/$$lang/$$lc; \
-	        (cd $(Rlocaledir)/$$lang/$$lc.old && \
-	         for file in *; do \
-	           if test -f $$file; then \
-	             ln -s ../$$link/$$file $(Rlocaledir)/$$lang/$$lc/$$file; \
-	           fi; \
-	         done); \
-	        rm -f $(Rlocaledir)/$$lang/$$lc.old; \
-	      else \
-	        if test -d $(Rlocaledir)/$$lang/$$lc; then \
-	          :; \
-	        else \
-	          rm -f $(Rlocaledir)/$$lang/$$lc; \
-	          mkdir $(Rlocaledir)/$$lang/$$lc; \
-	        fi; \
-	      fi; \
-	    fi; \
-	  done; \
+	  $(MKINSTALLDIRS) $$dir; \
 	done
 
 # Define this as empty until I found a useful application.
@@ -153,13 +71,8 @@ uninstall-exec:
 uninstall-data: uninstall-data-@USE_NLS@
 uninstall-data-no:
 uninstall-data-yes:
-	@catalogs='$(CATALOGS)'; \
-	for cat in $$catalogs; do \
-	  cat=`basename $$cat`; \
-	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
-	  for lc in LC_MESSAGES $(EXTRA_LOCALE_CATEGORIES); do \
-	    rm -f $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
-	  done; \
+	@for lang in $(LANGS); do \
+	  rm -f $(Rlocaledir)/$$lang/LC_MESSAGES/R.mo; \
 	done
 
 check: all
@@ -168,7 +81,7 @@ info dvi ps pdf html tags TAGS ctags CTAGS ID:
 
 mostlyclean:
 	@rm -f stamp-poT
-	@rm -f core core.* $(DOMAIN).po $(DOMAIN).1po $(DOMAIN).2po *.new.po
+	@rm -f core core.* R.po R.1po R.2po *.new.po
 	@rm -fr *.o
 
 clean: mostlyclean
@@ -190,8 +103,6 @@ dist distdir:
 	  fi; \
 	done
 
-## NB datasets does not have any po, tcltk has src but no tcltk.pot
-R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
 
 Makefile: Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

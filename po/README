@@ -1,11 +1,8 @@
 NB: this is in the process of conversion of R scripts.  These
 instructions may not be current.
 
-The Makefile.in.in here was originally produced by gettextize, but has
-since been modified extensively.
-
-If you convert a C file for use with gettext, add it to POTFILES.in and
-then run
+If you convert a C file for use with gettext, add it to POTFILES and
+then run (in the 'po' directory in builddir)
 
 	make update-po
 
@@ -15,19 +12,16 @@ Target
 
 	make update-pkg-po
 
-updates the message catalogs for the C and R code in the standard packages,
-uses msgmerge --update to update the translations and then re-makes the
-compiled (.mo) files.
+updates the message catalogs for the C and R code in the standard packages.
 
-To do this for an individual standard package use
-
-	make pkg-update PKG=<pkgname>
-
-If you add a package, R-level catalogs are produced automatically but
-for a C-level catalog you need to touch path/to/package/po/package.pot.
+If you add a package, add it to R_PKGS_PO in po/Makefile.in.  R-level
+catalogs are produced automatically by 'make update-pkg-po' but for a
+C-level catalog you need to touch path/to/package/po/package.pot.
 
 To add a new translation, add the lang.po file to this directory and
-add the language to LINGUAS, and translators to THANKS.
+add the language to LANGS in Makefile.in, and translators to THANKS.
+For package translations, simply add the [R-]lang.po files to the
+package's po directory.
 
 If there are no problems with the translations 'make all R' (in the
 builddir, if separate) will do the rest (create ll.gmo and install it
@@ -42,12 +36,11 @@ to check and compile the translation, and
 
 to install it manually for testing.
 
-An R-core member, after fixing a translation file, e.g.,
-   	../src/library/<pkg>/po/R-<ll>.po
-needs to use msgfmt as above, e.g., inside the <pkg>/po/ directory,
-        msgfmt -c --statistics -o R-<ll>.gmo R-<ll>.po
-and     mv R-<ll>.gmo ../inst/po/<ll>/LC_MESSAGES/R-tools.mo
+R-core members: after updating translations, run
 
+       make update-po update-pkg-po update-RGui
+
+and then commit the changes from the svn checkout.
 
 
 Windows RGui translations
