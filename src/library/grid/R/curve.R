@@ -444,7 +444,7 @@ calcCurveGrob <- function(x, debug) {
 validDetails.curve <- function(x) {
     if ((!is.unit(x$x1) || !is.unit(x$y1)) ||
         (!is.unit(x$x2) || !is.unit(x$y2)))
-        stop("'x1', 'y1' ,'x2', and 'y2' must be units")
+        stop("'x1', 'y1', 'x2', and 'y2' must be units")
     x$curvature <- as.numeric(x$curvature)
     x$angle <- x$angle %% 180
     x$ncp <- as.integer(x$ncp)

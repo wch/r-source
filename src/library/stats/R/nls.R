@@ -502,7 +502,7 @@ nls <-
                 warning("No starting values specified for some parameters.\n",
                         "Initializing ", paste(sQuote(nnn), collapse=", "),
                         " to '1.'.\n",
-                        "Consider specifying 'start' or using a selfStart model")
+                        "Consider specifying 'start' or using a selfStart model", domain = NA)
 		start <- setNames(as.list(rep(1., length(nnn))), nnn)
                 varNames <- varNames[i <- is.na(match(varNames, nnn))]
                 n <- n[i]
