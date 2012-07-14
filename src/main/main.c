@@ -677,17 +677,9 @@ void attribute_hidden BindDomain(char *R_Home)
     char localedir[PATH_MAX+20];
     setlocale(LC_MESSAGES,"");
     textdomain(PACKAGE);
-    {
-	char *p = getenv("R_SHARE_DIR");
-	if(p) {
-	    strcpy(localedir, p);
-	    strcat(localedir, "/locale");
-	} else {
-	    strcpy(localedir, R_Home);
-	    strcat(localedir, "/share/locale");
-	}
-    }
+    strcpy(localedir, R_Home); strcat(localedir, "/library/base/po");
     bindtextdomain(PACKAGE, localedir); // PACKAGE = DOMAIN = "R"
+    bindtextdomain("R-base", localedir);
 # ifdef WIN32
     bindtextdomain("RGui", localedir);
 # endif

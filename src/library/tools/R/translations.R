@@ -250,7 +250,7 @@ update_po <- function(srcdir)
     on.exit({Sys.setlocale("LC_COLLATE", coll); setwd(pwd)})
     Sys.setlocale("LC_COLLATE", "C")
     setwd(srcdir)
-    potfile <- "po/R.pot"
+    potfile <- "src/library/base/po/R.pot"
     ofile <- tempfile()
     cfiles <- readLines("po/POTFILES")
     cfiles <- grep("^#", cfiles, value = TRUE, invert = TRUE)
@@ -264,7 +264,7 @@ update_po <- function(srcdir)
     if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     ## compare ofile and po/R.pot, ignoring dates.
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
-    pofiles <- dir("po", pattern = "^[^R]*[.]po$", full.names = TRUE)
+    pofiles <- dir("src/library/base/po", pattern = "^[^R]*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "po/en@quot.po"]
 #    newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles) {
@@ -280,7 +280,9 @@ update_po <- function(srcdir)
 ##             print(res)
 ##             next
 ##         }
-        dest <- sprintf("po/%s.gmo", lang)
+        dest <- file.path("src/library/base/inst/po", lang, "LC_MESSAGES")
+        dir.create(dest, FALSE, TRUE)
+        dest <- file.path(dest, "R.mo")
         if (file_test("-ot", f, dest)) next
         cmd <- paste("msgfmt -c --statistics -o", dest, f)
         if(system(cmd) != 0L)
@@ -297,7 +299,9 @@ update_po <- function(srcdir)
     message("  ", lang, ":", domain = NA)
     f <- "po/en@quot.po"
     en_quote(potfile, f)
-    dest <- sprintf("po/%s.gmo", lang)
+    dest <- file.path("src/library/base/inst/po", lang, "LC_MESSAGES")
+    dir.create(dest, FALSE, TRUE)
+    dest <- file.path(dest, "R.mo")
     cmd <- paste("msgfmt -c --statistics -o", dest, f)
     if(system(cmd) != 0L)
         warning(sprintf("running msgfmt on %s failed", basename(f)),
@@ -328,9 +332,8 @@ update_RGui_po <- function(srcdir)
                           c("clipboard.c", "dialogs.c", "gmenus.c",
                             "metafile.c", "printer.c")),
                 "src/library/grDevices/src/devWindows.c")
-    potfile <- "po/RGui.pot"
+    potfile <- "src/library/base/po/RGui.pot"
     ofile <- tempfile()
-    ofile <- '/tmp/foo.pot'
     cmd <- sprintf("xgettext --keyword --keyword=G_ --keyword=GN_ -o %s", shQuote(ofile))
     cmd <- c(cmd, "--package-name=R",
              paste("--package-version", getRversion(), sep = "="),
@@ -341,11 +344,12 @@ update_RGui_po <- function(srcdir)
     if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     ## compare ofile and po/RGui.pot, ignoring dates.
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
-    pofiles <- dir("po", pattern = "^RGui-.*[.]po$", full.names = TRUE)
+    pofiles <- dir("src/library/base/po", pattern = "^RGui-.*[.]po$", full.names = TRUE)
 #    newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles) {
-        lang <- sub("[.]po", "", basename(f))
-        message("  ", lang, ":", appendLF = FALSE, domain = NA)
+        lang <- sub("^RGui-(.*)[.]po$", "\\1", basename(f))
+        lang2 <- sub("[.]po", "", basename(f))
+        message("  ", lang2, ":", appendLF = FALSE, domain = NA)
         cmd <- paste("msgmerge --update", f, potfile)
         if(system(cmd) != 0L) {
             warning("running msgmerge failed", domain = NA)
@@ -356,7 +360,9 @@ update_RGui_po <- function(srcdir)
             print(res)
             next
         }
-        dest <- sprintf("po/%s.gmo", lang)
+        dest <- file.path("src/library/base/inst/po", lang, "LC_MESSAGES")
+        dir.create(dest, FALSE, TRUE)
+        dest <- file.path(dest, "RGui.mo")
         cmd <- paste("msgfmt -c --statistics -o", dest, f)
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),

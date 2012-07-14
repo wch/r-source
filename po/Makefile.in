@@ -13,9 +13,6 @@ include $(top_builddir)/Makeconf
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
-Rsharedir = "$(DESTDIR)${rsharedir}"
-Rlocaledir = "$(Rsharedir)/locale"
-
 LANGS = `cd $(srcdir); ls *.po | sed -e 's/\.po//' -e /^RGui/d`
 ## LANGS = da en en_GB es fr de it ja ko nn pl pt_BR ru tr zh_CN zh_TW en@quot
 
@@ -32,41 +29,16 @@ R:
 all-yes: update-po
 all-no:
 
-install: install-exec install-data
+install:
 install-exec:
-install-data: install-data-@USE_NLS@
-install-data-no:
-install-data-yes:
-	@$(MKINSTALLDIRS) $(Rsharedir)
-	$(ECHO) "installing translations:"
-	@for lang in $(LANGS); do \
-	  $(ECHO) "  $$lang"; \
-	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
-	  $(MKINSTALLDIRS) $$dir; \
-	  $(INSTALL_DATA) $(srcdir)/$${lang}.gmo $$dir/R.mo; \
-	done
-
-install-strip: install
-
-installdirs: installdirs-exec installdirs-data
+install-data:
+installdirs:
 installdirs-exec:
-installdirs-data: installdirs-data-@USE_NLS@
-installdirs-data-no:
-installdirs-data-yes:
-	$(MKINSTALLDIRS) $(Rsharedir)
-	@for lang in $(LANGS); do \
-	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
-	  $(MKINSTALLDIRS) $$dir; \
-	done
+installdirs-data:
 
-uninstall: uninstall-exec uninstall-data
+uninstall:
 uninstall-exec:
-uninstall-data: uninstall-data-@USE_NLS@
-uninstall-data-no:
-uninstall-data-yes:
-	@for lang in $(LANGS); do \
-	  rm -f $(Rlocaledir)/$$lang/LC_MESSAGES/R.mo; \
-	done
+uninstall-data:
 
 check: all
 
