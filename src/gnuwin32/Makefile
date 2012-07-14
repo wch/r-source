@@ -299,7 +299,7 @@ distclean: clean
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(MAKE) -C cran clean
 	$(RM) -r ../library/.vignettes # it gets left behind if there is an error
-	$(RM) -r ../../share/locale
+	$(RM) -r ../../share/locale # relic of earlier versions
 	$(RM) MkRules Rpwd.exe # do this last of all
 
 veryclean: distclean

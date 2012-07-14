@@ -45,7 +45,7 @@ ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
 
 
 # we don't want share/{Makefile.in,java,sh} installed
-SHARE_DIRS = R encodings licenses locale make texmf zoneinfo
+SHARE_DIRS = R encodings licenses make texmf zoneinfo
 
 all: $(RPREFIX)-win.exe
 msi: $(RPREFIX)-$(SUFF).msi

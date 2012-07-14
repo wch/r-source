@@ -294,8 +294,8 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item There is a new \command{configure} options
-      \option{--use-libtiff} (mainly in case the system installation
+      \item There is a new \command{configure} option
+      \option{--with-libtiff} (mainly in case the system installation
       needs to be avoided).
     }
   }
