@@ -44,7 +44,6 @@ en_quote <- function(potfile, outfile)
         this <- paste0(this, collapse="")
         ## This is the fixup: need to avoid apostrophes, which follow alnum
         this <- gsub("^'([^`']*)'",'‘\\1’', this)
-#        this <- gsub("( |\\(|\\\\n|/)'([^`']*)'",'\\1‘\\2’', this)
         this <- gsub("([^[:alpha:]]|\\\\\n)'([^`']*)'",'\\1‘\\2’', this)
         out <- if (n > 1L) {
             ## now split where it was before
@@ -132,8 +131,9 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     } else file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "R-.*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "po/R-en@quot.po"]
-    newer <- file_test("-nt", potfile, pofiles)
-    for (f in pofiles[newer]) {
+    ## .po file might be newer than .mo
+    # newer <- file_test("-nt", potfile, pofiles)
+    for (f in pofiles) {
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
         message("  R-", lang, ":", domain = NA, appendLF = FALSE)
         ## This seems not to update the file dates.
@@ -194,8 +194,8 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^[^R].*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "en@quot.po"]
-    newer <- file_test("-nt", potfile, pofiles)
-    for (f in pofiles[newer]) {
+#    newer <- file_test("-nt", potfile, pofiles)
+    for (f in pofiles) {
         lang <- sub("[.]po", "", basename(f))
         message("  ", lang, ":", appendLF = FALSE, domain = NA)
         cmd <- paste("msgmerge --update", shQuote(f), shQuote(potfile))
@@ -266,8 +266,8 @@ update_po <- function(srcdir)
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^[^R]*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "po/en@quot.po"]
-    newer <- file_test("-nt", potfile, pofiles)
-    for (f in pofiles[newer]) {
+#    newer <- file_test("-nt", potfile, pofiles)
+    for (f in pofiles) {
         lang <- sub("[.]po", "", basename(f))
         message("  ", lang, ":", domain = NA, appendLF = FALSE)
         cmd <- paste("msgmerge --update", f, potfile)
@@ -306,21 +306,6 @@ update_po <- function(srcdir)
     invisible()
 }
 
-install_po <- function(srcdir, Rlocaledir)
-{
-    podir <- file.path(srcdir, "po")
-    message("installing translations:", domain = NA)
-    langs <- dir(podir, pattern = "^[^R].*.gmo")
-    langs <- sub("[.]gmo$", "", langs)
-    for(lang in langs) {
-        dest <- file.path(Rlocaledir, lang, "LC_MESSAGES")
-        dir.create(dest, FALSE, TRUE)
-        file.copy(file.path(srcdir, "po", paste0(lang, ".gmo")),
-                  file.path(dest, "R.mo"))
-    }
-}
-
-
 update_RGui_po <- function(srcdir)
 {
     same <- function(a, b)
@@ -357,8 +342,8 @@ update_RGui_po <- function(srcdir)
     ## compare ofile and po/RGui.pot, ignoring dates.
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^RGui-.*[.]po$", full.names = TRUE)
-    newer <- file_test("-nt", potfile, pofiles)
-    for (f in pofiles[newer]) {
+#    newer <- file_test("-nt", potfile, pofiles)
+    for (f in pofiles) {
         lang <- sub("[.]po", "", basename(f))
         message("  ", lang, ":", appendLF = FALSE, domain = NA)
         cmd <- paste("msgmerge --update", f, potfile)
