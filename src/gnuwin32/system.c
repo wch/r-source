@@ -848,9 +848,6 @@ int cmdlineoptions(int ac, char **av)
     char *p;
     char  s[1024], cmdlines[10000];
     R_size_t Virtual;
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX+20];
-#endif
     structRstart rstart;
     Rstart Rp = &rstart;
     Rboolean usedRdata = FALSE, processing = TRUE;
