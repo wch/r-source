@@ -16,15 +16,11 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 Rsharedir = "$(DESTDIR)${rsharedir}"
 Rlocaledir = "$(Rsharedir)/locale"
 
-## FIXME: compute these from a directory listing
-LANGS = da en en_GB es fr de it ja ko nn pl pt_BR ru tr zh_CN zh_TW en@quot
+LANGS = `cd $(srcdir); ls *.po | sed -e 's/\.po//' -e /^RGui/d`
+## LANGS = da en en_GB es fr de it ja ko nn pl pt_BR ru tr zh_CN zh_TW en@quot
 
 ## datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base compiler grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
-
-
-DISTFILES = README RGui.pot THANKS Makefile.in Makefile.win POTFILES R.pot \
-  `ls $(srcdir)/*.po $(srcdir)/*.gmo`
 
 .SUFFIXES:
 
@@ -42,9 +38,9 @@ install-data: install-data-@USE_NLS@
 install-data-no:
 install-data-yes:
 	@$(MKINSTALLDIRS) $(Rsharedir)
-	echo "installing translations:"
+	$(ECHO) "installing translations:"
 	@for lang in $(LANGS); do \
-	  echo "  $$lang"; \
+	  $(ECHO) "  $$lang"; \
 	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
 	  $(MKINSTALLDIRS) $$dir; \
 	  $(INSTALL_DATA) $(srcdir)/$${lang}.gmo $$dir/R.mo; \
@@ -63,9 +59,6 @@ installdirs-data-yes:
 	  $(MKINSTALLDIRS) $$dir; \
 	done
 
-# Define this as empty until I found a useful application.
-installcheck:
-
 uninstall: uninstall-exec uninstall-data
 uninstall-exec:
 uninstall-data: uninstall-data-@USE_NLS@
@@ -79,52 +72,27 @@ check: all
 
 info dvi ps pdf html tags TAGS ctags CTAGS ID:
 
-mostlyclean:
-	@rm -f stamp-poT
-	@rm -f core core.* R.po R.1po R.2po *.new.po
-	@rm -fr *.o
+clean mostlyclean:
 
-clean: mostlyclean
-
-distclean: clean
+distclean:
 	@rm -f Makefile
 
 maintainer-clean: distclean
-	@echo "This command is intended for maintainers to use;"
-	@echo "it deletes files that may require special tools to rebuild."
-
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-dist distdir:
-	@for file in $(DISTFILES); do \
-	  if test -f $$file; then \
-	    cp -p $$file $(distdir) || exit 1; \
-	  else \
-	    cp -p $(srcdir)/$$file $(distdir) || exit 1; \
-	  fi; \
-	done
-
 
 Makefile: Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 update-po:
-	@echo "tools:::update_po(\"$(top_srcdir)\")" | \
+	@$(ECHO) "tools:::update_po(\"$(top_srcdir)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 update-RGui:
-	@echo "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
+	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 update-pkg-po:
 	@for pkg in $(R_PKGS_PO); do \
-	   echo "updating translations for $${pkg}"; \
-	   echo "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\")" | \
+	   $(ECHO) "updating translations for $${pkg}"; \
+	   $(ECHO) "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\")" | \
 	     R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null; \
 	done
-
-
-force:
-
-# Tell versions [3.59,3.63) of GNU make not to export all variables.
-# Otherwise a system limit (for SysV at least) may be exceeded.
-.NOEXPORT:

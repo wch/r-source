@@ -17,8 +17,8 @@ DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL ONEWS OONEWS README VERSION VERSION-NICK \
 	Makeconf.in Makefile.in Makefile.fw \
 	config.site configure configure.ac
-SUBDIRS = m4 tools doc etc share src tests @USE_NLS_TRUE@ po
-SUBDIRS_WITH_NO_BUILD = @USE_NLS_FALSE@ po
+SUBDIRS = m4 tools doc etc share src tests
+SUBDIRS_WITH_NO_BUILD = po
 
 all: Makefile Makeconf R docs recommended svn-vignettes
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
