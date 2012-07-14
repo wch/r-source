@@ -193,7 +193,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     potfile <- file.path("po", paste0(pkg, ".pot"))
     if(!same(potfile, ofile)) file.copy(ofile, potfile, overwrite = TRUE)
     pofiles <- dir("po", pattern = "^[^R].*[.]po$", full.names = TRUE)
-    pofiles <- pofiles[pofiles != "en@quot.po"]
+    pofiles <- pofiles[pofiles != "po/en@quot.po"]
 #    newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles) {
         lang <- sub("[.]po", "", basename(f))
