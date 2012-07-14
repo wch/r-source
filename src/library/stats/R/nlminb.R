@@ -83,9 +83,9 @@ nlminb <-
 	    stop("control argument must be a named list")
 	pos <- pmatch(nms, names(port_cpos))
 	if (any(nap <- is.na(pos))) {
-	    warning(paste("unrecognized control element(s) named `",
+	    warning(paste("unrecognized control element(s) named '",
 			  paste(nms[nap], collapse = ", "),
-			  "' ignored", sep = ""))
+			  "' ignored", sep = ""), domain = NA)
 	    pos <- pos[!nap]
 	    control <- control[!nap]
 	}
@@ -107,7 +107,7 @@ nlminb <-
         grad <- quote(gradient(.par, ...))
         if (!is.null(hessian)) {
             if (is.logical(hessian))
-                stop("Logical `hessian' argument not allowed.  See documentation.")
+                stop("Logical 'hessian' argument not allowed.  See documentation.")
             hess <- quote(hessian(.par, ...))
         }
     }
