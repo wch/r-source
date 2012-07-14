@@ -759,6 +759,8 @@
       level combinations for the special case where all
       \eqn{h_ii}{h[i,i]} are the same. (\PR{14837})
 
+      \item \code{Sys.glob()} caused segfault if first element of \code{path} was 
+      \code{NA_character} (\PR{14990})
     }
   }
 }
