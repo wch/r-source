@@ -176,7 +176,7 @@ msgid "invalid value of ncol(x)"
 msgstr "invalid value of ncol(x)"
 
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "singular matrix in ‘backsolve’. First zero in diagonal [%d]"
 
 msgid "complex matrices not permitted at present"
 msgstr "complex matrices not permitted at present"
@@ -616,7 +616,7 @@ msgid "No DLL currently loaded with name or path"
 msgstr "No DLL currently loaded with name or path"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
-msgstr "multiple DLLs match '%s'. Using ‘%s’"
+msgstr "multiple DLLs match ‘%s’. Using ‘%s’"
 
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
 msgstr "must specify DLL via a DLLInfo object. See getLoadedDLLs()"

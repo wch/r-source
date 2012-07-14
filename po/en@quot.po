@@ -518,7 +518,7 @@ msgstr "encoding ‘%s’ is not recognised"
 #: src/gnuwin32/system.c:336 src/unix/sys-std.c:865
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
-msgstr "<ERROR: re-encoding failure from encoding '%s'>\n"
+msgstr "<ERROR: re-encoding failure from encoding ‘%s’>\n"
 
 #: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1036
 #: src/gnuwin32/system.c:1048 src/main/connections.c:569
@@ -528,7 +528,7 @@ msgstr "<ERROR: re-encoding failure from encoding '%s'>\n"
 #: src/unix/system.c:336
 #, c-format
 msgid "cannot open file '%s': %s"
-msgstr "cannot open file '%s': %s"
+msgstr "cannot open file ‘%s’: %s"
 
 #: src/gnuwin32/system.c:562
 #, c-format
@@ -595,7 +595,7 @@ msgstr "you must specify ‘--save’, ‘--no-save’ or ‘--vanilla’"
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
-"impossible to create 'reader thread'; you must free some system resources"
+"impossible to create ‘reader thread’; you must free some system resources"
 
 #: src/include/Errormsg.h:25 src/main/subscript.c:312 src/main/subscript.c:353
 #: src/main/subscript.c:457 src/main/subscript.c:554
@@ -755,7 +755,7 @@ msgid ""
 "unable to load shared object '%s':\n"
 "  %s"
 msgstr ""
-"unable to load shared object '%s':\n"
+"unable to load shared object ‘%s’:\n"
 "  %s"
 
 #: src/main/Rdynload.c:920
@@ -1129,7 +1129,7 @@ msgstr "getAttrib: invalid type (%s) for TAG"
 #: src/main/attrib.c:374
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector"
-msgstr "invalid type (%s) for 'names': must be vector"
+msgstr "invalid type (%s) for ‘names’: must be vector"
 
 #: src/main/attrib.c:377
 #, c-format
@@ -1446,12 +1446,12 @@ msgstr "non-positive ‘fill’ argument will be ignored"
 #: src/main/builtin.c:604
 #, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "argument %d (type '%s') cannot be handled by ‘cat’"
+msgstr "argument %d (type ‘%s’) cannot be handled by ‘cat’"
 
 #: src/main/builtin.c:742
 #, c-format
 msgid "vector: cannot make a vector of mode '%s'."
-msgstr "vector: cannot make a vector of mode '%s'."
+msgstr "vector: cannot make a vector of mode ‘%s’."
 
 #: src/main/builtin.c:767
 msgid "cannot set length of non-vector"
@@ -2006,7 +2006,7 @@ msgstr "fifo connections are not available on this system"
 #: src/main/connections.c:1048
 #, c-format
 msgid "cannot open pipe() cmd '%s': %s"
-msgstr "cannot open pipe() cmd '%s': %s"
+msgstr "cannot open pipe() cmd ‘%s’: %s"
 
 #: src/main/connections.c:1215 src/main/connections.c:1536
 #, c-format
@@ -2514,7 +2514,7 @@ msgstr "the standard deviation is zero"
 
 #: src/main/cum.c:49
 msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
-msgstr "Integer overflow in 'cumsum'; use ‘cumsum(as.numeric(.))’"
+msgstr "Integer overflow in ‘cumsum’; use ‘cumsum(as.numeric(.))’"
 
 #: src/main/cum.c:182
 msgid "min/max not defined for complex numbers"
@@ -4033,7 +4033,7 @@ msgstr "zero-length arrow is of indeterminate angle and so skipped"
 #: src/main/graphics.c:3103
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-msgstr "invalid par(“bty”) = '%c'; no box() drawn"
+msgstr "invalid par(“bty”) = ‘%c’; no box() drawn"
 
 #: src/main/graphics.c:3120
 msgid "invalid argument to GBox"
@@ -4509,7 +4509,7 @@ msgstr "invalid type (%s) for variable ‘%s’"
 #: src/main/model.c:1383
 #, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr "variable lengths differ (found for '%s')"
+msgstr "variable lengths differ (found for ‘%s’)"
 
 #: src/main/model.c:1437
 msgid "invalid result from na.action"
@@ -4762,7 +4762,7 @@ msgid ""
 "type '%s')"
 msgstr ""
 "the formal definition of a primitive generic must be a function object (got "
-"type '%s')"
+"type ‘%s’)"
 
 #: src/main/objects.c:1303
 #, c-format
@@ -6172,7 +6172,7 @@ msgstr "XDR read failed"
 #: src/main/saveload.c:2145
 #, c-format
 msgid "cannot save data -- unable to open '%s': %s"
-msgstr "cannot save data -- unable to open '%s': %s"
+msgstr "cannot save data -- unable to open ‘%s’: %s"
 
 #: src/main/saveload.c:2242 src/main/serialize.c:2065
 #, c-format
@@ -6705,7 +6705,7 @@ msgstr "coercion has changed vector length to 0"
 #: src/main/sprintf.c:400
 #, c-format
 msgid "invalid format '%s'; %s"
-msgstr "invalid format '%s'; %s"
+msgstr "invalid format ‘%s’; %s"
 
 #: src/main/sprintf.c:338
 #, c-format
@@ -8161,7 +8161,7 @@ msgid ""
 "Cannot open file '%s': %s\n"
 "\n"
 msgstr ""
-"Cannot open file '%s': %s\n"
+"Cannot open file ‘%s’: %s\n"
 "\n"
 
 #: src/unix/sys-std.c:1215 src/unix/sys-std.c:1238

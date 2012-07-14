@@ -142,7 +142,7 @@ msgid "Invalid display list element"
 msgstr "Invalid display list element"
 
 msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
-msgstr "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+msgstr "grob(s) overwritten (grab WILL not be faithful; try ‘wrap=TRUE’)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "viewport overwritten (grab MAY not be faithful)"

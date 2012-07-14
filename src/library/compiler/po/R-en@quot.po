@@ -62,7 +62,7 @@ msgid "cannot compile promise literals in code"
 msgstr "cannot compile promise literals in code"
 
 msgid "possible error in '%s': %s"
-msgstr "possible error in '%s': %s"
+msgstr "possible error in ‘%s’: %s"
 
 msgid "bad namespace import frame"
 msgstr "bad namespace import frame"

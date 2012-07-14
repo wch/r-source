@@ -97,7 +97,7 @@ msgid "Mismatches in argument default values:"
 msgstr "Mismatches in argument default values:"
 
 msgid "Codoc mismatches from documentation object '%s':"
-msgstr "Codoc mismatches from documentation object '%s':"
+msgstr "Codoc mismatches from documentation object ‘%s’:"
 
 msgid "Code: %s"
 msgstr "Code: %s"
@@ -106,7 +106,7 @@ msgid "Docs: %s"
 msgstr "Docs: %s"
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
-msgstr "S4 class codoc mismatches from documentation object '%s':"
+msgstr "S4 class codoc mismatches from documentation object ‘%s’:"
 
 msgid "Slots for class '%s'"
 msgstr "Slots for class ‘%s’"
@@ -115,7 +115,7 @@ msgid "name"
 msgstr "name"
 
 msgid "Data codoc mismatches from documentation object '%s':"
-msgstr "Data codoc mismatches from documentation object '%s':"
+msgstr "Data codoc mismatches from documentation object ‘%s’:"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variables in data frame ‘%s’"
@@ -130,22 +130,22 @@ msgid "Undocumented arguments in documentation object '%s'"
 msgstr "Undocumented arguments in documentation object ‘%s’"
 
 msgid "Duplicated \\argument entries in documentation object '%s':"
-msgstr "Duplicated \\argument entries in documentation object '%s':"
+msgstr "Duplicated \\argument entries in documentation object ‘%s’:"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
-msgstr "Documented arguments not in \\usage in documentation object '%s':"
+msgstr "Documented arguments not in \\usage in documentation object ‘%s’:"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
-msgstr "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr "Objects in \\usage without \\alias in documentation object ‘%s’:"
 
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr "Assignments in \\usage in documentation object '%s':"
+msgstr "Assignments in \\usage in documentation object ‘%s’:"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr "Bad \\usage lines found in documentation object '%s':"
+msgstr "Bad \\usage lines found in documentation object ‘%s’:"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
-msgstr "S3 methods shown with full name in documentation object '%s':"
+msgstr "S3 methods shown with full name in documentation object ‘%s’:"
 
 msgid "unable to create"
 msgstr "unable to create"
@@ -163,7 +163,7 @@ msgid ""
 "parse error in file '%s':\n"
 "%s"
 msgstr ""
-"parse error in file '%s':\n"
+"parse error in file ‘%s’:\n"
 "%s"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
@@ -176,13 +176,13 @@ msgid "cannot check R code installed as image"
 msgstr "cannot check R code installed as image"
 
 msgid "parse error in file '%s':"
-msgstr "parse error in file '%s':"
+msgstr "parse error in file ‘%s’:"
 
 msgid "parse error in examples from file '%s':"
-msgstr "parse error in examples from file '%s':"
+msgstr "parse error in examples from file ‘%s’:"
 
 msgid "File '%s':"
-msgstr "File '%s':"
+msgstr "File ‘%s’:"
 
 msgid "found T/F in %s"
 msgstr "found T/F in %s"
@@ -260,7 +260,7 @@ msgid ""
 "separated by single '.' or '-'."
 msgstr ""
 "Version numbers must be sequences of at least two non-negative integers, "
-"separated by single ‘.’ or '-'."
+"separated by single ‘.’ or ‘-’."
 
 msgid "Invalid Priority field."
 msgstr "Invalid Priority field."
@@ -314,7 +314,7 @@ msgid "Invalid license file pointers: %s"
 msgstr "Invalid license file pointers: %s"
 
 msgid "Non-portable flags in variable '%s':"
-msgstr "Non-portable flags in variable '%s':"
+msgstr "Non-portable flags in variable ‘%s’:"
 
 msgid "package must be loaded"
 msgstr "package must be loaded"
@@ -336,7 +336,7 @@ msgid "Unknown package(s) %s in Rd xrefs"
 msgstr "Unknown package(s) %s in Rd xrefs"
 
 msgid "Missing link(s) in documentation object '%s':"
-msgstr "Missing link(s) in documentation object '%s':"
+msgstr "Missing link(s) in documentation object ‘%s’:"
 
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
@@ -419,16 +419,16 @@ msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr "NB: need Internet access to use CRAN incoming checks"
 
 msgid "Rd files with duplicated name '%s':"
-msgstr "Rd files with duplicated name '%s':"
+msgstr "Rd files with duplicated name ‘%s’:"
 
 msgid "Rd files with duplicated alias '%s':"
-msgstr "Rd files with duplicated alias '%s':"
+msgstr "Rd files with duplicated alias ‘%s’:"
 
 msgid "Argument items with no description in Rd object '%s':"
-msgstr "Argument items with no description in Rd object '%s':"
+msgstr "Argument items with no description in Rd object ‘%s’:"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr "Auto-generated content requiring editing in Rd object '%s':"
+msgstr "Auto-generated content requiring editing in Rd object ‘%s’:"
 
 msgid "Generics g in env ="
 msgstr "Generics g in env ="
@@ -465,7 +465,7 @@ msgstr "Rd files must have a non-empty \\name."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
 msgstr ""
-"See chapter ‘Writing R documentation’ in manual 'Writing R Extensions'."
+"See chapter ‘Writing R documentation’ in manual ‘Writing R Extensions’."
 
 msgid "missing/empty \\title field in '%s'"
 msgstr "missing/empty \\title field in ‘%s’"
@@ -570,7 +570,7 @@ msgid "duplicated files in '%s' field:"
 msgstr "duplicated files in ‘%s’ field:"
 
 msgid "files in '%s' field missing from '%s':"
-msgstr "files in ‘%s’ field missing from '%s':"
+msgstr "files in ‘%s’ field missing from ‘%s’:"
 
 msgid "files in '%s' missing from '%s' field:"
 msgstr "files in ‘%s’ missing from ‘%s’ field:"
@@ -858,7 +858,7 @@ msgid "source must be an environment or a list"
 msgstr "source must be an environment or a list"
 
 msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+msgstr "invalid value for ‘compress’: should be FALSE, TRUE, 2 or 3"
 
 msgid "this cannot be used for package 'base'"
 msgstr "this cannot be used for package ‘base’"
@@ -1239,8 +1239,8 @@ msgstr[1] "Note: found %d strings marked as “bytes”"
 
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
-msgstr[0] "Warning in file '%s':"
-msgstr[1] "Warnings in file '%s':"
+msgstr[0] "Warning in file ‘%s’:"
+msgstr[1] "Warnings in file ‘%s’:"
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"

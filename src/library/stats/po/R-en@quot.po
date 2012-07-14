@@ -1558,7 +1558,7 @@ msgid ""
 "Standard errors can be obtained through 'se.contrast'."
 msgstr ""
 "Standard error information not returned as design is unbalanced. \n"
-"Standard errors can be obtained through 'se.contrast'."
+"Standard errors can be obtained through ‘se.contrast’."
 
 msgid "SEs for type '%s' are not yet implemented"
 msgstr "SEs for type ‘%s’ are not yet implemented"
@@ -1711,13 +1711,13 @@ msgid "Initializing"
 msgstr "Initializing"
 
 msgid "to '1.'."
-msgstr "to '1.'."
+msgstr "to ‘1.’."
 
 msgid "Consider specifying 'start' or using a selfStart model"
 msgstr "Consider specifying ‘start’ or using a selfStart model"
 
 msgid "parameters without starting value in 'data':"
-msgstr "parameters without starting value in 'data':"
+msgstr "parameters without starting value in ‘data’:"
 
 msgid "fitting parameters"
 msgstr "fitting parameters"
@@ -1773,7 +1773,7 @@ msgstr "‘trace != 0’ needs ‘REPORT >= 1’"
 msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
-"method L-BFGS-B uses ‘factr’ (and 'pgtol') instead of ‘reltol’ and ‘abstol’"
+"method L-BFGS-B uses ‘factr’ (and ‘pgtol’) instead of ‘reltol’ and ‘abstol’"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable:"
 msgstr "one-diml optimization by Nelder-Mead is unreliable:"
@@ -2099,7 +2099,7 @@ msgid "cannot use more inner knots than unique 'x' values"
 msgstr "cannot use more inner knots than unique ‘x’ values"
 
 msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr "specified both ‘df’ and 'cv'; will disregard the latter"
+msgstr "specified both ‘df’ and ‘cv’; will disregard the latter"
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "you must supply 1 < df <= n,  n = #{unique x} ="
