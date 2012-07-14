@@ -55,10 +55,12 @@ diag <- function(x = 1, nrow, ncol)
 	## no further check, to also work with 'Matrix'
 	stop("only matrix diagonals can be replaced")
     len.i <- min(dx)
-    i <- seq_len(len.i)
     len.v <- length(value)
     if(len.v != 1L && len.v != len.i)
 	stop("replacement diagonal has wrong length")
-    if(len.i > 0L) x[cbind(i, i)] <- value
+    if(len.i > 0L) {
+	i <- seq_len(len.i)
+	x[cbind(i, i)] <- value
+    }
     x
 }
