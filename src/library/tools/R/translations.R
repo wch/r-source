@@ -297,7 +297,7 @@ update_po <- function(srcdir)
 
     lang <- "en@quot"
     message("  ", lang, ":", domain = NA)
-    f <- "po/en@quot.po"
+    f <- "src/library/base/po/en@quot.po"
     en_quote(potfile, f)
     dest <- file.path("src/library/base/inst/po", lang, "LC_MESSAGES")
     dir.create(dest, FALSE, TRUE)
@@ -363,6 +363,7 @@ update_RGui_po <- function(srcdir)
         dest <- file.path("src/library/base/inst/po", lang, "LC_MESSAGES")
         dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, "RGui.mo")
+        if (file_test("-ot", f, dest)) next
         cmd <- paste("msgfmt -c --statistics -o", dest, f)
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),

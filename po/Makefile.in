@@ -57,15 +57,15 @@ Makefile: Makefile.in $(top_builddir)/config.status
 ## en@quot has to be done in a UTF-8 locale
 update-po:
 	@$(ECHO) "tools:::update_po(\"$(top_srcdir)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) #> /dev/null
 
 update-RGui:
 	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) #> /dev/null
 
 update-pkg-po:
 	@for pkg in $(R_PKGS_PO); do \
 	   $(ECHO) "updating translations for $${pkg}"; \
 	   $(ECHO) "tools:::update_pkg_po(\"$(top_srcdir)/src/library/$${pkg}\")" | \
-	     R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) > /dev/null; \
+	     R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE); \ # > /dev/null; \
 	done
