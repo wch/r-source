@@ -68,7 +68,7 @@ en_quote <- function(potfile, outfile)
 }
 
 ## But for now
-en_quote0 <- function(potfile, out)
+en_quote <- function(potfile, out)
 {
     SED <- Sys.getenv("SED", "sed") # but needs to be GNU sed on my Mac
 #    SED <- "gnused"

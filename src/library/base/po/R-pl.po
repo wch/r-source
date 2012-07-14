@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-07-14 13:42\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -275,7 +275,8 @@ msgstr "niepoprawny 'row.names', długość %d dla ramki z %d wierszami"
 msgid "supplied %d row names for %d rows"
 msgstr "dostarczono %d nazwę wiersza dla %d wierszy"
 
-msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+#, fuzzy
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr ""
 "options('stringsAsFactors') nie została ustawiona na 'TRUE' lub 'FALSE'"
 

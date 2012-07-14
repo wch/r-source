@@ -1994,7 +1994,7 @@ msgid "'k' must be odd!  Changing 'k' to"
 msgstr "‘k’ must be odd!  Changing ‘k’ to"
 
 msgid "'k' is bigger than 'n'!  Changing 'k' to"
-msgstr "‘k’ is bigger than 'n'!  Changing ‘k’ to"
+msgstr "‘k’ is bigger than ‘n’!  Changing ‘k’ to"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
 msgstr "bandwidth ‘k’ must be >= 1 and odd!"

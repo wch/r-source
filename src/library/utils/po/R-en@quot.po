@@ -463,7 +463,7 @@ msgid "... database rebuilt"
 msgstr "... database rebuilt"
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr "no information in the database for package %s: need ‘rebuild = TRUE’?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "incorrect ‘agrep’ specification"
