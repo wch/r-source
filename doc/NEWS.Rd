@@ -300,10 +300,16 @@
     }
   }
 
-  \subsection{UTILITIES}{
+  \subsection{INTERNATIONALIZATION}{
     \itemize{
       \item The management of translations has been converted to \R
       code: see \code{?tools::update_pkg_po}.
+
+      \item The translations for the \R interpreter and
+      \command{RGui.exe} are now part of the \pkg{base} package (rather than
+      having sources in directory \file{po} and being installed to
+      \file{share/locale}.  Thus the \pkg{base} package supports three
+      translation domains, \code{R-base}, \code{R} and \code{RGui}.
     }
   }
   

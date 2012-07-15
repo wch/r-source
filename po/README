@@ -1,8 +1,7 @@
-NB: this is in the process of conversion to R scripts.  These
-instructions may not be current.
+NB: These instructions are only for R >= 2.16.0, and under development.
 
-If you convert a C file for use with gettext, add it to POTFILES and
-then run (in the 'po' directory in builddir)
+If you convert a C file for use with gettext, add it to POTFILES in
+this directory and then run (in the 'po' directory in builddir)
 
 	make update-po
 
@@ -20,24 +19,11 @@ are produced automatically by 'make update-pkg-po' but for a C-level
 template catalog you need to touch src/library/pkg/po/pkg.pot: only do
 so once some messages have been marked for translation.
 
-To add a new translation, add the lang.po file to this directory and
-translators to THANKS.  For package translations, add the [R-]lang.po
-files to the package's po directory (and perhaps update THANKS).
+For package translations, add the [R-]lang.po files to the package's
+po directory (and perhaps update THANKS).  Note that translations for
+the interpreter itself are in src/library/base/po/R.pot.
 
-If there are no problems with the translations 'make all R' (in the
-builddir, if separate) will do the rest (create ll.gmo and install it
-as required).  For fuller manual control, use
-
-	msgfmt -c --statistics -o ll.gmo ll.po
-
-to check and compile the translation, and
-
-	mkdir R_BUILD_DIR/share/locale/ll/LC_MESSAGES
-	cp ll.gmo R_BUILD_DIR/share/locale/ll/LC_MESSAGES/R.mo
-
-to install it manually for testing.
-
-Note too tools::checkPoFiles() (which is run by the make cmds).
+Note also tools::checkPoFiles().
 
 R-core members: after updating translations, run
 
@@ -49,29 +35,17 @@ and then commit the changes in the svn checkout.
 Windows RGui translations
 =========================
 
-These are contained in RGui.pot, and translations should be called
-RGui-ll.po for language 'll'.
+These are contained in src/library/base/po/RGui.pot, and translations
+should be called RGui-ll.po for language 'll'.
 
 To re-make RGui.pot and all the translations use 'make update-RGui'
 ('make -f Makefile.win update-RGui' on Windows).
-
-(All RGui-*.gmo files will installed to the right places when 'make -f
-Makefile.win' is run in this directory, which is part of the main
-'make' process on Windows.)
 
 
 Adding translations to other packages
 =====================================
 
 See 'Writing R Extensions'.
-
-
-Note to FreeBSD and OS X users
-==============================
-
-NB: FreeBSD's sed does not work correctly (it appends LF to every
-line), so GNU sed is required.  Set the environment variable SED as
-needed.
 
 
 Subversion note
