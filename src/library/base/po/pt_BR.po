@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-15 07:55+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -537,12 +537,12 @@ msgstr "codificação '%s' não reconhecida"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ERRO: re-codificação falhou a partir da codificação '%s'> \n"
 
-#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1036
-#: src/gnuwin32/system.c:1048 src/main/connections.c:569
+#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1031
+#: src/gnuwin32/system.c:1043 src/main/connections.c:569
 #: src/main/connections.c:574 src/main/dounzip.c:177 src/main/saveload.c:1950
 #: src/main/serialize.c:2489 src/main/serialize.c:2494
-#: src/main/serialize.c:2576 src/main/serialize.c:2621 src/unix/system.c:316
-#: src/unix/system.c:336
+#: src/main/serialize.c:2576 src/main/serialize.c:2621 src/unix/system.c:301
+#: src/unix/system.c:321
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "não foi possível abrir o arquivo '%s': %s"
@@ -552,63 +552,63 @@ msgstr "não foi possível abrir o arquivo '%s': %s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): arquivo '%s' não existe\n"
 
-#: src/gnuwin32/system.c:967
+#: src/gnuwin32/system.c:962
 #, fuzzy, c-format
 msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
 msgstr "ATENÇÃO: valor '%s' é inválido: ignorado\n"
 
-#: src/gnuwin32/system.c:999
+#: src/gnuwin32/system.c:994
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ATENÇÃO: faltando argumento max-mem-size\n"
 
-#: src/gnuwin32/system.c:1005
+#: src/gnuwin32/system.c:1000
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ATENÇÃO: valor de --max-mem-size é inválido: ignorado\n"
 
-#: src/gnuwin32/system.c:1007
+#: src/gnuwin32/system.c:1002
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "ATENÇÃO: --max-mem-size=%lu'%c': muito grande e ignorado\n"
 
-#: src/gnuwin32/system.c:1012
+#: src/gnuwin32/system.c:1007
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "ATENÇÃO: max-mem-size =%4.1fM muito pequeno e ignorado\n"
 
-#: src/gnuwin32/system.c:1016
+#: src/gnuwin32/system.c:1011
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "ATENÇÃO: max-mem-size =%4.0fM muito grande e tomando como %uM\n"
 
-#: src/gnuwin32/system.c:1059 src/unix/system.c:355
+#: src/gnuwin32/system.c:1054 src/unix/system.c:340
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "ATENÇÃO: '-e %s' omitido na entrada é muito grande\n"
 
-#: src/gnuwin32/system.c:1063 src/unix/system.c:369
+#: src/gnuwin32/system.c:1058 src/unix/system.c:354
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATENÇÃO: opção desconhecida '%s'\n"
 
-#: src/gnuwin32/system.c:1085 src/unix/system.c:373
+#: src/gnuwin32/system.c:1080 src/unix/system.c:358
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTO '%s' __ignorado__\n"
 
-#: src/gnuwin32/system.c:1091 src/unix/system.c:380
+#: src/gnuwin32/system.c:1086 src/unix/system.c:365
 msgid "cannot use -e with -f or --file"
 msgstr "não é possível usar -e com -f ou --file"
 
-#: src/gnuwin32/system.c:1109
+#: src/gnuwin32/system.c:1104
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "criação de tmpfile falho -- tente definir TMPDIR adequadamente?"
 
-#: src/gnuwin32/system.c:1128 src/unix/system.c:430
+#: src/gnuwin32/system.c:1123 src/unix/system.c:415
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "você deve especificar '--save', '--no-save' ou '--vanilla'"
 
-#: src/gnuwin32/system.c:1133
+#: src/gnuwin32/system.c:1128
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -4186,61 +4186,61 @@ msgstr "dummy"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Erro: falha de segmentação na pilha C\n"
 
-#: src/main/main.c:836
+#: src/main/main.c:831
 msgid "unable to open the base package\n"
 msgstr "não foi possível abrir o pacote base\n"
 
-#: src/main/main.c:913
+#: src/main/main.c:908
 #, fuzzy, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "não foi possível restaurar os dados presentes em .RData\n"
 
-#: src/main/main.c:960
+#: src/main/main.c:955
 msgid "During startup - "
 msgstr "Durante a inicialização - "
 
-#: src/main/main.c:1189
+#: src/main/main.c:1184
 msgid "cannot quit from browser"
 msgstr "não é possível sair do navegador"
 
-#: src/main/main.c:1193
+#: src/main/main.c:1188
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "uma das respostas a seguir esperada: \"yes\", \"no\", \"ask\" ou \"default\""
 
-#: src/main/main.c:1198
+#: src/main/main.c:1193
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" em uso não-interativo: padrão da linha de comando será utilizado"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1201
 msgid "unrecognized value of 'save'"
 msgstr "valor de 'save' não reconhecido"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1204
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' inválido, suposto 0"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1209
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' inválido, suposto FALSE"
 
-#: src/main/main.c:1245
+#: src/main/main.c:1240
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 "não foi possível alocar espaço para elemento do retorno de chamada de nível "
 "superior"
 
-#: src/main/main.c:1323
+#: src/main/main.c:1318
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "índice negativo passado para R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1426
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "mensagens de aviso da chamada de tarefa de nível superior '%s'\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1482
 msgid "top-level task callback did not return a logical value"
 msgstr "chamada de tarefa de nível superior não retornou um valor lógico"
 
@@ -7423,26 +7423,26 @@ msgstr "execução do comando '%s' deve status %d e mensagem de erro '%s'"
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() não está implementado nesse sistema"
 
-#: src/unix/system.c:245
+#: src/unix/system.c:230
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ATENÇÃO: --gui ou -g sem especificação e ignorado"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:252
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ATENÇÃO: interface gráfica desconhecida '%s', usando X11\n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:255
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ATENÇÃO: interface gráfica '%s' desconhecida, usando nenhuma\n"
 
-#: src/unix/system.c:382
+#: src/unix/system.c:367
 msgid "creating temporary file for '-e' failed"
 msgstr "criação de arquivo temporário para '-e' falhou"
 
-#: src/unix/system.c:463
+#: src/unix/system.c:448
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATENÇÃO: Somente editando o primeiro arquivo da lista"
 

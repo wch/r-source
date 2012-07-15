@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 20:36+0100\n"
+"POT-Creation-Date: 2012-07-15 07:55+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -534,8 +534,8 @@ msgstr "編碼 '%s' 無法確認"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<錯誤：從編碼 '%s' 重新編碼時失敗>\n"
 
-#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1034
-#: src/gnuwin32/system.c:1046 src/main/connections.c:569
+#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1031
+#: src/gnuwin32/system.c:1043 src/main/connections.c:569
 #: src/main/connections.c:574 src/main/dounzip.c:177 src/main/saveload.c:1950
 #: src/main/serialize.c:2489 src/main/serialize.c:2494
 #: src/main/serialize.c:2576 src/main/serialize.c:2621 src/unix/system.c:301
@@ -549,63 +549,63 @@ msgstr "無法開啟檔案 '%s' ：%s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): 檔案 '%s' 不存在\n"
 
-#: src/gnuwin32/system.c:965
+#: src/gnuwin32/system.c:962
 #, fuzzy, c-format
 msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
 msgstr "警告：'%s' 值無效：已忽略"
 
-#: src/gnuwin32/system.c:997
+#: src/gnuwin32/system.c:994
 msgid "WARNING: no max-mem-size given\n"
 msgstr "警告: max-mem-size 沒有定義\n"
 
-#: src/gnuwin32/system.c:1003
+#: src/gnuwin32/system.c:1000
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "警告: --max-mem-size 值不正確: 忽略不用\n"
 
-#: src/gnuwin32/system.c:1005
+#: src/gnuwin32/system.c:1002
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "警告：--max-mem-size=%lu%c：太大因而忽略\n"
 
-#: src/gnuwin32/system.c:1010
+#: src/gnuwin32/system.c:1007
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "警告：--max-mem-size=%4.1fM：太小因而忽略\n"
 
-#: src/gnuwin32/system.c:1014
+#: src/gnuwin32/system.c:1011
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "警告：--max-mem-size=%4.0fM：太大因而視為 %uM\n"
 
-#: src/gnuwin32/system.c:1057 src/unix/system.c:340
+#: src/gnuwin32/system.c:1054 src/unix/system.c:340
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "警告：'-e %s' 因為輸入太長而被省略\n"
 
-#: src/gnuwin32/system.c:1061 src/unix/system.c:354
+#: src/gnuwin32/system.c:1058 src/unix/system.c:354
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 沒有 '%s' 這樣的選項\n"
 
-#: src/gnuwin32/system.c:1083 src/unix/system.c:358
+#: src/gnuwin32/system.c:1080 src/unix/system.c:358
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引數 '%s' 忽略不用\n"
 
-#: src/gnuwin32/system.c:1089 src/unix/system.c:365
+#: src/gnuwin32/system.c:1086 src/unix/system.c:365
 msgid "cannot use -e with -f or --file"
 msgstr "無法將 -e 與 -f 或 --file 共同使用"
 
-#: src/gnuwin32/system.c:1107
+#: src/gnuwin32/system.c:1104
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "建立暫存檔時失敗 -- 已適當設定了 TMPDIR？"
 
-#: src/gnuwin32/system.c:1126 src/unix/system.c:415
+#: src/gnuwin32/system.c:1123 src/unix/system.c:415
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "您必須指定 '--save'、'--no-save' 或 '--vanilla' 其中的一個"
 
-#: src/gnuwin32/system.c:1131
+#: src/gnuwin32/system.c:1128
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "無法建立 'reader thread'；您必須釋放一些系統資源"
