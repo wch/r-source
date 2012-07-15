@@ -2055,11 +2055,11 @@ and @option{--build} can be added to zip up the installation.
 for many human languages, and @emph{localization} to adapting to a
 specific country and language.
 
-Historically @R{} worked in the ISO Latin-1 8-bit character set and so
+Prior to 2005 @R{} worked in the ISO Latin-1 8-bit character set and so
 covered English and most Western European languages (if not necessarily
-their currency symbols).  Since @R{} 2.1.0 it has supported multi-byte
-character sets such as UTF-8 and others used for Chinese, Japanese and
-Korean.
+their currency symbols).  Since @R{} 2.1.0 it has supported Eastern
+European 8-bit character sets, and multi-byte character sets such as
+UTF-8 and others used for Chinese, Japanese and Korean.
 
 Current builds of @R{} support all the character sets that the
 underlying OS can handle.  These are interpreted according to the
@@ -2101,30 +2101,28 @@ two-character abbreviation following ISO 639 (see e.g.@:
 @item
 A `territory', used mainly to specify the currency. These are generally
 specified by an upper-case two-character abbreviation following ISO 3166
-(see e.g.@: @uref{http://@/en.wikipedia.org/@/wiki/@/ISO_3166}).  Sometimes
-the combination of language and territory is used to specify the
-encoding, for example to distinguish between traditional and simplified
-Chinese.
+(see e.g.@: @uref{http://@/en.wikipedia.org/@/wiki/@/ISO_3166}).
 
 @item
 A charset encoding, which determines both how a byte stream should be
 divided into characters, and which characters the subsequences of bytes
-represent.
+represent.  Sometimes the combination of language and territory is used
+to specify the encoding, for example to distinguish between traditional
+and simplified Chinese.
 
 @item
 Optionally, a modifier, for example to indicate that Austria is to be
 considered pre- or post-Euro.  The modifier is also used to indicate the
-script (@code{@@latin}, @code{@@cyrillic}, @code{@@iqtelif}) or language
-dialect (e.g.@: @code{saaho}, a dialect of Afar, and @code{bokmal} and
-@code{nynorsk}, dialects of Norwegian regarded by some OSes as separate
-languages, @code{no} and @code{nn}).
+script (@code{@@latin}, @code{@@cyrillic} for Serbian, @code{@@iqtelif})
+or language dialect (e.g.@: @code{saaho}, a dialect of Afar, and
+@code{bokmal} and @code{nynorsk}, dialects of Norwegian regarded by some
+OSes as separate languages, @code{no} and @code{nn}).
 @end itemize
 
 @R{} is principally concerned with the first (for translations) and
 third.  Note that the charset may be deducible from the language, as
 some OSes offer only one charset per language, and most OSes have only
-one charset each for many languages.  Note too the remark above about
-Chinese.
+one charset each for many languages.
 
 @menu
 * Locales under Linux::         
@@ -2149,7 +2147,9 @@ some distributions of Linux) use @samp{.utf8} rather than @samp{.UTF-8}.
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
 information and lists can be found at
-@uref{http://msdn.microsoft.com/@/library/@/default.asp?@/url=@//library/@/en-us/@/vccore98/@/html/@/_crt_language_and_country_strings.asp}.
+@uref{http://msdn.microsoft.com/en-us/library/hzz3tw78(v=vs.80)}
+(or if Microsoft moves it yet again, search for @samp{Windows language
+country strings}).
 
 It offers only one encoding per language.
 
@@ -2248,13 +2248,13 @@ default also be used in Spanish-speaking Latin American countries, and
 also for @samp{pt_BR}, which are used for Brazilian locales but not for
 locales specifying Portugal.
 
-Translations in the right language but the wrong charset be made use of
+Translations in the right language but the wrong charset are made use of
 @enindex LANGUAGE
 by on-the-fly re-encoding.  The @env{LANGUAGE} variable (only) can be a
 colon-separated list, for example @samp{se:de}, giving a set of
 languages in decreasing order of preference.  One special value is
 @samp{en@@quot}, which can be used in a UTF-8 locale to have American
-error messages with pairs of quotes translated to Unicode directional
+error messages with pairs of single quotes translated to Unicode directional
 quotes.
 
 If no suitable translation catalogue is found or a particular message is
