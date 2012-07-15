@@ -276,7 +276,7 @@ update_RGui_po <- function(srcdir)
     cmd <- c(cmd, "--package-name=R",
              paste("--package-version", getRversion(), sep = "="),
              "--add-comments=TRANSLATORS:",
-             '--copyright-holder="The R Foundation"',
+             '--copyright-holder="The R Core Team"',
              '--msgid-bugs-address="bugs.r-project.org"')
     cmd <- paste(c(cmd, cfiles), collapse=" ")
     if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)

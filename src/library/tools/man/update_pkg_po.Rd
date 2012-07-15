@@ -9,7 +9,7 @@
   Prepare Translations for a Package
 }
 \description{
-  Prepare the \file{po} directory of a packages.
+  Prepare the \file{po} directory of a package.
 }
 \usage{
 update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
@@ -22,7 +22,7 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     package's \file{DESCRIPTION} file.}
   \item{copyright, bugs}{optional character strings for the
     \samp{Copyright} and \samp{Report-Msgid-Bugs-To} details in the
-    template file.}
+    template files.}
 }
 \details{
   This performs a series of steps to prepare for or update messages in
@@ -55,6 +55,9 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \item All the \file{po/\var{lang}.po} files are compiled and
     installed under \file{inst/po}.
   }
+  
+  \code{pkg = "base"} is special (and for use by \R developers only):
+  the C files are not in the package directory but in the main sources.
 }
 \section{System requirements}{
   This function requires the following tools from the GNU

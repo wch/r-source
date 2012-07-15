@@ -8,7 +8,8 @@ Target
 	make update-pkg-po
 
 updates the message catalogs for the C and R code in the interpreter
-and standard packages.
+and standard packages.  To update just one package, see
+?tools::update-pkg-po .
 
 If you add a package with translations (hence not datasets), add it to
 R_PKGS_PO in po/Makefile.in.  R-level template catalogs (R-pkg.pot)
