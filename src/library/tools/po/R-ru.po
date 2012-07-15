@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 08:12\n"
+"POT-Creation-Date: 2012-07-15 08:19\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1163,6 +1163,10 @@ msgstr "запускаю регрессионные тесты на регулярные выражения"
 
 msgid "running tests to possibly trigger segfaults"
 msgstr "запускаю тесты на возможное переключение ошибок сегментации"
+
+#, fuzzy
+msgid "not insttalling"
+msgstr "устанавливаю в"
 
 msgid "'x' must be a single character string"
 msgstr "аргумент 'x' должен быть текстовой строкой"

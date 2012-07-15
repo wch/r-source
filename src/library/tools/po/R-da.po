@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 08:12\n"
+"POT-Creation-Date: 2012-07-15 08:19\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1107,6 +1107,9 @@ msgid "running regexp regression tests"
 msgstr ""
 
 msgid "running tests to possibly trigger segfaults"
+msgstr ""
+
+msgid "not insttalling"
 msgstr ""
 
 msgid "'x' must be a single character string"

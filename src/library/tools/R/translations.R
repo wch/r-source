@@ -69,7 +69,7 @@ en_quote <- function(potfile, outfile)
     close(con)
 }
 
-## But for now
+## For previous version
 en_quote0 <- function(potfile, out)
 {
     SED <- Sys.getenv("SED", "sed") # but needs to be GNU sed on my Mac
@@ -147,6 +147,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         res <- checkPoFile(f, TRUE)
         if(nrow(res)) {
             print(res)
+            message("not insttalling")
             next
         }
         dest <- file.path("inst", "po", lang, "LC_MESSAGES")
@@ -216,6 +217,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
             res <- checkPoFile(f, TRUE)
             if(nrow(res)) {
                 print(res)
+                message("not insttalling")
                 next
             }
         }

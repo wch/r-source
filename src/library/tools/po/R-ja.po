@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 08:12\n"
+"POT-Creation-Date: 2012-07-15 08:19\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1187,6 +1187,10 @@ msgstr " regexp 回帰テストの実行中 "
 
 msgid "running tests to possibly trigger segfaults"
 msgstr " 可能性のある trigger segfaults のテストを実行中 "
+
+#, fuzzy
+msgid "not insttalling"
+msgstr " 以下にインストール中: "
 
 msgid "'x' must be a single character string"
 msgstr " 引数 'txt' は１つの文字でなければなりません "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 08:12\n"
+"POT-Creation-Date: 2012-07-15 08:19\n"
 "PO-Revision-Date: 2012-03-06 09:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1165,6 +1165,10 @@ msgstr "Ausführen von Rgressions-Tests für reguläre Ausdrücke"
 
 msgid "running tests to possibly trigger segfaults"
 msgstr "Ausführen von Tests, um Segfaults zu provozieren"
+
+#, fuzzy
+msgid "not insttalling"
+msgstr "installiert nach"
 
 msgid "'x' must be a single character string"
 msgstr "'x' muss eine Zeichenkette sein"
