@@ -310,6 +310,9 @@
       having sources in directory \file{po} and being installed to
       \file{share/locale}.  Thus the \pkg{base} package supports three
       translation domains, \code{R-base}, \code{R} and \code{RGui}.
+
+      \item The compiled translations which ship with \R are all in the
+      new package \pkg{translations} for easier updating.
     }
   }
   

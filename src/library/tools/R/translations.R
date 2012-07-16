@@ -114,17 +114,18 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         version <- desc[2L]
         if (missing(copyright)) copyright <- NULL
         if (missing(bugs)) bugs <- NULL
+        stem <- file.path("inst", "po")
     } else { # A base package
         pkg <- basename(pkgdir)
         name <- "R"
         version <- as.character(getRversion())
         copyright <- "The R Core Team"
         bugs <- "bugs.r-project.org"
+        stem <- file.path("..", "translations", "inst")
     }
     ## The interpreter is 'src' for the base package.
     is_base <- (pkg == "base")
     have_src <- paste0(pkg, ".pot") %in% files
-    stem <- file.path("inst", "po")
 
     ## do R-pkg domain first
     ofile <- tempfile()
@@ -300,7 +301,7 @@ update_RGui_po <- function(srcdir)
             print(res)
             next
         }
-        dest <- file.path("src/library/base/inst/po", lang, "LC_MESSAGES")
+        dest <- file.path("src/library/translations/inst", lang, "LC_MESSAGES")
         dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, "RGui.mo")
         if (file_test("-ot", f, dest)) next

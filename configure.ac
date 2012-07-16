@@ -2604,6 +2604,8 @@ AC_CONFIG_FILES(
   src/library/tools/DESCRIPTION
   src/library/tools/Makefile
   src/library/tools/src/Makefile
+  src/library/translations/DESCRIPTION
+  src/library/translations/Makefile
   src/library/utils/DESCRIPTION
   src/library/utils/Makefile
   src/main/Makefile

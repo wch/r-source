@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win
 
-SUBDIRS = profile $(R_PKGS_BASE) Recommended
+SUBDIRS = profile $(R_PKGS_BASE) translations Recommended
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
@@ -34,7 +34,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@for pkg in profile base tools compiler; do \
+	@for pkg in profile translations base tools compiler; do \
 	  (cd $${pkg} && $(MAKE) all) || exit 1; \
 	done
 	@if test -z "$(R_NO_BASE_COMPILE)"; then \

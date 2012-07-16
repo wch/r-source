@@ -677,7 +677,7 @@ void attribute_hidden BindDomain(char *R_Home)
     char localedir[PATH_MAX+20];
     setlocale(LC_MESSAGES,"");
     textdomain(PACKAGE);
-    strcpy(localedir, R_Home); strcat(localedir, "/library/base/po");
+    strcpy(localedir, R_Home); strcat(localedir, "/library/translations");
     bindtextdomain(PACKAGE, localedir); // PACKAGE = DOMAIN = "R"
     bindtextdomain("R-base", localedir);
 # ifdef WIN32
