@@ -46,6 +46,7 @@ R:
 	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
 	     all install-tests || exit 1; \
 	done
+	@$(MAKE) -C translations -f Makefile.win
 	@(cd base && $(MAKE) -f Makefile.win mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
