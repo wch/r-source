@@ -28,8 +28,6 @@ en_quote <- function(potfile, outfile)
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
     if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2) # will be in UTF-8
-    ## remove lines starting #: which are file locations.
-    lines <- grep("^#: ", lines,  value = TRUE, invert = TRUE)
     starts <- grep("^msgstr", lines)
     current <- 1L; out <- character()
     for (s in starts) {
@@ -167,7 +165,8 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     if (l10n_info()[["UTF-8"]]) {
         lang <- "en@quot"
         message("  R-", lang, ":", domain = NA)
-        f <- "po/R-en@quot.po"
+        # f <- "po/R-en@quot.po"
+        f <- tempfile()
         en_quote(potfile, f)
         dest <- file.path(stem, lang, "LC_MESSAGES")
         dir.create(dest, FALSE, TRUE)
@@ -237,7 +236,8 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     if (l10n_info()[["UTF-8"]]) {
         lang <- "en@quot"
         message("  ", lang, ":", domain = NA)
-        f <- "po/en@quot.po"
+        # f <- "po/en@quot.po"
+        f <- tempfile()
         en_quote(potfile, f)
         dest <- file.path(stem, lang, "LC_MESSAGES")
         dir.create(dest, FALSE, TRUE)

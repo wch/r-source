@@ -49,8 +49,8 @@ See 'Writing R Extensions'.
 Subversion note
 ===============
 
-If you need to add a en@auot file, the current incantation appears to be
+If you need to add a en@auot directory, the current incantation appears to be
 
-svn add .../en@quot.po@
+svn add .../en@quot@
 
 with a trailing @.
