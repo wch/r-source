@@ -140,7 +140,7 @@ fixfiles:
 	@$(MK) -C ./fixed
 
 fixed/fixdesc:
-	@sh fixed/GETDESC $(R_PKGS_BASE)
+	@sh fixed/GETDESC $(R_PKGS_BASE) translations
 
 dllversion.o: ../include/Rversion.h
 
