@@ -19,7 +19,7 @@ DEFPKGS = NULL
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc mkpo instdirs
+	@$(MAKE) -f Makefile.win mkR1 mkdesc instdirs
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazycomp
 	@gzip -9f $(top_builddir)/library/grDevices/afm/*.afm

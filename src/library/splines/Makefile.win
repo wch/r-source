@@ -17,7 +17,7 @@ DEFPKGS = NULL
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc mkpo
+	@$(MAKE) -f Makefile.win mkR1 mkdesc
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazycomp
 

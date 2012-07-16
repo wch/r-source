@@ -18,7 +18,7 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mkdemos2 mkpo
+	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mkdemos2
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
 	@if ! test $(top_builddir)/library/$(pkg)/R/$(pkg) -nt all.R; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \

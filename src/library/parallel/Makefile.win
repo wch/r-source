@@ -20,7 +20,7 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
-	@$(MAKE) -f Makefile.win mkR1 mkdesc instdirs mkpo mksrc-win2
+	@$(MAKE) -f Makefile.win mkR1 mkdesc instdirs mksrc-win2
 	@$(MAKE) -f Makefile.win mklazycomp
 
 mkR: mkR1

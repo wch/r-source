@@ -20,7 +20,7 @@ ifeq "$(BUILD_TCLTK)" "yes"
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc mkexec mkdemos mkpo
+	@$(MAKE) -f Makefile.win mkR1 mkdesc mkexec mkdemos
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazycomp
 else

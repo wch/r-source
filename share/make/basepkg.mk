@@ -114,7 +114,7 @@ mkexec:
 	  done; \
 	fi
 
-## only use if byte-compilation is disabled
+## only used if byte-compilation is disabled
 mklazy:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
@@ -125,16 +125,6 @@ mklazycomp: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 mkRsimple:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rd?
-
-mkpo:
-	@if test -d $(srcdir)/inst/po; then \
-	  if test "$(USE_NLS)" = "yes"; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
-	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
-	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
-	    -exec rm -rf \{\} \; 2>/dev/null; \
-	  fi; \
-	fi
 
 mksrc:
 	@if test -d src; then \

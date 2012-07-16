@@ -16,7 +16,7 @@ DEFPKGS = "methods,graphics,stats"
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR2 mkdesc mkpo
+	@$(MAKE) -f Makefile.win mkR2 mkdesc
 	@$(MAKE) -f Makefile.win mklazycomp
 
 mkR: mkR2

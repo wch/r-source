@@ -29,7 +29,7 @@ update:
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR1 mkdesc2 mkpo
+	@$(MAKE) mkR1 mkdesc2
 	@$(MAKE) mksrc
 	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \

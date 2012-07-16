@@ -22,7 +22,7 @@ EXTRAS = @BYTE_COMPILE_PACKAGES_TRUE@ R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR2 mkdesc mkpo
+	@$(MAKE) mkR2 mkdesc
 	@$(MAKE) mksrc
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \
 	  $(MAKE) RfilesLazy; \

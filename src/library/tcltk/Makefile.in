@@ -36,7 +36,7 @@ all: Makefile DESCRIPTION
 	  fi)
 	@$(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg)
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@$(MAKE) mkdesc mkexec mkdemos mkpo
+	@$(MAKE) mkdesc mkexec mkdemos
 	@if test -d src -a @use_tcltk@ = yes; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi

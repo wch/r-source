@@ -27,7 +27,7 @@ update:
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@WHICH="@WHICH@" $(MAKE) mkRbase mkdesc2 mkdemos2 mkpo
+	@WHICH="@WHICH@" $(MAKE) mkRbase mkdesc2 mkdemos2
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
 
 include $(top_srcdir)/share/make/basepkg.mk

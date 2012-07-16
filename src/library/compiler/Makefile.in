@@ -23,7 +23,7 @@ DEFPKGS = NULL
 all: Makefile DESCRIPTION @MAINTAINER_MODE_TRUE@ from-noweb
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR1 mkdesc mkpo
+	@$(MAKE) mkR1 mkdesc
 @BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) mklazy
 @BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp
 

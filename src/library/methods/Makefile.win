@@ -17,7 +17,7 @@ EXTRAS = R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR2 front mkdesc mkpo
+	@$(MAKE) -f Makefile.win mkR2 front mkdesc
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \
 	  $(MAKE) -f Makefile.win RfilesLazy; \

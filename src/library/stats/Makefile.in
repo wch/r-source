@@ -26,7 +26,7 @@ DEFPKGS = NULL
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR1 front mkdesc mkdemos mkpo
+	@$(MAKE) mkR1 front mkdesc mkdemos
 	@$(MAKE) mksrc
 @BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) mklazy
 @BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp
