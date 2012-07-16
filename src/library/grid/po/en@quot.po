@@ -17,86 +17,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: grid.c:214
 msgid "Cannot clip to rotated viewport"
 msgstr "Cannot clip to rotated viewport"
 
-#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 
-#: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "attempt to plot on null device"
 
-#: grid.c:1232
 msgid "There is no layout defined"
 msgstr "There is no layout defined"
 
-#: grid.c:1452
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygon edge not found (zero-width or zero-height?)"
 
-#: grid.c:1461
 msgid "Polygon edge not found"
 msgstr "Polygon edge not found"
 
-#: grid.c:1615
 msgid "Require at least two points to draw arrow"
 msgstr "Require at least two points to draw arrow"
 
-#: grid.c:1931
 msgid "Non-finite control point in Xspline"
 msgstr "Non-finite control point in Xspline"
 
-#: grid.c:2796
 msgid "non-finite x or y in graphics path"
 msgstr "non-finite x or y in graphics path"
 
-#: grid.c:3286
 msgid "invalid plotting symbol"
 msgstr "invalid plotting symbol"
 
-#: grid.c:3372
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 
-#: layout.c:519
 msgid "invalid layout.pos.row"
 msgstr "invalid layout.pos.row"
 
-#: layout.c:523
 msgid "invalid layout.pos.col"
 msgstr "invalid layout.pos.col"
 
-#: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "singular transformation matrix"
 
-#: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Unable to store grid state.  Too many devices open?"
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
 msgid "Unimplemented unit function"
 msgstr "Unimplemented unit function"
 
-#: unit.c:893 unit.c:1639
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Illegal unit or unit not yet implemented"
 
-#: unit.c:1798
 msgid "Invalid unit"
 msgstr "Invalid unit"
 
-#: unit.c:1814
 msgid "Units must be character"
 msgstr "Units must be character"
 
-#: unit.c:1817
 msgid "Units must be of length > 0"
 msgstr "Units must be of length > 0"
 
-#: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
 msgstr "Non-finite location and/or size for viewport"

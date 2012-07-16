@@ -17,27 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: Rmd5.c:36
 msgid "argument 'files' must be character"
 msgstr "argument ‘files’ must be character"
 
-#: Rmd5.c:50
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 failed on file ‘%s’"
 
-#: signals.c:43
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() is not supported on this platform"
 
-#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() is not supported on this platform"
 
-#: text.c:65
 msgid "invalid argument type"
 msgstr "invalid argument type"
 
-#: text.c:222 text.c:244
 msgid "out of memory"
 msgstr "out of memory"
