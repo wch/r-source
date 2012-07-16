@@ -15,8 +15,8 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MAKE) -f Makefile.win mkdesc
 	@$(MKINSTALLDIRS) -p $(top_builddir)/library/$(pkg)
-	cp -r `ls -d $(srcdir)/inst/*` $(top_builddir)/library/$(pkg)
-	find "$(top_builddir)/library/$(pkg)" -name .svn -type d -prune \
+	@cp -r `ls -d $(srcdir)/inst/*` $(top_builddir)/library/$(pkg)
+	@find "$(top_builddir)/library/$(pkg)" -name .svn -type d -prune \
             -exec rm -rf \{\} \; 2>/dev/null
 
 include $(top_srcdir)/share/make/basepkg.mk
