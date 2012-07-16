@@ -18,5 +18,6 @@ all:
 	@cp -r `ls -d $(srcdir)/inst/*` $(top_builddir)/library/$(pkg)
 	@find "$(top_builddir)/library/$(pkg)" -name .svn -type d -prune \
             -exec rm -rf \{\} \; 2>/dev/null
+	@cp DESCRIPTION $(top_builddir)/library/$(pkg)
 
 include $(top_srcdir)/share/make/basepkg.mk

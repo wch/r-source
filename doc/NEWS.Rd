@@ -312,7 +312,13 @@
       translation domains, \code{R-base}, \code{R} and \code{RGui}.
 
       \item The compiled translations which ship with \R are all in the
-      new package \pkg{translations} for easier updating.
+      new package \pkg{translations} for easier updating.  The first
+      package of that name found on \code{.libPaths()} at the start of
+      the \R session will be used.  (It is possible messages will be
+      used before \code{.libPaths()} is set up in which case the
+      default translations will be used: set environment variable
+      \env{R_TRANSLATIONS} to point to the location of the intended
+      \pkg{translations} package to use this right from the start.)
     }
   }
   

@@ -19,6 +19,18 @@ invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
                       unlist(strsplit(Sys.getenv("R_LIBS_USER"), ";"))
                       )))
 
+local({
+    popath <- Sys.getenv("R_TRANSLATIONS", "")
+    if(!nzchar(popath)) {
+        paths <- file.path(.libPaths(), "translations", "DESCRIPTION")
+        popath <- dirname(paths[file.exists(paths)][1])
+    }
+    bindtextdomain("R", popath)
+    bindtextdomain("R-base", popath)
+    bindtextdomain("RGui", popath)
+    assign(".popath", popath, .BaseNamespaceEnv)
+})
+
 if(nzchar(Sys.getenv("R_PAPERSIZE"))) {
     options(papersize = Sys.getenv("R_PAPERSIZE"))
 } else {

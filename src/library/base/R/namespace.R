@@ -318,9 +318,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## standard packages are treated differently
             std <- c("compiler", "foreign", "grDevices", "graphics", "grid",
                      "methods", "parallel", "splines", "stats", "stats4",
-                     "tcltk", "tool", "utils")
-            popath <- if (pkgname %in% std) file.path(.Library, "translations")
-            else file.path(pkgpath, "po")
+                     "tcltk", "tools", "utils")
+            popath <- if (pkgname %in% std) .popath else file.path(pkgpath, "po")
             if(!file.exists(popath)) return()
             bindtextdomain(pkgname, popath)
             bindtextdomain(paste("R", pkgname, sep = "-"), popath)
