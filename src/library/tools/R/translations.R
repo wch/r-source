@@ -149,7 +149,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         res <- checkPoFile(f, TRUE)
         if(nrow(res)) {
             print(res)
-            message("not insttalling")
+            message("not installing")
             next
         }
         dest <- file.path(stem, lang, "LC_MESSAGES")
