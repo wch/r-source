@@ -2429,6 +2429,30 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         setwd(owd)
     }
 
+    check_dot_files <- function()
+    {
+        checkingLog(Log, "for hidden files and directories")
+        owd <- setwd(pkgdir)
+        dots <- dir(".", all.files = TRUE, full.names = TRUE,
+                        recursive = TRUE, pattern = "^[.]")
+        dots <- sub("^./","", dots)
+        allowed <-
+            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras")
+        dots <- dots[!dots %in% allowed]
+        alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
+        alldirs <- sub("^./","", alldirs)
+        alldirs <- alldirs[alldirs != "."]
+        dots <- c(dots, grep("[.][^/]*$", alldirs, value = TRUE))
+        if (length(dots)) {
+            warningLog(Log, "Found the following hidden files and directories:")
+            printLog(Log, .format_lines_with_indent(dots), "\n")
+            wrapLog("These were most likely included in error.",
+                    "See section 'Package structure'",
+                    "in the 'Writing R Extensions' manual.\n")
+        } else resultLog(Log, "OK")
+        setwd(owd)
+    }
+
     check_install <- function()
     {
         ## Option '--no-install' turns off installation and the tests
@@ -3455,6 +3479,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
             ## we need to do this before installation
             if (R_check_executables) check_executables()
+
+            check_dot_files()
 
             if (do_install) {
                 check_install()

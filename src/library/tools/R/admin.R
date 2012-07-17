@@ -817,9 +817,12 @@ function(dir)
 
 checkRdaFiles <- function(paths)
 {
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
+    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir)) {
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
+        ## Exclude .RData, which this may or may not match
+        paths <- grep("/[.]RData$", paths, value = TRUE, invert = TRUE)
+    }
     res <- data.frame(size = NA_real_, ASCII = NA,
                       compress = NA_character_, version = NA_integer_,
                       stringsAsFactors = FALSE)

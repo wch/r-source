@@ -3756,23 +3756,28 @@ function(pkgDir, thorough = FALSE)
     if (sum(rdas$size) < 1e5 || # we don't report unless we get a 1e5 reduction
         any(rdas$compress %in% c("bzip2", "xz"))) # assume already optimized
         thorough <- FALSE
-    if (thorough &&
-        length(files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
-                                   file.path(pkgDir, "data", "*.RData"))))) {
-        cpdir <- tempfile('cp')
-        dir.create(cpdir)
-        file.copy(files, cpdir)
-        resaveRdaFiles(cpdir)
-        rdas2 <- checkRdaFiles(cpdir)
-        row.names(rdas2) <- basename(row.names(rdas2))
-        diff2 <- (rdas2$ASCII != rdas$ASCII) | (rdas2$compress != rdas$compress)
-        diff2 <- diff2 & (rdas$size > 1e4) & (rdas2$size < 0.9*rdas$size)
-        sizes <- c(sum(rdas$size), sum(rdas2$size))
-        improve <- data.frame(old_size = rdas$size,
-                              new_size = rdas2$size,
-                              compress = rdas2$compress,
-                              row.names = row.names(rdas))[diff2, ]
-    } else sizes <- improve <- NULL
+    sizes <- improve <- NULL
+    if (thorough) {
+        files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
+                            file.path(pkgDir, "data", "*.RData")))
+        ## Exclude .RData, which this may or may not match
+        files <- grep("/[.]RData$", files, value = TRUE, invert = TRUE)
+        if (length(files)) {
+            cpdir <- tempfile('cp')
+            dir.create(cpdir)
+            file.copy(files, cpdir)
+            resaveRdaFiles(cpdir)
+            rdas2 <- checkRdaFiles(cpdir)
+            row.names(rdas2) <- basename(row.names(rdas2))
+            diff2 <- (rdas2$ASCII != rdas$ASCII) | (rdas2$compress != rdas$compress)
+            diff2 <- diff2 & (rdas$size > 1e4) & (rdas2$size < 0.9*rdas$size)
+            sizes <- c(sum(rdas$size), sum(rdas2$size))
+            improve <- data.frame(old_size = rdas$size,
+                                  new_size = rdas2$size,
+                                  compress = rdas2$compress,
+                                  row.names = row.names(rdas))[diff2, ]
+        }
+    }
     structure(list(rdas = rdas[problems, 1:3], msg = msg,
                    sizes = sizes, improve = improve),
               class = "check_package_compact_datasets")
