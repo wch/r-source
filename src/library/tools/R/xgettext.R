@@ -183,3 +183,145 @@ function(dir, potFile)
                 un <- un[-match(e, un)]
             }
 }
+
+getfmts <- function(s) .Internal(getfmts(s))
+
+checkPoFile <- function(f, strictPlural = FALSE)
+{
+    lines <- readLines(f, encoding = "bytes")
+    i <- 0
+    noCformat <- FALSE
+    f1_plural <- NULL
+    ref <- NA
+    fuzzy <- FALSE
+
+    result <- matrix(character(0), ncol = 5, nrow = 0)
+    while (i < length(lines)) {
+	i <- i + 1
+
+	if (grepl("^#,", lines[i], useBytes = TRUE)) {
+	    noCformat <- noCformat || grepl("no-c-format", lines[i], useBytes = TRUE)
+	    fuzzy <- fuzzy || grepl("fuzzy", lines[i], useBytes = TRUE)
+	} else if (grepl("^#:", lines[i], useBytes = TRUE)) {
+	    if (!is.na(ref))
+		ref <- paste(ref, "etc.")
+	    else
+		ref <- sub("^#:[[:blank:]]*", "", lines[i])
+	} else if (grepl("^msgid ", lines[i], useBytes = TRUE)) {
+	    s1 <- sub('^msgid[[:blank:]]+["](.*)["][[:blank:]]*$', "\\1", lines[i])
+	    while (grepl('^["]', lines[i+1], useBytes = TRUE)) {
+		i <- i + 1
+		s1 <- paste0(s1, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[i]))
+	    }
+	    f1 <- try(.Internal(getfmts(s1)), silent = TRUE)
+	    j <- i + 1
+
+	    if (noCformat || inherits(f1, "try-error")) {
+		noCformat <- FALSE
+		next
+	    }
+
+	    while (j <= length(lines)) {
+		if (grepl("^msgid_plural[[:blank:]]", lines[j], useBytes = TRUE))
+		    statement <- "msgid_plural"
+		else if (grepl("^msgstr[[:blank:]]", lines[j], useBytes = TRUE))
+		    statement <- "msgstr"
+		else if (grepl("^msgstr\\[[[:digit:]]+\\][[:blank:]]", lines[j], useBytes = TRUE))
+		    statement <- sub("^(msgstr)\\[([[:digit:]]+)\\].*$", "\\1\\\\[\\2\\\\]", lines[j])
+		else
+		    break
+
+		s2 <- sub( paste0("^", statement, "[[:blank:]]+[\"](.*)[\"][[:blank:]]*$"),
+		                 "\\1", lines[j])
+		while (grepl('^["]', lines[j+1], useBytes = TRUE)) {
+		    j <- j + 1
+		    s2 <- paste0(s2, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[j]))
+		}
+
+		if (s1 == "") { # The header
+		    encoding <- sub(".*Content-Type:[^\\]*charset=([^\\[:space:]]*)[[:space:]]*\\\\n.*", "\\1", s2)
+		    lines <- iconv(lines, encoding, "UTF-8")
+		    break
+		}
+
+		f2 <- try(.Internal(getfmts(s2)), silent = TRUE)
+
+		if (statement == "msgid_plural") {
+		    if (!strictPlural) {
+			f1_plural <- f2
+			j <- j+1
+			next
+		    }
+		}
+
+		if (s2 != "" &&
+		     !(identical(f1, f2) || identical(f1_plural, f2))) {
+		    location <- paste0(f, ":", j)
+		    if (inherits(f2, "try-error"))
+			diff <- conditionMessage(attr(f2, "condition"))
+		    else {
+		    	if (length(f1) < length(f2)) {
+			    diff <- "too many entries"
+			    length(f2) <- length(f1)
+		    	} else if (length(f1) > length(f2)) {
+			    diff <- "too few entries"
+			    length(f1) <- length(f2)
+			} else
+			    diff <- ""
+			diffs <- which(f1 != f2)
+			if (length(diffs)) {
+			    if (diff != "")
+			    	diff <- paste0(diff, ", ")
+			    if (length(diffs) > 1)
+				diff <- paste(paste0(diff, "differences in entries"),
+			                      paste(diffs, collapse = ","))
+			    else
+				diff <- paste(paste0(diff, "difference in entry"),
+				              diffs)
+			}
+			if (grepl("\u066A", s2, fixed=TRUE))
+			    diff <- paste0(diff, ", translation contains arabic percent sign U+066A")
+			if (grepl("\uFE6A", s2, fixed=TRUE))
+			    diff <- paste0(diff, ", translation contains small percent sign U+FE6A")
+			if (grepl("\uFF05", s2, fixed=TRUE))
+			    diff <- paste0(diff, ", translation contains wide percent sign U+FF05")
+		    }
+                    if (!fuzzy)
+                        result <- rbind(result, c(location, ref, diff, s1, s2))
+		}
+		j <- j+1
+	    }
+	    i <- j-1
+	    noCformat <- FALSE
+	    f1_plural <- NULL
+	    ref <- NA
+            fuzzy <- FALSE
+	}
+    }
+    structure(result, class = "check_po_files")
+}
+
+checkPoFiles <- function(language, dir=".")
+{
+    files <- list.files(path = dir, pattern = paste0(language, "[.]po$"),
+                        full.names = TRUE, recursive = TRUE)
+    result <- matrix(character(0), ncol = 5, nrow = 0)
+    for (f in files) {
+	errs <- checkPoFile(f, strictPlural = grepl("^R-", basename(f)))
+	if (nrow(errs) > 0) result <- rbind(result, errs)
+    }
+    structure(result, class = "check_po_files")
+}
+
+print.check_po_files <- function(x, ...)
+{
+    if (!nrow(x))
+	cat("No errors\n")
+    else
+	for (i in 1:nrow(x)) {
+	    if (is.na(x[i, 2])) cols <- c(1, 3:5)
+	    else cols <- 1:5
+	    cat(x[i, cols], sep = "\n")
+	    cat("\n")
+	}
+}

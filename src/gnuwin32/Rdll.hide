@@ -764,6 +764,7 @@
  do_getconst
  do_getenv
  do_geterrmessage
+ do_getfmts
  do_getlocale
  do_gettext
  do_getwd

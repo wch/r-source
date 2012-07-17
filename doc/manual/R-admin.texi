@@ -2746,15 +2746,15 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
-@code{zlib} or @code{libtiff} (any recent version of 3.x.y -- 3.9.[45]
-have been tested -- 4.0.x is expected to work) respectively.  They
-also need support for either @code{X11} or @code{cairo} (see above).
+@code{zlib} or @code{libtiff} (any recent version -- 3.9.[45] and 4.0.2
+have been tested) respectively.  They also need support for either
+@code{X11} or @code{cairo} (see above).
 
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
 PCRE will be used if specified by @option{--with-system-zlib} (version
 1.2.3 or later), @option{--with-system-bzlib} or
-@option{--with-system-pcre} (version 8.10 or later, preferably 8.21
+@option{--with-system-pcre} (version 8.10 or later, preferably 8.30
 which is what is supplied with @R{}): otherwise versions in the @R{}
 sources will be compiled in.  As the latter suffice and are tested with
 @R{} you should not need to change this.

@@ -41,6 +41,10 @@
       
       \item The handling of single quotes in the \code{en@quot}
       pseudo-language has been slightly improved.
+
+      \item New functions \code{checkPoFiles()} and \code{checkPoFile()}
+      have been added to the \pkg{tools} package to check for
+      consistency of format strings in translation files.
     }
   }
 
@@ -441,6 +445,8 @@
       level combinations for the special case where all
       \eqn{h_ii}{h[i,i]} are the same. (\PR{14837})
 
+      \item \code{Sys.glob()} caused a segfault if the first element of
+      \code{path} was \code{NA_character}. (\PR{14990})
     }
   }
 }
