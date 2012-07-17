@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 08:19\n"
+"POT-Creation-Date: 2012-07-17 12:49\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1191,8 +1191,15 @@ msgid "running tests to possibly trigger segfaults"
 msgstr "exécution de tests pour générer éventuellement des 'segfaults'"
 
 #, fuzzy
+msgid "not installing"
+msgstr "installation dans"
+
+#, fuzzy
 msgid "not insttalling"
 msgstr "installation dans"
+
+msgid "R CMD build failed"
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr "'x' doit être une chaîne de caractères unique"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 08:19\n"
+"POT-Creation-Date: 2012-07-17 12:49\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1165,7 +1165,13 @@ msgstr ""
 msgid "running tests to possibly trigger segfaults"
 msgstr ""
 
+msgid "not installing"
+msgstr ""
+
 msgid "not insttalling"
+msgstr ""
+
+msgid "R CMD build failed"
 msgstr ""
 
 #, fuzzy

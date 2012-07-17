@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 07:55+0100\n"
+"POT-Creation-Date: 2012-07-17 12:49+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -4064,57 +4064,57 @@ msgstr ""
 msgid "Error: segfault from C stack overflow\n"
 msgstr ""
 
-#: src/main/main.c:831
+#: src/main/main.c:833
 msgid "unable to open the base package\n"
 msgstr ""
 
-#: src/main/main.c:908
+#: src/main/main.c:910
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr ""
 
-#: src/main/main.c:955
+#: src/main/main.c:957
 msgid "During startup - "
 msgstr ""
 
-#: src/main/main.c:1184
+#: src/main/main.c:1186
 msgid "cannot quit from browser"
 msgstr ""
 
-#: src/main/main.c:1188
+#: src/main/main.c:1190
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 
-#: src/main/main.c:1193
+#: src/main/main.c:1195
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
-#: src/main/main.c:1201
+#: src/main/main.c:1203
 msgid "unrecognized value of 'save'"
 msgstr ""
 
-#: src/main/main.c:1204
+#: src/main/main.c:1206
 msgid "invalid 'status', 0 assumed"
 msgstr ""
 
-#: src/main/main.c:1209
+#: src/main/main.c:1211
 msgid "invalid 'runLast', FALSE assumed"
 msgstr ""
 
-#: src/main/main.c:1240
+#: src/main/main.c:1242
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 
-#: src/main/main.c:1318
+#: src/main/main.c:1320
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr ""
 
-#: src/main/main.c:1426
+#: src/main/main.c:1428
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 
-#: src/main/main.c:1482
+#: src/main/main.c:1484
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 

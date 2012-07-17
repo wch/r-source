@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 07:55+0100\n"
+"POT-Creation-Date: 2012-07-17 12:49+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -4160,60 +4160,60 @@ msgstr ""
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Hata: C stack taşmasından segfault\n"
 
-#: src/main/main.c:831
+#: src/main/main.c:833
 msgid "unable to open the base package\n"
 msgstr "base paketi açılamadı\n"
 
-#: src/main/main.c:908
+#: src/main/main.c:910
 #, fuzzy, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr ".RData'da kayıtlı veri geri alınamadı\n"
 
-#: src/main/main.c:955
+#: src/main/main.c:957
 msgid "During startup - "
 msgstr "Başlangıç sırasında - "
 
-#: src/main/main.c:1184
+#: src/main/main.c:1186
 msgid "cannot quit from browser"
 msgstr "tarayıcıdan çıkılamıyor"
 
-#: src/main/main.c:1188
+#: src/main/main.c:1190
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "\"yes\", \"no\", \"ask\", veya \"default\" seçeneklerinden biri beklendi."
 
-#: src/main/main.c:1193
+#: src/main/main.c:1195
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "etkileşimli olmayan kullanımda save=\"ask\" kullanımı: komut dizesi "
 "varsayılanı kullanılacak"
 
-#: src/main/main.c:1201
+#: src/main/main.c:1203
 msgid "unrecognized value of 'save'"
 msgstr "'save' in tanınmayan değeri"
 
-#: src/main/main.c:1204
+#: src/main/main.c:1206
 msgid "invalid 'status', 0 assumed"
 msgstr "geçersiz 'status', 0 varsayıldı"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1211
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "geçersiz 'runLast', YANLIŞ varsayıldı"
 
-#: src/main/main.c:1240
+#: src/main/main.c:1242
 msgid "cannot allocate space for toplevel callback element"
 msgstr "üst seviye geri çağrı öğesi için yer ayrılamıyor"
 
-#: src/main/main.c:1318
+#: src/main/main.c:1320
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex'e negatif indis verildi"
 
-#: src/main/main.c:1426
+#: src/main/main.c:1428
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "üst seviye görev geri çağrılarından uyarı mesajları '%s'\n"
 
-#: src/main/main.c:1482
+#: src/main/main.c:1484
 msgid "top-level task callback did not return a logical value"
 msgstr "üst seviye görev geri çağrısı mantıksal bir değer döndürmedi"
 

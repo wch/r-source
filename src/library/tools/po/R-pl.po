@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 08:19\n"
+"POT-Creation-Date: 2012-07-17 12:49\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1172,8 +1172,15 @@ msgid "running tests to possibly trigger segfaults"
 msgstr "wykonywanie testów by potencjalnie wywołać naruszenie ochrony pamięci"
 
 #, fuzzy
+msgid "not installing"
+msgstr "instalowanie do"
+
+#, fuzzy
 msgid "not insttalling"
 msgstr "instalowanie do"
+
+msgid "R CMD build failed"
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr "'x' musi być jednym znakiem"

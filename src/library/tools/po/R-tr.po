@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 08:19\n"
+"POT-Creation-Date: 2012-07-17 12:49\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1103,7 +1103,13 @@ msgstr ""
 msgid "running tests to possibly trigger segfaults"
 msgstr ""
 
+msgid "not installing"
+msgstr ""
+
 msgid "not insttalling"
+msgstr ""
+
+msgid "R CMD build failed"
 msgstr ""
 
 msgid "'x' must be a single character string"

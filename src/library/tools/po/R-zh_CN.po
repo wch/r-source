@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-15 08:19\n"
+"POT-Creation-Date: 2012-07-17 12:49\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -1130,8 +1130,15 @@ msgid "running tests to possibly trigger segfaults"
 msgstr "执行触发程序段故障检验"
 
 #, fuzzy
+msgid "not installing"
+msgstr "安装至"
+
+#, fuzzy
 msgid "not insttalling"
 msgstr "安装至"
+
+msgid "R CMD build failed"
+msgstr ""
 
 msgid "'x' must be a single character string"
 msgstr "'x'必需是单字符串"
