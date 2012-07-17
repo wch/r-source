@@ -2442,7 +2442,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
         alldirs <- sub("^./","", alldirs)
         alldirs <- alldirs[alldirs != "."]
-        dots <- c(dots, grep("[.][^/]*$", alldirs, value = TRUE))
+        bases <- basename(alldirs)
+        dots <- c(dots, alldirs[grepl("^[.]", basename(alldirs))])
         if (length(dots)) {
             noteLog(Log, "Found the following hidden files and directories:")
             printLog(Log, .format_lines_with_indent(dots), "\n")
