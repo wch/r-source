@@ -228,6 +228,12 @@ should not be empty).  The package subdirectory may also contain files
 @file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
 useful to end users.
 
+Except where specifically mentioned,@footnote{currently, top-level files
+@file{.Rbuildignore} and @file{.Rinstignore}, and
+@file{vignettes/.install_extras}.} packages should not contain
+Unix-style `hidden' files/directory (that is, those whose name starts
+with a dot).
+
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 subsections below.  The @file{NAMESPACE} file is described in the
 section on @ref{Package namespaces}.
