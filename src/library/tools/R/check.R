@@ -2444,7 +2444,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         alldirs <- alldirs[alldirs != "."]
         dots <- c(dots, grep("[.][^/]*$", alldirs, value = TRUE))
         if (length(dots)) {
-            warningLog(Log, "Found the following hidden files and directories:")
+            noteLog(Log, "Found the following hidden files and directories:")
             printLog(Log, .format_lines_with_indent(dots), "\n")
             wrapLog("These were most likely included in error.",
                     "See section 'Package structure'",
