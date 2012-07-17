@@ -62,6 +62,11 @@
       by \code{library(pkgname, lib.loc = "somewhere")} without being on
       the library search path (unless it is already installed in
       \code{.Library}, when it always will be).
+
+      \item \command{R CMD check --as-cran} notes \sQuote{hidden} files
+      and directories (with names starting with a dot) that are not
+      needed for the operation of \command{R CMD INSTALL} or \code{R CMD
+	build}: such files should be excluded from the published tarball.
       
       \item When \code{R CMD Rd2pdf} is used with \file{inputenx.sty},
       it allows further characters (mainly for Eastern European

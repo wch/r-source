@@ -1,5 +1,5 @@
 
-R version 2.15.0 Patched (2012-04-15 r59036) -- "Easter Beagle"
+R version 2.15.1 Patched (2012-07-17 r59869) -- "Roasted Marshmallows"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -410,6 +410,25 @@ of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
 > ### Keywords: programming utilities
 > 
 > ### ** Examples
+> 
+> 
+> cleanEx()
+> nameEx("checkPoFiles")
+> ### * checkPoFiles
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: checkPoFiles
+> ### Title: Check translation files for inconsistent format strings.
+> ### Aliases: checkPoFile checkPoFiles
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D checkPoFiles("de", "/path/to/R/src/directory")
+> ## End(Not run)
+> 
 > 
 > 
 > cleanEx()
