@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-17 12:49\n"
+"POT-Creation-Date: 2012-07-18 09:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -1133,10 +1133,6 @@ msgstr "执行触发程序段故障检验"
 msgid "not installing"
 msgstr "安装至"
 
-#, fuzzy
-msgid "not insttalling"
-msgstr "安装至"
-
 msgid "R CMD build failed"
 msgstr ""
 
@@ -1229,6 +1225,10 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#, fuzzy
+#~ msgid "not insttalling"
+#~ msgstr "安装至"
 
 #, fuzzy
 #~ msgid "running msgmerge failed"

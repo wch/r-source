@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-13 10:54+0100\n"
 "PO-Revision-Date: 2012-03-06 09:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -55,61 +55,61 @@ msgstr "unzulässiger Argumenttyp"
 
 #: complete_cases.c:112
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "Anzahl der Fälle durch keine Eingabe festgelegt"
 
 #: complete_cases.c:215
 msgid "not all arguments have the same length"
-msgstr ""
+msgstr "nicht alle Argumente haben gleiche Länge"
 
 #: cov.c:553
 msgid "missing observations in cov/cor"
-msgstr ""
+msgstr "fehlende Beobachtungen in cov/cor"
 
 #: cov.c:631
 msgid "'x' is NULL"
-msgstr ""
+msgstr "'x' ist NULL"
 
 #: cov.c:650 cov.c:656
 msgid "incompatible dimensions"
-msgstr ""
+msgstr "inkompatible Dimensionen"
 
 #: cov.c:675 cov.c:716 cov.c:749
 msgid "no complete element pairs"
-msgstr ""
+msgstr "keine vollständigen Elementpaare"
 
 #: cov.c:688
 msgid "invalid 'use' (computational method)"
-msgstr ""
+msgstr "ungültiger 'use' (Berechnungsmethode)"
 
 #: cov.c:691
 msgid "'x' is empty"
-msgstr ""
+msgstr "'x' ist leer"
 
 #: cov.c:785
 msgid "the standard deviation is zero"
-msgstr ""
+msgstr "Standardabweichung ist Null"
 
 #: deriv.c:119
 msgid "invalid form in unary minus check"
-msgstr ""
+msgstr "ungültige Form in unärem minus Check"
 
 #: deriv.c:526
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
-msgstr ""
+msgstr "Funktion '%s' ist nicht in der Tabelle der Ableitungen"
 
 #: deriv.c:633
 msgid "variable must be a character string"
-msgstr ""
+msgstr "Variable muss eine Zeichenkette sein"
 
 #: deriv.c:635
 msgid "only the first element is used as variable name"
-msgstr ""
+msgstr "nur das erste Element wird als Variablenname genutzt"
 
 #: deriv.c:648
 #, c-format
 msgid "invalid expression in '%s'"
-msgstr ""
+msgstr "ungültiger Ausdruck in '%s'"
 
 #: deriv.c:924 model.c:91
 #, fuzzy
@@ -135,11 +135,11 @@ msgstr "distance(): unzulässige distance"
 
 #: distn.c:31
 msgid "NaNs produced"
-msgstr ""
+msgstr "NaNs wurden erzeugt"
 
 #: distn.c:32
 msgid "Non-numeric argument to mathematical function"
-msgstr ""
+msgstr "Nicht-numerisches Argument für mathematische Funktion"
 
 #: family.c:21
 #, c-format
@@ -158,19 +158,19 @@ msgstr "Argument %s muss ein numerischer Vektor der Länge 1 oder %d sein"
 
 #: fourier.c:52 fourier.c:139
 msgid "non-numeric argument"
-msgstr ""
+msgstr "nicht-numerisches Argument"
 
 #: fourier.c:70 fourier.c:85 fourier.c:153
 msgid "fft factorization error"
-msgstr ""
+msgstr "fft Faktorisierungs-Fehler"
 
 #: fourier.c:125
 msgid "vector-valued (multivariate) series required"
-msgstr ""
+msgstr "vektorwertige (multivariate) Reihe verlangt"
 
 #: fourier.c:198
 msgid "no factors"
-msgstr ""
+msgstr "keine Faktoren"
 
 #: fourier.c:201
 #, fuzzy
@@ -203,24 +203,24 @@ msgstr "Burg's Algorithmus konnte keine partielle Korrelation finden"
 
 #: model.c:89
 msgid "invalid variables"
-msgstr ""
+msgstr "ungültige Variablen"
 
 #: model.c:93 model.c:98
 msgid "number of variables != number of variable names"
-msgstr ""
+msgstr "Anzahl Variablen und Anzahl Variablennamen sind unterschiedlich"
 
 #: model.c:96
 msgid "invalid extra variables"
-msgstr ""
+msgstr "ungültige zusätzliche Variablen"
 
 #: model.c:100
 msgid "invalid extra variable names"
-msgstr ""
+msgstr "ungültige zusätzliche Variablennamen"
 
 #: model.c:121
 #, c-format
 msgid "overlong names in '%s'"
-msgstr ""
+msgstr "überlange Namen in '%s'"
 
 #: model.c:148
 #, fuzzy, c-format
@@ -230,11 +230,11 @@ msgstr "unzulässiger Typ für eval_check_source"
 #: model.c:153
 #, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr ""
+msgstr "Variablenlängen sind unterschiedlich (gefunden für '%s')"
 
 #: model.c:207
 msgid "invalid result from na.action"
-msgstr ""
+msgstr "ungültiges Ergebnis aus na.action"
 
 #: model.c:363 model.c:371 optim.c:194
 #, fuzzy, c-format
@@ -248,12 +248,12 @@ msgstr "unzulässiger Wert von lag.max"
 
 #: model.c:384
 msgid "do not know how many cases"
-msgstr ""
+msgstr "kenne nicht die Anzahl der Fälle"
 
 #: model.c:408
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr ""
+msgstr "Variablenlängen sind unterschiedlich (gefunden für Variable %d)"
 
 #: model.c:412 model.c:419
 #, fuzzy, c-format
@@ -262,35 +262,35 @@ msgstr "Variable '%s' ist nicht numerisch"
 
 #: model.c:531
 msgid "the response appeared on the right-hand side and was dropped"
-msgstr ""
+msgstr "Antwortvariable erschien auf der rechten Seite und wurde verworfen"
 
 #: model.c:551
 #, c-format
 msgid "term %d would require %.0g columns"
-msgstr ""
+msgstr "Term %d würde %.0g Spalten benötigen"
 
 #: model.c:555
 #, c-format
 msgid "matrix would require %.0g columns"
-msgstr ""
+msgstr "Matrix würde %.0g Spalten benötigen"
 
 #: model.c:566
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr ""
+msgstr "Problem mit dem Term %d in model.matrix: keine Spalten zugewiesen"
 
 #: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
 msgid "term names will be truncated"
-msgstr ""
+msgstr "Term-Namen werden abgeschnitten"
 
 #: model.c:629
 msgid "complex variables are not currently allowed in model matrices"
-msgstr ""
+msgstr "Komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
 
 #: model.c:653
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
-msgstr ""
+msgstr "Variablen des Typs '%s' sind in Modellmatrizen nicht erlaubt"
 
 #: model.c:875
 #, fuzzy
@@ -299,7 +299,7 @@ msgstr "unzulässiger Wert von lag.max"
 
 #: model.c:909
 msgid "formula expected"
-msgstr ""
+msgstr "Formel wird erwartet"
 
 #: model.c:1026
 #, fuzzy
@@ -324,7 +324,7 @@ msgstr "unzulässiger Wert von lag.max"
 #: model.c:1493
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
-msgstr ""
+msgstr "verdoppelter Name '%s' in Data Frame bei Benutzung von '.'"
 
 #: model.c:1550
 #, fuzzy
@@ -333,19 +333,19 @@ msgstr "unzulässiger Wert von lag.max"
 
 #: model.c:1636
 msgid "argument is not a valid model"
-msgstr ""
+msgstr "Argument ist kein gültiges Modell"
 
 #: model.c:1646
 msgid "'specials' must be NULL or a character vector"
-msgstr ""
+msgstr "'specials' muss NULL oder eine Charaktervektor sein"
 
 #: model.c:1658
 msgid "'data' argument is of the wrong type"
-msgstr ""
+msgstr "Argument 'data' hat falschen Typ"
 
 #: model.c:1924
 msgid "'.' in formula and no 'data' argument"
-msgstr ""
+msgstr "'.' erscheint in der Formel und 'data' Argument ist ungültig"
 
 #: monoSpl.c:40
 msgid "n must be at least two"
@@ -428,61 +428,61 @@ msgstr "Variable '%s' ist nicht numerisch"
 
 #: optim.c:73 optim.c:100
 msgid "non-finite value supplied by optim"
-msgstr ""
+msgstr "nicht endlicher Wert von optim angegeben"
 
 #: optim.c:80
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
-msgstr ""
+msgstr "Zielfunktion gibt Ergebnis der Länge %d zurück, nicht Länge 1"
 
 #: optim.c:107
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
-msgstr ""
+msgstr "Gradient in optim gibt Ergebnis der Länge %d zurück, nicht Länge %d"
 
 #: optim.c:190 optim.c:394
 msgid "'fn' is not a function"
-msgstr ""
+msgstr "'fn' ist keine Funktion"
 
 #: optim.c:207 optim.c:400
 msgid "'parscale' is of the wrong length"
-msgstr ""
+msgstr "'parscale' hat falsche Länge"
 
 #: optim.c:236
 msgid "'maxit' is not an integer"
-msgstr ""
+msgstr "'maxit' ist keine ganze Zahl"
 
 #: optim.c:255
 msgid "'tmax' is not an integer"
-msgstr ""
+msgstr "'tmax' ist keine ganze Zahl"
 
 #: optim.c:257 optim.c:274 optim.c:299 optim.c:329 optim.c:408
 msgid "'gr' is not a function"
-msgstr ""
+msgstr "'gr' ist keine Funktion"
 
 #: optim.c:280 optim.c:305 optim.c:335 optim.c:414
 msgid "'ndeps' is of the wrong length"
-msgstr ""
+msgstr "'ndeps' hat falsche Länge"
 
 #: optim.c:365
 msgid "unknown 'method'"
-msgstr ""
+msgstr "unbekannte 'method'"
 
 #: optimize.c:54 optimize.c:139 optimize.c:362
 msgid "NA replaced by maximum positive value"
-msgstr ""
+msgstr "NA durch größte positive Zahl ersetzt"
 
 #: optimize.c:62 optimize.c:151 optimize.c:370
 msgid "NA/Inf replaced by maximum positive value"
-msgstr ""
+msgstr "NA/Inf durch größte positive Zahl ersetzt"
 
 #: optimize.c:71
 msgid "invalid function value in 'optimize'"
-msgstr ""
+msgstr "ungültiger Funktionswert in 'optimize'"
 
 #: optimize.c:89 optimize.c:180 optimize.c:555
 msgid "attempt to minimize non-function"
-msgstr ""
+msgstr "Versuch etwas anderes als eine Funktion zu minimieren"
 
 #: optimize.c:96 optimize.c:103 optimize.c:112 optimize.c:185 optimize.c:190
 #: optimize.c:206
@@ -492,15 +492,15 @@ msgstr "approx(): unzulässiger f Wert"
 
 #: optimize.c:105 optimize.c:191
 msgid "'xmin' not less than 'xmax'"
-msgstr ""
+msgstr "'xmin' ist nicht kleiner als 'xmax'"
 
 #: optimize.c:148
 msgid "-Inf replaced by maximally negative value"
-msgstr ""
+msgstr "-Inf durch maximal negative Zahl ersetzt"
 
 #: optimize.c:161
 msgid "invalid function value in 'zeroin'"
-msgstr ""
+msgstr "ungültiger Funktionswert in 'zeroin'"
 
 #: optimize.c:196 optimize.c:201
 #, fuzzy, c-format
@@ -514,23 +514,24 @@ msgstr "'m' muss eine Liste sein"
 
 #: optimize.c:354
 msgid "non-finite value supplied by 'nlm'"
-msgstr ""
+msgstr "nicht-endlicher Wert von 'nlm' angegeben"
 
 #: optimize.c:389
 msgid "invalid function value in 'nlm' optimizer"
-msgstr ""
+msgstr "ungültiger Funktionswert in 'nlm' Optimierung"
 
 #: optimize.c:400 optimize.c:415
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
+"Funktionswertzwischenspeicher für die Optimierung ernsthaft durcheinander"
 
 #: optimize.c:430
 msgid "numeric parameter expected"
-msgstr ""
+msgstr "numerischer Parameter erwartet"
 
 #: optimize.c:434
 msgid "conflicting parameter lengths"
-msgstr ""
+msgstr "Parameter Längen passen nicht"
 
 #: optimize.c:438
 #, fuzzy
@@ -549,39 +550,39 @@ msgstr "unzulässiger Argumenttyp"
 
 #: optimize.c:471
 msgid "non-positive number of parameters in nlm"
-msgstr ""
+msgstr "nicht-positive Zahl von Parametern in nlm"
 
 #: optimize.c:473
 msgid "nlm is inefficient for 1-d problems"
-msgstr ""
+msgstr "nlm ist für 1-d Probleme ineffizient"
 
 #: optimize.c:475
 msgid "invalid gradient tolerance in nlm"
-msgstr ""
+msgstr "ungültige Gradiententoleranz in nlm"
 
 #: optimize.c:477
 msgid "invalid iteration limit in nlm"
-msgstr ""
+msgstr "ungültiges Iterationslimit in nlm"
 
 #: optimize.c:479
 msgid "minimization function has no good digits in nlm"
-msgstr ""
+msgstr "Minimierungsfunktion hat keine guten Dezimalen in nlm"
 
 #: optimize.c:481
 msgid "no analytic gradient to check in nlm!"
-msgstr ""
+msgstr "kein analytischer Gradient zur Überprüfung in nlm"
 
 #: optimize.c:483
 msgid "no analytic Hessian to check in nlm!"
-msgstr ""
+msgstr "keine analytische Hessematrix zur Überprüfung in nlm"
 
 #: optimize.c:485
 msgid "probable coding error in analytic gradient"
-msgstr ""
+msgstr "wahrscheinlicher Programmierfehler im analytischen Gradienten"
 
 #: optimize.c:487
 msgid "probable coding error in analytic Hessian"
-msgstr ""
+msgstr "wahrscheinlicher Programmierfehler in analytischer Hessematrix"
 
 #: optimize.c:489
 #, c-format
@@ -589,22 +590,24 @@ msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr ""
+"*** unbekannte Fehlermeldung (msg = %d) in nlm()\n"
+"*** sollte nicht passieren!"
 
 #: optimize.c:500
 msgid "Relative gradient close to zero.\n"
-msgstr ""
+msgstr "Relativer Gradient nahe Null.\n"
 
 #: optimize.c:501 optimize.c:505
 msgid "Current iterate is probably solution.\n"
-msgstr ""
+msgstr "Aktuelle Iteration ist wahrscheinlich Lösung.\n"
 
 #: optimize.c:504
 msgid "Successive iterates within tolerance.\n"
-msgstr ""
+msgstr "Aufeinanderfolgende Iterationen innerhalb der Toleranz.\n"
 
 #: optimize.c:508
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr ""
+msgstr "Letzter globaler Schritt fand keinen Punkt unterhalb x.\n"
 
 #: optimize.c:509
 msgid ""
@@ -612,10 +615,13 @@ msgid ""
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr ""
+"Entweder ist x angenähertes lokales Minimum der Funktion,\n"
+"die Funktion ist zu nichtlinear für diesen Algorithmus\n"
+"oder steptol ist zu groß.\n"
 
 #: optimize.c:514
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
-msgstr ""
+msgstr "Iterationslimit überschritten. Algorithmus fehlgeschlagen.\n"
 
 #: optimize.c:517
 msgid ""
@@ -625,6 +631,11 @@ msgid ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 msgstr ""
+"Maximale Schrittgröße fünf Mal nacheinander überschritten.\n"
+"Entweder ist die Funktion nicht nach unten beschränkt,\n"
+"nähert sich asymptotisch einem endlichen Wert\n"
+"von oben in eine Richtung an\n"
+"oder stepmx ist zu klein.\n"
 
 #: optimize.c:579 optimize.c:584 optimize.c:588 optimize.c:592 optimize.c:596
 #: optimize.c:600 optimize.c:605
@@ -635,10 +646,14 @@ msgstr "unzulässiger Wert von lag.max"
 #: optimize.c:636
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
+"angegebene Hessematrix hat falsche Länge oder falschen Modus und wird "
+"deshalb ignoriert"
 
 #: optimize.c:640
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
+"angegebener Gradient hat falsche Länge oder falschen Modus und wird deshalb "
+"ignoriert"
 
 #: pacf.c:81
 msgid "bad Starma struct"
@@ -752,7 +767,7 @@ msgstr "unzulässiger Argumenttyp"
 
 #: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
 msgid "NAs produced"
-msgstr ""
+msgstr "NAs produziert"
 
 #: random.c:240
 #, fuzzy

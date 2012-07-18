@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-17 12:49\n"
+"POT-Creation-Date: 2012-07-18 09:44\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1168,10 +1168,6 @@ msgstr "запускаю тесты на возможное переключение ошибок сегментации"
 msgid "not installing"
 msgstr "устанавливаю в"
 
-#, fuzzy
-msgid "not insttalling"
-msgstr "устанавливаю в"
-
 msgid "R CMD build failed"
 msgstr ""
 
@@ -1282,6 +1278,10 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#, fuzzy
+#~ msgid "not insttalling"
+#~ msgstr "устанавливаю в"
 
 #, fuzzy
 #~ msgid "running msgmerge failed"

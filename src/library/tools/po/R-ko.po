@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-17 12:49\n"
+"POT-Creation-Date: 2012-07-18 09:44\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1163,10 +1163,6 @@ msgstr "running tests to possibly trigger segfaults"
 msgid "not installing"
 msgstr "다음 부분에 설치 "
 
-#, fuzzy
-msgid "not insttalling"
-msgstr "다음 부분에 설치 "
-
 msgid "R CMD build failed"
 msgstr ""
 
@@ -1259,6 +1255,10 @@ msgstr[0] "다음의 함수들에서 .Internal 호출들을  찾았습니다 "
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
+
+#, fuzzy
+#~ msgid "not insttalling"
+#~ msgstr "다음 부분에 설치 "
 
 #, fuzzy
 #~ msgid "running msgmerge failed"

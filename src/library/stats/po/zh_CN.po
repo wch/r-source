@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-13 10:54+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -56,61 +56,61 @@ msgstr "参数种类不对"
 
 #: complete_cases.c:112
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "无法用输入来确定个案数目"
 
 #: complete_cases.c:215
 msgid "not all arguments have the same length"
-msgstr ""
+msgstr "不是所有的参数都一样长"
 
 #: cov.c:553
 msgid "missing observations in cov/cor"
-msgstr ""
+msgstr "cov/cor中有遗漏值"
 
 #: cov.c:631
 msgid "'x' is NULL"
-msgstr ""
+msgstr "'x'为NULL"
 
 #: cov.c:650 cov.c:656
 msgid "incompatible dimensions"
-msgstr ""
+msgstr "不兼容的量度"
 
 #: cov.c:675 cov.c:716 cov.c:749
 msgid "no complete element pairs"
-msgstr ""
+msgstr "不存在完的一对"
 
 #: cov.c:688
 msgid "invalid 'use' (computational method)"
-msgstr ""
+msgstr "'use'不对(计算方法)"
 
 #: cov.c:691
 msgid "'x' is empty"
-msgstr ""
+msgstr "'x'是空的"
 
 #: cov.c:785
 msgid "the standard deviation is zero"
-msgstr ""
+msgstr "标准差为零"
 
 #: deriv.c:119
 msgid "invalid form in unary minus check"
-msgstr ""
+msgstr "检查一进列减号时发现形式不对"
 
 #: deriv.c:526
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
-msgstr ""
+msgstr "微分表里没有这个函数'%s'"
 
 #: deriv.c:633
 msgid "variable must be a character string"
-msgstr ""
+msgstr "变数必需是字符串"
 
 #: deriv.c:635
 msgid "only the first element is used as variable name"
-msgstr ""
+msgstr "只用了第一个元素作为变数名"
 
 #: deriv.c:648
 #, c-format
 msgid "invalid expression in '%s'"
-msgstr ""
+msgstr "'%s'的表达式不对"
 
 #: deriv.c:924 model.c:91
 #, fuzzy
@@ -136,11 +136,11 @@ msgstr "distance()：距离值不对"
 
 #: distn.c:31
 msgid "NaNs produced"
-msgstr ""
+msgstr "产生了NaNs"
 
 #: distn.c:32
 msgid "Non-numeric argument to mathematical function"
-msgstr ""
+msgstr "数学函数中用了非数值参数"
 
 #: family.c:21
 #, c-format
@@ -159,19 +159,19 @@ msgstr "参数%s必需为长度为一或长度为%d的数字向量"
 
 #: fourier.c:52 fourier.c:139
 msgid "non-numeric argument"
-msgstr ""
+msgstr "非数值参数"
 
 #: fourier.c:70 fourier.c:85 fourier.c:153
 msgid "fft factorization error"
-msgstr ""
+msgstr "fft因数分解错误"
 
 #: fourier.c:125
 msgid "vector-valued (multivariate) series required"
-msgstr ""
+msgstr "需要矢量值系列(多变数)"
 
 #: fourier.c:198
 msgid "no factors"
-msgstr ""
+msgstr "非因子"
 
 #: fourier.c:201
 #, fuzzy
@@ -204,24 +204,24 @@ msgstr "Burg的算法没有能够找到偏相关数"
 
 #: model.c:89
 msgid "invalid variables"
-msgstr ""
+msgstr "变数不对"
 
 #: model.c:93 model.c:98
 msgid "number of variables != number of variable names"
-msgstr ""
+msgstr "变数数目不等于变数名字数目"
 
 #: model.c:96
 msgid "invalid extra variables"
-msgstr ""
+msgstr "額外变数不对"
 
 #: model.c:100
 msgid "invalid extra variable names"
-msgstr ""
+msgstr "额外变数名字不对"
 
 #: model.c:121
 #, c-format
 msgid "overlong names in '%s'"
-msgstr ""
+msgstr "'%s'里的名字太长"
 
 #: model.c:148
 #, fuzzy, c-format
@@ -231,11 +231,11 @@ msgstr "eval_check_store的种类不对"
 #: model.c:153
 #, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr ""
+msgstr "变数的长度不一样('%s')"
 
 #: model.c:207
 msgid "invalid result from na.action"
-msgstr ""
+msgstr "na.action的结果有错"
 
 #: model.c:363 model.c:371 optim.c:194
 #, fuzzy, c-format
@@ -249,12 +249,12 @@ msgstr "lag.max的值不对"
 
 #: model.c:384
 msgid "do not know how many cases"
-msgstr ""
+msgstr "案例数目不清"
 
 #: model.c:408
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr ""
+msgstr "变数的长度不一样(变数%d)"
 
 #: model.c:412 model.c:419
 #, fuzzy, c-format
@@ -263,35 +263,35 @@ msgstr "变量'%s'不是数值"
 
 #: model.c:531
 msgid "the response appeared on the right-hand side and was dropped"
-msgstr ""
+msgstr "在公式右手的反应略过不用"
 
 #: model.c:551
 #, c-format
 msgid "term %d would require %.0g columns"
-msgstr ""
+msgstr "%d项需要%.0g个列"
 
 #: model.c:555
 #, c-format
 msgid "matrix would require %.0g columns"
-msgstr ""
+msgstr "矩阵需要%.0g个列"
 
 #: model.c:566
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr ""
+msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
 #: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
 msgid "term names will be truncated"
-msgstr ""
+msgstr "项名字太长，被缩短了"
 
 #: model.c:629
 msgid "complex variables are not currently allowed in model matrices"
-msgstr ""
+msgstr "模型矩阵里目前不能有复数"
 
 #: model.c:653
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
-msgstr ""
+msgstr "模型矩阵里不能有种类为'%s'的参数"
 
 #: model.c:875
 #, fuzzy
@@ -300,7 +300,7 @@ msgstr "lag.max的值不对"
 
 #: model.c:909
 msgid "formula expected"
-msgstr ""
+msgstr "需要公式"
 
 #: model.c:1026
 #, fuzzy
@@ -325,7 +325,7 @@ msgstr "lag.max的值不对"
 #: model.c:1493
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
-msgstr ""
+msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 
 #: model.c:1550
 #, fuzzy
@@ -334,19 +334,19 @@ msgstr "lag.max的值不对"
 
 #: model.c:1636
 msgid "argument is not a valid model"
-msgstr ""
+msgstr "参数不是正确的模型"
 
 #: model.c:1646
 msgid "'specials' must be NULL or a character vector"
-msgstr ""
+msgstr "'specials'的值要么是NULL要么是字符矢量"
 
 #: model.c:1658
 msgid "'data' argument is of the wrong type"
-msgstr ""
+msgstr "'data'参数种类有错"
 
 #: model.c:1924
 msgid "'.' in formula and no 'data' argument"
-msgstr ""
+msgstr "公式里有'.'，而没有'data'这一参数"
 
 #: monoSpl.c:40
 msgid "n must be at least two"
@@ -428,61 +428,61 @@ msgstr "变量'%s'不是数值"
 
 #: optim.c:73 optim.c:100
 msgid "non-finite value supplied by optim"
-msgstr ""
+msgstr "optim回覆了无限值"
 
 #: optim.c:80
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
-msgstr ""
+msgstr "optim内的目标函数长度被评估为%d，而不是一"
 
 #: optim.c:107
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
-msgstr ""
+msgstr "optim梯度长度被评估为%d，而不是%d"
 
 #: optim.c:190 optim.c:394
 msgid "'fn' is not a function"
-msgstr ""
+msgstr "'fn'不是函数"
 
 #: optim.c:207 optim.c:400
 msgid "'parscale' is of the wrong length"
-msgstr ""
+msgstr "'parscale'的长度不对"
 
 #: optim.c:236
 msgid "'maxit' is not an integer"
-msgstr ""
+msgstr "'maxit'不是整数"
 
 #: optim.c:255
 msgid "'tmax' is not an integer"
-msgstr ""
+msgstr "'tmax'不是整数"
 
 #: optim.c:257 optim.c:274 optim.c:299 optim.c:329 optim.c:408
 msgid "'gr' is not a function"
-msgstr ""
+msgstr "'gr'不是函数"
 
 #: optim.c:280 optim.c:305 optim.c:335 optim.c:414
 msgid "'ndeps' is of the wrong length"
-msgstr ""
+msgstr "'ndeps'长度不对"
 
 #: optim.c:365
 msgid "unknown 'method'"
-msgstr ""
+msgstr "没有这样的'method'"
 
 #: optimize.c:54 optimize.c:139 optimize.c:362
 msgid "NA replaced by maximum positive value"
-msgstr ""
+msgstr "NA被换成最大的正值"
 
 #: optimize.c:62 optimize.c:151 optimize.c:370
 msgid "NA/Inf replaced by maximum positive value"
-msgstr ""
+msgstr "NA/Inf被换成最大的正值"
 
 #: optimize.c:71
 msgid "invalid function value in 'optimize'"
-msgstr ""
+msgstr "'optimize'里的函数值不对"
 
 #: optimize.c:89 optimize.c:180 optimize.c:555
 msgid "attempt to minimize non-function"
-msgstr ""
+msgstr "不能将非函数最小化"
 
 #: optimize.c:96 optimize.c:103 optimize.c:112 optimize.c:185 optimize.c:190
 #: optimize.c:206
@@ -492,15 +492,15 @@ msgstr "approx(): f值不对"
 
 #: optimize.c:105 optimize.c:191
 msgid "'xmin' not less than 'xmax'"
-msgstr ""
+msgstr "'xmin'不能小于xmax"
 
 #: optimize.c:148
 msgid "-Inf replaced by maximally negative value"
-msgstr ""
+msgstr "-Inf被换成最大的负值"
 
 #: optimize.c:161
 msgid "invalid function value in 'zeroin'"
-msgstr ""
+msgstr "'zeroin'函数值不对"
 
 #: optimize.c:196 optimize.c:201
 #, fuzzy, c-format
@@ -514,23 +514,23 @@ msgstr "'m'的值必需是串列"
 
 #: optimize.c:354
 msgid "non-finite value supplied by 'nlm'"
-msgstr ""
+msgstr "'nlm'回复了无限值"
 
 #: optimize.c:389
 msgid "invalid function value in 'nlm' optimizer"
-msgstr ""
+msgstr "'nlm'最佳化器里的函数值不对"
 
 #: optimize.c:400 optimize.c:415
 msgid "function value caching for optimization is seriously confused"
-msgstr ""
+msgstr "最佳化时函数值暫存器出了问题"
 
 #: optimize.c:430
 msgid "numeric parameter expected"
-msgstr ""
+msgstr "需要数值参数"
 
 #: optimize.c:434
 msgid "conflicting parameter lengths"
-msgstr ""
+msgstr "参数的长度自相矛盾"
 
 #: optimize.c:438
 #, fuzzy
@@ -549,62 +549,62 @@ msgstr "参数种类不对"
 
 #: optimize.c:471
 msgid "non-positive number of parameters in nlm"
-msgstr ""
+msgstr "nlm参数不能是负的"
 
 #: optimize.c:473
 msgid "nlm is inefficient for 1-d problems"
-msgstr ""
+msgstr "用nlm来解决一维问题效率不高"
 
 #: optimize.c:475
 msgid "invalid gradient tolerance in nlm"
-msgstr ""
+msgstr "nlm里的梯度容错不对"
 
 #: optimize.c:477
 msgid "invalid iteration limit in nlm"
-msgstr ""
+msgstr "nlm里的迭代极限不对"
 
 #: optimize.c:479
 msgid "minimization function has no good digits in nlm"
-msgstr ""
+msgstr "nlm最小化函数找不到可适用的数字"
 
 #: optimize.c:481
 msgid "no analytic gradient to check in nlm!"
-msgstr ""
+msgstr "nlm里没有可查的分析梯度!"
 
 #: optimize.c:483
 msgid "no analytic Hessian to check in nlm!"
-msgstr ""
+msgstr "nlm里没有可查的分析海森!"
 
 #: optimize.c:485
 msgid "probable coding error in analytic gradient"
-msgstr ""
+msgstr "分析梯度的代码很有可能出错"
 
 #: optimize.c:487
 msgid "probable coding error in analytic Hessian"
-msgstr ""
+msgstr "分析海森的代码很有可能出错"
 
 #: optimize.c:489
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
-msgstr ""
+msgstr "*** nlm()产生了不知是什么的错误信息(msg = %d) 。这不应该发生!"
 
 #: optimize.c:500
 msgid "Relative gradient close to zero.\n"
-msgstr ""
+msgstr "相对梯度离零太近.\n"
 
 #: optimize.c:501 optimize.c:505
 msgid "Current iterate is probably solution.\n"
-msgstr ""
+msgstr "当前的重复值很可能就已经是答案了.\n"
 
 #: optimize.c:504
 msgid "Successive iterates within tolerance.\n"
-msgstr ""
+msgstr "在容错范围内连续迭代.\n"
 
 #: optimize.c:508
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr ""
+msgstr "最后一步的整体优化没有能找到比x值要小的一个点.\n"
 
 #: optimize.c:509
 msgid ""
@@ -612,10 +612,11 @@ msgid ""
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr ""
+"要么x已经是函数的本地最小值，要么这个函数非线性太强，要么steptol设得太大。\n"
 
 #: optimize.c:514
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
-msgstr ""
+msgstr "超过了迭代极限。算法失败.\n"
 
 #: optimize.c:517
 msgid ""
@@ -625,6 +626,10 @@ msgid ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 msgstr ""
+"最大步骤超过了5次。\n"
+"这个函数要么没有下边界,\n"
+"从上边界达到了渐近有限值\n"
+"要么是stepmx设得太小。\n"
 
 #: optimize.c:579 optimize.c:584 optimize.c:588 optimize.c:592 optimize.c:596
 #: optimize.c:600 optimize.c:605
@@ -634,11 +639,11 @@ msgstr "lag.max的值不对"
 
 #: optimize.c:636
 msgid "hessian supplied is of the wrong length or mode, so ignored"
-msgstr ""
+msgstr "海森的长度不对或其状态不对，因此略过不用"
 
 #: optimize.c:640
 msgid "gradient supplied is of the wrong length or mode, so ignored"
-msgstr ""
+msgstr "梯度的长度或其状态不对，因此略过不用"
 
 #: pacf.c:81
 msgid "bad Starma struct"
@@ -746,7 +751,7 @@ msgstr "参数种类不对"
 
 #: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
 msgid "NAs produced"
-msgstr ""
+msgstr "产生了NA"
 
 #: random.c:240
 #, fuzzy

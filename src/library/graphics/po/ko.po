@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-13 10:52+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -29,8 +29,9 @@ msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "이벤트 GE_ScalePS는 단일 수치를 필요로 합니다"
 
 #: base.c:322 base.c:329 base.c:337
+#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr ""
+msgstr "등록된 graphics 시스템이 너무 많습니다"
 
 #: graphics.c:289
 #, c-format

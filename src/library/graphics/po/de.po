@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-13 10:52+0100\n"
 "PO-Revision-Date: 2012-03-05 15:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -25,8 +25,9 @@ msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "Ereignis GE_ScalePS verlangt einzelnen numerischen Wert"
 
 #: base.c:322 base.c:329 base.c:337
+#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr ""
+msgstr "zu viele Grafiksysteme registriert"
 
 #: graphics.c:289
 #, c-format

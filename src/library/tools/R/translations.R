@@ -216,11 +216,11 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
             warning("running msgmerge on ",  f, " failed", domain = NA)
             next
         }
-        if (dom != "R") {
+        if (!dom %in% c("R", "stats")) {
             res <- checkPoFile(f, TRUE)
             if(nrow(res)) {
                 print(res)
-                message("not insttalling")
+                message("not installing")
                 next
             }
         }

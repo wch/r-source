@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-13 10:52+0100\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -31,8 +31,9 @@ msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "Событие GE_ScalePS требует единичного числового значения"
 
 #: base.c:322 base.c:329 base.c:337
+#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr ""
+msgstr "слишком много зарегистрированных графических систем"
 
 #: graphics.c:289
 #, c-format

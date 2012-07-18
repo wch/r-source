@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-13 10:54+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -337,8 +337,9 @@ msgid "argument is not a valid model"
 msgstr ""
 
 #: model.c:1646
+#, fuzzy
 msgid "'specials' must be NULL or a character vector"
-msgstr ""
+msgstr "'path' skal være en tegnvektor"
 
 #: model.c:1658
 msgid "'data' argument is of the wrong type"
