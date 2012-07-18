@@ -3997,6 +3997,11 @@ msgfmt -c --statistics -o inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo po/@var{ll}.
 from the package's top-level directory.  Using @option{-c} does some
 useful validity checks, and @option{--statistics} notes the coverage.
 
+Note that as from @R{} 2.16.0 the location of the compiled translations
+(the @file{.mo} file) is different for a standard package (stored in the
+@pkg{translations} package and a contributed one (stored in the
+package's own sources).
+
 @node Supporting R function,  , Installing translations, Internationalization
 @subsection Supporting R function
 
