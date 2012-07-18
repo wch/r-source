@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-10  The R Core Team
+ *  Copyright (C) 2000-12  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -193,7 +193,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	rnk_v = array_value ? LENGTH(dim_v) : 1;
 	PROTECT(dim = allocVector(INTSXP, rnk_v+1));
 	if(array_value)
-	    for(int j=0; j < rnk_v; j++)
+	    for(int j = 0; j < rnk_v; j++)
 		INTEGER(dim)[j] = INTEGER(dim_v)[j];
 	else
 	    INTEGER(dim)[0] = commonLen;
@@ -214,7 +214,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 			// should never happen ..
 			error(_("dimnames(<value>) is neither NULL nor list of length %d"),
 			      rnk_v);
-		    for(int j=0; j < rnk_v; j++)
+		    for(int j = 0; j < rnk_v; j++)
 			SET_VECTOR_ELT(dimnames, j, VECTOR_ELT(rowNames, j));
 		} else
 		    SET_VECTOR_ELT(dimnames, 0, rowNames);

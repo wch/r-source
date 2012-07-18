@@ -464,7 +464,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	    get_number (0, 99, 2);
 	    /* The "Year 2000: The Millennium Rollover" paper suggests that
 	       values in the range 69-99 refer to the twentieth century.  */
-	    tm->tm_year = val >= 69 ? val : val + 100;
+	    int ival = val;
+	    tm->tm_year = ival >= 69 ? ival : ival + 100;
 	    /* Indicate that we want to use the century, if specified.  */
 	    want_century = 1;
 	    want_xday = 1;
@@ -494,7 +495,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		    val = (val / 100) * 100 + ((val % 100) * 50) / 30;
 		}
 		if (val > 1200) return NULL;
-		off = (val * 3600) / 100;
+		off = ((val * 3600) / 100);
 		if (neg) off = -off;
 		*poffset = off;
 	    }
@@ -557,7 +558,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		    wchar_t *end;
 		    sval = wcstod(rp, &end);
 		    if( sval >= 0.0 && sval <= 61.0) {
-			tm->tm_sec = sval;
+			tm->tm_sec = (int) sval;
 			*psecs = sval;
 		    }
 		    rp = end;
@@ -587,7 +588,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	    case L'y':
 		/* Match year within century using alternate numeric symbols.  */
 		get_alt_number (0, 99, 2);
-		tm->tm_year = val >= 69 ? val : val + 100;
+	        int ival = val;
+	        tm->tm_year = ival >= 69 ? ival : ival + 100;
 		want_xday = 1;
 		break;
 	    default:
@@ -926,7 +928,8 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	       And this is mandated by the POSIX 2001 standard, with a
 	       caveat that it might change in future.
 	    */
-	    tm->tm_year = val >= 69 ? val : val + 100;
+	    int ival = val;
+	    tm->tm_year = ival >= 69 ? ival : ival + 100;
 	    /* Indicate that we want to use the century, if specified.  */
 	    want_century = 1;
 	    want_xday = 1;
@@ -1020,7 +1023,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		       char *end;
 		       sval = strtod(rp, &end);
 		       if( sval >= 0.0 && sval <= 61.0) {
-			   tm->tm_sec = sval;
+			   tm->tm_sec = (int) sval;
 			   *psecs = sval;
 		       }
 		       rp = end;
@@ -1050,7 +1053,8 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	    case 'y':
 		/* Match year within century using alternate numeric symbols.  */
 		get_alt_number (0, 99, 2);
-		tm->tm_year = val >= 69 ? val : val + 100;
+		int ival = val;
+		tm->tm_year = ival >= 69 ? ival : ival + 100;
 		want_xday = 1;
 		break;
 	    default:

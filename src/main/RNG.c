@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -157,18 +157,18 @@ double unif_rand(void)
 
 	p1 = a12 * (unsigned int)II(1) - a13n * (unsigned int)II(0);
 	/* p1 % m1 would surely do */
-	k = p1 / m1;
+	k = (int) (p1 / m1);
 	p1 -= k * m1;
 	if (p1 < 0.0) p1 += m1;
-	II(0) = II(1); II(1) = II(2); II(2) = p1;
+	II(0) = II(1); II(1) = II(2); II(2) = (int) p1;
 
 	p2 = a21 * (unsigned int)II(5) - a23n * (unsigned int)II(3);
-	k = p2 / m2;
+	k = (int) (p2 / m2);
 	p2 -= k * m2;
 	if (p2 < 0.0) p2 += m2;
-	II(3) = II(4); II(4) = II(5); II(5) = p2;
+	II(3) = II(4); II(4) = II(5); II(5) = (int) p2;
 
-	return ((p1 > p2) ? (p1 - p2) : (p1 - p2 + m1)) * normc;
+	return (double)((p1 > p2) ? (p1 - p2) : (p1 - p2 + m1)) * normc;
     }
     default:
 	error(_("unif_rand: unimplemented RNG kind %d"), RNG_kind);
@@ -455,7 +455,7 @@ static void RNGkind(RNGtype newkind)
 	error(_("RNGkind: unimplemented RNG kind %d"), newkind);
     }
     GetRNGstate();
-    RNG_Init(newkind, unif_rand() * UINT_MAX);
+    RNG_Init(newkind, (Int32) (unif_rand() * UINT_MAX));
     RNG_kind = newkind;
     PutRNGstate();
 }
@@ -682,7 +682,7 @@ static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 static long ran_arr_cycle(void)
 {
   ran_array(ran_arr_buf,QUALITY);
-  ran_arr_buf[KK]=-1;
+  ran_arr_buf[KK]=(long)(-1);
   ran_arr_ptr=ran_arr_buf+1;
   return ran_arr_buf[0];
 }
@@ -749,7 +749,7 @@ static void RNG_Init_R_KT(Int32 seed)
     fun = findVar1(install(".TAOCP1997init"), R_BaseEnv, CLOSXP, FALSE);
     if(fun == R_UnboundValue)
 	error("function '.TAOCP1997init' is missing");
-    PROTECT(sseed = ScalarInteger(seed % 1073741821));
+    PROTECT(sseed = ScalarInteger((int)(seed % 1073741821)));
     PROTECT(call = lang2(fun, sseed));
     ans = eval(call, R_GlobalEnv);
     memcpy(dummy, INTEGER(ans), 100*sizeof(int));
