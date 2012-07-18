@@ -82,6 +82,8 @@
 
       \item Use of \code{tapply()} with a 0-length \code{INDEX} list is
       deprecated with a warning.
+
+      \item \samp{Translation} packages are defunct.
     }
   }
 

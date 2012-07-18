@@ -508,6 +508,8 @@
 
         if (!is.na(Type) && Type == "Translation") {
             starsmsg(stars, "installing *Translation* package ", sQuote(pkg_name), " ...")
+            warning("'Translation' packages are deprecated",
+                    immediate. = TRUE, call. = TRUE, domain = NA)
             if (dir.exists("share")) {
                 files <- Sys.glob("share/*")
                 if (length(files)) file.copy(files, R.home("share"), TRUE)
