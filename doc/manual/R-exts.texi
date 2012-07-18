@@ -363,8 +363,7 @@ an @samp{Encoding} field (see below).
 
 The mandatory @samp{Package} field gives the name of the package.  This
 should contain only letters, numbers and dot, have at least two
-characters and start with a letter and not end in a dot.  (Translation
-packages are allowed names of the form @samp{Translation-@var{ll}}.)
+characters and start with a letter and not end in a dot.
 
 The mandatory @samp{Version} field gives the version of the package.
 This is a sequence of at least @emph{two} (and usually three)
@@ -4109,10 +4108,9 @@ of which need write permission in the @R{} installation tree.
 
 @menu
 * Frontend::                    
-* Translation::                 
 @end menu
 
-@node Frontend, Translation, Package types, Package types
+@node Frontend,  , Package types, Package types
 @subsection Frontend
 
 This is a rather general mechanism, designed for adding new front-ends
@@ -4125,45 +4123,6 @@ other action is taken.
 
 @code{R CMD build} can package up this type of extension, but @code{R
 CMD check} will check the type and skip it.
-
-@node Translation,  , Frontend, Package types
-@subsection Translation
-
-Conventionally, a translation package for language @var{ll} is called
-@pkg{Translation-@var{ll}} and has @code{Type: Translation}.  It needs
-to contain the directories @file{share/@/locale/@var{ll}} and
-@file{library/@/@var{pkgname}/@/po/@/@var{ll}}, or at least those for
-which translations are available.  The files @file{.mo} are installed in
-the parallel places in the @R{} installation tree.
-
-For example, a package @pkg{Translation-it} might be prepared from an
-installed (and tested) version of @R{} by
-
-@example
-mkdir Translation-it
-cd Translation-it
-(cd "$R_HOME"; tar cf - share/locale/it library/*/po/it) | tar xf -
-# the next step is not needed on Windows
-msgfmt -c -o share/locale/it/LC_MESSAGES/RGui.mo $R_SRC_HOME/po/RGui-it.gmo
-# create a DESCRIPTION file
-cd ..
-R CMD build Translation-it
-@end example
-
-It is probably appropriate to give the package a version number based on
-the version of @R{} which has been translated.  So the
-@file{DESCRIPTION} file might look like
-
-@example
-Package: Translation-it
-Type: Translation
-Version: 2.2.1-1
-Title: Italian Translations for R 2.2.1
-Description: Italian Translations for R 2.2.1
-Author: The translators
-Maintainer: Some Body <somebody@@some.where.net>
-License: GPL (>= 2)
-@end example
 
 @node Services,  , Package types, Creating R packages
 @section Services

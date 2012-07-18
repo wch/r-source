@@ -506,18 +506,8 @@
             return()
         }
 
-        if (!is.na(Type) && Type == "Translation") {
-            starsmsg(stars, "installing *Translation* package ", sQuote(pkg_name), " ...")
-            if (dir.exists("share")) {
-                files <- Sys.glob("share/*")
-                if (length(files)) file.copy(files, R.home("share"), TRUE)
-            }
-            if (dir.exists("library")) {
-                ## FIXME use file.copy
-                system(paste("cp -r ./library", R.home()))
-            }
-            return()
-        }
+        if (!is.na(Type) && Type == "Translation")
+            errmsg("'Translation' packages are defunct")
 
         OS_type <- desc["OS_type"]
         if (WINDOWS) {
