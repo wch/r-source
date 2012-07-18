@@ -1132,8 +1132,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                           ! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX")) {
 	    con <- file(nsFile, encoding=enc)
             on.exit(close(con))
-	    parse(con)
-        } else parse(nsFile)
+	    parse(con, srcfile=NULL)
+        } else parse(nsFile, srcfile=NULL)
     else if (mustExist)
         stop(gettextf("package %s has no NAMESPACE file", sQuote(package)),
              domain = NA)
@@ -1270,7 +1270,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            ## e.g. c("pre", "post") or a regular name
                            ## as the prefix.
                            if(symNames[idx] != "") {
-                               e <- parse(text = symNames[idx])[[1L]]
+                               e <- parse(text = symNames[idx], srcfile=NULL)[[1L]]
                                if(is.call(e))
                                    val <- eval(e)
                                else

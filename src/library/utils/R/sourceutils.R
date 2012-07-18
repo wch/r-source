@@ -74,3 +74,41 @@ getSrcLocation <- function(x, which=c("line", "column", "byte", "parse"), first=
     	srcref[index]
     }
  }
+
+getSrcfile <- function(x) {
+    srcref <- getSrcref(x)
+    if (is.list(srcref))
+    	srcref <- srcref[[length(srcref)]]
+    attr(srcref, "srcfile")
+}
+
+getParseData <- function(x, includeText = NA) {
+    srcfile <- getSrcfile(x)
+    
+    if (is.null(srcfile)) 
+    	return(NULL)
+    else 
+    	data <- srcfile$parseData
+    if (!is.null(data)) {
+        tokens <- attr(data, "tokens")
+        data <- t(unclass(data))
+        colnames(data) <- c( "line1", "col1",  
+		 	     "line2", "col2", 
+		 	     "terminal", "token.num", "id", "parent" )
+    	data <- data.frame(data[,-c(5,6)], token=tokens, 
+    	                   terminal=as.logical(data[,"terminal"]),
+    			   stringsAsFactors=FALSE)
+    	
+    	if (isTRUE(includeText)) gettext <- seq_len(nrow(data))
+        else if (is.na(includeText)) gettext <- which(data$terminal)
+        else gettext <- integer(0)
+        
+        if (length(gettext)) {
+	    text <- character(nrow(data))
+	    for (row in gettext) 
+            	text[row] <- paste(as.character(srcref(srcfile, data[row,1:4])), collapse="\n")
+            data <- data.frame(data, text=text)
+        }
+    }
+    data	
+}

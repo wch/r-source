@@ -252,7 +252,7 @@ function(file, envir = baseenv(), chdir = FALSE,
     	srcfile <- srcfilecopy(file, lines, file.info(file)[1,"mtime"], isFile = TRUE)
     	exprs <- parse(text = lines, srcfile = srcfile)
     } else
-    	exprs <- parse(n = -1, file = file)
+    	exprs <- parse(n = -1, file = file, srcfile = NULL)
     if (length(exprs) == 0L)
 	return(invisible())
     if (chdir && (path <- dirname(file)) != ".") {

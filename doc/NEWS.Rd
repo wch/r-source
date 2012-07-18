@@ -135,6 +135,11 @@
 
       \item Multistratum MANOVA works. In fact, it seems to have done so
       for years in spite of the help page claiming it did not.
+      
+      \item The parser now incorporates code from Romain Francois'
+      parser package, to support more detailed computation on the
+      code, such as syntax highlighting, comment-based documentation,
+      etc.      
     }
   }
 
