@@ -449,14 +449,15 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
 ## (arch), .bzr, .git, .hg (mercurial) and _darcs (Darcs)
+## And it seems .metadata (eclipse) is in the same category.
 
 .vc_dir_names <-
-    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs")
+    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs", ".metadata")
 
 ## and RE version (beware of the need for escapes if amending)
 
 .vc_dir_names_re <-
-    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs)(/|$)"
+    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs|\\.metadata)(/|$)"
 
 ### * Internal utility functions.
 
