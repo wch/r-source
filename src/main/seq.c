@@ -326,10 +326,7 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	    PROTECT(tmp = allocVector(STRSXP, 2));
 	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
 	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
-	}
-	else {
-	    PROTECT(tmp = mkString("factor"));
-	}
+	} else PROTECT(tmp = mkString("factor"));
 	setAttrib(a, R_ClassSymbol, tmp);
 	UNPROTECT(1);
 	setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
@@ -366,7 +363,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
     PROTECT(ap = CONS(R_NilValue,
 		      list4(R_NilValue, R_NilValue, R_NilValue, R_NilValue)));
-    SET_TAG(ap,  install("x"));
+    SET_TAG(ap, install("x"));
     SET_TAG(CDR(ap), install("times"));
     SET_TAG(CDDR(ap), install("length.out"));
     SET_TAG(CDR(CDDR(ap)), install("each"));
@@ -391,9 +388,11 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(each == NA_INTEGER) each = 1;
 
     if(lx == 0) {
-	UNPROTECT(3);
-	if(len == NA_INTEGER) return x;
-	else return lengthgets(duplicate(x), len);
+	SEXP a;
+	PROTECT(a = duplicate(x));
+	if(len != NA_INTEGER && len > 0) a = lengthgets(a, len);
+	UNPROTECT(4);
+	return a;
     }
 
     if(len != NA_INTEGER) { /* takes precedence over times */

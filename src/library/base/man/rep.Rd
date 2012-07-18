@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -48,8 +48,8 @@ rep.int(x, times)
 }
 
 \details{
-  The default behaviour is as if the call was \code{rep(x, times=1,
-    length.out=NA, each=1)}.  Normally just one of the additional
+  The default behaviour is as if the call was \code{rep(x, times = 1,
+    length.out = NA, each = 1)}.  Normally just one of the additional
   arguments is specified, but if \code{each} is specified with either
   of the other two, its replication is performed first, and then that
   implied by \code{times} or \code{length.out}.
@@ -78,7 +78,8 @@ rep.int(x, times)
   An object of the same type as \code{x} (except that \code{rep} will
   coerce pairlists to vector lists).
 
-  \code{rep.int} returns no attributes.
+  \code{rep.int} returns no attributes (except the class if returning a
+  factor).
 
   The default method of \code{rep} gives the result names (which will
   almost always contain duplicates) if \code{x} had names, but retains
@@ -86,7 +87,8 @@ rep.int(x, times)
 }
 \note{
   Function \code{rep.int} is a simple case handled by internal code, and
-  provided as a separate function purely for S compatibility.
+  provided as a separate function partly for S compatibility and partly
+  for speed (especially when names can be dropped).
 
   Function \code{rep} is a primitive, but (partial) matching of argument
   names is performed as for normal functions.  You can no longer pass a
