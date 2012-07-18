@@ -3850,8 +3850,9 @@ the default).
 
 The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
-Windows users can find pre-compiled binaries at the @acronym{GNU}
-archive mirrors and packaged with the @code{poEdit} package
+Windows users can find pre-compiled binaries at
+@uref{http://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}
+and packaged with the @code{poEdit} package
 (@uref{http://poedit.sourceforge.net/@/download.php#win32}).
 
 @menu
@@ -4103,8 +4104,8 @@ The @file{CITATION} file should itself produce no output when
 
 The @file{DESCRIPTION} file has an optional field @code{Type} which if
 missing is assumed to be @code{Package}, the sort of extension discussed
-so far in this chapter.  Currently two other types are recognized, both
-of which need write permission in the @R{} installation tree.
+so far in this chapter.  Currently one other type is recognized; there
+used also to be a @code{Translation} type.
 
 @menu
 * Frontend::                    
@@ -4123,6 +4124,9 @@ other action is taken.
 
 @code{R CMD build} can package up this type of extension, but @code{R
 CMD check} will check the type and skip it.
+
+Many packages of this type need write permission for the @R{}
+installation directory.
 
 @node Services,  , Package types, Creating R packages
 @section Services
@@ -11517,6 +11521,12 @@ example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
 @samp{SJava} (see @uref{http://www.omegahat.org/@/RSJava/}) and @samp{JRI}
 (part of the @CRANpkg{rJava} package on @acronym{CRAN}).
 
+Note that the APIs described in this chapter are only intended to be
+used in an alternative front-end: they are not part of the API made
+available for @R{} packages and can be dangerous to use in a
+conventional package (although packages may contain alternative
+front-ends).
+
 @menu
 * Embedding R under Unix-alikes::  
 * Embedding R under Windows::   
@@ -11885,6 +11895,9 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @}
 @end example
 @end deftypefun
+
+These callbacks should never be changed in a running @R{} session (and
+hence cannot be called from an extension package).
 
 @node Registering symbols, Meshing event loops, Setting R callbacks, Embedding R under Unix-alikes
 @subsection Registering symbols
@@ -12317,7 +12330,7 @@ retained, there is also a key named something like @code{2.11.0} or
 @code{2.11.0 patched} or @code{2.12.0 Pre-release} with a value for
 @code{InstallPath}.
 
-So a comprehensive algorithm to search to @code{R_HOME} is something
+So a comprehensive algorithm to search for @code{R_HOME} is something
 like
 
 @itemize
@@ -12342,7 +12355,7 @@ use its value for @code{InstallPath}.
 @end itemize
 
 Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
-are in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
+were in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
 @file{R_HOME\bin\x64}.  So you need to arrange to look first in the
 architecture-specific subdirectory and then in @file{R_HOME\bin}.
 
