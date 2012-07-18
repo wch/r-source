@@ -885,6 +885,9 @@
 /* Name of package */
 #define PACKAGE "R"
 
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT "https://bugs.r-project.org"
+
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "R"
 
@@ -936,9 +939,9 @@
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
 #ifdef WIN64
-#define R_PLATFORM "x86_64-pc-mingw32"
+#define R_PLATFORM "x86_64-w64-mingw32"
 #else
-#define R_PLATFORM "i386-pc-mingw32"
+#define R_PLATFORM "i386-w64-mingw32"
 #endif
 
 /* Define this to be printing command on your system. */
@@ -951,7 +954,7 @@
 #define R_SOCKLEN_T int
 
 /* Define this to be the name of the vendor of your system. */
-#define R_VENDOR "pc"
+#define R_VENDOR "w64"
 
 /* Define this to be the extension used for shared objects on your system. */
 #define SHLIB_EXT ".dll"

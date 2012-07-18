@@ -50,7 +50,8 @@ static Rboolean
 stem_leaf(double *x, int n, double scale, int width, double atom)
 {
     double r, c, x1, x2;
-    int mm, mu, k, i, j, hi, lo, xi;
+    double mu, lo, hi;
+    int mm, k, i, j, xi;
     int ldigits, hdigits, ndigits, pdigits;
 
     R_rsort(x,n);
@@ -87,23 +88,22 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 
     lo = floor(x[0]  *c/mu)*mu;
     hi = floor(x[n-1]*c/mu)*mu;
-    ldigits = (lo < 0) ? floor(log10(-lo))+1 : 0;
-    hdigits = (hi > 0) ? floor(log10(hi))    : 0;
+    ldigits = (lo < 0) ? (int) floor(log10(-(double)lo))+1 : 0;
+    hdigits = (hi > 0) ? (int) floor(log10((double)hi))    : 0;
     ndigits = (ldigits < hdigits) ? hdigits : ldigits;
 
     /* Starting cell */
 
-    if(lo < 0 && floor(x[0]*c) == lo)
-	lo=lo-mu;
-    hi = lo+mu;
+    if(lo < 0 && floor(x[0]*c) == lo) lo = lo - mu;
+    hi = lo + mu;
     if(floor(x[0]*c+0.5) > hi) {
 	lo = hi;
-	hi = lo+mu;
+	hi = lo + mu;
     }
 
     /* Print out the info about the decimal place */
 
-    pdigits= 1 - floor(log10(c)+0.5);
+    pdigits = 1 - (int) floor(log10(c)+0.5);
 
     Rprintf("  The decimal point is ");
     if(pdigits == 0)
@@ -114,13 +114,13 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
     i = 0;
     do {
 	if(lo < 0)
-	    stem_print(hi,lo,ndigits);
+	    stem_print((int)hi, (int)lo, ndigits);
 	else
-	    stem_print(lo,hi,ndigits);
+	    stem_print((int)lo, (int)hi, ndigits);
 	j = 0;
 	do {
-	    if(x[i] < 0)xi = x[i]*c - .5;
-	    else	xi = x[i]*c + .5;
+	    if(x[i] < 0)xi = (int) (x[i]*c - .5);
+	    else	xi = (int) (x[i]*c + .5);
 
 	    if( (hi == 0 && x[i] >= 0)||
 		(lo <  0 && xi >  hi) ||

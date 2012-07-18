@@ -68,7 +68,7 @@ rcont2(int *nrow, int *ncol,
 
 		/* Compute conditional expected value of MATRIX(L, M) */
 
-		nlm = ia * (id / (double) ie) + 0.5;
+		nlm = (int)(ia * (id / (double) ie) + 0.5);
 		x = exp(fact[ia] + fact[ib] + fact[ic] + fact[id]
 			- fact[ie] - fact[nlm]
 			- fact[id - nlm] - fact[ia - nlm] - fact[ii + nlm]);
@@ -83,7 +83,7 @@ rcont2(int *nrow, int *ncol,
 
 		do {
 		    /* Increment entry in row L, column M */
-		    j = (id - nlm) * (double)(ia - nlm);
+		    j = (int)((id - nlm) * (double)(ia - nlm));
 		    lsp = (j == 0);
 		    if (!lsp) {
 			++nlm;
@@ -97,7 +97,7 @@ rcont2(int *nrow, int *ncol,
 			R_CheckUserInterrupt();
 
 			/* Decrement entry in row L, column M */
-			j = nll * (double)(ii + nll);
+			j = (int)(nll * (double)(ii + nll));
 			lsm = (j == 0);
 			if (!lsm) {
 			    --nll;

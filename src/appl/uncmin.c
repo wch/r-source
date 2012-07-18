@@ -2033,7 +2033,7 @@ optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
 	stpsiz = 0.;
 	for (i = 0; i < n; ++i)
 	    stpsiz += x[i] * x[i] * sx[i] * sx[i];
-	*stepmx = 1000. * fmax2(sqrt(stpsiz), 1);
+	*stepmx = 1000. * fmax2(sqrt(stpsiz), 1.);
     }
 
     /*	check function scale */
@@ -2249,7 +2249,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
     for (i = 0; i < n; ++i)
 	p[i] = 0.;
 
-    rnf = pow(10., -ndigit);
+    rnf = pow(10., -(double)ndigit);
     rnf = fmax2(rnf, epsm);
     analtl = sqrt(rnf);
     analtl = fmax2(0.1, analtl);
