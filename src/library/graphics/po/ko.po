@@ -510,9 +510,8 @@ msgid "incorrect length for '%s' argument"
 msgstr "'%s'인수의 길이가 잘못되었습니다"
 
 #: plot.c:3951
-#, fuzzy
 msgid "unable to allocate memory (in xspline)"
-msgstr "메모리를 확보할 수 없습니다 (do_xspline에서)"
+msgstr "메모리를 확보할 수 없습니다 (xspline에서)"
 
 #: plot3d.c:196 plot3d.c:1937
 msgid "insufficient 'x' or 'y' values"

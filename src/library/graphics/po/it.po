@@ -521,9 +521,8 @@ msgid "incorrect length for '%s' argument"
 msgstr "lunghezza sbagliata dell'argomento 'mode'"
 
 #: plot.c:3951
-#, fuzzy
 msgid "unable to allocate memory (in xspline)"
-msgstr "impossibile allocare memoria (in GPolygon)"
+msgstr "impossibile allocare memoria (in xspline)"
 
 #: plot3d.c:196 plot3d.c:1937
 msgid "insufficient 'x' or 'y' values"

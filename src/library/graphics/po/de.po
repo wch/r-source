@@ -506,9 +506,8 @@ msgid "incorrect length for '%s' argument"
 msgstr "falsche Länge für das '%s' Argument"
 
 #: plot.c:3951
-#, fuzzy
 msgid "unable to allocate memory (in xspline)"
-msgstr "kann keinen Speicher zuteilen (in do_xspline)"
+msgstr "kann keinen Speicher zuteilen (in xspline)"
 
 #: plot3d.c:196 plot3d.c:1937
 msgid "insufficient 'x' or 'y' values"

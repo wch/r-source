@@ -50,9 +50,9 @@ msgid "maximum supported lag is 350"
 msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
 
 #: complete_cases.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny 'type' (%s) argumentu"
 
 #: complete_cases.c:112
 msgid "no input has determined the number of cases"
@@ -114,14 +114,12 @@ msgid "invalid expression in '%s'"
 msgstr "niepoprawne wyreżenie w '%s'"
 
 #: deriv.c:924 model.c:91
-#, fuzzy
 msgid "invalid variable names"
-msgstr "niepoprawna wartość lag.max"
+msgstr "niepoprawne nazwy zmiennej"
 
 #: deriv.c:933
-#, fuzzy
 msgid "invalid tag"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny tag"
 
 #: distance.c:156
 msgid "treating non-finite values as NA"
@@ -175,9 +173,8 @@ msgid "no factors"
 msgstr "brak czynników"
 
 #: fourier.c:201
-#, fuzzy
 msgid "invalid factors"
-msgstr "Niepoprawne vmethod"
+msgstr "niepoprawne czynniki"
 
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -226,9 +223,9 @@ msgid "overlong names in '%s'"
 msgstr "zbyt długie nazwy w '%s'"
 
 #: model.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for variable '%s'"
-msgstr "niepoprawny typ dla eval_check_store"
+msgstr "niepoprawny typ (%s) dla zmiennej '%s'"
 
 #: model.c:153
 #, c-format
@@ -240,14 +237,13 @@ msgid "invalid result from na.action"
 msgstr "niepoprawny wynik 'na.action'"
 
 #: model.c:363 model.c:371 optim.c:194
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny argument '%s'"
 
 #: model.c:382
-#, fuzzy
 msgid "invalid model frame"
-msgstr "niepoprawna wartość lag.max"
+msgstr "niepoprawna ramka modelu"
 
 #: model.c:384
 msgid "do not know how many cases"
@@ -259,9 +255,9 @@ msgid "variable lengths differ (found for variable %d)"
 msgstr "długości zmiennych różnią się (znaleziono dla zmiennej %d)"
 
 #: model.c:412 model.c:419
-#, fuzzy, c-format
+#, c-format
 msgid "variable %d has no levels"
-msgstr "zmienna '%s' nie jest liczbą rzeczywistą"
+msgstr "zmienna %d nie ma poziomów"
 
 #: model.c:531
 msgid "the response appeared on the right-hand side and was dropped"
@@ -484,9 +480,9 @@ msgstr "próba minimalizacji nie-funkcji"
 
 #: optimize.c:96 optimize.c:103 optimize.c:112 optimize.c:185 optimize.c:190
 #: optimize.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "approx(): niepoprawna wartość f"
+msgstr "niepoprawna wartość '%s'"
 
 #: optimize.c:105 optimize.c:191
 msgid "'xmin' not less than 'xmax'"
@@ -501,14 +497,13 @@ msgid "invalid function value in 'zeroin'"
 msgstr "niepoprawna wartość funkcji w 'zeroin'"
 
 #: optimize.c:196 optimize.c:201
-#, fuzzy, c-format
+#, c-format
 msgid "NA value for '%s' is not allowed"
-msgstr "zmienna '%s' nie jest liczbą rzeczywistą"
+msgstr "Wartość NA dla '%s' nie jest dozwolona"
 
 #: optimize.c:211
-#, fuzzy
 msgid "'maxiter' must be positive"
-msgstr "'m' musi być listą"
+msgstr "'maxiter' musi być dodatnie"
 
 #: optimize.c:354
 msgid "non-finite value supplied by 'nlm'"
@@ -533,17 +528,15 @@ msgstr "konfliktujące długości parametrów"
 #: optimize.c:438
 #, fuzzy
 msgid "invalid parameter length"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny typ parametru"
 
 #: optimize.c:448 optimize.c:455
-#, fuzzy
 msgid "missing value in parameter"
-msgstr "brakuje wartości w ostatnich %d obserwacjach"
+msgstr "brakuje wartości w parametrze"
 
 #: optimize.c:460
-#, fuzzy
 msgid "invalid parameter type"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny typ parametru"
 
 #: optimize.c:471
 msgid "non-positive number of parameters in nlm"
@@ -636,9 +629,8 @@ msgstr ""
 
 #: optimize.c:579 optimize.c:584 optimize.c:588 optimize.c:592 optimize.c:596
 #: optimize.c:600 optimize.c:605
-#, fuzzy
 msgid "invalid NA value in parameter"
-msgstr "niepoprawna wartość lag.max"
+msgstr "niepoprawna wartość NA w parametrze"
 
 #: optimize.c:636
 msgid "hessian supplied is of the wrong length or mode, so ignored"
@@ -752,23 +744,20 @@ msgstr "macierz 'scal' nie jest dodatnio określona"
 #: random.c:51 random.c:55 random.c:60 random.c:65 random.c:118 random.c:124
 #: random.c:129 random.c:134 random.c:177 random.c:182 random.c:187
 #: random.c:201 random.c:285
-#, fuzzy
 msgid "invalid arguments"
-msgstr "niepoprawny typ argumentu"
+msgstr "nieporawne argumenty"
 
 #: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
 msgid "NAs produced"
 msgstr "Wyporodukowano wartości NA"
 
 #: random.c:240
-#, fuzzy
 msgid "invalid first argument 'n'"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny pierwszy argument 'n'"
 
 #: random.c:242
-#, fuzzy
 msgid "invalid second argument 'size'"
-msgstr "niepoprawny typ argumentu"
+msgstr "niepoprawny drugi argument 'size'"
 
 #: smooth.c:79
 #, c-format

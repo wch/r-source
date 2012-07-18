@@ -507,9 +507,8 @@ msgid "incorrect length for '%s' argument"
 msgstr " '%s' 引数の長さが不正です "
 
 #: plot.c:3951
-#, fuzzy
 msgid "unable to allocate memory (in xspline)"
-msgstr " メモリ確保ができません (do_xspline 中) "
+msgstr " メモリ確保ができません (xspline 中) "
 
 #: plot3d.c:196 plot3d.c:1937
 msgid "insufficient 'x' or 'y' values"

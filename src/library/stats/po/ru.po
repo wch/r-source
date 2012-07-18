@@ -55,9 +55,9 @@ msgid "maximum supported lag is 350"
 msgstr "максимальный поддерживаемый лаг -- 350"
 
 #: complete_cases.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный 'type' (%s) аргумента"
 
 #: complete_cases.c:112
 msgid "no input has determined the number of cases"
@@ -118,14 +118,12 @@ msgid "invalid expression in '%s'"
 msgstr "неправильное выражение в '%s'"
 
 #: deriv.c:924 model.c:91
-#, fuzzy
 msgid "invalid variable names"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильные имена переменных"
 
 #: deriv.c:933
-#, fuzzy
 msgid "invalid tag"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный тег"
 
 #: distance.c:156
 msgid "treating non-finite values as NA"
@@ -179,9 +177,8 @@ msgid "no factors"
 msgstr "нет факторов"
 
 #: fourier.c:201
-#, fuzzy
 msgid "invalid factors"
-msgstr "Неправильный vmethod"
+msgstr "неправильные факторы"
 
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -229,9 +226,9 @@ msgid "overlong names in '%s'"
 msgstr "слишком длинное имя в '%s'"
 
 #: model.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for variable '%s'"
-msgstr "неправильный тип 'eval_check_store'"
+msgstr "неправильный (%s) тип переменной '%s'"
 
 #: model.c:153
 #, c-format
@@ -243,14 +240,13 @@ msgid "invalid result from na.action"
 msgstr "неправильный результат 'na.action'"
 
 #: model.c:363 model.c:371 optim.c:194
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный аргумент '%s'"
 
 #: model.c:382
-#, fuzzy
 msgid "invalid model frame"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильный модельный фрейм"
 
 #: model.c:384
 msgid "do not know how many cases"
@@ -262,9 +258,9 @@ msgid "variable lengths differ (found for variable %d)"
 msgstr "длины переменных различаются (найдено для переменной %d)"
 
 #: model.c:412 model.c:419
-#, fuzzy, c-format
+#, c-format
 msgid "variable %d has no levels"
-msgstr "переменная '%s' не является числовой"
+msgstr "у переменной %d нет уровней"
 
 #: model.c:531
 msgid "the response appeared on the right-hand side and was dropped"
@@ -299,33 +295,28 @@ msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "переменные типа '%s' в модельных матрицах не разрешены"
 
 #: model.c:875
-#, fuzzy
 msgid "invalid formula in 'update'"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильная формула в 'update'"
 
 #: model.c:909
 msgid "formula expected"
 msgstr "ожидается формула"
 
 #: model.c:1026
-#, fuzzy
 msgid "invalid term in model formula"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильный терм в модельной формуле"
 
 #: model.c:1101
-#, fuzzy
 msgid "invalid model formula"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильная модельная формула"
 
 #: model.c:1127 model.c:1371
-#, fuzzy
 msgid "invalid power in formula"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильная степень в формуле"
 
 #: model.c:1163
-#, fuzzy
 msgid "invalid model formula in ExtractVars"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильная модельная формула в ExtractVars"
 
 #: model.c:1493
 #, c-format
@@ -333,9 +324,8 @@ msgid "duplicated name '%s' in data frame using '.'"
 msgstr "повторяющееся имя '%s' в таблице данных, использую '.'"
 
 #: model.c:1550
-#, fuzzy
 msgid "invalid model formula in EncodeVars"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильная модельная формула в EncodeVars"
 
 #: model.c:1636
 msgid "argument is not a valid model"
@@ -492,9 +482,9 @@ msgstr "попытка минимизировать не-функцию"
 
 #: optimize.c:96 optimize.c:103 optimize.c:112 optimize.c:185 optimize.c:190
 #: optimize.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "approx(): неправильное значение f"
+msgstr "неправильное значение '%s'"
 
 #: optimize.c:105 optimize.c:191
 msgid "'xmin' not less than 'xmax'"
@@ -509,14 +499,13 @@ msgid "invalid function value in 'zeroin'"
 msgstr "неправильное значение функции в 'zeroin'"
 
 #: optimize.c:196 optimize.c:201
-#, fuzzy, c-format
+#, c-format
 msgid "NA value for '%s' is not allowed"
-msgstr "переменная '%s' не является числовой"
+msgstr "NA в '%s' не разрешается"
 
 #: optimize.c:211
-#, fuzzy
 msgid "'maxiter' must be positive"
-msgstr "'m' должен быть списком"
+msgstr "'maxiter' должен быть положителен"
 
 #: optimize.c:354
 msgid "non-finite value supplied by 'nlm'"
@@ -539,19 +528,16 @@ msgid "conflicting parameter lengths"
 msgstr "конфликтующие длины параметров"
 
 #: optimize.c:438
-#, fuzzy
 msgid "invalid parameter length"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный параметр длины"
 
 #: optimize.c:448 optimize.c:455
-#, fuzzy
 msgid "missing value in parameter"
-msgstr "пропущенное значение в последних %d наблюдениях"
+msgstr "пропущенное значение в параметре"
 
 #: optimize.c:460
-#, fuzzy
 msgid "invalid parameter type"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный параметр типа"
 
 #: optimize.c:471
 msgid "non-positive number of parameters in nlm"
@@ -645,9 +631,8 @@ msgstr ""
 
 #: optimize.c:579 optimize.c:584 optimize.c:588 optimize.c:592 optimize.c:596
 #: optimize.c:600 optimize.c:605
-#, fuzzy
 msgid "invalid NA value in parameter"
-msgstr "неправильное значение 'lag.max'"
+msgstr "неправильное NA-значение в параметре"
 
 #: optimize.c:636
 msgid "hessian supplied is of the wrong length or mode, so ignored"
@@ -761,23 +746,20 @@ msgstr "матрица 'scal' не положительно-определенная"
 #: random.c:51 random.c:55 random.c:60 random.c:65 random.c:118 random.c:124
 #: random.c:129 random.c:134 random.c:177 random.c:182 random.c:187
 #: random.c:201 random.c:285
-#, fuzzy
 msgid "invalid arguments"
-msgstr "неправильный тип аргумента"
+msgstr "неправильные аргументы"
 
 #: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
 msgid "NAs produced"
 msgstr "получились NA"
 
 #: random.c:240
-#, fuzzy
 msgid "invalid first argument 'n'"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный первый аргумент 'n'"
 
 #: random.c:242
-#, fuzzy
 msgid "invalid second argument 'size'"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный второй аргумент 'size'"
 
 #: smooth.c:79
 #, c-format
