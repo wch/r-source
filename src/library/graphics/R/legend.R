@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 legend <-
-function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
+function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
          lty, lwd, pch, angle = 45, density = NULL, bty = "o", bg = par("bg"),
          box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
 	 pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
@@ -216,7 +216,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 
     if (mfill) {		#- draw filled boxes -------------
 	if(plot) {
-	    fill <- rep_len(fill, n.leg)
+	    if(!is.null(fill)) fill <- rep_len(fill, n.leg)
 	    rect2(left = xt, top=yt+ybox/2, dx = xbox, dy = ybox,
 		  col = fill,
 		  density = density, angle = angle, border = border)
