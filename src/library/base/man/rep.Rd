@@ -28,10 +28,9 @@ rep.int(x, times)
 rep_len(x, length.out)
 }
 \arguments{
-  \item{x}{a vector (of any mode including a list) or a pairlist or a
-    factor or (for \code{rep} only) a \code{POSIXct} or \code{POSIXlt}
-    or \code{Date} object; or an S4 object containing such an
-    object.}
+  \item{x}{a vector (of any mode including a list) or a factor or (for
+    \code{rep} only) a \code{POSIXct} or \code{POSIXlt} or \code{Date}
+    object; or an S4 object containing such an object.}
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
@@ -81,8 +80,7 @@ rep_len(x, length.out)
   (\code{0} for raw vectors) and \code{NULL} for a list.
 }
 \value{
-  An object of the same type as \code{x} (except that \code{rep} will
-  coerce pairlists to vector lists).
+  An object of the same type as \code{x}.
 
   \code{rep.int} and \code{rep_len} return no attributes (except the
   class if returning a factor).

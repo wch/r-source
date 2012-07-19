@@ -228,6 +228,11 @@
       \item The previously deprecated uses of \code{array()} with a
       0-length \code{dim} argument and \code{tapply()} with a 0-length
       \code{INDEX} list are now errors.
+
+      \item \samp{Translation} packages are defunct.
+
+      \item Calling \code{rep()} or \code{rep.int()} on a pairlist is
+      now an error.
     }
   }
 
@@ -423,7 +428,10 @@
       \item Use of \code{tapply()} with a 0-length \code{INDEX} list is
       deprecated with a warning.
 
-      \item \samp{Translation} packages are defunct.
+      \item \samp{Translation} packages are deprecated.
+
+      \item Calling \code{rep()} or \code{rep.int()} on a pairlist is
+      deprecated and will give a warning.
     }
   }
 
@@ -578,8 +586,6 @@
       \code{?getCConverterDescriptions}) are deprecated: use the
       \code{.Call()} interface instead.  There are no known examples
       (they were never fully documented).
-      
-      \item \samp{Translation} packages are deprecated.      
     }
   }
 
