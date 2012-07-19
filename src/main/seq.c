@@ -332,7 +332,7 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	    RAW(a)[i] = RAW(s)[i % ns];
 	break;
     default:
-	UNIMPLEMENTED_TYPE("rep", s);
+	UNIMPLEMENTED_TYPE("rep.int", s);
     }
     if (inherits(s, "factor")) {
 	SEXP tmp;
@@ -362,9 +362,6 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     s = CAR(args);
-
-    /* This is what rep() does */
-    if(isNull(s)) return s;
 
     if (!isVector(s) && (!isList(s)))
 	error(_("attempt to replicate non-vector"));
@@ -467,7 +464,7 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < na; i++) SET_VECTOR_ELT(a, i, R_NilValue);
 	    break;
 	default:
-	    UNIMPLEMENTED_TYPE("rep", s);
+	    UNIMPLEMENTED_TYPE("rep_len", s);
 	}
     }
     if (inherits(s, "factor")) {
@@ -541,6 +538,8 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(each == NA_INTEGER) each = 1;
 
     if(lx == 0) {
+	if(len > 0 && x == R_NilValue) 
+	    warningcall(call, "'x' is NULL so the result will be NULL");
 	SEXP a;
 	PROTECT(a = duplicate(x));
 	if(len != NA_INTEGER && len > 0) a = xlengthgets(a, len);

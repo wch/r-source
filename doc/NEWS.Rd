@@ -143,6 +143,9 @@
 
       \item There is a new function \code{rep_len()} analogous to
       \code{rep.int()} for when speed is required (and names are not).
+
+      \item The undocumented use \code{rep(NULL, length.out = n)} for
+      \code{n > 0} (which returns \code{NULL}) now gives a warning.
     }
   }
 

@@ -1899,8 +1899,7 @@ for(n in c(200, 722, 1000)) x <- rWishart(1, n, diag(n))
 
 ## undocumented used of rep(NULL), from matplot()
 stopifnot(identical(rep(NULL, length.out = 4), NULL))
-stopifnot(identical(rep_len(NULL, length.out = 4), NULL))
-## failed in first version of rep()
+## now gives a warning.
 
 
 proc.time()
