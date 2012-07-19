@@ -84,6 +84,9 @@
       deprecated with a warning.
 
       \item \samp{Translation} packages are defunct.
+
+      \item Calling \code{rep()} or \code{rep.int()} on a pairlist is
+      deprecated and will give a warning.
     }
   }
 

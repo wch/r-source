@@ -24,10 +24,10 @@ rep(x, \dots)
 rep.int(x, times)
 }
 \arguments{
-  \item{x}{a vector (of any mode including a list) or a pairlist or a
-    factor or (except for \code{rep.int}) a \code{POSIXct} or
-    \code{POSIXlt} or \code{date} object; or also, an S4 object containing
-    a vector of the above kind.}
+  \item{x}{a vector (of any mode including a list) or a factor or
+    (except for \code{rep.int}) a \code{POSIXct} or \code{POSIXlt} or
+    \code{date} object; or also, an S4 object containing a vector of the
+    above kind.}
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
@@ -75,15 +75,14 @@ rep.int(x, times)
   (\code{0} for raw vectors) and \code{NULL} for a list.
 }
 \value{
-  An object of the same type as \code{x} (except that \code{rep} will
-  coerce pairlists to vector lists).
+  An object of the same type as \code{x}.
 
   \code{rep.int} returns no attributes (except the class if returning a
   factor).
 
   The default method of \code{rep} gives the result names (which will
   almost always contain duplicates) if \code{x} had names, but retains
-  no other attributes except for factors.
+  no other attributes.
 }
 \note{
   Function \code{rep.int} is a simple case handled by internal code, and

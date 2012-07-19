@@ -170,8 +170,10 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 
     if (isVector(s))
 	a = allocVector(TYPEOF(s), na);
-    else
+    else {
+	warning("replication of pairlists is deprecated");
 	a = allocList(na);
+    }
     PROTECT(a);
     n = 0;
     switch (TYPEOF(s)) {
@@ -271,8 +273,10 @@ static SEXP rep1(SEXP s, SEXP ncopy)
     na = nc * ns;
     if (isVector(s))
 	a = allocVector(TYPEOF(s), na);
-    else
+    else {
+	warning("replication of pairlists is deprecated");
 	a = allocList(na);
+    }
     PROTECT(a);
 
 #ifdef _S4_rep_keepClass
@@ -387,6 +391,8 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warningcall(call, _("first element used of '%s' argument"), "each");
     if(each == NA_INTEGER) each = 1;
 
+    if (TYPEOF(x) == LISTSXP)
+	warningcall(call, "replication of pairlists is deprecated");
     if(lx == 0) {
 	SEXP a;
 	PROTECT(a = duplicate(x));
