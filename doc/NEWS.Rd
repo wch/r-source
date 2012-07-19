@@ -83,7 +83,7 @@
       \item Use of \code{tapply()} with a 0-length \code{INDEX} list is
       deprecated with a warning.
 
-      \item \samp{Translation} packages are defunct.
+      \item \samp{Translation} packages are deprecated.
 
       \item Calling \code{rep()} or \code{rep.int()} on a pairlist is
       deprecated and will give a warning.
