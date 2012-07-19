@@ -145,7 +145,7 @@ static void setId( SEXP expr, yyltype loc){
     } while (YYID (0))
 
 		
-# define YY_LOCATION_PRINT(File, Loc)					\
+# define YY_LOCATION_PRINT(Loc)					\
  fprintf ( stderr, "%d.%d.%d-%d.%d.%d (%d)",				\
  	(Loc).first_line, (Loc).first_column,	(Loc).first_byte, 	\
  	(Loc).last_line,  (Loc).last_column, 	(Loc).last_byte, 	\
@@ -3115,6 +3115,10 @@ static void recordParents( int parent, yyltype * childs, int nchilds){
 		loc = childs[ii] ;
 		if( loc.first_line == loc.last_line && loc.first_byte > loc.last_byte ){
 			continue ;
+		}
+		/* FIXME:  workaround to prevent segfaults.  This shouldn't happen... */
+		if ((childs[ii]).id < 0 || (childs[ii]).id > identifier) {
+		    return;
 		}
 		ID_PARENT( (childs[ii]).id ) = parent  ;
 	}
