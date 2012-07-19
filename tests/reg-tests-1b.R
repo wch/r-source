@@ -1896,4 +1896,11 @@ sunflowerplot( Sepal.Length ~ Sepal.Width, data = iris, xlab = "A")
 for(n in c(200, 722, 1000)) x <- rWishart(1, n, diag(n))
 ## failed in various ways in R <= 2.15.1
 
+
+## undocumented used of rep(NULL), from matplot()
+stopifnot(identical(rep(NULL, length.out = 4), NULL))
+stopifnot(identical(rep_len(NULL, length.out = 4), NULL))
+## failed in first version of rep()
+
+
 proc.time()

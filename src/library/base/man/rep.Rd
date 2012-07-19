@@ -99,6 +99,11 @@ rep_len(x, length.out)
   Function \code{rep} is a primitive, but (partial) matching of argument
   names is performed as for normal functions.  You can no longer pass a
   missing argument to e.g. \code{length.out}.
+
+  For historical reasons \code{rep} works on \code{NULL}: the result is
+  always \code{NULL} even when \code{length.out} is positive.
+  \code{rep_len} has followed this behaviour to allow it to be a drop-in
+  replacement.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
