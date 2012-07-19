@@ -4600,8 +4600,10 @@ do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     what = asInteger(CAR(args));
-    if (what == NA_INTEGER || what < 0 || what >= NCONNECTIONS ||
-	!Connections[what]) error(_("there is no connection %d"), what);
+    if (what == NA_INTEGER)
+	error(_("there is no connection NA"));
+    if (what < 0 || what >= NCONNECTIONS || !Connections[what]) 
+	error(_("there is no connection %d"), what);
 
     con = Connections[what];
     PROTECT(ans = ScalarInteger(what));

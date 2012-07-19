@@ -92,16 +92,14 @@ isatty(con)
 
 \examples{
 showConnections(all = TRUE)
-
+\dontrun{
 textConnection(letters)
 # oops, I forgot to record that one
 showConnections()
 #  class     description      mode text   isopen   can read can write
 #3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"     
-\dontrun{close(getConnection(3))}
-\dontshow{try({r <- as.numeric(row.names(showConnections()))
-close(getConnection(r))})}
-showConnections()
+mycon <- getConnection(3)
+}
 
 c(isatty(stdin()), isatty(stdout()), isatty(stderr()))
 }
