@@ -887,6 +887,7 @@
  do_remove
  do_rep
  do_rep_int
+ do_rep_len
  do_repeat
  do_resetCondHands
  do_restart

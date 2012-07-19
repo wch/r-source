@@ -368,6 +368,7 @@ SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_remove(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rep_int(SEXP, SEXP, SEXP, SEXP);
+SEXP do_rep_len(SEXP, SEXP, SEXP, SEXP);
 SEXP do_repeat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_resetCondHands(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);

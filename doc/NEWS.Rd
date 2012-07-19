@@ -140,6 +140,9 @@
       parser package, to support more detailed computation on the
       code, such as syntax highlighting, comment-based documentation,
       etc.      
+
+      \item There is a new function \code{rep_len()} analogous to
+      \code{rep.int()} for when speed is required (and names are not).
     }
   }
 

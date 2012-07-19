@@ -598,6 +598,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"invisible",	do_invisible,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rep",		do_rep,		0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rep.int",	do_rep_int,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"rep_len",	do_rep_len,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"seq.int",	do_seq,		0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"seq_len",	do_seq_len,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"seq_along",	do_seq_along,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},

@@ -324,7 +324,6 @@ static SEXP rep1(SEXP s, SEXP ncopy)
     }
 	break;
     case VECSXP:
-	i = 0;
 	for (i = 0; i < na; i++)
 	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
 	break;
@@ -341,10 +340,7 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	    PROTECT(tmp = allocVector(STRSXP, 2));
 	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
 	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
-	}
-	else {
-	    PROTECT(tmp = mkString("factor"));
-	}
+	} else PROTECT(tmp = mkString("factor"));
 	setAttrib(a, R_ClassSymbol, tmp);
 	UNPROTECT(1);
 	setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
@@ -358,6 +354,137 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     return rep1(CAR(args), CADR(args));
 }
+
+SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_xlen_t i, ns, na;
+    SEXP a, s, len;
+
+    checkArity(op, args);
+    s = CAR(args);
+
+    /* This is what rep() does */
+    if(isNull(s)) return s;
+
+    if (!isVector(s) && (!isList(s)))
+	error(_("attempt to replicate non-vector"));
+
+    len = CADR(args);
+    if(length(len) != 1)
+	error(_("invalid '%s' value"), "length.out");
+#ifdef LONG_VECTOR_SUPPORT
+    double sna = asReal(len);
+    if (!R_FINITE(sna) || sna < 0)
+	error(_("invalid '%s' value"), "length.out");
+    na = (R_xlen_t) sna;
+#else
+    if ((na = asInteger(len)) == NA_INTEGER || na < 0) /* na = 0 ok */
+	error(_("invalid '%s' value"), "length.out");
+#endif
+
+    ns = xlength(s);
+    if (isVector(s))
+	a = allocVector(TYPEOF(s), na);
+    else {
+	if (na > INT_MAX) error("too long for a pairlist");
+	a = allocList((int) na);
+    }
+    PROTECT(a);
+
+#ifdef _S4_rep_keepClass
+    if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
+	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
+	SET_S4_OBJECT(a);
+    }
+#endif
+
+    /* We need to handle ns = 0 and do that separately for speed. */
+    if (ns > 0) {
+	switch (TYPEOF(s)) {
+	case LGLSXP:
+	    for (i = 0; i < na; i++) LOGICAL(a)[i] = LOGICAL(s)[i % ns];
+	    break;
+	case INTSXP:
+	    for (i = 0; i < na; i++) INTEGER(a)[i] = INTEGER(s)[i % ns];
+	    break;
+	case REALSXP:
+	    for (i = 0; i < na; i++) REAL(a)[i] = REAL(s)[i % ns];
+	    break;
+	case CPLXSXP:
+	    for (i = 0; i < na; i++) COMPLEX(a)[i] = COMPLEX(s)[i % ns];
+	    break;
+	case RAWSXP:
+	    for (i = 0; i < na; i++) RAW(a)[i] = RAW(s)[i % ns];
+	    break;
+	case STRSXP:
+	    for (i = 0; i < na; i++) SET_STRING_ELT(a, i, STRING_ELT(s, i% ns));
+	    break;
+	case LISTSXP:
+	{
+	    int i = 0, nss = (int) ns;
+	    for (SEXP t = a; t != R_NilValue; t = CDR(t), i++)
+		SETCAR(t, duplicate(CAR(nthcdr(s, (i % nss)))));
+	}
+	break;
+	case VECSXP:
+	    for (i = 0; i < na; i++)
+		SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("rep", s);
+	}
+    } else {
+	switch (TYPEOF(s)) {
+	case LGLSXP:
+	    for (i = 0; i < na; i++) LOGICAL(a)[i] = NA_LOGICAL;
+	    break;
+	case INTSXP:
+	    for (i = 0; i < na; i++) INTEGER(a)[i] = NA_INTEGER;
+	    break;
+	case REALSXP:
+	    for (i = 0; i < na; i++) REAL(a)[i] = NA_REAL;
+	    break;
+	case CPLXSXP:
+	    for (i = 0; i < na; i++) {
+		COMPLEX(a)[i].r = NA_REAL;
+		COMPLEX(a)[i].i = NA_REAL;
+	    }
+	    break;
+	case RAWSXP:
+	    for (i = 0; i < na; i++) RAW(a)[i] = (Rbyte) 0;
+	    break;
+	case STRSXP:
+	    for (i = 0; i < na; i++) SET_STRING_ELT(a, i, NA_STRING);
+	    break;
+	case LISTSXP:
+	{
+	    int i = 0;
+	    for (SEXP t = a; t != R_NilValue; t = CDR(t), i++)
+		SETCAR(t, R_NilValue);
+	}
+	break;
+	case VECSXP:
+	    for (i = 0; i < na; i++) SET_VECTOR_ELT(a, i, R_NilValue);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("rep", s);
+	}
+    }
+    if (inherits(s, "factor")) {
+	SEXP tmp;
+	if(inherits(s, "ordered")) {
+	    PROTECT(tmp = allocVector(STRSXP, 2));
+	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
+	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
+	} else PROTECT(tmp = mkString("factor"));
+	setAttrib(a, R_ClassSymbol, tmp);
+	UNPROTECT(1);
+	setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
+    }
+    UNPROTECT(1);
+    return a;
+}
+
 
 /* We are careful to use evalListKeepMissing here (inside
    DispatchOrEval) to avoid dropping missing arguments so e.g.
@@ -382,7 +509,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
     PROTECT(ap = CONS(R_NilValue,
 		      list4(R_NilValue, R_NilValue, R_NilValue, R_NilValue)));
-    SET_TAG(ap,  install("x"));
+    SET_TAG(ap, install("x"));
     SET_TAG(CDR(ap), install("times"));
     SET_TAG(CDDR(ap), install("length.out"));
     SET_TAG(CDR(CDDR(ap)), install("each"));
@@ -414,9 +541,11 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(each == NA_INTEGER) each = 1;
 
     if(lx == 0) {
-	UNPROTECT(3);
-	if(len == NA_INTEGER) return x;
-	else return xlengthgets(duplicate(x), len);
+	SEXP a;
+	PROTECT(a = duplicate(x));
+	if(len != NA_INTEGER && len > 0) a = xlengthgets(a, len);
+	UNPROTECT(4);
+	return a;
     }
 
     if(len != NA_INTEGER) { /* takes precedence over times */
