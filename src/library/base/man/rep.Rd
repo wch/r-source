@@ -93,6 +93,9 @@ rep.int(x, times)
   Function \code{rep} is a primitive, but (partial) matching of argument
   names is performed as for normal functions.  You can no longer pass a
   missing argument to e.g. \code{length.out}.
+
+  For historical reasons \code{rep} works on \code{NULL}: the result is
+  always \code{NULL} even when \code{length.out} is positive.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

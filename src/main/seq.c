@@ -318,7 +318,7 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	    RAW(a)[i] = RAW(s)[i % ns];
 	break;
     default:
-	UNIMPLEMENTED_TYPE("rep", s);
+	UNIMPLEMENTED_TYPE("rep.int", s);
     }
     if (inherits(s, "factor")) {
 	SEXP tmp;
