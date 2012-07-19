@@ -29,9 +29,9 @@ rep_len(x, length.out)
 }
 \arguments{
   \item{x}{a vector (of any mode including a list) or a pairlist or a
-    factor or (except for \code{rep.int}) a \code{POSIXct} or
-    \code{POSIXlt} or \code{date} object; or also, an S4 object containing
-    a vector of the above kind.}
+    factor or (for \code{rep} only) a \code{POSIXct} or \code{POSIXlt}
+    or \code{Date} object; or an S4 object containing such an
+    object.}
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
@@ -89,7 +89,7 @@ rep_len(x, length.out)
 
   The default method of \code{rep} gives the result names (which will
   almost always contain duplicates) if \code{x} had names, but retains
-  no other attributes except for factors.
+  no other attributes.
 }
 \note{
   Function \code{rep.int} is a simple case handled by internal code, and
@@ -136,8 +136,9 @@ rep(as.POSIXlt(x), rep(2, 3))
 x <- factor(LETTERS[1:4]); names(x) <- letters[1:4]
 x
 rep(x, 2)
-rep(x, each=2)
+rep(x, each = 2)
 rep.int(x, 2)  # no names
+rep_len(x, 10)
 }
 \keyword{manip}
 \keyword{chron}

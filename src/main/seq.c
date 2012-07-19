@@ -166,7 +166,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     nc = xlength(ncopy);
     na = 0;
     for (i = 0; i < nc; i++) {
-	if (INTEGER(t)[i] == NA_INTEGER || INTEGER(t)[i]<0)
+	if (INTEGER(t)[i] == NA_INTEGER || INTEGER(t)[i] < 0)
 	    error(_("invalid '%s' value"), "times");
 	na += INTEGER(t)[i];
     }
@@ -227,173 +227,21 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     default:
 	UNIMPLEMENTED_TYPE("rep2", s);
     }
-#ifdef _S4_rep_keepClass
-    if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
-	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
-	SET_S4_OBJECT(a);
-    }
-#endif
-    if (inherits(s, "factor")) {
-	SEXP tmp;
-	if(inherits(s, "ordered")) {
-	    PROTECT(tmp = allocVector(STRSXP, 2));
-	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
-	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
-	}
-	else {
-	    PROTECT(tmp = mkString("factor"));
-	}
-	setAttrib(a, R_ClassSymbol, tmp);
-	UNPROTECT(1);
-	setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
-    }
     UNPROTECT(2);
     return a;
 }
 
-/* called in do_rep_int() only */
-static SEXP rep1(SEXP s, SEXP ncopy)
+static SEXP rep3(SEXP s, R_xlen_t na)
 {
-    R_xlen_t i, ns, na, nc;
-    SEXP a, t;
+    R_xlen_t i, ns = xlength(s);
+    SEXP a;
 
-    if (!isVector(ncopy))
-	error(_("incorrect type for second argument"));
-
-    if (!isVector(s) && (!isList(s)))
-	error(_("attempt to replicate non-vector"));
-
-    nc = xlength(ncopy);
-    /* FIXME: only want to do this for nc > 1 */
-    if (nc == xlength(s)) return rep2(s, ncopy);
-    if (nc != 1) error(_("invalid '%s' value"), "times");
-
-#ifdef LONG_VECTOR_SUPPORT
-    double snc = asReal(ncopy);
-    if (!R_FINITE(snc) || snc < 0)
-	error(_("invalid '%s' value"), "times");
-    nc = (R_xlen_t) snc;
-#else
-    if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0)/* nc = 0 ok */
-	error(_("invalid '%s' value"), "times");
-#endif
-
-    ns = xlength(s);
-    na = nc * ns;
     if (isVector(s))
 	a = allocVector(TYPEOF(s), na);
     else {
 	if (na > INT_MAX) error("too long for a pairlist");
 	a = allocList((int) na);
     }
-    PROTECT(a);
-
-#ifdef _S4_rep_keepClass
-    if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
-	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
-	SET_S4_OBJECT(a);
-    }
-#endif
-
-    switch (TYPEOF(s)) {
-    case LGLSXP:
-	for (i = 0; i < na; i++)
-	    LOGICAL(a)[i] = LOGICAL(s)[i % ns];
-	break;
-    case INTSXP:
-	for (i = 0; i < na; i++)
-	    INTEGER(a)[i] = INTEGER(s)[i % ns];
-	break;
-    case REALSXP:
-	for (i = 0; i < na; i++)
-	    REAL(a)[i] = REAL(s)[i % ns];
-	break;
-    case CPLXSXP:
-	for (i = 0; i < na; i++)
-	    COMPLEX(a)[i] = COMPLEX(s)[i % ns];
-	break;
-    case STRSXP:
-	for (i = 0; i < na; i++)
-	    SET_STRING_ELT(a, i, STRING_ELT(s, i% ns));
-	break;
-    case LISTSXP:
-    {
-	int i = 0, nss = (int) ns;
-	for (t = a; t != R_NilValue; t = CDR(t), i++)
-	    SETCAR(t, duplicate(CAR(nthcdr(s, (i % nss)))));
-    }
-	break;
-    case VECSXP:
-	for (i = 0; i < na; i++)
-	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
-	break;
-    case RAWSXP:
-	for (i = 0; i < na; i++)
-	    RAW(a)[i] = RAW(s)[i % ns];
-	break;
-    default:
-	UNIMPLEMENTED_TYPE("rep.int", s);
-    }
-    if (inherits(s, "factor")) {
-	SEXP tmp;
-	if(inherits(s, "ordered")) {
-	    PROTECT(tmp = allocVector(STRSXP, 2));
-	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
-	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
-	} else PROTECT(tmp = mkString("factor"));
-	setAttrib(a, R_ClassSymbol, tmp);
-	UNPROTECT(1);
-	setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
-    }
-    UNPROTECT(1);
-    return a;
-}
-
-SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    checkArity(op, args);
-    return rep1(CAR(args), CADR(args));
-}
-
-SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    R_xlen_t i, ns, na;
-    SEXP a, s, len;
-
-    checkArity(op, args);
-    s = CAR(args);
-
-    if (!isVector(s) && (!isList(s)))
-	error(_("attempt to replicate non-vector"));
-
-    len = CADR(args);
-    if(length(len) != 1)
-	error(_("invalid '%s' value"), "length.out");
-#ifdef LONG_VECTOR_SUPPORT
-    double sna = asReal(len);
-    if (!R_FINITE(sna) || sna < 0)
-	error(_("invalid '%s' value"), "length.out");
-    na = (R_xlen_t) sna;
-#else
-    if ((na = asInteger(len)) == NA_INTEGER || na < 0) /* na = 0 ok */
-	error(_("invalid '%s' value"), "length.out");
-#endif
-
-    ns = xlength(s);
-    if (isVector(s))
-	a = allocVector(TYPEOF(s), na);
-    else {
-	if (na > INT_MAX) error("too long for a pairlist");
-	a = allocList((int) na);
-    }
-    PROTECT(a);
-
-#ifdef _S4_rep_keepClass
-    if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
-	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
-	SET_S4_OBJECT(a);
-    }
-#endif
 
     /* We need to handle ns = 0 and do that separately for speed. */
     if (ns > 0) {
@@ -428,7 +276,7 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
 	    break;
 	default:
-	    UNIMPLEMENTED_TYPE("rep", s);
+	    UNIMPLEMENTED_TYPE("rep3", s);
 	}
     } else {
 	switch (TYPEOF(s)) {
@@ -464,9 +312,97 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < na; i++) SET_VECTOR_ELT(a, i, R_NilValue);
 	    break;
 	default:
-	    UNIMPLEMENTED_TYPE("rep_len", s);
+	    UNIMPLEMENTED_TYPE("rep3", s);
 	}
     }
+    return a;
+}
+
+SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP s = CAR(args), ncopy = CADR(args);
+    R_xlen_t nc;
+    SEXP a;
+
+    if (!isVector(ncopy))
+	error(_("incorrect type for second argument"));
+
+    if (!isVector(s) && (!isList(s)))
+	error(_("attempt to replicate non-vector"));
+
+    nc = xlength(ncopy); // might be 0
+    if (nc == xlength(s)) PROTECT(a = rep2(s, ncopy));
+    else {
+	if (nc != 1) error(_("invalid '%s' value"), "times");
+	
+#ifdef LONG_VECTOR_SUPPORT
+	double snc = asReal(ncopy);
+	if (!R_FINITE(snc) || snc < 0)
+	    error(_("invalid '%s' value"), "times");
+	nc = (R_xlen_t) snc;
+#else
+	if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0)/* nc = 0 ok */
+	    error(_("invalid '%s' value"), "times");
+#endif
+	PROTECT(a = rep3(s, nc * xlength(s)));
+    }
+
+#ifdef _S4_rep_keepClass
+    if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
+	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
+	SET_S4_OBJECT(a);
+    }
+#endif
+
+    if (inherits(s, "factor")) {
+	SEXP tmp;
+	if(inherits(s, "ordered")) {
+	    PROTECT(tmp = allocVector(STRSXP, 2));
+	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
+	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
+	} else PROTECT(tmp = mkString("factor"));
+	setAttrib(a, R_ClassSymbol, tmp);
+	UNPROTECT(1);
+	setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
+    }
+    UNPROTECT(1);
+    return a;
+}
+
+SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_xlen_t na;
+    SEXP a, s, len;
+
+    checkArity(op, args);
+    s = CAR(args);
+
+    if (!isVector(s) && (!isList(s)))
+	error(_("attempt to replicate non-vector"));
+
+    len = CADR(args);
+    if(length(len) != 1)
+	error(_("invalid '%s' value"), "length.out");
+#ifdef LONG_VECTOR_SUPPORT
+    double sna = asReal(len);
+    if (!R_FINITE(sna) || sna < 0)
+	error(_("invalid '%s' value"), "length.out");
+    na = (R_xlen_t) sna;
+#else
+    if ((na = asInteger(len)) == NA_INTEGER || na < 0) /* na = 0 ok */
+	error(_("invalid '%s' value"), "length.out");
+#endif
+
+    PROTECT(a = rep3(s, na));
+
+#ifdef _S4_rep_keepClass
+    if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
+	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
+	SET_S4_OBJECT(a);
+    }
+#endif
+
     if (inherits(s, "factor")) {
 	SEXP tmp;
 	if(inherits(s, "ordered")) {
@@ -619,7 +555,7 @@ done:
 	SET_S4_OBJECT(ans);
     }
 #endif
-    /* 1D arrays get dimensions preserved */
+    /* 1D arrays get dimensions preserved by subsetting */
     setAttrib(ans, R_DimSymbol, R_NilValue);
     UNPROTECT(nprotect);
     return ans;
