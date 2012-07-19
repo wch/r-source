@@ -86,6 +86,8 @@ matplot <- function(x, y, type = "p",
     if(length(pch) < k) pch <- rep(pch, length.out = k)
     if(length(col) < k) col <- rep(col, length.out = k)
     if(length(bg) < k)	bg  <- rep(bg,	length.out = k)
+    ## should not be able to call rep() on NULL
+    if(is.null(cex)) cex <- 1
     if(length(cex) < k) cex <- rep(cex, length.out = k)
     ii <- seq_len(k)
     dev.hold(); on.exit(dev.flush())
