@@ -487,6 +487,9 @@
       
       \item Base package vignettes (e.g. \code{vignette("Sweave")}) were 
       not fully installed in builds of \R from the tarball.
+
+      \item \code{lchoose()} and \code{choose()} could overflow the C
+      stack and crash \R.
     }
   }
 }

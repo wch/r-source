@@ -79,6 +79,7 @@ double lchoose(double n, double k)
 	return lchoose(-n+ k-1, k);
     }
     else if (R_IS_INT(n)) {
+	n = floor(n + 0.5);
 	if(n < k) return ML_NEGINF;
 	/* k <= n :*/
 	if(n - k < 2) return lchoose(n, n-k); /* <- Symmetry */
@@ -126,6 +127,7 @@ double choose(double n, double k)
 	return r;
     }
     else if (R_IS_INT(n)) {
+	n = floor(n + 0.5);
 	if(n < k) return 0.;
 	if(n - k < k_small_max) return choose(n, n-k); /* <- Symmetry */
 	return floor(exp(lfastchoose(n, k)) + 0.5);
