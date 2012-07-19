@@ -25,10 +25,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 {
     args <- list(x, ...)
     namedargs <-
-	if(!is.null(attributes(args)$names))
-	    attributes(args)$names != ""
-	else
-	    rep(FALSE, length.out = length(args))
+	if(!is.null(attributes(args)$names)) attributes(args)$names != ""
+	else rep_len(FALSE, length(args))
     ## pars <- c(args[namedargs], pars)
     groups <- if(is.list(x)) x else args[!namedargs]
     if(0L == (n <- length(groups)))

@@ -187,8 +187,7 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
     }
     makeNames <- function(x) {
         nmx <- names(x)
-        if(is.null(nmx))
-            nmx <- rep("", length.out = length(x))
+        if(is.null(nmx)) nmx <- rep_len("", length(x))
         nmx
     }
 

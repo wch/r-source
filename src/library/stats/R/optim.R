@@ -59,8 +59,8 @@ optim <- function(par, fn, gr = NULL, ...,
                 "use \"Brent\" or optimize() directly")
     if(npar > 1 && method == "Brent")
 	stop('method = "Brent" is only available for one-dimensional optimization')
-    lower <- as.double(rep(lower, length.out = npar))
-    upper <- as.double(rep(upper, length.out = npar))
+    lower <- as.double(rep_len(lower, npar))
+    upper <- as.double(rep_len(upper, npar))
     res <- if(method == "Brent") { ## 1-D
         if(any(!is.finite(c(upper, lower))))
            stop("'lower' and 'upper' must be finite values")

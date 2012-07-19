@@ -32,11 +32,11 @@ profiler.nls <- function(fitted, ...)
     trace <- fitted$call$trace
     defaultPars <- fittedPars <- fittedModel$getPars()
     lower <- fitted$call$lower
-    lower <- rep(if(!is.null(lower)) as.double(lower) else Inf,
-                 length.out = length(defaultPars))
+    lower <- rep_len(if(!is.null(lower)) as.double(lower) else Inf,
+                     length(defaultPars))
     upper <- fitted$call$upper
-    upper <- rep(if(!is.null(upper)) as.double(upper) else Inf,
-                 length.out = length(defaultPars))
+    upper <- rep_len(if(!is.null(upper)) as.double(upper) else Inf,
+                     length(defaultPars))
     defaultVary <- rep.int(TRUE, length(defaultPars))
     S.hat <- deviance(fitted) # need to allow for weights
     s2.hat <- summary(fitted)$sigma^2
@@ -138,9 +138,9 @@ profile.nls <-
     pars <- prof$getFittedPars()
     npar <- length(pars)  # less in a partially linear model
     lower <- fitted$call$lower
-    lower <- rep(if(!is.null(lower)) as.double(lower) else -Inf, length.out = npar)
+    lower <- rep_len(if(!is.null(lower)) as.double(lower) else -Inf, npar)
     upper <- fitted$call$upper
-    upper <- rep(if(!is.null(upper)) as.double(upper) else Inf, length.out = npar)
+    upper <- rep_len(if(!is.null(upper)) as.double(upper) else Inf, npar)
     if(is.character(which)) which <- match(which, names(pars), 0)
     which <- which[which >= 1 & which <= npar]
     ## was 'npar' - length(which) would have made more sense

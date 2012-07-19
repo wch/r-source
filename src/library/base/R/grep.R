@@ -298,7 +298,7 @@ function(x, m, invert = FALSE, value)
         if(np != nv) {
             if(!nv)
                 stop("must have replacement values for matches")
-            value <- rep(value, length.out = np)
+            value <- rep_len(value, np)
         }
         x[pos] <- paste(sapply(y, `[`, 1L),
                         value,
@@ -314,7 +314,7 @@ function(x, m, invert = FALSE, value)
         stop("missing replacement values are not allowed")
     if(!xlength(value))
         stop("value does not provide any replacement values")
-    value <- rep(value, length.out = length(x))
+    value <- rep_len(value, length(x))
 
     y <- if(invert) {
         ## Replace non-matches.
@@ -326,7 +326,7 @@ function(x, m, invert = FALSE, value)
             if(nv != (nu + 1L)) {
                 if(!nv)
                     stop("must have replacements for non-matches")
-                v <- rep(v, length.out = nu + 1L)
+                v <- rep_len(v, nu + 1L)
             }
             paste0(v, c(u, ""), collapse = "")
         },
@@ -341,7 +341,7 @@ function(x, m, invert = FALSE, value)
             if(nv != (nu - 1L)) {
                 if(!nv)
                     stop("must have replacements for matches")
-                v <- rep(v, length.out = nu - 1L)
+                v <- rep_len(v, nu - 1L)
             }
             paste0(u, c(v, ""), collapse = "")
         },

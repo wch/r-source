@@ -225,8 +225,8 @@ coplot <-
 	xlim <- range(as.numeric(x), finite = TRUE)
     if(missing(ylim))
 	ylim <- range(as.numeric(y), finite = TRUE)
-    pch <- rep(pch, length.out = nobs)
-    col <- rep(col, length.out = nobs)
+    pch <- rep_len(pch, nobs)
+    col <- rep_len(col, nobs)
     do.panel <- function(index, subscripts = FALSE, id) {
 	## Use `global' variables
 	##	rows, columns,	total.rows, total.columns, nplots, xlim, ylim

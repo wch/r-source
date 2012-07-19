@@ -43,11 +43,15 @@ pie <-
             c("white", "lightblue", "mistyrose", "lightcyan",
               "lavender", "cornsilk")
         else par("fg")
-    col <- rep(col, length.out = nx)
-    border <- rep(border, length.out = nx)
-    lty <- rep(lty, length.out = nx)
-    angle <- rep(angle, length.out = nx)
-    density <- rep(density, length.out = nx)
+    if(!is.null(col))
+        col <- rep_len(col, nx)
+    if(!is.null(border))
+        border <- rep_len(border, nx)
+    if(!is.null(lty))
+        lty <- rep_len(lty, nx)
+    angle <- rep(angle, nx)
+    if(!is.null(density))
+        density <- rep_len(density, nx)
     twopi <- if(clockwise) -2*pi else 2*pi
     t2xy <- function(t) {
         t2p <- twopi*t + init.angle * pi/180
@@ -55,7 +59,7 @@ pie <-
     }
     for (i in 1L:nx) {
 	n <- max(2, floor(edges * dx[i]))
-	P <- t2xy(seq.int(x[i], x[i + 1], length.out = n))
+	P <- t2xy(seq.int(x[i], x[i + 1], n))
 	polygon(c(P$x, 0), c(P$y, 0), density = density[i], angle = angle[i],
                 border = border[i], col = col[i], lty = lty[i])
 	P <- t2xy(mean(x[i + 0:1]))

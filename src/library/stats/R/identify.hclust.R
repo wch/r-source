@@ -56,7 +56,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
         stop(gettextf("all elements of 'which' must be between 1 and %d", k),
              domain = NA)
 
-    border <- rep(border, length.out = length(which))
+    border <- rep_len(border, length(which))
 
     retval <- list()
     for(n in seq_along(which)) {

@@ -25,7 +25,7 @@
 
 numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
 {
-    dir <- rep(dir, length.out = length(theta))
+    dir <- rep_len(dir, length(theta))
     val <- .Call(C_numeric_deriv, expr, theta, rho, dir)
     valDim <- dim(val)
     if (!is.null(valDim)) {
@@ -57,7 +57,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     rhs <- eval(form[[3L]], envir = env)
     storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && length(wts))
-        sqrt(wts) else rep(1, length.out=NROW(rhs))
+        sqrt(wts) else rep_len(1, NROW(rhs))
     assign(".swts", .swts, envir = env)
     p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
     p <- p1 + p2
@@ -240,12 +240,12 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     getPars <- getPars.noVarying
     internalPars <- getPars()
 
-    if(!is.null(upper)) upper <- rep(upper, length.out = parLength)
+    if(!is.null(upper)) upper <- rep_len(upper, parLength)
     useParams <- rep(TRUE, parLength)
     lhs <- eval(form[[2L]], envir = env)
     rhs <- eval(form[[3L]], envir = env)
     .swts <- if(!missing(wts) && length(wts))
-        sqrt(wts) else rep(1, length.out=length(rhs))
+        sqrt(wts) else rep_len(1, length(rhs))
     assign(".swts", .swts, envir = env)
     resid <- .swts * (lhs - rhs)
     dev <- sum(resid^2)
@@ -416,8 +416,8 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     scale <- 1
     low <- upp <- NULL
     if (any(lower != -Inf) || any(upper != Inf)) {
-        low <- rep(as.double(lower), length.out = length(par))
-        upp <- rep(as.double(upper), length.out = length(par))
+        low <- rep_len(as.double(lower), length(par))
+        upp <- rep_len(as.double(upper), length(par))
         if(any(unlist(start) < low) ||any( unlist(start) > upp)) {
             iv[1L] <- 300
 	    return(if(give.v) list(iv = iv, v = v[seq_len(18L)]) else iv)
@@ -426,7 +426,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
         .Call(C_port_nlsb, m,
-              d = rep(as.double(scale), length.out = length(par)),
+              d = rep_len(as.double(scale), length(par)),
               df = m$gradient(), iv, v, low, upp)
     } else iv[1L] <- 6
 

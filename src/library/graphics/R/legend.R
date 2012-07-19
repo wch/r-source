@@ -187,7 +187,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 	    top	 <- y + (1 - yjust) * h
 	} else {
 	    usr <- par("usr")
-	    inset <- rep(inset, length.out = 2)
+	    inset <- rep_len(inset, 2)
 	    insetx <- inset[1L]*(usr[2L] - usr[1L])
 	    left <- switch(auto, "bottomright"=,
 			   "topright"=, "right" = usr[2L] - w - insetx,
@@ -216,7 +216,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 
     if (mfill) {		#- draw filled boxes -------------
 	if(plot) {
-	    fill <- rep(fill, length.out = n.leg)
+	    fill <- rep_len(fill, n.leg)
 	    rect2(left = xt, top=yt+ybox/2, dx = xbox, dy = ybox,
 		  col = fill,
 		  density = density, angle = angle, border = border)
@@ -224,14 +224,14 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 	xt <- xt + dx.fill
     }
     if(plot && (has.pch || do.lines))
-	col <- rep(col, length.out = n.leg)
+	col <- rep_len(col, n.leg)
 
     if(missing(lwd))
 	lwd <- par("lwd") # = default for pt.lwd
     if (do.lines) {			#- draw lines ---------------------
 	if(missing(lty)) lty <- 1
-	lty <- rep(lty, length.out = n.leg)
-	lwd <- rep(lwd, length.out = n.leg)
+	lty <- rep_len(lty, n.leg)
+	lwd <- rep_len(lwd, n.leg)
 	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0) & !is.na(lwd)
 	if(trace)
 	    catn("  segments2(",xt[ok.l] + x.off*xchar, ",", yt[ok.l],
@@ -243,10 +243,10 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 	xt <- xt + (seg.len+x.off) * xchar
     }
     if (has.pch) {			#- draw points -------------------
-	pch   <- rep(pch, length.out = n.leg)
-	pt.bg <- rep(pt.bg, length.out = n.leg)
-	pt.cex<- rep(pt.cex, length.out = n.leg)
-	pt.lwd<- rep(pt.lwd, length.out = n.leg)
+	pch   <- rep_len(pch, n.leg)
+	pt.bg <- rep_len(pt.bg, n.leg)
+	pt.cex<- rep_len(pt.cex, n.leg)
+	pt.lwd<- rep_len(pt.lwd, n.leg)
 	ok <- !is.na(pch) & (is.character(pch) | pch >= 0)
 	x1 <- (if(merge && do.lines) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]

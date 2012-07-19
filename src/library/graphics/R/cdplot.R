@@ -67,7 +67,7 @@ function(x, y,
     if(is.null(xlab)) xlab <- deparse(substitute(x))
     if(is.null(ylab)) ylab <- deparse(substitute(y))
     if(is.null(col)) col <- gray.colors(length(levels(y)))
-    col <- rep(col, length.out = length(levels(y)))
+    col <- rep_len(col, length.out = length(levels(y)))
     if(is.null(yaxlabels)) yaxlabels <- levels(y)
 
     ## coerce x and check y

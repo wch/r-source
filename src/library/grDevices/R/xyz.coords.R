@@ -84,9 +84,9 @@ xy.coords <-
     if(length(x) != length(y)) {
 	if(recycle) {
 	    if((nx <- length(x)) < (ny <- length(y)))
-		x <- rep(x, length.out = ny)
+		x <- rep_len(x, ny)
 	    else
-		y <- rep(y, length.out = nx)
+		y <- rep_len(y, nx)
 	}
 	else
 	    stop("'x' and 'y' lengths differ")
@@ -203,9 +203,9 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
     if(((xl <- length(x)) != length(y)) || (xl != length(z))) {
 	if(recycle) {
 	    ml <- max(xl, (yl <- length(y)), (zl <- length(z)))
-	    if(xl < ml) x <- rep(x, length.out = ml)
-	    if(yl < ml) y <- rep(y, length.out = ml)
-	    if(zl < ml) z <- rep(z, length.out = ml)
+	    if(xl < ml) x <- rep_len(x, ml)
+	    if(yl < ml) y <- rep_len(y, ml)
+	    if(zl < ml) z <- rep_len(z, ml)
 	}
 	else stop("'x', 'y' and 'z' lengths differ")
     }

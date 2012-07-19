@@ -29,8 +29,7 @@ complex <- function(length.out = 0L,
 	.Internal(complex(length.out, real, imaginary))
     } else {
 	n <- max(length.out, xlength(argument), xlength(modulus))
-	rep(modulus, length.out = n) *
-	    exp(1i * rep(argument, length.out = n))
+	rep_len(modulus, n) * exp(1i * rep_len(argument, n))
     }
 }
 

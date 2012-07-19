@@ -252,12 +252,12 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(is.null(off))
         off <- if(dimd == 2) 2 * (dx - 1) else rep.int(10, dimd)
     if(length(off) != dimd)
-        off <- rep(off, length.out = dimd)
+        off <- rep_len(off, dimd)
     if(any(off > 50))
         off <- off * 50/max(off)
     ## Initialize directions.
     if (is.null(dir) || length(dir) != dimd) {
-        dir <- rep(c("v","h"), length.out = dimd)
+        dir <- rep_len(c("v","h"), dimd)
     }
     if (!is.null(sort)) {
         if(length(sort) != dimd)
@@ -296,7 +296,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             else if(is.null(color))
                 rep.int("grey", ncolors)
             else                        # recycle
-                rep(color, length.out = ncolors)
+                rep_len(color, ncolors)
     }
 
     ##-- Plotting

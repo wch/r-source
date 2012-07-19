@@ -109,13 +109,13 @@ nlminb <-
         }
     }
     if (any(lower != -Inf) || any(upper != Inf)) {
-        low <- rep(as.double(lower), length.out = length(par))
-        upp <- rep(as.double(upper), length.out = length(par))
+        low <- rep_len(as.double(lower), length(par))
+        upp <- rep_len(as.double(upper), length(par))
     } else low <- upp <- numeric()
 
     ## Do the optimization
     .Call(C_port_nlminb, obj, grad, hess, rho, low, upp,
-          d = rep(as.double(scale), length.out = length(par)), iv, v)
+          d = rep_len(as.double(scale), length(par)), iv, v)
 
     iv1 <- iv[1L]
     list(par = get(".par", envir = rho),

@@ -230,21 +230,23 @@ polygon <-
         ends <- c(seq_along(xy$x)[is.na(xy$x) | is.na(xy$y)], length(xy$x) + 1)
 
         num.polygons <- length(ends)
-        col <- rep(col, length.out = num.polygons)
-        border <- rep(border, length.out = num.polygons)
-        lty <- rep(lty, length.out = num.polygons)
-        density <- rep(density, length.out = num.polygons)
-        angle <- rep(angle, length.out = num.polygons)
+        col <- rep_len(col, num.polygons)
+        if(length(border))
+            border <- rep_len(border, num.polygons)
+        if(length(lty))
+            lty <- rep_len(lty, num.polygons)
+        if(length(density))
+            density <- rep_len(density, num.polygons)
+        angle <- rep_len(angle, num.polygons)
 
-        i <- 1
+        i <- 1L
         for (end in ends) {
             if (end > start) {
-                den <- density[i]
-                if(is.na(den) || den < 0)
+                if(is.null(density) || is.na(density[i]) || density[i] < 0)
                     .External.graphics(C_polygon, xy$x[start:(end - 1)],
                                        xy$y[start:(end - 1)],
                                        col[i], NA, lty[i], ...)
-                else if (den > 0) {
+                else if (density[i] > 0) {
 
                         ## note: if col[i]==NA, "segments" will fill with par("fg")
 

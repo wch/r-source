@@ -67,10 +67,10 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
     if(nobs != ndata)
 	data <-
 	    if(NCOL(data) == 1) {
-		if(ndata < nobs) rep(data, length.out = nobs)
+		if(ndata < nobs) rep_len(data, nobs)
 		else if(ndata > nobs) data[1L:nobs]
 	    } else {
-		if(ndata < nobs) data[rep(1L:ndata, length.out = nobs), ]
+		if(ndata < nobs) data[rep_len(1L:ndata, nobs), ]
 		else if(ndata > nobs) data[1L:nobs, ]
 	    }
     ## FIXME: The following "attr<-"() calls C tspgets() which uses a

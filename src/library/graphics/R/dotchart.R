@@ -35,7 +35,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	    labels <- rownames(x)
 	if (is.null(labels))
 	    labels <- as.character(1L:nrow(x))
-	labels <- rep(labels, length.out = n)
+	labels <- rep_len(labels, n)
 	if (is.null(groups))
 	    groups <- col(x, as.factor = TRUE)
 	glabels <- levels(groups)
@@ -75,8 +75,8 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	o <- sort.list(as.numeric(groups), decreasing = TRUE)
 	x <- x[o]
 	groups <- groups[o]
-	color <- rep(color, length.out=length(groups))[o]
-	lcolor <- rep(lcolor, length.out=length(groups))[o]
+	color <- rep_len(color, length(groups))[o]
+	lcolor <- rep_len(lcolor, length(groups))[o]
 	offset <- cumsum(c(0, diff(as.numeric(groups)) != 0))
 	y <- 1L:n + 2 * offset
 	ylim <- range(0, y + 2)

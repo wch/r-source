@@ -130,9 +130,9 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     nmColClasses <- names(colClasses)
     if(length(colClasses) < cols)
         if(is.null(nmColClasses)) {
-            colClasses <- rep(colClasses, length.out=cols)
+            colClasses <- rep_len(colClasses, cols)
         } else {
-            tmp <- rep(NA_character_, length.out=cols)
+            tmp <- rep_len(NA_character_, cols)
             names(tmp) <- col.names
             i <- match(nmColClasses, col.names, 0L)
             if(any(i <= 0L))
@@ -177,7 +177,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     }
 
     if(is.logical(as.is)) {
-	as.is <- rep(as.is, length.out=cols)
+	as.is <- rep_len(as.is, cols)
     } else if(is.numeric(as.is)) {
 	if(any(as.is < 1 | as.is > cols))
 	    stop("invalid numeric 'as.is' expression")

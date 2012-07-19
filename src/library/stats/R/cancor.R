@@ -32,7 +32,7 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
 	else xcenter <- rep.int(0, ncx)
     }
     else {
-	xcenter <- rep(xcenter, length.out = ncx)
+	xcenter <- rep_len(xcenter, ncx)
 	x <- x - rep(xcenter, rep.int(nr, ncx))
     }
     if(is.logical(ycenter)) {
@@ -43,8 +43,8 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
 	else ycenter <- rep.int(0, ncy)
     }
     else {
-	ycenter <- rep(ycenter, length.out = ncy)
-	y <- y - rep(ycenter, rep.int(nr,ncy))
+	ycenter <- rep_len(ycenter, ncy)
+	y <- y - rep(ycenter, rep.int(nr, ncy))
     }
     qx <- qr(x)
     qy <- qr(y)

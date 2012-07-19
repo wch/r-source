@@ -102,8 +102,6 @@ rep_len(x, length.out)
 
   For historical reasons \code{rep} works on \code{NULL}: the result is
   always \code{NULL} even when \code{length.out} is positive.
-  \code{rep_len} has followed this behaviour to allow it to be a drop-in
-  replacement.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

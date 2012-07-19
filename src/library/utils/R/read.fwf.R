@@ -77,7 +77,7 @@ function(file, widths, header = FALSE, sep = "\t",
         first <- st[-length(st)][!drop]
         last <- cumsum(widths)[!drop]
         cat(file = FILE, sapply(raw, doone),
-            sep = c(rep(sep, length.out = length(first)-1L), "\n"))
+            sep = c(rep_len(sep, length(first)-1L), "\n"))
 
         if (nread < thisblock) break
         if (n > 0L) n <- n - length(raw)

@@ -79,16 +79,16 @@ matplot <- function(x, y, type = "p",
     ylab <- if (is.null(ylab)) xy$ylab else ylab
     xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
     ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
-    if(length(type)< k) type<- rep(type,length.out = k)
-    if(length(lty) < k) lty <- rep(lty, length.out = k)
-    if(length(lend)< k) lend <- rep(lend, length.out = k)
-    if(length(lwd) < k) lwd <- rep(lwd, length.out = k)
-    if(length(pch) < k) pch <- rep(pch, length.out = k)
-    if(length(col) < k) col <- rep(col, length.out = k)
-    if(length(bg) < k)	bg  <- rep(bg,	length.out = k)
+    if(length(type)< k) type<- rep_len(type,k)
+    if(length(lty) < k) lty <- rep_len(lty, k)
+    if(length(lend)< k) lend <- rep_len(lend, k)
+    if(length(lwd) < k) lwd <- rep_len(lwd, k)
+    if(length(pch) < k) pch <- rep_len(pch, k)
+    if(length(col) < k) col <- rep_len(col, k)
+    if(length(bg) < k)	bg  <- rep_len(bg,  k)
     ## should not be able to call rep() on NULL
     if(is.null(cex)) cex <- 1
-    if(length(cex) < k) cex <- rep(cex, length.out = k)
+    if(length(cex) < k) cex <- rep_len(cex, k)
     ii <- seq_len(k)
     dev.hold(); on.exit(dev.flush())
     if(!add) {
