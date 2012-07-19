@@ -40,6 +40,12 @@
 
 #include "nmath.h"
 
+/* These are recursive, so we should do a stack check */
+
+#ifndef MATHLIB_STANDALONE
+void R_CheckStack(void);
+#endif
+
 double attribute_hidden lfastchoose(double n, double k)
 {
     return -log(n + 1.) - lbeta(n - k + 1., k + 1.);
@@ -65,6 +71,9 @@ double lchoose(double n, double k)
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if(ISNAN(n) || ISNAN(k)) return n + k;
+#endif
+#ifndef MATHLIB_STANDALONE
+    R_CheckStack();
 #endif
     if (fabs(k - k0) > 1e-7)
 	MATHLIB_WARNING2(_("'k' (%.2f) must be integer, rounded to %.0f"), k0, k);
@@ -105,6 +114,9 @@ double choose(double n, double k)
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if(ISNAN(n) || ISNAN(k)) return n + k;
+#endif
+#ifndef MATHLIB_STANDALONE
+    R_CheckStack();
 #endif
     if (fabs(k - k0) > 1e-7)
 	MATHLIB_WARNING2(_("'k' (%.2f) must be integer, rounded to %.0f"), k0, k);
