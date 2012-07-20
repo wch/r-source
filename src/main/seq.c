@@ -226,63 +226,31 @@ static SEXP rep3(SEXP s, R_xlen_t na)
 
     PROTECT(a = allocVector(TYPEOF(s), na));
 
-    /* We need to handle ns = 0 and do that separately for speed. */
-    if (ns > 0) {
-	switch (TYPEOF(s)) {
-	case LGLSXP:
-	    for (i = 0; i < na; i++) LOGICAL(a)[i] = LOGICAL(s)[i % ns];
-	    break;
-	case INTSXP:
-	    for (i = 0; i < na; i++) INTEGER(a)[i] = INTEGER(s)[i % ns];
-	    break;
-	case REALSXP:
-	    for (i = 0; i < na; i++) REAL(a)[i] = REAL(s)[i % ns];
-	    break;
-	case CPLXSXP:
-	    for (i = 0; i < na; i++) COMPLEX(a)[i] = COMPLEX(s)[i % ns];
-	    break;
-	case RAWSXP:
-	    for (i = 0; i < na; i++) RAW(a)[i] = RAW(s)[i % ns];
-	    break;
-	case STRSXP:
-	    for (i = 0; i < na; i++) SET_STRING_ELT(a, i, STRING_ELT(s, i% ns));
-	    break;
-	case VECSXP:
-	    for (i = 0; i < na; i++)
-		SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
-	    break;
-	default:
-	    UNIMPLEMENTED_TYPE("rep3", s);
-	}
-    } else {
-	switch (TYPEOF(s)) {
-	case LGLSXP:
-	    for (i = 0; i < na; i++) LOGICAL(a)[i] = NA_LOGICAL;
-	    break;
-	case INTSXP:
-	    for (i = 0; i < na; i++) INTEGER(a)[i] = NA_INTEGER;
-	    break;
-	case REALSXP:
-	    for (i = 0; i < na; i++) REAL(a)[i] = NA_REAL;
-	    break;
-	case CPLXSXP:
-	    for (i = 0; i < na; i++) {
-		COMPLEX(a)[i].r = NA_REAL;
-		COMPLEX(a)[i].i = NA_REAL;
-	    }
-	    break;
-	case RAWSXP:
-	    for (i = 0; i < na; i++) RAW(a)[i] = (Rbyte) 0;
-	    break;
-	case STRSXP:
-	    for (i = 0; i < na; i++) SET_STRING_ELT(a, i, NA_STRING);
-	    break;
-	case VECSXP:
-	    for (i = 0; i < na; i++) SET_VECTOR_ELT(a, i, R_NilValue);
-	    break;
-	default:
-	    UNIMPLEMENTED_TYPE("rep3", s);
-	}
+    switch (TYPEOF(s)) {
+    case LGLSXP:
+	for (i = 0; i < na; i++) LOGICAL(a)[i] = LOGICAL(s)[i % ns];
+	break;
+    case INTSXP:
+	for (i = 0; i < na; i++) INTEGER(a)[i] = INTEGER(s)[i % ns];
+	break;
+    case REALSXP:
+	for (i = 0; i < na; i++) REAL(a)[i] = REAL(s)[i % ns];
+	break;
+    case CPLXSXP:
+	for (i = 0; i < na; i++) COMPLEX(a)[i] = COMPLEX(s)[i % ns];
+	break;
+    case RAWSXP:
+	for (i = 0; i < na; i++) RAW(a)[i] = RAW(s)[i % ns];
+	break;
+    case STRSXP:
+	for (i = 0; i < na; i++) SET_STRING_ELT(a, i, STRING_ELT(s, i% ns));
+	break;
+    case VECSXP:
+	for (i = 0; i < na; i++)
+	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
+	break;
+    default:
+	UNIMPLEMENTED_TYPE("rep3", s);
     }
     UNPROTECT(1);
     return a;
@@ -302,7 +270,8 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("attempt to replicate non-vector"));
 
     nc = xlength(ncopy); // might be 0
-    if (nc == xlength(s)) PROTECT(a = rep2(s, ncopy));
+    if (nc == xlength(s)) 
+	PROTECT(a = rep2(s, ncopy));
     else {
 	if (nc != 1) error(_("invalid '%s' value"), "times");
 	
@@ -364,6 +333,15 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' value"), "length.out");
 #endif
 
+    if (TYPEOF(s) == NILSXP && na > 0)
+	error(_("cannot replicate NULL to a non-zero length"));
+    if (xlength(s) == 0) {
+	SEXP a;
+	PROTECT(a = duplicate(s));
+	if(na > 0) a = xlengthgets(a, na);
+	UNPROTECT(1);
+	return a;
+    }
     PROTECT(a = rep3(s, na));
 
 #ifdef _S4_rep_keepClass
