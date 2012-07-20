@@ -226,10 +226,12 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     if(plot && (has.pch || do.lines))
 	col <- rep_len(col, n.leg)
 
-    if(missing(lwd))
+    ## NULL is not documented but people use it.
+    if(missing(lwd) || is.null(lwd))
 	lwd <- par("lwd") # = default for pt.lwd
     if (do.lines) {			#- draw lines ---------------------
-	if(missing(lty)) lty <- 1
+        ## NULL is not documented
+	if(missing(lty) || is.null(lty)) lty <- 1
 	lty <- rep_len(lty, n.leg)
 	lwd <- rep_len(lwd, n.leg)
 	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0) & !is.na(lwd)
