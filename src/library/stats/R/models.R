@@ -517,8 +517,8 @@ model.matrix.default <- function(object, data = environment(object),
             }
         }
     } else {               # internal model.matrix needs some variable
-        isF <-  FALSE
-        data <- list(x=rep(0, nrow(data)))
+	isF <- FALSE
+	data <- data.frame(x=rep(0, nrow(data)))
     }
     ans <- .External2(C_modelmatrix, t, data)
     cons <- if(any(isF))

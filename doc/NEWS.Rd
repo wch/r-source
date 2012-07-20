@@ -135,11 +135,11 @@
 
       \item Multistratum MANOVA works. In fact, it seems to have done so
       for years in spite of the help page claiming it did not.
-      
+
       \item The parser now incorporates code from Romain Francois'
       parser package, to support more detailed computation on the
       code, such as syntax highlighting, comment-based documentation,
-      etc.      
+      etc.
 
       \item There is a new function \code{rep_len()} analogous to
       \code{rep.int()} for when speed is required (and names are not).
@@ -333,7 +333,7 @@
       \pkg{translations} package to use this right from the start.)
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item When \command{R CMD build} is run in an encoding other than
@@ -383,7 +383,7 @@
       \item \code{qqline()} has new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
-      
+
       \item The handling of single quotes in the \code{en@quot}
       pseudo-language has been slightly improved.
 
@@ -412,7 +412,7 @@
       and directories (with names starting with a dot) that are not
       needed for the operation of \command{R CMD INSTALL} or \code{R CMD
 	build}: such files should be excluded from the published tarball.
-      
+
       \item When \code{R CMD Rd2pdf} is used with \file{inputenx.sty},
       it allows further characters (mainly for Eastern European
       languages) by including \file{ix-utf8enc.dfu} (if available).
@@ -484,12 +484,15 @@
       \item \code{rWishart()} could overflow the C stack and maybe crash
       the \R process for dimensions of several hundreds or more.
       (Reported by Michael Braun on R-sig-mac.)
-      
-      \item Base package vignettes (e.g. \code{vignette("Sweave")}) were 
+
+      \item Base package vignettes (e.g. \code{vignette("Sweave")}) were
       not fully installed in builds of \R from the tarball.
 
       \item \code{lchoose()} and \code{choose()} could overflow the C
       stack and crash \R.
+
+      \item \code{model.matrix( ~1, .)} now also contains the same
+      rownames that less trivial formulae produce.  (\PR{14992})
     }
   }
 }
