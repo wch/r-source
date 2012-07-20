@@ -82,7 +82,7 @@ matplot <- function(x, y, type = "p",
     if(length(lty) < k) lty <- rep_len(lty, k)
     if(length(lend)< k) lend <- rep_len(lend, k)
     ## sciplot passes NULL
-    if(length(lwd) < k && !s.null(lwd)) lwd <- rep_len(lwd, k)
+    if(length(lwd) < k && !is.null(lwd)) lwd <- rep_len(lwd, k)
     if(length(pch) < k) pch <- rep_len(pch, k)
     if(length(col) < k) col <- rep_len(col, k)
     if(length(bg) < k)	bg  <- rep_len(bg,  k)
