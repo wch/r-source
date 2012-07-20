@@ -493,6 +493,10 @@
 
       \item \code{model.matrix( ~1, .)} now also contains the same
       rownames that less trivial formulae produce.  (\PR{14992})
+      
+      \item When given a 0-byte file and asked to keep source
+      references, \code{parse()} read input from \code{stdin()}
+      instead.      
     }
   }
 }

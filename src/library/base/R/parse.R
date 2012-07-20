@@ -30,6 +30,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
             file <- file(filename, "r")
             if (missing(srcfile) && keep.source) {
             	text <- readLines(file)
+            	if (!length(text)) text <- ""
             	close(file)
             	file <- stdin()
         	srcfile <- srcfilecopy(filename, text, file.info(filename)[1,"mtime"],
