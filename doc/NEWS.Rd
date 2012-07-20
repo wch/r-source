@@ -146,6 +146,8 @@
 
       \item The undocumented use \code{rep(NULL, length.out = n)} for
       \code{n > 0} (which returns \code{NULL}) now gives a warning.
+      
+      \item The included LAPACK has been updated to 3.4.1.
     }
   }
 
@@ -431,7 +433,9 @@
       \item \samp{Translation} packages are deprecated.
 
       \item Calling \code{rep()} or \code{rep.int()} on a pairlist is
-      deprecated and will give a warning.
+      deprecated and will give a warning.  In any case, \code{rep()}
+      converted a pairlist to a list so you may as well do that
+      explicitly.
     }
   }
 
