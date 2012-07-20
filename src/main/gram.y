@@ -137,10 +137,11 @@ static void setId( SEXP expr, yyltype loc){
 	} else	{							\
 	  (Current).first_line   = (Current).last_line   =		\
 	    YYRHSLOC (Rhs, 0).last_line;				\
-	  (Current).first_column = (Current).last_column =		\
-	    YYRHSLOC (Rhs, 0).last_column;				\
-	  (Current).first_byte   = (Current).last_byte =		\
-	    YYRHSLOC (Rhs, 0).last_byte;				\
+	  (Current).first_column = YYRHSLOC (Rhs, 0).last_column;	\
+	  (Current).last_column = (Current).first_column - 1;		\
+	  (Current).first_byte = YYRHSLOC (Rhs, 0).last_byte;		\
+	  (Current).last_byte = (Current).first_byte - 1;		\
+	  (Current).id = NA_INTEGER;                                    \
 	} 								\
     } while (YYID (0))
 
@@ -3067,7 +3068,7 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 		colon = 0 ;
 	}
 	
-	if (!ParseState.keepSrcRefs) return;
+	if (!ParseState.keepSrcRefs || id == NA_INTEGER) return;
 	
 	// don't care about zero sized things
 	if( !yytext[0] ) return ;
@@ -3113,12 +3114,11 @@ static void recordParents( int parent, yyltype * childs, int nchilds){
 	yyltype loc ;
 	for( ii=0; ii<nchilds; ii++){
 		loc = childs[ii] ;
-		if( loc.first_line == loc.last_line && loc.first_byte > loc.last_byte ){
+		if( loc.id == NA_INTEGER || (loc.first_line == loc.last_line && loc.first_byte > loc.last_byte) )
 			continue ;
-		}
-		/* FIXME:  workaround to prevent segfaults.  This shouldn't happen... */
-		if ((childs[ii]).id < 0 || (childs[ii]).id > identifier) {
-		    return;
+		/*  This shouldn't happen... */
+		if (loc.id < 0 || loc.id > identifier) {
+		    error(_("Internal parser error at line %d"),  ParseState.xxlineno);
 		}
 		ID_PARENT( (childs[ii]).id ) = parent  ;
 	}
