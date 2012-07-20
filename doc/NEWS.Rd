@@ -501,6 +501,9 @@
       \item When given a 0-byte file and asked to keep source
       references, \code{parse()} read input from \code{stdin()}
       instead.      
+      
+      \item The \code{pdf()} device did not delete temporary files
+      when closed.  (\PR{14991})
     }
   }
 }
