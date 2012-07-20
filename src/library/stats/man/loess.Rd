@@ -70,7 +70,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   and these have tricubic weighting (proportional to \eqn{(1 -
     \mathrm{(dist/maxdist)}^3)^3}{(1 - (dist/maxdist)^3)^3}).  For
   \eqn{\alpha > 1}, all points are used, with the
-  \sQuote{maximum distance} assumed to be \eqn{\alpha^{1/p}}{\alpha^1/p}
+  \sQuote{maximum distance} assumed to be \eqn{\alpha^{1/p}}{\alpha^(1/p)}
   times the actual maximum distance for \eqn{p} explanatory variables.
 
   For the default family, fitting is by (weighted) least squares.  For
