@@ -221,33 +221,54 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 /* rep_len(x, len), also used for rep.int() with scalar 'times' */
 static SEXP rep3(SEXP s, R_xlen_t na)
 {
-    R_xlen_t i, ns = xlength(s);
+    R_xlen_t i, j, ns = xlength(s);
     SEXP a;
 
     PROTECT(a = allocVector(TYPEOF(s), na));
 
+    // i % ns is slow, especially with long R_xlen_t
     switch (TYPEOF(s)) {
     case LGLSXP:
-	for (i = 0; i < na; i++) LOGICAL(a)[i] = LOGICAL(s)[i % ns];
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    LOGICAL(a)[i++] = LOGICAL(s)[j++];
+	}
 	break;
     case INTSXP:
-	for (i = 0; i < na; i++) INTEGER(a)[i] = INTEGER(s)[i % ns];
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    INTEGER(a)[i++] = INTEGER(s)[j++];
+	}
 	break;
     case REALSXP:
-	for (i = 0; i < na; i++) REAL(a)[i] = REAL(s)[i % ns];
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    REAL(a)[i++] = REAL(s)[j++];
+	}
 	break;
     case CPLXSXP:
-	for (i = 0; i < na; i++) COMPLEX(a)[i] = COMPLEX(s)[i % ns];
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    COMPLEX(a)[i++] = COMPLEX(s)[j++];
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < na; i++) RAW(a)[i] = RAW(s)[i % ns];
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    RAW(a)[i++] = RAW(s)[j++];
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < na; i++) SET_STRING_ELT(a, i, STRING_ELT(s, i% ns));
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    SET_STRING_ELT(a, i++, STRING_ELT(s, j++));
+	}
 	break;
     case VECSXP:
-	for (i = 0; i < na; i++)
-	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i % ns)));
+	for (i = 0, j = 0; i < na;) {
+	    if (j >= ns) j = 0;
+	    SET_VECTOR_ELT(a, i++, duplicate(VECTOR_ELT(s, j++)));
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("rep3", s);
