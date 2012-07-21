@@ -39,8 +39,9 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   \code{nv <= min(n, p)}, and even more efficient if one or both are zero.
 
   Unsuccessful results from the underlying LAPACK code will result in an
-  error giving a positive error code: these can only be interpreted by
-  detailed study of the FORTRAN code.
+  error giving a positive error code (most often \code{1}): these can
+  only be interpreted by detailed study of the FORTRAN code but mean
+  that the algorithm failed to converge.
 }
 \value{
   The SVD decomposition of the matrix as computed by LAPACK/LINPACK,
