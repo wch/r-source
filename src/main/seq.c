@@ -393,6 +393,10 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(x) == LISTSXP)
 	warningcall(call, "replication of pairlists is deprecated");
+    if (!isVector(x) && !isList(x))
+	errorcall(call, "attempt to replicate an object of type '%s'",
+		  type2char(TYPEOF(x)));
+	
     if(lx == 0) {
 	SEXP a;
 	PROTECT(a = duplicate(x));

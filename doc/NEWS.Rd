@@ -45,6 +45,13 @@
       \item New functions \code{checkPoFiles()} and \code{checkPoFile()}
       have been added to the \pkg{tools} package to check for
       consistency of format strings in translation files.
+
+      \item \code{model.matrix( ~1, .)} now also contains the same
+      rownames that less trivial formulae produce.  (Wist of \PR{14992},
+      changes the output of several packages.)
+
+      \item Misuse of \code{rep()} on undocumented objects (e.g. calls)
+      is now reported as an error.
     }
   }
 
@@ -86,7 +93,9 @@
       \item \samp{Translation} packages are deprecated.
 
       \item Calling \code{rep()} or \code{rep.int()} on a pairlist is
-      deprecated and will give a warning.
+      deprecated and will give a warning.  In any case, \code{rep()}
+      converted a pairlist to a list so you may as well do that
+      explicitly.
     }
   }
 
@@ -145,16 +154,13 @@
 
       \item \code{lchoose()} and \code{choose()} could overflow the C
       stack and crash \R.
-
-      \item \code{model.matrix( ~1, .)} now also contains the same
-      rownames that less trivial formulae produce.  (\PR{14992})
       
       \item When given a 0-byte file and asked to keep source
       references, \code{parse()} read input from \code{stdin()}
       instead.      
       
-      \item The \code{pdf()} device did not delete temporary files
-      when closed.  (\PR{14991})
+      \item \code{pdf(compress = TRUE)} did not delete temporary files
+      it created until the end of the \R session.  (\PR{14991})
     }
   }
 }
