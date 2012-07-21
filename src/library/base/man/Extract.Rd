@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extract}
@@ -17,10 +17,12 @@
 \alias{[[<-}
 \alias{$<-}
 \concept{delete}
+
 \description{
   Operators acting on vectors, matrices, arrays and lists to extract or
   replace parts.
 }
+
 \usage{
 x[i]
 x[i, j, \dots , drop = TRUE]
@@ -34,6 +36,7 @@ x[i, j, \dots] <- value
 x[[i]] <- value
 x$i <- value
 }
+
 \arguments{
   \item{x, object}{
     object from which to extract element(s) or in which to replace element(s).
@@ -80,6 +83,7 @@ x$i <- value
   \item{value}{typically an array-like \R object of a similar class as
     \code{x}.}
 }
+
 \details{
   These operators are generic.  You can write methods to handle indexing
   of specific classes of objects, see \link{InternalMethods} as well as
@@ -117,6 +121,7 @@ x$i <- value
   It is an error to apply any of these operators to an object which is
   not subsettable (e.g. a function).
 }
+
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
   select a single element \emph{dropping} \code{\link{names}}, whereas
@@ -130,6 +135,7 @@ x$i <- value
   An empty index selects all values: this is most often used to replace
   all the entries but keep the \code{\link{attributes}}.
 }
+
 \section{Matrices and arrays}{
   Matrices and arrays are vectors with a dimension attribute and so all
   the vector forms of indexing can be used with a single index.  The
@@ -162,6 +168,7 @@ x$i <- value
   is one-dimensional when the row names (if any) will be indexed to
   provide names for the result.
 }
+
 \section{Recursive (list-like) objects}{
   Indexing by \code{[} is similar to atomic vectors and selects a list
   of the specified element(s).
@@ -196,6 +203,7 @@ x$i <- value
   if \code{value} has length 1 or 0, \code{x} is first coerced to a
   zero-length vector of the type of \code{value}.
 }
+
 \section{Environments}{
   Both \code{$} and \code{[[} can be applied to environments.  Only
   character indices are allowed and no partial matching is done.  The
@@ -207,6 +215,7 @@ x$i <- value
     inherits=FALSE)}.  Such an assignment will either create a new
   binding or change the existing binding in \code{x}.
 }
+
 \section{NAs in indexing}{
   When extracting, a numerical, logical or character \code{NA} index picks
   an unknown element and so returns \code{NA} in the corresponding
@@ -219,6 +228,7 @@ x$i <- value
   be used or not, this is only allowed if the rhs value is of length one
   (so the two interpretations would have the same outcome).
 }
+
 \section{Argument matching}{
   Note that these operations do not match their index arguments in the
   standard way: argument names are ignored and positional matching only is
@@ -233,6 +243,7 @@ x$i <- value
   To avoid confusion, do not name index arguments (but \code{drop} and
   \code{exact} must be named).
 }
+
 \section{S4 methods}{
   These operators are also implicit S4 generics, but as primitives, S4
   methods will be dispatched only on S4 objects \code{x}.
@@ -249,6 +260,7 @@ x$i <- value
   have \code{name} in their signature because the grammar only allows
   symbols or string constants for the \code{name} argument.
 }
+
 \section{Character indices}{
   Character indices can in some circumstances be partially matched (see
   \code{\link{pmatch}}) to the names or dimnames of the object being
@@ -267,17 +279,20 @@ x$i <- value
   appropriate dimnames, they are taken as all \code{""} and so match
   nothing.
 }
+
 \note{
   The documented behaviour of S is that an \code{NA} replacement index
   \sQuote{goes nowhere} but uses up an element of \code{value}
   (Becker \emph{et al} p. 359).  However, that has not been true of
   other implementations.
 }
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
+
 \seealso{
   \code{\link{names}} for details of matching to names, and
   \code{\link{pmatch}} for partial matching.
@@ -289,14 +304,17 @@ x$i <- value
 
   \code{\link{Syntax}} for operator precedence, and the
   \emph{R Language} reference manual about indexing details.
+  
+  
+  \code{\link{NULL}} for details of indexing null objects.
 }
 %% Fixme: Link (to html in 'help.start()', pdf from 'ref manual',
 %% 'info' from ESS, see \url{http://cran.R-project.org/manuals.html}.
 
 \examples{
 x <- 1:12
-m <- matrix(1:6, nrow=2, dimnames=list(c("a", "b"), LETTERS[1:3]))
-li <- list(pi=pi, e = exp(1))
+m <- matrix(1:6, nrow = 2, dimnames = list(c("a", "b"), LETTERS[1:3]))
+li <- list(pi = pi, e = exp(1))
 x[10]                 # the tenth element of x
 x <- x[-1]            # delete the 1st element of x
 m[1,]                 # the first row of matrix m
@@ -307,8 +325,8 @@ ci <- cbind(c("a", "b", "a"), c("A", "C", "B"))
 m[ci]                 # matrix character index
 m <- m[,-1]           # delete the first column of m
 li[[1]]               # the first element of list li
-y <- list(1,2,a=4,5)
-y[c(3,4)]             # a list containing elements 3 and 4 of y
+y <- list(1, 2, a = 4, 5)
+y[c(3, 4)]            # a list containing elements 3 and 4 of y
 y$a                   # the element of y named a
 
 ## non-integer indices are truncated:
@@ -325,7 +343,7 @@ stopifnot(identical(names(nx[1]), "Abc"),
         is.null(names(nx[["Abc"]])), is.null(names(nx[[2]])))
 }
 ## recursive indexing into lists
-z <- list( a=list( b=9, c='hello'), d=1:5)
+z <- list(a = list(b = 9, c = 'hello'), d = 1:5)
 unlist(z)
 z[[c(1, 2)]]
 z[[c(1, 2, 1)]]  # both "hello"
