@@ -46,12 +46,12 @@
       have been added to the \pkg{tools} package to check for
       consistency of format strings in translation files.
 
-      \item \code{model.matrix( ~1, .)} now also contains the same
+      \item \code{model.matrix(~1, ...)} now also contains the same
       rownames that less trivial formulae produce.  (Wist of \PR{14992},
       changes the output of several packages.)
 
-      \item Misuse of \code{rep()} on undocumented objects (e.g. calls)
-      is now reported as an error.
+      \item Misuse of \code{rep()} on undocumented types of objects
+      (e.g. calls) is now reported as an error.
     }
   }
 
