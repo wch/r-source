@@ -13878,7 +13878,7 @@
 *     End of ZLAHRD
 *
       END
-*> \brief \b ZLANGE
+*> \brief \b ZLANGE returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a general rectangular matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -14017,17 +14017,17 @@
 *     ..
 *     .. Local Scalars ..
       INTEGER            I, J
-      DOUBLE PRECISION   SCALE, SUM, VALUE
+      DOUBLE PRECISION   SCALE, SUM, VALUE, TEMP
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MAX, MIN, SQRT
+      INTRINSIC          ABS, MIN, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -14040,7 +14040,8 @@
          VALUE = ZERO
          DO 20 J = 1, N
             DO 10 I = 1, M
-               VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+               TEMP = ABS( A( I, J ) )
+               IF( VALUE.LT.TEMP .OR. DISNAN( TEMP ) ) VALUE = TEMP
    10       CONTINUE
    20    CONTINUE
       ELSE IF( ( LSAME( NORM, 'O' ) ) .OR. ( NORM.EQ.'1' ) ) THEN
@@ -14053,7 +14054,7 @@
             DO 30 I = 1, M
                SUM = SUM + ABS( A( I, J ) )
    30       CONTINUE
-            VALUE = MAX( VALUE, SUM )
+            IF( VALUE.LT.SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    40    CONTINUE
       ELSE IF( LSAME( NORM, 'I' ) ) THEN
 *
@@ -14069,7 +14070,8 @@
    70    CONTINUE
          VALUE = ZERO
          DO 80 I = 1, M
-            VALUE = MAX( VALUE, WORK( I ) )
+            TEMP = WORK( I )
+            IF( VALUE.LT.TEMP .OR. DISNAN( TEMP ) ) VALUE = TEMP
    80    CONTINUE
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
@@ -14089,7 +14091,7 @@
 *     End of ZLANGE
 *
       END
-*> \brief \b ZLANHE
+*> \brief \b ZLANHE returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex Hermitian matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -14240,14 +14242,14 @@
       DOUBLE PRECISION   ABSA, SCALE, SUM, VALUE
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, DBLE, MAX, SQRT
+      INTRINSIC          ABS, DBLE, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -14261,15 +14263,19 @@
          IF( LSAME( UPLO, 'U' ) ) THEN
             DO 20 J = 1, N
                DO 10 I = 1, J - 1
-                  VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+                  SUM = ABS( A( I, J ) )
+                  IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    10          CONTINUE
-               VALUE = MAX( VALUE, ABS( DBLE( A( J, J ) ) ) )
+               SUM = ABS( DBLE( A( J, J ) ) )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    20       CONTINUE
          ELSE
             DO 40 J = 1, N
-               VALUE = MAX( VALUE, ABS( DBLE( A( J, J ) ) ) )
+               SUM = ABS( DBLE( A( J, J ) ) )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
                DO 30 I = J + 1, N
-                  VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+                  SUM = ABS( A( I, J ) )
+                  IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    30          CONTINUE
    40       CONTINUE
          END IF
@@ -14290,7 +14296,8 @@
                WORK( J ) = SUM + ABS( DBLE( A( J, J ) ) )
    60       CONTINUE
             DO 70 I = 1, N
-               VALUE = MAX( VALUE, WORK( I ) )
+               SUM = WORK( I )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    70       CONTINUE
          ELSE
             DO 80 I = 1, N
@@ -14303,7 +14310,7 @@
                   SUM = SUM + ABSA
                   WORK( I ) = WORK( I ) + ABSA
    90          CONTINUE
-               VALUE = MAX( VALUE, SUM )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   100       CONTINUE
          END IF
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
@@ -14342,7 +14349,7 @@
 *     End of ZLANHE
 *
       END
-*> \brief \b ZLANHS
+*> \brief \b ZLANHS returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -14478,14 +14485,14 @@
       DOUBLE PRECISION   SCALE, SUM, VALUE
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MAX, MIN, SQRT
+      INTRINSIC          ABS, MIN, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -14498,7 +14505,8 @@
          VALUE = ZERO
          DO 20 J = 1, N
             DO 10 I = 1, MIN( N, J+1 )
-               VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+               SUM = ABS( A( I, J ) )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    10       CONTINUE
    20    CONTINUE
       ELSE IF( ( LSAME( NORM, 'O' ) ) .OR. ( NORM.EQ.'1' ) ) THEN
@@ -14511,7 +14519,7 @@
             DO 30 I = 1, MIN( N, J+1 )
                SUM = SUM + ABS( A( I, J ) )
    30       CONTINUE
-            VALUE = MAX( VALUE, SUM )
+            IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    40    CONTINUE
       ELSE IF( LSAME( NORM, 'I' ) ) THEN
 *
@@ -14527,7 +14535,8 @@
    70    CONTINUE
          VALUE = ZERO
          DO 80 I = 1, N
-            VALUE = MAX( VALUE, WORK( I ) )
+            SUM = WORK( I )
+            IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    80    CONTINUE
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
@@ -14547,7 +14556,7 @@
 *     End of ZLANHS
 *
       END
-*> \brief \b ZLANTR
+*> \brief \b ZLANTR returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a trapezoidal or triangular matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -14717,14 +14726,14 @@
       DOUBLE PRECISION   SCALE, SUM, VALUE
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
+      LOGICAL            LSAME, DISNAN
+      EXTERNAL           LSAME, DISNAN
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           ZLASSQ
 *     ..
 *     .. Intrinsic Functions ..
-      INTRINSIC          ABS, MAX, MIN, SQRT
+      INTRINSIC          ABS, MIN, SQRT
 *     ..
 *     .. Executable Statements ..
 *
@@ -14739,13 +14748,15 @@
             IF( LSAME( UPLO, 'U' ) ) THEN
                DO 20 J = 1, N
                   DO 10 I = 1, MIN( M, J-1 )
-                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+                     SUM = ABS( A( I, J ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    10             CONTINUE
    20          CONTINUE
             ELSE
                DO 40 J = 1, N
                   DO 30 I = J + 1, M
-                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+                     SUM = ABS( A( I, J ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    30             CONTINUE
    40          CONTINUE
             END IF
@@ -14754,13 +14765,15 @@
             IF( LSAME( UPLO, 'U' ) ) THEN
                DO 60 J = 1, N
                   DO 50 I = 1, MIN( M, J )
-                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+                     SUM = ABS( A( I, J ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    50             CONTINUE
    60          CONTINUE
             ELSE
                DO 80 J = 1, N
                   DO 70 I = J, M
-                     VALUE = MAX( VALUE, ABS( A( I, J ) ) )
+                     SUM = ABS( A( I, J ) )
+                     IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
    70             CONTINUE
    80          CONTINUE
             END IF
@@ -14784,7 +14797,7 @@
                      SUM = SUM + ABS( A( I, J ) )
   100             CONTINUE
                END IF
-               VALUE = MAX( VALUE, SUM )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   110       CONTINUE
          ELSE
             DO 140 J = 1, N
@@ -14799,7 +14812,7 @@
                      SUM = SUM + ABS( A( I, J ) )
   130             CONTINUE
                END IF
-               VALUE = MAX( VALUE, SUM )
+               IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   140       CONTINUE
          END IF
       ELSE IF( LSAME( NORM, 'I' ) ) THEN
@@ -14852,7 +14865,8 @@
          END IF
          VALUE = ZERO
          DO 280 I = 1, M
-            VALUE = MAX( VALUE, WORK( I ) )
+            SUM = WORK( I )
+            IF( VALUE .LT. SUM .OR. DISNAN( SUM ) ) VALUE = SUM
   280    CONTINUE
       ELSE IF( ( LSAME( NORM, 'F' ) ) .OR. ( LSAME( NORM, 'E' ) ) ) THEN
 *
@@ -22647,7 +22661,7 @@
 *     End of ZLASR
 *
       END
-*> \brief \b ZLASSQ
+*> \brief \b ZLASSQ updates a sum of squares represented in scaled form.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -22778,6 +22792,10 @@
       INTEGER            IX
       DOUBLE PRECISION   TEMP1
 *     ..
+*     .. External Functions ..
+      LOGICAL            DISNAN
+      EXTERNAL           DISNAN
+*     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DIMAG
 *     ..
@@ -22785,8 +22803,8 @@
 *
       IF( N.GT.0 ) THEN
          DO 10 IX = 1, 1 + ( N-1 )*INCX, INCX
-            IF( DBLE( X( IX ) ).NE.ZERO ) THEN
-               TEMP1 = ABS( DBLE( X( IX ) ) )
+            TEMP1 = ABS( DBLE( X( IX ) ) )
+            IF( TEMP1.GT.ZERO.OR.DISNAN( TEMP1 ) ) THEN
                IF( SCALE.LT.TEMP1 ) THEN
                   SUMSQ = 1 + SUMSQ*( SCALE / TEMP1 )**2
                   SCALE = TEMP1
@@ -22794,8 +22812,8 @@
                   SUMSQ = SUMSQ + ( TEMP1 / SCALE )**2
                END IF
             END IF
-            IF( DIMAG( X( IX ) ).NE.ZERO ) THEN
-               TEMP1 = ABS( DIMAG( X( IX ) ) )
+            TEMP1 = ABS( DIMAG( X( IX ) ) )
+            IF( TEMP1.GT.ZERO.OR.DISNAN( TEMP1 ) ) THEN
                IF( SCALE.LT.TEMP1 ) THEN
                   SUMSQ = 1 + SUMSQ*( SCALE / TEMP1 )**2
                   SCALE = TEMP1

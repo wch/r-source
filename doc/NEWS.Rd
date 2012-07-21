@@ -147,7 +147,9 @@
       \item The undocumented use \code{rep(NULL, length.out = n)} for
       \code{n > 0} (which returns \code{NULL}) now gives a warning.
       
-      \item The included LAPACK has been updated to 3.4.1.
+      \item The included LAPACK has been updated to 3.4.1, with some
+      patches from the currnet SVN sources.  (\emph{Inter alia}, this
+      resolves \PR{14692}.)
     }
   }
 
