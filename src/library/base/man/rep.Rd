@@ -100,6 +100,11 @@ rep_len(x, length.out)
 
   For historical reasons \code{rep} works on \code{NULL}: the result is
   always \code{NULL} even when \code{length.out} is positive.
+
+  Although it has never been documented, these functions have always
+  worked on \link{expression} vectors.  Versions prior to \R 2.16.0
+  accepted pairlists and some other objects (although the results were
+  rarely what their users intended).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

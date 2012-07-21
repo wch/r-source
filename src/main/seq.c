@@ -265,6 +265,7 @@ static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
 	}
 	break;
     case VECSXP:
+    case EXPRSXP:
 	for (i = 0, j = 0; i < na;) {
 	    if (j >= ns) j = 0;
 	    SET_VECTOR_ELT(a, i++, duplicate(VECTOR_ELT(s, j++)));
@@ -288,7 +289,8 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("incorrect type for second argument"));
 
     if (!isVector(s) && s != R_NilValue)
-	error(_("attempt to replicate non-vector"));
+	error(_("attempt to replicate an object of type '%s'"), 
+	      type2char(TYPEOF(s)));
 
     nc = xlength(ncopy); // might be 0
     if (nc == xlength(s)) 
@@ -388,10 +390,6 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return a;
 }
-
-//#define NEW_REP
-
-#ifdef NEW_REP
 
 /* rep(), allowing for both times and each */
 static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, int each, R_xlen_t nt)
@@ -512,7 +510,6 @@ done:
     UNPROTECT(1);
     return a;
 }
-#endif
 
 /* We are careful to use evalListKeepMissing here (inside
    DispatchOrEval) to avoid dropping missing arguments so e.g.
@@ -617,55 +614,11 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(len > 0 && each == 0)
 	errorcall(call, _("invalid '%s' argument"), "each");
 
-#ifndef NEW_REP
-    SEXP ind;
- #ifdef LONG_VECTOR_SUPPORT
-    if (len > INT_MAX) {
-	PROTECT(ind = allocVector(REALSXP, len));
-	if(nt == 1)
-	    for(i = 0; i < len; i++)
-		REAL(ind)[i] = (double)( 1 + ((i/each) % lx));
-	else {
-	    R_xlen_t j, k, k2, k3;
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) {
-		R_xlen_t sum = 0;
-		for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
-		for(k3 = 0; k3 < sum; k3++) {
-		    REAL(ind)[k2++] = (double)(i+1);
-		    if(k2 == len) goto done;
-		}
-	    }
-	}
-    } else
-#endif
-    {
-	PROTECT(ind = allocVector(INTSXP, len));
-	if(nt == 1)
-	    for(i = 0; i < len; i++)
-		INTEGER(ind)[i] = (int)( 1 + ((i/each) % lx));
-	else {
-	    R_xlen_t j, k, k2, k3;
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) {
-		R_xlen_t sum = 0;
-		for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
-		for(k3 = 0; k3 < sum; k3++) {
-		    INTEGER(ind)[k2++] = (int)(i+1);
-		    if(k2 == len) goto done;
-		}
-	    }
-	}
-    }
-done:
-    ans = do_subset_dflt(R_NilValue, R_NilValue, list2(x, ind), rho);
-    /* 1D arrays get dimensions preserved by subsetting */
-    setAttrib(ans, R_DimSymbol, R_NilValue);
-#else
     SEXP xn = getAttrib(x, R_NamesSymbol);
 
     PROTECT(ans = rep4(x, times, len, each, nt));
     if (length(xn) > 0)
 	setAttrib(ans, R_NamesSymbol, rep4(xn, times, len, each, nt));
-#endif
 
 #ifdef _S4_rep_keepClass
     if(IS_S4_OBJECT(x)) { /* e.g. contains = "list" */
