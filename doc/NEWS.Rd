@@ -203,6 +203,9 @@
 
       Such calls can terminate the \R process which loads the package.
 
+      \item \command{R CMD check} (if checking subdirectories) checks
+      that the \R code in any demos can be parsed, and warns if not.
+
       \item The location of the build and check environment files can
       now be specified by the environment variables
       \env{R_BUILD_ENVIRON} and \env{R_CHECK_ENVIRON}, respectively.

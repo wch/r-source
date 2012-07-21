@@ -748,11 +748,26 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             printLog(Log, "Subdirectory 'data' contains no data sets.\n")
        }
         ## Subdirectory 'demo' without demos?
-        if (dir.exists("demo") &&
-            !length(list_files_with_type("demo", "demo"))) {
-            if (!any) warningLog(Log)
-            any <- TRUE
-            printLog(Log, "Subdirectory 'demo' contains no demos.\n")
+
+        if (dir.exists("demo")) {
+            demos <- list_files_with_type("demo", "demo")
+            if(!length(demos)) {
+                if (!any) warningLog(Log)
+                any <- TRUE
+                printLog(Log, "Subdirectory 'demo' contains no demos.\n")
+            } else {
+                ## check we can parse each demo.
+                bad <- character()
+                for(d in demos)
+                    tryCatch(parse(file = d),
+                             error = function(e) bad <<- c(bad, basename(d)))
+                if (length(bad)) {
+                    if (!any) warningLog(Log)
+                    any <- TRUE
+                    printLog(Log, "Demos which do not contain valid R code:")
+                    printLog(Log, .format_lines_with_indent(sQuote(bad)), "\n")
+                }
+            }
         }
 
         ## Subdirectory 'exec' without files?
