@@ -1,5 +1,5 @@
 The Fortran routines here are extracted from LAPACK 3.1.0, then 3.1.1, 3.4.1
-(http://www.netlib.org/lapack and mirrors).
+(http://www.netlib.org/lapack and mirrors), then from SVN in July 2012.
 
 dlapack?.f are support routines for `real' LAPACK calls
 cmplx.f are support routines for LAPACK calls from complex arithmetic
@@ -127,3 +127,4 @@ zgelqf.f	zladiv.f	zlarfb.f	ztrevc.f	zunmlq.f
 zgeqp3.f	zlahqr.f	zlarfg.f	ztrexc.f	zunmqr.f
 zunmhr.f
 
+R.patch is a patch to suppress warnings.
