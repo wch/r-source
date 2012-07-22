@@ -47,7 +47,7 @@
       consistency of format strings in translation files.
 
       \item \code{model.matrix(~1, ...)} now also contains the same
-      rownames that less trivial formulae produce.  (Wist of \PR{14992},
+      rownames that less trivial formulae produce.  (Wish of \PR{14992},
       changes the output of several packages.)
 
       \item Misuse of \code{rep()} on undocumented types of objects
