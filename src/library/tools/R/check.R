@@ -2476,7 +2476,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                         recursive = TRUE, pattern = "^[.]")
         dots <- sub("^./","", dots)
         allowed <-
-            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras")
+            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras",
+              ".install_timestamp") # Kurt uses this
         dots <- dots[!dots %in% allowed]
         alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
         alldirs <- sub("^./","", alldirs)
