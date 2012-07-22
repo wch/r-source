@@ -22,10 +22,6 @@
 @end macro
 
 @ifinfo
-This is the R language definition.
-
-@Rcopyright{2000}
-
 @ignore
 Permission is granted to process this file through TeX and print the
 results, provided the printed document carries a copying permission
@@ -34,7 +30,6 @@ notice identical to this one except for the removal of this paragraph
 
 @end ignore
 
-@permission{}
 @end ifinfo
 
 @titlepage
@@ -65,6 +60,11 @@ forth.
 The current version of this document is @value{VERSION} @b{DRAFT}.
 
 @value{ISBN-lang}
+
+@Rcopyright{2000}
+
+@permission{}
+
 @end ifnottex
 
 @menu

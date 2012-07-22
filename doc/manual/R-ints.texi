@@ -20,10 +20,6 @@
 @include version.texi
 
 @ifinfo
-This is a guide to R's internal structures.
-
-@Rcopyright{1999}
-
 @ignore
 Permission is granted to process this file through TeX and print the
 results, provided the printed document carries a copying permission
@@ -31,9 +27,6 @@ notice identical to this one except for the removal of this paragraph
 (this paragraph not being relevant to the printed manual).
 
 @end ignore
-
-@permission{}
-@c ---------- ^- read that
 @end ifinfo
 
 @titlepage
@@ -63,6 +56,12 @@ the core team working on @R{} itself.
 The current version of this document is @value{VERSION}.
 
 @value{ISBN-ints}
+
+@Rcopyright{1999}
+
+@permission{}
+@c ---------- ^- read that
+
 @end ifnottex
 
 @menu
