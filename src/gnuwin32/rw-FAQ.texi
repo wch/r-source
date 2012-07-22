@@ -222,7 +222,7 @@ set the default installation directory
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
-@samp{i386} and @samp{x64} (there were many more before R 2.15.0).
+@samp{i386}, @samp{x64} and @samp{translations}.
 @end table
 
 @noindent

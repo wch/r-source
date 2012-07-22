@@ -346,6 +346,9 @@
       default translations will be used: set environment variable
       \env{R_TRANSLATIONS} to point to the location of the intended
       \pkg{translations} package to use this right from the start.)
+
+      \item The translations form a separate group in the Windows
+      installer, so can be omitted if desired.
     }
   }
 

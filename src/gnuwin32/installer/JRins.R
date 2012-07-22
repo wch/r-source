@@ -103,6 +103,8 @@
                   grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f))) "i386"
 	else if (grepl("/i386/", f)) "i386"
 	else if (grepl("/x64/", f)) "x64"
+	else if (grepl("(/po$|/po/|/msgs$|/msgs/|^library/translations)", f))
+            "translations"
 	else "main"
 
         if (component == "x64" && !have64bit) next
