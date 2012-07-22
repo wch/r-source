@@ -897,7 +897,8 @@ and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
 line for each demo, giving its name and a description separated by white
 space. (Note that it is not possible to generate this index file
-automatically.)
+automatically.)  Note that a demo does not have a specified encoding and
+so should be an ASCII file (@pxref{Encoding issues}).
 
 @cindex .Rinstignore file
 The contents of the @file{inst} subdirectory will be copied recursively
@@ -2712,9 +2713,9 @@ Please ensure that you can run through the complete procedure with only
 warnings that you understand and have reasons not to eliminate.  In
 principle, packages must pass @code{R CMD check} without warnings or
 significant notes to be admitted to the main @acronym{CRAN} package
-area.  If there are warnings you cannot eliminate (for example because
-you believe them to be spurious) send an explanatory note as part of
-your covering email.
+area.  If there are warnings or notes you cannot eliminate (for example
+because you believe them to be spurious) send an explanatory note as
+part of your covering email.
 
 Also read the CRAN policies linked from
 @uref{http://cran.r-project.org/web/packages/} and note that by
