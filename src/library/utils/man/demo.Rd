@@ -1,6 +1,6 @@
 % File src/library/utils/man/demo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{demo}
@@ -13,7 +13,8 @@
 \usage{
 demo(topic, package = NULL, lib.loc = NULL,
      character.only = FALSE, verbose = getOption("verbose"),
-     echo = TRUE, ask = getOption("demo.ask"))
+     echo = TRUE, ask = getOption("demo.ask"),
+     encoding = getOption("encoding"))
 }
 \arguments{
   \item{topic}{the topic which should be demonstrated, given as a
@@ -42,6 +43,8 @@ demo(topic, package = NULL, lib.loc = NULL,
     device and to any devices opened by the demo code.  If this is
     evaluated to \code{TRUE} and the session is \link{interactive}, the
     user is asked to press RETURN to start.}
+  \item{encoding}{See \code{\link{source}}.  If the package has a
+    declared encoding, that takes preference.}
 }
 \details{
   If no topics are given, \code{demo} lists the available demos.  The

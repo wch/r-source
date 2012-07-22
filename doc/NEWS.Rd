@@ -148,8 +148,12 @@
       \code{n > 0} (which returns \code{NULL}) now gives a warning.
       
       \item The included LAPACK has been updated to 3.4.1, with some
-      patches from the currnet SVN sources.  (\emph{Inter alia}, this
+      patches from the current SVN sources.  (\emph{Inter alia}, this
       resolves \PR{14692}.)
+      
+      \item \code{demo()} gains an \code{encoding} argument for those
+      packages with non-ASCII demos: it defaults to the package encoding
+      where there is one.
     }
   }
 
@@ -202,9 +206,6 @@
       \file{.o} file in which the calls occur.
 
       Such calls can terminate the \R process which loads the package.
-
-      \item \command{R CMD check} (if checking subdirectories) checks
-      that the \R code in any demos can be parsed, and warns if not.
 
       \item The location of the build and check environment files can
       now be specified by the environment variables
@@ -438,6 +439,10 @@
       needed for the operation of \command{R CMD INSTALL} or \code{R CMD
 	build}: such files should be excluded from the published tarball.
 
+      \item \command{R CMD check} (if checking subdirectories) checks
+      that the \R code in any demos is ASCII and can be parsed, and
+      warns if not.
+      
       \item When \code{R CMD Rd2pdf} is used with \file{inputenx.sty},
       it allows further characters (mainly for Eastern European
       languages) by including \file{ix-utf8enc.dfu} (if available).
