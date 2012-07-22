@@ -1609,9 +1609,12 @@ which support version 2.5), but portable packages cannot assume that end
 users have recent versions (there are some years-old versions of Linux
 in use), and it may be safest to assume version 2.5.
 
-OpenMP support is expected to be available on Windows in the toolchain
-used for @R{} 2.15.0 and these macros will be set appropriately.  It is
-not available on Windows prior to @R{} 2.14.2.
+C/C++ code written to use OpenMP should include @code{omp} pragmas and
+other OpenMP-specific code in @code{#ifdef _OPENMP ... #endif}.
+
+OpenMP support is available on Windows in the toolchain used for @R{}
+2.15.0 and these macros will be set appropriately.  It is not available
+on Windows prior to @R{} 2.14.2.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
