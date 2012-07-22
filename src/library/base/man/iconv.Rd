@@ -59,8 +59,6 @@ iconvlist()
   Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
   are ignored: they will always be translated as if from \code{from}
   even if declared otherwise.
-
-  \code{"UTF8"} will be accepted as meaning the (more correct) \code{"UTF-8"}.
 }
 
 \section{Implementation Details}{
