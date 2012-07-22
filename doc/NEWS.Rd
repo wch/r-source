@@ -75,6 +75,10 @@
       needed for the operation of \command{R CMD INSTALL} or \code{R CMD
 	build}: such files should be excluded from the published tarball.
 
+      \item \command{R CMD check} (if checking subdirectories) checks
+      that the \R code in any demos is ASCII and can be parsed, and
+      warns if not.
+      
       \item When \code{R CMD Rd2pdf} is used with \file{inputenx.sty},
       it allows further characters (mainly for Eastern European
       languages) by including \file{ix-utf8enc.dfu} (if available).

@@ -748,11 +748,50 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             printLog(Log, "Subdirectory 'data' contains no data sets.\n")
        }
         ## Subdirectory 'demo' without demos?
-        if (dir.exists("demo") &&
-            !length(list_files_with_type("demo", "demo"))) {
-            if (!any) warningLog(Log)
-            any <- TRUE
-            printLog(Log, "Subdirectory 'demo' contains no demos.\n")
+
+        if (dir.exists("demo")) {
+            demos <- list_files_with_type("demo", "demo")
+            if(!length(demos)) {
+                if (!any) warningLog(Log)
+                any <- TRUE
+                printLog(Log, "Subdirectory 'demo' contains no demos.\n")
+            } else {
+                ## check for non-ASCII code in each demo
+                bad <- character()
+                for(d in demos) {
+                    x <- readLines(d, warn = FALSE)
+                    asc <- iconv(x, "latin1", "ASCII")
+                    ind <- is.na(asc) | asc != x
+                    if (any(ind)) bad <- c(bad, basename(d))
+                }
+                if (length(bad)) {
+                    if (!any) warningLog(Log)
+                    any <- TRUE
+                    printLog(Log, "Demos with non-ASCII characters:")
+                    if(length(bad) > 1L)
+                        printLog(Log, "\n",
+                                 .format_lines_with_indent(bad), "\n")
+                    else printLog(Log, "  ", bad, "\n")
+                    wrapLog("Portable packages must use only ASCII",
+                            "characters in their demos.\n",
+                            "Use \\uxxxx escapes for other characters.\n")
+                    demos <- demos[! basename(demos) %in% bad]
+                }
+                ## check we can parse each demo.
+                bad <- character()
+                for(d in demos)
+                    tryCatch(parse(file = d),
+                             error = function(e) bad <<- c(bad, basename(d)))
+                if (length(bad)) {
+                    if (!any) warningLog(Log)
+                    any <- TRUE
+                    printLog(Log, "Demos which do not contain valid R code:")
+                    if(length(bad) > 1L)
+                        printLog(Log, "\n",
+                                 .format_lines_with_indent(bad), "\n")
+                    else printLog(Log, "  ", bad, "\n")
+               }
+            }
         }
 
         ## Subdirectory 'exec' without files?
