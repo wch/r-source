@@ -147,10 +147,6 @@
       \item The undocumented use \code{rep(NULL, length.out = n)} for
       \code{n > 0} (which returns \code{NULL}) now gives a warning.
       
-      \item The included LAPACK has been updated to 3.4.1, with some
-      patches from the current SVN sources.  (\emph{Inter alia}, this
-      resolves \PR{14692}.)
-      
       \item \code{demo()} gains an \code{encoding} argument for those
       packages with non-ASCII demos: it defaults to the package encoding
       where there is one.
@@ -416,6 +412,10 @@
 
       \item Misuse of \code{rep()} on undocumented types of objects
       (e.g. calls) is now reported as an error.
+      
+      \item The included LAPACK has been updated to 3.4.1, with some
+      patches from the current SVN sources.  (\emph{Inter alia}, this
+      resolves \PR{14692}.)
     }
   }
 
