@@ -46,7 +46,7 @@ cut(x, \dots)
   the extreme values both fall within the break intervals.  (If \code{x}
   is a constant vector, equal-length intervals are created that cover
   the single value.)
-  
+
   If a \code{labels} parameter is specified, its values are used
   to name the factor levels.  If none is specified, the factor
   level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
@@ -79,7 +79,7 @@ cut(x, \dots)
 \seealso{
   \code{\link{split}} for splitting a variable according to a group factor;
   \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}},
-  \code{\link{findInterval}()}.
+  \code{\link{findInterval}}.
 
   \code{\link{quantile}} for ways of choosing breaks of roughly equal
   content (rather than length).
