@@ -1,0 +1,204 @@
+diff -ru dorcsd.f /tmp/dorcsd.f
+--- dorcsd.f	2012-04-11 20:42:32.000000000 +0100
++++ /tmp/dorcsd.f	2012-07-21 13:48:01.000000000 +0100
+@@ -427,19 +428,26 @@
+          ITAUQ1 = ITAUP2 + MAX( 1, M - P )
+          ITAUQ2 = ITAUQ1 + MAX( 1, Q )
+          IORGQR = ITAUQ2 + MAX( 1, M - Q )
+-         CALL DORGQR( M-Q, M-Q, M-Q, 0, MAX(1,M-Q), 0, WORK, -1,
++c WORK is a suitable dummy
++         CALL DORGQR( M-Q, M-Q, M-Q, WORK, MAX(1,M-Q), WORK, WORK, -1,
+      $                CHILDINFO )
+          LORGQRWORKOPT = INT( WORK(1) )
+          LORGQRWORKMIN = MAX( 1, M - Q )
+          IORGLQ = ITAUQ2 + MAX( 1, M - Q )
+-         CALL DORGLQ( M-Q, M-Q, M-Q, 0, MAX(1,M-Q), 0, WORK, -1,
++c WORK is a suitable dummy
++         CALL DORGLQ( M-Q, M-Q, M-Q, WORK, MAX(1,M-Q), WORK, WORK, -1,
+      $                CHILDINFO )
+          LORGLQWORKOPT = INT( WORK(1) )
+          LORGLQWORKMIN = MAX( 1, M - Q )
+          IORBDB = ITAUQ2 + MAX( 1, M - Q )
+-         CALL DORBDB( TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12,
+-     $                X21, LDX21, X22, LDX22, 0, 0, 0, 0, 0, 0, WORK,
+-     $                -1, CHILDINFO )
++c avoid compiler warnings
++c         CALL DORBDB( TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12,
++c     $                X21, LDX21, X22, LDX22, 0, 0, 0, 0, 0, 0, WORK,
++c     $                -1, CHILDINFO )
++      CALL DORBDB( TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12, X21,
++     $             LDX21, X22, LDX22, THETA, WORK(IPHI), WORK(ITAUP1),
++     $             WORK(ITAUP2), WORK(ITAUQ1), WORK(ITAUQ2),
++     $             WORK(IORBDB), -1, CHILDINFO )
+          LORBDBWORKOPT = INT( WORK(1) )
+          LORBDBWORKMIN = LORBDBWORKOPT
+          IB11D = ITAUQ2 + MAX( 1, M - Q )
+@@ -451,9 +459,15 @@
+          IB22D = IB21E + MAX( 1, Q - 1 )
+          IB22E = IB22D + MAX( 1, Q )
+          IBBCSD = IB22E + MAX( 1, Q - 1 )
+-         CALL DBBCSD( JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, M, P, Q, 0,
+-     $                0, U1, LDU1, U2, LDU2, V1T, LDV1T, V2T, LDV2T, 0,
+-     $                0, 0, 0, 0, 0, 0, 0, WORK, -1, CHILDINFO )
++c         CALL DBBCSD( JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, M, P, Q, 0,
++c     $                0, U1, LDU1, U2, LDU2, V1T, LDV1T, V2T, LDV2T, 0,
++c     $                0, 0, 0, 0, 0, 0, 0, WORK, -1, CHILDINFO )
++        CALL DBBCSD( JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, M, P, Q, 
++     $             THETA,
++     $             WORK(IPHI), U1, LDU1, U2, LDU2, V1T, LDV1T, V2T,
++     $             LDV2T, WORK(IB11D), WORK(IB11E), WORK(IB12D),
++     $             WORK(IB12E), WORK(IB21D), WORK(IB21E), WORK(IB22D),
++     $             WORK(IB22E), WORK(IBBCSD), -1, INFO )
+          LBBCSDWORKOPT = INT( WORK(1) )
+          LBBCSDWORKMIN = LBBCSDWORKOPT
+          LWORKOPT = MAX( IORGQR + LORGQRWORKOPT, IORGLQ + LORGLQWORKOPT,
+@@ -595,4 +609,3 @@
+ *     End DORCSD
+ *
+       END
+-
+--- zgesvd.f	2012-04-13 19:13:07.000000000 +0100
++++ /tmp/zgesvd.f	2012-07-23 09:14:24.000000000 +0100
+@@ -321,24 +321,24 @@
+ *
+             MNTHR = ILAENV( 6, 'ZGESVD', JOBU // JOBVT, M, N, 0, 0 )
+ *           Compute space needed for ZGEQRF
+-            CALL ZGEQRF( M, N, A, LDA, DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZGEQRF=DUM(1)
++            CALL ZGEQRF( M, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZGEQRF=CDUM(1)
+ *           Compute space needed for ZUNGQR
+-            CALL ZUNGQR( M, N, N, A, LDA, DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZUNGQR_N=DUM(1)
+-            CALL ZUNGQR( M, M, N, A, LDA, DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZUNGQR_M=DUM(1)
++            CALL ZUNGQR( M, N, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZUNGQR_N=CDUM(1)
++            CALL ZUNGQR( M, M, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZUNGQR_M=CDUM(1)
+ *           Compute space needed for ZGEBRD
+-            CALL ZGEBRD( N, N, A, LDA, S, DUM(1), DUM(1),
+-     $                   DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZGEBRD=DUM(1)
++            CALL ZGEBRD( N, N, A, LDA, S, DUM(1), CDUM(1),
++     $                   CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZGEBRD=CDUM(1)
+ *           Compute space needed for ZUNGBR
+-            CALL ZUNGBR( 'P', N, N, N, A, LDA, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-            LWORK_ZUNGBR_P=DUM(1)
+-            CALL ZUNGBR( 'Q', N, N, N, A, LDA, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-            LWORK_ZUNGBR_Q=DUM(1)
++            CALL ZUNGBR( 'P', N, N, N, A, LDA, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++            LWORK_ZUNGBR_P=CDUM(1)
++            CALL ZUNGBR( 'Q', N, N, N, A, LDA, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++            LWORK_ZUNGBR_Q=CDUM(1)
+ *
+             IF( M.GE.MNTHR ) THEN
+                IF( WNTUN ) THEN
+@@ -443,20 +443,20 @@
+ *
+ *              Path 10 (M at least N, but not much larger)
+ *
+-               CALL ZGEBRD( M, N, A, LDA, S, DUM(1), DUM(1),
+-     $                   DUM(1), DUM(1), -1, IERR )
+-               LWORK_ZGEBRD=DUM(1)
++               CALL ZGEBRD( M, N, A, LDA, S, DUM(1), CDUM(1),
++     $                   CDUM(1), CDUM(1), -1, IERR )
++               LWORK_ZGEBRD=CDUM(1)
+                MAXWRK = 2*N + LWORK_ZGEBRD
+                IF( WNTUS .OR. WNTUO ) THEN
+-                  CALL ZUNGBR( 'Q', M, N, N, A, LDA, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-                  LWORK_ZUNGBR_Q=DUM(1)
++                  CALL ZUNGBR( 'Q', M, N, N, A, LDA, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++                  LWORK_ZUNGBR_Q=CDUM(1)
+                   MAXWRK = MAX( MAXWRK, 2*N+LWORK_ZUNGBR_Q )
+                END IF
+                IF( WNTUA ) THEN
+-                  CALL ZUNGBR( 'Q', M, M, N, A, LDA, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-                  LWORK_ZUNGBR_Q=DUM(1)
++                  CALL ZUNGBR( 'Q', M, M, N, A, LDA, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++                  LWORK_ZUNGBR_Q=CDUM(1)
+                   MAXWRK = MAX( MAXWRK, 2*N+LWORK_ZUNGBR_Q )
+                END IF
+                IF( .NOT.WNTVN ) THEN
+@@ -470,25 +470,26 @@
+ *
+             MNTHR = ILAENV( 6, 'ZGESVD', JOBU // JOBVT, M, N, 0, 0 )
+ *           Compute space needed for ZGELQF
+-            CALL ZGELQF( M, N, A, LDA, DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZGELQF=DUM(1)
++            CALL ZGELQF( M, N, A, LDA, CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZGELQF=CDUM(1)
+ *           Compute space needed for ZUNGLQ
+-            CALL ZUNGLQ( N, N, M, DUM(1), N, DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZUNGLQ_N=DUM(1)
+-            CALL ZUNGLQ( M, N, M, A, LDA, DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZUNGLQ_M=DUM(1)
++            CALL ZUNGLQ( N, N, M, CDUM(1), N, CDUM(1), CDUM(1), -1,
++     $                  IERR )
++            LWORK_ZUNGLQ_N=CDUM(1)
++            CALL ZUNGLQ( M, N, M, A, LDA, CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZUNGLQ_M=CDUM(1)
+ *           Compute space needed for ZGEBRD
+-            CALL ZGEBRD( M, M, A, LDA, S, DUM(1), DUM(1),
+-     $                   DUM(1), DUM(1), -1, IERR )
+-            LWORK_ZGEBRD=DUM(1)
++            CALL ZGEBRD( M, M, A, LDA, S, DUM(1), CDUM(1),
++     $                   CDUM(1), CDUM(1), -1, IERR )
++            LWORK_ZGEBRD=CDUM(1)
+ *            Compute space needed for ZUNGBR P
+-            CALL ZUNGBR( 'P', M, M, M, A, N, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-            LWORK_ZUNGBR_P=DUM(1)
++            CALL ZUNGBR( 'P', M, M, M, A, N, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++            LWORK_ZUNGBR_P=CDUM(1)
+ *           Compute space needed for ZUNGBR Q
+-            CALL ZUNGBR( 'Q', M, M, M, A, N, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-            LWORK_ZUNGBR_Q=DUM(1)
++            CALL ZUNGBR( 'Q', M, M, M, A, N, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++            LWORK_ZUNGBR_Q=CDUM(1)
+             IF( N.GE.MNTHR ) THEN
+                IF( WNTVN ) THEN
+ *
+@@ -592,21 +593,21 @@
+ *
+ *              Path 10t(N greater than M, but not much larger)
+ *
+-               CALL ZGEBRD( M, N, A, LDA, S, DUM(1), DUM(1),
+-     $                   DUM(1), DUM(1), -1, IERR )
+-               LWORK_ZGEBRD=DUM(1)
++               CALL ZGEBRD( M, N, A, LDA, S, DUM(1), CDUM(1),
++     $                   CDUM(1), CDUM(1), -1, IERR )
++               LWORK_ZGEBRD=CDUM(1)
+                MAXWRK = 2*M + LWORK_ZGEBRD
+                IF( WNTVS .OR. WNTVO ) THEN
+ *                Compute space needed for ZUNGBR P
+-                 CALL ZUNGBR( 'P', M, N, M, A, N, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-                 LWORK_ZUNGBR_P=DUM(1)
++                 CALL ZUNGBR( 'P', M, N, M, A, N, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++                 LWORK_ZUNGBR_P=CDUM(1)
+                  MAXWRK = MAX( MAXWRK, 2*M+LWORK_ZUNGBR_P )
+                END IF
+                IF( WNTVA ) THEN
+-                 CALL ZUNGBR( 'P', N,  N, M, A, N, DUM(1),
+-     $                   DUM(1), -1, IERR )
+-                 LWORK_ZUNGBR_P=DUM(1)
++                 CALL ZUNGBR( 'P', N,  N, M, A, N, CDUM(1),
++     $                   CDUM(1), -1, IERR )
++                 LWORK_ZUNGBR_P=CDUM(1)
+                  MAXWRK = MAX( MAXWRK, 2*M+LWORK_ZUNGBR_P )
+                END IF
+                IF( .NOT.WNTUN ) THEN

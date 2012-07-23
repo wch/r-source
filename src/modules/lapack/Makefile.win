@@ -12,7 +12,7 @@ endif
 
 CSOURCES = Lapack.c
 OBJS=$(CSOURCES:.c=.o) dllversion.o
-LIBSOURCES = dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f cmplx.f
+LIBSOURCES = dlamch.f dlapack.f cmplx.f
 LIBOBJECTS = $(LIBSOURCES:.f=.o) init_win.o Rlapackrc.o
 
 CPPFLAGS=-I../../include -DHAVE_CONFIG_H

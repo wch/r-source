@@ -52,6 +52,10 @@
 
       \item Misuse of \code{rep()} on undocumented types of objects
       (e.g. calls) is now reported as an error.
+      
+      \item The included LAPACK has been updated to 3.4.1, with some
+      patches from the current SVN sources.  (\emph{Inter alia}, this
+      resolves \PR{14692}.)
     }
   }
 
