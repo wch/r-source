@@ -107,13 +107,14 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{"win.binary"}: the binary types can be listed and downloaded
     but not installed on other platforms.
 
-    The default is the appropriate binary type on Windows and on
-    the CRAN binary Mac OS X distribution, otherwise \code{"source"}.
-    For the platforms where binary packages are the default, an
-    alternative is \code{"both"} which means \sQuote{try binary if
-      available, otherwise try source}.  (This will only choose the
-    binary package if its version number is no older than the source
-    version.)
+    The default is the appropriate binary type on Windows and on the
+    CRAN binary Mac OS X distribution, otherwise \code{"source"}.  For
+    the platforms where binary packages are the default, an alternative
+    is \code{"both"} which means \sQuote{try binary if available,
+    otherwise try source}.  (This will only choose the binary package if
+    its version number is no older than the source version.  In
+    interactive use it will ask before attempting to install source
+    packages.)
   }
   \item{configure.args}{
     (not used on Windows) a character vector or a named list.  If a

@@ -148,7 +148,7 @@ function(dir, fields = NULL,
                 if(!inherits(temp, "error")) {
                     if(is.na(temp["NeedsCompilation"])) {
                         l <- utils::untar(files[i], list = TRUE)
-                        temp["NeedsCompliation"] <-
+                        temp["NeedsCompilation"] <-
                             if(any(l == file.path(packages[i], "src/"))) "yes" else "no"
                     }
                     temp["MD5sum"] <- md5sum(files[i])

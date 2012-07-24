@@ -268,6 +268,7 @@ install.packages <-
         }
     }
 
+# for testing .Platform$pkgType <- "mac.binary.leopard"
     ## Look at type == "both"
     if (type == "both") {
         ## NB it is only safe to use binary packages with a Mac OS X
@@ -283,17 +284,55 @@ install.packages <-
         type <- "source"
         contriburl <- contrib.url(repos, "source")
         available <-
-            available.packages(contriburl = contriburl, method = method)
+            available.packages(contriburl = contriburl, method = method,
+                               fields = "NeedsCompilation")
         pkgs <- getDependencies(pkgs, dependencies, available, lib)
         ## Now see what we can get as binary packages.
         av2 <- available.packages(contriburl = contrib.url(repos, type2),
                                   method = method)
         bins <- row.names(av2)
         bins <- pkgs[pkgs %in% bins]
-        ## It seems safest to use binaries only if they are as recent as sources.
+        srcOnly <- pkgs[! pkgs %in% bins]
         binvers <- av2[bins, "Version"]
+        hasSrc <-  !is.na(av2[bins, "Archs"])
+
         srcvers <- available[bins, "Version"]
-        bins <- bins[binvers >= srcvers] # allow for CRAN extras updates
+        later <- binvers < srcvers
+        if(any(later)) {
+            msg <- ngettext(sum(later),
+                            "There is a binary version available but the source version is later",
+                            "There are binary versions available but the source versions are later")
+            cat("\n",
+                paste(strwrap(msg, indent = 2, exdent = 2), collapse = "\n"),
+                ":\n", sep = "")
+            out <- data.frame(`binary` = binvers, `source` = srcvers,
+                              `needs_compilation` =  hasSrc,
+                              row.names = bins,
+                              check.names = FALSE)[later, ]
+            print(out)
+            cat("\n")
+            if(interactive() && any(later & hasSrc)) {
+                message("Do you want to attempt to install from sources the package(s) which need compilation?")
+                res <- readline("y/n: ")
+                if(res != "y") later <- later & !hasSrc
+            }
+        }
+        bins <- bins[!later]
+
+        if(interactive() && length(srcOnly)) {
+            nc <- !( available[srcOnly, "NeedsCompilation"] %in% "no")
+            s2 <- srcOnly[nc]
+            if(length(s2)) {
+                msg <- c("Package(s) which are only available in source form, and may need compilation of C/C++/Fortran: ",
+                         sQuote(s2))
+                msg <- strwrap(paste(msg, collapse = " "), exdent = 2)
+                message(paste(msg, collapse = "\n"), domain = NA)
+                message("Do you want to attempt to install these from sources?")
+                res <- readline("y/n: ")
+                if(res != "y") pkgs <- setdiff(pkgs, s2)
+            }
+        }
+
         if(length(bins)) {
             if(type2 == "win.binary")
                 .install.winbinary(pkgs = bins, lib = lib,
