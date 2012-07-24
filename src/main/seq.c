@@ -177,38 +177,38 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     switch (TYPEOF(s)) {
     case LGLSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		LOGICAL(a)[n++] = LOGICAL(s)[i];
 	break;
     case INTSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		INTEGER(a)[n++] = INTEGER(s)[i];
 	break;
     case REALSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		REAL(a)[n++] = REAL(s)[i];
 	break;
     case CPLXSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		COMPLEX(a)[n++] = COMPLEX(s)[i];
 	break;
     case STRSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		SET_STRING_ELT(a, n++, STRING_ELT(s, i));
 	break;
     case VECSXP:
     case EXPRSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		SET_VECTOR_ELT(a, n++, VECTOR_ELT(s, i));
 	break;
     case RAWSXP:
 	for (i = 0; i < nc; i++)
-	    for (j = 0; j < (INTEGER(t)[i]); j++)
+	    for (j = 0; j < INTEGER(t)[i]; j++)
 		RAW(a)[n++] = RAW(s)[i];
 	break;
     default:

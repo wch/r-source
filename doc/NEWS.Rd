@@ -463,6 +463,18 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item For a Windows or Mac OS X binary package install,
+      \code{install.packages()} will check if a source package is
+      available on the same repositories, and report if it is a later
+      version or there is a source package but no binary package
+      available.
+
+      This check can be suppressed: see the help page.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}

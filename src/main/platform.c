@@ -2411,6 +2411,8 @@ static int do_copy(const char* from, const char* name, const char* to,
     mask = 0777;
 #endif
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
+    if (strlen(from) + strlen(name) >= PATH_MAX)
+	error(_("over-long path length"));
     snprintf(this, PATH_MAX, "%s%s", from, name);
     /* Here we want the target not the link */
     stat(this, &sb);
@@ -2420,6 +2422,8 @@ static int do_copy(const char* from, const char* name, const char* to,
 	char p[PATH_MAX];
 
 	if (!recursive) return 1;
+	if (strlen(from) + strlen(name) >= PATH_MAX)
+	    error(_("over-long path length"));
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
 	/* If a directory does not have write permission for the user,
 	   we will fail to create files in that directory, so defer
@@ -2451,6 +2455,8 @@ static int do_copy(const char* from, const char* name, const char* to,
 
 	nfail = 0;
 	size_t nc = strlen(to);
+	if (strlen(from) + strlen(name) >= PATH_MAX)
+	    error(_("over-long path length"));
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
 	if (over || !R_FileExists(dest)) {
 	    /* REprintf("copying %s to %s\n", this, dest); */
