@@ -146,6 +146,11 @@ function(dir, fields = NULL,
                 temp <- tryCatch(read.dcf(p, fields = fields)[1L, ],
                                  error = identity)
                 if(!inherits(temp, "error")) {
+                    if(is.na(temp["NeedsCompilation"])) {
+                        l <- utils::untar(files[i], list = TRUE)
+                        temp["NeedsCompliation"] <-
+                            if(any(l == file.path(packages[i], "src/"))) "yes" else "no"
+                    }
                     temp["MD5sum"] <- md5sum(files[i])
                     db[[i]] <- temp
                 }
@@ -193,7 +198,7 @@ function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
     else if(identical(dependencies, "most"))
         dependencies <-
             c("Depends", "Imports", "LinkingTo", "Suggests")
-    
+
     av <- installed[, dependencies, drop = FALSE]
     rn <- row.names(installed)
     need <- apply(av, 1L, function(x)
