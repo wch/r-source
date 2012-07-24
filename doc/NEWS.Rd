@@ -216,14 +216,6 @@
     }
   }
 
-  \subsection{PERFORMANCE IMPROVEMENTS}{
-    \itemize{
-      \item \code{rep()} is faster and uses less memory,
-      substantially so in some common cases (e.g. if \code{times} is of
-      length one or \code{length.out} is given, and \code{each = 1}).
-    }
-  }
-  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The \code{ENCODING} argument to \code{.C()} is defunct.
@@ -424,6 +416,10 @@
       \item \code{array()} is now implemented in C code (for speed) when
       \code{data} is atomic or an unclassed list (so it is known that
       \code{as.vector(data)} will have no class to be used by \code{rep()}).
+      
+      \item \code{rep()} is faster and uses less memory,
+      substantially so in some common cases (e.g. if \code{times} is of
+      length one or \code{length.out} is given, and \code{each = 1}).
     }
   }
 
