@@ -255,6 +255,18 @@ install.packages <-
 	} else stop("unable to install packages")
     }
 
+
+    ## check if we should infer repos=NULL
+    if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
+        if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
+           (type %in% "win.binary" && length(grep("\\.zip$", pkgs))) ||
+           (substr(type, 1L, 10L) == "mac.binary"
+            && length(grep("\\.tgz$", pkgs)))) {
+            repos <- NULL
+            message("inferring 'repos = NULL' from the file name")
+        }
+    }
+
     ## Look at type == "both"
     if (type == "both") {
         ## NB it is only safe to use binary packages with a Mac OS X
@@ -305,16 +317,45 @@ install.packages <-
                 "\n", domain = NA)
             flush.console()
 
-    }
-
-    ## check if we should infer repos=NULL
-    if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
-        if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
-           (type %in% "win.binary" && length(grep("\\.zip$", pkgs))) ||
-           (substr(type, 1L, 10L) == "mac.binary"
-            && length(grep("\\.tgz$", pkgs)))) {
-            repos <- NULL
-            message("inferring 'repos = NULL' from the file name")
+    } else if (getOption("install.packages.check.source", "yes") %in% "yes"
+               && (type %in% "win.binary" || substr(type, 1L, 10L) == "mac.binary")) {
+        if (missing(contriburl) && is.null(available) && !is.null(repos)) {
+            contriburl <- contrib.url(repos, "source")
+            av1 <-
+                available.packages(contriburl = contriburl, method = method)
+            pkgs <- getDependencies(pkgs, dependencies, av1, lib)
+            ## Now see what we can get as binary packages.
+            available <-
+                available.packages(contriburl = contrib.url(repos, type), method = method)
+            bins <- pkgs[pkgs %in% row.names(available)]
+            ## so a package might only be available as source,
+            ## or it might be later in source.
+            ## FIXME: might only want to check on the same repository,
+            ## allowing for CRANextras.
+            na <- pkgs[!pkgs %in% bins]
+            if (length(na)) {
+                msg <-
+                    sprintf(ngettext(length(na),
+                                     "package %s is available as a source package but not as a binary",
+                                     "packages %s are available as source packages but not as binaries"),
+                            paste(sQuote(na), collapse=", "))
+                cat("\n   ", msg, "\n\n", sep = "")
+            }
+            binvers <- available[bins, "Version"]
+            srcvers <- av1[bins, "Version"]
+            later <- binvers < srcvers
+            if(any(later)) {
+                msg <- ngettext(sum(later),
+                                 "There is a binary version available (and will be installed) but the source version is later",
+                                 "There are binary versions available (and will be installed) but the source versions are later")
+                cat("\n",
+                    paste(strwrap(msg, indent = 2, exdent = 2), collapse = "\n"),
+                    ":\n", sep = "")
+                print(data.frame(`binary` = binvers, `source` = srcvers,
+                                 row.names = bins,
+                                 check.names = FALSE)[later, ])
+                cat("\n")
+            }
         }
     }
 

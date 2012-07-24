@@ -168,7 +168,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
 }
 \details{
-    \R packages are primarily distributed as \emph{source} packages, but
+  \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
   also supported, and the type most commonly used on Windows and from
   the CRAN distribution for Mac OS X.  This function can install either
@@ -177,7 +177,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \code{\link{getOption}("pkgType")}: this defaults to \code{"source"}
   apart from under Windows or a CRAN binary distribution for Mac OS X.
   
-  This is the main function to install packages. It takes
+  This is the main function to install packages.  It takes
   a vector of names and a destination library, downloads the packages
   from the repositories and installs them.  (If the library is omitted
   it defaults to the first directory in \code{.libPaths()}, with a
@@ -216,6 +216,14 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   
   Argument \code{libs_only = TRUE} is supported for source installs and for
   Windows binary installs.
+  
+  For binary installs, the function also checks for the availability of
+  a source package on the same repository, and reports if the source
+  package has a later version, or is available but no binary version
+  is.  This check can be suppressed by
+\preformatted{
+      options(install.packages.check.source = "no")
+}
 }
 \value{
   Invisible \code{NULL}.
