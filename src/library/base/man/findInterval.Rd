@@ -20,11 +20,12 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     and \code{N} to \code{N-1}.}
 }
 \description{
-  Find the indices of \code{x} in \code{vec}, where \code{vec} must be
-  sorted (non-decreasingly); i.e., if \code{i <- findInterval(x,v)},
-  we have \eqn{v_{i_j} \le x_j < v_{i_j + 1}}{v[i[j]] \le x[j] < v[i[j] + 1]}
+  Given a vector of non-decreasing breakpoints in \code{vec}, find the
+  interval containing each element of \code{x}; i.e., if
+  \code{i <- findInterval(x,v)}, for each index \code{j} in \code{x}
+  \eqn{v_{i_j} \le x_j < v_{i_j + 1}}{v[i[j]] \le x[j] < v[i[j] + 1]}
   where \eqn{v_0 := -\infty}{v[0] := - Inf},
-  \eqn{v_{N+1} := +\infty}{v[N+1] := + Inf}, and \code{N <- length(vec)}.
+  \eqn{v_{N+1} := +\infty}{v[N+1] := + Inf}, and \code{N <- length(v)}.
   At the two boundaries, the returned index may differ by 1, depending
   on the optional arguments \code{rightmost.closed} and \code{all.inside}.
 }
@@ -62,6 +63,10 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
   of \eqn{n}) also basically the same as \code{findInterval(.)}.
 }
 \examples{
+x <- 2:18
+v <- c(5, 10, 15) # create two bins [5,10) and [10,15)
+cbind(x, findInterval(x, v))
+
 N <- 100
 X <- sort(round(stats::rt(N, df=2), 2))
 tt <- c(-100, seq(-2,2, len=201), +100)
