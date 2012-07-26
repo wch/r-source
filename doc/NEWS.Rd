@@ -412,6 +412,10 @@
       \item The included LAPACK has been updated to 3.4.1, with some
       patches from the current SVN sources.  (\emph{Inter alia}, this
       resolves \PR{14692}.)
+
+      \item \code{file.copy(recursive = TRUE)} has some additional
+      checks on user error leading to attempted infinite recursion (and on
+      some platforms to crashing \R).
     }
   }
 
