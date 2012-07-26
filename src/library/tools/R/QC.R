@@ -5369,8 +5369,12 @@ function(dir)
     # There may be white space differences here
     m_m_1 <- gsub("[[:space:]]+", " ", m_m)
     m_d_1 <- gsub("[[:space:]]+", " ", m_d)
-    if(!all(m_m_1== m_d_1))
+    if(!all(m_m_1== m_d_1)) {
+        ## strwrap is used below, so we need to worry about encodings.
+        ## m_d is in UTF-8 already
+        if(Encoding(m_m) == "latin1") m_m <- iconv(m_m, "latin1")
         out$new_maintainer <- list(m_m, m_d)
+    }
 
     l_d <- db[db[, "Package"] == package, "License"]
     if(!foss && analyze_license(l_d)$is_verified)
