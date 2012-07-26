@@ -528,7 +528,9 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(4);
 	return a;
     }
-    if (!isVector(x)) error(_("attempt to replicate non-vector"));
+    if (!isVector(x))
+	errorcall(call, "attempt to replicate an object of type '%s'",
+		  type2char(TYPEOF(x)));
 
     /* So now we know x is a vector of positive length.  We need to
        replicate it, and its names if it has them. */

@@ -120,6 +120,12 @@
       available.
 
       This check can be suppressed: see the help page.
+
+      \item \code{install.packages(type = "both")} has been enhanced.
+      In interactive use it will ask whether to choose the source
+      version of a package if the binary version is older and contains
+      compiled code, and also asks if source packages with no binary
+      version should be installed).
     }
   }
 
