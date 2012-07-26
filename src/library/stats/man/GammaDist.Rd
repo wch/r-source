@@ -1,6 +1,6 @@
 % File src/library/stats/man/GammaDist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{GammaDist}
@@ -55,7 +55,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
   for \eqn{x \ge 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
   (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the function implemented by \R's
-  \code{\link{gamma}()} and defined in its help.  Note that \eqn{a=0}
+  \code{\link{gamma}()} and defined in its help.  Note that \eqn{a = 0}
   corresponds to the trivial distribution with all mass at point 0.)
 
   The mean and variance are
@@ -79,7 +79,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 %   \code{scale < 1e-10}.
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no
-  \code{scale} parameter.
+  \code{scale} parameter.  Prior to \R 2.16.0 \code{scale} took
+  precedence over \code{rate}, but now it is an error to supply both.
 
   \code{pgamma} is closely related to the incomplete gamma function.  As
   defined by Abramowitz and Stegun 6.5.1 (and by \sQuote{Numerical
