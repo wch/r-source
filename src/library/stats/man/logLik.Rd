@@ -1,6 +1,6 @@
 % File src/library/stats/man/logLik.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -52,7 +52,8 @@ logLik(object, \dots)
 
   For \code{"lm"} fits it is assumed that the scale has been estimated
   (by maximum likelihood or REML), and all the constants in the
-  log-likelihood are included.
+  log-likelihood are included.  That method is only applicable to
+  single-response fits.
 }
 \value{
   Returns an object of class \code{logLik}.  This is a number with at
