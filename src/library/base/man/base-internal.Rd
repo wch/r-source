@@ -30,6 +30,7 @@
 \alias{.cache_class}
 \alias{.Firstlib_as_onLoad}
 \alias{.methodsNamespace} % created by the methods package ....
+\aiias{.popath}
 
 \title{Internal Objects in Package \pkg{base}}
 \description{
@@ -75,6 +76,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
 .find.package(\dots)
 .path.package(\dots)
+
+.popath
 }
 \arguments{
   \item{x}{object from which to extract elements.}
