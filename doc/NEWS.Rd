@@ -150,6 +150,10 @@
       \item \code{demo()} gains an \code{encoding} argument for those
       packages with non-ASCII demos: it defaults to the package encoding
       where there is one.
+      
+      \item \code{strwrap()} converts inputs with a marked encoding to
+      the current locale: previously it made some attempt to pass
+      through as bytes inputs invalid in the current locale.
     }
   }
 
