@@ -312,7 +312,11 @@ install.packages <-
             print(out)
             cat("\n")
             if(interactive() && any(later & hasSrc)) {
-                message("Do you want to attempt to install from sources the package(s) which need compilation?")
+                msg <-
+                    ngettext(sum(later & hasSrc),
+                             "Do you want to install from sources the package which need compilation?",
+                             "Do you want to install from sources the packages which need compilation?")
+                message(msg, domain = NA)
                 res <- readline("y/n: ")
                 if(res != "y") later <- later & !hasSrc
             }
@@ -320,11 +324,14 @@ install.packages <-
         bins <- bins[!later]
 
         if(interactive() && length(srcOnly)) {
-            nc <- !( available[srcOnly, "NeedsCompilation"] %in% "no")
+            nc <- !( available[srcOnly, "NeedsCompilation"] %in% "no" )
             s2 <- srcOnly[nc]
             if(length(s2)) {
-                msg <- c("Package(s) which are only available in source form, and may need compilation of C/C++/Fortran: ",
-                         sQuote(s2))
+                msg <-
+                    ngettext(length(s2),
+                             "Package which are only available in source form, and may need compilation of C/C++/Fortran",
+                             "Packages which are only available in source form, and may need compilation of C/C++/Fortran")
+                msg <- c(paste0(msg, ": "), sQuote(s2))
                 msg <- strwrap(paste(msg, collapse = " "), exdent = 2)
                 message(paste(msg, collapse = "\n"), domain = NA)
                 message("Do you want to attempt to install these from sources?")

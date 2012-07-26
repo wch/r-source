@@ -579,7 +579,9 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(4);
 	return a;
     }
-    if (!isVector(x)) error(_("attempt to replicate non-vector"));
+    if (!isVector(x))
+	errorcall(call, "attempt to replicate an object of type '%s'",
+		  type2char(TYPEOF(x)));
 
     /* So now we know x is a vector of positive length.  We need to
        replicate it, and its names if it has them. */
@@ -881,16 +883,24 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
+    R_xlen_t len;
 
     checkArity(op, args);
     check1arg(args, call, "length.out");
-    double dlen = asReal(CAR(args));
-    if(!R_FINITE(dlen) || dlen < 0)
-	errorcall(call, _("argument must be coercible to non-negative integer"));
     if(length(CAR(args)) != 1)
 	warningcall(call, _("first element used of '%s' argument"),
 		    "length.out");
-    R_xlen_t len = (R_xlen_t) dlen;
+
+ #ifdef LONG_VECTOR_SUPPORT
+    double dlen = asReal(CAR(args));
+    if(!R_FINITE(dlen) || dlen < 0)
+	errorcall(call, _("argument must be coercible to non-negative integer"));
+    len = (R_xlen_t) dlen;
+#else
+    len = asInteger(CAR(args));
+    if(len == NA_INTEGER || len < 0)
+	errorcall(call, _("argument must be coercible to non-negative integer"));
+#endif
 
  #ifdef LONG_VECTOR_SUPPORT
     if (len > INT_MAX) {
