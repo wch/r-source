@@ -554,6 +554,9 @@
       
       \item \code{logLik()} did not detect the error of applying it
       to a multiple-response linear model.  (\PR{15000})
+      
+      \item \code{file.copy(recursive = TRUE)} did not always report
+      \code{FALSE} for a failure two or more directories deep.
     }
   }
 }
