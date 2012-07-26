@@ -59,7 +59,7 @@ pie <-
     }
     for (i in 1L:nx) {
 	n <- max(2, floor(edges * dx[i]))
-	P <- t2xy(seq.int(x[i], x[i + 1], n))
+	P <- t2xy(seq.int(x[i], x[i + 1], length.out = n))
 	polygon(c(P$x, 0), c(P$y, 0), density = density[i], angle = angle[i],
                 border = border[i], col = col[i], lty = lty[i])
 	P <- t2xy(mean(x[i + 0:1]))
