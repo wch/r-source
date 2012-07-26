@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011 The R Core Team
+ *  Copyright (C) 1998--2012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2259,39 +2259,54 @@ end:
    'from', 'to' should have trailing path separator if needed.
 */
 #ifdef Win32
-static int do_copy(const wchar_t* from, const wchar_t* name,
-		   const wchar_t* to, int over, int recursive, int perms)
+static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to, 
+		   int over, int recursive, int perms, int depth)
 {
     R_CheckUserInterrupt(); // includes stack check
+    if(depth > 100) {
+	warning(_("too deep nesting"));
+	return 1;
+    }
     struct _stati64 sb;
     int nc, nfail = 0, res;
-    wchar_t dest[PATH_MAX], this[PATH_MAX];
+    wchar_t dest[PATH_MAX + 1], this[PATH_MAX + 1];
 
+    if (wcslen(from) + wcslen(name) >= PATH_MAX) {
+	warning(_("over-long path length"));
+	return 1;
+    }
     wsprintfW(this, L"%ls%ls", from, name);
     _wstati64(this, &sb);
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	_WDIR *dir;
 	struct _wdirent *de;
-	wchar_t p[PATH_MAX];
+	wchar_t p[PATH_MAX + 1];
 
 	if (!recursive) return 1;
 	nc = wcslen(to);
+	if (wcslen(to) + wcslen(name) >= PATH_MAX) {
+	    warning(_("over-long path length"));
+	    return 1;
+	}
 	wsprintfW(dest, L"%ls%ls", to, name);
 	/* We could set the mode (only the 200 part matters) later */
 	res = _wmkdir(dest);
 	if (res && errno != EEXIST) {
 	    warning(_("problem creating directory %ls: %s"), 
-		    this, strerror(errno));
+		    dest, strerror(errno));
 	    return 1;
 	}
 	// NB Windows' mkdir appears to require \ not /.
-	wcscat(dest, L"\\");
 	if ((dir = _wopendir(this)) != NULL) {
 	    while ((de = _wreaddir(dir))) {
 		if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
 		    continue;
+		if (wcslen(name) + wcslen(de->d_name) + 1 >= PATH_MAX) {
+		    warning(_("over-long path length"));
+		    return 1;
+		}
 		wsprintfW(p, L"%ls%\\%ls", name, de->d_name);
-		do_copy(from, p, to, over, recursive, perms);
+		nfail += do_copy(from, p, to, over, recursive, perms, ++depth);
 	    }
 	    _wclosedir(dir);
 	} else {
@@ -2304,6 +2319,11 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 
 	nfail = 0;
 	nc = wcslen(to);
+	if (wcslen(from) + wcslen(name) >= PATH_MAX) {
+	    warning(_("over-long path length"));
+	    nfail++;
+	    goto copy_error;
+	}
 	wsprintfW(dest, L"%ls%ls", to, name);
 	if (over || !R_WFileExists(dest)) { /* FIXME */
 	    if ((fp1 = _wfopen(this, L"rb")) == NULL ||
@@ -2384,7 +2404,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 			wcsncpy(from, L".\\", PATH_MAX);
 		    }
 		}
-		nfail = do_copy(from, name, dir, over, recursive, perms);
+		nfail = do_copy(from, name, dir, over, recursive, perms, 1);
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}
@@ -2396,12 +2416,17 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 
 static int do_copy(const char* from, const char* name, const char* to,
-		   int over, int recursive, int perms)
+		   int over, int recursive, int perms, int depth)
 {
     R_CheckUserInterrupt(); // includes stack check
+    if(depth > 100) {
+	warning(_("too deep nesting"));
+	return 1;
+    }
+    
     struct stat sb;
     int nc, nfail = 0, res, mask;
-    char dest[PATH_MAX], this[PATH_MAX];
+    char dest[PATH_MAX+1], this[PATH_MAX+1];
 
 #ifdef HAVE_UMASK
     int um = umask(0); umask(um);
@@ -2410,17 +2435,25 @@ static int do_copy(const char* from, const char* name, const char* to,
     mask = 0777;
 #endif
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
-    snprintf(this, PATH_MAX, "%s%s", from, name);
+    if (strlen(from) + strlen(name) >= PATH_MAX) {
+	warning(_("over-long path length"));
+	return 1;
+    }
+    snprintf(this, PATH_MAX+1, "%s%s", from, name);
     /* Here we want the target not the link */
     stat(this, &sb);
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	DIR *dir;
 	struct dirent *de;
-	char p[PATH_MAX];
+	char p[PATH_MAX+1];
 
 	if (!recursive) return 1;
 	nc = strlen(to);
-	snprintf(dest, PATH_MAX, "%s%s", to, name);
+	if (nc + strlen(name) >= PATH_MAX) {
+	    warning(_("over-long path length"));
+	    return 1;
+	}
+	snprintf(dest, PATH_MAX+1, "%s%s", to, name);
 	/* If a directory does not have write permission for the user,
 	   we will fail to create files in that directory, so defer
 	   setting mode */
@@ -2435,8 +2468,12 @@ static int do_copy(const char* from, const char* name, const char* to,
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		snprintf(p, PATH_MAX, "%s/%s", name, de->d_name);
-		do_copy(from, p, to, over, recursive, perms);
+		if (strlen(name) + strlen(de->d_name) + 1 >= PATH_MAX) {
+		    warning(_("over-long path length"));
+		    return 1;
+		}
+		snprintf(p, PATH_MAX+1, "%s/%s", name, de->d_name);
+		nfail += do_copy(from, p, to, over, recursive, perms, ++depth);
 	    }
 	    closedir(dir);
 	} else {
@@ -2451,7 +2488,12 @@ static int do_copy(const char* from, const char* name, const char* to,
 
 	nfail = 0;
 	nc = strlen(to);
-	snprintf(dest, PATH_MAX, "%s%s", to, name);
+	if (nc + strlen(name) >= PATH_MAX) {
+	    warning(_("over-long path length"));
+	    nfail++;
+	    goto copy_error;
+	}
+	snprintf(dest, PATH_MAX+1, "%s%s", to, name);
 	if (over || !R_FileExists(dest)) {
 	    /* REprintf("copying %s to %s\n", this, dest); */
 	    if ((fp1 = R_fopen(this, "rb")) == NULL ||
@@ -2526,7 +2568,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    strncpy(name, from, PATH_MAX);
 		    strncpy(from, "./", PATH_MAX);
 		}
-		nfail = do_copy(from, name, dir, over, recursive, perms);
+		nfail = do_copy(from, name, dir, over, recursive, perms, 1);
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}

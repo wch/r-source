@@ -104,6 +104,8 @@ file.copy <- function(from, to,
     if (!(nt <- length(to)))   stop("no files to copy to")
     ## we don't use file_test as that is in utils.
     if (nt == 1 && isTRUE(file.info(to)$isdir)) {
+        if (recursive && to %in% from)
+            stop("attempt to copy a directory to itself")
         ## on Windows we need \ for the compiled code (e.g. mkdir).
         if(.Platform$OS.type == "windows") {
             from <- gsub("/", "\\", from, fixed = TRUE)
