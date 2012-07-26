@@ -191,6 +191,9 @@
       
       \item \code{pdf(compress = TRUE)} did not delete temporary files
       it created until the end of the \R session.  (\PR{14991})
+      
+      \item \code{logLik()} did not detect the error of applying it
+      to a multiple-response linear model.  (\PR{15000})
     }
   }
 }
