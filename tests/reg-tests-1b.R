@@ -1915,4 +1915,10 @@ ans <- merge(factorial.data, data1, by = c("a.factor", "b.factor"),
 stopifnot(is.na(ans[["y"]][4,]))
 ## only set the first column of ans[["y"]] to NA.
 
+
+## PR14967
+stopifnot(qgeom(1e-20, prob = 0.1) >= 0)
+## was -1 in R 2.15.1
+
+
 proc.time()
