@@ -165,6 +165,10 @@ par(\dots, no.readonly = FALSE)
   to physical margins.  (The same inter-line spacing multiplied by
   \code{lheight} is used for multi-line strings in \code{text} and
   \code{strheight}.)
+  
+  Note that graphical parameters are suggestions: plotting functions and
+  devices need not make use of them (and this is particularly true of
+  non-default methods for e.g. \code{plot}).
 }
 
 \value{
@@ -537,6 +541,9 @@ par(\dots, no.readonly = FALSE)
       \code{\link{plot.window}} or setting \code{par("usr")}: \code{n}
       is taken from \code{par("lab")}.  It affects the default behaviour
       of subsequent calls to \code{\link{axis}} for sides 1 or 3.
+      
+      It is only relevant to default numeric axis systems, and not for
+      example to dates.
     }
     \item{\code{xaxs}}{The style of axis interval calculation to be used
       for the x-axis.  Possible values are \code{"r"}, \code{"i"},

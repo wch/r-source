@@ -133,10 +133,14 @@ merge.data.frame <-
         }
         y <- y[c(m$yi, if(all.x) rep.int(1L, nxx), if(all.y) m$y.alone),
                -by.y, drop = FALSE]
-        if(all.x)
-            for(i in seq_along(y))
+        if(all.x) {
+            zap <- (lxy+1L):(lxy+nxx)
+            for(i in seq_along(y)) {
                 ## do it this way to invoke methods for e.g. factor
-                is.na(y[[i]]) <- (lxy+1L):(lxy+nxx)
+                if(is.matrix(y[[1]])) y[[1]][zap, ] <- NA
+                else is.na(y[[i]]) <- zap
+            }
+        }
 
         if(has.common.nms) names(y) <- nm.y
         nm <- c(names(x), names(y))

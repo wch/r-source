@@ -1,6 +1,6 @@
 % File src/library/base/man/merge.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Copyright 2002-2011 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -46,7 +46,7 @@ merge(x, y, \dots)
   \item{\dots}{arguments to be passed to or from methods.}
 }
 \details{
-  By default the data frames are merged on the columns with names they
+   By default the data frames are merged on the columns with names they
   both have, but separate specifications of the columns can be given by
   \code{by.x} and \code{by.y}.  The rows in the two data frames that
   match on the specified columns are extracted, and joined together.  If
@@ -84,6 +84,13 @@ merge(x, y, \dots)
   (\code{all = TRUE} a \emph{(full) outer join}.  DBMSes do not match
   \code{NULL} records, equivalent to \code{incomparables = NA} in \R.
 }
+
+\note{
+  This is intended to work with data frames with vector-like columns:
+  some aspects work with data frames containing matrices, but not all.
+  
+}
+
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
   common columns, but for \code{sort = FALSE} are in an unspecified order.

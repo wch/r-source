@@ -1865,4 +1865,17 @@ sunflowerplot( Sepal.Length ~ Sepal.Width, data = iris, xlab = "A")
 ## failed in 2.15.1
 
 
+## PR14974
+a.factor <- as.factor(rep(letters[1:2], 2))
+b.factor <- as.factor(rep(c(1:2), each = 2))
+y <- cbind(aa = as.character(a.factor), bb = b.factor)
+data1 <- data.frame(a.factor, b.factor, y = NA)
+data1$y <- y # inserts a matric
+data1 <- subset(data1, !((a.factor == "b") & (b.factor == 2))) # Delete row
+factorial.data <- data.frame(a.factor, b.factor, row = 1:length(b.factor))
+ans <- merge(factorial.data, data1, by = c("a.factor", "b.factor"),
+             all.x = TRUE)
+stopifnot(is.na(ans[["y"]][4,]))
+## only set the first column of ans[["y"]] to NA.
+
 proc.time()
