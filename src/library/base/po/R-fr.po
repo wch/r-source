@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:42\n"
+"POT-Creation-Date: 2012-07-27 08:48\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -708,6 +708,10 @@ msgstr ""
 
 msgid "no files to copy to"
 msgstr "aucun fichier vers où copier"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "impossible de créer un répertoire pour le lien '%s"
 
 msgid "more 'from' files than 'to' files"
 msgstr "plus de fichiers 'from' que de fichiers 'to'"
@@ -1855,193 +1859,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
-
-#~ msgid "rhs is the wrong length for indexing by a logical matrix"
-#~ msgstr ""
-#~ "la partie de droite a une taille incorrecte pour l'indiçage par une "
-#~ "matrice logique"
-
-#~ msgid ""
-#~ "Functions for exporting methods must have been made generic, explicitly "
-#~ "or implicitly; not true when loading %s for %s"
-#~ msgstr ""
-#~ "Les fonctions pour les méthodes exportées doivent être rendues "
-#~ "génériques, de manière explicite ou implicite ; Ce n'est pas le cas lors "
-#~ "du chargement de %s pour %s"
-
-#~ msgid "'symbol.C' is not needed: please remove it"
-#~ msgstr "'symbol.C' n'est pas nécessaire : veuillez l'éliminer"
-
-#~ msgid "'symbol.For' is not needed: please remove it"
-#~ msgstr "'symbol.For' n'est pas nécessaire : veuillez l'éliminer"
-
-#~ msgid "'pattern' must be a non-empty character string"
-#~ msgstr "'pattern' doit être une chaîne de caractères non vide"
-
-#~ msgid "invalid multibyte string for 'pattern'"
-#~ msgstr "chaîne de caractères multioctets incorrecte pour 'pattern'"
-
-#~ msgid "'max.distance' must be non-negative"
-#~ msgstr "'max.distance' ne peut être négatif"
-
-#, fuzzy
-#~ msgid "%s must be a character vector"
-#~ msgstr "'arg' doit être NULL ou une chaîne de caractères"
-
-#, fuzzy
-#~ msgid "%s must be a list of character vectors"
-#~ msgstr "'arg' doit être NULL ou une chaîne de caractères"
-
-#, fuzzy
-#~ msgid "package %s has no namespace and is not on the search path"
-#~ msgstr ""
-#~ "le package %s n'a pas d'espace de noms et n'est pas repris dans le chemin "
-#~ "de recherche"
-
-#, fuzzy
-#~ msgid "package %s contains no R code"
-#~ msgstr "le package '%s' ne contient pas de code R"
-
-#, fuzzy
-#~ msgid ".First.lib failed for %s"
-#~ msgstr ".First.lib a échoué pour '%s'"
-
-#~ msgid "package '%s' has a non-function '.First.lib'"
-#~ msgstr "la package '%s' a un '.First.lib' qui n'est pas une fonction"
-
-#~ msgid "no files to copy from"
-#~ msgstr "aucun fichier d'où copier"
-
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "l'utilisation de 'save' est obsolète"
-
-#~ msgid "save != FALSE is defunct"
-#~ msgstr "save != FALSE n'est plus autorisé"
-
-#~ msgid "got invalid index for importing"
-#~ msgstr "index incorrect lors de l'importation"
-
-#~ msgid "cyclic name space dependencies are not supported"
-#~ msgstr "dépendances cycliques d'espaces de noms non supportées"
-
-#~ msgid "'recursive' will be ignored"
-#~ msgstr "l'argument 'recursive' sera ignoré"
-
-#~ msgid "imperative name space directives are disabled"
-#~ msgstr "les directives impératives d'espaces de noms sont désactivées"
-
-#~ msgid "all objects in base name space are currently exported."
-#~ msgstr ""
-#~ "tous les objets dans l'espace de noms de base sont actuellement exportés."
-
-#~ msgid "can only export from a name space"
-#~ msgstr "impossible d'exporter sans espace de noms"
-
-#~ msgid "'fromLast' must be TRUE or FALSE"
-#~ msgstr "'fromLast' doit être TRUE ou FALSE"
-
-#~ msgid "shared library '%s' not found"
-#~ msgstr "la librairie partagée '%s' est introuvable"
-
-#~ msgid ""
-#~ "package '%s' claims to be built under R version %s but is missing some "
-#~ "help files and needs to be re-installed"
-#~ msgstr ""
-#~ "le package '%s' prétend avoir été compilé sous R version %s mais ne "
-#~ "contient pas certains fichiers d'aide et doit être réinstallé"
-
-#~ msgid "invalid digits"
-#~ msgstr "nombre de chiffres incorrect"
-
-#~ msgid "The following object(s) are masked"
-#~ msgstr "Objet(s) masqués : "
-
-#~ msgid "_by_"
-#~ msgstr "_par_"
-
-#~ msgid "from"
-#~ msgstr "de"
-
-#~ msgid ":"
-#~ msgstr " : "
-
-#~ msgid "argument to 'which' is not logical"
-#~ msgstr "l'argument pour 'which' n'est pas une valeur logique"
-
-#~ msgid "is not on the search path"
-#~ msgstr "n'est pas trouvé dans le chemin de recherche"
-
-#~ msgid "'"
-#~ msgstr "'"
-
-#~ msgid "in useDynLib("
-#~ msgstr "dans useDynLib("
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
-#~ msgstr "la méthode S3 '%s' est déclarée dans NAMESPACE mais est introuvable"
-
-#~ msgid "is required by"
-#~ msgstr "est requis par"
-
-#~ msgid "(still attached)"
-#~ msgstr "(toujours attaché)"
-
-#~ msgid "name space '%s' is still used by: %s"
-#~ msgstr "l'espace de noms '%s' est encore utilisé par : %s"
-
-#~ msgid "See the Note in ?library"
-#~ msgstr "Voyez la note dans ?library"
-
-#~ msgid "package was installed prior to 2.4.0 and must be re-installed"
-#~ msgstr "le package a été intallé avant R 2.4.0 et doit être réinstallé"
-
-#~ msgid "%s failed in 'attachNamespace'"
-#~ msgstr "%s a échoué dans 'attachNamespace'"
-
-#~ msgid "%s failed in 'loadNamespace' for '%s'"
-#~ msgstr "%s a échoué dans 'loadNamespace' pour '%s'"
-
-#~ msgid "name space '%s' is loaded"
-#~ msgstr "l'espace de noms '%s' est chargé"
-
-#~ msgid "%s failed in unloadNamespace(%s)"
-#~ msgstr "%s a échoué dans unloadNamespace(%s)"
-
-#~ msgid "extra arguments ignored:"
-#~ msgstr "l'argument supplémentaire sera ignoré :"
-
-#~ msgid "numeric or complex values required in 'eigen'"
-#~ msgstr "valeurs numériques ou complexes nécessaires dans 'eigen'"
-
-#~ msgid "argument to 'svd' must be numeric"
-#~ msgstr "l'argument pour 'svd' doit être numérique"
-
-#~ msgid "package '%s' has been merged into '%s'"
-#~ msgstr "le package '%s' a été fusionné avec '%s'"
-
-#~ msgid "package 'lqs' has been moved back to package 'MASS'"
-#~ msgstr "le package 'lqs' est maintenant à nouveau dans le package 'MASS'"
-
-#~ msgid "package 'MASS' has now been loaded"
-#~ msgstr "le package 'MASS' est maintenant chargé"
-
-#~ msgid "package 'MASS' seems to be missing from this R installation"
-#~ msgstr "le package 'MASS' semble manquer dans cette installation de R"
-
-#~ msgid "there is no package called '%s', version %s"
-#~ msgstr "aucun package '%s', version %s n'est trouvé"
-
-#~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
-#~ msgstr "'%s' n'est pas un package valide -- a-t-il été installé < 2.0.0 ?"
-
-#~ msgid "non-numeric data type in frame"
-#~ msgstr "type de données non numériques"
-
-#~ msgid "class information lost from one or more columns"
-#~ msgstr "information de classe perdue pour une ou plusieurs colonnes"
-
-#~ msgid "Invalid DCF format."
-#~ msgstr "Format DCf incorrecT."

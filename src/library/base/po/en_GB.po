@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-17 12:49+0100\n"
+"POT-Creation-Date: 2012-07-27 08:49+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -199,9 +199,9 @@ msgstr ""
 #: src/main/connections.c:4384 src/main/connections.c:4388
 #: src/main/connections.c:4513 src/main/connections.c:4515
 #: src/main/connections.c:4517 src/main/connections.c:4545
-#: src/main/connections.c:4675 src/main/connections.c:4701
-#: src/main/connections.c:4705 src/main/connections.c:4709
-#: src/main/connections.c:4713 src/main/context.c:593 src/main/context.c:602
+#: src/main/connections.c:4677 src/main/connections.c:4703
+#: src/main/connections.c:4707 src/main/connections.c:4711
+#: src/main/connections.c:4715 src/main/context.c:593 src/main/context.c:602
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
@@ -232,16 +232,16 @@ msgstr ""
 #: src/main/platform.c:1140 src/main/platform.c:1143 src/main/platform.c:1146
 #: src/main/platform.c:1149 src/main/platform.c:1152 src/main/platform.c:1251
 #: src/main/platform.c:1254 src/main/platform.c:1257 src/main/platform.c:1296
-#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1562
-#: src/main/platform.c:1565 src/main/platform.c:1568 src/main/platform.c:1604
-#: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1692
-#: src/main/platform.c:1707 src/main/platform.c:1744 src/main/platform.c:1746
-#: src/main/platform.c:1811 src/main/platform.c:1895 src/main/platform.c:2170
-#: src/main/platform.c:2216 src/main/platform.c:2346 src/main/platform.c:2349
-#: src/main/platform.c:2352 src/main/platform.c:2355 src/main/platform.c:2358
-#: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
-#: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2573
-#: src/main/platform.c:2581 src/main/platform.c:2617 src/main/platform.c:2667
+#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1564
+#: src/main/platform.c:1567 src/main/platform.c:1570 src/main/platform.c:1606
+#: src/main/platform.c:1609 src/main/platform.c:1612 src/main/platform.c:1694
+#: src/main/platform.c:1709 src/main/platform.c:1746 src/main/platform.c:1748
+#: src/main/platform.c:1813 src/main/platform.c:1897 src/main/platform.c:2172
+#: src/main/platform.c:2218 src/main/platform.c:2369 src/main/platform.c:2372
+#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
+#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
+#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2619
+#: src/main/platform.c:2627 src/main/platform.c:2663 src/main/platform.c:2713
 #: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
 #: src/main/print.c:269 src/main/print.c:275 src/main/random.c:495
 #: src/main/random.c:499 src/main/random.c:503 src/main/saveload.c:1939
@@ -256,8 +256,8 @@ msgstr ""
 #: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
 #: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
-#: src/main/seq.c:398 src/main/seq.c:403 src/main/seq.c:411 src/main/seq.c:431
-#: src/main/seq.c:435 src/main/seq.c:441 src/main/seq.c:448
+#: src/main/seq.c:555 src/main/seq.c:560 src/main/seq.c:568 src/main/seq.c:599
+#: src/main/seq.c:603 src/main/seq.c:609 src/main/seq.c:617
 #: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
 #: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
@@ -328,16 +328,16 @@ msgstr ""
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
 #: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
 #: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
-#: src/main/errors.c:1358 src/main/seq.c:170 src/main/seq.c:269
-#: src/main/seq.c:274 src/main/seq.c:278 src/main/sort.c:967
-#: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
-#: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
-#: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3150
-#: src/modules/X11/devX11.c:3155 src/modules/X11/devX11.c:3160
-#: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3175
-#: src/modules/X11/devX11.c:3179 src/modules/X11/devX11.c:3183
-#: src/unix/sys-std.c:1286
+#: src/main/errors.c:1358 src/main/seq.c:171 src/main/seq.c:299
+#: src/main/seq.c:304 src/main/seq.c:308 src/main/seq.c:349 src/main/seq.c:353
+#: src/main/seq.c:357 src/main/sort.c:967 src/main/sort.c:1013
+#: src/main/sort.c:1065 src/main/source.c:216 src/main/summary.c:842
+#: src/main/sysutils.c:249 src/main/util.c:951 src/main/util.c:956
+#: src/main/util.c:963 src/main/util.c:966 src/modules/X11/devX11.c:3123
+#: src/modules/X11/devX11.c:3150 src/modules/X11/devX11.c:3155
+#: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175 src/modules/X11/devX11.c:3179
+#: src/modules/X11/devX11.c:3183 src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
@@ -1435,7 +1435,7 @@ msgstr ""
 #: src/main/connections.c:3789 src/main/connections.c:3823
 #: src/main/connections.c:4199 src/main/connections.c:4264
 #: src/main/connections.c:4471 src/main/connections.c:4475
-#: src/main/connections.c:4838 src/main/deparse.c:350 src/main/deparse.c:436
+#: src/main/connections.c:4840 src/main/deparse.c:350 src/main/deparse.c:436
 #: src/main/scan.c:1709 src/main/serialize.c:1948
 msgid "cannot write to this connection"
 msgstr ""
@@ -1957,8 +1957,8 @@ msgstr ""
 #: src/main/connections.c:1275 src/main/connections.c:1285
 #: src/main/connections.c:1404 src/main/connections.c:1464
 #: src/main/connections.c:1990 src/main/connections.c:2007
-#: src/main/connections.c:2316 src/main/connections.c:5011
-#: src/main/connections.c:5075
+#: src/main/connections.c:2316 src/main/connections.c:5013
+#: src/main/connections.c:5077
 msgid "too large a block specified"
 msgstr ""
 
@@ -1969,7 +1969,7 @@ msgstr ""
 
 #: src/main/connections.c:970 src/main/connections.c:1121
 #: src/main/connections.c:1742 src/main/connections.c:2954
-#: src/main/connections.c:4677
+#: src/main/connections.c:4679
 msgid "only first element of 'description' argument used"
 msgstr ""
 
@@ -1984,7 +1984,7 @@ msgstr ""
 #: src/main/connections.c:3297 src/main/connections.c:3404
 #: src/main/connections.c:3565 src/main/connections.c:3816
 #: src/main/connections.c:4143 src/main/connections.c:4257
-#: src/main/connections.c:4467 src/main/connections.c:4815 src/main/dcf.c:65
+#: src/main/connections.c:4467 src/main/connections.c:4817 src/main/dcf.c:65
 #: src/main/deparse.c:342 src/main/deparse.c:428 src/main/saveload.c:2256
 #: src/main/saveload.c:2336 src/main/scan.c:906 src/main/scan.c:1017
 #: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:2117
@@ -2049,7 +2049,7 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr ""
 
-#: src/main/connections.c:1548 src/main/connections.c:5619
+#: src/main/connections.c:1548 src/main/connections.c:5621
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr ""
@@ -2177,7 +2177,7 @@ msgstr ""
 #: src/main/connections.c:3062 src/main/connections.c:3109
 #: src/main/connections.c:3130 src/main/connections.c:3153
 #: src/main/connections.c:3165 src/main/connections.c:3277
-#: src/main/connections.c:3389 src/main/connections.c:5114
+#: src/main/connections.c:3389 src/main/connections.c:5116
 msgid "'con' is not a connection"
 msgstr ""
 
@@ -2205,7 +2205,7 @@ msgstr ""
 msgid "cannot close messages sink connection"
 msgstr ""
 
-#: src/main/connections.c:3132 src/main/connections.c:4837
+#: src/main/connections.c:3132 src/main/connections.c:4839
 #: src/main/serialize.c:1938 src/main/serialize.c:1946
 msgid "connection is not open"
 msgstr ""
@@ -2346,85 +2346,89 @@ msgid "no sink to remove"
 msgstr ""
 
 #: src/main/connections.c:4604
+msgid "there is no connection NA"
+msgstr ""
+
+#: src/main/connections.c:4606
 #, c-format
 msgid "there is no connection %d"
 msgstr ""
 
-#: src/main/connections.c:4739
+#: src/main/connections.c:4741
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:4793 src/modules/internet/internet.c:114
+#: src/main/connections.c:4795 src/modules/internet/internet.c:114
 #: src/modules/internet/internet.c:569
 msgid "unsupported URL scheme"
 msgstr ""
 
-#: src/main/connections.c:4879
+#: src/main/connections.c:4881
 msgid "file stream does not have gzip magic number"
 msgstr ""
 
-#: src/main/connections.c:4890
+#: src/main/connections.c:4892
 msgid "file stream does not have valid gzip header"
 msgstr ""
 
-#: src/main/connections.c:4955
+#: src/main/connections.c:4957
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr ""
 
-#: src/main/connections.c:5057
+#: src/main/connections.c:5059
 #, c-format
 msgid "crc error %x %x\n"
 msgstr ""
 
-#: src/main/connections.c:5084
+#: src/main/connections.c:5086
 msgid "write error on 'gzcon' connection"
 msgstr ""
 
-#: src/main/connections.c:5118
+#: src/main/connections.c:5120
 msgid "'level' must be one of 0 ... 9"
 msgstr ""
 
-#: src/main/connections.c:5121
+#: src/main/connections.c:5123
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/connections.c:5124
+#: src/main/connections.c:5126
 msgid "this is already a gzcon connection"
 msgstr ""
 
-#: src/main/connections.c:5130
+#: src/main/connections.c:5132
 msgid "can only use read- or write- binary connections"
 msgstr ""
 
-#: src/main/connections.c:5133
+#: src/main/connections.c:5135
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 
-#: src/main/connections.c:5136
+#: src/main/connections.c:5138
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
 msgstr ""
 
-#: src/main/connections.c:5139 src/main/connections.c:5143
-#: src/main/connections.c:5150 src/main/connections.c:5164
+#: src/main/connections.c:5141 src/main/connections.c:5145
+#: src/main/connections.c:5152 src/main/connections.c:5166
 msgid "allocation of 'gzcon' connection failed"
 msgstr ""
 
-#: src/main/connections.c:5324
+#: src/main/connections.c:5326
 msgid "not a list of sockets"
 msgstr ""
 
-#: src/main/connections.c:5329
+#: src/main/connections.c:5331
 msgid "bad write indicators"
 msgstr ""
 
-#: src/main/connections.c:5340
+#: src/main/connections.c:5342
 msgid "not a socket connection"
 msgstr ""
 
-#: src/main/connections.c:5563
+#: src/main/connections.c:5565
 msgid "unknown compression, assuming none"
 msgstr ""
 
@@ -2673,7 +2677,7 @@ msgstr ""
 msgid "no arguments supplied"
 msgstr ""
 
-#: src/main/dotcode.c:418 src/main/seq.c:696
+#: src/main/dotcode.c:418 src/main/seq.c:831
 msgid "too many arguments"
 msgstr ""
 
@@ -3611,7 +3615,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:4301 src/main/names.c:1171
+#: src/main/eval.c:4301 src/main/names.c:1172
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ""
@@ -3735,145 +3739,150 @@ msgstr ""
 msgid "no graphics event handlers set"
 msgstr ""
 
-#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2001
-#: src/main/gram.y:2015
+#: src/main/gram.y:219 src/main/gram.y:234 src/main/gram.y:2149
+#: src/main/gram.y:2163
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr ""
 
-#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2005
-#: src/main/gram.y:2012
+#: src/main/gram.y:223 src/main/gram.y:231 src/main/gram.y:2153
+#: src/main/gram.y:2160
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr ""
 
-#: src/main/gram.y:947
-#, c-format
-msgid "incorrect tag type at line %d"
-msgstr ""
-
-#: src/main/gram.y:1475
-msgid "contextstack overflow"
-msgstr ""
-
-#: src/main/gram.y:1711
-msgid "input"
-msgstr ""
-
-#: src/main/gram.y:1712
-msgid "end of input"
-msgstr ""
-
-#: src/main/gram.y:1713
-msgid "string constant"
-msgstr ""
-
-#: src/main/gram.y:1714
-msgid "numeric constant"
-msgstr ""
-
-#: src/main/gram.y:1715
-msgid "symbol"
-msgstr ""
-
-#: src/main/gram.y:1716
-msgid "assignment"
-msgstr ""
-
-#: src/main/gram.y:1717
-msgid "end of line"
-msgstr ""
-
-#: src/main/gram.y:1731 src/main/gram.y:1737
-#, c-format
-msgid "unexpected %s"
-msgstr ""
-
-#: src/main/gram.y:1747
-#, c-format
-msgid "Repeated formal argument '%s' on line %d"
-msgstr ""
-
-#: src/main/gram.y:1765
+#: src/main/gram.y:463
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr ""
 
-#: src/main/gram.y:1916
+#: src/main/gram.y:1052
+#, c-format
+msgid "incorrect tag type at line %d"
+msgstr ""
+
+#: src/main/gram.y:1613
+msgid "contextstack overflow"
+msgstr ""
+
+#: src/main/gram.y:1849
+msgid "input"
+msgstr ""
+
+#: src/main/gram.y:1850
+msgid "end of input"
+msgstr ""
+
+#: src/main/gram.y:1851
+msgid "string constant"
+msgstr ""
+
+#: src/main/gram.y:1852
+msgid "numeric constant"
+msgstr ""
+
+#: src/main/gram.y:1853
+msgid "symbol"
+msgstr ""
+
+#: src/main/gram.y:1854
+msgid "assignment"
+msgstr ""
+
+#: src/main/gram.y:1855
+msgid "end of line"
+msgstr ""
+
+#: src/main/gram.y:1869 src/main/gram.y:1875
+#, c-format
+msgid "unexpected %s"
+msgstr ""
+
+#: src/main/gram.y:1885
+#, c-format
+msgid "Repeated formal argument '%s' on line %d"
+msgstr ""
+
+#: src/main/gram.y:2064
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr ""
 
-#: src/main/gram.y:1918
+#: src/main/gram.y:2066
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
 
-#: src/main/gram.y:1929
+#: src/main/gram.y:2077
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr ""
 
-#: src/main/gram.y:1961
+#: src/main/gram.y:2109
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
-#: src/main/gram.y:2116
+#: src/main/gram.y:2264
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2130
+#: src/main/gram.y:2278
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2145
+#: src/main/gram.y:2293
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2153
+#: src/main/gram.y:2301
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2165
+#: src/main/gram.y:2313
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2180
+#: src/main/gram.y:2328
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2188
+#: src/main/gram.y:2336
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2228
+#: src/main/gram.y:2376
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2281
+#: src/main/gram.y:2429
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 
-#: src/main/gram.y:2285
+#: src/main/gram.y:2433
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
 
-#: src/main/gram.y:2814 src/main/gram.y:2821 src/main/gram.y:2827
-#: src/main/gram.y:2834
+#: src/main/gram.y:3009 src/main/gram.y:3016 src/main/gram.y:3022
+#: src/main/gram.y:3029
 #, c-format
 msgid "contextstack overflow at line %d"
+msgstr ""
+
+#: src/main/gram.y:3121
+#, c-format
+msgid "Internal parser error at line %d"
 msgstr ""
 
 #: src/main/graphics.c:65
@@ -4278,24 +4287,24 @@ msgstr ""
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1006
+#: src/main/names.c:1007
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:1009
+#: src/main/names.c:1010
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1137
+#: src/main/names.c:1138
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1139
+#: src/main/names.c:1140
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1166 src/main/names.c:1169
+#: src/main/names.c:1167 src/main/names.c:1170
 msgid "invalid .Internal() argument"
 msgstr ""
 
@@ -4692,101 +4701,111 @@ msgstr ""
 msgid "file name too long"
 msgstr ""
 
-#: src/main/platform.c:1575 src/main/platform.c:1622 src/main/sysutils.c:1637
+#: src/main/platform.c:1577 src/main/platform.c:1624 src/main/sysutils.c:1637
 #: src/main/sysutils.c:1651
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1618 src/main/sysutils.c:1647
+#: src/main/platform.c:1620 src/main/sysutils.c:1647
 #, c-format
 msgid "read error on '%s'"
 msgstr ""
 
-#: src/main/platform.c:1778
+#: src/main/platform.c:1780
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1790
+#: src/main/platform.c:1792
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1817
+#: src/main/platform.c:1819
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:2119
+#: src/main/platform.c:2121
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:2125
+#: src/main/platform.c:2127
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:2132
+#: src/main/platform.c:2134
 msgid "unknown format returned by gethostbyname"
 msgstr ""
 
-#: src/main/platform.c:2141
+#: src/main/platform.c:2143
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:2198
+#: src/main/platform.c:2200
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
 
-#: src/main/platform.c:2201
+#: src/main/platform.c:2203
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2247
+#: src/main/platform.c:2249
 #, c-format
 msgid "'%ls' already exists"
 msgstr ""
 
-#: src/main/platform.c:2251
+#: src/main/platform.c:2253
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2281
-#, c-format
-msgid "problem creating directory %ls: %s"
+#: src/main/platform.c:2268 src/main/platform.c:2424
+msgid "too deep nesting"
+msgstr ""
+
+#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2306
+#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2453
+#: src/main/platform.c:2472 src/main/platform.c:2492
+msgid "over-long path length"
 msgstr ""
 
 #: src/main/platform.c:2296
 #, c-format
+msgid "problem creating directory %ls: %s"
+msgstr ""
+
+#: src/main/platform.c:2314
+#, c-format
 msgid "problem reading dir %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2309
+#: src/main/platform.c:2332
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2425
+#: src/main/platform.c:2462
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2439
+#: src/main/platform.c:2480
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2455
+#: src/main/platform.c:2501
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2578
+#: src/main/platform.c:2624
 msgid "'mode' must be of length at least one"
 msgstr ""
 
-#: src/main/platform.c:2645
+#: src/main/platform.c:2691
 msgid "insufficient OS support on this platform"
 msgstr ""
 
@@ -5300,48 +5319,57 @@ msgstr ""
 msgid "NA/NaN argument"
 msgstr ""
 
-#: src/main/seq.c:261
+#: src/main/seq.c:289
 msgid "incorrect type for second argument"
 msgstr ""
 
-#: src/main/seq.c:264
+#: src/main/seq.c:292
+#, c-format
+msgid "attempt to replicate an object of type '%s'"
+msgstr ""
+
+#: src/main/seq.c:345
 msgid "attempt to replicate non-vector"
 msgstr ""
 
-#: src/main/seq.c:406 src/main/seq.c:413 src/main/seq.c:566 src/main/seq.c:758
+#: src/main/seq.c:361
+msgid "cannot replicate NULL to a non-zero length"
+msgstr ""
+
+#: src/main/seq.c:563 src/main/seq.c:570 src/main/seq.c:701 src/main/seq.c:891
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr ""
 
-#: src/main/seq.c:564
+#: src/main/seq.c:699
 msgid "'length.out' must be a non-negative number"
 msgstr ""
 
-#: src/main/seq.c:584 src/main/seq.c:650 src/main/seq.c:664
+#: src/main/seq.c:719 src/main/seq.c:785 src/main/seq.c:799
 msgid "'from' must be finite"
 msgstr ""
 
-#: src/main/seq.c:586 src/main/seq.c:652 src/main/seq.c:682
+#: src/main/seq.c:721 src/main/seq.c:787 src/main/seq.c:817
 msgid "'to' must be finite"
 msgstr ""
 
-#: src/main/seq.c:598
+#: src/main/seq.c:733
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr ""
 
-#: src/main/seq.c:610
+#: src/main/seq.c:745
 msgid "'by' argument is much too small"
 msgstr ""
 
-#: src/main/seq.c:612
+#: src/main/seq.c:747
 msgid "wrong sign in 'by' argument"
 msgstr ""
 
-#: src/main/seq.c:666 src/main/seq.c:684
+#: src/main/seq.c:801 src/main/seq.c:819
 msgid "'by' must be finite"
 msgstr ""
 
-#: src/main/seq.c:756
+#: src/main/seq.c:897 src/main/seq.c:902
 msgid "argument must be coercible to non-negative integer"
 msgstr ""
 

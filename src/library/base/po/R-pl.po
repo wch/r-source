@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:42\n"
+"POT-Creation-Date: 2012-07-27 08:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -685,6 +685,10 @@ msgstr ""
 
 msgid "no files to copy to"
 msgstr "brak plików do skopiowania"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "nie udało się utworzyć katalogu dla łącza '%s"
 
 msgid "more 'from' files than 'to' files"
 msgstr "więcej plików 'from' niż plików 'to'"
@@ -1834,7 +1838,3 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
-
-#~ msgid "rhs is the wrong length for indexing by a logical matrix"
-#~ msgstr ""
-#~ "prawa strona ma niepoprawną długość dla indeksownia przez macierz logiczną"

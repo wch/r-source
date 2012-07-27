@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-07-27 08:49\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -750,6 +750,9 @@ msgstr " 曖昧な距離法です "
 msgid "non-square matrix"
 msgstr " 正方行列ではありません "
 
+msgid "specify 'rate' or 'scale' but not both"
+msgstr ""
+
 msgid "x[] and prob[] must be equal length vectors."
 msgstr " x[] と prob[] は等しい長さのベクトルでなければなりません "
 
@@ -1442,6 +1445,9 @@ msgstr " 比較すべきモデルがありません "
 
 msgid "extra arguments discarded"
 msgstr " 余計な引数は捨てられました "
+
+msgid "logLik.lm only handles single responses"
+msgstr ""
 
 msgid "no \"nobs\" attribute is available"
 msgstr " いかなる \"nobs\" 属性も利用不能です "

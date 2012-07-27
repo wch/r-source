@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-07-27 08:49\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -740,6 +740,9 @@ msgstr "距离方法不明确"
 msgid "non-square matrix"
 msgstr "非正方形矩阵"
 
+msgid "specify 'rate' or 'scale' but not both"
+msgstr ""
+
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[]和prob[]必需是长度相等的矢量。"
 
@@ -1405,6 +1408,9 @@ msgstr "没有可用来比较的模型"
 
 msgid "extra arguments discarded"
 msgstr "额外参数不用"
+
+msgid "logLik.lm only handles single responses"
+msgstr ""
 
 msgid "no \"nobs\" attribute is available"
 msgstr "没有\"nobs\"这个属性"

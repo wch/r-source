@@ -1190,18 +1190,3 @@ msgstr "페이지 변경을 확인하기 위해 기다리는 중..."
 #: src/library/grDevices/src/devWindows.c:3769
 msgid "Click or hit ENTER for next page"
 msgstr "클릭 또는 ENTER 키를 누르면 다음 페이지로 이동합니다"
-
-#~ msgid "Html search page"
-#~ msgstr "검색경로 목록"
-
-#~ msgid "Tile"
-#~ msgstr "타일"
-
-#~ msgid "Postscript files (*.ps)"
-#~ msgstr "Postscript 파일 (*.ps)"
-
-#~ msgid "PDF files (*.pdf)"
-#~ msgstr "PDF 파일(*.pdf)"
-
-#~ msgid "Enhanced metafiles (*.emf)"
-#~ msgstr "강화된 metafiles(*.emf)"

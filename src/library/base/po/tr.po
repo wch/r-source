@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-17 12:49+0100\n"
+"POT-Creation-Date: 2012-07-27 08:49+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -202,9 +202,9 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/connections.c:4384 src/main/connections.c:4388
 #: src/main/connections.c:4513 src/main/connections.c:4515
 #: src/main/connections.c:4517 src/main/connections.c:4545
-#: src/main/connections.c:4675 src/main/connections.c:4701
-#: src/main/connections.c:4705 src/main/connections.c:4709
-#: src/main/connections.c:4713 src/main/context.c:593 src/main/context.c:602
+#: src/main/connections.c:4677 src/main/connections.c:4703
+#: src/main/connections.c:4707 src/main/connections.c:4711
+#: src/main/connections.c:4715 src/main/context.c:593 src/main/context.c:602
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
@@ -235,16 +235,16 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/platform.c:1140 src/main/platform.c:1143 src/main/platform.c:1146
 #: src/main/platform.c:1149 src/main/platform.c:1152 src/main/platform.c:1251
 #: src/main/platform.c:1254 src/main/platform.c:1257 src/main/platform.c:1296
-#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1562
-#: src/main/platform.c:1565 src/main/platform.c:1568 src/main/platform.c:1604
-#: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1692
-#: src/main/platform.c:1707 src/main/platform.c:1744 src/main/platform.c:1746
-#: src/main/platform.c:1811 src/main/platform.c:1895 src/main/platform.c:2170
-#: src/main/platform.c:2216 src/main/platform.c:2346 src/main/platform.c:2349
-#: src/main/platform.c:2352 src/main/platform.c:2355 src/main/platform.c:2358
-#: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
-#: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2573
-#: src/main/platform.c:2581 src/main/platform.c:2617 src/main/platform.c:2667
+#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1564
+#: src/main/platform.c:1567 src/main/platform.c:1570 src/main/platform.c:1606
+#: src/main/platform.c:1609 src/main/platform.c:1612 src/main/platform.c:1694
+#: src/main/platform.c:1709 src/main/platform.c:1746 src/main/platform.c:1748
+#: src/main/platform.c:1813 src/main/platform.c:1897 src/main/platform.c:2172
+#: src/main/platform.c:2218 src/main/platform.c:2369 src/main/platform.c:2372
+#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
+#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
+#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2619
+#: src/main/platform.c:2627 src/main/platform.c:2663 src/main/platform.c:2713
 #: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
 #: src/main/print.c:269 src/main/print.c:275 src/main/random.c:495
 #: src/main/random.c:499 src/main/random.c:503 src/main/saveload.c:1939
@@ -259,8 +259,8 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
 #: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
-#: src/main/seq.c:398 src/main/seq.c:403 src/main/seq.c:411 src/main/seq.c:431
-#: src/main/seq.c:435 src/main/seq.c:441 src/main/seq.c:448
+#: src/main/seq.c:555 src/main/seq.c:560 src/main/seq.c:568 src/main/seq.c:599
+#: src/main/seq.c:603 src/main/seq.c:609 src/main/seq.c:617
 #: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
 #: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
@@ -331,16 +331,16 @@ msgstr "geçersiz zaman aralığı"
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
 #: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
 #: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
-#: src/main/errors.c:1358 src/main/seq.c:170 src/main/seq.c:269
-#: src/main/seq.c:274 src/main/seq.c:278 src/main/sort.c:967
-#: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
-#: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
-#: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3150
-#: src/modules/X11/devX11.c:3155 src/modules/X11/devX11.c:3160
-#: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3175
-#: src/modules/X11/devX11.c:3179 src/modules/X11/devX11.c:3183
-#: src/unix/sys-std.c:1286
+#: src/main/errors.c:1358 src/main/seq.c:171 src/main/seq.c:299
+#: src/main/seq.c:304 src/main/seq.c:308 src/main/seq.c:349 src/main/seq.c:353
+#: src/main/seq.c:357 src/main/sort.c:967 src/main/sort.c:1013
+#: src/main/sort.c:1065 src/main/source.c:216 src/main/summary.c:842
+#: src/main/sysutils.c:249 src/main/util.c:951 src/main/util.c:956
+#: src/main/util.c:963 src/main/util.c:966 src/modules/X11/devX11.c:3123
+#: src/modules/X11/devX11.c:3150 src/modules/X11/devX11.c:3155
+#: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175 src/modules/X11/devX11.c:3179
+#: src/modules/X11/devX11.c:3183 src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
 msgstr "geçersiz '%s' değeri"
@@ -1461,7 +1461,7 @@ msgstr "'parent' bir ortam değil"
 #: src/main/connections.c:3789 src/main/connections.c:3823
 #: src/main/connections.c:4199 src/main/connections.c:4264
 #: src/main/connections.c:4471 src/main/connections.c:4475
-#: src/main/connections.c:4838 src/main/deparse.c:350 src/main/deparse.c:436
+#: src/main/connections.c:4840 src/main/deparse.c:350 src/main/deparse.c:436
 #: src/main/scan.c:1709 src/main/serialize.c:1948
 msgid "cannot write to this connection"
 msgstr "bu bağlantıya yazılamıyor"
@@ -1992,8 +1992,8 @@ msgstr "fifo '%s' açılamadı"
 #: src/main/connections.c:1275 src/main/connections.c:1285
 #: src/main/connections.c:1404 src/main/connections.c:1464
 #: src/main/connections.c:1990 src/main/connections.c:2007
-#: src/main/connections.c:2316 src/main/connections.c:5011
-#: src/main/connections.c:5075
+#: src/main/connections.c:2316 src/main/connections.c:5013
+#: src/main/connections.c:5077
 msgid "too large a block specified"
 msgstr "çok geniş bir alan seçildi"
 
@@ -2004,7 +2004,7 @@ msgstr "fifo bağlantısı yer ayırması başarısız"
 
 #: src/main/connections.c:970 src/main/connections.c:1121
 #: src/main/connections.c:1742 src/main/connections.c:2954
-#: src/main/connections.c:4677
+#: src/main/connections.c:4679
 msgid "only first element of 'description' argument used"
 msgstr "'description' argümanın sadece ilk öğesi kullanıldı"
 
@@ -2020,7 +2020,7 @@ msgstr ""
 #: src/main/connections.c:3297 src/main/connections.c:3404
 #: src/main/connections.c:3565 src/main/connections.c:3816
 #: src/main/connections.c:4143 src/main/connections.c:4257
-#: src/main/connections.c:4467 src/main/connections.c:4815 src/main/dcf.c:65
+#: src/main/connections.c:4467 src/main/connections.c:4817 src/main/dcf.c:65
 #: src/main/deparse.c:342 src/main/deparse.c:428 src/main/saveload.c:2256
 #: src/main/saveload.c:2336 src/main/scan.c:906 src/main/scan.c:1017
 #: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:2117
@@ -2086,7 +2086,7 @@ msgstr "'%s' dosyası bzip2 ile sıkıştırılmamış gibi gözüküyor"
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile bağlanıtısı yer ayırması başarısız"
 
-#: src/main/connections.c:1548 src/main/connections.c:5619
+#: src/main/connections.c:1548 src/main/connections.c:5621
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "lzma çözücüsü başlatılamadı, hata %d"
@@ -2215,7 +2215,7 @@ msgstr "soketler bu sistemde mevcut değil"
 #: src/main/connections.c:3062 src/main/connections.c:3109
 #: src/main/connections.c:3130 src/main/connections.c:3153
 #: src/main/connections.c:3165 src/main/connections.c:3277
-#: src/main/connections.c:3389 src/main/connections.c:5114
+#: src/main/connections.c:3389 src/main/connections.c:5116
 msgid "'con' is not a connection"
 msgstr "'con' bir bağlantı değil"
 
@@ -2243,7 +2243,7 @@ msgstr "sink çıktı bağlantısı kapatılamaz"
 msgid "cannot close messages sink connection"
 msgstr "sink bağlantısı mesajları kapatılamaz"
 
-#: src/main/connections.c:3132 src/main/connections.c:4837
+#: src/main/connections.c:3132 src/main/connections.c:4839
 #: src/main/serialize.c:1938 src/main/serialize.c:1946
 msgid "connection is not open"
 msgstr "bağlantı açık değil"
@@ -2388,64 +2388,69 @@ msgid "no sink to remove"
 msgstr "kaldırılcak sink yok"
 
 #: src/main/connections.c:4604
+#, fuzzy
+msgid "there is no connection NA"
+msgstr "bağlantı yok %d"
+
+#: src/main/connections.c:4606
 #, c-format
 msgid "there is no connection %d"
 msgstr "bağlantı yok %d"
 
-#: src/main/connections.c:4739
+#: src/main/connections.c:4741
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") sadece open = \"w+\" ve open = \"w+b\" destekler: ilki "
 "kullanılıyor"
 
-#: src/main/connections.c:4793 src/modules/internet/internet.c:114
+#: src/main/connections.c:4795 src/modules/internet/internet.c:114
 #: src/modules/internet/internet.c:569
 msgid "unsupported URL scheme"
 msgstr "desteklenmeyen URL şeması"
 
-#: src/main/connections.c:4879
+#: src/main/connections.c:4881
 msgid "file stream does not have gzip magic number"
 msgstr "dosya akışı gzip magic numarasına sahip değil"
 
-#: src/main/connections.c:4890
+#: src/main/connections.c:4892
 msgid "file stream does not have valid gzip header"
 msgstr "dosya akışı geçerli gzip başlığı içermiyor"
 
-#: src/main/connections.c:4955
+#: src/main/connections.c:4957
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' bağlantısını temizlerken yazma hatası"
 
-#: src/main/connections.c:5057
+#: src/main/connections.c:5059
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc hatası %x %x\n"
 
-#: src/main/connections.c:5084
+#: src/main/connections.c:5086
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' bağlantısında yazma hatası"
 
-#: src/main/connections.c:5118
+#: src/main/connections.c:5120
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' 0 ... 9'dan biri olmalı"
 
-#: src/main/connections.c:5121
+#: src/main/connections.c:5123
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' TRUE veya FALSE olmalı"
 
-#: src/main/connections.c:5124
+#: src/main/connections.c:5126
 msgid "this is already a gzcon connection"
 msgstr "bir zaten bir gzcon bağlantısı"
 
-#: src/main/connections.c:5130
+#: src/main/connections.c:5132
 msgid "can only use read- or write- binary connections"
 msgstr "ikili bağlantılarda sadece read- veya write- işlemi yapılabilir"
 
-#: src/main/connections.c:5133
+#: src/main/connections.c:5135
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bir metin modu 'file' bağlantısı düzgün olarak çalışmayabilir"
 
-#: src/main/connections.c:5136
+#: src/main/connections.c:5138
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2453,24 +2458,24 @@ msgstr ""
 "yazılabilir textConnection'dan bir gzcon bağlantısı oluşturulamaz; "
 "rawConnection deneyin"
 
-#: src/main/connections.c:5139 src/main/connections.c:5143
-#: src/main/connections.c:5150 src/main/connections.c:5164
+#: src/main/connections.c:5141 src/main/connections.c:5145
+#: src/main/connections.c:5152 src/main/connections.c:5166
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' bağlantısı ayırması başarısız"
 
-#: src/main/connections.c:5324
+#: src/main/connections.c:5326
 msgid "not a list of sockets"
 msgstr "bir soket listesi değil"
 
-#: src/main/connections.c:5329
+#: src/main/connections.c:5331
 msgid "bad write indicators"
 msgstr "hatalı yazma göstericileri"
 
-#: src/main/connections.c:5340
+#: src/main/connections.c:5342
 msgid "not a socket connection"
 msgstr "bir soket bağlantısı değil"
 
-#: src/main/connections.c:5563
+#: src/main/connections.c:5565
 msgid "unknown compression, assuming none"
 msgstr "bilinmeyen sıkıştırma, sıkıştırma olmadığı varsayılıyor"
 
@@ -2725,7 +2730,7 @@ msgstr "PACKAGE argümanı çok uzun"
 msgid "no arguments supplied"
 msgstr "argüman verilmedi"
 
-#: src/main/dotcode.c:418 src/main/seq.c:696
+#: src/main/dotcode.c:418 src/main/seq.c:831
 msgid "too many arguments"
 msgstr "çok fazla argüman"
 
@@ -3683,7 +3688,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr "döngü için geçersiz sıralama argümanı"
 
-#: src/main/eval.c:4301 src/main/names.c:1171
+#: src/main/eval.c:4301 src/main/names.c:1172
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "iç fonksiyonlarda \"%s\" yok"
@@ -3811,145 +3816,145 @@ msgstr "getGraphicsEvent 'in yinelemeli kullanımı desteklenmiyor"
 msgid "no graphics event handlers set"
 msgstr "grafik olay yöneticisi seti yok"
 
-#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2001
-#: src/main/gram.y:2015
+#: src/main/gram.y:219 src/main/gram.y:234 src/main/gram.y:2149
+#: src/main/gram.y:2163
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "%d dizesi ndan MBCS karakterini okurken EOF alındı"
 
-#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2005
-#: src/main/gram.y:2012
+#: src/main/gram.y:223 src/main/gram.y:231 src/main/gram.y:2153
+#: src/main/gram.y:2160
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "ayrıştırıcının %d dizesi nda geçersiz çokbaytlı karakter"
 
-#: src/main/gram.y:947
-#, c-format
-msgid "incorrect tag type at line %d"
-msgstr "dize %d 'de geçersiz etiket tipi"
-
-#: src/main/gram.y:1475
-msgid "contextstack overflow"
-msgstr "içerikyığını taşması"
-
-#: src/main/gram.y:1711
-msgid "input"
-msgstr "giriş"
-
-#: src/main/gram.y:1712
-msgid "end of input"
-msgstr "giriş sonu"
-
-#: src/main/gram.y:1713
-msgid "string constant"
-msgstr "dize sabiti"
-
-#: src/main/gram.y:1714
-msgid "numeric constant"
-msgstr "sayısal sabit"
-
-#: src/main/gram.y:1715
-msgid "symbol"
-msgstr "sembol"
-
-#: src/main/gram.y:1716
-msgid "assignment"
-msgstr "atama"
-
-#: src/main/gram.y:1717
-msgid "end of line"
-msgstr "satır sonu"
-
-#: src/main/gram.y:1731 src/main/gram.y:1737
-#, c-format
-msgid "unexpected %s"
-msgstr "beklenmeyen durum, %s"
-
-#: src/main/gram.y:1747
-#, c-format
-msgid "Repeated formal argument '%s' on line %d"
-msgstr "Tekrarlanmış biçimsel argüman '%s' (%d dizesi nda)"
-
-#: src/main/gram.y:1765
+#: src/main/gram.y:463
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "%d. satırda girdi önbellek taşması"
 
-#: src/main/gram.y:1916
+#: src/main/gram.y:1052
+#, c-format
+msgid "incorrect tag type at line %d"
+msgstr "dize %d 'de geçersiz etiket tipi"
+
+#: src/main/gram.y:1613
+msgid "contextstack overflow"
+msgstr "içerikyığını taşması"
+
+#: src/main/gram.y:1849
+msgid "input"
+msgstr "giriş"
+
+#: src/main/gram.y:1850
+msgid "end of input"
+msgstr "giriş sonu"
+
+#: src/main/gram.y:1851
+msgid "string constant"
+msgstr "dize sabiti"
+
+#: src/main/gram.y:1852
+msgid "numeric constant"
+msgstr "sayısal sabit"
+
+#: src/main/gram.y:1853
+msgid "symbol"
+msgstr "sembol"
+
+#: src/main/gram.y:1854
+msgid "assignment"
+msgstr "atama"
+
+#: src/main/gram.y:1855
+msgid "end of line"
+msgstr "satır sonu"
+
+#: src/main/gram.y:1869 src/main/gram.y:1875
+#, c-format
+msgid "unexpected %s"
+msgstr "beklenmeyen durum, %s"
+
+#: src/main/gram.y:1885
+#, c-format
+msgid "Repeated formal argument '%s' on line %d"
+msgstr "Tekrarlanmış biçimsel argüman '%s' (%d dizesi nda)"
+
+#: src/main/gram.y:2064
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr "yalın tamsayı %sL ondalık içeriyor; sayısal değer kullanılıyor"
 
-#: src/main/gram.y:1918
+#: src/main/gram.y:2066
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "tamsayı olmayan değer %s L ile uygun; sayısal değer kullanılıyor"
 
-#: src/main/gram.y:1929
+#: src/main/gram.y:2077
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "tamsayı %sL gereksiz ondalık nokta içeriyor"
 
-#: src/main/gram.y:1961
+#: src/main/gram.y:2109
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d dizesinde, uzun dize için önbellek ayrılamadı"
 
-#: src/main/gram.y:2116
+#: src/main/gram.y:2264
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2130
+#: src/main/gram.y:2278
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2145
+#: src/main/gram.y:2293
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\u', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2153
+#: src/main/gram.y:2301
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "geçersiz \\u{xxxx} dizilişi (satır %d)"
 
-#: src/main/gram.y:2165
+#: src/main/gram.y:2313
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2180
+#: src/main/gram.y:2328
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\U', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2188
+#: src/main/gram.y:2336
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "geçersiz  \\U{xxxxxxxx} dizilimi (satır %d)"
 
-#: src/main/gram.y:2228
+#: src/main/gram.y:2376
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' bir tanımlanamayan kaçış karakteri (\"%s\" ile başlayan karakter "
 "dizesinde)"
 
-#: src/main/gram.y:2281
+#: src/main/gram.y:2429
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "Unicode ile sekizli/onaltılı kaçış karakterlerini karıştırmaya izin "
 "verilmiyor"
 
-#: src/main/gram.y:2285
+#: src/main/gram.y:2433
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3958,11 +3963,16 @@ msgstr ""
 "bu yerelde bulunmayan Unicode kaçışları içeren %d dizesi \n"
 "çok uzun (maks 10000 karakter)"
 
-#: src/main/gram.y:2814 src/main/gram.y:2821 src/main/gram.y:2827
-#: src/main/gram.y:2834
+#: src/main/gram.y:3009 src/main/gram.y:3016 src/main/gram.y:3022
+#: src/main/gram.y:3029
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d dizesi nda içerikyığını taşması"
+
+#: src/main/gram.y:3121
+#, fuzzy, c-format
+msgid "Internal parser error at line %d"
+msgstr "%d. satırda girdi önbellek taşması"
 
 #: src/main/graphics.c:65
 #, c-format
@@ -4376,24 +4386,24 @@ msgstr "Rprofmem: çıktı dosyası '%s' açılamadı"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1006
+#: src/main/names.c:1007
 msgid "string argument required"
 msgstr "dize argümanı gerekli"
 
-#: src/main/names.c:1009
+#: src/main/names.c:1010
 msgid "no such primitive function"
 msgstr "böyle bir basit fonksiyon yok"
 
-#: src/main/names.c:1137
+#: src/main/names.c:1138
 msgid "attempt to use zero-length variable name"
 msgstr "sıfır uzunlukta değişken ismi kullanımı denemesi"
 
-#: src/main/names.c:1139
+#: src/main/names.c:1140
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "değişken isimleri %d karakterle sınırlıdır"
 
-#: src/main/names.c:1166 src/main/names.c:1169
+#: src/main/names.c:1167 src/main/names.c:1170
 msgid "invalid .Internal() argument"
 msgstr "geçersiz .Internal() argüman"
 
@@ -4806,103 +4816,114 @@ msgstr "R ev dizini belirlenemedi"
 msgid "file name too long"
 msgstr "dosya ismi çok uzun"
 
-#: src/main/platform.c:1575 src/main/platform.c:1622 src/main/sysutils.c:1637
+#: src/main/platform.c:1577 src/main/platform.c:1624 src/main/sysutils.c:1637
 #: src/main/sysutils.c:1651
 msgid "internal out-of-memory condition"
 msgstr "iç yetersiz-bellek durumu"
 
-#: src/main/platform.c:1618 src/main/sysutils.c:1647
+#: src/main/platform.c:1620 src/main/sysutils.c:1647
 #, c-format
 msgid "read error on '%s'"
 msgstr "'%s' de okuma hatası"
 
-#: src/main/platform.c:1778
+#: src/main/platform.c:1780
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "'LC_NUMERIC' belirlemek R'nin tuhaf çalışmasına sebep olabilir"
 
-#: src/main/platform.c:1790
+#: src/main/platform.c:1792
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1817
+#: src/main/platform.c:1819
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "İşletim Sistemi yereli \"%s\" e ayarlama isteğinin gerçekleştirelemeyeceğini "
 "raporladı"
 
-#: src/main/platform.c:2119
+#: src/main/platform.c:2121
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' 1 birim uzunlukta bir karakter vektörü olmalı"
 
-#: src/main/platform.c:2125
+#: src/main/platform.c:2127
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() '%s' sunucusunu çözümleyemedi"
 
-#: src/main/platform.c:2132
+#: src/main/platform.c:2134
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname'den döndürülen bilinmeyen biçim"
 
-#: src/main/platform.c:2141
+#: src/main/platform.c:2143
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() bu platformda desteklenmiyor"
 
-#: src/main/platform.c:2198
+#: src/main/platform.c:2200
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' zaten mevcut"
 
-#: src/main/platform.c:2201
+#: src/main/platform.c:2203
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "'%s' dizini oluşturulamıyor, sebep: '%s'"
 
-#: src/main/platform.c:2247
+#: src/main/platform.c:2249
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' zaten var"
 
-#: src/main/platform.c:2251
+#: src/main/platform.c:2253
 #, fuzzy, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "'%s' dizini oluşturulamıyor, sebep: '%s'"
 
-#: src/main/platform.c:2281
+#: src/main/platform.c:2268 src/main/platform.c:2424
+msgid "too deep nesting"
+msgstr ""
+
+#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2306
+#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2453
+#: src/main/platform.c:2472 src/main/platform.c:2492
+#, fuzzy
+msgid "over-long path length"
+msgstr "sıfır uzunlukta model"
+
+#: src/main/platform.c:2296
 #, fuzzy, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2296
+#: src/main/platform.c:2314
 #, fuzzy, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2309
+#: src/main/platform.c:2332
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2425
+#: src/main/platform.c:2462
 #, fuzzy, c-format
 msgid "problem creating directory %s: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2439
+#: src/main/platform.c:2480
 #, fuzzy, c-format
 msgid "problem reading directory %s: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2455
+#: src/main/platform.c:2501
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2578
+#: src/main/platform.c:2624
 msgid "'mode' must be of length at least one"
 msgstr "'mode' uzunluğu en az bir olmalıdır"
 
-#: src/main/platform.c:2645
+#: src/main/platform.c:2691
 msgid "insufficient OS support on this platform"
 msgstr "bu platform için yetersiz işletim sistemi desteği"
 
@@ -5421,48 +5442,58 @@ msgstr "0 uzunluğunda argüman"
 msgid "NA/NaN argument"
 msgstr "NA/NaN argüman"
 
-#: src/main/seq.c:261
+#: src/main/seq.c:289
 msgid "incorrect type for second argument"
 msgstr "ikinci argüman için yanlış tip"
 
-#: src/main/seq.c:264
+#: src/main/seq.c:292
+#, fuzzy, c-format
+msgid "attempt to replicate an object of type '%s'"
+msgstr "vektör olmayanı kopyalama denemesi"
+
+#: src/main/seq.c:345
 msgid "attempt to replicate non-vector"
 msgstr "vektör olmayanı kopyalama denemesi"
 
-#: src/main/seq.c:406 src/main/seq.c:413 src/main/seq.c:566 src/main/seq.c:758
+#: src/main/seq.c:361
+#, fuzzy
+msgid "cannot replicate NULL to a non-zero length"
+msgstr "%d uzunluğunda vektör oluşturulamadı"
+
+#: src/main/seq.c:563 src/main/seq.c:570 src/main/seq.c:701 src/main/seq.c:891
 #, fuzzy, c-format
 msgid "first element used of '%s' argument"
 msgstr "'url' argümanının sadece ilk öğesi kullanıldı"
 
-#: src/main/seq.c:564
+#: src/main/seq.c:699
 msgid "'length.out' must be a non-negative number"
 msgstr "'length.out' negatif olmayan bir sayı olmalı"
 
-#: src/main/seq.c:584 src/main/seq.c:650 src/main/seq.c:664
+#: src/main/seq.c:719 src/main/seq.c:785 src/main/seq.c:799
 msgid "'from' must be finite"
 msgstr "'from' sonlu olmalı"
 
-#: src/main/seq.c:586 src/main/seq.c:652 src/main/seq.c:682
+#: src/main/seq.c:721 src/main/seq.c:787 src/main/seq.c:817
 msgid "'to' must be finite"
 msgstr "'to' sonlu olmalı"
 
-#: src/main/seq.c:598
+#: src/main/seq.c:733
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr "'seq' içinde geçersiz '(to - from)/by'"
 
-#: src/main/seq.c:610
+#: src/main/seq.c:745
 msgid "'by' argument is much too small"
 msgstr "'by' argümanı çok küçük"
 
-#: src/main/seq.c:612
+#: src/main/seq.c:747
 msgid "wrong sign in 'by' argument"
 msgstr "'by' argümanında yanlış imza"
 
-#: src/main/seq.c:666 src/main/seq.c:684
+#: src/main/seq.c:801 src/main/seq.c:819
 msgid "'by' must be finite"
 msgstr "'by' sonlu olmalı"
 
-#: src/main/seq.c:756
+#: src/main/seq.c:897 src/main/seq.c:902
 msgid "argument must be coercible to non-negative integer"
 msgstr "argüman negatif olmayan tamsayıya zorlanabilmeli"
 
@@ -7405,837 +7436,3 @@ msgstr "X11 modülü yüklenemiyor"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 mevcut değil"
-
-#~ msgid "argument must have positive length"
-#~ msgstr "argüman pozitif uzunluğa sahip olmalıdır"
-
-#~ msgid "invalid internal function"
-#~ msgstr "geçersiz iç fonksiyon"
-
-#~ msgid "invalid first argument 'n'"
-#~ msgstr "geçersiz ilk argüman 'n'"
-
-#~ msgid "invalid second argument 'size'"
-#~ msgstr "geçersiz ikinci argüman 'size'"
-
-#~ msgid "invalid term in model formula"
-#~ msgstr "model formülünde geçersiz terim"
-
-#~ msgid "invalid model formula"
-#~ msgstr "geçersiz model formülü"
-
-#~ msgid "invalid power in formula"
-#~ msgstr "formülde geçersiz kuvvet"
-
-#~ msgid "invalid model formula in ExtractVars"
-#~ msgstr "ExtractVars içinde geçersiz model formülü"
-
-#~ msgid "duplicated name '%s' in data frame using '.'"
-#~ msgstr "'.' kullanan veri çerçevesinde 2 adet aynı isim ('%s')"
-
-#~ msgid "invalid model formula in EncodeVars"
-#~ msgstr "EncodeVars içinde geçersiz model formülü"
-
-#~ msgid "argument is not a valid model"
-#~ msgstr "argüman uygun bir model değil"
-
-#, fuzzy
-#~ msgid "'specials' must be NULL or a character vector"
-#~ msgstr "'path' bir karakter vektörü olmalıdır"
-
-#~ msgid "'data' argument is of the wrong type"
-#~ msgstr "yanlış tipin 'data' argümanı"
-
-#~ msgid "'.' in formula and no 'data' argument"
-#~ msgstr "formülde '.', 'data' argümanı yok"
-
-#~ msgid "invalid formula in 'update'"
-#~ msgstr "'update'de geçersiz formül"
-
-#~ msgid "formula expected"
-#~ msgstr "formül beklendi"
-
-#~ msgid "'fn' is not a function"
-#~ msgstr "'fn' bir fonksiyon değil"
-
-#~ msgid "'parscale' is of the wrong length"
-#~ msgstr "yanlış uzunlukta 'parscale'"
-
-#~ msgid "'maxit' is not an integer"
-#~ msgstr "'maxit' bir tamsayı değil"
-
-#~ msgid "'tmax' is not an integer"
-#~ msgstr "'tmax' bir tamsayı değil"
-
-#~ msgid "'gr' is not a function"
-#~ msgstr "'gr' bir fonksiyon değil"
-
-#~ msgid "'ndeps' is of the wrong length"
-#~ msgstr "'ndeps' yanlış uzunlukta"
-
-#~ msgid "unknown 'method'"
-#~ msgstr "bilinmeyen 'method'"
-
-#~ msgid "Event GE_ScalePS requires a single numeric value"
-#~ msgstr "GE_Scaleps olayı bir tekil sayısal veri gerektirir"
-
-#~ msgid "missing observations in cov/cor"
-#~ msgstr "cov/cor içinde eksik gözlemler"
-
-#~ msgid "'x' is NULL"
-#~ msgstr "'x' NULL"
-
-#~ msgid "incompatible dimensions"
-#~ msgstr "uyumsuz boyutlar"
-
-#~ msgid "no complete element pairs"
-#~ msgstr "tam öğe çiftleri yok"
-
-#~ msgid "invalid 'use' (computational method)"
-#~ msgstr "geçersiz 'use' (hesaplamalı metod)"
-
-#~ msgid "'x' is empty"
-#~ msgstr "'x' boş"
-
-#~ msgid "the standard deviation is zero"
-#~ msgstr "standart sapma sıfır"
-
-#, fuzzy
-#~ msgid "invalid form in unary minus check"
-#~ msgstr "tekli değer eksi kontrolünde geçersiz biçim"
-
-#~ msgid "Function '%s' is not in the derivatives table"
-#~ msgstr "'%s' fonksiyonu türevler tablosunda değil"
-
-#~ msgid "variable must be a character string"
-#~ msgstr "değişken bir karakter dizesi olmalıdır"
-
-#~ msgid "invalid expression in '%s'"
-#~ msgstr "'%s'de geçersiz ifade"
-
-#~ msgid "invalid variable names"
-#~ msgstr "geçersiz değişken isimleri"
-
-#~ msgid "invalid tag"
-#~ msgstr "geçersiz etiket"
-
-#~ msgid "fft factorization error"
-#~ msgstr "fft oluşturma hatası"
-
-#~ msgid "vector-valued (multivariate) series required"
-#~ msgstr "vektör değerli (çokdeğişkenli) seriler zorunlu"
-
-#~ msgid "no factors"
-#~ msgstr "faktör yok"
-
-#, fuzzy
-#~ msgid "invalid factors"
-#~ msgstr "geçersiz faktör"
-
-#~ msgid "bad units specified in '%s'"
-#~ msgstr "'%s' içinde hatalı birimler seçildi"
-
-#~ msgid "attempt to plot on null device"
-#~ msgstr "boş aygıtta grafik denemesi"
-
-#~ msgid "outer margins too large (fig.region too small)"
-#~ msgstr "dış sınırlar çok geniş (şekil sınırı çok küçük)"
-
-#~ msgid "figure region too large"
-#~ msgstr "şekil bölgesi çok geniş"
-
-#~ msgid "figure margins too large"
-#~ msgstr "şekil sınırları çok geniş"
-
-#~ msgid "plot region too large"
-#~ msgstr "grafik bölgesi çok geniş"
-
-#~ msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
-#~ msgstr "sonlu olmayan eksen sınırları [GScale(%g,%g,%d, .); log=%d]"
-
-#~ msgid "axis style \"%c\" unimplemented"
-#~ msgstr "eksen biçimi \"%c\" tanımlanmamış"
-
-#~ msgid "No graphics device is active"
-#~ msgstr "Hiç bir grafik aygıtı aktif değil"
-
-#~ msgid "plot.new has not been called yet"
-#~ msgstr "plot.new henüz çağırılmadı"
-
-#~ msgid "unable to allocate memory (in GPolygon)"
-#~ msgstr "hafıza ayrılamıyor (GPolygon içinde)"
-
-#~ msgid "zero-length arrow is of indeterminate angle and so skipped"
-#~ msgstr "belirsiz açıda sıfır uzunlukta ok, atlandı"
-
-#~ msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-#~ msgstr "geçersiz par(\"bty\") = '%c'; box() çizilmedi"
-
-#~ msgid "invalid argument to GBox"
-#~ msgstr "GBox a geçersiz argüman"
-
-#~ msgid "Metric information not available for this device"
-#~ msgstr "Bu aygıtta metrik bilgisi bulunmuyor"
-
-#~ msgid "invalid variables"
-#~ msgstr "geçersiz değişken"
-
-#~ msgid "number of variables != number of variable names"
-#~ msgstr "değişken sayısı değişken isimlerine eşit değil"
-
-#~ msgid "invalid extra variables"
-#~ msgstr "geçersiz eksta değişkenler"
-
-#~ msgid "invalid extra variable names"
-#~ msgstr "geçersiz ekstra değişken ismi"
-
-#~ msgid "overlong names in '%s'"
-#~ msgstr "'%s' de çok uzun isimler"
-
-#~ msgid "invalid type (%s) for variable '%s'"
-#~ msgstr "geçersiz tip (%s), -'%s' değişkeni için-"
-
-#~ msgid "variable lengths differ (found for '%s')"
-#~ msgstr "değişken uzunlukları farklı (%s için bulundu)"
-
-#~ msgid "invalid result from na.action"
-#~ msgstr "na.action'dan geçersiz sonuç"
-
-#~ msgid "invalid model frame"
-#~ msgstr "geçersiz model çerçevesi"
-
-#~ msgid "do not know how many cases"
-#~ msgstr "kaç durum olduğu bilinmiyor"
-
-#~ msgid "variable lengths differ (found for variable %d)"
-#~ msgstr "değişken uzunlukları farklı (%d değişkeni için bulundu)"
-
-#~ msgid "variable %d has no levels"
-#~ msgstr "%d değişkeni düzeye sahip değil"
-
-#~ msgid "the response appeared on the right-hand side and was dropped"
-#~ msgstr "cevap sağ tarafta ortaya çıktı ve vazgeçildi"
-
-#~ msgid "term %d would require %.0g columns"
-#~ msgstr "terim %d %.0g kolon gerektirir"
-
-#~ msgid "matrix would require %.0g columns"
-#~ msgstr "matris %.0g kolon gerektirir"
-
-#~ msgid "problem with term %d in model.matrix: no columns are assigned"
-#~ msgstr "model matrisindeki terim %d de sorun: kolon atanmadı"
-
-#~ msgid "term names will be truncated"
-#~ msgstr "terim isimleri kırpılacak"
-
-#~ msgid "complex variables are not currently allowed in model matrices"
-#~ msgstr "şuanda model matrislerinde karmaşık değişkenlere izin verilmiyor"
-
-#~ msgid "variables of type '%s' are not allowed in model matrices"
-#~ msgstr "model matrislerinde '%s' tipinin değişkenlerine izin verilmiyor"
-
-#~ msgid "NA replaced by maximum positive value"
-#~ msgstr "NA maksimum pozitif değerle değiştirildi"
-
-#~ msgid "NA/Inf replaced by maximum positive value"
-#~ msgstr "NA/Inf maksimum pozitif değerle değiştirildi"
-
-#~ msgid "invalid function value in 'optimize'"
-#~ msgstr "'optimize' içinde geçersiz fonksiyon değeri"
-
-#~ msgid "attempt to minimize non-function"
-#~ msgstr "fonksiyon olmayanı küçültme denemesi"
-
-#~ msgid "'xmin' not less than 'xmax'"
-#~ msgstr "'xmin' 'xmax' dan küçük değil"
-
-#, fuzzy
-#~ msgid "-Inf replaced by maximally negative value"
-#~ msgstr "NA/Inf maksimum pozitif değerle değiştirildi"
-
-#~ msgid "invalid function value in 'zeroin'"
-#~ msgstr "'zeroin' de geçersiz fonksiyon değeri"
-
-#~ msgid "'maxiter' must be positive"
-#~ msgstr "'maxiter' pozitif olmalı"
-
-#~ msgid "NA value for '%s' is not allowed"
-#~ msgstr "'%s' için NA değerine izin verilmiyor"
-
-#~ msgid "non-finite value supplied by 'nlm'"
-#~ msgstr "'nlm' tarafından sonlu olmayan bir değer sağlandı"
-
-#~ msgid "invalid function value in 'nlm' optimizer"
-#~ msgstr "'nlm' "
-
-#~ msgid "function value caching for optimization is seriously confused"
-#~ msgstr ""
-#~ "optimizasyon için fonksiyon değer önbellekleme ciddi şekilde "
-#~ "karıştırılıyor"
-
-#~ msgid "numeric parameter expected"
-#~ msgstr "sayısal parametre beklendi"
-
-#~ msgid "conflicting parameter lengths"
-#~ msgstr "çakışan parametre uzunlukları"
-
-#~ msgid "invalid parameter length"
-#~ msgstr "geçersiz parametre uzunluğu"
-
-#~ msgid "missing value in parameter"
-#~ msgstr "parametrede eksik değer"
-
-#~ msgid "invalid parameter type"
-#~ msgstr "geçersiz parametre tipi"
-
-#~ msgid "invalid NA value in parameter"
-#~ msgstr "parametrede geçersiz NA değeri"
-
-#~ msgid "non-positive number of parameters in nlm"
-#~ msgstr "nlm'de pozitif olmayan sayıda parametre"
-
-#~ msgid "nlm is inefficient for 1-d problems"
-#~ msgstr "nlm 1-d problemleri için verimsizdir"
-
-#~ msgid "invalid gradient tolerance in nlm"
-#~ msgstr "nlm'de geçersiz değişim derecesi (gradyan) toleransı"
-
-#~ msgid "invalid iteration limit in nlm"
-#~ msgstr "nlm'de geçersiz öteleme sınırı"
-
-#~ msgid "no analytic gradient to check in nlm!"
-#~ msgstr "nlm'de kontrol etmek için bir analitik gradyan yok!"
-
-#~ msgid "no analytic Hessian to check in nlm!"
-#~ msgstr "nlm'de kontrol edilecek analitik Hessian Matrisi yok!"
-
-#~ msgid "probable coding error in analytic gradient"
-#~ msgstr "analitik gradyanda olası kodlama hatası"
-
-#~ msgid "probable coding error in analytic Hessian"
-#~ msgstr "analitik Hessian Matrisinde olası kodlama hatası"
-
-#~ msgid ""
-#~ "*** unknown error message (msg = %d) in nlm()\n"
-#~ "*** should not happen!"
-#~ msgstr ""
-#~ "*** nlm() içinde bilinmeyen hata mesajı (msg = %d)\n"
-#~ "*** gerçekleşmemesi gerekir!"
-
-#~ msgid "Relative gradient close to zero.\n"
-#~ msgstr "Göreli değişim derecesi (gradyan) sıfıra yakın\n"
-
-#~ msgid "Current iterate is probably solution.\n"
-#~ msgstr "Geçerli öteleme muhtemelen sonuç.\n"
-
-#~ msgid "Successive iterates within tolerance.\n"
-#~ msgstr "Toleranslar içinde başarılı ötleme.\n"
-
-#~ msgid "Last global step failed to locate a point lower than x.\n"
-#~ msgstr ""
-#~ "x'den küçük bir nokta bulmak için yapılan son global adım başarısız.\n"
-
-#~ msgid ""
-#~ "Either x is an approximate local minimum of the function,\n"
-#~ "the function is too non-linear for this algorithm,\n"
-#~ "or steptol is too large.\n"
-#~ msgstr ""
-#~ "Ya x fonksiyonun bir yaklaşık yerel minimumu,\n"
-#~ "ve fonksiyon bu algoritma için çok fazla doğrusal değil,\n"
-#~ "veya stepol çok geniş.\n"
-
-#~ msgid "Iteration limit exceeded.  Algorithm failed.\n"
-#~ msgstr "Öteleme sınırı aşıldı. Algoritma başarısız.\n"
-
-#~ msgid ""
-#~ "Maximum step size exceeded 5 consecutive times.\n"
-#~ "Either the function is unbounded below,\n"
-#~ "becomes asymptotic to a finite value\n"
-#~ "from above in some direction,\n"
-#~ "or stepmx is too small.\n"
-#~ msgstr ""
-#~ "Azami adım sayısı ardışık 5 kereyi geçti.\n"
-#~ "Fonksiyon alttan sınırlandırılmamış,\n"
-#~ "ve herhangi bir yönde üstten \n"
-#~ "sonlu bir değer ile asimptotik oluyor,\n"
-#~ "veya stepmx çok küçük.\n"
-
-#~ msgid "hessian supplied is of the wrong length or mode, so ignored"
-#~ msgstr ""
-#~ "verilen hessian matrisi yanlış modda veya uzunlukta, görmezden gelindi"
-
-#~ msgid "gradient supplied is of the wrong length or mode, so ignored"
-#~ msgstr "verilen gradyan yanlış uzunlukta veya modda, görmezden gelinecek"
-
-#~ msgid "invalid value specified for graphical parameter \"%s\""
-#~ msgstr "grafiksel parametre \"%s\" için geçersiz değer berlirlendi"
-
-#~ msgid "graphical parameter \"%s\" has the wrong length"
-#~ msgstr "grafiksel parametre \"%s\" yanlış uzunlukta"
-
-#~ msgid "graphical parameter \"%s\" cannot be set"
-#~ msgstr "grafiksel parametre \"%s\" belirlenemez"
-
-#~ msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-#~ msgstr "grafiksel parametre 'family' 200 bayt üst sınırına sahip"
-
-#~ msgid "parameter \"mfg\" has the wrong length"
-#~ msgstr "\"mfg\" parametresi yanlış uzunlukta"
-
-#~ msgid "parameter \"i\" in \"mfg\" is out of range"
-#~ msgstr "\"mfg\" içindeki \"i\" parametresi sınırlar dışında"
-
-#~ msgid "parameter \"j\" in \"mfg\" is out of range"
-#~ msgstr "\"mfg\" içindeki \"j\" parametresi sınırlar dışında"
-
-#~ msgid "value of nr in \"mfg\" is wrong and will be ignored"
-#~ msgstr "\"mfg\" içindeki nr değeri yanlış, görmezden gelinecek"
-
-#~ msgid "value of nc in \"mfg\" is wrong and will be ignored"
-#~ msgstr "\"mfg\" içindeki nc değeri yanlış, görmezden gelinecek"
-
-#~ msgid "calling par(new=TRUE) with no plot"
-#~ msgstr "çizim olmadan par(new=TRUE) çağırılıyor"
-
-#~ msgid "graphical parameter \"%s\" is obsolete"
-#~ msgstr "grafiksel parametre \"%s\" çok eski"
-
-#~ msgid "\"%s\" is not a graphical parameter"
-#~ msgstr "\"%s\" bir grafiksel parametre değil"
-
-#~ msgid "invalid argument passed to par()"
-#~ msgstr "par()'a geçersiz bir argüman geçirildi"
-
-#~ msgid "too many rows in layout, limit %d"
-#~ msgstr "yerleşimde çok fazla sütun var, sınır %d"
-
-#~ msgid "too many columns in layout, limit %d"
-#~ msgstr "yerleşimde çok fazla dize var, sınır %d"
-
-#~ msgid "too many cells in layout, limit %d"
-#~ msgstr "yerleşimde çok fazla hücre var, sınır %d"
-
-#~ msgid "only NA allowed in logical plotting symbol"
-#~ msgstr "mantıksal grafik çizme sembolünde sadece NA'ya izni veriliyor"
-
-#~ msgid "invalid plotting symbol"
-#~ msgstr "geçersiz grafik sembolü"
-
-#~ msgid "invalid 'vfont' value [typeface]"
-#~ msgstr "geçersiz 'vfont' değeri [typeface]"
-
-#~ msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
-#~ msgstr "geçersiz 'vfont' değeri [typeface = %d, fontindex = %d]"
-
-#~ msgid "invalid graphics parameter"
-#~ msgstr "geçersiz grafik parametresi"
-
-#~ msgid "at least 3 arguments required"
-#~ msgstr "en az 3 argüman gereklidir"
-
-#~ msgid "\"log=\" specification must be character"
-#~ msgstr "\"log=\" özelliği karakter olmalıdır"
-
-#~ msgid "invalid \"log=%s\" specification"
-#~ msgstr "geçersiz \"log=%s\" özelliği"
-
-#~ msgid "NAs not allowed in 'xlim'"
-#~ msgstr "NAs a 'xlim' izin verilmiyor"
-
-#~ msgid "need finite 'xlim' values"
-#~ msgstr "sonlu 'xlim' değerleri gerekli"
-
-#~ msgid "NAs not allowed in 'ylim'"
-#~ msgstr "NAs a 'ylim' izin verilmiyor"
-
-#~ msgid "need finite 'ylim' values"
-#~ msgstr "sonlu 'ylim' değerleri gerekli"
-
-#~ msgid "Logarithmic axis must have positive limits"
-#~ msgstr "Logaritmik eksen pozitif limitlere sahip olmalıdır"
-
-#~ msgid "invalid type for axis labels"
-#~ msgstr "eksen etiketleri için geçersiz yazım"
-
-#~ msgid "invalid axis number %d"
-#~ msgstr "geçersiz eksen numarası %d"
-
-#~ msgid "zero length 'padj' specified"
-#~ msgstr "sıfır birim uzunlukta 'padj' seçildi"
-
-#~ msgid "'labels' is supplied and not 'at'"
-#~ msgstr "'labels' verildi ama 'at verilmedi"
-
-#~ msgid "'at' and 'labels' lengths differ, %d != %d"
-#~ msgstr "'at' ve 'labels' uzunlukları farklı, %d != %d"
-
-#~ msgid "no locations are finite"
-#~ msgstr "hiçbir bölge sonlu değil"
-
-#~ msgid "invalid plotting structure"
-#~ msgstr "geçersiz grafik yapısı"
-
-#~ msgid "'x' and 'y' lengths differ in %s()"
-#~ msgstr "%s() içinde 'x' ve 'y' uzunlukları farklı "
-
-#~ msgid "plot type '%s' will be truncated to first character"
-#~ msgstr "çizim tipi '%s' in ilk karakteri kullanılacak"
-
-#~ msgid "invalid plot type"
-#~ msgstr "geçersiz grafik tipi"
-
-#~ msgid "invalid plot type '%c'"
-#~ msgstr "geçersiz grafik tipi '%c'"
-
-#~ msgid "invalid third argument"
-#~ msgstr "geçersiz üçüncü argüman"
-
-#~ msgid "invalid fourth argument"
-#~ msgstr "geçersiz dördüncü argüman"
-
-#~ msgid "cannot mix zero-length and non-zero-length coordinates"
-#~ msgstr ""
-#~ "sıfır uzunlukta ve sıfır olmayan uzunluktaki koordinatlar karıştırılamadı"
-
-#~ msgid "unable to allocate memory (in GPath)"
-#~ msgstr "bellek ayrılamadı (GPath de) "
-
-#~ msgid "invalid x or y (in GPath)"
-#~ msgstr "geçersiz x veya y (GPath de)"
-
-#~ msgid "invalid arrow head length"
-#~ msgstr "geçersiz ok başı uzunluğu"
-
-#~ msgid "invalid arrow head angle"
-#~ msgstr "geçersiz ok başı açısı"
-
-#~ msgid "invalid arrow head specification"
-#~ msgstr "geçersiz ok başı özelliği"
-
-#~ msgid "zero length 'labels'"
-#~ msgstr "sıfır birim uzunlukta 'labels'"
-
-#~ msgid "no coordinates were supplied"
-#~ msgstr "koordinat girilmedi"
-
-#~ msgid "zero length 'text' specified"
-#~ msgstr "sıfır birim uzunlukta 'text' belirlendi"
-
-#~ msgid "zero length 'side' specified"
-#~ msgstr "sıfır birim uzunlukta 'side' belirlendi"
-
-#~ msgid "zero length 'line' specified"
-#~ msgstr "sıfır birim uzunlukta 'line' belirlendi"
-
-#~ msgid "zero length 'outer' specified"
-#~ msgstr "sıfır birim uzunlukta 'outer' belirlendi"
-
-#~ msgid "zero length 'at' specified"
-#~ msgstr "sıfır birim uzunluğunda 'at' belirlendi"
-
-#~ msgid "zero length 'adj' specified"
-#~ msgstr "sıfır birim uzunluğunda 'adj' belirlendi"
-
-#~ msgid "zero length 'cex' specified"
-#~ msgstr "sıfır birim uzunluğu 'cex' belirlendi"
-
-#~ msgid "zero length 'col' specified"
-#~ msgstr "sıfır birim uzunluğu 'col' belirlendi"
-
-#~ msgid "zero length 'font' specified"
-#~ msgstr "sıfır birim uzunluğunda 'font' belirlendi"
-
-#~ msgid "invalid a=, b= specification"
-#~ msgstr "geçersiz a=, b= belirlemesi"
-
-#~ msgid "'a' and 'b' must be finite"
-#~ msgstr "'a' ve 'b' sonlu olmalıdır"
-
-#~ msgid "invalid number of points in locator()"
-#~ msgstr "locator() içinde geçersiz nokta sayısı"
-
-#~ msgid "invalid number of points in identify()"
-#~ msgstr "identify() içinde geçersiz nokta sayısı"
-
-#~ msgid "incorrect argument type"
-#~ msgstr "hatalı argüman yazımı"
-
-#~ msgid "different argument lengths"
-#~ msgstr "farklı argüman uzunlukları"
-
-#~ msgid "more 'labels' than points"
-#~ msgstr "noktalardan çok 'labels'"
-
-#~ msgid "warning: no point within %.2f inches\n"
-#~ msgstr "uyarı: %.2f inç içinde nokta yok\n"
-
-#~ msgid "warning: nearest point already identified\n"
-#~ msgstr "uyarı: en yakın nokta zaten zaten tanımlanmış\n"
-
-#~ msgid "invalid units"
-#~ msgstr "geçersiz birimler"
-
-#~ msgid "invalid dendrogram input"
-#~ msgstr "geçersiz dendrogram girişi"
-
-#~ msgid "invalid symbol parameter vector"
-#~ msgstr "geçersiz sembol parametre vektörü"
-
-#~ msgid "invalid symbol coordinates"
-#~ msgstr "geçersiz sembol koordinatları"
-
-#~ msgid "x/y/parameter length mismatch"
-#~ msgstr "x/y/parametre uzunluğu uyumsuzluğu"
-
-#~ msgid "invalid circles data"
-#~ msgstr "geçersiz daire verisi"
-
-#~ msgid "invalid symbol parameter"
-#~ msgstr "geçersiz sembol parametresi"
-
-#~ msgid "invalid squares data"
-#~ msgstr "geçersiz kare verisi"
-
-#~ msgid "invalid rectangles data (need 2 columns)"
-#~ msgstr "geçersiz dikdörtgen verisi (2 sütun gerekli)"
-
-#~ msgid "invalid stars data"
-#~ msgstr "geçersiz yıldız verisi"
-
-#~ msgid "invalid thermometers data (need 3 or 4 columns)"
-#~ msgstr "geçersiz termometre verisi (3 veya 4 sütun gerekli)"
-
-#~ msgid "invalid thermometers[,%s]"
-#~ msgstr "geçersiz thermometers[,%s]"
-
-#~ msgid "thermometers[,%s] not in [0,1] -- may look funny"
-#~ msgstr "thermometers[,%s] [0,1] içide değil -- komik görünebilir"
-
-#~ msgid "invalid thermometers[,1:2]"
-#~ msgstr "geçersiz thermometers[,1:2]"
-
-#~ msgid "invalid boxplots data (need 5 columns)"
-#~ msgstr "geçersiz kutu bıyık grafiği verisi (6 sütun gerekli)"
-
-#~ msgid "boxplots[,5] outside [0,1] -- may look funny"
-#~ msgstr "boxplots[,5] [0,1] dışında -- komik görünebilir"
-
-#~ msgid "invalid boxplots[, 1:4]"
-#~ msgstr "geçersiz boxplots[, 1:4]"
-
-#~ msgid "invalid symbol type"
-#~ msgstr "geçersiz sembol tipi"
-
-#~ msgid "incorrect length for '%s' argument"
-#~ msgstr "'%s' argümanı için hatalı uzunluk"
-
-#~ msgid "unable to allocate memory (in do_xspline)"
-#~ msgstr "bellek ayrılamadı (do_xspline içinde)"
-
-#~ msgid "insufficient 'x' or 'y' values"
-#~ msgstr "yetersiz 'x' veya 'y' değerleri"
-
-#~ msgid "dimension mismatch"
-#~ msgstr "boyut uyumsuzluğu"
-
-#~ msgid "no contour values"
-#~ msgstr "çevre değeri yok"
-
-#~ msgid "missing 'x' values"
-#~ msgstr "eksik 'x' değerleri"
-
-#~ msgid "increasing 'x' values expected"
-#~ msgstr "artan 'x' değerleri beklendi"
-
-#~ msgid "missing 'y' values"
-#~ msgstr "eksik 'y' değerleri"
-
-#~ msgid "increasing 'y' values expected"
-#~ msgstr "artan 'y' değeri beklendi"
-
-#~ msgid "invalid NA contour values"
-#~ msgstr "geçersiz NA çevre değerleri"
-
-#~ msgid "invalid x / y values or limits"
-#~ msgstr "geçersiz x / y değerleri veya sınırları"
-
-#~ msgid "invalid contour levels: must be strictly increasing"
-#~ msgstr "geçersiz çevre seviyeleri: kesinlikle artan olmalı"
-
-#~ msgid "Axis orientation not calculated"
-#~ msgstr "Eksen yönelimi hesaplanmadı"
-
-#~ msgid "too few parameters"
-#~ msgstr "çok az parametre"
-
-#~ msgid "invalid 'x' limits"
-#~ msgstr "geçersiz 'x' sınırları"
-
-#~ msgid "invalid 'y' limits"
-#~ msgstr "geçersiz 'y' sınırları"
-
-#~ msgid "invalid 'z' limits"
-#~ msgstr "geçersiz 'z' sınırları"
-
-#~ msgid "'xlab' must be a character vector of length 1"
-#~ msgstr "'xlab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
-
-#~ msgid "'ylab' must be a character vector of length 1"
-#~ msgstr "'ylab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
-
-#~ msgid "'zlab' must be a character vector of length 1"
-#~ msgstr "'zlab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
-
-#~ msgid "invalid viewing parameters"
-#~ msgstr "geçersiz görüntüleme parametreleri"
-
-#~ msgid "no input has determined the number of cases"
-#~ msgstr "durum sayısı kadar girdi belirlenemedi"
-
-#~ msgid "not all arguments have the same length"
-#~ msgstr "tüm argüman aynı uzunlukta değil"
-
-#~ msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-#~ msgstr "'%*' yapılı 'fmt2' uzunluğu maksimum %d'i geçiyor"
-
-#~ msgid "missing value for 'length'"
-#~ msgstr "'length' için eksik değer"
-
-#~ msgid "lists must be duplicated in .C"
-#~ msgstr ".C'de listeler kopyalanmalıdır"
-
-#~ msgid "character vector element does not have type CHARSXP"
-#~ msgstr "karakter vektör öğesi CHARSXP tipine sahip değil"
-
-#~ msgid "cannot mix 0-length vectors with others"
-#~ msgstr "0-uzunluğunda vektörler diğerleriyle karıştırılamaz"
-
-#~ msgid "unsupported encoding '%s'"
-#~ msgstr "desteklenmeyen kodlama '%s'"
-
-#~ msgid "conversion problem in re-encoding to '%s'"
-#~ msgstr "'%s'e tekrar kodlarken dönüşüm sorunu olluştu"
-
-#~ msgid "conversion problem in re-encoding from '%s'"
-#~ msgstr "'%s'de yeniden kodlarken dönüştürme sorunu"
-
-#~ msgid "ENCODING used more than once"
-#~ msgstr "ENCODING birden fazla kez kullanıldı"
-
-#~ msgid "ENCODING argument must be a single character string"
-#~ msgstr "ENCODING argüman tek bir karakter dizesi olmalıdı"
-
-#~ msgid "this version of R cannot write byte code objects"
-#~ msgstr "R'nin bu sürümü bayt kodu nesnelerini yazamaz"
-
-#~ msgid "this version of R cannot read byte code objects"
-#~ msgstr "R'nin bu sürümü bayt kodu nesnelerini okuyamaz"
-
-#~ msgid "binary format is deprecated; using xdr instead"
-#~ msgstr "ikili biçim onaylanmamış; yerine xdr kullanılacak"
-
-#~ msgid "no locator capability in device driver"
-#~ msgstr "aygıt sürücüsünde yerleştirme yeteneği yok"
-
-#~ msgid ""
-#~ "invalid body argument for \"function\"\n"
-#~ "Should NEVER happen; please bug.report() [mkCLOSXP]"
-#~ msgstr ""
-#~ "\"function\" için geçersiz gövde argümanı\n"
-#~ "ASLA oluşmaması gerekir; lütfen bug.report() [mkCLOSXP]"
-
-#~ msgid "vector: zero-length 'type' argument"
-#~ msgstr "vektör: sıfır-uzunlukta 'type' argümanı"
-
-#~ msgid "function is too long to keep source (at line %d)"
-#~ msgstr "kaynağı tutmak için fonksiyon çok uzun (dize %d)"
-
-#~ msgid "functions nested too deeply in source code at line %d"
-#~ msgstr "kaynak kodun %d dizesi nda fonksiyonlar çok içiçe geçmiş"
-
-#~ msgid "not a vector object"
-#~ msgstr "bir vektör nesnesi değil"
-
-#~ msgid "can only handle simple real vectors"
-#~ msgstr "sadece basit reel vektörler kullanabilir"
-
-#~ msgid "not a simple vector"
-#~ msgstr "basir bir vektör değil"
-
-#~ msgid "not a simple matrix"
-#~ msgstr "basit bir matris değil"
-
-#~ msgid "proc.time() is not implemented on this system"
-#~ msgstr "proc.time() bu sistemde tanımlı değil"
-
-#~ msgid "setTimelimit() is not implemented on this system"
-#~ msgstr "setTimelimit() bu sistemde tanımlı değil"
-
-#~ msgid "setSessionTimelimit() is not implemented on this system"
-#~ msgstr "setSessionTimelimit() bu sistemde tanımlı değil"
-
-#~ msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
-#~ msgstr "type=\"cairo\" bu derlemede desteklenmiyor -- \"Xlib\" kullanılıyor"
-
-#~ msgid "invalid string argument"
-#~ msgstr "geçersiz dize argüman"
-
-#~ msgid "unimplemented cairo-based device"
-#~ msgstr "tanımlanmamış cairo-temelli aygıt"
-
-#~ msgid "unable to start device '%s'"
-#~ msgstr "'%s' aygıtı başlatılamadı"
-
-#~ msgid "cairo-based devices are not supported on this build"
-#~ msgstr "cairo temelli aygıtlar bu platformda desteklenmiyor"
-
-#~ msgid "append mode may not do what you expect"
-#~ msgstr "\"append\" modu beklediğiniz yerine getirmeyebilir"
-
-#~ msgid "this platform does not support 'split=TRUE'"
-#~ msgstr "bu platform 'split=TRUE' desteklemiyor"
-
-#~ msgid "'destination' does not exist"
-#~ msgstr "'destination' bulunmuyor"
-
-#~ msgid "names(x) must be valid character(length(x))."
-#~ msgstr "names(x) geçerli bir character(length(x)) olmalıdır."
-
-#~ msgid "'%s' must be an environment"
-#~ msgstr "'%s' bir ortam olmalıdır"
-
-#~ msgid "invalid '%s' argument: must be NULL or environment"
-#~ msgstr "geçersiz '%s' argümanı: NULL veya ortam olmalıdır"
-
-#~ msgid "invalid '%s' arguemnt"
-#~ msgstr "geçersiz '%s' argümanı"
-
-#~ msgid "missing value where logical needed"
-#~ msgstr "mantıksal değer gereken yerde eksik değer"
-
-#~ msgid "argument of if(*) is not interpretable as logical"
-#~ msgstr "if(*)'in argümanı mantıksal olarak yorumlanamıyor"
-
-#~ msgid "not a SPECIAL function"
-#~ msgstr "bir SPECIAL fonksiyon değil"
-
-#~ msgid "error: system commands are not supported in this version of R.\n"
-#~ msgstr "hata: sistem komutları R'nin sürümünde desteklenmiyor.\n"
-
-#~ msgid "'source' must be a single string"
-#~ msgstr "'source' tek bir dize olmalı"
-
-#~ msgid "'destination' must be a single string"
-#~ msgstr "'destination' tek bir dize olmalı"
-
-#~ msgid "missing values are not allowed"
-#~ msgstr "eksik değerlere izin verilmiyor"
-
-#~ msgid "expanded destination name too long"
-#~ msgstr "genişletilen hedef ismi çok uzun"
-
-#~ msgid "file.access() is not implemented on this system"
-#~ msgstr "file.access() bu sistemde tanımlanmamış"
-
-#~ msgid "invalid 'tempdir' in R_tmpnam"
-#~ msgstr "R_tmpnam içinde geçersiz 'tempdir'"

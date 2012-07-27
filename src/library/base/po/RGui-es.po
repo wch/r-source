@@ -1209,18 +1209,3 @@ msgstr "Esperando para confirmar cambio de página..."
 #: src/library/grDevices/src/devWindows.c:3769
 msgid "Click or hit ENTER for next page"
 msgstr "Clique con el mouse o presione ENTER para próxima página"
-
-#~ msgid "Html search page"
-#~ msgstr "Html página de búsqueda"
-
-#~ msgid "Tile"
-#~ msgstr "Título"
-
-#~ msgid "Postscript files (*.ps)"
-#~ msgstr "Archivos postscript (*.ps)"
-
-#~ msgid "PDF files (*.pdf)"
-#~ msgstr "Archivos PDF (*.pdf)"
-
-#~ msgid "Enhanced metafiles (*.emf)"
-#~ msgstr "Archivos de tipo metafiles realzados (*.emf)"

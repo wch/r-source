@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:42\n"
+"POT-Creation-Date: 2012-07-27 08:48\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -686,6 +686,10 @@ msgstr ""
 
 msgid "no files to copy to"
 msgstr "nenhum arquivo para onde copiar"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "falha ao encontrar objeto de metadados para %s"
 
 msgid "more 'from' files than 'to' files"
 msgstr "mais arquivos 'from' do que 'to'"
@@ -1864,56 +1868,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
-
-#~ msgid "rhs is the wrong length for indexing by a logical matrix"
-#~ msgstr ""
-#~ "o lado direito da expressão tem o comprimento errado para indexação "
-#~ "através de uma matriz lógica"
-
-#~ msgid "'symbol.C' is not needed: please remove it"
-#~ msgstr "'symbol.C' não é necesário: por favor remova"
-
-#~ msgid "'symbol.For' is not needed: please remove it"
-#~ msgstr "'symbol.For' não é necessário: remova-o"
-
-#~ msgid "'pattern' must be a non-empty character string"
-#~ msgstr "'pattern' deve ser uma string de caracteres não vazia"
-
-#~ msgid "invalid multibyte string for 'pattern'"
-#~ msgstr "string multibyte inválida para 'pattern'"
-
-#~ msgid "'max.distance' must be non-negative"
-#~ msgstr "'max.distance' deve ser não negativo"
-
-#, fuzzy
-#~ msgid "%s must be a character vector"
-#~ msgstr "'arg' deve ser NULL ou um vetor caractere"
-
-#, fuzzy
-#~ msgid "%s must be a list of character vectors"
-#~ msgstr "'arg' deve ser NULL ou um vetor caractere"
-
-#, fuzzy
-#~ msgid "package %s has no namespace and is not on the search path"
-#~ msgstr ""
-#~ "pacote '%s' não tem um espaço de nomes e não está no caminho de procura"
-
-#, fuzzy
-#~ msgid "package %s contains no R code"
-#~ msgstr "pacote '%s' não contem código R"
-
-#, fuzzy
-#~ msgid ".First.lib failed for %s"
-#~ msgstr ".First.lib falhou para '%s'"
-
-#~ msgid "package '%s' has a non-function '.First.lib'"
-#~ msgstr "pacote '%s' tem uma não funão '.FIrst.lib'"
-
-#~ msgid "no files to copy from"
-#~ msgstr "nenhum arquivo de onde copiar"
-
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "uso de 'save' é obsoleto"
-
-#~ msgid "save != FALSE is defunct"
-#~ msgstr "save != FALSE foi extinto"

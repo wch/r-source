@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-07-27 08:49\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -767,6 +767,9 @@ msgstr "método de distância ambígua"
 msgid "non-square matrix"
 msgstr "matriz não é quadrada"
 
+msgid "specify 'rate' or 'scale' but not both"
+msgstr ""
+
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] e prob[] devem ser vetores de comprimento igual."
 
@@ -1469,6 +1472,9 @@ msgstr "nenhum modelo para comparar"
 
 msgid "extra arguments discarded"
 msgstr "argumentos extras descartados"
+
+msgid "logLik.lm only handles single responses"
+msgstr ""
 
 msgid "no \"nobs\" attribute is available"
 msgstr ""

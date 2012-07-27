@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-07-27 08:49+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -43,7 +43,7 @@ msgstr "CharInfo não pode ser analisado"
 msgid "unknown AFM entity encountered"
 msgstr "entidade AFM desconhecida encontrada"
 
-#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7898 devPicTeX.c:487
+#: devPS.c:739 devPS.c:742 devPS.c:4417 devPS.c:7902 devPicTeX.c:487
 #: devPicTeX.c:489
 #, c-format
 msgid "invalid string in '%s'"
@@ -159,11 +159,11 @@ msgstr ""
 msgid "Object .ps.prolog is not a character vector"
 msgstr ""
 
-#: devPS.c:2639 devPS.c:6407 devWindows.c:783
+#: devPS.c:2639 devPS.c:6408 devWindows.c:783
 msgid "Invalid line end"
 msgstr ""
 
-#: devPS.c:2658 devPS.c:6426 devWindows.c:796
+#: devPS.c:2658 devPS.c:6427 devWindows.c:796
 msgid "Invalid line join"
 msgstr ""
 
@@ -172,22 +172,22 @@ msgid "Invalid line mitre"
 msgstr ""
 
 #: devPS.c:2874 devPS.c:3767 devPS.c:4215 devPS.c:4242 devPS.c:5250
-#: devPS.c:7748 devPS.c:7793
+#: devPS.c:7752 devPS.c:7797
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr ""
 
-#: devPS.c:3095 devPS.c:4717 devPS.c:5828
+#: devPS.c:3095 devPS.c:4717 devPS.c:5829
 #, c-format
 msgid "filename too long in %s()"
 msgstr ""
 
-#: devPS.c:3101 devPS.c:4723 devPS.c:5834
+#: devPS.c:3101 devPS.c:4723 devPS.c:5835
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr ""
 
-#: devPS.c:3118 devPS.c:5894
+#: devPS.c:3118 devPS.c:5895
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr ""
@@ -197,7 +197,7 @@ msgstr ""
 msgid "failed to load encoding file in %s()"
 msgstr "falha ao carregar arquivo de codificação '%s'"
 
-#: devPS.c:3177 devPS.c:3240 devPS.c:5953 devPS.c:6008 devPS.c:7629
+#: devPS.c:3177 devPS.c:3240 devPS.c:5954 devPS.c:6009 devPS.c:7633
 msgid "Invalid font type"
 msgstr ""
 
@@ -237,7 +237,7 @@ msgstr ""
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr ""
 
-#: devPS.c:3580 devPS.c:4970 devPS.c:4981 devPS.c:7058 qdPDF.c:98
+#: devPS.c:3580 devPS.c:4970 devPS.c:4981 devPS.c:7059 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr ""
@@ -274,7 +274,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr ""
 
-#: devPS.c:4403 devPS.c:5295 devPS.c:7883
+#: devPS.c:4403 devPS.c:5295 devPS.c:7887
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -319,7 +319,7 @@ msgstr ""
 msgid "empty file name"
 msgstr ""
 
-#: devPS.c:5027 devPS.c:5079 devPS.c:5656 devPS.c:5700 devPS.c:7117
+#: devPS.c:5027 devPS.c:5079 devPS.c:5657 devPS.c:5701 devPS.c:7119
 msgid "write failed"
 msgstr ""
 
@@ -328,125 +328,125 @@ msgstr ""
 msgid "unable to use encoding '%s'"
 msgstr ""
 
-#: devPS.c:5544 devPS.c:5547
+#: devPS.c:5545 devPS.c:5548
 #, fuzzy
 msgid "failed to increase 'maxRaster'"
 msgstr "falha ao alocar lista de fonte"
 
-#: devPS.c:5559
+#: devPS.c:5560
 msgid "Unable to allocate raster image"
 msgstr ""
 
-#: devPS.c:5760
+#: devPS.c:5761
 msgid "Corrupt loaded encodings;  font not added"
 msgstr ""
 
-#: devPS.c:5769
+#: devPS.c:5770
 msgid "Failed to record device encoding; font not added"
 msgstr ""
 
-#: devPS.c:5880
+#: devPS.c:5881
 msgid "increasing the PDF version to 1.2"
 msgstr ""
 
-#: devPS.c:5910
+#: devPS.c:5911
 msgid "failed to load default encoding"
 msgstr ""
 
-#: devPS.c:5976
+#: devPS.c:5977
 msgid "Failed to initialise default PDF font"
 msgstr ""
 
-#: devPS.c:6031
+#: devPS.c:6032
 msgid "Failed to initialise additional PDF fonts"
 msgstr ""
 
-#: devPS.c:6044
+#: devPS.c:6045
 #, fuzzy
 msgid "failed to allocate rasters"
 msgstr "falha ao alocar lista de fonte"
 
-#: devPS.c:6051
+#: devPS.c:6052
 #, fuzzy
 msgid "failed to allocate masks"
 msgstr "falha ao alocar lista de fonte"
 
-#: devPS.c:6114
+#: devPS.c:6115
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr ""
 
-#: devPS.c:6138
+#: devPS.c:6139
 msgid "invalid foreground/background color (pdf)"
 msgstr ""
 
-#: devPS.c:6255
+#: devPS.c:6256
 msgid "Invalid alpha value in PDF"
 msgstr ""
 
-#: devPS.c:6280
+#: devPS.c:6281
 msgid "increasing the PDF version to 1.4"
 msgstr ""
 
-#: devPS.c:6331 devPS.c:6378
+#: devPS.c:6332 devPS.c:6379
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr ""
 
-#: devPS.c:6572
+#: devPS.c:6573
 #, fuzzy
 msgid "Failed to load sRGB colorspace file"
 msgstr "falha ao carregar arquivo de codificação '%s'"
 
-#: devPS.c:6836
+#: devPS.c:6837
 msgid "Corrupt encodings in PDF device"
 msgstr ""
 
-#: devPS.c:6917
+#: devPS.c:6918
 msgid "increasing the PDF version to 1.3"
 msgstr ""
 
-#: devPS.c:7042
+#: devPS.c:7043
 #, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr ""
 
-#: devPS.c:7048
+#: devPS.c:7049
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr ""
 
-#: devPS.c:7190
+#: devPS.c:7192
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDF device"
 msgstr ""
 
-#: devPS.c:7654 devPS.c:8015 devPS.c:8062
+#: devPS.c:7658 devPS.c:8019 devPS.c:8066
 msgid "Failed to find or load PDF font"
 msgstr ""
 
-#: devPS.c:7837 devPS.c:7970
+#: devPS.c:7841 devPS.c:7974
 msgid "Failed to find or load PDF CID font"
 msgstr ""
 
-#: devPS.c:8201 devPS.c:8205 devPS.c:8365 devPS.c:8369
+#: devPS.c:8205 devPS.c:8209 devPS.c:8369 devPS.c:8373
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr ""
 
-#: devPS.c:8223 devPS.c:8381
+#: devPS.c:8227 devPS.c:8385
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:8229 devPS.c:8391 devPS.c:8394 devWindows.c:3642 devWindows.c:3646
+#: devPS.c:8233 devPS.c:8395 devPS.c:8398 devWindows.c:3642 devWindows.c:3646
 #: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
 #: devWindows.c:3685 devWindows.c:3689
 #, c-format
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:8242 devPS.c:8309 devPS.c:8408 devPicTeX.c:742 devWindows.c:3722
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:742 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr "não é possível iniciar dispositivo %s()"

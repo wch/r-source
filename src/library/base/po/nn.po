@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-17 12:49+0100\n"
+"POT-Creation-Date: 2012-07-27 08:49+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -200,9 +200,9 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/connections.c:4384 src/main/connections.c:4388
 #: src/main/connections.c:4513 src/main/connections.c:4515
 #: src/main/connections.c:4517 src/main/connections.c:4545
-#: src/main/connections.c:4675 src/main/connections.c:4701
-#: src/main/connections.c:4705 src/main/connections.c:4709
-#: src/main/connections.c:4713 src/main/context.c:593 src/main/context.c:602
+#: src/main/connections.c:4677 src/main/connections.c:4703
+#: src/main/connections.c:4707 src/main/connections.c:4711
+#: src/main/connections.c:4715 src/main/context.c:593 src/main/context.c:602
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
@@ -233,16 +233,16 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/platform.c:1140 src/main/platform.c:1143 src/main/platform.c:1146
 #: src/main/platform.c:1149 src/main/platform.c:1152 src/main/platform.c:1251
 #: src/main/platform.c:1254 src/main/platform.c:1257 src/main/platform.c:1296
-#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1562
-#: src/main/platform.c:1565 src/main/platform.c:1568 src/main/platform.c:1604
-#: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1692
-#: src/main/platform.c:1707 src/main/platform.c:1744 src/main/platform.c:1746
-#: src/main/platform.c:1811 src/main/platform.c:1895 src/main/platform.c:2170
-#: src/main/platform.c:2216 src/main/platform.c:2346 src/main/platform.c:2349
-#: src/main/platform.c:2352 src/main/platform.c:2355 src/main/platform.c:2358
-#: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
-#: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2573
-#: src/main/platform.c:2581 src/main/platform.c:2617 src/main/platform.c:2667
+#: src/main/platform.c:1353 src/main/platform.c:1356 src/main/platform.c:1564
+#: src/main/platform.c:1567 src/main/platform.c:1570 src/main/platform.c:1606
+#: src/main/platform.c:1609 src/main/platform.c:1612 src/main/platform.c:1694
+#: src/main/platform.c:1709 src/main/platform.c:1746 src/main/platform.c:1748
+#: src/main/platform.c:1813 src/main/platform.c:1897 src/main/platform.c:2172
+#: src/main/platform.c:2218 src/main/platform.c:2369 src/main/platform.c:2372
+#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
+#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
+#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2619
+#: src/main/platform.c:2627 src/main/platform.c:2663 src/main/platform.c:2713
 #: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
 #: src/main/print.c:269 src/main/print.c:275 src/main/random.c:495
 #: src/main/random.c:499 src/main/random.c:503 src/main/saveload.c:1939
@@ -257,8 +257,8 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
 #: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
-#: src/main/seq.c:398 src/main/seq.c:403 src/main/seq.c:411 src/main/seq.c:431
-#: src/main/seq.c:435 src/main/seq.c:441 src/main/seq.c:448
+#: src/main/seq.c:555 src/main/seq.c:560 src/main/seq.c:568 src/main/seq.c:599
+#: src/main/seq.c:603 src/main/seq.c:609 src/main/seq.c:617
 #: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
 #: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
@@ -329,16 +329,16 @@ msgstr "ugyldig tidsstempel"
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
 #: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
 #: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
-#: src/main/errors.c:1358 src/main/seq.c:170 src/main/seq.c:269
-#: src/main/seq.c:274 src/main/seq.c:278 src/main/sort.c:967
-#: src/main/sort.c:1013 src/main/sort.c:1065 src/main/source.c:216
-#: src/main/summary.c:842 src/main/sysutils.c:249 src/main/util.c:951
-#: src/main/util.c:956 src/main/util.c:963 src/main/util.c:966
-#: src/modules/X11/devX11.c:3123 src/modules/X11/devX11.c:3150
-#: src/modules/X11/devX11.c:3155 src/modules/X11/devX11.c:3160
-#: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3175
-#: src/modules/X11/devX11.c:3179 src/modules/X11/devX11.c:3183
-#: src/unix/sys-std.c:1286
+#: src/main/errors.c:1358 src/main/seq.c:171 src/main/seq.c:299
+#: src/main/seq.c:304 src/main/seq.c:308 src/main/seq.c:349 src/main/seq.c:353
+#: src/main/seq.c:357 src/main/sort.c:967 src/main/sort.c:1013
+#: src/main/sort.c:1065 src/main/source.c:216 src/main/summary.c:842
+#: src/main/sysutils.c:249 src/main/util.c:951 src/main/util.c:956
+#: src/main/util.c:963 src/main/util.c:966 src/modules/X11/devX11.c:3123
+#: src/modules/X11/devX11.c:3150 src/modules/X11/devX11.c:3155
+#: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175 src/modules/X11/devX11.c:3179
+#: src/modules/X11/devX11.c:3183 src/unix/sys-std.c:1286
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ugyldig «%s»-verdi"
@@ -1471,7 +1471,7 @@ msgstr "«parent» er ikkje ein omgjevnad"
 #: src/main/connections.c:3789 src/main/connections.c:3823
 #: src/main/connections.c:4199 src/main/connections.c:4264
 #: src/main/connections.c:4471 src/main/connections.c:4475
-#: src/main/connections.c:4838 src/main/deparse.c:350 src/main/deparse.c:436
+#: src/main/connections.c:4840 src/main/deparse.c:350 src/main/deparse.c:436
 #: src/main/scan.c:1709 src/main/serialize.c:1948
 msgid "cannot write to this connection"
 msgstr "klarte ikkje skriva til sambandet"
@@ -2002,8 +2002,8 @@ msgstr "klarte ikkje opna fifo-en «%s»"
 #: src/main/connections.c:1275 src/main/connections.c:1285
 #: src/main/connections.c:1404 src/main/connections.c:1464
 #: src/main/connections.c:1990 src/main/connections.c:2007
-#: src/main/connections.c:2316 src/main/connections.c:5011
-#: src/main/connections.c:5075
+#: src/main/connections.c:2316 src/main/connections.c:5013
+#: src/main/connections.c:5077
 msgid "too large a block specified"
 msgstr "for stor blokk oppgjeven"
 
@@ -2014,7 +2014,7 @@ msgstr "feil ved reservering av fifo-samband"
 
 #: src/main/connections.c:970 src/main/connections.c:1121
 #: src/main/connections.c:1742 src/main/connections.c:2954
-#: src/main/connections.c:4677
+#: src/main/connections.c:4679
 msgid "only first element of 'description' argument used"
 msgstr "berre det første elementet i «description»-argumentet vert brukt"
 
@@ -2031,7 +2031,7 @@ msgstr ""
 #: src/main/connections.c:3297 src/main/connections.c:3404
 #: src/main/connections.c:3565 src/main/connections.c:3816
 #: src/main/connections.c:4143 src/main/connections.c:4257
-#: src/main/connections.c:4467 src/main/connections.c:4815 src/main/dcf.c:65
+#: src/main/connections.c:4467 src/main/connections.c:4817 src/main/dcf.c:65
 #: src/main/deparse.c:342 src/main/deparse.c:428 src/main/saveload.c:2256
 #: src/main/saveload.c:2336 src/main/scan.c:906 src/main/scan.c:1017
 #: src/main/scan.c:1517 src/main/scan.c:1713 src/main/serialize.c:2117
@@ -2097,7 +2097,7 @@ msgstr "fila «%s» ser ikkje ut til å vera komprimert med bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "feil ved reservering av bzfile-samband"
 
-#: src/main/connections.c:1548 src/main/connections.c:5619
+#: src/main/connections.c:1548 src/main/connections.c:5621
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "klarte ikkje starta lzma-dekodaren (feil %d)"
@@ -2227,7 +2227,7 @@ msgstr "soklar er ikkje tilgjengelege på dette systemet"
 #: src/main/connections.c:3062 src/main/connections.c:3109
 #: src/main/connections.c:3130 src/main/connections.c:3153
 #: src/main/connections.c:3165 src/main/connections.c:3277
-#: src/main/connections.c:3389 src/main/connections.c:5114
+#: src/main/connections.c:3389 src/main/connections.c:5116
 msgid "'con' is not a connection"
 msgstr "«con» er ikkje eit samband"
 
@@ -2255,7 +2255,7 @@ msgstr "klarte ikkje lukka utsink-samband"
 msgid "cannot close messages sink connection"
 msgstr "klarte ikkje lukka meldingssink-samband"
 
-#: src/main/connections.c:3132 src/main/connections.c:4837
+#: src/main/connections.c:3132 src/main/connections.c:4839
 #: src/main/serialize.c:1938 src/main/serialize.c:1946
 msgid "connection is not open"
 msgstr "sambandet er ikkje ope"
@@ -2401,64 +2401,69 @@ msgid "no sink to remove"
 msgstr "ingen sink å fjerna"
 
 #: src/main/connections.c:4604
+#, fuzzy
+msgid "there is no connection NA"
+msgstr "sambandet %d finst ikkje"
+
+#: src/main/connections.c:4606
 #, c-format
 msgid "there is no connection %d"
 msgstr "sambandet %d finst ikkje"
 
-#: src/main/connections.c:4739
+#: src/main/connections.c:4741
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") støttar berre «open = \"w+\"» og «open = \"w+b\"» (brukar "
 "førstnemnde)"
 
-#: src/main/connections.c:4793 src/modules/internet/internet.c:114
+#: src/main/connections.c:4795 src/modules/internet/internet.c:114
 #: src/modules/internet/internet.c:569
 msgid "unsupported URL scheme"
 msgstr "ikkje-støtta URL-skjema"
 
-#: src/main/connections.c:4879
+#: src/main/connections.c:4881
 msgid "file stream does not have gzip magic number"
 msgstr "filstraumen har ikkje det magiske talet til gzip"
 
-#: src/main/connections.c:4890
+#: src/main/connections.c:4892
 msgid "file stream does not have valid gzip header"
 msgstr "filstraumen har ikkje eit gyldig gzip-hovud"
 
-#: src/main/connections.c:4955
+#: src/main/connections.c:4957
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "feil ved tømming av gzon-samband"
 
-#: src/main/connections.c:5057
+#: src/main/connections.c:5059
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "CRC-feil %x %x\n"
 
-#: src/main/connections.c:5084
+#: src/main/connections.c:5086
 msgid "write error on 'gzcon' connection"
 msgstr "feil ved skriving til gzcon-samband"
 
-#: src/main/connections.c:5118
+#: src/main/connections.c:5120
 msgid "'level' must be one of 0 ... 9"
 msgstr "«level» må vera éin av 0, 1, ..., 9"
 
-#: src/main/connections.c:5121
+#: src/main/connections.c:5123
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "«allowNonCompression» må vera «TRUE» (sann) eller «FALSE» (usann)"
 
-#: src/main/connections.c:5124
+#: src/main/connections.c:5126
 msgid "this is already a gzcon connection"
 msgstr "dette er alt eit gzcon-samband"
 
-#: src/main/connections.c:5130
+#: src/main/connections.c:5132
 msgid "can only use read- or write- binary connections"
 msgstr "kan berre bruka lese- eller skrive-binærsamband"
 
-#: src/main/connections.c:5133
+#: src/main/connections.c:5135
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bruk av tekstmodus-«file»-samband vil kanskje ikkje fungera skikkeleg"
 
-#: src/main/connections.c:5136
+#: src/main/connections.c:5138
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2466,24 +2471,24 @@ msgstr ""
 "kan ikkje oppretta eit gzcon-samband frå ein skrivar «textConnection» (du "
 "kan prøva å bruka «rawConnection»)"
 
-#: src/main/connections.c:5139 src/main/connections.c:5143
-#: src/main/connections.c:5150 src/main/connections.c:5164
+#: src/main/connections.c:5141 src/main/connections.c:5145
+#: src/main/connections.c:5152 src/main/connections.c:5166
 msgid "allocation of 'gzcon' connection failed"
 msgstr "feil ved reservering av gzcon-samband"
 
-#: src/main/connections.c:5324
+#: src/main/connections.c:5326
 msgid "not a list of sockets"
 msgstr "ikkje ei liste over soklar"
 
-#: src/main/connections.c:5329
+#: src/main/connections.c:5331
 msgid "bad write indicators"
 msgstr "ugyldig skriveindikatorar"
 
-#: src/main/connections.c:5340
+#: src/main/connections.c:5342
 msgid "not a socket connection"
 msgstr "ikkje eit sokkelsamband"
 
-#: src/main/connections.c:5563
+#: src/main/connections.c:5565
 msgid "unknown compression, assuming none"
 msgstr "ukjend komprimering – antek ukomprimerte data"
 
@@ -2737,7 +2742,7 @@ msgstr "PACKAGE-argumentet er for langt"
 msgid "no arguments supplied"
 msgstr "ingen argument oppgjevne"
 
-#: src/main/dotcode.c:418 src/main/seq.c:696
+#: src/main/dotcode.c:418 src/main/seq.c:831
 msgid "too many arguments"
 msgstr "for mange argument"
 
@@ -3694,7 +3699,7 @@ msgstr "feil i bytekode-versjon"
 msgid "invalid sequence argument in for loop"
 msgstr "ugyldig følgjeargument i for-lykkje"
 
-#: src/main/eval.c:4301 src/main/names.c:1171
+#: src/main/eval.c:4301 src/main/names.c:1172
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "internfunksjonen «%s» finst ikkje"
@@ -3822,138 +3827,138 @@ msgstr "rekursiv bruk av «getGraphicsEvent» er ikkje støtta"
 msgid "no graphics event handlers set"
 msgstr "ingen grafikkhendingshandsamarar definerte"
 
-#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2001
-#: src/main/gram.y:2015
+#: src/main/gram.y:219 src/main/gram.y:234 src/main/gram.y:2149
+#: src/main/gram.y:2163
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "Nådde slutten av fila ved lesing av MBCS-teikn på linje %d"
 
-#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2005
-#: src/main/gram.y:2012
+#: src/main/gram.y:223 src/main/gram.y:231 src/main/gram.y:2153
+#: src/main/gram.y:2160
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "Ugyldig multibyte-teikn i tolkar på linje %d"
 
-#: src/main/gram.y:947
-#, c-format
-msgid "incorrect tag type at line %d"
-msgstr "ugyldig merkelapptype på linje %d"
-
-#: src/main/gram.y:1475
-msgid "contextstack overflow"
-msgstr "contextstack-overflyt"
-
-#: src/main/gram.y:1711
-msgid "input"
-msgstr "inndata"
-
-#: src/main/gram.y:1712
-msgid "end of input"
-msgstr "slutt på inndata"
-
-#: src/main/gram.y:1713
-msgid "string constant"
-msgstr "teiknkonstant"
-
-#: src/main/gram.y:1714
-msgid "numeric constant"
-msgstr "numerisk konstant"
-
-#: src/main/gram.y:1715
-msgid "symbol"
-msgstr "symbol"
-
-#: src/main/gram.y:1716
-msgid "assignment"
-msgstr "tildeling"
-
-#: src/main/gram.y:1717
-msgid "end of line"
-msgstr "linjeskift"
-
-#: src/main/gram.y:1731 src/main/gram.y:1737
-#, c-format
-msgid "unexpected %s"
-msgstr "uventa %s"
-
-#: src/main/gram.y:1747
-#, c-format
-msgid "Repeated formal argument '%s' on line %d"
-msgstr "Gjenteke formelt argument «%s» på linje %d"
-
-#: src/main/gram.y:1765
+#: src/main/gram.y:463
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "overflyt i inndatabuffer på linje %d"
 
-#: src/main/gram.y:1916
+#: src/main/gram.y:1052
+#, c-format
+msgid "incorrect tag type at line %d"
+msgstr "ugyldig merkelapptype på linje %d"
+
+#: src/main/gram.y:1613
+msgid "contextstack overflow"
+msgstr "contextstack-overflyt"
+
+#: src/main/gram.y:1849
+msgid "input"
+msgstr "inndata"
+
+#: src/main/gram.y:1850
+msgid "end of input"
+msgstr "slutt på inndata"
+
+#: src/main/gram.y:1851
+msgid "string constant"
+msgstr "teiknkonstant"
+
+#: src/main/gram.y:1852
+msgid "numeric constant"
+msgstr "numerisk konstant"
+
+#: src/main/gram.y:1853
+msgid "symbol"
+msgstr "symbol"
+
+#: src/main/gram.y:1854
+msgid "assignment"
+msgstr "tildeling"
+
+#: src/main/gram.y:1855
+msgid "end of line"
+msgstr "linjeskift"
+
+#: src/main/gram.y:1869 src/main/gram.y:1875
+#, c-format
+msgid "unexpected %s"
+msgstr "uventa %s"
+
+#: src/main/gram.y:1885
+#, c-format
+msgid "Repeated formal argument '%s' on line %d"
+msgstr "Gjenteke formelt argument «%s» på linje %d"
+
+#: src/main/gram.y:2064
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr ""
 "heiltalsliteralen %sL inneheld ein desimalverdi (brukar flyttalsverdien)"
 
-#: src/main/gram.y:1918
+#: src/main/gram.y:2066
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "flyttalsverdien %s kvalifisert med L (brukar flyttalsverdien)"
 
-#: src/main/gram.y:1929
+#: src/main/gram.y:2077
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "heiltalsverdien %sL inneheld eit unødvendig desimalpunktum"
 
-#: src/main/gram.y:1961
+#: src/main/gram.y:2109
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "klarte ikkje reservera buffer til lang streng på linje %d"
 
-#: src/main/gram.y:2116
+#: src/main/gram.y:2264
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "«\\x» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
-#: src/main/gram.y:2130
+#: src/main/gram.y:2278
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\uxxxx-følgjer er ikkje støtta mellom `-teikn (linje %d)"
 
-#: src/main/gram.y:2145
+#: src/main/gram.y:2293
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "«\\u» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
-#: src/main/gram.y:2153
+#: src/main/gram.y:2301
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "ugyldig \\u{xxxx}-følgje (linje %d)"
 
-#: src/main/gram.y:2165
+#: src/main/gram.y:2313
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx-følgjer er ikkje støtta mellom `-teikn (linje %d)"
 
-#: src/main/gram.y:2180
+#: src/main/gram.y:2328
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "«\\U» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
-#: src/main/gram.y:2188
+#: src/main/gram.y:2336
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "ugyldig \\U{xxxxxxxx}-følgje (linje %d)"
 
-#: src/main/gram.y:2228
+#: src/main/gram.y:2376
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "«\\%c» er eit ukjent verneteikn i tekststreng som startar med «%s»"
 
-#: src/main/gram.y:2281
+#: src/main/gram.y:2429
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "det er ikkje mogleg å blanda Unicode og oktal- eller heksadesimal-koding i "
 "tekststrengar"
 
-#: src/main/gram.y:2285
+#: src/main/gram.y:2433
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3962,11 +3967,16 @@ msgstr ""
 "strengen på linje %d som inneheld Unicode-verneteikn som\n"
 "ikkje finst i dette lokalet er for lang (maks 10000 teikn)"
 
-#: src/main/gram.y:2814 src/main/gram.y:2821 src/main/gram.y:2827
-#: src/main/gram.y:2834
+#: src/main/gram.y:3009 src/main/gram.y:3016 src/main/gram.y:3022
+#: src/main/gram.y:3029
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "contextstack-overflyt på linje %d"
+
+#: src/main/gram.y:3121
+#, fuzzy, c-format
+msgid "Internal parser error at line %d"
+msgstr "overflyt i inndatabuffer på linje %d"
 
 #: src/main/graphics.c:65
 #, c-format
@@ -4380,24 +4390,24 @@ msgstr "Rprofmem: klarte ikkje opna utfila «%s»"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1006
+#: src/main/names.c:1007
 msgid "string argument required"
 msgstr "krev strengargument"
 
-#: src/main/names.c:1009
+#: src/main/names.c:1010
 msgid "no such primitive function"
 msgstr "primitivfunksjonen finst ikkje"
 
-#: src/main/names.c:1137
+#: src/main/names.c:1138
 msgid "attempt to use zero-length variable name"
 msgstr "variabelnamn av lengd null"
 
-#: src/main/names.c:1139
+#: src/main/names.c:1140
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "variabelnamn må vera mindre enn %d byte"
 
-#: src/main/names.c:1166 src/main/names.c:1169
+#: src/main/names.c:1167 src/main/names.c:1170
 msgid "invalid .Internal() argument"
 msgstr "ugyldig .Internal()-argument"
 
@@ -4811,101 +4821,112 @@ msgstr "klarte ikkje fastsetja heimeadressa til R"
 msgid "file name too long"
 msgstr "filnamnet er for langt"
 
-#: src/main/platform.c:1575 src/main/platform.c:1622 src/main/sysutils.c:1637
+#: src/main/platform.c:1577 src/main/platform.c:1624 src/main/sysutils.c:1637
 #: src/main/sysutils.c:1651
 msgid "internal out-of-memory condition"
 msgstr "intern «ikkje nok minne»-feil"
 
-#: src/main/platform.c:1618 src/main/sysutils.c:1647
+#: src/main/platform.c:1620 src/main/sysutils.c:1647
 #, c-format
 msgid "read error on '%s'"
 msgstr "lesefeil på «%s»"
 
-#: src/main/platform.c:1778
+#: src/main/platform.c:1780
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "viss du set «LC_NUMERIC», kan R oppføra seg merkeleg"
 
-#: src/main/platform.c:1790
+#: src/main/platform.c:1792
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1817
+#: src/main/platform.c:1819
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "OS-førespurnad om å setja lokalet til «%s» kan ikkje følgjast"
 
-#: src/main/platform.c:2119
+#: src/main/platform.c:2121
 msgid "'hostname' must be a character vector of length 1"
 msgstr "«hostnamne» må vera ein teiknvektor av lengd 1"
 
-#: src/main/platform.c:2125
+#: src/main/platform.c:2127
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() klarte ikkje utføra namneoppslag for verten «%s»"
 
-#: src/main/platform.c:2132
+#: src/main/platform.c:2134
 msgid "unknown format returned by gethostbyname"
 msgstr "ukjend format returnert av gethostbyname"
 
-#: src/main/platform.c:2141
+#: src/main/platform.c:2143
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() er ikkje støtta på denne plattforma"
 
-#: src/main/platform.c:2198
+#: src/main/platform.c:2200
 #, c-format
 msgid "'%s' already exists"
 msgstr "«%s» finst alt"
 
-#: src/main/platform.c:2201
+#: src/main/platform.c:2203
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "kan ikkje oppretta mappa «%s», av grunnen «%s»"
 
-#: src/main/platform.c:2247
+#: src/main/platform.c:2249
 #, c-format
 msgid "'%ls' already exists"
 msgstr "«%ls» finst alt"
 
-#: src/main/platform.c:2251
+#: src/main/platform.c:2253
 #, fuzzy, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "kan ikkje oppretta mappa «%s», av grunnen «%s»"
 
-#: src/main/platform.c:2281
+#: src/main/platform.c:2268 src/main/platform.c:2424
+msgid "too deep nesting"
+msgstr ""
+
+#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2306
+#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2453
+#: src/main/platform.c:2472 src/main/platform.c:2492
+#, fuzzy
+msgid "over-long path length"
+msgstr "mønster av lengd 0"
+
+#: src/main/platform.c:2296
 #, fuzzy, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "feil ved køyring av skriveprogrammet %s"
 
-#: src/main/platform.c:2296
+#: src/main/platform.c:2314
 #, fuzzy, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "feil ved køyring av skriveprogrammet %s"
 
-#: src/main/platform.c:2309
+#: src/main/platform.c:2332
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2425
+#: src/main/platform.c:2462
 #, fuzzy, c-format
 msgid "problem creating directory %s: %s"
 msgstr "feil ved køyring av skriveprogrammet %s"
 
-#: src/main/platform.c:2439
+#: src/main/platform.c:2480
 #, fuzzy, c-format
 msgid "problem reading directory %s: %s"
 msgstr "feil ved køyring av skriveprogrammet %s"
 
-#: src/main/platform.c:2455
+#: src/main/platform.c:2501
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2578
+#: src/main/platform.c:2624
 msgid "'mode' must be of length at least one"
 msgstr "«mode» må ha minst eitt element"
 
-#: src/main/platform.c:2645
+#: src/main/platform.c:2691
 msgid "insufficient OS support on this platform"
 msgstr "ikkje nok OS-støtte på denne plattforma"
 
@@ -5429,48 +5450,58 @@ msgstr "argumentet har lengd null"
 msgid "NA/NaN argument"
 msgstr "NA/NaN-argument"
 
-#: src/main/seq.c:261
+#: src/main/seq.c:289
 msgid "incorrect type for second argument"
 msgstr "ugyldig type for andre argument"
 
-#: src/main/seq.c:264
+#: src/main/seq.c:292
+#, fuzzy, c-format
+msgid "attempt to replicate an object of type '%s'"
+msgstr "prøvde å replikera ikkje-vektor"
+
+#: src/main/seq.c:345
 msgid "attempt to replicate non-vector"
 msgstr "prøvde å replikera ikkje-vektor"
 
-#: src/main/seq.c:406 src/main/seq.c:413 src/main/seq.c:566 src/main/seq.c:758
+#: src/main/seq.c:361
+#, fuzzy
+msgid "cannot replicate NULL to a non-zero length"
+msgstr "kan ikkje reservera vektor av lengd %d"
+
+#: src/main/seq.c:563 src/main/seq.c:570 src/main/seq.c:701 src/main/seq.c:891
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr "berre det første elementet i «%s»-argumentet vert brukt"
 
-#: src/main/seq.c:564
+#: src/main/seq.c:699
 msgid "'length.out' must be a non-negative number"
 msgstr "«length.out» må vera eit ikkje-negativt tal"
 
-#: src/main/seq.c:584 src/main/seq.c:650 src/main/seq.c:664
+#: src/main/seq.c:719 src/main/seq.c:785 src/main/seq.c:799
 msgid "'from' must be finite"
 msgstr "«from» må vera endeleg"
 
-#: src/main/seq.c:586 src/main/seq.c:652 src/main/seq.c:682
+#: src/main/seq.c:721 src/main/seq.c:787 src/main/seq.c:817
 msgid "'to' must be finite"
 msgstr "«to» må vera endeleg"
 
-#: src/main/seq.c:598
+#: src/main/seq.c:733
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr "ugyldig «(to - from)/by» i «seq»"
 
-#: src/main/seq.c:610
+#: src/main/seq.c:745
 msgid "'by' argument is much too small"
 msgstr "«by»-argumentet er for lite"
 
-#: src/main/seq.c:612
+#: src/main/seq.c:747
 msgid "wrong sign in 'by' argument"
 msgstr "feil forteikn i «by»-argument"
 
-#: src/main/seq.c:666 src/main/seq.c:684
+#: src/main/seq.c:801 src/main/seq.c:819
 msgid "'by' must be finite"
 msgstr "«by» må vera endeleg"
 
-#: src/main/seq.c:756
+#: src/main/seq.c:897 src/main/seq.c:902
 msgid "argument must be coercible to non-negative integer"
 msgstr "argumentet må kunna gjerast om til eit ikkje-negativt heiltal"
 
@@ -7412,792 +7443,3 @@ msgstr "X11-modulen kan ikkje lastast"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 er ikkje tilgjengeleg"
-
-#~ msgid "argument must have positive length"
-#~ msgstr "argumentet må ha positiv lengd"
-
-#~ msgid "invalid internal function"
-#~ msgstr "ugyldig internfunksjon"
-
-#~ msgid "invalid first argument 'n'"
-#~ msgstr "ugyldig førsteargument «n»"
-
-#~ msgid "invalid second argument 'size'"
-#~ msgstr "ugyldig andreargument «size»"
-
-#~ msgid "invalid term in model formula"
-#~ msgstr "ugyldig element i modellformel"
-
-#~ msgid "invalid model formula"
-#~ msgstr "ugyldig modellformel"
-
-#~ msgid "invalid power in formula"
-#~ msgstr "ugyldig potens i formel"
-
-#~ msgid "invalid model formula in ExtractVars"
-#~ msgstr "ugyldig modellformel i ExtractVars"
-
-#~ msgid "duplicated name '%s' in data frame using '.'"
-#~ msgstr "duplikatnamn «%s» i dataramme som brukar «.»"
-
-#~ msgid "invalid model formula in EncodeVars"
-#~ msgstr "ugyldig modellformel i EncodeVars"
-
-#~ msgid "argument is not a valid model"
-#~ msgstr "argumentet er ikkje ein gyldig modell"
-
-#, fuzzy
-#~ msgid "'specials' must be NULL or a character vector"
-#~ msgstr "«path» må vera ein teiknvektor"
-
-#~ msgid "'data' argument is of the wrong type"
-#~ msgstr "«data»-argumentet er av feil type"
-
-#~ msgid "'.' in formula and no 'data' argument"
-#~ msgstr "«.» i formel og ikkje noko «data»-argument"
-
-#~ msgid "invalid formula in 'update'"
-#~ msgstr "ugyldig formel i «update»"
-
-#~ msgid "formula expected"
-#~ msgstr "venta ein formel"
-
-#~ msgid "objective function in optim evaluates to length %d not 1"
-#~ msgstr "objektivfunksjonen i optim vert evaluert til lengd %d, ikkje 1"
-
-#~ msgid "gradient in optim evaluated to length %d not %d"
-#~ msgstr "gradienten i optim vert evaluert til lengd %d ikkje %d"
-
-#~ msgid "'fn' is not a function"
-#~ msgstr "«fn» er ikkje ein funksjon"
-
-#~ msgid "'parscale' is of the wrong length"
-#~ msgstr "«parscale» har feil lengd"
-
-#~ msgid "'maxit' is not an integer"
-#~ msgstr "«maxit» er ikkje eit heiltal"
-
-#~ msgid "'tmax' is not an integer"
-#~ msgstr "«tmax» er ikkje eit heiltal"
-
-#~ msgid "'gr' is not a function"
-#~ msgstr "«gr» er ikkje ein funksjon"
-
-#~ msgid "'ndeps' is of the wrong length"
-#~ msgstr "«ndeps» har feil lengd"
-
-#~ msgid "unknown 'method'"
-#~ msgstr "ukjend «method»"
-
-#~ msgid "Event GE_ScalePS requires a single numeric value"
-#~ msgstr "Hendinga «GE_ScalePS» tek nøyaktig éin talverdi"
-
-#~ msgid "missing observations in cov/cor"
-#~ msgstr "manglar observasjonar i cov/cor"
-
-#~ msgid "'x' is NULL"
-#~ msgstr "«x» er NULL"
-
-#~ msgid "incompatible dimensions"
-#~ msgstr "ikkje-samsvarande dimensjonar"
-
-#~ msgid "no complete element pairs"
-#~ msgstr "ingen fullstendige elementpar"
-
-#~ msgid "invalid 'use' (computational method)"
-#~ msgstr "ugyldig «use» (utrekningsmetode)"
-
-#~ msgid "'x' is empty"
-#~ msgstr "«x» er tom"
-
-#~ msgid "the standard deviation is zero"
-#~ msgstr "standardavviket er null"
-
-#~ msgid "invalid form in unary minus check"
-#~ msgstr "ugyldig form i unærminus-kontroll"
-
-#~ msgid "Function '%s' is not in the derivatives table"
-#~ msgstr "Funksjonen «%s» er ikkje med i deriveringstabellen"
-
-#~ msgid "variable must be a character string"
-#~ msgstr "variabelen må vera ein teiknstreng"
-
-#~ msgid "invalid expression in '%s'"
-#~ msgstr "ugyldig uttrykk i «%s»"
-
-#~ msgid "invalid variable names"
-#~ msgstr "ugyldige variabelnamn"
-
-#~ msgid "invalid tag"
-#~ msgstr "ugyldig «tag»"
-
-#~ msgid "fft factorization error"
-#~ msgstr "fft-faktoriseringsfeil"
-
-#~ msgid "vector-valued (multivariate) series required"
-#~ msgstr "tek berre (multivariate) vektorrekkjer"
-
-#~ msgid "no factors"
-#~ msgstr "ingen faktorar"
-
-#~ msgid "invalid factors"
-#~ msgstr "ugyldige faktorar"
-
-#~ msgid "bad units specified in '%s'"
-#~ msgstr "ugyldige einingar gjevne i «%s»"
-
-#~ msgid "attempt to plot on null device"
-#~ msgstr "forsøk på å plotta på nulleininga"
-
-#~ msgid "outer margins too large (fig.region too small)"
-#~ msgstr "ytremargane er for store (figurområdet vert for lite)"
-
-#~ msgid "figure region too large"
-#~ msgstr "figurområdet er for stort"
-
-#~ msgid "figure margins too large"
-#~ msgstr "figurmargane er for store"
-
-#~ msgid "plot region too large"
-#~ msgstr "plotteområdet er for stort"
-
-#~ msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
-#~ msgstr "uendelege aksegrenser [GScale(%g,%g,%d, .); log=%d]"
-
-#~ msgid "axis style \"%c\" unimplemented"
-#~ msgstr "aksestilen «%c» er ikkje implementert"
-
-#~ msgid "No graphics device is active"
-#~ msgstr "Inga verksam grafikkeining"
-
-#~ msgid "plot.new has not been called yet"
-#~ msgstr "plot.new er ikkje kalla enno"
-
-#~ msgid "unable to allocate memory (in GPolygon)"
-#~ msgstr "klarte ikkje reservera minne (i GPolygon)"
-
-#~ msgid "zero-length arrow is of indeterminate angle and so skipped"
-#~ msgstr ""
-#~ "pil av lengd null har ikkje-unik vinkel, og vert derfor ikkje teikna"
-
-#~ msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-#~ msgstr "ugyldig par(\"bty\") = '%c' (ingen box() teikna)"
-
-#~ msgid "invalid argument to GBox"
-#~ msgstr "ugyldig argument til GBox"
-
-#~ msgid "Metric information not available for this device"
-#~ msgstr "Metrikkinformasjon ikkje tilgjengeleg for eininga"
-
-#~ msgid "invalid variables"
-#~ msgstr "ugyldige variablar"
-
-#~ msgid "number of variables != number of variable names"
-#~ msgstr "talet på variablar er ikkje det same som talet på variabel namn"
-
-#~ msgid "invalid extra variables"
-#~ msgstr "ugyldige ekstravariablar"
-
-#~ msgid "invalid extra variable names"
-#~ msgstr "ugyldige ekstra variabelnamn"
-
-#~ msgid "overlong names in '%s'"
-#~ msgstr "for lange namn i «%s»"
-
-#~ msgid "invalid type (%s) for variable '%s'"
-#~ msgstr "ugyldig type (%s) for variabelen «%s»"
-
-#~ msgid "variable lengths differ (found for '%s')"
-#~ msgstr "variabellengdene er forskjellige (for «%s»)"
-
-#~ msgid "invalid result from na.action"
-#~ msgstr "ugyldig resultat frå na.action"
-
-#~ msgid "invalid model frame"
-#~ msgstr "ugyldig modellramme"
-
-#~ msgid "do not know how many cases"
-#~ msgstr "veit ikkje kor mange"
-
-#~ msgid "variable lengths differ (found for variable %d)"
-#~ msgstr "variabellengdene er forskjellige (for variabelen «%d»)"
-
-#~ msgid "variable %d has no levels"
-#~ msgstr "variabelen %d har ikkje noko nivå"
-
-#~ msgid "the response appeared on the right-hand side and was dropped"
-#~ msgstr "responsen stod òg på høgresida, og vart derfor utelaten"
-
-#~ msgid "term %d would require %.0g columns"
-#~ msgstr "leddet %d ville kreva %.0g kolonnar"
-
-#~ msgid "matrix would require %.0g columns"
-#~ msgstr "matrisa ville kreva %.0g kolonnar"
-
-#~ msgid "problem with term %d in model.matrix: no columns are assigned"
-#~ msgstr "problem med elementet %d i model.matrix: ingen kolonnar tildelte"
-
-#~ msgid "term names will be truncated"
-#~ msgstr "elementnamna vert trunkerte"
-
-#~ msgid "complex variables are not currently allowed in model matrices"
-#~ msgstr "kan ikkje bruka komplekse variablar i modellmatriser"
-
-#~ msgid "variables of type '%s' are not allowed in model matrices"
-#~ msgstr "kan ikkje bruka variablar av typen «%s» i modellmatriser"
-
-#~ msgid "NA replaced by maximum positive value"
-#~ msgstr "NA bytt ut med den største positive verdien"
-
-#~ msgid "NA/Inf replaced by maximum positive value"
-#~ msgstr "NA/Inf bytte ut med den største positive verdien"
-
-#~ msgid "invalid function value in 'optimize'"
-#~ msgstr "ugyldig funksjonsverdi i «optimize»"
-
-#~ msgid "attempt to minimize non-function"
-#~ msgstr "prøvde å minimera ein ikkje-funksjon"
-
-#~ msgid "'xmin' not less than 'xmax'"
-#~ msgstr "«xmin» er ikkje mindre enn «xmax»"
-
-#, fuzzy
-#~ msgid "-Inf replaced by maximally negative value"
-#~ msgstr "NA/Inf bytte ut med den største positive verdien"
-
-#~ msgid "invalid function value in 'zeroin'"
-#~ msgstr "ugyldig funksjonsverdi i «zeroin»"
-
-#~ msgid "'maxiter' must be positive"
-#~ msgstr "«maxiter» må vera positiv"
-
-#~ msgid "NA value for '%s' is not allowed"
-#~ msgstr "kan ikkje ha NA-verdi for «%s»"
-
-#~ msgid "non-finite value supplied by 'nlm'"
-#~ msgstr "ikkje-endeleg verdi gjeven til «nlm»"
-
-#~ msgid "invalid function value in 'nlm' optimizer"
-#~ msgstr "ugyldig funksjonsverdi i «nlm»-optimisator"
-
-#~ msgid "function value caching for optimization is seriously confused"
-#~ msgstr "funksjonsverdi-caching for optimering er veldig forvirra"
-
-#~ msgid "numeric parameter expected"
-#~ msgstr "venta numerisk parameter"
-
-#~ msgid "conflicting parameter lengths"
-#~ msgstr "parameterverdiar i konflikt"
-
-#~ msgid "invalid parameter length"
-#~ msgstr "ugyldig parameterlengd"
-
-#~ msgid "missing value in parameter"
-#~ msgstr "manglar verdi i parameter"
-
-#~ msgid "invalid parameter type"
-#~ msgstr "ugyldig parametertype"
-
-#~ msgid "invalid NA value in parameter"
-#~ msgstr "ugyldig NA-verdi i parameter"
-
-#~ msgid "non-positive number of parameters in nlm"
-#~ msgstr "ikkje-positivt tal på parametrar i nlm"
-
-#~ msgid "nlm is inefficient for 1-d problems"
-#~ msgstr "nlm er ikkje effektiv for 1D-problem"
-
-#~ msgid "invalid gradient tolerance in nlm"
-#~ msgstr "ugyldig gradienttoleranse i nlm"
-
-#~ msgid "invalid iteration limit in nlm"
-#~ msgstr "ugyldig iterasjonsgrense i nlm"
-
-#~ msgid "minimization function has no good digits in nlm"
-#~ msgstr "minimeringsfunksjonen har ingen gyldige siffer i nlm"
-
-#~ msgid "no analytic gradient to check in nlm!"
-#~ msgstr "ingen analytisk gradient å sjekka i nlm"
-
-#~ msgid "no analytic Hessian to check in nlm!"
-#~ msgstr "inga analytisk Hess-matrise å sjekka i nlm"
-
-#~ msgid "probable coding error in analytic gradient"
-#~ msgstr "truleg kodefeil i den analytiske gradienten"
-
-#~ msgid "probable coding error in analytic Hessian"
-#~ msgstr "truleg kodefeil i den analytiske Hess-matrisa"
-
-#~ msgid ""
-#~ "*** unknown error message (msg = %d) in nlm()\n"
-#~ "*** should not happen!"
-#~ msgstr ""
-#~ "*** Ukjend feilmelding (msg = %d) i nlm().\n"
-#~ "*** Skal ikkje kunna skje!"
-
-#~ msgid "Relative gradient close to zero.\n"
-#~ msgstr "Relativ gradient nær null.\n"
-
-#~ msgid "Current iterate is probably solution.\n"
-#~ msgstr "Gjeldande iterasjon er truleg ei løysing.\n"
-
-#~ msgid "Successive iterates within tolerance.\n"
-#~ msgstr "Etterfølgjande iterasjonar innan toleransenivå.\n"
-
-#~ msgid "Last global step failed to locate a point lower than x.\n"
-#~ msgstr "Det siste globale steg klarte ikkje finna eit punkt lågare enn x.\n"
-
-#~ msgid ""
-#~ "Either x is an approximate local minimum of the function,\n"
-#~ "the function is too non-linear for this algorithm,\n"
-#~ "or steptol is too large.\n"
-#~ msgstr ""
-#~ "Anten er x eit tilnærma minimum av funksjonen,\n"
-#~ "eller så er funksjonen for ikkje-lineær for denne\n"
-#~ "algoritmen, eller så er «steptol» for stor.\n"
-
-#~ msgid "Iteration limit exceeded.  Algorithm failed.\n"
-#~ msgstr "Nådde iterasjonsgrensa. Algoritmen var mislukka.\n"
-
-#~ msgid ""
-#~ "Maximum step size exceeded 5 consecutive times.\n"
-#~ "Either the function is unbounded below,\n"
-#~ "becomes asymptotic to a finite value\n"
-#~ "from above in some direction,\n"
-#~ "or stepmx is too small.\n"
-#~ msgstr ""
-#~ "Oversteig maks steglengd 5 etterfølgjande gonger.\n"
-#~ "Anten har ikkje funksjonen noko nedre grense,\n"
-#~ "han vert asymptotisk ein endeleg verdi ovanfrå\n"
-#~ "i éin retning, eller så er «stepmx» for liten.\n"
-
-#~ msgid "hessian supplied is of the wrong length or mode, so ignored"
-#~ msgstr ""
-#~ "den oppgjevne Hess-matrisa har feil lengd eller modus (og vert ikkje "
-#~ "brukt)"
-
-#~ msgid "gradient supplied is of the wrong length or mode, so ignored"
-#~ msgstr ""
-#~ "den oppgjevne gradienten har feil lengd eller modus (og vert ikkje brukt)"
-
-#~ msgid "invalid value specified for graphical parameter \"%s\""
-#~ msgstr "ugyldig verdi oppgjeven for den grafiske parameteren «%s»"
-
-#~ msgid "graphical parameter \"%s\" has the wrong length"
-#~ msgstr "den grafiske parameteren «%s» har feil lengd"
-
-#~ msgid "graphical parameter \"%s\" cannot be set"
-#~ msgstr "den grafiske parameteren «%s» kan ikkje definerast"
-
-#~ msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-#~ msgstr "den grafiske parameteren «family» har ei makslengd på 200 byte"
-
-#~ msgid "parameter \"mfg\" has the wrong length"
-#~ msgstr "parameteren «mfg» har feil lengd"
-
-#~ msgid "parameter \"i\" in \"mfg\" is out of range"
-#~ msgstr "parameteren «i» i «mfg» ligg utanfor gyldig verdiområde"
-
-#~ msgid "parameter \"j\" in \"mfg\" is out of range"
-#~ msgstr "parameteren «j» i «mfg» ligg utanfor gyldig verdiområde"
-
-#~ msgid "value of nr in \"mfg\" is wrong and will be ignored"
-#~ msgstr "verdien «nr» i «mfg» er feil, og vert ikkje brukt"
-
-#~ msgid "value of nc in \"mfg\" is wrong and will be ignored"
-#~ msgstr "verdien «nc» i «mfg» er feil, og vert ikkje brukt"
-
-#~ msgid "calling par(new=TRUE) with no plot"
-#~ msgstr "kallar par(new=TRUE) utan noko plott"
-
-#~ msgid "graphical parameter \"%s\" is obsolete"
-#~ msgstr "den grafiske parameteren «%s» er utdatert"
-
-#~ msgid "\"%s\" is not a graphical parameter"
-#~ msgstr "«%s» er ikkje ein grafisk parameter"
-
-#~ msgid "invalid argument passed to par()"
-#~ msgstr "ugyldig argument sendt til par()"
-
-#~ msgid "too many rows in layout, limit %d"
-#~ msgstr "for mange rader i oppsett (grense: %d)"
-
-#~ msgid "too many columns in layout, limit %d"
-#~ msgstr "for mange kolonnar i oppsett (grense: %d)"
-
-#~ msgid "too many cells in layout, limit %d"
-#~ msgstr "for mange celler i oppsett (grense: %d)"
-
-#~ msgid "only NA allowed in logical plotting symbol"
-#~ msgstr "berre NA-verdiar er tillatne i logisk plottesymbol"
-
-#~ msgid "invalid plotting symbol"
-#~ msgstr "ugyldig plottesymbol"
-
-#~ msgid "invalid 'vfont' value [typeface]"
-#~ msgstr "gyldig «vfont»-verdi [typeface]"
-
-#~ msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
-#~ msgstr "gyldig «vfont»-verdi [typeface = %d, fontindex = %d]"
-
-#~ msgid "invalid graphics parameter"
-#~ msgstr "ugyldig grafikkparameter"
-
-#~ msgid "at least 3 arguments required"
-#~ msgstr "må ha minst 3 argument"
-
-#~ msgid "\"log=\" specification must be character"
-#~ msgstr "«log»-valet må vera eit teikn"
-
-#~ msgid "invalid \"log=%s\" specification"
-#~ msgstr "ugyldig «log=%s»-val"
-
-#~ msgid "NAs not allowed in 'xlim'"
-#~ msgstr "kan ikkje ha NA-verdiar i «xlim»"
-
-#~ msgid "need finite 'xlim' values"
-#~ msgstr "må ha endelege «xlim»-verdiar"
-
-#~ msgid "NAs not allowed in 'ylim'"
-#~ msgstr "kan ikkje ha NA-verdiar i «ylim»"
-
-#~ msgid "need finite 'ylim' values"
-#~ msgstr "må ha endelege «ylim»-verdiar"
-
-#~ msgid "Logarithmic axis must have positive limits"
-#~ msgstr "Logaritmisk akse må ha positive grenser"
-
-#~ msgid "invalid type for axis labels"
-#~ msgstr "ugyldig type for aksenamn"
-
-#~ msgid "invalid axis number %d"
-#~ msgstr "ugyldig aksetal %d"
-
-#~ msgid "zero length 'padj' specified"
-#~ msgstr "«padj» av lengd null"
-
-#~ msgid "'labels' is supplied and not 'at'"
-#~ msgstr "«labels» oppgjeven men ikkje «at»"
-
-#~ msgid "'at' and 'labels' lengths differ, %d != %d"
-#~ msgstr "lengda på «at» (%d) og «labels» (%d) er forskjellig"
-
-#~ msgid "no locations are finite"
-#~ msgstr "ingen plasseringar er endelege"
-
-#~ msgid "invalid plotting structure"
-#~ msgstr "ugyldig plottestruktur"
-
-#~ msgid "'x' and 'y' lengths differ in %s()"
-#~ msgstr "«x» og «y»-lengdene er forskjellig i %s()"
-
-#~ msgid "plot type '%s' will be truncated to first character"
-#~ msgstr "plottetypen «%s» vert trunkert til det første teiknet"
-
-#~ msgid "invalid plot type"
-#~ msgstr "ugyldig plottetype"
-
-#~ msgid "invalid plot type '%c'"
-#~ msgstr "ugyldig plottetype «%c»"
-
-#~ msgid "invalid third argument"
-#~ msgstr "ugyldig tredjeargument"
-
-#~ msgid "invalid fourth argument"
-#~ msgstr "ugyldig fjerdeargument"
-
-#~ msgid "cannot mix zero-length and non-zero-length coordinates"
-#~ msgstr "kan ikkje blanda koordinatar av lengd null og lengd ulik null"
-
-#~ msgid "unable to allocate memory (in GPath)"
-#~ msgstr "klarte ikkje reservera minne (i GPath)"
-
-#~ msgid "invalid x or y (in GPath)"
-#~ msgstr "ugyldig x eller y (i GPath)"
-
-#~ msgid "invalid arrow head length"
-#~ msgstr "ugyldig lengd på pilhovud"
-
-#~ msgid "invalid arrow head angle"
-#~ msgstr "ugyldig vinkel på pilhovud"
-
-#~ msgid "invalid arrow head specification"
-#~ msgstr "ugyldig pilhovud-val"
-
-#~ msgid "zero length 'labels'"
-#~ msgstr "«labels» av lengd null"
-
-#~ msgid "no coordinates were supplied"
-#~ msgstr "ingen koordinatar oppgjevne"
-
-#~ msgid "zero length 'text' specified"
-#~ msgstr "«text» av lengd null oppgjeven"
-
-#~ msgid "zero length 'side' specified"
-#~ msgstr "«side» av lengd null oppgjeven"
-
-#~ msgid "zero length 'line' specified"
-#~ msgstr "«line» av lengd null oppgjeven"
-
-#~ msgid "zero length 'outer' specified"
-#~ msgstr "«outer» av lengd null oppgjeven"
-
-#~ msgid "zero length 'at' specified"
-#~ msgstr "«at» av lengd null oppgjeven"
-
-#~ msgid "zero length 'adj' specified"
-#~ msgstr "«adj» av lengd null oppgjeven"
-
-#~ msgid "zero length 'cex' specified"
-#~ msgstr "«cex» av lengd null oppgjeven"
-
-#~ msgid "zero length 'col' specified"
-#~ msgstr "«col» av lengd null oppgjeven"
-
-#~ msgid "zero length 'font' specified"
-#~ msgstr "«font» av lengd null oppgjeven"
-
-#~ msgid "invalid a=, b= specification"
-#~ msgstr "ugyldig a=, b=-val"
-
-#~ msgid "'a' and 'b' must be finite"
-#~ msgstr "«a» og «b» må vera endelege"
-
-#~ msgid "invalid number of points in locator()"
-#~ msgstr "ugyldig tal på punkt i locator()"
-
-#~ msgid "invalid number of points in identify()"
-#~ msgstr "ugyldig tal på punkt i identify()"
-
-#~ msgid "incorrect argument type"
-#~ msgstr "ugyldig argumenttype"
-
-#~ msgid "different argument lengths"
-#~ msgstr "forskjellige argumentlengder"
-
-#~ msgid "more 'labels' than points"
-#~ msgstr "fleire «labels»-verdiar enn punkt"
-
-#~ msgid "warning: no point within %.2f inches\n"
-#~ msgstr "åtvaring: ingen punkt innan %.2f tommar\n"
-
-#~ msgid "warning: nearest point already identified\n"
-#~ msgstr "åtvaring: det næraste punktet er alt identifisert\n"
-
-#~ msgid "invalid units"
-#~ msgstr "ugyldige einingar"
-
-#~ msgid "invalid dendrogram input"
-#~ msgstr "ugyldig dendrogram-inndata"
-
-#~ msgid "invalid symbol parameter vector"
-#~ msgstr "ugyldig symbol-parametervektor"
-
-#~ msgid "invalid symbol coordinates"
-#~ msgstr "ugyldige symbolkoordinator"
-
-#~ msgid "x/y/parameter length mismatch"
-#~ msgstr "ulike lengder på x/y/parameter"
-
-#~ msgid "invalid circles data"
-#~ msgstr "ugyldige sirkeldata"
-
-#~ msgid "invalid symbol parameter"
-#~ msgstr "ugyldig symbolparameter"
-
-#~ msgid "invalid squares data"
-#~ msgstr "ugyldige kvadratdata"
-
-#~ msgid "invalid rectangles data (need 2 columns)"
-#~ msgstr "ugyldige rektangeldata (treng 2 kolonnar)"
-
-#~ msgid "invalid stars data"
-#~ msgstr "ugyldige stjernedata"
-
-#~ msgid "invalid thermometers data (need 3 or 4 columns)"
-#~ msgstr "ugyldige termometerdata (treng 3 eller 4 kolonnar)"
-
-#~ msgid "invalid thermometers[,%s]"
-#~ msgstr "ugyldige termometer[,%s]"
-
-#~ msgid "thermometers[,%s] not in [0,1] -- may look funny"
-#~ msgstr "termometer[,%s] ikkje i området [0,1] – kan sjå rart ut"
-
-#~ msgid "invalid thermometers[,1:2]"
-#~ msgstr "ugyldige termometer[,1:2]"
-
-#~ msgid "invalid boxplots data (need 5 columns)"
-#~ msgstr "ugyldige boksplott-data (treng 5 kolonnar)"
-
-#~ msgid "boxplots[,5] outside [0,1] -- may look funny"
-#~ msgstr "boksplott[,5] utanfor området [0,1] – kan sjå rart ut"
-
-#~ msgid "invalid boxplots[, 1:4]"
-#~ msgstr "ugyldige boksplott[, 1:4]"
-
-#~ msgid "invalid symbol type"
-#~ msgstr "ugyldig symboltype"
-
-#~ msgid "incorrect length for '%s' argument"
-#~ msgstr "ugyldig lengd på «%s»-argument"
-
-#~ msgid "unable to allocate memory (in do_xspline)"
-#~ msgstr "klarte ikkje reservera minne (i do_xspline)"
-
-#~ msgid "insufficient 'x' or 'y' values"
-#~ msgstr "ikkje nok «x»- eller «y»-verdiar"
-
-#~ msgid "dimension mismatch"
-#~ msgstr "ulike dimensjon"
-
-#~ msgid "no contour values"
-#~ msgstr "ingen konturverdiar"
-
-#~ msgid "missing 'x' values"
-#~ msgstr "manglar «x»-verdiar"
-
-#~ msgid "increasing 'x' values expected"
-#~ msgstr "venta stigande følgje med «x»-verdiar"
-
-#~ msgid "missing 'y' values"
-#~ msgstr "manglar «y»-verdiar"
-
-#~ msgid "increasing 'y' values expected"
-#~ msgstr "venta stigande følgje med «y»-verdiar"
-
-#~ msgid "invalid NA contour values"
-#~ msgstr "ugyldige NA-konturverdiar"
-
-#~ msgid "invalid x / y values or limits"
-#~ msgstr "ugyldige «x»- eller «y»-verdiar på limits"
-
-#~ msgid "invalid contour levels: must be strictly increasing"
-#~ msgstr "ugyldige konturnivå: må vera strengt stigande"
-
-#~ msgid "Axis orientation not calculated"
-#~ msgstr "Akseretnings ikkje rekna ut"
-
-#~ msgid "too few parameters"
-#~ msgstr "for få parametrar"
-
-#~ msgid "invalid 'x' limits"
-#~ msgstr "ugyldige «x»-grenser"
-
-#~ msgid "invalid 'y' limits"
-#~ msgstr "ugyldige «y»-grenser"
-
-#~ msgid "invalid 'z' limits"
-#~ msgstr "ugyldige «z»-grenser"
-
-#~ msgid "'xlab' must be a character vector of length 1"
-#~ msgstr "«xlab» må vera ein teiknvektor av lengd 1"
-
-#~ msgid "'ylab' must be a character vector of length 1"
-#~ msgstr "«ylab» må vera ein teiknvektor av lengd 1"
-
-#~ msgid "'zlab' must be a character vector of length 1"
-#~ msgstr "«zlab» må vera ein teiknvektor av lengd 1"
-
-#~ msgid "invalid viewing parameters"
-#~ msgstr "ugyldige visingsparametrar"
-
-#~ msgid "no input has determined the number of cases"
-#~ msgstr "ingen inndata har fastsett talet på tilfelle"
-
-#~ msgid "not all arguments have the same length"
-#~ msgstr "alle argumenta har ikkje same lengd"
-
-#~ msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-#~ msgstr "den «%*»-konstruerte «fmt2»-lengda er større enn maksverdien %d"
-
-#~ msgid "missing value for 'length'"
-#~ msgstr "manglar verdi for «lengd»"
-
-#~ msgid "lists must be duplicated in .C"
-#~ msgstr "lister må dupliserast i .C"
-
-#~ msgid "character vector element does not have type CHARSXP"
-#~ msgstr "teiknvektorelement har ikkje typen CHARSXP"
-
-#~ msgid "cannot mix 0-length vectors with others"
-#~ msgstr "kan ikkje blanda vektorar av lengd null med andre"
-
-#~ msgid "unsupported encoding '%s'"
-#~ msgstr "ikkje-støtta koding «%s»"
-
-#~ msgid "conversion problem in re-encoding to '%s'"
-#~ msgstr "feil ved omkoding til «%s»"
-
-#~ msgid "conversion problem in re-encoding from '%s'"
-#~ msgstr "feil ved omkoding frå «%s»"
-
-#~ msgid "ENCODING used more than once"
-#~ msgstr "ENCODING er brukt meir enn éin gong"
-
-#~ msgid "ENCODING argument must be a single character string"
-#~ msgstr "ENCODING-argumentet må vera ein einskild tekststreng"
-
-#~ msgid "this version of R cannot write byte code objects"
-#~ msgstr "denne versjonen av R kan ikkje skriva bytekode-objekt"
-
-#~ msgid "this version of R cannot read byte code objects"
-#~ msgstr "denne versjonen av R kan ikkje lesa bytekode-objekt"
-
-#~ msgid "binary format is deprecated; using xdr instead"
-#~ msgstr "binærformatet er utdatert – brukar xdr i staden for"
-
-#~ msgid "no locator capability in device driver"
-#~ msgstr "einingsdrivaren støttar ikkje koordinatdetektering"
-
-#~ msgid ""
-#~ "invalid body argument for \"function\"\n"
-#~ "Should NEVER happen; please bug.report() [mkCLOSXP]"
-#~ msgstr ""
-#~ "Ugyldig funksjonskroppargument for «function».\n"
-#~ "Skal ALDRI skje. Køyr bug.report() [mkCLOSXP]."
-
-#~ msgid "vector: zero-length 'type' argument"
-#~ msgstr "vector: «type»-argument av lengd null"
-
-#~ msgid "function is too long to keep source (at line %d)"
-#~ msgstr "funksjonen er for lang til å halda på kjeldekoden (linje %d)"
-
-#~ msgid "functions nested too deeply in source code at line %d"
-#~ msgstr "funksjonar for djupt inni funksjonar i kjeldekoden på linje %d"
-
-#~ msgid "not a vector object"
-#~ msgstr "ikkje eit vektorobjekt"
-
-#~ msgid "can only handle simple real vectors"
-#~ msgstr "kan berre handtera enkle reelle vektorar"
-
-#~ msgid "not a simple vector"
-#~ msgstr "ikkje ein enkel vektor"
-
-#~ msgid "not a simple matrix"
-#~ msgstr "ikkje ei enkel matrise"
-
-#~ msgid "proc.time() is not implemented on this system"
-#~ msgstr "proc.time() er ikkje implementert på dette systemet"
-
-#~ msgid "setTimelimit() is not implemented on this system"
-#~ msgstr "setTimelimit() er ikkje implementert på dette systemet"
-
-#~ msgid "setSessionTimelimit() is not implemented on this system"
-#~ msgstr "setSessionTimelimit() er ikkje implementert på dette systemet"
-
-#~ msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
-#~ msgstr ""
-#~ "type=\"cairo\" er ikkje støtta i denne bygginga (brukar «Xlib» i staden)"
-
-#~ msgid "invalid string argument"
-#~ msgstr "ugyldig strengargument"
-
-#~ msgid "unimplemented cairo-based device"
-#~ msgstr "ikkje-implementert cairo-basert eining"
-
-#~ msgid "unable to start device '%s'"
-#~ msgstr "klarte ikkje starta eininga «%s»"
-
-#~ msgid "cairo-based devices are not supported on this build"
-#~ msgstr "cairo-baserte einingar ikkje støtta på denne bygget"

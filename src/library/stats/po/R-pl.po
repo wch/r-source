@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-07-27 08:49\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -771,6 +771,9 @@ msgstr "niejednoznaczna metoda wyznaczania odległości"
 msgid "non-square matrix"
 msgstr "niekwadratowa macierz"
 
+msgid "specify 'rate' or 'scale' but not both"
+msgstr ""
+
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] oraz prob[] muszą być wektorami o jednakowej długości."
 
@@ -1472,6 +1475,9 @@ msgstr "brak modeli do porownania"
 
 msgid "extra arguments discarded"
 msgstr "ekstra argumenty odrzucono"
+
+msgid "logLik.lm only handles single responses"
+msgstr ""
 
 msgid "no \"nobs\" attribute is available"
 msgstr "brak dostępnego atrybutu \"nobs\""

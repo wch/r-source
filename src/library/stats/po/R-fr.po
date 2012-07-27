@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-07-27 08:49\n"
 "PO-Revision-Date: 2012-03-06 21:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -781,6 +781,9 @@ msgstr "méthode de calcul de distance ambigüe"
 msgid "non-square matrix"
 msgstr "la matrice n'est pas carrée"
 
+msgid "specify 'rate' or 'scale' but not both"
+msgstr ""
+
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] et prob[] doivent être des vecteur de même longueur"
 
@@ -1503,6 +1506,9 @@ msgstr "pas de modèle à comparer"
 
 msgid "extra arguments discarded"
 msgstr "arguments supplémentaires ignorés"
+
+msgid "logLik.lm only handles single responses"
+msgstr ""
 
 msgid "no \"nobs\" attribute is available"
 msgstr "aucun attribut \"nobs\" n'est disponible"
