@@ -44,9 +44,11 @@ struct callinfo {
 
 static double fcn1(double x, struct callinfo *info)
 {
-    SEXP s;
-    REAL(CADR(info->R_fcall))[0] = x;
+    SEXP s, sx;
+    PROTECT(sx = ScalarReal(x));
+    SETCADR(info->R_fcall, sx);
     s = eval(info->R_fcall, info->R_env);
+    UNPROTECT(1);
     switch(TYPEOF(s)) {
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
@@ -114,7 +116,6 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
     PROTECT(res = allocVector(REALSXP, 1));
-    SETCADR(info.R_fcall, allocVector(REALSXP, 1));
     REAL(res)[0] = Brent_fmin(xmin, xmax,
 			      (double (*)(double, void*)) fcn1, &info, tol);
     UNPROTECT(2);
@@ -129,9 +130,11 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static double fcn2(double x, struct callinfo *info)
 {
-    SEXP s;
-    REAL(CADR(info->R_fcall))[0] = x;
+    SEXP s, sx;
+    PROTECT(sx = ScalarReal(x));
+    SETCADR(info->R_fcall, sx);
     s = eval(info->R_fcall, info->R_env);
+    UNPROTECT(1);
     switch(TYPEOF(s)) {
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
@@ -212,9 +215,7 @@ SEXP zeroin2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
-    SETCADR(info.R_fcall, allocVector(REALSXP, 1));
     PROTECT(res = allocVector(REALSXP, 3));
-
     REAL(res)[0] =
 	R_zeroin2(xmin, xmax, f_ax, f_bx, (double (*)(double, void*)) fcn2,
 		 (void *) &info, &tol, &iter);
@@ -614,11 +615,11 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_gradientSymbol = install("gradient");
     R_hessianSymbol = install("hessian");
 
+    /* This vector is shared with all subsequent calls */
     v = allocVector(REALSXP, n);
-    for (i = 0; i < n; i++) {
-	REAL(v)[i] = x[i];
-    }
+    for (i = 0; i < n; i++) REAL(v)[i] = x[i];
     SETCADR(state->R_fcall, v);
+    SET_NAMED(v, 2); // in case the functions try to alter it
     value = eval(state->R_fcall, state->R_env);
 
     v = getAttrib(value, R_gradientSymbol);

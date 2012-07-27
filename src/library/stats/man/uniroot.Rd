@@ -58,6 +58,8 @@ uniroot(f, interval, \dots,
   The argument passed to \code{f} has special semantics and is shared
   between calls.  The function should not copy it.
 }
+%% or at least, it did prior to R 2.16.0
+
 \value{
   A list with four components: \code{root} and \code{f.root} give the
   location of the root and the value of the function evaluated at that

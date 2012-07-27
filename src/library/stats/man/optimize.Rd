@@ -72,11 +72,11 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 
   \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
   of \var{x}.
-}
-\note{
+  
   The argument passed to \code{f} has special semantics and is shared
   between calls.  The function should not copy it.
 }
+%% or at least, it did prior to R 2.16.0
 \value{
   A list with components \code{minimum} (or \code{maximum})
   and \code{objective} which give the location of the minimum (or maximum)

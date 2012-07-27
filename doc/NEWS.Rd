@@ -161,6 +161,11 @@
 
       \item \code{merge()} works in more cases where the data frames
       include matrices.  (Wish of \PR{14974})
+      
+      \item \code{optimize()} and \code{uniroot()} no longer use a
+      shared parameter object across calls.  (\code{nlm()},
+      \code{nlminb()} and \code{optim()} with numerical derivatives
+      still do, as documented.)
     }
   }
 
