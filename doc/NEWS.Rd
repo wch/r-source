@@ -154,6 +154,13 @@
       \item \code{strwrap()} converts inputs with a marked encoding to
       the current locale: previously it made some attempt to pass
       through as bytes inputs invalid in the current locale.
+      
+      \item Specifying both \code{rate} and \code{scale} to
+      \code{[dpar]gamma} is a warning (if they are essentially the same
+      value) or an error.
+
+      \item \code{merge()} works in more cases where the data frames
+      include matrices.  (Wish of \PR{14974})
     }
   }
 
