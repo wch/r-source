@@ -96,12 +96,12 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 	}
 #endif
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-					    (double)xd->windowWidth,
-					    (double)xd->windowHeight);
+					    xd->windowWidth,
+					    xd->windowHeight);
     } else if (xd->type == PNGdirect) {
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-					    (double)xd->windowWidth,
-					    (double)xd->windowHeight);
+					    xd->windowWidth,
+					    xd->windowHeight);
     } else if(xd->type == SVG || xd->type == PDF || xd->type == PS) {
 	/* leave creation to BM_Newpage */
 	return TRUE;

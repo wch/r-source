@@ -303,11 +303,11 @@ static cairo_surface_t* createImageSurface(unsigned int *raster, int w, int h)
      */
     for (i=0; i<w*h; i++) {
         int alpha = R_ALPHA(raster[i]);
-        imageData[i*4 + 3] = alpha;
+        imageData[i*4 + 3] = (unsigned char) alpha;
         if (alpha < 255) {
-            imageData[i*4 + 2] = R_RED(raster[i]) * alpha / 255;
-            imageData[i*4 + 1] = R_GREEN(raster[i]) * alpha / 255;
-            imageData[i*4 + 0] = R_BLUE(raster[i]) * alpha / 255;
+            imageData[i*4 + 2] = (unsigned char)(R_RED(raster[i]) * alpha / 255);
+	    imageData[i*4 + 1] = (unsigned char)(R_GREEN(raster[i]) * alpha / 255);
+	    imageData[i*4 + 0] = (unsigned char)(R_BLUE(raster[i]) * alpha / 255);
         } else {
             imageData[i*4 + 2] = R_RED(raster[i]);
             imageData[i*4 + 1] = R_GREEN(raster[i]);
@@ -839,7 +839,7 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
 	Rf_ucstoutf8(str, (unsigned int) c);
     } else {
 	/* Here, we assume that c < 256 */
-	str[0] = c; str[1] = 0;
+	str[0] = (char)c; str[1] = 0;
     }
 
     FT_getFont(gc, dd, xd->fontscale);

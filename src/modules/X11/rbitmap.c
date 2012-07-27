@@ -206,15 +206,15 @@ int R_SaveAsPng(void  *d, int width, int height,
 	    } else {
 		/* PNG needs NON-premultiplied alpha */
 		int a = GETALPHA(col);
-		trans[i] = a;
+		trans[i] = (png_byte) a;
 		if(a == 255 || a == 0) {
 		    pngpalette[i].red = GETRED(col);
 		    pngpalette[i].green = GETGREEN(col);
 		    pngpalette[i].blue = GETBLUE(col);
 		} else {
-		    pngpalette[i].red = 0.49 + 255.0*GETRED(col)/a;
-		    pngpalette[i].green = 0.49 + 255.0*GETGREEN(col)/a;
-		    pngpalette[i].blue = 0.49 + 255.0*GETBLUE(col)/a;
+		    pngpalette[i].red = (png_byte)(0.49 + 255.0*GETRED(col)/a);
+		    pngpalette[i].green = (png_byte)(0.49 + 255.0*GETGREEN(col)/a);
+		    pngpalette[i].blue = (png_byte)(0.49 + 255.0*GETBLUE(col)/a);
 
 		}
 	    }
@@ -232,8 +232,8 @@ int R_SaveAsPng(void  *d, int width, int height,
     }
 
     if(res > 0)
-	png_set_pHYs(png_ptr, info_ptr, res/0.0254, res/0.0254,
-		     PNG_RESOLUTION_METER);
+	png_set_pHYs(png_ptr, info_ptr, (png_uint_32)(res/0.0254), 
+		     (png_uint_32)(res/0.0254), PNG_RESOLUTION_METER);
 
     /* Write the file header information.  REQUIRED */
     png_write_info(png_ptr, info_ptr);
@@ -255,7 +255,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 		    else if (col > palette[mid]) low  = mid + 1;
 		    else break;
 		}
-		*pscanline++ = mid;
+		*pscanline++ = (png_byte) mid;
 	    } else {
 		if(have_alpha) {
 		    /* PNG needs NON-premultiplied alpha */
@@ -264,12 +264,12 @@ int R_SaveAsPng(void  *d, int width, int height,
 			*pscanline++ = GETRED(col) ;
 			*pscanline++ = GETGREEN(col) ;
 			*pscanline++ = GETBLUE(col) ;
-			*pscanline++ =  a;
+			*pscanline++ = (png_byte) a;
 		    } else {
-			*pscanline++ = 0.49 + 255.0*GETRED(col)/a ;
-			*pscanline++ = 0.49 + 255.0*GETGREEN(col)/a ;
-			*pscanline++ = 0.49 + 255.0*GETBLUE(col)/a ;
-			*pscanline++ =  a;
+			*pscanline++ = (png_byte)(0.49 + 255.0*GETRED(col)/a) ;
+			*pscanline++ = (png_byte)(0.49 + 255.0*GETGREEN(col)/a) ;
+			*pscanline++ = (png_byte)(0.49 + 255.0*GETBLUE(col)/a) ;
+			*pscanline++ = (png_byte) a;
 		    }
 		} else {
 		    *pscanline++ = GETRED(col) ;
@@ -407,8 +407,8 @@ int R_SaveAsJpeg(void  *d, int width, int height,
     jpeg_set_defaults(&cinfo);
     if(res > 0) {
 	cinfo.density_unit = 1;  /* pixels per inch */
-	cinfo.X_density = res;
-	cinfo.Y_density = res;
+	cinfo.X_density = (UINT16) res;
+	cinfo.Y_density = (UINT16) res;
     }
     jpeg_set_quality(&cinfo, quality, TRUE);
     /* Step 4: Start compressor */
@@ -644,7 +644,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     BMPDW(width); /* biWidth */
     BMPDW(height); /* biHeight */
     BMPW(1);	/* biPlanes - must be 1 */
-    BMPW(biBitCount); /* biBitCount */
+    BMPW((unsigned short) biBitCount); /* biBitCount */
     BMPDW(0); /* biCompression=BI_RGB */
     BMPDW(0); /* biSizeImage (with BI_RGB not needed)*/
     lres = (int)(0.5 + res/0.0254);

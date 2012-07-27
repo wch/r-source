@@ -538,7 +538,7 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 	    } else { /* 	------	a0 < 1 < b0 < 8	 ------ */
 
 		u = gamln1(a0);
-		m = b0 - 1.0;
+		m = (int)(b0 - 1.0);
 		if (m >= 1) {
 		    c = 1.0;
 		    for (i = 1; i <= m; ++i) {
@@ -624,7 +624,7 @@ static double bup(double a, double b, double x, double y, int n, double eps)
     apb = a + b;
     ap1 = a + 1.0;
     if (n > 1 && a >= 1. && apb >= ap1 * 1.1) {
-	mu = fabs(exparg(1));
+	mu = (int)fabs(exparg(1));
 	k = (int) exparg(0);
 	if (k < mu) {
 	    mu = k;
@@ -845,7 +845,7 @@ static double brcomp(double a, double b, double x, double y, int log_p)
 /*		  ALGORITHM FOR 1 < b0 < 8 */
 
     u = gamln1(a0);
-    n = b0 - 1.0;
+    n = (int)(b0 - 1.0);
     if (n >= 1) {
 	c = 1.0;
 	for (i = 1; i <= n; ++i) {
@@ -991,7 +991,7 @@ L50:
 
 L60:
     u = gamln1(a0);
-    n = b0 - 1.0;
+    n = (int)(b0 - 1.0);
     if (n < 1) {
 	goto L70;
     }
@@ -2077,7 +2077,7 @@ L30:
     if (b > 1e3) {
 	goto L50;
     }
-    n = a - 1.0;
+    n = (int)(a - 1.0);
     w = 1.0;
     for (i = 1; i <= n; ++i) {
 	a += -1.0;
@@ -2093,7 +2093,7 @@ L30:
 L40:
 /*                 REDUCTION OF B WHEN B < 8 */
 
-    n = b - 1.0;
+    n = (int)(b - 1.0);
     z = 1.0;
     for (i = 1; i <= n; ++i) {
 	b += -1.0;
@@ -2103,7 +2103,7 @@ L40:
 
 L50:
 /*                REDUCTION OF A WHEN B > 1000 */
-    n = a - 1.0;
+    n = (int)(a - 1.0);
     w = 1.0;
     for (i = 1; i <= n; ++i) {
 	a += -1.0;
@@ -2296,7 +2296,7 @@ static double gamln(double a)
 	return gamln1(a - 0.5 - 0.5);
 
     else if (a < 10.0) {
-	int i, n = a - 1.25;
+	int i, n = (int)(a - 1.25);
 	double t = a;
 	double w = 1.0;
 	for (i = 1; i <= n; ++i) {
