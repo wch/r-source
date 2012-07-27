@@ -1,6 +1,6 @@
 % File src/library/stats/man/GammaDist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{GammaDist}
@@ -79,7 +79,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 %   \code{scale < 1e-10}.
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no
-  \code{scale} parameter.
+  \code{scale} parameter.  In \R, \code{scale} takes precedence over
+  \code{rate} if both are supplied.
 
   \code{pgamma} is closely related to the incomplete gamma function.  As
   defined by Abramowitz and Stegun 6.5.1 (and by \sQuote{Numerical

@@ -2582,7 +2582,7 @@ installed.
 @node Essential programs and libraries, Useful libraries and programs, Essential and useful other programs under a Unix-alike, Essential and useful other programs under a Unix-alike
 @section Essential programs and libraries
 
-You need a means of compiling C and FORTRAN 77 (see @ref{Using
+You need a means of compiling C and FORTRAN 90 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
 @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
@@ -3570,6 +3570,9 @@ structure defined in @file{R_ext/Complex.h}.}, but you may need to avoid
 compiler flags@footnote{In particular, avoid @command{g77}'s
 @option{-pedantic}, which gives confusing error messages.} asserting
 FORTRAN 77 compliance.
+
+Compiling the version of LAPACK in the @R{} sources also requires some
+Fortran 90 extensions.
 
 @cindex BLAS library
 For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
