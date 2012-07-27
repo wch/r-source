@@ -416,6 +416,8 @@
       \item \code{file.copy(recursive = TRUE)} has some additional
       checks on user error leading to attempted infinite recursion (and on
       some platforms to crashing \R).
+
+      \item PCRE has been updated to version 8.31, a bug-fix release.
     }
   }
 
