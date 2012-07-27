@@ -141,9 +141,8 @@ smooth.spline <-
     keep.stuff <- FALSE ## << to become an argument in the future
     ans.names <- c("coef","ty","lev","spar","parms","crit","iparms","ier",
                    if(keep.stuff) "scratch")
-    ## This uses DUP = FALSE which is dangerous since it does change
-    ## its argument w.  We don't assume that as.double will
-    ## always duplicate, although it does in R 2.3.1.
+    ## This used to use DUP = FALSE, but the C code changes w and isetup
+    ## (at least).
     fit <- .Fortran(C_qsbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
@@ -165,8 +164,7 @@ smooth.spline <-
 		    scratch = double(17L * nk + 1L),
 		    ld4  = 4L,
 		    ldnk = 1L,
-		    ier = integer(1),
-		    DUP = FALSE
+		    ier = integer(1L)
 		    )[ans.names]
     ## now we have clobbered wbar, recompute it.
     wbar <- tmp[, 1]
