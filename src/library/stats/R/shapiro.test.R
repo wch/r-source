@@ -18,8 +18,8 @@ shapiro.test <- function(x) {
     DNAME <- deparse(substitute(x))
     x <- sort(x[complete.cases(x)])
     stopifnot(is.numeric(x))
-    n <- length(x) # *is* integer
-    if(n < 3 || n > 5000)
+    n <- as.integer(length(x))
+    if(is.na(n) || n < 3 || n > 5000)
 	stop("sample size must be between 3 and 5000")
     rng <- x[n] - x[1L]
     if(rng == 0)
@@ -30,11 +30,11 @@ shapiro.test <- function(x) {
     ## C Code: Use the first n1 observations as uncensored
     sw <- .C(C_swilk,
 	     init = FALSE,
-	     as.single(x),
+	     as.double(x),
 	     n,#      integer
 	     n1 = n,#   "
 	     n2,#       "
-	     a = single(n2),
+	     a = double(n2),
 	     w	= double(1),
 	     pw = double(1),
 	     ifault = integer(1L))
