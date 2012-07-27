@@ -30,7 +30,6 @@
 \alias{as.list.POSIXct}
 \alias{.leap.seconds}
 \alias{is.na.POSIXlt}
-\alias{all.equal.POSIXct}
 \alias{c.POSIXct}
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}

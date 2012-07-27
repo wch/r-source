@@ -166,6 +166,10 @@
       shared parameter object across calls.  (\code{nlm()},
       \code{nlminb()} and \code{optim()} with numerical derivatives
       still do, as documented.)
+
+      \item The \code{all.eqaal()} method for date-times is now
+      documented: times are regarded as equal (by default) if they
+      differ by up to 1 msec.
     }
   }
 

@@ -407,10 +407,10 @@ c.POSIXlt <- function(..., recursive=FALSE)
     as.POSIXlt(do.call("c", lapply(list(...), as.POSIXct)))
 
 ## force absolute comparisons
-all.equal.POSIXct <- function(target, current, ..., scale=1)
+all.equal.POSIXct <- function(target, current, ..., tolerance = 1e-3, scale=1)
 {
     check_tzones(target, current)
-    NextMethod("all.equal")
+    NextMethod("all.equal", tolerance = tolerance, scale = scale)
 }
 
 

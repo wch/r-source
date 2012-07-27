@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -13,6 +13,7 @@
 \alias{all.equal.formula}
 \alias{all.equal.list}
 \alias{all.equal.language}
+\alias{all.equal.POSIXct}
 \alias{all.equal.raw}
 \alias{attr.all.equal}
 \concept{numerical equality}
@@ -70,6 +71,9 @@ attr.all.equal(target, current,
   For complex \code{target}, the modulus (\code{\link{Mod}}) of the
   difference is used: \code{all.equal.numeric} is called so arguments
   \code{tolerance} and \code{scale} are available.
+
+  The method for the date-time class \code{"\link{POSIXct}"} by default
+  allows a tolerance of \code{tolerance = 0.001} seconds.
 
   \code{attr.all.equal} is used for comparing
   \code{\link{attributes}}, returning \code{NULL} or a
