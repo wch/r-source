@@ -49,30 +49,47 @@ qcauchy <-
 rcauchy <-
     function(n, location=0, scale=1) .External(C_rcauchy, n, location, scale)
 
+## allow a fuzz of ca 20ulp here.
 dgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE)
 {
-    if(!missing(rate) && !missing(scale))
-       stop("specify 'rate' or 'scale' but not both")
+    if(!missing(rate) && !missing(scale)) {
+        if(abs(rate*scale - 1) < 1e-15)
+            warning("specify 'rate' or 'scale' but not both")
+        else
+            stop("specify 'rate' or 'scale' but not both")
+    }
     .External(C_dgamma, x, shape, scale, log)
 }
 pgamma <- function(q, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
 {
-    if(!missing(rate) && !missing(scale))
-       stop("specify 'rate' or 'scale' but not both")
+    if(!missing(rate) && !missing(scale)) {
+        if(abs(rate*scale - 1) < 1e-15)
+            warning("specify 'rate' or 'scale' but not both")
+        else
+            stop("specify 'rate' or 'scale' but not both")
+    }
     .External(C_pgamma, q, shape, scale, lower.tail, log.p)
 }
 qgamma <- function(p, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
 {
-    if(!missing(rate) && !missing(scale))
-       stop("specify 'rate' or 'scale' but not both")
+    if(!missing(rate) && !missing(scale)) {
+        if(abs(rate*scale - 1) < 1e-15)
+            warning("specify 'rate' or 'scale' but not both")
+        else
+            stop("specify 'rate' or 'scale' but not both")
+    }
     .External(C_qgamma, p, shape, scale, lower.tail, log.p)
 }
 rgamma <- function(n, shape, rate = 1, scale = 1/rate)
 {
-    if(!missing(rate) && !missing(scale))
-       stop("specify 'rate' or 'scale' but not both")
+    if(!missing(rate) && !missing(scale)) {
+        if(abs(rate*scale - 1) < 1e-15)
+            warning("specify 'rate' or 'scale' but not both")
+        else
+            stop("specify 'rate' or 'scale' but not both")
+    }
     .External(C_rgamma, n, shape, scale)
 }
 dlnorm <- function(x, meanlog=0, sdlog=1, log=FALSE)
