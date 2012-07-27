@@ -1,6 +1,6 @@
 % File src/library/stats/man/nlminb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nlminb}
@@ -52,6 +52,10 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
 
   The PORT documentation is at
   \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
+  
+  The parameter vector passed to \code{objective}, \code{gradient} and
+  \code{hessian} has special semantics and is shared between calls.  The
+  functions should not copy it.
 }
 \value{
   A list with components:

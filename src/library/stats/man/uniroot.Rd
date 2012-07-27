@@ -1,6 +1,6 @@
 % File src/library/stats/man/uniroot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{uniroot}
@@ -54,6 +54,9 @@ uniroot(f, interval, \dots,
 
   \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
   of \var{x}.
+  
+  The argument passed to \code{f} has special semantics and is shared
+  between calls.  The function should not copy it.
 }
 \value{
   A list with four components: \code{root} and \code{f.root} give the

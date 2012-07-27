@@ -74,6 +74,9 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
 
   The functions supplied must always return finite (including not
   \code{NA} and not \code{NaN}) values.
+  
+  The parameter vector passed to \code{f} and \code{hessian} has special
+  semantics and is shared between calls.  The functions should not copy it.
 }
 \value{
   A list containing the following components:

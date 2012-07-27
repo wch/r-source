@@ -1,6 +1,6 @@
 % File src/library/stats/man/optimize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{optimize}
@@ -16,7 +16,7 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 \alias{optimize}
 \alias{optimise}
 \arguments{
-  \item{f}{the function to be optimized. The function is
+  \item{f}{the function to be optimized.  The function is
     either minimized or maximized over its first argument
     depending on the value of \code{maximum}.}
   \item{interval}{a vector containing the end-points of the interval
@@ -72,6 +72,10 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 
   \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
   of \var{x}.
+}
+\note{
+  The argument passed to \code{f} has special semantics and is shared
+  between calls.  The function should not copy it.
 }
 \value{
   A list with components \code{minimum} (or \code{maximum})
