@@ -62,6 +62,9 @@
       some platforms to crashing \R).
 
       \item PCRE has been updated to version 8.31, a bug-fix release.
+
+      \item The included version of \code{liblzma} has been updated to
+      version 5.0.4, a minor bug-fix release.
     }
   }
 
