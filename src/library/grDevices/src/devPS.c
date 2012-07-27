@@ -373,14 +373,14 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics,
     if (streql(c1, "space") || streql(c2, "space")) return 0;
     for(i = 0; i < 256; i++) {
 	if (!strcmp(c1, charnames[i].cname)) {
-	    metrics->KernPairs[nkp].c1 = i;
+	    metrics->KernPairs[nkp].c1 = (unsigned char) i;
 	    done++;
 	    break;
 	}
     }
     for(i = 0; i < 256; i++)
 	if (!strcmp(c2, charnames[i].cname)) {
-	    metrics->KernPairs[nkp].c2 = i;
+	    metrics->KernPairs[nkp].c2 = (unsigned char) i;
 	    done++;
 	    break;
 	}
@@ -678,22 +678,22 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 	    break;
 	}
     }
-    metrics->nKP = i;
+    metrics->nKP = (short) i;
     R_gzclose(fp);
     /* Make an index for kern-pair searches: relies on having contiguous
        blocks by first char for efficiency, but works in all cases. */
     {
 	short ind, tmp;
 	for (j = 0; j < 256; j++) {
-	    metrics->KPstart[j] = i;
+	    metrics->KPstart[j] = (short) i;
 	    metrics->KPend[j] = 0;
 	}
 	for (j = 0; j < i; j++) {
 	    ind = metrics->KernPairs[j].c1;
 	    tmp = metrics->KPstart[ind];
-	    if(j < tmp) metrics->KPstart[ind] = j;
+	    if(j < tmp) metrics->KPstart[ind] = (short) j;
 	    tmp = metrics->KPend[ind];
-	    if(j > tmp) metrics->KPend[ind] = j;
+	    if(j > tmp) metrics->KPend[ind] = (short) j;
 	}
     }
     return 1;
@@ -731,7 +731,7 @@ static double
 	    status = (int) mbcsToUcs2((char *)str, ucs2s, ucslen, enc);
 	    if (status >= 0)
 		for(i = 0 ; i < ucslen ; i++) {
-		    wx = 500 * Ri18n_wcwidth(ucs2s[i]);
+		    wx = (short)(500 * Ri18n_wcwidth(ucs2s[i]));
 		    /* printf("width for U+%04x is %d\n", ucs2s[i], wx); */
 		    sum += wx;
 		}
@@ -832,7 +832,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 		  encoding);
 
 	/* Here we use terminated strings, but could use one char */
-	w[0] = c; w[1] = 0;
+	w[0] = (unsigned short) c; w[1] = 0;
 	i_buf = (char *)w;
 	i_len = 4;
 	o_buf = out;
@@ -883,7 +883,7 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
 	    /* convert to UCS-2 to use wcwidth. */
 	    char str[2]={0,0};
 	    ucs2_t out;
-	    str[0] = c;
+	    str[0] = (char) c;
 	    if(mbcsToUcs2(str, &out, 1, CE_NATIVE) == (size_t)-1)
 		error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
 	    c = out;
@@ -2747,9 +2747,9 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
 
-static void PostScriptWriteString(FILE *fp, const char *str, int nb)
+static void PostScriptWriteString(FILE *fp, const char *str, size_t nb)
 {
-    int i;
+    size_t i;
 
     fputc('(', fp);
     for (i = 0 ; i < nb && *str; i++, str++)
@@ -2783,7 +2783,7 @@ static void PostScriptWriteString(FILE *fp, const char *str, int nb)
 static FontMetricInfo *metricInfo(const char *, int, PostScriptDesc *);
 
 static void PostScriptText(FILE *fp, double x, double y,
-			   const char *str, int nb, double xc, double rot,
+			   const char *str, size_t nb, double xc, double rot,
 			   const pGEcontext gc,
 			   pDevDesc dd)
 {
@@ -2808,7 +2808,7 @@ static void PostScriptText(FILE *fp, double x, double y,
 }
 
 static void PostScriptText2(FILE *fp, double x, double y,
-			    const char *str, int nb,
+			    const char *str, size_t nb,
 			    Rboolean relative, double rot,
 			    const pGEcontext gc,
 			    pDevDesc dd)
@@ -2832,11 +2832,11 @@ static void PostScriptText2(FILE *fp, double x, double y,
 }
 
 static void PostScriptHexText(FILE *fp, double x, double y,
-			      const char *str, int strlen,
+			      const char *str, size_t strlen,
 			      double xc, double rot)
 {
     unsigned char *p = (unsigned char *)str;
-    int i;
+    size_t i;
 
     fprintf(fp, "%.2f %.2f ", x, y);
     fprintf(fp, "<");
@@ -2864,7 +2864,8 @@ PostScriptTextKern(FILE *fp, double x, double y,
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     int face = gc->fontface;
     FontMetricInfo *metrics;
-    int i, j, n, nout = 0, w;
+    size_t i, n, nout = 0;
+    int j, w;
     unsigned char p1, p2;
     double fac = 0.001 * floor(gc->cex * gc->ps + 0.5);
     Rboolean relative = FALSE;
@@ -2882,6 +2883,7 @@ PostScriptTextKern(FILE *fp, double x, double y,
     metrics = metricInfo(gc->fontfamily, face, pd);
 
     n = strlen(str);
+    if (n < 1) return;
     /* First check for any kerning */
     for(i = 0; i < n-1; i++) {
 	p1 = str[i];
@@ -3342,8 +3344,8 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	error(_("invalid page type '%s' (postscript)"), pd->papername);
     }
     pd->pagecentre = pagecentre;
-    pd->paperwidth = 72 * pd->pagewidth;
-    pd->paperheight = 72 * pd->pageheight;
+    pd->paperwidth = (int)(72 * pd->pagewidth);
+    pd->paperheight = (int)(72 * pd->pageheight);
     pd->onefile = onefile;
     if(pd->landscape) {
 	double tmp;
@@ -3365,8 +3367,8 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     } else {
 	xoff = yoff = 0.0;
     }
-    pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ?
-			       pd->pageheight : pd->pagewidth);
+    pd->maxpointsize = (int)(72.0 * ((pd->pageheight > pd->pagewidth) ?
+				     pd->pageheight : pd->pagewidth));
     pd->pageno = pd->fileno = 0;
     pd->warn_trans = FALSE;
 
@@ -4831,8 +4833,8 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	error(_("invalid page type '%s' (xfig)"), pd->papername);
     }
     pd->pagecentre = pagecentre;
-    pd->paperwidth = 72 * pd->pagewidth;
-    pd->paperheight = 72 * pd->pageheight;
+    pd->paperwidth = (int)(72 * pd->pagewidth);
+    pd->paperheight = (int)(72 * pd->pageheight);
     if(!onefile) {
 	char *p = strrchr(pd->filename, '%');
 	if(!p)
@@ -4859,8 +4861,8 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     else
 	pd->ymax = (int)(1200.0 * pd->height);
     pd->onefile = onefile;
-    pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ?
-			       pd->pageheight : pd->pagewidth);
+    pd->maxpointsize = (int)(72.0 * ((pd->pageheight > pd->pagewidth) ?
+				     pd->pageheight : pd->pagewidth));
     pd->pageno = 0;
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
@@ -5094,7 +5096,7 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
     FILE *fp = pd->tmpfp;
     int ix0, iy0, ix1, iy1;
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
-	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+	dofill, lty = XF_SetLty(gc->lty), lwd = (int)(gc->lwd*0.833 + 0.5);
 
     if(lty < 0) return;
 
@@ -5127,7 +5129,7 @@ static void XFig_Circle(double x, double y, double r,
     FILE *fp = pd->tmpfp;
     int ix, iy, ir;
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
-	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+	dofill, lty = XF_SetLty(gc->lty), lwd = (int)(gc->lwd*0.833 + 0.5);
 
     if(lty < 0) return;
 
@@ -5154,7 +5156,7 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
-    int lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+    int lty = XF_SetLty(gc->lty), lwd = (int)(gc->lwd*0.833 + 0.5);
 
     if(lty < 0) return;
 
@@ -5182,7 +5184,7 @@ static void XFig_Polygon(int n, double *x, double *y,
     double xx, yy;
     int i;
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
-	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+	dofill, lty = XF_SetLty(gc->lty), lwd = (int)(gc->lwd*0.833 + 0.5);
 
     if(lty < 0) return;
 
@@ -5213,7 +5215,7 @@ static void XFig_Polyline(int n, double *x, double *y,
     XFigDesc *pd = (XFigDesc*) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     double xx, yy;
-    int i, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+    int i, lty = XF_SetLty(gc->lty), lwd = (int)(gc->lwd*0.833 + 0.5);
 
     XF_CheckAlpha(gc->col, pd);
     if(R_OPAQUE(gc->col) && lty >= 0) {
@@ -5277,7 +5279,7 @@ static void XFig_Text(double x, double y, const char *str,
 	    void *cd;
 	    const char *i_buf; char *o_buf;
 	    size_t i_len, o_len, status;
-	    int buflen = MB_LEN_MAX*strlen(str) + 1;
+	    size_t buflen = MB_LEN_MAX*strlen(str) + 1;
 
 	    cd = (void*)Riconv_open(pd->encoding, "");
 	    if(cd == (void*)-1) {
@@ -5609,7 +5611,7 @@ static void writeRasterXObject(rasterImage raster, int n,
 	    double r =  0.213 * R_RED(raster.raster[i]) 
 		+ 0.715 * R_GREEN(raster.raster[i])
 		+ 0.072 * R_BLUE(raster.raster[i]);
-	    *p++ = (int)(r + 0.49);
+	    *p++ = (Bytef)(r + 0.49);
 	}
     } else {
 	inlen = 3 * raster.w * raster.h;
@@ -5622,7 +5624,7 @@ static void writeRasterXObject(rasterImage raster, int n,
     }
     uLong outlen = inlen;
     if (pd->useCompression) {
-	outlen = 1.001*inlen + 20;
+	outlen = (int)(1.001*inlen + 20);
 	buf2 = Calloc(outlen, Bytef);
 	int res = compress(buf2, &outlen, buf, inlen);
 	if(res != Z_OK) error("internal error %d in writeRasterXObject", res);
@@ -5672,7 +5674,7 @@ static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd)
     for(int i = 0; i < raster.w * raster.h; i++) 
 	*p++ = R_ALPHA(raster.raster[i]);
     if (pd->useCompression) {
-	outlen = 1.001*inlen + 20;
+	outlen = (uLong)(1.001*inlen + 20);
 	buf2 = Calloc(outlen, Bytef);
 	int res = compress(buf2, &outlen, buf, inlen);
 	if(res != Z_OK) error("internal error %d in writeRasterXObject", res);
@@ -6115,8 +6117,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	error(_("invalid paper type '%s' (pdf)"), pd->papername);
     }
     pd->pagecentre = pagecentre;
-    pd->paperwidth = 72 * pd->pagewidth;
-    pd->paperheight = 72 * pd->pageheight;
+    pd->paperwidth = (int)(72 * pd->pagewidth);
+    pd->paperheight = (int)(72 * pd->pageheight);
     if(strcmp(pd->papername, "special"))
     {
 	if(pd->width < 0.1 || pd->width > pd->pagewidth-0.5)
@@ -6140,8 +6142,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     }
 
     pd->onefile = onefile;
-    pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ?
-			       pd->pageheight : pd->pagewidth);
+    pd->maxpointsize = (int)(72.0 * ((pd->pageheight > pd->pagewidth) ?
+				     pd->pageheight : pd->pagewidth));
     pd->pageno = pd->fileno = 0;
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
@@ -6244,9 +6246,9 @@ static void PDF_Invalidate(pDevDesc dd)
  */
 static int alphaIndex(int alpha, short *alphas) {
     int i, found = 0;
-    for (i=0; i<256 && !found; i++) {
+    for (i = 0; i < 256 && !found; i++) {
 	if (alphas[i] < 0) {
-	    alphas[i] = alpha;
+	    alphas[i] = (short) alpha;
 	    found = 1;
 	}
 	else if (alpha == alphas[i])
@@ -7010,7 +7012,7 @@ static void PDF_endfile(PDFDesc *pd)
     fclose(pd->pdffp);
     if (pd->open_type == 1) {
 	char buf[APPENDBUFSIZE];
-	int nc;
+	size_t nc;
 	pd->pdffp = R_fopen(pd->filename, "rb"); 
 	while((nc = fread(buf, 1, APPENDBUFSIZE, pd->pdffp))) {
 	    if(nc != fwrite(buf, 1, nc, pd->pipefp))
@@ -7100,10 +7102,10 @@ static void PDF_endpage(PDFDesc *pd)
     if (pd->useCompression) {
 	fflush(pd->pdffp);
 	fseek(pd->pdffp, 0, SEEK_END);
-	unsigned int len = ftell(pd->pdffp);
+	unsigned int len = (unsigned int) ftell(pd->pdffp);
 	fseek(pd->pdffp, 0, SEEK_SET);
 	Bytef *buf = Calloc(len, Bytef);
-	uLong outlen = 1.001*len + 20;
+	uLong outlen = (uLong)(1.001*len + 20);
 	Bytef *buf2 = Calloc(outlen, Bytef);
 	size_t res = fread(buf, 1, len, pd->pdffp);
 	if (res < len) error("internal read error in PDF_endpage");
@@ -7672,11 +7674,12 @@ static void PDFWriteT1KerningString(FILE *fp, const char *str,
 				    const pGEcontext gc)
 {
     unsigned char p1, p2;
-    int i,j, n;
-    int ary_buf[128], *ary;
+    size_t i, n;
+    int j, ary_buf[128], *ary;
     Rboolean haveKerning = FALSE;
 
     n = strlen(str);
+    if (n < 1) return;
     if(n > sizeof(ary_buf)/sizeof(int))
 	ary = Calloc(n, int);
     else ary = ary_buf;
