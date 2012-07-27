@@ -489,6 +489,13 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+     \itemize{
+      \item LAPACK 3.4.1 does use some Fortran 90 features, so
+      \command{g77} no longer suffices.
+    }
+ }
+    
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
