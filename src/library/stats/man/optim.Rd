@@ -177,7 +177,12 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   Any names given to \code{par} will be copied to the vectors passed to
   \code{fn} and \code{gr}.  Note that no other attributes of \code{par}
   are copied over.
+  
+  The parameter vector passed to \code{fn} has special semantics and may
+  be shared between calls: the function should not change or copy it.
 }
+%% when numerical derivatives are used, fn is called repeatedly with
+%% modified copies of the same objet.
 
 \value{
   For \code{optim}, a list with components:
