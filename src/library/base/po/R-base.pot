@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -624,6 +624,9 @@ msgid "'%s' is only meaningful for ordered factors if all arguments have the sam
 msgstr ""
 
 msgid "no files to copy to"
+msgstr ""
+
+msgid "attempt to copy a directory to itself"
 msgstr ""
 
 msgid "more 'from' files than 'to' files"

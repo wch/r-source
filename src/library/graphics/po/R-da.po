@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2012-01-08 00:28+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,6 +178,10 @@ msgstr ""
 msgid "'x' must be numeric"
 msgstr ""
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "ugyldig »log«"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr ""
 
@@ -191,6 +195,9 @@ msgid "invalid number of 'breaks'"
 msgstr ""
 
 msgid "hist.default: pretty() error, breaks="
+msgstr ""
+
+msgid "invalid length(breaks)"
 msgstr ""
 
 msgid "'breaks' are not strictly increasing"

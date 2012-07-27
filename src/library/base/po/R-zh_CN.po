@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -663,6 +663,10 @@ msgstr "如果所有的参数都有相同的因子水平设置的话，'%s'才�
 
 msgid "no files to copy to"
 msgstr "拷贝时没有可以写的文件"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "无法为'%s'这个链结创建目录"
 
 msgid "more 'from' files than 'to' files"
 msgstr "'from'的文件比'to'的文件要多"

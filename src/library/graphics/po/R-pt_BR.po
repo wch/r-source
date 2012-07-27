@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -186,6 +186,10 @@ msgstr "especificação de geometria incorreta"
 msgid "'x' must be numeric"
 msgstr "'x' deve ser numérico"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "'log' inválido"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'nclass' não utilizado quando 'breaks' é especificado"
 
@@ -200,6 +204,10 @@ msgstr "número inválido de 'breaks'"
 
 msgid "hist.default: pretty() error, breaks="
 msgstr "hist.default: erro em pretty(), breaks="
+
+#, fuzzy
+msgid "invalid length(breaks)"
+msgstr "comprimentos das coordenadas inválido"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks' não é estritamente crescente"

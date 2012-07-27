@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:32+0100\n"
+"POT-Creation-Date: 2012-07-27 08:56+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -186,16 +186,16 @@ msgstr ""
 #: src/main/platform.c:1138 src/main/platform.c:1141 src/main/platform.c:1144
 #: src/main/platform.c:1147 src/main/platform.c:1150 src/main/platform.c:1249
 #: src/main/platform.c:1252 src/main/platform.c:1255 src/main/platform.c:1294
-#: src/main/platform.c:1351 src/main/platform.c:1354 src/main/platform.c:1560
-#: src/main/platform.c:1563 src/main/platform.c:1566 src/main/platform.c:1602
-#: src/main/platform.c:1605 src/main/platform.c:1608 src/main/platform.c:1691
-#: src/main/platform.c:1706 src/main/platform.c:1743 src/main/platform.c:1745
-#: src/main/platform.c:1810 src/main/platform.c:1894 src/main/platform.c:2169
-#: src/main/platform.c:2215 src/main/platform.c:2345 src/main/platform.c:2348
-#: src/main/platform.c:2351 src/main/platform.c:2354 src/main/platform.c:2357
-#: src/main/platform.c:2491 src/main/platform.c:2494 src/main/platform.c:2497
-#: src/main/platform.c:2500 src/main/platform.c:2503 src/main/platform.c:2572
-#: src/main/platform.c:2580 src/main/platform.c:2616 src/main/platform.c:2666
+#: src/main/platform.c:1351 src/main/platform.c:1354 src/main/platform.c:1562
+#: src/main/platform.c:1565 src/main/platform.c:1568 src/main/platform.c:1604
+#: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1693
+#: src/main/platform.c:1708 src/main/platform.c:1745 src/main/platform.c:1747
+#: src/main/platform.c:1812 src/main/platform.c:1896 src/main/platform.c:2171
+#: src/main/platform.c:2217 src/main/platform.c:2368 src/main/platform.c:2371
+#: src/main/platform.c:2374 src/main/platform.c:2377 src/main/platform.c:2380
+#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
+#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2618
+#: src/main/platform.c:2626 src/main/platform.c:2662 src/main/platform.c:2712
 #: src/main/plot.c:3118 src/main/plot.c:4260 src/main/plot.c:4264
 #: src/main/plot.c:4267 src/main/plot3d.c:2446 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2455 src/main/plot3d.c:2459 src/main/plot3d.c:2463
@@ -213,22 +213,22 @@ msgstr ""
 #: src/main/scan.c:1503 src/main/scan.c:1509 src/main/scan.c:1725
 #: src/main/scan.c:1726 src/main/scan.c:1728 src/main/scan.c:1729
 #: src/main/scan.c:1730 src/main/scan.c:1731 src/main/scan.c:1732
-#: src/main/scan.c:1733 src/main/seq.c:381 src/main/seq.c:388
-#: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
-#: src/main/sort.c:161 src/main/sysutils.c:590 src/main/sysutils.c:594
-#: src/main/sysutils.c:598 src/main/sysutils.c:604 src/main/sysutils.c:608
-#: src/main/sysutils.c:1617 src/main/sysutils.c:1621 src/main/unique.c:851
-#: src/main/unique.c:1177 src/main/unique.c:1237 src/main/unique.c:1244
-#: src/main/util.c:573 src/main/util.c:576 src/main/util.c:1756
-#: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:299
-#: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
-#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
-#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:3217
-#: src/modules/X11/devX11.c:3220 src/modules/X11/devX11.c:3223
-#: src/modules/X11/devX11.c:3247 src/unix/sys-std.c:1212
-#: src/unix/sys-std.c:1235
+#: src/main/scan.c:1733 src/main/seq.c:506 src/main/seq.c:511
+#: src/main/seq.c:519 src/main/seq.c:548 src/main/seq.c:552 src/main/seq.c:558
+#: src/main/seq.c:566 src/main/sort.c:161 src/main/sysutils.c:590
+#: src/main/sysutils.c:594 src/main/sysutils.c:598 src/main/sysutils.c:604
+#: src/main/sysutils.c:608 src/main/sysutils.c:1617 src/main/sysutils.c:1621
+#: src/main/unique.c:851 src/main/unique.c:1177 src/main/unique.c:1237
+#: src/main/unique.c:1244 src/main/util.c:573 src/main/util.c:576
+#: src/main/util.c:1756 src/modules/internet/internet.c:284
+#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
+#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
+#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
+#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1080
+#: src/modules/X11/devX11.c:3217 src/modules/X11/devX11.c:3220
+#: src/modules/X11/devX11.c:3223 src/modules/X11/devX11.c:3247
+#: src/unix/sys-std.c:1212 src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
@@ -292,7 +292,7 @@ msgstr ""
 #: src/main/plot.c:2299 src/main/plot.c:3331 src/main/plot.c:3333
 #: src/main/plot.c:3335 src/main/plot.c:3493 src/main/plot3d.c:1382
 #: src/main/plot3d.c:2524 src/main/plot3d.c:2528 src/main/plot3d.c:2530
-#: src/main/seq.c:167 src/main/seq.c:265 src/main/seq.c:268
+#: src/main/seq.c:168 src/main/seq.c:315 src/main/seq.c:317
 #: src/main/sort.c:871 src/main/sort.c:970 src/main/source.c:216
 #: src/main/summary.c:1027 src/main/sysutils.c:249 src/main/util.c:954
 #: src/main/util.c:959 src/main/util.c:966 src/main/util.c:969
@@ -772,24 +772,24 @@ msgstr ""
 msgid "table entry must be an external pointer"
 msgstr ""
 
-#: src/main/Rstrptime.h:503 src/main/Rstrptime.h:966
+#: src/main/Rstrptime.h:504 src/main/Rstrptime.h:969
 #, c-format
 msgid "use of %s for input is not supported"
 msgstr ""
 
-#: src/main/Rstrptime.h:1220
+#: src/main/Rstrptime.h:1224
 msgid "input string is too long"
 msgstr ""
 
-#: src/main/Rstrptime.h:1222
+#: src/main/Rstrptime.h:1226
 msgid "invalid multibyte input string"
 msgstr ""
 
-#: src/main/Rstrptime.h:1225
+#: src/main/Rstrptime.h:1229
 msgid "format string is too long"
 msgstr ""
 
-#: src/main/Rstrptime.h:1227
+#: src/main/Rstrptime.h:1231
 msgid "invalid multibyte format string"
 msgstr ""
 
@@ -2694,7 +2694,7 @@ msgstr ""
 msgid "no arguments supplied"
 msgstr ""
 
-#: src/main/dotcode.c:430 src/main/seq.c:645
+#: src/main/dotcode.c:430 src/main/seq.c:774
 msgid "too many arguments"
 msgstr ""
 
@@ -3624,7 +3624,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:4317 src/main/names.c:1221
+#: src/main/eval.c:4317 src/main/names.c:1222
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ""
@@ -4495,24 +4495,24 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 
-#: src/main/names.c:1053
+#: src/main/names.c:1054
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:1056
+#: src/main/names.c:1057
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1187
+#: src/main/names.c:1188
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1189
+#: src/main/names.c:1190
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1216 src/main/names.c:1219
+#: src/main/names.c:1217 src/main/names.c:1220
 msgid "invalid .Internal() argument"
 msgstr ""
 
@@ -5222,101 +5222,111 @@ msgstr ""
 msgid "file name too long"
 msgstr ""
 
-#: src/main/platform.c:1573 src/main/platform.c:1620 src/main/sysutils.c:1636
+#: src/main/platform.c:1575 src/main/platform.c:1622 src/main/sysutils.c:1636
 #: src/main/sysutils.c:1650
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1616 src/main/sysutils.c:1646
+#: src/main/platform.c:1618 src/main/sysutils.c:1646
 #, c-format
 msgid "read error on '%s'"
 msgstr ""
 
-#: src/main/platform.c:1777
+#: src/main/platform.c:1779
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1789
+#: src/main/platform.c:1791
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1816
+#: src/main/platform.c:1818
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:2118
+#: src/main/platform.c:2120
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:2124
+#: src/main/platform.c:2126
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:2131
+#: src/main/platform.c:2133
 msgid "unknown format returned by gethostbyname"
 msgstr ""
 
-#: src/main/platform.c:2140
+#: src/main/platform.c:2142
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:2197
+#: src/main/platform.c:2199
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
 
-#: src/main/platform.c:2200
+#: src/main/platform.c:2202
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2246
+#: src/main/platform.c:2248
 #, c-format
 msgid "'%ls' already exists"
 msgstr ""
 
-#: src/main/platform.c:2250
+#: src/main/platform.c:2252
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2280
-#, c-format
-msgid "problem creating directory %ls: %s"
+#: src/main/platform.c:2267 src/main/platform.c:2423
+msgid "too deep nesting"
+msgstr ""
+
+#: src/main/platform.c:2275 src/main/platform.c:2288 src/main/platform.c:2305
+#: src/main/platform.c:2323 src/main/platform.c:2439 src/main/platform.c:2453
+#: src/main/platform.c:2472 src/main/platform.c:2492
+msgid "over-long path length"
 msgstr ""
 
 #: src/main/platform.c:2295
 #, c-format
+msgid "problem creating directory %ls: %s"
+msgstr ""
+
+#: src/main/platform.c:2313
+#, c-format
 msgid "problem reading dir %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2308
+#: src/main/platform.c:2331
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2425
+#: src/main/platform.c:2462
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2439
+#: src/main/platform.c:2480
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2455
+#: src/main/platform.c:2501
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2577
+#: src/main/platform.c:2623
 msgid "'mode' must be of length at least one"
 msgstr ""
 
-#: src/main/platform.c:2644
+#: src/main/platform.c:2690
 msgid "insufficient OS support on this platform"
 msgstr ""
 
@@ -6219,48 +6229,49 @@ msgstr ""
 msgid "NA/NaN argument"
 msgstr ""
 
-#: src/main/seq.c:256
+#: src/main/seq.c:305
 msgid "incorrect type for second argument"
 msgstr ""
 
-#: src/main/seq.c:259
-msgid "attempt to replicate non-vector"
+#: src/main/seq.c:308
+#, c-format
+msgid "attempt to replicate an object of type '%s'"
 msgstr ""
 
-#: src/main/seq.c:383 src/main/seq.c:390 src/main/seq.c:519 src/main/seq.c:699
+#: src/main/seq.c:514 src/main/seq.c:521 src/main/seq.c:648 src/main/seq.c:828
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr ""
 
-#: src/main/seq.c:517
+#: src/main/seq.c:646
 msgid "'length.out' must be a non-negative number"
 msgstr ""
 
-#: src/main/seq.c:537 src/main/seq.c:599 src/main/seq.c:613
+#: src/main/seq.c:666 src/main/seq.c:728 src/main/seq.c:742
 msgid "'from' must be finite"
 msgstr ""
 
-#: src/main/seq.c:539 src/main/seq.c:601 src/main/seq.c:631
+#: src/main/seq.c:668 src/main/seq.c:730 src/main/seq.c:760
 msgid "'to' must be finite"
 msgstr ""
 
-#: src/main/seq.c:551
+#: src/main/seq.c:680
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr ""
 
-#: src/main/seq.c:559
+#: src/main/seq.c:688
 msgid "'by' argument is much too small"
 msgstr ""
 
-#: src/main/seq.c:561
+#: src/main/seq.c:690
 msgid "wrong sign in 'by' argument"
 msgstr ""
 
-#: src/main/seq.c:615 src/main/seq.c:633
+#: src/main/seq.c:744 src/main/seq.c:762
 msgid "'by' must be finite"
 msgstr ""
 
-#: src/main/seq.c:697
+#: src/main/seq.c:826
 msgid "argument must be coercible to non-negative integer"
 msgstr ""
 
@@ -6545,11 +6556,11 @@ msgstr ""
 msgid "required resulting string length %d is > maximal %d"
 msgstr ""
 
-#: src/main/sprintf.c:101
+#: src/main/sprintf.c:101 src/main/sprintf.c:481
 msgid "'fmt' is not a character vector"
 msgstr ""
 
-#: src/main/sprintf.c:106
+#: src/main/sprintf.c:106 src/main/sprintf.c:474
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr ""
@@ -6563,12 +6574,12 @@ msgstr ""
 msgid "arguments cannot be recycled to the same length"
 msgstr ""
 
-#: src/main/sprintf.c:149 src/main/sprintf.c:255
+#: src/main/sprintf.c:149 src/main/sprintf.c:255 src/main/sprintf.c:490
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr ""
 
-#: src/main/sprintf.c:167
+#: src/main/sprintf.c:167 src/main/sprintf.c:510
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr ""
@@ -6579,7 +6590,7 @@ msgstr ""
 msgid "reference to non-existent argument %d"
 msgstr ""
 
-#: src/main/sprintf.c:216
+#: src/main/sprintf.c:216 src/main/sprintf.c:550
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
@@ -6624,6 +6635,10 @@ msgstr ""
 
 #: src/main/sprintf.c:415
 msgid "unsupported type"
+msgstr ""
+
+#: src/main/sprintf.c:484
+msgid "'fmt' must be length 1"
 msgstr ""
 
 #: src/main/startup.c:65
@@ -7431,11 +7446,11 @@ msgstr ""
 #: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
 #: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
 #: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1006
-#: src/modules/lapack/Lapack.c:1012 src/modules/lapack/Lapack.c:1051
-#: src/modules/lapack/Lapack.c:1058 src/modules/lapack/Lapack.c:1062
-#: src/modules/lapack/Lapack.c:1091 src/modules/lapack/Lapack.c:1098
-#: src/modules/lapack/Lapack.c:1123
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
+#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
+#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
+#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1126
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr ""
@@ -7545,12 +7560,12 @@ msgid "argument %d of Lapack routine %s had invalid value"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1044 src/modules/lapack/Lapack.c:1084
+#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1118
+#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
 msgid "'a' must be a square matrix"
 msgstr ""
 
@@ -7564,8 +7579,8 @@ msgid "the leading minor of order %d is not positive definite"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:993
-#: src/modules/lapack/Lapack.c:1111
+#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
+#: src/modules/lapack/Lapack.c:1114
 msgid "'a' must be a numeric matrix"
 msgstr ""
 
@@ -7588,21 +7603,22 @@ msgstr ""
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1037
-#: src/modules/lapack/Lapack.c:1075
+#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
+#: src/modules/lapack/Lapack.c:1078
 msgid "'b' must be a numeric matrix"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:975
-msgid "Lapack routine dgesv: system is exactly singular"
+#, c-format
+msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:980
+#: src/modules/lapack/Lapack.c:982
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1116
 msgid "argument 'logarithm' must be logical"
 msgstr ""
 

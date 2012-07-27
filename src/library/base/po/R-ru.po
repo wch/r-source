@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -675,6 +675,10 @@ msgstr ""
 
 msgid "no files to copy to"
 msgstr "нет файлов, чтобы скопировать на"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "не удалось создать папку для ссылки %s"
 
 msgid "more 'from' files than 'to' files"
 msgstr "больше файлов 'from', чем 'to'"

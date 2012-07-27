@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -662,6 +662,10 @@ msgstr ""
 
 msgid "no files to copy to"
 msgstr "ingen filer at kopiere til"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "ingen filer/mappe at henvise til"
 
 msgid "more 'from' files than 'to' files"
 msgstr "flere 'from'-filer end 'to'-filer"

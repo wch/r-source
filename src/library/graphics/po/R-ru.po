@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2011-10-18 19:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -193,6 +193,10 @@ msgstr "неправильное указание геометрии"
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числовым"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "неправильный 'log'"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'nclass' не используется, когда указаны 'breaks'"
 
@@ -207,6 +211,10 @@ msgstr "неправильное количество 'breaks'"
 
 msgid "hist.default: pretty() error, breaks="
 msgstr "hist.default: ошибка в pretty(), breaks="
+
+#, fuzzy
+msgid "invalid length(breaks)"
+msgstr "неправильные длины координат"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks' не возрастают строго"

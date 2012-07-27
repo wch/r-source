@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -188,6 +188,10 @@ msgstr "정확하지 않는 치수(geometry)의 지정입니다"
 msgid "'x' must be numeric"
 msgstr "'x'는 수치가 아니면 되지 않습니다"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "무효인 'log' 입니다"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'breaks'가 지정되었을때 'nclass'는 사용되지 않습니다"
 
@@ -202,6 +206,10 @@ msgstr "'breaks'의 수가 무효입니다"
 
 msgid "hist.default: pretty() error, breaks="
 msgstr "hist.default: pretty()의 사이 차이입니다. 분할점 ="
+
+#, fuzzy
+msgid "invalid length(breaks)"
+msgstr "무효인 좌표장입니다"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'break'가 엄밀히 말하자면, 증가가 아닙니다"

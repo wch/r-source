@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -704,6 +704,10 @@ msgstr ""
 
 msgid "no files to copy to"
 msgstr "aucun fichier vers où copier"
+
+#, fuzzy
+msgid "attempt to copy a directory to itself"
+msgstr "impossible de créer un répertoire pour le lien '%s"
 
 msgid "more 'from' files than 'to' files"
 msgstr "plus de fichiers 'from' que de fichiers 'to'"

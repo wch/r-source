@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2011-10-07 15:38+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -187,6 +187,10 @@ msgstr "ungültige Spzifikation der Geometrie"
 msgid "'x' must be numeric"
 msgstr "'x' muss nummerisch sein"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "ungültiger Wert für 'axp'"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'nclass' wird nicht benutzt, wenn 'breaks' spezifizert werden"
 
@@ -201,6 +205,10 @@ msgstr "unzulässige Anzahle für 'breaks'"
 
 msgid "hist.default: pretty() error, breaks="
 msgstr "hist.default: Fehler in pretty(), breaks="
+
+#, fuzzy
+msgid "invalid length(breaks)"
+msgstr "unzulässige Koordinatenlängen"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks' sind nicht streng monoton steigend"

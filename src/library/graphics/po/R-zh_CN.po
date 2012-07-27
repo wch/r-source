@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-07-27 08:56\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -182,6 +182,10 @@ msgstr "几何定义不对"
 msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
+#, fuzzy
+msgid "invalid length(x)"
+msgstr "'log'不对"
+
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'breaks'设定了的话'nclass'就不能用了"
 
@@ -196,6 +200,10 @@ msgstr "'breaks'数目不对"
 
 msgid "hist.default: pretty() error, breaks="
 msgstr "hist.default: pretty()错误, breaks="
+
+#, fuzzy
+msgid "invalid length(breaks)"
+msgstr "座标长度不对"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks'必需严格递增"
