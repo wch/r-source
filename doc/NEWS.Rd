@@ -375,6 +375,9 @@
 
       \item \code{aov()} and \code{manova()} gave spurious warning about
       singular error model in the multiresponse case.
+
+      \item \code{qgeom()} could return \code{-1} for extremely small
+      \code{q}. (\PR{14967}.)
     }
   }
 }
