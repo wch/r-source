@@ -213,6 +213,9 @@
       
       \item \code{file.copy(recursive = TRUE)} did not always report
       \code{FALSE} for a failure two or more directories deep.
+
+      \item \code{qgeom()} could return \code{-1} for extremely small
+      \code{q}. (\PR{14967}.)
     }
   }
 }
