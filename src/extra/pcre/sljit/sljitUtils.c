@@ -262,8 +262,9 @@ SLJIT_API_FUNC_ATTRIBUTE sljit_w SLJIT_CALL sljit_stack_resize(struct sljit_stac
 	}
 	aligned_new_limit = (new_limit + sljit_page_align) & ~sljit_page_align;
 	aligned_old_limit = (stack->limit + sljit_page_align) & ~sljit_page_align;
+// R change
 	if (aligned_new_limit < aligned_old_limit)
-		posix_madvise((void*)aligned_new_limit, aligned_old_limit - aligned_new_limit, POSIX_MADV_DONTNEED);
+		madvise((void*)aligned_new_limit, aligned_old_limit - aligned_new_limit, MADV_DONTNEED);
 	stack->limit = new_limit;
 	return 0;
 #endif
