@@ -588,6 +588,10 @@
 
       \item \code{qgeom()} could return \code{-1} for extremely small
       \code{q}. (\PR{14967}.)
+
+      \item \code{smooth.spline()} used \code{DUP = FALSE} which allowed
+      its compiled C code to change the function: this was masked by the
+      default byte-compilation. (\PR{14965}.)
     }
   }
 }
