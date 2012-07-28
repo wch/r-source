@@ -592,6 +592,9 @@
       \item \code{smooth.spline()} used \code{DUP = FALSE} which allowed
       its compiled C code to change the function: this was masked by the
       default byte-compilation. (\PR{14965}.)
+      
+      \item In Windows, the GUI preferences for foreground color were 
+      not always respected.  (Reported by Benjamin Wells.)
     }
   }
 }
