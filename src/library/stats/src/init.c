@@ -53,8 +53,8 @@ static R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType prho_t[5] = {INTSXP, REALSXP, REALSXP, INTSXP, LGLSXP};
 static R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, REALSXP, INTSXP, INTSXP, INTSXP,
-				       REALSXP, REALSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
+				       SINGLESXP, REALSXP, REALSXP, INTSXP};
 
 static R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
 					 INTSXP,LGLSXP};
