@@ -1030,7 +1030,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           sprintf("tools::checkFF(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd)
             if (length(out)) {
-                warningLog(Log)
+                if(any(grepl("Foreign function calls without", out)))
+                    warningLog(Log)
+                else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("See the chapter 'System and foreign language interfaces'",
                         "of the 'Writing R Extensions' manual.\n")

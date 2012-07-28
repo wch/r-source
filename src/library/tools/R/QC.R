@@ -1793,6 +1793,7 @@ function(package, dir, file, lib.loc = NULL,
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
+        pkg <- basename(dir)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1818,6 +1819,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
+        pkg <- basename(dir)
         dfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(dfile))
             .read_description(dfile)["Encoding"] else NA
@@ -1838,9 +1840,9 @@ function(package, dir, file, lib.loc = NULL,
                                                                "code"))))
             stop("unable to write code files")
     }
-    else if(!missing(file))
-        enc <- NA
-    else
+    else if(!missing(file)) {
+        pkg <- enc <- NA
+    } else
         stop("you must specify 'package', 'dir' or 'file'")
 
     if(missing(package) && !file_test("-f", file))
@@ -1857,7 +1859,8 @@ function(package, dir, file, lib.loc = NULL,
     ## *invisibly* (so that output is not duplicated).
     ## Otherwise, if not verbose, we return the list of bad FF calls.
 
-    bad_exprs <- list()
+    bad_exprs <- wrong_pkg <- list()
+    bad_pkg <- character()
     FF_funs <- FF_fun_names <- c(".C", ".Fortran", ".Call", ".External",
                                  ".Call.graphics", ".External.graphics")
     ## As pointed out by DTL, packages could use non-base FF calls for
@@ -1884,9 +1887,15 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
+                this <- ""
                 if(!is.character(e[[2L]])) parg <- "Called with symbol"
                 else {
-                    parg <- e[["PACKAGE"]]
+                    this <- parg <- e[["PACKAGE"]]
+                    if (!is.na(pkg) && !is.null(parg) &&
+                        nzchar(parg) && parg != pkg) {
+                        wrong_pkg <<- c(wrong_pkg, e)
+                        bad_pkg <<- c(bad_pkg, this)
+                    }
                     parg <- if(!is.null(parg) && (parg != "")) "OK"
                     else if(!has_namespace) {
                         bad_exprs <<- c(bad_exprs, e)
@@ -1895,7 +1904,8 @@ function(package, dir, file, lib.loc = NULL,
                 }
                 if(verbose)
                     cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
-                        ", ...): ", parg, "\n", sep = "")
+                        ", ..., PACKAGE = \"", this, "\"): ",
+                        parg, "\n", sep = "")
             }
             for(i in seq_along(e)) Recall(e[[i]])
         }
@@ -1936,6 +1946,8 @@ function(package, dir, file, lib.loc = NULL,
                                domain = NA, call. = FALSE))
     }
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+    attr(bad_exprs, "wrong_pkg") <- wrong_pkg
+    attr(bad_exprs, "bad_pkg") <- bad_pkg
     class(bad_exprs) <- "checkFF"
     if(verbose)
         invisible(bad_exprs)
@@ -1946,22 +1958,25 @@ function(package, dir, file, lib.loc = NULL,
 format.checkFF <-
 function(x, ...)
 {
-    if(!length(x)) return(character())
+    y <- attr(x, "wrong_pkg")
+    z <- attr(x, "bad_pkg")
+    if(!length(x) && !length(y)) return(character())
 
-    .fmt <- function(i) {
-        paste(deparse(x[[i]][[1L]]),
-              "(",
-              deparse(x[[i]][[2L]]),
-              ", ...)",
-              sep = "")
-    }
+    .fmt <- function(x)
+        paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
+    res <- character()
+    if (length(x))
+        res <- c(gettextf("Foreign function calls without 'PACKAGE' argument:"),
+          unlist(lapply(x, .fmt)))
+    .fmt2 <- function(x, z)
+        paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]),
+               ", ..., PACKAGE = \"", z, "\")")
 
-    c(gettextf("Foreign function calls without 'PACKAGE' argument:"),
-      ## <FIXME>
-      ## Should really iterate over x.
-      unlist(lapply(seq_along(x), .fmt))
-      ## </FIXME>
-      )
+    if (length(y))
+        res <- c(res,
+                 gettextf("Foreign function calls with 'PACKAGE' argument in different package:"),
+                 unlist(lapply(seq_along(y), function(i) .fmt2(y[[i]], z[i]))))
+    res
 }
 
 print.checkFF <-
