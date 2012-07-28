@@ -1891,7 +1891,7 @@ function(package, dir, file, lib.loc = NULL,
                 if(!is.character(e[[2L]])) parg <- "Called with symbol"
                 else {
                     this <- parg <- e[["PACKAGE"]]
-                    if (!is.na(pkg) && !is.null(parg) &&
+                    if (!is.na(pkg) && is.character(parg) &&
                         nzchar(parg) && parg != pkg) {
                         wrong_pkg <<- c(wrong_pkg, e)
                         bad_pkg <<- c(bad_pkg, this)
