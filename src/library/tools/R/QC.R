@@ -1962,20 +1962,34 @@ function(x, ...)
     z <- attr(x, "bad_pkg")
     if(!length(x) && !length(y)) return(character())
 
-    .fmt <- function(x)
-        paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
     res <- character()
-    if (length(x))
-        res <- c(gettextf("Foreign function calls without 'PACKAGE' argument:"),
-          unlist(lapply(x, .fmt)))
-    .fmt2 <- function(x, z)
-        paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]),
-               ", ..., PACKAGE = \"", z, "\")")
+    if (length(x)) {
+        .fmt <- function(x)
+            paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
+        res <- c(gettextf("Foreign function call(s) without 'PACKAGE' argument:"),
+                 unlist(lapply(x, .fmt)))
+    }
 
-    if (length(y))
-        res <- c(res,
-                 gettextf("Foreign function calls with 'PACKAGE' argument in different package:"),
-                 unlist(lapply(seq_along(y), function(i) .fmt2(y[[i]], z[i]))))
+    if (length(y)) {
+        bases <- .get_standard_package_names()$base
+        .fmt2 <- function(x, z)
+            paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]),
+                   ", ..., PACKAGE = \"", z, "\")")
+        base <- z %in% bases
+        if(any(base)) {
+            res <- c(res,
+                     gettextf("Foreign function call(s) with 'PACKAGE' argument in a base package:"),
+                     unlist(lapply(seq_along(y)[base],
+                                   function(i) .fmt2(y[[i]], z[i]))))
+        }
+        if(any(!base)) {
+            res <- c(res,
+                     gettextf("Foreign function call(s) with 'PACKAGE' argument in different package:"),
+                     unlist(lapply(seq_along(y)[!base],
+                                   function(i) .fmt2(y[[i]], z[i]))))
+        }
+
+    }
     res
 }
 
