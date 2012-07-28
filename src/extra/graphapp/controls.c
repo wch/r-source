@@ -607,6 +607,7 @@ void setforeground(control obj, rgb fg)
     	    COLORREF wincolour = RGB((fg&gaRed)>>16,(fg&gaGreen)>>8,(fg&gaBlue)); 
     	    format.cbSize = sizeof(format);
     	    format.dwMask = CFM_COLOR;
+    	    format.dwEffects = 0;
     	    format.crTextColor = wincolour;
 
 	    sendmessage(obj->handle, EM_SETCHARFORMAT, 0, (LPARAM)&format);
