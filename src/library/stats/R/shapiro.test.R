@@ -30,7 +30,7 @@ shapiro.test <- function(x)
     n2 <- n %/% 2L # integer, too
     ## C Code: Use the first n1 observations as uncensored
     sw <- .C(C_swilk,
-	     as.single(x),
+	     as.double(x),
 	     n,#      integer
 	     n1 = n,#   "
 	     w	= double(1),

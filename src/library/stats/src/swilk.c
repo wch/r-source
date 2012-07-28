@@ -12,7 +12,7 @@
 static double poly(const double *, int, double);
 
 void
-swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault)
+swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
 {
     int nn2 = *n / 2;
     double a[nn2 + 1]; /* 1-based */
@@ -22,31 +22,25 @@ swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault)
 	Calculates the Shapiro-Wilk W test and its significance level
 */
 
-    /* Initialized data */
-    const static double zero = 0.;
-    const static double one = 1.;
-    const static double two = 2.;
-
-    const static double small = 1e-19;
+    double small = 1e-19;
 
     /* polynomial coefficients */
-    const static double g[2] = { -2.273,.459 };
-    const static double
-      c1[6] = { 0.,.221157,-.147981,-2.07119, 4.434685, -2.706056 },
-      c2[6] = { 0.,.042981,-.293762,-1.752461,5.682633, -3.582633 };
-    const static double c3[4] = { .544,-.39978,.025054,-6.714e-4 };
-    const static double c4[4] = { 1.3822,-.77857,.062767,-.0020322 };
-    const static double c5[4] = { -1.5861,-.31082,-.083751,.0038915 };
-    const static double c6[3] = { -.4803,-.082676,.0030302 };
-    const static double c7[2] = { .164,.533 };
-    const static double c8[2] = { .1736,.315 };
-    const static double c9[2] = { .256,-.00635 };
+    double g[2] = { -2.273,.459 };
+    double c1[6] = { 0.,.221157,-.147981,-2.07119, 4.434685, -2.706056 };
+    double c2[6] = { 0.,.042981,-.293762,-1.752461,5.682633, -3.582633 };
+    double c3[4] = { .544,-.39978,.025054,-6.714e-4 };
+    double c4[4] = { 1.3822,-.77857,.062767,-.0020322 };
+    double c5[4] = { -1.5861,-.31082,-.083751,.0038915 };
+    double c6[3] = { -.4803,-.082676,.0030302 };
+    double c7[2] = { .164,.533 };
+    double c8[2] = { .1736,.315 };
+    double c9[2] = { .256,-.00635 };
 
     /* System generated locals */
     double r__1;
 
 /*
-	Auxiliary routines : poly()  {below}
+  Auxiliary routines : poly()  {below}
 */
     /* Local variables */
     int i, j, ncens, i1;
@@ -69,32 +63,31 @@ swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault)
     } /* just for -Wall:*/ else { delta = 0.; }
 
     if (*n == 3) {
-	const static double sqrth = .70710678;/* = sqrt(1/2), was .70711f */
-	a[1] = sqrth;
+	a[1] = 0.70710678;/* = sqrt(1/2) */
     } else {
 	an25 = an + .25;
-	summ2 = zero;
+	summ2 = 0.;
 	for (i = 1; i <= nn2; ++i) {
 	    a[i] = qnorm((i - 0.375) / an25, 0., 1., 1, 0);
 	    r__1 = a[i];
 	    summ2 += r__1 * r__1;
 	}
-	summ2 *= two;
+	summ2 *= 2.;
 	ssumm2 = sqrt(summ2);
-	rsn = one / sqrt(an);
+	rsn = 1. / sqrt(an);
 	a1 = poly(c1, 6, rsn) - a[1] / ssumm2;
 
 	/* Normalize a[] */
 	if (*n > 5) {
 	    i1 = 3;
 	    a2 = -a[2] / ssumm2 + poly(c2, 6, rsn);
-	    fac = sqrt((summ2 - two * (a[1] * a[1]) - two * (a[2] * a[2]))
-		       / (one - two * (a1 * a1) - two * (a2 * a2)));
+	    fac = sqrt((summ2 - 2. * (a[1] * a[1]) - 2. * (a[2] * a[2]))
+		       / (1. - 2. * (a1 * a1) - 2. * (a2 * a2)));
 	    a[2] = a2;
 	} else {
 	    i1 = 2;
-	    fac = sqrt((summ2 - two * (a[1] * a[1])) /
-		       ( one  - two * (a1 * a1)));
+	    fac = sqrt((summ2 - 2. * (a[1] * a[1])) /
+		       ( 1.  - 2. * (a1 * a1)));
 	}
 	a[1] = a1;
 	for (i = i1; i <= nn2; ++i) a[i] /= - fac;
@@ -102,7 +95,7 @@ swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault)
 
 /*	If W is input as negative, calculate significance level of -W */
 
-    if (*w < zero) {
+    if (*w < 0.) {
 	w1 = 1. + *w;
 	*ifault = 0;
 	goto L70;
@@ -136,16 +129,14 @@ swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault)
 	    sa += sign(i - j) * a[min(i,j)];
 	xx = xi;
     }
-    if (*n > 5000) {
-	*ifault = 2;
-    }
+    if (*n > 5000) *ifault = 2;
 
 /*	Calculate W statistic as squared correlation
 	between data and coefficients */
 
     sa /= *n1;
     sx /= *n1;
-    ssa = ssx = sax = zero;
+    ssa = ssx = sax = 0.;
     j = *n - 1;
     for (i = 0; i < *n1; ++i, --j) {
 	if (i != j)
@@ -169,8 +160,8 @@ L70:
 /*	Calculate significance level for W */
 
     if (*n == 3) {/* exact P value : */
-	const static double pi6 = 1.90985931710274;/* = 6/pi, was  1.909859f */
-	const static double stqr= 1.04719755119660;/* = asin(sqrt(3/4)), was 1.047198f */
+	double pi6 = 1.90985931710274, /* = 6/pi */
+	    stqr = 1.04719755119660; /* = asin(sqrt(3/4)) */
 	*pw = pi6 * (asin(sqrt(*w)) - stqr);
 	if(*pw < 0.) *pw = 0.;
 	return;
@@ -197,30 +188,19 @@ L70:
 /*	Censoring by proportion NCENS/N.
 	Calculate mean and sd of normal equivalent deviate of W. */
 
-	const static double three = 3.;
-
-	const static double z90 = 1.2816;
-	const static double z95 = 1.6449;
-	const static double z99 = 2.3263;
-	const static double zm = 1.7509;
-	const static double zss = .56268;
-	const static double bf1 = .8378;
-
-	const static double xx90 = .556;
-	const static double xx95 = .622;
+	double z90 = 1.2816, z95 = 1.6449, z99 = 2.3263, zm = 1.7509, 
+	    zss = 0.56268, bf1 = 0.8378, xx90 = 0.556, xx95 = 0.622;
 
 	ld = -log(delta);
-	bf = one + xx * bf1;
-	r__1 = pow(xx90, xx);
-	z90f = z90 + bf * pow(poly(c7, 2, r__1), ld);
-	r__1 = pow(xx95, xx);
-	z95f = z95 + bf * pow(poly(c8, 2, r__1), ld);
+	bf = 1. + xx * bf1;
+	z90f = z90 + bf * pow(poly(c7, 2, pow(xx90, xx)), ld);
+	z95f = z95 + bf * pow(poly(c8, 2, pow(xx95, xx)), ld);
 	z99f = z99 + bf * pow(poly(c9, 2, xx), ld);
 
 /*	Regress Z90F,...,Z99F on normal deviates Z90,...,Z99 to get
 	pseudo-mean and pseudo-sd of z as the slope and intercept */
 
-	zfm = (z90f + z95f + z99f) / three;
+	zfm = (z90f + z95f + z99f) / 3.;
 	zsd = (z90 * (z90f - zfm) +
 	       z95 * (z95f - zfm) + z99 * (z99f - zfm)) / zss;
 	zbar = zfm - zsd * zm;
@@ -246,9 +226,7 @@ static double poly(const double *cc, int nord, double x)
     ret_val = cc[0];
     if (nord > 1) {
 	p = x * cc[nord-1];
-	for (j = nord - 2; j > 0; j--)
-	    p = (p + cc[j]) * x;
-
+	for (j = nord - 2; j > 0; j--) p = (p + cc[j]) * x;
 	ret_val += p;
     }
     return ret_val;
