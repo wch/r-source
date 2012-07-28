@@ -3600,19 +3600,12 @@ does so as part of the compilation flags.  If you wish to use
 makefiles in sub-directories may also need to define @code{NDEBUG}.
 
 This applies not only to your own code but to any external software you
-compile in or link to.  Such code may contain references
-to @code{abort} or @code{exit} that can never be called, but if any are
-found in the package's shared object/DLL, they are reported by
-@command{R CMD check}.
+compile in or link to.
 
 @item
 Compiled code should not write to @file{stdout} or @file{stderr} and C++
-and Fortran I/O should not be used.  Where @command{R CMD check} can
-detect this in the package's shared object/DLL it will report it: as
-with the previous item such calls may come from external software and
-may never be called.  (This seems particularly common on Mac OS X and
-Windows with static libraries: however on Windows the use of Fortran I/O
-usually results in the detection of @code{_assert} and @code{exit}.)
+and Fortran I/O should not be used.  As with the previous item such
+calls may come from external software and may never be called.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -3638,6 +3631,13 @@ ways.  Good ways to avoid trouble are to make as many symbols as
 possible static (check with @code{nm -pg}), and to use unusual names, as
 well as ensuring you have used the @code{PACKAGE} argument that @code{R
 CMD check} checks for.
+
+@item
+It is not portable to call compiled code in @R{} or other packages
+@emph{via} @code{.Internal}, @code{.C}, @code{.Fortran}, @code{.Call} or
+@code{.External}, since such interfaces are subject to change without
+notice and will probably result in your code terminating the @R{}
+process.
 
 @item
 Do not use (hard or symbolic) file links in your package sources.
