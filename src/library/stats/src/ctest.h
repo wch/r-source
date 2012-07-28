@@ -40,7 +40,6 @@ void pkstwo(Sint *n, double *x, double *tol) ;
 void prho(int *n, double *is, double *pv, int *ifault, int *lower_tail);
 void psmirnov2x(double *x, Sint *m, Sint *n);
 void qansari(Sint *len, double *x, Sint *m, Sint *n);
-void swilk(int *init, float *x, int *n, int *n1, int *n2,
-	   float *a,  double *w, double *pw, int *ifault);
+void swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault);
 
 #endif

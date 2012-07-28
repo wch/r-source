@@ -53,8 +53,8 @@ static R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType prho_t[5] = {INTSXP, REALSXP, REALSXP, INTSXP, LGLSXP};
 static R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
-				       SINGLESXP, REALSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType swilk_t[7] = {SINGLESXP, INTSXP, INTSXP,
+					      REALSXP, REALSXP, INTSXP};
 
 static R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
 					 INTSXP,LGLSXP};
@@ -106,7 +106,7 @@ static const R_CMethodDef CEntries[]  = {
     {"prho", (DL_FUNC) &prho, 5, prho_t},
     {"psmirnov2x", (DL_FUNC) &psmirnov2x, 3, psmirnov2x_t},
     {"qansari",  (DL_FUNC) &qansari, 4, qansari_t},
-    {"swilk", (DL_FUNC) &swilk, 9, swilk_t},
+    {"swilk", (DL_FUNC) &swilk, 6, swilk_t},
     {"BDRksmooth", (DL_FUNC) &BDRksmooth, 8},
     {"loess_raw", (DL_FUNC) &loess_raw, 24},
     {"loess_dfit", (DL_FUNC) &loess_dfit, 13},

@@ -12,11 +12,10 @@
 static double poly(const double *, int, double);
 
 void
-swilk(int *init,/* logical: is a[] already initialized ? */
-      float *x, int *n, int *n1, int *n2,
-      float *a,/* coefficients a[] */
-      double *w, double *pw, int *ifault)
+swilk(float *x, int *n, int *n1, double *w, double *pw, int *ifault)
 {
+    int nn2 = *n / 2;
+    double a[nn2 + 1]; /* 1-based */
 
 /*	ALGORITHM AS R94 APPL. STATIST. (1995) vol.44, no.4, 547-551.
 
@@ -50,72 +49,55 @@ swilk(int *init,/* logical: is a[] already initialized ? */
 	Auxiliary routines : poly()  {below}
 */
     /* Local variables */
-    int i, j, ncens, i1, nn2;
+    int i, j, ncens, i1;
 
     double zbar, ssassx, summ2, ssumm2, gamma, delta, range;
     double a1, a2, an, bf, ld, m, s, sa, xi, sx, xx, y, w1;
     double fac, asa, an25, ssa, z90f, sax, zfm, z95f, zsd, z99f, rsn, ssx, xsx;
 
     *pw = 1.;
-    if (*w >= 0.) {
-	*w = 1.;
-    }
-    if (*n < 3) {	*ifault = 1; return;
-    }
+    if (*w >= 0.) *w = 1.;
+    if (*n < 3) { *ifault = 1; return;}
 
     an = (double) (*n);
-    nn2 = *n / 2;
-    if (*n2 < nn2) {	*ifault = 3; return;
-    }
-    if (*n1 < 3) {	*ifault = 1; return;
-    }
+    if (*n1 < 3) {*ifault = 1; return;}
     ncens = *n - *n1;
-    if (ncens < 0 || (ncens > 0 && *n < 20)) {	*ifault = 4; return;
-    }
+    if (ncens < 0 || (ncens > 0 && *n < 20)) {*ifault = 4; return;}
     if (ncens > 0) {
 	delta = (double) ncens / an;
-	if (delta > .8f) {	*ifault = 5; return;
-	}
+	if (delta > 0.8) {*ifault = 5; return;}
     } /* just for -Wall:*/ else { delta = 0.; }
 
-    --a; /* so we can keep using 1-based indices */
-
-/*	If INIT is false (always when called from R),
- *	calculate coefficients a[] for the test statistic W */
-    if (! (*init)) {
-	if (*n == 3) {
-	    const static double sqrth = .70710678;/* = sqrt(1/2), was .70711f */
-	    a[1] = (float) sqrth;
-	} else {
-	    an25 = an + .25;
-	    summ2 = zero;
-	    for (i = 1; i <= *n2; ++i) {
-		a[i] = (float) qnorm((i - .375f) / an25, 0., 1., 1, 0);
-		r__1 = a[i];
-		summ2 += r__1 * r__1;
-	    }
-	    summ2 *= two;
-	    ssumm2 = sqrt(summ2);
-	    rsn = one / sqrt(an);
-	    a1 = poly(c1, 6, rsn) - a[1] / ssumm2;
-
-	    /* Normalize a[] */
-	    if (*n > 5) {
-		i1 = 3;
-		a2 = -a[2] / ssumm2 + poly(c2, 6, rsn);
-		fac = sqrt((summ2 - two * (a[1] * a[1]) - two * (a[2] * a[2]))
-			 / (one - two * (a1 * a1) - two * (a2 * a2)));
-		a[2] = (float) a2;
-	    } else {
-		i1 = 2;
-		fac = sqrt((summ2 - two * (a[1] * a[1])) /
-			   ( one  - two * (a1 * a1)));
-	    }
-	    a[1] = (float) a1;
-	    for (i = i1; i <= nn2; ++i)
-		a[i] /= - fac;
+    if (*n == 3) {
+	const static double sqrth = .70710678;/* = sqrt(1/2), was .70711f */
+	a[1] = sqrth;
+    } else {
+	an25 = an + .25;
+	summ2 = zero;
+	for (i = 1; i <= nn2; ++i) {
+	    a[i] = qnorm((i - 0.375) / an25, 0., 1., 1, 0);
+	    r__1 = a[i];
+	    summ2 += r__1 * r__1;
 	}
-	*init = (1);
+	summ2 *= two;
+	ssumm2 = sqrt(summ2);
+	rsn = one / sqrt(an);
+	a1 = poly(c1, 6, rsn) - a[1] / ssumm2;
+
+	/* Normalize a[] */
+	if (*n > 5) {
+	    i1 = 3;
+	    a2 = -a[2] / ssumm2 + poly(c2, 6, rsn);
+	    fac = sqrt((summ2 - two * (a[1] * a[1]) - two * (a[2] * a[2]))
+		       / (one - two * (a1 * a1) - two * (a2 * a2)));
+	    a[2] = a2;
+	} else {
+	    i1 = 2;
+	    fac = sqrt((summ2 - two * (a[1] * a[1])) /
+		       ( one  - two * (a1 * a1)));
+	}
+	a[1] = a1;
+	for (i = i1; i <= nn2; ++i) a[i] /= - fac;
     }
 
 /*	If W is input as negative, calculate significance level of -W */
@@ -129,9 +111,7 @@ swilk(int *init,/* logical: is a[] already initialized ? */
 /*	Check for zero range */
 
     range = x[*n1 - 1] - x[0];
-    if (range < small) {
-	*ifault = 6;	return;
-    }
+    if (range < small) {*ifault = 6; return;}
 
 /*	Check for correct sort order on range - scaled X */
 
@@ -231,11 +211,11 @@ L70:
 
 	ld = -log(delta);
 	bf = one + xx * bf1;
-	r__1 = pow(xx90, (double) xx);
-	z90f = z90 + bf * pow(poly(c7, 2, r__1), (double) ld);
-	r__1 = pow(xx95, (double) xx);
-	z95f = z95 + bf * pow(poly(c8, 2, r__1), (double) ld);
-	z99f = z99 + bf * pow(poly(c9, 2, xx), (double)ld);
+	r__1 = pow(xx90, xx);
+	z90f = z90 + bf * pow(poly(c7, 2, r__1), ld);
+	r__1 = pow(xx95, xx);
+	z95f = z95 + bf * pow(poly(c8, 2, r__1), ld);
+	z99f = z99 + bf * pow(poly(c9, 2, xx), ld);
 
 /*	Regress Z90F,...,Z99F on normal deviates Z90,...,Z99 to get
 	pseudo-mean and pseudo-sd of z as the slope and intercept */
@@ -247,8 +227,7 @@ L70:
 	m += zbar * s;
 	s *= zsd;
     }
-    *pw = pnorm((double) y, (double)m, (double)s, 0/* upper tail */, 0);
-    /*  = alnorm_(dble((Y - M)/S), 1); */
+    *pw = pnorm(y, m, s, 0/* upper tail */, 0);
 
     return;
 } /* swilk */
