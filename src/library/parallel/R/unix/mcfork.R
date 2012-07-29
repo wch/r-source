@@ -74,7 +74,7 @@ rmChild <- function(child)
 mckill <- function(process, signal = 2L)
 {
     process <- processID(process)
-    ## or simply parallel::pskill(process, signal)
+    ## or simply tools::pskill(process, signal)
     unlist(lapply(process, function(p)
                   .Call(C_mc_kill, as.integer(p), as.integer(signal))))
 }
