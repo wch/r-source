@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka and the
- *                            R Core Team
+ *  Copyright (C) 1997-2012   R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,14 +28,8 @@
 #include <Rmath.h> /* for imin2 and imax2 */
 #include <R_ext/Print.h> /* for Rprintf */
 #include <R_ext/Utils.h> /* for R_rsort */
-#include <R_ext/Applic.h>
-
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-# define attribute_hidden __attribute__ ((visibility ("hidden")))
-#else
-# define attribute_hidden
-#endif
-
+#include <R_ext/Error.h>
+#include <R_ext/Arith.h> /* for R_FINITE */
 
 static void stem_print(int close, int dist, int ndigits)
 {
@@ -146,8 +139,41 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
     return TRUE;
 }
 
-Rboolean attribute_hidden
-stemleaf(double *x, int *n, double *scale, int *width, double *atom)
+Rboolean
+C_stemleaf(double *x, int *n, double *scale, int *width, double *atom)
 {
     return stem_leaf(x, *n, *scale, *width, *atom);
+}
+
+/* Formerly in src/appl/binning.c */
+
+void C_bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
+		int *right, int *include_border, int *naok)
+{
+    int i, lo, hi;
+    int n, nb1, new, lft;
+
+    n = *pn;
+    nb1 = *pnb - 1;
+    lft = !(*right);
+
+    for(i = 0; i < nb1; i++) count[i] = 0;
+
+    for(i = 0 ; i < n ; i++)
+	if(R_FINITE(x[i])) {
+	    lo = 0;
+	    hi = nb1;
+	    if(breaks[lo] <= x[i] &&
+	       (x[i] < breaks[hi] || (x[i] == breaks[hi] && *include_border))) {
+		while(hi-lo >= 2) {
+		    new = (hi+lo)/2;
+		    if(x[i] > breaks[new] || (lft && x[i] == breaks[new]))
+			lo = new;
+		    else
+			hi = new;
+		}
+		count[lo] += 1;
+	    }
+	} else if (! *naok)
+	    error("NA's in .C(\"bincount\",... NAOK=FALSE)");
 }

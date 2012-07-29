@@ -187,9 +187,6 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 /* appl/rowsum.c */
 void R_rowsum(int *dim, double *na_x, double *x, double *group);
 
-/* appl/stem.c */
-Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom);
-
 /* appl/strsignif.c */
 void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result);

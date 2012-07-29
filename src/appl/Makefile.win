@@ -11,7 +11,7 @@ CSOURCES = \
 	optim.c \
 	pretty.c \
 	rcont.c rowsum.c \
-	stem.c strsignif.c \
+	strsignif.c \
 	tabulate.c \
 	uncmin.c \
 	zeroin.c

@@ -74,8 +74,7 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
     }
 }
 
-/* bincount is called by  hist(.)  [only]
- */
+/* bincount was called by  hist(.), currently unused in R */
 
 attribute_hidden
 void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,

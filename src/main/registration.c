@@ -79,7 +79,6 @@
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
-static R_NativePrimitiveArgType bincount_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
 
 static R_NativePrimitiveArgType R_cumsum_t[] = {REALSXP, INTSXP, REALSXP, REALSXP};
 
@@ -91,7 +90,6 @@ static R_NativePrimitiveArgType R_max_col_t[] = {REALSXP, INTSXP, INTSXP, INTSXP
 static R_NativePrimitiveArgType R_pretty_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 static R_NativePrimitiveArgType R_rowsum_t[] = {INTSXP, REALSXP, REALSXP, REALSXP};
 
-static R_NativePrimitiveArgType stemleaf_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
 
 /* Note the ANYSXP in the first place.
    Doesn't quite work.  Needs investigation.
@@ -122,14 +120,12 @@ static R_NativePrimitiveArgType fdhess_t[] = {};
 static R_CMethodDef cMethods [] = {
     CDEF(bakslv),
     CDEF(bincode),
-    CDEF(bincount),
     CDEF(R_cumsum),
     CDEF(find_interv_vec),
     CDEF(R_max_col),
     CDEF(R_pretty),
     /* this is called by Hmisc, although no longer used in R */
     CDEF(R_rowsum),
-    CDEF(stemleaf),
 #if 0
     CDEF(str_signif),
 #else

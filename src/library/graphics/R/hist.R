@@ -103,11 +103,11 @@ hist.default <-
     storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
     ## arguments are often irrelevant (not with integer data!)
-    counts <- .C("bincount",
+    counts <- .C(C_bincount,
 		 x, n, fuzzybreaks, nB, counts = integer(nB - 1),
 		 right = as.logical(right),
 		 include= as.logical(include.lowest), naok = FALSE,
-		 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
+		 NAOK = FALSE, DUP = FALSE, PACKAGE = "graphics") $counts
     if (any(counts < 0))
 	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
