@@ -1977,16 +1977,18 @@ function(x, ...)
                    ", ..., PACKAGE = \"", z, "\")")
         base <- z %in% bases
         if(any(base)) {
+            xx <- unlist(lapply(seq_along(y)[base],
+                                function(i) .fmt2(y[[i]], z[i])))
             res <- c(res,
                      gettextf("Foreign function call(s) with 'PACKAGE' argument in a base package:"),
-                     unlist(lapply(seq_along(y)[base],
-                                   function(i) .fmt2(y[[i]], z[i]))))
+                     sort(unique(xx)))
         }
         if(any(!base)) {
+            xx <-  unlist(lapply(seq_along(y)[!base],
+                                 function(i) .fmt2(y[[i]], z[i])))
             res <- c(res,
                      gettextf("Foreign function call(s) with 'PACKAGE' argument in different package:"),
-                     unlist(lapply(seq_along(y)[!base],
-                                   function(i) .fmt2(y[[i]], z[i]))))
+                    sort(unique(xx)))
         }
 
     }

@@ -223,6 +223,11 @@
 
       Such calls can terminate the \R process which loads the package.
 
+      \item \command{R CMD check} now checks for \code{.C()},
+      \code{.Call()}, \code{.External()} and \code{.Fortran()} calls in
+      other packages, and gives a warning on those found from \R itself
+      (which are not part of the API and change without notice).
+      
       \item The location of the build and check environment files can
       now be specified by the environment variables
       \env{R_BUILD_ENVIRON} and \env{R_CHECK_ENVIRON}, respectively.
