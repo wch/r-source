@@ -1965,7 +1965,7 @@ function(x, ...)
     res <- character()
     if (length(x)) {
         .fmt <- function(x)
-            paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
+            paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
         res <- c(gettextf("Foreign function call(s) without 'PACKAGE' argument:"),
                  unlist(lapply(x, .fmt)))
     }
@@ -1973,7 +1973,7 @@ function(x, ...)
     if (length(y)) {
         bases <- .get_standard_package_names()$base
         .fmt2 <- function(x, z)
-            paste0(deparse(x[[1L]]), "(", deparse(x[[2L]]),
+            paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]),
                    ", ..., PACKAGE = \"", z, "\")")
         base <- z %in% bases
         if(any(base)) {
