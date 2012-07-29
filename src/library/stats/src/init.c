@@ -205,7 +205,7 @@ static const R_FortranMethodDef FortEntries[] = {
     {"smart", (DL_FUNC) &F77_SUB(smart), 16},
     {"pppred", (DL_FUNC) &F77_SUB(pppred), 5},
     {"setsmu", (DL_FUNC) &F77_SUB(setsmu), 0},
-    {"qsbart", (DL_FUNC) &F77_SUB(qsbart), 21},
+    {"rbart", (DL_FUNC) &F77_SUB(rbart), 20},
     {"bvalus", (DL_FUNC) &F77_SUB(bvalus), 7},
     {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},
     {"hclust", (DL_FUNC) &F77_SUB(hclust), 11},

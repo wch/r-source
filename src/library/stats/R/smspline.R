@@ -141,9 +141,8 @@ smooth.spline <-
     keep.stuff <- FALSE ## << to become an argument in the future
     ans.names <- c("coef","ty","lev","spar","parms","crit","iparms","ier",
                    if(keep.stuff) "scratch")
-    ## This used to use DUP = FALSE, but the C code changes w and isetup
-    ## (at least).
-    fit <- .Fortran(C_qsbart,		# code in ../src/qsbart.f
+    ## This used to use DUP = FALSE, but the C code changes w
+    fit <- .Fortran(C_rbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
 		    x = as.double(xbar),
@@ -160,7 +159,6 @@ smooth.spline <-
 		    iparms = iparms,
 		    spar = spar,
 		    parms = unlist(contr.sp[1:4]),
-		    isetup = 0L,
 		    scratch = double(17L * nk + 1L),
 		    ld4  = 4L,
 		    ldnk = 1L,
