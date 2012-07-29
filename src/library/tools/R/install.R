@@ -168,8 +168,7 @@
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
-                    .Call("R_setFileTime", pkgdir, file.info(lp)$mtime,
-                          PACKAGE = "base")
+                    Sys.setFileTime(pkgdir, file.info(lp)$mtime)
                     unlink(lp, recursive = TRUE)
                 } else {
                     ## some shells require that they be run in a known dir
@@ -558,8 +557,8 @@
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
                     file.copy(instdir, lockdir, recursive = TRUE)
-                    .Call("R_setFileTime", file.path(lockdir, pkg_name),
-                          file.info(instdir)$mtime, PACKAGE = "base")
+                    Sys.setFileTime(file.path(lockdir, pkg_name),
+                                    file.info(instdir)$mtime)
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
                     system(paste("mv", shQuote(instdir),

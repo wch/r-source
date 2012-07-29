@@ -444,7 +444,7 @@
       version 5.0.4, a minor bug-fix release.
 
       \item New function \code{.bincode()}, a \sQuote{bare-bones}
-      versions of \code{cut.default(labels = FALSE)}.
+      version of \code{cut.default(labels = FALSE)}.
     }
   }
 

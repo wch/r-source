@@ -203,7 +203,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(dothis) {
                 close(out)
                 Sys.chmod(name, mode, FALSE) # override umask
-                .Call("R_setFileTime", name, ft, PACKAGE = "base")
+                Sys.setFileTime(name, ft)
             }
         } else if(ctype %in% c("1", "2")) { # hard and symbolic links
             contents <- c(contents, name)
@@ -245,8 +245,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!list) {
                 mydir.create(name)
                 Sys.chmod(name, mode, TRUE) # FIXME: check result
-                ## not much point, since dir will be populated afterwards
-                ## .Call("R_setFileTime", name, ft)
+                ## no point is setting time, as dir will be populated later.
             }
         } else if(ctype %in% c("L", "K")) {
             ## This is a GNU extension that should no longer be
