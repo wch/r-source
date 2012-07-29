@@ -20,7 +20,7 @@ shapiro.test <- function(x)
     x <- sort(x[complete.cases(x)])
     stopifnot(is.numeric(x))
     n <- length(x)
-    if(is.na(n) || n < 3 || n > 5000)
+    if(is.na(n) || n < 3L || n > 5000L)
 	stop("sample size must be between 3 and 5000")
     rng <- x[n] - x[1L]
     if(rng == 0)
@@ -29,14 +29,14 @@ shapiro.test <- function(x)
 	x <- x/rng # rescale to avoid ifault=6
     n2 <- n %/% 2L # integer, too
     ## C Code: Use the first n1 observations as uncensored
-    sw <- .C(C_swilk,
+    sw <- .C(C_swilk2,
 	     as.double(x),
 	     n,#      integer
 	     n1 = n,#   "
-	     w	= double(1),
-	     pw = double(1),
+	     w	= double(1L),
+	     pw = double(1L),
 	     ifault = integer(1L))
-    if (sw$ifault && sw$ifault != 7)# 7 *does* happen (Intel Linux)
+    if (sw$ifault && sw$ifault != 7L) # 7 *does* happen (Intel Linux)
 	stop(gettextf("ifault=%d. This should not happen", sw$ifault),
              domain = NA)
     RVAL <- list(statistic = c(W = sw$w),

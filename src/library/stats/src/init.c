@@ -106,7 +106,7 @@ static const R_CMethodDef CEntries[]  = {
     {"prho", (DL_FUNC) &prho, 5, prho_t},
     {"psmirnov2x", (DL_FUNC) &psmirnov2x, 3, psmirnov2x_t},
     {"qansari",  (DL_FUNC) &qansari, 4, qansari_t},
-    {"swilk", (DL_FUNC) &swilk, 6, swilk_t},
+    {"swilk2", (DL_FUNC) &swilk, 6, swilk_t},
     {"BDRksmooth", (DL_FUNC) &BDRksmooth, 8},
     {"loess_raw", (DL_FUNC) &loess_raw, 24},
     {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
