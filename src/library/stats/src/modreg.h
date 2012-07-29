@@ -95,12 +95,12 @@ void F77_SUB(smart)(int *m, int *mu, int *p, int * q, int *n,
 void F77_SUB(setsmu)(void);
 void F77_SUB(pppred)(int *np, double *x, double *smod,
 		     double *y, double *sc);
-void F77_SUB(qsbart)(double *penalt, double *dofoff,
-		     double *xs, double *ys, double *ws, double *ssw,
-		     int *n, double *knot, int *nk, double *coef,
-		     double *sz, double *lev, double *crit, int *iparms,
-		     double *spar, double *parms, int *isetup,
-		     double *scrtch, int *ld4, int *ldnk, int *ier);
+void F77_SUB(rbart)(double *penalt, double *dofoff,
+		    double *xs, double *ys, double *ws, double *ssw,
+		    int *n, double *knot, int *nk, double *coef,
+		    double *sz, double *lev, double *crit, int *iparms,
+		    double *spar, double *parms,
+		    double *scrtch, int *ld4, int *ldnk, int *ier);
 
 void F77_NAME(sbart)
     (double *penalt, double *dofoff,

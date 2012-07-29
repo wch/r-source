@@ -1,11 +1,12 @@
 C An interface to sbart() --- fewer arguments BUT unspecified scrtch() dimension
 C
-C NB: this routine alters ws.
+C NB: this routine alters ws [and isetup].
+C renamed for safety
 C
-      subroutine qsbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
+      subroutine rbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &     coef,sz,lev,
      &     crit,iparms,spar,parms,
-     &     isetup, scrtch, ld4,ldnk,ier)
+     &     scrtch, ld4,ldnk,ier)
 c
       integer n,nk,isetup, iparms(3), ld4,ldnk,ier
       double precision penalt,dofoff, xs(n),ys(n),ws(n),ssw,
@@ -14,6 +15,7 @@ c
      &     scrtch(*)
 C          ^^^^^^^^ dimension (9+2*ld4+nk)*nk = (17 + nk)*nk
 
+      isetup = 0
       call sbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &     coef,sz,lev, crit,
      &     iparms(1),spar,iparms(2),iparms(3),
