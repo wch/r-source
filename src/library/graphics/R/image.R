@@ -90,7 +90,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         if (!is.double(breaks)) breaks <- as.double(breaks)
 	zi <- .C("bincode",
 		 z1, length(z), breaks, length(breaks),
-		 code = integer(length(z)), (TRUE), (TRUE), nok = TRUE,
+		 code = integer(length(z)), (TRUE), (TRUE), noak = TRUE,
 		 NAOK = TRUE, DUP = FALSE, PACKAGE = "base") $code - 1
     }
     if (!add)
