@@ -83,6 +83,8 @@ cut(x, \dots)
 
   \code{\link{quantile}} for ways of choosing breaks of roughly equal
   content (rather than length).
+
+  \code{\link{.bincode}} for a bare-bones version. 
 }
 \examples{
 Z <- stats::rnorm(10000)

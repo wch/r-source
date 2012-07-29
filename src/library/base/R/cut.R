@@ -22,7 +22,7 @@ cut.default <-
 {
     if (!is.numeric(x)) stop("'x' must be numeric")
     if (length(breaks) == 1L) {
-	if (is.na(breaks) | breaks < 2L)
+	if (is.na(breaks) || breaks < 2L)
 	    stop("invalid number of intervals")
 	nb <- as.integer(breaks + 1)# one more than #{intervals}
 	dx <- diff(rx <- range(x,na.rm=TRUE))
@@ -64,4 +64,18 @@ cut.default <-
     ## NB this relies on passing NAOK in that position!
     if(codes.only) code
     else factor(code, seq_along(labels), labels, ordered = ordered_result)
+}
+
+## called from image.default and for use in packages.
+.bincode <- function(x, breaks, right = TRUE, include.lowest = FALSE)
+{
+    if(!is.double(x)) storage.mode(x) <- "double"
+    nx <- as.integer(length(x))
+    if (is.na(nx)) stop("invalid value of length(x)") # no long vectors
+    if(!is.double(breaks)) storage.mode(breaks) <- "double"
+    nb <- as.integer(length(breaks <- sort.int(breaks)))
+    if (is.na(nb)) stop("invalid value of length(breaks)") # no long vectors
+    .C("bincode", x, nx, breaks, nb, code = integer(nx),
+       as.logical(right), as.logical(include.lowest), naok = TRUE,
+       NAOK = TRUE, DUP = FALSE, PACKAGE = "base")$code
 }
