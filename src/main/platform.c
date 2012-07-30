@@ -2822,7 +2822,7 @@ typedef struct TMN_REPARSE_DATA_BUFFER
     DWORD  ReparseTag;
     WORD   ReparseDataLength;
     WORD   Reserved;
-    WORD   SubstituteNameOffset;`
+    WORD   SubstituteNameOffset;
     WORD   SubstituteNameLength;
     WORD   PrintNameOffset;
     WORD   PrintNameLength;
