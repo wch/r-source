@@ -55,4 +55,8 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, int *docoef,
 		      double *qraux, double *resid, double *hat,
 		      double *coef, double *sigma, double *tol);
+
+void stats_signrank_free(void);
+void stats_wilcox_free(void);
+
 #endif

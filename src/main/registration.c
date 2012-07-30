@@ -141,15 +141,6 @@ static R_CMethodDef cMethods [] = {
     CDEF(Rsockread),
     CDEF(Rsockwrite),
 
-    /* nmath cleanup */
-    {"signrank_free", (DL_FUNC)&signrank_free, 0, NULL},
-    {"wilcox_free", (DL_FUNC)&wilcox_free, 0, NULL},
-
-#if 0
-    /* Why are these here?  Not used (currently) */
-    {"InitGraphics", (DL_FUNC)&Rf_InitGraphics, 0, NULL},
-    {"InitColors", (DL_FUNC)&Rf_InitColors, 0, NULL},
-#endif
     {NULL, NULL, 0}
 };
 

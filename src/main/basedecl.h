@@ -50,9 +50,6 @@ SEXP qr_coef_real(SEXP, SEXP);
 SEXP qr_qy_real(SEXP, SEXP, SEXP);
 SEXP det_ge_real(SEXP, SEXP);
 
-void signrank_free(void);
-void wilcox_free(void);
-
 SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);

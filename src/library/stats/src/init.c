@@ -150,6 +150,8 @@ static const R_CMethodDef CEntries[]  = {
     CDEF(massdist),
     CDEF(spline_coef),
     CDEF(spline_eval),
+    {"signrank_free", (DL_FUNC) &stats_signrank_free, 0},
+    {"wilcox_free", (DL_FUNC) &stats_wilcox_free, 0},
     {NULL, NULL, 0}
 };
 

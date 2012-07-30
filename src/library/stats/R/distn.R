@@ -293,34 +293,34 @@ qtukey <- function(p, nmeans, df, nranges=1, lower.tail = TRUE, log.p = FALSE)
 
 dwilcox <- function(x, m, n, log = FALSE)
 {
-    on.exit(.C("wilcox_free", PACKAGE = "base"))
+    on.exit(.C(C_wilcox_free, PACKAGE = "stats"))
     .External(C_dwilcox, x, m, n, log)
 }
 pwilcox <- function(q, m, n, lower.tail = TRUE, log.p = FALSE)
 {
-    on.exit(.C("wilcox_free", PACKAGE = "base"))
+    on.exit(.C(C_wilcox_free, PACKAGE = "stats"))
     .External(C_pwilcox, q, m, n, lower.tail, log.p)
 }
 qwilcox <- function(p, m, n, lower.tail = TRUE, log.p = FALSE)
 {
-    on.exit(.C("wilcox_free", PACKAGE = "base"))
+    on.exit(.C(C_wilcox_free, PACKAGE = "stats"))
     .External(C_qwilcox, p, m, n, lower.tail, log.p)
 }
 rwilcox <- function(nn, m, n) .External(C_rwilcox, nn, m, n)
 
 dsignrank <- function(x, n, log = FALSE)
 {
-    on.exit(.C("signrank_free", PACKAGE = "base"))
+    on.exit(.C(C_signrank_free, PACKAGE = "stats"))
     .External(C_dsignrank, x, n, log)
 }
 psignrank <- function(q, n, lower.tail = TRUE, log.p = FALSE)
 {
-    on.exit(.C("signrank_free", PACKAGE = "base"))
+    on.exit(.C(C_signrank_free, PACKAGE = "stats"))
     .External(C_psignrank, q, n, lower.tail, log.p)
 }
 qsignrank <- function(p, n, lower.tail = TRUE, log.p = FALSE)
 {
-    on.exit(.C("signrank_free", PACKAGE = "base"))
+    on.exit(.C(C_signrank_free, PACKAGE = "stats"))
     .External(C_qsignrank, p, n, lower.tail, log.p)
 }
 rsignrank <- function(nn, n) .External(C_rsignrank, nn, n)

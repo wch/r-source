@@ -25,8 +25,9 @@ assign("pids", integer(), envir = mc_pids)
 clean_pids <- function(e) {
     pids <- get("pids", envir = e)
     if(length(pids)) {
-        library.dynam("tools", "tools", .Library)
-        .Call("ps_kill", pids, 9L, PACKAGE = "tools")
+        tools::pskill(pids, tools::SIGKILL)
+#        library.dynam("tools", "tools", .Library)
+#        .Call("ps_kill", pids, 9L, PACKAGE = "tools")
     }
 }
 

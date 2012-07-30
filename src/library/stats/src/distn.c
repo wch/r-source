@@ -439,3 +439,21 @@ SEXP distn4(SEXP args)
     else error("unknown distribution %s", dn);
     return R_NilValue;
 }
+
+/* These are here to get them in the correct package */
+
+
+/* from src/nmath/wilcox.c */
+extern void signrank_free(void);
+extern void wilcox_free(void);
+
+void stats_signrank_free(void)
+{
+    signrank_free();
+}
+
+
+void stats_wilcox_free(void)
+{
+    wilcox_free();
+}
