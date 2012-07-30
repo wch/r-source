@@ -65,6 +65,6 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 void registerBase(void);
 void unregisterBase(void);
-Rboolean C_stemleaf(double *x, int *n, double *scale, int *width, double *atom);
-void C_bincount(double *x, int *n, double *breaks, int *nb, int *count,
-		int *right, int *include_border, int *naok);
+
+SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom);
+SEXP C_BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest);

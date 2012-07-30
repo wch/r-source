@@ -103,12 +103,8 @@ hist.default <-
     storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
     ## arguments are often irrelevant (not with integer data!)
-    counts <- .C(C_bincount,
-		 x, n, fuzzybreaks, nB, counts = integer(nB - 1),
-		 right = as.logical(right),
-		 include= as.logical(include.lowest), naok = FALSE,
-		 NAOK = FALSE, DUP = FALSE, PACKAGE = "graphics") $counts
-    if (any(counts < 0))
+    counts <- .Call(C_BinCount, x, fuzzybreaks, right, include.lowest)
+    if (any(counts < 0L))
 	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
@@ -118,7 +114,7 @@ hist.default <-
 			intensities = dens,
 			density = dens, mids = mids,
 			xname = xname, equidist = equidist),
-		   class="histogram")
+		   class = "histogram")
     if (plot) {
 	plot(r, freq = freq1, col = col, border = border,
 	     angle = angle, density = density,

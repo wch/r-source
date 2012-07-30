@@ -21,8 +21,7 @@ stem <- function(x, scale = 1, width = 80, atom = 0.00000001)
     n <- as.integer(length(x))
     if (is.na(n)) stop("invalid length(x)")
     if (n == 0) stop("no non-missing values")
-    if (scale <= 0) stop("'scale' must be positive")# unlike S
-    .C(C_stemleaf, as.double(x), n, as.double(scale), as.integer(width),
-       as.double(atom), PACKAGE = "graphics")
+    if (scale <= 0) stop("'scale' must be positive") # unlike S
+    .Call(C_StemLeaf, as.double(x), scale, width, atom, PACKAGE = "graphics")
     invisible(NULL)
 }

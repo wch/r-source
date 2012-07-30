@@ -18,10 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
+#include <Rinternals.h>
 #include <math.h>
 #include <limits.h> /* INT_MAX */
 #include <stdlib.h> /* abs */
@@ -139,32 +136,34 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
     return TRUE;
 }
 
-Rboolean
-C_stemleaf(double *x, int *n, double *scale, int *width, double *atom)
+/* The R wrapper has removed NAs from x */
+SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
 {
-    return stem_leaf(x, *n, *scale, *width, *atom);
+    if(TYPEOF(x) != REALSXP || TYPEOF(scale) != REALSXP) error("invalid input");
+    int width = asInteger(swidth), n = LENGTH(x);
+    if (n == NA_INTEGER || width == NA_INTEGER) error("invalid input");
+    double sc = asReal(scale), sa = asReal(atom);
+    if (!R_FINITE(sc) || !R_FINITE(sa)) error("invalid input");
+    stem_leaf(REAL(x), n, sc, width, sa);
+    return R_NilValue;
 }
 
-/* Formerly in src/appl/binning.c */
+/* Formerly a version in src/appl/binning.c */
 
-void C_bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
-		int *right, int *include_border, int *naok)
+static void 
+C_bincount(double *x, int n, double *breaks, int nb, int *count,
+	   int right, int include_border)
 {
-    int i, lo, hi;
-    int n, nb1, new, lft;
-
-    n = *pn;
-    nb1 = *pnb - 1;
-    lft = !(*right);
+    int i, lo, hi, nb1 = nb - 1, new, lft = !right;
 
     for(i = 0; i < nb1; i++) count[i] = 0;
 
     for(i = 0 ; i < n ; i++)
-	if(R_FINITE(x[i])) {
+	if(R_FINITE(x[i])) { // left in as a precaution
 	    lo = 0;
 	    hi = nb1;
 	    if(breaks[lo] <= x[i] &&
-	       (x[i] < breaks[hi] || (x[i] == breaks[hi] && *include_border))) {
+	       (x[i] < breaks[hi] || (x[i] == breaks[hi] && include_border))) {
 		while(hi-lo >= 2) {
 		    new = (hi+lo)/2;
 		    if(x[i] > breaks[new] || (lft && x[i] == breaks[new]))
@@ -174,6 +173,21 @@ void C_bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 		}
 		count[lo] += 1;
 	    }
-	} else if (! *naok)
-	    error("NA's in .C(\"bincount\",... NAOK=FALSE)");
+	}
+}
+
+/* The R wrapper removed non-finite values and set the storage.mode */
+SEXP C_BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
+{
+    if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
+	error("invalid input");
+    int n = LENGTH(x), nB = LENGTH(breaks);
+    if (n == NA_INTEGER || nB == NA_INTEGER) error("invalid input");
+    int sr = asLogical(right), sl = asLogical(lowest);
+    if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
+    SEXP counts;
+    PROTECT(counts = allocVector(INTSXP, nB - 1));
+    C_bincount(REAL(x), n, REAL(breaks), nB, INTEGER(counts), sr, sl);
+    UNPROTECT(1);
+    return counts;
 }
