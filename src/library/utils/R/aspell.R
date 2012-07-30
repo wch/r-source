@@ -270,13 +270,6 @@ aspell_filter_db <- new.env(hash = FALSE) # small
 aspell_filter_db$Rd <- tools::RdTextFilter
 aspell_filter_db$Sweave <- tools::SweaveTeXFilter
 
-aspell_filter_db$pot <-
-function(ifile, encoding)
-{
-    lines <- readLines(ifile, encoding = encoding)
-    ifelse(grepl("^msgid ", lines), sub("^msgid ", "      ", lines), "")
-}
-
 aspell_find_program <-
 function(program = NULL)
 {
@@ -565,10 +558,101 @@ function(dir, control = list(), program = NULL)
            program = program)
 }
 
+## For spell-checking R files in a package.
+
+aspell_filter_db$R <-
+function(ifile, encoding = "unknown")
+{
+    pd <- get_parse_data_for_message_strings(ifile, encoding)
+    if(is.null(pd)) return(character())
+    
+    lines <- readLines(ifile, encoding = encoding)
+    ## We may have multi-line string literals, which are tricky to write
+    ## out line-wise.  So let's do everything in one big string for now.
+    nc <- nchar(lines)
+    s <- vapply(Map(rep.int, rep.int(" ", length(nc)), nc,
+                    USE.NAMES = FALSE),
+                paste, "", collapse = "")
+    offsets <- c(0, cumsum(nc + 1L))
+    s <- paste(s, collapse = "\n")
+    starts <- offsets[pd$line1] + pd$col1
+    texts <- as.character(pd$text)
+    stops <- starts + nchar(texts)
+    for(i in seq_along(texts))
+        substring(s, starts[i], stops[i]) <- texts[i]
+
+    unlist(strsplit(s, "\n"))
+}
+
+get_parse_data_for_message_strings <-
+function(file, encoding = "unknown")
+{
+    oop <- options(keep.source = TRUE)
+    on.exit(options(oop))
+
+    exprs <- parse(file = file, encoding = encoding)
+    if(!length(exprs)) return(NULL)
+    pd <- getParseData(exprs)
+
+    parents <- pd$parent
+    names(parents) <- pd$id
+    children <- split(pd$id, pd$parent)
+
+    ids <- pd$id[(pd$token == "SYMBOL_FUNCTION_CALL") &
+                 !is.na(match(pd$text,
+                              c("warning", "stop",
+                                "message", "packageStartupMessage", 
+                                "gettext", "gettextf", "ngettext")))]
+    ids <- parents[as.character(parents[as.character(ids)])]
+    ids <- intersect(as.character(unlist(children[as.character(ids)])),
+                     names(children))
+    ids <- unlist(children[ids])
+    pos <- which(!is.na(match(pd$id, ids)) & pd$token == "STR_CONST")
+
+    pd[!is.na(match(pd$id, ids)) & pd$token == "STR_CONST", ]
+}
+  
+aspell_package_R_files <-
+function(dir, control = list(), program = NULL)
+{
+    dir <- tools::file_path_as_absolute(dir)
+
+    subdir <- file.path(dir, "R")
+    files <- if(file_test("-d", subdir))
+        tools::list_files_with_type(subdir,
+                                    "code",
+                                    OS_subdirs = c("unix", "windows"))
+    else character()
+
+    meta <- tools:::.get_package_metadata(dir, installed = FALSE)
+    if(is.na(encoding <- meta["Encoding"]))
+        encoding <- "unknown"
+
+    ## <FIXME>
+    ## Add support for defaults eventually ...
+    ##   defaults <- .aspell_package_defaults(dir, encoding)$R_files
+    ## </FIXME>
+
+    program <- aspell_find_program(program)    
+
+    aspell(files,
+           filter = "R",
+           control = control,
+           encoding = encoding,
+           program = program)
+}
+
 ## For spell-checking pot files in a package.
+
 ## (Of course, directly analyzing the message strings would be more
-## useful, but require writing an R text filter along the lines of
-## tools::xgettext2pot().)
+## useful, but require writing appropriate text filters.)
+
+aspell_filter_db$pot <-
+function(ifile, encoding = "unknown")
+{
+    lines <- readLines(ifile, encoding = encoding)
+    ifelse(grepl("^msgid ", lines), sub("^msgid ", "      ", lines), "")
+}
 
 aspell_package_pot_files <-
 function(dir, control = list(), program = NULL)
@@ -578,16 +662,25 @@ function(dir, control = list(), program = NULL)
     files <- if(file_test("-d", subdir))
         Sys.glob(file.path(subdir, "*.pot"))
     else character()
+
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
+
+    program <- aspell_find_program(program)
+    
     aspell(files, filter = "pot", control = control,
            encoding = encoding, program = program)
 }
 
 ## For spell-checking package DESCRIPTION files.
 
-aspell_filter_description <-
+## <FIXME>
+## Maybe generalize this to a general-purpose filter for DCF files which
+## allows specifying the fields to be kept?
+## </FIXME>
+
+aspell_filter_db$description <-
 function(ifile, encoding)
 {
     lines <- readLines(ifile, encoding = encoding)
@@ -604,10 +697,14 @@ function(dir, control = list(), program = NULL)
 {
     dir <- tools::file_path_as_absolute(dir)
     files <- file.path(dir, "DESCRIPTION")
+
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
-    aspell(files, filter = aspell_filter_description, control = control,
+
+    program <- aspell_find_program(program)
+    
+    aspell(files, filter = "description", control = control,
            encoding = encoding, program = program)
 }
 
