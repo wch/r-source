@@ -20,15 +20,13 @@
 #include <config.h>
 #include <Defn.h>
 
-#include "methods.h"
-
+/* no #include "methods.h" because NLS warns of double inclusion */
 /* in names.c */
-SEXP getPRIMNAME(SEXP object);
+const char *getPRIMNAME(SEXP object);
 
 
 SEXP R_get_primname(SEXP object)
 {
-    SEXP f;
     if(TYPEOF(object) != BUILTINSXP && TYPEOF(object) != SPECIALSXP)
 	error("'R_get_primname' called on a non-primitive");
     return mkString(getPRIMNAME(object));
