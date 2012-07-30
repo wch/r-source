@@ -256,6 +256,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"attach",	do_attach,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"detach",	do_detach,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"search",	do_search,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"setFileTime",	do_setFileTime,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 
 /* Mathematical Functions */

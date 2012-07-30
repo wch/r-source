@@ -2789,10 +2789,12 @@ static int winSetFileTime(const char *fn, time_t ftime)
 # endif
 #endif
 
-SEXP attribute_hidden R_setFileTime(SEXP name, SEXP time)
+SEXP attribute_hidden 
+do_setFileTime(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    const char *fn = translateChar(STRING_ELT(name, 0));
-    int ftime = asInteger(time), res;
+    checkArity(op, args);
+    const char *fn = translateChar(STRING_ELT(CAR(args), 0));
+    int ftime = asInteger(CADR(args)), res;
 
 #ifdef Win32
     res  = winSetFileTime(fn, (time_t)ftime);
@@ -2820,7 +2822,7 @@ typedef struct TMN_REPARSE_DATA_BUFFER
     DWORD  ReparseTag;
     WORD   ReparseDataLength;
     WORD   Reserved;
-    WORD   SubstituteNameOffset;
+    WORD   SubstituteNameOffset;`
     WORD   SubstituteNameLength;
     WORD   PrintNameOffset;
     WORD   PrintNameLength;

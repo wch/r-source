@@ -90,9 +90,7 @@ SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBflush(SEXP);
 
-SEXP R_get_primname(SEXP op) ;
-
-SEXP R_setFileTime(SEXP name, SEXP time);
+SEXP R_get_primname(SEXP op);
 
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);
