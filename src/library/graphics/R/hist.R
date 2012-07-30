@@ -38,9 +38,9 @@ hist.default <-
 	if(!missing(nclass))
 	    warning("'nclass' not used when 'breaks' is specified")
     }
-    else if(!is.null(nclass) && length(nclass) == 1)
+    else if(!is.null(nclass) && length(nclass) == 1L)
 	breaks <- nclass
-    use.br <- use.br && (nB <- length(breaks)) > 1
+    use.br <- use.br && (nB <- length(breaks)) > 1L
     if(use.br)
 	breaks <- sort(breaks)
     else {				# construct vector of breaks
@@ -61,7 +61,7 @@ hist.default <-
 	} else if(is.function(breaks)) {
 	    breaks <- breaks(x)
 	}
-	if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1)
+	if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
 	    stop("invalid number of 'breaks'")
 	breaks <- pretty (range(x), n = breaks, min.n = 1)
 	nB <- length(breaks)
@@ -161,7 +161,7 @@ plot.histogram <-
 	## for back compatibility
 	y <- x$density; if(is.null(y)) x$intensities else y}
     nB <- length(x$breaks)
-    if(is.null(y) || 0 == nB) stop("'x' is wrongly structured")
+    if(is.null(y) || 0L == nB) stop("'x' is wrongly structured")
 
     dev.hold(); on.exit(dev.flush())
     if(!add) {

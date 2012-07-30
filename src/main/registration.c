@@ -73,7 +73,13 @@
 
    If these omitted routines are not visible to package DLLs/shared
    libraries on some platforms, the package should be linked against
-   Rdll.lib or libR.so or the equivalent on that platform.
+   R.dll or libR.so or the equivalent on that platform.
+*/
+
+/* FIXME: bincode is no longer used in R, but is still used by
+   packages misc3d mixOmics spam 
+
+   R_tabulate is no longer used in R, but is used by package pegas
 */
 
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
@@ -219,6 +225,8 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(bitwiseXor, 2),
 
     CALLDEF(crc64ToString, 1),
+    CALLDEF(BinCode, 4),
+    CALLDEF(R_Tabulate, 2),
 
     {NULL, NULL, 0}
 };
