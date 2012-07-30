@@ -675,19 +675,14 @@ function(dir, control = list(), program = NULL)
 
 ## For spell-checking package DESCRIPTION files.
 
-## <FIXME>
-## Maybe generalize this to a general-purpose filter for DCF files which
-## allows specifying the fields to be kept?
-## </FIXME>
-
-aspell_filter_db$description <-
-function(ifile, encoding)
+aspell_filter_db$dcf <-
+function(ifile, encoding, keep = c("Title", "Description"))
 {
     lines <- readLines(ifile, encoding = encoding)
     line_has_tags <- grepl("^[^[:blank:]][^:]*:", lines)
     tags <- sub(":.*", "", lines[line_has_tags])
     lines <- split(lines, cumsum(line_has_tags))
-    ind <- is.na(match(tags, c("Title", "Description"))) 
+    ind <- is.na(match(tags, keep)) 
     lines[ind] <- lapply(lines[ind], function(s) rep.int("", length(s)))
     unlist(lines, use.names = FALSE)
 }
@@ -704,7 +699,7 @@ function(dir, control = list(), program = NULL)
 
     program <- aspell_find_program(program)
     
-    aspell(files, filter = "description", control = control,
+    aspell(files, filter = "dcf", control = control,
            encoding = encoding, program = program)
 }
 
