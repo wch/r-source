@@ -79,7 +79,8 @@
  * rightassoc: Right (1) or left (0) associative operator
  *
  */
-attribute_hidden FUNTAB R_FunTab[] =
+//attribute_hidden
+FUNTAB R_FunTab[] =
 {
 
 /* printname	c-entry		offset	eval	arity	pp-kind	     precedence	rightassoc
