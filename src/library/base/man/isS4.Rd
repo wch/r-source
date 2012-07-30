@@ -1,6 +1,6 @@
 % File src/library/base/man/isS4.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isS4}
@@ -22,9 +22,10 @@ asS3(object, flag = TRUE, complete = TRUE)
 \arguments{
   \item{object}{Any R object.}
 
-  \item{flag, complete}{Optional arguments to indicate direction of
-      conversion and whether conversion to S3 is completed.  Not
-      usually needed, but see the details section.}
+  \item{flag}{Optional, logical: indicate direction of conversion.}
+  
+  \item{complete}{Optional logical: whether conversion to S3 is
+    completed.  Not usually needed, but see the details section.}
 }
 \value{
   \code{isS4} always returns \code{TRUE} or \code{FALSE} according to
@@ -42,9 +43,8 @@ asS3(object, flag = TRUE, complete = TRUE)
 \details{
   Note that \code{isS4} does not rely on the \pkg{methods}
   package, so in particular it can be used to detect the need to
-  \code{\link{require}} that package.  (The other functions do depend on
-  \pkg{methods}.)
-  
+  \code{\link{require}} that package.
+    
   \code{asS3} uses the value of
   \code{complete} to control whether an attempt is made to transform
   \code{object} into a valid object of the implied S3 class.  If
