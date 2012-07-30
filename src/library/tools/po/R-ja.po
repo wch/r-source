@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-18 09:44\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -156,7 +156,16 @@ msgstr ""
 " ファイル '%s' 中に構文解析エラー : \n"
 " %s "
 
-msgid "Foreign function calls without 'PACKAGE' argument:"
+#, fuzzy
+msgid "Foreign function call(s) without 'PACKAGE' argument:"
+msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
 msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
 
 msgid "declared S3 method '%s' not found"

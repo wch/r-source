@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49+0100\n"
+"POT-Creation-Date: 2012-07-30 14:20+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
 msgstr ".C(\"bincode \",... NAOK=FALSE) 안에 NA 가 있습니다"
 
-#: src/appl/binning.c:111
+#: src/appl/binning.c:110
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr ".C(\"bincount \",... NAOK=FALSE) 안에 NA 가 있습니다 "
 
@@ -243,11 +243,11 @@ msgstr "'%ls' 를 표시하는데 문제가 있습니다 "
 #: src/main/platform.c:1609 src/main/platform.c:1612 src/main/platform.c:1694
 #: src/main/platform.c:1709 src/main/platform.c:1746 src/main/platform.c:1748
 #: src/main/platform.c:1813 src/main/platform.c:1897 src/main/platform.c:2172
-#: src/main/platform.c:2218 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
-#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
-#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2619
-#: src/main/platform.c:2627 src/main/platform.c:2663 src/main/platform.c:2713
+#: src/main/platform.c:2218 src/main/platform.c:2370 src/main/platform.c:2373
+#: src/main/platform.c:2376 src/main/platform.c:2379 src/main/platform.c:2382
+#: src/main/platform.c:2539 src/main/platform.c:2542 src/main/platform.c:2545
+#: src/main/platform.c:2548 src/main/platform.c:2551 src/main/platform.c:2621
+#: src/main/platform.c:2629 src/main/platform.c:2665 src/main/platform.c:2715
 #: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
 #: src/main/print.c:269 src/main/print.c:275 src/main/random.c:495
 #: src/main/random.c:499 src/main/random.c:503 src/main/saveload.c:1939
@@ -3676,7 +3676,7 @@ msgstr "바이트 코드 버전이 불일치합니다"
 msgid "invalid sequence argument in for loop"
 msgstr "for 루프 범위 인수가 잘못되었습니다"
 
-#: src/main/eval.c:4301 src/main/names.c:1172
+#: src/main/eval.c:4301 src/main/names.c:1174
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "내부 함수 \"%s \" 가 없습니다"
@@ -4200,15 +4200,15 @@ msgstr "최상위의 task callback '%s'에서 경고 메시지 \n"
 msgid "top-level task callback did not return a logical value"
 msgstr "최상위의 task callback가 논리 값을 반환하지 않습니다"
 
-#: src/main/mapply.c:46
+#: src/main/mapply.c:47
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr "Zero-length inputs cannot be mixed with those of non-zero length"
 
-#: src/main/mapply.c:63
+#: src/main/mapply.c:65
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "'mapply'인수 'MoreArgs'가 리스트가 아닙니다"
 
-#: src/main/mapply.c:99
+#: src/main/mapply.c:101
 msgid "longer argument not a multiple of length of shorter"
 msgstr "긴 인수의 길이가 짧은 쪽의 길이의 배수가 아닙니다"
 
@@ -4359,24 +4359,24 @@ msgstr "Rprofmem: cannot open output file '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1007
+#: src/main/names.c:1009
 msgid "string argument required"
 msgstr "문자열 인수가 요구되고 있습니다"
 
-#: src/main/names.c:1010
+#: src/main/names.c:1012
 msgid "no such primitive function"
 msgstr "그런 원시함수는 없습니다"
 
-#: src/main/names.c:1138
+#: src/main/names.c:1140
 msgid "attempt to use zero-length variable name"
 msgstr "길이가 0 인 변수 이름을 사용하려 했습니다"
 
-#: src/main/names.c:1140
+#: src/main/names.c:1142
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "변수 이름은 %d 바이트가 상한입니다"
 
-#: src/main/names.c:1167 src/main/names.c:1170
+#: src/main/names.c:1169 src/main/names.c:1172
 msgid "invalid .Internal() argument"
 msgstr ".Internal()의 인수가 잘못되었습니다"
 
@@ -4584,18 +4584,14 @@ msgstr "C level MAKE_CLASS 매크로가 NULL문자 포인터로 호출되었습�
 msgid "R_getClassDef(.) called with NULL string pointer"
 msgstr "R_getClassDef(.) 가 NULL문자포인터로 호출되었습니다"
 
-#: src/main/objects.c:1501
+#: src/main/objects.c:1502
 msgid "C level NEW macro called with null class definition pointer"
 msgstr "C 레벨 NEW 매크로가 null 클래스 정의 포인터로 호출되었습니다"
 
-#: src/main/objects.c:1505
+#: src/main/objects.c:1506
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "가상 클래스 (\"%s\") 로부터 객체를 생성하려 했습니다"
-
-#: src/main/objects.c:1550
-msgid "'R_get_primname' called on a non-primitive"
-msgstr "'R_get_primname' called on a non-primitive"
 
 #: src/main/objects.c:1580
 #, c-format
@@ -4842,13 +4838,13 @@ msgstr "'%ls'은 이미 존재합니다"
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "디렉토리 '%ls'을 만들 수 없습니다, 이유는 '%s'입니다"
 
-#: src/main/platform.c:2268 src/main/platform.c:2424
+#: src/main/platform.c:2268 src/main/platform.c:2425
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2306
-#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2453
-#: src/main/platform.c:2472 src/main/platform.c:2492
+#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2307
+#: src/main/platform.c:2325 src/main/platform.c:2441 src/main/platform.c:2454
+#: src/main/platform.c:2474 src/main/platform.c:2494
 #, fuzzy
 msgid "over-long path length"
 msgstr "길이가 0의 패턴입니다"
@@ -4858,36 +4854,36 @@ msgstr "길이가 0의 패턴입니다"
 msgid "problem creating directory %ls: %s"
 msgstr "디렉토리 %ls를 만드는 데 문제가 있습니다 : %s\\"
 
-#: src/main/platform.c:2314
+#: src/main/platform.c:2315
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "디렉토리 %ls를 읽는 데 문제가 있습니다 : %s\\"
 
-#: src/main/platform.c:2332
+#: src/main/platform.c:2333
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "%ls 를 %ls에 복사하는 데 문제가 있습니다 : %s"
 
-#: src/main/platform.c:2462
+#: src/main/platform.c:2463
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "디렉토리 %s를 만드는 데 문제가 있습니다 : %s"
 
-#: src/main/platform.c:2480
+#: src/main/platform.c:2482
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "디렉토리 %s를 읽는 데 문제가 있습니다 : %s"
 
-#: src/main/platform.c:2501
+#: src/main/platform.c:2503
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "%s 를 %s에 복사하는 데 문제가 있습니다 : %s"
 
-#: src/main/platform.c:2624
+#: src/main/platform.c:2626
 msgid "'mode' must be of length at least one"
 msgstr "'mode'의 길이는 1 이상이어야 합니다"
 
-#: src/main/platform.c:2691
+#: src/main/platform.c:2693
 msgid "insufficient OS support on this platform"
 msgstr "이 플랫폼에서는 OS지원이 불충분합니다"
 
@@ -6406,7 +6402,7 @@ msgstr "경고 메시지가 255자로 잘렸습니다"
 
 #: src/main/util.c:1748
 #, fuzzy
-msgid "alll arguments must be named"
+msgid "all arguments must be named"
 msgstr "속성 이름이 지정되어야 합니다"
 
 #: src/main/util.c:1820
@@ -7392,3 +7388,6 @@ msgstr "X11 모듈을 로드될 수 없습니다"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11을 사용할 수 없습니다"
+
+#~ msgid "'R_get_primname' called on a non-primitive"
+#~ msgstr "'R_get_primname' called on a non-primitive"

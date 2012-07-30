@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-18 09:44\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,7 +137,13 @@ msgstr ""
 msgid "parse error in file '%s':\n%s"
 msgstr ""
 
-msgid "Foreign function calls without 'PACKAGE' argument:"
+msgid "Foreign function call(s) without 'PACKAGE' argument:"
+msgstr ""
+
+msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+msgstr ""
+
+msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
 msgstr ""
 
 msgid "declared S3 method '%s' not found"

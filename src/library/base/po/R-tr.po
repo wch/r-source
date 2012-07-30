@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:48\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -246,6 +246,9 @@ msgid "labels/breaks length conflict"
 msgstr ""
 
 msgid "invalid value of length(x)"
+msgstr ""
+
+msgid "invalid value of length(breaks)"
 msgstr ""
 
 msgid "invalid 'row.names' length"

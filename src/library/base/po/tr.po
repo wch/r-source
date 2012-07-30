@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49+0100\n"
+"POT-Creation-Date: 2012-07-30 14:20+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
 msgstr "NA's in C(\"bincode\",... NAOK=FALSE)"
 
-#: src/appl/binning.c:111
+#: src/appl/binning.c:110
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr "NA's in .C(\"bincount\",... NAOK=FALSE)"
 
@@ -240,11 +240,11 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/platform.c:1609 src/main/platform.c:1612 src/main/platform.c:1694
 #: src/main/platform.c:1709 src/main/platform.c:1746 src/main/platform.c:1748
 #: src/main/platform.c:1813 src/main/platform.c:1897 src/main/platform.c:2172
-#: src/main/platform.c:2218 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
-#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
-#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2619
-#: src/main/platform.c:2627 src/main/platform.c:2663 src/main/platform.c:2713
+#: src/main/platform.c:2218 src/main/platform.c:2370 src/main/platform.c:2373
+#: src/main/platform.c:2376 src/main/platform.c:2379 src/main/platform.c:2382
+#: src/main/platform.c:2539 src/main/platform.c:2542 src/main/platform.c:2545
+#: src/main/platform.c:2548 src/main/platform.c:2551 src/main/platform.c:2621
+#: src/main/platform.c:2629 src/main/platform.c:2665 src/main/platform.c:2715
 #: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
 #: src/main/print.c:269 src/main/print.c:275 src/main/random.c:495
 #: src/main/random.c:499 src/main/random.c:503 src/main/saveload.c:1939
@@ -3688,7 +3688,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr "döngü için geçersiz sıralama argümanı"
 
-#: src/main/eval.c:4301 src/main/names.c:1172
+#: src/main/eval.c:4301 src/main/names.c:1174
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "iç fonksiyonlarda \"%s\" yok"
@@ -4227,15 +4227,15 @@ msgstr "üst seviye görev geri çağrılarından uyarı mesajları '%s'\n"
 msgid "top-level task callback did not return a logical value"
 msgstr "üst seviye görev geri çağrısı mantıksal bir değer döndürmedi"
 
-#: src/main/mapply.c:46
+#: src/main/mapply.c:47
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 
-#: src/main/mapply.c:63
+#: src/main/mapply.c:65
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "'mapply'ın argümanı 'MoreArgs' bir liste değil"
 
-#: src/main/mapply.c:99
+#: src/main/mapply.c:101
 msgid "longer argument not a multiple of length of shorter"
 msgstr "uzun argüman kısa argümanın uzunluğunun bir katı değil"
 
@@ -4386,24 +4386,24 @@ msgstr "Rprofmem: çıktı dosyası '%s' açılamadı"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1007
+#: src/main/names.c:1009
 msgid "string argument required"
 msgstr "dize argümanı gerekli"
 
-#: src/main/names.c:1010
+#: src/main/names.c:1012
 msgid "no such primitive function"
 msgstr "böyle bir basit fonksiyon yok"
 
-#: src/main/names.c:1138
+#: src/main/names.c:1140
 msgid "attempt to use zero-length variable name"
 msgstr "sıfır uzunlukta değişken ismi kullanımı denemesi"
 
-#: src/main/names.c:1140
+#: src/main/names.c:1142
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "değişken isimleri %d karakterle sınırlıdır"
 
-#: src/main/names.c:1167 src/main/names.c:1170
+#: src/main/names.c:1169 src/main/names.c:1172
 msgid "invalid .Internal() argument"
 msgstr "geçersiz .Internal() argüman"
 
@@ -4617,18 +4617,14 @@ msgstr "C seviye MAKE_CLASS makro NULL dize işaretçisiyle çağırıldı"
 msgid "R_getClassDef(.) called with NULL string pointer"
 msgstr "R_getClassDef(.) bir NULL dize işaretçisiyle çağırıldı"
 
-#: src/main/objects.c:1501
+#: src/main/objects.c:1502
 msgid "C level NEW macro called with null class definition pointer"
 msgstr "C seviye NEW makro null sınıf tanım işaretçisiyle çağırıldı"
 
-#: src/main/objects.c:1505
+#: src/main/objects.c:1506
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "bir sanal sınıf olan (\"%s\")'den bir nesne oluşturulmaya çalışılıyor"
-
-#: src/main/objects.c:1550
-msgid "'R_get_primname' called on a non-primitive"
-msgstr "basit olmayanda 'R_get_primname' çağırıldı"
 
 #: src/main/objects.c:1580
 #, c-format
@@ -4878,13 +4874,13 @@ msgstr "'%ls' zaten var"
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "'%s' dizini oluşturulamıyor, sebep: '%s'"
 
-#: src/main/platform.c:2268 src/main/platform.c:2424
+#: src/main/platform.c:2268 src/main/platform.c:2425
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2306
-#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2453
-#: src/main/platform.c:2472 src/main/platform.c:2492
+#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2307
+#: src/main/platform.c:2325 src/main/platform.c:2441 src/main/platform.c:2454
+#: src/main/platform.c:2474 src/main/platform.c:2494
 #, fuzzy
 msgid "over-long path length"
 msgstr "sıfır uzunlukta model"
@@ -4894,36 +4890,36 @@ msgstr "sıfır uzunlukta model"
 msgid "problem creating directory %ls: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2314
+#: src/main/platform.c:2315
 #, fuzzy, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2332
+#: src/main/platform.c:2333
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2462
+#: src/main/platform.c:2463
 #, fuzzy, c-format
 msgid "problem creating directory %s: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2480
+#: src/main/platform.c:2482
 #, fuzzy, c-format
 msgid "problem reading directory %s: %s"
 msgstr "düzenleyici %s çalıştırırken sorun oluştu"
 
-#: src/main/platform.c:2501
+#: src/main/platform.c:2503
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2624
+#: src/main/platform.c:2626
 msgid "'mode' must be of length at least one"
 msgstr "'mode' uzunluğu en az bir olmalıdır"
 
-#: src/main/platform.c:2691
+#: src/main/platform.c:2693
 msgid "insufficient OS support on this platform"
 msgstr "bu platform için yetersiz işletim sistemi desteği"
 
@@ -6446,7 +6442,7 @@ msgstr "uyarı mesajı 255 karaktere indirgendi"
 
 #: src/main/util.c:1748
 #, fuzzy
-msgid "alll arguments must be named"
+msgid "all arguments must be named"
 msgstr "nitelikler isimlendirilmelidir"
 
 #: src/main/util.c:1820
@@ -7436,3 +7432,6 @@ msgstr "X11 modülü yüklenemiyor"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 mevcut değil"
+
+#~ msgid "'R_get_primname' called on a non-primitive"
+#~ msgstr "basit olmayanda 'R_get_primname' çağırıldı"

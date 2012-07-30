@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-18 09:44\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -153,7 +153,16 @@ msgstr ""
 "파일 '%s' 내에 파싱에러: \n"
 "%s "
 
-msgid "Foreign function calls without 'PACKAGE' argument:"
+#, fuzzy
+msgid "Foreign function call(s) without 'PACKAGE' argument:"
+msgstr "'PACKAGE' 인자없이 호출된 외부함수들: "
+
+#, fuzzy
+msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+msgstr "'PACKAGE' 인자없이 호출된 외부함수들: "
+
+#, fuzzy
+msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
 msgstr "'PACKAGE' 인자없이 호출된 외부함수들: "
 
 msgid "declared S3 method '%s' not found"

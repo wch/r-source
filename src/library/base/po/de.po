@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49+0100\n"
+"POT-Creation-Date: 2012-07-30 14:20+0100\n"
 "PO-Revision-Date: 2012-03-05 15:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
 msgstr "NAs in .C(\"bincode\",... NAOK=FALSE)"
 
-#: src/appl/binning.c:111
+#: src/appl/binning.c:110
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr "NAs in .C(\"bincount\",... NAOK=FALSE)"
 
@@ -237,11 +237,11 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/platform.c:1609 src/main/platform.c:1612 src/main/platform.c:1694
 #: src/main/platform.c:1709 src/main/platform.c:1746 src/main/platform.c:1748
 #: src/main/platform.c:1813 src/main/platform.c:1897 src/main/platform.c:2172
-#: src/main/platform.c:2218 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
-#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
-#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2619
-#: src/main/platform.c:2627 src/main/platform.c:2663 src/main/platform.c:2713
+#: src/main/platform.c:2218 src/main/platform.c:2370 src/main/platform.c:2373
+#: src/main/platform.c:2376 src/main/platform.c:2379 src/main/platform.c:2382
+#: src/main/platform.c:2539 src/main/platform.c:2542 src/main/platform.c:2545
+#: src/main/platform.c:2548 src/main/platform.c:2551 src/main/platform.c:2621
+#: src/main/platform.c:2629 src/main/platform.c:2665 src/main/platform.c:2715
 #: src/main/print.c:235 src/main/print.c:241 src/main/print.c:263
 #: src/main/print.c:269 src/main/print.c:275 src/main/random.c:495
 #: src/main/random.c:499 src/main/random.c:503 src/main/saveload.c:1939
@@ -3693,7 +3693,7 @@ msgstr "nicht passende Bytecode Versionen"
 msgid "invalid sequence argument in for loop"
 msgstr "ungültiges Argument für Sequenz in for Schleife"
 
-#: src/main/eval.c:4301 src/main/names.c:1172
+#: src/main/eval.c:4301 src/main/names.c:1174
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "keine interne Funktion \"%s\""
@@ -4229,16 +4229,16 @@ msgstr "Warnmeldung vom toplevel task callback '%s'\n"
 msgid "top-level task callback did not return a logical value"
 msgstr "toplevel task callback gibt keinen logischen Wert zurück"
 
-#: src/main/mapply.c:46
+#: src/main/mapply.c:47
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Eingaben mit Länge 0 können nicht mit Eingaben anderer Länge gemischt werden"
 
-#: src/main/mapply.c:63
+#: src/main/mapply.c:65
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "Argument 'MoreArgs' von 'mapply' ist keine Liste"
 
-#: src/main/mapply.c:99
+#: src/main/mapply.c:101
 msgid "longer argument not a multiple of length of shorter"
 msgstr ""
 "Länge des längeren Objektes\n"
@@ -4391,24 +4391,24 @@ msgstr "Rprofmem: kann die Ausgabedatei '%s' nicht öffnen"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1007
+#: src/main/names.c:1009
 msgid "string argument required"
 msgstr "Zeichenkettenargument benötigt"
 
-#: src/main/names.c:1010
+#: src/main/names.c:1012
 msgid "no such primitive function"
 msgstr "keine solche primitive Funktion"
 
-#: src/main/names.c:1138
+#: src/main/names.c:1140
 msgid "attempt to use zero-length variable name"
 msgstr "Versuch einen Variablennamen der Länge 0 zu nutzen"
 
-#: src/main/names.c:1140
+#: src/main/names.c:1142
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "Variablennamen sind auf %d Bytes beschränkt"
 
-#: src/main/names.c:1167 src/main/names.c:1170
+#: src/main/names.c:1169 src/main/names.c:1172
 msgid "invalid .Internal() argument"
 msgstr "ungültiges Argument für .Internal()"
 
@@ -4624,18 +4624,14 @@ msgstr "Makro MAKE_CLASS auf C Level mit NULL Zeichenkettenzeiger aufgerufen"
 msgid "R_getClassDef(.) called with NULL string pointer"
 msgstr "R_getClassDef(.) mit Zeichenketten NULL-Zeiger aufgerufen"
 
-#: src/main/objects.c:1501
+#: src/main/objects.c:1502
 msgid "C level NEW macro called with null class definition pointer"
 msgstr "Makro NEW auf C Level mit NULL Klassendefinitionszeiger aufgerufen"
 
-#: src/main/objects.c:1505
+#: src/main/objects.c:1506
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "Versuch, ein Objekt aus einer virtuelle Klasse (\"%s\") zu erzeugen"
-
-#: src/main/objects.c:1550
-msgid "'R_get_primname' called on a non-primitive"
-msgstr "'R_get_primname' für ein non-primitive aufgerufen"
 
 #: src/main/objects.c:1580
 #, c-format
@@ -4884,13 +4880,13 @@ msgstr "'%ls' existiert bereits"
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "kann Verzeichnis '%ls' nicht erzeugen, Grund '%s'"
 
-#: src/main/platform.c:2268 src/main/platform.c:2424
+#: src/main/platform.c:2268 src/main/platform.c:2425
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2306
-#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2453
-#: src/main/platform.c:2472 src/main/platform.c:2492
+#: src/main/platform.c:2276 src/main/platform.c:2289 src/main/platform.c:2307
+#: src/main/platform.c:2325 src/main/platform.c:2441 src/main/platform.c:2454
+#: src/main/platform.c:2474 src/main/platform.c:2494
 #, fuzzy
 msgid "over-long path length"
 msgstr "Muster mit Länge 0"
@@ -4900,36 +4896,36 @@ msgstr "Muster mit Länge 0"
 msgid "problem creating directory %ls: %s"
 msgstr "Problem beim erzeugen von Verzeichnis %ls: %s"
 
-#: src/main/platform.c:2314
+#: src/main/platform.c:2315
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "Problem beim Lesen von Verzeichnis %ls: %s"
 
-#: src/main/platform.c:2332
+#: src/main/platform.c:2333
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "Problem %ls nach %ls zu kopieren: %s"
 
-#: src/main/platform.c:2462
+#: src/main/platform.c:2463
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "Problem beim Erzeugen von Verzeichnis %s: %s"
 
-#: src/main/platform.c:2480
+#: src/main/platform.c:2482
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "Problem beim Lesen aus Verzeichnis %s: %s"
 
-#: src/main/platform.c:2501
+#: src/main/platform.c:2503
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "Problem %s nach %s zu kopieren: %s"
 
-#: src/main/platform.c:2624
+#: src/main/platform.c:2626
 msgid "'mode' must be of length at least one"
 msgstr "'mode' muss Länge >= 1 haben"
 
-#: src/main/platform.c:2691
+#: src/main/platform.c:2693
 msgid "insufficient OS support on this platform"
 msgstr "ungenügende OS Unterstützung auf dieser Plattform"
 
@@ -6464,7 +6460,7 @@ msgstr "Warnung auf 255 Zeichen gekürzt"
 
 #: src/main/util.c:1748
 #, fuzzy
-msgid "alll arguments must be named"
+msgid "all arguments must be named"
 msgstr "Attribute müssen Namen haben"
 
 #: src/main/util.c:1820
@@ -7452,3 +7448,6 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
+
+#~ msgid "'R_get_primname' called on a non-primitive"
+#~ msgstr "'R_get_primname' für ein non-primitive aufgerufen"

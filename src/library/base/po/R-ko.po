@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:48\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -252,6 +252,10 @@ msgstr "labels/breaks 의 길이가 일치하지 않습니다 "
 
 #, fuzzy
 msgid "invalid value of length(x)"
+msgstr "잘못된 값입니다 "
+
+#, fuzzy
+msgid "invalid value of length(breaks)"
 msgstr "잘못된 값입니다 "
 
 msgid "invalid 'row.names' length"

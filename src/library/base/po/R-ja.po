@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:48\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -249,6 +249,10 @@ msgstr " ラベルまたは分割点の長さが矛盾しています "
 
 #, fuzzy
 msgid "invalid value of length(x)"
+msgstr " 無効な値です "
+
+#, fuzzy
+msgid "invalid value of length(breaks)"
 msgstr " 無効な値です "
 
 msgid "invalid 'row.names' length"

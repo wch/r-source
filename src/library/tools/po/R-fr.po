@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-18 09:44\n"
+"POT-Creation-Date: 2012-07-30 14:20\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -161,7 +161,16 @@ msgstr ""
 "erreur d'analyse de code dans le fichier '%s' :\n"
 "%s"
 
-msgid "Foreign function calls without 'PACKAGE' argument:"
+#, fuzzy
+msgid "Foreign function call(s) without 'PACKAGE' argument:"
+msgstr "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+
+#, fuzzy
+msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+msgstr "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+
+#, fuzzy
+msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
 msgstr "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
 
 msgid "declared S3 method '%s' not found"
