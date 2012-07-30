@@ -22,14 +22,14 @@
 
 #include "methods.h"
 
+/* in names.c */
+SEXP getPRIMNAME(SEXP object);
+
+
 SEXP R_get_primname(SEXP object)
 {
     SEXP f;
     if(TYPEOF(object) != BUILTINSXP && TYPEOF(object) != SPECIALSXP)
 	error("'R_get_primname' called on a non-primitive");
-//    PROTECT(f = allocVector(STRSXP, 1));
-//    SET_STRING_ELT(f, 0, mkChar(PRIMNAME(object)));
-//    UNPROTECT(1);
-//    return f;
-    return mkString(PRIMNAME(object));
+    return mkString(getPRIMNAME(object));
 }
