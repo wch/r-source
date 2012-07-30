@@ -565,7 +565,7 @@ function(dir, control = list(), program = NULL)
            program = program)
 }
 
-## For spell checking pot files in a package.
+## For spell-checking pot files in a package.
 ## (Of course, directly analyzing the message strings would be more
 ## useful, but require writing an R text filter along the lines of
 ## tools::xgettext2pot().)
@@ -582,6 +582,32 @@ function(dir, control = list(), program = NULL)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
     aspell(files, filter = "pot", control = control,
+           encoding = encoding, program = program)
+}
+
+## For spell-checking package DESCRIPTION files.
+
+aspell_filter_description <-
+function(ifile, encoding)
+{
+    lines <- readLines(ifile, encoding = encoding)
+    line_has_tags <- grepl("^[^[:blank:]][^:]*:", lines)
+    tags <- sub(":.*", "", lines[line_has_tags])
+    lines <- split(lines, cumsum(line_has_tags))
+    ind <- is.na(match(tags, c("Title", "Description"))) 
+    lines[ind] <- lapply(lines[ind], function(s) rep.int("", length(s)))
+    unlist(lines, use.names = FALSE)
+}
+
+aspell_package_description <-
+function(dir, control = list(), program = NULL)
+{
+    dir <- tools::file_path_as_absolute(dir)
+    files <- file.path(dir, "DESCRIPTION")
+    meta <- tools:::.get_package_metadata(dir, installed = FALSE)
+    if(is.na(encoding <- meta["Encoding"]))
+        encoding <- "unknown"
+    aspell(files, filter = aspell_filter_description, control = control,
            encoding = encoding, program = program)
 }
 

@@ -5418,6 +5418,17 @@ function(dir)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
+    if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
+                                        FALSE))) {
+        a <- utils:::aspell_package_description(dir,
+                                                control =
+                                                 c("--master=en_US",
+                                                   "--add-extra-dicts=en_GB"),
+                                                program = "aspell")
+        if(NROW(a))
+            out$spelling <- a
+    }
+
     out
 
 }
@@ -5457,7 +5468,14 @@ function(x, ...)
             "New license:",
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old license:",
-            strwrap(y[[2L]], indent = 2L, exdent = 4L))
+            strwrap(y[[2L]], indent = 2L, exdent = 4L)),
+      if(NROW(y <- x$spelling)) {
+          s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
+          c("Possibly mis-spelled words in DESCRIPTION:",
+            sprintf("  %s (%s)",
+                    names(s),
+                    lapply(s, paste, collapse = ", ")))
+      }
       )
 }
 
