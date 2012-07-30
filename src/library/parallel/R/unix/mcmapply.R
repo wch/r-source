@@ -27,17 +27,15 @@ mcmapply <-
     n <- max(lens)
     if(n && min(lens) == 0L)
         stop("Zero-length inputs cannot be mixed with those of non-zero length")
-    answer <- if(n <= mc.cores) {
-        .Call("do_mapply", FUN, dots, MoreArgs, environment(), PACKAGE = "base")
-    } else {
+    answer <- if(n <= mc.cores) .Internal(mapply(FUN, dots, MoreArgs))
+    else {
         ## recycle shorter vectors
         X <- if (!all(lens == n))
             lapply(dots, function(x) rep(x, length.out = n))
         else dots
         do_one <- function(indices, ...) {
             dots <- lapply(X, function(x) x[indices])
-            .Call("do_mapply", FUN, dots, MoreArgs, environment(),
-                  PACKAGE = "base")
+            .Internal(mapply(FUN, dots, MoreArgs))
         }
         answer <- mclapply(seq_len(n), do_one, mc.preschedule = mc.preschedule,
                            mc.set.seed = mc.set.seed, mc.silent = mc.silent,

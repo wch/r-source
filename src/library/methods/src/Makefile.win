@@ -12,7 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = do_substitute_direct.c init.c methods_list_dispatch.c \
-  slot.c class_support.c tests.c
+  slot.c class_support.c tests.c utils.c
 SOURCES_F =
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o

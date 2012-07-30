@@ -67,7 +67,6 @@ SEXP R_do_new_object(SEXP);
 
 SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP do_mapply(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_shortRowNames(SEXP);
 SEXP R_copyDFattr(SEXP, SEXP);
@@ -86,8 +85,6 @@ SEXP R_unserialize(SEXP, SEXP);
 SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBflush(SEXP);
-
-SEXP R_get_primname(SEXP op);
 
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);

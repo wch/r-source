@@ -1486,7 +1486,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 {
     ## the primitive name is 'as.double', but S4 methods are
     ## traditionally set on 'as.numeric'
-    f <- .Call("R_get_primname", object, PACKAGE = "base")
+    f <- .Call("R_get_primname", object, PACKAGE = "methods")
     if(f == "as.double") "as.numeric" else f
 }
 

@@ -1488,6 +1488,7 @@ SEXP R_getClassDef(const char *what)
     return(e);
 }
 
+/* in Rinternals.h */
 SEXP R_do_new_object(SEXP class_def)
 {
     static SEXP s_virtual = NULL, s_prototype, s_className;
@@ -1527,7 +1528,6 @@ Rboolean attribute_hidden R_seemsOldStyleS4Object(SEXP object)
 }
 
 
-
 SEXP R_isS4Object(SEXP object)
 {
     /* wanted: return isS4(object) ? mkTrue() : mkFalse(); */
@@ -1547,7 +1547,7 @@ SEXP R_get_primname(SEXP object)
 {
     SEXP f;
     if(TYPEOF(object) != BUILTINSXP && TYPEOF(object) != SPECIALSXP)
-	error(_("'R_get_primname' called on a non-primitive"));
+	error("'R_get_primname' called on a non-primitive");
     PROTECT(f = allocVector(STRSXP, 1));
     SET_STRING_ELT(f, 0, mkChar(PRIMNAME(object)));
     UNPROTECT(1);

@@ -187,9 +187,6 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_getDllTable, 0),
     CALLDEF(R_getRegisteredRoutines, 1),
 
-    /* mapply */
-    CALLDEF(do_mapply, 4),
-
     CALLDEF(R_shortRowNames, 2),
     CALLDEF(R_copyDFattr, 2),
 
@@ -199,7 +196,6 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_isS4Object, 1),
     CALLDEF(R_setS4Object, 3),
     CALLDEF(R_do_new_object, 1),
-    CALLDEF(R_get_primname, 1),
 
     /* compression and serialization routines */
     CALLDEF(R_compress1, 1),
