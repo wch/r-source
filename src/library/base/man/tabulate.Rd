@@ -1,6 +1,6 @@
 % File src/library/base/man/tabulate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tabulate}
@@ -18,18 +18,22 @@ tabulate(bin, nbins = max(1, bin, na.rm = TRUE))
     \item{nbins}{the number of bins to be used.}
 }
 \details{
-   \code{tabulate} is used as the basis of the \code{\link{table}} function.
+   \code{tabulate} is the workhorse for the \code{\link{table}} function.
   
   If \code{bin} is a factor, its internal integer representation
   is tabulated.
   
   If the elements of \code{bin} are numeric but not integers,
-  they are truncated to the nearest integer.
+  they are truncated by \code{\link{as.integer}}.
 }
 \value{
   An integer vector (without names).  There is a bin for each of the
   values \code{1, \dots, nbins}; values outside that range and \code{NA}s
   are (silently) ignored.
+
+  On 64-bit platforms \code{bin} can have \eqn{2^{31}}{2^31} or more
+  elements and hence a count could exceed the maximum integer: this is
+  currently an error.
 }
 \seealso{
   \code{\link{table}}, \code{\link{factor}}.

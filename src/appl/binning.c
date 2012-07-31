@@ -38,6 +38,8 @@
 #define _(String) (String)
 #endif
 
+/* No longer used in R as it does not support long vectors */
+
 /* bincode  cuts up the data using half open intervals defined as [a,b)
    (if right = FALSE) or (a, b] (if right = TRUE)
 */

@@ -1866,17 +1866,14 @@ SEXP crc64ToString(SEXP in)
     return mkString(ans);
 }
 
-/* Unlike src/appl/binning.c, this allows long vectors.
-   FIXME: In principle counts could over-flow.
- */
 static void 
-bincode(double *x, R_xlen_t n, double *breaks, R_xlen_t nb,
+bincode(double *x, R_xlen_t n, double *breaks, int nb,
 	int *code, int right, int include_border)
 {
-    int i, lo, hi, nb1 = nb - 1, new;
+    int lo, hi, nb1 = nb - 1, new;
     int lft = !right;
 
-    for(i = 0; i < n; i++) {
+    for(R_xlen_t i = 0; i < n; i++) {
 	code[i] = NA_INTEGER;
 	if(!ISNAN(x[i])) {
 	    lo = 0;
@@ -1897,14 +1894,17 @@ bincode(double *x, R_xlen_t n, double *breaks, R_xlen_t nb,
     }
 }
 
-/* The R wrapper set the storage.mode */
+/* The R wrapper set the storage.mode.
+   'breaks' cannot be a long vector as the return codes are integer.
+ */
 SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
     if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
-    R_xlen_t n = XLENGTH(x), nB = XLENGTH(breaks);
+    R_xlen_t n = XLENGTH(x), nB = LENGTH(breaks);
     int sr = asLogical(right), sl = asLogical(lowest);
-    if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
+    if (nB = NA_INTEGER || sr == NA_INTEGER || sl == NA_INTEGER) 
+	error("invalid input");
     SEXP codes;
     PROTECT(codes = allocVector(INTSXP, n));
     bincode(REAL(x), n, REAL(breaks), nB, INTEGER(codes), sr, sl);
