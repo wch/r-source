@@ -103,13 +103,9 @@ hist.default <-
     storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
     ## arguments are often irrelevant (not with integer data!)
-    counts <- .C("bincount",
-		 x, n, fuzzybreaks, nB, counts = integer(nB - 1),
-		 right = as.logical(right),
-		 include= as.logical(include.lowest), naok = FALSE,
-		 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
+    counts <- .Call("BinCount", x, fuzzybreaks, right, include.lowest)
     if (any(counts < 0))
-	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
+	stop("negative 'counts'. Internal Error", domain = NA)
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
     dens <- counts/(n*diff(breaks)) # use un-fuzzed intervals

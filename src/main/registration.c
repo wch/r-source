@@ -61,7 +61,9 @@
 #include "basedecl.h"
 
 /* FIXME: bincode is no longer used in R, but is still used by
-   packages misc3d mixOmics spam 
+   packages misc3d mixOmics spam
+
+   bincount is no longer used in R, used in pegas.
 */
 
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
@@ -233,7 +235,9 @@ static R_CallMethodDef callMethods [] = {
 
     CALLDEF(crc64ToString, 1),
     CALLDEF(BinCode, 4),
+    CALLDEF(BinCount, 4),
     CALLDEF(R_Tabulate, 2),
+    CALLDEF(BinCount, 4),
 
     {NULL, NULL, 0}
 };

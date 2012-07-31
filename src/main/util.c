@@ -1868,6 +1868,49 @@ SEXP crc64ToString(SEXP in)
     return mkString(ans);
 }
 
+
+/* Formerly a version in src/appl/binning.c */
+static void 
+C_bincount(double *x, int n, double *breaks, int nb, int *count,
+	   int right, int include_border)
+{
+    int i, lo, hi, nb1 = nb - 1, new, lft = !right;
+
+    for(i = 0; i < nb1; i++) count[i] = 0;
+    for(i = 0 ; i < n ; i++)
+	if(R_FINITE(x[i])) { // left in as a precaution
+	    lo = 0;
+	    hi = nb1;
+	    if(breaks[lo] <= x[i] &&
+	       (x[i] < breaks[hi] || (x[i] == breaks[hi] && include_border))) {
+		while(hi-lo >= 2) {
+		    new = (hi+lo)/2;
+		    if(x[i] > breaks[new] || (lft && x[i] == breaks[new]))
+			lo = new;
+		    else
+			hi = new;
+		}
+		count[lo] += 1;
+	    }
+	}
+}
+
+/* The R wrapper removed non-finite values and set the storage.mode */
+SEXP BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
+{
+    if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
+	error("invalid input");
+    int n = LENGTH(x), nB = LENGTH(breaks);
+    if (n == NA_INTEGER || nB == NA_INTEGER) error("invalid input");
+    int sr = asLogical(right), sl = asLogical(lowest);
+    if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
+    SEXP counts;
+    PROTECT(counts = allocVector(INTSXP, nB - 1));
+    C_bincount(REAL(x), n, REAL(breaks), nB, INTEGER(counts), sr, sl);
+    UNPROTECT(1);
+    return counts;
+}
+
 #include <R_ext/Applic.h>
 
 /* The R wrapper set the storage.mode */
