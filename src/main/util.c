@@ -1747,7 +1747,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
     UErrorCode  status = U_ZERO_ERROR;
 
     for (; args != R_NilValue; args = CDR(args)) {
-	if (isNull(TAG(args))) error(_("alll arguments must be named"));
+	if (isNull(TAG(args))) error(_("all arguments must be named"));
 	const char *this = CHAR(PRINTNAME(TAG(args)));
 	const char *s;
 
@@ -1866,4 +1866,38 @@ SEXP crc64ToString(SEXP in)
     crc = lzma_crc64((uint8_t *)str, strlen(str), crc);
     snprintf(ans, 17, "%lx", (long unsigned int) crc);
     return mkString(ans);
+}
+
+#include <R_ext/Applic.h>
+
+/* The R wrapper set the storage.mode */
+SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
+{
+    if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
+	error("invalid input");
+    int n = LENGTH(x), nB = LENGTH(breaks);
+    if (n == NA_INTEGER || nB == NA_INTEGER) error("invalid input");
+    int sr = asLogical(right), sl = asLogical(lowest);
+    if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
+    SEXP codes;
+    PROTECT(codes = allocVector(INTSXP, n));
+    int naok = 1;
+    bincode(REAL(x), &n, REAL(breaks), &nB, INTEGER(codes), &sr, &sl, &naok);
+    UNPROTECT(1);
+    return codes;
+}
+
+SEXP R_Tabulate(SEXP in, SEXP nbin)
+{
+    if(TYPEOF(in) != INTSXP)  error("invalid input");
+    int n = LENGTH(in);
+    if (n == NA_INTEGER) error("invalid input");
+    int nb = asInteger(nbin);
+    if (nb == NA_INTEGER || nb < 0) error("invalid input");
+    SEXP ans = allocVector(INTSXP, nb);
+    int *x = INTEGER(in), *y = INTEGER(ans);
+    memset(y, 0, nb * sizeof(int));
+    for(int i = 0 ; i < n ; i++)
+	if (x[i] != NA_INTEGER && x[i] > 0 && x[i] <= nb) y[x[i] - 1]++;
+    return ans;
 }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2011	The R Core Team.
+ *  Copyright (C) 2002-2012	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,20 +60,8 @@
 
 #include "basedecl.h"
 
-/* Omitted (relative to those in ROUTINES):
-
-   fft_factor
-   fft_work
-   fdhess
-   optif9
-
-   These can still be called directly in native code in a package.
-   They are just not exported here for access via the .C(), .Call(),
-   .Fortran() or .External() interfaces.
-
-   If these omitted routines are not visible to package DLLs/shared
-   libraries on some platforms, the package should be linked against
-   Rdll.lib or libR.so or the equivalent on that platform.
+/* FIXME: bincode is no longer used in R, but is still used by
+   packages misc3d mixOmics spam 
 */
 
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
@@ -244,6 +232,8 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(bitwiseXor, 2),
 
     CALLDEF(crc64ToString, 1),
+    CALLDEF(BinCode, 4),
+    CALLDEF(R_Tabulate, 2),
 
     {NULL, NULL, 0}
 };

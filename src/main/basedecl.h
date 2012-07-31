@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2011	The R Core Team.
+ *  Copyright (C) 2002-2012	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -113,3 +113,6 @@ SEXP bitwiseAnd(SEXP, SEXP);
 SEXP bitwiseOr(SEXP, SEXP);
 SEXP bitwiseXor(SEXP, SEXP);
 SEXP crc64ToString(SEXP);
+
+SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest);
+SEXP R_Tabulate(SEXP in, SEXP nbin);

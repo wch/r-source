@@ -24,8 +24,8 @@ cut.default <-
     if (length(breaks) == 1L) {
 	if (is.na(breaks) || breaks < 2L)
 	    stop("invalid number of intervals")
-	nb <- as.integer(breaks + 1)# one more than #{intervals}
-	dx <- diff(rx <- range(x,na.rm=TRUE))
+	nb <- as.integer(breaks + 1) # one more than #{intervals}
+	dx <- diff(rx <- range(x, na.rm = TRUE))
 	if(dx == 0) dx <- abs(rx[1L])
 	breaks <- seq.int(rx[1L] - dx/1000,
                           rx[2L] + dx/1000, length.out = nb)
@@ -53,15 +53,7 @@ cut.default <-
         codes.only <- TRUE
     else if (length(labels) != nb - 1L)
         stop("labels/breaks length conflict")
-    if(!is.double(x)) storage.mode(x) <- "double"
-    if(!is.double(breaks)) storage.mode(breaks) <- "double"
-    nx <- as.integer(length(x))
-    if (is.na(nx)) stop("invalid value of length(x)")
-    code <- .C("bincode", x = x, n = nx, breaks = breaks,
-               as.integer(nb), code = integer(nx), right = as.logical(right),
-	       include = as.logical(include.lowest), naok = TRUE,
-	       NAOK = TRUE, DUP = FALSE, PACKAGE = "base") $code
-    ## NB this relies on passing NAOK in that position!
+    code <- .bincode(x, breaks, right, include.lowest)
     if(codes.only) code
     else factor(code, seq_along(labels), labels, ordered = ordered_result)
 }
@@ -70,12 +62,6 @@ cut.default <-
 .bincode <- function(x, breaks, right = TRUE, include.lowest = FALSE)
 {
     if(!is.double(x)) storage.mode(x) <- "double"
-    nx <- as.integer(length(x))
-    if (is.na(nx)) stop("invalid value of length(x)") # no long vectors
     if(!is.double(breaks)) storage.mode(breaks) <- "double"
-    nb <- as.integer(length(breaks <- sort.int(breaks)))
-    if (is.na(nb)) stop("invalid value of length(breaks)") # no long vectors
-    .C("bincode", x, nx, breaks, nb, code = integer(nx),
-       as.logical(right), as.logical(include.lowest), naok = TRUE,
-       NAOK = TRUE, DUP = FALSE, PACKAGE = "base")$code
+    .Call("BinCode", x, breaks, right, include.lowest, PACKAGE = "base")
 }

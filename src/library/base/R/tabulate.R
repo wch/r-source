@@ -27,8 +27,5 @@ tabulate <- function(bin, nbins = max(1L, bin, na.rm = TRUE))
     ## could remove once we have long vectors ....
     if (nbins > .Machine$integer.max)
         stop("attempt to make a table with >= 2^31 elements")
-    ## DUP = FALSE avoids 'bin' being duplicated.
-    .C("R_tabulate",
-       bin, nb, nbins, ans = integer(nbins),
-       NAOK = TRUE, PACKAGE = "base", DUP = FALSE)$ans
+    .Call("R_Tabulate", bin, nbins, PACKAGE = "base")
 }
