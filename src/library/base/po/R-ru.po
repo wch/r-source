@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-07-31 12:46\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -251,10 +251,6 @@ msgstr "'breaks' не уникальны"
 
 msgid "labels/breaks length conflict"
 msgstr "длины labels/breaks конфликтуют"
-
-#, fuzzy
-msgid "invalid value of length(x)"
-msgstr "неправильное значение"
 
 msgid "invalid 'row.names' length"
 msgstr "неправильная длина 'row.names'"
@@ -1804,6 +1800,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "invalid value of length(x)"
+#~ msgstr "неправильное значение"
 
 #~ msgid "'symbol.C' is not needed: please remove it"
 #~ msgstr "'symbol.C' не нужен: удалите его"

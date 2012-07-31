@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-07-31 12:46\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -216,10 +216,6 @@ msgstr "'break'가 엄밀히 말하자면, 증가가 아닙니다"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability'는 '!freq'의 별명입니다만, 그것들은 차이가 납니다"
-
-msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
-msgstr ""
-"negative의 'counts'입니다. \"bincount\"를 위한 C-코드의 내부 에러입니다"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
@@ -453,6 +449,10 @@ msgstr[0] "하나가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] ""
+
+#~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
+#~ msgstr ""
+#~ "negative의 'counts'입니다. \"bincount\"를 위한 C-코드의 내부 에러입니다"
 
 #, fuzzy
 #~ msgid "explanatory variable should be numeric"

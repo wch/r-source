@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-07-31 12:46\n"
 "PO-Revision-Date: 2011-10-18 19:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -221,9 +221,6 @@ msgstr "'breaks' не возрастают строго"
 
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability' является псевдонимом для '!freq', однако они отличаются."
-
-msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
-msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
@@ -462,6 +459,9 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
+
+#~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
+#~ msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""
 
 #~ msgid "explanatory variable should be numeric"
 #~ msgstr "независимая переменная должна быть числовой"

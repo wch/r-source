@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2012-07-31 12:46+0100\n"
 "PO-Revision-Date: 2012-03-05 15:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -176,7 +176,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/grep.c:1486 src/main/grep.c:1490 src/main/grep.c:1495
 #: src/main/grep.c:2298 src/main/grep.c:2303 src/main/grep.c:2590
 #: src/main/grep.c:2595 src/main/memory.c:3373 src/main/model.c:1612
-#: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:93
+#: src/main/model.c:1620 src/main/optim.c:220 src/main/paste.c:93
 #: src/main/paste.c:376 src/main/paste.c:383 src/main/paste.c:390
 #: src/main/paste.c:395 src/main/paste.c:400 src/main/paste.c:405
 #: src/main/paste.c:408 src/main/paste.c:416 src/main/paste.c:582
@@ -192,11 +192,11 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/platform.c:1607 src/main/platform.c:1610 src/main/platform.c:1693
 #: src/main/platform.c:1708 src/main/platform.c:1745 src/main/platform.c:1747
 #: src/main/platform.c:1812 src/main/platform.c:1896 src/main/platform.c:2171
-#: src/main/platform.c:2217 src/main/platform.c:2368 src/main/platform.c:2371
-#: src/main/platform.c:2374 src/main/platform.c:2377 src/main/platform.c:2380
-#: src/main/platform.c:2537 src/main/platform.c:2540 src/main/platform.c:2543
-#: src/main/platform.c:2546 src/main/platform.c:2549 src/main/platform.c:2618
-#: src/main/platform.c:2626 src/main/platform.c:2662 src/main/platform.c:2712
+#: src/main/platform.c:2217 src/main/platform.c:2369 src/main/platform.c:2372
+#: src/main/platform.c:2375 src/main/platform.c:2378 src/main/platform.c:2381
+#: src/main/platform.c:2539 src/main/platform.c:2542 src/main/platform.c:2545
+#: src/main/platform.c:2548 src/main/platform.c:2551 src/main/platform.c:2620
+#: src/main/platform.c:2628 src/main/platform.c:2664 src/main/platform.c:2714
 #: src/main/plot.c:3118 src/main/plot.c:4260 src/main/plot.c:4264
 #: src/main/plot.c:4267 src/main/plot3d.c:2446 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2455 src/main/plot3d.c:2459 src/main/plot3d.c:2463
@@ -4847,7 +4847,7 @@ msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr ""
 "Objekt der Klasse \"%s\" korrespondiert nicht mit einem gültigen S3 Objekt"
 
-#: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
+#: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:179
 msgid "non-finite value supplied by optim"
 msgstr "nicht endlicher Wert von optim angegeben"
 
@@ -4861,75 +4861,75 @@ msgstr "Zielfunktion gibt Ergebnis der Länge %d zurück, nicht Länge 1"
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "Gradient in optim gibt Ergebnis der Länge %d zurück, nicht Länge %d"
 
-#: src/main/optim.c:191
+#: src/main/optim.c:186
 #, c-format
 msgid "candidate point in optim evaluated to length %d not %d"
 msgstr ""
 "Kandidatenpunkt in optim gibt Ergebnis der Länge %d zurück, nicht Länge %d"
 
-#: src/main/optim.c:221 src/main/optim.c:425
+#: src/main/optim.c:216 src/main/optim.c:420
 msgid "'fn' is not a function"
 msgstr "'fn' ist keine Funktion"
 
-#: src/main/optim.c:238 src/main/optim.c:431
+#: src/main/optim.c:233 src/main/optim.c:426
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale' hat falsche Länge"
 
-#: src/main/optim.c:267
+#: src/main/optim.c:262
 msgid "'maxit' is not an integer"
 msgstr "'maxit' ist keine ganze Zahl"
 
-#: src/main/optim.c:286
+#: src/main/optim.c:281
 msgid "'tmax' is not an integer"
 msgstr "'tmax' ist keine ganze Zahl"
 
-#: src/main/optim.c:288 src/main/optim.c:305 src/main/optim.c:330
-#: src/main/optim.c:360 src/main/optim.c:439
+#: src/main/optim.c:283 src/main/optim.c:300 src/main/optim.c:325
+#: src/main/optim.c:355 src/main/optim.c:434
 msgid "'gr' is not a function"
 msgstr "'gr' ist keine Funktion"
 
-#: src/main/optim.c:311 src/main/optim.c:336 src/main/optim.c:366
-#: src/main/optim.c:445
+#: src/main/optim.c:306 src/main/optim.c:331 src/main/optim.c:361
+#: src/main/optim.c:440
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps' hat falsche Länge"
 
-#: src/main/optim.c:396
+#: src/main/optim.c:391
 msgid "unknown 'method'"
 msgstr "unbekannte 'method'"
 
-#: src/main/optim.c:544
+#: src/main/optim.c:539
 msgid "REPORT must be > 0 (method = \"BFGS\")"
 msgstr "REPORT muss > 0 sein (method = \"BFGS\")"
 
-#: src/main/optim.c:555
+#: src/main/optim.c:550
 msgid "initial value in 'vmmin' is not finite"
 msgstr "Anfangswert in 'vmmin' ist nicht endlich"
 
-#: src/main/optim.c:703
+#: src/main/optim.c:698
 msgid "function cannot be evaluated at initial parameters"
 msgstr "Funktion kann für die Startwerte nicht berechnet werden"
 
-#: src/main/optim.c:897
+#: src/main/optim.c:892
 msgid "unknown 'type' in CG method of optim"
 msgstr "unbekannter 'type' in CG Methode von optim"
 
-#: src/main/optim.c:910
+#: src/main/optim.c:905
 msgid "Function cannot be evaluated at initial parameters"
 msgstr "Funktion kann für die Startwerte nicht berechnet werden"
 
-#: src/main/optim.c:965
+#: src/main/optim.c:960
 msgid "unknown type in CG method of optim"
 msgstr "unbekannter Typ in CG Methode von optim"
 
-#: src/main/optim.c:1058
+#: src/main/optim.c:1053
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
 msgstr "REPORT muss > 0 sein (method = \"L-BFGS-B\")"
 
-#: src/main/optim.c:1082
+#: src/main/optim.c:1077
 msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr "L-BFGS-B benötigt endliche Werte von 'fn'"
 
-#: src/main/optim.c:1137
+#: src/main/optim.c:1132
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "trace, REPORT muss > 0 sein (method = \"SANN\")"
 
@@ -5417,13 +5417,13 @@ msgstr "'%ls' existiert bereits"
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "kann Verzeichnis '%ls' nicht erzeugen, Grund '%s'"
 
-#: src/main/platform.c:2267 src/main/platform.c:2423
+#: src/main/platform.c:2267 src/main/platform.c:2424
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2275 src/main/platform.c:2288 src/main/platform.c:2305
-#: src/main/platform.c:2323 src/main/platform.c:2439 src/main/platform.c:2453
-#: src/main/platform.c:2472 src/main/platform.c:2492
+#: src/main/platform.c:2275 src/main/platform.c:2288 src/main/platform.c:2306
+#: src/main/platform.c:2324 src/main/platform.c:2440 src/main/platform.c:2454
+#: src/main/platform.c:2474 src/main/platform.c:2494
 #, fuzzy
 msgid "over-long path length"
 msgstr "Parameter Längen passen nicht"
@@ -5433,36 +5433,36 @@ msgstr "Parameter Längen passen nicht"
 msgid "problem creating directory %ls: %s"
 msgstr "Problem beim erzeugen von Verzeichnis %ls: %s"
 
-#: src/main/platform.c:2313
+#: src/main/platform.c:2314
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "Problem beim Lesen von Verzeichnis %ls: %s"
 
-#: src/main/platform.c:2331
+#: src/main/platform.c:2332
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "Problem %ls nach %ls zu kopieren: %s"
 
-#: src/main/platform.c:2462
+#: src/main/platform.c:2463
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "Problem beim Erzeugen von Verzeichnis %s: %s"
 
-#: src/main/platform.c:2480
+#: src/main/platform.c:2482
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "Problem beim Lesen aus Verzeichnis %s: %s"
 
-#: src/main/platform.c:2501
+#: src/main/platform.c:2503
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "Problem %s nach %s zu kopieren: %s"
 
-#: src/main/platform.c:2623
+#: src/main/platform.c:2625
 msgid "'mode' must be of length at least one"
 msgstr "'mode' muss Länge >= 1 haben"
 
-#: src/main/platform.c:2690
+#: src/main/platform.c:2692
 msgid "insufficient OS support on this platform"
 msgstr "ungenügende OS Unterstützung auf dieser Plattform"
 
@@ -7363,7 +7363,7 @@ msgstr "Warnung auf 255 Zeichen gekürzt"
 
 #: src/main/util.c:1750
 #, fuzzy
-msgid "alll arguments must be named"
+msgid "all arguments must be named"
 msgstr "Attribute müssen Namen haben"
 
 #: src/main/util.c:1822

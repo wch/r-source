@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-07-31 12:46\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -256,10 +256,6 @@ msgstr "'breaks' ne sont pas des valeurs uniques"
 
 msgid "labels/breaks length conflict"
 msgstr "longueurs de 'labels' et 'breaks' non conformes"
-
-#, fuzzy
-msgid "invalid value of length(x)"
-msgstr "valeur incorrecte"
 
 msgid "invalid 'row.names' length"
 msgstr "longueur de 'row.names' incorrecte"
@@ -1852,6 +1848,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "invalid value of length(x)"
+#~ msgstr "valeur incorrecte"
 
 #~ msgid ""
 #~ "Functions for exporting methods must have been made generic, explicitly "

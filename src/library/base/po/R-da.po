@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-07-31 12:46\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -242,10 +242,6 @@ msgstr "'breaks' er ikke unikke"
 
 msgid "labels/breaks length conflict"
 msgstr "længdekonflikt for etiketter/skift"
-
-#, fuzzy
-msgid "invalid value of length(x)"
-msgstr "ugyldigt antal intervaller"
 
 msgid "invalid 'row.names' length"
 msgstr "ugyldig længde for 'row.names'"
@@ -1759,6 +1755,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "invalid value of length(x)"
+#~ msgstr "ugyldigt antal intervaller"
 
 #~ msgid "'symbol.C' is not needed: please remove it"
 #~ msgstr "'symbol.C' er ikke krævet: fjern det venligst"

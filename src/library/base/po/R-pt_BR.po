@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-07-31 12:46\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -249,10 +249,6 @@ msgstr "'breaks' não são únicos"
 
 msgid "labels/breaks length conflict"
 msgstr "conflito de tamanho entre labels e breaks"
-
-#, fuzzy
-msgid "invalid value of length(x)"
-msgstr "valor inválido"
 
 msgid "invalid 'row.names' length"
 msgstr "'row.names' com comprimento inválido"
@@ -1861,6 +1857,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "invalid value of length(x)"
+#~ msgstr "valor inválido"
 
 #~ msgid "'symbol.C' is not needed: please remove it"
 #~ msgstr "'symbol.C' não é necesário: por favor remova"
