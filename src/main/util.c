@@ -1903,7 +1903,7 @@ SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 	error("invalid input");
     R_xlen_t n = XLENGTH(x), nB = LENGTH(breaks);
     int sr = asLogical(right), sl = asLogical(lowest);
-    if (nB = NA_INTEGER || sr == NA_INTEGER || sl == NA_INTEGER) 
+    if (nB == NA_INTEGER || sr == NA_INTEGER || sl == NA_INTEGER) 
 	error("invalid input");
     SEXP codes;
     PROTECT(codes = allocVector(INTSXP, n));
