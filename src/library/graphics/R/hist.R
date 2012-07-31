@@ -105,7 +105,7 @@ hist.default <-
     ## arguments are often irrelevant (not with integer data!)
     counts <- .Call(C_BinCount, x, fuzzybreaks, right, include.lowest)
     if (any(counts < 0L))
-	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
+	stop("negative 'counts'. Internal Error.", domain = NA)
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
     dens <- counts/(n*diff(breaks)) # use un-fuzzed intervals

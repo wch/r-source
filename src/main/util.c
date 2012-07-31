@@ -1866,21 +1866,48 @@ SEXP crc64ToString(SEXP in)
     return mkString(ans);
 }
 
-#include <R_ext/Applic.h>
+/* Unlike src/appl/binning.c, this allows long vectors.
+   FIXME: In principle counts could over-flow.
+ */
+static void 
+bincode(double *x, R_xlen_t n, double *breaks, R_xlen_t nb,
+	int *code, int right, int include_border)
+{
+    int i, lo, hi, nb1 = nb - 1, new;
+    int lft = !right;
+
+    for(i = 0; i < n; i++) {
+	code[i] = NA_INTEGER;
+	if(!ISNAN(x[i])) {
+	    lo = 0;
+	    hi = nb1;
+	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
+	       (x[i] == breaks[lft ? hi : lo] && ! include_border)) ;
+	    else {
+		while(hi - lo >= 2) {
+		    new = (hi + lo)/2;
+		    if(x[i] > breaks[new] || (lft && x[i] == breaks[new]))
+			lo = new;
+		    else
+			hi = new;
+		}
+		code[i] = lo + 1;
+	    }
+	}
+    }
+}
 
 /* The R wrapper set the storage.mode */
 SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
     if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
-    int n = LENGTH(x), nB = LENGTH(breaks);
-    if (n == NA_INTEGER || nB == NA_INTEGER) error("invalid input");
+    R_xlen_t n = XLENGTH(x), nB = XLENGTH(breaks);
     int sr = asLogical(right), sl = asLogical(lowest);
     if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
     SEXP codes;
     PROTECT(codes = allocVector(INTSXP, n));
-    int naok = 1;
-    bincode(REAL(x), &n, REAL(breaks), &nB, INTEGER(codes), &sr, &sl, &naok);
+    bincode(REAL(x), n, REAL(breaks), nB, INTEGER(codes), sr, sl);
     UNPROTECT(1);
     return codes;
 }
@@ -1888,14 +1915,14 @@ SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 SEXP R_Tabulate(SEXP in, SEXP nbin)
 {
     if(TYPEOF(in) != INTSXP)  error("invalid input");
-    int n = LENGTH(in);
-    if (n == NA_INTEGER) error("invalid input");
+    R_xlen_t n = XLENGTH(in);
+    /* FIXME: could in principle be a long vector */
     int nb = asInteger(nbin);
     if (nb == NA_INTEGER || nb < 0) error("invalid input");
     SEXP ans = allocVector(INTSXP, nb);
     int *x = INTEGER(in), *y = INTEGER(ans);
     memset(y, 0, nb * sizeof(int));
-    for(int i = 0 ; i < n ; i++)
+    for(R_xlen_t i = 0 ; i < n ; i++)
 	if (x[i] != NA_INTEGER && x[i] > 0 && x[i] <= nb) y[x[i] - 1]++;
     return ans;
 }

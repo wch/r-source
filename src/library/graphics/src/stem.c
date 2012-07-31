@@ -150,13 +150,16 @@ SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
 
 /* Formerly a version in src/appl/binning.c */
 
+/* FIXME: with long vectors, count could overflow */
 static void 
 C_bincount(double *x, int n, double *breaks, int nb, int *count,
 	   int right, int include_border)
 {
-    int i, lo, hi, nb1 = nb - 1, new, lft = !right;
+    R_xlen_t i, lo, hi, nb1 = nb - 1, new;
+    int lft = !right;
 
-    for(i = 0; i < nb1; i++) count[i] = 0;
+    // for(i = 0; i < nb1; i++) count[i] = 0;
+    memset(count, 0, nb1 * sizeof(int));
 
     for(i = 0 ; i < n ; i++)
 	if(R_FINITE(x[i])) { // left in as a precaution
@@ -181,8 +184,7 @@ SEXP C_BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
     if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
-    int n = LENGTH(x), nB = LENGTH(breaks);
-    if (n == NA_INTEGER || nB == NA_INTEGER) error("invalid input");
+    R_xlen_t n = XLENGTH(x), nB = XLENGTH(breaks);
     int sr = asLogical(right), sl = asLogical(lowest);
     if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
     SEXP counts;
