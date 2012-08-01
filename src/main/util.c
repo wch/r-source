@@ -1926,3 +1926,24 @@ SEXP R_Tabulate(SEXP in, SEXP nbin)
 	if (x[i] != NA_INTEGER && x[i] > 0 && x[i] <= nb) y[x[i] - 1]++;
     return ans;
 }
+
+/* x can be a long vector but xt cannot since the result is integer */
+SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside)
+{
+    if(TYPEOF(xt) != REALSXP || TYPEOF(x) != REALSXP) error("invalid input");
+    int n = LENGTH(xt);
+    if (n == NA_INTEGER) error("invalid input");
+    R_xlen_t nx = XLENGTH(x);
+    int sr = asLogical(right), si = asLogical(inside);
+    if (sr == NA_INTEGER || si == NA_INTEGER) error("invalid input");
+    SEXP ans;
+    PROTECT(ans = allocVector(INTSXP, nx));  // not currently needed
+    int ii = 1;
+    for(R_xlen_t i = 0; i < nx; i++) {
+	int mfl = si;
+	ii = findInterval(REAL(xt), n, REAL(x)[i], sr, si, ii,  &mfl);
+	INTEGER(ans)[i] = ii;
+    }
+    UNPROTECT(1);
+    return ans;
+}
