@@ -94,11 +94,13 @@ void bakslv(double *, int *, int *,
 	    double *, int *, int *,
 	    double *, int *, int *);
 
+#ifdef OLD
 /* appl/binning.c : hidden */
 void bincode (double *x, int *n, double *breaks, int *nb,
 	      int *code, int *right, int *include_border, int *naok);
 void bincount(double *x, int *n, double *breaks, int *nb, int *count,
 	      int *right, int *include_border, int *naok);
+#endif
 
 /* appl/ch2inv.f */
 void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
@@ -191,8 +193,10 @@ void R_rowsum(int *dim, double *na_x, double *x, double *group);
 void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result);
 
-/* appl/tabulate.c : non-API, used in package ape */
+#ifdef OLD
+/* appl/tabulate.c : non-API, used in packages pcaPA and phangorn */
 void R_tabulate(int *x, int *n, int *nbin, int *ans);
+#endif
 
 /* appl/uncmin.c : */
 

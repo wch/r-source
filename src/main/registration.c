@@ -63,6 +63,8 @@
 /* FIXME: bincode is no longer used in R, but is still used by
    packages misc3d mixOmics spam 
 */
+void bincode (double *x, int *n, double *breaks, int *nb,
+	      int *code, int *right, int *include_border, int *naok);
 
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
 
