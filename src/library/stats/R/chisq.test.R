@@ -61,8 +61,10 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
     }
     if (is.matrix(x)) {
 	METHOD <- "Pearson's Chi-squared test"
-	nr <- nrow(x)
-	nc <- ncol(x)
+        nr <- as.integer(nrow(x))
+        nc <- as.integer(ncol(x))
+        if (is.na(nr) || is.na(nc) || is.na(nr * nc))
+            stop("invalid nrow(x) or ncol(x)", domain = NA)
 	sr <- rowSums(x)
 	sc <- colSums(x)
 	E <- outer(sr, sc, "*") / n
@@ -76,15 +78,15 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	if (simulate.p.value && all(sr > 0) && all(sc > 0)) {
 	    setMETH()
 	    tmp <- .C(C_chisqsim,
-		      as.integer(nr),
-		      as.integer(nc),
+		      nr,
+		      nc,
 		      as.integer(sr),
 		      as.integer(sc),
 		      as.integer(n),
 		      as.integer(B),
 		      as.double(E),
 		      integer(nr * nc),
-		      double(n + 1),
+		      double(n + 1L),
 		      integer(nc),
 		      results = double(B))
 	    ## Sorting before summing may look strange, but seems to be
@@ -97,7 +99,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	else {
 	    if (simulate.p.value)
 		warning("cannot compute simulated p-value with zero marginals")
-	    if (correct && nrow(x) == 2 && ncol(x) == 2) {
+	    if (correct && nrow(x) == 2L && ncol(x) == 2L) {
 		YATES <- min(0.5, abs(x-E))
                 if (YATES > 0)
 		    METHOD <- paste(METHOD, "with Yates' continuity correction")
@@ -105,7 +107,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	    else
 		YATES <- 0
 	    STATISTIC <- sum((abs(x - E) - YATES)^2 / E)
-	    PARAMETER <- (nr - 1) * (nc - 1)
+	    PARAMETER <- (nr - 1L) * (nc - 1L)
 	    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
 	}
     }

@@ -21,19 +21,20 @@
 diffinv <- function (x, ...) { UseMethod("diffinv") }
 
 ## the workhorse of diffinv.default:
-diffinv.vector <- function (x, lag = 1, differences = 1, xi, ...)
+diffinv.vector <- function (x, lag = 1L, differences = 1L, xi, ...)
 {
     if (!is.vector(x)) stop ("'x' is not a vector")
-    if (lag < 1 || differences < 1) stop ("bad value for 'lag' or 'differences'")
+    lag <- as.integer(lag); difference <- as.integer(differences)
+    if (lag < 1L || differences < 1L) stop ("bad value for 'lag' or 'differences'")
     if(missing(xi)) xi <- rep(0., lag*differences)
     if (length(xi) != lag*differences) stop ("'xi' has not the right length")
-    if (differences == 1) {
+    if (differences == 1L) {
         x <- as.double(x)
         xi <- as.double(xi)
-        n <- length(x)
+        n <- as.integer(length(x))
+        if (is.na(n)) stop ("invalid value of length(x)")
         y <- c(xi[1L:lag], double(n))
-        .C(C_R_intgrt_vec,
-           x, y=y, as.integer(lag), n, PACKAGE="stats")$y
+        .C(C_R_intgrt_vec, x, y = y, lag, n, PACKAGE="stats")$y
     }
     else
         diffinv.vector(diffinv.vector(x, lag, differences-1,

@@ -32,20 +32,21 @@ acf <-
     x <- as.matrix(x)
     if(!is.numeric(x))
         stop("'x' must be numeric")
-    sampleT <- nrow(x)
-    nser <- ncol(x)
+    sampleT <- as.integer(nrow(x))
+    nser <- as.integer(ncol(x))
+    if(is.na(sampleT) || is.na(nser)) stop("sampleT and nser must be ints",
+                                           domain = NA)
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
-    lag.max <- min(lag.max, sampleT - 1)
-    if (lag.max < 0) stop("'lag.max' must be at least 0")
+    lag.max <- as.integer(min(lag.max, sampleT - 1L))
+    if (is.na(lag.max) || lag.max < 0) stop("'lag.max' must be at least 0")
     if(demean)
 	x <- sweep(x, 2, colMeans(x, na.rm = TRUE), check.margin=FALSE)
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
-    acf <- array(.C(C_acf,
-                    as.double(x), as.integer(sampleT), as.integer(nser),
-                    as.integer(lag.max), as.integer(type=="correlation"),
-                    acf=double((lag.max+1L) * nser * nser), NAOK = TRUE
+    acf <- array(.C(C_acf, as.double(x), sampleT, nser, lag.max,
+                    as.integer(type == "correlation"),
+                    acf = double((lag.max+1L) * nser * nser), NAOK = TRUE
                     )$acf, c(lag.max + 1L, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,

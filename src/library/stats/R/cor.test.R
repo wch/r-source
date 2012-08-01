@@ -39,12 +39,12 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     conf.int <- FALSE
 
     if(method == "pearson") {
-	if(n < 3)
+	if(n < 3L)
 	    stop("not enough finite observations")
 	method <- "Pearson's product-moment correlation"
 	names(NVAL) <- "correlation"
 	r <- cor(x, y)
-        df <- n - 2
+        df <- n - 2L
 	ESTIMATE <- c(cor = r)
 	PARAMETER <- c(df = df)
 	STATISTIC <- c(t = sqrt(df) * r / sqrt(1 - r^2))

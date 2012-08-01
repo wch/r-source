@@ -57,6 +57,7 @@ lm.influence <- function (model, do.coef = TRUE)
         n <- as.integer(nrow(mqr$qr))
         if (is.na(n)) stop("invalid model QR matrix")
         k <- as.integer(mqr$rank)
+        if (is.na(k)) stop("invalid model QR matrix")
         ## in na.exclude case, omit NAs; also drop 0-weight cases
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")

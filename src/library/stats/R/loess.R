@@ -127,7 +127,7 @@ simpleLoess <-
     if(sum.parametric == D) stop("specified parametric for all predictors")
 
     if(iterations)
-    for(j in 1L:iterations) {
+    for(j in seq_len(iterations)) {
 	robust <- weights * robust
 	if(j > 1) statistics <- "none"
 	else if(surface == "interpolate" && statistics == "approximate")
@@ -175,9 +175,9 @@ simpleLoess <-
 	fit.kd <- list(parameter=pars, a=z$a[1L:pars[4L]], xi=z$xi[1L:pars[4L]],
 		       vert=z$vert, vval=z$vval[1L:enough])
     }
-    if(iterations > 1) {
+    if(iterations > 1L) {
 	pseudovalues <- .Fortran(C_lowesp,
-				 as.integer(N),
+				 N,
 				 as.double(y),
 				 as.double(z$fitted.values),
 				 as.double(weights),

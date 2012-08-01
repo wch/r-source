@@ -84,12 +84,12 @@ hclust <- function(d, method="complete", members=NULL)
     ## as merge, height, and order lists.
 
     hcass <- .Fortran(C_hcass2,
-		      n = as.integer(n),
-		      ia = as.integer(hcl$ia),
-		      ib = as.integer(hcl$ib),
+		      n = n, # checked above.
+		      ia = hcl$ia,
+		      ib = hcl$ib,
   		      order = integer(n),
 		      iia = integer(n),
-		      iib = integer(n), PACKAGE="stats")
+		      iib = integer(n))
 
     tree <- list(merge = cbind(hcass$iia[1L:(n-1)], hcass$iib[1L:(n-1)]),
 		 height= hcl$crit[1L:(n-1)],

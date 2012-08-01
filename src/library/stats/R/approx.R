@@ -77,8 +77,10 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	    stop("'approx' requires n >= 1")
 	xout <- seq.int(x[1L], x[nx], length.out = n)
     }
+    nxout <- as.integer(length(xout))
+    if (is.na(nxout)) stop("invalid length(xout)")
     y <- .C(C_R_approx, as.double(x), as.double(y), nx,
-	    xout = as.double(xout), as.integer(length(xout)),
+	    xout = as.double(xout), nxout,
 	    as.integer(method), as.double(yleft), as.double(yright),
 	    as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
     list(x = xout, y = y)
@@ -112,50 +114,13 @@ approxfun <- function(x, y = NULL, method = "linear",
     rm(rule, ties, lenR)
 
     ## 1. Test input consistency once
-    .C(C_R_approxtest,as.double(x), as.double(y), as.integer(n),
+    .C(C_R_approxtest,as.double(x), as.double(y), n,
         as.integer(method), as.double(f), NAOK = TRUE,
         PACKAGE = "stats")
 
     ## 2. Create and return function that does not test input validity...
-    function(v) .C(C_R_approxfun, as.double(x), as.double(y), as.integer(n),
+    function(v) .C(C_R_approxfun, as.double(x), as.double(y), n,
         xout = as.double(v), as.integer(length(v)), as.integer(method),
         as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE,
         PACKAGE = "stats")$xout
-}
-
-### duplicate from base/R/findint.R
-if(FALSE) {
-### This is a `variant' of  approx( method = "constant" ) :
-findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
-{
-    ## Purpose: gives back the indices of  x in vec;  vec[] sorted
-    ## -------------------------------------------------------------------------
-    ## Author: Martin Maechler, Date:  4 Jan 2002, 10:16
-
-    if(any(is.na(vec)))
-	stop("'vec' contains NAs")
-    if(is.unsorted(vec))
-	stop("'vec' must be sorted non-decreasingly")
-    ## deal with NA's in x:
-    if(has.na <- any(ix <- is.na(x)))
-	x <- x[!ix]
-    nx <- as.integer(length(x))
-    if (is.na(nx)) stop("invalid length(x)")
-    nv <- as.integer(length(vec))
-    if (is.na(nv)) stop("invalid length(vec)")
-    index <- integer(nx)
-    .C("find_interv_vec",
-       xt = as.double(vec), n = nv,
-       x  = as.double(x),  nx = nx,
-       as.logical(rightmost.closed),
-       as.logical(all.inside),
-       index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only
-       PACKAGE = "base")
-    if(has.na) {
-	ii <- as.integer(ix)
-	ii[ix] <- NA
-	ii[!ix] <- index
-	ii
-    } else index
-}
 }

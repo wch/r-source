@@ -14,11 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-max.col <- function(m, ties.method=c("random", "first", "last"))
+max.col <- function(m, ties.method = c("random", "first", "last"))
 {
     ties.method <- match.arg(ties.method)
     m <- as.matrix(m)
-    n <- nrow(m)
+    n <- as.integer(nrow(m))
+    if (is.na(n)) stop("invalid value of nrow(x)")
     .C("R_max_col",
        as.double(m),
        n,
