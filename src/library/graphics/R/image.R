@@ -87,7 +87,11 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	    stop("breaks must all be finite")
         ## spatstat passes a factor matrix here.
         z1 <- if (!is.double(z)) as.double(z) else z
-        zi <- .bincode(z1, breaks, TRUE, TRUE) - 1L
+        if (!is.double(breaks)) breaks <- as.double(breaks)
+	zi <- .C("bincode",
+		 z1, length(z), breaks, length(breaks),
+		 code = integer(length(z)), TRUE, TRUE, noak = TRUE,
+		 NAOK = TRUE, DUP = FALSE, PACKAGE = "base")$code - 1
     }
     if (!add)
 	plot(NA, NA, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
