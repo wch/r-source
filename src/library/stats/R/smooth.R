@@ -28,7 +28,8 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
     rules <- c("copy","Tukey")#- exact order matters!
     if(is.na(iend <- pmatch(endrule, rules)))
         stop("wrong endrule")
-    n <- length(x)
+    n <- as.integer(length(x))
+    if(is.na(n)) stop("invalid length(x)")
     kind <- match.arg(kind)
     if(substr(kind ,1L, 3L) == "3RS" && !do.ends)
         iend <- -iend
@@ -40,7 +41,7 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
               y = double(n),
               n, iend,
               iter = integer(1L),
-              DUP=FALSE,
+              DUP = FALSE,
 	      PACKAGE = "stats")[c("y","iter")]
 
     if(any(kind == c("R", "S"))) { # `iter' really was `changed'
