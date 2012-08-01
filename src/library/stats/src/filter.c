@@ -77,6 +77,56 @@ filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
     }
 }
 
+SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
+{
+   if (TYPEOF(sx) != REALSXP || TYPEOF(sfilter) != REALSXP)
+       error("invalid input");
+    R_xlen_t nx = XLENGTH(sx), nf = XLENGTH(sfilter);
+    int sides = asInteger(ssides), circular = asLogical(scircular);
+    if(sides == NA_INTEGER || circular == NA_LOGICAL)  error("invalid input");
+
+    SEXP ans = allocVector(REALSXP, nx);
+
+    R_xlen_t i, j, nshift;
+    double z, tmp, *x = REAL(sx), *filter = REAL(sfilter), *out = REAL(ans);
+
+    if(sides == 2) nshift = nf /2; else nshift = 0;
+    if(!circular) {
+	for(i = 0; i < nx; i++) {
+	    z = 0;
+	    if(i + nshift - (nf - 1) < 0 || i + nshift >= nx) {
+		out[i] = NA_REAL;
+		continue;
+	    }
+	    for(j = max(0, nshift + i - nx); j < min(nf, i + nshift + 1) ; j++) {
+		tmp = x[i + nshift - j];
+		if(my_isok(tmp)) z += filter[j] * tmp;
+		else { out[i] = NA_REAL; goto bad; }
+	    }
+	    out[i] = z;
+	bad:
+	    continue;
+	}
+    } else { /* circular */
+	for(i = 0; i < nx; i++)
+	{
+	    z = 0;
+	    for(j = 0; j < nf; j++) {
+		R_xlen_t ii = i + nshift - j;
+		if(ii < 0) ii += nx;
+		if(ii >= nx) ii -= nx;
+		tmp = x[ii];
+		if(my_isok(tmp)) z += filter[j] * tmp;
+		else { out[i] = NA_REAL; goto bad2; }
+	    }
+	    out[i] = z;
+	bad2:
+	    continue;
+	}
+    }
+    return ans;
+}
+
 /* recursive filtering */
 void
 filter2(double *x, int *n, double *filter, int *nfilt, double *out)
@@ -95,6 +145,27 @@ filter2(double *x, int *n, double *filter, int *nfilt, double *out)
     bad3:
 	continue;
     }
+}
+
+SEXP filter4(SEXP x, SEXP filter, SEXP out)
+{
+   if (TYPEOF(x) != REALSXP || TYPEOF(filter) != REALSXP
+       || TYPEOF(out) != REALSXP) error("invalid input");
+    R_xlen_t nx = XLENGTH(x), nf = XLENGTH(filter);
+    double sum, tmp, *r = REAL(out), *rx = REAL(x), *rf = REAL(filter);
+
+    for(R_xlen_t i = 0; i < nx; i++) {
+	sum = rx[i];
+	for (R_xlen_t j = 0; j < nf; j++) {
+	    tmp = r[nf + i - j - 1];
+	    if(my_isok(tmp)) sum += tmp * rf[j];
+	    else { r[nf + i] = NA_REAL; goto bad3; }
+	}
+	r[nf + i] = sum;
+    bad3:
+	continue;
+    }
+    return out;
 }
 
 /* now allows missing values */

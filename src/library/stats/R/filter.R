@@ -31,20 +31,13 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     if(method == "convolution") {
         if(nfilt > n) stop("'filter' is longer than time series")
         sides <- as.integer(sides)
-        if(is.na(sides) ||( sides != 1 && sides != 2))
+        if(is.na(sides) ||( sides != 1L && sides != 2L))
             stop("argument 'sides' must be 1 or 2")
         circular <- as.logical(circular)
         if (is.na(circular)) stop("'circular' must be logical and not NA")
         for (i in 1L:nser)
-            y[, i] <- .C(C_filter1,
-                         as.double(x[,i]),
-                         n,
-                         as.double(filter),
-                         nfilt,
-                         sides,
-                         circular,
-                         out = double(n), NAOK = TRUE,
-                         PACKAGE = "stats")$out
+            y[, i] <- .Call(C_filter3, as.double(x[, i]), as.double(filter),
+                            sides, circular)
     } else {
         if(missing(init)) {
             init <- matrix(0, nfilt, nser)
@@ -52,24 +45,20 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             ni <- NROW(init)
             if(ni != nfilt)
                 stop("length of 'init' must equal length of 'filter'")
-            if(NCOL(init) != 1 && NCOL(init) != nser)
+            if(NCOL(init) != 1L && NCOL(init) != nser)
                 stop(gettextf("'init'; must have 1 or %d cols", nser),
                      domain = NA)
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }
+        ## NB: this alters its third argument
         for (i in 1L:nser)
-            y[, i] <- .C(C_filter2,
-                         as.double(x[,i]),
-                         n,
-                         as.double(filter),
-                         nfilt,
-                         out = as.double(c(rev(init[, i]), double(n))),
-                         NAOK = TRUE,
-                         PACKAGE = "stats")$out[-(1L:nfilt)]
+            y[, i] <-
+                .Call(C_filter4, as.double(x[,i]), as.double(filter),
+                      as.double(c(rev(init[, i]), double(n))))[-(1L:nfilt)]
     }
     y <- drop(y)
     tsp(y) <- xtsp
-    class(y) <- if(nser > 1) c("mts", "ts") else "ts"
+    class(y) <- if(nser > 1L) c("mts", "ts") else "ts"
     y
 }
 

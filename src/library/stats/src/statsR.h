@@ -53,3 +53,7 @@ SEXP Random3(SEXP args);
 SEXP distn2(SEXP args);
 SEXP distn3(SEXP args);
 SEXP distn4(SEXP args);
+
+SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular);
+SEXP filter4(SEXP x, SEXP filter, SEXP out);
+

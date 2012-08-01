@@ -37,16 +37,6 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
         stop("NA logical arguments", domain = NA)
     index <- .Call("FindIntervVec", as.double(vec), as.double(x),
                    right, inside, PACKAGE = "base")
-    if(FALSE) {
-    index <- integer(nx)
-    ## NB: this is naughty, and changes index in-place.
-    .C("find_interv_vec",
-       xt = as.double(vec), n = nv,
-       x  = as.double(x),  nx = nx,
-       right, inside,
-       index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only
-       PACKAGE = "base")
-}
     if(has.na) {
 	ii <- as.integer(ix)
 	ii[ix] <- NA
