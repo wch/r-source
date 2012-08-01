@@ -1935,15 +1935,18 @@ SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside)
     if (n == NA_INTEGER) error("invalid input");
     R_xlen_t nx = XLENGTH(x);
     int sr = asLogical(right), si = asLogical(inside);
-    if (sr == NA_INTEGER || si == NA_INTEGER) error("invalid input");
-    SEXP ans;
-    PROTECT(ans = allocVector(INTSXP, nx));  // not currently needed
+    if (sr == NA_INTEGER) error("invalid 'rightmost.closed' argument");
+    if (si == NA_INTEGER) error("invalid 'all.inside' argument");
+    SEXP ans = allocVector(INTSXP, nx);
+    double *rxt = REAL(xt), *rx = REAL(x);
     int ii = 1;
-    for(R_xlen_t i = 0; i < nx; i++) {
-	int mfl = si;
-	ii = findInterval(REAL(xt), n, REAL(x)[i], sr, si, ii,  &mfl);
+    for(int i = 0; i < nx; i++) {
+	if (ISNAN(REAL(x)[i])) ii = NA_INTEGER;
+	else {
+	    int mfl = si;
+	    ii = findInterval(rxt, n, rx[i], sr, si, ii, &mfl);
+	}
 	INTEGER(ans)[i] = ii;
     }
-    UNPROTECT(1);
     return ans;
 }

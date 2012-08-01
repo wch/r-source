@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## Because this works with matrices, it cannot yet work with long vectors
 filter <- function(x, filter, method = c("convolution", "recursive"),
                    sides = 2L, circular = FALSE, init=NULL)
 {
