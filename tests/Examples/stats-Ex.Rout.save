@@ -15366,12 +15366,11 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > ## look at the internal structure:
 > unclass(sfun0)
 function (v) 
-.C(C_R_approxfun, as.double(x), as.double(y), as.integer(n), 
-    xout = as.double(v), as.integer(length(v)), as.integer(method), 
-    as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
-    PACKAGE = "stats")$xout
-<bytecode: 0x3fc0078>
-<environment: 0xa168ee0>
+.C(C_R_approxfun, as.double(x), as.double(y), n, xout = as.double(v), 
+    as.integer(length(v)), as.integer(method), as.double(yleft), 
+    as.double(yright), as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
+<bytecode: 0x7fa1dc01ef08>
+<environment: 0x7fa1e1d3c790>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
