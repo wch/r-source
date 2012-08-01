@@ -82,11 +82,13 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             sr <- rowSums(x)
             sc <- colSums(x)
             x <- x[sr > 0, sc > 0, drop = FALSE]
-            nr <- nrow(x)
-            nc <- ncol(x)
-            if(nr <= 1)
+            nr <- as.integer(nrow(x))
+            nc <- as.integer(ncol(x))
+            if (is.na(nr) || is.na(nc) || is.na(nr * nc))
+                stop("invalid nrow(x) or ncol(x)", domain = NA)
+            if(nr <= 1L)
                 stop("need 2 or more non-zero row marginals")
-            if(nc <= 1)
+            if(nc <= 1L)
                 stop("need 2 or more non-zero column marginals")
             METHOD <- paste(METHOD, "with simulated p-value\n\t (based on", B,
 			     "replicates)")
@@ -95,14 +97,14 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             n <- sum(sc)
             STATISTIC <- -sum(lfactorial(x))
 	    tmp <- .C(C_fisher_sim,
-		      as.integer(nr),
-		      as.integer(nc),
+		      nr,
+                      nc,
 		      as.integer(sr),
 		      as.integer(sc),
 		      as.integer(n),
 		      as.integer(B),
-		      integer(nr * nc),
-		      double(n + 1),
+		      integer(nr * nc), # checked for overflow above
+		      double(n + 1L),
 		      integer(nc),
 		      results = double(B),
 		      PACKAGE = "stats")$results
@@ -120,8 +122,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        as.double(5), #  expect
                        as.double(80),#  percnt
                        as.double(1), #  emin
-                       double(1),    #  prt
-                       p = double(1),
+                       double(1L),   #  prt
+                       p = double(1L),
                        as.integer(workspace),
                        mult = as.integer(mult),
                        PACKAGE = "stats")$p
@@ -134,8 +136,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        as.double(-1),#  expect < 0 : exact
                        as.double(100),
                        as.double(0),
-                       double(1),#   prt
-                       p = double(1),
+                       double(1L), #   prt
+                       p = double(1L),
                        as.integer(workspace),
                        mult = as.integer(mult),
                        PACKAGE = "stats")$p
@@ -145,11 +147,11 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
     if((nr == 2) && (nc == 2)) {## conf.int and more only in  2 x 2 case
         if(hybrid) warning("'hybrid' is ignored for a 2 x 2 table")
-        m <- sum(x[, 1])
-        n <- sum(x[, 2])
-        k <- sum(x[1, ])
-        x <- x[1, 1]
-        lo <- max(0, k - n)
+        m <- sum(x[, 1L])
+        n <- sum(x[, 2L])
+        k <- sum(x[1L, ])
+        x <- x[1L, 1L]
+        lo <- max(0L, k - n)
         hi <- min(k, m)
         NVAL <- c("odds ratio" = or)
 

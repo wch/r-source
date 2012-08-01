@@ -15,30 +15,35 @@
 #  http://www.r-project.org/Licenses/
 
 filter <- function(x, filter, method = c("convolution", "recursive"),
-                   sides = 2, circular = FALSE, init=NULL)
+                   sides = 2L, circular = FALSE, init=NULL)
 {
     method <- match.arg(method)
     x <- as.ts(x)
     xtsp <- tsp(x)
     x <- as.matrix(x)
-    n <- nrow(x)
+    n <- as.integer(nrow(x))
+    if (is.na(n)) stop("invalid value of nrow(x)", domain = NA)
     nser <- ncol(x)
-    nfilt <- length(filter)
-    if(any(is.na(filter))) stop("missing values in 'filter'")
+    nfilt <- as.integer(length(filter))
+    if (is.na(n)) stop("invalid value of length(filter)", domain = NA)
+   if(any(is.na(filter))) stop("missing values in 'filter'")
     y <- matrix(NA, n, nser)
     if(method == "convolution") {
         if(nfilt > n) stop("'filter' is longer than time series")
-        if(sides != 1 && sides != 2)
+        sides <- as.integer(sides)
+        if(is.na(sides) ||( sides != 1 && sides != 2))
             stop("argument 'sides' must be 1 or 2")
+        circular <- as.logical(circular)
+        if (is.na(circular)) stop("'circular' must be logical and not NA")
         for (i in 1L:nser)
             y[, i] <- .C(C_filter1,
                          as.double(x[,i]),
-                         as.integer(n),
+                         n,
                          as.double(filter),
-                         as.integer(nfilt),
-                         as.integer(sides),
-                         as.integer(circular),
-                         out=double(n), NAOK=TRUE,
+                         nfilt,
+                         sides,
+                         circular,
+                         out = double(n), NAOK = TRUE,
                          PACKAGE = "stats")$out
     } else {
         if(missing(init)) {
@@ -55,11 +60,11 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
         for (i in 1L:nser)
             y[, i] <- .C(C_filter2,
                          as.double(x[,i]),
-                         as.integer(n),
+                         n,
                          as.double(filter),
-                         as.integer(nfilt),
-                         out=as.double(c(rev(init[, i]), double(n))),
-                         NAOK=TRUE,
+                         nfilt,
+                         out = as.double(c(rev(init[, i]), double(n))),
+                         NAOK = TRUE,
                          PACKAGE = "stats")$out[-(1L:nfilt)]
     }
     y <- drop(y)

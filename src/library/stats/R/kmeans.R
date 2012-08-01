@@ -27,7 +27,7 @@ function(x, centers, iter.max = 10, nstart = 1,
                                 as.integer(k), c1 = integer(m), integer(m),
                                 nc = integer(k), double(k), double(k), integer(k),
                                 double(m), integer(k), integer(k),
-                                as.integer(iter.max), wss = double(k),
+                                iter.max, wss = double(k),
                                 ifault = 0L)
                        switch(Z$ifault,
                               stop("empty cluster: try a better set of initial centers",
@@ -41,8 +41,8 @@ function(x, centers, iter.max = 10, nstart = 1,
                    },
                    { # 2
                        Z <- .C(C_kmeans_Lloyd, x, m, p,
-                               centers = centers, as.integer(k),
-                               c1 = integer(m), iter = as.integer(iter.max),
+                               centers = centers, k,
+                               c1 = integer(m), iter = iter.max,
                                nc = integer(k), wss = double(k))
                        if(Z$iter > iter.max)
                            warning("did not converge in ",
@@ -53,8 +53,8 @@ function(x, centers, iter.max = 10, nstart = 1,
                    },
                    { # 3
                        Z <- .C(C_kmeans_MacQueen, x, m, p,
-                               centers = as.double(centers), as.integer(k),
-                               c1 = integer(m), iter = as.integer(iter.max),
+                               centers = as.double(centers), k,
+                               c1 = integer(m), iter = iter.max,
                                nc = integer(k), wss = double(k))
                        if(Z$iter > iter.max)
                            warning("did not converge in ",
@@ -98,7 +98,10 @@ function(x, centers, iter.max = 10, nstart = 1,
         if(m < k)
             stop("more cluster centers than data points")
     }
-    if(iter.max < 1) stop("'iter.max' must be positive")
+    k <- as.integer(k)
+    if(is.na(k)) stop("'invalid value of 'k'")
+    iter.max <- as.integer(iter.max)
+    if(is.na(iter.max) || iter.max < 1) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in 'x' and 'centers'")
     if(!is.double(x)) storage.mode(x) <- "double"

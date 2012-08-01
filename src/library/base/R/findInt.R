@@ -31,13 +31,16 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     if (is.na(nx)) stop("invalid length(x)")
     nv <- as.integer(length(vec))
     if (is.na(nv)) stop("invalid length(vec)")
+    right <- as.logical(rightmost.closed)
+    inside <- as.logical(all.inside)
+    if (is.na(right) || is.na(inside))
+        stop("NA logical arguments", domain = NA)
     index <- integer(nx)
     ## NB: this is naughty, and changes index in-place.
     .C("find_interv_vec",
        xt = as.double(vec), n = nv,
        x  = as.double(x),  nx = nx,
-       as.logical(rightmost.closed),
-       as.logical(all.inside),
+       right, inside,
        index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only
        PACKAGE = "base")
     if(has.na) {

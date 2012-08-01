@@ -92,6 +92,7 @@ function (x,
            as.double(max(min(beta, 1), 0)),
            as.double(max(min(gamma, 1), 0)),
            as.integer(start.time),
+           ## no idea why this is so: same as seasonal != "multiplicative"
            as.integer(! + (seasonal == "multiplicative")),
            as.integer(f),
            as.integer(!is.logical(beta) || beta),

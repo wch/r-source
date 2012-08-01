@@ -23,7 +23,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     nvar <- length(dtab)
 
     ncon <- length(margin)
-    conf <- matrix(0, nrow = nvar, ncol = ncon)
+    conf <- matrix(0L, nrow = nvar, ncol = ncon)
     nmar <- 0
     varnames <- names(dimnames(table))
     for (k in seq_along(margin)) {
