@@ -67,7 +67,7 @@
       version 5.0.4, a minor bug-fix release.
 
       \item New function \code{.bincode()}, a \sQuote{bare-bones}
-      versions of \code{cut.default(labels = FALSE)}.
+      version of \code{cut.default(labels = FALSE)}.
     }
   }
 
@@ -80,6 +80,10 @@
       \item \code{rep()} is faster and uses less memory,
       substantially so in some common cases (e.g. if \code{times} is of
       length one or \code{length.out} is given, and \code{each = 1}).
+      
+      \item \code{findInterval()}, \code{tabulate()}, \code{cut()},
+      \code{hist()} and \code{image.default()} all use \code{.Call()}
+      and are more efficient.
     }
   }
 

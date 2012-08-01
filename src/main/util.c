@@ -1944,3 +1944,26 @@ SEXP R_Tabulate(SEXP in, SEXP nbin)
 	if (x[i] != NA_INTEGER && x[i] > 0 && x[i] <= nb) y[x[i] - 1]++;
     return ans;
 }
+
+SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside)
+{
+    if(TYPEOF(xt) != REALSXP || TYPEOF(x) != REALSXP) error("invalid input");
+    int n = LENGTH(xt);
+    if (n == NA_INTEGER) error("invalid input");
+    int nx = LENGTH(x);
+    int sr = asLogical(right), si = asLogical(inside);
+    if (sr == NA_INTEGER) error("invalid 'rightmost.closed' argument");
+    if (si == NA_INTEGER) error("invalid 'all.inside' argument");
+    SEXP ans = allocVector(INTSXP, nx);
+    double *rxt = REAL(xt), *rx = REAL(x);
+    int ii = 1;
+    for(int i = 0; i < nx; i++) {
+	if (ISNAN(REAL(x)[i])) ii = NA_INTEGER;
+	else {
+	    int mfl = si;
+	    ii = findInterval(rxt, n, rx[i], sr, si, ii, &mfl);
+	}
+	INTEGER(ans)[i] = ii;
+    }
+    return ans;
+}

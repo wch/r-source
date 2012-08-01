@@ -238,6 +238,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(BinCount, 4),
     CALLDEF(R_Tabulate, 2),
     CALLDEF(BinCount, 4),
+    CALLDEF(FindIntervVec, 4),
 
     {NULL, NULL, 0}
 };

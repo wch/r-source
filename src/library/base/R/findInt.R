@@ -17,36 +17,14 @@
 ### This is a `variant' of  approx( method = "constant" ) :
 findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 {
-    ## Purpose: gives back the indices of  x in vec;  vec[] sorted
-    ## -------------------------------------------------------------------------
-    ## Author: Martin Maechler, Date:  4 Jan 2002, 10:16
+    ## Purpose: returns the indices of  x in vec;  vec[] sorted
+    ## ---------------------------------------------------------
+    ## Author: Martin Maechler, Date:  4 Jan 2002, 10:16 (of very different .C version)
 
     if(any(is.na(vec)))
 	stop("'vec' contains NAs")
     if(is.unsorted(vec))
 	stop("'vec' must be sorted non-decreasingly")
-    ## deal with NA's in x:
-    if(has.na <- any(ix <- is.na(x))) x <- x[!ix]
-    nx <- as.integer(length(x))
-    if (is.na(nx)) stop("invalid length(x)")
-    nv <- as.integer(length(vec))
-    if (is.na(nv)) stop("invalid length(vec)")
-    right <- as.logical(rightmost.closed)
-    inside <- as.logical(all.inside)
-    if (is.na(right) || is.na(inside))
-        stop("NA logical arguments", domain = NA)
-    index <- integer(nx)
-    ## NB: this is naughty, and changes index in-place.
-    .C("find_interv_vec",
-       xt = as.double(vec), n = nv,
-       x  = as.double(x),  nx = nx,
-       right, inside,
-       index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only
-       PACKAGE = "base")
-    if(has.na) {
-	ii <- as.integer(ix)
-	ii[ix] <- NA
-	ii[!ix] <- index
-	ii
-    } else index
+    .Call("FindIntervVec", as.double(vec), as.double(x),
+          rightmost.closed, all.inside, PACKAGE = "base")
 }

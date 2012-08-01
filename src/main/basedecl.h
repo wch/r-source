@@ -117,3 +117,4 @@ SEXP crc64ToString(SEXP);
 SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest);
 SEXP BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest);
 SEXP R_Tabulate(SEXP in, SEXP nbin);
+SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside);

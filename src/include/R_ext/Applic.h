@@ -154,9 +154,10 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
 		    int *ilo, int *mflag);
+/* Non-API No longer used */
 void find_interv_vec(double *xt, int *n, double *x, int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);
-/* used in package eco */
+/* API, used in package eco */
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
