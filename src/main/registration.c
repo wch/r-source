@@ -62,6 +62,9 @@
 
 /* FIXME: bincode is no longer used in R, but is still used by
    packages misc3d mixOmics spam 
+
+   find_interv_vec is used in IDBsim and timeSeries: 
+   dangerously because of NAOK = TRUE.
 */
 void bincode (double *x, int *n, double *breaks, int *nb,
 	      int *code, int *right, int *include_border, int *naok);
@@ -72,7 +75,7 @@ static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP,
 
 static R_NativePrimitiveArgType R_cumsum_t[] = {REALSXP, INTSXP, REALSXP, REALSXP};
 
-static R_NativePrimitiveArgType find_interv_vec_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, LGLSXP, LGLSXP, INTSXP};
+//static R_NativePrimitiveArgType find_interv_vec_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, LGLSXP, LGLSXP, INTSXP};
 
 
 static R_NativePrimitiveArgType R_max_col_t[] = {REALSXP, INTSXP, INTSXP, INTSXP, INTSXP};
@@ -111,7 +114,7 @@ static R_CMethodDef cMethods [] = {
     CDEF(bakslv),
     CDEF(bincode),
     CDEF(R_cumsum),
-    CDEF(find_interv_vec),
+//    CDEF(find_interv_vec),
     CDEF(R_max_col),
     CDEF(R_pretty),
     /* this is called by Hmisc, although no longer used in R */
