@@ -610,6 +610,9 @@
       
       \item In Windows, the GUI preferences for foreground color were 
       not always respected.  (Reported by Benjamin Wells.)
+      
+      \item On OS X, the Quartz versions of the bitmap devices did not
+      respect \code{antialias = "none"}.  (\PR{15006}.)
     }
   }
 }

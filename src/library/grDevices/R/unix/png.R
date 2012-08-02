@@ -50,7 +50,7 @@ png <- function(filename = "Rplot%03d.png",
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "png", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != "none", TRUE, "", bg,
+                            d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 2L, g$width, g$height,
@@ -83,7 +83,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "jpeg", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != "none", TRUE, "", bg,
+                            d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 3L, g$width, g$height,
@@ -115,7 +115,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "tiff", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != "none", TRUE, "", bg,
+                            d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 8L, g$width, g$height,
@@ -144,7 +144,7 @@ bmp <- function(filename = "Rplot%03d.bmp",
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "bmp", path.expand(filename),
                             width, height, pointsize, d$family,
-                            antialias != "none", TRUE, "", bg,
+                            d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 9L, g$width, g$height,
