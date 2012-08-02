@@ -225,6 +225,10 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *xpls, double *fpls, double *gpls, int *itrmcd,
 	    double *a, double *wrk);
 
+/* remove in due course */
+double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
+		double *Tol, int *Maxit);
+
 #ifdef  __cplusplus
 }
 #endif
