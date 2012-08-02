@@ -81,14 +81,12 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 	   int tmax, double ti, int trace, void *ex);
 
-/* appl/interv.c: 
-   Also in Utils.h, used in package eco */
+/* appl/interv.c: Also in Utils.h, used in package eco */
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
 
-
-
+
 /* ------------------ Entry points NOT in the R API --------------- */
 
 /* The following are registered for use in .C/.Fortran */
@@ -103,19 +101,19 @@ void bakslv(double *, int *, int *,
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
 #endif
 
-/* appl/pretty.c  */
+/* appl/pretty.c: hidden, used in engine.c  */
 void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	      double *shrink_sml, double *high_u_fact,
 	      int *eps_correction);
 
-/* appl/strsignif.c */
+/* appl/strsignif.c: hidden */
 void str_signif(void *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result);
 
 /* appl/ch2inv.f */
 void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
 
-/* appl/chol.f Used in package nlme */
+/* appl/chol.f: used in package nlme */
 void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
 
 /* appl/eigen.f */
@@ -218,7 +216,7 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 		 double shrink_sml, double high_u_fact[],
 		 int eps_correction, int return_bounds);
 
-/* appl/rcont.c: API prior to R 2.15.2 */
+/* appl/rcont.c: API prior to R 2.15.2, used in package bnlearn */
 void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
 	    double *fact, int *jwork, int *matrix);
 
