@@ -89,7 +89,7 @@ int findInterval(double *xt, int n, double x,
 
 
 
-/* Entry points NOT in the R API */
+/* ------------------ Entry points NOT in the R API --------------- */
 
 /* appl/bakslv.c : hidden */
 void bakslv(double *, int *, int *,
@@ -99,24 +99,12 @@ void bakslv(double *, int *, int *,
 /* appl/ch2inv.f */
 void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
 
-/* appl/chol.f Used in nlme */
+/* appl/chol.f Used in package nlme */
 void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
 
-/* appl/cpoly.c : hidden */
+/* appl/cpoly.c : hidden, and for use in complex.c */
 void R_cpolyroot(double *opr, double *opi, int *degree,
 		 double *zeror, double *zeroi, Rboolean *fail);
-/* More `Complex Polynomial Utilities' could be exported:
-
-   polyev(...)
-   errev(...)
-   cpoly_cauchy(...)
-   cpoly_scale(...)
-   cdivid(...)
-*/
-
-
-/* appl/cumsum.c : non-API, used in package DCluster */
-void R_cumsum(double *, int *, double *, double *);
 
 /* appl/eigen.f */
 int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
@@ -127,7 +115,7 @@ int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
 		 double *fv1, double *fv2, double *fm1, int *ierr);
 int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
 		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
-/* used in nlme */
+/* used in package nlme */
 int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
@@ -188,7 +176,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
 
-/* used in nlme */
+/* used in package nlme */
 void optif9(int nr, int n, double *x,
 	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	    void *state, double *typsiz, double fscale, int method,
@@ -202,35 +190,6 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *a, double *wrk);
 
 
-/* ALL appl/<foobar>.f	[semi-automatically by
- *				 f2c -A -P *.f; cat *.P > all.h	 and editing]
- */
-
-/* This is not in the applications but in the BLAS, and defined in Lapack.h
-extern int F77_NAME(lsame)(const char *, const char *);
-*/
-
-/* LINPACK routines also declared in Linpack.h
-void F77_NAME(dpoco)(double *a, int *lda, int *n, double *rcond,
-		     double *z__, int *info);
-void F77_NAME(dpodi)(double *a, int *lda, int *n, double *det, int *job);
-void F77_NAME(dpofa)(double *a, int *lda, int *n, int *info);
-void F77_NAME(dposl)(double *a, int *lda, int *n, double *b);
-void F77_NAME(dqrdc)(double *x, int *ldx, int *n, int *p,
-		     double *qraux, int *jpvt, double *work, int *job);
-void F77_NAME(dqrsl)(double *x, int *ldx, int *n, int *k,
-		     double *qraux, double *y,
-		     double *qy, double *qty, double *b,
-		     double *rsd, double *xb, int *job, int *info);
-void F77_NAME(dsvdc)(double *x, int *ldx, int *n, int *p,
-		     double *s, double *e,
-		     double *u, int *ldu, double *v, int *ldv,
-		     double *work, int *job, int *info);
-void F77_NAME(dtrco)(double *t, int *ldt, int *n, double *rcond,
-		     double *z__, int *job);
-void F77_NAME(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
-		     int *info);
-*/
 
 /* find qr decomposition, dqrdc2() is basis of R's qr(), also used by nlme */
 void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,

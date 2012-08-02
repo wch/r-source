@@ -163,11 +163,6 @@ localeCP
 for graphapp.dll
 
 
-R_cumsum
-
-for package DCluster
-
-
 fft_factor
 fft_work
 
@@ -177,15 +172,6 @@ setup_term_ui
 
 for package Rserve
 
-Brent_fmin
-R_tabulate
-R_zeroin
-
-for package ape
-
-findInterval
-
-for package eco
 
 chol_
 optif9
