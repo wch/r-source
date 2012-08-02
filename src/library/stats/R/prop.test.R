@@ -56,7 +56,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 	p <- .5
     if (!is.null(p)) {
 	DNAME <- paste(DNAME, ", null ",
-		       ifelse(k == 1, "probability ", "probabilities "),
+		       if(k == 1) "probability " else "probabilities ",
 		       deparse(substitute(p)), sep = "")
 	if (length(p) != l)
 	    stop("'p' must have the same length as 'x' and 'n'")
@@ -79,12 +79,11 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     names(ESTIMATE) <- if (k == 1) "p" else paste("prop", 1L:l)[OK]
     NVAL <- p
     CINT <- NULL
-    YATES <- ifelse(correct && (k <= 2), .5, 0)
+    YATES <- if(correct && (k <= 2)) .5 else 0
 
     if (k == 1) {
-	z <- ifelse(alternative == "two.sided",
-		    qnorm((1 + conf.level) / 2),
-		    qnorm(conf.level))
+	z <- qnorm(if(alternative == "two.sided")
+		   (1 + conf.level) / 2 else conf.level)
 	YATES <- min(YATES, abs(x - n * p))
         z22n <- z^2 / (2 * n)
 	p.c <- ESTIMATE + YATES / n
@@ -115,12 +114,11 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     if (!is.null(CINT))
 	attr(CINT, "conf.level") <- conf.level
 
-    METHOD <- paste(ifelse(k == 1,
-			   "1-sample proportions test",
-			   paste(k, "-sample test for ",
-				 ifelse(is.null(p), "equality of", "given"),
-				 " proportions", sep = "")),
-		    ifelse(YATES, "with", "without"),
+    METHOD <- paste(if(k == 1) "1-sample proportions test" else
+                    paste0(k, "-sample test for ",
+                           if(is.null(p)) "equality of" else "given",
+                           " proportions"),
+		    if(YATES) "with" else "without",
 		    "continuity correction")
 
     if (is.null(p)) {

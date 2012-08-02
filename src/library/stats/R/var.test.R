@@ -51,8 +51,7 @@ function(x, y, ratio = 1,
     }
     ESTIMATE <- V.x / V.y
     STATISTIC <- ESTIMATE / ratio
-    PARAMETER <- c(DF.x, DF.y)
-
+    PARAMETER <- c("num df" = DF.x, "denom df" = DF.y)
     PVAL <- pf(STATISTIC, DF.x, DF.y)
     if (alternative == "two.sided") {
         PVAL <- 2 * min(PVAL, 1 - PVAL)
@@ -67,7 +66,6 @@ function(x, y, ratio = 1,
     else
         CINT <- c(0, ESTIMATE / qf(1 - conf.level, DF.x, DF.y))
     names(STATISTIC) <- "F"
-    names(PARAMETER) <- c("num df", "denom df")
     names(ESTIMATE) <- names(ratio) <- "ratio of variances"
     attr(CINT, "conf.level") <- conf.level
     RVAL <- list(statistic = STATISTIC,
