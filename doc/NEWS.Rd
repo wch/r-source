@@ -211,6 +211,11 @@
 
       \item \code{agrep()} and \code{grep()} will return double vectors
       of indices for long vector inputs.
+      
+      \item Many calls to \code{.C()} have been replaced by
+      \code{.Call()} to allow long vectors to be supported (now or in
+      the future).  Regretably several packages had copied the non-API
+      \code{.C()} calls and so fail.
     }
   }
 
