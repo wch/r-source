@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2007   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2012   Robert Gentleman, Ross Ihaka
  *                             and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -58,10 +58,6 @@ void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
 	    int *limit, int *lenw, int *last,
 	    int *iwork, double *work);
 
-/* appl/rcont.c */
-void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
-	    double *fact, int *jwork, int *matrix);
-
 /* main/optim.c */
 typedef double optimfn(int, double *, void *);
 typedef void optimgr(int, double *, double *, void *);
@@ -99,14 +95,6 @@ int findInterval(double *xt, int n, double x,
 void bakslv(double *, int *, int *,
 	    double *, int *, int *,
 	    double *, int *, int *);
-
-#ifdef OLD
-/* appl/binning.c : hidden */
-void bincode (double *x, int *n, double *breaks, int *nb,
-	      int *code, int *right, int *include_border, int *naok);
-void bincount(double *x, int *n, double *breaks, int *nb, int *count,
-	      int *right, int *include_border, int *naok);
-#endif
 
 /* appl/ch2inv.f */
 void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
@@ -157,17 +145,6 @@ Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
 
-#ifdef OLD
-/* appl/interv.c: also in Utils.h */
-/* used from Fortran in packages gam and mda */
-int F77_SUB(interv)(double *xt, int *n, double *x,
-		    Rboolean *rightmost_closed, Rboolean *all_inside,
-		    int *ilo, int *mflag);
-/* Non-API No longer used */
-void find_interv_vec(double *xt, int *n, double *x, int *nx,
-		     int *rightmost_closed, int *all_inside, int *indx);
-#endif
-
 /* appl/lbfgsb.c */
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
@@ -191,19 +168,13 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	      double *shrink_sml, double *high_u_fact,
 	      int *eps_correction);
 
-#ifdef OLD
-/* appl/rowsum.c */
-void R_rowsum(int *dim, double *na_x, double *x, double *group);
-#endif
+/* appl/rcont.c: API prior to R 2.15.2 */
+void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
+	    double *fact, int *jwork, int *matrix);
 
 /* appl/strsignif.c */
 void str_signif(void *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result);
-
-#ifdef OLD
-/* appl/tabulate.c : non-API, used in packages pcaPA and phangorn */
-void R_tabulate(int *x, int *n, int *nbin, int *ans);
-#endif
 
 /* appl/uncmin.c : */
 
@@ -230,7 +201,7 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *xpls, double *fpls, double *gpls, int *itrmcd,
 	    double *a, double *wrk);
 
-/* appl/zeroin.c : non API, but used in package qtl */
+/* appl/zeroin.c : non API, but used in packages ape and qtl */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 		double *Tol, int *Maxit);
 /* R_zeroin2() is faster for "expensive" f(), in those typical cases where

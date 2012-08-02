@@ -19,15 +19,14 @@ include $(top_builddir)/Makeconf
 
 SOURCES_C = \
 	bakslv.c binning.c \
-	cpoly.c cumsum.c \
+	cpoly.c \
 	fft.c fmin.c integrate.c interv.c \
 	lbfgsb.c \
 	machar.c maxcol.c \
 	optim.c \
 	pretty.c \
-	rcont.c rowsum.c \
+	rcont.c \
 	strsignif.c \
-	tabulate.c \
 	uncmin.c \
 	zeroin.c
 SOURCES_F = \

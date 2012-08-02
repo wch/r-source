@@ -501,6 +501,9 @@
       deprecated and will give a warning.  In any case, \code{rep()}
       converted a pairlist to a list so you may as well do that
       explicitly.
+
+      \item Entry point \code{rcont2} is no longer part of the API, and
+      will move to package \pkg{stats} in \R 2.16.0.
     }
   }
 
