@@ -98,7 +98,8 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
     r
 }
 
-## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998 :
+## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998,
+## many corrections by R-core.
 formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL,
 		     big.mark = "", big.interval = 3L,

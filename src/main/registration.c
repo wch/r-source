@@ -62,9 +62,6 @@
 
 /* FIXME: bincode is no longer used in R, but is still used by
    packages misc3d mixOmics spam 
-
-   find_interv_vec is used in IDBsim and timeSeries: 
-   dangerously because of NAOK = TRUE.
 */
 void bincode (double *x, int *n, double *breaks, int *nb,
 	      int *code, int *right, int *include_border, int *naok);
@@ -75,23 +72,9 @@ static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP,
 
 static R_NativePrimitiveArgType R_cumsum_t[] = {REALSXP, INTSXP, REALSXP, REALSXP};
 
-//static R_NativePrimitiveArgType find_interv_vec_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, LGLSXP, LGLSXP, INTSXP};
-
-
 static R_NativePrimitiveArgType R_max_col_t[] = {REALSXP, INTSXP, INTSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_pretty_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
-static R_NativePrimitiveArgType R_rowsum_t[] = {INTSXP, REALSXP, REALSXP, REALSXP};
-
-
-/* Note the ANYSXP in the first place.
-   Doesn't quite work.  Needs investigation.
-   See the odd first argument in the routine's definition.
-
-static R_NativePrimitiveArgType str_signif_t[] = {ANYSXP, INTSXP, STRSXP, INTSXP, INTSXP, STRSXP, STRSXP, STRSXP};
-*/
-
-// static R_NativePrimitiveArgType R_tabulate_t[] = {INTSXP, INTSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType Rsockconnect_t[] = {INTSXP, STRSXP};
 static R_NativePrimitiveArgType Rsockopen_t[] = {INTSXP};
@@ -114,17 +97,9 @@ static R_CMethodDef cMethods [] = {
     CDEF(bakslv),
     CDEF(bincode),
     CDEF(R_cumsum),
-//    CDEF(find_interv_vec),
     CDEF(R_max_col),
     CDEF(R_pretty),
-    /* this is called by Hmisc, although no longer used in R */
-    CDEF(R_rowsum),
-#if 0
-    CDEF(str_signif),
-#else
-    {"str_signif", (DL_FUNC) &str_signif, 8, NULL},
-#endif
-//    CDEF(R_tabulate),
+    {"str_signif", (DL_FUNC) &str_signif, 8, NULL}, // mutable first arg
 
     /* Sockets */
     CDEF(Rsockconnect),

@@ -229,6 +229,5 @@ Sys.setFileTime <- function(path, time)
         stop("invalid 'path' argument")
     time <- as.POSIXct(time)
     if (is.na(time))  stop("invalid 'time' argument")
-#    invisible(.Call("R_setFileTime", path, time, PACKAGE = "base"))
     .Internal(setFileTime(path, time))
 }
