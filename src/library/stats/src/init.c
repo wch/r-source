@@ -76,9 +76,6 @@ static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, IN
 					      INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
 					      INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType lowess_t[] = {REALSXP, REALSXP, INTSXP, REALSXP,
-				       INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-
 static R_NativePrimitiveArgType massdist_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, REALSXP, REALSXP, INTSXP};
 static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
@@ -146,7 +143,6 @@ static const R_CMethodDef CEntries[]  = {
     CDEF(band_phi6_bin),
     CDEF(band_den_bin),
     CDEF(loglin),
-    CDEF(lowess),
     CDEF(massdist),
     CDEF(spline_coef),
     CDEF(spline_eval),
@@ -205,6 +201,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"r2dtable", (DL_FUNC) &r2dtable, 3},
     CALLDEF(filter3, 4),
     CALLDEF(filter4, 3),
+    CALLDEF(lowess, 5),
     {NULL, NULL, 0}
 };
 
@@ -355,7 +352,7 @@ void attribute_visible R_init_stats(DllInfo *dll)
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
 
-    R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC)nlminb_iterate);
-    R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC)nlsb_iterate);
-    R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC)Rf_divset);
+    R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC) nlminb_iterate);
+    R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC) nlsb_iterate);
+    R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC) Rf_divset);
 }

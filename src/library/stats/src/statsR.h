@@ -56,4 +56,5 @@ SEXP distn4(SEXP args);
 
 SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular);
 SEXP filter4(SEXP x, SEXP filter, SEXP out);
+SEXP Lowess(SEXP x, SEXP y, SEXP sf, SEXP siter, SEXP sdelta);
 

@@ -1,6 +1,6 @@
 % File src/library/stats/man/lowess.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lowess}
@@ -11,8 +11,7 @@
   regression (see the references).
 }
 \usage{
-lowess(x, y = NULL, f = 2/3, iter = 3,
-       delta = 0.01 * diff(range(xy$x[o])))
+lowess(x, y = NULL, f = 2/3, iter = 3, delta = 0.01 * diff(range(x)))
 }
 \alias{lowess}
 \arguments{

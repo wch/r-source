@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2006   Robert Gentleman, Ross Ihaka and the
- *                            R Core Team
+ *  Copyright (C) 1999-20012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -276,9 +275,32 @@ void clowess(double *x, double *y, int n,
     }
 }
 
+#if 0
 void lowess(double *x, double *y, int *n,
 	    double *f, int *nsteps, double *delta,
 	    double *ys, double *rw, double *res)
 {
     clowess(x, y, *n, *f, *nsteps, *delta, ys, rw, res);
+}
+#endif
+
+
+#include <Rinternals.h>
+SEXP lowess(SEXP x, SEXP y, SEXP sf, SEXP siter, SEXP sdelta)
+{
+    if(TYPEOF(x) != REALSXP || TYPEOF(y) != REALSXP) error("invalid input");
+    int nx = LENGTH(x);
+    if (nx == NA_INTEGER || nx == 0) error("invalid input");
+    double f = asReal(sf);
+    if (!R_FINITE(f) || f <= 0) error("'f' must be finite and > 0");
+    int iter = asInteger(siter);
+    if (!R_FINITE(iter) || iter < 0) error("'iter' must be finite and >= 0");
+    double delta = asReal(sdelta), *rw, *res;
+    SEXP ans;
+    PROTECT(ans = allocVector(REALSXP, nx));
+    rw = (double *) R_alloc(nx, sizeof(double));
+    res = (double *) R_alloc(nx, sizeof(double));
+    clowess(REAL(x), REAL(y), nx, f, iter, delta, REAL(ans), rw, res);
+    UNPROTECT(1);
+    return ans;
 }
