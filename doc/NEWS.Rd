@@ -124,6 +124,9 @@
       deprecated and will give a warning.  In any case, \code{rep()}
       converted a pairlist to a list so you may as well do that
       explicitly.
+
+      \item Entry point \code{rcont2} is no longer part of the API, and
+      will move to package \pkg{stats} in \R 2.16.0.
     }
   }
 
@@ -230,6 +233,9 @@
       
       \item In Windows, the GUI preferences for foreground color were 
       not always respected.  (Reported by Benjamin Wells.)
+      
+      \item On OS X, the Quartz versions of the bitmap devices did not
+      respect \code{antialias = "none"}.  (\PR{15006}.)
     }
   }
 }

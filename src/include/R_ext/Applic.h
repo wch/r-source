@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2007   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2012   Robert Gentleman, Ross Ihaka
  *                             and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -57,10 +57,6 @@ void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
 	    double *result, double *abserr, int *neval, int *ier,
 	    int *limit, int *lenw, int *last,
 	    int *iwork, double *work);
-
-/* appl/rcont.c */
-void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
-	    double *fact, int *jwork, int *matrix);
 
 /* main/optim.c */
 typedef double optimfn(int, double *, void *);
@@ -145,7 +141,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp);
 Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 /* TRUE: success */ int isn, double *work, int *iwork);
 
-/* appl/fmin.c : non-API, but used in package ape */
+/* appl/fmin.c : */
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
 
@@ -185,6 +181,10 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	      double *shrink_sml, double *high_u_fact,
 	      int *eps_correction);
 
+/* appl/rcont.c: API prior to R 2.15.2 */
+void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
+	    double *fact, int *jwork, int *matrix);
+
 /* appl/rowsum.c */
 void R_rowsum(int *dim, double *na_x, double *x, double *group);
 
@@ -195,7 +195,7 @@ Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result);
 
-/* appl/tabulate.c : non-API, used in package ape */
+/* appl/tabulate.c : non-API, used in package ape, phangorn, pcaPA */
 void R_tabulate(int *x, int *n, int *nbin, int *ans);
 
 /* appl/uncmin.c : */
