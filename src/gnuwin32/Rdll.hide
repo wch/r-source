@@ -1273,6 +1273,7 @@
  lzma_vli_decode
  lzma_vli_encode
  lzma_vli_size
+ machar
  mallinfo
  mb_char_len
  menuclear

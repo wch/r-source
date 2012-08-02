@@ -93,6 +93,13 @@
 #include <math.h>
 #include <R_ext/Applic.h>
 
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
+
+attribute_hidden
 void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 	int *iexp, int *minexp, int *maxexp, double *eps,
 	double *epsneg, double *xmin, double *xmax)

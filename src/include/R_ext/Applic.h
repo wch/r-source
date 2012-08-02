@@ -156,9 +156,15 @@ void F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
 
 /* hidden, for use in R.bin/R.dll/libR.so */
 
-/* appl/cpoly.c : hidden, and for use in complex.c */
+/* appl/cpoly.c : for use in complex.c */
 void R_cpolyroot(double *opr, double *opi, int *degree,
 		 double *zeror, double *zeroi, Rboolean *fail);
+
+/* appl/machar.c: for use in platform.c */
+void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
+	    int *negep, int *iexp, int *minexp, int *maxexp,
+	    double *eps, double *epsneg, double *xmin, double *xmax);
+
 
 
 /* For use in package stats */
@@ -182,11 +188,6 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
 	    double *wa, int * iwa, char *task, int iprint,
 	    int *lsave, int *isave, double *dsave);
-
-/* appl/machar.c */
-void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
-	    int *negep, int *iexp, int *minexp, int *maxexp,
-	    double *eps, double *epsneg, double *xmin, double *xmax);
 
 /* appl/uncmin.c : */
 
@@ -221,7 +222,7 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
 	    double *fact, int *jwork, int *matrix);
 
-/* used in packages nlme, pcaPP */
+/* appl/uncmin.c : used in packages nlme, pcaPP */
 void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *xpls, double *fpls, double *gpls, int *itrmcd,
 	    double *a, double *wrk);
