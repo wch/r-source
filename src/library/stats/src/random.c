@@ -25,9 +25,9 @@
 
 #include <Defn.h>
 #include <R_ext/Random.h>
-#include <R_ext/Applic.h>	/* for rcont2() */
 #include <Rmath.h>		/* for lgammafn, rmultinom */
 #include <errno.h>
+#include "ctest.h"		/* for rcont2 */
 #include "statsR.h"
 
 typedef double (*ran1) (double);

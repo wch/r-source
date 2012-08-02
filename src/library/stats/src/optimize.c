@@ -125,8 +125,14 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 // One Dimensional Root Finding --  just wrapper code for
-// Brent's "zeroin" -- in ../appl/zeroin.c :
+// Brent's "zeroin"
 // ---------------
+
+extern double 
+R_zeroin2(double ax, double bx, double fa, double fb, 
+	  double (*f)(double x, void *info), void *info, 
+	  double *Tol, int *Maxit);
+
 
 static double fcn2(double x, struct callinfo *info)
 {

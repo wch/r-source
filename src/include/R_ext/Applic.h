@@ -201,14 +201,6 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *xpls, double *fpls, double *gpls, int *itrmcd,
 	    double *a, double *wrk);
 
-/* appl/zeroin.c : non API, but used in packages ape and qtl */
-double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
-		double *Tol, int *Maxit);
-/* R_zeroin2() is faster for "expensive" f(), in those typical cases where
- *             f(ax) and f(bx) are available anyway : */
-double R_zeroin2(double ax, double bx, double fa, double fb,
-		 double (*f)(double, void *), void *info, double *Tol, int *Maxit);
-
 
 /* ALL appl/<foobar>.f	[semi-automatically by
  *				 f2c -A -P *.f; cat *.P > all.h	 and editing]

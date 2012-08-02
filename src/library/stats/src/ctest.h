@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-5   The R Core Team.
+ *  Copyright (C) 2001-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,4 +42,6 @@ void psmirnov2x(double *x, Sint *m, Sint *n);
 void qansari(Sint *len, double *x, Sint *m, Sint *n);
 void swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault);
 
+void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
+	    double *fact, int *jwork, int *matrix);
 #endif

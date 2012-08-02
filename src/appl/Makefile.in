@@ -18,17 +18,8 @@ include $(top_builddir)/Makeconf
 ## </NOTE>
 
 SOURCES_C = \
-	bakslv.c binning.c \
-	cpoly.c \
-	fft.c fmin.c integrate.c interv.c \
-	lbfgsb.c \
-	machar.c maxcol.c \
-	optim.c \
-	pretty.c \
-	rcont.c \
-	strsignif.c \
-	uncmin.c \
-	zeroin.c
+	bakslv.c binning.c cpoly.c fft.c fmin.c integrate.c interv.c \
+	lbfgsb.c machar.c maxcol.c optim.c pretty.c rcont.c strsignif.c uncmin.c
 SOURCES_F = \
 	ch2inv.f chol.f \
 	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \

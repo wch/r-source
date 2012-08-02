@@ -83,19 +83,6 @@
 
 #define EPSILON DBL_EPSILON
 
-double R_zeroin(			/* An estimate of the root */
-    double ax,				/* Left border | of the range	*/
-    double bx,				/* Right border| the root is seeked*/
-    double (*f)(double x, void *info),	/* Function under investigation	*/
-    void *info,				/* Add'l info passed on to f	*/
-    double *Tol,			/* Acceptable tolerance		*/
-    int *Maxit)				/* Max # of iterations */
-{
-    double fa = (*f)(ax, info);
-    double fb = (*f)(bx, info);
-    return R_zeroin2(ax, bx, fa, fb, f, info, Tol, Maxit);
-}
-
 /* R_zeroin2() is faster for "expensive" f(), in those typical cases where
  *             f(ax) and f(bx) are available anyway : */
 
