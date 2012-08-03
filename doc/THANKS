@@ -19,14 +19,14 @@ and Achim Zeileis.
 Others have written code that has been adopted by R and is
 acknowledged in the code files, including
 
-David J. Best, Richard Brent, Kevin Buhr, Bill Cleveland,
-R. B. Cleveland,, Ulrich Drepper, David M. Gay, Richard H. Jones, Eric
+David J. Best, Richard Brent, Kevin Buhr, Bill Cleveland, Robert
+Cleveland,, Ulrich Drepper, David M. Gay, Richard H. Jones, Eric
 Grosse, John Hartigan, Shelby Haberman, Andrew Harvey, George
-Marsaglia, C. R. Mckenzie, J. E. McRae, Cyrus Mehta, David Meyer,
-Fionn Murtagh, John C. Nash, Finbarr O'Sullivan, William Patefield,
-Nitin Patel, D. E. Roberts, Patrick Royston, W. M. Shyu, Richard
-C. Singleton, I. Terpenning, Wai Wan Tsang , Berwin Turlach, Jingbo
-Wang and M. A. Wong.
+Marsaglia, C. R. Mckenzie, Jean. McRae, Cyrus Mehta, Fionn Murtagh,
+John C. Nash, Finbarr O'Sullivan, William Patefield, Nitin Patel,
+D. E. Roberts, Patrick Royston, Ming-Jen Shyu, Richard C. Singleton, Irma
+Terpenning, Wai Wan Tsang , Berwin Turlach, Jingbo Wang and
+M. A. Wong.
 
 
 The R Foundation may decide to give out <first.lastname>@R-project.org
