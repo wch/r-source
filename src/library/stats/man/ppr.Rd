@@ -1,6 +1,6 @@
 % File src/library/stats/man/ppr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 % file stats/man/ppr.Rd
@@ -152,6 +152,11 @@ method functions.
   from each regressor at each step and so is a little less likely to
   converge to a saddle point of the sum of squares criterion.
 }
+\source{
+  Friedman (1984): converted to double precision and added interface to
+  smoothing splines by B. D. Ripley, originally for the \pkg{MASS} package.
+}
+
 \references{
   Friedman, J. H. and Stuetzle, W. (1981)
   Projection pursuit regression.

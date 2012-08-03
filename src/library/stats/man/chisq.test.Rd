@@ -63,8 +63,7 @@ chisq.test(x, y = NULL, correct = TRUE,
 
   In the contingency table case simulation is done by random sampling
   from the set of all contingency tables with given marginals, and works
-  only if the marginals are strictly positive.  (A C translation of the
-  algorithm of Patefield (1981) is used.)  Continuity correction is
+  only if the marginals are strictly positive.  Continuity correction is
   never used, and the statistic is quoted without it.  Note that this is
   not the usual sampling situation assumed for the chi-squared test but
   rather that for Fisher's exact test.
@@ -98,6 +97,11 @@ chisq.test(x, y = NULL, correct = TRUE,
   For goodness-of-fit testing, notably of continuous distributions,
   \code{\link{ks.test}}.
 }
+\source{
+  The code for Monte Carlo similation is a C translation of the Fortran
+  algorithm of Patefield (1981).
+}
+
 \references{
   Hope, A. C. A. (1968)
   A simplified Monte Carlo significance test procedure.

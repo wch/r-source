@@ -1,6 +1,6 @@
 % File src/library/stats/man/nls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nls}
@@ -143,7 +143,10 @@ nls(formula, data, start, control, algorithm,
   \url{http://www.netlib.org/port/} for the Port library
   documentation.
 }
-\author{Douglas M. Bates and Saikat DebRoy}
+\author{
+  Douglas M. Bates and Saikat DebRoy: David M. Gay for the Fortran code
+  used by \code{algorithm = "port"}.
+}
 \seealso{
   \code{\link{summary.nls}}, \code{\link{predict.nls}},
   \code{\link{profile.nls}}.

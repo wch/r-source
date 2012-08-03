@@ -1,6 +1,6 @@
 % File src/library/stats/man/loess.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loess}
@@ -91,9 +91,13 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 }
 \author{
   B. D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu (currently available as \code{dloess} at
-  \url{http://www.netlib.org/a}: the \R implementation is based on an
-  1998 version).
+  Grosse and Shyu.
+}
+
+\source{
+  The 1998 version of \code{cloess} package of Cleveland,
+  Grosse and Shyu.  A later version is available as \code{dloess} at
+  \url{http://www.netlib.org/a}.
 }
 \note{
   As this is based on \code{cloess}, it is similar to but not identical to

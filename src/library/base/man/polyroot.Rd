@@ -1,6 +1,6 @@
 % File src/library/base/man/polyroot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{polyroot}
@@ -33,6 +33,10 @@ polyroot(z)
 \value{
   A complex vector of length \eqn{n - 1}, where \eqn{n} is the position
   of the largest non-zero element of \code{z}. 
+}
+\source{
+  C translation by Ross Ihaka of Fortran code in the reference, with
+  modifications by the R Core Team.
 }
 \references{
   Jenkins and Traub (1972)
