@@ -82,6 +82,26 @@ getSrcfile <- function(x) {
     attr(srcref, "srcfile")
 }
 
+substr_with_tabs <- function(x, start, stop, tabsize = 8) {
+    widths <- rep(1, nchar(x))
+    tabs <- which(strsplit(x,"")[[1]] == "\t")
+    for (i in tabs) {
+	cols <- cumsum(widths)
+	widths[i] <- tabsize*((cols[i] + tabsize) %/% tabsize) - cols[i] + 1
+    }
+    cols <- cumsum(widths)
+    start <- which(cols >= start)
+    if (!length(start))
+    	return("")
+    start <- start[1]
+    stop <- which(cols <= stop)
+    if (length(stop)) {
+    	stop <- stop[length(stop)]
+    	substr(x, start, stop)
+    } else
+    	""
+}
+
 getParseData <- function(x, includeText = NA) {
     srcfile <- getSrcfile(x)
     
@@ -105,8 +125,13 @@ getParseData <- function(x, includeText = NA) {
         
         if (length(gettext)) {
 	    text <- character(nrow(data))
-	    for (row in gettext) 
-            	text[row] <- paste(as.character(srcref(srcfile, data[row,1:4])), collapse="\n")
+	    for (row in gettext) {
+	    	lines <- getSrcLines(srcfile, data[row,1], data[row,3])
+	    	n <- length(lines)
+	    	lines[n] <- substr_with_tabs(lines[n], 1, data[row,4])
+	    	lines[1] <- substr_with_tabs(lines[1], data[row,2], Inf)
+            	text[row] <- paste(lines, collapse="\n")
+            }
             data <- data.frame(data, text=text)
         }
     }
