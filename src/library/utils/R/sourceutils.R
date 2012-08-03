@@ -76,9 +76,15 @@ getSrcLocation <- function(x, which=c("line", "column", "byte", "parse"), first=
  }
 
 getSrcfile <- function(x) {
-    srcref <- getSrcref(x)
-    if (is.list(srcref))
-    	srcref <- srcref[[length(srcref)]]
+    result <- attr(x, "srcfile")
+    if (!is.null(result)) return(result)
+    
+    srcref <- attr(x, "wholeSrcref")
+    if (is.null(srcref)) {
+	srcref <- getSrcref(x)
+    	if (is.list(srcref) && length(srcref))
+    	    srcref <- srcref[[length(srcref)]]
+    }
     attr(srcref, "srcfile")
 }
 
