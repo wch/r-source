@@ -1901,8 +1901,8 @@ SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
     if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
-    R_xlen_t n = XLENGTH(x), nB = LENGTH(breaks);
-    int sr = asLogical(right), sl = asLogical(lowest);
+    R_xlen_t n = XLENGTH(x);
+    int nB = LENGTH(breaks), sr = asLogical(right), sl = asLogical(lowest);
     if (nB == NA_INTEGER || sr == NA_INTEGER || sl == NA_INTEGER) 
 	error("invalid input");
     SEXP codes;
