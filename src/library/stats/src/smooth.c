@@ -1,5 +1,9 @@
 /* Tukey Median Smoothing */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <stdlib.h> /* for abs */
 #include <math.h>
 #include <R_ext/Boolean.h>
