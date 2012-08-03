@@ -16,8 +16,6 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  *
- *  Quartz Quartz device module header file
- *
  */
 
 /* ansari.c

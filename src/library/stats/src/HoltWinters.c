@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/.
  */
 
+/* Originally contributed by David Meyer */
+
 #include <R.h>
 #include "ts.h"
 #include <stdlib.h>

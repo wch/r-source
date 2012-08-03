@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+# Originally contributed by David Meyer
+
 HoltWinters <-
 function (x,
 
