@@ -1901,8 +1901,10 @@ SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
     if (TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
+#ifdef LONG_VECTOR_SUPPORT
     if (IS_LONG_VEC(breaks))
 	error(_("long vector '%s' is not supported"), "breaks");
+#endif
     R_xlen_t n = XLENGTH(x);
     int nB = LENGTH(breaks), sr = asLogical(right), sl = asLogical(lowest);
     if (nB == NA_INTEGER) error(_("invalid '%s' argument"), "breaks");
@@ -1935,8 +1937,10 @@ SEXP R_Tabulate(SEXP in, SEXP nbin)
 SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside)
 {
     if(TYPEOF(xt) != REALSXP || TYPEOF(x) != REALSXP) error("invalid input");
+#ifdef LONG_VECTOR_SUPPORT
     if (IS_LONG_VEC(xt))
 	error(_("long vector '%s' is not supported"), "vec");
+#endif
     int n = LENGTH(xt);
     if (n == NA_INTEGER) error(_("invalid '%s' argument"), "vec");
     R_xlen_t nx = XLENGTH(x);
