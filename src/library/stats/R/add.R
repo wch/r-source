@@ -14,6 +14,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## Based on functions written for the MASS package,
+# copyright (C) 1994-2008 W. N. Venables and B. D. Ripley
+
+
 ## version to return NA for df = 0, as R did before 2.7.0
 safe_pchisq <- function(q, df, ...)
 {
@@ -672,6 +676,8 @@ factor.scope <- function(factor, scope)
     list(drop = nmdrop, add = nmadd)
 }
 
+
+## a slightly simplified version of stepAIC().
 step <- function(object, scope, scale = 0,
 		 direction = c("both", "backward", "forward"),
 		 trace = 1, keep = NULL, steps = 1000, k = 2, ...)

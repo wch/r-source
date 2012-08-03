@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## file stats/R/ppr.R
-## copyright (C) 1998 B. D. Ripley
+## Copyright (C) 1998 B. D. Ripley
 ## Copyright (C) 2000-3 The R Core Team
 ## This version distributed under GPL (version 2 or later)
 

@@ -174,11 +174,6 @@ src/library/stats/src/PPsum.c
 	Copyright (C) 1997-1999	 Adrian Trapletti
 
 
-src/library/stats/src/carray.c, mburg.c, myw.c, qr.c
-
-	Copyright (C) 1999 Martyn Plummer
-
-
 src/library/stats/R/nls.R
 
 	In part, Copyright 1999-1999 Saikat DebRoy
@@ -188,7 +183,7 @@ src/library/stats/R/nlsFunc.R
 src/library/stats/R/selfStart.R
 src/library/stats/R/zzModels.R
 
-	Copyright 1997,1999 Jose C. Pinheiro
+	Copyright 1997,1999 Jose C. Pinheiro, Douglas M. Bates
 
 src/library/stats/R/runmed.R
 src/library/stats/src/Trunmed.c
