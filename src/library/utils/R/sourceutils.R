@@ -117,14 +117,18 @@ getParseData <- function(x, includeText = NA) {
 		 	     "terminal", "token.num", "id", "parent" )
     	data <- data.frame(data[,-c(5,6)], token=tokens, 
     	                   terminal=as.logical(data[,"terminal"]),
+    	                   text=attr(data, "text"),
     			   stringsAsFactors=FALSE)
     	
-    	if (isTRUE(includeText)) gettext <- seq_len(nrow(data))
-        else if (is.na(includeText)) gettext <- which(data$terminal)
-        else gettext <- integer(0)
+    	if (isTRUE(includeText)) gettext <- which(!nzchar(data$text))
+        else if (is.na(includeText)) gettext <- which(!nzchar(data$text) & data$terminal)
+        else {
+            gettext <- integer(0)
+            data$text <- NULL
+        }
         
         if (length(gettext)) {
-	    text <- character(nrow(data))
+	    text <- data$text
 	    for (row in gettext) {
 	    	lines <- getSrcLines(srcfile, data[row,1], data[row,3])
 	    	n <- length(lines)
@@ -132,7 +136,7 @@ getParseData <- function(x, includeText = NA) {
 	    	lines[1] <- substr_with_tabs(lines[1], data[row,2], Inf)
             	text[row] <- paste(lines, collapse="\n")
             }
-            data <- data.frame(data, text=text)
+            data$text <- text
         }
     }
     data	
