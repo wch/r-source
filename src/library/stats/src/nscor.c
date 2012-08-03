@@ -1,3 +1,26 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2000-1   The R Core Team.
+ *
+ *  Based on Applied Statistics algorithm AS177
+ *    (C) Royal Statistical Society 1982
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, a copy is available at
+ *  http://www.r-project.org/Licenses/
+ */
+
+
 /* nscor.f -- translated by f2c (version 19980913).
  * ------- and produced by f2c-clean,v 1.8 --- and hand polished: M.Maechler
  */

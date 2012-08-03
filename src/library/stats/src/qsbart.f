@@ -1,3 +1,24 @@
+c-----------------------------------------------------------------------
+c
+c  R : A Computer Language for Statistical Data Analysis
+c  Copyright (C) 1998-2012 The R Core Team
+c
+c  This program is free software; you can redistribute it and/or modify
+c  it under the terms of the GNU General Public License as published by
+c  the Free Software Foundation; either version 2 of the License, or
+c  (at your option) any later version.
+c
+c  This program is distributed in the hope that it will be useful,
+c  but WITHOUT ANY WARRANTY; without even the implied warranty of
+c  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+c  GNU General Public License for more details.
+c
+c  You should have received a copy of the GNU General Public License
+c  along with this program; if not, a copy is available at
+c  http://www.r-project.org/Licenses/
+c
+c-----------------------------------------------------------------------
+
 C An interface to sbart() --- fewer arguments BUT unspecified scrtch() dimension
 C
 C NB: this routine alters ws [and isetup].
