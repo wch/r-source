@@ -1899,12 +1899,15 @@ bincode(double *x, R_xlen_t n, double *breaks, int nb,
  */
 SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
-    if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
+    if (TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
+    if (IS_LONG_VEC(breaks))
+	error(_("long vector '%s' is not supported"), "breaks");
     R_xlen_t n = XLENGTH(x);
     int nB = LENGTH(breaks), sr = asLogical(right), sl = asLogical(lowest);
-    if (nB == NA_INTEGER || sr == NA_INTEGER || sl == NA_INTEGER) 
-	error("invalid input");
+    if (nB == NA_INTEGER) error(_("invalid '%s' argument"), "breaks");
+    if (sr == NA_INTEGER) error(_("invalid '%s' argument"), "right");
+    if (sl == NA_INTEGER) error(_("invalid '%s' argument"), "include.lowest");
     SEXP codes;
     PROTECT(codes = allocVector(INTSXP, n));
     bincode(REAL(x), n, REAL(breaks), nB, INTEGER(codes), sr, sl);
@@ -1914,11 +1917,12 @@ SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 
 SEXP R_Tabulate(SEXP in, SEXP nbin)
 {
-    if(TYPEOF(in) != INTSXP)  error("invalid input");
+    if (TYPEOF(in) != INTSXP)  error("invalid input");
     R_xlen_t n = XLENGTH(in);
     /* FIXME: could in principle be a long vector */
     int nb = asInteger(nbin);
-    if (nb == NA_INTEGER || nb < 0) error("invalid input");
+    if (nb == NA_INTEGER || nb < 0) 
+	error(_("invalid '%s' argument"), "nbin");
     SEXP ans = allocVector(INTSXP, nb);
     int *x = INTEGER(in), *y = INTEGER(ans);
     memset(y, 0, nb * sizeof(int));
@@ -1931,12 +1935,16 @@ SEXP R_Tabulate(SEXP in, SEXP nbin)
 SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside)
 {
     if(TYPEOF(xt) != REALSXP || TYPEOF(x) != REALSXP) error("invalid input");
+    if (IS_LONG_VEC(xt))
+	error(_("long vector '%s' is not supported"), "vec");
     int n = LENGTH(xt);
-    if (n == NA_INTEGER) error("invalid input");
+    if (n == NA_INTEGER) error(_("invalid '%s' argument"), "vec");
     R_xlen_t nx = XLENGTH(x);
     int sr = asLogical(right), si = asLogical(inside);
-    if (sr == NA_INTEGER) error("invalid 'rightmost.closed' argument");
-    if (si == NA_INTEGER) error("invalid 'all.inside' argument");
+    if (sr == NA_INTEGER) 
+	error(_("invalid '%s' argument"), "rightmost.closed");
+    if (si == NA_INTEGER)
+	error(_("invalid '%s' argument"), "all.inside");
     SEXP ans = allocVector(INTSXP, nx);
     double *rxt = REAL(xt), *rx = REAL(x);
     int ii = 1;

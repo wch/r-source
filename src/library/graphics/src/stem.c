@@ -18,6 +18,10 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <Rinternals.h>
 #include <math.h>
 #include <limits.h> /* INT_MAX */
@@ -27,6 +31,13 @@
 #include <R_ext/Utils.h> /* for R_rsort */
 #include <R_ext/Error.h>
 #include <R_ext/Arith.h> /* for R_FINITE */
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 static void stem_print(int close, int dist, int ndigits)
 {
@@ -140,10 +151,14 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
 {
     if(TYPEOF(x) != REALSXP || TYPEOF(scale) != REALSXP) error("invalid input");
+    if (IS_LONG_VEC(x))
+	error(_("long vector '%s' is not supported"), "x");
     int width = asInteger(swidth), n = LENGTH(x);
-    if (n == NA_INTEGER || width == NA_INTEGER) error("invalid input");
+    if (n == NA_INTEGER) error(_("invalid '%s' argument"), "x");
+    if (width == NA_INTEGER) error(_("invalid '%s' argument"), "width");
     double sc = asReal(scale), sa = asReal(atom);
-    if (!R_FINITE(sc) || !R_FINITE(sa)) error("invalid input");
+    if (!R_FINITE(sc)) error(_("invalid '%s' argument"), "scale");
+    if (!R_FINITE(sa)) error(_("invalid '%s' argument"), "atom");
     stem_leaf(REAL(x), n, sc, width, sa);
     return R_NilValue;
 }
@@ -189,8 +204,9 @@ SEXP C_BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 	error("invalid input");
     R_xlen_t n = XLENGTH(x), nB = XLENGTH(breaks);
     int sr = asLogical(right), sl = asLogical(lowest);
-    if (sr == NA_INTEGER || sl == NA_INTEGER) error("invalid input");
-    SEXP counts;
+    if (sr == NA_INTEGER) error(_("invalid '%s' argument"), "right");
+    if (sl == NA_INTEGER) error(_("invalid '%s' argument"), "include.lowest");
+   SEXP counts;
     PROTECT(counts = allocVector(INTSXP, nB - 1));
     C_bincount(REAL(x), n, REAL(breaks), nB, INTEGER(counts), sr, sl);
     UNPROTECT(1);
