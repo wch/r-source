@@ -41,9 +41,6 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 	    double *table, double *fit, int *locmar, int *nmar, double *marg,
 	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault);
-void lowess(double *x, double *y, int *n,
-	    double *f, int *nsteps, double *delta,
-	    double *ys, double *rw, double *res);
 void massdist(double *x, double *xmass, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny);
 void spline_coef(int *method, int *n, double *x, double *y,

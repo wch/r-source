@@ -24,7 +24,12 @@
 #include <R.h>
 /* for Sint .. */
 #include <Rinternals.h>
-/* FIXME: shouldn't we  do the  ENABLE_NLS .. include <libintl.h> part here? */
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 SEXP R_isoreg(SEXP y);
 

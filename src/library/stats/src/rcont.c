@@ -14,12 +14,8 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Error.h>
 #include <R_ext/Utils.h>
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) gettext (String)
-#else
-#define _(String) (String)
-#endif
+
+#include "ctest.h"
 
 void
 rcont2(int *nrow, int *ncol,

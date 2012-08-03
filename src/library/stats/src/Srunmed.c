@@ -19,12 +19,6 @@
  */
 
 #include "modreg.h"
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("stats", String)
-#else
-#define _(String) (String)
-#endif
 
 void Srunmed(double* y, double* smo, int* n, Sint* band,
 	     Sint* end_rule, Sint* debug)
