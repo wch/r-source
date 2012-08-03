@@ -3790,6 +3790,10 @@ tables for objects (@file{.o} files) at installation in a file
 @file{symbols.rds}.  (Only currently supported on Linux, Solaris, OS X,
 Windows and FreeBSD.)
 Default: true.
+
+@item _R_CHECK_WARN_ON_NAMESPACE_
+Should the absence of a namespace be a warning rather than a note?
+Default: false, except for CRAN submission checks.
 @end vtable
 
 CRAN's submission checks use something like

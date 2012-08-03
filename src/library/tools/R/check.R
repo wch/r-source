@@ -1030,9 +1030,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           sprintf("tools::checkFF(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd)
             if (length(out)) {
-                if(any(grepl("Foreign function call(s) without", out)) ||
-                   (!is_base_pkg && any(grepl("in a base package:", out))))
-                    warningLog(Log)
+                if(any(grepl("^Foreign function call\\(s\\) without", out)) ||
+                   (!is_base_pkg && any(grepl("in a base package:", out))) ||
+                   any(grepl("^Undeclared package\\(s\\) in", out))
+                   ) warningLog(Log)
                 else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("See the chapter 'System and foreign language interfaces'",
@@ -3044,7 +3045,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## set to empty of something non-existent.
         if(nzchar(Renv) && file.exists(Renv)) readRenviron(Renv)
     } else {
-        ## Read in ~/.R/check.Renviron[.rarch] (if existent).
+        ## Read in ~/.R/check.Renviron[.rarch] (if it exists).
         rarch <- .Platform$r_arch
         if (nzchar(rarch) &&
             file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
@@ -3278,6 +3279,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
+    ## FIXME: change to TRUE below once 2.14.0 has been out for a year
+    warn_on_namespace <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_WARN_ON_NAMESPACE_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -3294,6 +3298,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
         R_check_suggests_only <- TRUE
+        warn_on_namespace <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
@@ -3513,7 +3518,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (file.exists(file.path(pkgdir, "NAMESPACE")))
                 resultLog(Log, "OK")
             else {
-                warningLog(Log)
+                if(warn_on_namespace) warningLog(Log) else noteLog(Log)
                 wrapLog("As from R 2.14.0 all packages need a namespace.\n",
                         "One will be generated on installation,",
                         "but it is better to handcraft a NAMESPACE file:",

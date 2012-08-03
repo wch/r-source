@@ -1984,7 +1984,7 @@ function(x, ...)
     if (length(x)) {
         .fmt <- function(x)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
-        res <- c(gettextf("Foreign function call(s) without 'PACKAGE' argument:"),
+        res <- c("Foreign function call(s) without 'PACKAGE' argument:",
                  unlist(lapply(x, .fmt)))
     }
 
@@ -1998,20 +1998,20 @@ function(x, ...)
             xx <- unlist(lapply(seq_along(y)[base],
                                 function(i) .fmt2(y[[i]], z[i])))
             res <- c(res,
-                     gettextf("Foreign function call(s) with 'PACKAGE' argument in a base package:"),
+                     "Foreign function call(s) with 'PACKAGE' argument in a base package:",
                      sort(unique(xx)))
         }
         if(any(!base)) {
             xx <-  unlist(lapply(seq_along(y)[!base],
                                  function(i) .fmt2(y[[i]], z[i])))
             res <- c(res,
-                     gettextf("Foreign function call(s) with 'PACKAGE' argument in different package:"),
+                     "Foreign function call(s) with 'PACKAGE' argument in different package:",
                     sort(unique(xx)))
         }
     }
     if (length(zz)) {
             res <- c(res,
-                     gettextf("Undeclared package(s) in foreign function calls"),
+                     "Undeclared package(s) in foreign function calls",
                      paste("  ", paste(sQuote(sort(unique(zz))), collapse = ", ")))
     }
     res
