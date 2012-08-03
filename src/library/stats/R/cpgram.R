@@ -14,10 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## from MASS library: (C) 1994-9 W. N. Venables and B. D. Ripley
+## from MASS package: (C) 1994-9 W. N. Venables and B. D. Ripley
 
-cpgram <- function(ts, taper=0.1,
-		   main=paste("Series: ", deparse(substitute(ts))), ci.col="blue")
+cpgram <-
+    function(ts, taper = 0.1,
+             main = paste("Series: ", deparse(substitute(ts))),
+             ci.col = "blue")
 {
     main
     if(NCOL(ts) > 1)
