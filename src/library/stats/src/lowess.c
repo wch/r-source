@@ -31,12 +31,12 @@
 # include <R_ext/Print.h>
 #endif
 
-static double fsquare(double x)
+static R_INLINE double fsquare(double x)
 {
     return x * x;
 }
 
-static double fcube(double x)
+static R_INLINE double fcube(double x)
 {
     return x * x * x;
 }
@@ -275,16 +275,6 @@ void clowess(double *x, double *y, int n,
     }
 }
 
-#if 0
-void lowess(double *x, double *y, int *n,
-	    double *f, int *nsteps, double *delta,
-	    double *ys, double *rw, double *res)
-{
-    clowess(x, y, *n, *f, *nsteps, *delta, ys, rw, res);
-}
-#endif
-
-
 #include <Rinternals.h>
 SEXP lowess(SEXP x, SEXP y, SEXP sf, SEXP siter, SEXP sdelta)
 {
@@ -296,6 +286,7 @@ SEXP lowess(SEXP x, SEXP y, SEXP sf, SEXP siter, SEXP sdelta)
     int iter = asInteger(siter);
     if (iter == NA_INTEGER || iter < 0) error("'iter' must be finite and >= 0");
     double delta = asReal(sdelta), *rw, *res;
+    if (!R_FINITE(delta) || delta < 0) error("'delta' must be finite and > 0");
     SEXP ans;
     PROTECT(ans = allocVector(REALSXP, nx));
     rw = (double *) R_alloc(nx, sizeof(double));
