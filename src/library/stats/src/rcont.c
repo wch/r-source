@@ -7,6 +7,17 @@
    use double precision for integer multiplication (against overflow);
 */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 #include <math.h>
 
 #include <R_ext/Random.h>

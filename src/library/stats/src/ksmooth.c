@@ -19,6 +19,13 @@
 
 #include <R.h>			/* for NA_REAL, includes math.h */
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 static double dokern(double x, int kern)
 {
     if(kern == 1) return(1.0);
