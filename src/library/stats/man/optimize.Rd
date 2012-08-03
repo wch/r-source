@@ -84,6 +84,7 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 }
 \source{
   A C translation of Fortran code \url{http://www.netlib.org/fmm/fmin.f}
+  (author(s) unstated)
   based on the Algol 60 procedure \code{localmin} given in the reference.
 }
 \references{

@@ -108,6 +108,10 @@
   platform --- this seems to be the case for the common \R platforms
   using ix86 and x86_64 chips.
 }
+\source{
+  Uses a C translation of Fortran code in the reference, modified by the
+  R Core Team to defeat over-optimization in recent compilers.
+}
 \references{
   Cody, W. J. (1988)
   MACHAR: A subroutine to dynamically determine machine parameters.

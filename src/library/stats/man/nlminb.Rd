@@ -100,9 +100,11 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
       objective function value.}% ETA0  42
   }
 }
-\references{ \url{http://netlib.bell-labs.com/netlib/port/} }
+\source{ \url{http://netlib.bell-labs.com/netlib/port/} }
 \author{
-  (of \R port) Douglas Bates and Deepayan Sarkar.
+  \R port: Douglas Bates and Deepayan Sarkar.
+
+  Underlying Fortran code by David M. Gay
 }
 \seealso{
   \code{\link{optim}} and \code{\link{nlm}}.

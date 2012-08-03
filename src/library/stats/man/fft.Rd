@@ -1,6 +1,6 @@
 % File src/library/stats/man/fft.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fft}
@@ -44,6 +44,9 @@ mvfft(z, inverse = FALSE)
   is highly composite (i.e., has many factors).  If this is not the
   case, the transform may take a long time to compute and will use a
   large amount of memory.
+}
+\source{
+  Uses C translation of Fortran code in Singleton (1979).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

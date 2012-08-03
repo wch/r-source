@@ -73,11 +73,13 @@ integrate(f, lower, upper, \dots, subdivisions=100,
   \item{message}{\code{"OK"} or a character string giving the error message.}
   \item{call}{the matched call.}
 }
-\references{
+
+\source{
   Based on QUADPACK routines \code{dqags} and \code{dqagi} by
   R. Piessens and E. deDoncker-Kapenga, available from Netlib.
+}
 
-  See\cr
+\references{
   R. Piessens, E. deDoncker-Kapenga, C. Uberhuber, D. Kahaner (1983)
   \emph{Quadpack: a Subroutine Package for Automatic Integration};
   Springer Verlag.

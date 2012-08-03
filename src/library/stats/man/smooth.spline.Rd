@@ -204,7 +204,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 \author{
   \R implementation by B. D. Ripley and Martin Maechler
   (\code{spar/lambda}, etc).
-
+}
+\source{
   This function is based on code in the \code{GAMFIT} Fortran program by
   T. Hastie and R. Tibshirani (\url{http://lib.stat.cmu.edu/general/}),
   which makes use of spline code by Finbarr O'Sullivan.  Its design

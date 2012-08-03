@@ -150,9 +150,11 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   reversed on insertion if it contained more than one character.  
 }
 \author{
-  \code{formatC} was originally written by Bill Dunlap, later much
-  improved by Martin Maechler.
-  It was first adapted for \R by Friedrich Leisch.
+  \code{formatC} was originally written by Bill Dunlap for S-PLUS, later
+  much improved by Martin Maechler.
+  
+  It was first adapted for \R by Friedrich Leisch and since much
+  improved by the R Core team.
 }
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
