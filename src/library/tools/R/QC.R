@@ -1793,6 +1793,8 @@ function(package, dir, file, lib.loc = NULL,
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
+        dfile <- file.path(dir, "DESCRIPTION")
+        db <- .read_description(dfile)
         pkg <- basename(dir)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
@@ -1821,8 +1823,11 @@ function(package, dir, file, lib.loc = NULL,
             dir <- file_path_as_absolute(dir)
         pkg <- basename(dir)
         dfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(dfile))
-            .read_description(dfile)["Encoding"] else NA
+        enc <- NA; db <- NULL
+        if(file.exists(dfile)) {
+            db <- .read_description(dfile)
+            enc <- db["Encoding"]
+        }
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
             has_namespace <- length(nm$dynlibs)
@@ -1948,6 +1953,18 @@ function(package, dir, file, lib.loc = NULL,
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
     attr(bad_exprs, "wrong_pkg") <- wrong_pkg
     attr(bad_exprs, "bad_pkg") <- bad_pkg
+    if (length(bad_pkg)) { # check against dependencies.
+        bases <- .get_standard_package_names()$base
+        bad <- bad_pkg[!bad_pkg %in% bases]
+        if (length(bad)) {
+            depends <- .get_requires_from_package_db(db, "Depends")
+            imports <- .get_requires_from_package_db(db, "Imports")
+            suggests <- .get_requires_from_package_db(db, "Suggests")
+            enhances <- .get_requires_from_package_db(db, "Enhances")
+            bad <- bad[!bad %in% c(depends, imports, suggests, enhances)]
+            attr(bad_exprs, "undeclared") <- bad
+       }
+    }
     class(bad_exprs) <- "checkFF"
     if(verbose)
         invisible(bad_exprs)
@@ -1960,6 +1977,7 @@ function(x, ...)
 {
     y <- attr(x, "wrong_pkg")
     z <- attr(x, "bad_pkg")
+    zz <- attr(x, "undeclared")
     if(!length(x) && !length(y)) return(character())
 
     res <- character()
@@ -1990,7 +2008,11 @@ function(x, ...)
                      gettextf("Foreign function call(s) with 'PACKAGE' argument in different package:"),
                     sort(unique(xx)))
         }
-
+    }
+    if (length(zz)) {
+            res <- c(res,
+                     gettextf("Undeclared package(s) in foreign function calls"),
+                     paste("  ", paste(sQuote(sort(unique(zz))), collapse = ", ")))
     }
     res
 }
