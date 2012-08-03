@@ -14,7 +14,20 @@ Rossini, Jonathan Rougier, Petr Savicky, Guenther Sawitzki, Marc
 Schwartz, Detlef Steuer, Bill Simpson, Gordon Smyth, Adrian Trapletti,
 Terry Therneau, Rolf Turner, Bill Venables, Gregory R. Warnes, Andreas
 Weingessel, Morten Welinder, James Wettenhall, Simon Wood
-and Achim Zeileis
+and Achim Zeileis.
+
+Others have written code that has been adopted by R and is
+acknowledged in the code files, including
+
+David J. Best, Richard Brent, Kevin Buhr, Bill Cleveland,
+R. B. Cleveland,, Ulrich Drepper, David M. Gay, Richard H. Jones, Eric
+Grosse, John Hartigan, Shelby Haberman, Andrew Harvey, George
+Marsaglia, C. R. Mckenzie, J. E. McRae, Cyrus Mehta, David Meyer,
+Fionn Murtagh, John C. Nash, Finbarr O'Sullivan, William Patefield,
+Nitin Patel, D. E. Roberts, Patrick Royston, W. M. Shyu, Richard
+C. Singleton, I. Terpenning, Wai Wan Tsang , Berwin Turlach, Jingbo
+Wang and M. A. Wong.
+
 
 The R Foundation may decide to give out <first.lastname>@R-project.org
 email addresses to contributors to the R Project (even without making them
@@ -23,9 +36,8 @@ would help advance the R project.
 
 The R Core Group, Roger Bivand, John Fox and Bill Venables are the
 ordinary members of the R Foundation.  In addition, Dirk Eddelbuettel,
-Torsten Hothorn, David Meyer, Deepayan Sarkar, Simon Wood, and Achim
-Zeileis are also e-addressable by
-<Firstname>.<Lastname>@R-project.org.
+Torsten Hothorn, David Meyer, Simon Wood, and Achim Zeileis are also
+e-addressable by <Firstname>.<Lastname>@R-project.org.
 
 Many more, too numerous to mention here, have contributed by sending bug
 reports and suggesting various improvements.

@@ -94,6 +94,10 @@ ks.test(x, y, \dots,
     performed.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
+\source{
+  The two-sided one-sample distribution comes \emph{via}
+  Marsaglisa, Tsang and Wang (2003).
+}
 \references{
   Z. W. Birnbaum and Fred H. Tingey (1951),
   One-sided confidence contours for probability distribution functions.
@@ -105,7 +109,7 @@ ks.test(x, y, \dots,
   Pages 295--301 (one-sample Kolmogorov test),
   309--314 (two-sample Smirnov test).
 
-  Durbin, J. (1973)
+  Durbin, J. (1973),
   \emph{Distribution theory for tests based on the sample distribution
     function}.  SIAM.
 
