@@ -2,8 +2,10 @@
  *  Copyright (C) 2000-2012 The R Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
+ *  by Russell V. Lenth
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
  *                        and AS R95 from AS Vol. 44, pp551-2, 1995
+ *  by H. Frick and Min Long Lam.
  *  original (C) Royal Statistical Society 1987, 1990, 1995
  *
  *  Returns the cumulative probability of x for the non-central

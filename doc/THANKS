@@ -17,30 +17,22 @@ Weingessel, Morten Welinder, James Wettenhall, Simon Wood
 and Achim Zeileis.
 
 Others have written code that has been adopted by R and is
-acknowledged in the code files, including (as well as some credited
-above)
+acknowledged in the code files, including
 
-David J. Best, Richard Brent, Kevin Buhr, Michael A. Covington, Bill
-Cleveland, Robert Cleveland,, Ulrich Drepper, Paul Eggert, David
-M. Gay, Richard H. Jones, Eric Grosse, Bruno Haible, John Hartigan,
-Shelby Haberman, Andrew Harvey, George Marsaglia, Gordon Matzigkeit,
+J. D. Beasley, David J. Best, Richard Brent, Kevin Buhr, Michael
+A. Covington, Bill Cleveland, Robert Cleveland,, G. W. Cran,
+C. G. Ding, Ulrich Drepper, Paul Eggert, J. O. Evans, David M. Gay,
+H. Frick, G. W. Hill, Richard H. Jones, Eric Grosse, Shelby Haberman,
+Bruno Haible, John Hartigan, Andrew Harvey, Trevor Hastie, Min Long
+Lam, George Marsaglia, K. J. Martin, Gordon Matzigkeit,
 C. R. Mckenzie, Jean McRae, Cyrus Mehta, Fionn Murtagh, John C. Nash,
-Finbarr O'Sullivan, William Patefield, Nitin Patel, D. E. Roberts,
-Patrick Royston, Ming-Jen Shyu, Richard C. Singleton, Irma Terpenning,
-Wai Wan Tsang , Berwin Turlach, Gary V. Vaughan, Jingbo Wang and
-M. A. Wong, and the Free Software Foundation for configure code and
-utilities.
-
-
-The R Foundation may decide to give out <first.lastname>@R-project.org
-email addresses to contributors to the R Project (even without making them
-members of the R Foundation) when in the view of the R Foundation this
-would help advance the R project.
-
-The R Core Group, Roger Bivand, John Fox and Bill Venables are the
-ordinary members of the R Foundation.  In addition, Dirk Eddelbuettel,
-Torsten Hothorn, David Meyer, Simon Wood, and Achim Zeileis are also
-e-addressable by <Firstname>.<Lastname>@R-project.org.
+Finbarr O'Sullivan, R. E. Odeh, William Patefield, Nitin Patel, Alan
+Richardson, D. E. Roberts, Patrick Royston, Russell Lenth, Ming-Jen
+Shyu, Richard C. Singleton, S. G. Springer, Supoj Sutanthavibul, Irma
+Terpenning, G. E. Thomas, Rob Tibshirani, Wai Wan Tsang, Berwin
+Turlach, Gary V. Vaughan, Michael Wichura, Jingbo Wang, M. A. Wong,
+and the Free Software Foundation (for autoconf code and utilities).
+See also files under src/extras.
 
 Many more, too numerous to mention here, have contributed by sending bug
 reports and suggesting various improvements.
@@ -59,3 +51,15 @@ Allan Wilks.
 A special debt is owed to John Chambers who has graciously contributed
 advice and encouragement in the early days of R and later became a
 member of the core team.
+
+
+
+The R Foundation may decide to give out <first.lastname>@R-project.org
+email addresses to contributors to the R Project (even without making them
+members of the R Foundation) when in the view of the R Foundation this
+would help advance the R project.
+
+The R Core Group, Roger Bivand, John Fox and Bill Venables are the
+ordinary members of the R Foundation.  In addition, Dirk Eddelbuettel,
+Torsten Hothorn, David Meyer, Simon Wood, and Achim Zeileis are also
+e-addressable by <Firstname>.<Lastname>@R-project.org.

@@ -1,6 +1,6 @@
 % File src/library/stats/man/Tukey.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Tukey}
@@ -45,11 +45,18 @@ qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
   inverse of \code{ptukey}.
   \code{qtukey} will be accurate to the 4th decimal place.
 }
+\source{
+  \code{qtukey} is in part adapted from Odeh and Evans (1974).
+}
 \references{
   Copenhaver, Margaret Diponzio and Holland, Burt S. (1988)
   Multiple comparisons of simple effects in
   the two-way analysis of variance with fixed effects.
   \emph{Journal of Statistical Computation and Simulation}, \bold{30}, 1--15.
+  
+  Odeh, R. E.  and  Evans, J. O. (1974)
+  Algorithm AS 70: Percentage Points of the Normal Distribution.
+  \emph{Applied Statistics} \bold{23}, 96--97. 
 }
 \seealso{
   \link{Distributions} for standard distributions, including
