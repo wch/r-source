@@ -570,7 +570,7 @@ function(src_dir, out_dir, packages)
 ### * .install_package_vignettes
 
 ## called from src/library/Makefile[.win]
-## this is only used when building R, to build the 'grid' and 'utils' vignettes.
+## this is only used when building R
 .install_package_vignettes <-
 function(dir, outDir, keep.source = TRUE)
 {
@@ -590,7 +590,7 @@ function(dir, outDir, keep.source = TRUE)
                       basename(file_path_sans_ext(vigns$docs))))
     upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
 
-    ## The primary use of this function is to build and install
+    ## The primary use of this function is to build and install PDF
     ## vignettes in base packages.
     ## Hence, we build in a subdir of the current directory rather
     ## than a temp dir: this allows inspection of problems and
