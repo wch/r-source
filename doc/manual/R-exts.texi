@@ -4623,7 +4623,7 @@ line) to mark code that should be run by @code{examples()} but not by
 used for code which might fail in circumstances that are hard to test
 for, for example in some locales.  (Use e.g. @code{capabilities()} to
 test for features needed in the examples wherever possible, and you can
-also use @code{try()} or @code{trycatch()}.)
+also use @code{try()} or @code{tryCatch()}.)
 
 @findex \keyword
 @item \keyword@{@var{key}@}
