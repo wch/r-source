@@ -1,6 +1,9 @@
 #  File src/library/graphics/R/pairs.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 1995-2012 The R Core Team
+#  Some parts  Copyright (C) 1999 Dr. Jens Oehlschlaegel-Akiyoshi
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
@@ -32,7 +35,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
 
 #################################################
 ## some of the changes are from code
-## Copyright 1999 Dr. Jens Oehlschlaegel-Akiyoshi
+## Copyright (C) 1999 Dr. Jens Oehlschlaegel-Akiyoshi
 ## Others are by BDR and MM
 ## This version distributed under GPL (version 2 or later)
 #################################################

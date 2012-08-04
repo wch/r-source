@@ -1,8 +1,7 @@
 #  File src/library/stats/R/selfStart.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright 1997,1999 Jose C. Pinheiro <jcp$research.bell-labs.com>,
-#                      Douglas M. Bates <bates$stat.wisc.edu>
+#  Copyright (C) 1997,1999 Jose C. Pinheiro and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

@@ -14,8 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## CD plots
-## written by Achim Zeileis <Achim.Zeileis@R-project.org>
+## CD plots contributed by Achim Zeileis
 
 cdplot <- function(x, ...) {
   UseMethod("cdplot")

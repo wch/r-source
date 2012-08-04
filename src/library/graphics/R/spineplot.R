@@ -14,8 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## Spine plots/Spinograms
-## written by Achim Zeileis <Achim.Zeileis@R-project.org>
+## Spine plots/Spinograms contributed by Achim Zeileis
 
 spineplot <- function(x, ...) {
     UseMethod("spineplot")

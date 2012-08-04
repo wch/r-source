@@ -16,7 +16,7 @@
 
 ### This code started life as spatial star plots by David A. Andrews.
 ### See http://www.udallas.edu:8080/~andrews/software/software.html
-### T. Dye <tdye@lava.net>, July 1999;  many improvements by MM
+### T. Dye July 1999;  many improvements by MM
 
 stars <-
 function(x, full = TRUE, scale = TRUE, radius = TRUE,
