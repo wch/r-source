@@ -15,6 +15,8 @@
 ## This is a very nifty way of creating "closures" and a little thought
 ## will show you that there are many ways of using this in statistics.
 
+#  Copyright (C) 1997-8 The R Core Team
+
 open.account <- function(total) {
 
     list(

@@ -1,4 +1,6 @@
-### Interactive density plots. Based on TCL version by Guido Masarotto
+### Interactive density plots. Based on Tcl version by Guido Masarotto
+
+#  Copyright (C) 2000-2009 The R Core Team
 
 require(tcltk) || stop("tcltk support is absent")
 require(graphics); require(stats)

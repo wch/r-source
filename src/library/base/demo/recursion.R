@@ -1,3 +1,4 @@
+#  Copyright (C) 1997-2005 The R Core Team
 
 ## Adaptive integration:	 Venables and Ripley pp. 105-110
 ## This is the basic integrator.

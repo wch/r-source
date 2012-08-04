@@ -5,6 +5,8 @@
 ### It is a ripoff of the plot.tcl demo from the tk 8.0 distribution
 ### All I did was to add the code to plot the fitted regression line.
 
+#  Copyright (C) 2000-2008 The R Core Team
+
 require(tcltk) || stop("tcl/tk library not available")
 require(graphics); require(stats)
 local({
