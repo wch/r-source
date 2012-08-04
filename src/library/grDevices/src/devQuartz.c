@@ -753,7 +753,7 @@ void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
         CGFloat dashlist[8];
         int   i, ndash = 0;
         int   lty = gc->lty;
-	float lwd = gc->lwd * 0.75;
+	float lwd = (float)(gc->lwd * 0.75);
         CGContextSetLineWidth(ctx, lwd);
 
         for(i = 0; i < 8 && lty; i++) {
@@ -921,7 +921,8 @@ static double RQuartz_StrWidth(const char *text, CTXDESC)
     RQuartz_SetFont(ctx, gc, xd);
     {
         CGFontRef font = CGContextGetFont(ctx);
-        float aScale   = (gc->cex * gc->ps * xd->tscale) / CGFontGetUnitsPerEm(font);
+        float aScale   = (float)((gc->cex * gc->ps * xd->tscale) /
+				 CGFontGetUnitsPerEm(font));
         UniChar *buffer;
         CGGlyph *glyphs;
         int     *advances;
@@ -957,7 +958,8 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     RQuartz_SetFont(ctx, gc, xd);
     gc->fill = fill;
     CGFontRef font = CGContextGetFont(ctx);
-    float aScale   = (gc->cex * gc->ps * xd->tscale) / CGFontGetUnitsPerEm(font);
+    float aScale   = (float) ((gc->cex * gc->ps * xd->tscale) /
+			      CGFontGetUnitsPerEm(font));
     UniChar *buffer;
     CGGlyph   *glyphs;
 
@@ -965,7 +967,7 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     float width = 0.0;
     CFStringRef str = text2unichar(gc, dd, text, &buffer, &Free);
     if (!str) return; /* invalid text contents */
-    len = CFStringGetLength(str);
+    len = (int) CFStringGetLength(str);
     /* FIXME: check allocations */
     glyphs = malloc(sizeof(CGGlyph) * len);
     CGFontGetGlyphsForUnichars(font, buffer, glyphs, len);
@@ -1216,17 +1218,18 @@ RQuartz_MetricInfo(int c, const pGEcontext gc,
     RQuartz_SetFont(ctx, gc, xd);
     {
 	CGFontRef font = CGContextGetFont(ctx);
-        float aScale   = (gc->cex * gc->ps * xd->tscale) / CGFontGetUnitsPerEm(font);
+        float aScale   = (float)((gc->cex * gc->ps * xd->tscale) /
+				 CGFontGetUnitsPerEm(font));
 	UniChar  *buffer, single;
         CGGlyph  glyphs[8];
 	CFStringRef str = NULL;
         int free_buffer = 0, len;
 	*width = *ascent = *descent = 0.0; /* data for bail-out cases */
 	if (c >= 0 && c <= ((mbcslocale && gc->fontface != 5) ? 127 : 255)) {
-	    char    text[2] = { c, 0 };
+	    char    text[2] = { (char)c, 0 };
 	    str = text2unichar(gc, dd, text, &buffer, &free_buffer);
 	    if(!str) return;
-	    len = CFStringGetLength(str);
+	    len = (int) CFStringGetLength(str);
 	    if (len > 7) return; /* this is basically impossible,
 				    but you never know */
 	} else {
