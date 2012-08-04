@@ -1,3 +1,5 @@
+#  Copyright (C) 1997-2009 The R Core Team
+
 ### Helical Valley Function
 ### Page 362 Dennis + Schnabel
 

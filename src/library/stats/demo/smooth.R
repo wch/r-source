@@ -1,4 +1,5 @@
 ### This used to be in   example(smooth) before we had package-specific demos
+#  Copyright (C) 1997-2009 The R Core Team
 
 require(stats); require(graphics); require(datasets)
 op <- par(mfrow = c(1,1))

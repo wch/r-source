@@ -2,6 +2,9 @@
 ###			By Annette Dobson
 ###
 ### == with some additions ==
+
+#  Copyright (C) 1997-2008 The R Core Team
+
 require(stats); require(graphics)
 
 ## Plant Weight Data (Page 9)

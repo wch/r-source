@@ -1,3 +1,5 @@
+#  Copyright (C) 2000-2008 The R Core Team
+
 require(tcltk) || stop("tcltk support is absent")
 require(stats)
 
