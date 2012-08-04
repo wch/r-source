@@ -2,7 +2,8 @@
 COPYRIGHT STATUS
 
 The bulk of this code is copyright by members of or all of the R Core
-Team.
+Team.  ('The R Core Team' in copyright statements in individual files
+refers to some or all of the team.)
 
 See the file COPYING for the exact conditions under which you may
 redistribute it.  R as a whole is distributed under GPL version 2 or
@@ -47,7 +48,7 @@ From the announcement of the change (2001-Feb-05)
 
     We encourage packages to be distributed under Open Source conditions,
     but accept that this is not possible for some contributions.  Our
-    intention is that export files and import libraries be `accessors'
+    intention is that export files and import libraries be 'accessors'
     under clause 5 of the LGPL, so that in most cases no (additional)
     restrictions are imposed by compiling a package using the LGPL-ed
     components of R.
@@ -95,7 +96,7 @@ src/library/grDevices/inst/afm/CM_*.afm
 src/library/grDevices/inst/afm/cm*.afm
 
 	are derived from afms which are copyright by the American
-	Mathematical Society, but `the AMS does require that the
+	Mathematical Society, but 'the AMS does require that the
 	AMS copyright notice be removed from any derivative versions
 	of the fonts which have been altered in any way'.
 
@@ -211,8 +212,7 @@ src/library/stats/src/nscor.c
 src/library/stats/src/prho.c
 src/library/stats/src/swilk.c
 src/library/stats/src/kmns.f
-src/library/ts/src/starma.c
-src/nmath/pgamma.c
+src/library/stats/src/starma.c
 src/nmath/pnbeta.c
 src/nmath/pnchisq.c
 src/nmath/pnt.c
@@ -220,14 +220,13 @@ src/nmath/qbeta.c
 src/nmath/qgamma.c
 src/nmath/qnorm.c
 src/nmath/qtukey.c
-src/nmath/sunif.c
   are based in whole or in part on Applied Statistics algorithms
   (C) Royal Statistical Society
 
 src/nmath/stirlerr.c
 src/nmath/dbinom.c
 src/nmath/dpois.c
-  are partly based on Clive Loader's (1999) work,
+  are partly based on Catherine/Clive Loader's (1999) work,
   (C) 1999-2000 Lucent Technologies, Bell Laboratories.
 
 

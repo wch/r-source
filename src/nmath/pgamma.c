@@ -43,7 +43,6 @@
  *
  *	Complete redesign by Morten Welinder, originally for Gnumeric.
  *	Improvements (e.g. "while NEEDED_SCALE") by Martin Maechler
- *	The old version can be activated by compiling with -DR_USE_OLD_PGAMMA
  *
  *  REFERENCES
  *
@@ -243,8 +242,6 @@ double logspace_sub (double logx, double logy)
     return logx + R_Log1_Exp(logy - logx);
 }
 
-
-#ifndef R_USE_OLD_PGAMMA
 
 /* dpois_wrap (x_P_1,  lambda, g_log) ==
  *   dpois (x_P_1 - 1, lambda, g_log) :=  exp(-L)  L^k / gamma(k+1) ,  k := x_P_1 - 1
@@ -722,160 +719,3 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
  * MM: I've not (yet?) taken  logcf(), but the other four
  */
 
-
-#else
-/* R_USE_OLD_PGAMMA */
-/*
- *  Copyright (C) 1998		Ross Ihaka
- *  Copyright (C) 1999-2000	The R Core Team
- *  Copyright (C) 2003-2004	The R Foundation
- *  based on AS 239 (C) 1988 Royal Statistical Society
- *
- *  ................
- *
- *  NOTES
- *
- *	This function is an adaptation of Algorithm 239 from the
- *	Applied Statistics Series.  The algorithm is faster than
- *	those by W. Fullerton in the FNLIB library and also the
- *	TOMS 542 alorithm of W. Gautschi.  It provides comparable
- *	accuracy to those algorithms and is considerably simpler.
- *
- *  REFERENCES
- *
- *	Algorithm AS 239, Incomplete Gamma Function
- *	Applied Statistics 37, 1988.
- */
-
-/* now would need this here: */
-double attribute_hidden pgamma_raw(x, alph, lower_tail, log_p) {
-    return pgamma(x, alph, 1, lower_tail, log_p);
-}
-
-double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
-{
-    const static double
-	xbig = 1.0e+8,
-	xlarge = 1.0e+37,
-
-	/* normal approx. for alph > alphlimit */
-	alphlimit = 1e5;/* was 1000. till R.1.8.x */
-
-    double pn1, pn2, pn3, pn4, pn5, pn6, arg, a, b, c, an, osum, sum;
-    long n;
-    int pearson;
-
-    /* check that we have valid values for x and alph */
-
-#ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(alph) || ISNAN(scale))
-	return x + alph + scale;
-#endif
-#ifdef DEBUG_p
-    REprintf("pgamma(x=%4g, alph=%4g, scale=%4g): ",x,alph,scale);
-#endif
-    if(alph <= 0. || scale <= 0.)
-	ML_ERR_return_NAN;
-
-    x /= scale;
-#ifdef DEBUG_p
-    REprintf("-> x=%4g; ",x);
-#endif
-#ifdef IEEE_754
-    if (ISNAN(x)) /* eg. original x = scale = Inf */
-	return x;
-#endif
-    if (x <= 0.)
-	return R_DT_0;
-
-#define USE_PNORM \
-    pn1 = sqrt(alph) * 3. * (pow(x/alph, 1./3.) + 1. / (9. * alph) - 1.); \
-    return pnorm(pn1, 0., 1., lower_tail, log_p);
-
-    if (alph > alphlimit) { /* use a normal approximation */
-	USE_PNORM;
-    }
-
-    if (x > xbig * alph) {
-	if (x > DBL_MAX * alph)
-	    /* if x is extremely large __compared to alph__ then return 1 */
-	    return R_DT_1;
-	else { /* this only "helps" when log_p = TRUE */
-	    USE_PNORM;
-	}
-    }
-
-    if (x <= 1. || x < alph) {
-
-	pearson = 1;/* use pearson's series expansion. */
-
-	arg = alph * log(x) - x - lgammafn(alph + 1.);
-#ifdef DEBUG_p
-	REprintf("Pearson  arg=%g ", arg);
-#endif
-	c = 1.;
-	sum = 1.;
-	a = alph;
-	do {
-	    a += 1.;
-	    c *= x / a;
-	    sum += c;
-	} while (c > DBL_EPSILON * sum);
-    }
-    else { /* x >= max( 1, alph) */
-
-	pearson = 0;/* use a continued fraction expansion */
-
-	arg = alph * log(x) - x - lgammafn(alph);
-#ifdef DEBUG_p
-	REprintf("Cont.Fract. arg=%g ", arg);
-#endif
-	a = 1. - alph;
-	b = a + x + 1.;
-	pn1 = 1.;
-	pn2 = x;
-	pn3 = x + 1.;
-	pn4 = x * b;
-	sum = pn3 / pn4;
-	for (n = 1; ; n++) {
-	    a += 1.;/* =   n+1 -alph */
-	    b += 2.;/* = 2(n+1)-alph+x */
-	    an = a * n;
-	    pn5 = b * pn3 - an * pn1;
-	    pn6 = b * pn4 - an * pn2;
-	    if (fabs(pn6) > 0.) {
-		osum = sum;
-		sum = pn5 / pn6;
-		if (fabs(osum - sum) <= DBL_EPSILON * fmin2(1., sum))
-		    break;
-	    }
-	    pn1 = pn3;
-	    pn2 = pn4;
-	    pn3 = pn5;
-	    pn4 = pn6;
-	    if (fabs(pn5) >= xlarge) {
-		/* re-scale the terms in continued fraction if they are large */
-#ifdef DEBUG_p
-		REprintf(" [r] ");
-#endif
-		pn1 /= xlarge;
-		pn2 /= xlarge;
-		pn3 /= xlarge;
-		pn4 /= xlarge;
-	    }
-	}
-    }
-
-    arg += log(sum);
-
-    lower_tail = (lower_tail == pearson);
-
-    if (log_p && lower_tail)
-	return(arg);
-    /* else */
-    /* sum = exp(arg); and return   if(lower_tail) sum	else 1-sum : */
-    return (lower_tail) ? exp(arg) : (log_p ? R_Log1_Exp(arg) : -expm1(arg));
-}
-
-#endif
-/* R_USE_OLD_PGAMMA */
