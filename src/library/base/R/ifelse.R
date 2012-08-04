@@ -23,9 +23,9 @@ ifelse <- function (test, yes, no)
     ans <- test
     ok <- !(nas <- is.na(test))
     if (any(test[ok]))
-        ans[test & ok] <- rep(yes, length.out = xlength(ans))[test & ok]
+        ans[test & ok] <- rep(yes, length.out = length(ans))[test & ok]
     if (any(!test[ok]))
-        ans[!test & ok] <- rep(no, length.out = xlength(ans))[!test & ok]
+        ans[!test & ok] <- rep(no, length.out = length(ans))[!test & ok]
     ans[nas] <- NA
     ans
 }

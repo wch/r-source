@@ -14,9 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-append <- function (x, values, after = xlength(x))
+append <- function (x, values, after = length(x))
 {
-    lengx <- xlength(x)
+    lengx <- length(x)
     if (!after) c(values, x)
     else if (after >= lengx) c(x, values)
     else c(x[1L:after], values, x[(after + 1L):lengx])

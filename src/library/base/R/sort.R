@@ -167,6 +167,6 @@ xtfrm.AsIs <- function(x)
 ## callback for C code for is.unsorted, hence negation.
 .gtn <- function(x, strictly)
 {
-    n <- xlength(x)
+    n <- length(x)
     if(strictly) !all(x[-1L] > x[-n]) else !all(x[-1L] >= x[-n])
 }

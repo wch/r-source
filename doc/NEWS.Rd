@@ -187,9 +187,11 @@
       limited, and most operations will return the error \sQuote{long
       vectors not supported yet}.  They can be serialized and
       unserialized, coercion, \code{identical()} and
-      \code{object.size()} work and means can be computed.  Their
-      lengths can be get and set by \code{xlength()}: calling
-      \code{length()} on a long vector will throw an error.
+      \code{object.size()} work and means can be computed.
+
+      \item \code{length()} returns a double for long vectors, and
+      lengths can be set to  \eqn{2^{31}}{2^31} or more by the
+      replacement function with a double value.
 
       \item Most aspects of indexing are available.  Generally
       double-valued indices can be used to access elements beyond
@@ -216,6 +218,12 @@
       \code{.Call()} to allow long vectors to be supported (now or in
       the future).  Regretably several packages had copied the non-API
       \code{.C()} calls and so fail.
+
+      \item \code{.C()} and \code{.Fortran()} do not accept long vector
+      inputs, at least for the time being.  This is a precaution as it
+      is very unlikely that existing code will have be written to handle
+      long vectors (and the \R wrappers often assume that
+      \code{length(x)} is an integer).
     }
   }
 

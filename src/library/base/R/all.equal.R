@@ -53,8 +53,8 @@ all.equal.numeric <-
 	return(msg)
     }
 
-    lt <- xlength(target)
-    lc <- xlength(current)
+    lt <- length(target)
+    lc <- length(current)
     cplx <- is.complex(target) # and so current must be too.
     if(lt != lc) {
 	## *replace* the 'Lengths' msg[] from attr.all.equal():
@@ -108,8 +108,8 @@ all.equal.character <-
 			    data.class(current), sep = ""))
 	return(msg)
     }
-    lt <- xlength(target)
-    lc <- xlength(current)
+    lt <- length(target)
+    lc <- length(current)
     if(lt != lc) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
@@ -192,11 +192,11 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
     target <- unclass(target)
     current <- unclass(current)
     iseq <-
-	if(xlength(target) == xlength(current)) {
+	if(length(target) == length(current)) {
 	    seq_along(target)
 	} else {
             if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
-	    nc <- min(xlength(target), xlength(current))
+	    nc <- min(length(target), length(current))
 	    msg <- c(msg, paste("Length mismatch: comparison on first",
 				nc, "components"))
 	    seq_len(nc)
@@ -219,8 +219,8 @@ all.equal.raw <-
 			    data.class(current), sep = ""))
 	return(msg)
     }
-    lt <- xlength(target)
-    lc <- xlength(current)
+    lt <- length(target)
+    lc <- length(current)
     if(lt != lc) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	msg <- c(msg, paste("Lengths (", lt, ", ", lc,

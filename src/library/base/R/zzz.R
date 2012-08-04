@@ -143,7 +143,7 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
     "is.array", "is.finite",
     "is.infinite", "is.matrix", "is.na", "is.nan", "is.numeric",
     "length", "length<-", "levels<-", "names", "names<-", "rep",
-    "seq.int", "xlength", "xlength<-", "xtfrm")
+    "seq.int", "xtfrm")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
@@ -227,8 +227,6 @@ assign("seq.int", function(from, to, by, length.out, along.with, ...)
 assign("signif", function(x, digits=6) UseMethod("signif"),
        envir = .GenericArgsEnv)
 assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
-assign("xlength<-", function(x, value) UseMethod("xlength<-"),
-       envir = .GenericArgsEnv)
 #assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
 ## make these the same object as as.double

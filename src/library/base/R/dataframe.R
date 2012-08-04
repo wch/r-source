@@ -58,7 +58,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if(n == 0L) {
         ## we have to be careful here.  This could be a
         ## 0-row data frame or an invalid one being constructed.
-        if(!is.null(attr(x, "row.names")) && xlength(value) > 0L)
+        if(!is.null(attr(x, "row.names")) && length(value) > 0L)
            stop("invalid 'row.names' length")
     }
     else if (length(value) != n)

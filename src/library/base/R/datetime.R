@@ -61,7 +61,7 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
         return(res)
     }
     xx <- x[!is.na(x)]
-    if (!xlength(xx)) {
+    if (!length(xx)) {
         res <- strptime(x, "%Y/%m/%d")
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
@@ -213,10 +213,10 @@ format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 print.POSIXct <- function(x, ...)
 {
     max.print <- getOption("max.print", 9999L)
-    if(max.print < xlength(x)) {
+    if(max.print < length(x)) {
         print(format(x[seq_len(max.print)], usetz=TRUE), ...)
         cat(' [ reached getOption("max.print") -- omitted',
-            xlength(x) - max.print, 'entries ]\n')
+            length(x) - max.print, 'entries ]\n')
     } else print(format(x, usetz=TRUE), ...)
     invisible(x)
 }
@@ -224,10 +224,10 @@ print.POSIXct <- function(x, ...)
 print.POSIXlt <- function(x, ...)
 {
     max.print <- getOption("max.print", 9999L)
-    if(max.print < xlength(x)) {
+    if(max.print < length(x)) {
         print(format(x[seq_len(max.print)], usetz=TRUE), ...)
         cat(' [ reached getOption("max.print") -- omitted',
-            xlength(x) - max.print, 'entries ]\n')
+            length(x) - max.print, 'entries ]\n')
    } else print(format(x, usetz=TRUE), ...)
     invisible(x)
 }
@@ -371,7 +371,7 @@ function(x, ..., drop = TRUE)
 
 `[<-.POSIXct` <-
 function(x, ..., value) {
-    if(!xlength(value)) return(x)
+    if(!length(value)) return(x)
     value <- unclass(as.POSIXct(value))
     cl <- oldClass(x)
     tz <- attr(x, "tzone")
@@ -416,7 +416,7 @@ all.equal.POSIXct <- function(target, current, ..., tolerance = 1e-3, scale=1)
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 {
-    if(min(sapply(list(year, month, day, hour, min, sec), xlength)) == 0L)
+    if(min(sapply(list(year, month, day, hour, min, sec), length)) == 0L)
         .POSIXct(numeric(), tz=tz)
     else {
         x <- paste(year, month, day, hour, min, sec, sep="-")
@@ -523,7 +523,7 @@ format.difftime <- function(x,...) paste(format(unclass(x),...), units(x))
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
-    if(is.array(x) || xlength(x) > 1L) {
+    if(is.array(x) || length(x) > 1L) {
         cat("Time differences in ", attr(x, "units"), "\n", sep="")
         y <- unclass(x); attr(y, "units") <- NULL
         print(y)
@@ -672,7 +672,7 @@ seq.POSIXt <-
         if (length(as.POSIXct(to)) != 1) stop("'to' must be of length 1")
     }
     if (!missing(along.with)) {
-        length.out <- xlength(along.with)
+        length.out <- length(along.with)
     }  else if (!is.null(length.out)) {
         if (length(length.out) != 1L) stop("'length.out' must be of length 1")
         length.out <- ceiling(length.out)

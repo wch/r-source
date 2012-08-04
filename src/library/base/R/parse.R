@@ -19,7 +19,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
 {
     keep.source <- isTRUE(getOption("keep.source"))
     if(!is.null(text)) {
-    	if (xlength(text) == 0L) return(expression())
+    	if (length(text) == 0L) return(expression())
 	if (missing(srcfile) && keep.source)
 	    srcfile <- srcfilecopy("<text>", text)
     }

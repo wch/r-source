@@ -1444,6 +1444,11 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	   We do not need to copy if the inputs have NAMED = 0 */
 
+#ifdef LONG_VECTOR_SUPPORT
+	if (isVector(s) && IS_LONG_VEC(s))
+	    error(_("long vectors (argument %d) are not supported in %s"), 
+		  na + 1, Fort ? ".C" : ".Fortran");
+#endif
 	SEXPTYPE t = TYPEOF(s);
 	switch(t) {
 	case RAWSXP:

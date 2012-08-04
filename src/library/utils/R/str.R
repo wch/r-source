@@ -145,7 +145,7 @@ str.default <-
     }
 
     oo <- options(digits = digits.d); on.exit(options(oo))
-    le <- xlength(object)
+    le <- length(object)
     if(is.na(le)) {
         warning("'str.default': 'le' is NA, so taken as 0", immediate. = TRUE)
         le <- 0
@@ -270,7 +270,7 @@ str.default <-
 							 inherits= TRUE))))) {
 		## str.default is a 'NextMethod' : omit the 'List of ..'
 		std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
-	    } else { # need as.character here for double xlengths.
+	    } else { # need as.character here for double lengths.
 		cat(if(i.pl) "Dotted pair list" else
 		    if(irregCl) paste(pClass(cl), "hidden list") else "List",
 		    " of ", as.character(le), "\n", sep="")

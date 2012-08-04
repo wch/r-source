@@ -7,8 +7,6 @@
 \alias{length}
 \alias{length<-}
 \alias{length<-.factor}
-\alias{xlength}
-\alias{xlength<-}
 \title{Length of an Object}
 \description{
   Get or set the length of vectors (including lists) and factors, and of
@@ -17,9 +15,6 @@
 \usage{
 length(x)
 length(x) <- value
-
-xlength(x)
-xlength(x) <- value
 }
 \arguments{
   \item{x}{an \R object.  For replacement, a vector or factor.}
@@ -42,17 +37,9 @@ xlength(x) <- value
   All are \link{primitive} functions.
 }
 \value{
-  The default method for \code{length} currently returns an
-  \code{\link{integer}} of length 1.  Since this may change in the
-  future and may differ for other methods, programmers should not rely
-  on it.  It gives an error for long vectors: the default method will
-  only return a non-negative integer (and never \code{NA}), but
-  see section \sQuote{Warning}.
-
-  On the other hand, the default method for \code{xlength} will return a
-  double value for vectors of more than \eqn{2^{31}-1}{2^31 - 1}
-  elements, and the default replacement method can set the length of
-  atomic vectors and list to such a length if \code{value} is double.
+  The default method for \code{length} currently returns a non-negative
+  \code{\link{integer}} of length 1, except for vectors of more than
+  \eqn{2^{31}-1}{2^31 - 1} elements, when it returns a double.
 
   For vectors (including lists) and factors the length is the number of
   elements.  For an environment it is the number of objects in the
@@ -71,6 +58,8 @@ xlength(x) <- value
   (\pkg{sets}).  As from \R 2.16.0, where a single double value is
   returned that can be represented as an integer, it is returned as a
   length-one integer vector.
+
+  And also as from \R 2.16.0, lengths can be returned as double in base \R.
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.

@@ -10,7 +10,7 @@
   Add elements to a vector.
 }
 \usage{
-append(x, values, after = xlength(x))
+append(x, values, after = length(x))
 }
 \arguments{
   \item{x}{the vector to be modified.}
