@@ -54,13 +54,13 @@ msgstr ""
 msgid ""
 "splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
 msgstr ""
-"splineDesign(*, sparse=TRUE) needs package “Matrix” correctly installed"
+"splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
 
 msgid "values of 'x' must be distinct"
 msgstr "values of ‘x’ must be distinct"
 
 msgid "'formula' must be of the form \"y ~ x\""
-msgstr "‘formula’ must be of the form “y ~ x”"
+msgstr "‘formula’ must be of the form \"y ~ x\""
 
 msgid "lengths of 'x' and 'y' must match"
 msgstr "lengths of ‘x’ and ‘y’ must match"

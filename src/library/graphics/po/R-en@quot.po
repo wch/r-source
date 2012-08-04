@@ -155,7 +155,7 @@ msgid "'add' will be ignored as there is no existing plot"
 msgstr "‘add’ will be ignored as there is no existing plot"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
-msgstr "‘from’ and ‘to’ must be > 0 with log=“x”"
+msgstr "‘from’ and ‘to’ must be > 0 with log=\"x\""
 
 msgid "'expr' did not evaluate to an object of length 'n'"
 msgstr "‘expr’ did not evaluate to an object of length ‘n’"

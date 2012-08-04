@@ -41,19 +41,19 @@ msgid "Use '%s' instead."
 msgstr "Use ‘%s’ instead."
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "See help(“Defunct”) and help(“%s-defunct”)."
+msgstr "See help(\"Defunct\") and help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
-msgstr "See help(“Defunct”)"
+msgstr "See help(\"Defunct\")"
 
 msgid "'%s' is deprecated."
 msgstr "‘%s’ is deprecated."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "See help(“Deprecated”) and help(“%s-deprecated”)."
+msgstr "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
-msgstr "See help(“Deprecated”)"
+msgstr "See help(\"Deprecated\")"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument to ‘La.svd’ must be numeric or complex"
@@ -424,13 +424,13 @@ msgid "'origin' must be supplied"
 msgstr "‘origin’ must be supplied"
 
 msgid "do not know how to convert '%s' to class \"Date\""
-msgstr "do not know how to convert ‘%s’ to class “Date”"
+msgstr "do not know how to convert ‘%s’ to class \"Date\""
 
 msgid "'%s' is not a \"date\" object"
-msgstr "‘%s’ is not a “date” object"
+msgstr "‘%s’ is not a \"date\" object"
 
 msgid "'%s' is not a \"dates\" object"
-msgstr "‘%s’ is not a “dates” object"
+msgstr "‘%s’ is not a \"dates\" object"
 
 msgid "binary + is not defined for Date objects"
 msgstr "binary + is not defined for Date objects"
@@ -501,31 +501,31 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "‘lag’ and ‘differences’ must be integers >= 1"
 
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "do not know how to convert ‘%s’ to class “POSIXlt”"
+msgstr "do not know how to convert ‘%s’ to class \"POSIXlt\""
 
 msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "do not know how to convert ‘%s’ to class “POSIXct”"
+msgstr "do not know how to convert ‘%s’ to class \"POSIXct\""
 
 msgid "wrong class"
 msgstr "wrong class"
 
 msgid "binary '+' is not defined for \"POSIXt\" objects"
-msgstr "binary ‘+’ is not defined for “POSIXt” objects"
+msgstr "binary ‘+’ is not defined for \"POSIXt\" objects"
 
 msgid "Can only subtract from POSIXt objects"
 msgstr "Can only subtract from POSIXt objects"
 
 msgid "unary '-' is not defined for \"POSIXt\" objects"
-msgstr "unary ‘-’ is not defined for “POSIXt” objects"
+msgstr "unary ‘-’ is not defined for \"POSIXt\" objects"
 
 msgid "can only subtract numbers from POSIXt objects"
 msgstr "can only subtract numbers from POSIXt objects"
 
 msgid "unary '%s' not defined for \"POSIXt\" objects"
-msgstr "unary ‘%s’ not defined for “POSIXt” objects"
+msgstr "unary ‘%s’ not defined for \"POSIXt\" objects"
 
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr "‘%s’ not defined for “POSIXt” objects"
+msgstr "‘%s’ not defined for \"POSIXt\" objects"
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "‘tzone’ attributes are inconsistent"
@@ -540,16 +540,16 @@ msgid "invalid units specified"
 msgstr "invalid units specified"
 
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr "unary ‘%s’ not defined for “difftime” objects"
+msgstr "unary ‘%s’ not defined for \"difftime\" objects"
 
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr "‘%s’ not defined for “difftime” objects"
+msgstr "‘%s’ not defined for \"difftime\" objects"
 
 msgid "both arguments of * cannot be \"difftime\" objects"
-msgstr "both arguments of * cannot be “difftime” objects"
+msgstr "both arguments of * cannot be \"difftime\" objects"
 
 msgid "second argument of / cannot be a \"difftime\" object"
-msgstr "second argument of / cannot be a “difftime” object"
+msgstr "second argument of / cannot be a \"difftime\" object"
 
 msgid "'from' must be a POSIXt object"
 msgstr "‘from’ must be a POSIXt object"
@@ -721,13 +721,13 @@ msgid "using the first element of 'value' of type expression"
 msgstr "using the first element of ‘value’ of type expression"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
-msgstr "‘mode’ must be “double” (“real”), “integer” or “character”"
+msgstr "‘mode’ must be \"double\" (\"real\"), \"integer\" or \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
-msgstr "coercing argument to “character” for format=“s”"
+msgstr "coercing argument to \"character\" for format=\"s\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr "‘format’ must be one of {“f”,“e”,“E”,“g”,“G”, “fg”, “s”}"
+msgstr "‘format’ must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'digits' reduced to"
 msgstr "‘digits’ reduced to"
@@ -898,7 +898,7 @@ msgid "shared object '%s' already loaded"
 msgstr "shared object ‘%s’ already loaded"
 
 msgid "now dyn.load(\"%s\") ..."
-msgstr "now dyn.load(“%s”) ..."
+msgstr "now dyn.load(\"%s\") ..."
 
 msgid "no DLL was specified"
 msgstr "no DLL was specified"
@@ -919,7 +919,7 @@ msgid "shared object '%s' not found"
 msgstr "shared object ‘%s’ not found"
 
 msgid "now dyn.unload(\"%s\") ..."
-msgstr "now dyn.unload(“%s”) ..."
+msgstr "now dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
 msgstr "Loading required package: %s"
@@ -998,7 +998,7 @@ msgid "'compress' must be logical or character"
 msgstr "‘compress’ must be logical or character"
 
 msgid "'compress = \"%s\"' is invalid"
-msgstr "‘compress = “%s”’ is invalid"
+msgstr "‘compress = \"%s\"’ is invalid"
 
 msgid "bad file argument"
 msgstr "bad file argument"
@@ -1214,7 +1214,7 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr "found methods to import for function %s but not the generic itself"
 
 msgid "No methods found in \"%s\" for requests: %s"
-msgstr "No methods found in “%s” for requests: %s"
+msgstr "No methods found in \"%s\" for requests: %s"
 
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "requested methods not found in environment/package %s: %s"
@@ -1224,7 +1224,7 @@ msgid ""
 "\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
 "No generic function found corresponding to requested imported methods for "
-"“%s” from package “%s” (malformed exports?)"
+"\"%s\" from package \"%s\" (malformed exports?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "cannot add to exports of a sealed namespace"
@@ -1239,7 +1239,7 @@ msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "empty name in directive ‘%s’ in NAMESPACE file"
 
 msgid "duplicated symbol names %s in useDynlib(\"%s\")"
-msgstr "duplicated symbol names %s in useDynlib(“%s”)"
+msgstr "duplicated symbol names %s in useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "bad ‘S3method’ directive: %s"
@@ -1410,7 +1410,7 @@ msgid "'file' must be NULL, a connection or a character string"
 msgstr "‘file’ must be NULL, a connection or a character string"
 
 msgid "this is the \"qr\" method for the generic function solve()"
-msgstr "this is the “qr” method for the generic function solve()"
+msgstr "this is the \"qr\" method for the generic function solve()"
 
 msgid "singular matrix 'a' in 'solve'"
 msgstr "singular matrix ‘a’ in ‘solve’"
@@ -1422,7 +1422,7 @@ msgid "'b' must be compatible with 'a'"
 msgstr "‘b’ must be compatible with ‘a’"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
-msgstr "solve.default called with a “qr” object: use ‘qr.solve’"
+msgstr "solve.default called with a \"qr\" object: use ‘qr.solve’"
 
 msgid "singular matrix 'a' in solve"
 msgstr "singular matrix ‘a’ in solve"
@@ -1460,10 +1460,10 @@ msgstr ""
 "Have you called ‘sort’ on a list?"
 
 msgid "method=\"quick\" is only for numeric 'x'"
-msgstr "method=“quick” is only for numeric ‘x’"
+msgstr "method=\"quick\" is only for numeric ‘x’"
 
 msgid "method=\"radix\" is only for integer 'x'"
-msgstr "method=“radix” is only for integer ‘x’"
+msgstr "method=\"radix\" is only for integer ‘x’"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "‘local’ must be TRUE, FALSE or an environment"
@@ -1478,7 +1478,7 @@ msgid "unable to find a plausible encoding"
 msgstr "unable to find a plausible encoding"
 
 msgid "encoding = \"%s\" chosen"
-msgstr "encoding = “%s” chosen"
+msgstr "encoding = \"%s\" chosen"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "‘chdir = TRUE’ makes no sense for a URL"
@@ -1550,10 +1550,10 @@ msgid "attempt to make a table with >= 2^31 elements"
 msgstr "attempt to make a table with >= 2^31 elements"
 
 msgid "'object' must inherit from class \"table\""
-msgstr "‘object’ must inherit from class “table”"
+msgstr "‘object’ must inherit from class \"table\""
 
 msgid "'x' must inherit from class \"summary.table\""
-msgstr "‘x’ must inherit from class “summary.table”"
+msgstr "‘x’ must inherit from class \"summary.table\""
 
 msgid "cannot coerce into a table"
 msgstr "cannot coerce into a table"
@@ -1613,10 +1613,10 @@ msgid "invalid value"
 msgstr "invalid value"
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr "unary ‘%s’ not defined for “numeric_version” objects"
+msgstr "unary ‘%s’ not defined for \"numeric_version\" objects"
 
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr "‘%s’ not defined for “numeric_version” objects"
+msgstr "‘%s’ not defined for \"numeric_version\" objects"
 
 msgid "not defined for numeric_version objects"
 msgstr "not defined for numeric_version objects"

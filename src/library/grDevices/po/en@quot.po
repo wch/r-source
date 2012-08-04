@@ -432,7 +432,7 @@ msgstr "cannot open ‘pdf’ pipe to ‘%s’"
 
 #: devPS.c:7051
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
-msgstr "file = “|cmd” implies ‘onefile = TRUE’"
+msgstr "file = \"|cmd\" implies ‘onefile = TRUE’"
 
 #: devPS.c:7194
 #, c-format
@@ -476,7 +476,7 @@ msgstr "unable to start %s() device"
 #: devQuartz.c:642
 #, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
-msgstr "font “%s” could not be found for family “%s”"
+msgstr "font \"%s\" could not be found for family \"%s\""
 
 #: devQuartz.c:660
 msgid "font family name is too long"
@@ -485,7 +485,7 @@ msgstr "font family name is too long"
 #: devQuartz.c:700
 #, c-format
 msgid "no font could be found for family \"%s\""
-msgstr "no font could be found for family “%s”"
+msgstr "no font could be found for family \"%s\""
 
 #: devQuartz.c:1355
 msgid "invalid 'file' argument"

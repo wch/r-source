@@ -61,8 +61,8 @@ msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
 "for function '%s'"
 msgstr ""
-"no “allMethods” slot found in object of class “%s” used as methods list for "
-"function ‘%s’"
+"no \"allMethods\" slot found in object of class \"%s\" used as methods list "
+"for function ‘%s’"
 
 #: methods_list_dispatch.c:358
 #, c-format
@@ -92,7 +92,7 @@ msgid ""
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
 "invalid generic function object for method selection for function ‘%s’: "
-"expected a function or a primitive, got an object of class “%s”"
+"expected a function or a primitive, got an object of class \"%s\""
 
 #: methods_list_dispatch.c:486
 #, c-format
@@ -115,7 +115,7 @@ msgid ""
 "a name, got an object of class \"%s\""
 msgstr ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
-"a name, got an object of class “%s”"
+"a name, got an object of class \"%s\""
 
 #: methods_list_dispatch.c:544
 msgid "use of NULL environment is defunct"
@@ -128,7 +128,7 @@ msgid ""
 "dispatch: got an object of class \"%s\""
 msgstr ""
 "invalid environment in checking for missing argument, ‘%s’, in methods "
-"dispatch: got an object of class “%s”"
+"dispatch: got an object of class \"%s\""
 
 #: methods_list_dispatch.c:574
 #, c-format
@@ -136,8 +136,8 @@ msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
 msgstr ""
-"object of class “%s” used as methods list for function ‘%s’ ( no ‘argument’ "
-"slot)"
+"object of class \"%s\" used as methods list for function ‘%s’ ( no "
+"‘argument’ slot)"
 
 #: methods_list_dispatch.c:585
 #, c-format
@@ -155,7 +155,7 @@ msgid ""
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 "(in selecting a method for function ‘%s’) the ‘environment’ argument for "
-"dispatch must be an R environment; got an object of class “%s”"
+"dispatch must be an R environment; got an object of class \"%s\""
 
 #: methods_list_dispatch.c:602 methods_list_dispatch.c:614
 #: methods_list_dispatch.c:995
@@ -170,7 +170,8 @@ msgstr ""
 #: methods_list_dispatch.c:622
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr "no matching method for function ‘%s’ (argument ‘%s’, with class “%s”)"
+msgstr ""
+"no matching method for function ‘%s’ (argument ‘%s’, with class \"%s\")"
 
 #: methods_list_dispatch.c:629
 #, c-format
@@ -213,7 +214,7 @@ msgstr "‘%s’ must be a non-empty string; got an empty string"
 #: methods_list_dispatch.c:805
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
-msgstr "‘%s’ must be a single string (got an object of class “%s”)"
+msgstr "‘%s’ must be a single string (got an object of class \"%s\")"
 
 #: methods_list_dispatch.c:876
 msgid "Class should be either a character-string name or a class definition"
@@ -222,7 +223,7 @@ msgstr "Class should be either a character-string name or a class definition"
 #: methods_list_dispatch.c:955
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
-msgstr "Failed to get the generic for the primitive “%s”"
+msgstr "Failed to get the generic for the primitive \"%s\""
 
 #: methods_list_dispatch.c:961
 #, c-format
@@ -231,7 +232,7 @@ msgid ""
 "class \"%s\""
 msgstr ""
 "Expected a generic function or a primitive for dispatch, got an object of "
-"class “%s”"
+"class \"%s\""
 
 #: methods_list_dispatch.c:973
 #, c-format
@@ -239,5 +240,5 @@ msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "
 "to have .SigArgs and .AllMtable assigned in its environment"
 msgstr ""
-"Generic “%s” seems not to have been initialized for table dispatch---need to "
-"have .SigArgs and .AllMtable assigned in its environment"
+"Generic \"%s\" seems not to have been initialized for table dispatch---need "
+"to have .SigArgs and .AllMtable assigned in its environment"
