@@ -1,5 +1,5 @@
 
-R version 2.15.0 alpha (2012-03-07 r58625)
+R version 2.15.1 Patched (2012-08-04 r60130) -- "Roasted Marshmallows"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -66,6 +66,10 @@ Type 'q()' to quit R.
 > ##' @return a list with 'value' and 'warning', where
 > ##'   'value' may be an error caught.
 > ##' @author Martin Maechler
+> 
+> #  Copyright (C) 2010 The R Core Team
+> 
+> 
 > tryCatch.W.E <- function(expr)
 + {
 +     W <- NULL
@@ -103,6 +107,8 @@ List of 2
 	demo(is.things)
 	---- ~~~~~~~~~
 
+> #  Copyright (C) 1997-2010 The R Core Team
+> 
 > ## being a 'builtin' function is not the same as being in base
 > ls.base <- ls("package:base", all=TRUE)
 
@@ -113,8 +119,8 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of base objects:		1253
-Number of functions in base:	1222
+Number of base objects:		1254
+Number of functions in base:	1223
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -629,6 +635,8 @@ is.vector          : |
 	demo(recursion)
 	---- ~~~~~~~~~
 
+> #  Copyright (C) 1997-2005 The R Core Team
+> 
 > ## Adaptive integration:	 Venables and Ripley pp. 105-110
 > ## This is the basic integrator.
 > 
@@ -730,6 +738,8 @@ is.vector          : |
 > ## This is a very nifty way of creating "closures" and a little thought
 > ## will show you that there are many ways of using this in statistics.
 > 
+> #  Copyright (C) 1997-8 The R Core Team
+> 
 > open.account <- function(total) {
 + 
 +     list(
@@ -785,6 +795,8 @@ In fn(obj) : is.na() applied to non-(list or vector) of type 'expression'
 	demo(graphics)
 	---- ~~~~~~~~
 
+> #  Copyright (C) 1997-2009 The R Core Team
+> 
 > require(datasets)
 
 > require(grDevices); require(graphics)
@@ -987,6 +999,8 @@ In fn(obj) : is.na() applied to non-(list or vector) of type 'expression'
 	demo(image)
 	---- ~~~~~
 
+> #  Copyright (C) 1997-2009 The R Core Team
+> 
 > require(datasets)
 
 > require(grDevices); require(graphics)
@@ -1193,6 +1207,8 @@ flld.c+                plot.axes = {})
 	demo(glm.vr)
 	---- ~~~~~~
 
+> #  Copyright (C) 1997-2009 The R Core Team
+> 
 > #### -*- R -*-
 > require(stats)
 
@@ -1368,6 +1384,7 @@ Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
 	---- ~~~~~~
 
 > ### This used to be in   example(smooth) before we had package-specific demos
+> #  Copyright (C) 1997-2009 The R Core Team
 > 
 > require(stats); require(graphics); require(datasets)
 
@@ -1506,5 +1523,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.908 0.04 1.958 0 0 
+Time elapsed:  1.882 0.05 1.942 0 0 
 > 
