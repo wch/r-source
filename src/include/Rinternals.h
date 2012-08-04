@@ -315,6 +315,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # define SET_TRUELENGTH(x,v)	((((VECSEXP) (x))->vecsxp.truelength)=(v))
 # define SET_SHORT_VEC_LENGTH SETLENGTH
 # define SET_SHORT_VEC_TRUELENGTH SET_TRUELENGTH
+# define IS_LONG_VEC(x) 0
 #endif
 
 /* Under the generational allocator the data for vector nodes comes
