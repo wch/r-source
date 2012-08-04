@@ -40,7 +40,8 @@
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
 
       \item The handling of single quotes in the \code{en@quot}
-      pseudo-language has been slightly improved.
+      pseudo-language has been slightly improved.  Double quotes are no
+      longer converted.
 
       \item New functions \code{checkPoFiles()} and \code{checkPoFile()}
       have been added to the \pkg{tools} package to check for
