@@ -1,11 +1,11 @@
 #  File src/library/stats/R/runmed.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995 Berwin A. Turlach <berwin@alphasun.anu.edu.au>
+#  Copyright (C) 1995 Berwin A. Turlach
 #  Ported to R, added interface to Stuetzle's code and further enhanced
 #  by Martin Maechler,
-#  Copyright (C) 1996--2002 Martin Maechler <maechler@stat.math.ethz.ch>
-#  Copyright (C) 2003       The R Foundation
+#  Copyright (C) 1996-2002 Martin Maechler
+#  Copyright (C) 2003 The R Foundation
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
