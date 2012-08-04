@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:07+0100\n"
+"POT-Creation-Date: 2012-08-04 17:07+0100\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "중앙값의 bandwidth/span 가 n 보다 큽니다"
 
-#: ansari.c:129
+#: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qunsari() 내에 확률이 [0,1] 범위외입니다"
 
@@ -63,17 +63,17 @@ msgstr "distance(): p 값이 잘못되었습니다 "
 msgid "distance(): invalid distance"
 msgstr "distance(): 거리가 잘못되었습니다 "
 
-#: family.c:21
+#: family.c:43
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "%g 값이 (0,1) 범위 외입니다 "
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "%s 인자는 반드시 수치형 벡터이어야 합니다 "
 
-#: family.c:107 family.c:110
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "%s 는 길이가 1 이거나 %d 인 수치형 벡터이어야 합니다 "
@@ -279,20 +279,20 @@ msgstr "'scal' 은 반드시 실수형 정방행렬이어야 합니다 "
 msgid "'scal' matrix is not positive-definite"
 msgstr "'scal' 행렬이 positive-definite 가 아닙니다 "
 
-#: smooth.c:79
+#: smooth.c:102
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "invalid end-rule for running median of 3: %d"
 
-#: smooth.c:231
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "smooth(*, '3RSR') 에서 할당에러가 발생했습니다 "
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "smooth(*,'3RSS') 에서 할당 에러가 발생했습니다 "
 
-#: smooth.c:264
+#: smooth.c:287
 msgid "allocation error in smooth(*, '3R')."
 msgstr "smooth(*,'3R') 에서 할당에러가 발생했습니다 "
 

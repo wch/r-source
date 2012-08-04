@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -277,14 +277,8 @@ msgstr "zero pontos não-NA"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' necessita de n >= 1"
 
-msgid "'vec' contains NAs"
-msgstr "'vec' contém NAs"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec' deve ser ordenado de forma crescente"
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr "comprimento inválido dos membros"
 
 msgid "'order.max' must be >= 1"
@@ -749,6 +743,9 @@ msgstr "valor ruim para o 'lag'  ou 'differences'"
 msgid "'xi' has not the right length"
 msgstr "'xi' não tem o comprimento certo"
 
+msgid "invalid value of length(x)"
+msgstr ""
+
 msgid "incorrect dimensions for 'xi'"
 msgstr "dimensões incorretas para 'xi'"
 
@@ -936,6 +933,9 @@ msgstr "'filter' está mais comprido do que série temporal"
 
 msgid "argument 'sides' must be 1 or 2"
 msgstr "argumento 'sides' deve ser 1 ou 2"
+
+msgid "'circular' must be logical and not NA"
+msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "comprimento de 'init' deve igualar o comprimento de 'filter'"
@@ -1276,6 +1276,10 @@ msgstr "centros iniciais não são distintos"
 msgid "more cluster centers than data points"
 msgstr "mais centros de agrupamento que pontos de dados"
 
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "argumento 'omit' inválido"
+
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' deve ser positivo"
 
@@ -1308,9 +1312,6 @@ msgid ""
 msgstr ""
 "y numérico deve ser fornecido.\n"
 "Para estimar a densidade use density()"
-
-msgid "invalid value of length(x)"
-msgstr ""
 
 msgid "'k' is not an integer"
 msgstr "'k' não é inteiro"
@@ -2503,6 +2504,16 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec' contém NAs"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec' deve ser ordenado de forma crescente"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "comprimento inválido dos membros"
 
 #~ msgid "No starting values specified for some parameters."
 #~ msgstr "Sem valores iniciais especificados para alguns parâmetros."

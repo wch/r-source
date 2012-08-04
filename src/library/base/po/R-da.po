@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -700,14 +700,6 @@ msgstr "'vec' indeholder NA'er"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' skal sorteres ikkefaldende"
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "ugyldigt antal intervaller"
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr "ugyldig længde for 'row.names'"
-
 msgid "using the first element of 'value' of type expression"
 msgstr "bruger det første element for 'value' for typeudtryk"
 
@@ -1052,6 +1044,10 @@ msgstr ""
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr "ugyldigt antal intervaller"
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
 
@@ -1291,6 +1287,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr "ugyldigt antal intervaller"
 
 msgid "invalid ncol(y)"
 msgstr ""
@@ -1755,6 +1755,14 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr "ugyldigt antal intervaller"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "ugyldig længde for 'row.names'"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

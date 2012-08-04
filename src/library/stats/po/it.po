@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:07+0100\n"
+"POT-Creation-Date: 2012-08-04 17:07+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "ampiezza/copertura mediane più grande di n"
 
-#: ansari.c:129
+#: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilità esterne a [0,1] in qansari()"
 
@@ -62,17 +62,17 @@ msgstr "distance(): p non valido"
 msgid "distance(): invalid distance"
 msgstr "distance(): distanza non valida"
 
-#: family.c:21
+#: family.c:43
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr ""
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr ""
 
-#: family.c:107 family.c:110
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr ""
@@ -278,20 +278,20 @@ msgstr ""
 msgid "'scal' matrix is not positive-definite"
 msgstr ""
 
-#: smooth.c:79
+#: smooth.c:102
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr ""
 
-#: smooth.c:231
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "errore allocazione memoria in smooth(*, '3RSR')."
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "errore allocazione memoria in smooth(*, '3RSS')."
 
-#: smooth.c:264
+#: smooth.c:287
 msgid "allocation error in smooth(*, '3R')."
 msgstr "errore allocazione memoria in smooth(*, '3R')."
 

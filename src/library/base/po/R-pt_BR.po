@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -721,14 +721,6 @@ msgstr "'vec' contem NAs"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de forma não-decrescente"
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "valor inválido"
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr "valor inválido"
-
 msgid "using the first element of 'value' of type expression"
 msgstr "usando o primeiro elemento de 'value' da expressão de tipo"
 
@@ -1118,6 +1110,10 @@ msgstr ""
 "tentativa de especificar nomes de colunas em um objeto com menos de duas "
 "dimensões"
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr "valor inválido"
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr "argumento não é numérico nem lógico: retornando NA"
 
@@ -1384,6 +1380,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr "valor inválido"
 
 #, fuzzy
 msgid "invalid ncol(y)"
@@ -1857,6 +1857,14 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr "valor inválido"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "valor inválido"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:07+0100\n"
+"POT-Creation-Date: 2012-08-04 17:07+0100\n"
 "PO-Revision-Date: 2012-03-06 21:47+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 
-#: ansari.c:129
+#: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilités en dehors de [0,1] dans qansari()"
 
@@ -62,17 +62,17 @@ msgstr "distance() : p incorrect"
 msgid "distance(): invalid distance"
 msgstr "distance() : distance incorrecte"
 
-#: family.c:21
+#: family.c:43
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "Valeur %g hors de l'intervalle (0, 1)"
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "L'argument %s doit être un vecteur numérique non vide"
 
-#: family.c:107 family.c:110
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "l'argument %s doit être un vecteur numérique de longueur 1 ou %d"
@@ -284,20 +284,20 @@ msgstr "'scal' doit être une matrice carrée de réels"
 msgid "'scal' matrix is not positive-definite"
 msgstr "la matrice 'scal' n'est pas définie et positive"
 
-#: smooth.c:79
+#: smooth.c:102
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
 
-#: smooth.c:231
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "erreur d'allocation dans smooth(*, '3RSR')."
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "erreur d'allocation dans smooth(*, '3RSS')."
 
-#: smooth.c:264
+#: smooth.c:287
 msgid "allocation error in smooth(*, '3R')."
 msgstr "erreur d'allocation dans smooth(*, '3R')."
 

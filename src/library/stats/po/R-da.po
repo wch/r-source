@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,13 +267,7 @@ msgstr ""
 msgid "'approx' requires n >= 1"
 msgstr ""
 
-msgid "'vec' contains NAs"
-msgstr ""
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr ""
-
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr ""
 
 msgid "'order.max' must be >= 1"
@@ -716,6 +710,9 @@ msgstr ""
 msgid "'xi' has not the right length"
 msgstr ""
 
+msgid "invalid value of length(x)"
+msgstr ""
+
 msgid "incorrect dimensions for 'xi'"
 msgstr ""
 
@@ -882,6 +879,9 @@ msgid "'filter' is longer than time series"
 msgstr ""
 
 msgid "argument 'sides' must be 1 or 2"
+msgstr ""
+
+msgid "'circular' must be logical and not NA"
 msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
@@ -1217,6 +1217,9 @@ msgstr ""
 msgid "more cluster centers than data points"
 msgstr ""
 
+msgid "'invalid value of 'k'"
+msgstr ""
+
 msgid "'iter.max' must be positive"
 msgstr ""
 
@@ -1244,9 +1247,6 @@ msgstr ""
 msgid ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
-msgstr ""
-
-msgid "invalid value of length(x)"
 msgstr ""
 
 msgid "'k' is not an integer"

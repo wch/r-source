@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
-"PO-Revision-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
+"PO-Revision-Date: 2012-08-04 17:07\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -288,14 +288,8 @@ msgstr "zero non-NA points"
 msgid "'approx' requires n >= 1"
 msgstr "‘approx’ requires n >= 1"
 
-msgid "'vec' contains NAs"
-msgstr "‘vec’ contains NAs"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "‘vec’ must be sorted non-decreasingly"
-
-msgid "invalid length(vec)"
-msgstr "invalid length(vec)"
+msgid "invalid length(xout)"
+msgstr "invalid length(xout)"
 
 msgid "'order.max' must be >= 1"
 msgstr "‘order.max’ must be >= 1"
@@ -739,6 +733,9 @@ msgstr "bad value for ‘lag’ or ‘differences’"
 msgid "'xi' has not the right length"
 msgstr "‘xi’ has not the right length"
 
+msgid "invalid value of length(x)"
+msgstr "invalid value of length(x)"
+
 msgid "incorrect dimensions for 'xi'"
 msgstr "incorrect dimensions for ‘xi’"
 
@@ -912,6 +909,9 @@ msgstr "‘filter’ is longer than time series"
 
 msgid "argument 'sides' must be 1 or 2"
 msgstr "argument ‘sides’ must be 1 or 2"
+
+msgid "'circular' must be logical and not NA"
+msgstr "‘circular’ must be logical and not NA"
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "length of ‘init’ must equal length of ‘filter’"
@@ -1249,6 +1249,9 @@ msgstr "initial centers are not distinct"
 msgid "more cluster centers than data points"
 msgstr "more cluster centers than data points"
 
+msgid "'invalid value of 'k'"
+msgstr "'invalid value of ‘k’"
+
 msgid "'iter.max' must be positive"
 msgstr "‘iter.max’ must be positive"
 
@@ -1279,9 +1282,6 @@ msgid ""
 msgstr ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
-
-msgid "invalid value of length(x)"
-msgstr "invalid value of length(x)"
 
 msgid "'k' is not an integer"
 msgstr "‘k’ is not an integer"

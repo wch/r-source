@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -714,14 +714,6 @@ msgstr "'vec' содержит NA"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' должен быть сортирован не по уменьшению"
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "неправильное имя"
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr "неправильное имя"
-
 msgid "using the first element of 'value' of type expression"
 msgstr "использую первый элемент 'value' типа выражения"
 
@@ -1068,6 +1060,10 @@ msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 "попытка установить имена колонок для объекта с менее чем двумя измерениями"
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr "неправильное значение"
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
 
@@ -1316,6 +1312,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr "неправильное имя"
 
 #, fuzzy
 msgid "invalid ncol(y)"
@@ -1800,6 +1800,14 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr "неправильное имя"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "неправильное имя"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

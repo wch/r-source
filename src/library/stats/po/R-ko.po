@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -289,14 +289,8 @@ msgstr "non-NA 포인트입니다"
 msgid "'approx' requires n >= 1"
 msgstr "'approx'는 n >= 1 인것을 필요로 합니다"
 
-msgid "'vec' contains NAs"
-msgstr "'vec'가 NA를 포함하고 있습니다"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr "멤버의 길이가 무효입니다"
 
 msgid "'order.max' must be >= 1"
@@ -763,6 +757,9 @@ msgstr "'lag' 또는 'differences'에는 부적절한 값입니다"
 msgid "'xi' has not the right length"
 msgstr "'xi'는 정확한 길이를 가지고 있지 않습니다"
 
+msgid "invalid value of length(x)"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions for 'xi'"
 msgstr "'x'의 길이가 정확하지 않습니다"
@@ -961,6 +958,9 @@ msgstr "'filter'는 시계열보다 깁니다"
 
 msgid "argument 'sides' must be 1 or 2"
 msgstr "인수 sides는 1 또는 2가 나오지 않으면 되지 않습니다"
+
+msgid "'circular' must be logical and not NA"
+msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init'의 길이는 'filter'의 길이에 동일하지 않으면 되지 않습니다"
@@ -1314,6 +1314,10 @@ msgstr "중심의 초기값에 동일한 것이 있습니다"
 msgid "more cluster centers than data points"
 msgstr "데이터 점보다 많은 cluster 중심이 있습니다"
 
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "무효인 인수 'omit'입니다"
+
 msgid "'iter.max' must be positive"
 msgstr "'iter.max'는 positive이 아니면 되지 않습니다"
 
@@ -1347,9 +1351,6 @@ msgid ""
 msgstr ""
 "y를 제공하지 않으면 되지 않습니다. \n"
 "밀도의 추정에는 density()를 사용합시다"
-
-msgid "invalid value of length(x)"
-msgstr ""
 
 msgid "'k' is not an integer"
 msgstr "'k'는 정수가 아닙니다"
@@ -2589,6 +2590,16 @@ msgstr[0] ""
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "모델식에서 파라미터 %s가 없습니다"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec'가 NA를 포함하고 있습니다"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "멤버의 길이가 무효입니다"
 
 #, fuzzy
 #~ msgid "No starting values specified for some parameters."

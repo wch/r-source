@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -719,14 +719,6 @@ msgstr "'vec' zawiera wartości NA"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' musi zostać posortowany w sposób niemalejący"
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "niepoprawna wartość"
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr "niepoprawna wartość"
-
 msgid "using the first element of 'value' of type expression"
 msgstr "używanie pierwszego elementu 'value' typu wyrażenia"
 
@@ -1080,6 +1072,10 @@ msgstr "próba ustawienia nazw wierszy dla obiektu bez wymiarów"
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr "próba ustawienia nazw kolumn dla obiektu z mniej niż dwoma wymiarami"
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr "niepoprawna wartość"
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
 "argument nie jest wartością liczbową ani logiczną: zwracanie wartości 'NA'"
@@ -1337,6 +1333,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr "niepoprawna wartość"
 
 #, fuzzy
 msgid "invalid ncol(y)"
@@ -1826,6 +1826,14 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr "niepoprawna wartość"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "niepoprawna wartość"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

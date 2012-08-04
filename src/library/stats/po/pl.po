@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:07+0100\n"
+"POT-Creation-Date: 2012-08-04 17:07+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "pasmo/rozpiętość ruchomych median jest większe niż n"
 
-#: ansari.c:129
+#: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "prawdopodobieństwa poza [0,1] w qansari()"
 
@@ -61,17 +61,17 @@ msgstr "distance(): niepoprawne p"
 msgid "distance(): invalid distance"
 msgstr "distance(): niepoprawna odległość"
 
-#: family.c:21
+#: family.c:43
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "Wartość %g jest poza zakresem (0, 1)"
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Argument %s musi być nuepustym wektorem liczbowym"
 
-#: family.c:107 family.c:110
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument %s musi być wektorem liczbowym o długości 1 lub długości %d"
@@ -278,20 +278,20 @@ msgstr "'scal' musi być kwadratową, rzeczywistą macierzą"
 msgid "'scal' matrix is not positive-definite"
 msgstr "macierz 'scal' nie jest dodatnio określona"
 
-#: smooth.c:79
+#: smooth.c:102
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
 
-#: smooth.c:231
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "błąd alokacji w smooth(*, '3RSR')."
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "błąd alokacji w smooth(*, '3RSS')."
 
-#: smooth.c:264
+#: smooth.c:287
 msgid "allocation error in smooth(*, '3R')."
 msgstr "błąd alokacji w smooth(*, '3R')."
 

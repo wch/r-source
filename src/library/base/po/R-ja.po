@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -715,14 +715,6 @@ msgstr " 'vec' は NA 値を含んでいます "
 msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr " 不当な名前です "
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr " 不当な名前です "
-
 msgid "using the first element of 'value' of type expression"
 msgstr " タイプ表現 'value' の最初の要素だけを使います "
 
@@ -1082,6 +1074,10 @@ msgstr " 次元無しのオブジェクトに行名を設定しようとしま�
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr " 次元が 2 未満のオブジェクトに列名を設定しようとしました "
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr " 無効な値です "
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr " 引数は数値でも論理値でもありません。NA 値を返します "
 
@@ -1345,6 +1341,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr " 不当な名前です "
 
 #, fuzzy
 msgid "invalid ncol(y)"
@@ -1807,6 +1807,14 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr " 不当な名前です "
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr " 不当な名前です "
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

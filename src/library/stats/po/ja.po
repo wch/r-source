@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:07+0100\n"
+"POT-Creation-Date: 2012-08-04 17:07+0100\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "bandwidth/span of running medians is larger than n"
 msgstr " 移動中央値のバンド幅・バンド範囲(span)が n より大きくなっています "
 
-#: ansari.c:129
+#: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
 msgstr " qansari() 中で確率が [0,1] の範囲外です "
 
@@ -61,17 +61,17 @@ msgstr " distance(): 不正な p "
 msgid "distance(): invalid distance"
 msgstr " distance(): 不正な距離 "
 
-#: family.c:21
+#: family.c:43
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr " 値 %g は範囲 (0, 1) 外です "
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr " 引数 %s は空でない数値ベクトルでなければなりません  "
 
-#: family.c:107 family.c:110
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
@@ -276,20 +276,20 @@ msgstr ""
 msgid "'scal' matrix is not positive-definite"
 msgstr ""
 
-#: smooth.c:79
+#: smooth.c:102
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr " 3点移動中央値計算の終了ルールが不正です: %d "
 
-#: smooth.c:231
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr " smooth(*, '3RSR') 中の割り当てエラーです． "
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr " smooth(*, '3RSS') 中の割り当てエラーです． "
 
-#: smooth.c:264
+#: smooth.c:287
 msgid "allocation error in smooth(*, '3R')."
 msgstr " smooth(*, '3R') 中の割り当てエラーです． "
 

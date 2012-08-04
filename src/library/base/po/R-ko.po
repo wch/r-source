@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2012-08-04 17:07\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -713,14 +713,6 @@ msgstr "'vec' 에 NA 가 있습니다"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' 는 비감소순으로 정렬되어야합니다 "
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "부적절한 이름입니다"
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr "부적절한 이름입니다"
-
 msgid "using the first element of 'value' of type expression"
 msgstr "using the first element of 'value' of type expression"
 
@@ -1070,6 +1062,10 @@ msgstr "차원이 없는 객체에 rownames 를 설정하려 했습니다 "
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr "2 차원 보다 작은 객체에 colnames 를 설정하려 했습니다 "
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr "잘못된 값입니다 "
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr "인수가 수치이거나 논리값이 아닙니다. NA값을 돌려줍니다"
 
@@ -1322,6 +1318,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr "부적절한 이름입니다"
 
 #, fuzzy
 msgid "invalid ncol(y)"
@@ -1783,6 +1783,14 @@ msgstr[0] "S3 메소드 %s 는 NAMESPACE 안에 선언되었으나 찾을 수 �
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr "부적절한 이름입니다"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "부적절한 이름입니다"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"
