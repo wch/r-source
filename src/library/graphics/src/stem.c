@@ -169,7 +169,7 @@ SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
 #include <string.h> // for memset
 
 static void 
-C_bincount(double *x, int n, double *breaks, int nb, int *count,
+C_bincount(double *x, R_xlen_t n, double *breaks, R_xlen_t nb, int *count,
 	   int right, int include_border)
 {
     R_xlen_t i, lo, hi, nb1 = nb - 1, new;
