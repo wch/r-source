@@ -170,6 +170,8 @@
       \item The \code{all.eqaal()} method for date-times is now
       documented: times are regarded as equal (by default) if they
       differ by up to 1 msec.
+      
+      \item The HTML manuals now use directional single quotes.
     }
   }
 
@@ -190,7 +192,7 @@
       \code{object.size()} work and means can be computed.
 
       \item \code{length()} returns a double for long vectors, and
-      lengths can be set to  \eqn{2^{31}}{2^31} or more by the
+      lengths can be set to \eqn{2^{31}}{2^31} or more by the
       replacement function with a double value.
 
       \item Most aspects of indexing are available.  Generally
@@ -430,7 +432,8 @@
       example of \pkg{lattice}'s \code{panel.qqmathline()}.
 
       \item The handling of single quotes in the \code{en@quot}
-      pseudo-language has been slightly improved.
+      pseudo-language has been slightly improved.  Double quotes are no
+      longer converted.
 
       \item New functions \code{checkPoFiles()} and \code{checkPoFile()}
       have been added to the \pkg{tools} package to check for
