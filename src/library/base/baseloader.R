@@ -1,7 +1,7 @@
+#  Copyright (C) 1995-2012 The R Core Team
+
 ## this should be kept in step with code in R/lazyload.R
 .Internal(eval(quote({
-#
-#  Copyright (C) 1995-2012 The R Core Team
 ..lazyLoad <- function(filebase, envir = parent.frame())
 {
     ##
