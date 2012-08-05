@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2012   The R Core Team
- *  Copyright (C) 2002--2008  The R Foundation
+ *  Copyright (C) 2002-2008   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -392,17 +392,23 @@ SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
-    R_len_t len;
-
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
-					     rho, &ans, 0, 1))
-      return(ans);
+    SEXP x = CAR(args), ans;
 
-    len = length(CAR(args));
+    if (isObject(x) &&
+       DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
+	if (length(ans) == 1 && TYPEOF(ans) == REALSXP) {
+	    double d = REAL(ans)[0];
+	    if (R_FINITE(d) && d >= 0. && d <= INT_MAX && floor(d) == d)
+		return coerceVector(ans, INTSXP);
+	}
+	return(ans);
+    }
+
+    /* with current defn of R_len_t this cannot happen */
+    R_len_t len = length(x);
     return ScalarInteger((len <= INT_MAX) ? len : NA_INTEGER);
 }
 

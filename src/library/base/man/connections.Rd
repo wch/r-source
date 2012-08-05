@@ -381,6 +381,9 @@ isIncomplete(con)
   undocumented.  On output the result is likely to be that up to the
   error, with a warning.  On input, it will most likely be all or some
   of the input up to the error.
+  
+  It may be possible to deduce the current native encoding from
+  \code{\link{Sys.getlocale}("LC_CTYPE")}, but not all OSes record it. 
 }
 
 \section{Blocking}{
