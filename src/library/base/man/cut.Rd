@@ -69,7 +69,7 @@ cut(x, \dots)
 \note{
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
   more efficient and less memory hungry.  Instead of \code{cut(*,
-    labels = FALSE)}, \code{\link{findInterval}()} is more efficient.
+    labels = FALSE)}, \code{\link{findInterval}} is more efficient.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

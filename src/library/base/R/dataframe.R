@@ -225,7 +225,7 @@ default.stringsAsFactors <- function()
     val <- getOption("stringsAsFactors")
     if(is.null(val)) val <- TRUE
     if(!is.logical(val) || is.na(val) || length(val) != 1L)
-        stop("options('stringsAsFactors') not set to TRUE or FALSE")
+        stop('options("stringsAsFactors") not set to TRUE or FALSE')
     val
 }
 

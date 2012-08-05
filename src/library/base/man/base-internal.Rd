@@ -132,8 +132,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   compiled code can safely be loaded into a build of \R, which it does by
   comparing their \sQuote{canonical} \code{"cpu-vendor-os"} descriptions.
   The default function omits the \code{vendor} part and allows small 
-  mismatches elsewhere.  Cognoscenti can replace this function in the
-  \code{base} namespace.
+  mismatches elsewhere.
 
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if
   the S4 method dispatch has been turned on in the evaluator (usually by
