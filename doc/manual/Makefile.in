@@ -23,7 +23,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN Rman.css Rfaq.css
+	ISBN Rman.css Rfaq.css quot.sed
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
@@ -80,7 +80,9 @@ docs: html
 	  $(ECHO) "file $@ will be missing"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
+	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  rm -f $@.tmp; \
 	fi
 
 .texi.info:
@@ -107,7 +109,9 @@ R-admin.html: $(srcdir)/R-admin.texi
 	  $(ECHO) "file $@ will be missing"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@;\
+	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@;\
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  rm -f $@.tmp; \
 	fi
 
 R-FAQ.html: $(srcdir)/R-FAQ.texi
@@ -116,7 +120,9 @@ R-FAQ.html: $(srcdir)/R-FAQ.texi
 	  $(ECHO) "file $@ will be missing"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(MAKEINFO) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
+	  $(MAKEINFO) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
+	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
+	  rm -f $@.tmp; \
 	fi
 
 
