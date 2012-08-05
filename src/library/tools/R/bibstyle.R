@@ -1,5 +1,7 @@
 # Functions for making Rd and human readable versions of bibentry records.
 
+#
+#  Copyright (C) 1995-2012 The R Core Team
 # Clean up LaTeX accents and braces
 cleanupLatex <- function(x) {
     if (!length(x)) return(x)

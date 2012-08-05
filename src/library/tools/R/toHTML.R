@@ -1,5 +1,7 @@
 toHTML <- function(x, ...) UseMethod("toHTML")
 
+#
+#  Copyright (C) 1995-2012 The R Core Team
 
 HTMLheader <-
 function(title="R", logo=TRUE,

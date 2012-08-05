@@ -1,5 +1,7 @@
 if(.Platform$OS.type == "windows") {
     read_symbols_from_dll <- function(f, rarch)
+#
+#  Copyright (C) 1995-2012 The R Core Team
     {
         ## reasonable to assume this on the path
         DLL_nm <- "objdump.exe"

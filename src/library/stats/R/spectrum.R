@@ -1,6 +1,9 @@
 #  File src/library/stats/R/spectrum.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 1994-9 W. N. Venables and B. D. Ripley
+#  Copyright (C) 1999-2012 The R Core Team
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or

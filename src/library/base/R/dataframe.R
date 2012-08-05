@@ -17,6 +17,7 @@
 # Statlib code by John Chambers, Bell Labs, 1994
 # Changes Copyright (C) 1998-2012 The R Core Team
 
+
 ## As from R 2.4.0, row.names can be either character or integer.
 ## row.names() will always return character.
 ## attr(, "row.names") will return either character or integer.

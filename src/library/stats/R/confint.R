@@ -1,6 +1,9 @@
 #  File src/library/stats/R/confint.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 1994-2003 W. N. Venables and B. D. Ripley
+#  Copyright (C) 2003-2012 The R Core Team
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or

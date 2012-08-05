@@ -1,7 +1,8 @@
 #  File src/library/stats/R/TukeyHSD.R
 #  Part of the R package, http://www.R-project.org
+#
 #  Copyright (C) 2000-2001  Douglas M. Bates
-#  Modified for base R 2002 B. D. Ripley
+#  Copyright (C) 2002-12  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

@@ -1,6 +1,9 @@
 #  File src/library/stats/R/ppr.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 1998 B. D. Ripley
+#  Copyright (C) 2000-12 The R Core Team
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
@@ -13,11 +16,6 @@
 #
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
-
-## file stats/R/ppr.R
-## Copyright (C) 1998 B. D. Ripley
-## Copyright (C) 2000-3 The R Core Team
-## This version distributed under GPL (version 2 or later)
 
 ppr <- function(x, ...) UseMethod("ppr")
 

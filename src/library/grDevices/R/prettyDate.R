@@ -1,6 +1,8 @@
 #  File src/library/grDevices/R/prettyDate.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 1995-2012 The R Core Team
+#
 # Original code Copyright (C) 2010 Felix Andrews
 # Modifications Copyright (C) 2010 The R Core Team
 #

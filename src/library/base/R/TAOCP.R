@@ -1,5 +1,6 @@
 #  File src/library/base/R/files.R
 #  Part of the R package, http://www.R-project.org
+#
 #  Copyright (C) 2007 R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
