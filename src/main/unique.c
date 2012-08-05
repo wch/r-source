@@ -1519,7 +1519,10 @@ static SEXP duplicated2(SEXP x, HashData *d)
     int *h = INTEGER(d->HashTable);
     int *v = INTEGER(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
-    for (i = 0; i < n; i++) v[i] = isDuplicated2(x, i, d);
+    for (i = 0; i < n; i++) {
+	if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	v[i] = isDuplicated2(x, i, d);
+    }
     UNPROTECT(2);
     return ans;
 }
