@@ -1,6 +1,9 @@
 #  File src/library/stats/R/add.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 1994-8 W. N. Venables and B. D. Ripley
+#  Copyright (C) 1998-2012 The R Core Team
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
@@ -13,9 +16,6 @@
 #
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
-
-## Based on functions written for the MASS package,
-# copyright (C) 1994-2008 W. N. Venables and B. D. Ripley
 
 
 ## version to return NA for df = 0, as R did before 2.7.0

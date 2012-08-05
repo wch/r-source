@@ -1,5 +1,7 @@
 local({
     makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
+#
+#  Copyright (C) 1995-2012 The R Core Team
                                variables) {
 
         envlist <- function(e) {

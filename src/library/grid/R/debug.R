@@ -1,5 +1,7 @@
 # Label grobs in a scene
 
+#
+#  Copyright (C) 1995-2012 The R Core Team
 labelGrob <- function(grob, recurse, curdepth, depth, labelfun, ...) {
     UseMethod("labelGrob")
 }

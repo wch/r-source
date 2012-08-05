@@ -1,5 +1,7 @@
 
 # API to access detailed text metric info
+#
+#  Copyright (C) 1995-2012 The R Core Team
 
 # This first function does NOT return a "unit" object
 # It is just access to font metric info in the calling context

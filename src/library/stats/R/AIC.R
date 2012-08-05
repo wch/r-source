@@ -1,6 +1,8 @@
 #  File src/library/stats/R/AIC.R
 #  Part of the R package, http://www.R-project.org
 #
+#  Copyright (C) 2001-3 The R Core Team
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
@@ -15,6 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 #### Return the value of Akaike's Information Criterion
+### originally from package nlne.
 
 AIC <- function(object, ..., k = 2) UseMethod("AIC")
 

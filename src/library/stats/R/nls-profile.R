@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1999-1999 Saikat DebRoy and Douglas M. Bates
-#  Copyright (C) 2005-11  The R Core Team
+#  Copyright (C) 1999-2011  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
