@@ -86,11 +86,15 @@ endif
 
 R-admin.html: $(srcdir)/R-admin.texi
 	@$(ECHO) "creating doc/manual/$@"
-	@$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@
+	@$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@.tmp || touch $@
+	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
+	@rm -f $@.tmp
 
 R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
-	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
+	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
+	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
+	@rm -f $@.tmp
 
 
 html: $(OBJECTS_HTML)
