@@ -31,6 +31,10 @@
 #define ARGUSED(x) LEVELS(x)
 #define SET_ARGUSED(x,v) SETLEVELS(x,v)
 
+/* interval at which to check interrupts */
+#define NINTERRUPT 1000000
+
+
 /* Hash function and equality test for keys */
 typedef struct _HashData HashData;
 
@@ -220,7 +224,7 @@ static int sequal(SEXP x, int i, SEXP y, int j)
 
 static int rawhash(SEXP x, int indx, HashData *d)
 {
-    return RAW(x)[indx];
+    return (int) RAW(x)[indx];
 }
 
 static int rawequal(SEXP x, int i, SEXP y, int j)
@@ -412,7 +416,7 @@ SEXP duplicated(SEXP x, Rboolean from_last)
     h = INTEGER(data.HashTable);				\
     if(TYPEOF(x) == STRSXP) {					\
 	data.useUTF8 = FALSE; data.useCache = TRUE;		\
-	for(i = 0; i < length(x); i++) {			\
+	for(i = 0; i < n; i++) {			\
 	    if(IS_BYTES(STRING_ELT(x, i))) {			\
 		data.useUTF8 = FALSE; break;			\
 	    }                                                   \
@@ -434,9 +438,15 @@ SEXP duplicated(SEXP x, Rboolean from_last)
 
     for (i = 0; i < data.M; i++) h[i] = NIL;
     if(from_last)
-	for (i = n-1; i >= 0; i--) v[i] = isDuplicated(x, i, &data);
+	for (i = n-1; i >= 0; i--) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	    v[i] = isDuplicated(x, i, &data);
+	}
     else
-	for (i = 0; i < n; i++) v[i] = isDuplicated(x, i, &data);
+	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	    v[i] = isDuplicated(x, i, &data);
+	}
 
     UNPROTECT(2);
     return ans;
@@ -451,9 +461,15 @@ int any_duplicated(SEXP x, Rboolean from_last)
 
     for (i = 0; i < data.M; i++) h[i] = NIL;
     if(from_last) {
-	for (i = n-1; i >= 0; i--) if(isDuplicated(x, i, &data)) { result = ++i; break; }
+	for (i = n-1; i >= 0; i--) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
+	}
     } else {
-	for (i = 0; i < n; i++)    if(isDuplicated(x, i, &data)) { result = ++i; break; }
+	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
+	}
     }
     UNPROTECT(1);
     return result;
@@ -473,9 +489,15 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 
     for (i = 0; i < data.M; i++) h[i] = NIL;
     if(from_last)
-	for (i = n-1; i >= 0; i--) v[i] = isDuplicated(x, i, &data);
+	for (i = n-1; i >= 0; i--) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	    v[i] = isDuplicated(x, i, &data);
+	}
     else
-	for (i = 0; i < n; i++) v[i] = isDuplicated(x, i, &data);
+	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
+	    v[i] = isDuplicated(x, i, &data);
+	}
 
     if(length(incomp)) {
 	PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
@@ -509,6 +531,7 @@ int any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
     if(from_last)
 	for (i = n-1; i >= 0; i--) {
 #define IS_DUPLICATED_CHECK				\
+	    if(i % NINTERRUPT == 0) R_CheckUserInterrupt(); \
 	    if(isDuplicated(x, i, &data)) {		\
 		Rboolean isDup = TRUE;			\
 		for(j = 0; j < m; j++)			\
@@ -524,8 +547,9 @@ int any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 	    IS_DUPLICATED_CHECK;
 	}
     else {
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
             IS_DUPLICATED_CHECK;
+	}
     }
 
     UNPROTECT(2);
@@ -646,8 +670,10 @@ static void DoHashing(SEXP table, HashData *d)
 
     for (int i = 0; i < d->M; i++) h[i] = NIL;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++) {
+	if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	(void) isDuplicated(table, i, d);
+    }
 }
 
 /* invalidate entries: normally few */
@@ -662,7 +688,7 @@ static int Lookup(SEXP table, SEXP x, int indx, HashData *d)
     int i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(table, h[i], x, indx))
-	    return h[i]>= 0 ? h[i] + 1 : d->nomatch;
+	    return h[i] >= 0 ? h[i] + 1 : d->nomatch;
 	i = (i + 1) % d->M;
     }
     return d->nomatch;
@@ -677,6 +703,7 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
     n = LENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
     for (i = 0; i < n; i++) {
+	if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	INTEGER(ans)[i] = Lookup(table, x, i, d);
     }
     UNPROTECT(1);
