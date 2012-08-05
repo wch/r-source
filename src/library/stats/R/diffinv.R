@@ -75,8 +75,8 @@ toeplitz <- function (x)
 {
     if (!is.vector(x)) stop ("'x' is not a vector")
     n <- length (x)
-    A <- matrix (0, n, n)
-    matrix (x[abs(col(A) - row(A)) + 1], n, n)
+    A <- matrix(NA, n, n)
+    matrix(x[abs(col(A) - row(A)) + 1L], n, n)
 }
 
 
