@@ -1,4 +1,4 @@
-#  File src/library/tools/R/news.R
+#  File src/library/utils/R/citation.R
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1995-2012 The R Core Team
