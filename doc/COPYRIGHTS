@@ -148,9 +148,12 @@ src/library/datasets/man/lh.Rd
 src/library/datasets/man/rock.Rd
 src/library/datasets/man/UKLungDeaths.Rd
 src/library/datasets/man/USAccDeaths.Rd
+src/library/stats/R/add.R
 src/library/stats/R/bandwidths.R
+src/library/stats/R/confint.R
 src/library/stats/R/cpgram.R
 src/library/stats/R/spectrum.R
+src/library/stats/R/vcov.R
 src/library/stats/src//bandwidths.c
 src/appl/maxcol.c
 

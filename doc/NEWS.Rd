@@ -170,8 +170,6 @@
       \item The \code{all.eqaal()} method for date-times is now
       documented: times are regarded as equal (by default) if they
       differ by up to 1 msec.
-      
-      \item The HTML manuals now use directional single quotes.
     }
   }
 
@@ -460,7 +458,10 @@
       version 5.0.4, a minor bug-fix release.
 
       \item New function \code{.bincode()}, a \sQuote{bare-bones}
-      version of \code{cut.default(labels = FALSE)}.
+      version of \code{cut.default(labels = FALSE)} for use in packages
+      with \code{image()} methods.
+      
+      \item The HTML manuals now use directional single quotes.
     }
   }
 
