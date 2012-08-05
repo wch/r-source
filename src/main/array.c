@@ -409,14 +409,12 @@ SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
-
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    SEXP x = CAR(args);
+    SEXP x = CAR(args), ans;
 
-    if (isObject(x) && 
+    if (isObject(x) &&
        DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
 	if (length(ans) == 1 && TYPEOF(ans) == REALSXP) {
 	    double d = REAL(ans)[0];

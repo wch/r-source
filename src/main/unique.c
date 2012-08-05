@@ -52,10 +52,18 @@ struct _HashData {
    are used as the hash code.
 
    NB: lots of this code relies on M being a power of two and
-   on silent integer overflow mod 2^32.  It also relies on M < 31.
+   on silent integer overflow mod 2^32.
 
-   <FIXME>  Integer keys are wasteful for logical and raw vectors,
-   but the tables are small in that case.
+   <FIXME> Integer keys are wasteful for logical and raw vectors, but
+   the tables are small in that case.  It would be much easier to
+   implement long vectors, though.
+*/
+
+/*  Currently the hash table is implemented as a (signed) integer
+    array.  So there are two 31-bit restrictions, the length of the
+    array and the values.  The values are initially NIL (-1).  O-based
+    indices are inserted by isDuplicated, and invalidated by setting
+    to NA_INTEGER.
 */
 
 static int scatter(unsigned int key, HashData *d)
@@ -65,15 +73,13 @@ static int scatter(unsigned int key, HashData *d)
 
 static int lhash(SEXP x, int indx, HashData *d)
 {
-    if (LOGICAL(x)[indx] == NA_LOGICAL)
-	return 2;
+    if (LOGICAL(x)[indx] == NA_LOGICAL) return 2;
     return LOGICAL(x)[indx];
 }
 
 static int ihash(SEXP x, int indx, HashData *d)
 {
-    if (INTEGER(x)[indx] == NA_INTEGER)
-	return 0;
+    if (INTEGER(x)[indx] == NA_INTEGER) return 0;
     return scatter((unsigned int) (INTEGER(x)[indx]), d);
 }
 
@@ -153,7 +159,7 @@ static int shash(SEXP x, int indx, HashData *d)
     p = translateCharUTF8(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
-	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
+	k = 11 * k + (unsigned int) *p; /* was 8 but 11 isn't a power of 2 */
     vmaxset(vmax); /* discard any memory used by translateChar */
     return scatter(k, d);
 }
@@ -229,7 +235,7 @@ static int vhash(SEXP x, int indx, HashData *d)
     unsigned int key;
     SEXP _this = VECTOR_ELT(x, indx);
 
-    key = OBJECT(_this) + 2*TYPEOF(_this) + 100*length(_this);
+    key = OBJECT(_this) + 2*TYPEOF(_this) + 100U*(unsigned int) length(_this);
     /* maybe we should also look at attributes, but that slows us down */
     switch (TYPEOF(_this)) {
     case LGLSXP:
@@ -290,7 +296,7 @@ static int vequal(SEXP x, int i, SEXP y, int j)
 /*
   Choose M to be the smallest power of 2
   not less than 2*n and set K = log2(M).
-  Need K >= 1 and hence M >= 2, and 2^M <= 2^31 -1, hence n <= 2^30.
+  Need K >= 1 and hence M >= 2, and 2^M <= 2^31 -1, hence n < 2^30.
 
   Dec 2004: modified from 4*n to 2*n, since in the worst case we have
   a 50% full table, and that is still rather efficient -- see
@@ -300,13 +306,13 @@ static void MKsetup(int n, HashData *d)
 {
     int n2 = 2 * n;
 
-    if(n < 0 || n > 1073741824) /* protect against overflow to -ve */
+    if(n < 0 || n >= 1073741824) /* protect against overflow to -ve */
 	error(_("length %d is too large for hashing"), n);
     d->M = 2;
     d->K = 1;
     while (d->M < n2) {
 	d->M *= 2;
-	d->K += 1;
+	d->K++;
     }
 }
 
@@ -318,7 +324,8 @@ static void HashTableSetup(SEXP x, HashData *d)
     case LGLSXP:
 	d->hash = lhash;
 	d->equal = lequal;
-	MKsetup(3, d);
+	d->M = 4;
+	d->K = 2; /* unused */
 	break;
     case INTSXP:
 	d->hash = ihash;
@@ -378,10 +385,8 @@ static int isDuplicated(SEXP x, int indx, HashData *d)
 
 static void removeEntry(SEXP table, SEXP x, int indx, HashData *d)
 {
-    int i, *h;
-
-    h = INTEGER(d->HashTable);
-    i = d->hash(x, indx, d);
+    int *h = INTEGER(d->HashTable);
+    int i = d->hash(x, indx, d);
     while (h[i] >= 0) {
 	if (d->equal(table, h[i], x, indx)) {
 	    h[i] = NA_INTEGER;  /* < 0, only index values are inserted */
@@ -549,6 +554,8 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fromLast == NA_LOGICAL)
 	error(_("'fromLast' must be TRUE or FALSE"));
 
+    Rboolean fL = (Rboolean) fromLast;
+
     /* handle zero length vectors, and NULL */
     if ((n = length(x)) == 0)
 	return(PRIMVAL(op) <= 1
@@ -564,15 +571,15 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0)) {
 	if(PRIMVAL(op) == 2) /* return R's 1-based index :*/
-	    return ScalarInteger(any_duplicated3(x, incomp, fromLast));
+	    return ScalarInteger(any_duplicated3(x, incomp, fL));
 	else
-	    dup = duplicated3(x, incomp, fromLast);
+	    dup = duplicated3(x, incomp, fL);
     }
     else {
 	if(PRIMVAL(op) == 2)
-	    return ScalarInteger(any_duplicated(x, fromLast));
+	    return ScalarInteger(any_duplicated(x, fL));
 	else
-	    dup = duplicated(x, fromLast);
+	    dup = duplicated(x, fL);
     }
     if (PRIMVAL(op) == 0) /* "duplicated()" */
 	return dup;
@@ -634,19 +641,16 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Build a hash table, ignoring information on duplication */
 static void DoHashing(SEXP table, HashData *d)
 {
-    int *h, i, n;
+    int n = LENGTH(table);
+    int *h = INTEGER(d->HashTable);
 
-    n = LENGTH(table);
-    h = INTEGER(d->HashTable);
+    for (int i = 0; i < d->M; i++) h[i] = NIL;
 
-    for (i = 0; i < d->M; i++)
-	h[i] = NIL;
-
-    for (i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
 	(void) isDuplicated(table, i, d);
 }
 
-/* invalidate entries */
+/* invalidate entries: normally few */
 static void UndoHashing(SEXP x, SEXP table, HashData *d)
 {
     for (int i = 0; i < LENGTH(x); i++) removeEntry(table, x, i, d);
@@ -654,10 +658,8 @@ static void UndoHashing(SEXP x, SEXP table, HashData *d)
 
 static int Lookup(SEXP table, SEXP x, int indx, HashData *d)
 {
-    int i, *h;
-
-    h = INTEGER(d->HashTable);
-    i = d->hash(x, indx, d);
+    int *h = INTEGER(d->HashTable);
+    int i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(table, h[i], x, indx))
 	    return h[i]>= 0 ? h[i] + 1 : d->nomatch;
@@ -1466,10 +1468,8 @@ Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 /* returns 1-based duplicate no */
 static int isDuplicated2(SEXP x, int indx, HashData *d)
 {
-    int i, *h;
-
-    h = INTEGER(d->HashTable);
-    i = d->hash(x, indx, d);
+    int *h = INTEGER(d->HashTable);
+    int i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(x, h[i], x, indx))
 	    return h[i] + 1;
@@ -1482,7 +1482,6 @@ static int isDuplicated2(SEXP x, int indx, HashData *d)
 static SEXP duplicated2(SEXP x, HashData *d)
 {
     SEXP ans;
-    int *h, *v;
     int i, n;
 
     n = LENGTH(x);
@@ -1490,8 +1489,8 @@ static SEXP duplicated2(SEXP x, HashData *d)
     PROTECT(d->HashTable);
     PROTECT(ans = allocVector(INTSXP, n));
 
-    h = INTEGER(d->HashTable);
-    v = INTEGER(ans);
+    int *h = INTEGER(d->HashTable);
+    int *v = INTEGER(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
     for (i = 0; i < n; i++) v[i] = isDuplicated2(x, i, d);
     UNPROTECT(2);
