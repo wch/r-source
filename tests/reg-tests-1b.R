@@ -1921,4 +1921,10 @@ stopifnot(qgeom(1e-20, prob = 0.1) >= 0)
 ## was -1 in R 2.15.1
 
 
+## Regression test for r60116:7
+(p1 <- parse(text="exp(-0.5*u**2)", srcfile=NULL))
+(p2 <- parse(text="exp(-0.5*u^2)",  srcfile=NULL))
+stopifnot(identical(p1, p2))
+## p1 was expression(exp((-0.5 * u)^2))
+
 proc.time()
