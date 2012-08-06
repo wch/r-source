@@ -21,21 +21,18 @@ length(x) <- value
   \item{value}{a non-negative integer or double (which will be rounded down).}
 }
 \details{
-  \code{length} and \code{xlength} differ only in the way they handle
-  the long vectors introduced for 64-bit builds in \R 2.16.0.
-  
-  All are generic: you can write methods to handle specific
+  Both functions are generic: you can write methods to handle specific
   classes of objects, see \link{InternalMethods}.  \code{length<-} has a
-  \code{"factor"} method.  The \code{xlength} versions will first try a
-  method for \code{xlength} then one of \code{length}.
+  \code{"factor"} method.
 
   The replacement form can be used to reset the length of a vector.  If
   a vector is shortened, extra values are discarded and when a vector is
   lengthened, it is padded out to its new length with \code{\link{NA}}s
   (\code{nul} for raw vectors).
   
-  All are \link{primitive} functions.
+  Both are \link{primitive} functions.
 }
+
 \value{
   The default method for \code{length} currently returns a non-negative
   \code{\link{integer}} of length 1, except for vectors of more than
@@ -48,14 +45,16 @@ length(x) <- value
   of the pairlist chain.  All other objects (including functions) have
   length one: note that for functions this differs from S.
 
-  The replacement forms remove all the attributes of \code{x} except its
-  names.
+  The replacement form removes all the attributes of \code{x} except its
+  names, which are adjusted (and if necessary extended by \code{""}).
 }
+
+
 \section{Warning}{
   Package authors have written methods that return a result of
   length other than one (\pkg{Formula}) and that return a vector type
   \code{\link{double}} (\pkg{Matrix}), even with non-integer values
-  (\pkg{sets}).  As from \R 2.16.0, where a single double value is
+  (\pkg{sets}).  As from \R 2.15.2, where a single double value is
   returned that can be represented as an integer, it is returned as a
   length-one integer vector.
 
