@@ -20,22 +20,6 @@ length(x) <- value
   \item{x}{an \R object.  For replacement, a vector or factor.}
   \item{value}{an integer: double values will be coerced to integer.}
 }
-\value{
-  The default method currently returns an \code{\link{integer}} of
-  length 1.  Since this may change in the future and may
-  differ for other methods, programmers should not rely on it.
-
-  For vectors (including lists) and factors the length is the number of
-  elements.  For an environment it is the number of objects in the
-  environment, and \code{NULL} has length 0.  For expressions and
-  pairlists (including language objects and dotlists) it is the length
-  of the pairlist chain.  All other objects (including functions) have
-  length one: note that for functions this differs from S.
-
-  The replacement form removes all the attributes of \code{x} except its
-  names.
-}
-
 \details{
   Both functions are generic: you can write methods to handle specific
   classes of objects, see \link{InternalMethods}.  \code{length<-} has a
@@ -49,11 +33,30 @@ length(x) <- value
   Both are \link{primitive} functions.
 }
 
+\value{
+  The default method currently returns an \code{\link{integer}} of
+  length 1.  Since this will change in the future and may
+  differ for other methods, programmers should not rely on it.
+
+  For vectors (including lists) and factors the length is the number of
+  elements.  For an environment it is the number of objects in the
+  environment, and \code{NULL} has length 0.  For expressions and
+  pairlists (including language objects and dotlists) it is the length
+  of the pairlist chain.  All other objects (including functions) have
+  length one: note that for functions this differs from S.
+
+  The replacement form removes all the attributes of \code{x} except its
+  names, which are adjusted (and if necessary extended by \code{""}).
+}
+
+
 \section{Warning}{
   Package authors have written methods that return a result of
   length other than one (\pkg{Formula}) and that return a vector type
   \code{\link{double}} (\pkg{Matrix}), even with non-integer values
-  (\pkg{sets}).
+  (\pkg{sets}).  As from \R 2.15.2, where a single double value is
+  returned that can be represented as an integer, it is returned as a
+  length-one integer vector.
 }
 
 \seealso{\code{nchar} for counting the number of characters in

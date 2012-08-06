@@ -88,22 +88,7 @@ static void cdivid(double, double, double, double, double *, double *);
 /* Global Variables (too many!) */
 
 static int nn;
-#if 0
-#define NMAX 50
-
-static double pr[NMAX];
-static double pi[NMAX];
-static double hr[NMAX];
-static double hi[NMAX];
-static double qpr[NMAX];
-static double qpi[NMAX];
-static double qhr[NMAX];
-static double qhi[NMAX];
-static double shr[NMAX];
-static double shi[NMAX];
-#else
 static double *pr, *pi, *hr, *hi, *qpr, *qpi, *qhr, *qhi, *shr, *shi;
-#endif
 static double sr, si;
 static double tr, ti;
 static double pvr, pvi;
