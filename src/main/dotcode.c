@@ -233,12 +233,35 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	*/
 
 	if (!*fun && !(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
-	    if(strlen(dll.DLLname))
-		errorcall(call,
-			  _("%s symbol name \"%s\" not in DLL for package \"%s\""),
-			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf,
-			  dll.DLLname);
-	    else
+	    if(strlen(dll.DLLname)) {
+		switch(symbol->type) {
+		case R_C_SYM:
+		    errorcall(call,
+			      _("\"%s\" not available for %s() for package \"%s\""),
+			      buf, ".C", dll.DLLname);
+		    break;
+		case R_FORTRAN_SYM:
+		    errorcall(call,
+			      _("\"%s\" not available for %s() for package \"%s\""),
+			      buf, ".Fortran", dll.DLLname);
+		    break;
+		case R_CALL_SYM:
+		    errorcall(call,
+			      _("\"%s\" not available for %s() for package \"%s\""),
+			      buf, ".Call", dll.DLLname);
+		    break;
+		case R_EXTERNAL_SYM:
+		    errorcall(call,
+			      _("\"%s\" not available for %s() for package \"%s\""),
+			      buf, ".External", dll.DLLname);
+		    break;
+		case R_ANY_SYM:
+		    errorcall(call,
+			      _("%s symbol name \"%s\" not in DLL for package \"%s\""),
+			      "C/Fortran", buf, dll.DLLname);
+		    break;
+		}
+	    } else
 		errorcall(call, _("%s symbol name \"%s\" not in load table"),
 			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf);
 	}
