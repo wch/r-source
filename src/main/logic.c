@@ -24,6 +24,9 @@
 
 #include "Defn.h"
 
+/* interval at which to check interrupts, a guess */
+#define NINTERRUPT 10000000
+
 
 static SEXP lunary(SEXP, SEXP, SEXP);
 static SEXP lbinary(SEXP, SEXP, SEXP);
@@ -172,28 +175,38 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
     PROTECT(x = allocVector(isRaw(arg) ? RAWSXP : LGLSXP, len));
     switch(TYPEOF(arg)) {
     case LGLSXP:
-	for (i = 0; i < len; i++)
+	for (i = 0; i < len; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(x)[i] = (LOGICAL(arg)[i] == NA_LOGICAL) ?
 		NA_LOGICAL : LOGICAL(arg)[i] == 0;
+	}
 	break;
     case INTSXP:
-	for (i = 0; i < len; i++)
+	for (i = 0; i < len; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(x)[i] = (INTEGER(arg)[i] == NA_INTEGER) ?
 		NA_LOGICAL : INTEGER(arg)[i] == 0;
+	}
 	break;
     case REALSXP:
-	for (i = 0; i < len; i++)
+	for (i = 0; i < len; i++){
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(x)[i] = ISNAN(REAL(arg)[i]) ?
 		NA_LOGICAL : REAL(arg)[i] == 0;
+	}
 	break;
     case CPLXSXP:
-	for (i = 0; i < len; i++)
+	for (i = 0; i < len; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(x)[i] = (ISNAN(COMPLEX(arg)[i].r) || ISNAN(COMPLEX(arg)[i].i))
 		? NA_LOGICAL : (COMPLEX(arg)[i].r == 0. && COMPLEX(arg)[i].i == 0.);
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < len; i++)
+	for (i = 0; i < len; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    RAW(x)[i] = 0xFF ^ RAW(arg)[i];
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("lunary", arg);
@@ -278,6 +291,7 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     switch (code) {
     case 1:		/* & : AND */
 	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = LOGICAL(s1)[i % n1];
 	    x2 = LOGICAL(s2)[i % n2];
 	    if (x1 == 0 || x2 == 0)
@@ -290,6 +304,7 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 	break;
     case 2:		/* | : OR */
 	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = LOGICAL(s1)[i % n1];
 	    x2 = LOGICAL(s2)[i % n2];
 	    if ((x1 != NA_LOGICAL && x1) || (x2 != NA_LOGICAL && x2))
@@ -325,6 +340,7 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
     switch (code) {
     case 1:		/* & : AND */
 	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = RAW(s1)[i % n1];
 	    x2 = RAW(s2)[i % n2];
 	    RAW(ans)[i] = x1 & x2;
@@ -332,6 +348,7 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
 	break;
     case 2:		/* | : OR */
 	for (i = 0; i < n; i++) {
+	    if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = RAW(s1)[i % n1];
 	    x2 = RAW(s2)[i % n2];
 	    RAW(ans)[i] = x1 | x2;
@@ -349,6 +366,7 @@ static int checkValues(int op, int na_rm, int *x, R_xlen_t n)
     R_xlen_t i;
     int has_na = 0;
     for (i = 0; i < n; i++) {
+	if (i % NINTERRUPT == 0) R_CheckUserInterrupt();
         if (!na_rm && x[i] == NA_LOGICAL) has_na = 1;
         else {
             if (x[i] == TRUE && op == _OP_ANY) return TRUE;
