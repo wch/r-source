@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -155,18 +155,6 @@ msgid ""
 msgstr ""
 " ファイル '%s' 中に構文解析エラー : \n"
 " %s "
-
-#, fuzzy
-msgid "Foreign function call(s) without 'PACKAGE' argument:"
-msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
-msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
-msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
 
 msgid "declared S3 method '%s' not found"
 msgstr " 宣言された S3 メソッド '%s' が見付かりません "
@@ -1294,6 +1282,19 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#, fuzzy
+#~ msgid "Foreign function call(s) without 'PACKAGE' argument:"
+#~ msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+#~ msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+#~ msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+#~ msgid ""
+#~ "Foreign function call(s) with 'PACKAGE' argument in different package:"
+#~ msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
 
 #, fuzzy
 #~ msgid "not insttalling"

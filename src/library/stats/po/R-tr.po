@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -270,15 +270,9 @@ msgstr "sıfır NA-olmayan nokta"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' n >= 1 gerektirir"
 
-msgid "'vec' contains NAs"
-msgstr "'vec' NAs içeriyor"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec' azalmayan şekilde sıralanmalı"
-
 #, fuzzy
-msgid "invalid length(vec)"
-msgstr "geçersiz argüman 'c'"
+msgid "invalid length(xout)"
+msgstr "geçersiz 'x'"
 
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' >= 1 olmalı"
@@ -907,6 +901,9 @@ msgstr "'filter' zaman serilerinden uzun"
 msgid "argument 'sides' must be 1 or 2"
 msgstr "'sides' argümanı 1 veya 2 olmalı"
 
+msgid "'circular' must be logical and not NA"
+msgstr ""
+
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init' uzunluğu 'filter' ile eşit uzunlukta olmalı"
 
@@ -1247,6 +1244,10 @@ msgstr ""
 
 msgid "more cluster centers than data points"
 msgstr ""
+
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "geçersiz argüman 'n'"
 
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' pozitif olmalı"
@@ -2436,6 +2437,16 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec' NAs içeriyor"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec' azalmayan şekilde sıralanmalı"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "geçersiz argüman 'c'"
 
 #, fuzzy
 #~ msgid "Initializing"

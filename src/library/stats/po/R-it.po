@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -288,14 +288,8 @@ msgstr "zero non-NA punti"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' richiede n >= 1"
 
-msgid "'vec' contains NAs"
-msgstr "'vec' contiene NA"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec' deve essere ordinata in modo non-decrescente"
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr "lunghezza dei membri non valida"
 
 msgid "'order.max' must be >= 1"
@@ -968,6 +962,9 @@ msgstr "'filter' più lungo della serie storica"
 msgid "argument 'sides' must be 1 or 2"
 msgstr "l'argomento 'sides' deve essere 1 o 2"
 
+msgid "'circular' must be logical and not NA"
+msgstr ""
+
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "la lunghezza di 'init' deve essere uguale a quella di 'filter' "
 
@@ -1318,6 +1315,10 @@ msgstr "i centri iniziali non sono distinti"
 
 msgid "more cluster centers than data points"
 msgstr "più cluster che dati"
+
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "argomento 'omit' non valido"
 
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' deve essere positivo"
@@ -2601,6 +2602,16 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec' contiene NA"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec' deve essere ordinata in modo non-decrescente"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "lunghezza dei membri non valida"
 
 #, fuzzy
 #~ msgid "No starting values specified for some parameters."

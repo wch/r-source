@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -245,12 +245,6 @@ msgstr ""
 msgid "labels/breaks length conflict"
 msgstr ""
 
-msgid "invalid value of length(x)"
-msgstr ""
-
-msgid "invalid value of length(breaks)"
-msgstr ""
-
 msgid "invalid 'row.names' length"
 msgstr ""
 
@@ -326,7 +320,7 @@ msgstr ""
 msgid "rhs is the wrong length"
 msgstr ""
 
-msgid "illegal matrix index in replacement"
+msgid "unsupported matrix index in replacement"
 msgstr ""
 
 msgid "need 0, 1, or 2 subscripts"
@@ -698,12 +692,6 @@ msgstr ""
 msgid "'vec' must be sorted non-decreasingly"
 msgstr ""
 
-msgid "invalid length(x)"
-msgstr ""
-
-msgid "invalid length(vec)"
-msgstr ""
-
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
@@ -1044,6 +1032,9 @@ msgstr ""
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 
+msgid "invalid value of nrow(x)"
+msgstr ""
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
 
@@ -1287,6 +1278,9 @@ msgid "invalid nrow(qr$qr)"
 msgstr ""
 
 msgid "invalid ncol(qr$qr)"
+msgstr ""
+
+msgid "invalid ncol(qr$rank)"
 msgstr ""
 
 msgid "invalid ncol(y)"
@@ -1536,10 +1530,7 @@ msgstr ""
 msgid "'bin' must be numeric or a factor"
 msgstr ""
 
-msgid "invalid value of length(bin)"
-msgstr ""
-
-msgid "invalid value of nbins"
+msgid "invalid value of 'nbins'"
 msgstr ""
 
 msgid "'INDEX' is of length zero"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: Srunmed.c:58
+#: Srunmed.c:52
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "pasmo/rozpiętość ruchomych median jest większe niż n"
 
-#: ansari.c:129
+#: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "prawdopodobieństwa poza [0,1] w qansari()"
 
@@ -133,25 +133,25 @@ msgstr "distance(): niepoprawne p"
 msgid "distance(): invalid distance"
 msgstr "distance(): niepoprawna odległość"
 
-#: distn.c:31
+#: distn.c:34
 msgid "NaNs produced"
 msgstr "Wyprodukowano wartości NaN"
 
-#: distn.c:32
+#: distn.c:35
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argument nieliczbowy przekazany do funkcji matematycznej"
 
-#: family.c:21
+#: family.c:43
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "Wartość %g jest poza zakresem (0, 1)"
 
-#: family.c:42 family.c:56 family.c:74
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Argument %s musi być nuepustym wektorem liczbowym"
 
-#: family.c:107 family.c:110
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument %s musi być wektorem liczbowym o długości 1 lub długości %d"
@@ -176,13 +176,26 @@ msgstr "brak czynników"
 msgid "invalid factors"
 msgstr "niepoprawne czynniki"
 
-#: ksmooth.c:65
+#: ksmooth.c:66
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "tylko 2500 wierszy jest dozwolonych dla sm.method=\"spline\""
 
 #: loessc.c:233
 msgid "span is too small"
 msgstr "rozpiętość jest za mała"
+
+#: lowess.c:292
+msgid "'f' must be finite and > 0"
+msgstr ""
+
+#: lowess.c:295
+#, fuzzy
+msgid "'iter' must be finite and >= 0"
+msgstr "'maxiter' musi być dodatnie"
+
+#: lowess.c:298
+msgid "'delta' must be finite and > 0"
+msgstr ""
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -340,19 +353,19 @@ msgstr "argument 'data' posiada błędny typ"
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' w formule a nie ma argumentu 'data'"
 
-#: monoSpl.c:40
+#: monoSpl.c:34
 msgid "n must be at least two"
 msgstr "n musi być co najmniej 2"
 
-#: monoSpl.c:73
+#: monoSpl.c:67
 msgid "Argument m must be numeric"
 msgstr "Argument m musi być liczbą"
 
-#: monoSpl.c:76
+#: monoSpl.c:70
 msgid "length(m) must be at least two"
 msgstr "length(m) musi być co najmniej dwa"
 
-#: monoSpl.c:78
+#: monoSpl.c:72
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "Argument Sx musi być wektorem liczbowym o jeden którszym niż m[]"
 
@@ -462,11 +475,11 @@ msgstr "'ndeps' posiada niepoprawną długość"
 msgid "unknown 'method'"
 msgstr "nieznana wartość 'method'"
 
-#: optimize.c:56 optimize.c:142 optimize.c:363
+#: optimize.c:56 optimize.c:148 optimize.c:369
 msgid "NA replaced by maximum positive value"
 msgstr "NA zastąpione przez maksymalną dodatnią wartość"
 
-#: optimize.c:64 optimize.c:154 optimize.c:371
+#: optimize.c:64 optimize.c:160 optimize.c:377
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf zastąpione przez maksymalną dodatnią wartość"
 
@@ -474,107 +487,107 @@ msgstr "NA/Inf zastąpione przez maksymalną dodatnią wartość"
 msgid "invalid function value in 'optimize'"
 msgstr "niepoprawna wartość funkcji w 'optimize'"
 
-#: optimize.c:91 optimize.c:183 optimize.c:556
+#: optimize.c:91 optimize.c:189 optimize.c:562
 msgid "attempt to minimize non-function"
 msgstr "próba minimalizacji nie-funkcji"
 
-#: optimize.c:98 optimize.c:105 optimize.c:114 optimize.c:188 optimize.c:193
-#: optimize.c:209
+#: optimize.c:98 optimize.c:105 optimize.c:114 optimize.c:194 optimize.c:199
+#: optimize.c:215
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
 
-#: optimize.c:107 optimize.c:194
+#: optimize.c:107 optimize.c:200
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' nie jest mniejsze niż 'xmax'"
 
-#: optimize.c:151
+#: optimize.c:157
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf zastąpiono przez maksymalną wartość ujemną"
 
-#: optimize.c:164
+#: optimize.c:170
 msgid "invalid function value in 'zeroin'"
 msgstr "niepoprawna wartość funkcji w 'zeroin'"
 
-#: optimize.c:199 optimize.c:204
+#: optimize.c:205 optimize.c:210
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "Wartość NA dla '%s' nie jest dozwolona"
 
-#: optimize.c:214
+#: optimize.c:220
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' musi być dodatnie"
 
-#: optimize.c:355
+#: optimize.c:361
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm nie dostarczył skończonej wartości"
 
-#: optimize.c:390
+#: optimize.c:396
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "niepoprawna wartość funkcji w optymalizatorze 'nlm'"
 
-#: optimize.c:401 optimize.c:416
+#: optimize.c:407 optimize.c:422
 msgid "function value caching for optimization is seriously confused"
 msgstr "buforowanie wartości funkcji dla optymalizacji jest poważnie zmieszane"
 
-#: optimize.c:431
+#: optimize.c:437
 msgid "numeric parameter expected"
 msgstr "oczekiwano liczbowego parametru"
 
-#: optimize.c:435
+#: optimize.c:441
 msgid "conflicting parameter lengths"
 msgstr "konfliktujące długości parametrów"
 
-#: optimize.c:439
+#: optimize.c:445
 #, fuzzy
 msgid "invalid parameter length"
 msgstr "niepoprawny typ parametru"
 
-#: optimize.c:449 optimize.c:456
+#: optimize.c:455 optimize.c:462
 msgid "missing value in parameter"
 msgstr "brakuje wartości w parametrze"
 
-#: optimize.c:461
+#: optimize.c:467
 msgid "invalid parameter type"
 msgstr "niepoprawny typ parametru"
 
-#: optimize.c:472
+#: optimize.c:478
 msgid "non-positive number of parameters in nlm"
 msgstr "niedodatnia liczba parametrów w nlm"
 
-#: optimize.c:474
+#: optimize.c:480
 msgid "nlm is inefficient for 1-d problems"
 msgstr "'nlm' jest nieefektywny dla problemów jednowymiarowych"
 
-#: optimize.c:476
+#: optimize.c:482
 msgid "invalid gradient tolerance in nlm"
 msgstr "niepoprawna tolerancja gradientu w nlm"
 
-#: optimize.c:478
+#: optimize.c:484
 msgid "invalid iteration limit in nlm"
 msgstr "niepoprawny limit iteracji w nlm"
 
-#: optimize.c:480
+#: optimize.c:486
 msgid "minimization function has no good digits in nlm"
 msgstr "funkcja mininalizująca nie ma dobrych cyfr w 'nlm'"
 
-#: optimize.c:482
+#: optimize.c:488
 msgid "no analytic gradient to check in nlm!"
 msgstr "brak analitycznego gradientu do sprawdzenia w nlm!"
 
-#: optimize.c:484
+#: optimize.c:490
 msgid "no analytic Hessian to check in nlm!"
 msgstr "brak analitycznego hesjanu do sprawdzenia w nlm!"
 
-#: optimize.c:486
+#: optimize.c:492
 msgid "probable coding error in analytic gradient"
 msgstr "prawdopodobnie błąd kodowania w analitycznym gradiencie"
 
-#: optimize.c:488
+#: optimize.c:494
 msgid "probable coding error in analytic Hessian"
 msgstr "prawdopodobnie błąd kodowania w analitycznym Hesjanie"
 
-#: optimize.c:490
+#: optimize.c:496
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -583,23 +596,23 @@ msgstr ""
 "*** nieznany komunikat o błędzie (msg = %d) w nlm()\n"
 "*** nie powinien wystąpić!"
 
-#: optimize.c:501
+#: optimize.c:507
 msgid "Relative gradient close to zero.\n"
 msgstr "Gradient względny bliski zera.\n"
 
-#: optimize.c:502 optimize.c:506
+#: optimize.c:508 optimize.c:512
 msgid "Current iterate is probably solution.\n"
 msgstr "Bieżąca iteracja chyba jest rozwiązaniem.\n"
 
-#: optimize.c:505
+#: optimize.c:511
 msgid "Successive iterates within tolerance.\n"
 msgstr "Kolejne iteracje w granicach tolerancji.\n"
 
-#: optimize.c:509
+#: optimize.c:515
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Ostatni globalny krok nie dał rady zlokalizować punkt niżej niż x.\n"
 
-#: optimize.c:510
+#: optimize.c:516
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -609,11 +622,11 @@ msgstr ""
 "albo funkcja jest zbyt nieliniowa dla tego algorytmu,\n"
 "albo 'steptol' jest zbyt duże.\n"
 
-#: optimize.c:515
+#: optimize.c:521
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Przekroczono limit iteracji. Algorytm zawiódł.\n"
 
-#: optimize.c:518
+#: optimize.c:524
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -627,18 +640,18 @@ msgstr ""
 "z góry w pewnym kierunku,\n"
 "albo 'stepmx' jest zbyt mały.\n"
 
-#: optimize.c:580 optimize.c:585 optimize.c:589 optimize.c:593 optimize.c:597
-#: optimize.c:601 optimize.c:606
+#: optimize.c:586 optimize.c:591 optimize.c:595 optimize.c:599 optimize.c:603
+#: optimize.c:607 optimize.c:612
 msgid "invalid NA value in parameter"
 msgstr "niepoprawna wartość NA w parametrze"
 
-#: optimize.c:637
+#: optimize.c:643
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "dostarczony hesjan posiada niepoprawną długość lub typ, tak więc został "
 "zignorowany"
 
-#: optimize.c:641
+#: optimize.c:647
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "dostarczony gradient posiada niepoprawną długość lub typ, tak więc został "
@@ -741,38 +754,43 @@ msgstr "'scal' musi być kwadratową, rzeczywistą macierzą"
 msgid "'scal' matrix is not positive-definite"
 msgstr "macierz 'scal' nie jest dodatnio określona"
 
-#: random.c:51 random.c:55 random.c:60 random.c:65 random.c:118 random.c:124
-#: random.c:129 random.c:134 random.c:177 random.c:182 random.c:187
-#: random.c:201 random.c:285
+#: random.c:54 random.c:58 random.c:63 random.c:68 random.c:122 random.c:128
+#: random.c:133 random.c:138 random.c:182 random.c:187 random.c:192
+#: random.c:206 random.c:293
 msgid "invalid arguments"
 msgstr "nieporawne argumenty"
 
-#: random.c:77 random.c:88 random.c:147 random.c:160 random.c:207 random.c:221
+#: random.c:80 random.c:92 random.c:151 random.c:165 random.c:212 random.c:227
 msgid "NAs produced"
 msgstr "Wyporodukowano wartości NA"
 
-#: random.c:240
+#: random.c:246
 msgid "invalid first argument 'n'"
 msgstr "niepoprawny pierwszy argument 'n'"
 
-#: random.c:242
+#: random.c:248
 msgid "invalid second argument 'size'"
 msgstr "niepoprawny drugi argument 'size'"
 
-#: smooth.c:79
+#: rcont.c:85
+#, c-format
+msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
+msgstr ""
+
+#: smooth.c:102
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
 
-#: smooth.c:231
+#: smooth.c:254
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "błąd alokacji w smooth(*, '3RSR')."
 
-#: smooth.c:244 smooth.c:254
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "błąd alokacji w smooth(*, '3RSS')."
 
-#: smooth.c:264
+#: smooth.c:287
 msgid "allocation error in smooth(*, '3R')."
 msgstr "błąd alokacji w smooth(*, '3R')."
 

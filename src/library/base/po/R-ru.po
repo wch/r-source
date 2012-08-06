@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -252,14 +252,6 @@ msgstr "'breaks' не уникальны"
 msgid "labels/breaks length conflict"
 msgstr "длины labels/breaks конфликтуют"
 
-#, fuzzy
-msgid "invalid value of length(x)"
-msgstr "неправильное значение"
-
-#, fuzzy
-msgid "invalid value of length(breaks)"
-msgstr "неправильное значение"
-
 msgid "invalid 'row.names' length"
 msgstr "неправильная длина 'row.names'"
 
@@ -338,7 +330,7 @@ msgid "rhs is the wrong length"
 msgstr "предложенные имена строк неправильной длины"
 
 #, fuzzy
-msgid "illegal matrix index in replacement"
+msgid "unsupported matrix index in replacement"
 msgstr "только логические матричные индексы разрешены для замены"
 
 msgid "need 0, 1, or 2 subscripts"
@@ -726,14 +718,6 @@ msgstr "'vec' содержит NA"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' должен быть сортирован не по уменьшению"
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr "неправильное значение"
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr "неправильное значение"
-
 msgid "using the first element of 'value' of type expression"
 msgstr "использую первый элемент 'value' типа выражения"
 
@@ -1080,6 +1064,10 @@ msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 "попытка установить имена колонок для объекта с менее чем двумя измерениями"
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr "неправильное значение"
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
 
@@ -1331,6 +1319,10 @@ msgstr ""
 
 msgid "invalid ncol(qr$qr)"
 msgstr ""
+
+#, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr "неправильное имя"
 
 #, fuzzy
 msgid "invalid ncol(y)"
@@ -1587,11 +1579,7 @@ msgid "'bin' must be numeric or a factor"
 msgstr "'bin' должен быть числом или фактором"
 
 #, fuzzy
-msgid "invalid value of length(bin)"
-msgstr "неправильное значение"
-
-#, fuzzy
-msgid "invalid value of nbins"
+msgid "invalid value of 'nbins'"
 msgstr "неправильное значение"
 
 #, fuzzy
@@ -1815,3 +1803,23 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "invalid value of length(x)"
+#~ msgstr "неправильное значение"
+
+#, fuzzy
+#~ msgid "invalid value of length(breaks)"
+#~ msgstr "неправильное значение"
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr "неправильное значение"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "неправильное значение"
+
+#, fuzzy
+#~ msgid "invalid value of length(bin)"
+#~ msgstr "неправильное значение"

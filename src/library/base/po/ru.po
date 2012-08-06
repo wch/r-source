@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -22,11 +22,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/appl/binning.c:73
+#: src/appl/binning.c:75
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
 msgstr "NA в .C(\"bincode\",... NAOK=FALSE)"
 
-#: src/appl/binning.c:110
+#: src/appl/binning.c:112
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr "NA в .C(\"bincount\",... NAOK=FALSE)"
 
@@ -75,11 +75,11 @@ msgstr "для 'L-BFGS-B' нужны конечные значения 'fn'"
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "'trace', 'REPORT' должен быть >= 0 (method = \"SANN\")"
 
-#: src/appl/pretty.c:106
+#: src/appl/pretty.c:112
 msgid "Internal(pretty()): very small range.. corrected"
 msgstr "Internal(pretty()): очень маленький размах... исправлено"
 
-#: src/appl/pretty.c:109
+#: src/appl/pretty.c:115
 msgid "Internal(pretty()): very large range.. corrected"
 msgstr "Internal(pretty()): очень большой размах... исправлено"
 
@@ -168,8 +168,8 @@ msgstr "проблема при отображении '%ls'"
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:126 src/main/agrep.c:130
 #: src/main/agrep.c:763 src/main/agrep.c:768 src/main/apply.c:288
 #: src/main/apply.c:290 src/main/apply.c:293 src/main/array.c:86
-#: src/main/array.c:1150 src/main/array.c:1279 src/main/array.c:1281
-#: src/main/array.c:1282 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1132 src/main/array.c:1261 src/main/array.c:1263
+#: src/main/array.c:1264 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -263,22 +263,24 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
 #: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
-#: src/main/seq.c:555 src/main/seq.c:560 src/main/seq.c:568 src/main/seq.c:599
-#: src/main/seq.c:603 src/main/seq.c:609 src/main/seq.c:617
+#: src/main/seq.c:614 src/main/seq.c:619 src/main/seq.c:627 src/main/seq.c:658
+#: src/main/seq.c:662 src/main/seq.c:668 src/main/seq.c:676
 #: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
-#: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
-#: src/main/unique.c:1181 src/main/unique.c:1241 src/main/unique.c:1248
+#: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:884
+#: src/main/unique.c:1210 src/main/unique.c:1270 src/main/unique.c:1277
 #: src/main/util.c:569 src/main/util.c:572 src/main/util.c:1754
-#: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:299
-#: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
-#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
-#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1080 src/modules/X11/devX11.c:3222
-#: src/modules/X11/devX11.c:3225 src/modules/X11/devX11.c:3228
-#: src/modules/X11/devX11.c:3252 src/unix/sys-std.c:1212
-#: src/unix/sys-std.c:1235
+#: src/main/util.c:1910 src/main/util.c:1911 src/main/util.c:1912
+#: src/main/util.c:1927 src/main/util.c:1945 src/main/util.c:1949
+#: src/main/util.c:1951 src/modules/internet/internet.c:284
+#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
+#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
+#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
+#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1080
+#: src/modules/X11/devX11.c:3222 src/modules/X11/devX11.c:3225
+#: src/modules/X11/devX11.c:3228 src/modules/X11/devX11.c:3252
+#: src/unix/sys-std.c:1212 src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
@@ -335,9 +337,9 @@ msgstr "неправильная временная метка"
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
 #: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
 #: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
-#: src/main/errors.c:1358 src/main/seq.c:171 src/main/seq.c:299
-#: src/main/seq.c:304 src/main/seq.c:308 src/main/seq.c:349 src/main/seq.c:353
-#: src/main/seq.c:357 src/main/sort.c:967 src/main/sort.c:1013
+#: src/main/errors.c:1358 src/main/seq.c:187 src/main/seq.c:337
+#: src/main/seq.c:342 src/main/seq.c:346 src/main/seq.c:387 src/main/seq.c:391
+#: src/main/seq.c:395 src/main/sort.c:967 src/main/sort.c:1013
 #: src/main/sort.c:1065 src/main/source.c:216 src/main/summary.c:842
 #: src/main/sysutils.c:249 src/main/util.c:951 src/main/util.c:956
 #: src/main/util.c:963 src/main/util.c:966 src/modules/X11/devX11.c:3123
@@ -895,7 +897,7 @@ msgstr "неправильная входная строка y[%d] для это
 msgid "regcomp error: '%s'"
 msgstr "ошибка regcomp: '%s'"
 
-#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:746
+#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:755
 msgid "invalid length"
 msgstr "неправильная длина"
 
@@ -939,85 +941,85 @@ msgstr "тип '%s' не поддерживается"
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
 msgstr "dimnames(<value>) не является ни NULL, ни списком длины %d"
 
-#: src/main/arithmetic.c:35
+#: src/main/arithmetic.c:40
 msgid "NaNs produced"
 msgstr "созданы NaN"
 
-#: src/main/arithmetic.c:36
+#: src/main/arithmetic.c:41
 msgid "Non-numeric argument to mathematical function"
 msgstr "Нечисловой аргумент для математической функции"
 
-#: src/main/arithmetic.c:178
+#: src/main/arithmetic.c:183
 msgid "probable complete loss of accuracy in modulus"
 msgstr "возможна полная потеря точности остатка от деления"
 
-#: src/main/arithmetic.c:321
+#: src/main/arithmetic.c:326
 msgid "operator needs one or two arguments"
 msgstr "оператору нужен один или два аргумента"
 
-#: src/main/arithmetic.c:338
+#: src/main/arithmetic.c:343
 msgid "non-numeric argument to binary operator"
 msgstr "нечисловой аргумент для бинарного оператора"
 
-#: src/main/arithmetic.c:400 src/main/relop.c:126
+#: src/main/arithmetic.c:405 src/main/relop.c:129
 msgid "non-conformable arrays"
 msgstr "неподобные многомерные матрицы"
 
-#: src/main/arithmetic.c:443
+#: src/main/arithmetic.c:448
 msgid "non-conformable time-series"
 msgstr "неподобные временные ряды"
 
-#: src/main/arithmetic.c:465 src/main/logic.c:121 src/main/relop.c:69
-#: src/main/relop.c:164
+#: src/main/arithmetic.c:470 src/main/logic.c:124 src/main/relop.c:72
+#: src/main/relop.c:167
 msgid "longer object length is not a multiple of shorter object length"
 msgstr ""
 "длина большего объекта не является произведением длины меньшего объекта"
 
-#: src/main/arithmetic.c:537
+#: src/main/arithmetic.c:542
 msgid "invalid argument to unary operator"
 msgstr "неправильный аргумент для унарного оператора"
 
-#: src/main/arithmetic.c:562 src/main/arithmetic.c:581
+#: src/main/arithmetic.c:567 src/main/arithmetic.c:586
 msgid "invalid unary operator"
 msgstr "неправильный унарный оператор"
 
-#: src/main/arithmetic.c:628
+#: src/main/arithmetic.c:633
 msgid "NAs produced by integer overflow"
 msgstr "целочисленное переполнение привело к созданию NA"
 
-#: src/main/arithmetic.c:1074
+#: src/main/arithmetic.c:1111
 msgid "unimplemented real function of 1 argument"
 msgstr "нереализованная действительная функция 1 аргумента"
 
-#: src/main/arithmetic.c:1088 src/main/complex.c:636 src/main/complex.c:706
+#: src/main/arithmetic.c:1125 src/main/complex.c:645 src/main/complex.c:715
 msgid "unimplemented complex function"
 msgstr "нереализованная комплексная функция"
 
-#: src/main/arithmetic.c:1348 src/main/arithmetic.c:1698
-#: src/main/arithmetic.c:1874 src/main/arithmetic.c:1985
+#: src/main/arithmetic.c:1389 src/main/arithmetic.c:1742
+#: src/main/arithmetic.c:1921 src/main/arithmetic.c:2033
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "нереализованная действительная функция %d числовых аргументов"
 
-#: src/main/arithmetic.c:1378
+#: src/main/arithmetic.c:1419
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d аргументов передано '%s', а требуется 1 или 2"
 
-#: src/main/arithmetic.c:1397
+#: src/main/arithmetic.c:1438
 msgid "invalid second argument of length 0"
 msgstr "неправильный второй аргумент нулевой длины"
 
-#: src/main/arithmetic.c:1467
+#: src/main/arithmetic.c:1508
 msgid "invalid argument 'base' of length 0"
 msgstr "неправильный аргумент 'base' нулевой длины"
 
-#: src/main/arithmetic.c:1475
+#: src/main/arithmetic.c:1516
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d аргумента передано 'log', а требуется 1 или 2"
 
-#: src/main/array.c:79 src/main/array.c:1449
+#: src/main/array.c:79 src/main/array.c:1431
 msgid "'data' must be of a vector type"
 msgstr "'data' должен быть вектором"
 
@@ -1058,7 +1060,7 @@ msgstr "длина данных [%d] не является множителем 
 msgid "data length exceeds size of matrix"
 msgstr "длина данных превышает размер матрицы"
 
-#: src/main/array.c:136 src/main/array.c:1460
+#: src/main/array.c:136 src/main/array.c:1442
 msgid "too many elements specified"
 msgstr "задано слишком много элементов"
 
@@ -1082,56 +1084,52 @@ msgstr "alloc3Darray: задано слишком много элементов"
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr "allocArray: при помощи 'dims' задано слишком много элементов"
 
-#: src/main/array.c:446
-msgid "length() requested for a long vector: use xlength() instead"
-msgstr ""
-
-#: src/main/array.c:463
+#: src/main/array.c:445
 msgid "a matrix-like object is required as argument to 'row/col'"
 msgstr "аргументом 'row/col' должен быть матрицеподобный объект"
 
-#: src/main/array.c:678
+#: src/main/array.c:660
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr "требует числовых/комплексных матричных/векторных аргументов"
 
-#: src/main/array.c:768 src/main/array.c:772 src/main/array.c:776
+#: src/main/array.c:750 src/main/array.c:754 src/main/array.c:758
 msgid "non-conformable arguments"
 msgstr "неподобные аргументы"
 
-#: src/main/array.c:1074
+#: src/main/array.c:1056
 msgid "argument is not a matrix"
 msgstr "аргумент не является матрицей"
 
-#: src/main/array.c:1109
+#: src/main/array.c:1091
 msgid "invalid first argument, must be an array"
 msgstr "неправильный первый аргумент, должна быть многомерная матрица"
 
-#: src/main/array.c:1124 src/main/array.c:1127
+#: src/main/array.c:1106 src/main/array.c:1109
 msgid "'a' does not have named dimnames"
 msgstr "'a' не имеет именованных измерений"
 
-#: src/main/array.c:1134
+#: src/main/array.c:1116
 #, c-format
 msgid "perm[%d] does not match a dimension name"
 msgstr "perm[%d] не соответствует имени измерения"
 
-#: src/main/array.c:1141
+#: src/main/array.c:1123
 msgid "'perm' is of wrong length"
 msgstr "'perm' неправильной длины"
 
-#: src/main/array.c:1148
+#: src/main/array.c:1130
 msgid "value out of range in 'perm'"
 msgstr "'perm': значение за пределами"
 
-#: src/main/array.c:1230
+#: src/main/array.c:1212
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'resize' должен быть TRUE или FALSE"
 
-#: src/main/array.c:1291
+#: src/main/array.c:1273
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числом"
 
-#: src/main/array.c:1456
+#: src/main/array.c:1438
 #, fuzzy
 msgid "'dims' cannot be of length 0"
 msgstr "'hadj' должен быть единичной длины"
@@ -1415,7 +1413,7 @@ msgstr "размер вектора не может быть неопредел�
 msgid "vector size cannot be negative"
 msgstr "размер вектора не может быть отрицательным"
 
-#: src/main/builtin.c:48 src/main/builtin.c:895
+#: src/main/builtin.c:48 src/main/builtin.c:896
 msgid "vector size specified is too large"
 msgstr "указанный размер вектора слишком велик"
 
@@ -1490,31 +1488,31 @@ msgstr "вектор: не могу сделать вектор типа '%s'."
 msgid "cannot set length of non-vector"
 msgstr "установить длину для не-вектора"
 
-#: src/main/builtin.c:880 src/main/builtin.c:890 src/main/options.c:609
+#: src/main/builtin.c:877 src/main/builtin.c:887 src/main/options.c:609
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
-#: src/main/builtin.c:882 src/main/builtin.c:892 src/main/builtin.c:894
+#: src/main/builtin.c:879 src/main/builtin.c:889 src/main/builtin.c:891
 #: src/main/character.c:365 src/main/coerce.c:2580
 msgid "invalid value"
 msgstr "неправильное значение"
 
-#: src/main/builtin.c:918 src/main/eval.c:401 src/main/eval.c:518
+#: src/main/builtin.c:922 src/main/eval.c:401 src/main/eval.c:518
 #: src/main/eval.c:1820 src/main/eval.c:1886 src/main/eval.c:1946
 #: src/main/eval.c:2272 src/main/eval.c:4371 src/main/eval.c:4480
 msgid "'...' used in an incorrect context"
 msgstr "'...' использовано в неправильном контексте"
 
-#: src/main/builtin.c:939
+#: src/main/builtin.c:943
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
 msgstr "повторяющиеся значения по-молучанию в переключателе: '%s' и '%s'"
 
-#: src/main/builtin.c:972
+#: src/main/builtin.c:976
 msgid "'EXPR' is missing"
 msgstr "'EXPR' отсутствует"
 
-#: src/main/builtin.c:976 src/main/eval.c:4794
+#: src/main/builtin.c:980 src/main/eval.c:4794
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR должно быть вектором единичной длины"
 
@@ -1841,7 +1839,7 @@ msgstr "rgb должен иметь 3 строки (внутренне)"
 msgid "bad hsv to rgb color conversion"
 msgstr "неправильная конвертация цвета из hsv в rgb"
 
-#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:167
+#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:170
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
@@ -1879,23 +1877,23 @@ msgstr "предложенный цвет -- не цифра и не симво�
 msgid "Invalid color specification"
 msgstr "Неправильное определение цвета"
 
-#: src/main/complex.c:122
+#: src/main/complex.c:126
 msgid "invalid complex unary operator"
 msgstr "неправильный комплексный унарный оператор"
 
-#: src/main/complex.c:251
+#: src/main/complex.c:260
 msgid "unimplemented complex operation"
 msgstr "не реализованная комплексная операция"
 
-#: src/main/complex.c:354
+#: src/main/complex.c:363
 msgid "non-numeric argument to function"
 msgstr "нечисловой аргумент аргумент для функции"
 
-#: src/main/complex.c:807
+#: src/main/complex.c:816
 msgid "invalid polynomial coefficient"
 msgstr "неправильный коэффициент многочлена"
 
-#: src/main/complex.c:812
+#: src/main/complex.c:821
 msgid "root finding code failed"
 msgstr "ошибка кода нахождения корня"
 
@@ -2732,7 +2730,7 @@ msgstr "аргумент PACKAGE слишком длинный"
 msgid "no arguments supplied"
 msgstr "не заданы аргументы"
 
-#: src/main/dotcode.c:418 src/main/seq.c:831
+#: src/main/dotcode.c:418 src/main/seq.c:901
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
@@ -2745,7 +2743,7 @@ msgstr "'NAME' отсутствует"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Неправильное количество аргументов (%d), ожидается %d для '%s' "
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2226
+#: src/main/dotcode.c:1161 src/main/dotcode.c:2231
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
@@ -2771,70 +2769,75 @@ msgstr ""
 "явный запрос не дублировать аргументы при вызове '%s', однако аргумент %d "
 "неправильного типа (%d != %d)"
 
-#: src/main/dotcode.c:1475
+#: src/main/dotcode.c:1449
+#, fuzzy, c-format
+msgid "long vectors (argument %d) are not supported in %s"
+msgstr "символические ссылки на этой платформе не поддерживаются"
+
+#: src/main/dotcode.c:1480
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "NA при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:1498
+#: src/main/dotcode.c:1503
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "NA/NaN/Inf при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:1503
+#: src/main/dotcode.c:1508
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1529
+#: src/main/dotcode.c:1534
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "комплексные NA/NaN/Inf при вызове внешней функции (аргумент %d)"
 
-#: src/main/dotcode.c:1548
+#: src/main/dotcode.c:1553
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "текстовые переменные должны быть дублированы в  .C/.Fortran"
 
-#: src/main/dotcode.c:1553
+#: src/main/dotcode.c:1558
 msgid "only first string in char vector used in .Fortran"
 msgstr "только первая строка текстового вектора использована в .Fortran"
 
-#: src/main/dotcode.c:1596
+#: src/main/dotcode.c:1601
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:1611 src/main/dotcode.c:1622
+#: src/main/dotcode.c:1616 src/main/dotcode.c:1627
 #, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "неправильный режим (%s) для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:1616
+#: src/main/dotcode.c:1621
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr "неправильный режим (%s) для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:1627
+#: src/main/dotcode.c:1632
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2471
+#: src/main/dotcode.c:2476
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "тип \"%s\" не поддерживается при межязыковых вызовах"
 
-#: src/main/dotcode.c:2538
+#: src/main/dotcode.c:2543
 msgid "invalid function in call_R"
 msgstr "неправильная функция в call_R"
 
-#: src/main/dotcode.c:2540
+#: src/main/dotcode.c:2545
 msgid "invalid argument count in call_R"
 msgstr "неправильный счет аргументов в call_R"
 
-#: src/main/dotcode.c:2542
+#: src/main/dotcode.c:2547
 msgid "invalid return value count in call_R"
 msgstr "неправильный счет возвращаемого значения в call_R"
 
-#: src/main/dotcode.c:2576
+#: src/main/dotcode.c:2581
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "режим '%s' не поддерживается в call_R"
@@ -3686,7 +3689,7 @@ msgstr "несоответствие версии байтового кода"
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:4301 src/main/names.c:1174
+#: src/main/eval.c:4301 src/main/names.c:1173
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "нет внутренней функции \"%s\""
@@ -4115,43 +4118,43 @@ msgstr "средства lapack не доступны из модуля"
 msgid "lapack routines cannot be loaded"
 msgstr "средства lapack не могут быть загружены"
 
-#: src/main/logic.c:47
+#: src/main/logic.c:50
 msgid "binary operations require two arguments"
 msgstr "бинарные операторы требуют два аргумента"
 
-#: src/main/logic.c:66 src/main/logic.c:128
+#: src/main/logic.c:69 src/main/logic.c:131
 msgid "operations are possible only for numeric, logical or complex types"
 msgstr ""
 "операции возможны только для числовых, логических или комплексных типов"
 
-#: src/main/logic.c:76
+#: src/main/logic.c:79
 msgid "binary operation on non-conformable arrays"
 msgstr "бинарная операция на неподобных многомерных матрицах"
 
-#: src/main/logic.c:102 src/main/relop.c:146
+#: src/main/logic.c:105 src/main/relop.c:149
 msgid "non-conformable time series"
 msgstr "неподобные временные ряды"
 
-#: src/main/logic.c:217
+#: src/main/logic.c:230
 #, c-format
 msgid "'%s' operator requires 2 arguments"
 msgstr "оператор '%s' требует 2 аргумента"
 
-#: src/main/logic.c:225
+#: src/main/logic.c:238
 #, c-format
 msgid "invalid 'x' type in 'x %s y'"
 msgstr "неправильный тип 'x' в 'x %s y'"
 
-#: src/main/logic.c:232
+#: src/main/logic.c:245
 #, c-format
 msgid "invalid 'y' type in 'x %s y'"
 msgstr "неправильный тип 'y' в 'x %s y'"
 
-#: src/main/logic.c:304
+#: src/main/logic.c:319
 msgid "Unary operator `!' called with two arguments"
 msgstr "Унарный оператор `!' вызван с двумя аргументами"
 
-#: src/main/logic.c:408
+#: src/main/logic.c:426
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr "преобразование аргумента типа '%s' в логический"
@@ -4380,24 +4383,24 @@ msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1009
+#: src/main/names.c:1008
 msgid "string argument required"
 msgstr "нужен текстовый аргумент"
 
-#: src/main/names.c:1012
+#: src/main/names.c:1011
 msgid "no such primitive function"
 msgstr "нет такой примитивной функции"
 
-#: src/main/names.c:1140
+#: src/main/names.c:1139
 msgid "attempt to use zero-length variable name"
 msgstr "попытка использовать имя переменной нулевой длины"
 
-#: src/main/names.c:1142
+#: src/main/names.c:1141
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "имена переменных ограничены %d байтами"
 
-#: src/main/names.c:1169 src/main/names.c:1172
+#: src/main/names.c:1168 src/main/names.c:1171
 msgid "invalid .Internal() argument"
 msgstr "неправильный .Internal() аргумент"
 
@@ -5066,20 +5069,20 @@ msgstr "не могу сделать выборку бОльшую чем поп
 msgid "incorrect number of probabilities"
 msgstr "неправильное количество вероятностей"
 
-#: src/main/relop.c:101
+#: src/main/relop.c:104
 #, c-format
 msgid "comparison (%d) is possible only for atomic and list types"
 msgstr "сравнение (%d) возможно только для элементарных и списковых типов"
 
-#: src/main/relop.c:106
+#: src/main/relop.c:109
 msgid "comparison is not allowed for expressions"
 msgstr "сравнение не разрешено для выражений"
 
-#: src/main/relop.c:195
+#: src/main/relop.c:198
 msgid "comparison of these types is not implemented"
 msgstr "сравнение этих типов не разработано"
 
-#: src/main/relop.c:396
+#: src/main/relop.c:411
 msgid "invalid comparison with complex values"
 msgstr "неправильное сравнение с комплексными значениями"
 
@@ -5415,75 +5418,75 @@ msgstr "поврежденная матрица -- размерность не �
 msgid "unequal factor lengths"
 msgstr "неравные длины факторов"
 
-#: src/main/seq.c:100
+#: src/main/seq.c:103
 msgid "result would be too long a vector"
 msgstr "результат может оказаться слишком длинным вектором"
 
-#: src/main/seq.c:146 src/main/seq.c:150
+#: src/main/seq.c:161 src/main/seq.c:165
 #, c-format
 msgid "numerical expression has %d elements: only the first used"
 msgstr "у числового выражения %d элементов: использован только первый"
 
-#: src/main/seq.c:148
+#: src/main/seq.c:163
 msgid "argument of length 0"
 msgstr "аргумент нулевой длины"
 
-#: src/main/seq.c:154
+#: src/main/seq.c:169
 msgid "NA/NaN argument"
 msgstr "NA/NaN-аргумент"
 
-#: src/main/seq.c:289
+#: src/main/seq.c:327
 msgid "incorrect type for second argument"
 msgstr "неправильный тип второго аргумента"
 
-#: src/main/seq.c:292
+#: src/main/seq.c:330
 #, fuzzy, c-format
 msgid "attempt to replicate an object of type '%s'"
 msgstr "попытка размножить не-вектор"
 
-#: src/main/seq.c:345
+#: src/main/seq.c:383
 msgid "attempt to replicate non-vector"
 msgstr "попытка размножить не-вектор"
 
-#: src/main/seq.c:361
+#: src/main/seq.c:399
 #, fuzzy
 msgid "cannot replicate NULL to a non-zero length"
 msgstr "не могу разместить вектор длины %d"
 
-#: src/main/seq.c:563 src/main/seq.c:570 src/main/seq.c:701 src/main/seq.c:891
+#: src/main/seq.c:622 src/main/seq.c:629 src/main/seq.c:760 src/main/seq.c:967
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr "использован первый элемент аргумента '%s'"
 
-#: src/main/seq.c:699
+#: src/main/seq.c:758
 msgid "'length.out' must be a non-negative number"
 msgstr "'length.out' должен быть неотрицательным числом"
 
-#: src/main/seq.c:719 src/main/seq.c:785 src/main/seq.c:799
+#: src/main/seq.c:778 src/main/seq.c:844 src/main/seq.c:861
 msgid "'from' must be finite"
 msgstr "'from' должен быть конечным"
 
-#: src/main/seq.c:721 src/main/seq.c:787 src/main/seq.c:817
+#: src/main/seq.c:780 src/main/seq.c:846 src/main/seq.c:883
 msgid "'to' must be finite"
 msgstr "'to' должен быть конечным"
 
-#: src/main/seq.c:733
+#: src/main/seq.c:792
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr "неверные '(to - from)/by' в 'seq'"
 
-#: src/main/seq.c:745
+#: src/main/seq.c:804
 msgid "'by' argument is much too small"
 msgstr "аргумент 'by' слишком короток"
 
-#: src/main/seq.c:747
+#: src/main/seq.c:806
 msgid "wrong sign in 'by' argument"
 msgstr "неправильный знак аргумента 'by'"
 
-#: src/main/seq.c:801 src/main/seq.c:819
+#: src/main/seq.c:863 src/main/seq.c:885
 msgid "'by' must be finite"
 msgstr "'by' должен быть конечным"
 
-#: src/main/seq.c:897 src/main/seq.c:902
+#: src/main/seq.c:973 src/main/seq.c:978
 msgid "argument must be coercible to non-negative integer"
 msgstr "аргумент должен быть преобразовываем в неотрицательное целое число"
 
@@ -6257,69 +6260,69 @@ msgstr "размещение в R_tmpnam2 не удалось"
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmarke = TRUE' не поддерживается на этой платформе"
 
-#: src/main/unique.c:304
+#: src/main/unique.c:314
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr "длина %d слишком велика для хеширования"
 
-#: src/main/unique.c:403
+#: src/main/unique.c:412
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated' применима только к векторам"
 
-#: src/main/unique.c:498
+#: src/main/unique.c:525
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr "any_duplicated3(., <0-length incomp>)"
 
-#: src/main/unique.c:547
+#: src/main/unique.c:576
 msgid "'fromLast' must be length 1"
 msgstr "'fromLast' должен быть единичной длины"
 
-#: src/main/unique.c:550
+#: src/main/unique.c:579
 msgid "'fromLast' must be TRUE or FALSE"
 msgstr "'fromLast' должен быть TRUE или FALSE"
 
-#: src/main/unique.c:559
+#: src/main/unique.c:590
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "'%s()' применима только к векторам"
 
-#: src/main/unique.c:808
+#: src/main/unique.c:837
 msgid "'match' requires vector arguments"
 msgstr "'match' требует векторных аргументов"
 
-#: src/main/unique.c:859 src/main/unique.c:1017
+#: src/main/unique.c:888 src/main/unique.c:1046
 msgid "argument is not of mode character"
 msgstr "аргумент не является текстом"
 
-#: src/main/unique.c:1143
+#: src/main/unique.c:1172
 msgid "... used in a situation where it doesn't exist"
 msgstr "... используется в ситуации, где его не существует"
 
-#: src/main/unique.c:1234
+#: src/main/unique.c:1263
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "не могу найти вложение из которого вызвано 'match.call'"
 
-#: src/main/unique.c:1392
+#: src/main/unique.c:1421
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "нечисловая матрица в 'rowsum()': это не должно происходить"
 
-#: src/main/unique.c:1424
+#: src/main/unique.c:1453
 msgid "non-numeric data frame in rowsum"
 msgstr "нечисловая таблица данных в 'rowsum'"
 
-#: src/main/unique.c:1456
+#: src/main/unique.c:1485
 msgid "this cannot happen"
 msgstr "это не может произойти"
 
-#: src/main/unique.c:1513
+#: src/main/unique.c:1542
 msgid "'names' must be a character vector"
 msgstr "'names' должны быть текстовым вектором"
 
-#: src/main/unique.c:1517
+#: src/main/unique.c:1546
 msgid "'sep' must be a character string"
 msgstr "'sep' должен быть текстовой строкой"
 
-#: src/main/unique.c:1590
+#: src/main/unique.c:1619
 msgid "csduplicated not called on a STRSXP"
 msgstr "'csduplicated' не вызван на 'STRSXP'"
 
@@ -6441,6 +6444,11 @@ msgstr "атрибуты должны быть именованы"
 #: src/main/util.c:1820
 msgid "ICU is not supported on this build"
 msgstr "ICU не поддерживается в этой сборке"
+
+#: src/main/util.c:1906 src/main/util.c:1942
+#, fuzzy, c-format
+msgid "long vector '%s' is not supported"
+msgstr "тип '%s' не поддерживается"
 
 #: src/main/version.c:36
 msgid ""

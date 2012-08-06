@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -17,11 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
 
-#: src/appl/binning.c:73
+#: src/appl/binning.c:75
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
 msgstr " .C(\"bincode\",... NAOK=FALSE) の中に NA があります "
 
-#: src/appl/binning.c:110
+#: src/appl/binning.c:112
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
 msgstr " .C(\"bincount\",... NAOK=FALSE) の中に NA があります "
 
@@ -70,11 +70,11 @@ msgstr " L-BFGS-B は有限な fn の値を必要とします "
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr " REPORT は正の値でなければなりません (method = \"SANN\") "
 
-#: src/appl/pretty.c:106
+#: src/appl/pretty.c:112
 msgid "Internal(pretty()): very small range.. corrected"
 msgstr " Internal(pretty()) の範囲が小さすぎます.. 修正しました "
 
-#: src/appl/pretty.c:109
+#: src/appl/pretty.c:115
 msgid "Internal(pretty()): very large range.. corrected"
 msgstr " Internal(pretty()) の範囲が大きすぎます.. 修正しました "
 
@@ -164,8 +164,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:126 src/main/agrep.c:130
 #: src/main/agrep.c:763 src/main/agrep.c:768 src/main/apply.c:288
 #: src/main/apply.c:290 src/main/apply.c:293 src/main/array.c:86
-#: src/main/array.c:1150 src/main/array.c:1279 src/main/array.c:1281
-#: src/main/array.c:1282 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1132 src/main/array.c:1261 src/main/array.c:1263
+#: src/main/array.c:1264 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -259,22 +259,24 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/scan.c:1509 src/main/scan.c:1725 src/main/scan.c:1726
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/scan.c:1730
 #: src/main/scan.c:1731 src/main/scan.c:1732 src/main/scan.c:1733
-#: src/main/seq.c:555 src/main/seq.c:560 src/main/seq.c:568 src/main/seq.c:599
-#: src/main/seq.c:603 src/main/seq.c:609 src/main/seq.c:617
+#: src/main/seq.c:614 src/main/seq.c:619 src/main/seq.c:627 src/main/seq.c:658
+#: src/main/seq.c:662 src/main/seq.c:668 src/main/seq.c:676
 #: src/main/sort.c:161 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:597 src/main/sysutils.c:603 src/main/sysutils.c:607
-#: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:855
-#: src/main/unique.c:1181 src/main/unique.c:1241 src/main/unique.c:1248
+#: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:884
+#: src/main/unique.c:1210 src/main/unique.c:1270 src/main/unique.c:1277
 #: src/main/util.c:569 src/main/util.c:572 src/main/util.c:1754
-#: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:299
-#: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:151
-#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
-#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1080 src/modules/X11/devX11.c:3222
-#: src/modules/X11/devX11.c:3225 src/modules/X11/devX11.c:3228
-#: src/modules/X11/devX11.c:3252 src/unix/sys-std.c:1212
-#: src/unix/sys-std.c:1235
+#: src/main/util.c:1910 src/main/util.c:1911 src/main/util.c:1912
+#: src/main/util.c:1927 src/main/util.c:1945 src/main/util.c:1949
+#: src/main/util.c:1951 src/modules/internet/internet.c:284
+#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
+#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
+#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
+#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1080
+#: src/modules/X11/devX11.c:3222 src/modules/X11/devX11.c:3225
+#: src/modules/X11/devX11.c:3228 src/modules/X11/devX11.c:3252
+#: src/unix/sys-std.c:1212 src/unix/sys-std.c:1235
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
@@ -331,9 +333,9 @@ msgstr " タイムスタンプが不正です "
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
 #: src/main/dotcode.c:194 src/main/errors.c:924 src/main/errors.c:955
 #: src/main/errors.c:1056 src/main/errors.c:1081 src/main/errors.c:1086
-#: src/main/errors.c:1358 src/main/seq.c:171 src/main/seq.c:299
-#: src/main/seq.c:304 src/main/seq.c:308 src/main/seq.c:349 src/main/seq.c:353
-#: src/main/seq.c:357 src/main/sort.c:967 src/main/sort.c:1013
+#: src/main/errors.c:1358 src/main/seq.c:187 src/main/seq.c:337
+#: src/main/seq.c:342 src/main/seq.c:346 src/main/seq.c:387 src/main/seq.c:391
+#: src/main/seq.c:395 src/main/sort.c:967 src/main/sort.c:1013
 #: src/main/sort.c:1065 src/main/source.c:216 src/main/summary.c:842
 #: src/main/sysutils.c:249 src/main/util.c:951 src/main/util.c:956
 #: src/main/util.c:963 src/main/util.c:966 src/modules/X11/devX11.c:3123
@@ -896,7 +898,7 @@ msgstr " 入力文字列 y[%d] はこのロケールでは不適切です "
 msgid "regcomp error: '%s'"
 msgstr " regcompのエラー: '%s' "
 
-#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:746
+#: src/main/apply.c:41 src/main/apply.c:110 src/main/complex.c:755
 msgid "invalid length"
 msgstr " 長さが不正です "
 
@@ -940,86 +942,86 @@ msgstr " '%s' という型はサポートされていません "
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
 msgstr " dimnames(<value>) は NULL でも長さ %d のリストでもありません "
 
-#: src/main/arithmetic.c:35
+#: src/main/arithmetic.c:40
 msgid "NaNs produced"
 msgstr " 計算結果が NaN になりました "
 
-#: src/main/arithmetic.c:36
+#: src/main/arithmetic.c:41
 msgid "Non-numeric argument to mathematical function"
 msgstr " 数学関数に非数値引数が渡されました "
 
-#: src/main/arithmetic.c:178
+#: src/main/arithmetic.c:183
 msgid "probable complete loss of accuracy in modulus"
 msgstr " 絶対値で精度が完全に失われた可能性があります "
 
-#: src/main/arithmetic.c:321
+#: src/main/arithmetic.c:326
 msgid "operator needs one or two arguments"
 msgstr " 演算子は一つまたは二つの引数を必要とします "
 
-#: src/main/arithmetic.c:338
+#: src/main/arithmetic.c:343
 msgid "non-numeric argument to binary operator"
 msgstr " 二項演算子の引数が数値ではありません "
 
-#: src/main/arithmetic.c:400 src/main/relop.c:126
+#: src/main/arithmetic.c:405 src/main/relop.c:129
 msgid "non-conformable arrays"
 msgstr " 適切な配列ではありません "
 
-#: src/main/arithmetic.c:443
+#: src/main/arithmetic.c:448
 msgid "non-conformable time-series"
 msgstr " 整合した時系列ではありません "
 
-#: src/main/arithmetic.c:465 src/main/logic.c:121 src/main/relop.c:69
-#: src/main/relop.c:164
+#: src/main/arithmetic.c:470 src/main/logic.c:124 src/main/relop.c:72
+#: src/main/relop.c:167
 msgid "longer object length is not a multiple of shorter object length"
 msgstr " 長いオブジェクトの長さが短いオブジェクトの長さの倍数になっていません "
 
-#: src/main/arithmetic.c:537
+#: src/main/arithmetic.c:542
 msgid "invalid argument to unary operator"
 msgstr " 単項演算子に対する引数が不正です "
 
-#: src/main/arithmetic.c:562 src/main/arithmetic.c:581
+#: src/main/arithmetic.c:567 src/main/arithmetic.c:586
 msgid "invalid unary operator"
 msgstr " 不正な単項演算子です "
 
-#: src/main/arithmetic.c:628
+#: src/main/arithmetic.c:633
 msgid "NAs produced by integer overflow"
 msgstr " 整数の桁あふれにより NA が生成されました "
 
-#: src/main/arithmetic.c:1074
+#: src/main/arithmetic.c:1111
 msgid "unimplemented real function of 1 argument"
 msgstr " 1個の引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1088 src/main/complex.c:636 src/main/complex.c:706
+#: src/main/arithmetic.c:1125 src/main/complex.c:645 src/main/complex.c:715
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
-#: src/main/arithmetic.c:1348 src/main/arithmetic.c:1698
-#: src/main/arithmetic.c:1874 src/main/arithmetic.c:1985
+#: src/main/arithmetic.c:1389 src/main/arithmetic.c:1742
+#: src/main/arithmetic.c:1921 src/main/arithmetic.c:2033
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr " %d 個の数値引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1378
+#: src/main/arithmetic.c:1419
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 " '%d' 個の引数が '%s' に渡されましたが，1つまたは2つが必要とされています "
 
-#: src/main/arithmetic.c:1397
+#: src/main/arithmetic.c:1438
 msgid "invalid second argument of length 0"
 msgstr " 二番目の長さ 0 の引数が不正です "
 
-#: src/main/arithmetic.c:1467
+#: src/main/arithmetic.c:1508
 msgid "invalid argument 'base' of length 0"
 msgstr " 長さ 0 の 'base ' 引数です "
 
-#: src/main/arithmetic.c:1475
+#: src/main/arithmetic.c:1516
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
 " 'log' 関数に %d 個の引数が渡されましたが，1つまたは2つでなくてはなりません "
 
-#: src/main/array.c:79 src/main/array.c:1449
+#: src/main/array.c:79 src/main/array.c:1431
 msgid "'data' must be of a vector type"
 msgstr " 'data' はベクトル型でなくてはなりません "
 
@@ -1062,7 +1064,7 @@ msgstr ""
 msgid "data length exceeds size of matrix"
 msgstr " データの長さが行列の大きさを超えています "
 
-#: src/main/array.c:136 src/main/array.c:1460
+#: src/main/array.c:136 src/main/array.c:1442
 msgid "too many elements specified"
 msgstr " 指定された要素数が多すぎます "
 
@@ -1086,56 +1088,52 @@ msgstr " alloc３Darray : 指定された要素数が多すぎます "
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr " allocArray：'dims' によって指定された要素数が多すぎます "
 
-#: src/main/array.c:446
-msgid "length() requested for a long vector: use xlength() instead"
-msgstr ""
-
-#: src/main/array.c:463
+#: src/main/array.c:445
 msgid "a matrix-like object is required as argument to 'row/col'"
 msgstr " 'row/col' への引数としては行列風のオブジェクトが必要とされます "
 
-#: src/main/array.c:678
+#: src/main/array.c:660
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr " 数値/複素数/行列またはベクトルが要求されます "
 
-#: src/main/array.c:768 src/main/array.c:772 src/main/array.c:776
+#: src/main/array.c:750 src/main/array.c:754 src/main/array.c:758
 msgid "non-conformable arguments"
 msgstr " 適切な引数ではありません "
 
-#: src/main/array.c:1074
+#: src/main/array.c:1056
 msgid "argument is not a matrix"
 msgstr " 引数が行列ではありません "
 
-#: src/main/array.c:1109
+#: src/main/array.c:1091
 msgid "invalid first argument, must be an array"
 msgstr " 一番目の引数が不正です。配列でなくてはなりません "
 
-#: src/main/array.c:1124 src/main/array.c:1127
+#: src/main/array.c:1106 src/main/array.c:1109
 msgid "'a' does not have named dimnames"
 msgstr " 'a' は名前付きの次元名を持ちません "
 
-#: src/main/array.c:1134
+#: src/main/array.c:1116
 #, c-format
 msgid "perm[%d] does not match a dimension name"
 msgstr " perm[%d] は次元名にマッチしません "
 
-#: src/main/array.c:1141
+#: src/main/array.c:1123
 msgid "'perm' is of wrong length"
 msgstr " 'perm' の長さが誤っています "
 
-#: src/main/array.c:1148
+#: src/main/array.c:1130
 msgid "value out of range in 'perm'"
 msgstr " 'perm' 中の値が範囲を超えています "
 
-#: src/main/array.c:1230
+#: src/main/array.c:1212
 msgid "'resize' must be TRUE or FALSE"
 msgstr " 'resize' は TRUE か FALSE でなければなりません "
 
-#: src/main/array.c:1291
+#: src/main/array.c:1273
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
 
-#: src/main/array.c:1456
+#: src/main/array.c:1438
 #, fuzzy
 msgid "'dims' cannot be of length 0"
 msgstr " 'hadj' は長さ1でなくてはなりません "
@@ -1424,7 +1422,7 @@ msgstr " ベクトルのサイズは∞ではありえません "
 msgid "vector size cannot be negative"
 msgstr " ベクトルのサイズは負ではありえません "
 
-#: src/main/builtin.c:48 src/main/builtin.c:895
+#: src/main/builtin.c:48 src/main/builtin.c:896
 msgid "vector size specified is too large"
 msgstr " 指定されたベクトルのサイズが長すぎます "
 
@@ -1499,31 +1497,31 @@ msgstr " ベクトル : モード \"%s\" のベクトルを作ることはでき
 msgid "cannot set length of non-vector"
 msgstr " ベクトルでないものの長さは設定できません "
 
-#: src/main/builtin.c:880 src/main/builtin.c:890 src/main/options.c:609
+#: src/main/builtin.c:877 src/main/builtin.c:887 src/main/options.c:609
 msgid "invalid argument"
 msgstr " 引数が不正です "
 
-#: src/main/builtin.c:882 src/main/builtin.c:892 src/main/builtin.c:894
+#: src/main/builtin.c:879 src/main/builtin.c:889 src/main/builtin.c:891
 #: src/main/character.c:365 src/main/coerce.c:2580
 msgid "invalid value"
 msgstr " 値が不正です "
 
-#: src/main/builtin.c:918 src/main/eval.c:401 src/main/eval.c:518
+#: src/main/builtin.c:922 src/main/eval.c:401 src/main/eval.c:518
 #: src/main/eval.c:1820 src/main/eval.c:1886 src/main/eval.c:1946
 #: src/main/eval.c:2272 src/main/eval.c:4371 src/main/eval.c:4480
 msgid "'...' used in an incorrect context"
 msgstr " '...' が不適切な文脈で使われました "
 
-#: src/main/builtin.c:939
+#: src/main/builtin.c:943
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
 msgstr " 重複する switch 既定値: '%s' と '%s' "
 
-#: src/main/builtin.c:972
+#: src/main/builtin.c:976
 msgid "'EXPR' is missing"
 msgstr " 'EXPR' がありません "
 
-#: src/main/builtin.c:976 src/main/eval.c:4794
+#: src/main/builtin.c:980 src/main/eval.c:4794
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPRは長さ1のベクトルでなければなりません "
 
@@ -1849,7 +1847,7 @@ msgstr " rgb は3行なければなりません（内部的に） "
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色の変換が上手くいきません "
 
-#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:167
+#: src/main/colors.c:1276 src/main/errors.c:1179 src/main/logic.c:170
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
@@ -1887,23 +1885,23 @@ msgstr " 与えられた色は数字も文字でもありません "
 msgid "Invalid color specification"
 msgstr " 色の指定が不正です "
 
-#: src/main/complex.c:122
+#: src/main/complex.c:126
 msgid "invalid complex unary operator"
 msgstr " 不正な複素単項演算子です "
 
-#: src/main/complex.c:251
+#: src/main/complex.c:260
 msgid "unimplemented complex operation"
 msgstr " 未実装の複素演算です "
 
-#: src/main/complex.c:354
+#: src/main/complex.c:363
 msgid "non-numeric argument to function"
 msgstr " 関数の引数が数値ではありません "
 
-#: src/main/complex.c:807
+#: src/main/complex.c:816
 msgid "invalid polynomial coefficient"
 msgstr " 多項式の係数が不正です "
 
-#: src/main/complex.c:812
+#: src/main/complex.c:821
 msgid "root finding code failed"
 msgstr " 根を見つけるコードが失敗しました "
 
@@ -2746,7 +2744,7 @@ msgstr " PACKAGE 引数が長すぎます "
 msgid "no arguments supplied"
 msgstr " 引数が与えられていません "
 
-#: src/main/dotcode.c:418 src/main/seq.c:831
+#: src/main/dotcode.c:418 src/main/seq.c:901
 msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
@@ -2760,7 +2758,7 @@ msgstr " 'EXPR' がありません "
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr " 引数の数(%1$d)が不正です。%3$s に対しては %2$d 個の引数が必要です "
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2226
+#: src/main/dotcode.c:1161 src/main/dotcode.c:2231
 msgid "too many arguments, sorry"
 msgstr " 引数が多すぎます（すみません…） "
 
@@ -2786,70 +2784,75 @@ msgstr ""
 " '%s' への呼出しで、引数を複製しないという明示的な要求ですが、引数 %d は誤っ"
 "たタイプです  (%d != %d)  "
 
-#: src/main/dotcode.c:1475
+#: src/main/dotcode.c:1449
+#, fuzzy, c-format
+msgid "long vectors (argument %d) are not supported in %s"
+msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
+
+#: src/main/dotcode.c:1480
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr " 外部関数呼出しの引数 %d が NA です "
 
-#: src/main/dotcode.c:1498
+#: src/main/dotcode.c:1503
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数の呼び出し(引数 %d) 中に NA/NaN/Inf があります "
 
-#: src/main/dotcode.c:1503
+#: src/main/dotcode.c:1508
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1529
+#: src/main/dotcode.c:1534
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数呼出し (引数 %d) 中に複素数の NA/NaN/Inf 値があります "
 
-#: src/main/dotcode.c:1548
+#: src/main/dotcode.c:1553
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr " .C/.Fortran 中に文字列変数は重複していなければなりません "
 
-#: src/main/dotcode.c:1553
+#: src/main/dotcode.c:1558
 msgid "only first string in char vector used in .Fortran"
 msgstr " .Fortran に対する文字ベクトルとして，最初の文字列だけを使いました "
 
-#: src/main/dotcode.c:1596
+#: src/main/dotcode.c:1601
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1611 src/main/dotcode.c:1622
+#: src/main/dotcode.c:1616 src/main/dotcode.c:1627
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1616
+#: src/main/dotcode.c:1621
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1627
+#: src/main/dotcode.c:1632
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2471
+#: src/main/dotcode.c:2476
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr " 言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません "
 
-#: src/main/dotcode.c:2538
+#: src/main/dotcode.c:2543
 msgid "invalid function in call_R"
 msgstr " call_R 中の関数が不正です "
 
-#: src/main/dotcode.c:2540
+#: src/main/dotcode.c:2545
 msgid "invalid argument count in call_R"
 msgstr " call_R の引数の個数が不正です "
 
-#: src/main/dotcode.c:2542
+#: src/main/dotcode.c:2547
 msgid "invalid return value count in call_R"
 msgstr " call_R の戻り値の個数が不正です "
 
-#: src/main/dotcode.c:2576
+#: src/main/dotcode.c:2581
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr " call_R では \"%s\" というモードはサポートされていません "
@@ -3700,7 +3703,7 @@ msgstr " バイトコードのバージョンが不一致です "
 msgid "invalid sequence argument in for loop"
 msgstr " for ループの範囲引数が不正です "
 
-#: src/main/eval.c:4301 src/main/names.c:1174
+#: src/main/eval.c:4301 src/main/names.c:1173
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr " 内部関数 \"%s\" がありません "
@@ -4124,42 +4127,42 @@ msgstr " LAPACKルーチンがモジュールにアクセスすることがで�
 msgid "lapack routines cannot be loaded"
 msgstr " LAPACK ルーチンはロードできませんでした "
 
-#: src/main/logic.c:47
+#: src/main/logic.c:50
 msgid "binary operations require two arguments"
 msgstr " 二項演算には二つの引数が必要です "
 
-#: src/main/logic.c:66 src/main/logic.c:128
+#: src/main/logic.c:69 src/main/logic.c:131
 msgid "operations are possible only for numeric, logical or complex types"
 msgstr " 演算が可能なのは数値、論理値、そして複素数型のみです "
 
-#: src/main/logic.c:76
+#: src/main/logic.c:79
 msgid "binary operation on non-conformable arrays"
 msgstr " 不整合な配列への二項演算です "
 
-#: src/main/logic.c:102 src/main/relop.c:146
+#: src/main/logic.c:105 src/main/relop.c:149
 msgid "non-conformable time series"
 msgstr " 整合した時系列ではありません "
 
-#: src/main/logic.c:217
+#: src/main/logic.c:230
 #, c-format
 msgid "'%s' operator requires 2 arguments"
 msgstr " '%s' 演算子には 2 つの引数が必要です "
 
-#: src/main/logic.c:225
+#: src/main/logic.c:238
 #, c-format
 msgid "invalid 'x' type in 'x %s y'"
 msgstr " 'x %s y' の 'x' の型が不正です "
 
-#: src/main/logic.c:232
+#: src/main/logic.c:245
 #, c-format
 msgid "invalid 'y' type in 'x %s y'"
 msgstr " 'x %s y' の 'y' の型が不正です "
 
-#: src/main/logic.c:304
+#: src/main/logic.c:319
 msgid "Unary operator `!' called with two arguments"
 msgstr " 単項演算子 '!' が2つの引数で呼び出されました "
 
-#: src/main/logic.c:408
+#: src/main/logic.c:426
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr " '%s'型の引数を論理型に変換します "
@@ -4387,24 +4390,24 @@ msgstr " Rprofmem: ファイル '%s' を開くことができません "
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1009
+#: src/main/names.c:1008
 msgid "string argument required"
 msgstr " 文字列引数が要求されています "
 
-#: src/main/names.c:1012
+#: src/main/names.c:1011
 msgid "no such primitive function"
 msgstr " そのようなプリミティブ関数はありません "
 
-#: src/main/names.c:1140
+#: src/main/names.c:1139
 msgid "attempt to use zero-length variable name"
 msgstr " 長さ0の変数名を使おうとしました "
 
-#: src/main/names.c:1142
+#: src/main/names.c:1141
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr " 変数名は%dバイトが上限です "
 
-#: src/main/names.c:1169 src/main/names.c:1172
+#: src/main/names.c:1168 src/main/names.c:1171
 msgid "invalid .Internal() argument"
 msgstr " .Internal() 引数が不正です "
 
@@ -5082,20 +5085,20 @@ msgstr ""
 msgid "incorrect number of probabilities"
 msgstr " 確率値の個数が正しくありません "
 
-#: src/main/relop.c:101
+#: src/main/relop.c:104
 #, c-format
 msgid "comparison (%d) is possible only for atomic and list types"
 msgstr " 比較 (%d) はアトミックおよびリスト型に対してだけ可能です "
 
-#: src/main/relop.c:106
+#: src/main/relop.c:109
 msgid "comparison is not allowed for expressions"
 msgstr " 式の比較は許されていません "
 
-#: src/main/relop.c:195
+#: src/main/relop.c:198
 msgid "comparison of these types is not implemented"
 msgstr " これらの型の比較は未実装です "
 
-#: src/main/relop.c:396
+#: src/main/relop.c:411
 msgid "invalid comparison with complex values"
 msgstr " 不正な複素値との比較です "
 
@@ -5434,76 +5437,76 @@ msgstr " 行列が壊れています。次元が長さと一致しません "
 msgid "unequal factor lengths"
 msgstr " 因子の長さが異なります "
 
-#: src/main/seq.c:100
+#: src/main/seq.c:103
 msgid "result would be too long a vector"
 msgstr " 結果のベクトルが長すぎます "
 
-#: src/main/seq.c:146 src/main/seq.c:150
+#: src/main/seq.c:161 src/main/seq.c:165
 #, c-format
 msgid "numerical expression has %d elements: only the first used"
 msgstr ""
 " 数値演算式は %d 個の要素を持っています（最初の要素だけが使われました） "
 
-#: src/main/seq.c:148
+#: src/main/seq.c:163
 msgid "argument of length 0"
 msgstr " 引数の長さが0です "
 
-#: src/main/seq.c:154
+#: src/main/seq.c:169
 msgid "NA/NaN argument"
 msgstr " 引数が NA/NaN です "
 
-#: src/main/seq.c:289
+#: src/main/seq.c:327
 msgid "incorrect type for second argument"
 msgstr " 二番目の引数の型が不正確です "
 
-#: src/main/seq.c:292
+#: src/main/seq.c:330
 #, fuzzy, c-format
 msgid "attempt to replicate an object of type '%s'"
 msgstr " ベクトルでないものを複製しようとしました "
 
-#: src/main/seq.c:345
+#: src/main/seq.c:383
 msgid "attempt to replicate non-vector"
 msgstr " ベクトルでないものを複製しようとしました "
 
-#: src/main/seq.c:361
+#: src/main/seq.c:399
 #, fuzzy
 msgid "cannot replicate NULL to a non-zero length"
 msgstr " 長さ %d のベクトルを割り当てることができません "
 
-#: src/main/seq.c:563 src/main/seq.c:570 src/main/seq.c:701 src/main/seq.c:891
+#: src/main/seq.c:622 src/main/seq.c:629 src/main/seq.c:760 src/main/seq.c:967
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr " '%s' 引数の最初の要素だけが使われました "
 
-#: src/main/seq.c:699
+#: src/main/seq.c:758
 msgid "'length.out' must be a non-negative number"
 msgstr " 'length.out' は非負の数値でなくてはなりません "
 
-#: src/main/seq.c:719 src/main/seq.c:785 src/main/seq.c:799
+#: src/main/seq.c:778 src/main/seq.c:844 src/main/seq.c:861
 msgid "'from' must be finite"
 msgstr " 'from' は有限な値でなければなりません "
 
-#: src/main/seq.c:721 src/main/seq.c:787 src/main/seq.c:817
+#: src/main/seq.c:780 src/main/seq.c:846 src/main/seq.c:883
 msgid "'to' must be finite"
 msgstr " 'to' は有限な値でなければなりません "
 
-#: src/main/seq.c:733
+#: src/main/seq.c:792
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr " 'seq' 中に不正な '(to - from)/by' "
 
-#: src/main/seq.c:745
+#: src/main/seq.c:804
 msgid "'by' argument is much too small"
 msgstr " 'by' 引数があまりに小さすぎます "
 
-#: src/main/seq.c:747
+#: src/main/seq.c:806
 msgid "wrong sign in 'by' argument"
 msgstr " 'by' 引数中に誤った符号 "
 
-#: src/main/seq.c:801 src/main/seq.c:819
+#: src/main/seq.c:863 src/main/seq.c:885
 msgid "'by' must be finite"
 msgstr " 'by' は有限でなければなりません "
 
-#: src/main/seq.c:897 src/main/seq.c:902
+#: src/main/seq.c:973 src/main/seq.c:978
 msgid "argument must be coercible to non-negative integer"
 msgstr " 引数は非負の整数に変換できなければなりません "
 
@@ -6280,70 +6283,70 @@ msgstr " R_tmpnam2 においてメモリ割り当てが失敗しました "
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr " 'dirmark  = TRUE' はこのプラットフォームではサポートされていません "
 
-#: src/main/unique.c:304
+#: src/main/unique.c:314
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr " 長さ %d は大きすぎてハッシュできません "
 
-#: src/main/unique.c:403
+#: src/main/unique.c:412
 msgid "'duplicated' applies only to vectors"
 msgstr " duplicated' はベクトルに対してだけ適用できます "
 
-#: src/main/unique.c:498
+#: src/main/unique.c:525
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr " any_duplicated3(., <0-length incomp>) "
 
-#: src/main/unique.c:547
+#: src/main/unique.c:576
 msgid "'fromLast' must be length 1"
 msgstr " 'fromLast' は長さ1でなければなりません "
 
-#: src/main/unique.c:550
+#: src/main/unique.c:579
 msgid "'fromLast' must be TRUE or FALSE"
 msgstr " 'fromLast' は TRUE か FALSE でなければなりません "
 
-#: src/main/unique.c:559
+#: src/main/unique.c:590
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr " %s() はベクトルにのみ使用できます "
 
-#: src/main/unique.c:808
+#: src/main/unique.c:837
 msgid "'match' requires vector arguments"
 msgstr " 'match' はベクトル引数を必要とします "
 
-#: src/main/unique.c:859 src/main/unique.c:1017
+#: src/main/unique.c:888 src/main/unique.c:1046
 msgid "argument is not of mode character"
 msgstr " 引数がモードを表す文字列ではありません "
 
-#: src/main/unique.c:1143
+#: src/main/unique.c:1172
 msgid "... used in a situation where it doesn't exist"
 msgstr " ... がそれが存在しな状況で使われました "
 
-#: src/main/unique.c:1234
+#: src/main/unique.c:1263
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 " 'match.call' がその中から呼び出されたクロージャを見付けることができません "
 
-#: src/main/unique.c:1392
+#: src/main/unique.c:1421
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr " rowsum() 関数中に非数値行列：これはあり得ません "
 
-#: src/main/unique.c:1424
+#: src/main/unique.c:1453
 msgid "non-numeric data frame in rowsum"
 msgstr " rowsum の引数が数値データフレームではありません "
 
-#: src/main/unique.c:1456
+#: src/main/unique.c:1485
 msgid "this cannot happen"
 msgstr " このようなことは起き得ないはずです "
 
-#: src/main/unique.c:1513
+#: src/main/unique.c:1542
 msgid "'names' must be a character vector"
 msgstr " 'names' は文字ベクトルでなければなりません "
 
-#: src/main/unique.c:1517
+#: src/main/unique.c:1546
 msgid "'sep' must be a character string"
 msgstr " 'sep' は文字列でなければなりません "
 
-#: src/main/unique.c:1590
+#: src/main/unique.c:1619
 msgid "csduplicated not called on a STRSXP"
 msgstr " csduplicated は STRSXP に対して呼び出されていません "
 
@@ -6463,6 +6466,11 @@ msgstr " 属性は名前が付けられていなければなりません "
 #: src/main/util.c:1820
 msgid "ICU is not supported on this build"
 msgstr " このビルドではICUはサポートされていません "
+
+#: src/main/util.c:1906 src/main/util.c:1942
+#, fuzzy, c-format
+msgid "long vector '%s' is not supported"
+msgstr " '%s' という型はサポートされていません "
 
 #: src/main/version.c:36
 msgid ""

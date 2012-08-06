@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -147,18 +147,6 @@ msgid ""
 msgstr ""
 "文件'%s'里句法分析有错：\n"
 "%s"
-
-#, fuzzy
-msgid "Foreign function call(s) without 'PACKAGE' argument:"
-msgstr "外函数调用时没有设定'package'这一参数:"
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
-msgstr "外函数调用时没有设定'package'这一参数:"
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
-msgstr "外函数调用时没有设定'package'这一参数:"
 
 msgid "declared S3 method '%s' not found"
 msgstr "找不到公布了的S3方法'%s'"
@@ -1234,6 +1222,19 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#, fuzzy
+#~ msgid "Foreign function call(s) without 'PACKAGE' argument:"
+#~ msgstr "外函数调用时没有设定'package'这一参数:"
+
+#, fuzzy
+#~ msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+#~ msgstr "外函数调用时没有设定'package'这一参数:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Foreign function call(s) with 'PACKAGE' argument in different package:"
+#~ msgstr "外函数调用时没有设定'package'这一参数:"
 
 #, fuzzy
 #~ msgid "not insttalling"

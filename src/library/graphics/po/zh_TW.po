@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:52+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -394,7 +394,8 @@ msgstr "'a' 和 'b' 的值必須是有限的"
 
 #: plot.c:2914 plot.c:4032 plot.c:4036 plot.c:4039 plot.c:4059 plot.c:4063
 #: plot.c:4066 plot3d.c:1088 plot3d.c:1092 plot3d.c:1097 plot3d.c:1101
-#: plot3d.c:1105 plot3d.c:1109
+#: plot3d.c:1105 plot3d.c:1109 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數不正確"
@@ -604,3 +605,8 @@ msgstr "所有的 z 值都一樣"
 #: plot3d.c:1975
 msgid "all z values are NA"
 msgstr "所有的 z 值都是 NA"
+
+#: stem.c:156
+#, c-format
+msgid "long vector '%s' is not supported"
+msgstr ""

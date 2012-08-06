@@ -747,7 +747,7 @@ data.frame <-
                 return(x)
             }  # end of logical matrix
             if(is.matrix(i))
-                stop("illegal matrix index in replacement")
+                stop("unsupported matrix index in replacement")
             j <- i
             i <- NULL
             has.i <- FALSE

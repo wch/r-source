@@ -11,7 +11,7 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item There is a subtle change in behaviour for numeric index
-      values \code{2^31} and larger.  These used never to be legitimate
+      values \code{2^31} and larger.  These never used to be legitimate
       and so were treated as \code{NA}, sometimes with a warning.  They
       are now legal for long vectors so there is no longer a warning,
       and \code{x[2^31] <- y} will now extend the vector on a 64-bit
@@ -224,6 +224,10 @@
       is very unlikely that existing code will have be written to handle
       long vectors (and the \R wrappers often assume that
       \code{length(x)} is an integer).
+      
+      \item Many more basic operations are now interruptible when run on
+      size-able vectors: typically interrupts are checked for every 1-100
+      million elements.
     }
   }
 

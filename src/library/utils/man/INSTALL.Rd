@@ -62,7 +62,7 @@
   function: if needed an external \command{tar} command can be specified
   by the environment variable \env{R_INSTALL_TAR}: please ensure that it
   can handle the type of compression used on the tarball.  (This is
-  sometimes needed for tarballs containing illegal or unsupported
+  sometimes needed for tarballs containing invalid or unsupported
   sections, and can be faster on very large tarballs.   Setting
   \env{R_INSTALL_TAR} to \samp{tar.exe} has been needed to overcome
   permissions issues on some Windows systems.)

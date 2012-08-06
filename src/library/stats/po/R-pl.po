@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -278,14 +278,8 @@ msgstr "zero punktów o wartości nie-NA"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' wymaga n >= 1"
 
-msgid "'vec' contains NAs"
-msgstr "'vec' zawiera wartości NA"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec' musi być posortowany niemalejąco"
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr "niepoprawna długość członków"
 
 msgid "'order.max' must be >= 1"
@@ -944,6 +938,9 @@ msgstr "'filter' jest dłuższy niż szeregi czasowe"
 msgid "argument 'sides' must be 1 or 2"
 msgstr "argument 'sides' musi być 1 lub 2"
 
+msgid "'circular' must be logical and not NA"
+msgstr ""
+
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "długość 'init' musi równać się długości 'filter'"
 
@@ -1287,6 +1284,10 @@ msgstr "początkowe centra nie są różne"
 
 msgid "more cluster centers than data points"
 msgstr "więcej centrów grup niż punktów danych"
+
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "niepoprawny argument 'n'"
 
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' musi być dodatnia"
@@ -2522,6 +2523,16 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parametr %s nie pojawia się w formule modelu"
 msgstr[1] "parametry %s nie pojawiają się w formule modelu"
 msgstr[2] "parametry %s nie pojawiają się w formule modelu"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec' zawiera wartości NA"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec' musi być posortowany niemalejąco"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "niepoprawna długość członków"
 
 #~ msgid "No starting values specified for some parameters."
 #~ msgstr "Nie określono początkowych wartości dla niektórych parametrów."

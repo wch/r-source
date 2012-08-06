@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:52+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -397,7 +397,8 @@ msgstr "'a' ve 'b' sonlu olmalıdır"
 
 #: plot.c:2914 plot.c:4032 plot.c:4036 plot.c:4039 plot.c:4059 plot.c:4063
 #: plot.c:4066 plot3d.c:1088 plot3d.c:1092 plot3d.c:1097 plot3d.c:1101
-#: plot3d.c:1105 plot3d.c:1109
+#: plot3d.c:1105 plot3d.c:1109 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "hatalı '%s' argümanı"
@@ -607,3 +608,8 @@ msgstr "tüm z değerleri eşit"
 #: plot3d.c:1975
 msgid "all z values are NA"
 msgstr "tüm z değerleri NA"
+
+#: stem.c:156
+#, c-format
+msgid "long vector '%s' is not supported"
+msgstr ""

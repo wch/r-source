@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -469,26 +469,26 @@ msgstr "nome fil etroppo lungo in pdf"
 msgid "no font could be found for family \"%s\""
 msgstr ""
 
-#: devQuartz.c:1355
+#: devQuartz.c:1358
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "argomento stringa non valido"
 
-#: devQuartz.c:1383
+#: devQuartz.c:1386
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "dispositivo non valido in savePlot"
 
-#: devQuartz.c:1411
+#: devQuartz.c:1414
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "impossibile aprire dispositivo PostScript"
 
-#: devQuartz.c:1461
+#: devQuartz.c:1464
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1585
+#: devQuartz.c:1588
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "Il dispositivo Quartz non è disponibile per questa piattaforma"

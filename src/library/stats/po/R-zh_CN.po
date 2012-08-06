@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -271,14 +271,8 @@ msgstr "没有非NA数据点"
 msgid "'approx' requires n >= 1"
 msgstr "'approx'需要n大于等于一"
 
-msgid "'vec' contains NAs"
-msgstr "'vec'含NA"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec'必需由小到大排序"
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr "成员长度不对"
 
 msgid "'order.max' must be >= 1"
@@ -898,6 +892,9 @@ msgstr "'filter'的长度比时间序列的长度要长"
 msgid "argument 'sides' must be 1 or 2"
 msgstr "参数'sides'必需是一或二"
 
+msgid "'circular' must be logical and not NA"
+msgstr ""
+
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init'的长度必需等于'filter'的长度"
 
@@ -1232,6 +1229,10 @@ msgstr "初始中心的值有些是相同的"
 
 msgid "more cluster centers than data points"
 msgstr "群集中心的数目要比数据点数目多"
+
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "参数'n'不对"
 
 msgid "'iter.max' must be positive"
 msgstr "'iter.max'必需是正数"
@@ -2406,6 +2407,16 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec'含NA"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec'必需由小到大排序"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "成员长度不对"
 
 #~ msgid "No starting values specified for some parameters."
 #~ msgstr "有些参数没有设定初始值"

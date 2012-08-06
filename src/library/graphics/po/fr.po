@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:52+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -398,7 +398,8 @@ msgstr "'a' et 'b' doivent être finis"
 
 #: plot.c:2914 plot.c:4032 plot.c:4036 plot.c:4039 plot.c:4059 plot.c:4063
 #: plot.c:4066 plot3d.c:1088 plot3d.c:1092 plot3d.c:1097 plot3d.c:1101
-#: plot3d.c:1105 plot3d.c:1109
+#: plot3d.c:1105 plot3d.c:1109 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
@@ -608,3 +609,8 @@ msgstr "toutes les valeurs en z sont égales"
 #: plot3d.c:1975
 msgid "all z values are NA"
 msgstr "toutes les valeurs z sont NA"
+
+#: stem.c:156
+#, c-format
+msgid "long vector '%s' is not supported"
+msgstr ""

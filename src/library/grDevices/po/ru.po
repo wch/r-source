@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20+0100\n"
+"POT-Creation-Date: 2012-08-06 10:48+0100\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -469,25 +469,25 @@ msgstr "слишком длинное имя семейства шрифтов"
 msgid "no font could be found for family \"%s\""
 msgstr "нельзя найти шрифт семейства \"%s\""
 
-#: devQuartz.c:1355
+#: devQuartz.c:1358
 msgid "invalid 'file' argument"
 msgstr "неправильный аргумент 'file'"
 
-#: devQuartz.c:1383
+#: devQuartz.c:1386
 msgid "invalid Quartz device size"
 msgstr "неправильный размер устройства Quartz"
 
-#: devQuartz.c:1411
+#: devQuartz.c:1414
 msgid "Unable to create device description."
 msgstr "Не могу создать описание устройства."
 
-#: devQuartz.c:1461
+#: devQuartz.c:1464
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 "Не могу создать целевое устройство Quartz, указанный тип не может быть "
 "поддержан."
 
-#: devQuartz.c:1585
+#: devQuartz.c:1588
 msgid "Quartz device is not available on this platform"
 msgstr "Устройство Quartz на этой платформе недоступно"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -286,14 +286,8 @@ msgstr "нулевые не-NA точки"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' требует n >= 1"
 
-msgid "'vec' contains NAs"
-msgstr "'vec' содержит NAs"
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec' должен быть сортирован не по уменьшению"
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr "неправильная длина членов"
 
 msgid "'order.max' must be >= 1"
@@ -939,6 +933,9 @@ msgstr "'filter' длиннее чем временной ряд"
 msgid "argument 'sides' must be 1 or 2"
 msgstr "аргумент 'sides' должен быть 1 или 2"
 
+msgid "'circular' must be logical and not NA"
+msgstr ""
+
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "длина 'init' должна равняться длине 'filter'"
 
@@ -1275,6 +1272,10 @@ msgstr "начальные центры не различаются"
 
 msgid "more cluster centers than data points"
 msgstr "больше центров кластеров, чем точек"
+
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr "неправильный аргумент 'n'"
 
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' должен быть положительным"
@@ -2507,6 +2508,16 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec' содержит NAs"
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr "'vec' должен быть сортирован не по уменьшению"
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr "неправильная длина членов"
 
 #~ msgid "No starting values specified for some parameters."
 #~ msgstr "Для некоторых параметров не указаны стартовые значения."

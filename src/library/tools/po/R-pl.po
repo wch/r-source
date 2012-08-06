@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -148,18 +148,6 @@ msgid ""
 msgstr ""
 "błąd parsowania w pliku '%s':\n"
 "%s"
-
-#, fuzzy
-msgid "Foreign function call(s) without 'PACKAGE' argument:"
-msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
-msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
-msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
 
 msgid "declared S3 method '%s' not found"
 msgstr "zadeklarmowana metoda S3 '%s' nie została znaleziona"
@@ -1304,6 +1292,19 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
 msgstr[1] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
+
+#, fuzzy
+#~ msgid "Foreign function call(s) without 'PACKAGE' argument:"
+#~ msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+
+#, fuzzy
+#~ msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+#~ msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+
+#, fuzzy
+#~ msgid ""
+#~ "Foreign function call(s) with 'PACKAGE' argument in different package:"
+#~ msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
 
 #, fuzzy
 #~ msgid "not insttalling"

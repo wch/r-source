@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -247,14 +247,6 @@ msgstr " 'breaks' が一意的ではありません "
 msgid "labels/breaks length conflict"
 msgstr " ラベルまたは分割点の長さが矛盾しています "
 
-#, fuzzy
-msgid "invalid value of length(x)"
-msgstr " 無効な値です "
-
-#, fuzzy
-msgid "invalid value of length(breaks)"
-msgstr " 無効な値です "
-
 msgid "invalid 'row.names' length"
 msgstr " 無効な 'row.names' 長です "
 
@@ -335,7 +327,7 @@ msgid "rhs is the wrong length"
 msgstr " 与えられた列名は誤った長さです "
 
 #, fuzzy
-msgid "illegal matrix index in replacement"
+msgid "unsupported matrix index in replacement"
 msgstr " 置き換えでは、論理値の行列の添字だけが許されます "
 
 msgid "need 0, 1, or 2 subscripts"
@@ -729,14 +721,6 @@ msgstr " 'vec' は NA 値を含んでいます "
 msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
 
-#, fuzzy
-msgid "invalid length(x)"
-msgstr " 無効な値です "
-
-#, fuzzy
-msgid "invalid length(vec)"
-msgstr " 無効な値です "
-
 msgid "using the first element of 'value' of type expression"
 msgstr " タイプ表現 'value' の最初の要素だけを使います "
 
@@ -1096,6 +1080,10 @@ msgstr " 次元無しのオブジェクトに行名を設定しようとしま�
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr " 次元が 2 未満のオブジェクトに列名を設定しようとしました "
 
+#, fuzzy
+msgid "invalid value of nrow(x)"
+msgstr " 無効な値です "
+
 msgid "argument is not numeric or logical: returning NA"
 msgstr " 引数は数値でも論理値でもありません。NA 値を返します "
 
@@ -1364,6 +1352,10 @@ msgid "invalid ncol(qr$qr)"
 msgstr ""
 
 #, fuzzy
+msgid "invalid ncol(qr$rank)"
+msgstr " 不当な名前です "
+
+#, fuzzy
 msgid "invalid ncol(y)"
 msgstr " 不当な名前です "
 
@@ -1619,11 +1611,7 @@ msgid "'bin' must be numeric or a factor"
 msgstr " 'bin' は数値または因子でなければなりません "
 
 #, fuzzy
-msgid "invalid value of length(bin)"
-msgstr " 無効な値です "
-
-#, fuzzy
-msgid "invalid value of nbins"
+msgid "invalid value of 'nbins'"
 msgstr " 無効な値です "
 
 #, fuzzy
@@ -1824,3 +1812,23 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#, fuzzy
+#~ msgid "invalid value of length(x)"
+#~ msgstr " 無効な値です "
+
+#, fuzzy
+#~ msgid "invalid value of length(breaks)"
+#~ msgstr " 無効な値です "
+
+#, fuzzy
+#~ msgid "invalid length(x)"
+#~ msgstr " 無効な値です "
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr " 無効な値です "
+
+#, fuzzy
+#~ msgid "invalid value of length(bin)"
+#~ msgstr " 無効な値です "

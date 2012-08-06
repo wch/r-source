@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-30 14:20\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -152,18 +152,6 @@ msgid ""
 msgstr ""
 "ошибка разбора в файле '%s':\n"
 "%s"
-
-#, fuzzy
-msgid "Foreign function call(s) without 'PACKAGE' argument:"
-msgstr "Вызов чужой функции без аргумента 'PACKAGE':"
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
-msgstr "Вызов чужой функции без аргумента 'PACKAGE':"
-
-#, fuzzy
-msgid "Foreign function call(s) with 'PACKAGE' argument in different package:"
-msgstr "Вызов чужой функции без аргумента 'PACKAGE':"
 
 msgid "declared S3 method '%s' not found"
 msgstr "заявленный S3-метод '%s' не найден"
@@ -1287,6 +1275,19 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#, fuzzy
+#~ msgid "Foreign function call(s) without 'PACKAGE' argument:"
+#~ msgstr "Вызов чужой функции без аргумента 'PACKAGE':"
+
+#, fuzzy
+#~ msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
+#~ msgstr "Вызов чужой функции без аргумента 'PACKAGE':"
+
+#, fuzzy
+#~ msgid ""
+#~ "Foreign function call(s) with 'PACKAGE' argument in different package:"
+#~ msgstr "Вызов чужой функции без аргумента 'PACKAGE':"
 
 #, fuzzy
 #~ msgid "not insttalling"

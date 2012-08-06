@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-08-06 10:48\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -273,14 +273,8 @@ msgstr " 非 NA 値がありません "
 msgid "'approx' requires n >= 1"
 msgstr " 'approx' は n > = 1 であることを必要とします "
 
-msgid "'vec' contains NAs"
-msgstr " 'vec' が NA を含んでいます "
-
-msgid "'vec' must be sorted non-decreasingly"
-msgstr " 'vec' は非減少順にソートされていなければなりません "
-
 #, fuzzy
-msgid "invalid length(vec)"
+msgid "invalid length(xout)"
 msgstr " メンバーの長さが無効です "
 
 msgid "'order.max' must be >= 1"
@@ -925,6 +919,9 @@ msgstr " フィルター('filter')は時系列より長いです "
 msgid "argument 'sides' must be 1 or 2"
 msgstr " 引数 sides は 1 か 2 でなければなりません "
 
+msgid "'circular' must be logical and not NA"
+msgstr ""
+
 msgid "length of 'init' must equal length of 'filter'"
 msgstr " 'init' の長さは 'filter' の長さに等しくなければなりません; "
 
@@ -1264,6 +1261,10 @@ msgstr " 中心の初期値に同じものがあります "
 
 msgid "more cluster centers than data points"
 msgstr " データ点よりも多くのクラスタ中心があります "
+
+#, fuzzy
+msgid "'invalid value of 'k'"
+msgstr " 無効な引数 'n' です "
 
 msgid "'iter.max' must be positive"
 msgstr " 'iter.max' は正でなければなりません "
@@ -2465,6 +2466,16 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr " 'vec' が NA を含んでいます "
+
+#~ msgid "'vec' must be sorted non-decreasingly"
+#~ msgstr " 'vec' は非減少順にソートされていなければなりません "
+
+#, fuzzy
+#~ msgid "invalid length(vec)"
+#~ msgstr " メンバーの長さが無効です "
 
 #~ msgid "No starting values specified for some parameters."
 #~ msgstr " いくつかのパラメータに対する初期値が与えられていません "
