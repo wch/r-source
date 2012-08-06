@@ -36,14 +36,13 @@ static int identifier ;
 static void incrementId(void);
 static void initData(void);
 static void initId(void);
-static void record_( int, int, int, int, int, int, char* ) ;
+static void record_( int, int, int, int, int, int ) ;
 
 static void yyerror(char *);
 static int yylex();
 int yyparse(void);
 
 static PROTECT_INDEX DATA_INDEX ;
-static PROTECT_INDEX TEXT_INDEX ;
 static PROTECT_INDEX ID_INDEX ;
 
 static FILE *fp_parse;
@@ -78,7 +77,6 @@ static int data_size ;
 static int id_size ;
 
 static SEXP data ;
-static SEXP text ;
 static SEXP ids ; 
 static void finalizeData( ) ;
 static void growData( ) ;
@@ -112,7 +110,7 @@ static int _current_token ;
 static void setId( SEXP expr, yyltype loc){
     record_( 
 	    (loc).first_parsed, (loc).first_column, (loc).last_parsed, (loc).last_column, 
-	    _current_token, (loc).id, 0 ) ;
+	    _current_token, (loc).id ) ;
 }
 
 # define YYLTYPE yyltype
@@ -1257,7 +1255,6 @@ static void ParseContextInit(void)
 
     id_size=0;
     PROTECT_WITH_INDEX( data = R_NilValue, &DATA_INDEX ) ;
-    PROTECT_WITH_INDEX( text = R_NilValue, &TEXT_INDEX ) ;
     initData();
 
     PROTECT_WITH_INDEX( ids = R_NilValue, &ID_INDEX ) ;
@@ -1267,7 +1264,6 @@ static void ParseContextInit(void)
 static void ParseContextDone(void)
 {
     UNPROTECT_PTR( data ) ;
-    UNPROTECT_PTR( text ) ;
     UNPROTECT_PTR( ids ) ;
 }
 
@@ -1960,19 +1956,14 @@ static int SkipComment(void)
     int type = COMMENT ;
 
     Rboolean maybeLine = (ParseState.xxcolno == 1);
-
-    DECLARE_YYTEXT_BUFP(yyp);
-    
     if (maybeLine) {
     	char lineDirective[] = "#line";
-    	YYTEXT_PUSH(c, yyp);
     	for (i=1; i<5; i++) {
     	    c = xxgetc();
   	    if (c != (int)(lineDirective[i])) {
   	    	maybeLine = FALSE;
   	    	break;
   	    }
-            YYTEXT_PUSH(c, yyp);
   	}
   	if (maybeLine)     
 	    c = processLineDirective(&type);
@@ -1982,22 +1973,15 @@ static int SkipComment(void)
     int _last_column  = ParseState.xxcolno ;
     int _last_parsed  = ParseState.xxparseno ;
     
-    if (c == '\n') {
-        _last_column = prevcols[prevpos];
-        _last_parsed = prevparse[prevpos];
-    }
-    
     while (c != '\n' && c != R_EOF) {
-        YYTEXT_PUSH(c, yyp);
  	_last_column = ParseState.xxcolno ;
 	_last_parsed = ParseState.xxparseno ;
 	c = xxgetc();
     }
     if (c == R_EOF) EndOfFile = 2;
     incrementId( ) ;
-    YYTEXT_PUSH('\0', yyp);
     record_( _first_parsed, _first_column, _last_parsed, _last_column,
-	     type, identifier, maybeLine ? 0 : yytext ) ;
+	     type, identifier ) ;
     return c;
 }
 
@@ -2018,10 +2002,8 @@ static int NumericValue(int c)
     {
 	count++;
 	if (c == 'L') /* must be at the end.  Won't allow 1Le3 (at present). */
-	{   YYTEXT_PUSH(c, yyp);
 	    break;
-	}
-	
+
 	if (c == 'x' || c == 'X') {
 	    if (count > 2 || last != '0') break;  /* 0x must be first */
 	    YYTEXT_PUSH(c, yyp);
@@ -2079,13 +2061,9 @@ static int NumericValue(int c)
 	if(a != (double) b) {
 	    if(GenerateCode) {
 		if(seendot == 1 && seenexp == 0)
-		    warning(_("integer literal %s contains decimal; using numeric value"), yytext);
-		else {
-		    /* hide the L for the warning message */
-		    *(yyp-2) = '\0';
+		    warning(_("integer literal %sL contains decimal; using numeric value"), yytext);
+		else
 		    warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
-		    *(yyp-2) = c;
-		}
 	    }
 	    asNumeric = 1;
 	    seenexp = 1;
@@ -2096,7 +2074,7 @@ static int NumericValue(int c)
 	yylval = GenerateCode ? mkComplex(yytext) : R_NilValue;
     } else if(c == 'L' && asNumeric == 0) {
 	if(GenerateCode && seendot == 1 && seenexp == 0)
-	    warning(_("integer literal %s contains unnecessary decimal point"), yytext);
+	    warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
 	yylval = GenerateCode ? mkInt(yytext) : R_NilValue;
 #if 0  /* do this to make 123 integer not double */
     } else if(!(seendot || seenexp)) {
@@ -2222,10 +2200,7 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
 }
 
 #define CTEXT_PUSH(c) do { \
-	if (ct - currtext >= 1000) { \
-	    memmove(currtext, currtext+100, 901); memmove(currtext, "... ", 4); ct -= 100; \
-	    currtext_truncated = TRUE; \
-	} \
+	if (ct - currtext >= 1000) {memmove(currtext, currtext+100, 901); memmove(currtext, "... ", 4); ct -= 100;} \
 	*ct++ = ((char) c);  \
 } while(0)
 #define CTEXT_POP() ct--
@@ -2241,9 +2216,8 @@ static int StringValue(int c, Rboolean forSymbol)
     char *stext = st0, *bp = st0;
     int wcnt = 0;
     ucs_t wcs[10001];
-    Rboolean oct_or_hex = FALSE, use_wcs = FALSE, currtext_truncated = FALSE;
+    Rboolean oct_or_hex = FALSE, use_wcs = FALSE;
 
-    CTEXT_PUSH(c);
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	CTEXT_PUSH(c);
 	if (c == '\n') {
@@ -2440,17 +2414,11 @@ static int StringValue(int c, Rboolean forSymbol)
     }
     STEXT_PUSH('\0');
     WTEXT_PUSH(0);
-    yytext[0] = '\0';
     if (c == R_EOF) {
         if(stext != st0) free(stext);
         PROTECT(yylval = R_NilValue);
     	return INCOMPLETE_STRING;
-    } else {
-    	CTEXT_PUSH(c);
-    	CTEXT_PUSH('\0');
     }
-    if (!currtext_truncated)
-    	strcpy(yytext, currtext);
     if(forSymbol) {
 	PROTECT(yylval = install(stext));
 	if(stext != st0) free(stext);
@@ -2608,13 +2576,6 @@ static int processLineDirective(int *type)
     return(c);
 }
 
-/* Get the R symbol, and set yytext at the same time */
-static SEXP install_and_save(char * text)
-{
-    strcpy(yytext, text);
-    return install(text);
-}
-
 /* Split the input stream into tokens. */
 /* This is the lowest of the parsing levels. */
 
@@ -2686,112 +2647,110 @@ static int token(void)
     switch (c) {
     case '<':
 	if (nextchar('=')) {
-	    yylval = install_and_save("<=");
+	    yylval = install("<=");
 	    return LE;
 	}
 	if (nextchar('-')) {
-	    yylval = install_and_save("<-");
+	    yylval = install("<-");
 	    return LEFT_ASSIGN;
 	}
 	if (nextchar('<')) {
 	    if (nextchar('-')) {
-		yylval = install_and_save("<<-");
+		yylval = install("<<-");
 		return LEFT_ASSIGN;
 	    }
 	    else
 		return ERROR;
 	}
-	yylval = install_and_save("<");
+	yylval = install("<");
 	return LT;
     case '-':
 	if (nextchar('>')) {
 	    if (nextchar('>')) {
-		yylval = install_and_save("<<-");
+		yylval = install("<<-");
 		return RIGHT_ASSIGN;
 	    }
 	    else {
-		yylval = install_and_save("<-");
+		yylval = install("<-");
 		return RIGHT_ASSIGN;
 	    }
 	}
-	yylval = install_and_save("-");
+	yylval = install("-");
 	return '-';
     case '>':
 	if (nextchar('=')) {
-	    yylval = install_and_save(">=");
+	    yylval = install(">=");
 	    return GE;
 	}
-	yylval = install_and_save(">");
+	yylval = install(">");
 	return GT;
     case '!':
 	if (nextchar('=')) {
-	    yylval = install_and_save("!=");
+	    yylval = install("!=");
 	    return NE;
 	}
-	yylval = install_and_save("!");
+	yylval = install("!");
 	return '!';
     case '=':
 	if (nextchar('=')) {
-	    yylval = install_and_save("==");
+	    yylval = install("==");
 	    return EQ;
 	}
-	yylval = install_and_save("=");
+	yylval = install("=");
 	return EQ_ASSIGN;
     case ':':
 	if (nextchar(':')) {
 	    if (nextchar(':')) {
-		yylval = install_and_save(":::");
+		yylval = install(":::");
 		return NS_GET_INT;
 	    }
 	    else {
-		yylval = install_and_save("::");
+		yylval = install("::");
 		return NS_GET;
 	    }
 	}
 	if (nextchar('=')) {
-	    yylval = install_and_save(":=");
+	    yylval = install(":=");
 	    return LEFT_ASSIGN;
 	}
-	yylval = install_and_save(":");
+	yylval = install(":");
 	return ':';
     case '&':
 	if (nextchar('&')) {
-	    yylval = install_and_save("&&");
+	    yylval = install("&&");
 	    return AND2;
 	}
-	yylval = install_and_save("&");
+	yylval = install("&");
 	return AND;
     case '|':
 	if (nextchar('|')) {
-	    yylval = install_and_save("||");
+	    yylval = install("||");
 	    return OR2;
 	}
-	yylval = install_and_save("|");
+	yylval = install("|");
 	return OR;
     case LBRACE:
-	yylval = install_and_save("{");
+	yylval = install("{");
 	return c;
     case RBRACE:
-        strcpy(yytext, "}");
 	return c;
     case '(':
-	yylval = install_and_save("(");
+	yylval = install("(");
 	return c;
     case ')':
-        strcpy(yytext, ")");
 	return c;
     case '[':
 	if (nextchar('[')) {
-	    yylval = install_and_save("[[");
+	    yylval = install("[[");
 	    return LBB;
 	}
-	yylval = install_and_save("[");
+	yylval = install("[");
 	return c;
     case ']':
-        strcpy(yytext, "]");
 	return c;
     case '?':
-	yylval = install_and_save("?");
+	strcpy(yytext, "?");
+	yylval = install(yytext);
 	return c;
     case '*':
 	/* Replace ** by ^.  This has been here since 1998, but is
@@ -2799,11 +2758,11 @@ static int token(void)
 	   the index of the Blue Book with a reference to p. 431, the
 	   help for 'Deprecated'.  S-PLUS 6.2 still allowed this, so
 	   presumably it was for compatibility with S. */
-	if (nextchar('*')) {
-	    strcpy(yytext, "**");
-	    yylval = install("^");
-	} else
-	    yylval = install_and_save("*");
+	if (nextchar('*'))
+	    c='^';
+	yytext[0] = (char) c;
+	yytext[1] = '\0';
+	yylval = install(yytext);
 	return c;
     case '+':
     case '/':
@@ -2816,8 +2775,6 @@ static int token(void)
 	yylval = install(yytext);
 	return c;
     default:
-        yytext[0] = (char) c;
-        yytext[1] = '\0';
 	return c;
     }
 }
@@ -2870,7 +2827,7 @@ static int token_(void){
     if( res != '\n' && res != END_OF_INPUT)
 	record_( yylloc.first_parsed, yylloc.first_column, 
 	         _last_parsed, _last_col,
-		res, identifier, yytext );
+		res, identifier );
 
     return res; 
 }
@@ -3103,7 +3060,7 @@ static int yylex(void)
  * 
  */
 static void record_( int first_parsed, int first_column, int last_parsed, int last_column,
-	int token, int id, char* text_in ){
+	int token, int id ){
        
 	
 	if( token == LEFT_ASSIGN && colon == 1){
@@ -3123,10 +3080,6 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 	_TOKEN( data_count )        = token;        
 	_ID( data_count )           = id ;          
 	_PARENT(data_count)         = 0 ; 
-	if ( text_in )
-	    SET_STRING_ELT(text, data_count, mkChar(text_in));
-	else
-	    SET_STRING_ELT(text, data_count, mkChar(""));
 	
 	if( id > id_size ){
 		growID(id) ;
@@ -3214,7 +3167,6 @@ static void finalizeData( ){
     int nloc = data_count ;
 
     SETLENGTH( data, data_count * DATA_ROWS ) ;
-    SETLENGTH( text, data_count );
 
     // int maxId = _ID(nloc-1) ;
     int i, j, id ;
@@ -3310,7 +3262,6 @@ static void finalizeData( ){
     	_TERMINAL(i) = xlat < YYNTOKENS;
     }
     setAttrib( data, install("tokens"), tokens );
-    setAttrib( data, install("text"), text );
     UNPROTECT(1);
     
     setAttrib( data, R_ClassSymbol, mkString("parseData"));
@@ -3326,24 +3277,21 @@ static void finalizeData( ){
  */
 static void growData(){
 	
-	SEXP bigger, biggertext ; 
+	SEXP bigger ; 
 	int current_data_size = data_size ;
 	data_size += NLINES * 10 ;
 	
 	PROTECT( bigger = allocVector( INTSXP, data_size * DATA_ROWS ) ) ; 
-	PROTECT( biggertext = allocVector( STRSXP, data_size ) );
 	int i,j,k;         
 	if( current_data_size > 0 ){
 		for( i=0,k=0; i<current_data_size; i++){
 			for( j=0; j<DATA_ROWS; j++,k++){
 				INTEGER( bigger )[k] = INTEGER(data)[k] ;
 			}
-			SET_STRING_ELT( biggertext, i, STRING_ELT( text, i ) );
 		}
 	}
 	REPROTECT( data = bigger, DATA_INDEX ) ;
-	REPROTECT( text = biggertext, TEXT_INDEX ) ;
-	UNPROTECT( 2 ) ;
+	UNPROTECT( 1 ) ;
 	
 }
 
