@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07\n"
+"POT-Creation-Date: 2012-08-06 10:53\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -273,7 +273,8 @@ msgstr "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
 msgid "supplied %d row names for %d rows"
 msgstr "предложено %d имен для %d строк"
 
-msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+#, fuzzy
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr "options('stringsAsFactors') не установлены в 'TRUE' или 'FALSE'"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"

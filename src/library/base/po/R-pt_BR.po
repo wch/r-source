@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07\n"
+"POT-Creation-Date: 2012-08-06 10:53\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -271,7 +271,8 @@ msgstr "'row.names' inválido, comprimento %d para um data frame com %d linhas"
 msgid "supplied %d row names for %d rows"
 msgstr "especificados %d nomes de linhas para %d linhas"
 
-msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+#, fuzzy
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr "options('stringsAsFactors') não definido como TRUE ou FALSE"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"

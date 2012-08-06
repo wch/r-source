@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07\n"
+"POT-Creation-Date: 2012-08-06 10:53\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -264,7 +264,8 @@ msgstr "ugyldig 'row-names', længde %d for en dataramme med %d rækker"
 msgid "supplied %d row names for %d rows"
 msgstr "angivet %d rækkenavne for %d rækker"
 
-msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+#, fuzzy
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr "tilvalg('stringsAsFactors') ikke angivet til SAND eller FALSK"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"

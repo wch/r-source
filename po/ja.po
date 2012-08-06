@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46+0100\n"
+"POT-Creation-Date: 2012-08-06 10:53+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -119,8 +119,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/gnuwin32/extra.c:1679 src/main/agrep.c:125 src/main/agrep.c:129
 #: src/main/agrep.c:754 src/main/agrep.c:759 src/main/apply.c:281
 #: src/main/apply.c:283 src/main/apply.c:286 src/main/array.c:86
-#: src/main/array.c:1100 src/main/array.c:1232 src/main/array.c:1234
-#: src/main/array.c:1235 src/main/attrib.c:192 src/main/builtin.c:75
+#: src/main/array.c:1106 src/main/array.c:1238 src/main/array.c:1240
+#: src/main/array.c:1241 src/main/attrib.c:192 src/main/builtin.c:75
 #: src/main/builtin.c:84 src/main/builtin.c:103 src/main/builtin.c:105
 #: src/main/builtin.c:134 src/main/builtin.c:520 src/main/builtin.c:536
 #: src/main/builtin.c:719 src/main/builtin.c:721 src/main/builtin.c:723
@@ -223,8 +223,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/seq.c:566 src/main/sort.c:161 src/main/sysutils.c:590
 #: src/main/sysutils.c:594 src/main/sysutils.c:598 src/main/sysutils.c:604
 #: src/main/sysutils.c:608 src/main/sysutils.c:1617 src/main/sysutils.c:1621
-#: src/main/unique.c:851 src/main/unique.c:1177 src/main/unique.c:1237
-#: src/main/unique.c:1244 src/main/util.c:573 src/main/util.c:576
+#: src/main/unique.c:881 src/main/unique.c:1207 src/main/unique.c:1267
+#: src/main/unique.c:1274 src/main/util.c:573 src/main/util.c:576
 #: src/main/util.c:1756 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
@@ -979,7 +979,7 @@ msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
 " 'log' 関数に %d 個の引数が渡されましたが，1つまたは2つでなくてはなりません "
 
-#: src/main/array.c:79 src/main/array.c:1401
+#: src/main/array.c:79 src/main/array.c:1407
 msgid "'data' must be of a vector type"
 msgstr " 'data' はベクトル型でなくてはなりません "
 
@@ -1046,57 +1046,57 @@ msgstr " alloc３Darray : 指定された要素数が多すぎます "
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr " allocArray：'dims' によって指定された要素数が多すぎます "
 
-#: src/main/array.c:418
+#: src/main/array.c:424
 msgid "a matrix-like object is required as argument to 'row/col'"
 msgstr " 'row/col' への引数としては行列風のオブジェクトが必要とされます "
 
-#: src/main/array.c:629
+#: src/main/array.c:635
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr " 数値/複素数/行列またはベクトルが要求されます "
 
-#: src/main/array.c:719 src/main/array.c:723 src/main/array.c:727
+#: src/main/array.c:725 src/main/array.c:729 src/main/array.c:733
 msgid "non-conformable arguments"
 msgstr " 適切な引数ではありません "
 
-#: src/main/array.c:1024
+#: src/main/array.c:1030
 msgid "argument is not a matrix"
 msgstr " 引数が行列ではありません "
 
-#: src/main/array.c:1059
+#: src/main/array.c:1065
 msgid "invalid first argument, must be an array"
 msgstr " 一番目の引数が不正です。配列でなくてはなりません "
 
-#: src/main/array.c:1074 src/main/array.c:1077
+#: src/main/array.c:1080 src/main/array.c:1083
 msgid "'a' does not have named dimnames"
 msgstr " 'a' は名前付きの次元名を持ちません "
 
-#: src/main/array.c:1084
+#: src/main/array.c:1090
 #, c-format
 msgid "perm[%d] does not match a dimension name"
 msgstr " perm[%d] は次元名にマッチしません "
 
-#: src/main/array.c:1091
+#: src/main/array.c:1097
 msgid "'perm' is of wrong length"
 msgstr " 'perm' の長さが誤っています "
 
-#: src/main/array.c:1098
+#: src/main/array.c:1104
 msgid "value out of range in 'perm'"
 msgstr " 'perm' 中の値が範囲を超えています "
 
-#: src/main/array.c:1180
+#: src/main/array.c:1186
 msgid "'resize' must be TRUE or FALSE"
 msgstr " 'resize' は TRUE か FALSE でなければなりません "
 
-#: src/main/array.c:1244
+#: src/main/array.c:1250
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
 
-#: src/main/array.c:1411
+#: src/main/array.c:1417
 #, fuzzy
 msgid "'dim' specifies too large an array"
 msgstr " 指定されたベクトルのサイズが長すぎます "
 
-#: src/main/array.c:1483 src/main/attrib.c:929
+#: src/main/array.c:1489 src/main/attrib.c:929
 msgid "'dimnames' applied to non-array"
 msgstr " 'dimnames' が配列以外に適用されました "
 
@@ -7179,70 +7179,70 @@ msgstr " R_tmpnam2 においてメモリ割り当てが失敗しました "
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr " 'dirmark  = TRUE' はこのプラットフォームではサポートされていません "
 
-#: src/main/unique.c:303
+#: src/main/unique.c:314
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr " 長さ %d は大きすぎてハッシュできません "
 
-#: src/main/unique.c:402
+#: src/main/unique.c:412
 msgid "'duplicated' applies only to vectors"
 msgstr " duplicated' はベクトルに対してだけ適用できます "
 
-#: src/main/unique.c:497
+#: src/main/unique.c:525
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr " any_duplicated3(., <0-length incomp>) "
 
-#: src/main/unique.c:546
+#: src/main/unique.c:576
 msgid "'fromLast' must be length 1"
 msgstr " 'fromLast' は長さ1でなければなりません "
 
-#: src/main/unique.c:549
+#: src/main/unique.c:579
 msgid "'fromLast' must be TRUE or FALSE"
 msgstr " 'fromLast' は TRUE か FALSE でなければなりません "
 
-#: src/main/unique.c:558
+#: src/main/unique.c:590
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr " %s() はベクトルにのみ使用できます "
 
-#: src/main/unique.c:807
+#: src/main/unique.c:837
 msgid "'match' requires vector arguments"
 msgstr " 'match' はベクトル引数を必要とします "
 
-#: src/main/unique.c:855 src/main/unique.c:1013
+#: src/main/unique.c:885 src/main/unique.c:1043
 msgid "argument is not of mode character"
 msgstr " 引数がモードを表す文字列ではありません "
 
-#: src/main/unique.c:1139
+#: src/main/unique.c:1169
 msgid "... used in a situation where it doesn't exist"
 msgstr " ... がそれが存在しな状況で使われました "
 
-#: src/main/unique.c:1230
+#: src/main/unique.c:1260
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 " 'match.call' がその中から呼び出されたクロージャを見付けることができません "
 
-#: src/main/unique.c:1388
+#: src/main/unique.c:1418
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr " rowsum() 関数中に非数値行列：これはあり得ません "
 
-#: src/main/unique.c:1420
+#: src/main/unique.c:1450
 msgid "non-numeric data frame in rowsum"
 msgstr " rowsum の引数が数値データフレームではありません "
 
-#: src/main/unique.c:1452
+#: src/main/unique.c:1482
 msgid "this cannot happen"
 msgstr " このようなことは起き得ないはずです "
 
-#: src/main/unique.c:1509
+#: src/main/unique.c:1536
 msgid "'names' must be a character vector"
 msgstr " 'names' は文字ベクトルでなければなりません "
 
-#: src/main/unique.c:1513
+#: src/main/unique.c:1540
 msgid "'sep' must be a character string"
 msgstr " 'sep' は文字列でなければなりません "
 
-#: src/main/unique.c:1586
+#: src/main/unique.c:1613
 msgid "csduplicated not called on a STRSXP"
 msgstr " csduplicated は STRSXP に対して呼び出されていません "
 
