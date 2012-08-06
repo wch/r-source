@@ -216,7 +216,7 @@
       
       \item Many calls to \code{.C()} have been replaced by
       \code{.Call()} to allow long vectors to be supported (now or in
-      the future).  Regretably several packages had copied the non-API
+      the future).  Regrettably several packages had copied the non-API
       \code{.C()} calls and so fail.
 
       \item \code{.C()} and \code{.Fortran()} do not accept long vector
