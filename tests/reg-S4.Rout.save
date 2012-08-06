@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-03-08 r58640)
+R Under development (unstable) (2012-08-06 r60176) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin10.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -280,8 +280,8 @@ Slot "y":
 + }
 > 
 > assertError(b & b)
-Note: Method with signature "brob#ANY" chosen for function "&",
- target signature "brob#brob".
+Note: Method with signature 'brob#ANY' chosen for function '&',
+ target signature 'brob#brob'.
  "ANY#brob" would also be valid
 > assertError(b | 1)
 > assertError(TRUE & b)
@@ -521,7 +521,7 @@ $answer.all
 > setMethod("!", "foo", function(e1) e1+NA)
 [1] "!"
 Warning message:
-For function '!', signature "foo": argument in method definition changed from (e1) to (x) 
+For function '!', signature 'foo': argument in method definition changed from (e1) to (x) 
 > selectMethod("!", "foo")
 Method Definition:
 

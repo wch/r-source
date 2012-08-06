@@ -133,20 +133,23 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
 
 ## templates for replacement methods for S3 classes in classes that extend oldClass
 .S3replace <-
-    list( e1  = quote( {
-    S3Part(from, needClass = NEED) <- value
-    from
-}),
+    list(e1 =
+         quote( {
+             S3Part(from, needClass = NEED) <- value
+             from
+         }),
+         e2 = quote( {
+             if(is(value, CLASS)) {
+                 S3Part(from,  needClass = NEED) <- value
+                 from
+             }
+             else
+                 stop(gettextf("Replacement value must be of class %s, got one of class %s",
+                               dQuote(CLASS),
+                               dQuote(class(value)[[1L]])))
 
-e2= quote( {
-    if(is(value, CLASS)) {
-        S3Part(from,  needClass = NEED) <- value
-        from
-    }
-    else
-      stop("Replacement value must be of class \"", CLASS, "\", got one of class \"", class(value)[[1L]], "\"")
-})
-   )
+         })
+         )
 
 .S3coerce <- function(from, to) {
     S3Part(from)

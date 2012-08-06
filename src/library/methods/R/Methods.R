@@ -35,7 +35,7 @@ setGeneric <-
              simpleInheritanceOnly = NULL)
 {
     if(is.character(.isSingleName(name)))
-        stop(gettextf('invalid argument "name": %s',
+        stop(gettextf("invalid argument 'name': %s",
                       .isSingleName(name)), domain = NA)
     if(exists(name, "package:base") &&
        is.primitive(get(name, "package:base"))) { # primitives
@@ -464,7 +464,7 @@ setMethod <-
             gwhere <- .genEnv(f)
         }
         else
-            stop("A function for argument \"f\" must be a generic function")
+            stop("A function for argument 'f' must be a generic function")
     }
     ## slight subtlety:  calling getGeneric vs calling isGeneric
     ## For primitive functions, getGeneric returns the (hidden) generic function,
@@ -559,9 +559,9 @@ setMethod <-
 		   ## fix up arg name for single-argument generics
 		   ## useful for e.g. '!'
 		   if(length(fnames) == length(mnames) && length(mnames) == 1L) {
-		       warning(gettextf("For function %s, signature \"%s\": argument in method definition changed from (%s) to (%s)",
+		       warning(gettextf("For function %s, signature %s: argument in method definition changed from (%s) to (%s)",
 					sQuote(f),
-                                        signature,
+                                        sQuote(signature),
                                         mnames,
                                         fnames),
                                domain = NA, call. = FALSE)
@@ -636,7 +636,7 @@ removeMethod <- function(f, signature = character(), where = topenv(parent.frame
       else if(is.primitive(f))
         { f <- .primname(f); fdef <- genericForPrimitive(f)}
       else
-        stop("Function supplied as argument \"f\" must be a generic")
+        stop("Function supplied as argument 'f' must be a generic")
     }
     else
       fdef <- getGeneric(f, where = where)
@@ -729,7 +729,7 @@ getMethod <-
 	    return(NULL)
 	## else
 	if(!is.character(f)) f <- deparse(substitute(f))
-	stop(gettextf('No generic function found for "%s"', f), domain = NA)
+	stop(gettextf("No generic function found for '%s'", f), domain = NA)
     }
     if(missing(mlist)) {
 	if(missing(where))
@@ -742,7 +742,7 @@ getMethod <-
 	value <- .findMethodInTable(signature, mlist, fdef)
 	if(is.null(value) && !optional) {
 	    if(!is.character(f)) f <- deparse(substitute(f))
-	    stop(gettextf('No method found for function "%s" and signature %s',
+	    stop(gettextf("No method found for function '%s' and signature %s",
 			  f, paste(signature, collapse = ", ")))
 	}
         return(value)
@@ -834,7 +834,7 @@ dumpMethods <- function(f, file = "", signature = NULL, methods= findMethods(f, 
     ## using the old MethodsList objects.  It is not meaningful with
     ## the current listOfMethods class
     if(length(signature) > 0)
-        warning("argument \"signature\" is not meaningful with the current implementation and is ignored \n(extract a subset of the methods list instead)")
+        warning("argument 'signature' is not meaningful with the current implementation and is ignored \n(extract a subset of the methods list instead)")
 
     ## sink() handling as general as possible -- unbelievably unpretty coding:
     closeit <- TRUE ; isSTDOUT <- FALSE
@@ -910,7 +910,9 @@ selectMethod <-
 	if(optional)
 	    return(mlist)
 	else
-	    stop(gettextf('"%s" has no methods defined', f), domain = NA)
+	    stop(gettextf("%s has no methods defined",
+                          sQuote(f)),
+                 domain = NA)
     }
     else ## mlist not an environment nor NULL :
 	stop("selectMethod(): mlist is not an environment or NULL :\n",
@@ -1060,8 +1062,10 @@ removeMethods <-
     ## the peculiar order of computations and the explicit use of missing(where).
     fdef <- getGeneric(f, where = where)
     if(!is(fdef, "genericFunction")) {
-        warning(gettextf("\"%s\" is not an S4 generic function in \"%s\"; methods not removed",
-                f, getPackageName(where)), domain = NA)
+        warning(gettextf("%s is not an S4 generic function in %s; methods not removed",
+                         sQuote(f),
+                         sQuote(getPackageName(where))),
+                domain = NA)
         return(FALSE)
     }
 
@@ -1106,8 +1110,9 @@ removeMethods <-
                 default <- as(default, "function") # strict, removes slots
                 rm(list=f, pos = db)
                 if(!existsFunction(f, FALSE, db)) {
-                    message(gettextf("restoring default function definition of \"%s\"",
-                                     f), domain = NA)
+                    message(gettextf("restoring default function definition of %s",
+                                     sQuote(f)),
+                            domain = NA)
                     assign(f, default, db)
                 }
                 ## else the generic is removed, nongeneric will be found elsewhere
@@ -1317,7 +1322,9 @@ implicitGeneric <- function(...) NULL
       if(!nzchar(name))
         stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
       if(!missing(generic) && is(generic, "genericFunction") && !.identC(name, generic@generic))
-        stop(gettextf('generic function supplied was not created for \"%s\"', name), domain = NA)
+        stop(gettextf('generic function supplied was not created for %s',
+                      sQuote(name)),
+             domain = NA)
       createGeneric <- (missing(generic) || !is(generic, "genericFunction")) && !isGeneric(name, where)
       if(createGeneric) {
           fdefault <- getFunction(name, where = where, mustFind = FALSE)
@@ -1328,7 +1335,9 @@ implicitGeneric <- function(...) NULL
           if(is.primitive(fdefault)) {
               value <- genericForPrimitive(name)
               if(!missing(generic) && !identical(value, generic))
-                  stop(gettextf('"%s" is a primitive function; its generic form cannot be redefined',name), domain = NA)
+                  stop(gettextf("%s is a primitive function; its generic form cannot be redefined",
+                                sQuote(name)),
+                       domain = NA)
               generic <- value
               package <- "base"
           }
@@ -1358,8 +1367,9 @@ implicitGeneric <- function(...) NULL
 
 setGenericImplicit <- function(name, where = topenv(parent.frame()), restore = TRUE) {
     if(!isGeneric(name, where)) {
-        warning(gettextf("\"%s\" is not currently a generic:  define it first to create a non-default implicit form",
-                         name), domain = NA)
+        warning(gettextf("%s is not currently a generic:  define it first to create a non-default implicit form",
+                         sQuote(name)),
+                domain = NA)
         return(FALSE)
     }
     generic <- getGeneric(name, where = where)
@@ -1594,7 +1604,7 @@ hasMethods <- function(f, where, package = "")
             package <- fdef@package
     }
     else if(!.isSingleString(f))
-        stop(gettextf("argument \"f\" must be a generic function or %s",
+        stop(gettextf("argument 'f' must be a generic function or %s",
                       .notSingleString(f)), domain = NA)
     else if(missing(package)) {
         package <- packageSlot(f) # maybe a string with package slot

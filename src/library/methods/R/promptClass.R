@@ -98,8 +98,10 @@ function (clName, filename = NULL, type = "class",
         else if(length(whereClass) > 1L) {
             if(identical(where, topenv(parent.frame()))) {
                 whereClass <- whereClass[[1L]]
-                warning(gettextf("multiple definitions of \"%s\" found; using the one on %s",
-                                 clName, whereClass), domain = NA)
+                warning(gettextf("multiple definitions of %s found; using the one on %s",
+                                 dQuote(clName),
+                                 whereClass),
+                        domain = NA)
             }
             else {
                 if(exists(classMetaName(clName), where, inherits = FALSE))

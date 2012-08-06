@@ -94,8 +94,9 @@
         switch(typeof(def),
                "builtin" = , "special" = , "NULL" = return(def),
                "closure" = {},
-               stop(gettextf("invalid object for formal method definition: type \"%s\"",
-                             typeof(def)), domain = NA)
+               stop(gettextf("invalid object for formal method definition: type %s",
+                             dQuote(typeof(def))),
+                    domain = NA)
                )
         if(is(def, "MethodDefinition")) {
             value <- def
@@ -248,8 +249,9 @@
               })
     setMethod("show", "classGeneratorFunction", where = envir,
               function(object) {
-                  cat(gettextf("Class generator function for class \"%s\" from package \"%s\"\n",
-                         object@className, object@package))
+                  cat(gettextf("Class generator function for class %s from package %s\n",
+                               dQuote(object@className),
+                               sQuote(object@package)))
                   show(as(object, "function"))
               })
 
