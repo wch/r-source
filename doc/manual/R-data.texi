@@ -18,10 +18,6 @@
 @include version.texi
 
 @ifinfo
-This is a guide to importing and exporting data to and from R.
-
-@Rcopyright{2000}
-
 @ignore
 Permission is granted to process this file through TeX and print the
 results, provided the printed document carries a copying permission
@@ -30,8 +26,6 @@ notice identical to this one except for the removal of this paragraph
 
 @end ignore
 
-@permission{}
-@c ---------- ^- read that
 @end ifinfo
 
 @titlepage
@@ -60,6 +54,12 @@ This is a guide to importing and exporting data to and from R.
 The current version of this document is @value{VERSION}.
 
 @value{ISBN-data}
+
+@Rcopyright{2000}
+
+@permission{}
+@c ---------- ^- read that
+
 @end ifnottex
 
 @menu

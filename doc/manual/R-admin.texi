@@ -19,10 +19,6 @@
 @include version.texi
 
 @ifinfo
-This is a guide to installation and administration for R.
-
-@Rcopyright{2001}
-
 @ignore
 Permission is granted to process this file through TeX and print the
 results, provided the printed document carries a copying permission
@@ -31,8 +27,6 @@ notice identical to this one except for the removal of this paragraph
 
 @end ignore
 
-@permission{}
-@c ---------- ^- read that
 @end ifinfo
 
 @titlepage
@@ -61,6 +55,12 @@ This is a guide to installation and administration for R.
 The current version of this document is @value{VERSION}.
 
 @value{ISBN-admin}
+
+@Rcopyright{2001}
+
+@permission{}
+@c ---------- ^- read that
+
 @end ifnottex
 
 @menu

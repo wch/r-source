@@ -56,15 +56,6 @@ Copyright @copyright{} 1997-- R Core Team@*
 @c Revert when this is fixed.
 @c </NOTE>
 
-@ifinfo
-This is an introduction to R.
-
-@RIcopyright{}
-
-@permission{}
-
-@end ifinfo
-
 @titlepage
 @title An Introduction to R
 @subtitle Notes on @R{}: A Programming Environment for Data Analysis and Graphics
@@ -105,6 +96,11 @@ statistical modelling and graphics.
 The current version of this document is @value{VERSION}.
 
 @value{ISBN-intro}
+
+@RIcopyright{}
+
+@permission{}
+
 @end ifnottex
 
 @menu
