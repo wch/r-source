@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Core Team
+ *  Copyright (C) 2000-2012 The R Core Team
  *  Copyright (C) 2005	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -111,9 +111,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
 	ML_ERR_return_NAN;
 
-    nn1 = floor(nn1in+0.5);
-    nn2 = floor(nn2in+0.5);
-    kk	= floor(kkin +0.5);
+    nn1 = (int) floor(nn1in+0.5);
+    nn2 = (int) floor(nn2in+0.5);
+    kk	= (int) floor(kkin +0.5);
 
     if (nn1 < 0 || nn2 < 0 || kk < 0 || kk > nn1 + nn2)
 	ML_ERR_return_NAN;
@@ -142,13 +142,13 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if (setup2) {
 	ks = kk;
 	if (kk + kk >= tn) {
-	    k = tn - kk;
+	    k = (int)(tn - kk);
 	} else {
 	    k = kk;
 	}
     }
     if (setup1 || setup2) {
-	m = (k + 1.0) * (n1 + 1.0) / (tn + 2.0);
+	m = (int) ((k + 1.0) * (n1 + 1.0) / (tn + 2.0));
 	minjx = imax2(0, k - n2);
 	maxjx = imin2(n1, k);
     }
@@ -225,14 +225,14 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	u = unif_rand() * p3;
 	v = unif_rand();
 	if (u < p1) {		/* rectangular region */
-	    ix = xl + u;
+	    ix = (int) (xl + u);
 	} else if (u <= p2) {	/* left tail */
-	    ix = xl + log(v) / lamdl;
+	    ix = (int) (xl + log(v) / lamdl);
 	    if (ix < minjx)
 		goto L30;
 	    v = v * (u - p1) * lamdl;
 	} else {		/* right tail */
-	    ix = xr - log(v) / lamdr;
+	    ix = (int) (xr - log(v) / lamdr);
 	    if (ix > maxjx)
 		goto L30;
 	    v = v * (u - p2) * lamdr;

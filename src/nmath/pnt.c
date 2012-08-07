@@ -1,7 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka and the R Core Team
- *  Copyright (C) 2000-2008 The R Core Team
+ *  Copyright (C) 1998-2012 The R Core Team
  *  based on AS243 (C) 1989 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -82,7 +81,8 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	/* Approx. from	 Abramowitz & Stegun 26.7.10 (p.949) */
 	s = 1./(4.*df);
 
-	return pnorm(tt*(1. - s), del, sqrt(1. + tt*tt*2.*s),
+	return pnorm((double)(tt*(1. - s)), del, 
+		     sqrt((double) (1. + tt*tt*2.*s)),
 		     lower_tail != negdel, log_p);
     }
 
@@ -152,7 +152,7 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 		goto finis;
 	    }
 	    if(s <= 0 && it > 1) goto finis;
-	    errbd = 2. * s * (xodd - godd);
+	    errbd = (double)(2. * s * (xodd - godd));
 #ifdef DEBUG_pnt
 	    REprintf("%3d %#9.4g %#9.4g|%#11.4Lg %#11.4Lg %#11.4Lg %#14.10Lg %#9.4g\n",
 		     it, 1e5*(double)godd, 1e5*(double)geven, p, q, s, tnc, errbd);
@@ -172,5 +172,5 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
     if(tnc > 1 - 1e-10 && lower_tail)
 	ML_ERROR(ME_PRECISION, "pnt{final}");
 
-    return R_DT_val(fmin2(tnc, 1.) /* Precaution */);
+    return R_DT_val(fmin2((double)tnc, 1.) /* Precaution */);
 }

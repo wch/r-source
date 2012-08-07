@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2007  The R Core Team
+  Copyright (C) 1999-2012  The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -180,10 +180,11 @@ double dwilcox(double x, double m, double n, int give_log)
     if ((x < 0) || (x > m * n))
 	return(R_D__0);
 
-    w_init_maybe(m, n);
+    int mm = (int) m, nn = (int) n, xx = (int) x;
+    w_init_maybe(mm, nn);
     d = give_log ?
-	log(cwilcox(x, m, n)) - lchoose(m + n, n) :
-	    cwilcox(x, m, n)  /	 choose(m + n, n);
+	log(cwilcox(xx, mm, nn)) - lchoose(m + n, n) :
+	    cwilcox(xx, mm, nn)  /  choose(m + n, n);
 
     return(d);
 }
@@ -212,18 +213,19 @@ double pwilcox(double q, double m, double n, int lower_tail, int log_p)
     if (q >= m * n)
 	return(R_DT_1);
 
-    w_init_maybe(m, n);
+    int mm = (int) m, nn = (int) n;
+    w_init_maybe(mm, nn);
     c = choose(m + n, n);
     p = 0;
     /* Use summation of probs over the shorter range */
     if (q <= (m * n / 2)) {
 	for (i = 0; i <= q; i++)
-	    p += cwilcox(i, m, n) / c;
+	    p += cwilcox(i, mm, nn) / c;
     }
     else {
 	q = m * n - q;
 	for (i = 0; i < q; i++)
-	    p += cwilcox(i, m, n) / c;
+	    p += cwilcox(i, mm, nn) / c;
 	lower_tail = !lower_tail; /* p = 1 - p; */
     }
 
@@ -234,7 +236,7 @@ double pwilcox(double q, double m, double n, int lower_tail, int log_p)
 
 double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 {
-    double c, p, q;
+    double c, p;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
@@ -257,14 +259,15 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
     if(log_p || !lower_tail)
 	x = R_DT_qIv(x); /* lower_tail,non-log "p" */
 
-    w_init_maybe(m, n);
+    int mm = (int) m, nn = (int) n;
+    w_init_maybe(mm, nn);
     c = choose(m + n, n);
     p = 0;
-    q = 0;
+    int q = 0;
     if (x <= 0.5) {
 	x = x - 10 * DBL_EPSILON;
 	for (;;) {
-	    p += cwilcox(q, m, n) / c;
+	    p += cwilcox(q, mm, nn) / c;
 	    if (p >= x)
 		break;
 	    q++;
@@ -273,9 +276,9 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
     else {
 	x = 1 - x + 10 * DBL_EPSILON;
 	for (;;) {
-	    p += cwilcox(q, m, n) / c;
+	    p += cwilcox(q, mm, nn) / c;
 	    if (p > x) {
-		q = m * n - q;
+		q = (int) (m * n - q);
 		break;
 	    }
 	    q++;
@@ -312,7 +315,7 @@ double rwilcox(double m, double n)
     for (i = 0; i < k; i++)
 	x[i] = i;
     for (i = 0; i < n; i++) {
-	j = floor(k * unif_rand());
+	j = (int) floor(k * unif_rand());
 	r += x[j];
 	x[j] = x[--k];
     }

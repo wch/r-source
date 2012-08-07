@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2007  The R Core Team
+ *  Copyright (C) 1999-2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -103,11 +103,10 @@ csignrank(int k, int n)
         return w[k];
 
     w[0] = w[1] = 1.;
-    for(j=2; j < n+1; ++j) {
+    for(j = 2; j < n+1; ++j) {
         int i, end = imin2(j*(j+1)/2, c);
-	for(i=end; i >= j; --i) {
+	for(i = end; i >= j; --i)
 	    w[i] += w[i-j];
-	}
     }
 
     return w[k];
@@ -131,8 +130,9 @@ double dsignrank(double x, double n, int give_log)
     if ((x < 0) || (x > (n * (n + 1) / 2)))
 	return(R_D__0);
 
-    w_init_maybe(n);
-    d = R_D_exp(log(csignrank(x, n)) - n * M_LN2);
+    int nn = (int) n;
+    w_init_maybe(nn);
+    d = R_D_exp(log(csignrank((int) x, nn)) - n * M_LN2);
 
     return(d);
 }
@@ -156,17 +156,18 @@ double psignrank(double x, double n, int lower_tail, int log_p)
     if (x >= n * (n + 1) / 2)
 	return(R_DT_1);
 
-    w_init_maybe(n);
+    int nn = (int) n;
+    w_init_maybe(nn);
     f = exp(- n * M_LN2);
     p = 0;
     if (x <= (n * (n + 1) / 4)) {
 	for (i = 0; i <= x; i++)
-	    p += csignrank(i, n) * f;
+	    p += csignrank(i, nn) * f;
     }
     else {
 	x = n * (n + 1) / 2 - x;
 	for (i = 0; i < x; i++)
-	    p += csignrank(i, n) * f;
+	    p += csignrank(i, nn) * f;
 	lower_tail = !lower_tail; /* p = 1 - p; */
     }
 
@@ -175,7 +176,7 @@ double psignrank(double x, double n, int lower_tail, int log_p)
 
 double qsignrank(double x, double n, int lower_tail, int log_p)
 {
-    double f, p, q;
+    double f, p;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
@@ -197,14 +198,15 @@ double qsignrank(double x, double n, int lower_tail, int log_p)
     if(log_p || !lower_tail)
 	x = R_DT_qIv(x); /* lower_tail,non-log "p" */
 
-    w_init_maybe(n);
+    int nn = (int) n;
+    w_init_maybe(nn);
     f = exp(- n * M_LN2);
     p = 0;
-    q = 0;
+    int q = 0;
     if (x <= 0.5) {
 	x = x - 10 * DBL_EPSILON;
 	for (;;) {
-	    p += csignrank(q, n) * f;
+	    p += csignrank(q, nn) * f;
 	    if (p >= x)
 		break;
 	    q++;
@@ -213,9 +215,9 @@ double qsignrank(double x, double n, int lower_tail, int log_p)
     else {
 	x = 1 - x + 10 * DBL_EPSILON;
 	for (;;) {
-	    p += csignrank(q, n) * f;
+	    p += csignrank(q, nn) * f;
 	    if (p > x) {
-		q = n * (n + 1) / 2 - q;
+		q = (int)(n * (n + 1) / 2 - q);
 		break;
 	    }
 	    q++;
