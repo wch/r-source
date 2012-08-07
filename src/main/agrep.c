@@ -30,6 +30,9 @@
 /* This is remapped */
 #undef pmatch 
 
+/* interval at which to check interrupts */
+#define NINTERRUPT 1000000
+
 #include <R_ext/RS.h>		/* for Calloc/Free */
 
 #include <wchar.h>
@@ -210,6 +213,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ind = allocVector(LGLSXP, n));
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
+	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	if(STRING_ELT(vec, i) == NA_STRING) {
 	    LOGICAL(ind)[i] = 0;
 	    continue;
