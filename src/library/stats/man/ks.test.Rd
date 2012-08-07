@@ -96,7 +96,7 @@ ks.test(x, y, \dots,
 }
 \source{
   The two-sided one-sample distribution comes \emph{via}
-  Marsaglisa, Tsang and Wang (2003).
+  Marsaglia, Tsang and Wang (2003).
 }
 \references{
   Z. W. Birnbaum and Fred H. Tingey (1951),

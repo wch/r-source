@@ -98,7 +98,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   \code{\link{ks.test}}.
 }
 \source{
-  The code for Monte Carlo similation is a C translation of the Fortran
+  The code for Monte Carlo simulation is a C translation of the Fortran
   algorithm of Patefield (1981).
 }
 
