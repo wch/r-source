@@ -85,7 +85,7 @@ Options:
   -f FILE, --file=FILE  Take input from 'FILE'
   -e EXPR               Execute 'EXPR' and exit
 
-FILE may contain spaces but not shell metacharacers.
+FILE may contain spaces but not shell metacharacters.
 
 Commands:
   BATCH			Run R in batch mode
