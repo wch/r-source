@@ -33,8 +33,10 @@
 {
     checkTrace <- function(fun, what, f) {
         if(is(fun, "traceable")) {
-            warning(gettextf("the function being used as %s in making a generic function for \"%s\" is currently traced; the function used will have tracing removed",
-                             what, f), domain = NA)
+            warning(gettextf("the function being used as %s in making a generic function for %s is currently traced; the function used will have tracing removed",
+                             what,
+                             sQuote(f)),
+                    domain = NA)
             .untracedFunction(fun)
         }
         else
@@ -42,8 +44,8 @@
     }
     if(missing(fdef)) {
         if(missing(fdefault))
-            stop(gettextf("Must supply either a generic function or a function as default for \"%s\"", #
-                          f),
+            stop(gettextf("Must supply either a generic function or a function as default for %s",
+                          sQuote(f)),
                  domain = NA)
         else if(is.primitive(fdefault)) {
             return(genericForPrimitive(f))
@@ -99,8 +101,9 @@
         fdefault <- checkTrace(fdefault)
         if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
            !is.primitive(fdefault))
-            stop(gettextf("the formal arguments of the generic function for \"%s\" (%s) differ from those of the non-generic to be used as the default (%s)",
-                          f, paste(formalArgs(fdef), collapse = ", "),
+            stop(gettextf("the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)",
+                          sQuote(f),
+                          paste(formalArgs(fdef), collapse = ", "),
                           paste(formalArgs(fdefault), collapse = ", ")),
                  domain = NA)
         fdefault <- asMethodDefinition(fdefault, fdef = value)
@@ -237,7 +240,7 @@ generic.skeleton <- function(name, fdef, fdefault)
     if(is.null(fdefault)) {
         fdefault <- fdef
         body(fdefault) <- substitute(stop(MESSAGE, domain = NA), list(MESSAGE=
-                                                   gettextf("invalid call in method dispatch to \"%s\" (no default method)", name)))
+                                                   gettextf("invalid call in method dispatch to '%s' (no default method)", name)))
         environment(fdefault) <- baseenv()
     }
     skeleton[[1L]] <- fdefault
@@ -478,7 +481,9 @@ getGeneric <-
             value
         else if(mustFind)
             ## the C code will have thrown an error if f is not a single string
-            stop(gettextf("no generic function found for \"%s\"", f), domain = NA)
+            stop(gettextf("no generic function found for %s",
+                          sQuote(f)),
+                 domain = NA)
         else
             NULL
     }
@@ -805,9 +810,8 @@ getGenerics <- function(where, searchForm = FALSE)
     funNames <- gsub(".__T__(.*):([^:]+)", "\\1", these)
     if(length(funNames) == 0L &&
        length(these[substr(these, 1L, 6L) == ".__M__"]))
-        warning(gettextf(
-                         "Package \"%s\" seems to have out-of-date methods; need to reinstall from source",
-                         getPackageName(where[[1L]])))
+        warning(gettextf("Package %s seems to have out-of-date methods; need to reinstall from source",
+                         sQuote(getPackageName(where[[1L]]))))
     packageNames <- gsub(".__T__(.*):([^:]+(.*))", "\\2", these)
     attr(funNames, "package") <- packageNames
     ## Would prefer following, but may be trouble bootstrapping methods
@@ -903,8 +907,8 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE,
                                   package, methods)
 {
     if(!is(fdef, "genericFunction")) {
-	warning(gettextf("no methods found for \"%s\"; cacheGenericsMetaData() will have no effect",
-			 f),
+	warning(gettextf("no methods found for %s; cacheGenericsMetaData() will have no effect",
+			 sQuote(f)),
 		domain = NA)
 	return(FALSE)
     }
@@ -1175,8 +1179,8 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
     if(is(x, "call")) {
         if(identical(x[[1L]], quote(standardGeneric))) {
             if(!identical(x[[2L]], fname))
-                warning(gettextf("the body of the generic function for \"%s\" calls 'standardGeneric' to dispatch on a different name (\"%s\")!",
-                                 fname,
+                warning(gettextf("the body of the generic function for %s calls 'standardGeneric' to dispatch on a different name (\"%s\")!",
+                                 sQuote(fname),
                                  paste(as.character(x[[2L]]), collapse = "\n")),
                         domain = NA)
             TRUE
@@ -1451,8 +1455,9 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     }
     f <- getGeneric(group)
     if(is.null(f)) {
-        warning(gettextf("\"%s\" is not a generic function (or not visible here)",
-                         f), domain = NA)
+        warning(gettextf("%s is not a generic function (or not visible here)",
+                         sQuote(f)),
+                domain = NA)
         return(character())
     }
     else if(!is(f, "groupGenericFunction"))
@@ -1844,9 +1849,13 @@ setLoadAction <- function(action,
         f <- actions[[i]]
         fname <- anames[[i]]
         if(!is(f, "function"))
-            stop( gettextf("non-function action: \"%s", fname))
+            stop(gettextf("non-function action: %s",
+                          sQuote(fname)),
+                 domain = NA)
         if(length(formals(f)) == 0)
-                stop(gettextf("action function \"%s\" has no arguments, should have at least 1",fname ))
+            stop(gettextf("action function %s has no arguments, should have at least 1",
+                          sQuoute(fname)),
+                 domain = NA)
     }
     for(i in seq_along(actions))
         assign(.actionMetaName(anames[[i]]), actions[[i]], envir = where)

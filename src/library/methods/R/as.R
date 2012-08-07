@@ -51,8 +51,9 @@ as <-
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
                 if(identical(ext, FALSE))
-                    stop(gettextf("internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
-                                  thisClass, Class), domain = NA)
+                    stop(gettextf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
+                                  dQuote(thisClass), Class),
+                         domain = NA)
                 else if(identical(ext, TRUE))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
                 else {
@@ -76,8 +77,10 @@ as <-
             else if(canCache)  # make into method definition
                 asMethod <- .asCoerceMethod(asMethod, thisClass, ClassDef, FALSE, where)
 	    if(is.null(asMethod))
-		stop(gettextf("no method or default for coercing \"%s\" to \"%s\"",
-			      thisClass, Class), domain = NA)
+		stop(gettextf("no method or default for coercing %s to %s",
+			      dQuote(thisClass),
+                              dQuote(Class)),
+                     domain = NA)
 	    else if(canCache) {
 		## cache in the coerce function's environment
 		cacheMethod("coerce", sig, asMethod, fdef = coerceFun,
@@ -185,7 +188,10 @@ as <-
                              inherited = inherited)
      }
     if(is.null(asMethod))
-        stop(gettextf("no method or default for as() replacement of \"%s\" with Class=\"%s\"", thisClass, Class), domain = NA)
+        stop(gettextf("no method or default for as() replacement of %s with Class=\"%s\"",
+                      dQuote(thisClass),
+                      Class),
+             domain = NA)
     asMethod(object, Class, value)
 }
 
@@ -206,7 +212,9 @@ setAs <-
     }
     else if(identical(extds, TRUE)) {
         if(.identC(from, to))
-            stop(gettextf("trying to set an 'as' relation from \"%s\" to itself", .class1(from)), domain = NA)
+            stop(gettextf("trying to set an 'as' relation from %s to itself",
+                          dQuote(.class1(from))),
+                 domain = NA)
         ## usually to will be a class union, where setAs() is not
         ## allowed by the definition of a union
         toDef <- getClassDef(to, where=where)
@@ -381,7 +389,10 @@ setAs <-
                                       fdef = rdef))
     if(prevCoerce || prevRepl) {
         if(!prevIs)
-            warning(gettextf("methods currently exist for coercing from \"%s\" to \"%s\"; they will be replaced.", from, to), domain = NA)
+            warning(gettextf("methods currently exist for coercing from %s to %s; they will be replaced.",
+                             dQuote(from),
+                             dQuote(to)),
+                    domain = NA)
         if(prevCoerce)
             setMethod(cdef, sig, NULL, where = baseenv())
         if(prevRepl)

@@ -23,7 +23,9 @@ method.skeleton <- function (generic, signature, file, external = FALSE,
     if (is.null(fdef)) {
         fdef <- implicitGeneric(generic, where = where)
         if(is.null(fdef))
-            stop(gettextf("No function definition found for \"%s\"", generic))
+            stop(gettextf("No function definition found for %s",
+                          sQuote(generic)),
+                 domain = NA)
     }
     else {
         generic <- fdef@generic

@@ -245,8 +245,10 @@ completeClassDefinition <-
        && getOption("warn") > 0 ## NEEDED:  a better way to turn on strict testing
        ) {
         bad <- names(ClassDef@subclasses)[!is.na(match(names(ClassDef@subclasses), names(ClassDef@contains)))]
-        warning(gettextf("potential cycle in class inheritance: \"%s\" has duplicates in superclasses and subclasses (%s)",
-                         Class, paste(bad, collapse = ", ")), domain = NA)
+        warning(gettextf("potential cycle in class inheritance: %s has duplicates in superclasses and subclasses (%s)",
+                         dQuote(Class),
+                         paste(bad, collapse = ", ")),
+                domain = NA)
     }
     ClassDef
 }
@@ -508,8 +510,10 @@ assignClassDef <-
                domain = NA)
       clName <- def@className; attributes(clName) <- NULL
       if(!.identC(Class, clName))
-          stop(gettextf("assigning as \"%s\" a class representation with internal name \"%s\"",
-                        Class, def@className), domain = NA)
+          stop(gettextf("assigning as %s a class representation with internal name %s",
+                        dQuote(Class),
+                        dQuote(def@className)),
+               domain = NA)
       where <- as.environment(where)
       mname <- classMetaName(Class)
       if(exists(mname, envir = where, inherits = FALSE) && bindingIsLocked(mname, where)) {
@@ -696,8 +700,9 @@ reconcilePropertiesAndPrototype <-
                   slots <- names(properties)
               }
               else if(!extends(elNamed(properties, ".Data"), dataPartClass))
-                  stop(gettextf("conflicting definition of data part: .Data = \"%s\", superclass implies \"%s\"",
-                                elNamed(properties, ".Data"), dataPartClass),
+                  stop(gettextf("conflicting definition of data part: .Data = %s, superclass implies %s",
+                                dQuote(elNamed(properties, ".Data")),
+                                dQuote(dataPartClass)),
                        domain = NA)
               pslots <- NULL
               if(is.null(prototype)) {
@@ -753,8 +758,8 @@ reconcilePropertiesAndPrototype <-
               dups <- !is.na(match(theseSlots, allProps))
               for(dup in theseSlots[dups])
                   if(!extends(elNamed(allProps, dup), elNamed(theseProperties, dup)))
-                      stop(gettextf("slot \"%s\" in class %s currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class %s",
-                                    dup,
+                      stop(gettextf("slot %s in class %s currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class %s",
+                                    sQuote(dup),
                                     dQuote(name),
                                     elNamed(allProps, dup),
                                     dQuote(cl)),
@@ -786,7 +791,8 @@ reconcilePropertiesAndPrototype <-
               ((is.na(match(dataPartClass, .BasicClasses)) &&
                 !isVirtualClass(dataPartDef)) || length(dataPartDef@slots))
           if(checkDataPart)
-              stop(gettextf("\"%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)", dataPartClass),
+              stop(gettextf("%s is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)",
+                            dQuote(dataPartClass)),
                    domain = NA)
           if(extends(prototypeClass, "classPrototypeDef"))
           {}
@@ -1118,7 +1124,7 @@ completeSubclasses <-
             }
         }
         else
-            stop(gettextf("the \"%s\" list for class %s, includes an undefined class %s",
+            stop(gettextf("the '%s' list for class %s, includes an undefined class %s",
                           if(superClassCase) "superClass" else "subClass",
                           dQuote(className),
                           dQuote(.className(by))),

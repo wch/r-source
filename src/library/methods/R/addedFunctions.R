@@ -86,7 +86,8 @@ elNamed <-
     i <- match(name, names(x))
     if(is.na(i)) {
         if(mustFind)
-            stop(gettextf("\"%s\" is not one of the element names", name),
+            stop(gettextf("%s is not one of the element names",
+                          sQuote(name)),
                  domain = NA)
         else NULL
     }

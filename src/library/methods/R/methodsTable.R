@@ -86,9 +86,9 @@
            sig <- anySig
     }
     else
-      stop(gettextf("Invalid object in meta table of methods for %s, label \"%s\", had class %s",
+      stop(gettextf("Invalid object in meta table of methods for %s, label %s, had class %s",
                     sQuote(generic@generic),
-                    what,
+                    sQuote(what),
                     dQuote(class(obj))),
            domain = NA)
     ns <- length(sig)
@@ -665,8 +665,10 @@
   }
   else {
     possible <- attr(cond, "candidates")
-    message(gettextf('Note: Method with signature "%s" chosen for function "%s",\n target signature "%s".\n %s would also be valid',
-                     selected, attr(cond, "generic"), attr(cond, "target"),
+    message(gettextf("Note: Method with signature %s chosen for function %s,\n target signature %s.\n %s would also be valid",
+                     sQuote(selected),
+                     sQuote(attr(cond, "generic")),
+                     sQuote(attr(cond, "target")),
 		     paste0('"', possible[is.na(match(possible, selected))], '"',
 			    collapse=", ")),
             domain = NA)
@@ -742,8 +744,10 @@
   else if(length(methods) == 0L) {
     cnames <- paste0("\"", sapply(classes, as.character), "\"",
 		     collapse = ", ")
-    stop("unable to find an inherited method for function \"", fdef@generic,
-         "\", for signature ", cnames)
+    stop(gettextf("unable to find an inherited method for function %s for signature %s",
+                  sQuote(fdef@generic),
+                  sQuote(cnames)),
+         domain = NA)
   }
   else
     stop("Internal error in finding inherited methods; didn't return a unique method")
@@ -1533,7 +1537,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       subclasses <- .relevantClasses(classesj, !virtual, where, ok[[j]])
       nj <- length(subclasses)
       ##       if(nj == 0) {  ##FIXME, wrong test
-      ##         warning(gettextf("No elligible subclasses for argument \"%s\" found, so no contribution to analysis",
+      ##         warning(gettextf("No eligible subclasses for argument '%s' found, so no contribution to analysis",
       ##                          colnames(sigs)[[j]]), domain  = NA)
       ##         next
       ##       }
