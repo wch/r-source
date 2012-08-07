@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-07 06:58+0100\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -210,8 +210,8 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
-#: src/main/deparse.c:387 src/main/devices.c:535 src/main/dotcode.c:421
-#: src/main/dotcode.c:425 src/main/dotcode.c:430 src/main/dounzip.c:320
+#: src/main/deparse.c:387 src/main/devices.c:535 src/main/dotcode.c:444
+#: src/main/dotcode.c:448 src/main/dotcode.c:453 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -2770,82 +2770,88 @@ msgstr ""
 "'name' doit être une chaîne de caractères (de longueur 1) ou une référence à "
 "un symbole natif"
 
-#: src/main/dotcode.c:196 src/main/dotcode.c:497
+#: src/main/dotcode.c:196 src/main/dotcode.c:520
 msgid "too many arguments in foreign function call"
 msgstr "trop d'arguments dans l'appel de fonction externe"
 
-#: src/main/dotcode.c:238
+#: src/main/dotcode.c:240 src/main/dotcode.c:245 src/main/dotcode.c:250
+#: src/main/dotcode.c:255
+#, fuzzy, c-format
+msgid "\"%s\" not available for %s() for package \"%s\""
+msgstr "%s non disponible pour ce périphérique"
+
+#: src/main/dotcode.c:260
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr ""
 "le nom %s de symbole \"%s\" est introuvable dans la DLL pour le package \"%s"
 "\""
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:265
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "point d'entrée %s \"%s\" absent de la table de chargement"
 
-#: src/main/dotcode.c:298
+#: src/main/dotcode.c:321
 msgid "NAOK used more than once"
 msgstr "NAOK utilisé plus d'une fois"
 
-#: src/main/dotcode.c:302
+#: src/main/dotcode.c:325
 msgid "DUP used more than once"
 msgstr "DUP utilisé plus d'une fois"
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:331
 msgid "DLL name is too long"
 msgstr "nom de DLL trop long"
 
-#: src/main/dotcode.c:311 src/main/dotcode.c:371 src/main/dotcode.c:377
+#: src/main/dotcode.c:334 src/main/dotcode.c:394 src/main/dotcode.c:400
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE utilisé plus d'une fois"
 
-#: src/main/dotcode.c:350
+#: src/main/dotcode.c:373
 msgid "PACKAGE argument must be a single character string"
 msgstr "l'argument PACKAGE doit être une chaîne de caractères unique"
 
-#: src/main/dotcode.c:356
+#: src/main/dotcode.c:379
 msgid "PACKAGE argument is too long"
 msgstr "argument PACKAGE trop long"
 
-#: src/main/dotcode.c:417
+#: src/main/dotcode.c:440
 msgid "no arguments supplied"
 msgstr "aucun argument fourni"
 
-#: src/main/dotcode.c:418 src/main/seq.c:901
+#: src/main/dotcode.c:441 src/main/seq.c:901
 msgid "too many arguments"
 msgstr "trop d'arguments"
 
-#: src/main/dotcode.c:455 src/main/dotcode.c:488 src/main/dotcode.c:1330
+#: src/main/dotcode.c:478 src/main/dotcode.c:511 src/main/dotcode.c:1353
 #, fuzzy
 msgid "'.NAME' is missing"
 msgstr "'EXPR' est manquant"
 
-#: src/main/dotcode.c:504 src/main/dotcode.c:1351
+#: src/main/dotcode.c:527 src/main/dotcode.c:1374
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Nombre d'arguments incorrect (%d), attendu %d pour '%s'"
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2231
+#: src/main/dotcode.c:1184 src/main/dotcode.c:2254
 msgid "too many arguments, sorry"
 msgstr "trop d'arguments, désolé"
 
-#: src/main/dotcode.c:1195 src/main/dotcode.c:1212
+#: src/main/dotcode.c:1218 src/main/dotcode.c:1235
 msgid "Invalid graphics state"
 msgstr "État des graphiques incorrect"
 
-#: src/main/dotcode.c:1285
+#: src/main/dotcode.c:1308
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "valeur NULL pour DLLInfoReference lors de la recherche de la DLL"
 
-#: src/main/dotcode.c:1391
+#: src/main/dotcode.c:1414
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Mauvais type pour l'argument %d dans l'appel à %s"
 
-#: src/main/dotcode.c:1426
+#: src/main/dotcode.c:1449
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2854,78 +2860,78 @@ msgstr ""
 "demande explicite de ne pas dupliquer les arguments dans l'appel à '%s', "
 "mais l'argument %d est du mauvais type (%d != %d)"
 
-#: src/main/dotcode.c:1449
+#: src/main/dotcode.c:1472
 #, fuzzy, c-format
 msgid "long vectors (argument %d) are not supported in %s"
 msgstr "les liens symboliques ne sont pas supportés sur cette architecture"
 
-#: src/main/dotcode.c:1480
+#: src/main/dotcode.c:1503
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "NA dans un appel à une fonction externe (argument %d)"
 
-#: src/main/dotcode.c:1503
+#: src/main/dotcode.c:1526
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "NA/NaN/Inf dans un appel à une fonction externe (argument %d)"
 
-#: src/main/dotcode.c:1508
+#: src/main/dotcode.c:1531
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1534
+#: src/main/dotcode.c:1557
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 "NA/NaN/Inf pour une valeur complexe dans l'appel d'une fonction externe "
 "(argument %d)"
 
-#: src/main/dotcode.c:1553
+#: src/main/dotcode.c:1576
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "les variables de caractères doivent être dupliquées en .C / .Fortran"
 
-#: src/main/dotcode.c:1558
+#: src/main/dotcode.c:1581
 msgid "only first string in char vector used in .Fortran"
 msgstr ""
 "seule la première chaîne du vecteur de caractères est utilisée dans .Fortran"
 
-#: src/main/dotcode.c:1601
+#: src/main/dotcode.c:1624
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "mode incorrect à passer vers le Fortran (argument %d)"
 
-#: src/main/dotcode.c:1616 src/main/dotcode.c:1627
+#: src/main/dotcode.c:1639 src/main/dotcode.c:1650
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "mode incorrect à passer vers le Fortran (argument %d)"
 
-#: src/main/dotcode.c:1621
+#: src/main/dotcode.c:1644
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr "mode incorrect à passer vers le Fortran (argument %d)"
 
-#: src/main/dotcode.c:1632
+#: src/main/dotcode.c:1655
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2476
+#: src/main/dotcode.c:2499
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type \"%s\" indisponible dans les appels entre langages"
 
-#: src/main/dotcode.c:2543
+#: src/main/dotcode.c:2566
 msgid "invalid function in call_R"
 msgstr "fonction incorrecte dans call_R"
 
-#: src/main/dotcode.c:2545
+#: src/main/dotcode.c:2568
 msgid "invalid argument count in call_R"
 msgstr "mauvais nombre d'arguments dans call_R"
 
-#: src/main/dotcode.c:2547
+#: src/main/dotcode.c:2570
 msgid "invalid return value count in call_R"
 msgstr "mauvais nombre de valeurs renvoyées par call_R"
 
-#: src/main/dotcode.c:2581
+#: src/main/dotcode.c:2604
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode '%s' non supporté dans call_R"
@@ -3907,153 +3913,153 @@ msgstr "l'utilisation récursive de getGraphicsEvent n'est pas permise"
 msgid "no graphics event handlers set"
 msgstr "aucun manipulateur graphiques (handler) défini"
 
-#: src/main/gram.y:219 src/main/gram.y:234 src/main/gram.y:2149
-#: src/main/gram.y:2163
+#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2171
+#: src/main/gram.y:2185
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF lors de la lecture de caractères MBCS à la ligne %d"
 
-#: src/main/gram.y:223 src/main/gram.y:231 src/main/gram.y:2153
-#: src/main/gram.y:2160
+#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2175
+#: src/main/gram.y:2182
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr ""
 "caractères multioctets incorrects dans l'analyse de code (parser) à la ligne "
 "%d"
 
-#: src/main/gram.y:463
+#: src/main/gram.y:465
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "débordement vers le haut du tampon d'entrée à la ligne %d"
 
-#: src/main/gram.y:1052
+#: src/main/gram.y:1054
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "type de marque incorrect à la ligne %d"
 
-#: src/main/gram.y:1613
+#: src/main/gram.y:1617
 msgid "contextstack overflow"
 msgstr "pile de noeuds débordée vers le haut"
 
-#: src/main/gram.y:1849
+#: src/main/gram.y:1853
 msgid "input"
 msgstr "entrée"
 
-#: src/main/gram.y:1850
+#: src/main/gram.y:1854
 msgid "end of input"
 msgstr "fin d'entrée"
 
-#: src/main/gram.y:1851
+#: src/main/gram.y:1855
 msgid "string constant"
 msgstr "constante de type chaîne de caractères"
 
-#: src/main/gram.y:1852
+#: src/main/gram.y:1856
 msgid "numeric constant"
 msgstr "constante numérique"
 
-#: src/main/gram.y:1853
+#: src/main/gram.y:1857
 msgid "symbol"
 msgstr "symbole"
 
-#: src/main/gram.y:1854
+#: src/main/gram.y:1858
 msgid "assignment"
 msgstr "affectation"
 
-#: src/main/gram.y:1855
+#: src/main/gram.y:1859
 msgid "end of line"
 msgstr "fin de ligne"
 
-#: src/main/gram.y:1869 src/main/gram.y:1875
+#: src/main/gram.y:1873 src/main/gram.y:1879
 #, c-format
 msgid "unexpected %s"
 msgstr "%s inattendu(e)"
 
-#: src/main/gram.y:1885
+#: src/main/gram.y:1889
 #, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "Argument formel répété '%s' à la ligne %d"
 
-#: src/main/gram.y:2064
-#, c-format
-msgid "integer literal %sL contains decimal; using numeric value"
+#: src/main/gram.y:2082
+#, fuzzy, c-format
+msgid "integer literal %s contains decimal; using numeric value"
 msgstr ""
 "le litéral entier %sL contient des décimales ; utilisation de la valeur "
 "numérique"
 
-#: src/main/gram.y:2066
+#: src/main/gram.y:2086
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
 "la valeur non entière %s est qualifiée avec L ; utilisation de la valeur "
 "numérique"
 
-#: src/main/gram.y:2077
-#, c-format
-msgid "integer literal %sL contains unnecessary decimal point"
+#: src/main/gram.y:2099
+#, fuzzy, c-format
+msgid "integer literal %s contains unnecessary decimal point"
 msgstr "le litéral entier %sL contient un séparateur décimal inutile"
 
-#: src/main/gram.y:2109
+#: src/main/gram.y:2131
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 "impossible d'allouer de la mémoire pour une longue chaîne de caractères à la "
 "ligne %d"
 
-#: src/main/gram.y:2264
+#: src/main/gram.y:2290
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' non suivi de chiffres hexadécimaux dans la chaîne de caractères "
 "débutant \"%s\""
 
-#: src/main/gram.y:2278
+#: src/main/gram.y:2304
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\uxxxx séquences non supportées dans les 'backticks' (ligne %d)"
 
-#: src/main/gram.y:2293
+#: src/main/gram.y:2319
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\u' non suivi de chiffres hexadécimaux dans la chaîne de caractères "
 "débutant \"%s\""
 
-#: src/main/gram.y:2301
+#: src/main/gram.y:2327
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "séquence \\u{xxxx} incorrecte (ligne %d)"
 
-#: src/main/gram.y:2313
+#: src/main/gram.y:2339
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx séquences non supportées dans les 'backticks' (ligne %d)"
 
-#: src/main/gram.y:2328
+#: src/main/gram.y:2354
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\U' non suivi de chiffres hexadécimaux dans la chaîne de caractères "
 "débutant \"%s\""
 
-#: src/main/gram.y:2336
+#: src/main/gram.y:2362
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "séquence \\U{xxxxxxxx} incorrecte (ligne %d)"
 
-#: src/main/gram.y:2376
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' est un code escape non reconnu dans une chaîne de caractères débutant "
 "\"%s\""
 
-#: src/main/gram.y:2429
+#: src/main/gram.y:2461
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "le mélange de texte Unicode et des caractères à échappement octaux ou "
 "décimaux n'est pas autorisée dans une chaîne de caractères"
 
-#: src/main/gram.y:2433
+#: src/main/gram.y:2465
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -4063,13 +4069,13 @@ msgstr ""
 "Unicode absents de cet environnement linguistique\n"
 "est trop longue (1000 caractères maximum)"
 
-#: src/main/gram.y:3009 src/main/gram.y:3016 src/main/gram.y:3022
-#: src/main/gram.y:3029
+#: src/main/gram.y:3053 src/main/gram.y:3060 src/main/gram.y:3066
+#: src/main/gram.y:3073
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "pile d'entiers débordée vers le haut à la ligne %d"
 
-#: src/main/gram.y:3121
+#: src/main/gram.y:3169
 #, fuzzy, c-format
 msgid "Internal parser error at line %d"
 msgstr "débordement vers le haut du tampon d'entrée à la ligne %d"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-07 06:58+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -208,8 +208,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
-#: src/main/deparse.c:387 src/main/devices.c:535 src/main/dotcode.c:421
-#: src/main/dotcode.c:425 src/main/dotcode.c:430 src/main/dounzip.c:320
+#: src/main/deparse.c:387 src/main/devices.c:535 src/main/dotcode.c:444
+#: src/main/dotcode.c:448 src/main/dotcode.c:453 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -2702,80 +2702,86 @@ msgstr ""
 " 'name' は（長さ1の）文字列またはネイティブなシンボル参照でなければなりませ"
 "ん "
 
-#: src/main/dotcode.c:196 src/main/dotcode.c:497
+#: src/main/dotcode.c:196 src/main/dotcode.c:520
 msgid "too many arguments in foreign function call"
 msgstr " 外部関数の呼び出しで引数が多すぎます "
 
-#: src/main/dotcode.c:238
+#: src/main/dotcode.c:240 src/main/dotcode.c:245 src/main/dotcode.c:250
+#: src/main/dotcode.c:255
+#, fuzzy, c-format
+msgid "\"%s\" not available for %s() for package \"%s\""
+msgstr " このデバイスに対して%sは利用できません "
+
+#: src/main/dotcode.c:260
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr " %s シンボル名 \"%s\" はパッケージ \"%s\" の DLL の中にありません "
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:265
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr " %s シンボル名 \"%s\" は load table にありません "
 
-#: src/main/dotcode.c:298
+#: src/main/dotcode.c:321
 msgid "NAOK used more than once"
 msgstr " NAOK が二回以上使われました "
 
-#: src/main/dotcode.c:302
+#: src/main/dotcode.c:325
 msgid "DUP used more than once"
 msgstr " DUP が二回以上使われました "
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:331
 msgid "DLL name is too long"
 msgstr " DLL の名前が長すぎます "
 
-#: src/main/dotcode.c:311 src/main/dotcode.c:371 src/main/dotcode.c:377
+#: src/main/dotcode.c:334 src/main/dotcode.c:394 src/main/dotcode.c:400
 msgid "PACKAGE used more than once"
 msgstr " PACKAGE が二回以上使われました "
 
-#: src/main/dotcode.c:350
+#: src/main/dotcode.c:373
 msgid "PACKAGE argument must be a single character string"
 msgstr " PACKAGE 引数は単一の文字列でなければなりません "
 
-#: src/main/dotcode.c:356
+#: src/main/dotcode.c:379
 msgid "PACKAGE argument is too long"
 msgstr " PACKAGE 引数が長すぎます "
 
-#: src/main/dotcode.c:417
+#: src/main/dotcode.c:440
 msgid "no arguments supplied"
 msgstr " 引数が与えられていません "
 
-#: src/main/dotcode.c:418 src/main/seq.c:901
+#: src/main/dotcode.c:441 src/main/seq.c:901
 msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
-#: src/main/dotcode.c:455 src/main/dotcode.c:488 src/main/dotcode.c:1330
+#: src/main/dotcode.c:478 src/main/dotcode.c:511 src/main/dotcode.c:1353
 #, fuzzy
 msgid "'.NAME' is missing"
 msgstr " 'EXPR' がありません "
 
-#: src/main/dotcode.c:504 src/main/dotcode.c:1351
+#: src/main/dotcode.c:527 src/main/dotcode.c:1374
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr " 引数の数(%1$d)が不正です。%3$s に対しては %2$d 個の引数が必要です "
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2231
+#: src/main/dotcode.c:1184 src/main/dotcode.c:2254
 msgid "too many arguments, sorry"
 msgstr " 引数が多すぎます（すみません…） "
 
-#: src/main/dotcode.c:1195 src/main/dotcode.c:1212
+#: src/main/dotcode.c:1218 src/main/dotcode.c:1235
 msgid "Invalid graphics state"
 msgstr " 無効なグラフィックス状態です "
 
-#: src/main/dotcode.c:1285
+#: src/main/dotcode.c:1308
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr " DLL を探している際に，DLLInfoReference に NULL 値が見つかりました "
 
-#: src/main/dotcode.c:1391
+#: src/main/dotcode.c:1414
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr " %d 引数の型が不正です（%s の呼び出しにおいて） "
 
-#: src/main/dotcode.c:1426
+#: src/main/dotcode.c:1449
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2784,75 +2790,75 @@ msgstr ""
 " '%s' への呼出しで、引数を複製しないという明示的な要求ですが、引数 %d は誤っ"
 "たタイプです  (%d != %d)  "
 
-#: src/main/dotcode.c:1449
+#: src/main/dotcode.c:1472
 #, fuzzy, c-format
 msgid "long vectors (argument %d) are not supported in %s"
 msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
 
-#: src/main/dotcode.c:1480
+#: src/main/dotcode.c:1503
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr " 外部関数呼出しの引数 %d が NA です "
 
-#: src/main/dotcode.c:1503
+#: src/main/dotcode.c:1526
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数の呼び出し(引数 %d) 中に NA/NaN/Inf があります "
 
-#: src/main/dotcode.c:1508
+#: src/main/dotcode.c:1531
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1534
+#: src/main/dotcode.c:1557
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr " 外部関数呼出し (引数 %d) 中に複素数の NA/NaN/Inf 値があります "
 
-#: src/main/dotcode.c:1553
+#: src/main/dotcode.c:1576
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr " .C/.Fortran 中に文字列変数は重複していなければなりません "
 
-#: src/main/dotcode.c:1558
+#: src/main/dotcode.c:1581
 msgid "only first string in char vector used in .Fortran"
 msgstr " .Fortran に対する文字ベクトルとして，最初の文字列だけを使いました "
 
-#: src/main/dotcode.c:1601
+#: src/main/dotcode.c:1624
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1616 src/main/dotcode.c:1627
+#: src/main/dotcode.c:1639 src/main/dotcode.c:1650
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1621
+#: src/main/dotcode.c:1644
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:1632
+#: src/main/dotcode.c:1655
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2476
+#: src/main/dotcode.c:2499
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr " 言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません "
 
-#: src/main/dotcode.c:2543
+#: src/main/dotcode.c:2566
 msgid "invalid function in call_R"
 msgstr " call_R 中の関数が不正です "
 
-#: src/main/dotcode.c:2545
+#: src/main/dotcode.c:2568
 msgid "invalid argument count in call_R"
 msgstr " call_R の引数の個数が不正です "
 
-#: src/main/dotcode.c:2547
+#: src/main/dotcode.c:2570
 msgid "invalid return value count in call_R"
 msgstr " call_R の戻り値の個数が不正です "
 
-#: src/main/dotcode.c:2581
+#: src/main/dotcode.c:2604
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr " call_R では \"%s\" というモードはサポートされていません "
@@ -3828,137 +3834,137 @@ msgstr " getGrapshicsEvent の再帰的使用はサポートされていませ�
 msgid "no graphics event handlers set"
 msgstr " 設定されたグラフィックス event handler がありません "
 
-#: src/main/gram.y:219 src/main/gram.y:234 src/main/gram.y:2149
-#: src/main/gram.y:2163
+#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2171
+#: src/main/gram.y:2185
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました(%d行) "
 
-#: src/main/gram.y:223 src/main/gram.y:231 src/main/gram.y:2153
-#: src/main/gram.y:2160
+#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2175
+#: src/main/gram.y:2182
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr " 構文解析中に不正なマルチバイト文字列がありました (%d行) "
 
-#: src/main/gram.y:463
+#: src/main/gram.y:465
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr " 入力バッファが溢れました  (%d行) "
 
-#: src/main/gram.y:1052
+#: src/main/gram.y:1054
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr " tag の型が正しくありません  (%d行) "
 
-#: src/main/gram.y:1613
+#: src/main/gram.y:1617
 msgid "contextstack overflow"
 msgstr " コンテクストスタックが溢れました "
 
-#: src/main/gram.y:1849
+#: src/main/gram.y:1853
 msgid "input"
 msgstr " 入力 "
 
-#: src/main/gram.y:1850
+#: src/main/gram.y:1854
 msgid "end of input"
 msgstr " 入力の終り "
 
-#: src/main/gram.y:1851
+#: src/main/gram.y:1855
 msgid "string constant"
 msgstr " 文字列定数 "
 
-#: src/main/gram.y:1852
+#: src/main/gram.y:1856
 msgid "numeric constant"
 msgstr " 数値定数 "
 
-#: src/main/gram.y:1853
+#: src/main/gram.y:1857
 msgid "symbol"
 msgstr " シンボル "
 
-#: src/main/gram.y:1854
+#: src/main/gram.y:1858
 msgid "assignment"
 msgstr " 付値 "
 
-#: src/main/gram.y:1855
+#: src/main/gram.y:1859
 msgid "end of line"
 msgstr " 行の終り "
 
-#: src/main/gram.y:1869 src/main/gram.y:1875
+#: src/main/gram.y:1873 src/main/gram.y:1879
 #, c-format
 msgid "unexpected %s"
 msgstr " 予想外の %s です "
 
-#: src/main/gram.y:1885
+#: src/main/gram.y:1889
 #, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr " 仮引数 '%s' が繰り返されています   (%d行) "
 
-#: src/main/gram.y:2064
-#, c-format
-msgid "integer literal %sL contains decimal; using numeric value"
+#: src/main/gram.y:2082
+#, fuzzy, c-format
+msgid "integer literal %s contains decimal; using numeric value"
 msgstr " 整数リテラル %sL は小数を含んでいます. 実数を利用します. "
 
-#: src/main/gram.y:2066
+#: src/main/gram.y:2086
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr " 非整数値 %s に L がついています；実数値を使います "
 
-#: src/main/gram.y:2077
-#, c-format
-msgid "integer literal %sL contains unnecessary decimal point"
+#: src/main/gram.y:2099
+#, fuzzy, c-format
+msgid "integer literal %s contains unnecessary decimal point"
 msgstr " 整数リテラル %sL は不要な小数点を含んでいます "
 
-#: src/main/gram.y:2109
+#: src/main/gram.y:2131
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr " 文字列が長すぎるためメモリ確保ができません  (%d行) "
 
-#: src/main/gram.y:2264
+#: src/main/gram.y:2290
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\"で始まる文字列の中で8進文字なしに'\\x'が使われています "
 
-#: src/main/gram.y:2278
+#: src/main/gram.y:2304
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\uxxxx シーケンスはバックチック内ではサポートされません   (%d 行) "
 
-#: src/main/gram.y:2293
+#: src/main/gram.y:2319
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\"で始まる文字列の中で8進文字なしに'\\u'が使われています "
 
-#: src/main/gram.y:2301
+#: src/main/gram.y:2327
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr " 不正な \\u{xxxx} 系列です  (%d行) "
 
-#: src/main/gram.y:2313
+#: src/main/gram.y:2339
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 " \\Uxxxxxxxx シーケンスはバックチック内ではサポートされません  (%d 行) "
 
-#: src/main/gram.y:2328
+#: src/main/gram.y:2354
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\"で始まる文字列の中で8進文字なしに'\\U'が使われています "
 
-#: src/main/gram.y:2336
+#: src/main/gram.y:2362
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です  (%d行) "
 
-#: src/main/gram.y:2376
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 " \"%2$s\"で始まる文字列の中で '\\%1$c' は文字列で認識されないエスケープです "
 
-#: src/main/gram.y:2429
+#: src/main/gram.y:2461
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr " 文字列中にユニコードや8進・16進エスケープ文字は許されません "
 
-#: src/main/gram.y:2433
+#: src/main/gram.y:2465
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3967,13 +3973,13 @@ msgstr ""
 " このロケールにはないUnicodeエスケープを含む %d 行の文字列は \n"
 " 長すぎます(最大1000文字です)  "
 
-#: src/main/gram.y:3009 src/main/gram.y:3016 src/main/gram.y:3022
-#: src/main/gram.y:3029
+#: src/main/gram.y:3053 src/main/gram.y:3060 src/main/gram.y:3066
+#: src/main/gram.y:3073
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr " コンテクストスタックが溢れました  (%d行) "
 
-#: src/main/gram.y:3121
+#: src/main/gram.y:3169
 #, fuzzy, c-format
 msgid "Internal parser error at line %d"
 msgstr " 入力バッファが溢れました  (%d行) "

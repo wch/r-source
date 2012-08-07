@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-07 06:58+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -211,8 +211,8 @@ msgstr "'%ls' 를 표시하는데 문제가 있습니다 "
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
-#: src/main/deparse.c:387 src/main/devices.c:535 src/main/dotcode.c:421
-#: src/main/dotcode.c:425 src/main/dotcode.c:430 src/main/dounzip.c:320
+#: src/main/deparse.c:387 src/main/devices.c:535 src/main/dotcode.c:444
+#: src/main/dotcode.c:448 src/main/dotcode.c:453 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -2685,80 +2685,86 @@ msgstr "기호 '%s'가 너무 깁니다"
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name' 은（길이가 1인）문자열 또는 네이티브 심볼 참조여야 합니다"
 
-#: src/main/dotcode.c:196 src/main/dotcode.c:497
+#: src/main/dotcode.c:196 src/main/dotcode.c:520
 msgid "too many arguments in foreign function call"
 msgstr "외부 함수 호출에서 인수가 너무 많습니다"
 
-#: src/main/dotcode.c:238
+#: src/main/dotcode.c:240 src/main/dotcode.c:245 src/main/dotcode.c:250
+#: src/main/dotcode.c:255
+#, fuzzy, c-format
+msgid "\"%s\" not available for %s() for package \"%s\""
+msgstr "이 장치에 대한 %s는 사용할 수 없습니다"
+
+#: src/main/dotcode.c:260
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "%s 심볼명 \"%s\" 가 패키지 \"%s\"의 DLL 안에 없습니다"
 
-#: src/main/dotcode.c:242
+#: src/main/dotcode.c:265
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s 심볼명 \"%s\" 가 로드 테이블에 없습니다"
 
-#: src/main/dotcode.c:298
+#: src/main/dotcode.c:321
 msgid "NAOK used more than once"
 msgstr "NAOK가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:302
+#: src/main/dotcode.c:325
 msgid "DUP used more than once"
 msgstr "DUP가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:308
+#: src/main/dotcode.c:331
 msgid "DLL name is too long"
 msgstr "DLL 이름은 너무 깁니다"
 
-#: src/main/dotcode.c:311 src/main/dotcode.c:371 src/main/dotcode.c:377
+#: src/main/dotcode.c:334 src/main/dotcode.c:394 src/main/dotcode.c:400
 msgid "PACKAGE used more than once"
 msgstr "패키지가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:350
+#: src/main/dotcode.c:373
 msgid "PACKAGE argument must be a single character string"
 msgstr "패키지 인수는 단일 문자열이어야만 합니다"
 
-#: src/main/dotcode.c:356
+#: src/main/dotcode.c:379
 msgid "PACKAGE argument is too long"
 msgstr "패키지 인수가 너무 깁니다"
 
-#: src/main/dotcode.c:417
+#: src/main/dotcode.c:440
 msgid "no arguments supplied"
 msgstr "인수가 제공되어 있지 않습니다"
 
-#: src/main/dotcode.c:418 src/main/seq.c:901
+#: src/main/dotcode.c:441 src/main/seq.c:901
 msgid "too many arguments"
 msgstr "인수의 수가 너무 많습니다"
 
-#: src/main/dotcode.c:455 src/main/dotcode.c:488 src/main/dotcode.c:1330
+#: src/main/dotcode.c:478 src/main/dotcode.c:511 src/main/dotcode.c:1353
 #, fuzzy
 msgid "'.NAME' is missing"
 msgstr "'EXPR' 가 없습니다"
 
-#: src/main/dotcode.c:504 src/main/dotcode.c:1351
+#: src/main/dotcode.c:527 src/main/dotcode.c:1374
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "인수의 개수 (%d)가 잘못되었습니다 : %d 개의 인수가 '%s'에 필요합니다"
 
-#: src/main/dotcode.c:1161 src/main/dotcode.c:2231
+#: src/main/dotcode.c:1184 src/main/dotcode.c:2254
 msgid "too many arguments, sorry"
 msgstr "인수가 너무 많습니다(죄송합니다)"
 
-#: src/main/dotcode.c:1195 src/main/dotcode.c:1212
+#: src/main/dotcode.c:1218 src/main/dotcode.c:1235
 msgid "Invalid graphics state"
 msgstr "잘못된 그래픽 상태입니다"
 
-#: src/main/dotcode.c:1285
+#: src/main/dotcode.c:1308
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL을 찾고 때 DLLInfoReference에 NULL 값이 발견되었습니다"
 
-#: src/main/dotcode.c:1391
+#: src/main/dotcode.c:1414
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "인수 %d의 형식이 %s의 호출에서 잘못되었습니다"
 
-#: src/main/dotcode.c:1426
+#: src/main/dotcode.c:1449
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -2767,75 +2773,75 @@ msgstr ""
 "'%s' 에 대한 호출 인수을 복제하지 말라는 명시적 요구가 있지만, 인수 %d는 잘못"
 "된 형식(%d != %d) 입니다"
 
-#: src/main/dotcode.c:1449
+#: src/main/dotcode.c:1472
 #, fuzzy, c-format
 msgid "long vectors (argument %d) are not supported in %s"
 msgstr "이 플랫폼에서는 심볼릭 링크는 지원되지 않습니다"
 
-#: src/main/dotcode.c:1480
+#: src/main/dotcode.c:1503
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "외부 함수 호출의 인수%d가 NA입니다"
 
-#: src/main/dotcode.c:1503
+#: src/main/dotcode.c:1526
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "외부 함수의 호출(arg %d)에 NA/NaN/Inf가 있습니다"
 
-#: src/main/dotcode.c:1508
+#: src/main/dotcode.c:1531
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1534
+#: src/main/dotcode.c:1557
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "외부함수를 호출한(인수 %d)중에 복소수의 NA/NaN/Inf값이 있습니다"
 
-#: src/main/dotcode.c:1553
+#: src/main/dotcode.c:1576
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "C/.Fortran에 문자열 변수는 중복하여야만 합니다"
 
-#: src/main/dotcode.c:1558
+#: src/main/dotcode.c:1581
 msgid "only first string in char vector used in .Fortran"
 msgstr "Fortran에 대한 문자 벡터으로서 최초의 문자열만을 사용했습니다"
 
-#: src/main/dotcode.c:1601
+#: src/main/dotcode.c:1624
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
-#: src/main/dotcode.c:1616 src/main/dotcode.c:1627
+#: src/main/dotcode.c:1639 src/main/dotcode.c:1650
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
-#: src/main/dotcode.c:1621
+#: src/main/dotcode.c:1644
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수 %d의 모드가 잘못되었습니다"
 
-#: src/main/dotcode.c:1632
+#: src/main/dotcode.c:1655
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2476
+#: src/main/dotcode.c:2499
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "언어 간의 함수 호출에서 \"%s\" 형식이 지원되지 않습니다"
 
-#: src/main/dotcode.c:2543
+#: src/main/dotcode.c:2566
 msgid "invalid function in call_R"
 msgstr "call_R의 함수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2545
+#: src/main/dotcode.c:2568
 msgid "invalid argument count in call_R"
 msgstr "call_R 인수 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2547
+#: src/main/dotcode.c:2570
 msgid "invalid return value count in call_R"
 msgstr "call_R의 반환값의 개수가 잘못되었습니다"
 
-#: src/main/dotcode.c:2581
+#: src/main/dotcode.c:2604
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R는 \"%s\" 라는 모드는 지원되지 않습니다"
@@ -3802,138 +3808,138 @@ msgstr "getGrapshicsEvent의 재귀적인 사용은 지원되지 않습니다"
 msgid "no graphics event handlers set"
 msgstr "설정된 그래픽 이벤트 핸들러가 없습니다"
 
-#: src/main/gram.y:219 src/main/gram.y:234 src/main/gram.y:2149
-#: src/main/gram.y:2163
+#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2171
+#: src/main/gram.y:2185
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "MBCS자를 읽고있는 도중에 %d행에서 EOF가 발생했습니다"
 
-#: src/main/gram.y:223 src/main/gram.y:231 src/main/gram.y:2153
-#: src/main/gram.y:2160
+#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2175
+#: src/main/gram.y:2182
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "구문분석을 하는 동안 잘못된 멀티 바이트 문자열이 %d행에 있었습니다"
 
-#: src/main/gram.y:463
+#: src/main/gram.y:465
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "%d행에서 입력 버퍼가 가득 찼습니다"
 
-#: src/main/gram.y:1052
+#: src/main/gram.y:1054
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "%d행의 tag 형식이 올바르지 않습니다"
 
-#: src/main/gram.y:1613
+#: src/main/gram.y:1617
 msgid "contextstack overflow"
 msgstr "컨텍스트 스택이 가득 찼습니다"
 
-#: src/main/gram.y:1849
+#: src/main/gram.y:1853
 msgid "input"
 msgstr "입력"
 
-#: src/main/gram.y:1850
+#: src/main/gram.y:1854
 msgid "end of input"
 msgstr "입력종료 "
 
-#: src/main/gram.y:1851
+#: src/main/gram.y:1855
 msgid "string constant"
 msgstr "문자열 상수"
 
-#: src/main/gram.y:1852
+#: src/main/gram.y:1856
 msgid "numeric constant"
 msgstr "수치상수 "
 
-#: src/main/gram.y:1853
+#: src/main/gram.y:1857
 msgid "symbol"
 msgstr "심볼 "
 
-#: src/main/gram.y:1854
+#: src/main/gram.y:1858
 msgid "assignment"
 msgstr "할당"
 
-#: src/main/gram.y:1855
+#: src/main/gram.y:1859
 msgid "end of line"
 msgstr "줄끝 "
 
-#: src/main/gram.y:1869 src/main/gram.y:1875
+#: src/main/gram.y:1873 src/main/gram.y:1879
 #, c-format
 msgid "unexpected %s"
 msgstr "예기치 않은 %s입니다"
 
-#: src/main/gram.y:1885
+#: src/main/gram.y:1889
 #, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "임시 인수 '%s'이 %d행에서 반복되고 있습니다"
 
-#: src/main/gram.y:2064
-#, c-format
-msgid "integer literal %sL contains decimal; using numeric value"
+#: src/main/gram.y:2082
+#, fuzzy, c-format
+msgid "integer literal %s contains decimal; using numeric value"
 msgstr "정수 리터럴 %sL이 소수를 포함합니다; 실수를 이용하겠습니다"
 
-#: src/main/gram.y:2066
+#: src/main/gram.y:2086
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "정수가 아닌 값을 %s에 L이 붙어 있습니다;실수를 이용하겠습니다"
 
-#: src/main/gram.y:2077
-#, c-format
-msgid "integer literal %sL contains unnecessary decimal point"
+#: src/main/gram.y:2099
+#, fuzzy, c-format
+msgid "integer literal %s contains unnecessary decimal point"
 msgstr "정수 리터럴 %sL이 불필요한 소수점을 포함하고 있습니다"
 
-#: src/main/gram.y:2109
+#: src/main/gram.y:2131
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d행의 문자열이 너무 길어서 버퍼를 확보할 수 없습니다"
 
-#: src/main/gram.y:2264
+#: src/main/gram.y:2290
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "\"%s\"로 시작하는 문자열 가운데 16진수 아닌 '\\x'가 사용되고 있습니다"
 
-#: src/main/gram.y:2278
+#: src/main/gram.y:2304
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\ uxxxx 순열들은  백틱에서 지원되지 않습니다 (%d 행)"
 
-#: src/main/gram.y:2293
+#: src/main/gram.y:2319
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "\"%s\"로 시작하는 문자열 가운데 16진수 아닌 '\\u'가 사용되고 있습니다"
 
-#: src/main/gram.y:2301
+#: src/main/gram.y:2327
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "잘못된 \\u{xxxx} 순서입니다 (%d행)"
 
-#: src/main/gram.y:2313
+#: src/main/gram.y:2339
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 
-#: src/main/gram.y:2328
+#: src/main/gram.y:2354
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "\"%s\"로 시작되는 문자열 가운데 16진수 아닌 '\\U'가 사용되었습니다"
 
-#: src/main/gram.y:2336
+#: src/main/gram.y:2362
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "invalid \\U{xxxxxxxx} sequence (line %d)"
 
-#: src/main/gram.y:2376
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' 는 \"%s\" 로 시작하는 문자열 중에서 인식되지 않는 이스케이프 문자입니"
 "다 "
 
-#: src/main/gram.y:2429
+#: src/main/gram.y:2461
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "문자열에서 유니코드와 8진수/16진수 이스케이프문자의 혼용은 허용되지 않습니다"
 
-#: src/main/gram.y:2433
+#: src/main/gram.y:2465
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3942,13 +3948,13 @@ msgstr ""
 "이 로케일에서 유니코드 이스케이프문자를 가진 %d행의 문자열이\n"
 "너무 깁니다(최대1000자)"
 
-#: src/main/gram.y:3009 src/main/gram.y:3016 src/main/gram.y:3022
-#: src/main/gram.y:3029
+#: src/main/gram.y:3053 src/main/gram.y:3060 src/main/gram.y:3066
+#: src/main/gram.y:3073
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "컨텍스트 스택이 가득 찼습니다 (%d행)"
 
-#: src/main/gram.y:3121
+#: src/main/gram.y:3169
 #, fuzzy, c-format
 msgid "Internal parser error at line %d"
 msgstr "%d행에서 입력 버퍼가 가득 찼습니다"
