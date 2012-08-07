@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-08-07 07:50\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -77,14 +77,9 @@ msgstr "S3Class参数必需是%s的母类别: %s不是这种情况"
 msgid "Replacement value must extend class %s, got %s"
 msgstr "替换值必需扩充%s类别，但现在得到的是%s"
 
-msgid "Replacement value must be of class \""
-msgstr "替换值的类别必需为"
-
-msgid "\", got one of class \""
-msgstr "\"，不能是类别"
-
-msgid "\""
-msgstr "\""
+#, fuzzy
+msgid "Replacement value must be of class %s, got one of class %s"
+msgstr "替换值必需扩充%s类别，但现在得到的是%s"
 
 msgid "no 'replace' method was defined for as(x, \"%s\") <- value for class %s"
 msgstr "不存在%2$s这一类别用于as(x, \"%1$s\") <- value函数的'replace'方法"
@@ -121,7 +116,8 @@ msgstr "必需设定成员类别: %s没有这样的设定"
 msgid "unable to create union class:  could not set members %s"
 msgstr "无法建立併集类别: 无法设定%s成员"
 
-msgid "invalid argument \"name\": %s"
+#, fuzzy
+msgid "invalid argument 'name': %s"
 msgstr "参数\"name\"无效: %s"
 
 msgid ""
@@ -166,7 +162,8 @@ msgid ""
 "internal error: did not get a valid generic function object for function %s"
 msgstr "内部出错: 为函数%s找不到泛型函数对象"
 
-msgid "A function for argument \"f\" must be a generic function"
+#, fuzzy
+msgid "A function for argument 'f' must be a generic function"
 msgstr "为参数\"f\"提供的函数必需是泛型函数"
 
 msgid "the environment %s is locked; cannot assign methods for function %s"
@@ -204,9 +201,10 @@ msgid ""
 "defined"
 msgstr "函数%s的方法和%s标记都被封闭了，因此无法将之重新定义"
 
+#, fuzzy
 msgid ""
-"For function %s, signature \"%s\": argument in method definition changed "
-"from (%s) to (%s)"
+"For function %s, signature %s: argument in method definition changed from "
+"(%s) to (%s)"
 msgstr "%s函数，\"%s\"标记：方法定义中的参数从(%s)改变成(%s)"
 
 msgid ""
@@ -218,7 +216,8 @@ msgid ""
 "invalid method definition: expected a function, got an object of class %s"
 msgstr "方法定义不对：提供的应该是函数，现在却是个类别为%s的对象"
 
-msgid "Function supplied as argument \"f\" must be a generic"
+#, fuzzy
+msgid "Function supplied as argument 'f' must be a generic"
 msgstr "给参数\"f\"所提供的函数必需是泛型函数"
 
 msgid "no generic function %s found"
@@ -230,11 +229,13 @@ msgstr "找不到对函数%s和标记%s适用的方法"
 msgid "no environment or package corresponding to argument where=%s"
 msgstr "找不到与where=%s参数相配的环境或程辑包"
 
-msgid "No generic function found for \"%s\""
+#, fuzzy
+msgid "No generic function found for '%s'"
 msgstr "找不到\"%s\"泛型函数"
 
-msgid "No method found for function \"%s\" and signature %s"
-msgstr "找不到适用于函数'%s'和标记%s的方法"
+#, fuzzy
+msgid "No method found for function '%s' and signature %s"
+msgstr "函数'%s'和标记%s没有方法"
 
 msgid "Warning:  using defunct methods list search"
 msgstr "警告：你用的串列搜索方法已经不现存了"
@@ -256,8 +257,9 @@ msgstr "函数%s和标记%s方法串列对象里没有设定方法"
 msgid "'file' must be a character string or a connection"
 msgstr "'file'必需是字符串或联结"
 
+#, fuzzy
 msgid ""
-"argument \"signature\" is not meaningful with the current implementation and "
+"argument 'signature' is not meaningful with the current implementation and "
 "is ignored \n"
 "(extract a subset of the methods list instead)"
 msgstr ""
@@ -270,7 +272,8 @@ msgstr "%2$s类别里没有一个匹配%1$s的方法"
 msgid "No method found for signature %s"
 msgstr "标记'%s'里不存在任何方法"
 
-msgid "\"%s\" has no methods defined"
+#, fuzzy
+msgid "%s has no methods defined"
 msgstr "'%s'没有设定任何方法"
 
 msgid "selectMethod(): mlist is not an environment or NULL :"
@@ -288,13 +291,15 @@ msgid ""
 "class %s)"
 msgstr "第一个参数应当为泛型函数的名称(现在却是类别为%s的对象)"
 
-msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
+#, fuzzy
+msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr "\"%s\"不是在\"%s\"里的泛型函数；因此方法没有被删除掉"
 
 msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr "无法将锁住了的环境/程輯包%2$s里的%1$s方法删除"
 
-msgid "restoring default function definition of \"%s\""
+#, fuzzy
+msgid "restoring default function definition of %s"
 msgstr "重存'%s'的默認函数定义"
 
 msgid ""
@@ -319,14 +324,17 @@ msgstr "'callGeneric'只能由泛型函数或方法来調用"
 msgid "expected a non-empty character string for argument name"
 msgstr "参数的名字应该是非空字符串"
 
-msgid "generic function supplied was not created for \"%s\""
+#, fuzzy
+msgid "generic function supplied was not created for %s"
 msgstr "为\"%s\"找不到泛型函数"
 
-msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
+#, fuzzy
+msgid "%s is a primitive function; its generic form cannot be redefined"
 msgstr "\"%s\" 是基元函数；其泛型形式是不能被重新定义的"
 
+#, fuzzy
 msgid ""
-"\"%s\" is not currently a generic:  define it first to create a non-default "
+"%s is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr "\"%s\"目前不是泛型函数：请先将之定义以建立一个非较默隐含形式 "
 
@@ -381,7 +389,11 @@ msgstr "findMethods()不适用于非泛型函数'%s'"
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "用'where'时，FALSE只对于'inherited'有意义，(得到了"
 
-msgid "argument \"f\" must be a generic function or %s"
+msgid "\""
+msgstr "\""
+
+#, fuzzy
+msgid "argument 'f' must be a generic function or %s"
 msgstr "参数\"f\"必需是泛型函数，或为%s"
 
 msgid "'%s' is not a known generic function {and 'package' not specified}"
@@ -436,7 +448,8 @@ msgid ""
 "generic function"
 msgstr "无法将方法标记同一个不是泛型函数的对象(类别是%s)相对应起来"
 
-msgid "invalid \"package\" slot or attribute, wrong length"
+#, fuzzy
+msgid "invalid 'package' slot or attribute, wrong length"
 msgstr "\"package\"槽或属性出了错，长度不对"
 
 msgid ""
@@ -468,7 +481,8 @@ msgid ""
 "signature: %s"
 msgstr "在函数'%s'里的方法标记中标记的参数名字不对: %s"
 
-msgid "No generic function found corresponding to \"%s\""
+#, fuzzy
+msgid "No generic function found corresponding to %s"
 msgstr "为\"%s\"找不到泛型函数"
 
 msgid "skipping methods list element %s of unexpected class %s"
@@ -485,7 +499,8 @@ msgstr "%s 里\"MethodsList\"元数据目标对象已经不推荐使用了"
 msgid "Use %s instead."
 msgstr "请用%s。"
 
-msgid "invalid object for formal method definition: type \"%s\""
+#, fuzzy
+msgid "invalid object for formal method definition: type %s"
 msgstr "正式方法定义的对象不对: \"%s\"种类"
 
 msgid "missing package slot (%s) in object of class %s (package info added)"
@@ -505,15 +520,17 @@ msgstr "%d: 目标\"%s\": 选择\"%s\" (其它：%s)"
 msgid "Notes: %s."
 msgstr "记录：%s。"
 
-msgid "Class generator function for class \"%s\" from package \"%s\""
+#, fuzzy
+msgid "Class generator function for class %s from package %s"
 msgstr "程辑包\"%2$s\"里用于\"%1$s\"这一类的类生成函数"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "方法(%s)标记里的名字同函数%s参数(%s)不相对应"
 
+#, fuzzy
 msgid ""
-"a call to callNextMethod() appears in a call to \"%s\", but the call does "
-"not seem to come from either a generic function or another 'callNextMethod'"
+"a call to callNextMethod() appears in a call to %s, but the call does not "
+"seem to come from either a generic function or another 'callNextMethod'"
 msgstr ""
 "callNextMethod()的调用是在調用'%s'时所要求的，但这一調用既不从泛型函数来，也"
 "从另外一个'callNextMethod'中来"
@@ -541,9 +558,10 @@ msgid ""
 "match the corresponding slot class: %s"
 msgstr "为类别\"%s\"建立原型时出了错，原型的單元同槽的类别对应不上: %s"
 
+#, fuzzy
 msgid ""
-"potential cycle in class inheritance: \"%s\" has duplicates in superclasses "
-"and subclasses (%s)"
+"potential cycle in class inheritance: %s has duplicates in superclasses and "
+"subclasses (%s)"
 msgstr "类别继承里有可能有循環: \"%s\"在父类别和子类别(%s)里有重复"
 
 msgid "undefined slot classes in definition of %s: %s"
@@ -569,7 +587,8 @@ msgstr ""
 "无法将类别为%s的对象指定成类别%s的定义：必需提供\"classRepresentation\"这种对"
 "象"
 
-msgid "assigning as \"%s\" a class representation with internal name \"%s\""
+#, fuzzy
+msgid "assigning as %s a class representation with internal name %s"
 msgstr "无法将内部名字为\"%2$s\"的类别表現指定成\"%1$s\""
 
 msgid "Class %s has a locked definition in package %s"
@@ -593,9 +612,8 @@ msgid ""
 "No definition was found for superclass %s in the specification of class %s"
 msgstr "在定义%2$s里不存在母类别%1$s的定义"
 
-msgid ""
-"conflicting definition of data part: .Data = \"%s\", superclass implies \"%s"
-"\""
+#, fuzzy
+msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
 msgstr "数据部分的定义相互有矛盾: .Data = \"%s\"，而父类别却意味着\"%s\""
 
 msgid ""
@@ -608,9 +626,10 @@ msgid ""
 "object that is class %s"
 msgstr "被提供的原型的类别为%s, 类别定义需要类别为%s的对象"
 
+#, fuzzy
 msgid ""
-"slot \"%s\" in class %s currently defined (or inherited) as \"%s\", "
-"conflicts with an inherited definition in class %s"
+"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
+"with an inherited definition in class %s"
 msgstr ""
 "类别%s里的槽\"%s\"目前被定义为(或继承于)\"%s\"，这与类别%s里所继承的定义相互"
 "有矛盾"
@@ -618,8 +637,9 @@ msgstr ""
 msgid "class %s extends an undefined class (%s)"
 msgstr "类别%s擴充不存在的类别(%s)"
 
+#, fuzzy
 msgid ""
-"\"%s\" is not eligible to be the data part of another class (must be a basic "
+"%s is not eligible to be the data part of another class (must be a basic "
 "class or a virtual class with no slots)"
 msgstr ""
 "%s\"不可以成为另外一个类别的数据部分(必需是没有槽的基本类别或虛擬类别才可以)"
@@ -632,7 +652,8 @@ msgstr "原型是带名字單元的串列(允许有歧义) ：最好用函数pro
 msgid "named elements of prototype do not correspond to slot names: %s"
 msgstr "原型的單元同槽的类别对应不上: %s"
 
-msgid "the \"%s\" list for class %s, includes an undefined class %s"
+#, fuzzy
+msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr "类别为%s的'%s'串列包含不存在的类别%s"
 
 msgid ""
@@ -733,16 +754,16 @@ msgstr "参数缩写必需为0，1，2，或3 "
 msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr "需要的是长度为%n不是%n的标签矢量"
 
+#, fuzzy
 msgid ""
-"the function being used as %s in making a generic function for \"%s\" is "
+"the function being used as %s in making a generic function for %s is "
 "currently traced; the function used will have tracing removed"
 msgstr ""
 "在为'%2$s'制造泛型函数时用的%1$s这一个函数现在已经被追踪；因此删除了对所用函"
 "数的追踪"
 
 #, fuzzy
-msgid ""
-"Must supply either a generic function or a function as default for \"%s\""
+msgid "Must supply either a generic function or a function as default for %s"
 msgstr "必需为\"#s\"提供一个作默认用的泛型函数或函数"
 
 msgid ""
@@ -756,9 +777,10 @@ msgstr "标记里出现了非参数：%s"
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "此函数里没有合适的参数可用来分配方法"
 
+#, fuzzy
 msgid ""
-"the formal arguments of the generic function for \"%s\" (%s) differ from "
-"those of the non-generic to be used as the default (%s)"
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
 msgstr ""
 "用于'%s'泛型函数(%s)的正式参数与将作为默認值(%s)来用的非泛型的正式参数不相符"
 "合"
@@ -772,7 +794,8 @@ msgstr "特殊函数%s没有已知的参数串列；假设用'(x, ...)'"
 msgid "making a generic for special function %s"
 msgstr "为特殊函数 %s制造泛型函数"
 
-msgid "invalid call in method dispatch to \"%s\" (no default method)"
+#, fuzzy
+msgid "invalid call in method dispatch to '%s' (no default method)"
 msgstr "给'%s'进行方法分配时的调用出了错(没有默認方法)"
 
 msgid "in method for %s with signature %s:"
@@ -812,7 +835,8 @@ msgstr ""
 msgid "methods cannot be defined for the primitive function %s"
 msgstr "无法为基元函数%s定义方法"
 
-msgid "no generic function found for \"%s\""
+#, fuzzy
+msgid "no generic function found for %s"
 msgstr "为'%s'找不到泛型函数"
 
 msgid "Empty function name in .getGeneric"
@@ -823,21 +847,22 @@ msgid ""
 "function %s may return incorrect information"
 msgstr "本R版本不维护方法串列对象：调用%s函数可能会返回不正确的信息"
 
+#, fuzzy
 msgid ""
-"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
-"source"
+"Package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr "程序包\"%s\"的方法好象过时了；请重新安装"
 
-msgid ""
-"no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
+#, fuzzy
+msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr "为'%s'找不到方法；'cacheGenericsMetaData'没有作用"
 
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr "类别为%2$s的泛型函数'%1$s'的值不对, 所要求的是%3$s"
 
+#, fuzzy
 msgid ""
-"the body of the generic function for \"%s\" calls 'standardGeneric' to "
-"dispatch on a different name (\"%s\")!"
+"the body of the generic function for %s calls 'standardGeneric' to dispatch "
+"on a different name (\"%s\")!"
 msgstr ""
 "'%s'泛型函数的程序部分調用'standardGeneric'来分配给一个不同的名字('%s')!"
 
@@ -883,7 +908,8 @@ msgstr "名字空间坏了: 父空间里不存在'base'"
 msgid "got a negative maximum number of frames to look at"
 msgstr "框的最大数不能是负值"
 
-msgid "\"%s\" is not a generic function (or not visible here)"
+#, fuzzy
+msgid "%s is not a generic function (or not visible here)"
 msgstr "'%s'不是泛型函数(或从这儿看不到)"
 
 msgid "invalid element in the groupMembers slot (class %s)"
@@ -933,16 +959,17 @@ msgid "Error in load action %s for package %s: %s: %s"
 msgstr "从%3$s里的程辑包%2$s为%1$s建立新的泛型函数"
 
 #, fuzzy
-msgid "non-function action: \"%s"
+msgid "non-function action: %s"
 msgstr "没有'%s'这样一个函数定义"
 
-msgid "action function \"%s\" has no arguments, should have at least 1"
+msgid "action function %s has no arguments, should have at least 1"
 msgstr ""
 
 msgid "Some actions missing: %s"
 msgstr ""
 
-msgid "\"%s\" has a sealed class definition and cannot be redefined"
+#, fuzzy
+msgid "%s has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
 
 msgid ""
@@ -952,7 +979,8 @@ msgstr ""
 "当参数'representation'是'classRepresentation'对象时只能使用'Class'和'where'变"
 "元"
 
-msgid "Internal error: definition of class \"%s\" not properly assigned"
+#, fuzzy
+msgid "Internal error: definition of class %s not properly assigned"
 msgstr "内部错误：类别\"%s\"的定义设得不对"
 
 msgid ""
@@ -987,20 +1015,24 @@ msgstr "重复槽名: %s"
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr "只能有一个数据对象(原型的参数没有名字)"
 
-msgid "\"%s\" is not a defined class"
+#, fuzzy
+msgid "%s is not a defined class"
 msgstr "\"%s\"不是有定义的类别"
 
-msgid "\"%s\" is not a slot in class %s"
+#, fuzzy
+msgid "%s is not a slot in class %s"
 msgstr "\"%s\"不是在%s类别里的槽"
 
+#, fuzzy
 msgid ""
-"assignment of an object of class %s is not valid for slot \"%s\" in an "
-"object of class %s; is(value, \"%s\") is not TRUE"
+"assignment of an object of class %s is not valid for slot %s in an object of "
+"class %s; is(value, \"%s\") is not TRUE"
 msgstr ""
 "不可以在类别为%3$s的对象里的\"%2$s\"槽指定类别为%1$s的对象；is(value, \"%4$s"
 "\")的值不是TRUE"
 
-msgid "Class definition for \"%s\" not found  (no action taken)"
+#, fuzzy
+msgid "Class definition for %s not found (no action taken)"
 msgstr "找不到\"%s\"类别定义(无效果)"
 
 msgid "class %s has multiple definitions visible; only the first removed"
@@ -1049,8 +1081,9 @@ msgstr "%s有多个定义(%s)；现在用程序包%s中%s的定义"
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr "类别定义最多只能扩展这些数据种类中的一个: %s"
 
+#, fuzzy
 msgid ""
-"Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
+"Sorry, abnormal type %s is not supported as a superclass of a class "
 "definition"
 msgstr "对不起，不支持作为一个类别定义的超类\"%s\""
 
@@ -1079,23 +1112,28 @@ msgstr "找不到%s这一函数"
 msgid "no non-generic function %s found"
 msgstr "找不到%s这一非泛型函数"
 
-msgid "\"%s\" is not one of the element names"
+#, fuzzy
+msgid "%s is not one of the element names"
 msgstr "'%s'不是單元名字中的一个"
 
+#, fuzzy
 msgid ""
-"internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the "
-"metadata asserts that the 'is' relation is FALSE"
+"internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata "
+"asserts that the 'is' relation is FALSE"
 msgstr ""
 "as()出了内部问题: \"%s\" is(object, \"%s\")的值为TRUE，但元数据却反应没"
 "有'is'这种的关系，其值为FALSE"
 
-msgid "no method or default for coercing \"%s\" to \"%s\""
+#, fuzzy
+msgid "no method or default for coercing %s to %s"
 msgstr "没有可以用来強制转换\"%s\"成\"%s\"的方法或默认函数"
 
-msgid "no method or default for as() replacement of \"%s\" with Class=\"%s\""
+#, fuzzy
+msgid "no method or default for as() replacement of %s with Class=\"%s\""
 msgstr "没有可用于类别为\"%s\"as()\"%s\"替换值的方法或默認函数"
 
-msgid "trying to set an 'as' relation from \"%s\" to itself"
+#, fuzzy
+msgid "trying to set an 'as' relation from %s to itself"
 msgstr "无法为\"%s\"与自己设立'as'关系"
 
 msgid "class %s is not defined in this environment"
@@ -1129,25 +1167,28 @@ msgstr "对象不明确(长度!=1) 因此无法强制转换成\"name\""
 msgid "undefined coerce method"
 msgstr "没有这个强制方法"
 
+#, fuzzy
 msgid ""
-"methods currently exist for coercing from \"%s\" to \"%s\"; they will be "
-"replaced."
+"methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "目前存在着強制转换\"%s\"成\"%s\"的方法；这些方法将会被替换掉。"
 
-msgid "object \"%s\" not found"
+#, fuzzy
+msgid "object %s not found"
 msgstr "找不到'%s'这个对象"
 
+#, fuzzy
 msgid ""
-"object \"%s\" not changed (it is not consistent with the current definition "
-"of class %s from %s)"
+"object %s not changed (it is not consistent with the current definition of "
+"class %s from %s)"
 msgstr "对象%1$s没有变动(它与%3$s里类别为%2$s的定义不相符合)"
 
 msgid "no definition for the class of %s (class %s) found"
 msgstr "类别为%s的定义不存在(类别%s)"
 
+#, fuzzy
 msgid ""
-"object \"%s\" not changed (it does not appear to be from a version of R "
-"earlier than 1.8.0)"
+"object %s not changed (it does not appear to be from a version of R earlier "
+"than 1.8.0)"
 msgstr "对象'%s'没有变动(它不是从R版本1.8.0之前来的)"
 
 msgid "'class1' must be the name of a class or a class definition"
@@ -1159,9 +1200,10 @@ msgstr "'class2'必需是类别名字或类别定义"
 msgid "class %s has no visible definition from package or environment %s"
 msgstr "类别%s在程輯包或环境%s里没有看得见的定义"
 
+#, fuzzy
 msgid ""
-"cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s"
-"\") is local and modifiable in this package"
+"cannot create a 'setIs' relation when neither of the classes (%s and %s) is "
+"local and modifiable in this package"
 msgstr ""
 "无法建立'setIs'这个关系，因为两个类别(\"%s\"和\"%s\")都不是局部性的，也不能在"
 "程輯包进行改动"
@@ -1196,7 +1238,8 @@ msgstr "类别%s里的槽必需擴充类别%s中相应的槽：%s出了错"
 msgid "invalid index for function argument"
 msgstr "函数参数的索引不对"
 
-msgid "No function definition found for \"%s\""
+#, fuzzy
+msgid "No function definition found for %s"
 msgstr "没有\"%s\"这样一个函数定义"
 
 msgid "Need a definition for the method here"
@@ -1208,8 +1251,8 @@ msgstr "方法骨架定于"
 msgid "connection"
 msgstr "链结"
 
-msgid ""
-"Invalid object in meta table of methods for %s, label \"%s\", had class %s"
+#, fuzzy
+msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr "元方法表里%1$s的对象有问题，\"%2$s\"标签的类别不应该是%3$s"
 
 msgid "Invalid mlist element for signature \""
@@ -1250,9 +1293,10 @@ msgid ""
 "No simply inherited methods found for function %s; using non-simple method"
 msgstr "找不到适用于函数%s的简单方法；用复杂方法"
 
+#, fuzzy
 msgid ""
-"Note: Method with signature \"%s\" chosen for function \"%s\",\n"
-" target signature \"%s\".\n"
+"Note: Method with signature %s chosen for function %s,\n"
+" target signature %s.\n"
 " %s would also be valid"
 msgstr ""
 "注意: 为函数\"%2$s\"选择了带\"%1$s\"标签的方法,\n"
@@ -1265,11 +1309,9 @@ msgstr "找到了"
 msgid "equally good next methods"
 msgstr "下一个方法一样有效"
 
-msgid "unable to find an inherited method for function \""
+#, fuzzy
+msgid "unable to find an inherited method for function %s for signature %s"
 msgstr "找不到继承方法，函数是"
-
-msgid "\", for signature"
-msgstr "\"，标记是"
 
 msgid ""
 "Internal error in finding inherited methods; didn't return a unique method"
@@ -1340,9 +1382,10 @@ msgstr "test==TRUE和S4Class定义不能同时存在"
 msgid "argument S4Class must be a class definition:  got an object of class %s"
 msgstr "参数S4Class必需是类别定义：现在得到的却是类别为%s的目标对象"
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\"; the class is defined "
-"but does not extend \"%s\" and is not valid as the data part"
+"inconsistent old-style class information for %s; the class is defined but "
+"does not extend %s and is not valid as the data part"
 msgstr ""
 "\"%s\"旧式类别信息有矛盾；虽然类别的定义是存在的，但它不扩展\"%s\"而且也不能"
 "当作数据来用"
@@ -1356,7 +1399,8 @@ msgstr ""
 msgid "Restoring definition of class %s"
 msgstr "恢复类别%s的定义"
 
-msgid "Slot \"%s\": class %s should extend class %s"
+#, fuzzy
+msgid "Slot %s: class %s should extend class %s"
 msgstr "槽\"%s\"：类别%s无法擴充类别%s"
 
 msgid ""
@@ -1378,9 +1422,10 @@ msgid ""
 "length %d"
 msgstr "参数'classes'必需是包含两个类别的矢量；现在得到的是长度为%d的参数"
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\" (maybe mixing old and "
-"new classes?)"
+"inconsistent old-style class information for %s (maybe mixing old and new "
+"classes?)"
 msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
 msgid ""
@@ -1400,7 +1445,8 @@ msgstr "建立了程輯包名: %s，因为没有找到其它名字"
 msgid "no definition of class %s found"
 msgstr "类别%s的定义不存在"
 
-msgid "multiple definitions of \"%s\" found; using the one on %s"
+#, fuzzy
+msgid "multiple definitions of %s found; using the one on %s"
 msgstr "\"%s\"有多个定义；现在用%s这一个"
 
 msgid ""
@@ -1408,7 +1454,8 @@ msgid ""
 "%s"
 msgstr "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
 
-msgid "\"%s\" is not a valid field or method name for reference class %s"
+#, fuzzy
+msgid "%s is not a valid field or method name for reference class %s"
 msgstr "\"%s\"场要么无效，要么引用类的方法名%s不对"
 
 msgid ""
@@ -1417,42 +1464,50 @@ msgid ""
 msgstr ""
 "在安装之前类别%s里的%s方法无法被处理成类别方法。在类别里有能出现方法损坏"
 
+#, fuzzy
 msgid ""
-"a call to superClass() is in the method \"%s\" but there is no superclass "
+"a call to superClass() is in the method %s but there is no superclass "
 "definition of this method for class %s"
 msgstr "在\"%s\"方法里调用了superClass()，但是%s类别里没有这个方法的超类别定义"
 
 msgid "Methods declared in usingMethods() but not found: %s"
 msgstr ""
 
-msgid "\"%s\" is not a reference class"
+#, fuzzy
+msgid "%s is not a reference class"
 msgstr "\"%s\"不是引用类别"
 
-msgid "\"%s\" is not a field in class %s"
+#, fuzzy
+msgid "%s is not a field in class %s"
 msgstr "\"%s\"不是在%s类别里的场"
 
+#, fuzzy
 msgid ""
 "Unnamed arguments to $new() must be objects from a reference class; got an "
-"object of class \"%s\""
+"object of class %s"
 msgstr ""
 "'genericFunction'的参数要么是NULL，要么是泛型函数对象；现在却是类别为\"%s\"的"
 "对象"
 
-msgid "\"%s\" is not a valid field or method name for this class"
+#, fuzzy
+msgid "%s is not a valid field or method name for this class"
 msgstr "\"%s\"不是个有效的场，出不是这个类别的方法名字"
 
+#, fuzzy
 msgid ""
-"The class of field \"%s\" in the object is not compatible with the desired "
-"class %s in the target"
+"The class of field %s in the object is not compatible with the desired class "
+"%s in the target"
 msgstr "\"%s\"对象场类别不符合目标中%s类别的需要"
 
-msgid "\"%s\" is not a defined class in this environment"
+#, fuzzy
+msgid "%s is not a defined class in this environment"
 msgstr "\"%s\"在这个环境里没有类别定义"
 
 msgid "Invalid Class argument:  should be a single string"
 msgstr "类别参数不对：应当是条单字符字串"
 
-msgid "\"%s\" is not one of the reference super classes for this object"
+#, fuzzy
+msgid "%s is not one of the reference super classes for this object"
 msgstr "\"%s\" 不是该对象的引用超类之一"
 
 msgid ""
@@ -1460,7 +1515,8 @@ msgid ""
 "method"
 msgstr "不能直接调用callSuper()：只能用其它的方法来调用它"
 
-msgid "\"%s\" is not a field in this class"
+#, fuzzy
+msgid "%s is not a field in this class"
 msgstr "\"%s\"不是这个类别里的场"
 
 msgid ""
@@ -1471,8 +1527,9 @@ msgstr "程辑包%2$s中%1$s类别的定义封闭了，因此无法将方法重�
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "methods()里的参数必需带名字，或者是带名字的串列"
 
+#, fuzzy
 msgid ""
-"Topic \"%s\" is not a method name in class %s\n"
+"Topic %s is not a method name in class %s\n"
 "The class definition follows"
 msgstr ""
 "\"%s\"主题在%s类别里不是方法名字\n"
@@ -1485,14 +1542,12 @@ msgstr "程辑包%2$s中%1$s类别的定义封闭了，因此无法个性场的�
 
 #, fuzzy
 msgid ""
-"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
-"existing field definition (\"%s\")"
+"The overriding class (\"%s\") of field %s is not a subclass of the existing "
+"field definition (\"%s\")"
 msgstr "首要类(\"%s\")的域不是存在域定义的子类别(\"%s\")"
 
-msgid "Field \""
-msgstr "场 \""
-
-msgid "\" is read-only"
+#, fuzzy
+msgid "Field %s is read-only"
 msgstr "\" 只读"
 
 msgid ""
@@ -1508,17 +1563,19 @@ msgstr "contains= 参数应当是超类别的名称(现在却是类别为%s的�
 msgid "No definition found for inherited class: %s"
 msgstr "继承类别的定义不存在: %s"
 
+#, fuzzy
 msgid ""
-"Single class name needed for field \"%s\", got a character vector of length "
-"%d"
+"Single class name needed for field %s, got a character vector of length %d"
 msgstr "\"%s\"场需要单一类别名字，现在得到的是长度为%d的字符串"
 
-msgid "Class %s for field \"%s\" is not defined"
+#, fuzzy
+msgid "Class %s for field %s is not defined"
 msgstr "场\"%2$s\"的类别%1$s还没有定义"
 
+#, fuzzy
 msgid ""
-"Field \"%s\" was supplied as an object of class %s; must be a class name or "
-"a binding function"
+"Field %s was supplied as an object of class %s; must be a class name or a "
+"binding function"
 msgstr "场\"%s\"被提供了类别%s的对象;但它必须是类别名或绑定函数"
 
 msgid ""
@@ -1581,10 +1638,12 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr "参数必需是场名字的字符串"
 
-msgid "Field \"%s\" is already locked"
+#, fuzzy
+msgid "Field %s is already locked"
 msgstr "场\"%s\"已经被锁住了"
 
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+#, fuzzy
+msgid "Field %s of class %s has a non-default binding and cannot be locked"
 msgstr "%1$s类别的\"%2$s\"场有非默认的约束力，因此不能被锁定"
 
 msgid ""
@@ -1607,7 +1666,8 @@ msgstr ""
 msgid "Argument signature= is not meaningful for tracing reference methods"
 msgstr " signature=参数不能适用于跟踪引用方法"
 
-msgid "\"%s\" is not a method for reference class %s"
+#, fuzzy
+msgid "%s is not a method for reference class %s"
 msgstr "\"%s\"不是引用类别%s的方法"
 
 msgid "argument 'what' should be the name of a function"
@@ -1619,17 +1679,19 @@ msgstr "不可以对内部函数%s进行跟踪"
 msgid ".TraceWithMethods: after computing what, whereF"
 msgstr ".TraceWithMethods: 在计算什么后，whereF"
 
-msgid "no function definition for \"%s\" found"
+#, fuzzy
+msgid "no function definition for %s found"
 msgstr "没有'%s'这样一个函数定义"
 
-msgid ""
-"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+#, fuzzy
+msgid "Can't untrace method for %s; no method defined for this signature: %s"
 msgstr "无法\"%s\"将删除追踪，这一标记没有与之相对应的唯一方法：%s"
 
 msgid ".TraceWithMethods: untrace case"
 msgstr ".TraceWithMethods: 删除追踪"
 
-msgid "the method for \"%s\" for this signature was not being traced"
+#, fuzzy
+msgid "the method for %s for this signature was not being traced"
 msgstr "此标记的\"%s\"方法没有被追踪"
 
 msgid ".TraceWithMethods: about to assign or setMethod"
@@ -1680,7 +1742,8 @@ msgstr "在源代码中找不到任何对象：需要附加或指定程序包"
 msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr "在多个程序包中找到了对象：用%s而不用%s"
 
-msgid "Package \"%s\" is not attached and no namespace found for it"
+#, fuzzy
+msgid "Package %s is not attached and no namespace found for it"
 msgstr "\"%s\"程序包没有被附加，也找不到它的名字空间"
 
 msgid ""
@@ -1722,17 +1785,20 @@ msgstr "为函数%s()插入了方法: %s"
 msgid "Pretend we inserted class"
 msgstr "假装我们插入了类别"
 
-msgid "No definition for object \"%s\" found in tracing environment"
+#, fuzzy
+msgid "No definition for object %s found in tracing environment"
 msgstr "在追溯环境里找不到\"%s\"对象的定义"
 
 msgid "multiple generics match pattern, using table %s"
 msgstr "有多个泛型同模式相匹配，用表%s"
 
+#, fuzzy
 msgid ""
-"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+"Does not seem to be a method table for generic %s in tracing environment"
 msgstr "在追溯环境里找不到\"%s\"泛型函数的方法表"
 
-msgid "No method in methods table for \"%s\" for signature \"%s\""
+#, fuzzy
+msgid "No method in methods table for %s for signature %s"
 msgstr "函数\"%s\"标记\"%s\"方法表里没有设定方法"
 
 msgid "not a package name: %s"
@@ -1747,6 +1813,21 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
+
+#~ msgid "Replacement value must be of class \""
+#~ msgstr "替换值的类别必需为"
+
+#~ msgid "\", got one of class \""
+#~ msgstr "\"，不能是类别"
+
+#~ msgid "No method found for function \"%s\" and signature %s"
+#~ msgstr "找不到适用于函数'%s'和标记%s的方法"
+
+#~ msgid "\", for signature"
+#~ msgstr "\"，标记是"
+
+#~ msgid "Field \""
+#~ msgstr "场 \""
 
 #~ msgid "the supplied generic function definition for"
 #~ msgstr "所提供的泛型函数定义是为"
@@ -1986,9 +2067,6 @@ msgstr[0] "类别%s的定义不存在"
 
 #~ msgid "no generic function '%s' found"
 #~ msgstr "不存在'%s'这一泛型函数"
-
-#~ msgid "no method found for function '%s' and signature %s"
-#~ msgstr "函数'%s'和标记%s没有方法"
 
 #~ msgid "'%s' is not a function visible from '%s'"
 #~ msgstr "'%s'不是可以从'%s'看得见的函数"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-08-07 07:50\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -90,14 +90,10 @@ msgid "Replacement value must extend class %s, got %s"
 msgstr ""
 " 置き換え値は %s クラスを拡張しなければなりませんが, %s が与えられました "
 
-msgid "Replacement value must be of class \""
-msgstr " 置き換え値は以下のクラスでなければなりません \" "
-
-msgid "\", got one of class \""
-msgstr " \", しかし, 以下のクラスの１つが与えられました \" "
-
-msgid "\""
-msgstr " \" "
+#, fuzzy
+msgid "Replacement value must be of class %s, got one of class %s"
+msgstr ""
+" 置き換え値は %s クラスを拡張しなければなりませんが, %s が与えられました "
 
 msgid "no 'replace' method was defined for as(x, \"%s\") <- value for class %s"
 msgstr ""
@@ -142,7 +138,8 @@ msgstr ""
 msgid "unable to create union class:  could not set members %s"
 msgstr " union クラスを生成できません : メンバー %s を設定できませんでした "
 
-msgid "invalid argument \"name\": %s"
+#, fuzzy
+msgid "invalid argument 'name': %s"
 msgstr " 不正な引数 \"name\" です: %s "
 
 msgid ""
@@ -195,7 +192,8 @@ msgstr ""
 " 内部エラー：関数 %s に対する適正な総称的関数オブジェクトを得ることができませ"
 "んでした "
 
-msgid "A function for argument \"f\" must be a generic function"
+#, fuzzy
+msgid "A function for argument 'f' must be a generic function"
 msgstr " 引数 \"f\" に対する関数は総称的でなければなりません "
 
 msgid "the environment %s is locked; cannot assign methods for function %s"
@@ -240,9 +238,10 @@ msgstr ""
 " 関数 %s とシグネチァ(signature) %s に対するメソッドは封印(sealed)されてお"
 "り、再定義出来ません "
 
+#, fuzzy
 msgid ""
-"For function %s, signature \"%s\": argument in method definition changed "
-"from (%s) to (%s)"
+"For function %s, signature %s: argument in method definition changed from "
+"(%s) to (%s)"
 msgstr ""
 " %s 関数のシグニチャ \"%s\": メソッド定義中の引数が (%s) から (%s) へ変換され"
 "ました "
@@ -260,7 +259,8 @@ msgstr ""
 " 不正なメソッド定義です：関数が期待されますが、クラス %s のオブジェクトが得ら"
 "れました "
 
-msgid "Function supplied as argument \"f\" must be a generic"
+#, fuzzy
+msgid "Function supplied as argument 'f' must be a generic"
 msgstr " 引数 'f' として提供された関数は総称的である必要があります "
 
 msgid "no generic function %s found"
@@ -272,10 +272,12 @@ msgstr " 関数 %s とシグネチャ(signature) %s に対するメソッドが�
 msgid "no environment or package corresponding to argument where=%s"
 msgstr " 引数 where=%s に対応するパッケージ, 環境がありません "
 
-msgid "No generic function found for \"%s\""
+#, fuzzy
+msgid "No generic function found for '%s'"
 msgstr " \"%s\" に対する総称的関数は見付かりません "
 
-msgid "No method found for function \"%s\" and signature %s"
+#, fuzzy
+msgid "No method found for function '%s' and signature %s"
 msgstr " 関数 \"%s\" とシグネチャ(signature) %s に対するメソッドがありません "
 
 msgid "Warning:  using defunct methods list search"
@@ -304,8 +306,9 @@ msgstr ""
 msgid "'file' must be a character string or a connection"
 msgstr " 'file' は文字列かコネクションでなければなりません "
 
+#, fuzzy
 msgid ""
-"argument \"signature\" is not meaningful with the current implementation and "
+"argument 'signature' is not meaningful with the current implementation and "
 "is ignored \n"
 "(extract a subset of the methods list instead)"
 msgstr ""
@@ -318,7 +321,8 @@ msgstr " %s に対するいかなるメソッドもクラス \"%s\" にはマッ
 msgid "No method found for signature %s"
 msgstr " シグネチャ(signature) %s に対するメソッドが見付かりませんでした "
 
-msgid "\"%s\" has no methods defined"
+#, fuzzy
+msgid "%s has no methods defined"
 msgstr " \"%s\" は定義されたメソッドを持ちません "
 
 msgid "selectMethod(): mlist is not an environment or NULL :"
@@ -340,7 +344,8 @@ msgstr ""
 " 最初の引数は総称的関数の名前であるべきです(クラス %s のオブジェクトを得まし"
 "た) "
 
-msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
+#, fuzzy
+msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr ""
 " 総称的関数でない \"%s\" が \"%s\" 中にあります； メソッドは取り除かれません"
 "でした "
@@ -348,7 +353,8 @@ msgstr ""
 msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr " %s (ロックされた環境/パッケージ %s 中の)のメソッドを削除できません "
 
-msgid "restoring default function definition of \"%s\""
+#, fuzzy
+msgid "restoring default function definition of %s"
 msgstr " \"%s\" の既定の関数定義を回復しています "
 
 msgid ""
@@ -377,14 +383,17 @@ msgstr " 'callGeneric' は総称的関数かメソッドから呼び出されな
 msgid "expected a non-empty character string for argument name"
 msgstr " 引数の名前には空ではない文字列が必要です "
 
-msgid "generic function supplied was not created for \"%s\""
+#, fuzzy
+msgid "generic function supplied was not created for %s"
 msgstr " 与えられた総称的関数は \"%s\" に対して作成できません "
 
-msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
+#, fuzzy
+msgid "%s is a primitive function; its generic form cannot be redefined"
 msgstr " \"%s\"はプリミティブな関数のため、その総称的関数は再定義できません "
 
+#, fuzzy
 msgid ""
-"\"%s\" is not currently a generic:  define it first to create a non-default "
+"%s is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr ""
 " \"%s\" は現在総称的ではありません；既定では無い暗黙の形式を作るためには、ま"
@@ -444,7 +453,11 @@ msgstr ""
 " where が与えられた時は、継承に対しては FALSE だけが意味を持ちます(以下が与え"
 "られました "
 
-msgid "argument \"f\" must be a generic function or %s"
+msgid "\""
+msgstr " \" "
+
+#, fuzzy
+msgid "argument 'f' must be a generic function or %s"
 msgstr " 引数 \"f\" に対する関数は総称関数または %s でなければなりません "
 
 msgid "'%s' is not a known generic function {and 'package' not specified}"
@@ -513,7 +526,8 @@ msgstr ""
 " メソッドシグナチャを総称的関数でない(クラス %s の)オブジェクトにマッチしよう"
 "としています "
 
-msgid "invalid \"package\" slot or attribute, wrong length"
+#, fuzzy
+msgid "invalid 'package' slot or attribute, wrong length"
 msgstr " 不正な \"package\" スロットもしくは属性、間違った長さ "
 
 msgid ""
@@ -552,7 +566,8 @@ msgid ""
 msgstr ""
 " 関数 %s に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：%s "
 
-msgid "No generic function found corresponding to \"%s\""
+#, fuzzy
+msgid "No generic function found corresponding to %s"
 msgstr " \"%s\" に対する総称的関数は見付かりません "
 
 msgid "skipping methods list element %s of unexpected class %s"
@@ -572,7 +587,8 @@ msgstr ""
 msgid "Use %s instead."
 msgstr " %s を代わりに使ってください． "
 
-msgid "invalid object for formal method definition: type \"%s\""
+#, fuzzy
+msgid "invalid object for formal method definition: type %s"
 msgstr " 形式的なメソッド定義に対する不正なオブジェクト：タイプ \"%s\" "
 
 msgid "missing package slot (%s) in object of class %s (package info added)"
@@ -595,16 +611,18 @@ msgstr " %d: ターゲット \"%s\": 選択 \"%s\" (その他: %s) "
 msgid "Notes: %s."
 msgstr " 注意：%s "
 
-msgid "Class generator function for class \"%s\" from package \"%s\""
+#, fuzzy
+msgid "Class generator function for class %s from package %s"
 msgstr " クラス \"%s\" に対する総称関数(パッケージ \"%s\" から) "
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 " メソッド (%s) に対するシグナチャ中の名前が %s の引数 (%s) にマッチしません "
 
+#, fuzzy
 msgid ""
-"a call to callNextMethod() appears in a call to \"%s\", but the call does "
-"not seem to come from either a generic function or another 'callNextMethod'"
+"a call to callNextMethod() appears in a call to %s, but the call does not "
+"seem to come from either a generic function or another 'callNextMethod'"
 msgstr ""
 " callNextMethod() の呼び出しが  \"%s\" への呼び出しに現れました．しかしこの呼"
 "び出しは総称的関数や別の 'callNextMethod' から来たものには見えません "
@@ -640,9 +658,10 @@ msgstr ""
 " クラス %s に対するプロトタイプの構築時，プロトタイプの要素は対応するスロット"
 "クラスとマッチしませんでした：%s "
 
+#, fuzzy
 msgid ""
-"potential cycle in class inheritance: \"%s\" has duplicates in superclasses "
-"and subclasses (%s)"
+"potential cycle in class inheritance: %s has duplicates in superclasses and "
+"subclasses (%s)"
 msgstr ""
 " クラス継承中に循環がある可能性：\"%s\" は上位クラスと下位クラス (%s) 中に重"
 "複しています "
@@ -670,7 +689,8 @@ msgstr ""
 " クラス %s のオブジェクトをクラス %s の定義として与えようとしています: "
 "\"classRepresentation\" オブジェクトを与える必要があります "
 
-msgid "assigning as \"%s\" a class representation with internal name \"%s\""
+#, fuzzy
+msgid "assigning as %s a class representation with internal name %s"
 msgstr " \"%s\" として内部名 \"%s\" を持つクラス表現を割り当て中 "
 
 msgid "Class %s has a locked definition in package %s"
@@ -696,9 +716,8 @@ msgid ""
 "No definition was found for superclass %s in the specification of class %s"
 msgstr " スーパークラス %s の定義が, クラス %s の設定中にありません "
 
-msgid ""
-"conflicting definition of data part: .Data = \"%s\", superclass implies \"%s"
-"\""
+#, fuzzy
+msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
 msgstr ""
 " データパートの相克する定義：.Data = \"%s\", 上位クラスは \"%s\" を含意しま"
 "す "
@@ -717,9 +736,10 @@ msgstr ""
 " クラス %s のプロトタイプが与えられましたが、クラス定義はクラス %s であるオブ"
 "ジェクトを必要とします "
 
+#, fuzzy
 msgid ""
-"slot \"%s\" in class %s currently defined (or inherited) as \"%s\", "
-"conflicts with an inherited definition in class %s"
+"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
+"with an inherited definition in class %s"
 msgstr ""
 " スロット \"%s\" (クラス \"%s\" 中の)は現在  \"%s\" として定義(もしくは継承)"
 "されていますが, クラス %s 中の継承された定義と相克します "
@@ -727,8 +747,9 @@ msgstr ""
 msgid "class %s extends an undefined class (%s)"
 msgstr " クラス %s は未定義のクラス (%s) に拡張されます "
 
+#, fuzzy
 msgid ""
-"\"%s\" is not eligible to be the data part of another class (must be a basic "
+"%s is not eligible to be the data part of another class (must be a basic "
 "class or a virtual class with no slots)"
 msgstr ""
 " \"%s\" は別のクラスのデータパートとして適正ではありません (基本クラスか、ス"
@@ -744,7 +765,8 @@ msgstr ""
 msgid "named elements of prototype do not correspond to slot names: %s"
 msgstr " プロトタイプの名前つきの要素はスロット名に対応しません：%s "
 
-msgid "the \"%s\" list for class %s, includes an undefined class %s"
+#, fuzzy
+msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr " \"%s\" リスト(クラス %s に対する)は未定義のクラス %s を含みます "
 
 msgid ""
@@ -854,16 +876,16 @@ msgstr " 引数の省略形は 0,1,2,3 のどれかでなければなりませ�
 msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr " 長さ %n のラベルベクトルを与える必要がありましたが、%n 個でした "
 
+#, fuzzy
 msgid ""
-"the function being used as %s in making a generic function for \"%s\" is "
+"the function being used as %s in making a generic function for %s is "
 "currently traced; the function used will have tracing removed"
 msgstr ""
 " %s として使われている関数(\"%s\" に対する総称的関数の作成時)は現在トレースさ"
 "れています；使われた関数は tracing を取り除かれるでしょう "
 
 #, fuzzy
-msgid ""
-"Must supply either a generic function or a function as default for \"%s\""
+msgid "Must supply either a generic function or a function as default for %s"
 msgstr ""
 " \"#s\" に対する既定値として、総称的関数か関数をあたえる必要があります "
 
@@ -880,9 +902,10 @@ msgstr " シグナチャ中に引数でないものがあります: %s "
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr " この関数中にはメソッドを割り当てるための適切な引数がありません "
 
+#, fuzzy
 msgid ""
-"the formal arguments of the generic function for \"%s\" (%s) differ from "
-"those of the non-generic to be used as the default (%s)"
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
 msgstr ""
 " \"%s\" (%s) に対する総称的関数の形式的引数は、既定 (%s) として使われる非総称"
 "的なそれの引数と異なります "
@@ -897,7 +920,8 @@ msgstr ""
 msgid "making a generic for special function %s"
 msgstr " 特殊関数 \"%s\" のジェネリックを作ります "
 
-msgid "invalid call in method dispatch to \"%s\" (no default method)"
+#, fuzzy
+msgid "invalid call in method dispatch to '%s' (no default method)"
 msgstr ""
 " メソッド割り当て \"%s\" において不正な呼び出し(既定メソッドがありません) "
 
@@ -944,7 +968,8 @@ msgstr ""
 msgid "methods cannot be defined for the primitive function %s"
 msgstr " プリミティブ関数 \"%s\" に対してはメソッドを定義できません "
 
-msgid "no generic function found for \"%s\""
+#, fuzzy
+msgid "no generic function found for %s"
 msgstr " \"%s\" に対する総称的関数は見付かりません "
 
 msgid "Empty function name in .getGeneric"
@@ -957,15 +982,15 @@ msgstr ""
 " このバージョンのRではメソッドリストのオブジェクトは管理されません：  関数 "
 "%s への要求は不正な結果を返すかもしれません "
 
+#, fuzzy
 msgid ""
-"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
-"source"
+"Package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr ""
 " パッケージ \"%s\" は時代遅れのメソッドを持つようです； ソースから再インス"
 "トールする必要があります "
 
-msgid ""
-"no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
+#, fuzzy
+msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
 " \"%s\" に対するメソッドはありません；cacheGenericsMetaData() は効果を持ちま"
 "せん "
@@ -974,9 +999,10 @@ msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr ""
 " 総称的関数 \"%s\" からの不正な値,クラス \"%s\" ですが %s が期待されます "
 
+#, fuzzy
 msgid ""
-"the body of the generic function for \"%s\" calls 'standardGeneric' to "
-"dispatch on a different name (\"%s\")!"
+"the body of the generic function for %s calls 'standardGeneric' to dispatch "
+"on a different name (\"%s\")!"
 msgstr ""
 " \"%s\" に対する総称的関数の本体は異なった名前 ('%s') を割り当てるため "
 "'standardGeneric' を呼び出しています! "
@@ -1030,7 +1056,8 @@ msgstr " へまな名前空間：その親中に 'base' 名前空間が見付か
 msgid "got a negative maximum number of frames to look at"
 msgstr " 見るべきフレームの最大数が負でした "
 
-msgid "\"%s\" is not a generic function (or not visible here)"
+#, fuzzy
+msgid "%s is not a generic function (or not visible here)"
 msgstr " \"%s\" は総称的関数ではありません(またはここでは可視ではありません) "
 
 msgid "invalid element in the groupMembers slot (class %s)"
@@ -1085,16 +1112,17 @@ msgid "Error in load action %s for package %s: %s: %s"
 msgstr " %s に対する総称関数をパッケージ %s (%s 中にある)から作成します "
 
 #, fuzzy
-msgid "non-function action: \"%s"
+msgid "non-function action: %s"
 msgstr " \"%s\" に対する関数定義はありません "
 
-msgid "action function \"%s\" has no arguments, should have at least 1"
+msgid "action function %s has no arguments, should have at least 1"
 msgstr ""
 
 msgid "Some actions missing: %s"
 msgstr ""
 
-msgid "\"%s\" has a sealed class definition and cannot be redefined"
+#, fuzzy
+msgid "%s has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
 
 msgid ""
@@ -1104,7 +1132,8 @@ msgstr ""
 " 'representation' が 'classRepresentation' オブジェクトのときは、引数 "
 "'Class' と 'where' だけを与えられます "
 
-msgid "Internal error: definition of class \"%s\" not properly assigned"
+#, fuzzy
+msgid "Internal error: definition of class %s not properly assigned"
 msgstr " 内部エラー: 適切に割り当てられなかったクラスの定義 \"%s\" "
 
 msgid ""
@@ -1148,20 +1177,24 @@ msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr ""
 " 一つのデータオブジェクト(プロトタイプへの名前の無い引数)だけが許されます "
 
-msgid "\"%s\" is not a defined class"
+#, fuzzy
+msgid "%s is not a defined class"
 msgstr " \"%s\" は定義されたクラスではありません "
 
-msgid "\"%s\" is not a slot in class %s"
+#, fuzzy
+msgid "%s is not a slot in class %s"
 msgstr " \"%s\" はクラス \"%s\" 中のスロットではありません "
 
+#, fuzzy
 msgid ""
-"assignment of an object of class %s is not valid for slot \"%s\" in an "
-"object of class %s; is(value, \"%s\") is not TRUE"
+"assignment of an object of class %s is not valid for slot %s in an object of "
+"class %s; is(value, \"%s\") is not TRUE"
 msgstr ""
 " クラス %s のオブジェクトの代入はスロット \"%s\" (クラス \"%s\" のオブジェク"
 "ト中)に対しては不正です； is(value, \"%s\") が TRUE ではありません "
 
-msgid "Class definition for \"%s\" not found  (no action taken)"
+#, fuzzy
+msgid "Class definition for %s not found (no action taken)"
 msgstr " \"%s\" に対するクラス定義が見付かりません(何も行いません) "
 
 msgid "class %s has multiple definitions visible; only the first removed"
@@ -1217,8 +1250,9 @@ msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
 " クラス定義は、これらのデータ型のうちの1つ以上を広げることができません：%s "
 
+#, fuzzy
 msgid ""
-"Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
+"Sorry, abnormal type %s is not supported as a superclass of a class "
 "definition"
 msgstr ""
 " すいませんが, 異常なタイプ \"%s\" はクラス定義のスーパークラスとして支持され"
@@ -1253,25 +1287,30 @@ msgstr " 関数 %s が見付かりません "
 msgid "no non-generic function %s found"
 msgstr " 総称的でない関数 %s が見付かりません "
 
-msgid "\"%s\" is not one of the element names"
+#, fuzzy
+msgid "%s is not one of the element names"
 msgstr " \"%s\" は要素名中にありません "
 
+#, fuzzy
 msgid ""
-"internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the "
-"metadata asserts that the 'is' relation is FALSE"
+"internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata "
+"asserts that the 'is' relation is FALSE"
 msgstr ""
 " as() 中に内部問題： \"%s\" is(object, \"%s\") は TRUE ですが、メタデータは "
 "'is' 関係 FALSE と主張しています "
 
-msgid "no method or default for coercing \"%s\" to \"%s\""
+#, fuzzy
+msgid "no method or default for coercing %s to %s"
 msgstr " \"%s\" を \"%s\" へ強制変換するためのメソッドや既定動作はありません "
 
-msgid "no method or default for as() replacement of \"%s\" with Class=\"%s\""
+#, fuzzy
+msgid "no method or default for as() replacement of %s with Class=\"%s\""
 msgstr ""
 " \"%s\" (Class=\"%s\" を持つ)の as() 変換のためのメソッドや既定動作はありませ"
 "ん "
 
-msgid "trying to set an 'as' relation from \"%s\" to itself"
+#, fuzzy
+msgid "trying to set an 'as' relation from %s to itself"
 msgstr " \"%s\" からそれ自体への 'as' 関係を設定しようとしています "
 
 msgid "class %s is not defined in this environment"
@@ -1311,19 +1350,21 @@ msgstr " \"name\" に強制変更するには曖昧なオブジェクトです (
 msgid "undefined coerce method"
 msgstr " 未定義の強制変換メソッド "
 
+#, fuzzy
 msgid ""
-"methods currently exist for coercing from \"%s\" to \"%s\"; they will be "
-"replaced."
+"methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr ""
 " \"%s\" から \"%s\" への強制変換のためのメソッドが現在存在します；これらを交"
 "換します "
 
-msgid "object \"%s\" not found"
+#, fuzzy
+msgid "object %s not found"
 msgstr " オブジェクト \"%s\" は存在しません "
 
+#, fuzzy
 msgid ""
-"object \"%s\" not changed (it is not consistent with the current definition "
-"of class %s from %s)"
+"object %s not changed (it is not consistent with the current definition of "
+"class %s from %s)"
 msgstr ""
 " オブジェクト \"%s\" は変更されません(これは クラス %s (%s からの)の現在の定"
 "義と両立しません) "
@@ -1331,9 +1372,10 @@ msgstr ""
 msgid "no definition for the class of %s (class %s) found"
 msgstr " \"%s\" のクラス(クラス \"%s\") に対する定義はありません "
 
+#, fuzzy
 msgid ""
-"object \"%s\" not changed (it does not appear to be from a version of R "
-"earlier than 1.8.0)"
+"object %s not changed (it does not appear to be from a version of R earlier "
+"than 1.8.0)"
 msgstr ""
 " オブジェクト \"%s\" は変更されません(これはバージョン 1.8.0 以前の R では存"
 "在するようには見えません)しないようです "
@@ -1348,9 +1390,10 @@ msgid "class %s has no visible definition from package or environment %s"
 msgstr ""
 " クラス \"%s\" はパッケージもしくは環境 \"%s\" から可視な定義を持ちません "
 
+#, fuzzy
 msgid ""
-"cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s"
-"\") is local and modifiable in this package"
+"cannot create a 'setIs' relation when neither of the classes (%s and %s) is "
+"local and modifiable in this package"
 msgstr ""
 " クラス (\"%s\" と \"%s\") のどちらもこのパッケージでローカルか変更可能なとき"
 "は 'setIs' 関係を生成できません "
@@ -1392,7 +1435,8 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr " 関数引数に対する不正なインデックスです "
 
-msgid "No function definition found for \"%s\""
+#, fuzzy
+msgid "No function definition found for %s"
 msgstr " \"%s\" に対する関数定義はありません "
 
 msgid "Need a definition for the method here"
@@ -1404,8 +1448,8 @@ msgstr " メソッドの骨格(skeleton)が以下に書き込まれます "
 msgid "connection"
 msgstr " コネクション "
 
-msgid ""
-"Invalid object in meta table of methods for %s, label \"%s\", had class %s"
+#, fuzzy
+msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 " %s、ラベル \"%s\"、 に対するメソッドのメタテーブル中に不正なオブジェクトがあ"
 "ります。クラス \"%s\" でした "
@@ -1452,9 +1496,10 @@ msgstr ""
 " 関数 %s に対して素直に継承されたメソッドが見つかりません。素直でないメソッド"
 "を使います。 "
 
+#, fuzzy
 msgid ""
-"Note: Method with signature \"%s\" chosen for function \"%s\",\n"
-" target signature \"%s\".\n"
+"Note: Method with signature %s chosen for function %s,\n"
+" target signature %s.\n"
 " %s would also be valid"
 msgstr ""
 " 注：シグネチャー\"%s\"を選ぶ(メソッド \"%s\" のために)方法, \n"
@@ -1467,11 +1512,9 @@ msgstr " が見付かりました "
 msgid "equally good next methods"
 msgstr " 同じぐらい良いネクストメソッド "
 
-msgid "unable to find an inherited method for function \""
+#, fuzzy
+msgid "unable to find an inherited method for function %s for signature %s"
 msgstr " 以下の関数に対する継承メソッドを見付けることができません \" "
-
-msgid "\", for signature"
-msgstr " \", 以下のシグネチャに対する "
 
 msgid ""
 "Internal error in finding inherited methods; didn't return a unique method"
@@ -1554,9 +1597,10 @@ msgstr ""
 " 引数 S4Class はクラス定義でなければなりません: クラス %s のオブジェクトが与"
 "えられました "
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\"; the class is defined "
-"but does not extend \"%s\" and is not valid as the data part"
+"inconsistent old-style class information for %s; the class is defined but "
+"does not extend %s and is not valid as the data part"
 msgstr ""
 " \"%s\" に対する不整合な旧式のクラス情報；クラスは定義されていますが \"%s\" "
 "を拡張しておらず、データ部分として無効です "
@@ -1571,7 +1615,8 @@ msgstr ""
 msgid "Restoring definition of class %s"
 msgstr " クラス”%s”の定義を回復しています "
 
-msgid "Slot \"%s\": class %s should extend class %s"
+#, fuzzy
+msgid "Slot %s: class %s should extend class %s"
 msgstr ""
 " スロット \"%s\": クラス \"%s\"  はクラス \"%s\"  に拡張されるべきです。 "
 
@@ -1599,9 +1644,10 @@ msgstr ""
 " 引数 'Classes' は二つのクラスのベクトルでなければなりません；長さ %d の引数"
 "でした "
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\" (maybe mixing old and "
-"new classes?)"
+"inconsistent old-style class information for %s (maybe mixing old and new "
+"classes?)"
 msgstr ""
 " \"%s\" に対する不整合な旧式の情報(恐らく古いクラスと新しいクラスが混ざってい"
 "る？) "
@@ -1626,7 +1672,8 @@ msgstr " 見つからないので、パッケージ名 %s を作成しました 
 msgid "no definition of class %s found"
 msgstr " クラス \"%s\" の定義はありません "
 
-msgid "multiple definitions of \"%s\" found; using the one on %s"
+#, fuzzy
+msgid "multiple definitions of %s found; using the one on %s"
 msgstr " \"%s\" の多重定義が見付かりました；%s に関するものを使います "
 
 msgid ""
@@ -1635,7 +1682,8 @@ msgid ""
 msgstr ""
 " クラス %s の定義は指定された位置 %s にありません、%s に関する定義です "
 
-msgid "\"%s\" is not a valid field or method name for reference class %s"
+#, fuzzy
+msgid "%s is not a valid field or method name for reference class %s"
 msgstr ""
 " 欄 \"%s\" は参照クラス %s に対する適正な欄もしくはメソッド名ではありません "
 
@@ -1646,8 +1694,9 @@ msgstr ""
 " メソッド %s (クラス %s からの)はインストールされるまでクラスメソッドとして処"
 "理されません． このクラス中のメソッドに混乱がある可能性があります． "
 
+#, fuzzy
 msgid ""
-"a call to superClass() is in the method \"%s\" but there is no superclass "
+"a call to superClass() is in the method %s but there is no superclass "
 "definition of this method for class %s"
 msgstr ""
 " superClass() の呼び出しはメソッド \"%s\" 中にありますが，クラス %s に対する"
@@ -1656,37 +1705,44 @@ msgstr ""
 msgid "Methods declared in usingMethods() but not found: %s"
 msgstr ""
 
-msgid "\"%s\" is not a reference class"
+#, fuzzy
+msgid "%s is not a reference class"
 msgstr " \"%s\" は参照クラスではありません "
 
-msgid "\"%s\" is not a field in class %s"
+#, fuzzy
+msgid "%s is not a field in class %s"
 msgstr " \"%s\" はクラス \"%s\" のフィールドではありません "
 
+#, fuzzy
 msgid ""
 "Unnamed arguments to $new() must be objects from a reference class; got an "
-"object of class \"%s\""
+"object of class %s"
 msgstr ""
 " $new() 関数への名前なし引数は参照クラスからのオブジェクトである必要がありま"
 "す ；クラス\"%s\" のオブジェクトを得ました "
 
-msgid "\"%s\" is not a valid field or method name for this class"
+#, fuzzy
+msgid "%s is not a valid field or method name for this class"
 msgstr ""
 " \"%s\" はこのクラスに対する適正なフィールドもしくはメソッド名ではありません "
 
+#, fuzzy
 msgid ""
-"The class of field \"%s\" in the object is not compatible with the desired "
-"class %s in the target"
+"The class of field %s in the object is not compatible with the desired class "
+"%s in the target"
 msgstr ""
 " オブジェクトのフィールド \"%s\" のクラスがターゲットのクラス%sと整合しませ"
 "ん。 "
 
-msgid "\"%s\" is not a defined class in this environment"
+#, fuzzy
+msgid "%s is not a defined class in this environment"
 msgstr " この環境ではクラス \"%s\" は定義されていません "
 
 msgid "Invalid Class argument:  should be a single string"
 msgstr " 不正なクラス引数です: 単一の文字列である必要があります "
 
-msgid "\"%s\" is not one of the reference super classes for this object"
+#, fuzzy
+msgid "%s is not one of the reference super classes for this object"
 msgstr " \"%s\" はこのオブジェクトに対する参照上位クラスの一つではありません "
 
 msgid ""
@@ -1696,7 +1752,8 @@ msgstr ""
 " callSuper() の直接の呼び出しは不正です: 他のメソッドからのみ呼び出されるべき"
 "です "
 
-msgid "\"%s\" is not a field in this class"
+#, fuzzy
+msgid "%s is not a field in this class"
 msgstr " \"%s\" はこのクラス中の欄（field)ではありません "
 
 msgid ""
@@ -1709,8 +1766,9 @@ msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 " methods() の引数は名前付きか，一つの名前付きリストでなければなりません "
 
+#, fuzzy
 msgid ""
-"Topic \"%s\" is not a method name in class %s\n"
+"Topic %s is not a method name in class %s\n"
 "The class definition follows"
 msgstr ""
 " トピック \"%s\" はクラス \"%s\" 中のメソッド名ではありません \n"
@@ -1723,17 +1781,16 @@ msgstr ""
 " クラス%s（パッケージ%s）の定義はロックされていて、フィールドは再定義できませ"
 "ん。 "
 
+#, fuzzy
 msgid ""
-"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
-"existing field definition (\"%s\")"
+"The overriding class (\"%s\") of field %s is not a subclass of the existing "
+"field definition (\"%s\")"
 msgstr ""
 " 上書きクラス \"%s\" (欄 \"%s\" の）は既存の欄定義 \"%s\" の下位クラスではあ"
 "りません "
 
-msgid "Field \""
-msgstr " 欄 \" "
-
-msgid "\" is read-only"
+#, fuzzy
+msgid "Field %s is read-only"
 msgstr " \" は読み取り専用です "
 
 msgid ""
@@ -1753,19 +1810,21 @@ msgstr ""
 msgid "No definition found for inherited class: %s"
 msgstr " 継承クラス %s に対する定義はありません "
 
+#, fuzzy
 msgid ""
-"Single class name needed for field \"%s\", got a character vector of length "
-"%d"
+"Single class name needed for field %s, got a character vector of length %d"
 msgstr ""
 " 欄 \"%s\" に対する単一のクラス名が必要とされています： 長さ %d の文字列ベク"
 "トルが与えられました "
 
-msgid "Class %s for field \"%s\" is not defined"
+#, fuzzy
+msgid "Class %s for field %s is not defined"
 msgstr " クラス \"%s\" （フィールド \"%s\" に対する）が定義されません "
 
+#, fuzzy
 msgid ""
-"Field \"%s\" was supplied as an object of class %s; must be a class name or "
-"a binding function"
+"Field %s was supplied as an object of class %s; must be a class name or a "
+"binding function"
 msgstr ""
 " 　欄 \"%s\" がクラス %s のオブジェクトとして与えられましたが，クラス名か "
 "binding 関数でなければなりません "
@@ -1836,10 +1895,12 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr " 引数はすべてフィールド名の文字列でなければなりません "
 
-msgid "Field \"%s\" is already locked"
+#, fuzzy
+msgid "Field %s is already locked"
 msgstr "  欄 \"%s\" はすでにロックされています "
 
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+#, fuzzy
+msgid "Field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 " フィールド \"%s\" （クラス \"%s\"）は既定の結合を持たないためロックできませ"
 "ん "
@@ -1865,7 +1926,8 @@ msgid "Argument signature= is not meaningful for tracing reference methods"
 msgstr ""
 " 引数 signature は参照メソッドを追跡するのに意味があるものではありません。 "
 
-msgid "\"%s\" is not a method for reference class %s"
+#, fuzzy
+msgid "%s is not a method for reference class %s"
 msgstr " \"%s\" は参照クラス %s に対するメソッドではありません "
 
 msgid "argument 'what' should be the name of a function"
@@ -1877,11 +1939,12 @@ msgstr " 内部関数 \"%s\" のトレースは許されていません "
 msgid ".TraceWithMethods: after computing what, whereF"
 msgstr " .TraceWithMethods: what, whereF の計算後に "
 
-msgid "no function definition for \"%s\" found"
+#, fuzzy
+msgid "no function definition for %s found"
 msgstr " \"%s\" に対する関数定義はありません "
 
-msgid ""
-"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+#, fuzzy
+msgid "Can't untrace method for %s; no method defined for this signature: %s"
 msgstr ""
 " メソッド \"%s\" に対するメソッドをトレースできません；　以下のシグネチャに対"
 "するメソッドはありません： %s "
@@ -1889,7 +1952,8 @@ msgstr ""
 msgid ".TraceWithMethods: untrace case"
 msgstr " .TraceWithMethods: トレースされないケース "
 
-msgid "the method for \"%s\" for this signature was not being traced"
+#, fuzzy
+msgid "the method for %s for this signature was not being traced"
 msgstr ""
 " このシグナチャの \"%s\" に対するメソッドはトレースされていませんでした "
 
@@ -1952,7 +2016,8 @@ msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr ""
 " 複数のパッケージにオブジェクトが見つかりました。%sを使い，%sを無視します。 "
 
-msgid "Package \"%s\" is not attached and no namespace found for it"
+#, fuzzy
+msgid "Package %s is not attached and no namespace found for it"
 msgstr ""
 " パッケージ \"%s\" がアタッチされておらず，それに対する名前空間が見つかりませ"
 "んでした "
@@ -2003,18 +2068,21 @@ msgstr " 関数 \"%s\" に対するメソッドが挿入されます： %s  "
 msgid "Pretend we inserted class"
 msgstr " クラスを挿入したかのようにふるまいます "
 
-msgid "No definition for object \"%s\" found in tracing environment"
+#, fuzzy
+msgid "No definition for object %s found in tracing environment"
 msgstr " \"%s\" に対する定義がトレース環境中に見付かりません "
 
 msgid "multiple generics match pattern, using table %s"
 msgstr " テーブル %s を使って、複数の総称関数がパターンにマッチしました "
 
+#, fuzzy
 msgid ""
-"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+"Does not seem to be a method table for generic %s in tracing environment"
 msgstr ""
 " 総称に対するメソッドテーブルのようには見えません　トレース環境中の \"%s\" "
 
-msgid "No method in methods table for \"%s\" for signature \"%s\""
+#, fuzzy
+msgid "No method in methods table for %s for signature %s"
 msgstr ""
 " シグネチャ(signature) ”%s” に対する \"%s\" に対するメソッドテーブル中にはい"
 "かなるメソッドもありません "
@@ -2032,6 +2100,18 @@ msgstr " ファイルを移動するか、クラスまたはメソッドを削�
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
+
+#~ msgid "Replacement value must be of class \""
+#~ msgstr " 置き換え値は以下のクラスでなければなりません \" "
+
+#~ msgid "\", got one of class \""
+#~ msgstr " \", しかし, 以下のクラスの１つが与えられました \" "
+
+#~ msgid "\", for signature"
+#~ msgstr " \", 以下のシグネチャに対する "
+
+#~ msgid "Field \""
+#~ msgstr " 欄 \" "
 
 #~ msgid "the supplied generic function definition for"
 #~ msgstr " 以下に対する提供された総称的関数定義 "

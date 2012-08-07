@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-08-07 07:50\n"
 "PO-Revision-Date: 2012-03-15 11:56-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -92,14 +92,9 @@ msgstr "Аргумент S3Class должен быть суперклассом %s: это не так для класса %s"
 msgid "Replacement value must extend class %s, got %s"
 msgstr "Заменяющее значение должно расширять класс %s, получил %s"
 
-msgid "Replacement value must be of class \""
-msgstr "Замещающее значение должно быть класса \""
-
-msgid "\", got one of class \""
-msgstr "\", получил класса \""
-
-msgid "\""
-msgstr "\""
+#, fuzzy
+msgid "Replacement value must be of class %s, got one of class %s"
+msgstr "Заменяющее значение должно расширять класс %s, получил %s"
 
 msgid "no 'replace' method was defined for as(x, \"%s\") <- value for class %s"
 msgstr ""
@@ -142,7 +137,8 @@ msgstr "классы-члены класса должны быть определены: не верно для %s"
 msgid "unable to create union class:  could not set members %s"
 msgstr "не могу создать класс union:  не могу установить членов %s"
 
-msgid "invalid argument \"name\": %s"
+#, fuzzy
+msgid "invalid argument 'name': %s"
 msgstr "неправильное \"name\" аргумента: %s"
 
 msgid ""
@@ -193,7 +189,8 @@ msgid ""
 msgstr ""
 "внутренняя ошибка: не получен верный объект общей функции для функции %s"
 
-msgid "A function for argument \"f\" must be a generic function"
+#, fuzzy
+msgid "A function for argument 'f' must be a generic function"
 msgstr "Функция для аргумента \"f\" должна быть общей функцией"
 
 msgid "the environment %s is locked; cannot assign methods for function %s"
@@ -234,9 +231,10 @@ msgid ""
 "defined"
 msgstr "метод для функции %s и подпись %s запечатаны и не могут быть изменены"
 
+#, fuzzy
 msgid ""
-"For function %s, signature \"%s\": argument in method definition changed "
-"from (%s) to (%s)"
+"For function %s, signature %s: argument in method definition changed from "
+"(%s) to (%s)"
 msgstr ""
 "Для функции %s, идентификатор %s: аргумент в определении метода изменен с "
 "(%s) на (%s)"
@@ -253,7 +251,8 @@ msgid ""
 msgstr ""
 "Неверное определение метода: ожидалась функция, а получен объект класса %s"
 
-msgid "Function supplied as argument \"f\" must be a generic"
+#, fuzzy
+msgid "Function supplied as argument 'f' must be a generic"
 msgstr "Функция, предоставленная аргументом \"f\" должна быть общей"
 
 msgid "no generic function %s found"
@@ -265,10 +264,12 @@ msgstr "не найдено метода для функции %s и идентификатора %s"
 msgid "no environment or package corresponding to argument where=%s"
 msgstr "нет ни окружениея, ни пакета соответствующего аргументу where=%s"
 
-msgid "No generic function found for \"%s\""
+#, fuzzy
+msgid "No generic function found for '%s'"
 msgstr "Не найдено общей функции для \"%s\""
 
-msgid "No method found for function \"%s\" and signature %s"
+#, fuzzy
+msgid "No method found for function '%s' and signature %s"
 msgstr "Не найдено метода для функции \"%s\" и идентификатора %s"
 
 msgid "Warning:  using defunct methods list search"
@@ -295,8 +296,9 @@ msgstr "не определено метода для функции %s и идентификатора %s"
 msgid "'file' must be a character string or a connection"
 msgstr "'file' должен быть текстовой строкой или соединением"
 
+#, fuzzy
 msgid ""
-"argument \"signature\" is not meaningful with the current implementation and "
+"argument 'signature' is not meaningful with the current implementation and "
 "is ignored \n"
 "(extract a subset of the methods list instead)"
 msgstr ""
@@ -309,7 +311,8 @@ msgstr "Нет метода для %s, сответствующего классу %s"
 msgid "No method found for signature %s"
 msgstr "Не найдено метода для идентификатора %s"
 
-msgid "\"%s\" has no methods defined"
+#, fuzzy
+msgid "%s has no methods defined"
 msgstr "\"%s\" не содержит определенных методов"
 
 msgid "selectMethod(): mlist is not an environment or NULL :"
@@ -331,13 +334,15 @@ msgstr ""
 "первый аргумент должен быть именем(-ами) общих функций (а получен объект "
 "класса %s)"
 
-msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
+#, fuzzy
+msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr "\"%s\" не является общей функцией S4 в \"%s\"; методы не удалены"
 
 msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr "не могу удалить методы %s в заблокированном окружении/пакете %s"
 
-msgid "restoring default function definition of \"%s\""
+#, fuzzy
+msgid "restoring default function definition of %s"
 msgstr "восстанавливаю определение по умолчанию для функции \"%s\""
 
 msgid ""
@@ -366,15 +371,17 @@ msgstr "'callGeneric' должна быть вызвана из общей функции или метода"
 msgid "expected a non-empty character string for argument name"
 msgstr "ожидаю непустую текстовую строку для имени аргумента"
 
-msgid "generic function supplied was not created for \"%s\""
+#, fuzzy
+msgid "generic function supplied was not created for %s"
 msgstr "указанная для \"%s\" общая функция не создана"
 
 #, fuzzy
-msgid "\"%s\" is a primitive function; its generic form cannot be redefined"
+msgid "%s is a primitive function; its generic form cannot be redefined"
 msgstr "\"class\" является примитивной функцией и не может быть переопределен"
 
+#, fuzzy
 msgid ""
-"\"%s\" is not currently a generic:  define it first to create a non-default "
+"%s is not currently a generic:  define it first to create a non-default "
 "implicit form"
 msgstr ""
 "\"%s\" в настоящее время не является общей функцией: определите ее первой, "
@@ -433,7 +440,11 @@ msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 "Только FALSE имеет значение для 'inherited', когда указано 'where' (получен"
 
-msgid "argument \"f\" must be a generic function or %s"
+msgid "\""
+msgstr "\""
+
+#, fuzzy
+msgid "argument 'f' must be a generic function or %s"
 msgstr "аргумент \"f\" должен быть общей функцией или %s"
 
 msgid "'%s' is not a known generic function {and 'package' not specified}"
@@ -499,7 +510,8 @@ msgstr ""
 "попытка сопоставить идентификатор метода с объектом (класса %s), который не "
 "является общей функцией"
 
-msgid "invalid \"package\" slot or attribute, wrong length"
+#, fuzzy
+msgid "invalid 'package' slot or attribute, wrong length"
 msgstr "неправильная позиция атрибут \"package\", неправильная длина"
 
 msgid ""
@@ -539,7 +551,8 @@ msgstr ""
 "в идентификаторе метода для функции %s неверные имена аргументов в "
 "идентификаторе: %s"
 
-msgid "No generic function found corresponding to \"%s\""
+#, fuzzy
+msgid "No generic function found corresponding to %s"
 msgstr "Нет общей функции, соответствующей \"%s\""
 
 msgid "skipping methods list element %s of unexpected class %s"
@@ -559,7 +572,8 @@ msgstr ""
 msgid "Use %s instead."
 msgstr "Вместо этого используйте %s."
 
-msgid "invalid object for formal method definition: type \"%s\""
+#, fuzzy
+msgid "invalid object for formal method definition: type %s"
 msgstr "неверный объект для формального определения метода: тип \"%s\""
 
 msgid "missing package slot (%s) in object of class %s (package info added)"
@@ -582,7 +596,8 @@ msgstr "%d: цель \"%s\": выбрано \"%s\" (другие: %s)"
 msgid "Notes: %s."
 msgstr "Замечания: %s."
 
-msgid "Class generator function for class \"%s\" from package \"%s\""
+#, fuzzy
+msgid "Class generator function for class %s from package %s"
 msgstr "Создание новой производящей функции для класса \"%s\" из пакета \"%s\""
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
@@ -590,9 +605,10 @@ msgstr ""
 "имена в идентификаторе для метода (%s) не совпадают с %s аргументами функции "
 "(%s)"
 
+#, fuzzy
 msgid ""
-"a call to callNextMethod() appears in a call to \"%s\", but the call does "
-"not seem to come from either a generic function or another 'callNextMethod'"
+"a call to callNextMethod() appears in a call to %s, but the call does not "
+"seem to come from either a generic function or another 'callNextMethod'"
 msgstr ""
 "при обращении к \"%s\", похоже был вызван callNextMethod(), но данный вызов "
 "не был, похоже, произведен другой общей функцией или другим 'callNextMethod'"
@@ -627,9 +643,10 @@ msgstr ""
 "при создании прототипа для класса %s элементы прототипа не совпадают с "
 "соответствующим слотом класса: %s"
 
+#, fuzzy
 msgid ""
-"potential cycle in class inheritance: \"%s\" has duplicates in superclasses "
-"and subclasses (%s)"
+"potential cycle in class inheritance: %s has duplicates in superclasses and "
+"subclasses (%s)"
 msgstr ""
 "потенциальный цикл в наследовании класса: \"%s\" имеет повторы в "
 "суперклассах и подклассах (%s)"
@@ -657,7 +674,8 @@ msgstr ""
 "попытка назначить объект класса %s определением класса %s: необходимо "
 "предоставить объект \"classRepresentation\""
 
-msgid "assigning as \"%s\" a class representation with internal name \"%s\""
+#, fuzzy
+msgid "assigning as %s a class representation with internal name %s"
 msgstr "назначаю как \"%s\" представление класса с внутренним именем \"%s\""
 
 msgid "Class %s has a locked definition in package %s"
@@ -683,9 +701,8 @@ msgid ""
 "No definition was found for superclass %s in the specification of class %s"
 msgstr "В спецификации класса %s нет определения для суперкласса %s"
 
-msgid ""
-"conflicting definition of data part: .Data = \"%s\", superclass implies \"%s"
-"\""
+#, fuzzy
+msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
 msgstr ""
 "конфликтующее определение части данных: .Data = \"%s\", суперкласс "
 "подразумевает \"%s\""
@@ -704,9 +721,10 @@ msgstr ""
 "прототип был предоставлен классом %s, но определение класса требует объект, "
 "являющийся классом %s"
 
+#, fuzzy
 msgid ""
-"slot \"%s\" in class %s currently defined (or inherited) as \"%s\", "
-"conflicts with an inherited definition in class %s"
+"slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
+"with an inherited definition in class %s"
 msgstr ""
 "слот %s в классе %s в данный момент определен (или наследован) как %s, "
 "конфликтуя с наследованным определением в классе %s"
@@ -714,8 +732,9 @@ msgstr ""
 msgid "class %s extends an undefined class (%s)"
 msgstr "класс %s расширяет неопределенный класс (%s)"
 
+#, fuzzy
 msgid ""
-"\"%s\" is not eligible to be the data part of another class (must be a basic "
+"%s is not eligible to be the data part of another class (must be a basic "
 "class or a virtual class with no slots)"
 msgstr ""
 "\"%s\" не может быть назначен частью данных другого класса (должен быть "
@@ -732,7 +751,8 @@ msgstr ""
 msgid "named elements of prototype do not correspond to slot names: %s"
 msgstr "именованные элементы прототипа не соответствуют именам слотов: %s"
 
-msgid "the \"%s\" list for class %s, includes an undefined class %s"
+#, fuzzy
+msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr "список %s для класса %s, включает неопределенный класс %s"
 
 msgid ""
@@ -844,16 +864,16 @@ msgstr "Сокращенный аргумент должен быть 0, 1, 2, или 3"
 msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr "Нужны добавочные метки вектора длины %n, а получено %n"
 
+#, fuzzy
 msgid ""
-"the function being used as %s in making a generic function for \"%s\" is "
+"the function being used as %s in making a generic function for %s is "
 "currently traced; the function used will have tracing removed"
 msgstr ""
 "функция, используемая как %s при создании общей функции для \"%s\" в данный "
 "момент отслеживается; для используемой функции трассировка будет удалена"
 
 #, fuzzy
-msgid ""
-"Must supply either a generic function or a function as default for \"%s\""
+msgid "Must supply either a generic function or a function as default for %s"
 msgstr ""
 "Надо определить либо общую функцию, либо функцию по умолчанию для \"#s\""
 
@@ -870,9 +890,10 @@ msgstr "не найдено аргументов в идентификаторе: %s"
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "нет подходящих аргументов для методов отправки в данной функции"
 
+#, fuzzy
 msgid ""
-"the formal arguments of the generic function for \"%s\" (%s) differ from "
-"those of the non-generic to be used as the default (%s)"
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
 msgstr ""
 "формальные аргументы общей функции для \"%s\" (%s) отличаются от не-общих, "
 "используемых по умолчанию (%s)"
@@ -888,7 +909,8 @@ msgstr ""
 msgid "making a generic for special function %s"
 msgstr "создаю общую для специальной функции %s"
 
-msgid "invalid call in method dispatch to \"%s\" (no default method)"
+#, fuzzy
+msgid "invalid call in method dispatch to '%s' (no default method)"
 msgstr "неверный вызов в методе оправки к \"%s\" (нет метода по умолчанию)"
 
 msgid "in method for %s with signature %s:"
@@ -937,7 +959,8 @@ msgstr ""
 msgid "methods cannot be defined for the primitive function %s"
 msgstr "методы не могут быть определены для элементарной функции %s"
 
-msgid "no generic function found for \"%s\""
+#, fuzzy
+msgid "no generic function found for %s"
 msgstr "не найдено общей функции для \"%s\""
 
 msgid "Empty function name in .getGeneric"
@@ -950,24 +973,25 @@ msgstr ""
 "Методы, перечисляющие объекты, не поддерживаются в этой версии R:  запрос "
 "функции %s может вернуть неправильную информацию"
 
+#, fuzzy
 msgid ""
-"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
-"source"
+"Package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr ""
 "Пакет \"%s\" возможно, содержит устаревшие методы; необходимо переустановить "
 "его из источника"
 
-msgid ""
-"no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
+#, fuzzy
+msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
 "не найдено методов для \"%s\"; cacheGenericsMetaData() не будет иметь эффекта"
 
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr "неверное значение из общей функции %s, класс %s, ожидалось %s"
 
+#, fuzzy
 msgid ""
-"the body of the generic function for \"%s\" calls 'standardGeneric' to "
-"dispatch on a different name (\"%s\")!"
+"the body of the generic function for %s calls 'standardGeneric' to dispatch "
+"on a different name (\"%s\")!"
 msgstr ""
 "тело общей функции для \"%s\" вызывает 'standardGeneric' для отправки под "
 "другим именем (\"%s\")!"
@@ -1024,7 +1048,8 @@ msgstr ""
 msgid "got a negative maximum number of frames to look at"
 msgstr "получено отрицательное максимальное число структур для поиска"
 
-msgid "\"%s\" is not a generic function (or not visible here)"
+#, fuzzy
+msgid "%s is not a generic function (or not visible here)"
 msgstr "\"%s\" не является общей функцией (либо не видна здесь)"
 
 msgid "invalid element in the groupMembers slot (class %s)"
@@ -1074,16 +1099,19 @@ msgstr "Нет функции для действия загрузки: %s"
 msgid "Error in load action %s for package %s: %s: %s"
 msgstr "Ошибка в действии загрузки %s для пакета %s: %s: %s"
 
-msgid "non-function action: \"%s"
+#, fuzzy
+msgid "non-function action: %s"
 msgstr "действие без фкнкции: \"%s\""
 
-msgid "action function \"%s\" has no arguments, should have at least 1"
+#, fuzzy
+msgid "action function %s has no arguments, should have at least 1"
 msgstr "функция действия \"%s\" не имеет аргументов, а должен быть хотя бы 1"
 
 msgid "Some actions missing: %s"
 msgstr "Некоторые действия пропущены: %s"
 
-msgid "\"%s\" has a sealed class definition and cannot be redefined"
+#, fuzzy
+msgid "%s has a sealed class definition and cannot be redefined"
 msgstr ""
 "\"%s\" имеет запечатанное определение класса и не может быть переопределено"
 
@@ -1094,7 +1122,8 @@ msgstr ""
 "только аргументы 'Class' и 'where' могут быть предоставлены когда аргумент "
 "'representation' является объектом класса 'classRepresentation'"
 
-msgid "Internal error: definition of class \"%s\" not properly assigned"
+#, fuzzy
+msgid "Internal error: definition of class %s not properly assigned"
 msgstr "Внутренняя ошибка: определение класса \"%s\" не присвоено как следует"
 
 msgid ""
@@ -1137,20 +1166,24 @@ msgstr "совпадающие имена слотов: %s"
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr "разрешен только один объект данных (безымянный аргумент для прототипа)"
 
-msgid "\"%s\" is not a defined class"
+#, fuzzy
+msgid "%s is not a defined class"
 msgstr "\"%s\" не является определенным классом"
 
-msgid "\"%s\" is not a slot in class %s"
+#, fuzzy
+msgid "%s is not a slot in class %s"
 msgstr "%s не является позицией класса %s"
 
+#, fuzzy
 msgid ""
-"assignment of an object of class %s is not valid for slot \"%s\" in an "
-"object of class %s; is(value, \"%s\") is not TRUE"
+"assignment of an object of class %s is not valid for slot %s in an object of "
+"class %s; is(value, \"%s\") is not TRUE"
 msgstr ""
 "назначение объекта класса %s неверно для позиции %s в объекте класса %s; is"
 "(value, %s) не является TRUE"
 
-msgid "Class definition for \"%s\" not found  (no action taken)"
+#, fuzzy
+msgid "Class definition for %s not found (no action taken)"
 msgstr ""
 "Определение класса для \"%s\" не найдено  (не предпринято никаких действий)"
 
@@ -1206,8 +1239,9 @@ msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
 "Определение класса на может расширить более чем один из этих типов данных: %s"
 
+#, fuzzy
 msgid ""
-"Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
+"Sorry, abnormal type %s is not supported as a superclass of a class "
 "definition"
 msgstr ""
 "Простите, ненормальный тип \"%s\" не боддерживается как суперкласс или "
@@ -1242,25 +1276,30 @@ msgstr "не найдено функции %s"
 msgid "no non-generic function %s found"
 msgstr "не найдено не общей функции %s"
 
-msgid "\"%s\" is not one of the element names"
+#, fuzzy
+msgid "%s is not one of the element names"
 msgstr "\"%s\" не является одним из имен элемента"
 
+#, fuzzy
 msgid ""
-"internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the "
-"metadata asserts that the 'is' relation is FALSE"
+"internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata "
+"asserts that the 'is' relation is FALSE"
 msgstr ""
 "внутренняя проблема в as(): \"%s\" is(объект, \"%s\") является TRUE, но "
 "метаданные утверждают, что 'is' зависимость является FALSE"
 
-msgid "no method or default for coercing \"%s\" to \"%s\""
+#, fuzzy
+msgid "no method or default for coercing %s to %s"
 msgstr "нет метода или значения по умолчанию для приведения \"%s\" к \"%s\""
 
-msgid "no method or default for as() replacement of \"%s\" with Class=\"%s\""
+#, fuzzy
+msgid "no method or default for as() replacement of %s with Class=\"%s\""
 msgstr ""
 "нет метода или значения по умолчанию для as() замещения \"%s\" на Class=\"%s"
 "\""
 
-msgid "trying to set an 'as' relation from \"%s\" to itself"
+#, fuzzy
+msgid "trying to set an 'as' relation from %s to itself"
 msgstr "пытаюсь установить отношение 'as' от \"%s\" на себя"
 
 msgid "class %s is not defined in this environment"
@@ -1300,27 +1339,30 @@ msgstr "сомнительный объект (длина!=1) для приведения к \"name\""
 msgid "undefined coerce method"
 msgstr "метод приведения не определен"
 
+#, fuzzy
 msgid ""
-"methods currently exist for coercing from \"%s\" to \"%s\"; they will be "
-"replaced."
+"methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr ""
 "методы для приведения \"%s\" к \"%s\" уже существуют; они будут заменены."
 
-msgid "object \"%s\" not found"
+#, fuzzy
+msgid "object %s not found"
 msgstr "объект \"%s\" не найден"
 
+#, fuzzy
 msgid ""
-"object \"%s\" not changed (it is not consistent with the current definition "
-"of class %s from %s)"
+"object %s not changed (it is not consistent with the current definition of "
+"class %s from %s)"
 msgstr ""
 "объект %s не изменен (он не совместим с текущим определением класса %s из %s)"
 
 msgid "no definition for the class of %s (class %s) found"
 msgstr "не найдено определения для класса из %s (класс %s)"
 
+#, fuzzy
 msgid ""
-"object \"%s\" not changed (it does not appear to be from a version of R "
-"earlier than 1.8.0)"
+"object %s not changed (it does not appear to be from a version of R earlier "
+"than 1.8.0)"
 msgstr ""
 "объект \"%s\" не изменен (кажется, что он не из версии R более ранней, чем "
 "1.8.0)"
@@ -1334,9 +1376,10 @@ msgstr "'class2' должен быть именем класса либо определением класса"
 msgid "class %s has no visible definition from package or environment %s"
 msgstr "класс %s не имеет видимого определения в пакете либо окружении %s"
 
+#, fuzzy
 msgid ""
-"cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s"
-"\") is local and modifiable in this package"
+"cannot create a 'setIs' relation when neither of the classes (%s and %s) is "
+"local and modifiable in this package"
 msgstr ""
 "не могу создать 'setIs' отношение т.к. ни один из классов (\"%s\" и \"%s\") "
 "не является локальным и модифицируемым в этом пакете"
@@ -1377,7 +1420,8 @@ msgstr ""
 msgid "invalid index for function argument"
 msgstr "неверный индекс для аргумента функции"
 
-msgid "No function definition found for \"%s\""
+#, fuzzy
+msgid "No function definition found for %s"
 msgstr "Не найдено определение функции для \"%s\""
 
 msgid "Need a definition for the method here"
@@ -1389,8 +1433,8 @@ msgstr "Каркас метода записан в"
 msgid "connection"
 msgstr "соединение"
 
-msgid ""
-"Invalid object in meta table of methods for %s, label \"%s\", had class %s"
+#, fuzzy
+msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 "Неверный объект в мета-таблице методов для %s, метка \"%s\", имеет класс %s"
 
@@ -1434,9 +1478,10 @@ msgstr ""
 "Не найдено просто унаследованного метода для функции %s; использую непростой "
 "метод"
 
+#, fuzzy
 msgid ""
-"Note: Method with signature \"%s\" chosen for function \"%s\",\n"
-" target signature \"%s\".\n"
+"Note: Method with signature %s chosen for function %s,\n"
+" target signature %s.\n"
 " %s would also be valid"
 msgstr ""
 "Замечание: Метод с подписью \"%s\" выбран для функции \"%s\",\n"
@@ -1449,11 +1494,9 @@ msgstr "найдено"
 msgid "equally good next methods"
 msgstr "в равной степени хорошие следующие методы"
 
-msgid "unable to find an inherited method for function \""
+#, fuzzy
+msgid "unable to find an inherited method for function %s for signature %s"
 msgstr "невозможно найти наследованный метод для функции \""
-
-msgid "\", for signature"
-msgstr "\", для идентификатора"
 
 msgid ""
 "Internal error in finding inherited methods; didn't return a unique method"
@@ -1532,9 +1575,10 @@ msgid "argument S4Class must be a class definition:  got an object of class %s"
 msgstr ""
 "аргумент S4Class должен быть определением класса; получен объект класса %s"
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\"; the class is defined "
-"but does not extend \"%s\" and is not valid as the data part"
+"inconsistent old-style class information for %s; the class is defined but "
+"does not extend %s and is not valid as the data part"
 msgstr ""
 "противоречивая, в старом стиле информация для \"%s\"; класс определен, но не "
 "расширяет %s и неправилен как часть данных"
@@ -1549,7 +1593,8 @@ msgstr ""
 msgid "Restoring definition of class %s"
 msgstr "Восстанавливаю определение класса %s"
 
-msgid "Slot \"%s\": class %s should extend class %s"
+#, fuzzy
+msgid "Slot %s: class %s should extend class %s"
 msgstr "Позиция \"%s\": класс %s должен расширить класс %s"
 
 msgid ""
@@ -1576,9 +1621,10 @@ msgstr ""
 "аргумент 'Classes' должен быть вектором двух классов; получен аргумент длины "
 "%d"
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\" (maybe mixing old and "
-"new classes?)"
+"inconsistent old-style class information for %s (maybe mixing old and new "
+"classes?)"
 msgstr ""
 "противоречивая, в старом стиле информация для класса \"%s\" (возможно имеет "
 "место смешение старых и новых классов?)"
@@ -1603,7 +1649,8 @@ msgstr "Создано имя пакета, %s, в то время как ни одного не найдено"
 msgid "no definition of class %s found"
 msgstr "не найдено определение класса %s"
 
-msgid "multiple definitions of \"%s\" found; using the one on %s"
+#, fuzzy
+msgid "multiple definitions of %s found; using the one on %s"
 msgstr "найдено несколько определений \"%s\"; использую одно из %s"
 
 msgid ""
@@ -1611,7 +1658,8 @@ msgid ""
 "%s"
 msgstr "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
 
-msgid "\"%s\" is not a valid field or method name for reference class %s"
+#, fuzzy
+msgid "%s is not a valid field or method name for reference class %s"
 msgstr ""
 "Поле \"%s\" -- неправильное поле или имя метода для ссылочного класса %s"
 
@@ -1622,8 +1670,9 @@ msgstr ""
 "Метод %s из класса %s не был преобразован в метод класса, покуда не был "
 "установлен. Возможно повреждение методов в классе."
 
+#, fuzzy
 msgid ""
-"a call to superClass() is in the method \"%s\" but there is no superclass "
+"a call to superClass() is in the method %s but there is no superclass "
 "definition of this method for class %s"
 msgstr ""
 "вызов superClass() есть в методе \"%s\", но там нет определения "
@@ -1632,34 +1681,41 @@ msgstr ""
 msgid "Methods declared in usingMethods() but not found: %s"
 msgstr ""
 
-msgid "\"%s\" is not a reference class"
+#, fuzzy
+msgid "%s is not a reference class"
 msgstr "\"%s\" не является ссылочным классом"
 
-msgid "\"%s\" is not a field in class %s"
+#, fuzzy
+msgid "%s is not a field in class %s"
 msgstr "\"%s\" не является полем класса %s"
 
+#, fuzzy
 msgid ""
 "Unnamed arguments to $new() must be objects from a reference class; got an "
-"object of class \"%s\""
+"object of class %s"
 msgstr ""
 "Непоименованные аргументы $new() должны быть объектами ссылочного класса; "
 "получен объект класса \"%s\""
 
-msgid "\"%s\" is not a valid field or method name for this class"
+#, fuzzy
+msgid "%s is not a valid field or method name for this class"
 msgstr "Поле \"%s\" -- неправильное поле или имя метода для этого класса"
 
+#, fuzzy
 msgid ""
-"The class of field \"%s\" in the object is not compatible with the desired "
-"class %s in the target"
+"The class of field %s in the object is not compatible with the desired class "
+"%s in the target"
 msgstr "Класс или поле \"%s\" объекта несовместимо с желаемым классом %s цели"
 
-msgid "\"%s\" is not a defined class in this environment"
+#, fuzzy
+msgid "%s is not a defined class in this environment"
 msgstr " \"%s\" -- класс, который не определен в этом окружении"
 
 msgid "Invalid Class argument:  should be a single string"
 msgstr "Invalid Class аргумент:  должен быть простой строкой"
 
-msgid "\"%s\" is not one of the reference super classes for this object"
+#, fuzzy
+msgid "%s is not one of the reference super classes for this object"
 msgstr "\"%s\" не является одной из ссылок суперкласса на этот объект"
 
 msgid ""
@@ -1669,7 +1725,8 @@ msgstr ""
 "прямые вызовы callSuper() неправильны:  можно вызывать только из другого "
 "метода"
 
-msgid "\"%s\" is not a field in this class"
+#, fuzzy
+msgid "%s is not a field in this class"
 msgstr "\"%s\" не является полем в этом классе"
 
 msgid ""
@@ -1683,8 +1740,9 @@ msgstr ""
 "Аргументы в methods() должны быть поименованы, или давайте один именованный "
 "список"
 
+#, fuzzy
 msgid ""
-"Topic \"%s\" is not a method name in class %s\n"
+"Topic %s is not a method name in class %s\n"
 "The class definition follows"
 msgstr ""
 "Топик \"%s\" не является именем метода в классе %s\n"
@@ -1695,17 +1753,16 @@ msgid ""
 "modified"
 msgstr "Определение класса %s в пакете %s заблокировано, поля изменить нельзя"
 
+#, fuzzy
 msgid ""
-"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
-"existing field definition (\"%s\")"
+"The overriding class (\"%s\") of field %s is not a subclass of the existing "
+"field definition (\"%s\")"
 msgstr ""
 "Переписывание class(\"%s\") или поля \"%s\" не является подклассом в текущем "
 "определении поля (\"%s\")"
 
-msgid "Field \""
-msgstr "Поле \""
-
-msgid "\" is read-only"
+#, fuzzy
+msgid "Field %s is read-only"
 msgstr "\" только для чтения"
 
 msgid ""
@@ -1725,17 +1782,19 @@ msgstr ""
 msgid "No definition found for inherited class: %s"
 msgstr "Нет определения для унаследованного класса: %s"
 
+#, fuzzy
 msgid ""
-"Single class name needed for field \"%s\", got a character vector of length "
-"%d"
+"Single class name needed for field %s, got a character vector of length %d"
 msgstr "Нужно одно имя класса для поля \"%s\", а поступил текстовый вектор %d"
 
-msgid "Class %s for field \"%s\" is not defined"
+#, fuzzy
+msgid "Class %s for field %s is not defined"
 msgstr "Класс %s для поля \"%s\" не определен"
 
+#, fuzzy
 msgid ""
-"Field \"%s\" was supplied as an object of class %s; must be a class name or "
-"a binding function"
+"Field %s was supplied as an object of class %s; must be a class name or a "
+"binding function"
 msgstr ""
 "Поле %s предложено как объект класса %s; а должно быть именем класса или "
 "функцией привязки"
@@ -1806,10 +1865,12 @@ msgstr ""
 msgid "Arguments must all be character string names of fields"
 msgstr "Аргументы должны быть текстовыми именами полей"
 
-msgid "Field \"%s\" is already locked"
+#, fuzzy
+msgid "Field %s is already locked"
 msgstr "Поле \"%s\" уже закрыто"
 
-msgid "Field \"%s\" of class %s has a non-default binding and cannot be locked"
+#, fuzzy
+msgid "Field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 "Поле \"%s\"  класса %s имеет присоединение не по умолчанию и не может быть "
 "заблокировано"
@@ -1834,7 +1895,8 @@ msgstr ""
 msgid "Argument signature= is not meaningful for tracing reference methods"
 msgstr "Аргумент signature= не имеет значения для выяснения методов ссылки"
 
-msgid "\"%s\" is not a method for reference class %s"
+#, fuzzy
+msgid "%s is not a method for reference class %s"
 msgstr "\"%s\" не является методом для ссылки на класс %s"
 
 msgid "argument 'what' should be the name of a function"
@@ -1846,11 +1908,12 @@ msgstr "Трассировка внутренней функции %s не разрешена"
 msgid ".TraceWithMethods: after computing what, whereF"
 msgstr ".TraceWithMethods: после расчета, что, whereF"
 
-msgid "no function definition for \"%s\" found"
+#, fuzzy
+msgid "no function definition for %s found"
 msgstr "не найдено определение функции для \"%s\""
 
-msgid ""
-"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+#, fuzzy
+msgid "Can't untrace method for %s; no method defined for this signature: %s"
 msgstr ""
 "Не могу untrace метод для \"%s\"; не определено метода для данного "
 "идентификатора: %s"
@@ -1858,7 +1921,8 @@ msgstr ""
 msgid ".TraceWithMethods: untrace case"
 msgstr ".TraceWithMethods: не трассируемый случай"
 
-msgid "the method for \"%s\" for this signature was not being traced"
+#, fuzzy
+msgid "the method for %s for this signature was not being traced"
 msgstr ""
 "данный метод для \"%s\" для данного идентификатора не может быть отслежен"
 
@@ -1918,7 +1982,8 @@ msgstr ""
 msgid "Objects found in multiple packages: using %s and ignoring %s"
 msgstr "Объекты найдены во многих пакетах: использую %s и пропускаю %s"
 
-msgid "Package \"%s\" is not attached and no namespace found for it"
+#, fuzzy
+msgid "Package %s is not attached and no namespace found for it"
 msgstr "Пакет \"%s\" не присоединен и его пространство имен не найдено"
 
 msgid ""
@@ -1970,18 +2035,21 @@ msgstr "Методы, вставленные для функции %s(): %s"
 msgid "Pretend we inserted class"
 msgstr "Предположим, мы вставили класс"
 
-msgid "No definition for object \"%s\" found in tracing environment"
+#, fuzzy
+msgid "No definition for object %s found in tracing environment"
 msgstr "В отслеживаемом окружении на найдено определения объекта \"%s\""
 
 msgid "multiple generics match pattern, using table %s"
 msgstr "множественные общие совпадающие паттерны, использую таблицу %s"
 
+#, fuzzy
 msgid ""
-"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+"Does not seem to be a method table for generic %s in tracing environment"
 msgstr ""
 "Похоже, что для общего  \"%s\" нет таблицы методов в отслеживаемом окружении"
 
-msgid "No method in methods table for \"%s\" for signature \"%s\""
+#, fuzzy
+msgid "No method in methods table for %s for signature %s"
 msgstr "В таблице методов нет метода для \"%s\" для подписи \"%s\""
 
 msgid "not a package name: %s"
@@ -1998,6 +2066,18 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "нет определения класса \"%s\""
 msgstr[1] "нет определений классов \"%s\""
 msgstr[2] "нет определений классов \"%s\""
+
+#~ msgid "Replacement value must be of class \""
+#~ msgstr "Замещающее значение должно быть класса \""
+
+#~ msgid "\", got one of class \""
+#~ msgstr "\", получил класса \""
+
+#~ msgid "\", for signature"
+#~ msgstr "\", для идентификатора"
+
+#~ msgid "Field \""
+#~ msgstr "Поле \""
 
 #~ msgid "the supplied generic function definition for"
 #~ msgstr "указанное определение общей функции для"
