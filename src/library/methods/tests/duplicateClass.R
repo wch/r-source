@@ -25,3 +25,11 @@ stopifnot(identical(getClass("Cholesky"), clG))
 ## Second:  tests of methods defined for the same generic
 ## (NOT YET!)
 
+## Related: retaining package slots in methods signatures (reported by Martin Morgan)
+setClass("A")
+setGeneric("bar", function(x, y) standardGeneric("bar"))
+setMethod(bar, signature(x="A", y="A"), function(x, y) {})
+setMethod(bar, signature(x="A", y="ANY"), function(x, y) {})
+
+## tests one use of .matchSigLength
+stopifnot(all(nzchar(getMethod("bar", signature(x="A", y="ANY"))@target@package)))
