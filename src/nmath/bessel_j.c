@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2005 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@
 #include <R_ext/Memory.h>
 #endif
 
+#define min0(x, y) (((x) <= (y)) ? (x) : (y))
+
 static void J_bessel(double *x, double *alpha, long *nb,
 		     double *b, long *ncalc);
 
@@ -59,7 +61,7 @@ double bessel_j(double x, double alpha)
 	       bessel_y(x, -alpha) * sin(M_PI * alpha)));
     }
     nb = 1 + (long)na; /* nb-1 <= alpha < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bj = (double *) calloc(nb, sizeof(double));
     if (!bj) MATHLIB_ERROR("%s", _("bessel_j allocation error"));
@@ -74,7 +76,7 @@ double bessel_j(double x, double alpha)
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
-			 x, alpha+nb-1);
+			 x, alpha+(double)nb-1);
     }
     x = bj[nb-1];
 #ifdef MATHLIB_STANDALONE
@@ -109,7 +111,7 @@ double bessel_j_ex(double x, double alpha, double *bj)
 		bessel_y_ex(x, -alpha, bj) * sin(M_PI * alpha)));
     }
     nb = 1 + (long)na; /* nb-1 <= alpha < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
@@ -117,7 +119,7 @@ double bessel_j_ex(double x, double alpha, double *bj)
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
-			 x, alpha+nb-1);
+			 x, alpha+(double)nb-1);
     }
     x = bj[nb-1];
     return x;
@@ -408,7 +410,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 			p = plast * tover;
 			--n;
 			en -= 2.;
-			nend = imin2(*nb,n);
+			nend = min0(*nb,n);
 			for (l = nstart; l <= nend; ++l) {
 			    pold = psavel;
 			    psavel = psave;
@@ -570,6 +572,6 @@ L250:
     else {
       /* Error return -- X, NB, or ALPHA is out of range : */
 	b[1] = 0.;
-	*ncalc = imin2(*nb,0) - 1;
+	*ncalc = min0(*nb,0) - 1;
     }
 }

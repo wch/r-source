@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2001 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
 #endif
+
+#define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
 static void I_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bi, long *ncalc);
@@ -61,7 +63,7 @@ double bessel_i(double x, double alpha, double expo)
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
     }
     nb = 1 + (long)na;/* nb-1 <= alpha < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bi = (double *) calloc(nb, sizeof(double));
     if (!bi) MATHLIB_ERROR("%s", _("bessel_i allocation error"));
@@ -76,7 +78,7 @@ double bessel_i(double x, double alpha, double expo)
 			     x, ncalc, nb, alpha);
 	else
 	    MATHLIB_WARNING2(_("bessel_i(%g,nu=%g): precision lost in result\n"),
-			     x, alpha+nb-1);
+			     x, alpha+(double)nb-1);
     }
     x = bi[nb-1];
 #ifdef MATHLIB_STANDALONE
@@ -113,7 +115,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
     }
     nb = 1 + (long)na;/* nb-1 <= alpha < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
 	if(ncalc < 0)
@@ -121,7 +123,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 			     x, ncalc, nb, alpha);
 	else
 	    MATHLIB_WARNING2(_("bessel_i(%g,nu=%g): precision lost in result\n"),
-			     x, alpha+nb-1);
+			     x, alpha+(double)nb-1);
     }
     x = bi[nb-1];
     return x;
@@ -316,7 +318,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 			p = plast * tover;
 			--n;
 			en -= 2.;
-			nend = imin2(*nb,n);
+			nend = min0(*nb,n);
 			for (l = nstart; l <= nend; ++l) {
 			    *ncalc = l;
 			    pold = psavel;
@@ -526,6 +528,6 @@ L230:
 	    }
 	}
     } else { /* argument out of range */
-	*ncalc = imin2(*nb,0) - 1;
+	*ncalc = min0(*nb,0) - 1;
     }
 }

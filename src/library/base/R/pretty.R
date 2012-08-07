@@ -25,8 +25,7 @@ pretty.default <-
              eps.correct = 0, ...)
 {
     x <- x[is.finite(x <- as.numeric(x))]
-    if(length(x)==0L)
-	return(x)
+    if(!length(x)) return(x)
     if(is.na(n <- as.integer(n[1L])) || n < 0L)# n=0 !!
 	stop("invalid 'n' value")
     if(!is.numeric(shrink.sml) || shrink.sml <= 0)

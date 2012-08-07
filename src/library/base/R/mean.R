@@ -36,7 +36,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
 	if(trim >= 0.5) return(stats::median(x, na.rm=FALSE))
 	lo <- floor(n*trim)+1
 	hi <- n+1-lo
-	x <- sort.int(x, partial=unique(c(lo, hi)))[lo:hi]
+	x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
     }
     .Internal(mean(x))
 }

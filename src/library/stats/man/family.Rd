@@ -201,7 +201,7 @@ logexp <- function(days = 1)
     mu.eta <- function(eta) days * plogis(eta)^(days-1) *
       .Call("logit_mu_eta", eta, PACKAGE = "stats")
     valideta <- function(eta) TRUE
-    link <- paste("logexp(", days, ")", sep="")
+    link <- paste0("logexp(", days, ")")
     structure(list(linkfun = linkfun, linkinv = linkinv,
                    mu.eta = mu.eta, valideta = valideta, name = link),
               class = "link-glm")

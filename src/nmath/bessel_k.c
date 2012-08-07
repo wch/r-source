@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2001 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
  *  Copyright (C) 2002-3    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,9 @@
 #include <R_ext/Memory.h>
 #endif
 
+#define min0(x, y) (((x) <= (y)) ? (x) : (y))
+#define max0(x, y) (((x) <= (y)) ? (y) : (x))
+
 static void K_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bk, long *ncalc);
 
@@ -54,7 +57,7 @@ double bessel_k(double x, double alpha, double expo)
     if(alpha < 0)
 	alpha = -alpha;
     nb = 1+ (long)floor(alpha);/* nb-1 <= |alpha| < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bk = (double *) calloc(nb, sizeof(double));
     if (!bk) MATHLIB_ERROR("%s", _("bessel_k allocation error"));
@@ -69,7 +72,7 @@ double bessel_k(double x, double alpha, double expo)
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_k(%g,nu=%g): precision lost in result\n"),
-			 x, alpha+nb-1);
+			 x, alpha+(double)nb-1);
     }
     x = bk[nb-1];
 #ifdef MATHLIB_STANDALONE
@@ -98,7 +101,7 @@ double bessel_k_ex(double x, double alpha, double expo, double *bk)
     if(alpha < 0)
 	alpha = -alpha;
     nb = 1+ (long)floor(alpha);/* nb-1 <= |alpha| < nb */
-    alpha -= (nb-1);
+    alpha -= (double)(nb-1);
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
@@ -106,7 +109,7 @@ double bessel_k_ex(double x, double alpha, double expo, double *bk)
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_k(%g,nu=%g): precision lost in result\n"),
-			 x, alpha+nb-1);
+			 x, alpha+(double)nb-1);
     }
     x = bk[nb-1];
     return x;
@@ -245,7 +248,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 
     ex = *x;
     nu = *alpha;
-    *ncalc = imin2(*nb,0) - 2;
+    *ncalc = min0(*nb,0) - 2;
     if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
 	if(ex <= 0 || (*ize == 1 && ex > xmax_BESS_K)) {
 	    if(ex <= 0) {
@@ -499,7 +502,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 	if (iend == 1)
 	    return;
 
-	m = imin2((long) (wminf - nu),iend);
+	m = min0((long) (wminf - nu),iend);
 	for (i = 2; i <= m; ++i) {
 	    t1 = bk1;
 	    bk1 = bk2;
@@ -539,7 +542,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 		bk2 *= ratio;
 	    }
 	}
-	*ncalc = imax2(1, mplus1 - k);
+	*ncalc = max0(1, mplus1 - k);
 	if (*ncalc == 1)
 	    bk[0] = bk2;
 	if (*nb == 1)

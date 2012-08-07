@@ -1,6 +1,6 @@
 % File src/library/base/man/cut.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cut}
@@ -46,7 +46,7 @@ cut(x, \dots)
   the extreme values both fall within the break intervals.  (If \code{x}
   is a constant vector, equal-length intervals are created that cover
   the single value.)
-  
+
   If a \code{labels} parameter is specified, its values are used
   to name the factor levels.  If none is specified, the factor
   level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
@@ -69,7 +69,7 @@ cut(x, \dots)
 \note{
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
   more efficient and less memory hungry.  Instead of \code{cut(*,
-    labels = FALSE)}, \code{\link{findInterval}} is more efficient.
+    labels = FALSE)}, \code{\link{findInterval}()} is more efficient.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -79,7 +79,7 @@ cut(x, \dots)
 \seealso{
   \code{\link{split}} for splitting a variable according to a group factor;
   \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}},
-  \code{\link{findInterval}()}.
+  \code{\link{findInterval}}.
 
   \code{\link{quantile}} for ways of choosing breaks of roughly equal
   content (rather than length).

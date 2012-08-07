@@ -140,15 +140,15 @@ QuartzDesc_t QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPa
     CFArrayRef  types = CGImageDestinationCopyTypeIdentifiers();
     CFStringRef mine  = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) type, strlen(type), kCFStringEncodingUTF8, FALSE);
     if(CFArrayContainsValue(types,CFRangeMake(0, CFArrayGetCount(types)), mine)) {
-        size_t w = dpi[0] * width;
-        size_t h = dpi[1] * height;
+        size_t w = (size_t) (dpi[0] * width);
+        size_t h = (size_t) (dpi[1] * height);
         size_t rb= (w*8*4+7)/8; /* Bytes per row */
         size_t s = h*rb;
         /* QuartzDesc_t qd; */
         /* Allocate sufficient space */
 	/* FIXME: check allocations */
         QuartzBitmapDevice *dev = malloc(sizeof(QuartzBitmapDevice)+s);
-        dev->length = s;
+        dev->length = (unsigned int) s;
         dev->uti  = type ? strdup(type) : NULL;
         dev->path = par->file ? strdup(par->file) : NULL;
         dev->page = 0;

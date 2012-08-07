@@ -411,6 +411,10 @@ AC_ARG_WITH([jpeglib],
 [AS_HELP_STRING([--with-jpeglib],[use jpeglib library (if available) @<:@yes@:>@])],
 [R_ARG_USE(jpeglib)],
 [use_jpeglib=yes])
+AC_ARG_WITH([libtiff],
+[AS_HELP_STRING([--with-libtiff],[use libtiff library (if available) @<:@yes@:>@])],
+[R_ARG_USE(libtiff)],
+[use_libtiff=yes])
 AC_ARG_WITH([system-zlib],
 [AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(zlib)],

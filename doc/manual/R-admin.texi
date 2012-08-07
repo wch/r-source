@@ -2748,7 +2748,13 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
 @code{zlib} or @code{libtiff} (any recent version -- 3.9.[45] and 4.0.2
 have been tested) respectively.  They also need support for either
-@code{X11} or @code{cairo} (see above).
+@code{X11} or @code{cairo} (see above).  Should support for these
+devices @strong{not} be required or broken system libraries need to be
+avoided there are @command{configure} options @option{--without-libpng},
+@option{--without-jpeglib} and @option{--without-libtiff}.  For most
+system installations the TIFF libraries will require JPEG libraries to
+be present and perhaps linked explicitly, so @option{--without-jpeglib}
+may also disable the @code{tiff()} device.
 
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and

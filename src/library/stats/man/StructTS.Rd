@@ -81,8 +81,10 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   \item{coef}{the estimated variances of the components.}
   \item{loglik}{the maximized log-likelihood.  Note that as all these
     models are non-stationary this includes a diffuse prior for some
-    observations and hence is not comparable with \code{\link{arima}}
+    observations and hence is not comparable to \code{\link{arima}}
     nor different types of structural models.}
+  \item{loglik0}{the maximized log-likelihood with the constant used
+    prior to \R 2.16.0, for backwards compatibility.}
   \item{data}{the time series \code{x}.}
   \item{residuals}{the standardized residuals.}
   \item{fitted}{a multiple time series with one component for the level,
@@ -114,7 +116,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 }
 \note{
   Optimization of structural models is a lot harder than many of the
-  references admit. For example, the \code{\link{AirPassengers}} data
+  references admit.  For example, the \code{\link{AirPassengers}} data
   are considered in Brockwell & Davis (1996): their solution appears to
   be a local maximum, but nowhere near as good a fit as that produced by
   \code{StructTS}.  It is quite common to find fits with one or more
@@ -137,7 +139,7 @@ lines(fitted(fit), col = "green")
 tsdiag(fit)
 
 (fit <- StructTS(log10(UKgas), type = "BSM"))
-par(mfrow = c(4, 1))
+par(mfrow = c(4, 1)) # to give appropriate aspect ratio for next plot.
 plot(log10(UKgas))
 plot(cbind(fitted(fit), resids=resid(fit)), main = "UK gas consumption")
 

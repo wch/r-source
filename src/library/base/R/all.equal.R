@@ -150,6 +150,8 @@ all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
 
 all.equal.formula <- function(target, current, ...)
 {
+    ## NB: this assumes the default method for class formula, not
+    ## the misquided one in package Formula
     if(length(target) != length(current))
 	return(paste("target, current differ in having response: ",
 		     length(target) == 3L, ", ",
@@ -188,27 +190,10 @@ all.equal.language <- function(target, current, ...)
 all.equal.list <- function(target, current, check.attributes = TRUE, ...)
 {
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
-##    nt <- names(target)
-##    nc <- names(current)
-    ## Unclass to ensure we get the low-level components (see the
-    ## comment below).
+    ## Unclass to ensure we get the low-level components
     target <- unclass(target)
     current <- unclass(current)
     iseq <-
-	## <FIXME>
-	## Commenting this eliminates PR#674, and assumes that lists are
-	## regarded as generic vectors, so that they are equal iff they
-	## have identical names attributes and all components are equal.
-	## if(length(nt) && length(nc)) {
-	##     if(any(not.in <- (c.in.t <- match(nc, nt, 0L)) == 0L))
-	##	msg <- c(msg, paste("Components not in target:",
-	##			    paste(nc[not.in], collapse = ", ")))
-	##     if(any(not.in <- match(nt, nc, 0L) == 0L))
-	##	msg <- c(msg, paste("Components not in current:",
-	##			    paste(nt[not.in], collapse = ", ")))
-	##     nt[c.in.t]
-	## } else
-	## </FIXME>
 	if(length(target) == length(current)) {
 	    seq_along(target)
 	} else {

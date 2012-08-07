@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.object.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -27,16 +27,19 @@
     is missing).  If there are no terms other than an intercept and offsets,
     this is \code{numeric(0)}.}
   \item{term.labels}{A character vector containing the labels for each
-    of the terms in the model, except for offsets.  Non-syntactic names
-    will be quoted by backticks.  Note that these are after possible
-    re-ordering (unless argument \code{keep.order} was false).}
+    of the terms in the model, except for offsets.  Note that these are
+    after possible re-ordering of terms.
+  
+    Non-syntactic names will be quoted by backticks: this makes it
+    easier to re-construct the formula from the term labels.
+  }
   \item{variables}{A call to \code{list} of the variables in the model.}
   \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
     indicating that an intercept is to be fit.}
   \item{order}{A vector of the same length as \code{term.labels}
     indicating the order of interaction for each term.}
   \item{response}{The index of the variable (in variables) of the
-    response (the left hand side of the formula). Zero, if there is no
+    response (the left hand side of the formula).  Zero, if there is no
     response.}
   \item{offset}{If the model contains \code{\link{offset}} terms there
     is an \code{offset} attribute indicating which variable(s) are offsets}
@@ -45,15 +48,15 @@
     pairlist of vectors (one for each specified special function) giving
     numeric indices of the arguments of the list returned as the
     \code{variables} attribute which contain these special functions.}
-  \item{dataClasses}{optional. A named character vector giving the classes
+  \item{dataClasses}{optional.  A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
 
   The object has class \code{c("terms", "formula")}.
 }
 \note{
   These objects are different from those found in S.  In particular
-  there is no \code{formula} attribute, instead the object is itself a
-  formula.  Thus, the mode of a terms object is different as well. 
+  there is no \code{formula} attribute: instead the object is itself a
+  formula.  (Thus, the mode of a terms object is different.)
 
   Examples of the \code{specials} argument can be seen in the
   \code{\link{aov}} and \code{\link[survival]{coxph}} functions, the
@@ -66,7 +69,7 @@
 ## use of specials (as used for gam() in packages mgcv and gam)
 (tf <- terms(y ~ x + x:z + s(x), specials = "s"))
 ## Note that the "factors" attribute has variables as row names
-## and term labels as column names, both as character vectors. 
+## and term labels as column names, both as character vectors.
 attr(tf, "specials")    # index 's' variable(s)
 rownames(attr(tf, "factors"))[attr(tf, "specials")$s]
 

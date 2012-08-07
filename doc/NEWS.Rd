@@ -154,6 +154,10 @@
 
   \subsection{INSTALLATION}{
      \itemize{
+      \item There is a new \command{configure} option
+      \option{--with-libtiff} (mainly in case the system installation
+      needs to be avoided).
+      
       \item LAPACK 3.4.1 does use some Fortran 90 features, so
       \command{g77} no longer suffices.
     }
