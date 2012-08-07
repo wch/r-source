@@ -10889,8 +10889,6 @@ Note that  @code{R_orderVector()} assumes the vector @code{indx}
 to be allocated to length @eqn{\ge n, >= n}.  On return, @code{indx[]}
 contains a permutation of @code{0:(n-1)}, i.e., 0-based C indices (and not
 1-based @R{} indices, as @R{}'s @code{order()}).
-
-See also  @code{R_order2double()} etc, below.
 @end deftypefun
 
 All other sort routines are declared in header file
@@ -10920,15 +10918,6 @@ and @code{NA}s are not handled.
 These all provide (very) partial sorting: they permute @var{x} so that
 @code{@var{x}[@var{k}]} is in the correct place with smaller values to
 the left, larger ones to the right.
-@end deftypefun
-
-@deftypefun  void R_order2double  (int *@var{indx}, int @var{n}, double *@var{x}, double *@var{y}, Rboolean @var{nalast}, Rboolean @var{decreasing})
-@deftypefunx void R_order2int     (int *@var{indx}, int @var{n}, int    *@var{x}, int    *@var{y}, Rboolean @var{nalast}, Rboolean @var{decreasing})
-@deftypefunx void R_order2dbl_int (int *@var{indx}, int @var{n}, double *@var{x}, int    *@var{y}, Rboolean @var{nalast}, Rboolean @var{decreasing})
-@deftypefunx void R_order2int_dbl (int *@var{indx}, int @var{n}, int    *@var{x}, double *@var{y}, Rboolean @var{nalast}, Rboolean @var{decreasing})
-
-These functions all correspond to @R{}'s  @code{indx <- order(x, y, nalast, decreasing)},
-similarly to @code{R_orderVector()} above.  See the note about @var{indx} there.
 @end deftypefun
 
 

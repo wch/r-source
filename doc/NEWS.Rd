@@ -340,21 +340,10 @@
       \code{"single"} arguments are used with \code{dup=FALSE}, as
       changes to such arguments are not returned to the caller.
 
-      \item New C functions \code{R_orderVector()}, \code{R_order2double()},
-      etc, corresponding to \R's \code{order()}.
-
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.  Code using them should
       be recompiled.
-    }
-  }
-
-  \subsection{INSTALLATION}{
-    \itemize{
-      \item There is a new \command{configure} option
-      \option{--with-libtiff} (mainly in case the system installation
-      needs to be avoided).
     }
   }
 
@@ -548,6 +537,10 @@
 
   \subsection{INSTALLATION}{
      \itemize{
+      \item There is a new \command{configure} option
+      \option{--with-libtiff} (mainly in case the system installation
+      needs to be avoided).
+      
       \item LAPACK 3.4.1 does use some Fortran 90 features, so
       \command{g77} no longer suffices.
     }
