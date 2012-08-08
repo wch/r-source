@@ -1960,6 +1960,7 @@ static int SkipComment(void)
     int type = COMMENT ;
 
     Rboolean maybeLine = (ParseState.xxcolno == 1);
+    Rboolean doSave;
 
     DECLARE_YYTEXT_BUFP(yyp);
     
@@ -1987,8 +1988,14 @@ static int SkipComment(void)
         _last_parsed = prevparse[prevpos];
     }
     
+    doSave = !maybeLine;
+    
     while (c != '\n' && c != R_EOF) {
-        YYTEXT_PUSH(c, yyp);
+        // Comments can be any length; we only record the ones that fit in yytext.
+        if (doSave) {
+            YYTEXT_PUSH(c, yyp);
+            doSave = (yyp - yytext) < sizeof(yytext) - 2;
+        }
  	_last_column = ParseState.xxcolno ;
 	_last_parsed = ParseState.xxparseno ;
 	c = xxgetc();
@@ -1997,7 +2004,7 @@ static int SkipComment(void)
     incrementId( ) ;
     YYTEXT_PUSH('\0', yyp);
     record_( _first_parsed, _first_column, _last_parsed, _last_column,
-	     type, identifier, maybeLine ? 0 : yytext ) ;
+	     type, identifier, doSave ? yytext : 0 ) ;
     return c;
 }
 

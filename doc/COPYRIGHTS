@@ -463,3 +463,11 @@ From GNU coreutils 8.12
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
+
+src/main/gram.y
+src/main/gram.c
+
+Portions of these files are based on the parser package,
+
+   Copyright (C) 2009--2011  Romain Francois
+   
