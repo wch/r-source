@@ -272,7 +272,7 @@ setAs <-
   ## functions.
   setGeneric("coerce", function(from, to, strict = TRUE) {
       if(TRUE) {
-          warning("Dirct use of coerce() is deprecated:  use as(from, class(to)) instead", domain = NA)
+          warning("Direct use of coerce() is deprecated:  use as(from, class(to)) instead", domain = NA)
           return(as(from, class(to), strict = strict))
       }
       standardGeneric("coerce")
@@ -280,7 +280,7 @@ setAs <-
              where = where)
   setGeneric("coerce<-", function(from, to, value) {
       if(TRUE) {
-          warning("Dirct use of coerce() is deprecated:  use as(from, class(to)) <- value instead", domain = NA)
+          warning("Direct use of coerce() is deprecated:  use as(from, class(to)) <- value instead", domain = NA)
           return(`as<-`(from, class(to), value))
       }
       standardGeneric("coerce<-")
