@@ -110,7 +110,8 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
 }
 
 
-print.packageDescription <- function(x, abbrCollate = 0.8 * getOption("width"), ...)
+print.packageDescription <-
+    function(x, abbrCollate = 0.8 * getOption("width"), ...)
 {
     xx <- x
     xx[] <- lapply(xx, function(x) if(is.na(x)) "NA" else x)
@@ -134,10 +135,10 @@ print.packageDescription <- function(x, abbrCollate = 0.8 * getOption("width"), 
 
 maintainer <- function(pkg) {
     force(pkg)
-    packageDescription(pkg)$Maintainer
+    gsub("\n", " ",packageDescription(pkg)$Maintainer, fixed = TRUE)
 }
 
-packageVersion <- function(pkg, lib.loc=NULL)
+packageVersion <- function(pkg, lib.loc = NULL)
 {
     res <- suppressWarnings(packageDescription(pkg, lib.loc=lib.loc,
                                                fields = "Version"))
