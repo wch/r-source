@@ -23,6 +23,9 @@
 #include <config.h>
 #endif
 
+/* interval at which to check interrupts */
+#define NINTERRUPT 10000000
+
 #include <Defn.h> /*-- Maybe modularize into own Coerce.h ..*/
 #include <float.h> /* for DBL_DIG */
 #define R_MSG_mode	_("invalid 'mode' argument")
@@ -452,24 +455,34 @@ static SEXP coerceToLogical(SEXP v)
     DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case INTSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(ans)[i] = LogicalFromInteger(INTEGER(v)[i], &warn);
+	}
 	break;
     case REALSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(ans)[i] = LogicalFromReal(REAL(v)[i], &warn);
-	    break;
+	}
+	break;
     case CPLXSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(ans)[i] = LogicalFromComplex(COMPLEX(v)[i], &warn);
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(ans)[i] = LogicalFromString(STRING_ELT(v, i), &warn);
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    LOGICAL(ans)[i] = LogicalFromInteger((int)RAW(v)[i], &warn);
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("coerceToLogical", v);
@@ -494,25 +507,35 @@ static SEXP coerceToInteger(SEXP v)
     DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    INTEGER(ans)[i] = IntegerFromLogical(LOGICAL(v)[i], &warn);
-	    break;
+	}
+	break;
     case REALSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    INTEGER(ans)[i] = IntegerFromReal(REAL(v)[i], &warn);
+	}
 	break;
     case CPLXSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    INTEGER(ans)[i] = IntegerFromComplex(COMPLEX(v)[i], &warn);
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    INTEGER(ans)[i] = IntegerFromString(STRING_ELT(v, i), &warn);
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    INTEGER(ans)[i] = (int)RAW(v)[i];
-	    break;
+	}
+	break;
     default:
 	UNIMPLEMENTED_TYPE("coerceToInteger", v);
     }
@@ -536,24 +559,34 @@ static SEXP coerceToReal(SEXP v)
     DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    REAL(ans)[i] = RealFromLogical(LOGICAL(v)[i], &warn);
+	}
 	break;
     case INTSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    REAL(ans)[i] = RealFromInteger(INTEGER(v)[i], &warn);
+	}
 	break;
     case CPLXSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    REAL(ans)[i] = RealFromComplex(COMPLEX(v)[i], &warn);
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    REAL(ans)[i] = RealFromString(STRING_ELT(v, i), &warn);
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    REAL(ans)[i] = RealFromInteger((int)RAW(v)[i], &warn);
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("coerceToReal", v);
@@ -578,24 +611,34 @@ static SEXP coerceToComplex(SEXP v)
     DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    COMPLEX(ans)[i] = ComplexFromLogical(LOGICAL(v)[i], &warn);
+	}
 	break;
     case INTSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    COMPLEX(ans)[i] = ComplexFromInteger(INTEGER(v)[i], &warn);
+	}
 	break;
     case REALSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    COMPLEX(ans)[i] = ComplexFromReal(REAL(v)[i], &warn);
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    COMPLEX(ans)[i] = ComplexFromString(STRING_ELT(v, i), &warn);
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    COMPLEX(ans)[i] = ComplexFromInteger((int)RAW(v)[i], &warn);
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("coerceToComplex", v);
@@ -622,6 +665,7 @@ static SEXP coerceToRaw(SEXP v)
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    tmp = IntegerFromLogical(LOGICAL(v)[i], &warn);
 	    if(tmp == NA_INTEGER) {
 		tmp = 0;
@@ -632,6 +676,7 @@ static SEXP coerceToRaw(SEXP v)
 	break;
     case INTSXP:
 	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    tmp = INTEGER(v)[i];
 	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
 		tmp = 0;
@@ -642,6 +687,7 @@ static SEXP coerceToRaw(SEXP v)
 	break;
     case REALSXP:
 	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    tmp = IntegerFromReal(REAL(v)[i], &warn);
 	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
 		tmp = 0;
@@ -652,6 +698,7 @@ static SEXP coerceToRaw(SEXP v)
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    tmp = IntegerFromComplex(COMPLEX(v)[i], &warn);
 	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
 		tmp = 0;
@@ -662,6 +709,7 @@ static SEXP coerceToRaw(SEXP v)
 	break;
     case STRSXP:
 	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    tmp = IntegerFromString(STRING_ELT(v, i), &warn);
 	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
 		tmp = 0;
@@ -694,30 +742,40 @@ static SEXP coerceToString(SEXP v)
     DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_STRING_ELT(ans, i, StringFromLogical(LOGICAL(v)[i], &warn));
+	}
 	break;
     case INTSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_STRING_ELT(ans, i, StringFromInteger(INTEGER(v)[i], &warn));
+	}
 	break;
     case REALSXP:
 	PrintDefaults();
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_STRING_ELT(ans, i, StringFromReal(REAL(v)[i], &warn));
+	}
 	R_print.digits = savedigits;
 	break;
     case CPLXSXP:
 	PrintDefaults();
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_STRING_ELT(ans, i, StringFromComplex(COMPLEX(v)[i], &warn));
+	}
 	R_print.digits = savedigits;
 	break;
     case RAWSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_STRING_ELT(ans, i, StringFromRaw(RAW(v)[i], &warn));
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("coerceToString", v);
@@ -791,28 +849,40 @@ static SEXP coerceToVectorList(SEXP v)
 #endif
     switch (TYPEOF(v)) {
     case LGLSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_VECTOR_ELT(ans, i, ScalarLogical(LOGICAL(v)[i]));
+	}
 	break;
     case INTSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_VECTOR_ELT(ans, i, ScalarInteger(INTEGER(v)[i]));
+	}
 	break;
     case REALSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_VECTOR_ELT(ans, i, ScalarReal(REAL(v)[i]));
+	}
 	break;
     case CPLXSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_VECTOR_ELT(ans, i, ScalarComplex(COMPLEX(v)[i]));
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_VECTOR_ELT(ans, i, ScalarString(STRING_ELT(v, i)));
+	}
 	break;
     case RAWSXP:
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    SET_VECTOR_ELT(ans, i, ScalarRaw(RAW(v)[i]));
+	}
 	break;
     case LISTSXP:
     case LANGSXP:
@@ -1020,23 +1090,32 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	PROTECT(rval = allocVector(type, n));
 	switch (type) {
 	case LGLSXP:
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		LOGICAL(rval)[i] = asLogical(VECTOR_ELT(v, i));
+	    }
 	    break;
 	case INTSXP:
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		INTEGER(rval)[i] = asInteger(VECTOR_ELT(v, i));
+	    }
 	    break;
 	case REALSXP:
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		REAL(rval)[i] = asReal(VECTOR_ELT(v, i));
+	    }
 	    break;
 	case CPLXSXP:
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		COMPLEX(rval)[i] = asComplex(VECTOR_ELT(v, i));
+	    }
 	    break;
 	case RAWSXP:
 	    for (i = 0; i < n; i++) {
+		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		tmp = asInteger(VECTOR_ELT(v, i));
 		if (tmp < 0 || tmp > 255) { /* includes NA_INTEGER */
 		    tmp = 0;
