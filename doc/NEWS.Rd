@@ -90,6 +90,10 @@
       \item \code{findInterval()}, \code{tabulate()}, \code{cut()},
       \code{hist()} and \code{image.default()} all use \code{.Call()}
       and are more efficient.
+      
+      \item \code{duplicated()}, \code{unique()} and similar are now no
+      longer limits to vectors of lengths from \eqn{2^{29}}{2^29} on
+      64-bit platforms.
     }
   }
 
@@ -116,6 +120,13 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The limit for \code{R_alloc} on 64-bit platforms has been
+      raised to just under 32GB (from just under 16GB).
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item Use of \code{array()} with a 0-length \code{dim} argument is
