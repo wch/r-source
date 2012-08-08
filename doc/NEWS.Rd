@@ -629,6 +629,10 @@
       
       \item On OS X, the Quartz versions of the bitmap devices did not
       respect \code{antialias = "none"}.  (\PR{15006}.)
+      
+      \item \code{unique()} and similar would infinite-loop if called on
+      a vector of length > \eqn{2^{29}}{2^29} (but reported that the
+      vector was too long for \eqn{2^{30}}{2^30} or more).
     }
   }
 }

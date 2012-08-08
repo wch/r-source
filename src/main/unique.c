@@ -300,7 +300,7 @@ static int vequal(SEXP x, int i, SEXP y, int j)
 /*
   Choose M to be the smallest power of 2
   not less than 2*n and set K = log2(M).
-  Need K >= 1 and hence M >= 2, and 2^M <= 2^31 -1, hence n < 2^30.
+  Need K >= 1 and hence M >= 2, and 2^M < 2^31-1, hence n <= 2^29.
 
   Dec 2004: modified from 4*n to 2*n, since in the worst case we have
   a 50% full table, and that is still rather efficient -- see
