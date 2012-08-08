@@ -34,7 +34,7 @@
   \item{verticals}{logical;  if \code{TRUE}, draw vertical lines at steps.}
   \item{do.points}{logical;  if \code{TRUE}, also draw points at the
     (\code{xlim} restricted) knot locations.  Default is true, for
-    sample size \eqn{< 10000}.}% n = 1 + 'sample size'
+    sample size \eqn{< 1000}.}% n = 1 + 'sample size'
   \item{pch}{character; point character if \code{do.points}.}
   \item{col}{default color of all points and lines.}
   \item{col.points}{character or integer code; color of points if
