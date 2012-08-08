@@ -563,7 +563,7 @@ function(dir, control = list(), program = NULL)
 ## For spell-checking R files in a package.
 
 aspell_filter_db$R <-
-function(ifile, encoding = "unknown")
+function(ifile, encoding = "unknown", ignore = "")
 {
     pd <- get_parse_data_for_message_strings(ifile, encoding)
     if(is.null(pd)) return(character())
@@ -583,7 +583,11 @@ function(ifile, encoding = "unknown")
     for(i in seq_along(texts))
         substring(s, starts[i], stops[i]) <- texts[i]
 
-    unlist(strsplit(s, "\n"))
+    lines <- unlist(strsplit(s, "\n"))
+    if(nzchar(ignore))
+        lines <- blank_out_regexp_matches(lines, ignore)
+    lines
+
 }
 
 get_parse_data_for_message_strings <-
@@ -615,7 +619,7 @@ function(file, encoding = "unknown")
 }
   
 aspell_package_R_files <-
-function(dir, control = list(), program = NULL)
+function(dir, ignore = "", control = list(), program = NULL)
 {
     dir <- tools::file_path_as_absolute(dir)
 
@@ -638,7 +642,7 @@ function(dir, control = list(), program = NULL)
     program <- aspell_find_program(program)    
 
     aspell(files,
-           filter = "R",
+           filter = list("R", ignore = ignore),
            control = control,
            encoding = encoding,
            program = program)
@@ -650,14 +654,19 @@ function(dir, control = list(), program = NULL)
 ## useful, but require writing appropriate text filters.)
 
 aspell_filter_db$pot <-
-function(ifile, encoding = "unknown")
+function(ifile, encoding = "unknown", ignore = "")
 {
     lines <- readLines(ifile, encoding = encoding)
-    ifelse(grepl("^msgid ", lines), sub("^msgid ", "      ", lines), "")
+    lines <- ifelse(grepl("^msgid ", lines),
+                    sub("^msgid ", "      ", lines),
+                    "")
+    if(nzchar(ignore))
+        lines <- blank_out_regexp_matches(lines, ignore)
+    lines
 }
 
 aspell_package_pot_files <-
-function(dir, control = list(), program = NULL)
+function(dir, ignore = "", control = list(), program = NULL)
 {
     dir <- tools::file_path_as_absolute(dir)
     subdir <- file.path(dir, "po")
@@ -671,8 +680,11 @@ function(dir, control = list(), program = NULL)
 
     program <- aspell_find_program(program)
     
-    aspell(files, filter = "pot", control = control,
-           encoding = encoding, program = program)
+    aspell(files,
+           filter = list("pot", ignore = ignore),
+           control = control,
+           encoding = encoding,
+           program = program)
 }
 
 ## For spell-checking package DESCRIPTION files.
@@ -760,4 +772,20 @@ function(dir, encoding = "unknown")
     envir <- new.env()
     for(e in exprs) eval(e, envir)
     as.list(envir)
+}
+
+## Utilities.
+
+blank_out_regexp_matches <-
+function(s, re)
+{
+    m <- gregexpr(re, s)
+    regmatches(s, m) <- Map(blanks, lapply(regmatches(s, m), nchar))
+    s
+}
+
+blanks <-
+function(n) {
+    vapply(Map(rep.int, rep.int(" ", length(n)), n, USE.NAMES = FALSE),
+           paste, "", collapse = "")
 }
