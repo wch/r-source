@@ -455,6 +455,8 @@
       with \code{image()} methods.
       
       \item The HTML manuals now use directional single quotes.
+      
+      \item \code{maintainer()} now converts embedded new lines to spaces.
     }
   }
 
