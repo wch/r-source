@@ -474,7 +474,7 @@
       \code{hist()} and \code{image.default()} all use \code{.Call()}
       and are more efficient.
       
-      \item \code{duplicated()}, \code{unique()} and similar are now
+      \item \code{duplicated()}, \code{unique()} and similar now
       support vectors of lengths above \eqn{2^{29}}{2^29} on 64-bit
       platforms.
     }

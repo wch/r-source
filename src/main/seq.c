@@ -88,7 +88,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 }
 
 /* interval at which to check interrupts */
-#define NINTERRUPT 1000000
+#define NINTERRUPT 1000000U
 
 static SEXP seq_colon(double n1, double n2, SEXP call)
 {
@@ -188,41 +188,45 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	na += INTEGER(t)[i];
     }
 
-    //int ni = na ? (NINTERRUPT * nc)/na : 1;
+    R_xlen_t ni = NINTERRUPT, ratio;
+    if(nc > 0) {
+	ratio = na/nc; // average no of replications
+	if (ratio > 1000U) ni = 1000U;
+    }
     PROTECT(a = allocVector(TYPEOF(s), na));
     n = 0;
     switch (TYPEOF(s)) {
     case LGLSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		LOGICAL(a)[n++] = LOGICAL(s)[i];
 	}
 	break;
     case INTSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		INTEGER(a)[n++] = INTEGER(s)[i];
 	}
 	break;
     case REALSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		REAL(a)[n++] = REAL(s)[i];
 	}
 	break;
     case CPLXSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		COMPLEX(a)[n++] = COMPLEX(s)[i];
 	}
 	break;
     case STRSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		SET_STRING_ELT(a, n++, STRING_ELT(s, i));
 	}
@@ -230,14 +234,14 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     case VECSXP:
     case EXPRSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		SET_VECTOR_ELT(a, n++, VECTOR_ELT(s, i));
 	}
 	break;
     case RAWSXP:
 	for (i = 0; i < nc; i++) {
-	    //if (i % ni == 0) R_CheckUserInterrupt();
+	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		RAW(a)[n++] = RAW(s)[i];
 	}
