@@ -1,6 +1,6 @@
 % File src/library/base/man/unique.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unique}
@@ -17,7 +17,8 @@
 \usage{
 unique(x, incomparables = FALSE, \dots)
 
-\method{unique}{default}(x, incomparables = FALSE, fromLast = FALSE, \dots)
+\method{unique}{default}(x, incomparables = FALSE, fromLast = FALSE,
+        nmax = NA, \dots)
 
 \method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1,
        fromLast = FALSE, \dots)
@@ -36,6 +37,8 @@ unique(x, incomparables = FALSE, \dots)
     from the last, i.e., the last (or rightmost) of identical elements will
     be kept.  This only matters for \code{\link{names}} or
     \code{\link{dimnames}}.}
+  \item{nmax}{the maximum number of unique items expected.
+    See \code{\link{duplicated}}.}
   \item{\dots}{arguments for particular methods.}
   \item{MARGIN}{the array margin to be held fixed: a single integer.}
 }

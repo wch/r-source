@@ -170,6 +170,11 @@
       \item The \code{all.eqaal()} method for date-times is now
       documented: times are regarded as equal (by default) if they
       differ by up to 1 msec.
+
+      \item \code{duplicated()} and \code{unique()} gain a \code{nmax}
+      argument which can be used to make them more efficient when
+      it is known that there are only a small number of unique entries.
+      This is done automatically for factors.
     }
   }
 
