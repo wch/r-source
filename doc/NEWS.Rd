@@ -91,9 +91,9 @@
       \code{hist()} and \code{image.default()} all use \code{.Call()}
       and are more efficient.
       
-      \item \code{duplicated()}, \code{unique()} and similar are now no
-      longer limits to vectors of lengths from \eqn{2^{29}}{2^29} on
-      64-bit platforms.
+      \item \code{duplicated()}, \code{unique()} and similar are now
+      support vectors of lengths above \eqn{2^{29}}{2^29} on 64-bit
+      platforms.
     }
   }
 
@@ -261,6 +261,9 @@
       \item \code{unique()} and similar would infinite-loop if called on
       a vector of length > \eqn{2^{29}}{2^29} (but reported that the
       vector was too long for \eqn{2^{30}}{2^30} or more).
+      
+      \item \code{parallel::stopCluster()} now works with MPI
+      clusters without \pkg{snow} being on the search path.
     }
   }
 }

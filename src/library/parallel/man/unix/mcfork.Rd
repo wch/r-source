@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/mcfork.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-12 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -79,6 +79,9 @@ mcexit(exit.code = 0L, send = NULL)
   never use on-screen graphics devices.  Some precautions have been
   taken to make this usable in \command{R.app} on Mac OS X, but users of
   third-party front-ends should consult their documentation.
+
+  This can also apply to other connections, e.g. to an X server, created
+  before forking.
 }
 
 \author{

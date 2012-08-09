@@ -242,9 +242,21 @@ sendData.MPInode <- function(node, data) snow::sendData.MPInode(node, data)
 sendData.NWSnode <- function(node, data) snow::sendData.NWSnode(node, data)
 sendData.PVMnode <- function(node, data) snow::sendData.PVMnode(node, data)
 
-stopCluster.MPIcluster <- function(cl) snow::stopCluster.MPIcluster(cl)
-stopCluster.NWScluster <- function(cl) snow::stopCluster.NWScluster(cl)
-stopCluster.PVMcluster <- function(cl) snow::stopCluster.PVMcluster(cl)
-stopCluster.spawnedMPIcluster <-
-    function(cl) snow::stopCluster.spawnedMPIcluster(cl)
+## these use NextMethod() so need copies.
+stopCluster.MPIcluster <- function(cl) {
+    NextMethod()
+    snow::setMPIcluster(NULL)
+}
+
+stopCluster.spawnedMPIcluster <- function(cl) {
+    comm <- 1
+    NextMethod()
+    mpi.comm.disconnect(comm)
+}
+
+stopCluster.NWScluster <- function(cl) {
+  NextMethod()
+  nwsDeleteWs(cl[[1]]$wsServer, nwsWsName(cl[[1]]$ws))
+  close(cl[[1]]$wsServer)
+}
 
