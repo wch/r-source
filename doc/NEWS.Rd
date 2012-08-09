@@ -74,6 +74,9 @@
       \item The HTML manuals now use directional single quotes.
       
       \item \code{maintainer()} now converts embedded new lines to spaces.
+      
+      \item The \code{X11()} device has some more protection against
+      being used with forked processes \emph{via} package \pkg{parallel}.
     }
   }
 
@@ -91,7 +94,7 @@
       \code{hist()} and \code{image.default()} all use \code{.Call()}
       and are more efficient.
       
-      \item \code{duplicated()}, \code{unique()} and similar are now
+      \item \code{duplicated()}, \code{unique()} and similar now
       support vectors of lengths above \eqn{2^{29}}{2^29} on 64-bit
       platforms.
     }
