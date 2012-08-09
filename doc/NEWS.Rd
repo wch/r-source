@@ -473,6 +473,10 @@
       \item \code{findInterval()}, \code{tabulate()}, \code{cut()},
       \code{hist()} and \code{image.default()} all use \code{.Call()}
       and are more efficient.
+      
+      \item \code{duplicated()}, \code{unique()} and similar are now
+      support vectors of lengths above \eqn{2^{29}}{2^29} on 64-bit
+      platforms.
     }
   }
 
@@ -499,6 +503,13 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The limit for \code{R_alloc} on 64-bit platforms has been
+      raised to just under 32GB (from just under 16GB).
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item Use of \code{array()} with a 0-length \code{dim} argument is
@@ -633,6 +644,9 @@
       \item \code{unique()} and similar would infinite-loop if called on
       a vector of length > \eqn{2^{29}}{2^29} (but reported that the
       vector was too long for \eqn{2^{30}}{2^30} or more).
+      
+      \item \code{parallel::stopCluster()} now works with MPI
+      clusters without \pkg{snow} being on the search path.
     }
   }
 }
