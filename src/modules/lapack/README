@@ -22,6 +22,9 @@ all these files must be updated {path relative to R's topdir}:
 
 We have tried to avoid including any single-precision routines.
 
+There is also a patch to avoid a gfortran warning at lines 21131:2
+of dlapack.f, in DGEQRT3.
+
 dlapack.f is the concatenation of
 
 dbbcsd.f	dgtsvx.f	dlarf.f		dorm2r.f	dstemr.f
