@@ -820,7 +820,7 @@ static void R_ProcessX11Events(void *data)
 {
     XEvent event;
 
-    while (displayOpen && XPending(display)) {
+    while (!R_isForkedChild && displayOpen && XPending(display)) {
 	XNextEvent(display, &event);
 	/* printf("%i\n",event.type); */
 	handleEvent(event);
@@ -3110,6 +3110,9 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     vmax = vmaxget();
+
+    if(R_isForkedChild)
+	error("a forked child should not open a graphics device");
 
     /* Decode the arguments */
     display = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);

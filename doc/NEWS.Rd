@@ -457,6 +457,9 @@
       \item The HTML manuals now use directional single quotes.
       
       \item \code{maintainer()} now converts embedded new lines to spaces.
+      
+      \item The \code{X11()} device has some more protection against
+      being used with forked processes \emph{via} package \pkg{parallel}.
     }
   }
 
