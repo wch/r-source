@@ -560,7 +560,7 @@ function(dir, control = list(), program = NULL)
            program = program)
 }
 
-## For spell-checking R files in a package.
+## Spell-checking R files.
 
 aspell_filter_db$R <-
 function(ifile, encoding = "unknown", ignore = "")
@@ -617,6 +617,33 @@ function(file, encoding = "unknown")
 
     pd[!is.na(match(pd$id, ids)) & pd$token == "STR_CONST", ]
 }
+
+## For spell-checking the R R files.
+
+aspell_R_R_files <-
+function(which = NULL, dir = NULL, ignore = "'[[:alnum:]_.]*'",
+         program = NULL)
+{
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(which))
+        which <- tools:::.get_standard_package_names()$base
+    
+    files <-
+        unlist(lapply(file.path(dir, "src", "library", which, "R"),
+                      tools::list_files_with_type,
+                      "code",
+                      OS_subdirs = c("unix", "windows")),
+               use.names = FALSE)
+
+    program <- aspell_find_program(program)
+
+    aspell(files,
+           filter = list("R", ignore = ignore),
+           control = aspell_control_R_Rd_files[[names(program)]],
+           program = program)
+}
+
+## For spell-checking R files in a package.
   
 aspell_package_R_files <-
 function(dir, ignore = "", control = list(), program = NULL)
@@ -648,7 +675,7 @@ function(dir, ignore = "", control = list(), program = NULL)
            program = program)
 }
 
-## For spell-checking pot files in a package.
+## Spell-checking pot files.
 
 ## (Of course, directly analyzing the message strings would be more
 ## useful, but require writing appropriate text filters.)
@@ -664,6 +691,8 @@ function(ifile, encoding = "unknown", ignore = "")
         lines <- blank_out_regexp_matches(lines, ignore)
     lines
 }
+
+## For spell-checking pot files in a package.
 
 aspell_package_pot_files <-
 function(dir, ignore = "", control = list(), program = NULL)
@@ -687,7 +716,30 @@ function(dir, ignore = "", control = list(), program = NULL)
            program = program)
 }
 
-## For spell-checking package DESCRIPTION files.
+## For spell-checking the R C files.
+
+aspell_R_C_files <-
+function(which = NULL, dir = NULL, ignore = "'[[:alnum:]_.]*'",
+         program = NULL)
+{
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(which))
+        which <- tools:::.get_standard_package_names()$base
+
+    files <- sprintf("%s.pot",
+                     file.path(dir, "src", "library",
+                               which, "po", which))
+    files <- files[file_test("-f", files)]
+    
+    program <- aspell_find_program(program)
+
+    aspell(files,
+           filter = list("pot", ignore = ignore),
+           control = aspell_control_R_Rd_files[[names(program)]],
+           program = program)
+}
+
+## Spell-checking DCF files.
 
 aspell_filter_db$dcf <-
 function(ifile, encoding, keep = c("Title", "Description"))
@@ -700,6 +752,8 @@ function(ifile, encoding, keep = c("Title", "Description"))
     lines[ind] <- lapply(lines[ind], function(s) rep.int("", length(s)))
     unlist(lines, use.names = FALSE)
 }
+
+## For spell-checking package DESCRIPTION files.
 
 aspell_package_description <-
 function(dir, control = list(), program = NULL)
