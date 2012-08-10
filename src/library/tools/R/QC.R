@@ -1885,6 +1885,90 @@ function(package, dir, file, lib.loc = NULL,
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
+    ## allow calls to LINPACK and LAPACK functions in base
+
+    ## NB: dqrls and dqrdc2 are not LINPACK
+    linpack <-
+        c("dchdc", "dpbfa", "dpbsl", "dpoco", "dpodi", "dpofa", "dposl",
+          "dqrdc", "dqrsl", "dqrutl", "dsvdc", "dtrco", "dtrsl")
+
+    lapack <-
+        c("dbbcsd", "dbdsdc", "dbdsqr", "ddisna", "dgbbrd", "dgbcon",
+          "dgbequ", "dgbequb", "dgbrfs", "dgbsv", "dgbsvx", "dgbtf2", "dgbtrf",
+          "dgbtrs", "dgebak", "dgebal", "dgebd2", "dgebrd", "dgecon", "dgeequ",
+          "dgeequb", "dgees", "dgeesx", "dgeev", "dgeevx", "dgegs", "dgegv",
+          "dgehd2", "dgehrd", "dgejsv", "dgelq2", "dgelqf", "dgels", "dgelsd",
+          "dgelss", "dgelsx", "dgelsy", "dgemqrt", "dgeql2", "dgeqlf",
+          "dgeqp3", "dgeqpf", "dgeqr2", "dgeqr2p", "dgeqrf", "dgeqrfp",
+          "dgeqrt2", "dgeqrt3", "dgeqrt", "dgerfs", "dgerq2", "dgerqf",
+          "dgesc2", "dgesdd", "dgesv", "dgesvd", "dgesvj", "dgesvx", "dgetc2",
+          "dgetf2", "dgetrf", "dgetri", "dgetrs", "dggbak", "dggbal", "dgges",
+          "dggesx", "dggev", "dggevx", "dggglm", "dgghrd", "dgglse", "dggqrf",
+          "dggrqf", "dggsvd", "dggsvp", "dgsvj0", "dgsvj1", "dgtcon", "dgtrfs",
+          "dgtsv", "dgtsvx", "dgttrf", "dgttrs", "dgtts2", "dhgeqz", "dhsein",
+          "dhseqr", "disnan", "dlabad", "dlabrd", "dlacn2", "dlacon", "dlacpy",
+          "dladiv", "dlae2", "dlaebz", "dlaed0", "dlaed1", "dlaed2", "dlaed3",
+          "dlaed4", "dlaed5", "dlaed6", "dlaed7", "dlaed8", "dlaed9", "dlaeda",
+          "dlaein", "dlaev2", "dlaexc", "dlag2", "dlags2", "dlagtf", "dlagtm",
+          "dlagts", "dlagv2", "dlahqr", "dlahr2", "dlahrd", "dlaic1", "dlaisnan",
+          "dlaln2", "dlals0", "dlalsa", "dlalsd", "dlamc3", "dlamch", "dlamrg",
+          "dlaneg", "dlangb", "dlange", "dlangt", "dlanhs", "dlansb", "dlansf",
+          "dlansp", "dlanst", "dlansy", "dlantb", "dlantp", "dlantr", "dlanv2",
+          "dlapll", "dlapmr", "dlapmt", "dlapy2", "dlapy3", "dlaqgb", "dlaqge",
+          "dlaqp2", "dlaqps", "dlaqr0", "dlaqr1", "dlaqr2", "dlaqr3", "dlaqr4",
+          "dlaqr5", "dlaqsb", "dlaqsp", "dlaqsy", "dlaqtr", "dlar1v", "dlar2v",
+          "dlarf", "dlarfb", "dlarfg", "dlarfgp", "dlarft", "dlarfx", "dlargv",
+          "dlarnv", "dlarra", "dlarrb", "dlarrc", "dlarrd", "dlarre", "dlarrf",
+          "dlarrj", "dlarrk", "dlarrr", "dlarrv", "dlarscl2", "dlartg",
+          "dlartgp", "dlartgs", "dlartv", "dlaruv", "dlarz", "dlarzb",
+          "dlarzt", "dlas2", "dlascl2", "dlascl", "dlasd0", "dlasd1", "dlasd2",
+          "dlasd3", "dlasd4", "dlasd5", "dlasd6", "dlasd7", "dlasd8", "dlasda",
+          "dlasdq", "dlasdt", "dlaset", "dlasq1", "dlasq2", "dlasq3", "dlasq4",
+          "dlasq5", "dlasq6", "dlasr", "dlasrt", "dlassq", "dlasv2", "dlaswp",
+          "dlasy2", "dlasyf", "dlatbs", "dlatdf", "dlatps", "dlatrd", "dlatrs",
+          "dlatrz", "dlatzm", "dlauu2", "dlauum", "dopgtr", "dopmtr", "dorbdb",
+          "dorcsd", "dorg2l", "dorg2r", "dorgbr", "dorghr", "dorgl2", "dorglq",
+          "dorgql", "dorgqr", "dorgr2", "dorgrq", "dorgtr", "dorm2l", "dorm2r",
+          "dormbr", "dormhr", "dorml2", "dormlq", "dormql", "dormqr", "dormr2",
+          "dormr3", "dormrq", "dormrz", "dormtr", "dpbcon", "dpbequ", "dpbrfs",
+          "dpbstf", "dpbsv", "dpbsvx", "dpbtf2", "dpbtrf", "dpbtrs", "dpftrf",
+          "dpftri", "dpftrs", "dpocon", "dpoequ", "dpoequb", "dporfs",
+          "dposv", "dposvx", "dpotf2", "dpotrf", "dpotri", "dpotrs", "dppcon",
+          "dppequ", "dpprfs", "dppsv", "dppsvx", "dpptrf", "dpptri", "dpptrs",
+          "dpstf2", "dpstrf", "dptcon", "dpteqr", "dptrfs", "dptsv", "dptsvx",
+          "dpttrf", "dpttrs", "dptts2", "drscl", "dsbev", "dsbevd", "dsbevx",
+          "dsbgst", "dsbgv", "dsbgvd", "dsbgvx", "dsbtrd", "dsfrk", "dspcon",
+          "dspev", "dspevd", "dspevx", "dspgst", "dspgv", "dspgvd", "dspgvx",
+          "dsprfs", "dspsv", "dspsvx", "dsptrd", "dsptrf", "dsptri", "dsptrs",
+          "dstebz", "dstedc", "dstegr", "dstein", "dstemr", "dsteqr", "dsterf",
+          "dstev", "dstevd", "dstevr", "dstevx", "dsycon", "dsyconv", "dsyequb",
+          "dsyev", "dsyevd", "dsyevr", "dsyevx", "dsygs2", "dsygst", "dsygv",
+          "dsygvd", "dsygvx", "dsyrfs", "dsysv", "dsysvx", "dsyswapr",
+          "dsytd2", "dsytf2", "dsytrd", "dsytrf", "dsytri2", "dsytri2x",
+          "dsytri", "dsytrs2", "dsytrs", "dtbcon", "dtbrfs", "dtbtrs",
+          "dtfsm", "dtftri", "dtfttp", "dtfttr", "dtgevc", "dtgex2", "dtgexc",
+          "dtgsen", "dtgsja", "dtgsna", "dtgsy2", "dtgsyl", "dtpcon", "dtpmqrt",
+          "dtpqrt2", "dtpqrt", "dtprfb", "dtprfs", "dtptri", "dtptrs",
+          "dtpttf", "dtpttr", "dtrcon", "dtrevc", "dtrexc", "dtrrfs", "dtrsen",
+          "dtrsna", "dtrsyl", "dtrti2", "dtrtri", "dtrtrs", "dtrttf", "dtrttp",
+          "dtzrqf", "dtzrzf", "dzsum1", "ieeeck", "iladlc", "iladlr", "ilaenv",
+          "ilaprec", "ilatrans", "ilazlc", "ilazlr", "iparmq", "izmax1",
+          "zbdsqr", "zdrscl", "zgebak", "zgebal", "zgebd2", "zgebrd", "zgecon",
+          "zgeev", "zgehd2", "zgehrd", "zgelq2", "zgelqf", "zgeqp3", "zgeqr2",
+          "zgeqrf", "zgesv", "zgesvd", "zgetf2", "zgetrf", "zgetrs", "zheev",
+          "zhetd2", "zhetrd", "zhseqr", "zlabrd", "zlacgv", "zlacn2", "zlacpy",
+          "zladiv", "zlahqr", "zlahr2", "zlahrd", "zlange", "zlanhe", "zlanhs",
+          "zlantr", "zlaqp2", "zlaqps", "zlaqr0", "zlaqr1", "zlaqr2", "zlaqr3",
+          "zlaqr4", "zlaqr5", "zlarf", "zlarfb", "zlarfg", "zlarft", "zlarfx",
+          "zlartg", "zlascl", "zlaset", "zlasr", "zlassq", "zlaswp", "zlatrd",
+          "zlatrs", "zpotf2", "zpotrf", "zrot", "zsteqr", "ztrcon", "ztrevc",
+          "ztrexc", "ztrtrs", "zung2l", "zung2r", "zungbr", "zunghr", "zungl2",
+          "zunglq", "zungql", "zungqr", "zungr2", "zungrq", "zungtr", "zunm2r",
+          "zunmbr", "zunmhr", "zunml2", "zunmlq", "zunmqr", "")
+
+    allowed <- c(linpack, lapack)
+
+
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1899,7 +1983,9 @@ function(package, dir, file, lib.loc = NULL,
                 else {
                     this <- parg <- e[["PACKAGE"]]
                     if (!is.na(pkg) && is.character(parg) &&
-                        nzchar(parg) && parg != pkg) {
+                        nzchar(parg) && parg != pkg &&
+                        (this != "base" || !e[[2L]] %in% allowed)
+                        ) {
                         wrong_pkg <<- c(wrong_pkg, e)
                         bad_pkg <<- c(bad_pkg, this)
                     }
