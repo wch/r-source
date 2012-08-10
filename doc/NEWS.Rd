@@ -214,7 +214,7 @@
       size on 64-bit platforms.
 
       \item The C-level function \code{R_alloc} can now allocate
-      \eqn{2^{34}}{2^34} or more bytes on 64-bit platforms.
+      \eqn{2^{35}}{2^35} or more bytes on 64-bit platforms.
 
       \item \code{agrep()} and \code{grep()} will return double vectors
       of indices for long vector inputs.
@@ -233,6 +233,9 @@
       \item Many more basic operations are now interruptible when run on
       size-able vectors: typically interrupts are checked for every 1-100
       million elements.
+
+      \item \code{rank()} and the default methods of \code{sort.list()}
+      and \code{order()} support long vectors (slowly).
     }
   }
 

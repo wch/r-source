@@ -597,17 +597,15 @@ SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 			/*--- Part IV : Rank & Order ---*/
 
-/* This cannot be done for long vectors, as it returns integers */
-
-static int equal(int i, int j, SEXP x, Rboolean nalast, SEXP rho)
+static int equal(R_xlen_t i, R_xlen_t j, SEXP x, Rboolean nalast, SEXP rho)
 {
-    int c=-1;
+    int c = -1;
 
     if (isObject(x) && !isNull(rho)) { /* so never any NAs */
 	/* evaluate .gt(x, i, j) */
 	SEXP si, sj, call;
-	si = ScalarInteger(i+1);
-	sj = ScalarInteger(j+1);
+	si = ScalarInteger((int)i+1);
+	sj = ScalarInteger((int)j+1);
 	PROTECT(call = lang4(install(".gt"), x, si, sj));
 	c = asInteger(eval(call, rho));
 	UNPROTECT(1);
@@ -636,16 +634,16 @@ static int equal(int i, int j, SEXP x, Rboolean nalast, SEXP rho)
     return 0;
 }
 
-static int greater(int i, int j, SEXP x, Rboolean nalast, Rboolean decreasing,
-		   SEXP rho)
+static int greater(R_xlen_t i, R_xlen_t j, SEXP x, Rboolean nalast,
+		   Rboolean decreasing, SEXP rho)
 {
     int c = -1;
 
     if (isObject(x) && !isNull(rho)) { /* so never any NAs */
 	/* evaluate .gt(x, i, j) */
 	SEXP si, sj, call;
-	si = ScalarInteger(i+1);
-	sj = ScalarInteger(j+1);
+	si = ScalarInteger((int)i+1);
+	sj = ScalarInteger((int)j+1);
 	PROTECT(call = lang4(install(".gt"), x, si, sj));
 	c = asInteger(eval(call, rho));
 	UNPROTECT(1);
@@ -744,14 +742,79 @@ static const int sincs[16] = {
 };
 
 // Needs indx set to  0:(n-1)  initially :
-static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
-			Rboolean decreasing, int greater_sub(int, int, SEXP, Rboolean, Rboolean))
+static void 
+orderVector(int *indx, int n, SEXP key, Rboolean nalast,
+	    Rboolean decreasing, 
+	    int greater_sub(int, int, SEXP, Rboolean, Rboolean))
 {
     int i, j, h, t;
     int itmp;
 
     for (t = 0; sincs[t] > n; t++);
+    for (h = sincs[t]; t < 16; h = sincs[++t]) {
+	if (t < 8) R_CheckUserInterrupt();
+	for (i = h; i < n; i++) {
+	    itmp = indx[i];
+	    j = i;
+	    while (j >= h &&
+		   greater_sub(indx[j - h], itmp, key, nalast^decreasing,
+			       decreasing)) {
+		indx[j] = indx[j - h];
+		j -= h;
+	    }
+	    indx[j] = itmp;
+	}
+    }
+}
+
+#ifdef LONG_VECTOR_SUPPORT
+static int listgreaterl(R_xlen_t i, R_xlen_t j, SEXP key, Rboolean nalast,
+		       Rboolean decreasing)
+{
+    SEXP x;
+    int c = -1;
+
+    while (key != R_NilValue) {
+	x = CAR(key);
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	case INTSXP:
+	    c = icmp(INTEGER(x)[i], INTEGER(x)[j], nalast);
+	    break;
+	case REALSXP:
+	    c = rcmp(REAL(x)[i], REAL(x)[j], nalast);
+	    break;
+	case CPLXSXP:
+	    c = ccmp(COMPLEX(x)[i], COMPLEX(x)[j], nalast);
+	    break;
+	case STRSXP:
+	    c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("listgreater", x);
+	}
+	if (decreasing) c = -c;
+	if (c > 0)
+	    return 1;
+	if (c < 0)
+	    return 0;
+	key = CDR(key);
+    }
+    if (c == 0 && i < j) return 0; else return 1;
+}
+
+static void 
+orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
+	     Rboolean decreasing, 
+	     int greater_sub(R_xlen_t, R_xlen_t, SEXP, Rboolean, Rboolean))
+{
+    int t;
+    R_xlen_t i, j, h;
+    R_xlen_t itmp;
+
+    for (t = 0; sincs[t] > n; t++);
     for (h = sincs[t]; t < 16; h = sincs[++t])
+	if (t < 8) R_CheckUserInterrupt();
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
 	    j = i;
@@ -764,6 +827,8 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 	    indx[j] = itmp;
 	}
 }
+#endif
+
 
 #define ORD_2_BODY(FNAME, TYPE_1, TYPE_2, GREATER_2_SUB)		\
 void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,			\
@@ -791,7 +856,6 @@ GREATER_2_SUB_DEF(int2greater,       int,    int, icmp, icmp)
 GREATER_2_SUB_DEF(dblint2greater, double,    int, rcmp, icmp)
 GREATER_2_SUB_DEF(intdbl2greater,    int, double, icmp, rcmp)
 
-// These are exported ( ../include/R_ext/Utils.h ):
 ORD_2_BODY(R_order2double , double, double, double2greater)
 ORD_2_BODY(R_order2int    ,    int,    int,    int2greater)
 ORD_2_BODY(R_order2dbl_int, double,    int, dblint2greater)
@@ -799,14 +863,16 @@ ORD_2_BODY(R_order2int_dbl,    int, double, intdbl2greater)
 
 
 #define sort2_with_index \
-	    for (h = sincs[t]; t < 16; h = sincs[++t]) \
-		for (i = lo + h; i <= hi; i++) { \
-		    itmp = indx[i]; \
-		    j = i; \
-		    while (j >= lo + h && less(indx[j - h], itmp)) { \
-			indx[j] = indx[j - h]; j -= h; } \
-		    indx[j] = itmp; \
-		}
+    for (h = sincs[t]; t < 16; h = sincs[++t]) { \
+	if(t < 8) R_CheckUserInterrupt();	 \
+	for (i = lo + h; i <= hi; i++) {	 \
+	    itmp = indx[i];			 \
+	    j = i;						     \
+	    while (j >= lo + h && less(indx[j - h], itmp)) {	     \
+		indx[j] = indx[j - h]; j -= h; }		     \
+	    indx[j] = itmp;					     \
+	}							     \
+    }
 
 
 // Usage:  R_orderVector(indx, n,  Rf_lang2(x,y),  nalast, decreasing)
@@ -816,7 +882,7 @@ void R_orderVector(int *indx, // must be pre-allocated to length >= n
 		   Rboolean nalast, Rboolean decreasing)
 {
     // idx[] <- 0:(n-1) :
-    for(int i=0; i < n; i++) indx[i] = i;
+    for(int i = 0; i < n; i++) indx[i] = i;
     orderVector(indx, n, arglist, nalast, decreasing, listgreater);
     return;
 }
@@ -955,11 +1021,144 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
     if(isna) Free(isna);
 }
 
+/* version for long vectors */
+#ifdef LONG_VECTOR_SUPPORT
+static void
+orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
+	      Rboolean decreasing, SEXP rho)
+{
+    R_xlen_t c, i, j, h, t, lo = 0, hi = n-1;
+    int *isna = NULL, numna = 0;
+    int *ix = NULL /* -Wall */;
+    double *x = NULL /* -Wall */;
+    Rcomplex *cx = NULL /* -Wall */;
+    SEXP *sx = NULL /* -Wall */;
+    R_xlen_t itmp;
+
+    switch (TYPEOF(key)) {
+    case LGLSXP:
+    case INTSXP:
+	ix = INTEGER(key);
+	break;
+    case REALSXP:
+	x = REAL(key);
+	break;
+    case STRSXP:
+	sx = STRING_PTR(key);
+	break;
+    case CPLXSXP:
+	cx = COMPLEX(key);
+	break;
+    }
+
+    if(isNull(rho)) {
+	/* First sort NAs to one end */
+	isna = Calloc(n, int);
+	switch (TYPEOF(key)) {
+	case LGLSXP:
+	case INTSXP:
+	    for (i = 0; i < n; i++) isna[i] = (ix[i] == NA_INTEGER);
+	    break;
+	case REALSXP:
+	    for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
+	    break;
+	case STRSXP:
+	    for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
+	    break;
+	case CPLXSXP:
+	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("orderVector1", key);
+	}
+	for (i = 0; i < n; i++) numna += isna[i];
+
+	if(numna)
+	    switch (TYPEOF(key)) {
+	    case LGLSXP:
+	    case INTSXP:
+	    case REALSXP:
+	    case STRSXP:
+	    case CPLXSXP:
+		if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
+		for (t = 0; sincs[t] > n; t++);
+#define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
+		sort2_with_index
+#undef less
+		    if(nalast) hi -= numna; else lo += numna;
+	    }
+    }
+
+    /* Shell sort isn't stable, so add test on index */
+    for (t = 0; sincs[t] > hi-lo+1; t++);
+
+    if (isObject(key) && !isNull(rho)) {
+/* only reached from do_rank */
+#define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
+	    sort2_with_index
+#undef less
+    } else {
+	switch (TYPEOF(key)) {
+	case LGLSXP:
+	case INTSXP:
+	    if (decreasing) {
+#define less(a, b) (ix[a] < ix[b] || (ix[a] == ix[b] && a > b))
+		sort2_with_index
+#undef less
+	    } else {
+#define less(a, b) (ix[a] > ix[b] || (ix[a] == ix[b] && a > b))
+		sort2_with_index
+#undef less
+	    }
+	    break;
+	case REALSXP:
+	    if (decreasing) {
+#define less(a, b) (x[a] < x[b] || (x[a] == x[b] && a > b))
+		sort2_with_index
+#undef less
+	    } else {
+#define less(a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
+		sort2_with_index
+#undef less
+	    }
+	    break;
+	case CPLXSXP:
+	    if (decreasing) {
+#define less(a, b) (ccmp(cx[a], cx[b], 0) < 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
+		sort2_with_index
+#undef less
+	    } else {
+#define less(a, b) (ccmp(cx[a], cx[b], 0) > 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
+		sort2_with_index
+#undef less
+	    }
+	    break;
+	case STRSXP:
+	    if (decreasing)
+#define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
+		sort2_with_index
+#undef less
+	    else
+#define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
+		sort2_with_index
+#undef less
+	    break;
+    	default:  /* only reached from do_rank */
+#define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
+	    sort2_with_index
+#undef less
+	}
+    }
+    if(isna) Free(isna);
+}
+#endif
+
 /* FUNCTION order(...) */
 SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ap, ans;
-    int i, n = -1, narg = 0;
+    SEXP ap, ans = R_NilValue /* -Wall */;
+    int narg = 0;
+    R_xlen_t n = -1;
     Rboolean nalast, decreasing;
 
     nalast = asLogical(CAR(args));
@@ -974,50 +1173,97 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
 
     if (isVector(CAR(args)))
-	n = LENGTH(CAR(args));
+	n = XLENGTH(CAR(args));
     for (ap = args; ap != R_NilValue; ap = CDR(ap), narg++) {
 	if (!isVector(CAR(ap)))
 	    error(_("argument %d is not a vector"), narg + 1);
-	if (LENGTH(CAR(ap)) != n)
+	if (XLENGTH(CAR(ap)) != n)
 	    error(_("argument lengths differ"));
     }
     /* NB: collation functions such as Scollate might allocate */
-    PROTECT(ans = allocVector(INTSXP, n));
     if (n != 0) {
-	for (i = 0; i < n; i++) INTEGER(ans)[i] = i;
-	if(narg == 1)
-	    orderVector1(INTEGER(ans), n, CAR(args), nalast, decreasing,
-			 R_NilValue);
-	else
-	    orderVector(INTEGER(ans), n, args, nalast, decreasing, listgreater);
-	for (i = 0; i < n; i++) INTEGER(ans)[i]++;
-    }
-    UNPROTECT(1);
-    return ans;
+	if(narg == 1) {
+#ifdef LONG_VECTOR_SUPPORT
+	    if (n > INT_MAX)  {
+		PROTECT(ans = allocVector(REALSXP, n));
+		R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
+		for (R_xlen_t i = 0; i < n; i++) in[i] = i;
+		orderVector1l(in, n, CAR(args), nalast, decreasing,
+			      R_NilValue);
+		for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = in[i] + 1;
+	    } else
+#endif
+	    {
+		PROTECT(ans = allocVector(INTSXP, n));
+		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = i;
+		orderVector1(INTEGER(ans), n, CAR(args), nalast, decreasing,
+			     R_NilValue);
+		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
+	    } 
+	} else {
+#ifdef LONG_VECTOR_SUPPORT
+	    if (n > INT_MAX)  {
+		PROTECT(ans = allocVector(REALSXP, n));
+		R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
+		for (R_xlen_t i = 0; i < n; i++) in[i] = i;
+		orderVectorl(in, n, CAR(args), nalast, decreasing,
+			     listgreaterl);
+		for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = in[i] + 1;
+	    } else
+#endif
+	    {
+		PROTECT(ans = allocVector(INTSXP, n));
+		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = i;
+		orderVector(INTEGER(ans), n, args, nalast, decreasing, listgreater);
+		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
+	    }
+	}
+	UNPROTECT(1);
+	return ans;
+    } else return allocVector(INTSXP, 0);
 }
 
 /* FUNCTION: rank(x, length, ties.method) */
 SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rank, indx, x;
+    SEXP rank, x;
     int *ik = NULL /* -Wall */;
     double *rk = NULL /* -Wall */;
     enum {AVERAGE, MAX, MIN} ties_kind = AVERAGE;
+    Rboolean isLong = FALSE;
 
     checkArity(op, args);
     x = CAR(args);
     if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
+#ifdef LONG_VECTOR_SUPPORT
+    SEXP sn = CADR(args);
+    R_xlen_t n;
+    if (TYPEOF(sn) == REALSXP)  {
+	double d = REAL(x)[0];
+	if(ISNAN(d)) error(_("vector size cannot be NA/NaN"));
+	if(!R_FINITE(d)) error(_("vector size cannot be infinite"));
+	if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
+	n = (R_xlen_t) d;
+	if (n < 0) error(_("invalid '%s' value"), "length(xx)");
+    } else {
+	int nn = asInteger(sn);
+	if (nn == NA_INTEGER || nn < 0)
+	    error(_("invalid '%s' value"), "length(xx)");
+	n = nn;
+    }
+    isLong = n > INT_MAX;
+#else
     int n = asInteger(CADR(args));
     if (n == NA_INTEGER || n < 0)
 	error(_("invalid '%s' value"), "length(xx)");
+#endif
     const char *ties_str = CHAR(asChar(CADDR(args)));
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
     else if(!strcmp(ties_str, "min"))	ties_kind = MIN;
     else error(_("invalid ties.method for rank() [should never happen]"));
-    PROTECT(indx = allocVector(INTSXP, n));
-    if (ties_kind == AVERAGE) {
+    if (ties_kind == AVERAGE || isLong) {
 	PROTECT(rank = allocVector(REALSXP, n));
 	rk = REAL(rank);
     } else {
@@ -1025,25 +1271,48 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ik = INTEGER(rank);
     }
     if (n > 0) {
-	int i, j, k;
-	int *in = INTEGER(indx);
-	for (i = 0; i < n; i++) in[i] = i;
-	orderVector1(in, n, x, TRUE, FALSE, rho);
-	for (i = 0; i < n; i = j+1) {
-	    j = i;
-	    while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE, rho)) j++;
-	    switch(ties_kind) {
-	    case AVERAGE:
-		for (k = i; k <= j; k++)
-		    rk[in[k]] = (i + j + 2) / 2.; break;
-	    case MAX:
-		for (k = i; k <= j; k++) ik[in[k]] = j+1; break;
-	    case MIN:
-		for (k = i; k <= j; k++) ik[in[k]] = i+1; break;
+#ifdef LONG_VECTOR_SUPPORT
+	if(isLong) {
+	    R_xlen_t i, j, k;
+	    R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
+	    for (i = 0; i < n; i++) in[i] = i;
+	    orderVector1l(in, n, x, TRUE, FALSE, rho);
+	    for (i = 0; i < n; i = j+1) {
+		j = i;
+		while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE, rho)) j++;
+		switch(ties_kind) {
+		case AVERAGE:
+		    for (k = i; k <= j; k++)
+			rk[in[k]] = (i + j + 2) / 2.; break;
+		case MAX:
+		    for (k = i; k <= j; k++) rk[in[k]] = j+1; break;
+		case MIN:
+		    for (k = i; k <= j; k++) rk[in[k]] = i+1; break;
+		}
+	    }
+	} else
+#endif
+	{
+	    int i, j, k;
+	    int *in = (int *) R_alloc(n, sizeof(int));
+	    for (i = 0; i < n; i++) in[i] = i;
+	    orderVector1(in, (int) n, x, TRUE, FALSE, rho);
+	    for (i = 0; i < n; i = j+1) {
+		j = i;
+		while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE, rho)) j++;
+		switch(ties_kind) {
+		case AVERAGE:
+		    for (k = i; k <= j; k++)
+			rk[in[k]] = (i + j + 2) / 2.; break;
+		case MAX:
+		    for (k = i; k <= j; k++) ik[in[k]] = j+1; break;
+		case MIN:
+		    for (k = i; k <= j; k++) ik[in[k]] = i+1; break;
+		}
 	    }
 	}
     }
-    UNPROTECT(2);
+    UNPROTECT(1);
     return rank;
 }
 

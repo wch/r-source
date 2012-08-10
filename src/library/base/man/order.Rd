@@ -1,6 +1,6 @@
 % File src/library/base/man/order.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{order}
@@ -65,6 +65,12 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   true.  For factors, this sorts on the internal codes, which is
   particularly appropriate for ordered factors.
 }
+
+\value{
+  An integer vector unless any of the inputs has \eqn{2^{31}}{2^31} or
+  more elements, when it is a double vector.
+}
+
 \note{
   \code{sort.list} can get called by mistake as a method for
   \code{\link{sort}} with a list argument, and gives a suitable error

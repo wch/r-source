@@ -1,6 +1,6 @@
 % File src/library/base/man/rank.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rank}
@@ -53,8 +53,9 @@ rank(x, na.last = TRUE,
 \value{
   A numeric vector of the same length as \code{x} with names copied from
   \code{x} (unless \code{na.last = NA}, when missing values are
-  removed).  The vector is of integer type unless \code{ties.method =
-    "average"} when it is of double type (whether or not there are any ties).
+  removed).  The vector is of integer type unless \code{x} is a long
+  vector or \code{ties.method = "average"} when it is of double type
+  (whether or not there are any ties).
 }
 \seealso{
   \code{\link{order}} and \code{\link{sort}}.
