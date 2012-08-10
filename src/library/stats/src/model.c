@@ -1261,18 +1261,21 @@ static int TermEqual(SEXP term1, SEXP term2)
 
 static SEXP StripTerm(SEXP term, SEXP list)
 {
-    SEXP tail;
+    SEXP root = R_NilValue, prev = R_NilValue;
     if (TermZero(term))
 	intercept = 0;
-    if (list == R_NilValue)
-	return list;
-    /* This can be highly recursive */
-    R_CheckStack();
-    tail = StripTerm(term, CDR(list));
-    if (TermEqual(term, CAR(list)))
-	return tail;
-    SETCDR(list, tail);
-    return list;
+    while (list != R_NilValue) {
+	if (TermEqual(term, CAR(list))) {
+	    if (prev != R_NilValue)
+		SETCDR(prev, CDR(list));
+	} else {
+	    if (root == R_NilValue)
+		root = list;
+	    prev = list;
+	}
+	list = CDR(list);
+    }
+    return root;
 }
 
 
@@ -1282,9 +1285,10 @@ static SEXP StripTerm(SEXP term, SEXP list)
 
 static SEXP TrimRepeats(SEXP list)
 {
-    /* Highly recursive, but StripTerm does the checking */
     if (list == R_NilValue)
 	return R_NilValue;
+    /* Highly recursive */
+    R_CheckStack();
     if (TermZero(CAR(list)))
 	return TrimRepeats(CDR(list));
     SETCDR(list, TrimRepeats(StripTerm(CAR(list), CDR(list))));
