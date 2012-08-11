@@ -175,6 +175,11 @@
       argument which can be used to make them more efficient when
       it is known that there are only a small number of unique entries.
       This is done automatically for factors.
+      
+      \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
+      \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
+      \code{rwilcox()} now return integer (not double) vectors.  This
+      halves the storage requirements for large simulations.
     }
   }
 
