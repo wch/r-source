@@ -1195,9 +1195,9 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	    {
 		PROTECT(ans = allocVector(INTSXP, n));
-		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = i;
-		orderVector1(INTEGER(ans), n, CAR(args), nalast, decreasing,
-			     R_NilValue);
+		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
+		orderVector1(INTEGER(ans), (int)n, CAR(args), nalast,
+			     decreasing, R_NilValue);
 		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
 	    } 
 	} else {
@@ -1213,8 +1213,9 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	    {
 		PROTECT(ans = allocVector(INTSXP, n));
-		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = i;
-		orderVector(INTEGER(ans), n, args, nalast, decreasing, listgreater);
+		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
+		orderVector(INTEGER(ans), (int) n, args, nalast, 
+			    decreasing, listgreater);
 		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
 	    }
 	}
@@ -1323,8 +1324,9 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans;
     Rboolean nalast, decreasing;
-    int i, n;
+    R_xlen_t i, n;
     int tmp, xmax = NA_INTEGER, xmin = NA_INTEGER, off, napos;
+    Rboolean isLong = FALSE;
 
     checkArity(op, args);
 
@@ -1336,8 +1338,17 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(decreasing == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
     off = nalast^decreasing ? 0 : 1;
-    n = LENGTH(x);
-    PROTECT(ans = allocVector(INTSXP, n));
+    n = XLENGTH(x);
+#ifdef LONG_VECTOR_SUPPORT
+    isLong = n > INT_MAX;
+    if(isLong)
+	ans = allocVector(REALSXP, n);
+    else
+	ans = allocVector(INTSXP, n);
+#else
+    ans = allocVector(INTSXP, n);
+#endif
+    PROTECT(ans); // not currently needed
     for(i = 0; i < n; i++) {
 	tmp = INTEGER(x)[i];
 	if(tmp == NA_INTEGER) continue;
@@ -1346,7 +1357,14 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(xmin == NA_INTEGER || tmp < xmin) xmin = tmp;
     }
     if(xmin == NA_INTEGER) {  /* all NAs, so nothing to do */
-	for(i = 0; i < n; i++) INTEGER(ans)[i] = i+1;
+#ifdef LONG_VECTOR_SUPPORT
+	if (isLong) {
+	    for(i = 0; i < n; i++) REAL(ans)[i] = (double)(i+1);
+	} else
+#endif
+	{
+	    for(i = 0; i < n; i++) INTEGER(ans)[i] = (int)(i+1);
+	}
 	UNPROTECT(1);
 	return ans;
     }
@@ -1356,7 +1374,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     napos = off ? 0 : xmax + 1;
     off -= xmin;
     /* automatic allocation is fine here: we know this is small */
-    R_len_t cnts[xmax+1];
+    R_xlen_t cnts[xmax+1];
 
     for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
     for(i = 0; i < n; i++) {
@@ -1365,17 +1383,36 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     for(i = 1; i <= xmax+1; i++) cnts[i] += cnts[i-1];
-    if(decreasing)
-	for(i = 0; i < n; i++) {
-	    tmp = INTEGER(x)[i];
-	    INTEGER(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] = i+1;
-	}
-    else
-	for(i = n-1; i >= 0; i--) {
-	    tmp = INTEGER(x)[i];
-	    INTEGER(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = i+1;
-	}
-
+#ifdef LONG_VECTOR_SUPPORT
+    if (isLong) {
+	if(decreasing)
+	    for(i = 0; i < n; i++) {
+		tmp = INTEGER(x)[i];
+		REAL(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] =
+		    (double)(i+1);
+	    }
+	else
+	    for(i = n-1; i >= 0; i--) {
+		tmp = INTEGER(x)[i];
+		REAL(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = 
+		    (double)(i+1);
+	    }
+    }
+#endif
+    {
+	if(decreasing)
+	    for(i = 0; i < n; i++) {
+		tmp = INTEGER(x)[i];
+		INTEGER(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] =
+		    (int) (i+1);
+	    }
+	else
+	    for(i = n-1; i >= 0; i--) {
+		tmp = INTEGER(x)[i];
+		INTEGER(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = 
+		    (int)(i+1);
+	    }
+    }
     UNPROTECT(1);
     return ans;
 }

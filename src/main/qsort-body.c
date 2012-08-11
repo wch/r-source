@@ -34,22 +34,20 @@
  * This version incorporates the modification in the remark by Peto.
 */
 
-#ifdef qsort_Index
-# define INT int
-#else
-# define INT size_t
+#ifndef INTt
+# define INTt size_t
 #endif
 
-    INT il[40], iu[40]; /* was 31 */
+    INTt il[40], iu[40]; /* was 31 */
     /* Arrays iu[k] and il[k] permit sorting up to 2^(k+1)-1 elements;
      * originally k = 20 -> n_max =    2'097'151
      * now        k = 31 -> n_max = 4294'967'295
      */
     NUMERIC vt, vtt;
     double R = 0.375;
-    INT ii, ij, k, l, m;
+    INTt ii, ij, k, l, m;
 #ifdef qsort_Index
-    INT it, tt;
+    INDt it, tt;
 #endif
 
 
@@ -68,7 +66,7 @@
       L20:
 	k = i;
 	/* ij = (j + i) >> 1; midpoint */
-	ij = (INT)(i + (INT)((j - i)*R));
+	ij = (INTt)(i + (INTt)((j - i)*R));
 #ifdef qsort_Index
 	it = I[ij];
 #endif
@@ -169,5 +167,3 @@
     v[k + 1] = vt;
     goto L100;
 } /* R_qsort{i} */
-
-#undef INT
