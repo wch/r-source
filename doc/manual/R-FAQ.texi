@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2012
-@set FAQ_DATE @value{FAQ_YEAR}-07-07
+@set FAQ_DATE @value{FAQ_YEAR}-08-11
 @set REL_YEAR 2012
 @set REL_MAJOR 2
 @set REL_MINOR 15
@@ -1709,8 +1709,7 @@ as a shared computing resource.
 @url{http://sysbio.mrc-bsu.cam.ac.uk/Rwui, Rwui} is a web application to
 create user-friendly web interfaces for R scripts.  All code for the web
 interface is created automatically.  There is no need for the user to do
-any extra scripting or learn any new scripting techniques.  Rwui can
-also be found at @uref{http://rwui.cryst.bbk.ac.uk}.
+any extra scripting or learn any new scripting techniques.
 
 The @CRANpkg{R.rsp} package by Henrik Bengtsson introduces ``R Server
 Pages''.  Analogous to Java Server Pages, an R server page is typically
