@@ -22,10 +22,10 @@ factor <- function(x = character(), levels, labels = levels,
     if(is.null(x)) x <- character()
     nx <- names(x)
     if (missing(levels)) {
-	y <- unique(x)
+	y <- unique(x, nmax = nmax)
 	ind <- sort.list(y) # or possibly order(x) which is more (too ?) tolerant
 	y <- as.character(y)
-	levels <- unique(y[ind], nmax = nmax)
+	levels <- unique(y[ind])
     }
     force(ordered) # check if original x is an ordered factor
     exclude <- as.vector(exclude, typeof(x)) # may result in NA
