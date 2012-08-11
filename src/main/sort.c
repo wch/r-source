@@ -1319,7 +1319,7 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include <R_ext/RS.h>
 
-/* also returns integers (a method for sort.list) */
+/* also returns integers/doubles (a method for sort.list) */
 SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans;
@@ -1388,13 +1388,13 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(decreasing)
 	    for(i = 0; i < n; i++) {
 		tmp = INTEGER(x)[i];
-		REAL(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] =
+		REAL(ans)[n-(cnts[(tmp == NA_INTEGER) ? napos : off+tmp]--)] =
 		    (double)(i+1);
 	    }
 	else
 	    for(i = n-1; i >= 0; i--) {
 		tmp = INTEGER(x)[i];
-		REAL(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = 
+		REAL(ans)[--cnts[(tmp == NA_INTEGER) ? napos : off+tmp]] = 
 		    (double)(i+1);
 	    }
     } else
@@ -1403,13 +1403,13 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(decreasing)
 	    for(i = 0; i < n; i++) {
 		tmp = INTEGER(x)[i];
-		INTEGER(ans)[n-(cnts[(tmp==NA_INTEGER) ? napos : off+tmp]--)] =
-		    (int) (i+1);
+		INTEGER(ans)[n-(cnts[(tmp == NA_INTEGER) ? napos : off+tmp]--)] =
+		    (int)(i+1);
 	    }
 	else
 	    for(i = n-1; i >= 0; i--) {
 		tmp = INTEGER(x)[i];
-		INTEGER(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = 
+		INTEGER(ans)[--cnts[(tmp == NA_INTEGER) ? napos : off+tmp]] = 
 		    (int)(i+1);
 	    }
     }
