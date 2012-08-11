@@ -1,6 +1,6 @@
 % File src/library/base/man/libPaths.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{libPaths}
@@ -56,7 +56,7 @@
   Mac OS X AQUA builds), for \R \var{x.y.z}.
 
   \code{.Library.site} can be set via the environment variable 
-  \env{R_LIBS_SITE} (as a colon-separated list of library trees).
+  \env{R_LIBS_SITE} (as a non-empty colon-separated list of library trees).
 #endif
 #ifdef windows
   The library search path is initialized at startup from the environment
@@ -70,7 +70,7 @@
   for \R \var{x.y.z}.
 
   \code{.Library.site} can be set via the environment variable
-  \env{R_LIBS_SITE} (as a semicolon-separated list of library trees).
+  \env{R_LIBS_SITE} (as a non-empty semicolon-separated list of library trees).
 #endif
 
   Both \env{R_LIBS_USER} and \env{R_LIBS_SITE} feature possible
