@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -375,18 +375,20 @@ static int TermEqual(SEXP term1, SEXP term2)
 
 static SEXP StripTerm(SEXP term, SEXP list)
 {
-    SEXP tail;
-    if (TermZero(term))
-	intercept = 0;
-    if (list == R_NilValue)
-	return list;
-    /* This can be highly recursive */
-    R_CheckStack();
-    tail = StripTerm(term, CDR(list));
-    if (TermEqual(term, CAR(list)))
-	return tail;
-    SETCDR(list, tail);
-    return list;
+    if (TermZero(term)) intercept = 0;
+    if (list == R_NilValue) return list;
+
+    SEXP root = R_NilValue, prev = R_NilValue;
+    while (list != R_NilValue) {
+	if (TermEqual(term, CAR(list))) {
+	    if (prev != R_NilValue) SETCDR(prev, CDR(list));
+	} else {
+	    if (root == R_NilValue) root = list;
+	    prev = list;
+	}
+	list = CDR(list);
+    }
+    return root;
 }
 
 

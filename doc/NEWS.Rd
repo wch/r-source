@@ -267,6 +267,10 @@
       
       \item \code{parallel::stopCluster()} now works with MPI
       clusters without \pkg{snow} being on the search path.
+      
+      \item \code{terms.formula()} could exhaust the stack, and the
+      stack check did not always catch this before the segfault.
+      (\PR{15013})
     }
   }
 }
