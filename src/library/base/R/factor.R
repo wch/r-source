@@ -16,8 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-factor <- function(x = character(), levels, labels=levels,
-                   exclude = NA, ordered = is.ordered(x))
+factor <- function(x = character(), levels, labels = levels,
+                   exclude = NA, ordered = is.ordered(x), nmax = NA)
 {
     if(is.null(x)) x <- character()
     nx <- names(x)
@@ -25,11 +25,12 @@ factor <- function(x = character(), levels, labels=levels,
 	y <- unique(x)
 	ind <- sort.list(y) # or possibly order(x) which is more (too ?) tolerant
 	y <- as.character(y)
-	levels <- unique(y[ind])
+	levels <- unique(y[ind], nmax = nmax)
     }
     force(ordered) # check if original x is an ordered factor
-    exclude <- as.vector(exclude, typeof(x))# may result in NA
+    exclude <- as.vector(exclude, typeof(x)) # may result in NA
     x <- as.character(x)
+    ## levels could be a long vectors, but match will not handle that.
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
     if(!is.null(nx))
@@ -42,7 +43,7 @@ factor <- function(x = character(), levels, labels=levels,
     levels(f) <- ## nl == nL or 1
 	if (nl == nL) as.character(labels)
 	else paste0(labels, seq_along(levels))
-    class(f) <- c(if(ordered)"ordered", "factor")
+    class(f) <- c(if(ordered) "ordered", "factor")
     f
 }
 
