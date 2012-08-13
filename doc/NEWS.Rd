@@ -160,7 +160,7 @@
       value) or an error.
 
       \item \code{merge()} works in more cases where the data frames
-      include matrices.  (Wish of \PR{14974})
+      include matrices.  (Wish of \PR{14974}.)
       
       \item \code{optimize()} and \code{uniroot()} no longer use a
       shared parameter object across calls.  (\code{nlm()},
@@ -172,14 +172,14 @@
       differ by up to 1 msec.
 
       \item \code{duplicated()} and \code{unique()} gain a \code{nmax}
-      argument which can be used to make them more efficient when
+      argument which can be used to make them much more efficient when
       it is known that there are only a small number of unique entries.
       This is done automatically for factors.
       
       \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
       \code{rwilcox()} now return integer (not double) vectors.  This
-      halves the storage requirements for large simulations.
+      halves the storage requirements for large simulations.      
     }
   }
 
@@ -239,8 +239,10 @@
       size-able vectors: typically interrupts are checked for every 1-100
       million elements.
 
-      \item \code{rank()} and the default methods of \code{sort.list()}
-      and \code{order()} support long vectors (slowly).
+      \item Most of the methods for \code{sort()} work for long vectors.
+
+      \code{rank()}, \code{sort.list()} and \code{order()} support
+      long vectors (slowly except for radix sorting).
     }
   }
 

@@ -33,7 +33,9 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.
   }
-  \item{method}{the method to be used: partial matches are allowed.}
+  \item{method}{the method to be used: partial matches are allowed.  The
+    default is \code{"shell"} except for some special cases: see
+    \sQuote{Details}.}
 }
 \details{
   In the case of ties in the first vector, values in the second are used
@@ -48,12 +50,14 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   The sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.
 
-  The default method for \code{sort.list} is a good compromise.
-  Method \code{"quick"} is only supported for numeric \code{x} with
-  \code{na.last=NA}, and is not stable, but will be faster for long vectors.
-  Method \code{"radix"} is only implemented for integer \code{x} with
-  a range of less than 100,000.  For such \code{x} it is very
-  fast (and stable), and hence is ideal for sorting factors.
+  The default method for \code{sort.list} is a good compromise.  Method
+  \code{"quick"} is only supported for numeric \code{x} with
+  \code{na.last = NA}, and is not stable, but will be substantially
+  faster for long vectors.  Method \code{"radix"} is only implemented
+  for integer \code{x} with a range of less than 100,000.  For such
+  \code{x} it is very fast (and stable), and hence is ideal for sorting
+  factors---as from \R 2.16.0 it is the default method for factors with
+  less than 100,000 levels.
 
   \code{partial = NULL} is supported for compatibility with other
   implementations of S, but no other values are accepted and ordering is

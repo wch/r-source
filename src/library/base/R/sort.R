@@ -39,7 +39,7 @@ sort.int <-
 	lev <- levels(x)
 	nlev <- nlevels(x)
  	isord <- is.ordered(x)
-        x <- c(x)
+        x <- c(x) # drop attributes
     } else if(!is.atomic(x))
         stop("'x' must be atomic")
 
@@ -81,7 +81,6 @@ sort.int <-
                    if(index.return || !is.null(nms)) {
                        o <- sort.list(x, decreasing = decreasing)
                        y <- if (index.return) list(x = x[o], ix = o) else x[o]
-                       ## names(y) <- nms[o] # pointless!
                    }
                    else
                        y <- .Internal(sort(x, decreasing))
@@ -90,8 +89,8 @@ sort.int <-
     if(!is.na(na.last) && has.na)
 	y <- if(!na.last) c(nas, y) else c(y, nas)
     if(isfact)
-        y <- (if (isord) ordered else factor)(y, levels=seq_len(nlev),
-                                              labels=lev)
+        y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
+                                              labels = lev)
     y
 }
 
@@ -101,18 +100,19 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
     if(any(unlist(lapply(z, is.object)))) {
         z <- lapply(z, function(x) if(is.object(x)) xtfrm(x) else x)
         if(!is.na(na.last))
-            return(do.call("order", c(z, na.last=na.last,
-                                      decreasing=decreasing)))
+            return(do.call("order", c(z, na.last = na.last,
+                                      decreasing = decreasing)))
     } else if(!is.na(na.last))
         return(.Internal(order(na.last, decreasing, ...)))
-    ## remove nas
+
+    ## na.last = NA case: remove nas
     if(any(diff(l.z <- vapply(z, length, 1L)) != 0L))
         stop("argument lengths differ")
     ans <- vapply(z, is.na, rep.int(NA, l.z[1L]))
     ok <- if(is.matrix(ans)) !apply(ans, 1, any) else !any(ans)
     if(all(!ok)) return(integer())
     z[[1L]][!ok] <- NA
-    ans <- do.call("order", c(z, decreasing=decreasing))
+    ans <- do.call("order", c(z, decreasing = decreasing))
     keep <- seq_along(ok)[ok]
     ans[ans %in% keep]
 }

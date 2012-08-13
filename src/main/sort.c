@@ -32,8 +32,8 @@
 static int icmp(int x, int y, Rboolean nalast)
 {
     if (x == NA_INTEGER && y == NA_INTEGER) return 0;
-    if (x == NA_INTEGER)return nalast?1:-1;
-    if (y == NA_INTEGER)return nalast?-1:1;
+    if (x == NA_INTEGER)return nalast ? 1 : -1;
+    if (y == NA_INTEGER)return nalast ? -1 : 1;
     if (x < y)		return -1;
     if (x > y)		return 1;
     return 0;
@@ -43,8 +43,8 @@ static int rcmp(double x, double y, Rboolean nalast)
 {
     int nax = ISNAN(x), nay = ISNAN(y);
     if (nax && nay)	return 0;
-    if (nax)		return nalast?1:-1;
-    if (nay)		return nalast?-1:1;
+    if (nax)		return nalast ? 1 : -1;
+    if (nay)		return nalast ? -1 : 1;
     if (x < y)		return -1;
     if (x > y)		return 1;
     return 0;
@@ -55,15 +55,15 @@ static int ccmp(Rcomplex x, Rcomplex y, Rboolean nalast)
     int nax = ISNAN(x.r), nay = ISNAN(y.r);
 				/* compare real parts */
     if (nax && nay)	return 0;
-    if (nax)		return nalast?1:-1;
-    if (nay)		return nalast?-1:1;
+    if (nax)		return nalast ? 1 : -1;
+    if (nay)		return nalast ? -1 : 1;
     if (x.r < y.r)	return -1;
     if (x.r > y.r)	return 1;
 				/* compare complex parts */
     nax = ISNAN(x.i); nay = ISNAN(y.i);
     if (nax && nay)	return 0;
-    if (nax)		return nalast?1:-1;
-    if (nay)		return nalast?-1:1;
+    if (nax)		return nalast ? 1 : -1;
+    if (nay)		return nalast ? -1 : 1;
     if (x.i < y.i)	return -1;
     if (x.i > y.i)	return 1;
 
@@ -73,8 +73,8 @@ static int ccmp(Rcomplex x, Rcomplex y, Rboolean nalast)
 static int scmp(SEXP x, SEXP y, Rboolean nalast)
 {
     if (x == NA_STRING && y == NA_STRING) return 0;
-    if (x == NA_STRING) return nalast?1:-1;
-    if (y == NA_STRING) return nalast?-1:1;
+    if (x == NA_STRING) return nalast ? 1 : -1;
+    if (y == NA_STRING) return nalast ? -1 : 1;
     if (x == y) return 0;  /* same string in cache */
     return Scollate(x, y);
 }
@@ -326,9 +326,10 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* c(1, 4^k +3*2^(k-1)+1) */
 #ifdef LONG_VECTOR_SUPPORT
-#define NI 19
-static const R_xlen_t incs[19] = {
-    68719869953L, 17180065793L, 4295065601L,
+// This goes up to 2^38: extend eventually.
+#define NI 20
+static const R_xlen_t incs[NI] = {
+    274878693377L, 68719869953L, 17180065793L, 4295065601L,
     1073790977L, 268460033L, 67121153L, 16783361L, 4197377L, 1050113L,
     262913L, 65921L, 16577L, 4193L, 1073L, 281L, 77L, 23L, 8L, 1L
 };
@@ -424,6 +425,7 @@ static void ssort2(SEXP *x, R_xlen_t n, Rboolean decreasing)
 	}
 }
 
+/* The meat of sort.int() */
 void sortVector(SEXP s, Rboolean decreasing)
 {
     R_xlen_t n = XLENGTH(s);
@@ -459,13 +461,13 @@ void sortVector(SEXP s, Rboolean decreasing)
  */
 #define psort_body						\
     Rboolean nalast=TRUE;					\
-    int L, R, i, j;						\
+    R_xlen_t L, R, i, j;					\
 								\
     for (L = lo, R = hi; L < R; ) {				\
 	v = x[k];						\
 	for(i = L, j = R; i <= j;) {				\
-	    while (TYPE_CMP(x[i], v, nalast) < 0) i++;			\
-	    while (TYPE_CMP(v, x[j], nalast) < 0) j--;			\
+	    while (TYPE_CMP(x[i], v, nalast) < 0) i++;		\
+	    while (TYPE_CMP(v, x[j], nalast) < 0) j--;		\
 	    if (i <= j) { w = x[i]; x[i++] = x[j]; x[j--] = w; }\
 	}							\
 	if (j < k) L = i;					\
@@ -473,7 +475,7 @@ void sortVector(SEXP s, Rboolean decreasing)
     }
 
 
-static void iPsort2(int *x, int lo, int hi, int k)
+static void iPsort2(int *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 {
     int v, w;
 #define TYPE_CMP icmp
@@ -481,7 +483,7 @@ static void iPsort2(int *x, int lo, int hi, int k)
 #undef TYPE_CMP
 }
 
-static void rPsort2(double *x, int lo, int hi, int k)
+static void rPsort2(double *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 {
     double v, w;
 #define TYPE_CMP rcmp
@@ -489,7 +491,7 @@ static void rPsort2(double *x, int lo, int hi, int k)
 #undef TYPE_CMP
 }
 
-static void cPsort2(Rcomplex *x, int lo, int hi, int k)
+static void cPsort2(Rcomplex *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 {
     Rcomplex v, w;
 #define TYPE_CMP ccmp
@@ -498,7 +500,7 @@ static void cPsort2(Rcomplex *x, int lo, int hi, int k)
 }
 
 
-static void sPsort2(SEXP *x, int lo, int hi, int k)
+static void sPsort2(SEXP *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 {
     SEXP v, w;
 #define TYPE_CMP scmp
@@ -506,9 +508,25 @@ static void sPsort2(SEXP *x, int lo, int hi, int k)
 #undef TYPE_CMP
 }
 
-/* elements of ind are 1-based, lo and hi are 0-based */
 
-static void Psort(SEXP x, int lo, int hi, int k)
+/* Needed for mistaken decision to put these in the API */
+void iPsort(int *x, int n, int k)
+{
+    iPsort2(x, 0, n-1, k);
+}
+
+void rPsort(double *x, int n, int k)
+{
+    rPsort2(x, 0, n-1, k);
+}
+
+void cPsort(Rcomplex *x, int n, int k)
+{
+    cPsort2(x, 0, n-1, k);
+}
+
+/* lo, hi, k are 0-based */
+static void Psort(SEXP x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 {
     /* Rprintf("looking for index %d in (%d, %d)\n", k, lo, hi);*/
     switch (TYPEOF(x)) {
@@ -530,67 +548,77 @@ static void Psort(SEXP x, int lo, int hi, int k)
     }
 }
 
-static void Psort0(SEXP x, int lo, int hi, int *ind, int k)
+
+/* Here ind are 1-based indices passed from R */
+static void
+Psort0(SEXP x, R_xlen_t lo, R_xlen_t hi, R_xlen_t *ind, int nind)
 {
-    if(k < 1 || hi-lo < 1) return;
-    if(k <= 1)
-	Psort(x, lo, hi, ind[0]-1);
+    if(nind < 1 || hi - lo < 1) return;
+    if(nind <= 1)
+	Psort(x, lo, hi, ind[0] - 1);
     else {
     /* Look for index nearest the centre of the range */
-	int i, This = 0, mid = (lo+hi)/2, z;
-	for(i = 0; i < k; i++)
-	    if(ind[i]-1 <= mid) This = i;
-	z = ind[This]-1;
+	int This = 0;
+	R_xlen_t mid = (lo+hi)/2, z;
+	for(int i = 0; i < nind; i++) if(ind[i] - 1 <= mid) This = i;
+	z = ind[This] - 1;
 	Psort(x, lo, hi, z);
 	Psort0(x, lo, z-1, ind, This);
-	Psort0(x, z+1, hi, ind + This + 1, k - This -1);
+	Psort0(x, z+1, hi, ind + This + 1, nind - This -1);
     }
 }
 
-/* Needed for mistaken decision to put these in the API */
-void iPsort(int *x, int n, int k)
-{
-    iPsort2(x, 0, n-1, k);
-}
-
-void rPsort(double *x, int n, int k)
-{
-    rPsort2(x, 0, n-1, k);
-}
-
-void cPsort(Rcomplex *x, int n, int k)
-{
-    cPsort2(x, 0, n-1, k);
-}
-
-
 
 /* FUNCTION psort(x, indices) */
-/* Indices are integers, so cannot be done for long vectors */
 SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int i, k, n;
-    int *l;
     checkArity(op, args);
+    SEXP x = CAR(args), p = CADR(args);
 
-    if (!isVectorAtomic(CAR(args)))
+    if (!isVectorAtomic(x))
 	error(_("only atomic vectors can be sorted"));
-    if(TYPEOF(CAR(args)) == RAWSXP)
+    if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
-    n = LENGTH(CAR(args));
-    SETCADR(args, coerceVector(CADR(args), INTSXP));
-    l = INTEGER(CADR(args));
-    k = LENGTH(CADR(args));
-    for (i = 0; i < k; i++) {
+    R_xlen_t n = XLENGTH(x);
+#ifdef LONG_VECTOR_SUPPORT
+    if(!IS_LONG_VEC(x) || TYPEOF(p) != REALSXP)
+	SETCADR(args, coerceVector(p, INTSXP));
+    p = CADR(args);
+    int nind = LENGTH(p);
+    R_xlen_t *l = (R_xlen_t *) R_alloc(nind, sizeof(R_xlen_t));
+    if (TYPEOF(p) == REALSXP) {
+	double *rl = REAL(p);
+	for (int i = 0; i < nind; i++) {
+	    if (!R_FINITE(rl[i])) error(_("NA or infinite index"));
+	    l[i] = (R_xlen_t) rl[i];
+	    if (l[i] < 1 || l[i] > n)
+		error(_("index %ld outside bounds"), l[i]);
+	}
+    } else {
+	int *il = INTEGER(p);
+	for (int i = 0; i < nind; i++) {
+	    if (il[i] == NA_INTEGER) error(_("NA index"));
+	    if (il[i] < 1 || il[i] > n)
+		error(_("index %d outside bounds"), il[i]);
+	    l[i] = il[i];
+	}
+    }
+#else
+    SETCADR(args, coerceVector(p, INTSXP));
+    p = CADR(args);
+    int nind = LENGTH(p);
+    int *l = INTEGER(p);
+    for (int i = 0; i < nind; i++) {
 	if (l[i] == NA_INTEGER)
 	    error(_("NA index"));
 	if (l[i] < 1 || l[i] > n)
 	    error(_("index %d outside bounds"), l[i]);
     }
-    SETCAR(args, duplicate(CAR(args)));
+#endif
+    SETCAR(args, duplicate(x));
     SET_ATTRIB(CAR(args), R_NilValue);  /* remove all attributes */
     SET_OBJECT(CAR(args), 0);           /* and the object bit    */
-    Psort0(CAR(args), 0, n - 1, l, k);
+    Psort0(CAR(args), 0, n - 1, l, nind);
     return CAR(args);
 }
 
@@ -742,9 +770,9 @@ static const int sincs[16] = {
 };
 
 // Needs indx set to  0:(n-1)  initially :
-static void 
+static void
 orderVector(int *indx, int n, SEXP key, Rboolean nalast,
-	    Rboolean decreasing, 
+	    Rboolean decreasing,
 	    int greater_sub(int, int, SEXP, Rboolean, Rboolean))
 {
     int i, j, h, t;
@@ -752,7 +780,7 @@ orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 
     for (t = 0; sincs[t] > n; t++);
     for (h = sincs[t]; t < 16; h = sincs[++t]) {
-	if (t < 8) R_CheckUserInterrupt();
+	R_CheckUserInterrupt();
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
 	    j = i;
@@ -803,18 +831,18 @@ static int listgreaterl(R_xlen_t i, R_xlen_t j, SEXP key, Rboolean nalast,
     if (c == 0 && i < j) return 0; else return 1;
 }
 
-static void 
+static void
 orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
-	     Rboolean decreasing, 
+	     Rboolean decreasing,
 	     int greater_sub(R_xlen_t, R_xlen_t, SEXP, Rboolean, Rboolean))
 {
     int t;
     R_xlen_t i, j, h;
     R_xlen_t itmp;
 
-    for (t = 0; sincs[t] > n; t++);
-    for (h = sincs[t]; t < 16; h = sincs[++t])
-	if (t < 8) R_CheckUserInterrupt();
+    for (t = 0; incs[t] > n; t++);
+    for (h = incs[t]; t < NI; h = sincs[++t])
+	R_CheckUserInterrupt();
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
 	    j = i;
@@ -864,7 +892,7 @@ ORD_2_BODY(R_order2int_dbl,    int, double, intdbl2greater)
 
 #define sort2_with_index \
     for (h = sincs[t]; t < 16; h = sincs[++t]) { \
-	if(t < 8) R_CheckUserInterrupt();	 \
+	R_CheckUserInterrupt();	 \
 	for (i = lo + h; i <= hi; i++) {	 \
 	    itmp = indx[i];			 \
 	    j = i;						     \
@@ -1004,15 +1032,15 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 	    break;
 	case STRSXP:
 	    if (decreasing)
-#define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
+#define less(a, b) (c = Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
 		sort2_with_index
 #undef less
 	    else
-#define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
+#define less(a, b) (c = Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
 		sort2_with_index
 #undef less
 	    break;
-    	default:  /* only reached from do_rank */
+	default:  /* only reached from do_rank */
 #define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
 	    sort2_with_index
 #undef less
@@ -1143,7 +1171,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 		sort2_with_index
 #undef less
 	    break;
-    	default:  /* only reached from do_rank */
+	default:  /* only reached from do_rank */
 #define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
 	    sort2_with_index
 #undef less
@@ -1199,7 +1227,7 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 		orderVector1(INTEGER(ans), (int)n, CAR(args), nalast,
 			     decreasing, R_NilValue);
 		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
-	    } 
+	    }
 	} else {
 #ifdef LONG_VECTOR_SUPPORT
 	    if (n > INT_MAX)  {
@@ -1214,7 +1242,7 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    {
 		PROTECT(ans = allocVector(INTSXP, n));
 		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
-		orderVector(INTEGER(ans), (int) n, args, nalast, 
+		orderVector(INTEGER(ans), (int) n, args, nalast,
 			    decreasing, listgreater);
 		for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
 	    }
@@ -1326,7 +1354,6 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rboolean nalast, decreasing;
     R_xlen_t i, n;
     int tmp, xmax = NA_INTEGER, xmin = NA_INTEGER, off, napos;
-    Rboolean isLong = FALSE;
 
     checkArity(op, args);
 
@@ -1340,7 +1367,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     off = nalast^decreasing ? 0 : 1;
     n = XLENGTH(x);
 #ifdef LONG_VECTOR_SUPPORT
-    isLong = n > INT_MAX;
+    Rboolean isLong = n > INT_MAX;
     if(isLong)
 	ans = allocVector(REALSXP, n);
     else
@@ -1394,7 +1421,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    for(i = n-1; i >= 0; i--) {
 		tmp = INTEGER(x)[i];
-		REAL(ans)[--cnts[(tmp == NA_INTEGER) ? napos : off+tmp]] = 
+		REAL(ans)[--cnts[(tmp == NA_INTEGER) ? napos : off+tmp]] =
 		    (double)(i+1);
 	    }
     } else
@@ -1409,7 +1436,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    for(i = n-1; i >= 0; i--) {
 		tmp = INTEGER(x)[i];
-		INTEGER(ans)[--cnts[(tmp == NA_INTEGER) ? napos : off+tmp]] = 
+		INTEGER(ans)[--cnts[(tmp == NA_INTEGER) ? napos : off+tmp]] =
 		    (int)(i+1);
 	    }
     }
