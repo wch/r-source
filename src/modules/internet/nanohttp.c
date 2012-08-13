@@ -75,7 +75,9 @@ extern void R_FlushConsole(void);
 #endif
 
 #include <R_ext/R-ftp-http.h>
-//#include <R_ext/PrtUtil.h>
+#ifdef Win32
+# include <R_ext/Print.h>
+#endif
 
 #ifdef HAVE_STRINGS_H
    /* may be needed to define bzero in FD_ZERO (eg AIX) */
