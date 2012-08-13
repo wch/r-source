@@ -25,6 +25,7 @@
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
 
+#include <Rinternals.h> // for R_xlen_t
 #include <R_ext/Complex.h>
 #include <R_ext/Print.h>
 
@@ -47,10 +48,10 @@ extern "C" {
 #endif
 
 /* Computation of printing formats */
-void formatLogical(int *, int, int *);
-void formatInteger(int *, int, int *);
-void formatReal(double *, int, int *, int *, int *, int);
-void formatComplex(Rcomplex *, int, int *, int *, int *, int *, int *, int *, int);
+void formatLogical(int *, R_xlen_t, int *);
+void formatInteger(int *, R_xlen_t, int *);
+void formatReal(double *, R_xlen_t, int *, int *, int *, int);
+void formatComplex(Rcomplex *, R_xlen_t, int *, int *, int *, int *, int *, int *, int);
 
 /* Formating of values */
 const char *EncodeLogical(int, int);
@@ -62,12 +63,11 @@ const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
 /* Printing */
 void VectorIndex(int, int);
 
-void printLogicalVector(int *, int, int);
-void printIntegerVector(int *, int, int);
-void printRealVector   (double *, int, int);
-void printComplexVector(Rcomplex *,int, int);
+void printLogicalVector(int *, R_xlen_t, int);
+void printIntegerVector(int *, R_xlen_t, int);
+void printRealVector   (double *, R_xlen_t, int);
+void printComplexVector(Rcomplex *, R_xlen_t, int);
 
-/* char *Rsprintf(char*, ...); */
 #ifdef  __cplusplus
 }
 #endif

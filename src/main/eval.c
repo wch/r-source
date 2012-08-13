@@ -29,6 +29,7 @@
 #include <Defn.h>
 #include <Rinterface.h>
 #include <Fileio.h>
+#include <R_ext/Print.h>
 
 
 #define ARGUSED(x) LEVELS(x)

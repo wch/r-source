@@ -758,6 +758,7 @@ extern Rboolean known_to_be_utf8 INI_as(FALSE);
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 # define allocCharsxp		Rf_allocCharsxp
+# define asVecSize		Rf_asVecSize
 # define begincontext		Rf_begincontext
 # define check_stack_balance	Rf_check_stack_balance
 # define check1arg		Rf_check1arg
@@ -955,6 +956,7 @@ SEXP Rf_EnsureString(SEXP);
 
 SEXP Rf_allocCharsxp(R_len_t);
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
+R_xlen_t asVecSize(SEXP x);
 void check1arg(SEXP, SEXP, const char *);
 void Rf_checkArityCall(SEXP, SEXP, SEXP);
 void CheckFormals(SEXP);
@@ -1101,7 +1103,7 @@ void R_restore_globals(RCNTXT *);
 #endif
 
 /* ../main/bind.c */
-SEXP ItemName(SEXP, int);
+SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
 void ErrorMessage(SEXP, int, ...);

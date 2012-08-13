@@ -40,7 +40,6 @@ SEXP csduplicated(SEXP x);  /* from unique.c */
 
 static R_size_t objectsize(SEXP s)
 {
-    int i;
     R_size_t cnt = 0, vcnt = 0;
     SEXP tmp, dup;
     Rboolean isVec = FALSE;
@@ -88,7 +87,7 @@ static R_size_t objectsize(SEXP s)
     case STRSXP:
 	vcnt = PTR2VEC(xlength(s));
 	dup = csduplicated(s);
-	for (i = 0; i < xlength(s); i++) {
+	for (R_xlen_t i = 0; i < xlength(s); i++) {
 	    tmp = STRING_ELT(s, i);
 	    if(tmp != NA_STRING && !LOGICAL(dup)[i])
 		cnt += objectsize(tmp);
@@ -104,7 +103,7 @@ static R_size_t objectsize(SEXP s)
     case WEAKREFSXP:
 	/* Generic Vector Objects */
 	vcnt = PTR2VEC(xlength(s));
-	for (i = 0; i < xlength(s); i++)
+	for (R_xlen_t i = 0; i < xlength(s); i++)
 	    cnt += objectsize(VECTOR_ELT(s, i));
 	isVec = TRUE;
 	break;

@@ -38,7 +38,6 @@ extern "C" {
 #include <R_ext/Complex.h>
 #include <R_ext/Error.h>
 #include <R_ext/Memory.h>
-#include <R_ext/PrtUtil.h>
 #include <R_ext/Utils.h>
 
 #include <R_ext/libextern.h>
@@ -46,11 +45,13 @@ extern "C" {
 typedef unsigned char Rbyte;
 
 /* type for length of vectors etc */
-typedef int R_len_t; /* will be long later, LONG64 or ssize_t on Win64 */
+typedef int R_len_t;
 #define R_LEN_T_MAX INT_MAX
+
 #if ( SIZEOF_SIZE_T > 4 )
 # define LONG_VECTOR_SUPPORT
 #endif
+
 #ifdef LONG_VECTOR_SUPPORT
     typedef ptrdiff_t R_xlen_t;
     typedef struct { R_xlen_t lv_length, lv_truelength; } R_long_vec_hdr_t;
@@ -61,6 +62,8 @@ typedef int R_len_t; /* will be long later, LONG64 or ssize_t on Win64 */
     typedef int R_xlen_t;
 # define R_XLEN_T_MAX R_LEN_T_MAX
 #endif
+
+#include <R_ext/PrtUtil.h> // uses R_xlen_t
 
 /* Fundamental Data Types:  These are largely Lisp
  * influenced structures, with the exception of LGLSXP,

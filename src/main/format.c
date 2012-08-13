@@ -45,17 +45,17 @@
 #include <Print.h>
 
 /* this is just for conformity with other types */
-void formatRaw(Rbyte *x, int n, int *fieldwidth)
+void formatRaw(Rbyte *x, R_xlen_t n, int *fieldwidth)
 {
     *fieldwidth = 2;
 }
 
-void formatString(SEXP *x, int n, int *fieldwidth, int quote)
+void formatString(SEXP *x, R_xlen_t n, int *fieldwidth, int quote)
 {
     int xmax = 0;
-    int i, l;
+    int l;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] == NA_STRING) {
 	    l = quote ? R_print.na_width : R_print.na_width_noquote;
 	} else l = Rstrlen(x[i], quote) + (quote ? 2 : 0);
@@ -64,12 +64,10 @@ void formatString(SEXP *x, int n, int *fieldwidth, int quote)
     *fieldwidth = xmax;
 }
 
-void formatLogical(int *x, int n, int *fieldwidth)
+void formatLogical(int *x, R_xlen_t n, int *fieldwidth)
 {
-    int i;
-
     *fieldwidth = 1;
-    for(i = 0 ; i < n; i++) {
+    for(R_xlen_t i = 0 ; i < n; i++) {
 	if (x[i] == NA_LOGICAL) {
 	    if(*fieldwidth < R_print.na_width)
 		*fieldwidth =  R_print.na_width;
@@ -83,12 +81,12 @@ void formatLogical(int *x, int n, int *fieldwidth)
     }
 }
 
-void formatInteger(int *x, int n, int *fieldwidth)
+void formatInteger(int *x, R_xlen_t n, int *fieldwidth)
 {
     int xmin = INT_MAX, xmax = INT_MIN, naflag = 0;
-    int i, l;
+    int l;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] == NA_INTEGER)
 	    naflag = 1;
 	else {
@@ -276,12 +274,12 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig)
    it is 0 except when called from do_format.
 */
 
-void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
+void formatReal(double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 {
     int left, right, sleft;
     int mnl, mxl, rgt, mxsl, mxns, wF;
     int neg, sgn, kpower, nsig;
-    int i, naflag, nanflag, posinf, neginf;
+    int naflag, nanflag, posinf, neginf;
 
     nanflag = 0;
     naflag = 0;
@@ -291,7 +289,7 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
     rgt = mxl = mxsl = mxns = INT_MIN;
     mnl = INT_MAX;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (!R_FINITE(x[i])) {
 	    if(ISNA(x[i])) naflag = 1;
 	    else if(ISNAN(x[i])) nanflag = 1;
@@ -362,7 +360,7 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
    together, not separately */
 void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
 
-void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
+void formatComplex(Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
 		   int *wi, int *di, int *ei, int nsmall)
 {
 /* format.info() or  x[1..l] for both Re & Im */
@@ -370,7 +368,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
     int rt, mnl, mxl, mxsl, mxns, wF, i_wF;
     int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
     int neg, sgn;
-    int i, kpower, nsig;
+    int kpower, nsig;
     int naflag;
     int rnanflag, rposinf, rneginf, inanflag, iposinf;
     Rcomplex tmp;
@@ -388,7 +386,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
     i_rt= i_mxl= i_mxsl= i_mxns= INT_MIN;
     i_mnl = mnl = INT_MAX;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	/* Now round */
 	z_prec_r(&tmp, &(x[i]), R_print.digits);
 	if(ISNA(tmp.r) || ISNA(tmp.i)) {

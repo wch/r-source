@@ -29,7 +29,7 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 
-static R_xlen_t asVecSize(SEXP x)
+R_xlen_t asVecSize(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
@@ -44,13 +44,12 @@ static R_xlen_t asVecSize(SEXP x)
 	    double d = REAL(x)[0];
 	    if(ISNAN(d)) error(_("vector size cannot be NA/NaN"));
 	    if(!R_FINITE(d)) error(_("vector size cannot be infinite"));
-	    if(d < 0) error(_("vector size cannot be negative"));
 	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
-	    return (R_size_t) d;
+	    return (R_xlen_t) d;
 	}
 	}
     }
-    return -1;  /* which gives error in the caller */
+    return -999;  /* which gives error in the caller */
 }
 
 SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)

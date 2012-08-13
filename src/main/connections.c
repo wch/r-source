@@ -81,6 +81,7 @@
 #include <R_ext/R-ftp-http.h>
 #include <R_ext/RS.h>		/* R_chk_calloc and Free */
 #include <R_ext/Riconv.h>
+#include <R_ext/Print.h> // REprintf, REvprintf
 #undef ERROR			/* for compilation on Windows */
 
 #ifdef Win32
@@ -3264,20 +3265,21 @@ static void con_cleanup(void *data)
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, ans2;
-    int i, n, nn, nnn, ok, warn, nread, c, nbuf, buf_size = BUF_SIZE;
+    int ok, warn, c, nbuf, buf_size = BUF_SIZE;
     int oenc = CE_NATIVE;
     Rconnection con = NULL;
     Rboolean wasopen;
     char *buf;
     const char *encoding;
     RCNTXT cntxt;
+    R_xlen_t i, n, nn, nnn, nread;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
-    n = asInteger(CADR(args));
-    if(n == NA_INTEGER)
+    n = asVecSize(CADR(args));
+    if(n == -999)
 	error(_("invalid '%s' argument"), "n");
     ok = asLogical(CADDR(args));
     if(ok == NA_LOGICAL)
@@ -3317,10 +3319,13 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!buf)
 	error(_("cannot allocate buffer in readLines"));
     nn = (n < 0) ? 1000 : n; /* initially allocate space for 1000 lines */
-    nnn = (n < 0) ? INT_MAX : n;
+    nnn = (n < 0) ? R_XLEN_T_MAX : n;
     PROTECT(ans = allocVector(STRSXP, nn));
     for(nread = 0; nread < nnn; nread++) {
 	if(nread >= nn) {
+	    /* FIXME, check for overflow */
+	    double dnn = 2.* nn;
+	    if (dnn > R_XLEN_T_MAX) error("too many items");
 	    ans2 = allocVector(STRSXP, 2*nn);
 	    for(i = 0; i < nn; i++)
 		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
@@ -3477,10 +3482,10 @@ static SEXP readOneString(Rconnection con)
     return mkChar(buf);
 }
 
-static int
-rawRead(char *p, int size, int n, Rbyte *bytes, int nbytes, int *np)
+static R_xlen_t
+rawRead(char *p, int size, R_xlen_t n, Rbyte *bytes, R_xlen_t nbytes, R_xlen_t *np)
 {
-    int avail, m;
+    R_xlen_t avail, m;
 
     avail = (nbytes - *np)/size;
     m = n;
@@ -3492,10 +3497,10 @@ rawRead(char *p, int size, int n, Rbyte *bytes, int nbytes, int *np)
     return m;
 }
 
-static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
+static SEXP rawOneString(Rbyte *bytes, R_xlen_t nbytes, R_xlen_t *np)
 {
     Rbyte *p;
-    int i;
+    R_xlen_t i;
     char *buf;
     SEXP res;
 
@@ -3521,21 +3526,21 @@ static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
 SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, swhat;
-    int i, size, signd, swap, n, m = 0, sizedef= 4, mode = 1,
-	nbytes = 0, np = 0;
+    int size, signd, swap, sizedef= 4, mode = 1;
     const char *what;
     void *p = NULL;
     Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
     Rbyte *bytes = NULL;
     RCNTXT cntxt;
+    R_xlen_t i, n,  m = 0, nbytes = 0, np = 0;
 
     checkArity(op, args);
 
     if(TYPEOF(CAR(args)) == RAWSXP) {
 	isRaw = TRUE;
 	bytes = RAW(CAR(args));
-	nbytes = LENGTH(CAR(args));
+	nbytes = XLENGTH(CAR(args));
     } else {
 	con = getConnection(asInteger(CAR(args)));
 	if(con->text) error(_("can only read from a binary connection"));
@@ -3546,8 +3551,8 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(swhat) || length(swhat) != 1)
 	error(_("invalid '%s' argument"), "what");
     what = CHAR(STRING_ELT(swhat, 0)); /* ASCII */
-    n = asInteger(CAR(args)); args = CDR(args);
-    if(n == NA_INTEGER || n < 0) error(_("invalid '%s' argument"), "n");
+    n = asVecSize(CAR(args)); args = CDR(args);
+    if(n < 0) error(_("invalid '%s' argument"), "n");
     size = asInteger(CAR(args)); args = CDR(args);
     signd = asLogical(CAR(args)); args = CDR(args);
     if(signd == NA_LOGICAL)
@@ -3594,11 +3599,11 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    /* Do this in blocks to avoid large buffers in the connection */
 	    char *pp = p;
-	    int m0, n0 = n;
+	    R_xlen_t m0, n0 = n;
 	    m = 0;
 	    while(n0) {
-		int n1 = (n0 < BLOCK) ? n0 : BLOCK;
-		m0 = (int) con->read(pp, size, n1, con);
+		size_t n1 = (n0 < BLOCK) ? n0 : BLOCK;
+		m0 = con->read(pp, size, n1, con);
 		m += m0;
 		if (m0 < n1) break;
 		n0 -= n1;
@@ -3683,11 +3688,11 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		/* Do this in blocks to avoid large buffers in the connection */
 		char *pp = p;
-		int m0, n0 = n;
+		R_xlen_t m0, n0 = n;
 		m = 0;
 		while(n0) {
-		    int n1 = (n0 < BLOCK) ? n0 : BLOCK;
-		    m0 = (int) con->read(pp, size, n1, con);
+		    size_t n1 = (n0 < BLOCK) ? n0 : BLOCK;
+		    m0 = con->read(pp, size, n1, con);
 		    m += m0;
 		    if (m0 < n1) break;
 		    n0 -= n1;
@@ -3698,7 +3703,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {
 	    char buf[size];
-	    int s;
+	    R_xlen_t s;
 	    if(mode == 1) { /* integer result */
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
@@ -3757,7 +3762,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
     if(m < n) {
-	PROTECT(ans = lengthgets(ans, m));
+	PROTECT(ans = xlengthgets(ans, m));
 	UNPROTECT(1);
     }
     UNPROTECT(1);

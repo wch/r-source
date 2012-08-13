@@ -160,7 +160,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 
     /* compute w[j] = column-width of j(+1)-th column : */
     for (j = 0; j < c; j++) {
-	formatLogical(&x[j * r], r, &w[j]);
+	formatLogical(&x[j * r], (R_xlen_t) r, &w[j]);
 
 #	define _PRINT_SET_clabw					\
 								\
@@ -230,7 +230,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     int *x = INTEGER(sx) + offset;
 
     for (j = 0; j < c; j++) {
-	formatInteger(&x[j * r], r, &w[j]);
+	formatInteger(&x[j * r], (R_xlen_t) r, &w[j]);
 	_PRINT_SET_clabw;
 	if (w[j] < clabw)
 	    w[j] = clabw;
@@ -270,7 +270,7 @@ static void printRealMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 	*e = (int *) R_alloc(c, sizeof(int));
 
     for (j = 0; j < c; j++) {
-	formatReal(&x[j * r], r, &w[j], &d[j], &e[j], 0);
+	formatReal(&x[j * r], (R_xlen_t) r, &w[j], &d[j], &e[j], 0);
 	_PRINT_SET_clabw;
 	if (w[j] < clabw)
 	    w[j] = clabw;
@@ -316,7 +316,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     /* Determine the column widths */
 
     for (j = 0; j < c; j++) {
-	formatComplex(&x[j * r], r,
+	formatComplex(&x[j * r], (R_xlen_t) r,
 		      &wr[j], &dr[j], &er[j],
 		      &wi[j], &di[j], &ei[j], 0);
 	_PRINT_SET_clabw;
@@ -364,7 +364,7 @@ static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     SEXP *x = STRING_PTR(sx)+offset;
 
     for (j = 0; j < c; j++) {
-	formatString(&x[j * r], r, &w[j], quote);
+	formatString(&x[j * r], (R_xlen_t) r, &w[j], quote);
 	_PRINT_SET_clabw;
 	if (w[j] < clabw)
 	    w[j] = clabw;
@@ -407,7 +407,7 @@ static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     Rbyte *x = RAW(sx) + offset;
 
     for (j = 0; j < c; j++) {
-	formatRaw(&x[j * r], r, &w[j]);
+	formatRaw(&x[j * r], (R_xlen_t) r, &w[j]);
 	_PRINT_SET_clabw;
 	if (w[j] < clabw)
 	    w[j] = clabw;

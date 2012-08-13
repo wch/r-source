@@ -357,10 +357,11 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
-    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
+    int il, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
     int w, d, e;
     int wi, di, ei, scikeep;
     const char *strp;
+    R_xlen_t i, n;
 
     checkArity(op, args);
     PrintDefaults();
@@ -421,7 +422,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "scientific");
     if(sci != NA_INTEGER) R_print.scipen = sci;
 
-    if ((n = LENGTH(x)) <= 0) {
+    if ((n = XLENGTH(x)) <= 0) {
 	PROTECT(y = allocVector(STRSXP, 0));
     } else {
 	switch (TYPEOF(x)) {
@@ -572,11 +573,11 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x;
-    int n, digits, nsmall, no = 1, w, d, e, wi, di, ei;
+    int digits, nsmall, no = 1, w, d, e, wi, di, ei;
 
     checkArity(op, args);
     x = CAR(args);
-    n = LENGTH(x);
+    R_xlen_t n = XLENGTH(x);
     PrintDefaults();
 
     digits = asInteger(CADR(args));
@@ -620,14 +621,11 @@ SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case STRSXP:
-    {
-	int i, il;
-	for (i = 0; i < n; i++)
+	for (R_xlen_t i = 0; i < n; i++)
 	    if (STRING_ELT(x, i) != NA_STRING) {
-		il = Rstrlen(STRING_ELT(x, i), 0);
+		int il = Rstrlen(STRING_ELT(x, i), 0);
 		if (il > w) w = il;
 	    }
-    }
 	break;
 
     default:

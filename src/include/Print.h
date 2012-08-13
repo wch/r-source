@@ -50,8 +50,8 @@ typedef struct {
 extern R_print_par_t R_print;
 
 /* Computation of printing formats */
-void formatRaw(Rbyte *, int, int *);
-void formatString(SEXP*, int, int*, int);
+void formatRaw(Rbyte *, R_xlen_t, int *);
+void formatString(SEXP*, R_xlen_t, int*, int);
 
 /* Formating of values */
 const char *EncodeElement(SEXP, int, int, char);

@@ -27,7 +27,6 @@
 SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, f, counts, vec, nm, nmj;
-    int i, j, k, nobs, nlevs, nfac;
     Rboolean have_names;
 
     checkArity(op, args);
@@ -38,9 +37,9 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("first argument must be a vector"));
     if (!isFactor(f))
 	error(_("second argument must be a factor"));
-    nlevs = nlevels(f);
-    nfac = LENGTH(CADR(args));
-    nobs = LENGTH(CAR(args));
+    int nlevs = nlevels(f);
+    R_xlen_t nfac = XLENGTH(CADR(args));
+    R_xlen_t nobs = XLENGTH(CAR(args));
     if (nfac <= 0 && nobs > 0)
 	error(_("Group length is 0 but data length > 0"));
     if (nfac > 0 && (nobs % nfac) != 0)
@@ -48,9 +47,9 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     nm = getAttrib(x, R_NamesSymbol);
     have_names = nm != R_NilValue;
     PROTECT(counts = allocVector(INTSXP, nlevs));
-    for (i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
-    for (i = 0; i < nobs; i++) {
-	j = INTEGER(f)[i % nfac];
+    for (int i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
+    for (R_xlen_t i = 0; i < nobs; i++) {
+	int j = INTEGER(f)[i % nfac];
 	if (j != NA_INTEGER) {
 	    /* protect against malformed factors */
 	    if (j > nlevs || j < 1) error(_("factor has bad level"));
@@ -61,7 +60,7 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     /* The i-th element will hold the split-out data */
     /* for the ith group. */
     PROTECT(vec = allocVector(VECSXP, nlevs));
-    for (i = 0;  i < nlevs; i++) {
+    for (R_xlen_t i = 0;  i < nlevs; i++) {
 	SET_VECTOR_ELT(vec, i, allocVector(TYPEOF(x), INTEGER(counts)[i]));
 	setAttrib(VECTOR_ELT(vec, i), R_LevelsSymbol,
 		  getAttrib(x, R_LevelsSymbol));
@@ -69,12 +68,11 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(VECTOR_ELT(vec, i), R_NamesSymbol,
 		      allocVector(STRSXP, INTEGER(counts)[i]));
     }
-    for (i = 0; i < nlevs; i++)
-	INTEGER(counts)[i] = 0;
-    for (i = 0;  i < nobs; i++) {
-	j = INTEGER(f)[i % nfac];
+    for (int i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
+    for (R_xlen_t i = 0;  i < nobs; i++) {
+	int j = INTEGER(f)[i % nfac];
 	if (j != NA_INTEGER) {
-	    k = INTEGER(counts)[j - 1];
+	    int k = INTEGER(counts)[j - 1];
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
 	    case INTSXP:
