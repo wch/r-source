@@ -37,7 +37,7 @@ R_xlen_t asVecSize(SEXP x)
 	{
 	    int res = INTEGER(x)[0];
 	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
-	    return res;
+	    return (R_xlen_t) res;
 	}
 	case REALSXP:
 	{
@@ -47,6 +47,12 @@ R_xlen_t asVecSize(SEXP x)
 	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
 	    return (R_xlen_t) d;
 	}
+	default:
+	{
+	    int res = asInteger(x);
+	    if(res != NA_INTEGER) return (R_xlen_t) res;
+	    // fall through
+	}	
 	}
     }
     return -999;  /* which gives error in the caller */
