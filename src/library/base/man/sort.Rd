@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -33,8 +33,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
-  \item{partial}{\code{NULL} or an integer vector of indices for
-    partial sorting.}
+  \item{partial}{\code{NULL} or a  vector of indices for partial sorting.}
   \item{method}{character string specifying the algorithm used.  Not
     available for partial sorting.}
   \item{index.return}{logical indicating if the ordering index vector should
@@ -49,7 +48,16 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   The default \code{sort} method makes use of \code{\link{order}} for
   classed objects, which in turn makes use of the generic function
   \code{\link{xtfrm}} (and can be slow unless a \code{xtfrm} method has
-  been defined unless \code{\link{is.numeric}(x)} is true).
+  been defined or \code{\link{is.numeric}(x)} is true).
+
+  Complex values are sorted first by the real part, then the imaginary
+  part.
+
+  The sort order for character vectors will depend on the collating
+  sequence of the locale in use: see \code{\link{Comparison}}.
+  The sort order for factors is the order of their levels (which is
+  particularly appropriate for ordered factors).
+
 
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of the result which are to be placed in their correct
@@ -60,38 +68,32 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   sorted array.  (This is included for efficiency, and many of the
   options are not available for partial sorting.  It is only
   substantially more efficient if \code{partial} has a handful of
-  elements, and a full sort is done (a quick sort if possible) if there
+  elements, and a full sort is done (a Quicksort if possible) if there
   are more than 10.)  Names are discarded for partial sorting.
-
-  Complex values are sorted first by the real part, then the imaginary
-  part.
-
-  The sort order for character vectors will depend on the collating
-  sequence of the locale in use: see \code{\link{Comparison}}.
-  The sort order for factors is the order of their levels (which is
-  particularly appropriate for ordered factors).
-
+  
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant
   from Sedgewick (1996)).  If \code{x} has names a stable sort is used,
   so ties are not reordered.  (This only matters if names are present.)
 
-  Method \code{"quick"} uses Singleton's Quicksort implementation and is
-  only available when \code{x} is numeric (double or integer) and
-  \code{partial} is \code{NULL}.  (For other types of \code{x} Shellsort
-  is used, silently.)  It is normally somewhat faster than Shellsort
-  (perhaps twice as fast on vectors of length a million) but has poor
+  Method \code{"quick"} uses Singleton (1969)'s implementation of
+  Hoare's Quicksort method and is only available when \code{x} is
+  numeric (double or integer) and \code{partial} is \code{NULL}.  (For
+  other types of \code{x} Shellsort is used, silently.)  It is normally
+  somewhat faster than Shellsort (perhaps 50\% faster on vectors of
+  length a million and twice as fast at a billion) but has poor
   performance in the rare worst case.  (Peto's modification using a
   pseudo-random midpoint is used to make the worst case rarer.)  This is
   not a stable sort, and ties may be reordered.
 }
+
 \value{
   For \code{sort}, the result depends on the S3 method which is
-  dispatched.  If \code{x} does not have a class the rest of this section
-  applies.  For classed objects which do not have a specific method the
-  default method will be used and is equivalent to \code{x[order(x,
-    ...)]}: this depends on the class having a suitable method for
-  \code{[} (and also that \code{\link{order}} will work, which is not
-  the case for a class based on a list).
+  dispatched.  If \code{x} does not have a class \code{sort.int} is used
+  and it description applies.  For classed objects which do not have a
+  specific method the default method will be used and is equivalent to
+  \code{x[order(x, ...)]}: this depends on the class having a suitable
+  method for \code{[} (and also that \code{\link{order}} will work,
+  which is not the case for a class based on a list).
 
   For \code{sort.int} the value is the sorted vector unless
   \code{index.return} is true, when the result is a list with components
@@ -103,11 +105,12 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 
   All attributes are removed from the return value (see Becker \emph{et
     al}, 1988, p.146) except names, which are sorted.  (If
-  \code{partial} is specified even the names are removed.)   Note that
+  \code{partial} is specified even the names are removed.)  Note that
   this means that the returned value has no class, except for factors
   and ordered factors (which are treated specially and whose result is
   transformed back to the original class).
 }
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -142,7 +145,6 @@ sort(c(10:3,2:12), method = "sh", index.return=TRUE) # is stable
 sort(c(10:3,2:12), method = "qu", index.return=TRUE) # is not
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
 ## $ix: 9 10  8  7 11  6 12  5 13  4 14  3 15 16  2 17  1 18 19
-##        ^^^^^
 
 x <- c(1:3, 3:5, 10)
 is.unsorted(x)                # FALSE: is sorted
@@ -154,7 +156,7 @@ N <- 2000
 Sim <- 20
 rep <- 1000 # << adjust to your CPU
 c1 <- c2 <- numeric(Sim)
-for(is in 1:Sim){
+for(is in seq_len(Sim)){
   x <- rnorm(N)
   c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"))[1]
   c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"))[1]

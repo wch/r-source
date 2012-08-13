@@ -8938,8 +8938,6 @@ value of its arguments if they are vector types.
 
 @example
 @group
-#include <R_ext/PrtUtil.h>
-
 SEXP showArgs(SEXP args)
 @{
     args = CDR(args); /* skip 'name' */
