@@ -36,6 +36,7 @@
 #endif
 
 #include <R_ext/RS.h> /* for S4 allocation */
+#include <R_ext/Print.h>
 
 /* Declarations for Valgrind.
 

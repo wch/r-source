@@ -29,6 +29,7 @@
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
 #include <errno.h>
+#include <R_ext/Print.h>
 
 static void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK);
 static int   in_R_HTTPRead(void *ctx, char *dest, int len);

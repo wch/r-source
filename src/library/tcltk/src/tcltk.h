@@ -25,7 +25,6 @@
 #include <string.h>
 
 #include <Rinternals.h>
-#include <R_ext/PrtUtil.h>
 #include <R_ext/Parse.h>
 
 #ifndef Win32

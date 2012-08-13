@@ -6,7 +6,6 @@
  */
 #include <R.h>
 #include <Rmath.h>
-#include <R_ext/PrtUtil.h>
 
 #include "modreg.h"
 

@@ -39,6 +39,7 @@
 #include "Startup.h"
 
 #include <locale.h>
+#include <R_ext/Print.h>
 
 #ifdef ENABLE_NLS
 void attribute_hidden nl_Rdummy(void)

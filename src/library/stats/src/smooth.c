@@ -29,10 +29,6 @@
 #include <R_ext/Error.h>
 #include <R_ext/Memory.h>
 
-#ifdef DEBUG_smooth
-# include <R_ext/PrtUtil.h>
-#endif
-
 #include "eda.h"
 #ifdef ENABLE_NLS
 #include <libintl.h>

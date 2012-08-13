@@ -23,7 +23,8 @@
  *MM: (cd `R-devel RHOME`/src/nmath ; gcc -std=gnu99 -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DHAVE_CONFIG_H -DDEBUG_bratio -g  -c ../../../R/src/nmath/toms708.c -o toms708.o; cd ../..; make R)
 */
 #ifdef DEBUG_bratio
-# include <R_ext/PrtUtil.h>
+/* for REprintf */
+# include <R_ext/Print.h>
 #endif
 
 /* MM added R_D_LExp, so redefine here in terms of rexpm1 */
