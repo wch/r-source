@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2011 The R Core Team
+ *  Copyright (C) 1999-2012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
-#include <R_ext/Rdynload.h>
+#include <Rdynpriv.h>
 
 #ifdef HAVE_X11
 
