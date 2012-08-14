@@ -24,37 +24,6 @@
 #include <Defn.h>
 
 
-#if 0
-typedef int (*R_SaveAsBitmap)(/* variable set of args */);
-static R_SaveAsBitmap R_devCairo;
-
-#include <dlfcn.h>
-static int Load_Rcairo_Dll(void)
-{
-    char dllpath[PATH_MAX], *p = getenv("R_HOME"), *module = "cairo";
-    static int initialized = 0;
-    void *handle;
-
-    if (initialized) return initialized;
-    initialized = -1;
-    
-#ifdef R_ARCH
-    snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s/%s%s", 
-	     p, R_ARCH, module, SHLIB_EXT);
-#else
-    snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s%s", 
-	     p, module, SHLIB_EXT);
-#endif
-    if((handle = dlopen(dllpath, RTLD_LOCAL))) {
-	R_devCairo = dlsym(handle, "in_Cairo");
-	if (!R_devCairo) {
-	    warning("unable to find R_devCairo");
-	} else initialized = 1;
-    }
-    return initialized;
-}
-#endif
-
 #include <R_ext/Rdynload.h>
 int R_cairoCdynload(int local, int now);
 

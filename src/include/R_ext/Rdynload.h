@@ -113,9 +113,6 @@ typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} N
 DL_FUNC R_FindSymbol(char const *, char const *, 
                        R_RegisteredNativeSymbol *symbol);
 
-int R_moduleCdynload(const char *module, int local, int now);
-int R_cairoCdynload(int local, int now);
-
 
 /* Experimental interface for exporting and importing functions from
    one package for use from C code in a package.  The registration

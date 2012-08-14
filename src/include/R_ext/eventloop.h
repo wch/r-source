@@ -17,6 +17,13 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* 
+   For use by alternative front-ends and packages which need to share
+   the R event loop (on all platforms).
+
+   Not part of the API and subject to change without notice.
+ */
+
 #ifndef R_EXT_EVENTLOOP_H
 #define R_EXT_EVENTLOOP_H
 
