@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Included by R.h: API on Windows */
+
 /* don't disallow including this one more than once */
 
 /* This is intended to be called from other header files, so not callable

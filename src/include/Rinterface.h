@@ -18,9 +18,12 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* This header file is to provide hooks for external GUIs such as
-   GNOME and Cocoa.  It is only used on Unix-alikes.  All entries
-   here should be documented in doc/manual/R-exts.texi
+/* This header file is to provide hooks for alternative front-ends,
+   e.g. GUIs such as GNOME and Cocoa.  It is only used on Unix-alikes.
+   All entries here should be documented in doc/manual/R-exts.texi.
+
+   It should not be included by package sources unless they are
+   providing such a front-end.
 */
 
 #ifndef RINTERFACE_H_

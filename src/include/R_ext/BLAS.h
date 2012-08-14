@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Part of the API */
+
 #ifndef R_BLAS_H
 #define R_BLAS_H
 /* C declarations of BLAS routines.  R packages that use these should have */

@@ -18,6 +18,13 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* 
+   C declarations of LAPACL Fortran subroutines included in R.
+   
+   Part of the API.
+ */
+
+
 #ifndef R_LAPACK_H
 #define R_LAPACK_H
 /* C declarations of BLAS routines.  R packages that use these should have */

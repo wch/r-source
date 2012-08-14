@@ -11278,14 +11278,15 @@ handlers
 @item @file{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
 @item @file{R_ext/Linpack.h} @tab C definitions for some LINPACK
 routines, not all of which are included in @R{}
-@item @file{R_ext/Parse.h} @tab a small part of @R{}'s parse interface
+@item @file{R_ext/Parse.h} @tab a small part of @R{}'s parse interface:
+not part of the stable API.
 @item @file{R_ext/RConvertors.h}
+@item @file{R_ext/RStartup.h} @tab for add-on front-ends
 @item @file{R_ext/Rdynload.h} @tab needed to register compiled code in
 packages
 @item @file{R_ext/R-ftp-http.h} @tab interface to internal method of
 @code{download.file}
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
-@item @file{R_ext/RStartup.h} @tab for add-on front-ends
 @item @file{R_ext/Visibility.h} @tab definitions controlling visibility
 @item @file{R_ext/eventloop.h} @tab for add-on front-ends and for
 packages that need to share in the @R{} event loops (on all platforms)
@@ -11305,9 +11306,9 @@ The following headers are included by @file{R.h}:
 @item @file{R_ext/Error.h} @tab error handling
 @item @file{R_ext/Memory.h} @tab memory allocation
 @item @file{R_ext/Print.h} @tab @code{Rprintf} and variations.
-@item @file{R_ext/Random.h} @tab random number generation
 @item @file{R_ext/RS.h} @tab definitions common to @file{R.h} and
 @file{S.h}, including @code{F77_CALL} etc.
+@item @file{R_ext/Random.h} @tab random number generation
 @item @file{R_ext/Utils.h} @tab sorting and other utilities
 @item @file{R_ext/libextern.h} @tab definitions for exports from
 @file{R.dll} on Windows.

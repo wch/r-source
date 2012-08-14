@@ -20,6 +20,8 @@
  * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
+/* Included by R.h: API */
+
 #ifndef R_EXT_UTILS_H_
 #define R_EXT_UTILS_H_
 

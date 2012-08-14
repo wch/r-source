@@ -18,6 +18,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Included by R.h: API */
+
 #ifndef R_EXT_CONSTANTS_H_
 #define R_EXT_CONSTANTS_H_
 
