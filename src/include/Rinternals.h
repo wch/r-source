@@ -39,6 +39,7 @@ extern "C" {
 #include <R_ext/Error.h>
 #include <R_ext/Memory.h>
 #include <R_ext/Utils.h>
+#include <R_ext/Print.h>
 
 #include <R_ext/libextern.h>
 
@@ -63,7 +64,7 @@ typedef int R_len_t;
 # define R_XLEN_T_MAX R_LEN_T_MAX
 #endif
 
-#include <R_ext/PrtUtil.h> // uses R_xlen_t
+// #include <R_ext/PrtUtil.h> // uses R_xlen_t
 
 /* Fundamental Data Types:  These are largely Lisp
  * influenced structures, with the exception of LGLSXP,

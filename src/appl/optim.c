@@ -25,6 +25,7 @@
 #include <R_ext/Random.h>	/* for the random number generation in
 				   samin() */
 #include <R_ext/Applic.h>
+#include <R_ext/Print.h>	/* for Rprintf */
 
 static double * vect(int n)
 {
