@@ -21,7 +21,11 @@
 /*  This file was contributed by Ei-ji Nakama.
  *  See also the comments in src/main/rlocale.c.
 
- * For use in R only. 
+ *  It does 2 things:
+ * (a) supplies wrapper/substitute wc[s]width functions for use in 
+ *    character.c, errors.c, printutils.c, devPS.c, RGui console.
+ * (b) Defines a replacment for iswctype to be used on Windows, OS X and AIX.
+ * in gram.c 
  */
 
 #ifndef R_LOCALE_H
@@ -36,8 +40,6 @@
 #ifdef  __cplusplus
 extern "C" {
 #endif
-
-extern const char *locale2charset(const char *);
 
 /*
  * Windows CJK

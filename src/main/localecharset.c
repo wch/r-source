@@ -19,6 +19,7 @@
 
 /*  This file was contributed by Ei-ji Nakama.
  *  It exports locale2charset for use in gram.y, and rlocale.c on MacOS X.
+ *  And sysutils.c, grDevices/src/devPS.c
  */
 
 /* setlocale(LC_CTYPE,NULL) to encodingname cf nl_langinfo(LC_CTYPE) */
@@ -52,7 +53,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include <rlocale.h> /* To get the correct linkage for locale2charset */
+//#include <rlocale.h> /* To get the correct linkage for locale2charset */
 
 /* name_value struct */
 typedef struct {

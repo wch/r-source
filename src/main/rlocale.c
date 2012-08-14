@@ -180,6 +180,10 @@ static const char UNICODE[] = "UCS-4BE";
 static const char UNICODE[] = "UCS-4LE";
 #endif
 
+/* in Defn.h which is not included here */
+extern const char *locale2charset(const char *);
+
+
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {	                                                             \
   char    mb_buf[MB_LEN_MAX+1];			                     \
