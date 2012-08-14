@@ -28,7 +28,7 @@
 #include "statsR.h"
 
 /* interval at which to check interrupts */
-#define NINTERRUPT 1000000
+//#define NINTERRUPT 1000000
 
 
 #define R_MSG_NA	_("NaNs produced")
@@ -86,7 +86,7 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)(double, double, int))
     m_opt = asInteger(sI);
 
     mod_iterate(na, nb, ia, ib) {
-	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	ai = a[ia];
 	bi = b[ib];
 	if_NA_Math2_set(y[i], ai, bi)
@@ -115,7 +115,7 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
     i_2 = asInteger(sI2);
 
     mod_iterate(na, nb, ia, ib) {
-	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	ai = a[ia];
 	bi = b[ib];
 	if_NA_Math2_set(y[i], ai, bi)
@@ -214,7 +214,7 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
     i_1 = asInteger(sI);
 
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
-	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	ai = a[ia];
 	bi = b[ib];
 	ci = c[ic];
@@ -243,7 +243,7 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ,
     i_2 = asInteger(sJ);
 
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
-	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	ai = a[ia];
 	bi = b[ib];
 	ci = c[ic];
@@ -375,7 +375,7 @@ static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(dou
     i_1 = asInteger(sI);
 
     mod_iterate4 (na, nb, nc, nd, ia, ib, ic, id) {
-	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	ai = a[ia];
 	bi = b[ib];
 	ci = c[ic];
@@ -404,7 +404,7 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
     i_2 = asInteger(sJ);
 
     mod_iterate4 (na, nb, nc, nd, ia, ib, ic, id) {
-	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	ai = a[ia];
 	bi = b[ib];
 	ci = c[ic];
