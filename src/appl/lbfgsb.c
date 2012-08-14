@@ -30,7 +30,7 @@
 #include <R_ext/RS.h> /* for F77_CALL */
 #include <R_ext/Linpack.h>
 #include <R_ext/Applic.h>
-#include <R_ext/PrtUtil.h> /* Rprintf */
+#include <R_ext/Print.h> /* Rprintf */
 
 static void timer(double * ttime)
 {

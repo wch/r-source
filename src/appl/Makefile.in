@@ -10,13 +10,12 @@ subdir = src/appl
 
 include $(top_builddir)/Makeconf
 
-## binning.c should be remoed before 2.16.0, when bincode is no longer registered.
+## binning.c should be remvoed before 2.16.0, when bincode is no longer registered.
 ## rcont.c should be removed after 2.15.2, which removes it from the API.
-## remove zeroin.c before 2.16.0: there for qtl and truncnorm
 SOURCES_C = \
 	bakslv.c binning.c cpoly.c fft.c fmin.c integrate.c interv.c \
 	lbfgsb.c machar.c maxcol.c optim.c pretty.c rcont.c strsignif.c \
-	uncmin.c zeroin.c
+	uncmin.c
 SOURCES_F = \
 	ch2inv.f chol.f \
 	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \

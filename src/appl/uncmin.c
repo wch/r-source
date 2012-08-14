@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2001   Saikat DebRoy and the
- *			      R Core Team
+ *  Copyright (C) 1997-2012   Saikat DebRoy and the R Core Team
  *  Copyright (C) 2003-2010   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,6 +30,7 @@
 #include <float.h> /* DBL_MAX */
 #include <R_ext/Applic.h>
 #include <R_ext/Boolean.h>
+#include <R_ext/Print.h>   /* Rprintf */
 #include <R_ext/PrtUtil.h> /* printRealVector */
 #include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */
 #include <Rmath.h>
