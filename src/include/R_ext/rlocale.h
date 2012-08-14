@@ -20,6 +20,8 @@
 
 /*  This file was contributed by Ei-ji Nakama.
  *  See also the comments in src/main/rlocale.c.
+
+ * For use in R only. 
  */
 
 #ifndef R_LOCALE_H

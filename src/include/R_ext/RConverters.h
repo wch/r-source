@@ -17,8 +17,11 @@
  *  http://www.r-project.org/Licenses/
  *
  *
- * Application Routines, typically implemented in  ../appl/
- * ----------------------------------------------  ========
+ */
+
+/*
+  Not part of the API, concerns .C() converters which are by default
+  not compiled into R.
  */
 
 #ifndef R_CCONVERTERS_H

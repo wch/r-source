@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Included by R.h: API */
+
 #ifndef R_EXT_BOOLEAN_H_
 #define R_EXT_BOOLEAN_H_
 
