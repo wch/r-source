@@ -29,6 +29,13 @@
 #include "Parse.h"
 #include <R_ext/Print.h>
 
+#if defined(__APPLE_CC__) || defined(__FreeBSD__)
+/* This may not be 100% true (see the comment in rlocales.h),
+   but it seems true in normal locales */
+# define __STDC_ISO_10646__
+#endif
+
+
 #define YYERROR_VERBOSE 1
 #define PARSE_ERROR_SIZE 256	    /* Parse error messages saved here */
 #define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
@@ -2147,12 +2154,6 @@ static int NumericValue(int c)
    valid in the current locale, we should switch to UTF-8 for that
    string.  Needs Unicode wide-char support.
 */
-
-#if defined(__APPLE_CC__)
-/* This may not be 100% true (see the comment in rlocales.h),
-   but it seems true in normal locales */
-# define __STDC_ISO_10646__
-#endif
 
 #if defined(Win32) || defined(__STDC_ISO_10646__)
 typedef wchar_t ucs_t;

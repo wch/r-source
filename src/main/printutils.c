@@ -66,6 +66,13 @@
 
 #include "RBufferUtils.h"
 
+
+#if defined(__APPLE_CC__) || defined(__FreeBSD__)
+/* This may not be 100% true (see the comment in rlocales.h),
+   but it seems true in normal locales */
+# define __STDC_ISO_10646__
+#endif
+
 #ifdef Win32
 int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
 		   va_list args);
