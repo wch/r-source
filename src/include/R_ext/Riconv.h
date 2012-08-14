@@ -17,6 +17,12 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/*
+  Interface to R's platform-independent implementation of iconv.
+
+  Part of the API.
+*/
+
 #ifndef R_ICONV_H
 #define R_ICONV_H
 

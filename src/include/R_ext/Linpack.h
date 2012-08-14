@@ -17,6 +17,14 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  */
+
+/* 
+   C declarations of double-precision LINPACK Fortran subroutines
+   included in R, and some others.
+   
+   Those which are listed as part of R are in the API
+ */
+
 #ifndef R_LINPACK_H_
 #define R_LINPACK_H_
 

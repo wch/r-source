@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* A header for use with alternative front-ends. Not formally part of
+ * the API so subject to change without notice. */
 
 #ifndef REMBEDDED_H_
 #define REMBEDDED_H_

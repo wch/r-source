@@ -17,6 +17,12 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/*
+  Definitions controlling visibility on some platforms.
+
+  Part of the API.
+*/
+
 #ifndef R_EXT_VISIBILITY_H_
 #define R_EXT_VISIBILITY_H_
 

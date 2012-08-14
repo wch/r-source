@@ -17,6 +17,12 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/*
+  C functions to be called from alternative front-ends.
+
+  Part of the API for such front-ends but not for packages.
+*/
+
 #ifndef R_EXT_RSTARTUP_H_
 #define R_EXT_RSTARTUP_H_
 
@@ -92,7 +98,7 @@ void R_common_command_line(int *, char **, Rstart);
 
 void R_set_command_line_arguments(int argc, char **argv);
 
-void setup_Rmainloop(void);
+void setup_Rmainloop(void); // also in Rembedded.h
 
 #ifdef __cplusplus
 }
