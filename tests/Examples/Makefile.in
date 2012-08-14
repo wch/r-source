@@ -17,7 +17,9 @@ INSTFILES = \
   stats-Ex.Rout.save stats4-Ex.Rout.save tools-Ex.Rout.save
 DISTFILES = Makefile.in  Makefile.win $(INSTFILES)
 
-R_EXE = LANGUAGE=en LC_TIME=C $(top_builddir)/bin/R --slave --vanilla
+## R_LIBS_SITE has to be non-empty or it is ignored
+R_EXE = LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE='nothing' \
+  $(top_builddir)/bin/R --slave --vanilla
 
 all: Makefile test-Examples-Base
 
