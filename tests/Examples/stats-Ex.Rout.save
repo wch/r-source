@@ -1,5 +1,5 @@
 
-R version 2.15.1 Patched (2012-07-05 r59734) -- "Roasted Marshmallows"
+R version 2.15.1 Patched (2012-08-14 r60258) -- "Roasted Marshmallows"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1616,7 +1616,7 @@ StructTS(x = log10(UKgas), type = "BSM")
 Variances:
     level      slope       seas    epsilon  
 0.000e+00  1.733e-05  7.137e-04  3.678e-04  
-> par(mfrow = c(4, 1))
+> par(mfrow = c(4, 1)) # to give appropriate aspect ratio for next plot.
 > plot(log10(UKgas))
 > plot(cbind(fitted(fit), resids=resid(fit)), main = "UK gas consumption")
 > 
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3913340>
+<environment: 0x4082e48>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4701,7 +4701,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5defb80>
+<bytecode: 0x45a01d0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -6689,8 +6689,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x2bbf910>
-<environment: 0x97ab330>
+<bytecode: 0x32a6ea0>
+<environment: 0x99c7658>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -6711,7 +6711,7 @@ function (eta)
 +     mu.eta <- function(eta) days * plogis(eta)^(days-1) *
 +       .Call("logit_mu_eta", eta, PACKAGE = "stats")
 +     valideta <- function(eta) TRUE
-+     link <- paste("logexp(", days, ")", sep="")
++     link <- paste0("logexp(", days, ")")
 +     structure(list(linkfun = linkfun, linkinv = linkinv,
 +                    mu.eta = mu.eta, valideta = valideta, name = link),
 +               class = "link-glm")
@@ -7092,11 +7092,11 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x6e97610>
+<environment: 0x7be8158>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
-> xnam <- paste("x", 1:25, sep="")
+> xnam <- paste0("x", 1:25)
 > (fmla <- as.formula(paste("y ~ ", paste(xnam, collapse= "+"))))
 y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + 
     x12 + x13 + x14 + x15 + x16 + x17 + x18 + x19 + x20 + x21 + 
@@ -11615,26 +11615,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x2bbda80>
-<environment: 0x4d195c0>
+<bytecode: 0x32a5010>
+<environment: 0x7b53c60>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x2bbda10>
-<environment: 0x4d195c0>
+<bytecode: 0x32a4fa0>
+<environment: 0x7b53c60>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x2bbd9a0>
-<environment: 0x4d195c0>
+<bytecode: 0x32a4f30>
+<environment: 0x7b53c60>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x2bbd7e0>
-<environment: 0x4d195c0>
+<bytecode: 0x32a5cd8>
+<environment: 0x7b53c60>
 
 $name
 [1] "identity"
@@ -11645,14 +11645,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4374df0>
-<environment: 0x47dedf0>
+<bytecode: 0x7b54c18>
+<environment: 0x7b49218>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4374f08>
-<environment: 0x47dedf0>
+<bytecode: 0x7b54d30>
+<environment: 0x7b49218>
 
 > 
 > 
@@ -15216,7 +15216,7 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
 > curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
 > legend("topleft",
-+        paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
++        paste0("splinefun( \"", c("fmm", "monoH.FC"), "\" )"),
 +        col = 2:3, lty = 1)
 > 
 > 
@@ -15325,8 +15325,8 @@ function (v)
 .C(C_R_approxfun, as.double(x), as.double(y), n, xout = as.double(v), 
     as.integer(length(v)), as.integer(method), as.double(yleft), 
     as.double(yright), as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
-<bytecode: 0x7fa1dc01ef08>
-<environment: 0x7fa1e1d3c790>
+<bytecode: 0x2e3f000>
+<environment: 0x991e6c0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -16097,7 +16097,7 @@ attr(,"response")
 attr(,".Environment")
 <environment: R_GlobalEnv>
 > ## Note that the "factors" attribute has variables as row names
-> ## and term labels as column names, both as character vectors. 
+> ## and term labels as column names, both as character vectors.
 > attr(tf, "specials")    # index 's' variable(s)
 $s
 [1] 4
@@ -17387,7 +17387,7 @@ B    L                 27 14 29 19 29 31 41 20 44
 > 
 > if(require("Matrix")) {
 +  ## similar to "nlme"s  'ergoStool' :
-+  d.ergo <- data.frame(Type = paste("T", rep(1:4, 9*4), sep=""),
++  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
 +                       Subj = gl(9,4, 36*4))
 +  print(xtabs(~ Type + Subj, data=d.ergo)) # 4 replicates each
 +  set.seed(15) # a subset of cases:
@@ -17542,7 +17542,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.64 0.248 12.925 0 0 
+Time elapsed:  11.808 0.316 12.289 0 0 
 > grDevices::dev.off()
 null device 
           1 
