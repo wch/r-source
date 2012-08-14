@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2009    The R Core Team
+ *  Copyright (C) 1998-2012    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -18,9 +18,7 @@
  */
 
 /*
- * Generally useful print utilities *NOT* relying on R internals (from Defn.h)
- *
- * (not useful anymore; use  R_print struct with SEXP) --> Print.h
+ *  These functions are not part of the API.
  */
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
@@ -40,7 +38,6 @@
 #define printIntegerVector Rf_printIntegerVector
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
-/* #define dropTrailing0      Rf_dropTrailing0 */
 
 #ifdef  __cplusplus
 extern "C" {
@@ -57,7 +54,6 @@ const char *EncodeLogical(int, int);
 const char *EncodeInteger(int, int);
 const char *EncodeReal(double, int, int, int, char);
 const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
-/* const char* dropTrailing0(const char *, char); */
 
 /* Printing */
 void VectorIndex(int, int);
