@@ -26,7 +26,7 @@
 #include <R_ext/Applic.h>	/* pretty0() */
 #include <Rmath.h>
 
-# include <R_ext/rlocale.h>
+# include <rlocale.h>
 
 int R_GE_getVersion()
 {

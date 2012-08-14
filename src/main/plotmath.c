@@ -28,7 +28,7 @@
 #include <Defn.h>
 
 #include <ctype.h>
-#include <R_ext/rlocale.h>
+#include <rlocale.h>
 
 
 #include <Rmath.h>

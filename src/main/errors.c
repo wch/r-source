@@ -284,7 +284,7 @@ static void reset_inWarning(void *data)
     inWarning = 0;
 }
 
-#include <R_ext/rlocale.h>
+#include <rlocale.h>
 
 static int wd(const char * buf)
 {

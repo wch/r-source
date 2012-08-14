@@ -37,7 +37,7 @@ extern void R_ProcessEvents(void);
 #include <ctype.h>
 #include <wchar.h>
 #include <limits.h>
-#include <R_ext/rlocale.h>
+#include <rlocale.h>
 #include <R_ext/Memory.h>
 #include "graphapp/ga.h"
 #ifdef USE_MDI

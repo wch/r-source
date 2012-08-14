@@ -294,6 +294,10 @@
 
       \item Calling \code{rep()} or \code{rep.int()} on a pairlist or
       other non-vector object is now an error.
+      
+      \item Several non-API entry points have been transferred to
+      packages (e.g. \code{R_zeroin2}) or replaced by different non-API
+      entry points (e.g. \code{R_tabulate}).
     }
   }
 

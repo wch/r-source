@@ -196,8 +196,7 @@ static SEXP	SrcRefs;
 static SrcRefState ParseState;
 static PROTECT_INDEX srindex;
 
-#include <R_ext/rlocale.h>
-/* # include <sys/param.h> what was this for? */
+#include <rlocale.h>
 #ifdef HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif

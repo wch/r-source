@@ -18,7 +18,7 @@
  */
 
 /*  This file was contributed by Ei-ji Nakama.
- *  See also the comments in R_ext/rlocale.h.
+ *  See also the comments in rlocale.h.
  *
  *  It provides replacements for the wctype functions on
  *  Windows (where they are not correct in e.g. Japanese)
@@ -39,7 +39,7 @@
 #include <stdlib.h>
 
 #define IN_RLOCALE_C 1 /* used in rlocale.h */
-#include <R_ext/rlocale.h>
+#include <rlocale.h>
 #include "rlocale_data.h"
 
 #include <wctype.h>

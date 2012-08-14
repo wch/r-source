@@ -1251,7 +1251,8 @@ static void clearrect(DEstruct DE)
    should get this far */
 
 /* --- Not true! E.g. ESC ends up in here... */
-#include <R_ext/rlocale.h>
+
+#include <rlocale.h>
 
 /* <FIXME> This is not correct for stateful MBCSs, but that's hard to
    do as we get a char at a time */

@@ -52,7 +52,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include <R_ext/rlocale.h> /* To get the correct linkage for locale2charset */
+#include <rlocale.h> /* To get the correct linkage for locale2charset */
 
 /* name_value struct */
 typedef struct {

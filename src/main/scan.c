@@ -45,7 +45,7 @@ static R_INLINE int imin2(int x, int y)
     return (x < y) ? x : y;
 }
 
-#include <R_ext/rlocale.h> /* for btowc */
+#include <rlocale.h> /* for btowc */
 
 /* The size of vector initially allocated by scan */
 #define SCAN_BLOCKSIZE		1000

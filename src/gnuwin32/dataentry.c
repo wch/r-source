@@ -30,7 +30,7 @@
 #include "win-nls.h"
 
 #include <wchar.h>
-#include <R_ext/rlocale.h>
+#include <rlocale.h>
 
 #define R_USE_SIGNALS 1
 #include "Defn.h"

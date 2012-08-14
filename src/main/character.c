@@ -74,7 +74,7 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 
 #include <R_ext/RS.h>  /* for Calloc/Free */
 
-#include <R_ext/rlocale.h>
+#include <rlocale.h>
 
 /* We use a shared buffer here to avoid reallocing small buffers, and
    keep a standard-size (MAXELTSIZE = 8192) buffer allocated shared

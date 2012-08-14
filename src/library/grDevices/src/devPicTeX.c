@@ -25,7 +25,7 @@
 
 #include <Defn.h>
 
-# include <R_ext/rlocale.h> /* includes wchar.h */
+# include <rlocale.h> /* includes wchar.h */
 
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>

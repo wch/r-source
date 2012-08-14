@@ -12,14 +12,14 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-## API(1): for .C() and .Call() writers, ...:
+## API(1): for .C() and .Call() writers _or_ for alternative front ends.
 SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h Rinterface.h
 ## API(2) {these are built, system-dependently}:
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 ## Non-API internal ones:
 INT_HEADERS = Colors.h Defn.h Errormsg.h Fileio.h Graphics.h GraphicsBase.h \
    IOStuff.h Internal.h Parse.h Print.h Rconnections.h Rdevices.h \
-   Rdynpriv.h Rgraphics.h Rinlinedfuns.h Startup.h
+   Rdynpriv.h Rgraphics.h Rinlinedfuns.h Startup.h rlocale.h
 
 DISTFILES = Makefile.in Makefile.win README $(INT_HEADERS) $(SRC_HEADERS) \
   config.h.in stamp-h.in Rmath.h0.in memcheck.h valgrind.h

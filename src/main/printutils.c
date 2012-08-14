@@ -277,7 +277,7 @@ const char
    which Western versions at least do not.).
 */
 
-#include <R_ext/rlocale.h> /* redefines isw* functions */
+#include <rlocale.h> /* redefines isw* functions */
 
 #ifdef Win32
 #include "rgui_UTF8.h"
