@@ -47,12 +47,14 @@ R_xlen_t asVecSize(SEXP x)
 	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
 	    return (R_xlen_t) d;
 	}
-	default:
+	case CHARSXP:
 	{
 	    int res = asInteger(x);
 	    if(res != NA_INTEGER) return (R_xlen_t) res;
-	    // fall through
+	    break;
 	}	
+	default:
+	    break;
 	}
     }
     return -999;  /* which gives error in the caller */
