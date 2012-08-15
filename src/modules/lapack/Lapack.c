@@ -86,9 +86,9 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	error(_("'method' must be a character string"));
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];
-    xvals = (double *) R_alloc(n * p, sizeof(double));
+    xvals = (double *) R_alloc(n * (size_t) p, sizeof(double));
     /* work on a copy of x */
-    Memcpy(xvals, REAL(x), n * p);
+    Memcpy(xvals, REAL(x), n * (size_t) p);
 
     {
 	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
