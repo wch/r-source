@@ -66,8 +66,6 @@ void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
 void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 #endif
 
-/* ../../main/printutils.c : */
-int	IndexWidth(int);
 /* ../../main/util.c  and others : */
 const char *R_ExpandFileName(const char *);
 void	setIVector(int*, int, int);

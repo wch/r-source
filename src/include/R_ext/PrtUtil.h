@@ -57,7 +57,8 @@ const char *EncodeReal(double, int, int, int, char);
 const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
 
 /* Printing */
-void VectorIndex(int, int);
+int	IndexWidth(R_xlen_t);
+void VectorIndex(R_xlen_t, int);
 
 void printLogicalVector(int *, R_xlen_t, int);
 void printIntegerVector(int *, R_xlen_t, int);
