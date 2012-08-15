@@ -104,7 +104,7 @@ static double wprob(double w, double rr, double cc)
     };
     double a, ac, pr_w, b, binc, c, cc1,
 	pminus, pplus, qexpo, qsqz, rinsum, wi, wincr, xx;
-    long double blb, bub, einsum, elsum;
+    LDOUBLE blb, bub, einsum, elsum;
     int j, jj;
 
 

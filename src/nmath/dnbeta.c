@@ -58,7 +58,7 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 
     int kMax;
     double k, ncp2, dx2, d, D, term;
-    long double sum, p_k, q;
+    LDOUBLE sum, p_k, q;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
@@ -118,5 +118,9 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 	sum += term;
     } while (term > sum * eps);
 
+#ifdef HAVE_LONG_DOUBLE
     return R_D_exp((double)(p_k + logl(sum)));
+#else
+    return R_D_exp((double)(p_k + log(sum)));
+#endif
 }

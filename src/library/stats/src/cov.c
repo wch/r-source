@@ -58,7 +58,7 @@ SEXP cov(SEXP x, SEXP y, SEXP na_method, SEXP kendall)
 /** Compute   Cov(xx[], yy[])  or  Cor(.,.)  with n = length(xx)
  */
 #define COV_PAIRWISE_BODY						\
-	long double sum, xmean = 0., ymean = 0., xsd, ysd, xm, ym;	\
+	LDOUBLE sum, xmean = 0., ymean = 0., xsd, ysd, xm, ym;	\
         int k, nobs, n1 = -1;	/* -Wall initializing */		\
 									\
 	    nobs = 0;							\
@@ -162,7 +162,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
  *           --------      -------
 */
 #define COV_ini_0				\
-    long double sum, tmp, xxm, yym;			\
+    LDOUBLE sum, tmp, xxm, yym;			\
     double *xx, *yy;				\
     int i, j, k, n1=-1/* -Wall */
 

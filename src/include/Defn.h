@@ -1245,6 +1245,13 @@ extern void *alloca(size_t);
 # endif
 #endif
 
+/* Required by C99, but might be slow */
+#ifdef HAVE_LONG_DOUBLE
+# define LDOUBLE long double
+#else
+# define LDOUBLE double
+#endif
+
 #endif /* DEFN_H_ */
 /*
  *- Local Variables:

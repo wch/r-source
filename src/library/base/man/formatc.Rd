@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -175,6 +175,8 @@ cbind(format(xx, digits=4), formatC(xx, digits = 4, format = "fg"))
 formatC(    c("a", "Abc", "no way"), width = -7)  # <=> flag = "-"
 formatC(c((-1:1)/0,c(1,100)*pi), width=8, digits=1)
 
+## note that some of the results here depend on the implementation
+## of long-double arithmetic, which is platform-specific.
 xx <- c(1e-12,-3.98765e-10,1.45645e-69,1e-70,pi*1e37,3.44e4)
 ##       1        2             3        4      5       6
 formatC(xx)

@@ -119,8 +119,8 @@ void formatInteger(int *x, R_xlen_t n, int *fieldwidth)
  * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
-/* long double is C99, so should always be defined */
-#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
+/* long double is C99, so should always be defined but may be slow */
+#if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 # ifdef HAVE_NEARBYINTL
 # define R_nearbyintl nearbyintl
 /* Cygwin had rintl but not nearbyintl */
@@ -128,9 +128,9 @@ void formatInteger(int *x, R_xlen_t n, int *fieldwidth)
 # define R_nearbyintl rintl
 # else
 # define R_nearbyintl private_nearbyintl
-long double private_nearbyintl(long double x)
+LDOUBLE private_nearbyintl(LDOUBLE x)
 {
-    long double x1;
+    LDOUBLE x1;
     x1 = - floorl(-x + 0.5);
     x = floorl(x + 0.5);
     if (x == x1) return(x);
@@ -144,7 +144,7 @@ long double private_nearbyintl(long double x)
 # else /* no long double */
 # ifdef HAVE_NEARBYINT
 #  define R_nearbyint nearbyint
-# elif defined(HAVE_RINTL)
+# elif defined(HAVE_RINT)
 #  define R_nearbyint rint
 # else
 #  define R_nearbyint private_rint
@@ -202,7 +202,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig)
             return;
         }
         kp = (int) floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
-#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
+#if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
         long double r_prec = r;
         /* use exact scaling factor in long double precision, if possible */
         if (abs(kp) <= 27) {

@@ -4252,6 +4252,13 @@ Some people have reported that the Solaris @code{libintl} needs to be
 avoided, for example by using @option{--disable-nls} or
 @option{--with-included-gettext} or using @code{libintl} from OpenCSW.
 
+The support of C99 @code{long double} on Sparc hardware uses
+quad-precision arithmetic, and this is usually slow because it is done
+by software emulation.  On such systems @code{HAVE_LONG_DOUBLE} in
+@file{src/include/config.h} can be undefined for faster but less
+accurate computations.
+
+
 When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
 disables @acronym{IEEE} arithmetic and @command{make check} will fail.

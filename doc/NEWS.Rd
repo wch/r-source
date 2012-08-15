@@ -167,7 +167,7 @@
       \code{nlminb()} and \code{optim()} with numerical derivatives
       still do, as documented.)
 
-      \item The \code{all.eqaal()} method for date-times is now
+      \item The \code{all.equal()} method for date-times is now
       documented: times are regarded as equal (by default) if they
       differ by up to 1 msec.
 
@@ -393,6 +393,16 @@
 
       \item The translations form a separate group in the Windows
       installer, so can be omitted if desired.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+     \itemize{
+      \item There is again support for building without using the C
+      \sQuote{long double} type.  This is required by C99, but system
+     implementations can be slow or flawed.  Simply undefine
+     \code{HAVE_LONG_DOUBLE} in \file{src/include/config.h} after
+     configuration.
     }
   }
 
