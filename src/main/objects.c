@@ -1488,6 +1488,7 @@ SEXP R_getClassDef(const char *what)
     return(e);
 }
 
+/* in Rinternals.h */
 SEXP R_do_new_object(SEXP class_def)
 {
     static SEXP s_virtual = NULL, s_prototype, s_className;
@@ -1525,7 +1526,6 @@ Rboolean attribute_hidden R_seemsOldStyleS4Object(SEXP object)
     return (klass != R_NilValue && LENGTH(klass) == 1 &&
 	    getAttrib(klass, R_PackageSymbol) != R_NilValue) ? TRUE: FALSE;
 }
-
 
 
 SEXP R_isS4Object(SEXP object)

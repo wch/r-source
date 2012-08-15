@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997,  Robert Gentleman and Ross Ihaka
- *                2007 The R Core Team
+ *                2007-12 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ int attribute_hidden R_IoBufferPutc(int c, IoBuffer *iob)
 {
     if (iob->write_offset == IOBSIZE)
 	NextWriteBufferListItem(iob);
-    *(iob->write_ptr)++ = c;
+    *(iob->write_ptr)++ = (char) c;
     iob->write_offset++;
     return 0;/*not used*/
 }
@@ -192,7 +192,7 @@ int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	l = 0;
 	for (i = 0; i < n; i++) {
 	    if (STRING_ELT(text, i) != R_NilValue) {
-		k = strlen(translateChar(STRING_ELT(text, i)));
+		k = (int) strlen(translateChar(STRING_ELT(text, i)));
 		if (k > l)
 		    l = k;
 	    }

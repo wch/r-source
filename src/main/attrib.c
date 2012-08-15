@@ -318,31 +318,27 @@ void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
     UNPROTECT(2);
 }
 
+/* Tweaks here based in part on PR#14934 */
 static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
-    SEXP s, t;
+    SEXP t = R_NilValue; /* -Wall */
 
     if(TYPEOF(vec) == CHARSXP)
 	error("cannot set attribute on a CHARSXP");
-    PROTECT(vec);
-    PROTECT(name);
-    PROTECT(val);
-    for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s)) {
+    /* this does no allocation */
+    for (SEXP s = ATTRIB(vec); s != R_NilValue; s = CDR(s)) {
 	if (TAG(s) == name) {
 	    SETCAR(s, val);
-	    UNPROTECT(3);
 	    return val;
 	}
+	t = s; // record last attribute, if any
     }
-    s = allocList(1);
-    SETCAR(s, val);
+    /* The usual convention is that the caller protects, 
+       so this is historical over-cautiousness */
+    PROTECT(vec); PROTECT(name); PROTECT(val);
+    SEXP s = CONS(val, R_NilValue);
     SET_TAG(s, name);
-    if (ATTRIB(vec) == R_NilValue)
-	SET_ATTRIB(vec, s);
-    else {
-	t = nthcdr(ATTRIB(vec), length(ATTRIB(vec)) - 1);
-	SETCDR(t, s);
-    }
+    if (ATTRIB(vec) == R_NilValue) SET_ATTRIB(vec, s); else SETCDR(t, s);
     UNPROTECT(3);
     return val;
 }
@@ -1023,7 +1019,7 @@ SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (s == R_NilValue) return x;
     }
     PROTECT(args = ans);
-    if (NAMED(x) > 1) { SETCAR(args, duplicate(x)); x = CAR(args); }
+    if (NAMED(x) > 1) SETCAR(args, x = duplicate(x));
     setAttrib(x, R_DimSymbol, CADR(args));
     setAttrib(x, R_NamesSymbol, R_NilValue);
     UNPROTECT(1);
@@ -1246,7 +1242,6 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ap, argList, s, t, tag = R_NilValue, alist, ans;
     const char *str;
-    size_t n;
     int nargs = length(args), exact = 0;
     enum { NONE, PARTIAL, PARTIAL2, FULL } match = NONE;
 
@@ -1279,7 +1274,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
     str = translateChar(STRING_ELT(t, 0));
-    n = strlen(str);
+    size_t n = strlen(str);
 
     /* try to find a match among the attributes list */
     for (alist = ATTRIB(s); alist != R_NilValue; alist = CDR(alist)) {

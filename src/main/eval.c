@@ -1,7 +1,7 @@
  /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011	The R Core Team.
+ *  Copyright (C) 1998--2012	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include <Defn.h>
 #include <Rinterface.h>
 #include <Fileio.h>
+#include <R_ext/Print.h>
 
 
 #define ARGUSED(x) LEVELS(x)
@@ -213,7 +214,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
 #endif
     int interval;
 
-    interval = 1e6 * dinterval + 0.5;
+    interval = (int)(1e6 * dinterval + 0.5);
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)
@@ -2008,8 +2009,8 @@ static SEXP VectorToPairListNamed(SEXP x)
 
 #define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == S4SXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
 
-/* "eval" and "eval.with.vis" : Evaluate the first argument */
-/* in the environment specified by the second argument. */
+/* "eval": Evaluate the first argument
+   in the environment specified by the second argument. */
 
 SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -3681,7 +3682,7 @@ static R_INLINE int bcStackIndex(R_bcstack_t *s)
 	if (LENGTH(idx) == 1) {
 	    double val = REAL(idx)[0];
 	    if (! ISNAN(val) && val <= INT_MAX && val > INT_MIN)
-		return val;
+		return (int) val;
 	    else return -1;
 	}
 	else return -1;

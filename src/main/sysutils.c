@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2011   The R Core Team
+ *  Copyright (C) 1997-2012   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ double attribute_hidden R_FileMtime(const char *path)
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
 	error(_("cannot determine file modification time of '%s'"), path);
-    return sb.st_mtime;
+    return (double) sb.st_mtime;
 }
 #endif
 

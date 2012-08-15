@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009,2011 The R Core Team.
+ *  Copyright (C) 2009-2012 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #endif
 
 #include <Defn.h>
+#include <R_ext/Print.h>
 
 /* FIXME: envir.c keeps this private - it should probably go to Defn.h */
 #define FRAME_LOCK_MASK (1<<14)

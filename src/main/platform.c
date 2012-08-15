@@ -67,7 +67,7 @@ static void Init_R_Machine(SEXP rho)
 	   &R_AccuracyInfo.xmin,
 	   &R_AccuracyInfo.xmax);
 
-    R_dec_min_exponent = floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
+    R_dec_min_exponent = (int) floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
     PROTECT(ans = allocVector(VECSXP, 18));
     PROTECT(nms = allocVector(STRSXP, 18));
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
@@ -414,7 +414,8 @@ static int R_AppendFile(SEXP file1, SEXP file2)
 {
     FILE *fp1, *fp2;
     char buf[APPENDBUFSIZE];
-    int nchar, status = 0;
+    size_t nchar;
+    int status = 0;
     if ((fp1 = RC_fopen(file1, "ab", TRUE)) == NULL) {
 	return 0;
     }
@@ -461,7 +462,8 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n1 == 1) { /* common case */
 	FILE *fp1, *fp2;
 	char buf[APPENDBUFSIZE];
-	int nchar, status = 0;
+	int status = 0;
+	size_t nchar;
 	if (STRING_ELT(f1, 0) == NA_STRING ||
 	    !(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
 	   goto done;
@@ -922,11 +924,11 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* POSIX 2008 changed this to a struct timespec st_mtim etc
 	       Not all OSes (e.g. Darwin) agree on this. */
 	    REAL(mtime)[i] = (double) STAT_TIMESPEC(sb, st_mtim).tv_sec
-		+ 1e-9 * STAT_TIMESPEC(sb, st_mtim).tv_nsec;
+		+ 1e-9 * (double) STAT_TIMESPEC(sb, st_mtim).tv_nsec;
 	    REAL(ctime)[i] = (double) STAT_TIMESPEC(sb, st_ctim).tv_sec
-		+ 1e-9 * STAT_TIMESPEC(sb, st_ctim).tv_nsec;
+		+ 1e-9 * (double) STAT_TIMESPEC(sb, st_ctim).tv_nsec;
 	    REAL(atime)[i] = (double) STAT_TIMESPEC(sb, st_atim).tv_sec
-		+ 1e-9 * STAT_TIMESPEC(sb, st_atim).tv_nsec;
+		+ 1e-9 * (double) STAT_TIMESPEC(sb, st_atim).tv_nsec;
 #else
 	    /* FIXME: there are higher-resolution ways to do this on Windows */
 	    REAL(mtime)[i] = (double) sb.st_mtime;
@@ -1299,7 +1301,7 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(file, i) != NA_STRING) {
 #ifdef Win32
 	    /* Package XML sends arbitrarily long strings to file.exists! */
-	    int len = strlen(CHAR(STRING_ELT(file, i)));
+	    size_t len = strlen(CHAR(STRING_ELT(file, i)));
 	    if (len > MAX_PATH)
 		LOGICAL(ans)[i] = FALSE;
 	    else
@@ -1480,7 +1482,7 @@ static int R_unlink(wchar_t *name, int recursive, int force)
 void R_CleanTempDir(void)
 {
     if (Sys_TempDir) {
-	int n = strlen(Sys_TempDir);
+	size_t n = strlen(Sys_TempDir);
 	/* Windows cannot delete the current working directory */
 	SetCurrentDirectory(R_HomeDir());
 	wchar_t w[2*(n+1)];
@@ -1506,14 +1508,14 @@ static int R_unlink(const char *name, int recursive, int force)
 	DIR *dir;
 	struct dirent *de;
 	char p[PATH_MAX];
-	int n, ans = 0;
+	int ans = 0;
 
 	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = opendir(name)) != NULL) {
 		while ((de = readdir(dir))) {
 		    if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 			continue;
-		    n = strlen(name);
+		    size_t n = strlen(name);
 		    if (name[n] == R_FileSep[0])
 			snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		    else
@@ -1653,7 +1655,6 @@ static void chmod_one(const char *name)
 #else
     struct stat sb;
 #endif
-    int n;
 #ifndef Win32
     mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR, /* 0644 */
 	dirmask = mask | S_IXUSR | S_IXGRP | S_IXOTH; /* 0755 */
@@ -1676,7 +1677,7 @@ static void chmod_one(const char *name)
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		n = strlen(name);
+		size_t n = strlen(name);
 		if (name[n-1] == R_FileSep[0])
 		    snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
 		else
@@ -2192,7 +2193,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	p = dir;
 	while ((p = Rf_strchr(p+1, '/'))) {
 	    *p = '\0';
-	    res = mkdir(dir, mode);
+	    res = mkdir(dir, (mode_t) mode);
 	    /* Solaris 10 returns ENOSYS on automount, PR#13834
 	       EROFS is allowed by POSIX, so we skip that too */
 	    serrno = errno;
@@ -2201,7 +2202,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	    *p = '/';
 	}
     }
-    res = mkdir(dir, mode);
+    res = mkdir(dir, (mode_t) mode);
     serrno = errno;
     if (show && res && serrno == EEXIST)
 	warning(_("'%s' already exists"), dir);
@@ -2328,7 +2329,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 
 	nfail = 0;
 	nc = wcslen(to);
-	if (wcslen(from) + wcslen(name) >= PATH_MAX) {
+	if (nc + wcslen(name) >= PATH_MAX) {
 	    warning(_("over-long path length"));
 	    nfail++;
 	    goto copy_error;
@@ -2434,11 +2435,11 @@ static int do_copy(const char* from, const char* name, const char* to,
     }
     
     struct stat sb;
-    int nc, nfail = 0, res, mask;
+    int nfail = 0, res, mask;
     char dest[PATH_MAX+1], this[PATH_MAX+1];
-
+    
 #ifdef HAVE_UMASK
-    int um = umask(0); umask(um);
+    int um = umask(0); umask((mode_t) um);
     mask = 0777 & ~um;
 #else
     mask = 0777;
@@ -2457,8 +2458,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 	char p[PATH_MAX+1];
 
 	if (!recursive) return 1;
-	nc = strlen(to);
-	if (nc + strlen(name) >= PATH_MAX) {
+	if (strlen(to) + strlen(name) >= PATH_MAX) {
 	    warning(_("over-long path length"));
 	    return 1;
 	}
@@ -2491,14 +2491,14 @@ static int do_copy(const char* from, const char* name, const char* to,
 		    this, strerror(errno));
 	    nfail++; /* we were unable to read a dir */
 	}
-	chmod(dest, perms ? (sb.st_mode & mask): mask);
+	chmod(dest, (mode_t) (perms ? (sb.st_mode & mask): mask));
     } else { /* a file */
 	FILE *fp1 = NULL, *fp2 = NULL;
 	char buf[APPENDBUFSIZE];
 
 	nfail = 0;
-	nc = strlen(to);
-	if (nc + strlen(name) >= PATH_MAX) {
+	size_t nc = strlen(to);
+	if (strlen(to) + strlen(name) >= PATH_MAX) {
 	    warning(_("over-long path length"));
 	    nfail++;
 	    goto copy_error;
@@ -2620,7 +2620,8 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_CHMOD
     SEXP paths, smode, ans;
-    int i, m, n, *modes, mode, res, um = 0;
+    int i, m, n, *modes, res;
+    mode_t um = 0;
 
     checkArity(op, args);
     paths = CAR(args);
@@ -2639,7 +2640,7 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
-	mode = modes[i % m];
+	mode_t mode = (mode_t) modes[i % m];
 	if (mode == NA_INTEGER) mode = 0777;
 #ifdef HAVE_UMASK
 	if(useUmask) mode = mode & ~um;
@@ -2693,7 +2694,7 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
 	umask(res);
 	R_Visible = TRUE;
     } else {
-	res = umask(mode);
+	res = umask((mode_t) mode);
 	R_Visible = FALSE;
     }
 #else
@@ -2744,9 +2745,10 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     PROTECT(ans = allocVector(INTSXP, 4));
     PROTECT(nms = allocVector(STRSXP, 4));
-    INTEGER(ans)[0] = (R_CStackLimit == -1) ? NA_INTEGER : R_CStackLimit;
-    INTEGER(ans)[1] = (R_CStackLimit == -1) ? NA_INTEGER :
-	R_CStackDir * (R_CStackStart - (uintptr_t) &ans);
+    /* FIXME: could be out of range */
+    INTEGER(ans)[0] = (R_CStackLimit == -1) ? NA_INTEGER : (int) R_CStackLimit;
+    INTEGER(ans)[1] = (R_CStackLimit == -1) ? NA_INTEGER : (int)
+	(R_CStackDir * (R_CStackStart - (uintptr_t) &ans));
     INTEGER(ans)[2] = R_CStackDir;
     INTEGER(ans)[3] = R_EvalDepth;
     SET_STRING_ELT(nms, 0, mkChar("size"));

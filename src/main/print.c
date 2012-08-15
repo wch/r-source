@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2011	The R Core Team.
+ *  Copyright (C) 2000-2012	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,8 +86,8 @@ void PrintDefaults(void)
 {
     R_print.na_string = NA_STRING;
     R_print.na_string_noquote = mkChar("<NA>");
-    R_print.na_width = strlen(CHAR(R_print.na_string));
-    R_print.na_width_noquote = strlen(CHAR(R_print.na_string_noquote));
+    R_print.na_width = (int) strlen(CHAR(R_print.na_string));
+    R_print.na_width_noquote = (int) strlen(CHAR(R_print.na_string_noquote));
     R_print.quote = 1;
     R_print.right = Rprt_adj_left;
     R_print.digits = GetOptionDigits();
@@ -143,7 +143,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid 'na.print' specification"));
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
 	R_print.na_width = R_print.na_width_noquote =
-	    strlen(CHAR(R_print.na_string));
+	    (int) strlen(CHAR(R_print.na_string));
     }
 
     if (length(rowlab) == 0) rowlab = R_NilValue;
@@ -247,7 +247,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid 'na.print' specification"));
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
 	R_print.na_width = R_print.na_width_noquote =
-	    strlen(CHAR(R_print.na_string));
+	    (int) strlen(CHAR(R_print.na_string));
     }
     args = CDR(args);
 
@@ -377,7 +377,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		if (LENGTH(tmp) == 1) {
 		    /* This can potentially overflow */
 		    const char *ctmp = translateChar(STRING_ELT(tmp, 0));
-		    int len = strlen(ctmp);
+		    int len = (int) strlen(ctmp);
 		    if(len < 100)
 			snprintf(pbuf, 115, "\"%s\"", ctmp);
 		    else {
@@ -422,7 +422,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
     }
     else { /* .. no dim() .. */
 	names = getAttrib(s, R_NamesSymbol);
-	taglen = strlen(tagbuf);
+	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
 	PROTECT(newcall = allocList(2));
 	SETCAR(newcall, install("print"));
@@ -575,7 +575,7 @@ static void printList(SEXP s, SEXP env)
     }
     else {
 	i = 1;
-	taglen = strlen(tagbuf);
+	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
 	PROTECT(newcall = allocList(2));
 	SETCAR(newcall, install("print"));
@@ -1006,7 +1006,7 @@ int F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
 {
     int k, nc = *nchar;
 
-    if(nc < 0) nc = strlen(label);
+    if(nc < 0) nc = (int) strlen(label);
     if(nc > 255) {
 	warning(_("invalid character length in dblepr"));
 	nc = 0;
@@ -1024,7 +1024,7 @@ int F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
 {
     int k, nc = *nchar;
 
-    if(nc < 0) nc = strlen(label);
+    if(nc < 0) nc = (int) strlen(label);
     if(nc > 255) {
 	warning(_("invalid character length in intpr"));
 	nc = 0;
@@ -1043,7 +1043,7 @@ int F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
     int k, nc = *nchar, nd = *ndata;
     double *ddata;
 
-    if(nc < 0) nc = strlen(label);
+    if(nc < 0) nc = (int) strlen(label);
     if(nc > 255) {
 	warning(_("invalid character length in realpr"));
 	nc = 0;
