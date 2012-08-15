@@ -494,6 +494,12 @@
       
       \item The \code{X11()} device has some more protection against
       being used with forked processes \emph{via} package \pkg{parallel}.
+      
+      \item Setting the environment variable \env{R_OSX_VALGRIND} (to
+      any value) allows \R to be run under \command{valgrind} on Mac OS
+      10.6 and 10.7 (\command{valgrind} currently has very limited
+      support for 10.8), provided \code{system()} is not used (directly
+      or indirectly).
     }
   }
 

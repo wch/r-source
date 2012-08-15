@@ -1024,7 +1024,8 @@ void R_CleanTempDir(void)
 #endif
 	snprintf(buf, 1024, "rm -rf %s", Sys_TempDir);
 	buf[1023] = '\0';
-	R_system(buf);
+	char *p = getenv("R_OSX_VALGRIND");
+	if (!p) R_system(buf);
     }
 }
 

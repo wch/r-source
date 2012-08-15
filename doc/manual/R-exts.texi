@@ -6608,10 +6608,17 @@ will be some small memory leaks from @code{readline} and @R{} itself ---
 these are memory areas that are in use right up to the end of the @R{}
 session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases even slower than that.  Earlier
-versions (at least) of @code{valgrind} are not happy with many optimized
-BLASes that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2,
-SSE3 and similar) so you may need to build a version of @R{}
-specifically to use with @code{valgrind}.
+versions of @code{valgrind} were not happy with many optimized BLASes
+that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2, SSE3
+and similar) so you may need to build a version of @R{} specifically to
+use with @code{valgrind}.
+
+On Mac OS 10.6/7 the valgrind session is likely to hang when @R{}
+terminates.  This is a bug in @command{valgrind} at least up to 3.8.0
+and can be circumvented by setting the environment variable
+@env{R_OSX_VALGRIND} (and cleaning up @file{/tmp} after the @R{}
+session).  It is still necessary to avoid the use of @code{system()} in
+the @R{} session, directly or indirectly.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
