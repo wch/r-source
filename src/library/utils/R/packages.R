@@ -74,11 +74,11 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                 if(inherits(z, "error")) {
                     ## read.dcf is going to interpret CRLF as LF, so use
                     ## binary mode to avoid CRCRLF.
-                    z <- tryCatch(download.file(url=paste(repos, "PACKAGES", sep = "/"),
+                    z <- tryCatch(download.file(url = paste(repos, "PACKAGES", sep = "/"),
                                                 destfile = tmpf, method = method,
                                                 cacheOK = FALSE, quiet = TRUE,
                                                 mode = "wb"),
-                             error = identity)
+                                  error = identity)
 		    options(op)
 		    if(inherits(z, "error")) {
 			warning(gettextf("unable to access index for repository %s", repos),
@@ -88,6 +88,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
 		    res0 <- read.dcf(file = tmpf)
 		} else
 		    options(op)
+                ## Do we want to cache an empty result?
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 saveRDS(res0, dest, compress = TRUE)
                 unlink(tmpf)
