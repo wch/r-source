@@ -26,7 +26,7 @@
 #endif
 
 #include <Defn.h>
-#include <R_ext/Prtutil.h> // for IndexWidth
+#include <R_ext/PrtUtil.h> // for IndexWidth
 #define imax2(x, y) ((x < y) ? y : x)
 
 #include "RBufferUtils.h"
