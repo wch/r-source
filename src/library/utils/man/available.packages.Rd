@@ -1,6 +1,6 @@
 % File src/library/utils/man/available.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{available.packages}
@@ -42,6 +42,14 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   }
 }
 \details{
+  The list is either copied from a local mirror (specified by a
+  \samp{file://} URI) or downloaded.  If downloaded, the list is cached
+  for the \R session in a per-repository file in \code{\link{tempdir()}}
+  with a name like
+\preformatted{
+    repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds
+ }
+ 
   By default, this includes only packages whose version and OS
   requirements are met by the running version of \R, and only gives
   information on the latest versions of packages.

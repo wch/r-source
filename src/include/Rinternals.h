@@ -64,7 +64,6 @@ typedef int R_len_t;
 # define R_XLEN_T_MAX R_LEN_T_MAX
 #endif
 
-// #include <R_ext/PrtUtil.h> // uses R_xlen_t
 
 /* Fundamental Data Types:  These are largely Lisp
  * influenced structures, with the exception of LGLSXP,
