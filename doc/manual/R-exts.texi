@@ -6608,11 +6608,10 @@ and similar) so you may need to build a version of @R{} specifically to
 use with @code{valgrind}.
 
 On Mac OS 10.6/7 the valgrind session is likely to hang when @R{}
-terminates.  This is a bug in @command{valgrind} at least up to 3.8.0
+terminates.  This is an issue in @command{valgrind} at least up to 3.8.0
 and can be circumvented by setting the environment variable
-@env{R_OSX_VALGRIND} (and cleaning up @file{/tmp} after the @R{}
-session).  It is still necessary to avoid the use of @code{system()} in
-the @R{} session, directly or indirectly.
+@env{R_OSX_VALGRIND}.  It is still necessary to avoid the use of
+@code{system()} in the @R{} session, directly or indirectly.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
