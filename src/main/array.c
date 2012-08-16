@@ -1244,16 +1244,13 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans = R_NilValue;
-    int OP, n, p, j, type;
+    int type;
     Rboolean NaRm, keepNA;
-#ifdef HAVE_OPENMP
-    int nthreads;
-#endif
 
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
-    n = asInteger(CAR(args)); args = CDR(args);
-    p = asInteger(CAR(args)); args = CDR(args);
+    int n = asInteger(CAR(args)); args = CDR(args);
+    int p = asInteger(CAR(args)); args = CDR(args);
     NaRm = asLogical(CAR(args));
     if (n == NA_INTEGER || n < 0)
 	error(_("invalid '%s' argument"), "n");
@@ -1262,7 +1259,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
     keepNA = !NaRm;
 
-    OP = PRIMVAL(op);
+    int OP = PRIMVAL(op);
     switch (type = TYPEOF(x)) {
     case LGLSXP: break;
     case INTSXP: break;
@@ -1274,6 +1271,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (OP == 0 || OP == 1) { /* columns */
 	PROTECT(ans = allocVector(REALSXP, p));
 #ifdef HAVE_OPENMP
+	int nthreads;
 	/* This gives a spurious -Wunused-but-set-variable error */
 	if (R_num_math_threads > 0)
 	    nthreads = R_num_math_threads;
@@ -1284,32 +1282,36 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	for (int j = 0; j < p; j++) {
 	    int cnt = n, i;
-	    int *ix;
-	    double *rx;
 	    LDOUBLE sum = 0.0;
 	    switch (type) {
 	    case REALSXP:
-		rx = REAL(x) + (R_xlen_t)n*j;
+	    {
+		double *rx = REAL(x) + (R_xlen_t)n*j;
 		if (keepNA)
 		    for (sum = 0., i = 0; i < n; i++) sum += *rx++;
 		else {
 		    for (cnt = 0, sum = 0., i = 0; i < n; i++, rx++)
 			if (!ISNAN(*rx)) {cnt++; sum += *rx;}
-			else if (keepNA) {sum = NA_REAL; break;}
+			else if (keepNA) {sum = NA_REAL; break;} // unused
 		}
 		break;
+	    }
 	    case INTSXP:
-		ix = INTEGER(x) + (R_xlen_t)n*j;
+	    {
+		int *ix = INTEGER(x) + (R_xlen_t)n*j;
 		for (cnt = 0, sum = 0., i = 0; i < n; i++, ix++)
 		    if (*ix != NA_INTEGER) {cnt++; sum += *ix;}
 		    else if (keepNA) {sum = NA_REAL; break;}
 		break;
+	    }
 	    case LGLSXP:
-		ix = LOGICAL(x) + (R_xlen_t)n*j;
+	    {
+		int *ix = LOGICAL(x) + (R_xlen_t)n*j;
 		for (cnt = 0, sum = 0., i = 0; i < n; i++, ix++)
 		    if (*ix != NA_LOGICAL) {cnt++; sum += *ix;}
 		    else if (keepNA) {sum = NA_REAL; break;}
 		break;
+	    }
 	    }
 	    if (OP == 1) sum /= cnt; /* gives NaN for cnt = 0 */
 	    REAL(ans)[j] = (double) sum;
@@ -1329,13 +1331,12 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else rans = Calloc(n, LDOUBLE);
 	if (!keepNA && OP == 3) Cnt = Calloc(n, int);
 
-	double *rx;
-	int *ix;
-	for (j = 0; j < p; j++) {
+	for (int j = 0; j < p; j++) {
 	    LDOUBLE *ra = rans;
 	    switch (type) {
 	    case REALSXP:
-		rx = REAL(x) + (R_xlen_t)n * j;
+	    {
+		double *rx = REAL(x) + (R_xlen_t)n * j;
 		if (keepNA)
 		    for (int i = 0; i < n; i++) *ra++ += *rx++;
 		else
@@ -1345,8 +1346,10 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    if (OP == 3) Cnt[i]++;
 			}
 		break;
+	    }
 	    case INTSXP:
-		ix = INTEGER(x) + (R_xlen_t)n * j;
+	    {
+		int *ix = INTEGER(x) + (R_xlen_t)n * j;
 		for (int i = 0; i < n; i++, ra++, ix++)
 		    if (keepNA) {
 			if (*ix != NA_INTEGER) *ra += *ix;
@@ -1357,8 +1360,10 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 			if (OP == 3) Cnt[i]++;
 		    }
 		break;
+	    }
 	    case LGLSXP:
-		ix = LOGICAL(x) + (R_xlen_t)n * j;
+	    {
+		int *ix = LOGICAL(x) + (R_xlen_t)n * j;
 		for (int i = 0; i < n; i++, ra++, ix++)
 		    if (keepNA) {
 			if (*ix != NA_LOGICAL) *ra += *ix;
@@ -1369,6 +1374,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 			if (OP == 3) Cnt[i]++;
 		    }
 		break;
+	    }
 	    }
 	}
 	if (OP == 3) {
