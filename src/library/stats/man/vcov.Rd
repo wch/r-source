@@ -34,10 +34,6 @@ vcov(object, \dots)
     \code{dispersion} parameter.
   }
 }
-\value{
-  A matrix of the estimated covariances between the parameter estimates
-  in the linear or non-linear predictor of the model.
-}
 \details{
   This is a generic function.
   Functions with names beginning in \code{vcov.} will be
@@ -53,6 +49,12 @@ vcov(object, \dots)
   (\code{vcov()} methods for summary objects allow more
   efficient and still encapsulated access when both
   \code{summary(mod)} and \code{vcov(mod)} are needed.)
+}
+\value{
+  A matrix of the estimated covariances between the parameter estimates
+  in the linear or non-linear predictor of the model.  This should have
+  row and column names corresponding to the parameter names given by the
+  \code{\link{coef}} method.
 }
 \keyword{models}
 \keyword{nonlinear}
