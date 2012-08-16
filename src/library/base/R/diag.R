@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## NB: nrow * col could overflow ints here.
 diag <- function(x = 1, nrow, ncol)
 {
     if (is.matrix(x)) {
@@ -25,7 +26,7 @@ diag <- function(x = 1, nrow, ncol)
         if((m <- min(dim(x))) == 0L)
 	    return(vector(typeof(x), 0L)) # logical, integer, also list ..
 
-        y <- c(x)[1L + 0L:(m - 1L) * (dim(x)[1L] + 1L)]
+        y <- c(x)[1 + 0L:(m - 1L) * (dim(x)[1L] + 1)]
         nms <- dimnames(x)
         if (is.list(nms) && !any(sapply(nms, is.null)) &&
             identical((nm <- nms[[1L]][seq_len(m)]), nms[[2L]][seq_len(m)]))
@@ -46,7 +47,7 @@ diag <- function(x = 1, nrow, ncol)
     if(missing(ncol)) ncol <- n
     ## some people worry about speed, so use .Internal
     y <- .Internal(matrix(0, n, ncol, FALSE, NULL, FALSE, FALSE))
-    if((m <- min(n, ncol)) > 0L) y[1L + 0L:(m - 1L) * (n + 1L)] <- x
+    if((m <- min(n, ncol)) > 0L) y[1 + 0L:(m - 1L) * (n + 1)] <- x
     y
 }
 
