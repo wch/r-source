@@ -1,6 +1,6 @@
 % File src/library/stats/man/coef.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{coef}
@@ -16,9 +16,6 @@ coefficients(object, \dots)
     meaningful.}
   \item{\dots}{other arguments.}
 }
-\value{
-  Coefficients extracted from the model object \code{object}.
-}
 \description{
   \code{coef} is a generic function which extracts model coefficients
   from objects returned by modeling functions.  \code{coefficients} is
@@ -31,6 +28,11 @@ coefficients(object, \dots)
 
   Class \code{"aov"} has a \code{coef} method that does not report
   aliased coefficients (see \code{\link{alias}}).
+}
+\value{
+  Coefficients extracted from the model object \code{object}.
+
+  For standard model fitting classes this will be a named numeric vector.
 }
 \seealso{
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
