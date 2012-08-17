@@ -1400,7 +1400,8 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(xmax > 100000) error(_("too large a range of values in 'x'"));
     napos = off ? 0 : xmax + 1;
     off -= xmin;
-    /* automatic allocation is fine here: we know this is small */
+    /* automatic allocation should be fine here: we know this is small */
+    R_CheckStack2((xmax+2) * sizeof(R_xlen_t));
     R_xlen_t cnts[xmax+2];
 
     for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
