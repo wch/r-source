@@ -22,13 +22,13 @@
       facilities (e.g. \command{ulimit} in a \command{bash} shell,
       \command{limit} in \command{csh}), to set limits on overall memory
       consumption of an \R process, particularly in a multi-user
-      environment.  A number of packages, particularly those using Java,
-      need a limit of at least 4GB of virtual memory.
+      environment.  A number of packages need a limit of at least 4GB of
+      virtual memory.
 
-      Windows builds of \R are by default limited in memory usage to the
-      amount of RAM installed: this limit can be changed by command-line
-      option \option{--max-mem-size} or setting environment variable
-      \env{R_MAX_MEM_SIZE}.
+      64-bit Windows builds of \R are by default limited in memory usage
+      to the amount of RAM installed: this limit can be changed by
+      command-line option \option{--max-mem-size} or setting environment
+      variable \env{R_MAX_MEM_SIZE}.
     }
   }
 
@@ -182,26 +182,31 @@
       halves the storage requirements for large simulations.      
       
       \item \code{sort()}, \code{sort.int()} and \code{sort.list()} now
-      use radix sorting for vectors of less than 100,000 levels when
+      use radix sorting for factors of less than 100,000 levels when
       \code{method} is not supplied.
+      
+      \item \code{diag()} as used to generate a diagonal matrix has been
+      re-written in C for speed and less memory usage.
     }
   }
 
   \subsection{LONG VECTORS}{
     \itemize{
-      \item There are the beginnings of support for vectors longer than
-      \eqn{2^{31}-1}{2^31 - 1} elements on 64-bit platforms.  This
-      applies to raw, logical, integer, double, complex and character
-      vectors, as well as lists.  (Elements of character vectors remain
-      limited to \eqn{2^{31}-1}{2^31 - 1} bytes.)
+      \item There is support for vectors longer than \eqn{2^{31}-1}{2^31
+      - 1} elements on 64-bit platforms.  This applies to raw, logical,
+      integer, double, complex and character vectors, as well as lists.
+      (Elements of character vectors remain limited to
+      \eqn{2^{31}-1}{2^31 - 1} bytes.)
 
       All aspects are currently experimental.
 
-      \item What can be done with such vectors is currently somewhat
-      limited, and most operations will return the error \sQuote{long
-      vectors not supported yet}.  They can be serialized and
-      unserialized, coercion, \code{identical()} and
-      \code{object.size()} work and means can be computed.
+      \item Most operations which can sensibly be done with long vectors
+      do work: others may return the error \sQuote{long vectors not
+      supported yet}.  Some of these are because they explicitly work
+      with integer indices (e.g. \code{anyDuplicated()}, \code{match()},
+      \code{sample.int()}) or because other limits (e.g. of character
+      strings or matrix dimensions) would be exceeded or the operations
+      would be extremely slow.
 
       \item \code{length()} returns a double for long vectors, and
       lengths can be set to \eqn{2^{31}}{2^31} or more by the
@@ -213,7 +218,9 @@
 
       \item There is some support for matrices and arrays with each
       dimension less than \eqn{2^{31}}{2^31} but total number of
-      elements more than that.
+      elements more than that.  Only some aspects of matrix arithmetic
+      work for such matrices, often taking minutes or hours for the
+      smallest possible matrix.
 
       \item \code{dist()} can produce dissimilarity objects for more
       than 65536 rows (but for example \code{cmdscale()} and
@@ -240,8 +247,8 @@
       \code{length(x)} is an integer).
       
       \item Many more basic operations are now interruptible when run on
-      size-able vectors: typically interrupts are checked for every 1-100
-      million elements.
+      size-able vectors: typically interrupts are checked for every
+      1--100 million elements.
 
       \item Most of the methods for \code{sort()} work for long vectors.
 
