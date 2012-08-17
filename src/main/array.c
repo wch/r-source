@@ -1513,3 +1513,55 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return ans;
 }
+
+SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, x, snr, snc;
+    int nr = 1, nc = 1, nprotect = 1;
+
+    checkArity(op, args);
+    x = CAR(args);
+    snr = CADR(args);
+    snc = CADDR(args);
+    nr = asInteger(snr);
+    if (nr == NA_INTEGER)
+	error(_("invalid 'nrow' value (too large or NA)"));
+    if (nr < 0)
+	error(_("invalid 'nrow' value (< 0)"));
+    nc = asInteger(snc);
+    if (nc == NA_INTEGER)
+	error(_("invalid 'ncol' value (too large or NA)"));
+    if (nc < 0)
+	error(_("invalid 'ncol' value (< 0)"));
+    int mn = (nr < nc) ? nr : nc; 
+    if (mn > 0 && LENGTH(x) == 0)
+	error(_("'x' must have positive length"));
+
+ #ifndef LONG_VECTOR_SUPPORT
+   if ((double)nr * (double)nc > INT_MAX)
+	error(_("too many elements specified"));
+#endif
+
+   if (TYPEOF(x) == CPLXSXP) {
+       PROTECT(ans = allocMatrix(CPLXSXP, nr, nc));
+       int nx = LENGTH(x);
+       R_xlen_t NR = nr;
+       Rcomplex *rx = COMPLEX(x), *ra = COMPLEX(ans), zero;
+       zero.r = zero.i = 0.0;
+       for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = zero;
+       for (int j = 0; j < mn; j++) ra[j * (NR+1)] = rx[j % nx];
+  } else {
+       if(TYPEOF(x) != REALSXP) {
+	   PROTECT(x = coerceVector(x, REALSXP));
+	   nprotect++;
+       }
+       PROTECT(ans = allocMatrix(REALSXP, nr, nc));
+       int nx = LENGTH(x);
+       R_xlen_t NR = nr;
+       double *rx = REAL(x), *ra = REAL(ans);
+       for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = 0.0;
+       for (int j = 0; j < mn; j++) ra[j * (NR+1)] = rx[j % nx];
+   }
+   UNPROTECT(nprotect);
+   return ans;
+}

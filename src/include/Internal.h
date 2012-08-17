@@ -161,6 +161,7 @@ SEXP do_deparseRd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_detach(SEXP,SEXP,SEXP,SEXP);
 SEXP do_dfltStop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dfltWarn(SEXP, SEXP, SEXP, SEXP);
+SEXP do_diag(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dim(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dimgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dimnames(SEXP, SEXP, SEXP, SEXP);

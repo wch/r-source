@@ -36,19 +36,15 @@ diag <- function(x = 1, nrow, ncol)
     if(is.array(x) && length(dim(x)) != 1L)
         stop("'x' is an array, but not 1D.")
 
-    if(missing(x))
-	n <- nrow
+    if(missing(x)) n <- nrow
     else if(length(x) == 1L && nargs() == 1L) {
 	n <- as.integer(x)
 	x <- 1
-    }
-    else n <- length(x)
+    } else n <- length(x)
     if(!missing(nrow)) n <- nrow
     if(missing(ncol)) ncol <- n
-    ## some people worry about speed, so use .Internal
-    y <- .Internal(matrix(0, n, ncol, FALSE, NULL, FALSE, FALSE))
-    if((m <- min(n, ncol)) > 0L) y[1 + 0L:(m - 1L) * (n + 1)] <- x
-    y
+    ## some people worry about speed
+    .Internal(diag(x, n, ncol))
 }
 
 `diag<-` <- function(x, value)
