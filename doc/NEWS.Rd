@@ -184,6 +184,9 @@
       \item \code{sort()}, \code{sort.int()} and \code{sort.list()} now
       use radix sorting for factors of less than 100,000 levels when
       \code{method} is not supplied.
+
+      \code{order()} for a single input calls \code{sort.list()} and so
+      uses radix sorting for most factors.
       
       \item \code{diag()} as used to generate a diagonal matrix has been
       re-written in C for speed and less memory usage.  It now forces
@@ -708,6 +711,10 @@
       \item \code{terms.formula()} could exhaust the stack, and the
       stack check did not always catch this before the segfault.
       (\PR{15013})
+      
+      \item \code{sort.list(method = "radix")} could give incorrect
+      results on certain compilers (seen with \command{clang} on Mac OS
+      10.7 and \command{Xcode 4.4.1}).
     }
   }
 }
