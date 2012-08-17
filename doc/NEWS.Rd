@@ -186,7 +186,9 @@
       \code{method} is not supplied.
       
       \item \code{diag()} as used to generate a diagonal matrix has been
-      re-written in C for speed and less memory usage.
+      re-written in C for speed and less memory usage.  It now forces
+      the result to be numeric in the case \code{diag(x)} since it is
+      said to have \sQuote{zero off-diagonal entries}.
     }
   }
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/diag.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{diag}
@@ -31,7 +31,7 @@ diag(x) <- value
     an identity matrix.
     \item \code{x} is a scalar (length-one vector) and the only
     argument, it returns a square identity matrix of size given by the scalar.
-    \item \code{x} is a vector, either of length at least 2 or there
+    \item \code{x} is a numeric vector, either of length at least 2 or there
     were further arguments.  This returns a matrix with the given
     diagonal and zero off-diagonal entries.
   }
