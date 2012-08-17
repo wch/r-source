@@ -277,6 +277,10 @@
       \item \code{terms.formula()} could exhaust the stack, and the
       stack check did not always catch this before the segfault.
       (\PR{15013})
+      
+      \item \code{sort.list(method = "radix")} could give incorrect
+      results on certain compilers (seen with \command{clang} on Mac OS
+      10.7 and \command{Xcode 4.4.1}).
     }
   }
 }
