@@ -384,9 +384,9 @@ static void SetupMonochrome(void)
 static unsigned GetMonochromePixel(int r, int g, int b)
 {
     if ((int)(0.299 * r + 0.587 * g + 0.114 * b) > 127)
-	return WhitePixel(display, screen);
+	return (unsigned) WhitePixel(display, screen);
     else
-	return BlackPixel(display, screen);
+	return (unsigned) BlackPixel(display, screen);
 }
 
 
@@ -399,12 +399,12 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
     unsigned int dr;
     int i;
     unsigned int pixel = 0;  /* -Wall */
-    int gray = (0.299 * r + 0.587 * g + 0.114 * b) + 0.0001;
+    int gray = (int)((0.299 * r + 0.587 * g + 0.114 * b) + 0.0001);
     for (i = 0; i < PaletteSize; i++) {
 	dr = (RPalette[i].red - gray);
 	d = dr * dr;
 	if (d < dmin) {
-	    pixel = XPalette[i].pixel;
+	    pixel = (unsigned) XPalette[i].pixel;
 	    dmin = d;
 	}
     }
@@ -417,11 +417,11 @@ static Rboolean GetGrayPalette(Display *displ, Colormap cmap, int n)
     m = 0;
     i = 0;
     for (i = 0; i < n; i++) {
-	RPalette[i].red	  = (i * 0xff) / (n - 1);
+	RPalette[i].red	  = (unsigned short) ((i * 0xff) / (n - 1));
 	RPalette[i].green = RPalette[i].red;
 	RPalette[i].blue  = RPalette[i].red;
 	/* Gamma correct here */
-	XPalette[i].red	  = (i * 0xffff) / (n - 1);
+	XPalette[i].red	  = (unsigned short)((i * 0xffff) / (n - 1));
 	XPalette[i].green = XPalette[i].red;
 	XPalette[i].blue  = XPalette[i].red;
 	status = XAllocColor(displ, cmap, &XPalette[i]);
@@ -496,9 +496,12 @@ static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
 		RPalette[i].green = (g * 0xff) / (ng - 1);
 		RPalette[i].blue  = (b * 0xff) / (nb - 1);
 		/* Perform Gamma Correction Here */
-		XPalette[i].red	  = pow(r / (nr - 1.0), RedGamma) * 0xffff;
-		XPalette[i].green = pow(g / (ng - 1.0), GreenGamma) * 0xffff;
-		XPalette[i].blue  = pow(b / (nb - 1.0), BlueGamma) * 0xffff;
+		XPalette[i].red	  =
+		    (unsigned short)(pow(r / (nr - 1.0), RedGamma) * 0xffff);
+		XPalette[i].green = 
+		    (unsigned short)(pow(g / (ng - 1.0), GreenGamma) * 0xffff);
+		XPalette[i].blue  = 
+		    (unsigned short)(pow(b / (nb - 1.0), BlueGamma) * 0xffff);
 		/* End Gamma Correction */
 		status = XAllocColor(dpy, cmap, &XPalette[i]);
 		if (status == 0) {
@@ -561,7 +564,7 @@ static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
 	db = (RPalette[i].blue - b);
 	d = dr * dr + dg * dg + db * db;
 	if (d < dmin) {
-	    pixel = XPalette[i].pixel;
+	    pixel = (unsigned int) XPalette[i].pixel;
 	    dmin = d;
 	}
     }
@@ -575,12 +578,15 @@ static unsigned int GetPseudoColor2Pixel(int r, int g, int b)
     for (i = 0; i < PaletteSize ; i++) {
 	if (r == RPalette[i].red &&
 	    g == RPalette[i].green &&
-	    b == RPalette[i].blue) return XPalette[i].pixel;
+	    b == RPalette[i].blue) return (unsigned int) XPalette[i].pixel;
     }
     /* Attempt to allocate a new color */
-    XPalette[PaletteSize].red	= pow(r / 255.0, RedGamma) * 0xffff;
-    XPalette[PaletteSize].green = pow(g / 255.0, GreenGamma) * 0xffff;
-    XPalette[PaletteSize].blue	= pow(b / 255.0, BlueGamma) * 0xffff;
+    XPalette[PaletteSize].red	= 
+	(unsigned short)(pow(r / 255.0, RedGamma) * 0xffff);
+    XPalette[PaletteSize].green = 
+	(unsigned short)(pow(g / 255.0, GreenGamma) * 0xffff);
+    XPalette[PaletteSize].blue	= 
+	(unsigned short)(pow(b / 255.0, BlueGamma) * 0xffff);
     if (PaletteSize == 256 ||
 	XAllocColor(display, colormap, &XPalette[PaletteSize]) == 0) {
 	error(_("Error: X11 cannot allocate additional graphics colors.\n\
@@ -590,7 +596,7 @@ Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."));
     RPalette[PaletteSize].green = g;
     RPalette[PaletteSize].blue = b;
     PaletteSize++;
-    return XPalette[PaletteSize - 1].pixel;
+    return (unsigned int)XPalette[PaletteSize - 1].pixel;
 }
 
 static unsigned int GetPseudoColorPixel(int r, int g, int b)
@@ -609,9 +615,9 @@ static unsigned int BMask, BShift;
 
 static void SetupTrueColor(void)
 {
-    RMask = visual->red_mask;
-    GMask = visual->green_mask;
-    BMask = visual->blue_mask;
+    RMask = (unsigned int)visual->red_mask;
+    GMask = (unsigned int)visual->green_mask;
+    BMask = (unsigned int)visual->blue_mask;
     RShift = 0; while ((RMask & 1) == 0) { RShift++; RMask >>= 1; }
     GShift = 0; while ((GMask & 1) == 0) { GShift++; GMask >>= 1; }
     BShift = 0; while ((BMask & 1) == 0) { BShift++; BMask >>= 1; }
@@ -619,9 +625,9 @@ static void SetupTrueColor(void)
 
 static unsigned GetTrueColorPixel(int r, int g, int b)
 {
-    r = pow((r / 255.0), RedGamma) * 255;
-    g = pow((g / 255.0), GreenGamma) * 255;
-    b = pow((b / 255.0), BlueGamma) * 255;
+    r = (int)(pow((r / 255.0), RedGamma) * 255);
+    g = (int)(pow((g / 255.0), GreenGamma) * 255);
+    b = (int)(pow((b / 255.0), BlueGamma) * 255);
     return
 	(((r * RMask) / 255) << RShift) |
 	(((g * GMask) / 255) << GShift) |
@@ -779,8 +785,8 @@ static void handleEvent(XEvent event)
 						    xd->windowHeight);
 		    xd->cs = 
 			cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						   (double) xd->windowWidth,
-						   (double) xd->windowHeight);
+						   xd->windowWidth,
+						   xd->windowHeight);
 		    cairo_status_t res = cairo_surface_status(xd->cs);
 		    if (res != CAIRO_STATUS_SUCCESS) {
 			warning("cairo error '%s'", 
@@ -933,9 +939,9 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 
     if(xd->type == PNG || xd->type == JPEG ||
        xd->type == TIFF || xd->type == BMP) {
-	dpi = (xd->res_dpi > 0) ? xd->res_dpi + 0.5 : 72;
+	dpi = (xd->res_dpi > 0) ? (int)(xd->res_dpi + 0.5) : 72;
     } else {
-	dpi = (1./pixelHeight() + 0.5);
+	dpi = (int)(1./pixelHeight() + 0.5);
     }
 
     if(abs(dpi - 75) < 5) {
@@ -946,8 +952,8 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
        an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
        14, 17, 18, 24 points. It's almost y = x * 100/72, but not
        quite. The constants were found using lm(). --pd */
-	size = R_rint(size * 1.43 - 0.4);
-    } else size = R_rint(size * dpi/72);
+	size = (int) R_rint(size * 1.43 - 0.4);
+    } else size = (int) R_rint(size * dpi/72);
 
     /* search fontcache */
     for ( i = nfonts ; i-- ; ) {
@@ -1093,7 +1099,7 @@ static void SetFont(const pGEcontext gc, pX11Desc xd)
     R_XFont *tmp;
     char *family = translateFontFamily(gc->fontfamily, xd);
     /* size is in points here */
-    int size = gc->cex * gc->ps + 0.5, face = gc->fontface;
+    int size = (int)(gc->cex * gc->ps + 0.5), face = gc->fontface;
 
     if (face < 1 || face > 5) face = 1;
 
@@ -1179,7 +1185,8 @@ static int gcToX11ljoin(R_GE_linejoin ljoin) {
 /* Not at all clear the optimization here is worth it */
 static void SetLinetype(const pGEcontext gc, pX11Desc xd)
 {
-    int i, newlty, newlwd, newlend, newljoin;
+    int i, newlty, newlend, newljoin;
+    double newlwd;
 
     newlty = gc->lty;
     newlwd = gc->lwd;
@@ -1203,11 +1210,11 @@ static void SetLinetype(const pGEcontext gc, pX11Desc xd)
 		int j = newlty & 15;
 		if (j == 0) j = 1; /* Or we die with an X Error */
 		/* scale line texture for line width */
-		j = j*newlwd*xd->lwdscale+0.5;
+		j = (int)(j*newlwd*xd->lwdscale+0.5);
 		/* make sure that scaled line texture */
 		/* does not exceed X11 storage limits */
 		if (j > 255) j = 255;
-		dashlist[i] = j;
+		dashlist[i] = (char) j;
 		newlty >>= 4;
 	    }
 	    /* NB if i is odd the pattern will be interpreted as
@@ -1480,8 +1487,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     if (type == WINDOW) {
 	int alreadyCreated = (xd->window != (Window)NULL);
 	if(alreadyCreated == 0) {
-	    xd->windowWidth = iw = (ISNA(w)?7:w)/pixelWidth();
-	    xd->windowHeight = ih = (ISNA(h)?7:h)/pixelHeight();
+	    xd->windowWidth = iw = (int)((ISNA(w)?7:w)/pixelWidth());
+	    xd->windowHeight = ih = (int)((ISNA(h)?7:h)/pixelHeight());
 
 	    hint = XAllocSizeHints();
 	    if(xpos == NA_INTEGER)
@@ -1619,8 +1626,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    xd->xcs = 
 			cairo_xlib_surface_create(display, xd->window,
 						  visual,
-						  (double) xd->windowWidth,
-						  (double) xd->windowHeight);
+						  xd->windowWidth,
+						  xd->windowHeight);
 		    res = cairo_surface_status(xd->xcs);
 		    if (res != CAIRO_STATUS_SUCCESS) {
 			warning("cairo error '%s'",
@@ -1639,16 +1646,16 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    }
 		    xd->cs = 
 			cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						   (double) xd->windowWidth,
-						   (double) xd->windowHeight);
+						   xd->windowWidth,
+						   xd->windowHeight);
 		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    if(xd->buffered > 1) addBuffering(xd);
 		} else /* non-buffered */
 		    xd->cs = 
 			cairo_xlib_surface_create(display, xd->window,
 						  visual,
-						  (double) xd->windowWidth,
-						  (double) xd->windowHeight);
+						  xd->windowWidth,
+						  xd->windowHeight);
 
 		res = cairo_surface_status(xd->cs);
 		if (res != CAIRO_STATUS_SUCCESS) {
@@ -1701,8 +1708,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    */
 	}
     } else { /* PIXMAP */
-	xd->windowWidth = iw = w;
-	xd->windowHeight = ih = h;
+	xd->windowWidth = iw = (int) w;
+	xd->windowHeight = ih = (int) h;
 	if (iw < 20 && ih < 20)
 	    warning(_("'width=%d, height=%d' are unlikely values in pixels"),
 		    iw, ih);
@@ -1793,16 +1800,16 @@ static double X11_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
     SetFont(gc, xd);
 
     if (xd->font->type == One_Font)
-	return (double) XTextWidth(xd->font->font, str, strlen(str));
+	return (double) XTextWidth(xd->font->font, str, (int)strlen(str));
     else  {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
 	if(utf8locale)
 	    return (double) Xutf8TextEscapement(xd->font->fontset,
-						str, strlen(str));
+						str, (int)strlen(str));
 	else
 #endif
 	    return (double) XmbTextEscapement(xd->font->fontset,
-					      str, strlen(str));
+					      str, (int)strlen(str));
     }
 }
 
@@ -1856,10 +1863,10 @@ static void X11_MetricInfo(int c, const pGEcontext gc,
 	ucstomb(buf, (unsigned int) c);
 #ifdef HAVE_XUTF8TEXTEXTENTS
 	if(utf8locale)
-	    Xutf8TextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
+	    Xutf8TextExtents(xd->font->fontset, buf, (int)strlen(buf), &ink, &log);
 	else
 #endif
-	    XmbTextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
+	    XmbTextExtents(xd->font->fontset, buf, (int)strlen(buf), &ink, &log);
 	/* Rprintf("%d %d %d %d\n", ink.x, ink.y, ink.width, ink.height);
 	   Rprintf("%d %d %d %d\n", log.x, log.y, log.width, log.height); */
 	*ascent = -ink.y;
@@ -1893,21 +1900,21 @@ static void X11_Clip(double x0, double x1, double y0, double y1,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (x0 < x1) {
-	xd->clip.x = (int) x0 ;
-	xd->clip.width = (int) x1 - (int) x0 + 1;
+	xd->clip.x = (unsigned short) x0 ;
+	xd->clip.width = (unsigned short) x1 - (unsigned short) x0 + 1;
     }
     else {
-	xd->clip.x = (int) x1;
-	xd->clip.width = (int) x0 - (int) x1 + 1;
+	xd->clip.x = (unsigned short) x1;
+	xd->clip.width = (unsigned short) x0 - (unsigned short) x1 + 1;
     }
 
     if (y0 < y1) {
-	xd->clip.y = (int) y0;
-	xd->clip.height = (int) y1 -  (int) y0 + 1;
+	xd->clip.y = (unsigned short) y0;
+	xd->clip.height = (unsigned short) y1 -  (unsigned short) y0 + 1;
     }
     else {
-	xd->clip.y = (int) y1;
-	xd->clip.height = (int) y0 - (int) y1 + 1;
+	xd->clip.y = (unsigned short) y1;
+	xd->clip.height = (unsigned short) y0 - (unsigned short) y1 + 1;
     }
 
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
@@ -1946,8 +1953,8 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
 	CheckAlpha(gc->fill, xd);
 	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
 	SetColor(xd->fill, xd);
-	xd->clip.x = 0; xd->clip.width = xd->windowWidth;
-	xd->clip.y = 0; xd->clip.height = xd->windowHeight;
+	xd->clip.x = 0; xd->clip.width = (unsigned short)xd->windowWidth;
+	xd->clip.y = 0; xd->clip.height = (unsigned short)xd->windowHeight;
 	XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
 	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
 		       xd->windowWidth, xd->windowHeight);
@@ -1974,7 +1981,7 @@ static unsigned int bitgp(void *xi, int x, int y)
     XColor xcol;
 
     /*	returns the colour of the (x,y) pixel stored as RGB */
-    i = XGetPixel((XImage *) xi, y, x);
+    i = (int) XGetPixel((XImage *) xi, y, x);
     switch(model) {
     case MONOCHROME:
 	return i == 0 ? 0xFFFFFFFF : 0;
@@ -2137,7 +2144,7 @@ static void X11_Deactivate(pDevDesc dd)
 static void X11_Rect(double x0, double y0, double x1, double y1,
 		     const pGEcontext gc, pDevDesc dd)
 {
-    int tmp;
+    double tmp;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (x0 > x1) {
@@ -2384,7 +2391,7 @@ static void X11_Circle(double x, double y, double r,
     int ir, ix, iy;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    ir = floor(r + 0.5);
+    ir = (int)floor(r + 0.5);
 
     ix = (int)x;
     iy = (int)y;
@@ -2435,8 +2442,8 @@ static void X11_Polyline(int n, double *x, double *y,
     points = (XPoint *) R_alloc(n, sizeof(XPoint));
 
     for(i = 0 ; i < n ; i++) {
-	points[i].x = (int)(x[i]);
-	points[i].y = (int)(y[i]);
+	points[i].x = (short)(x[i]);
+	points[i].y = (short)(y[i]);
     }
 
     CheckAlpha(gc->col, xd);
@@ -2466,11 +2473,11 @@ static void X11_Polygon(int n, double *x, double *y,
     points = (XPoint *) R_alloc(n+1, sizeof(XPoint));
 
     for (i = 0 ; i < n ; i++) {
-	points[i].x = (int)(x[i]);
-	points[i].y = (int)(y[i]);
+	points[i].x = (short)(x[i]);
+	points[i].y = (short)(y[i]);
     }
-    points[n].x = (int)(x[0]);
-    points[n].y = (int)(y[0]);
+    points[n].x = (short)(x[0]);
+    points[n].y = (short)(y[0]);
     CheckAlpha(gc->fill, xd);
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, xd);
@@ -2634,7 +2641,7 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	    	event.xkey.state |= ShiftMask;
 	    }
       	    XLookupString(&event.xkey, keystart, 
-			  sizeof(keybuffer)-(keystart-keybuffer), 
+			  sizeof(keybuffer)-(int)(keystart-keybuffer), 
 			  &keysym, &compose);
       	    /* Rprintf("keysym=%x\n", keysym); */
       	    if ((keycode = translate_key(keysym)) > knUNKNOWN)
@@ -3351,7 +3358,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 		res = FALSE;
 	    } else {
 		this->buff = (char *)malloc(pty_items + 1);
-		this->last = this->len = pty_items;
+		this->last = this->len = (int) pty_items;
 		if(this->buff) {
 		    /* property always ends in 'extra' zero byte */
 		    memcpy(this->buff, buffer, pty_items + 1);
