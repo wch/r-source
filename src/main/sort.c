@@ -32,8 +32,8 @@
 static int icmp(int x, int y, Rboolean nalast)
 {
     if (x == NA_INTEGER && y == NA_INTEGER) return 0;
-    if (x == NA_INTEGER)return nalast?1:-1;
-    if (y == NA_INTEGER)return nalast?-1:1;
+    if (x == NA_INTEGER)return nalast ? 1 : -1;
+    if (y == NA_INTEGER)return nalast ? -1 : 1;
     if (x < y)		return -1;
     if (x > y)		return 1;
     return 0;
@@ -43,8 +43,8 @@ static int rcmp(double x, double y, Rboolean nalast)
 {
     int nax = ISNAN(x), nay = ISNAN(y);
     if (nax && nay)	return 0;
-    if (nax)		return nalast?1:-1;
-    if (nay)		return nalast?-1:1;
+    if (nax)		return nalast ? 1 : -1;
+    if (nay)		return nalast ? -1 : 1;
     if (x < y)		return -1;
     if (x > y)		return 1;
     return 0;
@@ -55,15 +55,15 @@ static int ccmp(Rcomplex x, Rcomplex y, Rboolean nalast)
     int nax = ISNAN(x.r), nay = ISNAN(y.r);
 				/* compare real parts */
     if (nax && nay)	return 0;
-    if (nax)		return nalast?1:-1;
-    if (nay)		return nalast?-1:1;
+    if (nax)		return nalast ? 1 : -1;
+    if (nay)		return nalast ? -1 : 1;
     if (x.r < y.r)	return -1;
     if (x.r > y.r)	return 1;
 				/* compare complex parts */
     nax = ISNAN(x.i); nay = ISNAN(y.i);
     if (nax && nay)	return 0;
-    if (nax)		return nalast?1:-1;
-    if (nay)		return nalast?-1:1;
+    if (nax)		return nalast ? 1 : -1;
+    if (nay)		return nalast ? -1 : 1;
     if (x.i < y.i)	return -1;
     if (x.i > y.i)	return 1;
 
@@ -73,8 +73,8 @@ static int ccmp(Rcomplex x, Rcomplex y, Rboolean nalast)
 static int scmp(SEXP x, SEXP y, Rboolean nalast)
 {
     if (x == NA_STRING && y == NA_STRING) return 0;
-    if (x == NA_STRING) return nalast?1:-1;
-    if (y == NA_STRING) return nalast?-1:1;
+    if (x == NA_STRING) return nalast ? 1 : -1;
+    if (y == NA_STRING) return nalast ? -1 : 1;
     if (x == y) return 0;  /* same string in cache */
     return Scollate(x, y);
 }
@@ -992,7 +992,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     napos = off ? 0 : xmax + 1;
     off -= xmin;
     /* automatic allocation is fine here: we know this is small */
-    R_len_t cnts[xmax+1];
+    R_xlen_t cnts[xmax+2];
 
     for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
     for(i = 0; i < n; i++) {
