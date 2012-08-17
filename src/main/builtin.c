@@ -47,11 +47,13 @@ R_xlen_t asVecSize(SEXP x)
 	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
 	    return (R_xlen_t) d;
 	}
-	case CHARSXP:
+	case STRSXP:
 	{
-	    int res = asInteger(x);
-	    if(res != NA_INTEGER) return (R_xlen_t) res;
-	    break;
+	    double d = asReal(x);
+	    if(ISNAN(d)) error(_("vector size cannot be NA/NaN"));
+	    if(!R_FINITE(d)) error(_("vector size cannot be infinite"));
+	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
+	    return (R_xlen_t) d;
 	}	
 	default:
 	    break;
