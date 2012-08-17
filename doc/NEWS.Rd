@@ -180,6 +180,10 @@
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
       \code{rwilcox()} now return integer (not double) vectors.  This
       halves the storage requirements for large simulations.      
+      
+      \item \code{sort()}, \code{sort.int()} and \code{sort.list()} now
+      use radix sorting for vectors of less than 100,000 levels when
+      \code{method} is not supplied.
     }
   }
 

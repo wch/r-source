@@ -85,6 +85,9 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   performance in the rare worst case.  (Peto's modification using a
   pseudo-random midpoint is used to make the worst case rarer.)  This is
   not a stable sort, and ties may be reordered.
+  
+  Factors with less than 100,000 levels are sorted by radix sorting when
+  \code{method} is not supplied: see \code{\link{sort.list}}.
 }
 
 \value{

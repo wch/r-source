@@ -58,8 +58,10 @@ sort.int <-
             .Internal(psort(x, partial))
         } else if (is.double(x)) .Internal(qsort(x, FALSE))
         else .Internal(sort(x, FALSE))
-    }
-    else {
+    } else if(isfact && missing(method) && nlev < 100000) {
+        o <- sort.list(x, decreasing = decreasing, method = "radix")
+        y <- x[o]
+    } else {
         nms <- names(x)
         method <- if(is.numeric(x)) match.arg(method) else "shell"
         switch(method,
@@ -120,6 +122,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
 sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
                       method = c("shell", "quick", "radix"))
 {
+    if (missing(method) && is.factor(x) && nlevels(x) < 100000) method <-"radix"
     method <- match.arg(method)
     if(!is.atomic(x))
         stop("'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?")
