@@ -93,6 +93,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     {
 	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
 	    ldvt = INTEGER(getAttrib(v, R_DimSymbol))[0];
+	/* FIXME: this could overflow */
 	int *iwork= (int *) R_alloc(8*(n<p ? n : p), sizeof(int));
 
 	/* ask for optimal size of work array */
@@ -202,19 +203,19 @@ static SEXP unscramble(const double* imaginary, int n,
 {
     int i, j;
     SEXP s = allocMatrix(CPLXSXP, n, n);
-
+    size_t N = n;
     for (j = 0; j < n; j++) {
 	if (imaginary[j] != 0) {
 	    int j1 = j + 1;
 	    for (i = 0; i < n; i++) {
-		COMPLEX(s)[i+n*j].r = COMPLEX(s)[i+n*j1].r = vecs[i + j * n];
-		COMPLEX(s)[i+n*j1].i = -(COMPLEX(s)[i+n*j].i = vecs[i + j1 * n]);
+		COMPLEX(s)[i+N*j].r = COMPLEX(s)[i+N*j1].r = vecs[i + j * N];
+		COMPLEX(s)[i+N*j1].i = -(COMPLEX(s)[i+N*j].i = vecs[i + j1 * N]);
 	    }
 	    j = j1;
 	} else {
 	    for (i = 0; i < n; i++) {
-		COMPLEX(s)[i+n*j].r = vecs[i + j * n];
-		COMPLEX(s)[i+n*j].i = 0.0;
+		COMPLEX(s)[i+N*j].r = vecs[i + j * N];
+		COMPLEX(s)[i+N*j].i = 0.0;
 	    }
 	}
     }
@@ -873,9 +874,10 @@ static SEXP modLa_chol(SEXP A)
 
 	if (m != n) error(_("'a' must be a square matrix"));
 	if (m <= 0) error(_("'a' must have dims > 0"));
+	size_t N = n;
 	for (j = 0; j < n; j++) {	/* zero the lower triangle */
 	    for (i = j+1; i < n; i++) {
-		REAL(ans)[i + j * n] = 0.;
+		REAL(ans)[i + N * j] = 0.;
 	    }
 	}
 
@@ -916,9 +918,10 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 	if (sz > n) { UNPROTECT(nprot); error(_("'size' cannot exceed ncol(x) = %d"), n); }
 	if (sz > m) { UNPROTECT(nprot); error(_("'size' cannot exceed nrow(x) = %d"), m); }
 	ans = PROTECT(allocMatrix(REALSXP, sz, sz)); nprot++;
+	size_t M = m, SZ = sz;
 	for (j = 0; j < sz; j++) {
 	    for (i = 0; i <= j; i++)
-		REAL(ans)[i + j * sz] = REAL(Amat)[i + j * m];
+		REAL(ans)[i + j * SZ] = REAL(Amat)[i + j * M];
 	}
 	F77_CALL(dpotri)("Upper", &sz, REAL(ans), &sz, &i);
 	if (i != 0) {
@@ -931,7 +934,7 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 	}
 	for (j = 0; j < sz; j++) {
 	    for (i = j+1; i < sz; i++)
-		REAL(ans)[i + j * sz] = REAL(ans)[j + i * sz];
+		REAL(ans)[i + j * SZ] = REAL(ans)[j + i * SZ];
 	}
 	UNPROTECT(nprot);
 	return ans;
@@ -964,9 +967,9 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 	      Bdims[0], p, n, n);
     ipiv = (int *) R_alloc(n, sizeof(int));
 
-    avals = (double *) R_alloc(n * n, sizeof(double));
+    avals = (double *) R_alloc((size_t)n * n, sizeof(double));
 				/* work on a copy of A */
-    Memcpy(avals, REAL(A), n * n);
+    Memcpy(avals, REAL(A), (size_t)n * n);
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
     if (info < 0)
 	error(_("argument %d of Lapack routine %s had invalid value"),
@@ -1138,15 +1141,17 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
 	    sign = -sign;
 	if (useLog) {
 	    modulus = 0.0;
+	    size_t N1 = n+1;
 	    for (i = 0; i < n; i++) {
-		double dii = REAL(A)[i*(n + 1)]; /* ith diagonal element */
+		double dii = REAL(A)[i * N1]; /* ith diagonal element */
 		modulus += log(dii < 0 ? -dii : dii);
 		if (dii < 0) sign = -sign;
 	    }
 	} else {
 	    modulus = 1.0;
+	    size_t N1 = n+1;
 	    for (i = 0; i < n; i++)
-		modulus *= REAL(A)[i*(n + 1)];
+		modulus *= REAL(A)[i * N1];
 	    if (modulus < 0) {
 		modulus = -modulus;
 		sign = -sign;
