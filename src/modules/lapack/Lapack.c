@@ -77,7 +77,6 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 		      SEXP method)
 {
     int *xdims, n, p, lwork, info = 0;
-    double *work, *xvals, tmp;
     SEXP val, nm;
 
     if (!(isString(jobu) && isString(jobv)))
@@ -86,15 +85,16 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	error(_("'method' must be a character string"));
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];
-    xvals = (double *) R_alloc(n * (size_t) p, sizeof(double));
-    /* work on a copy of x */
+    /* work on a copy of x: duplicate would copy too much, like dimnames */
+    double *xvals = (double *) R_alloc(n * (size_t) p, sizeof(double));
     Memcpy(xvals, REAL(x), n * (size_t) p);
 
     {
 	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
 	    ldvt = INTEGER(getAttrib(v, R_DimSymbol))[0];
-	/* FIXME: this could overflow */
-	int *iwork= (int *) R_alloc(8*(n<p ? n : p), sizeof(int));
+	double tmp;
+	/* min(n,p) large is implausible, but ... */
+	int *iwork= (int *) R_alloc(8*(size_t)(n < p ? n : p), sizeof(int));
 
 	/* ask for optimal size of work array */
 	lwork = -1;
@@ -106,7 +106,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	if (info != 0)
 	    error(_("error code %d from Lapack routine '%s'"), info, "dgesdd");
 	lwork = (int) tmp;
-	work = (double *) R_alloc(lwork, sizeof(double));
+	double *work = (double *) R_alloc(lwork, sizeof(double));
 	F77_CALL(dgesdd)(CHAR(STRING_ELT(jobu, 0)),
 			 &n, &p, xvals, &n, REAL(s),
 			 REAL(u), &ldu,
@@ -237,7 +237,7 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
 
     xvals = (double *) R_alloc(n * n, sizeof(double));
     /* work on a copy of x */
-    Memcpy(xvals, REAL(x), n * n);
+    Memcpy(xvals, REAL(x), (size_t) n * n);
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid '%s' argument"), "only.values");
     vectors = !ov;
@@ -459,7 +459,7 @@ static SEXP modLa_zgecon(SEXP A, SEXP norm)
     /* Compute the LU-decomposition and overwrite 'x' with result;
      * working on a copy of A : */
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
-    Memcpy(avals, COMPLEX(A), n * n);
+    Memcpy(avals, COMPLEX(A), (size_t) n * n);
     F77_CALL(zgetrf)(&n, &n, avals, &n,
 		     /* iwork: */(int *) R_alloc(n, sizeof(int)),
 		     &info);
@@ -545,7 +545,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
-    Memcpy(avals, COMPLEX(A), n * n);
+    Memcpy(avals, COMPLEX(A), (size_t) n * n);
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
     if (info < 0)
 	error(_("argument %d of Lapack routine %s had invalid value"),
@@ -694,33 +694,40 @@ static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 #endif
 }
 
-static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP xin, SEXP s, SEXP u, SEXP v)
+static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
-    int *xdims, n, p, lwork, info;
-    double *rwork;
-    Rcomplex *work, tmp;
-    SEXP x, val, nm;
+    SEXP val, nm;
 
     if (!(isString(jobu) && isString(jobv)))
 	error(_("'jobu' and 'jobv' must be character strings"));
-    PROTECT(x = duplicate(xin));
-    xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
-    n = xdims[0]; p = xdims[1];
-    rwork = (double *) R_alloc(5*(n < p ? n:p), sizeof(double));
+    int *xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
+    int n = xdims[0], p = xdims[1];
+
+    /* The underlying LAPACK, specifically ZLARF, does not work with
+     * long arrays */
+    if ((double)n * (double)p > INT_MAX)
+	error(_("matrices of 2^31 or more elements are not supported"));
+    double *rwork = (double *) R_alloc(5*(size_t)(n < p ? n:p), sizeof(double));
+
+    /* work on a copy of x: duplicate would copy too much, like dimnames */
+    Rcomplex *xvals = (Rcomplex *) R_alloc(n * (size_t) p, sizeof(Rcomplex));
+    Memcpy(xvals, COMPLEX(x), n * (size_t) p);
+
     /* ask for optimal size of work array */
-    lwork = -1;
+    int lwork = -1, info;
+    Rcomplex tmp;
     F77_CALL(zgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
-		     &n, &p, COMPLEX(x), &n, REAL(s),
+		     &n, &p, xvals, &n, REAL(s),
 		     COMPLEX(u), INTEGER(getAttrib(u, R_DimSymbol)),
 		     COMPLEX(v), INTEGER(getAttrib(v, R_DimSymbol)),
 		     &tmp, &lwork, rwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgesvd");
     lwork = (int) tmp.r;
-    work = (Rcomplex *) R_alloc(lwork, sizeof(Rcomplex));
+    Rcomplex *work = (Rcomplex *) R_alloc(lwork, sizeof(Rcomplex));
     F77_CALL(zgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
-		     &n, &p, COMPLEX(x), &n, REAL(s),
+		     &n, &p, xvals, &n, REAL(s),
 		     COMPLEX(u), INTEGER(getAttrib(u, R_DimSymbol)),
 		     COMPLEX(v), INTEGER(getAttrib(v, R_DimSymbol)),
 		     work, &lwork, rwork, &info);
@@ -735,7 +742,7 @@ static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP xin, SEXP s, SEXP u, SEXP
     SET_VECTOR_ELT(val, 0, s);
     SET_VECTOR_ELT(val, 1, u);
     SET_VECTOR_ELT(val, 2, v);
-    UNPROTECT(3);
+    UNPROTECT(2);
     return val;
 #else
     error(_("Fortran complex functions are not available on this platform"));
@@ -815,7 +822,7 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 
     xvals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
-    Memcpy(xvals, COMPLEX(x), n * n);
+    Memcpy(xvals, COMPLEX(x), (size_t) n * n);
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid '%s' argument"), "only.values");
     jobVL[0] = jobVR[0] = 'N';

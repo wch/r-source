@@ -201,7 +201,7 @@
       All aspects are currently experimental.
 
       \item Most operations which can sensibly be done with long vectors
-      do work: others may return the error \sQuote{long vectors not
+      now work: others may return the error \sQuote{long vectors not
       supported yet}.  Some of these are because they explicitly work
       with integer indices (e.g. \code{anyDuplicated()}, \code{match()},
       \code{sample.int()}) or because other limits (e.g. of character
@@ -218,9 +218,10 @@
 
       \item There is some support for matrices and arrays with each
       dimension less than \eqn{2^{31}}{2^31} but total number of
-      elements more than that.  Only some aspects of matrix arithmetic
-      work for such matrices, often taking minutes or hours for the
-      smallest possible matrix.
+      elements more than that.  Only some aspects of matrix algebra work
+      for such matrices, often taking minutes or hours for the smallest
+      possible matrix.  In other cases the underlying Fortran code has
+      an unstated restriction (as was found for complex \code{svd()}).
 
       \item \code{dist()} can produce dissimilarity objects for more
       than 65536 rows (but for example \code{cmdscale()} and
