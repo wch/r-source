@@ -4113,12 +4113,12 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, onechar, nchars;
-    int i, len, n, m = 0, nbytes = 0, np = 0, useBytes;
+    R_xlen_t i, n, m = 0;
+    int nbytes = 0, np = 0, useBytes;
     Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
     Rbyte *bytes = NULL;
     RCNTXT cntxt;
-
     checkArity(op, args);
 
     if(TYPEOF(CAR(args)) == RAWSXP) {
@@ -4130,8 +4130,9 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->canread)
 	    error(_("cannot read from this connection"));
     }
+    /* We did as.integer in the wrapper */
     nchars = CADR(args);
-    n = LENGTH(nchars);
+    n = XLENGTH(nchars);
     if(n == 0) return allocVector(STRSXP, 0);
     useBytes = asLogical(CADDR(args));
     if(useBytes == NA_LOGICAL)
@@ -4158,7 +4159,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("can only read in bytes in a non-UTF-8 MBCS locale" ));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0, m = 0; i < n; i++) {
-	len = INTEGER(nchars)[i];
+	int len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
 	    error(_("invalid '%s' argument"), "nchar");
 	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np, useBytes)
@@ -4171,7 +4172,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
     if(m < n) {
-	PROTECT(ans = lengthgets(ans, m));
+	PROTECT(ans = xlengthgets(ans, m));
 	UNPROTECT(1);
     }
     UNPROTECT(1);
@@ -4182,8 +4183,9 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP object, nchars, sep, ans = R_NilValue, si;
-    int i, n, useBytes;
-    size_t len, slen, tlen, lenb, lenc;
+    R_xlen_t i, n, len;
+    int useBytes;
+    size_t slen, tlen, lenb, lenc;
     char *buf;
     const char *s, *ssep = "";
     Rboolean wasopen = TRUE, usesep, isRaw = FALSE;
@@ -4204,6 +4206,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	wasopen = con->isopen;
     }
 
+    /* We did as.integer in the wrapper */
     nchars = CADDR(args);
     sep = CADDDR(args);
     useBytes = asLogical(CAD4R(args));
@@ -4221,10 +4224,10 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ssep = CHAR(STRING_ELT(sep, 0));
 	else
 	    ssep = translateChar(STRING_ELT(sep, 0));
-	slen = strlen(ssep) + 1; // short
+	slen = strlen(ssep) + 1;
     }
-    n = LENGTH(nchars);
-    if(LENGTH(object) < n)
+    n = XLENGTH(nchars);
+    if(XLENGTH(object) < n)
 	error(_("'object' is too short"));
     if(n == 0) {
 	if(isRaw) return allocVector(RAWSXP, 0); else return R_NilValue;
@@ -4247,10 +4250,14 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	buf = (char *) R_alloc(len + slen, sizeof(char));
     } else {
+	double dlen = 0;
 	for (i = 0; i < n; i++)
-	    len += INTEGER(nchars)[i] + slen;
+	    dlen += (double)(INTEGER(nchars)[i] + slen);
+	if (dlen > R_XLEN_T_MAX)
+	    error("too much data for a raw vector on this platform");
+	len = (R_xlen_t) dlen;
 	PROTECT(ans = allocVector(RAWSXP, len));
-	buf = (char*)RAW(ans);
+	buf = (char*) RAW(ans);
     }
 
     if(!wasopen) {
