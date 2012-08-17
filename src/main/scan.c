@@ -565,7 +565,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	if (n == blocksize) {
 	    /* enlarge the vector*/
 	    bns = ans;
-	    if(blocksize > INT_MAX/2) error(_("too many items");
+	    if(blocksize > INT_MAX/2) error(_("too many items"));
 	    blocksize = 2 * blocksize;
 	    ans = allocVector(type, blocksize);
 	    UNPROTECT(1);
@@ -712,7 +712,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		sprintf(ConsolePrompt, "%d: ", n + 1);
 	}
 	if (n == blksize && colsread == 0) {
-	    if(blksize > INT_MAX/2) error(_("too many items");
+	    if(blksize > INT_MAX/2) error(_("too many items"));
 	    blksize = 2 * blksize;
 	    for (i = 0; i < nc; i++) {
 		old = VECTOR_ELT(ans, i);
