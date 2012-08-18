@@ -99,13 +99,6 @@ sort.int <-
 order <- function(..., na.last = TRUE, decreasing = FALSE)
 {
     z <- list(...)
-    if (length(z) == 1L) {
-        z <- z[[1L]]
-        if (!is.factor(z) && is.object(z))
-            return(sort.list(xtfrm(z), na.last = na.last,
-                             decreasing = decreasing))
-        else return(sort.list(z, na.last = na.last, decreasing = decreasing))
-    }
     if(any(unlist(lapply(z, is.object)))) {
         z <- lapply(z, function(x) if(is.object(x)) xtfrm(x) else x)
         if(!is.na(na.last))
