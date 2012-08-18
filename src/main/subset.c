@@ -376,17 +376,17 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 {
     int k, mode;
     SEXP dimnames, dimnamesnames, p, q, r, result, xdims;
-    const void *vmaxsave;
+    const void *vmaxsave = vmaxget();
 
     mode = TYPEOF(x);
     xdims = getAttrib(x, R_DimSymbol);
     k = length(xdims);
 
-    vmaxsave = vmaxget();
+    /* k is now the number of dims */
     int **subs = (int**)R_alloc(k, sizeof(int*));
     int *indx = (int*)R_alloc(k, sizeof(int));
-    R_xlen_t *offset = (R_xlen_t*)R_alloc(k, sizeof(R_xlen_t));
     int *bound = (int*)R_alloc(k, sizeof(int));
+    R_xlen_t *offset = (R_xlen_t*)R_alloc(k, sizeof(R_xlen_t));
 
     /* Construct a vector to contain the returned values. */
     /* Store its extents. */
