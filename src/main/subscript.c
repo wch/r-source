@@ -304,18 +304,21 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call)
     return x;
 }
 
-/* Special Matrix Subscripting: Handles the case x[i] where */
-/* x is an n-way array and i is a matrix with n columns. */
-/* This code returns a vector containing the integer subscripts */
-/* to be extracted when x is regarded as unravelled. */
-/* Negative indices are not allowed. */
-/* A zero anywhere in a row will cause a zero in the same */
-/* position in the result. */
+/* Special Matrix Subscripting: Handles the case x[i] where
+   x is an n-way array and i is a matrix with n columns.
+   This code returns a vector containing the subscripts
+   to be extracted when x is regarded as unravelled.
+
+   Negative indices are not allowed.
+
+   A zero/NA anywhere in a row will cause a zero/NA in the same
+   position in the result.
+*/
 
 
 SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 {
-    int j, i, k, nrs = nrows(s);
+    int nrs = nrows(s);
     R_xlen_t NR = nrs;
     SEXP rvec;
 
@@ -324,80 +327,77 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
     }
 
 #ifdef LONG_VECTOR_SUPPORT
-    /* Check if this is a long vector */
-    Rboolean lvec = FALSE;
+    /* Check if it is a long vector we need to index */
     R_len_t len = 1;
-    for (j = 0; j < LENGTH(dims); j++)  len *= INTEGER(dims)[j];
-    lvec = len > R_SHORT_LEN_MAX;
+    for (int j = 0; j < LENGTH(dims); j++)  len *= INTEGER(dims)[j];
 
-    if(lvec) {
+    if(len > R_SHORT_LEN_MAX) {
 	PROTECT(rvec = allocVector(REALSXP, nrs));
-	memset(INTEGER(rvec), 0, nrs * sizeof(double));
-	s = coerceVector(s, INTSXP);
-	for (i = 0; i < nrs; i++) {
-	    R_xlen_t tdim = 1;
-	    /* compute 0-based subscripts for a row
-	       (0 in the input gets -1 in the output here) */
-	    for (j = 0; j < LENGTH(dims); j++) {
-		k = INTEGER(s)[i + j * NR];
-		if(k == NA_INTEGER) {
-		    REAL(rvec)[i] = NA_REAL;
-		    break;
+	double *rv = REAL(rvec);
+	for (int i = 0; i < nrs; i++) rv[i] = 1.; // 1-based.
+	if (TYPEOF(s) == REALSXP) {
+	    for (int i = 0; i < nrs; i++) {
+		R_xlen_t tdim = 1;
+		for (int j = 0; j < LENGTH(dims); j++) {
+		    double k = REAL(s)[i + j * NR];
+		    if(ISNAN(k)) {rv[i] = NA_REAL; break;}
+		    if(k < 0) {
+			ECALL(call, _("negative values are not allowed in a matrix subscript"));
+		    }
+		    if(k == 0.) {rv[i] = 0.; break;}
+		    if (k > INTEGER(dims)[j]) {
+			ECALL(call, _("subscript out of bounds"));
+		    }
+		    rv[i] += (k - 1.) * tdim;
+		    tdim *= INTEGER(dims)[j];
 		}
-		if(k < 0) {
-		    ECALL(call, _("negative values are not allowed in a matrix subscript"));
-		}
-		if(k == 0) {
-		    INTEGER(rvec)[i] = -1;
-		    break;
-		}
-		if (k > INTEGER(dims)[j]) {
-		    ECALL(call, _("subscript out of bounds"));
-		}
-		REAL(rvec)[i] += (double) ((k - 1) * tdim);
-		tdim *= INTEGER(dims)[j];
 	    }
-	    /* transform to 1 based subscripting (0 in the input gets 0
-	       in the output here) */
-	    if(!ISNA(REAL(rvec)[i])) REAL(rvec)[i]++;
+	} else {
+	    s = coerceVector(s, INTSXP);
+	    for (int i = 0; i < nrs; i++) {
+		R_xlen_t tdim = 1;
+		for (int j = 0; j < LENGTH(dims); j++) {
+		    int k = INTEGER(s)[i + j * NR];
+		    if(k == NA_INTEGER) {rv[i] = NA_REAL; break;}
+		    if(k < 0) {
+			ECALL(call, _("negative values are not allowed in a matrix subscript"));
+		    }
+		    if(k == 0) {rv[i] = 0.; break;}
+		    if (k > INTEGER(dims)[j]) {
+			ECALL(call, _("subscript out of bounds"));
+		    }
+		    rv[i] += (double) ((k - 1) * tdim);
+		    tdim *= INTEGER(dims)[j];
+		}
+	    }
 	}
     } else
 #endif
     {
 	PROTECT(rvec = allocVector(INTSXP, nrs));
-	memset(INTEGER(rvec), 0, nrs * sizeof(int));
+	int *iv = INTEGER(rvec);
+	for (int i = 0; i < nrs; i++) iv[i] = 1; // 1-based.
 	s = coerceVector(s, INTSXP);
-	for (i = 0; i < nrs; i++) {
+	for (int i = 0; i < nrs; i++) {
 	    int tdim = 1;
-	    /* compute 0-based subscripts for a row
-	       (0 in the input gets -1 in the output here) */
-	    for (j = 0; j < LENGTH(dims); j++) {
-		k = INTEGER(s)[i + j * NR];
-		if(k == NA_INTEGER) {
-		    INTEGER(rvec)[i] = NA_INTEGER;
-		    break;
-		}
+	    for (int j = 0; j < LENGTH(dims); j++) {
+		int k = INTEGER(s)[i + j * NR];
+		if(k == NA_INTEGER) {iv[i] = NA_INTEGER; break;}
 		if(k < 0) {
 		    ECALL(call, _("negative values are not allowed in a matrix subscript"));
 		}
-		if(k == 0) {
-		    INTEGER(rvec)[i] = -1;
-		    break;
-		}
+		if(k == 0) {iv[i] = 0; break;}
 		if (k > INTEGER(dims)[j]) {
 		    ECALL(call, _("subscript out of bounds"));
 		}
-		INTEGER(rvec)[i] += (k - 1) * tdim;
+		iv[i] += (k - 1) * tdim;
 		tdim *= INTEGER(dims)[j];
 	    }
-	    /* transform to 1 based subscripting (0 in the input gets 0
-	       in the output here) */
-	    if(INTEGER(rvec)[i] != NA_INTEGER) INTEGER(rvec)[i]++;
 	}
     }
 
     UNPROTECT(1);
-    return (rvec);
+    return rvec;
 }
 
 /*
