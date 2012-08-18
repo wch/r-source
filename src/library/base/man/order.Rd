@@ -31,8 +31,8 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     decreasing?}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
-    \code{FALSE}, they are put first; if \code{NA}, they are removed.
-  }
+    \code{FALSE}, they are put first; if \code{NA}, they are removed
+    (see \sQuote{Note}.)}
   \item{method}{the method to be used: partial matches are allowed.}
 }
 \details{
@@ -69,7 +69,18 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \code{sort.list} can get called by mistake as a method for
   \code{\link{sort}} with a list argument, and gives a suitable error
   message for list \code{x}.
+  
+  There is a historical difference in behaviour for \code{na.last = NA}:
+  \code{sort.list} removes the \code{NA}s and then computes the order
+  amongst the remaining elements: \code{order} computes the order
+  amongst the non-\code{NA} elements of the original vector.  Thus
+ \preformatted{
+   x[order(x, na.last = NA)]
+   zz <- x[!is.na(x)]; zz[sort.list(x, na.last = NA)]
+ }
+   both sort the non-\code{NA} values of \code{x}.
 }
+  
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
