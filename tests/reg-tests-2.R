@@ -2655,3 +2655,13 @@ df
 split(df, df[, 1:2]) # default is sep = "."
 split(df, df[, 1:2], sep = ":")
 ##
+
+
+## The difference between sort.list and order
+z <- c(4L, NA, 2L, 3L, NA, 1L)
+order(z, na.last = NA)
+sort.list(z, na.last = NA)
+sort.list(z, na.last = NA, method = "shell")
+sort.list(z, na.last = NA, method = "quick")
+sort.list(z, na.last = NA, method = "radix")
+## Differences first documented in R 2.15.2

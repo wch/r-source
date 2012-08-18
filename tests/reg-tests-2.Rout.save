@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-08-06 r60176) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-08-18 r60303) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -7010,4 +7010,19 @@ $`a.b:c`
 6 a.b c 6
 
 > ##
+> 
+> 
+> ## The difference between sort.list and order
+> z <- c(4L, NA, 2L, 3L, NA, 1L)
+> order(z, na.last = NA)
+[1] 6 3 4 1
+> sort.list(z, na.last = NA)
+[1] 4 2 3 1
+> sort.list(z, na.last = NA, method = "shell")
+[1] 4 2 3 1
+> sort.list(z, na.last = NA, method = "quick")
+[1] 4 2 3 1
+> sort.list(z, na.last = NA, method = "radix")
+[1] 4 2 3 1
+> ## Differences first documented in R 2.15.2
 > 
