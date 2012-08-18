@@ -183,7 +183,8 @@
       
       \item \code{sort()}, \code{sort.int()} and \code{sort.list()} now
       use radix sorting for factors of less than 100,000 levels when
-      \code{method} is not supplied.
+      \code{method} is not supplied.  So does \code{order()} if called
+      with a single factor, unless \code{na.last = NA}.
       
       \item \code{diag()} as used to generate a diagonal matrix has been
       re-written in C for speed and less memory usage.  It now forces

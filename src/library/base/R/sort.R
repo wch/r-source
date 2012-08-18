@@ -104,8 +104,11 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
         if(!is.na(na.last))
             return(do.call("order", c(z, na.last = na.last,
                                       decreasing = decreasing)))
-    } else if(!is.na(na.last))
-        return(.Internal(order(na.last, decreasing, ...)))
+    } else if(!is.na(na.last)) {
+        if (length(z) == 1L && is.factor(zz <- z[[1L]]) && nlevels(zz) < 100000)
+            return(.Internal(radixsort(zz, na.last, decreasing)))
+        else return(.Internal(order(na.last, decreasing, ...)))
+    }
 
     ## na.last = NA case: remove nas
     if(any(diff(l.z <- vapply(z, length, 1L)) != 0L))
@@ -136,7 +139,7 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
         else stop("method=\"quick\" is only for numeric 'x'")
     }
     if(method == "radix") {
-        if(!typeof(x) == "integer") # do want to allow factors here
+        if(!typeof(x) == "integer") # we do want to allow factors here
             stop("method=\"radix\" is only for integer 'x'")
         if(is.na(na.last))
             return(.Internal(radixsort(x[!is.na(x)], TRUE, decreasing)))
