@@ -374,8 +374,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 
 static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 {
-    int i, j, k, ii, jj, mode, n;
-    int **subs, *indx, *offset, *bound;
+    int k, mode;
     SEXP dimnames, dimnamesnames, p, q, r, result, xdims;
     const void *vmaxsave;
 
@@ -384,17 +383,17 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     k = length(xdims);
 
     vmaxsave = vmaxget();
-    subs = (int**)R_alloc(k, sizeof(int*));
-    indx = (int*)R_alloc(k, sizeof(int));
-    offset = (int*)R_alloc(k, sizeof(int));
-    bound = (int*)R_alloc(k, sizeof(int));
+    int **subs = (int**)R_alloc(k, sizeof(int*));
+    int *indx = (int*)R_alloc(k, sizeof(int));
+    R_xlen_t *offset = (R_xlen_t*)R_alloc(k, sizeof(R_xlen_t));
+    int *bound = (int*)R_alloc(k, sizeof(int));
 
     /* Construct a vector to contain the returned values. */
     /* Store its extents. */
 
-    n = 1;
+    R_xlen_t n = 1;
     r = s;
-    for (i = 0; i < k; i++) {
+    for (int i = 0; i < k; i++) {
 	SETCAR(r, int_arraySubscript(i, CAR(r), xdims, x, call));
 	bound[i] = LENGTH(CAR(r));
 	n *= bound[i];
@@ -402,21 +401,21 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     }
     PROTECT(result = allocVector(mode, n));
     r = s;
-    for (i = 0; i < k; i++) {
+    for (int i = 0; i < k; i++) {
 	indx[i] = 0;
 	subs[i] = INTEGER(CAR(r));
 	r = CDR(r);
     }
     offset[0] = 1;
-    for (i = 1; i < k; i++)
+    for (int i = 1; i < k; i++)
 	offset[i] = offset[i - 1] * INTEGER(xdims)[i - 1];
 
     /* Transfer the subset elements from "x" to "a". */
 
-    for (i = 0; i < n; i++) {
-	ii = 0;
-	for (j = 0; j < k; j++) {
-	    jj = subs[j][indx[j]];
+    for (R_xlen_t i = 0; i < n; i++) {
+	R_xlen_t ii = 0;
+	for (int j = 0; j < k; j++) {
+	    int jj = subs[j][indx[j]];
 	    if (jj == NA_INTEGER) {
 		ii = NA_INTEGER;
 		goto assignLoop;
@@ -478,7 +477,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    break;
 	}
 	if (n > 1) {
-	    j = 0;
+	    int j = 0;
 	    while (++indx[j] >= bound[j]) {
 		indx[j] = 0;
 		j = (j + 1) % k;
@@ -487,7 +486,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     }
 
     PROTECT(xdims = allocVector(INTSXP, k));
-    for(i = 0 ; i < k ; i++)
+    for(int i = 0 ; i < k ; i++)
 	INTEGER(xdims)[i] = bound[i];
     setAttrib(result, R_DimSymbol, xdims);
     UNPROTECT(1);
@@ -500,12 +499,11 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     dimnames = getAttrib(x, R_DimNamesSymbol);
     dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
     if (dimnames != R_NilValue) {
-	/*SEXP xdims;
-	int */ j = 0;
+	int j = 0;
 	PROTECT(xdims = allocVector(VECSXP, k));
 	if (TYPEOF(dimnames) == VECSXP) {
 	    r = s;
-	    for (i = 0; i < k ; i++) {
+	    for (int i = 0; i < k ; i++) {
 		if (bound[i] > 0) {
 		  SET_VECTOR_ELT(xdims, j++,
 			ExtractSubset(VECTOR_ELT(dimnames, i),
@@ -521,7 +519,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    p = dimnames;
 	    q = xdims;
 	    r = s;
-	    for(i = 0 ; i < k; i++) {
+	    for(int i = 0 ; i < k; i++) {
 		SETCAR(q, allocVector(STRSXP, bound[i]));
 		SETCAR(q, ExtractSubset(CAR(p), CAR(q), CAR(r), call));
 		p = CDR(p);
