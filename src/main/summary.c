@@ -488,7 +488,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	int_a = 0;/* int_a = 1	<-->	a is INTEGER */
 	real_a = 0;
 
-	if(length(a) > 0) {
+	if(xlength(a) > 0) {
 	    updated = 0;/*- GLOBAL -*/
 
 	    switch(iop) {
