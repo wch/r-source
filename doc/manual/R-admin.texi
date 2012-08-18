@@ -3072,7 +3072,7 @@ versions of MKL for Mac OS X and Windows, but they do not work with the
 standard compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
-following notes apply exactly only to version 10.0.
+following notes apply exactly only to version 10.3.
 
 Version 10 of MKL supports two linking models: the default model, which
 is backward compatible with version 9 (see below), and the pure layered
@@ -3089,24 +3089,25 @@ therefore use the interface layer that matches your compiler
 R can be linked to a sequential version of MKL by something like
 
 @example
-MKL_LIB_PATH=/opt/intel/mkl/10.0.3.020/lib/em64t/
+MKL_LIB_PATH=/opt/intel/mkl/10.311.339/lib/intel64/
 export LD_LIBRARY_PATH=$MKL_LIB_PATH
-MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_sequential -lmkl_lapack -lmkl_core"
+MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core"
 ./configure --with-blas="$MKL" --with-lapack
 @end example
 
 @noindent
-The order of the libraries is important.  The option
+where some versions may need @code{-lmkl_lapack} before
+@code{-lmkl_core}.  The order of the libraries is important.  The option
 @option{--with-lapack} is used since MKL contains a tuned copy of LAPACK
-as well as @acronym{BLAS} (@pxref{LAPACK}), although this (and the
-corresponding library) can be omitted.
+as well as @acronym{BLAS} (@pxref{LAPACK}), although this can be
+omitted.
 
 Threaded MKL may be used (according to Zhang Zhang of Intel) by
 replacing the line defining the variable @code{MKL} with (Intel OMP)
 
 @example
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_intel_thread \
-     -lmkl_lapack -lmkl_core -liomp5 -lpthread"
+     -lmkl_core -liomp5 -lpthread"
 @end example
 
 @noindent
@@ -3114,7 +3115,7 @@ or (GNU OMP)
 
 @example
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
-     -lmkl_lapack -lmkl_core -fopenmp -lpthread"
+     -lmkl_core -fopenmp -lpthread"
 @end example
 
 @noindent
