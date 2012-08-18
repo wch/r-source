@@ -1073,14 +1073,14 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    iip[itmp]++;				\
 	    break;					\
 	}						\
-    for (j = 0, itmp = 0; itmp < n; itmp++)	       	\
-	j += iip[itmp] * stride[itmp];
+    for (lj = 0, itmp = 0; itmp < n; itmp++)	       	\
+	lj += iip[itmp] * stride[itmp];
 
 /* aperm (a, perm, resize = TRUE) */
 SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, perm, r, dimsa, dimsr, dna;
-    int i, j, n, len, itmp;
+    int i, j, n, itmp;
 
     checkArity(op, args);
 
@@ -1115,13 +1115,13 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else {
 	PROTECT(perm = coerceVector(perm, INTSXP));
-	if (length(perm) == n) {
+	if (LENGTH(perm) == n) {
 	    for (i = 0; i < n; i++) pp[i] = INTEGER(perm)[i] - 1;
 	    UNPROTECT(1);
 	} else error(_("'perm' is of wrong length"));
     }
 
-    int *iip = (int *) R_alloc((size_t) n, sizeof(int));
+    R_xlen_t *iip = (R_xlen_t *) R_alloc((size_t) n, sizeof(R_xlen_t));
     for (i = 0; i < n; iip[i++] = 0);
     for (i = 0; i < n; i++)
 	if (pp[i] >= 0 && pp[i] < n) iip[pp[i]]++;
@@ -1131,7 +1131,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* create the stride object and permute */
 
-    int *stride = (int *) R_alloc((size_t) n, sizeof(int));
+    R_xlen_t *stride = (R_xlen_t *) R_alloc((size_t) n, sizeof(R_xlen_t));
     for (iip[0] = 1, i = 1; i<n; i++) iip[i] = iip[i-1] * isa[i-1];
     for (i = 0; i < n; i++) stride[i] = iip[pp[i]];
 
@@ -1143,60 +1143,60 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* and away we go! iip will hold the incrementer */
 
-    len = LENGTH(a);
-    len = length(a);
+    R_xlen_t len = XLENGTH(a);
     PROTECT(r = allocVector(TYPEOF(a), len));
 
     for (i = 0; i < n; iip[i++] = 0);
 
+    R_xlen_t li, lj;
     switch (TYPEOF(a)) {
 
     case INTSXP:
-	for (j=0, i=0; i < len; i++) {
-	    INTEGER(r)[i] = INTEGER(a)[j];
+	for (lj = 0, li = 0; li < len; li++) {
+	    INTEGER(r)[li] = INTEGER(a)[lj];
 	    CLICKJ;
 	}
 	break;
 
     case LGLSXP:
-	for (j=0, i=0; i < len; i++) {
-	    LOGICAL(r)[i] = LOGICAL(a)[j];
+	for (lj = 0, li = 0; li < len; li++) {
+	    LOGICAL(r)[li] = LOGICAL(a)[lj];
 	    CLICKJ;
 	}
 	break;
 
     case REALSXP:
-	for (j=0, i=0; i < len; i++) {
-	    REAL(r)[i] = REAL(a)[j];
+	for (lj = 0, li = 0; li < len; li++) {
+	    REAL(r)[li] = REAL(a)[lj];
 	    CLICKJ;
 	}
 	break;
 
     case CPLXSXP:
-	for (j=0, i=0; i < len; i++) {
-	    COMPLEX(r)[i].r = COMPLEX(a)[j].r;
-	    COMPLEX(r)[i].i = COMPLEX(a)[j].i;
+	for (lj = 0, li = 0; li < len; li++) {
+	    COMPLEX(r)[li].r = COMPLEX(a)[lj].r;
+	    COMPLEX(r)[li].i = COMPLEX(a)[lj].i;
 	    CLICKJ;
 	}
 	break;
 
     case STRSXP:
-	for (j=0, i=0; i < len; i++) {
-	    SET_STRING_ELT(r, i, STRING_ELT(a, j));
+	for (lj = 0, li = 0; li < len; li++) {
+	    SET_STRING_ELT(r, li, STRING_ELT(a, lj));
 	    CLICKJ;
 	}
 	break;
 
     case VECSXP:
-	for (j=0, i=0; i < len; i++) {
-	    SET_VECTOR_ELT(r, i, VECTOR_ELT(a, j));
+	for (lj = 0, li = 0; li < len; li++) {
+	    SET_VECTOR_ELT(r, li, VECTOR_ELT(a, lj));
 	    CLICKJ;
 	}
 	break;
 
     case RAWSXP:
-	for (j=0, i=0; i < len; i++) {
-	    RAW(r)[i] = RAW(a)[j];
+	for (lj = 0, li = 0; li < len; li++) {
+	    RAW(r)[li] = RAW(a)[lj];
 	    CLICKJ;
 	}
 	break;
