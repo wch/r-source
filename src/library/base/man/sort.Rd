@@ -103,9 +103,10 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \code{index.return} is true, when the result is a list with components
   named \code{x} and \code{ix} containing the sorted numbers and the
   ordering index vector.  In the latter case, if \code{method ==
-    "quick"} ties may be reversed in the ordering, unlike
-  \code{sort.list}, as quicksort is not stable.  NB: the index vector
-  refers to element numbers \emph{after removal of \code{NA}s}. 
+    "quick"} ties may be reversed in the ordering (unlike
+  \code{sort.list}) as quicksort is not stable.  NB: the index vector
+  refers to element numbers \emph{after removal of \code{NA}s}: see
+  \code{\link{order}} if you want the original element numbers.
 
   All attributes are removed from the return value (see Becker \emph{et
     al}, 1988, p.146) except names, which are sorted.  (If
