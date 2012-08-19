@@ -1,6 +1,6 @@
 % File src/library/base/man/qr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{qr}
@@ -79,6 +79,9 @@ as.qr(x)
 
   It is not possible to coerce objects to mode \code{"qr"}.  Objects
   either are QR decompositions or they are not.
+
+  The LINPACK interface is restricted to matrices \code{x} with less
+  than \eqn{2^{31}}{2^31} elements.
 }
 \value{
   The QR decomposition of the matrix as computed by LINPACK or LAPACK.

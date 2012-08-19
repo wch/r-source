@@ -1,6 +1,6 @@
 % File src/library/base/man/chol.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol}
@@ -53,7 +53,10 @@ chol(x, \dots)
   \code{pivot <- attr(Q, "pivot")} and \code{oo <- order(pivot)}, it
   is true that \code{t(Q[, oo]) \%*\% Q[, oo]} equals \code{x},
   or, alternatively, \code{t(Q) \%*\% Q} equals \code{x[pivot,
-  pivot]}.  See the examples.
+    pivot]}.  See the examples.
+
+  The LINPACK interface is restricted to matrices \code{x} with less
+  than \eqn{2^{31}}{2^31} elements.
 }
 
 \section{Warning}{

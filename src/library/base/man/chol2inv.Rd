@@ -1,6 +1,6 @@
 % File src/library/base/man/chol2inv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
@@ -28,6 +28,9 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 \details{
   This is an interface to the LAPACK routine DPOTRI and the LINPACK
   routine DPODI.
+
+  The LINPACK interface is restricted to matrices \code{x} with less
+  than \eqn{2^{31}}{2^31} elements.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)

@@ -1,10 +1,14 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
 \title{Solve a System of Equations}
+\description{
+  This generic function solves the equation \code{a \%*\% x = b} for \code{x},
+  where \code{b} can be either a vector or a matrix.
+}
 \usage{
 solve(a, b, \dots)
 
@@ -27,10 +31,6 @@ solve(a, b, \dots)
     \R < 1.7.0)?  Otherwise LAPACK is used.}
   \item{\dots}{further arguments passed to or from other methods}
 }
-\description{
-  This generic function solves the equation \code{a \%*\% x = b} for \code{x},
-  where \code{b} can be either a vector or a matrix.
-}
 \details{
   \code{a} or \code{b} can be complex, but this uses double complex
   arithmetic which might not be available on all platforms and LAPACK
@@ -45,6 +45,9 @@ solve(a, b, \dots)
   For back-compatibility \code{a} can be a (real) QR decomposition,
   although \code{\link{qr.solve}} should be called in that case.
   \code{\link{qr.solve}} can handle non-square systems.
+
+  The LINPACK interface is restricted to matrices \code{x} with less
+  than \eqn{2^{31}}{2^31} elements.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
