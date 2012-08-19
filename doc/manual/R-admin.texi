@@ -2278,7 +2278,7 @@ specific OSes).  For most a 32-bit version is the default, but for some
 (e.g., @cputype{x86_64} Linux and (Mac) OS X >= 10.6) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
-@acronym{IEC}@tie{}60559@footnote{also known as
+@acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also known as
 @acronym{IEEE}@tie{}754} double-precision reals, and so compute to
 the same precision@footnote{at least when storing quantities: the on-FPU
 precision is allowed to vary} and with the same limits on the sizes of
@@ -2334,13 +2334,8 @@ both and install them in the same place: @xref{Sub-architectures}.
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
-use of 32-bit integers (especially in FORTRAN code).  On all builds of
-@R{}, the maximum length (number of elements) of a vector is
-@math{2^{31}-1}, about 2 billion, and on 64-bit builds the size of a
-block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
-is anticipated these will be raised eventually@footnote{this comment has
-been in the manual since 2005.} but the need for 8GB objects is (when
-this was written in 2011) exceptional.
+use of 32-bit integers (especially in FORTRAN code).  For example, the
+dimensions of an array are limited to @math{2^{31} - 1}.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
@@ -2584,14 +2579,14 @@ installed.
 
 You need a means of compiling C and FORTRAN 90 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
-compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
-@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
-that C11 compilers (when they appear) need not be C99-compliant: @R{}
-requires support for @code{double complex} which is optional in C11 but
-is mandatory in C99.}  @R{} tries to choose suitable flags for the C
-compilers it knows about, but you may have to set @code{CC} or
-@code{CFLAGS} suitably.  For recent versions of @command{gcc} with
-@code{glibc} this means including
+compiler should be @acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also
+known as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and
+C99-compliant.@footnote{Note that C11 compilers (when they appear) need
+not be C99-compliant: @R{} requires support for @code{double complex}
+which is optional in C11 but is mandatory in C99.}  @R{} tries to choose
+suitable flags for the C compilers it knows about, but you may have to
+set @code{CC} or @code{CFLAGS} suitably.  For recent versions of
+@command{gcc} with @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.}.  If the compiler is
@@ -2945,11 +2940,11 @@ a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
 So if @R{} is re-built to use an enhanced @acronym{BLAS} then packages
 such as @CRANpkg{quantreg} will need to be re-installed.
 
-@R{} relies on @acronym{IEC}@tie{}60559 compliance of an external
-@acronym{BLAS}.  This can be broken if for example the code assumes that
-terms with a zero factor are always zero and do not need to be
-computed---whereas @code{x*0} can be @code{NaN}. This is
-checked in the test suite.
+@R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
+external @acronym{BLAS}.  This can be broken if for example the code
+assumes that terms with a zero factor are always zero and do not need to
+be computed---whereas @code{x*0} can be @code{NaN}. This is checked in
+the test suite.
 
 
 @menu
@@ -3064,11 +3059,12 @@ updated for CPUs released since mid-2010.  However, OpenBLAS
 
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
-For Intel processors under Linux, there is Intel's Math Kernel Library
+For Intel processors@footnote{and perhaps others} under Linux, there is
+Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.  There are also
-versions of MKL for Mac OS X and Windows, but they do not work with the
+versions of MKL for Mac OS X and Windows, but they did not work with the
 standard compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
@@ -3121,7 +3117,8 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
 @noindent
 The default number of threads will be chosen by the OpenMP software,
 but can be controlled by setting @code{OMP_NUM_THREADS} or
-@code{MKL_NUM_THREADS}.
+@code{MKL_NUM_THREADS}, and in recent versions seems to produce a
+sensible value for sole use of the machine.
 
 Static threaded MKL may be used (GNU OpenMP) with something like
 
@@ -3137,6 +3134,10 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
 
 @noindent
 (Thanks to Ei-ji Nakama).
+
+The MKL documentation includes a `link line advisor' which will suggest
+appropriate incantations: an on-line version was available at
+@uref{http://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor/}
 
 The default linking model, which was also used by version 9 of MKL, can
 be used by
@@ -3260,8 +3261,23 @@ platforms}.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
-because it is necessary on some platforms.  Reporting problems where it
-is used unnecessarily will simply irritate the @R{} helpers.
+because it is necessary on some platforms and because some users want to
+experiment with claimed performance improvements.  Reporting problems
+where it is used unnecessarily will simply irritate the @R{} helpers.
+
+Note too the comments about @acronym{ISO}/@acronym{IEC}@tie{}60559
+compliance in the section of external @acronym{BLAS}: these apply
+equally to an external LAPACK, and for example the Intel MKL
+documentation says
+@quotation
+LAPACK routines assume that input matrices do not contain IEEE 754
+special values such as INF or NaN values. Using these special values may
+cause LAPACK to return unexpected results or become unstable.
+@end quotation
+
+As from @R{} 2.16.0 we rely on limited support in LAPACK for matrices
+with @math{2^{31}} or more elements: it is quite possible that an
+external LAPACK will not have that support.
 
 @node Caveats,  , LAPACK, Linear algebra
 @subsection Caveats
