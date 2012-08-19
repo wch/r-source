@@ -16,16 +16,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## NB: nrow * col could overflow ints here.
 diag <- function(x = 1, nrow, ncol)
 {
     if (is.matrix(x)) {
         if (nargs() > 1L)
             stop("'nrow' or 'ncol' cannot be specified when 'x' is a matrix")
 
-        if((m <- min(dim(x))) == 0L)
-	    return(vector(typeof(x), 0L)) # logical, integer, also list ..
-
+        if((m <- min(dim(x))) == 0L) return(vector(typeof(x), 0L))
+        ## NB: need double index to avoid overflows.
         y <- c(x)[1 + 0L:(m - 1L) * (dim(x)[1L] + 1)]
         nms <- dimnames(x)
         if (is.list(nms) && !any(sapply(nms, is.null)) &&
@@ -33,16 +31,16 @@ diag <- function(x = 1, nrow, ncol)
             names(y) <- nm
         return(y)
     }
-    if(is.array(x) && length(dim(x)) != 1L)
+    if (is.array(x) && length(dim(x)) != 1L)
         stop("'x' is an array, but not 1D.")
 
-    if(missing(x)) n <- nrow
-    else if(length(x) == 1L && nargs() == 1L) {
+    if (missing(x)) n <- nrow
+    else if (length(x) == 1L && nargs() == 1L) {
 	n <- as.integer(x)
 	x <- 1
     } else n <- length(x)
-    if(!missing(nrow)) n <- nrow
-    if(missing(ncol)) ncol <- n
+    if (!missing(nrow)) n <- nrow
+    if (missing(ncol)) ncol <- n
     ## some people worry about speed
     .Internal(diag(x, n, ncol))
 }
@@ -50,14 +48,14 @@ diag <- function(x = 1, nrow, ncol)
 `diag<-` <- function(x, value)
 {
     dx <- dim(x)
-    if(length(dx) != 2L)
+    if (length(dx) != 2L)
 	## no further check, to also work with 'Matrix'
 	stop("only matrix diagonals can be replaced")
     len.i <- min(dx)
     len.v <- length(value)
-    if(len.v != 1L && len.v != len.i)
+    if (len.v != 1L && len.v != len.i)
 	stop("replacement diagonal has wrong length")
-    if(len.i > 0L) {
+    if (len.i) {
 	i <- seq_len(len.i)
 	x[cbind(i, i)] <- value
     }

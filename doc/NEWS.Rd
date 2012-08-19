@@ -62,6 +62,8 @@
       \item On Windows, the C stack size has been increased to 64MB (it
       has been 10MB since the days of 32MB RAM systems).
 
+      On other OS this is set at run time rather than when compiling.
+
       \item Matrix indexing of dataframes by two column numeric indices
       is now supported for replacement as well as extraction.
 
@@ -92,14 +94,6 @@
       \code{lty}, \code{lwd} and \code{pch} in \code{par()} now requires a
       length-one argument.   Previously some silently took the first
       element of a longer vector, but not always when documented to do so.
-
-      \item The \code{model.frame()} method for \code{"lm"} uses
-      \code{xlevels}: this is safer if \code{data} was supplied or
-      \code{model = FALSE} was used and the levels of factors used in
-      the fit had been re-ordered since fitting.
-
-      Similarly, \code{model.frame.lm(fm, data=<data>)} copies across
-      the variables used for safe prediction from the fit.
 
       \item \code{Sys.which()} when used with inputs which would be
       unsafe in a shell (e.g. absolute paths containing spaces) now uses
@@ -246,8 +240,8 @@
 
       \item \code{.C()} and \code{.Fortran()} do not accept long vector
       inputs, at least for the time being.  This is a precaution as it
-      is very unlikely that existing code will have be written to handle
-      long vectors (and the \R wrappers often assume that
+      is very unlikely that existing code will have been written to
+      handle long vectors (and the \R wrappers often assume that
       \code{length(x)} is an integer).
       
       \item Many more basic operations are now interruptible when run on
@@ -376,7 +370,7 @@
       \item Passing \code{NULL} to \code{.C()} is now an error.
 
       \item \code{.C()} and \code{.Fortran()} now warn if
-      \code{"single"} arguments are used with \code{dup=FALSE}, as
+      \code{"single"} arguments are used with \code{DUP = FALSE}, as
       changes to such arguments are not returned to the caller.
 
       \item C entry points \code{R_qsort} and \code{R_qsort_I} now have
@@ -397,14 +391,15 @@
       \file{share/locale}).  Thus the \pkg{base} package supports three
       translation domains, \code{R-base}, \code{R} and \code{RGui}.
 
-      \item The compiled translations which ship with \R are all in the
-      new package \pkg{translations} for easier updating.  The first
-      package of that name found on \code{.libPaths()} at the start of
-      the \R session will be used.  (It is possible messages will be
-      used before \code{.libPaths()} is set up in which case the
-      default translations will be used: set environment variable
-      \env{R_TRANSLATIONS} to point to the location of the intended
-      \pkg{translations} package to use this right from the start.)
+      \item The compiled translations which ship with \R are all
+      installed to the new package \pkg{translations} for easier
+      updating.  The first package of that name found on
+      \code{.libPaths()} at the start of the \R session will be used.
+      (It is possible messages will be used before \code{.libPaths()} is
+      set up in which case the default translations will be used: set
+      environment variable \env{R_TRANSLATIONS} to point to the location
+      of the intended \pkg{translations} package to use this right from
+      the start.)
 
       \item The translations form a separate group in the Windows
       installer, so can be omitted if desired.
@@ -432,9 +427,6 @@
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
-
-      \item \code{aov()} and \code{manova()} gave spurious warning about
-      singular error model in the multiresponse case.
     }
   }
 }
@@ -456,10 +448,10 @@
       the default method does, although this was undocumented).
       (Wish of \PR{14961}.)
 
-      \item Reference class methods that use other methods in an
-      indirect way (e.g., by \code{sapply()}) must tell the code
-      analysis to include that method.  They can now do so by invoking
-      \code{$usingMethods()}. %$
+      \item Reference class methods (in the \pkg{methods} package) that
+      use other methods in an indirect way (e.g., by \code{sapply()})
+      must tell the code analysis to include that method.  They can now
+      do so by invoking \code{$usingMethods()}. %$
 
       \item More Polish translations are available: for the
       \command{RGui} menus and for several recommended packages.
@@ -515,6 +507,14 @@
       10.6 and 10.7 (\command{valgrind} currently has very limited
       support for 10.8), provided \code{system()} is not used (directly
       or indirectly).
+      
+      \item The \code{model.frame()} method for \code{"lm"} uses
+      \code{xlevels}: this is safer if \code{data} was supplied or
+      \code{model = FALSE} was used and the levels of factors used in
+      the fit had been re-ordered since fitting.
+
+      Similarly, \code{model.frame(fm, data=<data>)} copies across
+      the variables used for safe prediction from the fit.
     }
   }
 
@@ -656,7 +656,7 @@
       \item \code{aov()} and \code{manova()} gave spurious warning about
       singular error model in the multiresponse case.
 
-      \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
+      \item In \code{ns()} and \code{bs()}, specifying \code{knots = NULL}
       is now equivalent to omitting it, also when \code{df} is
       specified.  (\PR{14970})
 
@@ -709,6 +709,10 @@
       \item \code{terms.formula()} could exhaust the stack, and the
       stack check did not always catch this before the segfault.
       (\PR{15013})
+      
+      \item \code{sort.list(method = "radix")} could give incorrect
+      results on certain compilers (seen with \command{clang} on Mac OS
+      10.7 and \command{Xcode 4.4.1}).
     }
   }
 }

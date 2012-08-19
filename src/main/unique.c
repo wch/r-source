@@ -1625,7 +1625,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP names, sep, ans, dup, newx;
     int i, cnt, *cnts, dp;
-    R_len_t n, len, maxlen = 0;
+    int n, len, maxlen = 0;
     HashData data;
     const char *csep, *ss;
     void *vmax;
@@ -1643,14 +1643,14 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     for(i = 0; i < n; i++) {
 	SET_STRING_ELT(ans, i, STRING_ELT(names, i));
-	len = (R_len_t) strlen(translateChar(STRING_ELT(names, i)));
+	len = (int) strlen(translateChar(STRING_ELT(names, i)));
 	if(len > maxlen) maxlen = len;
 	vmaxset(vmax);
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	char buf[maxlen + (R_len_t) strlen(csep)
-		 + (R_len_t) (log((double)n)/log(10.0)) + 2];
+	char buf[maxlen + (int) strlen(csep)
+		 + (int) (log((double)n)/log(10.0)) + 2];
 	if(n < 10000) {
 	    R_CheckStack2((size_t)n * sizeof(int));
 	    cnts = (int *) alloca(((size_t) n) * sizeof(int));
