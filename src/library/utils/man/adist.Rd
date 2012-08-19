@@ -1,3 +1,8 @@
+% File src/library/utils/man/adist.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2011-2 R Core Team
+% Distributed under GPL 2 or later
+
 \name{adist}
 \alias{adist}
 \title{Approximate String Distances}
@@ -12,7 +17,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
       partial = !fixed, ignore.case = FALSE, useBytes = FALSE)
 }
 \arguments{
-  \item{x}{a character vector.}
+  \item{x}{a character vector.  \link{Long vectors} are not supported.}
   \item{y}{a character vector, or \code{NULL} (default) indicating
     taking \code{x} as \code{y}.}
   \item{costs}{a numeric vector or list with names partially matching
