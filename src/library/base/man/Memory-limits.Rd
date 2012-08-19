@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory-limits.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Memory-limits}
@@ -45,8 +45,8 @@
   lengths are stored as signed integers.  In addition, the storage space
   cannot exceed the address limit, and if you try to exceed that limit,
   the error message begins \code{cannot allocate vector of length}.
-  The number of characters in a character string is in theory only
-  limited by the address space.
+  The number of bytes in a character string is limited to
+  \eqn{2^{31} - 1 \approx 2\thinspace 10^9}{2^31 - 1 ~ 2*10^9}.
 }
 \section{Unix}{
   The address-space limit is system-specific: 32-bit OSes
@@ -58,13 +58,15 @@
   See the OS/shell's help on commands such as \code{limit} or
   \code{ulimit} for how to impose limitations on the resources available
   to a single process.  For example a \command{bash} user could use
-\preformatted{ulimit -t 600 -m 2000000
+\preformatted{ulimit -t 600 -v 4000000
 }
   whereas a \command{csh} user might use
 \preformatted{limit cputime 10m
-limit memoryuse 2048m
+limit vmemoryuse 4096m
 }
-  to limit a process to 10 minutes of CPU time and (around) 2Gb of memory.
+  to limit a process to 10 minutes of CPU time and (around) 4Gb of
+  virtual memory.  (There are other options to set the RAM in use, but they
+  are not generally honoured.)
 }
 \section{Windows}{
   The address-space limit is 2Gb under 32-bit Windows unless the OS's
