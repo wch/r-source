@@ -223,6 +223,7 @@ FUNTAB R_FunTab[] =
 {"matrix",	do_matrix,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"array",	do_array,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"diag",	do_diag,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"backsolve",	do_backsolve,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"row",		do_rowscols,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"col",		do_rowscols,	2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"unlist",	do_unlist,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},

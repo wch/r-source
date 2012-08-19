@@ -85,7 +85,7 @@ static R_NativePrimitiveArgType Rsockwrite_t[] = {INTSXP, STRSXP, INTSXP, INTSXP
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 static R_CMethodDef cMethods [] = {
-    CDEF(bakslv),
+//    CDEF(bakslv),
     CDEF(bincode), // remove after R 2.15.2
     CDEF(R_max_col),
     CDEF(R_pretty),

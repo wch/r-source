@@ -1565,3 +1565,33 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
    UNPROTECT(nprotect);
    return ans;
 }
+
+
+// backsolve(r, x, k, upper.tri, transpose)
+SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int nprot = 1;
+    checkArity(op, args);
+
+    SEXP r = CAR(args); args = CDR(args);
+    SEXP x = CAR(args); args = CDR(args);
+    int nb = ncols(x), nrx = nrows(r);
+    int k = asInteger(CAR(args)); args = CDR(args);
+    if (k == NA_INTEGER || k <= 0 || k > nrx) 
+	error(_("invalid '%s' argument"), "k");
+    int upper = asLogical(CAR(args)); args = CDR(args);
+    if (upper == NA_INTEGER) error(_("invalid '%s' argument"), "upper.tri");
+    int trans = asLogical(CAR(args));
+    if (trans == NA_INTEGER) error(_("invalid '%s' argument"), "transpose");
+    SEXP ans;
+    if (TYPEOF(r) != REALSXP) {PROTECT(r = coerceVector(r, REALSXP)); nprot++;}
+    if (TYPEOF(x) != REALSXP) {PROTECT(x = coerceVector(x, REALSXP)); nprot++;}
+    PROTECT(ans = allocMatrix(REALSXP, k, nb));
+    int info = 0, job = upper + 10 * trans;
+    bakslv(REAL(r), &nrx, &k, REAL(x), &k, &nb, REAL(ans), &job, &info); 
+    if (info)
+	error(_("singular matrix in 'backsolve'. First zero in diagonal [%d]"),
+	    info);
+    UNPROTECT(nprot);
+    return ans;
+}

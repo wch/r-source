@@ -184,6 +184,9 @@
       re-written in C for speed and less memory usage.  It now forces
       the result to be numeric in the case \code{diag(x)} since it is
       said to have \sQuote{zero off-diagonal entries}.
+      
+      \item \code{backsolve()} (and \code{forwardsolve()}) are now
+      internal functions, for speed and support for large matrices.
     }
   }
 

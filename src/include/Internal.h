@@ -116,6 +116,7 @@ SEXP do_attr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attrgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attributes(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attributesgets(SEXP, SEXP, SEXP, SEXP);
+SEXP do_backsolve(SEXP, SEXP, SEXP, SEXP);
 SEXP do_basename(SEXP, SEXP, SEXP, SEXP);
 SEXP do_begin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bind(SEXP, SEXP, SEXP, SEXP);
