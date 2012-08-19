@@ -1,6 +1,6 @@
 % File src/library/base/man/charmatch.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{charmatch}
@@ -11,9 +11,9 @@ charmatch(x, table, nomatch = NA_integer_)
 \alias{charmatch}
 \arguments{
   \item{x}{the values to be matched: converted to a character vector by
-    \code{\link{as.character}}.}
+    \code{\link{as.character}}.  \link{Long vectors} are supported.}
   \item{table}{the values to be matched against: converted to a character
-    vector.}
+    vector.  \link{Long vectors} are not supported.}
   \item{nomatch}{the (integer) value to be returned at non-matching
     positions.}
 }

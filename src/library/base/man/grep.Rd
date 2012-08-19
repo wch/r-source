@@ -52,7 +52,8 @@ regexec(pattern, text, ignore.case = FALSE,
     is used with a warning.  Missing values are allowed except for
     \code{regexpr} and \code{gregexpr}.}
   \item{x, text}{a character vector where matches are sought, or an
-    object which can be coerced by \code{as.character} to a character vector.}
+    object which can be coerced by \code{as.character} to a character
+    vector.  \link{Long vectors} are supported.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{perl}{logical.  Should perl-compatible regexps be used?}
