@@ -776,7 +776,7 @@ static void UndoHashing(SEXP x, SEXP table, HashData *d)
     for (int i = 0; i < LENGTH(x); i++) removeEntry(table, x, i, d);
 }
 
-static int Lookup(SEXP table, SEXP x, int indx, HashData *d)
+static int Lookup(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
     int *h = INTEGER(d->HashTable);
     hlen i = d->hash(x, indx, d);
@@ -807,14 +807,13 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 static SEXP match_transform(SEXP s, SEXP env)
 {
     if(OBJECT(s)) {
-	if(inherits(s, "factor"))
-	    return asCharacterFactor(s);
+	if(inherits(s, "factor")) return asCharacterFactor(s);
 	else if(inherits(s, "POSIXlt")) { /* and maybe more classes in the future:
 					   * Call R's (generic)  as.character(s) : */
 	    SEXP call, r;
 	    PROTECT(call = lang2(install("as.character"), s));
-	    PROTECT(r = eval(call, env));
-	    UNPROTECT(2);
+	    r = eval(call, env);
+	    UNPROTECT(1);
 	    return r;
 	}
     }
@@ -828,16 +827,17 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     SEXPTYPE type;
     HashData data;
 
-    int i, n = length(ix), nprot = 0;
+    R_xlen_t n = xlength(ix);
 
     /* handle zero length arguments */
     if (n == 0) return allocVector(INTSXP, 0);
     if (length(itable) == 0) {
 	ans = allocVector(INTSXP, n);
-	for (i = 0; i < n; i++) INTEGER(ans)[i] = nmatch;
+	for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = nmatch;
 	return ans;
     }
 
+    int nprot = 0;
     PROTECT(x     = match_transform(ix,     env)); nprot++;
     PROTECT(table = match_transform(itable, env)); nprot++;
     /* or should we use PROTECT_WITH_INDEX  and  REPROTECT below ? */
@@ -846,8 +846,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
      * Note that above we coerce factors and "POSIXlt", only to character.
      * Hence, coerce to character or to `higher' type
      * (given that we have "Vector" or NULL) */
-    if(TYPEOF(x) >= STRSXP || TYPEOF(table) >= STRSXP)
-	type = STRSXP;
+    if(TYPEOF(x) >= STRSXP || TYPEOF(table) >= STRSXP) type = STRSXP;
     else type = TYPEOF(x) < TYPEOF(table) ? TYPEOF(table) : TYPEOF(x);
     PROTECT(x     = coerceVector(x,     type)); nprot++;
     PROTECT(table = coerceVector(table, type)); nprot++;
@@ -858,7 +857,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	Rboolean useBytes = FALSE;
 	Rboolean useUTF8 = FALSE;
         Rboolean useCache = TRUE;
-	for(i = 0; i < length(x); i++) {
+	for(R_xlen_t i = 0; i < length(x); i++) {
             SEXP s = STRING_ELT(x, i);
 	    if(IS_BYTES(s)) {
 		useBytes = TRUE;
@@ -874,7 +873,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	    }
         }
 	if(!useBytes || useCache) {
-	    for(i = 0; i < length(table); i++) {
+	    for(int i = 0; i < length(table); i++) {
                 SEXP s = STRING_ELT(table, i);
 		if(IS_BYTES(s)) {
 		    useBytes = TRUE;
@@ -915,25 +914,14 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
 
 SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int nomatch, nargs = length(args);
-    SEXP incomp;
-
-    /* checkArity(op, args); too many packages have captured 3 from R < 2.7.0 */
-    if (nargs < 3 || nargs > 4)
-	error("%d arguments passed to .Internal(%s) which requires %d",
-	      length(args), PRIMNAME(op), PRIMARITY(op));
-    if (nargs == 3)
-	warning("%d arguments passed to .Internal(%s) which requires %d",
-		length(args), PRIMNAME(op), PRIMARITY(op));
+    checkArity(op, args);
 
     if ((!isVector(CAR(args)) && !isNull(CAR(args)))
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
-    nomatch = asInteger(CADDR(args));
-    if (nargs < 4) return matchE(CADR(args), CAR(args), nomatch, env);
-
-    incomp = CADDDR(args);
+    int nomatch = asInteger(CADDR(args));
+    SEXP incomp = CADDDR(args);
 
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0))
@@ -943,7 +931,7 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* pmatch and charmatch return integer positions, so cannot be used
-   for long vectors (in general) */
+   for long vector tables */
 
 /* Partial Matching of Strings */
 /* Fully S Compatible version. */
@@ -959,9 +947,8 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    int i, j,  mtch, n_input, n_target, mtch_count, dups_ok, no_match;
+    int mtch, n_target, mtch_count, dups_ok, no_match;
     size_t temp;
-    int nexact = 0;
     int *used = NULL, *ians;
     const char **in, **tar;
     Rboolean no_dups;
@@ -969,9 +956,9 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     input = CAR(args);
-    n_input = LENGTH(input);
+    R_xlen_t n_input = XLENGTH(input);
     target = CADR(args);
-    n_target = LENGTH(target);
+    n_target = LENGTH(target); // not allowed to be long
     no_match = asInteger(CADDR(args));
     dups_ok = asLogical(CADDDR(args));
     if (dups_ok == NA_LOGICAL)
@@ -983,10 +970,10 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(no_dups) {
 	used = (int *) R_alloc((size_t) n_target, sizeof(int));
-	for (j = 0; j < n_target; j++) used[j] = 0;
+	for (int j = 0; j < n_target; j++) used[j] = 0;
     }
 
-    for(i = 0; i < n_input; i++) {
+    for(R_xlen_t i = 0; i < n_input; i++) {
 	if(IS_BYTES(STRING_ELT(input, i))) {
 	    useBytes = TRUE;
 	    useUTF8 = FALSE;
@@ -996,7 +983,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if(!useBytes) {
-	for(i = 0; i < n_target; i++) {
+	for(R_xlen_t i = 0; i < n_target; i++) {
 	    if(IS_BYTES(STRING_ELT(target, i))) {
 		useBytes = TRUE;
 		useUTF8 = FALSE;
@@ -1012,34 +999,35 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, n_input));
     ians = INTEGER(ans);
     if(useBytes) {
-	for(i = 0; i < n_input; i++) {
+	for(R_xlen_t i = 0; i < n_input; i++) {
 	    in[i] = CHAR(STRING_ELT(input, i));
 	    ians[i] = 0;
 	}
-	for(j = 0; j < n_target; j++)
+	for(int j = 0; j < n_target; j++)
 	    tar[j] = CHAR(STRING_ELT(target, j));
     }
     else if(useUTF8) {
-	for(i = 0; i < n_input; i++) {
+	for(R_xlen_t i = 0; i < n_input; i++) {
 	    in[i] = translateCharUTF8(STRING_ELT(input, i));
 	    ians[i] = 0;
 	}
-	for(j = 0; j < n_target; j++)
+	for(int j = 0; j < n_target; j++)
 	    tar[j] = translateCharUTF8(STRING_ELT(target, j));
     } else {
-	for(i = 0; i < n_input; i++) {
+	for(R_xlen_t i = 0; i < n_input; i++) {
 	    in[i] = translateChar(STRING_ELT(input, i));
 	    ians[i] = 0;
 	}
-	for(j = 0; j < n_target; j++)
+	for(int j = 0; j < n_target; j++)
 	    tar[j] = translateChar(STRING_ELT(target, j));
     }
     /* First pass, exact matching */
+    R_xlen_t nexact = 0;
     if(no_dups) {
-	for (i = 0; i < n_input; i++) {
+	for (R_xlen_t i = 0; i < n_input; i++) {
 	    const char *ss = in[i];
 	    if (strlen(ss) == 0) continue;
-	    for (j = 0; j < n_target; j++) {
+	    for (int j = 0; j < n_target; j++) {
 		if (used[j]) continue;
 		if (strcmp(ss, tar[j]) == 0) {
 		    if(no_dups) used[j] = 1;
@@ -1064,17 +1052,17 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    data.useUTF8 = useUTF8;
 	    data.nomatch = 0;
 	    DoHashing(target, &data);
-	    for (i = 0; i < n_input; i++) {
+	    for (R_xlen_t i = 0; i < n_input; i++) {
 		/* we don't want to lookup "" */
 		if (strlen(in[i]) == 0) continue;
 		ians[i] = Lookup(target, input, i, &data);
 		if(ians[i]) nexact++;
 	    }
 	} else {
-	    for (i = 0; i < n_input; i++) {
+	    for (R_xlen_t i = 0; i < n_input; i++) {
 		const char *ss = in[i];
 		if (strlen(ss) == 0) continue;
-		for (j = 0; j < n_target; j++)
+		for (int j = 0; j < n_target; j++)
 		    if (strcmp(ss, tar[j]) == 0) {
 			ians[i] = j + 1;
 			nexact++;
@@ -1086,7 +1074,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(nexact < n_input) {
 	/* Second pass, partial matching */
-	for (i = 0; i < n_input; i++) {
+	for (R_xlen_t i = 0; i < n_input; i++) {
 	    const char *ss;
 	    if (ians[i]) continue;
 	    ss = in[i];
@@ -1094,7 +1082,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (temp == 0) continue;
 	    mtch = 0;
 	    mtch_count = 0;
-	    for (j = 0; j < n_target; j++) {
+	    for (int j = 0; j < n_target; j++) {
 		if (no_dups && used[j]) continue;
 		if (strncmp(ss, tar[j], temp) == 0) {
 		    mtch = j + 1;
@@ -1107,7 +1095,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	/* Third pass, set no matches */
-	for (i = 0; i < n_input; i++)
+	for (R_xlen_t i = 0; i < n_input; i++)
 	    if(ians[i] == 0) ians[i] = no_match;
 
     }
@@ -1122,25 +1110,21 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    Rboolean perfect;
-    int i, j, k, imatch, n_input, n_target, no_match, *ians;
-    size_t temp;
     const char *ss, *st;
     Rboolean useBytes = FALSE, useUTF8 = FALSE;
-    const void *vmax;
 
     checkArity(op, args);
 
     input = CAR(args);
-    n_input = LENGTH(input);
+    R_xlen_t n_input = LENGTH(input);
     target = CADR(args);
-    n_target = LENGTH(target);
+    int n_target = LENGTH(target);
 
     if (!isString(input) || !isString(target))
 	error(_("argument is not of mode character"));
-    no_match = asInteger(CADDR(args));
+    int no_match = asInteger(CADDR(args));
 
-    for(i = 0; i < n_input; i++) {
+    for(R_xlen_t i = 0; i < n_input; i++) {
 	if(IS_BYTES(STRING_ELT(input, i))) {
 	    useBytes = TRUE;
 	    useUTF8 = FALSE;
@@ -1150,7 +1134,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if(!useBytes) {
-	for(i = 0; i < n_target; i++) {
+	for(int i = 0; i < n_target; i++) {
 	    if(IS_BYTES(STRING_ELT(target, i))) {
 		useBytes = TRUE;
 		useUTF8 = FALSE;
@@ -1162,28 +1146,28 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(ans = allocVector(INTSXP, n_input));
-    ians = INTEGER(ans);
+    int *ians = INTEGER(ans);
 
-    vmax = vmaxget();
-    for(i = 0; i < n_input; i++) {
+    const void *vmax = vmaxget();
+    for(R_xlen_t i = 0; i < n_input; i++) {
 	if(useBytes)
 	    ss = CHAR(STRING_ELT(input, i));
 	else if(useUTF8)
 	    ss = translateCharUTF8(STRING_ELT(input, i));
 	else
 	    ss = translateChar(STRING_ELT(input, i));
-	temp = strlen(ss);
-	imatch = NA_INTEGER;
-	perfect = FALSE;
+	size_t temp = strlen(ss);
+	int imatch = NA_INTEGER;
+	Rboolean perfect = FALSE;
 	/* we could reset vmax here too: worth it? */
-	for(j = 0; j < n_target; j++) {
+	for(int j = 0; j < n_target; j++) {
 	    if(useBytes)
 		st = CHAR(STRING_ELT(target, j));
 	    else if(useUTF8)
 		st = translateCharUTF8(STRING_ELT(target, j));
 	    else
 		st = translateChar(STRING_ELT(target, j));
-	    k = strncmp(ss, st, temp);
+	    int k = strncmp(ss, st, temp);
 	    if (k == 0) {
 		if (strlen(st) == temp) {
 		    if (perfect)
