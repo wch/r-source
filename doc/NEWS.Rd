@@ -24,10 +24,10 @@
       the default method does, although this was undocumented).
       (Wish of \PR{14961}.)
 
-      \item Reference class methods that use other methods in an
-      indirect way (e.g., by \code{sapply()}) must tell the code
-      analysis to include that method.  They can now do so by invoking
-      \code{$usingMethods()}. %$
+      \item Reference class methods (in the \pkg{methods} package) that
+      use other methods in an indirect way (e.g., by \code{sapply()})
+      must tell the code analysis to include that method.  They can now
+      do so by invoking \code{$usingMethods()}. %$
 
       \item More Polish translations are available: for the
       \command{RGui} menus and for several recommended packages.
@@ -83,6 +83,14 @@
       10.6 and 10.7 (\command{valgrind} currently has very limited
       support for 10.8), provided \code{system()} is not used (directly
       or indirectly).
+      
+      \item The \code{model.frame()} method for \code{"lm"} uses
+      \code{xlevels}: this is safer if \code{data} was supplied or
+      \code{model = FALSE} was used and the levels of factors used in
+      the fit had been re-ordered since fitting.
+
+      Similarly, \code{model.frame(fm, data=<data>)} copies across
+      the variables used for safe prediction from the fit.
     }
   }
 
@@ -224,7 +232,7 @@
       \item \code{aov()} and \code{manova()} gave spurious warning about
       singular error model in the multiresponse case.
 
-      \item In \code{ns()} and \code{bs()}, specifying \code{knots=NULL}
+      \item In \code{ns()} and \code{bs()}, specifying \code{knots = NULL}
       is now equivalent to omitting it, also when \code{df} is
       specified.  (\PR{14970})
 
