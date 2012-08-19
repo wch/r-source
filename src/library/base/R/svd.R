@@ -40,6 +40,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     if(is.na(n)) stop("invalid nrow(x)")
     p <- as.integer(p)
     if(is.na(p)) stop("invalid ncol(x)")
+    if(1.0 * n * p > 2147483647) stop("too large a matrix for LINPACK")
 
     if(nu == 0L) {
 	job <- 0L

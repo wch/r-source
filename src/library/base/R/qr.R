@@ -43,6 +43,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     if(is.na(p)) stop("invalid ncol(x)")
     n <- as.integer(nrow(x))
     if(is.na(n)) stop("invalid nrow(x)")
+    if(1.0 * n * p > 2147483647) stop("too large a matrix for LINPACK")
     res <- .Fortran("dqrdc2",
 	     qr = x,
 	     n,

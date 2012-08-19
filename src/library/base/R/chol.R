@@ -40,6 +40,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
     ## sanity checks
     n <- as.integer(n)
     if(is.na(n)) stop("invalid nrow(x)")
+    if(n > 46340) stop("too large a matrix for LINPACK")
 
     if(!is.double(x)) storage.mode(x) <- "double"
 
