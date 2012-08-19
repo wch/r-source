@@ -234,7 +234,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	     y,
 	     ny,
 	     xb = y,# incl. {dim}names
-             DUP=FALSE, PACKAGE="base")$xb
+             DUP = FALSE, PACKAGE = "base")$xb
 }
 
 ## qr.solve is defined in  ./solve.R

@@ -1567,7 +1567,7 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-// backsolve(r, x, k, upper.tri, transpose)
+/* backsolve(r, x, k, upper.tri, transpose) */
 SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int nprot = 1;
@@ -1592,6 +1592,21 @@ SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (info)
 	error(_("singular matrix in 'backsolve'. First zero in diagonal [%d]"),
 	    info);
+    UNPROTECT(nprot);
+    return ans;
+}
+
+/* max.col(m, ties.method) */
+SEXP attribute_hidden do_maxcol(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP m = CAR(args);
+    int method = asInteger(CADR(args));
+    int nr = nrows(m), nc = ncols(m), nprot = 1;
+    if (TYPEOF(m) != REALSXP) PROTECT(m = coerceVector(m, REALSXP));
+    SEXP ans = allocVector(INTSXP, nr);
+    PROTECT(ans);
+    R_max_col(REAL(m), &nr, &nc, INTEGER(ans), &method);
     UNPROTECT(nprot);
     return ans;
 }

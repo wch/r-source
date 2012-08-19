@@ -61,16 +61,12 @@
 #include "basedecl.h"
 
 /* FIXME: bincode is no longer used in R, but is still used by
-   packages misc3d mixOmics spam .  Remove after R 2.15.2.
+   packages mixOmics spam .  Remove after R 2.15.2.
 */
 void bincode (double *x, int *n, double *breaks, int *nb,
 	      int *code, int *right, int *include_border, int *naok);
 
-static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
-
 static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
-
-static R_NativePrimitiveArgType R_max_col_t[] = {REALSXP, INTSXP, INTSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_pretty_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 
@@ -85,9 +81,7 @@ static R_NativePrimitiveArgType Rsockwrite_t[] = {INTSXP, STRSXP, INTSXP, INTSXP
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 static R_CMethodDef cMethods [] = {
-//    CDEF(bakslv),
     CDEF(bincode), // remove after R 2.15.2
-    CDEF(R_max_col),
     CDEF(R_pretty),
     {"str_signif", (DL_FUNC) &str_signif, 8, NULL}, // mutable first arg
 
