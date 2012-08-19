@@ -328,7 +328,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 
 #ifdef LONG_VECTOR_SUPPORT
     /* Check if it is a long vector we need to index */
-    R_len_t len = 1;
+    R_xlen_t len = 1;
     for (int j = 0; j < LENGTH(dims); j++)  len *= INTEGER(dims)[j];
 
     if(len > R_SHORT_LEN_MAX) {
