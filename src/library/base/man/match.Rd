@@ -21,8 +21,8 @@ match(x, table, nomatch = NA_integer_, incomparables = NULL)
 x \%in\% table
 }
 \arguments{
-  \item{x}{vector or \code{NULL}: the values to be matched.  \link{Long
-      vectors} are supported.}
+  \item{x}{vector or \code{NULL}: the values to be matched.
+    \link{Long vectors} are supported.}
   \item{table}{vector or \code{NULL}: the values to be matched against.
     \link{Long vectors} are not supported.}
   \item{nomatch}{the value to be returned in the case when no match is
