@@ -2725,7 +2725,7 @@ part of your covering email.
 Also read the CRAN policies linked from
 @uref{http://cran.r-project.org/web/packages/} and note that by
 submitting a package you are confirming that your package complies with
-them.  If this a package new to CRAN, confirm that you have read and
+them.  If this is a package new to CRAN, confirm that you have read and
 agree to those policies in your submission email.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
@@ -2737,10 +2737,10 @@ instructions to view it as a folder, then copy the submission to the
 folder.} and not @samp{sftp} to connect to this server, and passive
 @samp{ftp} is more often successful) and send a message to
 @email{CRAN@@R-project.org} about it (with your package name and version
-in the subject line of the form ``CRAN submission package version'', and please 
-do not submit a package by email).  For
-a new submission, please note in the message that you have read and
-agreed to the CRAN policies.
+in the subject line of the form ``CRAN submission @samp{package}
+@samp{version}'', and please do not submit a package by email).  For a
+new submission, please note in the message that you have read and agreed
+to the CRAN policies.
 
 The @acronym{CRAN} maintainers will run these tests before putting a
 submission online.  (They will use the latest development version of
