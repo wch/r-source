@@ -101,7 +101,7 @@ void bakslv(double *, int *, int *,
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
 #endif
 
-/* appl/pretty.c: hidden, used in engine.c  */
+/* appl/pretty.c: hidden  */
 void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	      double *shrink_sml, double *high_u_fact,
 	      int *eps_correction);
@@ -211,7 +211,7 @@ void optif9(int nr, int n, double *x,
 
 /* Others */
 
-/* appl/pretty.c non-API but used by GWAtoolbox and rgl */
+/* appl/pretty.c non-API but used by engine.c,  rgl and formerly GWAtoolbox */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 		 double shrink_sml, double high_u_fact[],
 		 int eps_correction, int return_bounds);

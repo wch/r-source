@@ -569,6 +569,7 @@
  do_attrgets
  do_attributes
  do_attributesgets
+ do_backsolve
  do_baseenv
  do_basename
  do_bcclose
@@ -791,6 +792,7 @@
  do_math4
  do_matprod
  do_matrix
+ do_maxcol
  do_memCompress
  do_memDecompress
  do_memlimits

@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2011  The R Core Team
+ *  Copyright (C) 1998-2012  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -222,6 +222,7 @@ double  Rlog1p(double);
 #define dlogis		Rf_dlogis
 #define dnbeta		Rf_dnbeta
 #define dnbinom		Rf_dnbinom
+#define dnbinom_mu	Rf_dnbinom_mu
 #define dnchisq		Rf_dnchisq
 #define dnf		Rf_dnf
 #define dnorm4		Rf_dnorm4
@@ -266,6 +267,7 @@ double  Rlog1p(double);
 #define plogis		Rf_plogis
 #define pnbeta		Rf_pnbeta
 #define pnbinom		Rf_pnbinom
+#define pnbinom_mu     	Rf_pnbinom_mu
 #define pnchisq		Rf_pnchisq
 #define pnf		Rf_pnf
 #define pnorm5		Rf_pnorm5
@@ -294,6 +296,7 @@ double  Rlog1p(double);
 #define qlogis		Rf_qlogis
 #define qnbeta		Rf_qnbeta
 #define qnbinom		Rf_qnbinom
+#define qnbinom_mu     	Rf_qnbinom_mu
 #define qnchisq		Rf_qnchisq
 #define qnf		Rf_qnf
 #define qnorm5		Rf_qnorm5
