@@ -1927,4 +1927,12 @@ stopifnot(qgeom(1e-20, prob = 0.1) >= 0)
 stopifnot(identical(p1, p2))
 ## p1 was expression(exp((-0.5 * u)^2))
 
+
+## backsolve with k < nrows(rhs)
+r <- rbind(c(1,2,3),c(0,1,1),c(0,0,2))
+b <- c(8,4,2,1)
+x <- backsolve(r, cbind(b,b))
+stopifnot(identical(x[,1], x[,2]))
+## 2.15.1 used elements (4,1), (2,1), (2,2) for second column.
+
 proc.time()

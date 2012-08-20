@@ -33,6 +33,9 @@ forwardsolve(l, x, k = ncol(l), upper.tri = FALSE, transpose = FALSE)
 
   \code{x <- backsolve   (R, b)} solves \eqn{R x = b}, and\cr
   \code{x <- forwardsolve(L, b)} solves \eqn{L x = b}, respectively.
+
+  The \code{r}/\code{l} must have at least \code{k} rows and columns,
+  and \code{x} must have at least \code{k} rows.
   
   This is a wrapper for the level-3 BLAS routine \code{dtrsm}.
 }

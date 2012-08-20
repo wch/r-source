@@ -716,6 +716,12 @@
       \item \code{sort.list(method = "radix")} could give incorrect
       results on certain compilers (seen with \command{clang} on Mac OS
       10.7 and \command{Xcode 4.4.1}).
+      
+      \item \code{backsolve(T, b)} gave incorrect results when
+      \code{nrows(b) > ncols(T)} and \code{b} had more than one column.
+
+      It could segfault or give nonsense if \code{k} was specified as
+      more than \code{ncols(T)}.
     }
   }
 }
