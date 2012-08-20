@@ -247,10 +247,6 @@
       handle long vectors (and the \R wrappers often assume that
       \code{length(x)} is an integer).
       
-      \item Many more basic operations are now interruptible when run on
-      size-able vectors: typically interrupts are checked for every
-      1--100 million elements.
-
       \item Most of the methods for \code{sort()} work for long vectors.
 
       \code{rank()}, \code{sort.list()} and \code{order()} support

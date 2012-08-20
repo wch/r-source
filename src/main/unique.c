@@ -497,12 +497,12 @@ SEXP duplicated(SEXP x, Rboolean from_last)
 
     if(from_last)
 	for (i = n-1; i >= 0; i--) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    v[i] = isDuplicated(x, i, &data);
 	}
     else
 	for (i = 0; i < n; i++) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    v[i] = isDuplicated(x, i, &data);
 	}
 
@@ -526,12 +526,12 @@ static SEXP Duplicated(SEXP x, Rboolean from_last, int nmax)
 
     if(from_last)
 	for (i = n-1; i >= 0; i--) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    v[i] = isDuplicated(x, i, &data);
 	}
     else
 	for (i = 0; i < n; i++) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    v[i] = isDuplicated(x, i, &data);
 	}
 
@@ -552,12 +552,12 @@ int any_duplicated(SEXP x, Rboolean from_last)
 
     if(from_last) {
 	for (i = n-1; i >= 0; i--) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
 	}
     } else {
 	for (i = 0; i < n; i++) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
 	}
     }
@@ -581,12 +581,12 @@ static SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last, int nmax)
 
     if(from_last)
 	for (i = n-1; i >= 0; i--) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    v[i] = isDuplicated(x, i, &data);
 	}
     else
 	for (i = 0; i < n; i++) {
-	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    v[i] = isDuplicated(x, i, &data);
 	}
 
@@ -622,7 +622,6 @@ int any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
     if(from_last)
 	for (i = n-1; i >= 0; i--) {
 #define IS_DUPLICATED_CHECK				\
-	    if((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt(); \
 	    if(isDuplicated(x, i, &data)) {		\
 		Rboolean isDup = TRUE;			\
 		for(j = 0; j < m; j++)			\
@@ -765,7 +764,7 @@ static void DoHashing(SEXP table, HashData *d)
     int n = LENGTH(table);
 
     for (int i = 0; i < n; i++) {
-	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	(void) isDuplicated(table, i, d);
     }
 }
@@ -797,7 +796,7 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
     n = LENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
     for (i = 0; i < n; i++) {
-	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	INTEGER(ans)[i] = Lookup(table, x, i, d);
     }
     UNPROTECT(1);
@@ -1598,7 +1597,7 @@ static SEXP duplicated2(SEXP x, HashData *d)
     int *v = INTEGER(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
     for (i = 0; i < n; i++) {
-	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+//	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	v[i] = isDuplicated2(x, i, d);
     }
     UNPROTECT(2);
