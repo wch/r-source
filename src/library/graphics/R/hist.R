@@ -40,9 +40,9 @@ hist.default <-
 	if(!missing(nclass))
 	    warning("'nclass' not used when 'breaks' is specified")
     }
-    else if(!is.null(nclass) && length(nclass) == 1)
+    else if(!is.null(nclass) && length(nclass) == 1L)
 	breaks <- nclass
-    use.br <- use.br && (nB <- length(breaks)) > 1
+    use.br <- use.br && (nB <- length(breaks)) > 1L
     if(use.br)
 	breaks <- sort(breaks)
     else {				# construct vector of breaks
@@ -63,7 +63,7 @@ hist.default <-
 	} else if(is.function(breaks)) {
 	    breaks <- breaks(x)
 	}
-	if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1)
+	if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
 	    stop("invalid number of 'breaks'")
 	breaks <- pretty (range(x), n = breaks, min.n = 1)
 	nB <- length(breaks)
@@ -105,9 +105,10 @@ hist.default <-
     storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
     ## arguments are often irrelevant (not with integer data!)
-    counts <- .Call("BinCount", x, fuzzybreaks, right, include.lowest)
-    if (any(counts < 0))
-	stop("negative 'counts'. Internal Error", domain = NA)
+    counts <- .Call("BinCount", x, fuzzybreaks, right, include.lowest,
+                    PACKAGE = "base")
+    if (any(counts < 0L))
+	stop("negative 'counts'. Internal Error.", domain = NA)
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
     dens <- counts/(n*diff(breaks)) # use un-fuzzed intervals
@@ -116,7 +117,7 @@ hist.default <-
 			intensities = dens,
 			density = dens, mids = mids,
 			xname = xname, equidist = equidist),
-		   class="histogram")
+		   class = "histogram")
     if (plot) {
 	plot(r, freq = freq1, col = col, border = border,
 	     angle = angle, density = density,
@@ -163,7 +164,7 @@ plot.histogram <-
 	## for back compatibility
 	y <- x$density; if(is.null(y)) x$intensities else y}
     nB <- length(x$breaks)
-    if(is.null(y) || 0 == nB) stop("'x' is wrongly structured")
+    if(is.null(y) || 0L == nB) stop("'x' is wrongly structured")
 
     dev.hold(); on.exit(dev.flush())
     if(!add) {
