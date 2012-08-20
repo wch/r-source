@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-1998   Robert Gentleman, Ross Ihaka and the
- *                            R Core Team
+ *  Copyright (C) 1997-2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -91,28 +90,24 @@ void bakslv(double *t, int *ldt, int *n,
  *	       the first zero diagonal element of t.
  *
  * subroutines and functions
- *     blas:    dcopy
- *     blas3:   dtrsm
+ *     blas:   dtrsm
  */
-    char *side = "L", *uplo, *transa, *diag = "N";
-    int i, ione = 1, j, nn = *n;
-    double one = 1.0;
 
     *info = 0;
-    for(i = 0; i < nn; i++) {	/* check for zeros on diagonal */
-	if (t[i * (*ldt + 1)] == 0.0) {
+    size_t incr = *ldt + 1;
+    for(int i = 0; i < *n; i++) { /* check for zeros on diagonal */
+	if (t[i * incr] == 0.0) {
 	    *info = i + 1;
 	    return;
 	}
     }
-    for(j = 0; j < *nb; j++) {  /* copy b to x */
-       F77_CALL(dcopy)(n, &b[j * *ldb], &ione, &x[j * *ldb], &ione);
-    }
-    transa = ((*job) / 10) ? "T" : "N";
-    uplo = ((*job) % 10) ? "U" : "L";
-    if (*n > 0 && *nb > 0 && *ldt > 0 && *ldb > 0) {
-	F77_CALL(dtrsm)(side, uplo, transa, diag, n, nb, &one,
-			t, ldt, x, ldb);
-    }
+    size_t db = *ldb, nn = *n;
+    for(int j = 0; j < *nb; j++)  /* copy b to x */
+	memcpy(x + j*db, b + j*db, nn*sizeof(double));
+    char *transa = ((*job) / 10) ? "T" : "N";
+    char *uplo = ((*job) % 10) ? "U" : "L";
+    double one = 1.0;
+    if (*n > 0 && *nb > 0 && *ldt > 0 && *ldb > 0)
+	F77_CALL(dtrsm)("L", uplo, transa, "N", n, nb, &one, t, ldt, x, ldb);
 }
 

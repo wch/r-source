@@ -1,6 +1,6 @@
 % File src/library/base/man/backsolve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{backsolve}
@@ -8,21 +8,14 @@
 \alias{forwardsolve}
 \title{Solve an Upper or Lower Triangular System}
 \description{
-  Solves a system of linear equations where the coefficient matrix is
-  upper (or \sQuote{right}, \sQuote{R}) or lower (\sQuote{left},
-  \sQuote{L}) triangular.\cr 
-
-  \code{x <- backsolve   (R, b)} solves \eqn{R x = b}, and\cr
-  \code{x <- forwardsolve(L, b)} solves \eqn{L x = b}, respectively.
+  Solves a triangular system of linear equations.
 }
 \usage{
-   backsolve(r, x, k=ncol(r), upper.tri=TRUE, transpose=FALSE)
-forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
+   backsolve(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE)
+forwardsolve(l, x, k = ncol(l), upper.tri = FALSE, transpose = FALSE)
 }
-% Name 'r' is not really making sense for upper.tri = FALSE
-% Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
 \arguments{
-  \item{r,l}{an upper (or lower) triangular matrix giving the
+  \item{r, l}{an upper (or lower) triangular matrix giving the
     coefficients for the system to be solved.  Values below (above)
     the diagonal are ignored.}
   \item{x}{a matrix whose columns give the right-hand sides for
@@ -33,12 +26,19 @@ forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
   \item{transpose}{logical; if \code{TRUE}, solve \eqn{r' * y = x} for
     \eqn{y}, i.e., \code{t(r) \%*\% y == x}.}
 }
+\details{
+   Solves a system of linear equations where the coefficient matrix is
+   upper (or \sQuote{right}, \sQuote{R}) or lower (\sQuote{left},
+   \sQuote{L}) triangular.
+
+  \code{x <- backsolve   (R, b)} solves \eqn{R x = b}, and\cr
+  \code{x <- forwardsolve(L, b)} solves \eqn{L x = b}, respectively.
+  
+  This is a wrapper for the level-3 BLAS routine \code{dtrsm}.
+}
 \value{
   The solution of the triangular system.  The result will be a vector if
   \code{x} is a vector and a matrix if \code{x} is a matrix.
-
-  Note that \code{forwardsolve(L, b)} is just a wrapper for
-  \code{backsolve(L, b, upper.tri=FALSE)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
