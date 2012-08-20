@@ -19,16 +19,18 @@
 forwardsolve <-
     function(l, x, k = ncol(l), upper.tri = FALSE, transpose = FALSE)
 {
+    l <- as.matrix(l)
     x.mat <- is.matrix(x)
     if(!x.mat) x <- as.matrix(x)
-    z <- .Internal(backsolve(as.matrix(l), x, k, upper.tri, transpose))
+    z <- .Internal(backsolve(l, x, k, upper.tri, transpose))
     if(x.mat) z else drop(z)
 }
 
 backsolve <- function(r, x, k  = ncol(r), upper.tri = TRUE, transpose = FALSE)
 {
+    r <- as.matrix(r) # so ncol(r) works
     x.mat <- is.matrix(x)
     if(!x.mat) x <- as.matrix(x)
-    z <- .Internal(backsolve(as.matrix(r), x, k, upper.tri, transpose))
+    z <- .Internal(backsolve(r, x, k, upper.tri, transpose))
     if(x.mat) z else drop(z)
 }
