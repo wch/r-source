@@ -51,7 +51,7 @@ addNA(x, ifany = FALSE)
   \item{levels}{an optional vector of the values that \code{x} might
     have taken.  The default is the unique set of values taken by
     \code{\link{as.character}(x)}, sorted into increasing order \emph{of
-      \code{x}}.  Note that this set can be specifed as smaller than
+      \code{x}}.  Note that this set can be specified as smaller than
     \code{sort(unique(x))}.}
   \item{labels}{\emph{either} an optional vector of labels for the
     levels (in the same order as \code{levels} after removing those in

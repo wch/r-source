@@ -49,7 +49,7 @@
   than 2 billion elements.  Whether matrix algebra (including
   \code{\link{\%*\%}}, \code{\link{crossprod}}, \code{\link{svd}},
   \code{\link{qr}}, \code{\link{solve}} and \code{\link{eigen}} will
-  actually work is somehwat implementation dependent, including the
+  actually work is somewhat implementation dependent, including the
   Fortran compiler used and if an external BLAS or LAPACK is used.
 
   An efficient parallel BLAS implementation will often be important to
