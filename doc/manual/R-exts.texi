@@ -5992,7 +5992,9 @@ profile DLLs on Windows.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{http://oprofile.sourceforge.net/}) for any
+@command{oprofile} (see @uref{http://oprofile.sourceforge.net/}) and
+@command{perf} (see
+@uref{https://perf.wiki.kernel.org/@/index.php/@/Tutorial}) for any
 executable or shared object.
 
 @subsubsection sprof
@@ -6634,7 +6636,7 @@ An example of @code{valgrind} output is
 @smallexample
 ==12539== Invalid read of size 4
 ==12539==    at 0x1CDF6CBE: csc_compTr (Mutils.c:273)
-==12539==    by 0x1CE07E1E: tsc_transpose (dtCMatrix.c:25)
+==12539==    by 0x1CE07E1E: tsc_trresolvedpose (dtCMatrix.c:25)
 ==12539==    by 0x80A67A7: do_dotcall (dotcode.c:858)
 ==12539==    by 0x80CACE2: Rf_eval (eval.c:400)
 ==12539==    by 0x80CB5AF: R_execClosure (eval.c:658)
