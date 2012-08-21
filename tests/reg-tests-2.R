@@ -2313,7 +2313,7 @@ Call
 
 ## .Call on symbol objects (not strings)
 ## https://stat.ethz.ch/pipermail/r-devel/2008-December/051669.html
-try(.Call("R_GD_nullDevice", NULL))
+try(.Call("R_GD_nullDevice", NULL, PACKAGE = "grDevices"))
 sym <- getDLLRegisteredRoutines("grDevices")$.Call[["R_GD_nullDevice"]]
 try(.Call(sym, NULL))
 try(.Call(sym$address, NULL))
