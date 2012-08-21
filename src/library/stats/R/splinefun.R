@@ -44,7 +44,7 @@ splinefun <- function(x, y=NULL,
         m <- c(Sx[1L], (Sx[-1L] + Sx[-n1])/2, Sx[n1]) ## 1.
 
         ## use C, as we need to "serially" progress from left to right:
-        m <- .Call(C_R_monoFC_m, m, Sx, PACKAGE="stats")
+        m <- .Call(C_R_monoFC_m, m, Sx)
 
         ## Hermite spline with (x,y,m) :
         return(splinefunH0(x = x, y = y, m = m, dx = dx))
@@ -59,8 +59,7 @@ splinefun <- function(x, y=NULL,
 	    b=double(nx),
 	    c=double(nx),
 	    d=double(nx),
-	    e=double(if(iMeth == 1) nx else 0),
-	    PACKAGE="stats")
+	    e=double(if(iMeth == 1) nx else 0))
     rm(x,y,nx,method,iMeth,ties)
     z$e <- NULL
     function(x, deriv = 0) {
@@ -92,8 +91,7 @@ splinefun <- function(x, y=NULL,
                   z$y,
                   z$b,
                   z$c,
-                  z$d,
-                  PACKAGE="stats")$y
+                  z$d)$y
 
         ## deal with points to the left of first knot if natural
         ## splines are used  (Bug PR#13132)

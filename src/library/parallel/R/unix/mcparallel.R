@@ -18,8 +18,7 @@
 
 ### Derived from multicore version 0.1-6 by Simon Urbanek
 
-mcaffinity <- function(affinity = NULL)
-  .Call(C_mc_affinity, affinity, PACKAGE="parallel")
+mcaffinity <- function(affinity = NULL) .Call(C_mc_affinity, affinity)
 
 mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL)
 {
@@ -30,7 +29,7 @@ mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affini
         on.exit(mcexit(1L, structure("fatal error in wrapper code",
                                   class = "try-error")))
         if (isTRUE(mc.set.seed)) mc.set.stream()
-        if (!is.null(mc.affinity)) .Call(C_mc_affinity, mc.affinity, PACKAGE="parallel")
+        if (!is.null(mc.affinity)) .Call(C_mc_affinity, mc.affinity)
         if (isTRUE(silent)) closeStdout()
         sendMaster(try(eval(expr, env), silent = TRUE))
         mcexit(0L)

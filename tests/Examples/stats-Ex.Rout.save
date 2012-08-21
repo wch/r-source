@@ -15368,7 +15368,7 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 function (v) 
 .C(C_R_approxfun, as.double(x), as.double(y), n, xout = as.double(v), 
     as.integer(length(v)), as.integer(method), as.double(yleft), 
-    as.double(yright), as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
+    as.double(yright), as.double(f), NAOK = TRUE)$xout
 <bytecode: 0x7fa1dc01ef08>
 <environment: 0x7fa1e1d3c790>
 attr(,"call")

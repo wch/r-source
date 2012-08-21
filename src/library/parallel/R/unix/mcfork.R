@@ -43,14 +43,14 @@ mcfork <- function() {
 
 ## not used
 readChildren <- function(timeout = 0)
-    .Call(C_mc_read_children, as.double(timeout), PACKAGE="parallel")
+    .Call(C_mc_read_children, as.double(timeout))
 
 ## used by mccollect, mclapply
 readChild <- function(child)
 {
     if (inherits(child, "process")) child <- processID(child)
     if (!is.numeric(child)) stop("invalid 'child' argument")
-    .Call(C_mc_read_child, as.integer(child), PACKAGE = "parallel")
+    .Call(C_mc_read_child, as.integer(child))
 }
 
 ## used by mccollect, mclapply
@@ -70,7 +70,7 @@ rmChild <- function(child)
 {
     if (inherits(child, "process")) child <- processID(child)
     if (!is.numeric(child)) stop("invalid 'child' argument")
-    .Call(C_mc_rm_child, as.integer(child), PACKAGE = "parallel")
+    .Call(C_mc_rm_child, as.integer(child))
 }
 
 ## used in pvec, mclapply
@@ -87,7 +87,7 @@ sendMaster <- function(what)
 {
     # This is talking to the same machine, so no point in using xdr.
     if (!is.raw(what)) what <- serialize(what, NULL, xdr = FALSE)
-    .Call(C_mc_send_master, what, PACKAGE = "parallel")
+    .Call(C_mc_send_master, what)
 }
 
 processID <- function(process) {
@@ -106,21 +106,20 @@ sendChildStdin <- function(child, what)
     if (is.character(what)) what <- charToRaw(paste(what, collapse='\n'))
     if (!is.raw(what)) stop("'what' must be a character or raw vector")
     invisible(unlist(lapply(child, function(p)
-                            .Call(C_mc_send_child_stdin, p, what,
-                                  PACKAGE = "parallel"))))
+                            .Call(C_mc_send_child_stdin, p, what))))
 }
 
 ## used by mcparallel, mclapply
 mcexit <- function(exit.code = 0L, send = NULL)
 {
     if (!is.null(send)) try(sendMaster(send), silent = TRUE)
-    .Call(C_mc_exit, as.integer(exit.code), PACKAGE = "parallel")
+    .Call(C_mc_exit, as.integer(exit.code))
 }
 
 ## used by mccollect, mclapply
 children <- function(select)
 {
-    p <- .Call(C_mc_children, PACKAGE = "parallel")
+    p <- .Call(C_mc_children)
     if (!missing(select)) p <- p[p %in% processID(select)]
     ## FIXME: this is not the meaning of this class as returned by mcfork
     lapply(p, function(x)
@@ -128,16 +127,15 @@ children <- function(select)
 }
 
 childrenDescriptors <- function(index = 0L)
-    .Call(C_mc_fds, as.integer(index), PACKAGE = "parallel")
+    .Call(C_mc_fds, as.integer(index))
 
-masterDescriptor <- function() .Call(C_mc_master_fd, PACKAGE = "parallel")
+masterDescriptor <- function() .Call(C_mc_master_fd)
 
-isChild <- function() .Call(C_mc_is_child, PACKAGE = "parallel")
+isChild <- function() .Call(C_mc_is_child)
 
-closeStdout <- function() .Call(C_mc_close_stdout, PACKAGE = "parallel")
-closeStderr <- function() .Call(C_mc_close_stderr, PACKAGE = "parallel")
-closeFD <- function(fds)
-    .Call(C_mc_close_fds, as.integer(fds), PACKAGE = "parallel")
+closeStdout <- function() .Call(C_mc_close_stdout)
+closeStderr <- function() .Call(C_mc_close_stderr)
+closeFD <- function(fds) .Call(C_mc_close_fds, as.integer(fds))
 
 closeAll <- function(includeStd = FALSE)
 {

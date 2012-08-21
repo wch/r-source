@@ -84,7 +84,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     y <- .C(C_R_approx, as.double(x), as.double(y), nx,
 	    xout = as.double(xout), nxout,
 	    as.integer(method), as.double(yleft), as.double(yright),
-	    as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
+	    as.double(f), NAOK = TRUE)$xout
     list(x = xout, y = y)
 }
 
@@ -117,12 +117,10 @@ approxfun <- function(x, y = NULL, method = "linear",
 
     ## 1. Test input consistency once
     .C(C_R_approxtest,as.double(x), as.double(y), n,
-        as.integer(method), as.double(f), NAOK = TRUE,
-        PACKAGE = "stats")
+        as.integer(method), as.double(f), NAOK = TRUE)
 
     ## 2. Create and return function that does not test input validity...
     function(v) .C(C_R_approxfun, as.double(x), as.double(y), n,
         xout = as.double(v), as.integer(length(v)), as.integer(method),
-        as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE,
-        PACKAGE = "stats")$xout
+        as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE)$xout
 }

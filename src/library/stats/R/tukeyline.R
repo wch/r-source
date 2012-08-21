@@ -30,7 +30,7 @@ line <- function(x, y=NULL)
 	    double(n),
 	    n,
 	    double(2),
-	    DUP = FALSE, PACKAGE = "stats")
+	    DUP = FALSE)
     value <- list(call = sys.call(), coefficients = z[[6L]],
                   residuals = z[[3L]], fitted.values = z[[4L]])
     class(value) <- "tukeyline"

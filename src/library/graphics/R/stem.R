@@ -24,6 +24,6 @@ stem <- function(x, scale = 1, width = 80, atom = 0.00000001)
     if (is.na(n)) stop("invalid length(x)")
     if (n == 0) stop("no non-missing values")
     if (scale <= 0) stop("'scale' must be positive") # unlike S
-    .Call(C_StemLeaf, as.double(x), scale, width, atom, PACKAGE = "graphics")
+    .Call(C_StemLeaf, as.double(x), scale, width, atom)
     invisible(NULL)
 }

@@ -47,8 +47,7 @@ spline <-
 	    b=double(nx),
 	    c=double(nx),
 	    d=double(nx),
-	    e=double(if(method == 1) nx else 0),
-	    PACKAGE="stats")
+	    e=double(if(method == 1) nx else 0))
     if(missing(xout))
         xout <- seq.int(xmin, xmax, length.out=n)
     else n <- length(xout)
@@ -64,6 +63,5 @@ spline <-
        z$y,
        z$b,
        z$c,
-       z$d,
-       PACKAGE="stats")[c("x","y")]
+       z$d)[c("x","y")]
 }
