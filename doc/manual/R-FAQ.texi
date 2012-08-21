@@ -586,7 +586,7 @@ When a new version of R is released, there may be a delay of up to 2
 weeks until the Fedora RPM becomes publicly available, as it must pass
 through the statutory Fedora review process.
 
-See @url{http://cran.r-project.org/bin/linux/suse/README.html} for
+See @url{http://CRAN.R-project.org/bin/linux/suse/README.html} for
 information about RPMs for openSUSE.
 
 @c The @file{bin/osf} directory of a @CRAN{} site contains RPMs
@@ -3339,7 +3339,7 @@ In most cases, typing the name of the function will print its source
 code. However, code is sometimes hidden in a namespace, or compiled.  For 
 a complete overview on how to access source code, see Uwe Ligges (2006),
 ``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
-43--45 (@url{http://cran.r-project.org/doc/Rnews/Rnews_2006-4.pdf}).
+43--45 (@url{http://CRAN.R-project.org/doc/Rnews/Rnews_2006-4.pdf}).
 
 @node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, Why is R apparently not releasing memory?, How do I access the source code for a function?, R Miscellanea
 @section Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?

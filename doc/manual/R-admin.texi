@@ -88,7 +88,7 @@ The current version of this document is @value{VERSION}.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
-members are listed at @uref{http://cran.r-project.org/@/mirrors.html}.
+members are listed at @uref{http://CRAN.R-project.org/@/mirrors.html}.
 
 @menu
 * Getting and unpacking the sources::  
@@ -991,7 +991,7 @@ configuration files in the @file{etc} directory.
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
-@uref{http://cran.r-project.org/bin/@/windows/@/Rtools/}) for details.
+@uref{http://CRAN.R-project.org/bin/@/windows/@/Rtools/}) for details.
 
 The @file{Rtools*.exe} executable installer described in @ref{The
 Windows toolset} also includes some source files in addition to the @R{}
@@ -1721,7 +1721,7 @@ binary containing either or both architectures.
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.14/@/@@ReadMe}.
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/2.14/@/@@ReadMe}.
 For 64-bit builds, packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution from
@@ -4755,7 +4755,7 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/} for the current
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/} for the current
 locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
@@ -4775,7 +4775,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
 named@footnote{for @R{} 2.14.2 and later.}  @file{Rtools215.exe},
-available from @uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/}. You
+available from @uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
