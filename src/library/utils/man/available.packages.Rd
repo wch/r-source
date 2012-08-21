@@ -44,7 +44,7 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
 \details{
   The list is either copied from a local mirror (specified by a
   \samp{file://} URI) or downloaded.  If downloaded, the list is cached
-  for the \R session in a per-repository file in \code{\link{tempdir()}}
+  for the \R session in a per-repository file in \code{\link{tempdir}()}
   with a name like
 \preformatted{
     repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds

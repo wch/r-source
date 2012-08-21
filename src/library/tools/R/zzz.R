@@ -24,6 +24,7 @@ function(libpath)
 
 ## These are created at install time: the numbers are hard-coded in signals.c
 ## They happen to be the BSD ones as this started in multicore
+## They are created before the C symbols are registered
 library.dynam("tools", "tools", .Library)
 SIGHUP <- .Call("ps_sigs", 1L, PACKAGE = "tools")
 SIGINT <- .Call("ps_sigs", 2L, PACKAGE = "tools")

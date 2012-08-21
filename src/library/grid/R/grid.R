@@ -444,7 +444,7 @@ grid.DLapply <- function(FUN, ...) {
 # you are doing -- this will be a bit of overkill, but is for safety
 grid.Call <- function(fnname, ...) {
   .Call(L_gridDirty)
-  .Call(fnname, ..., PACKAGE="grid")
+  .Call(fnname, ...)
 }
 
 grid.Call.graphics <- function(fnname, ...) {
@@ -456,11 +456,11 @@ grid.Call.graphics <- function(fnname, ...) {
     # the the first thing on the engine display list is a dirty
     # operation;  this is necessary in case the display list is
     # played on another device (e.g., via replayPlot() or dev.copy())
-    .Call.graphics(L_gridDirty, PACKAGE="grid")
-    result <- .Call.graphics(fnname, ..., PACKAGE="grid")
+    .Call.graphics(L_gridDirty)
+    result <- .Call.graphics(fnname, ...)
   } else {
     .Call(L_gridDirty)
-    result <- .Call(fnname, ..., PACKAGE="grid")
+    result <- .Call(fnname, ...)
   }
   result
 }

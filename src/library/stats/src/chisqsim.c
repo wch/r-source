@@ -19,7 +19,7 @@
 
 #include <Rmath.h>
 #include <R_ext/Random.h>
-#include <R_ext/Applic.h>
+//#include <R_ext/Applic.h>
 
 #include "ctest.h"
 

@@ -80,7 +80,7 @@ hclust <- function(d, method="complete", members=NULL)
 		    nn = integer(n),
 		    disnn = double(n),
 		    flag = logical(n),
-		    diss = d, PACKAGE="stats")
+		    diss = d)
 
     ## 2nd step: interpret the information that we now have
     ## as merge, height, and order lists.

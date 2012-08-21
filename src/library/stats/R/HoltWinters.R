@@ -110,9 +110,7 @@ function (x,
            SSE = as.double(0),
            level = double(len + 1L),
            trend = double(len + 1L),
-           seasonal = double(len + f),
-
-	   PACKAGE = "stats"
+           seasonal = double(len + f)
            )
 
     ## if alpha and/or beta and/or gamma are omitted, use optim to find the

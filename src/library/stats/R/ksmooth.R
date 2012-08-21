@@ -43,9 +43,7 @@ ksmooth <-
 	    yp=double(n.points),
 	    as.integer(n.points),
 	    as.integer(krn),
-	    as.double(bandwidth),
-	    PACKAGE="stats"
-	    )
+	    as.double(bandwidth))
     list(x=z$xp, y=z$yp)
 }
 

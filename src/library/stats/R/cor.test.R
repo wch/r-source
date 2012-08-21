@@ -94,8 +94,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                         .C(C_pkendall,
                            length(q),
                            p = as.double(q),
-                           as.integer(n),
-                           PACKAGE = "stats")$p
+                           as.integer(n))$p
                     }
                     PVAL <-
                         switch(alternative,
@@ -158,8 +157,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                            as.double(round(q) + 2*lower.tail),
                            p = double(1L),
                            integer(1L),
-                           as.logical(lower.tail),
-                           PACKAGE = "stats")$p
+                           as.logical(lower.tail))$p
 		    else { # for large n: asymptotic t_{n-2}
                         den <- (n*(n^2-1))/6 # careful for overflow
                         ## Kendall et all (1939) p. 260

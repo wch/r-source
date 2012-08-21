@@ -278,7 +278,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if(valid <= 2L) { # days or weeks
         from <- unclass(as.Date(from))
         if(!is.null(length.out))
-            res <- seq.int(from, by=by, length.out=length.out)
+            res <- seq.int(from, by = by, length.out = length.out)
         else {
             to0 <- unclass(as.Date(to))
             ## defeat test in seq.default

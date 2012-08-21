@@ -108,8 +108,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 		      integer(nr * nc), # checked for overflow above
 		      double(n + 1L),
 		      integer(nc),
-		      results = double(B),
-		      PACKAGE = "stats")$results
+		      results = double(B))$results
 	    ## use correct significance level for a Monte Carlo test
             almost.1 <- 1 + 64 * .Machine$double.eps
             ## PR#10558: STATISTIC is negative
@@ -127,8 +126,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        double(1L),   #  prt
                        p = double(1L),
                        as.integer(workspace),
-                       mult = as.integer(mult),
-                       PACKAGE = "stats")$p
+                       mult = as.integer(mult))$p
         } else
             PVAL <- .C(C_fexact,
                        nr,
@@ -141,8 +139,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        double(1L), #   prt
                        p = double(1L),
                        as.integer(workspace),
-                       mult = as.integer(mult),
-                       PACKAGE = "stats")$p
+                       mult = as.integer(mult))$p
 
         RVAL <- list(p.value = max(0, min(1, PVAL)))
     }

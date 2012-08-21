@@ -114,7 +114,7 @@ mkexec:
 	  done; \
 	fi
 
-## only use if byte-compilation is disabled
+## only used if byte-compilation is disabled
 mklazy:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
