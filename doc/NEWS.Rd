@@ -376,6 +376,10 @@
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.  Code using them should
       be recompiled.
+      
+      \item A few recently added C entry points were missing the
+      remapping to \code{Rf_}, notably \code{[dpq]nbinom_mu}.  Packages
+      using them need to be reinstalled.
     }
   }
 
