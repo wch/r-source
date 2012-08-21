@@ -169,16 +169,25 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
   and look there.
 */
 
+#define CHECK_NAMSPACE_RESOLUTION 1
+
+
 static SEXP
 resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 		     R_RegisteredNativeSymbol *symbol, char *buf,
-		     int *nargs, int *naok, int *dup, SEXP call)
+		     int *nargs, int *naok, int *dup, SEXP call, SEXP env)
 {
     SEXP op;
     const char *p; char *q;
     DllReference dll = {"", NULL, NULL, NOT_DEFINED};
 
-    op = CAR(args);
+    // find if we were called from a namespace
+    SEXP env2 = ENCLOS(env);
+    const char *ns = "";
+    if(R_IsNamespaceEnv(env2))
+	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
+
+    op = CAR(args);  // value of .NAME =
     /* NB, this sets fun, symbol and buf and is not just a check! */
     checkValidSymbolId(op, call, fun, symbol, buf);
 
@@ -186,10 +195,12 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     /* We know this is ok because do_dotCode is entered */
     /* with its arguments evaluated. */
 
+    /* This is used as shorthand for 'all' in R_FindSymbol, but
+       should never be supplied */
     strcpy(dll.DLLname, "");
     if(symbol->type == R_C_SYM || symbol->type == R_FORTRAN_SYM) {
+	/* And that also looks for PACKAGE = */
 	args = naokfind(CDR(args), nargs, naok, dup, &dll);
-
 	if(*naok == NA_LOGICAL)
 	    errorcall(call, _("invalid '%s' value"), "naok");
 	if(*nargs > MAX_ARGS)
@@ -200,6 +211,17 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	   argument if found */
 	args = pkgtrim(args, &dll);
     }
+    if (!*fun && dll.type == FILENAME && !strlen(dll.DLLname))
+	errorcall(call, _("PACKAGE = \"\" is invalid"));
+#ifdef CHECK_CROSS_USAGE
+    if (!*fun && dll.type == FILENAME && strcmp(dll.DLLname, "base")) {
+	if(strlen(ns) && strcmp(dll.DLLname, ns) &&
+	   !(streql(dll.DLLname, "BioC_graph") && streql(ns, "graph")))
+	    warningcall(call, 
+			"using PACKAGE = \"%s\" from namespace '%s'",
+			dll.DLLname, ns);
+    }
+#endif
 
     /* Make up the load symbol and look it up. */
 
@@ -216,7 +238,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     }
 
     if(!*fun) {
-	if(dll.type != FILENAME) {
+	if(dll.type != FILENAME && strlen(ns)) {
 	    /* no PACKAGE= arg, so see if we can identify a DLL
 	       from the namespace defining the function */
 	    *fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol);
@@ -225,6 +247,12 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	       if(!fun)
 		   errorcall(call, _("cannot resolve native routine"));
 	    */
+#ifdef CHECK_NAMSPACE_RESOLUTION
+	    if(!*fun)
+		warningcall(call, 
+			    "\"%s\" not resolved from current namespace (%s)",
+			    buf, ns);
+#endif
 	}
 
 	/* NB: the actual conversion to the symbol is done in
@@ -337,7 +365,7 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		   be the last argument.
 		*/
 	    } else {
-		    /* Have a DLL object*/
+		/* Have a DLL object, which is not something documented .... */
 		if(TYPEOF(CAR(s)) == EXTPTRSXP) {
 		    dll->dll = (HINSTANCE) R_ExternalPtrAddr(CAR(s));
 		    dll->type = DLL_HANDLE;
@@ -478,7 +506,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
     check1arg(args, call, "name");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
-				NULL, call);
+				NULL, call, env);
 
     if (PRIMVAL(op) == 1) {
 	R_ExternalRoutine2 fun = (R_ExternalRoutine2) ofun;
@@ -511,7 +539,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
     check1arg(args, call, "name");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
-				NULL, call);
+				NULL, call, env);
     args = CDR(args);
     fun = (VarFun) ofun;
 
@@ -1282,7 +1310,7 @@ Rf_getCallingDLL(void)
   We are given the PACKAGE argument in dll.obj
   and we can try to figure out how to resolve this.
   0) dll.obj is NULL.  Then find the environment of the
-   calling function and if it is a namespace, get the
+   calling function and if it is a namespace, get the first registered DLL.
 
   1) dll.obj is a DLLInfo object
 */
@@ -1312,7 +1340,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
     if(numProtects)
 	UNPROTECT(numProtects);
 
-    return(fun);
+    return fun;
 }
 
 
@@ -1365,7 +1393,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     args = enctrim(args);
     args = resolveNativeRoutine(args, &ofun, &symbol, symName, &nargs,
-				&naok, &dup, call);
+				&naok, &dup, call, env);
     fun = (VarFun) ofun;
 
     if(symbol.symbol.c && symbol.symbol.c->numArgs > -1) {

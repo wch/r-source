@@ -73,6 +73,9 @@
   You may see \code{PACKAGE = "base"} for symbols linked into \R.  Do
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
+  
+  \code{PACKAGE = ""} used to be accepted (but was undocumented): it is
+  now an error.
 }
 
 \references{

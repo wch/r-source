@@ -187,6 +187,9 @@
       
       \item \code{backsolve()} (and \code{forwardsolve()}) are now
       internal functions, for speed and support for large matrices.
+      
+      \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
+      although it was contrary to the documentation.  It is now an error.
     }
   }
 

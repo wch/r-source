@@ -204,6 +204,9 @@
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
   
+  \code{PACKAGE = ""} used to be accepted (but was undocumented): it is
+  now an error.
+  
   The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
   was not as documented.  This has been corrected, but the
   \code{\link{.Call}} and \code{\link{.External}} interfaces are much
