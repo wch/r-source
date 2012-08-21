@@ -1032,7 +1032,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           sprintf("tools::checkFF(dir = \"%s\")\n", pkgdir))
             out <- R_runR2(Rcmd)
             if (length(out)) {
-                if(any(grepl("^Foreign function call\\(s\\) with", out)) ||
+                if(any(grepl("^Foreign function call\\(s\\) with(out| empty)", out)) ||
                    (!is_base_pkg && any(grepl("in a base package:", out))) ||
                    any(grepl("^Undeclared package\\(s\\) in", out))
                    ) warningLog(Log)
