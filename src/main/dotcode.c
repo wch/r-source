@@ -69,7 +69,7 @@ typedef struct {
 /* This looks up entry points in DLLs in a platform specific way. */
 static DL_FUNC
 R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
-			  R_RegisteredNativeSymbol *symbol);
+			  R_RegisteredNativeSymbol *symbol, SEXP env);
 
 static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		     DllReference *dll);
@@ -186,6 +186,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     const char *ns = "";
     if(R_IsNamespaceEnv(env2))
 	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
+    else env2 = R_NilValue;
 
     op = CAR(args);  // value of .NAME =
     /* NB, this sets fun, symbol and buf and is not just a check! */
@@ -206,7 +207,6 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	if(*nargs > MAX_ARGS)
 	    errorcall(call, _("too many arguments in foreign function call"));
     } else {
-	if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
 	/* This has the side effect of setting dll.type if a PACKAGE=
 	   argument if found */
 	args = pkgtrim(args, &dll);
@@ -241,18 +241,14 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	if(dll.type != FILENAME && strlen(ns)) {
 	    /* no PACKAGE= arg, so see if we can identify a DLL
 	       from the namespace defining the function */
-	    *fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol);
-	    /* need to continue if there is no PACKAGE arg or if the
-	       namespace search failed
-	       if(!fun)
-		   errorcall(call, _("cannot resolve native routine"));
-	    */
+	    *fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol, env2);
 #ifdef CHECK_NAMSPACE_RESOLUTION
 	    if(!*fun)
 		warningcall(call, 
 			    "\"%s\" not resolved from current namespace (%s)",
 			    buf, ns);
 #endif
+	    /* need to continue if the namespace search failed */
 	}
 
 	/* NB: the actual conversion to the symbol is done in
@@ -411,7 +407,9 @@ static void setDLLname(SEXP s, char *DLLname)
 static SEXP pkgtrim(SEXP args, DllReference *dll)
 {
     SEXP s, ss;
-    int pkgused=0;
+    int pkgused = 0;
+
+    if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
 
     for(s = args ; s != R_NilValue;) {
 	ss = CDR(s);
@@ -1316,7 +1314,8 @@ Rf_getCallingDLL(void)
 */
 static DL_FUNC
 R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
-			  R_RegisteredNativeSymbol *symbol)
+			  R_RegisteredNativeSymbol *symbol, 
+			  SEXP env)
 {
     int numProtects = 0;
     DllInfo *info;
@@ -1324,7 +1323,12 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 
     if(dll->obj == NULL) {
 	/* Rprintf("\nsearching for %s\n", name); */
-	dll->obj = Rf_getCallingDLL();
+	if (env != R_NilValue) {
+	    SEXP e;
+	    PROTECT(e = lang2(install("getCallingDLLe"), env));
+	    dll->obj = eval(e, R_GlobalEnv);
+	    UNPROTECT(1);
+	} else dll->obj = Rf_getCallingDLL();
 	PROTECT(dll->obj); numProtects++;
     }
 

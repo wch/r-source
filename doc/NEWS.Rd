@@ -190,6 +190,18 @@
       
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
+      
+      \item Omitting \code{PACKAGE} in \code{.C()} etc calls was
+      supposed to make use of the DLL from the namespace within which
+      the enclosing function was defined.  It was less successful in
+      doing so than it might be, and gave no indication it had failed.
+
+      A new search strategy is much more successful and gives a warning
+      when it fails.  In most cases this is because the entry point is
+      not actually provided by that package (and so \code{PACKAGE}
+      should be used to indicate which package is intended) but in a few
+      the warning indicates that an explicit \code{PACKAGE} argument is
+      needed.
     }
   }
 
