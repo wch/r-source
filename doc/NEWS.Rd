@@ -718,6 +718,10 @@
 
       It could segfault or give nonsense if \code{k} was specified as
       more than \code{ncols(T)}.
+      
+      \item \code{smooth.spline()} did not check that a specified
+      numeric \code{spar} was of length 1, and gave corrupt results if
+      it was of length 0.
     }
   }
 }

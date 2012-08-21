@@ -125,6 +125,8 @@ smooth.spline <-
         } else 1L
     spar <- if(ispar == 1L) as.double(spar) else double(1)
     ## was <- if(missing(spar)) 0 else if(spar < 1.01e-15) 0 else  1
+    ## but package forecast passed a length-0 vector.
+    if(length(spar) != 1) stop("'spar' must be of length 1")
 
     ## icrit {../src/sslvrg.f}:
     ##		(0 = no crit,  1 = GCV ,  2 = ord.CV , 3 = df-matching)
