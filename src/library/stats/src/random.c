@@ -41,6 +41,7 @@ typedef double (*ran3) (double, double, double);
 
 SEXP Random1(SEXP args)
 {
+    if (!isVectorList(CAR(args))) error("incorrect usage");
     SEXP x, a;
     R_xlen_t i, n, na;
     ran1 fn = NULL; /* -Wall */
@@ -128,6 +129,7 @@ SEXP Random1(SEXP args)
 
 SEXP Random2(SEXP args)
 {
+    if (!isVectorList(CAR(args))) error("incorrect usage");
     SEXP x, a, b;
     R_xlen_t i, n, na, nb;
     ran2 fn = NULL; /* -Wall */
@@ -228,6 +230,7 @@ SEXP Random2(SEXP args)
 
 SEXP Random3(SEXP args)
 {
+    if (!isVectorList(CAR(args))) error("incorrect usage");
     SEXP x, a, b, c;
     R_xlen_t i, n, na, nb, nc;
     ran3 fn = rhyper;  /* the only current example */
