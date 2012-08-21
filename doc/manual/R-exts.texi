@@ -2619,9 +2619,15 @@ and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
 packages to @acronym{CRAN}.
 
-Before submitting a package @var{mypkg}, do run the following steps to
-test it is complete and will install properly.  (Run from the directory
-containing @file{@var{mypkg}} as a subdirectory.)
+Before submitting a package @var{mypkg}, read the CRAN policies linked
+from @uref{http://CRAN.R-project.org/web/packages/} and note that by
+submitting a package you are confirming that your package complies with
+them.  If this is a package new to CRAN, confirm that you have read and
+agree to those policies in your submission email.
+
+Next, do run the following steps to test it is complete and will install
+properly.  (Run from the directory containing @file{@var{mypkg}} as a
+subdirectory.)
 
 @enumerate
 @item
@@ -2721,12 +2727,6 @@ significant notes to be admitted to the main @acronym{CRAN} package
 area.  If there are warnings or notes you cannot eliminate (for example
 because you believe them to be spurious) send an explanatory note as
 part of your covering email.
-
-Also read the CRAN policies linked from
-@uref{http://cran.r-project.org/web/packages/} and note that by
-submitting a package you are confirming that your package complies with
-them.  If this is a package new to CRAN, confirm that you have read and
-agree to those policies in your submission email.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
@@ -6096,7 +6096,7 @@ ways to get useful error information and moving on to how to deal with
 errors that crash @R{}.  For those who prefer other styles there are
 contributed packages such as @CRANpkg{debug} on @acronym{CRAN}
 (described in an article in
-@uref{http://cran.r-project.org/@/doc/@/Rnews/@/Rnews_2003-3.pdf, R-News
+@uref{http://CRAN.R-project.org/@/doc/@/Rnews/@/Rnews_2003-3.pdf, R-News
 3/3}).  (There are notes from 2002 provided by Roger Peng at
 @uref{http://www.biostat.jhsph.edu/@/~rpeng/@/docs/@/R-debug-tools.pdf}
 which provide complementary examples to those given here.)
@@ -12067,7 +12067,7 @@ currently available that interface directly with @R{} and provide a
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available via
-@uref{http://cran.r-project.org/@/other-software.html} or
+@uref{http://CRAN.R-project.org/@/other-software.html} or
 @uref{http://sunsite.univie.ac.at/rcom/}, which works with package
 @CRANpkg{rscproxy} to support transfer of data to and from @R{} and remote
 execution of R commands, as well as embedding of an @R{} graphics
