@@ -1811,6 +1811,9 @@ function(package, dir, file, lib.loc = NULL,
             if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
                 DLLs <- get("DLLs", envir = ce$.__NAMESPACE__.)
                 has_namespace <- length(DLLs) > 0L
+                if(has_namespace) { # the C code only looks at the first
+                    nsDLL <- DLLs[1L]
+                }
             }
             ce
         } else
@@ -1866,7 +1869,7 @@ function(package, dir, file, lib.loc = NULL,
     ## *invisibly* (so that output is not duplicated).
     ## Otherwise, if not verbose, we return the list of bad FF calls.
 
-    bad_exprs <- wrong_pkg <- list()
+    bad_exprs <- empty_exprs <- wrong_pkg <- list()
     bad_pkg <- character()
     FF_funs <- FF_fun_names <- c(".C", ".Fortran", ".Call", ".External",
                                  ".Call.graphics", ".External.graphics")
@@ -1990,15 +1993,23 @@ function(package, dir, file, lib.loc = NULL,
                         bad_pkg <<- c(bad_pkg, this)
                     }
                     parg <- if(!is.null(parg) && (parg != "")) "OK"
+                    else if(identical(parg, "")) {
+                        empty_exprs <<- c(empty_exprs, e)
+                        "EMPTY"
+                    }
                     else if(!has_namespace) {
                         bad_exprs <<- c(bad_exprs, e)
                         "MISSING"
                     } else "MISSING but in a function in a namespace"
                 }
                 if(verbose)
-                    cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
-                        ", ..., PACKAGE = \"", this, "\"): ",
-                        parg, "\n", sep = "")
+                    if(is.null(this))
+                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
+                            ", ... ): ", parg, "\n", sep = "")
+                   else
+                        cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
+                            ", ..., PACKAGE = \"", this, "\"): ",
+                            parg, "\n", sep = "")
             }
             for(i in seq_along(e)) Recall(e[[i]])
         }
@@ -2041,6 +2052,7 @@ function(package, dir, file, lib.loc = NULL,
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
     attr(bad_exprs, "wrong_pkg") <- wrong_pkg
     attr(bad_exprs, "bad_pkg") <- bad_pkg
+    attr(bad_exprs, "empty") <- empty_exprs
     if (length(bad_pkg)) { # check against dependencies.
         bases <- .get_standard_package_names()$base
         bad <- bad_pkg[!bad_pkg %in% bases]
@@ -2063,10 +2075,10 @@ function(package, dir, file, lib.loc = NULL,
 format.checkFF <-
 function(x, ...)
 {
+    xx <- attr(x, "empty")
     y <- attr(x, "wrong_pkg")
     z <- attr(x, "bad_pkg")
     zz <- attr(x, "undeclared")
-    if(!length(x) && !length(y)) return(character())
 
     res <- character()
     if (length(x)) {
@@ -2074,6 +2086,13 @@ function(x, ...)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
         res <- c("Foreign function call(s) without 'PACKAGE' argument:",
                  unlist(lapply(x, .fmt)))
+    }
+    if (length(xx)) {
+        .fmt <- function(x)
+            paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
+        res <- c(res,
+                 "Foreign function call(s) with empty 'PACKAGE' argument:",
+                 unlist(lapply(xx, .fmt)))
     }
 
     if (length(y)) {
