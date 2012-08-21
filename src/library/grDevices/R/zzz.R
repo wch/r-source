@@ -36,7 +36,7 @@
             if(.Platform$OS.type == "windows") windows
             else if (.Platform$GUI == "AQUA" ||
                      ((!nzchar(dsp) || grepl("^/tmp/launch-", dsp))
-                      && .Call("makeQuartzDefault"))) quartz
+                      && .Call("makeQuartzDefault", PACKAGE = "grDevices"))) quartz
             else if (nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
 	    else defdev
         }
