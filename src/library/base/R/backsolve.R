@@ -27,7 +27,8 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
     if(!x.mat) x <- as.matrix(x) # k  x	nb
     storage.mode(x) <- "double"
     k <- as.integer(k)
-    if(is.na(k) || k <= 0 || nrow(x) < k)
+    ldb <- nrow(x)
+    if(is.na(k) || k <= 0 || k > ldb || k > ncol(r))
         stop("invalid argument values in 'backsolve'")
     nb <- as.integer(ncol(x))
     if(is.na(nb)) stop("invalid value of ncol(x)")
@@ -36,12 +37,13 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
     job <- as.integer(upper.tri + 10L*transpose)
     z <- .C("bakslv",
 	    t  = r, ldt= nrow(r), n  = k,
-	    b  = x, ldb= k,	  nb = nb,
-	    x  = matrix(0, k, nb),
+	    b  = x, ldb, nb = nb,
+	    x  = matrix(0, ldb, nb),
 	    job = job,
 	    info = integer(1L),
 	    DUP = FALSE, PACKAGE = "base")[c("x","info")]
     if(z$info)
 	stop(gettextf("singular matrix in 'backsolve'. First zero in diagonal [%d]", z$info), domain = NA)
-    if(x.mat) z$x else drop(z$x)
+    zx <- if (k < ldb) z$x[seq_len(k),,drop=FALSE] else z$x
+    if(x.mat) zx else drop(zx)
 }

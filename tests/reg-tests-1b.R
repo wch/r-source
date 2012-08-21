@@ -1878,4 +1878,12 @@ ans <- merge(factorial.data, data1, by = c("a.factor", "b.factor"),
 stopifnot(is.na(ans[["y"]][4,]))
 ## only set the first column of ans[["y"]] to NA.
 
+
+## backsolve with k < nrows(rhs)
+r <- rbind(c(1,2,3),c(0,1,1),c(0,0,2))
+b <- c(8,4,2,1)
+x <- backsolve(r, cbind(b,b))
+stopifnot(identical(x[,1], x[,2]))
+## used elements (4,1), (2,1), (2,2) for second column.
+
 proc.time()
