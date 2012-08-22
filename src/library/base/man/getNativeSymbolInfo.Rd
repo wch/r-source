@@ -140,10 +140,10 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   \code{\link{dyn.load}}.  
 }
 
-\examples{
-library(stats) # normally loaded
-getNativeSymbolInfo("dansari")
+% \examples{
+% library(stats) # normally loaded
+% getNativeSymbolInfo("dansari")
 
-getNativeSymbolInfo("hcass2")  # a Fortran symbol
-}
+% getNativeSymbolInfo("hcass2")  # a Fortran symbol
+% }
 \keyword{interface}

@@ -49,8 +49,6 @@ static SEXP PkgSymbol = NULL;
 static SEXP EncSymbol = NULL;
 static SEXP CSingSymbol = NULL;
 
-/* Global variable that should go. Should actually be doing this in
-   a much more straightforward manner. */
 #include <Rdynpriv.h>
 enum {FILENAME, DLL_HANDLE, R_OBJECT, NOT_DEFINED};
 typedef struct {
@@ -213,6 +211,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     }
     if (!*fun && dll.type == FILENAME && !strlen(dll.DLLname))
 	errorcall(call, _("PACKAGE = \"\" is invalid"));
+
 #ifdef CHECK_CROSS_USAGE
     if (!*fun && dll.type == FILENAME && strcmp(dll.DLLname, "base")) {
 	if(strlen(ns) && strcmp(dll.DLLname, ns) &&
@@ -1341,8 +1340,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 	fun = R_dlsym(info, name, symbol);
     }
 
-    if(numProtects)
-	UNPROTECT(numProtects);
+    if(numProtects) UNPROTECT(numProtects);
 
     return fun;
 }

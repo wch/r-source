@@ -189,8 +189,15 @@ Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
     Rboolean old;
     old = info->useDynamicLookup;
     info->useDynamicLookup = value;
+    return old;
+}
 
-    return(old);
+Rboolean R_forceSymbols(DllInfo *info, Rboolean value)
+{
+    Rboolean old;
+    old = info->forceSymbols;
+    info->forceSymbols = value;
+    return old;
 }
 
 static void
@@ -254,10 +261,11 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
        Potentially change in the future to be only registered
        if there are any registered values.
     */
-    info->useDynamicLookup = (info->handle)?TRUE:FALSE;
+    info->useDynamicLookup = (info->handle) ? TRUE : FALSE;
+    info->forceSymbols = FALSE;
 
     if(croutines) {
-	for(num=0; croutines[num].name != NULL; num++) {;}
+	for(num = 0; croutines[num].name != NULL; num++) {;}
 	info->CSymbols = (Rf_DotCSymbol*)calloc((size_t) num,
 						sizeof(Rf_DotCSymbol));
 	info->numCSymbols = num;
@@ -267,39 +275,35 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
     }
 
     if(fortranRoutines) {
-	for(num=0; fortranRoutines[num].name != NULL; num++) {;}
+	for(num = 0; fortranRoutines[num].name != NULL; num++) {;}
 	info->FortranSymbols =
 	    (Rf_DotFortranSymbol*)calloc((size_t) num,
 					 sizeof(Rf_DotFortranSymbol));
 	info->numFortranSymbols = num;
-
-	for(i = 0; i < num; i++) {
+	for(i = 0; i < num; i++)
 	    R_addFortranRoutine(info, fortranRoutines+i,
 				info->FortranSymbols + i);
-	}
     }
 
     if(callRoutines) {
-	for(num=0; callRoutines[num].name != NULL; num++) {;}
+	for(num = 0; callRoutines[num].name != NULL; num++) {;}
 	info->CallSymbols =
 	    (Rf_DotCallSymbol*)calloc((size_t) num, sizeof(Rf_DotCallSymbol));
 	info->numCallSymbols = num;
-	for(i = 0; i < num; i++) {
+	for(i = 0; i < num; i++)
 	    R_addCallRoutine(info, callRoutines+i, info->CallSymbols + i);
-	}
     }
 
     if(externalRoutines) {
-	for(num=0; externalRoutines[num].name != NULL; num++) {;}
+	for(num = 0; externalRoutines[num].name != NULL; num++) {;}
 	info->ExternalSymbols =
 	    (Rf_DotExternalSymbol*)calloc((size_t) num,
 					  sizeof(Rf_DotExternalSymbol));
 	info->numExternalSymbols = num;
 
-	for(i = 0; i < num; i++) {
+	for(i = 0; i < num; i++) 
 	    R_addExternalRoutine(info, externalRoutines+i,
 				 info->ExternalSymbols + i);
-	}
     }
 
     return(1);
@@ -475,6 +479,7 @@ found:
     R_callDLLUnload(&LoadedDLL[loc]);
     R_osDynSymbol->closeLibrary(LoadedDLL[loc].handle);
     Rf_freeDllInfo(LoadedDLL+loc);
+    /* FIXME: why not use memcpy here? */
     for(i = loc + 1 ; i < CountDLL ; i++) {
 	LoadedDLL[i - 1].path = LoadedDLL[i].path;
 	LoadedDLL[i - 1].name = LoadedDLL[i].name;
@@ -488,6 +493,7 @@ found:
 	LoadedDLL[i - 1].CallSymbols = LoadedDLL[i].CallSymbols;
 	LoadedDLL[i - 1].FortranSymbols = LoadedDLL[i].FortranSymbols;
 	LoadedDLL[i - 1].ExternalSymbols = LoadedDLL[i].ExternalSymbols;
+	LoadedDLL[i - 1].forceSymbols = LoadedDLL[i].forceSymbols;
     }
     CountDLL--;
     return 1;
@@ -591,6 +597,7 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
        initialization routine can limit access by setting this to FALSE.
     */
     info->useDynamicLookup = TRUE;
+    info->forceSymbols = FALSE;
 
     dpath = (char *) malloc(strlen(path)+1);
     if(dpath == NULL) {
@@ -845,6 +852,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
     for (i = CountDLL - 1; i >= 0; i--) {
 	doit = all;
 	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
+	if(doit && LoadedDLL[i].forceSymbols) doit = 0;
 	if(doit) {
 	    fcnptr = R_dlsym(&LoadedDLL[i], name, symbol); /* R_osDynSymbol->dlsym */
 	    if (fcnptr != (DL_FUNC) NULL) {
