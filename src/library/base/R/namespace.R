@@ -359,7 +359,7 @@ loadNamespace <- function (package, lib.loc = NULL,
               return(NULL)
 
             symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
-                                               withRegistrationInfo = TRUE)
+                                           withRegistrationInfo = TRUE)
             lapply(seq_along(symNames),
                     function(i) {
                         ## could vectorize this outside of the loop

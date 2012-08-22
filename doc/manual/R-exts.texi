@@ -2953,6 +2953,7 @@ in the sources.  However, not all versions of @R{} will read the
 * Specifying imports and exports::  
 * Registering S3 methods::      
 * Load hooks::                  
+* useDynLib::                   
 * An example::                  
 * Summary -- converting an existing package::  
 * Namespaces with S4 classes and methods::  
@@ -3065,7 +3066,7 @@ to be imported explicitly.
 and non-standard names such as @code{[<-} and @code{function} must
 be.)
 
-@node Load hooks, An example, Registering S3 methods, Package namespaces
+@node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
 
 @findex .onLoad
@@ -3097,10 +3098,16 @@ start-up banner); code to set options and load shared objects should be
 placed in a @code{.onLoad} function, or use made of the @code{useDynLib}
 directive described next.
 
-There can be one or more @code{useDynLib} directives which allows shared
-objects that need to be loaded to be specified in the @file{NAMESPACE}
-file.@footnote{NB: this will only be read in all versions of @R{} if the
-package contains @R{} code in a @file{R} directory.}  The directive
+User-level hooks are also available: see the help on function
+@code{setHook}.
+
+@node useDynLib, An example, Load hooks, Package namespaces
+@subsection useDynLib
+
+A @file{NAMESPACE} file can contain one or more @code{useDynLib}
+directives which allows shared objects that need to be
+loaded.@footnote{NB: this will only be read in all versions of @R{} if
+the package contains @R{} code in a @file{R} directory.}  The directive
 
 @findex useDynLib
 @example
@@ -3115,9 +3122,6 @@ Loading of registered object(s) occurs after the package code has been
 loaded and before running the load hook function.  Packages that would
 only need a load hook function to load a shared object can use the
 @code{useDynLib} directive instead.
-
-User-level hooks are also available: see the help on function
-@code{setHook}.
 
 The @code{useDynLib} directive also accepts the names of the native
 routines that are to be used in @R{} @emph{via} the @code{.C}, @code{.Call},
@@ -3272,11 +3276,11 @@ which makes the @R{} variables corresponding to the FORTRAN symbols
 space.
 
 
-More information about this symbol lookup, along with some approaches
-for customizing it, is available from
-@uref{http://www.omegahat.org/@/examples/@/RDotCall}.
+@c More information about this symbol lookup, along with some approaches
+@c for customizing it, is available from
+@c @uref{http://www.omegahat.org/@/examples/@/RDotCall}.
 
-@node An example, Summary -- converting an existing package, Load hooks, Package namespaces
+@node An example, Summary -- converting an existing package, useDynLib, Package namespaces
 @subsection An example
 
 As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
@@ -7464,6 +7468,25 @@ in the @R{} source tree (e.g., @pkg{stats}).  Also, there is a
 brief, high-level introduction in @emph{R News} (volume 1/3, September
 2001, pages 20--23, @uref{http://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
 
+Once routines are registered, they can be referred to as @R{} objects if
+they this is arranged in the @code{useDynLib} call in the package's
+@file{NAMESPACE} file (see @ref{useDynLib}).  This avoids the overhead
+of looking up an entry point each time it is used, and ensure that the
+entry point in the package is the one used (without a @code{PACKAGE =
+"pkg"} argument).  So for example the @pkg{stats} package has
+@example
+# Refer to all C/Fortran routines by their name prefixed by C_
+useDynLib(stats, .registration = TRUE, .fixes = "C_")
+@end example
+in its @file{NAMESPACE} file, and then @code{ansari.test}'s default
+methods can contain
+@example
+        pansari <- function(q, m, n)
+            .C(C_pansari, as.integer(length(q)), p = as.double(q), 
+                as.integer(m), as.integer(n))$p
+@end example
+
+
 @c These tools are not currently operational.
 @c Additionally, there are (experimental) tools that can be used to
 @c automate the generation of the code to register the routines for a
@@ -7597,11 +7620,11 @@ will compile @file{test.c}!
 If the @file{src} subdirectory of an add-on package contains source code
 with one of the extensions listed above or a file @file{Makevars} but
 @strong{not} a file @code{Makefile}, @command{R CMD INSTALL} creates a
-shared object (for loading into @R{} through @code{useDynlib()} in the
-@file{NAMESPACE}, or in the
-@code{.onLoad} function of the package) using the @command{R CMD SHLIB}
-mechanism.  If file @file{Makevars} exists it is read first, then the
-system makefile and then any personal @file{Makevars} files.
+shared object (for loading into @R{} through @code{useDynlib} in the
+@file{NAMESPACE}, or in the @code{.onLoad} function of the package)
+using the @command{R CMD SHLIB} mechanism.  If file @file{Makevars}
+exists it is read first, then the system makefile and then any personal
+@file{Makevars} files.
 
 If the @file{src} subdirectory of package contains a file
 @file{Makefile}, this is used by @command{R CMD INSTALL} in place of the
@@ -8239,7 +8262,7 @@ The usual @R{} object modes are given in the table.
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
 @headitem SEXPTYPE @tab @R{} equivalent
 @item @code{REALSXP}  @tab numeric with storage mode @code{double}
-@item @code{INTSXP}   @tab integer
+@item @code{R OBJECTS}   @tab integer
 @item @code{CPLXSXP}  @tab complex
 @item @code{LGLSXP}   @tab logical
 @item @code{STRSXP}   @tab character
@@ -11513,9 +11536,9 @@ mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
-@uref{http://www.rforge.net/@/Rserve/}) and connections to Java in
-@samp{SJava} (see @uref{http://www.omegahat.org/@/RSJava/}) and @samp{JRI}
-(part of the @CRANpkg{rJava} package on @acronym{CRAN}).
+@uref{http://www.rforge.net/@/Rserve/}) and connections to Java in the
+Omegahat package @samp{SJava} and @samp{JRI} (part of the
+@CRANpkg{rJava} package on @acronym{CRAN}).
 
 Note that the APIs described in this chapter are only intended to be
 used in an alternative front-end: they are not part of the API made
