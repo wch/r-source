@@ -6614,9 +6614,9 @@ that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2, SSE3
 and similar) so you may need to build a version of @R{} specifically to
 use with @code{valgrind}.
 
-On Mac OS 10.6/7 the valgrind session is likely to hang when @R{}
-terminates.  This is an issue in @command{valgrind} at least up to 3.8.0
-and can be circumvented by setting the environment variable
+On Mac OS 10.6/7 the valgrind session is liable to hang when @R{}
+terminates.  This was an issue in @command{valgrind} prior to 3.8.1 and
+can be circumvented by setting the environment variable
 @env{R_OSX_VALGRIND}.  It is still necessary to avoid the use of
 @code{system()} in the @R{} session, directly or indirectly.
 

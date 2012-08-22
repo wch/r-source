@@ -524,7 +524,8 @@
       any value) allows \R to be run under \command{valgrind} on Mac OS
       10.6 and 10.7 (\command{valgrind} currently has very limited
       support for 10.8), provided \code{system()} is not used (directly
-      or indirectly).
+      or indirectly).  This should not be needed for \command{valgrind}
+      >= 3.8.1.
       
       \item The \code{model.frame()} method for \code{"lm"} uses
       \code{xlevels}: this is safer if \code{data} was supplied or
