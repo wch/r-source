@@ -3149,7 +3149,7 @@ rather than
 
 There are at least two benefits to this approach.  Firstly, the symbol
 lookup is done just once for each symbol rather than each time the
-routine is invoked. Secondly, this removes any ambiguity in resolving
+routine is invoked.  Secondly, this removes any ambiguity in resolving
 symbols that might be present in several compiled DLLs.
 
 In some circumstances, there will already be an @R{} variable in the
@@ -3635,8 +3635,7 @@ good way to avoid this.
 Conflicts between symbols in DLLs are handled in very platform-specific
 ways.  Good ways to avoid trouble are to make as many symbols as
 possible static (check with @code{nm -pg}), and to use unusual names, as
-well as ensuring you have used the @code{PACKAGE} argument that @code{R
-CMD check} checks for.
+well as ensuring you have used the @code{PACKAGE} argument.
 
 @item
 It is not portable to call compiled code in @R{} or other packages
@@ -7120,7 +7119,10 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.)
+directive will be used.  However, prior to @R{} 2.16.0 the detection of
+the correct namespace is unreliable and you are strongly recommended to
+use the @code{PACKAGE} argument for packages to be used with earlier
+versions of @R{}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
