@@ -1246,8 +1246,7 @@ callGeneric <- function(...)
 }
 
 initMethodDispatch <- function(where = topenv(parent.frame()))
-    .Call("R_initMethodDispatch", as.environment(where),
-          PACKAGE = "methods")# C-level initialization
+    .Call(C_R_initMethodDispatch, as.environment(where))# C-level initialization
 
 ### dummy version for booting
 isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where),

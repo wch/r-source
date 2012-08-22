@@ -1,4 +1,4 @@
-useDynLib(methods) #>> fails for now : .registration = TRUE
+useDynLib(methods, .registration = TRUE, .fixes = "C_")
 
 importFrom(utils, find)
 

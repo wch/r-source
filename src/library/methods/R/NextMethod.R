@@ -123,9 +123,7 @@ callNextMethod <- function(...) {
         }
         else
             call <- match.call(method, mcall, expand.dots = FALSE)
-        .Call("R_nextMethodCall",
-              call,
-              callEnv, PACKAGE="methods")
+        .Call(C_R_nextMethodCall, call, callEnv)
     }
 }
 

@@ -504,8 +504,7 @@ getGeneric <-
             message("Empty function name in .getGeneric")
             dput(sys.calls())
         }
-        value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
-                       PACKAGE = "methods")
+        value <- .Call(C_R_getGeneric, f, FALSE, as.environment(where), package)
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
         if(!is.null(value) && exists(f, .GlobalEnv) &&
@@ -939,14 +938,14 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE,
 
 setPrimitiveMethods <-
   function(f, fdef, code, generic, mlist = get(".Methods", envir = environment(generic)))
-    .Call("R_M_setPrimitiveMethods", f, fdef, code, generic, mlist, PACKAGE="methods")
+    .Call(C_R_M_setPrimitiveMethods, f, fdef, code, generic, mlist)
 
 ### utility to turn ALL primitive methods on or off (to avoid possible inf. recursion)
 .allowPrimitiveMethods <-
   function(onOff) {
       if(onOff) code <- "SET"
       else code <- "CLEAR"
-      .Call("R_M_setPrimitiveMethods", "", NULL, code, NULL, NULL, PACKAGE = "methods")
+      .Call(C_R_M_setPrimitiveMethods, "", NULL, code, NULL, NULL)
   }
 
 
@@ -999,7 +998,7 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
 }
 
 missingArg <- function(symbol, envir = parent.frame(), eval = FALSE)
-    .Call("R_missingArg", if(eval) symbol else substitute(symbol), envir, PACKAGE = "methods")
+    .Call(C_R_missingArg, if(eval) symbol else substitute(symbol), envir)
 
 balanceMethodsList <- function(mlist, args, check = TRUE)
 {
@@ -1406,7 +1405,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 .identC <- function(c1 = NULL, c2 = NULL)
 {
     ## are the two objects identical class or genric function string names?
-    .Call("R_identC", c1, c2, PACKAGE="methods")
+    .Call(C_R_identC, c1, c2)
 }
 
 ## a version of match that avoids the is.factor() junk: faster & safe for bootstrapping
@@ -1493,7 +1492,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 {
     ## the primitive name is 'as.double', but S4 methods are
     ## traditionally set on 'as.numeric'
-    f <- .Call("R_get_primname", object, PACKAGE = "methods")
+    f <- .Call(C_R_get_primname, object)
     if(f == "as.double") "as.numeric" else f
 }
 

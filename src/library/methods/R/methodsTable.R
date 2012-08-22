@@ -1077,7 +1077,7 @@
 
 ## temporary switch for tables
 useMTable <- function(onOff = NA)
-  .Call("R_set_method_dispatch", as.logical(onOff), PACKAGE = "methods")
+  .Call(C_R_set_method_dispatch, as.logical(onOff))
 
 ## get all the group generic functions, in breadth-first order since
 ## direct group inheritance is closer than indirect (all existing
