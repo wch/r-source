@@ -119,4 +119,5 @@ void R_init_grDevices(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
+    // R_forceSymbols(dll, TRUE);
 }

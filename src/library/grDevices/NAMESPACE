@@ -11,7 +11,7 @@ if(tools:::.OStype() == "windows") {
               C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
               C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,
               C_devnext = devnext, C_devoff = devoff, C_devprev = devprev,
-              C_devset = devset, C_devsize = devsize)
+              C_devset = devset, C_devsize = devsize, cairoProps)
 
 
 } else {
@@ -22,7 +22,8 @@ if(tools:::.OStype() == "windows") {
               C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
               C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,
               C_devnext = devnext, C_devoff = devoff, C_devprev = devprev,
-              C_devset = devset, C_devsize = devsize)
+              C_devset = devset, C_devsize = devsize,
+              cairoProps, makeQuartzDefault)
 }
 
 export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks, blues9,
