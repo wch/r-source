@@ -198,7 +198,6 @@ static R_FortranMethodDef fortranMethods[] = {
     FDEF(dqrdc),
     FDEF(dqrdc2),
     FDEF(dqrls),
-    FDEF(dqrsl),
     FDEF(dqrqty),
     FDEF(dqrqy),
     FDEF(dqrrsd),
