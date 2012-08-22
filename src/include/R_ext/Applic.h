@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2012   Robert Gentleman, Ross Ihaka
- *                             and the R Core Team
+ *  Copyright (C) 1998-2012   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -91,16 +90,6 @@ int findInterval(double *xt, int n, double x,
 
 /* The following are registered for use in .C/.Fortran */
 
-/* appl/bakslv.c : hidden */
-void bakslv(double *, int *, int *,
-	    double *, int *, int *,
-	    double *, int *, int *);
-
-#if 0
-/* appl/maxcol.c: Utils.h */
-void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
-#endif
-
 /* appl/pretty.c: hidden  */
 void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	      double *shrink_sml, double *high_u_fact,
@@ -177,7 +166,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp);
 Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 /* TRUE: success */ int isn, double *work, int *iwork);
 
-/* appl/fmin.c : non_API, used by pcaPA */
+/* appl/fmin.c: used by package paaPA */
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
 
@@ -211,7 +200,7 @@ void optif9(int nr, int n, double *x,
 
 /* Others */
 
-/* appl/pretty.c non-API but used by engine.c,  rgl and formerly GWAtoolbox */
+/* appl/pretty.c non-API but used by engine.c, rgl and formerly GWAtoolbox */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 		 double shrink_sml, double high_u_fact[],
 		 int eps_correction, int return_bounds);
@@ -224,10 +213,6 @@ void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
 void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *xpls, double *fpls, double *gpls, int *itrmcd,
 	    double *a, double *wrk);
-
-/* remove in due course */
-double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
-		double *Tol, int *Maxit);
 
 #ifdef  __cplusplus
 }
