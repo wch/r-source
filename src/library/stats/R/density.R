@@ -129,14 +129,9 @@ density.default <-
     if (!is.finite(to)) stop("non-finite 'to'")
     lo <- from - 4 * bw
     up <- to + 4 * bw
-    y <- .C(C_massdist,
-	    x = as.double(x),
-            xmass = as.double(weights),
-	    nx = nx,
-	    xlo = as.double(lo),
-	    xhi = as.double(up),
-	    y = double(2 * n),
-	    ny = as.integer(n))$y * totMass
+    ## This bins weighted distances
+    y <- .Call(C_BinDist, x, weights, lo, up, n) * totMass
+
     kords <- seq.int(0, 2*(up-lo), length.out = 2L * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
@@ -165,29 +160,28 @@ density.default <-
     kords <- fft( fft(y)* Conj(fft(kords)), inverse=TRUE)
     kords <- pmax.int(0, Re(kords)[1L:n]/length(y))
     xords <- seq.int(lo, up, length.out = n)
-#    keep <- (xords >= from) & (xords <= to)
     x <- seq.int(from, to, length.out = n.user)
     structure(list(x = x, y = approx(xords, kords, x)$y, bw = bw, n = N,
 		   call=match.call(), data.name=name, has.na = FALSE),
 	      class="density")
 }
 
-plot.density <- function(x, main=NULL, xlab=NULL, ylab="Density", type="l",
-			 zero.line = TRUE, ...)
+plot.density <- function(x, main = NULL, xlab = NULL, ylab = "Density",
+                         type = "l", zero.line = TRUE, ...)
 {
     if(is.null(xlab))
 	xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
     if(is.null(main)) main <- deparse(x$call)
-    plot.default(x, main=main, xlab=xlab, ylab=ylab, type=type, ...)
-    if(zero.line) abline(h=0, lwd=0.1, col = "gray")
+    plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
+    if(zero.line) abline(h = 0, lwd = 0.1, col = "gray")
     invisible(NULL)
 }
 
-print.density <- function(x, digits=NULL, ...)
+print.density <- function(x, digits = NULL, ...)
 {
-    cat("\nCall:\n\t",deparse(x$call),
-	"\n\nData: ",x$data.name," (",x$n," obs.);",
-	"\tBandwidth 'bw' = ",formatC(x$bw,digits=digits), "\n\n",sep="")
-    print(summary(as.data.frame(x[c("x","y")])), digits=digits, ...)
+    cat("\nCall:\n\t", deparse(x$call),
+	"\n\nData: ", x$data.name, " (", x$n, " obs.);",
+	"\tBandwidth 'bw' = ", formatC(x$bw, digits = digits), "\n\n", sep = "")
+    print(summary(as.data.frame(x[c("x","y")])), digits = digits, ...)
     invisible(x)
 }

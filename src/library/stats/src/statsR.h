@@ -35,6 +35,7 @@ SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular);
 SEXP filter4(SEXP x, SEXP filter, SEXP out);
 SEXP lowess(SEXP x, SEXP y, SEXP sf, SEXP siter, SEXP sdelta);
 SEXP DoubleCentre(SEXP A);
+SEXP BinDist(SEXP x, SEXP weights, SEXP slo, SEXP sup, SEXP sn);
 
 /* Declarations for .External[2] entry points */
 

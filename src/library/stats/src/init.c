@@ -76,7 +76,6 @@ static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, IN
 					      INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
 					      INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType massdist_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, REALSXP, REALSXP, INTSXP};
 static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
 						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
@@ -140,7 +139,6 @@ static const R_CMethodDef CEntries[]  = {
     CDEF(band_phi6_bin),
     CDEF(band_den_bin),
     CDEF(loglin),
-    CDEF(massdist),
     CDEF(spline_coef),
     CDEF(spline_eval),
     {"signrank_free", (DL_FUNC) &stats_signrank_free, 0},
@@ -200,6 +198,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(filter4, 3),
     CALLDEF(lowess, 5),
     CALLDEF(DoubleCentre, 1),
+    CALLDEF(BinDist, 5),
     {NULL, NULL, 0}
 };
 

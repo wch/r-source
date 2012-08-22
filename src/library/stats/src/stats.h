@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005   The R Core Team.
+ *  Copyright (C) 2005-12   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,8 +41,6 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 	    double *table, double *fit, int *locmar, int *nmar, double *marg,
 	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault);
-void massdist(double *x, double *xmass, int *nx, double *xlow, double *xhigh,
-	      double *y, int *ny);
 void spline_coef(int *method, int *n, double *x, double *y,
 		 double *b, double *c, double *d, double *e);
 void spline_eval(int *method, int *nu, double *u, double *v,
