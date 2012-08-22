@@ -746,6 +746,8 @@
       \item The misuse of \code{.C("name", ..., PACKAGE = foo)} where
       \code{foo} is an arbitrary \R object is now an error.  (Seen in
       package \pkg{coxphf} and elsewhere.)
+
+      \item Protection added to \code{do_system} (\PR{15025})
     }
   }
 }

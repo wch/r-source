@@ -260,7 +260,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(rval, j, CAR(tlist));
 	    tlist = CDR(tlist);
 	}
-	if(ll) setAttrib(rval, install("status"), ScalarInteger(ll));
+	if(ll) {
+	    SEXP lsym = install("status");
+	    setAttrib(rval, lsym, ScalarInteger(ll));
+	}
 	UNPROTECT(2);
 	return rval;
     } else {
