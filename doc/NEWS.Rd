@@ -112,6 +112,18 @@
       \item \code{duplicated()}, \code{unique()} and similar now
       support vectors of lengths above \eqn{2^{29}}{2^29} on 64-bit
       platforms.
+      
+      \item Omitting \code{PACKAGE} in \code{.C()} etc calls was
+      supposed to make use of the DLL from the namespace within which
+      the enclosing function was defined.  It was less successful in
+      doing so than it might be, and gave no indication it had failed.
+
+      A new search strategy is much more successful and gives a warning
+      when it fails.  In most cases this is because the entry point is
+      not actually provided by that package (and so \code{PACKAGE}
+      should be used to indicate which package is intended) but in a few
+      the warning indicates that an explicit \code{PACKAGE} argument is
+      needed.
     }
   }
 
@@ -300,6 +312,10 @@
       \item \code{smooth.spline()} did not check that a specified
       numeric \code{spar} was of length 1, and gave corrupt results if
       it was of length 0.
+
+      \item The misuse of \code{.C("name", ..., PACKAGE = foo)} where
+      \code{foo} is an arbitrary \R object is now an error.  (Seen in
+      package \pkg{coxphf} and elsewhere.)
     }
   }
 }
