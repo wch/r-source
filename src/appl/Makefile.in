@@ -14,8 +14,7 @@ include $(top_builddir)/Makeconf
 ## rcont.c should be removed after 2.15.2, which removes it from the API.
 SOURCES_C = \
 	binning.c cpoly.c fft.c fmin.c integrate.c interv.c \
-	lbfgsb.c machar.c maxcol.c optim.c pretty.c rcont.c strsignif.c \
-	uncmin.c
+	machar.c maxcol.c optim.c pretty.c rcont.c strsignif.c uncmin.c
 SOURCES_F = \
 	ch2inv.f chol.f \
 	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
@@ -25,7 +24,7 @@ DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
   @BLAS_SHLIB_FALSE@ $(OBJECTS_BLAS)
-HEADERS =
+HEADERS = lbfgsb.c
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = COPYRIGHT COPYRIGHT.ftn README \

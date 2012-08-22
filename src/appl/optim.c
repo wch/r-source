@@ -628,6 +628,8 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
     *grcount = gradcount;
 }
 
+#include "lbfgsb.c"
+
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *Fmin, optimfn fminfn, optimgr fmingr, int *fail,
 	    void *ex, double factr, double pgtol,

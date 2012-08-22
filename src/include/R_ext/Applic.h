@@ -166,15 +166,9 @@ void fft_factor(int n, int *pmaxf, int *pmaxp);
 Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 /* TRUE: success */ int isn, double *work, int *iwork);
 
-/* appl/fmin.c: used by package paaPA */
+/* appl/fmin.c: used by package pcaPA */
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
-
-/* appl/lbfgsb.c: used in GenSA */
-void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
-	    double *f, double *g, double factr, double *pgtol,
-	    double *wa, int * iwa, char *task, int iprint,
-	    int *lsave, int *isave, double *dsave);
 
 /* appl/uncmin.c : */
 
