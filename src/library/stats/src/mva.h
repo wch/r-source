@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001, 2004   The R Core Team.
+ *  Copyright (C) 2001-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,15 +20,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
-void dblcen(double *a, int *na);
-
 void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p);
-/* double R_euclidean(double *x, int nr, int nc, int i1, int i2);
-   double R_maximum  (double *x, int nr, int nc, int i1, int i2);
-   double R_manhattan(double *x, int nr, int nc, int i1, int i2);
-   double R_canberra (double *x, int nr, int nc, int i1, int i2);
-   double R_dist_binary(double *x, int nr, int nc, int i1, int i2); */
 
 SEXP R_cutree(SEXP merge, SEXP which);
 

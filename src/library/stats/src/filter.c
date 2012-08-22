@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1999, 2001, 2   The R Core Team
+ *  Copyright (C) 1999, 2001-12   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,50 +32,8 @@
 #define max(a, b) ((a < b)?(b):(a))
 #endif
 
+// currently ISNAN includes NAs
 #define my_isok(x) (!ISNA(x) & !ISNAN(x))
-
-void
-filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
-	int *circular, double *out)
-{
-    int i, ii, j, nf=*nfilt, nn = *n, nshift;
-    double z, tmp;
-
-    if(*sides == 2) nshift = nf /2; else nshift = 0;
-    if(!*circular) {
-	for(i = 0; i < nn; i++) {
-	    z = 0;
-	    if(i + nshift - (nf - 1) < 0 || i + nshift >= nn) {
-		out[i] = NA_REAL;
-		continue;
-	    }
-	    for(j = max(0, nshift + i - nn); j < min(nf, i + nshift + 1) ; j++) {
-		tmp = x[i + nshift - j];
-		if(my_isok(tmp)) z += filter[j] * tmp;
-		else { out[i] = NA_REAL; goto bad; }
-	    }
-	    out[i] = z;
-	bad:
-	    continue;
-	}
-    } else { /* circular */
-	for(i = 0; i < nn; i++)
-	{
-	    z = 0;
-	    for(j = 0; j < nf; j++) {
-		ii = i + nshift - j;
-		if(ii < 0) ii += nn;
-		if(ii >= nn) ii -= nn;
-		tmp = x[ii];
-		if(my_isok(tmp)) z += filter[j] * tmp;
-		else { out[i] = NA_REAL; goto bad2; }
-	    }
-	    out[i] = z;
-	bad2:
-	    continue;
-	}
-    }
-}
 
 SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
 {
@@ -128,25 +86,6 @@ SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
 }
 
 /* recursive filtering */
-void
-filter2(double *x, int *n, double *filter, int *nfilt, double *out)
-{
-    int i, j, nf = *nfilt;
-    double sum, tmp;
-
-    for(i = 0; i < *n; i++) {
-	sum = x[i];
-	for (j = 0; j < nf; j++) {
-	    tmp = out[nf + i - j - 1];
-	    if(my_isok(tmp)) sum += tmp * filter[j];
-	    else { out[nf + i] = NA_REAL; goto bad3; }
-	}
-	out[nf + i] = sum;
-    bad3:
-	continue;
-    }
-}
-
 SEXP filter4(SEXP x, SEXP filter, SEXP out)
 {
    if (TYPEOF(x) != REALSXP || TYPEOF(filter) != REALSXP

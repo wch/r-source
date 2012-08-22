@@ -23,12 +23,13 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     if (is.null(n <- attr(d, "Size"))) {
         if(add) d <- as.matrix(d)
 	x <- as.matrix(d^2)
+        storage.mode(x) <- "double"
 	if ((n <- nrow(x)) != ncol(x))
 	    stop("distances must be result of 'dist' or a square matrix")
         rn <- rownames(x)
     } else {
         rn <- attr(d, "Labels")
-	x <- matrix(0, n, n)
+	x <- matrix(0, n, n) # must be double
         if (add) d0 <- x
 	x[row(x) > col(x)] <- d^2
 	x <- x + t(x)
@@ -42,9 +43,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     if(is.na(n) || n > 46340) stop("invalid value of 'n'")
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
-    storage.mode(x) <- "double"
-    ## doubly center x in-place
-    .C(C_dblcen, x, n, DUP = FALSE)
+    x <- .Call(C_DoubleCentre, x)
 
     if(add) { ## solve the additive constant problem
         ## it is c* = largest eigenvalue of 2 x 2 (n x n) block matrix Z:
@@ -52,14 +51,14 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         Z <- matrix(0, 2L*n, 2L*n)
         Z[cbind(i2,i)] <- -1
         Z[ i, i2] <- -x
-        Z[i2, i2] <- .C(C_dblcen, x = 2*d, n)$x
+        Z[i2, i2] <- .Call(C_DoubleCentre, 2*d)
         e <- eigen(Z, symmetric = FALSE, only.values = TRUE)$values
         add.c <- max(Re(e))
         ## and construct a new x[,] matrix:
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)
         x[non.diag] <- (d[non.diag] + add.c)^2
-        .C(C_dblcen, x, n, DUP = FALSE)
+        x <- .Call(C_DoubleCentre, x)
     }
     e <- eigen(-x/2, symmetric = TRUE)
     ev <- e$values[seq_len(k)]

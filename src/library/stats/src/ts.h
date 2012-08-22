@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-4   The R Core Team.
+ *  Copyright (C) 2001-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,9 +35,6 @@ void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
 	      double *pacf, double *var, double *aic, int *porder,
 	      int *puseaic);
 void R_intgrt_vec (double *x, double *y, int *lag, int *n);
-void filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
-	     int *circular, double *out);
-void filter2(double *x, int *n, double *filter, int *nfilt, double *out);
 void R_pp_sum (double *u, int *n, int *l, double *sum);
 void HoltWinters (double *x, int *xl, double *alpha, double *beta,
 		  double *gamma, int *start_time, int *seasonal, int *period,
