@@ -299,29 +299,33 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    cmd, res);
 	}
 	
-	rval = allocVector(STRSXP, i);
+	rval = PROTECT(allocVector(STRSXP, i));
 	for (j = (i - 1); j >= 0; j--) {
 	    SET_STRING_ELT(rval, j, CAR(tlist));
 	    tlist = CDR(tlist);
 	}
 	if(res) {
-	    setAttrib(rval, install("status"), ScalarInteger(res));
-	    if(errno)
-		setAttrib(rval, install("errmsg"), mkString(strerror(errno)));
+	    SEXP lsym = install("status");
+	    setAttrib(rval, lsym, ScalarInteger(res));
+	    if(errno) {
+		lsym = install("errmsg");
+		setAttrib(rval, lsym, mkString(strerror(errno)));
+	    }
 	}
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return rval;
     }
     else { /* intern =  FALSE */
 #ifdef HAVE_AQUA
 	R_Busy(1);
 #endif
-	tlist = allocVector(INTSXP, 1);
+	tlist = PROTECT(allocVector(INTSXP, 1));
 	fflush(stdout);
 	INTEGER(tlist)[0] = R_system(translateChar(STRING_ELT(CAR(args), 0)));
 #ifdef HAVE_AQUA
 	R_Busy(0);
 #endif
+	UNPROTECT(1);
 	R_Visible = 0;
 	return tlist;
     }
