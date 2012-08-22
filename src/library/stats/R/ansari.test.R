@@ -50,9 +50,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
         exact <- ((m < 50L) && (n < 50L))
 
     if(exact && !TIES) {
-        pansari <- function(q, m, n) {
+        pansari <- function(q, m, n)
             .C(C_pansari, as.integer(length(q)), p = as.double(q), m, n)$p
-        }
         PVAL <-
             switch(alternative,
                    two.sided = {
@@ -66,9 +65,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                    less = 1 - pansari(STATISTIC - 1, m, n),
                    greater = pansari(STATISTIC, m, n))
         if (conf.int) {
-            qansari <- function(p, m, n) {
+            qansari <- function(p, m, n)
                 .C(C_qansari, as.integer(length(p)), q = as.double(p), m, n)$q
-            }
             alpha <- 1 - conf.level
             x <- sort(x)
             y <- sort(y)
