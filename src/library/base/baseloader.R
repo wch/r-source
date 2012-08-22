@@ -114,3 +114,15 @@
 ## keep in sync with R/zzz.R
 as.numeric <- as.real <- as.double
 is.name <- is.symbol
+
+
+## populate C/Fortran symbols
+local({
+    routines <- getDLLRegisteredRoutines("base", addNames = FALSE)
+    for(i in 1:3) {
+        lapply(routines[[i]],
+               function(sym)
+               assign(paste0(if(i == 3) ".F_" else ".C_", sym$name),
+                      sym, envir = .BaseNamespaceEnv))
+    }
+})

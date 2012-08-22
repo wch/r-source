@@ -23,7 +23,7 @@ norm <- function(x, type = c("O", "I", "F", "M", "2")) {
 	## *faster* at least on some platforms {but possibly less accurate}:
 	##sqrt(eigen(crossprod(x), symmetric=TRUE, only.values=TRUE)$values[1L])
     } else
-	.Call("La_dlange", x, type, PACKAGE="base")
+	.Call(.C_La_dlange, x, type)
 } ## and define it as implicitGeneric, so S4 methods are consistent
 
 kappa <- function(z, ...) UseMethod("kappa")
@@ -38,14 +38,14 @@ rcond <- function(x, norm = c("O","I","1"), triangular = FALSE, ...) {
     ## x = square matrix :
     if(is.complex(x)) {
         if(triangular)
-            .Call("La_ztrcon", x, norm, PACKAGE="base")
-        else .Call("La_zgecon", x, norm, PACKAGE="base")
+            .Call(.C_La_ztrcon, x, norm)
+        else .Call(.C_La_zgecon, x, norm)
     }
     else {
         storage.mode(x) <- "double"
         if(triangular)
-            .Call("La_dtrcon", x, norm, PACKAGE="base")
-        else .Call("La_dgecon", x, norm, PACKAGE="base")
+            .Call(.C_La_dtrcon, x, norm)
+        else .Call(.C_La_dgecon, x, norm)
     }
 }
 
@@ -93,7 +93,7 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 	if(p != ncol(z)) stop("triangular matrix should be square")
 	if(is.null(norm)) norm <- "1"
 	if(is.complex(z))
-	    1/.Call("La_ztrcon", z, norm, PACKAGE="base")
+	    1/.Call(.C_La_ztrcon, z, norm)
 	else if(LINPACK) {
 	    if(norm == "I") # instead of "1" / "O"
 		z <- t(z)
@@ -101,18 +101,11 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 	    ## even though dtrco's doc also say to compute the
 	    ## 1-norm reciprocal condition
             if(!is.double(z)) storage.mode(z) <- "double"
-	    1 / .Fortran("dtrco",
-			 z,
-			 p,
-			 p,
-			 k = double(1),
-			 double(p),
-			 1L,
-			 PACKAGE = "base")$k
+	    1 / .Fortran(.F_dtrco, z, p, p, k = double(1), double(p), 1L)$k
 	}
 	else { ## Lapack
 	    storage.mode(z) <- "double"
-	    1/.Call("La_dtrcon", z, norm, PACKAGE="base")
+	    1/.Call(.C_La_dtrcon, z, norm)
 	}
     }
 }

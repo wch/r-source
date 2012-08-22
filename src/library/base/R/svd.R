@@ -64,7 +64,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     v <- if(job == 0L) double() else matrix(0, p, p)
 
     mm <- min(n+1L,p)
-    z <- .Fortran("dsvdc",
+    z <- .Fortran(.F_dsvdc,
 		  x, # did storage.mode above
 		  n,
 		  n,
@@ -78,7 +78,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 		  double(n),
 		  as.integer(job),
 		  info = integer(1L),
-		  DUP = FALSE, PACKAGE = "base")[c("d","u","v","info")]
+		  DUP = FALSE)[c("d","u","v","info")]
     if(z$info)
 	stop(gettextf("error %d in 'dsvdc'", z$info), domain = NA)
     z$d <- z$d[seq_len(min(n, p))]

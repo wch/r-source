@@ -65,5 +65,5 @@ cut.default <-
 {
     if(!is.double(x)) storage.mode(x) <- "double"
     if(!is.double(breaks)) storage.mode(breaks) <- "double"
-    .Call("BinCode", x, breaks, right, include.lowest, PACKAGE = "base")
+    .Call(.C_BinCode, x, breaks, right, include.lowest)
 }

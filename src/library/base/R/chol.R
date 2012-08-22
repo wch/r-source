@@ -35,7 +35,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 	n <- 1L
     }
     if(!pivot && !LINPACK)
-        return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
+        return(.Call(.C_La_chol, as.matrix(x)))
 
     ## sanity checks
     n <- as.integer(n)
@@ -47,15 +47,8 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
     if(pivot) { ## code could be used in the other case too
         xx <- x
         xx[lower.tri(xx)] <- 0
-        z <- .Fortran("dchdc",
-                      x = xx,
-                      n,
-                      n,
-                      double(n),
-                      piv = integer(n),
-                      as.integer(pivot),
-                      rank = integer(1L),
-                      DUP = FALSE, PACKAGE = "base")
+        z <- .Fortran(.F_dchdc, x = xx, n, n, double(n), piv = integer(n),
+                      as.integer(pivot), rank = integer(1L), DUP = FALSE)
         if (z$rank < n)
             if(!pivot) stop("matrix not positive definite")
             else warning("matrix not positive definite")
@@ -68,13 +61,8 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
         }
         robj
     } else {
-        z <- .Fortran("chol",
-                      x = x,
-                      n,
-                      n,
-                      v = matrix(0, nrow=n, ncol=n),
-                      info = integer(1L),
-                      DUP = FALSE, PACKAGE = "base")
+        z <- .Fortran(.F_chol, x = x, n, n, v = matrix(0, nrow=n, ncol=n),
+                      info = integer(1L), DUP = FALSE)
         if(z$info)
             stop("non-positive definite matrix in 'chol'")
         z$v
@@ -85,7 +73,7 @@ chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
 {
     if(!is.numeric(x))
 	stop("non-numeric argument to 'chol2inv'")
-    if(!LINPACK) return(.Call("La_chol2inv", x, size, PACKAGE = "base"))
+    if(!LINPACK) return(.Call(.C_La_chol2inv, x, size))
 
     if(is.matrix(x)) {
 	nr <- nrow(x)
@@ -101,13 +89,9 @@ chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
     if(is.na(size) || size <= 0L || size > nr || size > nc)
 	stop("invalid 'size' argument in 'chol2inv'")
     if(!is.double(x)) storage.mode(x) <- "double"
-    z <- .Fortran("ch2inv",
-		  x = x,
-		  nr,
-		  size,
-		  v = matrix(0, nrow=size, ncol=size),
-		  info = integer(1L),
-		  DUP = FALSE, PACKAGE = "base")
+    z <- .Fortran(.F_ch2inv,
+		  x = x, nr, size, v = matrix(0, nrow=size, ncol=size),
+                  info = integer(1L), DUP = FALSE)
     if(z$info)
 	stop("singular matrix in 'chol2inv'")
     z$v

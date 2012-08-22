@@ -236,3 +236,15 @@ assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
        envir = .GenericArgsEnv)
 assign("as.real", get("as.double", envir = .GenericArgsEnv),
        envir = .GenericArgsEnv)
+
+## populate C/Fortran symbols
+.onLoad <- function(libname, pathname)
+{
+    routines <- getDLLRegisteredRoutines("base", addNames = FALSE)
+    for(i in 1:3) {
+        lapply(routines[[i]],
+               function(sym)
+               assign(paste0(if(i == 3) ".F_" else ".C_", sym$name),
+                      sym, envir = .BaseNamespaceEnv))
+    }
+}

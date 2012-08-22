@@ -38,13 +38,13 @@ pretty.default <-
 	stop("'u5.bias' must be non-negative numeric")
     if((eps.correct <- as.integer(eps.correct)) < 0L || eps.correct > 2L)
 	stop("'eps.correct' must be 0, 1, or 2")
-    z <- .C("R_pretty", l=as.double(min(x)), u=as.double(max(x)),
+    z <- .C(.C_R_pretty, l=as.double(min(x)), u=as.double(max(x)),
             n = n,
             min.n,
 	    shrink = as.double(shrink.sml),
             high.u.fact = as.double(c(high.u.bias, u5.bias)),
             eps.correct,
-            DUP = FALSE, PACKAGE = "base")
+            DUP = FALSE)
     s <- seq.int(z$l, z$u, length.out = z$n+1)
     if(!eps.correct && z$n) { # maybe zap smalls from seq() rounding errors
         ## better than zapsmall(s, digits = 14) :

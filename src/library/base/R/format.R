@@ -189,7 +189,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	digits <- -digits # C-code will notice "do not drop trailing zeros"
 
     attr(x, "Csingle") <- NULL	# avoid interpreting as.single
-    r <- .C("str_signif",
+    r <- .C(.C_str_signif,
 	    x = x,
 	    n = n,
 	    mode   = as.character(mode),
@@ -197,8 +197,8 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    digits = as.integer(digits),
 	    format = as.character(format),
 	    flag   = as.character(flag),
-	    result = blank.chars(i.strlen + 2L), # used to overrun
-	    PACKAGE = "base")$result
+	    result = blank.chars(i.strlen + 2L) # used to overrun
+	    )$result
     if (some.special)
 	r[!Ok] <- format.char(rQ, width=width, flag=flag)
 

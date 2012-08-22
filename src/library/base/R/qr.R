@@ -26,12 +26,12 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 {
     x <- as.matrix(x)
     if(is.complex(x))
-        return(structure(.Call("La_zgeqp3", x, PACKAGE = "base"), class = "qr"))
+        return(structure(.Call(.C_La_zgeqp3, x), class = "qr"))
     ## otherwise :
     if(!is.double(x))
 	storage.mode(x) <- "double"
     if(LAPACK) {
-        res <- .Call("La_dgeqp3", x, PACKAGE = "base")
+        res <- .Call(.C_La_dgeqp3, x)
         if(!is.null(cn <- colnames(x)))
             colnames(res$qr) <- cn[res$pivot]
         attr(res, "useLAPACK") <- TRUE
@@ -44,7 +44,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     n <- as.integer(nrow(x))
     if(is.na(n)) stop("invalid nrow(x)")
     if(1.0 * n * p > 2147483647) stop("too large a matrix for LINPACK")
-    res <- .Fortran("dqrdc2",
+    res <- .Fortran(.F_dqrdc2,
 	     qr = x,
 	     n,
 	     n,
@@ -53,8 +53,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 	     rank = integer(1L),
 	     qraux = double(p),
 	     pivot = as.integer(1L:p),
-	     double(2*p),
-	     PACKAGE = "base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
+	     double(2L*p))[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
     if(!is.null(cn <- colnames(x)))
         colnames(res$qr) <- cn[res$pivot]
     class(res) <- "qr"
@@ -84,7 +83,7 @@ qr.coef <- function(qr, y)
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
 	coef[qr$pivot,] <-
-            .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")[ix, ]
+            .Call(.C_qr_coef_cmplx, qr, y)[ix, ]
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
@@ -93,7 +92,7 @@ qr.coef <- function(qr, y)
         if(!is.double(y)) storage.mode(y) <- "double"
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
 	coef[qr$pivot,] <-
-            .Call("qr_coef_real", qr, y, PACKAGE = "base")[ix,]
+            .Call(.C_qr_coef_real, qr, y)[ix,]
 	return(if(im) coef else c(coef))
     }
     if (k == 0L) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
@@ -101,7 +100,7 @@ qr.coef <- function(qr, y)
     storage.mode(y) <- "double"
     if( nrow(y) != n )
 	stop("'qr' and 'y' must have the same number of rows")
-    z <- .Fortran("dqrcf",
+    z <- .Fortran(.F_dqrcf,
 		  as.double(qr$qr),
 		  n, k,
 		  as.double(qr$qraux),
@@ -109,7 +108,7 @@ qr.coef <- function(qr, y)
 		  ny,
 		  coef = matrix(0, nrow = k,ncol = ny),
 		  info = integer(1L),
-		  NAOK = TRUE, PACKAGE = "base")[c("coef","info")]
+		  NAOK = TRUE)[c("coef","info")]
     if(z$info) stop("exact singularity in 'qr.coef'")
     if(k < p) {
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
@@ -133,11 +132,11 @@ qr.qy <- function(qr, y)
     if(is.complex(qr$qr)) {
         y <- as.matrix(y)
         if(!is.complex(y)) y[] <- as.complex(y)
-        return(.Call("qr_qy_cmplx", qr, y, 0, PACKAGE = "base"))
+        return(.Call(.C_qr_qy_cmplx, qr, y, 0))
     }
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
-        return(.Call("qr_qy_real", qr, as.matrix(y), 0, PACKAGE = "base"))
+        return(.Call(.C_qr_qy_real, qr, as.matrix(y), 0))
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
     k <- as.integer(qr$rank)
@@ -146,14 +145,14 @@ qr.qy <- function(qr, y)
    storage.mode(y) <- "double"
     if(NROW(y) != n)
 	stop("'qr' and 'y' must have the same number of rows")
-    .Fortran("dqrqy",
+    .Fortran(.F_dqrqy,
 	     as.double(qr$qr),
 	     n, k,
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     qy = y,# incl. {dim}names
-	     PACKAGE="base")$qy
+	     qy = y# incl. {dim}names
+	     )$qy
 }
 
 qr.qty <- function(qr, y)
@@ -162,11 +161,11 @@ qr.qty <- function(qr, y)
     if(is.complex(qr$qr)){
         y <- as.matrix(y)
         if(!is.complex(y)) y[] <- as.complex(y)
-        return(.Call("qr_qy_cmplx", qr, y, 1, PACKAGE = "base"))
+        return(.Call(.C_qr_qy_cmplx, qr, y, 1))
     }
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
-        return(.Call("qr_qy_real", qr, as.matrix(y), 1, PACKAGE = "base"))
+        return(.Call(.C_qr_qy_real, qr, as.matrix(y), 1))
 
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
@@ -176,14 +175,14 @@ qr.qty <- function(qr, y)
     if(NROW(y) != n)
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
-    .Fortran("dqrqty",
+    .Fortran(.F_dqrqty,
 	     as.double(qr$qr),
 	     n, k,
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     qty = y,# incl. {dim}names
-             PACKAGE = "base")$qty
+	     qty = y# incl. {dim}names
+             )$qty
 }
 
 qr.resid <- function(qr, y)
@@ -202,13 +201,13 @@ qr.resid <- function(qr, y)
     if( NROW(y) != n )
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
-    .Fortran("dqrrsd",
+    .Fortran(.F_dqrrsd,
 	     as.double(qr$qr),	     n, k,
 	     as.double(qr$qraux),
              y,
 	     ny,
-	     rsd = y,# incl. {dim}names
-	     PACKAGE="base")$rsd
+	     rsd = y# incl. {dim}names
+	     )$rsd
 }
 
 qr.fitted <- function(qr, y, k=qr$rank)
@@ -227,14 +226,14 @@ qr.fitted <- function(qr, y, k=qr$rank)
     if( NROW(y) != n )
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
-    .Fortran("dqrxb",
+    .Fortran(.F_dqrxb,
 	     as.double(qr$qr),
 	     n, k,
 	     as.double(qr$qraux),
 	     y,
 	     ny,
 	     xb = y,# incl. {dim}names
-             DUP = FALSE, PACKAGE = "base")$xb
+             DUP = FALSE)$xb
 }
 
 ## qr.solve is defined in  ./solve.R

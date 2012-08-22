@@ -54,15 +54,15 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     if (!EISPACK) {
         if (symmetric) {
             z <- if(!complex.x)
-                .Call("La_rs", x, only.values, PACKAGE = "base")
+                .Call(.C_La_rs, x, only.values)
             else
-                .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
+                .Call(.C_La_rs_cmplx, x, only.values)
             ord <- rev(seq_along(z$values))
         } else {
             z <- if(!complex.x)
-                .Call("La_rg", x, only.values, PACKAGE = "base")
+                .Call(.C_La_rg, x, only.values)
             else
-                .Call("La_rg_cmplx", x, only.values, PACKAGE = "base")
+                .Call(.C_La_rg_cmplx, x, only.values)
             ord <- sort.list(Mod(z$values), decreasing = TRUE)
         }
         return(list(values = z$values[ord],
@@ -73,7 +73,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     dbl.n <- double(n)
     if(symmetric) {##--> real values
 	if(complex.x) {
-	    z <- .Fortran("ch",
+	    z <- .Fortran(.F_ch,
 			  n,
 			  n,
 			  Re(x),
@@ -85,8 +85,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  dbl.n,
 			  double(2*n),
-			  ierr = integer(1L),
-                          PACKAGE="base")
+			  ierr = integer(1L))
 	    if (z$ierr)
 		stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
                      domain = NA)
@@ -95,7 +94,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 					    imaginary=z$ivectors), ncol=n)
 	}
 	else {
-	    z <- .Fortran("rs",
+	    z <- .Fortran(.F_rs,
 			  n,
 			  n,
 			  x,
@@ -104,8 +103,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  vectors = x,
 			  dbl.n,
 			  dbl.n,
-			  ierr = integer(1L),
-                          PACKAGE="base")
+			  ierr = integer(1L))
 	    if (z$ierr)
 		stop(gettextf("'rs' returned code %d in 'eigen'", z$ierr),
                      domain = NA)
@@ -116,7 +114,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 	if(complex.x) {
 	    xr <- Re(x)
 	    xi <- Im(x)
-	    z <- .Fortran("cg",
+	    z <- .Fortran(.F_cg,
 			  n,
 			  n,
 			  xr,
@@ -129,8 +127,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  dbl.n,
 			  dbl.n,
-			  ierr = integer(1L),
-                          PACKAGE="base")
+			  ierr = integer(1L))
 	    if (z$ierr)
 		stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
                      domain = NA)
@@ -140,7 +137,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 					    imaginary=z$ivectors), ncol=n)
 	}
 	else {
-	    z <- .Fortran("rg",
+	    z <- .Fortran(.F_rg,
 			  n,
 			  n,
 			  x,
@@ -150,8 +147,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  vectors = x,
 			  integer(n),
 			  dbl.n,
-			  ierr = integer(1L),
-                          PACKAGE="base")
+			  ierr = integer(1L))
 	    if (z$ierr)
 		stop(gettextf("'rg' returned code %d in 'eigen'", z$ierr),
                      domain = NA)
