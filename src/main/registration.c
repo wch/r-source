@@ -170,34 +170,26 @@ static R_CallMethodDef callMethods [] = {
 };
 
 
-#define FDEF(name)  {#name, (DL_FUNC) &F77_SYMBOL(name), -1, NULL}
+#define FDEF(name, n)  {#name, (DL_FUNC) &F77_SYMBOL(name), n, NULL}
 static R_FortranMethodDef fortranMethods[] = {
-    FDEF(ch2inv),
-    FDEF(chol),
-    FDEF(cg),
-    FDEF(ch),
-    FDEF(rg),
-    FDEF(rs),
-    /* Linpack */
-    FDEF(dchdc),
-//    FDEF(dpbfa),
-//    FDEF(dpbsl),
-//    FDEF(dpoco),
-//    FDEF(dpodi),
-//    FDEF(dpofa),
-//    FDEF(dposl),
-    FDEF(dqrcf),
-//    FDEF(dqrdc),
-    FDEF(dqrdc2),
-    FDEF(dqrls), // for historical reasons
-    FDEF(dqrqty),
-    FDEF(dqrqy),
-    FDEF(dqrrsd),
-    FDEF(dqrsl),
-    FDEF(dqrxb),
-    FDEF(dsvdc),
-//    FDEF(dtrsl),
-    FDEF(dtrco),
+    FDEF(ch2inv, 5),
+    FDEF(chol, 7),
+    FDEF(cg, 13),
+    FDEF(ch, 12),
+    FDEF(rg, 10),
+    FDEF(rs, 9),
+    /* Linpack etc */
+    FDEF(dchdc, 7),
+    FDEF(dqrcf, 8),
+    FDEF(dqrdc2, 9),
+    FDEF(dqrls, -1), // for historical reasons
+    FDEF(dqrqty, 7),
+    FDEF(dqrqy, 7),
+    FDEF(dqrrsd, 7),
+//    FDEF(dqrsl, -1),
+    FDEF(dqrxb, 7),
+    FDEF(dsvdc, 13),
+    FDEF(dtrco, 6),
     {NULL, NULL, 0}
 };
 
