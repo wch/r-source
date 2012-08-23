@@ -74,12 +74,6 @@
 \alias{.C_R_unserialize}
 \alias{.C_Rrowsum_df}
 \alias{.C_Rrowsum_matrix}
-\alias{.C_Rsockclose}
-\alias{.C_Rsockconnect}
-\alias{.C_Rsocklisten}
-\alias{.C_Rsockopen}
-\alias{.C_Rsockread}
-\alias{.C_Rsockwrite}
 \alias{.C_bincode}
 \alias{.C_bitwiseAnd}
 \alias{.C_bitwiseNot}
