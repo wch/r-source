@@ -173,7 +173,7 @@ static R_CallMethodDef callMethods [] = {
 #define FDEF(name, n)  {#name, (DL_FUNC) &F77_SYMBOL(name), n, NULL}
 static R_FortranMethodDef fortranMethods[] = {
     FDEF(ch2inv, 5),
-    FDEF(chol, 7),
+    FDEF(chol, 5),
     FDEF(cg, 13),
     FDEF(ch, 12),
     FDEF(rg, 10),

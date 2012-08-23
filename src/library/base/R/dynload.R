@@ -55,7 +55,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
 	    msg <- paste("no such symbol", id)
 	    if(length(pkgName) && nzchar(pkgName))
 		msg <- paste(msg, "in package", pkgName)
-	    stop(msg)
+	    stop(msg, domain = NA)
 	}
 	names(v) <- c("name", "address", "package", "numParameters")[seq_along(v)]
 	v
@@ -87,7 +87,7 @@ getDLLRegisteredRoutines.character <- function(dll, addNames = TRUE)
     w <- vapply(dlls, function(x) x[["name"]] == dll || x[["path"]] == dll, NA)
 
     if(!any(w))
-        stop("No DLL currently loaded with name or path ", dll)
+        stop("No DLL currently loaded with name or path ", sQuote(dll))
 
     dll <- which(w)[1L]
     if(sum(w) > 1L)

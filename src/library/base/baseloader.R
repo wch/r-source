@@ -125,6 +125,8 @@ local({
         assign(paste0(".F_", i), routines[[3]][[i]], envir = .BaseNamespaceEnv)
     for(i in 1:2)
         lapply(routines[[i]],
-               function(sym)
-               assign(paste0(".C_", sym$name), sym, envir = .BaseNamespaceEnv))
+               function(sym) {
+                   if(!grepl("^Rsock", sym$name))
+                        assign(paste0(".C_", sym$name), sym, envir = .BaseNamespaceEnv)
+               })
 })
