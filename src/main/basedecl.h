@@ -56,6 +56,8 @@ SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_traceOnOff(SEXP);
 SEXP R_setS4Object(SEXP, SEXP);
+// remove in due course
+SEXP R_do_new_object(SEXP);
 
 SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
