@@ -119,7 +119,7 @@ convertNative <- function(unit, dimension="x", type="location") {
 # in the current context
 calcStringMetric <- function(text) {
     # .Call rather than .Call.graphics because it is a one-off calculation
-    metric <- grid.Call("L_stringMetric", text)
+    metric <- grid.Call(L_stringMetric, text)
     names(metric) <- c("ascent", "descent", "width")
     metric
 }

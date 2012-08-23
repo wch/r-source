@@ -418,21 +418,21 @@ grid.refresh <- function() {
 grid.DLapply <- function(FUN, ...) {
     FUN <- match.fun(FUN)
     # Traverse DL and do something to each entry
-    gridDL <- grid.Call("L_getDisplayList")
-    gridDLindex <- grid.Call("L_getDLindex")
+    gridDL <- grid.Call(L_getDisplayList)
+    gridDLindex <- grid.Call(L_getDLindex)
     newDL <- vector("list", gridDLindex)
     for (i in 1:(gridDLindex - 1)) {
-        elt <- grid.Call("L_getDLelt", i)
+        elt <- grid.Call(L_getDLelt, i)
         newElt <- FUN(elt, ...)
         if (!(is.null(newElt) || inherits(newElt, class(elt))))
             stop("Invalid modification of the display list")
         newDL[[i]] <- newElt
     }
     for (i in 1:(gridDLindex - 1)) {
-        grid.Call("L_setDLindex", i)
-        grid.Call("L_setDLelt", newDL[[i]])
+        grid.Call(L_setDLindex, i)
+        grid.Call(L_setDLelt, newDL[[i]])
     }
-    grid.Call("L_setDLindex", gridDLindex)
+    grid.Call(L_setDLindex, gridDLindex)
 }
 
 # Wrapper for .Call and .Call.graphics
