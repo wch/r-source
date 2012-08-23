@@ -257,6 +257,25 @@
     }
   }
 
+  \subsection{PERFORMANCE IMPROVEMENTS}{
+    \itemize{
+      \item More use has been made of \R objects representing registered
+      entry points, which is much more efficient as the address is
+      provided by the loader once only when the package is loaded.
+
+      This has been done for packages \code{base}, \code{methods} and
+      \code{splines}: it was already in place for most of the other
+      packages.
+
+      \item Since these entry points are always accessed by the \R etnry
+      points they do not need to be in the load table which can be
+      smaller and hence searched faster.  This does mean that
+      \code{.C}/\code{.Fortran}/\code{.Call} calls copied from earlier
+      versions of \R no longer work -- but they were never part of the
+      API.  [In progress.]
+    }
+  }
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives a warning rather than a
