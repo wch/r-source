@@ -184,7 +184,7 @@ setIs <-
             if(classDef@virtual)
                 classDef2@prototype <- classDef@prototype
             else # new(), but without intialize(), which may require an arg.
-                classDef2@prototype <- .Call("R_do_new_object", classDef, PACKAGE = "base")
+                classDef2@prototype <- .Call(C_new_object, classDef)
         }
     }
     assignClassDef(class2, classDef2, where2, TRUE)

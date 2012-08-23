@@ -394,7 +394,7 @@ new <-
   function(Class, ...)
 {
     ClassDef <- getClass(Class, where = topenv(parent.frame()))
-    value <- .Call("R_do_new_object", ClassDef, PACKAGE = "base")
+    value <- .Call(C_new_object, ClassDef)
     initialize(value, ...)
 }
 

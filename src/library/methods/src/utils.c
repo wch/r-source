@@ -31,3 +31,10 @@ SEXP R_get_primname(SEXP object)
 	error("'R_get_primname' called on a non-primitive");
     return mkString(getPRIMNAME(object));
 }
+
+/* The main entry point is in Rinternals.h, but we want to register
+   the call in *this* package */
+SEXP new_object(SEXP class_def)
+{
+    return R_do_new_object(class_def);
+}

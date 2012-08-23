@@ -63,29 +63,21 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
     invisible(value)
 }
 
-.isMethodsDispatchOn <- function(onOff = NULL)
-    .Call("R_isMethodsDispatchOn", onOff, PACKAGE = "base")
+## now primiive
+##.isMethodsDispatchOn <- function(onOff = NULL)
+##   .Call("R_isMethodsDispatchOn", onOff, PACKAGE = "base")
 
-tracingState <- function( on = NULL)
-    .Call("R_traceOnOff", on, PACKAGE = "base")
+tracingState <- function(on = NULL) .Call(.C_R_traceOnOff, on)
 
-isS4 <- function(object)
-    .Call("R_isS4Object", object, PACKAGE = "base")
+## now primiive
+## isS4 <- function(object) .Call("R_isS4Object", object, PACKAGE = "base")
 
-asS4 <- function(object, flag = TRUE, complete = TRUE) {
-    flag <- methods::as(flag, "logical")
-    if(length(flag) != 1L || is.na(flag))
-	stop("Expected a single logical value for the S4 state flag")
-    .Call("R_setS4Object", object, flag, complete, PACKAGE = "base")
-}
 
-asS3 <- function(object, flag = TRUE, complete = TRUE) {
-    flag <- methods::as(flag, "logical")
-    if(length(flag) != 1L || is.na(flag))
-	stop("Expected a single logical value for the S3 state flag")
-    .Call("R_setS4Object", object, !flag, complete, PACKAGE = "base")
-}
+asS4 <- function(object, flag = TRUE, complete = TRUE)
+    .Call(.C_R_setS4Object, object, flag, complete)
 
+asS3 <- function(object, flag = TRUE, complete = TRUE)
+    .Call(.C_R_setS4Object, object, !as.logical(flag), complete)
 
 
 .doTrace <- function(expr, msg) {

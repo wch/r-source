@@ -541,6 +541,7 @@
  do_Rhome
  do_Rprof
  do_Rprofmem
+ do_S4on
  do_abbrev
  do_abs
  do_addCondHands

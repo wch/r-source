@@ -566,6 +566,7 @@ FUNTAB R_FunTab[] =
 {"is.raw",	do_is,		RAWSXP, 1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"is.object",	do_is,		50,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"isS4",	do_is,		51,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"is.numeric",	do_is,		100,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.matrix",	do_is,		101,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -990,6 +991,7 @@ FUNTAB R_FunTab[] =
 {"getRegisteredRoutines",do_getRegisteredRoutines,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getLoadedDLLs",do_getDllTable,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"getSymbolInfo",do_getSymbolInfo,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{".isMethodsDispatchOn",do_S4on,0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };

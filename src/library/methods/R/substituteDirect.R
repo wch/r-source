@@ -25,8 +25,7 @@ substituteDirect <-
   ## not evaluate its first argument.
   function(object, frame = parent.frame(), cleanFunction = TRUE)
 {
-    value <- .Call("do_substitute_direct", object, frame,
-                   PACKAGE = "methods")
+    value <- .Call(C_do_substitute_direct, object, frame)
      if(cleanFunction && is.function(value)) {
        ## unset any local environment
        environment(value) <- .GlobalEnv
