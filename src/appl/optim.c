@@ -640,6 +640,10 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
     double f, *g, dsave[29], *wa;
     int tr = -1, iter = 0, *iwa, isave[44], lsave[4];
 
+    /* shut up gcc -Wall in 4.6.x */
+
+    for(int i = 0; i < 4; i++) lsave[i] = 0;
+
     if(n == 0) { /* not handled in setulb */
 	*fncount = 1;
 	*grcount = 0;
