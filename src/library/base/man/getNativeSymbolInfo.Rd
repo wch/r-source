@@ -1,6 +1,6 @@
 % File src/library/base/man/getNativeSymbolInfo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getNativeSymbolInfo}
@@ -12,35 +12,30 @@
   Obtain a Description of one or more Native (C/Fortran) Symbols
 }
 \description{
-  This finds and returns as comprehensive a description of one or more
-  dynamically loaded or \sQuote{exported} built-in native symbols.  For
-  each name, it returns information about the name of the symbol, the
-  library in which it is located and, if available, the number of
-  arguments it expects and by which interface it should be called (i.e
-  \code{\link{.Call}}, \code{\link{.C}}, \code{\link{.Fortran}}, or
+  This finds and returns a description of one or more dynamically loaded
+  or \sQuote{exported} built-in native symbols.  For each name, it
+  returns information about the name of the symbol, the library in which
+  it is located and, if available, the number of arguments it expects
+  and by which interface it should be called (i.e \code{\link{.Call}},
+  \code{\link{.C}}, \code{\link{.Fortran}}, or
   \code{\link{.External}}). Additionally, it returns the address of the
-  symbol and this can be passed to other C routines which can
-  invoke.  Specifically, this provides a way to explicitly share symbols
-  between different dynamically loaded package libraries.  Also, it
-  provides a way to query where symbols were resolved, and aids
-  diagnosing strange behavior associated with dynamic resolution.
-
-  This is vectorized in the \code{name} argument so can process
-  multiple symbols in a single call.  The result is a list that can be
-  indexed by the given symbol names.
+  symbol and this can be passed to other C routines.  Specifically, this
+  provides a way to explicitly share symbols between different
+  dynamically loaded package libraries.  Also, it provides a way to
+  query where symbols were resolved, and aids diagnosing strange
+  behavior associated with dynamic resolution.
 }
 \usage{
 getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
                     withRegistrationInfo = FALSE)
 }
 \arguments{
-  \item{name}{the name(s) of the native symbol(s) as used in a call
-    to \code{\link{is.loaded}}, etc.  Note that Fortran symbols should be
-    supplied as-is, not wrapped in \code{symbol.For}.
-  }
+  \item{name}{the name(s) of the native symbol(s).}
+  
   \item{PACKAGE}{an optional argument that specifies to which
-    DLL we restrict the search for this symbol.  If this is
+    DLL to restrict the search for this symbol.  If this is
     \code{"base"}, we search in the \R executable itself.}
+  
   \item{unlist}{a logical value which controls how the result is
     returned if the function is called with the name of a single symbol.
     If \code{unlist} is \code{TRUE} and the number of symbol names in
@@ -55,7 +50,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   \item{withRegistrationInfo}{a logical value indicating whether, if
     \code{TRUE}, to return information that was registered with \R about
     the symbol and its parameter types if such information is available,
-    or if \code{FALSE} to return the address of the symbol.
+    or if \code{FALSE} to return just the address of the symbol.
   }
 }
 \details{
@@ -106,7 +101,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   \code{ExternalRoutine} corresponding to the R interface by which it
   should be invoked.
 
-  If any of the symbols is not found, an error is immediately raised.
+  If any of the symbols is not found, an error is raised.
 
   If \code{name} contains only one symbol name and \code{unlist} is
   \code{TRUE}, then the single \code{NativeSymbolInfo} is returned
@@ -116,7 +111,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   For information about registering native routines,
   see \dQuote{In Search of C/C++ & FORTRAN Routines},
   R-News, volume 1, number 3, 2001, p20--23
-  (\url{http://CRAN.R-project.org/doc/Rnews/}).  
+  (\url{http://cran.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).  
 }
 \author{Duncan Temple Lang}
 \note{
@@ -127,8 +122,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   callbacks to that function at different points in its computation
   (e.g., \code{\link{nls}}).  Additionally, we can resolve the symbol
   just once and avoid resolving it repeatedly or using the internal
-  cache.  In the future, one may be able to treat \code{NativeSymbol}
-  objects directly as callback objects.
+  cache.
 }
 \seealso{
   \code{\link{getDLLRegisteredRoutines}},

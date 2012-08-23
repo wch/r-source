@@ -1,6 +1,6 @@
 % File src/library/base/man/getDLLRegisteredRoutines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getDLLRegisteredRoutines}
@@ -81,7 +81,8 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
 \author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}}
 
 \seealso{
-  \code{\link{getLoadedDLLs}}
+  \code{\link{getLoadedDLLs}},
+  \code{\link{getNativeSymbolInfo}} for information on the entry points listed.
 }
 \examples{
 dlls <- getLoadedDLLs()
