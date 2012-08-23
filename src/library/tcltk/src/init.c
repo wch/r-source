@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-10   The R Core Team.
+ *  Copyright (C) 2003-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -62,5 +62,6 @@ void R_init_tcltk(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, NULL, NULL, ExternEntries);
     R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, FALSE);
 }
 

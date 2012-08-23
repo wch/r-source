@@ -34,18 +34,23 @@
         } else Sys.unsetenv("TCLLIBPATH") # it case called from a 64-bit process
     }
     library.dynam("tcltk", pkgname, libname, DLLpath = tclbin)
-    .C("tcltk_start", PACKAGE = "tcltk")
+    routines <- getDLLRegisteredRoutines("tcltk", addNames = FALSE)
+    ns <- asNamespace(pkgname)
+    for(i in c(1,4))
+        lapply(routines[[i]],
+               function(sym) assign(paste0(".C_", sym$name), sym, envir = ns))
+    .C(.C_tcltk_start)
     addTclPath(system.file("exec", package = "tcltk"))
     packageStartupMessage(" ", "done", domain = "R-tcltk")
     invisible()
 }
 
-.onUnload <- function(libpath) {
-    ## precaution in case the DLL has been unloaded without the namespace
-    if(is.loaded("tcltk_end", PACKAGE="tcltk")) {
-        .C("tcltk_end", PACKAGE="tcltk")
-        ## unloading the DLL used to work with 8.3,
-        ## but it seems Tcl/Tk >= 8.4 does not like being reinitialized
-        ## library.dynam.unload("tcltk", libpath)
-    }
-}
+## .onUnload <- function(libpath) {
+##     ## precaution in case the DLL has been unloaded without the namespace
+##     if(is.loaded("tcltk_end", PACKAGE="tcltk")) {
+##         .C("tcltk_end", PACKAGE="tcltk")
+##         ## unloading the DLL used to work with 8.3,
+##         ## but it seems Tcl/Tk >= 8.4 does not like being reinitialized
+##         ## library.dynam.unload("tcltk", libpath)
+##     }
+## }

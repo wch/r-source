@@ -263,11 +263,11 @@
       entry points, which is much more efficient as the address is
       provided by the loader once only when the package is loaded.
 
-      This has been done for packages \code{base}, \code{methods} and
-      \code{splines}: it was already in place for most of the other
-      packages.
+      This has been done for packages \code{base}, \code{methods},
+      \code{splines} and \code{tcltk}: it was already in place for the
+      other standard packages.
 
-      \item Since these entry points are always accessed by the \R etnry
+      \item Since these entry points are always accessed by the \R entry
       points they do not need to be in the load table which can be
       smaller and hence searched faster.  This does mean that
       \code{.C}/\code{.Fortran}/\code{.Call} calls copied from earlier

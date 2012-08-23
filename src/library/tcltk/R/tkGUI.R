@@ -22,7 +22,7 @@ tkStartGUI <- function() {
     	stop("The tkGUI is not available under Windows")
     tclServiceMode(FALSE)
     tcl("source", file.path(.Library, "tcltk", "exec", "console.tcl"))
-    .C("RTcl_ActivateConsole", PACKAGE = "tcltk")
+    .C(.C_RTcl_ActivateConsole)
     Menu <- .Tk.newwin(".menu")
     Term <- .Tk.newwin(".tk-R.term")
     Toolbar <- .Tk.newwin(".tk-R.toolbar")

@@ -27,17 +27,22 @@
 
     ## Use local = FALSE to allow easy loading of Tcl extensions
     library.dynam("tcltk", pkgname, libname, local = FALSE)
-    .TkUp <<- .C("tcltk_init", 0L, PACKAGE="tcltk")[[1L]] == 1L
+    routines <- getDLLRegisteredRoutines("tcltk", addNames = FALSE)
+    ns <- asNamespace(pkgname)
+    for(i in c(1,4)) # .C and .External
+        lapply(routines[[i]],
+               function(sym) assign(paste0(".C_", sym$name), sym, envir = ns))
+    .TkUp <<- .C(.C_tcltk_init, 0L)[[1L]] == 1L
     addTclPath(system.file("exec", package = "tcltk"))
     packageStartupMessage("done", domain = "R-tcltk")
     invisible()
 }
 
-.onUnload <- function(libpath) {
-    ## precaution in case the DLL has been unloaded without the namespace
-    if(is.loaded("delTcl", PACKAGE="tcltk")) {
-        .C("delTcl", PACKAGE="tcltk")
-        ## if we unload the DLL, get a segfault if we try to use tcltk again.
-        ## library.dynam.unload("tcltk", libpath)
-    }
-}
+## .onUnload <- function(libpath) {
+##     ## precaution in case the DLL has been unloaded without the namespace
+##     if(is.loaded("delTcl", PACKAGE="tcltk")) {
+##         .C("delTcl", PACKAGE="tcltk")
+##         ## if we unload the DLL, get a segfault if we try to use tcltk again.
+##         library.dynam.unload("tcltk", libpath)
+##     }
+## }
