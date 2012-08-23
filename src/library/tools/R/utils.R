@@ -1161,6 +1161,7 @@ function(package)
              ic.infer = "all.R2",
              hier.part = "all.regs",
              lasso2 = "qr.rtr.inv",
+             latticeExtra = "xyplot.list",
              locfit = c("density.lf", "plot.eval"),
              moments = c("all.cumulants", "all.moments"),
              mratios = c("t.test.ration", "t.test.ratio.default",
