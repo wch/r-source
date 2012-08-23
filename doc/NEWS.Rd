@@ -623,6 +623,10 @@
 
       \item Entry point \code{rcont2} is no longer part of the API, and
       will move to package \pkg{stats} in \R 2.16.0.
+      
+      \item The \sQuote{internal} graphics device invoked by
+      \code{.Call("R_GD_nullDevice", package = "grDevices")} is about to
+      be removed: use \code{pdf(file = NULL)} instead.
     }
   }
 
