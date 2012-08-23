@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-08-21 r60339) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-08-22 r60377) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6310,29 +6310,6 @@ Error in aggregate.data.frame(z, by = z[1], FUN = sum) :
 > Call
 foo(1, bar = 2)
 > ## unnamed call in 2.8.1
-> 
-> 
-> ## .Call on symbol objects (not strings)
-> ## https://stat.ethz.ch/pipermail/r-devel/2008-December/051669.html
-> try(.Call("R_GD_nullDevice", NULL, PACKAGE = "grDevices"))
-Error in .Call("R_GD_nullDevice", NULL, PACKAGE = "grDevices") : 
-  Incorrect number of arguments (1), expecting 0 for 'R_GD_nullDevice'
-> sym <- getDLLRegisteredRoutines("grDevices")$.Call[["R_GD_nullDevice"]]
-> try(.Call(sym, NULL))
-Error in .Call(sym, NULL) : 
-  Incorrect number of arguments (1), expecting 0 for 'R_GD_nullDevice'
-> try(.Call(sym$address, NULL))
-Error in .Call(sym$address, NULL) : 
-  Incorrect number of arguments (1), expecting 0 for 'R_GD_nullDevice'
-> ## wrong error in 2.8.1
-> sym <- getDLLRegisteredRoutines("stats")$.C$prho
-> try(.C(sym, NULL))
-Error in .C(sym, NULL) : 
-  Incorrect number of arguments (1), expecting 5 for 'prho'
-> try(.C(sym$address, NULL))
-Error in .C(sym$address, NULL) : 
-  Incorrect number of arguments (1), expecting 5 for 'prho'
-> ## were OK
 > 
 > options(keep.source = TRUE)
 > ## $<- on pairlists failed to duplicate (from Felix Andrews,
