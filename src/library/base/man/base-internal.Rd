@@ -159,7 +159,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   have had had they been closures.  All the primitives that are internal
   S3 generics have corresponding members of \code{.GenericArgsEnv} and
   the remaining non-language-element primitives correspond to
-  \code{.ArgsEnv}. See the \sQuote{R Internals} manual for further
+  \code{.ArgsEnv}.  See the \sQuote{R Internals} manual for further
   details.  They are used by \code{\link{args}} and
   \code{\link{print.default}} and the QC functions \code{\link{codoc}}
   and \code{\link{checkS3methods}}.
@@ -181,12 +181,15 @@ lazyLoadDBfetch(key, file, compressed, hook)
   generators added in \R 2.11.0.
 
   \code{.cache_class} caches the inheritance of an S4 class for use in
-  S3 method dispatch.  With \code{NULL} second argument, returns the
+  S3 method dispatch.  With \code{NULL} second argument it returns the
   cached inheritance, for diagnostic use.
 
   \code{.find.package} and \code{.path.package} are internal-only
   versions (and the only versions available prior to \R 2.13.0) of
-  \code{\link{.find.package}} and \code{\link{.path.package}}.
+  \code{\link{find.package}} and \code{\link{path.package}}.
+
+  \code{.popath} is a variable created at startup which records where
+  the \pkg{translations} package in use is.
 }
 \value{
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
