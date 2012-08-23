@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-07-07 r59751) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-08-23 r60381) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6708,8 +6708,7 @@ function (eta)
 + {
 +     linkfun <- function(mu) qlogis(mu^(1/days))
 +     linkinv <- function(eta) plogis(eta)^days
-+     mu.eta <- function(eta) days * plogis(eta)^(days-1) *
-+       .Call("logit_mu_eta", eta, PACKAGE = "stats")
++     mu.eta <- function(eta) days * plogis(eta)^(days-1) * binomial()$mu_eta
 +     valideta <- function(eta) TRUE
 +     link <- paste0("logexp(", days, ")")
 +     structure(list(linkfun = linkfun, linkinv = linkinv,
