@@ -188,6 +188,7 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
 /* formerly in grid.c */
 SEXP R_GD_nullDevice()
 {
+    warning("R_GD_nullDevice is deprecated and will be removed shortly");
     GEnullDevice();
     return R_NilValue;
 }
