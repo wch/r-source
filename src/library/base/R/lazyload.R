@@ -20,8 +20,9 @@
 ##
 ## This code has been factored in a somewhat peculiar way to allow the
 ## lazy load data base mechanism to be used for storing processed .Rd
-## files. This isn't wuite right as the .Rd use only uses the data
+## files. This isn't quite right as the .Rd use only uses the data
 ## base, not the lazy load part, but for now it will do. LT
+
 lazyLoadDBexec <- function(filebase, fun, filter)
 {
     ##
@@ -85,7 +86,7 @@ lazyLoadDBexec <- function(filebase, fun, filter)
             if (! is.null(data$attributes))
                 attributes(e) <-data$attributes
             if (! is.null(data$isS4) && data$isS4)
-                .Call("R_setS4Object", e, TRUE, TRUE, PACKAGE = "base")
+                .Call(.C_R_setS4Object, e, TRUE, TRUE)
             if (! is.null(data$locked) && data$locked)
                 .Internal(lockEnvironment(e, FALSE))
             e

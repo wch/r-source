@@ -118,11 +118,13 @@ is.name <- is.symbol
 
 ## populate C/Fortran symbols
 local({
-    routines <- getDLLRegisteredRoutines("base", addNames = FALSE)
-    for(i in 1:3) {
+    routines <- getDLLRegisteredRoutines("base")
+    for (i in c("cg", "ch", "ch2inv", "chol", "dchdc", "dqrcf", "dqrdc2",
+                "dqrqty", "dqrqy", "dqrrsd", "dqrxb", "dsvdc", "dtrco",
+                "rg", "rs"))
+        assign(paste0(".F_", i), routines[[3]][[i]], envir = .BaseNamespaceEnv)
+    for(i in 1:2)
         lapply(routines[[i]],
                function(sym)
-               assign(paste0(if(i == 3) ".F_" else ".C_", sym$name),
-                      sym, envir = .BaseNamespaceEnv))
-    }
+               assign(paste0(".C_", sym$name), sym, envir = .BaseNamespaceEnv))
 })

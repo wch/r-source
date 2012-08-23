@@ -54,11 +54,6 @@ SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
-
-SEXP R_getSymbolInfo(SEXP, SEXP, SEXP);
-SEXP R_getDllTable(void);
-SEXP R_getRegisteredRoutines(SEXP);
-
 SEXP R_isMethodsDispatchOn(SEXP);
 SEXP R_traceOnOff(SEXP);
 SEXP R_isS4Object(SEXP);
@@ -67,9 +62,6 @@ SEXP R_do_new_object(SEXP);
 
 SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
-
-SEXP R_shortRowNames(SEXP);
-SEXP R_copyDFattr(SEXP, SEXP);
 
 void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);

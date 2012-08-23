@@ -133,14 +133,6 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_removeTaskCallback, 1),
     CALLDEF(R_addTaskCallback, 4),
 
-    /* Reflectance for the dynamically loaded native symbols. */
-    CALLDEF(R_getSymbolInfo, 3),
-    CALLDEF(R_getDllTable, 0),
-    CALLDEF(R_getRegisteredRoutines, 1),
-
-    CALLDEF(R_shortRowNames, 2),
-    CALLDEF(R_copyDFattr, 2),
-
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),
@@ -188,23 +180,23 @@ static R_FortranMethodDef fortranMethods[] = {
     FDEF(rs),
     /* Linpack */
     FDEF(dchdc),
-    FDEF(dpbfa),
-    FDEF(dpbsl),
-    FDEF(dpoco),
-    FDEF(dpodi),
-    FDEF(dpofa),
-    FDEF(dposl),
+//    FDEF(dpbfa),
+//    FDEF(dpbsl),
+//    FDEF(dpoco),
+//    FDEF(dpodi),
+//    FDEF(dpofa),
+//    FDEF(dposl),
     FDEF(dqrcf),
-    FDEF(dqrdc),
+//    FDEF(dqrdc),
     FDEF(dqrdc2),
-    FDEF(dqrls),
+    FDEF(dqrls), // for historical reasons
     FDEF(dqrqty),
     FDEF(dqrqy),
     FDEF(dqrrsd),
     FDEF(dqrsl),
     FDEF(dqrxb),
     FDEF(dsvdc),
-    FDEF(dtrsl),
+//    FDEF(dtrsl),
     FDEF(dtrco),
     {NULL, NULL, 0}
 };

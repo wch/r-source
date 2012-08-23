@@ -123,12 +123,6 @@
 # define HAVE_DYNAMIC_LOADING
 #endif
 
-/* The following code loads in a compatibility module written by Luke
-   Tierney to support S version 4 on Hewlett-Packard machines.	The
-   relevant defines are set up by autoconf. */
-
-
-#ifdef HAVE_DYNAMIC_LOADING
 
 #ifdef CACHE_DLL_SYM  /* NOT USED */
 /* keep a record of symbols that have been found */
@@ -1324,53 +1318,96 @@ R_getRegisteredRoutines(SEXP dll)
     return(ans);
 }
 
-#else /* no dyn.load support */
-
-void InitFunctionHashing()
+SEXP attribute_hidden
+do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    const char *package = "", *name;
+    R_RegisteredNativeSymbol symbol = {R_ANY_SYM, {NULL}, NULL};
+    SEXP sym = R_NilValue;
+    DL_FUNC f = NULL;
+
+    checkArity(op, args);
+    SEXP sname = CAR(args), spackage = CADR(args), 
+	withRegistrationInfo = CADDR(args);
+
+    name = translateChar(STRING_ELT(sname, 0));
+    if(length(spackage)) {
+	if(TYPEOF(spackage) == STRSXP)
+	    package = translateChar(STRING_ELT(spackage, 0));
+	else if(TYPEOF(spackage) == EXTPTRSXP &&
+		R_ExternalPtrTag(spackage) == install("DLLInfo")) {
+	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);
+	    package = NULL;
+	} else
+	    error(_("must pass package name or DllInfo reference"));
+    }
+    if(package)
+	f = R_FindSymbol(name, package, &symbol);
+    if(f)
+	sym = createRSymbolObject(sname, f, &symbol,
+				  LOGICAL(withRegistrationInfo)[0]);
+    return sym;
 }
 
-attribute_hidden
-DL_FUNC R_FindSymbol(char const *name, char const *pkg,
-		     R_RegisteredNativeSymbol *symbol)
+SEXP attribute_hidden
+do_getDllTable(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i;
-    for(i = 0; CFunTab[i].name; i++)
-	if(!strcmp(name, CFunTab[i].name)) return CFunTab[i].func;
-    return (DL_FUNC) 0;
-}
+    SEXP ans;
 
-SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error(_("no dyn.load support in this R version"));
-    return(R_NilValue);
-}
+    checkArity(op, args);
 
-SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error(_("no dyn.load support in this R version"));
-    return(R_NilValue);
-}
+ again:
+    PROTECT(ans = allocVector(VECSXP, CountDLL));
+    for(i = 0; i < CountDLL; i++) {
+	SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
+    }
+    setAttrib(ans, R_ClassSymbol, mkString("DLLInfoList"));
+    UNPROTECT(1);
 
-SEXP attribute_hidden
-R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
-{
-    error(_("no dyn.load support in this R version"));
-}
+    /* There is a problem here: The allocations can cause gc, and gc
+       may result in no longer referenced DLLs being unloaded.  So
+       CountDLL can be reduced during this loop.  A simple work-around
+       is to just try again until CountDLL at the end is the same as
+       it was at the beginning.  LT */
+    if (CountDLL != LENGTH(ans))
+	goto again;
 
-SEXP attribute_hidden
-R_getDllTable()
-{
-    error(_("no dyn.load support in this R version"));
+    return ans;
 }
 
 SEXP attribute_hidden
-R_getRegisteredRoutines(SEXP dll)
+do_getRegisteredRoutines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error(_("no dyn.load support in this R version"));
+    const char * const names[] = {".C", ".Call", ".Fortran", ".External"};
+
+    checkArity(op, args);
+    SEXP dll = CAR(args), ans, snames;
+
+    if(TYPEOF(dll) != EXTPTRSXP &&
+       R_ExternalPtrTag(dll) != install("DLLInfo"))
+	error(_("R_getRegisteredRoutines() expects a DllInfo reference"));
+
+    DllInfo *info = (DllInfo *) R_ExternalPtrAddr(dll);
+    if(!info) error(_("NULL value passed for DllInfo"));
+
+
+    PROTECT(ans = allocVector(VECSXP, 4));
+
+    SET_VECTOR_ELT(ans, 0, R_getRoutineSymbols(R_C_SYM, info));
+    SET_VECTOR_ELT(ans, 1, R_getRoutineSymbols(R_CALL_SYM, info));
+    SET_VECTOR_ELT(ans, 2, R_getRoutineSymbols(R_FORTRAN_SYM, info));
+    SET_VECTOR_ELT(ans, 3, R_getRoutineSymbols(R_EXTERNAL_SYM, info));
+
+    PROTECT(snames = allocVector(STRSXP, 4));
+    for(int i = 0; i < 4; i++)
+	SET_STRING_ELT(snames, i, mkChar(names[i]));
+    setAttrib(ans, R_NamesSymbol, snames);
+    UNPROTECT(2);
+    return(ans);
 }
 
-#endif
+
 
 /* Experimental interface for exporting and importing functions and
    data from one package for use from C code in a package.  The

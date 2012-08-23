@@ -1321,18 +1321,6 @@ try( do.call(function(x) NextMethod('foo'),list()) )
 ## segfaulted <= 2.11.1
 
 
-## identical() returned FALSE on external ptr with
-## identical addresses <= 2.11.1
-stopifnot(identical(
-                    getNativeSymbolInfo("R_getSymbolInfo", "base"),
-                    getNativeSymbolInfo("R_getSymbolInfo", "base")
-                    ))
-stopifnot(!identical(
-                     getNativeSymbolInfo("R_getSymbolInfo", "base"),
-                     getNativeSymbolInfo("R_getRegisteredRoutines", "base")
-                     ))
-
-
 ## getNamespaceVersion() etc
 stopifnot(getNamespaceVersion("stats") == getRversion())
 ## failed in R 2.11.x

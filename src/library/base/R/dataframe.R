@@ -34,7 +34,7 @@
 ## duplication of row names.
 
 .row_names_info <- function(x, type = 1L)
-    .Call("R_shortRowNames", x, type, PACKAGE = "base")
+    .Internal(shortRowNames(x, type))
 
 row.names <- function(x) UseMethod("row.names")
 row.names.data.frame <- function(x) as.character(attr(x, "row.names"))
@@ -586,7 +586,7 @@ data.frame <-
     ## make a shallow copy
     x <- vector("list", length(x))
     ## attributes(x) <- attributes(xx) expands row names
-    x <- .Call("R_copyDFattr", xx, x, PACKAGE="base")
+    x <- .Internal(copyDFattr(xx, x))
     oldClass(x) <- attr(x, "row.names") <- NULL
 
     if(has.j) { # df[i, j]

@@ -32,6 +32,82 @@
 \alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
 
+\alias{.C_BinCode}
+\alias{.C_FindIntervVec}
+\alias{.C_La_chol}
+\alias{.C_La_chol2inv}
+\alias{.C_La_dgecon}
+\alias{.C_La_dgeqp3}
+\alias{.C_La_dgesv}
+\alias{.C_La_dlange}
+\alias{.C_La_dtrcon}
+\alias{.C_La_rg}
+\alias{.C_La_rg_cmplx}
+\alias{.C_La_rs}
+\alias{.C_La_rs_cmplx}
+\alias{.C_La_svd}
+\alias{.C_La_svd_cmplx}
+\alias{.C_La_zgecon}
+\alias{.C_La_zgeqp3}
+\alias{.C_La_zgesv}
+\alias{.C_La_ztrcon}
+\alias{.C_R_Tabulate}
+\alias{.C_R_addTaskCallback}
+\alias{.C_R_compress1}
+\alias{.C_R_decompress1}
+\alias{.C_R_do_new_object}
+\alias{.C_R_getTaskCallbackNames}
+\alias{.C_R_getVarsFromFrame}
+\alias{.C_R_getbcprofcounts}
+\alias{.C_R_isMethodsDispatchOn}
+\alias{.C_R_isS4Object}
+\alias{.C_R_lazyLoadDBflush}
+\alias{.C_R_lazyLoadDBinsertValue}
+\alias{.C_R_pretty}
+\alias{.C_R_removeTaskCallback}
+\alias{.C_R_serialize}
+\alias{.C_R_serializeb}
+\alias{.C_R_setS4Object}
+\alias{.C_R_startbcprof}
+\alias{.C_R_stopbcprof}
+\alias{.C_R_traceOnOff}
+\alias{.C_R_unserialize}
+\alias{.C_Rrowsum_df}
+\alias{.C_Rrowsum_matrix}
+\alias{.C_Rsockclose}
+\alias{.C_Rsockconnect}
+\alias{.C_Rsocklisten}
+\alias{.C_Rsockopen}
+\alias{.C_Rsockread}
+\alias{.C_Rsockwrite}
+\alias{.C_bincode}
+\alias{.C_bitwiseAnd}
+\alias{.C_bitwiseNot}
+\alias{.C_bitwiseOr}
+\alias{.C_bitwiseXor}
+\alias{.C_crc64ToString}
+\alias{.C_det_ge_real}
+\alias{.C_qr_coef_cmplx}
+\alias{.C_qr_coef_real}
+\alias{.C_qr_qy_cmplx}
+\alias{.C_qr_qy_real}
+\alias{.C_str_signif}
+\alias{.F_cg}
+\alias{.F_ch}
+\alias{.F_ch2inv}
+\alias{.F_chol}
+\alias{.F_dchdc}
+\alias{.F_dqrcf}
+\alias{.F_dqrdc2}
+\alias{.F_dqrqty}
+\alias{.F_dqrqy}
+\alias{.F_dqrrsd}
+\alias{.F_dqrxb}
+\alias{.F_dsvdc}
+\alias{.F_dtrco}
+\alias{.F_rg}
+\alias{.F_rs}
+
 \title{Internal Objects in Package \pkg{base}}
 \description{
   Internal objects in the base package, which are only user-visible
@@ -189,10 +265,13 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.find.package} and \code{.path.package} are internal-only
   versions (and the only versions available prior to \R 2.13.0) of
-  \code{\link{.find.package}} and \code{\link{.path.package}}.
+  \code{\link{find.package}} and \code{\link{path.package}}.
 
   \code{.popath} is a variable created at startup which records where
   the \pkg{translations} package in use is.
+  
+  Objects starting \code{.C_} and \code{.F_} are references to
+  registered C and Fortran entry points.
 }
 \value{
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}

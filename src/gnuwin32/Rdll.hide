@@ -611,6 +611,7 @@
  do_commentgets
  do_compilepkgs
  do_complex
+ do_copyDFattr
  do_contourLines
  do_countfields
  do_cum
@@ -693,16 +694,19 @@
  do_gctorture2
  do_get
  do_getClipboardFormats
+ do_getDllTable
  do_getGraphicsEvent
  do_getGraphicsEventEnv
  do_getIdentification
  do_getNSRegistry
  do_getNumRtoCConverters
  do_getRegNS
+ do_getRegisteredRoutines
  do_getRestart
  do_getRtoCConverterDescriptions
  do_getRtoCConverterStatus
  do_getSnapshot
+ do_getSymbolInfo
  do_getWindowHandle
  do_getWindowHandles
  do_getWindowTitle
@@ -929,6 +933,7 @@
  do_setwd
  do_setwinprogressbar
  do_shellexec
+ do_shortRowNames
  do_shortpath
  do_signalCondition
  do_sink

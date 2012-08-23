@@ -179,14 +179,17 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	return getAttrib0(vec, name);
 }
 
-SEXP R_shortRowNames(SEXP vec, SEXP stype)
+attribute_hidden
+SEXP do_shortRowNames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* return  n if the data frame 'vec' has c(NA, n) rownames;
      *	       nrow(.) otherwise;  note that data frames with nrow(.) == 0
      *		have no row.names.
      ==> is also used in dim.data.frame() */
-    SEXP s = getAttrib0(vec, R_RowNamesSymbol), ans = s;
-    int type = asInteger(stype);
+
+    checkArity(op, args);
+    SEXP s = getAttrib0(CAR(args), R_RowNamesSymbol), ans = s;
+    int type = asInteger(CADR(args));
 
     if( type < 0 || type > 2)
 	error(_("invalid '%s' argument"), "type");
@@ -200,13 +203,17 @@ SEXP R_shortRowNames(SEXP vec, SEXP stype)
 }
 
 /* This is allowed to change 'out' */
-SEXP R_copyDFattr(SEXP in, SEXP out)
+attribute_hidden
+SEXP do_copyDFattr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    checkArity(op, args);
+    SEXP in = CAR(args), out = CADR(args);
     SET_ATTRIB(out, ATTRIB(in));
     IS_S4_OBJECT(in) ?  SET_S4_OBJECT(out) : UNSET_S4_OBJECT(out);
     SET_OBJECT(out, OBJECT(in));
     return out;
 }
+
 
 /* 'name' should be 1-element STRSXP or SYMSXP */
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
