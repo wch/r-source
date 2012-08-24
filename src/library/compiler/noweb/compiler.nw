@@ -4908,28 +4908,28 @@ missingArgs <- function(args) {
 }
 @ %def missingArgs
 
-For compiling packages during the lazy loading process [[cmpfun]]
-needs to call [[asS4]], which is defined in [[base]] but calls
-[[methods::as]].  When compiling [[methods]] it turns out that
-[[methods]] is not fully initialized at the point where this is needed
-and therefore the exported [[as]] function is not available. For now,
-the [[compiler]] package defines its own [[asS4]] that uses the
-unexported function [[methods:::as]] instead.  It would probably be
-better to make this change in [[base::asS4]] instead.
-%% **** change this in base instead??
-<<[[asS4]] function>>=
-## We need our own version of base::asS4 that differs only from the one
-## in base by using methods:::as instead of methods::as.  This is needed
-## to JIT compile methods as the lazy loading mechanism used there does
-## it's thing during the first namespace load at a point where exports
-## are not yet set up.
-asS4 <- function(object, flag = TRUE, complete = TRUE) {
-    flag <- methods:::as(flag, "logical")
-    if(length(flag) != 1L || is.na(flag))
-        stop("expected a single logical value for the S4 state flag")
-    .Call("R_setS4Object", object, flag, complete, PACKAGE = "base")
-}
-@ %def asS4
+% For compiling packages during the lazy loading process [[cmpfun]]
+% needs to call [[asS4]], which is defined in [[base]] but calls
+% [[methods::as]].  When compiling [[methods]] it turns out that
+% [[methods]] is not fully initialized at the point where this is needed
+% and therefore the exported [[as]] function is not available. For now,
+% the [[compiler]] package defines its own [[asS4]] that uses the
+% unexported function [[methods:::as]] instead.  It would probably be
+% better to make this change in [[base::asS4]] instead.
+% %% **** change this in base instead??
+% <<[[asS4]] function>>=
+% ## We need our own version of base::asS4 that differs only from the one
+% ## in base by using methods:::as instead of methods::as.  This is needed
+% ## to JIT compile methods as the lazy loading mechanism used there does
+% ## it's thing during the first namespace load at a point where exports
+% ## are not yet set up.
+% asS4 <- function(object, flag = TRUE, complete = TRUE) {
+%     flag <- methods:::as(flag, "logical")
+%     if(length(flag) != 1L || is.na(flag))
+%         stop("expected a single logical value for the S4 state flag")
+%     .Call("R_setS4Object", object, flag, complete, PACKAGE = "base")
+% }
+% @ %def asS4
 
 
 \section{Environment utilities}
