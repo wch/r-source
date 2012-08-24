@@ -121,16 +121,10 @@
 ## stripped down version of asS4 in base (asS4 can't be used until the methods
 ## namespace is available -- no longer true)
 .asS4 <- function (object)
-{
- ##   .Call("R_setS4Object", object, TRUE, 0L, PACKAGE = "base")
     asS4(object, TRUE, 0L)
-}
 
 .notS4 <- function (object)
-{
-##    .Call("R_setS4Object", object, FALSE, 0L, PACKAGE = "base")
     asS4(object, FALSE, 0L)
-}
 
 
 ## the bootstrap version: "#----" brackets lines that replace parts of the real version

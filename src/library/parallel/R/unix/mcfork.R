@@ -24,14 +24,8 @@
 
 mc_pids <- new.env()
 assign("pids", integer(), envir = mc_pids)
-clean_pids <- function(e) {
-    pids <- get("pids", envir = e)
-    if(length(pids)) {
-        tools::pskill(pids, tools::SIGKILL)
-#        library.dynam("tools", "tools", .Library)
-#        .Call("ps_kill", pids, 9L, PACKAGE = "tools")
-    }
-}
+clean_pids <- function(e)
+    if(length(pids<- get("pids", envir = e))) tools::pskill(pids, tools::SIGKILL)
 
 mcfork <- function() {
     r <- .Call(C_mc_fork, PACKAGE = "parallel")

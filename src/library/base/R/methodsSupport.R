@@ -63,14 +63,8 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
     invisible(value)
 }
 
-## now primiive
-##.isMethodsDispatchOn <- function(onOff = NULL)
-##   .Call("R_isMethodsDispatchOn", onOff, PACKAGE = "base")
 
 tracingState <- function(on = NULL) .Call(.C_R_traceOnOff, on)
-
-## now primiive
-## isS4 <- function(object) .Call("R_isS4Object", object, PACKAGE = "base")
 
 
 asS4 <- function(object, flag = TRUE, complete = TRUE)
