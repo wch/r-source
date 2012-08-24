@@ -78,7 +78,6 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(CIDFontInUse, 2),
     CALLDEF(R_CreateAtVector, 4),
     CALLDEF(R_GAxisPars, 3),
-    {"R_GD_nullDevice", (DL_FUNC) &R_GD_nullDevice, 0},
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),
     CALLDEF(cairoProps, 1),

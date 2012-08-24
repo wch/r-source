@@ -7,7 +7,7 @@ if(tools:::.OStype() == "windows") {
     useDynLib(grDevices, R_chull, R_CreateAtVector, R_GAxisPars,
               PicTeX, PostScript, XFig, PDF,
               Cdevga = devga, CsavePlot = savePlot, devCairo,
-              Type1FontInUse, CIDFontInUse, R_GD_nullDevice,
+              Type1FontInUse, CIDFontInUse,
               C_devcap = devcap, C_devcapture = devcapture,
               C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
               C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,
@@ -16,7 +16,7 @@ if(tools:::.OStype() == "windows") {
 } else {
     useDynLib(grDevices, R_chull, R_CreateAtVector, R_GAxisPars,
               PicTeX, PostScript, XFig, PDF, CQuartz = Quartz, devCairo,
-              Type1FontInUse, CIDFontInUse, R_GD_nullDevice,
+              Type1FontInUse, CIDFontInUse,
               C_devcap = devcap, C_devcapture = devcapture,
               C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
               C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,

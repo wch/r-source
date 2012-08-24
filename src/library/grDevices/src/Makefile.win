@@ -12,7 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = axis_scales.c chull.c devices.c init.c \
-   devNull.c devPicTeX.c devPS.c devWindows.c
+   devPicTeX.c devPS.c devWindows.c
 SOURCES_F =
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o

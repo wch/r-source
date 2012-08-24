@@ -47,8 +47,6 @@ SEXP CIDFontInUse(SEXP, SEXP);
 SEXP Quartz(SEXP);
 SEXP makeQuartzDefault();
 
-SEXP R_GD_nullDevice();
-
 SEXP devCairo(SEXP);
 
 Rboolean

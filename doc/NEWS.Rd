@@ -328,6 +328,10 @@
       \item Several non-API entry points have been transferred to
       packages (e.g. \code{R_zeroin2}) or replaced by different non-API
       entry points (e.g. \code{R_tabulate}).
+      
+      \item The \sQuote{internal} graphics device invoked by
+      \code{.Call("R_GD_nullDevice", package = "grDevices")} has
+      been removed: use \code{pdf(file = NULL)} instead.
     }
   }
 
