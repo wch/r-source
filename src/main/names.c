@@ -992,7 +992,7 @@ FUNTAB R_FunTab[] =
 {"getSymbolInfo",do_getSymbolInfo,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {".isMethodsDispatchOn",do_S4on,0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"lazyLoadDBfetch",do_lazyLoadDBfetch,0,1,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"lazyLoadDBflush",do_lazyLoadDBflush,0,1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"lazyLoadDBflush",do_lazyLoadDBflush,0,11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getVarsFromFrame",do_getVarsFromFrame, 0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"lazyLoadDBinsertValue",do_lazyLoadDBinsertValue, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
