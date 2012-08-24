@@ -24,22 +24,10 @@ asS3(object, flag = TRUE, complete = TRUE)
 
   \item{flag}{Optional, logical: indicate direction of conversion.}
   
-  \item{complete}{Optional logical: whether conversion to S3 is
+  \item{complete}{Optional, logical: whether conversion to S3 is
     completed.  Not usually needed, but see the details section.}
 }
-\value{
-  \code{isS4} always returns \code{TRUE} or \code{FALSE} according to
-  whether the internal flag marking an S4 object has been turned on for
-  this object.
 
-  \code{asS4} and \code{asS3} will turn this flag on or off, 
-  and \code{asS3} will set the class from the objects \code{.S3Class}
-  slot if one exists.  Note that \code{asS3} will \emph{not}  turn
-  the object into an S3 object
-  unless there is a valid conversion; that is, an object of type other
-  than \code{"S4"} for which the S4 object is an extension, unless
-  argument \code{complete} is \code{FALSE}.
-}
 \details{
   Note that \code{isS4} does not rely on the \pkg{methods}
   package, so in particular it can be used to detect the need to
@@ -54,9 +42,29 @@ asS3(object, flag = TRUE, complete = TRUE)
   \code{\link{S3Part}}).  This includes classes extending the
   pseudo-classes \code{array} and \code{matrix}: such objects will have
   their class attribute set to \code{NULL}.
+
+  \code{isS4} is \link{primitive}.
 }
-\seealso{\code{\link{is.object}} for a more general test; \link{Methods}
-for general information on S4.}
+
+\value{
+  \code{isS4} always returns \code{TRUE} or \code{FALSE} according to
+  whether the internal flag marking an S4 object has been turned on for
+  this object.
+
+  \code{asS4} and \code{asS3} will turn this flag on or off, 
+  and \code{asS3} will set the class from the objects \code{.S3Class}
+  slot if one exists.  Note that \code{asS3} will \emph{not}  turn
+  the object into an S3 object
+  unless there is a valid conversion; that is, an object of type other
+  than \code{"S4"} for which the S4 object is an extension, unless
+  argument \code{complete} is \code{FALSE}.
+}
+
+\seealso{
+  \code{\link{is.object}} for a more general test; \link{Methods}
+  for general information on S4.
+}
+
 \examples{
 \dontshow{require(methods)}
 isS4(pi) # FALSE
