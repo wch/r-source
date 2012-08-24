@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46+0100\n"
+"POT-Creation-Date: 2012-08-24 09:22+0100\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgstr "Tegninfo kunne ikke fortolkes"
 msgid "unknown AFM entity encountered"
 msgstr "mødte ukendt AFM-entitet"
 
-#: devPS.c:739 devPS.c:742 devPS.c:4419 devPS.c:7905 devPicTeX.c:486
-#: devPicTeX.c:488
+#: devPS.c:739 devPS.c:742 devPS.c:4419 devPS.c:7905 devPicTeX.c:487
+#: devPicTeX.c:489
 #, c-format
 msgid "invalid string in '%s'"
 msgstr "ugyldig streng i '%s'"
@@ -458,7 +458,7 @@ msgid "invalid value of '%s'"
 msgstr "ugyldig værdi for '%s'"
 
 # 85%
-#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:741 devWindows.c:3722
+#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:742 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr "kan ikke starte %s()-enhed"
@@ -477,24 +477,24 @@ msgstr "skriftfamilienavnet er for langt"
 msgid "no font could be found for family \"%s\""
 msgstr "ingen skrift kunne findes for familie »%s«"
 
-#: devQuartz.c:1355
+#: devQuartz.c:1358
 msgid "invalid 'file' argument"
 msgstr "ugyldigt 'fil'-argument"
 
-#: devQuartz.c:1383
+#: devQuartz.c:1386
 msgid "invalid Quartz device size"
 msgstr "ugyldig Quartz-enhedsstørrelse"
 
-#: devQuartz.c:1411
+#: devQuartz.c:1414
 msgid "Unable to create device description."
 msgstr "Kan ikke oprette enhedsbeskrivelse."
 
-#: devQuartz.c:1461
+#: devQuartz.c:1464
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 "Kan ikke oprette Quartz-enhedsmål, angivet type er måske ikke understøttet."
 
-#: devQuartz.c:1585
+#: devQuartz.c:1588
 msgid "Quartz device is not available on this platform"
 msgstr "Quartz-enhed er ikke tilgængelig på denne platform"
 

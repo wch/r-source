@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46+0100\n"
+"POT-Creation-Date: 2012-08-24 09:22+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -43,8 +43,8 @@ msgstr "'CharInfo' nie mógl zostać przetworzony"
 msgid "unknown AFM entity encountered"
 msgstr "napotkano nieznany obiekt AFM"
 
-#: devPS.c:739 devPS.c:742 devPS.c:4419 devPS.c:7905 devPicTeX.c:486
-#: devPicTeX.c:488
+#: devPS.c:739 devPS.c:742 devPS.c:4419 devPS.c:7905 devPicTeX.c:487
+#: devPicTeX.c:489
 #, c-format
 msgid "invalid string in '%s'"
 msgstr "niepoprawny ciąg w '%s'"
@@ -452,7 +452,7 @@ msgstr "niepoprawny parametr 'fonts' w %s"
 msgid "invalid value of '%s'"
 msgstr "niepoprawna wartość '%s'"
 
-#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:741 devWindows.c:3722
+#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:742 devWindows.c:3722
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nie można uruchomić urządzenia '%s()'"
@@ -471,24 +471,24 @@ msgstr "nazwa rodziny czcionki jest zbyt długa"
 msgid "no font could be found for family \"%s\""
 msgstr "nie można było znaleźć żadnej czcionki dla rodziny \"%s\""
 
-#: devQuartz.c:1355
+#: devQuartz.c:1358
 msgid "invalid 'file' argument"
 msgstr "błędny argument 'file'"
 
-#: devQuartz.c:1383
+#: devQuartz.c:1386
 msgid "invalid Quartz device size"
 msgstr "niepoprawny rozmiar urządzenia Quartz"
 
-#: devQuartz.c:1411
+#: devQuartz.c:1414
 msgid "Unable to create device description."
 msgstr "Nie można utworzyć opisu urządzenia."
 
-#: devQuartz.c:1461
+#: devQuartz.c:1464
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 "Nie można utworzyć urządzenia Quartz, podany typ może nie być wspierany."
 
-#: devQuartz.c:1585
+#: devQuartz.c:1588
 msgid "Quartz device is not available on this platform"
 msgstr "urządzenie Quartz nie jest dostępne na tej platformie"
 

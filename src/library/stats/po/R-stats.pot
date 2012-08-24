@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07\n"
+"POT-Creation-Date: 2012-08-24 09:22\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1998,6 +1998,9 @@ msgid "'nknots' must be at least 1"
 msgstr ""
 
 msgid "cannot use more inner knots than unique 'x' values"
+msgstr ""
+
+msgid "'spar' must be of length 1"
 msgstr ""
 
 msgid "specified both 'df' and 'cv'; will disregard the latter"
