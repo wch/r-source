@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:26\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -2152,6 +2152,10 @@ msgstr "'lag.max' deve ser ao menos 1"
 
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
+
+#, fuzzy
+msgid "'spar' must be of length 1"
+msgstr "'acf' deve ter comprimento dois ou mais"
 
 msgid "specified both 'df' and 'cv'; will disregard the latter"
 msgstr ""

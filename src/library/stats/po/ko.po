@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-24 09:26+0100\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -321,7 +321,7 @@ msgstr "모델식에 잘못된 항목이 있습니다"
 msgid "invalid model formula"
 msgstr "모델식이 잘못되었습니다"
 
-#: model.c:1127 model.c:1371
+#: model.c:1127 model.c:1375
 msgid "invalid power in formula"
 msgstr "모델식에 잘못된 지수가 있습니다"
 
@@ -329,28 +329,28 @@ msgstr "모델식에 잘못된 지수가 있습니다"
 msgid "invalid model formula in ExtractVars"
 msgstr "ExtractVars의 모델식이 잘못되었습니다"
 
-#: model.c:1493
+#: model.c:1497
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "''를 사용한 데이터 프레임에서 중복된 이름 '%s'이 있습니다"
 
-#: model.c:1550
+#: model.c:1554
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars의 모델식이 잘못되었습니다"
 
-#: model.c:1636
+#: model.c:1640
 msgid "argument is not a valid model"
 msgstr "인수는 유효한 모델이 아닙니다"
 
-#: model.c:1646
+#: model.c:1650
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' must be NULL or a character vector"
 
-#: model.c:1658
+#: model.c:1662
 msgid "'data' argument is of the wrong type"
 msgstr "'data'인수가 잘못된 유형입니다"
 
-#: model.c:1924
+#: model.c:1928
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.'가 수식에서 있습니다만, 'data'인수가 아닙니다"
 
@@ -406,7 +406,7 @@ msgstr "수렴합니다 "
 msgid "'theta' should be of type character"
 msgstr "'theta' 는 반드시 문자형 이어야 합니다 "
 
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:368
 msgid "use of NULL environment is defunct"
 msgstr "use of NULL environment is defunct"
 
@@ -670,72 +670,72 @@ msgstr "forkal 에러코드는 %d 입니다"
 msgid "invalid value of lag.max"
 msgstr "lag.max 값이 잘못되었습니다 "
 
-#: port.c:131
+#: port.c:133
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg=%d 는 1,2,3, 혹은 4 의 값을 가져야 합니다 "
 
-#: port.c:310
+#: port.c:312
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "기울기 함수는 길이가 %d 인 수치형 벡터를 반환해야 합니다  "
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessian 함수는 반드시 order 가 %d 인 수치형 정방행렬을 반환해야 합니다 "
 
-#: port.c:370
+#: port.c:372
 msgid "'rho' must be an environment"
 msgstr "'rho' 는 반드시 환경이어야 합니다 "
 
-#: port.c:372 port.c:523
+#: port.c:374 port.c:525
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' 는 반드시 수치형 벡터이어야 합니다 "
 
-#: port.c:374
+#: port.c:376
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Hessian 이 정의되었다면 기울기도 정의되어야 합니다 "
 
-#: port.c:377
+#: port.c:379
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "환경 'rho' 은 반드시 길이가 %d 인 수치형 벡터 '.par' 를 포함해야 합니다  "
 
-#: port.c:391
+#: port.c:393
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' 와 'upper' 는 반드시 수치형 벡터이어야 합니다 "
 
-#: port.c:437
+#: port.c:439
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' 는 명명된 list 에만 적용됩니다 "
 
-#: port.c:458
+#: port.c:460
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() 를 찾을 수 없습니다 "
 
-#: port.c:471
+#: port.c:473
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' 는 반드시 (%d,%d) 인 수치형 행렬이어야 합니다 "
 
-#: port.c:492
+#: port.c:494
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn 은 모드 %d, 길이 %d 를 생성했고, 모드 %d, 길이 %d 를 요구합니다 "
 
-#: port.c:505
+#: port.c:507
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store 에 대한 유형이 잘못되었습니다 "
 
-#: port.c:524
+#: port.c:526
 msgid "m must be a list"
 msgstr "m 은 반드시 list 이어야 합니다 "
 
-#: port.c:544
+#: port.c:546
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' 와 'upperb' 는 반드시 수치형 벡터이어야 합니다 "
 
@@ -751,21 +751,22 @@ msgstr "'scal' 은 반드시 실수형 정방행렬이어야 합니다 "
 msgid "'scal' matrix is not positive-definite"
 msgstr "'scal' 행렬이 positive-definite 가 아닙니다 "
 
-#: random.c:54 random.c:58 random.c:63 random.c:68 random.c:122 random.c:128
-#: random.c:133 random.c:138 random.c:182 random.c:187 random.c:192
-#: random.c:206 random.c:293
+#: random.c:65 random.c:69 random.c:74 random.c:79 random.c:160 random.c:166
+#: random.c:171 random.c:176 random.c:239 random.c:244 random.c:249
+#: random.c:263 random.c:354
 msgid "invalid arguments"
 msgstr "invalid arguments"
 
-#: random.c:80 random.c:92 random.c:151 random.c:165 random.c:212 random.c:227
+#: random.c:94 random.c:120 random.c:193 random.c:221 random.c:269
+#: random.c:288
 msgid "NAs produced"
 msgstr "NA가 생성되었습니다"
 
-#: random.c:246
+#: random.c:307
 msgid "invalid first argument 'n'"
 msgstr "첫번째의 인수 'n'가 잘못되었습니다"
 
-#: random.c:248
+#: random.c:309
 msgid "invalid second argument 'size'"
 msgstr "두번째의 인수 'size'가 잘못되었습니다"
 
@@ -774,20 +775,20 @@ msgstr "두번째의 인수 'size'가 잘못되었습니다"
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
 
-#: smooth.c:102
+#: smooth.c:98
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "invalid end-rule for running median of 3: %d"
 
-#: smooth.c:254
+#: smooth.c:250
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "smooth(*, '3RSR') 에서 할당에러가 발생했습니다 "
 
-#: smooth.c:267 smooth.c:277
+#: smooth.c:263 smooth.c:273
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "smooth(*,'3RSS') 에서 할당 에러가 발생했습니다 "
 
-#: smooth.c:287
+#: smooth.c:283
 msgid "allocation error in smooth(*, '3R')."
 msgstr "smooth(*,'3R') 에서 할당에러가 발생했습니다 "
 

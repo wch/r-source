@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:26\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -2082,6 +2082,10 @@ msgstr "'nknots' en az 1 olmalı"
 
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
+
+#, fuzzy
+msgid "'spar' must be of length 1"
+msgstr "'model$order' 3 uzunluğunda olmalı"
 
 msgid "specified both 'df' and 'cv'; will disregard the latter"
 msgstr ""

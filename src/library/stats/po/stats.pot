@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-24 09:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -317,7 +317,7 @@ msgstr ""
 msgid "invalid model formula"
 msgstr ""
 
-#: model.c:1127 model.c:1371
+#: model.c:1127 model.c:1375
 msgid "invalid power in formula"
 msgstr ""
 
@@ -325,28 +325,28 @@ msgstr ""
 msgid "invalid model formula in ExtractVars"
 msgstr ""
 
-#: model.c:1493
+#: model.c:1497
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr ""
 
-#: model.c:1550
+#: model.c:1554
 msgid "invalid model formula in EncodeVars"
 msgstr ""
 
-#: model.c:1636
+#: model.c:1640
 msgid "argument is not a valid model"
 msgstr ""
 
-#: model.c:1646
+#: model.c:1650
 msgid "'specials' must be NULL or a character vector"
 msgstr ""
 
-#: model.c:1658
+#: model.c:1662
 msgid "'data' argument is of the wrong type"
 msgstr ""
 
-#: model.c:1924
+#: model.c:1928
 msgid "'.' in formula and no 'data' argument"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 msgid "'theta' should be of type character"
 msgstr ""
 
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:368
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -655,70 +655,70 @@ msgstr ""
 msgid "invalid value of lag.max"
 msgstr ""
 
-#: port.c:131
+#: port.c:133
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""
 
-#: port.c:310
+#: port.c:312
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:370
+#: port.c:372
 msgid "'rho' must be an environment"
 msgstr ""
 
-#: port.c:372 port.c:523
+#: port.c:374 port.c:525
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:374
+#: port.c:376
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:377
+#: port.c:379
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:391
+#: port.c:393
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:437
+#: port.c:439
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:458
+#: port.c:460
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:471
+#: port.c:473
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:492
+#: port.c:494
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:505
+#: port.c:507
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:524
+#: port.c:526
 msgid "m must be a list"
 msgstr ""
 
-#: port.c:544
+#: port.c:546
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
@@ -734,21 +734,22 @@ msgstr ""
 msgid "'scal' matrix is not positive-definite"
 msgstr ""
 
-#: random.c:54 random.c:58 random.c:63 random.c:68 random.c:122 random.c:128
-#: random.c:133 random.c:138 random.c:182 random.c:187 random.c:192
-#: random.c:206 random.c:293
+#: random.c:65 random.c:69 random.c:74 random.c:79 random.c:160 random.c:166
+#: random.c:171 random.c:176 random.c:239 random.c:244 random.c:249
+#: random.c:263 random.c:354
 msgid "invalid arguments"
 msgstr ""
 
-#: random.c:80 random.c:92 random.c:151 random.c:165 random.c:212 random.c:227
+#: random.c:94 random.c:120 random.c:193 random.c:221 random.c:269
+#: random.c:288
 msgid "NAs produced"
 msgstr ""
 
-#: random.c:246
+#: random.c:307
 msgid "invalid first argument 'n'"
 msgstr ""
 
-#: random.c:248
+#: random.c:309
 msgid "invalid second argument 'size'"
 msgstr ""
 
@@ -757,20 +758,20 @@ msgstr ""
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
 
-#: smooth.c:102
+#: smooth.c:98
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr ""
 
-#: smooth.c:254
+#: smooth.c:250
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr ""
 
-#: smooth.c:267 smooth.c:277
+#: smooth.c:263 smooth.c:273
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr ""
 
-#: smooth.c:287
+#: smooth.c:283
 msgid "allocation error in smooth(*, '3R')."
 msgstr ""
 

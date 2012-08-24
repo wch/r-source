@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-24 09:25+0100\n"
 "PO-Revision-Date: 2012-02-26 14:10+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -23,10 +23,6 @@ msgstr ""
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr " '%s'は長さ%dの数値でなければなりません "
-
-#: devNull.c:42 devNull.c:45
-msgid "unable to start NULL device"
-msgstr " Null デバイスは開始できません "
 
 #: devPS.c:559
 #, c-format
@@ -661,6 +657,9 @@ msgstr "QuartzBitmap_Output - ファイル'%s'を開けません "
 msgid "Not a supported scheme, no image data written"
 msgstr ""
 " サポートされていないスキーム(scheme)なのでイメージデータは書き出されません "
+
+#~ msgid "unable to start NULL device"
+#~ msgstr " Null デバイスは開始できません "
 
 #~ msgid "printing via file = \"\" is not implemented in this version"
 #~ msgstr " file = \"\" による描画はこのバージョンでは実装されていません "

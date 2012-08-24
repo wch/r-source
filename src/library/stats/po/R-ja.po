@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:26\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -2111,6 +2111,10 @@ msgstr " 'nknots' は少なくとも 1 でなければなりません "
 
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr " 相異なる 'x' 値の数より多くの内部結節点を使用することはできません "
+
+#, fuzzy
+msgid "'spar' must be of length 1"
+msgstr " 'ref' の長さは 1 でなければなりません "
 
 msgid "specified both 'df' and 'cv'; will disregard the latter"
 msgstr " 'df' と 'cv' の両方が特定されているので、後者は無視されます "

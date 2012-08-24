@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -154,16 +154,6 @@ msgstr "对象的名字已经存在"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "自动载入器在'%2$s'找不到'%1$s' "
 
-msgid "invalid argument values in 'backsolve'"
-msgstr "'backsolve'的参数有错"
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr "无效值"
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "'backsolve'的矩阵奇异。对角[%d]第一个零点"
-
 msgid "complex matrices not permitted at present"
 msgstr "复数矩阵现在不能用"
 
@@ -179,6 +169,9 @@ msgstr "'chol'的参数不是矩阵"
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "名字不对"
+
+msgid "too large a matrix for LINPACK"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "非正定矩阵"
@@ -622,6 +615,9 @@ msgstr "零乘零的矩阵"
 msgid "non-square matrix in 'eigen'"
 msgstr "eigen里的矩阵不是正方形的"
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'eigen'里'ch'回覆了代码%d"
 
@@ -1053,10 +1049,6 @@ msgstr "不能给没有维度的对象设行名"
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr "不能给维度小于二的对名设列名"
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr "无效值"
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr "参数不是数值也不是逻辑值：回覆NA"
 
@@ -1095,12 +1087,6 @@ msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr "S4状况标记应该是一个单独逻辑值"
-
-msgid "Expected a single logical value for the S3 state flag"
-msgstr "S3状况标记应该是一个单独逻辑值"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "不能改变因子的存储状态"
@@ -1759,6 +1745,26 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr "'backsolve'的参数有错"
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr "无效值"
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr "'backsolve'的矩阵奇异。对角[%d]第一个零点"
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr "无效值"
+
+#~ msgid "Expected a single logical value for the S4 state flag"
+#~ msgstr "S4状况标记应该是一个单独逻辑值"
+
+#~ msgid "Expected a single logical value for the S3 state flag"
+#~ msgstr "S3状况标记应该是一个单独逻辑值"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

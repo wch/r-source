@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -164,16 +164,6 @@ msgstr "esiste già un oggetto con questo nome"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "l'autocaricatore non trova '%s' in '%s'"
 
-msgid "invalid argument values in 'backsolve'"
-msgstr "parametri non valid in 'backsolve'"
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr "valore 'n' non valido"
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "matrice singolare in backsolve. Primo zero sulla diagonale [%d]"
-
 msgid "complex matrices not permitted at present"
 msgstr "matrici complesse non ammesse al momento"
 
@@ -189,6 +179,9 @@ msgstr "argomento di 'chol' deve essere una matrice"
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "nome non valido"
+
+msgid "too large a matrix for LINPACK"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "matrice non definita positiva"
@@ -659,6 +652,9 @@ msgstr "matrice 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "matrice non quadrata in 'eigen'"
+
+msgid "too large a matrix for EISPACK"
+msgstr ""
 
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' ha restituito codice %d in 'eigen'"
@@ -1140,10 +1136,6 @@ msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 "tentativo di impostare colnames per un oggetto con meno di due dimensioni"
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr "valore 'n' non valido"
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr "l'argomento non è numerico o logico: restituisco NA"
 
@@ -1186,12 +1178,6 @@ msgid ""
 msgstr ""
 "Il 'trace' delle funzioni richiede il pacchetto method, ma non è possibile "
 "caricare il namespace methods"
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr ""
-
-msgid "Expected a single logical value for the S3 state flag"
-msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
@@ -1909,6 +1895,20 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr "parametri non valid in 'backsolve'"
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr "valore 'n' non valido"
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr "matrice singolare in backsolve. Primo zero sulla diagonale [%d]"
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr "valore 'n' non valido"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

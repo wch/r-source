@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -157,16 +157,6 @@ msgstr "объект с таким именем уже есть"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "автозагрузчик не нашел '%s' в '%s'"
 
-msgid "invalid argument values in 'backsolve'"
-msgstr "неправильные значения аргумента в 'backsolve'"
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr "неправильное значение"
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "сингулярная матрица в 'backsolve'. Первый ноль на диагонали [%d]"
-
 msgid "complex matrices not permitted at present"
 msgstr "в настоящее время комплексные матрицы не разрешены"
 
@@ -182,6 +172,9 @@ msgstr "нематричный аргумент для 'chol'"
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "неправильное имя"
+
+msgid "too large a matrix for LINPACK"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "матрица не является положительно определенной"
@@ -630,6 +623,9 @@ msgstr "0 x 0 матрица"
 msgid "non-square matrix in 'eigen'"
 msgstr "неквадратная матрица в 'eigen'"
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' возвратил код %d в 'eigen'"
 
@@ -1064,10 +1060,6 @@ msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 "попытка установить имена колонок для объекта с менее чем двумя измерениями"
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr "неправильное значение"
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
 
@@ -1109,12 +1101,6 @@ msgid ""
 msgstr ""
 "Трассировка функций требует пакета 'methods', но я не могу загрузить его "
 "пространство имен"
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr "Ожидается простое логическое значение для флага состояния S4"
-
-msgid "Expected a single logical value for the S3 state flag"
-msgstr "Ожидается простое логическое значение для флага состояния S3"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "неправильно менять тип хранения фактора"
@@ -1803,6 +1789,26 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr "неправильные значения аргумента в 'backsolve'"
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr "неправильное значение"
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr "сингулярная матрица в 'backsolve'. Первый ноль на диагонали [%d]"
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr "неправильное значение"
+
+#~ msgid "Expected a single logical value for the S4 state flag"
+#~ msgstr "Ожидается простое логическое значение для флага состояния S4"
+
+#~ msgid "Expected a single logical value for the S3 state flag"
+#~ msgstr "Ожидается простое логическое значение для флага состояния S3"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

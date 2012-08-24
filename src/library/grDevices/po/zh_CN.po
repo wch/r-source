@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-24 09:25+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -21,10 +21,6 @@ msgstr ""
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr "'%s'必需是长度为%d的数值"
-
-#: devNull.c:42 devNull.c:45
-msgid "unable to start NULL device"
-msgstr "无法启动NULL装置"
 
 #: devPS.c:559
 #, c-format
@@ -641,6 +637,9 @@ msgstr " QuartzBitmap_Output - 打不开'%s'文件"
 #: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"
 msgstr "不支持这个规划，因此没有写任何图象数据"
+
+#~ msgid "unable to start NULL device"
+#~ msgstr "无法启动NULL装置"
 
 #~ msgid "printing via file = \"\" is not implemented in this version"
 #~ msgstr "本版本没有实现通过file = \"\" 印刷的这一功能"

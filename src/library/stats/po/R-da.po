@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:26\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2039,6 +2039,10 @@ msgstr ""
 
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
+
+#, fuzzy
+msgid "'spar' must be of length 1"
+msgstr "»acf« skal have længden to eller længere"
 
 msgid "specified both 'df' and 'cv'; will disregard the latter"
 msgstr ""

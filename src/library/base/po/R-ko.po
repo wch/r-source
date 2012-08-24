@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -155,16 +155,6 @@ msgstr "해당 이름을 가진 객체가 존재합니다 "
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "자동로더는 '%s' 를 '%s' 에서 찾을 수 없습니다 "
 
-msgid "invalid argument values in 'backsolve'"
-msgstr "'backsolve' 의 인자값이 잘못되었습니다 "
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr "잘못된 값입니다 "
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-
 msgid "complex matrices not permitted at present"
 msgstr "복소 행렬은 현재 허용도지 않습니다 "
 
@@ -180,6 +170,9 @@ msgstr "'chol' 에 행렬이 아닌 인수입니다"
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "부적절한 이름입니다"
+
+msgid "too large a matrix for LINPACK"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "향렬이 positive definite 가 아닙니다 "
@@ -633,6 +626,9 @@ msgstr "0 x 0 행렬 "
 msgid "non-square matrix in 'eigen'"
 msgstr "'eigen' 에 non-sqare 행렬이 주어졌습니다"
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' 는 코드 %d 를 'eigen' 에 반환했습니다 "
 
@@ -1068,10 +1064,6 @@ msgstr "차원이 없는 객체에 rownames 를 설정하려 했습니다 "
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr "2 차원 보다 작은 객체에 colnames 를 설정하려 했습니다 "
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr "잘못된 값입니다 "
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr "인수가 수치이거나 논리값이 아닙니다. NA값을 돌려줍니다"
 
@@ -1112,12 +1104,6 @@ msgid ""
 msgstr ""
 "트레이싱 함수들은 methods 패키지가 필요하지만, methods 네임스페이스를 로드 "
 "할 수 없습니다 "
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr "S4 상태 플래그에 대해서는 하나의 논리 값이 기대되고 있습니다"
-
-msgid "Expected a single logical value for the S3 state flag"
-msgstr "S3 상태 플래그에 대해서는 하나의 논리 값이 기대되고 있습니다"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "요인을 저장하는 모드를 잘 못 변경하였습니다 "
@@ -1788,6 +1774,26 @@ msgstr[0] "S3 메소드 %s 는 NAMESPACE 안에 선언되었으나 찾을 수 �
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr "'backsolve' 의 인자값이 잘못되었습니다 "
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr "잘못된 값입니다 "
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr "잘못된 값입니다 "
+
+#~ msgid "Expected a single logical value for the S4 state flag"
+#~ msgstr "S4 상태 플래그에 대해서는 하나의 논리 값이 기대되고 있습니다"
+
+#~ msgid "Expected a single logical value for the S3 state flag"
+#~ msgstr "S3 상태 플래그에 대해서는 하나의 논리 값이 기대되고 있습니다"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -151,16 +151,6 @@ msgstr " その名前のオブジェクトは既に存在します "
 msgid "autoloader did not find '%s' in '%s'"
 msgstr " 自動ローダーは '%s' を '%s' 中に見つけられませんでした "
 
-msgid "invalid argument values in 'backsolve'"
-msgstr " 'backsolve' に無効な引数値が与えられました "
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr " 無効な値です "
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr " 'backsolve' に特異行列。対角線 [%d] の最初の要素がゼロです "
-
 msgid "complex matrices not permitted at present"
 msgstr " 複素行列は現在許可されていません "
 
@@ -176,6 +166,9 @@ msgstr " 'chol' へ行列でない引数 "
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr " 不当な名前です "
+
+msgid "too large a matrix for LINPACK"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr " 行列は正定値符号ではありません "
@@ -634,6 +627,9 @@ msgstr " 0 x 0 行列です "
 msgid "non-square matrix in 'eigen'"
 msgstr " 'eigen' に非正方行列が与えられました "
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'ch' がコード %d を返しました "
 
@@ -1080,10 +1076,6 @@ msgstr " 次元無しのオブジェクトに行名を設定しようとしま�
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr " 次元が 2 未満のオブジェクトに列名を設定しようとしました "
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr " 無効な値です "
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr " 引数は数値でも論理値でもありません。NA 値を返します "
 
@@ -1124,12 +1116,6 @@ msgid ""
 msgstr ""
 " トレース関数は methods パッケージを必要としていますが、その名前空間をロード"
 "できません "
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr " S4 状態フラグに対しては単一の論理値が期待されています "
-
-msgid "Expected a single logical value for the S3 state flag"
-msgstr " S3 状態フラグに対しては単一の論理値が期待されています "
 
 msgid "invalid to change the storage mode of a factor"
 msgstr " factor　の格納モードを変えるのは不正です "
@@ -1812,6 +1798,26 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr " 'backsolve' に無効な引数値が与えられました "
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr " 無効な値です "
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr " 'backsolve' に特異行列。対角線 [%d] の最初の要素がゼロです "
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr " 無効な値です "
+
+#~ msgid "Expected a single logical value for the S4 state flag"
+#~ msgstr " S4 状態フラグに対しては単一の論理値が期待されています "
+
+#~ msgid "Expected a single logical value for the S3 state flag"
+#~ msgstr " S3 状態フラグに対しては単一の論理値が期待されています "
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-24 09:25+0100\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -25,10 +25,6 @@ msgstr ""
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr "'%s' должен быть числовым длины %d"
-
-#: devNull.c:42 devNull.c:45
-msgid "unable to start NULL device"
-msgstr "не могу запустить NULL-устройство"
 
 #: devPS.c:559
 #, c-format
@@ -652,6 +648,9 @@ msgstr "QuartzBitmap_Output - не могу открыть файл '%s'"
 #: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"
 msgstr "Схема не поддерживается, данные изображения не записаны"
+
+#~ msgid "unable to start NULL device"
+#~ msgstr "не могу запустить NULL-устройство"
 
 #~ msgid "printing via file = \"\" is not implemented in this version"
 #~ msgstr "печать через file = \"\" недоступна в этой версии"

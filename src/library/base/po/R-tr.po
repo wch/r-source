@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -152,15 +152,6 @@ msgstr ""
 msgid "autoloader did not find '%s' in '%s'"
 msgstr ""
 
-msgid "invalid argument values in 'backsolve'"
-msgstr ""
-
-msgid "invalid value of ncol(x)"
-msgstr ""
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr ""
-
 msgid "complex matrices not permitted at present"
 msgstr ""
 
@@ -174,6 +165,9 @@ msgid "non-matrix argument to 'chol'"
 msgstr ""
 
 msgid "invalid nrow(x)"
+msgstr ""
+
+msgid "too large a matrix for LINPACK"
 msgstr ""
 
 msgid "matrix not positive definite"
@@ -607,6 +601,9 @@ msgstr ""
 msgid "non-square matrix in 'eigen'"
 msgstr ""
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr ""
 
@@ -1032,9 +1029,6 @@ msgstr ""
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 
-msgid "invalid value of nrow(x)"
-msgstr ""
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
 
@@ -1071,12 +1065,6 @@ msgstr ""
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
-msgstr ""
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr ""
-
-msgid "Expected a single logical value for the S3 state flag"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"

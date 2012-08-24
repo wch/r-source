@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,16 +149,6 @@ msgstr "et objekt med det navn findes allerede"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "autoindlæser fandt ikke '%s' i '%s'"
 
-msgid "invalid argument values in 'backsolve'"
-msgstr "ugyldigt argumentværdier i 'backsolve'"
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr "ugyldigt antal intervaller"
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "entalsmatrix i 'backsolve'. Første nul i diagonal [%d]"
-
 msgid "complex matrices not permitted at present"
 msgstr "kompleks matricer er ikke tilladt i øjeblikket"
 
@@ -172,6 +162,9 @@ msgid "non-matrix argument to 'chol'"
 msgstr "ikke matrix argument for 'chol'"
 
 msgid "invalid nrow(x)"
+msgstr ""
+
+msgid "too large a matrix for LINPACK"
 msgstr ""
 
 msgid "matrix not positive definite"
@@ -619,6 +612,9 @@ msgstr "0 x 0 matrix"
 msgid "non-square matrix in 'eigen'"
 msgstr "ikkekvadratisk matrix i 'eigen'"
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' returnerede kode %d i 'eigen'"
 
@@ -1050,10 +1046,6 @@ msgstr ""
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr "ugyldigt antal intervaller"
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
 
@@ -1090,12 +1082,6 @@ msgstr ""
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
-msgstr ""
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr ""
-
-msgid "Expected a single logical value for the S3 state flag"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
@@ -1760,6 +1746,20 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr "ugyldigt argumentværdier i 'backsolve'"
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr "ugyldigt antal intervaller"
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr "entalsmatrix i 'backsolve'. Første nul i diagonal [%d]"
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr "ugyldigt antal intervaller"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

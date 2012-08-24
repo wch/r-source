@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-08-24 09:25\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -156,16 +156,6 @@ msgstr "ein Objekt dieses Namens existiert bereits"
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "Autoloader konnte '%s' nicht in '%s' finden"
 
-msgid "invalid argument values in 'backsolve'"
-msgstr "ungültige Argumentwerte in 'backsolve'"
-
-#, fuzzy
-msgid "invalid value of ncol(x)"
-msgstr "ungültiger Wert"
-
-msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
-
 msgid "complex matrices not permitted at present"
 msgstr "komplexe Matrizen momentan nicht zugelassen"
 
@@ -181,6 +171,9 @@ msgstr "nicht-matrix Argument für 'chol'"
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "ungültiger Name"
+
+msgid "too large a matrix for LINPACK"
+msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "Matrix nicht positiv definit"
@@ -635,6 +628,9 @@ msgstr "0 x 0 Matrix"
 msgid "non-square matrix in 'eigen'"
 msgstr "nicht-quadratische Matrix in 'eigen'"
 
+msgid "too large a matrix for EISPACK"
+msgstr ""
+
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' gab Kode %d zurück in 'eigen'"
 
@@ -1076,10 +1072,6 @@ msgstr ""
 "Versuch die Spaltennamen für ein Objekt mit weniger als zwei Dimensionen zu "
 "setzen"
 
-#, fuzzy
-msgid "invalid value of nrow(x)"
-msgstr "ungültiger Wert"
-
 msgid "argument is not numeric or logical: returning NA"
 msgstr "Argument ist weder numerisch noch boolesch: gebe NA zurück"
 
@@ -1121,12 +1113,6 @@ msgid ""
 msgstr ""
 "Das Tracing von Funktionen benötigt das Paket methods, aber der Namensraum "
 "von methods kann nicht geladen werden"
-
-msgid "Expected a single logical value for the S4 state flag"
-msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
-
-msgid "Expected a single logical value for the S3 state flag"
-msgstr "Erwarte einzelnen logischen Wert für das S3 Status-Flag"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
@@ -1808,6 +1794,26 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "invalid argument values in 'backsolve'"
+#~ msgstr "ungültige Argumentwerte in 'backsolve'"
+
+#, fuzzy
+#~ msgid "invalid value of ncol(x)"
+#~ msgstr "ungültiger Wert"
+
+#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+#~ msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
+
+#, fuzzy
+#~ msgid "invalid value of nrow(x)"
+#~ msgstr "ungültiger Wert"
+
+#~ msgid "Expected a single logical value for the S4 state flag"
+#~ msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
+
+#~ msgid "Expected a single logical value for the S3 state flag"
+#~ msgstr "Erwarte einzelnen logischen Wert für das S3 Status-Flag"
 
 #, fuzzy
 #~ msgid "invalid value of length(x)"

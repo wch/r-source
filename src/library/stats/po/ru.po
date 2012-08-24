@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-08-24 09:26+0100\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -323,7 +323,7 @@ msgstr "неправильный терм в модельной формуле"
 msgid "invalid model formula"
 msgstr "неправильная модельная формула"
 
-#: model.c:1127 model.c:1371
+#: model.c:1127 model.c:1375
 msgid "invalid power in formula"
 msgstr "неправильная степень в формуле"
 
@@ -331,28 +331,28 @@ msgstr "неправильная степень в формуле"
 msgid "invalid model formula in ExtractVars"
 msgstr "неправильная модельная формула в ExtractVars"
 
-#: model.c:1493
+#: model.c:1497
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "повторяющееся имя '%s' в таблице данных, использую '.'"
 
-#: model.c:1550
+#: model.c:1554
 msgid "invalid model formula in EncodeVars"
 msgstr "неправильная модельная формула в EncodeVars"
 
-#: model.c:1636
+#: model.c:1640
 msgid "argument is not a valid model"
 msgstr "аргумент не является правильной моделью"
 
-#: model.c:1646
+#: model.c:1650
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' должен быть NULL или текстовым вектором"
 
-#: model.c:1658
+#: model.c:1662
 msgid "'data' argument is of the wrong type"
 msgstr "аргумент 'data' неправильного типа"
 
-#: model.c:1924
+#: model.c:1928
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' в формуле и нет аргумента 'data'"
 
@@ -408,7 +408,7 @@ msgstr "сошлось"
 msgid "'theta' should be of type character"
 msgstr "'theta' должна быть текстового типа"
 
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:368
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL больше не работает"
 
@@ -673,74 +673,74 @@ msgstr "ошибка 'forkal' с кодом %d"
 msgid "invalid value of lag.max"
 msgstr "неправильное значение 'lag.max'"
 
-#: port.c:131
+#: port.c:133
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d должен быть 1, 2, 3 или 4"
 
-#: port.c:310
+#: port.c:312
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "градиентная функция должна возвращать числовой вектор длины %d"
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "функция гессиана должна возвращать квадратную числовую матрицу порядка %d"
 
-#: port.c:370
+#: port.c:372
 msgid "'rho' must be an environment"
 msgstr "'rho' должно быть окружением"
 
-#: port.c:372 port.c:523
+#: port.c:374 port.c:525
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' должен быть непустым числовым вектором"
 
-#: port.c:374
+#: port.c:376
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 "Когда определяется функция, вычисляющая гессиан, должен быть определен и "
 "градиент"
 
-#: port.c:377
+#: port.c:379
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "окружение 'rho' должно содержать числовой вектор '.par' длины %d"
 
-#: port.c:391
+#: port.c:393
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' и 'upper' должны быть числовыми векторами"
 
-#: port.c:437
+#: port.c:439
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' применяется лишь к именованным спискам"
 
-#: port.c:458
+#: port.c:460
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() не найден"
 
-#: port.c:471
+#: port.c:473
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
 
-#: port.c:492
+#: port.c:494
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn выдала тип %d, длину %d - нужен тип %d, длина %d"
 
-#: port.c:505
+#: port.c:507
 msgid "invalid type for eval_check_store"
 msgstr "неправильный тип 'eval_check_store'"
 
-#: port.c:524
+#: port.c:526
 msgid "m must be a list"
 msgstr "m должен быть списком"
 
-#: port.c:544
+#: port.c:546
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' и 'upperb' должны быть числовыми векторами"
 
@@ -756,21 +756,22 @@ msgstr "'scal' должен быть настоящей квадратной матрицей"
 msgid "'scal' matrix is not positive-definite"
 msgstr "матрица 'scal' не положительно-определенная"
 
-#: random.c:54 random.c:58 random.c:63 random.c:68 random.c:122 random.c:128
-#: random.c:133 random.c:138 random.c:182 random.c:187 random.c:192
-#: random.c:206 random.c:293
+#: random.c:65 random.c:69 random.c:74 random.c:79 random.c:160 random.c:166
+#: random.c:171 random.c:176 random.c:239 random.c:244 random.c:249
+#: random.c:263 random.c:354
 msgid "invalid arguments"
 msgstr "неправильные аргументы"
 
-#: random.c:80 random.c:92 random.c:151 random.c:165 random.c:212 random.c:227
+#: random.c:94 random.c:120 random.c:193 random.c:221 random.c:269
+#: random.c:288
 msgid "NAs produced"
 msgstr "получились NA"
 
-#: random.c:246
+#: random.c:307
 msgid "invalid first argument 'n'"
 msgstr "неправильный первый аргумент 'n'"
 
-#: random.c:248
+#: random.c:309
 msgid "invalid second argument 'size'"
 msgstr "неправильный второй аргумент 'size'"
 
@@ -779,20 +780,20 @@ msgstr "неправильный второй аргумент 'size'"
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
 
-#: smooth.c:102
+#: smooth.c:98
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "неправильное конечное правило для бегущей медианы 3: %d"
 
-#: smooth.c:254
+#: smooth.c:250
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "ошибка выделения памяти в smooth(*, '3RSR')."
 
-#: smooth.c:267 smooth.c:277
+#: smooth.c:263 smooth.c:273
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "ошибка выделения памяти в smooth(*, '3RSS')."
 
-#: smooth.c:287
+#: smooth.c:283
 msgid "allocation error in smooth(*, '3R')."
 msgstr "ошибка выделения памяти в smooth(*, '3R')."
 
