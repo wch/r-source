@@ -69,12 +69,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
    syms
 }
 
-getLoadedDLLs <- function()
-{
-    els <- .Internal(getLoadedDLLs())
-    names(els) <- vapply(els, function(x) x[["name"]], "")
-    els
-}
+getLoadedDLLs <- function() .Internal(getLoadedDLLs())
 
 
 getDLLRegisteredRoutines <- function(dll, addNames = TRUE)

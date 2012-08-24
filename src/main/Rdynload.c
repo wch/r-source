@@ -1349,19 +1349,18 @@ do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
     return sym;
 }
 
+/* .Internal(getLoadedDLLs()) */
 SEXP attribute_hidden
 do_getDllTable(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i;
-    SEXP ans;
+    SEXP ans, nm;
 
     checkArity(op, args);
 
  again:
     PROTECT(ans = allocVector(VECSXP, CountDLL));
-    for(i = 0; i < CountDLL; i++) {
+    for(int i = 0; i < CountDLL; i++)
 	SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
-    }
     setAttrib(ans, R_ClassSymbol, mkString("DLLInfoList"));
     UNPROTECT(1);
 
@@ -1370,9 +1369,15 @@ do_getDllTable(SEXP call, SEXP op, SEXP args, SEXP env)
        CountDLL can be reduced during this loop.  A simple work-around
        is to just try again until CountDLL at the end is the same as
        it was at the beginning.  LT */
-    if (CountDLL != LENGTH(ans))
-	goto again;
+    if (CountDLL != LENGTH(ans)) goto again;
 
+    PROTECT(ans);
+    PROTECT(nm = allocVector(STRSXP, CountDLL));
+    setAttrib(ans, R_NamesSymbol, nm);
+    for(int i = 0; i < CountDLL; i++)
+	SET_STRING_ELT(nm, i, 
+		       STRING_ELT(VECTOR_ELT(VECTOR_ELT(ans, i), 0), 0));
+    UNPROTECT(2);
     return ans;
 }
 
