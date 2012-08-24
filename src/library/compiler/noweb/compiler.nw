@@ -5375,7 +5375,6 @@ Opcodes.names <- names(Opcodes.argc)
 
 <<[[is.ddsym]] function>>
 
-<<[[asS4]] function>>
 
 <<[[missingArgs]] function>>
 
