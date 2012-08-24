@@ -549,12 +549,10 @@ installed.packages <-
             ## Previously used URLencode for e.g. Windows paths with drives
             ## This version works for very long file names.
             base <- paste(c(lib, fields), collapse = ",")
-            enc <- sprintf("%d_%s", nchar(base),
-                           ## add 64-bit CRC in hex (in theory, seems
-                           ## it is actually 32-bit on some systems)
-                           .Call("crc64ToString", base, PACKAGE = "base"))
-            dest <- file.path(tempdir(),
-                              paste0("libloc_", enc, ".rds"))
+            ## add length and 64-bit CRC in hex (in theory, seems
+            ## it is actually 32-bit on some systems)
+            enc <- sprintf("%d_%s", nchar(base), .Call(.C_crc64ToString, base))
+            dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
             if(file.exists(dest) &&
                file.info(dest)$mtime > file.info(lib)$mtime &&
                (val <- readRDS(dest))$base == base)

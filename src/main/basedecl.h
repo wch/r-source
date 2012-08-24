@@ -71,9 +71,9 @@ SEXP R_serializeb(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_serialize(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_unserialize(SEXP, SEXP);
 
-SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
-SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP R_lazyLoadDBflush(SEXP);
+//SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
+//SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
+//SEXP R_lazyLoadDBflush(SEXP);
 
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);

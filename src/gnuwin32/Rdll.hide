@@ -229,7 +229,6 @@
  R_getRegisteredRoutines
  R_getS4DataSlot
  R_getSymbolInfo
- R_getVarsFromFrame
  R_gmtime
  R_init_base
  R_init_jit_enabled
@@ -239,8 +238,6 @@
  R_isMissing
  R_is_running
  R_jit_enabled
- R_lazyLoadDBflush
- R_lazyLoadDBinsertValue
  R_localtime
  R_max_memory
  R_max_num_math_threads
@@ -708,6 +705,7 @@
  do_getRtoCConverterStatus
  do_getSnapshot
  do_getSymbolInfo
+ do_getVarsFromFrame
  do_getWindowHandle
  do_getWindowHandles
  do_getWindowTitle
@@ -762,6 +760,8 @@
  do_l10n_info
  do_lapply
  do_lazyLoadDBfetch
+ do_lazyLoadDBflush
+ do_lazyLoadDBinsertValue
  do_length
  do_lengthgets
  do_levelsgets

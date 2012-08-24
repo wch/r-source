@@ -84,7 +84,7 @@ lazyLoadDBexec <- function(filebase, fun, filter)
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
             if (! is.null(data$attributes))
-                attributes(e) <-data$attributes
+                attributes(e) <- data$attributes
             if (! is.null(data$isS4) && data$isS4)
                 .Call(.C_R_setS4Object, e, TRUE, TRUE)
             if (! is.null(data$locked) && data$locked)

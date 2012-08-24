@@ -151,10 +151,8 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                            variables)
 {
-    envlist <- function(e) {
-        names <- ls(e, all.names=TRUE)
-        .Call("R_getVarsFromFrame", names, e, FALSE, PACKAGE="base")
-    }
+    envlist <- function(e)
+        .Internal(getVarsFromFrame(ls(e, all.names = TRUE), e, FALSE))
 
     envtable <- function() {
         idx <- 0
@@ -179,17 +177,14 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     }
 
     lazyLoadDBinsertValue <- function(value, file, ascii, compress, hook)
-        .Call("R_lazyLoadDBinsertValue", value, file, ascii, compress, hook,
-              PACKAGE = "base")
+        .Internal(lazyLoadDBinsertValue(value, file, ascii, compress, hook))
 
     lazyLoadDBinsertListElement <- function(x, i, file, ascii, compress, hook)
-        .Call("R_lazyLoadDBinsertValue", x[[i]], file, ascii, compress, hook,
-              PACKAGE = "base")
+        .Internal(lazyLoadDBinsertValue(x[[i]], file, ascii, compress, hook))
 
     lazyLoadDBinsertVariable <- function(n, e, file, ascii, compress, hook) {
-        x <- .Call("R_getVarsFromFrame", n, e, FALSE, PACKAGE="base")
-       .Call("R_lazyLoadDBinsertValue", x[[1L]], file, ascii, compress, hook,
-              PACKAGE = "base")
+        x <- .Internal(getVarsFromFrame(n, e, FALSE))
+       .Internal(lazyLoadDBinsertValue(x[[1L]], file, ascii, compress, hook))
     }
 
     mapfile <- paste(filebase, "rdx", sep = ".")

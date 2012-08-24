@@ -65,12 +65,6 @@
             set(n, e, envenv)           # MUST do this immediately
             key <- getFromFrame(n, env)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
-            ## comment from r41494
-            ## modified the loading of old environments, so that those
-            ## serialized with parent.env NULL are loaded with the
-            ## parent.env=emptyenv(); and yes an alternative would have been
-            ## baseenv(), but that was seldom the intention of folks that
-            ## set the environment to NULL.
             if (is.null(data$enclos))
                 parent.env(e) <- emptyenv()
             else
@@ -79,9 +73,8 @@
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
             if (! is.null(data$attributes))
-                attributes(e) <-data$attributes
-            if (! is.null(data$isS4) && data$isS4)
-                .Call("R_setS4Object", e, TRUE, TRUE, PACKAGE = "base")
+                attributes(e) <- data$attributes
+            ## there are no S4 objects in base
             if (! is.null(data$locked) && data$locked)
                 .Internal(lockEnvironment(e, FALSE))
             e

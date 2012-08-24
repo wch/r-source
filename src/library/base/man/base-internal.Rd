@@ -56,10 +56,7 @@
 \alias{.C_R_compress1}
 \alias{.C_R_decompress1}
 \alias{.C_R_getTaskCallbackNames}
-\alias{.C_R_getVarsFromFrame}
 \alias{.C_R_getbcprofcounts}
-\alias{.C_R_lazyLoadDBflush}
-\alias{.C_R_lazyLoadDBinsertValue}
 \alias{.C_R_pretty}
 \alias{.C_R_removeTaskCallback}
 \alias{.C_R_serialize}
