@@ -523,15 +523,21 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
     Rcomplex *avals;
-    SEXP B;
+    SEXP B, Ad, Bd;
 
     if (!(isMatrix(A) && isComplex(A)))
 	error(_("'a' must be a complex matrix"));
     if (!(isMatrix(Bin) && isComplex(Bin)))
 	error(_("'b' must be a complex matrix"));
     PROTECT(B = duplicate(Bin));
+    /* This could allocate so needs protection
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    */
+    PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    Adims = INTEGER(A);
+    Bdims = INTEGER(B);
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
     p = Bdims[1];
@@ -552,7 +558,7 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 	      -info, "zgesv");
     if (info > 0)
 	error(("Lapack routine zgesv: system is exactly singular"));
-    UNPROTECT(1);
+    UNPROTECT(3);
     return B;
 #else
     error(_("Fortran complex functions are not available on this platform"));
@@ -954,15 +960,22 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p, info, *ipiv, *Adims, *Bdims;
     double *avals, anorm, rcond, tol = asReal(tolin), *work;
-    SEXP B;
+    SEXP B, Ad, Bd;
 
     if (!(isMatrix(A) && isReal(A)))
 	error(_("'a' must be a numeric matrix"));
     if (!(isMatrix(Bin) && isReal(Bin)))
 	error(_("'b' must be a numeric matrix"));
     PROTECT(B = duplicate(Bin));
+    /* This could allocate so needs protection
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    */
+    PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    Adims = INTEGER(A);
+    Bdims = INTEGER(B);
+    
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
     p = Bdims[1];
@@ -992,7 +1005,7 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 	    error(_("system is computationally singular: reciprocal condition number = %g"),
 		  rcond);
     }
-    UNPROTECT(1);
+    UNPROTECT(3);
     return B;
 }
 
