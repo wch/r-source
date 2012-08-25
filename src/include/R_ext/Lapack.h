@@ -19,7 +19,7 @@
  */
 
 /* 
-   C declarations of LAPACL Fortran subroutines included in R.
+   C declarations of LAPACK Fortran subroutines included in R.
    
    Part of the API.
  */
