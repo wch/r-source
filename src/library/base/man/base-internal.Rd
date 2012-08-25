@@ -32,8 +32,6 @@
 \alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
 
-\alias{.C_BinCode}
-\alias{.C_FindIntervVec}
 \alias{.C_La_chol}
 \alias{.C_La_chol2inv}
 \alias{.C_La_dgecon}
@@ -51,29 +49,18 @@
 \alias{.C_La_zgeqp3}
 \alias{.C_La_zgesv}
 \alias{.C_La_ztrcon}
-\alias{.C_R_Tabulate}
 \alias{.C_R_addTaskCallback}
-\alias{.C_R_compress1}
-\alias{.C_R_decompress1}
 \alias{.C_R_getTaskCallbackNames}
 \alias{.C_R_getbcprofcounts}
 \alias{.C_R_pretty}
 \alias{.C_R_removeTaskCallback}
-\alias{.C_R_serialize}
-\alias{.C_R_serializeb}
 \alias{.C_R_setS4Object}
 \alias{.C_R_startbcprof}
 \alias{.C_R_stopbcprof}
 \alias{.C_R_traceOnOff}
-\alias{.C_R_unserialize}
 \alias{.C_Rrowsum_df}
 \alias{.C_Rrowsum_matrix}
 \alias{.C_bincode}
-\alias{.C_bitwiseAnd}
-\alias{.C_bitwiseNot}
-\alias{.C_bitwiseOr}
-\alias{.C_bitwiseXor}
-\alias{.C_crc64ToString}
 \alias{.C_det_ge_real}
 \alias{.C_qr_coef_cmplx}
 \alias{.C_qr_coef_real}

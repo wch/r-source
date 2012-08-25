@@ -27,6 +27,7 @@ void Rsocklisten(int *, char **, int *);
 void Rsockclose(int *);
 void Rsockread(int *, char **, int *);
 void Rsockwrite(int *, char **, int *, int *, int *);
+
 SEXP La_svd(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP La_rs(SEXP, SEXP);
 SEXP La_rg(SEXP, SEXP);
@@ -64,28 +65,6 @@ void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);
 void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);
 
-SEXP R_compress1(SEXP);
-SEXP R_decompress1(SEXP);
-
-SEXP R_serializeb(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP R_serialize(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP R_unserialize(SEXP, SEXP);
-
-//SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
-//SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
-//SEXP R_lazyLoadDBflush(SEXP);
-
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);
 SEXP R_stopbcprof(void);
-
-SEXP bitwiseNot(SEXP);
-SEXP bitwiseAnd(SEXP, SEXP);
-SEXP bitwiseOr(SEXP, SEXP);
-SEXP bitwiseXor(SEXP, SEXP);
-SEXP crc64ToString(SEXP);
-
-SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest);
-SEXP R_Tabulate(SEXP in, SEXP nbin);
-SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside);
-

@@ -273,6 +273,9 @@
       \code{.C}/\code{.Fortran}/\code{.Call} calls copied from earlier
       versions of \R no longer work -- but they were never part of the
       API.  [In progress.]
+      
+      \item Many \code{.Call()} calls in package \pkg{base} have been
+      migrated to \code{.Internal()} calls.
     }
   }
 

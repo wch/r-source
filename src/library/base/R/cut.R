@@ -65,5 +65,5 @@ cut.default <-
 {
     if(!is.double(x)) storage.mode(x) <- "double"
     if(!is.double(breaks)) storage.mode(breaks) <- "double"
-    .Call(.C_BinCode, x, breaks, right, include.lowest)
+    .Internal(bincode(x, breaks, right, include.lowest))
 }

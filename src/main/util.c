@@ -1854,14 +1854,16 @@ int Scollate(SEXP a, SEXP b)
 
 #include <lzma.h>
 
-SEXP crc64ToString(SEXP in)
+SEXP attribute_hidden do_crc64(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
+    SEXP in = CAR(args);
     uint64_t crc = 0;
     char ans[17];
     if (!isString(in)) error("input must be a character string");
     const char *str = CHAR(STRING_ELT(in, 0));
 
-    /* Seems this is realy 64-bit only on 64-bit platforms */
+    /* Seems this is really 64-bit only on 64-bit platforms */
     crc = lzma_crc64((uint8_t *)str, strlen(str), crc);
     snprintf(ans, 17, "%lx", (long unsigned int) crc);
     return mkString(ans);
@@ -1898,8 +1900,14 @@ bincode(double *x, R_xlen_t n, double *breaks, int nb,
 /* The R wrapper set the storage.mode.
    'breaks' cannot be a long vector as the return codes are integer.
  */
-SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
+SEXP attribute_hidden do_bincode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
+    SEXP x, breaks, right, lowest;
+    x = CAR(args); args = CDR(args);
+    breaks = CAR(args); args = CDR(args);
+    right = CAR(args); args = CDR(args);
+    lowest = CAR(args);
     if (TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
 	error("invalid input");
 #ifdef LONG_VECTOR_SUPPORT
@@ -1918,8 +1926,10 @@ SEXP BinCode(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
     return codes;
 }
 
-SEXP R_Tabulate(SEXP in, SEXP nbin)
+SEXP attribute_hidden do_tabulate(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
+    SEXP in = CAR(args), nbin = CADR(args);
     if (TYPEOF(in) != INTSXP)  error("invalid input");
     R_xlen_t n = XLENGTH(in);
     /* FIXME: could in principle be a long vector */
@@ -1935,8 +1945,14 @@ SEXP R_Tabulate(SEXP in, SEXP nbin)
 }
 
 /* x can be a long vector but xt cannot since the result is integer */
-SEXP FindIntervVec(SEXP xt, SEXP x, SEXP right, SEXP inside)
+SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
+    SEXP xt, x, right, inside;
+    xt = CAR(args); args = CDR(args);
+    x = CAR(args); args = CDR(args);
+    right = CAR(args); args = CDR(args);
+    inside = CAR(args);
     if(TYPEOF(xt) != REALSXP || TYPEOF(x) != REALSXP) error("invalid input");
 #ifdef LONG_VECTOR_SUPPORT
     if (IS_LONG_VEC(xt))

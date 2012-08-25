@@ -27,6 +27,6 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 	stop("'vec' contains NAs")
     if(is.unsorted(vec))
 	stop("'vec' must be sorted non-decreasingly")
-    .Call(.C_FindIntervVec, as.double(vec), as.double(x),
-          rightmost.closed, all.inside)
+    .Internal(findInterval(as.double(vec), as.double(x),
+                           rightmost.closed, all.inside))
 }

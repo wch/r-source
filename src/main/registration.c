@@ -137,31 +137,10 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_traceOnOff, 1),
     CALLDEF(R_setS4Object, 3),
 
-    /* compression and serialization routines */
-    CALLDEF(R_compress1, 1),
-    CALLDEF(R_decompress1, 1),
-    CALLDEF(R_serializeb, 5),
-    CALLDEF(R_serialize, 5),
-    CALLDEF(R_unserialize, 2),
-
-    /* lazy loading support */
-//    CALLDEF(R_getVarsFromFrame, 3),
-//    CALLDEF(R_lazyLoadDBinsertValue, 5),
-//    CALLDEF(R_lazyLoadDBflush, 1),
-
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
 
-    CALLDEF(bitwiseNot, 1),
-    CALLDEF(bitwiseAnd, 2),
-    CALLDEF(bitwiseOr,  2),
-    CALLDEF(bitwiseXor, 2),
-
-    CALLDEF(crc64ToString, 1),
-    CALLDEF(BinCode, 4),
-    CALLDEF(R_Tabulate, 2),
-    CALLDEF(FindIntervVec, 4),
 
     {NULL, NULL, 0}
 };

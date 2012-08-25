@@ -638,7 +638,7 @@ static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 }
 
 
-SEXP bitwiseNot(SEXP a)
+static SEXP bitwiseNot(SEXP a)
 {
     R_xlen_t  i, m = XLENGTH(a);
     SEXP ans = allocVector(INTSXP, m);
@@ -647,7 +647,7 @@ SEXP bitwiseNot(SEXP a)
 }
 
 #define mymax(x, y) ((x >= y) ? x : y)
-SEXP bitwiseAnd(SEXP a, SEXP b)
+static SEXP bitwiseAnd(SEXP a, SEXP b)
 {
     R_xlen_t  i, m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;
     SEXP ans = allocVector(INTSXP, mn);
@@ -656,7 +656,7 @@ SEXP bitwiseAnd(SEXP a, SEXP b)
     return ans;
 }
 
-SEXP bitwiseOr(SEXP a, SEXP b)
+static SEXP bitwiseOr(SEXP a, SEXP b)
 {
     R_xlen_t  i, m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;
     SEXP ans = allocVector(INTSXP, mn);
@@ -665,11 +665,24 @@ SEXP bitwiseOr(SEXP a, SEXP b)
     return ans;
 }
 
-SEXP bitwiseXor(SEXP a, SEXP b)
+static SEXP bitwiseXor(SEXP a, SEXP b)
 {
     R_xlen_t i,  m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;
     SEXP ans = allocVector(INTSXP, mn);
     for(i = 0; i < mn; i++)
 	INTEGER(ans)[i] = INTEGER(a)[i%m] ^ INTEGER(b)[i%n];
+    return ans;
+}
+
+SEXP attribute_hidden do_bitwise(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP ans = R_NilValue; /* -Wall */
+    switch(PRIMVAL(op)) {
+    case 1: ans = bitwiseAnd(CAR(args), CADR(args)); break;
+    case 2: ans = bitwiseNot(CAR(args)); break;
+    case 3: ans = bitwiseOr(CAR(args), CADR(args)); break;
+    case 4: ans = bitwiseXor(CAR(args), CADR(args)); break;
+    }
     return ans;
 }

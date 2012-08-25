@@ -573,10 +573,12 @@
  do_bcclose
  do_bcversion
  do_begin
+ do_bincode
  do_bind
  do_bindtextdomain
  do_bndIsActive
  do_bndIsLocked
+ do_bitwise
  do_body
  do_bodyCode
  do_break
@@ -612,6 +614,7 @@
  do_copyDFattr
  do_contourLines
  do_countfields
+ do_crc64
  do_cum
  do_dataentry
  do_dataviewer
@@ -676,6 +679,7 @@
  do_filerename
  do_fileshow
  do_filesymlink
+ do_findinterval
  do_first_min
  do_flush
  do_flushconsole
@@ -914,6 +918,7 @@
  do_seq
  do_seq_along
  do_seq_len
+ do_serialize
  do_serializeToConn
  do_set
  do_setFileTime
@@ -982,6 +987,7 @@
  do_systime
  do_sysumask
  do_syswhich
+ do_tabulate
  do_tempdir
  do_tempfile
  do_textconnection
