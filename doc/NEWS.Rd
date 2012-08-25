@@ -276,6 +276,9 @@
       
       \item Many \code{.Call()} calls in package \pkg{base} have been
       migrated to \code{.Internal()} calls.
+      
+      \item \code{solve()} makes fewer copies, especially when \code{b}
+      is a vector rather than a matrix.
     }
   }
 
@@ -459,6 +462,10 @@
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
+      
+      \item \code{solve(A, b)} for a vector \code{b} gave the answer
+      names for \code{colnames(A)} for \code{LINPACK = TRUE} but not in
+      the default case.
     }
   }
 }

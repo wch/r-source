@@ -523,34 +523,52 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
     Rcomplex *avals;
-    SEXP B, Ad, Bd;
+    SEXP B, Ad, Bd, Adn, Bdn;
 
     if (!(isMatrix(A) && isComplex(A)))
 	error(_("'a' must be a complex matrix"));
-    if (!(isMatrix(Bin) && isComplex(Bin)))
-	error(_("'b' must be a complex matrix"));
-    PROTECT(B = duplicate(Bin));
-    /* This could allocate so needs protection
-    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
-    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
-    */
+    if (!isComplex(Bin)) error(_("'b' must be a complex vector or matrix"));
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
-    PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     Adims = INTEGER(Ad);
-    Bdims = INTEGER(Bd);
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
-    p = Bdims[1];
-    if(p == 0) error(_("no right-hand side in 'b'"));
     if(Adims[1] != n)
 	error(_("'a' (%d x %d) must be square"), n, Adims[1]);
-    if(Bdims[0] != n)
-	error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
-		Bdims[0], p, n, n);
+    Adn = getAttrib(A, R_DimNamesSymbol);
+
+    if (isMatrix(Bin)) {
+	PROTECT(Bd = coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
+	Bdims = INTEGER(Bd);
+	p = Bdims[1];
+	if(p == 0) error(_("no right-hand side in 'b'"));
+	if(Bdims[0] != n)
+	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
+		  Bdims[0], p, n, n);
+	UNPROTECT(1);
+	PROTECT(B = allocMatrix(CPLXSXP, n, p));
+	if (!isNull(Adn)) {
+	    // rownames(ans) = colnames(A), colnames(ans) = colnames(Bin)
+	    Bdn = allocVector(VECSXP, 2);
+	    SET_VECTOR_ELT(Bdn, 0, VECTOR_ELT(Adn, 1));
+	    SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
+	    if (!isNull(Bindn))
+		SET_VECTOR_ELT(Bdn, 1, VECTOR_ELT(Bindn, 1));
+	    setAttrib(B, R_DimNamesSymbol, Bdn);
+	}
+    } else {
+	p = 1;
+	if(length(Bin) != n)
+	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
+		  length(Bin), p, n, n);	
+	PROTECT(B = allocVector(CPLXSXP, n));
+	if (!isNull(Adn)) setAttrib(B, R_NamesSymbol, VECTOR_ELT(Adn, 1));
+    }
+    Memcpy(COMPLEX(B), COMPLEX(Bin), (size_t)n * p);
+
     ipiv = (int *) R_alloc(n, sizeof(int));
 
+    /* work on a copy of a */
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
-    /* work on a copy of x */
     Memcpy(avals, COMPLEX(A), (size_t) n * n);
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
     if (info < 0)
@@ -960,35 +978,52 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p, info, *ipiv, *Adims, *Bdims;
     double *avals, anorm, rcond, tol = asReal(tolin), *work;
-    SEXP B, Ad, Bd;
+    SEXP B, Ad, Bd, Adn, Bdn;
 
-    if (!(isMatrix(A) && isReal(A)))
+    if (!(isMatrix(A) && (TYPEOF(A) == REALSXP || TYPEOF(A) == INTSXP)))
 	error(_("'a' must be a numeric matrix"));
-    if (!(isMatrix(Bin) && isReal(Bin)))
-	error(_("'b' must be a numeric matrix"));
-    PROTECT(B = duplicate(Bin));
-    /* This could allocate so needs protection
-    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
-    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
-    */
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
-    PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     Adims = INTEGER(Ad);
-    Bdims = INTEGER(Bd);
-    
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
-    p = Bdims[1];
-    if(p == 0) error(_("no right-hand side in 'b'"));
     if(Adims[1] != n)
 	error(_("'a' (%d x %d) must be square"), n, Adims[1]);
-    if(Bdims[0] != n)
-	error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
-	      Bdims[0], p, n, n);
+    Adn = getAttrib(A, R_DimNamesSymbol);
+
+    if (isMatrix(Bin)) {
+	PROTECT(Bd = coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
+	Bdims = INTEGER(Bd);
+	p = Bdims[1];
+	if(p == 0) error(_("no right-hand side in 'b'"));
+	if(Bdims[0] != n)
+	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
+		  Bdims[0], p, n, n);
+	UNPROTECT(1);
+	PROTECT(B = allocMatrix(REALSXP, n, p));
+	if (!isNull(Adn)) {
+	    // rownames(ans) = colnames(A), colnames(ans) = colnames(Bin)
+	    Bdn = allocVector(VECSXP, 2);
+	    SET_VECTOR_ELT(Bdn, 0, VECTOR_ELT(Adn, 1));
+	    SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
+	    if (!isNull(Bindn))
+		SET_VECTOR_ELT(Bdn, 1, VECTOR_ELT(Bindn, 1));
+	    setAttrib(B, R_DimNamesSymbol, Bdn);
+	}
+    } else {
+	p = 1;
+	if(length(Bin) != n)
+	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
+		  length(Bin), p, n, n);	
+	PROTECT(B = allocVector(REALSXP, n));
+	if (!isNull(Adn)) setAttrib(B, R_NamesSymbol, VECTOR_ELT(Adn, 1));
+    }
+    Memcpy(REAL(B), REAL(Bin), (size_t)n * p);
+    
     ipiv = (int *) R_alloc(n, sizeof(int));
 
+    /* work on a copy of A */
+    PROTECT(A = coerceVector(A, REALSXP));
     avals = (double *) R_alloc((size_t)n * n, sizeof(double));
-				/* work on a copy of A */
     Memcpy(avals, REAL(A), (size_t)n * n);
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
     if (info < 0)
@@ -1005,7 +1040,7 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 	    error(_("system is computationally singular: reciprocal condition number = %g"),
 		  rcond);
     }
-    UNPROTECT(3);
+    UNPROTECT(2);
     return B;
 }
 

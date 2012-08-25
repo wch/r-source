@@ -41,19 +41,13 @@ solve.default <-
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
 	a <- as.matrix(a)
 	if(missing(b)) {
-            if(nrow(a) != ncol(a))
-                stop("only square matrices can be inverted")
 	    b <- diag(1.0+0.0i, nrow(a))
 	    colnames(b) <- rownames(a)
 	} else if(!is.complex(b)) b[] <- as.complex(b)
 	if(!is.complex(a)) a[] <- as.complex(a)
-	return (if (is.matrix(b)) {
-            if(ncol(a) != nrow(b)) stop("'b' must be compatible with 'a'")
-	    rownames(b) <- colnames(a)
-	    .Internal(La_zgesv(a, b))
-	} else
-	    drop(.Internal(La_zgesv(a, as.matrix(b)))))
+        return(.Internal(La_zgesv(a, b)))
     }
+
     if(is.qr(a)) {
 	warning("solve.default called with a \"qr\" object: use 'qr.solve'")
 	return(solve.qr(a, b, tol))
@@ -62,19 +56,12 @@ solve.default <-
     if(!LINPACK) {
 	a <- as.matrix(a)
 	if(missing(b)) {
-            if(nrow(a) != ncol(a))
-                stop("only square matrices can be inverted")
 	    b <- diag(1.0, nrow(a))
 	    colnames(b) <- rownames(a)
 	} else storage.mode(b) <- "double"
-	storage.mode(a) <- "double"
-	return (if (is.matrix(b)) {
-            if(ncol(a) != nrow(b)) stop("'b' must be compatible with 'a'")
-	    rownames(b) <- colnames(a)
-	    .Internal(La_dgesv(a, b, tol))
-	} else
-	    drop(.Internal(La_dgesv(a, as.matrix(b), tol))))
+        return(.Internal(La_dgesv(a, b, tol)))
     }
+
     a <- qr(a, tol = tol)
     nc <- ncol(a$qr)
     if( a$rank != nc )

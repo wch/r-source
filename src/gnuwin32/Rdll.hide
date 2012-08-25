@@ -89,7 +89,6 @@
  R_FreeSEXP
  R_FreeStringBuffer
  R_FreeStringBufferL
- R_FunTab
  R_GE_VStrHeight
  R_GE_VStrWidth
  R_GE_VText
