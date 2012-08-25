@@ -980,7 +980,8 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
     double *avals, anorm, rcond, tol = asReal(tolin), *work;
     SEXP B, Ad, Bd, Adn, Bdn;
 
-    if (!(isMatrix(A) && (TYPEOF(A) == REALSXP || TYPEOF(A) == INTSXP)))
+    if (!(isMatrix(A) && 
+	  (TYPEOF(A) == REALSXP || TYPEOF(A) == INTSXP || TYPEOF(A) == LGLSXP)))
 	error(_("'a' must be a numeric matrix"));
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Adims = INTEGER(Ad);

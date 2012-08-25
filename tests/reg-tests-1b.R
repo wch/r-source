@@ -1923,4 +1923,17 @@ x <- backsolve(r, cbind(b,b))
 stopifnot(identical(x[,1], x[,2]))
 ## 2.15.1 used elements (4,1), (2,1), (2,2) for second column.
 
+
+## Matrix oddly assumes that solve() drops NULL dimanmes
+A <- diag(3)
+dimnames(A) <- list(NULL, NULL)
+sA <- solve(A)
+stopifnot(is.null(dimnames(sA)))
+# and expm inverts a logical matrix, even though this is not as documented.
+Q <- matrix(c(FALSE, TRUE, TRUE, FALSE), 2, 2)
+is.numeric(Q) # FALSE
+solve(Q)
+## failed in pre-2.16.0, which interpreted 'numeric' correctly.
+
+
 proc.time()
