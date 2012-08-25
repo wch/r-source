@@ -518,6 +518,7 @@ static SEXP La_ztrcon(SEXP A, SEXP norm)
 
 
 
+// see the comments in La_zgesv
 static SEXP La_zgesv(SEXP A, SEXP Bin)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
@@ -546,14 +547,13 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 		  Bdims[0], p, n, n);
 	UNPROTECT(1);
 	PROTECT(B = allocMatrix(CPLXSXP, n, p));
-	if (!isNull(Adn)) {
-	    // rownames(ans) = colnames(A), colnames(ans) = colnames(Bin)
+	SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
+	if (!isNull(Adn) || !isNull(Bindn)) {
 	    Bdn = allocVector(VECSXP, 2);
-	    SET_VECTOR_ELT(Bdn, 0, VECTOR_ELT(Adn, 1));
-	    SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
-	    if (!isNull(Bindn))
-		SET_VECTOR_ELT(Bdn, 1, VECTOR_ELT(Bindn, 1));
-	    setAttrib(B, R_DimNamesSymbol, Bdn);
+	    if (!isNull(Adn)) SET_VECTOR_ELT(Bdn, 0, VECTOR_ELT(Adn, 1));
+	    if (!isNull(Bindn)) SET_VECTOR_ELT(Bdn, 1, VECTOR_ELT(Bindn, 1));
+	    if (!isNull(VECTOR_ELT(Bdn, 0)) && !isNull(VECTOR_ELT(Bdn, 1)))
+		setAttrib(B, R_DimNamesSymbol, Bdn);
 	}
     } else {
 	p = 1;
@@ -567,7 +567,7 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 
     ipiv = (int *) R_alloc(n, sizeof(int));
 
-    /* work on a copy of a */
+    /* work on a copy of A */
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     Memcpy(avals, COMPLEX(A), (size_t) n * n);
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
@@ -1000,14 +1000,15 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 		  Bdims[0], p, n, n);
 	UNPROTECT(1);
 	PROTECT(B = allocMatrix(REALSXP, n, p));
-	if (!isNull(Adn)) {
+	SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
+	## This is somewhat odd, but Matrix relies on dropping NULL dimnames
+	if (!isNull(Adn) || !isNull(Bindn)) {
 	    // rownames(ans) = colnames(A), colnames(ans) = colnames(Bin)
 	    Bdn = allocVector(VECSXP, 2);
-	    SET_VECTOR_ELT(Bdn, 0, VECTOR_ELT(Adn, 1));
-	    SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
-	    if (!isNull(Bindn))
-		SET_VECTOR_ELT(Bdn, 1, VECTOR_ELT(Bindn, 1));
-	    setAttrib(B, R_DimNamesSymbol, Bdn);
+	    if (!isNull(Adn)) SET_VECTOR_ELT(Bdn, 0, VECTOR_ELT(Adn, 1));
+	    if (!isNull(Bindn)) SET_VECTOR_ELT(Bdn, 1, VECTOR_ELT(Bindn, 1));
+	    if (!isNull(VECTOR_ELT(Bdn, 0)) && !isNull(VECTOR_ELT(Bdn, 1)))
+		setAttrib(B, R_DimNamesSymbol, Bdn);
 	}
     } else {
 	p = 1;
