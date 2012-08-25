@@ -536,8 +536,8 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
     */
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
-    Adims = INTEGER(A);
-    Bdims = INTEGER(B);
+    Adims = INTEGER(Ad);
+    Bdims = INTEGER(Bd);
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
     p = Bdims[1];
@@ -973,8 +973,8 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
     */
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
-    Adims = INTEGER(A);
-    Bdims = INTEGER(B);
+    Adims = INTEGER(Ad);
+    Bdims = INTEGER(Bd);
     
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
