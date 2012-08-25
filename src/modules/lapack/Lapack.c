@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2010  The R Core Team.
+ *  Copyright (C) 2001--2012  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@
  *       2) Pkgs cannot get it from the C-Lapack interface code {lapack.so}
  *          since that is R-internal
  */
-char La_norm_type(const char *typstr)
+static char La_norm_type(const char *typstr)
 {
     char typup;
 
@@ -56,7 +56,7 @@ char La_norm_type(const char *typstr)
 }
 
 /* Lapack condition number approximation: currently only supports _1 or _Inf norm : */
-char La_rcond_type(const char *typstr)
+static char La_rcond_type(const char *typstr)
 {
     char typup;
 
@@ -73,8 +73,8 @@ char La_rcond_type(const char *typstr)
 }
 
 
-static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
-		      SEXP method)
+static SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
+		   SEXP method)
 {
     int *xdims, n, p, lwork, info = 0;
     SEXP val, nm;
@@ -129,7 +129,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     return val;
 }
 
-static SEXP modLa_rs(SEXP xin, SEXP only_values)
+static SEXP La_rs(SEXP xin, SEXP only_values)
 {
     int *xdims, n, lwork, info = 0, ov;
     char jobv[1], uplo[1], range[1];
@@ -222,7 +222,7 @@ static SEXP unscramble(const double* imaginary, int n,
     return s;
 }
 
-static SEXP modLa_rg(SEXP x, SEXP only_values)
+static SEXP La_rg(SEXP x, SEXP only_values)
 {
     Rboolean vectors, complexValues;
     int i, n, lwork, info, *xdims, ov;
@@ -301,7 +301,7 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     return ret;
 }
 
-static SEXP modLa_dlange(SEXP A, SEXP type)
+static SEXP La_dlange(SEXP A, SEXP type)
 {
     SEXP x, val;
     int *xdims, m, n, nprot = 0;
@@ -335,7 +335,7 @@ static SEXP modLa_dlange(SEXP A, SEXP type)
 
 
 /* ------------------------------------------------------------ */
-static SEXP modLa_dgecon(SEXP A, SEXP norm)
+static SEXP La_dgecon(SEXP A, SEXP norm)
 {
     SEXP x, val;
     int *xdims, m, n, info, *iwork;
@@ -392,7 +392,7 @@ static SEXP modLa_dgecon(SEXP A, SEXP norm)
     return val;
 }
 
-static SEXP modLa_dtrcon(SEXP A, SEXP norm)
+static SEXP La_dtrcon(SEXP A, SEXP norm)
 {
     SEXP x, val;
     int *xdims, n, nprot = 0, info;
@@ -431,7 +431,7 @@ static SEXP modLa_dtrcon(SEXP A, SEXP norm)
     return val;
 }
 
-static SEXP modLa_zgecon(SEXP A, SEXP norm)
+static SEXP La_zgecon(SEXP A, SEXP norm)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     SEXP val;
@@ -482,7 +482,7 @@ static SEXP modLa_zgecon(SEXP A, SEXP norm)
 #endif
 }
 
-static SEXP modLa_ztrcon(SEXP A, SEXP norm)
+static SEXP La_ztrcon(SEXP A, SEXP norm)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     SEXP val;
@@ -518,7 +518,7 @@ static SEXP modLa_ztrcon(SEXP A, SEXP norm)
 
 
 
-static SEXP modLa_zgesv(SEXP A, SEXP Bin)
+static SEXP La_zgesv(SEXP A, SEXP Bin)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
@@ -560,7 +560,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 #endif
 }
 
-static SEXP modLa_zgeqp3(SEXP Ain)
+static SEXP La_zgeqp3(SEXP Ain)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int i, m, n, *Adims, info, lwork;
@@ -610,7 +610,7 @@ static SEXP modLa_zgeqp3(SEXP Ain)
 #endif
 }
 
-static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
+static SEXP qr_coef_cmplx(SEXP Q, SEXP Bin)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims;
@@ -653,7 +653,7 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 #endif
 }
 
-static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
+static SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims, tr;
@@ -694,7 +694,7 @@ static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 #endif
 }
 
-static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+static SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     SEXP val, nm;
@@ -750,7 +750,7 @@ static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v
 #endif
 }
 
-static SEXP modLa_rs_cmplx(SEXP xin, SEXP only_values)
+static SEXP La_rs_cmplx(SEXP xin, SEXP only_values)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int *xdims, n, lwork, info, ov;
@@ -806,7 +806,7 @@ static SEXP modLa_rs_cmplx(SEXP xin, SEXP only_values)
 #endif
 }
 
-static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
+static SEXP La_rg_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int  n, lwork, info, *xdims, ov;
@@ -869,7 +869,7 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 
 /* ------------------------------------------------------------ */
 
-static SEXP modLa_chol(SEXP A)
+static SEXP La_chol(SEXP A)
 {
     if (isMatrix(A)) {
 	SEXP ans = PROTECT((TYPEOF(A) == REALSXP)?duplicate(A):
@@ -903,7 +903,7 @@ static SEXP modLa_chol(SEXP A)
     return R_NilValue; /* -Wall */
 }
 
-static SEXP modLa_chol2inv(SEXP A, SEXP size)
+static SEXP La_chol2inv(SEXP A, SEXP size)
 {
     int sz = asInteger(size);
     if (sz == NA_INTEGER || sz < 1) {
@@ -950,7 +950,7 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 
 /* ------------------------------------------------------------ */
 
-static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
+static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p, info, *ipiv, *Adims, *Bdims;
     double *avals, anorm, rcond, tol = asReal(tolin), *work;
@@ -996,7 +996,7 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
     return B;
 }
 
-static SEXP modLa_dgeqp3(SEXP Ain)
+static SEXP La_dgeqp3(SEXP Ain)
 {
     int i, m, n, *Adims, info, lwork;
     double *work, tmp;
@@ -1039,7 +1039,7 @@ static SEXP modLa_dgeqp3(SEXP Ain)
     return val;
 }
 
-static SEXP modqr_coef_real(SEXP Q, SEXP Bin)
+static SEXP qr_coef_real(SEXP Q, SEXP Bin)
 {
     int n, nrhs, lwork, info, k, *Bdims, *Qdims;
     SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
@@ -1077,7 +1077,7 @@ static SEXP modqr_coef_real(SEXP Q, SEXP Bin)
     return B;
 }
 
-static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
+static SEXP qr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
 {
     int n, nrhs, lwork, info, k, *Bdims, *Qdims, tr;
     SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
@@ -1114,7 +1114,7 @@ static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
 }
 
 /* TODO : add  a *complex* version, using  LAPACK ZGETRF() */
-static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
+static SEXP det_ge_real(SEXP Ain, SEXP logarithm)
 {
     int i, n, *Adims, info, *jpvt, sign, useLog;
     double modulus = 0.0; /* -Wall */
@@ -1178,6 +1178,66 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
     return val;
 }
 
+static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = R_NilValue;
+
+    switch(PRIMVAL(op)) {
+    case 0: ans = La_zgeqp3(CAR(args)); break;
+    case 1: ans = La_rs(CAR(args), CADR(args)); break;
+    case 2: ans = La_rs_cmplx(CAR(args), CADR(args)); break;
+    case 3: ans = La_rg(CAR(args), CADR(args)); break;
+    case 41: ans = La_rg_cmplx(CAR(args), CADR(args)); break;
+    case 5: ans = La_rs(CAR(args), CADR(args)); break;
+    case 51: ans = La_rs_cmplx(CAR(args), CADR(args)); break;
+    case 6: ans = La_dlange(CAR(args), CADR(args)); break;
+    case 7: ans = La_dgecon(CAR(args), CADR(args)); break;
+    case 8: ans = La_dtrcon(CAR(args), CADR(args)); break;
+    case 9: ans = La_zgecon(CAR(args), CADR(args)); break;
+    case 10: ans = La_ztrcon(CAR(args), CADR(args)); break;
+    case 11: ans = La_zgesv(CAR(args), CADR(args)); break;
+
+    case 100: ans = La_dgesv(CAR(args), CADR(args), CADDR(args)); break;
+    case 101: ans = La_dgeqp3(CAR(args)); break;
+
+    case 200: ans = La_chol(CAR(args)); break;
+    case 201: ans = La_chol2inv(CAR(args), CADR(args)); break;
+
+    case 300: ans = qr_coef_real(CAR(args), CADR(args)); break;
+    case 301: ans = qr_qy_real(CAR(args), CADR(args), CADDR(args)); break;
+    case 302: ans = det_ge_real(CAR(args), CADR(args)); break;
+    case 303: ans = qr_coef_cmplx(CAR(args), CADR(args)); break;
+    case 304: ans = qr_qy_cmplx(CAR(args), CADR(args), CADDR(args)); break;
+
+    case 400:
+    {
+	SEXP a1, a2, a3, a4, a5, a6;
+	a1 = CAR(args); args = CDR(args);
+	a2 = CAR(args); args = CDR(args);
+	a3 = CAR(args); args = CDR(args);
+	a4 = CAR(args); args = CDR(args);
+	a5 = CAR(args); args = CDR(args);
+	a6 = CAR(args); args = CDR(args);
+	ans = La_svd(a1, a2, a3, a4, a5, a6, CAR(args));
+	break;
+    }
+    case 401:
+    {
+	SEXP a1, a2, a3, a4, a5;
+	a1 = CAR(args); args = CDR(args);
+	a2 = CAR(args); args = CDR(args);
+	a3 = CAR(args); args = CDR(args);
+	a4 = CAR(args); args = CDR(args);
+	a5 = CAR(args); args = CDR(args);
+	ans = La_svd_cmplx(a1, a2, a3, a4, a5, CAR(args));
+	break;
+    }
+    }
+
+    return ans;
+}
+
+
 /* ------------------------------------------------------------ */
 
 #include <Rmodules/Rlapack.h>
@@ -1189,27 +1249,6 @@ R_init_lapack(DllInfo *info)
     R_LapackRoutines *tmp;
     tmp = Calloc(1, R_LapackRoutines);
 
-    tmp->svd = modLa_svd;
-    tmp->rs = modLa_rs;
-    tmp->rg = modLa_rg;
-    tmp->dlange = modLa_dlange;
-    tmp->dgecon = modLa_dgecon;
-    tmp->dtrcon = modLa_dtrcon;
-    tmp->zgecon = modLa_zgecon;
-    tmp->ztrcon = modLa_ztrcon;
-    tmp->zgesv = modLa_zgesv;
-    tmp->zgeqp3 = modLa_zgeqp3;
-    tmp->qr_coef_cmplx = modqr_coef_cmplx;
-    tmp->qr_qy_cmplx = modqr_qy_cmplx;
-    tmp->svd_cmplx = modLa_svd_cmplx;
-    tmp->rs_cmplx = modLa_rs_cmplx;
-    tmp->rg_cmplx = modLa_rg_cmplx;
-    tmp->chol = modLa_chol;
-    tmp->chol2inv = modLa_chol2inv;
-    tmp->dgesv = modLa_dgesv;
-    tmp->dgeqp3 = modLa_dgeqp3;
-    tmp->qr_coef_real = modqr_coef_real;
-    tmp->qr_qy_real = modqr_qy_real;
-    tmp->det_ge_real = moddet_ge_real;
+    tmp->do_lapack = mod_do_lapack;
     R_setLapackRoutines(tmp);
 }

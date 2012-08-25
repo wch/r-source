@@ -53,11 +53,11 @@ extern "C" {
 
 /* matrix norms: converting typstr[]  to one of {'M', 'O', 'I', 'F'}
  * or signal error(): */
-La_extern char La_norm_type(const char *typstr);
+// La_extern char La_norm_type(const char *typstr);
 
 /* matrix (reciprocal) condition numbers: convert typstr[]  to 'O'(ne) or 'I'(nf)
  * or signal error(): */
-La_extern char La_rcond_type(const char *typstr);
+// La_extern char La_rcond_type(const char *typstr);
 
 
 
