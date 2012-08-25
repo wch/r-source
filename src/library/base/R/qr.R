@@ -26,12 +26,12 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 {
     x <- as.matrix(x)
     if(is.complex(x))
-        return(structure(.Call(.C_La_zgeqp3, x), class = "qr"))
+        return(structure(.Internal(La_zgeqp3(x)), class = "qr"))
     ## otherwise :
     if(!is.double(x))
 	storage.mode(x) <- "double"
     if(LAPACK) {
-        res <- .Call(.C_La_dgeqp3, x)
+        res <- .Internal(La_dgeqp3(x))
         if(!is.null(cn <- colnames(x)))
             colnames(res$qr) <- cn[res$pivot]
         attr(res, "useLAPACK") <- TRUE
@@ -82,8 +82,7 @@ qr.coef <- function(qr, y)
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
-	coef[qr$pivot,] <-
-            .Call(.C_qr_coef_cmplx, qr, y)[ix, ]
+	coef[qr$pivot,] <- .Internal(qr_coef_cmplx(qr, y))[ix, ]
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
@@ -91,8 +90,7 @@ qr.coef <- function(qr, y)
     if(!is.null(a) && is.logical(a) && a) {
         if(!is.double(y)) storage.mode(y) <- "double"
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
-	coef[qr$pivot,] <-
-            .Call(.C_qr_coef_real, qr, y)[ix,]
+	coef[qr$pivot,] <- .Internal(qr_coef_real(qr, y))[ix,]
 	return(if(im) coef else c(coef))
     }
     if (k == 0L) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
@@ -132,11 +130,11 @@ qr.qy <- function(qr, y)
     if(is.complex(qr$qr)) {
         y <- as.matrix(y)
         if(!is.complex(y)) y[] <- as.complex(y)
-        return(.Call(.C_qr_qy_cmplx, qr, y, 0))
+        return(.Internal(qr_qy_cmplx(qr, y, FALSE)))
     }
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
-        return(.Call(.C_qr_qy_real, qr, as.matrix(y), 0))
+        return(.Internal(qr_qy_real(qr, as.matrix(y), FALSE)))
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
     k <- as.integer(qr$rank)
@@ -161,11 +159,11 @@ qr.qty <- function(qr, y)
     if(is.complex(qr$qr)){
         y <- as.matrix(y)
         if(!is.complex(y)) y[] <- as.complex(y)
-        return(.Call(.C_qr_qy_cmplx, qr, y, 1))
+        return(.Internal(qr_qy_cmplx(qr, y, TRUE)))
     }
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
-        return(.Call(.C_qr_qy_real, qr, as.matrix(y), 1))
+        return(.Internal(qr_qy_real(qr, as.matrix(y), TRUE)))
 
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")

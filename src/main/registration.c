@@ -100,34 +100,6 @@ static R_CMethodDef cMethods [] = {
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef callMethods [] = {
-    /* lapack */
-    CALLDEF(La_svd, 7),
-    CALLDEF(La_rs, 2),
-    CALLDEF(La_rg, 2),
-    CALLDEF(La_dlange, 2),
-    CALLDEF(La_dgecon, 2),
-    CALLDEF(La_dtrcon, 2),
-    CALLDEF(La_zgecon, 2),
-    CALLDEF(La_ztrcon, 2),
-    CALLDEF(La_zgesv, 2),
-    CALLDEF(La_zgeqp3, 1),
-    CALLDEF(qr_coef_cmplx, 2),
-    CALLDEF(qr_qy_cmplx, 3),
-    CALLDEF(La_svd_cmplx, 6),
-    CALLDEF(La_rs_cmplx, 2),
-    CALLDEF(La_rg_cmplx, 2),
-    CALLDEF(La_chol2inv, 2),
-    CALLDEF(La_chol, 1),
-    CALLDEF(La_dgesv, 3),
-    CALLDEF(La_dgeqp3, 1),
-    CALLDEF(qr_coef_real, 2),
-    CALLDEF(qr_qy_real, 3),
-    CALLDEF(det_ge_real, 2),
-
-    /* In ../main/unique.c to use hashing. */
-    CALLDEF(Rrowsum_matrix, 5),
-    CALLDEF(Rrowsum_df, 5),
-
     /* Top-level task callbacks */
     CALLDEF(R_getTaskCallbackNames, 0),
     CALLDEF(R_removeTaskCallback, 1),
@@ -140,7 +112,6 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
-
 
     {NULL, NULL, 0}
 };

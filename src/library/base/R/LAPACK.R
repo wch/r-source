@@ -57,7 +57,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         }
         else
             stop("'nv' must be 0, nrow(x) or ncol(x)")
-        res <- .Call(.C_La_svd_cmplx, jobu, jobv, x, double(min(n, p)), u, v)
+        res <- .Internal(La_svd_cmplx(jobu, jobv, x, double(min(n, p)), u, v))
         return(res[c("d", if(nu) "u", if(nv) "vt")])
     } else {
         if(nu || nv) {
@@ -78,8 +78,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
             v <- matrix(0, 1L, 1L)
         }
         jobv <- ""
-        res <- .Call(.C_La_svd, jobu, jobv, x, double(min(n,p)), u, v,
-                     "dgsedd")
+        res <- .Internal(La_svd(jobu, jobv, x, double(min(n,p)), u, v, "dgsedd"))
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
         if(nu) res$u <- res$u[, 1L:min(n, nu), drop = FALSE]
         if(nv) res$vt <- res$vt[1L:min(p, nv), , drop = FALSE]

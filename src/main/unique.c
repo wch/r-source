@@ -1436,7 +1436,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 #define ZEROINT(X,N,I) do{memset(INTEGER(X),0,(size_t)(N)*sizeof(int));}while(0)
 #define ZERODBL(X,N,I) do{memset(REAL(X),0,(size_t)(N)*sizeof(double));}while(0)
 
-SEXP attribute_hidden
+static SEXP
 Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 {
     SEXP matches,ans;
@@ -1503,7 +1503,7 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
     return ans;
 }
 
-SEXP attribute_hidden
+static SEXP
 Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 {
     SEXP matches,ans,col,xcol;
@@ -1568,6 +1568,18 @@ Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
     UNPROTECT(1); /*ans*/
     return ans;
 }
+
+SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    if(PRIMVAL(op) == 1)
+	return Rrowsum_df(CAR(args), CADR(args), CADDR(args), 
+			  CADDDR(args), CAD4R(args));
+    else
+	return Rrowsum_matrix(CAR(args), CADR(args), CADDR(args), 
+			      CADDDR(args), CAD4R(args));
+}
+
 
 /* returns 1-based duplicate no */
 static int isDuplicated2(SEXP x, int indx, HashData *d)

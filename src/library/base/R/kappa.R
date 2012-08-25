@@ -23,7 +23,7 @@ norm <- function(x, type = c("O", "I", "F", "M", "2")) {
 	## *faster* at least on some platforms {but possibly less accurate}:
 	##sqrt(eigen(crossprod(x), symmetric=TRUE, only.values=TRUE)$values[1L])
     } else
-	.Call(.C_La_dlange, x, type)
+	.Internal(La_dlange(x, type))
 } ## and define it as implicitGeneric, so S4 methods are consistent
 
 kappa <- function(z, ...) UseMethod("kappa")
@@ -38,14 +38,14 @@ rcond <- function(x, norm = c("O","I","1"), triangular = FALSE, ...) {
     ## x = square matrix :
     if(is.complex(x)) {
         if(triangular)
-            .Call(.C_La_ztrcon, x, norm)
-        else .Call(.C_La_zgecon, x, norm)
+            .Internal(La_ztrcon(x, norm))
+        else .Internal(La_zgecon(x, norm))
     }
     else {
         storage.mode(x) <- "double"
         if(triangular)
-            .Call(.C_La_dtrcon, x, norm)
-        else .Call(.C_La_dgecon, x, norm)
+            .Internal(La_dtrcon(x, norm))
+        else .Internal(La_dgecon(x, norm))
     }
 }
 
@@ -93,7 +93,7 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 	if(p != ncol(z)) stop("triangular matrix should be square")
 	if(is.null(norm)) norm <- "1"
 	if(is.complex(z))
-	    1/.Call(.C_La_ztrcon, z, norm)
+	    1/.Internal(La_ztrcon(z, norm))
 	else if(LINPACK) {
 	    if(norm == "I") # instead of "1" / "O"
 		z <- t(z)
@@ -105,7 +105,7 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 	}
 	else { ## Lapack
 	    storage.mode(z) <- "double"
-	    1/.Call(.C_La_dtrcon, z, norm)
+	    1/.Internal(La_dtrcon(z, norm))
 	}
     }
 }

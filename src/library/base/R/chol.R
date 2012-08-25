@@ -35,7 +35,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 	n <- 1L
     }
     if(!pivot && !LINPACK)
-        return(.Call(.C_La_chol, as.matrix(x)))
+        return(.Internal(La_chol(as.matrix(x))))
 
     ## sanity checks
     n <- as.integer(n)
@@ -73,7 +73,7 @@ chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
 {
     if(!is.numeric(x))
 	stop("non-numeric argument to 'chol2inv'")
-    if(!LINPACK) return(.Call(.C_La_chol2inv, x, size))
+    if(!LINPACK) return(.Internal(La_chol2inv(x, size)))
 
     if(is.matrix(x)) {
 	nr <- nrow(x)

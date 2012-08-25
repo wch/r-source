@@ -52,22 +52,6 @@
  InitDynload
  Init_R_Variables
  LOCK_BINDING
- La_chol
- La_chol2inv
- La_dgecon
- La_dgeqp3
- La_dgesv
- La_dlange
- La_dtrcon
- La_rg
- La_rg_cmplx
- La_rs
- La_rs_cmplx
- La_svd_cmplx
- La_zgecon
- La_zgeqp3
- La_zgesv
- La_ztrcon
  LoadInitFile
  MDIset
  MDIsize
@@ -390,8 +374,6 @@
  Rm_free
  Rm_malloc
  Rm_realloc
- Rrowsum_df
- Rrowsum_matrix
  Rsockclose
  Rsockconnect
  Rsocklisten
@@ -524,7 +506,6 @@
  dbinom_raw
  dblep0_
  deleditordata
- det_ge_real
  do_AT
  do_Cstack_info
  do_D2POSIXlt
@@ -763,6 +744,7 @@
  do_isvector
  do_l10n_info
  do_lapply
+ do_lapack
  do_lazyLoadDBfetch
  do_lazyLoadDBflush
  do_lazyLoadDBinsertValue
@@ -906,6 +888,7 @@
  do_return
  do_rgb
  do_rowscols
+ do_rowsum
  do_sample
  do_save
  do_saveToConn
@@ -1350,10 +1333,6 @@
  process_site_Renviron
  process_system_Renviron
  process_user_Renviron
- qr_coef_cmplx
- qr_coef_real
- qr_qy_cmplx
- qr_qy_real
  raise
  realp0_
  registerBase

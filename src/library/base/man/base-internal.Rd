@@ -32,23 +32,6 @@
 \alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
 
-\alias{.C_La_chol}
-\alias{.C_La_chol2inv}
-\alias{.C_La_dgecon}
-\alias{.C_La_dgeqp3}
-\alias{.C_La_dgesv}
-\alias{.C_La_dlange}
-\alias{.C_La_dtrcon}
-\alias{.C_La_rg}
-\alias{.C_La_rg_cmplx}
-\alias{.C_La_rs}
-\alias{.C_La_rs_cmplx}
-\alias{.C_La_svd}
-\alias{.C_La_svd_cmplx}
-\alias{.C_La_zgecon}
-\alias{.C_La_zgeqp3}
-\alias{.C_La_zgesv}
-\alias{.C_La_ztrcon}
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
 \alias{.C_R_getbcprofcounts}
@@ -58,15 +41,7 @@
 \alias{.C_R_startbcprof}
 \alias{.C_R_stopbcprof}
 \alias{.C_R_traceOnOff}
-\alias{.C_Rrowsum_df}
-\alias{.C_Rrowsum_matrix}
 \alias{.C_bincode}
-\alias{.C_det_ge_real}
-\alias{.C_qr_coef_cmplx}
-\alias{.C_qr_coef_real}
-\alias{.C_qr_qy_cmplx}
-\alias{.C_qr_qy_real}
-\alias{.C_str_signif}
 \alias{.F_cg}
 \alias{.F_ch}
 \alias{.F_ch2inv}
@@ -85,7 +60,7 @@
 
 \title{Internal Objects in Package \pkg{base}}
 \description{
-  Internal objects in the base package, which are only user-visible
+  Internal objects in the base package which are only user-visible
   because of the special nature of the base namespace.
 }
 \usage{

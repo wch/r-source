@@ -28,38 +28,12 @@ void Rsockclose(int *);
 void Rsockread(int *, char **, int *);
 void Rsockwrite(int *, char **, int *, int *, int *);
 
-SEXP La_svd(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP La_rs(SEXP, SEXP);
-SEXP La_rg(SEXP, SEXP);
-SEXP La_dlange(SEXP, SEXP);
-SEXP La_dgecon(SEXP, SEXP);
-SEXP La_dtrcon(SEXP, SEXP);
-SEXP La_zgecon(SEXP, SEXP);
-SEXP La_ztrcon(SEXP, SEXP);
-SEXP La_zgesv(SEXP, SEXP);
-SEXP La_zgeqp3(SEXP);
-SEXP qr_coef_cmplx(SEXP, SEXP);
-SEXP qr_qy_cmplx(SEXP, SEXP, SEXP);
-SEXP La_svd_cmplx(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP La_rs_cmplx(SEXP, SEXP);
-SEXP La_rg_cmplx(SEXP, SEXP);
-SEXP La_chol(SEXP);
-SEXP La_chol2inv(SEXP, SEXP);
-SEXP La_dgesv(SEXP, SEXP, SEXP);
-SEXP La_dgeqp3(SEXP);
-SEXP qr_coef_real(SEXP, SEXP);
-SEXP qr_qy_real(SEXP, SEXP, SEXP);
-SEXP det_ge_real(SEXP, SEXP);
-
 SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_traceOnOff(SEXP);
 SEXP R_setS4Object(SEXP, SEXP);
-
-SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
 
 void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);

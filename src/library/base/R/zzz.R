@@ -115,7 +115,7 @@ assign("is.real", function(x) NULL, envir = .ArgsEnv)
 assign("is.recursive", function(x) NULL, envir = .ArgsEnv)
 assign("is.single", function(x) NULL, envir = .ArgsEnv)
 assign("is.symbol", function(x) NULL, envir = .ArgsEnv)
-assign("isS4", function(x) NULL, envir = .ArgsEnv)
+assign("isS4", function(object) NULL, envir = .ArgsEnv)
 assign("list", function(...) NULL, envir = .ArgsEnv)
 assign("lazyLoadDBfetch", function(key, file, compressed, hook) NULL,
        envir = .ArgsEnv)
