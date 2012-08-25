@@ -5,18 +5,19 @@
 
 \name{getParseData}
 \alias{getParseData}
+\alias{getParseText}
 \title{
 Get detailed parse information from object.
 }
 \description{
 If the \code{"keep.source"} option is \code{TRUE}, \R's parser
-will attach detailed information on the object it has parsed.  This
-function retrieves that information.
+will attach detailed information on the object it has parsed.  These
+functions retrieve that information.
 }
 \usage{
 getParseData(x, includeText=NA)
+getParseText(parseData, id)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 an expression returned from \code{\link{parse}}, or a function or other
@@ -24,6 +25,12 @@ object with source reference information
 }
   \item{includeText}{
 logical; whether to include the text of parsed items in the result
+}
+  \item{parseData}{
+a dataframe returned from \code{getParseData}
+}
+  \item{id}{
+a vector of item identifiers whose text is to be retrieved
 }
 }
 \details{
@@ -35,6 +42,7 @@ source references in the parsed code, and retrieved by the \code{getParseData}
 function.
 }
 \value{
+For \code{getParseData}:
 If parse data is not present, \code{NULL}.  Otherwise
 a dataframe is returned, containing the following columns:
 \item{line1}{integer. The line number where the item starts.  This is the
@@ -52,6 +60,17 @@ a leaf in the parse tree.}
 \item{text}{character. If \code{includeText} is \code{TRUE}, the
 text of all tokens; if it is \code{NA} (the default), the text of terminal
 tokens.  If \code{includeText == FALSE}, this column is not included.}
+
+The rownames of the dataframe will be equal to the \code{id} values,
+and the dataframe will have a \code{"srcfile"} attribute containing
+the \code{\link{srcfile}} record which was used.  The rows will be
+ordered by starting position within the source file, with parent items
+occurring before their children.
+
+For \code{getParseText}:
+A character vector of the same length as \code{id} containing the associated
+text items.  If they are not included in \code{parseData}, they will be
+retrieved from the original file.
 }
 \references{
 Romain Francois (2012). parser: Detailed R source code parser. R
@@ -83,6 +102,7 @@ fn <- function(x) {
   x + 1 # A comment, kept as part of the source
 }                           
 
-getParseData(fn)  
+d <- getParseData(fn)
+
 }
 \keyword{  utilities  }

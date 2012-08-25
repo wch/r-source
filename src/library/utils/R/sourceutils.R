@@ -127,7 +127,10 @@ getParseData <- function(x, includeText = NA) {
     	                   terminal=as.logical(data[,"terminal"]),
     	                   text=attr(data, "text"),
     			   stringsAsFactors=FALSE)
-    	
+    	o <- order(data[,1], data[,2], -data[,3], -data[,4])
+    	data <- data[o,]
+    	rownames(data) <- data$id
+    	attr(data, "srcfile") <- srcfile
     	if (isTRUE(includeText)) gettext <- which(!nzchar(data$text))
         else if (is.na(includeText)) gettext <- which(!nzchar(data$text) & data$terminal)
         else {
@@ -135,17 +138,27 @@ getParseData <- function(x, includeText = NA) {
             data$text <- NULL
         }
         
-        if (length(gettext)) {
-	    text <- data$text
-	    for (row in gettext) {
-	    	lines <- getSrcLines(srcfile, data[row,1], data[row,3])
-	    	n <- length(lines)
-	    	lines[n] <- substr_with_tabs(lines[n], 1, data[row,4])
-	    	lines[1] <- substr_with_tabs(lines[1], data[row,2], Inf)
-            	text[row] <- paste(lines, collapse="\n")
-            }
-            data$text <- text
-        }
+        if (length(gettext)) 
+	    data$text[gettext] <- getParseText(data, data$id[gettext])
     }
     data	
+}
+
+getParseText <- function(parseData, id) {
+    srcfile <- attr(parseData, "srcfile")
+    d <- parseData[as.character(id),]
+    text <- d$text
+    if (is.null(text)) {
+    	text <- character(nrow(text))
+    	blank <- seq_along(text)
+    } else
+    	blank <- which(!nzchar(text))
+    for (i in blank) {
+	lines <- getSrcLines(srcfile, d$line1[i], d$line2[i])
+        n <- length(lines)
+        lines[n] <- substr_with_tabs(lines[n], 1, d$col2[i])
+        lines[1] <- substr_with_tabs(lines[1], d$col1[i], Inf)
+        text[i] <- paste(lines, collapse="\n")
+    }
+    text
 }

@@ -133,7 +133,8 @@
       \item The parser now incorporates code from Romain Francois'
       parser package, to support more detailed computation on the
       code, such as syntax highlighting, comment-based documentation,
-      etc.
+      etc.  Functions \code{getParseData()} and \code{getParseText()}
+      access the data.
 
       \item There is a new function \code{rep_len()} analogous to
       \code{rep.int()} for when speed is required (and names are not).
