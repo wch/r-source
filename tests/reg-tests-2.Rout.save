@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-08-25 r60417) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-08-22 r60377) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -5046,14 +5046,14 @@ Error : no valid set of coefficients has been found: please supply starting valu
 > rownames(temp) <- as.character(1:5)
 > colnames(temp) <- as.character(1:4)
 > try(solve(temp))
-Error in solve.default(temp) : 'a' (5 x 4) must be square
+Error in solve.default(temp) : only square matrices can be inverted
 > # also complex
 > try(solve(temp+0i))
 Error in solve.default(temp + (0+0i)) : 
   only square matrices can be inverted
 > # and non-comformant systems
 > try(solve(temp, diag(3)))
-Error in solve.default(temp, diag(3)) : 'a' (5 x 4) must be square
+Error in solve.default(temp, diag(3)) : 'b' must be compatible with 'a'
 > ## gave errors from rownames<- in 2.2.1
 > 
 > 
