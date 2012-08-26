@@ -593,29 +593,81 @@ function(ifile, encoding = "unknown", ignore = "")
 get_parse_data_for_message_strings <-
 function(file, encoding = "unknown")
 {
+    ## The message strings considered are the string constants subject to
+    ## translation in gettext-family calls (see below for details).
+    
     oop <- options(keep.source = TRUE)
     on.exit(options(oop))
 
     exprs <- parse(file = file, encoding = encoding)
     if(!length(exprs)) return(NULL)
+
     pd <- getParseData(exprs)
 
+    ## Function for computing grandparent ids.    
     parents <- pd$parent
     names(parents) <- pd$id
-    children <- split(pd$id, pd$parent)
+    gpids <- function(ids)
+        parents[as.character(parents[as.character(ids)])]
 
-    ids <- pd$id[(pd$token == "SYMBOL_FUNCTION_CALL") &
-                 !is.na(match(pd$text,
-                              c("warning", "stop",
-                                "message", "packageStartupMessage", 
-                                "gettext", "gettextf", "ngettext")))]
-    ids <- parents[as.character(parents[as.character(ids)])]
-    ids <- intersect(as.character(unlist(children[as.character(ids)])),
-                     names(children))
-    ids <- unlist(children[ids])
-    pos <- which(!is.na(match(pd$id, ids)) & pd$token == "STR_CONST")
+    ind <- (pd$token == "SYMBOL_FUNCTION_CALL") &
+        !is.na(match(pd$text,
+                     c("warning", "stop",
+                       "message", "packageStartupMessage", 
+                       "gettext", "gettextf", "ngettext")))
+    
+    funs <- pd$text[ind]
 
-    pd[!is.na(match(pd$id, ids)) & pd$token == "STR_CONST", ]
+    ids <- gpids(pd$id[ind])
+    calls <- getParseText(pd, ids)
+
+    table <- pd[pd$token == "STR_CONST", ]
+    pos <- match(gpids(table$id), ids)
+    ind <- !is.na(pos)
+    table <- split(table[ind, ], factor(pos[ind], seq_along(ids)))
+
+    ## We have synopses
+    ##   message(..., domain = NULL, appendLF = TRUE)
+    ##   packageStartupMessage(..., domain = NULL, appendLF = TRUE)
+    ##   warning(..., call. = TRUE, immediate. = FALSE, domain = NULL)
+    ##   stop(..., call. = TRUE, domain = NULL)
+    ##   gettext(..., domain = NULL)
+    ##   ngettext(n, msg1, msg2, domain = NULL)
+    ##   gettextf(fmt, ..., domain = NULL)
+    ## For the first five, we simply take all unnamed strings.
+    ## (Could make this more precise, of course.)
+    ## For the latter two, we take the msg1/msg2 and fmt arguments,
+    ## provided these are strings.
+
+    extract_message_strings <- function(fun, call, table) {
+        ## Matching a call containing ... gives
+        ##   Error in match.call(message, call) : 
+        ##   ... used in a situation where it doesn't exist
+        ## so eliminate these.
+        ## (Note that we also drop "..." strings.)
+        call <- parse(text = call)[[1L]]
+        call <- call[ as.character(call) != "..." ]
+        mc <- as.list(match.call(get(fun, envir = .BaseNamespaceEnv),
+                                 call))
+        args <- if(fun == "gettextf")
+            mc["fmt"]
+        else if(fun == "ngettext")
+            mc[c("msg1", "msg2")]
+        else {
+            if(!is.null(names(mc)))
+                mc <- mc[!nzchar(names(mc))]
+            mc[-1L]
+        }
+        strings <- as.character(args[vapply(args, is.character, TRUE)])
+        ## Need to canonicalize to match string constants before and
+        ## after parsing ...
+        texts <- vapply(parse(text = table$text), as.character, "")
+        table[!is.na(match(texts, strings)), ]
+    }
+
+    do.call(rbind,
+            Map(extract_message_strings,
+                as.list(funs), as.list(calls), table))
 }
 
 ## For spell-checking the R R files.
