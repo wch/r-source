@@ -103,6 +103,8 @@ fn <- function(x) {
 }                           
 
 d <- getParseData(fn)
-
+plus <- which(d$token == "'+'")
+sum <- d$parent[plus]
+getParseText(d, sum)
 }
 \keyword{  utilities  }
