@@ -2255,7 +2255,7 @@ static int StringValue(int c, Rboolean forSymbol)
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	CTEXT_PUSH(c);
 	if (c == '\n') {
-	    xxungetc(c);
+	    xxungetc(c); CTEXT_POP();
 	    /* Fix suggested by Mark Bravington to allow multiline strings
 	     * by pretending we've seen a backslash. Was:
 	     * return ERROR;
