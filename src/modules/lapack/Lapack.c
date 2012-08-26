@@ -146,8 +146,8 @@ static SEXP La_rs(SEXP x, SEXP only_values)
     if (ov == NA_LOGICAL) error(_("invalid '%s' argument"), "only.values");
     if (ov) jobv[0] = 'N'; else jobv[0] = 'V';
 
+    /* work on a copy of x, since LAPACK trashes it */
     rx = (double *) R_alloc(n * (size_t) n, sizeof(double));
-    /* work on a copy of x */
     Memcpy(rx, REAL(x), (size_t) n * n);
     PROTECT(values = allocVector(REALSXP, n));
     rvalues = REAL(values);
@@ -779,20 +779,22 @@ static SEXP La_rs_cmplx(SEXP xin, SEXP only_values)
     Rcomplex *work, *rx, tmp;
     double *rwork, *rvalues;
 
-    PROTECT(x = duplicate(xin));
-    rx = COMPLEX(x);
     uplo[0] = 'L';
-    xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
+    xdims = INTEGER(coerceVector(getAttrib(xin, R_DimSymbol), INTSXP));
     n = xdims[0];
     if (n != xdims[1]) error(_("'x' must be a square complex matrix"));
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid '%s' argument"), "only.values");
     if (ov) jobv[0] = 'N'; else jobv[0] = 'V';
 
+    PROTECT(x = allocMatrix(CPLXSXP, n, n));
+    rx = COMPLEX(x);
+    Memcpy(rx, COMPLEX(xin), (size_t) n * n);
     PROTECT(values = allocVector(REALSXP, n));
     rvalues = REAL(values);
 
-    rwork = (double *) R_alloc((3*(size_t)n-2) > 1 ? 3*(size_t)n-2 : 1, sizeof(double));
+    rwork = (double *) R_alloc((3*(size_t)n-2) > 1 ? 3*(size_t)n-2 : 1, 
+			       sizeof(double));
     /* ask for optimal size of work array */
     lwork = -1;
     F77_CALL(zheev)(jobv, uplo, &n, rx, &n, rvalues, &tmp, &lwork, rwork,
