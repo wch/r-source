@@ -32,8 +32,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 	storage.mode(x) <- "double"
     if(LAPACK) {
         res <- .Internal(La_dgeqp3(x))
-        if(!is.null(cn <- colnames(x)))
-            colnames(res$qr) <- cn[res$pivot]
+        if(!is.null(cn <- colnames(x))) colnames(res$qr) <- cn[res$pivot]
         attr(res, "useLAPACK") <- TRUE
         class(res) <- "qr"
         return(res)
@@ -65,8 +64,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 
 qr.coef <- function(qr, y)
 {
-    if( !is.qr(qr) )
-	stop("first argument must be a QR decomposition")
+    if( !is.qr(qr) ) stop("first argument must be a QR decomposition")
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
     p <- as.integer(ncol(qr$qr))
@@ -87,7 +85,7 @@ qr.coef <- function(qr, y)
     }
     ## else {not complex} :
     a <- attr(qr, "useLAPACK")
-    if(!is.null(a) && is.logical(a) && a) {
+    if(!is.null(a) && is.logical(a) && a) { # or isTRUE
         if(!is.double(y)) storage.mode(y) <- "double"
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
 	coef[qr$pivot,] <- .Internal(qr_coef_real(qr, y))[ix,]
@@ -200,10 +198,7 @@ qr.resid <- function(qr, y)
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran(.F_dqrrsd,
-	     as.double(qr$qr),	     n, k,
-	     as.double(qr$qraux),
-             y,
-	     ny,
+	     as.double(qr$qr), n, k, as.double(qr$qraux), y, ny,
 	     rsd = y# incl. {dim}names
 	     )$rsd
 }
@@ -225,11 +220,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran(.F_dqrxb,
-	     as.double(qr$qr),
-	     n, k,
-	     as.double(qr$qraux),
-	     y,
-	     ny,
+	     as.double(qr$qr), n, k, as.double(qr$qraux), y, ny,
 	     xb = y,# incl. {dim}names
              DUP = FALSE)$xb
 }

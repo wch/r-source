@@ -43,8 +43,7 @@ solve.default <-
 	if(missing(b)) {
 	    b <- diag(1.0+0.0i, nrow(a))
 	    colnames(b) <- rownames(a)
-	} else if(!is.complex(b)) b[] <- as.complex(b)
-	if(!is.complex(a)) a[] <- as.complex(a)
+	}
         return(.Internal(La_zgesv(a, b)))
     }
 
@@ -58,7 +57,7 @@ solve.default <-
 	if(missing(b)) {
 	    b <- diag(1.0, nrow(a))
 	    colnames(b) <- rownames(a)
-	} else storage.mode(b) <- "double"
+	}
         return(.Internal(La_dgesv(a, b, tol)))
     }
 

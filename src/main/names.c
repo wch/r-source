@@ -1033,7 +1033,7 @@ FUNTAB R_FunTab[] =
 {"qr_coef_cmplx",do_lapack,    	303,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"qr_qy_cmpl",	do_lapack,     	304,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"La_svd",	do_lapack,     	400,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_svd",	do_lapack,     	400,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_svd_cmplx",do_lapack,     	401,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},

@@ -36,8 +36,6 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...)
 eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 {
     x <- as.matrix(x)
-    if(!is.null(dimnames(x)))
-        dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     n <- nrow(x)
     if (!n) stop("0 x 0 matrix")
     if (n != ncol(x)) stop("non-square matrix in 'eigen'")
@@ -45,24 +43,19 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     if(is.na(n)) stop("invalid nrow(x)")
 
     complex.x <- is.complex(x)
-    if(!complex.x && !is.double(x))
-	storage.mode(x) <- "double"
+    if(!complex.x && !is.double(x)) storage.mode(x) <- "double"
     if (!all(is.finite(x))) stop("infinite or missing values in 'x'")
 
     if(missing(symmetric)) symmetric <- isSymmetric.matrix(x)
 
     if (!EISPACK) {
         if (symmetric) {
-            z <- if(!complex.x)
-                .Internal(La_rs(x, only.values))
-            else
-                .Internal(La_rs_cmplx(x, only.values))
+            z <- if(!complex.x) .Internal(La_rs(x, only.values))
+            else .Internal(La_rs_cmplx(x, only.values))
             ord <- rev(seq_along(z$values))
         } else {
-            z <- if(!complex.x)
-                .Internal(La_rg(x, only.values))
-            else
-                .Internal(La_rg_cmplx(x, only.values))
+            z <- if(!complex.x) .Internal(La_rg(x, only.values))
+            else .Internal(La_rg_cmplx(x, only.values))
             ord <- sort.list(Mod(z$values), decreasing = TRUE)
         }
         return(list(values = z$values[ord],
@@ -71,6 +64,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 
     if(n > 46340) stop("too large a matrix for EISPACK")
     dbl.n <- double(n)
+    if(!is.null(dimnames(x)))
+        dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     if(symmetric) {##--> real values
 	if(complex.x) {
 	    z <- .Fortran(.F_ch,

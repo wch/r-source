@@ -22,7 +22,6 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 	stop("argument to 'La.svd' must be numeric or complex")
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     x <- as.matrix(x)
-    if (is.numeric(x)) storage.mode(x) <- "double"
     n <- nrow(x)
     p <- ncol(x)
     if(!n || !p) stop("0 extent dimensions")
@@ -60,28 +59,31 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         res <- .Internal(La_svd_cmplx(jobu, jobv, x, double(min(n, p)), u, v))
         return(res[c("d", if(nu) "u", if(nv) "vt")])
     } else {
+        storage.mode(x) <- "double"  ## allow for logical/integer
         if(nu || nv) {
             np <- min(n, p)
             if(nu <= np && nv <= np) {
                 jobu <- "S"
                 u <- matrix(0, n, np)
-                v <- matrix(0, np, p)
+                vt <- matrix(0, np, p)
+                nu0 <- nv0 <- np
             } else {
                 jobu <- "A"
                 u <- matrix(0, n, n)
-                v <- matrix(0, p, p)
+                vt <- matrix(0, p, p)
+                nu0 <- n; nv0 <- p
             }
         } else {
             jobu <- "N"
             # these dimensions _are_ checked, but unused
             u <- matrix(0, 1L, 1L)
-            v <- matrix(0, 1L, 1L)
+            vt <- matrix(0, 1L, 1L)
         }
         jobv <- ""
-        res <- .Internal(La_svd(jobu, jobv, x, double(min(n,p)), u, v, "dgsedd"))
+        res <- .Internal(La_svd(jobu, jobv, x, double(min(n,p)), u, vt))
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
-        if(nu) res$u <- res$u[, 1L:min(n, nu), drop = FALSE]
-        if(nv) res$vt <- res$vt[1L:min(p, nv), , drop = FALSE]
+        if(nu && nu < nu0) res$u <- res$u[, 1L:min(n, nu), drop = FALSE]
+        if(nv && nv < nv0) res$vt <- res$vt[1L:min(p, nv), , drop = FALSE]
         return(res)
     }
     ## not reached

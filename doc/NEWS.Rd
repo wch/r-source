@@ -280,6 +280,8 @@
       
       \item \code{solve()} makes fewer copies, especially when \code{b}
       is a vector rather than a matrix.
+      
+      \item \code{eigen()} makes fewer copies if the input has dimnames.
     }
   }
 
@@ -465,8 +467,11 @@
       than using ASCII escapes).
       
       \item \code{solve(A, b)} for a vector \code{b} gave the answer
-      names for \code{colnames(A)} for \code{LINPACK = TRUE} but not in
+      names from \code{colnames(A)} for \code{LINPACK = TRUE} but not in
       the default case.
+
+      \item \code{La.svd()} accepts logical matrices (as documented, and
+      as \code{svd()} did).
     }
   }
 }
