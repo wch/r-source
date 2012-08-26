@@ -95,7 +95,7 @@ substr_with_tabs <- function(x, start, stop, tabsize = 8) {
     tabs <- which(strsplit(x,"")[[1]] == "\t")
     for (i in tabs) {
 	cols <- cumsum(widths)
-	widths[i] <- tabsize*((cols[i] + tabsize) %/% tabsize) - cols[i] + 1
+	widths[i] <- tabsize - (cols[i] - 1) %% tabsize
     }
     cols <- cumsum(widths)
     start <- which(cols >= start)
