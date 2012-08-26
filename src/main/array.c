@@ -1496,7 +1496,7 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     case EXPRSXP:
 	if (nans && lendat)
 	    for (i = 0; i < nans; i++)
-		SET_VECTOR_ELT(ans, i, STRING_ELT(vals, i % lendat));
+		SET_VECTOR_ELT(ans, i, VECTOR_ELT(vals, i % lendat));
 	break;
     default:
 	// excluded above
