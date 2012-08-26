@@ -1981,8 +1981,8 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <R_ext/Applic.h>
 SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, nm, hi;
     checkArity(op, args);
+    SEXP ans, nm, hi;
     double l = asReal(CAR(args)); args = CDR(args);
     if (!R_FINITE(l)) error(_("invalid '%s' argument"), "l");
     double u = asReal(CAR(args)); args = CDR(args);
@@ -2014,6 +2014,47 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(nm, 0, mkChar("l"));
     SET_STRING_ELT(nm, 1, mkChar("u"));
     SET_STRING_ELT(nm, 2, mkChar("n"));
+    UNPROTECT(2);
+    return ans;
+}
+
+/*
+    r <- .C("str_signif", x = x, n = n, mode = as.character(mode), 
+        width = as.integer(width), digits = as.integer(digits), 
+        format = as.character(format), flag = as.character(flag), 
+        result = blank.chars(i.strlen + 2L), PACKAGE = "base")$result
+*/
+
+SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args); args = CDR(args);
+    int n = length(x);
+    const char *type = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    int width = asInteger(CAR(args)); args = CDR(args);
+    int digits = asInteger(CAR(args)); args = CDR(args);
+    const char *fmt = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    const char *flag = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    SEXP i_strlen = CAR(args);
+    PROTECT(i_strlen = coerceVector(i_strlen, INTSXP));
+    char **cptr = (char**) R_alloc(n, sizeof(char*));
+    for (int i = 0; i < n; i++) {
+	int ix = INTEGER(i_strlen)[i] + 2;
+	cptr[i] = (char *) R_alloc(ix + 1, sizeof(char));
+	memset(cptr[i], ' ', ix);
+	cptr[i][ix] = 0;
+    }
+    // px = DATAPTR(x) will not work with write-barrier enabled
+    void *px = NULL /* -Wall */;
+    switch(TYPEOF(x)) {
+    case INTSXP: px = INTEGER(x); break;
+    case REALSXP: px = REAL(x); break;
+    default: error("unsupported type ");
+    }
+    str_signif(px, &n, &type, &width, &digits, &fmt, &flag, cptr);
+    SEXP ans;
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (int i = 0; i < n; i++) SET_STRING_ELT(ans, i, mkChar(cptr[i]));
     UNPROTECT(2);
     return ans;
 }

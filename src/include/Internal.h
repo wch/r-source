@@ -218,6 +218,7 @@ SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flush(SEXP, SEXP, SEXP, SEXP);
 SEXP do_for(SEXP, SEXP, SEXP, SEXP);
 SEXP do_format(SEXP, SEXP, SEXP, SEXP);
+SEXP do_formatC(SEXP, SEXP, SEXP, SEXP);
 SEXP do_formatinfo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_formatPOSIXlt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_formals(SEXP, SEXP, SEXP, SEXP);

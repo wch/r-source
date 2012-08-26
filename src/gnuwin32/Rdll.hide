@@ -666,6 +666,7 @@
  do_for
  do_formals
  do_format
+ do_formatC
  do_formatPOSIXlt
  do_formatinfo
  do_function
