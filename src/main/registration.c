@@ -125,11 +125,10 @@ static R_FortranMethodDef fortranMethods[] = {
     FDEF(dchdc, 7),
     FDEF(dqrcf, 8),
     FDEF(dqrdc2, 9),
-    FDEF(dqrls, -1), // for historical reasons
+    FDEF(dqrls, -1), // for historical reasons, 13 args
     FDEF(dqrqty, 7),
     FDEF(dqrqy, 7),
     FDEF(dqrrsd, 7),
-//    FDEF(dqrsl, -1),
     FDEF(dqrxb, 7),
     FDEF(dsvdc, 13),
     FDEF(dtrco, 6),
