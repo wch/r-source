@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2010  The R Core Team.
+ *  Copyright (C) 2001--2012  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -535,8 +535,8 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
     */
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
-    Adims = INTEGER(A);
-    Bdims = INTEGER(B);
+    Adims = INTEGER(Ad);
+    Bdims = INTEGER(Bd);
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
     p = Bdims[1];
@@ -963,8 +963,8 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
     */
     PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     PROTECT(Bd = coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
-    Adims = INTEGER(A);
-    Bdims = INTEGER(B);
+    Adims = INTEGER(Ad);
+    Bdims = INTEGER(Bd);
     
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
