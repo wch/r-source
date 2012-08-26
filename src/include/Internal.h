@@ -347,6 +347,7 @@ SEXP do_pmin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
 SEXP do_POSIXlt2D(SEXP, SEXP, SEXP, SEXP);
+SEXP do_pretty(SEXP, SEXP, SEXP, SEXP);
 SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdefault(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printDeferredWarnings(SEXP, SEXP, SEXP, SEXP);

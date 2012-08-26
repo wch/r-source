@@ -1897,9 +1897,7 @@ bincode(double *x, R_xlen_t n, double *breaks, int nb,
     }
 }
 
-/* The R wrapper set the storage.mode.
-   'breaks' cannot be a long vector as the return codes are integer.
- */
+/* 'breaks' cannot be a long vector as the return codes are integer. */
 SEXP attribute_hidden do_bincode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -1908,12 +1906,12 @@ SEXP attribute_hidden do_bincode(SEXP call, SEXP op, SEXP args, SEXP rho)
     breaks = CAR(args); args = CDR(args);
     right = CAR(args); args = CDR(args);
     lowest = CAR(args);
-    if (TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
-	error("invalid input");
 #ifdef LONG_VECTOR_SUPPORT
     if (IS_LONG_VEC(breaks))
 	error(_("long vector '%s' is not supported"), "breaks");
 #endif
+    PROTECT(x = coerceVector(x, REALSXP));
+    PROTECT(breaks = coerceVector(breaks, REALSXP));
     R_xlen_t n = XLENGTH(x);
     int nB = LENGTH(breaks), sr = asLogical(right), sl = asLogical(lowest);
     if (nB == NA_INTEGER) error(_("invalid '%s' argument"), "breaks");
@@ -1922,7 +1920,7 @@ SEXP attribute_hidden do_bincode(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP codes;
     PROTECT(codes = allocVector(INTSXP, n));
     bincode(REAL(x), n, REAL(breaks), nB, INTEGER(codes), sr, sl);
-    UNPROTECT(1);
+    UNPROTECT(3);
     return codes;
 }
 
@@ -1977,5 +1975,45 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	INTEGER(ans)[i] = ii;
     }
+    return ans;
+}
+
+#include <R_ext/Applic.h>
+SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, nm, hi;
+    checkArity(op, args);
+    double l = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(l)) error(_("invalid '%s' argument"), "l");
+    double u = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(u)) error(_("invalid '%s' argument"), "u");
+    int n = asInteger(CAR(args)); args = CDR(args);
+    if (n == NA_INTEGER || n < 0) error(_("invalid '%s' argument"), "n");
+    int min_n = asInteger(CAR(args)); args = CDR(args);
+    if (min_n == NA_INTEGER || min_n < 0 || min_n > n) 
+	error(_("invalid '%s' argument"), "min.n");
+    double shrink = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(shrink) || shrink <= 0.) 
+	error(_("invalid '%s' argument"), "shrink.sml");
+    PROTECT(hi = coerceVector(CAR(args), REALSXP)); args = CDR(args);
+    double z;
+    if (!R_FINITE(z = REAL(hi)[0]) || z < 0.)
+	error(_("invalid '%s' argument"), "high.u.bias");
+    if (!R_FINITE(z = REAL(hi)[1]) || z < 0.)
+	error(_("invalid '%s' argument"), "u5.bias");
+    int eps = asInteger(CAR(args)); /* eps.correct */
+    if (eps == NA_INTEGER || eps < 0 || eps > 2) 
+	error(_("'eps.correct' must be 0, 1, or 2"));
+    R_pretty(&l, &u, &n, &min_n, &shrink, REAL(hi), &eps);
+    PROTECT(ans = allocVector(VECSXP, 3));
+    SET_VECTOR_ELT(ans, 0, ScalarReal(l));
+    SET_VECTOR_ELT(ans, 1, ScalarReal(u));
+    SET_VECTOR_ELT(ans, 2, ScalarInteger(n));
+    nm = allocVector(STRSXP, 3);
+    setAttrib(ans, R_NamesSymbol, nm);
+    SET_STRING_ELT(nm, 0, mkChar("l"));
+    SET_STRING_ELT(nm, 1, mkChar("u"));
+    SET_STRING_ELT(nm, 2, mkChar("n"));
+    UNPROTECT(2);
     return ans;
 }

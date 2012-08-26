@@ -833,6 +833,7 @@
  do_pmin
  do_polyroot
  do_pos2env
+ do_pretty
  do_primitive
  do_printDeferredWarnings
  do_printdefault

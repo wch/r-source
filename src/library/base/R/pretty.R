@@ -26,31 +26,13 @@ pretty.default <-
 {
     x <- x[is.finite(x <- as.numeric(x))]
     if(!length(x)) return(x)
-    if(is.na(n <- as.integer(n[1L])) || n < 0L)# n=0 !!
-	stop("invalid 'n' value")
-    if(!is.numeric(shrink.sml) || shrink.sml <= 0)
-	stop("'shrink.sml' must be numeric > 0")
-    if((min.n <- as.integer(min.n)) < 0 || min.n > n)
-	stop("'min.n' must be non-negative integer <= n")
-    if(!is.numeric(high.u.bias) || high.u.bias < 0)
-	stop("'high.u.bias' must be non-negative numeric")
-    if(!is.numeric(u5.bias) || u5.bias < 0)
-	stop("'u5.bias' must be non-negative numeric")
-    if((eps.correct <- as.integer(eps.correct)) < 0L || eps.correct > 2L)
-	stop("'eps.correct' must be 0, 1, or 2")
-    z <- .C(.C_R_pretty, l=as.double(min(x)), u=as.double(max(x)),
-            n = n,
-            min.n,
-	    shrink = as.double(shrink.sml),
-            high.u.fact = as.double(c(high.u.bias, u5.bias)),
-            eps.correct,
-            DUP = FALSE)
-    s <- seq.int(z$l, z$u, length.out = z$n+1)
+    z <- .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
+                          c(high.u.bias, u5.bias), eps.correct))
+    s <- seq.int(z$l, z$u, length.out = z$n + 1)
     if(!eps.correct && z$n) { # maybe zap smalls from seq() rounding errors
         ## better than zapsmall(s, digits = 14) :
-        delta <- diff(range(z$l, z$u)) / z$n
-        if(any(small <- abs(s) < 1e-14 * delta))
-            s[small] <- 0
+        delta <- diff(range(z$l, z$u)) / z$n  # or abs(z$u - z$l)
+        if(any(small <- abs(s) < 1e-14 * delta)) s[small] <- 0
     }
     s
 }

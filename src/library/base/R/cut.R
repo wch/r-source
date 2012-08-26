@@ -62,8 +62,5 @@ cut.default <-
 
 ## called from image.default and for use in packages.
 .bincode <- function(x, breaks, right = TRUE, include.lowest = FALSE)
-{
-    if(!is.double(x)) storage.mode(x) <- "double"
-    if(!is.double(breaks)) storage.mode(breaks) <- "double"
     .Internal(bincode(x, breaks, right, include.lowest))
-}
+
