@@ -530,26 +530,24 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
     Rcomplex *avals;
-    SEXP B, Ad, Bd, Adn, Bdn;
+    SEXP B, Adn, Bdn;
 
     if (!(isMatrix(A))) error(_("'a' must be a complex matrix"));
-    PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
-    Adims = INTEGER(Ad);
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
-    if(Adims[1] != n)
-	error(_("'a' (%d x %d) must be square"), n, Adims[1]);
+    int n2 = Adims[1];
+    if(n2 != n) error(_("'a' (%d x %d) must be square"), n, n2);
     Adn = getAttrib(A, R_DimNamesSymbol);
 
     if (isMatrix(Bin)) {
-	PROTECT(Bd = coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
-	Bdims = INTEGER(Bd);
+	Bdims = INTEGER(coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
 	p = Bdims[1];
 	if(p == 0) error(_("no right-hand side in 'b'"));
-	if(Bdims[0] != n)
+	int p2 = Bdims[0];
+	if(p2 != n)
 	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
-		  Bdims[0], p, n, n);
-	UNPROTECT(1);
+		  p2, p, n, n);
 	PROTECT(B = allocMatrix(CPLXSXP, n, p));
 	SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
 	if (!isNull(Adn) || !isNull(Bindn)) {
@@ -582,7 +580,7 @@ static SEXP La_zgesv(SEXP A, SEXP Bin)
 	      -info, "zgesv");
     if (info > 0)
 	error(("Lapack routine zgesv: system is exactly singular"));
-    UNPROTECT(5);
+    UNPROTECT(3);  /* B, Bin, A */
     return B;
 #else
     error(_("Fortran complex functions are not available on this platform"));
@@ -987,27 +985,26 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p, info, *ipiv, *Adims, *Bdims;
     double *avals, anorm, rcond, tol = asReal(tolin), *work;
-    SEXP B, Ad, Bd, Adn, Bdn;
+    SEXP B, Adn, Bdn;
 
     if (!(isMatrix(A) && 
 	  (TYPEOF(A) == REALSXP || TYPEOF(A) == INTSXP || TYPEOF(A) == LGLSXP)))
 	error(_("'a' must be a numeric matrix"));
-    PROTECT(Ad = coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
-    Adims = INTEGER(Ad);
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     n = Adims[0];
     if(n == 0) error(_("'a' is 0-diml"));
-    if(Adims[1] != n) error(_("'a' (%d x %d) must be square"), n, Adims[1]);
+    int n2 = Adims[1];
+    if(n2 != n) error(_("'a' (%d x %d) must be square"), n, n2);
     Adn = getAttrib(A, R_DimNamesSymbol);
 
     if (isMatrix(Bin)) {
-	PROTECT(Bd = coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
-	Bdims = INTEGER(Bd);
+	Bdims = INTEGER(coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
 	p = Bdims[1];
 	if(p == 0) error(_("no right-hand side in 'b'"));
-	if(Bdims[0] != n)
+	int p2 = Bdims[0];
+	if(p2 != n)
 	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
-		  Bdims[0], p, n, n);
-	UNPROTECT(1);
+		  p2, p, n, n);
 	PROTECT(B = allocMatrix(REALSXP, n, p));
 	SEXP Bindn =  getAttrib(Bin, R_DimNamesSymbol);
 	// This is somewhat odd, but Matrix relies on dropping NULL dimnames
@@ -1051,7 +1048,7 @@ static SEXP La_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 	    error(_("system is computationally singular: reciprocal condition number = %g"),
 		  rcond);
     }
-    UNPROTECT(3);
+    UNPROTECT(3); /* B, Bin, A */
     return B;
 }
 
