@@ -46,7 +46,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   and post-processing the output as \sQuote{printing}.
 
   You will need \code{ghostscript}: the full path to the executable can
-  be set by the environment variable \env{R_GSCMD}. It this is unset, a
+  be set by the environment variable \env{R_GSCMD}. If this is unset, a
   GhostScript executable will be looked for by name on your path: on a
   Unix alike \code{"gs"} is used, and on Windows the setting of the
   environment variable \env{GSC} is used, otherwise commands
