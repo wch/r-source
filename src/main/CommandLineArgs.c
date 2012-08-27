@@ -198,11 +198,9 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    /* mop up --min-[nv]size */
 	    else if( !strncmp(*av, "--min-nsize", 11) ||
 		     !strncmp(*av, "--min-vsize", 11) ) {
-		R_ShowMessage(msg);
 		if(strlen(*av) < 13) {
 		    if(ac > 1) {ac--; av++; p = *av;} else p = NULL;
-		}
-		else p = &(*av)[12];
+		} else p = &(*av)[12];
 		if (p == NULL) {
 		    snprintf(msg, 1024,
 			     _("WARNING: no value given for '%s'"), *av);
