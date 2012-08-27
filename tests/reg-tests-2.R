@@ -2652,3 +2652,14 @@ sort.list(z, na.last = NA, method = "shell")
 sort.list(z, na.last = NA, method = "quick")
 sort.list(z, na.last = NA, method = "radix")
 ## Differences first documented in R 2.15.2
+
+## PR#15028: names longer than cutoff NB (= 1000)
+NB <- 1000
+lns <- capture.output(
+    setNames(c(255, 1000, 30000),
+             c(paste(rep.int("a", NB+2), collapse=""),
+               paste(rep.int("b", NB+2), collapse=""),
+               paste(rep.int("c", NB+2), collapse=""))))
+sub("^ +", '', lns[2* 1:3])
+## *values* were cutoff when printed
+

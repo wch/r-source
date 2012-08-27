@@ -445,12 +445,12 @@
   }
 
   \subsection{INSTALLATION}{
-     \itemize{
+    \itemize{
       \item There is again support for building without using the C
       \sQuote{long double} type.  This is required by C99, but system
-     implementations can be slow or flawed.  Simply undefine
-     \code{HAVE_LONG_DOUBLE} in \file{src/include/config.h} after
-     configuration.
+      implementations can be slow or flawed.  Simply undefine
+      \code{HAVE_LONG_DOUBLE} in \file{src/include/config.h} after
+      configuration.
     }
   }
 
@@ -807,6 +807,9 @@
       package \pkg{coxphf} and elsewhere.)
 
       \item Protection added to \code{do_system}. (\PR{15025})
+
+      \item Printing of vectors with names > 1000 characters now works
+      correctly. (\PR{15028})
     }
   }
 }
