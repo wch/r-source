@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -52,16 +52,15 @@ is.loaded(symbol, PACKAGE = "", type = "")
     the DLL given by this argument (plus the conventional extension,
     \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
-    that no other package can override their external symbols.  Use
-    \code{PACKAGE="base"} for symbols linked in to \R.  This is used in the
-    same way as in \code{\link{.C}}, \code{\link{.Call}},
-    \code{\link{.Fortran}} and \code{\link{.External}} functions}
+    that no other package can override their external symbols.  This is
+    used in the same way as in \code{\link{.C}}, \code{\link{.Call}},
+    \code{\link{.Fortran}} and \code{\link{.External}} functions.}
   \item{type}{The type of symbol to look for: can be any (\code{""}, the
     default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
   The objects \code{dyn.load} loads are called \sQuote{dynamically
-    loadable libraries} (abbreviated to \sQuote{DLL} on all platforms
+    loadable libraries} (abbreviated to \sQuote{DLL}) on all platforms
   except Mac OS X, which unfortunately uses the term for a different
   sort of sobject.  On Unix-alikes they are also called \sQuote{dynamic
     shared objects} (\sQuote{DSO}), or \sQuote{shared objects} for
@@ -156,7 +155,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 }
 \note{
   \code{is.loaded} requires the name you would give to \code{.C} etc
-  and \strong{not} (as in S) that remapped by defunct functions
+  and \strong{not} (as in S) that remapped by the defunct functions
   \code{symbol.C} or \code{symbol.For}.
 
   The creation of DLLs and the runtime linking of them into executing
