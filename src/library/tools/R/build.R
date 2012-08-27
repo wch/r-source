@@ -951,8 +951,15 @@ get_exclude_patterns <- function()
         exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
         ## Mac resource forks
         exclude <- exclude | grepl("^\\._", bases)
+        exclude <- exclude | (isdir & grepl("^src.*/[.]deps$", allfiles))
 	## Windows DLL resource file
-        exclude <- exclude | (bases == paste0("src/", pkgname, "_res.rc"))
+        exclude <- exclude | (allfiles == paste0("src/", pkgname, "_res.rc"))
+        ## inst/doc/.Rinstignore is a mistake
+        exclude <- exclude | grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", allfiles)
+        exclude <- exclude | grepl("vignettes/[.]Rinstignore$", allfiles)
+        ## leftovers
+        exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
+        exclude <- exclude | (bases %in% .hidden_file_exclusions)
         unlink(allfiles[exclude], recursive = TRUE, force = TRUE)
         setwd(owd)
 

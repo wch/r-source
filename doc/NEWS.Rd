@@ -616,6 +616,18 @@
       it allows further characters (mainly for Eastern European
       languages) by including \file{ix-utf8enc.dfu} (if available).
       (Wish of \PR{14989}.)
+      
+      \item \command{R CMD build} now omits several types of hidden
+      files/directories, including \file{inst/doc/.Rinstignore},
+      \file{vignettes/.Rinstignore}, (\file{.Rinstignore} should be at
+      top level), \file{.deps} under \file{src}, \file{.Renviron},
+      \file{.Rprofile}, \file{.Rproj.user}, \file{.backups},
+      \file{.cvsignore}, \file{.cproject}, \file{.directory},
+      \file{.dropbox}, \file{.exrc}, \file{.gdb.history},
+      \file{.gitattributes}, \file{.gitignore}, \file{.gitmodules},
+      \file{.hgignore}, \file{.hgtags}, \file{.htaccess},
+      \file{.latex2html-init}, \file{.project}, \file{.seed},
+      \file{.settings}, \file{.tm_properties} and various leftovers.
     }
   }
 

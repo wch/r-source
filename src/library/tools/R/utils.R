@@ -463,6 +463,22 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 .vc_dir_names_re <-
     "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs|\\.metadata)(/|$)"
 
+## We are told
+## .Rproj.user is Rstudio
+## .cproject .project .settings are Eclipse
+## .exrc is for vi
+## .tm_properties is Mac's TextMate
+.hidden_file_exclusions <-
+    c(".Renviron", ".Rprofile", ".Rproj.user",
+      ".tex", ".log", ".aux", ".pdf", ".png",
+      ".backups", ".cvsignore", ".cproject", ".directory",
+      ".dropbox", ".exrc", ".gdb.history",
+      ".gitattributes", ".gitignore", ".gitmodules",
+      ".hgignore", ".hgtags",
+      ".htaccess",
+      ".latex2html-init",
+      ".project", ".seed", ".settings", ".tm_properties")
+
 ### * Internal utility functions.
 
 ### ** %w/o%
