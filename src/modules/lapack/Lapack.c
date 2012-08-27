@@ -31,7 +31,12 @@
 
 #include "Lapack.h"
 
-/* FIXME: Would want to make these available to packages;
+/* NB: the handling of dims is odd here.  Most are coerced to be
+ * integers (which dimgets currently guarantees), but a couple were
+ * used unchecked. 
+ */
+
+/* FIXME: MM would want to make these available to packages;
  * BUT:  1) cannot be in libRlapack {since that may be external}
  *       2) Pkgs cannot get it from the C-Lapack interface code {lapack.so}
  *          since that is R-internal
@@ -87,8 +92,13 @@ static SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP vt)
     Memcpy(xvals, REAL(x), n * (size_t) p);
 
     {
-	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
-	    ldvt = INTEGER(getAttrib(vt, R_DimSymbol))[0];
+	int ldu, ldvt;
+	SEXP dims = getAttrib(u, R_DimSymbol);
+	if (TYPEOF(dims) != INTSXP) error("non-integer dims");
+	ldu = INTEGER(dims)[0];
+	dims = getAttrib(vt, R_DimSymbol);
+	if (TYPEOF(dims) != INTSXP) error("non-integer dims");
+	ldvt = INTEGER(dims)[0];
 	double tmp;
 	/* min(n,p) large is implausible, but ... */
 	int *iwork= (int *) R_alloc(8*(size_t)(n < p ? n : p), sizeof(int));
@@ -737,10 +747,16 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     /* ask for optimal size of work array */
     int lwork = -1, info;
     Rcomplex tmp;
+    int ldu, ldv;
+    SEXP dims = getAttrib(u, R_DimSymbol);
+    if (TYPEOF(dims) != INTSXP) error("non-integer dims");
+    ldu = INTEGER(dims)[0];
+    dims = getAttrib(v, R_DimSymbol);
+    if (TYPEOF(dims) != INTSXP) error("non-integer dims");
+    ldv = INTEGER(dims)[0];
     F77_CALL(zgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
 		     &n, &p, xvals, &n, REAL(s),
-		     COMPLEX(u), INTEGER(getAttrib(u, R_DimSymbol)),
-		     COMPLEX(v), INTEGER(getAttrib(v, R_DimSymbol)),
+		     COMPLEX(u), &ldu, COMPLEX(v), &ldv,
 		     &tmp, &lwork, rwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgesvd");
@@ -748,8 +764,7 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     Rcomplex *work = (Rcomplex *) R_alloc(lwork, sizeof(Rcomplex));
     F77_CALL(zgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
 		     &n, &p, xvals, &n, REAL(s),
-		     COMPLEX(u), INTEGER(getAttrib(u, R_DimSymbol)),
-		     COMPLEX(v), INTEGER(getAttrib(v, R_DimSymbol)),
+		     COMPLEX(u), &ldu, COMPLEX(v), &ldv,
 		     work, &lwork, rwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgesvd");
@@ -896,6 +911,7 @@ static SEXP La_chol(SEXP A)
 	SEXP ans = PROTECT((TYPEOF(A) == REALSXP)?duplicate(A):
 			   coerceVector(A, REALSXP));
 	SEXP adims = getAttrib(A, R_DimSymbol);
+	if (TYPEOF(adims) != INTSXP) error("non-integer dims");
 	int m = INTEGER(adims)[0];
 	int n = INTEGER(adims)[1];
 	int i, j;
@@ -934,6 +950,7 @@ static SEXP La_chol2inv(SEXP A, SEXP size)
 	    /* nothing to do; m = n = 1; ... */
 	} else if (isMatrix(A)) {
 	    SEXP adims = getAttrib(A, R_DimSymbol);
+	    if (TYPEOF(adims) != INTSXP) error("non-integer dims");
 	    Amat = PROTECT(coerceVector(A, REALSXP)); nprot++;
 	    m = INTEGER(adims)[0];
 	    n = INTEGER(adims)[1];
