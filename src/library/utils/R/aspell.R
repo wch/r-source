@@ -563,7 +563,7 @@ function(dir, control = list(), program = NULL)
 ## Spell-checking R files.
 
 aspell_filter_db$R <-
-function(ifile, encoding = "unknown", ignore = "")
+function(ifile, encoding = "unknown", ignore = character())
 {
     pd <- get_parse_data_for_message_strings(ifile, encoding)
     if(is.null(pd)) return(character())
@@ -577,15 +577,19 @@ function(ifile, encoding = "unknown", ignore = "")
                 paste, "", collapse = "")
     offsets <- c(0, cumsum(nc + 1L))
     s <- paste(s, collapse = "\n")
-    starts <- offsets[pd$line1] + pd$col1
+    ## Note that we drop the string delimiters.
+    starts <- offsets[pd$line1] + pd$col1 + 1L
     texts <- as.character(pd$text)
+    texts <- substring(texts, 2L, nchar(texts) - 1L)
     stops <- starts + nchar(texts)
     for(i in seq_along(texts))
         substring(s, starts[i], stops[i]) <- texts[i]
 
     lines <- unlist(strsplit(s, "\n"))
-    if(nzchar(ignore))
-        lines <- blank_out_regexp_matches(lines, ignore)
+
+    for(re in ignore[nzchar(ignore)])
+        lines <- blank_out_regexp_matches(lines, re)
+
     lines
 
 }
@@ -639,6 +643,11 @@ function(file, encoding = "unknown")
     ## For the latter two, we take the msg1/msg2 and fmt arguments,
     ## provided these are strings.
 
+    ## <NOTE>
+    ## Using domain = NA inhibits translation: perhaps it should
+    ## optionally also inhibit spell checking?
+    ## </NOTE>
+
     extract_message_strings <- function(fun, call, table) {
         ## Matching a call containing ... gives
         ##   Error in match.call(message, call) : 
@@ -673,7 +682,9 @@ function(file, encoding = "unknown")
 ## For spell-checking the R R files.
 
 aspell_R_R_files <-
-function(which = NULL, dir = NULL, ignore = "'[[:alnum:]_.]*'",
+function(which = NULL, dir = NULL,
+         ignore = c("[ \t]'[[:alnum:]_.]*'[ \t[:punct:]]",
+                    "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
          program = NULL)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
@@ -732,15 +743,38 @@ function(dir, ignore = "", control = list(), program = NULL)
 ## (Of course, directly analyzing the message strings would be more
 ## useful, but require writing appropriate text filters.)
 
+## See also tools:::checkPoFile().
+
 aspell_filter_db$pot <-
-function(ifile, encoding = "unknown", ignore = "")
+function (ifile, encoding = "unknown", ignore = character()) 
 {
     lines <- readLines(ifile, encoding = encoding)
-    lines <- ifelse(grepl("^msgid ", lines),
-                    sub("^msgid ", "      ", lines),
-                    "")
-    if(nzchar(ignore))
-        lines <- blank_out_regexp_matches(lines, ignore)
+
+    ind <- grepl("^msgid[ \t]", lines)
+
+    do_entry <- function(s) {
+        out <- character(length(s))
+        i <- 1L
+        out[i] <- blank_out_regexp_matches(s[i], "^msgid[ \t]+\"")
+        while(grepl("^\"", s[i <- i + 1L]))
+            out[i] <- sub("^\"", " ", s[i])
+        if(grepl("^msgid_plural[ \t]", s[i])) {
+            out[i] <- blank_out_regexp_matches(s[i], "^msgid_plural[ \t]+\"")
+            while(grepl("^\"", s[i <- i + 1L]))
+                out[i] <- sub("^\"", " ", s[i])
+        }
+        out
+    }
+
+    entries <- split(lines, cumsum(ind))
+    lines <- c(character(length(entries[[1L]])),
+               as.character(do.call(c, lapply(entries[-1L], do_entry))))
+
+    lines <- sub("\"[ \t]*$", " ", lines)
+    
+    for(re in ignore[nzchar(ignore)])
+        lines <- blank_out_regexp_matches(lines, re)
+
     lines
 }
 
@@ -771,12 +805,16 @@ function(dir, ignore = "", control = list(), program = NULL)
 ## For spell-checking the R C files.
 
 aspell_R_C_files <-
-function(which = NULL, dir = NULL, ignore = "'[[:alnum:]_.]*'",
+function(which = NULL, dir = NULL,
+         ignore = c("[ \t]'[[:alnum:]_.]*'[ \t[:punct:]]",
+                    "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
          program = NULL)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     if(is.null(which))
         which <- tools:::.get_standard_package_names()$base
+    if(!is.na(pos <- match("base", which)))
+        which[pos] <- "R"
 
     files <- sprintf("%s.pot",
                      file.path(dir, "src", "library",
