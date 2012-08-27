@@ -200,6 +200,8 @@ slotsFromS3 <- function(object) {
     list()
 }
 
+utils::globalVariables("CLASS")
+
 .oldTestFun <- function(object) CLASS %in% attr(object, "class")
 .oldCoerceFun <- function(from, strict = TRUE) {
     if(strict)

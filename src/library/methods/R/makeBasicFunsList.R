@@ -22,6 +22,8 @@
 ## uses the primitive list and the function .addBasicGeneric
 ## defined (earlier) in BasicFunsList.R
 
+utils::globalVariables(".addBasicGeneric")
+
 .makeBasicFuns <- function(where)
 {
     funs <- get(".BasicFunsList", envir=where)
