@@ -31,8 +31,8 @@ SEXP fft(SEXP z, SEXP inverse);
 SEXP mvfft(SEXP z, SEXP inverse);
 SEXP nextn(SEXP n, SEXP factors);
 
-SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular);
-SEXP filter4(SEXP x, SEXP filter, SEXP out);
+SEXP cfilter(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular);
+SEXP rfilter(SEXP x, SEXP filter, SEXP out);
 SEXP lowess(SEXP x, SEXP y, SEXP sf, SEXP siter, SEXP sdelta);
 SEXP DoubleCentre(SEXP A);
 SEXP BinDist(SEXP x, SEXP weights, SEXP slo, SEXP sup, SEXP sn);

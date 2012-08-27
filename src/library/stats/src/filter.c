@@ -35,7 +35,7 @@
 // currently ISNAN includes NAs
 #define my_isok(x) (!ISNA(x) & !ISNAN(x))
 
-SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
+SEXP cfilter(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
 {
    if (TYPEOF(sx) != REALSXP || TYPEOF(sfilter) != REALSXP)
        error("invalid input");
@@ -86,7 +86,7 @@ SEXP filter3(SEXP sx, SEXP sfilter, SEXP ssides, SEXP scircular)
 }
 
 /* recursive filtering */
-SEXP filter4(SEXP x, SEXP filter, SEXP out)
+SEXP rfilter(SEXP x, SEXP filter, SEXP out)
 {
    if (TYPEOF(x) != REALSXP || TYPEOF(filter) != REALSXP
        || TYPEOF(out) != REALSXP) error("invalid input");
