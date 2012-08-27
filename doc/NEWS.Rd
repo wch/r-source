@@ -561,6 +561,10 @@
 
       Similarly, \code{model.frame(fm, data=<data>)} copies across
       the variables used for safe prediction from the fit.
+      
+      \item Functions such as \code{parLapply()} in package
+      \pkg{parallel} can make use of a default cluster if one is set.
+      (Reported by Martin Morgan.)
     }
   }
 
@@ -802,7 +806,7 @@
       \code{foo} is an arbitrary \R object is now an error.  (Seen in
       package \pkg{coxphf} and elsewhere.)
 
-      \item Protection added to \code{do_system} (\PR{15025})
+      \item Protection added to \code{do_system}. (\PR{15025})
     }
   }
 }

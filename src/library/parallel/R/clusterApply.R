@@ -165,28 +165,39 @@ splitCols <- function(x, ncl)
     lapply(splitIndices(ncol(x), ncl), function(i) x[, i, drop=FALSE])
 
 parLapply <- function(cl = NULL, X, fun, ...)
+{
+    cl <- defaultCluster(cl)
     do.call(c,
             clusterApply(cl, x = splitList(X, length(cl)),
                          fun = lapply, fun, ...),
             quote = TRUE)
+}
 
 parLapplyLB <- function(cl = NULL, X, fun, ...)
+{
+    cl <- defaultCluster(cl)
     do.call(c,
             clusterApplyLB(cl, x = splitList(X, length(cl)),
                            fun = lapply, fun, ...),
             quote = TRUE)
+}
 
 parRapply <- function(cl = NULL, x, FUN, ...)
+{
+    cl <- defaultCluster(cl)
     do.call(c,
             clusterApply(cl = cl, x = splitRows(x, length(cl)),
                          fun = apply, MARGIN = 1L, FUN = FUN, ...),
             quote = TRUE)
+}
 
-parCapply <- function(cl = NULL, x, FUN, ...)
+parCapply <- function(cl = NULL, x, FUN, ...) {
+    cl <- defaultCluster(cl)
     do.call(c,
             clusterApply(cl = cl, x = splitCols(x, length(cl)),
                          fun = apply, MARGIN = 2L, FUN = FUN, ...),
             quote = TRUE)
+}
 
 
 parSapply <-
