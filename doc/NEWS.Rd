@@ -338,6 +338,9 @@
       package \pkg{coxphf} and elsewhere.)
 
       \item Protection added to \code{do_system}. (\PR{15025})
+
+      \item Printing of vectors with names > 1000 characters now works
+      correctly. (\PR{15028})
     }
   }
 }
