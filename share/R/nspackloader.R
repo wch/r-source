@@ -18,7 +18,7 @@
 
 local({
     info <- loadingNamespaceInfo()
-    ns <- .Internal(getRegisteredNamespace(as.name(info$pkgname)))
+    ns <- .getNamespace(as.name(info$pkgname))
     if (is.null(ns))
         stop("cannot find namespace environment");
     barepackage <- sub("([^-]+)_.*", "\\1", info$pkgname)

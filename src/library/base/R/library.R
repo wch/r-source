@@ -149,7 +149,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     checkNoGenerics <- function(env, pkg)
     {
         nenv <- env
-        ns <- .Internal(getRegisteredNamespace(as.name(pkg)))
+        ns <- .getNamespace(as.name(pkg))
         if(!is.null(ns)) nenv <- asNamespace(ns)
         if (exists(".noGenerics", envir = nenv, inherits = FALSE))
             TRUE

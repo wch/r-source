@@ -1209,6 +1209,8 @@ SEXP install(const char *name)
 }
 
 
+//#define CHECK_INTERNAL 1
+
 /*  do_internal - This is the code for .Internal(). */
 
 SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1228,6 +1230,30 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     if (INTERNAL(fun) == R_NilValue)
 	errorcall(call, _("there is no .Internal function '%s'"),
 		  CHAR(PRINTNAME(fun)));
+
+#ifdef CHECK_INTERNAL
+    // find out if we were called from a namespace.
+    // inlining by the compiler can defeat this.
+    const char *ns = "";
+    if(R_IsNamespaceEnv(env)) {
+	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env), 0));
+    } else {
+	SEXP env2 = ENCLOS(env);
+	if(R_IsNamespaceEnv(env2))
+	    ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
+    }
+    const char *fn = CHAR(PRINTNAME(fun));
+    // nspackloader.R contains a .Internal call
+    if (strlen(ns) && strcmp(fn, "getRegisteredNamespace") && 
+	strcmp(ns, "base") && strcmp(ns, "tools") && 
+	strcmp(ns, "methods") && strcmp(ns, "utils") && 
+	strcmp(ns, "compiler") && strcmp(ns, "parallel"))
+//	Rprintf(
+	errorcall(call,
+		  ".Internal(%s()) called from namespace '%s'\n", fn, ns);
+
+#endif 
+
     args = CDR(s);
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env, call, 0);

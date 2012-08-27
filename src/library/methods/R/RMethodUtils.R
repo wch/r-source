@@ -1405,7 +1405,8 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 }
 
 ## a version of match that avoids the is.factor() junk: faster & safe for bootstrapping
-.matchBasic <- function(x, table, nomatch = NA) .Internal(match(x, table, nomatch))
+## This cannot work: wrong number of args.
+## .matchBasic <- function(x, table, nomatch = NA) .Internal(match(x, table, nomatch))
 
 ## match default exprs in the method to those in the generic
 ## if the method does not itself specify a default, and the
@@ -1518,7 +1519,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 .NamespaceOrPackage <- function(what)
 {
     name <- as.name(what)
-    ns <-  .Internal(getRegisteredNamespace(name))
+    ns <-  .getNamespace(name)
     if(!is.null(ns))
         asNamespace(ns)
     else {
@@ -1536,7 +1537,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     if(is.environment(where))
         value <- where
     else if(is.character(where) && nzchar(where)) {
-        ns <- .Internal(getRegisteredNamespace(where))
+        ns <- .getNamespace(where)
         if(isNamespace(ns))
             value <- ns
         else if(where %in% search())

@@ -5975,12 +5975,7 @@ function(env)
 {
     package <-
         sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
-    ## (Ugly, but why not?)
-    if(length(package) && nzchar(package)) {
-        .Internal(getRegisteredNamespace(as.name(package)))
-        ## Note that we could also use
-        ##   getNamespace(package, error = function(e) NULL)
-    }
+    if(length(package) && nzchar(package)) .getNamespace(as.name(package))
 }
 
 
