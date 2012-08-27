@@ -16,6 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+utils::globalVariables(c(".possibleExtends", ".makeGeneric",
+                         ".newClassRepresentation", ".classGeneratorFunction",
+                         ".mergeClassDefSlots", "..mergeClassDefSlots"))
+
 ..First.lib  <-
   ## Initialize the methods package.  Called from .onLoad, first
   ## during INSTALL, when saved will be FALSE, at which time

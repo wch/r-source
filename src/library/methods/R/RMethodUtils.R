@@ -1574,6 +1574,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     f
 }
 
+utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 
 .standardGenericDots <- function(name)
 {
@@ -1697,12 +1698,15 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 .methodsIsLoaded <- function()
     identical(.saveImage, TRUE)
 
+if(FALSE) {
 ## Defined but not currently used:
 ## utilitity to test well-defined classes in signature,
 ## for setMethod(), setAs() [etc.?], the result to be
 ## assigned in package where=
 ## Returns a list of signature, messages and level of error
-.validSignature <- function(signature, generic, where) {
+
+## Has undefined ns an package
+ .validSignature <- function(signature, generic, where) {
     thisPkg <- getPackageName(where, FALSE)
     checkDups <- .duplicateClassesExist()
     if(is(signature, "character")) { # including class "signature"
@@ -1789,6 +1793,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     }
     list(signature = signature, message = msgs, level = level)
 }
+}
 
 .ActionMetaPattern <- function()
     paste0("^[.]",substring(methodsPackageMetaName("A",""),2))
@@ -1850,7 +1855,7 @@ setLoadAction <- function(action,
                  domain = NA)
         if(length(formals(f)) == 0)
             stop(gettextf("action function %s has no arguments, should have at least 1",
-                          sQuoute(fname)),
+                          sQuote(fname)),
                  domain = NA)
     }
     for(i in seq_along(actions))

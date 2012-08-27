@@ -586,7 +586,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
 }
 
 
-
+utils::globalVariables("fdef")
 .dummySetMethod <- function(f, signature = character(), definition,
 	     where = topenv(parent.frame()), valueClass = NULL,
 	     sealed = FALSE)

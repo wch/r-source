@@ -89,6 +89,7 @@ traceOff <-
     remove(list = name, pos=sessionData())
   }
 
+utils::globalVariables(".BrowserStack")
 browseAll <-
   ## browse the current stack of function calls.
   ##
