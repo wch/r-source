@@ -49,17 +49,17 @@ length(x) <- value
   names, which are adjusted (and if necessary extended by \code{""}).
 }
 
-
 \section{Warning}{
-  Package authors have written methods that return a result of
-  length other than one (\pkg{Formula}) and that return a vector type
+  Package authors have written methods that return a result of length
+  other than one (\pkg{Formula}) and that return a vector of type
   \code{\link{double}} (\pkg{Matrix}), even with non-integer values
-  (\pkg{sets}).  As from \R 2.15.2, where a single double value is
-  returned that can be represented as an integer, it is returned as a
-  length-one integer vector.
+  (earlier versions of \pkg{sets}).  As from \R 2.15.2, where a single
+  double value is returned that can be represented as an integer it is
+  returned as a length-one integer vector.
 
-  And also as from \R 2.16.0, lengths can be returned as double in base \R.
+  As from \R 2.16.0, lengths can be returned as double in base \R.
 }
+
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.
 }
