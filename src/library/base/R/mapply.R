@@ -34,6 +34,9 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
     else answer
 }
 
+.mapply <- function(FUN, dots, MoreArgs)
+    .Internal(mapply(FUN, dots, MoreArgs))
+
 Vectorize <- function(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
                       USE.NAMES = TRUE)
 {

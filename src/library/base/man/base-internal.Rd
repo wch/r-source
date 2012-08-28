@@ -31,6 +31,7 @@
 \alias{.Firstlib_as_onLoad}
 \alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
+\alias{.mapply}
 
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
@@ -104,6 +105,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .path.package(\dots)
 
 .popath
+
+.mapply(FUN, dots, MoreArgs)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -140,6 +143,10 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{tz}{an optional timezone.}
   \item{units}{see \code{\link{difftime}}.}
   \item{\dots}{Arguments passed to non-dot name versions.}
+    \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
+  \item{dots}{lst of arguments to vectorize over (vectors or lists of
+    strictly positive length, or all of zero length).}
+  \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
