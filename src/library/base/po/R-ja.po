@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25\n"
+"POT-Creation-Date: 2012-08-28 08:32\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1306,24 +1306,6 @@ msgstr " 引数がありません "
 msgid "an argument will be fractionally recycled"
 msgstr " 引数は繰り返して使われます "
 
-msgid "invalid 'n' value"
-msgstr " 無効な 'n' 値です "
-
-msgid "'shrink.sml' must be numeric > 0"
-msgstr " 'shrink.sml' は正の数値でなければなりません "
-
-msgid "'min.n' must be non-negative integer <= n"
-msgstr " 'min.n' は n 以下の非負整数でなければなりません "
-
-msgid "'high.u.bias' must be non-negative numeric"
-msgstr " 'high.u.bias' は非負の数値でなければなりません "
-
-msgid "'u5.bias' must be non-negative numeric"
-msgstr " 'u5.bias' は非負の数値でなければなりません "
-
-msgid "'eps.correct' must be 0, 1, or 2"
-msgstr " 'eps.correct' は 0, 1 または 2 でなければなりません "
-
 #, fuzzy
 msgid "invalid ncol(x)"
 msgstr " 不当な名前です "
@@ -1446,9 +1428,6 @@ msgstr " 'solve' 中に特異行列 'a' があります' "
 
 msgid "only square matrices can be inverted"
 msgstr " 逆行列は正方行列だけにしか定義できません "
-
-msgid "'b' must be compatible with 'a'"
-msgstr " 'b' は 'a' と両立しなければなりません "
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""
@@ -1798,6 +1777,27 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "invalid 'n' value"
+#~ msgstr " 無効な 'n' 値です "
+
+#~ msgid "'shrink.sml' must be numeric > 0"
+#~ msgstr " 'shrink.sml' は正の数値でなければなりません "
+
+#~ msgid "'min.n' must be non-negative integer <= n"
+#~ msgstr " 'min.n' は n 以下の非負整数でなければなりません "
+
+#~ msgid "'high.u.bias' must be non-negative numeric"
+#~ msgstr " 'high.u.bias' は非負の数値でなければなりません "
+
+#~ msgid "'u5.bias' must be non-negative numeric"
+#~ msgstr " 'u5.bias' は非負の数値でなければなりません "
+
+#~ msgid "'eps.correct' must be 0, 1, or 2"
+#~ msgstr " 'eps.correct' は 0, 1 または 2 でなければなりません "
+
+#~ msgid "'b' must be compatible with 'a'"
+#~ msgstr " 'b' は 'a' と両立しなければなりません "
 
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr " 'backsolve' に無効な引数値が与えられました "

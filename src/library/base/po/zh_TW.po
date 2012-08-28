@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25+0100\n"
+"POT-Creation-Date: 2012-08-28 08:32+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -265,17 +265,20 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/sysutils.c:1618 src/main/sysutils.c:1622 src/main/unique.c:964
 #: src/main/unique.c:1287 src/main/unique.c:1347 src/main/unique.c:1354
 #: src/main/util.c:570 src/main/util.c:573 src/main/util.c:1755
-#: src/main/util.c:1911 src/main/util.c:1912 src/main/util.c:1913
-#: src/main/util.c:1928 src/main/util.c:1946 src/main/util.c:1950
-#: src/main/util.c:1952 src/modules/internet/internet.c:285
-#: src/modules/internet/internet.c:291 src/modules/internet/internet.c:297
-#: src/modules/internet/internet.c:300 src/modules/internet/internet.c:304
-#: src/modules/lapack/Lapack.c:152 src/modules/lapack/Lapack.c:242
-#: src/modules/lapack/Lapack.c:667 src/modules/lapack/Lapack.c:770
-#: src/modules/lapack/Lapack.c:827 src/modules/lapack/Lapack.c:1090
-#: src/modules/X11/devX11.c:3232 src/modules/X11/devX11.c:3235
-#: src/modules/X11/devX11.c:3238 src/modules/X11/devX11.c:3262
-#: src/unix/sys-std.c:1219 src/unix/sys-std.c:1242
+#: src/main/util.c:1917 src/main/util.c:1918 src/main/util.c:1919
+#: src/main/util.c:1936 src/main/util.c:1960 src/main/util.c:1964
+#: src/main/util.c:1966 src/main/util.c:1987 src/main/util.c:1989
+#: src/main/util.c:1991 src/main/util.c:1994 src/main/util.c:1997
+#: src/main/util.c:2001 src/main/util.c:2003
+#: src/modules/internet/internet.c:285 src/modules/internet/internet.c:291
+#: src/modules/internet/internet.c:297 src/modules/internet/internet.c:300
+#: src/modules/internet/internet.c:304 src/modules/lapack/Lapack.c:156
+#: src/modules/lapack/Lapack.c:249 src/modules/lapack/Lapack.c:695
+#: src/modules/lapack/Lapack.c:800 src/modules/lapack/Lapack.c:861
+#: src/modules/lapack/Lapack.c:1146 src/modules/X11/devX11.c:3232
+#: src/modules/X11/devX11.c:3235 src/modules/X11/devX11.c:3238
+#: src/modules/X11/devX11.c:3262 src/unix/sys-std.c:1219
+#: src/unix/sys-std.c:1242
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數不正確"
@@ -542,7 +545,7 @@ msgstr "<錯誤：從編碼 '%s' 重新編碼時失敗>\n"
 #: src/gnuwin32/system.c:1043 src/main/connections.c:570
 #: src/main/connections.c:575 src/main/dounzip.c:177 src/main/saveload.c:1950
 #: src/main/serialize.c:2490 src/main/serialize.c:2495
-#: src/main/serialize.c:2577 src/main/serialize.c:2622 src/unix/system.c:301
+#: src/main/serialize.c:2580 src/main/serialize.c:2625 src/unix/system.c:301
 #: src/unix/system.c:321
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -638,34 +641,34 @@ msgstr "警告：沒有設定 --enconding 的值"
 msgid "WARNING: option '%s' no longer supported"
 msgstr "警告：不再支援選項 '%s'"
 
-#: src/main/CommandLineArgs.c:208
+#: src/main/CommandLineArgs.c:206
 #, c-format
 msgid "WARNING: no value given for '%s'"
 msgstr "警告：沒有設定 '%s' 的值"
 
-#: src/main/CommandLineArgs.c:218
+#: src/main/CommandLineArgs.c:216
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored"
 msgstr "警告：'%s' 值無效：已忽略"
 
-#: src/main/CommandLineArgs.c:222
+#: src/main/CommandLineArgs.c:220
 #, c-format
 msgid "WARNING: %s: too large and ignored"
 msgstr "警告：%s：過大因而忽略"
 
-#: src/main/CommandLineArgs.c:236
+#: src/main/CommandLineArgs.c:234
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "警告：沒有設定 '--max-ppsize' 的值"
 
-#: src/main/CommandLineArgs.c:241
+#: src/main/CommandLineArgs.c:239
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "警告：'--max-ppsize' 值是負數：已忽略"
 
-#: src/main/CommandLineArgs.c:243
+#: src/main/CommandLineArgs.c:241
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "警告：'--max-ppsize' 的值太小：已忽略"
 
-#: src/main/CommandLineArgs.c:246
+#: src/main/CommandLineArgs.c:244
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "警告：'--max-ppsize' 的值太大：已忽略"
 
@@ -795,20 +798,20 @@ msgstr "必須傳給套件名稱或 DllInfo 參照"
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject 中的類型 %d 尚未被實作"
 
-#: src/main/Rdynload.c:1300 src/main/Rdynload.c:1389
+#: src/main/Rdynload.c:1300 src/main/Rdynload.c:1394
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr "R_getRegisteredRoutines() 需要 DllInfo 參考"
 
-#: src/main/Rdynload.c:1303 src/main/Rdynload.c:1392
+#: src/main/Rdynload.c:1303 src/main/Rdynload.c:1397
 msgid "NULL value passed for DllInfo"
 msgstr "傳給 DllInfo 一個 NULL 值"
 
-#: src/main/Rdynload.c:1452
+#: src/main/Rdynload.c:1457
 #, c-format
 msgid "function '%s' not provided by package '%s'"
 msgstr "函數 '%s' 未由套件 '%s' 所提供"
 
-#: src/main/Rdynload.c:1454
+#: src/main/Rdynload.c:1459
 msgid "table entry must be an external pointer"
 msgstr "表格條目必須是一個外部指標"
 
@@ -1414,7 +1417,7 @@ msgstr "指定的向量大小太大"
 #: src/main/envir.c:2930 src/main/envir.c:2965 src/main/envir.c:2986
 #: src/main/envir.c:3292 src/main/envir.c:3297 src/main/eval.c:4958
 #: src/main/objects.c:191 src/main/objects.c:197 src/main/saveload.c:2059
-#: src/main/saveload.c:2350 src/main/serialize.c:2644
+#: src/main/saveload.c:2350 src/main/serialize.c:2647
 msgid "use of NULL environment is defunct"
 msgstr "NULL 環境的使用已經廢止"
 
@@ -2608,7 +2611,7 @@ msgstr "'opts' 應該是小的非負值整數"
 
 #: src/main/deparse.c:401 src/main/envir.c:1688 src/main/envir.c:1770
 #: src/main/eval.c:408 src/main/eval.c:1067 src/main/eval.c:3331
-#: src/main/saveload.c:1967 src/main/saveload.c:2298 src/main/serialize.c:2662
+#: src/main/saveload.c:1967 src/main/saveload.c:2298 src/main/serialize.c:2665
 #, c-format
 msgid "object '%s' not found"
 msgstr "找不到物件 '%s'"
@@ -3650,7 +3653,7 @@ msgstr "位元組碼版本不符"
 msgid "invalid sequence argument in for loop"
 msgstr "迴圈中的序列引數不正確"
 
-#: src/main/eval.c:4302 src/main/names.c:1184
+#: src/main/eval.c:4302 src/main/names.c:1229
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "沒有 \"%s\" 這個內部函數"
@@ -4053,18 +4056,11 @@ msgstr "無效的繫結位址規格"
 msgid "socket routines cannot be loaded"
 msgstr "無法載入插槽例行程式"
 
-#: src/main/lapack.c:58
+#: src/main/lapack.c:39
 msgid "lapack routines cannot be accessed in module"
 msgstr "無法讀寫模組中的 lapack 例行程式"
 
-#: src/main/lapack.c:70 src/main/lapack.c:82 src/main/lapack.c:94
-#: src/main/lapack.c:106 src/main/lapack.c:118 src/main/lapack.c:130
-#: src/main/lapack.c:142 src/main/lapack.c:154 src/main/lapack.c:166
-#: src/main/lapack.c:177 src/main/lapack.c:188 src/main/lapack.c:199
-#: src/main/lapack.c:211 src/main/lapack.c:223 src/main/lapack.c:235
-#: src/main/lapack.c:247 src/main/lapack.c:259 src/main/lapack.c:271
-#: src/main/lapack.c:283 src/main/lapack.c:295 src/main/lapack.c:307
-#: src/main/lapack.c:319
+#: src/main/lapack.c:53
 msgid "lapack routines cannot be loaded"
 msgstr "無法載入 lapack 例行程式"
 
@@ -4129,44 +4125,44 @@ msgstr "無法還原儲存在 %s 中的資料\n"
 msgid "During startup - "
 msgstr "於啟動期間 - "
 
-#: src/main/main.c:1187
+#: src/main/main.c:1188
 msgid "cannot quit from browser"
 msgstr "無法離開瀏覽器"
 
-#: src/main/main.c:1191
+#: src/main/main.c:1192
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用 \"yes\"、\"no\"、\"ask\" 或 \"default\" 中的一個。"
 
-#: src/main/main.c:1196
+#: src/main/main.c:1197
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\" 不能在非交互狀態時使用：改用命令列預設值"
 
-#: src/main/main.c:1204
+#: src/main/main.c:1205
 msgid "unrecognized value of 'save'"
 msgstr "沒有這種 'save' 值"
 
-#: src/main/main.c:1207
+#: src/main/main.c:1208
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' 不正確, 假定為 0"
 
-#: src/main/main.c:1212
+#: src/main/main.c:1213
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' 不正確, 假定為 FALSE"
 
-#: src/main/main.c:1243
+#: src/main/main.c:1244
 msgid "cannot allocate space for toplevel callback element"
 msgstr "無法為最高層回呼元素配置空間"
 
-#: src/main/main.c:1321
+#: src/main/main.c:1322
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "負的索引值被傳遞給 R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1429
+#: src/main/main.c:1430
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高層任務回呼 '%s' 產生了警告訊息\n"
 
-#: src/main/main.c:1485
+#: src/main/main.c:1486
 msgid "top-level task callback did not return a logical value"
 msgstr "最高層任務回呼沒回傳邏輯值"
 
@@ -4329,24 +4325,24 @@ msgstr "Rprofmem：無法開啟輸出檔案 '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1019
+#: src/main/names.c:1064
 msgid "string argument required"
 msgstr "需要字串引數"
 
-#: src/main/names.c:1022
+#: src/main/names.c:1067
 msgid "no such primitive function"
 msgstr "沒有此一原始函數"
 
-#: src/main/names.c:1150
+#: src/main/names.c:1195
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零長度的變數名"
 
-#: src/main/names.c:1152
+#: src/main/names.c:1197
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "變數名稱受限為 %d 位元組"
 
-#: src/main/names.c:1179 src/main/names.c:1182
+#: src/main/names.c:1224 src/main/names.c:1227
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 引數不正確"
 
@@ -5566,7 +5562,7 @@ msgstr "序列化太大而無法儲存在純量向量中"
 msgid "cannot allocate buffer"
 msgstr "無法配置緩衝區"
 
-#: src/main/serialize.c:2484 src/main/serialize.c:2554
+#: src/main/serialize.c:2484 src/main/serialize.c:2557
 msgid "not a proper file name"
 msgstr "檔案名稱不正確"
 
@@ -5578,28 +5574,28 @@ msgstr "非適當純量向量"
 msgid "could not determine file position"
 msgstr "無法確定檔案位置"
 
-#: src/main/serialize.c:2556
+#: src/main/serialize.c:2559
 msgid "bad offset/length argument"
 msgstr "不當的位移/長度引數"
 
-#: src/main/serialize.c:2580 src/main/serialize.c:2593
-#: src/main/serialize.c:2602 src/main/serialize.c:2612
-#: src/main/serialize.c:2625
+#: src/main/serialize.c:2583 src/main/serialize.c:2596
+#: src/main/serialize.c:2605 src/main/serialize.c:2615
+#: src/main/serialize.c:2628
 #, c-format
 msgid "seek failed on %s"
 msgstr "搜索 %s 失敗"
 
-#: src/main/serialize.c:2597 src/main/serialize.c:2606
-#: src/main/serialize.c:2616 src/main/serialize.c:2629
+#: src/main/serialize.c:2600 src/main/serialize.c:2609
+#: src/main/serialize.c:2619 src/main/serialize.c:2632
 #, c-format
 msgid "read failed on %s"
 msgstr "讀取 %s 失敗"
 
-#: src/main/serialize.c:2648
+#: src/main/serialize.c:2651
 msgid "bad environment"
 msgstr "不當的環境"
 
-#: src/main/serialize.c:2650
+#: src/main/serialize.c:2653
 msgid "bad variable names"
 msgstr "不當的變數名稱"
 
@@ -6256,15 +6252,15 @@ msgstr "rowsum 中不能有非數值資料框"
 msgid "this cannot happen"
 msgstr "這不可能發生"
 
-#: src/main/unique.c:1619
+#: src/main/unique.c:1631
 msgid "'names' must be a character vector"
 msgstr "'names' 必須是字元向量"
 
-#: src/main/unique.c:1623
+#: src/main/unique.c:1635
 msgid "'sep' must be a character string"
 msgstr "'sep' 必須是字串"
 
-#: src/main/unique.c:1699
+#: src/main/unique.c:1711
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated 不能用於 STRSXP"
 
@@ -6383,10 +6379,14 @@ msgstr "屬性必須命名"
 msgid "ICU is not supported on this build"
 msgstr "這個組建不支援 ICU"
 
-#: src/main/util.c:1907 src/main/util.c:1943
+#: src/main/util.c:1911 src/main/util.c:1957
 #, fuzzy, c-format
 msgid "long vector '%s' is not supported"
 msgstr "類型 '%s' 未被支援"
+
+#: src/main/util.c:2006
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr ""
 
 #: src/main/version.c:36
 msgid ""
@@ -6614,216 +6614,216 @@ msgstr "太多重新傳送，中斷工作 ..."
 msgid "allocation of socket connection failed"
 msgstr "配置插槽連結失敗"
 
-#: src/modules/lapack/Lapack.c:45 src/modules/lapack/Lapack.c:64
+#: src/modules/lapack/Lapack.c:50 src/modules/lapack/Lapack.c:69
 #, c-format
 msgid "argument type[1]='%s' must be a character string of string length 1"
 msgstr "引數 type[1]='%s' 必須是長度為 1 的字串"
 
-#: src/modules/lapack/Lapack.c:53
+#: src/modules/lapack/Lapack.c:58
 #, c-format
 msgid "argument type[1]='%s' must be one of 'M','1','O','I','F' or 'E'"
 msgstr "引數 type[1]='%s' 必須是 'M','1','O','I','F' 或 'E' 之一"
 
-#: src/modules/lapack/Lapack.c:70
+#: src/modules/lapack/Lapack.c:75
 #, c-format
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
 msgstr "引數 type[1]='%s' 必須是 '1', 'O' 或 'I' 之一"
 
-#: src/modules/lapack/Lapack.c:83 src/modules/lapack/Lapack.c:703
+#: src/modules/lapack/Lapack.c:87 src/modules/lapack/Lapack.c:731
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr "'jobu' 和 'jobv' 必須是字元物件"
 
-#: src/modules/lapack/Lapack.c:85
-msgid "'method' must be a character string"
-msgstr "'method' 必須是字串"
-
-#: src/modules/lapack/Lapack.c:107 src/modules/lapack/Lapack.c:116
-#: src/modules/lapack/Lapack.c:171 src/modules/lapack/Lapack.c:182
-#: src/modules/lapack/Lapack.c:257 src/modules/lapack/Lapack.c:263
-#: src/modules/lapack/Lapack.c:586 src/modules/lapack/Lapack.c:592
-#: src/modules/lapack/Lapack.c:636 src/modules/lapack/Lapack.c:643
-#: src/modules/lapack/Lapack.c:647 src/modules/lapack/Lapack.c:681
-#: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:726
-#: src/modules/lapack/Lapack.c:735 src/modules/lapack/Lapack.c:781
-#: src/modules/lapack/Lapack.c:787 src/modules/lapack/Lapack.c:842
-#: src/modules/lapack/Lapack.c:848 src/modules/lapack/Lapack.c:1019
-#: src/modules/lapack/Lapack.c:1025 src/modules/lapack/Lapack.c:1064
-#: src/modules/lapack/Lapack.c:1071 src/modules/lapack/Lapack.c:1075
-#: src/modules/lapack/Lapack.c:1104 src/modules/lapack/Lapack.c:1111
-#: src/modules/lapack/Lapack.c:1136
+#: src/modules/lapack/Lapack.c:114 src/modules/lapack/Lapack.c:123
+#: src/modules/lapack/Lapack.c:178 src/modules/lapack/Lapack.c:189
+#: src/modules/lapack/Lapack.c:264 src/modules/lapack/Lapack.c:270
+#: src/modules/lapack/Lapack.c:614 src/modules/lapack/Lapack.c:620
+#: src/modules/lapack/Lapack.c:664 src/modules/lapack/Lapack.c:671
+#: src/modules/lapack/Lapack.c:675 src/modules/lapack/Lapack.c:709
+#: src/modules/lapack/Lapack.c:716 src/modules/lapack/Lapack.c:760
+#: src/modules/lapack/Lapack.c:768 src/modules/lapack/Lapack.c:816
+#: src/modules/lapack/Lapack.c:822 src/modules/lapack/Lapack.c:876
+#: src/modules/lapack/Lapack.c:882 src/modules/lapack/Lapack.c:1075
+#: src/modules/lapack/Lapack.c:1081 src/modules/lapack/Lapack.c:1120
+#: src/modules/lapack/Lapack.c:1127 src/modules/lapack/Lapack.c:1131
+#: src/modules/lapack/Lapack.c:1160 src/modules/lapack/Lapack.c:1167
+#: src/modules/lapack/Lapack.c:1192
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "錯誤程式碼 %d，Lapack 例行程式 '%s'"
 
-#: src/modules/lapack/Lapack.c:150 src/modules/lapack/Lapack.c:236
-#: src/modules/lapack/Lapack.c:768 src/modules/lapack/Lapack.c:821
+#: src/modules/lapack/Lapack.c:154 src/modules/lapack/Lapack.c:243
+#: src/modules/lapack/Lapack.c:855
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' 必須是正方形的數值矩陣"
 
-#: src/modules/lapack/Lapack.c:312
+#: src/modules/lapack/Lapack.c:319
 msgid "'type' must be a character string"
 msgstr "'type' 必須是字串"
 
-#: src/modules/lapack/Lapack.c:319 src/modules/lapack/Lapack.c:353
-#: src/modules/lapack/Lapack.c:410
+#: src/modules/lapack/Lapack.c:326 src/modules/lapack/Lapack.c:360
+#: src/modules/lapack/Lapack.c:416
 msgid "'A' must be a numeric matrix"
 msgstr "'A' 必須是數值矩陣"
 
-#: src/modules/lapack/Lapack.c:346 src/modules/lapack/Lapack.c:402
-#: src/modules/lapack/Lapack.c:444 src/modules/lapack/Lapack.c:493
+#: src/modules/lapack/Lapack.c:353 src/modules/lapack/Lapack.c:408
+#: src/modules/lapack/Lapack.c:450 src/modules/lapack/Lapack.c:499
 msgid "'norm' must be a character string"
 msgstr "'norm' 必須是字串"
 
-#: src/modules/lapack/Lapack.c:374
+#: src/modules/lapack/Lapack.c:380
 #, c-format
 msgid "error [%d] from Lapack 'dgetrf()'"
 msgstr "錯誤 [%d] 來自 Lapack 'dgetrf()'"
 
-#: src/modules/lapack/Lapack.c:379
+#: src/modules/lapack/Lapack.c:385
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
 msgstr ""
 "精確的奇異性：U[%d,%d] = 0 於 LU-decomposition {Lapack 'dgetrf()'} 之中"
 
-#: src/modules/lapack/Lapack.c:391
+#: src/modules/lapack/Lapack.c:397
 #, c-format
 msgid "error [%d] from Lapack 'dgecon()'"
 msgstr "錯誤 [%d] 來自 Lapack 'dgecon()'"
 
-#: src/modules/lapack/Lapack.c:416 src/modules/lapack/Lapack.c:450
-#: src/modules/lapack/Lapack.c:499
+#: src/modules/lapack/Lapack.c:422 src/modules/lapack/Lapack.c:456
+#: src/modules/lapack/Lapack.c:505
 msgid "'A' must be a *square* matrix"
 msgstr "'A' 必須是 *正方形* 矩陣"
 
-#: src/modules/lapack/Lapack.c:430
+#: src/modules/lapack/Lapack.c:436
 #, c-format
 msgid "error [%d] from Lapack 'dtrcon()'"
 msgstr "錯誤 [%d] 來自 Lapack 'dtrcon()'"
 
-#: src/modules/lapack/Lapack.c:446 src/modules/lapack/Lapack.c:495
+#: src/modules/lapack/Lapack.c:452 src/modules/lapack/Lapack.c:501
 msgid "'A' must be a complex matrix"
 msgstr "'A' 必須是複數矩陣"
 
-#: src/modules/lapack/Lapack.c:468
+#: src/modules/lapack/Lapack.c:474
 #, c-format
 msgid "error [%d] from Lapack 'zgetrf()'"
 msgstr "錯誤 [%d] 來自 Lapack 'zgetrf()'"
 
-#: src/modules/lapack/Lapack.c:476
+#: src/modules/lapack/Lapack.c:482
 #, c-format
 msgid "error [%d] from Lapack 'zgecon()'"
 msgstr "錯誤 [%d] 來自 Lapack 'zgecon()'"
 
-#: src/modules/lapack/Lapack.c:480 src/modules/lapack/Lapack.c:514
-#: src/modules/lapack/Lapack.c:558 src/modules/lapack/Lapack.c:608
-#: src/modules/lapack/Lapack.c:651 src/modules/lapack/Lapack.c:692
-#: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:804
-#: src/modules/lapack/Lapack.c:865
+#: src/modules/lapack/Lapack.c:486 src/modules/lapack/Lapack.c:520
+#: src/modules/lapack/Lapack.c:586 src/modules/lapack/Lapack.c:636
+#: src/modules/lapack/Lapack.c:679 src/modules/lapack/Lapack.c:720
+#: src/modules/lapack/Lapack.c:781 src/modules/lapack/Lapack.c:838
+#: src/modules/lapack/Lapack.c:899
 msgid "Fortran complex functions are not available on this platform"
 msgstr "本平臺不能使用 Fortran 複數功能"
 
-#: src/modules/lapack/Lapack.c:511
+#: src/modules/lapack/Lapack.c:517
 #, c-format
 msgid "error [%d] from Lapack 'ztrcon()'"
 msgstr "錯誤 [%d] 來自 Lapack 'ztrcon()'"
 
-#: src/modules/lapack/Lapack.c:529 src/modules/lapack/Lapack.c:572
+#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:600
 msgid "'a' must be a complex matrix"
 msgstr "'a' 必須是複數矩陣"
 
-#: src/modules/lapack/Lapack.c:531 src/modules/lapack/Lapack.c:622
-#: src/modules/lapack/Lapack.c:665
-msgid "'b' must be a complex matrix"
-msgstr "'b' 必須是複數矩陣"
-
-#: src/modules/lapack/Lapack.c:536 src/modules/lapack/Lapack.c:967
+#: src/modules/lapack/Lapack.c:538 src/modules/lapack/Lapack.c:995
 msgid "'a' is 0-diml"
 msgstr "'a' 是 0-diml"
 
-#: src/modules/lapack/Lapack.c:538 src/modules/lapack/Lapack.c:969
-msgid "no right-hand side in 'b'"
-msgstr "'b' 在等號右側沒有公式"
-
-#: src/modules/lapack/Lapack.c:540 src/modules/lapack/Lapack.c:971
+#: src/modules/lapack/Lapack.c:540 src/modules/lapack/Lapack.c:997
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "'a' (%d x %d) 必須是正方形的"
 
-#: src/modules/lapack/Lapack.c:542 src/modules/lapack/Lapack.c:973
+#: src/modules/lapack/Lapack.c:546 src/modules/lapack/Lapack.c:1003
+msgid "no right-hand side in 'b'"
+msgstr "'b' 在等號右側沒有公式"
+
+#: src/modules/lapack/Lapack.c:549 src/modules/lapack/Lapack.c:563
+#: src/modules/lapack/Lapack.c:1006 src/modules/lapack/Lapack.c:1022
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "'b' (%d x %d) 必須與 'a' (%d x %d) 相容"
 
-#: src/modules/lapack/Lapack.c:551 src/modules/lapack/Lapack.c:896
-#: src/modules/lapack/Lapack.c:939 src/modules/lapack/Lapack.c:982
+#: src/modules/lapack/Lapack.c:579 src/modules/lapack/Lapack.c:928
+#: src/modules/lapack/Lapack.c:971 src/modules/lapack/Lapack.c:1038
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "Lapack 例行程式 %2$s 的引數 %1$d 具有不正確的值"
 
-#: src/modules/lapack/Lapack.c:629 src/modules/lapack/Lapack.c:674
-#: src/modules/lapack/Lapack.c:1057 src/modules/lapack/Lapack.c:1097
+#: src/modules/lapack/Lapack.c:650 src/modules/lapack/Lapack.c:693
+msgid "'b' must be a complex matrix"
+msgstr "'b' 必須是複數矩陣"
+
+#: src/modules/lapack/Lapack.c:657 src/modules/lapack/Lapack.c:702
+#: src/modules/lapack/Lapack.c:1113 src/modules/lapack/Lapack.c:1153
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "公式右側應該有 %d 而不是 %d 列"
 
-#: src/modules/lapack/Lapack.c:710
+#: src/modules/lapack/Lapack.c:738
 msgid "matrices of 2^31 or more elements are not supported"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:882 src/modules/lapack/Lapack.c:1131
+#: src/modules/lapack/Lapack.c:798
+#, fuzzy
+msgid "'x' must be a square complex matrix"
+msgstr "'x' 必須是正方形的數值矩陣"
+
+#: src/modules/lapack/Lapack.c:917 src/modules/lapack/Lapack.c:1187
 msgid "'a' must be a square matrix"
 msgstr "'a' 必須是正方形矩陣"
 
-#: src/modules/lapack/Lapack.c:883
+#: src/modules/lapack/Lapack.c:918
 msgid "'a' must have dims > 0"
 msgstr "'a' 必須有 dims > 0"
 
-#: src/modules/lapack/Lapack.c:894
+#: src/modules/lapack/Lapack.c:926
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "序列 %d 前置的次要符號並非肯定明確"
 
-#: src/modules/lapack/Lapack.c:902 src/modules/lapack/Lapack.c:923
-#: src/modules/lapack/Lapack.c:960 src/modules/lapack/Lapack.c:1006
-#: src/modules/lapack/Lapack.c:1124
+#: src/modules/lapack/Lapack.c:933 src/modules/lapack/Lapack.c:955
+#: src/modules/lapack/Lapack.c:992 src/modules/lapack/Lapack.c:1062
+#: src/modules/lapack/Lapack.c:1180
 msgid "'a' must be a numeric matrix"
 msgstr "'a' 必須是數值矩陣"
 
-#: src/modules/lapack/Lapack.c:910
+#: src/modules/lapack/Lapack.c:941
 msgid "'size' argument must be a positive integer"
 msgstr "'size' 引數必須是正整數"
 
-#: src/modules/lapack/Lapack.c:925
+#: src/modules/lapack/Lapack.c:957
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "'size' 不能超過 ncol(x)=%d"
 
-#: src/modules/lapack/Lapack.c:926
+#: src/modules/lapack/Lapack.c:958
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "'size' 不能超過 nrow(x)=%d"
 
-#: src/modules/lapack/Lapack.c:937
+#: src/modules/lapack/Lapack.c:969
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "元素 (%d,%d) 為零，因此無法逆向求值"
 
-#: src/modules/lapack/Lapack.c:962 src/modules/lapack/Lapack.c:1050
-#: src/modules/lapack/Lapack.c:1088
-msgid "'b' must be a numeric matrix"
-msgstr "'b' 必須是數值矩陣"
-
-#: src/modules/lapack/Lapack.c:985
+#: src/modules/lapack/Lapack.c:1041
 #, fuzzy, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "Lapack 例行程式 dgesv: 系統正好是獨特的"
 
-#: src/modules/lapack/Lapack.c:992
+#: src/modules/lapack/Lapack.c:1048
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "系統計算上是獨特的: 互反條件數=%g"
 
-#: src/modules/lapack/Lapack.c:1126
+#: src/modules/lapack/Lapack.c:1106 src/modules/lapack/Lapack.c:1144
+msgid "'b' must be a numeric matrix"
+msgstr "'b' 必須是數值矩陣"
+
+#: src/modules/lapack/Lapack.c:1182
 msgid "argument 'logarithm' must be logical"
 msgstr "引數 'logarithm' 必須是邏輯值"
 
@@ -7347,6 +7347,9 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "無法使用 X11"
+
+#~ msgid "'method' must be a character string"
+#~ msgstr "'method' 必須是字串"
 
 #~ msgid "no dyn.load support in this R version"
 #~ msgstr "本 R 版本不支援 dyn.load"

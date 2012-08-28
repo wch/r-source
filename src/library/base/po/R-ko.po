@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25\n"
+"POT-Creation-Date: 2012-08-28 08:32\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1283,24 +1283,6 @@ msgstr "잘 못된 인수입니다 "
 msgid "an argument will be fractionally recycled"
 msgstr "인수가 반복사용될 것입니다 "
 
-msgid "invalid 'n' value"
-msgstr "'n' 값이 잘 못되었습니다 "
-
-msgid "'shrink.sml' must be numeric > 0"
-msgstr "'shrink.sml' 는 반드시 0 보다 큰 양수이어야 합니다 "
-
-msgid "'min.n' must be non-negative integer <= n"
-msgstr "'min.n' 는 n 보다 작은 양의 정수이어야 합니다 "
-
-msgid "'high.u.bias' must be non-negative numeric"
-msgstr "'high.bias' 는 반드시 양수이어야 합니다"
-
-msgid "'u5.bias' must be non-negative numeric"
-msgstr "'u5.bias' 는 반드시 양수이어야 합니다 "
-
-msgid "'eps.correct' must be 0, 1, or 2"
-msgstr "'eps.corect' 는 반드시 0, 1, 또는 2 일 것입니다 "
-
 #, fuzzy
 msgid "invalid ncol(x)"
 msgstr "부적절한 이름입니다"
@@ -1424,9 +1406,6 @@ msgstr "singular matrix 'a' in 'solve'"
 
 msgid "only square matrices can be inverted"
 msgstr "정방행렬만이 역행렬을 구할 수 있습니다 "
-
-msgid "'b' must be compatible with 'a'"
-msgstr "'b' 는 반드시 'a' 와 호환됩니다 "
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""
@@ -1774,6 +1753,27 @@ msgstr[0] "S3 메소드 %s 는 NAMESPACE 안에 선언되었으나 찾을 수 �
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "invalid 'n' value"
+#~ msgstr "'n' 값이 잘 못되었습니다 "
+
+#~ msgid "'shrink.sml' must be numeric > 0"
+#~ msgstr "'shrink.sml' 는 반드시 0 보다 큰 양수이어야 합니다 "
+
+#~ msgid "'min.n' must be non-negative integer <= n"
+#~ msgstr "'min.n' 는 n 보다 작은 양의 정수이어야 합니다 "
+
+#~ msgid "'high.u.bias' must be non-negative numeric"
+#~ msgstr "'high.bias' 는 반드시 양수이어야 합니다"
+
+#~ msgid "'u5.bias' must be non-negative numeric"
+#~ msgstr "'u5.bias' 는 반드시 양수이어야 합니다 "
+
+#~ msgid "'eps.correct' must be 0, 1, or 2"
+#~ msgstr "'eps.corect' 는 반드시 0, 1, 또는 2 일 것입니다 "
+
+#~ msgid "'b' must be compatible with 'a'"
+#~ msgstr "'b' 는 반드시 'a' 와 호환됩니다 "
 
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr "'backsolve' 의 인자값이 잘못되었습니다 "

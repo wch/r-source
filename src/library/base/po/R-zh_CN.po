@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25\n"
+"POT-Creation-Date: 2012-08-28 08:32\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1261,24 +1261,6 @@ msgstr "没有参数"
 msgid "an argument will be fractionally recycled"
 msgstr "参数将被数据略微回收"
 
-msgid "invalid 'n' value"
-msgstr "'n'的值有错"
-
-msgid "'shrink.sml' must be numeric > 0"
-msgstr "'shrink.sml'必需为大于零的数值"
-
-msgid "'min.n' must be non-negative integer <= n"
-msgstr "'min.n'必需为非负整数，而且得小于等于n"
-
-msgid "'high.u.bias' must be non-negative numeric"
-msgstr "'high.u.bias' 必需为非负数值"
-
-msgid "'u5.bias' must be non-negative numeric"
-msgstr "'u5.bias'必需为非负数值"
-
-msgid "'eps.correct' must be 0, 1, or 2"
-msgstr "'eps.correct'的值只能为零，一，或二"
-
 #, fuzzy
 msgid "invalid ncol(x)"
 msgstr "名字不对"
@@ -1401,9 +1383,6 @@ msgstr "'solve'里的'a'是奇异矩阵"
 
 msgid "only square matrices can be inverted"
 msgstr "只有正方形的矩阵才能求逆"
-
-msgid "'b' must be compatible with 'a'"
-msgstr "‘b’必需同‘a’相容"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "调用solve.default在\"qr\"对象上：用'qr.solve'"
@@ -1745,6 +1724,27 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "invalid 'n' value"
+#~ msgstr "'n'的值有错"
+
+#~ msgid "'shrink.sml' must be numeric > 0"
+#~ msgstr "'shrink.sml'必需为大于零的数值"
+
+#~ msgid "'min.n' must be non-negative integer <= n"
+#~ msgstr "'min.n'必需为非负整数，而且得小于等于n"
+
+#~ msgid "'high.u.bias' must be non-negative numeric"
+#~ msgstr "'high.u.bias' 必需为非负数值"
+
+#~ msgid "'u5.bias' must be non-negative numeric"
+#~ msgstr "'u5.bias'必需为非负数值"
+
+#~ msgid "'eps.correct' must be 0, 1, or 2"
+#~ msgstr "'eps.correct'的值只能为零，一，或二"
+
+#~ msgid "'b' must be compatible with 'a'"
+#~ msgstr "‘b’必需同‘a’相容"
 
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr "'backsolve'的参数有错"

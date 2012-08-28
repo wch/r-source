@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25\n"
+"POT-Creation-Date: 2012-08-28 08:32\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1296,24 +1296,6 @@ msgstr "keine Argumente"
 msgid "an argument will be fractionally recycled"
 msgstr "ein Argument wird teilweise recycled"
 
-msgid "invalid 'n' value"
-msgstr "ungültiger Wert für 'n'"
-
-msgid "'shrink.sml' must be numeric > 0"
-msgstr "'shrink.sml' muss numerisch und > 0 sein"
-
-msgid "'min.n' must be non-negative integer <= n"
-msgstr "'min.n' muss nicht negative ganze Zahl <= n sein"
-
-msgid "'high.u.bias' must be non-negative numeric"
-msgstr "'high.u.bias' muss nicht negativ numerisch sein"
-
-msgid "'u5.bias' must be non-negative numeric"
-msgstr "'u5.bias' muss nicht negativ numerisch sein"
-
-msgid "'eps.correct' must be 0, 1, or 2"
-msgstr "'eps.correct' muss 0, 1 oder 2 sein"
-
 #, fuzzy
 msgid "invalid ncol(x)"
 msgstr "ungültiger Name"
@@ -1436,9 +1418,6 @@ msgstr "singuläre Matrix 'a' in 'solve'"
 
 msgid "only square matrices can be inverted"
 msgstr "nur quadratische Matrizen können invertiert werden"
-
-msgid "'b' must be compatible with 'a'"
-msgstr "'b' muss kompatibel sein mit 'a'"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "solve.default mit einem \"qr\" Objekt aufgerufen: benutze 'qr.solve'"
@@ -1794,6 +1773,27 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "invalid 'n' value"
+#~ msgstr "ungültiger Wert für 'n'"
+
+#~ msgid "'shrink.sml' must be numeric > 0"
+#~ msgstr "'shrink.sml' muss numerisch und > 0 sein"
+
+#~ msgid "'min.n' must be non-negative integer <= n"
+#~ msgstr "'min.n' muss nicht negative ganze Zahl <= n sein"
+
+#~ msgid "'high.u.bias' must be non-negative numeric"
+#~ msgstr "'high.u.bias' muss nicht negativ numerisch sein"
+
+#~ msgid "'u5.bias' must be non-negative numeric"
+#~ msgstr "'u5.bias' muss nicht negativ numerisch sein"
+
+#~ msgid "'eps.correct' must be 0, 1, or 2"
+#~ msgstr "'eps.correct' muss 0, 1 oder 2 sein"
+
+#~ msgid "'b' must be compatible with 'a'"
+#~ msgstr "'b' muss kompatibel sein mit 'a'"
 
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr "ungültige Argumentwerte in 'backsolve'"

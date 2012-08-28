@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25\n"
+"POT-Creation-Date: 2012-08-28 08:32\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1238,24 +1238,6 @@ msgstr ""
 msgid "an argument will be fractionally recycled"
 msgstr ""
 
-msgid "invalid 'n' value"
-msgstr ""
-
-msgid "'shrink.sml' must be numeric > 0"
-msgstr ""
-
-msgid "'min.n' must be non-negative integer <= n"
-msgstr ""
-
-msgid "'high.u.bias' must be non-negative numeric"
-msgstr ""
-
-msgid "'u5.bias' must be non-negative numeric"
-msgstr ""
-
-msgid "'eps.correct' must be 0, 1, or 2"
-msgstr ""
-
 msgid "invalid ncol(x)"
 msgstr ""
 
@@ -1374,9 +1356,6 @@ msgid "singular matrix 'a' in 'solve'"
 msgstr ""
 
 msgid "only square matrices can be inverted"
-msgstr ""
-
-msgid "'b' must be compatible with 'a'"
 msgstr ""
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
