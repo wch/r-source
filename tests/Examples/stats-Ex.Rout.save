@@ -1,5 +1,5 @@
 
-R version 2.15.1 Patched (2012-08-23 r60385) -- "Roasted Marshmallows"
+R version 2.15.1 Patched (2012-08-28 r60463) -- "Roasted Marshmallows"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -12649,7 +12649,7 @@ attr(,"class")
 +   n <- length(pp$x)
 +   plot(pp$x, diff.quot(pp$x,pp$y), type = 'l', xlab="x", ylab="",
 +        col = "blue", col.main = "red",
-+        main= paste("s",paste(rep("'",d), collapse=""),"(x)", sep=""))
++        main= paste0("s",paste(rep("'",d), collapse=""),"(x)"))
 +   mtext("Difference quotient approx.(last)", col = "blue")
 +   lines(pp <- predict(cars.spl, xx, deriv = d), col = "red")
 + ## Don't show: 
