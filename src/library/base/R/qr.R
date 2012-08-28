@@ -16,6 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+#is.qr <- function(x) !is.null(x$qr) && !is.null(x$rank) && !is.null(x$qraux)
+
 is.qr <- function(x) inherits(x, "qr")
 
 qr <- function(x, ...) UseMethod("qr")
@@ -26,9 +28,15 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     if(is.complex(x))
         return(structure(.Internal(La_qr_cmplx(x)), class = "qr"))
     ## otherwise :
-    storage.mode(x) <- "double"
-    if(LAPACK)
-        return(structure(.Internal(La_qr(x)), useLapack = TRUE, class = "qr"))
+    if(!is.double(x))
+	storage.mode(x) <- "double"
+    if(LAPACK) {
+        res <- .Internal(La_qr(x))
+        if(!is.null(cn <- colnames(x))) colnames(res$qr) <- cn[res$pivot]
+        attr(res, "useLAPACK") <- TRUE
+        class(res) <- "qr"
+        return(res)
+    }
 
     p <- as.integer(ncol(x))
     if(is.na(p)) stop("invalid ncol(x)")
@@ -43,7 +51,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 	     as.double(tol),
 	     rank = integer(1L),
 	     qraux = double(p),
-	     pivot = as.integer(seq_len(p)),
+	     pivot = as.integer(1L:p),
 	     double(2L*p))[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
     if(!is.null(cn <- colnames(x)))
         colnames(res$qr) <- cn[res$pivot]
@@ -57,9 +65,12 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 qr.coef <- function(qr, y)
 {
     if( !is.qr(qr) ) stop("first argument must be a QR decomposition")
-    n <- as.integer(nrow(qr$qr)); if(is.na(n)) stop("invalid nrow(qr$qr)")
-    p <- as.integer(ncol(qr$qr)); if(is.na(p)) stop("invalid ncol(qr$qr)")
-    k <- as.integer(qr$rank); if(is.na(k)) stop("invalid ncol(qr$rank)")
+    n <- as.integer(nrow(qr$qr))
+    if(is.na(n)) stop("invalid nrow(qr$qr)")
+    p <- as.integer(ncol(qr$qr))
+    if(is.na(p)) stop("invalid ncol(qr$qr)")
+    k <- as.integer(qr$rank)
+    if(is.na(k)) stop("invalid ncol(qr$rank)")
     im <- is.matrix(y)
     if (!im) y <- as.matrix(y)
     ny <- as.integer(ncol(y))
@@ -69,14 +80,15 @@ qr.coef <- function(qr, y)
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
-	coef[qr$pivot, ] <- .Internal(qr_coef_cmplx(qr, y))[ix, ]
+	coef[qr$pivot,] <- .Internal(qr_coef_cmplx(qr, y))[ix, ]
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
-    if(isTRUE(attr(qr, "useLAPACK"))) {
-        storage.mode(y) <- "double"
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a) { # or isTRUE
+        if(!is.double(y)) storage.mode(y) <- "double"
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
-	coef[qr$pivot, ] <- .Internal(qr_coef_real(qr, y))[ix, ]
+	coef[qr$pivot,] <- .Internal(qr_coef_real(qr, y))[ix,]
 	return(if(im) coef else c(coef))
     }
     if (k == 0L) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
@@ -96,7 +108,7 @@ qr.coef <- function(qr, y)
     if(z$info) stop("exact singularity in 'qr.coef'")
     if(k < p) {
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
-	coef[qr$pivot[seq_len(k)], ] <- z$coef
+	coef[qr$pivot[1L:k],] <- z$coef
     }
     else coef <- z$coef
 
@@ -118,14 +130,15 @@ qr.qy <- function(qr, y)
         if(!is.complex(y)) y[] <- as.complex(y)
         return(.Internal(qr_qy_cmplx(qr, y, FALSE)))
     }
-    if(isTRUE(attr(qr, "useLAPACK")))
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
         return(.Internal(qr_qy_real(qr, as.matrix(y), FALSE)))
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
     k <- as.integer(qr$rank)
     ny <- as.integer(NCOL(y))
     if(is.na(ny)) stop("invalid NCOL(y)")
-    storage.mode(y) <- "double"
+   storage.mode(y) <- "double"
     if(NROW(y) != n)
 	stop("'qr' and 'y' must have the same number of rows")
     .Fortran(.F_dqrqy,
@@ -146,7 +159,8 @@ qr.qty <- function(qr, y)
         if(!is.complex(y)) y[] <- as.complex(y)
         return(.Internal(qr_qy_cmplx(qr, y, TRUE)))
     }
-    if(isTRUE(attr(qr, "useLAPACK")))
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
         return(.Internal(qr_qy_real(qr, as.matrix(y), TRUE)))
 
     n <- as.integer(nrow(qr$qr))
@@ -171,7 +185,8 @@ qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("not implemented for complex 'qr'")
-    if(isTRUE(attr(qr, "useLAPACK")))
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
         stop("not supported for LAPACK QR")
     k <- as.integer(qr$rank)
     if (k==0) return(y)
@@ -192,7 +207,8 @@ qr.fitted <- function(qr, y, k=qr$rank)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("not implemented for complex 'qr'")
-    if(isTRUE(attr(qr, "useLAPACK")))
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
         stop("not supported for LAPACK QR")
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
@@ -223,7 +239,7 @@ qr.Q <- function (qr, complete = FALSE,
 	if (complete) diag(Dvec, dqr[1L])
 	else {
 	    ncols <- min(dqr)
-	    diag(Dvec[seq_len(ncols)], nrow = dqr[1L], ncol = ncols)
+	    diag(Dvec[1L:ncols], nrow = dqr[1L], ncol = ncols)
 	}
     qr.qy(qr, D)
 }
@@ -250,10 +266,10 @@ qr.X <- function (qr, complete = FALSE,
     p <- as.integer(dim(R)[2L])
     if(is.na(p)) stop("invalid NCOL(R)")
     if (ncol < p)
-	R <- R[, seq_len(ncol), drop = FALSE]
+	R <- R[, 1L:ncol, drop = FALSE]
     else if (ncol > p) {
 	tmp <- diag(if (!cmplx) 1 else 1 + 0i, nrow(R), ncol)
-	tmp[, seq_len(p)] <- R
+	tmp[, 1L:p] <- R
 	R <- tmp
     }
     res <- qr.qy(qr, R)
