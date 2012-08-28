@@ -29,6 +29,8 @@ getNamespace <- function(name) {
     else tryCatch(loadNamespace(name), error = function(e) stop(e))
 }
 
+.getNamespace <- function(name) .Internal(getRegisteredNamespace(as.name(name)))
+
 loadedNamespaces <- function()
     ls(.Internal(getNamespaceRegistry()), all.names = TRUE)
 

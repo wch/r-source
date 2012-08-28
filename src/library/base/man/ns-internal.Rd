@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-internals}
@@ -26,6 +26,7 @@
 \alias{.mergeImportMethods}
 \alias{.knownS3Generics}
 \alias{loadingNamespaceInfo}
+\alias{.getNamespace}
 \usage{
 asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo(ns, which)
@@ -46,6 +47,7 @@ setNamespaceInfo(ns, which, val)
 .mergeImportMethods(impenv, expenv, metaname)
 .knownS3Generics
 loadingNamespaceInfo()
+.getNamespace(name)
 }
 
 \arguments{
@@ -68,6 +70,7 @@ loadingNamespaceInfo()
   \item{val}{any object.}
   \item{\dots}{character arguments.}
   \item{metaname}{the methods table name.}
+  \item{name}{symbol: name of namespace}
 }
 \description{
   Internal namespace support functions.  Not intended to be called directly.
