@@ -809,7 +809,9 @@
       \item Protection added to \code{do_system}. (\PR{15025})
 
       \item Printing of vectors with names > 1000 characters now works
-      correctly. (\PR{15028})
+      correctly rather than truncating. (\PR{15028})
+      
+      \item \code{qr()} for a complex matrix did not pivot the column names.
     }
   }
 }

@@ -44,7 +44,7 @@ solve.default <-
 	    b <- diag(1.0+0.0i, nrow(a))
 	    colnames(b) <- rownames(a)
 	}
-        return(.Internal(La_zgesv(a, b)))
+        return(.Internal(La_solve_cmplx(a, b)))
     }
 
     if(is.qr(a)) {
@@ -58,7 +58,7 @@ solve.default <-
 	    b <- diag(1.0, nrow(a))
 	    colnames(b) <- rownames(a)
 	}
-        return(.Internal(La_dgesv(a, b, tol)))
+        return(.Internal(La_solve(a, b, tol)))
     }
 
     a <- qr(a, tol = tol)

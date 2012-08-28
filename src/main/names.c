@@ -1011,7 +1011,7 @@ FUNTAB R_FunTab[] =
 {"rowsum_matrix",do_rowsum, 	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"rowsum_df",	do_rowsum, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"La_zgeqp3",	do_lapack,     	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_qr_cmplx",	do_lapack,     	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_rs",	do_lapack,     	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_rs_cmplx",do_lapack,     	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_rg",	do_lapack,     	3,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1023,9 +1023,9 @@ FUNTAB R_FunTab[] =
 {"La_dtrcon",	do_lapack,     	8,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_zgecon",	do_lapack,     	9,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_ztrcon",	do_lapack,     	10,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_zgesv",	do_lapack,     	11,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_dgesv",	do_lapack,     	100,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_dgeqp3",	do_lapack,     	101,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_solve_cmplx",do_lapack,    11,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_solve",	do_lapack,     	100,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_qr",	do_lapack,     	101,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_chol",	do_lapack,     	200,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_chol2inv",	do_lapack,     	201,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
