@@ -1817,7 +1817,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- R_runR(NULL, c(Ropts, enc),
-                             c("LANGUAGE=en",
+                             c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
                                if(nzchar(arch)) env0,
                                jitstr, elibs),
                              stdout = exout, stderr = exout,
@@ -1993,8 +1993,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             t1 <- proc.time()
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = c("LANGUAGE=en", if(nzchar(arch)) env0,
-                                     jitstr, elibs),
+                             env = c("LANGUAGE=en",
+                             "_R_CHECK_INTERNALS2_=1",
+                             if(nzchar(arch)) env0,
+                             jitstr, elibs),
                              stdout = "", stderr = "", arch = arch)
             t2 <- proc.time()
             if (status) {
@@ -2197,7 +2199,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
                                  ## add timing as footer, as BATCH does
-                                 env = c(jitstr, "R_BATCH=1234", elibs),
+                                 env = c(jitstr, "R_BATCH=1234", elibs,
+                                 "_R_CHECK_INTERNALS2_=1"),
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)

@@ -961,6 +961,7 @@ void setup_Rmainloop(void)
 
     /* trying to do this earlier seems to run into bootstrapping issues. */
     R_init_jit_enabled();
+    R_Is_Running = 2;
 }
 
 extern SA_TYPE SaveAction; /* from src/main/startup.c */

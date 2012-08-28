@@ -1209,8 +1209,6 @@ SEXP install(const char *name)
 }
 
 
-//#define CHECK_INTERNAL 1
-
 /*  do_internal - This is the code for .Internal(). */
 
 SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1231,28 +1229,34 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("there is no .Internal function '%s'"),
 		  CHAR(PRINTNAME(fun)));
 
-#ifdef CHECK_INTERNAL
-    // find out if we were called from a namespace.
-    // inlining by the compiler can defeat this.
-    const char *ns = "";
-    if(R_IsNamespaceEnv(env)) {
-	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env), 0));
-    } else {
-	SEXP env2 = ENCLOS(env);
-	if(R_IsNamespaceEnv(env2))
-	    ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
+#ifdef CHECK_INTERNALS
+    if(R_Is_Running > 1 && getenv("_R_CHECK_INTERNALS2_")) {
+	// find out if we were called from a namespace.
+	// inlining by the compiler can defeat this.
+	const char *ns = "";
+	SEXP e = env;
+	for (int i = 0; i < 10; i++) {
+	    if(R_IsNamespaceEnv(e)) {
+		ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(e), 0));
+		break;
+	    }
+	    e = ENCLOS(e);
+	    if (isNull(e)) break;
+	}
+	const char *fn = CHAR(PRINTNAME(fun));
+	if (!strlen(ns) && strcmp(fn, "getRegisteredNamespace"))
+	    errorcall(call,
+		      ".Internal(%s()) not called from a base namespace\n", fn);
+	// nspackloader.R contains a .Internal call, so need this
+	// until all packages have been re-installed.
+	if (strlen(ns) && strcmp(fn, "getRegisteredNamespace")
+	    && strcmp(ns, "base") && strcmp(ns, "tools") && strcmp(ns, "methods")
+	    && strcmp(ns, "utils") && strcmp(ns, "compiler"))
+	    errorcall(call,
+		      ".Internal(%s()) called from namespace '%s'\n", fn, ns);
     }
-    const char *fn = CHAR(PRINTNAME(fun));
-    // nspackloader.R contains a .Internal call
-    if (strlen(ns) && strcmp(fn, "getRegisteredNamespace") && 
-	strcmp(ns, "base") && strcmp(ns, "tools") && 
-	strcmp(ns, "methods") && strcmp(ns, "utils") && 
-	strcmp(ns, "compiler") && strcmp(ns, "parallel"))
-//	Rprintf(
-	errorcall(call,
-		  ".Internal(%s()) called from namespace '%s'\n", fn, ns);
+#endif
 
-#endif 
 
     args = CDR(s);
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
