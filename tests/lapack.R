@@ -77,3 +77,62 @@ sm[] <- sm + rnorm(25) * 1i
 sm <- 0.5 * (sm + Conj(t(sm)))
 Ceigenok(sm, eigen(sm))
 Ceigenok(sm, eigen(sm, sym=FALSE))
+
+
+##  -------  tests of integer matrices -----------------
+
+set.seed(123)
+A <- matrix(rpois(25, 5), 5, 5)
+
+A %*% A
+crossprod(A)
+tcrossprod(A)
+
+solve(A)
+qr(A)
+determinant(A, log = FALSE)
+
+rcond(A)
+rcond(A, "I")
+rcond(A, "1")
+
+eigen(A)
+svd(A)
+La.svd(A)
+
+As <- crossprod(A)
+eigen(As)
+chol(As)
+backsolve(As, 1:5)
+
+##  -------  tests of logical matrices -----------------
+
+set.seed(123)
+A <- matrix(runif(25) > 0.5, 5, 5)
+
+A %*% A
+crossprod(A)
+tcrossprod(A)
+
+qr(A)
+determinant(A, log = FALSE) # 0
+
+rcond(A)
+rcond(A, "I")
+rcond(A, "1")
+
+eigen(A)
+svd(A)
+La.svd(A)
+
+As <- A
+As[upper.tri(A)] <- t(A)[upper.tri(A)]
+det(As)
+eigen(As)
+solve(As)
+
+## quite hard to come up with an example where this might make sense.
+Ac <- A; Ac[] <- as.logical(diag(5))
+chol(Ac)
+
+

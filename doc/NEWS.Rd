@@ -191,6 +191,9 @@
       
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
+      
+      \item More matrix algebra functions (e.g. \code{chol()} accept
+      logical matrices.
     }
   }
 

@@ -45,6 +45,5 @@ determinant.matrix <- function(x, logarithm = TRUE, ...)
     ## FIXME: should not be so hard to implement; see
     ##      moddet_ge_real() in ../../../modules/lapack/Lapack.c
     ## the 'sign' would have to be complex z, with |z|=1
-    storage.mode(x) <- "double"
     .Internal(det_ge_real(x, logarithm))
 }

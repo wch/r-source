@@ -16,7 +16,8 @@
 eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 }
 \arguments{
-  \item{x}{a matrix whose spectral decomposition is to be computed.}
+  \item{x}{a numeric or complexmatrix whose spectral decomposition is to
+    be computed.  Logical matrices are coerced to numeric.}
   \item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
     (or Hermitian if complex) and only its lower triangle (diagonal
     included) is used.  If \code{symmetric} is not specified, the matrix
@@ -52,7 +53,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   solution may be of a similar matrix with complex conjugate pairs of
   eigenvalues.
 
-  The LINPACK interface is restricted to matrices \code{x} with less
+  The EISPACK interface is restricted to matrices \code{x} with less
   than \eqn{2^{31}}{2^31} elements.
 }
 \value{

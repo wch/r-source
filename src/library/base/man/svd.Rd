@@ -16,8 +16,8 @@ svd(x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE)
 La.svd(x, nu = min(n, p), nv = min(n, p))
 }
 \arguments{
-  \item{x}{a numeric, logical or complex matrix whose SVD decomposition
-    is to be computed.}
+  \item{x}{a numeric or complex matrix whose SVD decomposition
+    is to be computed.  Logical matrices are coerced to numeric.}
   \item{nu}{the number of left  singular vectors to be computed.
     This must between \code{0} and \code{n = nrow(x)}.}
   \item{nv}{the number of right singular vectors to be computed.

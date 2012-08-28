@@ -26,7 +26,6 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     if(is.complex(x))
         return(structure(.Internal(La_qr_cmplx(x)), class = "qr"))
     ## otherwise :
-    storage.mode(x) <- "double"
     if(LAPACK)
         return(structure(.Internal(La_qr(x)), useLAPACK = TRUE, class = "qr"))
 
@@ -35,6 +34,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     n <- as.integer(nrow(x))
     if(is.na(n)) stop("invalid nrow(x)")
     if(1.0 * n * p > 2147483647) stop("too large a matrix for LINPACK")
+    storage.mode(x) <- "double"
     res <- .Fortran(.F_dqrdc2,
 	     qr = x,
 	     n,
@@ -67,14 +67,12 @@ qr.coef <- function(qr, y)
     if (p == 0L) return( if (im) matrix(0, p, ny) else numeric() )
     ix <- if ( p > n ) c(seq_len(n), rep(NA, p - n)) else seq_len(p)
     if(is.complex(qr$qr)) {
-	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
 	coef[qr$pivot, ] <- .Internal(qr_coef_cmplx(qr, y))[ix, ]
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
     if(isTRUE(attr(qr, "useLAPACK"))) {
-        storage.mode(y) <- "double"
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
 	coef[qr$pivot, ] <- .Internal(qr_coef_real(qr, y))[ix, ]
 	return(if(im) coef else c(coef))
@@ -113,13 +111,11 @@ qr.coef <- function(qr, y)
 qr.qy <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    if(is.complex(qr$qr)) {
-        y <- as.matrix(y)
-        if(!is.complex(y)) y[] <- as.complex(y)
-        return(.Internal(qr_qy_cmplx(qr, y, FALSE)))
-    }
+    if(is.complex(qr$qr))
+        return(.Internal(qr_qy_cmplx(qr, as.matrix(y), FALSE)))
     if(isTRUE(attr(qr, "useLAPACK")))
         return(.Internal(qr_qy_real(qr, as.matrix(y), FALSE)))
+
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
     k <- as.integer(qr$rank)
@@ -141,11 +137,8 @@ qr.qy <- function(qr, y)
 qr.qty <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    if(is.complex(qr$qr)){
-        y <- as.matrix(y)
-        if(!is.complex(y)) y[] <- as.complex(y)
-        return(.Internal(qr_qy_cmplx(qr, y, TRUE)))
-    }
+    if(is.complex(qr$qr))
+        return(.Internal(qr_qy_cmplx(qr, as.matrix(y), TRUE)))
     if(isTRUE(attr(qr, "useLAPACK")))
         return(.Internal(qr_qy_real(qr, as.matrix(y), TRUE)))
 
@@ -171,8 +164,7 @@ qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("not implemented for complex 'qr'")
-    if(isTRUE(attr(qr, "useLAPACK")))
-        stop("not supported for LAPACK QR")
+    if(isTRUE(attr(qr, "useLAPACK"))) stop("not supported for LAPACK QR")
     k <- as.integer(qr$rank)
     if (k==0) return(y)
     n <- as.integer(nrow(qr$qr))
@@ -192,8 +184,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("not implemented for complex 'qr'")
-    if(isTRUE(attr(qr, "useLAPACK")))
-        stop("not supported for LAPACK QR")
+    if(isTRUE(attr(qr, "useLAPACK"))) stop("not supported for LAPACK QR")
     n <- as.integer(nrow(qr$qr))
     if(is.na(n)) stop("invalid nrow(qr$qr)")
     k <- as.integer(k)

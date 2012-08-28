@@ -43,7 +43,6 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     if(is.na(n)) stop("invalid nrow(x)")
 
     complex.x <- is.complex(x)
-    if(!complex.x && !is.double(x)) storage.mode(x) <- "double"
     if (!all(is.finite(x))) stop("infinite or missing values in 'x'")
 
     if(missing(symmetric)) symmetric <- isSymmetric.matrix(x)
@@ -63,6 +62,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     }
 
     if(n > 46340) stop("too large a matrix for EISPACK")
+    if(!complex.x && !is.double(x)) storage.mode(x) <- "double"
     dbl.n <- double(n)
     if(!is.null(dimnames(x)))
         dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors

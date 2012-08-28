@@ -22,20 +22,15 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 {
     if (is.complex(x))
         stop("complex matrices not permitted at present")
-    else if(!is.numeric(x))
-	stop("non-numeric argument to 'chol'")
 
     if(is.matrix(x)) {
-	if(nrow(x) != ncol(x))
-	    stop("non-square matrix in 'chol'")
+	if(nrow(x) != ncol(x)) stop("non-square matrix in 'chol'")
 	n <- nrow(x)
     } else {
-	if(length(x) != 1L)
-	    stop("non-matrix argument to 'chol'")
+	if(length(x) != 1L) stop("non-matrix argument to 'chol'")
 	n <- 1L
     }
-    if(!pivot && !LINPACK)
-        return(.Internal(La_chol(as.matrix(x))))
+    if(!pivot && !LINPACK) return(.Internal(La_chol(as.matrix(x))))
 
     ## sanity checks
     n <- as.integer(n)
@@ -71,10 +66,9 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 
 chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
 {
-    if(!is.numeric(x))
-	stop("non-numeric argument to 'chol2inv'")
     if(!LINPACK) return(.Internal(La_chol2inv(x, size)))
 
+    if(!is.numeric(x)) stop("non-numeric argument to 'chol2inv'")
     if(is.matrix(x)) {
 	nr <- nrow(x)
 	nc <- ncol(x)

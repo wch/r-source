@@ -32,7 +32,8 @@ is.qr(x)
 as.qr(x)
 }
 \arguments{
-  \item{x}{a matrix whose QR decomposition is to be computed.}
+  \item{x}{a numeric or complex matrix whose QR decomposition is to be
+    computed.  Logical matrices are coerced to numeric.}
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{x}. Only used if \code{LAPACK} is false and
     \code{x} is real.}
@@ -41,7 +42,7 @@ as.qr(x)
   \item{a}{a QR decomposition or (\code{qr.solve} only) a rectangular matrix.}
   \item{k}{effective rank.}
   \item{LAPACK}{logical.  For real \code{x}, if true use LAPACK
-    otherwise use LINPACK.}
+    otherwise use LINPACK (the default).}
   \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
@@ -64,7 +65,7 @@ as.qr(x)
   \code{t(Q) \%*\% y}, where \code{Q} is the (complete) \eqn{\bold{Q}} matrix.
 
   All the above functions keep \code{dimnames} (and \code{names}) of
-  \code{x} and \code{y} if there are.
+  \code{x} and \code{y} if there are any.
 
   \code{solve.qr} is the method for \code{\link{solve}} for \code{qr} objects.
   \code{qr.solve} solves systems of equations via the QR decomposition:
@@ -82,6 +83,8 @@ as.qr(x)
 
   The LINPACK interface is restricted to matrices \code{x} with less
   than \eqn{2^{31}}{2^31} elements.
+
+  \code{qr.fitted} and \code{qr.resid} only support the LINPACK interface.
 }
 \value{
   The QR decomposition of the matrix as computed by LINPACK or LAPACK.

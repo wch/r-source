@@ -18,7 +18,7 @@
 
 La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 {
-    if(!is.numeric(x) && !is.complex(x))
+    if(!is.logical(x) && !is.numeric(x) && !is.complex(x))
 	stop("argument to 'La.svd' must be numeric or complex")
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     x <- as.matrix(x)
@@ -59,7 +59,6 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         res <- .Internal(La_svd_cmplx(jobu, jobv, x, double(min(n, p)), u, v))
         return(res[c("d", if(nu) "u", if(nv) "vt")])
     } else {
-        storage.mode(x) <- "double"  ## allow for logical/integer
         if(nu || nv) {
             np <- min(n, p)
             if(nu <= np && nv <= np) {
@@ -79,8 +78,8 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
             u <- matrix(0, 1L, 1L)
             vt <- matrix(0, 1L, 1L)
         }
-        jobv <- ""
-        res <- .Internal(La_svd(jobu, jobv, x, double(min(n,p)), u, vt))
+        ## type is now coerced internally
+        res <- .Internal(La_svd(jobu, x, double(min(n,p)), u, vt))
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
         if(nu && nu < nu0) res$u <- res$u[, 1L:min(n, nu), drop = FALSE]
         if(nv && nv < nv0) res$vt <- res$vt[1L:min(p, nv), , drop = FALSE]

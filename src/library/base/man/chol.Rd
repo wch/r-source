@@ -18,7 +18,7 @@ chol(x, \dots)
 }
 \arguments{
   \item{x}{an object for which a method exists.  The default method
-    applies to real symmetric, positive-definite matrices.}
+    applies to numeric (or logical) symmetric, positive-definite matrices.}
   \item{\dots}{arguments to be based to or from methods.}
   \item{pivot}{Should pivoting be used?}
   \item{LINPACK}{logical.  Should LINPACK be used in the non-pivoting

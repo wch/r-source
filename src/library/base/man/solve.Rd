@@ -18,7 +18,7 @@ solve(a, b, \dots)
 \alias{solve.default}
 \arguments{
   \item{a}{a square numeric or complex matrix containing the coefficients of
-    the linear system.}
+    the linear system.  Logical matrices are coerced to numeric.}
   \item{b}{a numeric or complex vector or matrix giving the right-hand
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
