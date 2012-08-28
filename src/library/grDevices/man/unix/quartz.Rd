@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/quartz.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-211 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
@@ -104,6 +104,12 @@ quartz.options(\dots, reset = FALSE)
     
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}
   for on-screen devices and to \code{"quartz_off_screen"} otherwise.
+  
+  The font family chosen needs to cover the characters to be used:
+  characters not in the font are rendered as empty oblongs.  For
+  non-Western-European languages something other than the default of
+  \code{"Helvetica"} is likely to be needed---one choice for Chinese is
+  \code{"MingLiU"}.
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for
@@ -112,7 +118,7 @@ quartz.options(\dots, reset = FALSE)
   \itemize{
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
-    \item The default font family is Arial.
+    \item The default font family is Helvetica.
     \item Line widths are a multiple of 1/96 inch with no minimum set by \R.
     \item Circle radii are real-valued with no minimum set by \R.
     \item Colours are specified as sRGB.
@@ -125,9 +131,9 @@ quartz.options(\dots, reset = FALSE)
   via \R's standard bitmap devices.
 }
 \examples{\dontrun{
-## put something this is your .Rprofile to customize the defaults
+## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
-        function(...) grDevices::quartz.options(width=8, height=6,
-                                                pointsize=10))
+        function(...) grDevices::quartz.options(width = 8, height = 6,
+                                                pointsize = 10))
 }}
 \keyword{device}
