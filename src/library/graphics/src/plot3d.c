@@ -173,22 +173,18 @@ SEXP C_filledcontour(SEXP args)
     PrintDefaults(); /* prepare for labelformat */
 
     args = CDR(args);
-    sx = CAR(args);
-    TypeCheck(sx, REALSXP);
+    sx = PROTECT(coerceVector(CAR(args), REALSXP));
     nx = LENGTH(sx);
     args = CDR(args);
 
-    sy = CAR(args);
-    TypeCheck(sy, REALSXP);
+    sy = PROTECT(coerceVector(CAR(args), REALSXP));
     ny = LENGTH(sy);
     args = CDR(args);
 
-    sz = CAR(args);
-    TypeCheck(sz, REALSXP);
+    sz = PROTECT(coerceVector(CAR(args), REALSXP));
     args = CDR(args);
 
-    sc = CAR(args);/* levels */
-    TypeCheck(sc, REALSXP);
+    sc = PROTECT(coerceVector(CAR(args), REALSXP)); /* levels */
     nc = length(sc);
     args = CDR(args);
 
@@ -257,7 +253,7 @@ SEXP C_filledcontour(SEXP args)
     GMode(0, dd);
     gpptr(dd)->col = colsave;
     gpptr(dd)->xpd = xpdsave;
-    UNPROTECT(1);
+    UNPROTECT(5);
     return R_NilValue;
 
  badxy:
@@ -286,18 +282,16 @@ SEXP C_image(SEXP args)
     GCheckState(dd);
 
     args = CDR(args);
-    sx = CAR(args);
-    TypeCheck(sx, REALSXP);
+
+    sx = PROTECT(coerceVector(CAR(args), REALSXP));
     nx = LENGTH(sx);
     args = CDR(args);
 
-    sy = CAR(args);
-    TypeCheck(sy, REALSXP);
+    sy = PROTECT(coerceVector(CAR(args), REALSXP));
     ny = LENGTH(sy);
     args = CDR(args);
 
-    sz = CAR(args);
-    TypeCheck(sz, INTSXP);
+    sz = PROTECT(coerceVector(CAR(args), INTSXP));
     args = CDR(args);
 
     PROTECT(sc = FixupCol(CAR(args), R_TRANWHITE));
@@ -330,7 +324,7 @@ SEXP C_image(SEXP args)
     GMode(0, dd);
     gpptr(dd)->col = colsave;
     gpptr(dd)->xpd = xpdsave;
-    UNPROTECT(1);
+    UNPROTECT(4);
     return R_NilValue;
 }
 
@@ -1875,29 +1869,24 @@ SEXP C_contour(SEXP args)
     if (length(args) < 12) error(_("too few arguments"));
     PrintDefaults(); /* prepare for labelformat */
 
-    x = CAR(args);
-    TypeCheck(x, REALSXP);
+    x = PROTECT(coerceVector(CAR(args), REALSXP));
     nx = LENGTH(x);
     args = CDR(args);
 
-    y = CAR(args);
-    TypeCheck(y, REALSXP);
+    y = PROTECT(coerceVector(CAR(args), REALSXP));
     ny = LENGTH(y);
     args = CDR(args);
 
-    z = CAR(args);
-    TypeCheck(z, REALSXP);
+    z = PROTECT(coerceVector(CAR(args), REALSXP));
     args = CDR(args);
 
     /* levels */
-    c = CAR(args);
-    TypeCheck(c, REALSXP);
+    c = PROTECT(coerceVector(CAR(args), REALSXP));
     nc = LENGTH(c);
     args = CDR(args);
 
     labels = CAR(args);
-    if (!isNull(labels))
-	TypeCheck(labels, STRSXP);
+    if (!isNull(labels)) TypeCheck(labels, STRSXP);
     args = CDR(args);
 
     labcex = asReal(CAR(args));
@@ -1973,7 +1962,7 @@ SEXP C_contour(SEXP args)
 	    warning(_("all z values are equal"));
 	else
 	    warning(_("all z values are NA"));
-	UNPROTECT(4);
+	UNPROTECT(8);
 	return R_NilValue;
     }
 
@@ -2034,6 +2023,6 @@ SEXP C_contour(SEXP args)
 	strncpy(gpptr(dd)->family, familysave, 201);
 	gpptr(dd)->font = fontsave;
     }
-    UNPROTECT(5);
+    UNPROTECT(9); /* x y z c vfont col lty lwd labellist */
     return result;
 }

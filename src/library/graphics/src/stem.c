@@ -199,18 +199,17 @@ C_bincount(double *x, R_xlen_t n, double *breaks, R_xlen_t nb, int *count,
 	}
 }
 
-/* The R wrapper removed non-finite values and set the storage.mode */
+/* The R wrapper removed non-finite values */
 SEXP C_BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest)
 {
-    if(TYPEOF(x) != REALSXP || TYPEOF(breaks) != REALSXP) 
-	error("invalid input");
+    x = PROTECT(coerceVector(x, REALSXP));
+    breaks = PROTECT(coerceVector(breaks, REALSXP));
     R_xlen_t n = XLENGTH(x), nB = XLENGTH(breaks);
     int sr = asLogical(right), sl = asLogical(lowest);
     if (sr == NA_INTEGER) error(_("invalid '%s' argument"), "right");
     if (sl == NA_INTEGER) error(_("invalid '%s' argument"), "include.lowest");
-   SEXP counts;
-    PROTECT(counts = allocVector(INTSXP, nB - 1));
+    SEXP counts = PROTECT(allocVector(INTSXP, nB - 1));
     C_bincount(REAL(x), n, REAL(breaks), nB, INTEGER(counts), sr, sl);
-    UNPROTECT(1);
+    UNPROTECT(3);
     return counts;
 }

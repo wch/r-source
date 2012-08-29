@@ -37,7 +37,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
     if(is.na(n)) stop("invalid nrow(x)")
     if(n > 46340) stop("too large a matrix for LINPACK")
 
-    if(!is.double(x)) storage.mode(x) <- "double"
+    storage.mode(x) <- "double"
 
     if(pivot) { ## code could be used in the other case too
         xx <- x
@@ -82,7 +82,7 @@ chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
     size <- as.integer(size)
     if(is.na(size) || size <= 0L || size > nr || size > nc)
 	stop("invalid 'size' argument in 'chol2inv'")
-    if(!is.double(x)) storage.mode(x) <- "double"
+    storage.mode(x) <- "double"
     z <- .Fortran(.F_ch2inv,
 		  x = x, nr, size, v = matrix(0, nrow=size, ncol=size),
                   info = integer(1L), DUP = FALSE)

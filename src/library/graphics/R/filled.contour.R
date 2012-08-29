@@ -82,9 +82,6 @@ function (x = seq(0, 1, length.out = nrow(z)),
     plot.new()
     plot.window(xlim, ylim, "", xaxs = xaxs, yaxs = yaxs, asp = asp)
 
-    if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
-        stop("no proper 'z' matrix specified")
-    if (!is.double(z)) storage.mode(z) <- "double"
     .filled.contour(x, y, z, levels, col)
     if (missing(plot.axes)) {
         if (axes) {
@@ -106,8 +103,6 @@ function (x = seq(0, 1, length.out = nrow(z)),
 {
     if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
         stop("no proper 'z' matrix specified")
-    if (!is.double(z)) storage.mode(z) <- "double"
-    .External.graphics(C_filledcontour, as.double(x), as.double(y), z,
-                       as.double(levels), col = col)
+    .External.graphics(C_filledcontour, x, y, z, levels, col)
     invisible()
 }

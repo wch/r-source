@@ -32,7 +32,6 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
 
     x <- as.matrix(x)
     N  <- nrow(x)
-    if (!is.double(x)) storage.mode(x) <- "double"
     attrs <- if(method == 6L)
         list(Size = N, Labels =  dimnames(x)[[1L]], Diag = diag,
              Upper = upper, method = METHODS[method],

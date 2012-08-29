@@ -106,8 +106,8 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(is.na(iter.max) || iter.max < 1) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in 'x' and 'centers'")
-    if(!is.double(x)) storage.mode(x) <- "double"
-    if(!is.double(centers)) storage.mode(centers) <- "double"
+    storage.mode(x) <- "double"
+    storage.mode(centers) <- "double"
     Z <- do_one(nmeth)
     best <- sum(Z$wss)
     if(nstart >= 2 && !is.null(cn))

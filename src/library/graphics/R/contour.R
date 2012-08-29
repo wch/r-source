@@ -57,7 +57,6 @@ function (x = seq(0, 1, length.out = nrow(z)),
 	localTitle(...)
     }
     ##- don't lose  dim(.)
-    if (!is.double(z)) storage.mode(z) <- "double"
     method <- pmatch(method[1L], c("simple", "edge", "flattest"))
     if (missing(vfont))
        vfont <- if(.Call(C_contourDef)) NULL else c("sans serif", "plain")
@@ -66,10 +65,8 @@ function (x = seq(0, 1, length.out = nrow(z)),
                    fontindex= pmatch(vfont[2L], Hershey$fontindex))
     if (!is.null(labels))
         labels <- as.character(labels)
-    .External.graphics(C_contour, as.double(x), as.double(y), z,
-                       as.double(levels),
-                       labels, labcex, drawlabels, method, vfont,
-                       col, lty, lwd)
+    .External.graphics(C_contour, x, y, z, levels, labels, labcex, drawlabels,
+                       method, vfont, col, lty, lwd)
     if(!add) {
         ## at least col, lty, lwd are not needed,
         ## but easiest to be consistent with plot.default

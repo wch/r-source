@@ -87,9 +87,8 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	    stop("must have one more break than colour")
 	if (any(!is.finite(breaks)))
 	    stop("breaks must all be finite")
-        ## spatstat passes a factor matrix here.
-        z1 <- if (!is.double(z)) as.double(z) else z
-        zi <- .bincode(z1, breaks, TRUE, TRUE) - 1L
+        ## spatstat passes a factor matrix here, but .bincode converts.
+        zi <- .bincode(z, breaks, TRUE, TRUE) - 1L
     }
     if (!add)
 	plot(NA, NA, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
@@ -115,8 +114,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
            useRaster <- FALSE
            ras <- dev.capabilities("raster")
            if(identical(ras, "yes")) useRaster <- TRUE
-           if(identical(ras, "non-missing"))
-               useRaster <- all(!is.na(zi))
+           if(identical(ras, "non-missing")) useRaster <- all(!is.na(zi))
        }
     }
     if (useRaster) {
@@ -132,11 +130,10 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         }
         zc <- col[zi + 1L]
         dim(zc) <- dim(z)
-        zc <- t(zc)[ncol(zc):1L,, drop=FALSE]
+        zc <- t(zc)[ncol(zc):1L,, drop = FALSE]
         rasterImage(as.raster(zc),
                     min(x), min(y), max(x), max(y),
-                    interpolate=FALSE)
-     } else .External.graphics(C_image, as.double(x), as.double(y),
-                               as.integer(zi), col)
+                    interpolate = FALSE)
+     } else .External.graphics(C_image, x, y, zi, col)
     invisible()
 }

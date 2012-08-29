@@ -101,10 +101,8 @@ hist.default <-
     fuzzybreaks <- breaks + fuzz
     h <- diff(fuzzybreaks)
 
-    storage.mode(x) <- "double"
-    storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
-    ## arguments are often irrelevant (not with integer data!)
+    ## arguments are often irrelevant (but not with integer data!)
     counts <- .Call(C_BinCount, x, fuzzybreaks, right, include.lowest)
     if (any(counts < 0L))
 	stop("negative 'counts'. Internal Error.", domain = NA)

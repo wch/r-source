@@ -102,9 +102,9 @@ simpleLoess <-
     if(!N || !D)	stop("invalid 'x'")
     if(!length(y))	stop("invalid 'y'")
     x <- as.matrix(x)
-    if(!is.double(x)) storage.mode(x) <- "double"
-    if(!is.double(y)) storage.mode(y) <- "double"
-    if(!is.double(weights)) storage.mode(weights) <- "double"
+    storage.mode(x) <- "double"
+    storage.mode(y) <- "double"
+    storage.mode(weights) <- "double"
     max.kd <-  max(N, 200)
     robust <- rep(1, N)
     divisor<- rep(1, D)
@@ -272,8 +272,8 @@ predLoess <-
     x <- x[, order.parametric, drop=FALSE]
     x.evaluate <- newx[, order.parametric, drop=FALSE]
     order.drop.sqr <- (2 - drop.square)[order.parametric]
-    if(!is.double(x)) storage.mode(x) <- "double"
-    if(!is.double(y)) storage.mode(y) <- "double"
+    storage.mode(x) <- "double"
+    storage.mode(y) <- "double"
     if(surface == "direct") {
         nas <- rowSums(is.na(newx)) > 0L
         fit <- rep(NA_real_, length(nas))

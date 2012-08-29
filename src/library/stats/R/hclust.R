@@ -68,7 +68,7 @@ hclust <- function(d, method="complete", members=NULL)
     else if(length(members) != n)
         stop("invalid length of members")
 
-    if (!is.double(d)) storage.mode(d) <- "double"
+    storage.mode(d) <- "double"
     hcl <- .Fortran(C_hclust,
 		    n = n,
 		    len = len,

@@ -70,9 +70,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 	stop("no proper 'z' matrix specified")
     ##- don't lose  dim(.)
-    if (!is.double(z)) storage.mode(z) <- "double"
-    invisible(.Internal(contourLines(as.double(x), as.double(y), z,
-                                     as.double(levels))))
+    invisible(.Internal(contourLines(x, y, z, levels)))
 }
 
 chull <- function(x, y = NULL)

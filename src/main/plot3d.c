@@ -266,25 +266,23 @@ SEXP attribute_hidden do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP c, x, y, z;
     int nx, ny, nc;
 
-    x = CAR(args);
-    internalTypeCheck(call, x, REALSXP);
+    x = PROTECT(coerceVector(CAR(args), REALSXP));
     nx = LENGTH(x);
     args = CDR(args);
 
-    y = CAR(args);
-    internalTypeCheck(call, y, REALSXP);
+    y = PROTECT(coerceVector(CAR(args), REALSXP));
     ny = LENGTH(y);
     args = CDR(args);
 
-    z = CAR(args);
-    internalTypeCheck(call, z, REALSXP);
+    z = PROTECT(coerceVector(CAR(args), REALSXP));
     args = CDR(args);
 
     /* levels */
-    c = CAR(args);
-    internalTypeCheck(call, c, REALSXP);
+    c = PROTECT(coerceVector(CAR(args), REALSXP));
     nc = LENGTH(c);
     args = CDR(args);
 
-    return GEcontourLines(REAL(x), nx, REAL(y), ny, REAL(z), REAL(c), nc);
+    SEXP res = GEcontourLines(REAL(x), nx, REAL(y), ny, REAL(z), REAL(c), nc);
+    UNPROTECT(4);
+    return res;
 }

@@ -192,7 +192,7 @@
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
       
-      \item More matrix algebra functions (e.g. \code{chol()} accept
+      \item More matrix algebra functions (e.g. \code{chol()}) accept
       logical matrices.
     }
   }
@@ -264,8 +264,8 @@
   \subsection{PERFORMANCE IMPROVEMENTS}{
     \itemize{
       \item More use has been made of \R objects representing registered
-      entry points, which is much more efficient as the address is
-      provided by the loader once only when the package is loaded.
+      entry points, which is more efficient as the address is provided
+      by the loader once only when the package is loaded.
 
       This has been done for packages \code{base}, \code{methods},
       \code{splines} and \code{tcltk}: it was already in place for the
@@ -285,6 +285,9 @@
       is a vector rather than a matrix.
       
       \item \code{eigen()} makes fewer copies if the input has dimnames.
+
+      \item Most of the linear algebra functions make fewer copies when
+      the input(s) are not double (e.g. integer or logical).
     }
   }
 
