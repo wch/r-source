@@ -501,7 +501,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, ".NAME");
+//    check1arg(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     fun = (R_ExternalRoutine) ofun;
@@ -544,7 +544,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, ".NAME");
+//    check1arg(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     args = CDR(args);
@@ -1388,7 +1388,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     char symName[MaxSymbolBytes], encname[101];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, ".NAME");
+//    check1arg(args, call, ".NAME");
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");
