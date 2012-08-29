@@ -818,6 +818,8 @@
       correctly rather than truncating. (\PR{15028})
       
       \item \code{qr()} for a complex matrix did not pivot the column names.
+
+      \item \code{--with='-framework vecLib'} now also works on OS X 10.8.
     }
   }
 }
