@@ -38,11 +38,8 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
     else if(kind == "S")
         iend <- as.logical(do.ends)
     ## same number and type of arguments for all:
-    smo <- .C(paste("Rsm", kind, sep="_"),
-              as.double(x),
-              y = double(n),
-              n, iend,
-              iter = integer(1L),
+    obj <- get(paste("C_Rsm", kind, sep="_"))
+    smo <- .C(obj, as.double(x), y = double(n), n, iend, iter = integer(1L),
               DUP = FALSE)[c("y","iter")]
 
     if(any(kind == c("R", "S"))) { # `iter' really was `changed'
