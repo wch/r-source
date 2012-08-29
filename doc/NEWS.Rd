@@ -597,12 +597,12 @@
       the enclosing function was defined.  It was less successful in
       doing so than it might be, and gave no indication it had failed.
 
-      A new search strategy is much more successful and gives a warning
+      A new search strategy is very successful and gives a warning
       when it fails.  In most cases this is because the entry point is
       not actually provided by that package (and so \code{PACKAGE}
-      should be used to indicate which package is intended) but in a few
-      the warning indicates that an explicit \code{PACKAGE} argument is
-      needed.
+      should be used to indicate which package is intended) but in some
+      the namespace does not have a DLL specified by a
+      \code{useDynLib()} directive so \code{PACKAGE} is required.
     }
   }
 
