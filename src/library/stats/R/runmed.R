@@ -28,11 +28,11 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
     if(is.na(n)) stop("invalid value of length(x)")
     k <- as.integer(k)
     if(is.na(k)) stop("invalid value of 'k'")
-    if(k < 0) stop("'k' must be positive")
-    if(k%%2 == 0)
+    if(k < 0L) stop("'k' must be positive")
+    if(k %% 2L == 0L)
         warning("'k' must be odd!  Changing 'k' to ",
                 k <- as.integer(1+ 2*(k %/% 2)))
-    if(n == 0) {
+    if(n == 0L) {
 	x <- double(); attr(x, "k") <- k
 	return(x)
     }
@@ -42,16 +42,14 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
     algorithm <-
         if(missing(algorithm)) { ## use efficient default
             ## This is too primitive, MM knows better :
-            if(k < 20 || n < 300) "Stuetzle" else "Turlach"
+            if(k < 20L || n < 300L) "Stuetzle" else "Turlach"
         }
-        else {
-            match.arg(algorithm, c("Stuetzle", "Turlach"))
-        }
+        else match.arg(algorithm, c("Stuetzle", "Turlach"))
     endrule <- match.arg(endrule)# including error.check
     iend <- switch(endrule,
                    ## "median" will be treated at the end
-                   "median" =, "keep" = 0,
-                   "constant" = 1)
+                   "median" =, "keep" = 0L,
+                   "constant" = 1L)
     if(print.level)
         cat("runmed(*, endrule=", endrule,", algorithm=",algorithm,
             ", iend=",iend,")\n")
@@ -62,9 +60,9 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
                          k,
                          as.double(x),
                          rmed = double(n),	# median[] -> result
-                         tmp1 = integer(k+1),	# outlist[]
-                         tmp2 = integer(2*k +1),# nrlist []
-                         tmp3 = double (2*k +1),# window []
+                         tmp1 = integer(k+1L),	# outlist[]
+                         tmp2 = integer(2L*k +1L),# nrlist []
+                         tmp3 = double (2L*k +1L),# window []
                          as.integer(iend),
                          as.integer(print.level),
                          DUP = FALSE)$ rmed
@@ -115,27 +113,27 @@ smoothEnds <- function(y, k = 3)
     }
 
     k <- as.integer(k)
-    if (k < 0 || k%%2 == 0)
+    if (k < 0L || k %% 2L == 0L)
         stop("bandwidth 'k' must be >= 1 and odd!")
-    k <- k %/% 2
-    if (k < 1) return(y)
+    k <- k %/% 2L
+    if (k < 1L) return(y)
     ## else: k >= 1L: do something
     n <- length(y)
     sm <- y
-    if (k >= 2) {
+    if (k >= 2L) {
         sm [2L]  <- med3(y[1L],y [2L], y [3L])
-        sm[n-1] <- med3(y[n],y[n-1],y[n-2])
+        sm[n-1L] <- med3(y[n],y[n-1L],y[n-2L])
 
         ## Here, could use Stuetzle's strategy for MUCH BIGGER EFFICIENCY
         ##	(when k>=3 , k >> 1):
         ## Starting with the uttermost 3 points,
         ## always 'adding'  2 new ones, and determine the new median recursively
         ##
-        if (k >= 3) {
+        if (k >= 3L) {
             for (i in 3:k) {
-                j <- 2*i - 1
+                j <- 2L*i - 1L
                 sm  [i]   <- med.odd( y [1L:j] ,     j) #- left border
-                sm[n-i+1] <- med.odd( y[(n+1-j):n], j) #- right border
+                sm[n-i+1L] <- med.odd( y[(n+1L-j):n], j) #- right border
             }
         }
     }
@@ -143,6 +141,6 @@ smoothEnds <- function(y, k = 3)
     ##--- For the very first and last pt.:  Use Tukey's end-point rule: ---
     ## Ysm[1L]:= Median(Ysm[2L],X1,Z_0), where Z_0 is extrapol. from Ysm[2L],Ysm[3L]
     sm[1L] <- med3(y[1L], sm [2L] , 3*sm [2L]  - 2*sm [3L])
-    sm[n] <- med3(y[n], sm[n-1], 3*sm[n-1] - 2*sm[n-2])
-    return(sm)
+    sm[n] <- med3(y[n], sm[n-1L], 3*sm[n-1L] - 2*sm[n-2L])
+    sm
 }
