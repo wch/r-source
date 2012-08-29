@@ -48,10 +48,12 @@ dimnames(x) <- value
   Both are \link{primitive} functions.  
 }
 \value{
-  The dimnames of a matrix or array can be \code{NULL} or a list of the
-  same length as \code{dim(x)}.  If a list, its components are either
-  \code{NULL} or a character vector with positive length of the
-  appropriate dimension of \code{x}.  The list can be named.
+  The dimnames of a matrix or array can be \code{NULL} (which is not
+  stored) or a list of the same length as \code{dim(x)}.  If a list, its
+  components are either \code{NULL} or a character vector with positive
+  length of the appropriate dimension of \code{x}.  The list can have
+  names.  It is possible that all components are \code{NULL}: such
+  dimnames may get converted to \code{NULL}.
 
   For the \code{"data.frame"} method both dimnames are character
   vectors, and the rownames must contain no duplicates nor missing values.

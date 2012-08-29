@@ -25,15 +25,17 @@ qr <- function(x, ...) UseMethod("qr")
 qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 {
     x <- as.matrix(x)
-    if(is.complex(x))
-        return(structure(.Call("La_zgeqp3", x, PACKAGE = "base"), class = "qr"))
+    if(is.complex(x)) {
+        res <- .Call("La_zgeqp3", x, PACKAGE = "base")
+         if(!is.null(cn <- colnames(x))) colnames(res$qr) <- cn[res$pivot]
+       return(structure(res, class = "qr"))
+    }
     ## otherwise :
     if(!is.double(x))
 	storage.mode(x) <- "double"
     if(LAPACK) {
         res <- .Call("La_dgeqp3", x, PACKAGE = "base")
-        if(!is.null(cn <- colnames(x)))
-            colnames(res$qr) <- cn[res$pivot]
+        if(!is.null(cn <- colnames(x))) colnames(res$qr) <- cn[res$pivot]
         attr(res, "useLAPACK") <- TRUE
         class(res) <- "qr"
         return(res)
