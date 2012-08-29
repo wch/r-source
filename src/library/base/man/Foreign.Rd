@@ -27,9 +27,9 @@
     \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
   \item{DUP}{if \code{TRUE} then arguments are duplicated before
     their address is passed to C or Fortran.}
-  \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
-    the DLL given by this argument (plus the conventional extension,
-    \file{.so}, \file{.dll}, \dots).
+  \item{PACKAGE}{if supplied, confine the search for a character string
+    \code{.NAME} to the DLL given by this argument (plus the
+    conventional extension, \file{.so}, \file{.dll}, \dots).
 
     This is intended to add safety for packages, which can ensure by
     using this argument that no other package can override their external

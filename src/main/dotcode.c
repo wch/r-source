@@ -50,6 +50,7 @@ static SEXP EncSymbol = NULL;
 static SEXP CSingSymbol = NULL;
 
 #include <Rdynpriv.h>
+// Odd: 'type' is really this enum
 enum {FILENAME, DLL_HANDLE, R_OBJECT, NOT_DEFINED};
 typedef struct {
     char DLLname[PATH_MAX];
@@ -61,7 +62,7 @@ typedef struct {
 /* Maximum length of entry-point name, including nul terminator */
 #define MaxSymbolBytes 1024
 
-/* Maximum number of args to .C, .Fortran and .C */
+/* Maximum number of args to .C, .Fortran and .Call */
 #define MAX_ARGS 65
 
 /* This looks up entry points in DLLs in a platform specific way. */
@@ -74,14 +75,18 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 static SEXP pkgtrim(SEXP args, DllReference *dll);
 
 /*
+  Called from resolveNativeRoutine (and itself).
+
   Checks whether the specified object correctly identifies a native routine.
-  This can be
-   a) a string,
+  op is the supplied value for .NAME.  This can be
+   a) a string (when this does nothing).
    b) an external pointer giving the address of the routine
       (e.g. getNativeSymbolInfo("foo")$address)
    c) or a NativeSymbolInfo itself  (e.g. getNativeSymbolInfo("foo"))
 
-   NB: in the last two cases it sets fun as well!
+   It copies the symbol name to buf.
+
+   NB: in the last two cases it sets fun and symbol as well!
  */
 static void
 checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
@@ -136,12 +141,6 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
 	    if (strlen(p) >= MaxSymbolBytes)
 		error(_("symbol '%s' is too long"), p);
 	    memcpy(buf, p, strlen(p)+1);
-	    /* Ouch, no length check
-	    q = buf;
-	    while ((*q = *p) != '\0') {
-		p++;
-		q++;
-	    } */
 	}
 
 	return;
@@ -206,7 +205,8 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    errorcall(call, _("too many arguments in foreign function call"));
     } else {
 	/* This has the side effect of setting dll.type if a PACKAGE=
-	   argument if found */
+	   argument if found, but it will only be used if a string was
+	   passed in  */
 	args = pkgtrim(args, &dll);
     }
     if (!*fun && dll.type == FILENAME && !strlen(dll.DLLname))
@@ -290,7 +290,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	}
     }
 
-    return(args);
+    return args;
 }
 
 
@@ -503,7 +503,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, "name");
+    check1arg(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
 
@@ -536,7 +536,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, "name");
+    check1arg(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     args = CDR(args);
@@ -1383,7 +1383,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     char symName[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, "name");
+    check1arg(args, call, ".NAME");
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");

@@ -24,9 +24,9 @@
   \item{\dots}{arguments to be passed to the compiled code. Up to 65 for
     \code{.Call}.}
   
-  \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
-    the DLL given by this argument (plus the conventional extension,
-    \file{.so}, \file{.dll}, \dots).
+  \item{PACKAGE}{if supplied, confine the search for a character string
+    \code{.NAME} to the DLL given by this argument (plus the
+    conventional extension, \file{.so}, \file{.dll}, \dots).
 
     This argument follows \code{...} and so its name cannot be abbreviated.
 
