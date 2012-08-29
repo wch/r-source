@@ -51,11 +51,10 @@
   encoding.  This is deprecated: convert code to use \code{\link{iconv}}.
   
   These functions are all \link{primitive}, and \code{.NAME} is always
-  matched to the first argument supplied (which if named must partially
-  match \code{.NAME}).  The other named arguments follow \code{\dots}
-  and so cannot be abbreviated.  For clarity, should avoid using names
-  in the arguments passed to \code{\dots} that match or partially match
-  \code{.NAME}.
+  matched to the first argument supplied (which should not be named).
+  The other named arguments follow \code{\dots} and so cannot be
+  abbreviated.  For clarity, should avoid using names in the arguments
+  passed to \code{\dots} that match or partially match \code{.NAME}.
 }
 
 \value{

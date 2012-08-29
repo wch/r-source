@@ -48,10 +48,9 @@
   variable number of arguments.
   
   These functions are \link{primitive}, and \code{.NAME} is always
-  matched to the first argument supplied (which if named must partially
-  match \code{.NAME}).  For clarity, avoid using names in the
-  arguments passed to \code{\dots} that match or partially match
-  \code{.NAME}.  
+  matched to the first argument supplied (which should not be named).
+  For clarity, avoid using names in the arguments passed to \code{\dots}
+  that match or partially match \code{.NAME}.
 }
 
 \value{

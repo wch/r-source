@@ -40,6 +40,15 @@
 #define max(a, b) ((a > b)?(a):(b))
 #endif
 
+/* Was 'name' prior to 2.13.0, then .NAME, but checked as
+   'name' up to 2.15.2'. */
+static void check1arg2(SEXP arg, SEXP call, const char *formal)
+{
+    if (TAG(arg) == R_NilValue) return;
+    warningcall(call, "the first argument should not be named");
+ }
+
+
 
 /* These are set during the first call to do_dotCode() below. */
 
@@ -503,7 +512,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, ".NAME");
+    check1arg2(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
 
@@ -536,7 +545,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, ".NAME");
+    check1arg2(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     args = CDR(args);
@@ -1383,7 +1392,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     char symName[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg(args, call, ".NAME");
+    check1arg2(args, call, ".NAME");
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");
