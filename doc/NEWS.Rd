@@ -471,6 +471,11 @@
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
+
+      \item Fix in \pkg{grid} for pushing a viewport into a layout
+      cell, where the layout is within a viewport that has zero width
+      or zero height (the layout column widths or row heights in this
+      case were being calculated with non-finite values).
       
       \item \code{solve(A, b)} for a vector \code{b} gave the answer
       names from \code{colnames(A)} for \code{LINPACK = TRUE} but not in
