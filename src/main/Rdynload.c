@@ -124,7 +124,7 @@
 #endif
 
 
-#ifdef CACHE_DLL_SYM  /* NOT USED */
+#ifdef CACHE_DLL_SYM  /* Used on Windows */
 /* keep a record of symbols that have been found */
 R_CPFun CPFun[100];
 int nCPFun = 0;
@@ -226,10 +226,9 @@ R_getDllInfo(const char *path)
 {
     int i;
     for(i = 0; i < CountDLL; i++) {
-	if(strcmp(LoadedDLL[i].path, path) == 0)
-	    return(&LoadedDLL[i]);
+	if(strcmp(LoadedDLL[i].path, path) == 0) return(&LoadedDLL[i]);
     }
-    return((DllInfo*) NULL);
+    return (DllInfo*) NULL;
 }
 
 /*
@@ -547,35 +546,29 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
     info = R_RegisterDLL(handle, path);
 
     /* Now look for an initializing routine named R_init_<object name>.
-       If it is present, we invoke it. It should take a reference to the
+       If it is present, we call it. It should take a reference to the
        DllInfo object currently being initialized.
     */
     if(info) {
-	char *tmp;
+	const char *nm = info->name;
+	char tmp[strlen(nm) + 9]; // R_init_ + underscore + null
 	DllInfoInitCall f;
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
-	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") +
-					   strlen(info->name)+ 1));
-	if(!tmp) error("allocation failure in AddDLL");
 	sprintf(tmp, "%s%s","R_init_", info->name);
 #else
-	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") +
-					   strlen(info->name)+ 2));
-	if(!tmp) error("allocation failure in AddDLL");
 	sprintf(tmp, "_%s%s","R_init_", info->name);
 #endif
 	f = (DllInfoInitCall) R_osDynSymbol->dlsym(info, tmp);
-	/* This is potentially unsafe in MBCSs, as '.' might be part of 
-	   a character: but is not in UTF-8 */
+	/* If that failed, might have used the package name with
+	   . replaced by _ (as . it not valid in symbol names). */
 	if(!f) {
+	    /* This is potentially unsafe in MBCSs, as '.' might be
+	       part of a character: but is not in UTF-8 */
 	    for(char *p = tmp; *p; p++) if(*p == '.') *p = '_';
 	    f = (DllInfoInitCall) R_osDynSymbol->dlsym(info, tmp);
 	}
-	free(tmp);
-	if(f)
-	    f(info);
+	if(f) f(info);
     }
-
 
     return info;
 }
@@ -601,8 +594,7 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     }
     strcpy(dpath, path);
 
-    if(R_osDynSymbol->fixPath)
-	R_osDynSymbol->fixPath(dpath);
+    if(R_osDynSymbol->fixPath) R_osDynSymbol->fixPath(dpath);
 
     /* keep only basename from path */
     p = Rf_strrchr(dpath, FILESEP[0]);
@@ -657,53 +649,48 @@ addDLL(char *dpath, char *DLLname, HINSTANCE handle)
 static Rf_DotCSymbol *
 Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name)
 {
-    int i;
-    for(i = 0; i < info->numCSymbols; i++) {
+    for(int i = 0; i < info->numCSymbols; i++) {
 	if(strcmp(name, info->CSymbols[i].name) == 0)
 	    return(&(info->CSymbols[i]));
     }
-
-    return(NULL);
+    return NULL;
 }
 
 static Rf_DotFortranSymbol *
 Rf_lookupRegisteredFortranSymbol(DllInfo *info, const char *name)
 {
-    int i;
-    for(i = 0; i < info->numFortranSymbols; i++) {
+    for(int i = 0; i < info->numFortranSymbols; i++) {
 	if(strcmp(name, info->FortranSymbols[i].name) == 0)
 	    return(&(info->FortranSymbols[i]));
     }
 
-    return((Rf_DotFortranSymbol*)NULL);
+    return (Rf_DotFortranSymbol*) NULL;
 }
 
 static Rf_DotCallSymbol *
 Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name)
 {
-    int i;
 
-    for(i = 0; i < info->numCallSymbols; i++) {
+    for(int i = 0; i < info->numCallSymbols; i++) {
 	if(strcmp(name, info->CallSymbols[i].name) == 0)
 	    return(&(info->CallSymbols[i]));
     }
-    return((Rf_DotCallSymbol*)NULL);
+    return (Rf_DotCallSymbol*) NULL;
 }
 
 static Rf_DotExternalSymbol *
 Rf_lookupRegisteredExternalSymbol(DllInfo *info, const char *name)
 {
-    int i;
-
-    for(i = 0; i < info->numExternalSymbols; i++) {
+    for(int i = 0; i < info->numExternalSymbols; i++) {
 	if(strcmp(name, info->ExternalSymbols[i].name) == 0)
 	    return(&(info->ExternalSymbols[i]));
     }
-    return((Rf_DotExternalSymbol*)NULL);
+    return (Rf_DotExternalSymbol*) NULL;
 }
 
-static DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
-				 R_RegisteredNativeSymbol *symbol)
+static DL_FUNC 
+R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
+			 R_RegisteredNativeSymbol *symbol)
 {
     NativeSymbolType purpose = R_ANY_SYM;
 
@@ -812,9 +799,10 @@ R_dlsym(DllInfo *info, char const *name,
     return f;
 }
 
-	/* R_FindSymbol checks whether one of the objects */
-	/* that have been loaded contains the symbol name and */
-	/* returns a pointer to that symbol upon success. */
+/* R_FindSymbol checks whether one of the objects that have been
+   loaded contains the symbol name and returns a pointer to that
+   symbol upon success. 
+*/
 
 DL_FUNC R_FindSymbol(char const *name, char const *pkg,
 		     R_RegisteredNativeSymbol *symbol)
