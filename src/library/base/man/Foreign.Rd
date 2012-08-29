@@ -27,9 +27,9 @@
     \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
   \item{DUP}{if \code{TRUE} then arguments are duplicated before
     their address is passed to C or Fortran.}
-  \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
-    the DLL given by this argument (plus the conventional extension,
-    \file{.so}, \file{.dll}, \dots).
+  \item{PACKAGE}{if supplied, confine the search for a character string
+    \code{.NAME} to the DLL given by this argument (plus the
+    conventional extension, \file{.so}, \file{.dll}, \dots).
 
     This is intended to add safety for packages, which can ensure by
     using this argument that no other package can override their external
@@ -150,7 +150,8 @@
   \code{.C("Cfunction", input = x, output = numeric(10))}.
 
   In this case the \code{output} variable did not exist before the call
-  so it cannot cause trouble.  If the \code{input} variable is not
+  so it cannot cause trouble (but as from \R 2.15.1 it is not copied
+  even with \code{DUP = TRUE}).  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
 
   Note that if \code{DUP = TRUE} there are up to two copies involved.
