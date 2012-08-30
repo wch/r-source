@@ -16,7 +16,7 @@
 eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 }
 \arguments{
-  \item{x}{a numeric or complexmatrix whose spectral decomposition is to
+  \item{x}{a numeric or complex matrix whose spectral decomposition is to
     be computed.  Logical matrices are coerced to numeric.}
   \item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
     (or Hermitian if complex) and only its lower triangle (diagonal

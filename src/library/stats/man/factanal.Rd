@@ -154,7 +154,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   maximum likelihood factor analysis is hard, and many other examples we
   compared had less good fits than produced by this function.  In
   particular, solutions which are \sQuote{Heywood cases} (with one or more
-  uniquenesses essentially zero) are much often common than most texts
+  uniquenesses essentially zero) are much more common than most texts
   and some other programs would lead one to believe.
 }
 

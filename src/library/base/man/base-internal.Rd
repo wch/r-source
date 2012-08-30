@@ -144,7 +144,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{units}{see \code{\link{difftime}}.}
   \item{\dots}{Arguments passed to non-dot name versions.}
     \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{dots}{lst of arguments to vectorize over (vectors or lists of
+  \item{dots}{list of arguments to vectorize over (vectors or lists of
     strictly positive length, or all of zero length).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 }
