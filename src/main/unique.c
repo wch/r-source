@@ -1586,12 +1586,12 @@ SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
 			     CADDDR(args), CAD4R(args));
 	PROTECT(ans);
 	SEXP nm = PROTECT(allocVector(VECSXP, 2));
-	SEXP ugroup = coerceVector(CADDDR(args), STRSXP);
+	SEXP ugroup = PROTECT(coerceVector(CADDDR(args), STRSXP));
 	SET_VECTOR_ELT(nm, 0, ugroup);
 	SEXP nm2 = getAttrib(CAR(args), R_DimNamesSymbol);
-	SET_VECTOR_ELT(nm, 1, VECTOR_ELT(nm2, 1));
+	if(length(nm2) >= 2) SET_VECTOR_ELT(nm, 1, VECTOR_ELT(nm2, 1));
 	setAttrib(ans, R_DimNamesSymbol, nm);
-	UNPROTECT(2);
+	UNPROTECT(3);
     }
     return ans;
 }
