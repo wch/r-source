@@ -75,6 +75,12 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
+
+\note{
+  \code{LINPACK = TRUE} (for compatibility with \R < 1.7.0) was formally
+  deprecated in \R 2.15.2.
+}
+
 \seealso{
   \code{\link{eigen}}, \code{\link{qr}}.
 }

@@ -75,6 +75,7 @@ solve.default <-
 	} else
 	    drop(.Call("La_dgesv", a, as.matrix(b), tol, PACKAGE = "base")))
     }
+    warning("LINPACK = TRUE is deprecated", domain = NA)
     a <- qr(a, tol = tol)
     nc <- ncol(a$qr)
     if( a$rank != nc )

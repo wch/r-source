@@ -194,6 +194,13 @@
       \item The \sQuote{internal} graphics device invoked by
       \code{.Call("R_GD_nullDevice", package = "grDevices")} is about to
       be removed: use \code{pdf(file = NULL)} instead.
+      
+      \item \code{eigen(EISPACK = TRUE)},
+      \code{chol(pivot = FALSE, LINPACK = TRUE)},
+      \code{chol2inv(LINPACK = TRUE)}, \code{solve(LINPACK = TRUE)} and
+      \code{svd(LINPACK = TRUE)} are deprecated and give a warning.
+
+      They were provided for compatibility with \R 1.7.0 (Mar 2003)!
     }
   }
 
