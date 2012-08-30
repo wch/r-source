@@ -147,6 +147,6 @@ for(f in ls(.ArgsEnv, all.names=TRUE))
     } else a <- list(zZ=NULL)
     res <- try(do.call(f, a), silent = TRUE)
     m <- geterrmessage()
-    if(!grepl('does not match|unused argument|requires 0', m))
+    if(!grepl('does not match|unused argument|requires 0|native symbol', m))
         stop("failure on ", f)
 }

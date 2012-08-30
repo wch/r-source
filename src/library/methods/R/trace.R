@@ -547,7 +547,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
 ## }
 
 .searchNamespaceNames <- function(env)
-    paste("namespace", getNamesapceName(env), sep=":")
+    paste("namespace", getNamespaceName(env), sep=":")
 
 .findFunEnvAndName <- function(what, where, signature = NULL) {
     pname <- character()
