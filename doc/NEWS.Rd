@@ -476,6 +476,7 @@
       cell, where the layout is within a viewport that has zero width
       or zero height (the layout column widths or row heights in this
       case were being calculated with non-finite values).
+      (Reported by Winston Chang.)
       
       \item \code{solve(A, b)} for a vector \code{b} gave the answer
       names from \code{colnames(A)} for \code{LINPACK = TRUE} but not in
