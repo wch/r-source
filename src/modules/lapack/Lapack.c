@@ -945,6 +945,51 @@ static SEXP La_chol(SEXP A)
     return ans;
 }
 
+static SEXP La_chol_piv(SEXP A, SEXP stol)
+{
+    if (!isMatrix(A)) error(_("'a' must be a numeric matrix"));
+    double tol = asReal(stol);
+
+    SEXP ans = PROTECT((TYPEOF(A) == REALSXP) ? duplicate(A):
+		       coerceVector(A, REALSXP));
+    SEXP adims = getAttrib(A, R_DimSymbol);
+    if (TYPEOF(adims) != INTSXP) error("non-integer dims");
+    int m = INTEGER(adims)[0], n = INTEGER(adims)[1];
+
+    if (m != n) error(_("'a' must be a square matrix"));
+    if (m <= 0) error(_("'a' must have dims > 0"));
+    size_t N = n;
+    for (int j = 0; j < n; j++) 	/* zero the lower triangle */
+	for (int i = j+1; i < n; i++) REAL(ans)[i + N * j] = 0.;
+
+    SEXP piv = PROTECT(allocVector(INTSXP, m));
+    int *ip = INTEGER(piv);
+    double *work = (double *) R_alloc(2 * (size_t)m, sizeof(double));
+    int rank, info;
+    F77_CALL(dpstrf)("U", &m, REAL(ans), &m, ip, &rank, &tol, work, &info);
+    if (info != 0) {
+	if (info > 0)
+	    warning(_("the matrix is either rank-deficient or indefinite"));
+	else
+	    error(_("argument %d of Lapack routine %s had invalid value"),
+		  -info, "dpotrf");
+    }
+    setAttrib(ans, install("pivot"), piv);
+    setAttrib(ans, install("rank"), ScalarInteger(rank));
+    SEXP cn, dn = getAttrib(ans, R_DimNamesSymbol);
+    if (!isNull(dn) && !isNull(cn = VECTOR_ELT(dn, 1))) {
+	// need to pivot the colnames
+	SEXP dn2 = PROTECT(duplicate(dn));
+	SEXP cn2 = VECTOR_ELT(dn2, 1);
+	for(int i = 0; i < m; i++) 
+	    SET_STRING_ELT(cn2, i, STRING_ELT(cn, ip[i] - 1)); // base 1
+	setAttrib(ans, R_DimNamesSymbol, dn2);
+	UNPROTECT(1);
+    }
+    UNPROTECT(2);
+    return ans;
+}
+
 static SEXP La_chol2inv(SEXP A, SEXP size)
 {
     int sz = asInteger(size);
@@ -1289,6 +1334,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case 200: ans = La_chol(CAR(args)); break;
     case 201: ans = La_chol2inv(CAR(args), CADR(args)); break;
+    case 202: ans = La_chol_piv(CAR(args), CADR(args)); break;
 
     case 300: ans = qr_coef_real(CAR(args), CADR(args)); break;
     case 301: ans = qr_qy_real(CAR(args), CADR(args), CADDR(args)); break;

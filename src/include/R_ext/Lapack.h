@@ -2767,6 +2767,11 @@ La_extern void
 F77_NAME(dtzrzf)(int *m, int *n, double *a, int *
 	lda, double *tau, double *work, int *lwork, int *info);
 
+La_extern void
+F77_NAME(dpstrf)(const char* uplo, const int* n,
+		 double* a, const int* lda, int* piv, int* rank,
+		 double* tol, double *work, int* info);
+
 
 La_extern int
 F77_NAME(lsame)(char *ca, char *cb);

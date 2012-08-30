@@ -14,15 +14,17 @@
 \usage{
 chol(x, \dots)
 
-\method{chol}{default}(x, pivot = FALSE,  LINPACK = pivot, \dots)
+\method{chol}{default}(x, pivot = FALSE,  LINPACK = pivot, tol = -1, \dots)
 }
 \arguments{
   \item{x}{an object for which a method exists.  The default method
     applies to numeric (or logical) symmetric, positive-definite matrices.}
   \item{\dots}{arguments to be based to or from methods.}
   \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical.  Should LINPACK be used in the non-pivoting
-    case (for compatibility with \R < 1.7.0)?}
+  \item{LINPACK}{logical.  Should LINPACK be used? (For compatibility
+    with \R < 1.7.0 in the non-pivoting case.)}
+  \item{tol}{A numeric tolerance for use with \code{pivot = TRUE,
+      LINPACK = FALSE)}.}
 }
 \value{
   The upper triangular factor of the Choleski decomposition, i.e., the
@@ -35,7 +37,7 @@ chol(x, \dots)
   \code{chol} is generic: the description here applies to the default
   method.
   
-  This is an interface to the LAPACK routine DPOTRF and the
+  This is an interface to the LAPACK routines DPOTRF and DPSTRF and the
   LINPACK routines DPOFA and DCHDC.
 
   Note that only the upper triangular part of \code{x} is used, so
@@ -43,7 +45,7 @@ chol(x, \dots)
 
   If \code{pivot = FALSE} and \code{x} is not non-negative definite an
   error occurs.  If \code{x} is positive semi-definite (i.e., some zero
-  eigenvalues) an error will also occur, as a numerical tolerance is used.
+  eigenvalues) an error will also occur as a numerical tolerance is used.
 
   If \code{pivot = TRUE}, then the Choleski decomposition of a positive
   semi-definite \code{x} can be computed.  The rank of \code{x} is
@@ -54,6 +56,12 @@ chol(x, \dots)
   is true that \code{t(Q[, oo]) \%*\% Q[, oo]} equals \code{x},
   or, alternatively, \code{t(Q) \%*\% Q} equals \code{x[pivot,
     pivot]}.  See the examples.
+
+  Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R
+  2.16.0.  The value of \code{tol} is passed to LAPACK, with negative
+  values selecting the default tolerance of (usually) \code{nrow(x) *
+  .Machine$double.neg.eps * max(diag(x)}.  The algorithm terminates once
+  the pivot is less than \code{tol}.
 
   The LINPACK interface is restricted to matrices \code{x} with less
   than \eqn{2^{31}}{2^31} elements.
@@ -105,6 +113,7 @@ crossprod(cm)  #-- = 'm'
 # now for something positive semi-definite
 x <- matrix(c(1:5, (1:5)^2), 5, 2)
 x <- cbind(x, x[, 1] + 3*x[, 2])
+colnames(x) <- letters[20:22]
 m <- crossprod(x)
 qr(m)$rank # is 2, as it should be
 
@@ -116,6 +125,12 @@ try(chol(m))
 ## we can use this by
 pivot <- attr(Q, "pivot")
 crossprod(Q[, order(pivot)]) # recover m
+
+(Q <- chol(m, TRUE, FALSE)) # NB rank is correct
+## we can use this by
+pivot <- attr(Q, "pivot")
+crossprod(Q[, order(pivot)]) # recover m
+
 
 ## now for a non-positive-definite matrix
 ( m <- matrix(c(5,-5,-5,3),2,2) )

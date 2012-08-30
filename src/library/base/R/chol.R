@@ -18,7 +18,7 @@
 
 chol <- function(x, ...) UseMethod("chol")
 
-chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
+chol.default <- function(x, pivot = FALSE, LINPACK = pivot, tol = -1, ...)
 {
     if (is.complex(x))
         stop("complex matrices not permitted at present")
@@ -30,7 +30,10 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 	if(length(x) != 1L) stop("non-matrix argument to 'chol'")
 	n <- 1L
     }
+
+    ## FIXME add pivoting version using DPSTRF (added in LAPACK 3.2)
     if(!pivot && !LINPACK) return(.Internal(La_chol(as.matrix(x))))
+    if(!LINPACK) return(.Internal(La_chol_piv(as.matrix(x), tol)))
 
     ## sanity checks
     n <- as.integer(n)
