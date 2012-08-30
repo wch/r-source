@@ -285,6 +285,8 @@ install.packages <-
             stop("type == \"both\" cannot be used with 'repos = NULL'")
         type <- "source"
         contriburl <- contrib.url(repos, "source")
+        # The line above may have changed the repos option, so..
+        if (missing(repos)) repos <- getOption("repos")
         available <-
             available.packages(contriburl = contriburl, method = method,
                                fields = "NeedsCompilation")
@@ -369,6 +371,8 @@ install.packages <-
                && (type %in% "win.binary" || substr(type, 1L, 10L) == "mac.binary")) {
         if (missing(contriburl) && is.null(available) && !is.null(repos)) {
             contriburl <- contrib.url(repos, "source")
+	    # The line above may have changed the repos option, so..
+            if (missing(repos)) repos <- getOption("repos")
             av1 <-
                 available.packages(contriburl = contriburl, method = method)
             pkgs <- getDependencies(pkgs, dependencies, av1, lib)

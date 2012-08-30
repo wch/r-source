@@ -837,6 +837,9 @@
       \item \command{R CMD check} no longer fails with an error if
       a \file{DESCRIPTION} file incorrectly contains a blank line.
       (Reported by Bill Dunlap.)
+      
+      \item \code{install.packages(type = "both")} could call
+      \code{chooseCRANmirror()} twice.      
     }
   }
 }
