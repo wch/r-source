@@ -101,7 +101,9 @@ svd(A)
 La.svd(A)
 
 As <- crossprod(A)
-eigen(As)
+E <- eigen(As)
+E$values
+abs(E$vectors) # signs vary
 chol(As)
 backsolve(As, 1:5)
 
@@ -114,21 +116,29 @@ A %*% A
 crossprod(A)
 tcrossprod(A)
 
-qr(A)
+Q <- qr(A)
+zapsmall(Q$qr)
+zapsmall(Q$qraux)
 determinant(A, log = FALSE) # 0
 
 rcond(A)
 rcond(A, "I")
 rcond(A, "1")
 
-eigen(A)
-svd(A)
-La.svd(A)
+E <- eigen(A)
+zapsmall(E$values)
+zapsmall(Mod(E$vectors))
+S <- svd(A)
+zapsmall(S$d)
+S <- La.svd(A)
+zapsmall(S$d)
 
 As <- A
 As[upper.tri(A)] <- t(A)[upper.tri(A)]
 det(As)
-eigen(As)
+E <- eigen(As)
+E$values
+zapsmall(E$vectors)
 solve(As)
 
 ## quite hard to come up with an example where this might make sense.
