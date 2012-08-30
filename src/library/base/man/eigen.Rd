@@ -102,6 +102,11 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Clarendon Press, Oxford.
 }
 
+\note{
+  \code{EISPACK = TRUE} (for compatibility with \R < 1.7.0) was formally
+  deprecated in \R 2.15.2.
+}
+
 \seealso{
   \code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and
   \code{\link{chol}} for related decompositions.

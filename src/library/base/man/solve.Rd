@@ -54,6 +54,12 @@ solve(a, b, \dots)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
+
+\note{
+  \code{LINPACK = TRUE} (for compatibility with \R < 1.7.0) was formally
+  deprecated in \R 2.15.2.
+}
+
 \seealso{
   \code{\link{solve.qr}} for the \code{qr} method,
   \code{\link{chol2inv}} for inverting from the Choleski factor

@@ -82,6 +82,12 @@ chol(x, \dots)
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
 
+\note{
+  \code{LINPACK = TRUE, pivot = FALSE} (for compatibility with \R <
+  1.7.0) was formally deprecated in \R 2.15.2.
+}
+
+
 \seealso{
   \code{\link{chol2inv}} for its \emph{inverse} (without pivoting),
   \code{\link{backsolve}} for solving linear systems with upper
@@ -114,7 +120,6 @@ crossprod(Q[, order(pivot)]) # recover m
 ## now for a non-positive-definite matrix
 ( m <- matrix(c(5,-5,-5,3),2,2) )
 try(chol(m))  # fails
-try(chol(m, LINPACK=TRUE))   # fails
 (Q <- chol(m, pivot = TRUE)) # warning
 crossprod(Q)  # not equal to m
 }

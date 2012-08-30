@@ -56,6 +56,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
         }
         robj
     } else {
+        warning("pivot = FALSE, LINPACK = TRUE is deprecated", domain = NA)
         z <- .Fortran(.F_chol, x = x, n, n, v = matrix(0, nrow=n, ncol=n),
                       info = integer(1L), DUP = FALSE)
         if(z$info)
@@ -68,6 +69,7 @@ chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
 {
     if(!LINPACK) return(.Internal(La_chol2inv(x, size)))
 
+    warning("LINPACK = TRUE is deprecated", domain = NA)
     if(!is.numeric(x)) stop("non-numeric argument to 'chol2inv'")
     if(is.matrix(x)) {
 	nr <- nrow(x)

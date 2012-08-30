@@ -61,6 +61,7 @@ solve.default <-
         return(.Internal(La_solve(a, b, tol)))
     }
 
+    warning("LINPACK = TRUE is deprecated", domain = NA)
     a <- qr(a, tol = tol)
     nc <- ncol(a$qr)
     if( a$rank != nc )

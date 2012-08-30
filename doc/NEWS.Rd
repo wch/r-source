@@ -192,8 +192,8 @@
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
       
-      \item More matrix algebra functions (e.g. \code{chol()}) accept
-      logical matrices.
+      \item More matrix algebra functions (e.g. \code{chol()} and
+      \code{solve()}) accept logical matrices (and coerce to numeric).
     }
   }
 
@@ -271,12 +271,12 @@
       \code{splines} and \code{tcltk}: it was already in place for the
       other standard packages.
 
-      \item Since these entry points are always accessed by the \R entry
+      Since these entry points are always accessed by the \R entry
       points they do not need to be in the load table which can be
-      smaller and hence searched faster.  This does mean that
-      \code{.C}/\code{.Fortran}/\code{.Call} calls copied from earlier
+      smaller and hence searched faster.  This does mean that \code{.C}
+      / \code{.Fortran} / \code{.Call} calls copied from earlier
       versions of \R no longer work -- but they were never part of the
-      API.  [In progress.]
+      API.
       
       \item Many \code{.Call()} calls in package \pkg{base} have been
       migrated to \code{.Internal()} calls.
@@ -675,6 +675,13 @@
       \item The \sQuote{internal} graphics device invoked by
       \code{.Call("R_GD_nullDevice", package = "grDevices")} is about to
       be removed: use \code{pdf(file = NULL)} instead.
+      
+      \item \code{eigen(EISPACK = TRUE)},
+      \code{chol(pivot = FALSE, LINPACK = TRUE)},
+      \code{chol2inv(LINPACK = TRUE)}, \code{solve(LINPACK = TRUE)} and
+      \code{svd(LINPACK = TRUE)} are deprecated and give a warning.
+
+      They were provided for compatibility with \R 1.7.0 (Mar 2003)!
     }
   }
 

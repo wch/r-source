@@ -61,6 +61,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
                     vectors = if (!only.values) z$vectors[, ord, drop = FALSE]))
     }
 
+    warning("EISPACK = TRUE is deprecated", domain = NA)
     if(n > 46340) stop("too large a matrix for EISPACK")
     if(!complex.x && !is.double(x)) storage.mode(x) <- "double"
     dbl.n <- double(n)

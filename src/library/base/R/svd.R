@@ -34,6 +34,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     }
 
     ## LINPACK only from here on.
+    warning("LINPACK = TRUE is deprecated", domain = NA)
     storage.mode(x) <- "double"
     n <- as.integer(n)
     if(is.na(n)) stop("invalid nrow(x)")
