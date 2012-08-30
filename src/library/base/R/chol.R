@@ -68,8 +68,8 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
         robj
     } else {
         warning("pivot = FALSE, LINPACK = TRUE is deprecated", domain = NA)
-        z <- .Fortran(.F_chol, x = x, n, n, v = matrix(0, nrow=n, ncol=n),
-                      info = integer(1L), DUP = FALSE)
+        z <- .Fortran("chol", x = x, n, n, v = matrix(0, nrow=n, ncol=n),
+                      info = integer(1L), DUP = FALSE, PACKAGE = "base")
         if(z$info)
             stop("non-positive definite matrix in 'chol'")
         z$v
