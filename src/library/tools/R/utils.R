@@ -1271,11 +1271,14 @@ function(dfile)
         stop(gettextf("file '%s' does not exist", dfile), domain = NA)
     out <- tryCatch(read.dcf(dfile,
                              keep.white =
-                             .keep_white_description_fields)[1L, ],
+                             .keep_white_description_fields),
                     error = function(e)
                     stop(gettextf("file '%s' is not in valid DCF format",
                                   dfile),
                          domain = NA, call. = FALSE))
+    if (nrow(out) != 1)
+    	stop("contains a blank line", call. = FALSE)
+    out <- out[1,]
     if(!is.na(encoding <- out["Encoding"])) {
         ## could convert everything to UTF-8
         if (encoding %in% c("latin1", "UTF-8"))

@@ -2780,12 +2780,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         checkingLog(Log, "for file ",
                     sQuote(file.path(pkgname0, "DESCRIPTION")))
         if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
-            desc <- try(read.dcf(f))
+            desc <- try(.read_description(f))
             if (inherits(desc, "try-error") || !length(desc)) {
                 resultLog(Log, "EXISTS but not correct format")
                 do_exit(1L)
             }
-            desc <- desc[1L, ]
             if(!grepl("^[[:alpha:]][[:alnum:].]*[[:alnum:]]$", desc["Package"])
                || grepl("[.]$", desc["Package"])) {
                 warningLog(Log)

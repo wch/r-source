@@ -873,12 +873,11 @@ get_exclude_patterns <- function()
         checkingLog(Log, "for file ", sQuote(file.path(pkg, "DESCRIPTION")))
         f <- file.path(pkgdir, "DESCRIPTION")
         if (file.exists(f)) {
-            desc <- try(read.dcf(f))
+            desc <- try(.read_description(f))
             if (inherits(desc, "try-error") || !length(desc)) {
                 resultLog(Log, "EXISTS but not correct format")
                 do_exit(1L)
             }
-            desc <- desc[1L, ]
             resultLog(Log, "OK")
         } else {
             resultLog(Log, "NO")

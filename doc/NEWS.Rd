@@ -833,6 +833,10 @@
       \item \code{qr()} for a complex matrix did not pivot the column names.
 
       \item \code{--with='-framework vecLib'} now also works on OS X 10.8.
+      
+      \item \command{R CMD check} no longer fails with an error if
+      a \file{DESCRIPTION} file incorrectly contains a blank line.
+      (Reported by Bill Dunlap.)
     }
   }
 }
