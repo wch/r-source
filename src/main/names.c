@@ -1009,7 +1009,7 @@ FUNTAB R_FunTab[] =
 {"serializeb",	do_serialize, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"unserialize",	do_serialize, 	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"rowsum_matrix",do_rowsum, 	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"rowsum_df",	do_rowsum, 	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"rowsum_df",	do_rowsum, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"La_qr_cmplx",	do_lapack,     	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_rs",	do_lapack,     	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1028,6 +1028,7 @@ FUNTAB R_FunTab[] =
 {"La_qr",	do_lapack,     	101,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_chol",	do_lapack,     	200,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_chol2inv",	do_lapack,     	201,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_chol_piv",	do_lapack,     	202,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"qr_coef_real",do_lapack,     	300,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"qr_qy_real",	do_lapack,     	301,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
