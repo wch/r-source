@@ -99,10 +99,10 @@ Rfe.exe: Rfe.o ../rhome.o rcico.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
-Rscript.o: ../../unix/Rscript.c
+Rscript.o: ../../unix/Rscript.c ../../include/Rversion.h
 	$(CC) $(CFLAGS) -DBINDIR='"$(BINDIR)"' -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
 
-Rscript.exe: Rscript.o rcico.o
+Rscript.exe: Rscript.o rcico.o 
 
 ## Not currently used (2.13.0)
 Rpwd:
