@@ -8229,6 +8229,10 @@ For example (from the internal code for @code{optim})
     REPROTECT(s = coerceVector(s, REALSXP), ipx);
 @end example
 
+Note that it is dangerous to mix @code{UNPROTECT_PTR} with
+@code{PROTECT_WITH_INDEX}, as the former changes the protection
+locations of objects that were protected after the one being
+unprotected.
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
 @subsection Allocating storage
