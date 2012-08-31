@@ -470,6 +470,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ## .tm_properties is Mac's TextMate
 .hidden_file_exclusions <-
     c(".Renviron", ".Rprofile", ".Rproj.user",
+      ".Rhistory", ".Rapp.history",
       ".tex", ".log", ".aux", ".pdf", ".png",
       ".backups", ".cvsignore", ".cproject", ".directory",
       ".dropbox", ".exrc", ".gdb.history",

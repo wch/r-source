@@ -2477,7 +2477,18 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         setwd(owd)
     }
 
-    check_dot_files <- function()
+    ## CRAN-pack knows about
+    .hidden_file_exclusions <-
+        c(".Renviron", ".Rprofile", ".Rproj.user",
+          ".Rhistory", ".Rapp.history",
+          ".tex", ".log", ".aux", ".pdf", ".png",
+          ".backups", ".cvsignore", ".cproject", ".directory",
+          ".dropbox", ".exrc", ".gdb.history",
+          ".gitattributes", ".gitignore", ".gitmodules",
+          ".hgignore", ".hgtags",
+          ".project", ".seed", ".settings", ".tm_properties")
+
+    check_dot_files <- function(cran = FALSE)
     {
         checkingLog(Log, "for hidden files and directories")
         owd <- setwd(pkgdir)
@@ -2492,13 +2503,22 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         alldirs <- sub("^./","", alldirs)
         alldirs <- alldirs[alldirs != "."]
         bases <- basename(alldirs)
-        dots <- c(dots, alldirs[grepl("^[.]", basename(alldirs))])
+        dots <- c(dots, alldirs[grepl("^[.]", bases)])
         if (length(dots)) {
             noteLog(Log, "Found the following hidden files and directories:")
             printLog(Log, .format_lines_with_indent(dots), "\n")
             wrapLog("These were most likely included in error.",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
+            if(cran) {
+                known <- basename(dots) %in% .hidden_file_exclusions
+                if (all(known))
+                    printLog(Log, "\nCRAN-pack knows about all of these\n")
+                else if (any(!known)) {
+                    printLog(Log, "\nCRAN-pack does not know about\n")
+                    printLog(Log, .format_lines_with_indent(dots[!known]), "\n")
+                }
+            }
         } else resultLog(Log, "OK")
         setwd(owd)
     }
@@ -3515,8 +3535,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 }
             }
 
-            if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE")) || as_cran)
-                check_CRAN_incoming()
+            check_incoming <- config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE")) || as_cran
+            if (check_incoming) check_CRAN_incoming()
 
             ## <NOTE>
             ## We want to check for dependencies early, since missing
@@ -3542,7 +3562,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             ## we need to do this before installation
             if (R_check_executables) check_executables()
 
-            check_dot_files()
+            check_dot_files(check_incoming)
 
             if (do_install) {
                 check_install()
