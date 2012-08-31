@@ -23,7 +23,7 @@
 #define R_RS_H
 
 #ifndef NO_C_HEADERS
-# include <string.h>		/* for memcpy */
+# include <string.h>		/* for memcpy, memset */
 #endif
 
 #include <Rconfig.h>		/* for F77_APPEND_UNDERSCORE */
