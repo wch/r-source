@@ -29,8 +29,7 @@ rowsum.default <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
     ugroup <- unique(group)
     if (reorder) ugroup <- sort(ugroup, na.last = TRUE, method = "quick")
 
-    rval <- .Internal(rowsum_matrix(x, NCOL(x), group, ugroup, na.rm))
-
+    rval <- .Internal(rowsum_matrix(x, group, ugroup, na.rm))
     dimnames(rval) <- list(as.character(ugroup), dimnames(x)[[2L]])
     rval
 }
@@ -45,7 +44,6 @@ rowsum.data.frame <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
     ugroup <- unique(group)
     if (reorder) ugroup <- sort(ugroup, na.last = TRUE, method = "quick")
 
-    rval <- .Internal(rowsum_df(x, NCOL(x), group, ugroup, na.rm))
-
+    rval <- .Internal(rowsum_df(x, group, ugroup, na.rm))
     as.data.frame(rval, row.names = as.character(ugroup))
 }
