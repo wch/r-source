@@ -2087,8 +2087,9 @@ The @file{data} directory is checked for non-ASCII characters and for
 the use of reasonable levels of compression.
 
 @item
-C, C++ and FORTRAN source and header files are tested for portable
-(LF-only) line endings.  If there is a @file{Makefile} or
+C, C++ and FORTRAN source and header files@footnote{An exception is made
+for subdirectories stating @samp{win} or @samp{Win}.} are tested for
+portable (LF-only) line endings.  If there is a @file{Makefile} or
 @file{Makefile.in} or @file{Makevars} or @file{Makevars.in} file under
 the @file{src} directory, it is checked for portable line endings and
 the correct use of @samp{$(BLAS_LIBS)} and @samp{$(LAPACK_LIBS)}

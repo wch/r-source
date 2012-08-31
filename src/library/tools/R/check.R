@@ -1573,6 +1573,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## pattern is "([cfh]|cc|cpp)"
         files <- dir("src", pattern = "\\.([cfh]|cc|cpp)$",
                      full.names = TRUE, recursive = TRUE)
+        ## exclude dirs starting src/win, e.g for tiff
+        files <- grep("^src/[Ww]in", files, invert = TRUE, value = TRUE)
         bad_files <- character()
         for(f in files) {
             contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
