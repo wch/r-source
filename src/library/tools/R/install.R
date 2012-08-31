@@ -889,8 +889,8 @@
 		}
 		Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
 		if (thislazy) {
-		    ## This also had an extra space in the sh version
-		    starsmsg(stars, " moving datasets to lazyload DB")
+		    starsmsg(paste0(stars, "*"),
+                             "moving datasets to lazyload DB")
 		    ## 'it is possible that data in a package will
 		    ## make use of the code in the package, so ensure
 		    ## the package we have just installed is on the
