@@ -11,7 +11,7 @@
 }
 \usage{
 aspell(files, filter, control = list(), encoding = "unknown",
-       program = NULL)
+       program = NULL, dictionaries = character())
 }
 \arguments{
   \item{files}{a character vector with the names of files to be checked.}
@@ -29,6 +29,11 @@ aspell(files, filter, control = list(), encoding = "unknown",
     \code{NULL} (default).  By default, the system path is searched for
     \command{aspell}, \command{hunspell} and \command{ispell} (in that
     order), and the first one found is used.}
+  \item{dictionaries}{a character vector of file paths of additional R
+    level dictionaries to use.  Elements with no path separator specify
+    R system dictionaries (in subdirectory \file{share/dictionaries} of
+    the R home directory).  The file extension (currently, only
+    \file{.rds}) can be omitted.}
 }
 \details{
   The spell check programs employed must support the so-called Ispell
@@ -50,6 +55,14 @@ aspell(files, filter, control = list(), encoding = "unknown",
   useful to use an indentation of 0 and visit output in grep-mode.  It
   also has a \code{verbose} argument: when this is true, suggestions for
   replacements are shown as well.
+
+  It is possible to employ additional R level dictionaries.  Currently,
+  these are files with extension \file{.rds} obtained by serializing
+  character vectors of word lists using \code{\link{saveRDS}}.  If such
+  dictionaries are employed, they are combined into a single word list
+  file which is then used as the spell checker's personal dictionary
+  (option \option{-p}): hence, the default personal dictionary is not
+  used in this case.
 }
 \value{
   A data frame inheriting from \code{aspell} (which has a useful print
@@ -69,13 +82,16 @@ aspell(files, filter, control = list(), encoding = "unknown",
 files <- Sys.glob("*.Rd")
 aspell(files, filter = list("Rd", drop = "\\references"))
 
-# To check all Sweave files
+## To check all Sweave files
 files <- Sys.glob(c("*.Rnw", "*.Snw", "*.rnw", "*.snw"))
 aspell(files, filter = "Sweave", control = "-t")
 
-# To check all Texinfo files (Aspell only)
+## To check all Texinfo files (Aspell only)
 files <- Sys.glob("*.texi")
 aspell(files, control = "--mode=texinfo")
+
+## List the available R system dictionaries.
+Sys.glob(file.path(R.home("share"), "dictionaries", "*.rds"))
 }
 }
 \keyword{utilities}

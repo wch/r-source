@@ -19,7 +19,7 @@
 
 aspell <-
 function(files, filter, control = list(), encoding = "unknown",
-         program = NULL)
+         program = NULL, dictionaries = character())
 {
     ## Take the given files and feed them through spell checker in
     ## Ispell pipe mode.
@@ -59,8 +59,9 @@ function(files, filter, control = list(), encoding = "unknown",
         filter <- aspell_filter_db[[filter_name]]
         ## Warn if the filter was not found in the db.
         if(is.null(filter))
-            warning(sprintf("Filter '%s' is not available.",
-                            filter_name))
+            warning(gettextf("Filter '%s' is not available.",
+                             filter_name),
+                    domain = NA)
     }
     else if(is.list(filter)) {
         ## Support
@@ -71,14 +72,12 @@ function(files, filter, control = list(), encoding = "unknown",
         filter <- aspell_filter_db[[filter_name]]
         ## Warn if the filter was not found in the db.
         if(is.null(filter))
-            warning(sprintf("Filter '%s' is not available.",
-                            filter_name))
+            warning(gettextf("Filter '%s' is not available.",
+                             filter_name),
+                    domain = NA)
     }
     else if(!is.function(filter))
         stop("Invalid 'filter' argument.")
-
-    ## No special expansion of control argument for now.
-    control <- paste(as.character(control), collapse = " ")
 
     encoding <- rep(encoding, length.out = length(files))
 
@@ -91,6 +90,33 @@ function(files, filter, control = list(), encoding = "unknown",
 
     tfile <- tempfile("aspell")
     on.exit(unlink(tfile))
+
+    if(length(dictionaries)) {
+        paths <- aspell_find_dictionaries(dictionaries)
+        ind <- paths == ""
+        if(any(ind)) {
+            warning(gettextf("The following dictionaries were not found:\n%s",
+                             paste(sprintf("  %s", dictionaries[ind]),
+                                   collapse = "\n")),
+                    domain = NA)
+            paths <- paths[!ind]
+        }
+        if(length(paths)) {
+            words <- unlist(lapply(paths, readRDS), use.names = FALSE)
+            personal <- tempfile("aspell_personal")
+            on.exit(unlink(personal), add = TRUE)
+            ## <FIXME>
+            ## How can we get the right language set (if needed)?
+            ## Maybe aspell() needs an additional 'language' arg?
+            aspell_write_personal_dictionary_file(words, personal,
+                                                  program = program)
+            ## </FIXME>
+            control <- c(control, "-p", shQuote(personal))
+        }
+    }
+
+    ## No special expansion of control argument for now.
+    control <- paste(as.character(control), collapse = " ")
 
     fnames <- names(files)
     files <- as.list(files)
@@ -117,7 +143,8 @@ function(files, filter, control = list(), encoding = "unknown",
         enc <- encoding[i]
 
         if(verbose)
-            message(sprintf("Processing file %s", fname))
+            message(gettextf("Processing file %s", fname),
+                    domain = NA)
 
         lines <- if(is.null(filter))
             readLines(file, encoding = enc)
@@ -163,7 +190,8 @@ function(files, filter, control = list(), encoding = "unknown",
 
 	if(out$status != 0L)
 	    stop(gettextf("Running aspell failed with diagnostics:\n%s",
-			  paste(out$stderr, collapse = "\n")))
+			  paste(out$stderr, collapse = "\n")),
+                 domain = NA)
 
 	## Hopefully everything worked ok.
 	lines <- out$stdout[-1L]
@@ -294,6 +322,32 @@ function(program = NULL)
             names(program) <- NA_character_
     }
     program
+}
+
+aspell_find_dictionaries <-
+function(dictionaries)
+{
+    paths <- as.character(dictionaries)
+    if(!(n <- length(paths))) return(NULL)
+
+    ## For now, all dictionary files should be .rds files.
+    ind <- !grepl("\\.rds$", paths)
+    if(any(ind))
+        paths[ind] <- sprintf("%s.rds", paths[ind])
+
+    ## Dictionaries with no path separators are looked for in the R
+    ## system dictionary directory.
+    pos <- grep(.Platform$file.sep, paths, fixed = TRUE)
+    ## (Equivalently, could check where paths == basename(paths).)
+    if(length(pos) < n)
+        paths[-pos] <-
+            file.path(R.home("share"), "dictionaries", paths[-pos])
+    if(length(pos))
+        paths[pos] <- path.expand(paths[pos])
+
+    paths[!file_test("-f", paths)] <- ""
+
+    paths
 }
 
 ### Utilities.
@@ -881,27 +935,25 @@ function(x, out, language = "en", program = NULL)
     ##   aspell --lang=en create personal ./foo "a b c"
     ## gives: Sorry "create/merge personal" is currently unimplemented.
 
+    ## Encodings are a nightmare.
+    ## Try to canonicalize to UTF-8 for Aspell (which allows recording
+    ## the encoding in the personal dictionary).
+    ## <FIXME>
+    ## What should we do for Hunspell (which can handle UTF-8, but has
+    ## no encoding information in the personal dictionary), or Ispell
+    ## (which cannot handle UTF-8)?
+    ## </FIXME>
+    
     if(names(program) == "aspell") {
-        header <- sprintf("personal_ws-1.1 %s %d", language, length(x))
-        ## In case UTF_8 is around ...
-        ## This would be nice:
-        ##   encodings <- unique(Encoding(x))
-        ##   if(identical(encodings[encodings != "unknown"], "UTF-8"))
-        ##       header <- paste(header, "UTF-8")
-        ## but does not work as we currently do not canonicalized to
-        ## UTF-8 and do not mark encodings when reading Aspell results
-        ## which are documented to be in the current encoding ...
-        if(localeToCharset()[1L] == "UTF-8") {
-            x <- iconv(x, "", "UTF-8")
-            if(any(Encoding(x) == "UTF-8"))
-                header <- paste(header, "UTF-8")
-        }
+        header <- sprintf("personal_ws-1.1 %s %d UTF-8",
+                          language, length(x))
+        x <- enc2utf8(x)
     }
     else {
         header <- NULL
     }
 
-    writeLines(c(header, x), out)
+    writeLines(c(header, x), out, useBytes = TRUE)
 }
 
 ## For reading package defaults:
