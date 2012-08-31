@@ -29,6 +29,8 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 
+#include <R_ext/RS.h> /* for Memzero */
+
 R_xlen_t asVecSize(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
@@ -753,13 +755,13 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	      translateChar(STRING_ELT(s, 0))); /* should be ASCII */
     }
     if (mode == INTSXP || mode == LGLSXP)
-	memset(INTEGER(s), 0, len*sizeof(int));
+	Memzero(INTEGER(s), len);
     else if (mode == REALSXP)
-	memset(REAL(s), 0, len*sizeof(double));
+	Memzero(REAL(s), len);
     else if (mode == CPLXSXP)
-	memset(COMPLEX(s), 0, len*sizeof(Rcomplex));
+	Memzero(COMPLEX(s), len);
     else if (mode == RAWSXP)
-	memset(RAW(s), 0, (size_t) len);
+	Memzero(RAW(s), len);
     /* other cases: list/expression have "NULL", ok */
     return s;
 }

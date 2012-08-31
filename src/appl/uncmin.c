@@ -192,19 +192,17 @@ static void mvmlts(int nr, int n, double *a, double *x, double *y)
  * NOTE:	x and y cannot share storage.
  */
 
-  int i, j;
-  double sum;
+    int i, j;
+    double sum;
 
-  for (i = 0; i < n; ++i) {
-    sum = 0.;
-    for (j = 0; j <= i; ++j) {
-      sum += a[i + j * nr] * x[j];
+    for (i = 0; i < n; ++i) {
+	sum = 0.;
+	for (j = 0; j <= i; ++j)
+	    sum += a[i + j * nr] * x[j];
+	for (j = i+1; j < n; ++j)
+	    sum += a[j + i * nr] * x[j];
+	y[i] = sum;
     }
-    for (j = i+1; j < n; ++j) {
-      sum += a[j + i * nr] * x[j];
-    }
-    y[i] = sum;
-  }
 } /* mvmlts */
 
 static void lltslv(int nr, int n, double *a, double *x, double *b)
@@ -226,12 +224,12 @@ static void lltslv(int nr, int n, double *a, double *x, double *b)
  *	if b is not required by calling program, then
  *	b and x may share the same storage. */
 
-  int job = 0, info;
+    int job = 0, info;
 
-  if( x != b) Memcpy(x, b, (size_t) n);
-  F77_CALL(dtrsl)(a, &nr, &n, x, &job, &info);
-  job = 10;
-  F77_CALL(dtrsl)(a, &nr, &n, x, &job, &info);
+    if (x != b) Memcpy(x, b, n);
+    F77_CALL(dtrsl)(a, &nr, &n, x, &job, &info);
+    job = 10;
+    F77_CALL(dtrsl)(a, &nr, &n, x, &job, &info);
 } /* lltslv */
 
 static void

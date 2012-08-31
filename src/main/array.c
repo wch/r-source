@@ -1327,7 +1327,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(n <= 10000) {
 	    R_CheckStack2(n * sizeof(LDOUBLE));
 	    rans = (LDOUBLE *) alloca(n * sizeof(LDOUBLE));
-	    memset(rans, 0, n*sizeof(LDOUBLE));
+	    Memzero(rans, n);
 	} else rans = Calloc(n, LDOUBLE);
 	if (!keepNA && OP == 3) Cnt = Calloc(n, int);
 
