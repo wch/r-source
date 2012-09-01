@@ -1,21 +1,21 @@
 % File src/library/utils/man/read.socket.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.socket}
 \title{ Read from or Write to a Socket}
 \usage{
-read.socket(socket, maxlen = 256, loop = FALSE)
+read.socket(socket, maxlen = 256L, loop = FALSE)
 write.socket(socket, string)
 }
 \alias{read.socket}
 \alias{write.socket}
 \arguments{
-    \item{socket}{a socket object}
-    \item{maxlen}{maximum length of string to read}
+    \item{socket}{a socket object.}
+    \item{maxlen}{maximum length (in bytes) of string to read.}
     \item{loop}{wait for ever if there is nothing to read?}
-    \item{string}{string to write to socket}
+    \item{string}{string to write to socket.}
 }
 \description{
     \code{read.socket} reads a string from the specified socket,
@@ -23,7 +23,10 @@ write.socket(socket, string)
     little error checking done by either.
 }
 \value{
-    \code{read.socket} returns the string read.
+  \code{read.socket} returns the string read as a length-one character vector.
+    
+  \code{write.socket} returns the number of bytes written.
+
 }
 \author{Thomas Lumley}
 
