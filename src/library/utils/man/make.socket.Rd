@@ -25,7 +25,8 @@ make.socket(host = "localhost", port, fail = TRUE, server = FALSE)
 }
 \value{
   An object of class \code{"socket"}, a list with components:
-  \item{socket}{socket number.  This is for internal use.}
+  \item{socket}{socket number.  This is for internal use.  On a
+    Unix-alike it is a file descriptor.}
   \item{port}{port number of the connection.}
   \item{host}{name of remote computer.}
 }

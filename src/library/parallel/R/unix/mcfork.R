@@ -28,7 +28,7 @@ clean_pids <- function(e)
     if(length(pids<- get("pids", envir = e))) tools::pskill(pids, tools::SIGKILL)
 
 mcfork <- function() {
-    r <- .Call(C_mc_fork, PACKAGE = "parallel")
+    r <- .Call(C_mc_fork)
     assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
     structure(list(pid = r[1L], fd = r[2:3]),
               class = c(if(r[1L]) "childProcess"

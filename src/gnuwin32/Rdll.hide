@@ -373,13 +373,7 @@
  Rm_free
  Rm_malloc
  Rm_realloc
- Rsockclose
- Rsockconnect
- Rsocklisten
- Rsockopen
- Rsockread
  Rsockselect
- Rsockwrite
  Rstrlen
  Rstrwid
  Rwin_rename
@@ -928,6 +922,7 @@
  do_signalCondition
  do_sink
  do_sinknumber
+ do_sock
  do_sockconn
  do_sockselect
  do_sort

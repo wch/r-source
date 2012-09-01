@@ -381,7 +381,7 @@ SEXP do_sock(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: ans = Rsockread(CAR(args), CADR(args)); 
 	break;
     case 5: ans = Rsockwrite(CAR(args), CADR(args)); 
-break;
+	break;
     }
     return ans;
 }
