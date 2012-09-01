@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-4   The R Core Team.
+ *  Copyright (C) 2001-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -259,65 +259,103 @@ SEXP attribute_hidden do_stopHTTPD(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+
 attribute_hidden
-void Rsockopen(int *port)
+SEXP Rsockconnect(SEXP sport, SEXP shost)
 {
+    if (length(sport) != 1) error("invalid 'socket' argument");
+    int port = asInteger(sport);
+    char *host[1];
+    host[0] = (char *) translateChar(STRING_ELT(shost, 0));
     if(!initialized) internet_Init();
     if(initialized > 0)
-	(*ptr->sockopen)(port);
+	(*ptr->sockconnect)(&port, host);
     else
 	error(_("socket routines cannot be loaded"));
+    return ScalarInteger(port);
 }
 
 attribute_hidden
-void Rsocklisten(int *sockp, char **buf, int *len)
+SEXP Rsockread(SEXP sport, SEXP smaxlen)
 {
+    if (length(sport) != 1) error("invalid 'socket' argument");
+    int port = asInteger(sport), maxlen = asInteger(smaxlen);
+    char buf[maxlen+1], *abuf[1];
+    abuf[0] = buf;
     if(!initialized) internet_Init();
     if(initialized > 0)
-	(*ptr->socklisten)(sockp, buf, len);
+	(*ptr->sockread)(&port, abuf, &maxlen);
     else
 	error(_("socket routines cannot be loaded"));
+    SEXP ans = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(ans, 0, mkCharLen(buf, maxlen));
+    UNPROTECT(1);
+    return ans;
+		       
 }
 
 attribute_hidden
-void Rsockconnect(int *port, char **host)
+SEXP Rsockclose(SEXP sport)
 {
+    if (length(sport) != 1) error("invalid 'socket' argument");
+    int port = asInteger(sport);
     if(!initialized) internet_Init();
     if(initialized > 0)
-	(*ptr->sockconnect)(port, host);
+	(*ptr->sockclose)(&port);
     else
 	error(_("socket routines cannot be loaded"));
+    return ScalarLogical(port);
 }
 
 attribute_hidden
-void Rsockclose(int *sockp)
+SEXP Rsockopen(SEXP sport)
 {
+    if (length(sport) != 1) error("invalid 'port' argument");
+    int port = asInteger(sport);
     if(!initialized) internet_Init();
     if(initialized > 0)
-	(*ptr->sockclose)(sockp);
+	(*ptr->sockopen)(&port);
     else
 	error(_("socket routines cannot be loaded"));
+    return ScalarInteger(port);
 }
 
 attribute_hidden
-void Rsockread(int *sockp, char **buf, int *maxlen)
+SEXP Rsocklisten(SEXP sport)
 {
+    if (length(sport) != 1) error("invalid 'socket' argument");
+    int port = asInteger(sport), len = 256;
+    char buf[257], *abuf[1];
+    abuf[0] = buf;
     if(!initialized) internet_Init();
     if(initialized > 0)
-	(*ptr->sockread)(sockp, buf, maxlen);
+	(*ptr->socklisten)(&port, abuf, &len);
     else
 	error(_("socket routines cannot be loaded"));
+    SEXP ans = PROTECT(ScalarInteger(port));
+    SEXP host = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(host, 0, mkChar(buf));
+    setAttrib(ans, install("host"), host);
+    UNPROTECT(2);
+    return ans;
 }
 
 attribute_hidden
-void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
+SEXP Rsockwrite(SEXP sport, SEXP sstring)
 {
+    if (length(sport) != 1) error("invalid 'socket' argument");
+    int port = asInteger(sport), start = 0, end, len;
+    char *buf = (char *) translateChar(STRING_ELT(sstring, 0)), *abuf[1];
+    end = len = strlen(buf);
+    abuf[0] = buf;
     if(!initialized) internet_Init();
     if(initialized > 0)
-	(*ptr->sockwrite)(sockp, buf, start, end, len);
+	(*ptr->sockwrite)(&port, abuf, &start, &end, &len);
     else
 	error(_("socket routines cannot be loaded"));
+    return ScalarInteger(len);
 }
+
 
 attribute_hidden
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,

@@ -68,26 +68,11 @@ void bincode (double *x, int *n, double *breaks, int *nb,
 
 static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
 
-static R_NativePrimitiveArgType Rsockconnect_t[] = {INTSXP, STRSXP};
-static R_NativePrimitiveArgType Rsockopen_t[] = {INTSXP};
-static R_NativePrimitiveArgType Rsocklisten_t[] = {INTSXP, STRSXP, INTSXP};
-static R_NativePrimitiveArgType Rsockclose_t[] = {INTSXP};
-static R_NativePrimitiveArgType Rsockread_t[] = {INTSXP, STRSXP, INTSXP};
-static R_NativePrimitiveArgType Rsockwrite_t[] = {INTSXP, STRSXP, INTSXP, INTSXP, INTSXP};
-
 
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 static R_CMethodDef cMethods [] = {
     CDEF(bincode), // remove after R 2.15.2
-
-    /* Sockets */
-    CDEF(Rsockconnect),
-    CDEF(Rsockopen),
-    CDEF(Rsocklisten),
-    CDEF(Rsockclose),
-    CDEF(Rsockread),
-    CDEF(Rsockwrite),
 
     {NULL, NULL, 0}
 };
@@ -108,6 +93,14 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
+
+    /* Sockets */
+    CALLDEF(Rsockconnect, 2),
+    CALLDEF(Rsockread, 2),
+    CALLDEF(Rsockclose, 1),
+    CALLDEF(Rsockopen, 1),
+    CALLDEF(Rsocklisten, 1),
+    CALLDEF(Rsockwrite, 2),
 
     {NULL, NULL, 0}
 };
