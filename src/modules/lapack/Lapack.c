@@ -972,7 +972,7 @@ static SEXP La_chol_piv(SEXP A, SEXP stol)
 	    warning(_("the matrix is either rank-deficient or indefinite"));
 	else
 	    error(_("argument %d of Lapack routine %s had invalid value"),
-		  -info, "dpotrf");
+		  -info, "dpstrf");
     }
     setAttrib(ans, install("pivot"), piv);
     setAttrib(ans, install("rank"), ScalarInteger(rank));
