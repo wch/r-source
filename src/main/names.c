@@ -952,6 +952,13 @@ FUNTAB R_FunTab[] =
 {"memCompress",do_memCompress,	0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"memDecompress",do_memDecompress,0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 
+{"sockconnect",	do_sock,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
+{"sockopen",	do_sock,	1,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+{"socklisten",	do_sock,	2,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+{"sockclose",	do_sock,	3,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+{"sockread",	do_sock,	4,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
+{"sockwrite",	do_sock,	5,      111,    2,      {PP_FUNCALL, PREC_FN,	0}},
+
 
 {"readDCF",	do_readDCF,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 

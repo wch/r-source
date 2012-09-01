@@ -431,6 +431,7 @@ SEXP do_shortRowNames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_signalCondition(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sinknumber(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sock(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_split(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sprintf(SEXP, SEXP, SEXP, SEXP);

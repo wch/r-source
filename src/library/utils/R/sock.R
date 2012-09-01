@@ -30,34 +30,34 @@ make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
     if(length(host <- as.character(host)) != 1L)
 	stop("'host' must be character of length 1")
     if (!server){
-	socket <- .Call("Rsockconnect", port, host, PACKAGE = "base")
+	socket <- .Internal(sockconnect(port, host))
     } else {
 	if (host != "localhost") stop("can only receive calls on local machine")
-	tmp <- .Call("Rsockopen", port, PACKAGE="base")
-        socket <- .Call("Rsocklisten", tmp, PACKAGE="base")
-	.Call("Rsockclose", tmp, PACKAGE="base")
+	tmp <- .Internal(sockopen(port))
+        socket <- .Internal(socklisten(tmp))
+        host <- attr(socket, "host")
+	.Internal(sockclose(tmp))
     }
     if (socket <= 0) {
 	if (fail) stop("socket not established")
         else warning("socket not established")
     }
-    rval <- list(socket = socket, host = attr(socket, "host"), port = port)
+    rval <- list(socket = socket, host = host, port = port)
     class(rval) <- "socket"
     rval
 }
 
-close.socket <- function(socket, ...)
-    .Call("Rsockclose", socket$socket, PACKAGE = "base")
+close.socket <- function(socket, ...) .Internal(sockclose(socket$socket))
 
 read.socket <- function(socket, maxlen = 256L, loop = FALSE)
 {
     repeat {
-	rval <- .Call("Rsockread", socket$socket, maxlen, PACKAGE = "base")
+	rval <- .Internal(sockread(socket$socket, maxlen))
 	if (nzchar(rval) || !loop) break
     }
     rval
 }
 
 write.socket <- function(socket, string)
-    invisible(.Call("Rsockwrite", socket$socket, string, PACKAGE = "base"))
+    .Internal(sockwrite(socket$socket, string))
 
