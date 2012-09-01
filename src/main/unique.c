@@ -1494,6 +1494,7 @@ rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
     default:
 	error("non-numeric matrix in rowsum(): this should not happen");
     }
+    if (TYPEOF(rn) != STRSXP) error("row names are not character");
     SEXP dn = allocVector(VECSXP, 2), dn2, dn3;
     setAttrib(ans, R_DimNamesSymbol, dn);
     SET_VECTOR_ELT(dn, 0, rn);
@@ -1506,7 +1507,7 @@ rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 }
 
 static SEXP
-rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm)
+rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 {
     SEXP matches,ans,col,xcol;
     int n, p, ng, narm;
@@ -1565,6 +1566,9 @@ rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm)
 	}
     }
     namesgets(ans, getAttrib(x, R_NamesSymbol));
+    if (TYPEOF(rn) != STRSXP) error("row names are not character");
+    setAttrib(ans, R_RowNamesSymbol, rn);
+    classgets(ans, mkString("data.frame"));
 
     UNPROTECT(3); /* HashTable, matches, ans */
     return ans;
@@ -1574,7 +1578,8 @@ SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     if(PRIMVAL(op) == 1)
-	return rowsum_df(CAR(args), CADR(args), CADDR(args), CADDDR(args));
+	return rowsum_df(CAR(args), CADR(args), CADDR(args), CADDDR(args),
+			 CAD4R(args));
     else
 	return rowsum(CAR(args), CADR(args), CADDR(args), CADDDR(args), 
 		      CAD4R(args));

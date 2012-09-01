@@ -1009,7 +1009,7 @@ FUNTAB R_FunTab[] =
 {"serializeb",	do_serialize, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"unserialize",	do_serialize, 	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"rowsum_matrix",do_rowsum, 	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"rowsum_df",	do_rowsum, 	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"rowsum_df",	do_rowsum, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"La_qr_cmplx",	do_lapack,     	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_rs",	do_lapack,     	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},

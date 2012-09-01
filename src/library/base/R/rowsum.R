@@ -36,7 +36,5 @@ rowsum.data.frame <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
     if (any(is.na(group))) warning("missing values for 'group'")
     ugroup <- unique(group)
     if (reorder) ugroup <- sort(ugroup, na.last = TRUE, method = "quick")
-
-    rval <- .Internal(rowsum_df(x, group, ugroup, na.rm))
-    as.data.frame(rval, row.names = as.character(ugroup))
+    .Internal(rowsum_df(x, group, ugroup, na.rm, as.character(ugroup)))
 }

@@ -1936,4 +1936,19 @@ solve(Q)
 ## failed in pre-2.16.0, which interpreted 'numeric' correctly.
 
 
+## tests of rowsum() with names and for factor groups
+set.seed(123)
+x <- matrix(runif(100), ncol=5)
+group <- sample(1:8, 20, TRUE)
+(xsum <- rowsum(x, group))
+colnames(x) <- letters[16:20]
+(xsum <- rowsum(x, group))
+rowsum(as.data.frame(x), group)
+group <- factor(group)
+(xsum <- rowsum(x, group))
+stopifnot(sapply(dimnames(xsum), is.character))
+rowsum(as.data.frame(x), group)
+## one version had factor row names.
+
+
 proc.time()
