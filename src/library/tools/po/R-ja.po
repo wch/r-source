@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-09-01 09:38\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1232,6 +1232,9 @@ msgstr " 不正なパッケージ構成です "
 
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
+
+msgid "contains a blank line"
+msgstr ""
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr " 非ASCIIデータをもつ未知のエンコーディングです: ASCIIに変換します "

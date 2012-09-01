@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:21+0100\n"
+"POT-Creation-Date: 2012-09-01 09:37+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -229,8 +229,8 @@ msgstr "'%ls' gösterilirken hata"
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
 #: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
-#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1080
+#: src/modules/lapack/Lapack.c:672 src/modules/lapack/Lapack.c:768
+#: src/modules/lapack/Lapack.c:825 src/modules/lapack/Lapack.c:1121
 #: src/modules/X11/devX11.c:3220 src/modules/X11/devX11.c:3223
 #: src/modules/X11/devX11.c:3226 src/modules/X11/devX11.c:3250
 #: src/unix/sys-std.c:1218 src/unix/sys-std.c:1241
@@ -288,7 +288,7 @@ msgstr "geçersiz zaman aralığı"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:203 src/main/errors.c:900 src/main/errors.c:931
+#: src/main/dotcode.c:202 src/main/errors.c:900 src/main/errors.c:931
 #: src/main/errors.c:1032 src/main/errors.c:1057 src/main/errors.c:1062
 #: src/main/errors.c:1334 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -605,37 +605,37 @@ msgstr "UYARI: verilen --encoding için değer verilmedi\n"
 msgid "WARNING: option '%s' no longer supported"
 msgstr "UYARI: '%s' seçeğeni artık desteklenmiyor\n"
 
-#: src/main/CommandLineArgs.c:208
+#: src/main/CommandLineArgs.c:206
 #, fuzzy, c-format
 msgid "WARNING: no value given for '%s'"
 msgstr "UYARI: '%s' için değer girilmedi\n"
 
-#: src/main/CommandLineArgs.c:218
+#: src/main/CommandLineArgs.c:216
 #, fuzzy, c-format
 msgid "WARNING: '%s' value is invalid: ignored"
 msgstr "UYARI: '%s' değeri geçersiz: görmezden gelindi\n"
 
-#: src/main/CommandLineArgs.c:222
+#: src/main/CommandLineArgs.c:220
 #, fuzzy, c-format
 msgid "WARNING: %s: too large and ignored"
 msgstr "UYARI: %s: çok büyük, görmezden gelindi\n"
 
-#: src/main/CommandLineArgs.c:236
+#: src/main/CommandLineArgs.c:234
 #, fuzzy
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "UYARI: '--max-ppsize' için değer verilmedi\n"
 
-#: src/main/CommandLineArgs.c:241
+#: src/main/CommandLineArgs.c:239
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "UYARI: '--max-ppsize' değeri negatif: görmezden gelindi\n"
 
-#: src/main/CommandLineArgs.c:243
+#: src/main/CommandLineArgs.c:241
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "UYARI: '--max-ppsize' değeri çok küçük: görmezden gelindi\n"
 
-#: src/main/CommandLineArgs.c:246
+#: src/main/CommandLineArgs.c:244
 #, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "UYARI: '--max-ppsize' değeri çok büyük: görmezden gelindi\n"
@@ -762,7 +762,7 @@ msgstr "kayıtlı yerel sembol için yer ayrılamadı (%d bayt)"
 msgid "must pass package name or DllInfo reference"
 msgstr "DllInfo referansı veya paket adı verilmeli"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:123
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:128
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject'de tanımlanmamış tip %d"
@@ -2698,20 +2698,20 @@ msgstr "aygıtı yerleştirmek için yeterli bellek yok (GEcreateDevDes içinde)
 msgid "Hit <Return> to see next plot: "
 msgstr "Sonraki çizimi görmek için <Enter>'a basın: "
 
-#: src/main/dotcode.c:102 src/main/dotcode.c:132
+#: src/main/dotcode.c:107 src/main/dotcode.c:137
 msgid "NULL value passed as symbol address"
 msgstr "NULL değeri sembol adresi olarak geçirildi"
 
-#: src/main/dotcode.c:137 src/main/dotcode.c:218
+#: src/main/dotcode.c:142 src/main/dotcode.c:218
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "'%s' sembolü çok uzun"
 
-#: src/main/dotcode.c:155
+#: src/main/dotcode.c:154
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name' bir dize (1 uzunluğunda) ya da yerel sembol referansı olmalıdır"
 
-#: src/main/dotcode.c:205 src/main/dotcode.c:555
+#: src/main/dotcode.c:204 src/main/dotcode.c:555
 msgid "too many arguments in foreign function call"
 msgstr "yabancı fonksiyon kullanımında çok fazla argüman"
 
@@ -2781,7 +2781,7 @@ msgstr "'EXPR' eksik"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Hatalı sayıda argüman (%d), %d adet bekleniyordu (%s için)"
 
-#: src/main/dotcode.c:1219 src/main/dotcode.c:2268
+#: src/main/dotcode.c:1219 src/main/dotcode.c:2267
 msgid "too many arguments, sorry"
 msgstr "çok fazla argüman, üzgünüm"
 
@@ -2852,24 +2852,24 @@ msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2383
+#: src/main/dotcode.c:2382
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "\"%s\" tipi dillerarası çağrılarda desteklenmiyor"
 
-#: src/main/dotcode.c:2450
+#: src/main/dotcode.c:2449
 msgid "invalid function in call_R"
 msgstr "call_R'de geçersiz fonksiyon"
 
-#: src/main/dotcode.c:2452
+#: src/main/dotcode.c:2451
 msgid "invalid argument count in call_R"
 msgstr "call_R'de geçersiz sayıda argüman"
 
-#: src/main/dotcode.c:2454
+#: src/main/dotcode.c:2453
 msgid "invalid return value count in call_R"
 msgstr "call_R içinde geçersiz geri dönüş değeri sayısı"
 
-#: src/main/dotcode.c:2488
+#: src/main/dotcode.c:2487
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R içinde '%s' modu desteklenmiyor"
@@ -7622,7 +7622,7 @@ msgstr ""
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
 msgstr "argument type[1]='%s' '1','O', or 'I' seçeneklerinden biri olmalı"
 
-#: src/modules/lapack/Lapack.c:84 src/modules/lapack/Lapack.c:705
+#: src/modules/lapack/Lapack.c:84 src/modules/lapack/Lapack.c:711
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr "'jobu' ve 'jobv' karakter dizeleri olmalı"
 
@@ -7633,23 +7633,23 @@ msgstr "'method' bir karakter dizesi olmalı"
 #: src/modules/lapack/Lapack.c:106 src/modules/lapack/Lapack.c:115
 #: src/modules/lapack/Lapack.c:170 src/modules/lapack/Lapack.c:181
 #: src/modules/lapack/Lapack.c:256 src/modules/lapack/Lapack.c:262
-#: src/modules/lapack/Lapack.c:585 src/modules/lapack/Lapack.c:591
-#: src/modules/lapack/Lapack.c:635 src/modules/lapack/Lapack.c:642
-#: src/modules/lapack/Lapack.c:646 src/modules/lapack/Lapack.c:680
-#: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
-#: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
-#: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
-#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
-#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
-#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
-#: src/modules/lapack/Lapack.c:1126
+#: src/modules/lapack/Lapack.c:591 src/modules/lapack/Lapack.c:597
+#: src/modules/lapack/Lapack.c:641 src/modules/lapack/Lapack.c:648
+#: src/modules/lapack/Lapack.c:652 src/modules/lapack/Lapack.c:686
+#: src/modules/lapack/Lapack.c:693 src/modules/lapack/Lapack.c:724
+#: src/modules/lapack/Lapack.c:733 src/modules/lapack/Lapack.c:779
+#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:840
+#: src/modules/lapack/Lapack.c:846 src/modules/lapack/Lapack.c:1050
+#: src/modules/lapack/Lapack.c:1056 src/modules/lapack/Lapack.c:1095
+#: src/modules/lapack/Lapack.c:1102 src/modules/lapack/Lapack.c:1106
+#: src/modules/lapack/Lapack.c:1135 src/modules/lapack/Lapack.c:1142
+#: src/modules/lapack/Lapack.c:1167
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "hata kodu %d, Lapack rutini '%s' den"
 
 #: src/modules/lapack/Lapack.c:149 src/modules/lapack/Lapack.c:235
-#: src/modules/lapack/Lapack.c:760 src/modules/lapack/Lapack.c:813
+#: src/modules/lapack/Lapack.c:766 src/modules/lapack/Lapack.c:819
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' bir sayısal kare matris olmalı"
 
@@ -7707,10 +7707,10 @@ msgid "error [%d] from Lapack 'zgecon()'"
 msgstr "hata [%d] (Lapack 'zgecon()' dan)"
 
 #: src/modules/lapack/Lapack.c:479 src/modules/lapack/Lapack.c:513
-#: src/modules/lapack/Lapack.c:557 src/modules/lapack/Lapack.c:607
-#: src/modules/lapack/Lapack.c:650 src/modules/lapack/Lapack.c:691
-#: src/modules/lapack/Lapack.c:740 src/modules/lapack/Lapack.c:796
-#: src/modules/lapack/Lapack.c:857
+#: src/modules/lapack/Lapack.c:563 src/modules/lapack/Lapack.c:613
+#: src/modules/lapack/Lapack.c:656 src/modules/lapack/Lapack.c:697
+#: src/modules/lapack/Lapack.c:746 src/modules/lapack/Lapack.c:802
+#: src/modules/lapack/Lapack.c:863
 msgid "Fortran complex functions are not available on this platform"
 msgstr "Fortran karmaşık fonksiyonları bu platformda mevcut değil"
 
@@ -7719,99 +7719,104 @@ msgstr "Fortran karmaşık fonksiyonları bu platformda mevcut değil"
 msgid "error [%d] from Lapack 'ztrcon()'"
 msgstr "hata [%d] (Lapack 'ztrcon()' dan)"
 
-#: src/modules/lapack/Lapack.c:528 src/modules/lapack/Lapack.c:571
+#: src/modules/lapack/Lapack.c:528 src/modules/lapack/Lapack.c:577
 msgid "'a' must be a complex matrix"
 msgstr "'a' bir karmaşık matris olmalı"
 
-#: src/modules/lapack/Lapack.c:530 src/modules/lapack/Lapack.c:621
-#: src/modules/lapack/Lapack.c:664
+#: src/modules/lapack/Lapack.c:530 src/modules/lapack/Lapack.c:627
+#: src/modules/lapack/Lapack.c:670
 msgid "'b' must be a complex matrix"
 msgstr "'b' bir karmaşık matris olmalı"
 
-#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:957
+#: src/modules/lapack/Lapack.c:541 src/modules/lapack/Lapack.c:998
 msgid "'a' is 0-diml"
 msgstr "'a' 0-boyutlu"
 
-#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:959
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1000
 msgid "no right-hand side in 'b'"
 msgstr "'b' içinde sağ taraf yok"
 
-#: src/modules/lapack/Lapack.c:539 src/modules/lapack/Lapack.c:961
+#: src/modules/lapack/Lapack.c:545 src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "'a' (%d x %d) kare olmalı"
 
-#: src/modules/lapack/Lapack.c:541 src/modules/lapack/Lapack.c:963
+#: src/modules/lapack/Lapack.c:547 src/modules/lapack/Lapack.c:1004
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "'b' (%d x %d), 'a' (%d x %d) ile uyumlu olmalı"
 
-#: src/modules/lapack/Lapack.c:550 src/modules/lapack/Lapack.c:887
-#: src/modules/lapack/Lapack.c:929 src/modules/lapack/Lapack.c:972
+#: src/modules/lapack/Lapack.c:556 src/modules/lapack/Lapack.c:893
+#: src/modules/lapack/Lapack.c:907 src/modules/lapack/Lapack.c:963
+#: src/modules/lapack/Lapack.c:1013
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "Lapacak rutininin %d inci argümanı geçersiz değere sahip %s"
 
-#: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
+#: src/modules/lapack/Lapack.c:634 src/modules/lapack/Lapack.c:679
+#: src/modules/lapack/Lapack.c:1088 src/modules/lapack/Lapack.c:1128
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "sağ taraf %d sütuna sahip olmalı (%d değil)"
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1162
 msgid "'a' must be a square matrix"
 msgstr "'a' bir kare matris olmalı"
 
-#: src/modules/lapack/Lapack.c:875
+#: src/modules/lapack/Lapack.c:881
 msgid "'a' must have dims > 0"
 msgstr "'a' boyutları > 0 olmalı"
 
-#: src/modules/lapack/Lapack.c:885
+#: src/modules/lapack/Lapack.c:891
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "sıra %d in baş minörü pozitif "
 
-#: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
-#: src/modules/lapack/Lapack.c:1114
+#: src/modules/lapack/Lapack.c:905
+msgid "the matrix is either rank-deficient or indefinite"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:927 src/modules/lapack/Lapack.c:948
+#: src/modules/lapack/Lapack.c:984 src/modules/lapack/Lapack.c:1037
+#: src/modules/lapack/Lapack.c:1155
 msgid "'a' must be a numeric matrix"
 msgstr "'a' bir sayısal matris olmalı"
 
-#: src/modules/lapack/Lapack.c:901
+#: src/modules/lapack/Lapack.c:935
 msgid "'size' argument must be a positive integer"
 msgstr "'size' argümanı bir pozitif tam sayı olmalı"
 
-#: src/modules/lapack/Lapack.c:916
+#: src/modules/lapack/Lapack.c:950
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "'size' ncol(x) = %d i geçemez"
 
-#: src/modules/lapack/Lapack.c:917
+#: src/modules/lapack/Lapack.c:951
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "'size' nrow(x) = %d i geçemez"
 
-#: src/modules/lapack/Lapack.c:927
+#: src/modules/lapack/Lapack.c:961
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "öğe (%d, %d) sıfıra eşit, tersi hesaplanamaz"
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
-#: src/modules/lapack/Lapack.c:1078
+#: src/modules/lapack/Lapack.c:986 src/modules/lapack/Lapack.c:1081
+#: src/modules/lapack/Lapack.c:1119
 msgid "'b' must be a numeric matrix"
 msgstr "'b' bir sayısal matris olmalı"
 
-#: src/modules/lapack/Lapack.c:975
+#: src/modules/lapack/Lapack.c:1016
 #, fuzzy, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "Lapack rutini dgesv: sistem tam olarak tek"
 
-#: src/modules/lapack/Lapack.c:982
+#: src/modules/lapack/Lapack.c:1023
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "sistem sayısal olarak tek: karşılıklı koşul numarası = %g"
 
-#: src/modules/lapack/Lapack.c:1116
+#: src/modules/lapack/Lapack.c:1157
 msgid "argument 'logarithm' must be logical"
 msgstr "'logarithm' argümanı mantıksal olmalı"
 

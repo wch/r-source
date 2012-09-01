@@ -1,109 +1,193 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-07-12 13:10\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
+# parallel/R/RngStream.R: 22
+# stop("invalid value of 'seed'")
+# parallel/R/RngStream.R: 29
+# stop("invalid value of 'seed'")
 msgid "invalid value of 'seed'"
 msgstr "niepoprawna wartość 'seed'"
 
+# parallel/R/clusterApply.R: 100
+# stop("need at least one argument")
 msgid "need at least one argument"
 msgstr "potrzeba co najmniej jednego argumentu"
 
+# parallel/R/clusterApply.R: 106
+# stop("Zero-length inputs cannot be mixed with those of non-zero length")
+# parallel/R/unix/mcmapply.R: 31
+# stop("Zero-length inputs cannot be mixed with those of non-zero length")
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
 "długości"
 
+# parallel/R/clusterApply.R: 224
+# stop("dim(X) must have a positive length")
 msgid "dim(X) must have a positive length"
-msgstr "dim(X) musi mieć dodatnią długość"
+msgstr "'dim(X)' musi mieć dodatnią długość"
 
+# parallel/R/clusterApply.R: 237
+# stop("'X' must have named dimnames")
 msgid "'X' must have named dimnames"
 msgstr "'X' musi mieć nazwane wymiary"
 
+# parallel/R/clusterApply.R: 240
+# stop("not all elements of 'MARGIN' are names of dimensions")
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
 
+# parallel/R/snow.R: 27
+# stop("no cluster supplied and none is registered")
 msgid "no cluster supplied and none is registered"
 msgstr "Klaster nie został dostarczony oraz żaden nie jest zarejestrowany"
 
+# parallel/R/snow.R: 42
+# stop("not a valid cluster")
 msgid "not a valid cluster"
-msgstr "nie jest poprawnym klastrem"
+msgstr "niepoprawny klaster"
 
+# parallel/R/snow.R: 138
+# stop("unknown cluster type")
 msgid "unknown cluster type"
 msgstr "nieznany typ klastra"
 
+# parallel/R/snowSOCK.R: 132
+# gettextf("socket cluster with %d nodes on hosts %s", nc,
+#                  paste(sQuote(hosts), collapse = ", "))
 msgid "socket cluster with %d nodes on hosts %s"
 msgstr "gniazdo klastra z %d węzłami na hostach %s"
 
 msgid ","
 msgstr ","
 
+# parallel/R/snowSOCK.R: 135
+# gettextf("socket cluster with %d nodes on host %s", nc, sQuote(hosts))
 msgid "socket cluster with %d nodes on host %s"
-msgstr "gniazdo klastra z %d węzłami na hoscie %s"
+msgstr "gniazdo klastra z %d węzłami na hoście %s"
 
+# parallel/R/snowSOCK.R: 145
+# gettextf("node of a socket cluster on host %s with pid %d",
+#                     sQuote(x[["host"]]), pid)
 msgid "node of a socket cluster on host %s with pid %d"
-msgstr "węzeł gniazda klastra na hoscie %s z pid %d"
+msgstr "węzeł gniazda klastra na hoście %s z pid %d"
 
+# parallel/R/snowSOCK.R: 145
+# gettextf("node of a socket cluster on host %s with pid %d",
+#                     sQuote(x[["host"]]), pid)
 msgid "host"
 msgstr "host"
 
+# parallel/R/unix/forkCluster.R: 21
+# stop("'nnodes' must be >= 1")
 msgid "'nnodes' must be >= 1"
 msgstr "'nnodes' musi być >= 1"
 
+# parallel/R/unix/mcfork.R: 52
+# stop("invalid 'child' argument")
+# parallel/R/unix/mcfork.R: 72
+# stop("invalid 'child' argument")
 msgid "invalid 'child' argument"
 msgstr "niepoprawny argument 'child'"
 
+# parallel/R/unix/mcfork.R: 63
+# stop("'children' must be a list of processes or a single process")
+# parallel/R/unix/mcfork.R: 65
+# stop("'children' must be a list of processes or a single process")
 msgid "'children' must be a list of processes or a single process"
 msgstr "'children' musi być listą procesów lub pojedynczym procesem"
 
+# parallel/R/unix/mcfork.R: 96
+# stop("'process' must be of the class \"process\"")
 msgid "'process' must be of the class \"process\""
-msgstr "'process' musi być klasy \"process\""
+msgstr "'process' musi być klasy 'process'"
 
+# parallel/R/unix/mcfork.R: 104
+# stop("'child' must be a valid child process")
 msgid "'child' must be a valid child process"
 msgstr "'child' musi być poprawnym procesem potomnym"
 
+# parallel/R/unix/mcfork.R: 107
+# stop("'what' must be a character or raw vector")
 msgid "'what' must be a character or raw vector"
 msgstr "'what' musi być znakiem albo pustym wektorem"
 
+# parallel/R/windows/mcdummies.R: 24
+# stop("'mc.cores' must be >= 1")
+# parallel/R/windows/mcdummies.R: 34
+# stop("'mc.cores' must be >= 1")
+# parallel/R/windows/mcdummies.R: 45
+# stop("'mc.cores' must be >= 1")
+# parallel/R/unix/pvec.R: 28
+# stop("'mc.cores' must be >= 1")
+# parallel/R/unix/mclapply.R: 27
+# stop("'mc.cores' must be >= 1")
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores' musi być >= 1"
 
+# parallel/R/unix/mclapply.R: 110
+# warning(gettextf("%d function calls resulted in an error",
+#                              has.errors), domain = NA)
 msgid "%d function calls resulted in an error"
 msgstr "wywołania funkcji %d spowodowało błąd"
 
+# parallel/R/unix/mclapply.R: 167
+# warning("all scheduled cores encountered errors in user code")
 msgid "all scheduled cores encountered errors in user code"
 msgstr "wszystkie zaplanowane jądra napotkały błędy w kodzie użytkownika"
 
+# parallel/R/unix/mcparallel.R: 59
+# stop("invalid 'jobs' argument")
 msgid "invalid 'jobs' argument"
 msgstr "niepoprawny argument 'jobs'"
 
+# parallel/R/windows/mcdummies.R: 32
+# stop("'v' must be a vector")
+# parallel/R/unix/pvec.R: 24
+# stop("'v' must be a vector")
 msgid "'v' must be a vector"
 msgstr "'v' musi być wektorem"
 
+# parallel/R/unix/pvec.R: 70
+# warning("some results may be missing, folded or caused an error")
 msgid "some results may be missing, folded or caused an error"
 msgstr ""
 "niektórych wyników może brakować, mogą być zwinięte lub spowodowały błąd"
 
+# parallel/R/windows/forkCluster.R: 20
+# stop("fork clusters are not supported on Windows")
 msgid "fork clusters are not supported on Windows"
 msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
 
+# parallel/R/windows/mcdummies.R: 25
+# stop("'mc.cores' > 1 is not supported on Windows")
+# parallel/R/windows/mcdummies.R: 35
+# stop("'mc.cores' > 1 is not supported on Windows")
+# parallel/R/windows/mcdummies.R: 46
+# stop("'mc.cores' > 1 is not supported on Windows")
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 nie jest wspierane w systemach Windows"
 
+# parallel/R/unix/mclapply.R: 169
+# warning(sprintf(ngettext(has.errors,
+#                                      "scheduled core %s encountered error in user code, all values of the job will be affected",
+#                                      "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"),
+#                             paste(has.errors, collapse = ", ")),
+#                     domain = NA)
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"

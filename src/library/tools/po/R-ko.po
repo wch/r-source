@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-09-01 09:38\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1203,6 +1203,9 @@ msgstr "패키지 레이아웃이 올바르지 않습니다 "
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "파일 '%s' 는 올바른 DCF 형식을 가지고 있지 않습니다 "
+
+msgid "contains a blank line"
+msgstr ""
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "알 수 없는 인코딩과 ASCII 가 아닌 데이터: ASCII 로 변환합니다 "

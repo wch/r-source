@@ -1,129 +1,271 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-08-06 10:53\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
+# src/library/base/R/Defunct.R: 21
+# gettextf("'%s' is defunct.\n
+# 			as.character(sys.call(sys.parent())[[1L]]))
 msgid "'%s' is defunct."
-msgstr "'%s' został zlikwidowany."
+msgstr "'%s' jest zlikwidowane."
 
+# src/library/base/R/Defunct.R: 24
+# gettextf("Use '%s' instead.\n
+#  new)
+# src/library/base/R/Deprecated.R: 27
+# gettextf("Use '%s' instead.\n
+#  new)
 msgid "Use '%s' instead."
-msgstr "Użyj '%s' w zamian."
+msgstr "Użyj w zamian '%s'."
 
+# src/library/base/R/Defunct.R: 27
+# gettextf("See help(\"Defunct\") and help(\"%s-defunct\").",
+# 			  package)
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
 msgstr "Zobacz help(\"Defunct\") oraz help(\"%s-defunct\")."
 
+# src/library/base/R/Defunct.R: 29
+# gettext("See help(\"Defunct\")")
 msgid "See help(\"Defunct\")"
 msgstr "Zobacz help(\"Defunct\")"
 
+# src/library/base/R/Deprecated.R: 25
+# gettextf("'%s' is deprecated.\n", old)
 msgid "'%s' is deprecated."
 msgstr "'%s' jest przestarzałe."
 
+# src/library/base/R/Deprecated.R: 30
+# gettextf("See help(\"Deprecated\") and help(\"%s-deprecated\").",
+# 		   package)
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "Zobacz help(\"Deprecated\") oraz help(\"%s-deprecated\")."
 
+# src/library/base/R/Deprecated.R: 32
+# gettext("See help(\"Deprecated\")")
 msgid "See help(\"Deprecated\")"
 msgstr "Zobacz help(\"Deprecated\")"
 
+# src/library/base/R/LAPACK.R: 22
+# stop("argument to 'La.svd' must be numeric or complex")
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument przekazywany do 'La.svd' musi być liczbowy lub zespolony"
 
+# src/library/base/R/eigen.R: 50
+# stop("infinite or missing values in 'x'")
+# src/library/base/R/LAPACK.R: 23
+# stop("infinite or missing values in 'x'")
+# src/library/base/R/svd.R: 22
+# stop("infinite or missing values in 'x'")
 msgid "infinite or missing values in 'x'"
 msgstr "wartość nieskończona lub brakuje wartości w 'x'"
 
+# src/library/base/R/LAPACK.R: 28
+# stop("0 extent dimensions")
+# src/library/base/R/svd.R: 26
+# stop("0 extent dimensions")
 msgid "0 extent dimensions"
 msgstr "wymiary o zerowym zakresie"
 
+# src/library/base/R/LAPACK.R: 44
+# stop("'nu' must be 0, nrow(x) or ncol(x)")
+# src/library/base/R/svd.R: 57
+# stop("'nu' must be 0, nrow(x) or ncol(x)")
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu' musi mieć wartość  0, nrow(x) lub ncol(x)"
+msgstr "'nu' musi mieć wartość 0, nrow(x) lub ncol(x)"
 
+# src/library/base/R/LAPACK.R: 59
+# stop("'nv' must be 0, nrow(x) or ncol(x)")
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' musi mieć wartość 0, nrow(x) lub ncol(x)"
 
+# src/library/base/R/New-Internal.R: 130
+# stop("second argument must be a list")
 msgid "second argument must be a list"
 msgstr "drugi argument musi być listą"
 
+# src/library/base/R/New-Internal.R: 253
+# stop("'iconvlist' is not available on this system")
+# src/library/base/R/New-Internal.R: 255
+# stop("'iconvlist' is not available on this system")
 msgid "'iconvlist' is not available on this system"
 msgstr "'iconvlist' nie jest dostępne w tym systemie"
 
+# src/library/base/R/RNG.R: 35
+# stop("'kind' must be a character string of length 1 (RNG to be used).")
+# src/library/base/R/RNG.R: 68
+# stop("'kind' must be a character string of length 1 (RNG to be used).")
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr "'kind' musi być ciągiem tekstowym o długości 1 (zostanie użyty RNG)."
+msgstr ""
+"'kind' musi być łańcuchem tekstowym o długości 1 (zostanie użyty 'RNG')."
 
+# src/library/base/R/RNG.R: 37
+# stop(gettextf("'%s' is not a valid abbreviation of an RNG", kind),
+#                  domain = NA)
+# src/library/base/R/RNG.R: 70
+# stop(gettextf("'%s' is not a valid abbreviation of an RNG", kind),
+#                  domain = NA)
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s' nie jest poprawnym skrótem dla RNG"
+msgstr "'%s' nie jest poprawnym skrótem dla 'RNG'"
 
+# src/library/base/R/RNG.R: 44
+# stop("'normal.kind' must be a character string of length 1")
+# src/library/base/R/RNG.R: 77
+# stop("'normal.kind' must be a character string of length 1")
 msgid "'normal.kind' must be a character string of length 1"
-msgstr "'normal.kind' musi być ciągiem tekstowym o długości 1"
+msgstr "'normal.kind' musi być łańcuchem tekstowym o długości 1"
 
+# src/library/base/R/RNG.R: 47
+# stop(gettextf("'%s' is not a valid choice", normal.kind),
+#                  domain = NA)
+# src/library/base/R/RNG.R: 80
+# stop(gettextf("'%s' is not a valid choice", normal.kind),
+#                  domain = NA)
 msgid "'%s' is not a valid choice"
 msgstr "'%s' nie jest poprawnym wyborem"
 
+# src/library/base/R/RNG.R: 50
+# warning("Buggy version of Kinderman-Ramage generator used")
 msgid "Buggy version of Kinderman-Ramage generator used"
 msgstr "Użyto błędnej wersji generatora Kindermana-Ramage'a"
 
+# src/library/base/R/RNG.R: 83
+# stop("Buggy version of Kinderman-Ramage generator is not allowed")
 msgid "Buggy version of Kinderman-Ramage generator is not allowed"
 msgstr "Błędna wersja generatora Kindermana-Ramage'a nie jest dozwolona"
 
+# src/library/base/R/RNG.R: 95
+# stop("malformed version string")
 msgid "malformed version string"
-msgstr "zniekształcony ciąg wersji"
+msgstr "zniekształcony łańcuch wersji"
 
+# src/library/base/R/all.equal.R: 40
+# gettextf("target is %s, current is %s",
+#                                 data.class(target), data.class(current))
 msgid "target is %s, current is %s"
 msgstr "cel: %s, bieżące: %s"
 
+# src/library/base/R/apply.R: 25
+# stop("dim(X) must have a positive length")
+# src/library/parallel/R/clusterApply.R: 224
+# stop("dim(X) must have a positive length")
 msgid "dim(X) must have a positive length"
-msgstr "dim(X) musi mieć dodatnią długość"
+msgstr "'dim(X)' musi mieć dodatnią długość"
 
+# src/library/base/R/apply.R: 38
+# stop("'X' must have named dimnames")
+# src/library/parallel/R/clusterApply.R: 237
+# stop("'X' must have named dimnames")
 msgid "'X' must have named dimnames"
 msgstr "'X' musi mieć nazwane wymiary"
 
+# src/library/base/R/apply.R: 41
+# stop("not all elements of 'MARGIN' are names of dimensions")
+# src/library/parallel/R/clusterApply.R: 240
+# stop("not all elements of 'MARGIN' are names of dimensions")
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
 
-#, fuzzy
+# src/library/base/R/load.R: 62
+# warning("Use of save versions prior to 2 is deprecated")
 msgid "use of 0-length dim is deprecated"
-msgstr "Użycie wersji zapisu wcześniejszych niż 2 jest przestarzałe"
+msgstr "użycie wymiaru o zerowej długości jest przestarzałe"
 
+# src/main/array.c: 1403
+# stop("'dim' specifies too large an array")
+# src/library/base/R/array.R: 34
+# stop("'dim' specifies too large an array")
 msgid "'dim' specifies too large an array"
 msgstr "'dim' określa zbyć dużą tablicę"
 
+# src/library/base/R/array.R: 52
+# stop("incorrect value for 'MARGIN'")
 msgid "incorrect value for 'MARGIN'"
 msgstr "niepoprawna wartość dla 'MARGIN'"
 
+# src/library/base/R/as.R: 82
+# stop("you cannot be serious")
 msgid "you cannot be serious"
 msgstr "nie mówisz na serio"
 
+# src/library/base/R/attach.R: 82
+# warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",
+#                 "*** Note that 'pos=1' will give an error in the future")
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
-msgstr "*** 'pos=1' nie jest możliwe; ustawianie 'pos=2' na chwilę obecną."
+msgstr "*** 'pos=1' nie jest możliwe; na chwilę obecną ustawianie 'pos=2'."
 
+# src/library/base/R/attach.R: 82
+# warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",
+#                 "*** Note that 'pos=1' will give an error in the future")
 msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** Zwróć uwagę, że 'pos=1' będzie zwracał błąd w przyszłości"
+msgstr "*** Zwróć uwagę, że 'pos=1' będzie zwracało błąd w przyszłości"
 
+# src/library/tools/R/Vignettes.R: 479
+# stop(gettextf("file '%s' not found", vignette),
+#              domain = NA)
+# src/library/base/R/attach.R: 88
+# stop(gettextf("file '%s' not found", what), domain = NA)
+# src/library/utils/R/tar.R: 319
+# warning(gettextf("file '%s' not found", f), domain = NA)
 msgid "file '%s' not found"
 msgstr "plik '%s' nie został znaleziony"
 
+# src/library/base/R/attach.R: 115
+# stop("invalid 'name' argument")
 msgid "invalid 'name' argument"
 msgstr "niepoprawny argument 'name'"
 
+# src/library/base/R/attach.R: 133
+# warning(gettextf("package %s is required by %s, which may no longer work correctly",
+#                                  sQuote(pkgname), sQuote(sub("^package:", "", pkg))),
+#                      call. = FALSE, domain = NA)
 msgid "package %s is required by %s, which may no longer work correctly"
 msgstr ""
-"pakiet %s jest wymagany przez %s, który z kolei może nie działać poprawnie"
+"pakiet '%s' jest wymagany przez '%s', który z kolei może nie działać "
+"poprawnie"
 
+# src/library/base/R/attach.R: 137
+# stop(gettextf("package %s is required by %s so will not be detached",
+#                               sQuote(pkgname), sQuote(sub("^package:", "", pkg))),
+#                      call. = FALSE, domain = NA)
 msgid "package %s is required by %s so will not be detached"
-msgstr "pakiet '%s' jest wymagany przez  '%s' tak więc nie zostanie odłączony"
+msgstr "pakiet '%s' jest wymagany przez '%s' tak więc nie zostanie odłączony"
 
+# src/library/base/R/attach.R: 151
+# warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+#                                  ".Last.lib", "detach", pkgname,
+#                                  deparse(conditionCall(res))[1L],
+#                                  conditionMessage(res)),
+#                         call. = FALSE, domain = NA)
+# src/library/base/R/namespace.R: 161
+# stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+#                               hookname, "attachNamespace", nsname,
+#                               deparse(conditionCall(res))[1L],
+#                               conditionMessage(res)),
+#                      call. = FALSE, domain = NA)
+# src/library/base/R/namespace.R: 254
+# stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+#                                   hookname, "loadNamespace", pkgname,
+#                                   deparse(conditionCall(res))[1L],
+#                                   conditionMessage(res)),
+#                          call. = FALSE, domain = NA)
+# src/library/base/R/namespace.R: 761
+# warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+#                                  hookname, "unloadNamespace", nsname,
+#                                  deparse(conditionCall(res))[1L],
+#                                  conditionMessage(res)),
+#                         call. = FALSE, domain = NA)
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
@@ -133,192 +275,671 @@ msgstr ""
 "  wywołanie: '%s'\n"
 "  błąd:  '%s'"
 
+# src/library/base/R/attach.R: 166
+# warning(sQuote(pkgname),
+#                              " namespace cannot be unloaded:\n  ",
+#                              conditionMessage(e), call. = FALSE)
 msgid "namespace cannot be unloaded:"
-msgstr "przestrzeń nazw nie może zostać usunięta:"
+msgstr ": przestrzeń nazw pakietu nie może zostać zwolniona:"
 
+# src/library/base/R/attach.R: 190
+# warning(sQuote(name), " converted to character string")
 msgid "converted to character string"
-msgstr "zamienione na ciąg znaków"
+msgstr "zamienione na łańcuch znaków"
 
+# src/library/base/R/attach.R: 202
+# warning("replaced regular expression pattern '[' by  '\\\\['")
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "zastąpiono wzór wyrażenia regularnego '[' przez '\\\\['"
 
+# src/library/base/R/attach.R: 206
+# warning("replaced '[<-' by '\\\\[<-' in regular expression pattern")
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
 msgstr "zastąpiono '[<-' przez '\\\\[<-' we wzorcu wyrażenia regularnego"
 
+# src/library/base/R/attr.R: 22
+# stop("RHS must be list")
 msgid "RHS must be list"
 msgstr "prawa strona musi być listą"
 
+# src/library/base/R/autoload.R: 22
+# stop("an object with that name already exists")
 msgid "an object with that name already exists"
 msgstr "obiekt o tej nazwie już istnieje"
 
+# src/library/base/R/autoload.R: 51
+# stop(gettextf("autoloader did not find '%s' in '%s'", name, package),
+#              domain = NA)
 msgid "autoloader did not find '%s' in '%s'"
 msgstr "automat ładujący nie znalazł '%s' w '%s'"
 
+# src/library/base/R/backsolve.R: 31
+# stop("invalid argument values in 'backsolve'")
 msgid "invalid argument values in 'backsolve'"
 msgstr "niepoprawne wartości argumentów w 'backsolve'"
 
-#, fuzzy
+# src/library/base/R/backsolve.R: 33
+# stop("invalid value of ncol(x)")
 msgid "invalid value of ncol(x)"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawna wartość 'ncol(x)'"
 
+# src/library/base/R/backsolve.R: 45
+# stop(gettextf("singular matrix in 'backsolve'. First zero in diagonal [%d]", z$info), domain = NA)
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "macierz osobliwa w 'backsolve'. Pierwsze zero na diagonali [%d]"
 
+# src/library/base/R/chol.R: 24
+# stop("complex matrices not permitted at present")
 msgid "complex matrices not permitted at present"
-msgstr "macierze zespolone nie są dozwolone na chwilę obecną"
+msgstr "macierze zespolone na chwilę obecną nie są dozwolone"
 
+# src/library/base/R/chol.R: 26
+# stop("non-numeric argument to 'chol'")
 msgid "non-numeric argument to 'chol'"
 msgstr "nieliczbowy argument przekazany do 'chol'"
 
+# src/library/base/R/chol.R: 30
+# stop("non-square matrix in 'chol'")
 msgid "non-square matrix in 'chol'"
 msgstr "macierz w 'chol' nie jest kwadratowa"
 
+# src/library/base/R/chol.R: 34
+# stop("non-matrix argument to 'chol'")
 msgid "non-matrix argument to 'chol'"
 msgstr "argument przekazany do 'chol' nie jest macierzą"
 
+# src/library/stats/R/kmeans.R: 72
+# stop("invalid nrow(x)")
+# src/library/base/R/eigen.R: 45
+# stop("invalid nrow(x)")
+# src/library/base/R/qr.R: 45
+# stop("invalid nrow(x)")
+# src/library/base/R/chol.R: 42
+# stop("invalid nrow(x)")
+# src/library/base/R/chol.R: 98
+# stop("invalid nrow(x)")
+# src/library/base/R/svd.R: 40
+# stop("invalid nrow(x)")
+# src/library/base/R/kappa.R: 92
+# stop("invalid nrow(x)")
 msgid "invalid nrow(x)"
-msgstr ""
+msgstr "niepoprawna wartość 'nrow(x)'"
 
+# src/library/base/R/chol.R: 59
+# stop("matrix not positive definite")
+# src/library/base/R/chol.R: 60
+# warning("matrix not positive definite")
 msgid "matrix not positive definite"
 msgstr "macierz nie jest dodatnio określona"
 
+# src/library/base/R/chol.R: 78
+# stop("non-positive definite matrix in 'chol'")
 msgid "non-positive definite matrix in 'chol'"
 msgstr "macierz w 'chol' nie jest dodatnio określona"
 
+# src/library/base/R/chol.R: 86
+# stop("non-numeric argument to 'chol2inv'")
 msgid "non-numeric argument to 'chol2inv'"
 msgstr "nieliczbowy argument przekazany do 'chol2inv'"
 
+# src/library/base/R/chol.R: 101
+# stop("invalid 'size' argument in 'chol2inv'")
 msgid "invalid 'size' argument in 'chol2inv'"
 msgstr "niepoprawny argument 'size' w 'chol2inv'"
 
+# src/library/base/R/chol.R: 111
+# stop("singular matrix in 'chol2inv'")
 msgid "singular matrix in 'chol2inv'"
 msgstr "macierz osobliwa w 'chol2inv'"
 
+# src/library/base/R/colSums.R: 27
+# stop("'x' must be an array of at least two dimensions")
+# src/library/base/R/colSums.R: 47
+# stop("'x' must be an array of at least two dimensions")
+# src/library/base/R/colSums.R: 67
+# stop("'x' must be an array of at least two dimensions")
+# src/library/base/R/colSums.R: 87
+# stop("'x' must be an array of at least two dimensions")
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' musi być tablicą o co najmniej dwóch wymiarach"
 
+# src/library/base/R/colSums.R: 29
+# stop("invalid 'dims'")
+# src/library/base/R/colSums.R: 49
+# stop("invalid 'dims'")
+# src/library/base/R/colSums.R: 69
+# stop("invalid 'dims'")
+# src/library/base/R/colSums.R: 89
+# stop("invalid 'dims'")
 msgid "invalid 'dims'"
 msgstr "niepoprawne 'dims'"
 
+# src/library/base/R/conditions.R: 64
+# stop("bad handler specification")
+# src/library/base/R/conditions.R: 73
+# stop("bad handler specification")
 msgid "bad handler specification"
 msgstr "niepoprawne określenie obsługi"
 
+# src/library/base/R/conditions.R: 195
+# stop(gettextf("no 'restart' '%s' found", as.character(r)),
+#                  domain = NA)
+# src/library/base/R/conditions.R: 208
+# stop(gettextf("no 'restart' '%s' found", as.character(r)),
+#                  domain = NA)
 msgid "no 'restart' '%s' found"
 msgstr "nie znaleziono 'restart' '%s'"
 
+# src/library/base/R/conditions.R: 204
+# stop("not an interactive session")
 msgid "not an interactive session"
-msgstr "nie interaktywna sesja"
+msgstr "nieinteraktywna sesja"
 
+# src/library/base/R/conditions.R: 264
+# stop("not a valid restart specification")
 msgid "not a valid restart specification"
-msgstr "nie jest poprawnym określeniem restartu"
+msgstr "niepoprawne określenie restartu"
 
+# src/library/base/R/conflicts.R: 22
+# stop("argument 'where' of length 0")
 msgid "argument 'where' of length 0"
 msgstr "argument 'where' o długości 0"
 
+# src/library/base/R/connections.R: 130
+# stop("argument 'object' must deparse to a single character string")
 msgid "argument 'object' must deparse to a single character string"
-msgstr "argument 'object' musi być konwertowalny do pojedynczego ciągu znaków"
+msgstr ""
+"argument 'object' musi być konwertowalny do pojedynczego łańcucha tekstowego"
 
+# src/library/base/R/connections.R: 144
+# stop("'origin' must be one of 'start', 'current' or 'end'")
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' musi być jednym ze 'start', 'current' lub 'end'"
 
+# src/library/base/R/connections.R: 153
+# stop("can only truncate an open connection")
 msgid "can only truncate an open connection"
-msgstr "można obciąć jedynie otwarte połączenie"
+msgstr "można przyciąć jedynie otwarte połączenie"
 
+# src/library/base/R/connections.R: 228
+# stop("can only write vector objects")
 msgid "can only write vector objects"
-msgstr "można jedynie zapisać obiekty wektorowe"
+msgstr "można zapisać jedynie obiekty wektorowe"
 
+# src/library/base/R/connections.R: 249
+# stop("can only write character objects")
 msgid "can only write character objects"
-msgstr "można jedynie zapisać obiekty tekstowe"
+msgstr "można zapisać jedynie obiekty tekstowe"
 
+# src/library/base/R/connections.R: 264
+# stop("supplied timeout must be NULL or a non-negative number")
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr ""
 "dostarczony limit czasu oczekiwania musi być wartością NULL lub nieujemną "
 "liczbą"
 
+# src/main/connections.c: 5477
+# error("'from' must be raw or character")
+# src/main/connections.c: 5557
+# error("'from' must be raw or character")
+# src/library/base/R/connections.R: 275
+# stop("'from' must be raw or character")
 msgid "'from' must be raw or character"
-msgstr "'from' musi być typem pustym lub znakiem"
+msgstr "'from' musi być typem pustym lub tekstem"
 
+# src/main/array.c: 1268
+# error(_("'x' must be numeric"))
+# src/library/stats/R/cor.R: 35
+# stop("'x' must be numeric")
+# src/library/stats/R/StructTS.R: 89
+# stop("'x' must be numeric")
+# src/library/stats/R/ar.mle.R: 29
+# stop("'x' must be numeric")
+# src/library/stats/R/ar.ols.R: 32
+# stop("'x' must be numeric")
+# src/library/stats/R/wilcox.test.R: 37
+# stop("'x' must be numeric")
+# src/library/stats/R/acf.R: 36
+# stop("'x' must be numeric")
+# src/library/stats/R/acf.R: 70
+# stop("'x' must be numeric")
+# src/library/stats/R/arima.R: 108
+# stop("'x' must be numeric")
+# src/library/stats/R/ar.R: 54
+# stop("'x' must be numeric")
+# src/library/stats/R/arma0.R: 63
+# stop("'x' must be numeric")
+# src/library/graphics/R/hist.R: 33
+# stop("'x' must be numeric")
+# src/library/graphics/R/stem.R: 21
+# stop("'x' must be numeric")
+# src/library/base/R/jitter.R: 28
+# stop("'x' must be numeric")
+# src/library/base/R/cut.R: 25
+# stop("'x' must be numeric")
+# src/library/base/R/rowsum.R: 24
+# stop("'x' must be numeric")
 msgid "'x' must be numeric"
 msgstr "'x' musi być liczbą"
 
+# src/library/base/R/cut.R: 28
+# stop("invalid number of intervals")
 msgid "invalid number of intervals"
 msgstr "niepoprawna liczba interwałów"
 
+# src/library/base/R/cut.R: 35
+# stop("'breaks' are not unique")
 msgid "'breaks' are not unique"
 msgstr "'breaks' nie są unikalne"
 
+# src/library/base/R/cut.R: 57
+# stop("labels/breaks length conflict")
 msgid "labels/breaks length conflict"
 msgstr "konflikt długości etykiet/przerw"
 
+# src/library/base/R/dataframe.R: 63
+# stop("invalid 'row.names' length")
+# src/library/base/R/dataframe.R: 66
+# stop("invalid 'row.names' length")
+# src/library/utils/R/readtable.R: 248
+# stop("invalid 'row.names' length")
+# src/library/utils/R/read.DIF.R: 259
+# stop("invalid 'row.names' length")
 msgid "invalid 'row.names' length"
 msgstr "niepoprawna długość 'row.names'"
 
+# src/library/base/R/dataframe.R: 75
+# stop("duplicate 'row.names' are not allowed")
+# src/library/utils/R/readtable.R: 250
+# stop("duplicate 'row.names' are not allowed")
+# src/library/utils/R/read.DIF.R: 261
+# stop("duplicate 'row.names' are not allowed")
 msgid "duplicate 'row.names' are not allowed"
 msgstr "powtórzone 'row.names' nie są dozwolone"
 
+# src/library/base/R/dataframe.R: 78
+# stop("missing values in 'row.names' are not allowed")
+# src/library/utils/R/readtable.R: 252
+# stop("missing values in 'row.names' are not allowed")
+# src/library/utils/R/read.DIF.R: 263
+# stop("missing values in 'row.names' are not allowed")
 msgid "missing values in 'row.names' are not allowed"
 msgstr "brakujące wartości w 'row.names' nie są dozwolone"
 
+# src/library/base/R/dataframe.R: 122
+# stop("invalid 'dimnames' given for data frame")
+# src/library/base/R/dataframe.R: 127
+# stop("invalid 'dimnames' given for data frame")
 msgid "invalid 'dimnames' given for data frame"
-msgstr "niepoprawne 'dimnames' dla ramki"
+msgstr "niepoprawne 'dimnames' dla podanej ramki danych"
 
+# src/library/base/R/dataframe.R: 141
+# stop(gettextf("cannot coerce class '%s' into a data.frame",
+#                   deparse(class(x))),
+#          domain = NA)
 msgid "cannot coerce class '%s' into a data.frame"
-msgstr "nie można przekształcić klasy '%s' w ramkę"
+msgstr "nie można przekształcić klasy '%s' w ramkę danych"
 
+# src/library/base/R/dataframe.R: 158
+# stop(gettextf("invalid 'row.names', length %d for a data frame with %d rows",
+#                            length(row.names), nr), domain = NA)
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr "niepoprawny 'row.names', długość %d dla ramki z %d wierszami"
+msgstr "niepoprawny 'row.names', długość %d dla ramki danych z %d wierszami"
 
+# src/library/base/R/dataframe.R: 183
+# stop(gettextf("supplied %d row names for %d rows",
+#                           length(row.names), dim(x)[[1L]]), domain = NA)
+# src/library/base/R/dataframe.R: 288
+# stop(gettextf("supplied %d row names for %d rows",
+#                           length(row.names), nrows), domain = NA)
 msgid "supplied %d row names for %d rows"
-msgstr "dostarczono %d nazwę wiersza dla %d wierszy"
+msgstr "dostarczono %d nazw wierszy dla %d wierszy"
 
-#, fuzzy
+# src/library/base/R/dataframe.R: 231
+# stop('options("stringsAsFactors") not set to TRUE or FALSE')
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr ""
-"options('stringsAsFactors') nie została ustawiona na 'TRUE' lub 'FALSE'"
+"'options(\"stringsAsFactors\")' nie zostało ustawione na 'TRUE' lub 'FALSE'"
 
+# src/library/base/R/dataframe.R: 367
+# stop(gettextf("mismatch of row names in arguments of 'data.frame\', item %d", i), domain = NA)
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
-msgstr "niedopasowanie nazw wiersza w argumentach 'data.frame', pozycja %d"
+msgstr "niedopasowanie nazw wierszy w argumentach 'data.frame', pozycja %d"
 
+# src/library/base/R/dataframe.R: 372
+# warning("some row.names duplicated: ",
+#                             paste(which(duplicated(new)), collapse=","),
+#                             " --> row.names NOT used")
 msgid "some row.names duplicated:"
 msgstr "niektóre wartości 'row.names' są powtórzone:"
 
+# src/main/errors.c: 457
+# ngettext("Warning message:\n", "Warning messages:\n", R_CollectWarnings)
+# src/main/memory.c: 3027
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "CHAR", "CHARSXP", type2char(TYPEOF(x)))
+# src/main/memory.c: 3034
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)))
+# src/main/memory.c: 3044
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)))
+# src/main/memory.c: 3051
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "LOGICAL",  "logical", type2char(TYPEOF(x)))
+# src/main/memory.c: 3059
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "INTEGER", "integer", type2char(TYPEOF(x)))
+# src/main/memory.c: 3066
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "RAW", "raw", type2char(TYPEOF(x)))
+# src/main/memory.c: 3073
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "REAL", "numeric", type2char(TYPEOF(x)))
+# src/main/memory.c: 3080
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "COMPLEX", "complex", type2char(TYPEOF(x)))
+# src/main/memory.c: 3095
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)))
+# src/main/memory.c: 3109
+# error("%s() can only be applied to a '%s', not a '%s'",
+# 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)))
+# src/main/main.c: 48
+# gettext("R", "dummy - do not translate")
+# src/main/character.c: 1041
+# error("invalid '%s' argument", "x")
+# src/main/sysutils.c: 808
+# error(_("unsupported conversion from '%s' to '%s'"),
+# 		      "latin1", "")
+# src/main/sysutils.c: 823
+# error(_("unsupported conversion from '%s' to '%s'"),
+# 		      "latin1", "")
+# src/library/grDevices/R/postscript.R: 50
+# stop(sprintf(ngettext(as.integer(sum(is.na(matches))),
+#                                  "invalid argument name %s in '%s'",
+#                                  "invalid argument names %s in '%s'"),
+#                          paste(sQuote(newnames[is.na(matches)]),
+#                                collapse=", "),
+#                          deparse(sys.call(sys.parent()))),
+#                  domain = NA)
+# src/library/stats/R/lm.R: 593
+# warning("models with response ",
+#                 deparse(responses[!sameresp]),
+#                 " removed because response differs from ", "model 1")
+# src/library/stats/R/mlm.R: 434
+# warning("models with response ",
+#                 deparse(responses[!sameresp]),
+#                 " removed because response differs from ", "model 1")
+# src/library/tools/R/install.R: 1340
+# message("\n", "install for ", arch, "\n", domain = NA)
+# src/library/tools/R/install.R: 1365
+# message("\n", "install for ", arch, "\n", domain = NA)
+# src/library/tools/R/utils.R: 408
+# stop(if(pdf) "pdflatex" else "latex", " is not available",
+#                  domain = NA)
+# src/library/tools/R/sotools.R: 233
+# gettextf("Found %s, possibly from %s",
+#                                     sQuote(v),
+#                                     paste(sprintf("%s (%s)",
+#                                                   sQuote(u[, "ssname"]),
+#                                                   u[, "language"]),
+#                                           collapse = ", "))
+# src/library/tools/R/testing.R: 270
+# stop("  ", "results differ from reference results")
+# src/library/tools/R/news.R: 581
+# stop(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\itemize.",
+#                           substring(sub("^[[:space:]]*", "",
+#                                         .Rd_deparse(x)),
+#                                     1L, 60L)),
+#                  domain = NA)
+# src/library/tools/R/news.R: 587
+# warning(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains more than one \\itemize.\nUsing the first one.",
+#                              substring(sub("^[[:space:]]*", "",
+#                                            .Rd_deparse(x)),
+#                                        1L, 60L)),
+#                     domain = NA)
+# src/library/graphics/src/plot.c: 4003
+# error("invalid '%s' argument", "x1")
+# src/library/graphics/src/plot.c: 4006
+# error("invalid '%s' argument", "x2")
+# src/library/graphics/src/plot.c: 4009
+# error("invalid '%s' argument", "y1")
+# src/library/graphics/src/plot.c: 4012
+# error("invalid '%s' argument", "y2")
+# src/library/base/man/message.Rd: 71
+# message("ABC", "DEF")
+# src/library/base/R/load.R: 35
+# warning(gettextf("file %s has magic number '%s'\n   Use of save versions prior to 2 is deprecated",
+#                              sQuote(basename(file)),
+#                              gsub("[\n\r]*", "", magic)),
+#                     domain = NA, call. = FALSE)
+# src/library/base/R/load.R: 169
+# message("[Previously saved workspace restored]", "\n")
+# src/library/base/R/attach.R: 151
+# warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+#                                  ".Last.lib", "detach", pkgname,
+#                                  deparse(conditionCall(res))[1L],
+#                                  conditionMessage(res)),
+#                         call. = FALSE, domain = NA)
+# src/library/base/R/dataframe.R: 391
+# stop("duplicate row.names: ",
+#                      paste(unique(row.names[duplicated(row.names)]),
+#                            collapse = ", "))
+# src/library/base/R/dataframe.R: 505
+# stop("duplicate row.names: ",
+#                  paste(unique(row.names[duplicated(row.names)]),
+#                        collapse = ", "))
+# src/library/base/R/namespace.R: 566
+# stop(gettextf("in package %s classes %s were specified for export but not defined",
+#                                   sQuote(package),
+#                                   paste(expClasses[missingClasses],
+#                                         collapse = ", ")),
+#                          domain = NA)
+# src/library/base/R/namespace.R: 627
+# stop(gettextf("in %s methods for export not found: %s",
+#                                   sQuote(package),
+#                                   paste(expMethods[missingMethods],
+#                                         collapse = ", ")),
+#                          domain = NA)
+# src/library/base/R/namespace.R: 960
+# stop(gettextf("requested methods not found in environment/package %s: %s",
+#                       sQuote(pkg),
+#                       paste(vars[is.na(match(vars, allFuns))],
+#                             collapse = ", ")), call. = FALSE, domain = NA)
+# src/library/Recommended/Matrix/src/Csparse.c: 724
+# warning(_("%s = '%s' (back-permuted) is experimental"),
+# 		"resultKind", "diagBack")
+# src/library/Recommended/survival/R/anova.coxphlist.S: 14
+# warning(paste("Models with response", deparse(responses[!sameresp]),
+#             "removed because response differs from", "model 1"))
+# src/library/Recommended/survival/R/anova.coxmelist.R: 25
+# warning(paste("Models with response", deparse(responses[!sameresp]),
+#             "removed because response differs from", "model 1"))
+# src/library/Recommended/survival/R/anova.coxph.S: 16
+# warning(paste("The following arguments to anova.coxph(..)",
+#             "are invalid and dropped:", paste(deparse(dotargs[named]),
+#                 collapse = ", ")))
+# src/library/Recommended/MASS/R/profiles.R: 70
+# message("\nParameter: ", pi, " ",
+#                         c("down", "up")[(sgn + 1)/2 + 1])
+# src/library/utils/R/linkhtml.R: 139
+# message(" ", "done")
+# src/library/utils/R/packages2.R: 40
+# warning(sprintf(ngettext(sum(miss),
+# 				 "package %s is not available (for %s)",
+# 				 "packages %s are not available (for %s)"),
+# 			paste(sQuote(p0[miss]), collapse=", "),
+# 			sub(" *\\(.*","", R.version.string)),
+#                 domain = NA, call. = FALSE)
+# src/library/utils/R/help.search.R: 194
+# message("Rebuilding the help.search() database", " ", "...",
+#                     if(verbose > 1L) "...")
+# src/library/utils/R/help.search.R: 364
+# message(" ", "done")
+# src/library/utils/R/help.search.R: 404
+# message(" ", "done")
+# src/library/utils/R/data.R: 206
+# message(if(!found) "*NOT* ", "found", domain = NA)
+# src/library/utils/R/edit.R: 107
+# warning(sprintf(ngettext(sum(has_class),
+#                                     "class discarded from column %s",
+#                                     "classes discarded from columns %s"),
+#                             paste(sQuote(names(name)[has_class]),
+#                                   collapse=", ")),
+#                     domain = NA, call. = FALSE, immediate. = TRUE)
+# src/library/utils/R/citation.R: 148
+# warning(gettextf("Invalid role specification(s): %s.",
+#                              paste(sQuote(role[pos[ind]]),
+#                                    collapse = ", ")))
+# src/library/utils/R/citation.R: 524
+# stop(gettextf("%s should be one of %s",
+#                       sQuote("style"),
+#                       paste(dQuote(bibentry_format_styles),
+#                             collapse = ", ")),
+#              domain = NA)
+# src/library/methods/man/setMethod.Rd: 383
+# stop(paste("!identical(", deparseText(substitute(e1)),
+#                    ", ", deparseText(substitute(e2)), ")", sep=""))
+# src/library/methods/R/RMethodUtils.R: 85
+# stop(gettextf("non-arguments found in the signature: %s",
+#                       paste(signature[is.na(match(signature, args))],
+#                             collapse = ", ")), domain = NA)
+# src/library/methods/R/RMethodUtils.R: 165
+# stop(gettextf("non-arguments found in the signature: %s",
+#                       paste(signature[is.na(match(signature, args))],
+#                             collapse = ", ")), domain = NA)
+# src/library/methods/R/trace.R: 638
+# warning(gettextf("Objects found in multiple packages: using %s and ignoring %s",
+#                              sQuote(names(possible[[1L]])),
+#                              paste(sQuote(names(possible[-1L])),
+#                                    collapse = ", ")),
+#                     domain = NA)
+# src/library/methods/R/SClasses.R: 126
+# stop(gettextf("duplicate class names among superclasses: %s",
+#                       paste(.dQ(includes[duplicated(includes)]),
+#                             collapse = ", ")),
+#              domain = NA)
+# src/library/methods/R/SClasses.R: 654
+# stop(gettextf("duplicated slot names: %s",
+#                               paste(sQuote(snames[duplicated(snames)]),
+#                                     collapse = ", ")), domain = NA)
+# src/library/methods/R/methodsTable.R: 667
+# gettextf("Note: Method with signature %s chosen for function %s,\n target signature %s.\n %s would also be valid",
+#                      sQuote(selected),
+#                      sQuote(attr(cond, "generic")),
+#                      sQuote(attr(cond, "target")),
+# 		     paste0('"', possible[is.na(match(possible, selected))], '"',
+# 			    collapse=", "))
+# src/library/methods/R/MethodsList.R: 62
+# stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
+#              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
+#                           collapse=", ")), domain = NA)
+# src/library/methods/R/RClassUtils.R: 190
+# stop(gettextf("in making the prototype for class %s elements of the prototype failed to match the corresponding slot class: %s",
+#                       dQuote(className),
+#                       paste(pnames[check],
+#                             "(class",
+#                             .dQ(slotDefs[match(pnames[check], slotNames)]),
+#                             ")",
+#                             collapse = ", ")),
+#              domain = NA)
+# src/library/methods/R/RClassUtils.R: 811
+# stop(gettextf("named elements of prototype do not correspond to slot names: %s",
+#                       paste(.dQ(pnames[is.na(match(pnames, slots))]),
+#                             collapse =", ")))
+# src/library/methods/R/RClassUtils.R: 1186
+# warning(gettextf("unable to find a consistent ordering of superclasses for class %s: order chosen is inconsistent with the superclasses of %s",
+#                            .dQ(className),
+#                            paste(.dQ(setdiff(newconflicts, conflicts)),
+#                                  collapse = ", ")),
+#                   call. = FALSE, domain = NA)
+# src/gnuwin32/extra.c: 1943
+# warning("unhandled key type %s\n", "REG_LINK")
+# src/gnuwin32/extra.c: 1947
+# warning("unhandled key type %s\n", "REG_RESOURCE_LIST")
 msgid ","
 msgstr ","
 
+# src/library/base/R/dataframe.R: 372
+# warning("some row.names duplicated: ",
+#                             paste(which(duplicated(new)), collapse=","),
+#                             " --> row.names NOT used")
 msgid "--> row.names NOT used"
-msgstr "--> row.names NIE używane"
+msgstr "--> row.names NIE zostało użyte"
 
+# src/library/base/R/dataframe.R: 389
+# stop("row names contain missing values")
+# src/library/base/R/dataframe.R: 503
+# stop("row names contain missing values")
 msgid "row names contain missing values"
 msgstr "nazwy wierszy zawierają brakujące wartości"
 
+# src/library/base/R/dataframe.R: 391
+# stop("duplicate row.names: ",
+#                      paste(unique(row.names[duplicated(row.names)]),
+#                            collapse = ", "))
+# src/library/base/R/dataframe.R: 505
+# stop("duplicate row.names: ",
+#                  paste(unique(row.names[duplicated(row.names)]),
+#                        collapse = ", "))
 msgid "duplicate row.names:"
-msgstr "zduplikowane wartości row.names:"
+msgstr "powtórzone wartości 'row.names':"
 
+# src/library/base/R/dataframe.R: 469
+# stop("arguments imply differing number of rows: ",
+#              paste(unique(nrows), collapse = ", "))
 msgid "arguments imply differing number of rows:"
-msgstr "argumenty sugerują różne liczby wierszy:"
+msgstr "argumenty sugerują różną liczbę wierszy:"
 
+# src/library/base/R/dataframe.R: 487
+# stop("row.names should specify one of the variables")
 msgid "row.names should specify one of the variables"
 msgstr "'row.names' powinny określać jedną ze zmiennych"
 
+# src/library/base/R/dataframe.R: 492
+# stop("row names supplied are of the wrong length")
 msgid "row names supplied are of the wrong length"
-msgstr "dostarczone nazwy wierszy są niepoprawnej długości"
+msgstr "dostarczone nazwy wierszy mają niepoprawną długość"
 
+# src/library/base/R/dataframe.R: 494
+# warning("row names were found from a short variable and have been discarded")
 msgid "row names were found from a short variable and have been discarded"
 msgstr ""
-"nazwy wierszy zostały znalezione z krótkiem zmiennej i zostały odrzucone"
+"nazwy wierszy zostały znalezione z krótkiej zmiennej i zostały odrzucone"
 
+# src/library/base/R/dataframe.R: 526
+# warning("named arguments other than 'drop' are discouraged")
 msgid "named arguments other than 'drop' are discouraged"
-msgstr "nazwane argumenty inne, niż 'drop' są odrzucone"
+msgstr "nazwane argumenty inne niż 'drop' są odrzucane"
 
+# src/library/base/R/dataframe.R: 529
+# warning("drop argument will be ignored")
 msgid "drop argument will be ignored"
 msgstr "argument 'drop' będzie zignorowany"
 
+# src/library/base/R/dataframe.R: 541
+# stop("undefined columns selected")
+# src/library/base/R/dataframe.R: 547
+# stop("undefined columns selected")
+# src/library/base/R/dataframe.R: 565
+# stop("undefined columns selected")
+# src/library/base/R/dataframe.R: 570
+# stop("undefined columns selected")
+# src/library/base/R/dataframe.R: 610
+# stop("undefined columns selected")
 msgid "undefined columns selected"
 msgstr "wybrano niezdefiniowane kolumny"
 
+# src/library/base/R/dataframe.R: 670
+# warning("named arguments other than 'exact' are discouraged")
 msgid "named arguments other than 'exact' are discouraged"
-msgstr "nazwane argumenty inne, niż 'exact' są odrzucone"
+msgstr "nazwane argumenty inne niż 'exact' są odrzucane"
 
+# src/library/base/R/dataframe.R: 690
+# warning("named arguments are discouraged")
+# src/library/base/R/dataframe.R: 968
+# warning("named arguments are discouraged")
 msgid "named arguments are discouraged"
 msgstr "nazwane argumenty są odrzucane"
 
@@ -329,234 +950,570 @@ msgstr ""
 msgid "only logical matrix subscripts are allowed in replacement"
 msgstr "tylko indeksy macierzy logicznej są dozwolone w zamianie"
 
+# src/library/base/R/dataframe.R: 758
+# stop("need 0, 1, or 2 subscripts")
 msgid "need 0, 1, or 2 subscripts"
 msgstr "potrzeba 0, 1, lub 2 indeksów"
 
+# src/library/base/R/dataframe.R: 772
+# stop("missing values are not allowed in subscripted assignments of data frames")
+# src/library/base/R/dataframe.R: 807
+# stop("missing values are not allowed in subscripted assignments of data frames")
 msgid ""
 "missing values are not allowed in subscripted assignments of data frames"
 msgstr ""
-"brakujace wartości nie sa dozwolone w indeksowanych przypisaniach ramek"
+"brakujące wartości nie są dozwolone w indeksowanych przypisaniach ramek "
+"danych"
 
+# src/library/base/R/dataframe.R: 801
+# stop("non-existent rows not allowed")
+# src/library/base/R/dataframe.R: 1034
+# stop("non-existent rows not allowed")
 msgid "non-existent rows not allowed"
 msgstr "nieistniejące wiersze nie są dozwolone"
 
+# src/library/base/R/dataframe.R: 809
+# stop("column name \"\" cannot match any column")
+# src/library/base/R/dataframe.R: 1037
+# stop("column name \"\" cannot match any column")
 msgid "column name \"\" cannot match any column"
-msgstr "nazwy \"\" kolumny nie można dopasować do żadnej kolumny"
+msgstr "kolumny o nazwie \"\" nie można dopasować do żadnej kolumny"
 
+# src/library/base/R/dataframe.R: 827
+# stop("new columns would leave holes after existing columns")
 msgid "new columns would leave holes after existing columns"
 msgstr "nowe kolumny zostawiłyby dziury po istniejących kolumnach"
 
+# src/library/base/R/dataframe.R: 841
+# stop("duplicate subscripts for columns")
 msgid "duplicate subscripts for columns"
 msgstr "powtórzone indeksy dla kolumn"
 
+# src/library/base/R/dataframe.R: 850
+# stop(gettextf("replacement has %d rows, data has %d", N, n),
+#                      domain = NA)
+# src/library/base/R/dataframe.R: 856
+# stop(gettextf("replacement has %d rows, data has %d", N, n),
+#                          domain = NA)
+# src/library/base/R/dataframe.R: 982
+# stop(gettextf("replacement has %d rows, data has %d", N, nrows),
+#                      domain = NA)
+# src/library/base/R/dataframe.R: 988
+# stop(gettextf("replacement has %d rows, data has %d",
+#                                   N, nrows), domain = NA)
+# src/library/base/R/dataframe.R: 1070
+# stop(gettextf("replacement has %d rows, data has %d", N, nrows),
+#                  domain = NA)
+# src/library/base/R/dataframe.R: 1076
+# stop(gettextf("replacement has %d rows, data has %d", N, nrows),
+#                      domain = NA)
 msgid "replacement has %d rows, data has %d"
 msgstr "zamiana ma %d wierszy, dane mają %d"
 
+# src/library/base/R/dataframe.R: 862
+# stop(gettextf("replacement has %d items, need %d", m, n*p),
+#                      domain = NA)
 msgid "replacement has %d items, need %d"
 msgstr "zamiana ma %d pozycji, potrzeba %d"
 
+# src/library/base/R/dataframe.R: 876
+# stop(gettextf("replacement element %d is a matrix/data frame of %d rows, need %d", k, N, n),
+#                      domain = NA)
 msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr "element zamiany %d jest macierzą/ramką o %d wierszach, potrzeba %d"
+msgstr ""
+"element zamiany %d jest macierzą/ramką danych o %d wierszach, potrzeba %d"
 
+# src/library/base/R/dataframe.R: 879
+# stop(gettextf("replacement element %d has %d rows, need %d",
+#                               k, N, n), domain = NA)
 msgid "replacement element %d has %d rows, need %d"
 msgstr "element zamiany %d posiada %d wierszy, potrzeba %d"
 
+# src/library/base/R/dataframe.R: 884
+# warning(gettextf("replacement element %d has %d rows to replace %d rows",
+#                                  k, N, n), domain = NA)
 msgid "replacement element %d has %d rows to replace %d rows"
 msgstr "element zamiany %d posiada %d wierszy do zastąpienia %d wierszy"
 
+# src/library/base/R/dataframe.R: 895
+# stop(gettextf("%d rows in value to replace %d rows", nrowv, n),
+#                   domain = NA)
 msgid "%d rows in value to replace %d rows"
 msgstr "%d wierszy w wartości do zastąpienia %d wierszy"
 
+# src/library/base/R/dataframe.R: 899
+# warning(gettextf("replacement data has %d rows to replace %d rows",
+#                          nrowv, n), domain = NA)
 msgid "replacement data has %d rows to replace %d rows"
-msgstr "zamiana danych posiada %d wierszy do zastąpienia %d wierszy"
+msgstr "zamienne dane posiadają %d wierszy do zastąpienia %d wierszy"
 
+# src/library/base/R/dataframe.R: 905
+# warning(gettextf("provided %d variables to replace %d variables",
+#                          ncolv, p), domain = NA)
 msgid "provided %d variables to replace %d variables"
 msgstr "dostarczono %d zmiennych do zastąpienia %d zmiennych"
 
+# src/library/base/R/dataframe.R: 1002
+# stop("only valid calls are x[[j]] <- value or x[[i,j]] <- value")
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr ""
 "jedynymi poprawnymi przywołaniami są x[[j]] <- wartość lub x[[i,j]] <- "
 "wartość"
 
+# src/library/base/R/dataframe.R: 1040
+# stop("replacing element in non-existent column: ", j[is.na(jseq)])
+# src/library/base/R/dataframe.R: 1047
+# stop("replacing element in non-existent column: ",
+#                  jseq[jseq>nvars])
 msgid "replacing element in non-existent column:"
 msgstr "zastępowanie elementu w nieistniejącej kolumnie:"
 
+# src/library/base/R/dataframe.R: 1051
+# stop("only a single element should be replaced")
 msgid "only a single element should be replaced"
-msgstr "tylko pojedynczy element powinień być zamieniony"
+msgstr "tylko pojedynczy element powinień być zamieniany"
 
+# src/library/base/R/dataframe.R: 1134
+# stop("names do not match previous names")
+# src/library/base/R/dataframe.R: 1136
+# stop("names do not match previous names")
 msgid "names do not match previous names"
 msgstr "nazwy nie zgadzają się z poprzednimi nazwami"
 
+# src/library/base/R/dataframe.R: 1189
+# stop("numbers of columns of arguments do not match")
+# src/library/base/R/dataframe.R: 1239
+# stop("numbers of columns of arguments do not match")
 msgid "numbers of columns of arguments do not match"
 msgstr "liczba kolumn argumentów nie zgadza się"
 
+# src/library/base/R/dataframe.R: 1229
+# stop("invalid list argument: all variables should have the same length")
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
-"niepoprawny argument spiska: dliny wsjech pjerjemjennych muszą być rawny"
+"niepoprawny argument listy: wszystkie zmienne powinny mieć tę samą długość"
 
+# src/library/base/R/dataframe.R: 1327
+# gettextf("data frame with 0 columns and %d rows\n", n)
 msgid "data frame with 0 columns and %d rows"
-msgstr "ramka z zerową liczbą kolumn oraz liczbą wierszy równą %d"
+msgstr "ramka danych z zerową liczbą kolumn oraz liczbą wierszy równą %d"
 
+# src/library/base/R/dataframe.R: 1331
+# gettext("<0 rows> (or 0-length row.names)\n")
 msgid "<0 rows> (or 0-length row.names)"
-msgstr "<0 wierszy> (lub row.names o zerowej długości)"
+msgstr "<0 wierszy> (lub 'row.names' o zerowej długości)"
 
+# src/library/base/R/dataframe.R: 1423
+# stop("non-numeric variable in data frame: ", vnames[!mode.ok])
 msgid "non-numeric variable in data frame:"
-msgstr "zmienna nie-liczbowa w ramce:"
+msgstr "zmienna nieliczbowa w ramce danych:"
 
+# src/library/base/R/dataframe.R: 1444
+# stop(.Generic, " only defined for equally-sized data frames")
 msgid "only defined for equally-sized data frames"
-msgstr "zdefiniowane jedynie dla ramek o równych rozmiarach"
+msgstr "zdefiniowane jedynie dla ramek danych o równych rozmiarach"
 
+# src/library/base/R/dataframe.R: 1454
+# stop(gettextf("list of length %d not meaningful", length(e2)),
+#                      domain = NA)
+# src/library/base/R/dataframe.R: 1471
+# stop(gettextf("list of length %d not meaningful", length(e1)),
+#                      domain = NA)
 msgid "list of length %d not meaningful"
-msgstr "lista o długości %d nie ma znaczenia"
+msgstr "lista o długości %d nie ma sensu"
 
+# src/library/base/R/dataframe.R: 1500
+# stop("only defined on a data frame with all numeric variables")
 msgid "only defined on a data frame with all numeric variables"
-msgstr "zdefiniowane jedynie na ramce z wszystkimi zmiennymi będącymi liczbami"
+msgstr ""
+"zdefiniowane jedynie na ramce danych ze wszystkimi zmiennymi będącymi "
+"liczbami"
 
+# src/library/base/R/datetime.R: 81
+# stop("character string is not in a standard unambiguous format")
+# src/library/base/R/dates.R: 57
+# stop("character string is not in a standard unambiguous format")
 msgid "character string is not in a standard unambiguous format"
-msgstr "ciąg znaków nie jest w standardowym jednoznacznym formacie"
+msgstr "łańcuch tekstowy nie jest w standardowym jednoznacznym formacie"
 
+# src/library/base/R/datetime.R: 86
+# stop("'origin' must be supplied")
+# src/library/base/R/datetime.R: 142
+# stop("'origin' must be supplied")
+# src/library/base/R/dates.R: 65
+# stop("'origin' must be supplied")
 msgid "'origin' must be supplied"
 msgstr "'origin' musi zostać dostarczone"
 
+# src/library/base/R/dates.R: 74
+# stop(gettextf("do not know how to convert '%s' to class \"Date\"",
+#                   deparse(substitute(x))))
 msgid "do not know how to convert '%s' to class \"Date\""
 msgstr "nie wiem jak przekonwertować klasę '%s' na klasę \"Date\""
 
+# src/library/base/R/datetime.R: 111
+# stop(gettextf("'%s' is not a \"date\" object",
+#                          deparse(substitute(x)) ))
+# src/library/base/R/dates.R: 84
+# stop(gettextf("'%s' is not a \"date\" object",
+#                          deparse(substitute(x)) ))
 msgid "'%s' is not a \"date\" object"
 msgstr "'%s' nie jest obiektem typu \"date\""
 
+# src/library/base/R/datetime.R: 124
+# stop(gettextf("'%s' is not a \"dates\" object",
+#                          deparse(substitute(x)) ))
+# src/library/base/R/dates.R: 97
+# stop(gettextf("'%s' is not a \"dates\" object",
+#                          deparse(substitute(x)) ))
 msgid "'%s' is not a \"dates\" object"
 msgstr "'%s' nie jest obiektem typu \"dates\""
 
+# src/library/base/R/dates.R: 143
+# stop("binary + is not defined for Date objects")
 msgid "binary + is not defined for Date objects"
-msgstr "dwuargumentowy operator '+' nie jest określony dla obiektów Date"
+msgstr "dwuargumentowy operator '+' nie jest określony dla obiektów \"Date\""
 
+# src/library/base/R/dates.R: 156
+# stop("Can only subtract from Date objects")
 msgid "Can only subtract from Date objects"
-msgstr "Można odejmować jedynie od obiektów 'Date'"
+msgstr "Można odejmować jedynie od obiektów \"Date\""
 
+# src/library/base/R/dates.R: 157
+# stop("unary - is not defined for Date objects")
 msgid "unary - is not defined for Date objects"
-msgstr "jednoargumentowy '-' nie jest określony dla obiektów Date"
+msgstr "jednoargumentowy '-' nie jest określony dla obiektów \"Date\""
 
+# src/library/base/R/dates.R: 161
+# stop("can only subtract numbers from Date objects")
 msgid "can only subtract numbers from Date objects"
-msgstr "można odejmować liczby jedynie od obiektów 'Date'"
+msgstr "można odejmować liczby jedynie od obiektów \"Date\""
 
+# src/library/base/R/dates.R: 168
+# stop("unary ", .Generic, " not defined for Date objects")
 msgid "unary"
-msgstr "jednoargumentówy"
+msgstr "jednoargumentowy"
 
+# src/library/base/R/dates.R: 168
+# stop("unary ", .Generic, " not defined for Date objects")
+# src/library/base/R/dates.R: 172
+# stop(.Generic, " not defined for Date objects")
+# src/library/base/R/dates.R: 180
+# stop(.Generic, " not defined for Date objects")
+# src/library/base/R/dates.R: 185
+# stop(.Generic, " not defined for Date objects")
 msgid "not defined for Date objects"
-msgstr "nie jest określone dla obiektów Date"
+msgstr "nie jest określony dla obiektów \"Date\""
 
+# src/library/base/R/datetime.R: 667
+# stop("'from' must be specified")
+# src/library/base/R/dates.R: 235
+# stop("'from' must be specified")
 msgid "'from' must be specified"
 msgstr "'from' musi być określone"
 
+# src/library/base/R/dates.R: 236
+# stop("'from' must be a Date object")
 msgid "'from' must be a Date object"
 msgstr "'from' musi być obiektem typu data"
 
+# src/main/seq.c: 772
+# error("'from' must be of length 1")
+# src/library/base/R/datetime.R: 670
+# stop("'from' must be of length 1")
+# src/library/base/R/seq.R: 47
+# stop("'from' must be of length 1")
+# src/library/base/R/dates.R: 237
+# stop("'from' must be of length 1")
 msgid "'from' must be of length 1"
 msgstr "'from' musi być długości 1"
 
+# src/library/base/R/dates.R: 239
+# stop("'to' must be a Date object")
 msgid "'to' must be a Date object"
 msgstr "'to' musi być obiektem typu data"
 
+# src/main/seq.c: 774
+# error("'to' must be of length 1")
+# src/library/base/R/datetime.R: 674
+# stop("'to' must be of length 1")
+# src/library/base/R/seq.R: 48
+# stop("'to' must be of length 1")
+# src/library/base/R/dates.R: 240
+# stop("'to' must be of length 1")
 msgid "'to' must be of length 1"
 msgstr "'to' musi być długości 1"
 
+# src/library/base/R/datetime.R: 679
+# stop("'length.out' must be of length 1")
+# src/library/base/R/dates.R: 245
+# stop("'length.out' must be of length 1")
 msgid "'length.out' must be of length 1"
-msgstr "'length.out' musi być dłygości 1"
+msgstr "'length.out' musi być długości 1"
 
+# src/library/base/R/datetime.R: 684
+# stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
+# src/library/base/R/dates.R: 250
+# stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
 msgid ""
 "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr ""
 "dokładnie dwa z 'to', 'by' oraz 'length.out' / 'along.with' muszą być "
 "określone"
 
+# src/main/seq.c: 778
+# error("'by' must be of length 1")
+# src/library/base/R/datetime.R: 695
+# stop("'by' must be of length 1")
+# src/library/base/R/dates.R: 258
+# stop("'by' must be of length 1")
 msgid "'by' must be of length 1"
 msgstr "'by' musi być długości 1"
 
+# src/library/base/R/datetime.R: 703
+# stop("invalid 'by' string")
+# src/library/base/R/dates.R: 266
+# stop("invalid 'by' string")
 msgid "invalid 'by' string"
-msgstr "błędny ciąg 'by'"
+msgstr "błędny łańcuch 'by'"
 
+# src/library/base/R/datetime.R: 707
+# stop("invalid string for 'by'")
+# src/library/base/R/dates.R: 269
+# stop("invalid string for 'by'")
 msgid "invalid string for 'by'"
-msgstr "błędny ciąg dla 'by'"
+msgstr "błędny łańcuch dla 'by'"
 
+# src/library/base/R/datetime.R: 713
+# stop("invalid mode for 'by'")
+# src/library/base/R/dates.R: 275
+# stop("invalid mode for 'by'")
 msgid "invalid mode for 'by'"
 msgstr "błędny tryb dla 'by'"
 
+# src/library/base/R/datetime.R: 714
+# stop("'by' is NA")
+# src/library/base/R/dates.R: 276
+# stop("'by' is NA")
 msgid "'by' is NA"
 msgstr "'by' posiada wartość NA"
 
+# src/library/base/R/datetime.R: 768
+# stop("'x' must be a date-time object")
+# src/library/base/R/dates.R: 323
+# stop("'x' must be a date-time object")
 msgid "'x' must be a date-time object"
 msgstr "'x' musi być obiektem typu data-czas"
 
+# src/library/graphics/R/datetime.R: 116
+# stop("invalid specification of 'breaks'")
+# src/library/graphics/R/datetime.R: 163
+# stop("invalid specification of 'breaks'")
+# src/library/graphics/R/datetime.R: 265
+# stop("invalid specification of 'breaks'")
+# src/library/graphics/R/datetime.R: 308
+# stop("invalid specification of 'breaks'")
+# src/library/base/R/datetime.R: 778
+# stop("invalid specification of 'breaks'")
+# src/library/base/R/datetime.R: 783
+# stop("invalid specification of 'breaks'")
+# src/library/base/R/datetime.R: 836
+# stop("invalid specification of 'breaks'")
+# src/library/base/R/dates.R: 333
+# stop("invalid specification of 'breaks'")
+# src/library/base/R/dates.R: 337
+# stop("invalid specification of 'breaks'")
+# src/library/base/R/dates.R: 390
+# stop("invalid specification of 'breaks'")
 msgid "invalid specification of 'breaks'"
 msgstr "niepoprawne określenie dla 'breaks'"
 
+# src/library/base/R/datetime.R: 852
+# stop("'origin' must be of length one")
+# src/library/base/R/dates.R: 403
+# stop("'origin' must be of length one")
 msgid "'origin' must be of length one"
 msgstr "'origin' musi być długości 1"
 
+# src/library/base/R/datetime.R: 951
+# stop("'lag' and 'differences' must be integers >= 1")
+# src/library/base/R/diff.R: 27
+# stop("'lag' and 'differences' must be integers >= 1")
+# src/library/base/R/dates.R: 443
+# stop("'lag' and 'differences' must be integers >= 1")
+# src/library/Recommended/Matrix/R/Matrix.R: 395
+# stop("'lag' and 'differences' must be integers >= 1")
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' oraz 'differences' muszą być liczbami całkowitymi >= 1"
 
+# src/library/base/R/datetime.R: 96
+# stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
+#                   deparse(substitute(x))))
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
 msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXlt\""
 
+# src/library/base/R/datetime.R: 153
+# stop(gettextf("do not know how to convert '%s' to class \"POSIXct\"",
+#                   deparse(substitute(x))))
 msgid "do not know how to convert '%s' to class \"POSIXct\""
 msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXct\""
 
+# src/library/tools/R/pdftools.R: 348
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 363
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 1204
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 1296
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 1408
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 1449
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 1497
+# stop("wrong class")
+# src/library/tools/R/pdftools.R: 1528
+# stop("wrong class")
+# src/library/base/R/datetime.R: 165
+# stop("wrong class")
+# src/library/base/R/datetime.R: 208
+# stop("wrong class")
+# src/library/base/R/library.R: 792
+# stop("wrong class")
+# src/library/base/R/version.R: 128
+# stop("wrong class")
 msgid "wrong class"
 msgstr "zła klasa"
 
+# src/library/base/R/datetime.R: 265
+# stop("binary '+' is not defined for \"POSIXt\" objects")
 msgid "binary '+' is not defined for \"POSIXt\" objects"
-msgstr "binarny '+' nie jest określony dla obiektów \"POSIXt\""
+msgstr "dwuargumentowy '+' nie jest określony dla obiektów \"POSIXt\""
 
+# src/library/base/R/datetime.R: 281
+# stop("Can only subtract from POSIXt objects")
 msgid "Can only subtract from POSIXt objects"
-msgstr "Można odjąć jedynie od obiektów POSIXt"
+msgstr "Można odejmować jedynie od obiektów POSIXt"
 
+# src/library/base/R/datetime.R: 282
+# stop("unary '-' is not defined for \"POSIXt\" objects")
 msgid "unary '-' is not defined for \"POSIXt\" objects"
-msgstr "jednoargumentówy '-' nie jest określony dla obiektów \"POSIXt\""
+msgstr "jednoargumentowy '-' nie jest określony dla obiektów \"POSIXt\""
 
+# src/library/base/R/datetime.R: 286
+# stop("can only subtract numbers from POSIXt objects")
 msgid "can only subtract numbers from POSIXt objects"
-msgstr "liczby można odjąć jedynie od obiektów POSIXt"
+msgstr "Można odejmować liczby jedynie od obiektów POSIXt"
 
+# src/library/base/R/datetime.R: 294
+# stop(gettextf("unary '%s' not defined for \"POSIXt\" objects",
+#                       .Generic), domain = NA)
 msgid "unary '%s' not defined for \"POSIXt\" objects"
 msgstr ""
-"jednoargumentówy operator '%s' nie jest zdefiniowany dla obiektów \"POSIXt\""
+"jednoargumentowy operator '%s' nie jest zdefiniowany dla obiektów \"POSIXt\""
 
+# src/library/base/R/datetime.R: 299
+# stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
+#              domain = NA)
+# src/library/base/R/datetime.R: 309
+# stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
+#          domain = NA)
+# src/library/base/R/datetime.R: 329
+# stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
+#              domain = NA)
+# src/library/base/R/datetime.R: 343
+# stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
+#              domain = NA)
 msgid "'%s' not defined for \"POSIXt\" objects"
 msgstr "'%s' nie jest określone dla obiektów \"POSIXt\""
 
+# src/library/base/R/datetime.R: 321
+# warning("'tzone' attributes are inconsistent")
 msgid "'tzone' attributes are inconsistent"
-msgstr "atrybuty 'tzone' sa niespójne"
+msgstr "atrybuty 'tzone' są niespójne"
 
+# src/library/base/R/datetime.R: 488
+# stop("'tim' is not character or numeric")
 msgid "'tim' is not character or numeric"
 msgstr "'tim' nie jest znakiem ani liczbą"
 
+# src/library/base/R/datetime.R: 489
+# stop("need explicit units for numeric conversion")
 msgid "need explicit units for numeric conversion"
 msgstr "potrzeba jawnych jednostek dla konwersji liczbowej"
 
+# src/library/base/R/datetime.R: 491
+# stop("invalid units specified")
+# src/library/base/R/datetime.R: 508
+# stop("invalid units specified")
 msgid "invalid units specified"
 msgstr "niepoprawne określenie jednostek"
 
+# src/library/base/R/datetime.R: 560
+# stop(gettextf("unary '%s' not defined for \"difftime\" objects",
+#                              .Generic), domain = NA, call. = FALSE)
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr "jednoargumentówy '%s' nie jest określony dla obiektów \"difftime\""
+msgstr "jednoargumentowy '%s' nie jest określony dla obiektów \"difftime\""
 
+# src/library/base/R/datetime.R: 591
+# stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
+#              domain = NA)
+# src/library/base/R/datetime.R: 624
+# stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
+#                 domain = NA)
+# src/library/base/R/datetime.R: 643
+# stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
+#              domain = NA)
 msgid "'%s' not defined for \"difftime\" objects"
 msgstr "'%s' nie jest określony dla obiektów \"difftime\""
 
+# src/library/base/R/datetime.R: 600
+# stop("both arguments of * cannot be \"difftime\" objects")
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr "oba argumenty \"*\" nie mogą być obiektami \"difftime\""
 
+# src/library/base/R/datetime.R: 609
+# stop("second argument of / cannot be a \"difftime\" object")
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "drugi argument \"/\" nie może być obiektem \"difftime\""
 
+# src/library/base/R/datetime.R: 668
+# stop("'from' must be a POSIXt object")
 msgid "'from' must be a POSIXt object"
 msgstr "'from' musi być obiektem POSIXt"
 
+# src/library/base/R/datetime.R: 673
+# stop("'to' must be a POSIXt object")
 msgid "'to' must be a POSIXt object"
 msgstr "'to' musi być obiektem POSIXt"
 
+# src/library/stats/R/ftable.R: 230
+# stop("'file' must be a character string or connection")
+# src/library/tools/R/readNEWS.R: 157
+# stop("'file' must be a character string or connection")
+# src/library/base/R/scan.R: 48
+# stop("'file' must be a character string or connection")
+# src/library/base/R/dcf.R: 27
+# stop("'file' must be a character string or connection")
+# src/library/base/R/dcf.R: 143
+# stop("'file' must be a character string or connection")
+# src/library/Recommended/Matrix/R/HBMM.R: 33
+# stop("'file' must be a character string or connection")
+# src/library/Recommended/Matrix/R/HBMM.R: 82
+# stop("'file' must be a character string or connection")
+# src/library/utils/R/readtable.R: 28
+# stop("'file' must be a character string or connection")
+# src/library/utils/R/readtable.R: 60
+# stop("'file' must be a character string or connection")
+# src/library/utils/R/write.table.R: 113
+# stop("'file' must be a character string or connection")
 msgid "'file' must be a character string or connection"
-msgstr "'file' musi być ciągiem tekstowym lub połączeniem"
+msgstr "'file' musi być łańcuchem tekstowym lub połączeniem"
 
+# src/library/base/R/dcf.R: 78
+# stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
+#                       paste0("  ", lines, collapse = "\n")),
+#              domain = NA)
 msgid ""
 "Invalid DCF format.\n"
 "Regular lines must have a tag.\n"
@@ -565,9 +1522,13 @@ msgid ""
 msgstr ""
 "Niepoprawny format DCF.\n"
 "Regularne linie muszą mieć znacznik.\n"
-"Przeszkadzające linie rozpoczynają się z:\n"
+"Przeszkadzające linie rozpoczynają się od:\n"
 "%s"
 
+# src/library/base/R/dcf.R: 102
+# stop(gettextf("Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s",
+#                       paste0("  ", lines, collapse = "\n")),
+#              domain = NA)
 msgid ""
 "Invalid DCF format.\n"
 "Continuation lines must not start a record.\n"
@@ -576,98 +1537,183 @@ msgid ""
 msgstr ""
 "Niepoprawny format DCF.\n"
 "Linie uzupełniające nie mogą rozpoczynać rekordu.\n"
-"Przeszkadzające linie rozpoczynają się z:\n"
+"Przeszkadzające linie rozpoczynają się od:\n"
 "%s"
 
+# src/library/base/R/det.R: 36
+# stop("'x' must be a square matrix")
 msgid "'x' must be a square matrix"
 msgstr "'x' musi być macierzą kwadratową"
 
+# src/library/base/R/det.R: 44
+# stop("determinant not currently defined for complex matrices")
 msgid "determinant not currently defined for complex matrices"
-msgstr "wyznacznik nie jest obecnie zdefiniowany dla macierzy zespolonych"
+msgstr "wyznacznik nie jest aktualnie zdefiniowany dla macierzy zespolonych"
 
+# src/library/base/R/diag.R: 24
+# stop("'nrow' or 'ncol' cannot be specified when 'x' is a matrix")
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
 msgstr "'nrow' ani 'ncol' nie mogą być określone kiedy 'x' jest macierzą"
 
+# src/library/base/R/diag.R: 37
+# stop("'x' is an array, but not 1D.")
 msgid "'x' is an array, but not 1D."
-msgstr "'x' jest tablicą, ale nie jest jednowymiarowa."
+msgstr "'x' jest tablicą, ale nie jednowymiarową."
 
+# src/library/base/R/diag.R: 59
+# stop("only matrix diagonals can be replaced")
 msgid "only matrix diagonals can be replaced"
 msgstr "tylko elementy diagonalne macierzy mogą zostać zastąpione"
 
+# src/library/base/R/diag.R: 63
+# stop("replacement diagonal has wrong length")
+# src/library/Recommended/Matrix/src/Mutils.c: 398
+# error("replacement diagonal has wrong length")
+# src/library/Recommended/Matrix/src/dgeMatrix.c: 251
+# error("replacement diagonal has wrong length")
 msgid "replacement diagonal has wrong length"
 msgstr "zamiana elementów diagonalnych ma niepoprawną długość"
 
+# src/library/base/R/duplicated.R: 44
+# stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+# src/library/base/R/duplicated.R: 77
+# stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+# src/library/base/R/duplicated.R: 120
+# stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
 msgid "MARGIN ="
 msgstr "MARGINES ="
 
+# src/library/base/R/duplicated.R: 44
+# stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+# src/library/base/R/duplicated.R: 77
+# stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+# src/library/base/R/duplicated.R: 120
+# stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
 msgid "is invalid for dim ="
-msgstr "jest niepoprawne dla dim ="
+msgstr "jest niepoprawny dla dim ="
 
+# src/library/base/R/dynload.R: 49
+# stop("must pass a package name, DLLInfo or DllInfoReference object")
 msgid "must pass a package name, DLLInfo or DllInfoReference object"
 msgstr "potrzeba przekazać nazwę pakietu, DLLInfo lub obiekt DllInfoReference"
 
+# src/library/base/R/dynload.R: 90
+# stop("No DLL currently loaded with name or path ", dll)
 msgid "No DLL currently loaded with name or path"
 msgstr "Brak biblioteki DLL aktualnie załadowanej o nazwie lub ścieżce"
 
+# src/library/base/R/dynload.R: 94
+# warning(gettextf("multiple DLLs match '%s'. Using '%s'",
+#                          dll, dll[["path"]]), domain = NA)
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "wielokrotna zgodność plików DLL z '%s'. Używanie '%s'"
 
+# src/library/base/R/dynload.R: 105
+# stop("must specify DLL via a DLLInfo object. See getLoadedDLLs()")
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
 msgstr "potrzeba określić DLL przez obiekt DLLInfo. Zobacz 'getLoadedDLLs()'"
 
+# src/library/base/R/dynload.R: 177
+# stop("function is not in a namespace, so cannot locate associated DLL")
 msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr ""
-"funkcja nie jest w przestrzeni nazw tak więc można zlokalizować powiązanego "
-"pliku DLL"
+"funkcja nie jest w przestrzeni nazw tak więc nie można zlokalizować "
+"powiązanego pliku DLL"
 
+# src/library/base/R/dynload.R: 188
+# stop("looking for DLL for native routine call, but no DLLs in namespace of call")
 msgid ""
 "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
-"poszukiwanie pliku DLL po wywołanie rodzimej procedury, ale brak plików DLL "
+"poszukiwanie pliku DLL dla wywołania rodzimej procedury, ale brak plików DLL "
 "w przestrzeni nazw wywołania"
 
+# src/library/base/R/eigen.R: 42
+# stop("0 x 0 matrix")
 msgid "0 x 0 matrix"
-msgstr "macierz 0 x 0"
+msgstr "macierz o rozmiarze 0 x 0"
 
+# src/library/base/R/eigen.R: 43
+# stop("non-square matrix in 'eigen'")
 msgid "non-square matrix in 'eigen'"
 msgstr "macierz w 'eigen' nie jest kwadratowa"
 
+# src/library/base/R/eigen.R: 90
+# stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
+#                      domain = NA)
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' zwrócił kod %d w 'eigen'"
 
+# src/library/base/R/eigen.R: 109
+# stop(gettextf("'rs' returned code %d in 'eigen'", z$ierr),
+#                      domain = NA)
 msgid "'rs' returned code %d in 'eigen'"
-msgstr "'rs' zwrócił %d w 'eigen'"
+msgstr "'rs' zwrócił kod %d w 'eigen'"
 
+# src/library/base/R/eigen.R: 134
+# stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
+#                      domain = NA)
 msgid "'cg' returned code %d in 'eigen'"
-msgstr "'cg' zwrócił %d w 'eigen'"
+msgstr "'cg' zwrócił kod %d w 'eigen'"
 
+# src/library/base/R/eigen.R: 155
+# stop(gettextf("'rg' returned code %d in 'eigen'", z$ierr),
+#                      domain = NA)
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' zwrócił kod %d w 'eigen'"
 
+# src/library/base/R/factor.R: 41
+# stop(gettextf("invalid labels; length %d should be 1 or %d", nl, nL),
+# 	     domain = NA)
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "nieprawidłowe etykiety; długość %d powinna wynosić 1 lub %d"
 
+# src/library/base/R/factor.R: 70
+# stop("number of levels differs")
 msgid "number of levels differs"
 msgstr "liczba poziomów różni się"
 
+# src/library/base/R/factor.R: 153
+# stop(.Generic, " not meaningful for factors")
+# src/library/base/R/factor.R: 157
+# stop(.Generic, " not meaningful for factors")
+# src/library/base/R/factor.R: 162
+# warning(.Generic, " not meaningful for factors")
 msgid "not meaningful for factors"
 msgstr "nie ma sensu dla czynników"
 
+# src/library/base/R/factor.R: 186
+# stop("level sets of factors are different")
+# src/library/base/R/factor.R: 278
+# stop("level sets of factors are different")
 msgid "level sets of factors are different"
-msgstr "poziomy faktorów są różne"
+msgstr "poziomy czynników są różne"
 
+# src/library/base/R/factor.R: 212
+# warning("invalid factor level, NAs generated")
 msgid "invalid factor level, NAs generated"
 msgstr "niepoprawny poziom czynnika, wygenerowano wartości NA"
 
+# src/library/base/R/factor.R: 237
+# warning("invalid factor level, NA generated")
 msgid "invalid factor level, NA generated"
 msgstr "niepoprawny poziom czynnika, wygenerowano wartość NA"
 
+# src/library/base/R/factor.R: 259
+# warning(sprintf("'%s' is not meaningful for ordered factors",
+#                         .Generic))
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' nie ma znaczenia dla uporządkowanych czynników"
 
+# src/library/base/R/factor.R: 301
+# stop(gettextf("'%s' not defined for ordered factors", .Generic),
+# 	     domain = NA)
 msgid "'%s' not defined for ordered factors"
 msgstr "'%s' nie jest określone dla uporządkowanych czynników"
 
+# src/library/base/R/factor.R: 308
+# stop(gettextf("'%s' is only meaningful for ordered factors if all arguments have the same level sets",
+# 		      .Generic))
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
@@ -675,316 +1721,612 @@ msgstr ""
 "'%s' ma sens tylko dla uporządkowanych czynników jeśli wszystkie argumenty "
 "mają ten sam zbiór poziomów"
 
+# src/library/base/R/files.R: 106
+# stop("no files to copy to")
 msgid "no files to copy to"
 msgstr "brak plików do skopiowania"
 
-#, fuzzy
+# src/library/base/R/files.R: 110
+# stop("attempt to copy a directory to itself")
 msgid "attempt to copy a directory to itself"
-msgstr "nie udało się utworzyć katalogu dla łącza '%s"
+msgstr "próba skopiowania katalogu do samego siebie"
 
+# src/library/base/R/windows/junctions.R: 25
+# stop("more 'from' files than 'to' files")
+# src/library/base/R/files.R: 117
+# stop("more 'from' files than 'to' files")
 msgid "more 'from' files than 'to' files"
 msgstr "więcej plików 'from' niż plików 'to'"
 
+# src/library/base/R/files.R: 119
+# warning("'recursive' will be ignored as 'to' is not a single existing directory")
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
-"'recursive' będzie zignorowany, z uwagi na to, że 'to' nie jest pojedynczym "
+"'recursive' będzie zignorowany ponieważ 'to' nie jest pojedynczym "
 "istniejącym katalogiem"
 
+# src/library/base/R/files.R: 124
+# stop("file can not be copied both 'from' and 'to'")
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "plik nie może być skopiowany jednocześnie z 'from' oraz 'to'"
 
+# src/library/base/R/files.R: 137
+# stop("no files to link from")
+# src/library/base/R/files.R: 145
+# stop("no files to link from")
 msgid "no files to link from"
 msgstr "brak plików z których można łączyć"
 
+# src/library/base/R/files.R: 138
+# stop("no files/directory to link to")
 msgid "no files/directory to link to"
 msgstr "brak plików/katalogu do których można łączyć"
 
+# src/library/base/R/windows/junctions.R: 22
+# stop("no files to link to")
+# src/library/base/R/files.R: 146
+# stop("no files to link to")
 msgid "no files to link to"
 msgstr "brak plików do których można łączyć"
 
+# src/library/base/R/library.R: 241
+# stop("'package' must be of length 1")
+# src/library/base/R/files.R: 178
+# stop("'package' must be of length 1")
 msgid "'package' must be of length 1"
 msgstr "'package' musi być długości 1"
 
+# src/library/base/R/files.R: 185
+# stop("no file found")
 msgid "no file found"
 msgstr "nie znaleziono pliku"
 
+# src/library/base/R/files.R: 231
+# stop("invalid 'path' argument")
 msgid "invalid 'path' argument"
 msgstr "niepoprawny argument 'path'"
 
+# src/library/base/R/files.R: 233
+# stop("invalid 'time' argument")
 msgid "invalid 'time' argument"
 msgstr "niepoprawny argument 'time'"
 
+# src/library/base/R/findInt.R: 27
+# stop("'vec' contains NAs")
 msgid "'vec' contains NAs"
 msgstr "'vec' zawiera wartości NA"
 
+# src/library/base/R/findInt.R: 29
+# stop("'vec' must be sorted non-decreasingly")
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' musi zostać posortowany w sposób niemalejący"
 
+# src/library/base/R/formals.R: 36
+# warning("using the first element of 'value' of type expression")
 msgid "using the first element of 'value' of type expression"
 msgstr "używanie pierwszego elementu 'value' typu wyrażenia"
 
+# src/library/base/R/format.R: 129
+# stop("'mode' must be \"double\" (\"real\"), \"integer\" or \"character\"")
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' musi być \"double\" (\"real\"), \"integer\" lub \"character\""
 
+# src/library/base/R/format.R: 132
+# warning('coercing argument to "character" for format="s"')
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "przekształcanie argumentu w \"character\" dla 'format=\"s\"'"
 
+# src/library/base/R/format.R: 146
+# stop('\'format\' must be one of {"f","e","E","g","G", "fg", "s"}')
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' musi być jednym z {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
+# src/library/base/R/format.R: 163
+# warning("'digits' reduced to ", maxDigits)
 msgid "'digits' reduced to"
 msgstr "'digits' zredukowano do"
 
+# src/library/base/R/format.R: 187
+# stop("'flag' can contain only '0+- #'")
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' może zawierać jedynie '0+- #'"
 
+# src/library/base/R/format.R: 232
+# warning("corrupt data frame: columns will be truncated or padded with NAs")
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
-"uszkodzona ramka: kolumny będą obcięte lub uzupełnione wartościami 'NA'"
+"uszkodzona ramka danych: kolumny będą obcięte lub uzupełnione wartościami "
+"'NA'"
 
+# src/library/base/R/format.R: 306
+# stop("'zero.print' has length > 1")
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' ma długość > 1"
 
+# src/library/base/R/format.R: 310
+# stop("'zero.print' must be character, logical or NULL")
 msgid "'zero.print' must be character, logical or NULL"
-msgstr "'zero.print' musi być znakiem, wartością logiczną lub NULL"
+msgstr "'zero.print' musi być tekstem, wartością logiczną lub NULL"
 
+# src/library/base/R/frametools.R: 26
+# stop("'subset' must evaluate to logical")
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' musi wyliczać wartość logiczną"
 
+# src/library/base/R/frametools.R: 42
+# stop("'subset' must be logical")
+# src/library/base/R/frametools.R: 56
+# stop("'subset' must be logical")
 msgid "'subset' must be logical"
 msgstr "'subset' musi być zmienną logiczną"
 
+# src/library/base/man/get.Rd: 19
+# stop(paste0("value for '", x, "' not found"),
+#               call. = FALSE)
+# src/library/base/R/get.R: 26
+# stop(paste0("value for '", x, "' not found"),
+# 				     call.=FALSE)
 msgid "value for '"
-msgstr "wartości dla '"
+msgstr "wartość dla '"
 
+# src/library/base/man/get.Rd: 19
+# stop(paste0("value for '", x, "' not found"),
+#               call. = FALSE)
+# src/library/base/R/get.R: 26
+# stop(paste0("value for '", x, "' not found"),
+# 				     call.=FALSE)
+# src/library/Recommended/survival/R/frailty.S: 12
+# stop(paste("Function '", temp, "' not found", sep=""))
 msgid "' not found"
-msgstr "' nie znaleziono"
+msgstr "' nie została znaleziona"
 
+# src/main/util.c: 1749
+# error(_("all arguments must be named"))
+# src/library/base/R/getenv.R: 45
+# stop("all arguments must be named")
 msgid "all arguments must be named"
 msgstr "wszystkie argumenty muszą być nazwane"
 
+# src/library/base/R/grep.R: 139
+# stop("match distance components must be non-negative")
+# src/library/base/R/grep.R: 154
+# stop("match distance components must be non-negative")
 msgid "match distance components must be non-negative"
 msgstr "komponenty o dopasowanej odległości muszą być nieujemne"
 
+# src/library/base/R/grep.R: 147
+# warning("unknown match distance components ignored")
 msgid "unknown match distance components ignored"
 msgstr "nieznane komponenty o dopasowanej odległości zostały zignorowane"
 
+# src/library/base/R/grep.R: 182
+# warning("unknown cost components ignored")
 msgid "unknown cost components ignored"
 msgstr "nieznane komponenty kosztowe zostały zignorowane"
 
+# src/library/base/R/grep.R: 188
+# stop("cost components must be non-negative")
 msgid "cost components must be non-negative"
 msgstr "komponenty kosztowe muszą być nieujemne"
 
+# src/library/base/R/grep.R: 199
+# stop(gettextf("%s and %s must have the same length",
+#                       sQuote("x"), sQuote("m")),
+#              domain = NA)
 msgid "%s and %s must have the same length"
 msgstr "%s oraz %s muszą mieć tę samą długość"
 
+# src/library/base/R/grep.R: 247
+# stop(gettextf("need non-overlapping matches for %s",
+#                                   sQuote("invert = TRUE")),
+#                          domain = NA)
 msgid "need non-overlapping matches for %s"
 msgstr "potrzeba niepokrywających się dopasowań dla %s"
 
+# src/library/base/R/grep.R: 295
+# stop("missing replacement values are not allowed")
+# src/library/base/R/grep.R: 316
+# stop("missing replacement values are not allowed")
 msgid "missing replacement values are not allowed"
 msgstr "brakujące wartości dla zamiany nie są dozwolone"
 
+# src/library/base/R/grep.R: 302
+# stop("must have replacement values for matches")
 msgid "must have replacement values for matches"
-msgstr "potrzeba mieć wartości zamianaów dla dopasowań"
+msgstr "potrzeba mieć wartości zamian dla dopasowań"
 
+# src/library/base/R/grep.R: 318
+# stop("value does not provide any replacement values")
 msgid "value does not provide any replacement values"
-msgstr "wartości nie dostarczają żadnych wartości zamianaów"
+msgstr "wartości nie dostarczają żadnych wartości zamian"
 
+# src/library/base/R/grep.R: 330
+# stop("must have replacements for non-matches")
 msgid "must have replacements for non-matches"
-msgstr "potrzeba mieć zamianai dla niedopasowań"
+msgstr "potrzeba mieć zamiany dla niedopasowań"
 
+# src/library/base/R/grep.R: 345
+# stop("must have replacements for matches")
 msgid "must have replacements for matches"
-msgstr "potrzeba mieć zamianai dla dopasowań"
+msgstr "potrzeba mieć zamiany dla dopasowań"
 
+# src/library/base/R/kappa.R: 64
+# warning(gettextf("norm '%s' currently always uses exact = FALSE",
+# 			     norm))
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norma '%s' aktualnie zawsze używa dokładnej wartości = FALSE"
 
+# src/library/base/R/kappa.R: 93
+# stop("triangular matrix should be square")
 msgid "triangular matrix should be square"
 msgstr "macierz trójkątna powinna mieć równą liczbę wierszy i kolumn"
 
+# src/library/base/R/lapply.R: 36
+# stop("'object' must be a list")
 msgid "'object' must be a list"
 msgstr "'object' musi być listą"
 
+# src/library/base/R/library.R: 40
+# warning("'keep.source' is deprecated and will be ignored")
+# src/library/base/R/library.R: 587
+# warning("'keep.source' is deprecated and will be ignored")
 msgid "'keep.source' is deprecated and will be ignored"
 msgstr "'keep.source' jest przestarzałe i będzie zignorowane"
 
+# src/library/base/R/library.R: 44
+# stop(gettextf("package %s has not been installed properly\n",
+#                           sQuote(pkgname)),
+#                  call. = FALSE, domain = NA)
+# src/library/base/R/namespace.R: 425
+# stop(gettextf("package %s has not been installed properly\n",
+#                               sQuote(basename(pkgpath))),
+#                      call. = FALSE, domain = NA)
 msgid "package %s has not been installed properly"
-msgstr "pakiet '%s' nie został zainstalowany poprawnie"
+msgstr "pakiet 's nie został zainstalowany poprawnie"
 
+# src/library/base/R/library.R: 52
+# stop(gettextf("package %s was built before R 2.10.0: please re-install it",
+#                           sQuote(pkgname)), call. = FALSE, domain = NA)
+# src/library/base/R/namespace.R: 430
+# stop(gettextf("package %s was built before R 2.10.0: please re-install it",
+#                              sQuote(basename(pkgpath))),
+#                      call. = FALSE, domain = NA)
 msgid "package %s was built before R 2.10.0: please re-install it"
-msgstr "pakiet '%s' został zbudowany przed R 2.10.0: proszę go przeinstalować"
+msgstr "pakiet %s został zbudowany przed R 2.10.0: proszę go przeinstalować"
 
+# src/library/base/R/library.R: 72
+# stop(gettextf("This is R %s, package %s needs %s %s",
+#                                       current, sQuote(pkgname), dep$op, target),
+#                              call. = FALSE, domain = NA)
 msgid "This is R %s, package %s needs %s %s"
 msgstr "To jest R %s, pakiet %s potrzebuje %s %s"
 
+# src/library/base/R/library.R: 79
+# warning(gettextf("package %s was built under R version %s",
+#                              sQuote(pkgname), as.character(built$R)),
+#                     call. = FALSE, domain = NA)
 msgid "package %s was built under R version %s"
 msgstr "pakiet %s został zbudowany w wersji R %s"
 
+# src/library/base/R/library.R: 90
+# stop(gettextf("package %s was built for %s",
+#                               sQuote(pkgname), platform),
+#                      call. = FALSE, domain = NA)
+# src/library/base/R/library.R: 98
+# stop(gettextf("package %s was built for %s",
+#                               sQuote(pkgname), platform),
+#                      call. = FALSE, domain = NA)
 msgid "package %s was built for %s"
-msgstr "pakiet %s został zbudowany dla %s"
+msgstr "pakiet %s został zbudowany dla platformy %s"
 
+# src/library/base/R/library.R: 106
+# stop(gettextf("package %s is not installed for 'arch=%s'",
+#                           sQuote(pkgname), r_arch),
+#                  call. = FALSE, domain = NA)
 msgid "package %s is not installed for 'arch=%s'"
-msgstr "pakiet '%s' nie jest zainstalowany dla 'arch=%s'"
+msgstr "pakiet %s nie jest zainstalowany dla 'arch=%s'"
 
+# src/library/base/R/library.R: 124
+# stop(gettextf("package %s has a license that you need to accept in an interactive session", sQuote(pkg)), domain = NA)
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
 msgstr ""
 "Pakiet %s posiada licencję, którą musisz zaakceptować w interaktywnej sesji"
 
+# src/library/base/R/library.R: 128
+# gettextf("Package %s has a license that you need to accept after viewing", sQuote(pkg))
 msgid "Package %s has a license that you need to accept after viewing"
 msgstr ""
 "Pakiet %s posiada licencję, którą musisz zaakceptować po przeglądnięciu"
 
+# src/library/base/R/library.R: 136
+# gettextf("Package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg))
 msgid ""
 "Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
-"Pakiet '%s' posiada licencję, którą musisz zaakceptować:\n"
+"Pakiet %s posiada licencję, którą musisz zaakceptować:\n"
 "zgodnie z opisem w pliku DESCRIPTION jest to"
 
+# src/library/base/R/library.R: 137
+# message(pkgInfo$DESCRIPTION["License"])
 msgid "License"
-msgstr "Licencja"
+msgstr "License"
 
+# src/library/base/R/library.R: 142
+# stop(gettextf("License for package %s not accepted",
+#                               sQuote(package)), domain = NA, call. = FALSE)
 msgid "License for package %s not accepted"
-msgstr "Licencja dla pakietu '%s' nie została zaakceptowana"
+msgstr "Licencja dla pakietu %s nie została zaakceptowana"
 
+# src/library/base/R/library.R: 215
+# gettextf("\n
+# Attaching package: %s\n
+#                                                        sQuote(package))
 msgid "Attaching package: %s"
 msgstr "Dołączanie pakietu: %s"
 
+# src/library/base/R/library.R: 232
+# message("'verbose' and 'quietly' are both true; being verbose then ..")
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
 msgstr ""
 "oba 'verbose' oraz 'quietly' są ustawione na tak; przyjmuję w takim razie "
 "tryb 'verbose' .."
 
+# src/library/base/R/library.R: 243
+# stop("invalid package name")
 msgid "invalid package name"
-msgstr "błędna nazwa pakietu"
+msgstr "niepoprawna nazwa pakietu"
 
+# src/library/base/R/library.R: 258
+# gettextf("there is no package called %s", sQuote(package))
+# src/library/base/R/library.R: 771
+# stop(gettextf("there is no package called %s", sQuote(pkg)),
+#                      domain = NA)
+# src/library/base/R/library.R: 782
+# warning(gettextf("there is no package called %s", sQuote(pkg)),
+#                     domain = NA)
+# src/library/base/R/namespace.R: 392
+# stop(gettextf("there is no package called %s", sQuote(package)),
+#                  domain = NA)
 msgid "there is no package called %s"
 msgstr "nie ma pakietu o nazwie %s"
 
+# src/library/base/R/library.R: 260
+# gettext("no library trees found in 'lib.loc'")
 msgid "no library trees found in 'lib.loc'"
 msgstr "nie znaleziono drzew bibliotek w 'lib.loc'"
 
+# src/library/base/R/library.R: 270
+# stop(gettextf("%s is not a valid installed package",
+#                               sQuote(package)), domain = NA)
 msgid "%s is not a valid installed package"
 msgstr "%s nie jest poprawnie zainstalowanym pakietem"
 
+# src/library/base/R/library.R: 286
+# warning(gettextf("%s not found on search path, using pos = 2", sQuote(pos)), domain = NA)
 msgid "%s not found on search path, using pos = 2"
-msgstr "'%s' nie zostało znalezione w ścieżce wyszukiwania, używanie 'pos = 2'"
+msgstr "%s nie zostało znalezione w ścieżce wyszukiwania, używanie 'pos = 2'"
 
+# src/library/base/R/library.R: 306
+# stop(gettextf("package/namespace load failed for %s",
+#                                        sQuote(package)),
+#                               call. = FALSE, domain = NA)
 msgid "package/namespace load failed for %s"
-msgstr "ładowanie pakietu/przestrzeni nazw nie powiodło się dla '%s'"
+msgstr "ładowanie pakietu/przestrzeni nazw nie powiodło się dla pakietu %s"
 
+# src/library/base/R/library.R: 326
+# stop(gettextf("package %s does not have a NAMESPACE and should be re-installed",
+#                           sQuote(package)), domain = NA)
 msgid "package %s does not have a NAMESPACE and should be re-installed"
 msgstr ""
-"pakiet '%s' nie posiada przestrzeni nazw i powinien być zainstalowany "
+"pakiet %s nie posiada przestrzeni nazw i powinien zostać zainstalowany "
 "ponownie"
 
+# src/library/base/R/library.R: 330
+# warning(gettextf("package %s already present in search()",
+#                              sQuote(package)), domain = NA)
 msgid "package %s already present in search()"
 msgstr "pakiet %s jest już obecny w 'search()'"
 
+# src/library/base/R/library.R: 354
+# warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", call.=FALSE)
+# src/library/base/R/library.R: 409
+# warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", call.=FALSE)
 msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr ""
-"'DESCRIPTION' posiada pole 'Encoding' i ponowne enkodowanie nie jest możliwe"
+"'DESCRIPTION' posiada pole 'Encoding' i ponowne kodowanie nie jest możliwe"
 
+# src/library/base/R/library.R: 452
+# gettextf("%sPackages in library %s:\n", sep, sQuote(lib))
 msgid "%sPackages in library %s:"
-msgstr "%s Pakietów w bibliotece %s:"
+msgstr "%sPakiety w bibliotece %s:"
 
+# src/library/base/R/library.R: 466
+# message("no packages found")
 msgid "no packages found"
 msgstr "nie znaleziono pakietów"
 
+# src/library/base/R/library.R: 471
+# gettext("R packages available")
 msgid "R packages available"
 msgstr "Dostępne pakiety R"
 
+# src/library/base/R/library.R: 500
+# stop(gettextf("DLL %s not found: maybe not installed for this architecture?", sQuote(chname)), domain = NA)
 msgid "DLL %s not found: maybe not installed for this architecture?"
 msgstr ""
-"plik DLL '%s' nie został znaleziony: być może nie został zainstalowany dla "
-"tej architektury?"
+"plik DLL %s nie został znaleziony: być może nie został zainstalowany dla tej "
+"architektury?"
 
+# src/library/base/R/library.R: 502
+# stop(gettextf("shared object %s not found", sQuote(chname1)),
+#                  domain = NA)
 msgid "shared object %s not found"
-msgstr "współdzielony obiekt '%s' nie został znaleziony"
+msgstr "współdzielony obiekt %s nie został znaleziony"
 
+# src/library/base/R/library.R: 510
+# gettextf("DLL %s already loaded", sQuote(chname1))
 msgid "DLL %s already loaded"
 msgstr "plik DLL %s jest już załadowany"
 
+# src/library/base/R/library.R: 513
+# gettextf("shared object '%s' already loaded",
+#                                  sQuote(chname1))
 msgid "shared object '%s' already loaded"
-msgstr "współdzielony obiekt '%s' jest już załadowany"
+msgstr "współdzielony obiekt %s jest już załadowany"
 
+# src/library/base/R/library.R: 532
+# gettextf("now dyn.load(\"%s\") ...", file)
 msgid "now dyn.load(\"%s\") ..."
-msgstr "teraz dyn.load(\"%s\") ..."
+msgstr "teraz 'dyn.load(\"%s\")' ..."
 
+# src/library/base/R/library.R: 547
+# stop("no DLL was specified")
 msgid "no DLL was specified"
 msgstr "nie określono pliku DLL"
 
+# src/library/base/R/library.R: 549
+# stop("no shared object was specified")
 msgid "no shared object was specified"
 msgstr "nie określono współdzielonego obiektu"
 
+# src/library/base/R/library.R: 562
+# stop(gettextf("DLL %s was not loaded", sQuote(chname1)),
+#                  domain = NA)
 msgid "DLL %s was not loaded"
 msgstr "plik DLL %s nie został załadowany"
 
+# src/library/base/R/library.R: 565
+# stop(gettextf("shared object %s was not loaded", sQuote(chname1)),
+#                  domain = NA)
 msgid "shared object %s was not loaded"
-msgstr "współdzielony obiekt '%s' nie został załadowany"
+msgstr "współdzielony obiekt %s nie został załadowany"
 
+# src/library/base/R/library.R: 570
+# stop(gettextf("DLL %s not found", sQuote(chname1)), domain = NA)
 msgid "DLL %s not found"
 msgstr "plik DLL %s nie został znaleziony"
 
+# src/library/base/R/library.R: 572
+# stop(gettextf("shared object '%s' not found", sQuote(chname1)),
+#                  domain = NA)
 msgid "shared object '%s' not found"
-msgstr "współdzielony obiekt '%s' nie został znaleziony"
+msgstr "współdzielony obiekt %s nie został znaleziony"
 
+# src/library/base/R/library.R: 575
+# gettextf("now dyn.unload(\"%s\") ...", file)
 msgid "now dyn.unload(\"%s\") ..."
-msgstr "teraz dyn.unload(\"%s\") ..."
+msgstr "teraz 'dyn.unload(\"%s\")' ..."
 
+# src/library/base/R/library.R: 594
+# gettextf("Loading required package: %s",
+#                                            package)
+# src/library/base/R/library.R: 866
+# gettextf("Loading required package: %s",
+#                                      pkg)
 msgid "Loading required package: %s"
 msgstr "Ładowanie wymaganego pakietu: %s"
 
+# src/library/base/R/library.R: 648
+# stop("none of the packages are loaded")
 msgid "none of the packages are loaded"
 msgstr "żaden z tych pakietów nie został załadowany"
 
+# src/library/base/R/library.R: 762
+# warning(gettextf("package %s found more than once,\n
+# ing the one found in %s",
+#                                  sQuote(pkg), sQuote(paths)), domain = NA)
 msgid ""
 "package %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"pakiet %s znaleziono więcej niż raz,\n"
+"pakiet %s został znaleziony więcej niż raz,\n"
 "używanie tego znalezionego w %s"
 
+# src/library/base/R/library.R: 794
+# gettextf("Further information is available in the following vignettes in directory %s:",
+#                  sQuote(file.path(x$path, "doc")))
 msgid ""
 "Further information is available in the following vignettes in directory %s:"
 msgstr ""
-"Dalsza informacja jest dostępna w następujących winietach w katalogu %s:"
+"Dalsza informacja jest dostępna w następujących ilustracjach w katalogu %s:"
 
+# src/library/base/R/library.R: 794
+# gettextf("Further information is available in the following vignettes in directory %s:",
+#                  sQuote(file.path(x$path, "doc")))
 msgid "doc"
 msgstr "doc"
 
+# src/library/base/R/library.R: 797
+# gettext("Description:")
 msgid "Description:"
 msgstr "Opis:"
 
+# src/library/base/R/library.R: 798
+# gettext("Index:")
 msgid "Index:"
 msgstr "Indeks:"
 
+# src/library/base/R/library.R: 806
+# gettextf("\n
+# \tInformation on package %s", sQuote(x$name))
 msgid "Information on package %s"
 msgstr "Informacja dotycząca pakietu %s"
 
+# src/library/base/R/library.R: 820
+# gettextf("Documentation for package %s", sQuote(x$name))
 msgid "Documentation for package %s"
 msgstr "Dokumentacja dla pakietu %s"
 
+# src/library/base/R/library.R: 850
+# stop(gettextf("package %s required by %s could not be found",
+#                                       sQuote(pkg), sQuote(pkgname)),
+#                              call. = FALSE, domain = NA)
 msgid "package %s required by %s could not be found"
-msgstr "pakiet '%s' wymagany przez '%s' nie mógł zostać znaleziony"
+msgstr "pakiet %s wymagany przez pakiet %s nie mógł zostać znaleziony"
 
+# src/library/base/R/library.R: 858
+# stop(gettextf("package %s %s was found, but %s %s is required by %s",
+#                                               sQuote(pkg), current, z$op,
+#                                               target, sQuote(pkgname)),
+#                                      call. = FALSE, domain = NA)
 msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "pakiet '%s %s' został znaleziony, ale '%s %s' jest wymagane przez '%s'"
+msgstr ""
+"pakiet %s %s został znaleziony, ale wersja %s %s jest wymagana przez pakiet "
+"%s"
 
+# src/library/base/R/library.R: 870
+# stop(gettextf("package %s could not be loaded", sQuote(pkg)),
+#                      call. = FALSE, domain = NA)
 msgid "package %s could not be loaded"
-msgstr "pakiet '%s' nie mógł zostać załadowany"
+msgstr "pakiet %s nie mógł zostać załadowany"
 
+# src/library/base/R/library.R: 882
+# stop(gettextf("package %s %s is loaded, but %s %s is required by %s",
+#                                               sQuote(pkg), current, z$op,
+#                                               target, sQuote(pkgname)),
+#                                      call. = FALSE, domain = NA)
 msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "pakiet %s %s jest załadowany, ale %s %s jest wymagane przez %s"
+msgstr ""
+"pakiet %s %s jest załadowany, ale wersja %s %s jest wymagana przez pakiet %s"
 
+# src/library/base/R/load.R: 29
+# stop("empty (zero-byte) input file")
 msgid "empty (zero-byte) input file"
 msgstr "pusty (zero bajtów) plik wejściowy"
 
+# src/library/base/R/load.R: 33
+# stop("input has been corrupted, with LF replaced by CR")
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "wejście zostało uszkodzone z LF zastąpionym przez CR"
 
+# src/library/base/R/load.R: 35
+# warning(gettextf("file %s has magic number '%s'\n   Use of save versions prior to 2 is deprecated",
+#                              sQuote(basename(file)),
+#                              gsub("[\n\r]*", "", magic)),
+#                     domain = NA, call. = FALSE)
 msgid ""
 "file %s has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
@@ -992,493 +2334,1069 @@ msgstr ""
 "plik %s posiada magiczną liczbę '%s'\n"
 "   Użycie wersji zapisu wcześniejszych niż 2 jest przestarzałe"
 
+# src/library/base/R/load.R: 44
+# stop("bad 'file' argument")
+# src/library/base/R/serialize.R: 37
+# stop("bad 'file' argument")
+# src/library/base/R/serialize.R: 48
+# stop("bad 'file' argument")
 msgid "bad 'file' argument"
 msgstr "błędny argument 'file'"
 
+# src/library/base/man/save.Rd: 22
+# stop("'file' must be specified")
+# src/library/base/R/load.R: 50
+# stop("'file' must be specified")
 msgid "'file' must be specified"
 msgstr "'file' musi być określone"
 
+# src/library/base/R/load.R: 62
+# warning("Use of save versions prior to 2 is deprecated")
 msgid "Use of save versions prior to 2 is deprecated"
 msgstr "Użycie wersji zapisu wcześniejszych niż 2 jest przestarzałe"
 
+# src/library/base/R/load.R: 65
+# warning("nothing specified to be save()d")
 msgid "nothing specified to be save()d"
 msgstr "nic nie zostało określone do zapisu przy pomocy funkcji 'save()'"
 
+# src/main/saveload.c: 1931
+# error(_("'file' must be non-empty string"))
+# src/main/eval.c: 5059
+# errorcall(call, _("'file' must be non-empty string"))
+# src/library/base/R/load.R: 87
+# stop("'file' must be non-empty string")
+# src/library/base/R/load.R: 127
+# stop("'file' must be non-empty string")
+# src/library/base/R/serialize.R: 24
+# stop("'file' must be non-empty string")
 msgid "'file' must be non-empty string"
-msgstr "'file' musi być niepustym ciągiem tekstowym"
+msgstr "'file' musi być niepustym łańcuchem tekstowym"
 
+# src/library/base/R/load.R: 90
+# stop("'compress' must be logical or character")
 msgid "'compress' must be logical or character"
-msgstr "'compress' musi być typem logicznym lub znakiem"
+msgstr "'compress' musi być typem logicznym lub tekstem"
 
+# src/library/base/R/load.R: 110
+# stop(gettextf("'compress = \"%s\"' is invalid", compress))
 msgid "'compress = \"%s\"' is invalid"
 msgstr "'compress = \"%s\"' jest niepoprawne"
 
+# src/library/base/R/load.R: 115
+# stop("bad file argument")
 msgid "bad file argument"
 msgstr "błędny argument pliku"
 
+# src/library/base/R/load.R: 117
+# stop("can only save to a binary connection")
 msgid "can only save to a binary connection"
 msgstr "można zapisać tylko do połączenia binarnego"
 
+# src/library/base/R/load.R: 159
+# stop("image could not be renamed and is left in ", outfile)
 msgid "image could not be renamed and is left in"
-msgstr "nazwa obrazu nie mogła zostać zmieniona; obraz pozostał w"
+msgstr "nazwa obrazu nie mogła zostać zmieniona; obraz pozostał w pliku"
 
+# src/library/base/R/load.R: 169
+# message("[Previously saved workspace restored]", "\n")
 msgid "[Previously saved workspace restored]"
 msgstr "[Poprzednio zapisany obszar roboczy został przywrócony]"
 
+# src/library/base/R/load.R: 184
+# gettextf("Attempting to load the environment %s", sQuote(info))
 msgid "Attempting to load the environment %s"
-msgstr "Próbowanie załadowania środowiska '%s'"
+msgstr "Próba załadowania środowiska %s"
 
+# src/library/base/R/load.R: 189
+# message("not found: using .GlobalEnv instead")
 msgid "not found: using .GlobalEnv instead"
 msgstr "nie znaleziono: zamiast tego używanie '.GlobalEnv'"
 
+# src/library/base/R/locales.R: 24
+# stop("invalid 'category' argument")
+# src/library/base/R/locales.R: 33
+# stop("invalid 'category' argument")
 msgid "invalid 'category' argument"
 msgstr "niepoprawny argument 'category'"
 
+# src/library/base/R/mapply.R: 49
+# stop("must specify formal argument names to vectorize")
 msgid "must specify formal argument names to vectorize"
 msgstr "potrzeba określić nazwy formalnych argumentów aby zwektoryzować"
 
+# src/library/base/R/match.R: 40
+# stop("'arg' must be NULL or a character vector")
 msgid "'arg' must be NULL or a character vector"
-msgstr "'arg' musi być NULL lub wektorem tekstowym"
+msgstr "'arg' musi być wartością NULL lub wektorem tekstowym"
 
+# src/library/base/R/match.R: 44
+# stop("'arg' must be of length 1")
 msgid "'arg' must be of length 1"
 msgstr "'arg' musi mieć długość 1"
 
+# src/library/base/R/match.R: 45
+# stop("'arg' must be of length >= 1")
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' musi mieć długość >= 1"
 
+# src/library/base/R/match.R: 50
+# stop(gettextf("'arg' should be one of %s",
+#                       paste(dQuote(choices), collapse = ", ")),
+#              domain = NA)
 msgid "'arg' should be one of %s"
 msgstr "'arg' powinien być jednym z %s"
 
+# src/library/base/R/match.R: 55
+# stop("there is more than one match in 'match.arg'")
 msgid "there is more than one match in 'match.arg'"
 msgstr "jest więcej niż jedno dopasowanie w 'match.arg'"
 
+# src/library/base/man/char.expand.Rd: 9
+# stop("no match")
+# src/library/base/R/match.R: 62
+# stop("no match")
 msgid "no match"
-msgstr "nie ma dopasowania"
+msgstr "brak dopasowania"
 
+# src/library/base/R/match.R: 65
+# stop("'input' must have length 1")
 msgid "'input' must have length 1"
 msgstr "'input' musi mieć długość 1"
 
+# src/library/base/R/match.R: 67
+# stop("'input' and 'target' must be character vectors")
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' oraz 'target' muszą być wektorami tekstowymi"
 
+# src/library/base/R/match.fun.R: 30
+# stop(gettextf("'%s' is not a function, character or symbol",
+#                           deparse(FUN)), domain = NA)
 msgid "'%s' is not a function, character or symbol"
-msgstr "'%s' nie jest funkcją, znakiem ani symbolem"
+msgstr "'%s' nie jest funkcją, tekstem ani symbolem"
 
+# src/library/base/R/match.fun.R: 39
+# stop(gettextf("found non-function '%s'", FUN), domain = NA)
 msgid "found non-function '%s'"
 msgstr "znaleziono nie-funkcję '%s'"
 
+# src/library/base/R/matrix.R: 57
+# stop("attempt to set rownames on object with no dimensions")
+# src/library/base/R/matrix.R: 61
+# stop("attempt to set rownames on object with no dimensions")
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "próba ustawienia nazw wierszy dla obiektu bez wymiarów"
 
+# src/library/base/R/matrix.R: 92
+# stop("attempt to set colnames on object with less than two dimensions")
+# src/library/base/R/matrix.R: 96
+# stop("attempt to set colnames on object with less than two dimensions")
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr "próba ustawienia nazw kolumn dla obiektu z mniej niż dwoma wymiarami"
 
-#, fuzzy
+# src/library/stats/R/filter.R: 28
+# stop("invalid value of nrow(x)", domain = NA)
+# src/library/base/R/max.col.R: 24
+# stop("invalid value of nrow(x)")
 msgid "invalid value of nrow(x)"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawna wartość 'ncol(x)'"
 
+# src/library/base/R/mean.R: 24
+# warning("argument is not numeric or logical: returning NA")
 msgid "argument is not numeric or logical: returning NA"
 msgstr ""
-"argument nie jest wartością liczbową ani logiczną: zwracanie wartości 'NA'"
+"argument nie jest wartością liczbową ani logiczną: zwracanie wartości NA"
 
+# src/library/base/R/mean.R: 30
+# stop("'trim' must be numeric of length one")
 msgid "'trim' must be numeric of length one"
-msgstr "'trim' musi być liczą o długości jeden"
+msgstr "'trim' musi być liczbą o długości jeden"
 
+# src/library/base/R/mean.R: 34
+# stop("trimmed means are not defined for complex data")
 msgid "trimmed means are not defined for complex data"
 msgstr "przycięte średnie nie są zdefiniowane dla danych złożonych"
 
-#, fuzzy
+# src/library/base/R/merge.R: 40
+# stop("'by' must specify uniquely valid column(s)")
 msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' musi określać poprawne kolumny"
+msgstr "'by' musi jednoznacznie określać poprawne kolumny"
 
+# src/library/base/R/merge.R: 44
+# stop("'by' must match numbers of columns")
 msgid "'by' must match numbers of columns"
-msgstr "'by' musi zgadzać się z liczbą kolumn"
+msgstr "'by' musi zgadzać się z liczbami kolumn"
 
+# src/library/base/R/merge.R: 46
+# stop("'by' must match number of columns")
 msgid "'by' must match number of columns"
 msgstr "'by' musi zgadzać się z liczbą kolumn"
 
+# src/library/base/R/merge.R: 48
+# stop("'by' must specify column(s) as numbers, names or logical")
 msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by' musi określać kolumny jako liczby, nazwy lub warunki logiczne"
 
+# src/library/base/R/merge.R: 49
+# stop("'by' must specify valid column(s)")
 msgid "'by' must specify valid column(s)"
 msgstr "'by' musi określać poprawne kolumny"
 
+# src/library/base/R/merge.R: 57
+# stop("'by.x' and 'by.y' specify different numbers of columns")
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' oraz 'by.y' określają różne liczby kolumn"
 
+# src/library/base/R/message.R: 36
+# warning("additional arguments ignored in message()")
 msgid "additional arguments ignored in message()"
-msgstr "zignorowano dodatkowe argumenty w 'message()'"
+msgstr "dodatkowe argumenty w 'message()' zostały zignorowane"
 
+# src/library/base/R/methodsSupport.R: 25
+# message("(loaded the methods namespace)")
 msgid "(loaded the methods namespace)"
 msgstr "(załadowano przestrzeń nazw metod)"
 
+# src/library/base/R/methodsSupport.R: 27
+# stop("Tracing functions requires the methods package, but unable to load methods namespace")
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 msgstr ""
-"Trassirowka funkcje wymaga pakietu 'methods', no ya nie można zagruzit jego "
-"przestrzeń nazw"
+"Funkcjonalność śledzenia funkcji wymaga pakietu 'methods', ale nie można "
+"załadować przestrzeni nazw metod"
 
+# src/library/base/R/methodsSupport.R: 78
+# stop("Expected a single logical value for the S4 state flag")
 msgid "Expected a single logical value for the S4 state flag"
 msgstr "Oczekiwano pojedynczej wartości logicznej dla flagi stanu S4"
 
+# src/library/base/R/methodsSupport.R: 85
+# stop("Expected a single logical value for the S3 state flag")
 msgid "Expected a single logical value for the S3 state flag"
 msgstr "Oczekiwano pojedynczej wartości logicznej dla flagi stanu S3"
 
+# src/main/coerce.c: 2663
+# error(_("invalid to change the storage mode of a factor"))
+# src/library/base/R/mode.R: 37
+# stop("invalid to change the storage mode of a factor")
 msgid "invalid to change the storage mode of a factor"
-msgstr "niepoprane jest zmienianie trybu przechowywania faktora"
+msgstr "zmiana trybu przechowywania czynnika jest niepoprawnym działaniem"
 
+# src/library/base/R/namespace.R: 81
+# stop(gettextf("'%s' is not an exported object from 'namespace:%s'",
+#                               name, getNamespaceName(ns)),
+#                      call. = FALSE, domain = NA)
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' nie jest eksportowanym obiektem z 'namespace:%s'"
 
+# src/library/base/R/namespace.R: 177
+# gettextf("running .First.lib() for package %s as .onLoad/.onAttach were not found", sQuote(nsname))
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
-"uruchamianie '.First.lib()' dla pakietu '%s' z powodu, że '.onLoad/."
-"onAttach' nie zostały znalezione"
+"uruchamianie '.First.lib()' dla pakietu %s ponieważ '.onLoad/.onAttach' nie "
+"zostały znalezione"
 
+# src/library/base/R/namespace.R: 194
+# stop("namespace is already attached")
 msgid "namespace is already attached"
 msgstr "przestrzeń nazw jest już dołączona"
 
+# src/library/base/R/namespace.R: 224
+# stop(gettextf("%s not found", name),
+#                        domain = NA)
 msgid "%s not found"
-msgstr "%s nie został znaleziony"
+msgstr "'%s' nie został znaleziony"
 
+# src/library/base/R/namespace.R: 307
+# stop(gettextf("namespace %s is already sealed in loadNamespace",
+#                               sQuote(getNamespaceName(ns))),
+#                      call. = FALSE, domain = NA)
 msgid "namespace %s is already sealed in loadNamespace"
-msgstr "przestrzeń nazw '%s' jest już zamknięta w 'loadNamespace'"
+msgstr "przestrzeń nazw %s jest już zamknięta w 'loadNamespace'"
 
+# src/library/base/R/namespace.R: 344
+# warning("failed to assign RegisteredNativeSymbol for ",
+#                                                sym$name,
+#                                                paste(" to", varName),
+#                                                " since ", varName,
+#                                                " is already defined in the ", package,
+#                                                " namespace")
 msgid "failed to assign RegisteredNativeSymbol for"
 msgstr "nie udało się przypisać 'RegisteredNativeSymbol' dla"
 
+# src/main/platform.c: 775
+# error(_("invalid '%s' argument"), "to")
+# src/main/platform.c: 2381
+# error(_("invalid '%s' argument"), "to")
+# src/main/platform.c: 2550
+# error(_("invalid '%s' argument"), "to")
+# src/main/sysutils.c: 593
+# error(_("invalid '%s' argument"), "to")
+# src/library/tools/R/testing.R: 265
+# message("  comparing ", sQuote(outfile), " to ",
+#                             sQuote(basename(savefile)), " ...", appendLF = FALSE)
+# src/library/tools/R/testing.R: 275
+# message("  comparing ", sQuote(outfile), " to ",
+#                             sQuote(basename(prevfile)), " ...", appendLF = FALSE)
+# src/library/tools/R/testing.R: 311
+# message("  comparing ", sQuote(outfile), " to ",
+#                         sQuote(savefile), " ...", appendLF = FALSE)
+# src/library/tools/R/testing.R: 387
+# message("  Comparing ", sQuote(outfile), " to ",
+#                     sQuote(savefile), " ...", appendLF = FALSE)
+# src/library/tools/R/testing.R: 519
+# message("  comparing ", sQuote(outfile), " to ",
+#                     sQuote(savefile), " ...", appendLF = FALSE)
+# src/library/graphics/src/plot.c: 4039
+# error(_("invalid '%s' argument"), "to")
+# src/library/graphics/src/plot.c: 4066
+# error(_("invalid '%s' argument"), "to")
+# src/library/base/R/namespace.R: 344
+# warning("failed to assign RegisteredNativeSymbol for ",
+#                                                sym$name,
+#                                                paste(" to", varName),
+#                                                " since ", varName,
+#                                                " is already defined in the ", package,
+#                                                " namespace")
+# src/library/base/R/namespace.R: 371
+# warning("failed to assign NativeSymbolInfo for ",
+#                                    origVarName,
+#                                    ifelse(origVarName != varName,
+#                                               paste(" to", varName), ""),
+#                                    " since ", varName,
+#                                    " is already defined in the ", package,
+#                                    " namespace")
+# src/library/parallel/tests/Master.R: 18
+# message("  Comparing ", sQuote(outfile), " to ",
+#                 sQuote(savefile), " ...", appendLF = FALSE)
 msgid "to"
-msgstr "do"
+msgstr "na"
 
+# src/library/base/R/namespace.R: 344
+# warning("failed to assign RegisteredNativeSymbol for ",
+#                                                sym$name,
+#                                                paste(" to", varName),
+#                                                " since ", varName,
+#                                                " is already defined in the ", package,
+#                                                " namespace")
+# src/library/base/R/namespace.R: 371
+# warning("failed to assign NativeSymbolInfo for ",
+#                                    origVarName,
+#                                    ifelse(origVarName != varName,
+#                                               paste(" to", varName), ""),
+#                                    " since ", varName,
+#                                    " is already defined in the ", package,
+#                                    " namespace")
 msgid "since"
-msgstr "od"
+msgstr "ponieważ"
 
+# src/library/base/R/namespace.R: 344
+# warning("failed to assign RegisteredNativeSymbol for ",
+#                                                sym$name,
+#                                                paste(" to", varName),
+#                                                " since ", varName,
+#                                                " is already defined in the ", package,
+#                                                " namespace")
+# src/library/base/R/namespace.R: 371
+# warning("failed to assign NativeSymbolInfo for ",
+#                                    origVarName,
+#                                    ifelse(origVarName != varName,
+#                                               paste(" to", varName), ""),
+#                                    " since ", varName,
+#                                    " is already defined in the ", package,
+#                                    " namespace")
 msgid "is already defined in the"
-msgstr "jest już zdefiniowane w"
+msgstr "jest już zdefiniowane w przestrzeni nazw pakietu"
 
+# src/library/base/R/namespace.R: 344
+# warning("failed to assign RegisteredNativeSymbol for ",
+#                                                sym$name,
+#                                                paste(" to", varName),
+#                                                " since ", varName,
+#                                                " is already defined in the ", package,
+#                                                " namespace")
+# src/library/base/R/namespace.R: 371
+# warning("failed to assign NativeSymbolInfo for ",
+#                                    origVarName,
+#                                    ifelse(origVarName != varName,
+#                                               paste(" to", varName), ""),
+#                                    " since ", varName,
+#                                    " is already defined in the ", package,
+#                                    " namespace")
 msgid "namespace"
-msgstr "przestrzeń nazw"
+msgstr " "
 
+# src/library/base/R/namespace.R: 371
+# warning("failed to assign NativeSymbolInfo for ",
+#                                    origVarName,
+#                                    ifelse(origVarName != varName,
+#                                               paste(" to", varName), ""),
+#                                    " since ", varName,
+#                                    " is already defined in the ", package,
+#                                    " namespace")
 msgid "failed to assign NativeSymbolInfo for"
 msgstr "nie udało się przypisać 'NativeSymbolInfo' dla"
 
+# src/library/base/R/namespace.R: 401
+# gettextf("package %s does not have a namespace",
+#                                 sQuote(package))
 msgid "package %s does not have a namespace"
-msgstr "pakiet '%s' nie zawiera przestrzeni nazw"
+msgstr "pakiet %s nie zawiera przestrzeni nazw"
 
+# src/library/base/R/namespace.R: 474
+# stop(gettextf("unable to load R code in package %s",
+#                               sQuote(package)), call. = FALSE, domain = NA)
 msgid "unable to load R code in package %s"
-msgstr "nie można załadować kodu R w pakiecie '%s'"
+msgstr "nie można załadować kodu R w pakiecie %s"
 
+# src/library/base/R/namespace.R: 558
+# warning(gettextf("exportClassPattern specified in NAMESPACE but no matching classes in package %s", sQuote(package)),
+#                             call. = FALSE, domain = NA)
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
 "%s"
 msgstr ""
 "'exportClassPattern' określono w 'NAMESPACE' ale brak pasujących klas w "
-"pakiecie '%s'"
+"pakiecie %s"
 
+# src/library/base/R/namespace.R: 566
+# stop(gettextf("in package %s classes %s were specified for export but not defined",
+#                                   sQuote(package),
+#                                   paste(expClasses[missingClasses],
+#                                         collapse = ", ")),
+#                          domain = NA)
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
-"w pakiecie '%s' klasy '%s' zostały określone do eksportu ale nie zostały "
+"w pakiecie %s klasy '%s' zostały określone do eksportu ale nie zostały "
 "zdefiniowane"
 
+# src/library/base/R/namespace.R: 584
+# warning(gettextf("No function found corresponding to methods exports from %s for: %s",
+#                                      sQuote(package),
+#                                      paste(sQuote(sort(unique(addGenerics[nowhere]))), collapse = ", ")),
+#                          domain = NA, call. = FALSE)
 msgid "No function found corresponding to methods exports from %s for: %s"
 msgstr "Nie znaleziono funkcji odpowiadającej eksportom funkcji z %s dla: %s"
 
+# src/library/base/R/namespace.R: 627
+# stop(gettextf("in %s methods for export not found: %s",
+#                                   sQuote(package),
+#                                   paste(expMethods[missingMethods],
+#                                         collapse = ", ")),
+#                          domain = NA)
 msgid "in %s methods for export not found: %s"
-msgstr "w %s metodach do eksportu nie znaleziono: %s"
+msgstr "w metodach do eksportu pakietu %s nie znaleziono: %s"
 
+# src/library/base/R/namespace.R: 663
+# warning(gettextf("multiple methods tables found for %s",
+# 				    sQuote(mi)), call. = FALSE, domain = NA)
 msgid "multiple methods tables found for %s"
 msgstr "wiele tablic metod znaleziono dla %s"
 
+# src/library/base/R/namespace.R: 670
+# warning(gettextf("failed to find metadata object for %s",
+#                                        sQuote(mi)), call. = FALSE, domain = NA)
 msgid "failed to find metadata object for %s"
 msgstr "nie udało się znaleźć obiektu metadanych dla  %s"
 
+# src/library/base/R/namespace.R: 676
+# stop(gettextf("in package %s methods %s were specified for export but not defined",
+#                               sQuote(package),
+#                               paste(expMethods, collapse = ", ")),
+#                      domain = NA)
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
-"w pakiecie '%s' metody '%s' zostały określone do eksportu ale nie zostały "
+"w pakiecie %s metody '%s' zostały określone do eksportu ale nie zostały "
 "zdefiniowane"
 
+# src/library/base/R/namespace.R: 705
+# gettextf("Loading required namespace: %s",
+#                                        package)
 msgid "Loading required namespace: %s"
 msgstr "Ładowanie wymaganej przestrzeni nazw: %s"
 
+# src/library/tools/R/testing.R: 490
+# stop("file ", sQuote(f), " not found", domain = NA)
+# src/library/base/R/namespace.R: 722
+# stop(name, " not found")
+# src/library/utils/R/indices.R: 146
+# stop("package ", sQuote(pkg), " not found")
 msgid "not found"
-msgstr "nie znaleziono"
+msgstr "nie została znaleziona"
 
+# src/library/base/R/namespace.R: 732
+# stop("not loading a namespace")
 msgid "not loading a namespace"
-msgstr "nie ładuję przestrzeni nazw"
+msgstr "nie ładuje przestrzeni nazw"
 
+# src/library/base/R/namespace.R: 775
+# stop(gettextf("namespace %s is imported by %s so cannot be unloaded",
+#                       sQuote(getNamespaceName(ns)),
+#                       paste(sQuote(users), collapse = ", ")),
+#              domain = NA)
 msgid "namespace %s is imported by %s so cannot be unloaded"
 msgstr ""
-"przestrzeń nazw '%s' jest zaimportowana przez '%s' nie może być więc usunięta"
+"przestrzeń nazw %s jest zaimportowana przez %s nie może być więc usunięta"
 
+# src/library/base/R/namespace.R: 812
+# stop("not a namespace")
 msgid "not a namespace"
-msgstr "nie jest przestrzenią nazw"
+msgstr "to nie jest przestrzeń nazw"
 
+# src/library/base/R/namespace.R: 814
+# stop("operation not allowed on base namespace")
 msgid "operation not allowed on base namespace"
 msgstr "operacja niedozwolona na bazowej przestrzeni nazw"
 
+# src/library/base/R/namespace.R: 859
+# stop("duplicate import names ",
+#              paste(impnames[duplicated(impnames)], collapse = ", "))
 msgid "duplicate import names"
 msgstr "powtórzone nazwy importu"
 
+# src/library/base/R/namespace.R: 864
+# gettext("replacing local value with import %s when loading %s")
+# src/library/base/R/namespace.R: 876
+# gettext("replacing local value with import %s when loading %s")
 msgid "replacing local value with import %s when loading %s"
-msgstr "zastępowanie lokalnej wartości z importu %s kiedy ładowanie %s"
+msgstr "zastępowanie lokalnej wartości z importu %s podczas ładowania %s"
 
+# src/library/base/R/namespace.R: 869
+# stop("cannot import into a sealed namespace")
 msgid "cannot import into a sealed namespace"
 msgstr "nie można zaimportować do zamkniętej przestrzeni nazw"
 
+# src/library/base/R/namespace.R: 871
+# gettext("replacing previous import %s when loading %s")
 msgid "replacing previous import %s when loading %s"
-msgstr "zastępowanie poprzedniego importu '%s' kiedy ładowanie '%s'"
+msgstr "zastępowanie poprzedniego importu %s podczas ładowanie %s"
 
+# src/library/base/R/namespace.R: 879
+# stop("invalid import target")
 msgid "invalid import target"
 msgstr "niepoprawny cel importu"
 
+# src/library/base/R/namespace.R: 898
+# warning(gettextf("found methods to import for function %s but not the generic itself",
+# 					 sQuote(genName)),
+#                                 call. = FALSE, domain = NA)
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 "znaleziono metody do importu dla funkcji %s ale nie znaleziono samej funkcji "
 "ogólnej"
 
+# src/library/base/R/namespace.R: 952
+# gettextf("No methods found in \"%s\" for requests: %s",
+#                          pkg, paste(vars[is.na(match(vars, allFuns))], collapse = ", "))
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr "Nie znaleziono metod w \"%s\" dla żądań: %s"
 
+# src/library/base/R/namespace.R: 960
+# stop(gettextf("requested methods not found in environment/package %s: %s",
+#                       sQuote(pkg),
+#                       paste(vars[is.na(match(vars, allFuns))],
+#                             collapse = ", ")), call. = FALSE, domain = NA)
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s"
 
+# src/library/base/R/namespace.R: 989
+# warning(gettextf("No generic function found corresponding to requested imported methods for \"%s\" from package \"%s\" (malformed exports?)",
+#                                  g, pkg),
+#                         domain = NA)
 msgid ""
 "No generic function found corresponding to requested imported methods for "
 "\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
-"Nie znaleziono ogólne funkcji odpowiadającej zażądanym zaimportowanym "
+"Nie znaleziono ogólnej funkcji odpowiadającej zażądanym zaimportowanym "
 "metodom dla \"%s\" z pakietu \"%s\" (uszkodzone eksporty?)"
 
+# src/library/base/R/namespace.R: 1032
+# stop("cannot add to exports of a sealed namespace")
 msgid "cannot add to exports of a sealed namespace"
-msgstr "nie można dodać do eksportów zamkniętych przestrzeni nazw"
+msgstr "nie można dodać do eksportów zamkniętej przestrzeni nazw"
 
+# src/library/base/R/namespace.R: 1064
+# stop("undefined exports: ", undef)
 msgid "undefined exports:"
 msgstr "niezdefiniowane eksporty:"
 
+# src/library/base/R/namespace.R: 1140
+# stop(gettextf("package %s has no NAMESPACE file", sQuote(package)),
+#              domain = NA)
 msgid "package %s has no NAMESPACE file"
-msgstr "pakiet '%s' nie posiada pliku NAMESPACE"
+msgstr "pakiet %s nie posiada pliku NAMESPACE"
 
+# src/library/base/R/namespace.R: 1160
+# stop(gettextf("empty name in directive '%s' in NAMESPACE file",
+# 			      as.character(e[[1L]])),
+# 		     domain = NA)
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "pusta nazwa w dyrektywie '%s' w pliku NAMESPACE"
 
+# src/library/base/R/namespace.R: 1262
+# warning(gettextf("duplicated symbol names %s in useDynlib(\"%s\")", paste(names(symNames)[dup], collapse = ", "), dyl),
+#                                    domain = NA)
 msgid "duplicated symbol names %s in useDynlib(\"%s\")"
 msgstr "powtórzone nazwy symboli '%s' w 'useDynlib(\"%s\")'"
 
+# src/library/base/R/namespace.R: 1310
+# stop(gettextf("bad 'S3method' directive: %s",
+#                                      deparse(e)),
+#                             call. = FALSE, domain = NA)
 msgid "bad 'S3method' directive: %s"
 msgstr "niepoprawna dyrektywa 'S3method': %s"
 
+# src/library/base/R/namespace.R: 1315
+# stop("too many 'S3method' directives", call. = FALSE)
 msgid "too many 'S3method' directives"
 msgstr "zbyć dużo dyrektyw 'S3method'"
 
+# src/library/base/R/namespace.R: 1318
+# stop(gettextf("unknown namespace directive: %s", deparse(e, nlines=1L)),
+#                     call. = FALSE, domain = NA)
 msgid "unknown namespace directive: %s"
 msgstr "nieznana dyrektywa przestrzeni nazw: %s"
 
+# src/library/base/R/namespace.R: 1361
+# warning(gettextf("S3 method %s was declared but not found",
+#                              sQuote(method)), call. = FALSE)
 msgid "S3 method %s was declared but not found"
-msgstr "metoda S3  '%s' została zadeklarowana ale nie została znaleziona"
+msgstr "metoda S3  %s została zadeklarowana ale nie została znaleziona"
 
+# src/library/base/R/namespace.R: 1370
+# stop("bad method")
 msgid "bad method"
 msgstr "zła metoda"
 
+# src/library/base/R/namespace.R: 1398
+# stop(gettextf("object '%s' not found whilst loading namespace '%s'",
+#                               genname, package), call. = FALSE, domain = NA)
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "nie znaleziono obiektu '%s' podczas ładowania przestrzeni nazw '%s'"
 
+# src/library/base/R/namespace.R: 1403
+# warning(gettextf("found an S4 version of %s so it has not been imported correctly",
+#                                  sQuote(genname)), call. = FALSE, domain = NA)
 msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "znaleziono wersję S4 '%s' tak więc nie został poprawnie zaimportowany"
+msgstr "znaleziono wersję S4 %s więc nie został poprawnie zaimportowany"
 
+# src/library/base/R/notyet.R: 20
+# stop(gettextf("'%s' is not implemented yet",
+#                   as.character(sys.call(sys.parent())[[1L]])), call. = FALSE)
 msgid "'%s' is not implemented yet"
 msgstr "'%s' nie jest jeszcze zaimplementowane"
 
+# src/library/base/R/notyet.R: 24
+# gettextf("argument '%s' is not used (yet)", arg)
 msgid "argument '%s' is not used (yet)"
-msgstr "argument '%s' nie jest (jeszcze) użyty"
+msgstr "argument '%s' nie został (jeszcze) użyty"
 
+# src/library/base/R/octhex.R: 63
+# stop("'x' cannot be coerced to 'octmode'")
 msgid "'x' cannot be coerced to 'octmode'"
-msgstr "'x' nie może zostać zamienione na system ósemkowy"
+msgstr "'x' nie może zostać przekształcone na system ósemkowy"
 
+# src/library/base/R/octhex.R: 113
+# stop("'x' cannot be coerced to hexmode")
 msgid "'x' cannot be coerced to hexmode"
-msgstr "'x' nie może zostać zamienione na system szesnastkowy 'hexmode'"
+msgstr "'x' nie może zostać przekształcone na system szesnastkowy"
 
+# src/main/summary.c: 845
+# error(_("no arguments"))
+# src/library/base/R/pmax.R: 25
+# stop("no arguments")
+# src/library/base/R/pmax.R: 63
+# stop("no arguments")
 msgid "no arguments"
 msgstr "brak argumentów"
 
+# src/main/summary.c: 890
+# warning(_("an argument will be fractionally recycled"))
+# src/library/base/R/pmax.R: 38
+# warning("an argument will be fractionally recycled")
+# src/library/base/R/pmax.R: 42
+# warning("an argument will be fractionally recycled")
+# src/library/base/R/pmax.R: 75
+# warning("an argument will be fractionally recycled")
+# src/library/base/R/pmax.R: 79
+# warning("an argument will be fractionally recycled")
 msgid "an argument will be fractionally recycled"
-msgstr "argument będzie częściowo powtórzony"
+msgstr "argument zostanie częściowo powtórzony"
 
+# src/library/base/R/pretty.R: 30
+# stop("invalid 'n' value")
 msgid "invalid 'n' value"
 msgstr "niepoprawna wartość 'n'"
 
+# src/library/base/R/pretty.R: 32
+# stop("'shrink.sml' must be numeric > 0")
 msgid "'shrink.sml' must be numeric > 0"
 msgstr "'shrink.sml' musi być liczbą > 0"
 
+# src/library/base/R/pretty.R: 34
+# stop("'min.n' must be non-negative integer <= n")
 msgid "'min.n' must be non-negative integer <= n"
 msgstr "'min.n' musi być nieujemną liczbą całkowitą <= n"
 
+# src/library/base/R/pretty.R: 36
+# stop("'high.u.bias' must be non-negative numeric")
 msgid "'high.u.bias' must be non-negative numeric"
 msgstr "'high.u.bias' musi być nieujemną liczbą"
 
+# src/library/base/R/pretty.R: 38
+# stop("'u5.bias' must be non-negative numeric")
 msgid "'u5.bias' must be non-negative numeric"
-msgstr "'u5.bias' musi być nieujemnym argumentem"
+msgstr "'u5.bias' musi być nieujemną liczbą"
 
+# src/library/base/R/pretty.R: 40
+# stop("'eps.correct' must be 0, 1, or 2")
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' musi być 0, 1, lub 2"
 
-#, fuzzy
+# src/library/stats/R/kmeans.R: 74
+# stop("invalid ncol(x)")
+# src/library/base/R/qr.R: 43
+# stop("invalid ncol(x)")
+# src/library/base/R/svd.R: 42
+# stop("invalid ncol(x)")
 msgid "invalid ncol(x)"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawne 'ncol(x)'"
 
+# src/library/base/R/qr.R: 69
+# stop("first argument must be a QR decomposition")
 msgid "first argument must be a QR decomposition"
 msgstr "pierwszy argument musi być dekompozycją QR"
 
+# src/library/base/R/qr.R: 71
+# stop("invalid nrow(qr$qr)")
+# src/library/base/R/qr.R: 141
+# stop("invalid nrow(qr$qr)")
+# src/library/base/R/qr.R: 171
+# stop("invalid nrow(qr$qr)")
+# src/library/base/R/qr.R: 198
+# stop("invalid nrow(qr$qr)")
+# src/library/base/R/qr.R: 221
+# stop("invalid nrow(qr$qr)")
 msgid "invalid nrow(qr$qr)"
-msgstr ""
+msgstr "niepoprawne 'nrow(qr$qr)'"
 
+# src/library/base/R/qr.R: 73
+# stop("invalid ncol(qr$qr)")
 msgid "invalid ncol(qr$qr)"
-msgstr ""
+msgstr "niepoprawne 'ncol(qr$qr)'"
 
-#, fuzzy
+# src/library/base/R/qr.R: 75
+# stop("invalid ncol(qr$rank)")
 msgid "invalid ncol(qr$rank)"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawne ncol(qr$qr)"
 
-#, fuzzy
+# src/library/base/R/qr.R: 79
+# stop("invalid ncol(y)")
 msgid "invalid ncol(y)"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawne 'ncol(y)'"
 
+# src/library/base/R/qr.R: 102
+# stop("'qr' and 'y' must have the same number of rows")
+# src/library/base/R/qr.R: 147
+# stop("'qr' and 'y' must have the same number of rows")
+# src/library/base/R/qr.R: 176
+# stop("'qr' and 'y' must have the same number of rows")
+# src/library/base/R/qr.R: 202
+# stop("'qr' and 'y' must have the same number of rows")
+# src/library/base/R/qr.R: 227
+# stop("'qr' and 'y' must have the same number of rows")
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr' oraz 'y' muszą mieć tę samą liczbę wierszy"
 
+# src/library/base/R/qr.R: 112
+# stop("exact singularity in 'qr.coef'")
 msgid "exact singularity in 'qr.coef'"
 msgstr "ścisła osobliwość w 'qr.coef'"
 
+# src/library/base/R/qr.R: 131
+# stop("argument is not a QR decomposition")
+# src/library/base/R/qr.R: 160
+# stop("argument is not a QR decomposition")
+# src/library/base/R/qr.R: 190
+# stop("argument is not a QR decomposition")
+# src/library/base/R/qr.R: 215
+# stop("argument is not a QR decomposition")
+# src/library/base/R/qr.R: 246
+# stop("argument is not a QR decomposition")
+# src/library/base/R/qr.R: 260
+# stop("argument is not a QR decomposition")
+# src/library/base/R/qr.R: 271
+# stop("argument is not a QR decomposition")
 msgid "argument is not a QR decomposition"
 msgstr "argument nie jest dekompozycją QR"
 
+# src/library/base/R/qr.R: 144
+# stop("invalid NCOL(y)")
+# src/library/base/R/qr.R: 174
+# stop("invalid NCOL(y)")
+# src/library/base/R/qr.R: 200
+# stop("invalid NCOL(y)")
+# src/library/base/R/qr.R: 225
+# stop("invalid NCOL(y)")
 msgid "invalid NCOL(y)"
-msgstr ""
+msgstr "niepoprawne 'NCOL(y)'"
 
+# src/library/base/R/qr.R: 191
+# stop("not implemented for complex 'qr'")
+# src/library/base/R/qr.R: 216
+# stop("not implemented for complex 'qr'")
 msgid "not implemented for complex 'qr'"
 msgstr "niezaimplementowane dla zespolonego 'qr'"
 
+# src/library/base/R/qr.R: 194
+# stop("not supported for LAPACK QR")
+# src/library/base/R/qr.R: 219
+# stop("not supported for LAPACK QR")
 msgid "not supported for LAPACK QR"
-msgstr "nie wspierane przez ' LAPACK QR'"
+msgstr "niewspierane przez ' LAPACK QR'"
 
+# src/library/base/R/qr.R: 223
+# stop("'k' is too large")
 msgid "'k' is too large"
-msgstr "'k' jest zbyć duże"
+msgstr "'k' jest zbyt duże"
 
+# src/library/base/R/qr.R: 275
+# stop("need larger value of 'ncol' as pivoting occurred")
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr "potrzeba większej wartości 'ncol' z uwagi na to, że nastąpił obrót"
+msgstr "potrzeba większej wartości 'ncol' ponieważ nastąpił obrót"
 
+# src/library/base/R/qr.R: 278
+# stop("invalid NCOL(R)")
 msgid "invalid NCOL(R)"
-msgstr ""
+msgstr "niepoprawne 'NCOL(R)'"
 
+# src/library/base/R/rle.R: 22
+# stop("'x' must be an atomic vector")
 msgid "'x' must be an atomic vector"
 msgstr "'x' musi być wektorem atomowym"
 
+# src/library/base/R/rle.R: 47
+# stop("invalid 'rle' structure")
 msgid "invalid 'rle' structure"
 msgstr "niepoprawna struktura 'rle'"
 
+# src/library/base/R/rm.R: 26
+# stop("... must contain names or character strings")
 msgid "... must contain names or character strings"
-msgstr "... musi zawierać nazwy lub ciągi znaków"
+msgstr "... musi zawierać nazwy lub łańcuchy tekstowe"
 
+# src/library/base/R/rowsum.R: 26
+# stop("incorrect length for 'group'")
+# src/library/base/R/rowsum.R: 43
+# stop("incorrect length for 'group'")
 msgid "incorrect length for 'group'"
 msgstr "niepoprawna długość dla 'group'"
 
+# src/library/base/R/rowsum.R: 28
+# warning("missing values for 'group'")
+# src/library/base/R/rowsum.R: 45
+# warning("missing values for 'group'")
 msgid "missing values for 'group'"
 msgstr "brakujące wartości w 'group'"
 
+# src/library/base/R/rowsum.R: 41
+# stop("not a data frame")
 msgid "not a data frame"
-msgstr "brak ramki"
+msgstr "brak ramki danych"
 
+# src/library/base/R/scale.R: 34
+# stop("length of 'center' must equal the number of columns of 'x'")
 msgid "length of 'center' must equal the number of columns of 'x'"
 msgstr "długość 'center' musi równać się liczbie kolumn 'x'"
 
+# src/library/base/R/scale.R: 48
+# stop("length of 'scale' must equal the number of columns of 'x'")
 msgid "length of 'scale' must equal the number of columns of 'x'"
 msgstr "długość 'scale' musi równać się liczbie kolumn 'x'"
 
+# src/library/base/R/scan.R: 33
+# stop("either specify 'nmax' or 'n', but not both.")
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "określ albo 'nmax' albo 'n', ale nie oba naraz"
 
+# src/library/base/R/seq.R: 36
+# stop("argument 'length.out' must be of length 1")
 msgid "argument 'length.out' must be of length 1"
 msgstr "argument 'length.out' musi mieć długość 1"
 
+# src/library/base/R/seq.R: 38
+# warning("first element used of 'length.out' argument")
 msgid "first element used of 'length.out' argument"
 msgstr "użyto pierwszego elementu argumentu 'length.out'"
 
+# src/library/graphics/R/mosaicplot.R: 184
+# warning(gettextf("extra argument(s) %s will be disregarded",
+#                          paste(sQuote(names(list(...))), collapse = ", ")),
+#                 domain = NA)
+# src/library/base/R/seq.R: 44
+# warning(gettextf("extra argument(s) %s will be disregarded",
+# 			 paste(sQuote(names(list(...))), collapse = ", ")),
+# 		domain = NA)
 msgid "extra argument(s) %s will be disregarded"
-msgstr "ekstra argumenty %s będą odrzucone"
+msgstr "dodatkowe argumenty %s zostaną odrzucone"
 
+# src/library/base/R/seq.R: 59
+# stop("invalid (to - from)/by in seq(.)")
+# src/library/Recommended/Matrix/R/abIndex.R: 164
+# stop("invalid (to - from)/by in seq(.)")
 msgid "invalid (to - from)/by in seq(.)"
-msgstr "niepoprawne (to - from)/by w seq(.)"
+msgstr "niepoprawne '(to - from)/by' w 'seq(.)'"
 
+# src/main/seq.c: 810
+# errorcall(call, _("wrong sign in 'by' argument"))
+# src/library/base/R/seq.R: 62
+# stop("wrong sign in 'by' argument")
+# src/library/Recommended/Matrix/R/abIndex.R: 167
+# stop("wrong sign in 'by' argument")
 msgid "wrong sign in 'by' argument"
 msgstr "błędny znak w argumencie 'by'"
 
+# src/main/seq.c: 808
+# errorcall(call, _("'by' argument is much too small"))
+# src/library/base/R/seq.R: 64
+# stop("'by' argument is much too small")
+# src/library/Recommended/Matrix/R/abIndex.R: 169
+# stop("'by' argument is much too small")
 msgid "'by' argument is much too small"
-msgstr "argument 'by' jest znacznie za mały"
+msgstr "wartość w argumencie 'by' jest znacznie za mała"
 
+# src/library/base/R/seq.R: 79
+# stop("length must be non-negative number")
+# src/library/Recommended/Matrix/R/abIndex.R: 179
+# stop("length must be non-negative number")
 msgid "length must be non-negative number"
 msgstr "długość musi być liczbą nieujemną"
 
+# src/main/seq.c: 905
+# errorcall(call, _("too many arguments"))
+# src/main/dotcode.c: 441
+# error(_("too many arguments"))
+# src/library/base/R/seq.R: 97
+# stop("too many arguments")
+# src/library/Recommended/Matrix/R/abIndex.R: 200
+# stop("too many arguments")
 msgid "too many arguments"
 msgstr "zbyć dużo argumentów"
 
+# src/library/base/R/serialize.R: 33
+# warning("'compress' is ignored unless 'file' is a file name")
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr "'compress' jest ignorowany chyba, że 'file' jest nazwą pliku"
+msgstr "'compress' zostanie zignorowany o ile 'file' nie jest nazwą pliku"
 
+# src/library/base/R/serialize.R: 58
+# stop("'connection' must be a connection")
+# src/library/base/R/serialize.R: 76
+# stop("'connection' must be a connection")
 msgid "'connection' must be a connection"
 msgstr "'connection' musi być połączeniem"
 
+# src/library/base/R/sink.R: 26
+# stop("'file' must be NULL or an already open connection")
 msgid "'file' must be NULL or an already open connection"
 msgstr "'file' musi być wartością NULL lub już otwartym połączeniem"
 
+# src/library/base/R/sink.R: 27
+# stop("cannot split the message connection")
 msgid "cannot split the message connection"
 msgstr "nie można rozdzielić komunikatu wiadomości"
 
+# src/library/base/R/sink.R: 36
+# stop("'file' must be NULL, a connection or a character string")
 msgid "'file' must be NULL, a connection or a character string"
-msgstr "'file' musi być wartością NULL, połączeniem lub ciągiem tekstowym"
+msgstr "'file' musi być wartością NULL, połączeniem lub łańcuchem tekstowym"
 
+# src/library/base/R/solve.R: 22
+# stop("this is the \"qr\" method for the generic function solve()")
 msgid "this is the \"qr\" method for the generic function solve()"
 msgstr "to jest metoda \"qr\" dla ogólnej funkcji 'solve()'"
 
+# src/library/base/R/solve.R: 26
+# stop("singular matrix 'a' in 'solve'")
+# src/library/base/R/solve.R: 81
+# stop("singular matrix 'a' in 'solve'")
 msgid "singular matrix 'a' in 'solve'"
 msgstr "osobliwa macierz 'a' w 'solve'"
 
+# src/library/base/R/solve.R: 29
+# stop("only square matrices can be inverted")
+# src/library/base/R/solve.R: 45
+# stop("only square matrices can be inverted")
+# src/library/base/R/solve.R: 66
+# stop("only square matrices can be inverted")
+# src/library/base/R/solve.R: 84
+# stop("only square matrices can be inverted")
+# src/library/base/R/solve.R: 103
+# stop("only square matrices can be inverted")
 msgid "only square matrices can be inverted"
-msgstr "tylko kwadratowe macierze można odwrócić"
+msgstr "jedynie kwadratowe macierze mogą zostać odwrócone"
 
+# src/library/base/R/solve.R: 51
+# stop("'b' must be compatible with 'a'")
+# src/library/base/R/solve.R: 72
+# stop("'b' must be compatible with 'a'")
 msgid "'b' must be compatible with 'a'"
-msgstr "'b' musi być kompatybilne z 'a'"
+msgstr "'b' musi być zgodne z 'a'"
 
+# src/library/base/R/solve.R: 58
+# warning("solve.default called with a \"qr\" object: use 'qr.solve'")
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
-msgstr "'solve.default' wywołane z obiektem \"qr\": używanie 'qr.solve'"
+msgstr ""
+"'solve.default' zostało wywołane z obiektem \"qr\": używanie 'qr.solve'"
 
+# src/library/base/R/solve.R: 100
+# stop("singular matrix 'a' in solve")
 msgid "singular matrix 'a' in solve"
 msgstr "osobliwa macierz 'a' w 'solve'"
 
+# src/library/base/R/sort.R: 22
+# stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
 msgid ""
 "'decreasing' must be a length-1 logical vector.\n"
 "Did you intend to set 'partial'?"
 msgstr ""
-"'decreasing' musi być wektorem logicznym o długości o jeden mniejszym.\n"
-"Czy był zamiar ustawić 'partial'?"
+"'decreasing' musi być wektorem logicznym o długości 1.\n"
+"Czy chciałeś ustawić 'partial'?"
 
+# src/library/base/R/sort.R: 38
+# stop("'index.return' only for non-factors")
 msgid "'index.return' only for non-factors"
-msgstr "'index.return' tylko dla nie-faktorów"
+msgstr "'index.return' dostępne jest jedynie dla nie-czynników"
 
+# src/library/base/R/sort.R: 44
+# stop("'x' must be atomic")
 msgid "'x' must be atomic"
 msgstr "'x' musi być atomowe"
 
+# src/library/base/R/sort.R: 51
+# stop("'index.return' only for 'na.last = NA'")
 msgid "'index.return' only for 'na.last = NA'"
-msgstr "'index.return' tylko dla 'na.last = NA'"
+msgstr "'index.return' dostępne jest jedynie dla 'na.last = NA'"
 
+# src/library/base/R/sort.R: 54
+# stop("unsupported options for partial sorting")
 msgid "unsupported options for partial sorting"
 msgstr "niewspierane opcje dla częściowego sortowania"
 
+# src/library/base/R/sort.R: 55
+# stop("non-finite 'partial'")
 msgid "non-finite 'partial'"
 msgstr "nieskończona wartość 'partial'"
 
+# src/main/sort.c: 1209
+# error(_("argument lengths differ"))
+# src/library/base/R/sort.R: 110
+# stop("argument lengths differ")
 msgid "argument lengths differ"
 msgstr "długości argumentów różnią się"
 
+# src/library/base/R/sort.R: 125
+# stop("'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?")
 msgid ""
 "'x' must be atomic for 'sort.list'\n"
 "Have you called 'sort' on a list?"
@@ -1486,178 +3404,333 @@ msgstr ""
 "'x' musi być typem atomowym dla 'sort.list'\n"
 "Czy wywołano 'sort' na liście?"
 
+# src/library/base/R/sort.R: 133
+# stop("method=\"quick\" is only for numeric 'x'")
 msgid "method=\"quick\" is only for numeric 'x'"
 msgstr "'method=\"quick\"' jest tylko dla liczbowych 'x'"
 
+# src/library/base/R/sort.R: 137
+# stop("method=\"radix\" is only for integer 'x'")
 msgid "method=\"radix\" is only for integer 'x'"
 msgstr "'method=\"radix\"' jest tylko dla liczb całkowitych 'x'"
 
+# src/library/base/R/source.R: 34
+# stop("'local' must be TRUE, FALSE or an environment")
 msgid "'local' must be TRUE, FALSE or an environment"
-msgstr "'local' musi być TRUE, FALSE lub być środowiskiem"
+msgstr "'local' musi być TRUE, FALSE lub musi być środowiskiem"
 
+# src/library/base/R/source.R: 38
+# stop("'echo' must be logical")
 msgid "'echo' must be logical"
 msgstr "'echo' musi być wartością logiczną"
 
+# src/library/base/R/source.R: 40
+# warning("'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'")
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr "'verbose' jest TRUE, 'echo' nie; ... przekształcanie 'echo <- TRUE'"
 
+# src/library/base/R/source.R: 69
+# stop("unable to find a plausible encoding")
 msgid "unable to find a plausible encoding"
-msgstr "nie można znaleźć wiarygnodnego enkodowania"
+msgstr "nie można znaleźć wiarygodnego kodowania"
 
+# src/library/base/R/source.R: 71
+# gettextf('encoding = "%s" chosen', encoding)
 msgid "encoding = \"%s\" chosen"
 msgstr "wybrano 'encoding = \"%s\"'"
 
+# src/library/base/R/source.R: 126
+# warning("'chdir = TRUE' makes no sense for a URL")
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' nie ma sensu dla adresu URL"
 
+# src/library/base/R/source.R: 130
+# stop("cannot 'chdir' as current directory is unknown")
+# src/library/base/R/source.R: 263
+# stop("cannot 'chdir' as current directory is unknown")
 msgid "cannot 'chdir' as current directory is unknown"
-msgstr "nie można wykonać 'chdir' dlatego, że bieżący katalog nie jest znany"
+msgstr "nie można wykonać 'chdir' ponieważ bieżący katalog nie jest znany"
 
+# src/library/base/R/source.R: 135
+# warning("'chdir = TRUE' makes no sense for a connection")
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE' nie ma sensu dla połączenia"
 
+# src/library/base/R/source.R: 247
+# stop(gettextf("'%s' is not an existing file", file))
 msgid "'%s' is not an existing file"
 msgstr "'%s' nie jest istniejącym plikiem"
 
+# src/library/base/R/srcfile.R: 78
+# warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
 msgid "Timestamp of '"
 msgstr "Sygnatura czasu dla '"
 
+# src/library/base/R/srcfile.R: 78
+# warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
 msgid "' has changed"
 msgstr "' zmieniła się"
 
+# src/library/base/R/stop.R: 25
+# warning("additional arguments ignored in stop()")
 msgid "additional arguments ignored in stop()"
-msgstr "zignorowano dodatkowe argumenty w 'stop()'"
+msgstr "dodatkowe argumenty zostały zignorowane w 'stop()'"
 
+# src/library/base/R/stop.R: 44
+# stop(paste0(ch, " is not ", if(length(r) > 1L)"all ", "TRUE"),
+# 		 call.= FALSE)
 msgid "is not"
 msgstr "nie jest"
 
+# src/library/base/R/stop.R: 44
+# stop(paste0(ch, " is not ", if(length(r) > 1L)"all ", "TRUE"),
+# 		 call.= FALSE)
 msgid "all"
-msgstr "wszystko"
+msgstr "całościowo"
 
+# src/main/printutils.c: 125
+# snprintf(buff, NB, "%*s", w, "TRUE")
+# src/library/base/R/stop.R: 44
+# stop(paste0(ch, " is not ", if(length(r) > 1L)"all ", "TRUE"),
+# 		 call.= FALSE)
 msgid "TRUE"
-msgstr "PRAWDA"
+msgstr "TRUE"
 
 msgid "additional arguments ignored in warning()"
-msgstr "zignorowano dodatkowe argumenty w 'warning()'"
+msgstr "dodatkowe argumenty zostały zignorowane w 'warning()'"
 
+# src/library/base/R/strwrap.R: 152
+# stop("incorrect value for 'x'")
+# src/library/base/R/strwrap.R: 159
+# stop("incorrect value for 'x'")
 msgid "incorrect value for 'x'"
 msgstr "niepoprawna wartość dla 'x'"
 
+# src/library/stats/R/chisq.test.R: 32
+# stop("'x' and 'y' must have the same length")
+# src/library/stats/R/fisher.test.R: 48
+# stop("'x' and 'y' must have the same length")
+# src/library/stats/R/cor.test.R: 31
+# stop("'x' and 'y' must have the same length")
+# src/library/stats/R/wilcox.test.R: 44
+# stop("'x' and 'y' must have the same length")
+# src/library/stats/R/mcnemar.test.R: 33
+# stop("'x' and 'y' must have the same length")
+# src/library/base/R/strwrap.R: 166
+# stop("'x' and 'y' must have the same length")
 msgid "'x' and 'y' must have the same length"
 msgstr "'x' oraz 'y' muszą mieć tę samą długość"
 
+# src/library/base/R/strwrap.R: 176
+# stop("incorrect values of 'indent' and 'width'")
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "niepoprawne wartości 'indent' oraz 'width'"
 
+# src/library/base/R/summary.R: 168
+# warning("probably wrong encoding in names(.) of column ",
+# 		paste(which(is.na(lw)), collapse = ", "))
 msgid "probably wrong encoding in names(.) of column"
-msgstr "prawdopodobnie błędne kodowanie w kolumnie 'names(.)'"
+msgstr "prawdopodobnie błędne kodowanie w 'names(.)' kolumny"
 
+# src/library/base/R/svd.R: 61
+# stop("'nv' must be 0 or ncol(x)")
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' musi być 0 lub 'ncol(x)'"
 
+# src/library/base/R/svd.R: 82
+# stop(gettextf("error %d in 'dsvdc'", z$info), domain = NA)
 msgid "error %d in 'dsvdc'"
 msgstr "błąd %d w 'dsvdc'"
 
+# src/library/base/R/sweep.R: 28
+# warning("STATS is longer than the extent of 'dim(x)[MARGIN]'")
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
-msgstr "STATS jest dłuższe nić rozmiar 'dim(x)[MARGIN]'"
+msgstr "STATS jest dłuższe niż rozmiar 'dim(x)[MARGIN]'"
 
+# src/library/base/R/sweep.R: 34
+# warning("STATS does not recycle exactly across MARGIN")
 msgid "STATS does not recycle exactly across MARGIN"
-msgstr "STATS nie potwarza się dokładnie zgodnie z MARGIN"
+msgstr "STATS nie powtarza się dokładnie zgodnie z MARGIN"
 
+# src/library/base/R/sweep.R: 40
+# warning("length(STATS) or dim(STATS) do not match dim(x)[MARGIN]")
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
-msgstr "'length(STATS)' lub 'dim(STATS)' nie zgada się z 'dim(x)[MARGIN]'"
+msgstr "'length(STATS)' lub 'dim(STATS)' nie zgadza się z 'dim(x)[MARGIN]'"
 
+# src/library/stats/R/ftable.R: 25
+# stop("nothing to tabulate")
+# src/library/base/R/table.R: 47
+# stop("nothing to tabulate")
 msgid "nothing to tabulate"
 msgstr "nic do tabulacji"
 
+# src/library/base/R/table.R: 65
+# stop("all arguments must have the same length")
 msgid "all arguments must have the same length"
 msgstr "wszystkie argumenty muszą mieć tę samą długość"
 
+# src/library/base/R/table.R: 101
+# stop("attempt to make a table with >= 2^31 elements")
+# src/library/base/R/tabulate.R: 26
+# stop("attempt to make a table with >= 2^31 elements")
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "próba utworzenia tabeli z >= 2^31 elementami"
 
+# src/library/base/R/table.R: 143
+# stop("'object' must inherit from class \"table\"")
 msgid "'object' must inherit from class \"table\""
 msgstr "'object' musi dziedziczyć z klasy \"table\""
 
+# src/library/base/R/table.R: 171
+# stop("'x' must inherit from class \"summary.table\"")
 msgid "'x' must inherit from class \"summary.table\""
 msgstr "'x' musi dziedziczyć z klasy \"summary.table\""
 
+# src/library/base/R/table.R: 213
+# stop("cannot coerce into a table")
+# src/library/base/R/table.R: 218
+# stop("cannot coerce into a table")
 msgid "cannot coerce into a table"
 msgstr "nie można przekształcić w tabelę"
 
+# src/library/base/R/table.R: 231
+# stop("'x' is not an array")
 msgid "'x' is not an array"
 msgstr "'x' nie jest tablicą"
 
+# src/library/base/R/tabulate.R: 22
+# stop("'bin' must be numeric or a factor")
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' musi być liczbą lub czynnikiem"
 
-#, fuzzy
+# src/library/base/R/tabulate.R: 28
+# stop("invalid value of 'nbins'")
 msgid "invalid value of length(bin)"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawna wartość 'length(bin)'"
 
-#, fuzzy
+# src/library/base/R/tabulate.R: 28
+# stop("invalid value of 'nbins'")
 msgid "invalid value of nbins"
-msgstr "niepoprawna wartość"
+msgstr "niepoprawna wartość 'nbins'"
 
-#, fuzzy
+# src/library/base/R/tapply.R: 24
+# stop("'INDEX' is of length zero")
 msgid "'INDEX' is of length zero"
-msgstr "'to' musi być długości 1"
+msgstr "'INDEX' ma zerową długość"
 
+# src/library/stats/R/aggregate.R: 60
+# stop("arguments must have same length")
+# src/library/base/R/tapply.R: 35
+# stop("arguments must have same length")
 msgid "arguments must have same length"
 msgstr "argumenty muszą mieć tę samą długość"
 
+# src/library/base/R/taskCallback.R: 22
+# stop("handler must be a function")
 msgid "handler must be a function"
 msgstr "przewodnik musi być funkcją"
 
+# src/library/base/R/taskCallback.R: 103
+# stop(gettextf("no such element '%s'", which), domain = NA)
 msgid "no such element '%s'"
 msgstr "nie ma elementu '%s'"
 
+# src/library/base/R/taskCallback.R: 143
+# gettext("Removing")
 msgid "Removing"
 msgstr "Usuwanie"
 
+# src/library/base/R/taskCallback.R: 162
+# gettext("Registering evaluate as low-level callback\n
 msgid "Registering evaluate as low-level callback"
 msgstr "Rejestrowanie obliczenia jako wywołania zwrotnego niskiego poziomu"
 
+# src/library/base/R/time.R: 47
+# c(gettext("user"), gettext("system"), gettext("elapsed"))
 msgid "user"
 msgstr "użytkownik"
 
+# src/library/base/R/time.R: 47
+# c(gettext("user"), gettext("system"), gettext("elapsed"))
 msgid "system"
 msgstr "system"
 
+# src/library/base/R/time.R: 47
+# c(gettext("user"), gettext("system"), gettext("elapsed"))
 msgid "elapsed"
 msgstr "upłynęło"
 
+# src/library/base/R/toString.R: 26
+# stop("'width' must be positive")
 msgid "'width' must be positive"
-msgstr "'width' musi być dodatnia"
+msgstr "'width' musi być dodatnie"
 
+# src/library/base/R/traceback.R: 28
+# gettext("No traceback available")
 msgid "No traceback available"
 msgstr "Śledzenie nie jest dostepne"
 
+# src/library/base/R/version.R: 51
+# stop("invalid version specification ",
+#                  paste(sQuote(unique(x[!ok])), collapse = ", "),
+#                  call. = FALSE)
 msgid "invalid version specification"
 msgstr "niepoprawne określenie wersji"
 
+# src/library/base/R/version.R: 153
+# stop("wrong argument")
 msgid "wrong argument"
 msgstr "błędny argument"
 
+# src/main/builtin.c: 886
+# error(_("invalid value"))
+# src/main/builtin.c: 896
+# error(_("invalid value"))
+# src/main/builtin.c: 898
+# error(_("invalid value"))
+# src/main/character.c: 365
+# error(_("invalid value"))
+# src/main/coerce.c: 2659
+# error(_("invalid value"))
+# src/library/base/R/version.R: 207
+# stop("invalid value")
+# src/library/base/R/version.R: 210
+# stop("invalid value")
+# src/library/base/R/version.R: 215
+# stop("invalid value")
 msgid "invalid value"
 msgstr "niepoprawna wartość"
 
+# src/library/base/R/version.R: 226
+# stop(gettextf("unary '%s' not defined for \"numeric_version\" objects",
+#                       .Generic), domain = NA)
 msgid "unary '%s' not defined for \"numeric_version\" objects"
 msgstr ""
-"jednoargumentówy '%s' nie jest określony dla obiektów \"numeric_version\""
+"jednoargumentowy '%s' nie jest określony dla obiektów \"numeric_version\""
 
+# src/library/base/R/version.R: 231
+# stop(gettextf("'%s' not defined for \"numeric_version\" objects",
+#                       .Generic), domain = NA)
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "'%s' nie jest określone dla obiektów \"numeric_version\""
 
+# src/library/base/R/version.R: 246
+# stop(.Generic, " not defined for numeric_version objects")
 msgid "not defined for numeric_version objects"
 msgstr "nie jest określone dla obiektów 'numeric_version'"
 
+# src/library/base/R/version.R: 320
+# gettext("<0 elements>")
 msgid "<0 elements>"
 msgstr "<0 elementów>"
 
+# src/library/base/R/zapsmall.R: 22
+# stop("invalid 'digits'")
 msgid "invalid 'digits'"
 msgstr "niepoprawne 'digits'"
 
+# src/library/base/R/unix/system.unix.R: 27
+# message("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
 msgid ""
 "arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
 "Windows only"
@@ -1665,69 +3738,138 @@ msgstr ""
 "argumenty 'show.output.on.console', 'minimized' oraz 'invisible' są tylko "
 "dla systemu Windows"
 
+# src/library/base/R/windows/system.R: 26
+# stop("'intern' must be TRUE or FALSE")
+# src/library/base/R/unix/system.unix.R: 30
+# stop("'intern' must be TRUE or FALSE")
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' musi być TRUE lub FALSE"
 
+# src/library/base/R/windows/system.R: 28
+# stop("'ignore.stdout' must be TRUE or FALSE")
+# src/library/base/R/unix/system.unix.R: 32
+# stop("'ignore.stdout' must be TRUE or FALSE")
 msgid "'ignore.stdout' must be TRUE or FALSE"
 msgstr "'ignore.stdout' musi być TRUE lub FALSE"
 
+# src/library/base/R/windows/system.R: 30
+# stop("'ignore.stderr' must be TRUE or FALSE")
+# src/library/base/R/unix/system.unix.R: 34
+# stop("'ignore.stderr' must be TRUE or FALSE")
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "'ignore.stderr' musi być TRUE lub FALSE"
 
+# src/library/base/R/windows/system.R: 32
+# stop("'wait' must be TRUE or FALSE")
+# src/library/base/R/windows/system.R: 71
+# stop("'wait' must be TRUE or FALSE")
+# src/library/base/R/unix/system.unix.R: 36
+# stop("'wait' must be TRUE or FALSE")
+# src/library/base/R/unix/system.unix.R: 61
+# stop("'wait' must be TRUE or FALSE")
 msgid "'wait' must be TRUE or FALSE"
 msgstr "'wait' musi być TRUE lub FALSE"
 
+# src/library/base/R/unix/system.unix.R: 42
+# stop("'input' must be a character vector or 'NULL'")
+# src/library/base/R/unix/system.unix.R: 96
+# stop("'input' must be a character vector or 'NULL'")
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' musi być wektorem tekstowym lub wartością 'NULL'"
 
+# src/library/base/R/unix/system.unix.R: 59
+# message("arguments 'minimized' and 'invisible' are for Windows only")
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
 msgstr "argumenty 'minimized' oraz 'invisible' są tylko dla systemu Windows"
 
+# src/library/base/R/unix/system.unix.R: 70
+# warning("setting stdout = TRUE")
 msgid "setting stdout = TRUE"
-msgstr "stawianie stdout = TRUE"
+msgstr "ustawianie 'stdout = TRUE'"
 
+# src/library/base/R/unix/system.unix.R: 78
+# stop("'stdout' must be of length 1")
 msgid "'stdout' must be of length 1"
 msgstr "'stdout' musi mieć długość 1"
 
+# src/library/base/R/unix/system.unix.R: 90
+# stop("'stderr' must be of length 1")
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' musi mieć długość 1"
 
+# src/library/base/R/unix/system.unix.R: 113
+# warning("'which' was not found on this platform")
 msgid "'which' was not found on this platform"
 msgstr "'which' nie zostało znalezione na tej platformie"
 
+# src/library/base/R/windows/junctions.R: 26
+# stop("fewer 'from' files than 'to' files")
 msgid "fewer 'from' files than 'to' files"
 msgstr "mniej plików 'from' niż plików 'to'"
 
+# src/library/base/R/windows/junctions.R: 33
+# warning(gettextf("link '%s' already exists", link), domain = NA)
 msgid "link '%s' already exists"
 msgstr "połączenie '%s' już istnieje"
 
+# src/library/base/R/windows/junctions.R: 37
+# warning(gettextf("failed to create directory for link '%s", link),
+#                     domain = NA)
 msgid "failed to create directory for link '%s"
 msgstr "nie udało się utworzyć katalogu dla łącza '%s"
 
+# src/library/base/R/windows/system.R: 34
+# stop("'show.output.on.console' must be TRUE or FALSE")
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' musi być TRUE lub FALSE"
 
+# src/library/base/R/windows/system.R: 36
+# stop("'minimized' must be TRUE or FALSE")
+# src/library/base/R/windows/system.R: 73
+# stop("'minimized' must be TRUE or FALSE")
 msgid "'minimized' must be TRUE or FALSE"
 msgstr "'minimized' musi być TRUE lub FALSE"
 
+# src/library/base/R/windows/system.R: 38
+# stop("'invisible' must be TRUE or FALSE")
+# src/library/base/R/windows/system.R: 75
+# stop("'invisible' must be TRUE or FALSE")
 msgid "'invisible' must be TRUE or FALSE"
 msgstr "'invisible' musi być TRUE lub FALSE"
 
+# src/library/base/R/windows/system.R: 114
+# stop(gettextf("'%s' could not be run", cmd0), domain = NA)
+# src/library/base/R/windows/system.R: 119
+# warning(gettextf("'%s' could not be run", cmd0), domain = NA)
 msgid "'%s' could not be run"
-msgstr "'%s' nie mógł zostać uruchomiony"
+msgstr "'%s' nie mogło zostać uruchomione"
 
+# src/library/base/R/windows/system.R: 115
+# stop(gettextf("'%s' execution failed with error code %d",
+#                                cmd0, res), domain = NA)
+# src/library/base/R/windows/system.R: 120
+# warning(gettextf("'%s' execution failed with error code %d",
+#                                   cmd0, res), domain = NA)
 msgid "'%s' execution failed with error code %d"
-msgstr "'%s' wykonywanie nie powiodło się zwracając kod błędu %d"
+msgstr "wykonywanie '%s' nie powiodło się zwracając kod błędu %d"
 
+# src/library/tools/R/check.R: 3122
+# stop("-l option without value", call. = FALSE)
+# src/library/tools/R/install.R: 1239
+# stop("-l option without value", call. = FALSE)
 msgid "-l option without value"
 msgstr "opcja -l bez wartości"
 
+# src/library/tools/R/install.R: 1434
+# stop("ERROR: no packages specified", call.=FALSE)
 msgid "ERROR: no packages specified"
 msgstr "BŁĄD: nie określono pakietów"
 
 msgid "Removing from library"
 msgstr "Usuwanie z biblioteki"
 
+# src/library/tools/R/install.R: 1450
+# stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE)
 msgid "ERROR: cannot cd to directory"
 msgstr "BŁĄD: nie można wejść do katalogu"
 
@@ -1744,41 +3886,77 @@ msgid "items"
 msgstr "pozycje"
 
 msgid "have been removed from the search path"
-msgstr "został usunięty z ścieżki wyszukiwania"
+msgstr "zostały usunięte z ścieżki wyszukiwania"
 
 msgid "cannot find namespace environment"
 msgstr "nie można znaleźć środowiska przestrzeni nazw"
 
+# src/library/base/R/New-Internal.R: 109
+# stop(sprintf(ngettext(as.integer(sum(is.na(opts))),
+#                               "deparse option %s is not recognized",
+#                               "deparse options %s are not recognized"),
+#                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
+#              call. = FALSE, domain = NA)
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
-msgstr[0] "opcja parsowania %s nie jest rozpoznana"
-msgstr[1] "opcje parsowania %s nie są rozpoznane"
-msgstr[2] "opcje parsowania %s nie są rozpoznane"
+msgstr[0] "opcja odwrotnego parsowania %s nie jest rozpoznana"
+msgstr[1] "opcje odwrotnego parsowania %s nie są rozpoznane"
+msgstr[2] "opcje odwrotnego parsowania %s nie są rozpoznane"
 
+# src/library/base/R/library.R: 423
+# ngettext(length(nopkgs),
+#                                     "library %s contains no packages",
+#                                     "libraries %s contain no packages")
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "biblioteka %s nie zawiera pakietów"
 msgstr[1] "biblioteki %s nie zawierają pakietów"
 msgstr[2] "biblioteki %s nie zawierają pakietów"
 
+# src/library/base/R/library.R: 650
+# warning(sprintf(ngettext(as.integer(sum(m)),
+#                                          "package %s is not loaded",
+#                                          "packages %s are not loaded"),
+#                                 paste(package[m], collapse=", ")),
+#                         domain = NA)
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
 msgstr[0] "pakiet %s nie jest załadowany"
 msgstr[1] "pakiety %s nie są załadowane"
 msgstr[2] "pakiety %s nie są załadowane"
 
+# src/library/base/R/library.R: 774
+# stop(ngettext(length(bad),
+#                               "there is no package called",
+#                               "there are no packages called"), " ",
+#                      paste(sQuote(bad), collapse = ", "), domain = NA)
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] "nie ma pakietu zwanego"
-msgstr[1] "nie ma pakietów zwanych"
-msgstr[2] "nie ma pakietów zwanych"
+msgstr[0] "nie ma pakietu o nazwie"
+msgstr[1] "nie ma pakietów o nazwach"
+msgstr[2] "nie ma pakietów o nazwach"
 
+# src/library/base/R/load.R: 78
+# stop(sprintf(ngettext(n,
+#                                       "object %s not found",
+#                                       "objects %s not found"
+#                                       ),
+#                              paste(sQuote(list[!ok]), collapse = ", ")
+#                              ), domain = NA)
+# src/library/methods/R/fixPrevious.R: 32
+# warning(gettextf("object %s not found",
+#                              sQuote(what)),
+#                     domain = NA)
 msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] "nie znaleziono obiektu %s"
 msgstr[1] "nie znaleziono obiektów %s"
 msgstr[2] "nie znaleziono obiektów %s"
 
+# src/library/base/R/namespace.R: 599
+# ngettext(length(bad),
+#                                      "Function found when exporting methods from the namespace %s which is not S4 generic: %s",
+#                                      "Functions found when exporting methods from the namespace %s which are not S4 generic: %s", domain = "R-base")
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1795,47 +3973,69 @@ msgstr[2] ""
 "Funkcje zostały znalezione podczas eksportowania metod z przestrzeni nazw "
 "'%s' która nie są ogólnymi S4: %s"
 
+# src/library/base/R/namespace.R: 1007
+# stop(sprintf(ngettext(length(miss),
+#                                   "class %s is not exported by 'namespace:%s'",
+#                                   "classes %s are not exported by 'namespace:%s'"),
+#                          paste(paste0('"', miss, '"'), collapse = ", "),
+#                          getNamespaceName(expenv)),
+#                  call. = FALSE, domain = NA)
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
 msgstr[0] "klasa '%s' nie jest wyeksportowana przez 'namespace:%s'"
 msgstr[1] "klasy '%s' nie są wyeksportowane przez 'namespace:%s'"
 msgstr[2] "klasy '%s' nie są wyeksportowane przez 'namespace:%s'"
 
+# src/library/base/R/namespace.R: 1014
+# stop(sprintf(ngettext(length(miss),
+#                                   "object %s is not exported by 'namespace:%s'",
+#                                   "objects %s are not exported by 'namespace:%s'"),
+#                          paste(sQuote(miss), collapse = ", "),
+#                          getNamespaceName(expenv)),
+#                  call. = FALSE, domain = NA)
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] "obiekt '%s' nie jest eksportowany przez 'namespace:%s'"
 msgstr[1] "obiekty '%s' nie są eksportowane przez 'namespace:%s'"
 msgstr[2] "obiekty '%s' nie są eksportowane przez 'namespace:%s'"
 
+# src/library/base/R/namespace.R: 1042
+# warning(sprintf(ngettext(sum(ex),
+#                                          "previous export '%s' is being replaced",
+#                                          "previous exports '%s' are being replaced"),
+#                                 paste(sQuote(expnames[ex]), collapse = ", ")),
+#                         call. = FALSE, domain = NA)
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
-msgstr[0] "poprzedni eksport '%s' jest zastąpiony"
-msgstr[1] "poprzednie eksporty '%s' są zastąpione"
-msgstr[2] "poprzednie eksporty '%s' są zastąpione"
+msgstr[0] "poprzedni eksport '%s' jest zastępowany"
+msgstr[1] "poprzednie eksporty '%s' są zastępowane"
+msgstr[2] "poprzednie eksporty '%s' są zastępowane"
 
+# src/library/base/R/namespace.R: 1423
+# warning(sprintf(ngettext(sum(notex),
+#                                  "S3 method %s was declared in NAMESPACE but not found",
+#                                  "S3 methods %s were declared in NAMESPACE but not found"),
+#                         paste(sQuote(info[notex, 3]), collapse = ", ")),
+#                 call. = FALSE, domain = NA)
 msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
-"Metoda S3 '%s' została zadeklarowana w NAMESPACE ale nie została znaleziona"
+"Metoda S3 '%s' została zadeklarowana w PRZESTRZENI NAZW ale nie została "
+"znaleziona"
 msgstr[1] ""
-"Metody S3 '%s' zostały zadeklarowane w NAMESPACE ale nie zostały znalezione"
+"Metody S3 '%s' zostały zadeklarowane w PRZESTRZENI NAZW ale nie zostały "
+"znalezione"
 msgstr[2] ""
-"Metody S3 '%s' zostały zadeklarowane w NAMESPACE ale nie zostały znalezione"
+"Metody S3 '%s' zostały zadeklarowane w PRZESTRZENI NAZW ale nie zostały "
+"znalezione"
 
+# src/main/errors.c: 456
+# src/library/base/R/warnings.R: 30
+# ngettext("Warning message:\n
+#  "Warning messages:\n
+#  R_CollectWarnings)
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
-
-#, fuzzy
-#~ msgid "invalid length(x)"
-#~ msgstr "niepoprawna wartość"
-
-#, fuzzy
-#~ msgid "invalid length(vec)"
-#~ msgstr "niepoprawna wartość"
-
-#, fuzzy
-#~ msgid "invalid value of length(x)"
-#~ msgstr "niepoprawna wartość"

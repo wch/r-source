@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-09-01 09:38\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -1173,6 +1173,9 @@ msgstr "程辑包布局不对"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
+
+msgid "contains a blank line"
+msgstr ""
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "

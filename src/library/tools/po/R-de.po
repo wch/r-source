@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:10\n"
+"POT-Creation-Date: 2012-09-01 09:38\n"
 "PO-Revision-Date: 2012-03-06 09:33+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1210,6 +1210,9 @@ msgstr "ungültige Paketstruktur"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
+
+msgid "contains a blank line"
+msgstr ""
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"

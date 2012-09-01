@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:21+0100\n"
+"POT-Creation-Date: 2012-09-01 09:37+0100\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -230,8 +230,8 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
 #: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
-#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1080
+#: src/modules/lapack/Lapack.c:672 src/modules/lapack/Lapack.c:768
+#: src/modules/lapack/Lapack.c:825 src/modules/lapack/Lapack.c:1121
 #: src/modules/X11/devX11.c:3220 src/modules/X11/devX11.c:3223
 #: src/modules/X11/devX11.c:3226 src/modules/X11/devX11.c:3250
 #: src/unix/sys-std.c:1218 src/unix/sys-std.c:1241
@@ -291,7 +291,7 @@ msgstr "marque (timestamp) incorrecte"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:203 src/main/errors.c:900 src/main/errors.c:931
+#: src/main/dotcode.c:202 src/main/errors.c:900 src/main/errors.c:931
 #: src/main/errors.c:1032 src/main/errors.c:1057 src/main/errors.c:1062
 #: src/main/errors.c:1334 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -608,34 +608,34 @@ msgstr "AVIS : aucune valeur donnée pour --encoding"
 msgid "WARNING: option '%s' no longer supported"
 msgstr "AVIS : l'option '%s' n'est plus disponible"
 
-#: src/main/CommandLineArgs.c:208
+#: src/main/CommandLineArgs.c:206
 #, c-format
 msgid "WARNING: no value given for '%s'"
 msgstr "AVIS : aucune valeur donnée pour '%s'"
 
-#: src/main/CommandLineArgs.c:218
+#: src/main/CommandLineArgs.c:216
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored"
 msgstr "AVIS : valeur '%s' incorrecte : ignorée"
 
-#: src/main/CommandLineArgs.c:222
+#: src/main/CommandLineArgs.c:220
 #, c-format
 msgid "WARNING: %s: too large and ignored"
 msgstr "AVIS : %s : trop grand et ignoré"
 
-#: src/main/CommandLineArgs.c:236
+#: src/main/CommandLineArgs.c:234
 msgid "WARNING: no value given for '--max-ppsize'"
 msgstr "AVIS : aucune valeur donnée pour '--max-ppsize'"
 
-#: src/main/CommandLineArgs.c:241
+#: src/main/CommandLineArgs.c:239
 msgid "WARNING: '--max-ppsize' value is negative: ignored"
 msgstr "AVIS : valeur de '--max-ppsize' strictement négative : ignorée"
 
-#: src/main/CommandLineArgs.c:243
+#: src/main/CommandLineArgs.c:241
 msgid "WARNING: '--max-ppsize' value is too small: ignored"
 msgstr "AVIS : valeur de '--max-ppsize' trop petite : ignorée"
 
-#: src/main/CommandLineArgs.c:246
+#: src/main/CommandLineArgs.c:244
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr "AVIS : valeur de '--max-ppsize' trop grande : ignorée"
 
@@ -775,7 +775,7 @@ msgstr ""
 msgid "must pass package name or DllInfo reference"
 msgstr "le nom du package ou la référence DllInfo doit être fourni"
 
-#: src/main/Rdynload.c:1216 src/main/dotcode.c:123
+#: src/main/Rdynload.c:1216 src/main/dotcode.c:128
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "Type %d non implémenté dans createRSymbolObject"
@@ -2778,22 +2778,22 @@ msgstr ""
 msgid "Hit <Return> to see next plot: "
 msgstr "Tapez <Entrée> pour voir le graphique suivant :"
 
-#: src/main/dotcode.c:102 src/main/dotcode.c:132
+#: src/main/dotcode.c:107 src/main/dotcode.c:137
 msgid "NULL value passed as symbol address"
 msgstr "valeur NULL passée comme adresse symbolique"
 
-#: src/main/dotcode.c:137 src/main/dotcode.c:218
+#: src/main/dotcode.c:142 src/main/dotcode.c:218
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "Le symbole '%s' est trop long"
 
-#: src/main/dotcode.c:155
+#: src/main/dotcode.c:154
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 "'name' doit être une chaîne de caractères (de longueur 1) ou une référence à "
 "un symbole natif"
 
-#: src/main/dotcode.c:205 src/main/dotcode.c:555
+#: src/main/dotcode.c:204 src/main/dotcode.c:555
 msgid "too many arguments in foreign function call"
 msgstr "trop d'arguments dans l'appel de fonction externe"
 
@@ -2865,7 +2865,7 @@ msgstr "'EXPR' est manquant"
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Nombre d'arguments incorrect (%d), attendu %d pour '%s'"
 
-#: src/main/dotcode.c:1219 src/main/dotcode.c:2268
+#: src/main/dotcode.c:1219 src/main/dotcode.c:2267
 msgid "too many arguments, sorry"
 msgstr "trop d'arguments, désolé"
 
@@ -2941,24 +2941,24 @@ msgstr "mode incorrect à passer vers le Fortran (argument %d)"
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2383
+#: src/main/dotcode.c:2382
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type \"%s\" indisponible dans les appels entre langages"
 
-#: src/main/dotcode.c:2450
+#: src/main/dotcode.c:2449
 msgid "invalid function in call_R"
 msgstr "fonction incorrecte dans call_R"
 
-#: src/main/dotcode.c:2452
+#: src/main/dotcode.c:2451
 msgid "invalid argument count in call_R"
 msgstr "mauvais nombre d'arguments dans call_R"
 
-#: src/main/dotcode.c:2454
+#: src/main/dotcode.c:2453
 msgid "invalid return value count in call_R"
 msgstr "mauvais nombre de valeurs renvoyées par call_R"
 
-#: src/main/dotcode.c:2488
+#: src/main/dotcode.c:2487
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode '%s' non supporté dans call_R"
@@ -7794,7 +7794,7 @@ msgstr ""
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
 msgstr "l'argument type[1]='%s' doit être une des options  '1', 'O' ou 'I'"
 
-#: src/modules/lapack/Lapack.c:84 src/modules/lapack/Lapack.c:705
+#: src/modules/lapack/Lapack.c:84 src/modules/lapack/Lapack.c:711
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr "'jobu' et 'jobv' doivent être des chaînes de caractères"
 
@@ -7805,23 +7805,23 @@ msgstr "'method' doit être une chaîne de caractères"
 #: src/modules/lapack/Lapack.c:106 src/modules/lapack/Lapack.c:115
 #: src/modules/lapack/Lapack.c:170 src/modules/lapack/Lapack.c:181
 #: src/modules/lapack/Lapack.c:256 src/modules/lapack/Lapack.c:262
-#: src/modules/lapack/Lapack.c:585 src/modules/lapack/Lapack.c:591
-#: src/modules/lapack/Lapack.c:635 src/modules/lapack/Lapack.c:642
-#: src/modules/lapack/Lapack.c:646 src/modules/lapack/Lapack.c:680
-#: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:718
-#: src/modules/lapack/Lapack.c:727 src/modules/lapack/Lapack.c:773
-#: src/modules/lapack/Lapack.c:779 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:1009
-#: src/modules/lapack/Lapack.c:1015 src/modules/lapack/Lapack.c:1054
-#: src/modules/lapack/Lapack.c:1061 src/modules/lapack/Lapack.c:1065
-#: src/modules/lapack/Lapack.c:1094 src/modules/lapack/Lapack.c:1101
-#: src/modules/lapack/Lapack.c:1126
+#: src/modules/lapack/Lapack.c:591 src/modules/lapack/Lapack.c:597
+#: src/modules/lapack/Lapack.c:641 src/modules/lapack/Lapack.c:648
+#: src/modules/lapack/Lapack.c:652 src/modules/lapack/Lapack.c:686
+#: src/modules/lapack/Lapack.c:693 src/modules/lapack/Lapack.c:724
+#: src/modules/lapack/Lapack.c:733 src/modules/lapack/Lapack.c:779
+#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:840
+#: src/modules/lapack/Lapack.c:846 src/modules/lapack/Lapack.c:1050
+#: src/modules/lapack/Lapack.c:1056 src/modules/lapack/Lapack.c:1095
+#: src/modules/lapack/Lapack.c:1102 src/modules/lapack/Lapack.c:1106
+#: src/modules/lapack/Lapack.c:1135 src/modules/lapack/Lapack.c:1142
+#: src/modules/lapack/Lapack.c:1167
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "code d'erreur %d dans le sous-programme Lapack '%s'"
 
 #: src/modules/lapack/Lapack.c:149 src/modules/lapack/Lapack.c:235
-#: src/modules/lapack/Lapack.c:760 src/modules/lapack/Lapack.c:813
+#: src/modules/lapack/Lapack.c:766 src/modules/lapack/Lapack.c:819
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' doit être une matrice carrée numérique"
 
@@ -7880,10 +7880,10 @@ msgid "error [%d] from Lapack 'zgecon()'"
 msgstr "code d'erreur [%d] dans le sous-programme Lapack 'zgecon()'"
 
 #: src/modules/lapack/Lapack.c:479 src/modules/lapack/Lapack.c:513
-#: src/modules/lapack/Lapack.c:557 src/modules/lapack/Lapack.c:607
-#: src/modules/lapack/Lapack.c:650 src/modules/lapack/Lapack.c:691
-#: src/modules/lapack/Lapack.c:740 src/modules/lapack/Lapack.c:796
-#: src/modules/lapack/Lapack.c:857
+#: src/modules/lapack/Lapack.c:563 src/modules/lapack/Lapack.c:613
+#: src/modules/lapack/Lapack.c:656 src/modules/lapack/Lapack.c:697
+#: src/modules/lapack/Lapack.c:746 src/modules/lapack/Lapack.c:802
+#: src/modules/lapack/Lapack.c:863
 msgid "Fortran complex functions are not available on this platform"
 msgstr ""
 "Les fonctions Fortran complexes ne sont pas disponibles sur cette "
@@ -7894,101 +7894,106 @@ msgstr ""
 msgid "error [%d] from Lapack 'ztrcon()'"
 msgstr "code d'erreur [%d] dans le sous-programme Lapack 'ztrcon()'"
 
-#: src/modules/lapack/Lapack.c:528 src/modules/lapack/Lapack.c:571
+#: src/modules/lapack/Lapack.c:528 src/modules/lapack/Lapack.c:577
 msgid "'a' must be a complex matrix"
 msgstr "'a' doit être une matrice complexe"
 
-#: src/modules/lapack/Lapack.c:530 src/modules/lapack/Lapack.c:621
-#: src/modules/lapack/Lapack.c:664
+#: src/modules/lapack/Lapack.c:530 src/modules/lapack/Lapack.c:627
+#: src/modules/lapack/Lapack.c:670
 msgid "'b' must be a complex matrix"
 msgstr "'b' doit être une matrice complexe"
 
-#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:957
+#: src/modules/lapack/Lapack.c:541 src/modules/lapack/Lapack.c:998
 msgid "'a' is 0-diml"
 msgstr "'a' est de dimension nulle"
 
-#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:959
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1000
 msgid "no right-hand side in 'b'"
 msgstr "aucun membre de droite dans 'b'"
 
-#: src/modules/lapack/Lapack.c:539 src/modules/lapack/Lapack.c:961
+#: src/modules/lapack/Lapack.c:545 src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "'a' (%d x %d) doit être carrée"
 
-#: src/modules/lapack/Lapack.c:541 src/modules/lapack/Lapack.c:963
+#: src/modules/lapack/Lapack.c:547 src/modules/lapack/Lapack.c:1004
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "'b' (%d x %d) doit être compatible avec 'a' (%d x %d)"
 
-#: src/modules/lapack/Lapack.c:550 src/modules/lapack/Lapack.c:887
-#: src/modules/lapack/Lapack.c:929 src/modules/lapack/Lapack.c:972
+#: src/modules/lapack/Lapack.c:556 src/modules/lapack/Lapack.c:893
+#: src/modules/lapack/Lapack.c:907 src/modules/lapack/Lapack.c:963
+#: src/modules/lapack/Lapack.c:1013
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "valeur incorrecte pour l'argument %d du sous-programme Lapack %s"
 
-#: src/modules/lapack/Lapack.c:628 src/modules/lapack/Lapack.c:673
-#: src/modules/lapack/Lapack.c:1047 src/modules/lapack/Lapack.c:1087
+#: src/modules/lapack/Lapack.c:634 src/modules/lapack/Lapack.c:679
+#: src/modules/lapack/Lapack.c:1088 src/modules/lapack/Lapack.c:1128
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "le membre de droite devrait avoir %d lignes et non %d"
 
-#: src/modules/lapack/Lapack.c:874 src/modules/lapack/Lapack.c:1121
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1162
 msgid "'a' must be a square matrix"
 msgstr "'a' doit être une matrice carrée"
 
-#: src/modules/lapack/Lapack.c:875
+#: src/modules/lapack/Lapack.c:881
 msgid "'a' must have dims > 0"
 msgstr "'a' doit avoir des dimensions > 0"
 
-#: src/modules/lapack/Lapack.c:885
+#: src/modules/lapack/Lapack.c:891
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "le mineur dominant d'ordre %d n'est pas défini positif"
 
-#: src/modules/lapack/Lapack.c:893 src/modules/lapack/Lapack.c:914
-#: src/modules/lapack/Lapack.c:950 src/modules/lapack/Lapack.c:996
-#: src/modules/lapack/Lapack.c:1114
+#: src/modules/lapack/Lapack.c:905
+msgid "the matrix is either rank-deficient or indefinite"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:927 src/modules/lapack/Lapack.c:948
+#: src/modules/lapack/Lapack.c:984 src/modules/lapack/Lapack.c:1037
+#: src/modules/lapack/Lapack.c:1155
 msgid "'a' must be a numeric matrix"
 msgstr "'a' doit être une matrice numérique"
 
-#: src/modules/lapack/Lapack.c:901
+#: src/modules/lapack/Lapack.c:935
 msgid "'size' argument must be a positive integer"
 msgstr "l'argument 'size' doit être un entier strictement positif"
 
-#: src/modules/lapack/Lapack.c:916
+#: src/modules/lapack/Lapack.c:950
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "l'argument 'size' ne doit pas dépasser ncol(x) = %d"
 
-#: src/modules/lapack/Lapack.c:917
+#: src/modules/lapack/Lapack.c:951
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "l'argument 'size' ne doit pas dépasser nrow(x) = %d"
 
-#: src/modules/lapack/Lapack.c:927
+#: src/modules/lapack/Lapack.c:961
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "l'élément (%d, %d) est nul, donc l'inverse ne peut être calculé"
 
-#: src/modules/lapack/Lapack.c:952 src/modules/lapack/Lapack.c:1040
-#: src/modules/lapack/Lapack.c:1078
+#: src/modules/lapack/Lapack.c:986 src/modules/lapack/Lapack.c:1081
+#: src/modules/lapack/Lapack.c:1119
 msgid "'b' must be a numeric matrix"
 msgstr "'b' doit être une matrice numérique"
 
-#: src/modules/lapack/Lapack.c:975
+#: src/modules/lapack/Lapack.c:1016
 #, fuzzy, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "sous-programme Lapack dgesv : le système est exactement singulier"
 
-#: src/modules/lapack/Lapack.c:982
+#: src/modules/lapack/Lapack.c:1023
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 "le système est numériquement singulier : conditionnement de la réciproque = "
 "%g"
 
-#: src/modules/lapack/Lapack.c:1116
+#: src/modules/lapack/Lapack.c:1157
 msgid "argument 'logarithm' must be logical"
 msgstr "l'argument 'logarithm' doit être de type logique"
 
