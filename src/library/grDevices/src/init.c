@@ -54,17 +54,13 @@ static SEXP cairoProps(SEXP in)
 #endif
 
 
-static R_NativePrimitiveArgType R_chull_t[] = {INTSXP, REALSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP};
-
 #ifndef WIN32
 void *getQuartzAPI();
 #endif
 
-#define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
-
 static R_CMethodDef CEntries [] = {
-    CDEF(R_chull),
 #ifndef WIN32
+    // What is this for?  Not use in R nor R.app sources
     {"getQuartzAPI", (DL_FUNC) getQuartzAPI, 0},
 #endif
     {NULL, NULL, 0}
@@ -78,6 +74,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(CIDFontInUse, 2),
     CALLDEF(R_CreateAtVector, 4),
     CALLDEF(R_GAxisPars, 3),
+    CALLDEF(C_chull, 1),
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),
     CALLDEF(cairoProps, 1),

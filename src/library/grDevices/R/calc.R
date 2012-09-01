@@ -79,17 +79,7 @@ chull <- function(x, y = NULL)
     x <- cbind(X$x, X$y)
     n <- nrow(x)
     if(n == 0) return(integer())
-    z <- .C(R_chull,
-	    n = as.integer(n),
-	    as.double(x),
-	    as.integer(n),
-	    as.integer(1L:n),
-	    integer(n),
-	    integer(n),
-	    ih = integer(n),
-	    nh = integer(1),
-	    il = integer(n))
-    rev(z$ih[1L:z$nh])
+    .Call(C_chull, x)
 }
 
 nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)

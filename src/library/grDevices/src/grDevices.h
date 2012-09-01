@@ -29,10 +29,6 @@
 #define _(String) (String)
 #endif
 
-void R_chull(int *n, double *x, int *m, int *in,
-	   int *ia, int *ib,
-	   int *ih, int *nh, int *il);
-
 SEXP R_CreateAtVector(SEXP axp, SEXP usr, SEXP nint, SEXP is_log);
 SEXP R_GAxisPars(SEXP usr, SEXP is_log, SEXP nintLog);
 
@@ -79,3 +75,5 @@ SEXP devoff(SEXP args);
 SEXP devprev(SEXP args);
 SEXP devset(SEXP args);
 SEXP devsize(SEXP args);
+
+SEXP C_chull(SEXP x);
