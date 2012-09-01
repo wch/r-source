@@ -96,6 +96,9 @@
       \item Functions such as \code{parLapply()} in package
       \pkg{parallel} can make use of a default cluster if one is set.
       (Reported by Martin Morgan.)
+      
+      \item \code{chol(pivot = TRUE, LINPACK = FALSE)} is now available
+      using LAPACK 3.2 subroutine \code{DPSTRF}.
     }
   }
 
@@ -230,6 +233,8 @@
       
       \item LAPACK 3.4.1 does use some Fortran 90 features, so
       \command{g77} no longer suffices.
+      
+      \item If an external LAPACK is used, it must be version 3.2 or later.
     }
  }
     

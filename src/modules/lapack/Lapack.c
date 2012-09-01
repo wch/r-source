@@ -867,11 +867,11 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 
 /* ------------------------------------------------------------ */
 
-static SEXP modLa_chol(SEXP A)
+static SEXP modLa_chol(SEXP A, SEXP pivot)
 {
     if (isMatrix(A)) {
-	SEXP ans = PROTECT((TYPEOF(A) == REALSXP)?duplicate(A):
-			   coerceVector(A, REALSXP));
+	SEXP ans = PROTECT((TYPEOF(A) == REALSXP) ?
+			   duplicate(A) : coerceVector(A, REALSXP));
 	SEXP adims = getAttrib(A, R_DimSymbol);
 	int m = INTEGER(adims)[0];
 	int n = INTEGER(adims)[1];
@@ -879,21 +879,49 @@ static SEXP modLa_chol(SEXP A)
 
 	if (m != n) error(_("'a' must be a square matrix"));
 	if (m <= 0) error(_("'a' must have dims > 0"));
-	for (j = 0; j < n; j++) {	/* zero the lower triangle */
-	    for (i = j+1; i < n; i++) {
-		REAL(ans)[i + j * n] = 0.;
-	    }
-	}
+	for (j = 0; j < n; j++)	/* zero the lower triangle */
+	    for (i = j+1; i < n; i++) REAL(ans)[i + j * n] = 0.;
 
-	F77_CALL(dpotrf)("Upper", &m, REAL(ans), &m, &i);
-	if (i != 0) {
-	    if (i > 0)
-		error(_("the leading minor of order %d is not positive definite"),
-		      i);
-	    error(_("argument %d of Lapack routine %s had invalid value"),
-		  -i, "dpotrf");
+	int piv = asInteger(pivot);
+	if (piv != 0 && piv != 1) error("invalid '%s' value", "pivot");
+	if(!piv) {
+	    F77_CALL(dpotrf)("Upper", &m, REAL(ans), &m, &i);
+	    if (i != 0) {
+		if (i > 0)
+		    error(_("the leading minor of order %d is not positive definite"),
+			  i);
+		error(_("argument %d of Lapack routine %s had invalid value"),
+		      -i, "dpotrf");
+	    }
+	} else {
+	    double tol = -1;
+	    SEXP piv = PROTECT(allocVector(INTSXP, m));
+	    int *ip = INTEGER(piv);
+	    double *work = (double *) R_alloc(2 * (size_t)m, sizeof(double));
+	    int rank, info;
+	    F77_CALL(dpstrf)("U", &m, REAL(ans), &m, ip, &rank, &tol, work, &info);
+	    if (info != 0) {
+		if (info > 0)
+		    warning(_("the matrix is either rank-deficient or indefinite"));
+		else
+		    error(_("argument %d of Lapack routine %s had invalid value"),
+			  -info, "dpstrf");
+	    }
+	    setAttrib(ans, install("pivot"), piv);
+	    setAttrib(ans, install("rank"), ScalarInteger(rank));
+	    SEXP cn, dn = getAttrib(ans, R_DimNamesSymbol);
+	    if (!isNull(dn) && !isNull(cn = VECTOR_ELT(dn, 1))) {
+		// need to pivot the colnames
+		SEXP dn2 = PROTECT(duplicate(dn));
+		SEXP cn2 = VECTOR_ELT(dn2, 1);
+		for(int i = 0; i < m; i++) 
+		    SET_STRING_ELT(cn2, i, STRING_ELT(cn, ip[i] - 1)); // base 1
+		setAttrib(ans, R_DimNamesSymbol, dn2);
+		UNPROTECT(1);
+	    }
+	    UNPROTECT(1);
 	}
-	unprotect(1);
+	UNPROTECT(1);
 	return ans;
     }
     else error(_("'a' must be a numeric matrix"));

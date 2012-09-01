@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-8 The R Core Team.
+ *  Copyright (C) 2003-12 The R Core Team.
  *  Copyright (C) 2008   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2766,6 +2766,11 @@ F77_NAME(dtgsyl)(char *trans, int *ijob, int *m, int *
 La_extern void
 F77_NAME(dtzrzf)(int *m, int *n, double *a, int *
 	lda, double *tau, double *work, int *lwork, int *info);
+
+La_extern void
+F77_NAME(dpstrf)(const char* uplo, const int* n,
+		 double* a, const int* lda, int* piv, int* rank,
+		 double* tol, double *work, int* info);
 
 
 La_extern int

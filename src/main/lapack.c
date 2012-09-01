@@ -38,7 +38,7 @@ SEXP qr_qy_cmplx(SEXP Q, SEXP B, SEXP trans)
 SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 SEXP La_rs_complex(SEXP x, SEXP only_values)
 SEXP La_rg_complex(SEXP x, SEXP only_values)
-SEXP La_chol (SEXP A)
+SEXP La_chol (SEXP A, SEXP pivot)
 SEXP La_chol2inv (SEXP x, SEXP size)
 SEXP La_dgesv(SEXP A, SEXP B, SEXP tol)
 SEXP La_dgeqp3(SEXP A)
@@ -133,11 +133,11 @@ SEXP La_rg_cmplx(SEXP x, SEXP only_values)
 }
 
 attribute_hidden
-SEXP La_chol(SEXP A)
+SEXP La_chol(SEXP A, SEXP pivot)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr->chol)(A);
+	return (*ptr->chol)(A, pivot);
     else {
 	error(_("lapack routines cannot be loaded"));
 	return R_NilValue;

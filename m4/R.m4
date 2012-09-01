@@ -2852,6 +2852,8 @@ AC_SUBST(BLAS_LIBS)
 ## broken LAPACKs out there.
 ## Based on acx_lapack.m4 version 1.3 (2002-03-12).
 
+## Test function was zgeev, changed to dpstrf which is LAPACK 3.2.
+
 AC_DEFUN([R_LAPACK_LIBS],
 [AC_REQUIRE([R_PROG_F77_FLIBS])
 AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
@@ -2868,9 +2870,9 @@ case "${with_lapack}" in
 esac
 
 if test "${r_cv_prog_f77_append_underscore}" = yes; then
-  zgeev=zgeev_
+  lapack=dpstrf_
 else
-  zgeev=zgeev
+  lapack=dpstrf
 fi
 
 # We cannot use LAPACK if BLAS is not found
@@ -2883,15 +2885,15 @@ LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
 ## LAPACK linked to by default?  (Could be in the BLAS libs.)
 if test "${acx_lapack_ok}" = no; then
-  AC_CHECK_FUNC(${zgeev}, [acx_lapack_ok=yes])
+  AC_CHECK_FUNC(${lapack}, [acx_lapack_ok=yes])
 fi
 
 ## Next, check LAPACK_LIBS environment variable
 if test "${acx_lapack_ok}" = no; then
   if test "x${LAPACK_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
-    AC_MSG_CHECKING([for ${zgeev} in ${LAPACK_LIBS}])
-    AC_TRY_LINK_FUNC(${zgeev}, [acx_lapack_ok=yes], [LAPACK_LIBS=""])
+    AC_MSG_CHECKING([for ${lapack} in ${LAPACK_LIBS}])
+    AC_TRY_LINK_FUNC(${lapack}, [acx_lapack_ok=yes], [LAPACK_LIBS=""])
     AC_MSG_RESULT([${acx_lapack_ok}])
     LIBS="${r_save_LIBS}"
   fi
@@ -2902,7 +2904,7 @@ fi
 
 ## Generic LAPACK library?
 if test "${acx_lapack_ok}" = no; then
-  AC_CHECK_LIB(lapack, ${zgeev},
+  AC_CHECK_LIB(lapack, ${lapack},
                [acx_lapack_ok=yes; LAPACK_LIBS="-llapack"])
 fi
 

@@ -169,7 +169,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(La_rs_cmplx, 2),
     CALLDEF(La_rg_cmplx, 2),
     CALLDEF(La_chol2inv, 2),
-    CALLDEF(La_chol, 1),
+    CALLDEF(La_chol, 2),
     CALLDEF(La_dgesv, 3),
     CALLDEF(La_dgeqp3, 1),
     CALLDEF(qr_coef_real, 2),

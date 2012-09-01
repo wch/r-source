@@ -88,7 +88,7 @@ The current version of this document is @value{VERSION}.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
-members are listed at @uref{http://cran.r-project.org/@/mirrors.html}.
+members are listed at @uref{http://CRAN.R-project.org/@/mirrors.html}.
 
 @menu
 * Getting and unpacking the sources::  
@@ -991,7 +991,7 @@ configuration files in the @file{etc} directory.
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
-@uref{http://cran.r-project.org/bin/@/windows/@/Rtools/}) for details.
+@uref{http://CRAN.R-project.org/bin/@/windows/@/Rtools/}) for details.
 
 The @file{Rtools*.exe} executable installer described in @ref{The
 Windows toolset} also includes some source files in addition to the @R{}
@@ -1721,7 +1721,7 @@ binary containing either or both architectures.
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.14/@/@@ReadMe}.
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/2.14/@/@@ReadMe}.
 For 64-bit builds, packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution from
@@ -3220,16 +3220,18 @@ run-time library path or @command{ld.so} cache).
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
 as @code{sunperf} on Solaris, @code{vecLib} on OS X and ACML on
-@cputype{ix86}/@cputype{x86_64} Linux).  However, the likely performance
-gains are thought to be small (and may be negative), and the default is
-not to search for a suitable LAPACK library, and this is definitely
-@strong{not} recommended.  You can specify a specific LAPACK library or
-a search for a generic library by the configuration option
-@option{--with-lapack}.  The default for @option{--with-lapack} is to
-check the @acronym{BLAS} library and then look for an external library
-@samp{-llapack}.  Sites searching for the fastest possible linear
-algebra may want to build a LAPACK library using the ATLAS-optimized
-subset of LAPACK.  To do so specify something like
+@cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2 is
+required. 
+
+However, the likely performance gains are thought to be small (and may
+be negative), and the default is not to search for a suitable LAPACK
+library, and this is definitely @strong{not} recommended.  You can
+specify a specific LAPACK library or a search for a generic library by
+the configuration option @option{--with-lapack}.  The default for
+@option{--with-lapack} is to check the @acronym{BLAS} library and then
+look for an external library @samp{-llapack}.  Sites searching for the
+fastest possible linear algebra may want to build a LAPACK library using
+the ATLAS-optimized subset of LAPACK.  To do so specify something like
 
 @example
 --with-lapack="-L/path/to/ATLAS/libs -llapack -lcblas"
@@ -3248,7 +3250,7 @@ Since ACML contains a full LAPACK, if selected as the @acronym{BLAS} it
 can be used as the LAPACK @emph{via} @option{--with-lapack}.
 
 If you do use @option{--with-lapack}, be aware of potential problems
-with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
+with bugs in the LAPACK sources (or in the posted corrections to those
 sources).  In particular, bugs in @code{DGEEV} and @code{DGESDD} have
 resulted in error messages such as
 
@@ -3258,9 +3260,7 @@ DGEBRD gave error code -10
 
 @noindent
 .  Other potential problems are incomplete versions of the libraries,
-seen several times over the years.  For problems compiling LAPACK using
-recent versions of @code{gcc} on @cputype{ix86} Linux, see @ref{New
-platforms}.
+seen several times in Linux distributions over the years.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
@@ -4747,7 +4747,7 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/} for the current
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/} for the current
 locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
@@ -4767,7 +4767,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
 named@footnote{for @R{} 2.14.2 and later.}  @file{Rtools215.exe},
-available from @uref{http://cran.r-project.org/@/bin/@/windows/@/Rtools/}. You
+available from @uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.

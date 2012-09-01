@@ -34,8 +34,8 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 	    stop("non-matrix argument to 'chol'")
 	n <- 1L
     }
-    if(!pivot && !LINPACK)
-        return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
+    if(!LINPACK)
+        return(.Call("La_chol", as.matrix(x), pivot, PACKAGE = "base"))
 
     ## sanity checks
     n <- as.integer(n)
