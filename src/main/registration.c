@@ -94,14 +94,6 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
 
-    /* Sockets */
-    CALLDEF(Rsockconnect, 2),
-    CALLDEF(Rsockread, 2),
-    CALLDEF(Rsockclose, 1),
-    CALLDEF(Rsockopen, 1),
-    CALLDEF(Rsocklisten, 1),
-    CALLDEF(Rsockwrite, 2),
-
     {NULL, NULL, 0}
 };
 

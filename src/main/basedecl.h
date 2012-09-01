@@ -35,10 +35,3 @@ void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);
 SEXP R_stopbcprof(void);
-
-SEXP Rsockconnect(SEXP sport, SEXP shost);
-SEXP Rsockread(SEXP sport, SEXP smaxlen);
-SEXP Rsockclose(SEXP sport);
-SEXP Rsockopen(SEXP sport);
-SEXP Rsocklisten(SEXP sport);
-SEXP Rsockwrite(SEXP sport, SEXP sstring);
