@@ -573,11 +573,14 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
   if(isClass(as.character(traceClassName)))
     return(as.character(traceClassName))
   if(verbose)
-    message("Constructing traceable class \"",traceClassName, "\"")
+    message(gettextf("Constructing traceable class %s",
+                     dQuote(traceClassName)),
+            domain = NA)
   env <- .classEnv(className)
   if(environmentIsLocked(env)) {
-    message("Environment of class \"", className,
-            "\" is locked; using global environment for new class")
+    message(gettextf("Environment of class %s is locked; using global environment for new class",
+                     dQuote(className)),
+            domain = NA)
     env <- .GlobalEnv
     packageSlot(traceClassName) <- NULL
   }

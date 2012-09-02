@@ -140,7 +140,9 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 summary.table <- function(object, ...)
 {
     if(!inherits(object, "table"))
-	stop("'object' must inherit from class \"table\"")
+	stop(gettextf("'object' must inherit from class %s",
+                      dQuote("table")),
+             domain = NA)
     n.cases <- sum(object)
     n.vars <- length(dim(object))
     y <- list(n.vars = n.vars,
@@ -168,7 +170,9 @@ print.summary.table <-
 function(x, digits = max(1, getOption("digits") - 3), ...)
 {
     if(!inherits(x, "summary.table"))
-	stop("'x' must inherit from class \"summary.table\"")
+	stop(gettextf("'x' must inherit from class %s",
+                      dQuote("summary.table")),
+             domain = NA)
     if(!is.null(x$call)) {
 	cat("Call: "); print(x$call)
     }

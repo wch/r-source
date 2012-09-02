@@ -166,7 +166,9 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 	termobj
     else {
         if(!inherits(termobj, "terms"))
-            stop("'termobj' must be a object of class \"terms\"")
+            stop(gettextf("'termobj' must be a object of class %s",
+                          dQuote("terms")),
+                 domain = NA)
 	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
 				  if (keep.response) termobj[[2L]] else NULL,
                                   attr(termobj, "intercept"))

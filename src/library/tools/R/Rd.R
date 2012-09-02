@@ -52,9 +52,11 @@ function(file, encoding = "unknown")
     Rd_name <- .Rd_get_name(Rd)
     if(!length(Rd_name)) {
         msg <-
-            c(gettextf("missing/empty \\name field in '%s'",
+            c(gettextf("missing/empty %s field in '%s'",
+                       "\\name",
                        description),
-              gettext("Rd files must have a non-empty \\name."),
+              gettextf("Rd files must have a non-empty %s.",
+                       "\\name"),
               gettext("See chapter 'Writing R documentation' in manual 'Writing R Extensions'."))
         stop(paste(msg, collapse = "\n"), domain = NA)
     }
@@ -759,7 +761,8 @@ function(db)
             stop("cannot deal with Rd objects with missing/empty names")
         }
         else {
-            stop(paste(gettext("missing/empty \\name field in Rd file(s)"),
+            stop(paste(gettextf("missing/empty %s field in Rd file(s)",
+                                "\\name"),
                        paste(" ", Rd_paths[idx], collapse = "\n"),
                        sep = "\n"),
                  call. = FALSE, domain = NA)

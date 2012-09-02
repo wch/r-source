@@ -836,7 +836,9 @@ get_exclude_patterns <- function()
     }
 
     if(!compact_vignettes %in% c("no", "qpdf", "gs", "gs+qpdf", "both")) {
-        warning('invalid value for --compact-vignettes, assuming "qpdf"')
+        warning(gettextf("invalid value for '--compact-vignettes', assuming %s",
+                         "\"qpdf\""),
+                domain = NA)
         compact_vignettes <-"qpdf"
     }
 

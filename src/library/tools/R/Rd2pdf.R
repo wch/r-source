@@ -823,7 +823,7 @@ setEncoding2, "
 
     res <- try(texi2pdf('Rd2.tex', quiet = FALSE, index = index))
     if (inherits(res, "try-error")) {
-        message("Error in running tools::texi2pdf")
+        message("Error in running tools::texi2pdf()")
         do_cleanup()
         q("no", status = 1L, runLast = FALSE)
     }

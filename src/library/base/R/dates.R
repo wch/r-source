@@ -71,8 +71,10 @@ as.Date.default <- function(x, ...)
     if(inherits(x, "Date")) return(x)
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = "Date"))
-    stop(gettextf("do not know how to convert '%s' to class \"Date\"",
-                  deparse(substitute(x))))
+    stop(gettextf("do not know how to convert '%s' to class %s",
+                  deparse(substitute(x)),
+                  dQuote("Date")),
+         domain = NA)
 }
 
 ## convert from package date

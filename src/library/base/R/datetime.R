@@ -93,8 +93,10 @@ as.POSIXlt.default <- function(x, tz = "", ...)
     if(inherits(x, "POSIXlt")) return(x)
     if(is.logical(x) && all(is.na(x)))
         return(as.POSIXlt(as.POSIXct.default(x), tz=tz))
-    stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
-                  deparse(substitute(x))))
+    stop(gettextf("do not know how to convert '%s' to class %s",
+                  deparse(substitute(x)),
+                  dQuote("POSIXlt")),
+         domain = NA)
 }
 
 as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
@@ -150,8 +152,10 @@ as.POSIXct.default <- function(x, tz = "", ...)
 	return(as.POSIXct(as.POSIXlt(x, tz, ...), tz, ...))
     if(is.logical(x) && all(is.na(x)))
         return(.POSIXct(as.numeric(x)))
-    stop(gettextf("do not know how to convert '%s' to class \"POSIXct\"",
-                  deparse(substitute(x))))
+    stop(gettextf("do not know how to convert '%s' to class %s",
+                  deparse(substitute(x)),
+                  dQuote("POSIXct")),
+         domain = NA)
 }
 
 as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))

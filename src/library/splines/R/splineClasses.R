@@ -51,7 +51,8 @@ splineDesign <-
 
     ## The x test w/ sorted knots assumes ord <= nk+1-ord, or nk >= 2*ord-1L:
     if(!outer.ok && nk < 2*ord-1)
-        stop(gettextf("need at least 2*ord -1 (=%d) knots", 2*ord -1),
+        stop(gettextf("need at least %s (=%d) knots",
+                      "2*ord -1", 2*ord -1),
              domain = NA)
 
     o1 <- ord - 1L
@@ -67,8 +68,11 @@ splineDesign <-
                 nnx <- length(x)
             }
 	} else
-	stop(gettextf("the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'",
-		      knots[ord], knots[nk- o1]), domain = NA)
+	stop(gettextf("the 'x' data must be in the range %g to %g unless you set '%s'",
+		      knots[ord],
+                      knots[nk - o1],
+                      "outer.ok = TRUE"),
+             domain = NA)
     }
     temp <- .Call(C_spline_basis, knots, ord, x, derivs)
     ncoef <- nk - ord
@@ -81,7 +85,9 @@ splineDesign <-
 
     if(sparse) {
 	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
-	    stop("splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed")
+	    stop(gettextf("%s needs package 'Matrix' correctly installed",
+                          "splineDesign(*, sparse=TRUE)"),
+                 domain = NA)
 
 	if(need.outer) { ## shift column numbers and drop those "outside"
 	    jj <- jj - o1 - 1L

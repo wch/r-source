@@ -250,7 +250,10 @@ S3Class <- function(object) {
     if(is.null(value)) {
         if(isS4(object)) {
             if(is.na(match(".Data", names(getClass(class(object))@slots))))
-              stop("S3Class only defined for extensions of \"oldClass\" or classes with a data part:  not true of class \"", class(object), "\"")
+                stop(gettextf("S3Class only defined for extensions of %s or classes with a data part:  not true of class %s",
+                              dQuote("oldClass"),
+                              dQuote(class(object))),
+                     domain = NA)
             class(getDataPart(object))
         }
         else

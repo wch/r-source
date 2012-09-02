@@ -34,7 +34,9 @@ recordPlot <- function()
 replayPlot <- function(x)
 {
     if(class(x) != "recordedplot")
-        stop("argument is not of class \"recordedplot\"")
+        stop(gettextf("argument is not of class %s",
+                      dQuote("recordedplot")),
+             domain = NA)
     nm <- names(x)
     version <- attr(x, "version")
     if (is.null(version))

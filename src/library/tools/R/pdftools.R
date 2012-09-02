@@ -151,7 +151,7 @@ function(file, cache = TRUE)
     startxref <- suppressWarnings(as.integer(rawToChar(bytes)))
     bytes <- read_prev_bytes_after_bytes(con, pdf_bytes_whitespaces)
     if(substring(rawToChar(bytes), 1L, 9L) != "startxref")
-        stop("cannot find startxref")
+        stop("cannot find 'startxref' keyword")
 
     xref_tabs <-
         matrix(integer(), nrow = 0L, ncol = 4L,
@@ -1600,7 +1600,8 @@ function(x, params)
     if(is.null(predictor) || (predictor == 1L))
         return(m)
     if((predictor < 10L) && (predictor > 15L)) {
-        stop(gettextf("unsupported flatedecode predictor %d",
+        stop(gettextf("unsupported %s predictor %d",
+                      "flatedecode",
                       predictor),
              domain = NA)
     }

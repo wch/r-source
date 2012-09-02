@@ -41,7 +41,9 @@ summary.manova <-
              intercept = FALSE, tol = 1e-7, ...)
 {
     if(!inherits(object, "maov"))
-        stop("object must be of class \"manova\" or \"maov\"")
+        stop(gettextf("object must be of class %s or %s",
+                      dQuote("manova"), dQuote("maov")),
+             domain = NA)
     test <- match.arg(test)
 
     asgn <- object$assign[object$qr$pivot[1L:object$rank]]

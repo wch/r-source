@@ -45,7 +45,8 @@ debugger <- function(dump = last.dump)
         browser()
     }
     if (class(dump) != "dump.frames") {
-        cat(gettext("'dump' is not an object of class 'dump.frames'\n"))
+        cat(gettextf("'dump' is not an object of class %s\n",
+                     dQuote("dump.frames")))
         return(invisible())
     }
     err.action <- getOption("error")

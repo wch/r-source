@@ -266,10 +266,11 @@
       Recall(table, sig, el, i1, add, fenv)
     }
     else
-      stop("Invalid mlist element for signature \"", classes[[j]],
-	   "\" at level ", i,
-           "( should be methods list or method, had class \"",
-           class(el), "\")")
+      stop(gettextf("Invalid mlist element for signature %s at level %d (should be methods list or method, had class %s)",
+                    sQuote(classes[[j]]),
+                    i,
+                    dQuote(class(el))),
+           domain = NA)
   }
   table
 }
@@ -424,9 +425,11 @@
             .resetTable(method, n, signames)
         }
         else
-            stop("Invalid object in methods table (\"", what,
-                 "\"), expected a method, got an object of class \"",
-                 class(method), "\"")
+            stop(gettextf("Invalid object in methods table (%s), expected a method, got an object of class %s",
+                          sQuote(what),
+                          dQuote(class(method))),
+                 domain = NA)
+
         if(is(method, "MethodDefinition")) {
             pkgs <- packageSlot(newSig)
             newSig <- as(ifelse(seqN > length(newSig), anyLabel, newSig), "signature")
@@ -1112,8 +1115,9 @@ useMTable <- function(onOff = NA)
   for(i in seq_along(generics)) {
     gen <- generics[[i]]
     if(!is(gen,"genericFunction"))
-      stop("Invalid group generic function in search for inherited method (class \"",
-           class(gen), "\"")
+      stop(gettextf("Invalid group generic function in search for inherited method (class %s)",
+                    dQuote(class(gen))),
+           domain = NA)
     table <- .getMethodsTable(gen)
     allMethods <- objects(envir=table, all.names = TRUE)
     ## TODO:  possible for .SigLength to differ between group &

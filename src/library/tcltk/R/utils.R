@@ -153,14 +153,18 @@ tkProgressBar <- function(title = "R progress bar", label = "",
 getTkProgressBar <- function(pb)
 {
     if(!inherits(pb, "tkProgressBar"))
-       stop("'pb' is not from class \"tkProgressBar\"")
+        stop(gettextf("'pb' is not from class %s",
+                      dQuote("tkProgressBar")),
+             domain = NA)
     pb$getVal()
 }
 
 setTkProgressBar <- function(pb, value, title = NULL, label = NULL)
 {
     if(!inherits(pb, "tkProgressBar"))
-       stop("'pb' is not from class \"tkProgressBar\"")
+        stop(gettextf("'pb' is not from class %s",
+                      dQuote("tkProgressBar")),
+             domain = NA)
     oldval <- pb$getVal()
     pb$up(value)
     if(!is.null(title)) pb$title(title)

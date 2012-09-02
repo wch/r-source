@@ -2774,7 +2774,8 @@ function(x, ...)
             } else {
                 sprintf("Vignette dependencies not required: %s", sQuote(bad))
             },
-            strwrap(gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")),
+            strwrap(gettextf("Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.",
+                             "\\VignetteDepends{}")),
             "")
       },
       if(length(bad <- x$missing_namespace_depends) > 1L) {
@@ -4390,8 +4391,9 @@ function(x, ...)
       strwrap(gettextf("Package startup functions should not call %s.",
                        sQuote("installed.packages")),
               exdent = 2L),
-      gettextf("See section %s in ?.onAttach.",
-               sQuote("Good practice")),
+      gettextf("See section %s in '%s'.",
+               sQuote("Good practice"),
+               "?.onAttach"),
       ""
       )
 }
@@ -5861,13 +5863,14 @@ function(env, verbose = getOption("verbose"))
             ## FIXME: This warning should not happen here when called
             ## from R CMD check, but rather be part of a new "check"
             ## there !
-	    warning("Generics g in env = ", format(env),
-		    " where hasMethods(g, env) errors: ",
-		    paste(sQuote(rErr), collapse = ", "),
-		    "\nMay need something like\n\n",
-		    paste0("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
-                          ")\n"),
-		    "\nin NAMESPACE.")
+	    warning(gettextf("Generics 'g' in 'env' %s where '%s' errors: %s\nMay need something like\n\n%s\nin NAMESPACE.",
+                             format(env),
+                             "hasMethods(g, env)",
+                             paste(sQuote(rErr), collapse = ", "),
+                             paste0("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
+                                    ")\n")
+                             ),
+                    domain = NA)
 	    hasM <- hasM[!hasErr]
 	}
 	!all(ok <- unlist(hasM))

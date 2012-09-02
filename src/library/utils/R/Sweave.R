@@ -331,7 +331,9 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
     if (is.character(syntax)) syntax <- get(syntax)
 
     if (!identical(class(syntax), "SweaveSyntax"))
-        stop("target syntax not of class \"SweaveSyntax\"")
+        stop(gettextf("target syntax not of class %s",
+                      dQuote("SweaveSyntax")),
+             domain = NA)
     if (is.null(syntax$trans))
         stop("target syntax contains no translation table")
 

@@ -3322,7 +3322,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
     if (as_cran) {
         if (extra_arch) {
-            message("--as-cran turns off --extra-arch")
+            message("'--as-cran' turns off '--extra-arch'")
             extra_arch <- FALSE
         }
         Sys.setenv("_R_CHECK_TIMINGS_" = "10")
@@ -3447,7 +3447,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             pkg <- file.path(dir, pkgname0)
         }
         if (!dir.exists(pkg))
-            stop("package dir ", sQuote(pkg), " does not exist")
+            stop("package directory ", sQuote(pkg), " does not exist")
         setwd(pkg)
         pkgdir <- getwd()
         thispkg_src_subdirs <- thispkg_subdirs

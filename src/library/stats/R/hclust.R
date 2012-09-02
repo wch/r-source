@@ -173,10 +173,12 @@ as.hclust <- function(x, ...) UseMethod("as.hclust")
 as.hclust.default <- function(x, ...) {
     if(inherits(x, "hclust")) x
     else
-	stop(gettext("argument 'x' cannot be coerced to class \"hclust\""),
+	stop(gettextf("argument 'x' cannot be coerced to class %s",
+                      dQuote("hclust")),
              if(!is.null(oldClass(x)))
              gettextf("\n Consider providing an as.hclust.%s() method",
-                      oldClass(x)[1L]), domain = NA)
+                      oldClass(x)[1L]),
+             domain = NA)
 }
 
 as.hclust.twins <- function(x, ...)

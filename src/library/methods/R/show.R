@@ -150,7 +150,9 @@ show <- function(object)
 
     ## a show() method for the signature class
     setMethod("show", "signature", function(object) {
-        message("An object of class \"", class(object), "\"")
+        message(gettextf("An object of class %s",
+                         dQuote(class(object))),
+                domain = NA)
         val <- object@.Data
         names(val) <- object@names
         callNextMethod(val)

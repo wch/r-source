@@ -439,7 +439,9 @@
 		## is no way to create it later.
 
 		if (dsym && length(grep("^darwin", R.version$os)) ) {
-		    message('generating debug symbols (dSYM)')
+		    message(gettextf("generating debug symbols (%s)",
+                                     "dSYM"),
+                            domain = NA)
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
                     for (file in dylib) system(paste0("dsymutil ", file))
 		}
@@ -644,7 +646,7 @@
                     makefiles <- f
                 if (file.exists("Makefile.win")) {
                     makefiles <- c("Makefile.win", makefiles)
-                    message("  running src/Makefile.win ...")
+                    message("  running 'src/Makefile.win' ...")
                     res <- system(paste("make --no-print-directory",
                                         paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0) shlib_install(instdir, rarch)
@@ -1317,7 +1319,7 @@
 
     if (merge) {
         if (length(pkgs) != 1L || !file_test("-f", pkgs))
-            stop("ERROR: --merge-multiarch applies only to a single tarball",
+            stop("ERROR: '--merge-multiarch' applies only to a single tarball",
                  call. = FALSE)
         if (WINDOWS) {
             f  <- dir(file.path(R.home(), "bin"))
