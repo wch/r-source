@@ -403,6 +403,7 @@ SEXP do_rownames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rowscols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_S4on(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sample(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sample2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_save(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveToConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);

@@ -1726,3 +1726,49 @@ SEXP attribute_hidden csduplicated(SEXP x)
     UNPROTECT(2);
     return ans;
 }
+
+#include <R_ext/Random.h>
+
+static R_INLINE double ru()
+{
+    double U = 33554432.0;
+    return (floor(U*unif_rand()) + unif_rand())/U;
+}
+
+SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP ans;
+    double dn = asReal(CAR(args));
+    int k = asInteger(CADR(args));
+    if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0)) 
+	error(_("invalid first argument"));
+    if (k < 0) error(_("invalid '%s' argument"), "size");
+    if (k > dn/2) error("This algorithm is for size <= n/2");
+    HashData data;
+    GetRNGstate();
+    if (dn > INT_MAX) {
+	ans = PROTECT(allocVector(REALSXP, k));
+	double *ry = REAL(ans);
+	HashTableSetup(ans, &data, NA_INTEGER);
+	PROTECT(data.HashTable);
+	for (int i = 0; i < k; i++)
+	    for(int j = 0; j < 100; j++) { // average < 2
+		ry[i] = floor(dn * ru() + 1);
+		if(!isDuplicated(ans, i, &data)) break;
+	    }
+   } else {
+	ans = PROTECT(allocVector(INTSXP, k));
+	int *iy = INTEGER(ans);
+	HashTableSetup(ans, &data, NA_INTEGER);
+	PROTECT(data.HashTable);
+	for (int i = 0; i < k; i++)
+	    for(int j = 0; j < 100; j++) { // average < 2
+		iy[i] = (int)(dn * unif_rand() + 1);
+		if(!isDuplicated(ans, i, &data)) break;
+	    }
+    }
+    PutRNGstate();
+    UNPROTECT(2);
+    return ans;
+}
