@@ -1,6 +1,6 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -66,6 +66,13 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   
   \code{sample.int} is a bare interface in which both \code{n} and
   \code{size} must be supplied as integers.
+  
+  As from \R 2.16.0, \code{n} can be larger than the largest
+  representable integer.  However only uniform sampling is supported,
+  and on 32-bit platforms, only with replacement.   Sampling with
+  replacement allocates a vector of \code{1:n} so uses a lot of memory
+  even if \code{size} is small.  Two random numbers are used to ensure
+  uniform sampling of large integers.
 }
 
 \value{
@@ -73,7 +80,8 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   drawn from either \code{x} or from the integers \code{1:x}.
 
   For \code{sample.int}, an integer vector of length \code{size} with
-  elements from \code{1:n},
+  elements from \code{1:n}, or a double vector if
+  \eqn{n \ge 2^{31}}{n >= 2^31}.
 }
 
 \references{
@@ -113,5 +121,8 @@ resample <- function(x, ...) x[sample.int(length(x), ...)]
 resample(x[x >  8]) # length 2
 resample(x[x >  9]) # length 1
 resample(x[x > 10]) # length 0
+
+## R >= 2.16.0 only
+sample.int(1e10, 12, replace = TRUE)
 }
 \keyword{distribution}

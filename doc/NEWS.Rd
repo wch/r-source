@@ -194,6 +194,9 @@
       
       \item More matrix algebra functions (e.g. \code{chol()} and
       \code{solve()}) accept logical matrices (and coerce to numeric).
+     
+      \item \code{sample.int()} has some support for  \eqn{n \ge
+      2^{31}}{n >= 2^31}: see its help for the limitations.
     }
   }
 
@@ -258,6 +261,8 @@
 
       \code{rank()}, \code{sort.list()} and \code{order()} support
       long vectors (slowly except for radix sorting).
+      
+      \item \code{sample()} can do uniform sampling from a long vector.
     }
   }
 

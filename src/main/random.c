@@ -433,29 +433,6 @@ static void ProbSampleNoReplace(int n, double *p, int *perm,
     }
 }
 
-/* Equal probability sampling; with-replacement case */
-
-static void R_INLINE SampleReplace(int k, int n, int *y)
-{
-    int i;
-    for (i = 0; i < k; i++)
-	y[i] = (int)(n * unif_rand() + 1);
-}
-
-/* Equal probability sampling; without-replacement case */
-
-static void R_INLINE SampleNoReplace(int k, int n, int *y, int *x)
-{
-    int i, j;
-    for (i = 0; i < n; i++)
-	x[i] = i;
-    for (i = 0; i < k; i++) {
-	j = (int)(n * unif_rand());
-	y[i] = x[j] + 1;
-	x[j] = x[--n];
-    }
-}
-
 void FixupProb(double *p, int n, int require_k, Rboolean replace)
 {
     double sum;
@@ -478,38 +455,44 @@ void FixupProb(double *p, int n, int require_k, Rboolean replace)
 	p[i] /= sum;
 }
 
+/* Our PRNGs have at most 32 bit of precision, and all have at least 25 */
+static R_INLINE double ru()
+{
+    double U = 33554432.0;
+    return (floor(U*unif_rand()) + unif_rand())/U;
+}
+
 /* do_sample - probability sampling with/without replacement.
    .Internal(sample(n, size, replace, prob))
 */
 SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, y, prob, sreplace;
-    int k, n, replace;
-    double *p;
+    SEXP x, y, sn, sk, prob, sreplace;
 
     checkArity(op, args);
-    n = asInteger(CAR(args)); args = CDR(args);
-    k = asInteger(CAR(args)); args = CDR(args); /* size */
+    sn = CAR(args); args = CDR(args);
+    sk = CAR(args); args = CDR(args); /* size */
     sreplace = CAR(args); args = CDR(args);
     if(length(sreplace) != 1)
 	 error(_("invalid '%s' argument"), "replace");
-    replace = asLogical(sreplace);
+    int replace = asLogical(sreplace);
     prob = CAR(args);
     if (replace == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "replace");
-    if (n == NA_INTEGER || n < 0 || (k > 0 && n == 0))
-	error(_("invalid first argument"));
-    if (k == NA_INTEGER || k < 0)
-	error(_("invalid '%s' argument"), "size");
-    if (!replace && k > n)
-	error(_("cannot take a sample larger than the population when 'replace = FALSE'"));
     GetRNGstate();
-    PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {
+	int n = asInteger(sn), k = asInteger(sk);
+	if (n == NA_INTEGER || n < 0 || (k > 0 && n == 0))
+	    error(_("invalid first argument"));
+	if (k == NA_INTEGER || k < 0)
+	    error(_("invalid '%s' argument"), "size");
+	if (!replace && k > n)
+	    error(_("cannot take a sample larger than the population when 'replace = FALSE'"));
+	PROTECT(y = allocVector(INTSXP, k));
 	prob = coerceVector(prob, REALSXP);
 	if (NAMED(prob)) prob = duplicate(prob);
 	PROTECT(prob);
-	p = REAL(prob);
+	double *p = REAL(prob);
 	if (length(prob) != n)
 	    error(_("incorrect number of probabilities"));
 	FixupProb(p, n, k, (Rboolean)replace);
@@ -525,12 +508,50 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ProbSampleNoReplace(n, p, INTEGER(x), k, INTEGER(y));
 	UNPROTECT(2);
     }
-    else {
-	/* avoid allocation for a single sample */
-	if (replace || k < 2) SampleReplace(k, n, INTEGER(y));
-	else {
-	    x = allocVector(INTSXP, n);
-	    SampleNoReplace(k, n, INTEGER(y), INTEGER(x));
+    else {  // uniform sampling
+	double dn = asReal(sn);
+	R_xlen_t k = asVecSize(sk);
+	if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0)) 
+	    error(_("invalid first argument"));
+	if (k < 0) error(_("invalid '%s' argument"), "size");
+	if (!replace && k > dn)
+	    error(_("cannot take a sample larger than the population when 'replace = FALSE'"));
+	if (dn > INT_MAX || k > INT_MAX) {
+	    PROTECT(y = allocVector(REALSXP, k));
+	    if (replace) {
+		double *ry = REAL(y);
+		for (R_xlen_t i = 0; i < k; i++) ry[i] = floor(dn * ru() + 1);
+	    } else {
+#ifdef LONG_VECTOR_SUPPORT
+		R_xlen_t n = (R_xlen_t) dn;
+		double *x = (double *)R_alloc(n, sizeof(double));
+		double *ry = REAL(y);
+		for (R_xlen_t i = 0; i < n; i++) x[i] = (double) i;
+		for (R_xlen_t i = 0; i < k; i++) {
+		    R_xlen_t j = (R_xlen_t)floor(n * ru());
+		    ry[i] = x[j] + 1;
+		    x[j] = x[--n];
+		}
+#else
+		error(_("n >= 2^31, replace = FALSE is only supported on 64-bit platforms"));
+#endif
+	    }
+	} else {
+	    int n = (int) dn;
+	    PROTECT(y = allocVector(INTSXP, k));
+	    int *iy = INTEGER(y);
+	    /* avoid allocation for a single sample */
+	    if (replace || k < 2) {
+		for (int i = 0; i < k; i++) iy[i] = (int)(dn * unif_rand() + 1);
+	    } else {
+		int *x = (int *)R_alloc(n, sizeof(int));
+		for (int i = 0; i < n; i++) x[i] = i;
+		for (int i = 0; i < k; i++) {
+		    int j = (int)(n * unif_rand());
+		    iy[i] = x[j] + 1;
+		    x[j] = x[--n];
+		}
+	    }
 	}
     }
     PutRNGstate();
