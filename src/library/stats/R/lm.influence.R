@@ -58,26 +58,13 @@ lm.influence <- function (model, do.coef = TRUE)
         mqr <- qr.lm(model)
         n <- as.integer(nrow(mqr$qr))
         if (is.na(n)) stop("invalid model QR matrix")
-        k <- as.integer(mqr$rank)
-        if (is.na(k)) stop("invalid model QR matrix")
         ## in na.exclude case, omit NAs; also drop 0-weight cases
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
-        res <- .Fortran(C_lminfl,
-                        mqr$qr,
-                        n,
-                        n,
-                        k,
-                        as.integer(do.coef),
-                        mqr$qraux,
-                        wt.res = e,
-                        hat = double(n),
-                        coefficients= if(do.coef) matrix(0, n, k) else double(),
-                        sigma = double(n),
-                        tol = 10 * .Machine$double.eps,
-                        DUP = FALSE
-                        )[c("hat", "coefficients", "sigma","wt.res")]
+        tol <- 10 * .Machine$double.eps;
+        ## This just returns e as res$wt.res
+        res <- .Call(C_influence, mqr, do.coef, e, tol);
         if(!is.null(model$na.action)) {
             hat <- naresid(model$na.action, res$hat)
             hat[is.na(hat)] <- 0       # omitted cases have 0 leverage
@@ -95,9 +82,7 @@ lm.influence <- function (model, do.coef = TRUE)
     res$wt.res <- naresid(model$na.action, res$wt.res)
     res$hat[res$hat > 1 - 10*.Machine$double.eps] <- 1 # force 1
     names(res$hat) <- names(res$sigma) <- names(res$wt.res)
-    if(!do.coef) ## drop it
-	res$coefficients <- NULL
-    else {
+    if(do.coef) {
         rownames(res$coefficients) <- names(res$wt.res)
         colnames(res$coefficients) <- names(coef(model))[!is.na(coef(model))]
     }

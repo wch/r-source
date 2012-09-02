@@ -187,6 +187,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(Rsm, 3),
     CALLDEF(tukeyline, 3),
     CALLDEF(runmed, 5),
+    CALLDEF(influence, 4),
     {NULL, NULL, 0}
 };
 
@@ -205,7 +206,7 @@ static const R_FortranMethodDef FortEntries[] = {
     {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
     {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
     {"stl", (DL_FUNC) &F77_SUB(stl), 18},
-    {"lminfl", (DL_FUNC) &F77_SUB(lminfl), 11},
+//    {"lminfl", (DL_FUNC) &F77_SUB(lminfl), 11},
     {NULL, NULL, 0}
 };
 

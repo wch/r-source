@@ -63,3 +63,4 @@ SEXP distn4(SEXP args);
 SEXP Rsm(SEXP x, SEXP stype, SEXP send);
 SEXP tukeyline(SEXP x, SEXP y, SEXP call);
 SEXP runmed(SEXP x, SEXP stype, SEXP sk, SEXP end, SEXP print_level);
+SEXP influence(SEXP mqr, SEXP do_coef, SEXP e, SEXP stol);
