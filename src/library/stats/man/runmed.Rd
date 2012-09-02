@@ -1,6 +1,6 @@
 % File src/library/stats/man/runmed.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{runmed}
@@ -70,6 +70,8 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
       \eqn{O(n \times k)}{O(n * k)} which is slower asymptotically, it is
       considerably faster for small \eqn{k} or \eqn{n}.}
   }
+  
+  Currently long vectors are only supported for \code{algorithm = "Steutzle"}.
 }
 \references{
   \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)

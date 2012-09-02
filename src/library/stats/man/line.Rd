@@ -1,6 +1,6 @@
 % File src/library/stats/man/line.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{line}
@@ -14,7 +14,13 @@
 line(x, y)
 }
 \arguments{
-  \item{x,y}{the arguments can be any way of specifying x-y pairs.}
+  \item{x,y}{the arguments can be any way of specifying x-y pairs.  See
+    \code{\link{xy.coords}}.}
+}
+\details{
+  Cases with missing values are omitted.
+
+  Long vectors are not supported.
 }
 \value{
   An object of class \code{"tukeyline"}.

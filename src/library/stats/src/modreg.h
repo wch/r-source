@@ -68,18 +68,6 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
 	  Sint *drop_square, Sint *sum_drop_sqr, double *cell,
 	  Sint *d, Sint *n, Sint *m, double *fit, double *L);
 
-void Srunmed(double *y, double *smo,
-	     Sint *n, Sint *band, Sint *end_rule, Sint *debug);
-
-void Trunmed(Sint *nn,/* = length(data) */
-	     Sint *kk,/* is odd <= nn */
-	     const double *data,
-	     double *median, /* (n) */
-	     Sint   *outlist,/* (k+1) */
-	     Sint   *nrlist,/* (2k+1) */
-	     double *window,/* (2k+1) */
-	     Sint   *end_rule,
-	     Sint   *print_level);
 void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl,
 		  int *pmaxiter, int *nc, double *wss);
 

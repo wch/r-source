@@ -21,7 +21,6 @@
 #include <Rinternals.h>
 
 #include "ctest.h"
-#include "eda.h"
 #include "family.h"
 #include "modreg.h"
 #include "mva.h"
@@ -55,11 +54,6 @@ static R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType swilk_t[6] = {REALSXP, INTSXP, INTSXP,
 					      REALSXP, REALSXP, INTSXP};
-
-static R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
-					 INTSXP,LGLSXP};
-static R_NativePrimitiveArgType Trunmed_t[9] = {INTSXP,INTSXP, REALSXP,REALSXP,
-					 INTSXP,INTSXP, REALSXP,INTSXP,INTSXP};
 
 static R_NativePrimitiveArgType band_ucv_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType band_bcv_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
@@ -109,15 +103,6 @@ static const R_CMethodDef CEntries[]  = {
     {"loess_dfitse", (DL_FUNC) &loess_dfitse, 16},
     {"loess_ifit", (DL_FUNC) &loess_ifit, 8},
     {"loess_ise", (DL_FUNC) &loess_ise, 15},
-    {"Srunmed", (DL_FUNC) &Srunmed, 6, Srunmed_t},
-    {"Trunmed", (DL_FUNC) &Trunmed, 9, Trunmed_t},
-    {"Rsm_3RSR", (DL_FUNC) &Rsm_3RSR, 5},
-    {"Rsm_3RSS", (DL_FUNC) &Rsm_3RSS, 5},
-    {"Rsm_3RS3R", (DL_FUNC) &Rsm_3RS3R, 5},
-    {"Rsm_3R", (DL_FUNC) &Rsm_3R, 5},
-    {"Rsm_3", (DL_FUNC) &Rsm_3, 5},
-    {"Rsm_S", (DL_FUNC) &Rsm_S, 5},
-    {"tukeyline", (DL_FUNC) &tukeyline, 6},
     {"R_distance", (DL_FUNC) &R_distance, 7},
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
@@ -199,6 +184,9 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(lowess, 5),
     CALLDEF(DoubleCentre, 1),
     CALLDEF(BinDist, 5),
+    CALLDEF(Rsm, 3),
+    CALLDEF(tukeyline, 3),
+    CALLDEF(runmed, 5),
     {NULL, NULL, 0}
 };
 

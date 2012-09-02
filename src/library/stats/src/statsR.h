@@ -60,3 +60,6 @@ SEXP distn2(SEXP args);
 SEXP distn3(SEXP args);
 SEXP distn4(SEXP args);
 
+SEXP Rsm(SEXP x, SEXP stype, SEXP send);
+SEXP tukeyline(SEXP x, SEXP y, SEXP call);
+SEXP runmed(SEXP x, SEXP stype, SEXP sk, SEXP end, SEXP print_level);

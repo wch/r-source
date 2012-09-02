@@ -54,33 +54,10 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
         cat("runmed(*, endrule=", endrule,", algorithm=",algorithm,
             ", iend=",iend,")\n")
     res <- switch(algorithm,
-                  Turlach = {
-                      .C(C_Trunmed,
-                         n,
-                         k,
-                         as.double(x),
-                         rmed = double(n),	# median[] -> result
-                         tmp1 = integer(k+1L),	# outlist[]
-                         tmp2 = integer(2L*k +1L),# nrlist []
-                         tmp3 = double (2L*k +1L),# window []
-                         as.integer(iend),
-                         as.integer(print.level),
-                         DUP = FALSE)$ rmed
-                  },
-                  Stuetzle = {
-                      .C(C_Srunmed,
-                         as.double(x),
-                         smo = double(n),
-                         n,
-                         k,
-                         as.integer(iend),
-                         debug = (print.level > 0),
-                         DUP = FALSE)$ smo
-                  })
-    if(endrule == "median")
-        res <- smoothEnds(res, k = k)
+                  Turlach = .Call(C_runmed, as.double(x), 1, k, iend, print.level),
+                  Stuetzle = .Call(C_runmed, as.double(x), 0, k, iend, print.level))
+    if(endrule == "median") res <- smoothEnds(res, k = k)
 
-    ## list(rmed=res$rmed, k=k)
     ## Setting attribute has the advantage that the result immediately plots
     attr(res,"k") <- k
     res
