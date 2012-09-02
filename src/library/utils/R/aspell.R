@@ -621,31 +621,64 @@ function(ifile, encoding = "unknown", ignore = character())
 {
     pd <- get_parse_data_for_message_strings(ifile, encoding)
     if(is.null(pd)) return(character())
-    
+
+    ## Strip the string delimiters.
+    pd$text <- substring(pd$text, 2L, nchar(pd$text) - 1L)
+
     lines <- readLines(ifile, encoding = encoding)
-    ## We may have multi-line string literals, which are tricky to write
-    ## out line-wise.  So let's do everything in one big string for now.
-    nc <- nchar(lines)
-    s <- vapply(Map(rep.int, rep.int(" ", length(nc)), nc,
-                    USE.NAMES = FALSE),
-                paste, "", collapse = "")
-    offsets <- c(0, cumsum(nc + 1L))
-    s <- paste(s, collapse = "\n")
-    ## Note that we drop the string delimiters.
-    starts <- offsets[pd$line1] + pd$col1 + 1L
-    texts <- as.character(pd$text)
-    texts <- substring(texts, 2L, nchar(texts) - 1L)
-    stops <- starts + nchar(texts)
-    for(i in seq_along(texts))
-        substring(s, starts[i], stops[i]) <- texts[i]
 
-    lines <- unlist(strsplit(s, "\n"))
+    ## Column positions in the parse data have tabs expanded to tab
+    ## stops using a tab width of 8, so for lines with tabs we need to
+    ## map the column positions back to character positions.
+    lines_in_pd <- sort(unique(c(pd$line1, pd$line2)))
+    tab <- Map(function(tp, nc) {
+        if(tp[1L] == -1L) return(NULL)
+        widths <- rep.int(1, nc)
+        for(i in tp) {
+            cols <- cumsum(widths)
+            widths[i] <- 8 - (cols[i] - 1) %% 8
+        }
+        cumsum(c(1, widths))
+    },
+               gregexpr("\t", lines[lines_in_pd], fixed = TRUE),
+               nchar(lines[lines_in_pd]))
+    names(tab) <- lines_in_pd        
 
+    lines[lines_in_pd] <- gsub("[^\t]", " ", lines[lines_in_pd])
+    lines[-lines_in_pd] <- ""
+
+    for(entry in split(pd, seq_len(NROW(pd)))) {
+        line1 <- entry$line1
+        line2 <- entry$line2
+        col1 <- entry$col1 + 1L
+        col2 <- entry$col2 - 1L
+        if(line1 == line2) {
+            if(length(ptab <- tab[[as.character(line1)]])) {
+                col1 <- which(ptab == col1)
+                col2 <- which(ptab == col2)
+            }
+            substring(lines[line1], col1, col2) <- entry$text
+        } else {
+            texts <- unlist(strsplit(entry$text, "\n", fixed = TRUE))
+            n <- length(texts)
+            if(length(ptab <- tab[[as.character(line1)]])) {
+                col1 <- which(ptab == col1)
+            }
+            substring(lines[line1], col1) <- texts[1L]
+            pos <- seq(from = 2, length.out = n - 2)
+            if(length(pos))
+                lines[line1 + pos - 1] <- texts[pos]
+            if(length(ptab <- tab[[as.character(line2)]])) {
+                col2 <- which(ptab == col2)
+            }
+            substring(lines[line2], 1L, col2) <- texts[n]
+        }
+    }
+    
     for(re in ignore[nzchar(ignore)])
         lines <- blank_out_regexp_matches(lines, re)
 
     lines
-
 }
 
 get_parse_data_for_message_strings <-
@@ -737,7 +770,7 @@ function(file, encoding = "unknown")
 
 aspell_R_R_files <-
 function(which = NULL, dir = NULL,
-         ignore = c("[ \t]'[[:alnum:]_.]*'[ \t[:punct:]]",
+         ignore = c("[ \t]'[^[:space:]']*'[ \t[:punct:]]",
                     "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
          program = NULL)
 {
