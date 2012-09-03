@@ -143,43 +143,35 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    copyListMatrix(ans, vals, byrow);
     } else if (isVector(vals)) { /* fill with NAs */
-	int i, j;
-	R_xlen_t NR = nr;
+	R_xlen_t N = (R_xlen_t) nr * nc, i;
 	switch(TYPEOF(vals)) {
 	case STRSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
-		    SET_STRING_ELT(ans, i + j * NR, NA_STRING);
+	    for (i = 0; i < N; i++)
+		SET_STRING_ELT(ans, i, NA_STRING);
 	    break;
 	case LGLSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
-		    LOGICAL(ans)[i + j * NR] = NA_LOGICAL;
+	    for (i = 0; i < N; i++)
+		LOGICAL(ans)[i] = NA_LOGICAL;
 	    break;
 	case INTSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
-		    INTEGER(ans)[i + j * NR] = NA_INTEGER;
+	    for (i = 0; i < N; i++)
+		INTEGER(ans)[i] = NA_INTEGER;
 	    break;
 	case REALSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
-		    REAL(ans)[i + j * NR] = NA_REAL;
+	    for (i = 0; i < N; i++)
+		REAL(ans)[i] = NA_REAL;
 	    break;
 	case CPLXSXP:
 	    {
 		Rcomplex na_cmplx;
 		na_cmplx.r = NA_REAL;
 		na_cmplx.i = 0;
-		for (i = 0; i < nr; i++)
-		    for (j = 0; j < nc; j++)
-			COMPLEX(ans)[i + j * NR] = na_cmplx;
+		for (i = 0; i < N; i++)
+		    COMPLEX(ans)[i] = na_cmplx;
 	    }
 	    break;
 	case RAWSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
-		    RAW(ans)[i + j * NR] = 0;
+	    memset(RAW(ans), 0, N);
 	    break;
 	default:
 	    /* don't fill with anything */
