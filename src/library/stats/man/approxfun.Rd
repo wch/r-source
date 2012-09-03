@@ -1,6 +1,6 @@
 % File src/library/stats/man/approxfun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{approxfun}
@@ -12,10 +12,10 @@
   or a function performing the linear (or constant) interpolation.
 }
 \usage{
-approx   (x, y = NULL, xout, method="linear", n=50,
+approx   (x, y = NULL, xout, method = "linear", n=50,
           yleft, yright, rule = 1, f = 0, ties = mean)
 
-approxfun(x, y = NULL,       method="linear",
+approxfun(x, y = NULL,       method  ="linear",
           yleft, yright, rule = 1, f = 0, ties = mean)
 }
 \arguments{
@@ -41,15 +41,27 @@ approxfun(x, y = NULL,       method="linear",
     points and if it is \code{2}, the value at the closest data extreme
     is used.  Use, e.g., \code{rule = 2:1}, if the left and right side
     extrapolation should differ.}
-  \item{f}{for \code{method="constant"} a number between 0 and 1
+  \item{f}{for \code{method = "constant"} a number between 0 and 1
     inclusive, indicating a compromise between left- and
     right-continuous step functions. If \code{y0} and \code{y1} are the
     values to the left and right of the point then the value is
-    \code{y0*(1-f)+y1*f} so that \code{f=0} is right-continuous and
-    \code{f=1} is left-continuous.}
+    \code{y0*(1-f)+y1*f} so that \code{f = 0} is right-continuous and
+    \code{f = 1} is left-continuous.}
   \item{ties}{Handling of tied \code{x} values.  Either a function
     with a single vector argument returning a single number result or
     the string \code{"ordered"}.}
+}
+\details{
+  The inputs can contain missing values which are deleted, so at least
+  two complete \code{(x, y)} pairs are required (for \code{method =
+  "linear"}, one otherwise).  If there are duplicated (tied) \code{x}
+  values and \code{ties} is a function it is applied to the \code{y}
+  values for each distinct \code{x} value.
+  Useful functions in this context include \code{\link{mean}},
+  \code{\link{min}}, and \code{\link{max}}.  If \code{ties = "ordered"}
+  the \code{x} values are assumed to be already ordered.  The first
+  \code{y} value will be used for interpolation to the left and the last
+  one for interpolation to the right.
 }
 \value{
   \code{approx} returns a list with components \code{x} and \code{y},
@@ -61,17 +73,10 @@ approxfun(x, y = NULL,       method="linear",
   \code{x} values, this function will return the corresponding
   interpolated values.  This is often more useful than \code{approx}.
 }
-\details{
-  The inputs can contain missing values which are deleted, so at least
-  two complete \code{(x, y)} pairs are required (for \code{method =
-  "linear"}, one otherwise).  If there are duplicated (tied) \code{x}
-  values and \code{ties} is a function it is applied to the \code{y}
-  values for each distinct \code{x} value.
-  Useful functions in this context include \code{\link{mean}},
-  \code{\link{min}}, and \code{\link{max}}.  If \code{ties="ordered"}
-  the \code{x} values are assumed to be already ordered.  The first
-  \code{y} value will be used for interpolation to the left and the last
-  one for interpolation to the right.
+\section{Warning}{
+  The value returned by \code{approxfun} contains references to the code
+  in the current version of \R: it is not intended to be saved and
+  loaded into a different \R session.
 }
 \seealso{
   \code{\link{spline}} and \code{\link{splinefun}} for spline
