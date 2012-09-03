@@ -54,8 +54,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 		   yleft, yright, rule = 1, f = 0, ties = mean)
 {
     method <- pmatch(method, c("linear", "constant"))
-    if (is.na(method))
-	stop("invalid interpolation method")
+    if (is.na(method)) stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
@@ -75,25 +74,20 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	yright <- if (rule[2L] == 1) NA else y[length(y)]
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
     if (missing(xout)) {
-	if (n <= 0)
-	    stop("'approx' requires n >= 1")
+	if (n <= 0) stop("'approx' requires n >= 1")
 	xout <- seq.int(x[1L], x[nx], length.out = n)
     }
-    nxout <- as.integer(length(xout))
-    if (is.na(nxout)) stop("invalid length(xout)")
-    y <- .C(C_R_approx, as.double(x), as.double(y), nx,
-	    xout = as.double(xout), nxout,
-	    as.integer(method), as.double(yleft), as.double(yright),
-	    as.double(f), NAOK = TRUE)$xout
-    list(x = xout, y = y)
+    x <- as.double(x); y <- as.double(y)
+    .Call(C_ApproxTest, x, y, method, f)
+    yout <- .Call(C_Approx, x, y, xout, method, yleft, yright, f)
+    list(x = xout, y = yout)
 }
 
 approxfun <- function(x, y = NULL, method = "linear",
 		   yleft, yright, rule = 1, f = 0, ties = mean)
 {
     method <- pmatch(method, c("linear", "constant"))
-    if (is.na(method))
-	stop("invalid interpolation method")
+    if (is.na(method)) stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
@@ -116,11 +110,9 @@ approxfun <- function(x, y = NULL, method = "linear",
     rm(rule, ties, lenR)
 
     ## 1. Test input consistency once
-    .C(C_R_approxtest,as.double(x), as.double(y), n,
-        as.integer(method), as.double(f), NAOK = TRUE)
+    x <- as.double(x); y <- as.double(y)
+    .Call(C_ApproxTest, x, y, method, f)
 
     ## 2. Create and return function that does not test input validity...
-    function(v) .C(C_R_approxfun, as.double(x), as.double(y), n,
-        xout = as.double(v), as.integer(length(v)), as.integer(method),
-        as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE)$xout
+    function(v) .Call(C_Approx, x, y, v, method, yleft, yright, f)
 }

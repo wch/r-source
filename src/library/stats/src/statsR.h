@@ -70,3 +70,13 @@ SEXP pKolmogorov2x(SEXP statistic, SEXP sn);
 SEXP pKS2(SEXP sn, SEXP stol);
 
 SEXP ksmooth(SEXP x, SEXP y, SEXP snp, SEXP skrn, SEXP sbw);
+
+SEXP SplineCoef(SEXP method, SEXP x, SEXP y);
+SEXP SplineEval(SEXP xout, SEXP z);
+
+SEXP ApproxTest(SEXP x, SEXP y, SEXP method, SEXP sf);
+SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method, 
+	    SEXP yleft, SEXP yright, SEXP sf);
+
+
+

@@ -57,27 +57,13 @@ static R_NativePrimitiveArgType band_phi4_bin_t[] = {INTSXP, INTSXP, REALSXP, IN
 static R_NativePrimitiveArgType band_phi6_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType band_den_bin_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 
-static R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType R_approxtest_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP};
-static R_NativePrimitiveArgType R_approxfun_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
-
 static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					      REALSXP, REALSXP, INTSXP, INTSXP, REALSXP,
 					      INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
 					      INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
-						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-
-static R_NativePrimitiveArgType lowesw_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
-static R_NativePrimitiveArgType lowesp_t[] = {
-    INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, REALSXP};
-
-
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
-#define FDEF(name)  {#name, (DL_FUNC) &F77_SUB(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 static const R_CMethodDef CEntries[]  = {
     {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
@@ -107,17 +93,12 @@ static const R_CMethodDef CEntries[]  = {
     {"HoltWinters", (DL_FUNC) &HoltWinters, 17},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
-    CDEF(R_approx),
-    CDEF(R_approxfun),
-    CDEF(R_approxtest),
     CDEF(band_ucv_bin),
     CDEF(band_bcv_bin),
     CDEF(band_phi4_bin),
     CDEF(band_phi6_bin),
     CDEF(band_den_bin),
     CDEF(loglin),
-    CDEF(spline_coef),
-    CDEF(spline_eval),
     {"signrank_free", (DL_FUNC) &stats_signrank_free, 0},
     {"wilcox_free", (DL_FUNC) &stats_wilcox_free, 0},
     {NULL, NULL, 0}
@@ -126,51 +107,51 @@ static const R_CMethodDef CEntries[]  = {
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"R_cutree", (DL_FUNC) &R_cutree, 2},
-    {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
-    {"R_monoFC_m", (DL_FUNC) &R_monoFC_m, 2},
-    {"numeric_deriv", (DL_FUNC)&numeric_deriv, 4},
-    {"nls_iter", (DL_FUNC)&nls_iter, 3},
-    {"setup_starma", (DL_FUNC) &setup_starma, 8},
-    {"free_starma", (DL_FUNC) &free_starma, 1},
-    {"set_trans", (DL_FUNC) &set_trans, 2},
-    {"arma0fa", (DL_FUNC) &arma0fa, 2},
-    {"get_s2", (DL_FUNC) &get_s2, 1},
-    {"get_resid", (DL_FUNC) &get_resid, 1},
-    {"Dotrans", (DL_FUNC) &Dotrans, 2},
-    {"arma0_kfore", (DL_FUNC) &arma0_kfore, 4},
-    {"Starma_method", (DL_FUNC) &Starma_method, 2},
-    {"Invtrans", (DL_FUNC) &Invtrans, 2},
-    {"Gradtrans", (DL_FUNC) &Gradtrans, 2},
-    {"ARMAtoMA", (DL_FUNC) &ARMAtoMA, 3},
-    {"KalmanLike", (DL_FUNC) &KalmanLike, 11},
-    {"KalmanFore", (DL_FUNC) &KalmanFore, 8},
-    {"KalmanSmooth", (DL_FUNC) &KalmanSmooth, 9},
-    {"ARIMA_undoPars", (DL_FUNC) &ARIMA_undoPars, 2},
-    {"ARIMA_transPars", (DL_FUNC) &ARIMA_transPars, 3},
-    {"ARIMA_Invtrans", (DL_FUNC) &ARIMA_Invtrans, 2},
-    {"ARIMA_Gradtrans", (DL_FUNC) &ARIMA_Gradtrans, 2},
-    {"ARIMA_Like", (DL_FUNC) &ARIMA_Like, 9},
-    {"ARIMA_CSS", (DL_FUNC) &ARIMA_CSS, 6},
-    {"TSconv", (DL_FUNC) &TSconv, 2},
-    {"getQ0", (DL_FUNC) &getQ0, 2},
-    {"port_ivset", (DL_FUNC) &port_ivset, 3},
-    {"port_nlminb", (DL_FUNC) &port_nlminb, 9},
-    {"port_nlsb", (DL_FUNC) &port_nlsb, 7},
-    {"logit_link", (DL_FUNC) &logit_link, 1},
-    {"logit_linkinv", (DL_FUNC) &logit_linkinv, 1},
-    {"logit_mu_eta", (DL_FUNC) &logit_mu_eta, 1},
-    {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
-    {"R_rWishart", (DL_FUNC) &R_rWishart, 3},
-    {"Cdqrls", (DL_FUNC) &Cdqrls, 3},
-    {"Cdist", (DL_FUNC) &Cdist, 4},
-    {"cor", (DL_FUNC) &cor, 4},
-    {"cov", (DL_FUNC) &cov, 4},
-    {"updateform", (DL_FUNC) &updateform, 2},
-    {"fft", (DL_FUNC) &fft, 2},
-    {"mvfft", (DL_FUNC) &mvfft, 2},
-    {"nextn", (DL_FUNC) &nextn, 2},
-    {"r2dtable", (DL_FUNC) &r2dtable, 3},
+    CALLDEF(cutree, 2),
+    CALLDEF(isoreg, 1),
+    CALLDEF(monoFC_m, 2),
+    CALLDEF(numeric_deriv, 4),
+    CALLDEF(nls_iter, 3),
+    CALLDEF(setup_starma, 8),
+    CALLDEF(free_starma, 1),
+    CALLDEF(set_trans, 2),
+    CALLDEF(arma0fa, 2),
+    CALLDEF(get_s2, 1),
+    CALLDEF(get_resid, 1),
+    CALLDEF(Dotrans, 2),
+    CALLDEF(arma0_kfore, 4),
+    CALLDEF(Starma_method, 2),
+    CALLDEF(Invtrans, 2),
+    CALLDEF(Gradtrans, 2),
+    CALLDEF(ARMAtoMA, 3),
+    CALLDEF(KalmanLike, 11),
+    CALLDEF(KalmanFore, 8),
+    CALLDEF(KalmanSmooth, 9),
+    CALLDEF(ARIMA_undoPars, 2),
+    CALLDEF(ARIMA_transPars, 3),
+    CALLDEF(ARIMA_Invtrans, 2),
+    CALLDEF(ARIMA_Gradtrans, 2),
+    CALLDEF(ARIMA_Like, 9),
+    CALLDEF(ARIMA_CSS, 6),
+    CALLDEF(TSconv, 2),
+    CALLDEF(getQ0, 2),
+    CALLDEF(port_ivset, 3),
+    CALLDEF(port_nlminb, 9),
+    CALLDEF(port_nlsb, 7),
+    CALLDEF(logit_link, 1),
+    CALLDEF(logit_linkinv, 1),
+    CALLDEF(logit_mu_eta, 1),
+    CALLDEF(binomial_dev_resids, 3),
+    CALLDEF(rWishart, 3),
+    CALLDEF(Cdqrls, 3),
+    CALLDEF(Cdist, 4),
+    CALLDEF(cor, 4),
+    CALLDEF(cov, 4),
+    CALLDEF(updateform, 2),
+    CALLDEF(fft, 2),
+    CALLDEF(mvfft, 2),
+    CALLDEF(nextn, 2),
+    CALLDEF(r2dtable, 3),
     CALLDEF(cfilter, 4),
     CALLDEF(rfilter, 3),
     CALLDEF(lowess, 5),
@@ -184,8 +165,20 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(pKolmogorov2x, 2),
     CALLDEF(pKS2, 2),
     CALLDEF(ksmooth, 5),
+    CALLDEF(SplineCoef, 3),
+    CALLDEF(SplineEval, 2),
+    CALLDEF(Approx, 7),
+    CALLDEF(ApproxTest, 4),
     {NULL, NULL, 0}
 };
+
+#define FDEF(name)  {#name, (DL_FUNC) &F77_SUB(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
+
+
+static R_NativePrimitiveArgType lowesw_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType lowesp_t[] = {
+    INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, REALSXP};
+
 
 static const R_FortranMethodDef FortEntries[] = {
     FDEF(lowesw),
@@ -202,7 +195,6 @@ static const R_FortranMethodDef FortEntries[] = {
     {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
     {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
     {"stl", (DL_FUNC) &F77_SUB(stl), 18},
-//    {"lminfl", (DL_FUNC) &F77_SUB(lminfl), 11},
     {NULL, NULL, 0}
 };
 

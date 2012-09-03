@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  The R Core Team
+ *  Copyright (C) 1998--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@
 #include <config.h>
 #endif
 
+#include <R.h>
 #include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 #include <stdio.h>
@@ -58,7 +59,8 @@
  *	elimination could be used.
  */
 
-void natural_spline(int n, double *x, double *y, double *b, double *c, double *d)
+static void 
+natural_spline(int n, double *x, double *y, double *b, double *c, double *d)
 {
     int nm1, i;
     double t;
@@ -136,7 +138,8 @@ void natural_spline(int n, double *x, double *y, double *b, double *c, double *d
  *	third derivatives of these cubics at the end-points.
  */
 
-void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
+static void 
+fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
 {
     int nm1, i;
     double t;
@@ -225,11 +228,13 @@ void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
  *	data with y[1] equal to y[n].
  */
 
-void periodic_spline(int n, double *x, double *y,
-		     double *b, double *c, double *d, double *e)
+static void 
+periodic_spline(int n, double *x, double *y, double *b, double *c, double *d)
 {
     double s;
     int i, nm1;
+    
+    double *e = (double *) R_alloc(n, sizeof(double));
 
     /* Adjustment for 1-based arrays */
 
@@ -340,62 +345,114 @@ void periodic_spline(int n, double *x, double *y,
 #undef D
 #undef X
 
-void spline_coef(int *method, int *n, double *x, double *y,
-		 double *b, double *c, double *d, double *e)
+/* These were/are the public interfaces */
+static void 
+spline_coef(int method, int n, double *x, double *y,
+	    double *b, double *c, double *d)
 {
-    switch(*method) {
+    switch(method) {
     case 1:
-	periodic_spline(*n, x, y, b, c, d, e);	break;
+	periodic_spline(n, x, y, b, c, d);	break;
 
     case 2:
-	natural_spline(*n, x, y, b, c, d);	break;
+	natural_spline(n, x, y, b, c, d);	break;
 
     case 3:
-	fmm_spline(*n, x, y, b, c, d);	break;
+	fmm_spline(n, x, y, b, c, d);	break;
     }
 }
 
-void spline_eval(int *method, int *nu, double *u, double *v,
-		 int *n, double *x, double *y, double *b, double *c, double *d)
+#include <Rinternals.h>
+#include "statsR.h"
+
+SEXP SplineCoef(SEXP method, SEXP x, SEXP y)
+{
+    x = PROTECT(coerceVector(x, REALSXP));
+    y = PROTECT(coerceVector(y, REALSXP));
+    int n = LENGTH(x), m = asInteger(method);
+    if(LENGTH(y) != n) error("inputs of different lengths");
+    SEXP b, c, d, ans, nm;
+    b = PROTECT(allocVector(REALSXP, n));
+    c = PROTECT(allocVector(REALSXP, n));
+    d = PROTECT(allocVector(REALSXP, n));
+    double *rb = REAL(b), *rc = REAL(c), *rd = REAL(d);
+    for (int i = 0; i < n; i++) rb[i] = rc[i] = rd[i] = 0;
+
+    spline_coef(m, n, REAL(x), REAL(y), rb, rc, rd);
+
+    ans = PROTECT(allocVector(VECSXP, 7));
+    SET_VECTOR_ELT(ans, 0, ScalarInteger(m));
+    SET_VECTOR_ELT(ans, 1, ScalarInteger(n));
+    SET_VECTOR_ELT(ans, 2, x);
+    SET_VECTOR_ELT(ans, 3, y);
+    SET_VECTOR_ELT(ans, 4, b);
+    SET_VECTOR_ELT(ans, 5, c);
+    SET_VECTOR_ELT(ans, 6, d);
+    nm = allocVector(STRSXP, 7);
+    setAttrib(ans, R_NamesSymbol, nm);
+    SET_STRING_ELT(nm, 0, mkChar("method"));
+    SET_STRING_ELT(nm, 1, mkChar("n"));
+    SET_STRING_ELT(nm, 2, mkChar("x"));
+    SET_STRING_ELT(nm, 3, mkChar("y"));
+    SET_STRING_ELT(nm, 4, mkChar("b"));
+    SET_STRING_ELT(nm, 5, mkChar("c"));
+    SET_STRING_ELT(nm, 6, mkChar("d"));
+    UNPROTECT(6);
+    return ans;
+}
+
+static void 
+spline_eval(int method, int nu, double *u, double *v,
+	    int n, double *x, double *y, double *b, double *c, double *d)
 {
 /* Evaluate  v[l] := spline(u[l], ...),	    l = 1,..,nu, i.e. 0:(nu-1)
  * Nodes x[i], coef (y[i]; b[i],c[i],d[i]); i = 1,..,n , i.e. 0:(*n-1)
  */
-    const int n_1 = *n - 1;
+    const int n_1 = n - 1;
     int i, j, k, l;
     double ul, dx, tmp;
 
-    if(*method == 1 && *n > 1) { /* periodic */
+    if(method == 1 && n > 1) { /* periodic */
 	dx = x[n_1] - x[0];
-	for(l = 0; l < *nu; l++) {
+	for(l = 0; l < nu; l++) {
 	    v[l] = fmod(u[l]-x[0], dx);
 	    if(v[l] < 0.0) v[l] += dx;
 	    v[l] += x[0];
 	}
-    }
-    else {
-	for(l = 0; l < *nu; l++)
-	    v[l] = u[l];
-    }
+    } else for(l = 0; l < nu; l++) v[l] = u[l];
 
-    i = 0;
-    for(l = 0; l < *nu; l++) {
+    for(l = 0, i = 0; l < nu; l++) {
 	ul = v[l];
 	if(ul < x[i] || (i < n_1 && x[i+1] < ul)) {
 	    /* reset i  such that  x[i] <= ul <= x[i+1] : */
 	    i = 0;
-	    j = *n;
+	    j = n;
 	    do {
 		k = (i+j)/2;
 		if(ul < x[k]) j = k;
 		else i = k;
-	    }
-	    while(j > i+1);
+	    } while(j > i+1);
 	}
 	dx = ul - x[i];
 	/* for natural splines extrapolate linearly left */
-	tmp = (*method == 2 && ul < x[0]) ? 0.0 : d[i];
+	tmp = (method == 2 && ul < x[0]) ? 0.0 : d[i];
 
 	v[l] = y[i] + dx*(b[i] + dx*(c[i] + dx*tmp));
     }
+}
+
+SEXP SplineEval(SEXP xout, SEXP z)
+{
+    xout = PROTECT(coerceVector(xout, REALSXP));
+    int nu = LENGTH(xout);
+    SEXP yout = PROTECT(allocVector(REALSXP, nu));
+    int method = asInteger(getListElement(z, "method")),
+	nx = asInteger(getListElement(z, "n"));
+    SEXP x = getListElement(z, "x"), y = getListElement(z, "y"),
+	b = getListElement(z, "b"), c = getListElement(z, "c"),
+	d = getListElement(z, "d");
+    spline_eval(method, nu, REAL(xout), REAL(yout), 
+		nx, REAL(x), REAL(y), REAL(b), REAL(c), REAL(d));
+    UNPROTECT(2);
+    return yout;
 }

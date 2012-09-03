@@ -44,29 +44,20 @@ splinefun <- function(x, y=NULL,
         m <- c(Sx[1L], (Sx[-1L] + Sx[-n1])/2, Sx[n1]) ## 1.
 
         ## use C, as we need to "serially" progress from left to right:
-        m <- .Call(C_R_monoFC_m, m, Sx)
+        m <- .Call(C_monoFC_m, m, Sx)
 
         ## Hermite spline with (x,y,m) :
         return(splinefunH0(x = x, y = y, m = m, dx = dx))
     }
     ## else
     iMeth <- match(method, c("periodic", "natural", "fmm", "monoH.FC"))
-    z <- .C(C_spline_coef,
-	    method=as.integer(iMeth),
-	    n=nx,
-	    x=x,
-	    y=y,
-	    b=double(nx),
-	    c=double(nx),
-	    d=double(nx),
-	    e=double(if(iMeth == 1) nx else 0))
-    rm(x,y,nx,method,iMeth,ties)
-    z$e <- NULL
-    function(x, deriv = 0) {
+    z <- .Call(C_SplineCoef, iMeth, x, y)
+    rm(x, y, nx, method, iMeth, ties)
+    function(x, deriv = 0L) {
 	deriv <- as.integer(deriv)
-	if (deriv < 0 || deriv > 3)
+	if (deriv < 0L || deriv > 3L)
 	    stop("'deriv' must be between 0 and 3")
-	if (deriv > 0) {
+	if (deriv > 0L) {
 	    ## For deriv >= 2, using approx() should be faster, but doing it correctly
 	    ## for all three methods is not worth the programmer's time...
 	    z0 <- double(z$n)
@@ -81,17 +72,8 @@ splinefun <- function(x, y=NULL,
         ##           where dx := (u[j]-x[i]); i such that x[i] <= u[j] <= x[i+1},
         ##                u[j]:= xout[j] (unless sometimes for periodic spl.)
         ##           and  d_i := d[i] unless for natural splines at left
-	res <- .C(C_spline_eval,
-                  z$method,
-                  as.integer(length(x)),
-                  x=as.double(x),
-                  y=double(length(x)),
-                  z$n,
-                  z$x,
-                  z$y,
-                  z$b,
-                  z$c,
-                  z$d)$y
+        res <- .Call(C_SplineEval, x, z)
+
 
         ## deal with points to the left of first knot if natural
         ## splines are used  (Bug PR#13132)

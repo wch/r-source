@@ -73,7 +73,7 @@ static double
  * @return
  */
 SEXP
-R_rWishart(SEXP ns, SEXP nuP, SEXP scal)
+rWishart(SEXP ns, SEXP nuP, SEXP scal)
 {
     SEXP ans;
     int *dims = INTEGER(getAttrib(scal, R_DimSymbol)), info,

@@ -27,11 +27,6 @@
 #define _(String) (String)
 #endif
 
-void R_approx(double *, double *, int *, double *, int *,
-	      int *, double *, double *, double *);
-void R_approxfun(double *, double *, int *, double *, int *,
-	      int *, double *, double *, double *);
-void R_approxtest(double *, double *, int *, int *, double *);
 void band_ucv_bin(int *, int *, double *, int *, double *, double *);
 void band_bcv_bin(int *, int *, double *, int *, double *, double *);
 void band_phi4_bin(int *, int *, double *, int *, double *, double *);
@@ -41,11 +36,6 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 	    double *table, double *fit, int *locmar, int *nmar, double *marg,
 	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault);
-void spline_coef(int *method, int *n, double *x, double *y,
-		 double *b, double *c, double *d, double *e);
-void spline_eval(int *method, int *nu, double *u, double *v,
-		 int *n, double *x, double *y,
-		 double *b, double *c, double *d);
 
 void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, int *docoef,
 		      double *qraux, double *resid, double *hat,

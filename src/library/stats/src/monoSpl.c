@@ -55,7 +55,7 @@ void monoFC_mod(double *m, double S[], int n)
     } /* end for */
 }
 
-SEXP R_monoFC_m(SEXP m, SEXP Sx)
+SEXP monoFC_m(SEXP m, SEXP Sx)
 {
     SEXP val;
     int n = LENGTH(m);

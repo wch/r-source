@@ -23,9 +23,9 @@
 void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p);
 
-SEXP R_cutree(SEXP merge, SEXP which);
+SEXP cutree(SEXP merge, SEXP which);
 
-SEXP R_rWishart(SEXP ns, SEXP nuP, SEXP scal);
+SEXP rWishart(SEXP ns, SEXP nuP, SEXP scal);
 
 
 void

@@ -21,12 +21,11 @@
 ####  also consider ``compatibility'' with  'approx' and 'approxfun'
 
 spline <-
-    function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x),
-             xout, ties = mean)
+    function(x, y = NULL, n = 3*length(x), method = "fmm",
+             xmin = min(x), xmax = max(x), xout, ties = mean)
 {
     method <- pmatch(method, c("periodic", "natural", "fmm"))
-    if(is.na(method))
-	stop("invalid interpolation method")
+    if(is.na(method)) stop("invalid interpolation method")
 
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
@@ -39,29 +38,12 @@ spline <-
         warning("spline: first and last y values differ - using y[1] for both")
         y[nx] <- y[1L]
     }
-    z <- .C(C_spline_coef,
-	    method=as.integer(method),
-	    n=nx,
-	    x=x,
-	    y=y,
-	    b=double(nx),
-	    c=double(nx),
-	    d=double(nx),
-	    e=double(if(method == 1) nx else 0))
-    if(missing(xout))
-        xout <- seq.int(xmin, xmax, length.out=n)
+   if(missing(xout)) xout <- seq.int(xmin, xmax, length.out = n)
     else n <- length(xout)
-    if (n <= 0)
-        stop("'spline' requires n >= 1")
-    .C(C_spline_eval,
-       z$method,
-       nu=as.integer(n),
-       x =as.double(xout),
-       y =double(n),
-       z$n,
-       z$x,
-       z$y,
-       z$b,
-       z$c,
-       z$d)[c("x","y")]
+    if (n <= 0) stop("'spline' requires n >= 1")
+
+    ## These calls could be combined, but splinefun needs separate ones.
+    z <- .Call(C_SplineCoef, method, x, y)
+    xout <- as.double(xout)
+    list(x = xout, y = .Call(C_SplineEval, xout, z))
 }

@@ -22,7 +22,7 @@
 #include <Rinternals.h>
 #include "mva.h"
 
-SEXP R_cutree(SEXP merge, SEXP which)
+SEXP cutree(SEXP merge, SEXP which)
 {
 /* Return grouping vector from cutting a (binary) (cluster) tree
  * into which[j] groups.

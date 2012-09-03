@@ -326,3 +326,6 @@ qsignrank <- function(p, n, lower.tail = TRUE, log.p = FALSE)
     .External(C_qsignrank, p, n, lower.tail, log.p)
 }
 rsignrank <- function(nn, n) .External(C_rsignrank, nn, n)
+
+##' Random sample from a Wishart distribution
+rWishart <- function(n, df, Sigma) .Call(C_rWishart, n, df, Sigma)

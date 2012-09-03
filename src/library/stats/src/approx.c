@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2001   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2012   Robert Gentleman, Ross Ihaka and the
  *			      R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -63,16 +63,13 @@ static double approx1(double v, double *x, double *y, int n,
     j = n - 1;
 
     /* handle out-of-domain points */
-
     if(v < x[i]) return Meth->ylow;
     if(v > x[j]) return Meth->yhigh;
 
     /* find the correct interval by bisection */
-
     while(i < j - 1) { /* x[i] <= v <= x[j] */
 	ij = (i + j)/2; /* i+1 <= ij <= j-1 */
-	if(v < x[ij]) j = ij;
-	else i = ij;
+	if(v < x[ij]) j = ij; else i = ij;
 	/* still i < j */
     }
     /* provably have i == j-1 */
@@ -83,62 +80,24 @@ static double approx1(double v, double *x, double *y, int n,
     if(v == x[i]) return y[i];
     /* impossible: if(x[j] == x[i]) return y[i]; */
 
-    if(Meth->kind == 1) { /* linear */
+    if(Meth->kind == 1) /* linear */
 	return y[i] + (y[j] - y[i]) * ((v - x[i])/(x[j] - x[i]));
-    }
-    else { /* 2 : constant */
+    else /* 2 : constant */
 	return y[i] * Meth->f1 + y[j] * Meth->f2;
-    }
 }/* approx1() */
 
 
-	/* R Frontend for Linear and Constant Interpolation */
-
-void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
-	      int *method, double *yleft, double *yright, double *f)
-{
-    int i;
-    appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
-
-    /* check interpolation method */
-
-    switch(*method) {
-    case 1: /* linear */
-	break;
-    case 2: /* constant */
-	if(!R_FINITE(*f) || *f < 0 || *f > 1)
-	    error(_("approx(): invalid f value"));
-	M.f2 = *f;
-	M.f1 = 1 - *f;
-	break;
-    default:
-	error(_("approx(): invalid interpolation method"));
-	break;
-    }
-
-    for(i = 0 ; i < *nxy ; i++)
-	if(ISNA(x[i]) || ISNA(y[i]))
-	    error(_("approx(): attempted to interpolate NA values"));
-
-    M.kind = *method;
-    M.ylow = *yleft;
-    M.yhigh = *yright;
-
-    for(i = 0 ; i < *nout; i++)
-	if(!ISNA(xout[i])) xout[i] = approx1(xout[i], x, y, *nxy, &M);
-}
-
 /* Testing done only once - in a separate function */
-void R_approxtest(double *x, double *y, int *nxy,
-		  int *method, double *f)
+static void 
+R_approxtest(double *x, double *y, int nxy, int method, double f)
 {
     int i;
 
-    switch(*method) {
+    switch(method) {
     case 1: /* linear */
       	break;
     case 2: /* constant */
-	if(!R_FINITE(*f) || *f < 0 || *f > 1)
+	if(!R_FINITE(f) || f < 0 || f > 1)
 	    error(_("approx(): invalid f value"));
 	break;
     default:
@@ -146,24 +105,47 @@ void R_approxtest(double *x, double *y, int *nxy,
 	break;
     }
     /* check interpolation method */
-    for(i = 0; i < *nxy; i++)
+    for(i = 0; i < nxy; i++)
 	if(ISNA(x[i]) || ISNA(y[i]))
 	    error(_("approx(): attempted to interpolate NA values"));
 }
 
 /* R Frontend for Linear and Constant Interpolation, no testing */
 
-void R_approxfun(double *x, double *y, int *nxy, double *xout, int *nout,
-		 int *method, double *yleft, double *yright, double *f)
+static void 
+R_approxfun(double *x, double *y, int nxy, double *xout, int nout,
+	    int method, double yleft, double yright, double f)
 {
     int i;
     appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
 
-    M.f2 = *f;
-    M.f1 = 1 - *f;
-    M.kind = *method;
-    M.ylow = *yleft;
-    M.yhigh = *yright;
-    for(i = 0; i < *nout; i++)
-	if(!ISNA(xout[i])) xout[i] = approx1(xout[i], x, y, *nxy, &M);
+    M.f2 = f;
+    M.f1 = 1 - f;
+    M.kind = method;
+    M.ylow = yleft;
+    M.yhigh = yright;
+    for(i = 0; i < nout; i++)
+	if(!ISNA(xout[i])) xout[i] = approx1(xout[i], x, y, nxy, &M);
+}
+
+#include <Rinternals.h>
+#include "statsR.h"
+SEXP ApproxTest(SEXP x, SEXP y, SEXP method, SEXP sf)
+{
+    int nx = LENGTH(x), m = asInteger(method);
+    double f = asReal(sf);
+    R_approxtest(REAL(x), REAL(y), nx, m, f);
+    return R_NilValue;
+}
+
+SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method, 
+	    SEXP yleft, SEXP yright, SEXP sf)
+{
+    SEXP xout = PROTECT(TYPEOF(v) == REALSXP ? duplicate(v) :
+			coerceVector(v, REALSXP));
+    int nx = LENGTH(x), nv = LENGTH(xout), m = asInteger(method);
+    double yl = asReal(yleft), yr = asReal(yright), f = asReal(sf);
+    R_approxfun(REAL(x), REAL(y), nx, REAL(xout), nv, m, yl, yr, f);
+    UNPROTECT(1);
+    return xout;
 }

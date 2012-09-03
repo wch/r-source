@@ -22,7 +22,7 @@
 #include <R.h>
 #include "modreg.h"
 
-SEXP R_isoreg(SEXP y)
+SEXP isoreg(SEXP y)
 {
     int n = LENGTH(y), i, ip, known, n_ip;
     double tmp, slope;

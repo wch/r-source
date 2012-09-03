@@ -31,7 +31,7 @@ isoreg <- function(x, y=NULL)
 	ord <- order(x, -y) ## 'increasing in x, decreasing in y'
 	y <- y[ord]
     }
-    z <- .Call(C_R_isoreg, if(isOrd)xy$y else y)
+    z <- .Call(C_isoreg, if(isOrd)xy$y else y)
     structure(c(xy[c("x","y")], z[c("yf","yc","iKnots")],
                 list(isOrd = isOrd, ord = if(!isOrd) ord,
                      call = match.call())),

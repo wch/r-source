@@ -17,5 +17,4 @@
 #  http://www.r-project.org/Licenses/
 
 ##' Random sample from a Wishart distribution
-rWishart <- function(n, df, Sigma)
-    .Call(C_R_rWishart, n, df, Sigma)
+rWishart <- function(n, df, Sigma) .Call(C_rWishart, n, df, Sigma)

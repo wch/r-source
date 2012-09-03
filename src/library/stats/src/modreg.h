@@ -30,10 +30,10 @@
 #define _(String) (String)
 #endif
 
-SEXP R_isoreg(SEXP y);
+SEXP isoreg(SEXP y);
 
 /* monoSpl.c : */
-SEXP R_monoFC_m(SEXP m, SEXP Sx);
+SEXP monoFC_m(SEXP m, SEXP Sx);
 void monoFC_mod(double *m, double Sx[], int n);
 
 void
