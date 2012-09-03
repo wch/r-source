@@ -44,13 +44,9 @@ static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP}
 static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
 					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType pkolmogorov2x_t[2] = {REALSXP, INTSXP};
-
 static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
 
-static R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType prho_t[5] = {INTSXP, REALSXP, REALSXP, INTSXP, LGLSXP};
-static R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType swilk_t[6] = {REALSXP, INTSXP, INTSXP,
 					      REALSXP, REALSXP, INTSXP};
@@ -90,11 +86,8 @@ static const R_CMethodDef CEntries[]  = {
     {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
     {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
     {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
-    {"pkolmogorov2x", (DL_FUNC) &pkolmogorov2x, 2, pkolmogorov2x_t},
     {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
-    {"pkstwo", (DL_FUNC) &pkstwo, 3, pkstwo_t},
     {"prho", (DL_FUNC) &prho, 5, prho_t},
-    {"psmirnov2x", (DL_FUNC) &psmirnov2x, 3, psmirnov2x_t},
     {"qansari",  (DL_FUNC) &qansari, 4, qansari_t},
     {"swilk2", (DL_FUNC) &swilk, 6, swilk_t},
     {"BDRksmooth", (DL_FUNC) &BDRksmooth, 8},
@@ -188,6 +181,9 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(tukeyline, 3),
     CALLDEF(runmed, 5),
     CALLDEF(influence, 4),
+    CALLDEF(pSmirnov2x, 3),
+    CALLDEF(pKolmogorov2x, 2),
+    CALLDEF(pKS2, 2),
     {NULL, NULL, 0}
 };
 

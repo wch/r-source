@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2009   The R Core Team.
+ *  Copyright (C) 1999-2012   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 */
 
 #include <R.h>
+#include <Rinternals.h>
 #include <Rmath.h>		/* constants */
 
 #include "ctest.h"
@@ -33,8 +34,8 @@ static void m_multiply(double *A, double *B, double *C, int m);
 static void m_power(double *A, int eA, double *V, int *eV, int m, int n);
 
 /* Two-sample two-sided asymptotic distribution */
-void
-pkstwo(Sint *n, double *x, double *tol)
+static void
+pkstwo(int n, double *x, double tol)
 {
 /* x[1:n] is input and output
  *
@@ -57,11 +58,11 @@ pkstwo(Sint *n, double *x, double *tol)
  *
  */
     double new, old, s, w, z;
-    Sint i, k, k_max;
+    int i, k, k_max;
 
-    k_max = (Sint) sqrt(2 - log(*tol));
+    k_max = (int) sqrt(2 - log(tol));
 
-    for(i = 0; i < *n; i++) {
+    for(i = 0; i < n; i++) {
 	if(x[i] < 1) {
 	    z = - (M_PI_2 * M_PI_4) / (x[i] * x[i]);
 	    w = log(x[i]);
@@ -77,7 +78,7 @@ pkstwo(Sint *n, double *x, double *tol)
 	    k = 1;
 	    old = 0;
 	    new = 1;
-	    while(fabs(old - new) > *tol) {
+	    while(fabs(old - new) > tol) {
 		old = new;
 		new += 2 * s * exp(z * k * k);
 		s *= -1;
@@ -89,51 +90,41 @@ pkstwo(Sint *n, double *x, double *tol)
 }
 
 /* Two-sided two-sample */
-void
-psmirnov2x(double *x, Sint *m, Sint *n)
+static double psmirnov2x(double *x, int m, int n)
 {
     double md, nd, q, *u, w;
-    Sint i, j;
+    int i, j;
 
-    if(*m > *n) {
-	i = *n; *n = *m; *m = i;
+    if(m > n) {
+	i = n; n = m; m = i;
     }
-    md = (double) (*m);
-    nd = (double) (*n);
+    md = (double) m;
+    nd = (double) n;
     /*
        q has 0.5/mn added to ensure that rounding error doesn't
        turn an equality into an inequality, eg abs(1/2-4/5)>3/10 
 
     */
     q = (0.5 + floor(*x * md * nd - 1e-7)) / (md * nd);
-    u = (double *) R_alloc(*n + 1, sizeof(double));
+    u = (double *) R_alloc(n + 1, sizeof(double));
 
-    for(j = 0; j <= *n; j++) {
+    for(j = 0; j <= n; j++) {
 	u[j] = ((j / nd) > q) ? 0 : 1;
     }
-    for(i = 1; i <= *m; i++) {
-	w = (double)(i) / ((double)(i + *n));
+    for(i = 1; i <= m; i++) {
+	w = (double)(i) / ((double)(i + n));
 	if((i / md) > q)
 	    u[0] = 0;
 	else
 	    u[0] = w * u[0];
-	for(j = 1; j <= *n; j++) {
+	for(j = 1; j <= n; j++) {
 	    if(fabs(i / md - j / nd) > q) 
 		u[j] = 0;
 	    else
 		u[j] = w * u[j] + u[j - 1];
 	}
     }
-    *x = u[*n];
-}
-
-/* The two-sided one-sample 'exact' distribution */
-void
-pkolmogorov2x(double *x, Sint *n)
-{
-    /* x is input and output. */
-
-    *x = K(*n, *x);
+    return u[n];
 }
 
 static double
@@ -244,4 +235,32 @@ m_power(double *A, int eA, double *V, int *eV, int m, int n)
 	*eV += 140;
     }
     Free(B);
+}
+
+/* Two-sided two-sample */
+SEXP pSmirnov2x(SEXP statistic, SEXP snx, SEXP sny)
+{
+    int nx = asInteger(snx), ny = asInteger(sny);
+    double st = asReal(statistic);
+    return ScalarReal(psmirnov2x(&st, nx, ny));
+}
+
+/* Two-sample two-sided asymptotic distribution */
+SEXP pKS2(SEXP statistic, SEXP stol)
+{
+    int n = LENGTH(statistic);
+    double tol = asReal(stol);
+    SEXP ans = duplicate(statistic);
+    pkstwo(n, REAL(ans), tol);
+    return ans;
+}
+
+
+/* The two-sided one-sample 'exact' distribution */
+SEXP pKolmogorov2x(SEXP statistic, SEXP sn)
+{
+    int n = asInteger(sn);
+    double st = asReal(statistic), p;
+    p = K(n, st);
+    return ScalarReal(p);
 }

@@ -60,10 +60,7 @@ ks.test <-
                                  "less" = "the CDF of x lies below that of y",
                                  "greater" = "the CDF of x lies above that of y")
         if(exact && (alternative == "two.sided") && !TIES)
-            PVAL <- 1 - .C(C_psmirnov2x,
-                           p = as.double(STATISTIC),
-                           as.integer(n.x),
-                           as.integer(n.y))$p
+            PVAL <- 1 - .Call(C_pSmirnov2x, STATISTIC, n.x, n.y)
     } else { ## one-sample case
         if(is.character(y)) # avoid matching anything in this function
             y <- get(y, mode = "function", envir = parent.frame())
@@ -83,7 +80,7 @@ ks.test <-
                             "less" = max(x))
         if(exact) {
             PVAL <- 1 - if(alternative == "two.sided")
-                .C(C_pkolmogorov2x, p = as.double(STATISTIC), as.integer(n))$p
+                .Call(C_pKolmogorov2x, STATISTIC, n)
             else {
                 pkolmogorov1x <- function(x, n) {
                     ## Probability function for the one-sided
@@ -121,9 +118,7 @@ ks.test <-
             p <- rep(0, length(x))
             p[is.na(x)] <- NA
             IND <- which(!is.na(x) & (x > 0))
-            if(length(IND))
-                p[IND] <- .C(C_pkstwo, length(x[IND]), p = x[IND],
-                             as.double(tol))$p
+            if(length(IND)) p[IND] <- .Call(C_pKS2, p = x[IND], tol)
             p
         }
         ## <FIXME>
