@@ -141,8 +141,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	## odd-number-of-str.del needed, when truncating below
 	sd <- "\""
 	nos <- "[^\"]*"
-	oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
-		       nos, "$", sep = "")
+	oddsd <- paste0("^", nos, sd, "(", nos, sd, nos, sd, ")*", nos, "$")
         ## A helper function for echoing source.  This is simpler than the
         ## same-named one in Sweave
 	trySrcLines <- function(srcfile, showfrom, showto) {
@@ -162,29 +161,24 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    ei <- exprs[i]
 	}
 	if (echo) {
-	    srcref <- NULL
 	    nd <- 0
-	    if (tail)
-	    	srcref <- attr(exprs, "wholeSrcref")
-	    else if (i <= length(srcrefs))
-	    	srcref <- srcrefs[[i]]
+	    srcref <- if(tail) attr(exprs, "wholeSrcref") else
+		if(i <= length(srcrefs)) srcrefs[[i]] # else NULL
  	    if (!is.null(srcref)) {
 	    	if (i == 1) lastshown <- min(skip.echo, srcref[3L]-1)
 	    	if (lastshown < srcref[3L]) {
 	    	    srcfile <- attr(srcref, "srcfile")
 	    	    dep <- trySrcLines(srcfile, lastshown+1, srcref[3L])
 	    	    if (length(dep)) {
-			if (tail)
-			    leading <- length(dep)
-			else
-			    leading <- srcref[1L]-lastshown
+			leading <- if(tail) length(dep) else srcref[1L]-lastshown
 			lastshown <- srcref[3L]
 			while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
 			    dep <- dep[-1L]
 			    leading <- leading - 1L
 			}
-			dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
-				    dep, sep="", collapse="\n")
+			dep <- paste0(rep.int(c(prompt.echo, continue.echo),
+					      c(leading, length(dep)-leading)),
+				      dep, collapse="\n")
 			nd <- nchar(dep, "c")
 		    } else
 		    	srcref <- NULL  # Give up and deparse
