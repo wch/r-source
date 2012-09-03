@@ -258,13 +258,13 @@ getOption(x, default = NULL)
       source location that is highest on the stack (the most recent
       call) will be printed.  \code{"bottom"} will print the location
       of the earliest call found on the stack.
-
+      
       Integer values can select other entries.  The value \code{0}
       corresponds to \code{"top"} and positive values count down the
       stack from there.  The value \code{-1} corresponds to
-      \code{"bottom"} and negative values count up from there.
+      \code{"bottom"} and negative values count up from there.  
       }
-
+      
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
@@ -307,14 +307,9 @@ getOption(x, default = NULL)
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
-    \item{\code{warnPartialMatchArgs}:}{logical.  If true, (possibly) warns if
-      partial matching is used in argument matching, see next
-      (\code{warnPartialMatchArgsNoDots}).}
-    \item{\code{warnPartialMatchArgsNoDots}:}{logical, only relevant
-      when \code{warnPartialMatchArgs} above is true.  Then, and when
-      the formal arguments contain no \code{...}, the warning about
-      partial argument matching is only triggered when
-      \code{warnPartialMatchArgsNoDots} is true.}
+    \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
+      partial matching is used in argument matching.}
+
     \item{\code{warnPartialMatchAttr}:}{logical.  If true, warns if
       partial matching is used in extracting attributes via
       \code{\link{attr}}.}
