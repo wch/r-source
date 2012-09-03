@@ -113,8 +113,8 @@ R_approxtest(double *x, double *y, int nxy, int method, double f)
 /* R Frontend for Linear and Constant Interpolation, no testing */
 
 static void 
-R_approxfun(double *x, double *y, int nxy, double *xout, int nout,
-	    int method, double yleft, double yright, double f)
+R_approxfun(double *x, double *y, int nxy, double *xout, double *yout,
+	    int nout, int method, double yleft, double yright, double f)
 {
     int i;
     appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
@@ -125,7 +125,8 @@ R_approxfun(double *x, double *y, int nxy, double *xout, int nout,
     M.ylow = yleft;
     M.yhigh = yright;
     for(i = 0; i < nout; i++)
-	if(!ISNA(xout[i])) xout[i] = approx1(xout[i], x, y, nxy, &M);
+	if(!ISNA(xout[i])) yout[i] = approx1(xout[i], x, y, nxy, &M);
+	else yout[i] = xout[i];
 }
 
 #include <Rinternals.h>
@@ -141,11 +142,12 @@ SEXP ApproxTest(SEXP x, SEXP y, SEXP method, SEXP sf)
 SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method, 
 	    SEXP yleft, SEXP yright, SEXP sf)
 {
-    SEXP xout = PROTECT(TYPEOF(v) == REALSXP ? duplicate(v) :
-			coerceVector(v, REALSXP));
-    int nx = LENGTH(x), nv = LENGTH(xout), m = asInteger(method);
+    SEXP xout = PROTECT(coerceVector(v, REALSXP));
+    int nx = LENGTH(x), nout = LENGTH(xout), m = asInteger(method);
     double yl = asReal(yleft), yr = asReal(yright), f = asReal(sf);
-    R_approxfun(REAL(x), REAL(y), nx, REAL(xout), nv, m, yl, yr, f);
-    UNPROTECT(1);
-    return xout;
+    SEXP yout = PROTECT(allocVector(REALSXP, nout));
+    R_approxfun(REAL(x), REAL(y), nx, REAL(xout), REAL(yout), nout, 
+		m, yl, yr, f);
+    UNPROTECT(2);
+    return yout;
 }
