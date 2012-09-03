@@ -136,23 +136,23 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int i, j;
 	switch(TYPEOF(vals)) {
 	case STRSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
+	    for (j = 0; j < nc; j++)
+		for (i = 0; i < nr; i++)
 		    SET_STRING_ELT(ans, i + j * nr, NA_STRING);
 	    break;
 	case LGLSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
+	    for (j = 0; j < nc; j++)
+		for (i = 0; i < nr; i++)
 		    LOGICAL(ans)[i + j * nr] = NA_LOGICAL;
 	    break;
 	case INTSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
+	    for (j = 0; j < nc; j++)
+		for (i = 0; i < nr; i++)
 		    INTEGER(ans)[i + j * nr] = NA_INTEGER;
 	    break;
 	case REALSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
+	    for (j = 0; j < nc; j++)
+		for (i = 0; i < nr; i++)
 		    REAL(ans)[i + j * nr] = NA_REAL;
 	    break;
 	case CPLXSXP:
@@ -160,14 +160,14 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		Rcomplex na_cmplx;
 		na_cmplx.r = NA_REAL;
 		na_cmplx.i = 0;
-		for (i = 0; i < nr; i++)
-		    for (j = 0; j < nc; j++)
+		for (j = 0; j < nc; j++)
+		    for (i = 0; i < nr; i++)
 			COMPLEX(ans)[i + j * nr] = na_cmplx;
 	    }
 	    break;
 	case RAWSXP:
-	    for (i = 0; i < nr; i++)
-		for (j = 0; j < nc; j++)
+	    for (j = 0; j < nc; j++)
+		for (i = 0; i < nr; i++)
 		    RAW(ans)[i + j * nr] = 0;
 	    break;
 	default:
