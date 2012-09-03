@@ -283,10 +283,9 @@
 
       Since these entry points are always accessed by the \R entry
       points they do not need to be in the load table which can be
-      smaller and hence searched faster.  This does mean that \code{.C}
-      / \code{.Fortran} / \code{.Call} calls copied from earlier
-      versions of \R no longer work -- but they were never part of the
-      API.
+      searched faster.  This does mean that \code{.C} / \code{.Fortran}
+      / \code{.Call} calls copied from earlier versions of \R may no
+      longer work -- but they were never part of the API.
       
       \item Many \code{.Call()} calls in package \pkg{base} have been
       migrated to \code{.Internal()} calls.

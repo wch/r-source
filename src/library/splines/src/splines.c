@@ -241,5 +241,5 @@ R_init_splines(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
-    R_forceSymbols(dll, TRUE);
+//    R_forceSymbols(dll, TRUE); // too few to worry about, used in cobs*
 }
