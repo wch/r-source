@@ -66,7 +66,9 @@ exists(x, where = -1, envir = , frame, mode = "any",
 \seealso{
   \code{\link{get}}.  For quite a different kind of \dQuote{existence}
   checking, namely if function arguments were specified,
-  \code{\link{missing}}.
+  \code{\link{missing}};
+  and for yet a different kind, namely if a file exists,
+  \code{\link{file.exists}}.
 }
 \examples{
 ##  Define a substitute function if necessary:

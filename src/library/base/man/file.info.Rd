@@ -21,7 +21,7 @@ file.info(\dots)
   What constitutes a \sQuote{file} is OS-dependent but includes
   directories.  (However, directory names must not include a trailing
   backslash or slash on Windows.)  See also the section in the help for
-  \code{\;link{file.exists}} on case-insensitive file systems.
+  \code{\link{file.exists}} on case-insensitive file systems.
 
   The file \sQuote{mode} follows POSIX conventions, giving three octal
   digits summarizing the permissions for the file owner, the owner's
