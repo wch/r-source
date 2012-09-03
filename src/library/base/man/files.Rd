@@ -75,6 +75,8 @@ Sys.junction(from, to)
   slash on Windows.)  Note that if the file is a symbolic link on a
   Unix-alike, the result indicates if the link points to an actual file,
   not just if the link exists.
+  Lastly, note the \emph{different} function \code{\link{exists}} which
+  checks for existence of \R objects.
 
   \code{file.remove} attempts to remove the files named in its argument.
   On most Unix platforms \sQuote{file} includes \emph{empty}
