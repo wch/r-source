@@ -27,18 +27,10 @@
 #include "ctest.h"
 #include "stats.h"
 
-/*
-  Removed the non-local variable `double ***w' and moved to R_alloc from
-  Calloc.
-  The tests for whether the memory was allocated have been discarded as
-  R_alloc will throw an error.
-  The .C() will handle the vmaxget() and vmaxset().
- */
-
 static double ***
-w_init(Sint m, Sint n)
+w_init(int m, int n)
 {
-    Sint i;
+    int i;
     double ***w;
 
     w = (double ***) R_alloc(m + 1, sizeof(double **));
@@ -90,9 +82,9 @@ cansari(int k, int m, int n, double ***w)
   And indeed, package `exactRankTests' uses it.
  */
 void
-dansari(Sint *len, double *x, Sint *m, Sint *n)
+dansari(int *len, double *x, int *m, int *n)
 {
-    Sint i;
+    int i;
     double ***w;
 
     w = w_init(*m, *n);
@@ -100,15 +92,15 @@ dansari(Sint *len, double *x, Sint *m, Sint *n)
 	if (fabs(x[i] - floor(x[i] + 0.5)) > 1e-7) {
 	    x[i] = 0;
 	} else {
-	    x[i] = cansari((Sint)x[i], (Sint)*m, (Sint)*n, w)
+	    x[i] = cansari((int)x[i], *m, *n, w)
 		/ choose(*m + *n, *m);
 	}
 }
 
 void
-pansari(Sint *len, double *x, Sint *m, Sint *n)
+pansari(int *len, double *x, int *m, int *n)
 {
-    Sint i, j, l, u;
+    int i, j, l, u;
     double c, p, q;
     double ***w;
 
@@ -125,7 +117,7 @@ pansari(Sint *len, double *x, Sint *m, Sint *n)
 	else {
 	    p = 0;
 	    for (j = l; j <= q; j++) {
-		p += cansari((Sint)j, (Sint)*m, (Sint)*n, w);
+		p += cansari(j, *m, *n, w);
 	    }
 	    x[i] = p / c;
 	}
@@ -133,9 +125,9 @@ pansari(Sint *len, double *x, Sint *m, Sint *n)
 }
 
 void
-qansari(Sint *len, double *x, Sint *m, Sint *n)
+qansari(int *len, double *x, int *m, int *n)
 {
-    Sint i, l, u;
+    int i, l, u;
     double c, p, xi;
     double ***w;
 
@@ -155,7 +147,7 @@ qansari(Sint *len, double *x, Sint *m, Sint *n)
 	    p = 0.;
 	    int q = 0;
 	    for(;;) {
-		p += cansari(q, (Sint)*m, (Sint)*n, w) / c;
+		p += cansari(q, *m, *n, w) / c;
 		if (p >= xi)
 		    break;
 		q++;

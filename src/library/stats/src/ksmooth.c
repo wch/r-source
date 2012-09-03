@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2003	The R Foundation
+ *  Copyright (C) 1998-2012	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 
 #include <R.h>			/* for NA_REAL, includes math.h */
+#include <Rinternals.h>
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
@@ -33,25 +34,25 @@ static double dokern(double x, int kern)
     return(0.0); /* -Wall */
 }
 
-void BDRksmooth(double *x, double *y, int *n,
-		double *xp, double *yp, int *np,
-		int *kern, double *bandwidth)
+static void BDRksmooth(double *x, double *y, R_xlen_t n,
+		       double *xp, double *yp, R_xlen_t np,
+		       int kern, double bw)
 {
-    int i, imin=0, j;
-    double cutoff=0.0, num, den, x0, w, bw=*bandwidth;
+    R_xlen_t imin = 0;
+    double cutoff = 0.0, num, den, x0, w;
 
     /* bandwidth is in units of half inter-quartile range. */
-    if(*kern == 1) {bw *= 0.5; cutoff = bw;}
-    if(*kern == 2) {bw *= 0.3706506; cutoff = 4*bw;}
-    while(x[imin] < xp[0] - cutoff && imin < *n) imin++;
-    for(j = 0; j < *np; j++) {
+    if(kern == 1) {bw *= 0.5; cutoff = bw;}
+    if(kern == 2) {bw *= 0.3706506; cutoff = 4*bw;}
+    while(x[imin] < xp[0] - cutoff && imin < n) imin++;
+    for(R_xlen_t j = 0; j < np; j++) {
 	num = den = 0.0;
 	x0 = xp[j];
-	for(i = imin; i < *n; i++) {
+	for(R_xlen_t i = imin; i < n; i++) {
 	    if(x[i] < x0 - cutoff) imin = i;
 	    else {
 		if(x[i] > x0 + cutoff) break;
-		w = dokern(fabs(x[i] - x0)/bw, *kern);
+		w = dokern(fabs(x[i] - x0)/bw, kern);
 		num += w*y[i];
 		den += w;
 	    }
@@ -64,4 +65,26 @@ void BDRksmooth(double *x, double *y, int *n,
 void F77_SUB(bdrsplerr)(void)
 {
     error(_("only 2500 rows are allowed for sm.method=\"spline\""));
+}
+
+SEXP ksmooth(SEXP x, SEXP y, SEXP xp, SEXP skrn, SEXP sbw)
+{
+    int krn = asInteger(skrn);
+    double bw = asReal(sbw);
+    x = PROTECT(coerceVector(x, REALSXP));
+    y = PROTECT(coerceVector(y, REALSXP));
+    xp = PROTECT(coerceVector(xp, REALSXP));
+    R_xlen_t nx = XLENGTH(x), np = XLENGTH(xp);
+    SEXP yp = PROTECT(allocVector(REALSXP, np));
+
+    BDRksmooth(REAL(x), REAL(y), nx, REAL(xp), REAL(yp), np, krn, bw);
+    SEXP ans = PROTECT(allocVector(VECSXP, 2));
+    SET_VECTOR_ELT(ans, 0, xp);
+    SET_VECTOR_ELT(ans, 1, yp);
+    SEXP nm = allocVector(STRSXP, 2);
+    setAttrib(ans, R_NamesSymbol, nm);
+    SET_STRING_ELT(nm, 0, mkChar("x"));
+    SET_STRING_ELT(nm, 1, mkChar("y"));
+    UNPROTECT(5);
+    return ans;
 }

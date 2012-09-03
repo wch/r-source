@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2001   The R Core Team.
+ *  Copyright (C) 1999-2012   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,14 +34,12 @@ ckendall(int k, int n, double **w) {
     int i, u;
     double s;
 
-    u = (Sint) (n * (n - 1) / 2);
-    if ((k < 0) || (k > u))
-	return(0);
+    u =  (n * (n - 1) / 2);
+    if ((k < 0) || (k > u)) return(0);
     if (w[n] == 0) {
 	w[n] = (double *) R_alloc(u + 1, sizeof(double));
 	memset(w[n], '\0', sizeof(double) * (u+1));
-	for (i = 0; i <= u; i++)
-	    w[n][i] = -1;
+	for (i = 0; i <= u; i++) w[n][i] = -1;
     }
     if (w[n][k] < 0) {
 	if (n == 1)
@@ -58,8 +56,8 @@ ckendall(int k, int n, double **w) {
 
 #if 0
 void
-dkendall(Sint *len, double *x, Sint *n) {
-    Sint i;
+dkendall(int *len, double *x, int *n) {
+    int i;
     double **w;
 
     w = (double **) R_alloc(*n + 1, sizeof(double *));
@@ -68,14 +66,14 @@ dkendall(Sint *len, double *x, Sint *n) {
 	if (fabs(x[i] - floor(x[i] + 0.5)) > 1e-7) {
 	    x[i] = 0;
 	} else {
-	    x[i] = ckendall((Sint)x[i], (Sint)*n) / gammafn(*n + 1, w);
+	    x[i] = ckendall((int)x[i], *n) / gammafn(*n + 1, w);
 	}
 }
 #endif
 
 void
-pkendall(Sint *len, double *x, Sint *n) {
-    Sint i, j;
+pkendall(int *len, double *x, int *n) {
+    int i, j;
     double p, q;
     double **w;
 
@@ -90,9 +88,7 @@ pkendall(Sint *len, double *x, Sint *n) {
 	    x[i] = 1;
 	else {
 	    p = 0;
-	    for (j = 0; j <= q; j++) {
-		p += ckendall((Sint)j, (Sint)*n, w);
-	    }
+	    for (j = 0; j <= q; j++) p += ckendall(j, *n, w);
 	    x[i] = p / gammafn(*n + 1);
 	}
     }

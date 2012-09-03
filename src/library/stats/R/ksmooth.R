@@ -28,14 +28,8 @@ ksmooth <-
     x.points <-
 	if(missing(x.points))
 	    seq.int(range.x[1L], range.x[2L], length.out = n.points)
-	else {n.points <- length(x.points); sort(x.points)}
-    nx <- as.integer(length(x))
-    if(is.na(nx)) stop("invalid value of length(x)")
+	else { n.points <- length(x.points); sort(x.points) }
     ord <- order(x)
-    z <- .C(C_BDRksmooth,
-	    as.double(x[ord]), as.double(y[ord]), nx,
-	    xp = as.double(x.points), yp = double(n.points),
-	    as.integer(n.points), as.integer(krn), as.double(bandwidth))
-    list(x = z$xp, y = z$yp)
+    .Call(C_ksmooth, x[ord], y[ord], x.points, krn, bandwidth)
 }
 

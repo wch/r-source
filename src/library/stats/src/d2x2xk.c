@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-1   The R Core Team.
+ *  Copyright (C) 2000-12   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include "ctest.h"
 
 void
-d2x2xk(Sint *k, double *m, double *n, double *t, double *d)
+d2x2xk(int *k, double *m, double *n, double *t, double *d)
 {
     int i, j, l, w, y, z;
     double u, **c;

@@ -68,3 +68,5 @@ SEXP influence(SEXP mqr, SEXP do_coef, SEXP e, SEXP stol);
 SEXP pSmirnov2x(SEXP statistic, SEXP snx, SEXP sny);
 SEXP pKolmogorov2x(SEXP statistic, SEXP sn);
 SEXP pKS2(SEXP sn, SEXP stol);
+
+SEXP ksmooth(SEXP x, SEXP y, SEXP snp, SEXP skrn, SEXP sbw);

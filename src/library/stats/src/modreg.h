@@ -22,7 +22,6 @@
 #define R_MODREG_H
 
 #include <R.h>
-/* for Sint .. */
 #include <Rinternals.h>
 #ifdef ENABLE_NLS
 #include <libintl.h>
@@ -37,36 +36,32 @@ SEXP R_isoreg(SEXP y);
 SEXP R_monoFC_m(SEXP m, SEXP Sx);
 void monoFC_mod(double *m, double Sx[], int n);
 
-void BDRksmooth(double *x, double *y, int *n,
-		double *xp, double *yp, int *np,
-		int *kern, double *bandwidth);
-
 void
-loess_raw(double *y, double *x, double *weights, double *robust, Sint *d,
-	  Sint *n, double *span, Sint *degree, Sint *nonparametric,
-	  Sint *drop_square, Sint *sum_drop_sqr, double *cell,
-	  char **surf_stat, double *surface, Sint *parameter,
-	  Sint *a, double *xi, double *vert, double *vval, double *diagonal,
-	  double *trL, double *one_delta, double *two_delta, Sint *setLf);
+loess_raw(double *y, double *x, double *weights, double *robust, int *d,
+	  int *n, double *span, int *degree, int *nonparametric,
+	  int *drop_square, int *sum_drop_sqr, double *cell,
+	  char **surf_stat, double *surface, int *parameter,
+	  int *a, double *xi, double *vert, double *vval, double *diagonal,
+	  double *trL, double *one_delta, double *two_delta, int *setLf);
 void
 loess_dfit(double *y, double *x, double *x_evaluate, double *weights,
-	   double *span, Sint *degree, Sint *nonparametric,
-	   Sint *drop_square, Sint *sum_drop_sqr,
-	   Sint *d, Sint *n, Sint *m, double *fit);
+	   double *span, int *degree, int *nonparametric,
+	   int *drop_square, int *sum_drop_sqr,
+	   int *d, int *n, int *m, double *fit);
 void
 loess_dfitse(double *y, double *x, double *x_evaluate, double *weights,
-	     double *robust, Sint *family, double *span, Sint *degree,
-	     Sint *nonparametric, Sint *drop_square,
-	     Sint *sum_drop_sqr,
-	     Sint *d, Sint *n, Sint *m, double *fit, double *L);
+	     double *robust, int *family, double *span, int *degree,
+	     int *nonparametric, int *drop_square,
+	     int *sum_drop_sqr,
+	     int *d, int *n, int *m, double *fit, double *L);
 void
-loess_ifit(Sint *parameter, Sint *a, double *xi, double *vert,
-	   double *vval, Sint *m, double *x_evaluate, double *fit);
+loess_ifit(int *parameter, int *a, double *xi, double *vert,
+	   double *vval, int *m, double *x_evaluate, double *fit);
 void
 loess_ise(double *y, double *x, double *x_evaluate, double *weights,
-	  double *span, Sint *degree, Sint *nonparametric,
-	  Sint *drop_square, Sint *sum_drop_sqr, double *cell,
-	  Sint *d, Sint *n, Sint *m, double *fit, double *L);
+	  double *span, int *degree, int *nonparametric,
+	  int *drop_square, int *sum_drop_sqr, double *cell,
+	  int *d, int *n, int *m, double *fit, double *L);
 
 void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl,
 		  int *pmaxiter, int *nc, double *wss);
