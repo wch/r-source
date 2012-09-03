@@ -620,7 +620,7 @@ aspell_filter_db$R <-
 function(ifile, encoding = "unknown", ignore = character())
 {
     pd <- get_parse_data_for_message_strings(ifile, encoding)
-    if(is.null(pd)) return(character())
+    if(is.null(pd) || !NROW(pd)) return(character())
 
     ## Strip the string delimiters.
     pd$text <- substring(pd$text, 2L, nchar(pd$text) - 1L)
