@@ -20,13 +20,16 @@ sample <- function(x, size, replace = FALSE, prob = NULL)
 {
     if(length(x) == 1L && is.numeric(x) && x >= 1) {
 	if(missing(size)) size <- x
-	.Internal(sample(x, size, replace, prob))
+	sample.int(x, size, replace, prob)
     } else {
-        ## result is integer, so do not yet allow long vectors
 	if(missing(size)) size <- length(x)
-	x[.Internal(sample(length(x), size, replace, prob))]
+	x[sample.int(length(x), size, replace, prob)]
     }
 }
 
 sample.int  <- function(n, size = n, replace = FALSE, prob = NULL)
-    .Internal(sample(n, size, replace, prob))
+{
+    if (!replace && is.null(prob) && n > 1e7 && size <= n/2)
+        .Internal(sample2(n, size))
+    else .Internal(sample(n, size, replace, prob))
+}

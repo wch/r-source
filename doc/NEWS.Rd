@@ -196,7 +196,12 @@
       \code{solve()}) accept logical matrices (and coerce to numeric).
      
       \item \code{sample.int()} has some support for  \eqn{n \ge
-      2^{31}}{n >= 2^31}: see its help for the limitations.
+	2^{31}}{n >= 2^31}: see its help for the limitations.
+
+      A different algorithm is used for \code{n, size, replace = FALSE,
+	prob = NULL)} for \code{n > 1e7} and \code{size <= n/2}.  This
+	is much faster and uses less memory, but does give different
+	results.
     }
   }
 

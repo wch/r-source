@@ -67,12 +67,10 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   \code{sample.int} is a bare interface in which both \code{n} and
   \code{size} must be supplied as integers.
   
-  As from \R 2.16.0, \code{n} can be larger than the largest
-  representable integer.  However only uniform sampling is supported,
-  and on 32-bit platforms, only with replacement.   Sampling with
-  replacement allocates a vector of \code{1:n} so uses a lot of memory
-  even if \code{size} is small.  Two random numbers are used to ensure
-  uniform sampling of large integers.
+  As from \R 2.16.0, \code{n} can be larger than the largest integer of
+  type \code{integer}, up to the largest representable integer in type
+  \code{double}.  Only uniform sampling is supported.  Two
+  random numbers are used to ensure uniform sampling of large integers.
 }
 
 \value{
@@ -116,7 +114,6 @@ x <- 1:10
     sample(x[x >  9]) # oops -- length 10!
     sample(x[x > 10]) # length 0
 
-## For R >= 2.11.0 only
 resample <- function(x, ...) x[sample.int(length(x), ...)]
 resample(x[x >  8]) # length 2
 resample(x[x >  9]) # length 1
@@ -124,5 +121,6 @@ resample(x[x > 10]) # length 0
 
 ## R >= 2.16.0 only
 sample.int(1e10, 12, replace = TRUE)
+sample.int(1e10, 12) # not that there is much chance of duplicates
 }
 \keyword{distribution}
