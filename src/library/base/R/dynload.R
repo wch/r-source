@@ -46,7 +46,10 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
     } else if(inherits(PACKAGE, "DLLInfoReference")) {
         pkgName <- character()
     } else
-        stop("must pass a package name, DLLInfo or DllInfoReference object")
+        stop(gettextf("must pass a package name, %s or %s object",
+                      dQuote("DLLInfo"),
+                      dQuote("DllInfoReference")),
+             domain = NA)
 
     syms <- lapply(name, function(id) {
 	v <- .Internal(getSymbolInfo(as.character(id), PACKAGE,
@@ -97,7 +100,9 @@ getDLLRegisteredRoutines.DLLInfo <- function(dll, addNames = TRUE)
 {
     ## Provide methods for the different types.
     if(!inherits(dll, "DLLInfo"))
-        stop("must specify DLL via a DLLInfo object. See getLoadedDLLs()")
+        stop(gettextf("must specify DLL via a %s object. See getLoadedDLLs()",
+                      dQuote("DLLInfo")),
+             domain = NA)
 
     info <- dll[["info"]]
     els <- .Internal(getRegisteredRoutines(info))

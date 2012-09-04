@@ -70,7 +70,9 @@ close.winProgressBar <- function(con, ...)
 setWinProgressBar <- function(pb, value, title=NULL, label=NULL)
 {
     if(!inherits(pb, "winProgressBar"))
-       stop("'pb' is not from class \"winProgressBar\"")
+       stop(gettextf("'pb' is not from class %s",
+                     dQuote("winProgressBar")),
+            domain = NA)
     if(!is.null(title)) title <- as.character(title)
     if(!is.null(label)) label <- as.character(label)
     invisible(.Internal(setWinProgressBar(pb$pb, as.double(value), title, label)))
@@ -79,6 +81,8 @@ setWinProgressBar <- function(pb, value, title=NULL, label=NULL)
 getWinProgressBar <- function(pb)
 {
     if(!inherits(pb, "winProgressBar"))
-       stop("'pb' is not from class \"winProgressBar\"")
+        stop(gettextf("'pb' is not from class %s",
+                      dQuote("winProgressBar")),
+             domain = NA)
     .Internal(setWinProgressBar(pb$pb, NULL, NULL, NULL))
 }

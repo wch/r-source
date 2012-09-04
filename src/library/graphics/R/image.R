@@ -119,7 +119,9 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
     }
     if (useRaster) {
          if(check_irregular(x,y))
-            stop("useRaster=TRUE can only be used with a regular grid")
+            stop(gettextf("%s can only be used with a regular grid",
+                          sQuote("useRaster = TRUE")),
+                 domain = NA)
         # this should be mostly equivalent to RGBpar3 with bg=NA
         if (!is.character(col)) {
             p <- palette()

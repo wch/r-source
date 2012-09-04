@@ -27,7 +27,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
                 system(paste(unzip, "-oq", zipname, "-d", dest),
                        show.output.on.console = FALSE, invisible = TRUE)
             } else unzip(zipname, exdir = dest)
-        } else stop(gettextf("zipfile %s not found",
+        } else stop(gettextf("zip file %s not found",
                              sQuote(zipname)), domain = NA)
     }
 

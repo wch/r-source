@@ -385,7 +385,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(!missing(instPkgs)) {
         ## actually we need rather more than this
         if(!is.matrix(instPkgs) || !is.character(instPkgs[, "Package"]))
-            stop("illformed 'instPkgs' matrix")
+            stop("ill-formed 'instPkgs' matrix")
     }
     if(NROW(instPkgs) == 0L) return(NULL)
 
