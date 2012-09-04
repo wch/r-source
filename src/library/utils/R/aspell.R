@@ -770,7 +770,7 @@ function(file, encoding = "unknown")
 
 aspell_R_R_files <-
 function(which = NULL, dir = NULL,
-         ignore = c("[ \t]'[^[:space:]']*'[ \t[:punct:]]",
+         ignore = c("[ \t]'[^']*'[ \t[:punct:]]",
                     "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
          program = NULL)
 {
