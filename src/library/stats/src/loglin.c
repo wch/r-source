@@ -33,10 +33,11 @@ static int *lvector(int n);
 
 static int c__1 = 1;
 
-void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
-	    double *table, double *fit, int *locmar, int *nmar, double *marg,
-	    int *nu, double *u, double *maxdev, int *maxit,
-	    double *dev, int *nlast, int *ifault)
+static void 
+loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
+       double *table, double *fit, int *locmar, int *nmar, double *marg,
+       int *nu, double *u, double *maxdev, int *maxit,
+       double *dev, int *nlast, int *ifault)
 {
     int i, j, k, n, point, size, *icon, *check;
     double x, y, xmax;
@@ -405,3 +406,64 @@ L50:
 static int *lvector(int n) {
     return (int *) R_alloc(n, sizeof(int));
 }
+#undef max
+#undef min
+#undef abs
+
+#include <R.h>
+#include <Rinternals.h>
+#include "statsR.h"
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
+
+SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start, 
+	    SEXP snmar, SEXP eps, SEXP iter) 
+{
+    int nvar = LENGTH(dtab), 
+	ncon = ncols(conf), 
+	ntab = LENGTH(table),
+	nmar = asInteger(snmar), 
+	maxit = asInteger(iter), 
+	nlast, ifault;
+    double maxdev = asReal(eps);
+    SEXP fit = PROTECT(TYPEOF(start) == REALSXP ? duplicate(start) :
+		       coerceVector(start, REALSXP)),
+	locmar = PROTECT(allocVector(INTSXP, ncon)),
+	marg = PROTECT(allocVector(REALSXP, nmar)),
+	u = PROTECT(allocVector(REALSXP, ntab)),
+	dev = PROTECT(allocVector(REALSXP, maxit));
+    dtab = PROTECT(coerceVector(dtab, INTSXP));
+    conf = PROTECT(coerceVector(conf, INTSXP));
+    table = PROTECT(coerceVector(table, REALSXP));
+    loglin(&nvar, INTEGER(dtab), &ncon, INTEGER(conf), &ntab,
+	   REAL(table), REAL(fit), INTEGER(locmar), &nmar, REAL(marg),
+	   &ntab, REAL(u), &maxdev, &maxit, REAL(dev), &nlast, &ifault);
+    switch(ifault) {
+    case 1:
+    case 2:
+	error(_("this should not happen")); break;
+    case 3:
+	warning(_("algorithm did not converge")); break;
+    case 4:
+	error(_("incorrect specification of 'table' or 'start'")); break;
+    default: 
+	break;
+    }
+
+    SEXP ans = PROTECT(allocVector(VECSXP, 3)), nm;
+    SET_VECTOR_ELT(ans, 0, fit);
+    SET_VECTOR_ELT(ans, 1, dev);
+    SET_VECTOR_ELT(ans, 2, ScalarInteger(nlast));
+    nm = allocVector(STRSXP, 3);
+    setAttrib(ans, R_NamesSymbol, nm);
+    SET_STRING_ELT(nm, 0, mkChar("fit"));
+    SET_STRING_ELT(nm, 1, mkChar("dev"));
+    SET_STRING_ELT(nm, 2, mkChar("nlast"));
+    UNPROTECT(9);
+    return ans;
+}
+

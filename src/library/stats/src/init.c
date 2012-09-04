@@ -57,11 +57,6 @@ static R_NativePrimitiveArgType band_phi4_bin_t[] = {INTSXP, INTSXP, REALSXP, IN
 static R_NativePrimitiveArgType band_phi6_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType band_den_bin_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 
-static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
-					      REALSXP, REALSXP, INTSXP, INTSXP, REALSXP,
-					      INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
-					      INTSXP, INTSXP};
-
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 
@@ -98,7 +93,6 @@ static const R_CMethodDef CEntries[]  = {
     CDEF(band_phi4_bin),
     CDEF(band_phi6_bin),
     CDEF(band_den_bin),
-    CDEF(loglin),
     {"signrank_free", (DL_FUNC) &stats_signrank_free, 0},
     {"wilcox_free", (DL_FUNC) &stats_wilcox_free, 0},
     {NULL, NULL, 0}
@@ -169,6 +163,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(SplineEval, 2),
     CALLDEF(Approx, 7),
     CALLDEF(ApproxTest, 4),
+    CALLDEF(LogLin, 7),
     {NULL, NULL, 0}
 };
 

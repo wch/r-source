@@ -17,7 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 loglin <- function(table, margin, start = rep(1, length(table)), fit =
-                   FALSE, eps = 0.1, iter = 20, param = FALSE, print =
+                   FALSE, eps = 0.1, iter = 20L, param = FALSE, print =
                    TRUE) {
     rfit <- fit
 
@@ -42,34 +42,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     ntab <- length(table)
     if (length(start) != ntab ) stop("'start' and 'table' must be same length")
 
-    storage.mode(conf) <- "integer"
-    ## NOTE: We make no use of the arguments locmar, nmar, marg, nu, and
-    ## u.  It might make sense to eliminate them and simplify the underlying C
-    ## code accordingly.
-    z <- .C(C_loglin,
-            as.integer(nvar),
-            as.integer(dtab),
-            as.integer(ncon),
-            conf,
-            as.integer(ntab),
-            as.double(table),
-            fit = as.double(start),
-            locmar = integer(ncon),
-            as.integer(nmar),
-            marginals = double(nmar),
-            as.integer(ntab),
-            u = double(ntab),
-            as.double(eps),
-            as.integer(iter),
-            dev = double(iter),
-            nlast = integer(1L),
-            ifault = integer(1L))
-    switch(z$ifault,
-           stop("this should not happen"),
-           stop("this should not happen"),
-           warning("algorithm did not converge"),
-           stop("incorrect specification of 'table' or 'start'")
-           )
+    z <- .Call(C_LogLin, dtab, conf, table, start, nmar, eps, iter)
 
     if (print)
         cat(z$nlast, "iterations: deviation", z$dev[z$nlast], "\n")

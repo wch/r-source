@@ -78,5 +78,5 @@ SEXP ApproxTest(SEXP x, SEXP y, SEXP method, SEXP sf);
 SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method, 
 	    SEXP yleft, SEXP yright, SEXP sf);
 
-
-
+SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,
+	    SEXP snmar, SEXP eps, SEXP iter);
