@@ -152,7 +152,7 @@ prho(int n, double is, double *pv, int ifault, int lower_tail)
 SEXP pRho(SEXP q, SEXP sn, SEXP lower)
 {
     double s = asReal(q), p;
-    int n = asInteger(sn), ltail = asInteger(lower), ifault;
+    int n = asInteger(sn), ltail = asInteger(lower), ifault = 0;
     prho(n, s, &p, ifault, ltail);
     return ScalarReal(p);
 }

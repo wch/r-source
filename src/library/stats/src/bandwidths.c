@@ -1,16 +1,30 @@
 /*
+ *  R : A Computer Language for Statistical Data Analysis
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
- *  This version distributed under GPL (version 2 or later)
+ *  Copyright (C) 2012  The R Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, a copy is available at
+ *  http://www.r-project.org/Licenses/
  */
 
 #include <math.h>
+#include <Rinternals.h>
 
 #ifndef max
 #  define max(a,b) ((a) > (b) ? (a) : (b))
 #  define min(a,b) ((a) < (b) ? (a) : (b))
 #endif
-
-#define abs9(a) (a > 0 ? a:-a)
 
 
 #if !defined(PI)
@@ -22,101 +36,96 @@
    plus/minus sqrt(DELMAX) std deviations */
 /* Formulae (6.67) and (6.69) of Scott (1992), the latter corrected. */
 
-void
-band_ucv_bin(int *n, int *nb, double *d, int *x, double *h, double *u)
+SEXP bw_ucv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 {
-    int   i, nn = *n, nbin = *nb;
-    double delta, hh = (*h), sum, term;
-
-    sum = 0.0;
-    for (i = 0; i < nbin; i++) {
-	delta = i * (*d) / hh;
+    double h = asReal(sh), d = asReal(sd), sum = 0.0, term, u;
+    int n = asInteger(sn), nbin = LENGTH(cnt), *x = INTEGER(cnt);
+    for (int i = 0; i < nbin; i++) {
+	double delta = i * d / h;
 	delta *= delta;
 	if (delta >= DELMAX) break;
 	term = exp(-delta / 4) - sqrt(8.0) * exp(-delta / 2);
 	sum += term * x[i];
     }
-    *u = 1 / (2 * nn * hh * sqrt(PI)) + sum / (nn * nn * hh * sqrt(PI));
+    u = 1 / (2 * n * h * sqrt(PI)) + sum / (n * n * h * sqrt(PI));
+    return ScalarReal(u);
 }
 
-void
-band_bcv_bin(int *n, int *nb, double *d, int *x, double *h, double *u)
+SEXP bw_bcv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 {
-    int   i, nn = *n, nbin = *nb;
-    double delta, hh = (*h), sum, term;
+    double h = asReal(sh), d = asReal(sd), sum = 0.0, term, u;
+    int n = asInteger(sn), nbin = LENGTH(cnt), *x = INTEGER(cnt);
 
     sum = 0.0;
-    for (i = 0; i < nbin; i++) {
-	delta = i * (*d) / hh;
-	delta *= delta;
+    for (int i = 0; i < nbin; i++) {
+	double delta = i * d / h; delta *= delta;
 	if (delta >= DELMAX) break;
 	term = exp(-delta / 4) * (delta * delta - 12 * delta + 12);
 	sum += term * x[i];
     }
-    *u = 1 / (2 * nn * hh * sqrt(PI)) + sum / (64 * nn * nn * hh * sqrt(PI));
+    u = 1 / (2 * n * h * sqrt(PI)) + sum / (64 * n * n * h * sqrt(PI));
+    return ScalarReal(u);
 }
 
-
-/* u := SDh(x, h, n, d) : */
-void
-band_phi4_bin(int *n, int *nb/* = length(x) */,
-	      double *d, int *x, double *h, double *u)
+SEXP bw_phi4(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 {
-    int   i, nn = *n, nbin = *nb;
-    double delta, sum, term;
+    double h = asReal(sh), d = asReal(sd), sum = 0.0, term, u;
+    int n = asInteger(sn), nbin = LENGTH(cnt), *x = INTEGER(cnt);
 
-    sum = 0.0;
-    for (i = 0; i < nbin; i++) {
-	delta = i * (*d) / (*h);
-	delta *= delta;
+    for (int i = 0; i < nbin; i++) {
+	double delta = i * d / h; delta *= delta;
 	if (delta >= DELMAX) break;
 	term = exp(-delta / 2) * (delta * delta - 6 * delta + 3);
 	sum += term * x[i];
     }
-    sum = 2 * sum + nn * 3;	/* add in diagonal */
-    *u = sum / (nn * (nn - 1) * pow(*h, 5.0) * sqrt(2 * PI));
+    sum = 2 * sum + n * 3;	/* add in diagonal */
+    u = sum / (n * (n - 1) * pow(h, 5.0) * sqrt(2 * PI));
+    return ScalarReal(u);
 }
 
-/* u := TDh(x, h, n, d) : */
-void
-band_phi6_bin(int *n, int *nb, double *d, int *x, double *h, double *u)
+SEXP bw_phi6(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 {
-    int   i, nn = *n, nbin = *nb;
-    double delta, sum, term;
+    double h = asReal(sh), d = asReal(sd), sum = 0.0, term, u;
+    int n = asInteger(sn), nbin = LENGTH(cnt), *x = INTEGER(cnt);
 
-    sum = 0.0;
-    for (i = 0; i < nbin; i++) {
-	delta = i * (*d) / (*h);
-	delta *= delta;
+    for (int i = 0; i < nbin; i++) {
+	double delta = i * d / h; delta *= delta;
 	if (delta >= DELMAX) break;
 	term = exp(-delta / 2) *
 	    (delta * delta * delta - 15 * delta * delta + 45 * delta - 15);
 	sum += term * x[i];
     }
-    sum = 2 * sum - 15 * nn;	/* add in diagonal */
-    *u = sum / (nn * (nn - 1) * pow(*h, 7.0) * sqrt(2 * PI));
+    sum = 2 * sum - 15 * n;	/* add in diagonal */
+    u = sum / (n * (n - 1) * pow(h, 7.0) * sqrt(2 * PI));
+    return ScalarReal(u);
 }
 
-void
-band_den_bin(int *n, int *nb, double *d, double *x, int *cnt)
+/* This would be impracticable for long vectors.  Better to bin x first */
+SEXP bw_den(SEXP nbin, SEXP sx)
 {
-    int   i, j, ii, jj, iij, nn = *n;
-    double xmin, xmax, rang, dd;
+    int nb = asInteger(nbin), n = LENGTH(sx);
+    double xmin, xmax, rang, dd, *x = REAL(sx);
+    SEXP sc = PROTECT(allocVector(INTSXP, nb));
+    int *cnt = INTEGER(sc);
 
-    for (i = 0; i < *nb; i++) cnt[i] = 0;
+    for (int i = 0; i < nb; i++) cnt[i] = 0;
     xmin = xmax = x[0];
-    for (i = 1; i < nn; i++) {
+    for (int i = 1; i < n; i++) {
 	xmin = min(xmin, x[i]);
 	xmax = max(xmax, x[i]);
     }
     rang = (xmax - xmin) * 1.01;
-    *d = dd = rang / (*nb);
-    for (i = 1; i < nn; i++) {
-	ii = (int)(x[i] / dd);
-	for (j = 0; j < i; j++) {
-	    jj = (int)(x[j] / dd);
-	    iij = abs9((ii - jj));
-	    cnt[iij]++;
+    dd = rang / nb;
+    for (int i = 1; i < n; i++) {
+	int ii = (int)(x[i] / dd);
+	for (int j = 0; j < i; j++) {
+	    int jj = (int)(x[j] / dd);
+	    cnt[abs(ii - jj)]++;
 	}
     }
+    SEXP ans = PROTECT(allocVector(VECSXP, 2));
+    SET_VECTOR_ELT(ans, 0, ScalarReal(dd));
+    SET_VECTOR_ELT(ans, 1, sc);
+    UNPROTECT(2);
+    return ans;
 }

@@ -27,12 +27,6 @@
 #define _(String) (String)
 #endif
 
-void band_ucv_bin(int *, int *, double *, int *, double *, double *);
-void band_bcv_bin(int *, int *, double *, int *, double *, double *);
-void band_phi4_bin(int *, int *, double *, int *, double *, double *);
-void band_phi6_bin(int *, int *, double *, int *, double *, double *);
-void band_den_bin(int *, int *, double *, int *, double *, double *);
-
 void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, int *docoef,
 		      double *qraux, double *resid, double *hat,
 		      double *coef, double *sigma, double *tol);

@@ -85,3 +85,10 @@ SEXP pAnsari(SEXP q, SEXP sm, SEXP sn);
 SEXP qAnsari(SEXP p, SEXP sm, SEXP sn);
 SEXP pKendall(SEXP q, SEXP sn);
 SEXP pRho(SEXP q, SEXP sn, SEXP lower);
+
+SEXP bw_den(SEXP nbin, SEXP sx);
+SEXP bw_ucv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
+SEXP bw_bcv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
+SEXP bw_phi4(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
+SEXP bw_phi6(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
+
