@@ -93,8 +93,7 @@ SEXP bw_bcv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 SEXP bw_phi4(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 SEXP bw_phi6(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 
-SEXP acf(SEXP x, SEXP lmax, SEXP sCor);
-SEXP pacf1(SEXP acf, SEXP lmax);
-SEXP Burg(SEXP x, SEXP order);
-SEXP pp_sum(SEXP u, SEXP sl);
-SEXP intgrt_vec(SEXP x, SEXP xi, SEXP slag);
+SEXP Fexact(SEXP x, SEXP pars, SEXP work, SEXP smult);
+SEXP Fisher_sim(SEXP sr, SEXP sc, SEXP sB);
+SEXP chisq_sim(SEXP sr, SEXP sc, SEXP sB, SEXP E);
+SEXP d2x2xk(SEXP sK, SEXP sm, SEXP sn, SEXP st, SEXP srn);

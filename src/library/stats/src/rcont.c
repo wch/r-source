@@ -26,8 +26,6 @@
 #include <R_ext/Error.h>
 #include <R_ext/Utils.h>
 
-#include "ctest.h"
-
 void
 rcont2(int *nrow, int *ncol,
        /* vectors of row and column totals, and their sum ntotal: */

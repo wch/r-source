@@ -27,8 +27,10 @@
 #include <R_ext/Random.h>
 #include <Rmath.h>		/* for lgammafn, rmultinom */
 #include <errno.h>
-#include "ctest.h"		/* for rcont2 */
 #include "statsR.h"
+
+void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
+	    double *fact, int *jwork, int *matrix);
 
 /* interval at which to check interrupts */
 #define NINTERRUPT 1000000

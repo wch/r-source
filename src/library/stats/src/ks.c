@@ -27,8 +27,6 @@
 #include <Rinternals.h>
 #include <Rmath.h>		/* constants */
 
-#include "ctest.h"
-
 static double K(int n, double d);
 static void m_multiply(double *A, double *B, double *C, int m);
 static void m_power(double *A, int eA, double *V, int *eV, int m, int n);

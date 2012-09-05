@@ -19,9 +19,6 @@
 
 #include <Rmath.h>
 #include <R_ext/Random.h>
-//#include <R_ext/Applic.h>
-
-#include "ctest.h"
 
 /* Driver routine to call RCONT2 from R, B times.
    Calculates the Pearson chi-squared for each generated table.
@@ -29,9 +26,9 @@
    Mostly here for historical reasons now that we have r2dtable().
 */
 
-void
+static void
 chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
-	 int *b, double *expected, int *observed, double *fact,
+	 int B, double *expected, int *observed, double *fact,
 	 int *jwork, double *results)
 {
     int i, j, ii, iter;
@@ -44,7 +41,7 @@ chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 
     GetRNGstate();
 
-    for(iter = 0; iter < *b; ++iter) {
+    for(iter = 0; iter < B; ++iter) {
 	rcont2(nrow, ncol, nrowt, ncolt, n, fact, jwork, observed);
 	/* Calculate chi-squared value from the random table. */
 	chisq = 0.;
@@ -69,9 +66,9 @@ chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
    Mostly here for historical reasons now that we have r2dtable().
 */
 
-void
+static void
 fisher_sim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
-	   int *b, int *observed, double *fact,
+	   int B, int *observed, double *fact,
 	   int *jwork, double *results)
 {
     int i, j, ii, iter;
@@ -84,14 +81,13 @@ fisher_sim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 
     GetRNGstate();
 
-    for(iter = 0; iter < *b; ++iter) {
+    for(iter = 0; iter < B; ++iter) {
 	rcont2(nrow, ncol, nrowt, ncolt, n, fact, jwork, observed);
 	/* Calculate log-prob value from the random table. */
 	ans = 0.;
 	for (j = 0; j < *ncol; ++j) {
-	    for (i = 0, ii = j * *nrow; i < *nrow;  i++, ii++) {
+	    for (i = 0, ii = j * *nrow; i < *nrow;  i++, ii++)
 		ans -= fact[observed[ii]];
-	    }
 	}
 	results[iter] = ans;
     }
@@ -99,4 +95,41 @@ fisher_sim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
     PutRNGstate();
 
     return;
+}
+
+#include <Rinternals.h>
+
+SEXP Fisher_sim(SEXP sr, SEXP sc, SEXP sB)
+{
+    sr = PROTECT(coerceVector(sr, INTSXP));
+    sc = PROTECT(coerceVector(sc, INTSXP));
+    int nr = LENGTH(sr), nc = LENGTH(sc), B = asInteger(sB);
+    int n = 0, *isr = INTEGER(sr);
+    for (int i = 0; i < nr; i++) n += isr[i];
+    int *observed = (int *) R_alloc(nr * nc, sizeof(int));
+    double *fact = (double *) R_alloc(n+1, sizeof(double));
+    int *jwork = (int *) R_alloc(nc, sizeof(int));
+    SEXP ans = PROTECT(allocVector(REALSXP, B));
+    fisher_sim(&nr, &nc, isr, INTEGER(sc), &n, B, observed, fact, 
+	       jwork, REAL(ans));
+    UNPROTECT(3);
+    return ans;
+}
+
+SEXP chisq_sim(SEXP sr, SEXP sc, SEXP sB, SEXP E)
+{
+    sr = PROTECT(coerceVector(sr, INTSXP));
+    sc = PROTECT(coerceVector(sc, INTSXP));
+    E = PROTECT(coerceVector(E, REALSXP));
+    int nr = LENGTH(sr), nc = LENGTH(sc), B = asInteger(sB);
+    int n = 0, *isr = INTEGER(sr);
+    for (int i = 0; i < nr; i++) n += isr[i];
+    int *observed = (int *) R_alloc(nr * nc, sizeof(int));
+    double *fact = (double *) R_alloc(n+1, sizeof(double));
+    int *jwork = (int *) R_alloc(nc, sizeof(int));
+    SEXP ans = PROTECT(allocVector(REALSXP, B));
+    chisqsim(&nr, &nc, isr, INTEGER(sc), &n, B, REAL(E), observed, fact,
+	     jwork, REAL(ans));
+    UNPROTECT(4);
+    return ans;
 }

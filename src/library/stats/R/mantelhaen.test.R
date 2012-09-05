@@ -24,19 +24,15 @@ function(x, y = NULL, z = NULL,
     DNAME <- deparse(substitute(x))
     if(is.array(x)) {
         if(length(dim(x)) == 3L) {
-            if(any(is.na(x)))
-                stop("NAs are not allowed")
-            if(any(dim(x) < 2L))
-                stop("each dimension in table must be >= 2")
+            if(any(is.na(x))) stop("NAs are not allowed")
+            if(any(dim(x) < 2L)) stop("each dimension in table must be >= 2")
         }
         else
             stop("'x' must be a 3-dimensional array")
     }
     else {
-        if(is.null(y))
-            stop("if 'x' is not an array, 'y' must be given")
-        if(is.null(z))
-            stop("if 'x' is not an array, 'z' must be given")
+        if(is.null(y)) stop("if 'x' is not an array, 'y' must be given")
+        if(is.null(z)) stop("if 'x' is not an array, 'z' must be given")
         if(any(diff(c(length(x), length(y), length(z))) != 0L ))
             stop("'x', 'y', and 'z' must have the same length")
         DNAME <- paste(DNAME, "and", deparse(substitute(y)), "and",
@@ -91,21 +87,21 @@ function(x, y = NULL, z = NULL,
             METHOD <- paste("Mantel-Haenszel chi-squared test",
                             if(YATES) "with" else "without",
                             "continuity correction")
-            s.diag <- sum(x[1, 1, ] * x[2, 2, ] / n)
-            s.offd <- sum(x[1, 2, ] * x[2, 1, ] / n)
+            s.diag <- sum(x[1L, 1L, ] * x[2L, 2L, ] / n)
+            s.offd <- sum(x[1L, 2L, ] * x[2L, 1L, ] / n)
             ## Mantel-Haenszel (1959) estimate of the common odds ratio.
             ESTIMATE <- s.diag / s.offd
             ## Robins et al. (1986) estimate of the standard deviation
             ## of the log of the Mantel-Haenszel estimator.
             sd <-
-                sqrt(  sum((x[1,1,] + x[2,2,]) * x[1,1,] * x[2,2,]
+                sqrt(  sum((x[1L,1L,] + x[2L,2L,]) * x[1L,1L,] * x[2L,2L,]
                            / n^2)
                      / (2 * s.diag^2)
-                     + sum((  (x[1,1,] + x[2,2,]) * x[1,2,] * x[2,1,]
-                            + (x[1,2,] + x[2,1,]) * x[1,1,] * x[2,2,])
+                     + sum((  (x[1L,1L,] + x[2L,2L,]) * x[1L,2L,] * x[2L,1L,]
+                            + (x[1L,2L,] + x[2L,1L,]) * x[1L,1L,] * x[2L,2L,])
                            / n^2)
                      / (2 * s.diag * s.offd)
-                     + sum((x[1,2,] + x[2,1,]) * x[1,2,] * x[2,1,]
+                     + sum((x[1L,2L,] + x[2L,1L,]) * x[1L,2L,] * x[2L,1L,]
                            / n^2)
                      / (2 * s.offd^2))
             CINT <-
@@ -145,12 +141,8 @@ function(x, y = NULL, z = NULL,
             ## Density of the *central* product hypergeometric
             ## distribution on its support: store for once as this is
             ## needed quite a bit.
-            dc <- .C(C_d2x2xk,
-                     as.integer(K),
-                     as.double(m),
-                     as.double(n),
-                     as.double(t),
-                     d = double(hi - lo + 1))$d
+
+            dc <- .Call(C_d2x2xk, K, m, n, t, hi - lo + 1L)
             logdc <- log(dc)
 
             dn2x2xk <- function(ncp) {

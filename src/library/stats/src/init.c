@@ -20,7 +20,6 @@
 #include <R.h>
 #include <Rinternals.h>
 
-#include "ctest.h"
 #include "family.h"
 #include "modreg.h"
 #include "mva.h"
@@ -32,24 +31,7 @@
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
 
-static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
-					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
-static R_NativePrimitiveArgType fishersim_t[10] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
-					   INTSXP, INTSXP, REALSXP, INTSXP, REALSXP};
-static R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-
-static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
-					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
-
-
-#define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
-
-
 static const R_CMethodDef CEntries[]  = {
-    {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
-    {"fisher_sim", (DL_FUNC) &fisher_sim, 10, fishersim_t},
-    {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
-    {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
     {"loess_raw", (DL_FUNC) &loess_raw, 24},
     {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
     {"loess_dfitse", (DL_FUNC) &loess_dfitse, 16},
@@ -147,6 +129,10 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(Burg, 2),
     CALLDEF(intgrt_vec, 3),
     CALLDEF(pp_sum, 2),
+    CALLDEF(Fexact, 4),
+    CALLDEF(Fisher_sim, 3),
+    CALLDEF(chisq_sim, 4),
+    CALLDEF(d2x2xk, 5),
     {NULL, NULL, 0}
 };
 

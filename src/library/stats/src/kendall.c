@@ -22,8 +22,6 @@
 #include <R.h>
 #include <Rmath.h>
 
-#include "ctest.h"
-
 /*
    and the exact distribution of  T = (n * (n - 1) * tau + 1) / 4,
    which is -- if there are no ties -- the number of concordant ordered pairs

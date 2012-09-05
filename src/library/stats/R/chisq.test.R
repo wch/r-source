@@ -79,24 +79,13 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	dimnames(E) <- dimnames(x)
 	if (simulate.p.value && all(sr > 0) && all(sc > 0)) {
 	    setMETH()
-	    tmp <- .C(C_chisqsim,
-		      nr,
-		      nc,
-		      as.integer(sr),
-		      as.integer(sc),
-		      as.integer(n),
-		      as.integer(B),
-		      as.double(E),
-		      integer(nr * nc),
-		      double(n + 1L),
-		      integer(nc),
-		      results = double(B))
+            tmp <- .Call(C_chisq_sim, sr, sc, B, E)
 	    ## Sorting before summing may look strange, but seems to be
 	    ## a sensible way to deal with rounding issues (PR#3486):
 	    STATISTIC <- sum(sort((x - E) ^ 2 / E, decreasing = TRUE))
 	    PARAMETER <- NA
 	    ## use correct significance level for a Monte Carlo test
-	    PVAL <- (1 + sum(tmp$results >= almost.1 * STATISTIC)) / (B + 1)
+	    PVAL <- (1 + sum(tmp >= almost.1 * STATISTIC)) / (B + 1)
 	}
 	else {
 	    if (simulate.p.value)

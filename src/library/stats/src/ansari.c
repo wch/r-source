@@ -24,7 +24,6 @@
 
 #include <R.h>
 #include <Rmath.h>		/* uses choose() */
-#include "ctest.h"
 #include "stats.h"
 
 static double ***
