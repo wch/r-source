@@ -72,7 +72,7 @@ splinefun <- function(x, y=NULL,
         ##           where dx := (u[j]-x[i]); i such that x[i] <= u[j] <= x[i+1},
         ##                u[j]:= xout[j] (unless sometimes for periodic spl.)
         ##           and  d_i := d[i] unless for natural splines at left
-        res <- .Call(C_SplineEval, x, z)
+        res <- .splinefun(x, z)
 
 
         ## deal with points to the left of first knot if natural
@@ -83,6 +83,9 @@ splinefun <- function(x, y=NULL,
         res
     }
 }
+
+## avoid capturing internal calls
+.splinefun <- function(x, z) .Call(C_SplineEval, x, z)
 
 ## hidden : The exported user function is splinefunH()
 splinefunH0 <- function(x, y, m, dx = x[-1L] - x[-length(x)])
