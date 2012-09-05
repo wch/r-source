@@ -57,33 +57,32 @@ knots.stepfun <- function(Fn, ...) eval(expression(x), envir=environment(Fn))
 print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
 {
     numform <- function(x) paste(formatC(x, digits = digits), collapse=", ")
-    i1 <- function(n) 1L:min(3, n)
-    i2 <- function(n) if(n >= 4) max(4, n-1):n else integer()
+    i1 <- function(n) 1L:min(3L, n)
+    i2 <- function(n) if(n >= 4L) max(4L, n-1L):n else integer()
     cat("Step function\nCall: ")
     print(attr(x, "call"), ...)
     env <- environment(x)
     n <- length(xx <- eval(expression(x), envir = env))
     cat(" x[1:", n, "] = ", numform(xx[i1(n)]),
-	if(n > 3) ", ", if(n > 5) " ..., ", numform(xx[i2(n)]), "\n", sep = "")
+	if(n > 3L) ", ", if(n > 5L) " ..., ", numform(xx[i2(n)]), "\n", sep = "")
     y <- eval(expression(c(yleft, y)), envir = env)
-    cat(n+1, " plateau levels = ", numform(y[i1(n+1)]),
-	if(n+1 > 3) ", ", if(n+1 > 5) " ..., ", numform(y[i2(n+1)]), "\n",
+    cat(n+1L, " plateau levels = ", numform(y[i1(n+1)]),
+	if(n+1L > 3L) ", ", if(n+1L > 5L) " ..., ", numform(y[i2(n+1L)]), "\n",
 	sep = "")
     invisible(x)
 }
 
 summary.stepfun <- function(object, ...)
 {
-    n <- eval(expression(n), envir = environment(object))
-    if(!is.integer(n) || n < 1) stop("not a valid step function")
-    ## n <- n-1
+    n <- length(eval(expression(x), envir = environment(object)))
+    if(!is.integer(n) || n < 1L) stop("not a valid step function")
     cat("Step function with continuity 'f'=",
 	format(eval(expression(f), envir = environment(object))),
-	", ", n, if(n <= 6) "knots at\n" else "knots with summary\n")
-    summ <- if(n>6) summary else function(x) x
+	", ", n, if(n <= 6L) "knots at\n" else "knots with summary\n")
+    summ <- if(n > 6L) summary else function(x) x
     print(summ(knots(object)))
-    cat(if(n>6) "\n" else "  ", "and	", n+1,
-        " plateau levels (y) ", if(n <= 6) "at\n" else "with summary\n",
+    cat(if(n > 6L) "\n" else "  ", "and	", n+1L,
+        " plateau levels (y) ", if(n <= 6L) "at\n" else "with summary\n",
         sep="")
     print(summ(eval(expression(c(yleft,y)), envir = environment(object))))
     invisible()
