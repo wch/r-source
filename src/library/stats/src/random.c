@@ -28,9 +28,8 @@
 #include <Rmath.h>		/* for lgammafn, rmultinom */
 #include <errno.h>
 #include "statsR.h"
-
-void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
-	    double *fact, int *jwork, int *matrix);
+#undef _
+#include "stats.h" // for rcont2
 
 /* interval at which to check interrupts */
 #define NINTERRUPT 1000000

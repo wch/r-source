@@ -27,6 +27,11 @@
 #define _(String) (String)
 #endif
 
+#include <R_ext/RS.h>
+
+void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
+	    double *fact, int *jwork, int *matrix);
+
 void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, int *docoef,
 		      double *qraux, double *resid, double *hat,
 		      double *coef, double *sigma, double *tol);

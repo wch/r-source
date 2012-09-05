@@ -17,8 +17,11 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#include <R.h>
+#include <Rinternals.h>
 #include <Rmath.h>
 #include <R_ext/Random.h>
+#include "stats.h" // for rcont2
 
 /* Driver routine to call RCONT2 from R, B times.
    Calculates the Pearson chi-squared for each generated table.
@@ -96,8 +99,6 @@ fisher_sim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 
     return;
 }
-
-#include <Rinternals.h>
 
 SEXP Fisher_sim(SEXP sr, SEXP sc, SEXP sB)
 {
